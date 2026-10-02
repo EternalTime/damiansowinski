@@ -68,7 +68,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "7556d057d48af4a5",
+    "version": "ba2c59eecd90e4a3",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -1857,10 +1857,57 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9abad142d458570e",
+    "version": "318ddb0b65f3d420",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
+  },
+  {
+    "id": "reissner_nordstrom_ads",
+    "name": "Reissner-Nordström-anti-de Sitter",
+    "tags": [
+      "electrovacuum",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "charged",
+      "charged black hole",
+      "black hole",
+      "electric charge",
+      "mass",
+      "electromagnetic field",
+      "cosmological constant",
+      "negative cosmological constant",
+      "anti-de Sitter",
+      "AdS/CFT",
+      "holography",
+      "black hole thermodynamics",
+      "van der Waals",
+      "phase transition",
+      "superradiance",
+      "curvature singularity",
+      "coordinate singularity",
+      "horizon",
+      "event horizon",
+      "Cauchy horizon",
+      "inner horizon",
+      "white hole",
+      "maximal extension",
+      "causal structure",
+      "strong cosmic censorship",
+      "supersymmetry",
+      "extremal",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "Einstein-Maxwell",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "42410c071ceba59f",
+    "diagrams": "84d8aa4c800066d0",
+    "conformal": "df06b8d369f90c16",
+    "embedding": "b5e538549e42926e"
   },
   {
     "id": "reissner_nordstrom_de_sitter",
@@ -1899,7 +1946,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "65ab645d4eb52580",
+    "version": "ad9078d2f0f37b4f",
     "diagrams": "f6c6ac1947d0b4e9",
     "conformal": "639eea78631ca3e1",
     "embedding": "342b4919bb1495ae"
@@ -2055,7 +2102,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "7a1f7ca03ba17edb",
+    "version": "9a1c274b5002c61a",
     "diagrams": "1fc6612302f13cf4",
     "conformal": "01527c3f93dbe1c9",
     "embedding": "d3f0fd120a6d665b"
@@ -2436,7 +2483,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "ebffc476bef3ffad",
+    "version": "b0facb94196207ed",
     "diagrams": "70598c77af726b80",
     "conformal": "243a2de40edb7f43",
     "embedding": "930f06c7003fad35"

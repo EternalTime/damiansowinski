@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 90,
+  "count": 91,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -576,6 +576,11 @@
           "id": "siklos",
           "kind": "generalisation",
           "text": "Anti-de Sitter space with a gravitational wave crossing it. The profile $H$ of a pp-wave goes inside the bracket of the Poincaré patch, and at $H = 0$ the wave is gone [siklos1985, podolsky1998]."
+        },
+        {
+          "id": "reissner_nordstrom_ads",
+          "kind": "generalisation",
+          "text": "Anti-de Sitter space with a charged black hole put in. For the field theory on the boundary the charge is a charge density [chamblin1999]."
         }
       ],
       "references": [
@@ -611,7 +616,8 @@
         "randall1999b",
         "coleman1980",
         "siklos1985",
-        "podolsky1998"
+        "podolsky1998",
+        "chamblin1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -18354,6 +18360,11 @@
           "id": "einstein_rosen_bridge",
           "kind": "dual",
           "text": "Einstein and Nathan Rosen's particle of 1935. Its charged bridge is this metric continued to $r_q^2 \\to -r_q^2$, which leaves one horizon at any mass, even none [einstein1935]."
+        },
+        {
+          "id": "reissner_nordstrom_ads",
+          "kind": "generalisation",
+          "text": "The charged black hole in anti-de Sitter space. At fixed charge its small and large black holes are like the liquid and the gas of a van der Waals fluid [chamblin1999]."
         }
       ],
       "references": [
@@ -18383,7 +18394,8 @@
         "hayward2006",
         "kinnersley1970",
         "bonnor1970",
-        "einstein1935"
+        "einstein1935",
+        "chamblin1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -18447,6 +18459,313 @@
           ],
           "ricci_scalar": "0",
           "kretschmann": "\\dfrac{56r_q^4 - 48r r_q^2 r_s + 12r^2 r_s^2}{r^8}"
+        }
+      ]
+    },
+    {
+      "id": "reissner_nordstrom_ads",
+      "name": "Reissner-Nordström-anti-de Sitter Black Hole",
+      "short_name": "Reissner-Nordström-anti-de Sitter",
+      "description": "A charged black hole in anti-de Sitter space, the static, spherically symmetric solution of the Einstein-Maxwell equations with a negative cosmological constant. It has an inner horizon and an event horizon inside a timelike boundary at infinity, and at fixed charge its small and large black holes behave as the liquid and the gas of a van der Waals fluid do.",
+      "tags": [
+        "electrovacuum",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "charged",
+        "charged black hole",
+        "black hole",
+        "electric charge",
+        "mass",
+        "electromagnetic field",
+        "cosmological constant",
+        "negative cosmological constant",
+        "anti-de Sitter",
+        "AdS/CFT",
+        "holography",
+        "black hole thermodynamics",
+        "van der Waals",
+        "phase transition",
+        "superradiance",
+        "curvature singularity",
+        "coordinate singularity",
+        "horizon",
+        "event horizon",
+        "Cauchy horizon",
+        "inner horizon",
+        "white hole",
+        "maximal extension",
+        "causal structure",
+        "strong cosmic censorship",
+        "supersymmetry",
+        "extremal",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "Einstein-Maxwell",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, the charge radius $r_q$ has $r_q^2 = Q^2G/(4\\pi\\epsilon_0c^4)$, and the anti-de Sitter radius $L$, a length, fixes the cosmological constant through $\\Lambda = -3/L^2$. The horizons $r_- < r_+$ are the two positive roots of $1 - r_s/r + r_q^2/r^2 + r^2/L^2$. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "schwarzschild_ads",
+          "kind": "special_case",
+          "text": "This black hole with no charge, $r_q = 0$. The inner horizon goes, and with it the small stable black hole of the fixed charge ensemble [chamblin1999]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "special_case",
+          "text": "This black hole with no cosmological constant, $L \\to \\infty$. The timelike boundary at infinity goes, and both horizons stay."
+        },
+        {
+          "id": "reissner_nordstrom_de_sitter",
+          "kind": "family",
+          "text": "The charged black hole with a positive cosmological constant. A cosmological horizon stands where this one has a timelike boundary [romans1992]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "special_case",
+          "text": "This spacetime with the mass and the charge taken out, $r_s = r_q = 0$. The timelike boundary at infinity stays."
+        },
+        {
+          "id": "topological_black_hole",
+          "kind": "family",
+          "text": "Black holes of anti-de Sitter space with flat and hyperbolic horizons. The hyperbolic hole of negative mass has an inner horizon and a conformal diagram like this one's [mann1997negative, brill1997]."
+        }
+      ],
+      "references": [
+        "hawking1983",
+        "reissner1916",
+        "nordstrom1918",
+        "chamblin1999",
+        "stuchlik2002",
+        "louko1996",
+        "romans1992",
+        "maldacena1998",
+        "kubiznak2012",
+        "basu2010",
+        "bosch2016",
+        "brecher2005",
+        "kehle2020",
+        "mann1997negative",
+        "brill1997"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/reissner_nordstrom_ads.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Static Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_- \\;\\text{(inner horizon)}",
+            "r = r_+ \\;\\text{(event horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius, $r_q^2 = Q^2 G / (4\\pi\\epsilon_0 c^4)$"
+            },
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2} + \\dfrac{r^2}{L^2}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2} + \\dfrac{r^2}{L^2}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2} + \\dfrac{r^2}{L^2}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2} + \\dfrac{r^2}{L^2}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6} - \\dfrac{48r_s\\,r_q^2}{r^7} + \\dfrac{56r_q^4}{r^8} + \\dfrac{24}{L^4}"
+        },
+        {
+          "id": "eddington_finkelstein_outgoing",
+          "name": "Outgoing Eddington-Finkelstein",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_- \\;\\text{(inner horizon)}",
+            "r = r_+ \\;\\text{(event horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius, $r_q^2 = Q^2 G / (4\\pi\\epsilon_0 c^4)$"
+            },
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded time $u = ct - r_*$ a length, where $dr_*/dr = \\left(1 - r_s/r + r_q^2/r^2 + r^2/L^2\\right)^{-1}$ and $r_* = 0$ at $r = 0$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2} + \\dfrac{r^2}{L^2}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2} + \\dfrac{r^2}{L^2}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6} - \\dfrac{48r_s\\,r_q^2}{r^7} + \\dfrac{56r_q^4}{r^8} + \\dfrac{24}{L^4}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_- \\;\\text{(inner horizon)}",
+            "r = r_+ \\;\\text{(event horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius, $r_q^2 = Q^2 G / (4\\pi\\epsilon_0 c^4)$"
+            },
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v = ct + r_*$ a length, where $dr_*/dr = \\left(1 - r_s/r + r_q^2/r^2 + r^2/L^2\\right)^{-1}$ and $r_* = 0$ at $r = 0$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2} + \\dfrac{r^2}{L^2}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2} + \\dfrac{r^2}{L^2}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6} - \\dfrac{48r_s\\,r_q^2}{r^7} + \\dfrac{56r_q^4}{r^8} + \\dfrac{24}{L^4}"
         }
       ]
     },
@@ -18526,6 +18845,11 @@
           "id": "majumdar_papapetrou",
           "kind": "family",
           "text": "Any number of black holes with charge equal to mass, at rest together when $\\Lambda = 0$. David Kastor and Jennie Traschen found their counterpart with $\\Lambda > 0$ in 1993, and one of its holes alone is the lukewarm black hole [kastor1993]."
+        },
+        {
+          "id": "reissner_nordstrom_ads",
+          "kind": "family",
+          "text": "The charged black hole with a negative cosmological constant. At $r_q = r_s/2$, where this one is lukewarm, that one is supersymmetric and a naked singularity [romans1992]."
         }
       ],
       "references": [
@@ -20179,6 +20503,11 @@
           "id": "topological_black_hole",
           "kind": "generalisation",
           "text": "The same metric function with $k$ where it has $1$: a flat horizon for $k = 0$ and a hyperbolic one for $k = -1$ [lemos1995, mann1997]."
+        },
+        {
+          "id": "reissner_nordstrom_ads",
+          "kind": "generalisation",
+          "text": "The same black hole with an electric charge. It gains an inner horizon, and at fixed charge a small black hole that is stable [chamblin1999]."
         }
       ],
       "references": [
@@ -20205,7 +20534,8 @@
         "vanzo1997",
         "kastor2009",
         "banados1992",
-        "hawking1999rotation"
+        "hawking1999rotation",
+        "chamblin1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_ads.json",
@@ -23941,6 +24271,11 @@
           "id": "btz",
           "kind": "family",
           "text": "The black hole of three dimensions, made by identifying points of anti-de Sitter space. Åminneborg, Bengtsson, Holst, and Peldán repeated the construction in four [aminneborg1996]."
+        },
+        {
+          "id": "reissner_nordstrom_ads",
+          "kind": "family",
+          "text": "The charged black hole of anti-de Sitter space with a round horizon. The hyperbolic hole of negative mass has an inner horizon as it does, and a conformal diagram like its own [mann1997negative, brill1997]."
         }
       ],
       "references": [

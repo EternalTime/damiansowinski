@@ -513,6 +513,14 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `throat/radial`, both sides through the throat with $\ell = \pm(r - a)$: the line $ct = 0$ from $\ell = -3.75\,r_s$ to $3.75\,r_s$, cut to the box at $|\ell| = 3\,r_s$.
 - `throat` and `spherical`, the diamond in $\ell_*$: the line $T = 0$ from $\ell = -3.75\,r_s$ to $3.75\,r_s$, both sides through the throat, the same on both.
 
+### Reissner-Nordström-anti-de Sitter
+
+- The embedding has two views at $r_s = 27L/8$ and $r_q^2 = 11L^2/8$: the equator of the static moment $t = 0$ from the throat $r_+ = L$ to $3L$ on both exteriors, and the static moment inside $r_-$, from $L/100$ to $r_- = L/2$ and back.
+- `static/radial`: the lines $ct = 0$ from $r_+$ to the box's edge at $3L$ and from $L/100$ to $r_-$; between the horizons the surfaces of constant $t$ are timelike.
+- `eddington_finkelstein_ingoing/finkelstein` and `/chart`: with $r_*(0) = 0$ the moments are the curves $v = r_*$, which run off to $v \to -\infty$ at $r_+$ and to $v \to +\infty$ at $r_-$.
+- `eddington_finkelstein_outgoing/finkelstein` and `/chart`: the time reverse, $u = -r_*$.
+- `static`, `ingoing` and `outgoing`, the conformal diagram: the moment outside is the line $T = 0$ through the bifurcation sphere of $r_+$ across both exteriors, and on the outgoing view the line $T = 2\pi$, since that chart's exterior is the one above the white hole; the moment inside is the line $T = \pi$ through the bifurcation sphere of $r_-$ on all three.
+
 ### Schwarzschild-anti-de Sitter
 
 - The embedding is the equator of the static moment $t = 0$ at $r_s = 2L$, $r$ from the throat $r_h = L$ to $3L$ on both exteriors through the bifurcation sphere, in flat space out to $2^{1/3}L$ and in Minkowski space beyond.

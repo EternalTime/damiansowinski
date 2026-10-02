@@ -5,7 +5,7 @@ schwarzschild_de_sitter, schwarzschild_ads, topological_black_hole, milne, einst
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
-damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
+damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, reissner_nordstrom_ads, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
 black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
 som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos and
 einstein_rosen_bridge, and Godel's cylindrical chart.
@@ -6299,6 +6299,105 @@ def reissner_nordstrom_de_sitter_pullback(chart):
 
 
 CHARTS["reissner_nordstrom_de_sitter"] = [lambda s=s: reissner_nordstrom_de_sitter(s) for s in RNDS_CHARTS]
+
+
+# -- Reissner-Nordström-anti-de Sitter -------------------------------------------------
+
+RNADS_CHARTS = ["static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing"]
+
+
+def reissner_nordstrom_ads(system_id):
+    """The charged black hole in anti-de Sitter space, f = 1 - r_s/r + r_q^2/r^2 + r^2/L^2, in the
+    static chart and in the two Eddington-Finkelstein charts built on its tortoise coordinate,
+    dr_*/dr = 1/f. The parameters are Reissner and Nordstrom's r_s and r_q and anti-de Sitter's
+    L, so each chart is Schwarzschild-anti-de Sitter's at r_q = 0 term by term, and Reissner and
+    Nordstrom's as L grows without bound. Every value is printed around L^2 r^2 f =
+    r^4 + L^2 r^2 - L^2 r r_s + L^2 r_q^2, the order Schwarzschild-anti-de Sitter's values keep,
+    r^3 + L^2 r - L^2 r_s. The metric and its inverse
+    are written as the line element writes f, and the Kretschmann scalar as Reissner and
+    Nordstrom's plus anti-de Sitter's 24/L^4, which it is. reissner_nordstrom_ads.md records
+    each chart's source."""
+    f = "\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2} + \\dfrac{r^2}{L^2}\\right)"
+    bare = f[6:-7]
+    sphere = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    domains = ["r \\in (0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+               "r = r_- \;\\text{(inner horizon)}", "r = r_+ \;\\text{(event horizon)}"]
+    if system_id == "static":
+        coords = ["t", "r", "\\theta", "\\phi"]
+        name = "Static Spherical"
+        line = "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        chart_line = "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        metric = {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"}
+        inverse = {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}
+    else:
+        null, sign = ("u", "-") if system_id == "eddington_finkelstein_outgoing" else ("v", "+")
+        coords = [null, "r", "\\theta", "\\phi"]
+        name = ("Outgoing" if null == "u" else "Ingoing") + " Eddington-Finkelstein"
+        line = "ds^2 = -" + f + "d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr" + sphere
+        chart_line = line
+        one = "-1" if null == "u" else "1"
+        metric = {(null, null): "-" + f, (null, "r"): one, ("r", null): one}
+        inverse = {(null, "r"): one, ("r", null): one, ("r", "r"): bare}
+    parameters = ["r_s", "r_q", "L"]
+    probe = vm.Reader(coords, parameters, ())
+    r, rs, rq, L = probe.symbol["r"], probe.parameters["r_s"], probe.parameters["r_q"], probe.parameters["L"]
+    return {
+        "metric_id": "reissner_nordstrom_ads",
+        "system": {"id": system_id, "name": name, "coords": coords,
+                   "domains": [coords[0] + " \\in (-\\infty, \\infty)"] + domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        "printer": {"rising": [L, rq, rs], "lead": [L, r, rs, rq], "flip": False},
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "ricci_scalar": "-\\dfrac{12}{L^2}",
+        "kretschmann": ("\\dfrac{12r_s^2}{r^6} - \\dfrac{48r_s\\,r_q^2}{r^7} + \\dfrac{56r_q^4}{r^8}"
+                        " + \\dfrac{24}{L^4}"),
+        "check": reissner_nordstrom_ads_check,
+    }
+
+
+def reissner_nordstrom_ads_check(chart):
+    """Every chart solves the Einstein-Maxwell equations with Lambda = -3/L^2 for the Coulomb field
+    of the charge: G^mu_nu = (3/L^2) delta^mu_nu + (r_q^2/r^4) diag(-1, -1, 1, 1), the stress of a
+    radial electric field E = Q/(4 pi epsilon_0 r^2) in the units of r_q. The static chart is the
+    published static chart of schwarzschild_ads at r_q = 0, and each Eddington-Finkelstein chart
+    is the static one pulled back, J^T g J, along c t = v - r_* or u + r_* with dr_*/dr = 1/f."""
+    r = chart.reader.symbol["r"]
+    rq, L = chart.reader.parameters["r_q"], chart.reader.parameters["L"]
+    mixed = chart.geo.raise_indices(chart.geo.einstein_ll(), 2, (0,))
+    for a in range(4):
+        for b in range(4):
+            wanted = (3 / L ** 2 + (-1 if a < 2 else 1) * rq ** 2 / r ** 4) if a == b else 0
+            if vm.norm(mixed[a][b] - wanted) != 0:
+                raise AssertionError(f"reissner_nordstrom_ads: the Einstein tensor misses the Coulomb field's "
+                                     f"stress in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
+    lead = chart.coords_tex[0]
+    if lead == "t":
+        spec = schwarzschild_ads("static")
+        other = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+        at = dict(zip(other.symbols, chart.symbols))
+        at.update({other.reader.parameters[k]: chart.reader.parameters[k] for k in ("r_s", "L")})
+        for i in range(4):
+            if vm.norm(other.geo.g[i, i].subs(at, simultaneous=True) - chart.geo.g[i, i].subs(rq, 0)) != 0:
+                raise AssertionError("reissner_nordstrom_ads: the static chart at r_q = 0 is not "
+                                     f"Schwarzschild-anti-de Sitter's in slot {chart.coords_tex[i]}{chart.coords_tex[i]}")
+        return
+    spec = reissner_nordstrom_ads("static")
+    static = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    at = dict(zip(static.symbols[1:], chart.symbols[1:]))
+    at.update({static.reader.parameters[k]: chart.reader.parameters[k] for k in ("r_s", "r_q", "L")})
+    old = static.geo.g.subs(at, simultaneous=True)
+    J = sp.eye(4)
+    J[0, 1] = (1 if lead == "u" else -1) / (-old[0, 0])
+    pulled = J.T * old * J
+    for i in range(4):
+        for j in range(i, 4):
+            if vm.norm(pulled[i, j] - chart.geo.g[i, j]) != 0:
+                raise AssertionError(f"reissner_nordstrom_ads: the static chart pulled back misses the "
+                                     f"{lead} chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["reissner_nordstrom_ads"] = [lambda s=s: reissner_nordstrom_ads(s) for s in RNADS_CHARTS]
 
 
 # -- The travelling wave on a cosmic string ----------------------------------------------

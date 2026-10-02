@@ -57,6 +57,11 @@
       "id": "btz",
       "kind": "family",
       "text": "The black hole of three dimensions, made by identifying points of anti-de Sitter space. Åminneborg, Bengtsson, Holst, and Peldán repeated the construction in four [aminneborg1996]."
+    },
+    {
+      "id": "reissner_nordstrom_ads",
+      "kind": "family",
+      "text": "The charged black hole of anti-de Sitter space with a round horizon. The hyperbolic hole of negative mass has an inner horizon as it does, and a conformal diagram like its own [mann1997negative, brill1997]."
     }
   ],
   "references": [

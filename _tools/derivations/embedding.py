@@ -3630,6 +3630,154 @@ def hayward(ck, src):
     return views
 
 
+RNADS = {"r_s": "27/8", "r_q": "sqrt(22)/4", "L": 1}
+RNADS_SETTINGS = ("$L = 1$, the unit of every length, $r_s = 27L/8$ and $r_q^2 = 11L^2/8$, so that $r_+ = L$ and "
+                  "$r_- = L/2$.")
+
+# Near the singularity the inner sheet closes on a light cone of Minkowski space, where a chord is
+# short in the metric against its length on the page, so it is written to twelve decimals.
+RNADS_DIGITS = 1e-12
+RNADS_KNOTS = 1.02
+
+
+def reissner_nordstrom_ads(ck, src):
+    """The static slice t = 0 of the charged black hole in anti-de Sitter space at L = 1,
+    r_s = 27/8 and r_q^2 = 11/8, where r^2 f = (r - 1)(r - 1/2)(r^2 + 3r/2 + 11/4): the horizons,
+    the positive roots of the published g^rr, are r_+ = 1 and r_- = 1/2. g_rr = 1/f and
+    g_phiphi = r^2, and f = 1 where r^4 - r_s r + r_q^2 = 0, at r = 0.4163 and r = 1.3275, the
+    two real roots of 8r^4 - 27r + 11.
+
+    Outside, the slice is Schwarzschild-anti-de Sitter's: in flat space dz/dr = sqrt(1/f - 1)
+    from the throat r_+, the bifurcation sphere, where it stands vertical, to r = 1.3275, where
+    it lies level, and beyond it, where 1/f < 1 and the circles grow faster than the distance
+    out to them, in three dimensional Minkowski space at dZ/dr = sqrt(1 - 1/f), toward a light
+    cone of that space, on both exteriors, to r = 3.
+
+    Inside r_- the slice runs through the inner bifurcation sphere, its widest circle, as
+    Reissner and Nordstrom's does, in flat space from r_- in to r = 0.4163, where it lies level.
+    Nearer the singularity f > 1 again, as it is far outside, so that part too is drawn in
+    Minkowski space, where it closes on the singularity along a light cone, dZ/dr -> 1 as
+    f -> infinity; it is drawn from r = 1/100 and written to twelve decimals. Between r_- and r_+ no surface carries the
+    slice, which is checked, as is each join, from the numbers and from the file."""
+    fixed_at = {"t": 0, **EQUATOR}
+    sl = Slice(src, "reissner_nordstrom_ads", "static", "r", "\\phi", fixed_at, RNADS)
+    msl = Slice(src, "reissner_nordstrom_ads", "static", "r", "\\phi", fixed_at, RNADS, space="minkowski")
+    rp, rm = sl.horizons()[:2]
+    # The level circles are roots of a quartic with no short form in radicals, so each slice is
+    # told them exactly, and slope() evaluates the tangent at the root itself.
+    levels = sp.Poly(8 * sl.x ** 4 - 27 * sl.x + 11, sl.x).real_roots()
+    level_in, level_out = (float(z) for z in levels)
+    for one in (sl, msl):
+        one.exact.update({float(z): sp.CRootOf(8 * sl.x ** 4 - 27 * sl.x + 11, k) for k, z in enumerate(levels)})
+    top, tip = 3.0, 0.01
+    name = "Reissner-Nordstrom-anti-de Sitter"
+    ck.add(f"{name}: the horizons are r_+ = L and r_- = L/2", abs(rp - 1.0) + abs(rm - 0.5), 1e-12)
+    ck.add(f"{name}: the surface lies level where f = 1, at the roots 0.4163 and 1.3275 of 8r^4 - 27r + 11",
+           float(np.max(np.abs(sl.defect_at(np.array([level_in, level_out])))))
+           + (abs(level_in - 0.4163) + abs(level_out - 1.3275)) * 1e-9, 1e-12)
+    ck.stops(f"{name}, between r_- and r_+", sl, np.linspace(rm, rp, 402)[1:-1])
+    ck.stops(f"{name}, beyond r = 1.3275 in flat space", sl, np.linspace(level_out, 40, 402)[1:])
+    ck.stops(f"{name}, nearer the singularity than r = 0.4163 in flat space", sl, np.linspace(0, level_in, 402)[1:-1])
+    for lo_, hi_, where in ((rp, level_out, "between r_+ and 1.3275"), (level_in, rm, "between 0.4163 and r_-")):
+        d = msl.defect_at(np.linspace(lo_, hi_, 402)[1:-1])
+        ck.add(f"{name}: {where} no surface in Minkowski space carries the slice, (drho/dr)^2 - g_rr < 0",
+               float(max(0.0, np.max(-d))), 0.0)
+        if not np.all(d > 0):
+            ck.items[-1]["ok"] = False
+
+    def as_written(a, b, where):
+        """The last point of the one piece is the first of the other, to the rounding of the coarser."""
+        pa, pb = a.data()["points"][-1], b.data()["points"][0]
+        ck.add(f"{name}, {a.id} and {b.id} as written: one point at {where}",
+               max(abs(pa[0] - pb[0]), abs(pa[1] - pb[1]), abs(pa[2] - pb[2])), 10.0 ** -min(a.decimals, b.decimals))
+
+    # Outside r_+: both exteriors through the throat.
+    size = 2 * top
+    join = ("at $r = 1.33\\,L$ the surface lies level, in flat space nearer the horizon and in Minkowski space "
+            "beyond")
+    edge = "the sheet runs on toward a light cone, to $r \\to \\infty$"
+    near = Piece("exterior", "sheet", sl, rp, level_out, 0.0, 1,
+                 (("throat", "the throat $r = r_+$, the bifurcation sphere, where the other exterior begins"), ("join", join)),
+                 [(rp, "horizon", "$r = r_+$"), (1.1, "r", None), (level_out, "space", None)], size)
+    out = Piece("exterior_minkowski", "sheet", msl, level_out, top, near.at(level_out)[1], 1, (("join", join), ("edge", edge)),
+                [(2.0, "r", None), (top, "r", None)], size)
+    far = Piece("other_exterior", "sheet2", sl, rp, level_out, 0.0, -1, (("throat", "the throat $r = r_+$"), ("join", join)),
+                [(1.1, "r2", None), (level_out, "space", None)], size)
+    far_out = Piece("other_exterior_minkowski", "sheet2", msl, level_out, top, far.at(level_out)[1], -1,
+                    (("join", join), ("edge", edge)), [(2.0, "r2", None), (top, "r2", None)], size)
+    for p in (near, out, far, far_out):
+        space = "in Minkowski space" if p.sl.lorentz else "in flat space"
+        ck.isometry(f"{name}, {p.id} {space}", p)
+        ck.radius(f"{name}, {p.id}, rho = r {space}", p, lambda r: r, size)
+    ck.join(f"{name}, the two sheets at the throat", near, rp, far, rp)
+    for a, b in ((near, out), (far, far_out)):
+        ck.join(f"{name}, {a.id} in flat space and {b.id} in Minkowski space at r = 1.3275", a, level_out, b, level_out)
+        as_written(a, b, "r = 1.3275")
+    outside = Surface([near, out, far, far_out])
+    fig = figure_of([outside], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], rp, 0.0, "$r = r_+$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(level_out), "$1.33\\,L$")
+    ring_label(fig, [0, 0, 0], *out.at(top), "$3L$")
+    fig.legend("fill", "cover", "the exterior $r > r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1.1\\,L$, $2L$ and $3L$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the event horizon")
+    fig.legend("line", "space", "$r = 1.33\\,L$, where $g_{rr} = 1$: flat space inside, Minkowski space beyond")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    not_space = ("Between the horizons, $r_- < r < r_+$, $g_{rr} < 0$: $r$ is a time there, and a slice of constant "
+                 "$t$ is not a moment of space.")
+    views = [view("outside", "Outside $r_+$", "$L$", [outside], fig.done(), stops=[not_space],
+                  settings=RNADS_SETTINGS + " Every length along the surface beyond $r = 1.33\\,L$ is measured "
+                                            "with $dX^2 + dY^2 - dZ^2$.")]
+
+    # Inside r_-: each side from the singularity's light cone up to the widest circle, r_-.
+    size = 2 * rm
+    join = ("at $r = 0.416\\,L$ the surface lies level, in flat space nearer the horizon and in Minkowski space "
+            "nearer the singularity")
+    edge = "the sheet runs on along a light cone to the singularity $r = 0$"
+    # Toward the tip 1/f falls as r^2, so a chord keeps its proper length only while it is short
+    # against r itself: the profile is taken through radii in the ratio RNADS_KNOTS.
+    knots = tip * RNADS_KNOTS ** np.arange(1, int(math.log(level_in / tip) / math.log(RNADS_KNOTS)) + 1)
+    lo = Piece("inside", "sheet", sl, level_in, rm, 0.0, 1,
+               (("join", join), ("join", "the inner horizon $r = r_-$, the widest circle, where the slice runs on "
+                                         "into the other region inside $r_-$")),
+               [(level_in, "space", None), (rm, "horizon", "$r = r_-$")], size)
+    lo.z = lo.z - lo.z[-1]
+    cone = Piece("inside_minkowski", "sheet", msl, tip, level_in, 0.0, 1, (("edge", edge), ("join", join)),
+                 [(0.1, "r", None), (0.25, "r", None)], size, digits=RNADS_DIGITS, knots=knots)
+    cone.z = cone.z - cone.z[-1] + lo.z[0]
+    hi = Piece("other_inside", "sheet2", sl, level_in, rm, -lo.z[0], -1,
+               (("join", join), ("join", "the inner horizon $r = r_-$")), [(level_in, "space", None)], size)
+    hi_cone = Piece("other_inside_minkowski", "sheet2", msl, tip, level_in, 0.0, -1, (("edge", edge), ("join", join)),
+                    [(0.1, "r2", None), (0.25, "r2", None)], size, digits=RNADS_DIGITS, knots=knots)
+    hi_cone.z = hi_cone.z - hi_cone.z[-1] + hi.z[0]
+    for p in (lo, cone, hi, hi_cone):
+        space = "in Minkowski space" if p.sl.lorentz else "in flat space"
+        ck.isometry(f"{name} inside, {p.id} {space}", p)
+        ck.radius(f"{name} inside, {p.id}, rho = r {space}", p, lambda r: r, size)
+    ck.join(f"{name} inside, the two sides at r_-", lo, rm, hi, rm)
+    for a, b in ((cone, lo), (hi_cone, hi)):
+        ck.join(f"{name} inside, {a.id} in Minkowski space and {b.id} in flat space at r = 0.4163", a, level_in, b, level_in)
+        as_written(a, b, "r = 0.4163")
+    # Toward the singularity the profile's slope dZ/dr = sqrt(1 - 1/f) closes on 1, a light cone's.
+    slope = float(np.sqrt(-msl.defect_at(np.array([tip]))[0]))
+    ck.add(f"{name} inside: at r = L/100 the slope dZ/dr is within 1e-4 of a light cone's", abs(slope - 1.0), 1e-4)
+    inside = Surface([cone, lo, hi, hi_cone])
+    fig = figure_of([inside], {"sheet": "cover"}, size, Camera(-90, 22))
+    ring_label(fig, [0, 0, 0], rm, 0.0, "$r = r_-$", dx=10)
+    ring_label(fig, [0, 0, 0], *lo.at(level_in), "$0.416\\,L$", side=-1)
+    fig.legend("fill", "cover", "the region $r < r_-$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $0.1\\,L$ and $0.25\\,L$")
+    fig.legend("line", "r2", "the same radii in the other region inside $r_-$")
+    fig.legend("line", "horizon", "the widest circle $r = r_-$, where the slice crosses the inner horizon")
+    fig.legend("line", "space", "$r = 0.416\\,L$, where $g_{rr} = 1$: flat space outside, Minkowski space inside")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("inside", "Inside $r_-$", "$L$", [inside], fig.done(), stops=[not_space],
+                      settings=RNADS_SETTINGS + " Every length along the surface nearer the singularity than "
+                                                "$r = 0.416\\,L$ is measured with $dX^2 + dY^2 - dZ^2$."))
+    return views
+
+
 def global_monopole(ck, src):
     """Two moments at Delta = 0.19, so that sqrt(1 - Delta) = 0.9. The monopole with no mass at
     its centre, the Barriola-Vilenkin chart's equator at t = 0: g_rr = 1 and g_phiphi =
@@ -8982,6 +9130,7 @@ DRAWN = {
     "einstein_static": einstein_static,
     "schwarzschild_de_sitter": schwarzschild_de_sitter,
     "schwarzschild_ads": schwarzschild_ads,
+    "reissner_nordstrom_ads": reissner_nordstrom_ads,
     "topological_black_hole": topological_black_hole,
     "siklos": siklos,
     "hayward": hayward,
@@ -9516,6 +9665,31 @@ CAPTIONS = {
         "In Minkowski space the horizon is one sheet of the hyperboloid $(Z + L)^2 - X^2 - Y^2 = L^2$, the "
         "hyperbolic plane of curvature $-1/L^2$, and it nears the light cone, dashed, without reaching it. A "
         "horizon of genus two or more is a polygon cut from this sheet with its edges joined in pairs.",
+    ],
+    ("reissner_nordstrom_ads", "outside"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the charged black hole in anti-de Sitter space at the moment "
+        "$t = 0$ ($r_s = 27L/8$, $r_q^2 = 11L^2/8$, $r_+ = L$) through both of its exteriors, joined at the "
+        "bifurcation sphere $r = r_+$, in flat space out to the circle where $g_{rr} = 1$ and in three "
+        "dimensional Minkowski space ($dX^2 + dY^2 - dZ^2$) beyond it, every distance along the surface the "
+        "metric distance.",
+        "On the slice the metric is $dr^2/f + r^2d\\phi^2$ with $f = 1 - r_s/r + r_q^2/r^2 + r^2/L^2$. From the "
+        "throat out to $r = 1.33\\,L$, $f < 1$ and the surface climbs at $dz/dr = \\sqrt{1/f - 1}$, from vertical "
+        "at the throat to level where $f = 1$. Beyond that circle the circles grow faster than the distance out "
+        "to them, as on the static slice of anti-de Sitter space, and the surface climbs at "
+        "$dZ/dr = \\sqrt{1 - 1/f}$ from level toward a light cone of Minkowski space. Both parts lie level at the "
+        "circle, so they meet there with one tangent plane.",
+    ],
+    ("reissner_nordstrom_ads", "inside"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the same black hole at one moment of $t$ inside its inner "
+        "horizon, where $r$ is again a distance and $t$ a time, through the inner horizon's bifurcation sphere "
+        "$r = r_-$, its widest circle, into a second region inside $r_-$, the same surface turned over, every "
+        "distance along the surface the metric distance.",
+        "Moving in from $r_-$, $g_{rr}$ falls to $1$ at $r = 0.416\\,L$, where the surface in flat space lies "
+        "level. Nearer the singularity the charge makes $f = 1 - r_s/r + r_q^2/r^2 + r^2/L^2$ greater than $1$, "
+        "as the term $r^2/L^2$ does far outside, and the "
+        "surface runs on in Minkowski space at $dZ/dr = \\sqrt{1 - 1/f}$. As $r \\to 0$, $f$ grows as "
+        "$r_q^2/r^2$ and the slope tends to $1$, so each side closes on the singularity along a light cone of "
+        "Minkowski space, a proper distance $0.13\\,L$ from the level circle.",
     ],
     ("reissner_nordstrom_de_sitter", "between"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the lukewarm black hole at the moment $t = 0$ of its static "

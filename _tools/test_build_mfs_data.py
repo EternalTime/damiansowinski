@@ -4810,6 +4810,18 @@ class Slices(unittest.TestCase):
                 return (0.25 * math.log(abs(1 - r)) - 0.125 * math.log((r * r + r + 2) / 2)
                         + 5 / (4 * w) * (math.atan((2 * r + 1) / w) - math.atan(1 / w)))
             return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
+        if key.startswith("reissner_nordstrom_ads/eddington_finkelstein"):
+            # At L = 1, r_s = 27/8 and r_q^2 = 11/8, r^2 f = (r - 1)(r - 1/2)(r^2 + 3r/2 + 11/4), and
+            # r_* = Re sum_i ln(1 - r/r_i)/f'(r_i) over the four roots, with f' = r_s/r^2 - 2r_q^2/r^3 + 2r, which
+            # vanishes at r = 0. Static t = 0 is v = r_* and u = -r_*, outside r_+ and inside r_-, drawn against
+            # v - r and u + r or against v and u.
+            sign = 1 if "ingoing" in key else -1
+            finkelstein = key.endswith("finkelstein")
+            roots = (1, 0.5, complex(-0.75, math.sqrt(35) / 4), complex(-0.75, -math.sqrt(35) / 4))
+
+            def rstar(r):
+                return sum(cmath.log(1 - r / z) / (27 / 8 / z ** 2 - 11 / 4 / z ** 3 + 2 * z) for z in roots).real
+            return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
         if key.startswith("hayward/eddington_finkelstein"):
             # At m = 1 and ell = 12/(7 sqrt 7), 1/F = 1 + 2r^2/((r - 12/7)(r - 6/7)(r + 4/7)), and
             # r_* = r + 3 ln|1 - 7r/12| - (6/5) ln|1 - 7r/6| + (1/5) ln(1 + 7r/4), which vanishes at r = 0.
@@ -5467,7 +5479,7 @@ class Slices(unittest.TestCase):
                         for X, T in points:
                             tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
                             self.assertLess(abs(tp * tq - want), 2e-3 * (1 + tp * tp) * (1 + tq * tq), f"{where} at {(X, T)}")
-                    elif metric_id == "bardeen":
+                    elif metric_id in ("bardeen", "reissner_nordstrom_ads"):
                         # Inside r- the moment runs through the inner bifurcation sphere, at T = pi, and
                         # outside r+ through the outer one, at T = 0, or a period up, at T = 2 pi, on the
                         # outgoing chart's view, whose exterior is the one above the white hole.

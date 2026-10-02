@@ -5927,6 +5927,128 @@ def tbh_negative(ck, src):
     return views
 
 
+RNADS = {"r_s": "27/8", "r_q": "sqrt(22)/4", "L": 1}
+RNADS_EF = (("ingoing", "eddington_finkelstein_ingoing", "v"), ("outgoing", "eddington_finkelstein_outgoing", "u"))
+
+
+def reissner_nordstrom_ads(ck, src):
+    """The charged black hole in anti-de Sitter space at L = 1, r_s = 27/8 and r_q^2 = 11/8, where
+    r^2 f = (r - 1)(r - 1/2)(r^2 + 3r/2 + 11/4): an event horizon r_+ = 1 and an inner horizon
+    r_- = 1/2, with k_+ = 21/16 and k_- = 15/4, and a complex pair of roots. f grows as r^2, so
+    1/f is a sum of simple poles alone, and CarterAdSTower's r* = Re sum_i ln(1 - r/r_i)/f'(r_i)
+    vanishes at r = 0, which puts the singularity on the vertical lines X = +-pi/2 beside each
+    region inside r_-, and tends to R = 0.4052 as r -> infinity, which puts the conformal
+    boundary on the timelike curve (-G(t - R), G(-t - R)) beside each exterior. The cells are
+    those of Reissner-Nordstrom's tower, with the boundary where that tower has its null
+    infinity, the diagram Brecher, He and Rozali draw in five dimensions with the boundaries
+    straight and the singularities bowed (JHEP 04 (2005) 004, figure 2). The ingoing chart
+    covers an exterior, the black hole and the region inside r_- to its left, and the outgoing
+    chart is its time reverse."""
+    name = "Reissner-Nordstrom-anti-de Sitter"
+    st = Plane(src, "reissner_nordstrom_ads", "static", ("t", "r"), EQUATOR, RNADS)
+    assert st.g[0, 1] == 0 and sp.simplify(st.g[0, 0] * st.g[1, 1] + 1) == 0
+    T = CarterAdSTower(st)
+    rp, rm = T.rf
+    far = T.far[1]
+    ck.limit(f"{name}: the horizons are the positive roots of the published g^rr, r_+ = L and r_- = L/2",
+             [rp, rm], [1.0, 0.5], 1e-12)
+    ck.limit(f"{name}: the surface gravities are 21/(16 L) and 15/(4 L)", T.kappa, [21 / 16, 15 / 4], 1e-12)
+    tower_checks(ck, f"{name} static", st, T, 0.01, 4)
+    rr = np.array([0.1, 0.3, 0.45, 0.6, 0.9, 1.5, 3.0, 30.0])
+    ck.limit(f"{name}: dr*/dr = 1/f", (T.rstar(rr + 1e-6) - T.rstar(rr - 1e-6)) / 2e-6 * T.f(rr), np.ones(8), 1e-6)
+    ck.limit(f"{name}: r* is the tortoise coordinate the other diagrams draw with", T.rstar(rr), slices.rnads_rstar(rr), 1e-12)
+    ck.limit(f"{name}: r* vanishes at r = 0", [float(T.rstar(0.0))], [0], 1e-12)
+    ck.limit(f"{name}: r* tends to R = 0.4052 L as r -> infinity", [float(T.rstar(1e12)), far], [far, 0.4052], 1e-4)
+
+    def ingoing(w, r):
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        gu = T.G(w - 2 * T.rstar(r))
+        return np.where(r > rp, -gu, np.where(r > rm, gu, PI - gu)), T.G(-w) + 0 * r
+
+    def outgoing(u, r):
+        return reflect(*ingoing(-np.asarray(u, dtype=float), r), True)
+    ein = Plane(src, "reissner_nordstrom_ads", "eddington_finkelstein_ingoing", ("v", "r"), EQUATOR, RNADS)
+    eout = Plane(src, "reissner_nordstrom_ads", "eddington_finkelstein_outgoing", ("u", "r"), EQUATOR, RNADS)
+    for label, plane, fmap, sign in (("ingoing", ein, ingoing, 1), ("outgoing", eout, outgoing, -1)):
+        for lo, hi in ((0.01, rm), (rm, rp), (rp, 30)):
+            ck.chart(f"{name}, {label} Eddington-Finkelstein, {lo:.2f} < r < {hi:.2f}", plane, fmap,
+                     ck.uniform(-3, 3), ck.uniform(lo + 1e-3, hi - 1e-3),
+                     lambda w, r, s=sign: (1, -s * (1 + np.abs(T.f(r)))))
+    ck.limit(f"{name}: the ingoing and static coordinates put one event at one point",
+             np.concatenate([ingoing(0.4 + T.rstar(r), r) for r in (0.75, 2.0)]),
+             np.concatenate([T.pq(c, 0.4, r) for c, r in (("II", 0.75), ("I", 2.0))]), 1e-12)
+    ck.limit(f"{name}: the outgoing and static coordinates put one event at one point, a period up the tower",
+             np.array(outgoing(0.4 - T.rstar(2.0), 2.0), dtype=float),
+             np.array(reflect(*T.pq("I", -0.4, 2.0), True), dtype=float), 1e-12)
+    t3 = np.array([-1.0, 0, 1])
+    ck.limit(f"{name}: r -> infinity lands on (-G(t - R), G(-t - R))",
+             np.concatenate(T.pq("I", t3, np.full(3, 1e12))), np.concatenate([-T.G(t3 - far), T.G(-t3 - far)]), 1e-6)
+    p, q = T.pq("III", np.array([-2.0, 0, 2]), np.full(3, 1e-12))
+    ck.limit(f"{name}: r -> 0 lands on the vertical line X = pi/2", q - p, [HALF] * 3, 1e-9)
+    K = st.kretschmann
+    ck.diverges(f"{name}: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+    ck.finite(f"{name}: the Kretschmann scalar is finite at both horizons", K(np.zeros(2), np.array([rm, rp])))
+
+    D = HyperbolicHoleDrawing(T, far)
+    box = [-HALF - 0.85, HALF + 0.85, -PI - 0.1, 3 * PI + 0.1]
+    times = [c / T.kp for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+    rI, rII, rIII = (1.05, 1.2, 1.5, 3.0), (0.6, 0.75, 0.9), (0.1, 0.25, 0.4)
+    grids = {"I": (rI, times), "II": (rII, times), "IV": (rII, times), "III": (rIII, times)}
+    outside, = slices.moments("reissner_nordstrom_ads", "outside")
+    inside, = slices.moments("reissner_nordstrom_ads", "inside")
+    out_line = through_bifurcation(T, ("I'", "I"), *outside.reach("static", "r")[::-1])
+    in_line = through_bifurcation(T, ("III'", "III"), *inside.reach("static", "r"))
+
+    def dressed(v, cover):
+        D.draw(v, grids, cover=cover)
+        v.label_xt([0, HALF + 0.1], "black hole", cls="region")
+        v.label_xt([0, 1.5 * PI - 0.1], "white hole", cls="region")
+        v.label_xt([0, -HALF], "white hole", cls="region")
+        v.label_xt([0, 2.5 * PI], "black hole", cls="region")
+        for sx in (1, -1):
+            for base in (0, 2 * PI):
+                v.label_xt([sx * 0.9, base + 0.3], "exterior", cls="region")
+                v.label_xt([sx * 1.5, base], "$r \\to \\infty$", "l" if sx > 0 else "r", "small", dx=6 * sx)
+            v.label_xt([sx * 0.95, PI + 0.3], "$r < r_-$", cls="region")
+            v.label_xt([sx * HALF, PI + 0.7], "$r = 0$", "l" if sx > 0 else "r", dx=8 * sx)
+        v.label_xt([Q4, Q4], "$r_+$", "tl", "small", dx=5, dy=1)
+        v.label_xt([Q4, 3 * Q4], "$r_-$", "bl", "small", dx=5, dy=-1)
+        v.set(fade={"top": 0.9, "bottom": 0.9},
+              settings="$r_s = 27L/8$ and $r_q^2 = 11L^2/8$, so that $r_+ = L$ and $r_- = L/2$, with "
+                       "$\\kappa_+ = 21/(16L)$.")
+        v.legend("horizon", "the horizons $r_+ = L$ and $r_- = L/2$")
+        v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges, timelike")
+        v.legend("boundary", "the conformal boundary $r \\to \\infty$, timelike")
+        v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, "
+                      "in units of $L$")
+        v.legend("t", "$ct$ constant")
+
+    v = View("static", "Static Spherical", box, "static")
+    dressed(v, [("I", False)])
+    v.legend("cover", "the exterior $r > r_+$, which $t$ and $r$ cover")
+    v.slice(outside, [out_line])
+    v.slice(inside, [in_line])
+    views = [v]
+    for (vid, system, null), fmap, cover, text in zip(
+            RNADS_EF, (ingoing, outgoing),
+            ([("I", False), ("II", False), ("III'", False)], [("I", True), ("II", True), ("III'", False)]),
+            ("an exterior, the black hole, and a region inside $r_-$, which $v$ and $r > 0$ cover",
+             "a region inside $r_-$, the white hole, and an exterior, which $u$ and $r > 0$ cover")):
+        v = View(vid, ("Ingoing" if vid == "ingoing" else "Outgoing") + " Eddington-Finkelstein", box, system)
+        dressed(v, cover)
+        for lo_, hi_ in ((0, rm), (rm, rp), (rp, np.inf)):
+            rr = spread(lo_, hi_, 600, 16)
+            for w in (-1.6, -0.6, 0.6, 1.6):
+                v.curve("null", *fmap(np.full_like(rr, w), rr))
+        v.legend("cover", text)
+        v.legend("null", f"${null}$ constant, an {vid} light ray")
+        # The outgoing chart's exterior is the one a period up the tower, and its moment t = 0 with it.
+        v.slice(outside, [reflect(*out_line, True) if vid == "outgoing" else out_line])
+        v.slice(inside, [in_line])
+        views.append(v)
+    return views
+
+
 def topological_black_hole(ck, src):
     """Three spacetimes of one line element, f = k - mu/r + r^2/L^2: the flat hole, the hyperbolic
     hole without mass and the hyperbolic hole of negative mass, each drawn in every chart that
@@ -16467,7 +16589,7 @@ DRAWN = {
     "point_particle_2plus1": point_particle_2plus1,
     "interior_schwarzschild": interior_schwarzschild, "gravastar": gravastar, "frw": frw,
     "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "tov": tov,
-    "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "c_metric": c_metric,
+    "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "reissner_nordstrom_ads": reissner_nordstrom_ads, "c_metric": c_metric,
     "misner": misner, "milne": milne,
     "gott_time_machine": gott_time_machine,
     "wormhole_time_machine": wormhole_time_machine,
@@ -17360,6 +17482,31 @@ CAPTIONS = {
         "coordinates $u$ and $r$ on it, the time reverse of the ingoing ones. From $U = -e^{-\\kappa u}$ and "
         "$V = UV(r)/U$ they cover the exterior and the white hole, and their lines of constant $u$ are outgoing "
         "light rays, which leave $r = 0$, cross the horizon outward, and end on the conformal boundary.",
+    ],
+    ("reissner_nordstrom_ads", "static"): [
+        "The charged black hole in anti-de Sitter space ($r_s = 27L/8$, $r_q^2 = 11L^2/8$, so that $r_+ = L$ and "
+        "$r_- = L/2$), maximally extended, each point in the diagram a 2-sphere of radius $r$. Its tortoise "
+        "coordinate $r_*$, with $dr_*/dr = (1 - r_s/r + r_q^2/r^2 + r^2/L^2)^{-1}$ and $r_*(0) = 0$, tends to a "
+        "finite value $R = 0.405\\,L$ as $r \\to \\infty$. With $u, v = ct \\mp r_*$ and $\\kappa_+ = 21/(16L)$, "
+        "every region is drawn in $\\arctan e^{-\\kappa_+u}$ and $\\arctan e^{\\kappa_+v}$, which makes the drawing "
+        "smooth across $r_+$ and continuous across $r_-$.",
+        "The regions are those of Reissner and Nordström's tower: an exterior on each side, a black hole above "
+        "them, a region inside $r_-$ on each side of that with a timelike singularity $r = 0$ on a straight line, "
+        "and then a white hole and two more exteriors, repeated up and down. Each exterior ends on the "
+        "conformal boundary, a timelike curve, where Reissner and Nordström's ends on null infinity. The "
+        "coordinates $t$ and $r > r_+$ cover one exterior alone.",
+    ],
+    ("reissner_nordstrom_ads", "ingoing"): [
+        "The same tower ($r_+ = L$, $r_- = L/2$) with the ingoing Eddington-Finkelstein coordinates $v$ and $r$ "
+        "on it, each point in the diagram a 2-sphere of radius $r$. One chart covers an exterior, the black "
+        "hole, and a region inside $r_-$, and its lines of constant $v$ are ingoing light rays, which leave the "
+        "conformal boundary, cross $r_+$ and $r_-$ at 45°, and end at $r = 0$.",
+    ],
+    ("reissner_nordstrom_ads", "outgoing"): [
+        "The same tower ($r_+ = L$, $r_- = L/2$) with the outgoing Eddington-Finkelstein coordinates $u$ and $r$ "
+        "on it, each point in the diagram a 2-sphere of radius $r$. One chart covers a region inside $r_-$, "
+        "the white hole above it, and an exterior, and its lines of constant $u$ are outgoing light rays, which "
+        "leave $r = 0$, cross $r_-$ and $r_+$ at 45°, and end on the conformal boundary.",
     ],
     ("reissner_nordstrom_de_sitter", "static"): [
         "The charged black hole in de Sitter space, maximally extended, drawn for the lukewarm hole ($r_q = r_s/2$, $\\Lambda = 27/(64\\,r_s^2)$), each point in the diagram "

@@ -604,6 +604,16 @@ RNDS_STATIC = 1.2979848366419
 # which lies between 0 and 2/f wherever f > 0, since f < 1 + r_q^2/r^2; v - r alone is spacelike where f > 2.
 RNDS_TIME_IN = "v - r + atan(2*r)/2"
 RNDS_TIME_OUT = "u + r - atan(2*r)/2"
+# The charged black hole in anti-de Sitter space at L = 1, r_s = 27/8 and r_q^2 = 11/8, where
+# r^2 f = (r - 1)(r - 1/2)(r^2 + 3r/2 + 11/4): the horizons are r_+ = L and r_- = L/2, the first the
+# horizon Schwarzschild-anti-de Sitter is drawn with.
+RNADS = {"r_s": "27/8", "r_q": "sqrt(22)/4", "L": 1}
+# A time function of its Eddington-Finkelstein charts at every r > 0: v - h(r) with
+# h' = r^2/((r^2 + 1)(r^2 + 2)), which lies between 0 and 2/f wherever f > 0, since
+# f < 1 + r_q^2/r^2 + r^2 < (r^2 + 1)(r^2 + 2)/r^2; v - r alone is spacelike where f > 2, near the
+# singularity and far outside.
+RNADS_TIME_IN = "v + atan(r) - sqrt(2)*atan(r/sqrt(2))"
+RNADS_TIME_OUT = "u - atan(r) + sqrt(2)*atan(r/sqrt(2))"
 # Kerr-de Sitter at Kerr's spin and Kottler's cosmological constant, a = 0.45 r_s and
 # Lambda = 0.2/r_s^2, so that r_- = 0.279, r_+ = 0.785 and r_c = 3.232 r_s, and Kerr-anti-de Sitter
 # at r_s = 2 l and a = l/2 with l = sqrt(-3/Lambda) the unit, so that r_- = 0.137 and r_+ = 0.859 l.
@@ -1022,6 +1032,18 @@ DIAGRAMS = [
     Diagram("reissner_nordstrom_de_sitter", "cosmological", "plane", "$\\tau$ and $\\rho$", ("\\tau", "\\rho"),
             (0, 3, -2, 4), "$\\rho/r_s$", "$c\\tau/r_s$", {"r_s": 1, "H": "3/8"}, EQUATOR, tau="tau", areal=True,
             no_throat=True, singular_zero="2*H*tau*rho + r_s"),
+    Diagram("reissner_nordstrom_ads", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
+            "$r/L$", "$ct/L$", RNADS, EQUATOR, orient="ingoing", areal=True),
+    Diagram("reissner_nordstrom_ads", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
+            ("v", "r"), (0, 3, -3, 0), "$r/L$", "$(v - r)/L$", RNADS, EQUATOR,
+            to_display=FINKELSTEIN_IN, tau=RNADS_TIME_IN, areal=True),
+    Diagram("reissner_nordstrom_ads", "eddington_finkelstein_ingoing", "chart", "against $v$",
+            ("v", "r"), (0, 3, -2.5, 0.5), "$r/L$", "$v/L$", RNADS, EQUATOR, tau=RNADS_TIME_IN, areal=True),
+    Diagram("reissner_nordstrom_ads", "eddington_finkelstein_outgoing", "finkelstein", "against $u + r$",
+            ("u", "r"), (0, 3, 0, 3), "$r/L$", "$(u + r)/L$", RNADS, EQUATOR,
+            to_display=FINKELSTEIN_OUT, tau=RNADS_TIME_OUT, areal=True),
+    Diagram("reissner_nordstrom_ads", "eddington_finkelstein_outgoing", "chart", "against $u$",
+            ("u", "r"), (0, 3, -0.5, 2.5), "$r/L$", "$u/L$", RNADS, EQUATOR, tau=RNADS_TIME_OUT, areal=True),
     Diagram("tangherlini", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_h$", "$ct/r_h$", {"r_h": 1}, TANGHERLINI_FIVE, orient="ingoing", areal=True),
     Diagram("tangherlini", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
@@ -2501,6 +2523,49 @@ CAPTIONS = {
         "the white hole, as the outgoing Eddington-Finkelstein chart does. The line $\\tau = 0$ is the sphere "
         "$r = r_s/2$ inside the white hole, and below it the chart runs on through the inner horizon to the "
         "singularity $r = 0$ on $H\\tau\\rho = -r_s/2$, where the Kretschmann scalar diverges.",
+    ],
+    ("reissner_nordstrom_ads", "static", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $r_s = 27L/8$ and $r_q^2 = 11L^2/8$, "
+        "the same at every other angle by spherical symmetry. There $g^{rr} = 1 - r_s/r + r_q^2/r^2 + r^2/L^2$ "
+        "vanishes at the inner horizon $r_- = L/2$ and at the event horizon $r_+ = L$, and the cones close at "
+        "both, since $dt/dr = \\pm 1/g^{rr}$ diverges there. Far outside, $g^{rr}$ grows as $r^2/L^2$ and the "
+        "cones open toward the horizontal: a light ray runs from any radius to $r \\to \\infty$ in a finite time "
+        "$t$, as in anti-de Sitter space.",
+        "Between $r_-$ and $r_+$, $t$ is a spacelike coordinate, and the components alone do not fix which way is "
+        "future. We take it from the ingoing Eddington-Finkelstein chart, which makes that region the black hole, "
+        "where every cone points to smaller $r$. Inside $r_-$ the coordinate $t$ is a time again, the cones open "
+        "wide as $g^{rr}$ grows as $r_q^2/r^2$, and the singularity $r = 0$, where the Kretschmann scalar diverges, "
+        "is timelike.",
+    ],
+    ("reissner_nordstrom_ads", "eddington_finkelstein_ingoing", "finkelstein"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $r_s = 27L/8$ and $r_q^2 = 11L^2/8$ "
+        "with $v - r$ as the vertical axis, so that the ingoing rays, $v = $ const, run at 45°. The outgoing family "
+        "has $dv/dr = 2/g^{rr}$ with $g^{rr} = 1 - r_s/r + r_q^2/r^2 + r^2/L^2$, so it stands vertical at both "
+        "horizons: each horizon is an outgoing ray that stays where it is.",
+        "The chart crosses the event horizon $r_+ = L$ into the black hole, where both edges of every future cone "
+        "point to smaller $r$, and the inner horizon $r_- = L/2$ into the region about the singularity, where the "
+        "outgoing edge points to larger $r$ again. Far outside, and near $r = 0$, the outgoing edge leans toward "
+        "the ingoing one, since $dv/dr$ falls as $2L^2/r^2$ and as $2r^2/r_q^2$.",
+    ],
+    ("reissner_nordstrom_ads", "eddington_finkelstein_ingoing", "chart"): [
+        "The same plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The ingoing family is $v = $ const and runs horizontally here, since $v$ is itself a "
+        "null coordinate. The outgoing family turns vertical at both horizons and leans back toward smaller "
+        "$r$ between them.",
+    ],
+    ("reissner_nordstrom_ads", "eddington_finkelstein_outgoing", "finkelstein"): [
+        "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $r_s = 27L/8$ and $r_q^2 = 11L^2/8$ "
+        "with $u + r$ as the vertical axis, so that the outgoing rays, $u = $ const, run at 45°. The ingoing family "
+        "stands vertical at both horizons. Between $r_-$ and $r_+$ both edges of every future cone point to "
+        "larger $r$: this is the white hole, which nothing from outside can enter.",
+        "The chart is the time reverse of the ingoing one: its $g_{ur}$ is $-1$ where the ingoing chart's "
+        "$g_{vr}$ is $+1$.",
+    ],
+    ("reissner_nordstrom_ads", "eddington_finkelstein_outgoing", "chart"): [
+        "The same plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a "
+        "null coordinate. The ingoing family turns vertical at both horizons and leans toward larger $r$ "
+        "between them.",
     ],
     ("tangherlini", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$) in five dimensions, the same at every fixed angle by hyperspherical "
@@ -7568,6 +7633,10 @@ def _kt_every(time, x):
     return np.arange(len(x)) % 12 == 0
 
 
+def _rnads_away(x, r):
+    return (np.abs(r - 1) > 0.05) & (np.abs(r - 0.5) > 0.05) & (r > 0.05)
+
+
 def _sads_rstar(r):
     """Schwarzschild-anti-de Sitter's tortoise coordinate at r_s = 2 and L = 1, where 1/f =
     r/((r - 1)(r^2 + r + 2)): (1/4) ln|r - 1| - (1/8) ln(r^2 + r + 2) + (5/(4 sqrt 7)) arctan((2r + 1)/sqrt 7),
@@ -7893,6 +7962,12 @@ CLOSED_FORMS = {
     ("hayward", "eddington_finkelstein_outgoing", "finkelstein"):
         (lambda u, r: u + 2 * _hayward_rstar(r), lambda u, r: u, _hayward_away),
     **_tbh_closed(),
+    ("reissner_nordstrom_ads", "static", "radial"):
+        (lambda t, r: t + slices.rnads_rstar(r), lambda t, r: t - slices.rnads_rstar(r), _rnads_away),
+    ("reissner_nordstrom_ads", "eddington_finkelstein_ingoing", "finkelstein"):
+        (lambda v, r: v, lambda v, r: v - 2 * slices.rnads_rstar(r), _rnads_away),
+    ("reissner_nordstrom_ads", "eddington_finkelstein_outgoing", "finkelstein"):
+        (lambda u, r: u + 2 * slices.rnads_rstar(r), lambda u, r: u, _rnads_away),
     ("schwarzschild_de_sitter", "static", "radial"):
         (lambda t, r: t + _sds_rstar(r), lambda t, r: t - _sds_rstar(r), _sds_away),
     ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "finkelstein"):

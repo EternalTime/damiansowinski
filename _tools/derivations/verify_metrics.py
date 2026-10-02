@@ -897,6 +897,18 @@ DIMENSIONS = {
     ("reissner_nordstrom_de_sitter", "cosmological"): {
         "\\tau": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "H": "1/T",
     },
+    # The charged black hole in anti-de Sitter space keeps the three lengths of its parents: r_s,
+    # the charge radius r_q and anti-de Sitter's radius L. The Eddington-Finkelstein times
+    # u = ct - r_* and v = ct + r_* are lengths.
+    ("reissner_nordstrom_ads", "static"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L", "L": "L",
+    },
+    ("reissner_nordstrom_ads", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L", "L": "L",
+    },
+    ("reissner_nordstrom_ads", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L", "L": "L",
+    },
     # Visser's thin shell wormhole joins two Schwarzschild exteriors at the throat radius a, a
     # length beside r_s. Through the throat, ell = +-(r - a) is a length, |ell| carries what ell
     # carries and sgn(ell) none, and the delta at the throat an inverse length.
