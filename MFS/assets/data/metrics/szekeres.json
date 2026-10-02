@@ -64,6 +64,11 @@
       "id": "khan_penrose",
       "kind": "programme",
       "text": "Two impulsive gravitational waves colliding head on, from 1971 [khan1971]. Szekeres had given a solution for part of such a collision in 1970, and in 1972 found the general solution for two plane waves that are linearly polarised [szekeres1970, szekeres1972]."
+    },
+    {
+      "id": "datt_ruban_t_models",
+      "kind": "special_case",
+      "text": "The spherical members of the second class: dust on a tube of spheres that all share one radius, found by B. Datt in 1938 and by Vladimir Ruban in 1968 [datt1938, ruban1968, krasinski1999datt]."
     }
   ],
   "references": [
@@ -88,7 +93,10 @@
     "bell1974",
     "khan1971",
     "szekeres1970",
-    "szekeres1972"
+    "szekeres1972",
+    "datt1938",
+    "ruban1968",
+    "krasinski1999datt"
   ],
   "coordinates": [
     {

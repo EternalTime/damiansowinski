@@ -523,6 +523,20 @@ Schwarzschild's metric with a small constant $\lambda^2$ added to $-g_{tt}$, whi
 - chart Isotropic: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(\left(\dfrac{4r - r_s}{4r + r_s}\right)^2 + \lambda^2\right)c^2dt^2 + \left(1 + \dfrac{r_s}{4r}\right)^4\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Einstein-Rosen: coordinates $(t, u, \theta, \phi)$, $$ds^2 = -\left(\dfrac{u^2}{u^2 + r_s} + \lambda^2\right)c^2dt^2 + 4\left(u^2 + r_s\right)du^2 + \left(u^2 + r_s\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Datt-Ruban T-Models
+
+The spherical dust solution that Tolman and Bondi's family leaves out. Every sphere of dust has the same radius $b(t)$, each moment of time is a tube $\mathbb{R} \times S^2$, and the dust is free to differ from shell to shell along it. Cut at a shell and joined to Schwarzschild's vacuum, the tube has the same mass however much dust it holds.
+
+- id: `datt_ruban_t_models`
+- tags: dust, inhomogeneous, T-model, T-region, T-sphere, mass defect, Kantowski-Sachs, black hole interior, matched solution, curvature singularity, shell crossing, big bang, cosmology, comoving, time-dependent, spherically symmetric, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/datt_ruban_t_models.json
+- chart Comoving: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + a^2dr^2 + b^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Ruban's Parametric Time: coordinates $(\eta, r, \theta, \phi)$, $$ds^2 = r_s^2\sin^4(\eta/2)\left(-d\eta^2 + d\theta^2 + \sin^2\theta\,d\phi^2\right) + a^2dr^2$$
+- chart Areal Time: coordinates $(T, r, \theta, \phi)$, $$ds^2 = -\dfrac{dT^2}{\dfrac{r_s}{T} - 1} + a^2dr^2 + T^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Ruban's de Sitter T-Model: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + a^2dr^2 + \ell^2\cosh^2(ct/\ell)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Kruskal Exterior of a T-Sphere: coordinates $(U, V, \theta, \phi)$, $$ds^2 = -\dfrac{4r_s^3}{r}e^{-r/r_s}\,dU\,dV + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### de Sitter
 
 The maximally symmetric vacuum solution with constant positive curvature, driven by a positive cosmological constant. It models an exponentially expanding empty universe and describes both inflation and the far future of our cosmos.
