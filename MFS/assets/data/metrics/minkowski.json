@@ -238,6 +238,11 @@
       "id": "moving_mirror",
       "kind": "locally_same",
       "text": "Two dimensions of Minkowski space with a mirror for a left edge. Let the mirror accelerate and the empty space to its right fills with radiation, thermal if the mirror's world line closes on a light ray [fulling1976, davies1977]."
+    },
+    {
+      "id": "einstein_1912_static",
+      "kind": "generalisation",
+      "text": "Flat spacetime with a speed of light that varies from place to place, Einstein's static gravity of 1912. Its uniform field is Minkowski space in Rindler's coordinates [einstein1912]."
     }
   ],
   "references": [

@@ -408,6 +408,11 @@
       "id": "misner_zapolsky",
       "kind": "composite",
       "text": "A star of radiation with an infinite central density. Tolman's fifth and sixth solutions carry Schwarzschild's vacuum outside a surface at $r_b = 2r_s$ and at $r_b = \\frac{7}{3}r_s$ [tolman1939]."
+    },
+    {
+      "id": "einstein_1912_static",
+      "kind": "programme",
+      "text": "Einstein's own first field outside a body, three years before Schwarzschild's. Its space is flat and only its clocks feel the mass, so it bends light by half as much [einstein1911]."
     }
   ],
   "references": [

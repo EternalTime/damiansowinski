@@ -643,6 +643,19 @@ Albert Einstein's cosmology of 1917: dust spread uniformly through a round three
 - chart Areal: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + \dfrac{R^2\,dr^2}{R^2 - r^2} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Einstein's Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2 + \dfrac{\left(x\,dx + y\,dy + z\,dz\right)^2}{R^2 - x^2 - y^2 - z^2}$$
 
+### Einstein's Static Field of 1912
+
+Einstein's theory of static gravity from his Prague year: space stays flat and the speed of light varies from place to place, serving as the gravitational potential. Clocks slow near a mass as they do in general relativity, and light bends by half as much.
+
+- id: `einstein_1912_static`
+- tags: scalar gravity, alternative theory of gravity, variable speed of light, equivalence principle, light deflection, uniform field, static, stationary, four-dimensional, Lorentzian, idealized model, curvature singularity, asymptotically flat
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/einstein_1912_static.json
+- chart Static Field: coordinates $(t, x, y, z)$, $$ds^2 = -N^2c^2dt^2 + dx^2 + dy^2 + dz^2$$
+- chart Uniform Field: coordinates $(t, x, y, z)$, $$ds^2 = -\dfrac{a^2z^2}{c^4}c^2dt^2 + dx^2 + dy^2 + dz^2$$
+- chart Outside a Body, February: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{m}{r}\right)^2c^2dt^2 + dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Outside a Body, March: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{m}{2r}\right)^4c^2dt^2 + dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Einstein-Rosen Bridge
 
 The model of a particle that Albert Einstein and Nathan Rosen proposed in 1935: two identical sheets of space joined at a smallest sphere, the bridge. The neutral bridge is Schwarzschild's exterior taken twice and joined at $r = r_s$, and the charged bridge is Reissner and Nordström's metric with the sign of the electric term reversed, which needs no mass.

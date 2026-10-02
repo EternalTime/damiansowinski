@@ -782,6 +782,12 @@ DIMENSIONS = {
     ("nordstrom_scalar", "spherical"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L"},
     ("nordstrom_scalar", "uniform"): {"t": "T", "x": "L", "y": "L", "z": "L", "a": "L/T**2"},
     ("nordstrom_scalar", "dust"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "L": "L"},
+    # Einstein's speed of light of 1912 is c N, with N a pure number that is 1 far from every mass.
+    # The uniform field is an acceleration and a body the length m = GM/c^2.
+    ("einstein_1912_static", "static"): {"t": "T", "x": "L", "y": "L", "z": "L", "N": "1"},
+    ("einstein_1912_static", "uniform"): {"t": "T", "x": "L", "y": "L", "z": "L", "a": "L/T**2"},
+    ("einstein_1912_static", "february"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L"},
+    ("einstein_1912_static", "march"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L"},
     # The slices are flat space and the whole of the geometry is the flow field carried on them,
     # so its components are velocities and the chart components of the metric are powers of V/c.
     ("natario", "cartesian_flow"): {

@@ -10813,6 +10813,42 @@ def small_universes_horn(ck, src):
                          "unit of every length.")
 
 
+def einstein_1912_static(ck, src):
+    """The equator outside a body by Einstein's equation of March 1912 at one moment of t. The
+    metric is -N^2 c^2 dt^2 + dr^2 + r^2 dOmega^2, so the moment has g_rr = 1 and g_phiphi = r^2:
+    the circle through r has the radius r and lies the distance r from the centre, a flat plane,
+    as every moment of every field of the theory is. It is drawn from the sphere r = m/2, where N
+    vanishes, out to 6m. Flamm's paraboloid for the same mass, r_s = 2m, is drawn faintly over the
+    same circles from its throat r = 2m, where it meets the plane, to 6m, where it stands
+    2 sqrt(r_s (r - r_s)) = 4 sqrt(2) m above it."""
+    edge, top = 0.5, 6.0
+    size = 2 * top
+    sl = Slice(src, "einstein_1912_static", "march", "r", "\\phi", {"t": 0, **EQUATOR}, {"m": 1})
+    disc = Piece("sheet", "sheet", sl, edge, top, 0.0, 1,
+                 (("edge", "the sphere $r = m/2$, where $N = 0$"), ("edge", "the plane runs on, to $r \\to \\infty$")),
+                 [(r, "r", None) for r in (1.0, 2.0, 3.0, 4.0, 5.0, top)], size)
+    where = "Einstein 1912, outside a body at t = 0"
+    ck.plane(where, sl, np.linspace(0.51, 40, 400))
+    ck.isometry(where, disc)
+    ck.radius(f"{where}, rho = r", disc, lambda r: r, size)
+    ck.form(f"{where}, a plane", disc, lambda r: 0 * r, size)
+    outer = Slice(src, "schwarzschild", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 2})
+    flamm = Piece("flamm", "reference", outer, 2.0, top, 0.0, 1, (("join", None), ("edge", None)), [], size,
+                  reference=True)
+    ck.add("Einstein 1912: Flamm's paraboloid of the same mass stands 4 sqrt(2) m above the plane at 6m",
+           abs(float(flamm.z[-1] - flamm.z[0]) - 4 * math.sqrt(2)), 1e-6)
+    surface = Surface([disc, flamm])
+    fig = figure_of([surface], {"sheet": "cover"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *disc.at(2.0), "$r = 2m$")
+    ring_label(fig, [0, 0, 0], *disc.at(top), "$6m$")
+    fig.legend("fill", "cover", "the equator outside the body at $t = 0$, which $r$ and $\\phi$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1$, $2$, $3$, $4$, $5$, and $6\\,m$")
+    fig.legend("line", "reference", "Flamm's paraboloid of the same mass, over the same circles")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("equator", "The equator", "$m$", [surface], fig.done(),
+                 settings="$m = 1$, the unit of every length.")]
+
+
 def btz(ck, src):
     """The moment t = 0 of the hole without rotation, M = 1 and J = 0 at l = 1, as its conformal
     diagram's square draws it, through both exteriors as one surface. g_rr = 1/N^2 with N^2 =
@@ -14312,6 +14348,7 @@ DRAWN = {
     "krasnikov": krasnikov,
     "tippett_tsang": tippett_tsang,
     "nordstrom_scalar": nordstrom_scalar,
+    "einstein_1912_static": einstein_1912_static,
     "kopczynski_trautman": kopczynski_trautman,
     "ab_metrics": ab_metrics,
     "small_universes": small_universes,
@@ -16251,6 +16288,15 @@ CAPTIONS = {
         "bang, $ct = -L$, to its largest at $t = 0$ and falls back to zero at the crunch, $ct = L$. Gravity "
         "decelerates the expansion at the steady rate $d^2\\Phi/d(ct)^2 = -2/L^2$, so the dust turns round and "
         "falls back however fast it starts.",
+    ],
+    ("einstein_1912_static", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) outside a body at one moment of $t$ by Einstein's equation of "
+        "March 1912, drawn as a surface in flat space with every distance along it the metric distance. Space is "
+        "flat in this theory, so the surface is a plane: the circle through $r$ has the circumference $2\\pi r$ "
+        "and lies the distance $r$ from the centre.",
+        "The faint surface is Flamm's paraboloid, the equatorial plane around the same mass in general relativity, "
+        "which rises from its throat at $r = 2m$. Its curvature bends a passing ray by as much again as the "
+        "slowing of clocks does, and on the flat plane a ray bends by half of general relativity's angle.",
     ],
     ("anti_de_sitter", "hyperboloid"): [
         "The equatorial plane ($\\theta = \\pi/2$) of anti-de Sitter space at the moment $t = 0$ of its static chart, "
