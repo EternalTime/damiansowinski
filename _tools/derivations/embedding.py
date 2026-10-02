@@ -3437,6 +3437,80 @@ def kerr_taub_nut(ck, src):
                           f"$r_- = -m/4$, and $r_E = {ergo:.3f}\\,m$ is the radius of the ergosurface on the equator.")]
 
 
+# Brill's charged Taub-NUT as every one of its diagrams draws it. The black hole in units of m, at
+# l = 3m/4 and r_q = m, where Delta = (r - 7/4)(r - 1/4); and the wormhole with no mass, in units of
+# l, at r_q = 3l/2, where Delta = r^2 + 5/4 has no root.
+BRILL_HOLE = {"m": 1, "l": "3/4", "r_q": 1}
+BRILL_WORMHOLE = {"m": 0, "l": 1, "r_q": "3/2"}
+
+
+def brill_charged_taub_nut(ck, src):
+    """The equator of a slice of constant t, where g_tphi, which carries cos(theta), vanishes:
+    g_rr = Sigma/Delta and g_phiphi = Sigma, so rho = sqrt(r^2 + l^2) and
+    (dz/dr)^2 = Sigma/Delta - r^2/Sigma. The black hole, at m = 1, l = 3/4 and r_q = 1, has its
+    horizons at 7/4 and 1/4, and the slice outside r_+ runs through the bifurcation sphere into a
+    second exterior. The wormhole, at m = 0, l = 1 and r_q = 3/2, has no horizon: Delta = r^2 + 5/4,
+    the slice is one piece from r -> -infinity to r -> infinity, the same on both sides, and its
+    smallest circle is the throat r = 0, of radius l."""
+    name = "Brill's charged Taub-NUT"
+    sl = Slice(src, "brill_charged_taub_nut", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, BRILL_HOLE)
+    rp, rm = sl.horizons()
+    ck.add(f"{name}: the horizons are at 7m/4 and m/4", abs(rp - 1.75) + abs(rm - 0.25), 1e-11)
+    ck.stops(f"{name}, between the horizons", sl, np.linspace(rm, rp, 402)[1:-1])
+    top, radii = 8.0, (3.0, 4.0, 5.0, 6.0, 7.0)
+    size = 2 * float(sl.rho_at(top))
+    near, far = two_sheets(ck, f"{name}, the black hole", sl, rp, top, radii, size, [(rp, "horizon", "$r = r_+$")],
+                           (" of the outer horizon", ""))
+    ck.add(f"{name}: the throat's circumference radius is sqrt(r+^2 + l^2)",
+           abs(near.at(rp)[0] - math.sqrt(1.75 ** 2 + 0.75 ** 2)), 1e-6)
+    hole = Surface([near, far])
+    fig = figure_of([hole], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(rp), "$r = r_+$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(top), "$8\\,m$")
+    fig.legend("fill", "cover", "the exterior $r > r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $3$, $4$, $5$, $6$, $7$ and $8\\,m$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the outer horizon")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views = [view("equator", "The black hole", "$m$", [hole], fig.done(),
+                  settings="$m = 1$, the unit of every length, $l = 3m/4$, and $r_q = m$, so that $r_+ = 7m/4$ and "
+                           "$r_- = m/4$.",
+                  stops=["Between the horizons, $r_- < r < r_+$, lies Brill's universe, where $r$ is a time and a slice "
+                         "of constant $t$ is not a moment of space, so the surface ends at $r_+$."])]
+
+    sw = Slice(src, "brill_charged_taub_nut", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, BRILL_WORMHOLE)
+    ck.add(f"{name}: the wormhole has no horizon", float(len(sw.horizons())), 0.5)
+    reach = 5.0
+    wide = 2 * float(sw.rho_at(reach))
+    steps = (1.0, 2.0, 3.0, 4.0)
+
+    def slope(r):
+        return math.sqrt((r * r + 1) / (r * r + 1.25) - r * r / (r * r + 1))
+    depth = quad(slope, 0.0, reach, epsabs=1e-13, epsrel=1e-13)[0]
+    whole = Piece("whole", "sheet", sw, -reach, reach, -depth, 1,
+                  (("edge", "the side $r < 0$ runs on, flattening, to $r \\to -\\infty$"),
+                   ("edge", "the side $r > 0$ runs on, flattening, to $r \\to \\infty$")),
+                  [(-reach, "r", None)] + [(-r, "r", None) for r in reversed(steps)] + [(0.0, "throat", "$r = 0$")]
+                  + [(r, "r", None) for r in steps] + [(reach, "r", None)], wide)
+    ck.isometry(f"{name}, the wormhole through its throat", whole)
+    ck.radius(f"{name}: the wormhole's circles have the radius sqrt(r^2 + l^2)", whole, lambda r: np.sqrt(r * r + 1), wide)
+    ck.add(f"{name}: the wormhole's surface is the same on both sides of the throat",
+           abs(whole.at(reach)[1] + whole.at(-reach)[1]) + abs(whole.at(0.0)[1]), 1e-6)
+    wormhole = Surface([whole])
+    fig = figure_of([wormhole], {"sheet": "cover"}, wide)
+    ring_label(fig, [0, 0, 0], *whole.at(0.0), "$r = 0$", dx=14)
+    ring_label(fig, [0, 0, 0], *whole.at(2.0), "$2\\,l$")
+    ring_label(fig, [0, 0, 0], *whole.at(-2.0), "$-2\\,l$")
+    fig.legend("fill", "cover", "the whole slice, which $t$ and $r$ cover from one side to the other")
+    fig.legend("line", "r", "$r$ constant, at $\\pm l$, $\\pm 2l$, $\\pm 3l$, $\\pm 4l$ and $\\pm 5l$")
+    fig.legend("line", "throat", "the throat $r = 0$, the smallest circle, of radius $l$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("wormhole", "The wormhole", "$l$", [wormhole], fig.done(),
+                      settings="$l = 1$, the unit of every length, $m = 0$, and $r_q = 3l/2$, so that "
+                               "$\\Delta = r^2 + 5l^2/4$ has no root."))
+    return views
+
+
 # Kerr-de Sitter as every one of its diagrams draws it: with Lambda > 0 at Kerr's spin and Kottler's
 # cosmological constant, a = 0.45 r_s and Lambda = 0.2/r_s^2, and with Lambda < 0 at Hawking and
 # Page's r_s = 2 l with a = l/2, in units of l = sqrt(-3/Lambda).
@@ -15605,6 +15679,7 @@ DRAWN = {
     "kerr_newman": kerr_newman,
     "kerr_de_sitter": kerr_de_sitter,
     "kerr_taub_nut": kerr_taub_nut,
+    "brill_charged_taub_nut": brill_charged_taub_nut,
     "cosmic_string": cosmic_string,
     "point_particle_2plus1": point_particle_2plus1,
     "frw": frw,
@@ -16601,6 +16676,26 @@ CAPTIONS = {
         "The surface leaves the centre $r = 0$, where the Kretschmann scalar diverges, widens to the horizon "
         "$r = r_q$, where it stands vertical, and runs on through the bifurcation sphere into a second static "
         "region, the same surface turned over, which closes at a centre of its own.",
+    ],
+    ("brill_charged_taub_nut", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the black hole at one moment of $t$ ($l = 3m/4$, $r_q = m$), "
+        "drawn as a surface in flat space with every distance along it the metric distance. The NUT parameter "
+        "enters $g_{t\\phi}$ through $\\cos\\theta$, which vanishes on the equator, so the slice there is a surface "
+        "of revolution with $g_{rr} = \\Sigma/\\Delta$ and circles of circumference $2\\pi\\sqrt{r^2 + l^2}$. It "
+        "stands vertical at the outer horizon $r_+ = 7m/4$, the bifurcation sphere, and runs through it into a "
+        "second exterior.",
+        "A charge of $r_q = m$ with no twist is the extremal black hole of Reissner and Nordström, whose throat is "
+        "infinitely long. The twist keeps the horizons apart, at $r_\\pm = m \\pm l$, and the throat is a circle of "
+        "radius $\\sqrt{r_+^2 + l^2}$ a finite distance in.",
+    ],
+    ("brill_charged_taub_nut", "wormhole"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the wormhole at one moment of $t$ ($m = 0$, $r_q = 3l/2$), "
+        "drawn as a surface in flat space with every distance along it the metric distance. With "
+        "$r_q^2 > m^2 + l^2$ the function $\\Delta$ has no root, so no horizon cuts the slice, and $r$ runs from "
+        "$-\\infty$ on one side to $\\infty$ on the other [clement2016].",
+        "The circle at $r$ has circumference $2\\pi\\sqrt{r^2 + l^2}$, smallest at the throat $r = 0$, where the "
+        "surface stands vertical and the sphere has area $4\\pi l^2$. With no mass the two sides are mirror "
+        "images. A mass makes them differ, since $r \\to -r$ changes the sign of $m$ [clement2016].",
     ],
     ("kerr_taub_nut", "equator"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Kerr-Taub-NUT black hole at one moment of Boyer-Lindquist $t$ "

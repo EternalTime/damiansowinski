@@ -17,8 +17,8 @@ rp3_geon, kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kas
 moving_mirror, gravitational_instantons, small_universes, misner_zapolsky, distorted_schwarzschild,
 cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_bodies,
 tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
-string_bh_three_four_charges, btz_multi_holes_wormholes and three_brane_throat, and Godel's
-cylindrical chart.
+string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, brill_charged_taub_nut
+and bach_weyl_ring, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -10337,6 +10337,287 @@ def kerr_taub_nut_check(chart, system):
 
 
 CHARTS["kerr_taub_nut"] = [lambda s=s: kerr_taub_nut(s) for s in KTN_CHARTS]
+
+
+# -- Brill's charged Taub-NUT ----------------------------------------------------------
+
+BRILL_CHARTS = ["spherical", "one_string", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing", "taub"]
+BRILL_NAMES = ["m", "l", "r_q", "\\Sigma = r^2 + l^2", "\\Delta = r^2 - 2mr - l^2 + r_q^2"]
+BRILL_TAUB_NAMES = ["m", "l", "r_q", "\\Sigma = \\tau^2 + l^2", "U = l^2 - r_q^2 + 2m\\tau - \\tau^2"]
+BRILL_SPHERE = "\\Sigma\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+BRILL_HORIZONS = ("\\Delta = 0 \\;\\text{(the horizons } r_\\pm = m \\pm \\sqrt{m^2 + l^2 - r_q^2}\\text{, present for } "
+                  "r_q^2 \\le m^2 + l^2\\text{)}")
+
+
+class BrillForms:
+    """How a value of Brill's charged Taub-NUT is written: in the two names its chart defines.
+
+    The checker hands every value back as a rational function of the radius, m, l, r_q,
+    sin(theta) and cos(theta). It is factored with the even powers of the sine written in the
+    cosine, each factor that is a multiple of a name's polynomial is written by the name, the
+    factor 1 - cos^2 is written sin^2, and any other sum is left in whichever of the cosine and the
+    sine gives it fewer terms. Such a sum is also tried with the mass or the charge written out
+    by the second name, as 2mr = r^2 - l^2 + r_q^2 - Delta, and the even powers of the radius by
+    the first, r^2 = Sigma - l^2, and takes the form with the fewest terms, so that
+    r^4 + 6l^2r^2 - 8ml^2r - 3l^4 + 4l^2r_q^2 is written Sigma^2 + 4l^2 Delta."""
+
+    def __init__(self, reader, radius, names):
+        self.x, self.theta = reader.symbol[radius], reader.symbol["\\theta"]
+        self.m, self.l, self.q = (reader.parameters[k] for k in ("m", "l", "r_q"))
+        self.s, self.c = sp.sin(self.theta), sp.cos(self.theta)
+        self.C = sp.Symbol("BRILL_cos")
+        self.named = names
+        (self.first, _), (self.second, radial) = names
+        # The mass and the square of the charge, each solved from the second name's polynomial.
+        self.solved = [None] + [sp.solve(radial - self.second, unknown)[0] for unknown in (self.m, self.q ** 2)]
+
+    def regrouped(self, base):
+        """The sum in the fewest terms among its forms in the two names, with the number it is a
+        multiple of taken out in front, or None where none is shorter."""
+        x, l, C, s = self.x, self.l, self.C, self.s
+        best, count = None, len(sp.Add.make_args(base))
+        for solved, unknown in zip(self.solved, (None, self.m, self.q ** 2)):
+            form = base if solved is None else sp.expand(base.subs(unknown, solved))
+            if sp.fraction(sp.together(form))[1].has(x):
+                continue                                         # the radius does not divide out
+            for named in (False, True):
+                if named:
+                    form = sp.expand(form.replace(lambda p: p.is_Pow and p.base == x and p.exp.is_Integer and p.exp > 1,
+                                                  lambda p: x ** (int(p.exp) % 2) * (self.first - l ** 2) ** (int(p.exp) // 2)))
+                candidates = [form, self.in_sine(form)]
+                if sp.degree(form, C) == 2 and form.coeff(C, 1) == 0:
+                    # A cos^2 + B is (A + B) cos^2 + B sin^2
+                    A, B = form.coeff(C, 2), form.coeff(C, 0)
+                    candidates.append(sp.expand((A + B) * C ** 2) + sp.expand(B * s ** 2))
+                for candidate in candidates:
+                    terms = len(sp.Add.make_args(candidate))
+                    if terms < count:
+                        best, count = candidate, terms
+        return None if best is None else best.primitive()
+
+    def printer(self):
+        placeholders = [p for p, _ in self.named]
+        return {"lead": [self.first, self.second, self.x, self.c, self.s, self.m, self.l, self.q], "flip": False,
+                "overrides": {p: "\\Sigma" for p in placeholders if p.name == "Sigma"},
+                "factors": [self.m, self.l, self.q, self.x] + placeholders}
+
+    def in_cosine(self, e):
+        s = self.s
+        e = e.replace(lambda p: p.is_Pow and p.base == s and p.exp.is_Integer and p.exp > 1,
+                      lambda p: s ** (int(p.exp) % 2) * (1 - self.c ** 2) ** (int(p.exp) // 2))
+        return e.subs(self.c, self.C)
+
+    def in_sine(self, e):
+        C = self.C
+        return sp.expand(e.replace(lambda p: p.is_Pow and p.base == C and p.exp.is_Integer and p.exp > 1,
+                                   lambda p: C ** (int(p.exp) % 2) * (1 - self.s ** 2) ** (int(p.exp) // 2)))
+
+    def pretty(self, value):
+        C, s = self.C, self.s
+        out = sp.Integer(1)
+        powers = {}
+        # The generators are named in one order: left to choose, sympy orders them by the run's
+        # hashes, and under some orders one Weyl component of Brill's universe did not factor in
+        # twenty minutes, where under this order every chart prints in about ten seconds.
+        gens = [g for g in (self.x, C, s, self.m, self.l, self.q) if sp.together(value).has(g) or g is C]
+        for f in sp.Mul.make_args(sp.factor(self.in_cosine(sp.together(value)), *gens)):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            powers[base] = powers.get(base, 0) + k
+        # (cos + 1)(cos - 1) is -sin^2
+        if powers.get(C + 1, 0) == powers.get(C - 1, 0) != 0:
+            k = powers.pop(C + 1)
+            del powers[C - 1]
+            powers[s] = powers.get(s, 0) + 2 * k
+            out *= (-1) ** k
+        for base, k in powers.items():
+            if base.is_Add:
+                expanded = sp.expand(base)
+                if sp.expand(expanded - 1 + C ** 2) == 0:
+                    base = s ** 2
+                elif sp.expand(expanded + 1 - C ** 2) == 0:
+                    base, out = s ** 2, out * (-1) ** k
+                else:
+                    for placeholder, polynomial in self.named:
+                        # A multiple of the name's polynomial, told by one coefficient and one expansion.
+                        ratio = expanded.coeff(self.x, 2) / polynomial.coeff(self.x, 2)
+                        if ratio.is_Number and ratio != 0 and sp.expand(expanded - ratio * polynomial) == 0:
+                            base, out = placeholder, out * ratio ** k
+                            break
+                    else:
+                        other = self.regrouped(expanded)
+                        if other is not None:
+                            base, out = other[1], out * other[0] ** k
+            out *= base ** k
+        return out.subs(C, self.c)
+
+
+def brill_line(system, c):
+    """The line element of a chart, with c the text that stands before the differential of its
+    time: empty in the chart x^0 = ct, and c where the time is the named one."""
+    if system == "taub":
+        return ("ds^2 = -\\dfrac{\\Sigma}{U}d\\tau^2 + \\dfrac{4l^2U}{\\Sigma}\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2 + "
+                + BRILL_SPHERE)
+    form = {"spherical": "\\left(" + c + "dt + 2l\\cos\\theta\\,d\\phi\\right)",
+            "one_string": "\\left(" + c + "dt_N - 2l\\left(1 - \\cos\\theta\\right)d\\phi\\right)",
+            "eddington_finkelstein_ingoing": "\\left(dv - 2l\\left(1 - \\cos\\theta\\right)d\\phi\\right)",
+            "eddington_finkelstein_outgoing": "\\left(du - 2l\\left(1 - \\cos\\theta\\right)d\\phi\\right)"}[system]
+    if system.startswith("eddington"):
+        sign = "+" if system.endswith("ingoing") else "-"
+        return "ds^2 = -\\dfrac{\\Delta}{\\Sigma}" + form + "^2 " + sign + " 2\\,dr" + form + " + " + BRILL_SPHERE
+    return "ds^2 = -\\dfrac{\\Delta}{\\Sigma}" + form + "^2 + \\dfrac{\\Sigma}{\\Delta}dr^2 + " + BRILL_SPHERE
+
+
+def brill_charged_taub_nut(system):
+    """Taub-NUT with a charge, Brill's solution of 1964, in five charts: the form with a Misner
+    string on each half of the axis, which is the Taub-NUT page's with r_q^2 added to Delta; the
+    same with the time shifted by 2l phi, which leaves the northern half regular; the ingoing and
+    outgoing Eddington-Finkelstein charts of that second form, along the two principal null
+    congruences; and the region between the horizons as Brill found it, a closed universe on S^3
+    in the time tau = r and the Euler angle psi = ct/2l. brill_charged_taub_nut_check holds each to
+    the Einstein-Maxwell equations with the potential r_q r (dt + 2l cos(theta) dphi)/Sigma, the
+    first to the published Taub-NUT metric at r_q = 0, Reissner and Nordstrom's at l = 0 and Israel,
+    Wilson and Perjes's charged NUT space at r_q^2 = m^2 + l^2, and each after the first to being
+    the first pulled back. brill_charged_taub_nut.md beside this file is the derivation."""
+    time, name = {"spherical": ("t", "Spherical"), "one_string": ("t_N", "One Misner String"),
+                  "eddington_finkelstein_ingoing": ("v", "Ingoing Eddington-Finkelstein"),
+                  "eddington_finkelstein_outgoing": ("u", "Outgoing Eddington-Finkelstein"),
+                  "taub": ("\\tau", "Brill's Universe")}[system]
+    if system == "taub":
+        coords, parameters = ["\\tau", "\\psi", "\\theta", "\\phi"], BRILL_TAUB_NAMES
+        reader = vm.Reader(coords, parameters, ())
+        x = reader.symbol["\\tau"]
+        m, l, q = (reader.parameters[k] for k in ("m", "l", "r_q"))
+        forms = BrillForms(reader, "\\tau", [(sp.Symbol("Sigma", positive=True), x ** 2 + l ** 2),
+                                             (sp.Symbol("U"), sp.expand(l ** 2 - q ** 2 + 2 * m * x - x ** 2))])
+        domains = ["\\tau \\in \\left(m - \\sqrt{m^2 + l^2 - r_q^2},\\, m + \\sqrt{m^2 + l^2 - r_q^2}\\right)", "\\psi \\in [0, 4\\pi)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                   "U = 0 \\;\\text{(the horizons } \\tau_\\pm = m \\pm \\sqrt{m^2 + l^2 - r_q^2}\\text{)}"]
+        radius = "\\tau"
+    else:
+        coords, parameters = [time, "r", "\\theta", "\\phi"], BRILL_NAMES
+        reader = vm.Reader(coords, parameters, ())
+        x = reader.symbol["r"]
+        m, l, q = (reader.parameters[k] for k in ("m", "l", "r_q"))
+        forms = BrillForms(reader, "r", [(sp.Symbol("Sigma", positive=True), x ** 2 + l ** 2),
+                                         (sp.Symbol("Delta"), sp.expand(x ** 2 - 2 * m * x - l ** 2 + q ** 2))])
+        polar, string = (("\\theta \\in (0, \\pi)", "\\theta = 0,\\, \\pi \\;\\text{(the Misner strings)}") if system == "spherical"
+                         else ("\\theta \\in [0, \\pi)", "\\theta = \\pi \\;\\text{(the Misner string)}"))
+        # A chart in t or t_N ends on the outer horizon where there is one; the null charts run through.
+        radial = (["r \\in (-\\infty, \\infty)"] if system.startswith("eddington") else
+                  ["r \\in \\left(m + \\sqrt{m^2 + l^2 - r_q^2},\\, \\infty\\right) \\;\\text{for}\\; r_q^2 \\le m^2 + l^2",
+                   "r \\in (-\\infty, \\infty) \\;\\text{for}\\; r_q^2 > m^2 + l^2"])
+        domains = [time + " \\in (-\\infty, \\infty)"] + radial + [polar, "\\phi \\in [0, 2\\pi)", BRILL_HORIZONS, string]
+        radius = "r"
+    # Clement, Gal'tsov and Guenouche's (2.6): the square of the Ricci tensor and the square of the Weyl tensor.
+    x2, x4, x6 = (radius + "^" + str(k) for k in (2, 4, 6))
+    kretschmann = ("\\dfrac{8r_q^4}{\\Sigma^4} + \\dfrac{48\\left(\\left(m^2 - l^2\\right)\\left(" + x6 + " - 15l^2" + x4
+                   + " + 15l^4" + x2 + " - l^6\\right) - 2m" + radius + "\\left(\\left(r_q^2 - 6l^2\\right)" + x4
+                   + " - 10l^2\\left(r_q^2 - 2l^2\\right)" + x2 + " + l^4\\left(5r_q^2 - 6l^2\\right)\\right)"
+                   " + r_q^2\\left(\\left(r_q^2 - 10l^2\\right)" + x4 + " - 2l^2\\left(3r_q^2 - 10l^2\\right)" + x2
+                   + " + l^4\\left(r_q^2 - 2l^2\\right)\\right)\\right)}{\\Sigma^6}")
+    return {
+        "metric_id": "brill_charged_taub_nut",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": brill_line(system, "c\\," if time in ("t", "t_N") else "")},
+        "chart_line_element": brill_line(system, ""),
+        "printer": forms.printer(),
+        "pretty": forms.pretty,
+        "check": lambda chart: brill_charged_taub_nut_check(chart, system),
+        "ricci_scalar": "0",
+        "kretschmann": kretschmann,
+    }
+
+
+def brill_charged_taub_nut_jacobian(chart, system):
+    """d(the spherical chart's coordinate)/d(the chart's), in the chart x^0 = ct of both."""
+    l = chart.reader.parameters["l"]
+    if system == "one_string":
+        # c t = c t_N - 2 l phi
+        return sp.Matrix([[1, 0, 0, -2 * l], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]])
+    if system == "taub":
+        # r = tau and c t = 2 l psi
+        return sp.Matrix([[0, 2 * l, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]])
+    # dv = c dt_N + Sigma dr/Delta, and its mirror for u, with c t_N = c t + 2 l phi
+    r = chart.symbols[1]
+    m, q = chart.reader.parameters["m"], chart.reader.parameters["r_q"]
+    sign = 1 if system.endswith("ingoing") else -1
+    return sp.Matrix([[1, -sign * (r ** 2 + l ** 2) / (r ** 2 - 2 * m * r - l ** 2 + q ** 2), 0, -2 * l], [0, 1, 0, 0],
+                      [0, 0, 1, 0], [0, 0, 0, 1]])
+
+
+def brill_published(metric_id, published_id, chart):
+    """A published chart's metric in t, r, theta and phi, with the spherical chart's symbols for its coordinates."""
+    entry = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                 if c["id"] == published_id)
+    reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+    values = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+    matrix = sp.Matrix(4, 4, lambda i, j: reader(values.get((entry["coords"][i], entry["coords"][j]), "0")))
+    return reader, matrix.subs(dict(zip([reader.symbol[x] for x in entry["coords"]], chart.symbols)))
+
+
+def brill_charged_taub_nut_check(chart, system):
+    geo, g, gi, X = chart.geo, chart.geo.g, chart.geo.ginv, chart.symbols
+    m, l, q = (chart.reader.parameters[k] for k in ("m", "l", "r_q"))
+    if system == "spherical":
+        # The Einstein-Maxwell equations with the potential A = r_q r (dt + 2 l cos(theta) dphi)/Sigma,
+        # in units where the charge is the length r_q: G_ab = 2 (F_ac F_b^c - g_ab F^2/4), and
+        # Maxwell's equations without a source.
+        r, theta = X[1], X[2]
+        Phi = q * r / (r ** 2 + l ** 2)
+        A = [Phi, 0, 0, 2 * l * sp.cos(theta) * Phi]
+        F = sp.Matrix(4, 4, lambda a, b: sp.diff(A[b], X[a]) - sp.diff(A[a], X[b]))
+        Fu = gi * F * gi
+        F2 = sum(F[a, b] * Fu[a, b] for a in range(4) for b in range(4))
+        einstein = geo.einstein_ll()
+        for a in range(4):
+            for b in range(a, 4):
+                stress = 2 * (sum(F[a, c] * F[b, d] * gi[c, d] for c in range(4) for d in range(4)) - g[a, b] * F2 / 4)
+                if vm.norm(einstein[a][b] - stress) != 0:
+                    raise AssertionError(f"brill_charged_taub_nut: G_{a}{b} is not the Maxwell stress")
+        root = (r ** 2 + l ** 2) * sp.sin(theta)
+        if vm.norm(g.det() + root ** 2) != 0:
+            raise AssertionError("brill_charged_taub_nut: the determinant is not -Sigma^2 sin^2(theta)")
+        for b in range(4):
+            if vm.norm(sum(sp.diff(root * Fu[a, b], X[a]) for a in range(4))) != 0:
+                raise AssertionError(f"brill_charged_taub_nut: Maxwell's equation {b} fails")
+
+        def same(matrix, what, at):
+            for i in range(4):
+                for j in range(i, 4):
+                    if vm.norm(matrix[i, j] - g[i, j].subs(at)) != 0:
+                        raise AssertionError(f"brill_charged_taub_nut: the chart is not {what} in slot "
+                                             f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+        reader, matrix = brill_published("taub_nut", "spherical", chart)
+        same(matrix.subs({reader.parameters["m"]: m, reader.parameters["l"]: l}), "the published Taub-NUT metric at r_q = 0",
+             {q: 0})
+        reader, matrix = brill_published("rn_metric", "spherical", chart)
+        same(matrix.subs({reader.parameters["r_s"]: 2 * m, reader.parameters["r_q"]: q}),
+             "Reissner and Nordstrom's published metric at l = 0", {l: 0})
+        reader, matrix = brill_published("israel_wilson_perjes", "spherical", chart)
+        same(matrix.subs({reader.parameters["m"]: m, reader.parameters["l"]: l}),
+             "Israel, Wilson and Perjes's published charged NUT space at r_q^2 = m^2 + l^2", {q: sp.sqrt(m ** 2 + l ** 2)})
+        return
+    ricci = geo.ricci_ll()
+    square = sum(ricci[a][b] * ricci[c][d] * gi[a, c] * gi[b, d] for a in range(4) for b in range(4) for c in range(4)
+                 for d in range(4))
+    if vm.norm(square - 4 * q ** 4 / (X[0 if system == "taub" else 1] ** 2 + l ** 2) ** 4) != 0:
+        raise AssertionError(f"brill_charged_taub_nut/{system}: the square of the Ricci tensor is not 4 r_q^4/Sigma^4")
+    spec = brill_charged_taub_nut("spherical")
+    source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    at = dict(zip(source.symbols, chart.symbols))
+    if system == "taub":
+        at = {source.symbols[1]: X[0], source.symbols[2]: X[2], source.symbols[3]: X[3]}
+    at.update({source.reader.parameters[k]: chart.reader.parameters[k] for k in ("m", "l", "r_q")})
+    jacobian = brill_charged_taub_nut_jacobian(chart, system)
+    pulled = jacobian.T * source.geo.g.subs(at, simultaneous=True) * jacobian
+    for i in range(4):
+        for j in range(i, 4):
+            if vm.norm(pulled[i, j] - g[i, j]) != 0:
+                raise AssertionError(f"brill_charged_taub_nut/{system}: the spherical chart pulled back misses slot "
+                                     f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["brill_charged_taub_nut"] = [lambda s=s: brill_charged_taub_nut(s) for s in BRILL_CHARTS]
 
 
 # -- The black string ------------------------------------------------------------------
