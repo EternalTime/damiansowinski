@@ -17484,7 +17484,7 @@ def brill_waves(system_id):
         coords, name = ["r", "\\theta", "\\phi"], "Spherical"
         parameters = ["\\psi = \\psi(r,\\theta)", "q = q(r,\\theta)"]
         domains = ["r \\in [0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
-                   "q = 0 \;\\text{at}\; \\theta = 0, \\pi \;\\text{(a regular axis)}"]
+                   "q = 0 \\;\\text{at}\\; \\theta = 0, \\pi \\;\\text{(a regular axis)}"]
         line = ("ds^2 = \\psi^4\\left(e^{2q}\\left(dr^2 + r^2d\\theta^2\\right)"
                 " + r^2\\sin^2\\theta\\,d\\phi^2\\right)")
         ricci = ("-\\dfrac{2\\left(4\\left(r^2\\,\\partial_r^2\\psi + 2r\\,\\partial_r\\psi + \\partial_\\theta^2\\psi"
@@ -17493,7 +17493,7 @@ def brill_waves(system_id):
     else:
         coords = ["\\rho", "z", "\\phi"]
         domains = ["\\rho \\in [0, \\infty)", "z \\in (-\\infty, \\infty)", "\\phi \\in [0, 2\\pi)",
-                   "q = 0 \;\\text{at}\; \\rho = 0 \;\\text{(a regular axis)}"]
+                   "q = 0 \\;\\text{at}\\; \\rho = 0 \\;\\text{(a regular axis)}"]
         line = "ds^2 = \\psi^4\\left(e^{2q}\\left(d\\rho^2 + dz^2\\right) + \\rho^2d\\phi^2\\right)"
         if system_id == "cylindrical":
             name, parameters = "Brill", ["\\psi = \\psi(\\rho,z)", "q = q(\\rho,z)"]
