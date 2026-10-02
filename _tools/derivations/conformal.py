@@ -123,7 +123,7 @@ EQUATOR = {"theta": "pi/2", "phi": "0"}
 NOT_DRAWN = {"godel", "stockum_dust", "som_raychaudhuri", "taub_nut", "kasner", "bianchi", "tolman_bondi", "alcubierre",
              "natario", "krasnikov", "pp_wave", "mixmaster", "lentz", "szekeres", "van_den_broeck",
              "string_wave", "black_saturn", "schrodinger_spacetime", "eguchi_hanson", "misner_brill_lindquist", "brill_waves",
-             "kundt_waves", "wahlquist", "tippett_tsang"}
+             "kundt_waves", "wahlquist", "tippett_tsang", "petrov_homogeneous"}
 
 
 # ---------------------------------------------------------------- the drawing
@@ -12930,6 +12930,145 @@ def nordstrom_scalar(ck, src):
     return views
 
 
+def einstein_1912_static(ck, src):
+    """Einstein's static field of 1912, one view for each chart. On a plane of t and one length x
+    the metric is -N^2 c^2 dt^2 + dx^2 = N^2 (-c^2 dt^2 + dx_*^2) with dx_* = dx/N, and a
+    conformal factor changes no null direction, so p, q = arctan((ct -+ x_*)/l) bring each plane
+    into Minkowski's diagram, as far as x_* runs.
+
+    Through the declared star N is positive everywhere, x_* runs over the whole line, and the
+    plane is the full diamond with the star a band from i^- to i^+. The uniform field is flat,
+    Rindler's wedge of Minkowski's diamond, with its horizon on z = 0. Outside a body N vanishes
+    on r = m by the equation of February and on r = m/2 by that of March, r_* runs to minus
+    infinity there, a simple logarithm in February and a pole in March, and the plane is a full
+    diamond again, each point a sphere, whose two left edges are that sphere at t = -+ infinity:
+    null lines, at a finite affine distance, on which the Kretschmann scalar diverges."""
+    views = []
+    dia_box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    mid = "einstein_1912_static"
+
+    # The star, in units of its radius R, with l = 2R.
+    ell = 2.0
+    star = Plane(src, mid, "static", ("t", "x"), {"y": "0", "z": "0"}, functions=nr.E12_STAR)
+
+    def through(t, x):
+        return mink_pq(t, nr.e12_tortoise(x), ell)
+    ck.chart("Einstein 1912, through the star", star, through, ck.uniform(-20, 20, 400), ck.uniform(-8, 8, 400),
+             lambda t, x: (1, 0))
+    ck.finite("Einstein 1912: the centre of the star is regular",
+              star.kretschmann(np.zeros(5), np.array([0.0, 1e-3, 1e-2, 0.5, 0.99])))
+    crossing = 2 * float(nr.e12_tortoise(1.0))
+    ck.limit("Einstein 1912: light crosses the star in 8.89 R/c", [crossing], [8.89], 5e-3)
+    v = View("static", "Static field", dia_box, "static")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    right = mink_pq(S_ALL, np.full_like(S_ALL, crossing / 2), ell)
+    left = mink_pq(S_ALL, np.full_like(S_ALL, -crossing / 2), ell)
+    v.fill("star", [[0, -PI]] + [point(a, b) for a, b in zip(*right)] + [[0, PI]]
+           + [point(a, b) for a, b in zip(*left)][::-1])
+    for x in (-4.0, -2.0, -0.5, 0.0, 0.5, 2.0, 4.0):
+        v.curve("r", *mink_pq(S_ALL, np.full_like(S_ALL, float(nr.e12_tortoise(x))), ell))
+    xs = np.concatenate([-S_POS[::-1], [0.0], S_POS])
+    xs = xs[np.abs(xs) < 1e9]
+    tort = nr.e12_tortoise(xs)
+    for t in (-4, -2, -1, 0, 1, 2, 4):
+        v.curve("t", *mink_pq(np.full_like(tort, t), tort, ell))
+    v.curve("surface", *right)
+    v.curve("surface", *left)
+    diamond_edges(v)
+    label_on(v, mink_pq(0, crossing / 2, ell), "$x = R$", "l", dx=5, dy=0)
+    v.label_xt([0.0, 1.3], "star", cls="region")
+    v.legend("cover", "the whole plane, which $t$ and $x$ cover")
+    v.legend("star", "the star, $|x| < R$")
+    v.legend("r", "$x$ constant, at $0$, $\\pm R/2$, $\\pm 2R$, and $\\pm 4R$")
+    v.legend("t", "$ct$ constant, at $0$, $\\pm R$, $\\pm 2R$, and $\\pm 4R$")
+    v.legend("surface", "the surface of the star, $x = \\pm R$")
+    v.set(restriction="The plane $y = z = 0$ only, totally geodesic, each point in the diagram a single event.",
+          settings="The star of uniform density with $\\omega = 3/(2R)$, where $R$ is its radius, the unit of every "
+                   "length, and $\\ell = 2R$; $p = \\arctan((ct - x_*)/\\ell)$ and $q = \\arctan((ct + x_*)/\\ell)$, with "
+                   "$x_* = \\int_0^x dx/N$.")
+    views.append(v)
+
+    # The uniform field on the plane of t and z, in units of c^2/a: Rindler's wedge.
+    field = Plane(src, mid, "uniform", ("t", "z"), {"x": "0", "y": "0"}, {"a": 1})
+
+    def wedge(t, z):
+        t, z = np.asarray(t, dtype=float), np.asarray(z, dtype=float)
+        return np.arctan(-z * np.exp(-t)), np.arctan(z * np.exp(t))
+    ck.chart("Einstein 1912, the uniform field", field, wedge, ck.uniform(-5, 5), ck.uniform(0.01, 10), lambda t, z: (1, 0))
+    p, q = wedge(np.array([-2.0, 2.0]), np.array([1e-12, 1e-12]))
+    ck.limit("Einstein 1912, the uniform field: z -> 0 is the pair of null lines p = 0 and q = 0", [q[0], p[1]], [0, 0], 1e-9)
+    ck.limit("Einstein 1912, the uniform field is flat", field.kretschmann(ck.uniform(-3, 3, 50), ck.uniform(0.1, 5, 50)),
+             np.zeros(50), 1e-12)
+    v = View("uniform", "Uniform field", dia_box, "uniform")
+    v.fill("region", DIAMOND)
+    v.fill("cover", [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]])
+    grid(v, "r", lambda z, t: wedge(t, z), (0.25, 0.5, 1, 2, 4), S_ALL)
+    grid(v, "t", wedge, (-2, -1, -0.5, 0, 0.5, 1, 2), S_POS)
+    v.line("horizon", [[[0, 0], [HALF, HALF]], [[0, 0], [HALF, -HALF]],
+                       [[0, 0], [-HALF, HALF]], [[0, 0], [-HALF, -HALF]]])
+    diamond_edges(v)
+    v.label_xt([Q4 - 0.05, Q4 + 0.05], "$z = 0$", "br", "small", dx=-3, dy=-2)
+    v.legend("cover", "the wedge above $z = 0$, which $t$ and $z$ cover")
+    v.legend("r", "$z$ constant, a body at rest in the field, in units of $c^2/a$")
+    v.legend("t", "$t$ constant, in units of $c/a$")
+    v.legend("horizon", "the horizon $z = 0$, where $N = 0$, and the null lines that continue it")
+    v.set(restriction="The plane $x = y = 0$ only, totally geodesic, each point in the diagram a single event.",
+          settings="$a = 1$, with $c^2/a$ the unit of every length; $p = \\arctan(-(az/c^2)e^{-at/c})$ and "
+                   "$q = \\arctan((az/c^2)e^{at/c})$.")
+    views.append(v)
+
+    # Outside a body by each equation, in units of m, with l = 2m.
+    bodies = (("february", "Outside a body, February", 1.0, lambda r: r + np.log(r - 1), "m",
+               "$r_* = r + m\\ln(r/m - 1)$", (1.1, 1.5, 2, 3, 5, 9), "$1.1\\,m$, $1.5\\,m$, $2m$, $3m$, $5m$, and $9m$"),
+              ("march", "Outside a body, March", 0.5, lambda r: r + np.log(r - 0.5) - 1 / (4 * r - 2), "m/2",
+               "$r_* = r + m\\ln(r/m - 1/2) - m^2/(4r - 2m)$", (0.75, 1, 1.5, 2, 3, 5, 9),
+               "$0.75\\,m$, $m$, $1.5\\,m$, $2m$, $3m$, $5m$, and $9m$"))
+    for system, name, edge, tortoise, edge_text, formula, radii, radii_text in bodies:
+        body = Plane(src, mid, system, ("t", "r"), EQUATOR, {"m": 1})
+
+        def outside(t, r, tortoise=tortoise):
+            with np.errstate(divide="ignore", invalid="ignore"):
+                rs = tortoise(np.asarray(r, dtype=float))
+            t = np.asarray(t, dtype=float)
+            return np.arctan((t - rs) / ell), np.arctan((t + rs) / ell)
+        where = f"Einstein 1912, the body of {system.capitalize()}"
+        ck.chart(where, body, outside, ck.uniform(-20, 20), edge + np.exp(ck.uniform(-3, 3)), lambda t, r: (1, 0))
+        ck.diverges(f"{where}: the Kretschmann scalar diverges on r = {edge_text}",
+                    body.kretschmann(0, edge + 1e-5), body.kretschmann(0, edge + 1e-6))
+        ck.limit(f"{where}: r = {edge_text} at t = 0 lands on the left corner", point(*outside(0.0, edge + 1e-300)),
+                 [-PI, 0], 1e-2)
+        v = View(system, name, dia_box, system)
+        v.fill("region", DIAMOND)
+        v.fill("cover", DIAMOND)
+        grid(v, "r", lambda r, t: outside(t, r), radii, S_ALL)
+        grid(v, "t", outside, (-8, -4, -2, 0, 2, 4, 8), edge + spread(0, np.inf, 600, 40))
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        v.line("singular", [[[0, PI], [-PI, 0]], [[-PI, 0], [0, -PI]]], zig=True)
+        for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6),
+                                         ((0, -PI), "$i^-$", "t", 0, 6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label_xt([-HALF, HALF], f"$r = {edge_text}$", "br", dx=-5, dy=-3)
+        v.label_xt([-HALF, -HALF], f"$r = {edge_text}$", "tr", dx=-5, dy=3)
+        label_on(v, outside(0, 3), "$r = 3m$")
+        v.legend("cover", "the whole spacetime outside the body, which $t$ and $r$ cover")
+        v.legend("r", f"$r$ constant, at {radii_text}")
+        v.legend("t", "$ct$ constant, at $0$, $\\pm 2m$, $\\pm 4m$, and $\\pm 8m$")
+        v.legend("singular", f"the singularity $r = {edge_text}$, where $N = 0$ and the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        if system == "march":
+            moment = slices.moments(mid, "equator")[0]
+            along_r = np.array(moment.reach("march", "r"))
+            v.slice(moment, [outside(0 * along_r, along_r)])
+        v.set(settings="$m = 1$, the unit of every length, and $\\ell = 2m$; $p = \\arctan((ct - r_*)/\\ell)$ and "
+                       f"$q = \\arctan((ct + r_*)/\\ell)$, with {formula}.")
+        views.append(v)
+    return views
+
+
 def malament_hogarth(ck, src):
     """Minkowski space less its origin, times Omega^2. A conformal factor changes no null
     direction, so for every Omega the causal structure is Minkowski's less that event, which
@@ -19949,6 +20088,7 @@ DRAWN = {
     "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii,
     "bartnik_mckinnon": bartnik_mckinnon,
     "nordstrom_scalar": nordstrom_scalar,
+    "einstein_1912_static": einstein_1912_static,
     "ab_metrics": ab_metrics,
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "reissner_nordstrom_ads": reissner_nordstrom_ads, "c_metric": c_metric,
     "misner": misner, "milne": milne,
@@ -22356,6 +22496,46 @@ CAPTIONS = {
         "The bang and the crunch are spacelike and meet at $i^0$, so the universe has no null infinity: every "
         "light ray begins on the bang and ends on the crunch. A ray crosses a comoving distance of $2L$ on the "
         "way, the size of the particle horizon at the crunch.",
+    ],
+    ("einstein_1912_static", "static"): [
+        "The line through the centre of a star of uniform density (radius $R$, $m = 0.793\\,R$) by Einstein's "
+        "equation of March 1912, on the plane $y = z = 0$, each point in the diagram a single event. The metric on "
+        "the plane is $N^2(-c^2dt^2 + dx_*^2)$ with $dx_* = dx/N$, so $p = \\arctan((ct - x_*)/\\ell)$ and "
+        "$q = \\arctan((ct + x_*)/\\ell)$ bring it into Minkowski's diamond, drawn with $T = p + q$ up and "
+        "$X = q - p$ across.",
+        "$N$ is positive at every point of the star, $0.181$ at its centre, so $x_*$ runs over the whole line and "
+        "the plane's infinity is Minkowski's. Light takes $8.89\\,R/c$ to cross the star, and $2R/c$ to cross the "
+        "same stretch of empty space.",
+    ],
+    ("einstein_1912_static", "uniform"): [
+        "The uniform field of Einstein's first paper of 1912 on the plane $x = y = 0$, each point in the diagram a "
+        "single event. With $ct' = z\\sinh(at/c)$ and $z' = z\\cosh(at/c)$ the metric is Minkowski's, "
+        "$-c^2dt'^2 + dz'^2$, so the field is the wedge $z' > c|t'|$ of Minkowski's diamond, drawn with $T = p + q$ "
+        "up and $X = q - p$ across.",
+        "The plane $z = 0$, where the speed of light vanishes, is the horizon of the bodies at rest in the field, "
+        "the pair of null lines through the centre of the diagram. Spacetime is flat there, and a body dropped "
+        "from rest crosses it into the rest of Minkowski space.",
+    ],
+    ("einstein_1912_static", "february"): [
+        "The field outside a static body by Einstein's equation of February 1912, each point in the diagram a "
+        "2-sphere of radius $r$. On the plane of $t$ and $r$ the metric is $(1 - m/r)^2(-c^2dt^2 + dr_*^2)$ with "
+        "$r_* = r + m\\ln(r/m - 1)$, which runs over the whole line, so $p = \\arctan((ct - r_*)/\\ell)$ and "
+        "$q = \\arctan((ct + r_*)/\\ell)$ bring the spacetime into a full diamond, drawn with $T = p + q$ up and "
+        "$X = q - p$ across.",
+        "The two edges on the left are the sphere $r = m$ in the infinite past and the infinite future of $t$, "
+        "null lines on which the Kretschmann scalar diverges. The diagram has the shape of Schwarzschild's "
+        "exterior, with a singularity where Schwarzschild's has its horizon: light and falling bodies reach it "
+        "at a finite affine distance, and the spacetime ends there.",
+    ],
+    ("einstein_1912_static", "march"): [
+        "The field outside a static body by Einstein's equation of March 1912, each point in the diagram a "
+        "2-sphere of radius $r$. On the plane of $t$ and $r$ the metric is $(1 - m/2r)^4(-c^2dt^2 + dr_*^2)$ with "
+        "$r_* = r + m\\ln(r/m - 1/2) - m^2/(4r - 2m)$, which runs over the whole line, so "
+        "$p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring the spacetime into a full "
+        "diamond, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "The two edges on the left are the sphere $r = m/2$ in the infinite past and the infinite future of $t$, "
+        "null lines on which the Kretschmann scalar diverges. Every star of the theory has its surface outside "
+        "that sphere, so the diagram of a star is Minkowski's triangle, with a regular centre on its edge.",
     ],
     ("frw", "flat"): [
         "A flat universe of dust, each point in the diagram a 2-sphere. With $k = 0$, $G^r{}_r = 0$ gives $a \\propto \\eta^2$, and the metric "

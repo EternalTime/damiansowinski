@@ -3271,7 +3271,10 @@ class EmbeddingDiagrams(unittest.TestCase):
         # flat plane too, on which its rings of dust shrink until the turn and grow again.
         flat_moments = {("domain_wall", "moments", 2), ("hayward", "history", 0), ("hayward", "history", 5),
                         ("hiscock", "history", 5), *(("nordstrom_scalar", "dust", k) for k in range(5)),
-                        *(("kopczynski_trautman", "universe", k) for k in range(5))}
+                        *(("kopczynski_trautman", "universe", k) for k in range(5)),
+                        # Space is flat in Einstein's static field of 1912, so the equator outside a body is a
+                        # plane, drawn under Flamm's paraboloid of the same mass.
+                        ("einstein_1912_static", "equator", 0)}
         self.assertNotIn("lentz", self.embedding)
         self.assertNotIn("embedding", next(m for m in read(build.INDEX_FILE) if m["id"] == "lentz"))
         for name, data in self.embedding.items():
@@ -4854,6 +4857,11 @@ class Slices(unittest.TestCase):
               # mass and the dust universe whose moments are embedded.
               "nordstrom_scalar/conformal/tx", "nordstrom_scalar/uniform/tz",
               "conformal nordstrom_scalar/conformal", "conformal nordstrom_scalar/uniform",
+              # A star, the uniform field and the body of the equation of February in Einstein's static
+              # field of 1912, other spacetimes than the body of the equation of March whose equator is embedded.
+              "einstein_1912_static/static/tx", "einstein_1912_static/uniform/tz", "einstein_1912_static/february/radial",
+              "conformal einstein_1912_static/static", "conformal einstein_1912_static/uniform",
+              "conformal einstein_1912_static/february",
               # The region x < 0 of Siklos's chart, another region than the one whose wave front is embedded.
               "siklos/kaigorodov_stationary/plane",
               # Kundt's waves with no cosmological constant, other spacetimes than the waves in de Sitter

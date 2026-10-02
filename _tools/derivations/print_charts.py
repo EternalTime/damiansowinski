@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
-charts of tov, malament_hogarth, nordstrom_scalar, mixmaster, lentz, einstein_static, btz, c_metric,
+charts of tov, malament_hogarth, nordstrom_scalar, einstein_1912_static, mixmaster, lentz, einstein_static, btz, c_metric,
 schwarzschild_de_sitter, schwarzschild_ads, topological_black_hole, ads_soliton, milne, einstein_rosen_waves, nariai, aichelburg_sexl, hotta_tanaka,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy, bonnor_rotating_dust,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, boulware_deser, gott_time_machine, zipoy_voorhees, szekeres,
@@ -21300,6 +21300,140 @@ def nordstrom_scalar_check(chart, system):
 
 
 CHARTS["nordstrom_scalar"] = [lambda s=s: nordstrom_scalar(s) for s in NORDSTROM_CHARTS]
+
+
+# -- Einstein's static field of 1912 -------------------------------------------------------
+
+EINSTEIN_1912_CHARTS = ("static", "uniform", "february", "march")
+
+
+def einstein_1912_static(system):
+    """Einstein's Prague theory of 1912: space is flat and the speed of light is c N(x, y, z), so
+    ds^2 = -N^2 c^2 dt^2 + dx^2 + dy^2 + dz^2, the line element whose geodesics are his equations of
+    motion (the addendum to the second paper). The static chart leaves N free. The uniform chart is
+    the field of the first paper, N linear in the height, counted from the plane where N vanishes.
+    The february chart is the field outside a spherical body by the first paper's equation,
+    Laplace's for N, N = 1 - m/r with m = GM/c^2. The march chart is the field outside it by the
+    second paper's equation, Laplace's for sqrt(N), N = (1 - m/2r)^2, Giulini's exterior solution
+    with his gravitational radius R_g = m/2. einstein_1912_static.md derives each."""
+    reals = "(-\\infty, \\infty)"
+    sphere = "r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    common = {"metric_id": "einstein_1912_static", "check": lambda chart: einstein_1912_check(chart, system)}
+    if system == "static":
+        coords, parameters = ["t", "x", "y", "z"], ["N = N(x,y,z)"]
+        probe = vm.Reader(coords, parameters, ())
+        N = probe.parameters["N"]
+        line = "ds^2 = -N^2{c2}dt^2 + dx^2 + dy^2 + dz^2"
+        return {
+            **common,
+            "system": {"id": "static", "name": "Static Field", "coords": coords,
+                       "domains": [f"{c} \\in {reals}" for c in coords] + ["N > 0"],
+                       "parameters": parameters, "line_element": line.replace("{c2}", "c^2")},
+            "chart_line_element": line.replace("{c2}", ""),
+            "printer": {"lead": [N], "collect": lambda poly, printer: cp.collect_by(poly, [N], printer)},
+            "ricci_scalar": "-\\dfrac{2\\left(\\partial_x^2N + \\partial_y^2N + \\partial_z^2N\\right)}{N}",
+        }
+    if system == "uniform":
+        coords, parameters = ["t", "x", "y", "z"], ["a"]
+        line = "ds^2 = -\\dfrac{a^2z^2}{c^4}{c2}dt^2 + dx^2 + dy^2 + dz^2"
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            **common,
+            "system": {"id": "uniform", "name": "Uniform Field", "coords": coords,
+                       "domains": ["t \\in " + reals, "x \\in " + reals, "y \\in " + reals, "z \\in (0, \\infty)",
+                                   "z = 0 \\;\\text{(horizon, where } N = 0\\text{)}"],
+                       "parameters": parameters, "line_element": line.replace("{c2}", "c^2")},
+            "chart_line_element": line.replace("{c2}", ""),
+            "printer": {"lead": [probe.parameters["a"], probe.symbol["z"]]},
+        }
+    coords, parameters = ["t", "r", "\\theta", "\\phi"], ["m"]
+    probe = vm.Reader(coords, parameters, ())
+    if system == "february":
+        lapse, edge, name = "\\left(1 - \\dfrac{m}{r}\\right)^2", "m", "Outside a Body, February"
+    else:
+        lapse, edge, name = "\\left(1 - \\dfrac{m}{2r}\\right)^4", "m/2", "Outside a Body, March"
+    line = "ds^2 = -" + lapse + "{c2}dt^2 + dr^2 + " + sphere
+    return {
+        **common,
+        "system": {"id": system, "name": name, "coords": coords,
+                   "domains": ["t \\in " + reals, f"r \\in ({edge}, \\infty)"] + angles
+                              + [f"r = {edge} \\;\\text{{(curvature singularity, where }} N = 0\\text{{)}}"],
+                   "parameters": parameters, "line_element": line.replace("{c2}", "c^2")},
+        "chart_line_element": line.replace("{c2}", ""),
+        "printer": {"lead": [probe.symbol["r"], probe.parameters["m"]]},
+        "components": {"metric_components": {("t", "t"): "-" + lapse}},
+    }
+
+
+def einstein_1912_check(chart, system):
+    """Each chart against the theory. Space is flat in every chart, so the Einstein tensor has no
+    tt component, and the static chart has the Ricci scalar -2 Laplacian(N)/N and R_tt =
+    N Laplacian(N). Each other chart is the static chart at its own N, pulled back. The uniform
+    field is flat, Rindler's wedge. The february body solves Laplace's equation for N, R = 0, and
+    the march body solves Einstein's second equation in a vacuum, N Laplacian(N) = (grad N)^2/2,
+    so R = -(grad N)^2/N^2; neither is flat. Both bodies have gamma = 0, since space is flat, and
+    beta = 1/2 in February and 3/4 in March. A body at rest in the uniform field at the height
+    c^2/a weighs a."""
+    geo = chart.geo
+    g = geo.g
+    scalar = geo.ricci_scalar()
+    if vm.norm(vm._at(geo.einstein_ll(), (0, 0))) != 0:
+        raise AssertionError(f"einstein_1912_static: G_tt does not vanish in the {system} chart")
+    if system == "static":
+        t, x, y, z = chart.symbols
+        N = chart.reader.parameters["N"]
+        laplacian = sum(sp.diff(N, s, 2) for s in (x, y, z))
+        if vm.norm(scalar + 2 * laplacian / N) != 0:
+            raise AssertionError("einstein_1912_static: R is not -2 Laplacian(N)/N")
+        if vm.norm(vm._at(geo.ricci_ll(), (0, 0)) - N * laplacian) != 0:
+            raise AssertionError("einstein_1912_static: R_tt is not N Laplacian(N)")
+        return
+    P = chart.reader.parameters
+    c = chart.reader.c
+    if system == "uniform":
+        t, x, y, z = chart.symbols
+        image, lapse = [t, x, y, z], P["a"] * z / c ** 2
+    else:
+        t, r, theta, phi = chart.symbols
+        image = [t, r * sp.sin(theta) * sp.cos(phi), r * sp.sin(theta) * sp.sin(phi), r * sp.cos(theta)]
+        lapse = 1 - P["m"] / r if system == "february" else (1 - P["m"] / (2 * r)) ** 2
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+    pulled = (J.T * sp.diag(-lapse ** 2, 1, 1, 1) * J).applyfunc(sp.simplify)
+    if (pulled - g).applyfunc(sp.simplify) != sp.zeros(4, 4):
+        raise AssertionError(f"einstein_1912_static: the {system} chart is not the static chart at its own N")
+    riemann = geo.riemann_llll()
+    flat = all(vm.norm(vm._at(riemann, index)) == 0 for index in vm._indices(4, 4))
+    gamma = geo.christoffel_ull()
+    if system == "uniform":
+        if not flat:
+            raise AssertionError("einstein_1912_static: the uniform field is not flat")
+        a = P["a"]
+        # The acceleration of a body at rest: Gamma^z_tt u^t u^t with u^t = 1/N.
+        weight = sp.simplify(gamma[3][0][0] / lapse ** 2)
+        if sp.simplify(weight.subs(z, c ** 2 / a) - a / c ** 2) != 0:
+            raise AssertionError("einstein_1912_static: a body at rest at z = c^2/a does not weigh a")
+        return
+    if flat:
+        raise AssertionError(f"einstein_1912_static: the {system} chart is flat")
+    m = P["m"]
+    slope = sp.diff(lapse, r)
+    if system == "february":
+        if vm.norm(scalar) != 0:
+            raise AssertionError("einstein_1912_static: N = 1 - m/r does not solve Laplace's equation")
+        want = [1, -2, 1]
+    else:
+        if sp.simplify(scalar + slope ** 2 / lapse ** 2) != 0:
+            raise AssertionError("einstein_1912_static: N = (1 - m/2r)^2 does not solve the equation of March")
+        want = [sp.Rational(3, 2), -2, 1]
+    # -g_tt = 1 - 2U + 2 beta U^2 with U = m/r, and g_rr = 1 + 2 gamma U = 1.
+    U = sp.Symbol("U", positive=True)
+    series = sp.series((-g[0, 0]).subs(r, m / U), U, 0, 3).removeO()
+    if sp.Poly(series, U).all_coeffs() != want or g[1, 1] != 1:
+        raise AssertionError(f"einstein_1912_static: the {system} body does not have gamma = 0 and its beta")
+
+
+CHARTS["einstein_1912_static"] = [lambda s=s: einstein_1912_static(s) for s in EINSTEIN_1912_CHARTS]
 
 
 # -- Penrose's spherical impulsive wave ----------------------------------------------------

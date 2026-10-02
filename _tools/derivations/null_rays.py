@@ -1843,6 +1843,63 @@ DECLARED_FUNCTIONS.update(_nm_declare({
                               else np.zeros_like(np.asarray(z, dtype=float))),
 }))
 NM_OMEGA = repr(nm_disc.omega_disc(NM_MU))
+
+
+# Einstein's static field of 1912 is drawn through a star of uniform density by his equation of
+# March, which is linear in the square root of N: Giulini's interior solution
+# sqrt(N) = sinh(omega r)/(omega r cosh(omega R)) joined at the surface r = R to the exterior
+# 1 - R_g/r, with R_g = R (1 - tanh(omega R)/(omega R)) his gravitational radius, half of m. The
+# star is declared at omega R = 3/2, in units of R, as a function of q = r^2, in which it is
+# smooth through the centre; e12_star carries its first two derivatives in q.
+E12_OMEGA = 1.5
+E12_RG = 1 - math.tanh(E12_OMEGA) / E12_OMEGA        # R_g/R = 0.3966, so m = 0.793 R
+
+
+def _e12_root(q, order):
+    """sqrt(N) of the declared star and its first two derivatives in q = (r/R)^2."""
+    q = np.asarray(q, dtype=float)
+    out = np.empty_like(q)
+    inside = q < 1
+    u = E12_OMEGA ** 2 * q[inside]
+    v = np.sqrt(np.where(u > 1e-2, u, 1.0))
+    # h(u) = sinh(sqrt u)/sqrt u = sum u^k/(2k + 1)!, by its series near the centre.
+    series = [sum(math.factorial(k) / math.factorial(k - order) * u ** (k - order) / math.factorial(2 * k + 1)
+                  for k in range(order, 8)),
+              (np.sinh(v) / v, (v * np.cosh(v) - np.sinh(v)) / (2 * v ** 3),
+               ((v * v + 3) * np.sinh(v) - 3 * v * np.cosh(v)) / (4 * v ** 5))[order]]
+    out[inside] = np.where(u > 1e-2, series[1], series[0]) * E12_OMEGA ** (2 * order) / math.cosh(E12_OMEGA)
+    far = q[~inside]
+    out[~inside] = (1 - E12_RG / np.sqrt(far), E12_RG / (2 * far ** 1.5), -3 * E12_RG / (4 * far ** 2.5))[order]
+    return out
+
+
+def _e12_star(q, order):
+    root, slope = _e12_root(q, 0), _e12_root(q, 1)
+    if order == 0:
+        return root ** 2
+    if order == 1:
+        return 2 * root * slope
+    return 2 * slope ** 2 + 2 * root * _e12_root(q, 2)
+
+
+DECLARED_FUNCTIONS.update(_nm_declare({"e12_star": _e12_star}))
+
+
+def e12_tortoise(x):
+    """x_* of the declared star on the line through its centre, dx_*/dx = 1/N from x_* = 0 at the
+    centre: one quadrature inside the star, and outside it Einstein's r + m ln(r - m/2) -
+    m^2/(4r - 2m) with m = 2 R_g, joined at the surface."""
+    from scipy.integrate import quad
+    inner = lambda r: quad(lambda s: 1 / float(_e12_star(np.array([s * s]), 0)[0]), 0, r, epsabs=1e-13, epsrel=1e-13)[0]
+    outer = lambda r: r + 2 * E12_RG * math.log(r - E12_RG) - E12_RG ** 2 / (r - E12_RG)
+    at_surface = inner(1.0)
+    one = lambda v: math.copysign(inner(abs(v)) if abs(v) <= 1 else at_surface + outer(abs(v)) - outer(1.0), v)
+    return np.vectorize(one, otypes=[float])(np.asarray(x, dtype=float))
+E12_STAR = {"N": "e12_star(x**2 + y**2 + z**2)"}
+E12_INPUT = ("Any $N$; drawn through the centre of a star of uniform density by Einstein's equation of March 1912, "
+             "$\\sqrt{N} = \\sinh(\\omega r)/(\\omega r\\cosh(\\omega R))$ inside the star and $1 - m/2r$ outside it, "
+             "where $r$ is the distance from the centre, $R$ is the radius of the star, and $\\omega = 3/(2R)$, so that "
+             "$m = 2R - (2/\\omega)\\tanh(\\omega R) = 0.793\\,R$.")
 NM_AXIS = {"U": "log(nm_x(z))/2", "a": "0", "k": "0"}
 NM_PLANE = {"nu": "-log(nm_g(rho))/2", "omega": "nm_w(rho)", "alpha": "log(nm_r(rho))/2"}
 NM_TURNING = {"U": "log(nm_e(rho))/2", "a": f"(nm_e(rho) - nm_s(rho))/({NM_OMEGA}*nm_e(rho))",
@@ -2759,6 +2816,19 @@ DIAGRAMS = [
             "$z\\;[c^2/a]$", "$ct\\;[c^2/a]$", {"a": 1}, {"x": "0", "y": "0"}, families=("moving down", "moving up")),
     Diagram("nordstrom_scalar", "dust", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1, 1),
             "$r/L$", "$ct/L$", {"L": 1}, EQUATOR, areal=True),
+    # Einstein's static field of 1912: space is flat and light moves at c N, so the cones narrow where N
+    # falls. The free chart is drawn through the centre of a declared star in units of its radius, the
+    # uniform field in units of c^2/a from its horizon, and each body in units of m from the sphere
+    # where its N vanishes.
+    Diagram("einstein_1912_static", "static", "tx", "$t$ and $x$ through a star", ("t", "x"), (-3, 3, -3, 3),
+            "$x/R$", "$ct/R$", {}, {"y": "0", "z": "0"}, families=SIDEWAYS, functions=E12_STAR, input=E12_INPUT,
+            lines=(("shell", "r", "-1", "the surface of the star, $x = \\pm R$"), ("shell", "r", "1", None))),
+    Diagram("einstein_1912_static", "uniform", "tz", "$t$ and $z$", ("t", "z"), (0, 3, -1.5, 1.5),
+            "$z\\;[c^2/a]$", "$ct\\;[c^2/a]$", {"a": 1}, {"x": "0", "y": "0"}, families=("moving down", "moving up")),
+    Diagram("einstein_1912_static", "february", "radial", "$t$ and $r$", ("t", "r"), (1, 5, -2, 2),
+            "$r/m$", "$ct/m$", {"m": 1}, EQUATOR, areal=True),
+    Diagram("einstein_1912_static", "march", "radial", "$t$ and $r$", ("t", "r"), (0.5, 4.5, -2, 2),
+            "$r/m$", "$ct/m$", {"m": 1}, EQUATOR, areal=True),
     Diagram("tippett_tsang", "cartesian", "tx", "$t$ and $x$ through the bubble", ("t", "x"),
             (-1.6, 1.6, -1.6, 1.6), "$x/A$", "$ct/A$", {}, {"y": "0", "z": "0"}, tau=TT_TAU, families=SIDEWAYS,
             cones=(8, 8), functions={"h": TT_H}, input=TT_INPUT, step=0.001,
@@ -6569,6 +6639,38 @@ CAPTIONS = {
         "distance of $2L$ in that span, so two galaxies further apart than $2L$ never see one another. On "
         "$r = (L^2 - c^2t^2)/2c|t|$ the area of the spheres is stationary along one family of rays, the apparent "
         "horizon of the bang before $t = 0$ and of the crunch after it.",
+    ],
+    ("einstein_1912_static", "static", "tx"): [
+        "The plane of $t$ and $x$ ($y = z = 0$) through the centre of a star of uniform density (radius $R$, "
+        "$m = 0.793\\,R$). Light moves at $dx/dt = \\pm cN$, so the cones are Minkowski's far from the star and "
+        "narrow toward its centre, where $N = 0.181$.",
+        "A clock at rest ticks at the rate $N$ and a rod measures the same length at every place, so the clocks "
+        "alone narrow the cones. On the surface $N = 0.364$. Every star of Einstein's equation of March 1912 has "
+        "$m < 2R$, so its surface lies outside the sphere $r = m/2$ and $N$ is positive throughout.",
+    ],
+    ("einstein_1912_static", "uniform", "tz"): [
+        "The plane of $t$ and $z$ ($x = y = 0$) in units of $c^2/a$. Light moves at $dz/dt = \\pm az/c$, a speed "
+        "that grows in proportion to the height, and the cones close toward $z = 0$.",
+        "The field is flat: $t$ and $z$ are the coordinates of observers of constant proper acceleration in "
+        "Minkowski space, and $z = 0$ is their horizon. A ray takes an infinite time $t$ to reach it, and a "
+        "falling body crosses it in a finite proper time.",
+    ],
+    ("einstein_1912_static", "february", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), each point in the plane a 2-sphere of area "
+        "$4\\pi r^2$. Light moves at $dr/dt = \\pm c(1 - m/r)$, so $ct \\mp r_*$ is constant along a ray, with "
+        "$r_* = r + m\\ln(r/m - 1)$.",
+        "The cones close toward $r = m$, which a ray reaches only as $t \\to \\infty$, as it reaches "
+        "Schwarzschild's horizon. Here the Kretschmann scalar diverges on that sphere as $(r - m)^{-2}$: a "
+        "curvature singularity of area $4\\pi m^2$, which a falling body reaches in a finite proper time.",
+    ],
+    ("einstein_1912_static", "march", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), each point in the plane a 2-sphere of area "
+        "$4\\pi r^2$. Light moves at $dr/dt = \\pm c(1 - m/2r)^2$, so $ct \\mp r_*$ is constant along a ray, with "
+        "$r_* = r + m\\ln(r/m - 1/2) - m^2/(4r - 2m)$.",
+        "To first order in $m/r$ clocks slow as they do in Schwarzschild's field, and space stays flat, so a ray "
+        "passing the body at the distance $b$ bends by $2m/b$, half of the $4m/b$ of general relativity. The "
+        "cones close toward $r = m/2$, where the Kretschmann scalar diverges as $(r - m/2)^{-4}$, and the surface "
+        "of every star lies outside that sphere.",
     ],
     ("tippett_tsang", "cartesian", "tx"): [
         "The plane of $t$ and $x$ ($y = z = 0$) through Tippett and Tsang's bubble, which on this plane is the ring "
@@ -13612,6 +13714,27 @@ def _ab_forms():
 
 
 CLOSED_FORMS.update(_ab_forms())
+
+
+def _e12_forms():
+    """Einstein's static field of 1912: ct -+ x_* is constant along a ray, with dx_*/dx = 1/N. The
+    uniform field's is Rindler's logarithm, each body's is elementary, and the star's is one
+    quadrature of the declared N, which the tracing never uses."""
+    star = e12_tortoise
+    february = lambda r: r + np.log(r - 1)
+    march = lambda r: r + np.log(r - 0.5) - 1 / (4 * r - 2)
+    return {
+        ("einstein_1912_static", "static", "tx"): (lambda t, x: t + star(x), lambda t, x: t - star(x), None),
+        ("einstein_1912_static", "uniform", "tz"):
+            (lambda t, z: t + np.log(z), lambda t, z: t - np.log(z), lambda t, z: z > 1e-3),
+        ("einstein_1912_static", "february", "radial"):
+            (lambda t, r: t + february(r), lambda t, r: t - february(r), lambda t, r: r > 1.0005),
+        ("einstein_1912_static", "march", "radial"):
+            (lambda t, r: t + march(r), lambda t, r: t - march(r), lambda t, r: r > 0.52),
+    }
+
+
+CLOSED_FORMS.update(_e12_forms())
 
 
 def verify(metrics=()):

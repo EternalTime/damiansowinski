@@ -2742,6 +2742,9 @@ FLAT = {
         "nordstrom_scalar", lambda m: along(0.0, *m.reach("spherical", "r")), view_id="point_mass"),
     ("nordstrom_scalar", "dust", "radial"): lambda: one(
         "nordstrom_scalar", lambda m: along(m.time, *m.reach("dust", "r")), view_id="dust"),
+    # Einstein's static field of 1912: the equator outside a body by the equation of March at t = 0.
+    ("einstein_1912_static", "march", "radial"): lambda: one(
+        "einstein_1912_static", lambda m: along(0.0, *m.reach("march", "r"))),
     # Kopczynski and Trautman's universe at each moment of its movie, out to the dust at r = l on each chart.
     ("kopczynski_trautman", "comoving_spherical", "radial"): lambda: one(
         "kopczynski_trautman", lambda m: along(m.time, *m.reach("comoving_spherical", "r"))),
@@ -2860,6 +2863,12 @@ HIDDEN = {
     ("nordstrom_scalar", "conformal"): "a plane wave of the theory, another spacetime than the point mass and the dust universe whose moments are embedded",
     ("nordstrom_scalar", "uniform", "tz"): "the uniform field, another spacetime than the point mass and the dust universe whose moments are embedded",
     ("nordstrom_scalar", "uniform"): "the uniform field, another spacetime than the point mass and the dust universe whose moments are embedded",
+    ("einstein_1912_static", "static", "tx"): "a star of the theory, another spacetime than the body of the equation of March whose equator is embedded",
+    ("einstein_1912_static", "static"): "a star of the theory, another spacetime than the body of the equation of March whose equator is embedded",
+    ("einstein_1912_static", "uniform", "tz"): "the uniform field, another spacetime than the body of the equation of March whose equator is embedded",
+    ("einstein_1912_static", "uniform"): "the uniform field, another spacetime than the body of the equation of March whose equator is embedded",
+    ("einstein_1912_static", "february", "radial"): "the field of the equation of February, another spacetime than the body of the equation of March whose equator is embedded",
+    ("einstein_1912_static", "february"): "the field of the equation of February, another spacetime than the body of the equation of March whose equator is embedded",
     ("tippett_tsang", "interior", "tx"): "the flat spacetime inside the bubble continued over the whole plane, another spacetime than the bubble whose moment is embedded",
     ("tippett_tsang", "rindler", "plane"): "the flat spacetime inside the bubble continued over the whole plane, another spacetime than the bubble whose moment is embedded",
     ("siklos", "kaigorodov_stationary", "plane"): "the region x < 0 of Siklos's chart, another region than the one whose wave front is embedded",

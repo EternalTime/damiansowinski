@@ -393,6 +393,11 @@
       "id": "datt_ruban_t_models",
       "kind": "generalisation",
       "text": "The inside of the horizon filled with dust that adds nothing to the mass: a tube of spheres, all of one radius, holding any amount of matter at the same $r_s$ [ruban1968]."
+    },
+    {
+      "id": "einstein_1912_static",
+      "kind": "programme",
+      "text": "Einstein's own first field outside a body, three years before Schwarzschild's. Its space is flat and only its clocks feel the mass, so it bends light by half as much [einstein1911]."
     }
   ],
   "references": [

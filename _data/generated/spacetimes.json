@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 141,
+  "count": 142,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -12148,6 +12148,298 @@
           ],
           "ricci_scalar": "\\dfrac{6}{R^2}",
           "kretschmann": "K = \\dfrac{12}{R^4}"
+        }
+      ]
+    },
+    {
+      "id": "einstein_1912_static",
+      "name": "Einstein's Static Field of 1912",
+      "short_name": "Einstein's 1912 Static Field",
+      "description": "Einstein's theory of static gravity from his Prague year: space stays flat and the speed of light varies from place to place, serving as the gravitational potential. Clocks slow near a mass as they do in general relativity, and light bends by half as much.",
+      "tags": [
+        "scalar gravity",
+        "alternative theory of gravity",
+        "variable speed of light",
+        "equivalence principle",
+        "light deflection",
+        "uniform field",
+        "static",
+        "stationary",
+        "four-dimensional",
+        "Lorentzian",
+        "idealized model",
+        "curvature singularity",
+        "asymptotically flat"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, with $c$ the speed of light where $N = 1$, so that Einstein's variable speed of light is $cN$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "The static field with no mass anywhere: at $N = 1$ the metric is Minkowski's. Einstein's uniform field is Minkowski space too, in the coordinates of uniformly accelerated observers that now carry Wolfgang Rindler's name [rindler1966]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "programme",
+          "text": "What the field outside a body became in the finished theory. To first order in $GM/c^2r$ Schwarzschild's clocks slow as Einstein's of 1912 do, and his curved space doubles the bending of light [einstein1915perihelion]."
+        },
+        {
+          "id": "nordstrom_scalar",
+          "kind": "programme",
+          "text": "The rival answer of the same year. Nordström kept the speed of light constant and let one factor rescale clocks and rods alike, so his light goes straight, while Einstein's field of 1912 slows the clocks alone and bends light by half of general relativity's angle [norton2007, will2014]."
+        },
+        {
+          "id": "ppn_metric",
+          "kind": "generalisation",
+          "text": "The weak field of a body with a number in front of every term. Einstein's bodies of 1912 sit at $\\gamma = 0$, with $\\beta = 1/2$ by the equation of February and $\\beta = 3/4$ by that of March [will2014]."
+        }
+      ],
+      "references": [
+        "weinstein2012",
+        "einstein1911",
+        "giulini2014prague",
+        "einstein1912abraham",
+        "einstein1912",
+        "rindler1966",
+        "einstein1912static",
+        "straumann2011",
+        "buchdahl1959",
+        "einstein1915perihelion",
+        "will2014",
+        "einstein1913",
+        "norton2007"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_1912_static.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Static Field",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "N > 0"
+          ],
+          "parameters": [
+            {
+              "symbol": "N = N(x,y,z)",
+              "description": "Speed of light at the point $(x, y, z)$ divided by $c$, a positive pure number. Einstein's field equation of February 1912 is $\\nabla^2N = 4\\pi G\\rho N/c^2$ and that of March 1912 is $N\\nabla^2N - \\tfrac{1}{2}(\\nabla N)^2 = 4\\pi G\\rho N^2/c^2$, where $\\rho$ is the density of mass and $\\nabla$ the gradient of flat space"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z)$, with $t$ carrying dimensions of time and $x$, $y$, and $z$ lengths, Cartesian on the flat space of the field. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -N^2c^2dt^2 + dx^2 + dy^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-N^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\left(\\partial_x^2N + \\partial_y^2N + \\partial_z^2N\\right)}{N}",
+          "kretschmann": "K = \\dfrac{8\\left(\\partial_x\\partial_y N\\right)^2 + 8\\left(\\partial_x\\partial_z N\\right)^2 + 4\\left(\\partial_x^2 N\\right)^2 + 8\\left(\\partial_y\\partial_z N\\right)^2 + 4\\left(\\partial_y^2 N\\right)^2 + 4\\left(\\partial_z^2 N\\right)^2}{N^2}"
+        },
+        {
+          "id": "uniform",
+          "name": "Uniform Field",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (0, \\infty)",
+            "z = 0 \\;\\text{(horizon, where } N = 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Proper acceleration of a body at rest at the height $z = c^2/a$, where $N = 1$"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z)$, with $t$ carrying dimensions of time and $z$ the height above the plane where $N = az/c^2$ vanishes. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{a^2z^2}{c^4}c^2dt^2 + dx^2 + dy^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{a^2\\,z^2}{c^4}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "february",
+          "name": "Outside a Body, February",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (m, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = m \\;\\text{(curvature singularity, where } N = 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass of the body as a length, $m = GM/c^2$, where $M$ is its gravitational mass; half the Schwarzschild radius of the same mass"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ centred on a static spherical body, with $t$ carrying dimensions of time and $r$ the distance from its centre, so that $N = 1 - m/r$ outside the body. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{m}{r}\\right)^2c^2dt^2 + dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{m}{r}\\right)^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{24m^2}{r^4\\left(r - m\\right)^2}"
+        },
+        {
+          "id": "march",
+          "name": "Outside a Body, March",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (m/2, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = m/2 \\;\\text{(curvature singularity, where } N = 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass of the body as a length, $m = GM/c^2$, where $M$ is its gravitational mass; half the Schwarzschild radius of the same mass"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ centred on a static spherical body, with $t$ carrying dimensions of time and $r$ the distance from its centre, so that $N = (1 - m/2r)^2$ outside the body. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{m}{2r}\\right)^4c^2dt^2 + dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{m}{2r}\\right)^4"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{4m^2}{r^2\\left(2r - m\\right)^2}",
+          "kretschmann": "K = \\dfrac{16m^2\\left(24r^2 - 32r\\,m + 11m^2\\right)}{r^4\\left(2r - m\\right)^4}"
         }
       ]
     },
@@ -27709,6 +28001,11 @@
           "id": "ab_metrics",
           "kind": "generalisation",
           "text": "Flat spacetime with a tachyon in it. At $b = 0$ A II and B I are the inside and the outside of the cone $T^2 = X^2 + Y^2$ about a spacelike line of Minkowski space [hruska2019]."
+        },
+        {
+          "id": "einstein_1912_static",
+          "kind": "generalisation",
+          "text": "Flat spacetime with a speed of light that varies from place to place, Einstein's static gravity of 1912. Its uniform field is Minkowski space in Rindler's coordinates [einstein1912]."
         }
       ],
       "references": [
@@ -31618,6 +31915,11 @@
           "id": "malament_hogarth",
           "kind": "family",
           "text": "Minkowski's metric times a free conformal factor again. There the factor is chosen to stretch one world line without end, and here a field equation fixes it [einstein1914fokker]."
+        },
+        {
+          "id": "einstein_1912_static",
+          "kind": "programme",
+          "text": "Einstein's own theory of 1912, the one Nordström set out to do without: a speed of light that varies from place to place over a space that stays flat [norton2007, einstein1912]."
         }
       ],
       "references": [
@@ -32509,6 +32811,11 @@
           "id": "exponential_metric",
           "kind": "family",
           "text": "A metric with no horizon that sits at general relativity's point: $e^{-2m/r} = 1 - 2m/r + 2m^2/r^2 - \\dots$, so $\\beta = \\gamma = 1$ and the post-Newtonian tests do not separate the two [boonserm2018]."
+        },
+        {
+          "id": "einstein_1912_static",
+          "kind": "special_case",
+          "text": "Einstein's static gravity of 1912 as a point of the plane. At $\\gamma = 0$ space is flat and light bends by half of general relativity's angle, with $\\beta = 1/2$ by his equation of February and $3/4$ by that of March [will2014]."
         }
       ],
       "references": [
@@ -38171,6 +38478,11 @@
           "id": "datt_ruban_t_models",
           "kind": "generalisation",
           "text": "The inside of the horizon filled with dust that adds nothing to the mass: a tube of spheres, all of one radius, holding any amount of matter at the same $r_s$ [ruban1968]."
+        },
+        {
+          "id": "einstein_1912_static",
+          "kind": "programme",
+          "text": "Einstein's own first field outside a body, three years before Schwarzschild's. Its space is flat and only its clocks feel the mass, so it bends light by half as much [einstein1911]."
         }
       ],
       "references": [
