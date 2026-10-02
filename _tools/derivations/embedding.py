@@ -9380,6 +9380,70 @@ def curzon_chazy(ck, src):
                         "space carries the slice on."])]
 
 
+def morgan_morgan(ck, src):
+    """The plane z = 0 of the first Morgan-Morgan disc at t = 0, the disc and the vacuum plane round
+    it, in Weyl's chart at m = a/5 in units of the disc's radius a.
+
+    On it g_rhorho = e^(2 gamma - 2 psi) and g_phiphi = rho^2 e^(-2 psi), so the circle of Weyl's
+    radius rho has radius rho e^(-psi) on the surface, and the slice is a surface of revolution in
+    flat space where e^(2 gamma) >= (1 - rho d_rho psi)^2, which holds everywhere: on the disc
+    rho d_rho psi = (3 pi m/4a^3) rho^2 stays below 1/2 while the dust is slower than light, and
+    gamma is of order m^2. The disc is a cap, smooth at its centre, and the plane outside it
+    flattens toward the cone of a point mass far away; psi, gamma and their first derivatives are
+    continuous at the rim, so the two pieces meet with one tangent. psi and gamma on the plane are
+    the closed forms the oblate spheroidal chart defines, written in rho, and the published oblate
+    chart is checked to give the same surface: its disc, xi = 0 with rho = a sqrt(1 - eta^2), and
+    its plane eta = 0 with rho = a sqrt(1 + xi^2)."""
+    name = "the first Morgan-Morgan disc"
+    sl = Slice(src, "morgan_morgan", "weyl", "\\rho", "\\phi", {"t": 0, "z": 0}, {}, functions=nr._morgan_morgan_plane())
+    rim, top = 1.0, 4.0
+    size = 2 * float(sl.rho_at(top))
+    xs = np.concatenate([np.linspace(0.0, 1.0, 400)[1:-1], np.linspace(1.0, 60.0, 600)[1:]])
+    ck.add(f"{name}: g_rhorho >= (d sqrt(g_phiphi)/d rho)^2 on the whole plane", float(max(0.0, np.max(-sl.defect_at(xs)))), 0.0)
+    disc = Piece("disc", "star", sl, 0.0, rim, 0.0, 1,
+                 (("axis", "the centre of the disc, $\\rho = 0$, where the cap is smooth"),
+                  ("join", "the rim of the disc, $\\rho = a$")),
+                 [(0.5, "r", None)], size)
+    plane = Piece("plane", "sheet", sl, rim, top, disc.at(rim)[1], 1,
+                  (("join", "the rim of the disc, $\\rho = a$"), ("edge", "the surface runs on to $\\rho \\to \\infty$")),
+                  [(rim, "surface", "$\\rho = a$"), (2.0, "r", None), (3.0, "r", None), (top, "r", "$4\\,a$")], size)
+
+    def numbers(x):
+        """psi and gamma on the plane from the closed forms in xi and eta, which the slice does not use."""
+        return np.array([nr._morgan_morgan_numbers(0.0, math.sqrt(1 - r * r)) if r < 1
+                         else nr._morgan_morgan_numbers(math.sqrt(r * r - 1), 0.0) for r in np.atleast_1d(x)]).T
+
+    def radius(x):
+        return x * np.exp(-numbers(x)[0])
+    for piece in (disc, plane):
+        ck.isometry(f"{name}, the {piece.id}", piece)
+        ck.radius(f"{name}, the {piece.id}, rho e^(-psi)", piece, radius, size)
+    ck.join(f"{name}, the disc meets the plane outside it at the rim", disc, rim, plane, rim)
+    ck.add(f"{name}: the rim is a circle of radius a e^(3 pi m/8a)",
+           abs(disc.at(rim)[0] - math.exp(3 * math.pi * 0.2 / 8)), 1e-9)
+    # The published oblate spheroidal chart on the same plane: its disc and its plane eta = 0.
+    on_disc = Slice(src, "morgan_morgan", "oblate_spheroidal", "\\eta", "\\phi", {"t": 0, "xi": 0}, nr.MM)
+    outside = Slice(src, "morgan_morgan", "oblate_spheroidal", "\\xi", "\\phi", {"t": 0, "eta": 0}, nr.MM)
+    eta, xi = np.linspace(0.05, 0.95, 37), np.linspace(0.05, 3.5, 70)
+    r_in, r_out = np.sqrt(1 - eta ** 2), np.sqrt(1 + xi ** 2)
+    # d rho/d eta = -eta/sqrt(1 - eta^2) and d rho/d xi = xi/sqrt(1 + xi^2) carry g_xx - (d radius/dx)^2 across.
+    worst = max(np.max(np.abs(on_disc.rho_at(eta) - sl.rho_at(r_in))), np.max(np.abs(outside.rho_at(xi) - sl.rho_at(r_out))),
+                np.max(np.abs(on_disc.defect_at(eta) - sl.defect_at(r_in) * eta ** 2 / (1 - eta ** 2))),
+                np.max(np.abs(outside.defect_at(xi) - sl.defect_at(r_out) * xi ** 2 / (1 + xi ** 2))))
+    ck.add(f"{name}, the oblate spheroidal chart's disc and plane give the same surface", float(worst), 1e-9)
+    surface = Surface([disc, plane])
+    fig = figure_of([surface], {"star": "star", "sheet": "cover"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *plane.at(rim), "$\\rho = a$", dx=10)
+    ring_label(fig, [0, 0, 0], *plane.at(top), "$4\\,a$")
+    fig.legend("fill", "star", "the disc, $\\rho \\le a$, at $t = 0$")
+    fig.legend("fill", "cover", "the plane $z = 0$ outside the disc, a vacuum")
+    fig.legend("line", "r", "$\\rho$ constant, at $a/2$ on the disc and $2$, $3$ and $4\\,a$ outside")
+    fig.legend("line", "surface", "the rim of the disc, $\\rho = a$, a circle of radius $1.27\\,a$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("plane", "The disc and its plane", "$a$", [surface], fig.done(),
+                 settings="The first disc of the family at $m = a/5$, with the radius $a$ of the disc the unit of every length.")]
+
+
 def double_kerr(ck, src):
     """The plane z = 0 midway between Kramer and Neugebauer's two black holes at t = 0, for Herdeiro
     and Rebelo's pair of opposite spins, J = M^2 and zeta = 4M, in units of M.
@@ -10861,6 +10925,7 @@ DRAWN = {
     "kantowski_sachs": kantowski_sachs,
     "curzon_chazy": curzon_chazy,
     "double_kerr": double_kerr,
+    "morgan_morgan": morgan_morgan,
     "bonnor_rotating_dust": bonnor_rotating_dust,
     "zipoy_voorhees": zipoy_voorhees,
     "robinson_trautman": robinson_trautman,
@@ -11610,6 +11675,14 @@ CAPTIONS = {
         "curve, and the surface leaves the axis there along a light cone of Minkowski space. Every circle grows "
         "faster than the distance out to it, so the surface climbs all the way, ever more gently, and far from "
         "the centre it flattens into the plane of flat space.",
+    ],
+    ("morgan_morgan", "plane"): [
+        "The plane $z = 0$ of the first Morgan-Morgan disc at one moment ($m = a/5$), drawn as a surface in flat space "
+        "with every distance along it the metric distance. On it $g_{\\rho\\rho} = e^{2\\gamma - 2\\psi}$ and the circle "
+        "of Weyl's radius $\\rho$ has circumference $2\\pi\\rho\\,e^{-\\psi}$, which is $2\\pi a\\,e^{3\\pi m/8a}$ at the rim.",
+        "The disc is a cap, smooth at its centre and steepest at the rim, where the dust moves at $0.94\\,c$, and the "
+        "vacuum plane round it flattens with distance. The two meet at the rim with one tangent, and the curvature of "
+        "the spacetime diverges there; the same plane at every moment is the same surface.",
     ],
     ("curzon_chazy", "equator"): [
         "The plane $z = 0$ of the Curzon-Chazy particle at one moment ($m = 1$), drawn as a surface in flat space "

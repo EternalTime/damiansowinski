@@ -654,7 +654,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "369ea5eab0a2c7e6",
+    "version": "b41a596c769d4563",
     "diagrams": "8b39c6bef80d5718",
     "conformal": "573aa16b0b411fe4",
     "embedding": "a9676c6465fbce1c"
@@ -856,7 +856,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "be10339083c8c9f7",
+    "version": "5042a9c9fcd76842",
     "diagrams": "1358f347fde7be67",
     "conformal": "7807b351c1311ade",
     "embedding": "ab81073436048cb9"
@@ -2091,6 +2091,40 @@
     "embedding": "1762ae2364403f3b"
   },
   {
+    "id": "morgan_morgan",
+    "name": "Morgan-Morgan",
+    "tags": [
+      "vacuum",
+      "static",
+      "stationary",
+      "axisymmetric",
+      "Weyl class",
+      "harmonic function",
+      "thin disc",
+      "counterrotating",
+      "dust",
+      "thin shell",
+      "circular orbits",
+      "collisionless",
+      "tangential pressure",
+      "reflection symmetry",
+      "mass",
+      "no horizon",
+      "curvature singularity",
+      "ring singularity",
+      "asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "27093a530677be31",
+    "diagrams": "fcd9b835546fa10a",
+    "conformal": "83b45b101a7e6db4",
+    "embedding": "6602c018a8504748"
+  },
+  {
     "id": "morris_thorne",
     "name": "Morris-Thorne",
     "tags": [
@@ -2685,7 +2719,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d6b41ad20040c606",
+    "version": "267ce341803766d6",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -3386,7 +3420,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4a0fb7e8023f05c0",
+    "version": "923b83b779212a53",
     "diagrams": "c383ba43920e5b0b",
     "conformal": "f06e536b192c099c",
     "embedding": "633fa78640daea0a"

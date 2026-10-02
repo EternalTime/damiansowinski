@@ -1,5 +1,5 @@
 {
-  "version": "e6afea158be24dc9",
+  "version": "27b59d212ade5b1d",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -21282,6 +21282,219 @@
         "eprint": "2310.04157",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.109.124011"
+      }
+    },
+    "morgan1969": {
+      "type": "article",
+      "fields": {
+        "title": "The Gravitational Field of a Disk",
+        "author": "Morgan, Thomas and Morgan, Lesley",
+        "journal": "Physical Review",
+        "volume": "183",
+        "number": "5",
+        "pages": "1097--1101",
+        "year": "1969",
+        "doi": "10.1103/PhysRev.183.1097",
+        "url": "https://doi.org/10.1103/PhysRev.183.1097"
+      }
+    },
+    "hunter1963": {
+      "type": "article",
+      "fields": {
+        "title": "The Structure and Stability of Self-Gravitating Disks",
+        "author": "Hunter, C.",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "126",
+        "number": "4",
+        "pages": "299--315",
+        "year": "1963",
+        "doi": "10.1093/mnras/126.4.299",
+        "url": "https://doi.org/10.1093/mnras/126.4.299"
+      }
+    },
+    "bonnor1968": {
+      "type": "article",
+      "fields": {
+        "title": "The interpretation of some spheroidal metrics",
+        "author": "Bonnor, W. B. and Sackfield, A.",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "8",
+        "number": "4",
+        "pages": "338--344",
+        "year": "1968",
+        "doi": "10.1007/BF01646273",
+        "url": "https://doi.org/10.1007/BF01646273"
+      }
+    },
+    "bardeen1969": {
+      "type": "article",
+      "fields": {
+        "title": "Uniformly Rotating Disks in General Relativity",
+        "author": "Bardeen, James M. and Wagoner, Robert V.",
+        "journal": "The Astrophysical Journal",
+        "volume": "158",
+        "pages": "L65--L69",
+        "year": "1969",
+        "doi": "10.1086/180434",
+        "url": "https://doi.org/10.1086/180434"
+      }
+    },
+    "kalnajs1972": {
+      "type": "article",
+      "fields": {
+        "title": "The Equilibria and Oscillations of a Family of Uniformly Rotating Stellar Disks",
+        "author": "Kalnajs, Agris J.",
+        "journal": "The Astrophysical Journal",
+        "volume": "175",
+        "pages": "63--76",
+        "year": "1972",
+        "doi": "10.1086/151538",
+        "url": "https://doi.org/10.1086/151538"
+      }
+    },
+    "lyndenbell1978": {
+      "type": "article",
+      "fields": {
+        "title": "Relativistic disks - {I}. Counter rotating disks",
+        "author": "Lynden-Bell, D. and Pineault, S.",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "185",
+        "number": "4",
+        "pages": "679--694",
+        "year": "1978",
+        "doi": "10.1093/mnras/185.4.679",
+        "url": "https://doi.org/10.1093/mnras/185.4.679"
+      }
+    },
+    "bicak1993": {
+      "type": "article",
+      "fields": {
+        "title": "Relativistic disks as sources of static vacuum spacetimes",
+        "author": "Bič\\'ak, Jiř\\'i and Lynden-Bell, D. and Katz, Joseph",
+        "journal": "Physical Review D",
+        "volume": "47",
+        "number": "10",
+        "pages": "4334--4343",
+        "year": "1993",
+        "doi": "10.1103/PhysRevD.47.4334",
+        "url": "https://doi.org/10.1103/PhysRevD.47.4334"
+      }
+    },
+    "bicak1993b": {
+      "type": "article",
+      "fields": {
+        "title": "Relativistic discs and flat galaxy models",
+        "author": "Bič\\'ak, J. and Lynden-Bell, D. and Pichon, C.",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "265",
+        "number": "1",
+        "pages": "126--144",
+        "year": "1993",
+        "doi": "10.1093/mnras/265.1.126",
+        "url": "https://doi.org/10.1093/mnras/265.1.126"
+      }
+    },
+    "lemos1993": {
+      "type": "article",
+      "fields": {
+        "title": "Superposition of {Morgan} and {Morgan} discs with a {Schwarzschild} black hole",
+        "author": "Lemos, J. P. S. and Letelier, P. S.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "10",
+        "number": "6",
+        "pages": "L75--L78",
+        "year": "1993",
+        "doi": "10.1088/0264-9381/10/6/003",
+        "url": "https://doi.org/10.1088/0264-9381/10/6/003"
+      }
+    },
+    "neugebauer1995": {
+      "type": "article",
+      "fields": {
+        "title": "General Relativistic Gravitational Field of a Rigidly Rotating Disk of Dust: Solution in Terms of Ultraelliptic Functions",
+        "author": "Neugebauer, G. and Meinel, R.",
+        "journal": "Physical Review Letters",
+        "volume": "75",
+        "number": "17",
+        "pages": "3046--3047",
+        "year": "1995",
+        "doi": "10.1103/PhysRevLett.75.3046",
+        "eprint": "gr-qc/0302060",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.75.3046"
+      }
+    },
+    "klein2001": {
+      "type": "article",
+      "fields": {
+        "title": "Exact relativistic treatment of stationary counterrotating dust disks: Boundary value problems and solutions",
+        "author": "Klein, C.",
+        "journal": "Physical Review D",
+        "volume": "63",
+        "number": "6",
+        "pages": "064033",
+        "year": "2001",
+        "doi": "10.1103/PhysRevD.63.064033",
+        "eprint": "gr-qc/0102083",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.63.064033"
+      }
+    },
+    "semerak2001": {
+      "type": "article",
+      "fields": {
+        "title": "Curvature singularity around first {Morgan-Morgan} disc",
+        "author": "Semer\\'ak, O.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "18",
+        "number": "17",
+        "pages": "3589--3593",
+        "year": "2001",
+        "doi": "10.1088/0264-9381/18/17/312",
+        "url": "https://doi.org/10.1088/0264-9381/18/17/312"
+      }
+    },
+    "semerak2002": {
+      "type": "incollection",
+      "fields": {
+        "title": "Towards gravitating discs around stationary black holes",
+        "author": "Semer\\'ak, Oldřich",
+        "booktitle": "Gravitation: Following the Prague Inspiration",
+        "publisher": "World Scientific",
+        "pages": "111--160",
+        "year": "2002",
+        "doi": "10.1142/9789812776938_0004",
+        "eprint": "gr-qc/0204025",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/9789812776938_0004"
+      }
+    },
+    "gonzalez2006": {
+      "type": "article",
+      "fields": {
+        "title": "An infinite family of generalized {Kalnajs} discs",
+        "author": "Gonz\\'alez, Guillermo A. and Reina, Jerson I.",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "371",
+        "number": "4",
+        "pages": "1873--1876",
+        "year": "2006",
+        "doi": "10.1111/j.1365-2966.2006.10819.x",
+        "eprint": "0806.4266",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1111/j.1365-2966.2006.10819.x"
+      }
+    },
+    "kofron2023": {
+      "type": "article",
+      "fields": {
+        "title": "Relativistic disks by {Appell}-ring convolutions",
+        "author": "Kofroň, David and Kotlař\\'ik, Petr and Semer\\'ak, Oldřich",
+        "journal": "arXiv preprint arXiv:2310.16669",
+        "year": "2023",
+        "eprint": "2310.16669",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2310.16669"
       }
     }
   }

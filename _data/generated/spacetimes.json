@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 111,
+  "count": 112,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -6498,6 +6498,11 @@
           "id": "bonnor_rotating_dust",
           "kind": "family",
           "text": "A cloud of rotating dust built on the potential of a point, as the Curzon-Chazy particle is. Its singularity at the origin is directional too: the curvature diverges along the axis and dies away in the equatorial plane [bonnor1977cloud, astesiano2024]."
+        },
+        {
+          "id": "morgan_morgan",
+          "kind": "limit_source",
+          "text": "Static discs of counterrotating dust, Weyl fields built on the Newtonian potential of a disc. In the limit of the disc shrunk to a point at fixed mass the field is the Curzon-Chazy particle's, which itself arises as the metric of a counterrotating disc [bicak1993]."
         }
       ],
       "references": [
@@ -6522,7 +6527,8 @@
         "kramer1980",
         "neugebauer2009",
         "bonnor1977cloud",
-        "astesiano2024"
+        "astesiano2024",
+        "bicak1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/curzon_chazy.json",
@@ -8305,6 +8311,11 @@
           "id": "bartnik_mckinnon",
           "kind": "family",
           "text": "Another static ball with no surface, whose stress along the radius differs from its stress across it. It is made of Yang-Mills field and is known only numerically [bartnik1988, volkov1999]."
+        },
+        {
+          "id": "morgan_morgan",
+          "kind": "family",
+          "text": "The same support within one plane: a static disc of dust on circular orbits, half the grains circling each way. Morgan and Morgan cite Einstein's paper [morgan1969]."
         }
       ],
       "references": [
@@ -8324,7 +8335,8 @@
         "tolman1939",
         "ruffini1969",
         "bartnik1988",
-        "volkov1999"
+        "volkov1999",
+        "morgan1969"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_cluster.json",
@@ -21178,6 +21190,222 @@
       ]
     },
     {
+      "id": "morgan_morgan",
+      "name": "Morgan-Morgan Discs",
+      "short_name": "Morgan-Morgan",
+      "description": "Static thin discs of dust in Weyl's class, found by Thomas Morgan and Lesley Morgan in 1969. Half the dust circles the axis one way and half the other, so a disc has no angular momentum, and the field around it is a static vacuum built on a Newtonian potential.",
+      "tags": [
+        "vacuum",
+        "static",
+        "stationary",
+        "axisymmetric",
+        "Weyl class",
+        "harmonic function",
+        "thin disc",
+        "counterrotating",
+        "dust",
+        "thin shell",
+        "circular orbits",
+        "collisionless",
+        "tangential pressure",
+        "reflection symmetry",
+        "mass",
+        "no horizon",
+        "curvature singularity",
+        "ring singularity",
+        "asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The mass parameter $m = GM/c^2$ is a length. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "curzon_chazy",
+          "kind": "limit",
+          "text": "The disc shrunk to a point. In the limit $a \\to 0$ at fixed mass the potential of the disc is that of a point, $\\psi = -m/R$, and Bičák, Lynden-Bell, and Katz showed that Curzon and Chazy's field itself arises as the metric of a counterrotating disc [bicak1993]."
+        },
+        {
+          "id": "einstein_cluster",
+          "kind": "family",
+          "text": "Einstein's sphere of particles on circular orbits in every direction. The disc is held up the same way within one plane, and Morgan and Morgan cite Einstein's paper [einstein1939, morgan1969]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "A Weyl field as well, built on the Newtonian potential of a rod. Lemos and Letelier set a disc of this family round Schwarzschild's black hole, an exact solution of the two together [lemos1993]."
+        },
+        {
+          "id": "zipoy_voorhees",
+          "kind": "family",
+          "text": "Another static Weyl field, that of a rod with any mass per length. Bičák, Lynden-Bell, and Katz showed that it too arises as the metric of a counterrotating disc [bicak1993]."
+        }
+      ],
+      "references": [
+        "hunter1963",
+        "bicak1993b",
+        "lyndenbell1978",
+        "morgan1969",
+        "einstein1939",
+        "weyl1917",
+        "lehmkuhl2019",
+        "bardeen1969",
+        "semerak2002",
+        "gonzalez2006",
+        "kalnajs1972",
+        "bardeen1971",
+        "neugebauer1995",
+        "bicak1993",
+        "lemos1993",
+        "klein2001",
+        "bonnor1968",
+        "semerak2001",
+        "kofron2023"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/morgan_morgan.json",
+      "charts": [
+        {
+          "id": "weyl",
+          "name": "Weyl",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "z = 0,\\; \\rho \\le a \\;\\text{(the disc)}",
+            "\\gamma = 0 \\;\\text{at}\\; \\rho = 0 \\;\\text{(a regular axis)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\psi = \\psi(\\rho,z)",
+              "description": "Dimensionless function of $\\rho$ and $z$, with $-e^{2\\psi}$ the norm of the Killing vector $\\partial_t$ in the chart $x^0 = ct$; off the disc the spacetime is a vacuum exactly where $\\partial_\\rho^2\\psi + \\dfrac{1}{\\rho}\\partial_\\rho\\psi + \\partial_z^2\\psi = 0$, Laplace's equation in the flat space of $\\rho$, $\\phi$, and $z$, together with the equations for $\\gamma$; for the disc of order $n = 1, 2, 3, \\dots$ of Morgan and Morgan's family $c^2\\psi$ is Newton's potential of a disc of mass $M$ and radius $a$ in the plane $z = 0$ with the surface density $\\dfrac{(2n + 1)M}{2\\pi a^2}\\left(1 - \\dfrac{\\rho^2}{a^2}\\right)^{n - 1/2}$, and for the first disc $\\psi = -\\dfrac{3m}{4a}\\left(\\left(1 + \\eta^2 - \\xi^2 + 3\\xi^2\\eta^2\\right)\\mathrm{arccot}\\,\\xi - \\xi\\left(3\\eta^2 - 1\\right)\\right)$, where $m = GM/c^2$ and the oblate spheroidal coordinates $\\xi \\ge 0$ and $\\eta$ are defined by $\\rho = a\\sqrt{\\left(1 + \\xi^2\\right)\\left(1 - \\eta^2\\right)}$ and $z = a\\xi\\eta$"
+            },
+            {
+              "symbol": "\\gamma = \\gamma(\\rho,z)",
+              "description": "Dimensionless function of $\\rho$ and $z$ fixed by $\\psi$ through $\\partial_\\rho\\gamma = \\rho\\left(\\left(\\partial_\\rho\\psi\\right)^2 - \\left(\\partial_z\\psi\\right)^2\\right)$ and $\\partial_z\\gamma = 2\\rho\\,\\partial_\\rho\\psi\\,\\partial_z\\psi$, and zero on the axis $\\rho = 0$, which is then free of conical singularities"
+            }
+          ],
+          "convention": "We use Weyl's canonical coordinates $(t, \\rho, \\phi, z)$, with $t$ carrying dimensions of time and $\\rho$ and $z$ lengths, and leave Weyl's two functions $\\psi$ and $\\gamma$ free. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -e^{2\\psi}c^2dt^2 + e^{-2\\psi}\\left(e^{2\\gamma}\\left(d\\rho^2 + dz^2\\right) + \\rho^2d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{2\\psi}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "e^{2\\gamma - 2\\psi}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{2\\gamma - 2\\psi}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2e^{-2\\psi}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\left(\\rho\\,\\partial_z^2\\psi + \\rho\\,\\partial_\\rho^2\\psi - \\rho\\,\\partial_z^2\\gamma - \\rho\\,\\partial_\\rho^2\\gamma - \\rho\\left(\\partial_z\\psi\\right)^2 + \\partial_\\rho\\psi - \\rho\\left(\\partial_\\rho\\psi\\right)^2\\right)e^{-2\\gamma + 2\\psi}}{\\rho}",
+          "kretschmann": "K = \\dfrac{4\\left(4\\rho^2\\left(\\partial_\\rho\\gamma\\right)^2\\left(\\partial_\\rho\\psi\\right)^2 - 4\\rho\\left(\\partial_\\rho\\gamma\\right)^2\\,\\partial_\\rho\\psi + 4\\rho^2\\left(\\partial_\\rho\\gamma\\right)^2\\left(\\partial_z\\psi\\right)^2 + 2\\left(\\partial_\\rho\\gamma\\right)^2 - 8\\rho^2\\,\\partial_\\rho\\gamma\\left(\\partial_\\rho\\psi\\right)^3 + 2\\rho\\,\\partial_\\rho\\gamma\\left(\\partial_\\rho\\psi\\right)^2 - 8\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 4\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_\\rho\\psi\\,\\partial_\\rho^2\\psi + 4\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_\\rho\\psi\\,\\partial_z^2\\psi - 2\\rho\\,\\partial_\\rho\\gamma\\left(\\partial_z\\psi\\right)^2 - 8\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_z\\psi\\,\\partial_\\rho\\partial_z\\psi + 2\\rho\\,\\partial_\\rho\\gamma\\,\\partial_\\rho^2\\psi - 2\\rho\\,\\partial_\\rho\\gamma\\,\\partial_z^2\\psi + 4\\rho^2\\left(\\partial_z\\gamma\\right)^2\\left(\\partial_\\rho\\psi\\right)^2 - 4\\rho\\left(\\partial_z\\gamma\\right)^2\\,\\partial_\\rho\\psi + 4\\rho^2\\left(\\partial_z\\gamma\\right)^2\\left(\\partial_z\\psi\\right)^2 + 2\\left(\\partial_z\\gamma\\right)^2 - 8\\rho^2\\,\\partial_z\\gamma\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi + 4\\rho\\,\\partial_z\\gamma\\,\\partial_\\rho\\psi\\,\\partial_z\\psi - 8\\rho^2\\,\\partial_z\\gamma\\,\\partial_\\rho\\psi\\,\\partial_\\rho\\partial_z\\psi - 8\\rho^2\\,\\partial_z\\gamma\\left(\\partial_z\\psi\\right)^3 + 4\\rho^2\\,\\partial_z\\gamma\\,\\partial_z\\psi\\,\\partial_\\rho^2\\psi - 4\\rho^2\\,\\partial_z\\gamma\\,\\partial_z\\psi\\,\\partial_z^2\\psi + 4\\rho\\,\\partial_z\\gamma\\,\\partial_\\rho\\partial_z\\psi + 7\\rho^2\\left(\\partial_\\rho\\psi\\right)^4 - 4\\rho\\left(\\partial_\\rho\\psi\\right)^3 + 14\\rho^2\\left(\\partial_\\rho\\psi\\right)^2\\left(\\partial_z\\psi\\right)^2 + 4\\rho^2\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_\\rho^2\\psi - 4\\rho^2\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z^2\\psi + 3\\left(\\partial_\\rho\\psi\\right)^2 - 4\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 + 16\\rho^2\\,\\partial_\\rho\\psi\\,\\partial_z\\psi\\,\\partial_\\rho\\partial_z\\psi + 2\\rho\\,\\partial_\\rho\\psi\\,\\partial_\\rho^2\\psi + 2\\rho\\,\\partial_\\rho\\psi\\,\\partial_z^2\\psi + 7\\rho^2\\left(\\partial_z\\psi\\right)^4 - 4\\rho^2\\left(\\partial_z\\psi\\right)^2\\,\\partial_\\rho^2\\psi + 4\\rho^2\\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2\\psi + \\rho^2\\left(\\partial_\\rho^2\\gamma\\right)^2 + 2\\rho^2\\,\\partial_\\rho^2\\gamma\\,\\partial_z^2\\gamma - 2\\rho^2\\,\\partial_\\rho^2\\gamma\\,\\partial_\\rho^2\\psi - 2\\rho^2\\,\\partial_\\rho^2\\gamma\\,\\partial_z^2\\psi + \\rho^2\\left(\\partial_z^2\\gamma\\right)^2 - 2\\rho^2\\,\\partial_z^2\\gamma\\,\\partial_\\rho^2\\psi - 2\\rho^2\\,\\partial_z^2\\gamma\\,\\partial_z^2\\psi + 3\\rho^2\\left(\\partial_\\rho^2\\psi\\right)^2 + 2\\rho^2\\,\\partial_\\rho^2\\psi\\,\\partial_z^2\\psi + 4\\rho^2\\left(\\partial_\\rho\\partial_z\\psi\\right)^2 + 3\\rho^2\\left(\\partial_z^2\\psi\\right)^2\\right)e^{-4\\gamma + 4\\psi}}{\\rho^2}"
+        },
+        {
+          "id": "oblate_spheroidal",
+          "name": "Oblate Spheroidal",
+          "coordinates": [
+            "t",
+            "\\xi",
+            "\\eta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\xi \\in [0, \\infty)",
+            "\\eta \\in [-1, 1]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\xi = 0 \\;\\text{(the disc)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass parameter, a length, $m = GM/c^2$ with $M$ the mass of the disc, measured at spatial infinity"
+            },
+            {
+              "symbol": "a",
+              "description": "Radius of the disc in Weyl's coordinates $\\rho = a\\sqrt{\\left(1 + \\xi^2\\right)\\left(1 - \\eta^2\\right)}$ and $z = a\\xi\\eta$, a length; the counter-rotating dust moves slower than light for $m/a < 2/(3\\pi)$"
+            },
+            {
+              "symbol": "\\alpha = \\dfrac{\\pi}{2} - \\arctan(\\xi)",
+              "description": "The angle $\\mathrm{arccot}\\,\\xi$, which falls from $\\pi/2$ on the disc to zero at infinity"
+            },
+            {
+              "symbol": "\\psi = -\\dfrac{3m}{4a}\\left(\\left(1 + \\eta^2 - \\xi^2 + 3\\xi^2\\eta^2\\right)\\alpha - \\xi\\left(3\\eta^2 - 1\\right)\\right)",
+              "description": "Weyl's first function for the first disc of Morgan and Morgan's family, with $c^2\\psi$ Newton's potential of a disc of surface density $\\dfrac{3M}{2\\pi a^2}\\sqrt{1 - \\rho^2/a^2}$; it solves Laplace's equation, $\\partial_\\xi\\left(\\left(1 + \\xi^2\\right)\\partial_\\xi\\psi\\right) + \\partial_\\eta\\left(\\left(1 - \\eta^2\\right)\\partial_\\eta\\psi\\right) = 0$, and on the disc $\\psi = -\\dfrac{3\\pi m}{8a}\\left(1 + \\eta^2\\right)$"
+            },
+            {
+              "symbol": "\\gamma = -\\dfrac{9m^2\\left(1 - \\eta^2\\right)}{16a^2}\\left(\\left(1 + \\xi^2\\right)\\left(9\\xi^2\\eta^2 + \\eta^2 - \\xi^2 - 1\\right)\\alpha^2 - 2\\xi\\left(9\\xi^2\\eta^2 + 7\\eta^2 - \\xi^2 + 1\\right)\\alpha + 9\\xi^2\\eta^2 + 4\\eta^2 - \\xi^2 + 4\\right)",
+              "description": "Weyl's second function, fixed by $\\psi$ through $\\partial_\\xi\\gamma = \\dfrac{1 - \\eta^2}{\\xi^2 + \\eta^2}\\left(\\xi\\left(1 + \\xi^2\\right)\\left(\\partial_\\xi\\psi\\right)^2 - \\xi\\left(1 - \\eta^2\\right)\\left(\\partial_\\eta\\psi\\right)^2 - 2\\eta\\left(1 + \\xi^2\\right)\\partial_\\xi\\psi\\,\\partial_\\eta\\psi\\right)$ and $\\partial_\\eta\\gamma = \\dfrac{1 + \\xi^2}{\\xi^2 + \\eta^2}\\left(\\eta\\left(1 + \\xi^2\\right)\\left(\\partial_\\xi\\psi\\right)^2 - \\eta\\left(1 - \\eta^2\\right)\\left(\\partial_\\eta\\psi\\right)^2 + 2\\xi\\left(1 - \\eta^2\\right)\\partial_\\xi\\psi\\,\\partial_\\eta\\psi\\right)$, and zero on the axis $\\eta = \\pm 1$"
+            }
+          ],
+          "convention": "We use oblate spheroidal coordinates $(t, \\xi, \\eta, \\phi)$, with $t$ carrying dimensions of time and $\\xi$ and $\\eta$ pure numbers, and write $\\alpha$ for $\\mathrm{arccot}\\,\\xi$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -e^{2\\psi}c^2dt^2 + a^2e^{-2\\psi}\\left(e^{2\\gamma}\\left(\\xi^2 + \\eta^2\\right)\\left(\\dfrac{d\\xi^2}{1 + \\xi^2} + \\dfrac{d\\eta^2}{1 - \\eta^2}\\right) + \\left(1 + \\xi^2\\right)\\left(1 - \\eta^2\\right)d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{2\\psi}"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "\\dfrac{a^2\\left(\\xi^2 + \\eta^2\\right)e^{2\\gamma - 2\\psi}}{1 + \\xi^2}"
+            },
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "\\dfrac{a^2\\left(\\xi^2 + \\eta^2\\right)e^{2\\gamma - 2\\psi}}{1 - \\eta^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)e^{-2\\psi}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{16\\left(\\left(1 - \\eta^2\\right)^2\\left(\\xi^2 + \\eta^2\\right)\\left(\\partial_\\eta^2\\psi\\right)^2 + 2\\xi\\left(1 - \\eta^2\\right)^2\\left(1 + \\xi^2\\right)^2\\left(\\partial_\\xi\\psi\\right)^3\\,\\partial_\\eta^2\\psi - 6\\eta\\left(1 - \\eta^2\\right)^2\\left(1 + \\xi^2\\right)^2\\left(\\partial_\\xi\\psi\\right)^2\\,\\partial_\\eta\\psi\\,\\partial_\\eta^2\\psi - 3\\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)\\left(\\xi^2 + \\eta^2\\right)\\left(\\partial_\\xi\\psi\\right)^2\\,\\partial_\\eta^2\\psi - 6\\xi\\left(1 - \\eta^2\\right)^3\\left(1 + \\xi^2\\right)\\partial_\\xi\\psi\\left(\\partial_\\eta\\psi\\right)^2\\,\\partial_\\eta^2\\psi + \\xi\\left(3\\xi^2 + \\eta^2 + 2\\right)\\left(1 - \\eta^2\\right)\\partial_\\xi\\psi\\,\\partial_\\eta^2\\psi + 2\\eta\\left(1 - \\eta^2\\right)^3\\left(1 + \\xi^2\\right)\\left(\\partial_\\eta\\psi\\right)^3\\,\\partial_\\eta^2\\psi + 3\\left(1 - \\eta^2\\right)^2\\left(\\xi^2 + \\eta^2\\right)\\left(\\partial_\\eta\\psi\\right)^2\\,\\partial_\\eta^2\\psi - \\eta\\left(3\\xi^2 + \\eta^2 + 2\\right)\\left(1 - \\eta^2\\right)\\partial_\\eta\\psi\\,\\partial_\\eta^2\\psi + \\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)^4\\left(\\partial_\\xi\\psi\\right)^6 - 3\\xi\\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)^3\\left(\\partial_\\xi\\psi\\right)^5 + 3\\left(1 - \\eta^2\\right)^2\\left(1 + \\xi^2\\right)^3\\left(\\partial_\\xi\\psi\\right)^4\\left(\\partial_\\eta\\psi\\right)^2 + 3\\eta\\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)^3\\left(\\partial_\\xi\\psi\\right)^4\\,\\partial_\\eta\\psi - \\left(3\\xi^2\\,\\eta^2 - 6\\xi^2 - \\eta^2 - 2\\right)\\left(1 + \\xi^2\\right)^2\\left(\\partial_\\xi\\psi\\right)^4 - 6\\xi\\left(1 - \\eta^2\\right)^2\\left(1 + \\xi^2\\right)^2\\left(\\partial_\\xi\\psi\\right)^3\\left(\\partial_\\eta\\psi\\right)^2 - 10\\xi\\,\\eta\\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)^2\\left(\\partial_\\xi\\psi\\right)^3\\,\\partial_\\eta\\psi + \\left(2\\xi^4\\,\\eta^3\\,\\partial_\\xi\\partial_\\eta\\psi - 2\\xi^4\\,\\eta\\,\\partial_\\xi\\partial_\\eta\\psi - 6\\xi^3 + 4\\xi^2\\,\\eta^3\\,\\partial_\\xi\\partial_\\eta\\psi - 4\\xi^2\\,\\eta\\,\\partial_\\xi\\partial_\\eta\\psi - 3\\xi\\,\\eta^2 - 3\\xi + 2\\eta^3\\,\\partial_\\xi\\partial_\\eta\\psi - 2\\eta\\,\\partial_\\xi\\partial_\\eta\\psi\\right)\\left(1 + \\xi^2\\right)\\left(\\partial_\\xi\\psi\\right)^3 + 3\\left(1 - \\eta^2\\right)^3\\left(1 + \\xi^2\\right)^2\\left(\\partial_\\xi\\psi\\right)^2\\left(\\partial_\\eta\\psi\\right)^4 + 6\\eta\\left(1 - \\eta^2\\right)^2\\left(1 + \\xi^2\\right)^2\\left(\\partial_\\xi\\psi\\right)^2\\left(\\partial_\\eta\\psi\\right)^3 + 3\\left(4\\xi^2\\,\\eta^2 + \\xi^2 + 5\\eta^2\\right)\\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)\\left(\\partial_\\xi\\psi\\right)^2\\left(\\partial_\\eta\\psi\\right)^2 - 3\\left(2\\xi^3\\,\\eta^4\\,\\partial_\\xi\\partial_\\eta\\psi - 4\\xi^3\\,\\eta^2\\,\\partial_\\xi\\partial_\\eta\\psi + 2\\xi^3\\,\\partial_\\xi\\partial_\\eta\\psi - 2\\xi^2\\,\\eta + 2\\xi\\,\\eta^4\\,\\partial_\\xi\\partial_\\eta\\psi - 4\\xi\\,\\eta^2\\,\\partial_\\xi\\partial_\\eta\\psi + 2\\xi\\,\\partial_\\xi\\partial_\\eta\\psi - 3\\eta^3 + \\eta\\right)\\left(1 + \\xi^2\\right)\\left(\\partial_\\xi\\psi\\right)^2\\,\\partial_\\eta\\psi + \\left(3\\xi^4 + 3\\xi^2 - \\eta^2 + 1\\right)\\left(\\partial_\\xi\\psi\\right)^2 - 3\\xi\\left(1 - \\eta^2\\right)^3\\left(1 + \\xi^2\\right)\\partial_\\xi\\psi\\left(\\partial_\\eta\\psi\\right)^4 + 6\\xi\\,\\eta\\left(1 - \\eta^2\\right)^2\\left(1 + \\xi^2\\right)\\partial_\\xi\\psi\\left(\\partial_\\eta\\psi\\right)^3 - 3\\left(2\\xi^2\\,\\eta^3\\,\\partial_\\xi\\partial_\\eta\\psi - 2\\xi^2\\,\\eta\\,\\partial_\\xi\\partial_\\eta\\psi + \\xi + 2\\eta^3\\,\\partial_\\xi\\partial_\\eta\\psi - 2\\eta\\,\\partial_\\xi\\partial_\\eta\\psi\\right)\\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)\\partial_\\xi\\psi\\left(\\partial_\\eta\\psi\\right)^2 - \\left(6\\xi^4\\,\\eta^2\\,\\partial_\\xi\\partial_\\eta\\psi - 6\\xi^4\\,\\partial_\\xi\\partial_\\eta\\psi + 6\\xi^3\\,\\eta + 6\\xi^2\\,\\eta^4\\,\\partial_\\xi\\partial_\\eta\\psi - 6\\xi^2\\,\\partial_\\xi\\partial_\\eta\\psi + 2\\xi\\,\\eta^3 + 4\\xi\\,\\eta + 6\\eta^4\\,\\partial_\\xi\\partial_\\eta\\psi - 6\\eta^2\\,\\partial_\\xi\\partial_\\eta\\psi\\right)\\partial_\\xi\\psi\\,\\partial_\\eta\\psi - 2\\eta\\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)\\partial_\\xi\\psi\\,\\partial_\\xi\\partial_\\eta\\psi + \\left(1 - \\eta^2\\right)^4\\left(1 + \\xi^2\\right)\\left(\\partial_\\eta\\psi\\right)^6 + 3\\eta\\left(1 - \\eta^2\\right)^3\\left(1 + \\xi^2\\right)\\left(\\partial_\\eta\\psi\\right)^5 + \\left(\\xi^2 - 2\\right)\\left(1 - \\eta^2\\right)^3\\left(\\partial_\\eta\\psi\\right)^4 + \\left(2\\xi\\,\\eta^4\\,\\partial_\\xi\\partial_\\eta\\psi - 4\\xi\\,\\eta^2\\,\\partial_\\xi\\partial_\\eta\\psi + 2\\xi\\,\\partial_\\xi\\partial_\\eta\\psi - 3\\eta\\right)\\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)\\left(\\partial_\\eta\\psi\\right)^3 + \\left(2\\xi^2\\,\\eta^2 + \\xi^2 + \\eta^4 + \\eta^2 + 1\\right)\\left(\\partial_\\eta\\psi\\right)^2 - 2\\xi\\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)\\partial_\\eta\\psi\\,\\partial_\\xi\\partial_\\eta\\psi + \\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)\\left(\\xi^2 + \\eta^2\\right)\\left(\\partial_\\xi\\partial_\\eta\\psi\\right)^2\\right)e^{-4\\gamma + 4\\psi}}{a^4\\left(\\xi^2 + \\eta^2\\right)^3}"
+        }
+      ]
+    },
+    {
       "id": "morris_thorne",
       "name": "Morris-Thorne Traversable Wormhole",
       "short_name": "Morris-Thorne",
@@ -27396,6 +27624,11 @@
           "id": "bartnik_mckinnon",
           "kind": "family",
           "text": "A ball of Yang-Mills field with no horizon, whose far field approaches Schwarzschild's. Pushed one way it collapses to a Schwarzschild black hole, and pushed the other it explodes [bartnik1988, zhou1991]."
+        },
+        {
+          "id": "morgan_morgan",
+          "kind": "family",
+          "text": "Static discs of counterrotating dust, Weyl fields as Schwarzschild's is. Lemos and Letelier set such a disc round Schwarzschild's black hole in an exact solution of the two together [lemos1993]."
         }
       ],
       "references": [
@@ -27481,7 +27714,8 @@
         "gibbonshawking1979",
         "liebling2023",
         "bartnik1988",
-        "zhou1991"
+        "zhou1991",
+        "lemos1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -34432,6 +34666,11 @@
           "id": "kerr",
           "kind": "family",
           "text": "The rotating black hole. Tomimatsu and Sato's spinning solution of 1972 is Kerr's metric at one value of its angular momentum, and the static limits of their family are the Zipoy-Voorhees metrics of whole number $\\delta$ [tomimatsu1972, kodamahikida2003]."
+        },
+        {
+          "id": "morgan_morgan",
+          "kind": "family",
+          "text": "Static discs of counterrotating dust in Weyl's class. Zipoy and Voorhees's metric also arises as the metric of a counterrotating disc [bicak1993]."
         }
       ],
       "references": [
@@ -34453,7 +34692,8 @@
         "brink2008",
         "maciejewski2013",
         "chowdhury2012",
-        "abdikamalov2019"
+        "abdikamalov2019",
+        "bicak1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/zipoy_voorhees.json",

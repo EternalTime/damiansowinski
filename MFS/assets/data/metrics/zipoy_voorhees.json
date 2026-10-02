@@ -54,6 +54,11 @@
       "id": "kerr",
       "kind": "family",
       "text": "The rotating black hole. Tomimatsu and Sato's spinning solution of 1972 is Kerr's metric at one value of its angular momentum, and the static limits of their family are the Zipoy-Voorhees metrics of whole number $\\delta$ [tomimatsu1972, kodamahikida2003]."
+    },
+    {
+      "id": "morgan_morgan",
+      "kind": "family",
+      "text": "Static discs of counterrotating dust in Weyl's class. Zipoy and Voorhees's metric also arises as the metric of a counterrotating disc [bicak1993]."
     }
   ],
   "references": [
@@ -75,7 +80,8 @@
     "brink2008",
     "maciejewski2013",
     "chowdhury2012",
-    "abdikamalov2019"
+    "abdikamalov2019",
+    "bicak1993"
   ],
   "coordinates": [
     {

@@ -251,6 +251,15 @@ DIMENSIONS = {
     ("double_kerr", "weyl"): {
         "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "f": "1", "\\omega": "L", "\\gamma": "1",
     },
+    # Weyl's two functions are pure numbers. In the oblate spheroidal chart xi and eta are pure
+    # numbers too, the disc's radius a carries the length, and alpha = arccot(xi) is an angle.
+    ("morgan_morgan", "weyl"): {
+        "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "\\psi": "1", "\\gamma": "1",
+    },
+    ("morgan_morgan", "oblate_spheroidal"): {
+        "t": "T", "\\xi": "1", "\\eta": "1", "\\phi": "1", "m": "L", "a": "L", "\\alpha": "1", "\\psi": "1",
+        "\\gamma": "1",
+    },
     # m = GM/c^2 is a length, and so is R = sqrt(rho^2 + z^2), the name Weyl's chart defines.
     ("curzon_chazy", "weyl"): {
         "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "m": "L", "R": "L",
@@ -1417,6 +1426,9 @@ HELD = {
     # and whose derivative along r is algebraic.
     ("tolman_vii", "spherical"): ("psi",),
     ("tolman_vii", "tolman"): ("psi",),
+    # Weyl's two functions for the first Morgan-Morgan disc, polynomials in xi, eta and arccot(xi):
+    # held, every value is written in them and their derivatives, as Weyl's chart writes it.
+    ("morgan_morgan", "oblate_spheroidal"): ("psi", "gamma"),
 }
 
 GREEK = [

@@ -303,6 +303,11 @@
       "id": "bartnik_mckinnon",
       "kind": "family",
       "text": "A ball of Yang-Mills field with no horizon, whose far field approaches Schwarzschild's. Pushed one way it collapses to a Schwarzschild black hole, and pushed the other it explodes [bartnik1988, zhou1991]."
+    },
+    {
+      "id": "morgan_morgan",
+      "kind": "family",
+      "text": "Static discs of counterrotating dust, Weyl fields as Schwarzschild's is. Lemos and Letelier set such a disc round Schwarzschild's black hole in an exact solution of the two together [lemos1993]."
     }
   ],
   "references": [
@@ -388,7 +393,8 @@
     "gibbonshawking1979",
     "liebling2023",
     "bartnik1988",
-    "zhou1991"
+    "zhou1991",
+    "lemos1993"
   ],
   "coordinates": [
     {
