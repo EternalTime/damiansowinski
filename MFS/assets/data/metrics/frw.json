@@ -62,6 +62,11 @@
       "id": "mcvittie",
       "kind": "generalisation",
       "text": "A point mass placed in the spatially flat Friedmann universe. At $r_s = 0$ it is that universe [mcvittie1933, kaloper2010]."
+    },
+    {
+      "id": "schwarzschild",
+      "kind": "family",
+      "text": "The vacuum around a single mass. Albert Einstein and Ernst Straus cut a ball out of a Friedmann universe of dust in 1945 and put Schwarzschild's solution for the mass removed in its place, so a system inside the hole does not feel the expansion [einstein1945, carrera2010]."
     }
   ],
   "references": [
@@ -100,7 +105,9 @@
     "robertson1933",
     "ellismaccallum1969",
     "mcvittie1933",
-    "kaloper2010"
+    "kaloper2010",
+    "einstein1945",
+    "carrera2010"
   ],
   "coordinates": [
     {

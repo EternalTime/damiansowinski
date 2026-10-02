@@ -60,6 +60,16 @@
       "id": "near_horizon_extreme_kerr",
       "kind": "special_case",
       "text": "The throat of the extreme hole with the charge switched off. With charge the throat slides toward the Bertotti-Robinson universe [bardeen1999]."
+    },
+    {
+      "id": "malament_hogarth",
+      "kind": "generalisation",
+      "text": "Kerr-Newman is a Malament-Hogarth spacetime, as Gábor Etesi and István Németi noted in 2002 when they set a computer in orbit around Kerr's black hole and sent an observer in to the inner horizon [etesi2002]."
+    },
+    {
+      "id": "dilaton_black_hole",
+      "kind": "family",
+      "text": "The charged black hole of low energy string theory. Ashoke Sen set it spinning in 1992, which makes his solution string theory's counterpart of Kerr-Newman, with mass, charge, and angular momentum [sen1992]."
     }
   ],
   "references": [
@@ -82,7 +92,9 @@
     "ruffini1971",
     "gibbons1975",
     "carter1968separable",
-    "bardeen1999"
+    "bardeen1999",
+    "etesi2002",
+    "sen1992"
   ],
   "coordinates": [
     {

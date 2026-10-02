@@ -45,6 +45,16 @@
       "id": "hartle_thorne",
       "kind": "family",
       "text": "The same star set turning slowly. James Hartle added rotation to these equations to second order in the angular velocity, and Hartle and Thorne's field is the outside of the result [hartle1967, hartlethorne1968]."
+    },
+    {
+      "id": "vaidya",
+      "kind": "family",
+      "text": "The outside of a star that shines. A star in equilibrium has Schwarzschild's vacuum around it and no pressure at its surface, and Nilton Santos showed in 1985 that a star losing heat joins to Vaidya's metric with a surface pressure proportional to the heat flux [santos1985]."
+    },
+    {
+      "id": "tolman_bondi",
+      "kind": "programme",
+      "text": "Richard Tolman's other spacetime, dust expanding or collapsing in spherical symmetry with a density that varies with radius, from 1934 [tolman1934]. Five years later he gave the method for static spheres of fluid that Oppenheimer and Volkoff applied in the paper after his [tolman1939]."
     }
   ],
   "references": [
@@ -70,7 +80,9 @@
     "buchdahl1959",
     "oppenheimersnyder1939",
     "hartle1967",
-    "hartlethorne1968"
+    "hartlethorne1968",
+    "santos1985",
+    "tolman1934"
   ],
   "coordinates": [
     {

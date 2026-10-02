@@ -61,6 +61,11 @@
       "id": "vaidya",
       "kind": "family",
       "text": "A star that radiates. Prahalad Vaidya carried the collapse over in 1966 to matter that shines as it falls [vaidya1966]."
+    },
+    {
+      "id": "btz",
+      "kind": "family",
+      "text": "The black hole of three dimensions. Robert Mann and Simon Ross showed in 1993 that dust collapsing under a negative cosmological constant can end as one [mann1993]."
     }
   ],
   "references": [
@@ -75,7 +80,8 @@
     "christodoulou1984",
     "szekeres1975collapse",
     "schwarzschild1916b",
-    "vaidya1966"
+    "vaidya1966",
+    "mann1993"
   ],
   "coordinates": [
     {

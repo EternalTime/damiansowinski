@@ -46,6 +46,11 @@
       "id": "kantowski_sachs",
       "kind": "family",
       "text": "The homogeneous cosmologies outside Bianchi's classification, with space $\\mathbb{R} \\times S^2$ [kantowski1966, ellismaccallum1969]."
+    },
+    {
+      "id": "de_sitter",
+      "kind": "family",
+      "text": "Where the expanding Bianchi universes end up when the cosmological constant is positive. Robert Wald proved in 1983 that every type but IX approaches de Sitter space exponentially, and that type IX does too when $\\Lambda$ is large enough [wald1983]."
     }
   ],
   "references": [
@@ -56,7 +61,8 @@
     "bkl1970",
     "kasner1921",
     "misner1963",
-    "kantowski1966"
+    "kantowski1966",
+    "wald1983"
   ],
   "coordinates": [
     {

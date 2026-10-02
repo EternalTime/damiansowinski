@@ -40,18 +40,23 @@
     },
     {
       "id": "levi_civita",
-      "kind": "family",
+      "kind": "limit",
       "text": "The Weyl field of an infinite line of mass, which the rod approaches locally as $m \\to \\infty$ [herrera1999]."
     },
     {
       "id": "curzon_chazy",
-      "kind": "special_case",
-      "text": "The rod shrunk to a point at fixed mass, $q \\to \\infty$ and $m \\to 0$ with $(1 + q)m$ fixed [herrera1999]."
+      "kind": "limit",
+      "text": "The rod shrunk to a point at fixed mass, the limit $q \\to \\infty$ and $m \\to 0$ with $(1 + q)m$ fixed [herrera1999]."
     },
     {
       "id": "fisher_jnw",
       "kind": "family",
       "text": "The same $g_{tt} = -f^{\\delta}$ on a spacetime that stays spherical and pays for it with a massless scalar field. It too has a naked singularity where Schwarzschild's horizon was [chowdhury2012]."
+    },
+    {
+      "id": "kerr",
+      "kind": "family",
+      "text": "The rotating black hole. Tomimatsu and Sato's spinning solution of 1972 is Kerr's metric at one value of its angular momentum, and the static limits of their family are the Zipoy-Voorhees metrics of whole number $\\delta$ [tomimatsu1972, kodamahikida2003]."
     }
   ],
   "references": [

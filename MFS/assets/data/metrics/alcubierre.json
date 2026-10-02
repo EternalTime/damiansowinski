@@ -41,6 +41,21 @@
       "id": "krasnikov",
       "kind": "family",
       "text": "A second way to beat light with negative energy. A pilot inside an Alcubierre bubble cannot reach its wall to steer it, and Krasnikov's tube is laid down by a ship moving slower than light [krasnikov1998, everett1997]."
+    },
+    {
+      "id": "morris_thorne",
+      "kind": "family",
+      "text": "The other way to cross space faster than light could in flat spacetime, a tunnel where Alcubierre has a bubble. Alcubierre set his drive beside it: \"just as it happens with wormholes, exotic matter will be needed\" [alcubierre1994]."
+    },
+    {
+      "id": "wormhole_time_machine",
+      "kind": "family",
+      "text": "A wormhole turned into a time machine by moving one of its mouths. Allen Everett showed in 1996 that a simple change to Alcubierre's bubble allows causal loops as well, as Alcubierre had conjectured [everett1996]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "special_case",
+      "text": "The drive switched off. With $v_s = 0$ the metric is Minkowski's, and with the bubble moving spacetime is still flat inside it and far from it [alcubierre1994]."
     }
   ],
   "references": [
@@ -56,7 +71,8 @@
     "lentz2021",
     "santiago2022",
     "krasnikov1998",
-    "everett1997"
+    "everett1997",
+    "everett1996"
   ],
   "coordinates": [
     {

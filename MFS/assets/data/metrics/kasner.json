@@ -53,6 +53,16 @@
       "id": "gowdy",
       "kind": "generalisation",
       "text": "Kasner's universe with gravitational waves running round a torus. The flat Kasner universe is the Gowdy torus with $P = \\tau$ and $Q = 0$ [ringstrom2010], and a polarised Gowdy universe approaches a Kasner universe of its own at each $\\theta$ as it nears the singularity [berger1974]."
+    },
+    {
+      "id": "schwarzschild",
+      "kind": "limit_source",
+      "text": "Send the mass of Schwarzschild's black hole to infinity in coordinates that stay inside the horizon, and the limit is the Kasner universe with exponents $(-\\frac{1}{3}, \\frac{2}{3}, \\frac{2}{3})$. Robert Geroch gave it in 1969 as an example of a limit that depends on the coordinates, since in others the same family tends to Minkowski space [geroch1969]."
+    },
+    {
+      "id": "nariai",
+      "kind": "programme",
+      "text": "Edward Kasner found this solution too. In 1921, the year of his anisotropic vacuum, he presented the product of two equal spheres as a solution with a cosmological constant, the positive signature form of Nariai's metric [kasner1925, kasner1921]."
     }
   ],
   "references": [
@@ -68,7 +78,9 @@
     "maccallum2011",
     "yurtsever1988",
     "ringstrom2010",
-    "berger1974"
+    "berger1974",
+    "geroch1969",
+    "kasner1925"
   ],
   "coordinates": [
     {

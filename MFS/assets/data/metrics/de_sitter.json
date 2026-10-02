@@ -59,13 +59,13 @@
     },
     {
       "id": "bardeen",
-      "kind": "composite",
-      "text": "A black hole with de Sitter space at its centre. Inside its inner horizon Bardeen's metric approaches de Sitter's static patch, which keeps the centre regular [ansoldi2008]."
+      "kind": "limit_source",
+      "text": "A black hole with de Sitter space at its centre. Inside its inner horizon Bardeen's metric approaches de Sitter's static patch, which keeps the centre regular, and in the limit $g \\to \\infty$ at fixed $r_s/g^3$ it is de Sitter's everywhere [ansoldi2008]."
     },
     {
       "id": "hayward",
-      "kind": "generalisation",
-      "text": "A black hole whose core is a ball of de Sitter space, with $\\Lambda = 3/\\ell^2$ whatever the mass [hayward2006, frolov2016]."
+      "kind": "limit_source",
+      "text": "A black hole whose core is a ball of de Sitter space with $\\Lambda = 3/\\ell^2$ whatever the mass. In the limit $m \\to \\infty$ at fixed $\\ell$ the whole metric is de Sitter's [hayward2006, frolov2016]."
     },
     {
       "id": "kerr_de_sitter",
@@ -76,6 +76,21 @@
       "id": "kastor_traschen",
       "kind": "generalisation",
       "text": "De Sitter space with charged black holes in it, each with a charge equal to its mass, carried along by the expansion or the contraction [kastor1993]."
+    },
+    {
+      "id": "interior_schwarzschild",
+      "kind": "family",
+      "text": "Schwarzschild's star of uniform density. Pawel Mazur and Emil Mottola showed in 2015 that with its radius taken down to its Schwarzschild radius the inside is a static patch of de Sitter space, with pressure $-\\rho c^2$ throughout [mazur2015]."
+    },
+    {
+      "id": "bianchi",
+      "kind": "family",
+      "text": "The homogeneous universes that expand at different rates in different directions. With a positive cosmological constant the differences die away: Robert Wald proved in 1983 that every expanding Bianchi universe but some of type IX approaches de Sitter space exponentially [wald1983]."
+    },
+    {
+      "id": "domain_wall",
+      "kind": "family",
+      "text": "A domain wall is a de Sitter space of one dimension fewer. In the flat space on either side the wall is the hyperboloid $X^2 + Y^2 + Z^2 = 1/k^2 + c^2T^2$, and the metric induced on it is de Sitter's in $2 + 1$ dimensions [ipser1984, caldwell1996]."
     }
   ],
   "references": [
@@ -101,7 +116,10 @@
     "hayward2006",
     "frolov2016",
     "akcay2011",
-    "kastor1993"
+    "kastor1993",
+    "mazur2015",
+    "ipser1984",
+    "caldwell1996"
   ],
   "coordinates": [
     {

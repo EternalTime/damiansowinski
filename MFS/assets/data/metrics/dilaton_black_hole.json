@@ -56,6 +56,16 @@
       "id": "kaluza_klein_monopole",
       "kind": "family",
       "text": "The extreme magnetic black hole of the same family with the dilaton coupled at strength $\\sqrt{3}$, Kaluza and Klein's value. Lifted to five dimensions its singularity goes away and it is a smooth vacuum solution [duff1994]."
+    },
+    {
+      "id": "kerr_newman",
+      "kind": "family",
+      "text": "The charged, rotating black hole of Einstein-Maxwell theory. Ashoke Sen built its counterpart in heterotic string theory in 1992, a black hole with mass, charge, and angular momentum [sen1992]."
+    },
+    {
+      "id": "c_metric",
+      "kind": "family",
+      "text": "Two black holes accelerating apart. Dowker, Gauntlett, Kastor, and Traschen generalised it in 1994 to a pair of oppositely charged dilaton black holes, and used it to describe their creation in a magnetic field [dowker1994]."
     }
   ],
   "references": [

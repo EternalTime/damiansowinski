@@ -52,6 +52,11 @@
       "id": "light_beam",
       "kind": "programme",
       "text": "Bonnor's exact field of a steady beam of light, from 1969. Light shining along the axis takes the place of the magnetic field [bonnor1969light]."
+    },
+    {
+      "id": "schwarzschild",
+      "kind": "family",
+      "text": "The black hole Frederick Ernst set in Melvin's universe in 1976. Ernst's metric is Schwarzschild's at $B = 0$ and Melvin's universe at $r_s = 0$ [ernst1976b]."
     }
   ],
   "references": [

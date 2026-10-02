@@ -55,7 +55,7 @@
     },
     {
       "id": "zipoy_voorhees",
-      "kind": "family",
+      "kind": "limit_source",
       "text": "The Weyl field of a rod of finite length. As $m \\to \\infty$ it becomes, locally, Levi-Civita's metric with $\\sigma = (1 + q)/2$ [herrera1999]."
     },
     {

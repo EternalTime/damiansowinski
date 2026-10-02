@@ -36,7 +36,7 @@
   "related": [
     {
       "id": "schwarzschild_de_sitter",
-      "kind": "generalisation",
+      "kind": "limit_source",
       "text": "Nariai's solution is the limit $\\Lambda r_s^2 \\to 4/9$ of Schwarzschild-de Sitter, where its two horizons meet: the largest black hole de Sitter space can hold [ginsparg1983]."
     },
     {
@@ -51,8 +51,13 @@
     },
     {
       "id": "reissner_nordstrom_de_sitter",
-      "kind": "generalisation",
-      "text": "The charged black hole in de Sitter space. Take away its charge and let its black hole horizon meet the cosmological one, and the metric is Nariai's [romans1992]."
+      "kind": "limit_source",
+      "text": "The charged black hole in de Sitter space. Take away its charge and let its black hole horizon close on the cosmological one, and in the limit the region between them is Nariai's solution [romans1992]."
+    },
+    {
+      "id": "kasner",
+      "kind": "programme",
+      "text": "Edward Kasner's vacuum of 1921, which expands along some axes and contracts along another. The same year he presented the product of two equal spheres as a solution with a cosmological constant, the positive signature form of Nariai's metric [kasner1921, kasner1925]."
     }
   ],
   "references": [
@@ -69,7 +74,8 @@
     "bousso1998",
     "bousso1998proliferation",
     "cardoso2004",
-    "romans1992"
+    "romans1992",
+    "kasner1921"
   ],
   "coordinates": [
     {

@@ -50,6 +50,11 @@
       "id": "schwarzschild",
       "kind": "piece",
       "text": "The outside of Ori's full model. Beyond the matter that surrounds the vacuum core, the geometry is Schwarzschild's [ori2005]."
+    },
+    {
+      "id": "godel",
+      "kind": "family",
+      "text": "Rotating dust with closed timelike curves through every event, there from the start. Ori built his model so that they first appear at a definite moment, inside a finite region [ori2005, godel1949]."
     }
   ],
   "references": [

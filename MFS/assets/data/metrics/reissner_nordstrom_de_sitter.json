@@ -54,13 +54,13 @@
     },
     {
       "id": "nariai",
-      "kind": "special_case",
-      "text": "The double horizon with no charge. At $r_q = 0$ and $\\Lambda r_s^2 = 4/9$ the black hole and cosmological horizons coincide, and the metric is Nariai's [romans1992]."
+      "kind": "limit",
+      "text": "The double horizon with no charge. At $r_q = 0$, in the limit $\\Lambda r_s^2 \\to 4/9$ where the black hole and cosmological horizons meet, the region between them becomes Nariai's solution [romans1992]."
     },
     {
       "id": "bertotti_robinson",
-      "kind": "special_case",
-      "text": "The throat of the cold black hole at $\\Lambda = 0$. Near a degenerate horizon the geometry is a product of a two dimensional spacetime of constant curvature and a sphere, and without a cosmological constant it is Bertotti and Robinson's [romans1992]."
+      "kind": "limit",
+      "text": "The throat of the cold black hole at $\\Lambda = 0$. The limit toward a degenerate horizon is a product of a two dimensional spacetime of constant curvature and a sphere, and without a cosmological constant it is Bertotti and Robinson's [romans1992]."
     },
     {
       "id": "kerr_de_sitter",
@@ -71,6 +71,11 @@
       "id": "kastor_traschen",
       "kind": "generalisation",
       "text": "Any number of lukewarm holes at once. In the cosmological chart their potentials add, and holes that fall together merge [kastor1993, brill1994]."
+    },
+    {
+      "id": "majumdar_papapetrou",
+      "kind": "family",
+      "text": "Any number of black holes with charge equal to mass, at rest together when $\\Lambda = 0$. David Kastor and Jennie Traschen found their counterpart with $\\Lambda > 0$ in 1993, and one of its holes alone is the lukewarm black hole [kastor1993]."
     }
   ],
   "references": [

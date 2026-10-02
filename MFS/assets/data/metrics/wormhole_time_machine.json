@@ -3250,6 +3250,16 @@
       "id": "ori_time_machine",
       "kind": "family",
       "text": "A time machine with no wormhole in it. Amos Ori's vacuum core of 2005 sits inside matter that obeys the weak, dominant, and strong energy conditions [ori2005]."
+    },
+    {
+      "id": "alcubierre",
+      "kind": "family",
+      "text": "The warp bubble, another way to outrun light that can be made into a time machine. Allen Everett modified Alcubierre's model in 1996 so that causal loops are possible, with no assumption added [everett1996]."
+    },
+    {
+      "id": "krasnikov",
+      "kind": "family",
+      "text": "A tube laid down by a ship moving slower than light, which shortens the trip home. One tube has no closed timelike curves, and Allen Everett and Thomas Roman showed in 1997 that two tubes that do not overlap make a time machine [everett1997]."
     }
   ],
   "references": [
@@ -3267,6 +3277,8 @@
     "kay1997",
     "visser1989prd",
     "gott1991",
-    "ori2005"
+    "ori2005",
+    "everett1996",
+    "everett1997"
   ]
 }

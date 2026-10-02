@@ -25,13 +25,13 @@
   "related": [
     {
       "id": "rn_metric",
-      "kind": "generalisation",
-      "text": "The charged black hole. With its charge at the largest value that keeps a horizon, the geometry near that horizon is the Bertotti-Robinson solution [gibbons1993]."
+      "kind": "limit_source",
+      "text": "The charged black hole. With its charge at the largest value that keeps a horizon, the limit of its geometry toward that horizon is the Bertotti-Robinson solution [gibbons1993]."
     },
     {
       "id": "majumdar_papapetrou",
-      "kind": "generalisation",
-      "text": "Any number of extremal charged black holes at rest. Each has a Bertotti-Robinson throat, however many of them stand together."
+      "kind": "limit_source",
+      "text": "Any number of extremal charged black holes at rest. The limit toward the horizon of each is a Bertotti-Robinson throat, however many of them stand together."
     },
     {
       "id": "anti_de_sitter",
@@ -60,13 +60,18 @@
     },
     {
       "id": "reissner_nordstrom_de_sitter",
-      "kind": "generalisation",
-      "text": "The charged black hole in de Sitter space. The throat of its cold member is a product of a two dimensional spacetime and a sphere, and at $\\Lambda = 0$ that product is Bertotti and Robinson's [romans1992]."
+      "kind": "limit_source",
+      "text": "The charged black hole in de Sitter space. The limit toward the horizon of its cold member is a product of a two dimensional spacetime and a sphere, and at $\\Lambda = 0$ that product is Bertotti and Robinson's [romans1992]."
     },
     {
       "id": "near_horizon_extreme_kerr",
       "kind": "family",
       "text": "The throat of an extreme black hole that spins, a vacuum with a circle twisted over the anti-de Sitter factor at every polar angle [bardeen1999]."
+    },
+    {
+      "id": "kerr",
+      "kind": "family",
+      "text": "The rotating black hole has a throat of its own. James Bardeen and Gary Horowitz took the limit toward the horizon of an extreme Kerr hole in 1999 and found a vacuum solution with many of the properties of AdS$_2 \\times$ S$^2$ [bardeen1999]."
     }
   ],
   "references": [

@@ -37,6 +37,16 @@
       "id": "oppenheimer_snyder",
       "kind": "family",
       "text": "Another ball of uniform density with Schwarzschild's vacuum outside, made of dust with no pressure, so it collapses [oppenheimersnyder1939]."
+    },
+    {
+      "id": "de_sitter",
+      "kind": "family",
+      "text": "With the star's radius taken down to $R = r_s$, far past the limit of $\\frac{9}{8}r_s$, the interior metric is the static patch of de Sitter space with $\\Lambda = 3/r_s^2$. Pawel Mazur and Emil Mottola found in 2015 that the pressure inside is then $-\\rho c^2$ throughout, and took it for a collapsed star with no singularity [mazur2015]."
+    },
+    {
+      "id": "einstein_static",
+      "kind": "family",
+      "text": "The whole three sphere, filled with dust and held still by a cosmological constant. Schwarzschild found in 1916 that space inside his star is a cap of such a sphere, and a year later Einstein closed the sphere into a universe [schwarzschild1916b, einstein1917]."
     }
   ],
   "references": [
@@ -49,7 +59,9 @@
     "schwarzschild1916",
     "tolman1939",
     "oppenheimer1939",
-    "oppenheimersnyder1939"
+    "oppenheimersnyder1939",
+    "mazur2015",
+    "einstein1917"
   ],
   "coordinates": [
     {

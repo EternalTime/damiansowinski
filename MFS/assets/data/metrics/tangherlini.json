@@ -54,6 +54,11 @@
       "id": "myers_perry",
       "kind": "generalisation",
       "text": "Tangherlini's black hole set spinning, in as many planes as its dimension has room for. With every spin at zero it is his metric again [myers1986]."
+    },
+    {
+      "id": "kerr",
+      "kind": "family",
+      "text": "The spinning black hole of four dimensions. Robert Myers and Malcolm Perry found its counterparts in $D$ dimensions in 1986, with the static black hole as the member that does not turn [myers1986]."
     }
   ],
   "references": [

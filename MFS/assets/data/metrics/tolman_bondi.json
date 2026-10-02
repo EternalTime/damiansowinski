@@ -44,6 +44,16 @@
       "id": "szekeres",
       "kind": "generalisation",
       "text": "Tolman-Bondi with the spheres pushed off center. Peter Szekeres's dust keeps the evolution of each shell and sets the shells eccentrically, so the density carries a dipole and in general no Killing vector survives [szekeres1975, bonnor1977]."
+    },
+    {
+      "id": "tov",
+      "kind": "programme",
+      "text": "Richard Tolman's other spacetime. In 1939 he gave a method for static spheres of perfect fluid, and in the paper that followed his J. Robert Oppenheimer and George Volkoff applied the equation of equilibrium to a star of neutrons [tolman1939, oppenheimer1939]."
+    },
+    {
+      "id": "vaidya",
+      "kind": "limit",
+      "text": "Dust made of light. José Lemos showed in 1992 that Vaidya's metric is the limit of Tolman-Bondi in which the dust moves at the speed of light, and Charles Hellaby found in 1994 that only dust that is hollow at the centre has that limit [lemos1992, hellaby1994]."
     }
   ],
   "references": [
@@ -66,7 +76,11 @@
     "moss2011",
     "zhang2011",
     "szekeres1975",
-    "bonnor1977"
+    "bonnor1977",
+    "tolman1939",
+    "oppenheimer1939",
+    "lemos1992",
+    "hellaby1994"
   ],
   "coordinates": [
     {

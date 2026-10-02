@@ -58,6 +58,16 @@
       "id": "oppenheimer_snyder",
       "kind": "special_case",
       "text": "A uniform ball of Szekeres's dust with concentric shells, falling from rest inside Schwarzschild's vacuum. Szekeres's quasispherical collapses include the spherically symmetric ones [szekeres1975collapse]."
+    },
+    {
+      "id": "bell_szekeres",
+      "kind": "programme",
+      "text": "Peter Szekeres's other spacetime, found with P. Bell in 1974: two plane electromagnetic shock waves colliding head on [bell1974]."
+    },
+    {
+      "id": "khan_penrose",
+      "kind": "programme",
+      "text": "Two impulsive gravitational waves colliding head on, from 1971 [khan1971]. Szekeres had given a solution for part of such a collision in 1970, and in 1972 found the general solution for two plane waves that are linearly polarised [szekeres1970, szekeres1972]."
     }
   ],
   "references": [
@@ -78,7 +88,11 @@
     "bolejko2006",
     "bolejko2010",
     "sussman2012",
-    "buckley2013"
+    "buckley2013",
+    "bell1974",
+    "khan1971",
+    "szekeres1970",
+    "szekeres1972"
   ],
   "coordinates": [
     {

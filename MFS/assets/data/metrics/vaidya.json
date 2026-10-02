@@ -49,6 +49,36 @@
       "id": "hayward",
       "kind": "generalisation",
       "text": "Vaidya's ingoing metric with a length $\\ell$ that keeps the centre regular while the radiation pours in. Sean Hayward used it in 2006 for a black hole that forms and evaporates with no singularity [hayward2006]."
+    },
+    {
+      "id": "tov",
+      "kind": "family",
+      "text": "The star that does not shine, a sphere of fluid in equilibrium with Schwarzschild's vacuum outside and no pressure at its surface. Vaidya gave spheres of fluid that radiate in 1951, and Nilton Santos found in 1985 that the pressure at such a star's surface is proportional to the heat flux [vaidya1951pr, santos1985]."
+    },
+    {
+      "id": "kerr",
+      "kind": "family",
+      "text": "The rotating black hole. Vaidya and L. K. Patel made it radiate in 1973: their solution has Kerr's symmetry, and with one parameter set to zero it is static and is Kerr's metric [vaidya1973]."
+    },
+    {
+      "id": "rn_metric",
+      "kind": "family",
+      "text": "The charged black hole. William Bonnor and Vaidya gave the shining star a charge in 1970, and with the mass and the charge held constant their metric is Reissner-Nordström's [bonnor1970]."
+    },
+    {
+      "id": "tolman_bondi",
+      "kind": "limit_source",
+      "text": "Dust with rest mass, falling or expanding in spherical symmetry. Vaidya's metric is its limit as the speed of the dust goes to that of light, which José Lemos took in 1992 and Charles Hellaby showed in 1994 to exist only for dust that is hollow at the centre [lemos1992, hellaby1994]."
+    },
+    {
+      "id": "light_beam",
+      "kind": "family",
+      "text": "Light as the source again, here a steady beam of parallel rays. William Bonnor found its exact field in 1969, a plane wave that keeps pace with the light [bonnor1969light]."
+    },
+    {
+      "id": "robinson_trautman",
+      "kind": "generalisation",
+      "text": "Vaidya's star with wave fronts of any shape, which carry gravitational waves as well as light. Jiří Podolský and Otakar Svítek showed in 2005 that these Robinson-Trautman spacetimes with pure radiation approach Vaidya's metric [podolsky2005]."
     }
   ],
   "references": [
@@ -67,7 +97,12 @@
     "dwivedi1989",
     "podolsky2008",
     "simpson2019vaidya",
-    "hayward2006"
+    "hayward2006",
+    "santos1985",
+    "lemos1992",
+    "hellaby1994",
+    "bonnor1969light",
+    "podolsky2005"
   ],
   "coordinates": [
     {

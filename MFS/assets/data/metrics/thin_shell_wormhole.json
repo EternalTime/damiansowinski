@@ -2701,6 +2701,11 @@
       "id": "damour_solodukhin",
       "kind": "family",
       "text": "A smooth wormhole that passes for a Schwarzschild black hole, with its throat where the horizon would be and its matter spread through a thin layer around it [damour2007]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "piece",
+      "text": "With no mass, $r_s = 0$, both sides of the throat are flat. Visser's first wormholes of 1989 were of this kind, two copies of Minkowski space with a region cut from each and the edges joined [visser1989prd]."
     }
   ],
   "references": [

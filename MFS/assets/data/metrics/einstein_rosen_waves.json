@@ -35,6 +35,11 @@
       "id": "gowdy",
       "kind": "locally_same",
       "text": "These waves closed up into a universe. Robert Gowdy changed their boundary conditions in 1971 [gowdy1971], and his $S^3$ and $S^2 \\times S^1$ universes transform locally into an Einstein-Rosen wave wherever the gradient of the orbit area is spacelike [gowdy2014]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "special_case",
+      "text": "The waves gone quiet. With $\\psi = 0$ and $\\gamma = 0$ the metric is Minkowski's in cylindrical coordinates."
     }
   ],
   "references": [

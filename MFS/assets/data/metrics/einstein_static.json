@@ -46,6 +46,16 @@
       "id": "anti_de_sitter",
       "kind": "conformal",
       "text": "Anti-de Sitter space is conformal to half of the static universe, $0 \\le \\chi < \\pi/2$, and the equator where it ends is a timelike boundary [hawking1973]."
+    },
+    {
+      "id": "interior_schwarzschild",
+      "kind": "family",
+      "text": "A star of uniform density, inside which space is a cap of a three sphere, as Karl Schwarzschild found a year before Einstein's universe [schwarzschild1916b]. Einstein's space is the whole sphere."
+    },
+    {
+      "id": "godel",
+      "kind": "family",
+      "text": "Dust that rotates where Einstein's is at rest, held by a cosmological constant of the opposite sign. Kurt Gödel wrote in 1949, without proof, that his universe and Einstein's are the only spatially homogeneous solutions with matter whose world lines stay equidistant [godel1949]."
     }
   ],
   "references": [
@@ -63,7 +73,9 @@
     "ellis2004explicit",
     "penrose1964conformal",
     "hawking1973",
-    "eddington1933"
+    "eddington1933",
+    "schwarzschild1916b",
+    "godel1949"
   ],
   "coordinates": [
     {

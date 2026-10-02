@@ -44,8 +44,8 @@
     },
     {
       "id": "bertotti_robinson",
-      "kind": "special_case",
-      "text": "The throat of the extremal black hole, $r_q = r_s/2$. Near its horizon the geometry is AdS$_2 \\times$ S$^2$ [gibbons1993]."
+      "kind": "limit",
+      "text": "The throat of the extremal black hole, $r_q = r_s/2$. In the limit taken toward its horizon the geometry is AdS$_2 \\times$ S$^2$ [gibbons1993]."
     },
     {
       "id": "majumdar_papapetrou",
@@ -81,6 +81,21 @@
       "id": "hayward",
       "kind": "family",
       "text": "A black hole with the same two horizons and the same tower of regions, and a regular centre at $r = 0$ [hayward2006]."
+    },
+    {
+      "id": "kerr",
+      "kind": "family",
+      "text": "The rotating black hole, which has an inner horizon too and no spherical symmetry. Eric Poisson and Werner Israel worked out mass inflation in 1989 on a charged spherical hole as a model of the inside of a spinning one [poisson1989, poisson1990]."
+    },
+    {
+      "id": "c_metric",
+      "kind": "family",
+      "text": "A pair of black holes accelerating apart. William Kinnersley and Martin Walker gave them a charge in 1970, in a solution that generalises Reissner-Nordström's [kinnersley1970]."
+    },
+    {
+      "id": "vaidya",
+      "kind": "family",
+      "text": "A star that shines, Schwarzschild's metric with a mass that changes in retarded time. William Bonnor and Prahalad Vaidya gave it a charge in 1970, the radiating form of Reissner-Nordström's metric [bonnor1970]."
     }
   ],
   "references": [
@@ -107,7 +122,9 @@
     "romans1992",
     "simpson2019",
     "borde1994",
-    "hayward2006"
+    "hayward2006",
+    "kinnersley1970",
+    "bonnor1970"
   ],
   "coordinates": [
     {

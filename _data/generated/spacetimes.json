@@ -34,8 +34,8 @@
       "related": [
         {
           "id": "schwarzschild",
-          "kind": "generalisation",
-          "text": "The Aichelburg-Sexl shock is Schwarzschild's field boosted to the speed of light with its energy held fixed, which flattens it onto a null plane [aichelburg1971]."
+          "kind": "limit_source",
+          "text": "The Aichelburg-Sexl shock is a limit of Schwarzschild's field: the boost is taken to the speed of light with the energy held fixed, which flattens the field onto a null plane [aichelburg1971]."
         },
         {
           "id": "pp_wave",
@@ -56,6 +56,16 @@
           "id": "string_wave",
           "kind": "family",
           "text": "Another pp-wave whose profile is harmonic off a line. Here the line is the path of a massless particle, there a cosmic string carrying a wave [garfinkle1990]."
+        },
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "The rotating black hole, boosted the same way. Valeria Ferrari and Paolo Pendenza took the limit along its axis in 1990 and found the field of massless particles on a ring [ferrari1990]."
+        },
+        {
+          "id": "khan_penrose",
+          "kind": "family",
+          "text": "Two impulsive waves colliding, each with a plane front of the same strength everywhere, which focus each other onto a singularity [khan1971]. Two Aichelburg-Sexl shocks meeting head on close a trapped surface around the collision, as Penrose found in 1974 [eardley2002]."
         }
       ],
       "references": [
@@ -81,7 +91,8 @@
         "yoshino2003",
         "sperhake2008",
         "east2013",
-        "garfinkle1990"
+        "garfinkle1990",
+        "khan1971"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/aichelburg_sexl.json",
@@ -352,6 +363,21 @@
           "id": "krasnikov",
           "kind": "family",
           "text": "A second way to beat light with negative energy. A pilot inside an Alcubierre bubble cannot reach its wall to steer it, and Krasnikov's tube is laid down by a ship moving slower than light [krasnikov1998, everett1997]."
+        },
+        {
+          "id": "morris_thorne",
+          "kind": "family",
+          "text": "The other way to cross space faster than light could in flat spacetime, a tunnel where Alcubierre has a bubble. Alcubierre set his drive beside it: \"just as it happens with wormholes, exotic matter will be needed\" [alcubierre1994]."
+        },
+        {
+          "id": "wormhole_time_machine",
+          "kind": "family",
+          "text": "A wormhole turned into a time machine by moving one of its mouths. Allen Everett showed in 1996 that a simple change to Alcubierre's bubble allows causal loops as well, as Alcubierre had conjectured [everett1996]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "The drive switched off. With $v_s = 0$ the metric is Minkowski's, and with the bubble moving spacetime is still flat inside it and far from it [alcubierre1994]."
         }
       ],
       "references": [
@@ -367,7 +393,8 @@
         "lentz2021",
         "santiago2022",
         "krasnikov1998",
-        "everett1997"
+        "everett1997",
+        "everett1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/alcubierre.json",
@@ -519,6 +546,11 @@
           "id": "near_horizon_extreme_kerr",
           "kind": "family",
           "text": "A vacuum with no cosmological constant that still carries an anti-de Sitter space of two dimensions along its axis, and a timelike boundary of its own [bardeen1999]."
+        },
+        {
+          "id": "godel",
+          "kind": "family",
+          "text": "A rotating universe of dust built on anti-de Sitter space of three dimensions, with its metric stretched by $\\sqrt{2}$ along a family of timelike lines and a flat direction added [godel1949]. Marianne Rooman and Philippe Spindel showed in 1998 that anti-de Sitter space is the boundary between such spaces that are causally safe and those with closed timelike curves [rooman1998]."
         }
       ],
       "references": [
@@ -546,7 +578,9 @@
         "robinson1959",
         "hogarth1992",
         "henneaux1985",
-        "bardeen1999"
+        "bardeen1999",
+        "godel1949",
+        "rooman1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -714,6 +748,11 @@
           "id": "c_metric",
           "kind": "family",
           "text": "A black hole with a string on one side alone. That string pulls it into uniform acceleration [kinnersley1970, achucarro1995]."
+        },
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "The rotating black hole. A string through it leaves a cone as well, measured in a frame that turns with the hole, as Ruth Gregory, David Kubizňák, and Danielle Wills found in 2013 [gregory2013]."
         }
       ],
       "references": [
@@ -1071,6 +1110,16 @@
           "id": "kerr_de_sitter",
           "kind": "family",
           "text": "The rotating black hole of anti-de Sitter space in four dimensions. Its boundary is a rotating Einstein universe too, one dimension up [hawking1999rotation]."
+        },
+        {
+          "id": "damour_solodukhin",
+          "kind": "family",
+          "text": "Schwarzschild's metric with a constant $\\lambda^2$ added to $-g_{tt}$, a wormhole that passes for a black hole. Sergey Solodukhin made that change first in the BTZ black hole, in 2005, to restore unitarity [solodukhin2005, damour2007]."
+        },
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "family",
+          "text": "Dust collapsing to a black hole in four dimensions. Robert Mann and Simon Ross carried the collapse over to three in 1993, where dust falling under a negative cosmological constant ends as a BTZ black hole [mann1993]."
         }
       ],
       "references": [
@@ -1090,7 +1139,9 @@
         "misner1967",
         "holst1999",
         "deser1992time",
-        "hawking1999rotation"
+        "hawking1999rotation",
+        "solodukhin2005",
+        "damour2007"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz.json",
@@ -1371,8 +1422,8 @@
         },
         {
           "id": "de_sitter",
-          "kind": "piece",
-          "text": "The core of Bardeen's black hole. Near the centre $f \\approx 1 - r_sr^2/g^3$, de Sitter's static metric with $\\Lambda = 3r_s/g^3$ [ansoldi2008]."
+          "kind": "limit",
+          "text": "The core of Bardeen's black hole. Near the centre $f \\approx 1 - r_sr^2/g^3$, de Sitter's static metric with $\\Lambda = 3r_s/g^3$, and in the limit $g \\to \\infty$ at fixed $r_s/g^3$ the whole metric is de Sitter's [ansoldi2008]."
         },
         {
           "id": "simpson_visser",
@@ -1658,6 +1709,11 @@
           "id": "minkowski",
           "kind": "piece",
           "text": "Ahead of both waves, where $u < 0$ and $v < 0$, the spacetime is flat [griffiths1991]."
+        },
+        {
+          "id": "szekeres",
+          "kind": "programme",
+          "text": "Peter Szekeres's other spacetime, dust cosmologies with no symmetry, from the year after this one [szekeres1975]."
         }
       ],
       "references": [
@@ -1675,7 +1731,8 @@
         "chandrasekhar1988",
         "konkowski1991",
         "dorca1993",
-        "gurses2003"
+        "gurses2003",
+        "szekeres1975"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bell_szekeres.json",
@@ -2104,13 +2161,13 @@
       "related": [
         {
           "id": "rn_metric",
-          "kind": "generalisation",
-          "text": "The charged black hole. With its charge at the largest value that keeps a horizon, the geometry near that horizon is the Bertotti-Robinson solution [gibbons1993]."
+          "kind": "limit_source",
+          "text": "The charged black hole. With its charge at the largest value that keeps a horizon, the limit of its geometry toward that horizon is the Bertotti-Robinson solution [gibbons1993]."
         },
         {
           "id": "majumdar_papapetrou",
-          "kind": "generalisation",
-          "text": "Any number of extremal charged black holes at rest. Each has a Bertotti-Robinson throat, however many of them stand together."
+          "kind": "limit_source",
+          "text": "Any number of extremal charged black holes at rest. The limit toward the horizon of each is a Bertotti-Robinson throat, however many of them stand together."
         },
         {
           "id": "anti_de_sitter",
@@ -2139,13 +2196,18 @@
         },
         {
           "id": "reissner_nordstrom_de_sitter",
-          "kind": "generalisation",
-          "text": "The charged black hole in de Sitter space. The throat of its cold member is a product of a two dimensional spacetime and a sphere, and at $\\Lambda = 0$ that product is Bertotti and Robinson's [romans1992]."
+          "kind": "limit_source",
+          "text": "The charged black hole in de Sitter space. The limit toward the horizon of its cold member is a product of a two dimensional spacetime and a sphere, and at $\\Lambda = 0$ that product is Bertotti and Robinson's [romans1992]."
         },
         {
           "id": "near_horizon_extreme_kerr",
           "kind": "family",
           "text": "The throat of an extreme black hole that spins, a vacuum with a circle twisted over the anti-de Sitter factor at every polar angle [bardeen1999]."
+        },
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "The rotating black hole has a throat of its own. James Bardeen and Gary Horowitz took the limit toward the horizon of an extreme Kerr hole in 1999 and found a vacuum solution with many of the properties of AdS$_2 \\times$ S$^2$ [bardeen1999]."
         }
       ],
       "references": [
@@ -2335,6 +2397,11 @@
           "id": "kantowski_sachs",
           "kind": "family",
           "text": "The homogeneous cosmologies outside Bianchi's classification, with space $\\mathbb{R} \\times S^2$ [kantowski1966, ellismaccallum1969]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "family",
+          "text": "Where the expanding Bianchi universes end up when the cosmological constant is positive. Robert Wald proved in 1983 that every type but IX approaches de Sitter space exponentially, and that type IX does too when $\\Lambda$ is large enough [wald1983]."
         }
       ],
       "references": [
@@ -2345,7 +2412,8 @@
         "bkl1970",
         "kasner1921",
         "misner1963",
-        "kantowski1966"
+        "kantowski1966",
+        "wald1983"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bianchi.json",
@@ -2845,6 +2913,11 @@
           "id": "photon_rocket",
           "kind": "family",
           "text": "Light as the source again, here streaming out of a point mass and pushing it along. Bonnor named its rectilinear case the photon rocket in 1994 [bonnor1994]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "family",
+          "text": "Light as the source again, here streaming out of a star evenly in all directions. Prahalad Vaidya found the field around the star in 1951 [vaidya1951]."
         }
       ],
       "references": [
@@ -2866,7 +2939,8 @@
         "ratzel2016",
         "bonnor2009",
         "bonnor1954",
-        "bonnor1994"
+        "bonnor1994",
+        "vaidya1951"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/light_beam.json",
@@ -3221,6 +3295,21 @@
           "id": "kerr_de_sitter",
           "kind": "family",
           "text": "A black hole with a spin and a cosmological constant where this one has an acceleration. Plebański and Demiański put all three into one family of solutions [kamran2009, plebanski1976]."
+        },
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "A black hole with a spin where this one has an acceleration. Plebański and Demiański's family holds both, and Jerry Griffiths and Jiří Podolský wrote it in 2005 in a form that is Kerr's metric with no acceleration and the C-metric with no rotation [plebanski1976, griffiths2005]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "family",
+          "text": "The charged black hole at rest. William Kinnersley and Martin Walker gave the accelerating mass a charge in 1970, and the horizons of their solution resemble Reissner-Nordström's, with one more for the acceleration [kinnersley1970]."
+        },
+        {
+          "id": "dilaton_black_hole",
+          "kind": "family",
+          "text": "The charged black hole of string theory. Fay Dowker, Jerome Gauntlett, David Kastor, and Jennie Traschen wrote the C-metric for a pair of them in 1994, oppositely charged and accelerating apart [dowker1994]."
         }
       ],
       "references": [
@@ -3422,8 +3511,8 @@
         },
         {
           "id": "zipoy_voorhees",
-          "kind": "generalisation",
-          "text": "The Weyl field of a rod. With the rod shrunk to a point at fixed mass it becomes the Curzon-Chazy particle [herrera1999]."
+          "kind": "limit_source",
+          "text": "The Weyl field of a rod. In the limit of the rod shrunk to a point at fixed mass it becomes the Curzon-Chazy particle [herrera1999]."
         }
       ],
       "references": [
@@ -3624,6 +3713,11 @@
           "id": "simpson_visser",
           "kind": "family",
           "text": "Simpson and Visser's one parameter change of Schwarzschild's metric, made in the radius, $r \\to \\sqrt{r^2 + a^2}$. Its wormhole has a throat of radius $a > r_s$, and for smaller $a$ it is a black hole with no singularity [simpson2019]."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "The black hole of three dimensions, where the change was first made. Solodukhin added $\\lambda^2$ to its $g_{tt}$ in 2005, which removes the horizon and leaves a wormhole whose perturbations evolve quasiperiodically [solodukhin2005]."
         }
       ],
       "references": [
@@ -4018,13 +4112,13 @@
         },
         {
           "id": "bardeen",
-          "kind": "composite",
-          "text": "A black hole with de Sitter space at its centre. Inside its inner horizon Bardeen's metric approaches de Sitter's static patch, which keeps the centre regular [ansoldi2008]."
+          "kind": "limit_source",
+          "text": "A black hole with de Sitter space at its centre. Inside its inner horizon Bardeen's metric approaches de Sitter's static patch, which keeps the centre regular, and in the limit $g \\to \\infty$ at fixed $r_s/g^3$ it is de Sitter's everywhere [ansoldi2008]."
         },
         {
           "id": "hayward",
-          "kind": "generalisation",
-          "text": "A black hole whose core is a ball of de Sitter space, with $\\Lambda = 3/\\ell^2$ whatever the mass [hayward2006, frolov2016]."
+          "kind": "limit_source",
+          "text": "A black hole whose core is a ball of de Sitter space with $\\Lambda = 3/\\ell^2$ whatever the mass. In the limit $m \\to \\infty$ at fixed $\\ell$ the whole metric is de Sitter's [hayward2006, frolov2016]."
         },
         {
           "id": "kerr_de_sitter",
@@ -4035,6 +4129,21 @@
           "id": "kastor_traschen",
           "kind": "generalisation",
           "text": "De Sitter space with charged black holes in it, each with a charge equal to its mass, carried along by the expansion or the contraction [kastor1993]."
+        },
+        {
+          "id": "interior_schwarzschild",
+          "kind": "family",
+          "text": "Schwarzschild's star of uniform density. Pawel Mazur and Emil Mottola showed in 2015 that with its radius taken down to its Schwarzschild radius the inside is a static patch of de Sitter space, with pressure $-\\rho c^2$ throughout [mazur2015]."
+        },
+        {
+          "id": "bianchi",
+          "kind": "family",
+          "text": "The homogeneous universes that expand at different rates in different directions. With a positive cosmological constant the differences die away: Robert Wald proved in 1983 that every expanding Bianchi universe but some of type IX approaches de Sitter space exponentially [wald1983]."
+        },
+        {
+          "id": "domain_wall",
+          "kind": "family",
+          "text": "A domain wall is a de Sitter space of one dimension fewer. In the flat space on either side the wall is the hyperboloid $X^2 + Y^2 + Z^2 = 1/k^2 + c^2T^2$, and the metric induced on it is de Sitter's in $2 + 1$ dimensions [ipser1984, caldwell1996]."
         }
       ],
       "references": [
@@ -4060,7 +4169,10 @@
         "hayward2006",
         "frolov2016",
         "akcay2011",
-        "kastor1993"
+        "kastor1993",
+        "mazur2015",
+        "ipser1984",
+        "caldwell1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -4237,6 +4349,16 @@
           "id": "kaluza_klein_monopole",
           "kind": "family",
           "text": "The extreme magnetic black hole of the same family with the dilaton coupled at strength $\\sqrt{3}$, Kaluza and Klein's value. Lifted to five dimensions its singularity goes away and it is a smooth vacuum solution [duff1994]."
+        },
+        {
+          "id": "kerr_newman",
+          "kind": "family",
+          "text": "The charged, rotating black hole of Einstein-Maxwell theory. Ashoke Sen built its counterpart in heterotic string theory in 1992, a black hole with mass, charge, and angular momentum [sen1992]."
+        },
+        {
+          "id": "c_metric",
+          "kind": "family",
+          "text": "Two black holes accelerating apart. Dowker, Gauntlett, Kastor, and Traschen generalised it in 1994 to a pair of oppositely charged dilaton black holes, and used it to describe their creation in a magnetic field [dowker1994]."
         }
       ],
       "references": [
@@ -4634,6 +4756,16 @@
           "id": "anti_de_sitter",
           "kind": "conformal",
           "text": "Anti-de Sitter space is conformal to half of the static universe, $0 \\le \\chi < \\pi/2$, and the equator where it ends is a timelike boundary [hawking1973]."
+        },
+        {
+          "id": "interior_schwarzschild",
+          "kind": "family",
+          "text": "A star of uniform density, inside which space is a cap of a three sphere, as Karl Schwarzschild found a year before Einstein's universe [schwarzschild1916b]. Einstein's space is the whole sphere."
+        },
+        {
+          "id": "godel",
+          "kind": "family",
+          "text": "Dust that rotates where Einstein's is at rest, held by a cosmological constant of the opposite sign. Kurt Gödel wrote in 1949, without proof, that his universe and Einstein's are the only spatially homogeneous solutions with matter whose world lines stay equidistant [godel1949]."
         }
       ],
       "references": [
@@ -4651,7 +4783,9 @@
         "ellis2004explicit",
         "penrose1964conformal",
         "hawking1973",
-        "eddington1933"
+        "eddington1933",
+        "schwarzschild1916b",
+        "godel1949"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_static.json",
@@ -4906,6 +5040,11 @@
           "id": "gowdy",
           "kind": "locally_same",
           "text": "These waves closed up into a universe. Robert Gowdy changed their boundary conditions in 1971 [gowdy1971], and his $S^3$ and $S^2 \\times S^1$ universes transform locally into an Einstein-Rosen wave wherever the gradient of the orbit area is spacelike [gowdy2014]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "The waves gone quiet. With $\\psi = 0$ and $\\gamma = 0$ the metric is Minkowski's in cylindrical coordinates."
         }
       ],
       "references": [
@@ -5604,6 +5743,11 @@
           "id": "mcvittie",
           "kind": "generalisation",
           "text": "A point mass placed in the spatially flat Friedmann universe. At $r_s = 0$ it is that universe [mcvittie1933, kaloper2010]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "The vacuum around a single mass. Albert Einstein and Ernst Straus cut a ball out of a Friedmann universe of dust in 1945 and put Schwarzschild's solution for the mass removed in its place, so a system inside the hole does not feel the expansion [einstein1945, carrera2010]."
         }
       ],
       "references": [
@@ -5642,7 +5786,9 @@
         "robertson1933",
         "ellismaccallum1969",
         "mcvittie1933",
-        "kaloper2010"
+        "kaloper2010",
+        "einstein1945",
+        "carrera2010"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -6470,6 +6616,21 @@
           "id": "malament_hogarth",
           "kind": "generalisation",
           "text": "Every event of Gödel's universe is a Malament-Hogarth event, one with a worldline of infinite proper length in its past [earman1993]."
+        },
+        {
+          "id": "einstein_static",
+          "kind": "family",
+          "text": "The other universe of dust that neither expands nor contracts. Gödel wrote that the two are the only spatially homogeneous solutions with matter whose world lines stay equidistant, and that his cosmological constant has the opposite sign to Einstein's [godel1949]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "family",
+          "text": "Gödel's universe is a line times a space of three dimensions, and Gödel described that space as one of constant curvature, which is anti-de Sitter space, stretched by $\\sqrt{2}$ along a family of timelike lines [godel1949]. Marianne Rooman and Philippe Spindel showed in 1998 that anti-de Sitter space is the boundary between the stretchings that are causally safe and those with closed timelike curves [rooman1998]."
+        },
+        {
+          "id": "ori_time_machine",
+          "kind": "family",
+          "text": "A time machine made to start at a definite moment, inside a finite region of vacuum. Amos Ori set it against Gödel's universe, which holds its closed timelike curves from the start [ori2005]."
         }
       ],
       "references": [
@@ -6490,7 +6651,9 @@
         "malament1985",
         "manchak2011",
         "stephenson2008",
-        "earman1993"
+        "earman1993",
+        "rooman1998",
+        "ori2005"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/godel.json",
@@ -7750,13 +7913,18 @@
         },
         {
           "id": "de_sitter",
-          "kind": "special_case",
+          "kind": "limit",
           "text": "The core. Near the centre $F \\approx 1 - r^2/\\ell^2$, de Sitter's static metric with $\\Lambda = 3/\\ell^2$, and as $m \\to \\infty$ at fixed $\\ell$ the whole metric becomes de Sitter's [hayward2006, frolov2016]."
         },
         {
           "id": "vaidya",
           "kind": "special_case",
           "text": "The forming and evaporating hole at $\\ell = 0$, and at large radius for every $\\ell$. Vaidya's ingoing radiation makes a singularity at the centre [hayward2006]."
+        },
+        {
+          "id": "simpson_visser",
+          "kind": "family",
+          "text": "Another black hole with no singularity. Simpson and Visser set theirs apart from the regular black holes of Bardeen and Hayward: it opens through a throat of radius $a$ where Hayward's closes over a regular centre [simpson2019]."
         }
       ],
       "references": [
@@ -7776,7 +7944,8 @@
         "frolov2014",
         "delorenzo2015",
         "carballorubio2018",
-        "vagnozzi2023"
+        "vagnozzi2023",
+        "simpson2019"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hayward.json",
@@ -8694,6 +8863,16 @@
           "id": "gowdy",
           "kind": "generalisation",
           "text": "Kasner's universe with gravitational waves running round a torus. The flat Kasner universe is the Gowdy torus with $P = \\tau$ and $Q = 0$ [ringstrom2010], and a polarised Gowdy universe approaches a Kasner universe of its own at each $\\theta$ as it nears the singularity [berger1974]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "limit_source",
+          "text": "Send the mass of Schwarzschild's black hole to infinity in coordinates that stay inside the horizon, and the limit is the Kasner universe with exponents $(-\\frac{1}{3}, \\frac{2}{3}, \\frac{2}{3})$. Robert Geroch gave it in 1969 as an example of a limit that depends on the coordinates, since in others the same family tends to Minkowski space [geroch1969]."
+        },
+        {
+          "id": "nariai",
+          "kind": "programme",
+          "text": "Edward Kasner found this solution too. In 1921, the year of his anisotropic vacuum, he presented the product of two equal spheres as a solution with a cosmological constant, the positive signature form of Nariai's metric [kasner1925, kasner1921]."
         }
       ],
       "references": [
@@ -8709,7 +8888,9 @@
         "maccallum2011",
         "yurtsever1988",
         "ringstrom2010",
-        "berger1974"
+        "berger1974",
+        "geroch1969",
+        "kasner1925"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner.json",
@@ -9223,6 +9404,66 @@
           "id": "hartle_thorne",
           "kind": "generalisation",
           "text": "The field outside a slowly rotating star, to second order in its spin. The star's quadrupole moment is free, and at Kerr's value, $Q = J^2/M$, the field is Kerr's metric to that order [hartlethorne1968]."
+        },
+        {
+          "id": "malament_hogarth",
+          "kind": "generalisation",
+          "text": "Kerr's black hole is a Malament-Hogarth spacetime. An observer falling to the inner horizon has by then received every signal a computer orbiting outside will ever send, however long it runs [etesi2002]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "family",
+          "text": "The charged black hole, which has an inner horizon as Kerr's does and spherical symmetry besides. Eric Poisson and Werner Israel took it in 1989 as a simple spherical model of the inside of a spinning hole, and found the mass within the inner horizon growing without bound [poisson1989, poisson1990]."
+        },
+        {
+          "id": "taub_nut",
+          "kind": "family",
+          "text": "Schwarzschild's metric with a twist $l$ where Kerr's has a spin $a$. Jerzy Plebański and Marek Demiański's family of 1976 holds both parameters at once [plebanski1976, griffiths2005]."
+        },
+        {
+          "id": "zipoy_voorhees",
+          "kind": "family",
+          "text": "The static field of a rod, which deforms Schwarzschild's metric by a quadrupole. Akira Tomimatsu and Humitaka Sato found a spinning vacuum solution in 1972 that is Kerr's metric at one value of its angular momentum and a Zipoy-Voorhees metric at none [tomimatsu1972, kodamahikida2003]."
+        },
+        {
+          "id": "tangherlini",
+          "kind": "family",
+          "text": "The static black hole of $D$ dimensions. Robert Myers and Malcolm Perry found its spinning family in 1986, the counterparts of Kerr's metric in higher dimensions, where a black hole can turn in several planes at once [myers1986, emparan2008]."
+        },
+        {
+          "id": "c_metric",
+          "kind": "family",
+          "text": "A black hole with an acceleration where Kerr's has a spin. Jerzy Plebański and Marek Demiański put both into one family in 1976, and the spinning C-metric is Kerr's metric when the acceleration vanishes [plebanski1976, griffiths2005]."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "family",
+          "text": "The throat of an extremal charged black hole, AdS$_2 \\times$ S$^2$. James Bardeen and Gary Horowitz found in 1999 that the limit toward the horizon of an extreme Kerr black hole is its vacuum counterpart, with a timelike boundary at infinity as well [bardeen1999]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "Kerr's metric with the mass taken out, $M = 0$, which is flat, in spheroidal coordinates built on a ring of radius $a$. Gary Gibbons and Mikhail Volkov pointed out in 2017 that the ring stays and joins two flat regions, so at $M = 0$ Kerr's spacetime is Minkowski space only locally [gibbons2017]."
+        },
+        {
+          "id": "aichelburg_sexl",
+          "kind": "family",
+          "text": "The shock wave of a black hole boosted to the speed of light. Valeria Ferrari and Paolo Pendenza boosted Kerr's along its axis in 1990, and took the limit to be the field of massless particles on a ring of radius $a$ [ferrari1990]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "family",
+          "text": "A star that shines. Prahalad Vaidya and L. K. Patel found a radiating Kerr metric in 1973, a field of flowing radiation with Kerr's symmetry that is Kerr's metric when the radiation is switched off [vaidya1973]."
+        },
+        {
+          "id": "khan_penrose",
+          "kind": "family",
+          "text": "Two impulsive plane waves colliding. With their polarisations out of line the collision is Yavuz Nutku and Mustafa Halil's solution, which Subrahmanyan Chandrasekhar and Valeria Ferrari derived in 1984 from the simplest solution of an equation of Ernst's type, as Kerr's metric is derived [chandrasekhar1984ferrari, nutku1977]."
+        },
+        {
+          "id": "string_black_hole",
+          "kind": "family",
+          "text": "Schwarzschild's black hole with a cosmic string through it. Ruth Gregory, David Kubizňák, and Danielle Wills put the string through a Kerr black hole in 2013 and found its effect conical in a frame turning with the hole [gregory2013]."
         }
       ],
       "references": [
@@ -9254,7 +9495,21 @@
         "carter1968separable",
         "myers1986",
         "bardeen1999",
-        "hartlethorne1968"
+        "hartlethorne1968",
+        "etesi2002",
+        "poisson1989",
+        "poisson1990",
+        "plebanski1976",
+        "griffiths2005",
+        "tomimatsu1972",
+        "kodamahikida2003",
+        "emparan2008",
+        "gibbons2017",
+        "ferrari1990",
+        "vaidya1973",
+        "chandrasekhar1984ferrari",
+        "nutku1977",
+        "gregory2013"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -10073,6 +10328,16 @@
           "id": "near_horizon_extreme_kerr",
           "kind": "special_case",
           "text": "The throat of the extreme hole with the charge switched off. With charge the throat slides toward the Bertotti-Robinson universe [bardeen1999]."
+        },
+        {
+          "id": "malament_hogarth",
+          "kind": "generalisation",
+          "text": "Kerr-Newman is a Malament-Hogarth spacetime, as Gábor Etesi and István Németi noted in 2002 when they set a computer in orbit around Kerr's black hole and sent an observer in to the inner horizon [etesi2002]."
+        },
+        {
+          "id": "dilaton_black_hole",
+          "kind": "family",
+          "text": "The charged black hole of low energy string theory. Ashoke Sen set it spinning in 1992, which makes his solution string theory's counterpart of Kerr-Newman, with mass, charge, and angular momentum [sen1992]."
         }
       ],
       "references": [
@@ -10095,7 +10360,9 @@
         "ruffini1971",
         "gibbons1975",
         "carter1968separable",
-        "bardeen1999"
+        "bardeen1999",
+        "etesi2002",
+        "sen1992"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr_newman.json",
@@ -10228,6 +10495,21 @@
           "id": "bell_szekeres",
           "kind": "family",
           "text": "The same collision with light for the waves. Bell and Szekeres's two electromagnetic shock waves meet in the same four regions and focus each other onto a Killing-Cauchy horizon, with the curvature bounded [bell1974, griffiths1991]."
+        },
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "The rotating black hole. Chandrasekhar and Ferrari wrote in 1984 that Nutku and Halil's collision, which is Khan and Penrose's with the polarisations out of line, occupies the same place among spacetimes with two spacelike Killing vectors \"as the Kerr solution does\" among those with one timelike and one spacelike [chandrasekhar1984ferrari]."
+        },
+        {
+          "id": "szekeres",
+          "kind": "programme",
+          "text": "Peter Szekeres's dust cosmologies of 1975 [szekeres1975]. Five years earlier he had given a solution for part of a collision of gravitational waves, and in 1972 the general solution for two plane waves that are linearly polarised [szekeres1970, szekeres1972]."
+        },
+        {
+          "id": "aichelburg_sexl",
+          "kind": "family",
+          "text": "An impulsive wave whose strength falls off with distance from one massless particle at its centre. Two of them meeting head on close a trapped surface around the collision, as Penrose found in 1974, so a black hole forms [eardley2002]."
         }
       ],
       "references": [
@@ -10244,7 +10526,9 @@
         "matzner1984",
         "yurtsever1988",
         "bell1974",
-        "griffiths1991"
+        "griffiths1991",
+        "szekeres1975",
+        "eardley2002"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/khan_penrose.json",
@@ -10398,6 +10682,16 @@
           "id": "van_den_broeck",
           "kind": "family",
           "text": "A warp bubble with a roomy pocket folded inside it. Krasnikov called the fold Van Den Broeck's trick, and with a pocket of his own brought the exotic matter of a shortcut down to about a milligram [krasnikov2003]."
+        },
+        {
+          "id": "wormhole_time_machine",
+          "kind": "family",
+          "text": "A wormhole made into a time machine by putting its two mouths out of step. Two Krasnikov tubes that do not overlap make one too, as Allen Everett and Thomas Roman showed in 1997 [everett1997]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "piece",
+          "text": "Spacetime is flat outside the tube and flat again inside it, where the light cones are opened out. All of the curvature is in the tube's thin wall [everett1997]."
         }
       ],
       "references": [
@@ -10822,7 +11116,7 @@
         },
         {
           "id": "zipoy_voorhees",
-          "kind": "family",
+          "kind": "limit_source",
           "text": "The Weyl field of a rod of finite length. As $m \\to \\infty$ it becomes, locally, Levi-Civita's metric with $\\sigma = (1 + q)/2$ [herrera1999]."
         },
         {
@@ -11048,8 +11342,8 @@
         },
         {
           "id": "bertotti_robinson",
-          "kind": "special_case",
-          "text": "The geometry down the throat of each hole. Near any one of them $U \\approx m_i/|\\mathbf{x} - \\mathbf{x}_i|$, and the metric is that of AdS$_2 \\times$ S$^2$."
+          "kind": "limit",
+          "text": "The geometry down the throat of each hole. In the limit toward any one of them $U \\approx m_i/|\\mathbf{x} - \\mathbf{x}_i|$, and the metric is that of AdS$_2 \\times$ S$^2$."
         },
         {
           "id": "kaluza_klein_monopole",
@@ -11060,6 +11354,11 @@
           "id": "kastor_traschen",
           "kind": "generalisation",
           "text": "The same holes in a universe with a positive cosmological constant, where they ride the expansion and no longer stand still. Holes that fall together merge [kastor1993, brill1994]."
+        },
+        {
+          "id": "reissner_nordstrom_de_sitter",
+          "kind": "family",
+          "text": "The charged black hole in de Sitter space. With charge equal to mass it is the single hole of David Kastor and Jennie Traschen's solutions of 1993, Majumdar and Papapetrou's holes in a universe with $\\Lambda > 0$, where they move and merge [kastor1993]."
         }
       ],
       "references": [
@@ -11292,9 +11591,24 @@
           "text": "The charged black hole has the property too, as John Earman and John Norton noted in 1993 [earman1993]."
         },
         {
+          "id": "kerr",
+          "kind": "special_case",
+          "text": "The rotating black hole has the property. Gábor Etesi and István Németi put the computer on an orbit around one in 2002 and sent the observer in, and by the time the observer reaches the inner horizon every signal the computer will ever send has arrived [etesi2002]."
+        },
+        {
+          "id": "kerr_newman",
+          "kind": "special_case",
+          "text": "The black hole with both spin and charge. Etesi and Németi counted it among the Malament-Hogarth spacetimes in 2002, beside anti-de Sitter space and Reissner-Nordström [etesi2002]."
+        },
+        {
           "id": "godel",
           "kind": "special_case",
           "text": "In Gödel's universe every event is a Malament-Hogarth event [earman1993]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "conformal",
+          "text": "Earman and Norton's toy example of 1993 is Minkowski space with one event removed and the metric multiplied by a factor that grows without bound toward it [earman1993]. Its light cones are Minkowski's, and Minkowski space itself is globally hyperbolic, so it lacks the property."
         }
       ],
       "references": [
@@ -11636,6 +11950,11 @@
           "id": "light_beam",
           "kind": "programme",
           "text": "Bonnor's exact field of a steady beam of light, from 1969. Light shining along the axis takes the place of the magnetic field [bonnor1969light]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "The black hole Frederick Ernst set in Melvin's universe in 1976. Ernst's metric is Schwarzschild's at $B = 0$ and Melvin's universe at $r_s = 0$ [ernst1976b]."
         }
       ],
       "references": [
@@ -12175,6 +12494,36 @@
           "id": "string_wave",
           "kind": "generalisation",
           "text": "Flat spacetime with a cosmic string through it and a wave running along the string. Take the string's mass to zero and a change of coordinates brings Minkowski back [anderson1999]."
+        },
+        {
+          "id": "kerr",
+          "kind": "generalisation",
+          "text": "Flat spacetime with a spinning mass in it. With the mass taken out, $M = 0$, Kerr's metric is flat again, in spheroidal coordinates built on a ring of radius $a$ [gibbons2017]."
+        },
+        {
+          "id": "einstein_rosen_waves",
+          "kind": "generalisation",
+          "text": "Flat spacetime with gravitational waves closing in on an axis and spreading out again. Karel Kuchař proved in 1971 that their canonical formalism is that of cylindrical scalar waves in Minkowski space [kuchar1971]."
+        },
+        {
+          "id": "alcubierre",
+          "kind": "generalisation",
+          "text": "Flat spacetime with a bubble moving through it. Inside the bubble and far from it spacetime stays flat, and all of the curvature is in the bubble's wall [alcubierre1994]."
+        },
+        {
+          "id": "krasnikov",
+          "kind": "composite",
+          "text": "A tube of flat spacetime laid through flat spacetime, the two joined by a thin curved wall. Inside the tube the light cones are opened out, so a ship comes home sooner than light could have outside it [krasnikov1998, everett1997]."
+        },
+        {
+          "id": "thin_shell_wormhole",
+          "kind": "composite",
+          "text": "Two copies of Minkowski space with a region cut from each and the edges identified make a wormhole whose matter sits only on the join, as Matt Visser showed in 1989 [visser1989prd]."
+        },
+        {
+          "id": "malament_hogarth",
+          "kind": "conformal",
+          "text": "Remove one event from Minkowski space and multiply the metric by a factor that grows without bound toward it, and one observer can see the whole endless future of another in a finite time of their own [earman1993]. Itamar Pitowsky had tried the same in Minkowski space itself in 1990, where the traveller's acceleration must grow without bound [pitowsky1990]."
         }
       ],
       "references": [
@@ -12214,7 +12563,15 @@
         "bonnor1969light",
         "friedman1990",
         "morris1988prl",
-        "anderson1999"
+        "anderson1999",
+        "gibbons2017",
+        "kuchar1971",
+        "alcubierre1994",
+        "krasnikov1998",
+        "everett1997",
+        "visser1989prd",
+        "earman1993",
+        "pitowsky1990"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -12970,6 +13327,11 @@
           "id": "simpson_visser",
           "kind": "special_case",
           "text": "Schwarzschild's metric with $\\sqrt{r^2 + a^2}$ written for $r$. While $a > r_s$ it is one of these wormholes, and for smaller $a$ a horizon closes over the throat [simpson2019]."
+        },
+        {
+          "id": "alcubierre",
+          "kind": "family",
+          "text": "A bubble that carries a ship faster than light, with no wormhole. Miguel Alcubierre wrote in 1994 that it needs exotic matter \"just as it happens with wormholes\" [alcubierre1994]."
         }
       ],
       "references": [
@@ -12990,7 +13352,8 @@
         "damour2007",
         "nandi2022",
         "krasnikov2003",
-        "simpson2019"
+        "simpson2019",
+        "alcubierre1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/morris_thorne.json",
@@ -13183,6 +13546,16 @@
           "id": "ori_time_machine",
           "kind": "family",
           "text": "A time machine with no wormhole in it. Amos Ori's vacuum core of 2005 sits inside matter that obeys the weak, dominant, and strong energy conditions [ori2005]."
+        },
+        {
+          "id": "alcubierre",
+          "kind": "family",
+          "text": "The warp bubble, another way to outrun light that can be made into a time machine. Allen Everett modified Alcubierre's model in 1996 so that causal loops are possible, with no assumption added [everett1996]."
+        },
+        {
+          "id": "krasnikov",
+          "kind": "family",
+          "text": "A tube laid down by a ship moving slower than light, which shortens the trip home. One tube has no closed timelike curves, and Allen Everett and Thomas Roman showed in 1997 that two tubes that do not overlap make a time machine [everett1997]."
         }
       ],
       "references": [
@@ -13200,7 +13573,9 @@
         "kay1997",
         "visser1989prd",
         "gott1991",
-        "ori2005"
+        "ori2005",
+        "everett1996",
+        "everett1997"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/wormhole_time_machine.json",
@@ -14029,7 +14404,7 @@
       "related": [
         {
           "id": "schwarzschild_de_sitter",
-          "kind": "generalisation",
+          "kind": "limit_source",
           "text": "Nariai's solution is the limit $\\Lambda r_s^2 \\to 4/9$ of Schwarzschild-de Sitter, where its two horizons meet: the largest black hole de Sitter space can hold [ginsparg1983]."
         },
         {
@@ -14044,8 +14419,13 @@
         },
         {
           "id": "reissner_nordstrom_de_sitter",
-          "kind": "generalisation",
-          "text": "The charged black hole in de Sitter space. Take away its charge and let its black hole horizon meet the cosmological one, and the metric is Nariai's [romans1992]."
+          "kind": "limit_source",
+          "text": "The charged black hole in de Sitter space. Take away its charge and let its black hole horizon close on the cosmological one, and in the limit the region between them is Nariai's solution [romans1992]."
+        },
+        {
+          "id": "kasner",
+          "kind": "programme",
+          "text": "Edward Kasner's vacuum of 1921, which expands along some axes and contracts along another. The same year he presented the product of two equal spheres as a solution with a cosmological constant, the positive signature form of Nariai's metric [kasner1921, kasner1925]."
         }
       ],
       "references": [
@@ -14062,7 +14442,8 @@
         "bousso1998",
         "bousso1998proliferation",
         "cardoso2004",
-        "romans1992"
+        "romans1992",
+        "kasner1921"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/nariai.json",
@@ -14886,6 +15267,11 @@
           "id": "vaidya",
           "kind": "family",
           "text": "A star that radiates. Prahalad Vaidya carried the collapse over in 1966 to matter that shines as it falls [vaidya1966]."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "The black hole of three dimensions. Robert Mann and Simon Ross showed in 1993 that dust collapsing under a negative cosmological constant can end as one [mann1993]."
         }
       ],
       "references": [
@@ -14900,7 +15286,8 @@
         "christodoulou1984",
         "szekeres1975collapse",
         "schwarzschild1916b",
-        "vaidya1966"
+        "vaidya1966",
+        "mann1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/oppenheimer_snyder.json",
@@ -15078,6 +15465,11 @@
           "id": "schwarzschild",
           "kind": "piece",
           "text": "The outside of Ori's full model. Beyond the matter that surrounds the vacuum core, the geometry is Schwarzschild's [ori2005]."
+        },
+        {
+          "id": "godel",
+          "kind": "family",
+          "text": "Rotating dust with closed timelike curves through every event, there from the start. Ori built his model so that they first appear at a definite moment, inside a finite region [ori2005, godel1949]."
         }
       ],
       "references": [
@@ -15871,8 +16263,8 @@
         },
         {
           "id": "bertotti_robinson",
-          "kind": "special_case",
-          "text": "The throat of the extremal black hole, $r_q = r_s/2$. Near its horizon the geometry is AdS$_2 \\times$ S$^2$ [gibbons1993]."
+          "kind": "limit",
+          "text": "The throat of the extremal black hole, $r_q = r_s/2$. In the limit taken toward its horizon the geometry is AdS$_2 \\times$ S$^2$ [gibbons1993]."
         },
         {
           "id": "majumdar_papapetrou",
@@ -15908,6 +16300,21 @@
           "id": "hayward",
           "kind": "family",
           "text": "A black hole with the same two horizons and the same tower of regions, and a regular centre at $r = 0$ [hayward2006]."
+        },
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "The rotating black hole, which has an inner horizon too and no spherical symmetry. Eric Poisson and Werner Israel worked out mass inflation in 1989 on a charged spherical hole as a model of the inside of a spinning one [poisson1989, poisson1990]."
+        },
+        {
+          "id": "c_metric",
+          "kind": "family",
+          "text": "A pair of black holes accelerating apart. William Kinnersley and Martin Walker gave them a charge in 1970, in a solution that generalises Reissner-Nordström's [kinnersley1970]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "family",
+          "text": "A star that shines, Schwarzschild's metric with a mass that changes in retarded time. William Bonnor and Prahalad Vaidya gave it a charge in 1970, the radiating form of Reissner-Nordström's metric [bonnor1970]."
         }
       ],
       "references": [
@@ -15934,7 +16341,9 @@
         "romans1992",
         "simpson2019",
         "borde1994",
-        "hayward2006"
+        "hayward2006",
+        "kinnersley1970",
+        "bonnor1970"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -16056,13 +16465,13 @@
         },
         {
           "id": "nariai",
-          "kind": "special_case",
-          "text": "The double horizon with no charge. At $r_q = 0$ and $\\Lambda r_s^2 = 4/9$ the black hole and cosmological horizons coincide, and the metric is Nariai's [romans1992]."
+          "kind": "limit",
+          "text": "The double horizon with no charge. At $r_q = 0$, in the limit $\\Lambda r_s^2 \\to 4/9$ where the black hole and cosmological horizons meet, the region between them becomes Nariai's solution [romans1992]."
         },
         {
           "id": "bertotti_robinson",
-          "kind": "special_case",
-          "text": "The throat of the cold black hole at $\\Lambda = 0$. Near a degenerate horizon the geometry is a product of a two dimensional spacetime of constant curvature and a sphere, and without a cosmological constant it is Bertotti and Robinson's [romans1992]."
+          "kind": "limit",
+          "text": "The throat of the cold black hole at $\\Lambda = 0$. The limit toward a degenerate horizon is a product of a two dimensional spacetime of constant curvature and a sphere, and without a cosmological constant it is Bertotti and Robinson's [romans1992]."
         },
         {
           "id": "kerr_de_sitter",
@@ -16073,6 +16482,11 @@
           "id": "kastor_traschen",
           "kind": "generalisation",
           "text": "Any number of lukewarm holes at once. In the cosmological chart their potentials add, and holes that fall together merge [kastor1993, brill1994]."
+        },
+        {
+          "id": "majumdar_papapetrou",
+          "kind": "family",
+          "text": "Any number of black holes with charge equal to mass, at rest together when $\\Lambda = 0$. David Kastor and Jennie Traschen found their counterpart with $\\Lambda > 0$ in 1993, and one of its holes alone is the lukewarm black hole [kastor1993]."
         }
       ],
       "references": [
@@ -16438,6 +16852,11 @@
           "id": "photon_rocket",
           "kind": "special_case",
           "text": "A member with pure radiation in place of the vacuum, whose fronts stay round while the body accelerates on the recoil of its light. Its news function vanishes, so it sends out no gravitational waves [dain1996, cornish2000]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "special_case",
+          "text": "The member with round wave fronts and pure radiation in place of the vacuum, a star that shines evenly. Jiří Podolský and Otakar Svítek showed in 2005 that the other members with pure radiation approach it [podolsky2005]."
         }
       ],
       "references": [
@@ -16464,7 +16883,8 @@
         "rezzolla2010",
         "brinkmann1925",
         "dain1996",
-        "cornish2000"
+        "cornish2000",
+        "podolsky2005"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/robinson_trautman.json",
@@ -16719,8 +17139,8 @@
         },
         {
           "id": "aichelburg_sexl",
-          "kind": "special_case",
-          "text": "Schwarzschild's field boosted to the speed of light, with the mass sent to zero as the energy stays fixed [aichelburg1971]."
+          "kind": "limit",
+          "text": "The limit of Schwarzschild's field boosted toward the speed of light, with the mass sent to zero as the energy stays fixed [aichelburg1971]."
         },
         {
           "id": "kantowski_sachs",
@@ -16821,6 +17241,21 @@
           "id": "hartle_thorne",
           "kind": "generalisation",
           "text": "The field outside a star that turns slowly. Rotation adds the dragging of inertial frames at first order in the spin and a quadrupole moment at second [hartlethorne1968]."
+        },
+        {
+          "id": "melvin",
+          "kind": "family",
+          "text": "A universe of magnetic field lines held together by their own gravity. Frederick Ernst put Schwarzschild's black hole inside it in 1976, and with the field switched off, $B = 0$, his metric is Schwarzschild's [ernst1976b]."
+        },
+        {
+          "id": "frw",
+          "kind": "family",
+          "text": "The expanding universe. Albert Einstein and Ernst Straus joined the two in 1945, with Schwarzschild's vacuum filling a hole cut from a Friedmann universe of dust [einstein1945]. Oppenheimer and Snyder's star is the reverse, a ball of that universe inside Schwarzschild's vacuum [oppenheimersnyder1939]."
+        },
+        {
+          "id": "kasner",
+          "kind": "limit",
+          "text": "A limit of Schwarzschild's metric with the mass sent to infinity. Robert Geroch showed in 1969 that the limit depends on the coordinates carried along: in one set it is Minkowski space, and in another, which stays inside the horizon, it is a Kasner universe [geroch1969]."
         }
       ],
       "references": [
@@ -16877,7 +17312,10 @@
         "fisher1948",
         "janis1968",
         "gregorylaflamme1993",
-        "hartlethorne1968"
+        "hartlethorne1968",
+        "ernst1976b",
+        "einstein1945",
+        "geroch1969"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -17104,6 +17542,16 @@
           "id": "oppenheimer_snyder",
           "kind": "family",
           "text": "Another ball of uniform density with Schwarzschild's vacuum outside, made of dust with no pressure, so it collapses [oppenheimersnyder1939]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "family",
+          "text": "With the star's radius taken down to $R = r_s$, far past the limit of $\\frac{9}{8}r_s$, the interior metric is the static patch of de Sitter space with $\\Lambda = 3/r_s^2$. Pawel Mazur and Emil Mottola found in 2015 that the pressure inside is then $-\\rho c^2$ throughout, and took it for a collapsed star with no singularity [mazur2015]."
+        },
+        {
+          "id": "einstein_static",
+          "kind": "family",
+          "text": "The whole three sphere, filled with dust and held still by a cosmological constant. Schwarzschild found in 1916 that space inside his star is a cap of such a sphere, and a year later Einstein closed the sphere into a universe [schwarzschild1916b, einstein1917]."
         }
       ],
       "references": [
@@ -17116,7 +17564,9 @@
         "schwarzschild1916",
         "tolman1939",
         "oppenheimer1939",
-        "oppenheimersnyder1939"
+        "oppenheimersnyder1939",
+        "mazur2015",
+        "einstein1917"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/interior_schwarzschild.json",
@@ -17526,7 +17976,7 @@
         },
         {
           "id": "nariai",
-          "kind": "special_case",
+          "kind": "limit",
           "text": "The limit $\\Lambda r_s^2 \\to 4/9$, where the black hole horizon meets the cosmological horizon. Paul Ginsparg and Malcolm Perry showed in 1983 that the region between them stays regular and becomes Nariai's solution [ginsparg1983]."
         },
         {
@@ -17827,6 +18277,11 @@
           "id": "myers_perry",
           "kind": "generalisation",
           "text": "Tangherlini's black hole set spinning, in as many planes as its dimension has room for. With every spin at zero it is his metric again [myers1986]."
+        },
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "The spinning black hole of four dimensions. Robert Myers and Malcolm Perry found its counterparts in $D$ dimensions in 1986, with the static black hole as the member that does not turn [myers1986]."
         }
       ],
       "references": [
@@ -18218,6 +18673,11 @@
           "id": "bardeen",
           "kind": "family",
           "text": "The regular black hole of 1968. Bardeen's closes over a regular centre with de Sitter space at its core, where the black bounce opens through a throat into another universe [ansoldi2008, simpson2019]."
+        },
+        {
+          "id": "hayward",
+          "kind": "family",
+          "text": "A regular black hole with a centre and a core of de Sitter space. Simpson and Visser counted Hayward's among the traditional regular black holes, which close over a regular centre where theirs opens through a throat [simpson2019, hayward2006]."
         }
       ],
       "references": [
@@ -18238,7 +18698,8 @@
         "vagnozzi2023",
         "riaz2022",
         "damour2007",
-        "ansoldi2008"
+        "ansoldi2008",
+        "hayward2006"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/simpson_visser.json",
@@ -19051,6 +19512,16 @@
           "id": "oppenheimer_snyder",
           "kind": "special_case",
           "text": "A uniform ball of Szekeres's dust with concentric shells, falling from rest inside Schwarzschild's vacuum. Szekeres's quasispherical collapses include the spherically symmetric ones [szekeres1975collapse]."
+        },
+        {
+          "id": "bell_szekeres",
+          "kind": "programme",
+          "text": "Peter Szekeres's other spacetime, found with P. Bell in 1974: two plane electromagnetic shock waves colliding head on [bell1974]."
+        },
+        {
+          "id": "khan_penrose",
+          "kind": "programme",
+          "text": "Two impulsive gravitational waves colliding head on, from 1971 [khan1971]. Szekeres had given a solution for part of such a collision in 1970, and in 1972 found the general solution for two plane waves that are linearly polarised [szekeres1970, szekeres1972]."
         }
       ],
       "references": [
@@ -19071,7 +19542,11 @@
         "bolejko2006",
         "bolejko2010",
         "sussman2012",
-        "buckley2013"
+        "buckley2013",
+        "bell1974",
+        "khan1971",
+        "szekeres1970",
+        "szekeres1972"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/szekeres.json",
@@ -19294,6 +19769,11 @@
           "id": "gowdy",
           "kind": "generalisation",
           "text": "The Taub universe is a Gowdy spacetime on $S^3$. Its extension past the Big Bang is the reason strong cosmic censorship is stated for generic initial data [gowdy2014]."
+        },
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "Schwarzschild's metric with a spin $a$ where this one has the twist $l$. Jerzy Plebański and Marek Demiański's family of 1976 holds both, and Jerry Griffiths and Jiří Podolský worked out in 2005 how its parameters become $a$ and $l$ [plebanski1976, griffiths2005]."
         }
       ],
       "references": [
@@ -19312,7 +19792,9 @@
         "misner1967",
         "grossperry1983",
         "mazur1986",
-        "gowdy2014"
+        "gowdy2014",
+        "plebanski1976",
+        "griffiths2005"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/taub_nut.json",
@@ -19658,6 +20140,16 @@
           "id": "szekeres",
           "kind": "generalisation",
           "text": "Tolman-Bondi with the spheres pushed off center. Peter Szekeres's dust keeps the evolution of each shell and sets the shells eccentrically, so the density carries a dipole and in general no Killing vector survives [szekeres1975, bonnor1977]."
+        },
+        {
+          "id": "tov",
+          "kind": "programme",
+          "text": "Richard Tolman's other spacetime. In 1939 he gave a method for static spheres of perfect fluid, and in the paper that followed his J. Robert Oppenheimer and George Volkoff applied the equation of equilibrium to a star of neutrons [tolman1939, oppenheimer1939]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "limit",
+          "text": "Dust made of light. José Lemos showed in 1992 that Vaidya's metric is the limit of Tolman-Bondi in which the dust moves at the speed of light, and Charles Hellaby found in 1994 that only dust that is hollow at the centre has that limit [lemos1992, hellaby1994]."
         }
       ],
       "references": [
@@ -19680,7 +20172,11 @@
         "moss2011",
         "zhang2011",
         "szekeres1975",
-        "bonnor1977"
+        "bonnor1977",
+        "tolman1939",
+        "oppenheimer1939",
+        "lemos1992",
+        "hellaby1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tolman_bondi.json",
@@ -19793,6 +20289,16 @@
           "id": "hartle_thorne",
           "kind": "family",
           "text": "The same star set turning slowly. James Hartle added rotation to these equations to second order in the angular velocity, and Hartle and Thorne's field is the outside of the result [hartle1967, hartlethorne1968]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "family",
+          "text": "The outside of a star that shines. A star in equilibrium has Schwarzschild's vacuum around it and no pressure at its surface, and Nilton Santos showed in 1985 that a star losing heat joins to Vaidya's metric with a surface pressure proportional to the heat flux [santos1985]."
+        },
+        {
+          "id": "tolman_bondi",
+          "kind": "programme",
+          "text": "Richard Tolman's other spacetime, dust expanding or collapsing in spherical symmetry with a density that varies with radius, from 1934 [tolman1934]. Five years later he gave the method for static spheres of fluid that Oppenheimer and Volkoff applied in the paper after his [tolman1939]."
         }
       ],
       "references": [
@@ -19818,7 +20324,9 @@
         "buchdahl1959",
         "oppenheimersnyder1939",
         "hartle1967",
-        "hartlethorne1968"
+        "hartlethorne1968",
+        "santos1985",
+        "tolman1934"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tov.json",
@@ -19936,6 +20444,36 @@
           "id": "hayward",
           "kind": "generalisation",
           "text": "Vaidya's ingoing metric with a length $\\ell$ that keeps the centre regular while the radiation pours in. Sean Hayward used it in 2006 for a black hole that forms and evaporates with no singularity [hayward2006]."
+        },
+        {
+          "id": "tov",
+          "kind": "family",
+          "text": "The star that does not shine, a sphere of fluid in equilibrium with Schwarzschild's vacuum outside and no pressure at its surface. Vaidya gave spheres of fluid that radiate in 1951, and Nilton Santos found in 1985 that the pressure at such a star's surface is proportional to the heat flux [vaidya1951pr, santos1985]."
+        },
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "The rotating black hole. Vaidya and L. K. Patel made it radiate in 1973: their solution has Kerr's symmetry, and with one parameter set to zero it is static and is Kerr's metric [vaidya1973]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "family",
+          "text": "The charged black hole. William Bonnor and Vaidya gave the shining star a charge in 1970, and with the mass and the charge held constant their metric is Reissner-Nordström's [bonnor1970]."
+        },
+        {
+          "id": "tolman_bondi",
+          "kind": "limit_source",
+          "text": "Dust with rest mass, falling or expanding in spherical symmetry. Vaidya's metric is its limit as the speed of the dust goes to that of light, which José Lemos took in 1992 and Charles Hellaby showed in 1994 to exist only for dust that is hollow at the centre [lemos1992, hellaby1994]."
+        },
+        {
+          "id": "light_beam",
+          "kind": "family",
+          "text": "Light as the source again, here a steady beam of parallel rays. William Bonnor found its exact field in 1969, a plane wave that keeps pace with the light [bonnor1969light]."
+        },
+        {
+          "id": "robinson_trautman",
+          "kind": "generalisation",
+          "text": "Vaidya's star with wave fronts of any shape, which carry gravitational waves as well as light. Jiří Podolský and Otakar Svítek showed in 2005 that these Robinson-Trautman spacetimes with pure radiation approach Vaidya's metric [podolsky2005]."
         }
       ],
       "references": [
@@ -19954,7 +20492,12 @@
         "dwivedi1989",
         "podolsky2008",
         "simpson2019vaidya",
-        "hayward2006"
+        "hayward2006",
+        "santos1985",
+        "lemos1992",
+        "hellaby1994",
+        "bonnor1969light",
+        "podolsky2005"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/vaidya.json",
@@ -20633,6 +21176,11 @@
           "id": "minkowski",
           "kind": "locally_same",
           "text": "Each side of the wall is the inside of the hyperboloid $X^2 + Y^2 + Z^2 = 1/k^2 + c^2T^2$ in Minkowski space [ipser1984, caldwell1996]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "family",
+          "text": "The wall itself is a de Sitter space of $2 + 1$ dimensions, a sphere that shrinks to the radius $1/k$ and grows again [caldwell1996]."
         }
       ],
       "references": [
@@ -20938,6 +21486,11 @@
           "id": "damour_solodukhin",
           "kind": "family",
           "text": "A smooth wormhole that passes for a Schwarzschild black hole, with its throat where the horizon would be and its matter spread through a thin layer around it [damour2007]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "piece",
+          "text": "With no mass, $r_s = 0$, both sides of the throat are flat. Visser's first wormholes of 1989 were of this kind, two copies of Minkowski space with a region cut from each and the edges joined [visser1989prd]."
         }
       ],
       "references": [
@@ -21131,18 +21684,23 @@
         },
         {
           "id": "levi_civita",
-          "kind": "family",
+          "kind": "limit",
           "text": "The Weyl field of an infinite line of mass, which the rod approaches locally as $m \\to \\infty$ [herrera1999]."
         },
         {
           "id": "curzon_chazy",
-          "kind": "special_case",
-          "text": "The rod shrunk to a point at fixed mass, $q \\to \\infty$ and $m \\to 0$ with $(1 + q)m$ fixed [herrera1999]."
+          "kind": "limit",
+          "text": "The rod shrunk to a point at fixed mass, the limit $q \\to \\infty$ and $m \\to 0$ with $(1 + q)m$ fixed [herrera1999]."
         },
         {
           "id": "fisher_jnw",
           "kind": "family",
           "text": "The same $g_{tt} = -f^{\\delta}$ on a spacetime that stays spherical and pays for it with a massless scalar field. It too has a naked singularity where Schwarzschild's horizon was [chowdhury2012]."
+        },
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "The rotating black hole. Tomimatsu and Sato's spinning solution of 1972 is Kerr's metric at one value of its angular momentum, and the static limits of their family are the Zipoy-Voorhees metrics of whole number $\\delta$ [tomimatsu1972, kodamahikida2003]."
         }
       ],
       "references": [

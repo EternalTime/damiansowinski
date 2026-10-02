@@ -5261,6 +5261,56 @@ class Relations(unittest.TestCase):
         for kind, back in build.RELATION_KINDS.items():
             self.assertEqual(build.RELATION_KINDS[back], kind)
 
+    def limit_pair(self, back="limit_source", reached="The limit $m \\to \\infty$.",
+                   source="The black hole this one is a limit of."):
+        metrics = self.pair("limit", back, text=reached)
+        metrics[1]["related"][0]["text"] = source
+        return metrics
+
+    def test_a_limit_is_answered_by_its_source_and_by_nothing_else(self):
+        """A limit is its own pair of kinds, as the captain asked on 2 October 2026: the spacetime
+        reached is a `limit` on the page of the one it is a limit of, which is its `limit_source`."""
+        self.assertEqual(build.RELATION_KINDS["limit"], "limit_source")
+        self.assertEqual(self.problems(self.limit_pair()), [])
+        for back in ("generalisation", "special_case", "family", "limit"):
+            found = self.problems(self.limit_pair(back))
+            self.assertTrue(any("b.json has to list a as limit_source" in problem for problem in found), back)
+
+    def test_a_limit_that_does_not_say_so_is_refused(self):
+        self.assertEqual(self.problems(self.limit_pair(reached="Kerr with no spin.")),
+                         ["a.json: related[b] is filed as a limit and does not say so, by the word limit "
+                          "or by an arrow such as $m \\to \\infty$"])
+        found = self.problems(self.limit_pair(source="The charged black hole."))
+        self.assertEqual(len(found), 1)
+        self.assertIn("b.json: related[a] is filed as a limit_source and does not say so", found[0])
+        for text in ("The limit taken toward its horizon.", "The rod shrunk to a point, $q \\to \\infty$.",
+                     "One of the limits Geroch took."):
+            self.assertEqual(self.problems(self.limit_pair(reached=text, source=text + " Again.")), [], text)
+
+    def test_every_limit_on_disk_says_so_on_both_pages(self):
+        """Stated here apart from the build's own check, so the two cannot go wrong together."""
+        limits = [(metric["id"], entry) for metric in build.load_metrics() for entry in metric["related"]
+                  if entry["kind"] in ("limit", "limit_source")]
+        self.assertGreater(len(limits), 20)
+        self.assertEqual(sum(entry["kind"] == "limit" for _, entry in limits) * 2, len(limits))
+        for metric_id, entry in limits:
+            self.assertRegex(entry["text"], r"\blimits?\b|\\to\b", f"{metric_id}.json: related[{entry['id']}]")
+
+    def test_no_special_case_on_disk_is_the_limit_of_a_boost_or_of_a_horizon(self):
+        """The relations filed as special cases until 2 October 2026 that are limits, each by the
+        pair of spacetimes: none may go back to `special_case`."""
+        kinds = {(metric["id"], entry["id"]): entry["kind"] for metric in build.load_metrics()
+                 for entry in metric["related"]}
+        for source, limit in (("schwarzschild", "aichelburg_sexl"), ("rn_metric", "bertotti_robinson"),
+                              ("majumdar_papapetrou", "bertotti_robinson"),
+                              ("reissner_nordstrom_de_sitter", "bertotti_robinson"),
+                              ("zipoy_voorhees", "curzon_chazy"), ("zipoy_voorhees", "levi_civita"),
+                              ("schwarzschild_de_sitter", "nariai"), ("reissner_nordstrom_de_sitter", "nariai"),
+                              ("hayward", "de_sitter"), ("bardeen", "de_sitter"), ("schwarzschild", "kasner"),
+                              ("tolman_bondi", "vaidya")):
+            self.assertEqual(kinds[source, limit], "limit", f"{source}.json: related[{limit}]")
+            self.assertEqual(kinds[limit, source], "limit_source", f"{limit}.json: related[{source}]")
+
     def test_a_relation_written_one_way_only_is_refused(self):
         metrics = self.pair()
         metrics[1]["related"] = [{"id": "c", "kind": "family", "text": "A cousin."}]

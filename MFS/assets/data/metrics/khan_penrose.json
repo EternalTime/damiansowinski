@@ -43,6 +43,21 @@
       "id": "bell_szekeres",
       "kind": "family",
       "text": "The same collision with light for the waves. Bell and Szekeres's two electromagnetic shock waves meet in the same four regions and focus each other onto a Killing-Cauchy horizon, with the curvature bounded [bell1974, griffiths1991]."
+    },
+    {
+      "id": "kerr",
+      "kind": "family",
+      "text": "The rotating black hole. Chandrasekhar and Ferrari wrote in 1984 that Nutku and Halil's collision, which is Khan and Penrose's with the polarisations out of line, occupies the same place among spacetimes with two spacelike Killing vectors \"as the Kerr solution does\" among those with one timelike and one spacelike [chandrasekhar1984ferrari]."
+    },
+    {
+      "id": "szekeres",
+      "kind": "programme",
+      "text": "Peter Szekeres's dust cosmologies of 1975 [szekeres1975]. Five years earlier he had given a solution for part of a collision of gravitational waves, and in 1972 the general solution for two plane waves that are linearly polarised [szekeres1970, szekeres1972]."
+    },
+    {
+      "id": "aichelburg_sexl",
+      "kind": "family",
+      "text": "An impulsive wave whose strength falls off with distance from one massless particle at its centre. Two of them meeting head on close a trapped surface around the collision, as Penrose found in 1974, so a black hole forms [eardley2002]."
     }
   ],
   "references": [
@@ -59,7 +74,9 @@
     "matzner1984",
     "yurtsever1988",
     "bell1974",
-    "griffiths1991"
+    "griffiths1991",
+    "szekeres1975",
+    "eardley2002"
   ],
   "coordinates": [
     {

@@ -56,13 +56,18 @@
     },
     {
       "id": "de_sitter",
-      "kind": "special_case",
+      "kind": "limit",
       "text": "The core. Near the centre $F \\approx 1 - r^2/\\ell^2$, de Sitter's static metric with $\\Lambda = 3/\\ell^2$, and as $m \\to \\infty$ at fixed $\\ell$ the whole metric becomes de Sitter's [hayward2006, frolov2016]."
     },
     {
       "id": "vaidya",
       "kind": "special_case",
       "text": "The forming and evaporating hole at $\\ell = 0$, and at large radius for every $\\ell$. Vaidya's ingoing radiation makes a singularity at the centre [hayward2006]."
+    },
+    {
+      "id": "simpson_visser",
+      "kind": "family",
+      "text": "Another black hole with no singularity. Simpson and Visser set theirs apart from the regular black holes of Bardeen and Hayward: it opens through a throat of radius $a$ where Hayward's closes over a regular centre [simpson2019]."
     }
   ],
   "references": [
@@ -82,7 +87,8 @@
     "frolov2014",
     "delorenzo2015",
     "carballorubio2018",
-    "vagnozzi2023"
+    "vagnozzi2023",
+    "simpson2019"
   ],
   "coordinates": [
     {

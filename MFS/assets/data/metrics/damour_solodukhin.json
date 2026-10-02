@@ -54,6 +54,11 @@
       "id": "simpson_visser",
       "kind": "family",
       "text": "Simpson and Visser's one parameter change of Schwarzschild's metric, made in the radius, $r \\to \\sqrt{r^2 + a^2}$. Its wormhole has a throat of radius $a > r_s$, and for smaller $a$ it is a black hole with no singularity [simpson2019]."
+    },
+    {
+      "id": "btz",
+      "kind": "family",
+      "text": "The black hole of three dimensions, where the change was first made. Solodukhin added $\\lambda^2$ to its $g_{tt}$ in 2005, which removes the horizon and leaves a wormhole whose perturbations evolve quasiperiodically [solodukhin2005]."
     }
   ],
   "references": [

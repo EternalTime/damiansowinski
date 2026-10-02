@@ -48,6 +48,11 @@
       "id": "c_metric",
       "kind": "family",
       "text": "A black hole with a string on one side alone. That string pulls it into uniform acceleration [kinnersley1970, achucarro1995]."
+    },
+    {
+      "id": "kerr",
+      "kind": "family",
+      "text": "The rotating black hole. A string through it leaves a cone as well, measured in a frame that turns with the hole, as Ruth Gregory, David Kubizňák, and Danielle Wills found in 2013 [gregory2013]."
     }
   ],
   "references": [
