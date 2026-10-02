@@ -422,6 +422,34 @@
     "embedding": "7035de7d63ab26a4"
   },
   {
+    "id": "bonnor_rotating_dust",
+    "name": "Bonnor Rotating Dust",
+    "tags": [
+      "dust",
+      "rotating",
+      "axisymmetric",
+      "stationary",
+      "closed timelike curves",
+      "asymptotically flat",
+      "angular momentum",
+      "frame dragging",
+      "negative mass",
+      "curvature singularity",
+      "naked singularity",
+      "directional singularity",
+      "Petrov type I",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "32e77d66e25d2611",
+    "diagrams": "f0fbc5b3a954d5c0",
+    "conformal": "35ac3817c45f10f9",
+    "embedding": "b7f898b0ae23639c"
+  },
+  {
     "id": "bonnor_vaidya",
     "name": "Bonnor-Vaidya",
     "tags": [
@@ -626,7 +654,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "848f60c9fc020b8f",
+    "version": "369ea5eab0a2c7e6",
     "diagrams": "8b39c6bef80d5718",
     "conformal": "573aa16b0b411fe4",
     "embedding": "a9676c6465fbce1c"
@@ -1082,7 +1110,7 @@
       "idealized model",
       "negative cosmological constant"
     ],
-    "version": "e27f9a9bc7bfac8e",
+    "version": "fc79097e7c87669d",
     "diagrams": "7bf82d9d4b9ce74d",
     "embedding": "05f185c5abaada89"
   },
@@ -1511,7 +1539,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "326e8bc8982876c0",
+    "version": "8ff47c2752b3a43b",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -1729,7 +1757,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5ffdcd707d1f201e",
+    "version": "fc9a990c0af80368",
     "diagrams": "03d90ee0c12cbe63",
     "embedding": "f63088100c538d20"
   },
@@ -2009,7 +2037,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "fb14cd3c24e680cc",
+    "version": "fc29e48d9366d7dd",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"

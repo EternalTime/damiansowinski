@@ -10021,6 +10021,74 @@ LIFSHITZ_DEPTH = 3.0     # how far the pseudosphere is drawn below rho = 0, in L
 LIFSHITZ_TOP = math.log(3.0)    # and how far the sheet in Minkowski space above it: to r = 3L
 
 
+def bonnor_rotating_dust(ck, src):
+    """The plane z = 0 of Bonnor's rotating dust cloud at t = 0 outside its closed timelike curves, in
+    the cylindrical chart at a = 1, the unit of length.
+
+    On it g_rhorho = e^(a^4/8 rho^4) and g_phiphi = rho^2 - a^4/rho^2, so the circle at rho has radius
+    R = sqrt(rho^2 - a^4/rho^2) on the surface, none at rho = a, the closed null curve, and inside it
+    g_phiphi < 0 and the circles are timelike, which is checked. With x = a^4/rho^4,
+    (dR/drho)^2 = (1 + x)^2/(1 - x) and g_rhorho = e^(x/8) < (dR/drho)^2 for every 0 < x < 1: the
+    circles grow faster than the distance out to them everywhere, no surface of revolution in flat
+    space carries any part of the slice, which is checked, and the whole of it is drawn in three
+    dimensional Minkowski space. It leaves the axis along the light cone, dZ/dR -> 1 at R = 0, and
+    flattens far out, where (dR/drho)^2 - g_rhorho -> (23/8) a^4/rho^4, which is checked, so its
+    height tends to a limit and the surface to a plane.
+
+    Toward rho = a the sheet runs into the axis along the light cone, and it keeps close to that
+    cone for longer than the spinning string's sheet does: a step d rho from rho = a(1 + e) moves
+    the circle's radius by d rho/sqrt(e) and has the proper length 1.06 d rho, so a chord's length
+    is the small difference of two nearly equal squares. The profile therefore steps toward the
+    axis by three hundredths of rho - a at a time, is written to twelve decimals, and starts at
+    rho = (1 + 2e-4) a, a circle of radius 0.028 a, three thousandths of the drawing's width. The spherical chart's equator,
+    where r is rho, is checked to give the same surface."""
+    fixed = {"t": 0, "z": 0}
+    sl = Slice(src, "bonnor_rotating_dust", "cylindrical", "\\rho", "\\phi", fixed, {"a": 1})
+    msl = Slice(src, "bonnor_rotating_dust", "cylindrical", "\\rho", "\\phi", fixed, {"a": 1}, space="minkowski")
+    radius = lambda x: np.sqrt(x ** 2 - 1 / x ** 2)
+    start, top = 1 + 2e-4, 5.0
+    size = 2 * float(radius(top))
+    outward = np.concatenate([np.linspace(1.0, 2.0, 402)[1:], np.linspace(2.0, 40.0, 400)])
+    ck.stops("Bonnor's dust cloud, outside rho = a in flat space", sl, outward)
+    inside = sl.gpp_at(np.linspace(0.05, 1.0, 202)[:-1])
+    ck.add("Bonnor's dust cloud: inside rho = a the circles are timelike, g_phiphi < 0", float(max(0.0, np.max(inside))), 0.0)
+    if not np.all(inside < 0):
+        ck.items[-1]["ok"] = False
+    x = outward ** -4.0
+    ck.add("Bonnor's dust cloud: (dR/drho)^2 - g_rhorho = (1 + x)^2/(1 - x) - e^(x/8) with x = a^4/rho^4",
+           float(np.max(np.abs(-msl.defect_at(outward) / ((1 + x) ** 2 / (1 - x) - np.exp(x / 8)) - 1))), 1e-9)
+    ck.add("Bonnor's dust cloud: far out the surface flattens, (dR/drho)^2 - g_rhorho -> (23/8) a^4/rho^4",
+           abs(-float(msl.defect_at(np.array([1e2]))[0]) * 1e8 - 23 / 8), 1e-6)
+    steps = int(math.ceil(math.log((top - 1) / (start - 1)) / math.log(1.03)))
+    sheet = Piece("sheet", "sheet", msl, start, top, 0.0, 1,
+                  (("edge", "the surface runs on into the axis along a light cone, to the closed null curve $\\rho = a$"),
+                   ("edge", "the surface runs on to $\\rho \\to \\infty$, flattening")),
+                  [(1.5, "r", None), (2.0, "r", None), (3.0, "r", None), (4.0, "r", None), (top, "r", None)],
+                  size, digits=1e-12,
+                  knots=[1 + (start - 1) * ((top - 1) / (start - 1)) ** (k / steps) for k in range(1, steps)])
+    ck.isometry("Bonnor's dust cloud, the plane z = 0 in Minkowski space", sheet)
+    ck.radius("Bonnor's dust cloud, the plane z = 0, R = sqrt(rho^2 - a^4/rho^2)", sheet, radius, size)
+    other = Slice(src, "bonnor_rotating_dust", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"a": 1},
+                  space="minkowski")
+    xs = sheet.x[1:]
+    ck.add("Bonnor's dust cloud, the spherical chart's equator gives the same surface",
+           float(max(np.max(np.abs(other.rho_at(xs) - msl.rho_at(xs))),
+                     np.max(np.abs(other.defect_at(xs) / msl.defect_at(xs) - 1)))), 1e-9)
+    surface = Surface([sheet])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *sheet.at(2.0), "$2\\,a$")
+    ring_label(fig, [0, 0, 0], *sheet.at(top), "$5\\,a$")
+    fig.legend("fill", "cover", "the region $\\rho > a$ of the plane $z = 0$ at $t = 0$, where the circles around the "
+                                "axis are spacelike")
+    fig.legend("line", "r", "$\\rho$ constant, at $1.5$, $2$, $3$, $4$, and $5\\,a$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("equator", "The plane $z = 0$", "$a$", [surface], fig.done(),
+                 settings="$a = 1$, the unit of every length. Every length along the surface is measured with "
+                          "$dX^2 + dY^2 - dZ^2$.",
+                 stops=["Inside $\\rho = a$ the circles of constant $t$, $\\rho$, and $z$ are closed timelike "
+                        "curves, $g_{\\phi\\phi} < 0$, and the plane at one $t$ is no moment of space there."])]
+
+
 def lifshitz_spacetime(ck, src):
     """The surface of rho and x at one moment of the proper distance chart, y held fixed:
     g_rhorho = 1 and g_xx = e^{2 rho/L}, at L = 1, whatever the dynamical exponent, which stands in
@@ -10793,6 +10861,7 @@ DRAWN = {
     "kantowski_sachs": kantowski_sachs,
     "curzon_chazy": curzon_chazy,
     "double_kerr": double_kerr,
+    "bonnor_rotating_dust": bonnor_rotating_dust,
     "zipoy_voorhees": zipoy_voorhees,
     "robinson_trautman": robinson_trautman,
     "string_black_hole": string_black_hole,
@@ -11531,6 +11600,16 @@ CAPTIONS = {
         "$\\tfrac{4}{3}\\cdot 2\\pi\\ell$, an excess of angle, so the tip is a cone in Minkowski space, "
         "$dX^2 + dY^2 - dZ^2$. Farther out the surface stands in flat space and widens as Flamm's paraboloid does; the "
         "same plane at every moment is the same surface.",
+    ],
+    ("bonnor_rotating_dust", "equator"): [
+        "The moment $t = 0$ of the plane $z = 0$ of Bonnor's dust cloud outside its closed timelike curves "
+        "($a = 1$, $\\rho > a$), in three dimensional Minkowski space ($dX^2 + dY^2 - dZ^2$), every distance along "
+        "the surface the metric distance.",
+        "On the slice the metric is $e^{a^4/8\\rho^4}d\\rho^2 + (\\rho^2 - a^4/\\rho^2)\\,d\\phi^2$, so the circle at "
+        "$\\rho$ has radius $\\sqrt{\\rho^2 - a^4/\\rho^2}$, and the circle $\\rho = a$ has none: it is a closed null "
+        "curve, and the surface leaves the axis there along a light cone of Minkowski space. Every circle grows "
+        "faster than the distance out to it, so the surface climbs all the way, ever more gently, and far from "
+        "the centre it flattens into the plane of flat space.",
     ],
     ("curzon_chazy", "equator"): [
         "The plane $z = 0$ of the Curzon-Chazy particle at one moment ($m = 1$), drawn as a surface in flat space "

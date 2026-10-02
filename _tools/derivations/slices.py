@@ -824,6 +824,17 @@ def _godel_cylinder(r):
     return lines
 
 
+def _bonnor_circle(rho):
+    """A circle of the plane z = 0 of Bonnor's dust cloud through time, at a rho within the
+    embedding's reach: the whole line t = 0, every phi."""
+    def lines(m):
+        lo, hi = m.reach("cylindrical", "\\rho")
+        if not lo <= rho <= hi:
+            raise ValueError("the circle lies outside the embedding")
+        return [[(0.0, -math.pi), (0.0, math.pi)]]
+    return lines
+
+
 def _spinning_cylinder(R, line=None):
     """A cylinder about the spinning string at the circumference radius R = sqrt(b^2 r^2 - a^2),
     which must lie within the embedding's reach: the whole line t = 0, every phi, or the line
@@ -1985,6 +1996,12 @@ FLAT = {
     ("double_kerr", "weyl", "midplane"): lambda: one("double_kerr", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
     ("double_kerr", "weyl", "axis"): _double_kerr_axis,
     # The plane z = 0 at t = 0, where the spherical chart's r is Weyl's rho.
+    # Bonnor's dust cloud: the moment t = 0 of the plane z = 0 outside the null circle, along the
+    # radius of each equatorial view and the whole line t = 0 of the circle at 3a/2.
+    **{("bonnor_rotating_dust", system, "equator"): lambda: one(
+        "bonnor_rotating_dust", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")))
+       for system in ("cylindrical", "spherical")},
+    ("bonnor_rotating_dust", "cylindrical", "outside"): lambda: one("bonnor_rotating_dust", _bonnor_circle(1.5)),
     ("curzon_chazy", "weyl", "equator"): lambda: one("curzon_chazy", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
     ("curzon_chazy", "spherical", "equator"): lambda: one("curzon_chazy", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
     ("mcvittie", "isotropic", "radial"): lambda: one("mcvittie", lambda m: along(m.time, *m.reach("isotropic", "r"))),
@@ -2097,8 +2114,13 @@ HIDDEN = {
     ("mass_inflation", "ingoing", "behind"): "behind Ori's shell, where the mass function is another one than the tail's, whose moments are embedded",
     ("mass_inflation", "shell"): "Ori's shell and the region behind it, another spacetime than the tail falling in alone, whose moments are embedded",
     ("hiscock", "ingoing", "shells"): "the simplest model, a hole made and removed by two shells, another spacetime than the one embedded",
+    **{("bonnor_rotating_dust", system, "axis"): "the axis, which the embedded plane z = 0 meets only at the centre, inside where the embedding begins"
+       for system in ("cylindrical", "spherical")},
+    ("bonnor_rotating_dust", "cylindrical", "inside"): "inside rho = a the circles are closed timelike curves; the embedding begins at rho = a",
     **{("curzon_chazy", system, "axis"): "the axis, which the embedded plane z = 0 meets only at rho = 0, inside where the embedding stops"
        for system in ("weyl", "spherical")},
+    **{("bonnor_rotating_dust", f"{system}_axis"): "the axis, which the embedded plane z = 0 meets only at the centre, inside where the embedding begins"
+       for system in ("cylindrical", "spherical")},
     **{("curzon_chazy", f"{system}_axis"): "the axis, which the embedded plane z = 0 meets only at rho = 0, inside where the embedding stops"
        for system in ("weyl", "spherical")},
     ("double_kerr", "weyl_axis_outside"): "the axis above the upper hole, which the embedded plane z = 0 does not meet",

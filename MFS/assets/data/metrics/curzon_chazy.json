@@ -41,6 +41,11 @@
       "id": "double_kerr",
       "kind": "family",
       "text": "Two Kerr black holes at rest on one axis. The axis between them is singular, as the line joining two Curzon-Chazy particles is, and no choice of spins removes the singularity [kramer1980, neugebauer2009]."
+    },
+    {
+      "id": "bonnor_rotating_dust",
+      "kind": "family",
+      "text": "A cloud of rotating dust built on the potential of a point, as the Curzon-Chazy particle is. Its singularity at the origin is directional too: the curvature diverges along the axis and dies away in the equatorial plane [bonnor1977cloud, astesiano2024]."
     }
   ],
   "references": [
@@ -63,7 +68,9 @@
     "bicak2000",
     "herrera1999",
     "kramer1980",
-    "neugebauer2009"
+    "neugebauer2009",
+    "bonnor1977cloud",
+    "astesiano2024"
   ],
   "coordinates": [
     {

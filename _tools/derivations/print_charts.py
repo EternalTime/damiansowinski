@@ -2,7 +2,7 @@
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
 schwarzschild_de_sitter, schwarzschild_ads, topological_black_hole, ads_soliton, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
-khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
+khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy, bonnor_rotating_dust,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, boulware_deser, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, reissner_nordstrom_ads, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
@@ -14378,6 +14378,181 @@ def bartnik_mckinnon_check(chart, system):
 
 
 CHARTS["bartnik_mckinnon"] = [lambda s=s: bartnik_mckinnon(s) for s in BARTNIK_MCKINNON_CHARTS]
+
+
+# -- Bonnor's rotating dust cloud ---------------------------------------------------------
+
+def bonnor_rotating_dust(system):
+    """Bonnor's rotating dust cloud, the member of van Stockum's class of rigidly rotating dust whose
+    twist is that of a dipole, K = a^2 rho^2/r^3 with r = sqrt(rho^2 + z^2) and a^2 = 2h for
+    Bonnor's h, in two charts:
+
+    cylindrical  the comoving chart of van Stockum's class, in which the dust is at rest and
+                 g_tt = -1: Bonnor's own, Collas and Klein's (1) and (2), Astesiano, Bini, Geralico
+                 and Ruggiero's (3.9) and (3.10), in Bratek, Jalocha and Kutschera's letters, rho
+                 for the distance from the axis and r for the distance from the centre, a name the
+                 chart defines;
+    spherical    rho = r sin(theta), z = r cos(theta), in which K = a^2 sin^2(theta)/r is Bratek,
+                 Jalocha and Kutschera's dipole and Astesiano and his coauthors' polar form with
+                 their latitude alpha = pi/2 - theta.
+
+    The cylindrical chart is checked against its source, dust at rest in the chart, and the
+    spherical chart to be the cylindrical one pulled back. bonnor_rotating_dust.md is the
+    derivation."""
+    reals = "(-\\infty, \\infty)"
+    if system == "cylindrical":
+        coords, parameters = ["t", "\\rho", "\\phi", "z"], ["a", "r = \\sqrt{\\rho^2 + z^2}"]
+        line = ("ds^2 = -\\left(c\\,dt - \\dfrac{a^2\\rho^2}{r^3}\\,d\\phi\\right)^2 + \\rho^2d\\phi^2"
+                " + e^{a^4\\rho^2(\\rho^2 - 8z^2)/(8r^8)}\\left(d\\rho^2 + dz^2\\right)")
+        probe = vm.Reader(coords, parameters, ())
+        rho, z, a = probe.symbol["\\rho"], probe.symbol["z"], probe.parameters["a"]
+        r = sp.Symbol("r", positive=True)
+        domains = ["t \\in " + reals, "\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)", "z \\in " + reals,
+                   "(\\rho, z) \\neq (0, 0) \\;\\text{(the singularity)}",
+                   "r^3 = a^2\\rho \\;\\text{(the circles of constant } t, \\rho, z \\text{ are null)}",
+                   "r^3 < a^2\\rho \\;\\text{(the circles of constant } t, \\rho, z \\text{ are closed timelike curves)}"]
+        mu = a ** 4 * rho ** 2 * (rho ** 2 - 8 * z ** 2) / (8 * (rho ** 2 + z ** 2) ** 4)
+        unit = a ** 4 * rho ** 2 * (rho ** 2 - 8 * z ** 2) / r ** 8
+        lead, pretty, name = [a, rho, r, z], one_exponential(weyl_distance(rho, z, r), mu, unit), "Cylindrical"
+        metric = {("\\phi", "\\phi"): "\\dfrac{\\rho^2\\left(r^6 - a^4\\rho^2\\right)}{r^6}"}
+        inverse = {("t", "t"): "-\\dfrac{r^6 - a^4\\rho^2}{r^6}"}
+    else:
+        coords, parameters = ["t", "r", "\\theta", "\\phi"], ["a"]
+        line = ("ds^2 = -\\left(c\\,dt - \\dfrac{a^2\\sin^2\\theta}{r}\\,d\\phi\\right)^2 + r^2\\sin^2\\theta\\,d\\phi^2"
+                " + e^{a^4\\sin^2\\theta(9\\sin^2\\theta - 8)/(8r^4)}\\left(dr^2 + r^2d\\theta^2\\right)")
+        probe = vm.Reader(coords, parameters, ())
+        r, th, a = probe.symbol["r"], probe.symbol["\\theta"], probe.parameters["a"]
+        domains = ["t \\in " + reals, "r \\in (0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                   "r = 0 \\;\\text{(the singularity)}",
+                   "r^2 = a^2\\sin\\theta \\;\\text{(the circles of constant } t, r, \\theta \\text{ are null)}",
+                   "r^2 < a^2\\sin\\theta \\;\\text{(the circles of constant } t, r, \\theta \\text{ are closed timelike curves)}"]
+        mu = a ** 4 * sp.sin(th) ** 2 * (9 * sp.sin(th) ** 2 - 8) / (8 * r ** 4)
+        unit = a ** 4 * sp.sin(th) ** 2 * (9 * sp.sin(th) ** 2 - 8) / r ** 4
+        lead, name = [a, r, sp.cos(th), sp.sin(th)], "Spherical"
+        pretty = one_exponential(weyl_distance(None, None, None), mu, unit)
+        metric = {("\\phi", "\\phi"): "\\dfrac{\\left(r^4 - a^4\\sin^2\\theta\\right)\\sin^2\\theta}{r^2}"}
+        inverse = {("t", "t"): "-\\dfrac{r^4 - a^4\\sin^2\\theta}{r^4}",
+                   ("\\phi", "\\phi"): "\\dfrac{1}{r^2\\sin^2\\theta}"}
+    return {
+        "metric_id": "bonnor_rotating_dust",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line},
+        # The chart coordinate is x^0 = ct, so c dt is the chart's dt.
+        "chart_line_element": line.replace("c\\,dt", "dt"),
+        "printer": {"lead": lead},
+        "pretty": pretty,
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "check": bonnor_rotating_dust_source if system == "cylindrical" else bonnor_rotating_dust_pullback,
+    }
+
+
+def one_exponential(rational, exponent, unit):
+    """A pretty printer for a chart whose every exponential is a power of one, e^exponent: the
+    value's exponentials are gathered into a single one, written as a rational multiple of
+    `unit`, the exponent as the line element spells it, eight times Bonnor's mu, and what is left
+    is handed to `rational`."""
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        total, rest = sp.Integer(0), sp.Integer(1)
+        for f in sp.Mul.make_args(sp.powsimp(sp.factor(value))):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            if isinstance(base, sp.exp):
+                total += base.args[0] * k
+            else:
+                rest *= f
+        if rest.atoms(sp.exp):
+            raise AssertionError(f"an exponential stands inside a sum of {value}")
+        multiple = sp.simplify(total / exponent)
+        if not multiple.is_Rational:
+            raise AssertionError(f"the exponent {total} is no rational multiple of the chart's")
+        if multiple == 0:
+            return rational(rest)
+        return sp.Mul(rational(rest), sp.exp(multiple / 8 * unit))
+
+    return pretty
+
+
+def bonnor_rotating_dust_source(chart):
+    """The cylindrical chart against its source. With K = a^2 rho^2/r^3 and mu the exponent of the
+    line element, van Stockum's three equations hold: K_rhorho - K_rho/rho + K_zz = 0,
+    mu_rho = (K_z^2 - K_rho^2)/2rho and mu_z = -K_rho K_z/rho. The Einstein tensor is that of dust at
+    rest in the chart, G^tt = D and every other G^{mu nu} = 0, with
+    D = e^(-mu)(K_rho^2 + K_z^2)/rho^2 = a^4(rho^2 + 4z^2)e^(-mu)/r^8, which is 8 pi G/c^2 times the
+    density and the Ricci scalar. The dust's world lines u = d_t are geodesics with no expansion
+    and no shear, and their vorticity vector has omega^2 = D/4, which is 2 pi G times the density,
+    as on the axis of van Stockum's cylinder. The determinant is -rho^2 e^(2 mu), so the signature
+    holds wherever the metric is finite, through the surface where the circles turn null."""
+    t, rho, phi, z = chart.symbols
+    a, r = chart.reader.parameters["a"], chart.reader.parameters["r"]
+    K = a ** 2 * rho ** 2 / r ** 3
+    mu = a ** 4 * rho ** 2 * (rho ** 2 - 8 * z ** 2) / (8 * r ** 8)
+    D = a ** 4 * (rho ** 2 + 4 * z ** 2) * sp.exp(-mu) / r ** 8
+    g = chart.geo.g
+    stated = {(0, 0): -1, (0, 2): K, (2, 2): rho ** 2 - K ** 2, (1, 1): sp.exp(mu), (3, 3): sp.exp(mu)}
+    for i in range(4):
+        for j in range(i, 4):
+            if vm.norm(g[i, j] - stated.get((i, j), 0)) != 0:
+                raise AssertionError(f"bonnor_rotating_dust: the metric is not van Stockum's form in slot {i}{j}")
+    checks = {"twist equation": sp.diff(K, rho, 2) - sp.diff(K, rho) / rho + sp.diff(K, z, 2),
+              "d_rho mu": sp.diff(mu, rho) - (sp.diff(K, z) ** 2 - sp.diff(K, rho) ** 2) / (2 * rho),
+              "d_z mu": sp.diff(mu, z) + sp.diff(K, rho) * sp.diff(K, z) / rho,
+              "density": D - sp.exp(-mu) * (sp.diff(K, rho) ** 2 + sp.diff(K, z) ** 2) / rho ** 2,
+              "determinant": sp.simplify(g.det() / (rho ** 2 * sp.exp(2 * mu)) + 1),
+              "Ricci scalar": chart.geo.ricci_scalar() - D}
+    for label, value in checks.items():
+        if vm.norm(value) != 0:
+            raise AssertionError(f"bonnor_rotating_dust: van Stockum's {label} fails")
+    lowered = chart.geo.einstein_ll()
+    raised = chart.geo.ginv * sp.Matrix(4, 4, lambda i, j: lowered[i][j]) * chart.geo.ginv
+    for i in range(4):
+        for j in range(4):
+            if vm.norm(raised[i, j] - (D if i == j == 0 else 0)) != 0:
+                raise AssertionError(f"bonnor_rotating_dust: G^{{{i}{j}}} is not that of dust at rest")
+    # u = d_t, u_mu = g_{mu t}: geodesic, and d_mu u_nu + d_nu u_mu - 2 Gamma^l_{mu nu} u_l = 0, so u is
+    # a Killing vector of unit length and its world lines neither expand nor shear.
+    gamma = chart.geo.christoffel_ull()
+    u_low = [g[m, 0] for m in range(4)]
+    for m in range(4):
+        if vm.norm(gamma[m][0][0]) != 0:
+            raise AssertionError("bonnor_rotating_dust: the dust's world lines are not geodesics")
+        for n in range(4):
+            killing = (sp.diff(u_low[n], chart.symbols[m]) + sp.diff(u_low[m], chart.symbols[n])
+                       - 2 * sum(gamma[l][m][n] * u_low[l] for l in range(4)))
+            if vm.norm(killing) != 0:
+                raise AssertionError("bonnor_rotating_dust: d_t is not a Killing vector")
+    # omega^m = eps^{m n k l} u_n d_k u_l / 2, with eps^{t rho phi z} = 1/sqrt(-g) = e^(-mu)/rho.
+    root = rho * sp.exp(mu)
+    omega = [sum(sp.LeviCivita(m, n, k, l) * u_low[n] * sp.diff(u_low[l], chart.symbols[k])
+                 for n in range(4) for k in range(4) for l in range(4)) / (2 * root) for m in range(4)]
+    square = sum(g[m, n] * omega[m] * omega[n] for m in range(4) for n in range(4))
+    if sp.simplify(square / D) != sp.Rational(1, 4):
+        raise AssertionError("bonnor_rotating_dust: the vorticity's square is not a quarter of the Ricci scalar")
+
+
+def bonnor_rotating_dust_pullback(chart):
+    """J^T g J, with g the cylindrical chart's metric and J the Jacobian of rho = r sin(theta),
+    z = r cos(theta), against the spherical chart's metric in every slot."""
+    spec = bonnor_rotating_dust("cylindrical")
+    source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    t, r, th, ph = chart.symbols
+    T, rho, phi, z = source.symbols
+    at = {T: t, rho: r * sp.sin(th), phi: ph, z: r * sp.cos(th),
+          source.reader.parameters["a"]: chart.reader.parameters["a"]}
+    images = [at[x] for x in source.symbols]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(images[i], chart.symbols[j]))
+    g = source.geo.g.subs(source.reader.parameters["r"], sp.sqrt(rho ** 2 + z ** 2))
+    pulled = J.T * g.subs(at, simultaneous=True).applyfunc(lambda e: sp.powdenest(sp.simplify(e), force=True)) * J
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify(pulled[i, j] - chart.geo.g[i, j]) != 0:
+                raise AssertionError(f"bonnor_rotating_dust: the cylindrical chart pulled back misses the "
+                                     f"spherical chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["bonnor_rotating_dust"] = [lambda s=s: bonnor_rotating_dust(s) for s in ("cylindrical", "spherical")]
 
 
 def write(spec):

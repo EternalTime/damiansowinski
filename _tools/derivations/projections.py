@@ -507,7 +507,8 @@ def about_axis(spec, sl, bracket, names, camera=Camera(-90, 30)):
     return fig.done(), sl
 
 
-def about_string(spec, sl, bracket, names, camera=Camera(-90, 30)):
+def about_string(spec, sl, bracket, names, camera=Camera(-90, 30), sense=1, reach=None, axis="the string",
+                 radius="r"):
     """Future light cones about a spinning string on a polar slice (t, r, phi), whose circles
     of constant t and r are timelike inside a critical radius r_c and spacelike outside it.
 
@@ -516,7 +517,11 @@ def about_string(spec, sl, bracket, names, camera=Camera(-90, 30)):
     at four places around each of the circles r_c/2, r_c and 3 r_c/2, those on r_c turned by 45
     degrees from the others so that no two meet, and none on the string, where the metric is
     singular. `names` are the TeX names of r_c and r_c/2. The floor reaches out to 2 r_c, and
-    the moment t = 0 the embedding diagram draws is the floor from r_c out."""
+    the moment t = 0 the embedding diagram draws is the floor from r_c out. `sense` is the way
+    round the timelike circle is future directed, +phi or -phi, which its arrows point; `reach`
+    hands back how far the embedding runs along the slice's own radius, where that is not the
+    spinning string's circumference radius; `axis` names the line r = 0 in the legend, and
+    `radius` is the TeX name of the slice's radius."""
     g_phiphi = lambda r: sl.metric((0.0, r, 0.0))[2, 2]
     critical = root(g_phiphi, *bracket)
     within = 0.5 * critical
@@ -532,7 +537,7 @@ def about_string(spec, sl, bracket, names, camera=Camera(-90, 30)):
     for r, cls in ((1.5, "floor"), (2.0, "floor"), (1.0, "critical"), (0.5, "ctc")):
         fig.line(cls, circle(sl, 0.0, r * critical), closed=True)
     for k in range(4):
-        fig.line("ctc", arrow(sl, 0.0, within, (k + 0.75) * np.pi / 2, 0.058 * unit))
+        fig.line("ctc", arrow(sl, 0.0, within, (k + 0.75) * np.pi / 2, 0.058 * unit, sense))
     fig.line("axis", np.array([[0, 0, -0.4], [0, 0, 0.875]]) * unit)
     cones = []
     for r, shift in ((within, 0.5), (critical, 0.0), (1.5 * critical, 0.5)):
@@ -543,17 +548,20 @@ def about_string(spec, sl, bracket, names, camera=Camera(-90, 30)):
     # The moment t = 0 is the floor from the null circle out, as far as the embedding reaches
     # or the floor does; inside r_c no surface of constant t is a moment of space.
     m = slices.moments(spec.metric)[0]
-    a, b = (float(nr.number(spec.params[k])) for k in ("a", "b"))
-    lo, hi = (math.sqrt(R * R + a * a) / b for R in m.reach("circumference_radius", "R"))
-    if not critical <= lo < critical * (1 + 1e-4) or not hi >= 2 * critical:
+    if reach:
+        lo, hi = reach(m)
+    else:
+        a, b = (float(nr.number(spec.params[k])) for k in ("a", "b"))
+        lo, hi = (math.sqrt(R * R + a * a) / b for R in m.reach("circumference_radius", "R"))
+    if not critical <= lo < critical * (1 + 1e-3) or not hi >= 2 * critical:
         raise SystemExit(f"{key(spec)}: the embedding does not run from r_c to the floor's edge")
     fig.slice(m, fills=[[circle(sl, 0.0, 2 * critical), circle(sl, 0.0, lo)]], lines=[circle(sl, 0.0, lo)])
     fig.label(np.array([0, 0, 0.875 * unit]), "$t$", "b", dy=-4)
     for r, name, phi in ((critical, names[0], -7 * np.pi / 18), (within, names[1], -4 * np.pi / 18)):
         fig.circle_label(float(sl.radius(r)), 0.0, phi, f"${name}$", "tl", dx=6, dy=4)
     fig.legend("cone", "cone", "future light cone")
-    fig.legend("line", "axis", "the string")
-    fig.legend("line", "critical", f"${names[0]}$, where the circle of fixed $t$ and $r$ is null")
+    fig.legend("line", "axis", axis)
+    fig.legend("line", "critical", f"${names[0]}$, where the circle of fixed $t$ and ${radius}$ is null")
     fig.legend("line", "ctc", f"${names[1]}$, where it is timelike")
     return fig.done(), sl
 
@@ -564,6 +572,18 @@ def spinning_string(spec):
     g_rr = 1 and g_tt = -1 put the null directions straight out from the string at 45 degrees."""
     sl = Slice(spec.metric, spec.system, ("t", "r", "\\phi"), "polar", spec.params, spec.fixed)
     return about_string(spec, sl, (0.5, 1.5), ("r = r_c", "r = r_c/2"))
+
+
+def bonnor_rotating_dust(spec):
+    """The light cones of Bonnor's dust cloud about its axis, on the slice z = 0 of the cylindrical
+    chart at a = 1, drawn polar with rho itself as its radius. The circles of constant t and rho
+    are timelike inside rho = a and future directed toward -phi there, since the twist enters as
+    -(c dt - (a^2/rho) dphi)^2, so the arrows point clockwise; no cone stands on the axis, whose
+    point rho = 0 of this slice is the singularity."""
+    sl = Slice(spec.metric, spec.system, ("t", "\\rho", "\\phi"), "polar", spec.params, spec.fixed)
+    return about_string(spec, sl, (0.5, 1.5), ("\\rho = a", "\\rho = a/2"), sense=-1,
+                        reach=lambda m: m.reach("cylindrical", "\\rho"), axis="the axis of rotation",
+                        radius="\\rho")
 
 
 def stockum(spec):
@@ -893,6 +913,16 @@ CAPTIONS = {
         "horizontal, and the circle $r = r_c/2$, run counterclockwise as its arrows point, lies inside every "
         "one of them: a closed timelike curve through each of its events.",
     ],
+    ("bonnor_rotating_dust", "cylindrical", "tipping"): [
+        "The slice $z = 0$ of $t$, $\\rho$, and $\\phi$, with $ct$ up and $\\rho$ as the radius. The cones stand at "
+        "$t = 0$ around the circles $\\rho = a/2$, $a$, and $3a/2$. The cross term $g_{t\\phi} = a^2/\\rho$ grows "
+        "toward the centre, and it tips the cones over toward $-\\phi$, clockwise seen from above, the more the "
+        "smaller the circle they stand on.",
+        "At $\\rho = a$, where $g_{\\phi\\phi} = \\rho^2 - a^4/\\rho^2$ vanishes, one edge of every cone lies along "
+        "the circle of constant $t$ and $\\rho$, which is a closed null curve. Inside it the cones have tipped past "
+        "the horizontal, and the circle $\\rho = a/2$, run clockwise as its arrows point, lies inside every one of "
+        "them: a closed timelike curve through each of its events. The centre of the slice is the singularity.",
+    ],
     ("stockum_dust", "cylindrical", "tipping"): [
         "The slice $z = 0$ of $t$, $r$, and $\\phi$, with $t$ up and the proper distance from "
         "the axis, $\\int e^{-r^2/2R^2}dr$, as the radius, which puts the null directions straight out "
@@ -1029,6 +1059,8 @@ FIGURES = [
                {"omega": 1}, {"z": "0"}),
     Projection("som_raychaudhuri", "cylindrical", "tipping", "light cones about the axis", som_raychaudhuri,
                {"Omega": 1}, {"z": "0"}),
+    Projection("bonnor_rotating_dust", "cylindrical", "tipping", "light cones about the axis", bonnor_rotating_dust,
+               {"a": 1}, {"z": "0"}),
     # The spinning string at the values its cylinders are drawn at, r_c = a/b = 1.
     Projection("spinning_string", "proper_radius", "tipping", "light cones about the string", spinning_string,
                nr.SPINNING, {"z": "0"}),

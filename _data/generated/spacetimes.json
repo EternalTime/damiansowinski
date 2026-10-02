@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 110,
+  "count": 111,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -4672,6 +4672,233 @@
       ]
     },
     {
+      "id": "bonnor_rotating_dust",
+      "name": "Bonnor's Rotating Dust Cloud",
+      "short_name": "Bonnor Rotating Dust",
+      "description": "A stationary, axially symmetric cloud of dust in rigid rotation that thins out to nothing in every direction, found by William Bonnor in 1977. Its total mass is zero, its centre is a singularity of negative mass, and the circles about the axis inside a torus around the centre are closed timelike curves.",
+      "tags": [
+        "dust",
+        "rotating",
+        "axisymmetric",
+        "stationary",
+        "closed timelike curves",
+        "asymptotically flat",
+        "angular momentum",
+        "frame dragging",
+        "negative mass",
+        "curvature singularity",
+        "naked singularity",
+        "directional singularity",
+        "Petrov type I",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The length $a$ sets the rotation, with $a^2 = 2h$ for Bonnor's parameter $h$ and angular momentum $J = c^3a^2/2G$. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "stockum_dust",
+          "kind": "family",
+          "text": "Lanczos and van Stockum's cylinder belongs to the same class of rigidly rotating dust, with a twist that grows as the square of the distance from the axis where Bonnor's is a dipole's. The cylinder runs on along its axis without end, and Bonnor's cloud thins out in every direction [vanstockum1937, bratek2007]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "The cloud with its rotation switched off, $a = 0$, where the density vanishes and the line element is flat space in cylindrical coordinates [astesiano2024]."
+        },
+        {
+          "id": "godel",
+          "kind": "family",
+          "text": "Kurt Gödel's universe of 1949, rigidly rotating dust with a cosmological constant and one density everywhere. Its closed timelike curves pass through every event, and Bonnor's cloud keeps its own inside a torus about the centre [godel1949, astesiano2024]."
+        },
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "Far from its centre Bonnor's cloud has the frame dragging term of Kerr's metric, for an angular momentum $J = c^3a^2/2G$, and no mass term to go with it [bratek2007]."
+        },
+        {
+          "id": "curzon_chazy",
+          "kind": "family",
+          "text": "A static vacuum field built on the potential of a point, as Bonnor's cloud is in van Stockum's class. Each has a singularity at the origin whose strength depends on the direction of approach [gautreau1967, ilyas2017, astesiano2024]."
+        }
+      ],
+      "references": [
+        "collas2004geodesics",
+        "dearaujo2000",
+        "lanczos1924",
+        "vanstockum1937",
+        "ilyas2017",
+        "maccallum2015",
+        "bonnor1977cloud",
+        "collas2004frame",
+        "bratek2007",
+        "astesiano2024",
+        "steadman1999",
+        "cooperstock2005",
+        "zingg2007",
+        "bonnor2005cloud",
+        "godel1949",
+        "gautreau1967"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bonnor_rotating_dust.json",
+      "charts": [
+        {
+          "id": "cylindrical",
+          "name": "Cylindrical",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "(\\rho, z) \\neq (0, 0) \\;\\text{(the singularity)}",
+            "r^3 = a^2\\rho \\;\\text{(the circles of constant } t, \\rho, z \\text{ are null)}",
+            "r^3 < a^2\\rho \\;\\text{(the circles of constant } t, \\rho, z \\text{ are closed timelike curves)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Rotation length, $a^2 = 2h = 2GJ/c^3$ with $h$ Bonnor's rotation parameter and $J$ the angular momentum at spatial infinity; the circle of constant $t$ in the equatorial plane is null at a distance $a$ from the centre"
+            },
+            {
+              "symbol": "r = \\sqrt{\\rho^2 + z^2}",
+              "description": "Distance from the centre in the flat space of the coordinates; the twist of the dust is $a^2\\rho^2/r^3$, a dipole's, and its density is $c^2/8\\pi G$ times the Ricci scalar"
+            }
+          ],
+          "convention": "We use the comoving cylindrical coordinates $(t, \\rho, \\phi, z)$ of van Stockum's class, in which the dust is at rest, with $t$ carrying dimensions of time, in the letters of Bratek, Jałocha, and Kutschera: Bonnor writes $r$ for our $\\rho$ and $R$ for our $r = \\sqrt{\\rho^2 + z^2}$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(c\\,dt - \\dfrac{a^2\\rho^2}{r^3}\\,d\\phi\\right)^2 + \\rho^2d\\phi^2 + e^{a^4\\rho^2(\\rho^2 - 8z^2)/(8r^8)}\\left(d\\rho^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "\\dfrac{a^2\\,\\rho^2}{r^3}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "\\dfrac{a^2\\,\\rho^2}{r^3}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "e^{a^4\\,\\rho^2\\left(\\rho^2 - 8z^2\\right)/(8r^8)}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{a^4\\,\\rho^2\\left(\\rho^2 - 8z^2\\right)/(8r^8)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\rho^2\\left(r^6 - a^4\\rho^2\\right)}{r^6}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{a^4\\left(4r^2 - 3\\rho^2\\right)e^{-a^4\\,\\rho^2\\left(\\rho^2 - 8z^2\\right)/(8r^8)}}{r^8}",
+          "kretschmann": "K = \\dfrac{a^4\\left(27a^8\\,\\rho^8 - 108a^8\\,\\rho^6\\,r^2 + 144a^8\\,\\rho^4\\,r^4 - 64a^8\\,\\rho^2\\,r^6 - 324a^4\\,\\rho^6\\,r^6 + 948a^4\\,\\rho^4\\,r^8 - 720a^4\\,\\rho^2\\,r^{10} + 128a^4\\,r^{12} + 288\\rho^2\\,r^{14} - 432r^{16}\\right)e^{-a^4\\,\\rho^2\\left(\\rho^2 - 8z^2\\right)/(4r^8)}}{4r^{24}}"
+        },
+        {
+          "id": "spherical",
+          "name": "Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = 0 \\;\\text{(the singularity)}",
+            "r^2 = a^2\\sin\\theta \\;\\text{(the circles of constant } t, r, \\theta \\text{ are null)}",
+            "r^2 < a^2\\sin\\theta \\;\\text{(the circles of constant } t, r, \\theta \\text{ are closed timelike curves)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Rotation length, $a^2 = 2h = 2GJ/c^3$ with $h$ Bonnor's rotation parameter and $J$ the angular momentum at spatial infinity; the circle of constant $t$ in the equatorial plane is null at a distance $a$ from the centre; the density of the dust is $c^2/8\\pi G$ times the Ricci scalar"
+            }
+          ],
+          "convention": "We use the spherical coordinates $(t, r, \\theta, \\phi)$ of Bratek, Jałocha, and Kutschera, with $t$ carrying dimensions of time, in which the dust is at rest and the cylindrical chart's $\\rho = r\\sin\\theta$ and $z = r\\cos\\theta$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(c\\,dt - \\dfrac{a^2\\sin^2\\theta}{r}\\,d\\phi\\right)^2 + r^2\\sin^2\\theta\\,d\\phi^2 + e^{a^4\\sin^2\\theta(9\\sin^2\\theta - 8)/(8r^4)}\\left(dr^2 + r^2d\\theta^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "\\dfrac{a^2\\sin^2\\theta}{r}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "\\dfrac{a^2\\sin^2\\theta}{r}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "e^{a^4\\left(9\\sin^2\\theta - 8\\right)\\sin^2\\theta/(8r^4)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2e^{a^4\\left(9\\sin^2\\theta - 8\\right)\\sin^2\\theta/(8r^4)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(r^4 - a^4\\sin^2\\theta\\right)\\sin^2\\theta}{r^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{a^4\\left(4 - 3\\sin^2\\theta\\right)e^{-a^4\\left(9\\sin^2\\theta - 8\\right)\\sin^2\\theta/(8r^4)}}{r^6}",
+          "kretschmann": "K = \\dfrac{a^4\\left(27a^8\\sin^8\\theta - 108a^8\\sin^6\\theta + 144a^8\\sin^4\\theta - 64a^8\\sin^2\\theta - 324a^4\\,r^4\\sin^6\\theta + 948a^4\\,r^4\\sin^4\\theta - 720a^4\\,r^4\\sin^2\\theta + 128a^4\\,r^4 + 288r^8\\sin^2\\theta - 432r^8\\right)e^{-a^4\\left(9\\sin^2\\theta - 8\\right)\\sin^2\\theta/(4r^4)}}{4r^{16}}"
+        }
+      ]
+    },
+    {
       "id": "bonnor_vaidya",
       "name": "Bonnor-Vaidya Charged Radiating Star",
       "short_name": "Bonnor-Vaidya",
@@ -6266,6 +6493,11 @@
           "id": "double_kerr",
           "kind": "family",
           "text": "Two Kerr black holes at rest on one axis. The axis between them is singular, as the line joining two Curzon-Chazy particles is, and no choice of spins removes the singularity [kramer1980, neugebauer2009]."
+        },
+        {
+          "id": "bonnor_rotating_dust",
+          "kind": "family",
+          "text": "A cloud of rotating dust built on the potential of a point, as the Curzon-Chazy particle is. Its singularity at the origin is directional too: the curvature diverges along the axis and dies away in the equatorial plane [bonnor1977cloud, astesiano2024]."
         }
       ],
       "references": [
@@ -6288,7 +6520,9 @@
         "bicak2000",
         "herrera1999",
         "kramer1980",
-        "neugebauer2009"
+        "neugebauer2009",
+        "bonnor1977cloud",
+        "astesiano2024"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/curzon_chazy.json",
@@ -10783,6 +11017,11 @@
           "id": "som_raychaudhuri",
           "kind": "family",
           "text": "Charged dust in rigid rotation, homogeneous as Gödel's universe is, with a line element one term away from flat space. It is the member $m = 0$ of the family in which Gödel's is $m^2 = 2\\Omega^2$ [som1968, reboucas1983]."
+        },
+        {
+          "id": "bonnor_rotating_dust",
+          "kind": "family",
+          "text": "A cloud of rigidly rotating dust with no cosmological constant, flat far away and singular at its centre. Its closed timelike curves stay inside a torus about that centre, where Gödel's pass through every event [bonnor1977cloud, astesiano2024]."
         }
       ],
       "references": [
@@ -10806,7 +11045,9 @@
         "earman1993",
         "rooman1998",
         "ori2005",
-        "som1968"
+        "som1968",
+        "bonnor1977cloud",
+        "astesiano2024"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/godel.json",
@@ -15155,6 +15396,11 @@
           "id": "double_kerr",
           "kind": "generalisation",
           "text": "Two Kerr black holes on one axis, built by Dietrich Kramer and Gernot Neugebauer in 1980. The repulsion between the spins does not balance the attraction, and a strut on the axis between the holes holds them apart [kramer1980, neugebauer2009]."
+        },
+        {
+          "id": "bonnor_rotating_dust",
+          "kind": "family",
+          "text": "A cloud of rotating dust whose field far away is Kerr's frame dragging term alone: angular momentum with no mass [bonnor1977cloud, bratek2007]."
         }
       ],
       "references": [
@@ -15204,7 +15450,9 @@
         "nutku1977",
         "gregory2013",
         "kramer1980",
-        "neugebauer2009"
+        "neugebauer2009",
+        "bonnor1977cloud",
+        "bratek2007"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -17609,6 +17857,11 @@
           "id": "som_raychaudhuri",
           "kind": "family",
           "text": "The same rigidly rotating dust given an electric charge. The factor $e^{-r^2/R^2}$ goes from the line element, and the universe is homogeneous [som1968, reboucas1983]."
+        },
+        {
+          "id": "bonnor_rotating_dust",
+          "kind": "family",
+          "text": "William Bonnor's cloud of 1977, a member of van Stockum's own class of rigidly rotating dust that thins out in every direction. Its total mass is zero and its centre is singular [bonnor1977cloud, bratek2007]."
         }
       ],
       "references": [
@@ -17624,7 +17877,9 @@
         "godel1949",
         "deser1992time",
         "som1968",
-        "reboucas1983"
+        "reboucas1983",
+        "bonnor1977cloud",
+        "bratek2007"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/stockum_dust.json",
@@ -20159,6 +20414,11 @@
           "id": "hiscock",
           "kind": "composite",
           "text": "A black hole that forms from a shell of light and radiates itself away. Flat space lies inside the shell before the hole forms and is all that is left once it has gone [martindussaud2019]."
+        },
+        {
+          "id": "bonnor_rotating_dust",
+          "kind": "generalisation",
+          "text": "Flat spacetime filled with a thin cloud of rigidly rotating dust that has angular momentum and no total mass. With the rotation set to zero, $a = 0$, the dust is gone and the spacetime is flat [bonnor1977cloud, astesiano2024]."
         }
       ],
       "references": [
@@ -20219,7 +20479,9 @@
         "oshiro1994",
         "brady1994",
         "kiselev2003",
-        "martindussaud2019"
+        "martindussaud2019",
+        "bonnor1977cloud",
+        "astesiano2024"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",

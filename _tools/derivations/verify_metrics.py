@@ -984,6 +984,10 @@ DIMENSIONS = {
     # so that Omega r^2/c is a length beside c dt.
     ("som_raychaudhuri", "cylindrical"): {"t": "T", "r": "L", "\\phi": "1", "z": "L", "\\Omega": "1/T"},
     ("som_raychaudhuri", "cartesian"): {"t": "T", "x": "L", "y": "L", "z": "L", "\\Omega": "1/T"},
+    # Bonnor's rotating dust cloud keeps c, and its a is a length, a^2 = 2h = 2GJ/c^3, so that
+    # a^2 rho^2/r^3 is a length beside c dt; r = sqrt(rho^2 + z^2) is the name the cylindrical chart defines.
+    ("bonnor_rotating_dust", "cylindrical"): {"t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "a": "L", "r": "L"},
+    ("bonnor_rotating_dust", "spherical"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "a": "L"},
     # Schwarzschild-anti-de Sitter keeps Schwarzschild's r_s and anti-de Sitter's radius, which the
     # entry calls L and the dimensional pass calls L as well, as for anti-de Sitter space itself.
     # The Eddington-Finkelstein times u = ct - r_* and v = ct + r_* are lengths.
@@ -1701,13 +1705,23 @@ def _factored_root(power):
 
 
 def _exponent_terms(power):
-    """exp(2x + y) as [(exp(x), 2), (exp(y), 1)], and t**(2p - 1) as [(t**p, 2), (t, -1)]."""
+    """exp(2x + y) as [(exp(x), 2), (exp(y), 1)], and t**(2p - 1) as [(t**p, 2), (t, -1)].
+
+    A number that expand has multiplied into a denominator's sum is taken out again, so that
+    exp(x/(8(u + v))) is [(exp(x/(u + v)), 1/8)] and its square the same generator to the power
+    1/4, as the conformal factor of Bonnor's dust cloud needs, whose exponent is over 8r^8 with
+    r^2 = rho^2 + z^2."""
     base, exponent = (sp.E, power.args[0]) if power.func is sp.exp else power.as_base_exp()
     terms = []
     for term in sp.Add.make_args(sp.expand(exponent)):
         coefficient, rest = term.as_coeff_Mul()
         if not coefficient.is_Rational:
             coefficient, rest = sp.Integer(1), term
+        else:
+            numerator, denominator = sp.fraction(rest)
+            if denominator.is_Add:
+                content, denominator = denominator.primitive()
+                coefficient, rest = coefficient / content, numerator / denominator
         if rest == 1:
             terms.append((base, coefficient))
         else:

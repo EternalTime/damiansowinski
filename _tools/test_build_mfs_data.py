@@ -4097,6 +4097,7 @@ class TurningLightConeFigures(unittest.TestCase):
         self.assertEqual(checked, {"alcubierre/bubble", "godel/tipping", "gott_time_machine/loop", "kerr/dragging", "kerr_de_sitter/dragging",
                                    "kerr_newman/dragging", "kerr_taub_nut/dragging", "near_horizon_extreme_kerr/dragging", "point_particle_2plus1/wedge",
                                    "som_raychaudhuri/tipping", "spinning_string/tipping", "stockum_dust/tipping",
+                                   "bonnor_rotating_dust/tipping",
                                    "wormhole_time_machine/trip"})
 
     def test_at_its_own_camera_the_page_draws_the_published_figure(self):
@@ -4599,6 +4600,11 @@ class Slices(unittest.TestCase):
               "conformal wormhole_time_machine/lorentz",
               # The axis of the Curzon-Chazy particle, which the embedded plane z = 0 meets only at R = 0.
               "curzon_chazy/weyl/axis", "curzon_chazy/spherical/axis",
+              # Bonnor's dust cloud: its axis meets the embedded plane only at the centre, and inside the
+              # null circle the circles about the axis are closed timelike curves.
+              "bonnor_rotating_dust/cylindrical/axis", "bonnor_rotating_dust/spherical/axis",
+              "bonnor_rotating_dust/cylindrical/inside",
+              "conformal bonnor_rotating_dust/cylindrical_axis", "conformal bonnor_rotating_dust/spherical_axis",
               "conformal curzon_chazy/weyl_axis", "conformal curzon_chazy/spherical_axis",
               # The axis above the two Kerr black holes, which the embedded plane z = 0 between them does not meet.
               "conformal double_kerr/weyl_axis_outside",
@@ -5275,6 +5281,7 @@ class Slices(unittest.TestCase):
                 return (lambda X: -math.sqrt(X * X - 2 * t)), None
             return (lambda X: t - 1.5 if key.endswith("/vacuum_core/off_centre") else t), None
         if key.startswith(("godel/cylindrical", "stockum_dust/cylindrical", "som_raychaudhuri/cylindrical",
+                           "bonnor_rotating_dust/cylindrical/outside",
                            "minkowski/rindler")):
             return (lambda X: 0.0), None
         if key == "spinning_string/helical/outside":

@@ -12331,6 +12331,128 @@ def curzon_chazy(ck, src):
     return views
 
 
+BONNOR_SCALE = 4.0   # the length l of p, q = arctan((ct -+ x_*)/l), in units of a
+
+
+def bonnor_plane_star(rho):
+    """rho_* on the plane z = 0 of Bonnor's dust cloud at a = 1, for the rays of no angular momentum:
+    the integral from 1 of e^(1/(16 s^4)) sqrt(1 - 1/s^4), which vanishes on the null circle rho = a
+    and grows as rho far out."""
+    def f(s):
+        return math.exp(1 / (16 * s ** 4)) * math.sqrt(max(0.0, 1 - 1 / s ** 4))
+
+    def one(r):
+        if r <= 1:
+            return 0.0
+        return integrate.quad(f, 1, r, epsabs=1e-13, epsrel=1e-13, limit=200)[0]
+    return np.vectorize(one, otypes=[float])(np.asarray(rho, dtype=float))
+
+
+def bonnor_rotating_dust(ck, src):
+    """Bonnor's rotating dust cloud on its axis and on its equatorial plane, a = 1.
+
+    On the axis rho = 0 the twist and the exponent of the conformal factor vanish and the metric is
+    -c^2dt^2 + dz^2, flat, so p, q = arctan((ct -+ z)/l) bring the half axis z > 0 into Minkowski's
+    triangle, with z = 0 a timelike line on X = 0 where the Kretschmann scalar 4a^4(8a^4 - 27z^4)/z^12
+    diverges, which is checked. On the plane z = 0 the circles of phi are divided out: the metric
+    orthogonal to them is -(rho^4/(rho^4 - a^4)) c^2dt^2 + e^(a^4/8rho^4) drho^2 outside rho = a, its
+    rays are the null geodesics of no angular momentum, and rho_*, the integral of
+    e^(a^4/16rho^4) sqrt(1 - a^4/rho^4) from a, is finite there, so the same p and q bring the plane
+    outside the null circle into the triangle with rho = a on X = 0. Inside rho = a the circles are
+    timelike and dividing them out leaves no light cone. The spherical chart draws the same two
+    surfaces, theta = 0 and theta = pi/2, where r is z and rho."""
+    ell = BONNOR_SCALE
+
+    def axis_pq(t, z):
+        return mink_pq(t, z, ell)
+
+    def plane_pq(t, rho):
+        return mink_pq(t, bonnor_plane_star(rho), ell)
+
+    views = []
+    charts = (("cylindrical", ("t", "z"), {"rho": "0", "phi": "0"}, ("t", "\\rho"), {"z": "0"}, "z", "\\rho"),
+              ("spherical", ("t", "r"), {"theta": "0", "phi": "0"}, ("t", "r"), {"theta": "pi/2"}, "r", "r"))
+    moment = slices.moments("bonnor_rotating_dust", "equator")[0]
+    TS = (-8, -4, -2, 0, 2, 4, 8)
+    for system, axis_plane, axis_fixed, eq_plane, eq_fixed, za, ra in charts:
+        axis = Plane(src, "bonnor_rotating_dust", system, axis_plane, axis_fixed, {"a": 1})
+        ck.chart(f"Bonnor's dust cloud {system}, the axis", axis, axis_pq, ck.uniform(-20, 20), ck.uniform(0.3, 20),
+                 lambda t, z: (1, 0))
+        g00, _, g11, *_ = axis.metric(np.zeros(5), np.array([0.2, 0.5, 1.0, 3.0, 10.0]))
+        ck.limit(f"Bonnor's dust cloud {system}: the axis is flat, g_tt = -1 and g_zz = 1", np.concatenate([g00, g11]),
+                 [-1.0] * 5 + [1.0] * 5, 1e-12)
+        K = axis.kretschmann
+        zz = np.array([0.7, 1.0, 2.5])
+        ck.limit(f"Bonnor's dust cloud {system}: the Kretschmann scalar on the axis is 4a^4(8a^4 - 27z^4)/z^12",
+                 K(np.zeros(3), zz), 4 * (8 - 27 * zz ** 4) / zz ** 12, 1e-9)
+        ck.diverges(f"Bonnor's dust cloud {system}: the Kretschmann scalar diverges at the centre along the axis",
+                    K(0, 0.3), K(0, 0.2))
+
+        box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+        v = View(f"{system}_axis", "The axis", box, system)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        grid(v, "r", lambda z, t: axis_pq(t, z), (1, 2, 4, 8), S_ALL)
+        grid(v, "t", axis_pq, TS, spread(0, np.inf, 300, 9))
+        v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6),
+                                         ((0, -PI), "$i^-$", "t", 0, 6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label_xt([0, 0.25], f"${za} = 0$", "r", dx=-6)
+        label_on(v, axis_pq(0, 4), "$4\\,a$")
+        v.legend("cover", f"the half axis ${za} > 0$, which $t$ and ${za}$ cover")
+        v.legend("r", f"${za}$ constant, at $1$, $2$, $4$, and $8\\,a$")
+        v.legend("t", "$ct$ constant, in units of $a$")
+        v.legend("singular", f"${za} = 0$, the singularity, where the density and the Kretschmann scalar diverge")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        v.set(restriction=("The half of the axis $\\rho = 0$ with $z > 0$ only" if system == "cylindrical" else
+                           "The half axis $\\theta = 0$ only") + ", totally geodesic, each point in the diagram a single event.",
+              settings=f"$a = 1$, the unit of every length, and $\\ell = {ell:g}\\,a$.")
+        views.append(v)
+
+        eq = Plane(src, "bonnor_rotating_dust", system, eq_plane, eq_fixed, {"a": 1}, quotient="phi")
+        ck.chart(f"Bonnor's dust cloud {system}, the plane z = 0 with phi divided out", eq, plane_pq,
+                 ck.uniform(-20, 20, 400), ck.uniform(1.05, 20, 400), lambda t, r: (1, 0))
+        g00, _, g11, *_ = eq.metric(np.zeros(4), np.array([1.2, 1.5, 3.0, 10.0]))
+        rr = np.array([1.2, 1.5, 3.0, 10.0])
+        ck.limit(f"Bonnor's dust cloud {system}: orthogonal to the circles the plane's metric is "
+                 "-(rho^4/(rho^4 - a^4)) c^2dt^2 + e^(a^4/8rho^4) drho^2",
+                 np.concatenate([g00, g11]), np.concatenate([-rr ** 4 / (rr ** 4 - 1), np.exp(1 / (8 * rr ** 4))]), 1e-10)
+        v = View(f"{system}_equator", "The plane $z = 0$" if system == "cylindrical" else "The plane $\\theta = \\pi/2$",
+                 [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], system)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        grid(v, "r", lambda r, t: plane_pq(t, r), (1.5, 2, 4, 8), S_ALL)
+        grid(v, "t", plane_pq, TS, spread(1, np.inf, 300, 9))
+        v.line("chartedge", [[[0, -PI], [0, PI]]])
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6),
+                                         ((0, -PI), "$i^-$", "t", 0, 6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label_xt([0, 0.25], f"${ra} = a$", "r", dx=-6)
+        label_on(v, plane_pq(0, 4), "$4\\,a$")
+        v.legend("cover", f"the plane outside ${ra} = a$, which $t$ and ${ra}$ cover")
+        v.legend("r", f"${ra}$ constant, at $1.5$, $2$, $4$, and $8\\,a$")
+        v.legend("t", "$ct$ constant, in units of $a$")
+        v.legend("chartedge", f"${ra} = a$, the closed null curve, inside which the circles about the axis are timelike")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        r = np.linspace(*moment.reach("cylindrical", "\\rho"), 2)
+        v.slice(moment, [plane_pq(0 * r, r)])
+        v.set(restriction=("The plane $z = 0$ outside $\\rho = a$" if system == "cylindrical" else
+                           "The plane $\\theta = \\pi/2$ outside $r = a$")
+              + " with $\\phi$ left out, totally geodesic, each point in the diagram a circle about the axis.",
+              settings=f"$a = 1$, the unit of every length, and $\\ell = {ell:g}\\,a$.")
+        views.append(v)
+    return views
+
+
 DOUBLE_KERR_SCALE = 4.0   # the length l of p, q = arctan((ct -+ x_*)/l), in units of m
 
 
@@ -15620,6 +15742,7 @@ DRAWN = {
     "roberts": roberts,
     "myers_perry": myers_perry,
     "curzon_chazy": curzon_chazy,
+    "bonnor_rotating_dust": bonnor_rotating_dust,
     "double_kerr": double_kerr,
     "zipoy_voorhees": zipoy_voorhees,
     "string_black_hole": string_black_hole,
@@ -15838,6 +15961,42 @@ CAPTIONS = {
         "The edge $X = 0$ is $r = 0$, the ring, a timelike singularity where the Kretschmann scalar diverges as "
         "$e^{2m^2/r^2}$ and which light from any event of the plane reaches in a finite time $t$. The axis meets the "
         "same coordinate point at the edge of its diamond, where the curvature goes to zero.",
+    ],
+    ("bonnor_rotating_dust", "cylindrical_axis"): [
+        "The half axis $\\rho = 0$, $z > 0$ of Bonnor's dust cloud ($a = 1$), each point in the diagram a single event. "
+        "The metric on it is $-c^2dt^2 + dz^2$, flat, so the maps $p = \\arctan((ct - z)/\\ell)$ and "
+        "$q = \\arctan((ct + z)/\\ell)$ bring it into Minkowski's triangle, drawn with $T = p + q$ up and "
+        "$X = q - p$ across.",
+        "The edge $X = 0$ is $z = 0$, the singularity, a timelike line that light from any event of the axis reaches "
+        "in a finite time. Along the axis the density of the dust grows as $1/z^6$ and the Kretschmann scalar is "
+        "$4a^4(8a^4 - 27z^4)/z^{12}$.",
+    ],
+    ("bonnor_rotating_dust", "cylindrical_equator"): [
+        "The equatorial plane ($z = 0$) of Bonnor's dust cloud ($a = 1$) outside the closed null curve $\\rho = a$, "
+        "with $\\phi$ left out, each point in the diagram a circle about the axis. Orthogonal to the circles the "
+        "metric is $-c^2dt^2/(1 - a^4/\\rho^4) + e^{a^4/8\\rho^4}d\\rho^2$, whose rays are the null geodesics of no "
+        "angular momentum, and with $\\rho_* = \\int_a^{\\rho} e^{a^4/16s^4}\\sqrt{1 - a^4/s^4}\\,ds$ the maps "
+        "$p = \\arctan((ct - \\rho_*)/\\ell)$ and $q = \\arctan((ct + \\rho_*)/\\ell)$ bring it into Minkowski's triangle.",
+        "The edge $X = 0$ is $\\rho = a$, which such a ray reaches in a finite time $t$. Inside it the circles about "
+        "the axis are closed timelike curves, and the plane with them divided out has no light cones.",
+    ],
+    ("bonnor_rotating_dust", "spherical_axis"): [
+        "The half axis $\\theta = 0$ of Bonnor's dust cloud ($a = 1$), each point in the diagram a single event. "
+        "The metric on it is $-c^2dt^2 + dr^2$, flat, so the maps $p = \\arctan((ct - r)/\\ell)$ and "
+        "$q = \\arctan((ct + r)/\\ell)$ bring it into Minkowski's triangle, drawn with $T = p + q$ up and "
+        "$X = q - p$ across.",
+        "The edge $X = 0$ is $r = 0$, the singularity, a timelike line that light from any event of the axis reaches "
+        "in a finite time. Along the axis the density of the dust grows as $1/r^6$ and the Kretschmann scalar is "
+        "$4a^4(8a^4 - 27r^4)/r^{12}$.",
+    ],
+    ("bonnor_rotating_dust", "spherical_equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Bonnor's dust cloud ($a = 1$) outside the closed null curve $r = a$, "
+        "with $\\phi$ left out, each point in the diagram a circle about the axis. Orthogonal to the circles the "
+        "metric is $-c^2dt^2/(1 - a^4/r^4) + e^{a^4/8r^4}dr^2$, whose rays are the null geodesics of no "
+        "angular momentum, and with $r_* = \\int_a^{r} e^{a^4/16s^4}\\sqrt{1 - a^4/s^4}\\,ds$ the maps "
+        "$p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring it into Minkowski's triangle.",
+        "The edge $X = 0$ is $r = a$, which such a ray reaches in a finite time $t$. Inside it the circles about "
+        "the axis are closed timelike curves, and the plane with them divided out has no light cones.",
     ],
     ("ads_soliton", "horowitz_myers"): [
         "The plane of $t$ and $r$ of the soliton ($\\tau = 0$, $x = 0$, $r_0 = L$). With "

@@ -51,6 +51,11 @@
       "id": "som_raychaudhuri",
       "kind": "family",
       "text": "Charged dust in rigid rotation, homogeneous as Gödel's universe is, with a line element one term away from flat space. It is the member $m = 0$ of the family in which Gödel's is $m^2 = 2\\Omega^2$ [som1968, reboucas1983]."
+    },
+    {
+      "id": "bonnor_rotating_dust",
+      "kind": "family",
+      "text": "A cloud of rigidly rotating dust with no cosmological constant, flat far away and singular at its centre. Its closed timelike curves stay inside a torus about that centre, where Gödel's pass through every event [bonnor1977cloud, astesiano2024]."
     }
   ],
   "references": [
@@ -74,7 +79,9 @@
     "earman1993",
     "rooman1998",
     "ori2005",
-    "som1968"
+    "som1968",
+    "bonnor1977cloud",
+    "astesiano2024"
   ],
   "coordinates": [
     {
