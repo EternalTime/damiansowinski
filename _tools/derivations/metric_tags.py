@@ -149,6 +149,10 @@ REGIONS = {
                "collapse, and the uniformly accelerating one, which alone is at rest in a static chart; a mirror "
                "on a general world line leaves the spacetime to its right no symmetry",
     },
+    "kerr_bertotti_robinson": {
+        "regions": [["boyer_lindquist"]],
+        "why": "static is the hole with no spin, a = 0, a special case of the family, which alone is static",
+    },
     "neugebauer_meinel": {
         "regions": [["weyl", "corotating", "bardeen_wagoner", "spheroidal"]],
         "why": "black_hole_limit is the limit mu -> mu_0 outside the disc, the extreme Kerr metric, "

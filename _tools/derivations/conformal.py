@@ -126,7 +126,8 @@ NOT_DRAWN = {"godel", "stockum_dust", "som_raychaudhuri", "maitra_dust", "taub_n
              "natario", "krasnikov", "pp_wave", "mixmaster", "lentz", "szekeres", "van_den_broeck",
              "string_wave", "black_saturn", "schrodinger_spacetime", "eguchi_hanson", "gravitational_instantons",
              "misner_brill_lindquist", "brill_waves",
-             "kundt_waves", "wahlquist", "tippett_tsang", "petrov_homogeneous", "eih_many_bodies"}
+             "kundt_waves", "wahlquist", "tippett_tsang", "petrov_homogeneous", "eih_many_bodies",
+             "kerr_bertotti_robinson"}
 
 
 # ---------------------------------------------------------------- the drawing

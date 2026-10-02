@@ -5012,6 +5012,9 @@ class Slices(unittest.TestCase):
                                                                 ("eddington_finkelstein_outgoing", "black_hole"),
                                                                 ("taub", "universe"))],
               *[f"conformal brill_charged_taub_nut/{v}" for v in ("axis", "ingoing", "outgoing", "universe", "wormhole")],
+              # Podolsky and Ovcharenko's hole with no spin, another member of the family than the spinning
+              # hole whose equator is embedded.
+              "kerr_bertotti_robinson/static/radial",
               *[f"zipoy_voorhees/{s}/axis_{k}" for s in ("spherical", "prolate_spheroidal") for k in ("oblate", "prolate")],
               *[f"conformal zipoy_voorhees/{s}_axis_{k}" for s in ("spherical", "prolate_spheroidal")
                 for k in ("oblate", "prolate")],

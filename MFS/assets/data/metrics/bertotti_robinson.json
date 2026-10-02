@@ -114,6 +114,11 @@
       "id": "three_brane_throat",
       "kind": "family",
       "text": "The three-brane of string theory has the same throat six dimensions up, anti-de Sitter space of five dimensions times a sphere of five [gibbons1993]."
+    },
+    {
+      "id": "kerr_bertotti_robinson",
+      "kind": "generalisation",
+      "text": "Put a spinning black hole into Bertotti and Robinson's field and it is Podolský and Ovcharenko's hole of 2025, which is this universe again when its mass is taken away [podolsky2025]."
     }
   ],
   "references": [
