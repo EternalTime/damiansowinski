@@ -275,7 +275,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d9178354592a5e1d",
+    "version": "af2436a42461fde1",
     "diagrams": "5f0ad659424e0599",
     "conformal": "c7fc09c16f9ab26f",
     "embedding": "e2cdc2bc29ec9b3c"
@@ -635,6 +635,38 @@
     "diagrams": "60cc56f450326363",
     "conformal": "d6c09caa82c5caf6",
     "embedding": "8cf5301ea3792cef"
+  },
+  {
+    "id": "chandrasekhar_xanthopoulos",
+    "name": "Chandrasekhar-Xanthopoulos",
+    "tags": [
+      "vacuum",
+      "plane wave",
+      "gravitational wave",
+      "colliding plane waves",
+      "impulsive wave",
+      "shock wave",
+      "Kerr",
+      "Petrov type D",
+      "Killing-Cauchy horizon",
+      "Cauchy horizon",
+      "inner horizon",
+      "black hole interior",
+      "ring singularity",
+      "timelike singularity",
+      "fold singularity",
+      "nonlinear",
+      "exact solution",
+      "time-dependent",
+      "Lorentzian",
+      "four-dimensional",
+      "idealized model",
+      "Einstein equations"
+    ],
+    "version": "b0f900246c9b21cd",
+    "diagrams": "1684108756c10324",
+    "conformal": "065779d03ab6d15d",
+    "embedding": "3437f058dfb1c91b"
   },
   {
     "id": "coleman_de_luccia",
@@ -1604,7 +1636,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5d877dca76450203",
+    "version": "4d5d07c7b557cb65",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -1744,7 +1776,7 @@
       "idealized model",
       "Einstein equations"
     ],
-    "version": "75bff3df4d16c304",
+    "version": "d485d81c6494f027",
     "diagrams": "39424436cf59ea7f",
     "conformal": "6fa408bb4e46f514",
     "embedding": "0633d69609fb99f8"
@@ -2043,7 +2075,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "616b8fb53f9ae289",
+    "version": "797428e936f9a614",
     "diagrams": "b920fffead7f2fe8",
     "conformal": "43d2fa3533d022a9",
     "embedding": "097ceae878d9ed12"
@@ -2158,7 +2190,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "1ce18b47ab2e9eff",
+    "version": "1359776b547da50c",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -2655,7 +2687,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "fe6a4560f6686fee",
+    "version": "56703bfaac897db4",
     "diagrams": "6e432dbfef4f0d7d",
     "embedding": "a484d91e42495a51"
   },
@@ -2943,7 +2975,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f346570d6df9c464",
+    "version": "74855e8165064629",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"

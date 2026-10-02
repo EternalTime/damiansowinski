@@ -35,10 +35,12 @@ kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_sta
 misner_brill_lindquist.md, lewis.md and tippett_tsang.md beside this file.
 """
 import argparse
+import fcntl
 import itertools
 import json
 import random
 import sys
+import tempfile
 import time
 from pathlib import Path
 
@@ -17387,6 +17389,279 @@ def tippett_tsang_rindler(chart):
 CHARTS["tippett_tsang"] = [lambda s=s: tippett_tsang(s) for s in TIPPETT_TSANG_CHARTS]
 
 
+# -- Chandrasekhar-Xanthopoulos colliding waves -------------------------------------------
+
+CX_CHARTS = ("prolate", "angular", "boyer_lindquist", "kerr_ingoing")
+CX_BASE = ["m", "\\alpha", "p = \\cos\\alpha", "q = \\sin\\alpha"]
+CX_KERR = ["m", "a", "\\Sigma = r^2 + a^2\\cos^2\\theta", "\\Delta = r^2 - 2mr + a^2"]
+CX_REALS = "(-\\infty, \\infty)"
+
+
+def cx_charts():
+    """Each chart's coordinates, domains, parameters and line element."""
+    plane = ("\\dfrac{Y}{X}\\left(dx - \\dfrac{2q\\left(%s\\right)}{Y}dy\\right)^2")
+    kerr_domain_note = "r = m - \\sqrt{m^2 - a^2} \\;\\text{(Killing-Cauchy horizon)}"
+    return {
+        "prolate": {
+            "name": "Chandrasekhar-Xanthopoulos", "coords": ["\\eta", "\\mu", "x", "y"],
+            "domains": ["\\eta \\in [0, 1)", "\\mu \\in [-\\eta, \\eta]", "x \\in " + CX_REALS, "y \\in " + CX_REALS,
+                        "\\eta = 1 \\;\\text{(Killing-Cauchy horizon)}"],
+            "parameters": CX_BASE + ["\\rho = 1 - p\\eta", "X = \\rho^2 + q^2\\mu^2", "Y = 1 - p^2\\eta^2 - q^2\\mu^2"],
+            "line": "ds^2 = m^2X\\left(-\\dfrac{d\\eta^2}{1 - \\eta^2} + \\dfrac{d\\mu^2}{1 - \\mu^2}\\right) + "
+                    + plane % "\\eta\\left(1 - \\mu^2\\right) - p\\left(\\eta^2 - \\mu^2\\right)"
+                    + " + \\dfrac{\\left(1 - \\eta^2\\right)\\left(1 - \\mu^2\\right)X}{Y}dy^2"},
+        "angular": {
+            "name": "Time and Space", "coords": ["\\psi", "\\lambda", "x", "y"],
+            "domains": ["\\psi \\in [0, \\pi/2)", "\\lambda \\in [-\\psi, \\psi]", "x \\in " + CX_REALS,
+                        "y \\in " + CX_REALS, "\\psi = \\pi/2 \\;\\text{(Killing-Cauchy horizon)}"],
+            "parameters": CX_BASE + ["\\rho = 1 - p\\sin\\psi", "X = \\rho^2 + q^2\\sin^2\\lambda",
+                                     "Y = 1 - p^2\\sin^2\\psi - q^2\\sin^2\\lambda"],
+            "line": "ds^2 = m^2X\\left(-d\\psi^2 + d\\lambda^2\\right) + "
+                    + plane % "\\sin\\psi\\cos^2\\lambda - p\\left(\\sin^2\\psi - \\sin^2\\lambda\\right)"
+                    + " + \\dfrac{X\\cos^2\\psi\\cos^2\\lambda}{Y}dy^2"},
+        "boyer_lindquist": {
+            "name": "Boyer-Lindquist", "coords": ["t", "r", "\\theta", "\\phi"],
+            "domains": ["t \\in " + CX_REALS, "r \\in \\left(m - \\sqrt{m^2 - a^2},\\, m\\right]",
+                        "\\theta \\in \\left[\\arccos\\dfrac{m - r}{\\sqrt{m^2 - a^2}},\\, "
+                        "\\pi - \\arccos\\dfrac{m - r}{\\sqrt{m^2 - a^2}}\\right]",
+                        "\\phi \\in " + CX_REALS, kerr_domain_note],
+            "parameters": CX_KERR,
+            "line": "ds^2 = -\\dfrac{\\Delta}{\\Sigma}\\left(dt - a\\sin^2\\theta\\,d\\phi\\right)^2 + \\dfrac{\\Sigma}{\\Delta}dr^2"
+                    " + \\Sigma\\,d\\theta^2 + \\dfrac{\\sin^2\\theta}{\\Sigma}\\left(a\\,dt - \\left(r^2 + a^2\\right)d\\phi\\right)^2"},
+        "kerr_ingoing": {
+            "name": "Ingoing Kerr", "coords": ["v", "r", "\\theta", "\\tilde\\phi"],
+            "domains": ["v \\in " + CX_REALS, "r \\in (-\\infty, m]", "\\theta \\in [0, \\pi]",
+                        "\\tilde\\phi \\in " + CX_REALS,
+                        "|\\cos\\theta| \\le \\dfrac{m - r}{\\sqrt{m^2 - a^2}} \\;\\text{(behind both wave fronts)}",
+                        kerr_domain_note, "\\Sigma = 0 \\;\\text{(the ring singularity)}"],
+            "parameters": CX_KERR,
+            "line": "ds^2 = -\\dfrac{\\Delta}{\\Sigma}\\left(dv - a\\sin^2\\theta\\,d\\tilde\\phi\\right)^2"
+                    " + 2\\,dr\\left(dv - a\\sin^2\\theta\\,d\\tilde\\phi\\right) + \\Sigma\\,d\\theta^2"
+                    " + \\dfrac{\\sin^2\\theta}{\\Sigma}\\left(a\\,dv - \\left(r^2 + a^2\\right)d\\tilde\\phi\\right)^2"},
+    }
+
+
+class CxForms:
+    """The printer of the two charts of the waves. A value is written in Kerr's radius
+    rho = 1 - p eta, every even power of p as a power of 1 - q^2, and factored; then
+    rho^2 + q^2 mu^2 is the X the chart names, 2 rho - X its Y, rho^2 - 2 rho + q^2, which is
+    Kerr's Delta over m^2, is -p^2 (1 - eta^2), and (1 + q)(1 - q) is p^2. In the chart of psi and
+    lambda eta and mu are the sines, and 1 - eta^2 and 1 - mu^2 the squared cosines."""
+
+    def __init__(self, reader, system):
+        self.system = system
+        self.alpha = reader.parameters["alpha"]
+        self.P, self.Q, self.A, self.X, self.Y = sp.symbols("p q rho X Y")
+        self.MU, self.C1, self.C2 = sp.symbols("CXmu CXc1 CXc2")
+        P, Q, A, MU = self.P, self.Q, self.A, self.MU
+        self.lead = [P, Q, A, self.X, self.Y]
+        self.named, self.overrides, self.kept = {}, {}, {}
+        if system == "prolate":
+            eta, mu = reader.symbol["\\eta"], reader.symbol["\\mu"]
+            self.into = {eta: (1 - A) / P, mu: MU}
+            self.one_eta, self.one_mu = sp.Symbol("CXe"), sp.Symbol("CXd")
+            self.named = {self.one_eta: "1 - \\eta^2", self.one_mu: "1 - \\mu^2"}
+            self.back = {MU: mu}
+        else:
+            psi, lam = reader.symbol["\\psi"], reader.symbol["\\lambda"]
+            self.into = {sp.sin(psi): (1 - A) / P, sp.sin(lam): MU, sp.cos(psi): self.C1, sp.cos(lam): self.C2}
+            self.one_eta, self.one_mu = self.C1 ** 2, self.C2 ** 2
+            self.back = {MU: sp.sin(lam), self.C1: sp.cos(psi), self.C2: sp.cos(lam)}
+
+    # -- the charts of eta and mu and of psi and lambda ----------------------------------------
+    def core(self, value):
+        """A value in p, q, rho, CXmu and the two cosines, shaped as the class says."""
+        P, Q, A, MU = self.P, self.Q, self.A, self.MU
+        horizon = A ** 2 - 2 * A + Q ** 2
+
+        def parity(side):
+            return sp.expand(sum(c * P ** (k % 2) * (1 - Q ** 2) ** (k // 2)
+                                 for (k,), c in sp.Poly(sp.expand(side), P).terms()))
+
+        # The checker's canonical form leaves each cosine to the first power at most, so only p is reduced,
+        # and each side is factored once.
+        numerator, denominator = (sp.factor(parity(side)) for side in sp.fraction(sp.together(value)))
+        coefficient, powers = _factor_powers(numerator / denominator, factor=False)
+        # A factor and its negative, one on each side of the fraction, are one factor.
+        for base in list(powers):
+            for other in list(powers):
+                if base in powers and other in powers and base is not other and sp.expand(base + other) == 0:
+                    k = powers.pop(other)
+                    coefficient *= (-1) ** k
+                    powers[base] += k
+        targets = [(A ** 2 + Q ** 2 * MU ** 2, self.X), (2 * A - A ** 2 - Q ** 2 * MU ** 2, self.Y),
+                   (horizon, -P ** 2 * self.one_eta)]
+
+        def add(written, k):
+            nonlocal coefficient
+            w_coefficient, w_powers = _factor_powers(written, factor=False)
+            coefficient *= w_coefficient ** k
+            for base, e in w_powers.items():
+                powers[base] = powers.get(base, 0) + e * k
+
+        for base in list(powers):
+            for target, written in targets:
+                sign = 1 if sp.expand(base - target) == 0 else -1 if sp.expand(base + target) == 0 else 0
+                if sign:
+                    k = powers.pop(base)
+                    coefficient *= sign ** k
+                    add(written, k)
+                    break
+        for one, other, product in ((Q + 1, Q - 1, P ** 2), (MU + 1, MU - 1, self.one_mu)):
+            a, b = powers.get(one, 0), powers.get(other, 0)
+            if a == b and a != 0:
+                del powers[one], powers[other]
+                coefficient *= (-1) ** a
+                add(product, a)
+        return coefficient, {base: k for base, k in powers.items() if k != 0}
+
+    def pretty(self, value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        # A vacuum's Weyl tensor is its Riemann tensor, so each value is shaped once and kept.
+        if value not in self.kept:
+            coefficient, powers = self.core(value.subs({sp.sin(self.alpha): self.Q, sp.cos(self.alpha): self.P})
+                                            .subs(self.into))
+            self.kept[value] = _keep_coeff(coefficient, sp.Mul(*[b ** k for b, k in powers.items()])).subs(self.back)
+        return self.kept[value]
+
+
+def cx_kerr_pretty(reader):
+    """A pretty printer for the two charts of Kerr: every even power of sin(theta) in a sum is written
+    in cos(theta), the value is factored, r^2 + a^2 cos^2(theta) is the Sigma the chart names and
+    r^2 - 2mr + a^2 its Delta, and (1 + cos)(1 - cos) is sin^2."""
+    r, th = reader.symbol["r"], reader.symbol["\\theta"]
+    m, a = reader.parameters["m"], reader.parameters["a"]
+    S, C, Sigma, Delta = sp.Symbol("CXs"), sp.Symbol("CXc"), sp.Symbol("Sigma"), sp.Symbol("Delta")
+    targets = [(r ** 2 + a ** 2 * C ** 2, Sigma), (r ** 2 - 2 * m * r + a ** 2, Delta)]
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        value = value.subs({sp.sin(th): S, sp.cos(th): C})
+        sides = []
+        for side in sp.fraction(sp.together(value)):
+            poly = sp.Poly(sp.expand(side), S)
+            low = min(k for (k,), _ in poly.terms())
+            rest = sp.expand(sum(c * S ** ((k - low) % 2) * (1 - C ** 2) ** ((k - low) // 2) for (k,), c in poly.terms()))
+            sides.append(S ** low * sp.factor(rest))
+        coefficient, powers = _factor_powers(sp.factor(sides[0] / sides[1]), factor=False)
+        for base in list(powers):
+            for target, written in targets:
+                sign = 1 if sp.expand(base - target) == 0 else -1 if sp.expand(base + target) == 0 else 0
+                if sign:
+                    k = powers.pop(base)
+                    coefficient *= sign ** k
+                    powers[written] = powers.get(written, 0) + k
+                    break
+        one, other = powers.get(C + 1, 0), powers.get(C - 1, 0)
+        if one == other and one != 0:
+            del powers[C + 1], powers[C - 1]
+            coefficient *= (-1) ** one
+            powers[S] = powers.get(S, 0) + 2 * one
+        return _keep_coeff(coefficient, sp.Mul(*[b ** k for b, k in powers.items()])).subs(
+            {S: sp.sin(th), C: sp.cos(th)})
+
+    return pretty, [m, a, r, Sigma, Delta]
+
+
+def chandrasekhar_xanthopoulos(system):
+    """Chandrasekhar and Xanthopoulos's colliding waves where both have passed, Proc. R. Soc. Lond.
+    A 408, 175 (1986), in four charts, each with the signature flipped from its source's. The chart
+    of eta and mu is theirs, eq. (13.22) of J. B. Griffiths, Colliding Plane Waves in General
+    Relativity (Oxford, 1991), where eta and mu are written t and z, with x shifted as in his
+    eq. (13.31) so that the cross term vanishes on the collision, and m restored as a length. The
+    chart of psi and lambda is his eq. (A.3), after Chandrasekhar and Ferrari, and the
+    Boyer-Lindquist chart his eqs. (13.23) to (13.27), for the case of Chandrasekhar and
+    Xanthopoulos, whose horizon is Kerr's inner one. The ingoing chart is Kerr's own, which crosses
+    that horizon. cx_check holds each to being a vacuum, to Kerr's Kretschmann scalar, and each
+    after the chart of eta and mu to being it carried along its map;
+    chandrasekhar_xanthopoulos.md beside this file is the derivation. No double null chart is
+    written: with psi = u + v and lambda = u - v the checker's canonical form spreads every sine
+    over the sines and cosines of u and of v, and the curvature did not finish in a quarter of an
+    hour."""
+    chart = cx_charts()[system]
+    reader = vm.Reader(chart["coords"], chart["parameters"], ())
+    if system in ("prolate", "angular"):
+        forms = CxForms(reader, system)
+        printing = {"printer": {"lead": forms.lead, "named": forms.named, "overrides": forms.overrides},
+                    "pretty": forms.pretty}
+    else:
+        pretty, lead = cx_kerr_pretty(reader)
+        printing = {"printer": {"lead": lead, "overrides": {sp.Symbol("Sigma"): "\\Sigma", sp.Symbol("Delta"): "\\Delta"}},
+                    "pretty": pretty}
+    return {
+        "metric_id": "chandrasekhar_xanthopoulos",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": chart["parameters"], "line_element": chart["line"]},
+        "chart_line_element": chart["line"],
+        "check": lambda c: cx_check(c, system),
+        **printing,
+    }
+
+
+def cx_image(system, eta, mu, x, y, m, p, q):
+    """A chart's first coordinates, and the Jacobian of all four, as functions of eta, mu, x and y."""
+    if system == "angular":
+        image = [sp.asin(eta), sp.asin(mu), x, y]
+    else:
+        image = [x - 2 * q * y / p, m * (1 - p * eta), sp.acos(mu), -y / (m * p)]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], (eta, mu, x, y)[j]))
+    if system == "kerr_ingoing":
+        # dv = dt + (r^2 + a^2) dr/Delta and d(phi~) = d(phi) + a dr/Delta, with r = m(1 - p eta).
+        r, a = image[1], m * q
+        delta = r ** 2 - 2 * m * r + a ** 2
+        J[0, 0] += (r ** 2 + a ** 2) / delta * (-m * p)
+        J[3, 0] += a / delta * (-m * p)
+    return image, J
+
+
+def cx_check(chart, system, points=8):
+    """The Ricci tensor vanishes; the Kretschmann scalar is Kerr's, 48 m^2 (r^2 - a^2 cos^2)(Sigma^2
+    - 16 a^2 r^2 cos^2)/Sigma^6; and J^T g J, with J the Jacobian of the chart's coordinates as
+    functions of eta, mu, x and y, is the metric of the chart of eta and mu at random points where
+    both waves have passed, to forty digits."""
+    ricci = chart.geo.ricci_ll()
+    if any(vm.norm(vm._at(ricci, index)) != 0 for index in vm._indices(4, 2)):
+        raise AssertionError(f"chandrasekhar_xanthopoulos: the {system} chart is not a vacuum")
+    home = cp.Chart(cx_charts()["prolate"]["coords"], cx_charts()["prolate"]["parameters"],
+                    cx_charts()["prolate"]["line"])
+    eta, mu, x, y = home.symbols
+    m, alpha = home.reader.parameters["m"], home.reader.parameters["alpha"]
+    p, q = sp.cos(alpha), sp.sin(alpha)
+    image, J = cx_image(system, eta, mu, x, y, m, p, q) if system != "prolate" else ([eta, mu, x, y], sp.eye(4))
+    at = dict(zip(chart.symbols[:3], image[:3]))
+    if system in ("boyer_lindquist", "kerr_ingoing"):
+        at = {chart.symbols[1]: image[1], chart.symbols[2]: image[2],
+              chart.reader.parameters["m"]: m, chart.reader.parameters["a"]: m * q}
+    else:
+        at = {chart.symbols[0]: image[0], chart.symbols[1]: image[1],
+              chart.reader.parameters["m"]: m, chart.reader.parameters["alpha"]: alpha}
+    difference = J.T * chart.geo.g.subs(at, simultaneous=True) * J - home.geo.g
+    r, c = m * (1 - p * eta), mu
+    a = m * q
+    sigma = r ** 2 + a ** 2 * c ** 2
+    kerr = 48 * m ** 2 * (r ** 2 - a ** 2 * c ** 2) * (sigma ** 2 - 16 * a ** 2 * r ** 2 * c ** 2) / sigma ** 6
+    scalar = sp.sympify(chart.geo.kretschmann()).subs(at, simultaneous=True) - kerr
+    rng = random.Random(11)
+    for _ in range(points):
+        point = {m: sp.Rational(rng.randint(5, 30), 10), alpha: sp.Rational(rng.randint(10, 140), 100),
+                 x: sp.Rational(rng.randint(-20, 20), 10), y: sp.Rational(rng.randint(-20, 20), 10)}
+        point[eta] = sp.Rational(rng.randint(1, 99), 100)
+        point[mu] = point[eta] * sp.Rational(rng.randint(-99, 99), 100)
+        worst = max(abs(sp.N(difference[i, j].subs(point), 40)) for i in range(4) for j in range(4))
+        if worst > sp.Float("1e-30"):
+            raise AssertionError(f"chandrasekhar_xanthopoulos: the {system} chart carried along its map misses the "
+                                 f"metric of the chart of eta and mu by {worst} at {point}")
+        if abs(sp.N(scalar.subs(point), 40)) > sp.Float("1e-28"):
+            raise AssertionError(f"chandrasekhar_xanthopoulos: the {system} chart's Kretschmann scalar is not Kerr's")
+
+
+CHARTS["chandrasekhar_xanthopoulos"] = [lambda s=s: chandrasekhar_xanthopoulos(s) for s in CX_CHARTS]
+
+
 def write(spec):
     start = time.time()
     chart = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
@@ -17435,6 +17710,15 @@ def write(spec):
         math["geodesics"] = list(spec["geodesics"])
 
     path = METRICS / f"{spec['metric_id']}.json"
+    # Charts of one spacetime may be printed in processes of their own, so the file is read, changed
+    # and written under a lock.
+    with open(Path(tempfile.gettempdir()) / f"mfs-print-{spec['metric_id']}.lock", "w") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        store(spec, math, path, start)
+
+
+def store(spec, math, path, start):
+    """The chart's mathematics written into its spacetime's file, beside the prose the file keeps."""
     metric = json.loads(path.read_text(encoding="utf-8"))
     charts = metric.get("coordinates", [])
     # A parameter keeps the description it has in this chart, or in another chart of the same
@@ -17470,14 +17754,18 @@ def write(spec):
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--metric", action="append", choices=sorted(CHARTS), default=[])
-    for metric_id in parser.parse_args().metric or sorted(CHARTS):
+    parser.add_argument("--system", action="append", default=[],
+                        help="print only this chart of the spacetimes named, repeatable")
+    chosen = parser.parse_args()
+    for metric_id in chosen.metric or sorted(CHARTS):
         print(metric_id, flush=True)
         # A spacetime with several charts printed by machine lists one builder per chart, or has
         # one builder that returns every chart, when the charts are checked against each other.
         for build in CHARTS[metric_id] if isinstance(CHARTS[metric_id], list) else [CHARTS[metric_id]]:
             specs = build()
             for spec in specs if isinstance(specs, list) else [specs]:
-                write(spec)
+                if not chosen.system or spec["system"]["id"] in chosen.system:
+                    write(spec)
 
 
 if __name__ == "__main__":

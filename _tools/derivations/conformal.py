@@ -14907,6 +14907,159 @@ def bell_szekeres(ck, src):
 AS_JUMP = float(np.log(8.0))    # the jump of a ray moving left at rho = rho_0/8, in units of 8GE/c^4
 
 
+# ---------------------------------------------------------------- Chandrasekhar-Xanthopoulos
+
+class CXNullRegion:
+    """The published metric of the chart of psi and lambda on the plane of u and v, with
+    psi = u + v and lambda = u - v, in the components of u and v, and with u, or v, or both, set
+    to zero ahead of that wave, as the chart's convention states."""
+
+    def __init__(self, plane, zero_u=False, zero_v=False):
+        self.plane, self.zero_u, self.zero_v = plane, zero_u, zero_v
+
+    def metric(self, u, v, fvals=None):
+        u, v = np.asarray(u, dtype=float), np.asarray(v, dtype=float)
+        a, b = 0 * u if self.zero_u else u, 0 * v if self.zero_v else v
+        g00, g01, g11, h00, h01, h11 = self.plane.metric(a + b, a - b)
+        return (g00 + 2 * g01 + g11, g00 - g11, g00 - 2 * g01 + g11,
+                (h00 + 2 * h01 + h11) / 4, (h00 - h11) / 4, (h00 - 2 * h01 + h11) / 4)
+
+
+def chandrasekhar_xanthopoulos(ck, src):
+    """The plane x = y = 0 at p = 3/5 and q = 4/5, totally geodesic, since the reflection of x and y
+    together is an isometry that fixes it, drawn as Khan and Penrose's is, in p, q = kp_pq(u),
+    kp_pq(v), with u and v the null coordinates the charts' conventions define. Where both waves
+    have passed the published chart of psi and lambda is checked through u, v = (psi +- lambda)/2,
+    the chart of eta and mu through their arcsines, and the Boyer-Lindquist chart through
+    psi = arcsin((m - r)/sqrt(m^2 - a^2)) and lambda = pi/2 - theta, with r falling toward the
+    future. Ahead of one wave or both the metric is the published one with u or v set to zero,
+    checked through the same maps; its Ricci tensor, computed from those components, is checked to
+    vanish, and its Riemann tensor to vanish ahead of both waves and not behind one. The published
+    Kretschmann scalar is checked to be Kerr's own on psi = pi/2, the Killing-Cauchy horizon."""
+    params, kerr = {"m": 1, "alpha": "atan(4/3)"}, {"m": 1, "a": "4/5"}
+    fixed = {"x": "0", "y": "0"}
+    ang = Plane(src, "chandrasekhar_xanthopoulos", "angular", ("\\psi", "\\lambda"), fixed, params)
+    psi = ck.uniform(0.001, HALF - 0.001)
+    lam = psi * ck.uniform(-0.999, 0.999)
+    ck.chart("Chandrasekhar-Xanthopoulos time and space", ang, lambda s, l: ((s + l) / 2, (s - l) / 2), psi, lam,
+             lambda s, l: (1, 0))
+    pro = Plane(src, "chandrasekhar_xanthopoulos", "prolate", ("\\eta", "\\mu"), fixed, params)
+    ck.chart("Chandrasekhar-Xanthopoulos eta and mu", pro,
+             lambda e, w: ((np.arcsin(e) + np.arcsin(w)) / 2, (np.arcsin(e) - np.arcsin(w)) / 2),
+             np.sin(psi), np.sin(lam), lambda e, w: (1, 0))
+    bl = Plane(src, "chandrasekhar_xanthopoulos", "boyer_lindquist", ("r", "\\theta"), {"t": "0", "phi": "0"}, kerr)
+
+    def bl_pq(r, th):
+        s, l = np.arcsin((1 - np.asarray(r, dtype=float)) / 0.6), HALF - np.asarray(th, dtype=float)
+        return (s + l) / 2, (s - l) / 2
+    ck.chart("Chandrasekhar-Xanthopoulos Boyer-Lindquist", bl, bl_pq, 1 - 0.6 * np.sin(psi), HALF - lam,
+             lambda r, th: (-1, 0))
+    for name, zu, zv, a, b in (("ahead of both waves", True, True, ck.uniform(-30, 0), ck.uniform(-30, 0)),
+                               ("behind the wave on u = 0 alone", False, True, ck.uniform(0, HALF - 0.001), ck.uniform(-30, 0)),
+                               ("behind the wave on v = 0 alone", True, False, ck.uniform(-30, 0), ck.uniform(0, HALF - 0.001))):
+        ck.chart(f"Chandrasekhar-Xanthopoulos {name}", CXNullRegion(ang, zu, zv), lambda a, b: (kp_pq(a), kp_pq(b)), a, b,
+                 lambda a, b: (1, 1))
+    # The curvature of the published metric with v, or both u and v, set to zero, from its components.
+    _, entry, reader = nr.load("chandrasekhar_xanthopoulos", "angular")
+    g = nr.published_matrix(reader, entry, "metric_components").subs(
+        {reader.parameters[k]: sp.sympify(value) for k, value in params.items()})
+    s_psi, s_lam, x, y = (reader.symbol[c] for c in entry["coords"])
+    u, v = sp.symbols("u v", real=True)
+    for name, at, flat in (("ahead of both waves", {s_psi: 0, s_lam: 0}, True),
+                           ("behind the wave on u = 0 alone", {s_psi: u, s_lam: u}, False)):
+        h = g.subs(at, simultaneous=True)
+        null = sp.zeros(4, 4)
+        null[0, 1] = null[1, 0] = (h[0, 0] - h[1, 1]) / 2
+        null[2:, 2:] = h[2:, 2:]
+        geo = vm.Geometry(null, [u, v, x, y], 10 ** 6)
+        ricci, riemann = geo.ricci_ll(), geo.riemann_llll()
+        ck.limit(f"Chandrasekhar-Xanthopoulos: a vacuum {name}",
+                 sum(1 for i in vm._indices(4, 2) if vm.norm(vm._at(ricci, i)) != 0), 0, tol=0.5)
+        curved = sum(1 for i in vm._indices(4, 4) if vm.norm(vm._at(riemann, i)) != 0)
+        ck.limit(f"Chandrasekhar-Xanthopoulos: {'flat' if flat else 'curved'} {name}", min(curved, 1), 0 if flat else 1,
+                 tol=0.5)
+    edge = ck.uniform(-HALF + 0.01, HALF - 0.01, 200)
+    # In units of m the scalar reaches 48/(1 - p)^6, about 11700, where the horizon meets lambda = 0,
+    # so it is held to Kerr's own on its inner horizon, with rho = 1 - p and w = q sin(lambda).
+    rho, w = 0.4, 0.8 * np.sin(edge)
+    ck.limit("Chandrasekhar-Xanthopoulos: on psi = pi/2 the Kretschmann scalar is Kerr's on its inner horizon, finite",
+             ang.kretschmann(np.full_like(edge, HALF - 1e-9), edge)
+             / (48 * (rho ** 2 - w ** 2) * ((rho ** 2 + w ** 2) ** 2 - 16 * w ** 2 * rho ** 2) / (rho ** 2 + w ** 2) ** 6),
+             1.0, tol=1e-5)
+
+    moments = slices.moments("chandrasekhar_xanthopoulos")
+    views = []
+    box = [-PI, PI, -PI, HALF + 0.25]
+    s_neg = spread(-np.inf, 0, 400, 9)[:-1]
+    whole = [point(-HALF, -HALF), point(HALF, -HALF), point(HALF, 0), point(0, HALF), point(-HALF, HALF)]
+    region_iv = [point(0, 0), point(HALF, 0), point(0, HALF)]
+    restriction = "The plane $x = y = 0$ only, totally geodesic, each point in the diagram a single event."
+    names = {"prolate": "Chandrasekhar-Xanthopoulos", "angular": "Time and Space", "boyer_lindquist": "Boyer-Lindquist"}
+    for system in ("prolate", "angular", "boyer_lindquist"):
+        vw = View(system, names[system], box, system)
+        vw.fill("region", whole)
+        vw.fill("cover", region_iv)
+        if system == "angular":
+            for c in (0.3, 0.6, 0.9, 1.2):
+                vw.curve("t", np.array([c, 0]), np.array([0, c]))
+            for c in (-0.9, -0.45, 0.45, 0.9):
+                s = np.array([abs(c), HALF])
+                vw.curve("r", (s + c) / 2, (s - c) / 2)
+            vw.legend("cover", "the region where both waves have passed, which $\\psi$ and $\\lambda$ cover")
+            vw.legend("t", "$\\psi$ constant, spacelike, at $0.3$, $0.6$, $0.9$, and $1.2$")
+            vw.legend("r", "$\\lambda$ constant, at $\\pm 0.45$ and $\\pm 0.9$")
+        elif system == "prolate":
+            for c in (0.2, 0.4, 0.6, 0.8):
+                s = math.asin(c)
+                vw.curve("t", np.array([s, 0]), np.array([0, s]))
+            for c in (-0.8, -0.4, 0.4, 0.8):
+                s = np.array([abs(math.asin(c)), HALF])
+                vw.curve("r", (s + math.asin(c)) / 2, (s - math.asin(c)) / 2)
+            vw.legend("cover", "the region where both waves have passed, which $\\eta$ and $\\mu$ cover")
+            vw.legend("t", "$\\eta$ constant, spacelike, at $0.2$, $0.4$, $0.6$, and $0.8$")
+            vw.legend("r", "$\\mu$ constant, at $\\pm 0.4$ and $\\pm 0.8$")
+        else:
+            for r in (0.9, 0.8, 0.7, 0.6, 0.5):
+                s = math.asin((1 - r) / 0.6)
+                vw.curve("t", np.array([s, 0]), np.array([0, s]))
+            for c in (-0.9, -0.45, 0.45, 0.9):
+                s = np.array([abs(c), HALF])
+                vw.curve("r", (s + c) / 2, (s - c) / 2)
+            vw.legend("cover", "the region where both waves have passed, which $r$ and $\\theta$ cover")
+            vw.legend("t", "$r$ constant, spacelike, from $0.9\\,m$ down to $0.5\\,m$, with $r$ falling toward the future")
+            vw.legend("r", "$\\theta$ constant, at $\\pi/2 \\pm 0.45$ and $\\pi/2 \\pm 0.9$")
+        vw.curve("surface", np.zeros_like(s_neg), kp_pq(s_neg))
+        vw.curve("surface", kp_pq(s_neg), np.zeros_like(s_neg))
+        vw.segment("surface", (0, 0), (0, HALF))
+        vw.segment("surface", (0, 0), (HALF, 0))
+        vw.segment("singular", (HALF, -HALF), (HALF, 0), zig=True)
+        vw.segment("singular", (-HALF, HALF), (0, HALF), zig=True)
+        vw.segment("horizon", (HALF, 0), (0, HALF))
+        vw.segment("scri", (-HALF, -HALF), (HALF, -HALF))
+        vw.segment("scri", (-HALF, -HALF), (-HALF, HALF))
+        vw.layers.append({"kind": "point", "class": "infinity", "at": rounded(point(-HALF, -HALF))})
+        vw.point("mark", (0, 0))
+        vw.label_xt(point(-HALF, -HALF), "$i^-$", "b", dy=-6)
+        vw.label((HALF, -HALF / 2), "$u = \\pi/2$", "l", "small", dx=6)
+        vw.label((-HALF / 2, HALF), "$v = \\pi/2$", "r", "small", dx=-6)
+        vw.label((HALF / 2, HALF / 2), "$u + v = \\pi/2$", "t", "small", dy=6)
+        vw.label((0.25 * -HALF, -HALF), "$\\mathscr{I}^-$", "bl", dx=5, dy=-3)
+        vw.label((-HALF, 0.25 * -HALF), "$\\mathscr{I}^-$", "br", dx=-5, dy=-3)
+        vw.legend("surface", "the fronts of the two gravitational waves, $u = 0$ and $v = 0$, each an impulse with a "
+                             "shock wave behind it")
+        vw.legend("mark", "the collision, $u = v = 0$")
+        vw.legend("horizon", "$u + v = \\pi/2$, the Killing-Cauchy horizon, Kerr's inner horizon, where the "
+                             "Kretschmann scalar is finite")
+        vw.legend("singular", "$u = \\pi/2$ and $v = \\pi/2$ behind one wave alone, fold singularities")
+        vw.legend("scri", "past null infinity $\\mathscr{I}^-$")
+        vw.set(restriction=restriction)
+        for m in moments:
+            vw.slice(m, points=[(m.time / 2, m.time / 2)])
+        views.append(vw)
+    return views
+
+
+
 def aichelburg_sexl(ck, src):
     """The plane of u and v at x = rho_0/8, y = 0 of the null Cartesian chart, in units of
     8GE/c^4 = rho_0 = 1. Off the shock u = 0 the metric on it is -du dv, flat, and a ray
@@ -16639,6 +16792,7 @@ DRAWN = {
     "ori_time_machine": ori_time_machine,
     "einstein_rosen_waves": einstein_rosen_waves, "gowdy": gowdy,
     "nariai": nariai, "khan_penrose": khan_penrose, "bell_szekeres": bell_szekeres,
+    "chandrasekhar_xanthopoulos": chandrasekhar_xanthopoulos,
     "majumdar_papapetrou": majumdar_papapetrou,
     "kastor_traschen": kastor_traschen,
     "robinson_trautman": robinson_trautman,
@@ -18892,6 +19046,21 @@ CAPTIONS = {
         "The coordinates $\\xi = au + bv$ and $\\eta = bv - au$ cover the region where both waves have "
         "passed, $|\\eta| \\le \\xi < \\pi/2$, each surface of constant $\\xi$ spacelike, and the "
         "Killing-Cauchy horizon is $\\xi = \\pi/2$.",
+    ],
+    ("chandrasekhar_xanthopoulos", "prolate"): [
+        "The plane $x = y = 0$ of the Chandrasekhar-Xanthopoulos spacetime, totally geodesic, each point in the diagram a single event. Two plane gravitational waves, each an impulse with a shock wave behind it, travel toward each other through flat space and collide at $u = v = 0$. Maps $p$ and $q$ of the null coordinates $u$ and $v$, each the coordinate itself where it is positive and its arctangent where it is negative, bring the whole plane into a finite drawing at $q = 4/5$, with $T = p + q$ up and $X = q - p$ across, and light at 45°.",
+        "Ahead of both waves the spacetime is flat, and its past edges are null infinity, $u \\to -\\infty$ and $v \\to -\\infty$. Behind one wave alone it is a plane wave, curved and a vacuum, which ends at $u = \\pi/2$ in a fold singularity, as the region behind the other wave ends at $v = \\pi/2$. Where both waves have passed each focuses the other, and the region, locally Kerr's metric between its horizons, ends on the Killing-Cauchy horizon $u + v = \\pi/2$, Kerr's inner horizon, where the curvature is finite.",
+        "The coordinates $\\eta = \\sin(u + v)$ and $\\mu = \\sin(u - v)$ cover the region where both waves have passed, $|\\mu| \\le \\eta < 1$, each surface of constant $\\eta$ spacelike, and the Killing-Cauchy horizon is $\\eta = 1$.",
+    ],
+    ("chandrasekhar_xanthopoulos", "angular"): [
+        "The plane $x = y = 0$ of the Chandrasekhar-Xanthopoulos spacetime, totally geodesic, each point in the diagram a single event. Two plane gravitational waves, each an impulse with a shock wave behind it, travel toward each other through flat space and collide at $u = v = 0$. Maps $p$ and $q$ of the null coordinates $u$ and $v$, each the coordinate itself where it is positive and its arctangent where it is negative, bring the whole plane into a finite drawing at $q = 4/5$, with $T = p + q$ up and $X = q - p$ across, and light at 45°.",
+        "Ahead of both waves the spacetime is flat, and its past edges are null infinity, $u \\to -\\infty$ and $v \\to -\\infty$. Behind one wave alone it is a plane wave, curved and a vacuum, which ends at $u = \\pi/2$ in a fold singularity, as the region behind the other wave ends at $v = \\pi/2$. Where both waves have passed each focuses the other, and the region, locally Kerr's metric between its horizons, ends on the Killing-Cauchy horizon $u + v = \\pi/2$, Kerr's inner horizon, where the curvature is finite.",
+        "The coordinates $\\psi = u + v$ and $\\lambda = u - v$ cover the region where both waves have passed, $|\\lambda| \\le \\psi < \\pi/2$, each surface of constant $\\psi$ spacelike, and the Killing-Cauchy horizon is $\\psi = \\pi/2$.",
+    ],
+    ("chandrasekhar_xanthopoulos", "boyer_lindquist"): [
+        "The plane $x = y = 0$ of the Chandrasekhar-Xanthopoulos spacetime, totally geodesic, each point in the diagram a single event. Two plane gravitational waves, each an impulse with a shock wave behind it, travel toward each other through flat space and collide at $u = v = 0$. Maps $p$ and $q$ of the null coordinates $u$ and $v$, each the coordinate itself where it is positive and its arctangent where it is negative, bring the whole plane into a finite drawing at $q = 4/5$, with $T = p + q$ up and $X = q - p$ across, and light at 45°.",
+        "Ahead of both waves the spacetime is flat, and its past edges are null infinity, $u \\to -\\infty$ and $v \\to -\\infty$. Behind one wave alone it is a plane wave, curved and a vacuum, which ends at $u = \\pi/2$ in a fold singularity, as the region behind the other wave ends at $v = \\pi/2$. Where both waves have passed each focuses the other, and the region, locally Kerr's metric between its horizons, ends on the Killing-Cauchy horizon $u + v = \\pi/2$, Kerr's inner horizon, where the curvature is finite.",
+        "Kerr's $r = m(1 - p\\sin(u + v))$ and $\\theta = \\pi/2 - u + v$ cover the region where both waves have passed, with $a = 4m/5$. There $r$ is the time: it falls from $m$ at the collision to $2m/5$ on the Killing-Cauchy horizon, and each surface of constant $r$ is spacelike.",
     ],
     ("bell_szekeres", "regular"): [
         "The plane $\\eta = 0$, $x = 0$ of the Bell-Szekeres spacetime where both waves have passed, totally "

@@ -318,6 +318,11 @@
       "id": "bonnor_magnetic_dipole",
       "kind": "family",
       "text": "Bonnor's mass with a magnetic dipole moment. With the dipole switched off it keeps a quadrupole and a naked singularity, so Schwarzschild's black hole is not among its cases [emparan2000]."
+    },
+    {
+      "id": "chandrasekhar_xanthopoulos",
+      "kind": "generalisation",
+      "text": "Two plane gravitational waves colliding head on. With their polarizations aligned, the region between the fronts is the inside of Schwarzschild's black hole, with $\\phi$ unrolled along the fronts [griffiths1991, ferrari1988]."
     }
   ],
   "references": [
@@ -407,7 +412,9 @@
     "lemos1993",
     "brill1963",
     "cook2000",
-    "emparan2000"
+    "emparan2000",
+    "griffiths1991",
+    "ferrari1988"
   ],
   "coordinates": [
     {

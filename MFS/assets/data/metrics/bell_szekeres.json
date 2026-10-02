@@ -52,6 +52,11 @@
       "id": "szekeres",
       "kind": "programme",
       "text": "Peter Szekeres's other spacetime, dust cosmologies with no symmetry, from the year after this one [szekeres1975]."
+    },
+    {
+      "id": "chandrasekhar_xanthopoulos",
+      "kind": "family",
+      "text": "Gravitational waves that end on a Killing-Cauchy horizon as these do. Between their fronts the metric is Kerr's between its horizons [chandrasekhar1986]."
     }
   ],
   "references": [
@@ -70,7 +75,8 @@
     "konkowski1991",
     "dorca1993",
     "gurses2003",
-    "szekeres1975"
+    "szekeres1975",
+    "chandrasekhar1986"
   ],
   "coordinates": [
     {

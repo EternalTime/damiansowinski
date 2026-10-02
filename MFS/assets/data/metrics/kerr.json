@@ -175,6 +175,11 @@
       "id": "neugebauer_meinel",
       "kind": "limit_source",
       "text": "A spinning disc of dust whose outside field becomes Kerr's at $J = GM^2/c$ in the limit $\\mu \\to \\mu_0$ of its one parameter, the disc itself shrinking to a point of Weyl's coordinates [meinel2002]."
+    },
+    {
+      "id": "chandrasekhar_xanthopoulos",
+      "kind": "locally_same",
+      "text": "Two plane gravitational waves whose collision makes the inside of Kerr. Between their fronts the metric is Kerr's between its two horizons, with $t$ and $\\phi$ running along the fronts and $\\phi$ unrolled, and the waves end on the inner horizon [chandrasekhar1986, griffiths1991]."
     }
   ],
   "references": [
@@ -230,7 +235,9 @@
     "bonnor2002",
     "davidson1994",
     "mars2001",
-    "meinel2002"
+    "meinel2002",
+    "chandrasekhar1986",
+    "griffiths1991"
   ],
   "coordinates": [
     {

@@ -193,6 +193,11 @@
       "id": "tippett_tsang",
       "kind": "generalisation",
       "text": "Minkowski space with a bubble in it that carries its riders round a closed timelike curve. Tippett and Tsang's metric is Minkowski's wherever their top hat function $h$ vanishes [tippett2017]."
+    },
+    {
+      "id": "chandrasekhar_xanthopoulos",
+      "kind": "composite",
+      "text": "Two plane gravitational waves colliding head on and ending on a horizon. Ahead of both of them spacetime is flat [griffiths1991]."
     }
   ],
   "references": [
