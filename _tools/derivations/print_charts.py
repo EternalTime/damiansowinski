@@ -8,7 +8,7 @@ kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, reissner_nordstrom_ads, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
 black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
 som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos,
-einstein_rosen_bridge and bonnor_vaidya, and Godel's cylindrical chart.
+einstein_rosen_bridge, bonnor_vaidya and tolman_vii, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -10304,11 +10304,312 @@ def siklos_check(chart, system):
 CHARTS["siklos"] = [lambda s=s: siklos(s) for s in SIKLOS_CHARTS]
 
 
+# -- Tolman's fluid spheres, solution VII -------------------------------------------------
+
+TOLMAN_VII_CHARTS = ("spherical", "tolman")
+TOLMAN_VII_SPHERE = "r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+TOLMAN_VII_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+
+
+def tolman_vii(system):
+    """Tolman's solution VII in the two forms its literature writes, both in the areal radius.
+    Lattimer and Prakash's (17) is the star whose density falls to zero at its surface r = R,
+    rho = rho_c(1 - r^2/R^2), with the compactness beta = GM/(Rc^2) = r_s/(2R): g^rr = Z =
+    1 - beta x(5 - 3x) with x = r^2/R^2, and g_tt = -(1 - 5 beta/3) cos^2(psi), their phi written
+    psi since phi is the azimuth here. Tolman's own (4.7) keeps his constants R, A, B and C:
+    Z = 1 - r^2/R^2 + 4r^4/A^4 and g_tt = -B^2 sin^2(psi), psi half the logarithm he writes.
+
+    The star's chart takes R and r_s for its parameters and names beta, since the checker
+    splits a radical into the roots of its radicand's factors with each read as positive, which
+    R - r_s is and 1 - 2 beta, normalised to -(2 beta - 1), is not.
+
+    The phase psi is half a logarithm of radicals and stands only inside a cosine or a sine,
+    and its derivative is algebraic: d psi/dr = -(r/R^2) sqrt(3 beta/Z) in the first chart and
+    2r/(A^2 sqrt(Z)) in the second. So psi is held as a function of r while the tensors are built
+    (vm.HELD), `reduce` writes its derivatives in, which leaves sin(psi) and cos(psi) with no
+    relation but the one the checker knows, and `pretty` writes each value in tan(psi), with
+    cos^2(psi) for the powers of 1 + tan^2(psi) that stand alone, in Z and sqrt(Z), and in
+    sqrt(3 beta). tolman_vii_check holds each chart to its source before anything is written,
+    and tolman_vii.md is the derivation."""
+    coords = ["t", "r", "\\theta", "\\phi"]
+    if system == "spherical":
+        name = "Lattimer-Prakash"
+        parameters = [
+            "R", "r_s", "\\beta = \\dfrac{r_s}{2R}",
+            "Z = 1 - \\dfrac{\\beta r^2\\left(5R^2 - 3r^2\\right)}{R^4}",
+            ("\\psi = \\arctan\\left(\\sqrt{\\dfrac{\\beta}{3\\left(1 - 2\\beta\\right)}}\\right) + \\dfrac{1}{2}"
+             "\\ln\\left(\\dfrac{1 + 2\\sqrt{3\\left(1 - 2\\beta\\right)/\\beta}}"
+             "{6r^2/R^2 - 5 + 2\\sqrt{3Z/\\beta}}\\right)")]
+        time = "-\\left(1 - \\dfrac{5\\beta}{3}\\right)\\cos^2\\psi\\,{c}dt^2"
+        domains = ["t \\in (-\\infty, \\infty)", "r \\in [0, R]"] + TOLMAN_VII_ANGLES
+    else:
+        name = "Tolman's Constants"
+        parameters = [
+            "R", "A", "B", "C",
+            "Z = 1 - \\dfrac{r^2}{R^2} + \\dfrac{4r^4}{A^4}",
+            ("\\psi = \\dfrac{1}{2}\\ln\\left(\\dfrac{1}{C}\\left(\\sqrt{Z} + \\dfrac{2r^2}{A^2}"
+             " - \\dfrac{A^2}{4R^2}\\right)\\right)")]
+        time = "-B^2\\sin^2\\psi\\,{c}dt^2"
+        domains = ["t \\in (-\\infty, \\infty)", "r \\in [0, r_b]"] + TOLMAN_VII_ANGLES
+    line = "ds^2 = " + time + " + \\dfrac{dr^2}{Z} + " + TOLMAN_VII_SPHERE
+    probe = vm.Reader(coords, parameters, (), held=("psi",))
+    r, psi, Z = probe.symbol["r"], probe.parameters["psi"], probe.parameters["Z"]
+    if system == "spherical":
+        radius, rs = probe.parameters["R"], probe.parameters["r_s"]
+        rate = -r * sp.sqrt(3 * rs / (2 * radius)) / (radius ** 2 * sp.sqrt(Z))
+        forms = TolmanForms(r, psi, Z, rate, [radius, r], compactness=(rs, radius))
+        lead = [forms.out[radius], forms.out[r], forms.beta]
+        lapse = "\\left(1 - \\dfrac{5\\beta}{3}\\right)\\cos^2\\psi"
+        components = {"metric_components": {("t", "t"): "-" + lapse},
+                      "inverse_metric_components": {("t", "t"): "-\\dfrac{1}{" + lapse + "}"}}
+    else:
+        constants = [probe.parameters[n] for n in ("A", "R", "B", "C")]
+        rate = 2 * r / (constants[0] ** 2 * sp.sqrt(Z))
+        forms = TolmanForms(r, psi, Z, rate, constants[:2] + [r] + constants[2:], sine=True)
+        lead = [forms.out[x] for x in constants[:2] + [r] + constants[2:]]
+        components = {}
+    return {
+        "metric_id": "tolman_vii",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line.replace("{c}", "c^2")},
+        "chart_line_element": line.replace("{c}", ""),
+        "printer": {"lead": [forms.trig] + lead, "factors": lead + [forms.Z], "overrides": forms.overrides,
+                    "named": forms.named, "collect": forms.collect},
+        "components": components,
+        "reduce": forms.reduce,
+        "pretty": forms.pretty,
+        "check": lambda chart: tolman_vii_check(chart, system, rate),
+    }
+
+
+class TolmanForms:
+    """Tolman's phase psi held as a function of r, and the way a value in it is written.
+
+    `reduce` writes every derivative of psi by d psi/dr = rate, which is algebraic, so that
+    sin(psi) and cos(psi) are left with no relation but cos^2 = 1 - sin^2. `pretty` writes a
+    value in T = tan(psi): sin^2 = T^2/(1 + T^2), cos^2 = 1/(1 + T^2) and sin cos = T/(1 + T^2),
+    no odd power of either standing alone in a tensor of a metric that holds psi only as
+    cos^2(psi) or sin^2(psi); a power of 1 + T^2 that factors out is written as that power of
+    cos^2(psi). The radical of Z is the generator s with s^2 = Z, the polynomial Z stands over
+    is written as Z, and in the star's chart r_s is written 2 R beta and the radical of 3 beta
+    is one generator q with q^2 = 3 beta. Every symbol is positive while a value is rewritten,
+    so that the roots of R merge and cancel."""
+
+    def __init__(self, r, psi, Z, rate, symbols, compactness=None, sine=False):
+        self.psi, self.rate, self.sine = psi, rate, sine
+        name = sp.Symbol("psi", real=True)
+        # Tolman's chart holds sin^2(psi), and is written in cot(psi) and sin^2(psi).
+        self.trig, self.square = (sp.cot(name), sp.sin(name)) if sine else (sp.tan(name), sp.cos(name))
+        self.named = {}
+        positive = {x: sp.Symbol("_" + x.name, positive=True) for x in symbols}
+        self.out = {x: sp.Symbol(x.name, positive=True) for x in symbols}
+        self.back = {positive[x]: self.out[x] for x in symbols}
+        self.Z = sp.Symbol("Z", positive=True)
+        self.q = self.beta = None
+        self.overrides = {}
+        self.inward = dict(positive)
+        if compactness:
+            rs, radius = compactness
+            self.beta, beta = sp.Symbol("beta", positive=True), sp.Symbol("_beta", positive=True)
+            self.q = sp.Symbol("_q", positive=True)
+            self.inward[rs] = 2 * positive[radius] * beta
+            self.back[beta] = self.beta
+            self.root = (beta, 3)
+            self.both, self.over = sp.Symbol("_qs", positive=True), sp.Symbol("_qos", positive=True)
+            self.lapse = sp.Symbol("_N", positive=True)
+            self.overrides.update({self.q: "\\sqrt{3\\beta}", self.both: "\\sqrt{3\\beta Z}",
+                                   self.over: "\\sqrt{3\\beta/Z}", self.beta: "\\beta"})
+            self.named[self.lapse] = "3 - 5\\beta"
+        self.r = positive[r]
+        self.explicit = sp.cancel(sp.together(Z.xreplace(self.inward)))
+        self.polynomial, self.below = sp.fraction(self.explicit)
+
+    def reduce(self, value):
+        value = sp.sympify(value)
+        if not value.has(sp.Derivative):
+            return vm.norm(value)
+        written = {}
+        for d in value.atoms(sp.Derivative):
+            if d.expr != self.psi:
+                raise AssertionError(f"tolman_vii: {d} is not a derivative of the phase")
+            (variable, order), = d.variable_count
+            written[d] = sp.diff(self.rate, variable, order - 1)
+        return vm.norm(value.xreplace(written))
+
+    def pretty(self, value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        T, cosine, s = sp.Symbol("_T", real=True), sp.Symbol("_c", positive=True), sp.Symbol("_s", positive=True)
+        if self.sine:
+            value = value.xreplace({sp.cos(self.psi): T * cosine, sp.sin(self.psi): cosine})
+        else:
+            value = value.xreplace({sp.sin(self.psi): T * cosine, sp.cos(self.psi): cosine})
+        if value.has(self.psi):
+            raise AssertionError(f"tolman_vii: the phase stands outside a sine or a cosine in {value}")
+        value = sp.powdenest(value.subs(self.inward, simultaneous=True), force=True)
+
+        # Every radical left is one of the radicand of Z, of 3 beta, or of a number.
+        def radical(power):
+            base, exponent = power.base, power.exp
+            if base.has(self.r):
+                ratio = sp.cancel(base / self.polynomial)
+                if ratio.has(self.r):
+                    raise AssertionError(f"tolman_vii: {base} under a root is not the radicand of Z")
+                return (s ** 2 * self.below * ratio) ** exponent
+            if self.q is not None and base == self.root[0]:
+                return (self.q ** 2 / self.root[1]) ** exponent
+            return power
+        value = value.replace(lambda e: e.is_Pow and e.exp.is_Rational and not e.exp.is_Integer and not e.base.is_Number,
+                              radical)
+        value = sp.powdenest(sp.expand_power_base(value, force=True), force=True)
+        numerator, denominator = sp.fraction(sp.together(value))
+        relations = [(cosine, 1 / (1 + T ** 2)), (s, self.explicit)]
+        if self.q is not None:
+            relations.append((self.q, self.root[0] * self.root[1]))
+
+        def lowered(polynomial):
+            for generator, square in relations:
+                terms = sp.Poly(sp.expand(polynomial), generator).terms()
+                polynomial = sp.together(sum(c * generator ** (k % 2) * square ** (k // 2) for (k,), c in terms))
+            return polynomial
+        value = sp.together(lowered(numerator) / lowered(denominator))
+        if value.has(cosine):
+            raise AssertionError(f"tolman_vii: an odd power of cos(psi) stands in {value}")
+        out, powers = _factor_powers(sp.factor(value))
+        result = out
+        for base, k in powers.items():
+            if sp.expand(base - self.polynomial) == 0:
+                base = self.below * self.Z
+            elif sp.expand(base + self.polynomial) == 0:
+                base, result = self.below * self.Z, result * (-1) ** k
+            elif sp.expand(base - (T ** 2 + 1)) == 0:
+                base, k = self.square, -2 * k
+            elif self.q is not None and sp.expand(base - (5 * self.root[0] - 3)) == 0:
+                base, result = self.lapse, result * (-1) ** k
+            elif base.has(s) and base != s:
+                even = base.subs(s, 0)
+                base = sp.factor(even) + s * sp.factor(sp.expand((base - even) / s))
+            result *= base ** k
+        if self.q is not None:
+            # sqrt(3 beta) and sqrt(Z) in one term stand under one root.
+            def merged(term):
+                powers = term.as_powers_dict()
+                if powers.get(self.q, 0) == 1 and powers.get(s, 0) in (1, -1):
+                    if powers[s] == 1 and powers.get(self.Z, 0) == -1:
+                        return term * self.Z / (self.q * s) * self.over
+                    return term / (self.q * s ** powers[s]) * (self.both if powers[s] == 1 else self.over)
+                return term
+            result = result.replace(lambda e: e.is_Mul, merged)
+            result = merged(result) if result.is_Mul else result
+        # A difference of two squares stays whole, as R^2 - r^2 and A^4 - 4R^2r^2.
+        result = cp.merge_squares(result) if result.is_Mul else result
+        result = result.xreplace({s: sp.sqrt(self.Z), T: self.trig}).xreplace(self.back)
+        return sp.powdenest(result, force=True)
+
+    def collect(self, polynomial, printer):
+        """A numerator grouped by powers of tan(psi), or of cot(psi), each coefficient factored
+        with the polynomial Z stands over written as Z and a difference of squares left whole."""
+        terms = sp.Poly(sp.expand(polynomial), self.trig).terms()
+        if all(k == 0 for (k,), _ in terms):
+            return printer.sum_of(polynomial)
+        over = self.polynomial.xreplace(self.back)
+        out = []
+        for (k,), coefficient in sorted(terms, key=lambda term: -term[0][0]):
+            number, powers = _factor_powers(coefficient)
+            rest = sp.Integer(1)
+            for base, n in powers.items():
+                if sp.expand(base - over) == 0:
+                    base = self.below.xreplace(self.back) * self.Z
+                elif sp.expand(base + over) == 0:
+                    base, number = self.below.xreplace(self.back) * self.Z, number * (-1) ** n
+                rest *= base ** n
+            # Two sums in one coefficient are a difference of two squares, which stays whole, and
+            # a sum leads with a positive term, its sign carried by the number in front.
+            sums = [f for f in sp.Mul.make_args(rest) if f.is_Add]
+            if len(sums) > 1:
+                rest = rest / sp.Mul(*sums) * sp.expand(sp.Mul(*sums))
+                sums = [f for f in sp.Mul.make_args(rest) if f.is_Add]
+            if len(sums) == 1 and printer.leads_negative(printer.sum_of(sums[0]).terms[0]):
+                number, rest = -number, rest / sums[0] * sp.expand(-sums[0])
+            out.append((number, rest * self.trig ** k))
+        return cp.Sum(out)
+
+
+def tolman_vii_check(chart, system, rate):
+    """Each chart against its source, before anything is written. The phase's definition has
+    the derivative `reduce` writes for it. The matter is a perfect fluid at rest, G^r_r =
+    G^theta_theta. In Lattimer and Prakash's chart the density is 8 pi G rho/c^2 =
+    15 beta(1 - r^2/R^2)/R^2 and the pressure their (17), which vanishes at r = R, where g_tt =
+    -(1 - 2 beta) and g^rr = 1 - 2 beta, Schwarzschild's exterior of the mass beta R c^2/G. In
+    Tolman's chart the density is his 3/R^2 - 20r^2/A^4 and the pressure his
+    -1/R^2 + 4r^2/A^4 + (4 sqrt(Z)/A^2) cot(psi), since (B^2 e^-nu - 1)^(1/2) = cot(psi). And
+    Lattimer and Prakash's chart is Tolman's at R^2 -> R^2/(5 beta), A^4 = 4R^4/(3 beta),
+    B^2 = 1 - 5 beta/3 and the C that makes his phase pi/2 less theirs."""
+    r = chart.symbols[1]
+    p = chart.reader.parameters
+    psi, Z = p["psi"], p["Z"]
+    explicit = chart.reader.held[psi]
+    # The derivative of a logarithm is algebraic, so the checker's own zero test settles it.
+    if vm.norm(sp.diff(explicit, r) - rate) != 0:
+        raise AssertionError(f"tolman_vii: the phase of the {system} chart does not have the derivative {rate}")
+    G = chart.geo.raise_indices(chart.geo.einstein_ll(), 2, (0,))
+    reduce = chart.reduce
+    if reduce(G[1][1] - G[2][2]) != 0 or reduce(G[2][2] - G[3][3]) != 0:
+        raise AssertionError(f"tolman_vii: the {system} chart is not a perfect fluid at rest")
+    if system == "spherical":
+        R, beta = p["R"], p["beta"]
+        density = 15 * beta * (1 - r ** 2 / R ** 2) / R ** 2
+        pressure = (2 * sp.sqrt(3 * beta * Z) * sp.tan(psi) - beta * (5 - 3 * r ** 2 / R ** 2)) / R ** 2
+    else:
+        R, A = p["R"], p["A"]
+        density = 3 / R ** 2 - 20 * r ** 2 / A ** 4
+        pressure = -1 / R ** 2 + 4 * r ** 2 / A ** 4 + 4 * sp.sqrt(Z) * sp.cot(psi) / A ** 2
+    if reduce(G[0][0] + density) != 0:
+        raise AssertionError(f"tolman_vii: the density of the {system} chart is not its source's")
+    if reduce(G[1][1] - pressure) != 0:
+        raise AssertionError(f"tolman_vii: the pressure of the {system} chart is not its source's")
+    if system != "spherical":
+        return
+    # The surface: no pressure, and Schwarzschild's g_tt and g^rr of the mass beta R c^2/G.
+    at_surface = {r: R}
+    tangent = sp.sqrt(beta / (3 * (1 - 2 * beta)))
+    if explicit.subs(at_surface) - sp.atan(tangent) != 0:
+        raise AssertionError("tolman_vii: the phase at the surface is not arctan sqrt(beta/(3(1 - 2 beta)))")
+    if vm.norm((pressure.subs(sp.tan(psi), tangent)).subs(at_surface)) != 0:
+        raise AssertionError("tolman_vii: the pressure does not vanish at the surface")
+    if vm.norm(Z.subs(at_surface) - (1 - 2 * beta)) != 0:
+        raise AssertionError("tolman_vii: g^rr at the surface is not Schwarzschild's")
+    if vm.norm((1 - 5 * beta / 3) / (1 + tangent ** 2) - (1 - 2 * beta)) != 0:
+        raise AssertionError("tolman_vii: g_tt at the surface is not Schwarzschild's")
+    # Tolman's chart at his constants for this star, at exact rational points.
+    source = tolman_vii("tolman")
+    own = cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+    q = own.reader.parameters
+    C = sp.sqrt(3 * beta) * (sp.Rational(1, 6) + sp.sqrt((1 - 2 * beta) / (3 * beta))) \
+        * sp.exp(2 * sp.atan(tangent) - sp.pi)
+    constants = {q["R"]: R / sp.sqrt(5 * beta), q["A"]: R * (4 / (3 * beta)) ** sp.Rational(1, 4),
+                 q["B"]: sp.sqrt(1 - 5 * beta / 3), q["C"]: C}
+    # Tolman's R is not the star's, and the two charts spell it alike, so every constant goes in at once.
+    theirs = own.geo.g.subs(constants, simultaneous=True)
+    mine = chart.geo.g.subs(chart.reader.held)
+    for compact, x in ((sp.Rational(2, 5), sp.Rational(1, 3)), (sp.Rational(3, 5), sp.Rational(4, 5)),
+                       (sp.Rational(1, 10), sp.Rational(1, 2))):
+        at = {p["r_s"]: compact, R: 1, r: x}
+        for i in range(2):
+            if abs(sp.N((theirs[i, i] - mine[i, i]).subs(at), 40)) > sp.Float(10) ** -30:
+                raise AssertionError("tolman_vii: Lattimer and Prakash's chart is not Tolman's at his constants")
+
+
+CHARTS["tolman_vii"] = [lambda s=s: tolman_vii(s) for s in TOLMAN_VII_CHARTS]
+
+
 def write(spec):
     start = time.time()
     chart = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
                      spec["printer"], spec.get("pretty"), spec.get("time"), spec.get("bracketed"), spec.get("reduce"),
-                     vm.ORDERS.get((spec["metric_id"], spec["system"]["id"])))
+                     vm.ORDERS.get((spec["metric_id"], spec["system"]["id"])),
+                     vm.HELD.get((spec["metric_id"], spec["system"]["id"]), ()))
     if "check" in spec:
         spec["check"](chart)
     math = chart.mathematics()

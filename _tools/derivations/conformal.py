@@ -7646,6 +7646,80 @@ def gravastar(ck, src):
         v.legend("centre", "$r = 0$, a regular centre")
         v.set(settings="$R = 1.25\\,r_s$ and $L = 2\\,r_s$.")
         v.slice(moment, [areal(0 * rr, rr)])
+
+
+# ---------------------------------------------------------------- Tolman's solution VII
+
+def tolman_vii(ck, src):
+    """Lattimer and Prakash's chart of the star, r <= R, joined at R = 2 r_s, beta = 1/4, to
+    the Schwarzschild exterior of the schwarzschild entry. g_tt is continuous at R, checked,
+    so t is one coordinate, and r* = int sqrt(g_rr/(-g_tt)) dr runs from the centre through the
+    surface; p, q = arctan((t -+ r*)/R) give Minkowski's triangle with the star a timelike
+    tube. Tolman's chart with his constants for the same star is checked to be the same
+    metric on the plane."""
+    R = 2.0
+    inner = Plane(src, "tolman_vii", "spherical", ("t", "r"), EQUATOR, nr.TOLMAN_VII_STAR)
+    own = Plane(src, "tolman_vii", "tolman", ("t", "r"), EQUATOR, nr.TOLMAN_VII_CONSTANTS)
+    outer = Plane(src, "schwarzschild", "spherical", ("t", "r"), EQUATOR, {"r_s": 1})
+    ck.limit("Tolman VII: g_tt is continuous at r = R",
+             [float(inner.g[0, 0].subs(inner.x1, R))], [float(outer.g[0, 0].subs(outer.x1, R))], 1e-12)
+    ck.limit("Tolman VII: g_rr is continuous at r = R",
+             [float(inner.g[1, 1].subs(inner.x1, R))], [float(outer.g[1, 1].subs(outer.x1, R))], 1e-12)
+    radii = [0.0, 0.4, 0.9, 1.3, 1.7, 1.99]
+    for k, name in ((0, "g_tt"), (1, "g_rr")):
+        ck.limit(f"Tolman VII: Tolman's constants give Lattimer and Prakash's {name}",
+                 [float(own.g[k, k].subs(own.x1, r)) for r in radii],
+                 [float(inner.g[k, k].subs(inner.x1, r)) for r in radii], 1e-12)
+    speed = sp.lambdify(inner.x1, sp.sqrt(inner.g[1, 1] / (-inner.g[0, 0])), "numpy")
+    rq = np.linspace(0, R, 300001)
+    rsq = cumulative_trapezoid(speed(rq), rq, initial=0)
+
+    def rstar(r):
+        r = np.asarray(r, dtype=float)
+        with np.errstate(invalid="ignore", divide="ignore"):
+            outside = rsq[-1] + (r + np.log(np.abs(r - 1))) - (R + np.log(R - 1))
+        return np.where(r <= R, np.interp(r, rq, rsq), outside)
+
+    def star(t, r):
+        return mink_pq(t, rstar(r), R)
+    ck.chart("Tolman VII, the star", inner, star, ck.uniform(-20, 20), ck.uniform(0.01, 1.99),
+             lambda t, r: (1, 0))
+    ck.chart("Tolman VII, the star in Tolman's constants", own, star, ck.uniform(-20, 20), ck.uniform(0.01, 1.99),
+             lambda t, r: (1, 0))
+    ck.chart("Tolman VII, the exterior", outer, star, ck.uniform(-20, 20), ck.uniform(2.01, 30),
+             lambda t, r: (1, 0))
+    ck.finite("Tolman VII: r = 0 is a regular centre",
+              inner.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+
+    views = []
+    for system, name in (("spherical", "Lattimer-Prakash"), ("tolman", "Tolman's Constants")):
+        v = View(system, name, [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], system)
+        v.fill("region", TRIANGLE)
+        ps, qs = mink_pq(S_ALL, rstar(R), R)
+        v.fill("cover", [[0, -PI]] + [point(p, q) for p, q in zip(ps, qs)] + [[0, PI]])
+        for r in (0.5, 1.0, 1.5):
+            v.curve("r", *star(S_ALL, np.full_like(S_ALL, r)))
+        for r in (3.0, 4.0, 8.0):
+            v.curve("r2", *star(S_ALL, np.full_like(S_ALL, r)))
+        rr = np.concatenate([np.linspace(0, R, 60)[:-1], R + np.exp(np.linspace(-6, 8, 200)) - np.exp(-6)])
+        for t in (-8, -4, -2, 0, 2, 4, 8):
+            v.curve("t", *star(np.full_like(rr, t), rr))
+        v.curve("surface", ps, qs)
+        triangle_edges(v)
+        label_on(v, mink_pq(0, rstar(R), R), "$r = R$" if system == "spherical" else "$r = r_b$")
+        v.label_xt([0.35, 0.0], "star", cls="region")
+        v.legend("cover", "the star, which the interior solution covers")
+        v.legend("r", "$r$ constant inside, at $0.5$, $1$ and $1.5\\,r_s$")
+        v.legend("r2", "$r$ constant outside, at $3$, $4$ and $8\\,r_s$")
+        v.legend("t", "$t$ constant, one $t$ on both sides")
+        v.legend("surface", "the surface of the star")
+        v.legend("centre", "$r = 0$, a regular centre")
+        v.set(settings="$R = 2\\,r_s$." if system == "spherical" else
+              "$R^2 = 16r_s^2/5$, $A^4 = 256r_s^4/3$, $B^2 = 7/12$, $C \\approx 0.0799$, and $r_b = 2\\,r_s$.")
+        star_moment = slices.moments("tolman_vii")[0]
+        lo, hi = star_moment.reach("spherical", "r")
+        rr = np.concatenate([np.linspace(lo, R, 40), R + np.geomspace(1e-6, hi - R, 200)])
+        v.slice(star_moment, [star(0 * rr, rr)])
         views.append(v)
     return views
 
@@ -17018,7 +17092,7 @@ DRAWN = {
     "point_particle_2plus1": point_particle_2plus1,
     "interior_schwarzschild": interior_schwarzschild, "gravastar": gravastar, "frw": frw,
     "einstein_cluster": einstein_cluster,
-    "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "bonnor_vaidya": bonnor_vaidya, "tov": tov,
+    "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "tolman_vii": tolman_vii,
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "reissner_nordstrom_ads": reissner_nordstrom_ads, "c_metric": c_metric,
     "misner": misner, "milne": milne,
     "gott_time_machine": gott_time_machine,
@@ -18721,6 +18795,23 @@ CAPTIONS = {
         "The tortoise coordinate $r_* = \\int e^{-\\Phi}(1 - 2m/r)^{-1/2}\\,dr$ runs from the centre to infinity, "
         "and $p, q = \\arctan((ct \\mp r_*)/3r_s)$ bring the spacetime into Minkowski's triangle, the causal "
         "structure of empty space.",
+    ],
+    ("tolman_vii", "spherical"): [
+        "A static star whose density falls as $1 - r^2/R^2$ to an empty surface, joined at $R = 2\\,r_s$ "
+        "($\\beta = 1/4$) to the Schwarzschild exterior, each point in the diagram a 2-sphere of radius $r$. "
+        "The central pressure is finite, as it is for every $\\beta < 0.3862$, and the star has no horizon.",
+        "At the surface $g_{tt} = -(1 - 2\\beta)$ on both sides, so $t$ is one coordinate throughout. The "
+        "tortoise coordinate $r_* = \\int\\sqrt{g_{rr}/(-g_{tt})}\\,dr$ runs from the centre through the "
+        "surface, and $p, q = \\arctan((ct \\mp r_*)/R)$ bring the spacetime into Minkowski's triangle, with "
+        "the star a timelike tube from $i^-$ to $i^+$.",
+    ],
+    ("tolman_vii", "tolman"): [
+        "The same star in Tolman's constants, joined at its surface $r_b = 2\\,r_s$ to the Schwarzschild "
+        "exterior, each point in the diagram a 2-sphere of radius $r$. His $B$ is the one that makes $g_{tt}$ "
+        "continuous there, so $t$ is one coordinate throughout.",
+        "The tortoise coordinate $r_* = \\int\\sqrt{g_{rr}/(-g_{tt})}\\,dr$ runs from the centre through the "
+        "surface, and $p, q = \\arctan((ct \\mp r_*)/r_b)$ bring the spacetime into Minkowski's triangle, with "
+        "the star a timelike tube from $i^-$ to $i^+$.",
     ],
     ("frw", "flat"): [
         "A flat universe of dust, each point in the diagram a 2-sphere. With $k = 0$, $G^r{}_r = 0$ gives $a \\propto \\eta^2$, and the metric "

@@ -1197,6 +1197,17 @@ Edward Teo's rotating traversable wormhole of 1998, the stationary, axially symm
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{16a^2b_0\cos^2\theta}{r}\right)^2c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{b_0}{r}} + \left(r + 16a^2b_0\cos^2\theta\right)^2\left(d\theta^2 + \sin^2\theta\left(d\phi - \dfrac{2ab_0^2}{r^3}c\,dt\right)^2\right)$$
 - chart Proper Radial Distance: coordinates $(t, l, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{16a^2b_0\cos^2\theta}{r}\right)^2c^2dt^2 + dl^2 + \left(r + 16a^2b_0\cos^2\theta\right)^2\left(d\theta^2 + \sin^2\theta\left(d\phi - \dfrac{2ab_0^2}{r^3}c\,dt\right)^2\right)$$
 
+### Tolman's Fluid Sphere, Solution VII
+
+A static star of perfect fluid whose density falls as the square of the radius, $\rho = \rho_c(1 - r^2/R^2)$ where the surface is empty. It is the seventh of the eight solutions Richard Tolman wrote down in 1939, and the density inside a neutron star follows it closely.
+
+- id: `tolman_vii`
+- tags: perfect fluid, static, stationary, spherically symmetric, stellar interior, neutron star, self-bound star, compactness, equation of state, mass, matched solution, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/tolman_vii.json
+- chart Lattimer-Prakash: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{5\beta}{3}\right)\cos^2\psi\,c^2dt^2 + \dfrac{dr^2}{Z} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Tolman's Constants: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -B^2\sin^2\psi\,c^2dt^2 + \dfrac{dr^2}{Z} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Tolman-Bondi Inhomogeneous Dust Universe
 
 A spherically symmetric but inhomogeneous dust solution generalizing FLRW to a density and an expansion that vary with position. It is widely used to model voids, structure formation, and inhomogeneous cosmologies.

@@ -2160,6 +2160,61 @@ def einstein_cluster(ck, src):
     return views
 
 
+def tolman_vii(ck, src):
+    """Tolman's solution VII for the star whose density reaches zero at its surface, at
+    R = 2 r_s, beta = 1/4, as the spacetime diagrams and the conformal diagram draw it. Inside,
+    g_rr = 1/Z with Z = 1 - 2m/r and m = beta r^3 (5R^2 - 3r^2)/(2R^4), so dz/dr =
+    sqrt(2m/(r - 2m)), which the star's piece is checked against by quadrature. Outside it is
+    Flamm's paraboloid from the schwarzschild entry, and at r = R both give g_rr =
+    1/(1 - r_s/R), so the two meet with one tangent. The Gaussian curvature of the slice is
+    m'/r^2 - m/r^3 = beta(10R^2 - 12r^2)/(2R^4): positive inside r = R sqrt(5/6) and negative
+    from there out, where the density is below a third of the mean inside. The vacuum
+    paraboloid is drawn on under the star, down to the throat the star does not have."""
+    R, top, beta = 2.0, 5.0, 0.25
+    size = 2 * top
+    inner = Slice(src, "tolman_vii", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 1, "R": 2})
+    outer = Slice(src, "schwarzschild", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 1})
+    vacuum = Piece("vacuum", "reference", outer, 1.0, R, 0.0, 1,
+                   (("throat", "the throat $r = r_s$ of the vacuum, which the star replaces"), ("join", None)),
+                   [(1.0, "reference", None)], size, reference=True)
+    zR = vacuum.at(R)[1]
+    ext = Piece("exterior", "sheet", outer, R, top, zR, 1,
+                (("join", "the surface of the star, $r = R$"), ("edge", "the paraboloid runs on to $r \\to \\infty$")),
+                [(R, "surface", "$r = R$")] + [(r, "r", None) for r in (3, 4)] + [(top, "r", None)], size)
+    star = Piece("star", "star", inner, 0.0, R, 0.0, 1,
+                 (("axis", "the centre $r = 0$, where the surface is smooth"), ("join", "the surface of the star, $r = R$")),
+                 [(r, "r", None) for r in (0.5, 1.0, 1.5)], size)
+    # The bowl is built from its centre and moved up to meet the exterior at R.
+    star.z = star.z + (zR - star.z[-1])
+    surface = Surface([star, ext, vacuum])
+    ck.isometry("Tolman VII, the star", star)
+    ck.isometry("Tolman VII, the exterior", ext)
+    ck.join("Tolman VII, the star meets the exterior at r = R", star, R, ext, R)
+
+    def climb(r):
+        m = beta * r ** 3 * (5 * R ** 2 - 3 * r ** 2) / (2 * R ** 4)
+        return math.sqrt(2 * m / (r - 2 * m)) if r > 0 else 0.0
+
+    def bowl(r):
+        return star.z[0] + np.array([quad(climb, 0.0, float(x), epsabs=1e-12, epsrel=1e-12)[0] for x in np.ravel(r)]
+                                    ).reshape(np.shape(r))
+    ck.form("Tolman VII, the bowl dz/dr = sqrt(2m/(r - 2m))", star, bowl, size)
+    ck.form("Tolman VII, the exterior is Flamm's", ext, lambda r: 2 * np.sqrt(r - 1), size)
+
+    fig = figure_of([surface], {"star": "star", "sheet": "cover"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *ext.at(R), "$r = R$", dx=10)
+    ring_label(fig, [0, 0, 0], *ext.at(top), "$5\\,r_s$")
+    ring_label(fig, [0, 0, 0], *vacuum.at(1.0), "$r_s$", side=-1, dx=8)
+    fig.legend("fill", "star", "the star, $r \\le R$")
+    fig.legend("fill", "cover", "the exterior, Flamm's paraboloid")
+    fig.legend("line", "r", "$r$ constant, at $0.5$, $1$ and $1.5\\,r_s$ inside and $3$, $4$ and $5\\,r_s$ outside")
+    fig.legend("line", "surface", "the surface of the star, $r = R$")
+    fig.legend("line", "reference", "the vacuum paraboloid inside $R$, down to its throat at $r_s$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("star", "The star and its exterior", "$r_s$", [surface], fig.done(),
+                 settings="$r_s = 1$, the unit of every length, and $R = 2\\,r_s$, so $\\beta = 1/4$.")]
+
+
 def tov(ck, src):
     """The declared neutron star: the polytrope p = K rho_0^2 at K = 100 and central rho_0 =
     1.28e-3, G = c = M_sun = 1, which null_rays.StarSolver solves from this spacetime's own
@@ -9302,6 +9357,7 @@ DRAWN = {
     "ori_time_machine": ori_time_machine,
     "interior_schwarzschild": interior_schwarzschild,
     "gravastar": gravastar,
+    "tolman_vii": tolman_vii,
     "tov": tov,
     "einstein_cluster": einstein_cluster,
     "morris_thorne": morris_thorne,
@@ -9606,6 +9662,17 @@ CAPTIONS = {
         "at $dz/dr = \\sqrt{2m/(r - 2m)}$: level at the centre, where $m$ grows as $r^3$, and steepest near the "
         "edge of the core. Far out $m$ approaches $r_s/2$ and the surface approaches Flamm's paraboloid of the "
         "whole mass, drawn dashed.",
+    ],
+    ("tolman_vii", "star"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the star at one moment of $t$ ($R = 2\\,r_s$), drawn as a "
+        "surface in flat space with every distance along it the metric distance. On it $g_{rr} = 1/Z$, so the "
+        "surface climbs at $dz/dr = \\sqrt{(1 - Z)/Z}$: level at the centre and steepest at the surface of the "
+        "star, where it meets Flamm's paraboloid in one circle with one tangent plane.",
+        "The curvature of the surface at radius $r$ is $\\beta(5R^2 - 6r^2)/R^4$. It is positive out to "
+        "$r = R\\sqrt{5/6}$, where the surface curves like a cap, and negative beyond, where it curves like a "
+        "saddle, as Flamm's paraboloid does everywhere. Karl Schwarzschild's star of uniform density is a cap of "
+        "a sphere all the way out, and meets the paraboloid with a jump in curvature that this star does not "
+        "have: the density here is zero on both sides of $r = R$.",
     ],
     ("tov", "star"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a neutron star at one moment of $t$, drawn as a "

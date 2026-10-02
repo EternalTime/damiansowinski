@@ -56,6 +56,11 @@
       "id": "einstein_cluster",
       "kind": "family",
       "text": "A ball of the same uniform density and the same space inside, held up by the sideways motion of its particles with no pressure along the radius. Petros Florides found it in 1974 and called it \"a new interior Schwarzschild solution\" [florides1974, bohmerlobo2008]."
+    },
+    {
+      "id": "tolman_vii",
+      "kind": "generalisation",
+      "text": "Tolman's seventh solution lets the density fall as the square of the radius, $\\rho = \\rho_c(1 - \\mu r^2/R^2)$. At $\\mu = 0$ it is Schwarzschild's uniform star, and at $\\mu = 1$ the density reaches zero at the surface [tolman1939, raghoonundun2015]."
     }
   ],
   "references": [
@@ -73,7 +78,8 @@
     "mazur2015",
     "einstein1917",
     "florides1974",
-    "bohmerlobo2008"
+    "bohmerlobo2008",
+    "raghoonundun2015"
   ],
   "coordinates": [
     {
