@@ -3844,6 +3844,12 @@ class Slices(unittest.TestCase):
         if key == "kaluza_klein_monopole/taub_nut/radial":
             # The Taub-NUT radius is rho = r + 2m, at m = 1, of the circles the cigar reaches in r.
             return (lambda X: 0.0), [r + 2 for r in self.reach(surface)]
+        if key == "damour_solodukhin/isotropic/radial":
+            # The isotropic radius of the circles the embedding reaches in the areal radius R, at r_s = 1:
+            # r = (R - 1/2 + sqrt(R(R - 1)))/2 on one side and 1/(16 r) on the other.
+            R = self.reach(surface)[1]
+            r = (R - 0.5 + math.sqrt(R * (R - 1))) / 2
+            return (lambda X: 0.0), [1 / (16 * r), r]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))

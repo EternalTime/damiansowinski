@@ -3948,6 +3948,122 @@ def thin_shell_wormhole(ck, src):
     return views
 
 
+def damour_solodukhin(ck, src):
+    """Damour and Solodukhin's wormhole at r_s = 1 and lambda = 1/5, one view for each chart. On its
+    plane of t and r the metric is (1 - r_s/r + lambda^2)(-c^2dt^2 + dr_*^2), with the tortoise
+    coordinate of null_rays's _ds_rstar, dr_*/dr = r/sqrt((r - r_s)(a r - r_s)) and a = 1 +
+    lambda^2, finite at the throat, where it is taken to vanish. Through the throat the coordinate
+    x = r_* sgn runs over the whole line, so p, q = arctan((ct -+ x)/l) with l = 4 r_s give the full
+    diamond, the throat on its axis. The rescaled time is sqrt(a) t and its tortoise coordinate
+    sqrt(a) x, which in Bueno and his collaborators' rho is r_s((2 + lambda^2) rho + lambda^2 sinh
+    rho)/2a, so the two charts of that time take l sqrt(a) for l and land on the same points,
+    which is checked. The isotropic radius r has the areal radius r(1 + r_s/4r)^2 and x = r_* sgn(4r -
+    r_s). The conformal factor is at least lambda^2, so there is no horizon, and the
+    Kretschmann scalar at the throat is (1 + 24 lambda^4)/(4 lambda^4 r_s^4) = 162.25/r_s^4. The
+    charts of t and r cover the right half."""
+    params = {"r_s": 1, "lambda": "1/5"}
+    ell, root = 4.0, math.sqrt(1.04)
+    planes = {cid: Plane(src, "damour_solodukhin", cid, ("t", x), EQUATOR, params)
+              for cid, x in (("spherical", "r"), ("rescaled", "r"), ("throat", "\\rho"), ("isotropic", "r"),
+                             ("einstein_rosen", "u"))}
+
+    def bridge(t, u):
+        u = np.asarray(u, dtype=float)
+        return mink_pq(t, np.sign(u) * nr._ds_rstar(1 + u ** 2), ell)
+
+    def isotropic(t, r):
+        r = np.asarray(r, dtype=float)
+        return mink_pq(t, np.sign(4 * r - 1) * nr._ds_rstar(nr._ds_areal(r)), ell)
+
+    maps = {"spherical": lambda t, r: mink_pq(t, nr._ds_rstar(r), ell),
+            "isotropic": isotropic,
+            "rescaled": lambda t, r: mink_pq(t, root * nr._ds_rstar(r), root * ell),
+            "throat": lambda t, rho: mink_pq(t, nr._ds_xstar(rho), root * ell),
+            "einstein_rosen": bridge}
+    spans = {"spherical": ck.uniform(1.0001, 40), "rescaled": ck.uniform(1.0001, 40),
+             "throat": ck.uniform(-9, 9), "isotropic": np.exp(ck.uniform(-6, 4)), "einstein_rosen": ck.uniform(-6, 6)}
+    for cid, plane in planes.items():
+        ck.chart(f"Damour-Solodukhin, {cid}", plane, maps[cid], ck.uniform(-40, 40), spans[cid], lambda t, x: (1, 0))
+    for cid, at in (("throat", 0.0), ("isotropic", 0.25), ("einstein_rosen", 0.0)):
+        K = planes[cid].kretschmann
+        ck.finite(f"Damour-Solodukhin, {cid}: the curvature is finite beside the throat",
+                  K(ck.uniform(-5, 5, 50), at + ck.uniform(-0.01, 0.01, 50)))
+        ck.limit(f"Damour-Solodukhin, {cid}: the Kretschmann scalar at the throat is (1 + 24 lambda^4)/(4 lambda^4 r_s^4)",
+                 K(np.zeros(1), np.full(1, at)), [(1 + 24 * 0.2 ** 4) / (4 * 0.2 ** 4)], 1e-7)
+    r = ck.uniform(1.001, 40)
+    g = planes["spherical"].metric(0 * r, r)
+    h = 1e-6 * r
+    ck.limit("Damour-Solodukhin: the tortoise coordinate has dr_*/dr = sqrt(-g_rr/g_tt)",
+             (nr._ds_rstar(r + h) - nr._ds_rstar(r - h)) / (2 * h) / np.sqrt(-g[2] / g[0]), np.ones_like(r), 1e-6)
+    ck.limit("Damour-Solodukhin: the tortoise coordinate vanishes at the throat", nr._ds_rstar(1.0), [0.0], 1e-12)
+    # One event, one point: the four maps agree, with r = r_s + u^2 = the radius at rho and T = sqrt(a) t.
+    t, u = ck.uniform(-20, 20), ck.uniform(0.05, 4)
+    rho = np.arccosh(52 * (1 + u ** 2) - 51)
+    want = np.array(bridge(t, u))
+    for cid, got in (("spherical", maps["spherical"](t, 1 + u ** 2)), ("rescaled", maps["rescaled"](root * t, 1 + u ** 2)),
+                     ("throat", maps["throat"](root * t, rho)),
+                     ("isotropic", isotropic(t, [nr._ds_isotropic(R) for R in 1 + u ** 2]))):
+        ck.limit(f"Damour-Solodukhin: the {cid} chart lands on the points of Einstein and Rosen's", np.array(got), want, 1e-9)
+    ck.limit("Damour-Solodukhin: the areal radius at rho is r_s + u^2", nr._ds_radius(rho), 1 + u ** 2, 1e-9)
+
+    box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    wormhole = slices.moments("damour_solodukhin")[0]
+    top = math.sqrt(wormhole.reach("spherical", "r")[1] - 1)
+    us = np.linspace(-top, top, 401)
+    TS = (-16, -8, -4, 0, 4, 8, 16)
+    radii = (1.5, 2.0, 3.0, 5.0)
+    views = []
+    for vid, label in (("spherical", "Damour-Solodukhin"), ("rescaled", "Rescaled time"),
+                       ("throat", "Through the throat"), ("isotropic", "Isotropic"),
+                       ("einstein_rosen", "Einstein-Rosen")):
+        v = View(vid, label, box, vid)
+        fmap = maps[vid]
+        scale = root * ell if vid in ("rescaled", "throat") else ell
+        v.fill("region", DIAMOND)
+        if vid == "einstein_rosen":
+            v.fill("cover", DIAMOND)
+            grid(v, "r", lambda u, t: fmap(t, u), (-2, -1.5, -1, -0.5, 0.5, 1, 1.5, 2), S_ALL)
+            label_on(v, fmap(0, 1), "$u = \\sqrt{r_s}$")
+            v.legend("cover", "the whole spacetime, which $t$ and $u$ cover")
+            v.legend("r", "$u$ constant, every $\\sqrt{r_s}/2$ to $\\pm 2\\sqrt{r_s}$, a sphere of radius $r_s + u^2$")
+        elif vid == "isotropic":
+            v.fill("cover", DIAMOND)
+            grid(v, "r", lambda r, t: fmap(t, r), (1 / 64, 1 / 32, 1 / 16, 1 / 8, 1 / 2, 1, 2, 4), S_ALL)
+            label_on(v, fmap(0, 1), "$r = r_s$")
+            v.legend("cover", "the whole spacetime, which $t$ and the isotropic $r$ cover")
+            v.legend("r", "$r$ constant, at $r_s/2$, $r_s$, $2\\,r_s$ and $4\\,r_s$ on one side and at "
+                          "$r_s/8$, $r_s/16$, $r_s/32$ and $r_s/64$ on the other")
+        elif vid == "throat":
+            v.fill("cover", DIAMOND)
+            grid(v, "r", lambda rho, t: fmap(t, rho), (-6, -5, -4, -2, 2, 4, 5, 6), S_ALL)
+            label_on(v, fmap(0, 4), "$\\rho = 4$")
+            v.legend("cover", "the whole spacetime, which $t$ and $\\rho$ cover")
+            v.legend("r", "$\\rho$ constant, at $\\pm 2$, $\\pm 4$, $\\pm 5$ and $\\pm 6$, spheres of radius "
+                          "$1.05$, $1.51$, $2.41$ and $4.86\\,r_s$")
+        else:
+            v.fill("cover", TRIANGLE)
+            for radius in radii:
+                v.curve("r", *fmap(S_ALL, np.full_like(S_ALL, radius)))
+                v.curve("r2", *bridge(S_ALL / (scale / ell), np.full_like(S_ALL, -math.sqrt(radius - 1))))
+            label_on(v, fmap(0, 2.0), "$r = 2\\,r_s$")
+            v.legend("cover", "the side $u > 0$, which $t$ and $r$ cover")
+            v.legend("r", "$r$ constant, at $1.5$, $2$, $3$ and $5\\,r_s$")
+            v.legend("r2", "the same radii on the other side")
+        grid(v, "t", lambda t, x: mink_pq(t, x, scale), TS, S_ALL)
+        v.line("throat", [[[0, -PI], [0, PI]]])
+        diamond_edges(v)
+        v.label_xt([0, 0.3], "throat", "l", "small", dx=6)
+        v.legend("t", "$ct$ constant, every $4\\,r_s$ to $\\pm 8\\,r_s$, and at $\\pm 16\\,r_s$")
+        v.legend("throat", "the throat $r = r_s$")
+        v.slice(wormhole, [bridge(0 * us, us)])
+        length = "\\ell = 4\\sqrt{1 + \\lambda^2}\\,r_s" if vid in ("rescaled", "throat") else "\\ell = 4\\,r_s"
+        v.set(settings=f"$r_s = 1$, $\\lambda = 1/5$, and ${length}$; $p = \\arctan((ct - x)/\\ell)$ and "
+                       "$q = \\arctan((ct + x)/\\ell)$, with $x$ the tortoise coordinate of the chart's time, "
+                       "zero at the throat.")
+        views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- the cosmic string
 
 def cosmic_string(ck, src):
@@ -7727,6 +7843,7 @@ DRAWN = {
     "melvin": melvin,
     "thin_shell_wormhole": thin_shell_wormhole,
     "teo_wormhole": teo_wormhole,
+    "damour_solodukhin": damour_solodukhin,
     "levi_civita": levi_civita,
     "kaluza_klein_monopole": kaluza_klein_monopole,
     "curzon_chazy": curzon_chazy,
@@ -8582,6 +8699,52 @@ CAPTIONS = {
         "The same wormhole in Schwarzschild's coordinates on one side of the throat, where $\\ell = r - a$. "
         "They cover the right half of the diamond and end at the throat $r = a$, and the same coordinates "
         "on the other side cover the left half.",
+    ],
+    ("damour_solodukhin", "spherical"): [
+        "The Damour-Solodukhin wormhole ($\\lambda = 0.2$) in its own coordinates on one side of the throat, each "
+        "point in the diagram a 2-sphere of radius $r$. The metric on the plane of $t$ and $r$ is "
+        "$(1 - r_s/r + \\lambda^2)\\left(-c^2dt^2 + dr_*^2\\right)$, with $r_*$ the tortoise coordinate, zero at the "
+        "throat, and $p, q = \\arctan((ct \\mp r_*)/\\ell)$ bring it into the right half of the diamond.",
+        "The coordinates end at the throat $r = r_s$, and the same coordinates on the other side cover the left "
+        "half. The factor $1 - r_s/r + \\lambda^2$ is at least $\\lambda^2$, so light crosses the throat and "
+        "there is no horizon.",
+    ],
+    ("damour_solodukhin", "rescaled"): [
+        "The same wormhole with $t$ the proper time of a clock at rest far away, $\\sqrt{1 + \\lambda^2}$ times "
+        "Damour and Solodukhin's. The tortoise coordinate of this time is $\\sqrt{1 + \\lambda^2}\\,r_*$, and "
+        "with $\\ell$ scaled by the same factor every event stands where it stood. The coordinates cover the "
+        "right half of the diamond and end at the throat $r = r_s$.",
+    ],
+    ("damour_solodukhin", "throat"): [
+        "The Damour-Solodukhin wormhole ($\\lambda = 0.2$), each point in the diagram a 2-sphere of radius "
+        "$r = r_s\\left(2 + \\lambda^2(1 + \\cosh\\rho)\\right)/2(1 + \\lambda^2)$. The metric on the plane of $t$ and "
+        "$\\rho$ is $(1 - r_s/(1 + \\lambda^2)r)\\left(-c^2dt^2 + dx^2\\right)$, with "
+        "$x = r_s\\left((2 + \\lambda^2)\\rho + \\lambda^2\\sinh\\rho\\right)/2(1 + \\lambda^2)$ running over the whole "
+        "line, and $p, q = \\arctan((ct \\mp x)/\\ell)$ bring it into the full diamond.",
+        "The two ends are two asymptotically flat regions, each with its own $i^0$ and $\\mathscr{I}^\\pm$, "
+        "joined at the throat $\\rho = 0$. The lines $\\rho = \\pm 2$ and $\\pm 4$ are spheres of radius "
+        "$1.05\\,r_s$ and $1.51\\,r_s$, and the diamond gives the space between them most of its width: for small "
+        "$\\lambda$ the tortoise coordinate of the sphere of radius $r$ is Schwarzschild's "
+        "$r + r_s\\ln(r/r_s - 1)$ and the constant $r_s\\left(\\ln(4/\\lambda^2) - 1\\right)$.",
+    ],
+    ("damour_solodukhin", "isotropic"): [
+        "The Damour-Solodukhin wormhole ($\\lambda = 0.2$) in the isotropic radius $r$, each point in the diagram a "
+        "2-sphere of radius $R = r(1 + r_s/4r)^2$. The metric on the plane of $t$ and $r$ is "
+        "$(1 - r_s/R + \\lambda^2)\\left(-c^2dt^2 + dx^2\\right)$ with $x = r_*(R)\\,\\mathrm{sgn}(4r - r_s)$, and "
+        "$p, q = \\arctan((ct \\mp x)/\\ell)$ bring it into the full diamond.",
+        "The throat is $r = r_s/4$, and $r \\to r_s^2/16r$ carries each sphere onto the sphere of the same size "
+        "on the other side, so the left half of the diamond is the range $0 < r < r_s/4$ and its $i^0$ is $r = 0$.",
+    ],
+    ("damour_solodukhin", "einstein_rosen"): [
+        "The Damour-Solodukhin wormhole ($\\lambda = 0.2$), each point in the diagram a 2-sphere of radius "
+        "$r_s + u^2$. The metric on the plane of $t$ and $u$ is $(1 - r_s/r + \\lambda^2)\\left(-c^2dt^2 + dx^2\\right)$, "
+        "with $x = r_*\\,\\mathrm{sgn}(u)$ running over the whole line and $r_*$ the tortoise coordinate, zero at the "
+        "throat, and $p, q = \\arctan((ct \\mp x)/\\ell)$ bring it into the full diamond.",
+        "The two ends are two asymptotically flat regions, each with its own $i^0$ and $\\mathscr{I}^\\pm$, "
+        "joined at the throat $u = 0$. The factor $1 - r_s/r + \\lambda^2$ is at least $\\lambda^2$, so light "
+        "crosses the throat and there is no horizon. At $\\lambda = 0$ the factor vanishes at $r_s$, $r_*$ "
+        "runs to $-\\infty$ there, and each half of the diamond becomes one exterior of the Schwarzschild "
+        "spacetime with the throat its horizon.",
     ],
     ("morris_thorne", "spherical"): [
         "The Morris-Thorne wormhole ($\\Phi = 0$, $b = b_0^2/r$), each point in the diagram a "

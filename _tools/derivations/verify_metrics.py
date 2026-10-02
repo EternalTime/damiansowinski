@@ -669,6 +669,24 @@ DIMENSIONS = {
     ("thin_shell_wormhole", "throat"): {
         "t": "T", "\\ell": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "a": "L",
     },
+    # Damour and Solodukhin's lambda is a pure number beside Schwarzschild's r_s. Bueno and his
+    # collaborators' rho is a pure number too, and Einstein and Rosen's u has u^2 = r - r_s, so it
+    # carries the square root of a length.
+    ("damour_solodukhin", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\lambda": "1",
+    },
+    ("damour_solodukhin", "rescaled"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\lambda": "1",
+    },
+    ("damour_solodukhin", "throat"): {
+        "t": "T", "\\rho": "1", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\lambda": "1",
+    },
+    ("damour_solodukhin", "isotropic"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\lambda": "1",
+    },
+    ("damour_solodukhin", "einstein_rosen"): {
+        "t": "T", "u": "L**(1/2)", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\lambda": "1",
+    },
     ("stockum_dust", "cylindrical"): {
         "t": "L", "r": "L", "\\phi": "1", "z": "L", "R": "L",
     },
