@@ -57,6 +57,11 @@
       "id": "gowdy",
       "kind": "generalisation",
       "text": "Between the outer and inner horizons $r$ is a time, and with $t$ wrapped into a circle the region is a Gowdy spacetime on $S^2 \\times S^1$ [obregon1998, garfinkle1999]."
+    },
+    {
+      "id": "simpson_visser",
+      "kind": "family",
+      "text": "Kerr's metric with $\\sqrt{r^2 + \\ell^2}$ written for the Boyer-Lindquist radius and $dr$ left alone is the rotating black bounce of Mazza, Franzin, and Liberati, a regular black hole or a wormhole depending on $\\ell$ [mazza2021]."
     }
   ],
   "references": [
@@ -83,7 +88,8 @@
     "banados1993",
     "teo1998",
     "obregon1998",
-    "garfinkle1999"
+    "garfinkle1999",
+    "mazza2021"
   ],
   "coordinates": [
     {

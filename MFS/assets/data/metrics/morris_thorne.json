@@ -58,6 +58,11 @@
       "id": "van_den_broeck",
       "kind": "family",
       "text": "Van Den Broeck's pocket in the proper distance $l$ is this line element with $\\Phi = 0$ and the far side closed off at a centre, a throat that opens onto a room [krasnikov2003]."
+    },
+    {
+      "id": "simpson_visser",
+      "kind": "special_case",
+      "text": "Schwarzschild's metric with $\\sqrt{r^2 + a^2}$ written for $r$. While $a > r_s$ it is one of these wormholes, and for smaller $a$ a horizon closes over the throat [simpson2019]."
     }
   ],
   "references": [
@@ -77,7 +82,8 @@
     "teo1998",
     "damour2007",
     "nandi2022",
-    "krasnikov2003"
+    "krasnikov2003",
+    "simpson2019"
   ],
   "coordinates": [
     {

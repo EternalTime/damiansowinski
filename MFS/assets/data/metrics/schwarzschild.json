@@ -185,6 +185,11 @@
       "id": "ori_time_machine",
       "kind": "composite",
       "text": "A time machine with a vacuum core inside a region of ordinary matter. Schwarzschild's geometry is everything outside that matter [ori2005]."
+    },
+    {
+      "id": "simpson_visser",
+      "kind": "generalisation",
+      "text": "Schwarzschild's metric with $\\sqrt{r^2 + a^2}$ written for $r$, which swaps the singularity for a sphere of area $4\\pi a^2$ with another universe behind it. At $a = 0$ it is Schwarzschild's [simpson2019]."
     }
   ],
   "references": [
@@ -234,7 +239,8 @@
     "kinnersley1969",
     "podolsky2008",
     "damour2007",
-    "ori2005"
+    "ori2005",
+    "simpson2019"
   ],
   "coordinates": [
     {

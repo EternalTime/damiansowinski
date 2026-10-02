@@ -685,6 +685,10 @@ SADS = {"r_s": 2, "L": 1}
 # Damour and Solodukhin's wormhole at lambda = 1/5, where the throat's clocks run five times slow.
 DS = {"r_s": 1, "lambda": "1/5"}
 
+# Simpson and Visser's three geometries at r_s = 1: the black bounce, a = r_s/2, whose horizons are
+# r = +-sqrt(3)/2, the one way wormhole, a = r_s, and the traversable wormhole, a = 2 r_s.
+SV_CASES = {"bounce": ("$a = r_s/2$", "1/2"), "null": ("$a = r_s$", "1"), "wormhole": ("$a = 2\\,r_s$", "2")}
+
 # Two of Majumdar and Papapetrou's holes, each of mass parameter m, the unit, at z = +-2m.
 MP_TWO = "1 + 1/sqrt(x**2 + y**2 + (z - 2)**2) + 1/sqrt(x**2 + y**2 + (z + 2)**2)"
 MP_TWO_CYLINDRICAL = "1 + 1/sqrt(rho**2 + (z - 2)**2) + 1/sqrt(rho**2 + (z + 2)**2)"
@@ -925,6 +929,26 @@ DIAGRAMS = [
     Diagram("damour_solodukhin", "einstein_rosen", "radial", "$t$ and $u$", ("t", "u"), (-2, 2, -5, 5),
             "$u/\\sqrt{r_s}$", "$ct/r_s$", DS, EQUATOR, families=SIDEWAYS, areal=True,
             areal_contours=(1.5, 2.0, 3.0)),
+    # Simpson and Visser's black bounce, one view for each of its three geometries in each chart: their
+    # own t and r through r = 0, Tsukamoto's areal radius on the side r > 0, from the sphere of least
+    # area out, and the two Eddington-Finkelstein charts of Simpson, Martin-Moruno and Visser. Where
+    # a < r_s the region between the horizons takes its future from the ingoing chart.
+    *[Diagram("simpson_visser", "spherical", case, label, ("t", "r"), (-4, 4, -4, 4), "$r/r_s$", "$ct/r_s$",
+              {"r_s": 1, "a": a}, EQUATOR, families=SIDEWAYS, areal=True,
+              orient="ingoing" if case == "bounce" else "tau")
+      for case, (label, a) in SV_CASES.items()],
+    *[Diagram("simpson_visser", "areal", case, label, ("t", "\\rho"), (float(Fraction(a)), float(Fraction(a)) + 6, -3, 3),
+              "$\\rho/r_s$", "$ct/r_s$", {"r_s": 1, "a": a}, EQUATOR, areal=True,
+              orient="ingoing" if case == "bounce" else "tau")
+      for case, (label, a) in SV_CASES.items()],
+    *[Diagram("simpson_visser", "eddington_finkelstein_ingoing", case, label, ("v", "r"), (-4, 4, -4, 4),
+              "$r/r_s$", "$(v - r)/r_s$", {"r_s": 1, "a": a}, EQUATOR, to_display=FINKELSTEIN_IN, tau="v - r",
+              families=SIDEWAYS, areal=True)
+      for case, (label, a) in SV_CASES.items()],
+    *[Diagram("simpson_visser", "eddington_finkelstein_outgoing", case, label, ("u", "r"), (-4, 4, -4, 4),
+              "$r/r_s$", "$(u + r)/r_s$", {"r_s": 1, "a": a}, EQUATOR, to_display=FINKELSTEIN_OUT, tau="u + r",
+              families=SIDEWAYS, areal=True)
+      for case, (label, a) in SV_CASES.items()],
     Diagram("morris_thorne", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/b_0$", "$ct/b_0$", {"b_0": 1}, EQUATOR, areal=True,
             functions={"Phi": "0", "b": "b_0**2/r"},
@@ -2142,6 +2166,122 @@ CAPTIONS = {
         "The throat $l = 0$ carries the curvature, a delta function, since $r = b + |l|$ has a kink there. "
         "The faint vertical lines are the spheres of areal radius $1.5\\,b$, $2\\,b$, and $3\\,b$, one of each "
         "on either side.",
+    ],
+    ("simpson_visser", "spherical", "bounce"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $a = r_s/2$, the black bounce, "
+        "the same at every other angle by spherical symmetry. The edges of the cones are "
+        "$dr/d(ct) = \\pm(1 - r_s/\\rho)$ with $\\rho = \\sqrt{r^2 + a^2}$, and they close on the two horizons "
+        "$r = \\pm\\sqrt{r_s^2 - a^2}$, which is $\\pm 0.87\\,r_s$ here.",
+        "Between the horizons $r$ is the time and the cones lie on their side. We take the future from the "
+        "ingoing Eddington-Finkelstein chart, which runs smoothly across both horizons, so every cone there "
+        "points to smaller $r$. The areal radius shrinks from $r_s$ to $a$ at $r = 0$, where Schwarzschild's "
+        "singularity would stand, and grows back to $r_s$ at the second horizon, beyond which $t$ is a time "
+        "again in a second asymptotically flat region. The Kretschmann scalar at $r = 0$ is "
+        "$(9r_s^2 - 16ar_s + 12a^2)/a^6$, which is $256/r_s^4$ here.",
+    ],
+    ("simpson_visser", "spherical", "null"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $a = r_s$, the one way wormhole. "
+        "The cones close at $r = 0$ alone, where $1 - r_s/\\rho$ vanishes as $r^2/2r_s^2$, so the sphere of "
+        "least area is an extremal horizon. Along a ray $ct \\mp r_*$ is constant, with "
+        "$r_* = r + r_s\\,\\mathrm{arsinh}(r/r_s) - r_s(r_s + \\rho)/r$ and $\\rho = \\sqrt{r^2 + r_s^2}$, which "
+        "diverges as $-2r_s^2/r$, so in this chart a ray reaches $r = 0$ only as $t \\to \\pm\\infty$.",
+        "On both sides $t$ is a time, and the region $r < 0$ is the mirror image of the region $r > 0$. Each "
+        "Eddington-Finkelstein chart carries one family of rays across $r = 0$. The Kretschmann scalar at "
+        "$r = 0$ is $5/r_s^4$.",
+    ],
+    ("simpson_visser", "spherical", "wormhole"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $a = 2\\,r_s$, the traversable "
+        "wormhole. No cone closes: $dr/d(ct) = \\pm(1 - r_s/\\rho)$ is least at the throat $r = 0$, where it is "
+        "$\\pm(1 - r_s/a) = \\pm 1/2$, and every ray crosses the throat. Along a ray $ct \\mp r_*$ is constant, with "
+        "$r_* = r + r_s\\,\\mathrm{arsinh}(r/a) + (r_s^2/k)\\left(\\arctan(r/k) + \\arctan(r_sr/k\\rho)\\right)$, "
+        "$\\rho = \\sqrt{r^2 + a^2}$, and $k = \\sqrt{a^2 - r_s^2}$.",
+        "A clock at rest in the throat ticks at $\\sqrt{1 - r_s/a} = 0.71$ of the rate of a distant one, where "
+        "the Ellis-Bronnikov wormhole, $r_s = 0$, keeps one rate everywhere. The Kretschmann scalar at the "
+        "throat is $(9r_s^2 - 16ar_s + 12a^2)/a^6$, which is $0.39/r_s^4$ here.",
+    ],
+    ("simpson_visser", "areal", "bounce"): [
+        "The plane of $t$ and the areal radius $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$) on the side $r > 0$ of "
+        "the sphere of least area, drawn for $a = r_s/2$. Here $g_{tt}$ and the spheres are Schwarzschild's, and "
+        "the edges of the cones are $d\\rho/d(ct) = \\pm(1 - r_s/\\rho)\\sqrt{1 - a^2/\\rho^2}$, so they close on "
+        "the horizon $\\rho = r_s$ and again on $\\rho = a$, the left edge of the chart.",
+        "Inside the horizon $\\rho$ is the time, and we take the future toward smaller $\\rho$, as the ingoing "
+        "Eddington-Finkelstein chart does. A ray reaches $\\rho = a$ at a finite $t$ with $d\\rho/d(ct) = 0$: "
+        "the areal radius has stopped shrinking, and the ray goes on into the half $r < 0$, where $\\rho$ grows "
+        "again. The Kretschmann scalar on $\\rho = a$ is $256/r_s^4$ here.",
+    ],
+    ("simpson_visser", "areal", "null"): [
+        "The plane of $t$ and the areal radius $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$) on the side $r > 0$, "
+        "drawn for $a = r_s$. The horizon and the sphere of least area are one sphere, $\\rho = r_s$, the left "
+        "edge of the chart, where $d\\rho/d(ct) = \\pm(1 - r_s/\\rho)\\sqrt{1 - r_s^2/\\rho^2}$ vanishes as "
+        "$(\\rho - r_s)^{3/2}$, and a ray moving in reaches it only as $t \\to \\infty$.",
+        "Outside it $g_{tt}$ and the spheres are Schwarzschild's, so light circles at $\\rho = 3r_s/2$ and the "
+        "innermost stable circular orbit is at $\\rho = 3r_s$, as for Schwarzschild's black hole. The "
+        "Kretschmann scalar on $\\rho = r_s$ is $5/r_s^4$.",
+    ],
+    ("simpson_visser", "areal", "wormhole"): [
+        "The plane of $t$ and the areal radius $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$) on one side of the "
+        "throat, drawn for $a = 2\\,r_s$. The cones close toward the throat $\\rho = a$ because "
+        "$g_{\\rho\\rho} = (1 - r_s/\\rho)^{-1}(1 - a^2/\\rho^2)^{-1}$ diverges there. On the throat "
+        "$g_{tt} = -(1 - r_s/a) = -1/2$, so $\\partial_t$ is timelike right up to it, and $\\rho = a$ is the edge "
+        "of this chart with no horizon on it.",
+        "A ray moving in from $\\rho$ reaches the throat after the finite time $r_*/c$, which is $5.7\\,r_s/c$ "
+        "from $\\rho = 4\\,r_s$ here, and goes on into the other side. The throat lies beyond Schwarzschild's "
+        "circular orbit of light, $\\rho = 3r_s/2$, and the one circular orbit of light is on the throat itself. The "
+        "Kretschmann scalar at the throat is $0.39/r_s^4$.",
+    ],
+    ("simpson_visser", "eddington_finkelstein_ingoing", "bounce"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $a = r_s/2$ with $v - r$ as the "
+        "vertical axis, so that the rays moving left, $v = $ const, run at 45°. The rays moving right have "
+        "$dv/dr = 2(1 - r_s/\\rho)^{-1}$ with $\\rho = \\sqrt{r^2 + a^2}$, and stand vertical on both horizons, "
+        "$r = \\pm 0.87\\,r_s$.",
+        "The chart runs from the region $r > 0.87\\,r_s$ through the black hole, across the sphere of least "
+        "area $r = 0$, and through the second horizon into the region $r < -0.87\\,r_s$. Between the horizons "
+        "both edges of every future cone point to smaller $r$, so whatever crosses the first horizon crosses "
+        "$r = 0$ and comes out in the second region. Seen from there the horizon $r = -0.87\\,r_s$ is a white "
+        "hole's: rays leave it and none go back in.",
+    ],
+    ("simpson_visser", "eddington_finkelstein_ingoing", "null"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $a = r_s$ with $v - r$ as the "
+        "vertical axis, so that the rays moving left, $v = $ const, run at 45°. The rays moving right have "
+        "$dv/dr = 2(1 - r_s/\\rho)^{-1}$ and stand vertical at $r = 0$ alone: the extremal horizon is itself a "
+        "ray of that family, staying where it is.",
+        "A ray moving left crosses $r = 0$ at a finite $v$ and goes on toward $r \\to -\\infty$, and no future "
+        "directed curve returns across that horizon, which is why Simpson and Visser call this geometry a one "
+        "way wormhole.",
+    ],
+    ("simpson_visser", "eddington_finkelstein_ingoing", "wormhole"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $a = 2\\,r_s$ with $v - r$ as the "
+        "vertical axis, so that the rays moving left, $v = $ const, run at 45°. The rays moving right have "
+        "$dv/dr = 2(1 - r_s/\\rho)^{-1}$, which is greatest at the throat $r = 0$, where it is $4$, so both "
+        "families cross the throat.",
+        "Here $v = ct + r_*$ with $r_*$ finite at every $r$, so this chart covers the same region as Simpson "
+        "and Visser's own, the whole spacetime.",
+    ],
+    ("simpson_visser", "eddington_finkelstein_outgoing", "bounce"): [
+        "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $a = r_s/2$ with $u + r$ as the "
+        "vertical axis, so that the rays moving right, $u = $ const, run at 45°. The rays moving left have "
+        "$du/dr = -2(1 - r_s/\\rho)^{-1}$ with $\\rho = \\sqrt{r^2 + a^2}$, and stand vertical on both horizons, "
+        "$r = \\pm 0.87\\,r_s$.",
+        "The chart is the time reverse of the ingoing one. Between the horizons both edges of every future "
+        "cone point to larger $r$: whatever enters from the region $r < -0.87\\,r_s$ crosses the sphere of "
+        "least area $r = 0$ and comes out through $r = 0.87\\,r_s$, which is a white hole's horizon for the "
+        "region beyond it.",
+    ],
+    ("simpson_visser", "eddington_finkelstein_outgoing", "null"): [
+        "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $a = r_s$ with $u + r$ as the "
+        "vertical axis, so that the rays moving right, $u = $ const, run at 45°. The rays moving left have "
+        "$du/dr = -2(1 - r_s/\\rho)^{-1}$ and stand vertical at $r = 0$ alone, the extremal horizon.",
+        "A ray moving right crosses $r = 0$ at a finite $u$, coming from $r \\to -\\infty$. This is the "
+        "horizon through which a region $r < 0$ empties into the region $r > 0$ to its future, the crossing "
+        "that the ingoing chart leaves out.",
+    ],
+    ("simpson_visser", "eddington_finkelstein_outgoing", "wormhole"): [
+        "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $a = 2\\,r_s$ with $u + r$ as the "
+        "vertical axis, so that the rays moving right, $u = $ const, run at 45°. The rays moving left have "
+        "$du/dr = -2(1 - r_s/\\rho)^{-1}$, steepest at the throat $r = 0$, where it is $-4$, and both families "
+        "cross the throat.",
+        "Here $u = ct - r_*$ with $r_*$ finite at every $r$, so this chart, the ingoing one, and Simpson and "
+        "Visser's own all cover the whole spacetime.",
     ],
     ("damour_solodukhin", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) on one side of the throat, drawn for "
@@ -5689,6 +5829,43 @@ def _mp_midplane(x):
 
 # (metric, system, view): (what P conserves, what M conserves, where to compare). None
 # where a family has no closed form. P moves toward smaller r or x, M toward larger.
+def _sv_rstar(r, a):
+    """The tortoise coordinate of Simpson and Visser's black bounce at r_s = 1, dr_*/dr = rho/(rho - r_s)
+    with rho = sqrt(r^2 + a^2): r + r_s arsinh(r/a) and a third term, a logarithm of the two horizons
+    r = +-h, h = sqrt(r_s^2 - a^2), where a < r_s, -r_s(r_s + rho)/r where a = r_s, and two arctangents
+    with k = sqrt(a^2 - r_s^2) where a > r_s. simpson_visser.md derives each."""
+    r = np.asarray(r, float)
+    rho = np.sqrt(r * r + a * a)
+    out = r + np.arcsinh(r / a)
+    if a < 1:
+        h = math.sqrt(1 - a * a)
+        return out + np.log(np.abs((r - h) * (r - h * rho) / ((r + h) * (r + h * rho)))) / (2 * h)
+    if a == 1:
+        return out - (1 + rho) / r
+    k = math.sqrt(a * a - 1)
+    return out + (np.arctan(r / k) + np.arctan(r / (k * rho))) / k
+
+
+def _sv_forms(a, chart):
+    """What each family keeps in a chart of the black bounce, and where the check is made: away from
+    the horizons, where r_* diverges."""
+    h = math.sqrt(max(1 - a * a, 0.0))
+
+    def clear(x0, r):
+        return (np.abs(r - h) > 0.05) & (np.abs(r + h) > 0.05) if a <= 1 else np.ones_like(np.asarray(r, float), bool)
+
+    if chart == "spherical":
+        return (lambda t, r: t + _sv_rstar(r, a), lambda t, r: t - _sv_rstar(r, a), clear)
+    if chart == "areal":
+        def star(rho):
+            return _sv_rstar(np.sqrt(np.maximum(np.asarray(rho, float) ** 2 - a * a, 0)), a)
+        return (lambda t, rho: t + star(rho), lambda t, rho: t - star(rho),
+                lambda t, rho: (np.abs(rho - 1) > 0.05) & (rho > a + 0.002))
+    if chart == "eddington_finkelstein_ingoing":
+        return (lambda v, r: v, lambda v, r: v - 2 * _sv_rstar(r, a), clear)
+    return (lambda u, r: u + 2 * _sv_rstar(r, a), lambda u, r: u, clear)
+
+
 def _ds_rstar(r):
     """The tortoise coordinate of Damour and Solodukhin's wormhole at r_s = 1 and lambda = 1/5, zero at
     the throat: dr_*/dr = r/sqrt((r - r_s)(a r - r_s)) with a = 1 + lambda^2."""
@@ -5868,6 +6045,10 @@ CLOSED_FORMS = {
     ("gowdy", "areal", "plane"): (lambda t, th: t + th, lambda t, th: t - th, lambda t, th: t > 0.02),
     ("gowdy", "sphere", "plane"): (lambda t, th: t + th, lambda t, th: t - th, None),
     ("gowdy", "logarithmic", "plane"): (lambda tau, th: np.exp(-tau) + th, lambda tau, th: np.exp(-tau) - th, None),
+    # With r_s = 1 and a = 1/2, 1 and 2: ct -+ r_* in the two charts of t, and v - 2r_* and u + 2r_*.
+    **{("simpson_visser", chart, case): _sv_forms(float(Fraction(a)), chart)
+       for chart in ("spherical", "areal", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing")
+       for case, (_, a) in SV_CASES.items()},
     # With r_s = 1 and lambda = 1/5, and r = 1 + u^2 through the throat, where r_* changes sign with u.
     ("damour_solodukhin", "spherical", "radial"):
         (lambda t, r: t + _ds_rstar(r), lambda t, r: t - _ds_rstar(r), lambda t, r: r > 1.0005),

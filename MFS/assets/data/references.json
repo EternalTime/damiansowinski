@@ -1,5 +1,5 @@
 {
-  "version": "f2285e5b376148c2",
+  "version": "6d462789cc77c927",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -13114,6 +13114,198 @@
         "eprint": "hep-th/0105136",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/hep-th/0105136"
+      }
+    },
+    "simpson2019": {
+      "type": "article",
+      "fields": {
+        "title": "Black-bounce to traversable wormhole",
+        "author": "Simpson, Alex and Visser, Matt",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2019",
+        "number": "02",
+        "pages": "042",
+        "year": "2019",
+        "doi": "10.1088/1475-7516/2019/02/042",
+        "eprint": "1812.07114",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1812.07114"
+      }
+    },
+    "simpson2019vaidya": {
+      "type": "article",
+      "fields": {
+        "title": "{Vaidya} spacetimes, black-bounces, and traversable wormholes",
+        "author": "Simpson, Alex and Martín-Moruno, Prado and Visser, Matt",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "36",
+        "number": "14",
+        "pages": "145007",
+        "year": "2019",
+        "doi": "10.1088/1361-6382/ab28a5",
+        "eprint": "1902.04232",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1902.04232"
+      }
+    },
+    "bronnikov2006": {
+      "type": "article",
+      "fields": {
+        "title": "Regular Phantom Black Holes",
+        "author": "Bronnikov, K. A. and Fabris, J. C.",
+        "journal": "Physical Review Letters",
+        "volume": "96",
+        "number": "25",
+        "pages": "251101",
+        "year": "2006",
+        "doi": "10.1103/PhysRevLett.96.251101",
+        "eprint": "gr-qc/0511109",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0511109"
+      }
+    },
+    "bronnikovkonoplya2020": {
+      "type": "article",
+      "fields": {
+        "title": "Echoes in brane worlds: Ringing at a black hole-wormhole transition",
+        "author": "Bronnikov, Kirill A. and Konoplya, Roman A.",
+        "journal": "Physical Review D",
+        "volume": "101",
+        "number": "6",
+        "pages": "064004",
+        "year": "2020",
+        "doi": "10.1103/PhysRevD.101.064004",
+        "eprint": "1912.05315",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1912.05315"
+      }
+    },
+    "churilova2020": {
+      "type": "article",
+      "fields": {
+        "title": "Ringing of the regular black-hole/wormhole transition",
+        "author": "Churilova, M. S. and Stuchlík, Z.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "37",
+        "number": "7",
+        "pages": "075014",
+        "year": "2020",
+        "doi": "10.1088/1361-6382/ab7717",
+        "eprint": "1911.11823",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1911.11823"
+      }
+    },
+    "tsukamoto2021": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational lensing in the {Simpson}-{Visser} black-bounce spacetime in a strong deflection limit",
+        "author": "Tsukamoto, Naoki",
+        "journal": "Physical Review D",
+        "volume": "103",
+        "number": "2",
+        "pages": "024033",
+        "year": "2021",
+        "doi": "10.1103/PhysRevD.103.024033",
+        "eprint": "2011.03932",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2011.03932"
+      }
+    },
+    "mazza2021": {
+      "type": "article",
+      "fields": {
+        "title": "A novel family of rotating black hole mimickers",
+        "author": "Mazza, Jacopo and Franzin, Edgardo and Liberati, Stefano",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2021",
+        "number": "04",
+        "pages": "082",
+        "year": "2021",
+        "doi": "10.1088/1475-7516/2021/04/082",
+        "eprint": "2102.01105",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2102.01105"
+      }
+    },
+    "lobo2021": {
+      "type": "article",
+      "fields": {
+        "title": "Novel black-bounce spacetimes: Wormholes, regularity, energy conditions, and causal structure",
+        "author": "Lobo, Francisco S. N. and Rodrigues, Manuel E. and Silva, Marcos V. de S. and Simpson, Alex and Visser, Matt",
+        "journal": "Physical Review D",
+        "volume": "103",
+        "number": "8",
+        "pages": "084052",
+        "year": "2021",
+        "doi": "10.1103/PhysRevD.103.084052",
+        "eprint": "2009.12057",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2009.12057"
+      }
+    },
+    "lima2021": {
+      "type": "article",
+      "fields": {
+        "title": "Can different black holes cast the same shadow?",
+        "author": "Lima Junior, Haroldo C. D. and Crispino, Luís C. B. and Cunha, Pedro V. P. and Herdeiro, Carlos A. R.",
+        "journal": "Physical Review D",
+        "volume": "103",
+        "number": "8",
+        "pages": "084040",
+        "year": "2021",
+        "doi": "10.1103/PhysRevD.103.084040",
+        "eprint": "2102.07034",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2102.07034"
+      }
+    },
+    "franzin2021": {
+      "type": "article",
+      "fields": {
+        "title": "Charged black-bounce spacetimes",
+        "author": "Franzin, Edgardo and Liberati, Stefano and Mazza, Jacopo and Simpson, Alex and Visser, Matt",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2021",
+        "number": "07",
+        "pages": "036",
+        "year": "2021",
+        "doi": "10.1088/1475-7516/2021/07/036",
+        "eprint": "2104.11376",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2104.11376"
+      }
+    },
+    "bronnikov2022": {
+      "type": "article",
+      "fields": {
+        "title": "Field sources for {Simpson}-{Visser} spacetimes",
+        "author": "Bronnikov, Kirill A. and Walia, Rahul Kumar",
+        "journal": "Physical Review D",
+        "volume": "105",
+        "number": "4",
+        "pages": "044039",
+        "year": "2022",
+        "doi": "10.1103/PhysRevD.105.044039",
+        "eprint": "2112.13198",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2112.13198"
+      }
+    },
+    "riaz2022": {
+      "type": "article",
+      "fields": {
+        "title": "Testing regular black holes with {X}-ray and {GW} data",
+        "author": "Riaz, Shafqat and Shashank, Swarnim and Roy, Rittick and Abdikamalov, Askar B. and Ayzenberg, Dimitry and Bambi, Cosimo and Zhang, Zuobin and Zhou, Menglei",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2022",
+        "number": "10",
+        "pages": "040",
+        "year": "2022",
+        "doi": "10.1088/1475-7516/2022/10/040",
+        "eprint": "2206.03729",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2206.03729"
       }
     }
   }

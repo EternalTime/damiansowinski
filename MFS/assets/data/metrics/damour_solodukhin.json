@@ -49,6 +49,11 @@
       "id": "ellis_bronnikov",
       "kind": "family",
       "text": "Another member of Morris and Thorne's family, with $\\Phi = 0$ and $b = \\ell^2/r$. Its clocks run at one rate everywhere, where Damour and Solodukhin's slow by the factor $\\lambda$ at the throat [ellis1973, bronnikov1973, damour2007]."
+    },
+    {
+      "id": "simpson_visser",
+      "kind": "family",
+      "text": "Simpson and Visser's one parameter change of Schwarzschild's metric, made in the radius, $r \\to \\sqrt{r^2 + a^2}$. Its wormhole has a throat of radius $a > r_s$, and for smaller $a$ it is a black hole with no singularity [simpson2019]."
     }
   ],
   "references": [
@@ -69,7 +74,8 @@
     "nandi2018",
     "vagnozzi2023",
     "ellis1973",
-    "bronnikov1973"
+    "bronnikov1973",
+    "simpson2019"
   ],
   "coordinates": [
     {

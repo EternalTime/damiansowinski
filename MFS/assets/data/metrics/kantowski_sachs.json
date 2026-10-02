@@ -50,6 +50,11 @@
       "id": "gowdy",
       "kind": "generalisation",
       "text": "With its axis wrapped into a circle, the member with no matter is a polarised Gowdy spacetime on $S^2 \\times S^1$ [obregon1998]."
+    },
+    {
+      "id": "simpson_visser",
+      "kind": "special_case",
+      "text": "A regular black hole whose inside, where $r$ is a time, is a Kantowski-Sachs cosmology that bounces: its spheres shrink to a least radius $a$ and grow again [bronnikov2022]."
     }
   ],
   "references": [
@@ -66,7 +71,8 @@
     "laflamme1987",
     "szekeres1975",
     "bonnor1977",
-    "obregon1998"
+    "obregon1998",
+    "bronnikov2022"
   ],
   "coordinates": [
     {

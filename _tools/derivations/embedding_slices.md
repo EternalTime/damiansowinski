@@ -241,6 +241,21 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `einstein_rosen/radial`, both sides in $u = \pm\sqrt{r - r_s}$: the line $ct = 0$ from $u = -\sqrt{5}$ to $\sqrt{5}$, cut to the box at $|u| = 2$.
 - All five conformal views, the diamond in the tortoise coordinate: the line $T = 0$ through the throat from $6\,r_s$ on one side to $6\,r_s$ on the other, the same on each.
 
+### Simpson-Visser black bounce
+
+Three spacetimes of one line element at $r_s = 1$, each marked on its own drawings alone: the black bounce $a = r_s/2$, the one way wormhole $a = r_s$ and the traversable wormhole $a = 2\,r_s$.
+
+- `outside`, the black bounce's equator at $t = 0$, read in the areal radius from the horizon $\rho = r_s$ to $6\,r_s$ on both sheets.
+  On `spherical/bounce` it is the line $ct = 0$ from $r = \sqrt{3}/2$ to the box's edge, on `areal/bounce` the line from $\rho = r_s$ to $6\,r_s$, and on the Eddington-Finkelstein planes the curve $v = r_*$ or $u = -r_*$, which runs off the box toward the horizon.
+  On the four conformal views of $a = r_s/2$ it is the line $T = 0$ through the bifurcation point.
+- `inside`, five moments of constant $r$ between the horizons, $r = 0.75$, $0.4$, $0$, $-0.4$ and $-0.75\,r_s$, each the stretch $|ct| \le r_s$ of its cylinder.
+  On `spherical/bounce` each is the upright segment at $r$ from $ct = -r_s$ to $r_s$, and on the ingoing plane the same segment about $v = r_*(r)$.
+  `areal/bounce` is drawn on the side $r > 0$, so it marks the first three, at $\rho = \sqrt{r^2 + a^2}$, the third on its edge $\rho = a$.
+  The outgoing chart's region between the horizons is the white hole, so `eddington_finkelstein_outgoing/bounce` marks none of them.
+  On the conformal views each is the curve $\tan p\tan q = e^{2\kappa r_*(r)}$ of the black hole, $r = 0$ on the line $T = \pi/2$.
+- `null`, the one way wormhole's equator at $t = 0$ from $r = r_s/50$ to $6\,r_s$: the line $ct = 0$ on `spherical/null`, from $\rho = 1.0002\,r_s$ on `areal/null`, the curve $v = r_*$ or $u = -r_*$ on the Eddington-Finkelstein planes, and the line $T = 0$ of one region $r > 0$ on the conformal views.
+- `wormhole`, the traversable wormhole's equator at $t = 0$ from $r = -6\,r_s$ to $6\,r_s$: the line $ct = 0$ across `spherical/wormhole`, from the throat $\rho = a$ out on `areal/wormhole`, the curve $v = r_*$ or $u = -r_*$ on the Eddington-Finkelstein planes, and the line $T = 0$ through the throat on the conformal views.
+
 ### Kaluza-Klein monopole
 
 The cigar is the surface of $r$ and $x_5$ on the half axis $\theta = 0$ at $t = 0$ in Gross and Perry's chart, from the nut $r = 0$ out to $r = 16m$ at $m = 1$.
