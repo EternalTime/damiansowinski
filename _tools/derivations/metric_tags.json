@@ -3318,6 +3318,50 @@
   ],
   "sphere": null
  },
+ "eih_many_bodies/harmonic": {
+  "stamp": "02709009a0f1c24f",
+  "relations": {},
+  "orders": [
+   {
+    "U": 2,
+    "chi": 2,
+    "V_1": 3,
+    "V_2": 3,
+    "V_3": 3,
+    "psi": 4
+   },
+   2,
+   "t"
+  ],
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [],
+  "sphere": null
+ },
+ "eih_many_bodies/standard": {
+  "stamp": "76182dc1a796f330",
+  "relations": {},
+  "orders": [
+   {
+    "U": 2,
+    "chi": 2,
+    "V_1": 3,
+    "V_2": 3,
+    "V_3": 3,
+    "psi": 4
+   },
+   2,
+   "t"
+  ],
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [],
+  "sphere": null
+ },
  "einstein_1912_static/february": {
   "stamp": "078850c27724f494",
   "relations": {},

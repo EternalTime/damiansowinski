@@ -2540,6 +2540,10 @@ FLAT = {
     ("bonnor_charged_dust", "spheroid_interior", "axis"): lambda: [
         Mark(moments("bonnor_charged_dust", "spheroid", label="$t = 0$, $u = 0$")[0], points=[(0.0, 0.0)])],
     ("bonnor_charged_dust", "spheroid_exterior", "axis"): lambda: [],
+    ("eih_many_bodies", "harmonic", "axis"): lambda: one(
+        "eih_many_bodies", lambda m: across(0.0, *m.reach("harmonic", "y")), view_id="midplane"),
+    ("eih_many_bodies", "standard", "axis"): lambda: one(
+        "eih_many_bodies", lambda m: across(0.0, *m.reach("harmonic", "y")), view_id="midplane"),
     ("israel_wilson_perjes", "cylindrical", "midplane"): lambda: one(
         "israel_wilson_perjes", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")), view_id="two_sources"),
     ("israel_wilson_perjes", "spheroidal", "axis"): lambda: one(
