@@ -280,6 +280,19 @@ DIMENSIONS = {
         "\\Sigma": "L**2", "\\Delta": "L**2", "A": "L**4", "H": "1", "\\omega": "1/L",
         "N": "1", "F": "L**2", "P": "L**2", "\\Omega": "1/L",
     },
+    # Podolsky and Ovcharenko's Kerr hole in Bertotti and Robinson's field: m = GM/c^2 and a are
+    # lengths and B an inverse length; I_1, I_2, the conicity C, P, the conformal factor Omega and
+    # the squared lapse N are pure numbers, Delta, Sigma, Q, F and W areas, A the square of an area,
+    # and the dragging rate omega an inverse length. The static chart's f is a pure number.
+    ("kerr_bertotti_robinson", "boyer_lindquist"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "a": "L", "B": "1/L", "I_1": "1", "I_2": "1",
+        "C": "1", "\\Delta": "L**2", "\\Sigma": "L**2", "P": "1", "Q": "L**2", "\\Omega": "1", "A": "L**4",
+        "\\omega": "1/L", "N": "1", "F": "L**2", "W": "L**2",
+    },
+    ("kerr_bertotti_robinson", "static"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "B": "1/L", "C": "1", "P": "1", "f": "1",
+        "\\Omega": "1",
+    },
     # sigma = G lambda/c^2, the mass per unit length lambda as a pure number, and the conicity C
     # are dimensionless. A power of the radius whose exponent holds sigma, or one of Kasner's
     # exponents, is read with the radius in a fixed unit, so rho^{2 - 4 sigma} is an area and
@@ -2238,6 +2251,12 @@ HELD = {
     # The areal radius of the three-brane on Gibbons, Horowitz and Townsend's chart, a fourth root
     # of 1 - w^4: held, a value is a rational function of w and r.
     ("three_brane_throat", "horizon"): ("r",),
+    # Podolsky and Ovcharenko's Kerr hole in Bertotti and Robinson's field, in the same four functions
+    # of a stationary field with an axis, the squared lapse N, F, W and the dragging rate omega, with
+    # their Q and P: held, every value is written in the six and their derivatives. The static chart
+    # holds the conformal factor Omega, f and P, as its line element writes them.
+    ("kerr_bertotti_robinson", "boyer_lindquist"): ("Q", "P", "omega", "N", "F", "W"),
+    ("kerr_bertotti_robinson", "static"): ("Omega", "f", "P"),
 }
 
 # The first derivatives of held names along the coordinates they vary with, written in the names

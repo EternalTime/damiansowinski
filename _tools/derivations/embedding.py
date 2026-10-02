@@ -3375,6 +3375,64 @@ def kerr(ck, src):
                           f"so that $r_+ = {rp:.3f}\\,GM/c^2$.")]
 
 
+def kerr_bertotti_robinson(ck, src):
+    """The equatorial slice of constant t of Podolsky and Ovcharenko's hole outside r_+, at a = 4m/5
+    and B = 1/(4m), where g_tphi drops out: rho = sqrt(g_phiphi) = C sqrt(W), the circumference
+    radius, with phi of period 2 pi on a regular axis, and g_rr = F/Q.
+
+    On the equator Sigma = r^2 and Omega^2 = 1 + B^2 r^2, so W = A/(r^2 (1 + B^2 r^2)), and on the
+    horizon A = (r_+^2 + a^2)^2: the throat has the radius C (r_+^2 + a^2)/(r_+ sqrt(1 + B^2 r_+^2)),
+    1.8608 m here. The circles widen without a turn toward C sqrt(A/(B^2 r^4)) at infinity,
+    3.8380 m, and g_rr falls as 1/(B^4 r^4 (1 - B^2 m^2 I_2/I_1^2)), so the radius r runs to infinity
+    within the distance 7.5602 m of the throat. The slice is drawn out to r = 50 m on both sheets
+    through the bifurcation sphere, where it stands within 0.01 m of the rim and has turned upright.
+    g_tt vanishes on the equator at r = 2.0210 m, where Q = a^2, found from the published metric."""
+    name = "Kerr-Bertotti-Robinson"
+    sl = Slice(src, "kerr_bertotti_robinson", "boyer_lindquist", "r", "\\phi", {"t": 0, **EQUATOR}, nr.KBR)
+    rp = sl.horizons()[0]
+    ck.add(f"{name}: the outer horizon is the larger root of the published g^rr, 1.6845 m", abs(rp - 1.6844809), 1e-6)
+    _, entry, R = nr.load("kerr_bertotti_robinson", "boyer_lindquist")
+    subs = {R.c: 1, R.symbol["\\theta"]: sp.pi / 2}
+    subs.update({R.parameters[k]: sp.sympify(v) for k, v in nr.KBR.items()})
+    gtt = nr.published_matrix(R, entry, "metric_components")[0, 0]
+    for _ in R.held:
+        gtt = gtt.subs(R.held).doit()
+    gtt = sp.lambdify(R.symbol["r"], gtt.subs(subs), "mpmath")
+    ergo = float(mpmath.findroot(gtt, (1.9, 2.2), solver="anderson"))
+    ck.add(f"{name}: g_tt vanishes on the equator at r = 2.0210 m", abs(ergo - 2.0210454), 1e-6)
+    top, size = 50.0, 9.0
+    radii = (2.5, 3.0, 4.0, 6.0, 10.0)
+    near = Piece("exterior", "sheet", sl, rp, top, 0.0, 1,
+                 (("throat", "the throat $r = r_+$, the bifurcation sphere, where the other exterior begins"),
+                  ("edge", "the surface runs on, upright, to $r \\to \\infty$ a short way above")),
+                 [(rp, "horizon", "$r = r_+$"), (ergo, "ergo", None)] + [(r, "r", None) for r in radii]
+                 + [(top, "r", "$r = 50\\,m$")], size)
+    far = Piece("other_exterior", "sheet2", sl, rp, top, 0.0, -1,
+                (("throat", "the throat $r = r_+$"), ("edge", "the surface runs on, upright, to $r \\to \\infty$")),
+                [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+    ck.join(f"{name}, the two sheets at the throat", near, rp, far, rp)
+    for p in (near, far):
+        ck.isometry(f"{name}, {p.id}", p)
+    C = 60025 / 61374
+    ck.add(f"{name}: the throat's circumference radius is C (r_+^2 + a^2)/(r_+ sqrt(1 + B^2 r_+^2))",
+           abs(near.at(rp)[0] - C * (rp ** 2 + 0.64) / (rp * math.sqrt(1 + rp ** 2 / 16))), 1e-6)
+    ck.add(f"{name}: at r = 50 m the circle has the radius 3.8295 m, within 0.01 m of the rim 3.8380 m",
+           abs(near.at(top)[0] - 3.82946), 1e-4)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(rp), "$r = r_+$", dx=10)
+    ring_label(fig, [0, 0, 0], *near.at(top), "$r = 50\\,m$", dx=10)
+    fig.legend("fill", "cover", "the exterior $r > r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $2.5$, $3$, $4$, $6$, $10$ and $50\\,m$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the horizon")
+    fig.legend("line", "ergo", f"the edge of the ergoregion, $r_E = {ergo:.3f}\\,m$ on the equator")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("equator", "The equator", "$m$", [surface], fig.done(),
+                 settings="$m = 1$, the unit of every length, $a = 4m/5$, and $B = 1/(4m)$, so that $r_+ = 1.684\\,m$, "
+                          f"$C = 0.978$, and $r_E = {ergo:.3f}\\,m$ is the radius of the ergosurface on the equator.")]
+
+
 def kerr_newman(ck, src):
     """a = 0.6 GM/c^2 and r_Q = 0.5 GM/c^2, as the conformal diagram draws Kerr-Newman; the
     ergosphere's edge on the equator is where g_tt = 0, r^2 - 2GMr/c^2 + r_Q^2 = 0."""
@@ -15677,6 +15735,7 @@ DRAWN = {
     "maitra_dust": maitra_dust,
     "kerr": kerr,
     "kerr_newman": kerr_newman,
+    "kerr_bertotti_robinson": kerr_bertotti_robinson,
     "kerr_de_sitter": kerr_de_sitter,
     "kerr_taub_nut": kerr_taub_nut,
     "brill_charged_taub_nut": brill_charged_taub_nut,
@@ -16400,6 +16459,17 @@ CAPTIONS = {
         "inside which nothing can stand still against the rotation. The ergosphere leaves the shape of the "
         "slice unmarked and lies in how the slices are stacked, the rotation dragging each one round past the "
         "next.",
+    ],
+    ("kerr_bertotti_robinson", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Podolský and Ovcharenko's spinning hole at one moment of $t$ "
+        "($a = 4m/5$, $B = 1/(4m)$), drawn as a surface in flat space with every distance along it the metric distance. "
+        "The cross term $g_{t\\phi}$ drops out at constant $t$, and the drawing's distance from the axis is the "
+        "circumference radius $C\\sqrt{W}$. As Kerr's does, the slice passes through the bifurcation sphere at $r_+$, "
+        "its throat, into a second exterior.",
+        "The throat has the radius $1.86\\,m$, and the dotted circle is the edge of the ergoregion on the equator. "
+        "Outward the circles widen toward the radius $3.84\\,m$ as the surface turns upright, and the whole of "
+        "$r > r_+$ lies within $7.56\\,m$ of the throat: in the field the radius $r$ runs to infinity at a finite "
+        "distance from the hole.",
     ],
     ("kerr_newman", "equator"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a charged rotating black hole at one moment of "

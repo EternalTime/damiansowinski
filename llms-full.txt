@@ -1158,6 +1158,17 @@ The exact vacuum solution for a rotating, uncharged black hole, characterized by
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/kerr.json
 - chart Kerr (Boyer-Lindquist): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2GMr}{c^2\left(r^2 + a^2\cos^2\theta\right)}\right)c^2 dt^2 - \dfrac{4GMar\sin^2\theta}{c^2\left(r^2 + a^2\cos^2\theta\right)}c\,dt\,d\phi + \dfrac{r^2 + a^2\cos^2\theta}{r^2 + a^2 - \dfrac{2GMr}{c^2}}dr^2 + \left(r^2 + a^2\cos^2\theta\right)d\theta^2 + \left(r^2 + a^2 + \dfrac{2GMa^2r\sin^2\theta}{c^2\left(r^2 + a^2\cos^2\theta\right)}\right)\sin^2\theta\,d\phi^2$$
 
+### Kerr-Bertotti-Robinson Black Hole
+
+Kerr's rotating black hole in a magnetic field that points along its axis of rotation and is uniform far away, the exact solution of the Einstein-Maxwell equations that Jiří Podolský and Hryhorii Ovcharenko found in 2025. It is of Petrov type D, it is Kerr's metric with the field switched off and Bertotti and Robinson's universe with the mass taken away, and the spinning hole carries an electric charge.
+
+- id: `kerr_bertotti_robinson`
+- tags: electrovacuum, Einstein-Maxwell, electromagnetic field, magnetic field, uniform field, rotating, rotating black hole, black hole, charged black hole, electric charge, stationary, axisymmetric, angular momentum, mass, ergoregion, frame dragging, ring singularity, curvature singularity, horizon, event horizon, Cauchy horizon, not asymptotically flat, Petrov type D, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kerr_bertotti_robinson.json
+- chart Podolský-Ovcharenko (Boyer-Lindquist): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -N\,c^2dt^2 + F\left(\dfrac{dr^2}{Q} + \dfrac{d\theta^2}{P}\right) + W\left(C\,d\phi - \omega\,c\,dt\right)^2$$
+- chart Schwarzschild-Bertotti-Robinson: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \dfrac{1}{\Omega^2}\left(-f\,c^2dt^2 + \dfrac{dr^2}{f} + r^2\left(\dfrac{d\theta^2}{P} + C^2P\sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Kerr-de Sitter and Kerr-anti-de Sitter Black Holes
 
 The rotating black hole in a universe with a cosmological constant of either sign, which Brandon Carter found in 1968 among the spacetimes whose geodesic equations separate. With $\Lambda > 0$ an inner horizon, an event horizon, and a cosmological horizon surround the ring singularity, and with $\Lambda < 0$ its boundary is a rotating Einstein universe.
