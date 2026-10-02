@@ -428,6 +428,11 @@
       "id": "bondi_sachs",
       "kind": "generalisation",
       "text": "Schwarzschild's metric in outgoing coordinates with four functions set free, the form the metric of an isolated body takes far away once it radiates. The mass aspect $M(u, \\theta)$ takes the place of $r_s/2$ and falls when gravitational waves leave [bondi1962]."
+    },
+    {
+      "id": "eih_many_bodies",
+      "kind": "generalisation",
+      "text": "Many bodies in slow motion. Close to each the field is Schwarzschild's far from its horizon, and between them it is known to the first order beyond Newton [will2014]."
     }
   ],
   "references": [
@@ -544,7 +549,8 @@
     "geroch1982",
     "bransdicke1961",
     "agnese1995",
-    "bondi1962"
+    "bondi1962",
+    "will2014"
   ],
   "coordinates": [
     {

@@ -139,6 +139,11 @@ with the metric, the Ricci scalar at the order named and the Kretschmann scalar 
 lowest order of the curvature. Those are the terms the metric fixes: one order further, each
 would need a term of the metric that the post-Newtonian metric does not have, which
 _tools/test_ppn_metric.py checks by adding such terms and finding the kept ones unmoved.
+
+The small quantities of such a system may be declared functions of the coordinates, as the
+potentials of Einstein, Infeld and Hoffmann's field of many bodies are: its ORDERS line gives
+each function its order, and a derivative of one along the named time counts one order more
+each time it is taken, since the bodies that make the potentials move slowly.
 """
 
 import argparse
@@ -1851,6 +1856,17 @@ DIMENSIONS = {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "a": "L", "\\beta": "1", "\\gamma": "1",
         "\\alpha_1": "1", "R": "L", "\\Delta": "1",
     },
+    # Einstein, Infeld and Hoffmann's field of many bodies: the potentials U, psi and the three
+    # components of V are pure numbers, each mass standing in them as the length Gm/c^2 over a
+    # distance, and the superpotential chi, the sum of each such length times a distance, is an area.
+    ("eih_many_bodies", "harmonic"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "U": "1", "\\psi": "1", "\\chi": "L**2",
+        "V_1": "1", "V_2": "1", "V_3": "1",
+    },
+    ("eih_many_bodies", "standard"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "U": "1", "\\psi": "1", "\\chi": "L**2",
+        "V_1": "1", "V_2": "1", "V_3": "1",
+    },
     # Three dimensions, where 4Gm/c^2 is a pure number, so alpha = 1 - 4Gm/c^2 is one too. The
     # isotropic radius and the isotropic x and y are lengths, measured in the arbitrary length ell,
     # as are the coordinate distances rho_1 and rho_2 from two particles at rest and half their
@@ -1999,6 +2015,11 @@ ORDERS = {
     ("ppn_metric", "cartesian"): ({"m": 2}, 2, "t"),
     ("ppn_metric", "areal"): ({"m": 2}, 2, "t"),
     ("ppn_metric", "rotating"): ({"m": 2, "a": 1}, 2, "t"),
+    # The field of many bodies, whose small quantities are its potentials, functions of the
+    # coordinates: Newton's potential U and the superpotential chi are second order, the vector
+    # potential third and psi fourth, and each derivative along the time counts one order more.
+    ("eih_many_bodies", "harmonic"): ({"U": 2, "chi": 2, "V_1": 3, "V_2": 3, "V_3": 3, "psi": 4}, 2, "t"),
+    ("eih_many_bodies", "standard"): ({"U": 2, "chi": 2, "V_1": 3, "V_2": 3, "V_3": 3, "psi": 4}, 2, "t"),
 }
 
 # The defined names a system holds as functions of the coordinates while its tensors are built.
@@ -3099,12 +3120,21 @@ class Reader:
             self.relations[self.parameters[name]] = sp.sympify(value)
         # A system kept to an order counts each of its small parameters as a power of one symbol.
         self.order = None
+        # The declared functions a post-Newtonian system counts as small, each with its order.
+        self.potentials = {}
         # A post-Newtonian system: the time coordinate whose indices carry an order each, and the
         # order a component without one is kept to, which is the lowest order of the curvature.
         self.slow = None
         if kept:
             weights, highest, *slow = kept
-            stray = [name for name in weights if name not in self.parameters or not self.parameters[name].is_Symbol]
+            # A post-Newtonian system may count a declared function of the coordinates as small, as
+            # the potentials of many bodies are: its order is the function's own, and each
+            # derivative of it along the slow time counts one order more, since the sources move
+            # slowly. Any other system counts constants alone.
+            potentials = {name for name in weights if slow and name in self.functions
+                          and self.functions[name][0] not in self.held}
+            stray = [name for name in weights if name not in potentials
+                     and (name not in self.parameters or not self.parameters[name].is_Symbol)]
             if stray:
                 raise LatexError(f"an order is declared for {stray}, which are not constants of the system")
             small = sp.Dummy("epsilon", positive=True)
@@ -3115,7 +3145,8 @@ class Reader:
                 # Every tensor is built two orders further, as far as any component is kept.
                 highest += 2
             self.order = ({self.parameters[name]: small ** weight * self.parameters[name]
-                           for name, weight in weights.items()}, small, highest)
+                           for name, weight in weights.items() if name not in potentials}, small, highest)
+            self.potentials = {self.functions[name][0]: weights[name] for name in potentials}
 
     def surface(self, expression):
         """The expression on the surface the entry's constrained parameters live on, and to
@@ -3162,13 +3193,31 @@ class Reader:
 
     def through(self, expression, highest):
         """The Taylor polynomial of the expression through the order `highest`."""
-        scaled, small, _ = self.order
-        term = sp.sympify(expression).xreplace(scaled)
+        small = self.order[1]
+        term = self._scaled(expression)
         out = sp.Integer(0)
         for k in range(highest + 1):
             out += norm(term.subs(small, 0)) / sp.factorial(k)
             term = sp.diff(term, small)
         return norm(out)
+
+    def _scaled(self, expression):
+        """The expression with each small parameter scaled by its power of the one symbol, and
+        each small function and each of its derivatives by theirs, a derivative along the slow
+        time one power more for each time it is taken."""
+        scaled, small, _ = self.order
+        expression = sp.sympify(expression)
+        if not self.potentials:
+            return expression.xreplace(scaled)
+        rule = dict(scaled)
+        time = self.symbol[self.coords[self.slow[0]]]
+        for function, weight in self.potentials.items():
+            rule[function] = small ** weight * function
+        for derivative in expression.atoms(sp.Derivative):
+            if derivative.expr in self.potentials:
+                slow = sum(count for variable, count in derivative.variable_count if variable == time)
+                rule[derivative] = small ** (self.potentials[derivative.expr] + slow) * derivative
+        return expression.xreplace(rule)
 
     def kept_order(self, field, index=()):
         """The order a component of a post-Newtonian system is kept to: `field` is the tensor,
@@ -3185,8 +3234,8 @@ class Reader:
 
     def zeroth(self, g):
         """A metric at zeroth order, every small parameter set to zero."""
-        scaled, small, _ = self.order
-        return norm(g.applyfunc(lambda e: e.xreplace(scaled).subs(small, 0)))
+        small = self.order[1]
+        return norm(g.applyfunc(lambda e: self._scaled(e).subs(small, 0)))
 
     def inverse(self, g):
         """The inverse of a metric to the order the system keeps, as the series

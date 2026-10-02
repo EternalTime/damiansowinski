@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 153,
+  "count": 154,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -14151,6 +14151,309 @@
           ],
           "ricci_scalar": "R = -\\dfrac{4m^2}{r^2\\left(2r - m\\right)^2}",
           "kretschmann": "K = \\dfrac{16m^2\\left(24r^2 - 32r\\,m + 11m^2\\right)}{r^4\\left(2r - m\\right)^4}"
+        }
+      ]
+    },
+    {
+      "id": "eih_many_bodies",
+      "name": "Einstein-Infeld-Hoffmann Field of Many Bodies",
+      "short_name": "Einstein-Infeld-Hoffmann",
+      "description": "The gravitational field of $N$ slowly moving bodies to the first order beyond Newton, the order at which the vacuum field equations fix how the bodies move. It is an approximate spacetime with a definite metric, the one the planets and the binary pulsar are timed in.",
+      "tags": [
+        "post-Newtonian",
+        "weak field",
+        "approximate solution",
+        "many bodies",
+        "two-body problem",
+        "problem of motion",
+        "equations of motion",
+        "point masses",
+        "binary",
+        "binary pulsar",
+        "periastron advance",
+        "perihelion precession",
+        "solar system",
+        "harmonic coordinates",
+        "gravitomagnetic",
+        "time-dependent",
+        "no horizon",
+        "Lorentzian",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit and count $v/c$ as first order, so $U$ and $\\chi$ are of second order, $V_1$, $V_2$, and $V_3$ of third, and $\\psi$ of fourth, and we write the metric and its inverse whole. A component of the connection, the Riemann tensor, or the Ricci tensor is kept through the fourth order with two time indices or more, the third with one, and the second with none, the Einstein tensor, the Weyl tensor, and the Ricci scalar through the second, or the third with an odd number of time indices, and the Kretschmann scalar through the fourth. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "ppn_metric",
+          "kind": "family",
+          "text": "One body at rest, with Eddington's numbers in front of its terms. With $U = m/r$ and nothing moving, the standard gauge here is that metric at $\\beta = \\gamma = 1$ [will2014]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "One body at rest. With $U = m/r$ and every other potential zero the metric is Schwarzschild's in isotropic coordinates, expanded far from the horizon, and Einstein, Infeld, and Hoffmann took the field close to each body to be of that kind [will2014]."
+        },
+        {
+          "id": "majumdar_papapetrou",
+          "kind": "family",
+          "text": "The other field of many bodies. There each body carries a charge equal to its mass, and all of them stay at rest for good; here nothing holds the bodies apart, so they orbit."
+        }
+      ],
+      "references": [
+        "einstein1938",
+        "kennefick1999",
+        "blanchet1998",
+        "will2018",
+        "will2014",
+        "levicivita1937",
+        "eddington1938",
+        "robertson1938",
+        "kopeikin2020",
+        "death1975",
+        "hulse1975",
+        "alvi2000"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/eih_many_bodies.json",
+      "charts": [
+        {
+          "id": "harmonic",
+          "name": "Einstein, Infeld, and Hoffmann (harmonic)",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "r_a > 0 \\;\\text{(between the bodies)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "U = U(t,x,y,z)",
+              "description": "Newton's potential of the bodies over $c^2$, a pure number: $U = \\sum_a m_a/r_a$ for bodies of mass $M_a$ at the places $\\mathbf{x}_a$, with $m_a = GM_a/c^2$ the mass of body $a$ as a length and $r_a = |\\mathbf{x} - \\mathbf{x}_a|$ the distance to it; between the bodies it solves Laplace's equation, $\\partial_x^2U + \\partial_y^2U + \\partial_z^2U = 0$"
+            },
+            {
+              "symbol": "\\psi = \\psi(t,x,y,z)",
+              "description": "Post-Newtonian potential, a pure number: $\\psi = \\sum_a \\left(m_a/r_a\\right)\\left(3v_a^2/2c^2 - \\sum_{b \\neq a} m_b/r_{ab}\\right)$, with $v_a$ the speed of body $a$ and $r_{ab} = |\\mathbf{x}_a - \\mathbf{x}_b|$ the distance between two bodies; between the bodies it solves Laplace's equation, $\\partial_x^2\\psi + \\partial_y^2\\psi + \\partial_z^2\\psi = 0$"
+            },
+            {
+              "symbol": "\\chi = \\chi(t,x,y,z)",
+              "description": "Superpotential, an area: $\\chi = \\sum_a m_a r_a$, which solves $\\partial_x^2\\chi + \\partial_y^2\\chi + \\partial_z^2\\chi = 2U$"
+            },
+            {
+              "symbol": "V_1 = V_1(t,x,y,z)",
+              "description": "Component along $x$ of the vector potential $\\mathbf{V} = \\sum_a m_a\\mathbf{v}_a/(c\\,r_a)$, a pure number, with $\\mathbf{v}_a$ the velocity of body $a$; between the bodies it solves Laplace's equation, $\\partial_x^2V_1 + \\partial_y^2V_1 + \\partial_z^2V_1 = 0$"
+            },
+            {
+              "symbol": "V_2 = V_2(t,x,y,z)",
+              "description": "Component along $y$ of $\\mathbf{V}$, a pure number; between the bodies it solves Laplace's equation, $\\partial_x^2V_2 + \\partial_y^2V_2 + \\partial_z^2V_2 = 0$"
+            },
+            {
+              "symbol": "V_3 = V_3(t,x,y,z)",
+              "description": "Component along $z$ of $\\mathbf{V}$, a pure number; between the bodies it solves Laplace's equation, $\\partial_x^2V_3 + \\partial_y^2V_3 + \\partial_z^2V_3 = 0$, and the three components keep $\\partial_tU + \\partial_xV_1 + \\partial_yV_2 + \\partial_zV_3 = 0$, since each mass is constant"
+            }
+          ],
+          "convention": "We use the coordinates $(t, x, y, z)$ of Einstein, Infeld, and Hoffmann, which are harmonic to this order, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$, so $\\partial_t$ and a dot on $t$ in the geodesic equations mean derivatives along $ct$. A derivative along $t$ counts one order more than what it acts on, since the bodies move slowly.",
+          "line_element": "ds^2 = -\\left(1 - 2U + 2U^2 - 2\\psi - \\partial_t^2\\chi\\right)c^2dt^2 - 8\\left(V_1\\,dx + V_2\\,dy + V_3\\,dz\\right)c\\,dt + \\left(1 + 2U\\right)\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - 2U + 2U^2 - 2\\psi - \\partial_t^2\\chi\\right)"
+            },
+            {
+              "indices": [
+                "t",
+                "x"
+              ],
+              "value": "-4V_1"
+            },
+            {
+              "indices": [
+                "x",
+                "t"
+              ],
+              "value": "-4V_1"
+            },
+            {
+              "indices": [
+                "t",
+                "y"
+              ],
+              "value": "-4V_2"
+            },
+            {
+              "indices": [
+                "y",
+                "t"
+              ],
+              "value": "-4V_2"
+            },
+            {
+              "indices": [
+                "t",
+                "z"
+              ],
+              "value": "-4V_3"
+            },
+            {
+              "indices": [
+                "z",
+                "t"
+              ],
+              "value": "-4V_3"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1 + 2U"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1 + 2U"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1 + 2U"
+            }
+          ],
+          "ricci_scalar": "R = -\\left(2\\partial_x^2 U + 2\\partial_y^2 U + 2\\partial_z^2 U\\right)",
+          "kretschmann": "K = 8\\partial_x^2 U\\,\\partial_y^2 U + 8\\partial_x^2 U\\,\\partial_z^2 U + 8\\partial_y^2 U\\,\\partial_z^2 U + 16\\left(\\partial_x\\partial_y U\\right)^2 + 16\\left(\\partial_x\\partial_z U\\right)^2 + 12\\left(\\partial_x^2 U\\right)^2 + 16\\left(\\partial_y\\partial_z U\\right)^2 + 12\\left(\\partial_y^2 U\\right)^2 + 12\\left(\\partial_z^2 U\\right)^2"
+        },
+        {
+          "id": "standard",
+          "name": "Standard post-Newtonian gauge",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "r_a > 0 \\;\\text{(between the bodies)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "U = U(t,x,y,z)",
+              "description": "Newton's potential of the bodies over $c^2$, a pure number: $U = \\sum_a m_a/r_a$ for bodies of mass $M_a$ at the places $\\mathbf{x}_a$, with $m_a = GM_a/c^2$ the mass of body $a$ as a length and $r_a = |\\mathbf{x} - \\mathbf{x}_a|$ the distance to it; between the bodies it solves Laplace's equation, $\\partial_x^2U + \\partial_y^2U + \\partial_z^2U = 0$"
+            },
+            {
+              "symbol": "\\psi = \\psi(t,x,y,z)",
+              "description": "Post-Newtonian potential, a pure number: $\\psi = \\sum_a \\left(m_a/r_a\\right)\\left(3v_a^2/2c^2 - \\sum_{b \\neq a} m_b/r_{ab}\\right)$, with $v_a$ the speed of body $a$ and $r_{ab} = |\\mathbf{x}_a - \\mathbf{x}_b|$ the distance between two bodies; between the bodies it solves Laplace's equation, $\\partial_x^2\\psi + \\partial_y^2\\psi + \\partial_z^2\\psi = 0$"
+            },
+            {
+              "symbol": "\\chi = \\chi(t,x,y,z)",
+              "description": "Superpotential, an area: $\\chi = \\sum_a m_a r_a$, which solves $\\partial_x^2\\chi + \\partial_y^2\\chi + \\partial_z^2\\chi = 2U$"
+            },
+            {
+              "symbol": "V_1 = V_1(t,x,y,z)",
+              "description": "Component along $x$ of the vector potential $\\mathbf{V} = \\sum_a m_a\\mathbf{v}_a/(c\\,r_a)$, a pure number, with $\\mathbf{v}_a$ the velocity of body $a$; between the bodies it solves Laplace's equation, $\\partial_x^2V_1 + \\partial_y^2V_1 + \\partial_z^2V_1 = 0$"
+            },
+            {
+              "symbol": "V_2 = V_2(t,x,y,z)",
+              "description": "Component along $y$ of $\\mathbf{V}$, a pure number; between the bodies it solves Laplace's equation, $\\partial_x^2V_2 + \\partial_y^2V_2 + \\partial_z^2V_2 = 0$"
+            },
+            {
+              "symbol": "V_3 = V_3(t,x,y,z)",
+              "description": "Component along $z$ of $\\mathbf{V}$, a pure number; between the bodies it solves Laplace's equation, $\\partial_x^2V_3 + \\partial_y^2V_3 + \\partial_z^2V_3 = 0$, and the three components keep $\\partial_tU + \\partial_xV_1 + \\partial_yV_2 + \\partial_zV_3 = 0$, since each mass is constant"
+            }
+          ],
+          "convention": "We use the coordinates $(t, x, y, z)$ of the standard post-Newtonian gauge, whose time is the harmonic time less $\\partial_t\\chi/2c$, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$, so $\\partial_t$ and a dot on $t$ in the geodesic equations mean derivatives along $ct$. A derivative along $t$ counts one order more than what it acts on, since the bodies move slowly.",
+          "line_element": "ds^2 = -\\left(1 - 2U + 2U^2 - 2\\psi\\right)c^2dt^2 - \\left(\\left(8V_1 + \\partial_t\\partial_x\\chi\\right)dx + \\left(8V_2 + \\partial_t\\partial_y\\chi\\right)dy + \\left(8V_3 + \\partial_t\\partial_z\\chi\\right)dz\\right)c\\,dt + \\left(1 + 2U\\right)\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - 2U + 2U^2 - 2\\psi\\right)"
+            },
+            {
+              "indices": [
+                "t",
+                "x"
+              ],
+              "value": "-\\left(4V_1 + \\dfrac{1}{2}\\partial_t\\partial_x\\chi\\right)"
+            },
+            {
+              "indices": [
+                "x",
+                "t"
+              ],
+              "value": "-\\left(4V_1 + \\dfrac{1}{2}\\partial_t\\partial_x\\chi\\right)"
+            },
+            {
+              "indices": [
+                "t",
+                "y"
+              ],
+              "value": "-\\left(4V_2 + \\dfrac{1}{2}\\partial_t\\partial_y\\chi\\right)"
+            },
+            {
+              "indices": [
+                "y",
+                "t"
+              ],
+              "value": "-\\left(4V_2 + \\dfrac{1}{2}\\partial_t\\partial_y\\chi\\right)"
+            },
+            {
+              "indices": [
+                "t",
+                "z"
+              ],
+              "value": "-\\left(4V_3 + \\dfrac{1}{2}\\partial_t\\partial_z\\chi\\right)"
+            },
+            {
+              "indices": [
+                "z",
+                "t"
+              ],
+              "value": "-\\left(4V_3 + \\dfrac{1}{2}\\partial_t\\partial_z\\chi\\right)"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1 + 2U"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1 + 2U"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1 + 2U"
+            }
+          ],
+          "ricci_scalar": "R = -\\left(2\\partial_x^2 U + 2\\partial_y^2 U + 2\\partial_z^2 U\\right)",
+          "kretschmann": "K = 8\\partial_x^2 U\\,\\partial_y^2 U + 8\\partial_x^2 U\\,\\partial_z^2 U + 8\\partial_y^2 U\\,\\partial_z^2 U + 16\\left(\\partial_x\\partial_y U\\right)^2 + 16\\left(\\partial_x\\partial_z U\\right)^2 + 12\\left(\\partial_x^2 U\\right)^2 + 16\\left(\\partial_y\\partial_z U\\right)^2 + 12\\left(\\partial_y^2 U\\right)^2 + 12\\left(\\partial_z^2 U\\right)^2"
         }
       ]
     },
@@ -29322,6 +29625,11 @@
           "id": "bonnor_charged_dust",
           "kind": "generalisation",
           "text": "Their metric with matter in it. Dust whose charge density equals its mass density is a source for $U$, and a ball of it can lie as near its own horizon as one likes [bonnor1975, lemos2004]."
+        },
+        {
+          "id": "eih_many_bodies",
+          "kind": "family",
+          "text": "Many bodies with no charge to hold them apart. They orbit, and their field is known to the first order beyond Newton, where Majumdar and Papapetrou's is exact [einstein1938]."
         }
       ],
       "references": [
@@ -29357,7 +29665,8 @@
         "emparan2000",
         "arnowitt1960",
         "bonnor1975",
-        "lemos2004"
+        "lemos2004",
+        "einstein1938"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/majumdar_papapetrou.json",
@@ -36450,6 +36759,11 @@
           "id": "brans_dicke_sphere",
           "kind": "special_case",
           "text": "Brans and Dicke's theory as a point of the plane. Far from the body their static sphere has $\\beta = 1$ and $\\gamma = (1 + \\omega)/(2 + \\omega)$ [thornewill1971, bransdicke1961]."
+        },
+        {
+          "id": "eih_many_bodies",
+          "kind": "family",
+          "text": "General relativity's field of many moving bodies, to the same order. One body at rest there is this metric at $\\beta = \\gamma = 1$ [will2014]."
         }
       ],
       "references": [
@@ -42186,6 +42500,11 @@
           "id": "bondi_sachs",
           "kind": "generalisation",
           "text": "Schwarzschild's metric in outgoing coordinates with four functions set free, the form the metric of an isolated body takes far away once it radiates. The mass aspect $M(u, \\theta)$ takes the place of $r_s/2$ and falls when gravitational waves leave [bondi1962]."
+        },
+        {
+          "id": "eih_many_bodies",
+          "kind": "generalisation",
+          "text": "Many bodies in slow motion. Close to each the field is Schwarzschild's far from its horizon, and between them it is known to the first order beyond Newton [will2014]."
         }
       ],
       "references": [
@@ -42302,7 +42621,8 @@
         "geroch1982",
         "bransdicke1961",
         "agnese1995",
-        "bondi1962"
+        "bondi1962",
+        "will2014"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",

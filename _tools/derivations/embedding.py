@@ -7838,6 +7838,45 @@ def majumdar_papapetrou(ck, src):
     return views
 
 
+def eih_many_bodies(ck, src):
+    """One moment, t = 0, of the binary the spacetime diagrams declare: two bodies of mass m = 1 at
+    x = +-10m on a circular orbit. The plane x = 0 midway between them has the metric
+    (1 + 2U)(dy^2 + dz^2) with U = 2/sqrt(s^2 + 100) at the distance s from the line through the
+    bodies, in both charts, so turned about that line it is a surface of revolution with
+    rho = s sqrt(1 + 2U) and dz/ds = sqrt(1 + 2U - (d rho/ds)^2), real since
+    d rho/ds = (1 + 2U + s U')/sqrt(1 + 2U) lies between 0 and sqrt(1 + 2U). It is flat where it
+    crosses that line, where U' = 0, and is drawn out to s = 30m, inside the near zone, which ends
+    at c/(2 Omega) = 37.1m."""
+    sl = Slice(src, "eih_many_bodies", "harmonic", "y", None, {"t": 0, "x": 0}, functions=dict(nr.EIH_BINARY),
+               turn="z")
+    top = 30.0
+    size = 2 * float(sl.rho_at(top))
+    radii = (10.0, 20.0)
+    plane = Piece("midplane", "sheet", sl, 0.0, top, 0.0, 1,
+                  (("axis", "the line through the two bodies, midway between them"),
+                   ("edge", "the surface runs on to the end of the near zone, $c/2\\Omega = 37.1\\,m$")),
+                  [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+    ck.isometry("Einstein-Infeld-Hoffmann, the midplane of two equal bodies", plane)
+    ck.radius("Einstein-Infeld-Hoffmann, the midplane, rho = s sqrt(1 + 4m/sqrt(s^2 + 100 m^2))", plane,
+              lambda r: r * np.sqrt(1 + 4 / np.sqrt(r * r + 100)), size)
+    other = Slice(src, "eih_many_bodies", "standard", "y", None, {"t": 0, "x": 0}, functions=dict(nr.EIH_BINARY),
+                  turn="z")
+    at = np.linspace(0.5, top, 60)
+    ck.add("Einstein-Infeld-Hoffmann: the midplane is the same surface in the standard gauge",
+           float(max(abs(float(sl.gxx_at(v)) - float(other.gxx_at(v))) for v in at)), 1e-12)
+    two = Surface([plane])
+    fig = figure_of([two], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *plane.at(10.0), "$s = 10\\,m$")
+    ring_label(fig, [0, 0, 0], *plane.at(top), "$30\\,m$")
+    fig.legend("fill", "cover", "the plane $x = 0$ at $t = 0$, midway between the bodies")
+    fig.legend("line", "r", "$s$ constant, at $10$, $20$ and $30$ times $m$")
+    fig.legend("line", "meridian", "the angle about the line through the bodies constant, every $15°$")
+    return [view("midplane", "Between two bodies", "$m$", [two], fig.done(),
+                 settings="$m = 1$, the unit of every length, and two bodies of mass $m$ at $x = \\pm 10\\,m$ at $t = 0$, "
+                          "so that $U = 2m/\\sqrt{s^2 + 100\\,m^2}$ on the plane $x = 0$, with $s = \\sqrt{y^2 + z^2}$.",
+                 input=nr.EIH_BINARY_INPUT)]
+
+
 # Two of Kastor and Traschen's holes, each of mass parameter m, the unit, at z = +-2m on the axis,
 # falling together at H = -3c/(32m), as their spacetime diagrams declare; slices.py holds the rate
 # and the last ray of the midplane to reach infinity.
@@ -14885,6 +14924,7 @@ DRAWN = {
     "minkowski": minkowski,
     "anti_de_sitter": anti_de_sitter,
     "malament_hogarth": malament_hogarth,
+    "eih_many_bodies": eih_many_bodies,
     "mixmaster": mixmaster,
     "kasner": kasner,
     "kasner_scalar": kasner_scalar,
@@ -16338,6 +16378,16 @@ CAPTIONS = {
         "$U + \\rho\\,\\partial_\\rho U = 1 + 8m^3/(\\rho^2 + 4m^2)^{3/2}$ lies between $0$ and $U$.",
         "The surface is flat where it crosses the axis, halfway between the horizons, and far out it rises as "
         "Flamm's paraboloid of the total mass $2m$ does, $dz/d\\rho \\to \\sqrt{4m/\\rho}$.",
+    ],
+    ("eih_many_bodies", "midplane"): [
+        "The plane $x = 0$ midway between two bodies of equal mass at $x = \\pm 10\\,m$, at the moment $t = 0$ of "
+        "their circular orbit, drawn as a surface in flat space with every distance along it the metric distance. "
+        "On it the metric is $(1 + 2U)(dy^2 + dz^2)$ with $U = 2m/\\sqrt{s^2 + 100\\,m^2}$ at the distance "
+        "$s = \\sqrt{y^2 + z^2}$ from the line through the bodies, so the circle of coordinate radius $s$ has the "
+        "circumference radius $s\\sqrt{1 + 2U}$.",
+        "The surface is flat where it crosses the line through the bodies, halfway between them, and far from that line it "
+        "rises as Flamm's paraboloid of the total mass $2m$ does. Both charts share it, since their times agree "
+        "on this plane at $t = 0$.",
     ],
     ("bertotti_robinson", "equator"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Bertotti-Robinson universe at one moment of $t$, drawn "
