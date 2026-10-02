@@ -124,7 +124,7 @@ NOT_DRAWN = {"godel", "stockum_dust", "som_raychaudhuri", "taub_nut", "kasner", 
              "natario", "krasnikov", "pp_wave", "mixmaster", "lentz", "szekeres", "van_den_broeck",
              "string_wave", "black_saturn", "schrodinger_spacetime", "eguchi_hanson", "gravitational_instantons",
              "misner_brill_lindquist", "brill_waves",
-             "kundt_waves", "wahlquist", "tippett_tsang"}
+             "kundt_waves", "wahlquist", "tippett_tsang", "petrov_homogeneous"}
 
 
 # ---------------------------------------------------------------- the drawing
@@ -13517,6 +13517,164 @@ def kopczynski_trautman(ck, src):
     return views
 
 
+def small_universes(ck, src):
+    """Ellis's torus of dust on its plane of the time and x, y and z held fixed, each point a 2-torus
+    of area a^2 L^2, at the cubic torus and the scale factor its other diagrams declare, in units of
+    the period L.
+
+    The metric on the plane is a^2(-d eta^2 + dx^2) with eta = 2 L sqrt(a) = 2 L (3ct/2L)^(1/3), and
+    a conformal factor changes no null direction, so p, q = arctan((eta -+ x)/L) bring it into
+    Minkowski's triangle, of which one cell of the universe is the part between the line x = 0,
+    X = 0, and the curve x = L, one surface of the torus drawn twice: it starts on the bang
+    eta = 0, the segment T = 0 from X = 0 to pi/2, and both meet at t = infinity, the one point i+
+    at (0, pi), since x is bounded. A ray from the bang at x = 0 reaches x = L at eta = L, which is
+    x = 0 again, and so laps the universe once in every L of eta. The published Kretschmann
+    scalar is checked to diverge on the bang."""
+    comoving_a, conformal_a = "(3*t/2)**Rational(2, 3)", "eta**2/4"
+
+    def eta_of(t):
+        return 2 * np.cbrt(1.5 * np.asarray(t, dtype=float))
+
+    def comoving(t, x):
+        return mink_pq(eta_of(t), x)
+    com = Plane(src, "small_universes", "torus", ("t", "x"), nr.SMALL_PLANE, nr.SMALL_TORUS, functions={"a": comoving_a})
+    con = Plane(src, "small_universes", "torus_conformal", ("\\eta", "x"), nr.SMALL_PLANE, nr.SMALL_TORUS,
+                functions={"a": conformal_a})
+    ck.chart("small universes, the torus in comoving time", com, comoving, ck.uniform(0.01, 30), ck.uniform(0, 1),
+             lambda t, x: (1, 0))
+    ck.chart("small universes, the torus in conformal time", con, mink_pq, ck.uniform(0.01, 30), ck.uniform(0, 1),
+             lambda e, x: (1, 0))
+    x = ck.uniform(0, 1, 50)
+    ck.diverges("small universes: t = 0 is a curvature singularity",
+                com.kretschmann(np.full(50, 1e-3), x), com.kretschmann(np.full(50, 1e-4), x))
+    ck.diverges("small universes: eta = 0 is a curvature singularity",
+                con.kretschmann(np.full(50, 1e-2), x), con.kretschmann(np.full(50, 1e-3), x))
+    p, q = mink_pq(np.full(50, 1e9), x)
+    ck.limit("small universes: eta -> infinity lands on the one point (0, pi)", np.concatenate([q - p, p + q]),
+             [0.0] * 50 + [PI] * 50, 1e-6)
+    p, q = mink_pq(np.zeros(50), x)
+    ck.limit("small universes: the bang lands on T = 0 at X = 2 arctan(x)", np.concatenate([p + q, q - p]),
+             np.concatenate([np.zeros(50), 2 * np.arctan(x)]), 1e-12)
+    # A lap: the ray from (eta, x) = (k, 0) reaches the far face at eta = k + 1, the event (k + 1, 0) again.
+    for k in range(3):
+        p0, _ = mink_pq(float(k), 0.0)
+        p1, _ = mink_pq(float(k + 1), 1.0)
+        ck.limit(f"small universes: lap {k + 1} of the ray from the bang is null", [float(p1)], [float(p0)], 1e-12)
+
+    edge = HALF
+    box = [-0.45, edge + 0.45, -0.3, PI + 0.3]
+    far = np.concatenate([[0.0], S_POS])
+    X, T = xt(*mink_pq(far, np.full_like(far, 1.0)))
+    region = [[0.0, 0.0]] + [[float(a), float(b)] for a, b in zip(X, T)] + [[0.0, PI]]
+    across = np.linspace(0, 1, 200)
+    moments = slices.moments("small_universes", "torus")
+    views = []
+    for vid, label, system, times, time_of, t_legend, singular, name in (
+            ("torus", "Comoving time", "torus", (1 / 12, 2 / 3, 9 / 4, 16 / 3, 125 / 12), eta_of,
+             "$ct$ constant, at $L/12$, $2L/3$, $9L/4$, $16L/3$, and $125L/12$, where $\\eta$ is $L$ to $5L$",
+             "the big bang, $t = 0$", "$t$"),
+            ("torus_conformal", "Conformal time", "torus_conformal", (0.5, 1, 2, 3, 4, 5), lambda c: c,
+             "$\\eta$ constant, at $L/2$ and every $L$ from $L$ to $5L$", "the big bang, $\\eta = 0$", "$\\eta$")):
+        v = View(vid, label, box, system)
+        v.fill("region", region)
+        v.fill("cover", region)
+        grid(v, "r", lambda xs, e: mink_pq(e, xs), (0.25, 0.5, 0.75), S_POS)
+        for c in times:
+            v.curve("t", *mink_pq(np.full_like(across, float(time_of(c))), across))
+        v.line("boundary", [[[0, 0], [0, PI]]])
+        v.curve("boundary", *mink_pq(far, np.full_like(far, 1.0)))
+        v.line("singular", [[[0, 0], [edge, 0]]], zig=True)
+        for k in range(3):
+            v.segment("null", mink_pq(float(k), 0.0), mink_pq(float(k + 1), 1.0))
+        v.layers.append({"kind": "point", "class": "infinity", "at": [0.0, round(PI, 4)]})
+        v.label_xt([0, PI], "$i^+$", "b", dy=-6)
+        v.label_xt([edge / 2, 0], singular, "t", dy=8)
+        v.label_xt([0, 1.5], "$x = 0$", "r", "coord", dx=-6)
+        v.label(mink_pq(1.6, 1.0), "$x = L$", "l", "coord", dx=6)
+        v.legend("cover", f"one cell of the torus universe, which {name} and $x$ cover")
+        v.legend("r", "$x$ constant, at $L/4$, $L/2$, and $3L/4$")
+        v.legend("t", t_legend)
+        v.legend("boundary", "$x = 0$ and $x = L$, one surface of the torus drawn twice")
+        v.legend("null", "a light ray from the bang on its first three laps of the universe, each begun where the last ended")
+        v.legend("singular", "the big bang, where the Kretschmann scalar diverges")
+        v.set(input=nr.SMALL_INPUT if vid == "torus" else nr.SMALL_INPUT_CONFORMAL)
+        for m in moments:
+            v.slice(m, [mink_pq(np.full_like(across, float(eta_of(m.time))), across)])
+        views.append(v)
+    views.append(small_universes_horn(ck, src))
+    return views
+
+
+def small_universes_horn(ck, src):
+    """Sokolov and Starobinsky's horn on its plane of the time and x, y and z held fixed, each point
+    a 2-torus of area a^2 b_2 b_3 e^(-2x), filled with the open dust its spacetime diagram declares,
+    in units of the radius of curvature a_0 at the moment a' = 6/5.
+
+    The metric on the plane is a^2(-d eta^2 + dx^2) with a = (11/50)(cosh(eta) - 1) and
+    ct = (11/50)(sinh(eta) - eta), and x runs over the whole line, so p, q = arctan(eta -+ x) bring
+    it onto the upper half of Minkowski's diamond: the bang eta = 0 is the segment T = 0 from
+    X = -pi to pi, and the two upper edges are reached by a light ray only at an infinite value of
+    its affine parameter, the integral of a^2 d eta. The published Kretschmann scalar is checked
+    to diverge on the bang."""
+    A = 11 / 50
+
+    def eta_of(t):
+        return nr._small_eta(t).reshape(np.shape(t))
+
+    def horn_pq(t, x):
+        return mink_pq(eta_of(t), x)
+
+    def dust(t, x):
+        a = A * (np.cosh(eta_of(t)) - 1)
+        return {"a": (a, np.sqrt(1 + 2 * A / a), -A / a ** 2)}
+    plane = Plane(src, "small_universes", "horn", ("t", "x"), {"y": "0", "z": "0"}, nr.SMALL_HORN, numeric=["a"])
+    ck.chart("small universes, the horn", plane, horn_pq, ck.uniform(0.01, 30), ck.uniform(-20, 20),
+             lambda t, x: (1, 0), dust)
+    x = ck.uniform(-3, 3, 50)
+    near, nearer = np.full(50, 1e-3), np.full(50, 1e-4)
+    ck.diverges("small universes: the horn's t = 0 is a curvature singularity",
+                plane.kretschmann(near, x, dust), plane.kretschmann(nearer, x, dust))
+    now = slices.SMALL_NOW
+    ck.limit("small universes: the horn's dust has a = a_0 and a' = 6/5 at eta = ln 11",
+             [float(eta_of(now)), float(dust(np.array([now]), 0)["a"][0][0]), float(dust(np.array([now]), 0)["a"][1][0])],
+             [math.log(11), 1.0, 1.2], 1e-9)
+    # The affine parameter along a ray, the integral of a^2 d eta, grows without bound.
+    far = np.array([20.0, 40.0])
+    ck.limit("small universes: the horn's upper edges are at infinite affine parameter",
+             [float(1 / (A * A * (np.sinh(2 * e) / 4 - 2 * np.sinh(e) + 1.5 * e))) for e in far], [0.0, 0.0], 1e-10)
+
+    v = View("horn", "The horn", [-PI - 0.45, PI + 0.45, -0.3, PI + 0.3], "horn")
+    tri = [[-PI, 0], [PI, 0], [0, PI]]
+    v.fill("region", tri)
+    v.fill("cover", tri)
+    grid(v, "r", lambda xs, e: mink_pq(e, xs), (-3, -1.5, 0, 1.5, 3), S_POS)
+    times = (0.05, 0.2, now, 2.0, 8.0)
+    for c in times:
+        if abs(c - now) > 1e-12:
+            v.curve("t", *mink_pq(np.full_like(S_ALL, float(eta_of(c))), S_ALL))
+    v.curve("surface", *mink_pq(np.full_like(S_ALL, math.log(11)), S_ALL))
+    v.line("singular", [[[-PI, 0], [PI, 0]]], zig=True)
+    v.line("scri", [[[-PI, 0], [0, PI]], [[0, PI], [PI, 0]]])
+    v.layers.append({"kind": "point", "class": "infinity", "at": [0.0, round(PI, 4)]})
+    for X in (-PI, PI):
+        v.layers.append({"kind": "point", "class": "infinity", "at": [round(X, 4), 0.0]})
+    v.label_xt([0, PI], "$i^+$", "b", dy=-6)
+    v.label_xt([-HALF, HALF], "$\\mathscr{I}^+$", "br", dx=-5, dy=-3)
+    v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+    v.label_xt([0, 0], "the big bang, $t = 0$", "t", dy=8)
+    v.legend("cover", "the whole horn, which $t$ and $x$ cover")
+    v.legend("r", "$x$ constant, at $0$, $\\pm 3/2$, and $\\pm 3$, the tori shrinking toward the right")
+    v.legend("t", "$ct$ constant, at $a_0/20$, $a_0/5$, $2a_0$, and $8a_0$")
+    v.legend("surface", "the moment $a = a_0$, where $\\eta = \\ln 11$")
+    v.legend("scri", "future null infinity, far along the horn in either direction")
+    v.legend("singular", "the big bang, where the Kretschmann scalar diverges")
+    v.set(input=nr.SMALL_OPEN_INPUT.format(G="$G^x{}_x = 0$"))
+    for m in slices.moments("small_universes", "horn"):
+        reach = np.linspace(*m.reach("horn", "x"), 200)
+        v.slice(m, [mink_pq(np.full_like(reach, math.log(11)), reach)])
+    return v
+
+
 def levi_civita(ck, src):
     """Levi-Civita's half plane of fixed phi and z at sigma = 1/4, in Weyl's coordinates and in
     the Kasner form.
@@ -20216,6 +20374,7 @@ DRAWN = {
     "myers_perry": myers_perry,
     "curzon_chazy": curzon_chazy,
     "kopczynski_trautman": kopczynski_trautman,
+    "small_universes": small_universes,
     "bonnor_rotating_dust": bonnor_rotating_dust,
     "double_kerr": double_kerr,
     "neugebauer_meinel": neugebauer_meinel,
@@ -22974,6 +23133,29 @@ CAPTIONS = {
         "since the two metrics differ by the factor $a^2$ alone.",
         "A ray that leaves $\\mathscr{I}^-$ crosses the turn and reaches $\\mathscr{I}^+$. The past light cone of "
         "any event widens without limit toward the past, so it meets the world line of every grain of dust.",
+    ],
+    ("small_universes", "torus"): [
+        "The plane of $t$ and $x$ of a torus of dust, each point in the diagram a 2-torus of area $a^2L^2$. The "
+        "metric on it is $a^2(-d\\eta^2 + dx^2)$ with $\\eta = 2L\\sqrt{a}$, and a conformal factor changes no "
+        "null direction, so $p, q = \\arctan((\\eta \\mp x)/L)$ bring it into Minkowski's triangle, where the "
+        "lines $x = 0$ and $x = L$ are one surface of the torus.",
+        "The big bang is spacelike, the segment along the bottom, and since $x$ is bounded every world line and "
+        "every light ray ends at the one point $i^+$, $t \\to \\infty$. A ray that leaves the diagram through "
+        "$x = L$ comes back in through $x = 0$ at the same $t$, so the ray from the bang laps the universe "
+        "again and again, and no particle horizon stays between two galaxies for long.",
+    ],
+    ("small_universes", "torus_conformal"): [
+        "The same plane ruled by the conformal time $\\eta$, each point in the diagram a 2-torus of area "
+        "$a^2L^2$, with $p, q = \\arctan((\\eta \\mp x)/L)$. Each lap of the ray takes $\\eta = L$, and the "
+        "lines of constant $\\eta$ at $L$, $2L$, and $3L$ are the moments at which its first three laps end.",
+    ],
+    ("small_universes", "horn"): [
+        "The plane of $t$ and $x$ of the horn filled with dust, each point in the diagram a 2-torus of area "
+        "$a^2b_2b_3e^{-2x}$. The metric on it is $a^2(-d\\eta^2 + dx^2)$ with $a\\,d\\eta = c\\,dt$, and $x$ runs "
+        "over the whole line, so $p, q = \\arctan(\\eta \\mp x)$ bring it onto the upper half of Minkowski's diamond.",
+        "The big bang is the segment along the bottom, and the two upper edges are future null infinity, one far "
+        "down the horn, where the tori are large, and one far up it, where they are small. A ray reaches either "
+        "only at an infinite value of its affine parameter.",
     ],
     ("melvin", "cylindrical"): [
         "The half plane of $t$ and $\\rho$ of Melvin's universe at fixed $\\phi$ and $z$, totally geodesic. The metric "

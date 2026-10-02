@@ -1,5 +1,5 @@
 {
-  "version": "9b3dadbac3f28fb9",
+  "version": "33e192772ab33499",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -25733,6 +25733,333 @@
         "eprint": "0912.4922",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/0912.4922"
+      }
+    },
+    "ellis1971": {
+      "type": "article",
+      "fields": {
+        "title": "Topology and cosmology",
+        "author": "Ellis, G. F. R.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "2",
+        "number": "1",
+        "pages": "7--21",
+        "year": "1971",
+        "doi": "10.1007/BF02450512",
+        "url": "https://doi.org/10.1007/BF02450512"
+      }
+    },
+    "ellis1986": {
+      "type": "article",
+      "fields": {
+        "title": "Observational and dynamical properties of small universes",
+        "author": "Ellis, G. F. R. and Schreiber, G.",
+        "journal": "Physics Letters A",
+        "volume": "115",
+        "number": "3",
+        "pages": "97--107",
+        "year": "1986",
+        "doi": "10.1016/0375-9601(86)90032-0",
+        "url": "https://doi.org/10.1016/0375-9601(86)90032-0"
+      }
+    },
+    "schwarzschild1900": {
+      "type": "article",
+      "fields": {
+        "title": "Ueber das zul\\\"assige Kr\\\"ummungsmaass des Raumes",
+        "author": "Schwarzschild, Karl",
+        "journal": "Vierteljahrsschrift der Astronomischen Gesellschaft",
+        "volume": "35",
+        "pages": "337--347",
+        "year": "1900"
+      }
+    },
+    "schwarzschild1998": {
+      "type": "article",
+      "fields": {
+        "title": "On the permissible curvature of space",
+        "author": "Schwarzschild, Karl",
+        "note": "Translated by John M. Stewart and Mary E. Stewart",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "15",
+        "number": "9",
+        "pages": "2539--2544",
+        "year": "1998",
+        "doi": "10.1088/0264-9381/15/9/003",
+        "url": "https://doi.org/10.1088/0264-9381/15/9/003"
+      }
+    },
+    "kragh2012": {
+      "type": "article",
+      "fields": {
+        "title": "Geometry and Astronomy: Pre-{Einstein} Speculations of Non-{Euclidean} Space",
+        "author": "Kragh, Helge",
+        "year": "2012",
+        "eprint": "1205.4909",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1205.4909"
+      }
+    },
+    "luminet1999": {
+      "type": "article",
+      "fields": {
+        "title": "Topology of the Universe: Theory and Observations",
+        "author": "Luminet, Jean-Pierre and Roukema, Boudewijn F.",
+        "year": "1999",
+        "eprint": "astro-ph/9901364",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/astro-ph/9901364"
+      }
+    },
+    "luminet2007": {
+      "type": "article",
+      "fields": {
+        "title": "The Rise of Big Bang Models, from Myth to Theory and Observations",
+        "author": "Luminet, Jean-Pierre",
+        "year": "2007",
+        "eprint": "0704.3579",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0704.3579"
+      }
+    },
+    "lachiezerey1995": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmic topology",
+        "author": "Lachièze-Rey, Marc and Luminet, Jean-Pierre",
+        "journal": "Physics Reports",
+        "volume": "254",
+        "number": "3",
+        "pages": "135--214",
+        "year": "1995",
+        "doi": "10.1016/0370-1573(94)00085-H",
+        "eprint": "gr-qc/9605010",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9605010"
+      }
+    },
+    "levin2002": {
+      "type": "article",
+      "fields": {
+        "title": "Topology and the cosmic microwave background",
+        "author": "Levin, Janna",
+        "journal": "Physics Reports",
+        "volume": "365",
+        "number": "4",
+        "pages": "251--333",
+        "year": "2002",
+        "doi": "10.1016/S0370-1573(02)00018-2",
+        "eprint": "gr-qc/0108043",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0108043"
+      }
+    },
+    "barrow2001": {
+      "type": "article",
+      "fields": {
+        "title": "Twin paradox in compact spaces",
+        "author": "Barrow, John D. and Levin, Janna",
+        "journal": "Physical Review A",
+        "volume": "63",
+        "number": "4",
+        "pages": "044104",
+        "year": "2001",
+        "doi": "10.1103/PhysRevA.63.044104",
+        "eprint": "gr-qc/0101014",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0101014"
+      }
+    },
+    "sokolov1974": {
+      "type": "article",
+      "fields": {
+        "title": "An estimate of the size of the universe from a topological point of view",
+        "author": "Sokolov, D. D. and Shvartsman, V. F.",
+        "journal": "Soviet Physics JETP",
+        "volume": "39",
+        "number": "2",
+        "pages": "196--200",
+        "year": "1974",
+        "url": "http://jetp.ras.ru/cgi-bin/e/index/e/39/2/p196?a=list"
+      }
+    },
+    "sokolov1975": {
+      "type": "article",
+      "fields": {
+        "title": "Globally inhomogeneous ``spliced'' universes",
+        "author": "Sokolov, D. D. and Starobinskii, A. A.",
+        "journal": "Soviet Astronomy",
+        "volume": "19",
+        "number": "5",
+        "pages": "629--633",
+        "year": "1976",
+        "note": "Russian original: Astronomicheskii Zhurnal 52, 1041--1048 (1975)",
+        "url": "https://ui.adsabs.harvard.edu/abs/1976SvA....19..629S"
+      }
+    },
+    "zeldovich1984": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum creation of a universe with nontrivial topology",
+        "author": "Zel'dovich, Ya. B. and Starobinskii, A. A.",
+        "journal": "Soviet Astronomy Letters",
+        "volume": "10",
+        "number": "3",
+        "pages": "135--137",
+        "year": "1984",
+        "url": "https://ui.adsabs.harvard.edu/abs/1984SvAL...10..135Z"
+      }
+    },
+    "gott1980": {
+      "type": "article",
+      "fields": {
+        "title": "Chaotic cosmologies and the topology of the Universe",
+        "author": "Gott, III, J. Richard",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "193",
+        "number": "1",
+        "pages": "153--169",
+        "year": "1980",
+        "doi": "10.1093/mnras/193.1.153",
+        "url": "https://doi.org/10.1093/mnras/193.1.153"
+      }
+    },
+    "mostow1968": {
+      "type": "article",
+      "fields": {
+        "title": "Quasi-conformal mappings in $n$-space and the rigidity of hyperbolic space forms",
+        "author": "Mostow, G. D.",
+        "journal": "Publications Math\\'ematiques de l'IH\\'ES",
+        "volume": "34",
+        "pages": "53--104",
+        "year": "1968",
+        "doi": "10.1007/BF02684590",
+        "url": "https://doi.org/10.1007/BF02684590"
+      }
+    },
+    "gabai2009": {
+      "type": "article",
+      "fields": {
+        "title": "Minimum volume cusped hyperbolic three-manifolds",
+        "author": "Gabai, David and Meyerhoff, Robert and Milley, Peter",
+        "journal": "Journal of the American Mathematical Society",
+        "volume": "22",
+        "number": "4",
+        "pages": "1157--1215",
+        "year": "2009",
+        "doi": "10.1090/S0894-0347-09-00639-0",
+        "eprint": "0705.4325",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0705.4325"
+      }
+    },
+    "stevens1993": {
+      "type": "article",
+      "fields": {
+        "title": "Microwave background anisotropy in a toroidal universe",
+        "author": "Stevens, Daniel and Scott, Douglas and Silk, Joseph",
+        "journal": "Physical Review Letters",
+        "volume": "71",
+        "number": "1",
+        "pages": "20--23",
+        "year": "1993",
+        "doi": "10.1103/PhysRevLett.71.20",
+        "url": "https://doi.org/10.1103/PhysRevLett.71.20"
+      }
+    },
+    "cornish1998": {
+      "type": "article",
+      "fields": {
+        "title": "Circles in the sky: finding topology with the microwave background radiation",
+        "author": "Cornish, Neil J. and Spergel, David N. and Starkman, Glenn D.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "15",
+        "number": "9",
+        "pages": "2657--2670",
+        "year": "1998",
+        "doi": "10.1088/0264-9381/15/9/013",
+        "eprint": "astro-ph/9801212",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/astro-ph/9801212"
+      }
+    },
+    "cornish2004": {
+      "type": "article",
+      "fields": {
+        "title": "Constraining the Topology of the Universe",
+        "author": "Cornish, Neil J. and Spergel, David N. and Starkman, Glenn D. and Komatsu, Eiichiro",
+        "journal": "Physical Review Letters",
+        "volume": "92",
+        "number": "20",
+        "pages": "201302",
+        "year": "2004",
+        "doi": "10.1103/PhysRevLett.92.201302",
+        "eprint": "astro-ph/0310233",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/astro-ph/0310233"
+      }
+    },
+    "planck2016topology": {
+      "type": "article",
+      "fields": {
+        "title": "{Planck} 2015 results. XVIII. Background geometry and topology of the Universe",
+        "author": "{Planck Collaboration} and Ade, P. A. R. and others",
+        "journal": "Astronomy \\& Astrophysics",
+        "volume": "594",
+        "pages": "A18",
+        "year": "2016",
+        "doi": "10.1051/0004-6361/201525829",
+        "eprint": "1502.01593",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1502.01593"
+      }
+    },
+    "luminet2003": {
+      "type": "article",
+      "fields": {
+        "title": "Dodecahedral space topology as an explanation for weak wide-angle temperature correlations in the cosmic microwave background",
+        "author": "Luminet, Jean-Pierre and Weeks, Jeffrey R. and Riazuelo, Alain and Lehoucq, Roland and Uzan, Jean-Philippe",
+        "journal": "Nature",
+        "volume": "425",
+        "number": "6958",
+        "pages": "593--595",
+        "year": "2003",
+        "doi": "10.1038/nature01944",
+        "eprint": "astro-ph/0310253",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/astro-ph/0310253"
+      }
+    },
+    "petersen2023": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmic topology. Part I. Limits on orientable {Euclidean} manifolds from circle searches",
+        "author": "Petersen, Pip and Akrami, Yashar and Copi, Craig J. and Jaffe, Andrew H. and Kosowsky, Arthur and Starkman, Glenn D. and Tamosiunas, Andrius and others",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2023",
+        "number": "01",
+        "pages": "030",
+        "year": "2023",
+        "doi": "10.1088/1475-7516/2023/01/030",
+        "eprint": "2211.02603",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2211.02603"
+      }
+    },
+    "martinbenito2011": {
+      "type": "article",
+      "fields": {
+        "title": "Matter in inhomogeneous loop quantum cosmology: The {Gowdy} $T^3$ model",
+        "author": "Martín-Benito, Mercedes and Martín-de Blas, Daniel and Mena Marugán, Guillermo A.",
+        "journal": "Physical Review D",
+        "volume": "83",
+        "number": "8",
+        "pages": "084050",
+        "year": "2011",
+        "doi": "10.1103/PhysRevD.83.084050",
+        "eprint": "1012.2324",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1012.2324"
       }
     }
   }

@@ -1746,6 +1746,19 @@ Schwarzschild's metric with $\sqrt{r^2 + a^2}$ written for the areal radius, whi
 - chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{\sqrt{r^2 + a^2}}\right)du^2 - 2\,du\,dr + \left(r^2 + a^2\right)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{\sqrt{r^2 + a^2}}\right)dv^2 + 2\,dv\,dr + \left(r^2 + a^2\right)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Small Universes
+
+A Friedmann universe whose space is a torus or another quotient of flat or hyperbolic space, made by declaring points a fixed step apart to be one point. At each point its geometry is Friedmann's, its volume can be finite with no curvature to close it, and an observer sees each galaxy many times over, at a different age each time. George Ellis reviewed such universes in 1971, and with G. Schreiber named them small universes in 1986.
+
+- id: `small_universes`
+- tags: cosmology, topology, multiply connected, torus, compact, closed universe, hyperbolic space, expanding universe, FLRW, locally isotropic, ghost images, cosmic microwave background, big bang, curvature singularity, time-dependent, exact solution, Lorentzian, Einstein equations, idealized model, four-dimensional, conformally flat
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/small_universes.json
+- chart Comoving Torus: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + a^2\left(dx^2 + dy^2 + dz^2\right)$$
+- chart Conformal Time on the Torus: coordinates $(\eta, x, y, z)$, $$ds^2 = a^2\left(-d\eta^2 + dx^2 + dy^2 + dz^2\right)$$
+- chart Comoving Hyperbolic: coordinates $(t, \chi, \theta, \phi)$, $$ds^2 = -c^2dt^2 + a^2\left(d\chi^2 + \sinh^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Horn: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + a^2\left(dx^2 + e^{-2x}\left(dy^2 + dz^2\right)\right)$$
+
 ### Som-Raychaudhuri Rotating Universe
 
 A homogeneous universe of charged dust in rigid rotation, held in a uniform magnetic field along the axis of rotation. Its line element is the shortest of Gödel's kind, and the circles about any world line of the dust are closed timelike curves beyond $r = c/\Omega$.

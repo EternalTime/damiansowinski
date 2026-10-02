@@ -10624,6 +10624,88 @@ def kopczynski_trautman(ck, src):
                  movie=movie(frames, "$ct$", times), settings="$\\ell = 1$, the unit of every length.")]
 
 
+SMALL_MOMENTS = (1 / 96, 1 / 12, 9 / 32)    # ct in L: light from the bang has been 1/2, 1 and 3/2 times round
+
+
+def small_universes(ck, src):
+    """The slice z = 0 of Ellis's torus of dust, at the cubic torus and the scale factor its other
+    diagrams declare, a = (3ct/2L)^(2/3) in units of the period L. A moment t of it has the flat
+    metric a^2(dx^2 + dy^2) with x and y both periodic in L: a flat torus, which no smooth surface
+    of flat space carries whole, so the circle of x is closed and the circle of y is drawn cut
+    open, a cylinder of circumference a L and of length a L whose two ends are one circle. x is
+    carried once round by x = L phi/(2 pi). Drawn at the three moments at which light from the bang
+    has been half way, once and one and a half times round, a = 1/16, 1/4 and 9/16, and played as a
+    movie with a frame about every 0.005 L of ct."""
+    size = 0.6
+
+    def scale(ct):
+        return (1.5 * ct) ** (2 / 3)
+
+    def moment(ct):
+        a = scale(ct)
+        sl = Slice(src, "small_universes", "torus", "y", "x", {"t": repr(float(ct)), "z": 0}, dict(nr.SMALL_TORUS),
+                   {"a": repr(a)}, swept={"x": "x/(2*pi)"})
+        tube = Piece("tube", "sheet", sl, 0.0, 1.0, -a / 2, 1,
+                     (("join", "the circle $y = 0$, which is the circle $y = L$"),
+                      ("join", "the circle $y = L$, which is the circle $y = 0$")),
+                     [(0.0, "surface", None), (0.25, "r", None), (0.5, "r", None), (0.75, "r", None),
+                      (1.0, "surface", None)], size)
+        where = f"small universes, the torus at ct = {ct:.4g} L"
+        ck.isometry(where, tube)
+        ck.radius(f"{where}, rho = a L/(2 pi)", tube, lambda y, a=a: np.full_like(y, a / (2 * math.pi)), size)
+        ck.form(f"{where}, z = a (y - L/2)", tube, lambda y, a=a: a * (y - 0.5), size)
+        return Surface([tube], label=f"$ct/L = {ct:.3f}$", time=ct)
+
+    # Light from the bang has crossed the comoving distance 2 L sqrt(a): L/2, L and 3L/2.
+    ck.add("small universes: the moments are those at which light has been 1/2, 1 and 3/2 times round",
+           max(abs(2 * math.sqrt(scale(t)) - n) for n, t in zip((0.5, 1, 1.5), SMALL_MOMENTS)), 1e-12)
+    times, keys = movie_values(list(SMALL_MOMENTS), 0.005)
+    frames = [moment(t) for t in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the slice $z = 0$ of a moment of constant $t$, which $x$ and $y$ cover")
+    fig.legend("line", "surface", "the circles $y = 0$ and $y = L$, one circle drawn twice")
+    fig.legend("line", "r", "$y$ constant, at $L/4$, $L/2$, and $3L/4$, each a circle of circumference $aL$")
+    fig.legend("line", "meridian", "$x$ constant, every $L/12$")
+    return [view("torus", "The torus, cut open", "$L$", surfaces, fig.done(),
+                 movie=movie(frames, "$ct$", [f.time for f in frames]),
+                 settings="A cubic torus of dust, $L_1 = L_2 = L_3 = L$ and $a = (3ct/2L)^{2/3}$, with the period "
+                          "$L$ the unit of every length."),
+            small_universes_horn(ck, src)]
+
+
+def small_universes_horn(ck, src):
+    """The slice z = 0 of Sokolov and Starobinsky's horn at one moment, with the periods b_2 = b_3 =
+    2 pi its spacetime diagram declares and the radius of curvature a_0 of that moment the unit. The
+    metric on it is dx^2 + e^(-2x) dy^2 with y periodic in 2 pi, so the circle at x has the radius
+    e^(-x) and the surface rises at dz/dx = sqrt(1 - e^(-2x)): Beltrami's pseudosphere, from its rim
+    x = 0, where the circles have grown as fast as the distance out to them, up the horn to x = 3.
+    Below the rim g_xx < (drho/dx)^2, which is checked, and no surface of revolution carries it."""
+    size = 3.0
+    sl = Slice(src, "small_universes", "horn", "x", "y", {"t": 0, "z": 0}, dict(nr.SMALL_HORN), {"a": "1"})
+    horn = Piece("horn", "sheet", sl, 0.0, 3.0, 0.0, 1,
+                 (("stops", "the rim $x = 0$, below which the circles grow faster than the distance out to them"),
+                  ("edge", "the horn runs on, narrowing, to $x \\to \\infty$")),
+                 [(1.0, "r", None), (2.0, "r", None)], size)
+    where = "small universes, the horn"
+    ck.isometry(where, horn)
+    ck.radius(f"{where}, rho = e^(-x)", horn, lambda x: np.exp(-x), size)
+    # The tractrix: z = artanh(s) - s with s = sqrt(1 - e^(-2x)).
+    ck.form(f"{where}, the pseudosphere z = artanh(s) - s", horn,
+            lambda x: np.arctanh(np.sqrt(1 - np.exp(-2 * x))) - np.sqrt(1 - np.exp(-2 * x)), size)
+    below = np.linspace(-3.0, -1e-3, 200)
+    ck.add(f"{where}: below the rim the circles outgrow the distance, e^(-x) > 1",
+           0.0 if np.all(np.exp(-below) > 1) else 1.0, 0.5)
+    surface = Surface([horn])
+    fig = figure_of([surface], {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the slice $z = 0$ of one moment, from the rim $x = 0$ up the horn")
+    fig.legend("line", "r", "$x$ constant, at $1$ and $2$, each a circle of circumference $2\\pi a_0e^{-x}$")
+    fig.legend("line", "meridian", "$y$ constant, every $30°$")
+    return view("horn", "The horn", "$a_0$", [surface], fig.done(),
+                settings="$b_2 = b_3 = 2\\pi$, with the radius $a_0$ of curvature of space at the moment drawn the "
+                         "unit of every length.")
+
+
 def btz(ck, src):
     """The moment t = 0 of the hole without rotation, M = 1 and J = 0 at l = 1, as its conformal
     diagram's square draws it, through both exteriors as one surface. g_rr = 1/N^2 with N^2 =
@@ -14124,6 +14206,7 @@ DRAWN = {
     "nordstrom_scalar": nordstrom_scalar,
     "kopczynski_trautman": kopczynski_trautman,
     "ab_metrics": ab_metrics,
+    "small_universes": small_universes,
     "alcubierre": alcubierre,
     "natario": natario,
     "btz": btz,
@@ -15096,6 +15179,25 @@ CAPTIONS = {
         "where $a = 1$, and grows again. The turn is smooth: near it $a \\approx 1 + c^2t^2/3\\ell^2$, and the "
         "expansion accelerates until $a^3 = 4$, at $ct = \\sqrt{3}\\,\\ell$, after which the dust slows it as in "
         "Friedmann's universe.",
+    ],
+    ("small_universes", "torus"): [
+        "The slice $z = 0$ of a torus of dust at three moments, $ct = L/96$, $L/12$, and $9L/32$, each drawn "
+        "as a surface in flat space with every distance along it the metric distance. On it the metric is "
+        "$a^2(dx^2 + dy^2)$ with $x$ and $y$ both periodic in $L$, a flat torus, drawn with the circle of $x$ "
+        "closed and the circle of $y$ cut open: a cylinder of circumference $aL$ and length $aL$ whose two "
+        "ends are one circle.",
+        "The galaxies keep their places on the surface while it grows. Light from the bang has been half way round "
+        "the circle at the first moment, once round at the second, and one and a half times at the third, since the "
+        "comoving distance it has crossed is $2L\\sqrt{a}$.",
+    ],
+    ("small_universes", "horn"): [
+        "The slice $z = 0$ of the horn at one moment ($b_2 = 2\\pi$), drawn as a surface in flat space with every "
+        "distance along it the metric distance. On it the metric is $a_0^2(dx^2 + e^{-2x}dy^2)$ with $y$ periodic, "
+        "so the circle at $x$ has the circumference $2\\pi a_0e^{-x}$: Eugenio Beltrami's pseudosphere, a piece of "
+        "the hyperbolic plane rolled up.",
+        "The surface begins at the rim $x = 0$. Below it the circles grow faster than the distance out to them, "
+        "and no surface of revolution in flat space carries them. Up the horn the circles shrink without limit "
+        "while the curvature stays $-1/a_0^2$ at every point.",
     ],
     ("melvin", "universe"): [
         "The plane $z = 0$ of Melvin's universe at one moment ($B = 1$), drawn as a surface in flat space with "
