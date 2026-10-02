@@ -102,6 +102,11 @@
       "id": "reissner_nordstrom_ads",
       "kind": "generalisation",
       "text": "Anti-de Sitter space with a charged black hole put in. For the field theory on the boundary the charge is a charge density [chamblin1999]."
+    },
+    {
+      "id": "boulware_deser",
+      "kind": "family",
+      "text": "Einstein-Gauss-Bonnet gravity in five dimensions has an anti-de Sitter space among its solutions with no cosmological constant in its action. David Boulware and Stanley Deser found it in 1985 beside their black hole, and its graviton is a ghost [boulware1985, charmousis2008]."
     }
   ],
   "references": [
@@ -138,7 +143,9 @@
     "coleman1980",
     "siklos1985",
     "podolsky1998",
-    "chamblin1999"
+    "chamblin1999",
+    "boulware1985",
+    "charmousis2008"
   ],
   "coordinates": [
     {

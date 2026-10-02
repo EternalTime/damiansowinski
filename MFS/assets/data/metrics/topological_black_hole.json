@@ -62,6 +62,11 @@
       "id": "reissner_nordstrom_ads",
       "kind": "family",
       "text": "The charged black hole of anti-de Sitter space with a round horizon. The hyperbolic hole of negative mass has an inner horizon as it does, and a conformal diagram like its own [mann1997negative, brill1997]."
+    },
+    {
+      "id": "boulware_deser",
+      "kind": "family",
+      "text": "The spherical black hole of Einstein-Gauss-Bonnet gravity in five dimensions. Rong-Gen Cai gave it flat and hyperbolic horizons in anti-de Sitter space in 2002 [cai2002]."
     }
   ],
   "references": [
@@ -84,7 +89,8 @@
     "hartnoll2009",
     "kovtun2005",
     "hartnoll2008",
-    "casini2011"
+    "casini2011",
+    "cai2002"
   ],
   "coordinates": [
     {

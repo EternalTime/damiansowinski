@@ -358,6 +358,14 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `spherical`, `ingoing`, `outgoing` and `six`, the square: the line $T = 0$ through the bifurcation sphere, from $6\,r_h$ in one exterior to $6\,r_h$ in the other.
 - Five dimensions and six are two spacetimes, so no drawing of one marks the other's moment, which `HIDDEN_VIEWS` records.
 
+### Boulware-Deser
+
+- The embedding has two views: the plane of $r$ and $\phi$ at $t = 0$ of the black hole, $r_0 = 13r_h/12$ and $\ell = 5r_h/12$, from the throat $r_h$ to $6\,r_h$ on both sheets, and of the other branch, $r_0 = \ell$, from the centre to $3\ell$.
+- `spherical/radial`: the line $ct = 0$ from $r_h$ to the edge of the box at $6\,r_h$; `spherical_plus/radial`: the line $ct = 0$ from $0$ to $3\ell$.
+- The Eddington-Finkelstein planes: $v = r_*$ and $u = -r_*$ with `slices.boulware_deser_rstar`, which runs off the drawing toward the horizon.
+- `spherical`, `ingoing` and `outgoing`, the square: the line $T = 0$ through the bifurcation sphere, from $6\,r_h$ in one exterior to $6\,r_h$ in the other; `branch`, the strip: the line $T = 0$ from the singularity out to $r = 3\ell$.
+- The black hole and the other branch are two spacetimes, so no drawing of one marks the other's moment, which `HIDDEN_VIEWS` records.
+
 ### Curzon-Chazy
 
 - The embedding is one moment: the plane $z = 0$ at $t = 0$ in Weyl's chart, from $\rho = 0.7226\,m$, where the surface starts, to $5\,m$.

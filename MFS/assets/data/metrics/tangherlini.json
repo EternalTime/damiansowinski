@@ -56,6 +56,11 @@
       "id": "kerr",
       "kind": "family",
       "text": "The spinning black hole of four dimensions. Robert Myers and Malcolm Perry found its counterparts in $D$ dimensions in 1986, with the static black hole as the member that does not turn [myers1986]."
+    },
+    {
+      "id": "boulware_deser",
+      "kind": "generalisation",
+      "text": "Tangherlini's black hole of five dimensions with the curvature squared term of string theory added to the action. The term brings a length $\\ell$ with it, and at $\\ell = 0$ the metric is Tangherlini's [boulware1985]."
     }
   ],
   "references": [
@@ -77,7 +82,8 @@
     "dimopoulos2001",
     "cms2011",
     "emparan2013",
-    "grossperry1983"
+    "grossperry1983",
+    "boulware1985"
   ],
   "coordinates": [
     {

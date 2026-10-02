@@ -288,6 +288,76 @@ def tangherlini_t(sign):
     return [Mark(m, [np.column_stack([sign * (r + 0.5 * np.log((r - 1) / (r + 1))), r])])]
 
 
+# Boulware and Deser's black hole as every diagram draws it, in units of its horizon radius: the
+# mass radius r_0 = 13/12 and the Gauss-Bonnet length l = 5/12, so that r_h^2 = r_0^2 - l^2 = 1; and
+# the other branch in units of l, at r_0 = l. The black hole's ratio r_0/l = 13/5 is above
+# 1 + sqrt 2, below which Beroiz, Dotti and Gleiser found the black hole unstable (Phys. Rev. D
+# 76, 024012).
+BD_R0, BD_ELL = 13 / 12, 5 / 12
+BD_PLUS_R0 = 1.0
+
+
+def _gauss(of, a, b, panels):
+    """The integral of a smooth function from a to b by Gauss and Legendre's rule of twelve points
+    on each of `panels` equal panels."""
+    nodes, weights = np.polynomial.legendre.leggauss(12)
+    edges = np.linspace(a, b, panels + 1)
+    half, mid = 0.5 * np.diff(edges), 0.5 * (edges[:-1] + edges[1:])
+    return float(np.sum(half[:, None] * weights * of(mid[:, None] + half[:, None] * nodes)))
+
+
+def _bd_part(r, of, far):
+    """The integral from 0 to r of `of`, which is smooth and falls as far/s^2: in s out to
+    s = 1 and in 1/s beyond it, where the integrand of[1/w]/w^2 is smooth down to w = 0."""
+    def one(x):
+        if x <= 1.0:
+            return _gauss(of, 0.0, x, 8) if x > 0 else 0.0
+        inner = _gauss(of, 0.0, 1.0, 8)
+        w = 0.0 if math.isinf(x) else 1.0 / x
+        return inner + _gauss(lambda q: np.where(q > 0, of(1 / np.maximum(q, 1e-300)) / np.maximum(q, 1e-300) ** 2, far),
+                              w, 1.0, 16)
+    return np.array([one(float(x)) for x in np.atleast_1d(np.asarray(r, dtype=float))]).reshape(np.shape(r))
+
+
+def boulware_deser_rstar(r):
+    """The tortoise coordinate of Boulware and Deser's black hole at r_0 = 13/12 and l = 5/12, as the
+    Eddington-Finkelstein charts fix it, vanishing at r = 0. With W = sqrt(r^4 + 4 l^2 r_0^2) and
+    W_h = r_h^2 + 2 l^2 its value at the horizon r_h = 1,
+    1/f = (r^2 + 2 l^2 + W)/(2 (r^2 - r_h^2)) = 1 + W_h/(r^2 - r_h^2) - (W - r^2 + 2 l^2)/(2 (W + W_h)),
+    so r_* = r + (W_h/2 r_h) ln|(r - r_h)/(r + r_h)| - J(r)/2: Tangherlini's, with the surface
+    gravity r_h/W_h in place of 1/r_h, less half the integral J of (W - s^2 + 2 l^2)/(W + W_h)
+    from 0, which is smooth, falls as 2 l^2/s^2 and vanishes at l = 0."""
+    l2, k = BD_ELL ** 2, 4 * BD_ELL ** 2 * BD_R0 ** 2
+    wh = 1 + 2 * l2
+
+    def of(s):
+        w = np.sqrt(s ** 4 + k)
+        # W - s^2 is written k/(W + s^2), which keeps its digits far out.
+        return (k / (w + s * s) + 2 * l2) / (w + wh)
+    r = np.asarray(r, dtype=float)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        pole = np.where(np.isinf(r), 0.0, 0.5 * wh * np.log(np.abs((r - 1) / (r + 1))))
+    return r + pole - 0.5 * _bd_part(r, of, 2 * l2)
+
+
+def boulware_deser_plus_rstar(r):
+    """The tortoise coordinate of the other branch at l = 1 and r_0 = 1, vanishing at r = 0:
+    the integral of 1/f_+ = 2 l^2/(r^2 + 2 l^2 + W), which falls as l^2/s^2, so r_* tends to a
+    finite value R as r -> infinity."""
+    k = 4 * BD_PLUS_R0 ** 2
+    return _bd_part(r, lambda s: 2 / (s * s + 2 + np.sqrt(s ** 4 + k)), 1.0)
+
+
+def boulware_deser_t(sign):
+    """The static t = 0 of Boulware and Deser's black hole in an Eddington-Finkelstein chart, r_h = 1:
+    v = r_* in the ingoing chart and u = -r_* in the outgoing one, outside r_h, as far as the
+    embedding reaches."""
+    m = moments("boulware_deser", "hole")[0]
+    lo, hi = m.reach("spherical", "r")
+    r = near(lo, hi)
+    return [Mark(m, [np.column_stack([sign * boulware_deser_rstar(r), r])])]
+
+
 def black_string_t(kerr_schild=False):
     """The black string's static t = 0 across the string, r_s = 1, where the plane of the time and r
     is Schwarzschild's: v = r + ln(r - 1) in the ingoing Eddington-Finkelstein chart, and
@@ -1452,6 +1522,14 @@ FLAT = {
     ("tangherlini", "eddington_finkelstein_outgoing", "chart"): lambda: tangherlini_t(-1),
     ("tangherlini", "spherical_six", "radial"): lambda: one(
         "tangherlini", lambda m: along(0.0, *m.reach("spherical_six", "r")), view_id="six"),
+    ("boulware_deser", "spherical", "radial"): lambda: one(
+        "boulware_deser", lambda m: along(0.0, *m.reach("spherical", "r")), view_id="hole"),
+    ("boulware_deser", "eddington_finkelstein_ingoing", "finkelstein"): lambda: boulware_deser_t(1),
+    ("boulware_deser", "eddington_finkelstein_ingoing", "chart"): lambda: boulware_deser_t(1),
+    ("boulware_deser", "eddington_finkelstein_outgoing", "finkelstein"): lambda: boulware_deser_t(-1),
+    ("boulware_deser", "eddington_finkelstein_outgoing", "chart"): lambda: boulware_deser_t(-1),
+    ("boulware_deser", "spherical_plus", "radial"): lambda: one(
+        "boulware_deser", lambda m: along(0.0, *m.reach("spherical_plus", "r")), view_id="branch"),
     # The black string across the string, in five dimensions on its three charts and in six on its
     # static chart; five and six are two spacetimes, each marked on its own charts alone.
     ("black_string", "static", "radial"): lambda: one(

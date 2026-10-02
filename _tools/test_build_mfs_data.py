@@ -4714,6 +4714,14 @@ class Slices(unittest.TestCase):
                         "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
                     **{f"conformal tangherlini/{v}": {"six"} for v in ("spherical", "ingoing", "outgoing")},
                     "tangherlini/spherical_six/radial": {"five"},
+                    # Boulware and Deser's black hole and the other root of their field equations are two
+                    # spacetimes, each marked on the drawings of its own charts.
+                    **{f"boulware_deser/{s}": {"branch"} for s in (
+                        "spherical/radial", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
+                        "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
+                    **{f"conformal boulware_deser/{v}": {"branch"} for v in ("spherical", "ingoing", "outgoing")},
+                    "boulware_deser/spherical_plus/radial": {"hole"},
+                    "conformal boulware_deser/branch": {"hole"},
                     # Myers and Perry's black hole is embedded on four surfaces, the plane of rotation and the
                     # transverse plane of the hole with one spin in five dimensions, the Hopf fibre of the hole with
                     # equal spins, and the transverse plane in six dimensions: each drawing marks the one it draws.
@@ -4979,6 +4987,23 @@ class Slices(unittest.TestCase):
             finkelstein = key.endswith("finkelstein")
             return (lambda X: sign * (0.5 * math.log(abs((X - 1) / (X + 1))) + (0 if finkelstein else X))), \
                 list(self.reach(surface))
+        if key.startswith("boulware_deser/eddington_finkelstein"):
+            # At r_0 = 13/12 and l = 5/12 the horizon is r_h = 1, W = sqrt(r^4 + (65/72)^2) is 97/72 on it, and
+            # 1/f = 1 + (97/72)/(r^2 - 1) - (W - r^2 + 25/72)/(2 (W + 97/72)), so
+            # r_* = r + (97/144) ln((r - 1)/(r + 1)) - J(r)/2 with J the integral of the last fraction's
+            # numerator over W + 97/72 from 0, by Simpson's rule. Static t = 0 is v = r_* and u = -r_*, drawn
+            # against v - r and u + r or against v and u.
+            sign = 1 if "ingoing" in key else -1
+            finkelstein = key.endswith("finkelstein")
+
+            def rstar(r, n=2000):
+                def of(x):
+                    w = math.sqrt(x ** 4 + (65 / 72) ** 2)
+                    return (w - x * x + 25 / 72) / (w + 97 / 72)
+                h = r / n
+                J = h / 3 * (of(0) + of(r) + sum((4 if k % 2 else 2) * of(k * h) for k in range(1, n)))
+                return r + 97 / 144 * math.log(abs((r - 1) / (r + 1))) - J / 2
+            return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
         if key.startswith("bardeen/eddington_finkelstein"):
             # At r_s = 1 and g = 1/3 the static t = 0 is v = r_* and u = -r_*, with dr_*/dr = 1/f and
             # r_* = 0 at the centre, drawn against v - r and u + r or against v and u. It runs off

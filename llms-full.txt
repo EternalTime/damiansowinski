@@ -350,6 +350,19 @@ Vaidya's radiating star with a charge: the field of a spherical body that sends 
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{q^2}{r^2}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Homothetic: coordinates $(V, R, \theta, \phi)$, $$ds^2 = e^{2\mu V/M}\left(-\left(1 - \dfrac{2M}{R} + \dfrac{Q^2}{R^2} - \dfrac{2\mu R}{M}\right)dV^2 + 2\,dV\,dR + R^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### Boulware-Deser Black Hole
+
+The spherical black hole of Einstein-Gauss-Bonnet gravity in five dimensions, which David Boulware and Stanley Deser found in 1985. The curvature squared term of string theory keeps its metric function finite at the centre and leaves a small mass with no horizon, and the same field equations have a second solution that approaches anti-de Sitter space.
+
+- id: `boulware_deser`
+- tags: static, stationary, spherically symmetric, hyperspherical symmetry, black hole, mass, Einstein-Gauss-Bonnet gravity, Gauss-Bonnet term, Lovelock gravity, higher curvature gravity, string theory, low energy string theory, higher dimensions, five-dimensional, curvature singularity, naked singularity, coordinate singularity, horizon, event horizon, white hole, maximal extension, causal structure, asymptotically flat, anti-de Sitter, ghost, instability, black hole thermodynamics, Hawking temperature, exact solution, Lorentzian, idealized model
+- signature: (-,+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/boulware_deser.json
+- chart Hyperspherical: coordinates $(t, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{2\ell^2}\left(1 - \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)\right)c^2dt^2 + \dfrac{dr^2}{1 + \dfrac{r^2}{2\ell^2}\left(1 - \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)} + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
+- chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{2\ell^2}\left(1 - \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)\right)du^2 - 2\,du\,dr + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{2\ell^2}\left(1 - \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)\right)dv^2 + 2\,dv\,dr + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
+- chart Hyperspherical, Anti-de Sitter Branch: coordinates $(t, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{2\ell^2}\left(1 + \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)\right)c^2dt^2 + \dfrac{dr^2}{1 + \dfrac{r^2}{2\ell^2}\left(1 + \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)} + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
+
 ### C-Metric Accelerating Black Holes
 
 An exact vacuum solution describing two black holes that accelerate away from each other, driven by a cosmic string or a strut along their axis of symmetry. With the acceleration set to zero it is the Schwarzschild black hole.

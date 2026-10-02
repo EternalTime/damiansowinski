@@ -94,6 +94,11 @@
       "id": "mass_inflation",
       "kind": "generalisation",
       "text": "Vaidya's ingoing metric with a charge on the hole, which gives it an inner horizon. A second stream running outward makes the mass function grow without limit there [poisson1989]."
+    },
+    {
+      "id": "boulware_deser",
+      "kind": "family",
+      "text": "The black hole of Einstein-Gauss-Bonnet gravity in five dimensions. Tsutomu Kobayashi made its mass a function of $v$ in 2005, a Vaidya solution of that theory [kobayashi2005]."
     }
   ],
   "references": [
@@ -122,7 +127,8 @@
     "bonnor1969light",
     "podolsky2005",
     "wang1997collapse",
-    "poisson1989"
+    "poisson1989",
+    "kobayashi2005"
   ],
   "coordinates": [
     {
