@@ -733,6 +733,24 @@ DIMENSIONS = {
     ("black_string", "static_six"): {
         "t": "T", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "z": "L", "r_h": "L",
     },
+    # Myers and Perry's rotating black hole keeps the mass parameter mu, which is r_h^(D-3) at no
+    # spin: an area in D = 5 and a volume in D = 6. Each spin parameter is a length, as Kerr's is.
+    # The ingoing time v = ct + r_* is a length, and the equal-spin chart's rho^2 = r^2 + a^2.
+    ("myers_perry", "boyer_lindquist"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\psi": "1", "\\mu": "L**2", "a": "L",
+    },
+    ("myers_perry", "ingoing_kerr"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\tilde\\phi": "1", "\\psi": "1", "\\mu": "L**2", "a": "L",
+    },
+    ("myers_perry", "two_spins"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\psi": "1", "\\mu": "L**2", "a": "L", "b": "L",
+    },
+    ("myers_perry", "equal_spins"): {
+        "t": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "\\psi": "1", "\\mu": "L**2", "a": "L",
+    },
+    ("myers_perry", "boyer_lindquist_six"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\chi": "1", "\\psi": "1", "\\mu": "L**3", "a": "L",
+    },
     # Schwarzschild-anti-de Sitter keeps Schwarzschild's r_s and anti-de Sitter's radius, which the
     # entry calls L and the dimensional pass calls L as well, as for anti-de Sitter space itself.
     # The Eddington-Finkelstein times u = ct - r_* and v = ct + r_* are lengths.

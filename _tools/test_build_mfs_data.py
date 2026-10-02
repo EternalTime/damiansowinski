@@ -2317,6 +2317,23 @@ class EmbeddingDiagrams(unittest.TestCase):
                 near(rho, 1 + a * math.cos(2 * math.pi * x / 10), f"the rippled horizon's rho at {x}, {surface['label']}")
                 self.assertLess(abs(math.hypot(rho2 - rho, z2 - z) - (x2 - x)), 2e-4 * (x2 - x), f"the chord at {x}")
             self.assertEqual((points[0][0], points[-1][0]), (-5.0, 5.0))
+            # Myers and Perry's hole with one spin in five dimensions, mu = 1 and a = 3/5: in the plane of
+            # rotation the circle at r has the radius sqrt(r^2 + a^2 + mu a^2/r^2), which is mu/r_+ = 5/4 at
+            # the throat, and in the transverse plane the slice is z = sqrt(mu) arcosh(r/r_+) with r_+ = 4/5.
+            # With equal spins, a = 2/5, the Hopf fibre at rho has the radius sqrt(rho^4 + mu a^2)/rho.
+            rotation = piece("myers_perry", pid, view=0)
+            self.assertEqual(tuple(rotation[0]), (0.8, 1.25, 0.0))
+            for r, rho, z in rotation:
+                near(rho, math.sqrt(r * r + 0.36 + 0.36 / (r * r)), f"Myers-Perry's plane of rotation rho at {r}")
+            for r, rho, z in piece("myers_perry", pid, view=1):
+                near(rho, r, f"Myers-Perry's transverse plane rho at {r}")
+                near(z, sign * math.acosh(max(r / 0.8, 1.0)), f"Myers-Perry's transverse plane z at {r}")
+            fibre = piece("myers_perry", pid, view=2)
+            self.assertAlmostEqual(fibre[0][1], 1.0, places=6)
+            for r, rho, z in fibre:
+                near(rho, math.sqrt(r ** 4 + 0.16) / r, f"Myers-Perry's Hopf fibre rho at {r}")
+            for r, rho, z in piece("myers_perry", pid, view=3):
+                near(rho, r, f"Myers-Perry's transverse plane in six dimensions rho at {r}")
         # The Kaluza-Klein monopole's cigar: the circle of the fifth dimension at r has radius
         # 8m sqrt(r/(r + 4m)), and the surface rises from the nut at dz/dr = 2 toward dz/dr = 1.
         cigar = piece("kaluza_klein_monopole", "cigar")
@@ -4000,6 +4017,9 @@ class Slices(unittest.TestCase):
     # a moment of space.
     HIDDEN = {"btz/stationary/rotating", "btz/eddington_finkelstein_ingoing/rotating",
               "btz/eddington_finkelstein_outgoing/rotating", "conformal btz/rotating",
+              # Myers and Perry's plane of rotation in six dimensions, which the embedded transverse plane
+              # theta = 0 meets nowhere outside the horizon.
+              "myers_perry/boyer_lindquist_six/rotation",
               "frw/comoving_spherical/radial", "frw/comoving_spherical/through", "frw/conformal_spherical/radial",
               "tolman_bondi/comoving_synchronous/collapse", "vaidya/eddington_finkelstein_outgoing/shell",
               "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "conformal frw/flat", "conformal frw/open",
@@ -4110,6 +4130,17 @@ class Slices(unittest.TestCase):
                         "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
                     **{f"conformal tangherlini/{v}": {"six"} for v in ("spherical", "ingoing", "outgoing")},
                     "tangherlini/spherical_six/radial": {"five"},
+                    # Myers and Perry's black hole is embedded on four surfaces, the plane of rotation and the
+                    # transverse plane of the hole with one spin in five dimensions, the Hopf fibre of the hole with
+                    # equal spins, and the transverse plane in six dimensions: each drawing marks the one it draws.
+                    **{f"{place}myers_perry/{where}": {"rotation", "transverse", "fibre", "six"} - {own}
+                       for place, where, own in (
+                           ("", "boyer_lindquist/transverse", "transverse"), ("", "boyer_lindquist/rotation", "rotation"),
+                           ("", "ingoing_kerr/transverse", "transverse"), ("", "ingoing_kerr/rotation", "rotation"),
+                           ("", "equal_spins/radial", "fibre"), ("", "boyer_lindquist_six/transverse", "six"),
+                           ("conformal ", "transverse", "transverse"), ("conformal ", "ingoing", "transverse"),
+                           ("conformal ", "rotation", "rotation"), ("conformal ", "equal", "fibre"),
+                           ("conformal ", "six", "six"))},
                     "conformal tangherlini/six": {"five"},
                     # The black string in five dimensions and in six are two spacetimes, each marked on
                     # the drawings of its own charts, and its rippled horizon is the perturbed string, a
@@ -4297,6 +4328,10 @@ class Slices(unittest.TestCase):
             if which == "cosmological":
                 return (lambda X: L.static_t(1 / L.H, X) + sign * L.rstar(X) - lean * X), [lo + 0.5, hi + 0.5]
             return (lambda X: sign * L.rstar(X) - lean * X), [lo, hi]
+        if key.startswith("myers_perry/ingoing_kerr"):
+            # One spin in five dimensions at mu = 1 and a = 3/5, r_+ = 4/5: Boyer-Lindquist t = 0 is v = r_*,
+            # r_* = r + (5/8) ln((r - 4/5)/(r + 4/5)), drawn against v - r, on either plane.
+            return (lambda X: 0.625 * math.log(abs((X - 0.8) / (X + 0.8)))), list(self.reach(surface))
         if key.startswith("tangherlini/eddington_finkelstein"):
             # Five dimensions at r_h = 1: r_* = r + ln((r - 1)/(r + 1))/2, and the static t = 0 is v = r_*
             # and u = -r_*, drawn against v - r and u + r or against v and u.

@@ -7709,6 +7709,320 @@ def fisher_jnw(ck, src):
     return views
 
 
+class MyersSix(Tower):
+    """The tower of f = 1 - mu/(r(r^2 + a^2)), the plane transverse to the rotation of Myers and
+    Perry's black hole with one spin in six dimensions. 1/f = 1 + mu/(r^3 + a^2 r - mu), and the
+    cubic has one positive root r+ and a complex pair, so
+
+        r* = r + Re sum_i A_i ln(1 - r/r_i),      A_i = mu/(3 r_i^2 + a^2),
+
+    over its three roots, which vanishes at r = 0; 1 - r/r_i meets the real axis only at r = 0
+    for a complex root, so the principal logarithm is continuous along r > 0. The surface
+    gravity is k = f'(r+)/2. dr*/dr = 1/f is checked by the function that draws with it."""
+
+    def __init__(self, f, r, mu, a):
+        self.f_sym = sp.simplify(f)
+        assert sp.simplify(self.f_sym - (1 - mu / (r * (r ** 2 + a ** 2)))) == 0, "f is not 1 - mu/(r(r^2 + a^2))"
+        self.roots = np.roots([1.0, 0.0, float(a) ** 2, -float(mu)]).astype(complex)
+        real = [x.real for x in self.roots if abs(x.imag) < 1e-12]
+        assert len(real) == 1 and real[0] > 0, "the cubic has not one positive root"
+        self.A = float(mu) / (3 * self.roots ** 2 + float(a) ** 2)
+        self.rf = [real[0]]
+        self.kp = float(sp.diff(self.f_sym, r).subs(r, sp.Float(real[0], 30))) / 2
+
+    def rstar(self, r):
+        r = np.asarray(r, dtype=float)
+        with np.errstate(divide="ignore"):
+            return r + np.real(sum(A * np.log(1 - r.astype(complex) / ri) for A, ri in zip(self.A, self.roots)))
+
+
+class MyersEqual(Tower):
+    """The tower of Myers and Perry's black hole with equal spins in five dimensions, the Hopf
+    fibre divided out. On the plane of t and rho the metric is g_tt dt^2 + g_rhorho d rho^2 with
+
+        d rho*/d rho = S/Delta,   S = rho^2 sqrt(rho^4 + mu a^2),   Delta = rho^4 - mu rho^2 + mu a^2,
+
+    Delta the numerator of the published g^rhorho, with the four simple roots +-rho+ and +-rho-.
+    It is EquatorTower's construction with four roots in place of two: with the residues
+    A_i = S(rho_i)/Delta'(rho_i), which are odd in the root since S is even, f = 1/(1 + sum_i
+    A_i/(rho - rho_i)) is a Tower's f, and d rho*/d rho = sqrt(W)/f with W = (S/Delta)^2 f^2, which
+    is 1 at each root. So
+
+        rho* = rho + sum_i A_i ln|rho/rho_i - 1| + D(rho),   D = int_0^rho h/(sqrt(W) + 1) ds,   h = (W - 1)/f,
+
+    with h rational and without a pole on rho >= 0, each step checked in sympy on construction.
+    The residues sum to zero, so h falls as 1/rho^2 and D converges; rho*(0) = 0 puts the
+    singularity rho = 0 on the vertical line X = pi/2, as Tower's does."""
+
+    def __init__(self, plane):
+        r = plane.x1
+        assert plane.g[0, 1] == 0
+        delta = sp.Poly(sp.numer(sp.together(plane.gi[1, 1])), r)
+        roots = sorted(delta.real_roots(), reverse=True)
+        assert len(roots) == 4 and delta.degree() == 4, "the published g^rhorho has not four simple roots"
+        delta = delta.as_expr() / delta.LC()
+        S2 = sp.cancel(sp.together(-plane.g[1, 1] / plane.g[0, 0] * delta ** 2))
+        A = [sp.radsimp(sp.sqrtdenest(sp.sqrt(sp.simplify(S2.subs(r, ri)))) / sp.diff(delta, r).subs(r, ri)) for ri in roots]
+        assert sp.simplify(sum(A)) == 0, "the residues do not sum to zero"
+        f = sp.cancel(sp.together(1 / (1 + sum(Ai / (r - ri) for Ai, ri in zip(A, roots)))))
+        super().__init__(f, r, roots)
+        W = sp.cancel(sp.together(S2 / delta ** 2 * self.f_sym ** 2))
+        h = sp.cancel(sp.together((W - 1) / self.f_sym))
+        for ri in roots:
+            assert sp.simplify(W.subs(r, ri) - 1) == 0, "sqrt(W) is not 1 at a horizon"
+        # The roots hold sqrt(5), so h's coefficients are no rationals and its poles are found numerically.
+        poles = sp.Poly(sp.N(sp.expand(sp.denom(h)), 30), r).nroots(n=20)
+        assert not [z for z in poles if abs(sp.im(z)) < 1e-12 and sp.re(z) >= 0], "h has a pole on rho >= 0"
+        assert sp.limit(h * r, r, sp.oo) == 0, "h does not fall faster than 1/rho"
+        integrand = sp.lambdify(r, h / (sp.sqrt(W) + 1), "numpy")
+
+        def in_w(w):
+            x = w * w / (1 - w * w)
+            return integrand(x) * 2 * w / (1 - w * w) ** 2
+        series = np.polynomial.chebyshev.Chebyshev.interpolate(in_w, 160, domain=[0, 1])
+        assert np.max(np.abs(series.coef[-8:])) < 1e-13 * np.max(np.abs(series.coef)), "D has not converged"
+        self.D = series.integ(lbnd=0)
+        # Tower's cells take rf as (rho+, rho-); the logarithms run over all four roots.
+        self.all_roots, self.rf = list(self.rf), self.rf[:2]
+
+    def rstar(self, r):
+        r = np.asarray(r, dtype=float)
+        with np.errstate(invalid="ignore", divide="ignore"):
+            w = np.where(np.isinf(r), 1.0, np.sqrt(r / (1 + r)))
+            logs = r + sum(A * np.log(np.abs(r / ri - 1)) for A, ri in zip(self.Af, self.all_roots))
+        return logs + self.D(w)
+
+
+def myers_perry(ck, src):
+    """Myers and Perry's black hole on five surfaces.
+
+    One spin in five dimensions, mu = 1 and a = 3/5, so that r+ = 4/5. On the plane transverse to
+    the rotation, theta = 0, the metric is -f dt^2 + dr^2/f with f = (r^2 - r+^2)/(r^2 + a^2),
+    whose 1/f = 1 + mu/(r^2 - r+^2): the Tower of the roots +-r+, with
+    r* = r + (mu/2r+) ln|(r - r+)/(r + r+)| and the surface gravity r+/mu. r* vanishes at
+    r = 0, where the circle of psi closes and the spacetime ends on a conical singularity with
+    the Kretschmann scalar 72 mu^2/a^8, so the diagram is Schwarzschild's square, as Myers and
+    Perry found for one vanishing spin in odd dimensions. The ingoing chart covers the exterior
+    and the black hole by V = exp(k v), U = -sgn(r - r+) exp(2k r*)/V. On the plane of rotation,
+    theta = pi/2, with phi divided out, the EquatorTower of the same two roots has r = 0 the
+    ring, where the Kretschmann scalar 72 mu^2/r^8 diverges, on the same straight lines.
+
+    Equal spins, mu = 1 and a = 2/5: MyersEqual, a tower of the two horizons rho+ and rho- with
+    the singularity rho = 0 timelike on X = pi/2, each point a squashed 3-sphere.
+
+    One spin in six dimensions, mu = 1 and a = 3/2, on the plane transverse to the rotation:
+    MyersSix, Schwarzschild's square again, with r = 0 a curvature singularity."""
+    one, box = {"mu": 1, "a": "3/5"}, [-PI - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25]
+    hexagon = [[PI, 0], [HALF, HALF], [-HALF, HALF], [-PI, 0], [-HALF, -HALF], [HALF, -HALF]]
+    exterior = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    t = spread(-np.inf, np.inf, 500, 9)
+
+    def square_checks(name, plane, T, rp, K_at_zero):
+        for cell, region, lo, hi, future in (("I", "exterior", rp + 1e-3, 8, (1, 0)),
+                                             ("II", "black hole", 0.01, rp - 1e-3, (0, -1)),
+                                             ("IV", "white hole", 0.01, rp - 1e-3, (0, 1)),
+                                             ("I'", "other exterior", rp + 1e-3, 8, (-1, 0))):
+            ck.chart(f"Myers-Perry, {name}, {region}", plane, lambda x0, r, cell=cell: T.pq(cell, x0, r),
+                     ck.uniform(-6, 6), ck.uniform(lo, hi), lambda x0, r, future=future: future)
+        rr = np.array([0.1, 0.3, rp + 0.2, 2.0, 5.0])
+        g00, _, g11 = plane.metric(0 * rr, rr)[:3]
+        ck.limit(f"Myers-Perry, {name}: |dr*/dr| is sqrt(-g_rr/g_tt) of the published metric",
+                 np.abs(T.rstar(rr + 1e-6) - T.rstar(rr - 1e-6)) / 2e-6 / np.sqrt(-g11 / g00), np.ones(5), 1e-6)
+        p, q = T.pq("II", np.array([-5.0, 0, 5]), np.full(3, 1e-9))
+        ck.limit(f"Myers-Perry, {name}: r -> 0 in the black hole lands on T = pi/2", p + q, [HALF] * 3)
+        p, q = T.pq("I", np.array([0.0]), np.array([1e8]))
+        ck.limit(f"Myers-Perry, {name}: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)",
+                 point(p[0], q[0]), [PI, 0], 1e-3)
+        p, q = T.pq("I", np.array([1.5 / T.kp]), np.array([rp * (1 + 1e-12)]))
+        ck.limit(f"Myers-Perry, {name}: r -> r+ at fixed t lands on the bifurcation surface",
+                 point(p[0], q[0]), [0, 0], 1e-4)
+        K = plane.kretschmann
+        ck.finite(f"Myers-Perry, {name}: the Kretschmann scalar is finite at the horizon",
+                  K(np.zeros(3), rp * np.array([0.999, 1, 1.001])))
+        if K_at_zero is None:
+            ck.diverges(f"Myers-Perry, {name}: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+        else:
+            ck.limit(f"Myers-Perry, {name}: the Kretschmann scalar at r = 0 is 72 mu^2/a^8",
+                     K(np.zeros(1), np.full(1, 1e-7)), [K_at_zero], 1e-6)
+
+    def edges(v, zero):
+        v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]],
+                        [[-PI, 0], [-HALF, HALF]], [[-PI, 0], [-HALF, -HALF]]])
+        v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+        v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+        for at in ((PI, 0), (-PI, 0), (HALF, HALF), (HALF, -HALF), (-HALF, HALF), (-HALF, -HALF)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+        v.label_xt([-PI, 0], "$i^0$", "r", dx=-6)
+        for sx in (1, -1):
+            v.label_xt([sx * HALF, HALF], "$i^+$", "b", dy=-6)
+            v.label_xt([sx * HALF, -HALF], "$i^-$", "t", dy=6)
+            v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-4)
+            v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=4)
+        v.label_xt([0, HALF], "$r = 0$", "b", dy=-8)
+        v.label_xt([0, -HALF], "$r = 0$", "t", dy=8)
+        v.label_xt([-Q4, Q4], "$r = r_+$", "tr", "small", dx=-6, dy=2)
+        v.label_xt([HALF, -0.95], "exterior", cls="region")
+        v.label_xt([-HALF, 0], "exterior", cls="region")
+        v.label_xt([0, 1.15], "black hole", cls="region")
+        v.label_xt([0, -1.15], "white hole", cls="region")
+        v.legend("horizon", "the horizon $r = r_+$")
+        v.legend("singular", zero)
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+
+    def moment_of(T, view_id, system):
+        m = slices.moments("myers_perry", view_id)[0]
+        lo, hi = m.reach(system, "r")
+        ends = np.linspace(lo, hi, 2)
+        left, right = T.pq("I'", 0 * ends, ends[::-1]), T.pq("I", 0 * ends, ends)
+        return m, [(np.concatenate([left[0], right[0]]), np.concatenate([left[1], right[1]]))]
+
+    def static(vid, label, system, T, radii, times, mark, named, zero, unit, restriction):
+        v = View(vid, label, box, system)
+        v.fill("region", hexagon)
+        v.fill("cover", exterior)
+        for r in radii:
+            v.curve("r", *T.pq("I", t, np.full_like(t, r)))
+        out = spread(T.rf[0], np.inf, 500, 14)
+        for tt in times:
+            v.curve("t", *T.pq("I", np.full_like(out, tt), out))
+        edges(v, zero)
+        for r, text in named:
+            label_on(v, T.pq("I", 0.0, r), text)
+        v.legend("cover", "the region that $t$ and $r > r_+$ cover")
+        v.legend("r", "$r$ constant")
+        v.legend("t", f"$ct$ constant, in units of {unit}")
+        v.slice(*mark)
+        v.set(restriction=restriction)
+        return v
+
+    views = []
+    conical = "$r = 0$, a conical singularity, where the Kretschmann scalar is $72\\mu^2/a^8$"
+    R_OUT, R_IN, TS = (0.85, 1.0, 1.25, 1.75, 2.5), (0.3, 0.5, 0.7), (-4, -2, -1, 0, 1, 2, 4)
+
+    # One spin in five dimensions: the plane transverse to the rotation, in both charts.
+    tr = Plane(src, "myers_perry", "boyer_lindquist", ("t", "r"), {"phi": "0", "psi": "0"}, one, axis=("theta", "0"))
+    assert tr.g[0, 1] == 0 and sp.simplify(tr.g[0, 0] * tr.g[1, 1] + 1) == 0
+    T5 = Tower(-tr.g[0, 0], tr.x1, [sp.Rational(4, 5), -sp.Rational(4, 5)])
+    rp = T5.rf[0]
+    ck.limit("Myers-Perry: the surface gravity on the transverse plane is r+/mu", [T5.kp], [0.8], 1e-12)
+    square_checks("the transverse plane", tr, T5, rp, 72 / 0.6 ** 8)
+    transverse = moment_of(T5, "transverse", "boyer_lindquist")
+    on_plane = ("The plane transverse to the rotation, $\\theta = 0$, only, a totally geodesic surface, each point "
+                "in the diagram a circle of $\\psi$ of radius $r$. The curvature singularity is the ring $r = 0$ "
+                "in the plane of rotation, the rim of the surface $r = 0$ drawn here.")
+    views.append(static("transverse", "The transverse plane", "boyer_lindquist", T5, R_OUT, TS, transverse,
+                        ((1.0, "$\\sqrt{\\mu}$"), (1.75, "$1.75\\sqrt{\\mu}$")), conical, "$\\sqrt{\\mu}$", on_plane))
+
+    def ingoing(w, r):
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        with np.errstate(over="ignore", invalid="ignore"):
+            uv = -np.sign(r - rp) * np.exp(2 * T5.kp * T5.rstar(r) - T5.kp * w)
+        return np.arctan(uv), atan_exp(T5.kp * w)
+    ik = Plane(src, "myers_perry", "ingoing_kerr", ("v", "r"), {"tildephi": "0", "psi": "0"}, one, axis=("theta", "0"))
+    ck.chart("Myers-Perry, ingoing Kerr on the transverse plane", ik, ingoing,
+             ck.uniform(-6, 6), ck.uniform(0.05, 8), lambda w, r: (1, -300))
+    ck.limit("Myers-Perry: the ingoing and Boyer-Lindquist coordinates put one event at one point",
+             ingoing(2.0 + float(T5.rstar(3.0)), 3.0), T5.pq("I", 2.0, 3.0), 1e-12)
+    v = View("ingoing", "The transverse plane", box, "ingoing_kerr")
+    v.fill("region", hexagon)
+    v.fill("cover", [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF], [-HALF, HALF]])
+    for r in R_OUT + R_IN:
+        v.curve("r", *ingoing(t, np.full_like(t, r)))
+    rr = spread(0, np.inf, 600, 14)
+    for w in (-6, -4, -2, 0, 2, 4, 6):
+        v.curve("null", *ingoing(np.full_like(rr, w), rr))
+    edges(v, conical)
+    v.legend("cover", "the region that $v$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant")
+    v.legend("null", "$v$ constant, an ingoing light ray")
+    v.slice(*transverse)
+    v.set(restriction=on_plane)
+    views.append(v)
+
+    # The plane of rotation, phi divided out.
+    ro = Plane(src, "myers_perry", "boyer_lindquist", ("t", "r"), {"theta": "pi/2", "psi": "0"}, one, quotient="phi")
+    TR = EquatorTower(ro)
+    ck.limit("Myers-Perry: the plane of rotation has the same horizon and surface gravity", [TR.rf[0], TR.kp],
+             [0.8, 0.8], 1e-12)
+    square_checks("the plane of rotation", ro, TR, TR.rf[0], None)
+    views.append(static("rotation", "The plane of rotation", "boyer_lindquist", TR, R_OUT, TS,
+                        moment_of(TR, "rotation", "boyer_lindquist"),
+                        ((1.0, "$\\sqrt{\\mu}$"), (1.75, "$1.75\\sqrt{\\mu}$")),
+                        "$r = 0$, the ring, where the Kretschmann scalar diverges", "$\\sqrt{\\mu}$",
+                        "The plane of rotation $\\theta = \\pi/2$ only, a totally geodesic surface, each point in "
+                        "the diagram a circle of $\\phi$. Light rays of zero angular momentum run at 45 degrees."))
+
+    # Equal spins: the tower of two horizons.
+    eq = Plane(src, "myers_perry", "equal_spins", ("t", "\\rho"), {"theta": "pi/2", "phi": "0"},
+               {"mu": 1, "a": "2/5"}, quotient="psi")
+    TE = MyersEqual(eq)
+    ep, em = TE.rf
+    ck.limit("Myers-Perry, equal spins: the horizons are sqrt(4/5) and sqrt(1/5) sqrt(mu)", [ep, em],
+             [math.sqrt(0.8), math.sqrt(0.2)], 1e-12)
+    tower_checks(ck, "Myers-Perry, equal spins", eq, TE, 0.01, 15)
+    rr = np.array([0.05, 0.3, 0.7, 1.0, 2.0, 7.0])
+    g00, _, g11 = eq.metric(0 * rr, rr)[:3]
+    ck.limit("Myers-Perry, equal spins: |d rho*/d rho| is sqrt(-g_rhorho/g_tt) of the published metric less its rotation",
+             np.abs(TE.rstar(rr + 1e-6) - TE.rstar(rr - 1e-6)) / 2e-6 / np.sqrt(-g11 / g00), np.ones(6), 1e-6)
+    ck.limit("Myers-Perry, equal spins: the surface gravity is (rho+^2 - rho-^2)/(sqrt(mu) rho+^2)", [TE.kp],
+             [0.6 / 0.8], 1e-12)
+    p, q = TE.pq("III", np.array([-6.0, 0, 6]), np.full(3, 1e-9))
+    ck.limit("Myers-Perry, equal spins: rho -> 0 lands on the vertical line X = pi/2", q - p, [HALF] * 3, 1e-5)
+    p, q = TE.pq("I", np.array([0.0]), np.array([1e9]))
+    ck.limit("Myers-Perry, equal spins: rho -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)",
+             point(p[0], q[0]), [PI, 0], 1e-3)
+    ck.diverges("Myers-Perry, equal spins: the Kretschmann scalar diverges at rho = 0",
+                eq.kretschmann(0, 1e-1), eq.kretschmann(0, 1e-2))
+    ck.finite("Myers-Perry, equal spins: the Kretschmann scalar is finite at both horizons",
+              eq.kretschmann(np.zeros(2), np.array([ep, em])))
+    D = TowerDrawing(TE, True, 0.0)
+    times = [c / TE.kp for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+    rI = nice_all(even_radii(TE, "I", 4, ep, np.inf), [ep])
+    rII = nice_all(even_radii(TE, "II", 4, em, ep), [em, ep])
+    rIII = nice_all(even_radii(TE, "III", 3, 0, em, xmax=HALF), [0, em])
+    v = View("equal", "Equal spins", [-PI - 0.45, PI + 0.45, -PI - 0.1, 3 * PI + 0.1], "equal_spins")
+    D.draw(v, {"I": (rI, times), "II": (rII, times), "IV": (rII, times), "III": (rIII, times)}, cover=[("I", False)])
+    D.labels(v, inner="$\\rho < \\rho_-$")
+    # The tower names its radius r; this chart's is rho.
+    renamed = {"$r_+$": "$\\rho_+$", "$r_-$": "$\\rho_-$", "$r = 0$": "$\\rho = 0$"}
+    for label in v.labels:
+        label["text"] = renamed.get(label["text"], label["text"])
+    v.set(fade={"top": 0.9, "bottom": 0.9},
+          restriction="The plane of $t$ and $\\rho$ with the Hopf fibre $\\psi$ divided out, each point in the "
+                      "diagram a squashed 3-sphere. Light rays of zero angular momentum run at 45 degrees.")
+    v.legend("cover", "the exterior $\\rho > \\rho_+$, which $t$ and $\\rho$ cover")
+    v.legend("r", f"$\\rho$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $\\rho_-$, "
+                  "in units of $\\sqrt{\\mu}$")
+    v.legend("t", "$ct$ constant")
+    v.legend("horizon", f"the horizons $\\rho_+ = {ep:.3f}$ and $\\rho_- = {em:.3f}\\sqrt{{\\mu}}$")
+    v.legend("singular", "$\\rho = 0$, a timelike singularity, where the Kretschmann scalar diverges")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    m = slices.moments("myers_perry", "fibre")[0]
+    v.slice(m, [through_bifurcation(TE, ("I'", "I"), *m.reach("equal_spins", "\\rho")[::-1])])
+    views.append(v)
+
+    # One spin in six dimensions: the space transverse to the rotation.
+    sx = Plane(src, "myers_perry", "boyer_lindquist_six", ("t", "r"), {"phi": "0", "chi": "pi/2", "psi": "0"},
+               {"mu": 1, "a": "3/2"}, axis=("theta", "0"))
+    assert sx.g[0, 1] == 0 and sp.simplify(sx.g[0, 0] * sx.g[1, 1] + 1) == 0
+    T6 = MyersSix(-sx.g[0, 0], sx.x1, 1, sp.Rational(3, 2))
+    r6 = T6.rf[0]
+    square_checks("six dimensions", sx, T6, r6, None)
+    views.append(static("six", "Six dimensions", "boyer_lindquist_six", T6, (0.5, 0.75, 1.0, 1.5, 2.5), TS,
+                        moment_of(T6, "six", "boyer_lindquist_six"),
+                        ((0.5, "$0.5\\,\\mu^{1/3}$"), (1.0, "$\\mu^{1/3}$")),
+                        "$r = 0$, where the Kretschmann scalar diverges", "$\\mu^{1/3}$",
+                        "The space transverse to the rotation, $\\theta = 0$, only, a totally geodesic surface, "
+                        "each point in the diagram a 2-sphere of radius $r$."))
+    views[0].set(settings="$\\mu = 1$ and $a = 0.6\\sqrt{\\mu}$, so that $r_+ = 0.8\\sqrt{\\mu}$.")
+    views[1].set(settings="$\\mu = 1$ and $a = 0.6\\sqrt{\\mu}$, so that $r_+ = 0.8\\sqrt{\\mu}$.")
+    views[2].set(settings="$\\mu = 1$ and $a = 0.6\\sqrt{\\mu}$, so that $r_+ = 0.8\\sqrt{\\mu}$.")
+    views[3].set(settings="$\\mu = 1$ and $a = 0.4\\sqrt{\\mu}$ in both planes.")
+    views[4].set(settings=f"$\\mu = 1$ and $a = 1.5\\,\\mu^{{1/3}}$, so that $r_+ = {r6:.3f}\\,\\mu^{{1/3}}$.")
+    return views
+
+
 def kaluza_klein_monopole(ck, src):
     """The Kaluza-Klein monopole's plane of t and its radius at m = 1, in each of its three polar
     charts.
@@ -10074,6 +10388,7 @@ DRAWN = {
     "levi_civita": levi_civita,
     "kaluza_klein_monopole": kaluza_klein_monopole,
     "fisher_jnw": fisher_jnw,
+    "myers_perry": myers_perry,
     "curzon_chazy": curzon_chazy,
     "zipoy_voorhees": zipoy_voorhees,
     "string_black_hole": string_black_hole,
@@ -11531,6 +11846,59 @@ CAPTIONS = {
         "and the bottom.",
         "The plane of $t$ and $r$ at every other constant $\\theta$ has the same null curves and the same drawing, "
         "on the axis with the factor equal to $1$.",
+    ],
+    ("myers_perry", "transverse"): [
+        "The plane transverse to the rotation ($\\theta = 0$) of the Myers-Perry black hole with one spin in five "
+        "dimensions ($a = 0.6\\sqrt{\\mu}$), maximally extended, each point in the diagram a circle of $\\psi$ "
+        "of radius $r$. On it the metric is $-f\\,c^2dt^2 + dr^2/f$ with $f = (r^2 - r_+^2)/(r^2 + a^2)$, and "
+        "the Kruskal coordinates $U = -e^{-\\kappa u}$ and $V = e^{\\kappa v}$, with $u, v = ct \\mp r_*$, "
+        "$r_* = r + (\\mu/2r_+)\\ln|(r - r_+)/(r + r_+)|$, and $\\kappa = r_+/\\mu$, make it regular through "
+        "$r_+$. With $p = \\arctan U$ and $q = \\arctan V$ the surface $r = 0$ lies on the straight lines "
+        "$T = \\pm\\pi/2$.",
+        "The horizon is the pair of null lines crossing at the bifurcation surface, and $r_+$ is the only "
+        "horizon: the diagram is Schwarzschild's square. The black hole ends on $r = 0$, where the circle of "
+        "$\\psi$ has shrunk to a point and the spacetime has a conical singularity, with the Kretschmann scalar "
+        "finite there.",
+    ],
+    ("myers_perry", "ingoing"): [
+        "The plane transverse to the rotation ($\\theta = 0$) of the same black hole with the ingoing coordinates "
+        "drawn on it, each point in the diagram a circle of $\\psi$ of radius $r$. The chart of $v$ and $r > 0$ "
+        "covers the exterior and the black hole in one piece: $V = e^{\\kappa v}$ and "
+        "$U = -\\mathrm{sgn}(r - r_+)\\,e^{2\\kappa r_*}/V$, with the tortoise coordinate "
+        "$r_* = r + (\\mu/2r_+)\\ln|(r - r_+)/(r + r_+)|$ and $\\kappa = r_+/\\mu$, as in the Boyer-Lindquist "
+        "chart.",
+        "Each line of constant $v$ is an ingoing light ray, which crosses the future horizon and ends on "
+        "$r = 0$. The white hole and the other exterior lie beyond the past horizon, where $v \\to -\\infty$.",
+    ],
+    ("myers_perry", "rotation"): [
+        "The plane of rotation ($\\theta = \\pi/2$) of the Myers-Perry black hole with one spin in five dimensions "
+        "($a = 0.6\\sqrt{\\mu}$) with $\\phi$ divided out, maximally extended, each point in the diagram a circle "
+        "of $\\phi$. The tortoise coordinate has $dr_*/dr = \\sqrt{r^4 + a^2r^2 + \\mu a^2}/(r^2 - r_+^2)$, "
+        "and $p = \\arctan U$, $q = \\arctan V$ with $U = -e^{-\\kappa u}$, $V = e^{\\kappa v}$, "
+        "$u, v = ct \\mp r_*$, and $\\kappa = r_+/\\mu$ bring the plane into the same square as the transverse "
+        "plane.",
+        "Here $r = 0$ is the ring, where the Kretschmann scalar $72\\mu^2/r^8$ diverges, a spacelike singularity "
+        "on $T = \\pm\\pi/2$. The hole has one horizon and no inner one, so nothing of Kerr's tower of universes "
+        "survives a single spin in five dimensions.",
+    ],
+    ("myers_perry", "equal"): [
+        "The Myers-Perry black hole with equal spins in five dimensions ($a = 0.4\\sqrt{\\mu}$), maximally "
+        "extended, each point in the diagram a squashed 3-sphere of $\\theta$, $\\phi$, and $\\psi$. The metric "
+        "depends on $\\rho$ alone, and with the Hopf fibre divided out the plane of $t$ and $\\rho$ has the "
+        "tortoise coordinate $d\\rho_*/d\\rho = \\rho^2\\sqrt{\\rho^4 + \\mu a^2}/(\\rho^4 - \\mu\\rho^2 + "
+        "\\mu a^2)$, taken to vanish at $\\rho = 0$.",
+        "The two horizons $\\rho_\\pm$ repeat without end, as Reissner-Nordström's and Kerr's do, and inside "
+        "each $\\rho_-$ the singularity $\\rho = 0$ is timelike, the vertical line a ray can pass by. The "
+        "coordinates $t$ and $\\rho > \\rho_+$ cover one exterior.",
+    ],
+    ("myers_perry", "six"): [
+        "The space transverse to the rotation ($\\theta = 0$) of the Myers-Perry black hole with one spin in six "
+        "dimensions ($a = 1.5\\,\\mu^{1/3}$), maximally extended, each point in the diagram a 2-sphere of radius "
+        "$r$. On it $f = 1 - \\mu/(r(r^2 + a^2))$, whose one positive root is the horizon, and the tortoise "
+        "coordinate $r_* = r + \\mathrm{Re}\\sum_i A_i\\ln(1 - r/r_i)$, summed over the three roots $r_i$ of "
+        "$r^3 + a^2r = \\mu$ with $A_i = \\mu/(3r_i^2 + a^2)$, vanishes at $r = 0$.",
+        "The diagram is Schwarzschild's square at every spin, since the cubic keeps its one positive root "
+        "however large $a$ is. The singularity $r = 0$ is spacelike, on $T = \\pm\\pi/2$.",
     ],
     ("kaluza_klein_monopole", "gross_perry"): [
         "The Kaluza-Klein monopole ($m = 1$), each point in the diagram a squashed 3-sphere of $\\theta$, "

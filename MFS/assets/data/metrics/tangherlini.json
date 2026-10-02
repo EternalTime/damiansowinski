@@ -49,6 +49,11 @@
       "id": "black_string",
       "kind": "family",
       "text": "Schwarzschild's black hole stretched along a line, the other black hole of five dimensions. A long enough piece of it has less entropy than Tangherlini's round hole of the same mass, and it is unstable [gregorylaflamme1993]."
+    },
+    {
+      "id": "myers_perry",
+      "kind": "generalisation",
+      "text": "Tangherlini's black hole set spinning, in as many planes as its dimension has room for. With every spin at zero it is his metric again [myers1986]."
     }
   ],
   "references": [

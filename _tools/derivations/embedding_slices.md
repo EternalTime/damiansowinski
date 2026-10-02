@@ -271,6 +271,16 @@ The cigar is the surface of $r$ and $x_5$ on the half axis $\theta = 0$ at $t = 
 Every plane of $t$ and the radius is drawn on that half axis, so the moment is the line $t = 0$ from the nut to $16m$ on each: $r$ itself in Gross and Perry's chart and the Hopf chart, and $\rho = r + 2m$, from $2m$ to $18m$, with the Taub-NUT radius.
 On the view through the nut it is the same line, which the page mirrors, and on each conformal view it is the curve $T = 0$ from the centre out to $r_*(16m)$.
 
+### Myers-Perry
+
+- The embedding is four moments, each at $t = 0$ from the throat out on both sheets: with one spin in five dimensions the plane of rotation, $\theta = \pi/2$, and the transverse plane, $\theta = 0$, both from $r_+ = 0.8\sqrt{\mu}$ to $4\sqrt{\mu}$; with equal spins the surface of $\rho$ and the Hopf fibre, from $\rho_+$ to $4\sqrt{\mu}$; and in six dimensions the transverse plane, from $r_+$ to $3\,\mu^{1/3}$.
+- `boyer_lindquist/transverse` and `boyer_lindquist/rotation`: the line $ct = 0$ from $r_+$ to the edge of the box, each plane marking the moment embedded on it.
+- `ingoing_kerr/transverse` and `ingoing_kerr/rotation`: $v = r_*$ with $r_* = r + \tfrac58\sqrt{\mu}\ln((r - r_+)/(r + r_+))$, the same on both planes, which runs off the drawing toward the horizon.
+- `equal_spins/radial` and `boyer_lindquist_six/transverse`: the line $ct = 0$ from the throat out.
+- `boyer_lindquist_six/rotation` marks nothing: the embedded transverse plane meets the plane of rotation nowhere outside the horizon, which `HIDDEN` records.
+- The conformal views `transverse`, `ingoing`, `rotation`, `equal` and `six`: the line $T = 0$ through the bifurcation surface, from one exterior to the other.
+- The four moments are four surfaces, three of them in other spacetimes than the fourth, so each drawing marks its own alone, which `HIDDEN_VIEWS` records.
+
 ### Schwarzschild-Tangherlini
 
 - The embedding is two moments, one in each dimension: the plane of $r$ and $\phi$ at $t = 0$ in the static chart, every other angle at $\pi/2$, from the throat $r_h$ to $6\,r_h$ on both sheets.
