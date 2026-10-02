@@ -193,6 +193,11 @@
       "id": "israel_shell",
       "kind": "composite",
       "text": "The space inside a collapsing shell of dust, which stays flat until the shell reaches the centre [israel1966]."
+    },
+    {
+      "id": "tippett_tsang",
+      "kind": "generalisation",
+      "text": "Minkowski space with a bubble in it that carries its riders round a closed timelike curve. Tippett and Tsang's metric is Minkowski's wherever their top hat function $h$ vanishes [tippett2017]."
     }
   ],
   "references": [
@@ -257,7 +262,8 @@
     "bonnor1977cloud",
     "astesiano2024",
     "podolskybelan2004",
-    "israel1966"
+    "israel1966",
+    "tippett2017"
   ],
   "coordinates": [
     {

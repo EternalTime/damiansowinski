@@ -41,6 +41,11 @@
       "id": "minkowski",
       "kind": "piece",
       "text": "Spacetime is flat outside the tube and flat again inside it, where the light cones are opened out. All of the curvature is in the tube's thin wall [everett1997]."
+    },
+    {
+      "id": "tippett_tsang",
+      "kind": "family",
+      "text": "One bubble with a closed timelike curve inside it. Tippett and Tsang observed in 2017 that a traveller needs a succession of tubes or warp bubbles to close a world line, and built a bubble that needs no second [tippett2017, everett1997]."
     }
   ],
   "references": [
@@ -52,7 +57,8 @@
     "krasnikov2003",
     "flynn2008january",
     "flynn2010jim",
-    "flynn2012lion"
+    "flynn2012lion",
+    "tippett2017"
   ],
   "coordinates": [
     {

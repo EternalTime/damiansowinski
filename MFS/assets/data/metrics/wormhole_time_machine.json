@@ -3258,6 +3258,11 @@
       "id": "krasnikov",
       "kind": "family",
       "text": "A tube laid down by a ship moving slower than light, which shortens the trip home. One tube has no closed timelike curves, and Allen Everett and Thomas Roman showed in 1997 that two tubes that do not overlap make a time machine [everett1997]."
+    },
+    {
+      "id": "tippett_tsang",
+      "kind": "family",
+      "text": "A time machine in the shape of a box. Tippett and Tsang's bubble of 2017 carries its riders round a closed timelike curve, and like the wormhole it needs matter that violates the energy conditions [tippett2017]."
     }
   ],
   "references": [
@@ -3277,6 +3282,7 @@
     "gott1991",
     "ori2005",
     "everett1996",
-    "everett1997"
+    "everett1997",
+    "tippett2017"
   ]
 }

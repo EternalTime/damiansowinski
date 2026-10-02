@@ -62,6 +62,11 @@
       "id": "point_particle_2plus1",
       "kind": "piece",
       "text": "Each string, seen end on, is a point particle in three dimensions, and Gott's pair is two of them passing. The proofs that the pair cannot be built were all done there, with particles [deser1992, carroll1994]."
+    },
+    {
+      "id": "tippett_tsang",
+      "kind": "family",
+      "text": "A time machine that fits in a box. Tippett and Tsang counted Gott's strings among the models that need matter spread out to infinity, and built a compact bubble in 2017, whose wall needs exotic matter [tippett2017]."
     }
   ],
   "references": [
@@ -86,7 +91,8 @@
     "birmingham2000",
     "dedeo2002",
     "morris1988prl",
-    "ori2005"
+    "ori2005",
+    "tippett2017"
   ],
   "coordinates": [
     {
