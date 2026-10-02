@@ -831,6 +831,13 @@ def _kds_above(sign):
                             np.column_stack([phi, np.full_like(phi, lo)])]])]
 
 
+def cx_tortoise(r):
+    """Kerr's r_* between its horizons at m = 1 and a = 4/5, dr_*/dr = (r^2 + a^2)/Delta with
+    r_* = 0 at r = m, as the ingoing chart of Chandrasekhar and Xanthopoulos's waves fixes it:
+    (r^2 + a^2)/Delta = 1 - (2/3)/(r - 2/5) + (8/3)/(r - 8/5)."""
+    return (r - 1) - (2 / 3) * math.log((r - 0.4) / 0.6) + (8 / 3) * math.log((1.6 - r) / 0.6)
+
+
 def flat(spec):
     """The moments the flat view `spec` of null_rays.py shows, in its chart's (x^0, r)."""
     key = (spec.metric, spec.system, spec.view)
@@ -2131,6 +2138,19 @@ FLAT = {
     # Each moment of Bell and Szekeres's ring is the plane of x and y at one event, on eta = 0 at
     # xi = t with a = b = 1: u = v = t/2; rho = 0 and chi = t - pi/2; U = V = -cos t/(sqrt 2 (1 + sin t));
     # and t = tan xi, r = sec xi on y = 0.
+    # The ring's centre, lambda = 0 at the moment's psi: eta = sin(psi), and Kerr's r = m - sqrt(m^2 - a^2) sin(psi)
+    # on the equator, at m = 1 and a = 4/5.
+    ("chandrasekhar_xanthopoulos", "prolate", "plane"): lambda: [
+        Mark(m, points=[(math.sin(m.time), 0.0)]) for m in moments("chandrasekhar_xanthopoulos")],
+    ("chandrasekhar_xanthopoulos", "angular", "plane"): lambda: [
+        Mark(m, points=[(m.time, 0.0)]) for m in moments("chandrasekhar_xanthopoulos")],
+    ("chandrasekhar_xanthopoulos", "boyer_lindquist", "plane"): lambda: [
+        Mark(m, points=[(1 - 0.6 * math.sin(m.time), math.pi / 2)]) for m in moments("chandrasekhar_xanthopoulos")],
+    # The ring's centre is t = 0 on the equator, so v = r_*(r), with r_* = 0 at r = m as the chart's
+    # convention fixes it.
+    ("chandrasekhar_xanthopoulos", "kerr_ingoing", "principal"): lambda: [
+        Mark(m, points=[(cx_tortoise(r), r)])
+        for m in moments("chandrasekhar_xanthopoulos") for r in [1 - 0.6 * math.sin(m.time)]],
     ("bell_szekeres", "double_null", "plane"): lambda: [
         Mark(m, points=[(m.time / 2, m.time / 2)]) for m in moments("bell_szekeres")],
     ("bell_szekeres", "time_space", "plane"): lambda: [Mark(m, points=[(m.time, 0.0)]) for m in moments("bell_szekeres")],

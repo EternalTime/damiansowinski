@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 122,
+  "count": 123,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -2581,6 +2581,11 @@
           "id": "szekeres",
           "kind": "programme",
           "text": "Peter Szekeres's other spacetime, dust cosmologies with no symmetry, from the year after this one [szekeres1975]."
+        },
+        {
+          "id": "chandrasekhar_xanthopoulos",
+          "kind": "family",
+          "text": "Gravitational waves that end on a Killing-Cauchy horizon as these do. Between their fronts the metric is Kerr's between its horizons [chandrasekhar1986]."
         }
       ],
       "references": [
@@ -2599,7 +2604,8 @@
         "konkowski1991",
         "dorca1993",
         "gurses2003",
-        "szekeres1975"
+        "szekeres1975",
+        "chandrasekhar1986"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bell_szekeres.json",
@@ -6313,6 +6319,476 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = 48\\alpha^6\\,m^2\\left(x + y\\right)^6"
+        }
+      ]
+    },
+    {
+      "id": "chandrasekhar_xanthopoulos",
+      "name": "Chandrasekhar-Xanthopoulos Colliding Plane Waves",
+      "short_name": "Chandrasekhar-Xanthopoulos",
+      "description": "Two plane gravitational waves colliding head on in flat space, each an impulse with a shock wave behind it, their polarizations out of line. Where both have passed the spacetime is locally Kerr's between its horizons, and the waves focus each other onto a Killing-Cauchy horizon with the curvature finite.",
+      "tags": [
+        "vacuum",
+        "plane wave",
+        "gravitational wave",
+        "colliding plane waves",
+        "impulsive wave",
+        "shock wave",
+        "Kerr",
+        "Petrov type D",
+        "Killing-Cauchy horizon",
+        "Cauchy horizon",
+        "inner horizon",
+        "black hole interior",
+        "ring singularity",
+        "timelike singularity",
+        "fold singularity",
+        "nonlinear",
+        "exact solution",
+        "time-dependent",
+        "Lorentzian",
+        "four-dimensional",
+        "idealized model",
+        "Einstein equations"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "No coordinate carries dimensions of time, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "related": [
+        {
+          "id": "kerr",
+          "kind": "locally_same",
+          "text": "Where both waves have passed, the metric is Kerr's between its two horizons in the coordinates of Boyer and Lindquist, with $r = m(1 - p\\eta)$, $\\cos\\theta = \\mu$, and $a = mq$, and with $t$ and $\\phi$ running along the wave fronts [chandrasekhar1986, griffiths1991, boyer1967]."
+        },
+        {
+          "id": "khan_penrose",
+          "kind": "family",
+          "text": "The same collision with waves that are impulses alone and polarizations aligned. Khan and Penrose's waves focus each other onto a curvature singularity on the surface where these waves meet a horizon, $\\eta = 1$ here and $u^2 + v^2 = 1$ in their null coordinates [khan1971, chandrasekhar1986]."
+        },
+        {
+          "id": "bell_szekeres",
+          "kind": "family",
+          "text": "Two electromagnetic shock waves that also end on a Killing-Cauchy horizon. Between their fronts lies the Bertotti-Robinson universe, where these waves have Kerr [bell1974, griffiths1991]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "With the polarizations aligned, $q = 0$, the metric between the fronts is Schwarzschild's inside its horizon, from $r = m$ down to the singularity at $r = 0$ [griffiths1991, ferrari1988]."
+        },
+        {
+          "id": "pp_wave",
+          "kind": "piece",
+          "text": "Each incoming wave alone is a plane wave of this family, an impulse with a shock wave behind it [chandrasekhar1986, griffiths1991]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "piece",
+          "text": "Ahead of both waves, where $u < 0$ and $v < 0$, the spacetime is flat [griffiths1991]."
+        },
+        {
+          "id": "mass_inflation",
+          "kind": "family",
+          "text": "The inner horizon of a black hole under perturbation. Ulvi Yurtsever took the Cauchy horizons of plane symmetric spacetimes, the kind these waves end on, as a simpler model of the same problem [yurtsever1993]."
+        }
+      ],
+      "references": [
+        "khan1971",
+        "nutku1977",
+        "chandrasekhar1984ferrari",
+        "griffiths1991",
+        "kerr1963",
+        "chandrasekhar1986",
+        "gurtug2015",
+        "hoenselaers1990",
+        "ferrari1988",
+        "yurtsever1987",
+        "chandrasekhar1987",
+        "griffiths2005killing",
+        "pretorius2018",
+        "boyer1967",
+        "bell1974",
+        "yurtsever1993"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/chandrasekhar_xanthopoulos.json",
+      "charts": [
+        {
+          "id": "prolate",
+          "name": "Chandrasekhar-Xanthopoulos",
+          "coordinates": [
+            "\\eta",
+            "\\mu",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "\\eta \\in [0, 1)",
+            "\\mu \\in [-\\eta, \\eta]",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "\\eta = 1 \\;\\text{(Killing-Cauchy horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "A length that sets the scale of the collision; between the fronts it is the mass of Kerr's metric, $GM/c^2$"
+            },
+            {
+              "symbol": "\\alpha",
+              "description": "An angle with $0 < \\alpha < \\pi/2$ that sets how far the polarizations of the two waves are out of line; they are aligned at $\\alpha = 0$"
+            },
+            {
+              "symbol": "p = \\cos\\alpha",
+              "description": "Chandrasekhar and Xanthopoulos's $p$, with $p^2 + q^2 = 1$"
+            },
+            {
+              "symbol": "q = \\sin\\alpha",
+              "description": "Chandrasekhar and Xanthopoulos's $q$, the spin of Kerr's metric in units of its mass, $a/m$"
+            },
+            {
+              "symbol": "\\rho = 1 - p\\eta",
+              "description": "Kerr's radius in units of $m$, which falls from one on the collision to $1 - p$ on the horizon"
+            },
+            {
+              "symbol": "X = \\rho^2 + q^2\\mu^2",
+              "description": "Chandrasekhar and Xanthopoulos's $X$, Kerr's $r^2 + a^2\\cos^2\\theta$ in units of $m^2$"
+            },
+            {
+              "symbol": "Y = 1 - p^2\\eta^2 - q^2\\mu^2",
+              "description": "Chandrasekhar and Xanthopoulos's $Y$, equal to $p^2(1 - \\eta^2) + q^2(1 - \\mu^2)$, which is $X$ times the squared length of the Killing vector $\\partial_x$"
+            }
+          ],
+          "convention": "We use the coordinates $(\\eta, \\mu, x, y)$ of Chandrasekhar and Xanthopoulos where both waves have passed, with $\\eta$ and $\\mu$ dimensionless and $x$ and $y$ lengths across the wave fronts, and write $\\rho$, $X$, and $Y$ as the parameters define them. The parameters $p = \\cos\\alpha$ and $q = \\sin\\alpha$ obey $p^2 + q^2 = 1$, and $m$ is a length. With null coordinates $u$ and $v$ that vanish on the two wave fronts, $\\eta = \\sin(u + v)$ and $\\mu = \\sin(u - v)$, and ahead of one wave or both, where $u < 0$ or $v < 0$, the metric is this one with $u$ or $v$ set to zero.",
+          "line_element": "ds^2 = m^2X\\left(-\\dfrac{d\\eta^2}{1 - \\eta^2} + \\dfrac{d\\mu^2}{1 - \\mu^2}\\right) + \\dfrac{Y}{X}\\left(dx - \\dfrac{2q\\left(\\eta\\left(1 - \\mu^2\\right) - p\\left(\\eta^2 - \\mu^2\\right)\\right)}{Y}dy\\right)^2 + \\dfrac{\\left(1 - \\eta^2\\right)\\left(1 - \\mu^2\\right)X}{Y}dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-\\dfrac{X\\,m^2}{1 - \\eta^2}"
+            },
+            {
+              "indices": [
+                "\\mu",
+                "\\mu"
+              ],
+              "value": "\\dfrac{X\\,m^2}{1 - \\mu^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{Y}{X}"
+            },
+            {
+              "indices": [
+                "x",
+                "y"
+              ],
+              "value": "\\dfrac{2q\\left(q^2\\,\\mu^2 + \\rho^2 - \\rho\\,\\mu^2 - \\rho\\right)}{p\\,X}"
+            },
+            {
+              "indices": [
+                "y",
+                "x"
+              ],
+              "value": "\\dfrac{2q\\left(q^2\\,\\mu^2 + \\rho^2 - \\rho\\,\\mu^2 - \\rho\\right)}{p\\,X}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{\\rho^4 - \\rho^4\\,\\mu^2 + 2q^2\\,\\rho + 2q^2\\,\\rho\\,\\mu^4 + 4q^2\\,\\rho\\,\\mu^2 - 3q^2\\,\\rho^2 - q^2\\,\\rho^2\\,\\mu^4 - q^4\\,\\mu^4 - 3q^4\\,\\mu^2}{p^2\\,X}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = -\\dfrac{48\\left(q\\,\\mu + \\rho\\right)\\left(q\\,\\mu - \\rho\\right)\\left(q^2\\,\\mu^2 - 4q\\,\\rho\\,\\mu + \\rho^2\\right)\\left(q^2\\,\\mu^2 + 4q\\,\\rho\\,\\mu + \\rho^2\\right)}{X^6\\,m^4}"
+        },
+        {
+          "id": "angular",
+          "name": "Time and Space",
+          "coordinates": [
+            "\\psi",
+            "\\lambda",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "\\psi \\in [0, \\pi/2)",
+            "\\lambda \\in [-\\psi, \\psi]",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "\\psi = \\pi/2 \\;\\text{(Killing-Cauchy horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "A length that sets the scale of the collision; between the fronts it is the mass of Kerr's metric, $GM/c^2$"
+            },
+            {
+              "symbol": "\\alpha",
+              "description": "An angle with $0 < \\alpha < \\pi/2$ that sets how far the polarizations of the two waves are out of line; they are aligned at $\\alpha = 0$"
+            },
+            {
+              "symbol": "p = \\cos\\alpha",
+              "description": "Chandrasekhar and Xanthopoulos's $p$, with $p^2 + q^2 = 1$"
+            },
+            {
+              "symbol": "q = \\sin\\alpha",
+              "description": "Chandrasekhar and Xanthopoulos's $q$, the spin of Kerr's metric in units of its mass, $a/m$"
+            },
+            {
+              "symbol": "\\rho = 1 - p\\sin\\psi",
+              "description": "Kerr's radius in units of $m$, which falls from one on the collision to $1 - p$ on the horizon"
+            },
+            {
+              "symbol": "X = \\rho^2 + q^2\\sin^2\\lambda",
+              "description": "Chandrasekhar and Xanthopoulos's $X$, Kerr's $r^2 + a^2\\cos^2\\theta$ in units of $m^2$"
+            },
+            {
+              "symbol": "Y = 1 - p^2\\sin^2\\psi - q^2\\sin^2\\lambda",
+              "description": "Chandrasekhar and Xanthopoulos's $Y$, equal to $p^2\\cos^2\\psi + q^2\\cos^2\\lambda$, which is $X$ times the squared length of the Killing vector $\\partial_x$"
+            }
+          ],
+          "convention": "We use coordinates $(\\psi, \\lambda, x, y)$ where both waves have passed, with $\\psi$ and $\\lambda$ dimensionless and $x$ and $y$ lengths across the wave fronts, and write $\\rho$, $X$, and $Y$ as the parameters define them. The parameters $p = \\cos\\alpha$ and $q = \\sin\\alpha$ obey $p^2 + q^2 = 1$, and $m$ is a length. With null coordinates $u$ and $v$ that vanish on the two wave fronts, $\\psi = u + v$ and $\\lambda = u - v$, and ahead of one wave or both, where $u < 0$ or $v < 0$, the metric is this one with $u$ or $v$ set to zero.",
+          "line_element": "ds^2 = m^2X\\left(-d\\psi^2 + d\\lambda^2\\right) + \\dfrac{Y}{X}\\left(dx - \\dfrac{2q\\left(\\sin\\psi\\cos^2\\lambda - p\\left(\\sin^2\\psi - \\sin^2\\lambda\\right)\\right)}{Y}dy\\right)^2 + \\dfrac{X\\cos^2\\psi\\cos^2\\lambda}{Y}dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "-X\\,m^2"
+            },
+            {
+              "indices": [
+                "\\lambda",
+                "\\lambda"
+              ],
+              "value": "X\\,m^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{Y}{X}"
+            },
+            {
+              "indices": [
+                "x",
+                "y"
+              ],
+              "value": "\\dfrac{2q\\left(q^2\\sin^2\\lambda + \\rho^2 - \\rho\\sin^2\\lambda - \\rho\\right)}{p\\,X}"
+            },
+            {
+              "indices": [
+                "y",
+                "x"
+              ],
+              "value": "\\dfrac{2q\\left(q^2\\sin^2\\lambda + \\rho^2 - \\rho\\sin^2\\lambda - \\rho\\right)}{p\\,X}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{\\rho^4 - \\rho^4\\sin^2\\lambda + 2q^2\\,\\rho + 2q^2\\,\\rho\\sin^4\\lambda + 4q^2\\,\\rho\\sin^2\\lambda - 3q^2\\,\\rho^2 - q^2\\,\\rho^2\\sin^4\\lambda - q^4\\sin^4\\lambda - 3q^4\\sin^2\\lambda}{p^2\\,X}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = -\\dfrac{48\\left(q\\sin\\lambda + \\rho\\right)\\left(q\\sin\\lambda - \\rho\\right)\\left(q^2\\sin^2\\lambda - 4q\\,\\rho\\sin\\lambda + \\rho^2\\right)\\left(q^2\\sin^2\\lambda + 4q\\,\\rho\\sin\\lambda + \\rho^2\\right)}{X^6\\,m^4}"
+        },
+        {
+          "id": "boyer_lindquist",
+          "name": "Boyer-Lindquist",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in \\left(m - \\sqrt{m^2 - a^2},\\, m\\right]",
+            "\\theta \\in \\left[\\arccos\\dfrac{m - r}{\\sqrt{m^2 - a^2}},\\, \\pi - \\arccos\\dfrac{m - r}{\\sqrt{m^2 - a^2}}\\right]",
+            "\\phi \\in (-\\infty, \\infty)",
+            "r = m - \\sqrt{m^2 - a^2} \\;\\text{(Killing-Cauchy horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "A length that sets the scale of the collision; between the fronts it is the mass of Kerr's metric, $GM/c^2$"
+            },
+            {
+              "symbol": "a",
+              "description": "Spin parameter of Kerr's metric, a length with $0 < a < m$, equal to $mq$"
+            },
+            {
+              "symbol": "\\Sigma = r^2 + a^2\\cos^2\\theta",
+              "description": "Kerr's $\\Sigma$, equal to $m^2X$"
+            },
+            {
+              "symbol": "\\Delta = r^2 - 2mr + a^2",
+              "description": "Kerr's horizon function, negative between the horizons $r_\\pm = m \\pm \\sqrt{m^2 - a^2}$ and zero on them"
+            }
+          ],
+          "convention": "We use the coordinates $(t, r, \\theta, \\phi)$ of Boyer and Lindquist for Kerr's metric between its horizons, with $t$ a length, and write $\\Sigma$ and $\\Delta$ as the parameters define them. With $a = mq$ they are $r = m(1 - p\\eta)$, $\\cos\\theta = \\mu$, $t = x - 2qy/p$, and $\\phi = -y/(mp)$, so $\\phi$ runs over the whole line.",
+          "line_element": "ds^2 = -\\dfrac{\\Delta}{\\Sigma}\\left(dt - a\\sin^2\\theta\\,d\\phi\\right)^2 + \\dfrac{\\Sigma}{\\Delta}dr^2 + \\Sigma\\,d\\theta^2 + \\dfrac{\\sin^2\\theta}{\\Sigma}\\left(a\\,dt - \\left(r^2 + a^2\\right)d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{2m\\,r - a^2\\cos^2\\theta - r^2}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{2m\\,a\\,r\\sin^2\\theta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-\\dfrac{2m\\,a\\,r\\sin^2\\theta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\Sigma}{\\Delta}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\Sigma"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(r^4 + a^2\\,r^2 + a^2\\,r^2\\cos^2\\theta + a^4\\cos^2\\theta + 2m\\,a^2\\,r - 2m\\,a^2\\,r\\cos^2\\theta\\right)\\sin^2\\theta}{\\Sigma}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = -\\dfrac{48m^2\\left(a\\cos\\theta + r\\right)\\left(a\\cos\\theta - r\\right)\\left(a^2\\cos^2\\theta - 4a\\,r\\cos\\theta + r^2\\right)\\left(a^2\\cos^2\\theta + 4a\\,r\\cos\\theta + r^2\\right)}{\\Sigma^6}"
+        },
+        {
+          "id": "kerr_ingoing",
+          "name": "Ingoing Kerr",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\tilde\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (-\\infty, m]",
+            "\\theta \\in [0, \\pi]",
+            "\\tilde\\phi \\in (-\\infty, \\infty)",
+            "|\\cos\\theta| \\le \\dfrac{m - r}{\\sqrt{m^2 - a^2}} \\;\\text{(behind both wave fronts)}",
+            "r = m - \\sqrt{m^2 - a^2} \\;\\text{(Killing-Cauchy horizon)}",
+            "\\Sigma = 0 \\;\\text{(the ring singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "A length that sets the scale of the collision; between the fronts it is the mass of Kerr's metric, $GM/c^2$"
+            },
+            {
+              "symbol": "a",
+              "description": "Spin parameter of Kerr's metric, a length with $0 < a < m$, equal to $mq$"
+            },
+            {
+              "symbol": "\\Sigma = r^2 + a^2\\cos^2\\theta",
+              "description": "Kerr's $\\Sigma$, equal to $m^2X$"
+            },
+            {
+              "symbol": "\\Delta = r^2 - 2mr + a^2",
+              "description": "Kerr's horizon function, negative between the horizons $r_\\pm = m \\pm \\sqrt{m^2 - a^2}$ and zero on them"
+            }
+          ],
+          "convention": "We use ingoing Kerr coordinates $(v, r, \\theta, \\tilde\\phi)$, which cross the horizon, with the advanced time $v = t + r_*$ a length, $dr_*/dr = (r^2 + a^2)/\\Delta$, $r_* = 0$ at $r = m$, and $d\\tilde\\phi = d\\phi + a\\,dr/\\Delta$, and write $\\Sigma$ and $\\Delta$ as the parameters define them. Both $v$ and $\\tilde\\phi$ run over the whole line.",
+          "line_element": "ds^2 = -\\dfrac{\\Delta}{\\Sigma}\\left(dv - a\\sin^2\\theta\\,d\\tilde\\phi\\right)^2 + 2\\,dr\\left(dv - a\\sin^2\\theta\\,d\\tilde\\phi\\right) + \\Sigma\\,d\\theta^2 + \\dfrac{\\sin^2\\theta}{\\Sigma}\\left(a\\,dv - \\left(r^2 + a^2\\right)d\\tilde\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "\\dfrac{2m\\,r - a^2\\cos^2\\theta - r^2}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "v",
+                "\\tilde\\phi"
+              ],
+              "value": "-\\dfrac{2m\\,a\\,r\\sin^2\\theta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "\\tilde\\phi",
+                "v"
+              ],
+              "value": "-\\dfrac{2m\\,a\\,r\\sin^2\\theta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "r",
+                "\\tilde\\phi"
+              ],
+              "value": "-a\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "\\tilde\\phi",
+                "r"
+              ],
+              "value": "-a\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\Sigma"
+            },
+            {
+              "indices": [
+                "\\tilde\\phi",
+                "\\tilde\\phi"
+              ],
+              "value": "\\dfrac{\\left(r^4 + a^2\\,r^2 + a^2\\,r^2\\cos^2\\theta + a^4\\cos^2\\theta + 2m\\,a^2\\,r - 2m\\,a^2\\,r\\cos^2\\theta\\right)\\sin^2\\theta}{\\Sigma}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = -\\dfrac{48m^2\\left(a\\cos\\theta + r\\right)\\left(a\\cos\\theta - r\\right)\\left(a^2\\cos^2\\theta - 4a\\,r\\cos\\theta + r^2\\right)\\left(a^2\\cos^2\\theta + 4a\\,r\\cos\\theta + r^2\\right)}{\\Sigma^6}"
         }
       ]
     },
@@ -16493,6 +16969,11 @@
           "id": "neugebauer_meinel",
           "kind": "limit_source",
           "text": "A spinning disc of dust whose outside field becomes Kerr's at $J = GM^2/c$ in the limit $\\mu \\to \\mu_0$ of its one parameter, the disc itself shrinking to a point of Weyl's coordinates [meinel2002]."
+        },
+        {
+          "id": "chandrasekhar_xanthopoulos",
+          "kind": "locally_same",
+          "text": "Two plane gravitational waves whose collision makes the inside of Kerr. Between their fronts the metric is Kerr's between its two horizons, with $t$ and $\\phi$ running along the fronts and $\\phi$ unrolled, and the waves end on the inner horizon [chandrasekhar1986, griffiths1991]."
         }
       ],
       "references": [
@@ -16548,7 +17029,9 @@
         "bonnor2002",
         "davidson1994",
         "mars2001",
-        "meinel2002"
+        "meinel2002",
+        "chandrasekhar1986",
+        "griffiths1991"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -18170,6 +18653,11 @@
           "id": "aichelburg_sexl",
           "kind": "family",
           "text": "An impulsive wave whose strength falls off with distance from one massless particle at its centre. Two of them meeting head on close a trapped surface around the collision, as Penrose found in 1974, so a black hole forms [eardley2002]."
+        },
+        {
+          "id": "chandrasekhar_xanthopoulos",
+          "kind": "family",
+          "text": "Waves with a shock behind each impulse and their polarizations out of line. They focus each other onto a horizon, the inner horizon of Kerr, on the surface where these waves have their singularity [chandrasekhar1986]."
         }
       ],
       "references": [
@@ -21619,6 +22107,11 @@
           "id": "btz",
           "kind": "family",
           "text": "The rotating black hole in three dimensions, which has an inner horizon too. J. S. F. Chan, K. C. K. Chan, and Robert Mann gave its charged form a Vaidya mass in 1996 and found the mass function diverging in the same way [chan1996]."
+        },
+        {
+          "id": "chandrasekhar_xanthopoulos",
+          "kind": "family",
+          "text": "Two colliding plane waves that end on the inner horizon of Kerr. Ulvi Yurtsever took such Cauchy horizons of plane symmetric spacetimes as a simpler model of the inner horizon of a black hole [yurtsever1993]."
         }
       ],
       "references": [
@@ -21641,7 +22134,8 @@
         "ori1992",
         "brady1992",
         "carballorubio2021",
-        "chan1996"
+        "chan1996",
+        "yurtsever1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mass_inflation.json",
@@ -22770,6 +23264,11 @@
           "id": "tippett_tsang",
           "kind": "generalisation",
           "text": "Minkowski space with a bubble in it that carries its riders round a closed timelike curve. Tippett and Tsang's metric is Minkowski's wherever their top hat function $h$ vanishes [tippett2017]."
+        },
+        {
+          "id": "chandrasekhar_xanthopoulos",
+          "kind": "composite",
+          "text": "Two plane gravitational waves colliding head on and ending on a horizon. Ahead of both of them spacetime is flat [griffiths1991]."
         }
       ],
       "references": [
@@ -28479,6 +28978,11 @@
           "id": "kundt_waves",
           "kind": "generalisation",
           "text": "Plane-fronted waves whose rays turn from one front to the next. Kundt found them beside the pp-waves in 1961, and one family with a cosmological constant holds both [kundt1961, bicak1999]."
+        },
+        {
+          "id": "chandrasekhar_xanthopoulos",
+          "kind": "composite",
+          "text": "Two plane waves of this family, each an impulse with a shock wave behind it, sent at each other head on. They focus each other onto a horizon [chandrasekhar1986]."
         }
       ],
       "references": [
@@ -28517,7 +29021,8 @@
         "horowitz2012lifshitz",
         "balasubramanian2008",
         "duval2009",
-        "bicak1999"
+        "bicak1999",
+        "chandrasekhar1986"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/pp_wave.json",
@@ -31472,6 +31977,11 @@
           "id": "israel_shell",
           "kind": "composite",
           "text": "A shell of dust falling in on flat space. Schwarzschild's metric is the field outside it, down to wherever the shell is [israel1966]."
+        },
+        {
+          "id": "chandrasekhar_xanthopoulos",
+          "kind": "generalisation",
+          "text": "Two plane gravitational waves colliding head on. With their polarizations aligned, the region between the fronts is the inside of Schwarzschild's black hole, with $\\phi$ unrolled along the fronts [griffiths1991, ferrari1988]."
         }
       ],
       "references": [
@@ -31562,7 +32072,9 @@
         "brill1963",
         "cook2000",
         "emparan2000",
-        "israel1966"
+        "israel1966",
+        "griffiths1991",
+        "ferrari1988"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",

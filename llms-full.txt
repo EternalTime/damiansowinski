@@ -445,6 +445,19 @@ An exact vacuum solution describing two black holes that accelerate away from ea
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \dfrac{1}{\left(1 + \alpha r\cos\theta\right)^2}\left(-\left(1 - \alpha^2r^2\right)\left(1 - \dfrac{2m}{r}\right)c^2dt^2 + \dfrac{dr^2}{\left(1 - \alpha^2r^2\right)\left(1 - \dfrac{2m}{r}\right)} + \dfrac{r^2d\theta^2}{1 + 2\alpha m\cos\theta} + C^2\left(1 + 2\alpha m\cos\theta\right)r^2\sin^2\theta\,d\phi^2\right)$$
 - chart Hong-Teo: coordinates $(\tau, y, x, \phi)$, $$ds^2 = \dfrac{1}{\alpha^2\left(x + y\right)^2}\left(\left(1 - y^2\right)\left(1 - 2\alpha m y\right)d\tau^2 - \dfrac{dy^2}{\left(1 - y^2\right)\left(1 - 2\alpha m y\right)} + \dfrac{dx^2}{\left(1 - x^2\right)\left(1 + 2\alpha m x\right)} + C^2\left(1 - x^2\right)\left(1 + 2\alpha m x\right)d\phi^2\right)$$
 
+### Chandrasekhar-Xanthopoulos Colliding Plane Waves
+
+Two plane gravitational waves colliding head on in flat space, each an impulse with a shock wave behind it, their polarizations out of line. Where both have passed the spacetime is locally Kerr's between its horizons, and the waves focus each other onto a Killing-Cauchy horizon with the curvature finite.
+
+- id: `chandrasekhar_xanthopoulos`
+- tags: vacuum, plane wave, gravitational wave, colliding plane waves, impulsive wave, shock wave, Kerr, Petrov type D, Killing-Cauchy horizon, Cauchy horizon, inner horizon, black hole interior, ring singularity, timelike singularity, fold singularity, nonlinear, exact solution, time-dependent, Lorentzian, four-dimensional, idealized model, Einstein equations
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/chandrasekhar_xanthopoulos.json
+- chart Chandrasekhar-Xanthopoulos: coordinates $(\eta, \mu, x, y)$, $$ds^2 = m^2X\left(-\dfrac{d\eta^2}{1 - \eta^2} + \dfrac{d\mu^2}{1 - \mu^2}\right) + \dfrac{Y}{X}\left(dx - \dfrac{2q\left(\eta\left(1 - \mu^2\right) - p\left(\eta^2 - \mu^2\right)\right)}{Y}dy\right)^2 + \dfrac{\left(1 - \eta^2\right)\left(1 - \mu^2\right)X}{Y}dy^2$$
+- chart Time and Space: coordinates $(\psi, \lambda, x, y)$, $$ds^2 = m^2X\left(-d\psi^2 + d\lambda^2\right) + \dfrac{Y}{X}\left(dx - \dfrac{2q\left(\sin\psi\cos^2\lambda - p\left(\sin^2\psi - \sin^2\lambda\right)\right)}{Y}dy\right)^2 + \dfrac{X\cos^2\psi\cos^2\lambda}{Y}dy^2$$
+- chart Boyer-Lindquist: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{\Delta}{\Sigma}\left(dt - a\sin^2\theta\,d\phi\right)^2 + \dfrac{\Sigma}{\Delta}dr^2 + \Sigma\,d\theta^2 + \dfrac{\sin^2\theta}{\Sigma}\left(a\,dt - \left(r^2 + a^2\right)d\phi\right)^2$$
+- chart Ingoing Kerr: coordinates $(v, r, \theta, \tilde\phi)$, $$ds^2 = -\dfrac{\Delta}{\Sigma}\left(dv - a\sin^2\theta\,d\tilde\phi\right)^2 + 2\,dr\left(dv - a\sin^2\theta\,d\tilde\phi\right) + \Sigma\,d\theta^2 + \dfrac{\sin^2\theta}{\Sigma}\left(a\,dv - \left(r^2 + a^2\right)d\tilde\phi\right)^2$$
+
 ### Coleman-De Luccia Bubble
 
 The spacetime of a false vacuum decaying, found by Sidney Coleman and Frank De Luccia in 1980. A bubble of lower vacuum energy appears by quantum tunnelling, its wall accelerates outward toward the speed of light, and the inside of the bubble is an open universe with no singularity at its start.

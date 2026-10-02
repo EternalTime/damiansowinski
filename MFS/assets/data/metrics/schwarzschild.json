@@ -323,6 +323,11 @@
       "id": "israel_shell",
       "kind": "composite",
       "text": "A shell of dust falling in on flat space. Schwarzschild's metric is the field outside it, down to wherever the shell is [israel1966]."
+    },
+    {
+      "id": "chandrasekhar_xanthopoulos",
+      "kind": "generalisation",
+      "text": "Two plane gravitational waves colliding head on. With their polarizations aligned, the region between the fronts is the inside of Schwarzschild's black hole, with $\\phi$ unrolled along the fronts [griffiths1991, ferrari1988]."
     }
   ],
   "references": [
@@ -413,7 +418,9 @@
     "brill1963",
     "cook2000",
     "emparan2000",
-    "israel1966"
+    "israel1966",
+    "griffiths1991",
+    "ferrari1988"
   ],
   "coordinates": [
     {

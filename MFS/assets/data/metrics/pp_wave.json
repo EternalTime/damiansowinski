@@ -88,6 +88,11 @@
       "id": "kundt_waves",
       "kind": "generalisation",
       "text": "Plane-fronted waves whose rays turn from one front to the next. Kundt found them beside the pp-waves in 1961, and one family with a cosmological constant holds both [kundt1961, bicak1999]."
+    },
+    {
+      "id": "chandrasekhar_xanthopoulos",
+      "kind": "composite",
+      "text": "Two plane waves of this family, each an impulse with a shock wave behind it, sent at each other head on. They focus each other onto a horizon [chandrasekhar1986]."
     }
   ],
   "references": [
@@ -126,7 +131,8 @@
     "horowitz2012lifshitz",
     "balasubramanian2008",
     "duval2009",
-    "bicak1999"
+    "bicak1999",
+    "chandrasekhar1986"
   ],
   "coordinates": [
     {

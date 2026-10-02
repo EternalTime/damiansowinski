@@ -77,6 +77,11 @@
       "id": "btz",
       "kind": "family",
       "text": "The rotating black hole in three dimensions, which has an inner horizon too. J. S. F. Chan, K. C. K. Chan, and Robert Mann gave its charged form a Vaidya mass in 1996 and found the mass function diverging in the same way [chan1996]."
+    },
+    {
+      "id": "chandrasekhar_xanthopoulos",
+      "kind": "family",
+      "text": "Two colliding plane waves that end on the inner horizon of Kerr. Ulvi Yurtsever took such Cauchy horizons of plane symmetric spacetimes as a simpler model of the inner horizon of a black hole [yurtsever1993]."
     }
   ],
   "references": [
@@ -99,7 +104,8 @@
     "ori1992",
     "brady1992",
     "carballorubio2021",
-    "chan1996"
+    "chan1996",
+    "yurtsever1993"
   ],
   "coordinates": [
     {

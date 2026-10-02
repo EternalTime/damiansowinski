@@ -57,6 +57,11 @@
       "id": "aichelburg_sexl",
       "kind": "family",
       "text": "An impulsive wave whose strength falls off with distance from one massless particle at its centre. Two of them meeting head on close a trapped surface around the collision, as Penrose found in 1974, so a black hole forms [eardley2002]."
+    },
+    {
+      "id": "chandrasekhar_xanthopoulos",
+      "kind": "family",
+      "text": "Waves with a shock behind each impulse and their polarizations out of line. They focus each other onto a horizon, the inner horizon of Kerr, on the surface where these waves have their singularity [chandrasekhar1986]."
     }
   ],
   "references": [

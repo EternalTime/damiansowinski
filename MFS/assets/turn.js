@@ -41,7 +41,8 @@
    smaller.
 
    A stack of ellipses, the world tube of a ring of particles or a cone cut open and unrolling,
-   is a grid piece whose rows are ellipses about the axis. It draws the lines it names itself and
+   is a grid piece whose rows are ellipses about the axis, (a cos v, b sin v), or where the ring is
+   sheared as well as stretched, (a cos v + sx sin v, sy cos v + b sin v). It draws the lines it names itself and
    its outline, and a point on it is judged from just outside and just inside it, straight out
    from the axis and back. A stack also stands on its axis of time, drawn up the axis and named
    at its top, and names each moment beside the end of its ring.
@@ -265,8 +266,9 @@
       for (j = 0; j < n; j++) {
         k = i * n + j;
         if (ellipses) {
-          X[k] = G.a[i] * Math.cos(G.v[j]);
-          Y[k] = G.b[i] * Math.sin(G.v[j]);
+          // A sheared row gives sx and sy as well: (a cos v + sx sin v, sy cos v + b sin v).
+          X[k] = G.a[i] * Math.cos(G.v[j]) + (G.sx ? G.sx[i] * Math.sin(G.v[j]) : 0);
+          Y[k] = (G.sy ? G.sy[i] * Math.cos(G.v[j]) : 0) + G.b[i] * Math.sin(G.v[j]);
           Z[k] = G.z[i];
         } else {
           X[k] = G.frame === 'polar' ? G.u[i] * Math.cos(G.v[j]) : G.u[i];
