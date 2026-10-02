@@ -10,8 +10,8 @@ black_string, myers_perry, black_saturn, near_horizon_extreme_kerr, hartle_thorn
 som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos, kundt_waves,
 schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
-israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis and
-wahlquist, and Godel's cylindrical chart.
+israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis,
+wahlquist and plebanski_hacyan, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -16967,6 +16967,169 @@ def wahlquist_check(chart, system, forms):
 
 
 CHARTS["wahlquist"] = [lambda s=s: wahlquist(s) for s in WAHLQUIST_CHARTS]
+
+
+# -- Plebański-Hacyan and anti-Nariai ---------------------------------------------------
+
+PH_CHARTS = ["sphere", "sphere_rindler", "plane", "plane_null", "plane_static", "anti_nariai", "anti_nariai_static",
+             "exceptional"]
+PH_SPHERE = "b^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+PH_HYPERBOLIC = "d\\theta^2 + \\sinh^2\\theta\\,d\\phi^2"
+PH_LINE = "{} \\in (-\\infty, \\infty)"
+PH_SPHERE_DOMAINS = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+PH_HYPERBOLIC_DOMAINS = ["\\theta \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)"]
+
+
+def plebanski_hacyan(system):
+    """The products of two surfaces of constant curvature K1 (the Lorentzian one) and K2 that
+    Ortaggio and Podolsky's table 1 lists beside Nariai's and Bertotti and Robinson's, and
+    Plebanski and Hacyan's exceptional metric. K1 = 0, K2 = 1/b^2, Lambda = 1/2b^2: Cardoso, Dias
+    and Lemos's (28) in four dimensions and its Rindler chart. K1 = -1/a^2, K2 = 0,
+    Lambda = -1/2a^2: Plebanski and Hacyan's own chart as Podolsky and Ortaggio write it, (37)
+    with A_1 = 0, Ortaggio and Podolsky's null chart (11) with v reversed, and Cardoso, Dias and
+    Lemos's (37) at k = 0. K1 = K2 = -1/a^2, Lambda = -1/a^2: Dias and Lemos's (17) and (21) at
+    K_0 = 1. The exceptional chart is Podolsky and Ortaggio's (37) with A_1 zeta + conj = f x + g y.
+    plebanski_hacyan_check holds each to G^mu_nu = -K2 on the Lorentzian block and -K1 on the
+    other, which is the Einstein-Maxwell equations with Lambda = (K1 + K2)/2 and a uniform field
+    of energy density (K2 - K1) c^4/16 pi G, and each chart that has a map to another to being
+    it pulled back. plebanski_hacyan.md records each chart's source."""
+    spec = {"metric_id": "plebanski_hacyan", "check": lambda c: plebanski_hacyan_check(c, system)}
+    parameters = ["b"] if system.startswith("sphere") else ["a"]
+    scalars = {}
+    if system == "sphere":
+        coords, name = ["t", "z", "\\theta", "\\phi"], "Sphere"
+        domains = [PH_LINE.format("t"), PH_LINE.format("z")] + PH_SPHERE_DOMAINS
+        line = "ds^2 = -c^2dt^2 + dz^2 + " + PH_SPHERE
+        chart_line = line.replace("c^2dt^2", "dt^2")
+    elif system == "sphere_rindler":
+        coords, name = ["\\tau", "\\chi", "\\theta", "\\phi"], "Sphere, Rindler"
+        domains = [PH_LINE.format("\\tau"), "\\chi \\in (0, \\infty)"] + PH_SPHERE_DOMAINS + [
+            "\\chi = 0 \\;\\text{(the Rindler horizon)}"]
+        line = chart_line = "ds^2 = -\\chi^2d\\tau^2 + d\\chi^2 + " + PH_SPHERE
+    elif system == "plane":
+        coords, name = ["u", "w", "x", "y"], "Plane"
+        domains = [PH_LINE.format(c) for c in coords] + ["w = 0 \\;\\text{(a Killing horizon)}"]
+        line = chart_line = "ds^2 = -2\\,du\\,dw - \\dfrac{w^2}{a^2}du^2 + dx^2 + dy^2"
+    elif system == "plane_null":
+        coords, name = ["u", "v", "x", "y"], "Plane, Null"
+        domains = [PH_LINE.format(c) for c in coords] + [
+            "uv > -2a^2", "uv = -2a^2 \\;\\text{(the timelike boundary at infinity)}"]
+        line = chart_line = ("ds^2 = -\\dfrac{2\\,du\\,dv}{\\left(1 + \\dfrac{uv}{2a^2}\\right)^2} + dx^2 + dy^2")
+        omega = "\\left(1 + \\dfrac{uv}{2a^2}\\right)"
+        spec["components"] = {
+            "metric_components": {k: "-" + omega + "^{-2}" for k in (("u", "v"), ("v", "u"))},
+            "inverse_metric_components": {k: "-" + omega + "^2" for k in (("u", "v"), ("v", "u"))}}
+    elif system == "plane_static":
+        coords, name = ["\\tau", "\\chi", "x", "y"], "Plane, Static"
+        domains = [PH_LINE.format("\\tau"), "\\chi \\in (0, \\infty)", PH_LINE.format("x"), PH_LINE.format("y"),
+                   "\\chi = 0 \\;\\text{(a Killing horizon)}"]
+        line = chart_line = "ds^2 = a^2\\left(-\\sinh^2\\chi\\,d\\tau^2 + d\\chi^2\\right) + dx^2 + dy^2"
+    elif system == "anti_nariai":
+        coords, name = ["\\tau", "\\chi", "\\theta", "\\phi"], "Anti-Nariai"
+        domains = [PH_LINE.format("\\tau"), "\\chi \\in (0, \\infty)"] + PH_HYPERBOLIC_DOMAINS + [
+            "\\chi = 0 \\;\\text{(a Killing horizon)}"]
+        line = chart_line = ("ds^2 = a^2\\left(-\\sinh^2\\chi\\,d\\tau^2 + d\\chi^2 + " + PH_HYPERBOLIC + "\\right)")
+    elif system == "anti_nariai_static":
+        coords, name = ["t", "r", "\\theta", "\\phi"], "Anti-Nariai, Static"
+        domains = [PH_LINE.format("t"), "r \\in (a, \\infty)"] + PH_HYPERBOLIC_DOMAINS + [
+            "r = a \\;\\text{(a Killing horizon)}"]
+        f = "\\left(\\dfrac{r^2}{a^2} - 1\\right)"
+        line = ("ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + f[6:-7] + "} + a^2\\left(" + PH_HYPERBOLIC + "\\right)")
+        chart_line = line.replace("c^2dt^2", "dt^2")
+        spec["components"] = {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                              "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): f[6:-7]}}
+    elif system == "exceptional":
+        coords, name = ["u", "w", "x", "y"], "Exceptional"
+        parameters = ["a", "f = f(u)", "g = g(u)"]
+        domains = [PH_LINE.format(c) for c in coords]
+        line = chart_line = ("ds^2 = -2\\,du\\,dw - \\left(\\dfrac{w^2}{a^2} + f\\,x + g\\,y\\right)du^2 + dx^2 + dy^2")
+        tilt = "\\dfrac{w^2}{a^2} + f\\,x + g\\,y"
+        spec["components"] = {"metric_components": {("u", "u"): "-\\left(" + tilt + "\\right)"},
+                              "inverse_metric_components": {("w", "w"): tilt}}
+    else:
+        raise KeyError(system)
+    probe = vm.Reader(coords, parameters, ())
+    radius = probe.parameters[parameters[0]]
+    printer = {"lead": [radius], "flip": False}
+    if system in ("plane_static", "anti_nariai"):
+        chi = cp.hyperbolic(probe.symbol["\\chi"])
+        if system == "anti_nariai":
+            theta = cp.hyperbolic(probe.symbol["\\theta"])
+            spec["pretty"] = lambda value: theta(chi(value))
+        else:
+            spec["pretty"] = chi
+    elif system == "anti_nariai_static":
+        printer["rising"] = [radius]
+        spec["pretty"] = cp.hyperbolic(probe.symbol["\\theta"])
+    elif system == "exceptional":
+        printer["lead"] = [radius, probe.symbol["w"], probe.parameters["f"], probe.parameters["g"]]
+    if system.startswith("sphere"):
+        scalars = {"ricci_scalar": "\\dfrac{2}{b^2}", "kretschmann": "\\dfrac{4}{b^4}"}
+    elif system.startswith("anti_nariai"):
+        scalars = {"ricci_scalar": "-\\dfrac{4}{a^2}", "kretschmann": "\\dfrac{8}{a^4}"}
+    else:
+        scalars = {"ricci_scalar": "-\\dfrac{2}{a^2}", "kretschmann": "\\dfrac{4}{a^4}"}
+    spec.update({"system": {"id": system, "name": name, "coords": coords, "domains": domains,
+                            "parameters": parameters, "line_element": line},
+                 "chart_line_element": chart_line, "printer": printer, **scalars})
+    return spec
+
+
+def plebanski_hacyan_curvatures(chart, system):
+    """K1 of the Lorentzian surface and K2 of the other, in the chart's own radius."""
+    radius = chart.reader.parameters["b" if system.startswith("sphere") else "a"]
+    if system.startswith("sphere"):
+        return 0, 1 / radius ** 2
+    if system.startswith("anti_nariai"):
+        return -1 / radius ** 2, -1 / radius ** 2
+    return -1 / radius ** 2, 0
+
+
+def plebanski_hacyan_check(chart, system):
+    """G^mu_nu is -K2 on the block of the first two coordinates and -K1 on the block of the last
+    two, and nothing off the diagonal: with Lambda = (K1 + K2)/2 that is G^mu_nu + Lambda delta =
+    (K2 - K1)/2 times diag(-1, -1, 1, 1), the stress of a uniform electromagnetic field along the
+    first surface with energy density (K2 - K1) c^4/16 pi G, which vanishes for anti-Nariai. The
+    Rindler chart is the sphere chart pulled back along ct = chi sinh tau, z = chi cosh tau, the
+    null chart Plebanski and Hacyan's along w = v/(1 + uv/2a^2), the static anti-Nariai chart the
+    first along r = a cosh chi and ct = a tau, and the exceptional chart Plebanski and Hacyan's
+    at f = g = 0."""
+    K1, K2 = plebanski_hacyan_curvatures(chart, system)
+    mixed = chart.geo.raise_indices(chart.geo.einstein_ll(), 2, (0,))
+    for i in range(4):
+        for j in range(4):
+            wanted = (-K2 if i < 2 else -K1) if i == j else 0
+            if vm.norm(mixed[i][j] - wanted) != 0:
+                raise AssertionError(f"plebanski_hacyan: the Einstein tensor of the {system} chart misses the uniform "
+                                     f"field's stress in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    x0, x1 = chart.symbols[:2]
+    maps = {"sphere_rindler": ("sphere", lambda r: [x1 * sp.sinh(x0), x1 * sp.cosh(x0)]),
+            "plane_null": ("plane", lambda r: [x0, x1 / (1 + x0 * x1 / (2 * r ** 2))]),
+            "anti_nariai": ("anti_nariai_static", lambda r: [r * x0, r * sp.cosh(x1)]),
+            "exceptional": ("plane", lambda r: [x0, x1])}
+    if system not in maps:
+        return
+    target_id, image = maps[system]
+    spec = plebanski_hacyan(target_id)
+    target = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    name = spec["system"]["parameters"][0]
+    radius = chart.reader.parameters[name]
+    new = image(radius) + list(chart.symbols[2:])
+    at = dict(zip(target.symbols, new))
+    at[target.reader.parameters[name]] = radius
+    J = sp.Matrix([[sp.diff(expr, v) for v in chart.symbols] for expr in new])
+    pulled = J.T * target.geo.g.subs(at, simultaneous=True) * J
+    here = chart.geo.g
+    if system == "exceptional":
+        here = here.subs({chart.reader.parameters["f"]: 0, chart.reader.parameters["g"]: 0})
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify((pulled[i, j] - here[i, j]).rewrite(sp.exp)) != 0:
+                raise AssertionError(f"plebanski_hacyan: the {target_id} chart pulled back misses the {system} "
+                                     f"chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["plebanski_hacyan"] = [lambda s=s: plebanski_hacyan(s) for s in PH_CHARTS]
 
 
 def write(spec):

@@ -62,6 +62,11 @@
       "id": "kundt_waves",
       "kind": "family",
       "text": "Nariai's universe has rays that neither expand nor twist, so it sits in Kundt's class beside his waves [podolskybelan2004]."
+    },
+    {
+      "id": "plebanski_hacyan",
+      "kind": "family",
+      "text": "The other products of two surfaces of constant curvature. Anti-Nariai trades de Sitter space for anti-de Sitter space and the sphere for a hyperbolic plane, and Plebański and Hacyan's two have one flat factor and a uniform electromagnetic field [ortaggio2002direct]."
     }
   ],
   "references": [
@@ -80,7 +85,8 @@
     "cardoso2004",
     "romans1992",
     "kasner1921",
-    "podolskybelan2004"
+    "podolskybelan2004",
+    "ortaggio2002direct"
   ],
   "coordinates": [
     {

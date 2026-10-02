@@ -694,6 +694,16 @@ DIMENSIONS = {
     ("natario", "plane_flow"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "u": "L/T",
     },
+    # Plebanski and Hacyan's products and anti-Nariai: a and b are the radii of the factors, tau a
+    # boost angle or a dimensionless time, and f and g, which multiply x and y in g_uu, inverse lengths.
+    ("plebanski_hacyan", "sphere"): {"t": "T", "z": "L", "\\theta": "1", "\\phi": "1", "b": "L"},
+    ("plebanski_hacyan", "sphere_rindler"): {"\\tau": "1", "\\chi": "L", "\\theta": "1", "\\phi": "1", "b": "L"},
+    ("plebanski_hacyan", "plane"): {"u": "L", "w": "L", "x": "L", "y": "L", "a": "L"},
+    ("plebanski_hacyan", "plane_null"): {"u": "L", "v": "L", "x": "L", "y": "L", "a": "L"},
+    ("plebanski_hacyan", "plane_static"): {"\\tau": "1", "\\chi": "1", "x": "L", "y": "L", "a": "L"},
+    ("plebanski_hacyan", "anti_nariai"): {"\\tau": "1", "\\chi": "1", "\\theta": "1", "\\phi": "1", "a": "L"},
+    ("plebanski_hacyan", "anti_nariai_static"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "a": "L"},
+    ("plebanski_hacyan", "exceptional"): {"u": "L", "w": "L", "x": "L", "y": "L", "a": "L", "f": "1/L", "g": "1/L"},
     # The conformal chart's eta and chi are angles; 1/Lambda carries the length squared.
     ("nariai", "static"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Lambda": "1/L**2",

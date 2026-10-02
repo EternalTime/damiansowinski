@@ -197,6 +197,13 @@ REGIONS = {
         "why": "vacuum_core leaves f free; the core is a vacuum where f is harmonic in x "
                "and y, as the other two charts take it",
     },
+    "plebanski_hacyan": {
+        "regions": [["sphere", "sphere_rindler"], ["plane", "plane_null", "plane_static"],
+                    ["anti_nariai", "anti_nariai_static"]],
+        "why": "the three products are three spacetimes, a flat plane times a sphere, anti-de Sitter "
+               "space of two dimensions times a flat plane, and anti-Nariai; exceptional leaves f and g "
+               "free, and with them it has no Killing vector",
+    },
     "point_particle_2plus1": {
         "regions": [["conical", "wedge", "circumference", "isotropic", "two_bodies", "moving"]],
         "why": "planet is the inside of a body of finite size, a cap of a sphere; the "
