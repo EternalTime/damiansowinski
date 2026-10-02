@@ -178,7 +178,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cf859aec3d79796b",
+    "version": "76f7ec968df6bc0b",
     "diagrams": "af782319d0ede812",
     "conformal": "7ea8e08d66397efe",
     "embedding": "1585df5452ac5572"
@@ -464,7 +464,7 @@
       "static",
       "spherically symmetric"
     ],
-    "version": "d6a355f9810fadf6",
+    "version": "282e13dc262e4ee9",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -783,6 +783,40 @@
     "embedding": "f0d7a1bdcd0620df"
   },
   {
+    "id": "gravastar",
+    "name": "Gravastar",
+    "tags": [
+      "gravastar",
+      "black hole mimicker",
+      "exotic compact object",
+      "no horizon",
+      "thin shell",
+      "matched solution",
+      "de Sitter core",
+      "regular centre",
+      "vacuum energy",
+      "positive cosmological constant",
+      "anisotropic pressure",
+      "strong energy condition",
+      "echoes",
+      "quasinormal modes",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "mass",
+      "asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "72e0145d4b53641a",
+    "diagrams": "1e2a338fbaeb162f",
+    "conformal": "c44e7367505c4a14",
+    "embedding": "eb3c3b7b2d474485"
+  },
+  {
     "id": "hartle_thorne",
     "name": "Hartle-Thorne",
     "tags": [
@@ -844,7 +878,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "10cb6b97f391362f",
+    "version": "12c3fab6c53c7e58",
     "diagrams": "bd41935318270b6a",
     "conformal": "17d38d5b746db304",
     "embedding": "5ff5b48da9e6b5f3"
@@ -1929,7 +1963,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d61c9242cf6aa64c",
+    "version": "a6431d47f7b13fb6",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -1952,7 +1986,7 @@
       "idealized model",
       "conformally flat"
     ],
-    "version": "b309bb1265ab361b",
+    "version": "85a0393e27a718f3",
     "diagrams": "2c3a4f257a42be77",
     "conformal": "576471fc7fb8c666",
     "embedding": "33dc4c3913188978"
@@ -2467,7 +2501,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e10afa2ca78a7047",
+    "version": "9b11ef4b6ef91775",
     "diagrams": "d3c0cce1a6061334",
     "conformal": "651a421afaa54900",
     "embedding": "c9905ef896f1be24"

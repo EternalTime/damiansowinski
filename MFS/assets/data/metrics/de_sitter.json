@@ -103,6 +103,11 @@
       "id": "senovilla",
       "kind": "family",
       "text": "A universe of radiation that also contracts, bounces, and expands with no singularity, and keeps the strong energy condition that de Sitter's violates. It has no closed trapped surface, and its slices of constant time are open [senovilla1998, chinea1992]."
+    },
+    {
+      "id": "gravastar",
+      "kind": "composite",
+      "text": "A ball of de Sitter space inside a thin shell, with Schwarzschild's vacuum outside. The vacuum within pushes outward on the shell, and no horizon forms [mazur2004]."
     }
   ],
   "references": [
@@ -137,7 +142,8 @@
     "caldwell1996",
     "coleman1980",
     "senovilla1998",
-    "chinea1992"
+    "chinea1992",
+    "mazur2004"
   ],
   "coordinates": [
     {

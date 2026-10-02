@@ -588,6 +588,11 @@ GODEL_RC = math.asinh(1.0)
 SDS = {"r_s": 1, "Lambda": "1/5"}
 # Visser's thin shell wormhole with its throat at a = 5r_s/4, inside the photon sphere 3r_s/2.
 TSW = {"r_s": 1, "a": "5/4"}
+# The gravastar every diagram draws: the shell at R = 5 r_s/4 round a ball of de Sitter space of
+# radius L = 2 r_s, where C = 64/195 and the shell has a positive surface density.
+GRAVASTAR = {"r_s": 1, "R": "5/4", "L": 2}
+GRAVASTAR_C = 64 / 195
+GRAVASTAR_X = 2 / math.sqrt(GRAVASTAR_C) * math.atanh(5 / 8)
 SDS_STATIC = 7.5 ** (1 / 3)
 # The lukewarm charged black hole in de Sitter space, r_q = r_s/2 and Lambda r_s^2 = 27/64, which is
 # H r_s/c = 3/8: f = (1 - 1/(2r))^2 - 9r^2/64 vanishes at r_c = 2, r_+ = 2/3, r_- = (2 sqrt 7 - 4)/3 and
@@ -1204,6 +1209,22 @@ DIAGRAMS = [
     Diagram("thin_shell_wormhole", "spherical", "radial", "$t$ and $r$", ("t", "r"), (1.25, 4.25, -1.5, 1.5),
             "$r/r_s$", "$ct/r_s$", TSW, EQUATOR, areal=True,
             lines=(("shell", "r", "5/4", "the shell at the throat, $r = a$"),)),
+    # The gravastar on its plane of the time and the radius: inside the shell in the areal radius and
+    # in the tortoise coordinate, where every ray runs at 45 degrees, and outside it in Schwarzschild's
+    # chart from the shell out.
+    Diagram("gravastar", "interior", "radial", "$t$ and $r$", ("t", "r"), (0, 1.25, -1.25, 1.25),
+            "$r/r_s$", "$ct/r_s$", GRAVASTAR, EQUATOR, areal=True,
+            lines=(("shell", "r", "5/4", "the shell, $r = R$"),)),
+    Diagram("gravastar", "interior", "through", "through the centre", ("t", "r"), (0, 1.25, -1.25, 1.25),
+            "$x/r_s$", "$ct/r_s$", GRAVASTAR, EQUATOR, mirror=True, families=SIDEWAYS, cones=(4, 8), areal=True,
+            lines=(("shell", "r", "5/4", "the shell, $r = R$"),)),
+    Diagram("gravastar", "interior_tortoise", "radial", "$t$ and $x$", ("t", "x"),
+            (0, 2.8, -1.4, 1.4), "$x/r_s$", "$ct/r_s$", GRAVASTAR, EQUATOR,
+            areal=True, areal_contours=(0.5, 1.0),
+            lines=(("shell", "r", repr(GRAVASTAR_X), "the shell, $r = R$"),)),
+    Diagram("gravastar", "exterior", "radial", "$t$ and $r$", ("t", "r"), (1.25, 4.25, -1.5, 1.5),
+            "$r/r_s$", "$ct/r_s$", {"r_s": 1, "R": "5/4"}, EQUATOR, areal=True,
+            lines=(("shell", "r", "5/4", "the shell, $r = R$"),)),
     # The wormhole time machine on the axis of the right mouth's acceleration, theta = 0, where
     # N = 1 + g l F: a stretch of the trip about the greatest acceleration, and one about the
     # greatest deceleration, half a trip's turn later. And the mouth of the short throat.
@@ -3006,6 +3027,37 @@ CAPTIONS = {
         "The chart stops at the throat $r = a$, before the cones close at $r_s$, so there is no horizon. A ray "
         "moving in reaches the throat at a finite $t$ and goes on into the other side, where $r$ grows again. "
         "The Kretschmann scalar $12r_s^2/r^6$ is at most $12r_s^2/a^6$.",
+    ],
+    ("gravastar", "interior", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) inside the shell, drawn for $R = 1.25\\,r_s$ and "
+        "$L = 2\\,r_s$, where $C = 64/195$. The edges of the cones are $dr/d(ct) = \\pm\\sqrt{C}\\left(1 - r^2/L^2\\right)$, "
+        "so $ct \\mp x$ is constant along a ray, with $x = (L/\\sqrt{C})\\,\\mathrm{artanh}(r/L)$ the tortoise "
+        "coordinate. The cones are widest at the centre, where $dr/d(ct) = \\pm 0.57$, and narrowest on the shell, "
+        "where it is $\\pm 0.35$.",
+        "The chart stops at the shell $r = R$, before the cones close at the de Sitter horizon $r = L$, and $t$ "
+        "is the time of the exterior chart. A ray from the centre reaches the shell after $ct = 2.56\\,r_s$ and "
+        "goes on into Schwarzschild's vacuum. The Kretschmann scalar is $24/L^4$ at every point.",
+    ],
+    ("gravastar", "interior", "through"): [
+        "The line through the centre of the gravastar in the plane $\\theta = \\pi/2$, from the shell to the "
+        "shell ($R = 1.25\\,r_s$, $L = 2\\,r_s$): $x = r$ on the right is $\\phi = 0$ and $x = -r$ on the left is "
+        "$\\phi = \\pi$. Rays cross the centre smoothly, and the cones are widest there.",
+    ],
+    ("gravastar", "interior_tortoise", "radial"): [
+        "The plane of $t$ and $x$ ($\\theta = \\pi/2$, $\\phi = 0$) inside the shell, drawn for $R = 1.25\\,r_s$ and "
+        "$L = 2\\,r_s$, where the shell is at $x = 2.56\\,r_s$. On this plane $ds^2 = C\\left(-c^2dt^2 + dx^2\\right)/"
+        "\\cosh^2(\\sqrt{C}\\,x/L)$, so every ray runs at 45° and every cone is the same. The faint vertical lines are "
+        "the spheres of areal radius $0.5\\,r_s$ and $r_s$, which crowd toward the shell since "
+        "$r = L\\tanh(\\sqrt{C}\\,x/L)$.",
+    ],
+    ("gravastar", "exterior", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell, drawn for $R = 1.25\\,r_s$. "
+        "The edges of the cones are $dr/d(ct) = \\pm(1 - r_s/r)$, so $ct \\mp r_*$ is constant along a ray, with "
+        "$r_* = r + r_s\\ln(r/r_s - 1)$, as outside a Schwarzschild black hole.",
+        "The chart stops at the shell $r = R$, before the cones close at $r_s$, so there is no horizon. A ray "
+        "moving in reaches the shell at a finite $t$, where $dr/d(ct) = -0.2$, and crosses into the de Sitter "
+        "interior. Light leaving the shell arrives far away with its frequency lowered by the factor "
+        "$\\sqrt{1 - r_s/R} = 0.45$. The Kretschmann scalar $12r_s^2/r^6$ is at most $12r_s^2/R^6$.",
     ],
     ("teo_wormhole", "spherical", "axis"): [
         "The plane of $t$ and $r$ on the axis of rotation ($\\theta = 0$) on one side of the throat, drawn for "
@@ -7147,6 +7199,11 @@ def _teo_axis(r):
             + np.sqrt(2) * np.arctanh(np.sqrt((r - 1) / (2 * r))))
 
 
+def _gravastar_x(r):
+    """The tortoise coordinate inside the gravastar the diagrams draw, dx/dr = 1/(sqrt(C)(1 - r^2/L^2))."""
+    return 2 / math.sqrt(GRAVASTAR_C) * np.arctanh(np.asarray(r, float) / 2)
+
+
 def _rstar(r, horizons):
     """The tortoise coordinate of f = prod(1 - r_i/r) with simple roots r_i, up to a constant."""
     out = np.asarray(r, float).copy()
@@ -7741,6 +7798,15 @@ CLOSED_FORMS = {
     ("thin_shell_wormhole", "throat", "radial"):
         (lambda t, l: t + _tsw_lstar(l), lambda t, l: t - _tsw_lstar(l), None),
     ("thin_shell_wormhole", "spherical", "radial"):
+        (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), None),
+    # The gravastar at r_s = 1, R = 5/4 and L = 2: ct -+ x inside, x = (L/sqrt(C)) artanh(r/L), and
+    # Schwarzschild's ct -+ r_* outside.
+    ("gravastar", "interior", "radial"):
+        (lambda t, r: t + _gravastar_x(r), lambda t, r: t - _gravastar_x(r), None),
+    ("gravastar", "interior", "through"):
+        (lambda t, r: t + _gravastar_x(r), lambda t, r: t - _gravastar_x(r), None),
+    ("gravastar", "interior_tortoise", "radial"): (lambda t, x: t + x, lambda t, x: t - x, None),
+    ("gravastar", "exterior", "radial"):
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), None),
     ("gowdy", "areal", "plane"): (lambda t, th: t + th, lambda t, th: t - th, lambda t, th: t > 0.02),
     ("gowdy", "sphere", "plane"): (lambda t, th: t + th, lambda t, th: t - th, None),

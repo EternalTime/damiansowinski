@@ -199,6 +199,15 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `spherical/through`: the line $t = 0$ from $x = -R$ to $R$.
 - `spherical`, the half diamond: the line $T = 0$ from the centre through the surface to $r = 4\,r_s$.
 
+### The gravastar
+
+- The embedding is the equator at one moment of $t$, drawn at $t = 0$ for $R = 1.25\,r_s$ and $L = 2\,r_s$: the interior, $r$ from $0$ to $R$, and the exterior from $R$ to $4\,r_s$; the vacuum paraboloid under the cap is a reference.
+- `interior/radial`, which draws the interior alone: the line $t = 0$ across the whole box, $r$ from $0$ to $R$.
+- `interior/through`: the line $t = 0$ from $x = -R$ to $R$.
+- `interior_tortoise/radial`: the same line in the tortoise coordinate, from $x = 0$ to the shell at $x = 2.56\,r_s$.
+- `exterior/radial`: the line $t = 0$ from the shell to the box's edge.
+- `interior`, `interior_tortoise` and `exterior`, the half diamond: the line $T = 0$ from the centre through the shell to $r = 4\,r_s$, the same on each.
+
 ### Kasner
 
 - The embedding is the plane $y = 0$ at $t = 1/4$, $1/2$, $1$ and $2$.

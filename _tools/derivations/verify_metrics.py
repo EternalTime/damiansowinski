@@ -906,6 +906,18 @@ DIMENSIONS = {
     ("thin_shell_wormhole", "throat"): {
         "t": "T", "\\ell": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "a": "L",
     },
+    # The gravastar: a ball of de Sitter space of radius L inside a thin shell at the areal radius
+    # R, Schwarzschild's vacuum of radius r_s outside. C is a name for the number that makes g_tt
+    # continuous across the shell, and the tortoise coordinate x of the interior is a length.
+    ("gravastar", "interior"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "R": "L", "L": "L", "C": "1",
+    },
+    ("gravastar", "interior_tortoise"): {
+        "t": "T", "x": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "R": "L", "L": "L", "C": "1",
+    },
+    ("gravastar", "exterior"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "R": "L",
+    },
     # Damour and Solodukhin's lambda is a pure number beside Schwarzschild's r_s. Bueno and his
     # collaborators' rho is a pure number too, and Einstein and Rosen's u has u^2 = r - r_s, so it
     # carries the square root of a length.
