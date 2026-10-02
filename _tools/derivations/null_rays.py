@@ -222,6 +222,7 @@ from scipy.special import expi as scipy_expi
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 import build_mfs_data as build  # noqa: E402
+import slices  # noqa: E402
 import verify_metrics as vm  # noqa: E402
 
 DIAGRAMS_DIR = build.DIAGRAMS_DIR
@@ -328,7 +329,7 @@ class Diagram:
     inside: bool = False            # rays stop short of the edge of the published domain
     cone: str = None                # what a cone is, where it is not the future light cone
     periodic: tuple = ()            # drawn coordinates whose two ends are one line, never hatched
-    marked: tuple = ()              # (kind, point, family, legend[, "past"]): a ray of one family,
+    marked: tuple = ()              # (kind, point, family, legend[, "past" or "future"]): a ray of one family,
                                     # or of both, through a point, drawn and named; see Plot.marked
     points: tuple = ()              # (kind, (x^0, r), legend): an event drawn and named
     lines: tuple = ()               # (kind, "x0" or "r", value, legend): a line of constant
@@ -347,6 +348,9 @@ class Diagram:
                                     # declares a curvature singularity, where the Kretschmann scalar
                                     # diverges too slowly for the test at 1e-5 of the drawing; drawn as a
                                     # singular curve and checked in 60 digits, see Plot.weak_singularity
+    ends_on_singular: bool = False  # a ray ends on the row's singular_zero curve, where the expression
+                                    # turns negative: Kastor and Traschen's metric is built on U^2, so the
+                                    # null condition runs on through U = 0, beyond which there is no spacetime
     no_throat: bool = False         # the areal radius is stationary along the drawn radius on a curve that
                                     # is no throat, as on tau = 0 of the lukewarm hole's cosmological chart,
                                     # where every rho has the areal radius r_s/2; the curve is left unmarked
@@ -736,6 +740,51 @@ MP_TWO = "1 + 1/sqrt(x**2 + y**2 + (z - 2)**2) + 1/sqrt(x**2 + y**2 + (z + 2)**2
 MP_TWO_CYLINDRICAL = "1 + 1/sqrt(rho**2 + (z - 2)**2) + 1/sqrt(rho**2 + (z + 2)**2)"
 MP_TWO_INPUT = ("Two holes, each of mass parameter $m$, on the axis at $z = \\pm 2m$: "
                 "$U = 1 + m/\\sqrt{x^2 + y^2 + (z - 2m)^2} + m/\\sqrt{x^2 + y^2 + (z + 2m)^2}$.")
+
+# Two of Kastor and Traschen's holes, each of mass parameter m, the unit, at z = +-2m, falling
+# together at H = -3c/(32m), and one hole alone at H = -3c/(16m), the lukewarm hole; slices.py
+# holds the rates and the last ray of each plane to reach infinity, the event horizon there.
+KT_TWO = "1/sqrt(x**2 + y**2 + (z - 2)**2) + 1/sqrt(x**2 + y**2 + (z + 2)**2)"
+KT_TWO_CYLINDRICAL = "1/sqrt(rho**2 + (z - 2)**2) + 1/sqrt(rho**2 + (z + 2)**2)"
+KT_PARAMS = {"H": "-3/32"}
+KT_TWO_INPUT = ("Two holes, each of mass parameter $m$, on the axis at $z = \\pm 2m$, falling together at "
+                "$H = -3c/(32m)$: $V = m/\\sqrt{x^2 + y^2 + (z - 2m)^2} + m/\\sqrt{x^2 + y^2 + (z + 2m)^2}$.")
+KT_HORIZON = "the event horizon, the last ray in the plane to reach infinity"
+
+
+def _kt_point(plane, x, comoving=False):
+    """An event of the last ray of a plane of the two holes to reach infinity, at the distance x."""
+    tau = float(slices.kt_last_ray(plane)(abs(x)))
+    return {"x0": repr(float(slices.kt_comoving_t(tau)) if comoving else tau), "r": repr(float(x))}
+
+
+def _kt_rows():
+    rows = []
+    for system, time, ylabel, box, comoving in (("cartesian", "\\tau", "$c\\tau/m$", (-12, 12, -12, 12), False),
+                                                ("comoving", "t", "$ct/m$", (-12, 12, 0, 24), True)):
+        common = dict(families=SIDEWAYS, functions={"V": KT_TWO}, input=KT_TWO_INPUT,
+                      tau="t" if comoving else "tau")
+        if not comoving:
+            common.update(singular_zero="H*tau + V", ends_on_singular=True)
+        rows.append(Diagram("kastor_traschen", system, "tz", "the axis", (time, "z"), box, "$z/m$", ylabel,
+                            KT_PARAMS, {"x": "0", "y": "0"}, **common,
+                            lines=(("grr", "r", "2", None), ("grr", "r", "-2", None)),
+                            marked=(("event", _kt_point("axis", 6, comoving), 1, KT_HORIZON),
+                                    ("event", _kt_point("axis", -6, comoving), 0, KT_HORIZON))))
+        rows.append(Diagram("kastor_traschen", system, "tx", "the midplane", (time, "x"), box, "$x/m$", ylabel,
+                            KT_PARAMS, {"y": "0", "z": "0"}, **common,
+                            marked=(("event", _kt_point("midplane", 0, comoving), "both", KT_HORIZON, "future"),)))
+        if not comoving:
+            rows.append(Diagram("kastor_traschen", "cylindrical", "radial", "$\\tau$ and $\\rho$", ("\\tau", "\\rho"),
+                                (0, 12, -8, 4), "$\\rho/m$", "$c\\tau/m$", KT_PARAMS, {"phi": "0", "z": "0"},
+                                functions={"V": KT_TWO_CYLINDRICAL}, input=KT_TWO_INPUT, tau="tau",
+                                singular_zero="H*tau + V", ends_on_singular=True, step=0.00125,
+                                marked=(("event", _kt_point("midplane", 4), 1, KT_HORIZON),)))
+            rows.append(Diagram("kastor_traschen", "isotropic", "radial", "$\\tau$ and $r$", ("\\tau", "r"),
+                                (0, 8, -4, 4), "$r/m$", "$c\\tau/m$", {"m": 1, "H": "-3/16"}, EQUATOR, tau="tau",
+                                areal=True, no_throat=True, singular_zero="H*tau*r + m", ends_on_singular=True))
+    return rows
+
 
 # Every view the page draws, in the order it shows them. Plot ranges are chosen with
 # equal scales on both axes, so light in flat space runs at 45 degrees, and cone
@@ -1332,6 +1381,7 @@ DIAGRAMS = [
             functions={"U": MP_TWO_CYLINDRICAL}, input=MP_TWO_INPUT),
     Diagram("majumdar_papapetrou", "isotropic", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/m$", "$ct/m$", {"m": 1}, EQUATOR, areal=True),
+    *_kt_rows(),
     Diagram("btz", "stationary", "static", "$J = 0$", ("t", "r"), (0, 3, -1.5, 1.5),
             "$r/\\ell$", "$ct/\\ell$", {"ell": 1, "M": 1, "J": 0}, {"phi": "0"}, orient="ingoing"),
     Diagram("btz", "stationary", "rotating", "$J = 4\\ell/5$", ("t", "r"), (0, 2, -1, 1),
@@ -3313,6 +3363,67 @@ CAPTIONS = {
         "lies the interior of the extremal Reissner-Nordström black hole, $0 < R < m$ in the areal radius "
         "$R = r + m$. The Kretschmann scalar $8m^2(6r^2 + m^2)/(r + m)^8$ is finite at the horizon.",
     ],
+    ("kastor_traschen", "cartesian", "tz"): [
+        "The plane of $\\tau$ and $z$ on the axis through both holes ($x = y = 0$), which light launched along the "
+        "axis never leaves, since $V$ is symmetric about it. Its rays are null geodesics with "
+        "$dz/d\\tau = \\pm c/U^2$, $U = H\\tau + V$, and $\\tau$ is a time everywhere, so no cone closes. Each hole "
+        "is the single coordinate point $z = \\pm 2m$, where $g^{zz} = 1/U^2$ vanishes, an infinitely long throat "
+        "whose spheres close on the area $4\\pi m^2$.",
+        "Since $H < 0$, $U$ falls at every place as $\\tau$ grows, and it reaches zero on the marked curve "
+        "$c\\tau = (32m/3)V$, where the Kretschmann scalar diverges. That singularity comes in from $z = \\pm\\infty$ "
+        "after $\\tau = 0$ and reaches the midpoint of the pair at $c\\tau = 32m/3$. Outside the pair, the marked ray "
+        "on each side is the last along the axis to reach infinity, the event horizon there: it leaves its hole "
+        "in the far past and runs out along $c\\tau z = -7.11\\,m^2$, where the areal radius "
+        "$H\\tau z + 2m$ is $8m/3$, the horizon of the lukewarm hole of mass parameter $2m$.",
+    ],
+    ("kastor_traschen", "cartesian", "tx"): [
+        "The plane of $\\tau$ and $x$ midway between the holes ($y = z = 0$), which light launched in it never "
+        "leaves, by the reflection $z \\to -z$ and the rotation about the axis. There "
+        "$U = H\\tau + 2m/\\sqrt{x^2 + 4m^2}$ and $dx/d\\tau = \\pm c/U^2$, so the cones open as $\\tau$ grows and "
+        "$U$ falls, up to the singularity $U = 0$ on the marked curve $c\\tau = (64m/3)/\\sqrt{x^2/m^2 + 4}$.",
+        "The two marked rays are the last in the plane to reach infinity, and they cross on the axis at "
+        "$c\\tau = -6.20\\,m$. Before that event a ray from any point of the plane escapes, so the plane lies "
+        "outside both holes. From it on, the event horizon cuts the plane in the circle the two rays trace, "
+        "which is where the two horizons have joined into one, and the circle grows along "
+        "$c\\tau|x| = -7.11\\,m^2$, the horizon of the lukewarm hole of mass parameter $2m$.",
+    ],
+    ("kastor_traschen", "cylindrical", "radial"): [
+        "The plane of $\\tau$ and $\\rho$ midway between the holes ($z = 0$, $\\phi = 0$), the same at every "
+        "$\\phi$ by the symmetry about the axis. There $U = H\\tau + 2m/\\sqrt{\\rho^2 + 4m^2}$ and "
+        "$d\\rho/d\\tau = \\pm c/U^2$, and the singularity $U = 0$ is the marked curve "
+        "$c\\tau = (64m/3)/\\sqrt{\\rho^2/m^2 + 4}$.",
+        "The marked ray is the last from the axis to reach infinity. It leaves $\\rho = 0$ at $c\\tau = -6.20\\,m$, "
+        "the event at which the horizons of the two holes join, and from then on it is the circle in which the "
+        "one event horizon cuts the plane.",
+    ],
+    ("kastor_traschen", "isotropic", "radial"): [
+        "The plane of $\\tau$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) about a single hole, drawn for $H = -3c/(16m)$, "
+        "the same at every other angle by spherical symmetry. The rays obey $dr/d\\tau = \\pm c/U^2$ with "
+        "$U = H\\tau + m/r$, so $\\tau$ is a time everywhere and no cone closes. The marked curves, where "
+        "$|\\nabla R|^2$ vanishes for the areal radius $R = rU = H\\tau r + m$, are the three horizons of the lukewarm "
+        "hole, the hyperbolas $c\\tau r = -16\\,m^2$ of the cosmological horizon $R = 4m$, $-16\\,m^2/9$ of the "
+        "black hole horizon $R = 4m/3$, and $0.74\\,m^2$ of the inner horizon $R = 0.86\\,m$.",
+        "With $H < 0$ the chart crosses the cosmological horizon inward from the contracting region and the "
+        "black hole horizon into the black hole, as the ingoing Eddington-Finkelstein chart does. The line "
+        "$\\tau = 0$ is the sphere $R = m$ inside the black hole, and above it the chart runs on through the inner "
+        "horizon to the singularity $R = 0$ on $c\\tau r = 16\\,m^2/3$, where the Kretschmann scalar diverges.",
+    ],
+    ("kastor_traschen", "comoving", "tz"): [
+        "The plane of $t$ and $z$ on the axis through both holes ($x = y = 0$), whose rays are null geodesics with "
+        "$dz/dt = \\pm c/(a\\Omega^2)$. The chart is the part $\\tau < 0$ of the Cartesian one, $H\\tau = e^{Ht}$, so "
+        "it ends before the singularity, and $t \\to \\infty$ is the moment $\\tau = 0$. Each hole is the single "
+        "coordinate point $z = \\pm 2m$.",
+        "With $H < 0$ the scale factor $a = e^{Ht}$ shrinks, and every proper distance between comoving points "
+        "shrinks with it. The marked ray on each side is the last along the axis to reach infinity, the event "
+        "horizon there, which runs out along $|z| = (2m/3)e^{-Ht}$.",
+    ],
+    ("kastor_traschen", "comoving", "tx"): [
+        "The plane of $t$ and $x$ midway between the holes ($y = z = 0$), which light launched in it never leaves. "
+        "There $\\Omega = 1 + 2m/(a\\sqrt{x^2 + 4m^2})$ and $dx/dt = \\pm c/(a\\Omega^2)$.",
+        "The two marked rays are the last in the plane to reach infinity. They cross on the axis at "
+        "$ct = 5.79\\,m$, the event at which the horizons of the two holes join, and from then on they trace the "
+        "circle in which the one event horizon cuts the plane, which grows as $|x| = (2m/3)e^{-Ht}$.",
+    ],
     ("btz", "stationary", "static"): [
         "The plane of $t$ and $r$ ($\\phi = 0$) of the hole without rotation ($M = 1$, $J = 0$), the "
         "same at every $\\phi$ by circular symmetry. The cones close at the horizon $r_+ = \\sqrt{M}\\,\\ell$, "
@@ -5259,6 +5370,10 @@ class Plot:
         return (None if lo is None else lo + margin, None if hi is None else hi - margin)
 
     def beyond(self, u):
+        if self.c.spec.ends_on_singular:
+            x0, r = self.to_chart(self.from_unit(u))
+            if float(self.c.fn["szero"](np.array([x0]), np.array([r]))[0]) <= 0:
+                return True
         if self.edge is None:
             return False
         _, r = self.to_chart(self.from_unit(u))
@@ -5522,13 +5637,24 @@ class Plot:
             for line in lines:
                 for u in np.asarray(line)[1:-1:max(1, len(line) // 12)]:
                     x0, r = (float(v) for v in self.to_chart(self.from_unit(u)))
-                    root = mpmath.findroot(lambda q: Z(mpmath.mpf(x0), q), mpmath.mpf(r))
+                    # The curve is met along r, or along x^0 where it runs level in r there, as
+                    # Kastor and Traschen's does above the midpoint of their two holes.
+                    try:
+                        root = mpmath.findroot(lambda q: Z(mpmath.mpf(x0), q), mpmath.mpf(r))
+
+                        def off(d, root=root, x0=x0):
+                            return mpmath.mpf(x0), root + d
+                    except ValueError:
+                        root = mpmath.findroot(lambda q: Z(q, mpmath.mpf(r)), mpmath.mpf(x0))
+
+                        def off(d, root=root, r=r):
+                            return root + d, mpmath.mpf(r)
                     step = 1e-3 * float(np.max(self.span))
-                    side = next((k for k in (1, -1) if self.claimed(x0, float(root) + k * step)), None)
+                    side = next((k for k in (1, -1) if self.claimed(*(float(v) for v in off(k * step)))), None)
                     if side is None:
                         raise SystemExit(f"{key(self.c.spec)}: neither side of the declared singularity at "
                                          f"{x0, r} lies in the published domains")
-                    near, far = (abs(K(mpmath.mpf(x0), root + side * mpmath.mpf(d))) for d in ("1e-30", "1e-20"))
+                    near, far = (abs(K(*off(side * mpmath.mpf(d)))) for d in ("1e-30", "1e-20"))
                     if not (near > 1e8 and near / far > 50):
                         raise SystemExit(f"{key(self.c.spec)}: the Kretschmann scalar does not diverge on the "
                                          f"declared singularity at {x0, r}: {float(far):.1e}, {float(near):.1e}")
@@ -5558,7 +5684,7 @@ class Plot:
 
     def marked(self, at, family, toward=None):
         """The rays a view marks through one point: of `family`, 0 or 1, or of both, traced both
-        ways or, with toward="past", only into the past. The point is an x^0, meaning the
+        ways or, with toward="past" or "future", only that way. The point is an x^0, meaning the
         outermost zero of g^rr there; {"r": r, "areal": R}, the x^0 on that line where the areal
         radius is R; or {"x0": x^0, "r": r} itself."""
         fn = self.c.fn
@@ -5576,7 +5702,8 @@ class Plot:
             return [self.ray_through(seed, f) for f in families]
         _, _, _, P, M = self.dirs_unit(seed[None, :])
         signs = self.c.orient(x0, r0, P[0], M[0])
-        return [self.trace(seed, f, -signs[f]) for f in families]
+        way = {"past": -1, "future": 1}[toward]
+        return [self.trace(seed, f, way * signs[f]) for f in families]
 
     def x0_range(self):
         """The least and greatest x^0 over the drawing's box."""
@@ -5894,6 +6021,10 @@ def bound_along(chart, name, text, subs):
         expr = chart.prep(chart.reader(text)).subs(subs)
     except (vm.LatexError, TypeError, ValueError):
         return None
+    if expr.free_symbols != {other}:
+        # An end that names a coordinate the plane holds fixed, as V/H does on a plane of
+        # Kastor and Traschen's two holes, is taken at the plane's value of it.
+        expr = expr.subs(dict(zip(chart.fixed_syms, chart.fixed_vals)))
     if expr.free_symbols != {other}:
         return None
     f = sp.lambdify(other, expr, "numpy")
@@ -6449,6 +6580,52 @@ def _rnds_cosmic_away(tau, rho):
     return _rnds_away(tau, r) & (np.abs(r - 0.5) > 0.05) & (np.abs(tau) > 0.05)
 
 
+def _kt_cosmic(tau, r, sign):
+    """What each family keeps on one hole's plane at m = 1 and H = -3/16: the static time of
+    slices.kt_static_t at the areal radius R = H tau r + 1, plus or minus the tortoise coordinate."""
+    return slices.kt_static_t(tau, r) + sign * slices.kt_rstar(slices.KT_H_ONE * tau * r + 1)
+
+
+def _kt_cosmic_away(tau, r):
+    R = slices.KT_H_ONE * tau * r + 1
+    return (np.all([np.abs(R - a) > 0.05 for a in slices.KT_ONE_ROOTS[:3]], axis=0) & (R > 0.05)
+            & (np.abs(R - 1) > 0.05) & (np.abs(tau) > 0.05))
+
+
+def _kt_label(plane, direction, comoving=False):
+    """What a ray of a plane of the two holes keeps, there being no closed form: where the ray
+    stood at c tau = -12 m, as 12 arctan(x/12), found by following it into the past with scipy's integrator, which
+    the tracing never uses. direction is +1 for the family moving right, dx/d(c tau) = 1/U^2,
+    and -1 for the one moving left. Into the past U only grows, so every ray is followed there
+    without meeting the singularity, and a ray that left a hole closes on it."""
+    H = slices.KT_H_TWO
+
+    def one(tau, x):
+        ray = solve_ivp(lambda q, y: [direction / (H * q + float(slices.kt_potential(plane, y[0]))) ** 2],
+                        [tau, -12.0], [x], rtol=1e-11, atol=1e-12)
+        # A ray that reaches the edge of the drawing near tau = 0 stood hundreds of m away then, so
+        # the place is named by its arctangent, which keeps the comparison at the drawing's own scale.
+        return 12 * math.atan(ray.y[0, -1] / 12)
+
+    def label(time, x):
+        time, x = np.asarray(time, dtype=float), np.asarray(x, dtype=float)
+        tau = np.exp(H * time) / H if comoving else time
+        return np.array([one(a, b) for a, b in zip(tau, x)])
+    return label
+
+
+def _kt_keep(plane):
+    """A ray of the two holes is compared at every twelfth point, since each costs an integration,
+    and where U > 1/4: beside the singularity U = 0 a ray runs level and its past is ill conditioned."""
+    def keep(tau, x):
+        return (np.arange(len(x)) % 12 == 0) & (slices.KT_H_TWO * tau + slices.kt_potential(plane, x) > 0.25)
+    return keep
+
+
+def _kt_every(time, x):
+    return np.arange(len(x)) % 12 == 0
+
+
 def _sads_rstar(r):
     """Schwarzschild-anti-de Sitter's tortoise coordinate at r_s = 2 and L = 1, where 1/f =
     r/((r - 1)(r^2 + r + 2)): (1/4) ln|r - 1| - (1/8) ln(r^2 + r + 2) + (5/(4 sqrt 7)) arctan((2r + 1)/sqrt 7),
@@ -6702,6 +6879,15 @@ CLOSED_FORMS = {
     ("rn_metric", "spherical", "radial"):
         (lambda t, r: t + _rstar(r, [0.64, 0.36]), lambda t, r: t - _rstar(r, [0.64, 0.36]),
          lambda t, r: (np.abs(r - 0.64) > 0.05) & (np.abs(r - 0.36) > 0.05)),
+    ("kastor_traschen", "cartesian", "tz"): (_kt_label("axis", -1), _kt_label("axis", 1), _kt_keep("axis")),
+    ("kastor_traschen", "cartesian", "tx"): (_kt_label("midplane", -1), _kt_label("midplane", 1), _kt_keep("midplane")),
+    ("kastor_traschen", "cylindrical", "radial"): (_kt_label("midplane", -1), _kt_label("midplane", 1), _kt_keep("midplane")),
+    ("kastor_traschen", "isotropic", "radial"):
+        (lambda tau, r: _kt_cosmic(tau, r, 1), lambda tau, r: _kt_cosmic(tau, r, -1), _kt_cosmic_away),
+    ("kastor_traschen", "comoving", "tz"):
+        (_kt_label("axis", -1, True), _kt_label("axis", 1, True), _kt_every),
+    ("kastor_traschen", "comoving", "tx"):
+        (_kt_label("midplane", -1, True), _kt_label("midplane", 1, True), _kt_every),
     ("majumdar_papapetrou", "cartesian", "tz"):
         (lambda t, z: t + _mp_axis(z), lambda t, z: t - _mp_axis(z), lambda t, z: np.abs(np.abs(z) - 2) > 0.05),
     ("majumdar_papapetrou", "cartesian", "tx"):
