@@ -663,6 +663,18 @@ A static, spherically symmetric traversable wormhole engineered to have no horiz
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -e^{2\Phi}c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{b}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Proper Radial Distance: coordinates $(t, l, \theta, \phi)$, $$ds^2 = -e^{2\Phi}c^2dt^2 + dl^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Morris-Thorne-Yurtsever Wormhole Time Machine
+
+A traversable wormhole whose mouths have been put out of step by taking one of them on a round trip at nearly the speed of light, described by Michael Morris, Kip Thorne, and Ulvi Yurtsever in 1988. Once the time shift between the mouths exceeds the light travel time between them, closed timelike curves loop through the throat, to the future of a Cauchy horizon whose light rays peel off one closed null geodesic.
+
+- id: `wormhole_time_machine`
+- tags: time machine, closed timelike curves, causality violation, chronology horizon, Cauchy horizon, wormhole, traversable, exotic matter, energy condition violation, twin paradox, chronology protection, self consistency, locally flat, non-vacuum, asymptotically flat, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/wormhole_time_machine.json
+- chart External Lorentz: coordinates $(T, X, Y, Z)$, $$ds^2 = -c^2dT^2 + dX^2 + dY^2 + dZ^2$$
+- chart Morris-Thorne-Yurtsever: coordinates $(t, l, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{glF\cos\theta}{c^2}\right)^2e^{2\Phi}c^2dt^2 + dl^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Short Throat: coordinates $(t, l, \theta, \phi)$, $$ds^2 = -c^2dt^2 + dl^2 + \left(b + |l|\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Nariai Universe
 
 A vacuum solution with a positive cosmological constant, geometrically the product of a two dimensional de Sitter space and a sphere of the same radius (dS₂ × S²). It is the limit of the Schwarzschild-de Sitter black hole as its horizon meets the cosmological horizon, the largest black hole a de Sitter universe can hold.

@@ -42,6 +42,11 @@
       "id": "btz",
       "kind": "family",
       "text": "The same construction in anti-de Sitter space of three dimensions, where the identification makes a black hole [banados1993]."
+    },
+    {
+      "id": "wormhole_time_machine",
+      "kind": "family",
+      "text": "A wormhole whose mouths move toward each other has a Cauchy horizon like Misner's with closed timelike curves behind it, and Kim and Thorne found the vacuum stress energy diverging there too [morris1988prl, kim1991]."
     }
   ],
   "references": [
@@ -59,7 +64,8 @@
     "grant1993",
     "thorne1993misner",
     "berkooz2004",
-    "banados1993"
+    "banados1993",
+    "morris1988prl"
   ],
   "coordinates": [
     {

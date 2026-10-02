@@ -100,6 +100,11 @@
       "id": "light_beam",
       "kind": "generalisation",
       "text": "Flat spacetime with a steady beam of light shining through it. Light running with the beam does not feel it [bonnor1969light]."
+    },
+    {
+      "id": "wormhole_time_machine",
+      "kind": "locally_same",
+      "text": "Minkowski space with two balls cut out and their surfaces identified at equal proper times is a wormhole, and moving one ball makes it a time machine [friedman1990, morris1988prl]."
     }
   ],
   "references": [
@@ -136,7 +141,9 @@
     "li1998",
     "griffiths1991",
     "deser1992time",
-    "bonnor1969light"
+    "bonnor1969light",
+    "friedman1990",
+    "morris1988prl"
   ],
   "coordinates": [
     {

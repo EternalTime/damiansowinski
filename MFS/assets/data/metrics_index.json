@@ -570,7 +570,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0c267ae75b9d2c76",
+    "version": "7d441a56c21491c4",
     "diagrams": "fc0a639f4f3a4d4d",
     "conformal": "14c873edf7fb75dc",
     "embedding": "c0db8a34cdba1339"
@@ -1055,7 +1055,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "945c5cfc6b711564",
+    "version": "a4831556c5b3883b",
     "diagrams": "8682a860d329f091",
     "conformal": "a9e34cf1c120e37d",
     "embedding": "32a5018b0ec61d91"
@@ -1079,7 +1079,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "000ca664718c5795",
+    "version": "7323fa7e3411d1fa",
     "diagrams": "23589bf4a0fdba65",
     "conformal": "62cc3d3fab22417e",
     "embedding": "74f663204d97446f"
@@ -1131,10 +1131,39 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "95accf7a9b6537e7",
+    "version": "2e5ff2940560df3c",
     "diagrams": "6a553e7d399d3c52",
     "conformal": "956949c7f4a96538",
     "embedding": "2fb2f35ad8d95922"
+  },
+  {
+    "id": "wormhole_time_machine",
+    "name": "Morris-Thorne-Yurtsever",
+    "tags": [
+      "time machine",
+      "closed timelike curves",
+      "causality violation",
+      "chronology horizon",
+      "Cauchy horizon",
+      "wormhole",
+      "traversable",
+      "exotic matter",
+      "energy condition violation",
+      "twin paradox",
+      "chronology protection",
+      "self consistency",
+      "locally flat",
+      "non-vacuum",
+      "asymptotically flat",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "0201ac36cee5b57d",
+    "diagrams": "e780b20f08791793",
+    "conformal": "325a9c57971cf007",
+    "embedding": "5d574463e63f1df8"
   },
   {
     "id": "nariai",
@@ -1788,7 +1817,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "79bb26b613fab434",
+    "version": "3eb16aa2291abe6b",
     "diagrams": "d3c0cce1a6061334",
     "conformal": "651a421afaa54900",
     "embedding": "c9905ef896f1be24"

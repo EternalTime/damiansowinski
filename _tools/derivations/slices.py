@@ -839,6 +839,11 @@ HIDDEN = {
        for view in ("midway", "one")},
     ("light_beam", "midway"): "two beams side by side, another spacetime than the single beam whose wave fronts are embedded",
     ("light_beam", "cartesian", "lens"): "the plane y = 0 with t left out, which every wave front covers whole",
+    ("wormhole_time_machine", "wormhole", "speeding"): "the axis of the acceleration, theta = 0, which the embedded plane theta = pi/2 meets nowhere",
+    ("wormhole_time_machine", "wormhole", "slowing"): "the axis of the acceleration, theta = 0, which the embedded plane theta = pi/2 meets nowhere",
+    ("wormhole_time_machine", "short_throat", "radial"): "the mouth of the throat of zero length; the moment embedded is the smooth wormhole's",
+    ("wormhole_time_machine", "lorentz", "trip"): "the flat space outside the mouths, with the mouths drawn as world lines; the moment embedded runs through the throat",
+    ("wormhole_time_machine", "lorentz"): "the flat space outside the mouths, with the mouths drawn as world lines; the moment embedded runs through the throat",
     ("frw", "open"): "the open universe's conformal diagram; the moments embedded are the closed universe's",
 }
 

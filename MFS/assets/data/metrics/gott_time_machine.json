@@ -46,6 +46,11 @@
       "id": "spinning_string",
       "kind": "family",
       "text": "One string that spins on its own. Deser, Jackiw, and 't Hooft found closed timelike curves around it in 1984 and wrote that moving particles without spin would not make them, which Gott's pair does [deser1984, carroll1994]."
+    },
+    {
+      "id": "wormhole_time_machine",
+      "kind": "family",
+      "text": "A time machine made by moving one mouth of a traversable wormhole, three years before Gott's strings. Hawking's chronology protection conjecture is aimed at both [morris1988prl, hawking1992]."
     }
   ],
   "references": [
@@ -68,7 +73,8 @@
     "holst1996",
     "holst1999",
     "birmingham2000",
-    "dedeo2002"
+    "dedeo2002",
+    "morris1988prl"
   ],
   "coordinates": [
     {

@@ -520,6 +520,16 @@ DIMENSIONS = {
     ("teo_wormhole", "proper_radial"): {
         "t": "T", "l": "L", "\\theta": "1", "\\phi": "1", "b_0": "L", "a": "1", "r": "L",
     },
+    # Morris, Thorne and Yurtsever's wormhole with one mouth accelerating: the flat space outside the
+    # mouths in its Lorentz chart, their own chart through the wormhole, whose acceleration g of
+    # the right mouth is a function of t and whose lapse N = 1 + g l F cos(theta)/c^2 is a name
+    # the chart defines, and the mouth of Friedman and his coauthors' throat of zero length.
+    ("wormhole_time_machine", "lorentz"): {"T": "T", "X": "L", "Y": "L", "Z": "L", "b": "L"},
+    ("wormhole_time_machine", "wormhole"): {
+        "t": "T", "l": "L", "\\theta": "1", "\\phi": "1",
+        "g": "L/T**2", "F": "1", "\\Phi": "1", "r": "L", "N": "1",
+    },
+    ("wormhole_time_machine", "short_throat"): {"t": "T", "l": "L", "\\theta": "1", "\\phi": "1", "b": "L"},
     # The slices are flat space and the whole of the geometry is the flow field carried on them,
     # so its components are velocities and the chart components of the metric are powers of V/c.
     ("natario", "cartesian_flow"): {

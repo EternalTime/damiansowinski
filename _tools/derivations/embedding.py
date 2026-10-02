@@ -2106,6 +2106,53 @@ def morris_thorne(ck, src):
                        "wormhole; $\\Phi$ does not enter the surface.")]
 
 
+def wormhole_time_machine(ck, src):
+    """The equatorial plane of Morris, Thorne and Yurtsever's chart at one moment of t, with the
+    wormhole its spacetime diagrams declare, Phi = 0 and r = sqrt(r_0^2 + l^2). On theta = pi/2
+    the lapse is 1 whatever the acceleration, and the slice's metric dl^2 + r^2 dphi^2 holds
+    neither g nor F, so the surface is the same at every t of the trip: dz/dl =
+    sqrt(1 - (dr/dl)^2) = r_0/r, the catenoid z = r_0 arcsinh(l/r_0), from the left mouth's side,
+    l < 0, through the throat to the right mouth's, which is checked at three moments of the trip."""
+    top, marks = 4.0, (1.0, 2.0, 3.0)
+    size = 2 * math.sqrt(1 + top ** 2)
+    slices_ = [Slice(src, "wormhole_time_machine", "wormhole", "l", "\\phi", {"t": t, "theta": "pi/2"}, {},
+                     dict(nr.WTM_FUNCTIONS)) for t in (0, nr.WTM_PEAK, nr.WTM_P / 2 - nr.WTM_PEAK)]
+    sl = slices_[0]
+    right = Piece("right", "sheet", sl, 0.0, top, 0.0, 1,
+                  (("throat", "the throat $l = 0$, where the two sides join"),
+                   ("edge", "the side of the right mouth runs on, flattening, into the space outside")),
+                  [(0.0, "throat", "$l = 0$")] + [(x, "r", None) for x in marks] + [(top, "r", None)], size)
+    left = Piece("left", "sheet2", sl, -top, 0.0, -float(sl.rise(-top, 0.0)), 1,
+                 (("edge", "the side of the left mouth runs on, flattening, into the same space outside"),
+                  ("throat", "the throat $l = 0$")),
+                 [(-top, "r2", None)] + [(-x, "r2", None) for x in marks[::-1]], size)
+    for p in (right, left):
+        ck.isometry(f"wormhole time machine, the {p.id} side", p)
+        ck.form(f"wormhole time machine, the {p.id} side, the catenoid z = r_0 arcsinh(l/r_0)", p, np.arcsinh, size)
+        ck.radius(f"wormhole time machine, the {p.id} side, rho = sqrt(r_0^2 + l^2)", p,
+                  lambda x: np.sqrt(1 + x ** 2), size)
+    ck.join("wormhole time machine, the two sides at the throat", right, 0.0, left, 0.0)
+    for other in slices_[1:]:
+        again = Piece("again", "sheet", other, 0.0, top, 0.0, 1, size=size)
+        ck.add("wormhole time machine, the same surface at another moment of the trip",
+               float(np.max(np.abs(np.arcsinh(again.x) - again.z))) / size, FORM)
+    surface = Surface([right, left])
+
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *right.at(0.0), "$l = 0$", dx=14)
+    ring_label(fig, [0, 0, 0], *right.at(3.0), "$3\\,r_0$")
+    ring_label(fig, [0, 0, 0], *left.at(-3.0), "$-3\\,r_0$")
+    fig.legend("fill", "cover", "the side of the right mouth, $l > 0$")
+    fig.legend("line", "r", "$l$ constant, at $1$, $2$, $3$ and $4\\,r_0$")
+    fig.legend("line", "r2", "the same distances on the side of the left mouth, $l < 0$")
+    fig.legend("line", "throat", "the throat $l = 0$, the smallest circle, of radius $r_0$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("wormhole", "The wormhole", "$r_0$", [surface], fig.done(),
+                 settings="$r_0 = 1$, the unit of every length.",
+                 input="$\\Phi = 0$ and $r = \\sqrt{r_0^2 + l^2}$, the Ellis-Bronnikov wormhole; on "
+                       "$\\theta = \\pi/2$ neither $g$ nor $F$ enters the surface.")]
+
+
 def thin_shell_wormhole(ck, src):
     """Flamm's paraboloid cut at the throat r = a and joined to its mirror image, drawn at r_s = 1
     and a = 5/4. On either side dz/dr = sqrt(r_s/(r - r_s)), so z = +-2(sqrt(r_s(r - r_s)) -
@@ -6276,6 +6323,7 @@ DRAWN = {
     "schwarzschild": schwarzschild,
     "misner": misner,
     "gott_time_machine": gott_time_machine,
+    "wormhole_time_machine": wormhole_time_machine,
     "interior_schwarzschild": interior_schwarzschild,
     "tov": tov,
     "morris_thorne": morris_thorne,
@@ -6459,6 +6507,16 @@ CAPTIONS = {
         "like a saddle, as Flamm's paraboloid does everywhere, while Karl Schwarzschild's star of uniform "
         "density is a cap of a sphere all the way out. This star, at $2GM/c^2R = 0.29$, ends far above the "
         "throat the vacuum paraboloid would have at $r_s = 2GM/c^2$, drawn dashed below it.",
+    ],
+    ("wormhole_time_machine", "wormhole"): [
+        "The plane $\\theta = \\pi/2$ through the wormhole at one moment of $t$, across the axis of the "
+        "acceleration, drawn as a surface in flat space with every distance along it the metric distance. On it "
+        "the metric is $dl^2 + r^2d\\phi^2$, so $dz/dl = \\sqrt{1 - (\\partial_l r)^2}$, and with "
+        "$r = \\sqrt{r_0^2 + l^2}$ the surface is the catenoid $r = r_0\\cosh(z/r_0)$.",
+        "Neither $g$ nor $F$ enters this plane, where $\\cos\\theta = 0$, and the surface is the same at every "
+        "moment of the trip. Both sides flatten into one and the same space outside, the left mouth and the "
+        "right mouth a distance apart in it that changes as the right one travels, while the length through "
+        "the throat stays as it is.",
     ],
     ("morris_thorne", "wormhole"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Morris-Thorne wormhole at one moment of $t$, "

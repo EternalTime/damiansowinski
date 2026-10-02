@@ -721,6 +721,19 @@ CAPTIONS = {
         "A ray that starts outside the beam falls through the logarithm of the vacuum field, crosses the beam, "
         "and climbs as far out on the other side.",
     ],
+    ("wormhole_time_machine", "lorentz", "trip"): [
+        "The slice $Y = 0$ of $T$, $Z$, and $X$ in the Lorentz frame of the left mouth, $T$ up, with the mouths "
+        "drawn as their world lines. The left mouth rests at $Z = 0$, and the right one leaves $Z = 10\\,r_0$ "
+        "at $\\tau = 0$, reaches $0.905\\,c$ and $Z = 31.5\\,r_0$, and is home after $P = 54\\,r_0/c$ of its own "
+        "time and $75.7\\,r_0/c$ of the left mouth's. Each dotted line joins the two mouths at one proper time "
+        "$\\tau$, every $9\\,r_0/c$, and its two ends are one event.",
+        "At $\\tau = 41.8\\,r_0/c$, with the right mouth on its way home, a light ray from the left mouth reaches "
+        "the right one at that same $\\tau$: the closed null geodesic. For mouths small beside the distance "
+        "between them, the future light cone of the event it leaves from is the Cauchy horizon, and a closed "
+        "timelike curve passes through every event inside it. "
+        "The one drawn leaves the left mouth at $\\tau = 60\\,r_0/c$, crosses to the right mouth at $0.46\\,c$, and "
+        "steps through the throat to the event it left.",
+    ],
     ("cosmic_string", "conical", "beam"): [
         "The plane $z = 0$ around the string seen from above, $t$ left out, drawn with $r$ as "
         "the radius and the angle $(1 - 4G\\mu/c^2)\\phi$, in which the plane is flat and every light "
@@ -838,6 +851,12 @@ FIGURES = [
     # charts are drawn at: half deficit angle pi/3, v = 4c/5 and d = l/2.
     Projection("gott_time_machine", "centre_of_momentum", "loop", "a closed timelike curve round both strings",
                lambda spec: gott_loop(spec), nr.GOTT_STRINGS, {"z": "0"}),
+    # Morris, Thorne and Yurtsever's round trip, as the flat views of their chart declare it, with
+    # the mouths small beside the distance between them.
+    Projection("wormhole_time_machine", "lorentz", "trip", "the round trip of the right mouth",
+               lambda spec: wormhole_trip(spec), {"b": 1}, {"Y": "0"},
+               input="Mouths of radius $b = r_0$ that start $D = 10\\,r_0$ apart, the right one on a round trip "
+                     "with rapidity $\\eta = \\tfrac{3}{2}\\sin^3(2\\pi\\tau/P)$ and $P = 54\\,r_0/c$."),
     # Alcubierre's bubble at the speed and with the profile its flat view declares.
     Projection("alcubierre", "cartesian", "bubble", "the bubble in three dimensions", bubble, {}, {"z": "0"},
                input="$v_s = 2$, and Alcubierre's own profile, "
@@ -1050,6 +1069,90 @@ def gott_loop(spec, x0=1.5, camera=Camera(-65, 24)):
     fig.legend("line", "edge", "the two faces of each wedge at one time of its string's rest frame")
     fig.legend("line", "axis", "from an event on one face to the same event on the other")
     fig.legend("line", "ctc", f"a closed timelike curve, at ${max(speeds):.2f}\\,c$")
+    fig.legend("cone", "cone", "future light cone")
+    return fig.done(), sl
+
+
+def wormhole_trip(spec, loop=60.0, camera=Camera(-72, 20)):
+    """Morris, Thorne and Yurtsever's round trip on the slice Y = 0 of the Lorentz chart, drawn
+    cartesian with T up and Z across: the two mouths' world lines, the lines joining them at equal
+    proper times, the closed null geodesic, the Cauchy horizon as the future light cone of the
+    event that geodesic leaves from, and a closed timelike curve.
+
+    The mouths are drawn as their world lines, their radius small beside the distance between
+    them. nr.WormholeTrip is the right mouth's world line. Every step of both world lines is
+    checked timelike against the published metric and of the proper time it is marked with, the
+    closed null geodesic is checked null, the pairs of identified events are checked spacelike
+    separated before it and timelike after, and the closed timelike curve, from the left mouth
+    at tau = `loop` to the right mouth at the same tau, is checked timelike and future directed."""
+    sl = Slice(spec.metric, spec.system, ("T", "Z", "X"), "cartesian", spec.params, spec.fixed)
+    g = sl.metric((0.0, 0.0, 0.0))
+    if not (np.array_equal(g, np.diag([-1.0, 1.0, 1.0])) and np.array_equal(sl.metric((3.1, -1.3, 2.1)), g)):
+        raise SystemExit(f"{key(spec)}: the published metric on the slice is not Minkowski's")
+    trip = nr.WormholeTrip()
+    P, D = trip.period, trip.distance
+
+    def event(mouth, tau):
+        T, Z = mouth(tau)
+        return np.array([float(T), float(Z), 0.0])
+
+    # Both world lines, each step timelike and of the proper time it spans.
+    tau = np.linspace(-4.0, P + 10.0, 3401)
+    for mouth in (trip.left, trip.right):
+        T, Z = mouth(tau)
+        k = np.stack([np.diff(T), np.diff(Z), np.zeros(len(tau) - 1)], 1)
+        elapsed = np.sqrt(-np.einsum("na,ab,nb->n", k, g, k))
+        if not (np.all(k[:, 0] > 0) and np.abs(elapsed / np.diff(tau) - 1).max() < 1e-4):
+            raise SystemExit(f"{key(spec)}: a mouth's world line is not marked with its proper time")
+    L_c, R_c = event(trip.left, trip.tau_c), event(trip.right, trip.tau_c)
+    k = R_c - L_c
+    if not (abs(k @ g @ k) < 1e-9 * k[0] ** 2 and k[0] > 0):
+        raise SystemExit(f"{key(spec)}: the closed geodesic is not null")
+    marks = np.arange(0.0, P + 10.0, 9.0)
+    for m in marks:
+        k = event(trip.right, m) - event(trip.left, m)
+        if (k @ g @ k < 0) != (m > trip.tau_c):
+            raise SystemExit(f"{key(spec)}: the mouths at tau = {m} are on the wrong side of the horizon")
+    A, B = event(trip.left, loop), event(trip.right, loop)
+    k = B - A
+    if not (k @ g @ k < 0 and k[0] > 0):
+        raise SystemExit(f"{key(spec)}: the closed curve is not timelike and future directed")
+    speed = float(abs(k[1]) / k[0])
+
+    draw = lambda e: sl.to_drawing((e[0], e[1], e[2]))
+    fig = Figure(spec.view, spec.label, camera)
+    far = float(trip.right(np.linspace(0, P, 2001))[1].max())
+    low, top = float(tau[0]), float(B[0]) + 3.0
+    fig.line("floor", np.array([[-8.0, -8.0, 0], [far + 4.0, -8.0, 0], [far + 4.0, 8.0, 0], [-8.0, 8.0, 0]]), closed=True)
+    fig.line("floor", np.array([[-8.0, 0, 0], [far + 4.0, 0, 0]]))
+    fig.line("world", np.array([[0.0, 0.0, low], [0.0, 0.0, top]]))
+    T, Z = trip.right(np.linspace(low, loop + 3.0, 1201))
+    fig.line("world", np.stack([Z, np.zeros_like(Z), T], 1))
+    for m in marks:
+        fig.line("axis", np.array([draw(event(trip.left, m)), draw(event(trip.right, m))]))
+    # The horizon: the future light cone of the event the closed null geodesic leaves from, its
+    # generators checked null by generators(), out to the height the figure is drawn to.
+    height = top - L_c[0]
+    apex, rim = future_cone(sl, tuple(L_c), height * np.sqrt(2.0), "tau")
+    fig.line("horizon", rim, closed=True)
+    for i in range(0, len(rim), len(rim) // 12):
+        fig.line("horizon", np.array([apex, rim[i]]))
+    fig.line("ergo", np.array([draw(L_c), draw(R_c)]))
+    fig.line("ctc", np.array([draw(A), draw(B)]))
+    cones = [future_cone(sl, tuple(e), 3.0, "tau") for e in (A, L_c)]
+    for apex_, rim_ in sorted(cones, key=lambda c: camera.depth(c[0])):
+        fig.cone(apex_, rim_)
+    for m in marks[::2]:
+        fig.label(draw(event(trip.left, m)), f"${m:g}$", "r", "small", dx=-6)
+    fig.label(draw(event(trip.left, marks[0])) + np.array([0, 0, -2.5]), "$c\\tau/r_0$", "r", "small", dx=-6)
+    fig.label((draw(L_c) + draw(R_c)) / 2, "$\\mathcal{C}$", "tl", dx=4, dy=6)
+    fig.label(np.array([0.0, 0.0, top]), "$T$", "b", dy=-4)
+    fig.label(np.array([far + 4.0, 0.0, 0.0]), "$Z$", "l", dx=4)
+    fig.legend("line", "world", "the two mouths, the left at rest and the right on its round trip")
+    fig.legend("line", "axis", "from one mouth to the other at one proper time $\\tau$, the two ends one event")
+    fig.legend("line", "ergo", "the closed null geodesic $\\mathcal{C}$")
+    fig.legend("line", "horizon", "the Cauchy horizon, the future light cone of the event $\\mathcal{C}$ leaves from")
+    fig.legend("line", "ctc", f"a closed timelike curve, at ${speed:.2f}\\,c$ from left mouth to right")
     fig.legend("cone", "cone", "future light cone")
     return fig.done(), sl
 

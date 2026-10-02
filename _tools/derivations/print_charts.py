@@ -4,7 +4,7 @@ charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metri
 schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
-kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket and light_beam, and Godel's cylindrical chart.
+kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam and wormhole_time_machine, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -4306,6 +4306,119 @@ def light_beam_null_dust(chart, system):
 
 
 CHARTS["light_beam"] = [lambda s=s: light_beam(s) for s in LIGHT_BEAM_CHARTS]
+
+
+# -- The wormhole time machine ---------------------------------------------------------
+
+WTM_CHARTS = ("lorentz", "wormhole", "short_throat")
+WTM_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+
+
+def wormhole_time_machine(system):
+    """Morris, Thorne and Yurtsever's wormhole with one mouth accelerating, in three charts.
+
+    The Lorentz chart of the flat space outside the mouths, where the physics is in the domains:
+    a ball of radius b removed about each mouth's world line and the two spheres identified at
+    equal proper times, the model of Friedman, Morris, Novikov, Echeverria, Klinkhammer, Thorne
+    and Yurtsever (1990). Morris, Thorne and Yurtsever's own chart through the wormhole (1988),
+    the static wormhole's Phi(l) and r(l) with the lapse N = 1 + g l F cos(theta)/c^2 of the right
+    mouth's accelerated frame\\; N is held as a function of t, l and theta while the tensors are
+    built and every value is written in N and its derivatives, so no component assumes a form of
+    g, F, Phi or r. And the mouth of the 1990 model in its rest frame, r = b + |l|, whose
+    curvature is the delta function of their equation (2). wormhole_time_machine.md derives each."""
+    reals = "(-\\infty, \\infty)"
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    if system == "lorentz":
+        coords, parameters = ["T", "X", "Y", "Z"], ["b"]
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "wormhole_time_machine",
+            "system": {"id": system, "name": "External Lorentz", "coords": coords,
+                       "domains": [f"{x} \\in {reals}" for x in coords] + [
+                           "|\\mathbf{X} - \\mathbf{X}_A(\\tau)| \\le b \\;\\text{in the rest frame of mouth } A = 1, 2 "
+                           "\\;\\text{(the balls removed)}",
+                           "\\mathcal{B}_1(\\tau) \\sim \\mathcal{B}_2(\\tau) "
+                           "\\;\\text{(the two spheres at equal proper time)}",
+                           "\\text{flat: every curvature tensor vanishes}"],
+                       "parameters": parameters, "line_element": "ds^2 = -c^2dT^2 + dX^2 + dY^2 + dZ^2"},
+            "chart_line_element": "ds^2 = -dT^2 + dX^2 + dY^2 + dZ^2",
+            "printer": {"lead": [probe.c, probe.symbol["T"]]},
+            "time": "T",
+        }
+    if system == "wormhole":
+        coords = ["t", "l", "\\theta", "\\phi"]
+        parameters = ["g = g(t)", "F = F(l)", "\\Phi = \\Phi(l)", "r = r(l)", "N = 1 + \\dfrac{glF\\cos\\theta}{c^2}"]
+        rest = " + dl^2 + r^2" + WTM_SPHERE
+        probe = vm.Reader(coords, parameters, ())
+        P = probe.parameters
+        return {
+            "metric_id": "wormhole_time_machine",
+            "system": {"id": system, "name": "Morris-Thorne-Yurtsever", "coords": coords,
+                       "domains": ["t \\in " + reals, "l \\in " + reals] + angles + [
+                           "l = 0 \\;\\text{(throat)}",
+                           "g_{\\max}S \\ll c^2 \\;\\text{(a wormhole of length } S \\text{ from mouth to mouth)}"],
+                       "parameters": parameters,
+                       "line_element": "ds^2 = -\\left(1 + \\dfrac{glF\\cos\\theta}{c^2}\\right)^2e^{2\\Phi}c^2dt^2" + rest},
+            "chart_line_element": "ds^2 = -N^2e^{2\\Phi}dt^2" + rest,
+            "printer": {"lead": [P["N"], P["Phi"], P["r"]]},
+            "check": wormhole_accelerated_frame,
+        }
+    coords, parameters = ["t", "l", "\\theta", "\\phi"], ["b"]
+    sphere = " + \\left(b + |l|\\right)^2" + WTM_SPHERE
+    probe = vm.Reader(coords, parameters, ())
+    ell, b = probe.symbol["l"], probe.parameters["b"]
+    # chart_printer.kink prints each value as A(|l|) + sgn(l) B(|l|), the delta's term last.
+    delta = sp.Symbol("_delta" + ell.name)
+
+    def then(e):
+        return sp.factor(e.subs(delta, 0)) + sp.factor(sp.diff(e, delta)) * delta
+
+    pretty, overrides = cp.kink(ell, then)
+    absolute = next(p for p in overrides if p.name.startswith("_abs"))
+    return {
+        "metric_id": "wormhole_time_machine",
+        "system": {"id": system, "name": "Short Throat", "coords": coords,
+                   "domains": ["t \\in " + reals, "l \\in " + reals] + angles + ["l = 0 \\;\\text{(throat)}"],
+                   "parameters": parameters, "line_element": "ds^2 = -c^2dt^2 + dl^2" + sphere},
+        "chart_line_element": "ds^2 = -dt^2 + dl^2" + sphere,
+        "printer": {"lead": [b, absolute], "flip": False, "last": [delta], "overrides": overrides},
+        "pretty": pretty,
+        "bracketed": pretty,
+        "kretschmann_where": "l",
+    }
+
+
+def wormhole_accelerated_frame(chart):
+    """Just outside the right mouth, where F = 1, Phi = 0 and r = l, the chart is flat space in
+    the right mouth's accelerated frame. Morris, Thorne and Yurtsever's transformation to the
+    Lorentz coordinates outside, with c = 1 and the mouth's rapidity eta, v = tanh(eta),
+
+        T = T_R + v gamma l cos(theta),    Z = Z_R + gamma l cos(theta),
+        X = l sin(theta) cos(phi),         Y = l sin(theta) sin(phi),
+
+    where dT_R/dt = gamma and dZ_R/dt = v gamma along the mouth's world line, pulls
+    -dT^2 + dX^2 + dY^2 + dZ^2 back to -(1 + g l cos(theta))^2 dt^2 + dl^2 + l^2 dOmega^2 with
+    g = d eta/dt = gamma^2 dv/dt, in every slot. And the chart's own metric is that one with
+    N^2 e^(2 Phi) for the lapse squared and r for l in the angular part."""
+    t, l, theta, phi = sp.symbols("t l theta phi", real=True)
+    eta, TR, ZR = (sp.Function(name)(t) for name in ("eta", "T_R", "Z_R"))
+    x = [t, l, theta, phi]
+    X = [TR + sp.sinh(eta) * l * sp.cos(theta), l * sp.sin(theta) * sp.cos(phi),
+         l * sp.sin(theta) * sp.sin(phi), ZR + sp.cosh(eta) * l * sp.cos(theta)]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(X[i], x[j])).subs({sp.Derivative(TR, t): sp.cosh(eta),
+                                                               sp.Derivative(ZR, t): sp.sinh(eta)})
+    pulled = (J.T * sp.diag(-1, 1, 1, 1) * J).applyfunc(sp.simplify)
+    lapse = 1 + sp.Derivative(eta, t) * l * sp.cos(theta)
+    if (pulled - sp.diag(-lapse ** 2, 1, l ** 2, l ** 2 * sp.sin(theta) ** 2)).applyfunc(sp.simplify) != sp.zeros(4, 4):
+        raise AssertionError("the accelerated frame outside the right mouth is not the Lorentz chart pulled back")
+    R, P = chart.reader, chart.reader.parameters
+    th = R.symbol["\\theta"]
+    expected = sp.diag(-P["N"] ** 2 * sp.exp(2 * P["Phi"]), 1, P["r"] ** 2, P["r"] ** 2 * sp.sin(th) ** 2)
+    if (chart.geo.g - expected).applyfunc(vm.norm) != sp.zeros(4, 4):
+        raise AssertionError("the wormhole chart's metric is not -N^2 e^(2 Phi) dt^2 + dl^2 + r^2 dOmega^2")
+
+
+CHARTS["wormhole_time_machine"] = [lambda s=s: wormhole_time_machine(s) for s in WTM_CHARTS]
 
 
 def write(spec):
