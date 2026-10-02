@@ -106,13 +106,20 @@ The spacetime panel's top is halfway between the foot of the Exit sign and 150px
 ## The contents of a spacetime
 
 The list's panel holds two views and shows one: the list of spacetimes with its search field, and the contents of the spacetime that is open, as the captain asked on 1 October 2026.
-Pressing a spacetime slides the list out to the left and its contents in from the right, and "‹ All spacetimes" at the head of the contents slides the list back.
+Both views stand to the panel's left when out of it, and the two never cross: pressing a spacetime slides the list out and then its contents in, and "‹ All spacetimes" at the head of the contents slides them out, the spacetime's page out to the right with them, and then the list back in.
+The page that left stays as drawn and its address goes from the address bar, and the spacetime's name in the list brings its contents, its page and its address back without drawing it again; `_mfsPageAway` and `_mfsPageBack` carry that.
+The contents come in only once the spacetime is drawn, so they slide in whole instead of filling a panel already in place, and a spacetime opened from another's "Related Spacetimes" slides the old contents out before the new ones come in.
 The list is never drawn again for that, so it comes back with the search as it was typed and at the place it was scrolled to, and the open spacetime's name in it brings the contents back without drawing the spacetime again.
 The contents are the headings of the page as drawn, every `.mfs-section-label` in the spacetime's panel in its order, read each time `renderMetric` draws it, so a new section needs no entry anywhere.
 An entry brings its section to the top of what shows of the spacetime, under the name where the name stays in sight; the spacetime's panel scrolls on a desktop and the page on a phone.
-The slide is 220ms in the stylesheet, and a reader who asked for reduced motion gets the swap and the jump at once.
-A spacetime has an address of its own, `/MFS/?spacetime=<id>`, which the address bar shows once one is open and which opens the page on that spacetime with its contents showing.
-`showContents`, `_mfsContents` and `_mfsOpen` in `_layouts/mfs.html` carry it, and `page_timing.mjs` holds every spacetime to it: the contents against the headings, each entry's jump, the list as it comes back, and the page opened at an address.
+The entry of the section being read is pink, the colour of the open spacetime's name in the list, and differs from the others in nothing else; it carries `aria-current` and is kept in sight where the contents scroll.
+A section is being read from the place its entry brings it to, so the one marked is the last whose place the reader has reached, and the first before any.
+Sections too near the end to reach the top all share the end of the scroll, and of those the entry the reader pressed is the one marked until they scroll by hand.
+`_mfsCurrentEntry` is that rule alone, places and scroll in and an index out.
+Each slide is 220ms in the stylesheet, and the script waits on the slides the browser reports rather than on a clock, so a reader who asked for reduced motion, for whom there are none, gets the swap and the jump at once.
+The stylesheet with the views' rules stands before the script for that reason: the script asks for the running slides as it is read, and a view set aside before its rule had been read would slide out in front of the reader.
+A spacetime has an address of its own, `/MFS/?spacetime=<id>`, which the address bar shows once one is open and which opens the page on that spacetime with the list never shown and its contents sliding in once it is drawn.
+`showContents`, `enter`, `mark`, `_mfsContents` and `_mfsOpen` in `_layouts/mfs.html` carry it, and `page_timing.mjs` holds every spacetime to it: the contents against the headings, each entry's jump, the one entry marked after each jump and at each section scrolled to, every slide starting from the left with the other view out of the panel, the page leaving with its contents before the list returns and coming back with them, the list as it comes back, and the page opened at an address.
 
 ## The page on a phone
 
