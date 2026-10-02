@@ -12796,6 +12796,73 @@ def senovilla(ck, src):
     return [v]
 
 
+def kopczynski_trautman(ck, src):
+    """Kopczynski and Trautman's universe, in units of l.
+
+    The metric is a^2(-d eta^2 + dr^2 + r^2 dOmega^2) with eta = int c dt/a, and
+    eta(t) = t 2F1(1/3, 1/2; 3/2; -t^2) grows as 3 t^(1/3), without limit in both directions, so
+    p, q = arctan(eta -+ r) bring the universe onto the whole of Minkowski's half diamond: no
+    spacelike edge stands where Friedmann's dust has its bang. The published Kretschmann scalar
+    is checked finite all over the plane and greatest at the turn, where it is 16/3 l^4, and the
+    scale factor the conformal chart is handed is checked against the equation its parameter
+    states, (da/d eta)^2 = 4(a - 1/a^2)/9 l^2."""
+    eta_of = nr._kt_eta
+    com = Plane(src, "kopczynski_trautman", "comoving_spherical", ("t", "r"), EQUATOR, {"ell": 1})
+    con = Plane(src, "kopczynski_trautman", "conformal", ("\\eta", "r"), EQUATOR, numeric=["a"])
+    ts = np.linspace(-400.0, 400.0, 400001)
+    etas = eta_of(ts)
+
+    def scale(eta, r):
+        t = np.interp(eta, etas, ts)
+        a = np.cbrt(1 + t ** 2)
+        return {"a": (a, 2 * t / (3 * a), 2 * (1 + 2 / a ** 3) / 9)}
+
+    def comoving(t, r):
+        return mink_pq(eta_of(t), r)
+    ck.chart("Kopczynski-Trautman comoving", com, comoving, ck.uniform(-6, 6), ck.uniform(0.01, 6), lambda t, r: (1, 0))
+    ck.chart("Kopczynski-Trautman conformal", con, mink_pq, ck.uniform(-6, 6), ck.uniform(0.01, 6),
+             lambda e, r: (1, 0), scale)
+    e = ck.uniform(-6, 6, 200)
+    a, da, _ = scale(e, 0 * e)["a"]
+    ck.limit("Kopczynski-Trautman: the scale factor solves (da/d eta)^2 = 4(a - 1/a^2)/9",
+             da ** 2, 4 * (a - a ** -2) / 9, 1e-9)
+    ck.limit("Kopczynski-Trautman: the conformal time grows as 3 t^(1/3), without limit",
+             [eta_of(1e9) / 3e3, eta_of(1e12) / 3e4], [1.0, 1.0], 2e-3)
+    K = com.kretschmann
+    everywhere = K(ck.uniform(-6, 6, 400), ck.uniform(0, 6, 400))
+    ck.finite("Kopczynski-Trautman: the Kretschmann scalar is finite all over the plane", everywhere)
+    ck.limit("Kopczynski-Trautman: the Kretschmann scalar at the turn is 16/3 l^4",
+             K(np.zeros(1), np.ones(1)), [16 / 3], 1e-9)
+    ck.limit("Kopczynski-Trautman: the Kretschmann scalar is nowhere greater than at the turn",
+             [max(0.0, float(np.max(everywhere)) - 16 / 3)], [0.0])
+
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    views = []
+    for vid, label, times, fmap, legend in (
+            ("comoving", "Comoving", (-8, -2, -0.5, 0, 0.5, 2, 8), comoving, "$ct/\\ell$ constant: $0$, $\\pm 1/2$, $\\pm 2$, and $\\pm 8$"),
+            ("conformal", "Conformal Time", (-4, -2, -1, 0, 1, 2, 4), mink_pq,
+             "$\\eta/\\ell$ constant: $0$, $\\pm 1$, $\\pm 2$, and $\\pm 4$")):
+        v = View(vid, label, box, "comoving_spherical" if vid == "comoving" else "conformal")
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        grid(v, "r", lambda r, t, fmap=fmap: fmap(t, r), (1, 2, 4), S_ALL)
+        grid(v, "t", fmap, [t for t in times if t != 0], S_POS)
+        grid(v, "surface", fmap, (0,), S_POS)
+        triangle_edges(v)
+        v.legend("cover", "the whole spacetime, which $r$ covers with $t$ or with $\\eta$")
+        v.legend("r", "comoving $r$ constant, in units of $\\ell$: the world lines of the dust")
+        v.legend("t", legend)
+        v.legend("surface", "the turn, $t = 0$, where the dust is densest and $a = 1$")
+        v.legend("centre", "$r = 0$, the world line of one grain of dust")
+        for m in slices.moments("kopczynski_trautman"):
+            along_r = np.array(m.reach("comoving_spherical", "r"))
+            v.slice(m, [mink_pq(np.full_like(along_r, float(eta_of(m.time))), along_r)])
+        v.set(settings="$\\ell = 1$, the scale of $p = \\arctan((\\eta - r)/\\ell)$ and "
+                       "$q = \\arctan((\\eta + r)/\\ell)$.")
+        views.append(v)
+    return views
+
+
 def levi_civita(ck, src):
     """Levi-Civita's half plane of fixed phi and z at sigma = 1/4, in Weyl's coordinates and in
     the Kasner form.
@@ -18710,6 +18777,7 @@ DRAWN = {
     "roberts": roberts,
     "myers_perry": myers_perry,
     "curzon_chazy": curzon_chazy,
+    "kopczynski_trautman": kopczynski_trautman,
     "bonnor_rotating_dust": bonnor_rotating_dust,
     "double_kerr": double_kerr,
     "neugebauer_meinel": neugebauer_meinel,
@@ -21302,6 +21370,23 @@ CAPTIONS = {
         "Every edge but the axis is at infinity: a light ray reaches $\\rho \\to \\infty$ only at an infinite value of its "
         "affine parameter, and the fluid reaches $t \\to \\pm\\infty$ only after an infinite proper time. The Kretschmann "
         "scalar is finite on the whole half plane and greatest at the marked event, where it is $792\\,a^4$.",
+    ],
+    ("kopczynski_trautman", "comoving"): [
+        "Kopczyński and Trautman's universe, each point in the diagram a 2-sphere. The metric is "
+        "$a^2(-d\\eta^2 + dr^2 + r^2d\\Omega^2)$ with the conformal time $\\eta = \\int c\\,dt/a$, which runs "
+        "over the whole real line, so $p, q = \\arctan((\\eta \\mp r)/\\ell)$ bring the universe onto the whole "
+        "of Minkowski's half diamond, with past and future null infinity for its edges.",
+        "Friedmann's flat universe of dust fills the upper half alone, with the big bang along $T = 0$. Here the "
+        "line $T = 0$ is the turn, a regular moment where the Kretschmann scalar is $16/3\\ell^4$, its greatest "
+        "value, and every world line of the dust and every light ray crosses it. The moments of constant $t$ "
+        "crowd toward the turn, since $\\eta$ grows only as $3\\ell\\,(ct/\\ell)^{1/3}$ far from it.",
+    ],
+    ("kopczynski_trautman", "conformal"): [
+        "The same universe ruled by its conformal time $\\eta$, each point in the diagram a 2-sphere. The lines of "
+        "constant $\\eta$ and of constant $r$ are those of Minkowski space in its inertial time and radius, "
+        "since the two metrics differ by the factor $a^2$ alone.",
+        "A ray that leaves $\\mathscr{I}^-$ crosses the turn and reaches $\\mathscr{I}^+$. The past light cone of "
+        "any event widens without limit toward the past, so it meets the world line of every grain of dust.",
     ],
     ("melvin", "cylindrical"): [
         "The half plane of $t$ and $\\rho$ of Melvin's universe at fixed $\\phi$ and $z$, totally geodesic. The metric "

@@ -930,6 +930,13 @@ def _charged_shell(view):
     return [Mark(m, found) for m in moments("charged_shell", "bounce") for found in [lines(m)] if found]
 
 
+def _kt_eta(t):
+    """The conformal time of Kopczynski and Trautman's universe at the proper time t, in units of l:
+    eta = t 2F1(1/3, 1/2; 3/2; -t^2)."""
+    from scipy.special import hyp2f1
+    return float(t * hyp2f1(1 / 3, 0.5, 1.5, -t * t))
+
+
 def one(metric_id, lines_of, label=None, view_id=None):
     """Each moment of a spacetime as the lines lines_of(moment) returns."""
     return [Mark(m, lines_of(m), label=label) for m in moments(metric_id, view_id)]
@@ -2607,6 +2614,13 @@ FLAT = {
         "nordstrom_scalar", lambda m: along(0.0, *m.reach("spherical", "r")), view_id="point_mass"),
     ("nordstrom_scalar", "dust", "radial"): lambda: one(
         "nordstrom_scalar", lambda m: along(m.time, *m.reach("dust", "r")), view_id="dust"),
+    # Kopczynski and Trautman's universe at each moment of its movie, out to the dust at r = l on each chart.
+    ("kopczynski_trautman", "comoving_spherical", "radial"): lambda: one(
+        "kopczynski_trautman", lambda m: along(m.time, *m.reach("comoving_spherical", "r"))),
+    ("kopczynski_trautman", "comoving_cartesian", "tx"): lambda: one(
+        "kopczynski_trautman", lambda m: across(m.time, *m.reach("comoving_spherical", "r"))),
+    ("kopczynski_trautman", "conformal", "radial"): lambda: one(
+        "kopczynski_trautman", lambda m: along(_kt_eta(m.time), *m.reach("comoving_spherical", "r"))),
     ("oppenheimer_snyder", "interior_comoving", "through"): _os_interior,
     ("semiclosed_world", "comoving", "dust"): lambda: _scw_dust(False),
     ("semiclosed_world", "conformal", "dust"): lambda: _scw_dust(True),

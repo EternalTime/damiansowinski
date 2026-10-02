@@ -322,7 +322,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1dabc18cb30095dc",
+    "version": "adc3900f5e5aef33",
     "diagrams": "d6268bdae97d9fd7",
     "embedding": "7fea7a854b8ceca4"
   },
@@ -1215,7 +1215,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "cd94e9fcc7ef895f",
+    "version": "2507a9ebb977715b",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -1988,6 +1988,34 @@
     "diagrams": "b8b3958f55b02f60",
     "conformal": "6ef2fd6aee9f0ecf",
     "embedding": "f88f2136771d0f0a"
+  },
+  {
+    "id": "kopczynski_trautman",
+    "name": "Kopczyński-Trautman",
+    "tags": [
+      "cosmology",
+      "Einstein-Cartan theory",
+      "torsion",
+      "spin",
+      "dust",
+      "bounce",
+      "no singularity",
+      "singularity theorems",
+      "homogeneous",
+      "isotropic",
+      "comoving",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "idealized model",
+      "conformally flat",
+      "spherically symmetric",
+      "four-dimensional"
+    ],
+    "version": "c6c7e325a9eee978",
+    "diagrams": "cdb14d2cd4994bf6",
+    "conformal": "970825f921a22257",
+    "embedding": "93002f20411a5f03"
   },
   {
     "id": "krasnikov",
@@ -3432,7 +3460,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3c0588407ad0782e",
+    "version": "ff13ef83cd6ce0fa",
     "diagrams": "ba9dba288cd26f63",
     "conformal": "e6b2c492ab043d17",
     "embedding": "e135a6bb032eedc2"
@@ -3552,7 +3580,7 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "59ae16c4bd36f66d",
+    "version": "3ae3a9e2ddbc9ef0",
     "diagrams": "9b126a24baab54f6",
     "conformal": "af0aad8daedb8e34",
     "embedding": "d2f10fa2373b33b4"

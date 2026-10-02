@@ -82,6 +82,11 @@
       "id": "point_particle_2plus1",
       "kind": "special_case",
       "text": "A slice across the string with the spin taken away. Deser, Jackiw, and 't Hooft met the spinning string as a spinning particle in three dimensions, in the paper that gives the cones of the particles without spin [deser1984]."
+    },
+    {
+      "id": "kopczynski_trautman",
+      "kind": "family",
+      "text": "The Einstein-Cartan theory applied to a whole universe. Dust with every spin aligned repels itself at high density, and the universe turns round where a big bang would be [kopczynski1973, trautman2006]."
     }
   ],
   "references": [
@@ -110,7 +115,9 @@
     "cornish1994",
     "kaloper1997",
     "anderson1999",
-    "som1968"
+    "som1968",
+    "kopczynski1973",
+    "trautman2006"
   ],
   "coordinates": [
     {
