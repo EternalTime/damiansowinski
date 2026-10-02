@@ -48,6 +48,11 @@
       "id": "kaluza_klein_monopole",
       "kind": "family",
       "text": "Another solution built on $1 + \\sum_i m_i/|\\mathbf{x} - \\mathbf{x}_i|$: any number of Kaluza-Klein monopoles stay at rest wherever they are put, as these black holes do [hawking1977, ruback1986]."
+    },
+    {
+      "id": "kastor_traschen",
+      "kind": "generalisation",
+      "text": "The same holes in a universe with a positive cosmological constant, where they ride the expansion and no longer stand still. Holes that fall together merge [kastor1993, brill1994]."
     }
   ],
   "references": [

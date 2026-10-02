@@ -50,6 +50,11 @@
       "id": "schwarzschild_de_sitter",
       "kind": "special_case",
       "text": "McVittie's universe expanding at a steady rate, with $H$ constant [kaloper2010, carrera2010]."
+    },
+    {
+      "id": "kastor_traschen",
+      "kind": "family",
+      "text": "Charged black holes in a universe that holds only a cosmological constant, which cannot pile up around them, so any number of them fit into one exact solution [kastor1993]."
     }
   ],
   "references": [
@@ -64,7 +69,8 @@
     "nolan1998",
     "lake2011",
     "faraoni2012",
-    "dasilva2013"
+    "dasilva2013",
+    "kastor1993"
   ],
   "coordinates": [
     {

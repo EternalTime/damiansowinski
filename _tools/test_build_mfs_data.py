@@ -3343,6 +3343,7 @@ class StacksAndMovies(unittest.TestCase):
               ("einstein_rosen_waves", "pulse"): "$ct$", ("nariai", "universe"): "$ct$",
               ("domain_wall", "moments"): "$kct$", ("kantowski_sachs", "dust"): "$\\eta$",
               ("robinson_trautman", "fronts"): "$cu$", ("mcvittie", "flamm"): "$ct$",
+              ("kastor_traschen", "two_holes"): "$c\\tau$",
               ("tolman_bondi", "cloud"): "$ct$", ("szekeres", "equators"): "$ct$", ("misner", "cylinders"): "$ct$",
               ("photon_rocket", "burn"): "$cu + r$", ("hayward", "history"): "$v - r$",
               ("gott_time_machine", "cylinders"): "$c\\tau$", ("kantowski_sachs", "vacuum"): "$c\\tau$",
@@ -4292,6 +4293,11 @@ class Slices(unittest.TestCase):
                     "majumdar_papapetrou/cylindrical/radial": {"one_hole"},
                     "majumdar_papapetrou/isotropic/radial": {"two_holes"},
                     "conformal majumdar_papapetrou/one_hole": {"two_holes"},
+                    # One of Kastor and Traschen's holes alone is another spacetime than two of them.
+                    **{f"kastor_traschen/{v}": {"one_hole"} for v in (
+                        "cartesian/tz", "cartesian/tx", "cylindrical/radial", "comoving/tz", "comoving/tx")},
+                    "kastor_traschen/isotropic/radial": {"two_holes"},
+                    "conformal kastor_traschen/one_hole": {"two_holes"},
                     # Melvin's universe with no hole and Ernst's hole inside it are two spacetimes of one entry,
                     # each chart's drawings marking its own moment.
                     "melvin/cylindrical/radial": {"ernst"}, "conformal melvin/cylindrical": {"ernst"},
@@ -4629,6 +4635,16 @@ class Slices(unittest.TestCase):
             if key == "milne/logarithmic_time/radial":
                 return (lambda X: math.log(t)), [0.0, hi]
             return (lambda X: t), [0.0, math.sinh(hi) if "spherical" in key else hi]
+        if key.startswith("kastor_traschen/"):
+            # One hole's moment is c tau = -8m/3. A moment of the midplane between two holes is level
+            # in tau, at ct = ln(H tau)/H in the comoving chart, H = -3/32, across the midplane out to
+            # the rho the embedding reaches, and meets the axis through the holes at z = 0.
+            if "/isotropic/" in key:
+                return (lambda X: -8 / 3), list(self.reach(surface))
+            level = math.log(-3 / 32 * t) / (-3 / 32) if "/comoving/" in key else t
+            lo, hi = self.reach(surface)
+            ends = [0.0] if key.endswith("/tz") else [-hi, hi] if key.endswith("/tx") else [lo, hi]
+            return (lambda X: level), ends
         if key.startswith("mcvittie/"):
             # A moment of cosmic time is level in both charts, from the throat out to the comoving r the
             # embedding reaches, which the areal chart draws at R = ar(1 + 1/(4ar))^2, r_s = 1, with
@@ -4990,6 +5006,28 @@ class Slices(unittest.TestCase):
                                 r = bisect(lambda r: (L.rstar(r) - (v - u) / 2) * (1 if grows else -1),
                                            lo + 1e-12, hi - 1e-12)
                                 self.assertLess(abs((u + v) / 2 - L.static_t(1 / L.H, r)), 5e-2, f"{where} at {(X, T)}")
+                            met += 1
+                        self.assertGreater(met, 3, where)
+                    elif metric_id == "kastor_traschen":
+                        # One hole at m = 1 and H = -3/16 is the lukewarm hole at r_s = 2m run backward: the
+                        # event (tau, r) is drawn where the lukewarm hole's cosmological chart draws
+                        # (-tau/2, r/2), turned upside down. So each point turned back, (X, -T), is carried
+                        # to u, v and the areal radius as the lukewarm hole's are, and lies on the moment
+                        # tau' = 4/3 of that chart, which is c tau = -8m/3.
+                        L = Lukewarm
+                        H = math.pi / 2
+                        met = 0
+                        for X, T in points:
+                            p_, q_ = (-T - X) / 2, (-T + X) / 2
+                            if min(abs(p_ / H - round(p_ / H)), abs(q_ / H - round(q_ / H))) < 0.03:
+                                continue    # beside a horizon, where four decimals no longer fix u or v
+                            u = -math.log(math.tan(-p_)) / L.KAPPA
+                            y, (lo, hi) = ((-q_, (0.5, L.ROOTS[1])) if q_ < 0 else (q_, (L.ROOTS[1], L.ROOTS[0]))
+                                           if q_ < H else (math.pi - q_, (L.ROOTS[0], 60.0)))
+                            v = math.log(math.tan(y)) / L.KAPPA
+                            grows = L.rstar(lo + 0.3 * (hi - lo)) < L.rstar(lo + 0.6 * (hi - lo))
+                            r = bisect(lambda r: (L.rstar(r) - (v - u) / 2) * (1 if grows else -1), lo + 1e-12, hi - 1e-12)
+                            self.assertLess(abs((u + v) / 2 - L.static_t(4 / 3, r)), 5e-2, f"{where} at {(X, T)}")
                             met += 1
                         self.assertGreater(met, 3, where)
                     elif metric_id == "rn_metric" and mark["view"] == "inside":

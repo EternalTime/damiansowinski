@@ -45,9 +45,44 @@
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. Each hole carries the mass parameter $m_i = GM_i/c^2$, a length, and a charge $Q_i$ of one common sign with $GQ_i^2/(4\\pi\\epsilon_0c^4) = m_i^2$. The cosmological constant is $\\Lambda = 3H^2/c^2$.",
-  "history": "",
-  "related": [],
-  "references": [],
+  "history": "Give a point mass an electric charge equal to its mass, set a second one beside it, and the pair stays wherever you put it: in Newton's theory the electric repulsion cancels the gravitational attraction at every separation [kastor1993]. General relativity keeps that balance exactly, for any number of such charges at rest: Sudhansu Datta Majumdar and Achilles Papapetrou each found the solution in 1947 [majumdar1947, papapetrou1947]. James Hartle and Stephen Hawking showed that every one of those point charges is a black hole, its point a horizon of area $4\\pi m_i^2$ [hartle1972]. What becomes of the standoff when the universe around the holes expands?¶A positive cosmological constant $\\Lambda$ changes what a charge equal to the mass means [kastor1993]. In de Sitter space the hole with $|Q| = M$ is the one whose horizon is exactly as hot as the cosmological horizon around it, the hole Larry Romans named \"lukewarm\", and the extremal hole carries more charge than mass [mellor1989, romans1992, kastor1993]. David Kastor and Jennie Traschen asked how a test particle with charge equal to its mass moves near such a hole [kastor1993]. With the least energy its areal radius grows or shrinks at the rate $c\\sqrt{\\Lambda/3}$ times itself, as it would in empty de Sitter space, so that the particle \"is, in some sense, not affected by the presence of the $Q = M$ black hole\" [kastor1993]. That was their hint to promote the test particles to black holes [kastor1993].¶In coordinates that ride the expansion, that one hole is Majumdar and Papapetrou's with a scale factor $a = e^{Ht}$ put in, $H = \\pm c\\sqrt{\\Lambda/3}$, and the same substitution gives any number of holes, $$ds^2 = -\\frac{c^2dt^2}{\\Omega^2} + a^2\\Omega^2\\left(dx^2 + dy^2 + dz^2\\right), \\qquad \\Omega = 1 + \\sum_i \\frac{m_i}{a|\\mathbf{x} - \\mathbf{x}_i|}$$ [kastor1993]. Each hole keeps its place $\\mathbf{x}_i$ and the universe does the moving [kastor1993]. With $H < 0$ the holes fall together and merge, and $H > 0$ is the time reverse [kastor1993, brill1994]. In their words, \"Black holes merge, and white holes split\" [kastor1993]. To their knowledge it was \"the first analytic description of coalescing black holes\" [kastor1993]. At $\\Lambda = 0$ the solution is Majumdar and Papapetrou's again [kastor1993].¶Is there a largest black hole? With $\\Lambda > 0$ there is: as the mass parameter $m$ of the $|Q| = M$ hole grows, its horizon closes on the cosmological horizon, the two meet at $m = c/(4|H|)$, and a heavier hole leaves its singularity naked [brill1994]. What if two holes, each lighter than that limit and together heavier, collide [brill1994]? Tetsuya Shiromizu, Ken-ichi Nakao, Hideo Kodama, and Kei-ichi Maeda had argued, with no exact solution to hand, that black holes of large area cannot collide in de Sitter space unless a naked singularity forms [shiromizu1993, brill1994]. Dieter Brill, Gary Horowitz, Kastor, and Traschen ran the collision in the exact solution, written in the time $\\tau$ with $H\\tau = e^{Ht}$ as $ds^2 = -c^2d\\tau^2/U^2 + U^2\\left(dx^2 + dy^2 + dz^2\\right)$, $U = H\\tau + \\sum_i m_i/|\\mathbf{x} - \\mathbf{x}_i|$, which runs on past $\\tau = 0$ to the singularity $U = 0$ [brill1994]. Below the limit the holes coalesce, the event horizon one sphere around each hole at early times and a single surface around both later, and above it a naked singularity forms to the future of a Cauchy horizon [brill1994].¶The horizons of several holes are rougher than one hole's [brill1994]. Across the cosmological horizon the metric is twice differentiable and in general not smooth, and across the inner horizon of each hole it is once differentiable, with a curvature singularity mild enough that geodesics pass through it [brill1994]. One hole alone is smooth everywhere, and Brill and his coauthors read the roughness as electromagnetic and gravitational radiation in the spacetime besides the holes [brill1994]. The solution fixes where the holes are and how heavy, but neither their velocities nor that radiation, so they wrote that \"we cannot yet claim that this is a serious violation of cosmic censorship\" [brill1994]. Miguel Zilhão, Vitor Cardoso, Leonardo Gualtieri, Carlos Herdeiro, Ulrich Sperhake, and Helvi Witek collided uncharged black holes in de Sitter space on a computer and found that pairs of large total mass lose causal contact even when they start close together, as cosmic censorship asks [zilhao2012].¶How do two horizons become one? Nakao, Shiromizu, and Sean Hayward followed two equal holes numerically: below the critical total mass a new trapping horizon, the edge of a region that light cannot leave, appears around both of the original ones [nakao1995]. Daisuke Ida, Nakao, Masaru Siino, and Hayward traced the event horizon by its light rays: it is a pair of trousers, and the points where new rays join it form a spacelike seam of finite length [ida1998]. They called this spacetime \"at present the only such analytic solution\" of colliding black holes [ida1998]. These holes may be the lightest things that can carry their charge: any number of them admit supercovariantly constant spinors, which Kastor and Traschen took as a sign of a state of least energy [kastor1996]. Gary Gibbons and Maeda found an exact relative, maximally charged black holes in a universe that expands with an arbitrary equation of state, a solution with a scalar field and two Maxwell fields [gibbons2010].",
+  "related": [
+    {
+      "id": "majumdar_papapetrou",
+      "kind": "special_case",
+      "text": "These holes with the cosmological constant switched off. At $H = 0$ the time drops out of the metric and the holes stand still [kastor1993]."
+    },
+    {
+      "id": "reissner_nordstrom_de_sitter",
+      "kind": "special_case",
+      "text": "One hole alone is the lukewarm charged black hole in de Sitter space, the one as hot as its cosmological horizon, in coordinates that ride the expansion [kastor1993, brill1994]."
+    },
+    {
+      "id": "de_sitter",
+      "kind": "special_case",
+      "text": "The universe the holes ride in. With every mass set to zero the metric is de Sitter space in its flat slicing [kastor1993]."
+    },
+    {
+      "id": "mcvittie",
+      "kind": "family",
+      "text": "A mass in an expanding universe filled with fluid, where the pressure piles up around the mass to keep the density even [kastor1993]."
+    }
+  ],
+  "references": [
+    "kastor1993",
+    "majumdar1947",
+    "papapetrou1947",
+    "hartle1972",
+    "mellor1989",
+    "romans1992",
+    "brill1994",
+    "shiromizu1993",
+    "zilhao2012",
+    "nakao1995",
+    "ida1998",
+    "kastor1996",
+    "gibbons2010"
+  ],
   "coordinates": [
     {
       "id": "cartesian",

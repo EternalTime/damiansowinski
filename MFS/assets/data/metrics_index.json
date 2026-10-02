@@ -450,7 +450,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4c46178ab5485dd9",
+    "version": "5e85ceb46c7cba4f",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -950,6 +950,54 @@
     "embedding": "e2698f474fe29ce2"
   },
   {
+    "id": "kastor_traschen",
+    "name": "Kastor-Traschen",
+    "tags": [
+      "electrovacuum",
+      "non-vacuum",
+      "dynamical",
+      "time-dependent",
+      "charged",
+      "charged black hole",
+      "black hole",
+      "multiple black holes",
+      "colliding black holes",
+      "black hole merger",
+      "white hole",
+      "electric charge",
+      "mass",
+      "electromagnetic field",
+      "cosmological constant",
+      "positive cosmological constant",
+      "de Sitter",
+      "lukewarm",
+      "expanding universe",
+      "cosmological",
+      "horizon",
+      "event horizon",
+      "cosmological horizon",
+      "Cauchy horizon",
+      "inner horizon",
+      "singularity",
+      "curvature singularity",
+      "naked singularity",
+      "cosmic censorship",
+      "harmonic function",
+      "superposition",
+      "causal structure",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "Einstein-Maxwell",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "65103cf6ea603f15",
+    "diagrams": "aa8f329620c5927d",
+    "conformal": "52493b5ac50704d6",
+    "embedding": "c4aa8198bba8d575"
+  },
+  {
     "id": "kerr",
     "name": "Kerr",
     "tags": [
@@ -1222,7 +1270,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ac370eafa4e41b3e",
+    "version": "1275091c7a10802b",
     "diagrams": "c6edded6cce52897",
     "conformal": "334186f800f59252",
     "embedding": "b9bf3c95064c40a7"
@@ -1277,7 +1325,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c272527fda92554c",
+    "version": "19249be05e8f6f1b",
     "diagrams": "00b799e11e5cfc26",
     "conformal": "5bfaa0670ab1bb25",
     "embedding": "2c9b70767c1e34be"
@@ -1790,7 +1838,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "480684d1a1ed2850",
+    "version": "e292e75cf6c34c33",
     "diagrams": "f6c6ac1947d0b4e9",
     "conformal": "639eea78631ca3e1",
     "embedding": "342b4919bb1495ae"

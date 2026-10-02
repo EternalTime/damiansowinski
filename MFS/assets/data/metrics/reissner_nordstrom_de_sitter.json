@@ -66,6 +66,11 @@
       "id": "kerr_de_sitter",
       "kind": "family",
       "text": "The black hole of de Sitter space with a spin where this one has a charge. Kayll Lake and Thomas Zannias found its horizons arranged as these are [lake2015]."
+    },
+    {
+      "id": "kastor_traschen",
+      "kind": "generalisation",
+      "text": "Any number of lukewarm holes at once. In the cosmological chart their potentials add, and holes that fall together merge [kastor1993, brill1994]."
     }
   ],
   "references": [
@@ -90,7 +95,8 @@
     "hintz2018",
     "hintz2017",
     "dias2018rough",
-    "lake2015"
+    "lake2015",
+    "brill1994"
   ],
   "coordinates": [
     {
