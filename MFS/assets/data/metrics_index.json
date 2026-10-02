@@ -737,7 +737,7 @@
       "idealized model",
       "stationary"
     ],
-    "version": "60c56f1fa0f5e5d0",
+    "version": "1d3050d1ef86fe25",
     "diagrams": "60cc56f450326363",
     "conformal": "d6c09caa82c5caf6",
     "embedding": "8cf5301ea3792cef"
@@ -869,7 +869,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a16441d6dc573562",
+    "version": "2c0c1f2dd4fd81ae",
     "diagrams": "8b39c6bef80d5718",
     "conformal": "573aa16b0b411fe4",
     "embedding": "a9676c6465fbce1c"
@@ -1005,6 +1005,41 @@
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc"
+  },
+  {
+    "id": "distorted_schwarzschild",
+    "name": "Distorted Schwarzschild",
+    "tags": [
+      "vacuum",
+      "static",
+      "stationary",
+      "axisymmetric",
+      "Weyl class",
+      "harmonic function",
+      "black hole",
+      "mass",
+      "quadrupole",
+      "tidal field",
+      "distorted black hole",
+      "horizon",
+      "Killing horizon",
+      "curvature singularity",
+      "not asymptotically flat",
+      "prolate spheroidal coordinates",
+      "no-hair theorem",
+      "black hole uniqueness",
+      "black hole thermodynamics",
+      "Hawking temperature",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "24045da352003429",
+    "diagrams": "3293440e9059a970",
+    "conformal": "49c40202992137c1",
+    "embedding": "a0dc24d8631c665d"
   },
   {
     "id": "double_kerr",
@@ -1300,7 +1335,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e13c93e2fb6b67f0",
+    "version": "afa657887e2652c7",
     "diagrams": "94462e128eea5d3d",
     "conformal": "73d1aa078d3b894f",
     "embedding": "e21547bef3d58f8e"
@@ -2628,7 +2663,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1c48156ae2caa6fb",
+    "version": "59d3265071db4bbd",
     "diagrams": "5ac02048c1fc2550",
     "conformal": "edd5386c486f11df",
     "embedding": "86969fc37532f407"
@@ -3700,7 +3735,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "eb765a3a641dd811",
+    "version": "5aaaede85649de23",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -4549,7 +4584,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4ef8f5966f0b96f8",
+    "version": "525d62e320d5875f",
     "diagrams": "c383ba43920e5b0b",
     "conformal": "f06e536b192c099c",
     "embedding": "633fa78640daea0a"

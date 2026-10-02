@@ -53,6 +53,11 @@
       "id": "curzon_chazy",
       "kind": "family",
       "text": "Another member of Weyl's class, built on the Newtonian potential of a point. Erez and Rosen's is built on the potential of Schwarzschild's rod with a quadrupole term added [bicak2000, boshkayev2019]."
+    },
+    {
+      "id": "distorted_schwarzschild",
+      "kind": "family",
+      "text": "The same recipe with the other quadrupole, the one that grows with distance and belongs to matter far away. It bends the horizon and leaves it regular, and Doroshkevich, Zel'dovich, and Novikov gave it in the same paper [doroshkevich1965]."
     }
   ],
   "references": [

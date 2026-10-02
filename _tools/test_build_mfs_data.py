@@ -5269,6 +5269,14 @@ class Slices(unittest.TestCase):
                        for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
                     **{f"conformal erez_rosen/{s}_equator_{k}": {o} for s in ("spherical", "prolate_spheroidal")
                        for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
+                    # The black hole in a tidal field is drawn oblate and prolate, two spacetimes of one line
+                    # element: each drawing marks the horizon of its own shape, and an equatorial drawing the
+                    # equatorial plane of its own shape as well, which does not meet the axis.
+                    **{f"{place}distorted_schwarzschild/{s}{join}{plane}_{k}":
+                       {o, f"horizon_{o}"} | ({k} if plane == "axis" else set())
+                       for place, join in (("", "/"), ("conformal ", "_"))
+                       for s in ("prolate_spheroidal", "spherical", "weyl") for plane in ("axis", "equator")
+                       for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
                     "majumdar_papapetrou/cartesian/tz": {"one_hole"},
                     "majumdar_papapetrou/cartesian/tx": {"one_hole"},
                     "majumdar_papapetrou/cylindrical/radial": {"one_hole"},
@@ -5450,6 +5458,18 @@ class Slices(unittest.TestCase):
             # The fronts of one retarded time differ only in size, so a moment is the whole
             # outgoing ray u = u_k, drawn against r and cu + r, from r = 0 to the box.
             return (lambda X: t + X), [0.0]
+        if key.startswith("distorted_schwarzschild/"):
+            # The black hole in a tidal field at m = 1: the horizon's bifurcation surface is the point t = 0
+            # of every plane at x = 1, r = 2m, z = m on Weyl's axis and rho = 0 in his equatorial plane, and
+            # the equatorial plane's t = 0 runs over the r the embedding reaches, with x = r/m - 1 and
+            # rho = m sqrt(x^2 - 1).
+            _, system, plane = key.split("/")
+            if not mark["lines"]:
+                return (lambda X: 0.0), [{"prolate_spheroidal": 1.0, "spherical": 2.0,
+                                          "weyl": 1.0 if plane.startswith("axis") else 0.0}[system]]
+            to = {"prolate_spheroidal": lambda r: r - 1, "spherical": lambda r: r,
+                  "weyl": lambda r: math.sqrt(max((r - 1) ** 2 - 1, 0.0))}[system]
+            return (lambda X: 0.0), [to(r) for r in self.reach(surface)]
         if key.startswith("string_black_hole/") and not mark["lines"]:
             # The horizon's bifurcation sphere, the point t = 0, r = r_s of the static planes.
             return (lambda X: 0.0), [1.0]

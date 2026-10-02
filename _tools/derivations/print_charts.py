@@ -14,7 +14,7 @@ israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, mi
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
 born_infeld_charge, penrose_impulsive_wave, exponential_metric, petrov_homogeneous, rp3_geon,
 kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kasner_scalar, moving_mirror,
-gravitational_instantons, small_universes and misner_zapolsky, and Godel's
+gravitational_instantons, small_universes, misner_zapolsky and distorted_schwarzschild, and Godel's
 cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
@@ -23809,6 +23809,580 @@ def small_universes_check(chart, system):
 
 
 CHARTS["small_universes"] = [lambda s=s: small_universes(s) for s in SMALL_CHARTS]
+
+
+# -- Schwarzschild's black hole in a tidal field -------------------------------------------
+
+DS_P_U = "U = \\dfrac{q}{4}\\left(3x^2 - 1\\right)\\left(3y^2 - 1\\right)"
+DS_P_V = ("V = -3q\\,x\\left(1 - y^2\\right) - \\dfrac{9q^2}{16}\\left(x^2 - 1\\right)\\left(1 - y^2\\right)"
+          "\\left(9x^2y^2 - x^2 - y^2 + 1\\right)")
+DS_PROLATE_PARAMETERS = ["m", "q", DS_P_U, DS_P_V]
+DS_S_U = "U = \\dfrac{q\\left(3r^2 - 6mr + 2m^2\\right)\\left(3\\cos^2\\theta - 1\\right)}{4m^2}"
+DS_S_V = ("V = -\\dfrac{3q\\left(r - m\\right)\\sin^2\\theta}{m} - \\dfrac{9q^2\\,r\\left(r - 2m\\right)\\sin^2\\theta}{16m^4}"
+          "\\left(\\left(r - m\\right)^2\\left(9\\cos^2\\theta - 1\\right) + m^2\\sin^2\\theta\\right)")
+DS_SPHERICAL_PARAMETERS = ["m", "q", DS_S_U, DS_S_V]
+DS_W_X = ("x = \\dfrac{\\sqrt{\\rho^2 + \\left(z + m\\right)^2} + \\sqrt{\\rho^2 + \\left(z - m\\right)^2}}{2m}")
+DS_W_Y = ("y = \\dfrac{\\sqrt{\\rho^2 + \\left(z + m\\right)^2} - \\sqrt{\\rho^2 + \\left(z - m\\right)^2}}{2m}")
+DS_W_PSI = ("\\psi = \\dfrac{1}{2}\\ln\\left(\\dfrac{x - 1}{x + 1}\\right)"
+            " + \\dfrac{q\\left(6z^2 - 3\\rho^2 - 2m^2\\right)}{4m^2}")
+DS_W_GAMMA = ("\\gamma = \\dfrac{1}{2}\\ln\\left(\\dfrac{x^2 - 1}{x^2 - y^2}\\right) - 3q\\,x\\left(1 - y^2\\right)"
+              " - \\dfrac{9q^2\\rho^2\\left(8z^2 - \\rho^2\\right)}{16m^4}")
+DS_WEYL_PARAMETERS = ["m", "q", DS_W_X, DS_W_Y, DS_W_PSI, DS_W_GAMMA]
+DS_HELD = ("U", "V")
+DS_CHARTS = ("prolate_spheroidal", "spherical", "weyl")
+
+
+def distorted_schwarzschild(system):
+    """Schwarzschild's black hole in the quadrupole field of distant matter, Doroshkevich,
+    Zel'dovich and Novikov's Appendix IV and the simplest of Geroch and Hartle's distorted black
+    holes: the member of Weyl's class whose potential is Schwarzschild's plus q times the
+    quadrupole harmonic that is regular on the horizon and grows with distance, P_2(x) P_2(y).
+
+    prolate_spheroidal  Doroshkevich, Zel'dovich and Novikov's own, and Shoom, Walsh and Booth's (1):
+                        ds^2 = -(x - 1)/(x + 1) e^{2U} c^2 dt^2 + m^2 (x + 1)^2 e^{-2U}
+                        (e^{2V}(dx^2/(x^2 - 1) + dy^2/(1 - y^2)) + (1 - y^2) dphi^2)
+    spherical           x = r/m - 1, y = cos(theta), Schwarzschild's chart at q = 0, Fairhurst and
+                        Krishnan's (3.7)
+    weyl                Weyl's canonical chart, in which Geroch and Hartle work, with psi and gamma
+                        Schwarzschild's plus U and V
+
+    U and V, or psi and gamma, are names each chart defines, held as functions of its two
+    coordinates while the tensors are built (vm.HELD). In the first two charts `reduce` writes
+    the second derivative of U along the radial coordinate by Laplace's equation and that of V
+    by the one field equation of second order, and leaves the first derivatives of V standing,
+    so that no value divides by x^2 - y^2, which Weyl's quadrature does; a value that vanishes
+    on the quadrature is written as zero, and the Weyl tensor, which is the Riemann tensor of a
+    vacuum, is written as the Riemann tensor is. Weyl's chart writes gamma's derivatives by the
+    quadrature, which divides by nothing there. distorted_schwarzschild_check holds each chart
+    to its source, and distorted_schwarzschild.md beside this file is the derivation."""
+    D = sp.Derivative
+    if system == "weyl":
+        coords = ["t", "\\rho", "\\phi", "z"]
+
+        def line(c2):
+            return (f"ds^2 = -e^{{2\\psi}}{c2}dt^2 + e^{{-2\\psi}}\\left(e^{{2\\gamma}}\\left(d\\rho^2 + dz^2\\right)"
+                    " + \\rho^2d\\phi^2\\right)")
+        probe = vm.Reader(coords, DS_WEYL_PARAMETERS, (), held=MM_HELD)
+        a, b = probe.symbol["\\rho"], probe.symbol["z"]
+        psi, gam = probe.parameters["psi"], probe.parameters["gamma"]
+        lead = [gam, psi]
+        for g in (gam, psi):
+            lead += [D(g, a), D(g, b)]
+        for g in (gam, psi):
+            lead += [D(g, (a, 2)), D(g, a, b), D(g, (b, 2))]
+        lead += [a]
+        named, overrides = distorted_weyl_exponentials([probe.symbol[name] for name in coords], lead, psi, gam)
+        return {
+            "metric_id": "distorted_schwarzschild",
+            "system": {"id": "weyl", "name": "Weyl", "coords": coords,
+                       "domains": ["t \\in (-\\infty, \\infty)", "\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                                   "z \\in (-\\infty, \\infty)",
+                                   "\\rho = 0,\\; |z| \\le m \\;\\text{(the horizon)}"],
+                       "parameters": DS_WEYL_PARAMETERS, "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"lead": lead, "factors": lead + list(overrides), "overrides": overrides},
+            "pretty": distorted_weyl_pretty(named),
+            "reduce": morgan_morgan_reduce(a, b, psi, gam, oblate=False),
+            "check": distorted_schwarzschild_check,
+        }
+    spherical = system == "spherical"
+    if not spherical:
+        coords = ["t", "x", "y", "\\phi"]
+        parameters, name = DS_PROLATE_PARAMETERS, "Prolate Spheroidal"
+
+        def line(c2):
+            return (f"ds^2 = -\\dfrac{{x - 1}}{{x + 1}}e^{{2U}}{c2}dt^2 + m^2\\left(x + 1\\right)^2e^{{-2U}}"
+                    "\\left(e^{2V}\\left(\\dfrac{dx^2}{x^2 - 1} + \\dfrac{dy^2}{1 - y^2}\\right)"
+                    " + \\left(1 - y^2\\right)d\\phi^2\\right)")
+        probe = vm.Reader(coords, parameters, (), held=DS_HELD)
+        a, b, m = probe.symbol["x"], probe.symbol["y"], probe.parameters["m"]
+        domains = ["t \\in (-\\infty, \\infty)", "x \\in (1, \\infty)", "y \\in [-1, 1]", "\\phi \\in [0, 2\\pi)",
+                   "x = 1 \\;\\text{(the horizon)}"]
+        named = [(sp.Symbol("DSH"), 1 - b ** 2, "1 - y^2"), (sp.Symbol("DSX"), a ** 2 - 1, "x^2 - 1")]
+        tail = [m, a, b]
+        factors = distorted_prolate_factors(a, b, named)
+    else:
+        coords = ["t", "r", "\\theta", "\\phi"]
+        parameters, name = DS_SPHERICAL_PARAMETERS, "Spherical"
+
+        def line(c2):
+            return (f"ds^2 = -\\left(1 - \\dfrac{{2m}}{{r}}\\right)e^{{2U}}{c2}dt^2 + e^{{-2U}}\\left(e^{{2V}}"
+                    "\\left(\\dfrac{dr^2}{1 - \\dfrac{2m}{r}} + r^2d\\theta^2\\right)"
+                    " + r^2\\sin^2\\theta\\,d\\phi^2\\right)")
+        probe = vm.Reader(coords, parameters, (), held=DS_HELD)
+        a, b, m = probe.symbol["r"], probe.symbol["\\theta"], probe.parameters["m"]
+        domains = ["t \\in (-\\infty, \\infty)", "r \\in (2m, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                   "r = 2m \\;\\text{(the horizon)}"]
+        named = []
+        tail = [a, m, sp.cos(b), sp.sin(b)]
+        factors = distorted_spherical_factors(a, b, m)
+    U, V = probe.parameters["U"], probe.parameters["V"]
+    reduce = distorted_schwarzschild_reduce(a, b, U, V, m if spherical else None)
+    lead = [V, U, D(V, a), D(V, b), D(U, a), D(U, b), D(U, a, b), D(U, (b, 2)), *tail]
+    derivatives = [D(V, a), D(V, b), D(U, a, b), D(U, (b, 2)), D(U, a), D(U, b)]
+
+    def pretty(value):
+        c, rest = factors(sp.sympify(value))
+        return _keep_coeff(c, sp.powsimp(rest, combine="exp"))
+
+    def collect(base, p):
+        # Each value is a polynomial in the derivatives of U and V, grouped by them, and every
+        # coefficient is written in the factors the line element has, its number kept in front.
+        e, forward, back = cp.symbolize(sp.expand(base))
+        poly = sp.Poly(e, *[forward.get(g, g) for g in derivatives])
+        if poly.total_degree() == 0:
+            return p.sum_of(base)
+        terms = []
+        for monomial, coeff in sorted(poly.terms(), key=lambda mc: tuple(-k for k in mc[0])):
+            c, rest = factors(coeff.as_expr().xreplace(back))
+            terms.append((c, rest * sp.Mul(*[g ** k for g, k in zip(derivatives, monomial)])))
+        return cp.Sum(terms)
+    printer = {"lead": lead, "collect": collect, "named": {s: text for s, _, text in named},
+               "factors": [s for s, _, _ in named] + lead}
+    return {
+        "metric_id": "distorted_schwarzschild",
+        "system": {"id": "spherical" if spherical else "prolate_spheroidal", "name": name, "coords": coords,
+                   "domains": domains, "parameters": parameters, "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "pretty": pretty,
+        "reduce": reduce,
+        "check": distorted_schwarzschild_check,
+        "after": distorted_schwarzschild_vacuum,
+    }
+
+
+def distorted_weyl_exponentials(symbols, lead, psi, gam):
+    """Every exponential a value of Weyl's chart can carry, e^{a gamma + b psi} with a and b whole
+    numbers from -4 to 4, each as a symbol of the printer with its text: (the symbols by their
+    exponential, the printer's overrides)."""
+    plain = cp.Printer(symbols, lead=lead, factors=lead)
+    named, overrides = {}, {}
+    for a, b in itertools.product(range(-4, 5), repeat=2):
+        if (a, b) != (0, 0):
+            e = sp.exp(a * gam + b * psi)
+            named[e] = sp.Symbol(f"DSE{len(named)}", positive=True)
+            overrides[named[e]] = plain(e)
+    return named, overrides
+
+
+def distorted_weyl_pretty(named):
+    """The pretty printer of Weyl's chart: a value factored with each exponential taken as one
+    symbol, so that e^{-2 gamma} e^{4 psi} comes out of a sum whole, and then written as one
+    exponential. Where it multiplies a sum the exponential is handed to the printer as a symbol
+    with its text, so that it is written in front of the sum: a value that opens with a bracket
+    cannot take a minus sign in front, and would be printed with the exponential spread over
+    every term."""
+    def pretty(value):
+        value = sp.powsimp(sp.sympify(value), combine="exp")
+        held = {e: sp.Dummy("e", positive=True) for e in value.atoms(sp.exp)}
+        factored = sp.factor(value.xreplace(held)).xreplace({d: e for e, d in held.items()})
+        factored = sp.powsimp(factored, combine="exp")
+        parts = sp.Mul.make_args(factored)
+        exponentials = [f for f in parts if isinstance(f, sp.exp)]
+        if len(exponentials) != 1 or not any(f.is_Add for f in parts):
+            return factored
+        (e,) = exponentials
+        return sp.Mul(*[named[e] if f is e else f for f in parts])
+    return pretty
+
+
+def distorted_prolate_factors(a, b, named):
+    """The pretty printer of the prolate spheroidal chart: a value factored, as (its number, the
+    rest), with (1 + y)(1 - y) written 1 - y^2 and (x - 1)(x + 1) written x^2 - 1 as far as the
+    two come in pairs. The number is handed back apart, since sympy spreads a number over a sum
+    when the two stand alone in a product, and 2(x + 1) would be printed 2x + 2."""
+    (H, _, _), (X, _, _) = named
+    pairs = [((1 - b, 1 + b), H), ((a - 1, a + 1), X)]
+
+    def factors(value):
+        number, rest = sp.factor(sp.sympify(value)).as_coeff_Mul()
+        powers = {}
+        for f in sp.Mul.make_args(rest):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            if base.is_Add and k.is_Integer and any(sp.expand(base + part) == 0 for one, _ in pairs for part in one):
+                # y - 1 is counted as 1 - y, and the sign goes to the number.
+                base, number = -base, number * (-1) ** k
+            base = next((part for one, _ in pairs for part in one if sp.expand(base - part) == 0), base)
+            powers[base] = powers.get(base, 0) + k
+        for (one, other), product in pairs:
+            ka, kb = powers.get(one, 0), powers.get(other, 0)
+            k = min(ka, kb) if ka > 0 and kb > 0 else max(ka, kb) if ka < 0 and kb < 0 else 0
+            if k:
+                powers[one], powers[other] = ka - k, kb - k
+                powers[product] = powers.get(product, 0) + k
+        return number, sp.Mul(*[base ** k for base, k in powers.items() if k != 0])
+    return factors
+
+
+def distorted_spherical_factors(a, b, m):
+    """The pretty printer of the spherical chart. The metric is even in theta, so a value is a
+    rational function of r, m and cos(theta), times sin(theta) or not, once each derivative of U
+    or V taken an odd number of times along theta is counted as odd; and it is homogeneous in r
+    and m once a derivative along r counts as an inverse length. It is factored in r/m and
+    y = cos(theta), with (1 - y)(1 + y) = sin^2(theta), and each factor is written back in r, m
+    and the derivatives themselves, as Erez and Rosen's spherical chart is."""
+    Y, S, S2 = sp.Symbol("DSY"), sp.Symbol("DSSIN"), sp.Symbol("DSSINSQ", positive=True)
+    RHO = sp.Symbol("DSRHO", positive=True)
+    plain = named_factors([], [(1 - Y, 1 + Y, S2)])
+
+    def factors(value):
+        value = sp.sympify(value)
+        forward, back = {}, {RHO: a / m}
+        for d in value.atoms(sp.Derivative):
+            along = dict(d.variable_count)
+            held = sp.Dummy("h")
+            forward[d] = held * S ** (along.get(b, 0) % 2) / m ** along.get(a, 0)
+            back[held] = d * m ** along.get(a, 0) / S ** (along.get(b, 0) % 2)
+        e = value.xreplace(forward).subs({sp.cos(b): Y, sp.sin(b): S, a: m * RHO})
+        e = sp.together(e)
+        parts = []
+        for side in sp.fraction(e):
+            poly = sp.Poly(sp.expand(side), S)
+            even = sum(c * (1 - Y ** 2) ** (k // 2) for (k,), c in poly.terms() if k % 2 == 0)
+            odd = sum(c * (1 - Y ** 2) ** (k // 2) for (k,), c in poly.terms() if k % 2 == 1)
+            parts.append((sp.expand(even), sp.expand(odd)))
+        (ne, no), (de, do) = parts
+        even, odd = sp.expand(ne * de - (1 - Y ** 2) * no * do), sp.expand(no * de - ne * do)
+        below = sp.expand(de ** 2 - (1 - Y ** 2) * do ** 2)
+        if even != 0 and odd != 0:
+            raise AssertionError("distorted_schwarzschild: a value of the spherical chart is neither even nor odd "
+                                 "in sin(theta)")
+        out = plain((even if odd == 0 else odd) / below) * (1 if odd == 0 else S)
+        # The number in front is kept apart to the end: sympy spreads a number over a sum when
+        # the two stand alone in a product, and 96(r - m) would be printed 96r - 96m.
+        number, result = sp.Integer(1), sp.Integer(1)
+        for f in sp.Mul.make_args(out):
+            if f.is_Number:
+                number *= f
+                continue
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            top, bottom = sp.fraction(sp.together(base.xreplace(back)))
+            if top.is_Add:
+                # A sum is written out, with its cosines in the sine wherever they come squared, and
+                # the power of sin(theta) every term carries is taken out of it.
+                poly = sp.Poly(sp.expand(top), Y)
+                top = sp.expand(sum(c * (1 - S ** 2) ** (n // 2) * Y ** (n % 2) for (n,), c in poly.terms()))
+                common = min(sp.Poly(term, S).degree() for term in sp.Add.make_args(top))
+                top, bottom = sp.expand(top / S ** common), sp.cancel(bottom / S ** common)
+            result *= (top / bottom) ** k
+        # A sine left under a sum goes into it term by term, where every term takes it as a power
+        # of the sine or as a cotangent: (d_theta U sin(theta) - cos(theta))/sin(theta) is written
+        # d_theta U - cot(theta).
+        powers = {}
+        for f in sp.Mul.make_args(sp.powsimp(result)):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            powers[base] = powers.get(base, 0) + k
+        sines = powers.pop(S, 0) + 2 * powers.pop(S2, 0)
+        if sines < 0:
+            under = -sines
+            for base, k in powers.items():
+                terms = sp.Add.make_args(base)
+                if base.is_Add and k == 1 and all(
+                        sp.Poly(term, S).degree() >= under
+                        or (sp.Poly(term, S).degree() == under - 1 and sp.Poly(term, Y).degree() == 1) for term in terms):
+                    del powers[base]
+                    powers[sp.Add(*[term / S ** under for term in terms])] = 1
+                    sines = 0
+                    break
+        result = sp.Mul(*[base ** k for base, k in powers.items()]) * S2 ** (sines // 2) * S ** (sines % 2)
+        c, result = result.subs({S2: sp.sin(b) ** 2}).subs({S: sp.sin(b), Y: sp.cos(b)}).as_coeff_Mul()
+        return number * c, result
+    return factors
+
+
+def distorted_quadrature(a, b, ua, ub, m=None):
+    """Weyl's quadrature for V, its two first derivatives in those of U: Erez and Rosen's
+    quadrature for gamma with Schwarzschild's potential added to U, less Schwarzschild's gamma.
+    In the prolate spheroidal x and y, or, with the mass parameter given, in r and theta."""
+    if m is None:
+        common = a ** 2 - b ** 2
+        return ((1 - b ** 2) / common * (a * (a ** 2 - 1) * ua ** 2 - a * (1 - b ** 2) * ub ** 2
+                                         - 2 * b * (a ** 2 - 1) * ua * ub + 2 * a * ua - 2 * b * ub),
+                ((a ** 2 - 1) * (b * (a ** 2 - 1) * ua ** 2 - b * (1 - b ** 2) * ub ** 2
+                                 + 2 * a * (1 - b ** 2) * ua * ub + 2 * b * ua) + 2 * a * (1 - b ** 2) * ub) / common)
+    # x = r/m - 1 and y = cos(theta): d_x = m d_r and d_y = -d_theta/sin(theta).
+    x, y = a / m - 1, sp.cos(b)
+    vx, vy = distorted_quadrature(x, y, m * ua, -ub / sp.sin(b))
+    return vx / m, -sp.sin(b) * vy
+
+
+def distorted_second_order(a, b, U, V, m=None):
+    """Laplace's equation for U and the field equation of second order for V, each solved for
+    the second derivative along the radial coordinate:
+    (x^2 - 1) V_xx + x V_x + (1 - y^2) V_yy - y V_y = -(x^2 - 1) U_x^2 - (1 - y^2) U_y^2 - 2 U_x,
+    which in r and theta is (r^2 - 2mr) V_rr + (r - m) V_r + V_thth = -(r^2 - 2mr) U_r^2 - U_th^2 - 2m U_r."""
+    D = sp.Derivative
+    laplace = erez_rosen_laplace(a, b, U, m)
+    if m is None:
+        vaa = (-(a ** 2 - 1) * D(U, a) ** 2 - (1 - b ** 2) * D(U, b) ** 2 - 2 * D(U, a) - a * D(V, a)
+               - (1 - b ** 2) * D(V, (b, 2)) + b * D(V, b)) / (a ** 2 - 1)
+    else:
+        vaa = (-(a ** 2 - 2 * m * a) * D(U, a) ** 2 - D(U, b) ** 2 - 2 * m * D(U, a) - (a - m) * D(V, a)
+               - D(V, (b, 2))) / (a ** 2 - 2 * m * a)
+    return laplace, {D(V, (a, 2)): vaa}
+
+
+def distorted_schwarzschild_reduce(a, b, U, V, m=None):
+    """`value` where the field equations of second order hold, with the first derivatives of V
+    left standing; zero where it vanishes on Weyl's quadrature as well, which is tried at two
+    random points before it is asked exactly."""
+    D = sp.Derivative
+    laplace, second = distorted_second_order(a, b, U, V, m)
+    uaa = laplace[D(U, (a, 2))]
+    va, vb = distorted_quadrature(a, b, D(U, a), D(U, b), m)
+
+    def partial(value):
+        value = sp.sympify(value).subs(second).doit()
+        value = value.subs({D(U, (a, 3)): sp.diff(uaa, a), D(U, (a, 2), b): sp.diff(uaa, b)}).doit()
+        return value.subs(laplace).doit()
+
+    def full(value):
+        value = value.subs({D(V, (b, 2)): sp.diff(vb, b), D(V, a, b): sp.diff(va, b)}).doit()
+        value = value.subs({D(V, a): va, D(V, b): vb}).doit()
+        value = value.subs({D(U, (a, 3)): sp.diff(uaa, a), D(U, (a, 2), b): sp.diff(uaa, b)}).doit()
+        return value.subs(laplace).doit()
+
+    def at_random(value, rng):
+        swap = {sp.sin(b): sp.Rational(3, 5), sp.cos(b): sp.Rational(4, 5)} if m is not None else {}
+        value = value.xreplace(swap)
+        atoms = sorted((value.atoms(sp.Derivative) | value.atoms(AppliedUndef) | value.free_symbols) - {b}
+                       if m is not None else
+                       value.atoms(sp.Derivative) | value.atoms(AppliedUndef) | value.free_symbols,
+                       key=sp.default_sort_key)
+        point = {s: sp.Rational(rng.randint(211, 397), rng.randint(101, 199)) for s in atoms}
+        return value.xreplace(point)
+
+    def reduce(value):
+        value = partial(value)
+        if value == 0:
+            return value
+        on_shell = full(value)
+        rng = random.Random(0)
+        if any(at_random(on_shell, rng) != 0 for _ in range(2)):
+            return value
+        if not gowdy_vanishes(on_shell):
+            raise AssertionError("distorted_schwarzschild: a value vanishes at two random points and not everywhere")
+        return sp.Integer(0)
+    reduce.full = full
+    return reduce
+
+
+def distorted_schwarzschild_vacuum(math, chart):
+    """The Weyl tensor of a vacuum is its Riemann tensor, and is written as the Riemann tensor
+    is: built apart, it carries the Ricci tensor's terms, which vanish only on Weyl's
+    quadrature. Each component of the difference is checked to vanish there first."""
+    geo = chart.geo
+    full = chart.reduce.full
+    riemann, weyl = geo.riemann_llll(), geo.weyl_llll()
+    n = len(chart.symbols)
+    for i, j, k, l in itertools.product(range(n), repeat=4):
+        if not gowdy_vanishes(full(sp.sympify(riemann[i][j][k][l] - weyl[i][j][k][l]))):
+            raise AssertionError("distorted_schwarzschild: the Weyl tensor is not the Riemann tensor on shell")
+    for variant in ("ulll", "llll"):
+        math["weyl_tensor"]["variants"][variant]["nonzero"] = json.loads(json.dumps(
+            math["riemann"]["variants"][variant]["nonzero"]))
+    math["kretschmann"] = "K = " + distorted_schwarzschild_kretschmann(chart)
+    return math
+
+
+def distorted_schwarzschild_kretschmann(chart):
+    """The Kretschmann scalar of a static vacuum, 16(a^2 + a b + b^2 + c^2), with a = R^{tx}_{tx},
+    b = R^{ty}_{ty} and c^2 = R^{tx}_{ty} R^{ty}_{tx} for x and y the chart's radial coordinate and
+    angle: the electric part of the Weyl tensor has no trace, and its magnetic part vanishes.
+    Each of the three is written as a common factor times a sum, and the whole is checked
+    against the scalar built from every component, on Weyl's quadrature."""
+    geo, reader = chart.geo, chart.reader
+    t, a, b, phi = chart.symbols
+    U, V = reader.parameters["U"], reader.parameters["V"]
+    m = reader.parameters["m"]
+    spherical = chart.coords_tex[1] == "r"
+    mixed = geo.raise_indices(geo.riemann_llll(), 4, (0,))
+    scale = sp.exp(2 * U - 2 * V) / (a ** 3 if spherical else m ** 2 * (a + 1) ** 3)
+    one = sp.cancel(sp.together(geo.ginv[1, 1] * mixed[0][1][0][1] / scale))
+    two = sp.cancel(sp.together(geo.ginv[2, 2] * mixed[0][2][0][2] / scale))
+    cross, below = sp.fraction(sp.cancel(sp.together(mixed[0][1][0][2])))
+    weight = sp.cancel(sp.together(geo.ginv[1, 1] * geo.ginv[2, 2] / (below * scale) ** 2))
+    scalar = 16 * scale ** 2 * (one ** 2 + one * two + two ** 2 + weight * cross ** 2)
+    if not gowdy_vanishes(chart.reduce.full(sp.sympify(scalar - geo.kretschmann()))):
+        raise AssertionError("distorted_schwarzschild: the Kretschmann scalar is not 16(a^2 + ab + b^2 + c^2)")
+    def parted(value):
+        """A value as (what multiplies its sum, the sum that holds the derivatives)."""
+        factored = chart.pretty(value)
+        sums = [f for f in sp.Mul.make_args(factored) if f.is_Add and f.atoms(sp.Derivative)]
+        if len(sums) != 1:
+            raise AssertionError("distorted_schwarzschild: a part of the Kretschmann scalar is no one sum")
+        return sp.cancel(factored / sums[0]), sums[0]
+    (pa, one), (pb, two), (pc, cross) = parted(one), parted(two), parted(cross)
+    if sp.cancel(pa / pb) not in (1, -1):
+        raise AssertionError("distorted_schwarzschild: the two diagonal parts have no common factor")
+    sb = sp.cancel(pb / pa)
+
+    def bracketed(part):
+        # A sum that leads with a minus sign is written with its sign changed, and the sign handed back.
+        text = chart.printer(part)
+        if text.startswith("-\\left(") and text.endswith("\\right)"):
+            return -1, text[1:]
+        return 1, "\\left(" + text + "\\right)"
+    (sa, A), (sb2, B), (_, C) = (bracketed(part) for part in (one, two, cross))
+    front = chart.text(16 * scale ** 2 * pa ** 2)
+    weight = chart.text(sp.cancel(weight * pc ** 2 / pa ** 2))
+    text = (f"{front}\\left({A}^2 {'+' if sa * sb2 * sb > 0 else '-'} {A}{B} + {B}^2 + {weight}{C}^2\\right)")
+    if not gowdy_vanishes(sp.sympify(reader(text) - scalar)):
+        raise AssertionError("distorted_schwarzschild: the Kretschmann scalar does not read back")
+    return text
+
+
+def distorted_schwarzschild_check(chart):
+    """Each chart: with the names written out, the Ricci tensor is exactly zero. The prolate
+    spheroidal and spherical charts: U solves Laplace's equation, V solves Weyl's quadrature
+    and the equation of second order and vanishes on the axis, V = 2U - 2q on the horizon, and
+    at q = 0 both vanish. The prolate spheroidal chart is Erez and Rosen's line element with
+    psi = (1/2) ln((x - 1)/(x + 1)) + U and gamma = (1/2) ln((x^2 - 1)/(x^2 - y^2)) + V, and its
+    U and V are Doroshkevich, Zel'dovich and Novikov's Appendix IV. The spherical chart's U and
+    V are the prolate spheroidal chart's at x = r/m - 1 and y = cos(theta), it is that chart
+    pulled back, and at q = 0 it is Schwarzschild's published metric with r_s = 2m. Weyl's
+    chart: psi solves Laplace's equation and gamma the quadrature, gamma vanishes on the axis
+    beyond the rod, and the prolate spheroidal chart is it pulled back along
+    rho = m sqrt((x^2 - 1)(1 - y^2)), z = m x y, the functions one value at an event."""
+    D = sp.Derivative
+    system = {"x": "prolate_spheroidal", "r": "spherical", "\\rho": "weyl"}[chart.coords_tex[1]]
+    reader = chart.reader
+    m, q = reader.parameters["m"], reader.parameters["q"]
+    rng = random.Random(0)
+
+    def numerically(value, symbols, what, ranges=None):
+        """A value of the chart's symbols vanishes at six random points to thirty digits."""
+        for _ in range(6):
+            at = {s: sp.Rational(rng.randint(*(ranges or {}).get(s, (11, 30))), 10) for s in symbols}
+            if abs(sp.N(value.subs(at), 40)) > sp.Float("1e-30"):
+                raise AssertionError(f"distorted_schwarzschild: the {system} chart misses {what}")
+
+    if system == "weyl":
+        t, rho, phi, z = chart.symbols
+        psi, gam = reader.parameters["psi"], reader.parameters["gamma"]
+        P, G = reader.held[psi], reader.held[gam]
+        ranges = {rho: (3, 40), z: (-40, 40), m: (5, 15), q: (-9, 9)}
+        symbols = [rho, z, m, q]
+        numerically(sp.diff(rho * sp.diff(P, rho), rho) / rho + sp.diff(P, z, 2), symbols, "Laplace's equation", ranges)
+        numerically(sp.diff(G, rho) - rho * (sp.diff(P, rho) ** 2 - sp.diff(P, z) ** 2), symbols,
+                    "the quadrature along rho", ranges)
+        numerically(sp.diff(G, z) - 2 * rho * sp.diff(P, rho) * sp.diff(P, z), symbols, "the quadrature along z", ranges)
+        # On the axis beyond the rod, z > m: gamma = 0.
+        numerically(G.subs(rho, 0), [z, m, q], "gamma on the axis", {z: (31, 60), m: (5, 15), q: (-9, 9)})
+        # The prolate spheroidal chart is this one pulled back, psi and gamma one value at an event.
+        spec = distorted_schwarzschild("prolate_spheroidal")
+        prolate = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
+                           held=DS_HELD)
+        T, x, y, ph = prolate.symbols
+        there = prolate.reader
+        pm, pq = there.parameters["m"], there.parameters["q"]
+        Uh, Vh = there.held[there.parameters["U"]], there.held[there.parameters["V"]]
+        image = [T, pm * sp.sqrt((x ** 2 - 1) * (1 - y ** 2)), ph, pm * x * y]
+        swap = {t: image[0], rho: image[1], phi: image[2], z: image[3], m: pm, q: pq}
+        points = {x: (11, 40), y: (-9, 9), pm: (5, 15), pq: (-9, 9)}
+        numerically(P.subs(swap, simultaneous=True) - sp.log((x - 1) / (x + 1)) / 2 - Uh, [x, y, pm, pq],
+                    "the prolate spheroidal chart's psi", points)
+        numerically(G.subs(swap, simultaneous=True) - sp.log((x ** 2 - 1) / (x ** 2 - y ** 2)) / 2 - Vh,
+                    [x, y, pm, pq], "the prolate spheroidal chart's gamma", points)
+        p0, g0 = sp.symbols("p0 g0", real=True)
+        source = chart.geo.g.subs({psi: p0, gam: g0}).subs(swap, simultaneous=True)
+        order = [T, x, y, ph]
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], order[j]))
+        pulled = (J.T * source * J).subs({p0: sp.log((x - 1) / (x + 1)) / 2 + there.parameters["U"],
+                                           g0: sp.log((x ** 2 - 1) / (x ** 2 - y ** 2)) / 2 + there.parameters["V"]})
+        for i in range(4):
+            for j in range(i, 4):
+                if sp.simplify(pulled[i, j] - prolate.geo.g[i, j]) != 0:
+                    raise AssertionError("distorted_schwarzschild: Weyl's chart pulled back misses the prolate "
+                                         f"spheroidal chart in slot {prolate.coords_tex[i]}{prolate.coords_tex[j]}")
+        return
+    spherical = system == "spherical"
+    t, a, b, phi = chart.symbols
+    U, V = reader.parameters["U"], reader.parameters["V"]
+    Uh, Vh = reader.held[U], reader.held[V]
+    # The Ricci tensor with the names written out, exactly.
+    written = {D(f, *w): sp.diff(h, *w) for f, h in ((U, Uh), (V, Vh))
+               for w in ((a,), (b,), (a, a), (a, b), (b, b), (a, a, a), (a, a, b), (a, b, b), (b, b, b))}
+    raw = vm.Geometry(chart.geo.g, chart.symbols, 10 ** 6, None).ricci_ll()
+    for i in range(4):
+        for j in range(i, 4):
+            value = sp.sympify(raw[i][j]).xreplace(written).subs({U: Uh, V: Vh}).doit()
+            if sp.simplify(value) != 0:
+                raise AssertionError(f"distorted_schwarzschild: the {system} chart is no vacuum")
+    va, vb = distorted_quadrature(a, b, sp.diff(Uh, a), sp.diff(Uh, b), m if spherical else None)
+    laplace, second = distorted_second_order(a, b, U, V, m if spherical else None)
+    horizon, pole = (2 * m, 0) if spherical else (1, 1)
+    checks = {"Laplace's equation": (sp.diff(Uh, (a, 2)) - laplace[D(U, (a, 2))]).subs(U, Uh).doit(),
+              "the quadrature along the radial coordinate": sp.diff(Vh, a) - va,
+              "the quadrature along the angle": sp.diff(Vh, b) - vb,
+              "the equation of second order for V": (sp.diff(Vh, (a, 2)) - second[D(V, (a, 2))]
+                                                     ).subs({U: Uh, V: Vh}).doit(),
+              "V on the axis": Vh.subs(b, pole),
+              "V = 2U - 2q on the horizon": (Vh - 2 * Uh + 2 * q).subs(a, horizon),
+              "U at q = 0": Uh.subs(q, 0), "V at q = 0": Vh.subs(q, 0)}
+    for label, value in checks.items():
+        if sp.simplify(value) != 0:
+            raise AssertionError(f"distorted_schwarzschild: the {system} chart misses {label}")
+    u0, v0 = sp.symbols("u0 v0", real=True)
+    if not spherical:
+        # Erez and Rosen's line element with psi = psi_S + U and gamma = gamma_S + V.
+        x, y = a, b
+        weyl = sp.diag(-sp.exp(2 * u0) * (x - 1) / (x + 1),
+                       *[m ** 2 * (x + 1) / (x - 1) * sp.exp(-2 * u0) * part for part in (
+                           sp.exp(2 * v0) * (x ** 2 - 1) / (x ** 2 - y ** 2) * (x ** 2 - y ** 2) / (x ** 2 - 1),
+                           sp.exp(2 * v0) * (x ** 2 - 1) / (x ** 2 - y ** 2) * (x ** 2 - y ** 2) / (1 - y ** 2))],
+                       m ** 2 * (x + 1) / (x - 1) * sp.exp(-2 * u0) * (x ** 2 - 1) * (1 - y ** 2))
+        here = chart.geo.g.subs({U: u0, V: v0})
+        if (weyl - here).applyfunc(sp.simplify) != sp.zeros(4, 4):
+            raise AssertionError("distorted_schwarzschild: the prolate spheroidal chart is not Weyl's line element")
+        # Doroshkevich, Zel'dovich and Novikov's Appendix IV, as printed.
+        lam, mu = x, y
+        printed_psi = sp.log((lam - 1) / (lam + 1)) / 2 + q * (3 * lam ** 2 - 1) * (3 * mu ** 2 - 1) / 4
+        printed_gamma = (sp.log((lam ** 2 - 1) / (lam ** 2 - mu ** 2)) / 2 - 3 * q * lam * (1 - mu ** 2)
+                         - sp.Rational(9, 16) * q ** 2 * (lam ** 2 - 1) * (1 - mu ** 2)
+                         * (9 * mu ** 2 * lam ** 2 - lam ** 2 - mu ** 2 + 1))
+        if sp.simplify(printed_psi - sp.log((x - 1) / (x + 1)) / 2 - Uh) != 0 or sp.simplify(
+                printed_gamma - sp.log((x ** 2 - 1) / (x ** 2 - y ** 2)) / 2 - Vh) != 0:
+            raise AssertionError("distorted_schwarzschild: U and V are not Doroshkevich, Zel'dovich and Novikov's")
+        return
+    spec = distorted_schwarzschild("prolate_spheroidal")
+    prolate = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
+                       held=DS_HELD)
+    T, x, y, ph = prolate.symbols
+    there = prolate.reader
+    at = {T: t, x: a / m - 1, y: sp.cos(b), ph: phi, there.parameters["m"]: m, there.parameters["q"]: q}
+    for label, here, name in (("U", Uh, "U"), ("V", Vh, "V")):
+        other = there.held[there.parameters[name]].subs(at, simultaneous=True)
+        if sp.simplify(here - other) != 0:
+            raise AssertionError(f"distorted_schwarzschild: the spherical chart's {label} is not the prolate "
+                                 "spheroidal chart's")
+    source = prolate.geo.g.subs({there.parameters["U"]: u0, there.parameters["V"]: v0}).subs(at, simultaneous=True)
+    image = [at[s] for s in prolate.symbols]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+    pulled = J.T * source * J
+    here = chart.geo.g.subs({U: u0, V: v0})
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify(pulled[i, j] - here[i, j]) != 0:
+                raise AssertionError("distorted_schwarzschild: the prolate spheroidal chart pulled back misses the "
+                                     f"spherical chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    published = next(c for c in json.loads((METRICS / "schwarzschild.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == "spherical")
+    sch = vm.Reader(published["coords"], [p["symbol"] for p in published["parameters"]], ())
+    swap = {sch.symbol[n]: reader.symbol[n] for n in published["coords"]}
+    swap[sch.parameters["r_s"]] = 2 * m
+    values = {tuple(e["indices"]): e["value"] for e in published["metric_components"]}
+    round_ = chart.geo.g.subs({U: 0, V: 0})
+    for i in range(4):
+        for j in range(4):
+            text = values.get((chart.coords_tex[i], chart.coords_tex[j]), "0")
+            if sp.simplify(sch(text).subs(swap) - round_[i, j]) != 0:
+                raise AssertionError("distorted_schwarzschild: at q = 0 the spherical chart misses Schwarzschild's "
+                                     f"published metric in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["distorted_schwarzschild"] = [lambda s=s: distorted_schwarzschild(s) for s in DS_CHARTS]
 
 
 def write(spec):

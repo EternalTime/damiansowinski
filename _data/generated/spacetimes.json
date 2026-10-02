@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 147,
+  "count": 148,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -7683,6 +7683,11 @@
           "id": "ab_metrics",
           "kind": "family",
           "text": "Classes A and B of the table Ehlers and Kundt put the C-metric in. Their fields admit an isotropy group, and the fields of class C admit none [ehlerskundt1962, bicak2009]."
+        },
+        {
+          "id": "distorted_schwarzschild",
+          "kind": "family",
+          "text": "A static black hole bent by matter far away, with nothing on its axis. Its horizon is smooth all the way round, with no string or strut to meet [fairhurst2001]."
         }
       ],
       "references": [
@@ -7712,7 +7717,8 @@
         "kamran2009",
         "emparan2000",
         "dias2003",
-        "bicak2009"
+        "bicak2009",
+        "fairhurst2001"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/c_metric.json",
@@ -9222,6 +9228,11 @@
           "id": "erez_rosen",
           "kind": "family",
           "text": "A Weyl field too, built on the potential of Schwarzschild's rod with a quadrupole term added, where Curzon and Chazy's is built on a point's [bicak2000, boshkayev2019]."
+        },
+        {
+          "id": "distorted_schwarzschild",
+          "kind": "family",
+          "text": "A Weyl field too, the potential of Schwarzschild's rod plus the quadrupole potential of distant matter, where Curzon and Chazy's is the potential of a point [bicak2000, doroshkevich1965]."
         }
       ],
       "references": [
@@ -9249,7 +9260,8 @@
         "astesiano2024",
         "bicak1993",
         "emparanteo2001",
-        "boshkayev2019"
+        "boshkayev2019",
+        "doroshkevich1965"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/curzon_chazy.json",
@@ -10924,6 +10936,307 @@
           ],
           "ricci_scalar": "R = -\\dfrac{r_d\\left(r\\,r_d + 3r\\,r_s - 4r_s\\,r_d\\right)}{r^2\\left(r - r_d\\right)^3}",
           "kretschmann": "K = \\dfrac{12r^4\\,r_d^2 - 4r^3\\,r_d^3 + r^2\\,r_d^4 - 40r^3\\,r_s\\,r_d^2 + 30r^2\\,r_s\\,r_d^3 - 8r\\,r_s\\,r_d^4 + 12r^4\\,r_s^2 - 36r^3\\,r_s^2\\,r_d + 73r^2\\,r_s^2\\,r_d^2 - 56r\\,r_s^2\\,r_d^3 + 16r_s^2\\,r_d^4}{r^4\\left(r - r_d\\right)^6}"
+        }
+      ]
+    },
+    {
+      "id": "distorted_schwarzschild",
+      "name": "Schwarzschild Black Hole in a Tidal Field",
+      "short_name": "Distorted Schwarzschild",
+      "description": "Schwarzschild's black hole in the quadrupole field of distant matter, a static vacuum solution of Weyl's class that A. G. Doroshkevich, Yakov Zel'dovich, and Igor Novikov gave in 1965, and the simplest of the distorted black holes of Robert Geroch and James Hartle. The tidal field flattens or stretches the horizon and leaves it regular; it grows with distance, so the solution holds between the horizon and the matter that distorts it.",
+      "tags": [
+        "vacuum",
+        "static",
+        "stationary",
+        "axisymmetric",
+        "Weyl class",
+        "harmonic function",
+        "black hole",
+        "mass",
+        "quadrupole",
+        "tidal field",
+        "distorted black hole",
+        "horizon",
+        "Killing horizon",
+        "curvature singularity",
+        "not asymptotically flat",
+        "prolate spheroidal coordinates",
+        "no-hair theorem",
+        "black hole uniqueness",
+        "black hole thermodynamics",
+        "Hawking temperature",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The mass parameter $m = GM/c^2$ is a length and the quadrupole parameter $q$ is a pure number. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The hole with nobody near, $q = 0$. Among static black holes in a vacuum that flattens out far away it is the only one [israel1967]."
+        },
+        {
+          "id": "erez_rosen",
+          "kind": "family",
+          "text": "The same recipe with the other quadrupole, the one that dies away with distance and belongs to the body itself. That one turns the horizon into a naked singularity for every $q \\neq 0$ [doroshkevich1965]."
+        },
+        {
+          "id": "zipoy_voorhees",
+          "kind": "family",
+          "text": "Another deformation of Schwarzschild's rod in Weyl's class, which changes the density of the rod. It too puts a naked singularity where the horizon was, as a deformation of the body itself does [shoom2016]."
+        },
+        {
+          "id": "melvin",
+          "kind": "family",
+          "text": "Ernst's black hole in Melvin's magnetic universe is the same idea with a magnetic field for the surroundings: a regular horizon in a field that never flattens out [fairhurst2001]."
+        },
+        {
+          "id": "c_metric",
+          "kind": "family",
+          "text": "A black hole pulled along its axis by a string or pushed by a strut, static and axisymmetric as well. Its horizon carries a conical singularity where the string meets it [fairhurst2001]."
+        },
+        {
+          "id": "curzon_chazy",
+          "kind": "family",
+          "text": "Another member of Weyl's class, built on the Newtonian potential of a point. Here the potential is that of Schwarzschild's rod plus a quadrupole that grows with distance [bicak2000, frolovshoom2007]."
+        }
+      ],
+      "references": [
+        "gurlebeck2015",
+        "schwarzschild1916",
+        "israel1967",
+        "frolovshoom2007",
+        "doroshkevich1965",
+        "weyl1917",
+        "fairhurst2001",
+        "shoom2016",
+        "mysak1966",
+        "geroch1982",
+        "binnington2009",
+        "abdolrahimi2015",
+        "bicak2000"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/distorted_schwarzschild.json",
+      "charts": [
+        {
+          "id": "prolate_spheroidal",
+          "name": "Prolate Spheroidal",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (1, \\infty)",
+            "y \\in [-1, 1]",
+            "\\phi \\in [0, 2\\pi)",
+            "x = 1 \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass parameter, a length, $m = GM/c^2$ with $M$ the mass of the black hole"
+            },
+            {
+              "symbol": "q",
+              "description": "Quadrupole parameter of the external field, a pure number; $q > 0$ flattens the horizon, as a ring of matter in the equatorial plane does, $q < 0$ stretches it along the axis, as masses on the axis do, and $q = 0$ is Schwarzschild's metric"
+            },
+            {
+              "symbol": "U = \\dfrac{q}{4}\\left(3x^2 - 1\\right)\\left(3y^2 - 1\\right)",
+              "description": "The potential of the distant matter, the quadrupole harmonic that is regular on the horizon and grows with distance; it solves Laplace's equation, $\\partial_x\\left(\\left(x^2 - 1\\right)\\partial_xU\\right) + \\partial_y\\left(\\left(1 - y^2\\right)\\partial_yU\\right) = 0$"
+            },
+            {
+              "symbol": "V = -3q\\,x\\left(1 - y^2\\right) - \\dfrac{9q^2}{16}\\left(x^2 - 1\\right)\\left(1 - y^2\\right)\\left(9x^2y^2 - x^2 - y^2 + 1\\right)",
+              "description": "Fixed by $U$ through $\\partial_xV = \\dfrac{1 - y^2}{x^2 - y^2}\\left(x\\left(x^2 - 1\\right)\\left(\\partial_xU\\right)^2 - x\\left(1 - y^2\\right)\\left(\\partial_yU\\right)^2 - 2y\\left(x^2 - 1\\right)\\partial_xU\\,\\partial_yU + 2x\\,\\partial_xU - 2y\\,\\partial_yU\\right)$ and $\\partial_yV = \\dfrac{1}{x^2 - y^2}\\left(\\left(x^2 - 1\\right)\\left(y\\left(x^2 - 1\\right)\\left(\\partial_xU\\right)^2 - y\\left(1 - y^2\\right)\\left(\\partial_yU\\right)^2 + 2x\\left(1 - y^2\\right)\\partial_xU\\,\\partial_yU + 2y\\,\\partial_xU\\right) + 2x\\left(1 - y^2\\right)\\partial_yU\\right)$, zero on the axis $y = \\pm 1$, and equal to $2U - 2q$ on the horizon"
+            }
+          ],
+          "convention": "We use prolate spheroidal coordinates $(t, x, y, \\phi)$, with $t$ carrying dimensions of time and $x$ and $y$ pure numbers; Weyl's canonical coordinates are $\\rho = m\\sqrt{(x^2 - 1)(1 - y^2)}$ and $z = mxy$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{x - 1}{x + 1}e^{2U}c^2dt^2 + m^2\\left(x + 1\\right)^2e^{-2U}\\left(e^{2V}\\left(\\dfrac{dx^2}{x^2 - 1} + \\dfrac{dy^2}{1 - y^2}\\right) + \\left(1 - y^2\\right)d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{\\left(1 - x\\right)e^{2U}}{x + 1}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{m^2\\left(x + 1\\right)e^{2V - 2U}}{x - 1}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{m^2\\left(x + 1\\right)^2e^{2V - 2U}}{1 - y^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "m^2\\left(x + 1\\right)^2\\left(1 - y^2\\right)e^{-2U}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{16e^{-4V + 4U}}{m^4\\left(x + 1\\right)^6}\\left(\\left(\\left(x + 1\\right)\\left(x^2 - 1\\right)\\partial_x V\\,\\partial_x U + \\left(x + 1\\right)\\partial_x V - \\left(x + 1\\right)\\left(1 - y^2\\right)\\partial_y V\\,\\partial_y U + \\left(x + 1\\right)\\left(1 - y^2\\right)\\partial_y^2 U - 2\\left(x + 1\\right)\\left(x^2 - 1\\right)\\left(\\partial_x U\\right)^2 + 2\\left(x + 1\\right)\\left(x - 2\\right)\\partial_x U + \\left(x + 1\\right)\\left(1 - y^2\\right)\\left(\\partial_y U\\right)^2 - 2y\\left(x + 1\\right)\\partial_y U + 2\\right)^2 - \\left(\\left(x + 1\\right)\\left(x^2 - 1\\right)\\partial_x V\\,\\partial_x U + \\left(x + 1\\right)\\partial_x V - \\left(x + 1\\right)\\left(1 - y^2\\right)\\partial_y V\\,\\partial_y U + \\left(x + 1\\right)\\left(1 - y^2\\right)\\partial_y^2 U - 2\\left(x + 1\\right)\\left(x^2 - 1\\right)\\left(\\partial_x U\\right)^2 + 2\\left(x + 1\\right)\\left(x - 2\\right)\\partial_x U + \\left(x + 1\\right)\\left(1 - y^2\\right)\\left(\\partial_y U\\right)^2 - 2y\\left(x + 1\\right)\\partial_y U + 2\\right)\\left(\\left(x + 1\\right)\\left(x^2 - 1\\right)\\partial_x V\\,\\partial_x U + \\left(x + 1\\right)\\partial_x V - \\left(x + 1\\right)\\left(1 - y^2\\right)\\partial_y V\\,\\partial_y U + \\left(x + 1\\right)\\left(1 - y^2\\right)\\partial_y^2 U - \\left(x + 1\\right)\\left(x^2 - 1\\right)\\left(\\partial_x U\\right)^2 + \\left(x + 1\\right)\\left(x - 2\\right)\\partial_x U + 2\\left(x + 1\\right)\\left(1 - y^2\\right)\\left(\\partial_y U\\right)^2 - y\\left(x + 1\\right)\\partial_y U + 1\\right) + \\left(\\left(x + 1\\right)\\left(x^2 - 1\\right)\\partial_x V\\,\\partial_x U + \\left(x + 1\\right)\\partial_x V - \\left(x + 1\\right)\\left(1 - y^2\\right)\\partial_y V\\,\\partial_y U + \\left(x + 1\\right)\\left(1 - y^2\\right)\\partial_y^2 U - \\left(x + 1\\right)\\left(x^2 - 1\\right)\\left(\\partial_x U\\right)^2 + \\left(x + 1\\right)\\left(x - 2\\right)\\partial_x U + 2\\left(x + 1\\right)\\left(1 - y^2\\right)\\left(\\partial_y U\\right)^2 - y\\left(x + 1\\right)\\partial_y U + 1\\right)^2 + \\dfrac{\\left(x + 1\\right)\\left(1 - y^2\\right)}{x - 1}\\left(\\left(x^2 - 1\\right)\\partial_x V\\,\\partial_y U + \\left(x^2 - 1\\right)\\partial_y V\\,\\partial_x U + \\partial_y V - \\left(x^2 - 1\\right)\\partial_x\\partial_y U - 3\\left(x^2 - 1\\right)\\partial_x U\\,\\partial_y U + \\left(x - 3\\right)\\partial_y U\\right)^2\\right)"
+        },
+        {
+          "id": "spherical",
+          "name": "Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (2m, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = 2m \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass parameter, a length, $m = GM/c^2$ with $M$ the mass of the black hole"
+            },
+            {
+              "symbol": "q",
+              "description": "Quadrupole parameter of the external field, a pure number; $q > 0$ flattens the horizon, as a ring of matter in the equatorial plane does, $q < 0$ stretches it along the axis, as masses on the axis do, and $q = 0$ is Schwarzschild's metric"
+            },
+            {
+              "symbol": "U = \\dfrac{q\\left(3r^2 - 6mr + 2m^2\\right)\\left(3\\cos^2\\theta - 1\\right)}{4m^2}",
+              "description": "The potential of the distant matter, the quadrupole harmonic that is regular on the horizon and grows with distance; it solves Laplace's equation, $\\partial_r\\left(\\left(r^2 - 2mr\\right)\\partial_rU\\right) + \\dfrac{1}{\\sin\\theta}\\partial_\\theta\\left(\\sin\\theta\\,\\partial_\\theta U\\right) = 0$"
+            },
+            {
+              "symbol": "V = -\\dfrac{3q\\left(r - m\\right)\\sin^2\\theta}{m} - \\dfrac{9q^2\\,r\\left(r - 2m\\right)\\sin^2\\theta}{16m^4}\\left(\\left(r - m\\right)^2\\left(9\\cos^2\\theta - 1\\right) + m^2\\sin^2\\theta\\right)",
+              "description": "Fixed by $U$ through $\\partial_rV = \\dfrac{\\sin\\theta}{r^2 - 2mr + m^2\\sin^2\\theta}\\left(\\left(r - m\\right)\\sin\\theta\\left(\\left(r^2 - 2mr\\right)\\left(\\partial_rU\\right)^2 - \\left(\\partial_\\theta U\\right)^2 + 2m\\,\\partial_rU\\right) + 2\\cos\\theta\\left(\\left(r^2 - 2mr\\right)\\partial_rU + m\\right)\\partial_\\theta U\\right)$ and $\\partial_\\theta V = -\\dfrac{\\sin\\theta}{r^2 - 2mr + m^2\\sin^2\\theta}\\left(\\left(r^2 - 2mr\\right)\\cos\\theta\\left(\\left(r^2 - 2mr\\right)\\left(\\partial_rU\\right)^2 - \\left(\\partial_\\theta U\\right)^2 + 2m\\,\\partial_rU\\right) - 2\\left(r - m\\right)\\sin\\theta\\left(\\left(r^2 - 2mr\\right)\\partial_rU + m\\right)\\partial_\\theta U\\right)$, zero on the axis $\\theta = 0$ and $\\theta = \\pi$, and equal to $2U - 2q$ on the horizon"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ that are Schwarzschild's at $q = 0$, with $t$ carrying dimensions of time and $r$ a length. The prolate spheroidal coordinates are $x = r/m - 1$ and $y = \\cos\\theta$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r}\\right)e^{2U}c^2dt^2 + e^{-2U}\\left(e^{2V}\\left(\\dfrac{dr^2}{1 - \\dfrac{2m}{r}} + r^2d\\theta^2\\right) + r^2\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{\\left(2m - r\\right)e^{2U}}{r}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r\\,e^{2V - 2U}}{r - 2m}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2e^{2V - 2U}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2e^{-2U}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{16e^{-4V + 4U}}{r^6}\\left(\\left(r^2\\left(r - 2m\\right)\\partial_r V\\,\\partial_r U + r\\,m\\,\\partial_r V - r\\,\\partial_\\theta V\\,\\partial_\\theta U + r\\,\\partial_\\theta^2 U - 2r^2\\left(r - 2m\\right)\\left(\\partial_r U\\right)^2 + 2r\\left(r - 3m\\right)\\partial_r U + r\\left(\\partial_\\theta U\\right)^2 + r\\,\\partial_\\theta U\\,\\cot\\theta + 2m\\right)^2 - \\left(r^2\\left(r - 2m\\right)\\partial_r V\\,\\partial_r U + r\\,m\\,\\partial_r V - r\\,\\partial_\\theta V\\,\\partial_\\theta U + r\\,\\partial_\\theta^2 U - 2r^2\\left(r - 2m\\right)\\left(\\partial_r U\\right)^2 + 2r\\left(r - 3m\\right)\\partial_r U + r\\left(\\partial_\\theta U\\right)^2 + r\\,\\partial_\\theta U\\,\\cot\\theta + 2m\\right)\\left(r^2\\left(r - 2m\\right)\\partial_r V\\,\\partial_r U + r\\,m\\,\\partial_r V - r\\,\\partial_\\theta V\\,\\partial_\\theta U + r\\,\\partial_\\theta^2 U - r^2\\left(r - 2m\\right)\\left(\\partial_r U\\right)^2 + r\\left(r - 3m\\right)\\partial_r U + 2r\\left(\\partial_\\theta U\\right)^2 + m\\right) + \\left(r^2\\left(r - 2m\\right)\\partial_r V\\,\\partial_r U + r\\,m\\,\\partial_r V - r\\,\\partial_\\theta V\\,\\partial_\\theta U + r\\,\\partial_\\theta^2 U - r^2\\left(r - 2m\\right)\\left(\\partial_r U\\right)^2 + r\\left(r - 3m\\right)\\partial_r U + 2r\\left(\\partial_\\theta U\\right)^2 + m\\right)^2 + \\dfrac{r}{r - 2m}\\left(r\\left(r - 2m\\right)\\partial_r V\\,\\partial_\\theta U + r\\left(r - 2m\\right)\\partial_\\theta V\\,\\partial_r U + m\\,\\partial_\\theta V - r\\left(r - 2m\\right)\\partial_r\\partial_\\theta U - 3r\\left(r - 2m\\right)\\partial_r U\\,\\partial_\\theta U + \\left(r - 4m\\right)\\partial_\\theta U\\right)^2\\right)"
+        },
+        {
+          "id": "weyl",
+          "name": "Weyl",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "\\rho = 0,\\; |z| \\le m \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass parameter, a length, $m = GM/c^2$ with $M$ the mass of the black hole"
+            },
+            {
+              "symbol": "q",
+              "description": "Quadrupole parameter of the external field, a pure number; $q > 0$ flattens the horizon, as a ring of matter in the equatorial plane does, $q < 0$ stretches it along the axis, as masses on the axis do, and $q = 0$ is Schwarzschild's metric"
+            },
+            {
+              "symbol": "x = \\dfrac{\\sqrt{\\rho^2 + \\left(z + m\\right)^2} + \\sqrt{\\rho^2 + \\left(z - m\\right)^2}}{2m}",
+              "description": "The prolate spheroidal radial coordinate, half the sum of the distances from the two ends of the rod $\\rho = 0$, $|z| \\le m$, over $m$"
+            },
+            {
+              "symbol": "y = \\dfrac{\\sqrt{\\rho^2 + \\left(z + m\\right)^2} - \\sqrt{\\rho^2 + \\left(z - m\\right)^2}}{2m}",
+              "description": "The prolate spheroidal angular coordinate, half the difference of the same two distances, over $m$"
+            },
+            {
+              "symbol": "\\psi = \\dfrac{1}{2}\\ln\\left(\\dfrac{x - 1}{x + 1}\\right) + \\dfrac{q\\left(6z^2 - 3\\rho^2 - 2m^2\\right)}{4m^2}",
+              "description": "Weyl's first function, the potential of Schwarzschild's rod plus the quadrupole potential of the distant matter; it solves Laplace's equation, $\\partial_\\rho^2\\psi + \\dfrac{1}{\\rho}\\partial_\\rho\\psi + \\partial_z^2\\psi = 0$"
+            },
+            {
+              "symbol": "\\gamma = \\dfrac{1}{2}\\ln\\left(\\dfrac{x^2 - 1}{x^2 - y^2}\\right) - 3q\\,x\\left(1 - y^2\\right) - \\dfrac{9q^2\\rho^2\\left(8z^2 - \\rho^2\\right)}{16m^4}",
+              "description": "Weyl's second function, fixed by $\\psi$ through $\\partial_\\rho\\gamma = \\rho\\left(\\left(\\partial_\\rho\\psi\\right)^2 - \\left(\\partial_z\\psi\\right)^2\\right)$ and $\\partial_z\\gamma = 2\\rho\\,\\partial_\\rho\\psi\\,\\partial_z\\psi$, and zero on the axis beyond the rod"
+            }
+          ],
+          "convention": "We use Weyl's canonical coordinates $(t, \\rho, \\phi, z)$, with $t$ carrying dimensions of time and $\\rho$ and $z$ lengths; the horizon is the rod $\\rho = 0$, $|z| \\le m$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -e^{2\\psi}c^2dt^2 + e^{-2\\psi}\\left(e^{2\\gamma}\\left(d\\rho^2 + dz^2\\right) + \\rho^2d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{2\\psi}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "e^{2\\gamma - 2\\psi}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{2\\gamma - 2\\psi}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2e^{-2\\psi}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{16e^{-4\\gamma + 4\\psi}\\left(\\rho^4\\left(\\partial_\\rho\\psi\\right)^6 - 3\\rho^3\\left(\\partial_\\rho\\psi\\right)^5 + 3\\rho^4\\left(\\partial_\\rho\\psi\\right)^4\\left(\\partial_z\\psi\\right)^2 + 4\\rho^2\\left(\\partial_\\rho\\psi\\right)^4 - 6\\rho^3\\left(\\partial_\\rho\\psi\\right)^3\\left(\\partial_z\\psi\\right)^2 + 2\\rho^3\\left(\\partial_\\rho\\psi\\right)^3\\,\\partial_z^2\\psi - 3\\rho\\left(\\partial_\\rho\\psi\\right)^3 + 3\\rho^4\\left(\\partial_\\rho\\psi\\right)^2\\left(\\partial_z\\psi\\right)^4 + 3\\rho^2\\left(\\partial_\\rho\\psi\\right)^2\\left(\\partial_z\\psi\\right)^2 - 6\\rho^3\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi\\,\\partial_\\rho\\partial_z\\psi - 3\\rho^2\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z^2\\psi + \\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho^3\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^4 - 6\\rho^3\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2\\psi + 6\\rho^2\\,\\partial_\\rho\\psi\\,\\partial_z\\psi\\,\\partial_\\rho\\partial_z\\psi + \\rho\\,\\partial_\\rho\\psi\\,\\partial_z^2\\psi + \\rho^4\\left(\\partial_z\\psi\\right)^6 + 3\\rho^2\\left(\\partial_z\\psi\\right)^4 + 2\\rho^3\\left(\\partial_z\\psi\\right)^3\\,\\partial_\\rho\\partial_z\\psi + 3\\rho^2\\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2\\psi + \\rho^2\\left(\\partial_\\rho\\partial_z\\psi\\right)^2 + \\rho^2\\left(\\partial_z^2\\psi\\right)^2\\right)}{\\rho^2}"
         }
       ]
     },
@@ -13678,6 +13991,11 @@
           "id": "curzon_chazy",
           "kind": "family",
           "text": "Another member of Weyl's class, built on the Newtonian potential of a point. Erez and Rosen's is built on the potential of Schwarzschild's rod with a quadrupole term added [bicak2000, boshkayev2019]."
+        },
+        {
+          "id": "distorted_schwarzschild",
+          "kind": "family",
+          "text": "The same recipe with the other quadrupole, the one that grows with distance and belongs to matter far away. It bends the horizon and leaves it regular, and Doroshkevich, Zel'dovich, and Novikov gave it in the same paper [doroshkevich1965]."
         }
       ],
       "references": [
@@ -28368,6 +28686,11 @@
           "id": "bonnor_magnetic_dipole",
           "kind": "programme",
           "text": "Bonnor's magnetic dipole of 1966, a pair of black holes with opposite magnetic charges. Melvin's field along the axis of the pair pulls the two apart and takes the place of the strut between them [emparan2000]."
+        },
+        {
+          "id": "distorted_schwarzschild",
+          "kind": "family",
+          "text": "Schwarzschild's black hole in the gravitational field of distant matter, as Ernst's is in a magnetic field: a regular horizon in surroundings that never flatten out [fairhurst2001]."
         }
       ],
       "references": [
@@ -28396,7 +28719,8 @@
         "robinson1959",
         "bonnor1969light",
         "kaup1968",
-        "emparan2000"
+        "emparan2000",
+        "fairhurst2001"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/melvin.json",
@@ -40189,6 +40513,11 @@
           "id": "einstein_1912_static",
           "kind": "programme",
           "text": "Einstein's own first field outside a body, three years before Schwarzschild's. Its space is flat and only its clocks feel the mass, so it bends light by half as much [einstein1911]."
+        },
+        {
+          "id": "distorted_schwarzschild",
+          "kind": "generalisation",
+          "text": "Schwarzschild's black hole with distant matter pulling on it. The quadrupole tidal field bends the horizon out of round and leaves it regular, and at $q = 0$ the metric is Schwarzschild's [doroshkevich1965, geroch1982]."
         }
       ],
       "references": [
@@ -40301,7 +40630,8 @@
         "ruban1968",
         "davies1977",
         "good2016",
-        "gibbons1977action"
+        "gibbons1977action",
+        "geroch1982"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -49460,6 +49790,11 @@
           "id": "erez_rosen",
           "kind": "family",
           "text": "Erez and Rosen's deformation of Schwarzschild's metric, which adds a quadrupole term to the rod's potential and keeps the mass at $m$ for every $q$ [memmen2021]. With the stretch by $\\delta$ applied to it too, it agrees with Hartle and Thorne's static exterior to first order in the quadrupole [boshkayev2019]."
+        },
+        {
+          "id": "distorted_schwarzschild",
+          "kind": "family",
+          "text": "Schwarzschild's rod with the potential of distant matter added to it in Weyl's class. That deformation comes from outside the body, and the horizon stays regular under it [geroch1982]."
         }
       ],
       "references": [
@@ -49485,7 +49820,8 @@
         "bicak1993",
         "emparan2000",
         "memmen2021",
-        "boshkayev2019"
+        "boshkayev2019",
+        "geroch1982"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/zipoy_voorhees.json",

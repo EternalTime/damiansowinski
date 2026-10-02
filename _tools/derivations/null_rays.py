@@ -377,6 +377,11 @@ TOLMAN_VII_CONSTANTS = {"R": "4/sqrt(5)", "A": "4/3**(1/4)", "B": "sqrt(7/12)",
                         "C": "sqrt(3)/2*(1/6 + sqrt(6)/3)*exp(2*atan(1/sqrt(6)) - pi)"}
 
 
+# Schwarzschild's black hole in a tidal field as its diagrams draw it: the oblate horizon of the
+# largest quadrupole parameter whose horizon stands in flat space, and the prolate one of the same size.
+DS_SHAPES = (("oblate", "1/12"), ("prolate", "-1/12"))
+
+
 @dataclass
 class Diagram:
     """One view of one coordinate system, and every choice its drawing makes."""
@@ -3925,6 +3930,35 @@ DIAGRAMS = [
       for shape, q in (("prolate", "1"), ("oblate", "-1/2"))
       for plane, name, fixed in (("axis", "The axis", {"theta": "0", "phi": "0"}),
                                  ("equator", "The equatorial plane", {**EQUATOR}))],
+    # Schwarzschild's black hole in a quadrupole tidal field on its two totally geodesic planes, the
+    # axis and the equatorial plane, in each chart, for the oblate q = 1/12, the largest q whose
+    # horizon stands in flat space, and the prolate q = -1/12. The prolate spheroidal and spherical
+    # charts are drawn on through the horizon to the singularity, with the future taken from the
+    # ingoing rays, as Schwarzschild's own chart is; Weyl's chart ends on the horizon, the end
+    # z = m of the rod on the axis and the point rho = 0 of the equatorial plane, where g_tt
+    # vanishes and g_rho rho stays finite. The Kretschmann scalar is written with a quotient by
+    # sin(theta) in the spherical chart and by rho in Weyl's, 0/0 on the axis, so the axial rows
+    # take it a hair off the axis.
+    *[Diagram("distorted_schwarzschild", "prolate_spheroidal", f"{plane}_{shape}", f"{name}, $q = {q}$", ("t", "x"),
+              (-1, 3, -2, 2), "$x$", "$ct/m$", {"m": 1, "q": q}, fixed, orient="ingoing")
+      for shape, q in DS_SHAPES
+      for plane, name, fixed in (("axis", "The axis", {"y": "1", "phi": "0"}),
+                                 ("equator", "The equatorial plane", {"y": "0", "phi": "0"}))],
+    *[Diagram("distorted_schwarzschild", "spherical", f"{plane}_{shape}", f"{name}, $q = {q}$", ("t", "r"),
+              (0, 4, -2, 2), "$r/m$", "$ct/m$", {"m": 1, "q": q}, fixed, orient="ingoing",
+              kretschmann_fixed={"theta": "1e-30"} if plane == "axis" else None)
+      for shape, q in DS_SHAPES
+      for plane, name, fixed in (("axis", "The axis", {"theta": "0", "phi": "0"}),
+                                 ("equator", "The equatorial plane", {**EQUATOR}))],
+    *[Diagram("distorted_schwarzschild", "weyl", f"axis_{shape}", f"The axis, $q = {q}$", ("t", "z"),
+              (1, 3, -1, 1), "$z/m$", "$ct/m$", {"m": 1, "q": q}, {"rho": "0", "phi": "0"},
+              kretschmann_fixed={"rho": "1e-12"},
+              lines=(("surface", "r", "1", "the horizon, the end $z = m$ of the rod"),))
+      for shape, q in DS_SHAPES],
+    *[Diagram("distorted_schwarzschild", "weyl", f"equator_{shape}", f"The equatorial plane, $q = {q}$",
+              ("t", "\\rho"), (0, 3, -1.5, 1.5), "$\\rho/m$", "$ct/m$", {"m": 1, "q": q}, {"phi": "0", "z": "0"},
+              lines=(("surface", "r", "0", "the horizon, $\\rho = 0$"),))
+      for shape, q in DS_SHAPES],
     # Bonnor's magnetic dipole at m = 1 and b = 2 sqrt 2, so that k = sqrt(m^2 + b^2) = 3 and the two
     # black holes stand at r = 4m on the axis, on its three totally geodesic planes:
     # the axis beyond a hole, the equatorial plane, and the stretch of axis between the holes,
@@ -4485,6 +4519,72 @@ def _bonnor_dipole_captions():
             "well, the length of the throat of an extremal black hole.",
         ],
     }
+
+
+def _distorted_schwarzschild_captions(system):
+    """The four captions of one chart of Schwarzschild's black hole in a tidal field: its axis and
+    its equatorial plane, oblate and prolate, in the chart's own radial coordinate."""
+    hole = "the black hole in a tidal field"
+    turns = "and every rotation about the axis fixes the plane, so the rays are null geodesics."
+    if system == "prolate_spheroidal":
+        r, edge, centre, fixed_axis, fixed_equator = "x", "x = 1", "x = -1", "$y = 1$, $\\phi = 0$", "$y = 0$, $\\phi = 0$"
+        mirror, with_x = "$y \\to -y$", ""
+        on_axis = ("The metric on it is $-Fc^2dt^2 + m^2dx^2/F$ with $F = e^{q(3x^2 - 1)}(x - 1)/(x + 1)$, so a ray "
+                   "has $c\\,dt/dx = \\pm m/F$")
+        on_equator = "A ray has $c\\,dt/dx = \\pm m\\,e^{V - 2U}(x + 1)/(x - 1)$"
+        rate = "m\\,e^{-2q}(x + 1)/(x - 1)"
+    elif system == "spherical":
+        r, edge, centre, fixed_axis = "r", "r = 2m", "r = 0", "$\\theta = 0$, $\\phi = 0$"
+        fixed_equator, mirror, with_x = "$\\theta = \\pi/2$, $\\phi = 0$", "$\\theta \\to \\pi - \\theta$", ", $x = r/m - 1$"
+        on_axis = ("The metric on it is $-Fc^2dt^2 + dr^2/F$ with $F = (1 - 2m/r)e^{q(3x^2 - 1)}$ and $x = r/m - 1$, "
+                   "so a ray has $c\\,dt/dr = \\pm 1/F$")
+        on_equator = "A ray has $c\\,dt/dr = \\pm e^{V - 2U}/(1 - 2m/r)$"
+        rate = "e^{-2q}/(1 - 2m/r)"
+    else:
+        r, edge, centre, fixed_axis = "z", "z = m", None, "$\\rho = 0$, $\\phi = 0$"
+        fixed_equator, mirror, with_x = "$z = 0$, $\\phi = 0$", "$z \\to -z$", ""
+        on_axis = ("On the axis beyond the rod $x = z/m$ and $y = 1$, and the metric is $-Fc^2dt^2 + dz^2/F$ with "
+                   "$F = e^{q(3z^2/m^2 - 1)}(z - m)/(z + m)$, so a ray has $c\\,dt/dz = \\pm 1/F$")
+        on_equator = ("In the plane $x = \\sqrt{1 + \\rho^2/m^2}$ and $y = 0$, and a ray has "
+                      "$c\\,dt/d\\rho = \\pm e^{\\gamma - 2\\psi}$")
+        rate = None
+    plane_r = "\\rho" if system == "weyl" else r
+    inside = (f"Inside ${edge}$, where the chart's domain stops, the same components give cones on their side; we take "
+              f"the future from the ingoing rays, as for Schwarzschild's chart, which makes that region the black hole, "
+              f"and the Kretschmann scalar diverges at ${centre}$.") if centre else None
+    out = {}
+    for shape, q, source, far, k_axis, k_equator in (
+            ("oblate", "1/12", "a ring of matter around the equator",
+             "opens them wider with every step outward", "zero at this $q$", "2.70/m^4"),
+            ("prolate", "-1/12", "masses far off on the axis",
+             "narrows them further with every step outward", "$3e^{-1/3}/m^4$", "0.183/m^4")):
+        setting = f"($q = {q}$, $m = 1$)"
+        first = (f"The plane of $t$ and ${r}$ ({fixed_axis}) of {hole} {setting}, with the field of {source}. "
+                 f"{on_axis}, {turns}")
+        if system == "weyl":
+            second = (f"The cones close toward the end ${edge}$ of the rod, the pole of the horizon, as Schwarzschild's "
+                      f"do, and beyond it the tidal potential, $e^{{q(3z^2/m^2 - 1)}}$ in $F$, {far}. The Kretschmann "
+                      f"scalar on the axis is $\\tfrac{{3}}{{4}}(1 - 12q)^2e^{{4q}}/m^4$ at the horizon, "
+                      f"{k_axis}.")
+            out[f"axis_{shape}"] = [first, second]
+        else:
+            second = (f"The cones close toward the horizon ${edge}$ as Schwarzschild's do, and beyond it the tidal "
+                      f"potential, $e^{{q(3x^2 - 1)}}$ in $F$, {far}. The Kretschmann scalar on the axis is "
+                      f"$\\tfrac{{3}}{{4}}(1 - 12q)^2e^{{4q}}/m^4$ at the horizon, {k_axis}.")
+            out[f"axis_{shape}"] = [first, second, inside]
+        first = (f"The plane of $t$ and ${plane_r}$ ({fixed_equator}) of {hole} {setting}, with the field of {source}. "
+                 f"{on_equator}, and the reflection {mirror} fixes the plane, so the rays are null geodesics.")
+        if system == "weyl":
+            second = ("The whole equator of the horizon is the one point $\\rho = 0$ of the plane, where the cones "
+                      "close as $c\\,dt/d\\rho = \\pm 2m\\,e^{-2q}/\\rho$. The Kretschmann scalar there is "
+                      f"$\\tfrac{{3}}{{4}}(1 + 3q)^2e^{{10q}}/m^4 = {k_equator}$.")
+            out[f"equator_{shape}"] = [first, second]
+        else:
+            second = (f"Toward the horizon ${edge}$ the slope grows as ${rate}$, the same rate as on the axis: the "
+                      "surface gravity is one number over the whole horizon. The Kretschmann scalar on the equator of "
+                      f"the horizon is $\\tfrac{{3}}{{4}}(1 + 3q)^2e^{{10q}}/m^4 = {k_equator}$.")
+            out[f"equator_{shape}"] = [first, second, inside]
+    return out
 
 
 def _erez_rosen_captions(system):
@@ -8886,6 +8986,8 @@ CAPTIONS = {
        for view, text in _zipoy_voorhees_captions(system).items()},
     **{("erez_rosen", system, view): text for system in ("prolate_spheroidal", "spherical")
        for view, text in _erez_rosen_captions(system).items()},
+    **{("distorted_schwarzschild", system, view): text for system in ("prolate_spheroidal", "spherical", "weyl")
+       for view, text in _distorted_schwarzschild_captions(system).items()},
     **{("bonnor_magnetic_dipole", "spheroidal", view): text for view, text in _bonnor_dipole_captions().items()},
     ("senovilla", "cylindrical", "radial"): [
         "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of Senovilla's universe ($a = 1$). The metric on it is "
@@ -12591,6 +12693,63 @@ def _erez_rosen_forms(plane, q, shift, edge):
     return (lambda t, r: t + star(r + shift), lambda t, r: t - star(r + shift), lambda t, r: r + shift > 1 + edge)
 
 
+def _distorted_exponent(plane, q):
+    """V - 2U of the black hole in a tidal field on the axis or in the equatorial plane, as a
+    function of the prolate spheroidal x: -q(3x^2 - 1) on the axis, where V = 0, and
+    (9/16) q^2 (x^2 - 1)^2 + (q/2)(3x^2 - 6x - 1) in the plane. Each is -2q on the horizon x = 1."""
+    if plane == "axis":
+        return lambda x: -q * (3 * x * x - 1)
+    return lambda x: 9 / 16 * q * q * (x * x - 1) ** 2 + q / 2 * (3 * x * x - 6 * x - 1)
+
+
+def _distorted_star(plane, q):
+    """The tortoise coordinate x_* of the black hole in a tidal field at m = 1 along x on the axis
+    or in the equatorial plane, the integral of sqrt(-g_xx/g_tt) = e^{V - 2U}(x + 1)/(x - 1). The
+    pole at the horizon has the residue 2e^{-2q} on both planes, so
+
+        x_* = 2e^{-2q} ln|x - 1| + int_1^x (e^{V - 2U}(s + 1) - 2e^{-2q})/(s - 1) ds - C,
+
+    the integrand smooth through s = 1, where it is e^{-2q}(1 + 2 W'(1)) with W = V - 2U, and C
+    chosen so that x_* vanishes at the singularity x = -1, as a Tower's does at r = 0."""
+    W = _distorted_exponent(plane, q)
+    A = 2 * math.exp(-2 * q)
+    slope_at_horizon = -6 * q        # W'(1) on both planes
+
+    def smooth(s):
+        if abs(s - 1) < 1e-6:
+            return math.exp(-2 * q) * (1 + 2 * slope_at_horizon)
+        return (math.exp(W(s)) * (s + 1) - A) / (s - 1)
+
+    def part(x):
+        return quad(smooth, 1.0, x, epsabs=1e-13, epsrel=1e-13, limit=400)[0]
+    centre = A * math.log(2.0) + part(-1.0)
+
+    # Far out the integrand is e^W to a part in 10^300 or better: where W falls, on the axis for
+    # q > 0, x_* has reached its limit by x = 60, and where W rises x_* is infinite to a float.
+    falls = W(60.0) < 0
+
+    def one(x):
+        if x == 1:
+            return -math.inf
+        if x > 60 and falls:
+            x = 60.0
+        if x > 1 and not falls and (math.isinf(x) or W(x) > 600):
+            return math.inf
+        return A * math.log(abs(x - 1)) + part(x) - centre
+    return lambda x: np.vectorize(one, otypes=[float])(np.asarray(x, float))
+
+
+def _distorted_forms(system, plane, q, edge):
+    """t + x_* and t - x_* of one view, with x read from the chart's own radial coordinate: x itself,
+    r/m - 1, z/m on the axis of Weyl's chart and sqrt(1 + rho^2/m^2) in its equatorial plane. The
+    rays are compared no nearer the horizon than `edge` in x."""
+    star = _distorted_star(plane, q)
+    x_of = {"prolate_spheroidal": lambda r: r, "spherical": lambda r: r - 1,
+            "weyl": (lambda r: r) if plane == "axis" else (lambda r: np.sqrt(1 + np.asarray(r, float) ** 2))}[system]
+    return (lambda t, r: t + star(x_of(r)), lambda t, r: t - star(x_of(r)),
+            lambda t, r: np.abs(x_of(r) - 1) > edge)
+
+
 def _bonnor_dipole_star(plane):
     """The tortoise coordinate of Bonnor's dipole at m = 1, b = 2 sqrt 2 on each of its three planes,
     in Bonnor's r and theta. On the axis beyond a hole dr_*/dr = (r^2 - 8)^2/((r - 4)^2 (r + 2)^2),
@@ -13589,6 +13748,12 @@ CLOSED_FORMS = {
        for system, shift in (("prolate_spheroidal", 0), ("spherical", -1))
        for shape, q in (("prolate", 1.0), ("oblate", -0.5))
        for plane, edge in (("axis", 0.1), ("equator", 0.02))},
+    # The rays of the black hole in a tidal field are compared from a tenth of x away from the horizon,
+    # on either side of it.
+    **{("distorted_schwarzschild", system, f"{plane}_{shape}"): _distorted_forms(system, plane, float(Fraction(q)), 0.1)
+       for system in ("prolate_spheroidal", "spherical", "weyl")
+       for shape, q in DS_SHAPES
+       for plane in ("axis", "equator")},
     ("melvin", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("senovilla", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     # Kopczynski and Trautman: eta(t) = int dt/(1 + t^2)^(1/3) = t 2F1(1/3, 1/2; 3/2; -t^2) in units of l.

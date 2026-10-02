@@ -323,6 +323,19 @@ DIMENSIONS = {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "q": "1", "L": "1", "\\psi": "1",
         "\\gamma": "1",
     },
+    # m = GM/c^2 is a length and the quadrupole parameter q of the external field a pure number; U and
+    # V, the distortion of Weyl's two functions, are pure numbers, and so are the prolate spheroidal
+    # x and y that Weyl's chart names.
+    ("distorted_schwarzschild", "prolate_spheroidal"): {
+        "t": "T", "x": "1", "y": "1", "\\phi": "1", "m": "L", "q": "1", "U": "1", "V": "1",
+    },
+    ("distorted_schwarzschild", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "q": "1", "U": "1", "V": "1",
+    },
+    ("distorted_schwarzschild", "weyl"): {
+        "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "m": "L", "q": "1", "x": "1", "y": "1", "\\psi": "1",
+        "\\gamma": "1",
+    },
     # m is half the mass as a length and b the dipole moment over the mass, a length; P, Q, Y
     # and Z are Bonnor's four polynomials, each an area.
     ("bonnor_magnetic_dipole", "spheroidal"): {
@@ -1949,6 +1962,12 @@ HELD = {
     # the logarithm of Schwarzschild's 1 - 2m/r: held, as the first Morgan-Morgan disc's are.
     ("erez_rosen", "prolate_spheroidal"): ("psi", "gamma"),
     ("erez_rosen", "spherical"): ("psi", "gamma"),
+    # The distortion U and V of Schwarzschild's black hole in a tidal field, polynomials in the
+    # coordinates, and Weyl's own psi and gamma in his chart: held, so that every value is written
+    # in them and their derivatives, as Erez and Rosen's are.
+    ("distorted_schwarzschild", "prolate_spheroidal"): ("U", "V"),
+    ("distorted_schwarzschild", "spherical"): ("U", "V"),
+    ("distorted_schwarzschild", "weyl"): ("psi", "gamma"),
     # Wahlquist's h_1 and h_2, and Mars's U and V, each a function of one coordinate that holds
     # that coordinate bare beside its sine, so that its derivatives are algebraic in the function.
     ("wahlquist", "wahlquist"): ("h_1", "h_2"),
@@ -2023,6 +2042,15 @@ RATES = {
                            " - 2\\left(r - m\\right)\\sin\\theta\\,\\partial_r\\psi\\,\\partial_\\theta\\psi\\right)"},
     },
     ("misner_zapolsky", "tolman_v"): {"Z": {"r": "\\dfrac{7Z - 4}{3r}"}},
+    # The black hole in a tidal field in Weyl's chart: psi's derivatives are rational in rho, z and the
+    # prolate spheroidal x and y the chart names, and gamma's are Weyl's quadrature. Written out and
+    # differentiated twice, the roots in x and y left the Kretschmann scalar unchecked at 120 seconds.
+    ("distorted_schwarzschild", "weyl"): {
+        "psi": {"\\rho": "\\dfrac{\\rho\\,x}{m^2\\left(x^2 - 1\\right)\\left(x^2 - y^2\\right)} - \\dfrac{3q\\rho}{2m^2}",
+                "z": "\\dfrac{y}{m\\left(x^2 - y^2\\right)} + \\dfrac{3q\\,z}{m^2}"},
+        "gamma": {"\\rho": "\\rho\\left(\\left(\\partial_\\rho\\psi\\right)^2 - \\left(\\partial_z\\psi\\right)^2\\right)",
+                  "z": "2\\rho\\,\\partial_\\rho\\psi\\,\\partial_z\\psi"},
+    },
     # dm/dr is the energy of the field in a shell, r_q^2/(r^2 + W), which is 4 pi G r^2 rho/c^4.
     **{("born_infeld_charge", chart): {"m": {"r": "\\dfrac{r_q^2}{r^2 + W}"}}
        for chart in ("static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing")},

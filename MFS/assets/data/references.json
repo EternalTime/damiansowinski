@@ -1,5 +1,5 @@
 {
-  "version": "5d50caaf1375677c",
+  "version": "1ea2f782d5f697ad",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -26236,6 +26236,130 @@
         "eprint": "1012.2324",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/1012.2324"
+      }
+    },
+    "mysak1966": {
+      "type": "article",
+      "fields": {
+        "title": "Behavior of the {Schwarzschild} Singularity in Superimposed Gravitational Fields",
+        "author": "Mysak, Lawrence and Szekeres, George",
+        "journal": "Canadian Journal of Physics",
+        "volume": "44",
+        "number": "3",
+        "pages": "617--627",
+        "year": "1966",
+        "doi": "10.1139/p66-051",
+        "url": "https://doi.org/10.1139/p66-051"
+      }
+    },
+    "geroch1982": {
+      "type": "article",
+      "fields": {
+        "title": "Distorted black holes",
+        "author": "Geroch, Robert and Hartle, James B.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "23",
+        "number": "4",
+        "pages": "680--692",
+        "year": "1982",
+        "doi": "10.1063/1.525384",
+        "url": "https://doi.org/10.1063/1.525384"
+      }
+    },
+    "fairhurst2001": {
+      "type": "article",
+      "fields": {
+        "title": "Distorted Black Holes with Charge",
+        "author": "Fairhurst, Stephen and Krishnan, Badri",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "10",
+        "number": "5",
+        "pages": "691--709",
+        "year": "2001",
+        "doi": "10.1142/S0218271801001086",
+        "eprint": "gr-qc/0010088",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0218271801001086"
+      }
+    },
+    "frolovshoom2007": {
+      "type": "article",
+      "fields": {
+        "title": "Interior of distorted black holes",
+        "author": "Frolov, Valeri P. and Shoom, Andrey A.",
+        "journal": "Physical Review D",
+        "volume": "76",
+        "number": "6",
+        "pages": "064037",
+        "year": "2007",
+        "doi": "10.1103/PhysRevD.76.064037",
+        "eprint": "0705.1570",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.76.064037"
+      }
+    },
+    "binnington2009": {
+      "type": "article",
+      "fields": {
+        "title": "Relativistic theory of tidal {Love} numbers",
+        "author": "Binnington, Taylor and Poisson, Eric",
+        "journal": "Physical Review D",
+        "volume": "80",
+        "number": "8",
+        "pages": "084018",
+        "year": "2009",
+        "doi": "10.1103/PhysRevD.80.084018",
+        "eprint": "0906.1366",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.80.084018"
+      }
+    },
+    "abdolrahimi2015": {
+      "type": "article",
+      "fields": {
+        "title": "Distorted local shadows",
+        "author": "Abdolrahimi, Shohreh and Mann, Robert B. and Tzounis, Christos",
+        "journal": "Physical Review D",
+        "volume": "91",
+        "number": "8",
+        "pages": "084052",
+        "year": "2015",
+        "doi": "10.1103/PhysRevD.91.084052",
+        "eprint": "1502.00073",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.91.084052"
+      }
+    },
+    "gurlebeck2015": {
+      "type": "article",
+      "fields": {
+        "title": "No-Hair Theorem for Black Holes in Astrophysical Environments",
+        "author": "Gürlebeck, Norman",
+        "journal": "Physical Review Letters",
+        "volume": "114",
+        "number": "15",
+        "pages": "151102",
+        "year": "2015",
+        "doi": "10.1103/PhysRevLett.114.151102",
+        "eprint": "1503.03240",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.114.151102"
+      }
+    },
+    "shoom2016": {
+      "type": "article",
+      "fields": {
+        "title": "Geodesic motion around a distorted static black hole",
+        "author": "Shoom, Andrey A. and Walsh, Cole and Booth, Ivan",
+        "journal": "Physical Review D",
+        "volume": "93",
+        "number": "6",
+        "pages": "064019",
+        "year": "2016",
+        "doi": "10.1103/PhysRevD.93.064019",
+        "eprint": "1512.01566",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.93.064019"
       }
     }
   }
