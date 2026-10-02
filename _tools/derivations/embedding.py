@@ -8303,6 +8303,69 @@ def khan_penrose(ck, src):
             view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(), movie=played, settings=settings)]
 
 
+def belinski_zakharov(ck, src):
+    """The plane of x and y of Belinski and Zakharov's wave of two solitons, at the four events
+    tau = 0.25, 0.5, 1 and 2 on xi = 0 of the pole chart, midway between the two pulses, at w = 1
+    and cosh(beta) = 5/4: each flat, g_xx dx^2 + g_yy dy^2 with
+    g_xx = sinh(tau)(p cosh(tau) + 1)/(p cosh(tau) - 1) and g_yy = sinh(tau)^2/g_xx, p = cosh(beta),
+    since g_xy carries sinh(xi), with the ring of free particles at rest on x^2 + y^2 = l^2,
+    which the published Christoffel symbols keep at rest on xi = 0: they have no Gamma^x_tautau
+    or Gamma^y_tautau, and Gamma^xi_tautau vanishes there. Kasner's own ring would be the circle
+    of radius sqrt(sinh(tau)); the pulses draw it out along x by (p cosh(tau) + 1)/(p cosh(tau) - 1)
+    in the ratio of its axes, which falls to 1 as they leave."""
+    gamma, R = published_christoffel(src, "belinski_zakharov", "pole")
+    ck.exact("Belinski-Zakharov: no published Gamma^x_tautau or Gamma^y_tautau",
+             not any(ix[0] in ("x", "y") and ix[1:] == ("\\tau", "\\tau") for ix in gamma))
+    xi_tt = gamma.get(("\\xi", "\\tau", "\\tau"), sp.Integer(0))
+    ck.exact("Belinski-Zakharov: Gamma^xi_tautau vanishes on xi = 0",
+             sp.simplify(sp.sympify(xi_tt).subs(R.symbol["\\xi"], 0)) == 0)
+    params = {"w": 1, "beta": "log(2)"}
+
+    def front(t):
+        return f"$\\tau = {t:g}$", t, {"tau": repr(t), "xi": 0}, None
+    named = (0.25, 0.5, 1.0, 2.0)
+    # The movie runs through the moments at a steady tau, a frame every 0.05 of it.
+    moments, keys = ring_moments(named, 0.05, lambda k: front(named[k]), front)
+    times = [t for _, t, _, _ in moments]
+    frames = ring_sequence(ck, src, "Belinski-Zakharov", "belinski_zakharov", "pole", moments, 3.0, params,
+                           axes=("x", "y"))
+    surfaces = [frames[i] for i in keys]
+
+    def rows(tau):
+        tau = np.asarray(tau, dtype=float)
+        up, down = 1.25 * np.cosh(tau) + 1, 1.25 * np.cosh(tau) - 1
+        return np.sqrt(np.sinh(tau) * up / down), np.sqrt(np.sinh(tau) * down / up)
+    a = np.linspace(0, 2 * math.pi, 361)
+    for s, t in zip(frames, times):
+        A, B = rows(t)
+        ck.add(f"Belinski-Zakharov, tau = {t}: the ellipse of semi-axes sqrt(g_xx) and sqrt(g_yy)",
+               float(np.max(np.abs(s.curves[0].points[:, :2] - np.column_stack([A * np.cos(a), B * np.sin(a)])))), 1e-12)
+
+    def plane(tau, A, B):
+        sl = FlatPlane(src, "belinski_zakharov", "pole", "x", "y", {"tau": repr(float(tau)), "xi": 0}, params)
+        return float(np.max(np.abs(sl.scale - [A, B])))
+    tube = stack(ck, "Belinski-Zakharov", surfaces, rows, 2.0, plane, 6.0,
+                 "the world tube of the ring runs on before $\\tau = 0.25$, down to the singularity, and after "
+                 "$\\tau = 2$")
+    tube_fig = stack_figure(tube, 6.0, "$\\tau$", [
+        ("fill", "cover", "the ring at every moment from $\\tau = 0.25$ to $\\tau = 2$, each at the height of its "
+                          "$\\tau$"),
+        ("line", "particles", "the ring at the four moments of the flat view, twelve of its particles marked"),
+        ("line", "worldline", "the world lines of the twelve particles, at rest in the chart"),
+        ("line", "axis", "the axis of $\\tau$, through the centre of the ring")])
+    fig, played = ring_movie(frames, 6.0, "$\\tau$")
+    fig.legend("fill", "cover", "the plane of $x$ and $y$ at each moment, flat")
+    fig.legend("line", "particles", "a ring of free particles at rest on $x^2 + y^2 = \\ell^2$, with twelve of them marked: "
+                                    "an ellipse reaching $\\sqrt{g_{xx}}\\,\\ell$ along $x$ and "
+                                    "$\\sqrt{g_{yy}}\\,\\ell$ along $y$")
+    fig.legend("line", "meridian", "straight lines from the centre, every $30°$")
+    settings = ("$w = 1$ and $\\cosh\\beta = 5/4$, each moment the plane of $x$ and $y$ at one $\\tau$ on $\\xi = 0$, "
+                "midway between the two pulses, with $\\ell$ the ring's radius in $x$ and $y$, the unit of every length.")
+    return [view("tube", "The ring's world tube", "$\\ell$", [tube], tube_fig, settings=settings,
+                 height="$\\tau$, a height of $2\\,\\ell$ for each unit of $\\tau$"),
+            view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(), movie=played, settings=settings)]
+
+
 def bell_szekeres(ck, src):
     """The wave front, the plane of x and y, at the four events xi = 0, 0.5, 0.9 and 1.2 on eta = 0
     of the chart of xi and eta, where au = bv, at a = b = 1: each flat, dx^2 + cos^2(xi) dy^2,
@@ -11071,6 +11134,7 @@ DRAWN = {
     "kasner": kasner,
     "bianchi": bianchi,
     "pp_wave": pp_wave, "khan_penrose": khan_penrose, "bell_szekeres": bell_szekeres,
+    "belinski_zakharov": belinski_zakharov,
     "light_beam": light_beam,
     "krasnikov": krasnikov,
     "alcubierre": alcubierre,
@@ -12700,6 +12764,23 @@ CAPTIONS = {
         "The world tube of a ring of free particles at rest before the pulse ($A = e^{-u^2}/L^2$), each wave front "
         "from $cu = -3\\,L$ to the focus at $cu = 0.66\\,L$ an ellipse at the height of its $u$. The pulse stretches "
         "the tube along $x$ and squeezes it along $y$ until it closes on a segment of the $x$ axis at the focus.",
+    ],
+    ("belinski_zakharov", "tube"): [
+        "The world tube of a ring of free particles at rest midway between the two pulses of the wave of two "
+        "solitons ($w = 1$, $\\cosh\\beta = 5/4$), each moment on $\\xi = 0$ from $\\tau = 0.25$ to $\\tau = 2$ an "
+        "ellipse at the height of its $\\tau$. Kasner's universe alone would widen the ring as a circle of radius "
+        "$\\sqrt{\\sinh\\tau}\\,\\ell$. The pulses draw it out along $x$ and squeeze it along $y$, with axes in the "
+        "ratio $(\\cosh\\beta\\cosh\\tau + 1)/(\\cosh\\beta\\cosh\\tau - 1)$, which falls to $1$ as they run off along "
+        "$\\xi = \\pm\\tau$.",
+    ],
+    ("belinski_zakharov", "ring"): [
+        "The plane of $x$ and $y$ as $\\tau$ runs from $0.25$ to $2$ on $\\xi = 0$, midway between the two pulses, "
+        "each moment drawn as a surface in flat space with every distance along it the metric distance. At each moment the "
+        "plane has the metric $g_{xx}dx^2 + g_{yy}dy^2$ with constant coefficients, since $g_{xy}$ vanishes on "
+        "$\\xi = 0$, so the drawing is a flat disc, and the wave shows in a ring of free particles at rest on the "
+        "circle $x^2 + y^2 = \\ell^2$ of the chart.",
+        "Near the singularity, where the pulses overlap, the ring is a long ellipse along $x$. As they leave it "
+        "grows and rounds off toward the circle of the Kasner universe behind them.",
     ],
     ("khan_penrose", "tube"): [
         "The world tube of a ring of free particles at rest on the wave front where both waves have passed ($L = 1$), "

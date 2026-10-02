@@ -10588,6 +10588,88 @@ def gowdy(ck, src):
     return views
 
 
+def belinski_zakharov(ck, src):
+    """Belinski and Zakharov's wave of two solitons on its plane of the time and the direction the
+    pulses travel along, x and y held fixed, each point a plane of the two Killing vectors.
+
+    The metric on the plane is f(-c^2dt^2 + dz^2) in the canonical chart, and a conformal factor
+    changes no null direction, so for every f p, q = arctan((ct -+ z)/w) bring it into the upper
+    half of Minkowski's diamond: the singularity t = 0 is the segment T = 0 from X = -pi to pi,
+    and the far edges are null infinity, since along a ray f falls as t^(-1/2) and the affine
+    parameter, the integral of f, grows without bound. The pole chart enters through
+    ct = w sinh(tau) cosh(xi) and z = w cosh(tau) sinh(xi), which carry its light rays
+    xi -+ tau = const into ct -+ z = w sinh(tau -+ xi), so xi = +-tau is the light cone of the
+    event t = 0, z = 0. The canonical map is checked with random values of f at every sample,
+    the pole map against the published metric, and the published Kretschmann scalar of the pole
+    chart is checked to diverge on tau = 0."""
+    fixed = {"x": "0", "y": "0"}
+    params = {"w": 1, "beta": "log(2)"}
+
+    def any_f(x0, x1):
+        w = ck.rng.uniform(0.5, 3, np.shape(x0))
+        return {"f": (w, 0 * w, 0 * w)}
+
+    def pole_pq(tau, xi):
+        tau, xi = np.asarray(tau, dtype=float), np.asarray(xi, dtype=float)
+        return mink_pq(np.sinh(tau) * np.cosh(xi), np.cosh(tau) * np.sinh(xi))
+    canonical = Plane(src, "belinski_zakharov", "canonical", ("t", "z"), fixed, {"w": 1}, numeric=["f"])
+    ck.chart("Belinski-Zakharov canonical, for any f", canonical, mink_pq, ck.uniform(0.01, 30), ck.uniform(-30, 30),
+             lambda t, z: (1, 0), any_f)
+    pole = Plane(src, "belinski_zakharov", "pole", ("\\tau", "\\xi"), fixed, params)
+    ck.chart("Belinski-Zakharov pole", pole, pole_pq, ck.uniform(0.05, 3), ck.uniform(-3, 3), lambda tau, xi: (1, 0))
+    K = pole.kretschmann
+    xi = ck.uniform(-2, 2, 50)
+    # K grows as 1/tau^3, with a coefficient that falls as 1/cosh^3(xi), 4.5e-2 at xi = 2.
+    ck.diverges("Belinski-Zakharov: tau = 0 is a curvature singularity", K(np.full(50, 1e-3), xi), K(np.full(50, 1e-4), xi))
+    p, q = pole_pq(np.zeros(50), xi)
+    ck.limit("Belinski-Zakharov: tau = 0 lands on T = 0 at X = 2 arctan(sinh(xi))", np.concatenate([p + q, q - p]),
+             np.concatenate([np.zeros(50), 2 * np.arctan(np.sinh(xi))]), 1e-12)
+    tau = ck.uniform(0.1, 3, 50)
+    p, q = pole_pq(tau, tau)
+    ck.limit("Belinski-Zakharov: xi = tau is the ray ct = z through the origin", p, np.zeros(50), 1e-12)
+
+    box = [-PI - 0.35, PI + 0.35, -0.3, PI + 0.3]
+    region = [[-PI, 0], [PI, 0], [0, PI]]
+    moments = slices.moments("belinski_zakharov")
+    views = []
+    for vid, label, system, space, space_at, time, time_at, fmap, whole, singular in (
+            ("canonical", "Belinski and Zakharov's chart", "canonical", "$z$ constant, every $2w$ from $-4w$ to $4w$",
+             (-4, -2, 0, 2, 4), "$ct$ constant, at $w/2$, $w$, $2w$ and $4w$", (0.5, 1, 2, 4), mink_pq,
+             "$t$ and $z$", "$t = 0$"),
+            ("pole", "Pole coordinates", "pole", "$\\xi$ constant, every $1$ from $-2$ to $2$", (-2, -1, 0, 1, 2),
+             "$\\tau$ constant, at $1/2$, $1$, $2$ and $3$", (0.5, 1, 2, 3), pole_pq, "$\\tau$ and $\\xi$",
+             "$\\tau = 0$")):
+        v = View(vid, label, box, system)
+        v.fill("region", region)
+        v.fill("cover", region)
+        grid(v, "r", lambda c, t, fmap=fmap: fmap(t, c), space_at, S_POS)
+        grid(v, "t", fmap, time_at, S_ALL)
+        v.segment("null", (0, 0), (0, HALF))
+        v.segment("null", (0, 0), (HALF, 0))
+        v.line("scri", [[[PI, 0], [0, PI]], [[0, PI], [-PI, 0]]])
+        v.line("singular", [[[-PI, 0], [PI, 0]]], zig=True)
+        for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((-PI, 0), "$i^0$", "r", -6, 0),
+                                         ((0, PI), "$i^+$", "b", 0, -6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(at[0], 4), round(at[1], 4)]})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        for sx in (1, -1):
+            v.label_xt([sx * HALF, HALF], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=5 * sx, dy=-3)
+        v.label_xt([1.2, 0], singular, "t", dy=8)
+        v.legend("cover", f"the whole spacetime, which {whole} cover")
+        v.legend("r", space)
+        v.legend("t", time)
+        v.legend("null", "the light cone of the event $t = 0$, $z = 0$, which the two pulses run along")
+        v.legend("scri", "null infinity $\\mathscr{I}^+$")
+        v.legend("singular", f"the singularity {singular}, where the Kretschmann scalar diverges")
+        v.set(restriction="The plane $x = y = 0$ only, totally geodesic, each point in the diagram a single event.",
+              settings="$w = 1$, the scale of $p = \\arctan((ct - z)/w)$ and $q = \\arctan((ct + z)/w)$, and "
+                       "$\\cosh\\beta = 5/4$; the drawing is the same for every $\\beta$.")
+        for m in moments:
+            v.slice(m, points=[pole_pq(m.time, 0.0)])
+        views.append(v)
+    return views
+
+
 def melvin(ck, src):
     """Melvin's half plane of fixed phi and z, and Ernst's equator.
 
@@ -15914,7 +15996,7 @@ DRAWN = {
     "gott_time_machine": gott_time_machine,
     "wormhole_time_machine": wormhole_time_machine,
     "ori_time_machine": ori_time_machine,
-    "einstein_rosen_waves": einstein_rosen_waves, "gowdy": gowdy,
+    "einstein_rosen_waves": einstein_rosen_waves, "gowdy": gowdy, "belinski_zakharov": belinski_zakharov,
     "nariai": nariai, "khan_penrose": khan_penrose, "bell_szekeres": bell_szekeres,
     "majumdar_papapetrou": majumdar_papapetrou,
     "kastor_traschen": kastor_traschen,
@@ -18164,6 +18246,20 @@ CAPTIONS = {
         "The same half plane in the null chart ($u = ct - \\rho$, $v = ct + \\rho$), where the metric on it is "
         "$-e^{2(\\gamma - \\psi)}du\\,dv$. The lines of constant $u$ and of constant $v$ are light rays, the 45° "
         "lines of the triangle, with $p = \\arctan(u/a)$ and $q = \\arctan(v/a)$, and the axis is the line $u = v$.",
+    ],
+    ("belinski_zakharov", "canonical"): [
+        "The plane of $t$ and $z$ of the wave of two solitons at fixed $x$ and $y$, totally geodesic. The metric "
+        "on it is $f(-c^2dt^2 + dz^2)$, and a conformal factor changes no null direction, so for every $f$ "
+        "$p, q = \\arctan((ct \\mp z)/w)$ bring it into the upper half of Minkowski's diamond.",
+        "The singularity $t = 0$ is spacelike, the segment along the bottom, and the two pulses leave its "
+        "middle and run along the marked light cone to null infinity on either side. A light ray reaches the far "
+        "edges only at an infinite value of its affine parameter, which grows as $\\int f\\,dt$ with $f$ falling "
+        "as $t^{-1/2}$.",
+    ],
+    ("belinski_zakharov", "pole"): [
+        "The same plane in the pole coordinates, with $ct = w\\sinh\\tau\\cosh\\xi$ and $z = w\\cosh\\tau\\sinh\\xi$. "
+        "The lines of constant $\\xi$ all end at $i^+$ and the lines of constant $\\tau$ run from one $i^0$ to the "
+        "other, with the singularity the line $\\tau = 0$.",
     ],
     ("gowdy", "areal"): [
         "The plane of $t$ and $\\theta$ of the torus universe, each point in the diagram a 2-torus of area "

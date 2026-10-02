@@ -1,5 +1,5 @@
 {
-  "version": "c6af7b1b573c5774",
+  "version": "fa0cb60f333b348b",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -21766,6 +21766,146 @@
         "eprint": "1607.05251",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/1607.05251"
+      }
+    },
+    "gardner1967": {
+      "type": "article",
+      "fields": {
+        "title": "Method for solving the {Korteweg-deVries} equation",
+        "author": "Gardner, Clifford S. and Greene, John M. and Kruskal, Martin D. and Miura, Robert M.",
+        "journal": "Physical Review Letters",
+        "volume": "19",
+        "number": "19",
+        "pages": "1095--1097",
+        "year": "1967",
+        "doi": "10.1103/PhysRevLett.19.1095",
+        "url": "https://doi.org/10.1103/PhysRevLett.19.1095"
+      }
+    },
+    "geroch1972": {
+      "type": "article",
+      "fields": {
+        "title": "A method for generating new solutions of {Einstein}'s equation. {II}",
+        "author": "Geroch, Robert",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "13",
+        "number": "3",
+        "pages": "394--404",
+        "year": "1972",
+        "doi": "10.1063/1.1665990",
+        "url": "https://doi.org/10.1063/1.1665990"
+      }
+    },
+    "alekseev2010": {
+      "type": "inproceedings",
+      "fields": {
+        "title": "Thirty years of studies of integrable reductions of {Einstein}'s field equations",
+        "author": "Alekseev, G. A.",
+        "booktitle": "The Twelfth Marcel Grossmann Meeting",
+        "editor": "Damour, Thibault and Jantzen, Robert T. and Ruffini, Remo",
+        "publisher": "World Scientific",
+        "pages": "645--666",
+        "year": "2012",
+        "doi": "10.1142/9789814374552_0033",
+        "eprint": "1011.3846",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1011.3846"
+      }
+    },
+    "maison1978": {
+      "type": "article",
+      "fields": {
+        "title": "Are the stationary, axially symmetric {Einstein} equations completely integrable?",
+        "author": "Maison, Dieter",
+        "journal": "Physical Review Letters",
+        "volume": "41",
+        "number": "8",
+        "pages": "521--522",
+        "year": "1978",
+        "doi": "10.1103/PhysRevLett.41.521",
+        "url": "https://doi.org/10.1103/PhysRevLett.41.521"
+      }
+    },
+    "harrison1978": {
+      "type": "article",
+      "fields": {
+        "title": "B\\\"acklund transformation for the {Ernst} equation of general relativity",
+        "author": "Harrison, B. Kent",
+        "journal": "Physical Review Letters",
+        "volume": "41",
+        "number": "18",
+        "pages": "1197--1200",
+        "year": "1978",
+        "doi": "10.1103/PhysRevLett.41.1197",
+        "url": "https://doi.org/10.1103/PhysRevLett.41.1197"
+      }
+    },
+    "belinsky1980": {
+      "type": "article",
+      "fields": {
+        "title": "Two-soliton waves in anisotropic cosmology",
+        "author": "Belinsky, V. and Fargion, D.",
+        "journal": "Il Nuovo Cimento B",
+        "volume": "59",
+        "number": "1",
+        "pages": "143--162",
+        "year": "1980",
+        "doi": "10.1007/BF02739052",
+        "url": "https://doi.org/10.1007/BF02739052"
+      }
+    },
+    "carr1983": {
+      "type": "article",
+      "fields": {
+        "title": "Soliton solutions and cosmological gravitational waves",
+        "author": "Carr, B. J. and Verdaguer, E.",
+        "journal": "Physical Review D",
+        "volume": "28",
+        "number": "12",
+        "pages": "2995--3006",
+        "year": "1983",
+        "doi": "10.1103/PhysRevD.28.2995",
+        "url": "https://doi.org/10.1103/PhysRevD.28.2995"
+      }
+    },
+    "ibanez1983": {
+      "type": "article",
+      "fields": {
+        "title": "Soliton collision in general relativity",
+        "author": "Iba\\~nez, J. and Verdaguer, E.",
+        "journal": "Physical Review Letters",
+        "volume": "51",
+        "number": "15",
+        "pages": "1313--1315",
+        "year": "1983",
+        "doi": "10.1103/PhysRevLett.51.1313",
+        "url": "https://doi.org/10.1103/PhysRevLett.51.1313"
+      }
+    },
+    "boyd1991": {
+      "type": "article",
+      "fields": {
+        "title": "Properties of gravitational ``solitons''",
+        "author": "Boyd, Patricia T. and Centrella, Joan M. and Klasky, Scott A.",
+        "journal": "Physical Review D",
+        "volume": "43",
+        "number": "2",
+        "pages": "379--390",
+        "year": "1991",
+        "doi": "10.1103/PhysRevD.43.379",
+        "url": "https://doi.org/10.1103/PhysRevD.43.379"
+      }
+    },
+    "belinski2001": {
+      "type": "book",
+      "fields": {
+        "title": "Gravitational Solitons",
+        "author": "Belinski, V. and Verdaguer, E.",
+        "publisher": "Cambridge University Press",
+        "address": "Cambridge",
+        "year": "2001",
+        "doi": "10.1017/CBO9780511535253",
+        "url": "https://doi.org/10.1017/CBO9780511535253"
       }
     }
   }

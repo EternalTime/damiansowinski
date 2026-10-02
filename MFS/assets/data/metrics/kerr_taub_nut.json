@@ -63,6 +63,11 @@
       "id": "c_metric",
       "kind": "family",
       "text": "A black hole with an acceleration where this one has a twist. Plebański and Demiański's family of 1976 holds spin, twist, and acceleration together, and in Jerry Griffiths and Jiří Podolský's form of it Kerr-Taub-NUT is what is left when the acceleration vanishes [plebanski1976, griffiths2005]."
+    },
+    {
+      "id": "belinski_zakharov",
+      "kind": "family",
+      "text": "The whole Kerr-NUT solution is two solitons added to flat space by Belinski and Zakharov's inverse scattering method [belinskii1979]."
     }
   ],
   "references": [
@@ -84,7 +89,8 @@
     "bordo2019",
     "miller1973",
     "mathgenealogymiller",
-    "emond2022"
+    "emond2022",
+    "belinskii1979"
   ],
   "coordinates": [
     {

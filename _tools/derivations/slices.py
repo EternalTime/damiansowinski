@@ -1960,6 +1960,12 @@ FLAT = {
     **{("light_beam", system, view): lambda: one("light_beam", lambda m: [[(m.time, -BIG), (m.time, BIG)]])
        for system, view in (("null_cylindrical_interior", "edge"), ("null_cylindrical_exterior", "twice"),
                             ("null_cylindrical_exterior", "four"))},
+    # Each moment of Belinski and Zakharov's ring is the plane of x and y at one event, on xi = 0 at
+    # tau = t of the pole chart, which is z = 0 at ct = w sinh(t) of the canonical chart, w = 1.
+    ("belinski_zakharov", "pole", "plane"): lambda: [
+        Mark(m, points=[(m.time, 0.0)]) for m in moments("belinski_zakharov")],
+    ("belinski_zakharov", "canonical", "plane"): lambda: [
+        Mark(m, points=[(math.sinh(m.time), 0.0)]) for m in moments("belinski_zakharov")],
     # Each moment is the plane of x and y at one event, on sigma = 0 at tau = t: u = v = sin(t/2).
     ("khan_penrose", "double_null", "plane"): lambda: [
         Mark(m, points=[(math.sin(m.time / 2), math.sin(m.time / 2))]) for m in moments("khan_penrose")],

@@ -63,6 +63,11 @@
       "id": "misner_brill_lindquist",
       "kind": "family",
       "text": "Two black holes at rest with no strut between them, for one moment only: the slice of space from which Susan Hahn and Richard Lindquist first computed two holes colliding head on [brill1963, hahn1964, holst2016]."
+    },
+    {
+      "id": "belinski_zakharov",
+      "kind": "family",
+      "text": "The Bäcklund transformations behind the double Kerr solution coincide with the soliton transformations of Belinski and Zakharov [alekseev2010]."
     }
   ],
   "references": [
@@ -90,7 +95,8 @@
     "einstein1936twobody",
     "brill1963",
     "hahn1964",
-    "holst2016"
+    "holst2016",
+    "alekseev2010"
   ],
   "coordinates": [
     {

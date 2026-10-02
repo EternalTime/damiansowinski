@@ -313,6 +313,11 @@
       "id": "misner_brill_lindquist",
       "kind": "family",
       "text": "One moment of a space with two Schwarzschild black holes at rest in it, made by adding their two conformal factors. With one hole it is the slice $t = 0$ of Schwarzschild's spacetime in isotropic coordinates [brill1963, cook2000]."
+    },
+    {
+      "id": "belinski_zakharov",
+      "kind": "family",
+      "text": "Schwarzschild's black hole is two solitons on flat space with no rotation, in Belinski and Zakharov's inverse scattering method [belinskii1979]."
     }
   ],
   "references": [
@@ -401,7 +406,8 @@
     "zhou1991",
     "lemos1993",
     "brill1963",
-    "cook2000"
+    "cook2000",
+    "belinskii1979"
   ],
   "coordinates": [
     {
