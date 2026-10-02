@@ -825,6 +825,48 @@ def check_symbols(metrics, diagrams, conformal, embedding):
         raise DataError("\n".join(problems))
 
 
+# A `$` opens or closes mathematics wherever the page sets a text, so one left over, as the
+# `$` after "axis" in a Kastor-Traschen parameter was on 2 October 2026, turns the words after
+# it into mathematics and prints the mathematics after them as its source. No text holds a
+# dollar that is not a delimiter, so every string of every file is held to it, paragraph by
+# paragraph, since the page sets each paragraph of a history on its own.
+DISPLAY_MATH = re.compile(r"\$\$.+?\$\$", re.DOTALL)
+DOLLAR = re.compile(r"(?<!\\)\$")
+
+
+def unbalanced_dollar(text):
+    """Whether a text opens mathematics it does not close, or closes what it did not open."""
+    return any(len(DOLLAR.findall(DISPLAY_MATH.sub(" ", paragraph))) % 2 for paragraph in text.split("¶"))
+
+
+def strings(value, where):
+    """Yield every string held anywhere in a parsed JSON value, each with its place."""
+    if isinstance(value, str):
+        yield where, value
+    elif isinstance(value, dict):
+        for key, item in value.items():
+            yield from strings(item, f"{where}.{key}")
+    elif isinstance(value, list):
+        for position, item in enumerate(value):
+            yield from strings(item, f"{where}[{position}]")
+
+
+def dollar_problems(name, data):
+    """Each string of one parsed file with an unbalanced `$`, named by its place."""
+    return [f"{where} has an unbalanced $: {text}" for where, text in strings(data, name) if unbalanced_dollar(text)]
+
+
+def check_dollars():
+    """Refuse a metric or diagram file with an unbalanced `$` in any of its strings, naming each."""
+    problems = []
+    for folder in (METRICS_DIR, DIAGRAMS_DIR, CONFORMAL_DIR, EMBEDDING_DIR):
+        for path in sorted(folder.glob("*.json")):
+            if not CONFLICT_COPY.search(path.stem):
+                problems += dollar_problems(path.name, json.loads(path.read_text(encoding="utf-8")))
+    if problems:
+        raise DataError("\n".join(problems))
+
+
 def serialise(value):
     return json.dumps(value, indent=2, ensure_ascii=False) + "\n"
 
@@ -838,6 +880,7 @@ def main(argv=None):
         references = build_references()
         metrics = load_metrics()
         check_citations(metrics, references["entries"])
+        check_dollars()
         check_prose_shape(metrics)
         check_conventions(metrics)
         check_relations(metrics)

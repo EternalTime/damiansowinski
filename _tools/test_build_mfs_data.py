@@ -811,16 +811,7 @@ class Contrast(unittest.TestCase):
                 self.assertEqual(self.caught(text), [])
 
 
-def strings(value, where):
-    """Yield every string held anywhere in a parsed JSON value, each with its place."""
-    if isinstance(value, str):
-        yield where, value
-    elif isinstance(value, dict):
-        for key, item in value.items():
-            yield from strings(item, f"{where}.{key}")
-    elif isinstance(value, list):
-        for position, item in enumerate(value):
-            yield from strings(item, f"{where}[{position}]")
+strings = build.strings
 
 
 class NoCost(unittest.TestCase):
@@ -5875,6 +5866,38 @@ class Citations(unittest.TestCase):
         for path, text in before.items():
             self.assertEqual(path.read_text(encoding="utf-8"), text)
 
+
+
+class Dollars(unittest.TestCase):
+    def test_the_collection_as_it_stands_balances(self):
+        self.assertIsNone(build.check_dollars())
+
+    def test_a_stray_dollar_is_caught_and_balanced_mathematics_is_not(self):
+        for text in ("holes at the points $z = z_i$ of the axis$, harmonic away from them",
+                     "a mass $m and a charge",
+                     "$$ds^2 = -dt^2$$ with $t$ and $x",
+                     "one paragraph with $a$ and $b¶the next with c$"):
+            with self.subTest(text):
+                self.assertTrue(build.unbalanced_dollar(text))
+        for text in ("no mathematics", "$a$ and $b$", "$$ds^2 = -dt^2$$ with $t$", "a price of \\$5",
+                     "$a$¶$$b$$¶$c$"):
+            with self.subTest(text):
+                self.assertFalse(build.unbalanced_dollar(text))
+
+    def test_a_stray_dollar_anywhere_in_a_file_is_named_by_its_place(self):
+        data = {"id": "x", "history": "$a$", "coordinates": [{"parameters": [{"description": "the axis$, harmonic"}]}]}
+        problems = build.dollar_problems("x.json", data)
+        self.assertEqual(len(problems), 1)
+        self.assertIn("x.json.coordinates[0].parameters[0].description", problems[0])
+
+    def test_a_stray_dollar_leaves_both_published_files_alone(self):
+        before = {path: path.read_text(encoding="utf-8") for path in (build.INDEX_FILE, build.REFERENCES_FILE)}
+        with mock.patch.object(build, "unbalanced_dollar", return_value=True), \
+                contextlib.redirect_stderr(io.StringIO()) as said:
+            self.assertEqual(build.main([]), 2)
+        self.assertIn("has an unbalanced $", said.getvalue())
+        for path, text in before.items():
+            self.assertEqual(path.read_text(encoding="utf-8"), text)
 
 
 class WormholeTrip(unittest.TestCase):

@@ -9927,7 +9927,7 @@
             },
             {
               "symbol": "V = V(\\rho,z)",
-              "description": "Dimensionless potential of the holes, $V = \\sum_i m_i/\\sqrt{\\rho^2 + (z - z_i)^2}$ for holes at the points $z = z_i$ of the axis$, harmonic away from them; no component assumes it harmonic"
+              "description": "Dimensionless potential of the holes, $V = \\sum_i m_i/\\sqrt{\\rho^2 + (z - z_i)^2}$ for holes at the points $z = z_i$ of the axis, harmonic away from them; no component assumes it harmonic"
             },
             {
               "symbol": "U = H\\tau + V",

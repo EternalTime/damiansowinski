@@ -109,6 +109,9 @@ Then run `python3 _tools/build_agent_data.py`, which adds the spacetime to `/dat
 Every key a metric cites has to be an entry in `assets/data/references.bib`.
 The command refuses to write anything if one is not, naming the metric file and the key it could not find, so a mistyped citation is caught here rather than published as a reference the reader cannot resolve.
 
+Every `$` opens or closes mathematics, in every string of every metric and diagram file.
+The command refuses in the same way a string with one left over, naming the file and the place in it, since a stray `$` sets the words after it as mathematics and prints the mathematics after them as its source; `check_dollars` in `build_mfs_data.py` holds the rule and the class `Dollars` in the tests holds it to the files on disk.
+
 Write a component value so that putting a minus sign in front of the whole string negates it.
 The page groups a tensor's components by value and merges a value with its negation, printing `R^t{}_{\theta t\theta} = -R^t{}_{\theta\theta t} = \dots` on one line, and it recognises the negation by that leading minus alone.
 So a value that is a bare sum wants collecting over a common denominator or wrapping in `\left(\right)` first, and its opposite wants writing as that string with a `-` in front rather than with the signs distributed through it.
