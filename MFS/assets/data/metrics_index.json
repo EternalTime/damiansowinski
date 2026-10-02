@@ -68,7 +68,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "dacd82ca88f783d0",
+    "version": "f6699e6705ea0d19",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -301,7 +301,7 @@
       "homogeneous",
       "product spacetime"
     ],
-    "version": "46ba56e5152fc4cd",
+    "version": "3aa0a60bcc341c12",
     "diagrams": "7b995662594f7524",
     "conformal": "d58ee6f7393843e4",
     "embedding": "4b36293b1a64925a"
@@ -749,7 +749,7 @@
       "static",
       "spherically symmetric"
     ],
-    "version": "d30647b3dce47a44",
+    "version": "97c9b695c18d89c6",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -1776,6 +1776,28 @@
     "embedding": "166bc957997dd4b5"
   },
   {
+    "id": "kundt_waves",
+    "name": "Kundt Waves",
+    "tags": [
+      "gravitational wave",
+      "Kundt class",
+      "Petrov type N",
+      "vanishing scalar invariants",
+      "curvature singularity",
+      "cosmological constant",
+      "time-dependent",
+      "radiating",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "117ebac18ab8bc79",
+    "diagrams": "707ada311baa183e",
+    "embedding": "aa93f3cc510fade8"
+  },
+  {
     "id": "stockum_dust",
     "name": "Lanczos-van Stockum",
     "tags": [
@@ -2106,7 +2128,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "fc29e48d9366d7dd",
+    "version": "b6b2027344b8aed0",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -2356,7 +2378,7 @@
       "Einstein space",
       "stationary"
     ],
-    "version": "952e52107e6d8be5",
+    "version": "d70e225dca00a576",
     "diagrams": "37b04b7cf3bacecd",
     "conformal": "4fac9b552eb536ea",
     "embedding": "1199648bcf6666d8"
@@ -2543,7 +2565,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8dc26652657730c1",
+    "version": "fe6a4560f6686fee",
     "diagrams": "6e432dbfef4f0d7d",
     "embedding": "a484d91e42495a51"
   },
@@ -2766,7 +2788,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "956effe2f17d8908",
+    "version": "15a6c2d3fd158de3",
     "diagrams": "53ff4d90bff08988",
     "conformal": "0326c9d2101aa7a6",
     "embedding": "7b7a1d9f63195b3e"
@@ -3009,7 +3031,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b58cec06e817f6b3",
+    "version": "7c7a92ae9d019d68",
     "diagrams": "468d3b17b45fa67c",
     "conformal": "2735322746e26156",
     "embedding": "ad8fbfdcb04765f7"

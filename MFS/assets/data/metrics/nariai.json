@@ -57,6 +57,11 @@
       "id": "kasner",
       "kind": "programme",
       "text": "Edward Kasner's vacuum of 1921, which expands along some axes and contracts along another. The same year he presented the product of two equal spheres as a solution with a cosmological constant, the positive signature form of Nariai's metric [kasner1921, kasner1925]."
+    },
+    {
+      "id": "kundt_waves",
+      "kind": "family",
+      "text": "Nariai's universe has rays that neither expand nor twist, so it sits in Kundt's class beside his waves [podolskybelan2004]."
     }
   ],
   "references": [
@@ -74,7 +79,8 @@
     "bousso1998proliferation",
     "cardoso2004",
     "romans1992",
-    "kasner1921"
+    "kasner1921",
+    "podolskybelan2004"
   ],
   "coordinates": [
     {

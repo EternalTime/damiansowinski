@@ -4096,7 +4096,8 @@ class TurningLightConeFigures(unittest.TestCase):
         checked = {f"{v['metric']}/{v['view']}" for v in turn_check(self)["figures"]}
         self.assertEqual(checked, set(self.figures))
         self.assertEqual(checked, {"alcubierre/bubble", "godel/tipping", "gott_time_machine/loop", "kerr/dragging", "kerr_de_sitter/dragging",
-                                   "kerr_newman/dragging", "kerr_taub_nut/dragging", "near_horizon_extreme_kerr/dragging", "point_particle_2plus1/wedge",
+                                   "kerr_newman/dragging", "kerr_taub_nut/dragging", "kundt_waves/fronts",
+                                   "near_horizon_extreme_kerr/dragging", "point_particle_2plus1/wedge",
                                    "som_raychaudhuri/tipping", "spinning_string/tipping", "stockum_dust/tipping",
                                    "bonnor_rotating_dust/tipping",
                                    "wormhole_time_machine/trip"})
@@ -4549,6 +4550,10 @@ class Slices(unittest.TestCase):
     # a moment of space.
     HIDDEN = {# The region x < 0 of Siklos's chart, another region than the one whose wave front is embedded.
               "siklos/kaigorodov_stationary/plane",
+              # Kundt's waves with no cosmological constant, other spacetimes than the waves in de Sitter
+              # and anti-de Sitter space whose fronts are embedded.
+              "kundt_waves/kundt/front", "kundt_waves/podolsky_belan/near", "kundt_waves/podolsky_belan/far",
+              "kundt_waves/simplest_wave/front", "kundt_waves/simplest_wave/depth", "kundt_waves/kerr_schild/fronts",
               # Hiscock's simplest model, a hole made and removed by two shells, another spacetime than the one embedded.
               "hiscock/ingoing/shells",
               "btz/stationary/rotating", "btz/eddington_finkelstein_ingoing/rotating",
@@ -4711,6 +4716,10 @@ class Slices(unittest.TestCase):
                     # first with no rotation, and each chart's drawings mark the moment of its own.
                     **{f"wahlquist/wahlquist/{v}": {"static"} for v in ("equator", "disc")},
                     **{f"wahlquist/whittaker/{v}": {"rotating"} for v in ("radial", "through")},
+                    # Kundt's waves in de Sitter and in anti-de Sitter space are two spacetimes of one line
+                    # element, and each plane of u and v marks the front of its own.
+                    "kundt_waves/ozsvath_robinson_rozga/de_sitter": {"hyperbolic"},
+                    "kundt_waves/ozsvath_robinson_rozga/anti_de_sitter": {"sphere"},
                     # Bartnik and McKinnon's solitons with one, two and three zeros are three spacetimes
                     # of one line element, and every drawing but the embedding diagram is the first's.
                     **{f"{place}bartnik_mckinnon/{s}": {"n2", "n3"}

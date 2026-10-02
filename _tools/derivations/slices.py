@@ -1384,6 +1384,14 @@ def _siklos(depth=None):
     return [Mark(m, along(0.0, *ends))]
 
 
+def _kundt(view_id):
+    """A wave front u = 0, v = 0 of the family with a cosmological constant, the hemisphere in
+    de Sitter space or the half plane in anti-de Sitter space. The plane of u and v at one place
+    on the front, drawn for the same member of the family, meets it at the event (0, 0)."""
+    m, = moments("kundt_waves", view_id, label="$u = v = 0$")
+    return [Mark(m, points=[(0.0, 0.0)])]
+
+
 def soliton_radius(rho):
     """Horowitz and Myers's radius at the proper distance rho from the soliton's tip, at
     r_0 = L = 1: r = cosh^(2/3)(3 rho/2)."""
@@ -1960,6 +1968,10 @@ FLAT = {
        for system in ("kaigorodov", "kaigorodov_poincare", "kaigorodov_kundt")},
     ("siklos", "kaigorodov_horospheric", "depth"): lambda: _siklos(lambda x: -math.log(x)),
     ("siklos", "kaigorodov_homogeneous", "depth"): lambda: _siklos(lambda x: math.log(x) / 2),
+    # The fronts of Kundt's kind with a cosmological constant: one event on the plane of u and v of
+    # the same member of the family.
+    ("kundt_waves", "ozsvath_robinson_rozga", "de_sitter"): lambda: _kundt("sphere"),
+    ("kundt_waves", "ozsvath_robinson_rozga", "anti_de_sitter"): lambda: _kundt("hyperbolic"),
     # Schrodinger spacetime's plane of x and r: one event on each plane of the time and the null coordinate.
     **{("schrodinger_spacetime", system, view): lambda: _schrodinger()
        for system, views in (("poincare", ("near", "middle", "far")), ("inverse_radius", ("near", "middle", "far")),
@@ -2122,6 +2134,12 @@ FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.
 HIDDEN = {
+    ("kundt_waves", "kundt", "front"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
+    ("kundt_waves", "podolsky_belan", "near"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
+    ("kundt_waves", "podolsky_belan", "far"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
+    ("kundt_waves", "simplest_wave", "front"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
+    ("kundt_waves", "simplest_wave", "depth"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
+    ("kundt_waves", "kerr_schild", "fronts"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
     ("siklos", "kaigorodov_stationary", "plane"): "the region x < 0 of Siklos's chart, another region than the one whose wave front is embedded",
     ("btz", "stationary", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "eddington_finkelstein_ingoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
