@@ -15036,6 +15036,236 @@ def siklos(ck, src):
     return views
 
 
+class KaluzaKleinTower(Tower):
+    """A Tower for a Kaluza-Klein black hole of one charge at r_s = 1, whose plane of t and r has
+    dr*/dr = sqrt(r(r + a))/(r - 1), a = q - r_s or p - r_s, no rational function of r. Its r* is
+    slices.kkbh_rstar, zero at the singularity r = 0, with the one logarithm sqrt(1 + a) ln|r - 1|,
+    so the surface gravity is 1/(2 sqrt(1 + a)), and the cells are a Tower's, written in
+    G(u) = arctan exp(-k u). With r*(0) = 0 the singularity is Kruskal's UV = 1."""
+
+    def __init__(self, a):
+        self.a = a
+        self.kp = 1 / (2 * math.sqrt(1 + a))
+        self.rf = [1.0]
+
+    def rstar(self, r):
+        return slices.kkbh_rstar(r, self.a)
+
+
+def kaluza_klein_black_hole(ck, src):
+    """The Kaluza-Klein black holes on six surfaces, in units of r_s.
+
+    One charge, q = 2 r_s or p = 2 r_s. With the circle divided out, the plane of t and r of the
+    electric hole has the metric -(f/H) dt^2 + dr^2/f, f = 1 - r_s/r and H = 1 + (q - r_s)/r; the
+    magnetic hole's plane on the half axis theta = 0 is -f dt^2 + (H/f) dr^2, and the Einstein
+    metric of four dimensions is sqrt(H) times the first. All three have the tortoise coordinate
+    dr*/dr = sqrt(H)/f, slices.kkbh_rstar, which vanishes at the singularity r = 0, and the
+    surface gravity 1/(2 sqrt(q r_s)): the KaluzaKleinTower, with U = -exp(-k u), V = exp(k v) and
+    UV = (1 - r/r_s) exp(2k D(r)), D the smooth part of r*, so that r = 0 is UV = 1, the straight
+    lines T = +-pi/2 of Schwarzschild's square. The ingoing chart of five dimensions has
+    v = ct + sqrt(q/r_s)(r + r_s ln|r/r_s - 1|), so ct + r* = v - sqrt(q/r_s) r + D(r), one formula
+    for every r > 0, and the Einstein metric's ingoing chart has v = ct + r* itself.
+
+    Equal charges, p = 3 r_s, with the circle divided out: Reissner and Nordstrom's plane with the
+    horizons rho = 2 r_s and r_s, the Tower of two roots, with rho = 0 timelike on X = pi/2."""
+    a, name = 1.0, "kaluza_klein_black_hole"
+    k = 1 / (2 * math.sqrt(1 + a))
+    root = math.sqrt(1 + a)
+    T = KaluzaKleinTower(a)
+    one = {"r_s": 1, "q": 2}
+    planes = {
+        "electric": Plane(src, name, "electric", ("t", "r"), EQUATOR, one, quotient="y"),
+        "magnetic": Plane(src, name, "magnetic", ("t", "r"), {"theta": "0", "phi": "0", "y": "0"}, {"r_s": 1, "p": 2}),
+        "einstein": Plane(src, name, "einstein", ("t", "r"), EQUATOR, one),
+    }
+    rr = np.array([0.05, 0.3, 0.7, 1.4, 2.0, 7.0])
+    for system, plane in planes.items():
+        for cell, region, lo, hi, future in (("I", "exterior", 1.001, 30, (1, 0)), ("II", "black hole", 0.01, 0.999, (0, -1)),
+                                             ("IV", "white hole", 0.01, 0.999, (0, 1)),
+                                             ("I'", "other exterior", 1.001, 30, (-1, 0))):
+            ck.chart(f"Kaluza-Klein black hole, {system}, {region}", plane, lambda t, r, cell=cell: T.pq(cell, t, r),
+                     ck.uniform(-15, 15), ck.uniform(lo, hi), lambda t, r, future=future: future)
+        g00, _, g11 = plane.metric(0 * rr, rr)[:3]
+        ck.limit(f"Kaluza-Klein black hole, {system}: |dr*/dr| is sqrt(-g_rr/g_tt) of the published metric",
+                 np.abs(T.rstar(rr + 1e-6) - T.rstar(rr - 1e-6)) / 2e-6 / np.sqrt(-g11 / g00), np.ones(6), 1e-6)
+        K = plane.kretschmann
+        ck.diverges(f"Kaluza-Klein black hole, {system}: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+        ck.finite(f"Kaluza-Klein black hole, {system}: the Kretschmann scalar is finite at the horizon",
+                  K(np.zeros(3), np.array([0.999, 1, 1.001])))
+    ck.limit("Kaluza-Klein black hole: r* vanishes at the singularity r = 0", [float(T.rstar(1e-14))], [0.0], 1e-6)
+    ck.limit("Kaluza-Klein black hole: the surface gravity is 1/(2 sqrt(q r_s))", [T.kp], [k], 1e-12)
+
+    def ingoing_w(w, r):
+        """(p, q) of the event where ct + r* = w, at any r > 0."""
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        return np.arctan((1 - r) * np.exp(2 * k * slices.kkbh_smooth(r, a) - k * w)), atan_exp(k * w)
+
+    def ingoing_five(v, r):
+        r = np.asarray(r, dtype=float)
+        return ingoing_w(np.asarray(v, dtype=float) - root * r + slices.kkbh_smooth(r, a), r)
+    efive = Plane(src, name, "eddington_finkelstein_ingoing", ("v", "r"), EQUATOR, one, quotient="w")
+
+    def future_five(v, r):
+        # The sum of the plane's two future null directions, the outgoing (k' + sqrt H, f) and the ingoing
+        # (-a/(sqrt H + k'), -1), with k' = sqrt(q/r_s) and H = 1 + a/r: timelike and future directed at every r.
+        h = np.sqrt(1 + a / np.asarray(r, dtype=float))
+        return root + h - a / (h + root), -1 / np.asarray(r, dtype=float)
+    ck.chart("Kaluza-Klein black hole, ingoing Eddington-Finkelstein", efive, ingoing_five,
+             ck.uniform(-15, 15), ck.uniform(0.01, 30), future_five)
+    efour = Plane(src, name, "einstein_eddington_finkelstein", ("v", "r"), EQUATOR, one)
+    ck.chart("Kaluza-Klein black hole, the Einstein metric's ingoing chart", efour, ingoing_w,
+             ck.uniform(-15, 15), ck.uniform(0.01, 30), lambda v, r: (1, -60))
+
+    p, q = T.pq("II", np.array([-5.0, 0, 5]), np.full(3, 1e-12))
+    ck.limit("Kaluza-Klein black hole: r -> 0 in the black hole lands on T = pi/2", p + q, [HALF] * 3, 1e-5)
+    p, q = T.pq("I", np.array([0.0]), np.array([1e8]))
+    ck.limit("Kaluza-Klein black hole: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)", point(p[0], q[0]), [PI, 0], 1e-3)
+    p, q = T.pq("I", np.array([3.0]), np.array([1 + 1e-12]))
+    ck.limit("Kaluza-Klein black hole: r -> r_s at fixed t lands on the bifurcation surface", point(p[0], q[0]), [0, 0], 1e-4)
+    rs = np.linspace(0.02, 5, 50)
+    for cell, sel in (("I", rs > 1.001), ("II", rs < 0.999)):
+        pp, qq = T.pq(cell, 0.3 + 0 * rs[sel], rs[sel])
+        ck.limit(f"Kaluza-Klein black hole {cell}: tan p tan q is Kruskal's UV = (1 - r/r_s) exp(2k D(r))",
+                 np.tan(pp) * np.tan(qq), (1 - rs[sel]) * np.exp(2 * k * slices.kkbh_smooth(rs[sel], a)), 1e-8)
+    ck.limit("Kaluza-Klein black hole: the ingoing chart of five dimensions and the static chart put one event at one point",
+             ingoing_five(2.0 + root * (3 + math.log(2)), 3.0), T.pq("I", 2.0, 3.0), 1e-12)
+    ck.limit("Kaluza-Klein black hole: the Einstein metric's ingoing and static charts put one event at one point",
+             ingoing_w(2.0 + float(T.rstar(3.0)), 3.0), T.pq("I", 2.0, 3.0), 1e-12)
+
+    box = [-PI - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25]
+    hexagon = [[PI, 0], [HALF, HALF], [-HALF, HALF], [-PI, 0], [-HALF, -HALF], [HALF, -HALF]]
+    exterior = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    R_OUT, R_IN, TS = (1.05, 1.25, 1.5, 2, 3), (0.25, 0.5, 0.75), (-8, -4, -2, 0, 2, 4, 8)
+
+    def edges(v):
+        v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]],
+                        [[-PI, 0], [-HALF, HALF]], [[-PI, 0], [-HALF, -HALF]]])
+        v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+        v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+        for at in ((PI, 0), (-PI, 0), (HALF, HALF), (HALF, -HALF), (-HALF, HALF), (-HALF, -HALF)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+        v.label_xt([-PI, 0], "$i^0$", "r", dx=-6)
+        for sx in (1, -1):
+            v.label_xt([sx * HALF, HALF], "$i^+$", "b", dy=-6)
+            v.label_xt([sx * HALF, -HALF], "$i^-$", "t", dy=6)
+            v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-4)
+            v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=4)
+        v.label_xt([0, HALF], "$r = 0$", "b", dy=-8)
+        v.label_xt([0, -HALF], "$r = 0$", "t", dy=8)
+        v.label_xt([-Q4, Q4], "$r = r_s$", "tr", "small", dx=-6, dy=2)
+        v.label_xt([HALF, -0.95], "exterior", cls="region")
+        v.label_xt([-HALF, 0], "exterior", cls="region")
+        v.label_xt([0, 1.15], "black hole", cls="region")
+        v.label_xt([0, -1.15], "white hole", cls="region")
+        v.legend("horizon", "the horizon $r = r_s$")
+        v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+
+    def moment_of(view_id):
+        m = slices.moments(name, view_id)[0]
+        lo, hi = m.reach(view_id, "r")
+        ends = np.linspace(lo, hi, 2)
+        left, right = T.pq("I'", 0 * ends, ends[::-1]), T.pq("I", 0 * ends, ends)
+        return m, [(np.concatenate([left[0], right[0]]), np.concatenate([left[1], right[1]]))]
+
+    settings = {"electric": "$r_s = 1$, the unit of every length, and $q = 2\\,r_s$.",
+                "magnetic": "$r_s = 1$, the unit of every length, and $p = 2\\,r_s$.",
+                "equal": "$r_s = 1$, the unit of every length, and $p = 3\\,r_s$, so that $\\rho_+ = 2\\,r_s$ and "
+                         "$\\rho_- = r_s$."}
+    divided = ("The plane of {0} and $r$ with the circle of the fifth dimension divided out, each point in the diagram "
+               "a 2-sphere times that circle. Light rays with no momentum along the circle run at 45 degrees.")
+    views = {}
+    t = spread(-np.inf, np.inf, 500, 9)
+    for vid, label, restriction, setting in (
+            ("electric", "Electric Charge", divided.format("$t$"), settings["electric"]),
+            ("magnetic", "Magnetic Charge",
+             "The half axis $\\theta = 0$ only, a totally geodesic surface, each point in the diagram a point of "
+             "the axis times the circle of the fifth dimension.", settings["magnetic"]),
+            ("einstein", "Einstein Metric, Four Dimensions", None, settings["electric"])):
+        v = View(vid, label, box, vid)
+        v.fill("region", hexagon)
+        v.fill("cover", exterior)
+        for r in R_OUT:
+            v.curve("r", *T.pq("I", t, np.full_like(t, r)))
+        far = spread(1, np.inf, 500, 14)
+        for tt in TS:
+            v.curve("t", *T.pq("I", np.full_like(far, tt), far))
+        edges(v)
+        for r, text in ((1.25, "$1.25\\,r_s$"), (2, "$2\\,r_s$")):
+            label_on(v, T.pq("I", 0.0, r), text)
+        v.legend("cover", "the exterior $r > r_s$, which $t$ and $r$ cover")
+        v.legend("r", "$r$ constant")
+        v.legend("t", "$ct$ constant, in units of $r_s$")
+        v.set(settings=setting, **({"restriction": restriction} if restriction else {}))
+        v.slice(*moment_of(vid))
+        views[vid] = v
+
+    whole = spread(0, np.inf, 600, 14)
+    for vid, label, system, fmap, null_legend, restriction, embedded in (
+            ("ingoing", "Ingoing Eddington-Finkelstein", "eddington_finkelstein_ingoing", ingoing_five,
+             "$v$ constant", divided.format("$v$"), "electric"),
+            ("einstein_ingoing", "Einstein Metric, Ingoing Eddington-Finkelstein", "einstein_eddington_finkelstein",
+             ingoing_w, "$v$ constant, an ingoing light ray", None, "einstein")):
+        v = View(vid, label, box, system)
+        v.fill("region", hexagon)
+        v.fill("cover", [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF], [-HALF, HALF]])
+        for r in R_OUT + R_IN:
+            v.curve("r", *fmap(t, np.full_like(t, r)))
+        for w in (-9, -6, -3, 0, 3, 6, 9):
+            v.curve("null" if vid == "einstein_ingoing" else "t", *fmap(np.full_like(whole, w), whole))
+        edges(v)
+        v.legend("cover", "the region that $v$ and $r > 0$ cover")
+        v.legend("r", "$r$ constant")
+        v.legend("null" if vid == "einstein_ingoing" else "t", null_legend)
+        v.set(settings=settings["electric"], **({"restriction": restriction} if restriction else {}))
+        v.slice(*moment_of(embedded))
+        views[vid] = v
+
+    # Equal charges: Reissner and Nordstrom's tower.
+    eq = Plane(src, name, "dyonic", ("t", "\\rho"), EQUATOR, {"r_s": 1, "p": 3}, quotient="y")
+    assert eq.g[0, 1] == 0 and sp.simplify(eq.g[0, 0] * eq.g[1, 1] + 1) == 0
+    roots = sorted(sp.solve(sp.numer(sp.together(eq.gi[1, 1])), eq.x1), reverse=True)
+    TE = Tower(-eq.g[0, 0], eq.x1, roots)
+    ep, em = TE.rf
+    tower_checks(ck, "Kaluza-Klein black hole, equal charges", eq, TE, 0.01, 15)
+    ck.limit("Kaluza-Klein black hole, equal charges: the horizons are (p + r_s)/2 and (p - r_s)/2", [ep, em], [2, 1], 1e-12)
+    p, q = TE.pq("III", np.array([-6.0, 0, 6]), np.full(3, 1e-12))
+    ck.limit("Kaluza-Klein black hole, equal charges: rho -> 0 lands on the vertical line X = pi/2", q - p, [HALF] * 3, 1e-9)
+    ck.diverges("Kaluza-Klein black hole, equal charges: the Kretschmann scalar diverges at rho = 0",
+                eq.kretschmann(0, 1e-2), eq.kretschmann(0, 1e-3))
+    ck.finite("Kaluza-Klein black hole, equal charges: the Kretschmann scalar is finite at both horizons",
+              eq.kretschmann(np.zeros(2), np.array([ep, em])))
+    D = TowerDrawing(TE, True, 0.0)
+    times = [c / TE.kp for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+    rI = nice_all(even_radii(TE, "I", 4, ep, np.inf), [ep])
+    rII = nice_all(even_radii(TE, "II", 4, em, ep), [em, ep])
+    rIII = nice_all(even_radii(TE, "III", 3, 0, em, xmax=HALF), [0, em])
+    v = View("equal", "Equal Charges", [-PI - 0.45, PI + 0.45, -PI - 0.1, 3 * PI + 0.1], "dyonic")
+    D.draw(v, {"I": (rI, times), "II": (rII, times), "IV": (rII, times), "III": (rIII, times)},
+           cover=[("I", False), ("II", False), ("III", False)])
+    D.labels(v, inner="$\\rho < \\rho_-$")
+    # The tower names its radius r; this chart's is rho.
+    renamed = {"$r_+$": "$\\rho_+$", "$r_-$": "$\\rho_-$", "$r = 0$": "$\\rho = 0$"}
+    for label in v.labels:
+        label["text"] = renamed.get(label["text"], label["text"])
+    v.set(fade={"top": 0.9, "bottom": 0.9}, settings=settings["equal"],
+          restriction="The plane of $t$ and $\\rho$ with the circle of the fifth dimension divided out, each point "
+                      "in the diagram a 2-sphere times that circle. Light rays with no momentum along the circle "
+                      "run at 45 degrees.")
+    v.legend("cover", "one exterior, one region between the horizons and one inside $\\rho_-$, which $t$ and "
+                      "$\\rho > 0$ cover")
+    v.legend("r", f"$\\rho$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $\\rho_-$, "
+                  "in units of $r_s$")
+    v.legend("t", "$ct$ constant")
+    v.legend("horizon", "the horizons $\\rho_+ = 2\\,r_s$ and $\\rho_- = r_s$")
+    v.legend("singular", "$\\rho = 0$, a timelike singularity, where the Kretschmann scalar diverges")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    views["equal"] = v
+    # The page lists the views in the order of the charts.
+    return [views[vid] for vid in ("electric", "ingoing", "magnetic", "equal", "einstein", "einstein_ingoing")]
+
+
 def kaluza_klein_monopole(ck, src):
     """The Kaluza-Klein monopole's plane of t and its radius at m = 1, in each of its three polar
     charts.
@@ -17878,6 +18108,7 @@ DRAWN = {
     "simpson_visser": simpson_visser,
     "levi_civita": levi_civita,
     "kaluza_klein_monopole": kaluza_klein_monopole,
+    "kaluza_klein_black_hole": kaluza_klein_black_hole,
     "fisher_jnw": fisher_jnw,
     "witten_black_hole": witten_black_hole,
     "roberts": roberts,
@@ -20003,6 +20234,60 @@ CAPTIONS = {
         "triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
         "The edge $X = 0$ is the nut $\\rho = 2m$, a regular centre where the Kretschmann scalar is "
         "$3/(32m^4)$, and the monopole has no horizon.",
+    ],
+    ("kaluza_klein_black_hole", "electric"): [
+        "The electrically charged Kaluza-Klein black hole, maximally extended ($q = 2\\,r_s$), with the circle "
+        "of $y$ divided out, each point in the diagram a 2-sphere times that circle. The rays with no momentum "
+        "along the circle keep $u$ or $v$, where $u, v = ct \\mp r_*$ and the tortoise coordinate $r_*$ has "
+        "$dr_*/dr = \\sqrt{r(r + q - r_s)}/(r - r_s)$ and vanishes at $r = 0$. Kruskal's $U = -e^{-\\kappa u}$ "
+        "and $V = e^{\\kappa v}$, with the surface gravity $\\kappa = 1/(2\\sqrt{q\\,r_s})$, cross the horizon, "
+        "and their arctangents put the singularity $r = 0$, where $UV = 1$, on the straight lines "
+        "$T = \\pm\\pi/2$.",
+        "The coordinates $t$ and $r > r_s$ cover the right exterior. The horizon is the pair of null lines "
+        "$U = 0$ and $V = 0$, crossing at the bifurcation surface, and the black hole above it ends at the "
+        "spacelike singularity $r = 0$. The diagram is Schwarzschild's square for every charge, with no inner "
+        "horizon.",
+    ],
+    ("kaluza_klein_black_hole", "ingoing"): [
+        "The whole of the electrically charged hole ($q = 2\\,r_s$) with the ingoing Eddington-Finkelstein "
+        "coordinates $v$ and $r$ on it, the circle of $w$ divided out. They cover the exterior and the black "
+        "hole together. An ingoing ray of the string's rest frame keeps $v$ and $w$ and so moves along the "
+        "circle of $y$, and with the circle divided out its shadow, a line of constant $v$, is timelike.",
+    ],
+    ("kaluza_klein_black_hole", "magnetic"): [
+        "The magnetically charged Kaluza-Klein black hole, maximally extended ($p = 2\\,r_s$), on its half axis "
+        "$\\theta = 0$, each point in the diagram a point of the axis times the circle of $y$. The metric on the "
+        "plane of $t$ and $r$ is $(1 - r_s/r)(-c^2dt^2 + dr_*^2)$, where the tortoise coordinate $r_*$ has "
+        "$dr_*/dr = \\sqrt{r(r + p - r_s)}/(r - r_s)$, the electric hole's with $p$ in place of $q$, so the "
+        "diagram is the same square.",
+        "The circle of $y$ shrinks toward the spacelike singularity $r = 0$, and on the horizon its "
+        "circumference is $4\\pi\\sqrt{r_s(p - r_s)}$. At $r_s = 0$ the horizon and the singularity are gone, "
+        "and the diagram is the triangle of the Kaluza-Klein monopole.",
+    ],
+    ("kaluza_klein_black_hole", "equal"): [
+        "The Kaluza-Klein black hole of equal charges, maximally extended ($p = 3\\,r_s$), with the circle of "
+        "$y$ divided out, each point in the diagram a 2-sphere times that circle. The metric orthogonal to the "
+        "circles is Reissner and Nordström's, with horizons at $\\rho_\\pm = (p \\pm r_s)/2$, so the diagram is "
+        "their tower: the exterior, the black hole between the horizons, and the region inside $\\rho_-$, "
+        "repeated without end.",
+        "The singularity $\\rho = 0$ is timelike. The circle of the fifth dimension has one length everywhere, "
+        "since the scalar field of four dimensions is constant when the charges are equal. At $r_s = 0$ the two "
+        "horizons meet at $\\rho = p/2$, an extremal hole whose horizon has the area $\\pi p^2$.",
+    ],
+    ("kaluza_klein_black_hole", "einstein"): [
+        "The Einstein metric of four dimensions of a Kaluza-Klein black hole of one charge, maximally extended "
+        "($q = 2\\,r_s$), each point in the diagram a 2-sphere of area $4\\pi r\\sqrt{r(r + q - r_s)}$. It is "
+        "$\\sqrt{1 + (q - r_s)/r}$ times the metric orthogonal to the circles of the fifth dimension, and a "
+        "conformal factor leaves every light ray where it is, so the diagram is the one drawn with the circle "
+        "divided out.",
+        "The singularity $r = 0$ is spacelike, as Schwarzschild's is, and there is no inner horizon. At the "
+        "extremal charge, $r_s = 0$, the horizon meets the singularity and its area is zero.",
+    ],
+    ("kaluza_klein_black_hole", "einstein_ingoing"): [
+        "The whole of the Einstein metric of four dimensions ($q = 2\\,r_s$) with its ingoing "
+        "Eddington-Finkelstein coordinates $v$ and $r$ on it. They cover the exterior and the black hole "
+        "together, and their lines of constant $v$ are ingoing light rays, which cross the horizon at 45° and "
+        "end at $r = 0$.",
     ],
     ("witten_black_hole", "witten"): [
         "Witten's black hole, maximally extended, each point in the diagram a single event. With "

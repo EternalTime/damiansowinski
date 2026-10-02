@@ -67,6 +67,11 @@
       "id": "randall_sundrum",
       "kind": "family",
       "text": "A fifth dimension of infinite size, with gravity held near a wall by the curvature of anti-de Sitter space [randall1999b]."
+    },
+    {
+      "id": "kaluza_klein_black_hole",
+      "kind": "generalisation",
+      "text": "The monopole with a horizon around it, together with its electric and dyonic relatives. At $r_s = 0$ the magnetic hole is the monopole, with $p = 4m$ [horowitz2012]."
     }
   ],
   "references": [
@@ -87,7 +92,8 @@
     "townsend1995",
     "gregory2012",
     "emparan2008",
-    "randall1999b"
+    "randall1999b",
+    "horowitz2012"
   ],
   "coordinates": [
     {

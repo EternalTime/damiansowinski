@@ -8,7 +8,7 @@ kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, reissner_nordstrom_ads, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
 black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
 som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos,
-einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev and mass_inflation, and Godel's cylindrical chart.
+einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation and kaluza_klein_black_hole, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -27,10 +27,8 @@ reads better than an expanded one, and each of those is checked against sympy he
 The derivations these charts rest on, and the reason each was chosen, are in tov.md,
 malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_sitter.md,
 majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md,
-witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md and kiselev.md beside this file.
-
-
-witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md and mass_inflation.md beside this file.
+witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, mass_inflation.md and
+kaluza_klein_black_hole.md beside this file.
 """
 import argparse
 import itertools
@@ -11306,6 +11304,346 @@ def mass_inflation_check(chart, system):
 
 
 CHARTS["mass_inflation"] = [lambda s=s: mass_inflation(s) for s in MASS_INFLATION_CHARTS]
+
+
+# -- Kaluza-Klein black holes ----------------------------------------------------------
+
+KKBH_CHARTS = ["electric", "eddington_finkelstein_ingoing", "magnetic", "dyonic", "einstein",
+               "einstein_eddington_finkelstein"]
+
+
+def kaluza_klein_black_hole(system_id):
+    """The charged black holes of gravity in five dimensions with the fifth a circle, in
+    Horowitz and Wiseman's parameters with their 2m written r_s: the horizon is at r = r_s, and
+    the lengths q >= r_s and p >= r_s carry the electric and the magnetic charge,
+    Q^2 = q(q^2 - r_s^2)/(4(p + q)) and P^2 = p(p^2 - r_s^2)/(4(p + q)), the mass being
+    (p + q)/4, all in units G_4 = c = 1 and in the equation numbers of arXiv:1107.5563. The electric chart is their (2.11), Schwarzschild's
+    black string boosted along y with cosh^2(alpha) = q/r_s, and the ingoing chart the boost of
+    the string's Eddington-Finkelstein chart. The magnetic chart is their (2.28). The dyonic
+    chart is the hole of equal charges, p = q, which is Reissner and Nordstrom's black hole with
+    the circle added, written in its areal radius rho = r + (p - r_s)/2. The two Einstein charts
+    print the metric of four dimensions, their (2.15) and (2.16), and its ingoing form.
+
+    kaluza_klein_check holds each chart of five dimensions to the general dyon of Gibbons and
+    Wiltshire, Rasheed and Larsen at its own p and q, pulled back, and the general dyon to being
+    a vacuum at random points; the electric chart to the published black string boosted, the
+    magnetic chart to the published Kaluza-Klein monopole at r_s = 0, the dyonic chart to
+    carrying the published Reissner-Nordstrom metric, and the Einstein charts to being the
+    reduction of the electric chart and to the field equations of four dimensions.
+    kaluza_klein_black_hole.md records each chart's source."""
+    reals = " \\in (-\\infty, \\infty)"
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    sphere = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    f, bare = "\\left(1 - \\dfrac{r_s}{r}\\right)", "1 - \\dfrac{r_s}{r}"
+    horizon = "r = r_s \\;\\text{(the horizon)}"
+    singular = "r = 0 \\;\\text{(the singularity)}"
+    components, extra = {}, {}
+    if system_id == "electric":
+        coords, parameters, name = ["t", "r", "\\theta", "\\phi", "y"], ["r_s", "q"], "Electric Charge"
+        domains = ["t" + reals, "r \\in (0, \\infty)"] + angles + ["y \\in [0, L)", horizon, singular]
+        cross = "\\dfrac{2\\sqrt{q\\left(q - r_s\\right)}}{r}"
+        more = "\\left(1 + \\dfrac{q - r_s}{r}\\right)"
+
+        def line(c2, c):
+            return ("ds^2 = -\\left(1 - \\dfrac{q}{r}\\right)" + c2 + "dt^2 - " + cross + c + "dt\\,dy + " + more
+                    + "dy^2 + \\dfrac{dr^2}{" + bare + "} + r^2" + sphere)
+        spec_line, chart_line = line("c^2", "c\\,"), line("", "")
+        half = "-\\dfrac{\\sqrt{q\\left(q - r_s\\right)}}{r}"
+        components = {"metric_components": {("t", "t"): "-\\left(1 - \\dfrac{q}{r}\\right)", ("t", "y"): half,
+                                            ("y", "t"): half, ("r", "r"): f + "^{-1}",
+                                            ("y", "y"): "1 + \\dfrac{q - r_s}{r}"}}
+        kretschmann = "\\dfrac{12r_s^2}{r^6}"
+    elif system_id == "eddington_finkelstein_ingoing":
+        coords, parameters = ["v", "r", "\\theta", "\\phi", "w"], ["r_s", "q"]
+        name = "Ingoing Eddington-Finkelstein"
+        domains = ["v" + reals, "r \\in (0, \\infty)"] + angles + ["w \\in [0, L)", horizon, singular]
+        spec_line = chart_line = (
+            "ds^2 = -\\left(1 - \\dfrac{q}{r}\\right)dv^2 - \\dfrac{2\\sqrt{q\\left(q - r_s\\right)}}{r}dv\\,dw"
+            " + \\left(1 + \\dfrac{q - r_s}{r}\\right)dw^2 + 2\\sqrt{\\dfrac{q}{r_s}}\\,dv\\,dr"
+            " - 2\\sqrt{\\dfrac{q - r_s}{r_s}}\\,dw\\,dr + r^2" + sphere)
+        half = "-\\dfrac{\\sqrt{q\\left(q - r_s\\right)}}{r}"
+        up, down = "\\sqrt{\\dfrac{q}{r_s}}", "-\\sqrt{\\dfrac{q - r_s}{r_s}}"
+        components = {"metric_components": {("v", "v"): "-\\left(1 - \\dfrac{q}{r}\\right)", ("v", "w"): half,
+                                            ("w", "v"): half, ("w", "w"): "1 + \\dfrac{q - r_s}{r}",
+                                            ("v", "r"): up, ("r", "v"): up, ("r", "w"): down, ("w", "r"): down}}
+        kretschmann = "\\dfrac{12r_s^2}{r^6}"
+    elif system_id == "magnetic":
+        coords, parameters, name = ["t", "r", "\\theta", "\\phi", "y"], ["r_s", "p"], "Magnetic Charge"
+        domains = (["t" + reals, "r \\in (0, \\infty)"] + angles
+                   + ["y \\in \\left[0, 4\\pi\\sqrt{p\\left(p - r_s\\right)}\\right)", horizon, singular,
+                      "\\theta = \\pi \\;\\text{(the Dirac string, a coordinate singularity)}"])
+        H = "\\left(1 + \\dfrac{p - r_s}{r}\\right)"
+
+        def line(c2):
+            return ("ds^2 = -" + f + c2 + "dt^2 + " + H + "\\left(\\dfrac{dr^2}{" + bare + "} + r^2" + sphere
+                    + "\\right) + " + H + "^{-1}\\left(dy + \\sqrt{p\\left(p - r_s\\right)}"
+                    "\\left(1 - \\cos\\theta\\right)d\\phi\\right)^2")
+        spec_line, chart_line = line("c^2"), line("")
+        components = {"metric_components": {
+            ("t", "t"): "-" + f,
+            ("\\phi", "\\phi"): ("r\\left(r + p - r_s\\right)\\sin^2\\theta + \\dfrac{p\\,r\\left(p - r_s\\right)"
+                                 "\\left(1 - \\cos\\theta\\right)^2}{r + p - r_s}")}}
+        kretschmann = None
+    elif system_id == "dyonic":
+        coords, parameters, name = ["t", "\\rho", "\\theta", "\\phi", "y"], ["r_s", "p"], "Equal Charges"
+        domains = (["t" + reals, "\\rho \\in (0, \\infty)"] + angles
+                   + ["y \\in \\left[0, 4\\pi\\sqrt{\\tfrac{1}{2}\\left(p^2 - r_s^2\\right)}\\right)",
+                      "\\rho = \\tfrac{1}{2}\\left(p + r_s\\right) \\;\\text{(the outer horizon)}",
+                      "\\rho = \\tfrac{1}{2}\\left(p - r_s\\right) \\;\\text{(the inner horizon)}",
+                      "\\rho = 0 \\;\\text{(the singularity)}",
+                      "\\theta = \\pi \\;\\text{(the Dirac string, a coordinate singularity)}"])
+        F = ("\\left(1 - \\dfrac{p + r_s}{2\\rho}\\right)\\left(1 - \\dfrac{p - r_s}{2\\rho}\\right)")
+        charge = "\\sqrt{\\dfrac{p^2 - r_s^2}{2}}"
+
+        def line(c2, c):
+            return ("ds^2 = -" + F + c2 + "dt^2 + \\dfrac{d\\rho^2}{" + F + "} + \\rho^2" + sphere
+                    + " + \\left(dy - \\dfrac{1}{\\rho}" + charge + c + "dt + " + charge
+                    + "\\left(1 - \\cos\\theta\\right)d\\phi\\right)^2")
+        spec_line, chart_line = line("c^2", "\\,c\\,"), line("", "\\,")
+        kretschmann = None
+    else:
+        root = "\\sqrt{r\\left(r + q - r_s\\right)}"
+        parameters = ["r_s", "q"]
+        kretschmann = None
+        if system_id == "einstein":
+            coords, name = ["t", "r", "\\theta", "\\phi"], "Einstein Metric, Four Dimensions"
+            domains = ["t" + reals, "r \\in (0, \\infty)"] + angles + [horizon, singular]
+
+            def line(c2):
+                return ("ds^2 = -\\dfrac{r - r_s}{" + root + "}" + c2 + "dt^2 + \\dfrac{" + root + "}{r - r_s}dr^2 + r"
+                        + root + sphere)
+            spec_line, chart_line = line("c^2"), line("")
+        else:
+            coords, name = ["v", "r", "\\theta", "\\phi"], "Einstein Metric, Ingoing Eddington-Finkelstein"
+            domains = ["v" + reals, "r \\in (0, \\infty)"] + angles + [horizon, singular]
+            spec_line = chart_line = ("ds^2 = -\\dfrac{r - r_s}{" + root + "}dv^2 + 2\\,dv\\,dr + r" + root + sphere)
+    probe = vm.Reader(coords, parameters, ())
+    radius = probe.symbol[coords[1]]
+    lead = [radius] + [probe.parameters[s] for s in parameters[1:]] + [probe.parameters["r_s"]]
+    spec = {
+        "metric_id": "kaluza_klein_black_hole",
+        "system": {"id": system_id, "name": name, "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": spec_line},
+        "chart_line_element": chart_line,
+        "printer": {"lead": lead, "flip": False},
+        "components": components,
+        "check": lambda chart, s=system_id: kaluza_klein_check(chart, s),
+        **extra,
+    }
+    if system_id in ("magnetic", "dyonic"):
+        # The potential 1 - cos(theta) mixes the cosine with sin^2(theta) in every value along phi.
+        spec["pretty"] = szekeres_polar(probe.symbol["\\theta"])
+    if kretschmann:
+        spec["kretschmann"] = kretschmann
+    return spec
+
+
+def kaluza_klein_dyon(x, rs, p, q):
+    """The general static dyon in the chart x = (t, r, theta, phi, y) with x^0 = ct: Horowitz and
+    Wiseman's (2.31) to (2.37) at a = 0, in the numbering of arXiv:1107.5563, which is Larsen's
+    and Rasheed's rotating dyon with no rotation and Gibbons and Wiltshire's dyon, with the potential along phi moved by a constant so that it
+    vanishes on theta = 0."""
+    t, r, th, ph, y = x
+    P = sp.sqrt(p * (p ** 2 - rs ** 2) / (p + q)) / 2
+    Q = sp.sqrt(q * (q ** 2 - rs ** 2) / (p + q)) / 2
+    H1 = r ** 2 + r * (p - rs) + p * (p - rs) * (q - rs) / (2 * (p + q))
+    H2 = r ** 2 + r * (q - rs) + q * (p - rs) * (q - rs) / (2 * (p + q))
+    D = r * (r - rs)
+    fibre = sp.Matrix([-2 * Q * (r + (p - rs) / 2) / H2, 0, 0, 2 * P * (1 - sp.cos(th)), 1])
+    g = (H2 / H1) * fibre * fibre.T
+    g[0, 0] += -D / H2
+    g[1, 1] += H1 / D
+    g[2, 2] += H1
+    g[3, 3] += H1 * sp.sin(th) ** 2
+    return g
+
+
+def kaluza_klein_ricci(g, x, point):
+    """The Ricci tensor of g at a point, in forty digits: the parameters are put in first, so
+    the derivatives are of functions of r and theta alone."""
+    n = len(x)
+    ginv = g.inv()
+    gamma = [[[sum(ginv[a, d] * (sp.diff(g[d, b], x[c]) + sp.diff(g[d, c], x[b]) - sp.diff(g[b, c], x[d]))
+                   for d in range(n)) / 2 for c in range(n)] for b in range(n)] for a in range(n)]
+    ricci = sp.zeros(n, n)
+    for b in range(n):
+        for c in range(b, n):
+            value = sum(sp.diff(gamma[a][b][c], x[a]) - sp.diff(gamma[a][b][a], x[c])
+                        + sum(gamma[a][a][d] * gamma[d][b][c] - gamma[a][c][d] * gamma[d][b][a] for d in range(n))
+                        for a in range(n))
+            ricci[b, c] = ricci[c, b] = sp.sympify(value).xreplace(point).evalf(40)
+    return ricci
+
+
+def kaluza_klein_published(metric_id, system_id):
+    """A published chart of another spacetime, as a chart_printer.Chart."""
+    entry = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                 if c["id"] == system_id)
+    reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+    symbols = [reader.symbol[name] for name in entry["coords"]]
+    g = sp.zeros(len(symbols), len(symbols))
+    for e in entry["metric_components"]:
+        i, j = (entry["coords"].index(k) for k in e["indices"])
+        g[i, j] = reader(e["value"])
+    return reader, symbols, g
+
+
+def kaluza_klein_check(chart, system_id):
+    x = chart.symbols
+    rs = chart.reader.parameters["r_s"]
+    g = chart.geo.g
+    n = len(x)
+
+    def same(pulled, what):
+        for i in range(n):
+            for j in range(i, n):
+                if vm.norm(pulled[i, j] - g[i, j]) != 0:
+                    raise AssertionError(f"kaluza_klein_black_hole: {what} misses the {system_id} chart in slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+    def pulled_back(source, image):
+        J = sp.Matrix(len(image), n, lambda i, j: sp.diff(image[i], x[j]))
+        return J.T * source * J
+
+    if system_id in ("einstein", "einstein_eddington_finkelstein"):
+        q = chart.reader.parameters["q"]
+        r, th = x[1], x[2]
+        root = sp.sqrt(r * (r + q - rs))
+        static = sp.diag(-(r - rs) / root, root / (r - rs), r * root, r * root * sp.sin(th) ** 2)
+        if system_id == "einstein":
+            # The reduction of the electric chart: ds_5^2 = e^{-4 phi/sqrt 3}(dy + 2A)^2 + e^{2 phi/sqrt 3} g_4.
+            own = kaluza_klein_black_hole("electric")
+            five = cp.Chart(own["system"]["coords"], own["system"]["parameters"], own["chart_line_element"])
+            at = dict(zip(five.symbols[:4], x))
+            at.update({five.reader.parameters[k]: chart.reader.parameters[k] for k in ("r_s", "q")})
+            g5 = five.geo.g.subs(at, simultaneous=True)
+            scalar = g5[4, 4]                                   # e^{-4 phi/sqrt 3}
+            twoA = [g5[a, 4] / scalar for a in range(4)]
+            reduced = sp.Matrix(4, 4, lambda a, b: sp.sqrt(scalar) * (g5[a, b] - scalar * twoA[a] * twoA[b]))
+            same(reduced, "the electric chart reduced along y")
+            kaluza_klein_field_equations(chart, scalar, [a / 2 for a in twoA])
+        else:
+            # v = ct + r_* with dr_*/dr = sqrt(r(r + q - r_s))/(r - r_s).
+            J = sp.eye(4)
+            J[0, 1] = -root / (r - rs)
+            same(J.T * static * J, "the static Einstein chart pulled back")
+        return
+    if system_id == "eddington_finkelstein_ingoing":
+        # ct = v - cosh(alpha) r_* and y = w - sinh(alpha) r_*, with r_* Schwarzschild's tortoise coordinate.
+        q = chart.reader.parameters["q"]
+        own = kaluza_klein_black_hole("electric")
+        source = cp.Chart(own["system"]["coords"], own["system"]["parameters"], own["chart_line_element"])
+        r = x[1]
+        J = sp.eye(5)
+        J[0, 1] = -sp.sqrt(q / rs) * r / (r - rs)
+        J[4, 1] = -sp.sqrt((q - rs) / rs) * r / (r - rs)
+        at = dict(zip(source.symbols, x))
+        at.update({source.reader.parameters[k]: chart.reader.parameters[k] for k in ("r_s", "q")})
+        same(J.T * source.geo.g.subs(at, simultaneous=True) * J, "the electric chart pulled back")
+        return
+    t, r, th, ph, y = x
+    if system_id == "electric":
+        q = chart.reader.parameters["q"]
+        same(kaluza_klein_dyon(x, rs, rs, q), "the general dyon at p = r_s")
+        # The published black string, boosted: t' = t cosh(alpha) - y sinh(alpha) and
+        # y' = y cosh(alpha) - t sinh(alpha) with cosh^2(alpha) = q/r_s.
+        reader, symbols, string = kaluza_klein_published("black_string", "static")
+        ch, sh = sp.sqrt(q / rs), sp.sqrt((q - rs) / rs)
+        image = [t * ch - y * sh, r, th, ph, y * ch - t * sh]
+        at = dict(zip(symbols, image))
+        at[reader.parameters["r_s"]] = rs
+        same(pulled_back(string.subs(at, simultaneous=True), image), "the published black string boosted")
+        kaluza_klein_vacuum()
+    elif system_id == "magnetic":
+        p = chart.reader.parameters["p"]
+        same(kaluza_klein_dyon(x, rs, p, rs), "the general dyon at q = r_s")
+        # At r_s = 0 it is the published monopole of Gross and Perry and of Sorkin with p = 4m.
+        reader, symbols, monopole = kaluza_klein_published("kaluza_klein_monopole", "gross_perry")
+        at = dict(zip(symbols, x))
+        at[reader.parameters["m"]] = p / 4
+        for i in range(5):
+            for j in range(i, 5):
+                if vm.norm((monopole.subs(at, simultaneous=True)[i, j] - g[i, j]).subs(rs, 0)) != 0:
+                    raise AssertionError("kaluza_klein_black_hole: the magnetic chart at r_s = 0 misses the "
+                                         f"published monopole in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    else:
+        p = chart.reader.parameters["p"]
+        rho = x[1]
+        image = [t, rho - (p - rs) / 2, th, ph, y]
+        general = kaluza_klein_dyon(image, rs, p, p)
+        same(pulled_back(general, image), "the general dyon at q = p")
+        # Without the circle it is the published metric of Reissner and Nordstrom with r_s -> p and
+        # r_q^2 -> (p^2 - r_s^2)/4, and the scalar field is constant: g_yy = 1.
+        reader, symbols, rn = kaluza_klein_published("rn_metric", "spherical")
+        at = dict(zip(symbols, x[:4]))
+        at.update({reader.parameters["r_s"]: p, reader.parameters["r_q"]: sp.sqrt(p ** 2 - rs ** 2) / 2})
+        rn = rn.subs(at, simultaneous=True)
+        if g[4, 4] != 1:
+            raise AssertionError("kaluza_klein_black_hole: the circle of the dyonic chart is not of constant length")
+        for a in range(4):
+            for b in range(a, 4):
+                if vm.norm(g[a, b] - g[a, 4] * g[b, 4] - rn[a, b]) != 0:
+                    raise AssertionError("kaluza_klein_black_hole: the dyonic chart reduced misses the published "
+                                         f"Reissner-Nordstrom metric in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
+
+
+def kaluza_klein_vacuum():
+    """The general dyon is a vacuum: its Ricci tensor at six random points, in forty digits."""
+    x = sp.symbols("t r theta phi y", real=True)
+    rs, p, q = sp.symbols("r_s p q", positive=True)
+    g = kaluza_klein_dyon(x, rs, p, q)
+    rng = random.Random(1986)
+    for _ in range(6):
+        size = sp.Rational(rng.randint(500, 1500), 1000)
+        values = {rs: size, p: size + sp.Rational(rng.randint(100, 2000), 1000),
+                  q: size + sp.Rational(rng.randint(100, 2000), 1000)}
+        point = {x[1]: size + sp.Rational(rng.randint(100, 3000), 1000), x[2]: sp.Rational(rng.randint(300, 2800), 1000)}
+        ricci = kaluza_klein_ricci(g.subs(values), x, point)
+        scale = max(abs(complex(e)) for e in g.subs(values).xreplace(point).evalf(40))
+        if max(abs(complex(e)) for e in ricci) > 1e-25 * scale:
+            raise AssertionError(f"kaluza_klein_black_hole: the general dyon is not a vacuum at {values}, {point}")
+
+
+def kaluza_klein_field_equations(chart, scalar, A):
+    """The equations of four dimensions, Horowitz and Wiseman's (2.4) to (2.6), for the Einstein
+    metric of the electric hole with e^{-4 phi/sqrt 3} = `scalar` and the potential A:
+    G_ab = 2 d_a phi d_b phi - g_ab (d phi)^2 + 2 e^{-2 sqrt 3 phi}(F_ac F_b^c - g_ab F^2/4),
+    d_a(sqrt(-g) e^{-2 sqrt 3 phi} F^ab) = 0, and box phi = -(sqrt 3/2) e^{-2 sqrt 3 phi} F^2.
+    Compared at six random points in forty digits, since the metric carries a square root."""
+    x = chart.symbols
+    rs, q = chart.reader.parameters["r_s"], chart.reader.parameters["q"]
+    g, ginv = chart.geo.g, chart.geo.ginv
+    phi = -sp.sqrt(3) * sp.log(scalar) / 4
+    e = scalar ** sp.Rational(3, 2)                       # e^{-2 sqrt 3 phi}
+    dphi = [sp.diff(phi, c) for c in x]
+    F = sp.Matrix(4, 4, lambda a, b: sp.diff(A[b], x[a]) - sp.diff(A[a], x[b]))
+    Fup = ginv * F * ginv
+    F2 = sum(F[a, b] * Fup[a, b] for a in range(4) for b in range(4))
+    dphi2 = sum(ginv[a, b] * dphi[a] * dphi[b] for a in range(4) for b in range(4))
+    G = chart.geo.einstein_ll()
+    root = sp.sqrt(-g.det())
+    maxwell = [sum(sp.diff(root * e * Fup[a, b], x[a]) for a in range(4)) for b in range(4)]
+    box = sum(sp.diff(root * ginv[a, b] * dphi[b], x[a]) for a in range(4) for b in range(4)) / root
+    rng = random.Random(2012)
+    for _ in range(6):
+        size = sp.Rational(rng.randint(500, 1500), 1000)
+        point = {rs: size, q: size + sp.Rational(rng.randint(100, 2000), 1000),
+                 x[1]: size + sp.Rational(rng.randint(100, 3000), 1000), x[2]: sp.Rational(rng.randint(300, 2800), 1000)}
+        at = lambda value: complex(sp.sympify(value).xreplace(point).evalf(40))
+        for a in range(4):
+            for b in range(a, 4):
+                FF = sum(F[a, c] * F[b, d] * ginv[c, d] for c in range(4) for d in range(4))
+                T = 2 * dphi[a] * dphi[b] - g[a, b] * dphi2 + 2 * e * (FF - g[a, b] * F2 / 4)
+                if abs(at(vm._at(G, (a, b)) - T)) > 1e-25:
+                    raise AssertionError("kaluza_klein_black_hole: the Einstein tensor of four dimensions misses the "
+                                         f"stress of the Maxwell field and the scalar in slot {(a, b)}")
+        if any(abs(at(m)) > 1e-25 for m in maxwell):
+            raise AssertionError("kaluza_klein_black_hole: Maxwell's equations fail in four dimensions")
+        if abs(at(box + sp.sqrt(3) * e * F2 / 2)) > 1e-25:
+            raise AssertionError("kaluza_klein_black_hole: the scalar's equation fails in four dimensions")
+
+
+CHARTS["kaluza_klein_black_hole"] = [lambda s=s: kaluza_klein_black_hole(s) for s in KKBH_CHARTS]
 
 
 def write(spec):

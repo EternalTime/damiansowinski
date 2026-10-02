@@ -69,6 +69,11 @@
       "id": "witten_black_hole",
       "kind": "limit",
       "text": "In the limit of the extremal magnetic charge, the region around the horizon is closely approximated by Witten's black hole in two dimensions times a sphere [giddings1992]."
+    },
+    {
+      "id": "kaluza_klein_black_hole",
+      "kind": "family",
+      "text": "The charged holes of Kaluza and Klein's theory, where the scalar field couples with strength $\\sqrt{3}$ and records the length of a fifth dimension. Their extremal limit has a horizon of zero area too, unless both charges are present [horowitz2012]."
     }
   ],
   "references": [
@@ -88,7 +93,8 @@
     "hirschmann2018",
     "mizuno2018",
     "kocherlakota2021",
-    "duff1994"
+    "duff1994",
+    "horowitz2012"
   ],
   "coordinates": [
     {

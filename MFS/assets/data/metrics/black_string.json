@@ -54,6 +54,11 @@
       "id": "randall_sundrum",
       "kind": "family",
       "text": "A wall in anti-de Sitter space of five dimensions, on which Schwarzschild's black hole is a black string that reaches away from the wall into the fifth [chamblin2000]."
+    },
+    {
+      "id": "kaluza_klein_black_hole",
+      "kind": "generalisation",
+      "text": "The black string with its extra direction a circle, set moving around it. Seen from four dimensions the moving string is an electrically charged black hole [horowitz2012]."
     }
   ],
   "references": [
@@ -75,7 +80,8 @@
     "figueras2016",
     "figueras2023",
     "grossperry1983",
-    "chamblin2000"
+    "chamblin2000",
+    "horowitz2012"
   ],
   "coordinates": [
     {

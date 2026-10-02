@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 97,
+  "count": 98,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -71,6 +71,11 @@
           "id": "siklos",
           "kind": "family",
           "text": "The counterparts of the pp-waves in anti-de Sitter space. Squeezed onto one front, a Siklos wave is the field of a null particle there [podolsky1998impulsive]."
+        },
+        {
+          "id": "kaluza_klein_black_hole",
+          "kind": "family",
+          "text": "A black string moving around a small fifth dimension is a charged black hole to four dimensions. At the speed of light it is a wave of this kind in five dimensions [horowitz2012]."
         }
       ],
       "references": [
@@ -98,7 +103,8 @@
         "east2013",
         "garfinkle1990",
         "khan1971",
-        "podolsky1998impulsive"
+        "podolsky1998impulsive",
+        "horowitz2012"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/aichelburg_sexl.json",
@@ -2620,6 +2626,11 @@
           "id": "randall_sundrum",
           "kind": "family",
           "text": "A wall in anti-de Sitter space of five dimensions, on which Schwarzschild's black hole is a black string that reaches away from the wall into the fifth [chamblin2000]."
+        },
+        {
+          "id": "kaluza_klein_black_hole",
+          "kind": "generalisation",
+          "text": "The black string with its extra direction a circle, set moving around it. Seen from four dimensions the moving string is an electrically charged black hole [horowitz2012]."
         }
       ],
       "references": [
@@ -2641,7 +2652,8 @@
         "figueras2016",
         "figueras2023",
         "grossperry1983",
-        "chamblin2000"
+        "chamblin2000",
+        "horowitz2012"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/black_string.json",
@@ -5546,6 +5558,11 @@
           "id": "witten_black_hole",
           "kind": "limit",
           "text": "In the limit of the extremal magnetic charge, the region around the horizon is closely approximated by Witten's black hole in two dimensions times a sphere [giddings1992]."
+        },
+        {
+          "id": "kaluza_klein_black_hole",
+          "kind": "family",
+          "text": "The charged holes of Kaluza and Klein's theory, where the scalar field couples with strength $\\sqrt{3}$ and records the length of a fifth dimension. Their extremal limit has a horizon of zero area too, unless both charges are present [horowitz2012]."
         }
       ],
       "references": [
@@ -5565,7 +5582,8 @@
         "hirschmann2018",
         "mizuno2018",
         "kocherlakota2021",
-        "duff1994"
+        "duff1994",
+        "horowitz2012"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dilaton_black_hole.json",
@@ -10552,6 +10570,624 @@
       ]
     },
     {
+      "id": "kaluza_klein_black_hole",
+      "name": "Kaluza-Klein Black Holes",
+      "short_name": "Kaluza-Klein Black Holes",
+      "description": "The charged black holes of gravity in five dimensions with the fifth dimension a small circle, vacuum solutions that four dimensions see as black holes with an electric charge, a magnetic charge, or both, and a scalar field. The electric hole is Schwarzschild's black string set moving around the circle, and Gary Gibbons and David Wiltshire classified the family in 1986.",
+      "tags": [
+        "vacuum",
+        "stationary",
+        "static",
+        "five-dimensional",
+        "four-dimensional",
+        "black hole",
+        "charged black hole",
+        "charged",
+        "electric charge",
+        "magnetic charge",
+        "dyon",
+        "Kaluza-Klein",
+        "compact dimension",
+        "higher dimensions",
+        "black string",
+        "boosted black hole",
+        "magnetic monopole",
+        "Dirac string",
+        "dilaton",
+        "scalar field",
+        "Einstein-Maxwell-dilaton",
+        "ergoregion",
+        "horizon",
+        "event horizon",
+        "inner horizon",
+        "curvature singularity",
+        "extremal",
+        "maximal extension",
+        "causal structure",
+        "black hole thermodynamics",
+        "string theory",
+        "Gregory-Laflamme instability",
+        "Gibbons-Wiltshire",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+,+)",
+      "convention": "The lengths $r_s$, $q$, and $p$ fix the mass and the charges. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "black_string",
+          "kind": "special_case",
+          "text": "The hole with no charge, $q = r_s$ and $p = r_s$: Schwarzschild's black hole at every point of the circle. Set it moving around the circle and it is the electric hole [horowitz2012]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "special_case",
+          "text": "The magnetic hole with its horizon taken away, $r_s = 0$, where $p = 4m$. The circle then closes smoothly at $r = 0$ and no singularity is left [horowitz2012]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "piece",
+          "text": "With equal electric and magnetic charges the scalar field is constant, and the metric orthogonal to the circles is Reissner and Nordström's, with both of its horizons [larsen2000]."
+        },
+        {
+          "id": "dilaton_black_hole",
+          "kind": "family",
+          "text": "The charged black hole of string theory, whose scalar field couples to the Maxwell field with strength $1$ where Kaluza and Klein's couples with strength $\\sqrt{3}$. Gibbons and Maeda found the charged holes for every coupling [gibbons1988, rasheed1995]."
+        },
+        {
+          "id": "aichelburg_sexl",
+          "kind": "family",
+          "text": "The electric hole at the speed of light, $r_s = 0$ with $q$ held fixed, is a plane fronted wave in five dimensions with the profile $q/r$, the counterpart there of Aichelburg and Sexl's shock [horowitz2012]."
+        }
+      ],
+      "references": [
+        "kaluza1921",
+        "klein1926",
+        "duff1994",
+        "horowitz2012",
+        "rasheed1995",
+        "dobiasch1982",
+        "chodos1982",
+        "pollard1983",
+        "gibbonswiltshire1986",
+        "grossperry1983",
+        "sorkin1983",
+        "larsen2000",
+        "emparan2006",
+        "hovdebo2006",
+        "gibbons1988"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_black_hole.json",
+      "charts": [
+        {
+          "id": "electric",
+          "name": "Electric Charge",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi",
+            "y"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "y \\in [0, L)",
+            "r = r_s \\;\\text{(the horizon)}",
+            "r = 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Radius of the horizon, the Schwarzschild radius of the black string before the boost"
+            },
+            {
+              "symbol": "q",
+              "description": "Charge length, $q = r_s\\cosh^2\\alpha$ for a boost of rapidity $\\alpha$ along the circle; $q \\ge r_s$, and $q = r_s$ is no charge. In units with $G = c = 1$ in four dimensions the mass is $M = (q + r_s)/4$ and the electric charge $Q = \\sqrt{q(q - r_s)}/2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi, y)$, Schwarzschild's with the length $y$ around the fifth dimension added, and $t$ carrying dimensions of time. The circle of $y$ has any length $L$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{q}{r}\\right)c^2dt^2 - \\dfrac{2\\sqrt{q\\left(q - r_s\\right)}}{r}c\\,dt\\,dy + \\left(1 + \\dfrac{q - r_s}{r}\\right)dy^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{q}{r}\\right)"
+            },
+            {
+              "indices": [
+                "t",
+                "y"
+              ],
+              "value": "-\\dfrac{\\sqrt{q\\left(q - r_s\\right)}}{r}"
+            },
+            {
+              "indices": [
+                "y",
+                "t"
+              ],
+              "value": "-\\dfrac{\\sqrt{q\\left(q - r_s\\right)}}{r}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1 + \\dfrac{q - r_s}{r}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi",
+            "w"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "w \\in [0, L)",
+            "r = r_s \\;\\text{(the horizon)}",
+            "r = 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Radius of the horizon, the Schwarzschild radius of the black string before the boost"
+            },
+            {
+              "symbol": "q",
+              "description": "Charge length, $q = r_s\\cosh^2\\alpha$ for a boost of rapidity $\\alpha$ along the circle; $q \\ge r_s$, and $q = r_s$ is no charge. In units with $G = c = 1$ in four dimensions the mass is $M = (q + r_s)/4$ and the electric charge $Q = \\sqrt{q(q - r_s)}/2$"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi, w)$, with $v = ct + \\sqrt{q/r_s}\\,r_*$ and $w = y + \\sqrt{(q - r_s)/r_s}\\,r_*$ both lengths, where $r_* = r + r_s\\ln\\left|r/r_s - 1\\right|$. The circle of $w$ has any length $L$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{q}{r}\\right)dv^2 - \\dfrac{2\\sqrt{q\\left(q - r_s\\right)}}{r}dv\\,dw + \\left(1 + \\dfrac{q - r_s}{r}\\right)dw^2 + 2\\sqrt{\\dfrac{q}{r_s}}\\,dv\\,dr - 2\\sqrt{\\dfrac{q - r_s}{r_s}}\\,dw\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{q}{r}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "\\sqrt{\\dfrac{q}{r_s}}"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "\\sqrt{\\dfrac{q}{r_s}}"
+            },
+            {
+              "indices": [
+                "v",
+                "w"
+              ],
+              "value": "-\\dfrac{\\sqrt{q\\left(q - r_s\\right)}}{r}"
+            },
+            {
+              "indices": [
+                "w",
+                "v"
+              ],
+              "value": "-\\dfrac{\\sqrt{q\\left(q - r_s\\right)}}{r}"
+            },
+            {
+              "indices": [
+                "r",
+                "w"
+              ],
+              "value": "-\\sqrt{\\dfrac{q - r_s}{r_s}}"
+            },
+            {
+              "indices": [
+                "w",
+                "r"
+              ],
+              "value": "-\\sqrt{\\dfrac{q - r_s}{r_s}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "1 + \\dfrac{q - r_s}{r}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "magnetic",
+          "name": "Magnetic Charge",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi",
+            "y"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "y \\in \\left[0, 4\\pi\\sqrt{p\\left(p - r_s\\right)}\\right)",
+            "r = r_s \\;\\text{(the horizon)}",
+            "r = 0 \\;\\text{(the singularity)}",
+            "\\theta = \\pi \\;\\text{(the Dirac string, a coordinate singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Radius of the horizon"
+            },
+            {
+              "symbol": "p",
+              "description": "Charge length; $p \\ge r_s$, and $p = r_s$ is no charge. In units with $G = c = 1$ in four dimensions the mass is $M = (p + r_s)/4$ and the magnetic charge $P = \\sqrt{p(p - r_s)}/2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi, y)$, with $t$ carrying dimensions of time and the fifth coordinate $y$ a length, periodic with period $4\\pi\\sqrt{p(p - r_s)}$. The potential $A_\\phi = \\tfrac{1}{2}\\sqrt{p(p - r_s)}\\,(1 - \\cos\\theta)$ vanishes on the half axis $\\theta = 0$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\left(1 + \\dfrac{p - r_s}{r}\\right)\\left(\\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right) + \\left(1 + \\dfrac{p - r_s}{r}\\right)^{-1}\\left(dy + \\sqrt{p\\left(p - r_s\\right)}\\left(1 - \\cos\\theta\\right)d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r + p - r_s}{r - r_s}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r\\left(r + p - r_s\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r\\left(r + p - r_s\\right)\\sin^2\\theta + \\dfrac{p\\,r\\left(p - r_s\\right)\\left(1 - \\cos\\theta\\right)^2}{r + p - r_s}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "y"
+              ],
+              "value": "-\\dfrac{r\\,\\sqrt{p}\\sqrt{p - r_s}\\left(\\cos\\theta - 1\\right)}{r + p - r_s}"
+            },
+            {
+              "indices": [
+                "y",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{r\\,\\sqrt{p}\\sqrt{p - r_s}\\left(\\cos\\theta - 1\\right)}{r + p - r_s}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{r}{r + p - r_s}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{48r^4\\,p^2 - 48r^4\\,p\\,r_s + 24r^4\\,r_s^2 - 48r^3\\,p^2\\,r_s + 120r^3\\,p\\,r_s^2 - 72r^3\\,r_s^3 + 81r^2\\,p^2\\,r_s^2 - 162r^2\\,p\\,r_s^3 + 81r^2\\,r_s^4 + 42r\\,p^3\\,r_s^2 - 126r\\,p^2\\,r_s^3 + 126r\\,p\\,r_s^4 - 42r\\,r_s^5 + 9p^4\\,r_s^2 - 36p^3\\,r_s^3 + 54p^2\\,r_s^4 - 36p\\,r_s^5 + 9r_s^6}{2r^4\\left(r + p - r_s\\right)^6}"
+        },
+        {
+          "id": "dyonic",
+          "name": "Equal Charges",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\theta",
+            "\\phi",
+            "y"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "y \\in \\left[0, 4\\pi\\sqrt{\\tfrac{1}{2}\\left(p^2 - r_s^2\\right)}\\right)",
+            "\\rho = \\tfrac{1}{2}\\left(p + r_s\\right) \\;\\text{(the outer horizon)}",
+            "\\rho = \\tfrac{1}{2}\\left(p - r_s\\right) \\;\\text{(the inner horizon)}",
+            "\\rho = 0 \\;\\text{(the singularity)}",
+            "\\theta = \\pi \\;\\text{(the Dirac string, a coordinate singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Difference of the radii of the two horizons, $\\rho = (p \\pm r_s)/2$"
+            },
+            {
+              "symbol": "p",
+              "description": "Sum of the radii of the two horizons; $p \\ge r_s$, and $p = r_s$ is no charge. In units with $G = c = 1$ in four dimensions the mass is $M = p/2$ and the electric and magnetic charges are equal, $Q = P = \\sqrt{(p^2 - r_s^2)/8}$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\theta, \\phi, y)$, with $t$ carrying dimensions of time, $\\rho$ the areal radius, and the fifth coordinate $y$ a length, periodic with period $4\\pi\\sqrt{(p^2 - r_s^2)/2}$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{p + r_s}{2\\rho}\\right)\\left(1 - \\dfrac{p - r_s}{2\\rho}\\right)c^2dt^2 + \\dfrac{d\\rho^2}{\\left(1 - \\dfrac{p + r_s}{2\\rho}\\right)\\left(1 - \\dfrac{p - r_s}{2\\rho}\\right)} + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\left(dy - \\dfrac{1}{\\rho}\\sqrt{\\dfrac{p^2 - r_s^2}{2}}\\,c\\,dt + \\sqrt{\\dfrac{p^2 - r_s^2}{2}}\\left(1 - \\cos\\theta\\right)d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{4\\rho^2 - 4\\rho\\,p - p^2 + r_s^2}{4\\rho^2}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(\\cos\\theta - 1\\right)\\left(p + r_s\\right)\\left(p - r_s\\right)}{2\\rho}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "\\dfrac{\\left(\\cos\\theta - 1\\right)\\left(p + r_s\\right)\\left(p - r_s\\right)}{2\\rho}"
+            },
+            {
+              "indices": [
+                "t",
+                "y"
+              ],
+              "value": "-\\dfrac{\\sqrt{2}\\sqrt{p + r_s}\\sqrt{p - r_s}}{2\\rho}"
+            },
+            {
+              "indices": [
+                "y",
+                "t"
+              ],
+              "value": "-\\dfrac{\\sqrt{2}\\sqrt{p + r_s}\\sqrt{p - r_s}}{2\\rho}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{4\\rho^2}{\\left(2\\rho - p - r_s\\right)\\left(2\\rho - p + r_s\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\rho^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{\\left(\\cos\\theta - 1\\right)\\left(2\\rho^2\\cos\\theta + 2\\rho^2 - p^2\\cos\\theta + p^2 + r_s^2\\cos\\theta - r_s^2\\right)}{2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "y"
+              ],
+              "value": "-\\dfrac{\\sqrt{2}\\sqrt{p + r_s}\\sqrt{p - r_s}\\left(\\cos\\theta - 1\\right)}{2}"
+            },
+            {
+              "indices": [
+                "y",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{\\sqrt{2}\\sqrt{p + r_s}\\sqrt{p - r_s}\\left(\\cos\\theta - 1\\right)}{2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{96\\rho^2\\,p^2 - 96\\rho\\,p^3 + 96\\rho\\,p\\,r_s^2 + 21p^4 - 42p^2\\,r_s^2 + 21r_s^4}{8\\rho^8}"
+        },
+        {
+          "id": "einstein",
+          "name": "Einstein Metric, Four Dimensions",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s \\;\\text{(the horizon)}",
+            "r = 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Radius of the horizon"
+            },
+            {
+              "symbol": "q",
+              "description": "Charge length, $q = r_s\\cosh^2\\alpha$ for a boost of rapidity $\\alpha$ along the circle; $q \\ge r_s$, and $q = r_s$ is no charge. In units with $G = c = 1$ in four dimensions the mass is $M = (q + r_s)/4$ and the electric charge $Q = \\sqrt{q(q - r_s)}/2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time, and take components of the Einstein metric $g_{\\mu\\nu}$ of four dimensions, where $ds_5^2 = e^{-4\\varphi/\\sqrt{3}}(dy + 2A_\\mu dx^\\mu)^2 + e^{2\\varphi/\\sqrt{3}}g_{\\mu\\nu}dx^\\mu dx^\\nu$, in the chart $x^0 = ct$. The magnetic hole has the same metric with $p$ in place of $q$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{r - r_s}{\\sqrt{r\\left(r + q - r_s\\right)}}c^2dt^2 + \\dfrac{\\sqrt{r\\left(r + q - r_s\\right)}}{r - r_s}dr^2 + r\\sqrt{r\\left(r + q - r_s\\right)}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r - r_s}{\\sqrt{r}\\sqrt{r + q - r_s}}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\sqrt{r}\\sqrt{r + q - r_s}}{r - r_s}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^{3/2}\\sqrt{r + q - r_s}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^{3/2}\\sqrt{r + q - r_s}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{3\\left(q - r_s\\right)^2\\left(r - r_s\\right)}{8r^{5/2}\\left(r + q - r_s\\right)^{5/2}}",
+          "kretschmann": "K = \\dfrac{192r^4\\,q^2 + 384r^4\\,q\\,r_s + 192r^4\\,r_s^2 + 192r^3\\,q^3 + 768r^3\\,q^2\\,r_s - 192r^3\\,q\\,r_s^2 - 768r^3\\,r_s^3 + 71r^2\\,q^4 + 620r^2\\,q^3\\,r_s - 286r^2\\,q^2\\,r_s^2 - 1572r^2\\,q\\,r_s^3 + 1167r^2\\,r_s^4 + 186r\\,q^4\\,r_s + 240r\\,q^3\\,r_s^2 - 1836r\\,q^2\\,r_s^3 + 2208r\\,q\\,r_s^4 - 798r\\,r_s^5 + 207q^4\\,r_s^2 - 828q^3\\,r_s^3 + 1242q^2\\,r_s^4 - 828q\\,r_s^5 + 207r_s^6}{64r^5\\left(r + q - r_s\\right)^5}"
+        },
+        {
+          "id": "einstein_eddington_finkelstein",
+          "name": "Einstein Metric, Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s \\;\\text{(the horizon)}",
+            "r = 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Radius of the horizon"
+            },
+            {
+              "symbol": "q",
+              "description": "Charge length, $q = r_s\\cosh^2\\alpha$ for a boost of rapidity $\\alpha$ along the circle; $q \\ge r_s$, and $q = r_s$ is no charge. In units with $G = c = 1$ in four dimensions the mass is $M = (q + r_s)/4$ and the electric charge $Q = \\sqrt{q(q - r_s)}/2$"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$ on the Einstein metric of four dimensions, with the advanced time $v = ct + r_*$ a length, where $dr_*/dr = \\sqrt{r(r + q - r_s)}/(r - r_s)$ and $r_* = 0$ at $r = 0$.",
+          "line_element": "ds^2 = -\\dfrac{r - r_s}{\\sqrt{r\\left(r + q - r_s\\right)}}dv^2 + 2\\,dv\\,dr + r\\sqrt{r\\left(r + q - r_s\\right)}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\dfrac{r - r_s}{\\sqrt{r}\\sqrt{r + q - r_s}}"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^{3/2}\\sqrt{r + q - r_s}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^{3/2}\\sqrt{r + q - r_s}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{3\\left(q - r_s\\right)^2\\left(r - r_s\\right)}{8r^{5/2}\\left(r + q - r_s\\right)^{5/2}}",
+          "kretschmann": "K = \\dfrac{192r^4\\,q^2 + 384r^4\\,q\\,r_s + 192r^4\\,r_s^2 + 192r^3\\,q^3 + 768r^3\\,q^2\\,r_s - 192r^3\\,q\\,r_s^2 - 768r^3\\,r_s^3 + 71r^2\\,q^4 + 620r^2\\,q^3\\,r_s - 286r^2\\,q^2\\,r_s^2 - 1572r^2\\,q\\,r_s^3 + 1167r^2\\,r_s^4 + 186r\\,q^4\\,r_s + 240r\\,q^3\\,r_s^2 - 1836r\\,q^2\\,r_s^3 + 2208r\\,q\\,r_s^4 - 798r\\,r_s^5 + 207q^4\\,r_s^2 - 828q^3\\,r_s^3 + 1242q^2\\,r_s^4 - 828q\\,r_s^5 + 207r_s^6}{64r^5\\left(r + q - r_s\\right)^5}"
+        }
+      ]
+    },
+    {
       "id": "kaluza_klein_monopole",
       "name": "Kaluza-Klein Monopole",
       "short_name": "Kaluza-Klein Monopole",
@@ -10619,6 +11255,11 @@
           "id": "randall_sundrum",
           "kind": "family",
           "text": "A fifth dimension of infinite size, with gravity held near a wall by the curvature of anti-de Sitter space [randall1999b]."
+        },
+        {
+          "id": "kaluza_klein_black_hole",
+          "kind": "generalisation",
+          "text": "The monopole with a horizon around it, together with its electric and dyonic relatives. At $r_s = 0$ the magnetic hole is the monopole, with $p = 4m$ [horowitz2012]."
         }
       ],
       "references": [
@@ -10639,7 +11280,8 @@
         "townsend1995",
         "gregory2012",
         "emparan2008",
-        "randall1999b"
+        "randall1999b",
+        "horowitz2012"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_monopole.json",
@@ -20322,6 +20964,11 @@
           "id": "mass_inflation",
           "kind": "generalisation",
           "text": "The same hole with radiation crossing its interior. Eric Poisson and Werner Israel sent two streams of light through it in 1989 and found the mass function growing without limit at the inner horizon [poisson1989]."
+        },
+        {
+          "id": "kaluza_klein_black_hole",
+          "kind": "composite",
+          "text": "Give every point a small circle and twist it by the potentials of equal electric and magnetic charges, and Reissner and Nordström's black hole solves the vacuum equations of five dimensions [larsen2000]."
         }
       ],
       "references": [
@@ -20354,7 +21001,8 @@
         "einstein1935",
         "chamblin1999",
         "kiselev2003",
-        "visser2020"
+        "visser2020",
+        "larsen2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",

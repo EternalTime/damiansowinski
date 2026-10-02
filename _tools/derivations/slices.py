@@ -278,6 +278,38 @@ def dilaton_t(sign):
     return [Mark(m, [np.column_stack([sign * (r + np.log(r - 1)), r])])]
 
 
+def kkbh_smooth(r, a=1.0):
+    """The part of the Kaluza-Klein black holes' tortoise coordinate that is smooth through the
+    horizon, at r_s = 1 with a = q - r_s or p - r_s: r_* less sqrt(1 + a) ln|r - 1|, where
+    r_* = s + (1 + a/2) ln((2s + 2r + a)/a) - sqrt(1 + a) ln(((a + 2) r + a + 2 sqrt(1 + a) s)/(a |r - 1|))
+    with s = sqrt(r(r + a)) is the integral of sqrt(r(r + a))/(r - 1) from the singularity r = 0."""
+    r = np.maximum(np.asarray(r, dtype=float), 0.0)
+    s = np.sqrt(r * (r + a))
+    k = math.sqrt(1 + a)
+    return s + (1 + a / 2) * np.log((2 * s + 2 * r + a) / a) - k * np.log(((a + 2) * r + a + 2 * k * s) / a)
+
+
+def kkbh_rstar(r, a=1.0):
+    """The tortoise coordinate of a Kaluza-Klein black hole of one charge at r_s = 1, zero at r = 0:
+    dr_*/dr = sqrt(r(r + a))/(r - 1), the rays with no momentum along the circle and the rays of
+    the Einstein metric of four dimensions alike."""
+    with np.errstate(divide="ignore"):
+        return kkbh_smooth(r, a) + math.sqrt(1 + a) * np.log(np.abs(np.asarray(r, dtype=float) - 1))
+
+
+def kkbh_t(view_id):
+    """The static t = 0 of a Kaluza-Klein black hole of one charge, q = 2 r_s, in its ingoing
+    charts, outside r_s, as far as the embedding reaches: v = sqrt(q/r_s) (r + r_s ln(r/r_s - 1)) in
+    the chart of five dimensions, whose v is built on Schwarzschild's tortoise coordinate, and
+    v = r_* in the Einstein metric's chart."""
+    system = {"electric": "electric", "einstein": "einstein"}[view_id]
+    m = moments("kaluza_klein_black_hole", view_id)[0]
+    lo, hi = m.reach(system, "r")
+    r = near(lo, hi)
+    v = math.sqrt(2) * (r + np.log(r - 1)) if view_id == "electric" else kkbh_rstar(r)
+    return [Mark(m, [np.column_stack([v, r])])]
+
+
 def tangherlini_t(sign):
     """Tangherlini's static t = 0 in five dimensions in an Eddington-Finkelstein chart, r_h = 1:
     v = r_* in the ingoing chart and u = -r_* in the outgoing one, r_* = r + ln((r - 1)/(r + 1))/2,
@@ -1562,6 +1594,11 @@ FLAT = {
         "kaluza_klein_monopole", lambda m: along(0.0, *m.reach("gross_perry", "r"))),
     ("kaluza_klein_monopole", "taub_nut", "radial"): lambda: one(
         "kaluza_klein_monopole", lambda m: along(0.0, *(r + 2 for r in m.reach("gross_perry", "r")))),
+    **{("kaluza_klein_black_hole", system, "radial"): lambda system=system: one(
+        "kaluza_klein_black_hole", lambda m: along(0.0, *m.reach(system, "r")), view_id=system)
+       for system in ("electric", "magnetic", "einstein")},
+    ("kaluza_klein_black_hole", "eddington_finkelstein_ingoing", "finkelstein"): lambda: kkbh_t("electric"),
+    ("kaluza_klein_black_hole", "einstein_eddington_finkelstein", "finkelstein"): lambda: kkbh_t("einstein"),
     # Letelier's black hole, r_s = 1, on the static and Eddington-Finkelstein planes, and the monopole
     # with no mass at its centre on the Barriola-Vilenkin plane; each is another spacetime than the other.
     ("string_black_hole", "static", "radial"): lambda: string_hole(),
@@ -1873,6 +1910,8 @@ HIDDEN = {
     ("vaidya", "eddington_finkelstein_outgoing", "shell"): "the exploding shell, the time reverse of the imploding shell embedded",
     ("bonnor_vaidya", "eddington_finkelstein_outgoing", "shell"): "the leaving shell, the time reverse of the falling shell embedded",
     ("bonnor_vaidya", "leaving"): "the leaving shell, the time reverse of the falling shell embedded",
+    ("kaluza_klein_black_hole", "dyonic", "radial"): "the hole of equal charges, another member of the family than the holes of one charge embedded",
+    ("kaluza_klein_black_hole", "equal"): "the hole of equal charges, another member of the family than the holes of one charge embedded",
     ("bonnor_vaidya", "homothetic", "scaling"): "the collapse of a mass and a charge that grow with the advanced time, another spacetime than the shell embedded",
     ("mass_inflation", "ingoing", "behind"): "behind Ori's shell, where the mass function is another one than the tail's, whose moments are embedded",
     ("mass_inflation", "shell"): "Ori's shell and the region behind it, another spacetime than the tail falling in alone, whose moments are embedded",

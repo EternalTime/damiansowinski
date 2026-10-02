@@ -119,6 +119,11 @@
       "id": "mass_inflation",
       "kind": "generalisation",
       "text": "The same hole with radiation crossing its interior. Eric Poisson and Werner Israel sent two streams of light through it in 1989 and found the mass function growing without limit at the inner horizon [poisson1989]."
+    },
+    {
+      "id": "kaluza_klein_black_hole",
+      "kind": "composite",
+      "text": "Give every point a small circle and twist it by the potentials of equal electric and magnetic charges, and Reissner and Nordström's black hole solves the vacuum equations of five dimensions [larsen2000]."
     }
   ],
   "references": [
@@ -151,7 +156,8 @@
     "einstein1935",
     "chamblin1999",
     "kiselev2003",
-    "visser2020"
+    "visser2020",
+    "larsen2000"
   ],
   "coordinates": [
     {

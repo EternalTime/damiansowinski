@@ -20,7 +20,7 @@
       "idealized model",
       "Petrov type N"
     ],
-    "version": "271eea1d0c1064e6",
+    "version": "40acff4d4b027173",
     "diagrams": "a6fabc19c0e551be",
     "conformal": "2771060b42b8605b",
     "embedding": "9b0e2bc9b72fa37e"
@@ -289,7 +289,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "bd51e68073f8f0d0",
+    "version": "696baa8b2518dd5f",
     "diagrams": "54fe7a1cf641db39",
     "conformal": "ef75cb2ee29e15d6",
     "embedding": "6f1faae1e35e650b"
@@ -587,7 +587,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8f855cbd7df843c7",
+    "version": "cb6c66bed190e2be",
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc"
@@ -1033,6 +1033,53 @@
     "embedding": "5ff5b48da9e6b5f3"
   },
   {
+    "id": "kaluza_klein_black_hole",
+    "name": "Kaluza-Klein Black Holes",
+    "tags": [
+      "vacuum",
+      "stationary",
+      "static",
+      "five-dimensional",
+      "four-dimensional",
+      "black hole",
+      "charged black hole",
+      "charged",
+      "electric charge",
+      "magnetic charge",
+      "dyon",
+      "Kaluza-Klein",
+      "compact dimension",
+      "higher dimensions",
+      "black string",
+      "boosted black hole",
+      "magnetic monopole",
+      "Dirac string",
+      "dilaton",
+      "scalar field",
+      "Einstein-Maxwell-dilaton",
+      "ergoregion",
+      "horizon",
+      "event horizon",
+      "inner horizon",
+      "curvature singularity",
+      "extremal",
+      "maximal extension",
+      "causal structure",
+      "black hole thermodynamics",
+      "string theory",
+      "Gregory-Laflamme instability",
+      "Gibbons-Wiltshire",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "32c246f1e279d351",
+    "diagrams": "90d54985332dcf14",
+    "conformal": "47650710de79f09c",
+    "embedding": "3daf392852ed147c"
+  },
+  {
     "id": "kaluza_klein_monopole",
     "name": "Kaluza-Klein Monopole",
     "tags": [
@@ -1061,7 +1108,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "f3033c4e2f69edd6",
+    "version": "d74cb7773cf3e2ea",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -2045,7 +2092,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8e268a80e63ea90e",
+    "version": "55e3ae17bbb4346b",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
