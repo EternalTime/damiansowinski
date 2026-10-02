@@ -5190,6 +5190,108 @@ def dilaton_black_hole(ck, src):
     return views
 
 
+SBC_THROAT_LO = 1 / 50
+
+
+def string_bh_three_four_charges(ck, src):
+    """Five moments t = 0, one of each chart, on the plane of r and phi with every other angle at
+    pi/2, at the parameters slices.SBC names. Off extremality the slice has g_rr = P/f and the
+    circumference radius r sqrt(P), with P = (H_1 H_2 H_3)^(1/3) in five dimensions and
+    sqrt(H_1 H_2 H_3 H_4) in four: it stands vertical at the throat r = r_0, the bifurcation
+    sphere, whose radius is (prod(r_0^2 + r_i^2))^(1/6) and (prod(r_0 + r_i))^(1/4), and runs on
+    into the other exterior. The extreme slice has g_rr = P, so dz/dr grows as 1/r toward the
+    horizon r = 0 and the throat runs on without end, its circles closing on (r_1 r_2 r_3)^(1/3)
+    and (r_1 r_2 r_3 r_4)^(1/4), each drawn from r = r_2/50. With the three charges equal the
+    areal chart has g_rr = 1/((1 - r_+^2/rho^2)(1 - r_-^2/rho^2)) and circles of radius rho. Each
+    height is the quadrature of the published metric, which Piece checks to be an isometry."""
+    P = nr.slices.SBC
+    views = []
+    rows = (
+        ("five_charges", "Three charges", "r", P["five_charges"], {"psi": "pi/2"}, "$r_0$",
+         "$D = 5$, $r_0 = 1$, the unit of every length, and $r_1 = r_0/2$, $r_2 = r_0$, $r_3 = 3r_0/2$, on the "
+         "plane of $r$ and $\\phi$ ($\\psi = \\theta = \\pi/2$)."),
+        ("five_extreme", "Extreme, three charges", "r", P["five_extreme"], {"psi": "pi/2"}, "$r_2$",
+         "$D = 5$, $r_2 = 1$, the unit of every length, and $r_1 = r_2/2$, $r_3 = 2r_2$, on the plane of $r$ and "
+         "$\\phi$ ($\\psi = \\theta = \\pi/2$)."),
+        ("five_areal", "Equal charges", "\\rho", P["five_areal"], {"psi": "pi/2"}, "$r_q$",
+         "$D = 5$, $r_q = 1$, the unit of every length, and $r_0 = 3r_q/4$, so that the horizons are at "
+         "$\\rho = 5r_q/4$ and $\\rho = r_q$, on the plane of $\\rho$ and $\\phi$ ($\\psi = \\theta = \\pi/2$)."),
+        ("four_charges", "Four charges", "r", P["four_charges"], {}, "$r_0$",
+         "$D = 4$, $r_0 = 1$, the unit of every length, and $r_1 = r_0/2$, $r_2 = r_0$, $r_3 = 3r_0/2$, "
+         "$r_4 = 2r_0$, on the equator ($\\theta = \\pi/2$)."),
+        ("four_extreme", "Extreme, four charges", "r", P["four_extreme"], {}, "$r_2$",
+         "$D = 4$, $r_2 = 1$, the unit of every length, and $r_1 = r_2/2$, $r_3 = 3r_2/2$, $r_4 = 2r_2$, on the "
+         "equator ($\\theta = \\pi/2$)."),
+    )
+    for system, label, radial, params, held, unit, settings in rows:
+        five, extreme = system.startswith("five"), system.endswith("extreme")
+        q = nr.slices.sbc_charges(system) if system != "five_areal" else []
+        sl = Slice(src, "string_bh_three_four_charges", system, radial, "\\phi", {"t": 0, **held, **EQUATOR}, params)
+        if five:
+            product = lambda r: np.prod([1 + a * a / r ** 2 for a in q], axis=0) ** (1 / 6)     # noqa: E731
+        else:
+            product = lambda r: np.prod([1 + a / r for a in q], axis=0) ** (1 / 4)              # noqa: E731
+        rho_of = (lambda r: r) if system == "five_areal" else (lambda r: r * product(r))
+        name = f"black holes of string theory, {label}"
+        sym = "\\rho" if system == "five_areal" else "r"
+        if extreme:
+            lo, top = SBC_THROAT_LO, 4.0
+            size = 2 * float(rho_of(top))
+            radii = (0.1, 0.25, 0.5, 1.0, 2.0, 3.0)
+            end = float(np.prod(q)) ** (1 / len(q))
+            throat = Piece("throat", "sheet", sl, lo, top, 0.0, 1,
+                           (("edge", "the throat runs on without end toward the horizon $r = 0$, its circles closing "
+                                     f"on the circumference radius ${end:.4g}\\,r_2$"),
+                            ("edge", "the surface runs on to $r \\to \\infty$")),
+                           [(lo, "r", None)] + [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+            ck.isometry(name, throat)
+            ck.radius(f"{name}, the closed form of rho", throat, rho_of, size)
+            ck.add(f"{name}: the circles close on the geometric mean of the charge radii",
+                   abs(float(rho_of(1e-9)) - end), 1e-6)
+            surface = Surface([throat])
+            fig = figure_of([surface], {"sheet": "cover"}, size)
+            ring_label(fig, [0, 0, 0], *throat.at(lo), "$r = r_2/50$")
+            ring_label(fig, [0, 0, 0], *throat.at(1.0), "$r = r_2$")
+            ring_label(fig, [0, 0, 0], *throat.at(top), "$4r_2$")
+            fig.legend("fill", "cover", "one moment of $t$, which $t$ and $r > 0$ cover")
+            fig.legend("line", "r", "$r$ constant, at $1/50$, $1/10$, $1/4$, $1/2$, $1$, $2$, $3$ and $4$ times $r_2$")
+            fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+            views.append(view(system, label, unit, [surface], fig.done(), settings=settings))
+            continue
+        rh = sl.horizons()[0]
+        expected = 1.25 if system == "five_areal" else 1.0
+        ck.add(f"{name}: the event horizon is at {expected}", abs(rh - expected), 1e-12)
+        top = 6.0
+        size = 2 * float(rho_of(top))
+        radii = (1.5, 2, 3, 4, 5)
+        horizon = "$\\rho = 5r_q/4$" if system == "five_areal" else "$r = r_0$"
+        end = f"the surface runs on to ${sym} \\to \\infty$"
+        near = Piece("exterior", "sheet", sl, rh, top, 0.0, 1,
+                     (("throat", f"the throat {horizon}, the bifurcation sphere, where the other exterior begins"),
+                      ("edge", end)),
+                     [(rh, "horizon", horizon)] + [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+        far = Piece("other_exterior", "sheet2", sl, rh, top, 0.0, -1,
+                    (("throat", f"the throat {horizon}"), ("edge", end)),
+                    [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+        for piece in (near, far):
+            ck.isometry(f"{name}, {piece.id}", piece)
+            ck.radius(f"{name}, {piece.id}, the closed form of rho", piece, rho_of, size)
+        ck.join(f"{name}, the two sheets at the throat", near, rh, far, rh)
+        surface = Surface([near, far])
+        fig = figure_of([surface], {"sheet": "cover"}, size)
+        ring_label(fig, [0, 0, 0], *near.at(rh), horizon, dx=14)
+        ring_label(fig, [0, 0, 0], *near.at(3.0), f"$3\\,{unit[1:-1]}$")
+        ring_label(fig, [0, 0, 0], *near.at(top), f"$6\\,{unit[1:-1]}$")
+        outside = "$\\rho > 5r_q/4$" if system == "five_areal" else "$r > r_0$"
+        fig.legend("fill", "cover", f"the exterior {outside} that $t$ and ${sym}$ cover")
+        fig.legend("line", "r", f"${sym}$ constant, at $1.5$, $2$, $3$, $4$, $5$ and $6\\,{unit[1:-1]}$")
+        fig.legend("line", "r2", "the same radii on the other exterior")
+        fig.legend("line", "horizon", f"the throat {horizon}, where the slice crosses the horizon")
+        fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+        views.append(view(system, label, unit, [surface], fig.done(), settings=settings))
+    return views
+
+
 def tangherlini(ck, src):
     """Tangherlini's black hole in five and in six dimensions, r_h = 1. The slice of constant t
     on the plane of r and phi, every other angle at pi/2, has g_rr = 1/(1 - (r_h/r)^(D-3)) and
@@ -15222,6 +15324,7 @@ DRAWN = {
     "nariai": nariai,
     "global_monopole": global_monopole,
     "tangherlini": tangherlini,
+    "string_bh_three_four_charges": string_bh_three_four_charges,
     "boulware_deser": boulware_deser,
     "black_string": black_string,
     "kaluza_klein_monopole": kaluza_klein_monopole,
@@ -17059,6 +17162,50 @@ CAPTIONS = {
         "temperature $\\hbar c\\lambda/2\\pi k_B$, the same for every mass.",
         "The meridians $\\theta = 0$ and $\\theta = \\pi$ are the moment $t = 0$ on the two sides of the "
         "horizon, the line along which the Euclidean section meets the black hole.",
+    ],
+    ("string_bh_three_four_charges", "five_charges"): [
+        "The plane of $r$ and $\\phi$ ($\\psi = \\theta = \\pi/2$) of the hole of three charges "
+        "($r_1 = r_0/2$, $r_2 = r_0$, $r_3 = 3r_0/2$) at one moment of $t$, drawn as a surface in flat space with "
+        "every distance along it the metric distance. On it the metric is "
+        "$(H_1H_2H_3)^{1/3}(dr^2/f + r^2d\\phi^2)$, so the circle of coordinate radius $r$ has the circumference "
+        "radius $r(H_1H_2H_3)^{1/6}$, which is $1.42\\,r_0$ at the throat $r = r_0$ where Tangherlini's is $r_0$.",
+        "Every slice of constant $t$ passes through the bifurcation sphere $r = r_0$, where the circles are "
+        "smallest, and runs on through it into a second exterior, the same surface turned over.",
+    ],
+    ("string_bh_three_four_charges", "five_extreme"): [
+        "The plane of $r$ and $\\phi$ ($\\psi = \\theta = \\pi/2$) of the extreme hole of three charges "
+        "($r_1 = r_2/2$, $r_3 = 2r_2$) at one moment of $t$, drawn as a surface in flat space with every distance "
+        "along it the metric distance. On it the metric is $(H_1H_2H_3)^{1/3}(dr^2 + r^2d\\phi^2)$, and toward the "
+        "horizon $r = 0$ it tends to $(r_1r_2r_3)^{2/3}(dr^2/r^2 + d\\phi^2)$.",
+        "The surface falls without end while its circles close on the radius $(r_1r_2r_3)^{1/3} = r_2$: the "
+        "throat is infinitely long, and it is drawn down to $r = r_2/50$. The 3-sphere at its end has the area "
+        "$2\\pi^2r_1r_2r_3$, which vanishes when a charge is missing.",
+    ],
+    ("string_bh_three_four_charges", "five_areal"): [
+        "The plane of $\\rho$ and $\\phi$ ($\\psi = \\theta = \\pi/2$) of the hole of three equal charges "
+        "($r_0 = 3r_q/4$) at one moment of $t$, drawn as a surface in flat space with every distance along it the "
+        "metric distance. On it the metric is $d\\rho^2/((1 - 25r_q^2/16\\rho^2)(1 - r_q^2/\\rho^2)) + \\rho^2d\\phi^2$, "
+        "the equator of the Reissner-Nordström black hole of five dimensions.",
+        "Every slice of constant $t$ passes through the bifurcation sphere $\\rho = 5r_q/4$, where the circles are "
+        "smallest, and runs on through it into a second exterior, the same surface turned over.",
+    ],
+    ("string_bh_three_four_charges", "four_charges"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the hole of four charges ($r_1 = r_0/2$, $r_2 = r_0$, "
+        "$r_3 = 3r_0/2$, $r_4 = 2r_0$) at one moment of $t$, drawn as a surface in flat space with every distance "
+        "along it the metric distance. On it the metric is $\\sqrt{H_1H_2H_3H_4}\\,(dr^2/f + r^2d\\phi^2)$, so the "
+        "circle of coordinate radius $r$ has the circumference radius $r(H_1H_2H_3H_4)^{1/4}$, which is "
+        "$2.18\\,r_0$ at the throat $r = r_0$ where Schwarzschild's is $r_0$.",
+        "Every slice of constant $t$ passes through the bifurcation sphere $r = r_0$, where the circles are "
+        "smallest, and runs on through it into a second exterior, the same surface turned over.",
+    ],
+    ("string_bh_three_four_charges", "four_extreme"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the extreme hole of four charges ($r_1 = r_2/2$, "
+        "$r_3 = 3r_2/2$, $r_4 = 2r_2$) at one moment of $t$, drawn as a surface in flat space with every distance "
+        "along it the metric distance. On it the metric is $\\sqrt{H_1H_2H_3H_4}\\,(dr^2 + r^2d\\phi^2)$, and toward "
+        "the horizon $r = 0$ it tends to $\\sqrt{r_1r_2r_3r_4}\\,(dr^2/r^2 + d\\phi^2)$, Bertotti-Robinson's cylinder.",
+        "The surface falls without end while its circles close on the radius $(r_1r_2r_3r_4)^{1/4} = 1.11\\,r_2$: "
+        "the throat is infinitely long, and it is drawn down to $r = r_2/50$. The sphere at its end has the area "
+        "$4\\pi\\sqrt{r_1r_2r_3r_4}$, which vanishes when a charge is missing.",
     ],
     ("tangherlini", "five"): [
         "The plane of $r$ and $\\phi$ ($\\psi = \\theta = \\pi/2$) of the Schwarzschild-Tangherlini spacetime in "

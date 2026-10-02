@@ -2554,6 +2554,17 @@ DIAGRAMS = [
             to_display=FINKELSTEIN_OUT, tau=RNADS_TIME_OUT, areal=True),
     Diagram("reissner_nordstrom_ads", "eddington_finkelstein_outgoing", "chart", "against $u$",
             ("u", "r"), (0, 3, -0.5, 2.5), "$r/L$", "$u/L$", RNADS, EQUATOR, tau=RNADS_TIME_OUT, areal=True),
+    # The black holes of string theory with three and four charges, at the parameters slices.SBC names.
+    Diagram("string_bh_three_four_charges", "five_charges", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/r_0$", "$ct/r_0$", slices.SBC["five_charges"], slices.SBC_FIVE, orient="ingoing", areal=True),
+    Diagram("string_bh_three_four_charges", "five_extreme", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r/r_2$", "$ct/r_2$", slices.SBC["five_extreme"], slices.SBC_FIVE, areal=True),
+    Diagram("string_bh_three_four_charges", "five_areal", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 5, -2.5, 2.5),
+            "$\\rho/r_q$", "$ct/r_q$", slices.SBC["five_areal"], slices.SBC_FIVE, orient="ingoing", areal=True),
+    Diagram("string_bh_three_four_charges", "four_charges", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/r_0$", "$ct/r_0$", slices.SBC["four_charges"], slices.SBC_FOUR, orient="ingoing", areal=True),
+    Diagram("string_bh_three_four_charges", "four_extreme", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r/r_2$", "$ct/r_2$", slices.SBC["four_extreme"], slices.SBC_FOUR, areal=True),
     Diagram("tangherlini", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_h$", "$ct/r_h$", {"r_h": 1}, TANGHERLINI_FIVE, orient="ingoing", areal=True),
     Diagram("tangherlini", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
@@ -5645,6 +5656,47 @@ CAPTIONS = {
         "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a "
         "null coordinate. The ingoing family turns vertical at both horizons and leans toward larger $r$ "
         "between them.",
+    ],
+    ("string_bh_three_four_charges", "five_charges", "radial"): [
+        "The plane of $t$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$) of the hole of three charges "
+        "($r_1 = r_0/2$, $r_2 = r_0$, $r_3 = 3r_0/2$), the same at every fixed angle by hyperspherical symmetry. "
+        "There $c\\,dt/dr = \\pm\\sqrt{H_1H_2H_3}/f$, so the cones close at the event horizon $r = r_0$, where $f = 0$, "
+        "and are narrower than Tangherlini's at every radius, since each of the three harmonic functions is greater than 1.",
+        "Inside $r_0$ the same components make $r$ the time, and the future is the one an ingoing ray carries "
+        "across the horizon, which makes that region the black hole. Its cones point to $r = 0$, the inner horizon, "
+        "a sphere of circumference radius $(r_1r_2r_3)^{1/3} = 0.91\\,r_0$ where the Kretschmann scalar is finite.",
+    ],
+    ("string_bh_three_four_charges", "five_extreme", "radial"): [
+        "The plane of $t$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$) of the extreme hole of three charges "
+        "($r_1 = r_2/2$, $r_3 = 2r_2$). There $c\\,dt/dr = \\pm\\sqrt{H_1H_2H_3}$, which grows as $r_1r_2r_3/r^3$ "
+        "toward $r = 0$, so the cones close there and an ingoing ray reaches $r = 0$ only as $t \\to +\\infty$.",
+        "$r = 0$ is the horizon, a 3-sphere of circumference radius $(r_1r_2r_3)^{1/3} = r_2$, where the "
+        "Kretschmann scalar is finite.",
+    ],
+    ("string_bh_three_four_charges", "five_areal", "radial"): [
+        "The plane of $t$ and $\\rho$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$) of the hole of three equal charges "
+        "($r_0 = 3r_q/4$), the Reissner-Nordström black hole of five dimensions. The cones close at the event "
+        "horizon $\\rho = 5r_q/4$ and at the inner horizon $\\rho = r_q$, the two radii where $g^{\\rho\\rho} = 0$.",
+        "Between the horizons $\\rho$ is the time and every cone points inward, with the future taken from an "
+        "ingoing ray. Inside $r_q$ the hole is static again, down to the singularity $\\rho = 0$, where the "
+        "Kretschmann scalar diverges.",
+    ],
+    ("string_bh_three_four_charges", "four_charges", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the hole of four charges ($r_1 = r_0/2$, "
+        "$r_2 = r_0$, $r_3 = 3r_0/2$, $r_4 = 2r_0$), the same at every angle by spherical symmetry. There "
+        "$c\\,dt/dr = \\pm\\sqrt{H_1H_2H_3H_4}/f$, so the cones close at the event horizon $r = r_0$ and are narrower "
+        "than Schwarzschild's at every radius.",
+        "Inside $r_0$ the same components make $r$ the time, and the future is the one an ingoing ray carries "
+        "across the horizon. Its cones point to $r = 0$, the inner horizon, a sphere of circumference radius "
+        "$(r_1r_2r_3r_4)^{1/4} = 1.11\\,r_0$ where the Kretschmann scalar is finite.",
+    ],
+    ("string_bh_three_four_charges", "four_extreme", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the extreme hole of four charges "
+        "($r_1 = r_2/2$, $r_3 = 3r_2/2$, $r_4 = 2r_2$). There $c\\,dt/dr = \\pm\\sqrt{H_1H_2H_3H_4}$, which grows as "
+        "$\\sqrt{r_1r_2r_3r_4}/r^2$ toward $r = 0$, so the cones close there and an ingoing ray reaches $r = 0$ "
+        "only as $t \\to +\\infty$.",
+        "$r = 0$ is the horizon, a sphere of circumference radius $(r_1r_2r_3r_4)^{1/4} = 1.11\\,r_2$, where the "
+        "Kretschmann scalar is finite. With the four charges equal this is the single hole of Majumdar and Papapetrou.",
     ],
     ("tangherlini", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$) in five dimensions, the same at every fixed angle by hyperspherical "
@@ -14079,6 +14131,12 @@ CLOSED_FORMS = {
         (lambda t, rho: t + _rstar(rho, [2, 1]), lambda t, rho: t - _rstar(rho, [2, 1]), _away(2.0, 1.0)),
     ("kaluza_klein_black_hole", "einstein_eddington_finkelstein", "finkelstein"):
         (lambda v, r: v, lambda v, r: v - 2 * _kkbh_rstar(r), _away(1.0)),
+    **{("string_bh_three_four_charges", chart, "radial"):
+       (lambda t, r, c=chart: t + slices.sbc_rstar(c, r), lambda t, r, c=chart: t - slices.sbc_rstar(c, r),
+        _away(1.0) if chart.endswith("charges") else (lambda t, r: r > 0.05))
+       for chart in ("five_charges", "five_extreme", "four_charges", "four_extreme")},
+    ("string_bh_three_four_charges", "five_areal", "radial"):
+        (lambda t, rho: t + slices.sbc_areal_rstar(rho), lambda t, rho: t - slices.sbc_areal_rstar(rho), _away(1.25, 1.0)),
     ("tangherlini", "spherical", "radial"):
         (lambda t, r: t + _tangherlini_rstar(r), lambda t, r: t - _tangherlini_rstar(r), _away(1.0)),
     ("tangherlini", "eddington_finkelstein_ingoing", "finkelstein"):

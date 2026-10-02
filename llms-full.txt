@@ -1981,6 +1981,20 @@ Edward Teo's rotating traversable wormhole of 1998, the stationary, axially symm
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{16a^2b_0\cos^2\theta}{r}\right)^2c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{b_0}{r}} + \left(r + 16a^2b_0\cos^2\theta\right)^2\left(d\theta^2 + \sin^2\theta\left(d\phi - \dfrac{2ab_0^2}{r^3}c\,dt\right)^2\right)$$
 - chart Proper Radial Distance: coordinates $(t, l, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{16a^2b_0\cos^2\theta}{r}\right)^2c^2dt^2 + dl^2 + \left(r + 16a^2b_0\cos^2\theta\right)^2\left(d\theta^2 + \sin^2\theta\left(d\phi - \dfrac{2ab_0^2}{r^3}c\,dt\right)^2\right)$$
 
+### Black Holes of String Theory with Three and Four Charges
+
+The black holes of string theory whose entropy was first counted from their microscopic states: in five dimensions with three charges, Strominger and Vafa's hole and the family of Horowitz, Maldacena, and Strominger around it, and in four dimensions with four charges, the hole of Cvetič and Youm. Each charge enters the metric through a harmonic function of its own, and the horizon of the extreme hole has an area only when every charge is present.
+
+- id: `string_bh_three_four_charges`
+- tags: static, stationary, spherically symmetric, hyperspherical symmetry, black hole, charged black hole, charged, string theory, black hole entropy, Bekenstein-Hawking entropy, black hole thermodynamics, brane, Strominger-Vafa, harmonic function, extremal, supersymmetric, dilaton, scalar field, electric charge, mass, horizon, event horizon, inner horizon, degenerate horizon, throat, curvature singularity, coordinate singularity, maximal extension, causal structure, asymptotically flat, higher dimensions, five-dimensional, four-dimensional, exact solution, Lorentzian, Einstein equations, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/string_bh_three_four_charges.json
+- chart Three Charges, Five Dimensions: coordinates $(t, r, \psi, \theta, \phi)$, $$ds^2 = -\left(H_1\,H_2\,H_3\right)^{-2/3}f\,c^2dt^2 + \left(H_1\,H_2\,H_3\right)^{1/3}\left(\dfrac{dr^2}{f} + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)\right)$$
+- chart Extreme, Three Charges, Five Dimensions: coordinates $(t, r, \psi, \theta, \phi)$, $$ds^2 = -\left(H_1\,H_2\,H_3\right)^{-2/3}c^2dt^2 + \left(H_1\,H_2\,H_3\right)^{1/3}\left(dr^2 + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)\right)$$
+- chart Equal Charges, Areal Radius, Five Dimensions: coordinates $(t, \rho, \psi, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_0^2 + r_q^2}{\rho^2}\right)\left(1 - \dfrac{r_q^2}{\rho^2}\right)c^2dt^2 + \dfrac{d\rho^2}{\left(1 - \dfrac{r_0^2 + r_q^2}{\rho^2}\right)\left(1 - \dfrac{r_q^2}{\rho^2}\right)} + \rho^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
+- chart Four Charges, Four Dimensions: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{f\,c^2dt^2}{\sqrt{H_1\,H_2\,H_3\,H_4}} + \sqrt{H_1\,H_2\,H_3\,H_4}\left(\dfrac{dr^2}{f} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Extreme, Four Charges, Four Dimensions: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{c^2dt^2}{\sqrt{H_1\,H_2\,H_3\,H_4}} + \sqrt{H_1\,H_2\,H_3\,H_4}\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Tilted Universes and the Whimper
 
 Homogeneous universes whose matter drifts through the surfaces of homogeneity, so that an observer riding with it sees a lopsided sky. In the simplest of them, Farnsworth's dust of 1967, those surfaces turn from spacelike to timelike across a Cauchy horizon, and the light rays along the horizon end where the density and the curvature are finite: a whimper, as George Ellis and A. R. King named it in 1974.

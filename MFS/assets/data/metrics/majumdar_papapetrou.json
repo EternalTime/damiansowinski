@@ -102,6 +102,11 @@
       "id": "eih_many_bodies",
       "kind": "family",
       "text": "Many bodies with no charge to hold them apart. They orbit, and their field is known to the first order beyond Newton, where Majumdar and Papapetrou's is exact [einstein1938]."
+    },
+    {
+      "id": "string_bh_three_four_charges",
+      "kind": "family",
+      "text": "The same recipe with four harmonic functions under one square root. With the four charges equal it is a single hole of Majumdar and Papapetrou again [cvetic1996dyonic]."
     }
   ],
   "references": [
@@ -138,7 +143,8 @@
     "arnowitt1960",
     "bonnor1975",
     "lemos2004",
-    "einstein1938"
+    "einstein1938",
+    "cvetic1996dyonic"
   ],
   "coordinates": [
     {

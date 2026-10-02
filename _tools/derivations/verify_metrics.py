@@ -1058,6 +1058,28 @@ DIMENSIONS = {
     ("bonnor_charged_dust", "quasi_black_hole"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "b": "L", "U": "1",
     },
+    # The black holes of string theory with three and four charges. The radius r_0 of the horizon
+    # and the charge radii r_i are lengths, r_0^2 sinh^2 alpha_i = r_i^2 in five dimensions and
+    # r_0 sinh^2 alpha_i = r_i in four, and f and the harmonic functions H_i are pure numbers.
+    ("string_bh_three_four_charges", "five_charges"): {
+        "t": "T", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "r_1": "L", "r_2": "L",
+        "r_3": "L", "f": "1", "H_1": "1", "H_2": "1", "H_3": "1",
+    },
+    ("string_bh_three_four_charges", "five_extreme"): {
+        "t": "T", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_1": "L", "r_2": "L", "r_3": "L",
+        "H_1": "1", "H_2": "1", "H_3": "1",
+    },
+    ("string_bh_three_four_charges", "five_areal"): {
+        "t": "T", "\\rho": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "r_q": "L",
+    },
+    ("string_bh_three_four_charges", "four_charges"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_0": "L", "r_1": "L", "r_2": "L", "r_3": "L",
+        "r_4": "L", "f": "1", "H_1": "1", "H_2": "1", "H_3": "1", "H_4": "1",
+    },
+    ("string_bh_three_four_charges", "four_extreme"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_1": "L", "r_2": "L", "r_3": "L", "r_4": "L",
+        "H_1": "1", "H_2": "1", "H_3": "1", "H_4": "1",
+    },
     # Israel, Wilson and Perjes's W = |U| is a pure number, as Majumdar and Papapetrou's U is, and
     # omega stands beside c dt, so it is a length; the spin a and the NUT parameter l are lengths too.
     ("israel_wilson_perjes", "cylindrical"): {
@@ -2136,6 +2158,12 @@ HELD = {
     # not print in five minutes; held, the whole chart takes seconds.
     ("kerr_melvin", "boyer_lindquist"): ("Delta", "omega", "N", "F", "P"),
     ("kerr_melvin", "rotating"): ("Delta", "omega", "N", "F", "P"),
+    # The harmonic functions H_i of the black holes of string theory, and f of the charts off
+    # extremality: held, a value is a rational function of them and r, as the line element is.
+    ("string_bh_three_four_charges", "five_charges"): ("f", "H_1", "H_2", "H_3"),
+    ("string_bh_three_four_charges", "five_extreme"): ("H_1", "H_2", "H_3"),
+    ("string_bh_three_four_charges", "four_charges"): ("f", "H_1", "H_2", "H_3", "H_4"),
+    ("string_bh_three_four_charges", "four_extreme"): ("H_1", "H_2", "H_3", "H_4"),
 }
 
 # The first derivatives of held names along the coordinates they vary with, written in the names
@@ -2212,6 +2240,18 @@ RATES = {
         "k": {"r": "\\dfrac{2r}{a\\left(1 + s\\right)}"},
         "gamma": {"r": "-\\dfrac{2r}{a^2\\left(1 + s\\right)^2}"},
     },
+    # The harmonic functions of the black holes of string theory fall as r^-2 in five dimensions
+    # and as r^-1 in four, and f rises the same way, so each slope is the name less one over r.
+    ("string_bh_three_four_charges", "five_charges"): {
+        "f": {"r": "\\dfrac{2\\left(1 - f\\right)}{r}"},
+        **{f"H_{i}": {"r": f"-\\dfrac{{2\\left(H_{i} - 1\\right)}}{{r}}"} for i in (1, 2, 3)}},
+    ("string_bh_three_four_charges", "five_extreme"): {
+        f"H_{i}": {"r": f"-\\dfrac{{2\\left(H_{i} - 1\\right)}}{{r}}"} for i in (1, 2, 3)},
+    ("string_bh_three_four_charges", "four_charges"): {
+        "f": {"r": "\\dfrac{1 - f}{r}"},
+        **{f"H_{i}": {"r": f"-\\dfrac{{H_{i} - 1}}{{r}}"} for i in (1, 2, 3, 4)}},
+    ("string_bh_three_four_charges", "four_extreme"): {
+        f"H_{i}": {"r": f"-\\dfrac{{H_{i} - 1}}{{r}}"} for i in (1, 2, 3, 4)},
 }
 
 # The systems whose delta stands on a curved background, where what multiplies it varies across

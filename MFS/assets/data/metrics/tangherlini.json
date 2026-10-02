@@ -66,6 +66,11 @@
       "id": "black_saturn",
       "kind": "family",
       "text": "A black ring in balance around a spinning hole. With the two turning against each other it can match Tangherlini's hole in mass and in having no angular momentum, so in five dimensions those two numbers do not fix the black hole [elvang2007]."
+    },
+    {
+      "id": "string_bh_three_four_charges",
+      "kind": "generalisation",
+      "text": "Tangherlini's hole of five dimensions given three charges. Each charge rescales its time and its space by a power of a harmonic function of its own [horowitz1996]."
     }
   ],
   "references": [
@@ -89,7 +94,8 @@
     "emparan2013",
     "grossperry1983",
     "boulware1985",
-    "elvang2007"
+    "elvang2007",
+    "horowitz1996"
   ],
   "coordinates": [
     {
