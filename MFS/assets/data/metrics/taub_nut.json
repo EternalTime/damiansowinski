@@ -86,6 +86,11 @@
       "id": "gravitational_instantons",
       "kind": "dual",
       "text": "With an imaginary time and an imaginary twist, $l = in$, Taub-NUT is a space with no time in it. It is regular at two masses, Stephen Hawking's self dual instanton at $m = n$ and Don Page's, which has a horizon, at $m = 5n/4$ [hawking1977, page1978bolt, gibbonshawking1979]."
+    },
+    {
+      "id": "brill_charged_taub_nut",
+      "kind": "generalisation",
+      "text": "Taub-NUT with a charge. Dieter Brill filled Taub's universe with an electromagnetic wave in 1964, and with charge enough, $r_q^2 > m^2 + l^2$, the horizons go and the spacetime is a wormhole [brill1964, clement2016]."
     }
   ],
   "references": [
@@ -113,7 +118,8 @@
     "eguchihanson1979",
     "gibbonshawking1979",
     "podolsky2018",
-    "page1978bolt"
+    "page1978bolt",
+    "clement2016"
   ],
   "coordinates": [
     {

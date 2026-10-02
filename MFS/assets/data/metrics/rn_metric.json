@@ -169,6 +169,11 @@
       "id": "bonnor_charged_dust",
       "kind": "composite",
       "text": "A star of charged dust at rest, with the extremal field, $r_q = r_s/2$, outside it. Its surface can lie as near the horizon as one likes, and the redshift of its centre is then as large as one likes [bonnor1975]."
+    },
+    {
+      "id": "brill_charged_taub_nut",
+      "kind": "generalisation",
+      "text": "Reissner and Nordström's hole with a NUT parameter $l$. The twist takes the singularity out of $r = 0$, and where too much charge would bare it, $r_q^2 > r_s^2/4 + l^2$, Brill's metric is a wormhole [brill1964, clement2016]."
     }
   ],
   "references": [
@@ -213,7 +218,9 @@
     "gibbonsrasheed1995",
     "arnowitt1960",
     "krasinski2012",
-    "bonnor1975"
+    "bonnor1975",
+    "brill1964",
+    "clement2016"
   ],
   "coordinates": [
     {

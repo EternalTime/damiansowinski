@@ -1106,6 +1106,12 @@ CX_KERR = {"m": 1, "a": "4/5"}
 # Kerr-Taub-NUT as its diagrams draw it: Kerr's limiting spin a = m with a twist l = 5m/4 above it,
 # in units of m, so that r_+ = 9/4 and r_- = -1/4 and no ring singularity is left.
 KTN = {"m": 1, "a": 1, "l": "5/4"}
+# Brill's charged Taub-NUT as its diagrams draw it: the black hole in units of m, at l = 3m/4 and
+# r_q = m, so that r_+ = 7/4 and r_- = 1/4, and the wormhole with no mass, in units of l, at
+# r_q = 3l/2, where Delta = r^2 + 5/4 has no root.
+BRILL_HOLE = {"m": 1, "l": "3/4", "r_q": 1}
+BRILL_WORMHOLE = {"m": 0, "l": 1, "r_q": "3/2"}
+BRILL_AXIS = {"theta": "0", "phi": "0"}
 
 # The Aichelburg-Sexl shock on the plane of u and v at three distances from the source, in units
 # of 8GE/c^4 with rho_0 = 8GE/c^4: each ray moving left jumps along the shock by -ln(rho/rho_0),
@@ -3542,6 +3548,29 @@ DIAGRAMS = [
     Diagram("kerr_taub_nut", "plebanski", "principal", "principal null rays, $\\tau$ and $q$", ("\\tau", "q"),
             (0, 6, -3, 3), "$q/m$", "$\\tau/m$", KTN, {"p": "5/4"}, orient="ingoing", tau="tau", principal=True,
             leaves=("sigma",), mark_gtt="the ergosurface", cone=PRINCIPAL_CONE),
+    # Brill's charged Taub-NUT. The cross term carries cos(theta), so the equator's plane of t and r
+    # holds its rays in the chart with two strings, and the regular half of the axis does in the
+    # chart with one and in both Eddington-Finkelstein charts, which run through both horizons.
+    # Brill's universe is the region between the horizons, drawn in tau and the length 2 l psi
+    # along the circle of psi, where the rays wind without end toward each horizon.
+    Diagram("brill_charged_taub_nut", "spherical", "black_hole", "the black hole", ("t", "r"), (0, 6, -3, 3),
+            "$r/m$", "$ct/m$", BRILL_HOLE, EQUATOR, orient="ingoing"),
+    Diagram("brill_charged_taub_nut", "spherical", "wormhole", "the wormhole", ("t", "r"), (-3, 3, -3, 3),
+            "$r/l$", "$ct/l$", BRILL_WORMHOLE, EQUATOR),
+    Diagram("brill_charged_taub_nut", "one_string", "black_hole", "the black hole, on the regular axis", ("t_N", "r"),
+            (0, 6, -3, 3), "$r/m$", "$ct_N/m$", BRILL_HOLE, BRILL_AXIS, orient="ingoing"),
+    Diagram("brill_charged_taub_nut", "one_string", "wormhole", "the wormhole, on the regular axis", ("t_N", "r"),
+            (-3, 3, -3, 3), "$r/l$", "$ct_N/l$", BRILL_WORMHOLE, BRILL_AXIS, orient="ingoing"),
+    Diagram("brill_charged_taub_nut", "eddington_finkelstein_ingoing", "black_hole", "the black hole", ("v", "r"),
+            (-3, 5, -4, 4), "$r/m$", "$(v - r)/m$", BRILL_HOLE, BRILL_AXIS, to_display=FINKELSTEIN_IN, orient="ingoing"),
+    Diagram("brill_charged_taub_nut", "eddington_finkelstein_ingoing", "wormhole", "the wormhole", ("v", "r"),
+            (-4, 4, -4, 4), "$r/l$", "$(v - r)/l$", BRILL_WORMHOLE, BRILL_AXIS, to_display=FINKELSTEIN_IN,
+            orient="ingoing"),
+    Diagram("brill_charged_taub_nut", "eddington_finkelstein_outgoing", "black_hole", "the white hole", ("u", "r"),
+            (-3, 5, -4, 4), "$r/m$", "$(u + r)/m$", BRILL_HOLE, BRILL_AXIS, to_display=FINKELSTEIN_OUT, orient="outgoing"),
+    Diagram("brill_charged_taub_nut", "taub", "universe", "$\\tau$ and $\\psi$", ("\\tau", "\\psi"),
+            (0, 2.25, 0.25, 1.75), "$2l\\psi/m$", "$\\tau/m$", BRILL_HOLE, {"theta": "pi/2", "phi": "0"},
+            to_display=((0, 1.5), (1, 0)), tau="tau", families=SIDEWAYS),
     Diagram("kerr_newman", "boyer_lindquist", "radial", "$t$ and $r$ on the axis", ("t", "r"),
             (0, 4, -2, 2), "$r/(GM/c^2)$", "$ct/(GM/c^2)$",
             {"G": 1, "M": 1, "a": "3/5", "r_Q": "1/2"}, {"theta": "0", "phi": "0"},
@@ -8325,6 +8354,35 @@ CAPTIONS = {
     ("kerr_taub_nut", "plebanski", "principal"): [
         "The surface $p = l$, the equatorial plane, drawn in $\\tau$ and $q$, with $\\sigma$ left out, for $a = m$ and $l = 5m/4$. Its rays are the principal null congruence, on which $d\\tau + q^2\\,d\\sigma = 0$ and $d\\tau - p^2\\,d\\sigma = \\pm(p^2 + q^2)\\,dq/Q$, so the curves drawn have $d\\tau/dq = \\pm q^2/Q$ at every $p$, and $\\sigma$ changes along each at $d\\sigma/dq = \\mp 1/Q$.",
         "The rays are null geodesics, and each cone is the future cone of the principal plane. The cones close at the horizon $q_+ = 9m/4$ and point to smaller $q$ inside it. At $q = 0$ the projections stand level, since $d\\tau/dq$ vanishes there. The dotted line is the ergosurface, $g_{\\tau\\tau} = 0$, where $Q = P$, at $q = 2.601\\,m$.",
+    ],
+    ("brill_charged_taub_nut", "spherical", "black_hole"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $l = 3m/4$ and $r_q = m$. The cross term $g_{t\\phi}$ carries $\\cos\\theta$ and drops out on this plane, and no Christoffel symbol turns these null curves out of it, so they are null geodesics, the paths light takes, with $d(ct)/dr = \\pm\\Sigma/\\Delta$. The cones close at the outer horizon $r_+ = 7m/4$, where the coordinate $t$ ends.",
+        "Inside $r_+$ we take the future from the ingoing rays, which makes the region between the horizons the black hole, where $r$ is the time and every cone points to smaller $r$. That region is Brill's universe [brill1964]. The cones open again inside the inner horizon $r_- = m/4$, and with $l \\neq 0$ the curvature stays finite at $r = 0$ [clement2016].",
+    ],
+    ("brill_charged_taub_nut", "spherical", "wormhole"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $m = 0$ and $r_q = 3l/2$. With $r_q^2 > m^2 + l^2$ the function $\\Delta = r^2 + 5l^2/4$ has no root, so no cone closes and $t$ is a time at every $r$. The null curves are null geodesics, the paths light takes, with $d(ct)/dr = \\pm\\Sigma/\\Delta$.",
+        "Light crosses from $r \\to -\\infty$ to $r \\to \\infty$ and back, through the throat at $r = 0$, where the sphere of constant $t$ and $r$ is smallest, with area $4\\pi l^2$ [clement2016]. The cones are widest there, at $d(ct)/dr = \\pm 4/5$, and close to $45°$ far from the throat on either side.",
+    ],
+    ("brill_charged_taub_nut", "one_string", "black_hole"): [
+        "The plane of $t_N$ and $r$ on the northern half of the axis ($\\theta = 0$, $\\phi = 0$), drawn for $l = 3m/4$ and $r_q = m$. In this chart the cross term vanishes there, the half axis is regular, and the curves drawn are null geodesics, the paths light takes. On it $g^{rr} = \\Delta/\\Sigma$ vanishes at $r_+ = 7m/4$, where the cones close, since $d(ct_N)/dr = \\pm\\Sigma/\\Delta$ diverges there.",
+        "Inside $r_+$ we take the future from the ingoing Eddington-Finkelstein chart, which makes the region between the horizons the black hole, where every cone points to smaller $r$. The Kretschmann scalar stays finite all the way down the axis, $r = 0$ included, since $\\Sigma = r^2 + l^2$ has no zero.",
+    ],
+    ("brill_charged_taub_nut", "one_string", "wormhole"): [
+        "The plane of $t_N$ and $r$ on the northern half of the axis ($\\theta = 0$, $\\phi = 0$), drawn for $m = 0$ and $r_q = 3l/2$. The half axis is regular in this chart, and the curves drawn are null geodesics, the paths light takes, with $d(ct_N)/dr = \\pm\\Sigma/\\Delta$. No cone closes, and light runs along the axis from one side of the throat $r = 0$ to the other.",
+    ],
+    ("brill_charged_taub_nut", "eddington_finkelstein_ingoing", "black_hole"): [
+        "The plane of $v$ and $r$ on the northern half of the axis ($\\theta = 0$, $\\phi = 0$), drawn for $l = 3m/4$ and $r_q = m$ with $v - r$ as the vertical axis, so that the ingoing rays, $v = $ const, run at 45°. The outgoing family has $dv/dr = 2\\Sigma/\\Delta$, so it stands vertical at $r_+ = 7m/4$ and at $r_- = m/4$: each horizon is an outgoing ray that stays where it is.",
+        "The chart crosses $r_+$ into the black hole, where both edges of every future cone point to smaller $r$. An ingoing ray crosses the inner horizon, passes $r = 0$, where the curvature is finite, and runs on toward $r \\to -\\infty$, a second region far from the hole.",
+    ],
+    ("brill_charged_taub_nut", "eddington_finkelstein_ingoing", "wormhole"): [
+        "The plane of $v$ and $r$ on the northern half of the axis ($\\theta = 0$, $\\phi = 0$), drawn for $m = 0$ and $r_q = 3l/2$ with $v - r$ as the vertical axis, so that the ingoing rays, $v = $ const, run at 45°. The outgoing family has $dv/dr = 2\\Sigma/\\Delta$, which stays finite, between $8/5$ at the throat and $2$ far from it, so every outgoing ray reaches $r \\to \\infty$.",
+    ],
+    ("brill_charged_taub_nut", "eddington_finkelstein_outgoing", "black_hole"): [
+        "The plane of $u$ and $r$ on the northern half of the axis ($\\theta = 0$, $\\phi = 0$), drawn for $l = 3m/4$ and $r_q = m$ with $u + r$ as the vertical axis, so that the outgoing rays, $u = $ const, run at 45°. The ingoing family stands vertical at $r_- = m/4$ and at $r_+ = 7m/4$. Between them both edges of every future cone point to larger $r$: this is the white hole, which nothing from outside can enter.",
+    ],
+    ("brill_charged_taub_nut", "taub", "universe"): [
+        "The plane of $\\tau$ and $\\psi$ ($\\theta = \\pi/2$, $\\phi = 0$) of Brill's universe, drawn for $l = 3m/4$ and $r_q = m$ with the length $2l\\psi$ across, so that both axes carry lengths. The universe begins at $\\tau_- = m/4$ and ends at $\\tau_+ = 7m/4$, the horizons of the black hole. The curves drawn are null geodesics, the paths light takes, with $2l\\,d\\psi/d\\tau = \\pm\\Sigma/U$.",
+        "The angle $\\psi$ has period $4\\pi$, so the plane is a cylinder, $6\\pi l$ around, and we draw a part of it $9m/4$ wide. Toward either end $U \\to 0$ and every ray winds around the cylinder without end, as the rays of Taub's empty universe do [misner1963]. The circles of $\\psi$ shrink to zero length at both ends while the spheres of $\\theta$ and $\\phi$ keep a finite area $4\\pi\\Sigma$.",
     ],
     ("kerr_newman", "boyer_lindquist", "radial"): [
         "The plane of $t$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $a = "
@@ -14314,6 +14372,41 @@ def _kerr_taub_nut_forms():
 
 
 CLOSED_FORMS.update(_kerr_taub_nut_forms())
+
+
+def _brill_forms():
+    """Brill's charged Taub-NUT against slices.py's r_*, dr_*/dr = Sigma/Delta, zero at r = 0: ct -+ r_*
+    in the charts in t and t_N, v and v - 2r_* in the ingoing chart, u + 2r_* and u in the outgoing
+    one, and 2 l psi -+ r_*(tau) in Brill's universe, where U = -Delta."""
+    import slices
+    hole, wormhole = slices.brill_rstar("black_hole"), slices.brill_rstar("wormhole")
+    l = slices.BRILL["black_hole"][1]
+
+    def away(x, r):
+        return np.all([np.abs(r - z) > 0.05 for z in (0.25, 1.75)], axis=0)
+
+    def anywhere(x, r):
+        return np.ones_like(r, dtype=bool)
+
+    def inside(tau, psi):
+        return (tau > 0.3) & (tau < 1.7)
+    out = {}
+    for system in ("spherical", "one_string"):
+        out[("brill_charged_taub_nut", system, "black_hole")] = (lambda t, r: t + hole(r), lambda t, r: t - hole(r), away)
+        out[("brill_charged_taub_nut", system, "wormhole")] = (lambda t, r: t + wormhole(r), lambda t, r: t - wormhole(r),
+                                                              anywhere)
+    out[("brill_charged_taub_nut", "eddington_finkelstein_ingoing", "black_hole")] = (
+        lambda v, r: v, lambda v, r: v - 2 * hole(r), away)
+    out[("brill_charged_taub_nut", "eddington_finkelstein_ingoing", "wormhole")] = (
+        lambda v, r: v, lambda v, r: v - 2 * wormhole(r), anywhere)
+    out[("brill_charged_taub_nut", "eddington_finkelstein_outgoing", "black_hole")] = (
+        lambda u, r: u + 2 * hole(r), lambda u, r: u, away)
+    out[("brill_charged_taub_nut", "taub", "universe")] = (
+        lambda tau, psi: 2 * l * psi - hole(tau), lambda tau, psi: 2 * l * psi + hole(tau), inside)
+    return out
+
+
+CLOSED_FORMS.update(_brill_forms())
 
 # Hartle and Thorne's star: the tortoise coordinate of ht_star on the axis and on the equator, and
 # the two quadratures of the Painleve-Gullstrand plane, which is Schwarzschild's on both.
