@@ -632,6 +632,13 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `kaigorodov_stationary/plane` marks nothing: the region $x < 0$ is another region than the one whose front is embedded.
 - The conformal views mark the front as the curve $v = 0$, or $t = 0$, from $x = Le^{-2}$ to $Le^{2}$.
 
+### Kundt waves
+
+- The embedding has two views in units of $\ell = \sqrt{3/|\Lambda|}$, both read in the chart of Ozsváth, Robinson and Rózga: the front $u = v = 0$ of the member $\alpha = 1$, $\beta = 0$, $\Lambda = 3/\ell^2$, a hemisphere, and the surface $u = v = 0$ of the member $\alpha = 0$, $\beta = 1/\ell$, $\Lambda = -3/\ell^2$, out to the circle a proper distance $2\ell$ from the centre.
+- `ozsvath_robinson_rozga/de_sitter` and `ozsvath_robinson_rozga/anti_de_sitter`: each is the plane of $u$ and $v$ at $\xi = \ell$, $\eta = 0$ of the same member as one view, and meets its front at the event $u = v = 0$, the centre of the drawing; $\xi = \ell$ lies inside the envelope's circle $2\ell$ and inside the last circle $2\ell\tanh 1$.
+- Every view of the charts without a cosmological constant, and the figure of the Kerr-Schild chart, marks nothing: those are other spacetimes than the two whose fronts are embedded.
+- There is no conformal diagram.
+
 ### The anti-de Sitter soliton
 
 - The embedding has one view at $r_0 = L$: the surface of $\rho$ and $\phi$ of the polar chart at $t = 0$, $x = 0$, from the tip $\rho = 0$ to $\rho = 2L$.
@@ -738,6 +745,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Kiselev | two lines, four curves; line and curve for the matter alone | none | line, four times; line, twice |
 | Schwarzschild-de Sitter | line, four curves | none | line, three times |
 | Siklos waves | event, three times; line, five times | none | curve, five times |
+| Kundt waves | event, twice | none | none drawn |
 | van Stockum | line, not visible | floor | none drawn |
 | Szekeres | not visible, twice | none | none drawn |
 | Taub-NUT | line | none | none drawn |

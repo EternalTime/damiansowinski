@@ -168,6 +168,11 @@ REGIONS = {
         "why": "isotropic is the single hole, which alone is spherically symmetric, and "
                "cylindrical the holes on one axis",
     },
+    "kundt_waves": {
+        "regions": [["kundt", "podolsky_belan", "ozsvath_robinson_rozga"]],
+        "why": "simplest_wave and kerr_schild are one wave of the family, whose profile alone "
+               "does not depend on u",
+    },
     "majumdar_papapetrou": {
         "regions": [["cartesian"]],
         "why": "isotropic is the single hole, which alone is spherically symmetric, and "

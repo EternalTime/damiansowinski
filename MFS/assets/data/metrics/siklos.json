@@ -60,6 +60,11 @@
       "id": "schrodinger_spacetime",
       "kind": "special_case",
       "text": "Siklos's line element at the profile $H = -\\beta^2/x^2$, which fails his vacuum equation and so needs matter. Its symmetries are those of the free Schrödinger equation [son2008, duval2009]."
+    },
+    {
+      "id": "kundt_waves",
+      "kind": "generalisation",
+      "text": "The wider family of Ozsváth, Robinson, and Rózga, sorted by the sign of one invariant. Siklos's waves are the case where it vanishes, and where it is positive the fronts roll round an envelope, as the fronts of Kundt's waves do [ozsvath1985, bicak1999, griffiths2004]."
     }
   ],
   "references": [
@@ -80,7 +85,8 @@
     "balasubramanian2010",
     "donos2010",
     "son2008",
-    "duval2009"
+    "duval2009",
+    "griffiths2004"
   ],
   "coordinates": [
     {

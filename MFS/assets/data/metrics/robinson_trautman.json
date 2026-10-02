@@ -62,6 +62,11 @@
       "id": "siklos",
       "kind": "family",
       "text": "Waves of the same algebraic type with a negative cosmological constant, on fronts that do not expand: hyperbolic planes crossing anti-de Sitter space [podolsky1998, bicak1999]."
+    },
+    {
+      "id": "kundt_waves",
+      "kind": "family",
+      "text": "The waves of the same type whose rays do not expand. A wave of type N without twist belongs to one class or the other, with or without a cosmological constant [bicak1999]."
     }
   ],
   "references": [
