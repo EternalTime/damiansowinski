@@ -1241,6 +1241,30 @@ DIMENSIONS = {
         "\\tau": "L", "q": "L", "p": "L", "\\sigma": "1/L", "m": "L", "a": "L", "l": "L",
         "Q": "L**2", "P": "L**2",
     },
+    # Brill's charged Taub-NUT. The mass enters as the length m = GM/c^2, as on the Taub-NUT page,
+    # and the NUT parameter l and the charge radius r_q are lengths. Sigma and Delta are areas. The
+    # times v and u are lengths. In the chart of Brill's universe tau is a length that stands as
+    # the time, psi is an Euler angle, and U is an area.
+    ("brill_charged_taub_nut", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "l": "L", "r_q": "L",
+        "\\Sigma": "L**2", "\\Delta": "L**2",
+    },
+    ("brill_charged_taub_nut", "one_string"): {
+        "t_N": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "l": "L", "r_q": "L",
+        "\\Sigma": "L**2", "\\Delta": "L**2",
+    },
+    ("brill_charged_taub_nut", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "l": "L", "r_q": "L",
+        "\\Sigma": "L**2", "\\Delta": "L**2",
+    },
+    ("brill_charged_taub_nut", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "l": "L", "r_q": "L",
+        "\\Sigma": "L**2", "\\Delta": "L**2",
+    },
+    ("brill_charged_taub_nut", "taub"): {
+        "\\tau": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "m": "L", "l": "L", "r_q": "L",
+        "\\Sigma": "L**2", "U": "L**2",
+    },
     # The Kaluza-Klein monopole has one length, m, with G nowhere in the line element. Gross
     # and Perry's fifth coordinate x_5 is a length of period 16 pi m, and the Hopf angle psi is a pure
     # number.

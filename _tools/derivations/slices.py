@@ -1177,6 +1177,20 @@ def ktn_rstar():
     return lambda r: np.asarray(r, dtype=float) + rest(r)
 
 
+# Brill's charged Taub-NUT as its diagrams draw it, (m, l, r_q): the black hole in units of m and
+# the wormhole with no mass in units of l.
+BRILL = {"black_hole": (1.0, 0.75, 1.0), "wormhole": (0.0, 1.0, 1.5)}
+
+
+def brill_rstar(case):
+    """Brill's charged Taub-NUT's r_*, dr_*/dr = Sigma/Delta with Sigma = r^2 + l^2 and
+    Delta = r^2 - 2mr - l^2 + r_q^2, and r_* = 0 at r = 0, as the Eddington-Finkelstein charts fix
+    it: v = c t_N + r_* and u = c t_N - r_*. The integrand is 1 + (2mr + 2l^2 - r_q^2)/Delta."""
+    m, l, q = BRILL[case]
+    rest = primitive([2 * m, 2 * l * l - q * q], [1.0, -2 * m, q * q - l * l])
+    return lambda r: np.asarray(r, dtype=float) + rest(r)
+
+
 def kds_schild(sign):
     """c(tau - t) of Kerr-de Sitter's Kerr-Schild chart, d/dr of it r_s r/((1 - Lambda r^2/3) Delta_r),
     zero at r = 0."""
@@ -2318,6 +2332,9 @@ FLAT = {
     **{("kerr_de_sitter", "kerr_schild", "axis" + suffix): (lambda sign=sign: _kds(sign, kds_schild))
        for sign, suffix in (("de_sitter", ""), ("anti_de_sitter", "_ads"))},
     ("kerr_taub_nut", "boyer_lindquist", "principal"): lambda: one("kerr_taub_nut", lambda m: along(0.0, *m.reach("boyer_lindquist", "r"))),
+    **{("brill_charged_taub_nut", "spherical", view): (lambda v=v: one("brill_charged_taub_nut",
+                                                                         lambda m: along(0.0, *m.reach("spherical", "r")), view_id=v))
+       for view, v in (("black_hole", "equator"), ("wormhole", "wormhole"))},
     ("kerr_taub_nut", "boyer_lindquist", "above"): lambda: kerr_above("kerr_taub_nut"),
     # Ernst and Wild's hole: the moment t = 0 is one surface in both charts, whose azimuths differ
     # by a function of t alone, and it meets each plane of t and r along t = 0 outside r_+.
@@ -3279,6 +3296,13 @@ HIDDEN = {
     ("coleman_de_luccia", "into_flat"): "a bubble with another vacuum inside than the anti-de Sitter space whose moments are embedded",
     **{("coleman_de_luccia", system, "out_of_flat"): "the region outside the light cone of the bubble's centre, which no moment of the open universe inside meets"
        for system in ("wall", "static_outside")},
+    **{("brill_charged_taub_nut", system, view): "the regular half of the axis, which the embedded equatorial plane does not meet"
+       for system, view in (("one_string", "black_hole"), ("one_string", "wormhole"),
+                            ("eddington_finkelstein_ingoing", "black_hole"), ("eddington_finkelstein_ingoing", "wormhole"),
+                            ("eddington_finkelstein_outgoing", "black_hole"))},
+    ("brill_charged_taub_nut", "taub", "universe"): "the region between the horizons, where a surface of constant t is not a moment of space",
+    **{("brill_charged_taub_nut", view): "the regular half of the axis, which the embedded equatorial plane does not meet"
+       for view in ("axis", "ingoing", "outgoing", "universe", "wormhole")},
     **{("kerr_taub_nut", system, "axis"): "the regular half of the axis, which the embedded equatorial plane does not meet"
        for system in ("one_string", "kerr_ingoing", "kerr_outgoing")},
     **{("kerr_taub_nut", view): "the regular half of the axis, which the embedded equatorial plane does not meet"

@@ -5648,6 +5648,155 @@ def kerr_taub_nut(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- Brill's charged Taub-NUT
+
+def brill_charged_taub_nut(ck, src):
+    """The half of the axis that is regular, theta = 0 in the chart with one Misner string, where
+    the published metric is -Delta/Sigma c^2 dt_N^2 + Sigma/Delta dr^2 with g_tt g_rr = -1 checked.
+
+    The black hole, at m = 1, l = 3/4 and r_q = 1: a tower with the two simple roots 7/4 and 1/4
+    and no singularity, r running on through r = 0 to a second end at r -> -infinity. The ingoing
+    Eddington-Finkelstein chart covers I, II and III' through q = G(-v) and u = v - 2r*, and the
+    outgoing one III', the white hole above it and the exterior above that. Brill's universe is the
+    region between the horizons with tau = r growing toward the future, the cell IV, with
+    c t_N = 2 l psi, so that one period 4 pi of psi is a strip of the cell 8 pi l wide in c t_N.
+
+    The wormhole, at m = 0, l = 1 and r_q = 3/2: f = (r^2 + 1)/(r^2 + 5/4) has no root, r_* runs
+    over the whole line, and p, q = arctan((c t_N -+ r_*)/l) give the full diamond.
+    """
+    name = "Brill's charged Taub-NUT axis"
+    pl = Plane(src, "brill_charged_taub_nut", "one_string", ("t_N", "r"), {"phi": "0"}, nr.BRILL_HOLE, axis=("theta", "0"))
+    assert pl.g[0, 1] == 0 and sp.simplify(pl.g[0, 0] * pl.g[1, 1] + 1) == 0
+    roots = sorted([x for x in sp.solve(sp.numer(sp.together(pl.gi[1, 1])), pl.x1) if x.is_real], reverse=True)
+    T = Tower(-pl.g[0, 0], pl.x1, roots)
+    rp, rm = T.rf
+    ck.limit(f"{name}: the horizons are the roots of the published g^rr, 7m/4 and m/4", [rp, rm], [1.75, 0.25], 1e-12)
+    tower_checks(ck, name, pl, T, -40, 30)
+    p, q = T.pq("III", np.array([0.0]), np.array([-1e9]))
+    ck.limit(f"{name}: r -> -infinity at t = 0 lands on the far i0, (X, T) = (pi, pi)", point(p[0], q[0]), [PI, PI], 1e-3)
+    ck.finite(f"{name}: the Kretschmann scalar is finite along the axis, at r = 0 and at both horizons",
+              pl.kretschmann(np.zeros(5), np.array([-1e-3, 0.0, 1e-3, rp, rm])))
+    ck.limit(f"{name}: the tower's r_* is the one the spacetime diagrams are checked against",
+             T.rstar(np.array([-3.0, 1.0, 5.0])), slices.brill_rstar("black_hole")(np.array([-3.0, 1.0, 5.0])), 1e-12)
+
+    def ingoing(w, r):
+        """(p, q) of the event (v, r) of the ingoing chart: q = G(-v) in I and II and, in III', the
+        mirror of III, q = G(u) read with u and v exchanged, which is G(-v) again."""
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        t = w - T.rstar(r)
+        cell = np.where(r > rp, 0, np.where(r > rm, 1, 2))
+        ps, qs = zip(*[T.pq("I", t, r), T.pq("II", t, r), T.pq("III'", -t, r)])
+        return np.choose(cell, ps), np.choose(cell, qs)
+
+    def outgoing(u, r):
+        """(p, q) of the event (u, r) of the outgoing chart: III', and above it the white hole and
+        the exterior of the next period, the cells II and I reflected."""
+        u, r = np.asarray(u, dtype=float), np.asarray(r, dtype=float)
+        t = u + T.rstar(r)
+        cell = np.where(r > rp, 0, np.where(r > rm, 1, 2))
+        ps, qs = zip(*[reflect(*T.pq(c, -t, r), up) for c, up in (("I", True), ("II", True))] + [T.pq("III'", -t, r)])
+        return np.choose(cell, ps), np.choose(cell, qs)
+
+    kin = Plane(src, "brill_charged_taub_nut", "eddington_finkelstein_ingoing", ("v", "r"), {"phi": "0"}, nr.BRILL_HOLE,
+                axis=("theta", "0"))
+    kout = Plane(src, "brill_charged_taub_nut", "eddington_finkelstein_outgoing", ("u", "r"), {"phi": "0"}, nr.BRILL_HOLE,
+                 axis=("theta", "0"))
+    f = sp.lambdify(pl.x1, -pl.g[0, 0], "numpy")
+    for label, plane, fmap, sign in (("ingoing", kin, ingoing, 1), ("outgoing", kout, outgoing, -1)):
+        for lo, hi in ((-40, rm), (rm, rp), (rp, 40)):
+            # d_v - (1 + |f|) d_r and d_u + (1 + |f|) d_r are timelike everywhere and raise T.
+            ck.chart(f"{name}, {label} Eddington-Finkelstein chart, {lo:.2f} < r < {hi:.2f}", plane, fmap,
+                     ck.uniform(-12, 12), ck.uniform(lo + 1e-3, hi - 1e-3),
+                     lambda w, r, s=sign: (1, -s * (1 + np.abs(f(r)))))
+    probe = np.array([-3.0, 1.0, 5.0])
+    ck.limit(f"{name}: the ingoing and static coordinates put one event at one point",
+             np.concatenate(ingoing(2.0 + T.rstar(probe), probe)),
+             np.concatenate([np.array([T.pq(c, s * 2.0, r)[i] for c, s, r in zip(("III'", "II", "I"), (-1, 1, 1), probe)])
+                             for i in (0, 1)]), 1e-12)
+    w = np.array([-3.0, 0.5, 4.0])
+    for r in (-3.0, 1.0, 5.0):
+        ck.limit(f"{name}: an ingoing ray keeps its q and an outgoing ray its p at r = {r:g}",
+                 np.concatenate([ingoing(w, np.full(3, r))[1] - ingoing(w, np.full(3, 6.0))[1],
+                                 outgoing(w, np.full(3, r))[0] - outgoing(w, np.full(3, -6.0))[0]]), np.zeros(6), 1e-12)
+
+    # Brill's universe: tau = r between the horizons, growing toward the future, and 2 l psi = c t_N.
+    twice = 2 * 0.75
+    # The Euler angles are singular at theta = 0, so the plane is read on the equator: at any fixed
+    # theta and phi the metric on tau and psi is the one on the half axis, -Sigma/U dtau^2 + 4 l^2 U/Sigma dpsi^2.
+    taub = Plane(src, "brill_charged_taub_nut", "taub", ("\\tau", "\\psi"), EQUATOR, nr.BRILL_HOLE)
+
+    def universe(tau, psi):
+        return T.pq("IV", twice * np.asarray(psi, dtype=float), tau)
+    ck.chart(f"{name}, Brill's universe", taub, universe, ck.uniform(rm + 1e-3, rp - 1e-3), ck.uniform(-8, 8),
+             lambda tau, psi: (1, 0))
+
+    D = TowerDrawing(T, False, -np.inf)
+    box = [-PI - 0.45, PI + 0.45, -PI - 0.1, 3 * PI + 0.1]
+    times = [c / T.kp for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+    rI = nice_all(even_radii(T, "I", 4, rp, np.inf), [rp])
+    rII = nice_all(even_radii(T, "II", 4, rm, rp), [rm, rp])
+    rIII = nice_all(even_radii(T, "III", 5, -np.inf, rm), [rm])
+    grids = {"I": (rI, times), "II": (rII, times), "IV": (rII, times), "III": (rIII, times)}
+    restriction = ("The northern half of the axis, $\\theta = 0$, only, a totally geodesic surface, regular in the "
+                   "charts whose time is $t_N$. The Misner string lies along the southern half, $\\theta = \\pi$, "
+                   "off this surface, and with $l \\neq 0$ the spacetime has no curvature singularity.")
+    hole = "$m = 1$, the unit of every length, $l = 3m/4$, and $r_q = m$."
+    views = []
+    for view_id, label, chart, cover, what, time in (
+            ("axis", "The black hole", "one_string", [("I", False)], "the exterior $r > r_+$, which $t_N$ and $r$ cover",
+             "$ct_N$ constant"),
+            ("ingoing", "Ingoing Eddington-Finkelstein", "eddington_finkelstein_ingoing",
+             [("I", False), ("II", False), ("III'", False)],
+             "an exterior, the black hole, and a region $r < r_-$, which $v$ and $r$ cover", "$ct_N$ constant"),
+            ("outgoing", "Outgoing Eddington-Finkelstein", "eddington_finkelstein_outgoing",
+             [("III'", False), ("II", True), ("I", True)],
+             "a region $r < r_-$, the white hole, and an exterior, which $u$ and $r$ cover", "$ct_N$ constant"),
+            ("universe", "Brill's universe", "taub", [("IV", False)],
+             "the region between the horizons, which $\\tau$ and $\\psi$ cover", "$\\psi$ constant")):
+        v = View(view_id, label, box, chart)
+        D.draw(v, grids, cover=cover)
+        D.labels(v)
+        v.set(fade={"top": 0.9, "bottom": 0.9}, restriction=restriction, settings=hole)
+        v.legend("cover", what)
+        v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, "
+                      "in units of $m$")
+        v.legend("t", time)
+        v.legend("horizon", "the horizons, $r_+ = 7m/4$ and $r_- = m/4$")
+        v.legend("scri", "null infinity, of $r \\to +\\infty$ and of $r \\to -\\infty$")
+        views.append(v)
+
+    # The wormhole: no horizon, and the whole of the half axis is one diamond.
+    worm = Plane(src, "brill_charged_taub_nut", "one_string", ("t_N", "r"), {"phi": "0"}, nr.BRILL_WORMHOLE,
+                 axis=("theta", "0"))
+    assert worm.g[0, 1] == 0 and sp.simplify(worm.g[0, 0] * worm.g[1, 1] + 1) == 0
+    star = slices.brill_rstar("wormhole")
+
+    def through(t, r):
+        return mink_pq(t, star(r))
+    ck.chart(f"{name}, the wormhole", worm, through, ck.uniform(-20, 20), ck.uniform(-20, 20), lambda t, r: (1, 0))
+    ck.finite(f"{name}: the wormhole's curvature is finite at the throat r = 0",
+              worm.kretschmann(ck.uniform(-5, 5, 50), ck.uniform(-0.01, 0.01, 50)))
+    ck.limit(f"{name}: the wormhole's r_* is r - arctan(2r/sqrt(5))/(2 sqrt(5))", star(np.array([-2.0, 0.0, 3.0])),
+             [r - np.arctan(2 * r / np.sqrt(5)) / (2 * np.sqrt(5)) for r in (-2.0, 0.0, 3.0)], 1e-12)
+    v = View("wormhole", "The wormhole", [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "one_string")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    grid(v, "r", lambda r, t: through(t, r), (-4, -2, -1, -0.5, 0.5, 1, 2, 4), S_ALL)
+    grid(v, "t", through, (-4, -2, -1, 0, 1, 2, 4), S_ALL)
+    v.line("throat", [[[0, -PI], [0, PI]]])
+    diamond_edges(v)
+    label_on(v, through(0, 2), "$r = 2l$")
+    label_on(v, through(0, -2), "$-2l$")
+    v.label_xt([0, 0.3], "throat", "l", "small", dx=6)
+    v.set(restriction=restriction, settings="$l = 1$, the unit of every length, $m = 0$, and $r_q = 3l/2$.")
+    v.legend("cover", "the whole of the half axis, which $t_N$ and $r$ cover")
+    v.legend("r", "$r$ constant, at $\\pm l/2$, $\\pm l$, $\\pm 2l$ and $\\pm 4l$")
+    v.legend("t", "$ct_N$ constant")
+    v.legend("throat", "the throat $r = 0$, where the spheres are smallest")
+    views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- Kerr-de Sitter and Kerr-anti-de Sitter
 
 KDS = {"r_s": 1, "a": "9/20", "Lambda": "1/5"}
@@ -22754,6 +22903,7 @@ DRAWN = {
     "coleman_de_luccia": coleman_de_luccia,
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "hiscock": hiscock, "bardeen": bardeen, "mass_inflation": mass_inflation,
     "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "kerr_taub_nut": kerr_taub_nut, "kerr_melvin": kerr_melvin,
+    "brill_charged_taub_nut": brill_charged_taub_nut,
     "de_sitter": de_sitter,
     "elliptic_de_sitter": elliptic_de_sitter,
     "self_creating_universe": self_creating_universe,
@@ -24112,6 +24262,24 @@ CAPTIONS = {
         "the expanding region together, from the singularity on $H\\tau\\rho = -r_s/2$ to $\\mathscr{I}^+$. The "
         "surface $\\tau = 0$ is $r = r_s/2$, inside the white hole, and every surface of constant $\\tau$ is "
         "spacelike.",
+    ],
+    ("brill_charged_taub_nut", "axis"): [
+        "The northern half of the axis, $\\theta = 0$, of the black hole ($l = 3m/4$, $r_q = m$) extended through its horizons, each point in the diagram a single event of the axis. In the charts whose time is $t_N$ the metric on it is $-f\\,c^2dt_N^2 + dr^2/f$ with $f = \\Delta/\\Sigma$, whose two roots are the horizons $r_- < r_+$. Every region is placed by $\\arctan e^{-\\kappa_+u}$ and $\\arctan e^{\\kappa_+v}$, the Kruskal coordinates of $r_+$ brought in from infinity, where $u, v = ct_N \\mp r_*$, $dr_*/dr = 1/f$, and $\\kappa_+ = f'(r_+)/2$ is the surface gravity of $r_+$.",
+        "The tower has the shape of Reissner and Nordström's: an exterior, the black hole across $r_+$, a region inside the inner horizon $r_-$, then a white hole and the next exterior, without end. Reissner and Nordström's tower ends on a singularity at $r = 0$. Here $\\Sigma = r^2 + l^2$ has no zero, the curvature is finite everywhere, and inside $r_-$ the radius runs on through $r = 0$ to $r \\to -\\infty$, a second region far from the hole [clement2016].",
+    ],
+    ("brill_charged_taub_nut", "ingoing"): [
+        "The regular half of the axis with the ingoing Eddington-Finkelstein coordinates $v$ and $r$ on it. One chart covers an exterior, the black hole, and a region inside $r_-$. Ingoing light rays, $v$ constant, run at 45° from past null infinity across $r_+$ and $r_-$ to the null infinity of $r \\to -\\infty$.",
+    ],
+    ("brill_charged_taub_nut", "outgoing"): [
+        "The regular half of the axis with the outgoing Eddington-Finkelstein coordinates $u$ and $r$ on it, the time reverse of the ingoing ones. They cover a region inside $r_-$, the white hole above it, and the exterior above that. Outgoing light rays, $u$ constant, run at 45° from the null infinity of $r \\to -\\infty$ across $r_-$ and $r_+$ to future null infinity.",
+    ],
+    ("brill_charged_taub_nut", "universe"): [
+        "The coordinates $\\tau$ and $\\psi$ of Brill's universe, with $\\tau = r$ and $2l\\psi = ct_N$, drawn on the regular half of the axis, whose metric the plane of $\\tau$ and $\\psi$ carries at every fixed $\\theta$ and $\\phi$. They cover a region between the horizons in which $r$ grows toward the future: the universe begins on $\\tau_- = m/4$ and ends on $\\tau_+ = 7m/4$.",
+        "The angle $\\psi$ has period $4\\pi$, so the closed universe is a strip of this region $8\\pi l$ wide in $ct_N$ with its two edges joined, and every moment of it is a sphere $S^3$ [brill1964]. Joined in that way, the lines of constant $r$ outside the horizons become closed timelike curves [misner1963].",
+    ],
+    ("brill_charged_taub_nut", "wormhole"): [
+        "The northern half of the axis, $\\theta = 0$, of the wormhole ($m = 0$, $r_q = 3l/2$), each point in the diagram a single event of the axis. With $r_q^2 > m^2 + l^2$ the function $f = \\Delta/\\Sigma$ has no root, and the null coordinates $p, q = \\arctan((ct_N \\mp r_*)/l)$, with $dr_*/dr = 1/f$ and $r_* = 0$ at $r = 0$, bring the whole of it into one diamond.",
+        "The diamond is that of flat space in two dimensions, with a null infinity on each side, for $r \\to \\infty$ and for $r \\to -\\infty$. Light crosses the throat $r = 0$ from either side and reaches the null infinity of the other [clement2016].",
     ],
     ("kerr_taub_nut", "axis"): [
         "The northern half of the axis, $\\theta = 0$, of the Kerr-Taub-NUT spacetime extended through its horizons, each point in the diagram a single event of the axis. In the charts whose time is $t_N$ the metric on it is $-f\\,c^2dt_N^2 + dr^2/f$ with $f = \\Delta/(r^2 + (a + l)^2)$, whose two roots are the horizons $r_- < r_+$. Every region is placed by $\\arctan e^{-\\kappa_+u}$ and $\\arctan e^{\\kappa_+v}$, the Kruskal coordinates of $r_+$ brought in from infinity, where $u, v = ct_N \\mp r_*$, $dr_*/dr = 1/f$, and $\\kappa_+ = f'(r_+)/2$ is the surface gravity of $r_+$.",

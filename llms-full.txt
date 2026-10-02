@@ -541,6 +541,20 @@ One moment of a spacetime that holds gravitational waves and nothing else, which
 - chart Spherical: coordinates $(r, \theta, \phi)$, $$ds^2 = \psi^4\left(e^{2q}\left(dr^2 + r^2d\theta^2\right) + r^2\sin^2\theta\,d\phi^2\right)$$
 - chart Without Axial Symmetry: coordinates $(\rho, z, \phi)$, $$ds^2 = \psi^4\left(e^{2q}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2\right)$$
 
+### Brill's Charged Taub-NUT Spacetime
+
+Taub-NUT with an electric charge, the solution of the Einstein-Maxwell equations Dieter Brill found in 1964 as a closed universe filled with gravitational and electromagnetic radiation. It is the Taub-NUT metric at $r_q = 0$ and Reissner and Nordström's at $l = 0$, it has no curvature singularity while $l \neq 0$, and for $r_q^2 > m^2 + l^2$ it has no horizon either and is a wormhole.
+
+- id: `brill_charged_taub_nut`
+- tags: electrovacuum, stationary, axisymmetric, charged, charged black hole, black hole, wormhole, traversable, electric charge, mass, NUT parameter, gravitomagnetic, electromagnetic field, Einstein-Maxwell, closed timelike curves, horizon, event horizon, Cauchy horizon, causal structure, Petrov type D, not asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/brill_charged_taub_nut.json
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{\Delta}{\Sigma}\left(c\,dt + 2l\cos\theta\,d\phi\right)^2 + \dfrac{\Sigma}{\Delta}dr^2 + \Sigma\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart One Misner String: coordinates $(t_N, r, \theta, \phi)$, $$ds^2 = -\dfrac{\Delta}{\Sigma}\left(c\,dt_N - 2l\left(1 - \cos\theta\right)d\phi\right)^2 + \dfrac{\Sigma}{\Delta}dr^2 + \Sigma\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\dfrac{\Delta}{\Sigma}\left(dv - 2l\left(1 - \cos\theta\right)d\phi\right)^2 + 2\,dr\left(dv - 2l\left(1 - \cos\theta\right)d\phi\right) + \Sigma\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\dfrac{\Delta}{\Sigma}\left(du - 2l\left(1 - \cos\theta\right)d\phi\right)^2 - 2\,dr\left(du - 2l\left(1 - \cos\theta\right)d\phi\right) + \Sigma\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Brill's Universe: coordinates $(\tau, \psi, \theta, \phi)$, $$ds^2 = -\dfrac{\Sigma}{U}d\tau^2 + \dfrac{4l^2U}{\Sigma}\left(d\psi + \cos\theta\,d\phi\right)^2 + \Sigma\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### C-Metric Accelerating Black Holes
 
 An exact vacuum solution describing two black holes that accelerate away from each other, driven by a cosmic string or a strut along their axis of symmetry. With the acceleration set to zero it is the Schwarzschild black hole.
