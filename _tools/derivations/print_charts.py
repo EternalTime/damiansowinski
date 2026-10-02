@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
-charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
+charts of tov, malament_hogarth, nordstrom_scalar, mixmaster, lentz, einstein_static, btz, c_metric,
 schwarzschild_de_sitter, schwarzschild_ads, topological_black_hole, ads_soliton, milne, einstein_rosen_waves, nariai, aichelburg_sexl, hotta_tanaka,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy, bonnor_rotating_dust,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, boulware_deser, gott_time_machine, zipoy_voorhees, szekeres,
@@ -11,8 +11,9 @@ som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, 
 schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis, erez_rosen,
-wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice and
-belinski_zakharov, and Godel's cylindrical chart.
+wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
+born_infeld_charge, penrose_impulsive_wave, exponential_metric, petrov_homogeneous, rp3_geon and
+kopczynski_trautman, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -33,7 +34,8 @@ malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_
 majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md,
 witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, mass_inflation.md,
 kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_star.md,
-misner_brill_lindquist.md, lewis.md, tippett_tsang.md and belinski_zakharov.md beside this file.
+misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md and
+petrov_homogeneous.md beside this file.
 """
 import argparse
 import fcntl
@@ -1189,6 +1191,184 @@ def nariai_embedding(chart, system):
             if sp.simplify(sp.expand_trig(diff.rewrite(sp.exp))) != 0:
                 raise AssertionError(f"nariai: the embedding pulled back misses the {system} chart "
                                      f"in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+# -- elliptic de Sitter space ----------------------------------------------------------
+
+EDS_CHARTS = ("global", "conformal", "kruskal", "static", "planar")
+EDS_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+EDS_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+# The antipodal map X -> -X of the hyperboloid in each chart that holds a point together with its
+# antipode, as the substitution of the chart's coordinates in order; theta -> pi - theta and
+# phi -> phi + pi is the antipodal map of the sphere of theta and phi.
+EDS_ANTIPODE = {
+    "global": lambda t, chi, theta, phi: (-t, sp.pi - chi, sp.pi - theta, phi + sp.pi),
+    "conformal": lambda eta, chi, theta, phi: (-eta, sp.pi - chi, sp.pi - theta, phi + sp.pi),
+    "kruskal": lambda U, V, theta, phi: (-U, -V, sp.pi - theta, phi + sp.pi),
+}
+
+
+def eds_embedding(system, coords, ell):
+    """(X_0, X_1, X_2, X_3, X_4) of the hyperboloid -X_0^2 + X_1^2 + ... + X_4^2 = l^2 at the chart's
+    coordinates, a time coordinate standing for x^0 = ct. The observer the charts are built about is
+    the pole X_1 = X_2 = X_3 = 0, X_4 > 0."""
+    a, b, c, d = coords
+    if system == "planar":
+        rho2 = b ** 2 + c ** 2 + d ** 2
+        return [ell * sp.sinh(a / ell) + sp.exp(a / ell) * rho2 / (2 * ell), sp.exp(a / ell) * b, sp.exp(a / ell) * c,
+                sp.exp(a / ell) * d, ell * sp.cosh(a / ell) - sp.exp(a / ell) * rho2 / (2 * ell)]
+    n = [sp.sin(c) * sp.cos(d), sp.sin(c) * sp.sin(d), sp.cos(c)]
+    if system == "global":
+        X0, X4, R = ell * sp.sinh(a / ell), ell * sp.cosh(a / ell) * sp.cos(b), ell * sp.cosh(a / ell) * sp.sin(b)
+    elif system == "conformal":
+        X0, X4, R = ell * sp.tan(a), ell * sp.cos(b) / sp.cos(a), ell * sp.sin(b) / sp.cos(a)
+    elif system == "kruskal":
+        X0, X4, R = ell * (a + b) / (1 - a * b), ell * (b - a) / (1 - a * b), ell * (1 + a * b) / (1 - a * b)
+    else:
+        s = sp.sqrt(ell ** 2 - b ** 2)
+        X0, X4, R = s * sp.sinh(a / ell), s * sp.cosh(a / ell), b
+    return [X0, R * n[0], R * n[1], R * n[2], X4]
+
+
+def elliptic_de_sitter(system):
+    """Elliptic de Sitter space, the hyperboloid -X_0^2 + X_1^2 + ... + X_4^2 = l^2 with X and -X
+    one event: Schrodinger, Expanding Universes (1956), section 3, and Parikh, Savonije and Verlinde,
+    Phys. Rev. D 67, 064005 (2003), whose global chart this is. Five charts: the global chart of
+    closed slices and its conformal time, on the half chi <= pi/2 of space, whose edge chi = pi/2 is
+    glued to itself with t -> -t; the Kruskal chart of Spradlin, Strominger and Volovich's review
+    on the half V >= U; the static chart, whose patch holds no antipodal pair; and the planar chart,
+    half of the hyperboloid and so, with the null surface X_0 + X_4 = 0, the whole space.
+    elliptic_de_sitter_check holds each to the hyperboloid pulled back, to R_mu_nu = (3/l^2) g_mu_nu
+    and a vanishing Weyl tensor, the first three to their antipodal map being X -> -X, and the last
+    two to covering no antipodal pair. elliptic_de_sitter.md records each chart's source."""
+    glue = "\\;\\text{(the antipodal identification)}"
+    charts = {
+        "global": {
+            "name": "Global", "coords": ["t", "\\chi", "\\theta", "\\phi"],
+            "domains": ["t \\in (-\\infty, \\infty)", "\\chi \\in [0, \\pi/2]"] + EDS_ANGLES
+                       + ["(t, \\pi/2, \\theta, \\phi) \\sim (-t, \\pi/2, \\pi - \\theta, \\phi + \\pi)" + glue],
+            "line": lambda c: (f"ds^2 = -{c + '^2' if c else ''}dt^2 + \\ell^2\\cosh^2({c}t/\\ell)"
+                               f"\\left(d\\chi^2 + \\sin^2\\chi{EDS_SPHERE}\\right)")},
+        "conformal": {
+            "name": "Conformal", "coords": ["\\eta", "\\chi", "\\theta", "\\phi"],
+            "domains": ["\\eta \\in (-\\pi/2, \\pi/2)", "\\chi \\in [0, \\pi/2]"] + EDS_ANGLES
+                       + ["(\\eta, \\pi/2, \\theta, \\phi) \\sim (-\\eta, \\pi/2, \\pi - \\theta, \\phi + \\pi)" + glue],
+            "line": lambda c: ("ds^2 = \\dfrac{\\ell^2}{\\cos^2\\eta}\\left(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi"
+                               f"{EDS_SPHERE}\\right)")},
+        "kruskal": {
+            "name": "Kruskal", "coords": ["U", "V", "\\theta", "\\phi"],
+            "domains": ["U \\in (-\\infty, \\infty)", "V \\in (-\\infty, \\infty)"] + EDS_ANGLES
+                       + ["-1 \\le UV < 1", "V \\ge U",
+                          "(U, U, \\theta, \\phi) \\sim (-U, -U, \\pi - \\theta, \\phi + \\pi)" + glue],
+            "line": lambda c: ("ds^2 = \\dfrac{\\ell^2}{\\left(1 - UV\\right)^2}\\left(-4\\,dU\\,dV + \\left(1 + UV\\right)^2"
+                               f"{EDS_SPHERE}\\right)")},
+        "static": {
+            "name": "Static", "coords": ["t", "r", "\\theta", "\\phi"],
+            "domains": ["t \\in (-\\infty, \\infty)", "r \\in [0, \\ell)"] + EDS_ANGLES
+                       + ["r = \\ell \\;\\text{(cosmological horizon)}"],
+            "line": lambda c: (f"ds^2 = -\\left(1 - \\dfrac{{r^2}}{{\\ell^2}}\\right){c + '^2' if c else ''}dt^2 + "
+                               f"\\dfrac{{dr^2}}{{1 - \\dfrac{{r^2}}{{\\ell^2}}}} + r^2{EDS_SPHERE}")},
+        "planar": {
+            "name": "Planar", "coords": ["t", "x", "y", "z"],
+            "domains": ["t \\in (-\\infty, \\infty)", "x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)",
+                        "z \\in (-\\infty, \\infty)"],
+            "line": lambda c: (f"ds^2 = -{c + '^2' if c else ''}dt^2 + e^{{2{c}t/\\ell}}"
+                               "\\left(dx^2 + dy^2 + dz^2\\right)")},
+    }
+    chart = charts[system]
+    probe = vm.Reader(chart["coords"], ["\\ell"], ())
+    ell = probe.parameters["ell"]
+    first = probe.symbol[chart["coords"][0]]
+    f, bare = "\\left(1 - \\dfrac{r^2}{\\ell^2}\\right)", "1 - \\dfrac{r^2}{\\ell^2}"
+    printing = {
+        "global": lambda: {"printer": {"lead": [ell], "arguments": {probe.c * first / ell: "ct/\\ell"}}, "time": "t",
+                           "pretty": nariai_hyperbolic(probe.c * first / ell)},
+        "conformal": lambda: {"printer": {"lead": [ell]}, "pretty": eds_conformal(first)},
+        "kruskal": lambda: {"printer": {"rising": [first, probe.symbol["V"]], "lead": [ell], "flip": False}},
+        "static": lambda: {"printer": {"lead": [ell], "rising": [probe.symbol["r"]], "flip": False},
+                           "components": {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                                          "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}}},
+        "planar": lambda: {"printer": {"lead": [ell]}, "time": "t"},
+    }[system]()
+    return {
+        "metric_id": "elliptic_de_sitter",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": ["\\ell"], "line_element": chart["line"]("c")},
+        "chart_line_element": chart["line"](""),
+        "check": lambda c: elliptic_de_sitter_check(c, system),
+        **printing,
+    }
+
+
+def eds_conformal(eta):
+    """A `pretty` for the conformal chart: each value written in sin(eta) and cos(eta) with every
+    even power of the sine reduced by sin^2 = 1 - cos^2, cancelled and factored, and a sine left
+    over a cosine written as the tangent, so that the conformal factor reads 1/cos^2(eta) and the
+    connection tan(eta). The other angles stay as sympy factors them."""
+    s, c, t = sp.symbols("_s _c _t")
+    relation = [s ** 2 + c ** 2 - 1]
+
+    def reduce(p):
+        return sp.expand(sp.reduced(sp.expand(p), relation, s, c)[1])
+
+    def pretty(value):
+        x = sp.sympify(value)
+        if not x.has(eta):
+            return sp.factor(x)
+        x = x.rewrite(sp.cos).subs({sp.sin(eta): s, sp.cos(eta): c}) if x.has(sp.tan(eta)) else \
+            x.subs({sp.sin(eta): s, sp.cos(eta): c})
+        num, den = (reduce(p) for p in sp.fraction(sp.together(x)))
+        # A denominator left with a sine is cleared by its conjugate, since a + b s times a - b s is
+        # a^2 - b^2 (1 - c^2).
+        d0, d1 = sp.Poly(den, s).coeff_monomial(1), sp.Poly(den, s).coeff_monomial(s)
+        if d1 != 0:
+            num, den = reduce(num * (d0 - d1 * s)), reduce(d0 ** 2 - d1 ** 2 * (1 - c ** 2))
+        out = sp.factor(sp.cancel(num / den))
+        powers = out.as_powers_dict()
+        if powers.get(s, 0) == 1 and powers.get(c, 0) < 0:
+            out = out * t * c / s
+        return out.subs({s: sp.sin(eta), c: sp.cos(eta), t: sp.tan(eta)})
+    return pretty
+
+
+def elliptic_de_sitter_check(chart, system):
+    """The chart is the hyperboloid's metric pulled back, an Einstein space with Lambda = 3/l^2 and
+    no Weyl tensor. Where the chart holds a point together with its antipode, its stated
+    identification is X -> -X; the static patch lies in X_4 > |X_0| and the planar chart in
+    X_0 + X_4 > 0, each of which X -> -X carries off itself."""
+    ell = chart.reader.parameters["ell"]
+    positive = sp.Symbol("ell_", positive=True)
+    X = eds_embedding(system, chart.symbols, ell)
+    J = sp.Matrix([[sp.diff(X_I, v) for v in chart.symbols] for X_I in X])
+    pulled = J.T * sp.diag(-1, 1, 1, 1, 1) * J
+    g = chart.geo.g
+    for i in range(4):
+        for j in range(i, 4):
+            difference = (pulled[i, j] - g[i, j]).subs(ell, positive)
+            if sp.simplify(sp.expand_trig(difference.rewrite(sp.exp))) != 0:
+                raise AssertionError(f"elliptic_de_sitter: the hyperboloid pulled back misses the {system} chart in slot "
+                                     f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+    on = sp.simplify((-X[0] ** 2 + sum(x ** 2 for x in X[1:]) - ell ** 2).subs(ell, positive).rewrite(sp.exp))
+    if sp.simplify(sp.expand_trig(on)) != 0:
+        raise AssertionError(f"elliptic_de_sitter: the {system} chart leaves the hyperboloid")
+    ricci = chart.geo.ricci_ll()
+    if any(vm.norm(ricci[a][b] - 3 * g[a, b] / ell ** 2) != 0 for a in range(4) for b in range(4)):
+        raise AssertionError(f"elliptic_de_sitter: R_mu_nu is not (3/l^2) g_mu_nu in the {system} chart")
+    if any(vm.norm(value) != 0 for value in sp.flatten(chart.geo.weyl_llll())):
+        raise AssertionError(f"elliptic_de_sitter: the {system} chart has a Weyl tensor")
+    if system in EDS_ANTIPODE:
+        image = dict(zip(chart.symbols, EDS_ANTIPODE[system](*chart.symbols)))
+        for X_I in X:
+            total = (X_I + X_I.subs(image, simultaneous=True)).subs(ell, positive)
+            if sp.simplify(sp.expand_trig(total.rewrite(sp.exp))) != 0:
+                raise AssertionError(f"elliptic_de_sitter: the {system} chart's identification is not X -> -X")
+    elif system == "static":
+        # X_4^2 - X_0^2 = l^2 - r^2 > 0 with X_4 > 0, so -X lies in X_4 < 0, off the patch.
+        if sp.simplify((X[4] ** 2 - X[0] ** 2 - (ell ** 2 - chart.symbols[1] ** 2)).rewrite(sp.exp)) != 0:
+            raise AssertionError("elliptic_de_sitter: the static patch is not X_4^2 - X_0^2 = l^2 - r^2")
+    else:
+        if sp.simplify((X[0] + X[4] - ell * sp.exp(chart.symbols[0] / ell)).rewrite(sp.exp)) != 0:
+            raise AssertionError("elliptic_de_sitter: the planar chart is not X_0 + X_4 = l exp(ct/l)")
 
 
 # -- Aichelburg-Sexl ------------------------------------------------------------------
@@ -2730,6 +2910,7 @@ MELVIN_GEODESICS = [
 
 
 CHARTS["melvin"] = [lambda s=s: melvin(s) for s in ("cylindrical", "ernst")]
+CHARTS["elliptic_de_sitter"] = [lambda s=s: elliptic_de_sitter(s) for s in EDS_CHARTS]
 CHARTS["schwarzschild_ads"] = [lambda s=s: schwarzschild_ads(s) for s in SADS_CHARTS]
 CHARTS["topological_black_hole"] = [lambda s=s: topological_black_hole(s) for s in TBH_CHARTS]
 
@@ -7817,6 +7998,220 @@ BARDEEN_CHARTS = ["static", "eddington_finkelstein_outgoing", "eddington_finkels
 CHARTS["bardeen"] = [lambda s=s: bardeen(s) for s in BARDEEN_CHARTS]
 
 
+# -- Born-Infeld point charge ----------------------------------------------------------
+
+BORN_INFELD_CHARTS = ["static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing"]
+BORN_INFELD_W = "W = \\sqrt{r^4 + r_0^4}"
+BORN_INFELD_M = ("m = \\dfrac{r_s}{2} + \\dfrac{r_q^2\\,r}{3\\left(r^2 + W\\right)} - \\dfrac{r_q^2}{3r_0}\\,"
+                 "\\mathrm{F}\\left(2\\arctan\\left(\\dfrac{r_0}{r}\\right) \\mid \\dfrac{1}{2}\\right)")
+# Born and Infeld's number, Gamma(1/4)^2/(6 sqrt(pi)) = 1.2360: the energy of the field of a point
+# charge is this times Q^2/r_0, so the mass function at the centre is r_s/2 - 1.2360 r_q^2/r_0.
+BORN_INFELD_NUMBER = sp.gamma(sp.Rational(1, 4)) ** 2 / (6 * sp.sqrt(sp.pi))
+
+
+def born_infeld_charge(system_id):
+    """The point charge of Born and Infeld's electrodynamics with its own gravity, Hoffmann's
+    solution of 1935: ds^2 = -f c^2dt^2 + dr^2/f + r^2 dOmega^2 with f = 1 - 2m(r)/r, in the static
+    chart and in the two Eddington-Finkelstein charts built on its tortoise coordinate,
+    dr_*/dr = 1/f. The parameters are three lengths: Schwarzschild's r_s for the whole mass,
+    Reissner and Nordstrom's r_q for the charge, and Born and Infeld's r_0, the radius at which
+    the charge's Coulomb field would reach their greatest field b. The charts name the radical
+    W = sqrt(r^4 + r_0^4) and the mass function m, whose slope is the energy of the field in a
+    shell, dm/dr = r_q^2/(r^2 + W), and which tends to r_s/2 far away: no elementary function has
+    that slope, and m is written with the incomplete elliptic integral of the first kind. The
+    checker holds m as a function with that slope, vm.HELD and vm.RATES, having checked the slope
+    against the elliptic integral, so every value is printed in r, W, m and r_q, where it is
+    Reissner and Nordstrom's at W = r^2, which is r_0 = 0. born_infeld_charge.md records each
+    chart's source."""
+    f = "\\left(1 - \\dfrac{2m}{r}\\right)"
+    bare = f[6:-7]
+    sphere = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    domains = ["r \\in (0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+               "r = r_h \\;\\text{(the horizons, where}\\; r = 2m\\text{)}"]
+    if system_id == "static":
+        coords = ["t", "r", "\\theta", "\\phi"]
+        name = "Static Spherical"
+        line = "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        chart_line = "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        metric = {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"}
+        inverse = {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}
+    else:
+        null, sign = ("u", "-") if system_id == "eddington_finkelstein_outgoing" else ("v", "+")
+        coords = [null, "r", "\\theta", "\\phi"]
+        name = ("Outgoing" if null == "u" else "Ingoing") + " Eddington-Finkelstein"
+        line = "ds^2 = -" + f + "d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr" + sphere
+        chart_line = line
+        one = "-1" if null == "u" else "1"
+        metric = {(null, null): "-" + f, (null, "r"): one, ("r", null): one}
+        inverse = {(null, "r"): one, ("r", null): one, ("r", "r"): bare}
+    parameters = ["r_s", "r_q", "r_0", BORN_INFELD_W, BORN_INFELD_M]
+    probe = vm.Reader(coords, parameters, (), held=("m",))
+    r, rq, r0, m = probe.symbol["r"], probe.parameters["r_q"], probe.parameters["r_0"], probe.parameters["m"]
+    W = sp.Symbol("W", positive=True)
+    slope = rq ** 2 / (r ** 2 + sp.sqrt(r ** 4 + r0 ** 4))
+
+    def reduce(value):
+        # The mass function's slope is the energy of the field in a shell, so no derivative of m is left.
+        value = sp.sympify(value)
+        for d in sorted(value.atoms(sp.Derivative), key=lambda d: -d.derivative_count):
+            if d.expr != m:
+                raise AssertionError(f"born_infeld_charge: {d} is no derivative of the mass function")
+            value = value.xreplace({d: sp.diff(slope, r, d.derivative_count - 1)})
+        return vm.norm(value)
+
+    def collect(poly, printer):
+        # r - 2m, whose zeros are the horizons, keeps the order the line element writes it in.
+        if sp.expand(poly - (r - 2 * m)) == 0 or sp.expand(poly + (r - 2 * m)) == 0:
+            return printer.sum_of(poly)
+        return cp.collect_by(poly, [m], printer)
+
+    return {
+        "metric_id": "born_infeld_charge",
+        "system": {"id": system_id, "name": name, "coords": coords,
+                   "domains": [coords[0] + " \\in (-\\infty, \\infty)"] + domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        # A numerator is grouped by the powers of the mass function, as (r^2 + W) m - r_q^2 r.
+        "printer": {"lead": [r, m, W, rq], "factors": [rq, r, m, W], "flip": False, "collect": collect},
+        "pretty": born_infeld_pretty(r, r0, W),
+        "reduce": reduce,
+        "ricci_scalar": "\\dfrac{4r_q^2\\left(W - r^2\\right)}{r^2\\,W\\left(r^2 + W\\right)}",
+        # In the frame of a static observer the Riemann tensor has three independent components.
+        "kretschmann": ("\\dfrac{16}{r^6}\\left(\\left(m - \\dfrac{r_q^2\\,r}{W}\\right)^2"
+                        " + \\left(m - \\dfrac{r_q^2\\,r}{r^2 + W}\\right)^2 + m^2\\right)"),
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "check": lambda chart: born_infeld_check(chart, system_id),
+    }
+
+
+def born_infeld_pretty(r, r0, W):
+    """A pretty printer for the charts of Born and Infeld's point charge, whose every value is a
+    rational function of r, r_q, the mass function m, r_0^4 and one radical, W = sqrt(r^4 + r_0^4).
+    Written in r, W, m and r_q, with r_0^4 = W^2 - r^4, no relation is left among the generators,
+    so the value factors there, and the W - r^2 that r_0^4 brings cancels: the density of the
+    field's energy is 2 r_q^2/(r^2 (r^2 + W)), Maxwell's r_q^2/r^4 at W = r^2."""
+    square = r ** 4 + r0 ** 4
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        value = value.replace(lambda p: p.is_Pow and sp.expand(p.base - square) == 0, lambda p: W ** (2 * p.exp))
+        value = sp.together(value.subs(r0, (W ** 2 - r ** 4) ** sp.Rational(1, 4)))
+        if value.has(r0) or any(not p.exp.is_Integer for p in value.atoms(sp.Pow)):
+            raise AssertionError(f"born_infeld_charge: a power of r_0 that is no power of r_0^4 is left in {value}")
+        return sp.factor(value)
+
+    return pretty
+
+
+def born_infeld_check(chart, system_id):
+    """Each chart solves Einstein's equations with the field of a point charge in Born and
+    Infeld's electrodynamics for its source. In lengths, with the electric field E a reciprocal
+    length, the Lagrangian is L(F) = beta^2 (sqrt(1 + 2F/beta^2) - 1) with F = F_mn F^mn/4 and
+    beta = r_q/r_0^2 the greatest field, Maxwell's L = F for small F, and the equations are
+    G_m^n = 2(L_F F_ml F^nl - delta_m^n L), as bardeen_source writes them. A radial electric
+    field has F = -E^2/2, the field equation d(r^2 L_F E)/dr = 0 gives E = r_q/sqrt(r^4 + r_0^4),
+    finite at the charge, and G^t_t = G^r_r = -2(L_F E^2 + L), G^theta_theta = G^phi_phi = -2L.
+    The static chart is Schwarzschild's published metric at r_q = 0 and tends to Reissner and
+    Nordstrom's as r_0 -> 0, its mass function has the slope the checker holds it to, tends to
+    r_s/2 far away and to r_s/2 - 1.2360 r_q^2/r_0 at the centre, Born and Infeld's number, and
+    where that vanishes g^rr tends to 1 - 2 r_q^2/r_0^2 at the centre, Hoffmann's conical
+    singularity; each Eddington-Finkelstein chart is the static one pulled back along
+    c t = v - r_* or u + r_*, dr_*/dr = 1/f."""
+    geo, g = chart.geo, chart.geo.g
+    reader = chart.reader
+    r = reader.symbol["r"]
+    rs, rq, r0, m = (reader.parameters[k] for k in ("r_s", "r_q", "r_0", "m"))
+    definition = reader.held[m]
+    W = sp.sqrt(r ** 4 + r0 ** 4)
+    if vm.norm(sp.diff(definition, r) - rq ** 2 / (r ** 2 + W)) != 0:
+        raise AssertionError("born_infeld_charge: the slope of the mass function is not r_q^2/(r^2 + W)")
+    E, F = sp.Symbol("E", positive=True), sp.Symbol("F", real=True)
+    beta = rq / r0 ** 2
+    lagrangian = beta ** 2 * (sp.sqrt(1 + 2 * F / beta ** 2) - 1)
+    field = rq / W
+    on = {F: -field ** 2 / 2}
+    L, LF = lagrangian.subs(on), sp.diff(lagrangian, F).subs(on)
+    if vm.norm(sp.diff(r ** 2 * LF * field, r)) != 0 or vm.norm(r ** 2 * LF * field - rq) != 0:
+        raise AssertionError("born_infeld_charge: the field r_q/W does not solve Born and Infeld's equation "
+                             "with the charge r_q")
+    mixed = geo.raise_indices(geo.einstein_ll(), 2, (0,))
+    wanted = [-2 * (LF * field ** 2 + L), -2 * (LF * field ** 2 + L), -2 * L, -2 * L]
+    for a in range(4):
+        for b in range(4):
+            if vm.norm(mixed[a][b] - (wanted[a] if a == b else 0)) != 0:
+                raise AssertionError(f"born_infeld_charge: the Einstein tensor misses the field's stress in slot "
+                                     f"{chart.coords_tex[a]}{chart.coords_tex[b]}")
+    if vm.norm(wanted[0] + 2 * rq ** 2 / (r ** 2 * (r ** 2 + W))) != 0:
+        raise AssertionError("born_infeld_charge: the energy density is not 2 r_q^2/(r^2 (r^2 + W))")
+    if system_id != "static":
+        spec = born_infeld_charge("static")
+        static = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
+                          held=("m",))
+        at = dict(zip(static.symbols[1:], chart.symbols[1:]))
+        old = static.geo.g.subs(at, simultaneous=True)
+        J = sp.eye(4)
+        J[0, 1] = (1 if chart.coords_tex[0] == "u" else -1) / (-old[0, 0])
+        pulled = J.T * old * J
+        for i in range(4):
+            for j in range(i, 4):
+                if vm.norm(pulled[i, j] - g[i, j]) != 0:
+                    raise AssertionError(f"born_infeld_charge: the static chart pulled back misses the "
+                                         f"{chart.coords_tex[0]} chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+        return
+    f = 1 - 2 * definition / r
+    if vm.norm(g[0, 0] + 1 - 2 * m / r) != 0 or vm.norm(g[1, 1] * (1 - 2 * m / r) - 1) != 0:
+        raise AssertionError("born_infeld_charge: the static chart is not -f c^2dt^2 + dr^2/f")
+
+    def number(e, values, digits=40):
+        return sp.sympify(e).xreplace(values).evalf(digits)
+
+    def published(metric_id, chart_id):
+        there = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == chart_id)
+        other = vm.Reader(there["coords"], [p["symbol"] for p in there["parameters"]], ())
+        values = {tuple(e["indices"]): other(e["value"]) for e in there["metric_components"]}
+        return other, values
+
+    rng = random.Random(7)
+    for _ in range(4):
+        at = {r: sp.Rational(rng.randint(500, 4000), 1000), rs: sp.Rational(rng.randint(500, 2000), 1000),
+              rq: sp.Rational(rng.randint(200, 900), 1000), r0: sp.Rational(rng.randint(300, 2000), 1000)}
+        # Schwarzschild's published metric at r_q = 0, where the mass function is r_s/2.
+        other, values = published("schwarzschild", "spherical")
+        same = {other.symbol["r"]: at[r], other.parameters["r_s"]: at[rs]}
+        if abs(number(f, {**at, rq: 0}) + number(values["t", "t"], same)) > sp.Float(10) ** -30:
+            raise AssertionError("born_infeld_charge: the static chart at r_q = 0 is not Schwarzschild's published metric")
+        # Reissner and Nordstrom's published metric as r_0 -> 0: f falls short of theirs by r_q^2 r_0^4/(20 r^6).
+        other, values = published("rn_metric", "spherical")
+        same = {other.symbol["r"]: at[r], other.parameters["r_s"]: at[rs], other.parameters["r_q"]: at[rq]}
+        small = sp.Rational(1, 10 ** 3)
+        miss = number(f, {**at, r0: small}, 60) + number(values["t", "t"], same, 60)
+        if abs(miss / number(-rq ** 2 * small ** 4 / (20 * r ** 6), at) - 1) > sp.Float(10) ** -6:
+            raise AssertionError("born_infeld_charge: the static chart does not tend to Reissner and Nordstrom's "
+                                 "published metric as r_0 -> 0")
+        # Far away the mass function is r_s/2 - r_q^2/(2r), and at the centre r_s/2 - 1.2360 r_q^2/r_0.
+        far = sp.Integer(10) ** 6
+        if abs(number((definition - rs / 2) * r, {**at, r: far}, 60) / number(-rq ** 2 / 2, at) - 1) > sp.Float(10) ** -20:
+            raise AssertionError("born_infeld_charge: the mass function does not tend to r_s/2 - r_q^2/(2r) far away")
+        centre = number(definition, {**at, r: sp.Rational(1, 10 ** 40)})
+        if abs(centre - number(rs / 2 - BORN_INFELD_NUMBER * rq ** 2 / r0, at)) > sp.Float(10) ** -30:
+            raise AssertionError("born_infeld_charge: the mass function at the centre is not "
+                                 "r_s/2 - Gamma(1/4)^2 r_q^2/(6 sqrt(pi) r_0)")
+        # Hoffmann's particle, whose whole mass is the field's: g^rr -> 1 - 2 r_q^2/r_0^2 at the centre.
+        whole = {**at, rs: 2 * BORN_INFELD_NUMBER * at[rq] ** 2 / at[r0]}
+        tiny = sp.Rational(1, 10 ** 15)
+        if abs(number(f, {**whole, r: tiny}) - number(1 - 2 * rq ** 2 / r0 ** 2, at)) > sp.Float(10) ** -12:
+            raise AssertionError("born_infeld_charge: g^rr of the particle whose mass is the field's does not tend to "
+                                 "1 - 2 r_q^2/r_0^2 at the centre")
+    if abs(sp.N(BORN_INFELD_NUMBER, 12) - sp.Float("1.23604978", 12)) > sp.Float(10) ** -8:
+        raise AssertionError("born_infeld_charge: Born and Infeld's number is not 1.2360")
+
+
+CHARTS["born_infeld_charge"] = [lambda s=s: born_infeld_charge(s) for s in BORN_INFELD_CHARTS]
+
+
 # -- Hayward ---------------------------------------------------------------------------
 
 HAYWARD_CHARTS = ("static", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing", "evaporating")
@@ -12383,6 +12778,191 @@ def israel_shell_check(chart, system):
 
 
 CHARTS["israel_shell"] = [lambda s=s: israel_shell(s) for s in ISRAEL_SHELL_CHARTS]
+
+
+# -- The charged shell of dust ------------------------------------------------------------
+
+CHARGED_SHELL_CHARTS = ("interior", "exterior", "exterior_ingoing", "exterior_outgoing", "exterior_isotropic")
+
+
+def charged_shell(system):
+    """The thin shell of charged dust of de la Cruz and Israel, Nuovo Cimento A 51, 744 (1967),
+    Kuchar, Czech. J. Phys. B 18, 435 (1968), and Boulware, Phys. Rev. D 8, 2363 (1973): flat space
+    inside the shell in the time T of an observer at its centre, and Reissner-Nordstrom's field of
+    the mass r_s and the charge r_q outside it, in four charts. The static chart ends on each
+    horizon\\; the ingoing Eddington-Finkelstein chart follows the shell in through r_+ and r_- to
+    the turn\\; the outgoing one follows it from the turn out through r_- and r_+ into the next
+    exterior\\; and the isotropic chart is the one in which Arnowitt, Deser and Misner, Phys. Rev.
+    120, 313 (1960), let the shell shrink to a point, with chi^2 = (1 + a/rho)(1 + b/rho) the
+    square of their conformal factor, a = r_s/4 + r_q/2 and b = r_s/4 - r_q/2 the lengths of their
+    two potentials psi + phi and psi - phi. The areal radius r is one coordinate on
+    both sides except in the isotropic chart, and the shell is r = R, a function of each chart's
+    time that the chart declares\\; mu = G m/c^2 is the rest mass of the dust as a length. The shell
+    is in no chart, since the time of one side is not the time of the other and g_rr jumps across
+    it. charged_shell_check holds the interior to Minkowski's published spherical chart, the
+    static chart to Reissner-Nordstrom's published metric, every exterior chart to the
+    Einstein-Maxwell equations of a point charge and to being the static chart pulled back, and
+    the isotropic chart at r_q = r_s/2 to Majumdar and Papapetrou's published single hole.
+    _tools/test_charged_shell.py holds the shell's motion to the junction conditions, and
+    charged_shell.md records each chart's source."""
+    sphere = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    mark = ["r = R \\;\\text{(the shell)}"]
+    horizons = ["r = r_\\pm \\;\\text{(the horizons, for}\\; r_q < r_s/2\\text{)}"]
+    if system == "interior":
+        coords, parameters = ["T", "r", "\\theta", "\\phi"], ["r_s", "r_q", "\\mu", "R = R(T)"]
+
+        def line(c2):
+            return "ds^2 = -" + c2 + "dT^2 + dr^2 + r^2" + sphere
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "charged_shell",
+            "system": {"id": system, "name": "Flat Interior", "coords": coords,
+                       "domains": ["T \\in (-\\infty, \\infty)", "r \\in [0, R]"] + angles + mark,
+                       "parameters": parameters, "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"lead": [probe.symbol["r"]], "flip": False},
+            "check": lambda chart: charged_shell_check(chart, system),
+        }
+    f = "\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2}\\right)"
+    bare = "1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2}"
+    scalar = "\\dfrac{4\\left(3r_s^2\\,r^2 - 12r_s\\,r_q^2\\,r + 14r_q^4\\right)}{r^8}"
+    if system == "exterior":
+        coords, parameters = ["t", "r", "\\theta", "\\phi"], ["r_s", "r_q", "\\mu", "R = R(t)"]
+
+        def line(c2):
+            return "ds^2 = -" + f + c2 + "dt^2 + \\dfrac{dr^2}{" + bare + "} + r^2" + sphere
+        probe = vm.Reader(coords, parameters, ())
+        r, rs, rq = probe.symbol["r"], probe.parameters["r_s"], probe.parameters["r_q"]
+        return {
+            "metric_id": "charged_shell",
+            "system": {"id": system, "name": "Reissner-Nordström Exterior", "coords": coords,
+                       "domains": ["t \\in (-\\infty, \\infty)", "r \\in [R, \\infty)"] + angles + mark + horizons,
+                       "parameters": parameters, "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"lead": [r, rs, rq], "factors": [rs, rq, r], "flip": False},
+            "components": {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                           "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}},
+            "kretschmann": scalar,
+            "check": lambda chart: charged_shell_check(chart, system),
+        }
+    if system in ("exterior_ingoing", "exterior_outgoing"):
+        null, sign, one = ("v", "+", "1") if system == "exterior_ingoing" else ("u", "-", "-1")
+        coords, parameters = [null, "r", "\\theta", "\\phi"], ["r_s", "r_q", "\\mu", f"R = R({null})"]
+        line = "ds^2 = -" + f + "d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr + r^2" + sphere
+        probe = vm.Reader(coords, parameters, ())
+        r, rs, rq = probe.symbol["r"], probe.parameters["r_s"], probe.parameters["r_q"]
+        return {
+            "metric_id": "charged_shell",
+            "system": {"id": system,
+                       "name": ("Ingoing" if null == "v" else "Outgoing") + " Eddington-Finkelstein Exterior",
+                       "coords": coords,
+                       "domains": [null + " \\in (-\\infty, \\infty)", "r \\in [R, \\infty)"] + angles + mark + horizons,
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [r, rs, rq], "factors": [rs, rq, r], "flip": False},
+            "components": {"metric_components": {(null, null): "-" + f, (null, "r"): one, ("r", null): one},
+                           "inverse_metric_components": {(null, "r"): one, ("r", null): one, ("r", "r"): bare}},
+            "kretschmann": scalar,
+            "check": lambda chart: charged_shell_check(chart, system),
+        }
+    coords = ["t", "\\rho", "\\theta", "\\phi"]
+    parameters = ["a", "b", "\\mu", "\\epsilon = \\epsilon(t)"]
+    chi2 = "\\left(1 + \\dfrac{a}{\\rho}\\right)^2\\left(1 + \\dfrac{b}{\\rho}\\right)^2"
+
+    def line(c2):
+        return ("ds^2 = -\\dfrac{\\left(\\rho^2 - ab\\right)^2}{\\left(\\rho + a\\right)^2\\left(\\rho + b\\right)^2}"
+                + c2 + "dt^2 + " + chi2 + "\\left(d\\rho^2 + \\rho^2" + sphere + "\\right)")
+    probe = vm.Reader(coords, parameters, ())
+    rho, a, b = probe.symbol["\\rho"], probe.parameters["a"], probe.parameters["b"]
+    return {
+        "metric_id": "charged_shell",
+        "system": {"id": system, "name": "Isotropic Exterior", "coords": coords,
+                   "domains": ["t \\in (-\\infty, \\infty)", "\\rho \\in [\\epsilon, \\infty)"] + angles
+                   + ["\\rho = \\epsilon \\;\\text{(the shell)}",
+                      "\\rho = \\sqrt{ab} \\;\\text{(the outer horizon, for}\\; b > 0\\text{)}"],
+                   "parameters": parameters, "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": {"lead": [rho, a, b], "factors": [a, b, rho], "flip": False},
+        "check": lambda chart: charged_shell_check(chart, system),
+    }
+
+
+def charged_shell_check(chart, system):
+    """The interior is flat and is Minkowski's published spherical chart with its time named T. The
+    static chart is Reissner-Nordstrom's published metric, slot by slot. Every exterior chart
+    carries the Einstein tensor of a point charge's field, G^a_b = (r_q^2/r^4) diag(-1, -1, 1, 1)
+    in the areal radius r, has no Ricci scalar, and is the static chart pulled back: along
+    v = ct + r_* and u = ct - r_* with dr_*/dr = 1/f, and along r = rho chi^2 with
+    chi^2 = (1 + a/rho)(1 + b/rho), a = r_s/4 + r_q/2 and b = r_s/4 - r_q/2. The isotropic chart at
+    b = 0, which is r_q = r_s/2, is Majumdar and Papapetrou's published single hole with m = a."""
+    geo, g = chart.geo, chart.geo.g
+
+    def published(source, there_id, rename=None):
+        there_chart = next(c for c in json.loads((METRICS / f"{source}.json").read_text(encoding="utf-8"))["coordinates"]
+                           if c["id"] == there_id)
+        there = vm.Reader(there_chart["coords"], [p["symbol"] for p in there_chart["parameters"]], ())
+        swap = {there.symbol[a]: chart.reader.symbol[b] for a, b in zip(there_chart["coords"], chart.coords_tex)}
+        for p in there_chart["parameters"]:
+            swap[there.parameters[p["symbol"]]] = (rename or {}).get(p["symbol"], chart.reader.parameters.get(p["symbol"]))
+        values = {tuple(e["indices"]): e["value"] for e in there_chart["metric_components"]}
+        return sp.Matrix(4, 4, lambda i, j: there(values.get((there_chart["coords"][i], there_chart["coords"][j]), "0")).subs(swap))
+
+    def same(matrix, name, at=None):
+        for i in range(4):
+            for j in range(i, 4):
+                if vm.norm((matrix[i, j] - g[i, j]).subs(at or {})) != 0:
+                    raise AssertionError(f"charged_shell: the {system} chart misses {name} in slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+    if system == "interior":
+        same(published("minkowski", "spherical"), "the published metric of minkowski")
+        if vm.norm(geo.kretschmann()) != 0:
+            raise AssertionError("charged_shell: the interior is not flat")
+        return
+    if system == "exterior_isotropic":
+        # a = r_s/4 + r_q/2 and b = r_s/4 - r_q/2, the lengths of Arnowitt, Deser and Misner's two potentials.
+        a, b = chart.reader.parameters["a"], chart.reader.parameters["b"]
+        rs, rq = 2 * (a + b), a - b
+    else:
+        rs, rq = chart.reader.parameters["r_s"], chart.reader.parameters["r_q"]
+    if vm.norm(geo.ricci_scalar()) != 0:
+        raise AssertionError(f"charged_shell: the {system} chart has a Ricci scalar")
+    if system == "exterior":
+        # Reissner-Nordstrom's page takes c = 1 and its time as a length, the chart x^0 = ct of this one.
+        same(published("rn_metric", "spherical"), "the published metric of rn_metric")
+    spec = charged_shell("exterior")
+    static = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    r_static = static.symbols[1]
+    if system == "exterior_isotropic":
+        rho = chart.reader.symbol["\\rho"]
+        areal = (rho + a) * (rho + b) / rho
+        J = sp.eye(4)
+        J[1, 1] = sp.diff(areal, rho)
+    else:
+        areal = chart.reader.symbol["r"]
+        fr = 1 - rs / areal + rq ** 2 / areal ** 2
+        # ct = v - r_* or u + r_*, so d(ct) = dv - dr/f or du + dr/f.
+        J = sp.eye(4)
+        if system != "exterior":
+            J[0, 1] = (-1 if system == "exterior_ingoing" else 1) / fr
+    at = {r_static: areal, static.reader.parameters["r_s"]: rs, static.reader.parameters["r_q"]: rq,
+          **dict(zip(static.symbols[2:], chart.symbols[2:]))}
+    same(J.T * static.geo.g.subs(at) * J, "the static chart pulled back")
+    einstein = (geo.ginv * sp.Matrix(geo.einstein_ll())).tolist()
+    field = rq ** 2 / areal ** 4
+    for i in range(4):
+        for j in range(4):
+            want = 0 if i != j else (-field if i < 2 else field)
+            if vm.norm(einstein[i][j] - want) != 0:
+                raise AssertionError(f"charged_shell: the {system} chart's Einstein tensor is not a point charge's "
+                                     f"field in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    if system == "exterior_isotropic":
+        hole = published("majumdar_papapetrou", "isotropic", {"m": a})
+        same(hole, "the published single hole of majumdar_papapetrou at b = 0", {b: 0})
+
+
+CHARTS["charged_shell"] = [lambda s=s: charged_shell(s) for s in CHARGED_SHELL_CHARTS]
 
 
 # -- Hiscock's evaporating black hole -----------------------------------------------------
@@ -17584,6 +18164,228 @@ def lewis_check(chart, system):
 CHARTS["lewis"] = [lambda s=s: lewis(s) for s in LEWIS_CHARTS]
 
 
+# -- Petrov's homogeneous vacuum ---------------------------------------------------------
+
+PETROV_CHARTS = ("petrov", "cylinder")
+PETROV_REALS = "(-\\infty, \\infty)"
+
+
+def petrov_homogeneous(system):
+    """Petrov's homogeneous vacuum of 1962, the one vacuum field without a cosmological constant
+    whose group of motions has four parameters and carries any event to any other in one way, in
+    two charts:
+
+    petrov    Petrov's own, his metric 7, in the letters of Gibbons and Gielen's (2.1), with the
+              length ell for his 1/k: a hyperbolic plane of r and z with a flat plane of t and
+              phi over each of its points, whose light cones turn through sqrt(3) r/2 ell;
+    cylinder  Bonnor's reading of 1979, the vacuum outside van Stockum's cylinder of dust of
+              radius R that turns at the angular velocity c/R, in van Stockum's coordinates,
+              which turn with the dust and whose phi is periodic: the heavy cylinder of the
+              Lewis family at m = sqrt(3).
+
+    Every value is printed in the cosine and the sine of the phase psi each chart names.
+    petrov_homogeneous_check holds each chart to its sources, and petrov_homogeneous.md beside
+    this file records them."""
+    PSI = sp.Symbol("psi", positive=True)
+    if system == "petrov":
+        coords = ["t", "r", "\\phi", "z"]
+        parameters = ["\\ell", "\\psi = \\dfrac{\\sqrt{3}\\,r}{\\ell}"]
+        line = ("ds^2 = dr^2 + e^{-2r/\\ell}dz^2 + e^{r/\\ell}\\left(\\cos\\psi\\left(d\\phi^2 - c^2dt^2\\right)"
+                " - 2\\sin\\psi\\,c\\,dt\\,d\\phi\\right)")
+        domains = ["t \\in " + PETROV_REALS, "r \\in " + PETROV_REALS, "\\phi \\in " + PETROV_REALS,
+                   "z \\in " + PETROV_REALS,
+                   "\\cos\\psi < 0 \\;\\text{(} \\partial_t \\text{ is spacelike and } \\partial_\\phi \\text{ timelike)}"]
+        name = "Petrov"
+        components = {}
+    else:
+        coords = ["t", "r", "\\phi", "z"]
+        parameters = ["R", "\\ell",
+                      "\\psi = \\sqrt{3}\\ln\\left(\\dfrac{r}{R}\\right)",
+                      "F = \\dfrac{r}{R}\\left(\\cos\\psi - \\dfrac{\\sin\\psi}{\\sqrt{3}}\\right)",
+                      "M = r\\left(\\cos\\psi + \\dfrac{\\sin\\psi}{\\sqrt{3}}\\right)",
+                      "L = -\\dfrac{2R\\,r\\sin\\psi}{\\sqrt{3}}"]
+        line = ("ds^2 = -F\\,c^2dt^2 - 2M\\,c\\,dt\\,d\\phi + \\dfrac{\\ell^2}{r^2}\\left(dr^2 + dz^2\\right)"
+                " + L\\,d\\phi^2")
+        domains = ["t \\in " + PETROV_REALS, "r \\in [R, \\infty)", "\\phi \\in [0, 2\\pi)", "z \\in " + PETROV_REALS,
+                   "r = R \\;\\text{(the surface of the dust, where the circle of constant } t, r, z \\text{ is null)}",
+                   "F < 0 \\;\\text{(} \\partial_t \\text{ is spacelike)}",
+                   "L < 0 \\;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}"]
+        name = "Dust Cylinder"
+        components = {
+            "metric_components": {("t", "t"): "-F", ("t", "\\phi"): "-M", ("\\phi", "t"): "-M",
+                                  ("\\phi", "\\phi"): "L"},
+            "inverse_metric_components": {("t", "t"): "-\\dfrac{L}{r^2}", ("t", "\\phi"): "-\\dfrac{M}{r^2}",
+                                          ("\\phi", "t"): "-\\dfrac{M}{r^2}", ("\\phi", "\\phi"): "\\dfrac{F}{r^2}"}}
+    probe = vm.Reader(coords, parameters, ())
+    r = probe.symbol["r"]
+
+    def pretty(value):
+        # The phase stands for its definition inside every cosine and sine, and the rest is factored.
+        value = sp.sympify(value).replace(lambda e: isinstance(e, (sp.cos, sp.sin)), lambda e: e.func(PSI))
+        return sp.factor_terms(sp.together(sp.expand(value)))
+
+    return {
+        "metric_id": "petrov_homogeneous",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": line.replace("c\\,dt", "dt").replace("c^2dt", "dt"),
+        "printer": {"lead": [r], "overrides": {PSI: "\\psi"},
+                    "collect": lambda poly, printer: cp.collect_by(poly, [sp.cos(PSI), sp.sin(PSI)], printer)},
+        "pretty": pretty,
+        "components": components,
+        "check": lambda chart: petrov_homogeneous_check(chart, system),
+        "kretschmann": "0",
+    }
+
+
+def petrov_homogeneous_chart(system):
+    spec = petrov_homogeneous(system)
+    return cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+
+
+def petrov_invariants(geo):
+    """The three scalars of a vacuum's curvature that hold no derivative of it: the Kretschmann
+    scalar R_abcd R^abcd, the Chern-Pontryagin scalar, R_abcd times its dual, and the cubic
+    R_ab^cd R_cd^ef R_ef^ab. The Riemann tensor is taken as a 6 by 6 matrix on index pairs."""
+    g, gi = geo.g, geo.ginv
+    n = g.shape[0]
+    pairs = [(a, b) for a in range(n) for b in range(a + 1, n)]
+    lowered = geo.riemann_llll()
+    R = sp.Matrix(len(pairs), len(pairs), lambda i, j: vm._at(lowered, pairs[i] + pairs[j]))
+    lift = sp.Matrix(len(pairs), len(pairs), lambda i, j: gi[pairs[i][0], pairs[j][0]] * gi[pairs[i][1], pairs[j][1]]
+                     - gi[pairs[i][0], pairs[j][1]] * gi[pairs[i][1], pairs[j][0]])
+    mixed = (lift * R).applyfunc(sp.simplify)                 # R^{ab}_{cd} over a < b, c < d
+    kretschmann = sp.simplify(4 * (mixed * mixed).trace())
+    cubic = sp.simplify(8 * (mixed * mixed * mixed).trace())
+    root = sp.sqrt(-g.det())
+    dual = sp.Matrix(len(pairs), len(pairs), lambda i, j: sp.LeviCivita(*(pairs[i] + pairs[j])))
+    # (1/2) eps^{abef} R_efcd R^cd_ab / sqrt(-g), each sum over ordered pairs counted once.
+    pontryagin = sp.simplify(4 * (dual * R * mixed).trace() / root)
+    return kretschmann, pontryagin, cubic
+
+
+def petrov_homogeneous_check(chart, system):
+    """petrov    a vacuum of determinant -1 whose Kretschmann and Chern-Pontryagin scalars both
+                 vanish while the cubic scalar R_ab^cd R_cd^ef R_ef^ab is -48/ell^6; the four
+                 Killing vectors of Gibbons and Gielen's (2.2), which are independent at every
+                 event and close into their algebra (2.3); and their left-invariant frame (3.11),
+                 orthonormal, with the future the vector cos(psi/2) d_t + sin(psi/2) d_phi;
+    cylinder     a vacuum with FL + M^2 = r^2; the published heavy cylinder of `lewis` at
+                 m = sqrt(3), where its w is 1/R; Petrov's chart carried along
+                 r_P = ell ln(r/R), z_P = ell z/R, x^0_P - phi_P = 3^(1/4) x^0 and
+                 sqrt(2 + sqrt 3) phi_P + sqrt(2 - sqrt 3) x^0_P = 3^(1/4) sqrt 2 R phi, Gibbons
+                 and Gielen's map with the time reversed, so that the two charts share a
+                 future on the surface and the dust turns as the published dust does; and, at ell = R/sqrt(e), the
+                 published chart of `stockum_dust` and its first derivative along r on r = R,
+                 where that chart's own R is this one's."""
+    t, r, phi, z = chart.symbols
+    g = chart.geo.g
+    name = {s.name: s for s in chart.reader.allowed}
+    ell = name["ell"]
+
+    def fail(what):
+        raise AssertionError(f"petrov_homogeneous: {what}")
+
+    ricci = chart.geo.ricci_ll()
+    for index in vm._indices(4, 2):
+        if vm.norm(vm._at(ricci, index)) != 0:
+            fail(f"the {system} chart's Ricci tensor does not vanish in slot {index}")
+    kretschmann, pontryagin, cubic = petrov_invariants(chart.geo)
+    if kretschmann != 0 or pontryagin != 0:
+        fail(f"the {system} chart's quadratic scalars are {kretschmann} and {pontryagin}")
+    if sp.simplify(cubic + 48 / ell ** 6) != 0:
+        fail(f"the {system} chart's cubic scalar is {cubic}")
+    root3 = sp.sqrt(3)
+    if system == "petrov":
+        if sp.simplify(g.det() + 1) != 0:
+            fail("the determinant of Petrov's chart is not -1")
+        X = [t, r, phi, z]
+        killing = {"T": [1, 0, 0, 0], "Phi": [0, 0, 1, 0], "Z": [0, 0, 0, 1],
+                   "R": [-(t + root3 * phi) / (2 * ell), 1, (root3 * t - phi) / (2 * ell), z / ell]}
+        for label, xi in killing.items():
+            lie = sp.Matrix(4, 4, lambda a, b: sum(xi[c] * sp.diff(g[a, b], X[c]) + g[c, b] * sp.diff(xi[c], X[a])
+                                                   + g[a, c] * sp.diff(xi[c], X[b]) for c in range(4)))
+            if lie.applyfunc(sp.simplify) != sp.zeros(4, 4):
+                fail(f"{label} is no Killing vector of Petrov's chart")
+        if sp.simplify(sp.Matrix([killing[k] for k in ("T", "Phi", "Z", "R")]).det()) == 0:
+            fail("the four Killing vectors are not independent, so the group is not simply transitive")
+
+        def bracket(u, v):
+            return [sp.simplify(sum(u[c] * sp.diff(v[a], X[c]) - v[c] * sp.diff(u[a], X[c]) for c in range(4)))
+                    for a in range(4)]
+
+        def combined(coefficients):
+            return [sp.simplify(sum(k * killing[label][a] for label, k in coefficients.items())) for a in range(4)]
+        half = sp.Rational(1, 2)
+        algebra = {"T": {"T": half / ell, "Phi": -root3 / (2 * ell)}, "Phi": {"Phi": half / ell, "T": root3 / (2 * ell)},
+                   "Z": {"Z": -1 / ell}}
+        for label, wanted in algebra.items():
+            if bracket(killing["R"], killing[label]) != combined(wanted):
+                fail(f"[R, {label}] is not Gibbons and Gielen's")
+        # The left-invariant frame, and the vector that is future directed at every r.
+        a = root3 * r / (2 * ell)
+        scale = sp.exp(r / (2 * ell))
+        frame = sp.Matrix([[scale * sp.cos(a), 0, scale * sp.sin(a), 0],      # lambda^4, timelike
+                           [0, 1, 0, 0],
+                           [-scale * sp.sin(a), 0, scale * sp.cos(a), 0],     # lambda^3
+                           [0, 0, 0, sp.exp(-r / ell)]])
+        if (frame.T * sp.diag(-1, 1, 1, 1) * frame - g).applyfunc(sp.simplify) != sp.zeros(4, 4):
+            fail("the left-invariant frame is not orthonormal")
+        arrow = sp.Matrix([sp.cos(a), 0, sp.sin(a), 0])
+        if sp.simplify((arrow.T * g * arrow)[0, 0] + sp.exp(r / ell)) != 0:
+            fail("cos(psi/2) d_t + sin(psi/2) d_phi is not timelike of norm -e^(r/ell)")
+        return
+    R = name["R"]
+    P = chart.reader.parameters
+    if sp.simplify(P["F"] * P["L"] + P["M"] ** 2 - r ** 2) != 0:
+        fail("FL + M^2 is not r^2")
+    generator = random.Random(1962)
+
+    def agree(ours, theirs, at, what):
+        for i in range(4):
+            for j in range(i, 4):
+                left, right = (sp.N(sp.sympify(m[i, j]).subs(at), 30) for m in (ours, theirs))
+                if abs(left - right) > sp.Float(10) ** -22 * (1 + abs(left)):
+                    fail(f"the cylinder chart is not {what} in slot {chart.coords_tex[i]}{chart.coords_tex[j]}: "
+                         f"{left} against {right}")
+
+    def published(metric_id, system_id):
+        entry = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == system_id)
+        reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+        there = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+        matrix = sp.Matrix(4, 4, lambda i, j: reader(there.get((entry["coords"][i], entry["coords"][j]), "0")))
+        return reader, matrix.subs(dict(zip([reader.symbol[c] for c in entry["coords"]], chart.symbols)))
+
+    source = petrov_homogeneous_chart("petrov")
+    scale = next(s for s in source.reader.allowed if s.name == "ell")
+    fourth = sp.root(3, 4)
+    plus, minus = sp.sqrt(2 + root3), sp.sqrt(2 - root3)
+    # x^0_P and phi_P in this chart's x^0 and phi.
+    time = (plus * fourth * t + fourth * sp.sqrt(2) * R * phi) / (plus + minus)
+    angle = time - fourth * t
+    image = [time, ell * sp.log(r / R), angle, ell * z / R]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+    carried = J.T * source.geo.g.subs(dict(zip(source.symbols, image)), simultaneous=True).subs(scale, ell) * J
+    reader, heavy = published("lewis", "stockum_heavy")
+    heavy = heavy.subs({next(s for s in reader.allowed if s.name == "m"): root3,
+                        next(s for s in reader.allowed if s.name == "R"): R,
+                        next(s for s in reader.allowed if s.name == "ell"): ell})
+    dust_reader, dust = published("stockum_dust", "cylindrical")
+    dust = dust.subs(dust_reader.parameters["R"], R)
+    for _ in range(3):
+        at = {r: sp.Rational(generator.randint(100, 4000), 97), R: sp.Rational(generator.randint(60, 100), 97),
+              ell: sp.Rational(generator.randint(40, 90), 97)}
+        agree(g, carried, at, "Petrov's chart carried along Gibbons and Gielen's map")
+        agree(g, heavy, at, "the published heavy cylinder of the Lewis family at m = sqrt(3)")
+        joined = {R: at[R], ell: at[R] / sp.sqrt(sp.E)}
+        agree(g.subs(r, R), dust.subs(r, R), joined, "the published dust on the surface")
+        agree(g.diff(r).subs(r, R), dust.diff(r).subs(r, R), joined, "joined smoothly to the published dust")
+
+
+CHARTS["petrov_homogeneous"] = [lambda s=s: petrov_homogeneous(s) for s in PETROV_CHARTS]
+
+
 # -- Wahlquist's rotating fluid --------------------------------------------------------
 
 WAHLQUIST_CHARTS = ["wahlquist", "mars", "mars_ingoing", "whittaker"]
@@ -19276,6 +20078,245 @@ def white_hole_check(chart, system):
 CHARTS["white_hole"] = [lambda s=s: white_hole(s) for s in WHITE_HOLE_CHARTS]
 
 
+# -- The RP3 geon ----------------------------------------------------------------------------
+
+RP3_GEON_CHARTS = ("kruskal", "schwarzschild", "isotropic")
+RP3_GEON_RADIUS = "r = r_s\\left(1 + \\mathrm{W}\\left(e^{-1}\\left(X^2 - T^2\\right)\\right)\\right)"
+RP3_GEON_GLUE = " \\;\\text{(the antipodal identification)}"
+# The involution J of Kruskal's manifold whose quotient is the geon, Louko and Marolf's (4.12a), as
+# the substitution of the Kruskal chart's coordinates in order: the reflection X -> -X with the
+# antipodal map of the sphere of theta and phi.
+RP3_GEON_INVOLUTION = lambda T, X, theta, phi: (T, -X, sp.pi - theta, phi + sp.pi)  # noqa: E731
+
+
+def rp3_geon(system):
+    """The RP3 geon, Kruskal's manifold with (T, X, theta, phi) and (T, -X, pi - theta, phi + pi) one
+    event: Misner and Wheeler, Ann. Phys. 2, 525 (1957), pages 593 and 594, for its moment of time
+    symmetry, Friedman, Schleich and Witt, Phys. Rev. Lett. 71, 1486 (1993), for the spacetime and
+    its name, and Louko and Marolf, Phys. Rev. D 58, 024007 (1998), section IV, whose charts these
+    are. Three charts: Kruskal's T and X, their (4.5) and (4.6), on the half X >= 0, whose edge
+    X = 0 is glued to itself by the antipodal map of the sphere, their (4.12a); Schwarzschild's
+    chart of the one exterior, their (4.9); and the isotropic chart Misner and Wheeler build the
+    moment of time symmetry in, their (234), (237) and (245) to (248), on the one sheet
+    rho > r_s/4. rp3_geon_check holds each to a vacuum and to the published chart of schwarzschild
+    carried along its map, the involution to being an isometry of Kruskal's chart with no fixed
+    point that keeps the directions of time and of space, and Misner and Wheeler's inversion to
+    being that involution on the moment T = 0. rp3_geon.md records each chart's source."""
+    sphere = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    time = "t \\in (-\\infty, \\infty)"
+
+    def check(chart):
+        return rp3_geon_check(chart, system)
+    if system == "kruskal":
+        coords, parameters = ["T", "X", "\\theta", "\\phi"], ["r_s", RP3_GEON_RADIUS]
+        factor = "\\dfrac{4r_s^3}{r}e^{-r/r_s}"
+        line = "ds^2 = " + factor + "\\left(-dT^2 + dX^2\\right) + r^2" + sphere
+        probe = vm.Reader(coords, parameters, (), held=("r",))
+        up = "\\dfrac{r}{4r_s^3}e^{r/r_s}"
+        return {
+            "metric_id": "rp3_geon",
+            "system": {"id": system, "name": "Kruskal", "coords": coords,
+                       "domains": ["T \\in (-\\infty, \\infty)", "X \\in [0, \\infty)"] + angles
+                       + ["T^2 - X^2 < 1 \\;\\text{(where } r > 0\\text{)}",
+                          "X = |T| \\;\\text{(the horizons)}",
+                          "(T, 0, \\theta, \\phi) \\sim (T, 0, \\pi - \\theta, \\phi + \\pi)" + RP3_GEON_GLUE],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [probe.parameters["r"], probe.parameters["r_s"]], "flip": False},
+            "reduce": rp3_geon_kruskal(probe),
+            "pretty": lambda value: value,
+            "components": {"metric_components": {("T", "T"): "-" + factor, ("X", "X"): factor},
+                           "inverse_metric_components": {("T", "T"): "-" + up, ("X", "X"): up}},
+            "kretschmann": "\\dfrac{12r_s^2}{r^6}",
+            "check": check,
+        }
+    parameters = ["r_s"]
+    if system == "schwarzschild":
+        coords = ["t", "r", "\\theta", "\\phi"]
+        f, bare = "\\left(1 - \\dfrac{r_s}{r}\\right)", "1 - \\dfrac{r_s}{r}"
+
+        def line(c2):
+            return "ds^2 = -" + f + c2 + "dt^2 + \\dfrac{dr^2}{" + bare + "} + r^2" + sphere
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "rp3_geon",
+            "system": {"id": system, "name": "Schwarzschild Exterior", "coords": coords,
+                       "domains": [time, "r \\in (r_s, \\infty)"] + angles + ["r = r_s \\;\\text{(the horizons)}"],
+                       "parameters": parameters, "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"rising": [probe.parameters["r_s"]], "lead": [probe.symbol["r"], probe.parameters["r_s"]],
+                        "flip": False},
+            "components": {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                           "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}},
+            "kretschmann": "\\dfrac{12r_s^2}{r^6}",
+            "check": check,
+        }
+    coords = ["t", "\\rho", "\\theta", "\\phi"]
+    lapse = "\\left(\\dfrac{4\\rho - r_s}{4\\rho + r_s}\\right)^2"
+    conformal = "\\left(1 + \\dfrac{r_s}{4\\rho}\\right)^4"
+
+    def line(c2):
+        return ("ds^2 = -" + lapse + c2 + "dt^2 + " + conformal + "\\left(d\\rho^2 + \\rho^2" + sphere + "\\right)")
+    probe = vm.Reader(coords, parameters, ())
+    return {
+        "metric_id": "rp3_geon",
+        "system": {"id": system, "name": "Isotropic", "coords": coords,
+                   "domains": [time, "\\rho \\in (r_s/4, \\infty)"] + angles
+                   + ["\\rho = r_s/4 \\;\\text{(the horizons, and the throat of the moment } t = 0\\text{)}",
+                      "(0, r_s/4, \\theta, \\phi) \\sim (0, r_s/4, \\pi - \\theta, \\phi + \\pi)" + RP3_GEON_GLUE],
+                   "parameters": parameters, "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": {"lead": [probe.symbol["\\rho"], probe.parameters["r_s"]], "flip": False},
+        "components": {"metric_components": {("t", "t"): "-" + lapse, ("\\rho", "\\rho"): conformal}},
+        "kretschmann": "\\dfrac{12r_s^2}{\\rho^6}\\left(1 + \\dfrac{r_s}{4\\rho}\\right)^{-12}",
+        "check": check,
+    }
+
+
+def rp3_geon_kruskal(reader):
+    """A `reduce` for Kruskal's chart of T and X, whose areal radius is held as a function r(T, X).
+    Its definition, (r/r_s - 1) e^(r/r_s) = X^2 - T^2, makes
+
+        d_T r = -2 r_s^2 T e^(-r/r_s)/r,    d_X r = 2 r_s^2 X e^(-r/r_s)/r,
+
+    by which every derivative of r is written. What is left holds r, e^(-r/r_s), T and X, with the
+    definition a relation among them, so the exponential is written (r - r_s)/(r_s (X^2 - T^2)),
+    after which r, T and X are free and a value that vanishes is exactly zero. The value is then
+    written back with the exponential: in the null combinations U = T - X and V = T + X every
+    product UV is (r_s - r) e^(r/r_s)/r_s, as white_hole_kruskal writes it, and the result is put
+    back in T and X. No value is then 0/0 on a horizon."""
+    T, X = reader.symbol["T"], reader.symbol["X"]
+    r, rs = reader.parameters["r"], reader.parameters["r_s"]
+    rates = {T: -2 * rs ** 2 * T * sp.exp(-r / rs) / r, X: 2 * rs ** 2 * X * sp.exp(-r / rs) / r}
+    rho, e = sp.Symbol("_rho", positive=True), sp.Symbol("_e", positive=True)
+    U, V = sp.symbols("_U _V")
+
+    def paired(poly):
+        """A polynomial in T and X with every product (T - X)(T + X) written by the exponential."""
+        out = sp.Integer(0)
+        for (a, b), coefficient in sp.Poly(sp.expand(poly.subs({T: (U + V) / 2, X: (V - U) / 2}, simultaneous=True)),
+                                           U, V).terms():
+            k = min(a, b)
+            out += coefficient * ((rs - rho) / (rs * e)) ** k * (T - X) ** (a - k) * (T + X) ** (b - k)
+        return out
+
+    def reduce(value):
+        value = sp.sympify(value)
+        if isinstance(value, sp.MatrixBase):
+            return value.applyfunc(reduce)
+        for _ in range(8):
+            derivatives = value.atoms(sp.Derivative)
+            if not derivatives:
+                break
+            written = {}
+            for d in derivatives:
+                (variable, order), *rest = d.variable_count
+                written[d] = sp.Derivative(rates[variable], (variable, order - 1), *rest).doit()
+            value = value.xreplace(written)
+        else:
+            raise AssertionError("rp3_geon: the derivatives of the areal radius do not settle")
+        # Powers of the exponential, of either sign, as powers of one symbol.
+        value = value.subs(r, rho)
+        value = value.replace(lambda x: isinstance(x, sp.exp), lambda x: e ** sp.cancel(-x.args[0] * rs / rho))
+        if any(not p.exp.is_Integer for p in value.atoms(sp.Pow) if p.base == e) or value.has(sp.exp):
+            raise AssertionError(f"rp3_geon: an exponential other than a power of e^(-r/r_s) in {value}")
+        free = sp.cancel(sp.together(value.subs(e, (rho - rs) / (rs * (X ** 2 - T ** 2)))))
+        if free == 0:
+            return sp.Integer(0)
+        num, den = sp.fraction(free)
+        forms = [sp.factor(free), sp.factor(sp.cancel(paired(num) / paired(den)))]
+        # A form that divides by T or X is 0/0 on a horizon, so one that does not is taken first.
+        best = min(forms, key=lambda form: (sp.fraction(form)[1].has(T, X), sp.count_ops(form)))
+        return best.subs(e, sp.exp(-r / rs)).subs(rho, r)
+
+    return reduce
+
+
+def rp3_geon_published(chart, image, jacobian):
+    """The published spherical chart of schwarzschild carried along areal radius = `image`, with
+    `jacobian` the derivatives of (x^0, r) along the chart's first two coordinates."""
+    published = next(c for c in json.loads((METRICS / "schwarzschild.json").read_text(encoding="utf-8"))
+                     ["coordinates"] if c["id"] == "spherical")
+    there = vm.Reader(published["coords"], [p["symbol"] for p in published["parameters"]], ())
+    values = {tuple(e["indices"]): e["value"] for e in published["metric_components"]}
+    names = published["coords"]
+    matrix = sp.Matrix(4, 4, lambda i, j: there(values.get((names[i], names[j]), "0")))
+    swap = {there.symbol[n]: s for n, s in zip(names[2:], chart.symbols[2:])}
+    swap[there.parameters["r_s"]] = chart.reader.parameters["r_s"]
+    matrix = matrix.subs(swap).subs(there.symbol["r"], image)
+    J = sp.diag(jacobian, sp.eye(2))
+    return J.T * matrix * J
+
+
+def rp3_geon_check(chart, system):
+    """Each chart is a vacuum and the published chart of schwarzschild carried along its map: r
+    itself, the areal radius rho (1 + r_s/4 rho)^2 of the isotropic radius, and Louko and Marolf's
+    (4.8), T = sqrt(r/r_s - 1) e^(r/2r_s) sinh(ct/2r_s), X the same with cosh. The involution is an
+    isometry of Kruskal's chart: the metric holds X only through X^2, r and dX^2, and the antipodal
+    map is an isometry of the sphere. It has no fixed point, since no point of the sphere is its
+    own antipode; its Jacobian diag(1, -1, -1, 1) has determinant +1 and leaves d/dT alone, so the
+    quotient is orientable in space and in time. On the moment t = 0 the signed
+    X = (4 rho - r_s) e^(r/2r_s)/(4 sqrt(r_s rho)) changes sign under Misner and Wheeler's inversion
+    rho -> r_s^2/16 rho, which leaves the areal radius and the metric of the moment as they are."""
+    geo, g = chart.geo, chart.geo.g
+    rs = chart.reader.parameters["r_s"]
+    ricci = geo.ricci_ll()
+    if system == "kruskal":
+        if any(vm.norm(chart.reader.surface(ricci[a][b])) != 0 for a in range(4) for b in range(4)):
+            raise AssertionError("rp3_geon: Kruskal's chart is not a vacuum")
+        t, r = sp.Symbol("t", real=True), sp.Symbol("r", positive=True)
+        root = sp.sqrt(r / rs - 1) * sp.exp(r / (2 * rs))
+        T, X = root * sp.sinh(t / (2 * rs)), root * sp.cosh(t / (2 * rs))
+        if sp.simplify((X ** 2 - T ** 2 - (r / rs - 1) * sp.exp(r / rs)).rewrite(sp.exp)) != 0:
+            raise AssertionError("rp3_geon: the map from Schwarzschild's chart misses (r/r_s - 1) e^(r/r_s) = X^2 - T^2")
+        J = sp.Matrix([[sp.diff(T, t), sp.diff(T, r)], [sp.diff(X, t), sp.diff(X, r)]])
+        factor = 4 * rs ** 3 * sp.exp(-r / rs) / r
+        pulled = (J.T * sp.diag(-factor, factor) * J).applyfunc(lambda x: sp.simplify(x.rewrite(sp.exp)))
+        if any(sp.simplify(x) != 0 for x in sp.flatten(pulled - sp.diag(-(1 - rs / r), 1 / (1 - rs / r)))):
+            raise AssertionError("rp3_geon: Kruskal's chart is not Schwarzschild's pulled back")
+        # The involution: the published line element is unchanged by it, and it moves every point.
+        symbols = chart.symbols
+        image = RP3_GEON_INVOLUTION(*symbols)
+        radius = chart.reader.parameters["r"]
+        # r is a function of X^2 - T^2 alone, so it is its own image.
+        moved = g.subs(dict(zip(symbols, image)), simultaneous=True).subs(
+            radius.subs(dict(zip(symbols, image)), simultaneous=True), radius)
+        jac = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], symbols[j]))
+        if any(sp.simplify(x) != 0 for x in sp.flatten(jac.T * moved * jac - g)):
+            raise AssertionError("rp3_geon: the involution is not an isometry of Kruskal's chart")
+        if jac.det() != 1 or jac[0, 0] != 1:
+            raise AssertionError("rp3_geon: the involution does not keep the directions of space and of time")
+        theta, phi = symbols[2], symbols[3]
+        n = sp.Matrix([sp.sin(theta) * sp.cos(phi), sp.sin(theta) * sp.sin(phi), sp.cos(theta)])
+        if any(sp.simplify(x) != 0 for x in n + n.subs({theta: image[2], phi: image[3]}, simultaneous=True)):
+            raise AssertionError("rp3_geon: the involution's map of the sphere is not the antipodal map")
+        return
+    if any(vm.norm(vm._at(ricci, index)) != 0 for index in vm._indices(4, 2)):
+        raise AssertionError(f"rp3_geon: the {system} chart is not a vacuum")
+    x = chart.symbols[1]
+    areal = x if system == "schwarzschild" else x * (1 + rs / (4 * x)) ** 2
+    pulled = rp3_geon_published(chart, areal, sp.diag(1, sp.diff(areal, x)))
+    if any(sp.simplify(pulled[i, j] - g[i, j]) != 0 for i in range(4) for j in range(4)):
+        raise AssertionError(f"rp3_geon: the {system} chart is not Schwarzschild's published metric carried along its map")
+    if system == "isotropic":
+        inverted = rs ** 2 / (16 * x)
+        if sp.simplify(areal.subs(x, inverted) - areal) != 0:
+            raise AssertionError("rp3_geon: Misner and Wheeler's inversion changes the areal radius")
+        J = sp.diag(1, sp.diff(inverted, x), 1, 1)
+        if any(sp.simplify(v) != 0 for v in sp.flatten(J.T * g.subs(x, inverted) * J - g)):
+            raise AssertionError("rp3_geon: Misner and Wheeler's inversion is not an isometry of the isotropic chart")
+        signed = (4 * x - rs) * sp.exp(areal / (2 * rs)) / (4 * sp.sqrt(rs * x))
+        if sp.simplify(signed ** 2 - (areal / rs - 1) * sp.exp(areal / rs)) != 0:
+            raise AssertionError("rp3_geon: the moment t = 0 is not X^2 = (r/r_s - 1) e^(r/r_s) in the isotropic radius")
+        positive = {x: sp.Symbol("x_", positive=True), rs: sp.Symbol("rs_", positive=True)}
+        if sp.simplify((signed + signed.subs(x, inverted)).subs(positive)) != 0:
+            raise AssertionError("rp3_geon: Misner and Wheeler's inversion is not X -> -X on the moment t = 0")
+
+
+CHARTS["rp3_geon"] = [lambda s=s: rp3_geon(s) for s in RP3_GEON_CHARTS]
+
+
 # -- The lattice universe of Lindquist and Wheeler ------------------------------------------
 
 LW_CHARTS = ("schwarzschild_cell", "cosmological_time", "lindquist_wheeler", "comparison_hypersphere")
@@ -19443,6 +20484,866 @@ def lindquist_wheeler_check(chart, system):
 
 
 CHARTS["lindquist_wheeler_lattice"] = [lambda s=s: lindquist_wheeler_lattice(s) for s in LW_CHARTS]
+
+
+# -- Nordstrom's scalar gravity ------------------------------------------------------------
+
+NORDSTROM_CHARTS = ("conformal", "spherical", "uniform", "dust")
+NORDSTROM_REALS = "(-\\infty, \\infty)"
+NORDSTROM_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+NORDSTROM_SPHERE = "r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+
+
+def nordstrom_scalar(system):
+    """Nordstrom's second theory of 1913 as Einstein and Fokker wrote it in 1914: the metric is a
+    conformal factor Phi^2 times Minkowski's in a preferred chart, and R = 24 pi G T/c^4. The
+    conformal chart leaves Phi free, as their equation for ds^2 does. The spherical chart is the
+    field outside a static spherical body, Phi = 1 - m/r with m = GM/c^2, Deruelle's (9.15) and
+    Deruelle and Sasaki's (3.8). The uniform chart is the homogeneous static field of Giulini's
+    section 4.1, Phi linear in z, with z counted from the plane where Phi vanishes. The dust chart
+    is the universe of Sundrum's section 9, Phi = 1 - c^2t^2/L^2. nordstrom_scalar.md derives each."""
+    flat = "-{c2}dt^2 + "
+    if system == "conformal":
+        coords = ["t", "x", "y", "z"]
+        parameters = ["\\Phi = \\Phi(t,x,y,z)"]
+        probe = vm.Reader(coords, parameters, ())
+        Phi = probe.parameters["Phi"]
+        box = "\\partial_x^2\\Phi + \\partial_y^2\\Phi + \\partial_z^2\\Phi - \\partial_t^2\\Phi"
+        d = {c: f"\\partial_{c}\\Phi" for c in "txyz"}
+
+        def A(a):
+            # 2 Phi^2 times the diagonal Schouten component: 4(d_a P)^2 - 2 P d_a^2 P - eta_aa (dP)^2.
+            text = ""
+            for c in "txyz":
+                k = (4 if c == a else 0) - (-1 if a == "t" else 1) * (-1 if c == "t" else 1)
+                body = ("" if abs(k) == 1 else str(abs(k))) + f"\\left({d[c]}\\right)^2"
+                text += (("-" if k < 0 else "") + body) if not text else ((" - " if k < 0 else " + ") + body)
+            return "\\left(" + text + f" - 2\\Phi\\,\\partial_{a}^2\\Phi" + "\\right)^2"
+
+        def B(a, b):
+            return f"\\left(2{d[a]}\\,{d[b]} - \\Phi\\,\\partial_{a}\\partial_{b}\\Phi\\right)^2"
+
+        line = "ds^2 = \\Phi^2\\left(" + flat + "dx^2 + dy^2 + dz^2\\right)"
+        return {
+            "metric_id": "nordstrom_scalar",
+            "system": {"id": "conformal", "name": "Einstein-Fokker", "coords": coords,
+                       "domains": [f"{c} \\in {NORDSTROM_REALS}" for c in coords] + ["\\Phi > 0"],
+                       "parameters": parameters, "line_element": line.replace("{c2}", "c^2")},
+            "chart_line_element": line.replace("{c2}", ""),
+            "printer": {"lead": [Phi], "collect": lambda poly, printer: cp.collect_by(poly, [Phi], printer)},
+            "ricci_scalar": "-\\dfrac{6\\left(" + box + "\\right)}{\\Phi^3}",
+            # K = 8 P_ab P^ab + 4 (P^a_a)^2 for a conformally flat metric, P the Schouten tensor.
+            "kretschmann": (
+                "\\dfrac{2\\left(" + " + ".join(A(a) for a in "txyz") + "\\right)"
+                " + 16\\left(" + " + ".join(B(a, b) for a, b in (("x", "y"), ("x", "z"), ("y", "z")))
+                + " - " + " - ".join(B("t", b) for b in "xyz") + "\\right)"
+                " + 4\\Phi^2\\left(" + box + "\\right)^2}{\\Phi^8}"),
+            "check": lambda chart: nordstrom_scalar_check(chart, system),
+        }
+    if system == "spherical":
+        coords, parameters = ["t", "r", "\\theta", "\\phi"], ["m"]
+        factor = "\\left(1 - \\dfrac{m}{r}\\right)^2"
+        line = "ds^2 = " + factor + "\\left(" + flat + "dr^2 + " + NORDSTROM_SPHERE + "\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "nordstrom_scalar",
+            "system": {"id": "spherical", "name": "Point Mass", "coords": coords,
+                       "domains": ["t \\in " + NORDSTROM_REALS, "r \\in (m, \\infty)"] + NORDSTROM_ANGLES
+                                  + ["r = m \\;\\text{(curvature singularity, where } \\Phi = 0\\text{)}"],
+                       "parameters": parameters, "line_element": line.replace("{c2}", "c^2")},
+            "chart_line_element": line.replace("{c2}", ""),
+            "printer": {"lead": [probe.symbol["r"], probe.parameters["m"]]},
+            "components": {
+                "metric_components": {("t", "t"): "-" + factor, ("r", "r"): factor},
+                "inverse_metric_components": {("t", "t"): "-\\left(1 - \\dfrac{m}{r}\\right)^{-2}",
+                                              ("r", "r"): "\\left(1 - \\dfrac{m}{r}\\right)^{-2}"}},
+            "kretschmann": "\\dfrac{8m^2\\left(6r^2 - 4mr + m^2\\right)}{\\left(r - m\\right)^8}",
+            "check": lambda chart: nordstrom_scalar_check(chart, system),
+        }
+    if system == "uniform":
+        coords, parameters = ["t", "x", "y", "z"], ["a"]
+        factor = "\\dfrac{a^2z^2}{c^4}"
+        line = "ds^2 = " + factor + "\\left(" + flat + "dx^2 + dy^2 + dz^2\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "nordstrom_scalar",
+            "system": {"id": "uniform", "name": "Uniform Field", "coords": coords,
+                       "domains": ["t \\in " + NORDSTROM_REALS, "x \\in " + NORDSTROM_REALS, "y \\in " + NORDSTROM_REALS,
+                                   "z \\in (0, \\infty)",
+                                   "z = 0 \\;\\text{(curvature singularity, where } \\Phi = 0\\text{)}"],
+                       "parameters": parameters, "line_element": line.replace("{c2}", "c^2")},
+            "chart_line_element": line.replace("{c2}", ""),
+            "printer": {"lead": [probe.parameters["a"], probe.symbol["z"]]},
+            "components": {
+                "metric_components": {("t", "t"): "-" + factor, **{(s, s): factor for s in "xyz"}},
+                "inverse_metric_components": {("t", "t"): "-\\dfrac{c^4}{a^2z^2}",
+                                              **{(s, s): "\\dfrac{c^4}{a^2z^2}" for s in "xyz"}}},
+            "kretschmann": "\\dfrac{24c^8}{a^4z^8}",
+            "check": lambda chart: nordstrom_scalar_check(chart, system),
+        }
+    coords, parameters = ["t", "r", "\\theta", "\\phi"], ["L"]
+    line = "ds^2 = \\left(1 - \\dfrac{{c2}t^2}{L^2}\\right)^2\\left(" + flat + "dr^2 + " + NORDSTROM_SPHERE + "\\right)"
+    probe = vm.Reader(coords, parameters, ())
+    t, L, c = probe.symbol["t"], probe.parameters["L"], probe.c
+    Q = sp.Symbol("Q")
+
+    def pretty(value):
+        # Every value is a rational function of ct and L whose only factor that vanishes is
+        # L^2 - c^2t^2, L^2 times the conformal factor, written whole wherever it stands.
+        def split(side):
+            power = 0
+            while True:
+                quotient, remainder = sp.div(sp.expand(side), sp.expand(L ** 2 - c ** 2 * t ** 2), t)
+                if remainder != 0:
+                    return sp.factor(side), power
+                side, power = quotient, power + 1
+
+        (numerator, up), (denominator, down) = (split(side) for side in sp.fraction(sp.together(value)))
+        return numerator / denominator * Q ** (up - down)
+
+    factor = "\\left(1 - \\dfrac{c^2t^2}{L^2}\\right)"
+    return {
+        "metric_id": "nordstrom_scalar",
+        "system": {"id": "dust", "name": "Dust Universe", "coords": coords,
+                   "domains": ["t \\in (-L/c, L/c)", "r \\in [0, \\infty)"] + NORDSTROM_ANGLES
+                              + ["t = \\pm L/c \\;\\text{(curvature singularities, where } \\Phi = 0\\text{)}"],
+                   "parameters": parameters, "line_element": line.replace("{c2}", "c^2")},
+        "chart_line_element": line.replace("{c2}", ""),
+        "printer": {"lead": [L, t, Q], "factors": [L, c, t, probe.symbol["r"]],
+                    "overrides": {Q: "\\left(L^2 - c^2t^2\\right)"}},
+        "time": "t",
+        "pretty": pretty,
+        # The factor stands without its brackets where it is the whole of a denominator.
+        "rewrite": [("{\\left(L^2 - c^2t^2\\right)}", "{L^2 - c^2t^2}"), ("c\\,t", "ct"), ("c^2\\,t^2", "c^2t^2"),
+                    ("c^4\\,t^4", "c^4t^4"), ("L^2\\,c^2", "L^2c^2")],
+        "components": {
+            "metric_components": {("t", "t"): "-" + factor + "^2", ("r", "r"): factor + "^2"},
+            "inverse_metric_components": {("t", "t"): "-" + factor + "^{-2}", ("r", "r"): factor + "^{-2}"}},
+        "ricci_scalar": "-\\dfrac{12L^4}{\\left(L^2 - c^2t^2\\right)^3}",
+        "check": lambda chart: nordstrom_scalar_check(chart, system),
+    }
+
+
+def nordstrom_scalar_check(chart, system):
+    """Each chart against the theory. The conformal chart has no Weyl tensor and the Ricci scalar
+    -6 box Phi/Phi^3, Einstein and Fokker's field equation R = 24 pi G T/c^4 written in the
+    preferred chart, so a vacuum is a solution of the wave equation. Each other chart is the
+    conformal chart at its own Phi, pulled back, and its Phi solves the field equation: the point
+    mass and the uniform field are vacua, R = 0, with a Ricci tensor that does not vanish, and the
+    dust universe has R Phi^3 constant, the density of dust at rest falling as the volume grows.
+    The point mass has Deruelle and Sasaki's R_ab R^ab, their (3.9), and the post-Newtonian
+    parameters gamma = -1 and beta = 1/2; a body at rest in the uniform field at the height
+    c^2/a, where Phi = 1, weighs a; and a galaxy at rest in the dust universe is in free fall."""
+    geo = chart.geo
+    g = geo.g
+    weyl = geo.weyl_llll()
+    if any(vm.norm(vm._at(weyl, index)) != 0 for index in vm._indices(4, 4)):
+        raise AssertionError(f"nordstrom_scalar: the {system} chart is not conformally flat")
+    scalar = geo.ricci_scalar()
+    if system == "conformal":
+        t, x, y, z = chart.symbols
+        Phi = chart.reader.parameters["Phi"]
+        box = sum(sp.diff(Phi, s, 2) for s in (x, y, z)) - sp.diff(Phi, t, 2)
+        if vm.norm(scalar + 6 * box / Phi ** 3) != 0:
+            raise AssertionError("nordstrom_scalar: R is not -6 box Phi/Phi^3")
+        return
+    source = nordstrom_scalar("conformal")
+    there = cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+    T, X, Y, Z = there.symbols
+    P = chart.reader.parameters
+    c = chart.reader.c
+    if system == "uniform":
+        t, x, y, z = chart.symbols
+        image, factor = [t, x, y, z], P["a"] * z / c ** 2
+    else:
+        t, r, theta, phi = chart.symbols
+        image = [t, r * sp.sin(theta) * sp.cos(phi), r * sp.sin(theta) * sp.sin(phi), r * sp.cos(theta)]
+        factor = 1 - P["m"] / r if system == "spherical" else 1 - t ** 2 / P["L"] ** 2
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+    pulled = (J.T * sp.diag(-1, 1, 1, 1) * J).applyfunc(sp.simplify) * factor ** 2
+    if (pulled - g).applyfunc(sp.simplify) != sp.zeros(4, 4):
+        raise AssertionError(f"nordstrom_scalar: the {system} chart is not the conformal chart at its own Phi")
+    ricci = geo.ricci_ll()
+    ginv = geo.ginv
+    squared = sp.simplify(sum(ginv[i, i] * ginv[j, j] * vm._at(ricci, (i, j)) ** 2 for i in range(4) for j in range(4)))
+    if system in ("spherical", "uniform"):
+        if vm.norm(scalar) != 0:
+            raise AssertionError(f"nordstrom_scalar: the {system} chart is not a vacuum of the theory, R = 0")
+        if squared == 0:
+            raise AssertionError(f"nordstrom_scalar: the Ricci tensor of the {system} chart vanishes")
+        if sp.simplify(geo.kretschmann() - 2 * squared) != 0:
+            raise AssertionError(f"nordstrom_scalar: K is not 2 R_ab R^ab in the {system} chart")
+    gamma = geo.christoffel_ull()
+    if system == "spherical":
+        m = P["m"]
+        if sp.simplify(squared - 4 * m ** 2 * (m ** 2 - 4 * m * r + 6 * r ** 2) / (r - m) ** 8) != 0:
+            raise AssertionError("nordstrom_scalar: R_ab R^ab is not Deruelle and Sasaki's (3.9)")
+        # -g_tt = 1 - 2U + 2 beta U^2 and g_rr = 1 + 2 gamma U in the isotropic radius, U = m/r.
+        U = sp.Symbol("U", positive=True)
+        lapse = sp.series((-g[0, 0]).subs(r, m / U), U, 0, 3).removeO()
+        space = sp.series(g[1, 1].subs(r, m / U), U, 0, 2).removeO()
+        if (sp.Poly(lapse, U).all_coeffs() != [1, -2, 1]) or (sp.Poly(space, U).all_coeffs() != [-2, 1]):
+            raise AssertionError("nordstrom_scalar: the point mass does not have beta = 1/2 and gamma = -1")
+    elif system == "uniform":
+        a = P["a"]
+        # The acceleration of a body at rest: Gamma^z_tt u^t u^t with u^t = 1/Phi, measured by sqrt(g_zz).
+        weight = sp.simplify(gamma[3][0][0] / factor ** 2 * factor)
+        if sp.simplify(weight.subs(z, c ** 2 / a) - a / c ** 2) != 0:
+            raise AssertionError("nordstrom_scalar: a body at rest at z = c^2/a does not weigh a")
+    else:
+        L = P["L"]
+        if sp.simplify(scalar * factor ** 3 + 12 / L ** 2) != 0:
+            raise AssertionError("nordstrom_scalar: R Phi^3 is not -12/L^2 in the dust universe")
+        if any(sp.simplify(gamma[i][0][0]) != 0 for i in range(1, 4)):
+            raise AssertionError("nordstrom_scalar: a galaxy at rest in the dust universe is not in free fall")
+
+
+CHARTS["nordstrom_scalar"] = [lambda s=s: nordstrom_scalar(s) for s in NORDSTROM_CHARTS]
+
+
+# -- Penrose's spherical impulsive wave ----------------------------------------------------
+
+PIW_CHARTS = ["null", "retarded", "behind", "ahead"]
+PIW_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+
+
+def piw_charts():
+    """The four charts of the wave a snapping cosmic string sends out, each with its coordinates,
+    parameters, domains and line elements; penrose_impulsive_wave.md beside this file derives each."""
+    return {
+        "null": {
+            "coords": ["U", "V", "\\rho", "\\phi"],
+            "parameters": ["k", "\\Theta = \\tfrac{1}{2}\\left(1 + \\mathrm{sgn}(U)\\right)"],
+            "domains": ["U \\in (-\\infty, \\infty)", "V \\in (0, \\infty)", "\\rho \\in (0, \\infty)",
+                        "\\phi \\in [0, 2\\pi)", "U = 0 \\;\\text{(the wave front)}",
+                        "V\\rho^2 = kU \\;\\text{(the string, ahead of the wave)}"],
+            "line": "ds^2 = 2\\,dU\\,dV + 2\\left(V + \\dfrac{k\\,U\\Theta}{\\rho^2}\\right)^2d\\rho^2"
+                    " + 2\\rho^2\\left(V - \\dfrac{k\\,U\\Theta}{\\rho^2}\\right)^2d\\phi^2",
+            "metric": {("\\rho", "\\rho"): "2\\left(V + \\dfrac{k\\,U\\Theta}{\\rho^2}\\right)^2",
+                       ("\\phi", "\\phi"): "2\\rho^2\\left(V - \\dfrac{k\\,U\\Theta}{\\rho^2}\\right)^2"},
+            "ahead": 1},
+        "retarded": {
+            "coords": ["u", "r", "\\theta", "\\phi"],
+            "parameters": ["k", "\\Theta = \\tfrac{1}{2}\\left(1 - \\mathrm{sgn}(u)\\right)"],
+            "domains": ["u \\in (-\\infty, \\infty)", "r \\in (0, \\infty)", "\\theta \\in (0, \\pi)",
+                        "\\phi \\in [0, 2\\pi)", "u = 0 \\;\\text{(the wave front)}",
+                        "r\\sin^2\\theta = -2ku \\;\\text{(the string, ahead of the wave)}"],
+            "line": "ds^2 = -du^2 - 2\\,du\\,dr + \\left(r - \\dfrac{2k\\,u\\Theta}{\\sin^2\\theta}\\right)^2d\\theta^2"
+                    " + \\sin^2\\theta\\left(r + \\dfrac{2k\\,u\\Theta}{\\sin^2\\theta}\\right)^2d\\phi^2",
+            "metric": {("\\theta", "\\theta"): "\\left(r - \\dfrac{2k\\,u\\Theta}{\\sin^2\\theta}\\right)^2",
+                       ("\\phi", "\\phi"): "\\sin^2\\theta\\left(r + \\dfrac{2k\\,u\\Theta}{\\sin^2\\theta}\\right)^2"},
+            "ahead": -1},
+        "behind": {
+            "coords": ["t", "r", "\\theta", "\\phi"], "parameters": [],
+            "domains": ["t \\in (0, \\infty)", "r \\in [0, ct)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                        "r = ct \\;\\text{(the wave front)}"],
+            "line": "ds^2 = -c^2dt^2 + dr^2 + r^2" + PIW_SPHERE,
+            "chart": "ds^2 = -dt^2 + dr^2 + r^2" + PIW_SPHERE},
+        "ahead": {
+            "coords": ["T", "R", "\\phi", "z"], "parameters": ["\\beta"],
+            "domains": ["T \\in (-\\infty, \\infty)", "R \\in (0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                        "z \\in (-\\infty, \\infty)",
+                        "R^2 + z^2 = c^2T^2 \\;\\text{(the wave front, for } T > 0\\text{, with the wave inside it)}",
+                        "R = 0 \\;\\text{(the string, a conical singularity)}"],
+            "line": "ds^2 = -c^2dT^2 + dR^2 + \\beta^2R^2d\\phi^2 + dz^2",
+            "chart": "ds^2 = -dT^2 + dR^2 + \\beta^2R^2d\\phi^2 + dz^2"},
+    }
+
+
+def penrose_impulsive_wave(system):
+    """Penrose's spherical impulsive wave for the warp of a cosmic string, h(Z) = Z^beta, in four
+    charts. The null chart is the continuous metric of J. Podolsky and J. B. Griffiths, Class.
+    Quantum Grav. 17, 1401 (2000), eq. (15) with epsilon = 0 and their H_1 = k/Z^2 of eq. (17), on
+    Z = rho e^{i phi}, where the square of the modulus is diagonal. The retarded chart is the same
+    eq. (15) with epsilon = 1 at V = sqrt(2) r, U = -u/sqrt(2) and rho = cot(theta/2). The other two
+    are the flat pieces: Minkowski's spherical chart behind the wave and the string's cone ahead of
+    it. piw_check holds each continuous chart to a vanishing Ricci tensor, to a curvature that is a
+    delta on the front alone, and to the flat metric on either side pulled back along Podolsky and
+    Griffiths's transformations (3) to (5); penrose_impulsive_wave.md is the derivation."""
+    chart = piw_charts()[system]
+    spec = {
+        "metric_id": "penrose_impulsive_wave",
+        "system": {"id": system, "name": {"null": "Null", "retarded": "Retarded Spherical",
+                                           "behind": "Behind the Wave", "ahead": "Ahead of the Wave"}[system],
+                   "coords": chart["coords"], "domains": chart["domains"], "parameters": chart["parameters"],
+                   "line_element": chart["line"]},
+        "chart_line_element": chart.get("chart", chart["line"]),
+        "check": lambda built: piw_check(built, system),
+    }
+    probe = vm.Reader(chart["coords"], chart["parameters"], ())
+    if system in ("null", "retarded"):
+        x, k = probe.symbol[chart["coords"][0]], probe.parameters["k"]
+
+        def then(e):
+            return sp.factor(sp.together(e))
+
+        pretty, overrides = cp.step(x, chart["ahead"], then)
+        delta = next(p for p in overrides if p.name.startswith("_delta"))
+        x_step = next(p for p in overrides if p.name.startswith("_step"))
+        rest = [probe.symbol[n] for n in chart["coords"][1:]]
+        spec.update({
+            "pretty": pretty, "bracketed": pretty,
+            "printer": {"lead": rest + [x, x_step], "factors": [k] + rest + [x, x_step], "last": [delta],
+                        "overrides": overrides, "flip": False},
+            "components": {"metric_components": chart["metric"]},
+            "kretschmann": "0",
+        })
+    else:
+        spec["printer"] = {"lead": list(probe.parameters.values()) + [probe.symbol[n] for n in chart["coords"][:2]]}
+        spec["time"] = chart["coords"][0]
+    return spec
+
+
+def piw_flat(epsilon, U, V, rho, phi, beta):
+    """Inertial coordinates (cT, X, Y, Z) of the flat space on either side of the wave front, as
+    functions of Podolsky and Griffiths's U, V and Z = rho e^{i phi}: their (3) behind the wave,
+    and ahead of it their (4) and (5) with h = Z^beta, for which h''/h' = (beta - 1)/Z and
+    h''/h' - 2h'/h = -(1 + beta)/Z, so that with p = 1 + epsilon rho^2 and k = (1 - beta^2)/4
+
+        A = rho^(1 - beta)/(beta p),   B = rho^(1 + beta)/(beta p),   C = h/(beta p rho^(beta - 1)),
+        D = rho^(1 - beta) (p (1 - beta)^2/(4 rho^2) + epsilon beta)/beta,
+        E = rho^(1 + beta) (p (1 + beta)^2/(4 rho^2) - epsilon beta)/beta,
+        F = h p k/(beta rho^(1 + beta)),
+
+    and v = AV - DU, u = BV - EU, eta = CV - FU. The flat metric is -2 du dv + 2 |d eta|^2, with
+    sqrt(2) u = cT + Z and sqrt(2) v = cT - Z, and the angle of eta is beta phi ahead of the wave."""
+    p = 1 + epsilon * rho ** 2
+    k = (1 - beta ** 2) / 4
+    behind_u, behind_v, behind_eta = rho ** 2 * V / p - U, V / p - epsilon * U, V * rho / p
+    A, B, C = rho ** (1 - beta) / (beta * p), rho ** (1 + beta) / (beta * p), rho / (beta * p)
+    D = rho ** (1 - beta) * (p * (1 - beta) ** 2 / (4 * rho ** 2) + epsilon * beta) / beta
+    E = rho ** (1 + beta) * (p * (1 + beta) ** 2 / (4 * rho ** 2) - epsilon * beta) / beta
+    F = p * k / (beta * rho)
+    ahead_u, ahead_v, ahead_eta = B * V - E * U, A * V - D * U, C * V - F * U
+    root = sp.sqrt(2)
+
+    def inertial(u, v, eta, angle):
+        return [(u + v) / root, root * eta * sp.cos(angle), root * eta * sp.sin(angle), (u - v) / root]
+
+    return inertial(behind_u, behind_v, behind_eta, phi), inertial(ahead_u, ahead_v, ahead_eta, beta * phi)
+
+
+def piw_check(chart, system, points=6):
+    """Each continuous chart is a vacuum whose Riemann tensor is a delta on the wave front and
+    nothing else, with R_{U rho U rho} = -2kV delta(U)/rho^2 = -R_{U phi U phi}/rho^2 in the null
+    chart, and its metric on either side of the front is Minkowski's pulled back along piw_flat, at
+    random points and strings in forty digits. The chart ahead of the wave is the published conical
+    chart of cosmic_string at 1 - 4G mu/c^2 = beta, and the chart behind it the published spherical
+    chart of minkowski."""
+    name = f"penrose_impulsive_wave {system}"
+
+    def published(metric_id, system_id):
+        entry = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == system_id)
+        reader = vm.Reader(entry["coords"], [q["symbol"] for q in entry["parameters"]], ())
+        there = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+        n = len(entry["coords"])
+        return reader, sp.Matrix(n, n, lambda i, j: reader(there.get((entry["coords"][i], entry["coords"][j]), "0")))
+
+    if system == "behind":
+        reader, matrix = published("minkowski", "spherical")
+        names = dict(zip([reader.symbol[n] for n in ("t", "r", "\\theta", "\\phi")], chart.symbols))
+        if vm.norm(matrix.subs(names) - chart.geo.g) != sp.zeros(4, 4):
+            raise AssertionError(f"{name}: not Minkowski's published spherical chart")
+        return
+    if system == "ahead":
+        reader, matrix = published("cosmic_string", "conical")
+        names = dict(zip([reader.symbol[n] for n in ("t", "r", "\\phi", "z")], chart.symbols))
+        beta = chart.reader.parameters["beta"]
+        names[reader.parameters["mu"]] = (1 - beta) * reader.c ** 2 / (4 * reader.parameters["G"])
+        if vm.norm(matrix.subs(names) - chart.geo.g) != sp.zeros(4, 4):
+            raise AssertionError(f"{name}: not the published cone of cosmic_string at 1 - 4G mu/c^2 = beta")
+        return
+    x = chart.symbols[0]
+    k = chart.reader.parameters["k"]
+    ahead = 1 if system == "null" else -1
+    ricci = chart.geo.ricci_ll()
+    if any(vm.norm(vm._at(ricci, index)) != 0 for index in vm._indices(4, 2)):
+        raise AssertionError(f"{name}: not a vacuum")
+    riemann = chart.geo.riemann_llll()
+    delta, held = sp.DiracDelta(x), sp.Symbol("PIWdelta")
+    for index in vm._indices(4, 4):
+        value = sp.sympify(vm._at(riemann, index)).xreplace({delta: held})
+        if vm.norm(value.subs(held, 0)) != 0 or vm.norm(sp.diff(value, held, 2)) != 0:
+            raise AssertionError(f"{name}: the curvature is not a delta on the wave front alone")
+    if system == "null":
+        V, rho = chart.symbols[1:3]
+        for index, expected in (((0, 2, 0, 2), -2 * k * V * delta / rho ** 2), ((0, 3, 0, 3), 2 * k * V * delta)):
+            if vm.norm(vm._at(riemann, index) - expected) != 0:
+                raise AssertionError(f"{name}: R_{index} is not {expected}")
+    if vm.norm(sp.sympify(chart.geo.kretschmann())) != 0:
+        raise AssertionError(f"{name}: the Kretschmann scalar does not vanish")
+    # Either side of the front against the flat space it is, through Podolsky and Griffiths's maps.
+    U, V, rho, phi, beta = sp.symbols("U V rho phi beta", positive=True)
+    if system == "null":
+        epsilon, own = 0, [U, V, rho, phi]
+        at = dict(zip(chart.symbols, own))
+    else:
+        epsilon = 1
+        u, r, theta = sp.symbols("u r theta", real=True)
+        own = [u, r, theta, phi]
+        at = dict(zip(chart.symbols, own))
+    eta = sp.diag(-1, 1, 1, 1)
+    rng = random.Random(17)
+    for side, image in zip((-ahead, ahead), piw_flat(epsilon, U, V, rho, phi, beta)):
+        if system == "retarded":
+            image = [e.subs({U: -u / sp.sqrt(2), V: sp.sqrt(2) * r, rho: sp.cot(theta / 2)}) for e in image]
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], own[j]))
+        mine = chart.geo.g.subs(sp.sign(x), side).subs(at).subs(k, (1 - beta ** 2) / 4)
+        difference = J.T * eta * J - mine
+        for _ in range(points):
+            point = {beta: sp.Rational(rng.randint(30, 95), 100), phi: sp.Rational(rng.randint(1, 600), 100)}
+            if system == "null":
+                point.update({V: sp.Rational(rng.randint(10, 60), 10), rho: sp.Rational(rng.randint(8, 30), 10),
+                              U: (1 if side == ahead else -1) * sp.Rational(rng.randint(1, 30), 10)})
+            else:
+                point.update({r: sp.Rational(rng.randint(10, 60), 10), theta: sp.Rational(rng.randint(60, 250), 100),
+                              u: side * sp.Rational(rng.randint(1, 30), 10)})
+            worst = max(abs(sp.N(difference[i, j].subs(point), 40)) for i in range(4) for j in range(4))
+            if worst > sp.Float("1e-30"):
+                raise AssertionError(f"{name}: the flat metric pulled back misses the chart's by {worst} at {point}, "
+                                     f"on the side sgn = {side}")
+
+
+CHARTS["penrose_impulsive_wave"] = [lambda s=s: penrose_impulsive_wave(s) for s in PIW_CHARTS]
+
+
+# -- The exponential metric of Papapetrou and Yilmaz ---------------------------------------
+
+EXPONENTIAL_CHARTS = ("isotropic", "cartesian", "areal", "harmonic")
+EXPONENTIAL_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+EXPONENTIAL_ISOTROPIC = "r = -\\dfrac{m}{\\mathrm{W}\\left(-m/R\\right)}"
+
+
+def exponential_metric(system):
+    """Papapetrou's (1954) and Yilmaz's (1958) static field of a mass, g_tt = -1/g_rr = -e^{-2m/r},
+    in four charts.
+
+    isotropic  ds^2 = -e^{-2m/r} c^2dt^2 + e^{2m/r}(dr^2 + r^2 dOmega^2), (1.1) of Boonserm,
+               Ngampitipan, Simpson and Visser (2018), with the throat at r = m;
+    cartesian  the same in the Cartesian coordinates of the isotropic chart, Misner's (1995) (3.1)
+               with Phi = -m/r, and r = sqrt(x^2 + y^2 + z^2) a name the chart defines;
+    areal      the curvature coordinates of their (3.9) and (3.14), R = r e^{m/r}, with the isotropic
+               radius r = -m/W(-m/R) held as a function of R, so that e^{m/r} = R/r and every value
+               is a rational function of r, R and m;
+    harmonic   Bronnikov's harmonic coordinate u = 1/r, the branch k = 0 of (53) and (54) of
+               Bronnikov, Fabris and Zhidenko (2011), in which the scalar field is linear in u.
+
+    exponential_metric_check holds each to their (4.1) to (4.11) and to the phantom field of their
+    (9.1), and each after the first to being the first pulled back; exponential_metric.md beside
+    this file is the derivation."""
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    parameters = ["m"]
+    reduce = pretty = geodesics = None
+    held = ()
+    if system == "isotropic":
+        coords, name = ["t", "r", "\\theta", "\\phi"], "Isotropic"
+        domains = (["t \\in (-\\infty, \\infty)", "r \\in (0, \\infty)"] + angles
+                   + ["r = m \\;\\text{(the throat)}", "r \\to 0 \\;\\text{(the singular horizon)}"])
+
+        def line(c2):
+            return f"ds^2 = -e^{{-2m/r}}{c2}dt^2 + e^{{2m/r}}\\left(dr^2 + r^2" + EXPONENTIAL_SPHERE + "\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        x, m = probe.symbol["r"], probe.parameters["m"]
+        printer = {"lead": [x, m], "factors": [m, x], "flip": False}
+        components = {"metric_components": {("t", "t"): "-e^{-2m/r}", ("r", "r"): "e^{2m/r}",
+                                            ("\\theta", "\\theta"): "r^2e^{2m/r}",
+                                            ("\\phi", "\\phi"): "r^2e^{2m/r}\\sin^2\\theta"},
+                      "inverse_metric_components": {("t", "t"): "-e^{2m/r}", ("r", "r"): "e^{-2m/r}"}}
+        kretschmann = "\\dfrac{4m^2\\left(12r^2 - 16mr + 7m^2\\right)e^{-4m/r}}{r^8}"
+        turn = "\\dfrac{2\\left(r - m\\right)}{r^2}"
+        geodesics = [
+            "\\ddot{t} + \\dfrac{2m}{r^2}\\dot{t}\\dot{r} = 0",
+            "\\ddot{r} + \\dfrac{m\\,e^{-4m/r}}{r^2}\\dot{t}^2 - \\dfrac{m}{r^2}\\dot{r}^2 - \\left(r - m\\right)\\dot{\\theta}^2"
+            " - \\left(r - m\\right)\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+            "\\ddot{\\theta} + " + turn + "\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+            "\\ddot{\\phi} + " + turn + "\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"]
+    elif system == "cartesian":
+        coords, name = ["t", "x", "y", "z"], "Cartesian"
+        parameters = ["m", "r = \\sqrt{x^2 + y^2 + z^2}"]
+        domains = ["t \\in (-\\infty, \\infty)", "x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)",
+                   "z \\in (-\\infty, \\infty)", "r > 0 \\;\\text{(off the singular horizon)}",
+                   "r = m \\;\\text{(the throat)}"]
+
+        def line(c2):
+            return f"ds^2 = -e^{{-2m/r}}{c2}dt^2 + e^{{2m/r}}\\left(dx^2 + dy^2 + dz^2\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        m = probe.parameters["m"]
+        x, y, z = (probe.symbol[k] for k in "xyz")
+        rr = sp.Symbol("r", positive=True)
+        printer = {"lead": [rr, m, x, y, z], "factors": [m, x, y, z, rr], "flip": False}
+        pretty = exponential_cartesian(x, y, z, rr)
+        components = {"metric_components": {("t", "t"): "-e^{-2m/r}", **{(k, k): "e^{2m/r}" for k in "xyz"}},
+                      "inverse_metric_components": {("t", "t"): "-e^{2m/r}", **{(k, k): "e^{-2m/r}" for k in "xyz"}}}
+        kretschmann = "\\dfrac{4m^2\\left(12r^2 - 16mr + 7m^2\\right)e^{-4m/r}}{r^8}"
+    elif system == "areal":
+        coords, name = ["t", "R", "\\theta", "\\phi"], "Areal (curvature coordinates)"
+        parameters = ["m", EXPONENTIAL_ISOTROPIC]
+        held = ("r",)
+        domains = (["t \\in (-\\infty, \\infty)", "R \\in (e\\,m, \\infty)"] + angles
+                   + ["R = e\\,m \\;\\text{(the throat, } r = m\\text{)}"])
+
+        def line(c2):
+            return (f"ds^2 = -e^{{-2m/r}}{c2}dt^2 + \\dfrac{{dR^2}}{{\\left(1 - \\dfrac{{m}}{{r}}\\right)^2}} + R^2"
+                    + EXPONENTIAL_SPHERE)
+        probe = vm.Reader(coords, parameters, (), held=held)
+        x, m, rr = probe.symbol["R"], probe.parameters["m"], probe.parameters["r"]
+        printer = {"lead": [rr, x, m], "factors": [m, rr, x], "flip": False}
+        reduce = exponential_areal(probe)
+        pretty = sp.factor
+        components = {"metric_components": {("t", "t"): "-e^{-2m/r}", ("R", "R"): "\\left(1 - \\dfrac{m}{r}\\right)^{-2}"},
+                      "inverse_metric_components": {("t", "t"): "-e^{2m/r}", ("R", "R"): "\\left(1 - \\dfrac{m}{r}\\right)^2"}}
+        kretschmann = "\\dfrac{4m^2\\left(12r^2 - 16mr + 7m^2\\right)}{r^4R^4}"
+    else:
+        coords, name = ["t", "u", "\\theta", "\\phi"], "Harmonic"
+        domains = (["t \\in (-\\infty, \\infty)", "u \\in (0, \\infty)"] + angles
+                   + ["u \\to 0 \\;\\text{(spatial infinity)}", "u = 1/m \\;\\text{(the throat)}",
+                      "u \\to \\infty \\;\\text{(the singular horizon)}"])
+
+        def line(c2):
+            return (f"ds^2 = -e^{{-2m\\,u}}{c2}dt^2 + \\dfrac{{e^{{2m\\,u}}}}{{u^2}}\\left(\\dfrac{{du^2}}{{u^2}} + d\\theta^2"
+                    " + \\sin^2\\theta\\,d\\phi^2\\right)")
+        probe = vm.Reader(coords, parameters, ())
+        x, m = probe.symbol["u"], probe.parameters["m"]
+        printer = {"lead": [x, m], "factors": [m, x], "rising": [x], "flip": False}
+        components = {"metric_components": {("t", "t"): "-e^{-2m\\,u}", ("u", "u"): "\\dfrac{e^{2m\\,u}}{u^4}",
+                                            ("\\theta", "\\theta"): "\\dfrac{e^{2m\\,u}}{u^2}",
+                                            ("\\phi", "\\phi"): "\\dfrac{e^{2m\\,u}\\sin^2\\theta}{u^2}"},
+                      "inverse_metric_components": {("t", "t"): "-e^{2m\\,u}", ("u", "u"): "u^4e^{-2m\\,u}"}}
+        kretschmann = "4m^2\\,u^6\\left(12 - 16m\\,u + 7m^2\\,u^2\\right)e^{-4m\\,u}"
+        turn = "\\dfrac{2\\left(1 - m\\,u\\right)}{u}"
+        geodesics = [
+            "\\ddot{t} - 2m\\,\\dot{t}\\dot{u} = 0",
+            "\\ddot{u} - m\\,u^4e^{-4m\\,u}\\dot{t}^2 - \\dfrac{2 - m\\,u}{u}\\dot{u}^2 + u\\left(1 - m\\,u\\right)\\dot{\\theta}^2"
+            " + u\\left(1 - m\\,u\\right)\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+            "\\ddot{\\theta} - " + turn + "\\dot{u}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+            "\\ddot{\\phi} - " + turn + "\\dot{u}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"]
+    spec = {
+        "metric_id": "exponential_metric",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "components": components,
+        "kretschmann": kretschmann,
+        "check": lambda chart: exponential_metric_check(chart, system),
+    }
+    if pretty:
+        spec["pretty"] = pretty
+    if reduce:
+        spec["reduce"] = reduce
+    if geodesics:
+        spec["geodesics"] = geodesics
+    return spec
+
+
+def exponential_cartesian(x, y, z, r):
+    """A pretty printer for the Cartesian chart: each value factored with the radius written r
+    wherever x^2 + y^2 + z^2 stands whole, one of the squares put by the other two and r^2 where
+    that leaves a shorter value."""
+    def pretty(value):
+        value = sp.factor(sp.sympify(value))
+        forms = [value]
+        for own in (x, y, z):
+            forms.append(sp.factor(sp.expand(value.subs(sp.sqrt(x ** 2 + y ** 2 + z ** 2), r)).subs(
+                own ** 2, r ** 2 - (x ** 2 + y ** 2 + z ** 2 - own ** 2))))
+        return min(forms, key=sp.count_ops)
+
+    return pretty
+
+
+def exponential_areal(reader):
+    """A `reduce` for the areal chart, whose isotropic radius is held as a function r(R). Its
+    definition, r e^{m/r} = R, makes
+
+        d_R r = r^2/(R (r - m)),    e^{m/r} = R/r,
+
+    by which every derivative of r and every exponential is written, so that a value is a rational
+    function of r, R and m, among which no relation is left, and one that vanishes is exactly zero."""
+    R, r, m = reader.symbol["R"], reader.parameters["r"], reader.parameters["m"]
+    rate = r ** 2 / (R * (r - m))
+    rho = sp.Symbol("_rho", positive=True)
+
+    def reduce(value):
+        value = sp.sympify(value)
+        if isinstance(value, sp.MatrixBase):
+            return value.applyfunc(reduce)
+        for _ in range(8):
+            derivatives = value.atoms(sp.Derivative)
+            if not derivatives:
+                break
+            written = {}
+            for d in derivatives:
+                (variable, order), *rest = d.variable_count
+                written[d] = sp.Derivative(rate, (variable, order - 1), *rest).doit()
+            value = value.xreplace(written)
+        else:
+            raise AssertionError("exponential_metric: the derivatives of the isotropic radius do not settle")
+        value = value.subs(r, rho)
+
+        def power(e):
+            k = sp.cancel(e.args[0] * rho / m)
+            if not k.is_Integer:
+                raise AssertionError(f"exponential_metric: an exponential other than a power of e^(m/r) in {value}")
+            return (R / rho) ** k
+        value = value.replace(lambda e: isinstance(e, sp.exp), power)
+        return sp.factor(sp.cancel(sp.together(value))).subs(rho, r)
+
+    return reduce
+
+
+def exponential_metric_check(chart, system):
+    """Each chart against Boonserm, Ngampitipan, Simpson and Visser (2018): the Ricci tensor is
+    -2 d_a phi d_b phi for phi = m/r, their (9.1) with Phi = 2m/r, the stress of a massless scalar
+    field of negative energy, which solves the wave equation; the Ricci scalar is their (4.7) and
+    the Kretschmann scalar their (4.9); the spheres have their least area, 4 pi e^2 m^2, on the
+    throat r = m, their (2.1) to (2.3); and each chart after the first is the first pulled back."""
+    P = chart.reader.parameters
+    m = P["m"]
+    x = chart.symbols[1]
+    g, ginv = chart.geo.g, chart.geo.ginv
+    if system == "isotropic":
+        radius = x
+    elif system == "cartesian":
+        radius = sp.sqrt(sum(s ** 2 for s in chart.symbols[1:]))
+    elif system == "areal":
+        radius = P["r"]
+    else:
+        radius = 1 / x
+    field = m / radius
+    reduce = chart.reduce or (lambda value: value)
+    ricci = chart.geo.ricci_ll()
+    for a, c in vm._indices(4, 2):
+        source = -2 * sp.diff(field, chart.symbols[a]) * sp.diff(field, chart.symbols[c])
+        if vm.norm(reduce(vm._at(ricci, (a, c)) - source)) != 0:
+            raise AssertionError(f"exponential_metric: R_ab is not -2 d_a phi d_b phi in slot {(a, c)} of the {system} chart")
+    # Box phi = 0, d_a(sqrt(-g) g^ab d_b phi) = 0, written through the logarithmic derivative of
+    # the determinant so that no root is taken.
+    det = g.det()
+    box = sum(sp.diff(ginv[a, c] * sp.diff(field, chart.symbols[c]), chart.symbols[a])
+              + sp.diff(det, chart.symbols[a]) / (2 * det) * ginv[a, c] * sp.diff(field, chart.symbols[c])
+              for a in range(4) for c in range(4))
+    if sp.simplify(reduce(box)) != 0:
+        raise AssertionError(f"exponential_metric: the field does not solve the wave equation in the {system} chart")
+    if system == "harmonic":
+        # Box u = 0: the coordinate is harmonic, and the field m u is linear in it.
+        if sp.simplify(sp.diff(ginv[1, 1], x) + sp.diff(det, x) / (2 * det) * ginv[1, 1]) != 0:
+            raise AssertionError("exponential_metric: the coordinate u is not harmonic")
+    if system == "areal":
+        # The held radius: its declared rate against its definition, r = -m/W(-m/R).
+        R = x
+        defined = -m / sp.LambertW(-m / R)
+        if vm.norm(sp.diff(defined, R) - defined ** 2 / (R * (defined - m))) != 0:
+            raise AssertionError("exponential_metric: d_R r is not r^2/(R (r - m))")
+        if vm.norm(defined * sp.exp(m / defined) - R) != 0:
+            raise AssertionError("exponential_metric: r e^(m/r) is not R")
+        if sp.simplify(reduce(chart.geo.ricci_scalar()) + 2 * m ** 2 / (radius ** 2 * R ** 2)) != 0:
+            raise AssertionError("exponential_metric: the Ricci scalar is not -2m^2/(r^2 R^2)")
+    scalar = {"isotropic": -2 * m ** 2 * sp.exp(-2 * m / x) / x ** 4}
+    if system == "isotropic":
+        if vm.norm(chart.geo.ricci_scalar() - scalar["isotropic"]) != 0:
+            raise AssertionError("exponential_metric: the Ricci scalar is not -2m^2 e^(-2m/r)/r^4")
+        area = g[2, 2]
+        if sp.simplify(sp.diff(area, x).subs(x, m)) != 0 or sp.simplify(sp.diff(area, x, 2).subs(x, m) - 2 * sp.E ** 2) != 0:
+            raise AssertionError("exponential_metric: the spheres do not have their least area on r = m")
+        if sp.simplify(area.subs(x, m) - sp.E ** 2 * m ** 2) != 0:
+            raise AssertionError("exponential_metric: the throat's areal radius is not e m")
+        return
+    source = exponential_metric("isotropic")
+    own = cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+    r = own.symbols[1]
+    if system == "cartesian":
+        t, cx, cy, cz = chart.symbols
+        rr = sp.sqrt(cx ** 2 + cy ** 2 + cz ** 2)
+        image = [t, rr, sp.acos(cz / rr), sp.atan2(cy, cx)]
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+        pulled = (J.T * own.geo.g.subs(dict(zip(own.symbols, image)), simultaneous=True) * J).applyfunc(sp.simplify)
+    else:
+        image = [chart.symbols[0], radius, chart.symbols[2], chart.symbols[3]]
+        J = sp.diag(1, sp.diff(radius, x), 1, 1)
+        pulled = J.T * own.geo.g.subs(dict(zip(own.symbols, image)), simultaneous=True) * J
+    for a, c in vm._indices(4, 2):
+        if sp.simplify(reduce(pulled[a, c] - g[a, c])) != 0:
+            raise AssertionError(f"exponential_metric: the {system} chart is not the isotropic chart pulled back in slot {(a, c)}")
+
+
+CHARTS["exponential_metric"] = [lambda s=s: exponential_metric(s) for s in EXPONENTIAL_CHARTS]
+
+
+# -- Kopczynski and Trautman's universe with torsion ----------------------------------------
+
+KT_CHARTS = ("comoving_cartesian", "comoving_spherical", "conformal")
+KT_REALS = "(-\\infty, \\infty)"
+KT_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+KT_SCALE = "a = \\left(1 + \\dfrac{c^2t^2}{\\ell^2}\\right)^{1/3}"
+KT_SPHERE = "dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+
+
+def kopczynski_trautman(system):
+    """Kopczynski's universe of spinning dust in the Einstein-Cartan theory, as Trautman's
+    article of 2006 writes it: the flat Robertson-Walker line element with the scale factor of
+    his modified Friedmann equation (33), (1/2) R'^2 - M/R + (3/2) S^2/R^4 = 0 at G = c = 1.
+    Counted from its least value the scale factor is a^3 = 1 + c^2t^2/l^2 with
+    l = c/sqrt(6 pi G rho_0), rho_0 the density of the dust at the bounce, so that
+    (da/d(ct))^2 = (4/9l^2)(1/a - 1/a^4). The two comoving charts name a and print every value in
+    a, ct and l; the conformal chart leaves a(eta) free, as the published conformal chart of
+    `frw` does, and its parameter states the equation it solves. kopczynski_trautman_check holds
+    each to the Einstein tensor of the dust and its spin; kopczynski_trautman.md derives each."""
+    if system == "conformal":
+        coords, parameters = ["\\eta", "r", "\\theta", "\\phi"], ["a = a(\\eta)"]
+        line = "ds^2 = a^2\\left(-d\\eta^2 + " + KT_SPHERE + "\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        a = probe.parameters["a"]
+        eta = probe.symbol["\\eta"]
+        return {
+            "metric_id": "kopczynski_trautman",
+            "system": {"id": "conformal", "name": "Conformal Time", "coords": coords,
+                       "domains": ["\\eta \\in " + KT_REALS, "r \\in [0, \\infty)"] + KT_ANGLES,
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [sp.Derivative(a, (eta, 2)), sp.Derivative(a, eta), a, probe.symbol["r"]]},
+            "check": lambda chart: kopczynski_trautman_check(chart, system),
+        }
+    parameters = ["\\ell", KT_SCALE]
+    scale = "\\left(1 + \\dfrac{{c2}t^2}{\\ell^2}\\right)^{2/3}"
+    if system == "comoving_cartesian":
+        coords, name = ["t", "x", "y", "z"], "Comoving Cartesian"
+        space = "dx^2 + dy^2 + dz^2"
+        domains = [f"{c} \\in {KT_REALS}" for c in coords]
+        components = {"metric_components": {(s, s): "a^2" for s in "xyz"},
+                      "inverse_metric_components": {(s, s): "\\dfrac{1}{a^2}" for s in "xyz"}}
+        geodesics = ["\\ddot{t} + \\dfrac{2ct}{3\\ell^2a}\\left(\\dot{x}^2 + \\dot{y}^2 + \\dot{z}^2\\right) = 0"] + [
+            "\\ddot{" + s + "} + \\dfrac{4ct}{3\\ell^2a^3}\\dot{t}\\dot{" + s + "} = 0" for s in "xyz"]
+    else:
+        coords, name = ["t", "r", "\\theta", "\\phi"], "Comoving Spherical"
+        space = KT_SPHERE
+        domains = ["t \\in " + KT_REALS, "r \\in [0, \\infty)"] + KT_ANGLES
+        components = {"metric_components": {("r", "r"): "a^2", ("\\theta", "\\theta"): "a^2r^2"},
+                      "inverse_metric_components": {("r", "r"): "\\dfrac{1}{a^2}",
+                                                    ("\\theta", "\\theta"): "\\dfrac{1}{a^2r^2}"}}
+        rate = "\\dfrac{4ct}{3\\ell^2a^3}"
+        geodesics = [
+            "\\ddot{t} + \\dfrac{2ct}{3\\ell^2a}\\left(\\dot{r}^2 + r^2\\dot{\\theta}^2 + r^2\\sin^2\\theta\\,\\dot{\\phi}^2\\right) = 0",
+            "\\ddot{r} + " + rate + "\\dot{t}\\dot{r} - r\\,\\dot{\\theta}^2 - r\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+            "\\ddot{\\theta} + " + rate + "\\dot{t}\\dot{\\theta} + \\dfrac{2}{r}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+            "\\ddot{\\phi} + " + rate + "\\dot{t}\\dot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"]
+    probe = vm.Reader(coords, parameters, ())
+    t, ell, c = probe.symbol["t"], probe.parameters["ell"], probe.c
+    A = sp.Symbol("KTa", positive=True)
+    s = sp.Symbol("KTs", real=True)
+
+    def named(value):
+        """The value, in the file's time, written in the scale factor a, with at most one ct left."""
+        value = sp.sympify(value).subs(t, ell * s / c)
+        value = value.replace(lambda p: p.is_Pow and not p.exp.is_Integer and p.exp.is_Rational,
+                              lambda p: _kt_root(p, s, ell, A))
+        value = sp.cancel(sp.together(sp.powsimp(sp.powdenest(value, force=True), force=True)))
+        if value.atoms(sp.Pow) and any(not p.exp.is_Integer for p in value.atoms(sp.Pow)):
+            raise AssertionError(f"kopczynski_trautman: a root is left in {value}")
+        num, den = sp.fraction(value)
+        num, den = (sp.expand(sum(coeff * s ** (k % 2) * (A ** 3 - 1) ** (k // 2)
+                                  for (k,), coeff in sp.Poly(side, s).terms())) for side in (num, den))
+        return sp.cancel(num / den).subs(s, c * t / ell)
+
+    def pretty(value):
+        # Factored in a^3, so that a^3 - 1 = c^2t^2/l^2 and 4 - a^3 stand whole.
+        cube = sp.Symbol("KTcube", positive=True)
+        out = sp.Integer(1)
+        for side, sign in zip(sp.fraction(sp.cancel(named(value))), (1, -1)):
+            poly = sp.Poly(side, A)
+            low = min(k for (k,), _ in poly.terms()) if side != 0 else 0
+            rest = sp.cancel(side / A ** low)
+            if all(k % 3 == 0 for (k,), _ in sp.Poly(rest, A).terms()):
+                rest = sp.factor(rest.subs(A, cube ** sp.Rational(1, 3))).subs(cube, A ** 3)
+            else:
+                rest = sp.factor(rest)
+            out *= (A ** low * rest) ** sign
+        return out
+
+    return {
+        "metric_id": "kopczynski_trautman",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": "ds^2 = -c^2dt^2 + a^2\\left(" + space + "\\right)"},
+        "chart_line_element": "ds^2 = -dt^2 + " + scale.replace("{c2}", "") + "\\left(" + space + "\\right)",
+        "printer": {"lead": [A, t, ell] + [probe.symbol[x] for x in coords[1:2]],
+                    "factors": [ell, c, t, A] + [probe.symbol[x] for x in coords[1:2]], "overrides": {A: "a"}},
+        "time": "t",
+        "pretty": pretty,
+        "bracketed": lambda value: sp.expand(named(sp.sympify(value).subs(t, c * t))),
+        "rewrite": [("c\\,t", "ct"), ("\\ell^2\\,a", "\\ell^2a"), ("\\ell^4\\,a", "\\ell^4a"), ("ct\\,r^2", "ct\\,r^2")],
+        "components": components,
+        "ricci_scalar": "\\dfrac{4\\left(a^3 + 2\\right)}{3\\ell^2a^6}",
+        "kretschmann": "\\dfrac{16\\left(5a^6 - 16a^3 + 20\\right)}{27\\ell^4a^{12}}",
+        "geodesics": geodesics,
+        "check": lambda chart: kopczynski_trautman_check(chart, system),
+    }
+
+
+def _kt_root(power, s, ell, A):
+    """A fractional power of a multiple of 1 + s^2 as that power of a^3."""
+    if not power.base.has(s):
+        return power
+    ratio = sp.cancel(power.base / (1 + s ** 2))
+    if ratio.has(s):
+        raise AssertionError(f"kopczynski_trautman: {power} is no power of 1 + c^2t^2/l^2")
+    return sp.powdenest(ratio ** power.exp, force=True) * A ** (3 * power.exp)
+
+
+def kopczynski_trautman_check(chart, system):
+    """Each chart against Trautman's equations. With u the dust's four-velocity, the Einstein
+    tensor of the Christoffel connection is (8 pi G/c^4) times that of a fluid with the energy
+    density rho c^2 - 2 pi G sigma^2/c^2 and the pressure -2 pi G sigma^2/c^2, his effective
+    stress tensor for dust of density rho and spin density sigma: in the lengths of the charts,
+    G^t_t = -(4/3l^2)(1/a^3 - 1/a^6) and G^x_x = (4/3l^2)/a^6, with rho and sigma falling as
+    1/a^3. The Weyl tensor vanishes. The spherical chart is the Cartesian one pulled back, and
+    the conformal chart is the spherical one carried along a d(eta) = c dt, where its free
+    a(eta) obeys a'^2 = 4(a - 1/a^2)/9l^2, the equation its parameter states."""
+    geo = chart.geo
+    weyl = geo.weyl_llll()
+    if any(vm.norm(vm._at(weyl, index)) != 0 for index in vm._indices(4, 4)):
+        raise AssertionError(f"kopczynski_trautman: the {system} chart is not conformally flat")
+    lowered = geo.einstein_ll()
+    # Every chart is diagonal, so the index is raised slot by slot.
+    mixed = [[geo.ginv[i, i] * vm._at(lowered, (i, j)) for j in range(4)] for i in range(4)]
+    if system == "conformal":
+        eta = chart.symbols[0]
+        a = chart.reader.parameters["a"]
+        ell = sp.Symbol("ell", positive=True)
+        first = 4 * (a - a ** -2) / (9 * ell ** 2)
+        rates = {sp.Derivative(a, (eta, 2)): sp.Rational(2, 9) * (1 + 2 / a ** 3) / ell ** 2}
+        scale = a
+        on_shell = lambda e: sp.simplify(sp.sympify(e).subs(rates).subs(sp.Derivative(a, eta) ** 2, first))  # noqa: E731
+        # The second derivative is the first equation differentiated.
+        if sp.simplify(sp.diff(first, eta) - 2 * sp.Derivative(a, eta) * rates[sp.Derivative(a, (eta, 2))]) != 0:
+            raise AssertionError("kopczynski_trautman: a'' is not the derivative of the equation for a'^2")
+    else:
+        t = chart.symbols[0]
+        ell = chart.reader.parameters["ell"]
+        scale = (1 + t ** 2 / ell ** 2) ** sp.Rational(1, 3)
+        on_shell = sp.simplify
+        if system == "comoving_spherical":
+            source = kopczynski_trautman("comoving_cartesian")
+            there = cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+            _, r, theta, phi = chart.symbols
+            image = [t, r * sp.sin(theta) * sp.cos(phi), r * sp.sin(theta) * sp.sin(phi), r * sp.cos(theta)]
+            J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+            old = there.geo.g.subs({there.symbols[0]: t, there.reader.parameters["ell"]: ell})
+            if (J.T * old * J - geo.g).applyfunc(sp.simplify) != sp.zeros(4, 4):
+                raise AssertionError("kopczynski_trautman: the spherical chart is not the Cartesian one pulled back")
+        # Trautman's (33) in these lengths: (da/d(ct))^2 = (4/9l^2)(1/a - 1/a^4).
+        if sp.simplify(sp.diff(scale, t) ** 2 - 4 * (1 / scale - 1 / scale ** 4) / (9 * ell ** 2)) != 0:
+            raise AssertionError("kopczynski_trautman: the scale factor does not solve the modified Friedmann equation")
+    density = sp.Rational(4, 3) * (scale ** -3 - scale ** -6) / ell ** 2
+    pressure = -sp.Rational(4, 3) * scale ** -6 / ell ** 2
+    for i in range(4):
+        for j in range(4):
+            wanted = 0 if i != j else (-density if i == 0 else pressure)
+            if on_shell(vm._at(mixed, (i, j)) - wanted) != 0:
+                raise AssertionError(f"kopczynski_trautman: the Einstein tensor of the {system} chart is not that of "
+                                     f"the dust and its spin in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["kopczynski_trautman"] = [lambda s=s: kopczynski_trautman(s) for s in KT_CHARTS]
 
 
 def write(spec):

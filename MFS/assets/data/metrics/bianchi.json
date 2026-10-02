@@ -49,6 +49,16 @@
       "id": "de_sitter",
       "kind": "family",
       "text": "Where the expanding Bianchi universes end up when the cosmological constant is positive. Robert Wald proved in 1983 that every type but IX approaches de Sitter space exponentially, and that type IX does too when $\\Lambda$ is large enough [wald1983]."
+    },
+    {
+      "id": "petrov_homogeneous",
+      "kind": "family",
+      "text": "A vacuum whose group of four symmetries holds groups of Bianchi's types I and VII. They act on surfaces with a time direction in them, so the spacetime is the same at every time as well [gibbons2008petrov, terzis2009]."
+    },
+    {
+      "id": "kopczynski_trautman",
+      "kind": "family",
+      "text": "A flat universe of spinning dust in the Einstein-Cartan theory, which turns round where a big bang would be. The Bianchi universes of types I to VIII filled with the same dust can avoid the singularity too, where the torsion outweighs the shear [tafel1973, kopczynski1973]."
     }
   ],
   "references": [
@@ -60,7 +70,11 @@
     "kasner1921",
     "misner1963",
     "kantowski1966",
-    "wald1983"
+    "wald1983",
+    "gibbons2008petrov",
+    "terzis2009",
+    "tafel1973",
+    "kopczynski1973"
   ],
   "coordinates": [
     {

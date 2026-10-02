@@ -79,6 +79,11 @@
       "id": "point_particle_2plus1",
       "kind": "special_case",
       "text": "The string with the dimension along it taken away. A slice across the string is the space around a point mass in a world of two dimensions, the cone Andrzej Staruszkiewicz found in 1963 [staruszkiewicz1963, deser1984]."
+    },
+    {
+      "id": "penrose_impulsive_wave",
+      "kind": "composite",
+      "text": "A string that snaps. Ahead of the wave it sends out the cone is still there, and behind the wave space is flat with no wedge missing [gleiser1989splitting, podolsky2000snapping]."
     }
   ],
   "references": [
@@ -105,7 +110,9 @@
     "deser1992time",
     "bronnikov2020",
     "garfinkle1990",
-    "staruszkiewicz1963"
+    "staruszkiewicz1963",
+    "gleiser1989splitting",
+    "podolsky2000snapping"
   ],
   "coordinates": [
     {
