@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 107,
+  "count": 108,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -7099,6 +7099,328 @@
       ]
     },
     {
+      "id": "eguchi_hanson",
+      "name": "Eguchi-Hanson Space",
+      "short_name": "Eguchi-Hanson",
+      "description": "A space of four dimensions with no time in it, the gravitational instanton Tohru Eguchi and Andrew Hanson found in 1978: a solution of Einstein's vacuum equations with Riemannian signature and self dual curvature. Space closes on a 2-sphere of radius $a/2$, the bolt, and far away it is flat space with every point identified with its opposite.",
+      "tags": [
+        "vacuum",
+        "four-dimensional",
+        "gravitational instanton",
+        "Riemannian",
+        "Euclidean signature",
+        "no time",
+        "self-dual",
+        "hyperkähler",
+        "Kähler",
+        "asymptotically locally Euclidean",
+        "ALE space",
+        "bolt",
+        "nuts and bolts",
+        "lens space",
+        "orbifold",
+        "cotangent bundle",
+        "Gibbons-Hawking",
+        "multi-centre",
+        "Calabi",
+        "K3 surface",
+        "Hopf fibration",
+        "regular",
+        "exact solution",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(+,+,+,+)",
+      "convention": "The length $a$ is the space's only parameter. All four coordinates are spatial, so no component carries a factor of $c$, and a dot in the geodesic equations is a derivative with respect to arc length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "taub_nut",
+          "kind": "limit_source",
+          "text": "Continue Taub-NUT to Euclidean signature, give it the mass $M = L(1 + a^4/8L^4)$, and send its NUT parameter $L \\to \\infty$ with $r^2 = \\rho^2 - L^2$ held fixed: the limit is the Eguchi-Hanson space, and the two share the isometry group $U(2)$ [eguchihanson1979, gibbonshawking1979]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "family",
+          "text": "The monopole's four dimensions of space are Gibbons and Hawking's metric with one centre and the constant $1$ kept in its potential. Drop the constant and take two centres, and the space is Eguchi and Hanson's [gibbonshawking1979, sorkin1983]."
+        },
+        {
+          "id": "majumdar_papapetrou",
+          "kind": "family",
+          "text": "Majumdar and Papapetrou's black holes are built on a sum of potentials $1/|\\mathbf{x} - \\mathbf{x}_i|$ over flat space, one for each hole. The Eguchi-Hanson space is built on the same sum with two terms, and its two centres are regular points [gibbonshawking1978, ishihara2006]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "Schwarzschild's black hole continued to Euclidean signature is Hawking's first gravitational instanton, and its horizon is a bolt as well, Gibbons and Hawking's \"canonical example\" [hawking1977, gibbonshawking1979]."
+        },
+        {
+          "id": "mixmaster",
+          "kind": "family",
+          "text": "A universe whose three axes on the 3-sphere all differ, as the axes of Belinskii, Gibbons, Page, and Pope's self dual metrics do. Of those, the only one with no singularity has two axes equal and is the Eguchi-Hanson space [belinskii1978bianchi, eguchihanson1979]."
+        }
+      ],
+      "references": [
+        "bpst1975",
+        "hawking1977",
+        "eguchihanson1978",
+        "hanson2020",
+        "eguchihanson1979",
+        "gibbonshawking1979",
+        "eguchigilkeyhanson1980",
+        "belinskii1978bianchi",
+        "calabi1979",
+        "gibbonshawking1978",
+        "prasad1979",
+        "ishihara2006",
+        "hitchin1979",
+        "hansonsha2017",
+        "kronheimer1989a",
+        "kronheimer1989b",
+        "lebrun1988",
+        "page1978k3",
+        "gibbonspope1979",
+        "sorkin1983"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/eguchi_hanson.json",
+      "charts": [
+        {
+          "id": "eguchi_hanson",
+          "name": "Eguchi-Hanson",
+          "coordinates": [
+            "r",
+            "\\theta",
+            "\\phi",
+            "\\psi"
+          ],
+          "domains": [
+            "r \\in [a, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\psi \\in [0, 2\\pi)",
+            "r = a \\;\\text{(the bolt, a 2-sphere of radius}\\; a/2\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "The space's one length: the bolt $r = a$ is a 2-sphere of radius $a/2$"
+            }
+          ],
+          "convention": "We use coordinates $(r, \\theta, \\phi, \\psi)$, with $r$ a length and $\\theta$, $\\phi$, and $\\psi$ the Euler angles of the 3-sphere, $\\psi$ with period $2\\pi$. With the orientation $dr \\wedge d\\theta \\wedge d\\phi \\wedge d\\psi$ the Riemann tensor is self dual.",
+          "line_element": "ds^2 = \\left(1 - \\dfrac{a^4}{r^4}\\right)^{-1}dr^2 + \\dfrac{r^2}{4}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\dfrac{r^2}{4}\\left(1 - \\dfrac{a^4}{r^4}\\right)\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r^4}{r^4 - a^4}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r^2}{4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^4 - a^4\\cos^2\\theta}{4r^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{\\left(r^4 - a^4\\right)\\cos\\theta}{4r^2}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(r^4 - a^4\\right)\\cos\\theta}{4r^2}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{r^4 - a^4}{4r^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{384a^8}{r^{12}}"
+        },
+        {
+          "id": "kahler",
+          "name": "Kähler Radius",
+          "coordinates": [
+            "\\rho",
+            "\\theta",
+            "\\phi",
+            "\\psi"
+          ],
+          "domains": [
+            "\\rho \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\psi \\in [0, 2\\pi)",
+            "\\rho = 0 \\;\\text{(the bolt, a 2-sphere of radius}\\; a/2\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "The space's one length: the bolt $\\rho = 0$ is a 2-sphere of radius $a/2$"
+            },
+            {
+              "symbol": "W = \\sqrt{\\rho^4 + a^4}",
+              "description": "The square of Eguchi and Hanson's radius, $W = r^2$"
+            }
+          ],
+          "convention": "We use coordinates $(\\rho, \\theta, \\phi, \\psi)$, with $\\rho$ the radius of the flat space the metric approaches far from the bolt, $\\rho^4 = r^4 - a^4$ in Eguchi and Hanson's radius $r$, and $\\theta$, $\\phi$, and $\\psi$ the Euler angles of the 3-sphere.",
+          "line_element": "ds^2 = \\dfrac{\\rho^2}{W}\\left(d\\rho^2 + \\dfrac{\\rho^2}{4}\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2\\right) + \\dfrac{W}{4}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{\\rho^2}{W}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{W}{4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\rho^4 + a^4\\sin^2\\theta}{4W}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{\\rho^4\\cos\\theta}{4W}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\rho^4\\cos\\theta}{4W}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{\\rho^4}{4W}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{384a^8}{W^6}"
+        },
+        {
+          "id": "two_centre",
+          "name": "Gibbons-Hawking Two-Centre",
+          "coordinates": [
+            "\\rho",
+            "z",
+            "\\psi",
+            "\\tau"
+          ],
+          "domains": [
+            "\\rho \\in [0, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\psi \\in [0, 2\\pi)",
+            "\\tau \\in [0, \\pi a/2)",
+            "(\\rho, z) = (0, \\pm a) \\;\\text{(the two centres, regular points)}",
+            "\\rho = 0,\\; |z| < a \\;\\text{(the bolt)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "The space's one length: the two centres stand at $z = \\pm a$"
+            },
+            {
+              "symbol": "R_1 = \\sqrt{\\rho^2 + \\left(z - a\\right)^2}",
+              "description": "The distance from the centre at $z = a$"
+            },
+            {
+              "symbol": "R_2 = \\sqrt{\\rho^2 + \\left(z + a\\right)^2}",
+              "description": "The distance from the centre at $z = -a$"
+            },
+            {
+              "symbol": "V = \\dfrac{a}{8}\\left(\\dfrac{1}{R_1} + \\dfrac{1}{R_2}\\right)",
+              "description": "The potential of the two centres, a solution of Laplace's equation on the flat space of $\\rho$, $z$, and $\\psi$"
+            },
+            {
+              "symbol": "\\omega = \\dfrac{a}{8}\\left(\\dfrac{z - a}{R_1} + \\dfrac{z + a}{R_2}\\right)",
+              "description": "The potential whose curl is the gradient of $V$"
+            }
+          ],
+          "convention": "We use coordinates $(\\rho, z, \\psi, \\tau)$, with $\\rho$, $z$, and $\\psi$ cylindrical coordinates on a flat space of three dimensions and $\\tau$ a length of period $\\pi a/2$ around the circle over each of its points. In Eguchi and Hanson's coordinates $z = r^2\\cos\\theta/a$, $\\rho = \\sqrt{r^4 - a^4}\\,\\sin\\theta/a$, and $\\tau = a\\phi/4$.",
+          "line_element": "ds^2 = V\\left(d\\rho^2 + dz^2 + \\rho^2d\\psi^2\\right) + V^{-1}\\left(d\\tau + \\omega\\,d\\psi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "V"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "V"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{a\\left(R_1 + R_2 + 2a\\right)\\left(R_1 + R_2 - 2a\\right)}{8\\left(R_1 + R_2\\right)}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{\\left(R_1 - R_2\\right)\\left(R_1 + R_2 + 2a\\right)\\left(R_1 + R_2 - 2a\\right)}{4a\\left(R_1 + R_2\\right)}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\psi"
+              ],
+              "value": "-\\dfrac{\\left(R_1 - R_2\\right)\\left(R_1 + R_2 + 2a\\right)\\left(R_1 + R_2 - 2a\\right)}{4a\\left(R_1 + R_2\\right)}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "V^{-1}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{24576a^2}{\\left(R_1 + R_2\\right)^6}"
+        }
+      ]
+    },
+    {
       "id": "einstein_cluster",
       "name": "Einstein's Cluster",
       "short_name": "Einstein Cluster",
@@ -13038,6 +13360,11 @@
           "id": "kaluza_klein_black_hole",
           "kind": "generalisation",
           "text": "The monopole with a horizon around it, together with its electric and dyonic relatives. At $r_s = 0$ the magnetic hole is the monopole, with $p = 4m$ [horowitz2012]."
+        },
+        {
+          "id": "eguchi_hanson",
+          "kind": "family",
+          "text": "Gibbons and Hawking's space with two centres and no constant in its potential; the monopole's four dimensions of space have one centre and the constant $1$. It has no circle of fixed size far away, and its boundary there is a 3-sphere with opposite points identified [gibbonshawking1979, eguchihanson1979]."
         }
       ],
       "references": [
@@ -13059,7 +13386,9 @@
         "gregory2012",
         "emparan2008",
         "randall1999b",
-        "horowitz2012"
+        "horowitz2012",
+        "gibbonshawking1979",
+        "eguchihanson1979"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_monopole.json",
@@ -17691,6 +18020,11 @@
           "id": "double_kerr",
           "kind": "family",
           "text": "Two spinning black holes on one axis, with no charge. The repulsion between their spins does not balance their attraction, so a strut holds them apart where these holes need none [kramer1980, neugebauer2009]."
+        },
+        {
+          "id": "eguchi_hanson",
+          "kind": "family",
+          "text": "A space of four dimensions with no time, built on the same sum of potentials $1/|\\mathbf{x} - \\mathbf{x}_i|$ over flat space, with two terms and no constant. Its two centres are regular points, the poles of a 2-sphere [gibbonshawking1978, ishihara2006]."
         }
       ],
       "references": [
@@ -17719,7 +18053,9 @@
         "ruback1986",
         "elvang2007",
         "kramer1980",
-        "neugebauer2009"
+        "neugebauer2009",
+        "gibbonshawking1978",
+        "ishihara2006"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/majumdar_papapetrou.json",
@@ -19842,6 +20178,11 @@
           "id": "gowdy",
           "kind": "programme",
           "text": "Both are testing grounds for the conjecture of Belinskii, Khalatnikov, and Lifshitz [bkl1970]. The Mixmaster universe oscillates all the way down to its singularity, and in a generic Gowdy universe the spatial curvature terms drop out [gowdy2014]."
+        },
+        {
+          "id": "eguchi_hanson",
+          "kind": "family",
+          "text": "A space of four dimensions with no time and the Mixmaster universe's symmetry, that of the 3-sphere. Belinskii, Gibbons, Page, and Pope solved its self dual case with all three axes unequal, and the one solution without a singularity has two axes equal: the Eguchi-Hanson space [belinskii1978bianchi, eguchihanson1979]."
         }
       ],
       "references": [
@@ -19863,7 +20204,9 @@
         "damour2003",
         "taub1951",
         "misner1963",
-        "gowdy2014"
+        "gowdy2014",
+        "belinskii1978bianchi",
+        "eguchihanson1979"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mixmaster.json",
@@ -26153,6 +26496,11 @@
           "id": "double_kerr",
           "kind": "generalisation",
           "text": "Two spinning black holes on one axis, held apart by a strut. With the spins switched off they are Rudolf Bach and Hermann Weyl's pair of Schwarzschild bodies of 1922 [bach1922, neugebauer2012]."
+        },
+        {
+          "id": "eguchi_hanson",
+          "kind": "family",
+          "text": "A gravitational instanton, as Schwarzschild's black hole continued to Euclidean signature is. Each closes on a 2-sphere that Gibbons and Hawking call a bolt, and Schwarzschild's bolt is its horizon [hawking1977, gibbonshawking1979]."
         }
       ],
       "references": [
@@ -26233,7 +26581,9 @@
         "lubbe2009",
         "sultana2005",
         "bach1922",
-        "neugebauer2012"
+        "neugebauer2012",
+        "hawking1977",
+        "gibbonshawking1979"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -30058,6 +30408,11 @@
           "id": "kerr_taub_nut",
           "kind": "generalisation",
           "text": "Taub-NUT set spinning. Marek Demiański and Ezra Newman's solution of 1966 carries a spin $a$ beside the twist $l$, and at $a = 0$ it is this metric [bini2003]."
+        },
+        {
+          "id": "eguchi_hanson",
+          "kind": "limit",
+          "text": "Continue Taub-NUT to Euclidean signature, where its NUT parameter is a length $L$, set $m = L(1 + a^4/8L^4)$, and let $L \\to \\infty$ with $r^2 - L^2$ held fixed. The limit is Eguchi and Hanson's gravitational instanton, a space of four dimensions with no time and with Taub-NUT's isometry group $U(2)$ [eguchihanson1979, gibbonshawking1979]."
         }
       ],
       "references": [
@@ -30081,7 +30436,9 @@
         "griffiths2005",
         "hartle1972",
         "brill1964",
-        "bini2003"
+        "bini2003",
+        "eguchihanson1979",
+        "gibbonshawking1979"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/taub_nut.json",

@@ -1,5 +1,5 @@
 {
-  "version": "a6b4152c1d0eceeb",
+  "version": "9f01bdde6c97be44",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -20335,6 +20335,255 @@
         "eprint": "1005.0760",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/1005.0760"
+      }
+    },
+    "bpst1975": {
+      "type": "article",
+      "fields": {
+        "title": "Pseudoparticle solutions of the {Yang-Mills} equations",
+        "author": "Belavin, A. A. and Polyakov, A. M. and Schwartz, A. S. and Tyupkin, Yu. S.",
+        "journal": "Physics Letters B",
+        "volume": "59",
+        "number": "1",
+        "pages": "85--87",
+        "year": "1975",
+        "doi": "10.1016/0370-2693(75)90163-X",
+        "url": "https://doi.org/10.1016/0370-2693(75)90163-X"
+      }
+    },
+    "eguchihanson1978": {
+      "type": "article",
+      "fields": {
+        "title": "Asymptotically flat self-dual solutions to {Euclidean} gravity",
+        "author": "Eguchi, Tohru and Hanson, Andrew J.",
+        "journal": "Physics Letters B",
+        "volume": "74",
+        "number": "3",
+        "pages": "249--251",
+        "year": "1978",
+        "doi": "10.1016/0370-2693(78)90566-X",
+        "url": "https://doi.org/10.1016/0370-2693(78)90566-X"
+      }
+    },
+    "belinskii1978bianchi": {
+      "type": "article",
+      "fields": {
+        "title": "Asymptotically {Euclidean} {Bianchi IX} metrics in quantum gravity",
+        "author": "Belinskii, V. A. and Gibbons, G. W. and Page, D. N. and Pope, C. N.",
+        "journal": "Physics Letters B",
+        "volume": "76",
+        "number": "4",
+        "pages": "433--435",
+        "year": "1978",
+        "doi": "10.1016/0370-2693(78)90899-7",
+        "url": "https://doi.org/10.1016/0370-2693(78)90899-7"
+      }
+    },
+    "gibbonshawking1978": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational multi-instantons",
+        "author": "Gibbons, G. W. and Hawking, S. W.",
+        "journal": "Physics Letters B",
+        "volume": "78",
+        "number": "4",
+        "pages": "430--432",
+        "year": "1978",
+        "doi": "10.1016/0370-2693(78)90478-1",
+        "url": "https://doi.org/10.1016/0370-2693(78)90478-1"
+      }
+    },
+    "page1978k3": {
+      "type": "article",
+      "fields": {
+        "title": "A physical picture of the {K3} gravitational instanton",
+        "author": "Page, Don N.",
+        "journal": "Physics Letters B",
+        "volume": "80",
+        "number": "1--2",
+        "pages": "55--57",
+        "year": "1978",
+        "doi": "10.1016/0370-2693(78)90305-2",
+        "url": "https://doi.org/10.1016/0370-2693(78)90305-2"
+      }
+    },
+    "eguchihanson1979": {
+      "type": "article",
+      "fields": {
+        "title": "Self-dual solutions to {Euclidean} gravity",
+        "author": "Eguchi, Tohru and Hanson, Andrew J.",
+        "journal": "Annals of Physics",
+        "volume": "120",
+        "number": "1",
+        "pages": "82--106",
+        "year": "1979",
+        "doi": "10.1016/0003-4916(79)90282-3",
+        "url": "https://doi.org/10.1016/0003-4916(79)90282-3"
+      }
+    },
+    "prasad1979": {
+      "type": "article",
+      "fields": {
+        "title": "Equivalence of {Eguchi-Hanson} metric to two center {Gibbons-Hawking} metric",
+        "author": "Prasad, M. K.",
+        "journal": "Physics Letters B",
+        "volume": "83",
+        "number": "3--4",
+        "pages": "310",
+        "year": "1979",
+        "doi": "10.1016/0370-2693(79)91114-6",
+        "url": "https://doi.org/10.1016/0370-2693(79)91114-6"
+      }
+    },
+    "calabi1979": {
+      "type": "article",
+      "fields": {
+        "title": "M\\'etriques k\\\"ahl\\'eriennes et fibr\\'es holomorphes",
+        "author": "Calabi, E.",
+        "journal": "Annales scientifiques de l'\\'Ecole Normale Sup\\'erieure",
+        "volume": "12",
+        "number": "2",
+        "pages": "269--294",
+        "year": "1979",
+        "doi": "10.24033/asens.1367",
+        "url": "https://doi.org/10.24033/asens.1367"
+      }
+    },
+    "hitchin1979": {
+      "type": "article",
+      "fields": {
+        "title": "Polygons and gravitons",
+        "author": "Hitchin, N. J.",
+        "journal": "Mathematical Proceedings of the Cambridge Philosophical Society",
+        "volume": "85",
+        "number": "3",
+        "pages": "465--476",
+        "year": "1979",
+        "doi": "10.1017/S0305004100055924",
+        "url": "https://doi.org/10.1017/S0305004100055924"
+      }
+    },
+    "gibbonspope1979": {
+      "type": "article",
+      "fields": {
+        "title": "The Positive Action conjecture and asymptotically {Euclidean} metrics in quantum gravity",
+        "author": "Gibbons, G. W. and Pope, C. N.",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "66",
+        "number": "3",
+        "pages": "267--290",
+        "year": "1979",
+        "doi": "10.1007/BF01197188",
+        "url": "https://doi.org/10.1007/BF01197188"
+      }
+    },
+    "gibbonshawking1979": {
+      "type": "article",
+      "fields": {
+        "title": "Classification of Gravitational Instanton symmetries",
+        "author": "Gibbons, G. W. and Hawking, S. W.",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "66",
+        "number": "3",
+        "pages": "291--310",
+        "year": "1979",
+        "doi": "10.1007/BF01197189",
+        "url": "https://doi.org/10.1007/BF01197189"
+      }
+    },
+    "eguchigilkeyhanson1980": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitation, gauge theories and differential geometry",
+        "author": "Eguchi, Tohru and Gilkey, Peter B. and Hanson, Andrew J.",
+        "journal": "Physics Reports",
+        "volume": "66",
+        "number": "6",
+        "pages": "213--393",
+        "year": "1980",
+        "doi": "10.1016/0370-1573(80)90130-1",
+        "url": "https://doi.org/10.1016/0370-1573(80)90130-1"
+      }
+    },
+    "lebrun1988": {
+      "type": "article",
+      "fields": {
+        "title": "Counter-examples to the generalized positive action conjecture",
+        "author": "LeBrun, Claude",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "118",
+        "number": "4",
+        "pages": "591--596",
+        "year": "1988",
+        "doi": "10.1007/BF01221110",
+        "url": "https://doi.org/10.1007/BF01221110"
+      }
+    },
+    "kronheimer1989a": {
+      "type": "article",
+      "fields": {
+        "title": "The construction of {ALE} spaces as hyper-{K}\\\"ahler quotients",
+        "author": "Kronheimer, P. B.",
+        "journal": "Journal of Differential Geometry",
+        "volume": "29",
+        "number": "3",
+        "pages": "665--683",
+        "year": "1989",
+        "doi": "10.4310/jdg/1214443066",
+        "url": "https://doi.org/10.4310/jdg/1214443066"
+      }
+    },
+    "kronheimer1989b": {
+      "type": "article",
+      "fields": {
+        "title": "A {Torelli}-type theorem for gravitational instantons",
+        "author": "Kronheimer, P. B.",
+        "journal": "Journal of Differential Geometry",
+        "volume": "29",
+        "number": "3",
+        "pages": "685--697",
+        "year": "1989",
+        "doi": "10.4310/jdg/1214443067",
+        "url": "https://doi.org/10.4310/jdg/1214443067"
+      }
+    },
+    "ishihara2006": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes on {Eguchi-Hanson} space in five-dimensional {Einstein-Maxwell} theory",
+        "author": "Ishihara, Hideki and Kimura, Masashi and Matsuno, Ken and Tomizawa, Shinya",
+        "journal": "Physical Review D",
+        "volume": "74",
+        "number": "4",
+        "pages": "047501",
+        "year": "2006",
+        "doi": "10.1103/PhysRevD.74.047501",
+        "eprint": "hep-th/0607035",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/0607035"
+      }
+    },
+    "hansonsha2017": {
+      "type": "incollection",
+      "fields": {
+        "title": "Isometric Embedding of the {A1} Gravitational Instanton",
+        "author": "Hanson, Andrew J. and Sha, Ji-Ping",
+        "booktitle": "Memorial Volume for Kerson Huang",
+        "publisher": "World Scientific",
+        "pages": "95--111",
+        "year": "2017",
+        "doi": "10.1142/9789813207431_0013",
+        "url": "https://doi.org/10.1142/9789813207431_0013"
+      }
+    },
+    "hanson2020": {
+      "type": "misc",
+      "fields": {
+        "title": "Visualizing the {Eguchi-Hanson} Space",
+        "author": "Hanson, Andrew J.",
+        "howpublished": "Slides of a talk at the Visualization Workshop, Komaba Campus, University of Tokyo, 14--15 March 2020",
+        "year": "2020",
+        "url": "https://homes.luddy.indiana.edu/hansona/papers/TokyoVizConf-Mar20.pdf"
       }
     }
   }

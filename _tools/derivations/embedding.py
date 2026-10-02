@@ -5117,6 +5117,108 @@ def kaluza_klein_monopole(ck, src):
                  settings="$m = 1$, the unit of every length, on the surface of $r$ and $x_5$ ($\\theta = 0$).")]
 
 
+def eguchi_hanson(ck, src):
+    """Three surfaces of the Eguchi-Hanson space at a = 1, each the fixed set of an isometry and so
+    totally geodesic. The fibre is the surface of r and psi over one point of the bolt: its metric
+    is dr^2/(1 - a^4/r^4) + (r^2/4)(1 - a^4/r^4) d psi^2 with psi of period 2 pi, so the circle at
+    r has radius rho = (r/2) sqrt(1 - a^4/r^4), drho/ds = (1 + a^4/r^4)/2 with s the proper
+    distance, and dz/dr = sqrt(3 + a^4/r^4)/2: smooth at the bolt, where drho/ds = 1, and far
+    away the cone drho/ds = 1/2, whose circles are half as long as the plane's. The bolt r = a
+    is the round sphere of radius a/2 that theta and phi cover. The surface theta = pi/2 at
+    psi = 0 and psi = pi is the fixed set of theta -> pi - theta, psi -> -psi: its two halves
+    meet on the bolt's equator, the smallest circle, of radius a/2, where each is vertical, with
+    dz/dr = sqrt((3r^4 + a^4)/(4(r^4 - a^4))). Drawn to r = 4a."""
+    from scipy.integrate import quad
+    top, size = 4.0, 5.0
+    radii = (1.25, 1.5, 2.0, 3.0)
+
+    fibre_slice = Slice(src, "eguchi_hanson", "eguchi_hanson", "r", "\\psi", {"theta": 0, "phi": 0}, {"a": 1})
+    fibre = Piece("fibre", "sheet", fibre_slice, 1.0, top, 0.0, 1,
+                  (("axis", "the bolt $r = a$, where the circle of $\\psi$ closes to a point"),
+                   ("edge", "the surface runs on to $r \\to \\infty$, a cone of half angle $30°$")),
+                  [(r, "r", None) for r in radii] + [(top, "r", "$r = 4a$")], size)
+    ck.isometry("Eguchi-Hanson, the fibre", fibre)
+    ck.radius("Eguchi-Hanson, the fibre, rho = (r/2) sqrt(1 - a^4/r^4)", fibre,
+              lambda r: 0.5 * r * np.sqrt(np.maximum(1 - r ** -4.0, 0)), size)
+
+    def fibre_height(r):
+        return np.array([quad(lambda u: 0.5 * math.sqrt(3 + u ** -4.0), 1, x, epsabs=1e-12, epsrel=1e-12)[0]
+                         for x in np.atleast_1d(r)])
+    ck.form("Eguchi-Hanson, the fibre, the quadrature of its height", fibre, fibre_height, size)
+    r = np.linspace(1.001, 200, 400)
+    ck.add("Eguchi-Hanson: drho/ds = (1 + a^4/r^4)/2 along the fibre",
+           float(np.max(np.abs(fibre_slice._drho(r) / np.sqrt(fibre_slice.gxx_at(r)) - (1 + r ** -4.0) / 2))), 1e-9)
+    ck.add("Eguchi-Hanson: the fibre closes smoothly on the bolt, drho/ds = 1 at r = a",
+           abs(float(fibre_slice._drho(1 + 1e-9) / np.sqrt(fibre_slice.gxx_at(1 + 1e-9))) - 1), 1e-7)
+    ck.add("Eguchi-Hanson: far away the fibre's circles are half as long as a plane's, rho/r = 1/2",
+           abs(float(fibre_slice.rho_at(1e6)) / 1e6 - 0.5), 1e-12)
+    fibre_surface = Surface([fibre])
+    fig = figure_of([fibre_surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *fibre.at(2.0), "$r = 2a$", dx=10)
+    ring_label(fig, [0, 0, 0], *fibre.at(top), "$4a$")
+    fig.legend("fill", "cover", "the surface of $r$ and $\\psi$ over the pole $\\theta = 0$ of the bolt")
+    fig.legend("line", "r", "$r$ constant, at $1.25$, $1.5$, $2$, $3$ and $4\\,a$: the circle of $\\psi$")
+    fig.legend("line", "meridian", "$\\psi$ constant, every $15°$")
+    views = [view("fibre", "The fibre", "$a$", [fibre_surface], fig.done(),
+                  settings="$a = 1$, the unit of every length, on the surface of $r$ and $\\psi$ "
+                           "($\\theta = 0$, $\\phi = 0$).")]
+
+    bolt_slice = Slice(src, "eguchi_hanson", "eguchi_hanson", "\\theta", "\\phi", {"r": 1, "psi": 0}, {"a": 1})
+    bolt = Piece("bolt", "sheet", bolt_slice, 0.0, math.pi, -0.5, 1,
+                 (("axis", "the pole $\\theta = 0$"), ("axis", "the pole $\\theta = \\pi$")),
+                 [(math.pi / 4, "r", None), (math.pi / 2, "r", "$\\theta = \\pi/2$"), (3 * math.pi / 4, "r", None)], 1.0)
+    ck.isometry("Eguchi-Hanson, the bolt", bolt)
+    ck.radius("Eguchi-Hanson, the bolt, rho = (a/2) sin theta", bolt, lambda th: 0.5 * np.sin(th), 1.0)
+    ck.form("Eguchi-Hanson, the bolt, z = -(a/2) cos theta", bolt, lambda th: -0.5 * np.cos(th), 1.0)
+    bolt_surface = Surface([bolt])
+    fig = figure_of([bolt_surface], {"sheet": "cover"}, 1.0)
+    ring_label(fig, [0, 0, 0], *bolt.at(math.pi / 2), "$\\theta = \\pi/2$", dx=10)
+    fig.legend("fill", "cover", "the bolt $r = a$, a sphere of radius $a/2$")
+    fig.legend("line", "r", "$\\theta$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("bolt", "The bolt", "$a$", [bolt_surface], fig.done(),
+                      settings="$a = 1$, the unit of every length, on the surface of $\\theta$ and $\\phi$ "
+                               "($r = a$)."))
+
+    equator_slice = Slice(src, "eguchi_hanson", "eguchi_hanson", "r", "\\phi", {"theta": "pi/2", "psi": 0}, {"a": 1})
+    near = Piece("near", "sheet", equator_slice, 1.0, top, 0.0, 1,
+                 (("throat", "the bolt's equator $r = a$, the smallest circle, of radius $a/2$"),
+                  ("edge", "the surface runs on to $r \\to \\infty$, a cone of half angle $30°$")),
+                 [(1.0, "throat", "$r = a$")] + [(r, "r", None) for r in radii] + [(top, "r", "$r = 4a$")], size)
+    far = Piece("far", "sheet2", equator_slice, 1.0, top, 0.0, -1,
+                (("throat", "the bolt's equator $r = a$"),
+                 ("edge", "the surface runs on to $r \\to \\infty$, a cone of half angle $30°$")),
+                [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+
+    def equator_height(r, sense):
+        # With r = a + w^2 the integrand is finite on the bolt, where dz/dr diverges as (r - a)^(-1/2).
+        def rate(w):
+            u = 1 + w * w
+            return w * math.sqrt((3 * u ** 4 + 1) / (w * w * (u + 1) * (u * u + 1)))
+        return np.array([sense * quad(rate, 0, math.sqrt(max(x - 1, 0)), epsabs=1e-12, epsrel=1e-12)[0]
+                         for x in np.atleast_1d(r)])
+    for p in (near, far):
+        ck.isometry(f"Eguchi-Hanson, the equator, {p.id}", p)
+        ck.radius(f"Eguchi-Hanson, the equator, {p.id}, rho = r/2", p, lambda r: 0.5 * r, size)
+        ck.form(f"Eguchi-Hanson, the equator, {p.id}, the quadrature of its height", p,
+                lambda r, s=p.sense: equator_height(r, s), size)
+    ck.join("Eguchi-Hanson, the two halves on the bolt's equator", near, 1.0, far, 1.0)
+    equator_surface = Surface([near, far])
+    fig = figure_of([equator_surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], 0.5, 0.0, "$r = a$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(2.0), "$2a$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$4a$")
+    fig.legend("fill", "cover", "the half $\\psi = 0$ of the surface $\\theta = \\pi/2$")
+    fig.legend("line", "r", "$r$ constant, at $1.25$, $1.5$, $2$, $3$ and $4\\,a$")
+    fig.legend("line", "r2", "the same radii on the half $\\psi = \\pi$")
+    fig.legend("line", "throat", "the bolt's equator $r = a$, where the two halves meet")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("equator", "Through the bolt", "$a$", [equator_surface], fig.done(),
+                      settings="$a = 1$, the unit of every length, on the surface of $r$ and $\\phi$ "
+                               "($\\theta = \\pi/2$, with $\\psi = 0$ on one half and $\\psi = \\pi$ on the other)."))
+    return views
+
+
 def kaluza_klein_black_hole(ck, src):
     """Three moments t = 0 of the Kaluza-Klein black holes, in units of r_s, each through the
     bifurcation surface r = r_s into the other exterior.
@@ -10537,6 +10639,7 @@ DRAWN = {
     "boulware_deser": boulware_deser,
     "black_string": black_string,
     "kaluza_klein_monopole": kaluza_klein_monopole,
+    "eguchi_hanson": eguchi_hanson,
     "kaluza_klein_black_hole": kaluza_klein_black_hole,
     "witten_black_hole": witten_black_hole,
     "myers_perry": myers_perry,
@@ -11619,6 +11722,36 @@ CAPTIONS = {
         "grows with the distance $s$ from the nut as $d\\rho/ds = 16m^2/(r + 4m)^2$, which is $1$ at $r = 0$, so "
         "the tip is as smooth as the pole of a sphere. The period $16\\pi m$ of $x_5$ is the one that makes it "
         "so; any other would leave the apex of a cone there.",
+    ],
+    ("eguchi_hanson", "fibre"): [
+        "The surface of $r$ and $\\psi$ over the pole $\\theta = 0$ of the bolt of the Eguchi-Hanson space, drawn "
+        "as a surface in flat space with every distance along it the metric distance. On it the metric is "
+        "$dr^2/(1 - a^4/r^4) + (r^2/4)(1 - a^4/r^4)\\,d\\psi^2$, so the circle of $\\psi$ at $r$ has circumference "
+        "$\\pi r\\sqrt{1 - a^4/r^4}$. The circle closes to a point on the bolt $r = a$, and its radius grows with "
+        "distance from the bolt at the rate $(1 + a^4/r^4)/2$, which is $1$ on the bolt, as about any point of a "
+        "plane. So the surface is smooth there, with $\\psi$ of period $2\\pi$.",
+        "Far from the bolt the rate tends to $1/2$, and the surface opens into a cone of half angle $30°$, whose "
+        "circles are half as long as a plane's at the same distance. Each point of the bolt carries such a surface. "
+        "The half length of the far circles is the identification of opposite points on the 3-sphere at infinity, "
+        "which makes the boundary a lens space; with $\\psi$ running to $4\\pi$ the far circles would be a plane's, "
+        "$2\\pi r$ long, and $r = a$ the tip of a cone.",
+    ],
+    ("eguchi_hanson", "bolt"): [
+        "The bolt $r = a$ of the Eguchi-Hanson space, the surface of $\\theta$ and $\\phi$, drawn as a surface in "
+        "flat space with every distance along it the metric distance: a round sphere of radius $a/2$ and area "
+        "$\\pi a^2$. It is the fixed set of the rotation in $\\psi$, and the space ends on it, with no point at "
+        "$r < a$. The curvature is greatest on the bolt, where the Kretschmann scalar is $384/a^4$.",
+    ],
+    ("eguchi_hanson", "equator"): [
+        "The surface of $r$ and $\\phi$ through the bolt's equator ($\\theta = \\pi/2$, with $\\psi = 0$ on one "
+        "half and $\\psi = \\pi$ on the other) in the Eguchi-Hanson space, drawn as a surface in flat space with "
+        "every distance along it the metric distance. On it the metric is $dr^2/(1 - a^4/r^4) + (r^2/4)\\,d\\phi^2$, "
+        "so the circle at $r$ has circumference $\\pi r$, and the smallest circle is the bolt's equator, of radius "
+        "$a/2$. The two halves are the two ways out of the bolt along the plane of $r$ and $\\psi$ over each point "
+        "of the equator, and they meet smoothly there.",
+        "Each half opens into a cone of half angle $30°$. Both run out to the same infinity: the points with "
+        "$\\psi = 0$ and with $\\psi = \\pi$ at large $r$ lie on the one boundary, a 3-sphere with opposite points "
+        "identified.",
     ],
     ("kaluza_klein_black_hole", "einstein"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a Kaluza-Klein black hole of one charge ($q = 2\\,r_s$) at "

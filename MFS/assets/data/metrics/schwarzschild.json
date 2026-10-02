@@ -288,6 +288,11 @@
       "id": "double_kerr",
       "kind": "generalisation",
       "text": "Two spinning black holes on one axis, held apart by a strut. With the spins switched off they are Rudolf Bach and Hermann Weyl's pair of Schwarzschild bodies of 1922 [bach1922, neugebauer2012]."
+    },
+    {
+      "id": "eguchi_hanson",
+      "kind": "family",
+      "text": "A gravitational instanton, as Schwarzschild's black hole continued to Euclidean signature is. Each closes on a 2-sphere that Gibbons and Hawking call a bolt, and Schwarzschild's bolt is its horizon [hawking1977, gibbonshawking1979]."
     }
   ],
   "references": [
@@ -368,7 +373,9 @@
     "lubbe2009",
     "sultana2005",
     "bach1922",
-    "neugebauer2012"
+    "neugebauer2012",
+    "hawking1977",
+    "gibbonshawking1979"
   ],
   "coordinates": [
     {

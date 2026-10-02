@@ -72,6 +72,11 @@
       "id": "double_kerr",
       "kind": "family",
       "text": "Two spinning black holes on one axis, with no charge. The repulsion between their spins does not balance their attraction, so a strut holds them apart where these holes need none [kramer1980, neugebauer2009]."
+    },
+    {
+      "id": "eguchi_hanson",
+      "kind": "family",
+      "text": "A space of four dimensions with no time, built on the same sum of potentials $1/|\\mathbf{x} - \\mathbf{x}_i|$ over flat space, with two terms and no constant. Its two centres are regular points, the poles of a 2-sphere [gibbonshawking1978, ishihara2006]."
     }
   ],
   "references": [
@@ -100,7 +105,9 @@
     "ruback1986",
     "elvang2007",
     "kramer1980",
-    "neugebauer2009"
+    "neugebauer2009",
+    "gibbonshawking1978",
+    "ishihara2006"
   ],
   "coordinates": [
     {

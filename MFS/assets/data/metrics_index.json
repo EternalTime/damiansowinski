@@ -699,6 +699,39 @@
     "embedding": "7ebe08e359710241"
   },
   {
+    "id": "eguchi_hanson",
+    "name": "Eguchi-Hanson",
+    "tags": [
+      "vacuum",
+      "four-dimensional",
+      "gravitational instanton",
+      "Riemannian",
+      "Euclidean signature",
+      "no time",
+      "self-dual",
+      "hyperkähler",
+      "Kähler",
+      "asymptotically locally Euclidean",
+      "ALE space",
+      "bolt",
+      "nuts and bolts",
+      "lens space",
+      "orbifold",
+      "cotangent bundle",
+      "Gibbons-Hawking",
+      "multi-centre",
+      "Calabi",
+      "K3 surface",
+      "Hopf fibration",
+      "regular",
+      "exact solution",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "9ac418d4897cd347",
+    "embedding": "4717367b2f2467bd"
+  },
+  {
     "id": "einstein_cluster",
     "name": "Einstein Cluster",
     "tags": [
@@ -1284,7 +1317,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "d74cb7773cf3e2ea",
+    "version": "bee72c713de77720",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -1736,7 +1769,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d57846eb4dc21d80",
+    "version": "cbdb23e61b4103cf",
     "diagrams": "c6edded6cce52897",
     "conformal": "334186f800f59252",
     "embedding": "b9bf3c95064c40a7"
@@ -1957,7 +1990,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "2a1e0f1a81906f09",
+    "version": "a3c18d524fa1a317",
     "embedding": "1762ae2364403f3b"
   },
   {
@@ -2555,7 +2588,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "71d6d0e71db426e5",
+    "version": "02315aba6430c669",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -2920,7 +2953,7 @@
       "idealized model",
       "not asymptotically flat"
     ],
-    "version": "5fcce987d9d8a609",
+    "version": "fc5fd5ba6a489d7c",
     "diagrams": "86d43f7abeacc5f4",
     "embedding": "30d5a7483e08a078"
   },

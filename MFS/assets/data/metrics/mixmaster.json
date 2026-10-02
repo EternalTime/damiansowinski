@@ -44,6 +44,11 @@
       "id": "gowdy",
       "kind": "programme",
       "text": "Both are testing grounds for the conjecture of Belinskii, Khalatnikov, and Lifshitz [bkl1970]. The Mixmaster universe oscillates all the way down to its singularity, and in a generic Gowdy universe the spatial curvature terms drop out [gowdy2014]."
+    },
+    {
+      "id": "eguchi_hanson",
+      "kind": "family",
+      "text": "A space of four dimensions with no time and the Mixmaster universe's symmetry, that of the 3-sphere. Belinskii, Gibbons, Page, and Pope solved its self dual case with all three axes unequal, and the one solution without a singularity has two axes equal: the Eguchi-Hanson space [belinskii1978bianchi, eguchihanson1979]."
     }
   ],
   "references": [
@@ -65,7 +70,9 @@
     "damour2003",
     "taub1951",
     "misner1963",
-    "gowdy2014"
+    "gowdy2014",
+    "belinskii1978bianchi",
+    "eguchihanson1979"
   ],
   "coordinates": [
     {

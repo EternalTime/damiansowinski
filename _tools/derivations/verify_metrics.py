@@ -818,6 +818,15 @@ DIMENSIONS = {
     ("kaluza_klein_monopole", "taub_nut"): {
         "t": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "\\psi": "1", "m": "L",
     },
+    # The Eguchi-Hanson space is Riemannian: every coordinate is spatial and none is a time. Its one
+    # parameter a is a length, and the Euler angles are pure numbers.
+    ("eguchi_hanson", "eguchi_hanson"): {"r": "L", "\\theta": "1", "\\phi": "1", "\\psi": "1", "a": "L"},
+    ("eguchi_hanson", "kahler"): {"\\rho": "L", "\\theta": "1", "\\phi": "1", "\\psi": "1", "a": "L", "W": "L^2"},
+    # The two-centre chart's fibre coordinate tau is a length of period pi a/2; V is a pure number and
+    # omega, the potential that stands beside d tau, a length.
+    ("eguchi_hanson", "two_centre"): {
+        "\\rho": "L", "z": "L", "\\psi": "1", "\\tau": "L", "a": "L", "R_1": "L", "R_2": "L", "V": "1", "\\omega": "L",
+    },
     # The Kaluza-Klein black holes keep three lengths: the horizon radius r_s and the charge
     # lengths q and p. The fifth coordinate y is a length, and so are the advanced time v = ct + ...
     # and its companion w along the circle.
