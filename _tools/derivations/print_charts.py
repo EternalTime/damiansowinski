@@ -14196,6 +14196,188 @@ def boson_star_pullback(chart):
 
 
 CHARTS["boson_star"] = [lambda s=s: boson_star(s) for s in BOSON_STAR_CHARTS]
+# -- Bartnik and McKinnon's soliton ------------------------------------------------------
+
+BARTNIK_MCKINNON_CHARTS = ("areal", "isotropic", "tortoise", "flow")
+BM_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+BM_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+
+
+def bartnik_mckinnon(system):
+    """Bartnik and McKinnon's soliton of 1988, a static ball of SU(2) Yang-Mills field held
+    together by its own gravity, in four charts. No solution is known in closed form, so every
+    chart leaves its two metric functions free, as TOV's does, and states the equations they
+    solve in the descriptions of its parameters.
+
+    The areal chart is Volkov and Gal'tsov's (Phys. Rep. 319, 1, 1999), their (2.50) with the
+    signature reversed: the mass function m and the lapse's sigma, N = 1 - 2m/r. The isotropic
+    chart is Kleihaus and Kunz's (Phys. Rev. D 57, 834, 1998), their (60), ds^2 = -f dt^2 +
+    (m/f)(dr^2 + r^2 dOmega^2), with their m written h and their r written rho, since m and r are
+    the mass function and the areal radius here. The tortoise chart takes the coordinate in
+    which the review writes the equation of the soliton's small oscillations, its (5.6),
+    dxi/dr = 1/(sigma N), so that the plane of t and xi is conformally flat; it names F = sigma^2 N
+    and the areal radius r(xi). The review writes it rho, which is the isotropic radius here. The chart of Breitenlohner, Forgács and Maison (Commun. Math. Phys.
+    163, 141, 1994) is their (48), ds^2 = A^2 N^2 dt^2 - r^2 (dtau^2 + dOmega^2) with N = sqrt(1 -
+    2m/r) and tau defined by dr = r N dtau, in which the field equations are a flow with no
+    explicit tau; A is the review's sigma.
+
+    bartnik_mckinnon_check holds the areal chart to the Einstein-Yang-Mills equations for the
+    magnetic potential of amplitude w, G^mu_nu = 2 ell^2 T^mu_nu with a traceless stress, and
+    each other chart to being the areal chart pulled back and to the same equations;
+    bartnik_mckinnon.md is the derivation."""
+    extra = {}
+    if system == "areal":
+        coords, name = ["t", "r", "\\theta", "\\phi"], "Areal Radius"
+        parameters = ["\\sigma = \\sigma(r)", "m = m(r)", "w = w(r)", "\\ell"]
+        domains = ["r \\in [0, \\infty)"] + BM_ANGLES + ["2m < r"]
+        line = ("ds^2 = -\\sigma^2\\left(1 - \\dfrac{2m}{r}\\right){c2}dt^2 + \\dfrac{dr^2}{1 - \\dfrac{2m}{r}}"
+                " + r^2" + BM_SPHERE)
+        probe = vm.Reader(coords, parameters, ())
+        r, sigma, m = probe.symbol["r"], probe.parameters["sigma"], probe.parameters["m"]
+        ds, dm = sp.Derivative(sigma, r), sp.Derivative(m, r)
+        d2s, d2m = sp.Derivative(sigma, (r, 2)), sp.Derivative(m, (r, 2))
+        lead = [d2s, ds, d2m, dm, r, m, sigma]
+        factors = [r, m, sigma, d2s, ds, d2m, dm]
+        extra["printer"] = {"collect": lambda poly, pr: cp.collect_by(poly, [d2s, ds], pr)}
+        # The orthonormal frame of a static observer, as TOV's is written: 4 A^2 + 8 B^2 + 8 C^2 +
+        # 4 D^2 with A = P'/(2 sigma), B = P/(2 r sigma), C = (r m' - m)/r^3 and D = 2m/r^3, where
+        # P = 2 N sigma' + sigma N' is twice the slope of the lapse times sqrt(N).
+        P = ("2r\\left(r - 2m\\right)\\partial_r\\sigma - 2\\sigma\\left(r\\,\\partial_r m - m\\right)")
+        dP = ("2r^2\\left(r - 2m\\right)\\partial_r^2\\sigma - 6r\\left(r\\,\\partial_r m - m\\right)\\partial_r\\sigma"
+              " - 2\\sigma\\left(r^2\\,\\partial_r^2 m - 2r\\,\\partial_r m + 2m\\right)")
+        extra["components"] = {"metric_components": {("t", "t"): "-\\dfrac{\\sigma^2\\left(r - 2m\\right)}{r}"}}
+        extra["kretschmann"] = ("\\dfrac{\\left(" + dP + "\\right)^2}{r^6\\sigma^2} + \\dfrac{2\\left(" + P
+                                + "\\right)^2}{r^6\\sigma^2} + \\dfrac{8\\left(r\\,\\partial_r m - m\\right)^2}{r^6}"
+                                " + \\dfrac{16m^2}{r^6}")
+    elif system == "isotropic":
+        coords, name = ["t", "\\rho", "\\theta", "\\phi"], "Isotropic"
+        parameters = ["f = f(\\rho)", "h = h(\\rho)"]
+        domains = ["\\rho \\in [0, \\infty)"] + BM_ANGLES
+        line = "ds^2 = -f\\,{c2}dt^2 + \\dfrac{h}{f}\\left(d\\rho^2 + \\rho^2" + BM_SPHERE + "\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        rho, f, h = probe.symbol["\\rho"], probe.parameters["f"], probe.parameters["h"]
+        lead = [sp.Derivative(f, (rho, 2)), sp.Derivative(h, (rho, 2)), sp.Derivative(f, rho), sp.Derivative(h, rho),
+                rho, f, h]
+        factors = [rho, f, h, sp.Derivative(f, rho), sp.Derivative(h, rho)]
+    elif system == "flow":
+        coords, name = ["t", "\\tau", "\\theta", "\\phi"], "Breitenlohner-Forgács-Maison"
+        parameters = ["A = A(\\tau)", "N = N(\\tau)", "r = r(\\tau)"]
+        domains = ["\\tau \\in (-\\infty, \\infty)"] + BM_ANGLES
+        line = "ds^2 = -A^2N^2{c2}dt^2 + r^2\\left(d\\tau^2 + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        tau = probe.symbol["\\tau"]
+        A, N, r = (probe.parameters[k] for k in ("A", "N", "r"))
+        first = [sp.Derivative(fn, tau) for fn in (A, N, r)]
+        lead = [sp.Derivative(fn, (tau, 2)) for fn in (A, N, r)] + first + [A, N, r]
+        factors = [A, N, r] + first
+    else:
+        coords, name = ["t", "\\xi", "\\theta", "\\phi"], "Tortoise"
+        parameters = ["F = F(\\xi)", "r = r(\\xi)"]
+        domains = ["\\xi \\in [0, \\infty)"] + BM_ANGLES
+        line = "ds^2 = F\\left(-{c2}dt^2 + d\\xi^2\\right) + r^2" + BM_SPHERE
+        probe = vm.Reader(coords, parameters, ())
+        x, F, r = probe.symbol["\\xi"], probe.parameters["F"], probe.parameters["r"]
+        lead = [sp.Derivative(F, (x, 2)), sp.Derivative(r, (x, 2)), sp.Derivative(F, x), sp.Derivative(r, x), F, r]
+        factors = [F, r, sp.Derivative(F, x), sp.Derivative(r, x)]
+    return {
+        "metric_id": "bartnik_mckinnon",
+        "system": {"id": system, "name": name, "coords": coords,
+                   "domains": ["t \\in (-\\infty, \\infty)"] + domains,
+                   "parameters": parameters, "line_element": line.replace("{c2}", "c^2")},
+        "chart_line_element": line.replace("{c2}", ""),
+        "printer": {"lead": lead, "factors": factors, **extra.pop("printer", {})},
+        "check": lambda chart: bartnik_mckinnon_check(chart, system),
+        **extra,
+    }
+
+
+def bartnik_mckinnon_check(chart, system):
+    """Every chart is a solution of the Einstein-Yang-Mills equations wherever its functions are
+    built from a solution of, with a prime for the derivative along the areal radius r,
+
+        m' = ell^2 (N w'^2 + V),    sigma' = 2 ell^2 sigma w'^2/r,
+        r^2 N w'' + (2m - 2 ell^2 r V) w' + w (1 - w^2) = 0,
+
+    N = 1 - 2m/r and V = (1 - w^2)^2/(2 r^2): its Einstein tensor is then 2 ell^2 times the stress
+    tensor of the magnetic potential, diagonal with T^t_t = -(N w'^2 + V)/r^2, T^r_r =
+    (N w'^2 - V)/r^2 and T^theta_theta = T^phi_phi = V/r^2, whose trace vanishes, so the Ricci
+    scalar does. The component across the radius is the one the construction of a solution never
+    uses, and it holds by the Bianchi identity.
+
+    The isotropic chart is the areal one pulled back along r(rho) with dr/drho = r sqrt(N)/rho,
+    which is f = sigma^2 N and h = f r^2/rho^2, and the tortoise chart along r(xi) with dr/dxi =
+    sigma N, which is F = sigma^2 N, and the chart of Breitenlohner, Forgács and Maison along
+    r(tau) with dr/dtau = r sqrt(N), which is A = sigma and their N the root of this one. Each is held to the areal radius sqrt(g_theta theta), to the
+    Misner-Sharp mass r(1 - |grad r|^2)/2 = m, to the areal chart's lapse and radial part, and
+    to the same mixed Einstein components, which are scalars on the plane of the time and the
+    radius.
+
+    The check runs along the chart's own radial coordinate x: the areal radius, m, sigma, w and
+    w' are five functions of x whose derivatives the equations above give, times dr/dx."""
+    x = chart.symbols[1]
+    q = chart.reader.parameters
+    ell = q["ell"] if system == "areal" else sp.Symbol("ell", positive=True)
+    radius = x if system == "areal" else sp.Function("radius")(x)
+    m, sigma, w, dw = (sp.Function(name)(x) for name in ("mass", "lapse", "amplitude", "slope"))
+    N = 1 - 2 * m / radius
+    V = (1 - w ** 2) ** 2 / (2 * radius ** 2)
+    if system == "areal":
+        rate = sp.Integer(1)
+        named = {q["sigma"]: sigma, q["m"]: m, q["w"]: w}
+    elif system == "isotropic":
+        rate = radius * sp.sqrt(N) / x
+        named = {q["f"]: sigma ** 2 * N, q["h"]: sigma ** 2 * N * radius ** 2 / x ** 2}
+    elif system == "flow":
+        rate = radius * sp.sqrt(N)
+        named = {q["A"]: sigma, q["N"]: sp.sqrt(N), q["r"]: radius}
+    else:
+        rate = sigma * N
+        named = {q["F"]: sigma ** 2 * N, q["r"]: radius}
+    plain = sp.symbols("radius lapse amplitude slope root x", positive=True)
+    rules = {sp.Derivative(m, x): rate * ell ** 2 * (N * dw ** 2 + V),
+             sp.Derivative(sigma, x): rate * 2 * ell ** 2 * sigma * dw ** 2 / radius,
+             sp.Derivative(w, x): rate * dw,
+             sp.Derivative(dw, x): -rate * ((2 * m - 2 * ell ** 2 * radius * V) * dw + w * (1 - w ** 2)) / (radius ** 2 * N)}
+    if system != "areal":
+        rules[sp.Derivative(radius, x)] = rate
+
+    def on_shell(value):
+        # Substituting a first derivative into a higher one leaves a derivative of the rule, which
+        # doit() takes, so each pass lowers the order by one.
+        value = sp.sympify(value).subs(named, simultaneous=True).doit()
+        for _ in range(4):
+            value = value.subs(rules).doit()
+        if value.atoms(sp.Derivative):
+            raise AssertionError(f"bartnik_mckinnon/{system}: a derivative the field equations do not give")
+        # What is left is algebraic in the five functions: with sqrt(N) one positive symbol, and
+        # the mass written by it, it is a rational function, which cancel() settles.
+        value = value.subs(m, radius * (1 - plain[4] ** 2) / 2).subs(dict(zip((sigma, w, dw), plain[1:4])))
+        return sp.cancel(sp.together(value.subs(radius, plain[0]).subs(x, plain[5])))
+
+    stress = [-(N * dw ** 2 + V) / radius ** 2, (N * dw ** 2 - V) / radius ** 2, V / radius ** 2, V / radius ** 2]
+    if sp.simplify(sum(stress)) != 0:
+        raise AssertionError("bartnik_mckinnon: the stress tensor of the Yang-Mills field is not traceless")
+    g, ginv = chart.geo.g, chart.geo.ginv
+    if on_shell(g[2, 2] - radius ** 2) != 0:
+        raise AssertionError(f"bartnik_mckinnon/{system}: the areal radius is not the areal chart's")
+    if on_shell(g[0, 0] + sigma ** 2 * N) != 0:
+        raise AssertionError(f"bartnik_mckinnon/{system}: the lapse is not the areal chart's")
+    if on_shell(g[1, 1] / rate ** 2 - 1 / N) != 0:
+        raise AssertionError(f"bartnik_mckinnon/{system}: the radial part is not the areal chart's pulled back")
+    # 1 - |grad r|^2 = 2m/r, with r^2 = g_theta theta, so that no root of it is taken.
+    if on_shell(1 - ginv[1, 1] * sp.diff(g[2, 2], x) ** 2 / (4 * g[2, 2]) - 2 * m / radius) != 0:
+        raise AssertionError(f"bartnik_mckinnon/{system}: the Misner-Sharp mass is not the mass function")
+    mixed = chart.geo.raise_indices(chart.geo.einstein_ll(), 2, (0,))
+    for i in range(4):
+        for j in range(4):
+            target = 2 * ell ** 2 * stress[i] if i == j else 0
+            if on_shell(mixed[i][j] - target) != 0:
+                raise AssertionError(f"bartnik_mckinnon/{system}: G^{i}_{j} is not the Yang-Mills field's")
+    if on_shell(chart.geo.ricci_scalar()) != 0:
+        raise AssertionError(f"bartnik_mckinnon/{system}: the Ricci scalar does not vanish on a solution")
+
+
+CHARTS["bartnik_mckinnon"] = [lambda s=s: bartnik_mckinnon(s) for s in BARTNIK_MCKINNON_CHARTS]
 
 
 def write(spec):

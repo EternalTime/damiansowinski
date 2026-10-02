@@ -1172,6 +1172,22 @@ DIMENSIONS = {
     ("boson_star", "isotropic"): {
         "t": "T", "R": "L", "\\theta": "1", "\\phi": "1", "\\alpha": "1", "\\psi": "1",
     },
+    # Bartnik and McKinnon's soliton: the mass function is a length, as TOV's is, the amplitude w
+    # of the Yang-Mills field and the lapse's sigma are numbers, and ell is the one length of the
+    # theory, which stands in the field equations and in no component. The isotropic chart's f
+    # and h are numbers, and the tortoise chart's r is the areal radius as a function of xi.
+    ("bartnik_mckinnon", "areal"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\sigma": "1", "m": "L", "w": "1", "\\ell": "L",
+    },
+    ("bartnik_mckinnon", "isotropic"): {
+        "t": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "f": "1", "h": "1",
+    },
+    ("bartnik_mckinnon", "flow"): {
+        "t": "T", "\\tau": "1", "\\theta": "1", "\\phi": "1", "A": "1", "N": "1", "r": "L",
+    },
+    ("bartnik_mckinnon", "tortoise"): {
+        "t": "T", "\\xi": "L", "\\theta": "1", "\\phi": "1", "F": "1", "r": "L",
+    },
     # Einstein's cluster: the mass function is a length, as TOV's is, and here it is a name for
     # r^2 Phi'/(1 + 2r Phi'), the mass that leaves no pressure along the radius. V and sigma are
     # ratios, a speed to c and a mass to twice an isotropic radius, and chi is an angle on the

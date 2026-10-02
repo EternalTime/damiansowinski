@@ -66,6 +66,11 @@
       "id": "boson_star",
       "kind": "family",
       "text": "Another star whose stress along the radius differs from its stress across it, made of a scalar field with no particles circling [ruffini1969]."
+    },
+    {
+      "id": "bartnik_mckinnon",
+      "kind": "family",
+      "text": "Another static ball with no surface, whose stress along the radius differs from its stress across it. It is made of Yang-Mills field and is known only numerically [bartnik1988, volkov1999]."
     }
   ],
   "references": [
@@ -83,7 +88,9 @@
     "lake2006",
     "einstein1917",
     "tolman1939",
-    "ruffini1969"
+    "ruffini1969",
+    "bartnik1988",
+    "volkov1999"
   ],
   "coordinates": [
     {

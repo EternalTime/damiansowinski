@@ -2069,6 +2069,14 @@ def interior_schwarzschild(ck, src):
 EC_V, EC_R = 0.5, 3.0                    # the speed and the radius, in r_s, of the two clusters with a surface
 # The cluster with no surface is the one the spacetime diagrams declare.
 EC_CORE, EC_CORE_INPUT = nr.EC_CORE, nr.EC_CORE_INPUT
+# Bartnik and McKinnon's solitons: the first is the one the spacetime diagrams declare.
+BM_EMBEDDING_INPUT = {
+    1: nr.BM_INPUT,
+    2: ("The soliton whose Yang-Mills amplitude $w$ has two zeros, which starts as $w = 1 - br^2/\\ell^2$ with "
+        "$b = 0.6517$, found by numerical integration. Its mass is $0.9713\\,c^2\\ell/G$."),
+    3: ("The soliton whose Yang-Mills amplitude $w$ has three zeros, which starts as $w = 1 - br^2/\\ell^2$ with "
+        "$b = 0.6970$, found by numerical integration. Its mass is $0.9953\\,c^2\\ell/G$."),
+}
 
 
 def einstein_cluster(ck, src):
@@ -2168,6 +2176,61 @@ def einstein_cluster(ck, src):
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
     views.append(view("core", "No surface", "$r_s$", [surface], fig.done(),
                       settings="$r_s = 1$, the unit of every length, and $b = 2\\,r_s$.", input=EC_CORE_INPUT))
+    return views
+
+
+def bartnik_mckinnon(ck, src):
+    """Bartnik and McKinnon's solitons with one, two and three zeros of the Yang-Mills amplitude w,
+    in units of ell, as bartnik_mckinnon.py solves them and the spacetime diagrams declare the
+    first. On the slice g_rr = r/(r - 2m), so dz/dr = sqrt(2m/(r - 2m)): level at the centre,
+    where m grows as r^3, and steepest where N = 1 - 2m/r is least, 0.242 at r = 1.60 for one
+    zero, 0.035 at 1.13 for two and 0.0030 at 1.02 for three, the neck that in the limit of
+    infinitely many zeros becomes the infinite throat of the extreme Reissner-Nordstrom hole.
+    Far out m approaches the soliton's mass, and Flamm's paraboloid of that mass, from the
+    schwarzschild entry, is drawn beside each surface, set to meet it at the edge of the drawing."""
+    top = 8.0
+    size = 2 * top
+    views = []
+    for n in (1, 2, 3):
+        soliton = nr.bm_soliton.soliton(n)
+        facts = soliton.facts()
+        mass, node = facts["M"], facts["nodes"][0]
+        functions = {k: v.replace(", 1)", f", {n})") for k, v in nr.BM_AREAL.items()}
+        inner = Slice(src, "bartnik_mckinnon", "areal", "r", "\\phi", {"t": 0, **EQUATOR}, {"ell": 1}, functions=functions)
+        outer = Slice(src, "schwarzschild", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": repr(2 * mass)})
+        ball = Piece("soliton", "star", inner, 0.0, top, 0.0, 1,
+                     (("axis", "the centre $r = 0$, where the surface is level"),
+                      ("edge", "the soliton runs on to $r \\to \\infty$, where it approaches the vacuum paraboloid")),
+                     [(node, "surface", None)] + [(r, "r", None) for r in (2.0, 4.0, 6.0)] + [(top, "r", None)], size,
+                     knots=(facts["r_N_min"],))
+        vacuum = Piece("vacuum", "reference", outer, 2 * mass, top, 0.0, 1,
+                       (("throat", "the throat $r = 2GM/c^2$ of the vacuum of the same mass"), ("join", None)),
+                       [(2 * mass, "reference", None)], size, reference=True)
+        vacuum.z = vacuum.z + (ball.z[-1] - vacuum.z[-1])
+        surface = Surface([ball, vacuum])
+        name = f"Bartnik-McKinnon, {n} zero" + ("" if n == 1 else "s")
+        ck.isometry(name + ", the soliton", ball)
+        grid = np.geomspace(0.02, top, 600)
+        m = soliton.m(grid)
+        ck.add(name + ": g_rr = r/(r - 2m) with the solved mass function",
+               float(np.max(np.abs(inner.gxx_at(grid) * (1 - 2 * m / grid) - 1))), 1e-9)
+        ck.add(name + ": no horizon, 2m < r", float(np.max(2 * m / grid)), 1.0)
+        ck.add(name + ": the solved functions keep the field equations",
+               max(float(np.max(np.abs(v))) for v in soliton.residual(np.geomspace(0.01, 100, 300))), 1e-3 if n == 3 else 1e-4)
+
+        fig = figure_of([surface], {"star": "star"}, size, Camera(-90, 32))
+        ring_label(fig, [0, 0, 0], *ball.at(node), "$w = 0$", dx=10)
+        ring_label(fig, [0, 0, 0], *ball.at(6.0), "$6\\,\\ell$")
+        ring_label(fig, [0, 0, 0], *ball.at(top), "$8\\,\\ell$")
+        ring_label(fig, [0, 0, 0], *vacuum.at(2 * mass), "$2GM/c^2$", side=-1, dx=8)
+        fig.legend("fill", "star", "the soliton, which has no surface")
+        fig.legend("line", "surface", ("the circle on which $w = 0$" if n == 1
+                                       else "the innermost circle on which $w = 0$") + f", $r = {node:.2f}\\,\\ell$")
+        fig.legend("line", "r", "$r$ constant, at $2$, $4$, $6$ and $8\\,\\ell$")
+        fig.legend("line", "reference", f"the vacuum paraboloid of the same mass, down to its throat at ${2 * mass:.2f}\\,\\ell$")
+        fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+        views.append(view(f"n{n}", {1: "One zero", 2: "Two zeros", 3: "Three zeros"}[n], "$\\ell$", [surface], fig.done(),
+                          settings="$\\ell = 1$, the unit of every length.", input=BM_EMBEDDING_INPUT[n]))
     return views
 
 
@@ -10648,6 +10711,7 @@ DRAWN = {
     "tov": tov,
     "boson_star": boson_star,
     "einstein_cluster": einstein_cluster,
+    "bartnik_mckinnon": bartnik_mckinnon,
     "morris_thorne": morris_thorne,
     "ellis_bronnikov": ellis_bronnikov,
     "van_den_broeck": van_den_broeck,
@@ -10964,6 +11028,15 @@ CAPTIONS = {
         "at $dz/dr = \\sqrt{2m/(r - 2m)}$: level at the centre, where $m$ grows as $r^3$, and steepest near the "
         "edge of the core. Far out $m$ approaches $r_s/2$ and the surface approaches Flamm's paraboloid of the "
         "whole mass, drawn dashed.",
+    ],
+    ("bartnik_mckinnon", "n1"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the soliton with one zero at one moment of $t$, drawn as a surface in flat space with every distance along it the metric distance. On it $g_{rr} = r/(r - 2m)$, so the surface climbs at $dz/dr = \\sqrt{2m/(r - 2m)}$: level at the centre, where $m$ grows as $r^3$, and steepest at $r = 1.60\\,\\ell$, where $1 - 2m/r = 0.242$ and the slope is $1.77$. Far out $m$ approaches $0.8286\\,\\ell$ and the surface approaches Flamm's paraboloid of the whole mass, drawn dashed.",
+    ],
+    ("bartnik_mckinnon", "n2"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the soliton with two zeros at one moment of $t$ ($b = 0.6517$, mass $0.9713\\,c^2\\ell/G$). The neck is steeper: $1 - 2m/r$ falls to $0.035$ at $r = 1.13\\,\\ell$, where the slope is $5.2$, and $w$ vanishes at $1.10\\,\\ell$ and at $3.70\\,\\ell$.",
+    ],
+    ("bartnik_mckinnon", "n3"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the soliton with three zeros at one moment of $t$ ($b = 0.6970$, mass $0.9953\\,c^2\\ell/G$), where $1 - 2m/r$ falls to $0.0030$ at $r = 1.02\\,\\ell$ and the slope reaches $18.3$. Each further zero deepens the neck, and in the limit of infinitely many zeros it is the infinite throat of the extreme Reissner-Nordström black hole, $1 - 2m/r = (1 - \\ell/r)^2$.",
     ],
     ("tolman_vii", "star"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the star at one moment of $t$ ($R = 2\\,r_s$), drawn as a "

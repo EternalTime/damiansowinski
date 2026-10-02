@@ -1,5 +1,5 @@
 {
-  "version": "ed1c0a78328d82a8",
+  "version": "cc5a14758f3f33cd",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -20845,6 +20845,280 @@
         "eprint": "gr-qc/0410040",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/gr-qc/0410040"
+      }
+    },
+    "bartnik1988": {
+      "type": "article",
+      "fields": {
+        "title": "Particlelike Solutions of the Einstein-Yang-Mills Equations",
+        "author": "Bartnik, Robert and McKinnon, John",
+        "journal": "Physical Review Letters",
+        "volume": "61",
+        "number": "2",
+        "pages": "141--144",
+        "year": "1988",
+        "doi": "10.1103/PhysRevLett.61.141",
+        "url": "https://doi.org/10.1103/PhysRevLett.61.141"
+      }
+    },
+    "deser1976": {
+      "type": "article",
+      "fields": {
+        "title": "Absence of static solutions in source-free Yang-Mills theory",
+        "author": "Deser, Stanley",
+        "journal": "Physics Letters B",
+        "volume": "64",
+        "number": "4",
+        "pages": "463--464",
+        "year": "1976",
+        "doi": "10.1016/0370-2693(76)90122-2",
+        "url": "https://doi.org/10.1016/0370-2693(76)90122-2"
+      }
+    },
+    "coleman1977glueballs": {
+      "type": "article",
+      "fields": {
+        "title": "There are no classical glueballs",
+        "author": "Coleman, Sidney",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "55",
+        "number": "2",
+        "pages": "113--116",
+        "year": "1977",
+        "doi": "10.1007/BF01626513",
+        "url": "https://doi.org/10.1007/BF01626513"
+      }
+    },
+    "deser1984eym": {
+      "type": "article",
+      "fields": {
+        "title": "Absence of static Einstein-Yang-Mills excitations in three dimensions",
+        "author": "Deser, Stanley",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "1",
+        "number": "1",
+        "pages": "L1--L2",
+        "year": "1984",
+        "doi": "10.1088/0264-9381/1/1/001",
+        "url": "https://doi.org/10.1088/0264-9381/1/1/001"
+      }
+    },
+    "straumann1990": {
+      "type": "article",
+      "fields": {
+        "title": "Instability of the Bartnik-McKinnon solution of the Einstein-Yang-Mills equations",
+        "author": "Straumann, Norbert and Zhou, Zhi-Hong",
+        "journal": "Physics Letters B",
+        "volume": "237",
+        "number": "3-4",
+        "pages": "353--356",
+        "year": "1990",
+        "doi": "10.1016/0370-2693(90)91188-H",
+        "url": "https://doi.org/10.1016/0370-2693(90)91188-H"
+      }
+    },
+    "zhou1991": {
+      "type": "article",
+      "fields": {
+        "title": "Nonlinear perturbations of Einstein-Yang-Mills solitons and non-abelian black holes",
+        "author": "Zhou, Zhi-Hong and Straumann, Norbert",
+        "journal": "Nuclear Physics B",
+        "volume": "360",
+        "number": "1",
+        "pages": "180--196",
+        "year": "1991",
+        "doi": "10.1016/0550-3213(91)90439-5",
+        "url": "https://doi.org/10.1016/0550-3213(91)90439-5"
+      }
+    },
+    "volkov1989": {
+      "type": "article",
+      "fields": {
+        "title": "Non-Abelian Einstein-Yang-Mills black holes",
+        "author": "Volkov, M. S. and Gal'tsov, D. V.",
+        "journal": "JETP Letters",
+        "volume": "50",
+        "number": "7",
+        "pages": "346--350",
+        "year": "1989",
+        "url": "https://inspirehep.net/literature/289991"
+      }
+    },
+    "kunzle1990": {
+      "type": "article",
+      "fields": {
+        "title": "Spherically symmetric static SU(2) Einstein-Yang-Mills fields",
+        "author": "Künzle, H. P. and Masood-ul-Alam, A. K. M.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "31",
+        "number": "4",
+        "pages": "928--935",
+        "year": "1990",
+        "doi": "10.1063/1.528773",
+        "url": "https://doi.org/10.1063/1.528773"
+      }
+    },
+    "bizon1990": {
+      "type": "article",
+      "fields": {
+        "title": "Colored black holes",
+        "author": "Bizoń, Piotr",
+        "journal": "Physical Review Letters",
+        "volume": "64",
+        "number": "24",
+        "pages": "2844--2847",
+        "year": "1990",
+        "doi": "10.1103/PhysRevLett.64.2844",
+        "url": "https://doi.org/10.1103/PhysRevLett.64.2844"
+      }
+    },
+    "smoller1991": {
+      "type": "article",
+      "fields": {
+        "title": "Smooth static solutions of the Einstein/Yang-Mills equations",
+        "author": "Smoller, Joel A. and Wasserman, Arthur G. and Yau, S.-T. and McLeod, J. B.",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "143",
+        "number": "1",
+        "pages": "115--147",
+        "year": "1991",
+        "doi": "10.1007/BF02100288",
+        "url": "https://doi.org/10.1007/BF02100288"
+      }
+    },
+    "smoller1993": {
+      "type": "article",
+      "fields": {
+        "title": "Existence of infinitely-many smooth, static, global solutions of the Einstein/Yang-Mills equations",
+        "author": "Smoller, J. A. and Wasserman, A. G.",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "151",
+        "number": "2",
+        "pages": "303--325",
+        "year": "1993",
+        "doi": "10.1007/BF02096771",
+        "url": "https://doi.org/10.1007/BF02096771"
+      }
+    },
+    "breitenlohner1994": {
+      "type": "article",
+      "fields": {
+        "title": "Static spherically symmetric solutions of the Einstein-Yang-Mills equations",
+        "author": "Breitenlohner, Peter and Forgács, Peter and Maison, Dieter",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "163",
+        "number": "1",
+        "pages": "141--172",
+        "year": "1994",
+        "doi": "10.1007/BF02101738",
+        "url": "https://doi.org/10.1007/BF02101738"
+      }
+    },
+    "galtsov1991": {
+      "type": "article",
+      "fields": {
+        "title": "Sphalerons in Einstein-Yang-Mills theory",
+        "author": "Gal'tsov, D. V. and Volkov, M. S.",
+        "journal": "Physics Letters B",
+        "volume": "273",
+        "number": "3",
+        "pages": "255--259",
+        "year": "1991",
+        "doi": "10.1016/0370-2693(91)91680-T",
+        "url": "https://doi.org/10.1016/0370-2693(91)91680-T"
+      }
+    },
+    "lavrelashvili1995": {
+      "type": "article",
+      "fields": {
+        "title": "A remark on the instability of the Bartnik-McKinnon solutions",
+        "author": "Lavrelashvili, George and Maison, Dieter",
+        "journal": "Physics Letters B",
+        "volume": "343",
+        "number": "1-4",
+        "pages": "214--217",
+        "year": "1995",
+        "doi": "10.1016/0370-2693(94)01479-V",
+        "eprint": "hep-th/9409185",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0370-2693(94)01479-V"
+      }
+    },
+    "volkov1995": {
+      "type": "article",
+      "fields": {
+        "title": "The number of sphaleron instabilities of the Bartnik-McKinnon solitons and non-Abelian black holes",
+        "author": "Volkov, M. S. and Brodbeck, O. and Lavrelashvili, G. and Straumann, N.",
+        "journal": "Physics Letters B",
+        "volume": "349",
+        "number": "4",
+        "pages": "438--442",
+        "year": "1995",
+        "doi": "10.1016/0370-2693(95)00293-T",
+        "eprint": "hep-th/9502045",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0370-2693(95)00293-T"
+      }
+    },
+    "choptuik1996": {
+      "type": "article",
+      "fields": {
+        "title": "Critical Behavior in Gravitational Collapse of a Yang-Mills Field",
+        "author": "Choptuik, Matthew W. and Chmaj, Tadeusz and Bizoń, Piotr",
+        "journal": "Physical Review Letters",
+        "volume": "77",
+        "number": "3",
+        "pages": "424--427",
+        "year": "1996",
+        "doi": "10.1103/PhysRevLett.77.424",
+        "eprint": "gr-qc/9603051",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.77.424"
+      }
+    },
+    "kleihaus1998": {
+      "type": "article",
+      "fields": {
+        "title": "Static axially symmetric Einstein-Yang-Mills-dilaton solutions: Regular solutions",
+        "author": "Kleihaus, Burkhard and Kunz, Jutta",
+        "journal": "Physical Review D",
+        "volume": "57",
+        "number": "2",
+        "pages": "834--856",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.57.834",
+        "eprint": "gr-qc/9707045",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.57.834"
+      }
+    },
+    "volkov1999": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitating non-Abelian solitons and black holes with Yang-Mills fields",
+        "author": "Volkov, Mikhail S. and Gal'tsov, Dmitri V.",
+        "journal": "Physics Reports",
+        "volume": "319",
+        "number": "1-2",
+        "pages": "1--83",
+        "year": "1999",
+        "doi": "10.1016/S0370-1573(99)00010-1",
+        "eprint": "hep-th/9810070",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0370-1573(99)00010-1"
+      }
+    },
+    "oliynyk2025": {
+      "type": "article",
+      "fields": {
+        "title": "Obituary: Robert Bartnik",
+        "author": "Oliynyk, Todd and Chruściel, Piotr T. and Huisken, Gerhard and Simon, Leon",
+        "journal": "Gazette of the Australian Mathematical Society",
+        "volume": "52",
+        "number": "1",
+        "pages": "26--30",
+        "year": "2025",
+        "url": "https://austms.org.au/wp-content/uploads/2025/03/521Web-2.pdf"
       }
     }
   }

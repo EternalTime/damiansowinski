@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 109,
+  "count": 110,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -2156,6 +2156,354 @@
       ]
     },
     {
+      "id": "bartnik_mckinnon",
+      "name": "Bartnik-McKinnon Soliton",
+      "short_name": "Bartnik-McKinnon Soliton",
+      "description": "A static ball of SU(2) Yang-Mills field held together by its own gravity, with a regular centre, no horizon, and flat space far away. Neither a Yang-Mills field nor gravity makes such a ball alone. No formula is known for it: the solutions are found by numerical integration, one for each number of zeros of the field, and every one of them is unstable.",
+      "tags": [
+        "soliton",
+        "particle-like solution",
+        "Yang-Mills field",
+        "Einstein-Yang-Mills",
+        "gauge field",
+        "numerical solution",
+        "sphaleron",
+        "regular centre",
+        "no horizon",
+        "asymptotically flat",
+        "instability",
+        "critical collapse",
+        "anisotropic",
+        "mass",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "isotropic coordinates",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "rn_metric",
+          "kind": "limit",
+          "text": "The solitons' outside in the limit of infinitely many zeros. As $n \\to \\infty$ the metric beyond $r = \\ell$ tends to the extreme Reissner-Nordström black hole of a magnetic monopole, $1 - 2m/r \\to (1 - \\ell/r)^2$ [breitenlohner1994, volkov1999]."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "limit",
+          "text": "The solitons' edge in the same limit. As $n \\to \\infty$ the sphere $r = \\ell$ recedes to an infinite distance from the centre, and the metric near it tends to the product of a pseudosphere and a sphere of radius $\\ell$ [breitenlohner1994]."
+        },
+        {
+          "id": "boson_star",
+          "kind": "family",
+          "text": "The other ball of field held together by its own gravity and known only numerically, made of a massive scalar field with a turning phase. Boson stars up to the heaviest are stable, and every one of these solitons is unstable [gleiser1989, lee1989, volkov1999]."
+        },
+        {
+          "id": "tov",
+          "kind": "generalisation",
+          "text": "The static sphere with both of its functions free, $e^{2\\Phi} = \\sigma^2(1 - 2m/r)$. A star fills it with fluid; the soliton fills it with a Yang-Mills field, whose stress along the radius differs from its stress across it."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "The soliton's far field, and one of its two fates. Far from the centre the metric approaches Schwarzschild's of the soliton's mass, and a perturbed soliton either collapses to a Schwarzschild black hole or explodes [bartnik1988, zhou1991]."
+        },
+        {
+          "id": "einstein_cluster",
+          "kind": "family",
+          "text": "Another static ball with no surface, whose stress along the radius differs from its stress across it. Einstein made his of particles on circular orbits, and it can be written in closed form."
+        },
+        {
+          "id": "roberts",
+          "kind": "family",
+          "text": "Collapse at the threshold, with a scalar field. Roberts's solution looks the same at every scale, as the critical solution does on one of the two thresholds Choptuik, Chmaj, and Bizoń found for a Yang-Mills field; on the other the critical solution is the first soliton [choptuik1996]."
+        }
+      ],
+      "references": [
+        "deser1976",
+        "volkov1999",
+        "coleman1977glueballs",
+        "deser1984eym",
+        "bartnik1988",
+        "oliynyk2025",
+        "breitenlohner1994",
+        "smoller1991",
+        "smoller1993",
+        "volkov1989",
+        "kunzle1990",
+        "bizon1990",
+        "kleihaus1998",
+        "straumann1990",
+        "zhou1991",
+        "galtsov1991",
+        "lavrelashvili1995",
+        "choptuik1996",
+        "gleiser1989",
+        "lee1989"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bartnik_mckinnon.json",
+      "charts": [
+        {
+          "id": "areal",
+          "name": "Areal Radius",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "2m < r"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\sigma = \\sigma(r)",
+              "description": "Lapse function, dimensionless: a clock held at radius $r$ runs at $\\sigma\\sqrt{1 - 2m/r}$ of the rate $t$ counts. On a solution $\\partial_r\\sigma = 2\\ell^2\\sigma\\left(\\partial_r w\\right)^2/r$, and $\\sigma \\to 1$ far away fixes the constant it would otherwise carry"
+            },
+            {
+              "symbol": "m = m(r)",
+              "description": "Mass function, a length: $m = GM(r)/c^2$ with $M(r)$ the mass inside the sphere of radius $r$, and $m(0) = 0$. On a solution $\\partial_r m = \\ell^2\\left(1 - 2m/r\\right)\\left(\\partial_r w\\right)^2 + \\ell^2\\left(1 - w^2\\right)^2/(2r^2)$, the energy of the Yang-Mills field in each shell"
+            },
+            {
+              "symbol": "w = w(r)",
+              "description": "Amplitude of the Yang-Mills field, dimensionless: the SU(2) potential is purely magnetic, with $w = \\pm 1$ where there is no field and $w = 0$ in the field of a magnetic monopole. On a solution $r^2\\left(1 - 2m/r\\right)\\partial_r^2 w + \\left(2m - \\ell^2\\left(1 - w^2\\right)^2/r\\right)\\partial_r w + w\\left(1 - w^2\\right) = 0$. A solution regular at the centre and flat far away exists for one starting value $b$ in $w = 1 - br^2/\\ell^2 + \\dots$ for each number $n = 1, 2, 3, \\dots$ of zeros of $w$, and is known only numerically"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "The one length of the theory, $\\ell = \\sqrt{4\\pi G}/(gc^2)$ with $g$ the coupling constant of the Yang-Mills field, so that masses come in units of $c^2\\ell/G$. The soliton with one zero has $b = 0.4537$ and the mass $0.8286\\,c^2\\ell/G$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius. The mass function $m(r)$ and the unit $\\ell$ are lengths, the lapse function $\\sigma(r)$ and the amplitude $w(r)$ of the Yang-Mills field are dimensionless, and we leave the three functions free, since no solution is known in closed form. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\sigma^2\\left(1 - \\dfrac{2m}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{2m}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\sigma^2\\left(r - 2m\\right)}{r}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r}{r - 2m}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\sigma\\left(r\\,\\partial_r^2 m + 2\\partial_r m\\right) + 2\\left(3r\\,\\partial_r m - 2r + m\\right)\\partial_r\\sigma - 2r\\left(r - 2m\\right)\\partial_r^2\\sigma}{r^2\\,\\sigma}",
+          "kretschmann": "K = \\dfrac{\\left(2r^2\\left(r - 2m\\right)\\partial_r^2\\sigma - 6r\\left(r\\,\\partial_r m - m\\right)\\partial_r\\sigma - 2\\sigma\\left(r^2\\,\\partial_r^2 m - 2r\\,\\partial_r m + 2m\\right)\\right)^2}{r^6\\sigma^2} + \\dfrac{2\\left(2r\\left(r - 2m\\right)\\partial_r\\sigma - 2\\sigma\\left(r\\,\\partial_r m - m\\right)\\right)^2}{r^6\\sigma^2} + \\dfrac{8\\left(r\\,\\partial_r m - m\\right)^2}{r^6} + \\dfrac{16m^2}{r^6}"
+        },
+        {
+          "id": "isotropic",
+          "name": "Isotropic",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "f = f(\\rho)",
+              "description": "Dimensionless: a clock held at $\\rho$ runs at $\\sqrt{f}$ of the rate $t$ counts, and $f \\to 1$ far away. In the functions of the areal radius it is $\\sigma^2\\left(1 - 2m/r\\right)$ on the same sphere"
+            },
+            {
+              "symbol": "h = h(\\rho)",
+              "description": "Dimensionless, with $h/f$ the factor that multiplies flat space: the sphere of isotropic radius $\\rho$ has the areal radius $r = \\rho\\sqrt{h/f}$, and $h \\to 1$ far away"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\theta, \\phi)$, with $t$ carrying dimensions of time and $\\rho$ the isotropic radius, a length, in which space is conformally flat. The functions $f(\\rho)$ and $h(\\rho)$ are dimensionless and left free, the areal radius is $r = \\rho\\sqrt{h/f}$, and $d\\rho/\\rho = dr/(r\\sqrt{1 - 2m/r})$ for the mass function $m$, with $\\rho/r \\to 1$ far away. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -f\\,c^2dt^2 + \\dfrac{h}{f}\\left(d\\rho^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-f"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{h}{f}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\rho^2\\,h}{f}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\rho^2\\,h\\sin^2\\theta}{f}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\rho\\,f\\,h^2\\,\\partial_\\rho^2 f - 4\\rho\\,f^2\\,h\\,\\partial_\\rho^2 h - 3\\rho\\,h^2\\left(\\partial_\\rho f\\right)^2 + \\rho\\,f\\,h\\,\\partial_\\rho f\\,\\partial_\\rho h + 4f\\,h^2\\,\\partial_\\rho f + 3\\rho\\,f^2\\left(\\partial_\\rho h\\right)^2 - 8f^2\\,h\\,\\partial_\\rho h}{2\\rho\\,f\\,h^3}",
+          "kretschmann": "K = \\dfrac{12\\rho^2\\,f^2\\,h^4\\left(\\partial_\\rho^2 f\\right)^2 - 16\\rho^2\\,f^3\\,h^3\\,\\partial_\\rho^2 f\\,\\partial_\\rho^2 h - 16\\rho^2\\,f\\,h^4\\left(\\partial_\\rho f\\right)^2\\,\\partial_\\rho^2 f - 4\\rho^2\\,f^2\\,h^3\\,\\partial_\\rho f\\,\\partial_\\rho h\\,\\partial_\\rho^2 f + 16\\rho\\,f^2\\,h^4\\,\\partial_\\rho f\\,\\partial_\\rho^2 f + 16\\rho^2\\,f^3\\,h^2\\left(\\partial_\\rho h\\right)^2\\,\\partial_\\rho^2 f - 16\\rho\\,f^3\\,h^3\\,\\partial_\\rho h\\,\\partial_\\rho^2 f + 8\\rho^2\\,f^4\\,h^2\\left(\\partial_\\rho^2 h\\right)^2 + 16\\rho^2\\,f^2\\,h^3\\left(\\partial_\\rho f\\right)^2\\,\\partial_\\rho^2 h - 16\\rho\\,f^3\\,h^3\\,\\partial_\\rho f\\,\\partial_\\rho^2 h - 16\\rho^2\\,f^4\\,h\\left(\\partial_\\rho h\\right)^2\\,\\partial_\\rho^2 h + 16\\rho\\,f^4\\,h^2\\,\\partial_\\rho h\\,\\partial_\\rho^2 h + 11\\rho^2\\,h^4\\left(\\partial_\\rho f\\right)^4 - 8\\rho^2\\,f\\,h^3\\left(\\partial_\\rho f\\right)^3\\,\\partial_\\rho h - 32\\rho\\,f\\,h^4\\left(\\partial_\\rho f\\right)^3 - 7\\rho^2\\,f^2\\,h^2\\left(\\partial_\\rho f\\right)^2\\left(\\partial_\\rho h\\right)^2 + 48\\rho\\,f^2\\,h^3\\left(\\partial_\\rho f\\right)^2\\,\\partial_\\rho h + 32f^2\\,h^4\\left(\\partial_\\rho f\\right)^2 - 4\\rho^2\\,f^3\\,h\\,\\partial_\\rho f\\left(\\partial_\\rho h\\right)^3 - 8\\rho\\,f^3\\,h^2\\,\\partial_\\rho f\\left(\\partial_\\rho h\\right)^2 - 48f^3\\,h^3\\,\\partial_\\rho f\\,\\partial_\\rho h + 9\\rho^2\\,f^4\\left(\\partial_\\rho h\\right)^4 - 8\\rho\\,f^4\\,h\\left(\\partial_\\rho h\\right)^3 + 24f^4\\,h^2\\left(\\partial_\\rho h\\right)^2}{4\\rho^2\\,f^2\\,h^6}"
+        },
+        {
+          "id": "tortoise",
+          "name": "Tortoise",
+          "coordinates": [
+            "t",
+            "\\xi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\xi \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "F = F(\\xi)",
+              "description": "Dimensionless, the factor that multiplies the flat plane of $t$ and $\\xi$: a clock held at $\\xi$ runs at $\\sqrt{F}$ of the rate $t$ counts, and $F \\to 1$ far away. In the functions of the areal radius it is $\\sigma^2 N$ on the same sphere"
+            },
+            {
+              "symbol": "r = r(\\xi)",
+              "description": "Areal radius of the sphere at $\\xi$, a length, with $r(0) = 0$ and $\\partial_\\xi r = \\sigma N$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\xi, \\theta, \\phi)$, with $t$ carrying dimensions of time and $\\xi$ the tortoise coordinate, a length measured from the centre, with $d\\xi/dr = 1/(\\sigma N)$ for the areal radius $r$, the lapse function $\\sigma$, and $N = 1 - 2m/r$ with $m$ the mass function. The function $F(\\xi)$ is dimensionless, $r(\\xi)$ is a length, and we leave both free. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = F\\left(-c^2dt^2 + d\\xi^2\\right) + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-F"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "F"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2F^3 - 2F^2\\left(\\partial_\\xi r\\right)^2 + r^2\\left(\\partial_\\xi F\\right)^2 - 4F^2\\,r\\,\\partial_\\xi^2 r - F\\,r^2\\,\\partial_\\xi^2 F}{F^3\\,r^2}",
+          "kretschmann": "K = \\dfrac{F^2\\,r^4\\left(\\partial_\\xi^2 F\\right)^2 - 2F\\,r^4\\left(\\partial_\\xi F\\right)^2\\,\\partial_\\xi^2 F + 8F^4\\,r^2\\left(\\partial_\\xi^2 r\\right)^2 - 8F^3\\,r^2\\,\\partial_\\xi F\\,\\partial_\\xi r\\,\\partial_\\xi^2 r + r^4\\left(\\partial_\\xi F\\right)^4 + 4F^2\\,r^2\\left(\\partial_\\xi F\\right)^2\\left(\\partial_\\xi r\\right)^2 + 4F^4\\left(\\partial_\\xi r\\right)^4 - 8F^5\\left(\\partial_\\xi r\\right)^2 + 4F^6}{F^6\\,r^4}"
+        },
+        {
+          "id": "flow",
+          "name": "Breitenlohner-Forgács-Maison",
+          "coordinates": [
+            "t",
+            "\\tau",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\tau \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "A = A(\\tau)",
+              "description": "Dimensionless, with $A \\to 1$ far away: the lapse function of the areal radius, there written $\\sigma$, on the same sphere"
+            },
+            {
+              "symbol": "N = N(\\tau)",
+              "description": "Dimensionless, $N = \\sqrt{1 - 2m/r}$ with $m$ the mass function, a length: a clock held at $\\tau$ runs at $AN$ of the rate $t$ counts, and $N = 1$ at the centre and far away"
+            },
+            {
+              "symbol": "r = r(\\tau)",
+              "description": "Areal radius of the sphere at $\\tau$, a length, with $\\partial_\\tau r = rN$, so that $r$ grows as $e^\\tau$ near the centre and far away"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\tau, \\theta, \\phi)$, with $t$ carrying dimensions of time and $\\tau$ dimensionless, defined by $\\partial_\\tau r = rN$ for the areal radius $r$, so that $\\tau \\to -\\infty$ at the centre. The functions $A(\\tau)$ and $N(\\tau)$ are dimensionless, $r(\\tau)$ is a length, and we leave the three free. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -A^2N^2c^2dt^2 + r^2\\left(d\\tau^2 + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-A^2\\,N^2"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2A\\,N\\,r^2 + 2A\\,N\\left(\\partial_\\tau r\\right)^2 - 2A\\,r\\,\\partial_\\tau N\\,\\partial_\\tau r - 2N\\,r\\,\\partial_\\tau A\\,\\partial_\\tau r - 4r^2\\,\\partial_\\tau A\\,\\partial_\\tau N - 4A\\,N\\,r\\,\\partial_\\tau^2 r - 2A\\,r^2\\,\\partial_\\tau^2 N - 2N\\,r^2\\,\\partial_\\tau^2 A}{A\\,N\\,r^4}",
+          "kretschmann": "K = \\dfrac{4N^2\\,r^4\\left(\\partial_\\tau^2 A\\right)^2 + 8A\\,N\\,r^4\\,\\partial_\\tau^2 A\\,\\partial_\\tau^2 N + 16N\\,r^4\\,\\partial_\\tau A\\,\\partial_\\tau N\\,\\partial_\\tau^2 A - 8N^2\\,r^3\\,\\partial_\\tau A\\,\\partial_\\tau r\\,\\partial_\\tau^2 A - 8A\\,N\\,r^3\\,\\partial_\\tau N\\,\\partial_\\tau r\\,\\partial_\\tau^2 A + 4A^2\\,r^4\\left(\\partial_\\tau^2 N\\right)^2 + 16A\\,r^4\\,\\partial_\\tau A\\,\\partial_\\tau N\\,\\partial_\\tau^2 N - 8A\\,N\\,r^3\\,\\partial_\\tau A\\,\\partial_\\tau r\\,\\partial_\\tau^2 N - 8A^2\\,r^3\\,\\partial_\\tau N\\,\\partial_\\tau r\\,\\partial_\\tau^2 N + 8A^2\\,N^2\\,r^2\\left(\\partial_\\tau^2 r\\right)^2 - 16A^2\\,N^2\\,r\\left(\\partial_\\tau r\\right)^2\\,\\partial_\\tau^2 r + 16r^4\\left(\\partial_\\tau A\\right)^2\\left(\\partial_\\tau N\\right)^2 - 16N\\,r^3\\left(\\partial_\\tau A\\right)^2\\,\\partial_\\tau N\\,\\partial_\\tau r + 12N^2\\,r^2\\left(\\partial_\\tau A\\right)^2\\left(\\partial_\\tau r\\right)^2 - 16A\\,r^3\\,\\partial_\\tau A\\left(\\partial_\\tau N\\right)^2\\,\\partial_\\tau r + 24A\\,N\\,r^2\\,\\partial_\\tau A\\,\\partial_\\tau N\\left(\\partial_\\tau r\\right)^2 + 12A^2\\,r^2\\left(\\partial_\\tau N\\right)^2\\left(\\partial_\\tau r\\right)^2 + 12A^2\\,N^2\\left(\\partial_\\tau r\\right)^4 - 8A^2\\,N^2\\,r^2\\left(\\partial_\\tau r\\right)^2 + 4A^2\\,N^2\\,r^4}{A^2\\,N^2\\,r^8}"
+        }
+      ]
+    },
+    {
       "id": "bell_szekeres",
       "name": "Bell-Szekeres Colliding Electromagnetic Waves",
       "short_name": "Bell-Szekeres",
@@ -2704,6 +3052,11 @@
           "id": "kerr",
           "kind": "family",
           "text": "The rotating black hole has a throat of its own. James Bardeen and Gary Horowitz took the limit toward the horizon of an extreme Kerr hole in 1999 and found a vacuum solution with many of the properties of AdS$_2 \\times$ S$^2$ [bardeen1999]."
+        },
+        {
+          "id": "bartnik_mckinnon",
+          "kind": "limit_source",
+          "text": "Balls of Yang-Mills field with a regular centre, one for each number $n$ of zeros of the field. In the limit $n \\to \\infty$ the metric at the edge of their core tends to AdS$_2 \\times$ S$^2$ [breitenlohner1994]."
         }
       ],
       "references": [
@@ -2727,7 +3080,8 @@
         "melvin1964",
         "bell1974",
         "griffiths1991",
-        "romans1992"
+        "romans1992",
+        "breitenlohner1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bertotti_robinson.json",
@@ -4679,6 +5033,11 @@
           "id": "gravastar",
           "kind": "family",
           "text": "Another star with no horizon offered as a stand in for a black hole, a ball of de Sitter space under a thin shell [mazur2004]."
+        },
+        {
+          "id": "bartnik_mckinnon",
+          "kind": "family",
+          "text": "A ball of Yang-Mills field held together by its own gravity, also known only numerically. It comes as a ladder of solitons counted by the zeros of the field, and every one of them is unstable [bartnik1988, volkov1999]."
         }
       ],
       "references": [
@@ -4704,7 +5063,9 @@
         "janis1968",
         "melvin1964",
         "einstein1939",
-        "mazur2004"
+        "mazur2004",
+        "bartnik1988",
+        "volkov1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/boson_star.json",
@@ -7705,6 +8066,11 @@
           "id": "boson_star",
           "kind": "family",
           "text": "Another star whose stress along the radius differs from its stress across it, made of a scalar field with no particles circling [ruffini1969]."
+        },
+        {
+          "id": "bartnik_mckinnon",
+          "kind": "family",
+          "text": "Another static ball with no surface, whose stress along the radius differs from its stress across it. It is made of Yang-Mills field and is known only numerically [bartnik1988, volkov1999]."
         }
       ],
       "references": [
@@ -7722,7 +8088,9 @@
         "lake2006",
         "einstein1917",
         "tolman1939",
-        "ruffini1969"
+        "ruffini1969",
+        "bartnik1988",
+        "volkov1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_cluster.json",
@@ -24484,6 +24852,11 @@
           "id": "kaluza_klein_black_hole",
           "kind": "composite",
           "text": "Give every point a small circle and twist it by the potentials of equal electric and magnetic charges, and Reissner and Nordström's black hole solves the vacuum equations of five dimensions [larsen2000]."
+        },
+        {
+          "id": "bartnik_mckinnon",
+          "kind": "limit_source",
+          "text": "Balls of Yang-Mills field with a regular centre and no horizon, one for each number $n$ of zeros of the field. In the limit $n \\to \\infty$ their outside is the extreme hole, $r_q = r_s/2$, with a magnetic charge [breitenlohner1994, volkov1999]."
         }
       ],
       "references": [
@@ -24517,7 +24890,9 @@
         "chamblin1999",
         "kiselev2003",
         "visser2020",
-        "larsen2000"
+        "larsen2000",
+        "breitenlohner1994",
+        "volkov1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -25336,6 +25711,11 @@
           "id": "vaidya",
           "kind": "family",
           "text": "Anzhong Wang and Henrique de Oliveira cut Roberts's collapse along a light ray and joined it to Vaidya's outgoing radiation, which gives the black hole a finite mass [wang1997collapse]. Let the field's strength $pv/2$ be any function $\\alpha(v)$ and Roberts's metric still solves Einstein's equations, with null dust like Vaidya's flowing in beside the scalar field [roberts1996]."
+        },
+        {
+          "id": "bartnik_mckinnon",
+          "kind": "family",
+          "text": "A static soliton on a threshold of collapse. For a Yang-Mills field Choptuik, Chmaj, and Bizoń found black holes that begin at a finite mass, with the first Bartnik-McKinnon soliton as the critical solution [choptuik1996]."
         }
       ],
       "references": [
@@ -25352,7 +25732,8 @@
         "frolov1999",
         "frolov2000",
         "christodoulou1994",
-        "christodoulou1999"
+        "christodoulou1999",
+        "choptuik1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/roberts.json",
@@ -26748,6 +27129,11 @@
           "id": "boson_star",
           "kind": "generalisation",
           "text": "Schwarzschild's vacuum with a ball of scalar field in its middle, held together by its own gravity. The ball has a regular centre and no horizon, and far from it the metric is Schwarzschild's [liebling2023]."
+        },
+        {
+          "id": "bartnik_mckinnon",
+          "kind": "family",
+          "text": "A ball of Yang-Mills field with no horizon, whose far field approaches Schwarzschild's. Pushed one way it collapses to a Schwarzschild black hole, and pushed the other it explodes [bartnik1988, zhou1991]."
         }
       ],
       "references": [
@@ -26831,7 +27217,9 @@
         "neugebauer2012",
         "hawking1977",
         "gibbonshawking1979",
-        "liebling2023"
+        "liebling2023",
+        "bartnik1988",
+        "zhou1991"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -31423,6 +31811,11 @@
           "id": "boson_star",
           "kind": "family",
           "text": "A star with no equation of state: a scalar field held up by the uncertainty principle, whose stress along the radius differs from its stress across it. Its largest mass is $0.633\\,M_P^2/m$ for bosons of mass $m$, with $M_P$ the Planck mass [ruffini1969, liebling2023]."
+        },
+        {
+          "id": "bartnik_mckinnon",
+          "kind": "special_case",
+          "text": "The static sphere whose matter is a Yang-Mills field, $e^{2\\Phi} = \\sigma^2(1 - 2m/r)$. It has no surface, its stress along the radius differs from its stress across it, and its two functions are known only numerically [bartnik1988, volkov1999]."
         }
       ],
       "references": [
@@ -31458,7 +31851,9 @@
         "lake2006",
         "lattimer2001",
         "ruffini1969",
-        "liebling2023"
+        "liebling2023",
+        "bartnik1988",
+        "volkov1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tov.json",

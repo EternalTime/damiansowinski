@@ -124,6 +124,11 @@
       "id": "kaluza_klein_black_hole",
       "kind": "composite",
       "text": "Give every point a small circle and twist it by the potentials of equal electric and magnetic charges, and Reissner and Nordström's black hole solves the vacuum equations of five dimensions [larsen2000]."
+    },
+    {
+      "id": "bartnik_mckinnon",
+      "kind": "limit_source",
+      "text": "Balls of Yang-Mills field with a regular centre and no horizon, one for each number $n$ of zeros of the field. In the limit $n \\to \\infty$ their outside is the extreme hole, $r_q = r_s/2$, with a magnetic charge [breitenlohner1994, volkov1999]."
     }
   ],
   "references": [
@@ -157,7 +162,9 @@
     "chamblin1999",
     "kiselev2003",
     "visser2020",
-    "larsen2000"
+    "larsen2000",
+    "breitenlohner1994",
+    "volkov1999"
   ],
   "coordinates": [
     {
