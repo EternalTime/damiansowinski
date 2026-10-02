@@ -104,6 +104,11 @@
       "id": "reissner_nordstrom_ads",
       "kind": "generalisation",
       "text": "The charged black hole in anti-de Sitter space. At fixed charge its small and large black holes are like the liquid and the gas of a van der Waals fluid [chamblin1999]."
+    },
+    {
+      "id": "bonnor_vaidya",
+      "kind": "generalisation",
+      "text": "Reissner-Nordström with its mass and its charge carried in or out by charged light. William Bonnor and Prahlad Vaidya made both functions of a null time in 1970, and with both held constant their metric is Reissner-Nordström's [bonnor1970]."
     }
   ],
   "references": [

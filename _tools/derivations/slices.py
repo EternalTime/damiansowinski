@@ -456,6 +456,12 @@ def simpson_visser(chart, case):
     return marks
 
 
+# Bonnor and Vaidya's charged shell, in units of its mass M: its charge, the value of Reissner-Nordstrom's
+# drawings, r_q = 0.48 r_s, and the roots r_+ and r_- of 1 - 2M/r + q^2/r^2.
+BV_Q = 0.96
+BV_RP, BV_RM = 1.28, 0.72
+
+
 ROBERTS_P = {"disperses": 0.9, "threshold": 1.0, "collapses": 2.0}     # p of each of the Roberts solution's outcomes
 
 
@@ -1696,6 +1702,9 @@ FLAT = {
     ("c_metric", "hong_teo", "inner"): lambda: _c_metric(True),
     ("vaidya", "eddington_finkelstein_ingoing", "shell"): lambda: one(
         "vaidya", lambda m: [[(m.time + r, r) for r in m.reach("eddington_finkelstein_ingoing", "r")]]),
+    # The same slices of Bonnor and Vaidya's charged shell.
+    ("bonnor_vaidya", "eddington_finkelstein_ingoing", "shell"): lambda: one(
+        "bonnor_vaidya", lambda m: [[(m.time + r, r) for r in m.reach("eddington_finkelstein_ingoing", "r")]]),
 }
 FLAT_METRICS = {key[0] for key in FLAT}
 
@@ -1732,6 +1741,9 @@ HIDDEN = {
     ("point_particle_2plus1", "moving", "wedge"): "the particle in motion, whose moment of the frame's t is not the moment of its rest frame that is embedded",
     ("tolman_bondi", "comoving_synchronous", "collapse"): "the marginally bound cloud, E = 0, whose moments are planes; the cloud embedded is released from rest",
     ("vaidya", "eddington_finkelstein_outgoing", "shell"): "the exploding shell, the time reverse of the imploding shell embedded",
+    ("bonnor_vaidya", "eddington_finkelstein_outgoing", "shell"): "the leaving shell, the time reverse of the falling shell embedded",
+    ("bonnor_vaidya", "leaving"): "the leaving shell, the time reverse of the falling shell embedded",
+    ("bonnor_vaidya", "homothetic", "scaling"): "the collapse of a mass and a charge that grow with the advanced time, another spacetime than the shell embedded",
     **{("curzon_chazy", system, "axis"): "the axis, which the embedded plane z = 0 meets only at rho = 0, inside where the embedding stops"
        for system in ("weyl", "spherical")},
     **{("curzon_chazy", f"{system}_axis"): "the axis, which the embedded plane z = 0 meets only at rho = 0, inside where the embedding stops"

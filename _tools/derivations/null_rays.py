@@ -812,6 +812,16 @@ SV_CASES = {"bounce": ("$a = r_s/2$", "1/2"), "null": ("$a = r_s$", "1"), "wormh
 # (r - 6m/7)(r - 12m/7)(r + 4m/7): the horizons are r_- = 6m/7 and r_+ = 12m/7, with surface
 # gravities -5/(12m) and 1/(6m). The extremal hole has ell = 4m/(3 sqrt 3) = 0.770 m.
 HAYWARD = {"m": 1, "ell": "12/(7*sqrt(7))"}
+# Bonnor and Vaidya's charged shell: its charge in units of its mass M, the value of Reissner-Nordstrom's
+# drawings, r_q = 0.48 r_s, and the radius q^2/2M at which the shell's energy density changes sign.
+BV_CHARGE = "Rational(24, 25)"
+BV_TURN = "288/625"
+BV_INPUT = {
+    "ingoing": "$m(v) = 0$ and $q(v) = 0$ for $v < 0$, and $m = M$ and $q = 0.96\\,M$ for $v > 0$: a shell of "
+               "charged null dust of mass $M$ falling in along $v = 0$.",
+    "outgoing": "$m(u) = M$ and $q(u) = 0.96\\,M$ for $u < 0$, and $m = 0$ and $q = 0$ for $u > 0$: a shell of "
+                "charged null dust carrying off the whole mass $M$ and the whole charge along $u = 0$.",
+}
 # The same length with the mass a function of advanced time, in units of its greatest value m_0:
 # it grows as sin^2 from v = 0 to 2, stays m_0 until v = 4 and falls as cos^2 to zero at v = 8.
 # Trapped spheres exist while m > m_* = 3 sqrt(3) ell/4 = 0.842 m_0, from v = 1.479 to 5.042.
@@ -2083,6 +2093,37 @@ DIAGRAMS = [
             marked=(("event", "-1/1000", 0, "the white hole's horizon"),), singular_runs=True,
             input="$m(u) = M$ for $u < 0$ and $0$ for $u > 0$, with $r_s = 2GM/c^2$: a shell of null "
                   "dust carrying off the whole mass $M$ along $u = 0$."),
+    # Bonnor and Vaidya's charged shell, as the conformal diagram declares it: a shell of charged
+    # null dust of mass M and charge q = 24M/25 falls in along v = 0, flat inside and
+    # Reissner-Nordstrom's metric outside, with r_+ = 1.28 M and r_- = 0.72 M. The shell's energy
+    # density changes sign at r = q^2/2M, which the row marks. The outgoing chart draws its time
+    # reverse. Inside r = sqrt(M^2 + q^2) - M the slices of constant v - r are timelike, so the
+    # cones are oriented by the family that keeps the null time. On the shell itself both steps take
+    # the flat side's value: with sympy's own 1/2 there, q^2 would be a quarter where m is a half.
+    Diagram("bonnor_vaidya", "eddington_finkelstein_ingoing", "shell", "a charged shell falling in", ("v", "r"),
+            (0, 4, -4, 2), "$r/M$", "$(v - r)/M$", {}, EQUATOR, to_display=FINKELSTEIN_IN,
+            tau="v - r", orient="ingoing", areal=True, functions={"m": "Heaviside(v, 0)", "q": BV_CHARGE + "*Heaviside(v, 0)"},
+            lines=(("shell", "x0", "0", "the shell, $v = 0$"),),
+            points=(("mark", ("0", BV_TURN), "the sphere $r = q^2/2m$, where the energy density of the shell "
+                                             "changes sign"),),
+            marked=(("event", "1/1000", 1, "the event horizon"),), singular_runs=True, input=BV_INPUT["ingoing"]),
+    Diagram("bonnor_vaidya", "eddington_finkelstein_outgoing", "shell", "a charged shell leaving", ("u", "r"),
+            (0, 4, -2, 4), "$r/M$", "$(u + r)/M$", {}, EQUATOR, to_display=FINKELSTEIN_OUT,
+            tau="u + r", orient="outgoing", areal=True, functions={"m": "Heaviside(-u, 0)", "q": BV_CHARGE + "*Heaviside(-u, 0)"},
+            lines=(("shell", "x0", "0", "the shell, $u = 0$"),),
+            points=(("mark", ("0", BV_TURN), "the sphere $r = q^2/2m$, where the energy density of the shell "
+                                             "changes sign"),),
+            marked=(("event", "-1/1000", 0, "the white hole's horizon"),), singular_runs=True,
+            input=BV_INPUT["outgoing"]),
+    # The homothetic collapse, m = mu v and q = (Q/M) mu v, in the chart that makes it static up to a
+    # conformal factor: at Q = 24M/25 and mu = 1/20 the three rays that keep their R stand at
+    # R = 0.67 M, 1.83 M and 7.50 M, the zeros of the published g^RR, and the dust's density changes
+    # sign on R = Q^2/M.
+    Diagram("bonnor_vaidya", "homothetic", "scaling", "the same at every scale", ("V", "R"), (0, 9, -4, 5),
+            "$R/M$", "$V/M$", {"M": 1, "Q": BV_CHARGE, "mu": "1/20"}, EQUATOR, orient="ingoing", areal=True,
+            lines=(("shell", "r", "576/625", "the sphere $R = Q^2/M$, where the energy density of the dust changes "
+                                             "sign"),),
+            input="$Q = 0.96\\,M$ and $\\mu = 1/20$: the mass grows as $m = v/20$ and the charge as $q = 0.96\\,m$."),
     # Robinson and Trautman's fronts, prolate at u = 0 and round by u = 3m, on the axis and on
     # the equator of the axisymmetric chart: the fronts are even about the equator, so d_theta H
     # vanishes on both and Gamma^theta_uu with it, and the null curves of each plane are null
@@ -5206,6 +5247,43 @@ CAPTIONS = {
         "horizon is the ingoing ray that stays at $r_s$ until the shell leaves and then crosses flat "
         "space to the centre, arriving at $cu = 2r_s$. Every ingoing ray that reaches the centre "
         "before that moment came out of the white hole, and every one after came in from far away.",
+    ],
+    ("bonnor_vaidya", "eddington_finkelstein_ingoing", "shell"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn with $v - r$ as the vertical axis so "
+        "that the ingoing rays, $v$ constant, run at 45°. A shell of charged null dust of mass $M$ and charge "
+        "$q = 0.96\\,M$ falls in along $v = 0$: before it the metric is flat, and after it the metric is "
+        "Reissner-Nordström's in ingoing coordinates, with $g^{rr} = 1 - 2M/r + q^2/r^2$ vanishing on "
+        "$r_+ = 1.28\\,M$ and $r_- = 0.72\\,M$. The event horizon is the outgoing ray that reaches $r_+$ just as "
+        "the shell does. It leaves the centre at $v = -2.56\\,M$ and crosses flat space.",
+        "Between $r_+$ and $r_-$ every future cone points to smaller $r$, and inside $r_-$ the cones open "
+        "again, so the outgoing rays there climb toward $r_-$ and $r = 0$, where the Kretschmann scalar "
+        "diverges, is a timelike line. Across the shell $G_{vv}$ jumps by $2(Mr - q^2/2)/r^3$ times a delta "
+        "function of $v$, so the energy density of the dust is positive outside the marked sphere "
+        "$r = q^2/2M = 0.46\\,M$ and negative inside it. Amos Ori showed in 1991 that the Lorentz force turns "
+        "the charged dust round on that sphere, and the stretch of the shell below the mark is drawn as the "
+        "metric stands.",
+    ],
+    ("bonnor_vaidya", "eddington_finkelstein_outgoing", "shell"): [
+        "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn with $u + r$ as the vertical axis so "
+        "that the outgoing rays, $u$ constant, run at 45°. It is the falling shell run backward in time, in "
+        "Bonnor and Vaidya's own coordinates: a shell of charged null dust carries the whole mass $M$ and the "
+        "whole charge $q = 0.96\\,M$ out along $u = 0$, with Reissner-Nordström's metric in outgoing "
+        "coordinates before it passes and flat space after.",
+        "Before the shell, the region between $r_- = 0.72\\,M$ and $r_+ = 1.28\\,M$ is a white hole, where every "
+        "future cone points to larger $r$. Its horizon is the ingoing ray that stays at $r_+$ until the shell "
+        "leaves and then crosses flat space to the centre, arriving at $u = 2.56\\,M$. The energy density of "
+        "the shell is positive outside the marked sphere $r = q^2/2M = 0.46\\,M$ and negative inside it.",
+    ],
+    ("bonnor_vaidya", "homothetic", "scaling"): [
+        "The plane of $V$ and $R$ ($\\theta = \\pi/2$, $\\phi = 0$) for a mass and a charge that grow in proportion "
+        "to the advanced time, $m = \\mu v$ and $q = Qm/M$. A line of constant $R$ is a sphere whose areal radius "
+        "grows with the mass, $r = Rm/M$, and a step up in $V$ multiplies every length by one factor, so the cones "
+        "depend on $R$ alone. The ingoing rays are level, $V$ constant.",
+        "The component $g^{RR}$ vanishes on $R = 0.67\\,M$, $1.83\\,M$, and $7.50\\,M$, and on each of those lines an "
+        "outgoing ray keeps its $R$: all three come out of the point $v = 0$, $r = 0$, where the collapse begins. "
+        "The marginally trapped spheres, $r^2 - 2mr + q^2 = 0$, are $R = 0.72\\,M$ and $1.28\\,M$, and the "
+        "Kretschmann scalar diverges on $R = 0$. The energy density of the dust is positive outside the marked "
+        "sphere $R = Q^2/M = 0.92\\,M$ and negative inside it.",
     ],
     ("robinson_trautman", "axisymmetric", "axis"): [
         "The plane of $u$ and $r$ on the axis of symmetry ($\\theta = 0$), drawn with $cu + r$ as "
@@ -8514,6 +8592,30 @@ CLOSED_FORMS.update({
         (lambda t, r: t + ht_star(r, -0.5), lambda t, r: t - ht_star(r, -0.5), None),
     ("hartle_thorne", "painleve_gullstrand", "axis"): (lambda t, r: t + pg_in(r), lambda t, r: t - pg_out(r), None),
     ("hartle_thorne", "painleve_gullstrand", "equator"): (lambda t, r: t + pg_in(r), lambda t, r: t - pg_out(r), None),
+})
+
+
+def _bv_rstar(r):
+    """Reissner-Nordstrom's tortoise coordinate at M = 1 and q = 24/25, r_+ = 32/25 and r_- = 18/25:
+    r_* = r + (r_+^2 ln|r/r_+ - 1| - r_-^2 ln|r/r_- - 1|)/(r_+ - r_-)."""
+    rp, rm = 1.28, 0.72
+    return r + (rp ** 2 * np.log(np.abs(r / rp - 1)) - rm ** 2 * np.log(np.abs(r / rm - 1))) / (rp - rm)
+
+
+def _bv_away(side):
+    """Off the shell on the side where the metric is Reissner-Nordstrom's, and off both horizons and r = 0."""
+    return lambda w, r: (side * w > 0.02) & (np.abs(r - 1.28) > 0.05) & (np.abs(r - 0.72) > 0.05) & (r > 0.05)
+
+
+# Bonnor and Vaidya's charged shell: on the Reissner-Nordstrom side an ingoing ray keeps v and an
+# outgoing one v - 2 r_*, and in the outgoing chart u + 2 r_* and u.
+CLOSED_FORMS.update({
+    ("bonnor_vaidya", "eddington_finkelstein_ingoing", "shell"):
+        (lambda v, r: v, lambda v, r: v - 2 * _bv_rstar(r), _bv_away(1)),
+    ("bonnor_vaidya", "eddington_finkelstein_outgoing", "shell"):
+        (lambda u, r: u + 2 * _bv_rstar(r), lambda u, r: u, _bv_away(-1)),
+    # In the homothetic chart an ingoing ray keeps V.
+    ("bonnor_vaidya", "homothetic", "scaling"): (lambda V, R: V, None, None),
 })
 
 

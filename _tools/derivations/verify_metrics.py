@@ -1056,6 +1056,18 @@ DIMENSIONS = {
         "v": "T", "r": "L", "\\theta": "1", "\\phi": "1",
         "G": "L**3/(M*T**2)", "m": "M",
     },
+    # Bonnor and Vaidya's charged radiating star: the null time, the mass m and the charge q are
+    # lengths, m = GM/c^2 and q^2 = GQ^2/(4 pi epsilon_0 c^4), so that r_s = 2m and r_q = q.
+    ("bonnor_vaidya", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "q": "L",
+    },
+    ("bonnor_vaidya", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "q": "L",
+    },
+    # The homothetic chart: V and R are lengths, as the scales M and Q are, and the rate mu a number.
+    ("bonnor_vaidya", "homothetic"): {
+        "V": "L", "R": "L", "\\theta": "1", "\\phi": "1", "M": "L", "Q": "L", "\\mu": "1",
+    },
     # Hartle and Thorne's exterior: the mass and the spin per unit mass are lengths and the
     # quadrupole moment per unit mass an area, so that Kerr's value is q = a^2. R, the star's
     # radius, enters the domain alone, and the rest are names for the functions of r and theta the

@@ -8210,6 +8210,308 @@ def vaidya(ck, src):
     return [v]
 
 
+# ---------------------------------------------------------------- Bonnor-Vaidya
+
+def bonnor_vaidya(ck, src):
+    """Bonnor and Vaidya's charged shell, m = q = 0 for v < 0 and m = M = 1, q = 24/25 for v > 0,
+    in three diagrams.
+
+    The shell as the ingoing metric stands. Outside the shell the metric is Reissner-Nordstrom's,
+    a Tower of the roots r_+ = 32/25 and r_- = 18/25 of the published g^rr, and the ingoing
+    chart covers its exterior I, the region II between the horizons and the region III' inside
+    r_-, with q = arctan e^(k v) throughout. Inside the shell space is flat with u = v - 2r, and
+    each outgoing ray keeps the p it has where it crosses the shell, at r = -u/2: p = F(u). With
+    q = F(v) - pi/2 the centre u = v is the straight line q - p = -pi/2, on which Reissner-
+    Nordstrom's singularity r = 0 also lies, and the two sides agree on the shell, where
+    F(0) - pi/2 = pi/4. Every p is moved by pi/2, so that the line is X = 0.
+
+    The leaving shell is the same drawing turned over in time, (p, q) -> (-q, -p), the outgoing
+    chart with m and q falling to zero at u = 0.
+
+    Ori's reading. The shell's energy density, the jump of G_vv, is 2(Mr - q^2/2)/r^3 and
+    vanishes at r_b = q^2/2M, inside r_-, where the published g^rr is 1 on both sides. There the
+    shell turns round and leaves along the outgoing ray u_s through that event, with flat space
+    still inside it: the flat region is v < 0 together with u > u_b = -2 r_b. The ray runs through
+    III', through the next region between the horizons and out through r_+ into the next
+    exterior, cells of the same Tower reflected, which the outgoing chart covers with the
+    cell's own time -u - r_*. Flat space inside the leaving shell takes its q from the shell,
+    q = Q(v) with r = (v - u_b)/2 there, and p = Q(u) + pi/2 for u > 0, which keeps the centre
+    straight."""
+    name = "Bonnor-Vaidya"
+    charge = {"m": "1", "q": "Rational(24, 25)"}
+    none = {"m": "0", "q": "0"}
+    IN, OUT = "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing"
+    hole = Plane(src, "bonnor_vaidya", IN, ("v", "r"), EQUATOR, {}, functions=charge)
+    flat = Plane(src, "bonnor_vaidya", IN, ("v", "r"), EQUATOR, {}, functions=none)
+    hole_out = Plane(src, "bonnor_vaidya", OUT, ("u", "r"), EQUATOR, {}, functions=charge)
+    flat_out = Plane(src, "bonnor_vaidya", OUT, ("u", "r"), EQUATOR, {}, functions=none)
+    roots = sorted(sp.solve(sp.numer(sp.together(hole.gi[1, 1])), hole.x1), reverse=True)
+    T = Tower(-hole.g[0, 0], hole.x1, roots)
+    rp, rm = T.rf
+    ck.limit(f"{name}: the horizons are the roots of the published g^rr", [rp, rm], [slices.BV_RP, slices.BV_RM], 1e-12)
+    rb = slices.BV_Q ** 2 / 2
+    ub = -2 * rb
+    S = HALF
+
+    def cells(w, r, table):
+        w, r = np.broadcast_arrays(np.asarray(w, dtype=float), np.asarray(r, dtype=float))
+        rs = T.rstar(r)
+        p, q = np.full(w.shape, np.nan), np.full(w.shape, np.nan)
+        for mask, c, t, up in table(w, r, rs):
+            if mask.any():
+                p[mask], q[mask] = reflect(*T.pq(c, t[mask], r[mask]), up)
+        return p - S, q
+
+    def ingoing(w, r):
+        """The ingoing chart of the charged side: I, II and III'."""
+        return cells(w, r, lambda w, r, rs: ((r > rp, "I", w - rs, False), ((r < rp) & (r > rm), "II", w - rs, False),
+                                             (r < rm, "III'", rs - w, False)))
+
+    def leaving(w, r):
+        """The outgoing chart of the charged side beyond the bounce: III', and the next region
+        between the horizons and the next exterior, reflected."""
+        return cells(w, r, lambda w, r, rs: ((r > rp, "I", -w - rs, True), ((r < rp) & (r > rm), "II", -w - rs, True),
+                                             (r < rm, "III'", -w - rs, False)))
+
+    def F(u):
+        """p of the outgoing ray that crosses the falling shell at r = -u/2, before the move by pi/2."""
+        u = np.asarray(u, dtype=float)
+        return ingoing(np.zeros_like(u), -u / 2)[0] + S
+
+    def inside(w, r):
+        """Flat space before the shell, v < 0."""
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        return F(w - 2 * r) - S, F(w) - HALF
+
+    pb = float(F(ub))
+    us = -math.log(math.tan(PI - pb)) / T.kp        # the leaving shell's u in the outgoing chart
+
+    def Q(w):
+        """q of the ingoing ray v = w > 0 of the flat space inside the leaving shell, which it meets at
+        r = (w - u_b)/2."""
+        w = np.asarray(w, dtype=float)
+        return leaving(np.full(w.shape, us), (w - ub) / 2)[1]
+
+    def P(u):
+        u = np.asarray(u, dtype=float)
+        with np.errstate(invalid="ignore"):
+            return np.where(u < 0, F(np.minimum(u, -1e-300)), Q(np.maximum(u, 0.0)) + HALF)
+
+    def within(w, r):
+        """Flat space inside the leaving shell, v > 0 and u > u_b."""
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        return P(w - 2 * r) - S, Q(w)
+
+    def turned(fmap):
+        """A map of the ingoing chart turned over in time, for the outgoing chart."""
+        def out(w, r):
+            p, q = fmap(-np.asarray(w, dtype=float), r)
+            return -q, -p
+        return out
+
+    span = 12
+    for part, lo, hi in (("outside r+", rp + 1e-3, 30), ("between the horizons", rm + 1e-3, rp - 1e-3),
+                         ("inside r-", 1e-3, rm - 1e-3)):
+        ck.chart(f"{name} ingoing, after the shell, {part}", hole, ingoing, ck.uniform(0.01, span), ck.uniform(lo, hi),
+                 lambda w, r: (1, -60))
+        ck.chart(f"{name} outgoing, before the shell, {part}", hole_out, turned(ingoing), ck.uniform(-span, -0.01),
+                 ck.uniform(lo, hi), lambda w, r: (1, 60))
+        ck.chart(f"{name} outgoing, beyond the bounce, {part}", hole_out, leaving, ck.uniform(-span, span),
+                 ck.uniform(lo, hi), lambda w, r: (1, 60))
+    ck.chart(f"{name} ingoing, flat before the shell", flat, inside, ck.uniform(-span, -0.01), ck.uniform(0.01, 20),
+             lambda w, r: (1, -60))
+    ck.chart(f"{name} outgoing, flat after the shell", flat_out, turned(inside), ck.uniform(0.01, span),
+             ck.uniform(0.01, 20), lambda w, r: (1, 60))
+    ck.chart(f"{name}, flat inside the leaving shell", flat, within, ck.uniform(0.5, span), ck.uniform(0.01, 0.4),
+             lambda w, r: (1, -60))
+    r = np.concatenate([ck.uniform(1e-3, rm - 1e-3, 60), ck.uniform(rm + 1e-3, rp - 1e-3, 60), ck.uniform(rp + 1e-3, 12, 80)])
+    ck.limit(f"{name}: the two sides put the falling shell v = 0 at one place", inside(np.zeros_like(r), r),
+             ingoing(np.zeros_like(r), r), 1e-9)
+    ck.limit(f"{name}: flat space and the charged side put the leaving shell at one place",
+             within(2 * r + ub, r), leaving(np.full_like(r, us), r), 1e-9)
+    ck.limit(f"{name}: the leaving shell starts where the falling shell has r = q^2/2M",
+             leaving(us, rb), ingoing(0.0, rb), 1e-9)
+    ck.limit(f"{name}: the published g^rr is 1 on the charged side at r = q^2/2M", hole.metric(0.5, rb)[5], [1.0], 1e-12)
+    w = np.array([-9.0, -3.0, -0.5, 0.5, 3.0, 9.0])
+    ck.limit(f"{name}: the centre is the straight line X = 0, before the shell and inside the leaving shell",
+             np.array(xt(*np.where(w < 0, inside(np.minimum(w, -1e-9), 0.0), within(np.maximum(w, 1e-9), 0.0))))[0], np.zeros(6), 1e-9)
+    ck.limit(f"{name}: r -> 0 after the shell lands on X = 0", xt(*ingoing(np.array([0.5, 2.0, 6.0]), np.full(3, 1e-12)))[0],
+             np.zeros(3), 1e-9)
+    ck.limit(f"{name}: the event horizon reaches the centre at v = -2r_+", F(-2 * rp + np.array([-1e-9, 1e-9])), [0, 0], 1e-6)
+    for way, fmap in (("ingoing", ingoing), ("leaving", leaving)):
+        for root, text, off, tol in ((rp, "r+", 1e-9, 1e-6), (rm, "r-", 1e-12, 1e-3)):
+            ck.limit(f"{name} {way}: the map is continuous across {text}",
+                     fmap(np.array([0.3, 2.5]), np.full(2, root + off)), fmap(np.array([0.3, 2.5]), np.full(2, root - off)), tol)
+    ck.diverges(f"{name}: the Kretschmann scalar diverges at r = 0 after the shell",
+                hole.kretschmann(1, 1e-2), hole.kretschmann(1, 1e-3))
+    ck.finite(f"{name}: r = 0 before the shell is a regular centre", flat.kretschmann(ck.uniform(-9, -1, 20), np.full(20, 1e-6)))
+
+    # Corners, as (p, q) after the move by pi/2.
+    iminus, izero, iplus = (-PI, -PI), (-PI, HALF), (-HALF, HALF)
+    on_shell, hit, end = (-PI, Q4), (Q4, Q4), (HALF, HALF)
+    bounce = (pb - S, Q4)
+    radii = {"I": (1.6, 2.5, 5.0), "II": (0.85, 1.0, 1.15), "III": (0.3, 0.5)}
+    w_after = spread(0, np.inf, 700, 12)
+    w_before = -spread(0, np.inf, 700, 12)[::-1]
+
+    def falling(v, mirror, upto=None):
+        """What both of the first two views draw: flat space before the shell and the charged side
+        after it, through `mirror`, the identity or the turn in time; with `upto`, only what lies
+        before the leaving shell, p < upto."""
+        def draw(cls, p, q):
+            if upto is not None:
+                p = np.where(p > upto + 1e-9, np.nan, p)
+            v.curve(cls, *mirror(p, q))
+        for r in (0.5, 1, 2, 4):
+            draw("r2", *inside(w_before, np.full_like(w_before, r)))
+        for tt in (-8, -4, -2, -1):
+            rr = np.linspace(0, -tt, 400)
+            draw("t2", *inside(tt + rr, rr))
+        for r in radii["I"] + radii["II"] + radii["III"]:
+            draw("r", *ingoing(w_after, np.full_like(w_after, r)))
+
+    def seg(v, cls, a, b, mirror, zig=False):
+        v.segment(cls, mirror(*a), mirror(*b), zig)
+
+    def same(p, q):
+        return p, q
+
+    def over(p, q):
+        return -np.asarray(q, dtype=float), -np.asarray(p, dtype=float)
+
+    def corner(v, pq, text, anchor, dx, dy):
+        v.point("infinity", pq)
+        v.label(pq, text, anchor, dx=dx, dy=dy)
+
+    listed_r = "$0.3$, $0.5$, $0.85$, $1$, $1.15$, $1.6$, $2.5$ and $5\\,M$"
+    settings = ("$M = 1$, the unit of every length, and $q = 0.96\\,M$, so that $r_+ = 1.28\\,M$, $r_- = 0.72\\,M$, and "
+                "$q^2/2M = 0.46\\,M$.")
+    views = []
+    for vid, label, system, mirror in (("shell", "Falling charged shell", IN, same), ("leaving", "Leaving charged shell", OUT, over)):
+        up = mirror is same
+        box = [-0.35, 3 * HALF + 0.35, -2 * PI - 0.25, PI + 0.3] if up else [-0.35, 3 * HALF + 0.35, -PI - 0.3, 2 * PI + 0.25]
+        v = View(vid, label, box, system)
+        charged = [on_shell, hit, end, iplus, izero]
+        before = [iminus, hit, on_shell]
+        v.fill("region", [point(*mirror(*c)) for c in charged])
+        v.fill("region", [point(*mirror(*c)) for c in before])
+        v.fill("cover", [point(*mirror(*c)) for c in charged])
+        v.fill("cover2", [point(*mirror(*c)) for c in before])
+        falling(v, mirror)
+        seg(v, "surface", on_shell, hit, mirror)
+        seg(v, "event", (-HALF, -HALF), iplus, mirror)
+        seg(v, "horizon", (0, Q4), (0, HALF), mirror)
+        seg(v, "horizon", iplus, end, mirror)
+        seg(v, "centre", iminus, hit, mirror)
+        seg(v, "singular", hit, end, mirror, zig=True)
+        seg(v, "scri", iplus, izero, mirror)
+        seg(v, "scri", izero, iminus, mirror)
+        v.point("mark", mirror(*bounce))
+        names = ("$i^-$", "$i^0$", "$i^+$") if up else ("$i^+$", "$i^0$", "$i^-$")
+        corner(v, mirror(*iminus), names[0], "t" if up else "b", 0, 6 if up else -6)
+        corner(v, mirror(*izero), names[1], "l", 6, 0)
+        corner(v, mirror(*iplus), names[2], "bl" if up else "tl", 4, -3 if up else 3)
+        scri = ("$\\mathscr{I}^+$", "$\\mathscr{I}^-$") if up else ("$\\mathscr{I}^-$", "$\\mathscr{I}^+$")
+        v.label(mirror(-3 * Q4, HALF), scri[0], "bl" if up else "tl", dx=4, dy=-3 if up else 3)
+        v.label(mirror(-PI, -Q4), scri[1], "tl" if up else "bl", dx=5, dy=3 if up else -3)
+        v.label(mirror(-HALF - 0.5, Q4), "the shell, $v = 0$" if up else "the shell, $u = 0$", "bl" if up else "tl", "small",
+                dx=4, dy=-3 if up else 3)
+        v.label(mirror(*bounce), "$r = q^2/2M$", "l", "small", dx=7)
+        v.legend("cover", "after the shell, $m = M$ and $q = 0.96\\,M$: Reissner-Nordström" if up else
+                 "before the shell, $m = M$ and $q = 0.96\\,M$: Reissner-Nordström")
+        v.legend("cover2", "before the shell, $m = q = 0$: flat" if up else "after the shell, $m = q = 0$: flat")
+        v.legend("surface", "the shell $v = 0$, a light ray" if up else "the shell $u = 0$, a light ray")
+        v.legend("mark", "the sphere $r = q^2/2M$ on the shell, where its energy density changes sign")
+        v.legend("r", f"$r$ constant on the charged side: {listed_r}")
+        v.legend("r2", "$r$ constant on the flat side: $0.5$, $1$, $2$ and $4\\,M$")
+        v.legend("t2", "$v - r$ constant on the flat side" if up else "$u + r$ constant on the flat side")
+        v.legend("event", "the event horizon, from the centre at $v = -2r_+$ to $i^+$" if up else
+                 "the white hole's horizon, from $i^-$ to the centre at $u = 2r_+$")
+        v.legend("horizon", "$r = r_-$: the marginally trapped spheres and, where $v \\to \\infty$, the Cauchy horizon" if up
+                 else "$r = r_-$: the marginally trapped spheres and, where $u \\to -\\infty$, the edge of the chart")
+        v.legend("singular", "$r = 0$ on the charged side, a timelike singularity, where the Kretschmann scalar diverges")
+        v.legend("centre", "$r = 0$ on the flat side, a regular centre")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        v.set(settings=settings, input=nr.BV_INPUT["ingoing" if up else "outgoing"])
+        views.append(v)
+
+    # Ori's reading: the shell turns at r_b and leaves along u_s.
+    v = View("bounce", "The shell turned back", [-0.35, 3 * HALF + 0.35, -2 * PI - 0.25, 3 * PI + 0.3])
+    top, last, next_zero, next_minus = (3 * HALF, 3 * HALF), (pb - S, 3 * HALF), (0, 3 * HALF), (0, PI)
+    left_end = (0, PI)
+    flat_region = [iminus, bounce, last, top]
+    charged = [on_shell, bounce, last, next_zero, next_minus, iplus, izero]
+    for cls in ("region", "cover"):
+        v.fill(cls, [point(*c) for c in charged])
+    v.fill("region", [point(*c) for c in flat_region])
+    v.fill("cover2", [point(*c) for c in flat_region])
+    falling(v, same, upto=pb - S)
+    u_all = spread(-np.inf, np.inf, 900, 12)
+    for r in radii["I"] + radii["II"] + radii["III"]:
+        p, q = leaving(u_all, np.full_like(u_all, r))
+        v.curve("r", np.where((p > pb - S + 1e-9) | (r < rm), np.nan, p), q)
+        # Inside r_- on the other side of the charged region, the cell III, with its own singularity.
+        if r < rm:
+            p, q = T.pq("III", u_all, np.full_like(u_all, r))
+            v.curve("r", p - S, q)
+    for r in (0.5, 1, 2, 4):
+        wv = spread(max(0.0, 2 * r + ub), np.inf, 700, 12)
+        v.curve("r2", *within(wv, np.full_like(wv, r)))
+        if 2 * r + ub < 0:
+            wv = -spread(0, -(2 * r + ub), 200, 10)[::-1]
+            v.curve("r2", *inside(wv, np.full_like(wv, r)))
+    v.segment("surface", on_shell, bounce)
+    v.segment("surface", bounce, last)
+    v.segment("event", (-HALF, -HALF), iplus)
+    for a, b in (((0, Q4), (0, PI)), (iplus, (pb - S, HALF)), ((0, PI), (pb - S, PI))):
+        v.segment("horizon", a, b)
+    v.segment("centre", iminus, top)
+    v.segment("singular", iplus, left_end, zig=True)
+    v.segment("scri", iplus, izero)
+    v.segment("scri", izero, iminus)
+    v.segment("scri", next_minus, next_zero)
+    v.segment("scri", next_zero, top)
+    v.point("mark", bounce)
+    corner(v, iminus, "$i^-$", "t", 0, 6)
+    corner(v, izero, "$i^0$", "l", 6, 0)
+    corner(v, iplus, "$i^+$", "l", 7, 0)
+    corner(v, next_zero, "$i^0$", "l", 6, 0)
+    corner(v, top, "$i^+$", "b", 0, -6)
+    v.label((-3 * Q4, HALF), "$\\mathscr{I}^+$", "bl", dx=4, dy=-3)
+    v.label((-PI, -Q4), "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+    v.label((3 * Q4, 3 * HALF), "$\\mathscr{I}^+$", "bl", dx=4, dy=-3)
+    v.label((0, 5 * Q4), "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+    v.label((-HALF - 0.5, Q4), "the shell", "bl", "small", dx=4, dy=-3)
+    v.label(bounce, "$r = q^2/2M$", "l", "small", dx=7)
+    v.legend("cover", "outside the shell, $m = M$ and $q = 0.96\\,M$: Reissner-Nordström")
+    v.legend("cover2", "inside the shell, $m = q = 0$: flat")
+    v.legend("surface", "the shell: in along a ray of constant $v$, round at the mark, and out along a ray of constant $u$")
+    v.legend("mark", "the sphere $r = q^2/2M$, where the energy density of the shell is zero and the shell turns")
+    v.legend("r", f"$r$ constant on the charged side: {listed_r}")
+    v.legend("r2", "$r$ constant on the flat side: $0.5$, $1$, $2$ and $4\\,M$")
+    v.legend("t2", "$v - r$ constant on the flat side, before the shell")
+    v.legend("event", "the event horizon of the first exterior")
+    v.legend("horizon", "$r = r_-$ and, beyond it, $r = r_+$ of the next exterior")
+    v.legend("singular", "$r = 0$ on the charged side, a timelike singularity, which the shell does not reach")
+    v.legend("centre", "$r = 0$ on the flat side, a regular centre throughout")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$ of the first exterior and of the next")
+    v.set(settings=settings,
+          input="The falling shell as far as $r = q^2/2M$, and from there the leaving shell, with flat space inside both.")
+    views.append(v)
+
+    # Each moment v - r = w through each side's own map, meeting on the shell at r = -w.
+    for m in slices.moments("bonnor_vaidya"):
+        lo, hi = m.reach(IN, "r")
+        w, cross = m.time, max(lo, -m.time)
+        r_in = np.linspace(lo, cross, 200) if cross > lo else np.zeros(0)
+        r_out = cross + (hi - cross) * np.linspace(0, 1, 400) ** 2
+        p_in, q_in = inside(w + r_in, r_in)
+        p_out, q_out = ingoing(w + r_out, r_out)
+        for view in (views[0], views[2]):
+            view.slice(m, [(np.concatenate([p_in, p_out]), np.concatenate([q_in, q_out]))])
+    return views
+
+
 # ---------------------------------------------------------------- McVittie
 
 MCV_H0 = 1 / math.sqrt(15)      # H_0 r_s/c, which is Lambda r_s^2 = 1/5, the value Kottler's diagrams take
@@ -16716,7 +17018,7 @@ DRAWN = {
     "point_particle_2plus1": point_particle_2plus1,
     "interior_schwarzschild": interior_schwarzschild, "gravastar": gravastar, "frw": frw,
     "einstein_cluster": einstein_cluster,
-    "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "tov": tov,
+    "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "bonnor_vaidya": bonnor_vaidya, "tov": tov,
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "reissner_nordstrom_ads": reissner_nordstrom_ads, "c_metric": c_metric,
     "misner": misner, "milne": milne,
     "gott_time_machine": gott_time_machine,
@@ -18896,6 +19198,40 @@ CAPTIONS = {
         "Schwarzschild's black hole and second exterior, as drawn here, the metric has five continuous "
         "derivatives in general. Until $cu = 1.18\\,m$ every line of constant $r$ on the axis is spacelike, "
         "since $g^{rr} < 0$ at every $r$ there, and from $cu = 4m$ on the lines are Schwarzschild's.",
+    ],
+    ("bonnor_vaidya", "shell"): [
+        "A spacetime into which a spherical shell of charged null dust of mass $M$ and charge $q = 0.96\\,M$ falls "
+        "along $v = 0$, drawn as the ingoing metric stands, each point in the diagram a 2-sphere. Before the shell "
+        "the metric is flat, and after it Reissner-Nordström's, whose ingoing coordinates cover the exterior, the "
+        "region between $r_+$ and $r_-$, and one region inside $r_-$, as far as the Cauchy horizon $v \\to \\infty$. "
+        "Each outgoing ray of the flat side keeps the $p$ it has where it crosses the shell, and $q$ is the same "
+        "function of $v$ less $\\pi/2$, which puts the centre on the straight line $X = 0$.",
+        "The event horizon forms at the centre at $v = -2r_+$ and grows through flat space to meet the shell at "
+        "$r_+$. The energy density of the shell is $(M - q^2/2r)/4\\pi r^2$, positive outside the marked sphere "
+        "$r = q^2/2M$ and negative from there to $r = 0$, where the timelike singularity begins.",
+    ],
+    ("bonnor_vaidya", "leaving"): [
+        "The falling shell turned over in time, in Bonnor and Vaidya's retarded coordinates: a spherical shell of "
+        "charged null dust carries the whole mass $M$ and the whole charge $q = 0.96\\,M$ out along $u = 0$, each "
+        "point in the diagram a 2-sphere. Before the shell the metric is Reissner-Nordström's, of which the "
+        "outgoing coordinates cover one region inside $r_-$, the white hole between $r_-$ and $r_+$, and the "
+        "exterior, and after it the metric is flat.",
+        "The white hole's horizon stays at $r_+$ until the shell leaves and then crosses flat space to the centre, "
+        "arriving at $u = 2r_+$. The energy density of the shell is positive outside the marked sphere "
+        "$r = q^2/2M$ and negative between it and the singularity.",
+    ],
+    ("bonnor_vaidya", "bounce"): [
+        "The same shell with the Lorentz force counted, each point in the diagram a 2-sphere. Amos Ori found in 1991 "
+        "that charged null dust loses energy as it falls toward a like charge and turns round where its energy "
+        "reaches zero, which for this shell is the sphere $r = q^2/2M = 0.46\\,M$, inside $r_-$. The shell falls in "
+        "along a ray of constant $v$, turns at the mark, and leaves along a ray of constant $u$, through $r_-$ and "
+        "$r_+$ of a white hole into another exterior, which it crosses to $\\mathscr{I}^+$. Its energy density is "
+        "positive all the way.",
+        "Space inside the shell is flat throughout, so the centre is regular at every time, and the singularity "
+        "of the charged region stands on the far side of it from the shell. The first exterior keeps its event "
+        "horizon, and an observer who stays there sees the shell cross $r_+$ and nothing after. Outside the shell "
+        "the metric is Reissner-Nordström's, read in ingoing coordinates before the turn and in outgoing "
+        "coordinates after it.",
     ],
     ("vaidya", "shell"): [
         "A spacetime into which a spherical shell of null dust of mass $M$ falls along $v = 0$, each point in the "

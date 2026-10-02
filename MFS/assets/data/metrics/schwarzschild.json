@@ -253,6 +253,11 @@
       "id": "einstein_cluster",
       "kind": "composite",
       "text": "A ball of particles on circular orbits with Schwarzschild's vacuum outside. Einstein used it in 1939 to argue that matter cannot be packed inside $r = r_s$, since the particles would have to reach the speed of light at one and a half times that radius [einstein1939]."
+    },
+    {
+      "id": "bonnor_vaidya",
+      "kind": "generalisation",
+      "text": "Schwarzschild's metric with a charge added and both the mass and the charge carried off by light. With no charge and a constant mass Bonnor and Vaidya's metric is Schwarzschild's in Eddington-Finkelstein coordinates."
     }
   ],
   "references": [

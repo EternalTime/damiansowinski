@@ -3484,6 +3484,7 @@ class StacksAndMovies(unittest.TestCase):
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
     MOVIES = {("frw", "closed"): "$ct$", ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("vaidya", "shell"): "$v - r$",
+              ("bonnor_vaidya", "shell"): "$v - r$",
               ("cosmic_string", "unroll"): "$\\Delta\\phi$", ("point_particle_2plus1", "unroll"): "$\\Delta\\phi$",
               ("milne", "hyperboloids"): "$ct$",
               ("coleman_de_luccia", "hyperboloids"): "$c\\tau$",
@@ -4263,6 +4264,143 @@ def novikov_t(R, tau):
     return r, math.log(abs((k + tan) / (k - tan))) + k * (eta + 0.5 * R * (eta + math.sin(eta)))
 
 
+# Bonnor and Vaidya's charged shell as its drawings take it, in units of its mass: the charge, the
+# horizons of the charged side, the surface gravity of the outer one, and the radius where the
+# shell's energy density changes sign.
+BV_Q = 0.96
+BV_RP, BV_RM = 1.28, 0.72
+BV_KAPPA = (BV_RP - BV_RM) / (2 * BV_RP ** 2)
+BV_TURN = BV_Q ** 2 / 2
+
+
+def bv_rstar(r):
+    """Reissner-Nordstrom's tortoise coordinate at M = 1 and q = 24/25, zero at r = 0."""
+    return r + (BV_RP ** 2 * math.log(abs(r / BV_RP - 1)) - BV_RM ** 2 * math.log(abs(r / BV_RM - 1))) / (BV_RP - BV_RM)
+
+
+def bv_crossing(u):
+    """p of the outgoing ray that crosses the falling shell v = 0 at r = -u/2, as the tower's ingoing
+    map has it: -arctan e^(2 k r_*) outside r_+, arctan e^(2 k r_*) between the horizons, and
+    pi - arctan e^(2 k r_*) inside r_-."""
+    r = -u / 2
+    x = 2 * BV_KAPPA * bv_rstar(r)
+    g = math.pi / 2 if x > 700 else math.atan(math.exp(x))
+    return -g if r > BV_RP else g if r > BV_RM else math.pi - g
+
+
+def bv_radius(v, p):
+    """r of the event of the charged side with the advanced time v > 0 and the tower's p, or None within
+    1e-3 of a cell's edge, where the map is too steep to carry back."""
+    for lo, hi, a, b in ((BV_RP, 60.0, -math.pi / 2, 0.0), (BV_RM, BV_RP, 0.0, math.pi / 2), (0.0, BV_RM, math.pi / 2, math.pi)):
+        if a + 1e-3 < p < b - 1e-3:
+            if lo == 0.0:
+                star = (v + math.log(math.tan(math.pi - p)) / BV_KAPPA) / 2
+            else:
+                star = (v + math.log(math.tan(abs(p))) / BV_KAPPA) / 2
+            return bisect(lambda r: bv_rstar(r) - star, lo + 1e-12, hi - 1e-12)
+    return None
+
+
+class BonnorVaidyaShell(unittest.TestCase):
+    """The published drawings of Bonnor and Vaidya's charged shell against its closed forms."""
+
+    @classmethod
+    def setUpClass(cls):
+        root = build.METRICS_DIR.parent
+        cls.diagrams = json.loads((root / "diagrams" / "bonnor_vaidya.json").read_text(encoding="utf-8"))
+        cls.conformal = json.loads((root / "conformal" / "bonnor_vaidya.json").read_text(encoding="utf-8"))
+        cls.embedding = json.loads((root / "embedding" / "bonnor_vaidya.json").read_text(encoding="utf-8"))
+
+    def marker(self, system, kind):
+        (view,) = self.diagrams["systems"][system]
+        return view, [m for m in view["markers"] if m["kind"] == kind]
+
+    def test_the_horizons_stand_at_the_roots_of_one_minus_2M_over_r_plus_q_squared_over_r_squared(self):
+        for system in ("eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing"):
+            view, (grr,) = self.marker(system, "grr")
+            X0, X1 = view["box"][:2]
+            radii = {round(X0 + x * (X1 - X0), 2) for line in grr["lines"] for x, _ in line}
+            self.assertEqual({min(radii), max(radii)}, {BV_RM, BV_RP}, system)
+            self.assertAlmostEqual(BV_RP * BV_RM, BV_Q ** 2)
+            self.assertAlmostEqual(BV_RP + BV_RM, 2)
+
+    def test_the_mark_on_the_shell_is_where_its_energy_density_changes_sign(self):
+        """The jump of G_vv across the shell is 2(M r - q^2/2)/r^3, zero at r = q^2/2M, which lies inside r_-."""
+        for system, sign in (("eddington_finkelstein_ingoing", -1), ("eddington_finkelstein_outgoing", 1)):
+            view, (mark,) = self.marker(system, "mark")
+            X0, X1, Y0, Y1 = view["box"]
+            (x, y), = mark["points"]
+            r, other = X0 + x * (X1 - X0), Y0 + y * (Y1 - Y0)
+            self.assertAlmostEqual(r, BV_TURN, delta=2e-4, msg=system)
+            self.assertAlmostEqual(other, sign * BV_TURN, delta=4e-4, msg=system)       # on the shell, v = 0 or u = 0
+            self.assertAlmostEqual(r - BV_Q ** 2 / 2, 0, delta=2e-4)
+            self.assertLess(r, BV_RM)
+
+    def test_the_event_horizon_leaves_the_centre_at_minus_twice_r_plus(self):
+        view, (event,) = self.marker("eddington_finkelstein_ingoing", "event")
+        X0, X1, Y0, Y1 = view["box"]
+        ends = sorted((X0 + x * (X1 - X0), Y0 + y * (Y1 - Y0)) for line in event["lines"] for x, y in (line[0], line[-1]))
+        self.assertAlmostEqual(ends[0][0], 0, delta=1e-3)
+        self.assertAlmostEqual(ends[0][1], -2 * BV_RP, delta=2e-3)
+        self.assertAlmostEqual(ends[-1][0], BV_RP, delta=1e-3)
+
+    def test_the_homothetic_rays_that_keep_their_radius_are_the_roots_of_the_cubic(self):
+        """2 mu R^3 - M R^2 + 2 M^2 R - M Q^2 = 0 at mu = 1/20, and R^2 - 2MR + Q^2 = 0 for the trapped spheres."""
+        view, (grr,) = self.marker("homothetic", "grr")
+        X0, X1 = view["box"][:2]
+        roots = sorted({round(X0 + x * (X1 - X0), 3) for line in grr["lines"] for x, _ in line})
+        self.assertEqual(len(roots), 3)
+        for R in roots:
+            self.assertAlmostEqual(0.1 * R ** 3 - R ** 2 + 2 * R - BV_Q ** 2, 0, delta=2e-2)
+        _, (apparent,) = self.marker("homothetic", "apparent")
+        self.assertEqual(sorted({round(X0 + x * (X1 - X0), 2) for line in apparent["lines"] for x, _ in line}), [BV_RM, BV_RP])
+        _, (shell,) = self.marker("homothetic", "shell")
+        self.assertEqual({round(X0 + x * (X1 - X0), 3) for line in shell["lines"] for x, _ in line}, {round(BV_Q ** 2, 3)})
+
+    def test_each_embedded_moment_is_a_flat_disc_inside_the_shell_and_the_closed_form_outside(self):
+        """z = 2s - 2q arctan(s/q) with s = sqrt(2r - q^2), from the shell at r = -(v - r) to the rim at
+        z = 0, and the last moment has the shell on q^2/2M, where the surface lies level."""
+        def height(r):
+            s = math.sqrt(max(2 * r - BV_Q ** 2, 0.0))
+            return 2 * s - 2 * BV_Q * math.atan(s / BV_Q)
+        (view,) = self.embedding["views"]
+        frames = view["movie"]["frames"]
+        self.assertEqual(len(frames), 42)
+        for frame in frames:
+            T = float(frame["value"])
+            inside, outside = ([[float(x) for x in point] for point in piece["points"]] for piece in frame["pieces"])
+            self.assertAlmostEqual(inside[-1][0], -T, delta=1e-9)
+            self.assertTrue(all(z == inside[0][2] and abs(rho - r) < 1e-6 for r, rho, z in inside))
+            self.assertEqual(outside[-1][0], 4.0)
+            for r, rho, z in outside:
+                self.assertAlmostEqual(rho, r, delta=1e-6)
+                self.assertAlmostEqual(z, height(r) - height(4.0), delta=2e-6, msg=f"v - r = {T} at r = {r}")
+        self.assertAlmostEqual(float(frames[-1]["value"]), -BV_TURN, delta=1e-9)
+        last = [[float(x) for x in point] for point in frames[-1]["pieces"][1]["points"]]
+        self.assertLess((last[1][2] - last[0][2]) / (last[1][1] - last[0][1]), 0.05)
+
+    def test_the_turned_shell_leaves_from_the_mark_and_reaches_the_next_null_infinity(self):
+        """On the conformal diagram of Ori's reading the shell is two straight null lines that meet at the
+        mark, the first rising to the left and the second to the right, and the centre X = 0 is regular
+        from i^- to the last i^+: the singular line is not on it."""
+        view = next(v for v in self.conformal["views"] if v["id"] == "bounce")
+        first, second = [layer["points"] for layer in view["layers"] if layer["class"] == "surface"]
+        (mark,) = [layer["at"] for layer in view["layers"] if layer["class"] == "mark"]
+        self.assertEqual(first[-1], mark)
+        self.assertEqual(second[0], mark)
+        for (Xa, Ta), (Xb, Tb), way in ((first[0], first[-1], -1), (second[0], second[-1], 1)):
+            self.assertAlmostEqual(Tb - Ta, way * (Xb - Xa), delta=2e-4)
+            self.assertGreater(Tb, Ta)
+        self.assertAlmostEqual(second[-1][0] + second[-1][1], 3 * math.pi, delta=2e-4)      # q = 3 pi/2
+        p = (mark[1] - mark[0]) / 2 + math.pi / 2
+        self.assertAlmostEqual(p, bv_crossing(-2 * BV_TURN), delta=2e-4)
+        (centre,) = [layer["points"] for layer in view["layers"] if layer["class"] == "centre"]
+        self.assertEqual([X for X, _ in centre], [0, 0])
+        self.assertAlmostEqual(centre[-1][1] - centre[0][1], 5 * math.pi, delta=2e-4)
+        (singular,) = [layer["points"] for layer in view["layers"] if layer["class"] == "singular"]
+        self.assertTrue(all(abs(X - math.pi) < 2e-4 for X, _ in singular))
+
+
 class RobertsCollapse(unittest.TestCase):
     """The published drawings of Roberts's collapse against its closed forms: where the apparent
     horizon and the singularity stand in each chart, and the shape of each embedded moment."""
@@ -4380,6 +4518,10 @@ class Slices(unittest.TestCase):
               "myers_perry/boyer_lindquist_six/rotation",
               "frw/comoving_spherical/radial", "frw/comoving_spherical/through", "frw/conformal_spherical/radial",
               "tolman_bondi/comoving_synchronous/collapse", "vaidya/eddington_finkelstein_outgoing/shell",
+              # Bonnor and Vaidya's leaving shell is the time reverse of the falling shell embedded, and the
+              # homothetic chart draws a mass and a charge that grow with the advanced time, another spacetime.
+              "bonnor_vaidya/eddington_finkelstein_outgoing/shell", "conformal bonnor_vaidya/leaving",
+              "bonnor_vaidya/homothetic/scaling",
               "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "som_raychaudhuri/cylindrical/beyond",
               "conformal frw/flat", "conformal frw/open",
               "misner/rindler/plane", "conformal misner/rindler",
@@ -4905,7 +5047,7 @@ class Slices(unittest.TestCase):
         if key == "gowdy/logarithmic/plane":
             # The same moment against theta and -tau = ln t.
             return (lambda X: math.log(t)), list(self.reach(surface))
-        if key == "vaidya/eddington_finkelstein_ingoing/shell":
+        if key in ("vaidya/eddington_finkelstein_ingoing/shell", "bonnor_vaidya/eddington_finkelstein_ingoing/shell"):
             return (lambda X: t), list(self.reach(surface))
         if key == "krasnikov/cylindrical/tx":
             path = next(c for c in surface["curves"] if c["class"] == "path")
@@ -5323,6 +5465,21 @@ class Slices(unittest.TestCase):
                             else:
                                 continue
                             self.assertLess(abs(v - r - t), 2e-3 * (1 + abs(v)), f"{where} at {(X, T)}")
+                    elif metric_id == "bonnor_vaidya":
+                        # Both views draw the moment before the shell turns: outside the shell through
+                        # the tower's ingoing map, and inside it through the flat map, every p moved by pi/2.
+                        for X, T in points:
+                            p, q = (T - X) / 2 + math.pi / 2, (T + X) / 2
+                            if q < math.pi / 4 - 1e-3:
+                                v = bisect(lambda u: bv_crossing(u) - q - math.pi / 2, -80, -1e-12)
+                                r = (v - bisect(lambda u: bv_crossing(u) - p, -80, -1e-12)) / 2
+                            elif q > math.pi / 4 + 1e-3:
+                                v = math.log(math.tan(q)) / BV_KAPPA
+                                r = bv_radius(v, p)
+                            else:
+                                continue
+                            if r is not None:
+                                self.assertLess(abs(v - r - t), 2e-3 * (1 + abs(v)), f"{where} at {(X, T)}")
                     elif metric_id == "oppenheimer_snyder":
                         chi0 = math.pi / 4
                         eta = bisect(lambda e: math.sqrt(2) * (e + math.sin(e)) - t, 0, math.pi)

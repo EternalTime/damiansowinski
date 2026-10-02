@@ -319,6 +319,47 @@
     "embedding": "7035de7d63ab26a4"
   },
   {
+    "id": "bonnor_vaidya",
+    "name": "Bonnor-Vaidya",
+    "tags": [
+      "null dust",
+      "charged null dust",
+      "charged",
+      "electric charge",
+      "electromagnetic field",
+      "Einstein-Maxwell",
+      "radiating",
+      "accreting",
+      "spherically symmetric",
+      "time-dependent",
+      "black hole",
+      "charged black hole",
+      "mass",
+      "horizon",
+      "event horizon",
+      "apparent horizon",
+      "Cauchy horizon",
+      "inner horizon",
+      "curvature singularity",
+      "naked singularity",
+      "weak energy condition",
+      "energy conditions",
+      "third law",
+      "self-similar",
+      "homothetic",
+      "Vaidya",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "bb7e25c1d9b37f54",
+    "diagrams": "2122349c176f47ed",
+    "conformal": "f82fe13ee8206113",
+    "embedding": "c306446463337712"
+  },
+  {
     "id": "c_metric",
     "name": "C-Metric",
     "tags": [
@@ -1890,7 +1931,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "318ddb0b65f3d420",
+    "version": "0d27daada2c265df",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -2077,7 +2118,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4cace8239b91fac0",
+    "version": "5a7184fd7ab0a484",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -2542,7 +2583,7 @@
       "naked singularity",
       "cosmic censorship"
     ],
-    "version": "c81ffc65a1f1a620",
+    "version": "941b00727e062bf4",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404"

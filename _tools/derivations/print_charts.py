@@ -7,8 +7,8 @@ robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, 
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, reissner_nordstrom_ads, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
 black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
-som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos and
-einstein_rosen_bridge, and Godel's cylindrical chart.
+som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos,
+einstein_rosen_bridge and bonnor_vaidya, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -27,7 +27,7 @@ reads better than an expanded one, and each of those is checked against sympy he
 The derivations these charts rest on, and the reason each was chosen, are in tov.md,
 malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_sitter.md,
 majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md,
-witten_black_hole.md, roberts.md and gravastar.md beside this file.
+witten_black_hole.md, roberts.md, gravastar.md and bonnor_vaidya.md beside this file.
 """
 import argparse
 import itertools
@@ -6840,6 +6840,208 @@ def hayward_check(chart):
 
 
 CHARTS["hayward"] = [lambda s=s: hayward(s) for s in HAYWARD_CHARTS]
+
+
+# -- Bonnor and Vaidya's charged radiating star ------------------------------------------
+
+BV_CHARTS = ("eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing", "homothetic")
+
+
+def bonnor_vaidya(system_id):
+    """Bonnor and Vaidya's charged radiating star, f = 1 - 2m/r + q^2/r^2 with the mass m and the
+    charge q, both lengths, functions of a null time: of the retarded time u in their own
+    coordinates, Booth's (55) and Kehle and Unger's (4.10), in which the star sends charge and mass
+    out along the rays u constant, and of the advanced time v in the ingoing chart, Ori's (2) and
+    (3), in which they fall in. With r_s = 2m and r_q = q they are the lengths of
+    Reissner-Nordstrom's published metric, so each chart is that metric where they are constant
+    and Vaidya's where q = 0. Every value is printed around r^2 - 2m r + q^2, the numerator of f,
+    with the two rates of change kept apart from what Reissner-Nordstrom has already. The third
+    chart is the homothetic one, bonnor_vaidya_homothetic. bonnor_vaidya_check holds each
+    Eddington-Finkelstein chart to the Einstein-Maxwell equations with a null current;
+    bonnor_vaidya.md beside this file is the derivation."""
+    if system_id == "homothetic":
+        return bonnor_vaidya_homothetic()
+    f = "\\left(1 - \\dfrac{2m}{r} + \\dfrac{q^2}{r^2}\\right)"
+    bare = "1 - \\dfrac{2m}{r} + \\dfrac{q^2}{r^2}"
+    sphere = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    null, sign = ("u", "-") if system_id == "eddington_finkelstein_outgoing" else ("v", "+")
+    coords = [null, "r", "\\theta", "\\phi"]
+    name = ("Outgoing" if null == "u" else "Ingoing") + " Eddington-Finkelstein"
+    line = "ds^2 = -" + f + "d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr" + sphere
+    one = "-1" if null == "u" else "1"
+    metric = {(null, null): "-" + f, (null, "r"): one, ("r", null): one}
+    inverse = {(null, "r"): one, ("r", null): one, ("r", "r"): bare}
+    parameters = [f"m = m({null})", f"q = q({null})"]
+    domains = [null + " \\in (-\\infty, \\infty)", "r \\in (0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+               "r^2 - 2mr + q^2 = 0 \\;\\text{(the marginally trapped spheres)}",
+               f"r\\,\\partial_{null} m = q\\,\\partial_{null} q \\;\\text{{(where the energy density of the null dust "
+               "changes sign)}"]
+    probe = vm.Reader(coords, parameters, ())
+    r, m, q = probe.symbol["r"], probe.parameters["m"], probe.parameters["q"]
+    dm, dq = sp.Derivative(m, probe.symbol[null]), sp.Derivative(q, probe.symbol[null])
+    # A product is written as the line element writes it, m and q before the radius, a sum by
+    # falling powers of r, and the two rates of change stand apart from the static part.
+    printer = {"lead": [dm, dq, r, m, q], "factors": [m, q, r, dm, dq], "flip": False,
+               "collect": lambda poly, pr: cp.collect_by(poly, [dm, dq], pr)}
+    return {
+        "metric_id": "bonnor_vaidya",
+        "system": {"id": system_id, "name": name, "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": line,
+        "printer": printer,
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "kretschmann": "\\dfrac{8\\left(6m^2\\,r^2 - 12m\\,q^2\\,r + 7q^4\\right)}{r^8}",
+        "check": bonnor_vaidya_check,
+    }
+
+
+def bonnor_vaidya_homothetic():
+    """The ingoing chart for a mass and a charge that grow in proportion to the advanced time,
+    m = mu v and q = (Q/M) mu v, Lake and Zannias's homothetic case, in Koh, Park and Sherif's
+    coordinates, their (29) to (35): R = M r/m and dv = (m/M) dV, so that v = (M/mu) e^(mu V/M)
+    and r = R e^(mu V/M). The metric is e^(2 mu V/M) times a static one, with
+    1 - 2M/R + Q^2/R^2 - 2 mu R/M in place of Reissner-Nordstrom's function, so V -> V + constant
+    is the homothety. The chart is checked to be the ingoing chart pulled back, and the dust's
+    density to change sign on R = Q^2/M."""
+    coords, parameters = ["V", "R", "\\theta", "\\phi"], ["M", "Q", "\\mu"]
+    f = "\\left(1 - \\dfrac{2M}{R} + \\dfrac{Q^2}{R^2} - \\dfrac{2\\mu R}{M}\\right)"
+    line = ("ds^2 = e^{2\\mu V/M}\\left(-" + f + "dV^2 + 2\\,dV\\,dR + R^2\\left(d\\theta^2 + "
+            "\\sin^2\\theta\\,d\\phi^2\\right)\\right)")
+    domains = ["V \\in (-\\infty, \\infty)", "R \\in (0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+               "V \\to -\\infty \\;\\text{(the first ray, }v = 0\\text{, flat space before it)}",
+               "2\\mu R^3 - MR^2 + 2M^2R - MQ^2 = 0 \\;\\text{(the rays that keep their }R\\text{)}",
+               "R = Q^2/M \\;\\text{(where the energy density of the null dust changes sign)}"]
+    probe = vm.Reader(coords, parameters, ())
+    V, R = probe.symbol["V"], probe.symbol["R"]
+    M, Q, mu = probe.parameters["M"], probe.parameters["Q"], probe.parameters["mu"]
+    return {
+        "metric_id": "bonnor_vaidya",
+        "system": {"id": "homothetic", "name": "Homothetic", "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [R, M, Q, mu], "factors": [mu, M, Q, R], "flip": False},
+        "check": bonnor_vaidya_homothetic_check,
+    }
+
+
+def bonnor_vaidya_homothetic_check(chart):
+    """The ingoing chart at m = mu v and q = (Q/M) mu v, pulled back along v = (M/mu) e^(mu V/M) and
+    r = R e^(mu V/M), and the dust's G_vv = 2(r m' - q q')/r^3 carried along: it is
+    G_VV = 2 mu (M R - Q^2)/(M R^3), which changes sign on R = Q^2/M."""
+    V, R, theta, phi = chart.symbols
+    M, Q, mu = (chart.reader.parameters[n] for n in ("M", "Q", "mu"))
+    own = bonnor_vaidya("eddington_finkelstein_ingoing")
+    source = cp.Chart(own["system"]["coords"], own["system"]["parameters"], own["chart_line_element"])
+    v, r = source.symbols[:2]
+    grow = sp.exp(mu * V / M)
+    images = [M * grow / mu, R * grow, theta, phi]
+    linear = {source.reader.parameters["m"]: mu * v, source.reader.parameters["q"]: Q * mu * v / M}
+    at = {v: images[0], r: images[1], source.symbols[2]: theta, source.symbols[3]: phi}
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(images[i], chart.symbols[j]))
+    pulled = J.T * source.geo.g.subs(linear).doit().subs(at, simultaneous=True) * J
+    for a in range(4):
+        for b in range(4):
+            if sp.simplify(pulled[a, b] - chart.geo.g[a, b]) != 0:
+                raise AssertionError(f"bonnor_vaidya: the homothetic chart is not the ingoing chart pulled back in slot "
+                                     f"{chart.coords_tex[a]}{chart.coords_tex[b]}")
+    # The Einstein tensor less the dust: the source's own, with its G_vv = 2(r m' - q q')/r^3 taken
+    # out, carried along the same map. What is left over is the dust in these coordinates.
+    Gs = sp.Matrix(4, 4, lambda a, b: vm._at(source.geo.einstein_ll(), (a, b)))
+    Gs[0, 0] -= 2 * (r * sp.diff(source.reader.parameters["m"], v)
+                     - source.reader.parameters["q"] * sp.diff(source.reader.parameters["q"], v)) / r ** 3
+    field = J.T * Gs.subs(linear).doit().subs(at, simultaneous=True) * J
+    G = chart.geo.einstein_ll()
+    for a in range(4):
+        for b in range(4):
+            dust = 2 * mu * (M * R - Q ** 2) / (M * R ** 3) if a == b == 0 else 0
+            if sp.simplify(vm._at(G, (a, b)) - field[a, b] - dust) != 0:
+                raise AssertionError(f"bonnor_vaidya: the dust of the homothetic chart is not 2 mu (M R - Q^2)/(M R^3) "
+                                     f"dV^2 in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
+
+
+def bonnor_vaidya_check(chart):
+    """The Einstein-Maxwell equations with a null current, in units G = c = 4 pi epsilon_0 = 1, with m
+    the mass and q the charge inside r. The field is the Coulomb field of the charge
+    the null time has reached, F = (q/r^2) dw ^ dr up to the sign of the chart, so that it is closed and
+    its divergence is a current along the rays w constant, 4 pi J^r = -+ q'/r^2. The Einstein tensor is
+    8 pi times the Maxwell stress of that field, G^w_w = G^r_r = -q^2/r^4 and G^theta_theta =
+    G^phi_phi = q^2/r^4, plus the null dust G_ww = -+ 2(r m' - q q')/r^3, upper sign for the
+    outgoing chart, Ori's (6). The dust's density
+    changes sign on r = q q'/m'. With m and q constant the chart is Reissner-Nordstrom's
+    published metric pulled back along t = w -+ r_*, dr_*/dr = 1/f, and with q = 0 it is the published chart of the same name of Vaidya's metric."""
+    w, r, theta, phi = chart.symbols
+    out = chart.coords_tex[0] == "u"
+    sign = -1 if out else 1
+    m, q = chart.reader.parameters["m"], chart.reader.parameters["q"]
+    g, ginv = chart.geo.g, chart.geo.ginv
+    # The Coulomb field of the charge q(w), F_wr = -+ q/r^2, with its potential A = -+ (q/r) dw.
+    x = chart.symbols
+    A = [sign * q / r, 0, 0, 0]
+    F = sp.Matrix(4, 4, lambda a, b: sp.diff(A[b], x[a]) - sp.diff(A[a], x[b]))
+    Fup = ginv * F * ginv.T
+    root = r ** 2 * sp.sin(theta)
+    if vm.norm(g.det() + root ** 2) != 0:
+        raise AssertionError("bonnor_vaidya: sqrt(-g) is not r^2 sin(theta)")
+    current = [sum(sp.diff(root * Fup[a, b], x[b]) for b in range(4)) / root for a in range(4)]
+    wanted_current = [0, sign * sp.diff(q, w) / r ** 2, 0, 0]
+    for a in range(4):
+        if vm.norm(current[a] - wanted_current[a]) != 0:
+            raise AssertionError(f"bonnor_vaidya: the current is not along the rays in slot {chart.coords_tex[a]}")
+    if vm.norm(sum(g[a, b] * current[a] * current[b] for a in range(4) for b in range(4))) != 0:
+        raise AssertionError("bonnor_vaidya: the current is not null")
+    # 8 pi T_ab of the field, 2(F_ac F_b^c - g_ab F^2/4), and the dust along dw.
+    F2 = sum(F[a, b] * Fup[a, b] for a in range(4) for b in range(4))
+    mixed = F * ginv                       # F_a^c
+    maxwell = sp.Matrix(4, 4, lambda a, b: 2 * (sum(mixed[a, c] * F[b, c] for c in range(4)) - g[a, b] * F2 / 4))
+    dust = sp.zeros(4, 4)
+    dust[0, 0] = 2 * sign * (r * sp.diff(m, w) - q * sp.diff(q, w)) / r ** 3
+    G = chart.geo.einstein_ll()
+    for a in range(4):
+        for b in range(4):
+            if vm.norm(vm._at(G, (a, b)) - maxwell[a, b] - dust[a, b]) != 0:
+                raise AssertionError(f"bonnor_vaidya: the Einstein tensor misses the field and the dust in slot "
+                                     f"{chart.coords_tex[a]}{chart.coords_tex[b]}")
+    up = chart.geo.raise_indices(G, 2, (0,))
+    for a, value in enumerate([-q ** 2 / r ** 4, -q ** 2 / r ** 4, q ** 2 / r ** 4, q ** 2 / r ** 4]):
+        if vm.norm(vm._at(up, (a, a)) - value) != 0:
+            raise AssertionError("bonnor_vaidya: the mixed Einstein tensor misses Reissner-Nordstrom's on the diagonal")
+    # Reissner-Nordstrom's published metric pulled back along t = w -+ r_*, at constant m = r_s/2 and q = r_q.
+    Rs, Rq = sp.symbols("r_s r_q", positive=True)
+    static = json.loads((METRICS / "rn_metric.json").read_text(encoding="utf-8"))["coordinates"][0]
+    source = cp.Chart(static["coords"], [p["symbol"] for p in static["parameters"]],
+                      static["line_element"].replace("d\\Omega^2", "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"))
+    fn = 1 - Rs / r + Rq ** 2 / r ** 2
+    at = {source.symbols[1]: r, source.symbols[2]: theta, source.symbols[3]: phi,
+          source.reader.parameters["r_s"]: Rs, source.reader.parameters["r_q"]: Rq}
+    J = sp.eye(4)
+    J[0, 1] = -sign / fn                    # dt = dw -+ dr/f
+    pulled = J.T * source.geo.g.subs(at, simultaneous=True) * J
+    frozen = g.subs({m: Rs / 2, q: Rq})
+    for a in range(4):
+        for b in range(4):
+            if sp.simplify(pulled[a, b] - frozen[a, b]) != 0:
+                raise AssertionError(f"bonnor_vaidya: at constant m and q the chart is not Reissner-Nordstrom's "
+                                     f"pulled back in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
+    # Vaidya's published chart of the same name at q = 0. That file keeps G, c
+    # and a mass explicit and its null time is a time, so its components are read with Gm/c^2 as
+    # one length and compared in the chart x^0 = c w, which is this chart's own null time.
+    name = "eddington_finkelstein_outgoing" if out else "eddington_finkelstein_ingoing"
+    vaidya = next(c for c in json.loads((METRICS / "vaidya.json").read_text(encoding="utf-8"))["coordinates"]
+                  if c["id"] == name)
+    reader = vm.Reader(vaidya["coords"], [p["symbol"] for p in vaidya["parameters"]], ())
+    length = sp.Symbol("Gm_over_c2", positive=True)
+    swap = {reader.parameters["m"]: length * reader.c ** 2 / reader.parameters["G"],
+            **{reader.symbol[n]: s for n, s in zip(vaidya["coords"][1:], chart.symbols[1:])}}
+    published = {tuple(e["indices"]): e["value"] for e in vaidya["metric_components"]}
+    for a in range(4):
+        for b in range(4):
+            text = published.get((vaidya["coords"][a], vaidya["coords"][b]), "0")
+            if sp.simplify(reader(text).subs(swap, simultaneous=True) - g[a, b].subs({q: 0, m: length})) != 0:
+                raise AssertionError(f"bonnor_vaidya: at q = 0 the chart is not Vaidya's in slot "
+                                     f"{chart.coords_tex[a]}{chart.coords_tex[b]}")
+
+
+CHARTS["bonnor_vaidya"] = [lambda s=s: bonnor_vaidya(s) for s in BV_CHARTS]
 # -- Hartle-Thorne ---------------------------------------------------------------------
 
 HT_CHARTS = ["hartle_thorne", "lense_thirring", "painleve_gullstrand"]
