@@ -11894,6 +11894,64 @@ def melvin(ck, src):
     return views
 
 
+def kerr_melvin(ck, src):
+    """The equatorial slice of constant t of Ernst and Wild's hole outside r_+, at a = 4m/5 and
+    B = 1/(4m), where g_tphi drops out: rho = sqrt(g_phiphi) = k sqrt(P) = k sqrt(A/(H Sigma)), the
+    circumference radius, with phi of period 2 pi on a regular axis, and g_rr = F/Delta = H Sigma/Delta.
+
+    On the equator H = (1 + B^2 A/(4 r^2))^2, and on the horizon A = 4 m^2 r_+^2, so the throat has
+    the radius 2 m k/(1 + B^2 m^2) whatever the spin, 32.08/17 m here, where Kerr's has 2m. The
+    circles widen to k/B = 4.01 m at r = 7.950 m, where B^2 A = 4 r^2, and narrow beyond it as
+    Melvin's plane does, drawn out to r = 10 m on both sheets of the slice through the bifurcation
+    sphere. g_tt vanishes on the equator at r = 1.942 m, found from the published metric."""
+    name = "Kerr-Melvin"
+    sl = Slice(src, "kerr_melvin", "boyer_lindquist", "r", "\\phi", {"t": 0, **EQUATOR}, nr.KM)
+    rp = sl.horizons()[0]
+    ck.add(f"{name}: the outer horizon is the larger root of the published g^rr, 8m/5", abs(rp - 1.6), 1e-11)
+    _, entry, R = nr.load("kerr_melvin", "boyer_lindquist")
+    subs = {R.c: 1, R.symbol["\\theta"]: sp.pi / 2}
+    subs.update({R.parameters[k]: sp.sympify(v) for k, v in nr.KM.items()})
+    gtt = nr.published_matrix(R, entry, "metric_components")[0, 0]
+    for _ in R.held:
+        # The held names hold one another: N, F and P hold H and A, which hold Delta.
+        gtt = gtt.subs(R.held).doit()
+    gtt = sp.lambdify(R.symbol["r"], gtt.subs(subs), "mpmath")
+    ergo = float(mpmath.findroot(gtt, (1.7, 2.2), solver="anderson"))
+    ck.add(f"{name}: g_tt vanishes on the equator at r = 1.9424 m", abs(ergo - 1.9424195963), 1e-9)
+    widest = brentq(lambda r: float(sl.rho_at(r + 1e-6) - sl.rho_at(r - 1e-6)), 6.0, 9.0, xtol=1e-9)
+    ck.add(f"{name}: the widest circle of the equator has radius k/B = 4.01 m, at r = 7.950 m",
+           abs(float(sl.rho_at(widest)) - 4.01) + abs(widest - 7.9497790) / 1e3, 1e-6)
+    top, size = 10.0, 18.0
+    radii = (3.0, 4.0, 5.0, 6.0)
+    near = Piece("exterior", "sheet", sl, rp, top, 0.0, 1,
+                 (("throat", "the throat $r = r_+$, the bifurcation sphere, where the other exterior begins"),
+                  ("edge", "the surface runs on, narrowing, to $r \\to \\infty$")),
+                 [(rp, "horizon", "$r = r_+$"), (ergo, "ergo", None)] + [(r, "r", None) for r in radii]
+                 + [(widest, "surface", "the widest circle"), (top, "r", None)], size)
+    far = Piece("other_exterior", "sheet2", sl, rp, top, 0.0, -1,
+                (("throat", "the throat $r = r_+$"), ("edge", "the surface runs on, narrowing, to $r \\to \\infty$")),
+                [(r, "r2", None) for r in radii] + [(widest, "surface", None), (top, "r2", None)], size)
+    ck.join(f"{name}, the two sheets at the throat", near, rp, far, rp)
+    for p in (near, far):
+        ck.isometry(f"{name}, {p.id}", p)
+    ck.add(f"{name}: the throat's circumference radius is 2mk/(1 + B^2 m^2)",
+           abs(near.at(rp)[0] - 2 * 1.0025 / (1 + 1 / 16)), 1e-6)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(rp), "$r = r_+$", dx=10)
+    ring_label(fig, [0, 0, 0], *near.at(widest), "$r = 7.95\\,m$", dx=10)
+    fig.legend("fill", "cover", "the exterior $r > r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $3$, $4$, $5$, $6$ and $10\\,m$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the horizon")
+    fig.legend("line", "ergo", f"the edge of the ergoregion, $r_E = {ergo:.3f}\\,m$ on the equator")
+    fig.legend("line", "surface", "the widest circle, of radius $k/B = 4.01\\,m$, at $r = 7.95\\,m$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("equator", "The equator", "$m$", [surface], fig.done(),
+                 settings="$m = 1$, the unit of every length, $a = 4m/5$, and $B = 1/(4m)$, so that $r_+ = 8m/5$, "
+                          f"$k = 1.0025$, and $r_E = {ergo:.3f}\\,m$ is the radius of the ergosurface on the equator.")]
+
+
 def levi_civita(ck, src):
     """Levi-Civita's plane z = 0 at t = 0 in Weyl's coordinates at sigma = 1/4 and C = 1.
 
@@ -14231,6 +14289,7 @@ DRAWN = {
     "brill_waves": brill_waves,
     "kastor_traschen": kastor_traschen,
     "melvin": melvin,
+    "kerr_melvin": kerr_melvin,
     "senovilla": senovilla,
     "thin_shell_wormhole": thin_shell_wormhole,
     "teo_wormhole": teo_wormhole,
@@ -15214,6 +15273,17 @@ CAPTIONS = {
         "widest circle, of radius $1/B$, at $r = 2/B$, and closes beyond it into a spike, as Melvin's plane does.",
         "The slice runs through the bifurcation sphere at $r_s$ into the other exterior, the same surface turned "
         "over. Where $B r_s \\ge 2$ the widest circle is the throat itself.",
+    ],
+    ("kerr_melvin", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Ernst and Wild's black hole at one moment of $t$ "
+        "($a = 4m/5$, $B = 1/(4m)$), drawn as a surface in flat space with every distance along it the metric "
+        "distance. The cross term $g_{t\\phi}$ drops out at constant $t$, and the drawing's distance from the axis "
+        "is the circumference radius $\\sqrt{g_{\\phi\\phi}} = k\\sqrt{P}$. As Kerr's does, the slice "
+        "passes through the bifurcation sphere at $r_+$, its throat, into a second exterior.",
+        "The throat's radius is $2mk/(1 + B^2m^2)$ whatever the spin, where Kerr's is $2m$, and the dotted circle is "
+        "the edge of the ergoregion on the equator. The magnetic field closes the surface up as it closes Melvin's "
+        "plane: the circles widen to the radius $k/B$, at $r = 7.95\\,m$, and beyond it they shrink while the "
+        "distance out to them grows, so the surface narrows into a spike of unbounded length.",
     ],
     ("lewis", "moment"): [
         "The moment $t = 0$ of the plane $z = 0$ outside the closed timelike curves of a rotating cylinder of the "

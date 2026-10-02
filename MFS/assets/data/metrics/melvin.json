@@ -66,6 +66,11 @@
       "id": "bonnor_magnetic_dipole",
       "kind": "programme",
       "text": "Bonnor's magnetic dipole of 1966, a pair of black holes with opposite magnetic charges. Melvin's field along the axis of the pair pulls the two apart and takes the place of the strut between them [emparan2000]."
+    },
+    {
+      "id": "kerr_melvin",
+      "kind": "generalisation",
+      "text": "Ernst's black hole set spinning, by Ernst and Wild in 1976. At $a = 0$ their metric is Ernst's [ernst1976c]."
     }
   ],
   "references": [

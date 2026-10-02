@@ -403,6 +403,11 @@
       "id": "gravitational_instantons",
       "kind": "dual",
       "text": "Schwarzschild's metric with $t = -i\\tau/c$ is a space of four dimensions with no time, Hawking's first gravitational instanton. It is smooth on the horizon only if $\\tau$ is a circle of length $4\\pi r_s$, and that length is the inverse of Hawking's temperature [gibbons1977action, gibbonshawking1979]."
+    },
+    {
+      "id": "kerr_melvin",
+      "kind": "generalisation",
+      "text": "A spinning black hole in a magnetic universe. With no spin and no field, $a = 0$ and $B = 0$, it is Schwarzschild's black hole [ernst1976c]."
     }
   ],
   "references": [
@@ -515,7 +520,8 @@
     "ruban1968",
     "davies1977",
     "good2016",
-    "gibbons1977action"
+    "gibbons1977action",
+    "ernst1976c"
   ],
   "coordinates": [
     {

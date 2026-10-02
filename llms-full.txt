@@ -1014,6 +1014,17 @@ The rotating black hole in a universe with a cosmological constant of either sig
 - chart Outgoing Kerr: coordinates $(u, r, \theta, \tilde\phi)$, $$ds^2 = -\dfrac{\Delta_r}{\rho^2}\left(du - \dfrac{a\sin^2\theta}{\Xi}d\tilde\phi\right)^2 - 2\,dr\left(du - \dfrac{a\sin^2\theta}{\Xi}d\tilde\phi\right) + \dfrac{\rho^2}{\Delta_\theta}d\theta^2 + \dfrac{\Delta_\theta\sin^2\theta}{\rho^2}\left(a\,du - \dfrac{r^2 + a^2}{\Xi}d\tilde\phi\right)^2$$
 - chart Kerr-Schild: coordinates $(\tau, r, \theta, \psi)$, $$ds^2 = -\dfrac{\Delta_\theta}{\Xi}\left(1 - \dfrac{\Lambda r^2}{3}\right)c^2\,d\tau^2 + \dfrac{\rho^2}{\left(1 - \dfrac{\Lambda r^2}{3}\right)\left(r^2 + a^2\right)}dr^2 + \dfrac{\rho^2}{\Delta_\theta}d\theta^2 + \dfrac{r^2 + a^2}{\Xi}\sin^2\theta\,d\psi^2 + \dfrac{r_s r}{\rho^2}\left(\dfrac{\Delta_\theta}{\Xi}c\,d\tau + \dfrac{\rho^2}{\left(1 - \dfrac{\Lambda r^2}{3}\right)\left(r^2 + a^2\right)}dr - \dfrac{a\sin^2\theta}{\Xi}d\psi\right)^2$$
 
+### Kerr Black Hole in a Magnetic Universe
+
+Kerr's rotating black hole inside Melvin's magnetic universe, the exact solution of the Einstein-Maxwell equations that Frederick Ernst and Walter Wild built in 1976 by a Harrison transformation of Kerr's metric. The hole carries the charge $Q = 2amB$ that Robert Wald found for a test field in 1974, and its ergoregion runs out to infinity in a tube beside the axis.
+
+- id: `kerr_melvin`
+- tags: electrovacuum, Einstein-Maxwell, electromagnetic field, magnetic field, rotating, rotating black hole, black hole, charged black hole, electric charge, stationary, axisymmetric, angular momentum, mass, ergoregion, frame dragging, curvature singularity, horizon, event horizon, Cauchy horizon, not asymptotically flat, Petrov type I, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kerr_melvin.json
+- chart Ernst-Wild (Boyer-Lindquist): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -N\,c^2dt^2 + F\left(\dfrac{dr^2}{\Delta} + d\theta^2\right) + P\left(k\,d\phi - \omega\,c\,dt\right)^2$$
+- chart Rotating Azimuth: coordinates $(t, r, \theta, \tilde\phi)$, $$ds^2 = -N\,c^2dt^2 + F\left(\dfrac{dr^2}{\Delta} + d\theta^2\right) + P\left(k\,d\tilde\phi - \left(\omega - k\Omega\right)\,c\,dt\right)^2$$
+
 ### Kerr-Newman Charged Rotating Black Hole
 
 The most general stationary black hole solution, carrying mass, angular momentum, and electric charge. It unifies the Kerr and Reissner-Nordström metrics into a single electrovacuum spacetime.

@@ -94,6 +94,11 @@
       "id": "plebanski_hacyan",
       "kind": "family",
       "text": "The same uniform field with a cosmological constant, in the products where one factor is flat: a flat plane of time and space times a sphere, and anti-de Sitter space of two dimensions times a flat plane. In both the energy density of the field matches the cosmological constant [ortaggio2002direct]."
+    },
+    {
+      "id": "kerr_melvin",
+      "kind": "family",
+      "text": "Kerr's black hole in Melvin's universe, whose magnetic field is a bundle along an axis. In 2025 Podolský and Ovcharenko put Kerr's hole into a field that is Bertotti and Robinson's when the mass is taken away [podolsky2025]."
     }
   ],
   "references": [
@@ -121,7 +126,8 @@
     "breitenlohner1994",
     "emparan2000",
     "podolskybelan2004",
-    "ortaggio2002direct"
+    "ortaggio2002direct",
+    "podolsky2025"
   ],
   "coordinates": [
     {
