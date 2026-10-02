@@ -314,6 +314,18 @@ NHEK_CONE = "future cone of no angular momentum"
 # coordinates, which is the point (2/3, 2/3, -1/3) of Kasner's circle, with ell = (3/4)^(2/3).
 LC_WEYL = {"sigma": "1/4", "C": 1}
 LC_KASNER = {"p_0": "2/3", "p_2": "2/3", "p_3": "-1/3", "ell": "(3/4)**(2/3)"}
+# Lewis's cylinders. The Weyl class is drawn at n = 1/2, sigma = 1/8, in Lewis's chart with
+# a = 4/9, b = 3 ell/2 and q = 1/9, which the canonical chart's alpha = 1 and j = ell/8 are: the
+# circle r = ell is null in both, and Lewis's dt is spacelike beyond r = 4 ell. The Lewis class is
+# drawn at m = 1 with a_1 = b_2 = 1 and a_2 = b_1 = 0, where f = (r/ell) cos(psi), k = -r sin(psi)
+# and l = r ell cos(psi). van Stockum's exteriors are drawn joined to the dust, ell = R/sqrt(e), at
+# n = 1/2, wR = sqrt(3)/4, at wR = 1/2, and at m = 3/2, wR = sqrt(13)/4.
+LEWIS_WEYL = {"n": "1/2", "a": "4/9", "b": "3/2", "q": "1/9", "ell": 1}
+LEWIS_CANONICAL = {"sigma": "1/8", "j": "1/8", "alpha": 1, "ell": 1}
+LEWIS_CLASS = {"m": 1, "a_1": 1, "b_1": 0, "a_2": 0, "ell": 1}
+STOCKUM_LIGHT = {"n": "1/2", "R": 1, "ell": "exp(-1/2)"}
+STOCKUM_CRITICAL = {"R": 1, "ell": "exp(-1/2)"}
+STOCKUM_HEAVY = {"m": "3/2", "R": 1, "ell": "exp(-1/2)"}
 
 # Bonnor's uniform beam of light as every one of its diagrams draws it: radius R, the unit, and
 # pi G epsilon R^2/c^4 = 1/32, his m, so that A = rho^2/8 inside the beam and (1 + 2 ln rho)/8
@@ -2746,6 +2758,31 @@ DIAGRAMS = [
             "$\\rho$", "$ct$", LC_WEYL, {"phi": "0", "z": "0"}),
     Diagram("levi_civita", "kasner", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r$", "$ct$", LC_KASNER, {"phi": "0", "z": "0"}),
+    # Lewis's cylinders: the canonical chart's plane of t and r, which holds its radial light rays as
+    # Levi-Civita's does, and in every chart the cylinders of t and phi at one r, unrolled, with phi
+    # scaled by r over the chart's unit of length. The time function is the static time t + C phi
+    # in the Weyl class's own charts, t outside van Stockum's light and critical cylinders, whose
+    # g^tt is negative at every radius, and phi in the bands where Lewis's f is negative.
+    Diagram("lewis", "canonical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r/\\ell$", "$ct/\\ell$", LEWIS_CANONICAL, {"phi": "0", "z": "0"}, orient="vector"),
+    *[Diagram("lewis", system, view, f"$t$ and $\\phi$ at ${name}$", ("t", "\\phi"),
+              tuple(s * math.pi * width for s in (-1, 1, -1, 1)), f"${across}$", f"$ct/{unit}$", params,
+              {"r": at, "z": "0"}, to_display=((0, width), (1, 0)), tau=tau, families=SIDEWAYS, cones=(5, 5),
+              periodic=("\\phi",))
+      for system, view, name, across, unit, params, at, width, tau in (
+          ("lewis", "inside", "r = \\ell/2", "r\\phi/\\ell", "\\ell", LEWIS_WEYL, "1/2", 0.5, "t + 3*phi/2"),
+          ("lewis", "between", "r = 2\\,\\ell", "r\\phi/\\ell", "\\ell", LEWIS_WEYL, "2", 2.0, "t + 3*phi/2"),
+          ("lewis", "beyond", "r = 6\\,\\ell", "r\\phi/\\ell", "\\ell", LEWIS_WEYL, "6", 6.0, "t + 3*phi/2"),
+          ("canonical", "inside", "r = \\ell/2", "r\\phi/\\ell", "\\ell", LEWIS_CANONICAL, "1/2", 0.5, "t + phi"),
+          ("canonical", "outside", "r = 3\\ell/2", "r\\phi/\\ell", "\\ell", LEWIS_CANONICAL, "3/2", 1.5, "t + phi"),
+          ("lewis_class", "first", "r = \\ell", "\\ell\\phi", "\\ell", LEWIS_CLASS, "1", 1.0, "t"),
+          ("lewis_class", "second", "r = e^{\\pi}\\ell", "\\ell\\phi", "\\ell", LEWIS_CLASS, "exp(pi)", 1.0, "phi"),
+          ("stockum_light", "surface", "r = R", "r\\phi/R", "R", STOCKUM_LIGHT, "1", 1.0, "t"),
+          ("stockum_light", "beyond", "r = 5R", "r\\phi/R", "R", STOCKUM_LIGHT, "5", 5.0, "t"),
+          ("stockum_critical", "surface", "r = R", "r\\phi/R", "R", STOCKUM_CRITICAL, "1", 1.0, "t"),
+          ("stockum_critical", "beyond", "r = 5R", "r\\phi/R", "R", STOCKUM_CRITICAL, "5", 5.0, "t"),
+          ("stockum_heavy", "surface", "r = R", "r\\phi/R", "R", STOCKUM_HEAVY, "1", 1.0, "t"),
+          ("stockum_heavy", "band", "r = 3R", "r\\phi/R", "R", STOCKUM_HEAVY, "3", 3.0, "phi"))],
     # The Curzon-Chazy particle on its two totally geodesic planes, the axis and the plane z = 0, in
     # each chart: on the axis the cones close toward R = 0, and in the plane they open.
     Diagram("curzon_chazy", "weyl", "axis", "$t$ and $z$ on the axis", ("t", "z"), (0, 4, -2, 2),
@@ -6706,6 +6743,63 @@ CAPTIONS = {
         "The Kretschmann scalar $3/(4\\rho^3)$ diverges on the axis $\\rho = 0$, and a ray that leaves the axis "
         "reaches every $\\rho$ in a finite time, so the singularity is naked.",
     ],
+    # Lewis's cylinders.
+    ("lewis", "canonical", "radial"): [
+        "The plane of $t$ and $r$ ($\\phi = 0$, $z = 0$) of a rotating cylinder of the Weyl class in the canonical chart ($\\sigma = 1/8$, $j = \\ell/8$, $\\alpha = 1$). The metric on it is $-u\\,c^2dt^2/\\alpha + h\\,dr^2$, Levi-Civita's, so the rays are the curves $ct = \\pm(16/9)\\,\\ell\\,(r/\\ell)^{9/16} + $ const, with cones that close toward the axis. No Christoffel symbol turns them out of the plane, so they are null geodesics.",
+        "The Kretschmann scalar $117/(256\\,r^4h^2)$ diverges on the axis $r = 0$, and a ray that leaves the axis reaches every $r$ in a finite time, so the singularity is naked. The angular momentum $j$ is in no coefficient of this plane, which is the same for the cylinder at rest.",
+    ],
+    ("lewis", "lewis", "inside"): [
+        "The cylinder of $t$ and $\\phi$ ($r = \\ell/2$, $z = 0$) in the Weyl class ($n = 1/2$, $a = 4/9$, $b = 3\\ell/2$, $q = 1/9$), opened along the line $\\phi = \\pm\\pi$ and drawn with $r\\phi$ across, so that its left and right edges are that one line. The metric on it is $-f\\,c^2dt^2 + 2k\\,c\\,dt\\,d\\phi + l\\,d\\phi^2$, the same at every point, so its null curves are straight, $c\\,dt = (k \\pm r)\\,d\\phi/f$. Inside $r = \\ell$, where $l < 0$, both go down in $t$ toward $+\\phi$, so every horizontal line, run toward $+\\phi$, points into the future cones, and the circle of constant $t$, $r$, and $z$ is a closed timelike curve.",
+        "Neither curve is a null geodesic: light launched along either one leaves the cylinder for larger $r$.",
+    ],
+    ("lewis", "lewis", "between"): [
+        "The cylinder of $t$ and $\\phi$ ($r = 2\\,\\ell$, $z = 0$) in the Weyl class ($n = 1/2$, $a = 4/9$, $b = 3\\ell/2$, $q = 1/9$), opened along the line $\\phi = \\pm\\pi$ and drawn with $r\\phi$ across, so that its left and right edges are that one line. The metric on it is $-f\\,c^2dt^2 + 2k\\,c\\,dt\\,d\\phi + l\\,d\\phi^2$, the same at every point, so its null curves are straight, $c\\,dt = (k \\pm r)\\,d\\phi/f$. Between $r = \\ell$ and $r = 4\\,\\ell$ both $f$ and $l$ are positive: one null curve climbs in $t$ toward $+\\phi$ and the other toward $-\\phi$, thirty four times as steeply, so the cones lean far toward $+\\phi$ and the circles of constant $t$ are spacelike.",
+        "Lewis's coordinates turn rigidly relative to the distant stars, at $\\Omega = q/(n\\ell - bq) = 1/(3\\ell)$ per unit of $ct$, and the lean of the cones is that turning. Neither curve is a null geodesic: light launched along either one leaves the cylinder for larger $r$.",
+    ],
+    ("lewis", "lewis", "beyond"): [
+        "The cylinder of $t$ and $\\phi$ ($r = 6\\,\\ell$, $z = 0$) in the Weyl class ($n = 1/2$, $a = 4/9$, $b = 3\\ell/2$, $q = 1/9$), opened along the line $\\phi = \\pm\\pi$ and drawn with $r\\phi$ across, so that its left and right edges are that one line. The metric on it is $-f\\,c^2dt^2 + 2k\\,c\\,dt\\,d\\phi + l\\,d\\phi^2$, the same at every point, so its null curves are straight, $c\\,dt = (k \\pm r)\\,d\\phi/f$. Beyond $r = 4\\,\\ell$, where $f < 0$, both null curves climb in $t$ toward $+\\phi$, and every vertical line, a point at rest in Lewis's coordinates, lies outside the cones.",
+        "The coordinates turn rigidly, and beyond $r = 4\\,\\ell$ a point fixed in them moves faster than light, as beyond the light cylinder of a rotating frame in flat spacetime. The circles of constant $t$ are spacelike, and the future is the side of growing $t + b\\phi/c$.",
+    ],
+    ("lewis", "canonical", "inside"): [
+        "The cylinder of $t$ and $\\phi$ ($r = \\ell/2$, $z = 0$) in the canonical chart ($\\sigma = 1/8$, $j = \\ell/8$, $\\alpha = 1$), opened along the line $\\phi = \\pm\\pi$ and drawn with $r\\phi$ across, so that its left and right edges are that one line. The metric on it is $-u\\,(c\\,dt + C\\,d\\phi)^2/\\alpha + \\alpha r^2d\\phi^2/u$ with $C = 4j/(1 - 4\\sigma) = \\ell$, the same at every point, so its null curves are straight: $c\\,dt = (-C \\pm \\alpha r/u)\\,d\\phi$. Inside $r = \\ell$ both go down in $t$ toward $+\\phi$, so every horizontal line, run toward $+\\phi$, points into the future cones, and the circle of constant $t$, $r$, and $z$ is a closed timelike curve.",
+        "Neither curve is a null geodesic: light launched along either one leaves the cylinder for larger $r$.",
+    ],
+    ("lewis", "canonical", "outside"): [
+        "The cylinder of $t$ and $\\phi$ ($r = 3\\ell/2$, $z = 0$) in the canonical chart ($\\sigma = 1/8$, $j = \\ell/8$, $\\alpha = 1$), opened along the line $\\phi = \\pm\\pi$ and drawn with $r\\phi$ across, so that its left and right edges are that one line. The metric on it is $-u\\,(c\\,dt + C\\,d\\phi)^2/\\alpha + \\alpha r^2d\\phi^2/u$ with $C = 4j/(1 - 4\\sigma) = \\ell$, the same at every point, so its null curves are straight: $c\\,dt = (-C \\pm \\alpha r/u)\\,d\\phi$. Outside $r = \\ell$ one climbs in $t$ toward $+\\phi$ and the other toward $-\\phi$, ten times as steeply, so the cones lean toward $+\\phi$, and the circles of constant $t$ are spacelike.",
+        "A lap toward $+\\phi$ takes light $2\\pi(\\alpha r/u - C)/c$ and a lap toward $-\\phi$ takes $2\\pi(\\alpha r/u + C)/c$. They differ by $4\\pi C/c$ at every radius, the Sagnac delay of Costa, Natário, and Santos. Neither curve is a null geodesic: light launched along either one leaves the cylinder for larger $r$.",
+    ],
+    ("lewis", "lewis_class", "first"): [
+        "The cylinder of $t$ and $\\phi$ ($r = \\ell$, $z = 0$) in the Lewis class ($m = 1$, $a_1 = b_2 = 1$, $a_2 = b_1 = 0$), opened along the line $\\phi = \\pm\\pi$ and drawn with $\\ell\\phi$ across, so that its left and right edges are that one line. Here $f = (r/\\ell)\\cos\\psi$, $k = -r\\sin\\psi$, and $l = r\\,\\ell\\cos\\psi$ with $\\psi = \\ln(r/\\ell)$, so at $r = \\ell$ the metric on the cylinder is $-c^2dt^2 + \\ell^2d\\phi^2$, and the null curves run at 45°.",
+        "Neither curve is a null geodesic: light launched toward $+\\phi$ is turned toward the axis and light launched toward $-\\phi$ away from it. The cones stand upright on this one cylinder and lean on every other, since $k$ vanishes only where $\\sin\\psi$ does.",
+    ],
+    ("lewis", "lewis_class", "second"): [
+        "The cylinder of $t$ and $\\phi$ ($r = e^{\\pi}\\ell$, $z = 0$) in the Lewis class ($m = 1$, $a_1 = b_2 = 1$, $a_2 = b_1 = 0$), opened along the line $\\phi = \\pm\\pi$ and drawn with $\\ell\\phi$ across, so that its left and right edges are that one line. Here $\\psi = \\pi$, so $f = -e^{\\pi}$ and $l = -e^{\\pi}\\ell^2$: the metric on the cylinder is $e^{\\pi}(c^2dt^2 - \\ell^2d\\phi^2)$, with $t$ a coordinate of space and $\\phi$ a coordinate of time. The null curves run at 45° and the cones lie on their sides, opening toward $+\\phi$.",
+        "Every horizontal line, run toward $+\\phi$, is a closed timelike curve, and so is every circle of constant $t$ from $r = e^{\\pi/2}\\ell$ to $r = e^{3\\pi/2}\\ell$. The pattern repeats each time $r$ grows by the factor $e^{2\\pi}$.",
+    ],
+    ("lewis", "stockum_light", "surface"): [
+        "The cylinder of $t$ and $\\phi$ ($r = R$, $z = 0$) outside van Stockum's cylinder ($n = 1/2$, $wR = \\sqrt{3}/4$), opened along the line $\\phi = \\pm\\pi$ and drawn with $r\\phi$ across, so that its left and right edges are that one line. The metric on it is $-F\\,c^2dt^2 - 2M\\,c\\,dt\\,d\\phi + L\\,d\\phi^2$, the same at every point, so its null curves are straight, $c\\,dt = (-M \\pm r)\\,d\\phi/F$. On the surface $F = 1$ and $M = wR^2$, the values of the dust inside, and the cones lean toward $+\\phi$: the null curve moving that way covers two and a half times the $\\phi$ in a given $t$ that the other does.",
+        "The coordinates turn with the dust, and a body at rest in them on the surface is in free fall, since $\\Gamma^r{}_{tt}$ vanishes at $r = R$. Neither null curve is a null geodesic: light launched along either one leaves the cylinder for larger $r$.",
+    ],
+    ("lewis", "stockum_light", "beyond"): [
+        "The cylinder of $t$ and $\\phi$ ($r = 5R$, $z = 0$) outside van Stockum's cylinder ($n = 1/2$, $wR = \\sqrt{3}/4$), opened along the line $\\phi = \\pm\\pi$ and drawn with $r\\phi$ across, so that its left and right edges are that one line. The metric on it is $-F\\,c^2dt^2 - 2M\\,c\\,dt\\,d\\phi + L\\,d\\phi^2$, the same at every point, so its null curves are straight, $c\\,dt = (-M \\pm r)\\,d\\phi/F$. Beyond $r = 3R$, where $F < 0$, both climb in $t$ toward $+\\phi$, and every vertical line, a point turning with the dust, lies outside the cones.",
+        "The circles of constant $t$ are spacelike here and at every radius, since $L > 0$: a light cylinder has no closed timelike curves. Light launched along either null curve leaves the cylinder for larger $r$.",
+    ],
+    ("lewis", "stockum_critical", "surface"): [
+        "The cylinder of $t$ and $\\phi$ ($r = R$, $z = 0$) outside van Stockum's cylinder ($wR = 1/2$), opened along the line $\\phi = \\pm\\pi$ and drawn with $r\\phi$ across, so that its left and right edges are that one line. The metric on it is $-F\\,c^2dt^2 - 2M\\,c\\,dt\\,d\\phi + L\\,d\\phi^2$, the same at every point, so its null curves are straight, $c\\,dt = (-M \\pm r)\\,d\\phi/F$. On the surface $F = 1$, $M = R/2$, and $L = 3R^2/4$, so the null curves are $c\\,dt = (R/2)\\,d\\phi$ and $c\\,dt = -(3R/2)\\,d\\phi$.",
+        "The curve moving to $+\\phi$ is a null geodesic: $\\Gamma^r{}_{tt}$, $\\Gamma^r{}_{t\\phi}$, and $\\Gamma^r{}_{\\phi\\phi}$ cancel along it, and light sent that way circles the cylinder. The same curve, $c\\,dt = (R/2)\\,d\\phi$, is null and geodesic at every radius. Light launched along the other one leaves the cylinder for larger $r$.",
+    ],
+    ("lewis", "stockum_critical", "beyond"): [
+        "The cylinder of $t$ and $\\phi$ ($r = 5R$, $z = 0$) outside van Stockum's cylinder ($wR = 1/2$), opened along the line $\\phi = \\pm\\pi$ and drawn with $r\\phi$ across, so that its left and right edges are that one line. The metric on it is $-F\\,c^2dt^2 - 2M\\,c\\,dt\\,d\\phi + L\\,d\\phi^2$, the same at every point, so its null curves are straight, $c\\,dt = (-M \\pm r)\\,d\\phi/F$. Beyond $r = eR$, where $F < 0$, both climb in $t$ toward $+\\phi$, and every vertical line, a point turning with the dust, lies outside the cones.",
+        "The slower curve is $c\\,dt = (R/2)\\,d\\phi$, the circular path of light the surface has, a null geodesic here too. The circles of constant $t$ are spacelike at every radius, since $L > 0$.",
+    ],
+    ("lewis", "stockum_heavy", "surface"): [
+        "The cylinder of $t$ and $\\phi$ ($r = R$, $z = 0$) outside van Stockum's cylinder ($m = 3/2$, $wR = \\sqrt{13}/4$), opened along the line $\\phi = \\pm\\pi$ and drawn with $r\\phi$ across, so that its left and right edges are that one line. The metric on it is $-F\\,c^2dt^2 - 2M\\,c\\,dt\\,d\\phi + L\\,d\\phi^2$, the same at every point, so its null curves are straight, $c\\,dt = (-M \\pm r)\\,d\\phi/F$. On the surface $F = 1$, $M = wR^2$, and $L = R^2(3 - m^2)/4$, and the cones lean so far toward $+\\phi$ that the null curve moving that way climbs by only $0.10\\,R$ per radian.",
+        "From $r = 1.14\\,R$, where $L = 0$, that curve goes down in $t$. Neither curve is a null geodesic: light launched toward $+\\phi$ is turned toward the axis and light launched toward $-\\phi$ away from it.",
+    ],
+    ("lewis", "stockum_heavy", "band"): [
+        "The cylinder of $t$ and $\\phi$ ($r = 3R$, $z = 0$) outside van Stockum's cylinder ($m = 3/2$, $wR = \\sqrt{13}/4$), opened along the line $\\phi = \\pm\\pi$ and drawn with $r\\phi$ across, so that its left and right edges are that one line. The metric on it is $-F\\,c^2dt^2 - 2M\\,c\\,dt\\,d\\phi + L\\,d\\phi^2$, the same at every point, so its null curves are straight, $c\\,dt = (-M \\pm r)\\,d\\phi/F$. Here both $F$ and $L$ are negative, $t$ is a coordinate of space and $\\phi$ a coordinate of time, and the cones lie on their sides, opening toward $+\\phi$.",
+        "Every horizontal line, run toward $+\\phi$, points into the future cones, so the circle of constant $t$, $r$, and $z$ is a closed timelike curve, as it is from $r = 1.14\\,R$ to $r = 9.24\\,R$, where $L < 0$. The band repeats each time $r$ grows by the factor $e^{2\\pi/m}$, which Frank Tipler found in 1974.",
+    ],
     ("levi_civita", "kasner", "radial"): [
         "The plane of $t$ and $r$ ($\\phi = 0$, $z = 0$) of Levi-Civita's cylinder in its Kasner form "
         "($p_0 = p_2 = 2/3$, $p_3 = -1/3$), with $r$ the proper distance from the axis. The metric on it is "
@@ -10318,6 +10412,9 @@ CLOSED_FORMS = {
         (lambda t, r: t + 4 * r ** 0.25, lambda t, r: t - 4 * r ** 0.25, lambda t, r: r > 0.01),
     ("levi_civita", "kasner", "radial"):
         (lambda t, r: t + 3 * np.cbrt(r), lambda t, r: t - 3 * np.cbrt(r), lambda t, r: r > 0.01),
+    # The canonical chart's plane at sigma = 1/8: sqrt(h alpha/u) = r^(-7/16).
+    ("lewis", "canonical", "radial"):
+        (lambda t, r: t + 16 / 9 * r ** 0.5625, lambda t, r: t - 16 / 9 * r ** 0.5625, lambda t, r: r > 0.01),
     ("point_particle_2plus1", "conical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("point_particle_2plus1", "wedge", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("point_particle_2plus1", "circumference", "radial"): (lambda t, R: t + R / 0.75, lambda t, R: t - R / 0.75, None),
@@ -10496,6 +10593,35 @@ CLOSED_FORMS.update({
         ("global", "near", 4.25), ("global", "middle", 2.0), ("global", "far", 4.25),
         ("dynamical_exponent", "one", 1.0), ("dynamical_exponent", "three_halves", math.sqrt(2)),
         ("dynamical_exponent", "three", 4.0), ("poincare_5d", "middle", 1.0), ("poincare_6d", "middle", 1.0))})
+def _lewis_slopes(system, r):
+    """The two null slopes c dt/dphi on a cylinder of Lewis's charts at the drawn parameters, the
+    lesser first where f is positive: (k -+ r)/f in Lewis's letters and (-M -+ r)/F in van Stockum's."""
+    if system == "canonical":
+        f, k = math.sqrt(r), -math.sqrt(r)
+    elif system == "lewis":
+        f = 4 * math.sqrt(r) / 9 - r ** 1.5 / 9
+        k = -r ** 1.5 / 2 - 1.5 * f
+    elif system == "lewis_class":
+        f, k = r * math.cos(math.log(r)), -r * math.sin(math.log(r))
+    elif system == "stockum_light":
+        f, k = 1.5 * math.sqrt(r) - 0.5 * r ** 1.5, -math.sqrt(3) / 4 * r * (1.5 * math.sqrt(r) - 0.5 / math.sqrt(r))
+    elif system == "stockum_critical":
+        f, k = r * (1 - math.log(r)), -r / 2 * (1 + math.log(r))
+    else:
+        psi = 1.5 * math.log(r)
+        f = r * (math.cos(psi) - math.sin(psi) / 1.5)
+        k = -math.sqrt(13) / 4 * r * (math.cos(psi) + math.sin(psi) / 1.5)
+    # Where f is negative the families change places: the one drawn first is then the steeper.
+    return tuple(sorted(((k - r) / f, (k + r) / f), reverse=f < 0))
+
+
+CYLINDERS.update({("lewis", system, view): _lewis_slopes(system, r) for system, view, r in (
+    ("lewis", "inside", 0.5), ("lewis", "between", 2.0), ("lewis", "beyond", 6.0),
+    ("canonical", "inside", 0.5), ("canonical", "outside", 1.5),
+    ("lewis_class", "first", 1.0), ("lewis_class", "second", math.exp(math.pi)),
+    ("stockum_light", "surface", 1.0), ("stockum_light", "beyond", 5.0),
+    ("stockum_critical", "surface", 1.0), ("stockum_critical", "beyond", 5.0),
+    ("stockum_heavy", "surface", 1.0), ("stockum_heavy", "band", 3.0))})
 CLOSED_FORMS.update({where: (lambda t, phi, k=left: t - k * phi, lambda t, phi, k=right: t - k * phi, None)
                      for where, (left, right) in CYLINDERS.items()})
 # Misner space: in Misner's plane one family keeps psi and the other T e^(psi/2), read through
@@ -10528,6 +10654,14 @@ CLOSED_FORMS.update({
 # cylinder as a null geodesic, or is turned toward or away from the axis.
 TURNING = {
     ("stockum_dust", "cylindrical", "inside"): ("away", "geodesic"),
+    # Lewis's cylinders where d_t is timelike and the circle spacelike, which is where a null curve
+    # moves left or right.
+    ("lewis", "lewis", "between"): ("away", "away"),
+    ("lewis", "canonical", "outside"): ("away", "away"),
+    ("lewis", "lewis_class", "first"): ("away", "toward"),
+    ("lewis", "stockum_light", "surface"): ("away", "away"),
+    ("lewis", "stockum_critical", "surface"): ("away", "geodesic"),
+    ("lewis", "stockum_heavy", "surface"): ("away", "toward"),
     ("stockum_dust", "cylindrical", "beyond"): ("away", "toward"),
     ("godel", "cylindrical", "inside"): ("away", "geodesic"),
     ("godel", "cylindrical", "beyond"): ("away", "toward"),

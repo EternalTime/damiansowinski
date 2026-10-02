@@ -39,6 +39,11 @@
       "text": "The string with its spin switched off, $J = 0$. The helix in time closes up and only the cone is left [soleng1992]."
     },
     {
+      "id": "lewis",
+      "kind": "generalisation",
+      "text": "The vacuum outside any straight rotating cylinder, curved off the axis. The flat one among Lewis's fields, $n = 1$ with $q = 0$, is the spinning string [bronnikov2020, jensen1992]."
+    },
+    {
       "id": "minkowski",
       "kind": "locally_same",
       "text": "Flat spacetime with a wedge cut out along the string and the two faces glued back together a time $8\\pi GJ/c^4$ out of step [deser1992time]."
@@ -98,6 +103,7 @@
     "menotti1993",
     "letelier1995",
     "mena2008",
+    "bronnikov2020",
     "vanstockum1937",
     "misner1963",
     "banados1992",

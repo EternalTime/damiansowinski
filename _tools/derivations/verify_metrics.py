@@ -849,6 +849,37 @@ DIMENSIONS = {
     ("misner_brill_lindquist", "bispherical"): {"\\mu": "1", "\\eta": "1", "\\phi": "1", "a": "L", "\\Psi": "1"},
     ("misner_brill_lindquist", "isotropic"): {"r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L"},
     ("misner_brill_lindquist", "charged"): {"x": "L", "y": "L", "z": "L", "\\chi": "1", "\\psi": "1"},
+    # Lewis's stationary cylinders. His coordinates are pure numbers, so each chart measures r in a
+    # length, ell or van Stockum's radius R, and every power whose exponent holds a parameter is a
+    # power of that ratio: the names u, h and H are pure numbers, and so are Lewis's constants n, a
+    # and q, the last his c, while his b is a length beside c dt. f and F are numbers, k and M
+    # lengths and l and L areas, as -f c^2dt^2 + 2k c dt dphi + l dphi^2 wants. The Komar mass per
+    # unit length sigma is a number and the angular momentum per unit length j a length, each with
+    # its power of G and c, and van Stockum's w, the dust's angular velocity over c, is an inverse length.
+    ("lewis", "lewis"): {
+        "t": "T", "r": "L", "\\phi": "1", "z": "L", "n": "1", "a": "1", "b": "L", "q": "1", "\\ell": "L",
+        "u": "1", "h": "1", "f": "1", "k": "L", "l": "L**2",
+    },
+    ("lewis", "canonical"): {
+        "t": "T", "r": "L", "\\phi": "1", "z": "L", "\\sigma": "1", "j": "L", "\\alpha": "1", "\\ell": "L",
+        "u": "1", "h": "1",
+    },
+    ("lewis", "lewis_class"): {
+        "t": "T", "r": "L", "\\phi": "1", "z": "L", "m": "1", "a_1": "1", "b_1": "1", "a_2": "1", "\\ell": "L",
+        "b_2": "1", "\\psi": "1", "h": "1", "f": "1", "k": "L", "l": "L**2",
+    },
+    ("lewis", "stockum_light"): {
+        "t": "T", "r": "L", "\\phi": "1", "z": "L", "n": "1", "R": "L", "\\ell": "L", "w": "1/L",
+        "u": "1", "H": "1", "F": "1", "M": "L", "L": "L**2",
+    },
+    ("lewis", "stockum_critical"): {
+        "t": "T", "r": "L", "\\phi": "1", "z": "L", "R": "L", "\\ell": "L", "H": "1", "F": "1", "M": "L",
+        "L": "L**2",
+    },
+    ("lewis", "stockum_heavy"): {
+        "t": "T", "r": "L", "\\phi": "1", "z": "L", "m": "1", "R": "L", "\\ell": "L", "w": "1/L",
+        "\\psi": "1", "H": "1", "F": "1", "M": "L", "L": "L**2",
+    },
     # The Kaluza-Klein black holes keep three lengths: the horizon radius r_s and the charge
     # lengths q and p. The fifth coordinate y is a length, and so are the advanced time v = ct + ...
     # and its companion w along the circle.

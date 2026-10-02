@@ -1792,7 +1792,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "fc9a990c0af80368",
+    "version": "e339b06dfd526e16",
     "diagrams": "03d90ee0c12cbe63",
     "embedding": "f63088100c538d20"
   },
@@ -1837,10 +1837,44 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "52fddae1d50e0bf3",
+    "version": "a5a6bd5c2d9a2391",
     "diagrams": "32400e2bb95be485",
     "conformal": "5451827f049d2595",
     "embedding": "232b53e716678841"
+  },
+  {
+    "id": "lewis",
+    "name": "Lewis",
+    "tags": [
+      "vacuum",
+      "stationary",
+      "rotating",
+      "cylindrical symmetry",
+      "axisymmetric",
+      "line mass",
+      "frame dragging",
+      "gravitomagnetism",
+      "Sagnac effect",
+      "Aharonov-Bohm effect",
+      "locally static",
+      "closed timelike curves",
+      "angular momentum",
+      "angular deficit",
+      "Weyl class",
+      "Lewis class",
+      "curvature singularity",
+      "naked singularity",
+      "not asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "c34315cc045f95d5",
+    "diagrams": "4ab32fd3e8390e5e",
+    "conformal": "ef3ef065649addc5",
+    "embedding": "77935accaa9e62b5"
   },
   {
     "id": "lifshitz_spacetime",
@@ -3068,7 +3102,7 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "58dc5f1f5dcac992",
+    "version": "59ae16c4bd36f66d",
     "diagrams": "9b126a24baab54f6",
     "conformal": "af0aad8daedb8e34",
     "embedding": "d2f10fa2373b33b4"
@@ -3375,7 +3409,7 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "7e58a2fbb5279019",
+    "version": "800ddb402872d052",
     "diagrams": "a5eedeb1a3fee9e3",
     "conformal": "23c762685b735685",
     "embedding": "aa10dc85dcfab188"
