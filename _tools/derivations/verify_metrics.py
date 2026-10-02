@@ -545,6 +545,15 @@ DIMENSIONS = {
     ("kasner_scalar", "kaluza_klein"): {
         "T": "T", "x": "L", "y": "L", "z": "L", "w": "L", "s_1": "1", "s_2": "1", "s_3": "1", "s_5": "1",
     },
+    # Kasner's universe with a magnetic field: the exponents and the strength b of the field are
+    # pure numbers, and the powers of the time are read with the time in a fixed unit, as Kasner's
+    # are, so that 1 + b^2 t^(2 p_3) balances. Rosen's time eta is a pure number and ell a length.
+    ("kasner_magnetic", "kasner_time"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "p_1": "1", "p_2": "1", "p_3": "1", "b": "1",
+    },
+    ("kasner_magnetic", "rosen"): {
+        "\\eta": "1", "x": "L", "y": "L", "z": "L", "\\ell": "L",
+    },
     # The other entry that keeps G and a mass explicit rather than folding them into a
     # length. The spin per unit mass a = J/(Mc) is a length, which is what makes
     # r^2 + a^2cos^2(theta) and r^2 - 2GMr/c^2 + a^2 areas.
@@ -2006,6 +2015,13 @@ PARAMETER_RELATIONS = {
     },
     # Kasner's vacuum of five dimensions, sum s_a = sum s_a^2 = 1: the second point where the line
     # from (1, 0, 0, 0) along (-(a + b + 1), a, b, 1) meets the sphere.
+    # Kasner's universe with a magnetic field: its exponents are those of the vacuum it starts
+    # from, on Kasner's circle, with the field along the axis of p_3, which is positive for u > 0.
+    ("kasner_magnetic", "kasner_time"): {
+        "p_1": "-u/(1 + u + u**2)",
+        "p_2": "(1 + u)/(1 + u + u**2)",
+        "p_3": "u*(1 + u)/(1 + u + u**2)",
+    },
     ("kasner_scalar", "kaluza_klein"): {
         "s_1": "1 - 2*(a + b + 1)**2/((a + b + 1)**2 + a**2 + b**2 + 1)",
         "s_2": "2*a*(a + b + 1)/((a + b + 1)**2 + a**2 + b**2 + 1)",

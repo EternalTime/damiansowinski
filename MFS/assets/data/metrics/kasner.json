@@ -85,6 +85,11 @@
       "id": "tilted_universes",
       "kind": "family",
       "text": "Homogeneous universes whose matter drifts through the surfaces of homogeneity. Bianchi's type I, Kasner's, has none of them [king1973]."
+    },
+    {
+      "id": "kasner_magnetic",
+      "kind": "generalisation",
+      "text": "Kasner's universe with a uniform magnetic field along one axis. The field carries it from one set of Kasner exponents at early times to another at late times, and the exponent $p_3$ along the field becomes $-p_3/(1 + 2p_3)$ [kastor2015]."
     }
   ],
   "references": [
@@ -107,7 +112,8 @@
     "belinskii1973",
     "ferrando2006",
     "martins1996",
-    "king1973"
+    "king1973",
+    "kastor2015"
   ],
   "coordinates": [
     {
