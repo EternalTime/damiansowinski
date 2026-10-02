@@ -4746,6 +4746,58 @@ def godel(ck, src):
                         "like this one."])]
 
 
+def som_raychaudhuri(ck, src):
+    """The plane z = 0 about one world line of the dust, at one moment of the cylindrical chart's
+    t, in units of r_c = c/Omega: g_rr = 1 and g_phiphi = r^2 (1 - r^2), so the circle at the
+    proper distance r from the axis has the radius rho = r sqrt(1 - r^2), widest at r = 1/sqrt(2),
+    where rho = 1/2, and g_rr - (drho/dr)^2 = r^2 (3 - 4 r^2)/(1 - r^2) vanishes at r = sqrt(3)/2:
+    the construction stops there, exactly, which is checked, before the circles turn null at
+    r = r_c and timelike beyond, both checked. The height is dz/dr = r sqrt((3 - 4r^2)/(1 - r^2)),
+    whose integral from the axis is z = (sqrt((1 - r^2)(3 - 4r^2)) - sqrt(3))/2
+    + (artanh(sqrt(3)/2) - artanh(sqrt((3 - 4r^2)/(4 - 4r^2))))/4 up to its sign, the closed form
+    the surface is checked against."""
+    sl = Slice(src, "som_raychaudhuri", "cylindrical", "r", "\\phi", {"t": 0, "z": 0}, {"Omega": 1})
+    stop = math.sqrt(3) / 2
+    ck.add("Som-Raychaudhuri: the surface stops at r = sqrt(3) r_c/2, where g_rr = (drho/dr)^2",
+           abs(float(sl.defect_at(stop))), 1e-12)
+    ck.stops("Som-Raychaudhuri, between the last surface and r_c", sl, np.linspace(stop, 1, 202)[1:-1])
+    beyond = sl.gpp_at(np.linspace(1, 3, 201)[1:])
+    ck.add("Som-Raychaudhuri: beyond r_c the circles are timelike, g_phiphi < 0", float(max(0.0, np.max(beyond))), 0.0)
+    size = 2 * 0.72
+    widest = 1 / math.sqrt(2)
+    dust = Piece("dust", "star", sl, 0.0, stop, 0.0, 1,
+                 (("axis", "the world line $r = 0$ of the dust"),
+                  ("stops", "the circles shrink faster than the distance out to them, and nothing in flat space carries the slice on")),
+                 [(0.25, "r", None), (0.5, "r", None), (widest, "r", None), (stop, "chartedge", None)], size)
+    ck.isometry("Som-Raychaudhuri, about one world line", dust)
+    ck.add("Som-Raychaudhuri: the widest circle is at r = r_c/sqrt(2), of radius r_c/2",
+           abs(float(np.max(dust.rho)) - 0.5), 1e-9)
+
+    def height(r):
+        w = np.sqrt((3 - 4 * r * r) / (4 - 4 * r * r))
+        return ((math.sqrt(3) - np.sqrt((1 - r * r) * (3 - 4 * r * r))) / 2
+                - (math.atanh(math.sqrt(3) / 2) - np.arctanh(w)) / 4)
+
+    ck.form("Som-Raychaudhuri, the height in closed form", dust, height, size)
+    ck.radius("Som-Raychaudhuri, rho = r sqrt(1 - r^2/r_c^2)", dust, lambda r: r * np.sqrt(1 - r * r), size)
+    surface = Surface([dust])
+    fig = figure_of([surface], {"star": "star"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *dust.at(widest), "$r_c/\\sqrt{2}$")
+    ring_label(fig, [0, 0, 0], *dust.at(stop), "$\\sqrt{3}\\,r_c/2$", side=-1)
+    fig.legend("fill", "star", "the dust about one of its world lines, which $t$, $r$ and $\\phi$ cover")
+    fig.legend("line", "r", "$r$ constant, at $r_c/4$, $r_c/2$ and $r_c/\\sqrt{2}$, the widest circle")
+    fig.legend("line", "chartedge", "$r = \\sqrt{3}\\,r_c/2$, where the drawing stops")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("dust", "About one world line", "$r_c$", [surface], fig.done(),
+                 settings="$r_c = c/\\Omega = 1$, the unit of every length.",
+                 stops=["From $r = \\sqrt{3}\\,r_c/2$ the circles shrink faster than the distance out to them, "
+                        "$g_{rr} < (\\partial_r\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution in flat space "
+                        "carries the slice on.",
+                        "At $r = r_c$ the circles about the axis are null, and beyond it they are closed timelike "
+                        "curves, so a surface of constant $t$ is not a moment of space there. Every world line of "
+                        "the dust is an axis like this one."])]
+
+
 def ellis_bronnikov(ck, src):
     """In its own chart r is the proper distance from the throat, g_rr = 1 and g_phiphi = r^2 +
     l^2, so dz/dr = l/sqrt(r^2 + l^2) and z = l arcsinh(r/l): the catenoid rho = l cosh(z/l),
@@ -8347,6 +8399,7 @@ DRAWN = {
     "stockum_dust": stockum_dust,
     "taub_nut": taub_nut,
     "godel": godel,
+    "som_raychaudhuri": som_raychaudhuri,
     "kerr": kerr,
     "kerr_newman": kerr_newman,
     "kerr_de_sitter": kerr_de_sitter,
@@ -9116,6 +9169,17 @@ CAPTIONS = {
         "Gödel found in 1949. The universe is homogeneous, so every world line of the dust is an axis like "
         "this one, and it has no moment of time that is space everywhere: this surface is a moment only near "
         "its axis.",
+    ],
+    ("som_raychaudhuri", "dust"): [
+        "The plane $z = 0$ about one world line of the dust in Som and Raychaudhuri's universe, at one moment "
+        "of $t$, drawn as a surface in flat space with every distance along it the metric distance. Its $r$ is "
+        "the proper distance from the axis, and the circle at $r$ has circumference "
+        "$2\\pi r\\sqrt{1 - r^2/r_c^2}$ with $r_c = c/\\Omega$, which grows out to $r = r_c/\\sqrt{2}$ and then "
+        "shrinks, so the surface curls back toward the axis, and at $r = \\sqrt{3}\\,r_c/2$ the circles shrink "
+        "faster than the distance out to them and the drawing stops.",
+        "At $r = r_c$ the circles are null, and beyond it they are closed timelike curves. The universe is "
+        "homogeneous, so every world line of the dust is an axis like this one, and this surface is a moment "
+        "of space only within $r_c$ of its axis.",
     ],
     ("ellis_bronnikov", "wormhole"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Ellis-Bronnikov wormhole at one moment of $t$, drawn "

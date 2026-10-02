@@ -66,6 +66,11 @@
       "id": "string_wave",
       "kind": "family",
       "text": "The straight string given a wave where this one is given spin. Its curvature scalars vanish as well, while the spacetime is curved wherever the wave passes [kaloper1997, anderson1999]."
+    },
+    {
+      "id": "som_raychaudhuri",
+      "kind": "family",
+      "text": "Soleng's thick string with $M = \\Omega r^2/c$ and $\\rho = r$ all the way out, a homogeneous universe of charged dust in rigid rotation. Its closed timelike curves lie outside $r = c/\\Omega$, where the string's lie inside $r_c$ [soleng1994, som1968]."
     }
   ],
   "references": [
@@ -92,7 +97,8 @@
     "banados1992",
     "cornish1994",
     "kaloper1997",
-    "anderson1999"
+    "anderson1999",
+    "som1968"
   ],
   "coordinates": [
     {

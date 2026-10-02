@@ -1,5 +1,5 @@
 {
-  "version": "321c82a0bafccf12",
+  "version": "a78cbc3b2885f135",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -16300,6 +16300,182 @@
         "year": "1976",
         "doi": "10.1103/PhysRevD.14.2460",
         "url": "https://doi.org/10.1103/PhysRevD.14.2460"
+      }
+    },
+    "som1968": {
+      "type": "article",
+      "fields": {
+        "title": "Cylindrically symmetric charged dust distributions in rigid rotation in general relativity",
+        "author": "Som, M. M. and Raychaudhuri, A. K.",
+        "journal": "Proceedings of the Royal Society of London. Series A. Mathematical and Physical Sciences",
+        "volume": "304",
+        "number": "1476",
+        "pages": "81--86",
+        "year": "1968",
+        "doi": "10.1098/rspa.1968.0073",
+        "url": "https://doi.org/10.1098/rspa.1968.0073"
+      }
+    },
+    "mathgenealogysom": {
+      "type": "misc",
+      "fields": {
+        "title": "Murari Moham Som",
+        "author": "{Mathematics Genealogy Project}",
+        "howpublished": "Department of Mathematics, North Dakota State University; record 166450, consulted 2 October 2026",
+        "year": "2026",
+        "url": "https://www.mathgenealogy.org/id.php?id=166450"
+      }
+    },
+    "raychaudhuri1980": {
+      "type": "article",
+      "fields": {
+        "title": "Homogeneous space-times of the G\\\"odel type",
+        "author": "Raychaudhuri, A. K. and Guha Thakurta, S. N.",
+        "journal": "Physical Review D",
+        "volume": "22",
+        "number": "4",
+        "pages": "802--806",
+        "year": "1980",
+        "doi": "10.1103/PhysRevD.22.802",
+        "url": "https://doi.org/10.1103/PhysRevD.22.802"
+      }
+    },
+    "paiva1987": {
+      "type": "article",
+      "fields": {
+        "title": "Time travel in the homogeneous Som-Raychaudhuri universe",
+        "author": "Paiva, F. M. and Rebou\\c{c}as, M. J. and Teixeira, A. F. F.",
+        "journal": "Physics Letters A",
+        "volume": "126",
+        "number": "3",
+        "pages": "168--170",
+        "year": "1987",
+        "doi": "10.1016/0375-9601(87)90453-1",
+        "url": "https://doi.org/10.1016/0375-9601(87)90453-1"
+      }
+    },
+    "paiva2011": {
+      "type": "article",
+      "fields": {
+        "title": "Tempa voja\\^go kaj geodezioj en \\^generala relativeco / Time travel and geodesics in general relativity",
+        "author": "Paiva, F. M. and Teixeira, A. F. F.",
+        "journal": "arXiv preprint arXiv:1104.2273",
+        "year": "2011",
+        "eprint": "1104.2273",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1104.2273"
+      }
+    },
+    "horowitz1995": {
+      "type": "article",
+      "fields": {
+        "title": "New class of exact solutions in string theory",
+        "author": "Horowitz, Gary T. and Tseytlin, A. A.",
+        "journal": "Physical Review D",
+        "volume": "51",
+        "number": "6",
+        "pages": "2896--2917",
+        "year": "1995",
+        "doi": "10.1103/PhysRevD.51.2896",
+        "eprint": "hep-th/9409021",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9409021"
+      }
+    },
+    "russo1995": {
+      "type": "article",
+      "fields": {
+        "title": "Constant magnetic field in closed string theory: an exactly solvable model",
+        "author": "Russo, J. G. and Tseytlin, A. A.",
+        "journal": "Nuclear Physics B",
+        "volume": "448",
+        "number": "1-2",
+        "pages": "293--328",
+        "year": "1995",
+        "doi": "10.1016/0550-3213(95)00091-6",
+        "eprint": "hep-th/9411099",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9411099"
+      }
+    },
+    "gauntlett2003": {
+      "type": "article",
+      "fields": {
+        "title": "All supersymmetric solutions of minimal supergravity in five dimensions",
+        "author": "Gauntlett, Jerome P. and Gutowski, Jan B. and Hull, Christopher M. and Pakis, Stathis and Reall, Harvey S.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "20",
+        "number": "21",
+        "pages": "4587--4634",
+        "year": "2003",
+        "doi": "10.1088/0264-9381/20/21/005",
+        "eprint": "hep-th/0209114",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/0209114"
+      }
+    },
+    "boyda2003": {
+      "type": "article",
+      "fields": {
+        "title": "Holographic protection of chronology in universes of the G\\\"odel type",
+        "author": "Boyda, Edward K. and Ganguli, Surya and Hořava, Petr and Varadarajan, Uday",
+        "journal": "Physical Review D",
+        "volume": "67",
+        "number": "10",
+        "pages": "106003",
+        "year": "2003",
+        "doi": "10.1103/PhysRevD.67.106003",
+        "eprint": "hep-th/0212087",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/0212087"
+      }
+    },
+    "hikida2003": {
+      "type": "article",
+      "fields": {
+        "title": "Can branes travel beyond CTC horizon in G\\\"odel universe?",
+        "author": "Hikida, Yasuaki and Rey, Soo-Jong",
+        "journal": "Nuclear Physics B",
+        "volume": "669",
+        "number": "1-2",
+        "pages": "57--77",
+        "year": "2003",
+        "doi": "10.1016/j.nuclphysb.2003.07.010",
+        "eprint": "hep-th/0306148",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/0306148"
+      }
+    },
+    "drukker2003": {
+      "type": "article",
+      "fields": {
+        "title": "G\\\"odel's universe in a supertube shroud",
+        "author": "Drukker, Nadav and Fiol, Bartomeu and Sim\\'on, Joan",
+        "journal": "Physical Review Letters",
+        "volume": "91",
+        "number": "23",
+        "pages": "231601",
+        "year": "2003",
+        "doi": "10.1103/PhysRevLett.91.231601",
+        "eprint": "hep-th/0306057",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/0306057"
+      }
+    },
+    "drukker2004": {
+      "type": "article",
+      "fields": {
+        "title": "G\\\"odel-type universes and the Landau problem",
+        "author": "Drukker, Nadav and Fiol, Bartomeu and Sim\\'on, Joan",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2004",
+        "number": "10",
+        "pages": "012",
+        "year": "2004",
+        "doi": "10.1088/1475-7516/2004/10/012",
+        "eprint": "hep-th/0309199",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/0309199"
       }
     }
   }

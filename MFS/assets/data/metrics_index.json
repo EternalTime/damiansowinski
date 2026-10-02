@@ -726,7 +726,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "967739ed305a9e23",
+    "version": "f584839f05618f8b",
     "diagrams": "7bf82d9d4b9ce74d",
     "embedding": "05f185c5abaada89"
   },
@@ -1185,7 +1185,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cd103681f1be9f71",
+    "version": "01239361f89fb827",
     "diagrams": "03d90ee0c12cbe63",
     "embedding": "824169d893851bd7"
   },
@@ -1404,7 +1404,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "21ec43bdac76712f",
+    "version": "83561f1d7f6a40c2",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -2117,6 +2117,33 @@
     "embedding": "044c6a18e30bb001"
   },
   {
+    "id": "som_raychaudhuri",
+    "name": "Som-Raychaudhuri",
+    "tags": [
+      "dust",
+      "charged",
+      "magnetic field",
+      "rotating",
+      "closed timelike curves",
+      "causality violation",
+      "cosmological",
+      "cosmology",
+      "exact solution",
+      "non-vacuum",
+      "stationary",
+      "homogeneous",
+      "cylindrical symmetry",
+      "axial symmetry",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "9145d035164e30ef",
+    "diagrams": "24d791c0188bc8ef",
+    "embedding": "96ddbe0d3bf719ac"
+  },
+  {
     "id": "spinning_string",
     "name": "Spinning Cosmic String",
     "tags": [
@@ -2144,7 +2171,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8650845911ed2d4a",
+    "version": "437e2a33caf6ab7c",
     "diagrams": "9b126a24baab54f6",
     "conformal": "af0aad8daedb8e34",
     "embedding": "d2f10fa2373b33b4"

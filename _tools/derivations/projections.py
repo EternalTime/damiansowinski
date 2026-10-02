@@ -581,6 +581,14 @@ def godel(spec):
     return about_axis(spec, sl, (0.5, 1.5), ("r = r_c", "r = 3r_c/2"))
 
 
+def som_raychaudhuri(spec):
+    """Som and Raychaudhuri's light cones about one world line of the dust, on the slice z = 0 at
+    Omega = 1, drawn polar with r itself as its radius: g_rr = -g_tt = 1, so c dt = +-dr runs at
+    45 degrees."""
+    sl = Slice(spec.metric, spec.system, ("t", "r", "\\phi"), "polar", spec.params, spec.fixed)
+    return about_axis(spec, sl, (0.5, 1.5), ("r = r_c", "r = 3r_c/2"))
+
+
 def ergoregion(spec, camera=Camera(-90, 30), horizon_between=(1.0, 1.9), ergo_below=3.0):
     """The light cones of a rotating hole on its equator, the slice theta = pi/2 of t, r and
     phi, drawn polar with r itself as its radius, down to the horizon.
@@ -867,6 +875,19 @@ CAPTIONS = {
         "every one of them: a closed timelike curve through each of its events. Every world line of the "
         "dust is equivalent to every other, so the cones tip over in the same way about each one.",
     ],
+    ("som_raychaudhuri", "cylindrical", "tipping"): [
+        "The slice $z = 0$ of $t$, $r$, and $\\phi$ about the axis $r = 0$, the world line of one "
+        "particle of the dust, with $ct$ up and $r$ as the radius, which puts the null directions "
+        "$c\\,dt = \\pm dr$ at 45°. The cones stand at $t = 0$ on the axis and around the circles "
+        "$r = r_c/2$, $r_c$, and $3r_c/2$, with $r_c = c/\\Omega$. On the axis they are upright, and farther "
+        "out the cross term $g_{t\\phi} = -\\Omega r^2/c$ tips them over toward $+\\phi$, counterclockwise "
+        "seen from above.",
+        "At $r = r_c$, where $g_{\\phi\\phi}$ vanishes, one edge of every cone lies along the circle of "
+        "constant $t$ and $r$, which is a closed null curve. Beyond it the cones have tipped past the "
+        "horizontal, and the circle $r = 3r_c/2$, run counterclockwise as its arrows point, lies inside "
+        "every one of them: a closed timelike curve through each of its events. Every world line of the "
+        "dust is equivalent to every other, so the cones tip over in the same way about each one.",
+    ],
     ("alcubierre", "cartesian", "bubble"): [
         "The slice $z = 0$ of $t$, $x$, and $y$ through a bubble moving at twice the speed of "
         "light along $x$, with $t$ up, $ct$ and $x$ drawn at one scale, at the moment $t = 0$ when the "
@@ -950,6 +971,8 @@ FIGURES = [
                {"R": 1}, {"z": "0"}),
     Projection("godel", "cylindrical", "tipping", "light cones about the axis", godel,
                {"omega": 1}, {"z": "0"}),
+    Projection("som_raychaudhuri", "cylindrical", "tipping", "light cones about the axis", som_raychaudhuri,
+               {"Omega": 1}, {"z": "0"}),
     # The spinning string at the values its cylinders are drawn at, r_c = a/b = 1.
     Projection("spinning_string", "proper_radius", "tipping", "light cones about the string", spinning_string,
                nr.SPINNING, {"z": "0"}),

@@ -1418,6 +1418,10 @@ FLAT = {
     ("godel", "cartesian", "tx"): lambda: one("godel", lambda m: across(0.0, 0.0, 2 * m.reach("cylindrical", "r")[1])),
     ("godel", "cylindrical", "inside"): lambda: one("godel", _godel_cylinder(math.asinh(1.0) / 2)),
     ("stockum_dust", "cylindrical", "inside"): lambda: one("stockum_dust", _godel_cylinder(0.5)),
+    # Som and Raychaudhuri's plane y = 0 is phi = 0 and pi with the same t, where x = +-r.
+    ("som_raychaudhuri", "cartesian", "tx"): lambda: one(
+        "som_raychaudhuri", lambda m: across(0.0, 0.0, m.reach("cylindrical", "r")[1])),
+    ("som_raychaudhuri", "cylindrical", "inside"): lambda: one("som_raychaudhuri", _godel_cylinder(0.5)),
     # The spinning string's moment t = 0 outside the null circle: the whole line t = 0 of each
     # cylinder outside it, and in the helical chart c tau = a phi~/b, one turn of the helix.
     **{("spinning_string", system, "outside"): lambda R=R: one("spinning_string", _spinning_cylinder(R))
@@ -1541,6 +1545,7 @@ HIDDEN = {
     ("frw", "conformal_spherical", "radial"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",
     ("godel", "cylindrical", "beyond"): "beyond r_c the circles are closed timelike curves and no surface of constant t is a moment of space; the embedding stops at sinh^2 r = 1/sqrt 2",
     ("stockum_dust", "cylindrical", "beyond"): "beyond r = R the circles are closed timelike curves; the embedding stops at r = 0.83 R",
+    ("som_raychaudhuri", "cylindrical", "beyond"): "beyond r_c the circles are closed timelike curves; the embedding stops at r = sqrt(3) r_c/2",
     **{("spinning_string", system, "inside"): "inside r_c the circles are closed timelike curves; the embedding begins at r_c"
        for system in ("proper_radius", "rescaled_radius", "helical")},
     ("tolman_bondi", "comoving_synchronous", "collapse"): "the marginally bound cloud, E = 0, whose moments are planes; the cloud embedded is released from rest",

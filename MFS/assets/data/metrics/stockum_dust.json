@@ -38,6 +38,11 @@
       "id": "spinning_string",
       "kind": "family",
       "text": "A string with spin, flat everywhere off its axis. Its closed timelike curves lie close in, where van Stockum's cylinder has them far out [deser1992time]."
+    },
+    {
+      "id": "som_raychaudhuri",
+      "kind": "family",
+      "text": "The same rigidly rotating dust given an electric charge. The factor $e^{-r^2/R^2}$ goes from the line element, and the universe is homogeneous [som1968, reboucas1983]."
     }
   ],
   "references": [
@@ -51,7 +56,9 @@
     "vanloo2004",
     "wack2014timebomber",
     "godel1949",
-    "deser1992time"
+    "deser1992time",
+    "som1968",
+    "reboucas1983"
   ],
   "coordinates": [
     {
