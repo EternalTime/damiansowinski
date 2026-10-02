@@ -7650,6 +7650,133 @@ def gravastar(ck, src):
     return views
 
 
+def einstein_cluster(ck, src):
+    """Einstein's cluster in each of its charts, in units of its Schwarzschild radius. The two
+    with a surface, Einstein's own at V = 1/2 and Florides's of uniform density, are joined at
+    R = 3 r_s to the Schwarzschild exterior of the schwarzschild entry, as the embedding diagram
+    draws them: g_tt is continuous at the surface, checked, so t is one coordinate, and r* =
+    int sqrt(g_xx/(-g_tt)) dx runs from the centre through the surface in the chart's own radial
+    coordinate x, the areal radius, Einstein's isotropic radius or the polar angle of the three
+    sphere; p, q = arctan((t -+ r*)/R) give Minkowski's triangle with the cluster a timelike
+    tube. The centre of Florides's cluster is regular and the centre of Einstein's, where the
+    density grows as 1/r^2, is a curvature singularity, both checked on the published Kretschmann
+    scalar. The areal chart is drawn for the declared cluster with no surface, whose r* runs out
+    to infinity."""
+    R = 3.0
+    outer = Plane(src, "schwarzschild", "spherical", ("t", "r"), EQUATOR, {"r_s": 1})
+    views = []
+    for system, label, x, params, edge, marks, singular, moment_view, what, settings in (
+            ("constant_speed", "Constant Speed", "r", {"V": "1/2", "R": 3}, R, (1.0, 2.0), True, "speed",
+             "$r$ constant inside, at $1$ and $2\\,r_s$", "$V = 1/2$ and $R = 3\\,r_s$."),
+            ("isotropic", "Isotropic (Einstein)", "\\rho",
+             {"sigma": "5 - 2*sqrt(6)", "rho_0": "3/(6 - 2*sqrt(6))**2"}, nr.EC_RHO0, (0.8, 1.6), True, "speed",
+             "$\\rho$ constant inside, at $0.8$ and $1.6\\,r_s$",
+             "$\\sigma = 5 - 2\\sqrt{6}$ and $\\rho_0 = 2.47\\,r_s$, the cluster with $V = 1/2$ and $R = 3\\,r_s$."),
+            ("uniform", "Uniform Density (Florides)", "r", {"r_s": 1, "R": 3}, R, (1.0, 2.0), False, "uniform",
+             "$r$ constant inside, at $1$ and $2\\,r_s$", "$R = 3\\,r_s$."),
+            ("hyperspherical", "Hyperspherical", "\\chi", {"a": "sqrt(27)", "chi_0": "asin(1/sqrt(3))"},
+             nr.EC_CHI0, (0.2, 0.4), False, "uniform", "$\\chi$ constant inside, at $0.2$ and $0.4$",
+             "$a = \\sqrt{27}\\,r_s$ and $\\sin\\chi_0 = 1/\\sqrt{3}$, the cluster with $R = 3\\,r_s$.")):
+        inner = Plane(src, "einstein_cluster", system, ("t", x), EQUATOR, params)
+        name = f"Einstein cluster, {system}"
+        ck.limit(f"{name}: g_tt is continuous at the surface",
+                 [float(inner.g[0, 0].subs(inner.x1, edge))], [float(outer.g[0, 0].subs(outer.x1, R))], 1e-12)
+        speed = sp.lambdify(inner.x1, sp.sqrt(inner.g[1, 1] / (-inner.g[0, 0])), "numpy")
+        # The integrand grows as a power of 1/x below one at Einstein's centre, so the grid crowds
+        # there and starts a part in 10^12 of the way out.
+        xq = np.geomspace(1e-12 * edge, edge, 300001)
+        xq[-1] = edge
+        rsq = cumulative_trapezoid(speed(xq), xq, initial=0)
+        xq, rsq = np.concatenate([[0.0], xq]), np.concatenate([[0.0], rsq])
+
+        def inside(t, xs, xq=xq, rsq=rsq):
+            return mink_pq(t, np.interp(np.asarray(xs, dtype=float), xq, rsq), R)
+
+        def outside(t, r, total=rsq[-1]):
+            r = np.asarray(r, dtype=float)
+            return mink_pq(t, total + (r + np.log(r - 1)) - (R + np.log(R - 1)), R)
+        ck.chart(f"{name}, the cluster", inner, inside, ck.uniform(-20, 20), ck.uniform(0.01 * edge, 0.99 * edge),
+                 lambda t, r: (1, 0))
+        ck.chart(f"{name}, the exterior", outer, outside, ck.uniform(-20, 20), ck.uniform(1.01 * R, 30),
+                 lambda t, r: (1, 0))
+        if singular:
+            ck.diverges(f"{name}: the centre is a curvature singularity",
+                        inner.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-3 * edge)),
+                        inner.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-4 * edge)))
+        else:
+            ck.finite(f"{name}: the centre is regular",
+                      inner.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-6 * edge)))
+
+        v = View(system, label, [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], system)
+        v.fill("region", TRIANGLE)
+        ps, qs = inside(S_ALL, edge)
+        v.fill("cover", [[0, -PI]] + [point(p, q) for p, q in zip(ps, qs)] + [[0, PI]])
+        for mark in marks:
+            v.curve("r", *inside(S_ALL, np.full_like(S_ALL, mark)))
+        for r in (4.0, 6.0, 12.0):
+            v.curve("r2", *outside(S_ALL, np.full_like(S_ALL, r)))
+        xi = np.linspace(0, edge, 60)
+        ro = R + np.exp(np.linspace(-6, 8, 200)) - np.exp(-6)
+        for t in (-12, -6, -3, 0, 3, 6, 12):
+            pi_, qi_ = inside(np.full_like(xi, t), xi)
+            po_, qo_ = outside(np.full_like(ro[1:], t), ro[1:])
+            v.curve("t", np.concatenate([pi_, po_]), np.concatenate([qi_, qo_]))
+        v.curve("surface", ps, qs)
+        if singular:
+            triangle_edges(v, centre_class="singular")
+            v.layers = [dict(layer, kind="zig") if layer["class"] == "singular" else layer for layer in v.layers]
+        else:
+            triangle_edges(v)
+        label_on(v, inside(0, edge), "$r = R$")
+        v.label_xt([0.35, 0.0], "cluster", cls="region")
+        v.legend("cover", "the cluster, $r \\le R$")
+        v.legend("r", what)
+        v.legend("r2", "$r$ constant outside, at $4$, $6$ and $12\\,r_s$")
+        v.legend("t", "$t$ constant, one $t$ on both sides")
+        v.legend("surface", "the surface $r = R$")
+        if singular:
+            v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+        else:
+            v.legend("centre", "$r = 0$, a regular centre")
+        v.set(settings=settings)
+        moment = slices.moments("einstein_cluster", moment_view)[0]
+        _, hi = moment.reach("spherical", "r")
+        rr = R + np.geomspace(1e-6, hi - R, 200)
+        pi_, qi_ = inside(0 * xi, xi)
+        po_, qo_ = outside(0 * rr, rr)
+        v.slice(moment, [(np.concatenate([pi_, po_]), np.concatenate([qi_, qo_]))])
+        views.append(v)
+
+    core = Plane(src, "einstein_cluster", "areal", ("t", "r"), EQUATOR, functions={"Phi": nr.EC_CORE})
+    speed = sp.lambdify(core.x1, sp.sqrt(core.g[1, 1] / (-core.g[0, 0])), "numpy")
+    rq = np.concatenate([np.linspace(0, 60, 240001)[:-1], np.geomspace(60, 1e7, 40000)])
+    rsq = cumulative_trapezoid(speed(np.maximum(rq, 1e-300)), rq, initial=0)
+
+    def cluster(t, r):
+        return mink_pq(t, np.interp(np.asarray(r, dtype=float), rq, rsq), R)
+    ck.chart("Einstein cluster, areal, the cluster with no surface", core, cluster, ck.uniform(-20, 20),
+             ck.uniform(0.01, 30), lambda t, r: (1, 0))
+    ck.finite("Einstein cluster, areal: the centre is regular",
+              core.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+    v = View("areal", "Areal Radius", [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "areal")
+    v.fill("region", TRIANGLE)
+    for r in (2.0, 4.0, 8.0, 16.0):
+        v.curve("r", *cluster(S_ALL, np.full_like(S_ALL, r)))
+    rr = np.exp(np.linspace(-6, 10, 260)) - np.exp(-6)
+    for t in (-12, -6, -3, 0, 3, 6, 12):
+        v.curve("t", *cluster(np.full_like(rr, t), rr))
+    triangle_edges(v)
+    v.legend("r", "$r$ constant, at $2$, $4$, $8$ and $16\\,r_s$")
+    v.legend("t", "$t$ constant")
+    v.legend("centre", "$r = 0$, a regular centre")
+    v.set(settings="$b = 2\\,r_s$.", input=nr.EC_CORE_INPUT)
+    moment = slices.moments("einstein_cluster", "core")[0]
+    lo, hi = moment.reach("areal", "r")
+    rr = np.linspace(lo, hi, 200)
+    v.slice(moment, [cluster(0 * rr, rr)])
+    return [views[0], views[1], views[2], views[3], v]
+
+
 # ---------------------------------------------------------------- FRW
 
 def frw(ck, src):
@@ -16588,6 +16715,7 @@ DRAWN = {
     "cosmic_string": cosmic_string, "spinning_string": spinning_string,
     "point_particle_2plus1": point_particle_2plus1,
     "interior_schwarzschild": interior_schwarzschild, "gravastar": gravastar, "frw": frw,
+    "einstein_cluster": einstein_cluster,
     "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "tov": tov,
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "reissner_nordstrom_ads": reissner_nordstrom_ads, "c_metric": c_metric,
     "misner": misner, "milne": milne,
@@ -18259,6 +18387,38 @@ CAPTIONS = {
         "The same gravastar in Schwarzschild's coordinates outside the shell, which cover the triangle from the "
         "shell out to $i^0$. There $x = x_R + r_* - r_*(R)$, where $x_R$ is the value of $x$ on the shell and "
         "$r_* = r + r_s\\ln(r/r_s - 1)$, as outside a Schwarzschild black hole.",
+    ],
+    ("einstein_cluster", "constant_speed"): [
+        "Einstein's cluster of constant speed ($V = 1/2$) joined at $R = 3\\,r_s$ to the Schwarzschild exterior, "
+        "each point in the diagram a 2-sphere of radius $r$. The surface lies outside one and a half Schwarzschild "
+        "radii, as the surface of every cluster does, so there is no horizon.",
+        "At the surface $g_{tt} = -(1 - r_s/R)$ on both sides, so $t$ is one coordinate throughout. The tortoise coordinate $r_* = \\int\\sqrt{g_{rr}/(-g_{tt})}\\,dr$ runs from the centre through the surface, and $p, q = \\arctan((ct \\mp r_*)/R)$ bring the spacetime into Minkowski's triangle, the causal structure of empty space, with the cluster a timelike tube from $i^-$ to $i^+$ about a centre where the Kretschmann scalar diverges.",
+    ],
+    ("einstein_cluster", "isotropic"): [
+        "Einstein's cluster of constant speed in his isotropic radius ($\\sigma = 5 - 2\\sqrt{6}$, "
+        "$\\rho_0 = 2.47\\,r_s$) joined at its surface to the Schwarzschild exterior, each point in the diagram a "
+        "2-sphere. Its surface has the areal radius $R = 3\\,r_s$, and there is no horizon.",
+        "At the surface $g_{tt} = -(1 - r_s/R)$ on both sides, so $t$ is one coordinate throughout. The tortoise coordinate $r_* = \\int\\sqrt{g_{\\rho\\rho}/(-g_{tt})}\\,d\\rho$ runs from the centre through the surface, and $p, q = \\arctan((ct \\mp r_*)/R)$ bring the spacetime into Minkowski's triangle, the causal structure of empty space, with the cluster a timelike tube from $i^-$ to $i^+$ about a centre where the Kretschmann scalar diverges.",
+    ],
+    ("einstein_cluster", "uniform"): [
+        "Florides's cluster of uniform density joined at $R = 3\\,r_s$ to the Schwarzschild exterior, each point "
+        "in the diagram a 2-sphere of radius $r$. The surface lies outside one and a half Schwarzschild radii, "
+        "where its particles would reach the speed of light, so there is no horizon.",
+        "At the surface $g_{tt} = -(1 - r_s/R)$ on both sides, so $t$ is one coordinate throughout. The tortoise coordinate $r_* = \\int\\sqrt{g_{rr}/(-g_{tt})}\\,dr$ runs from the centre through the surface, and $p, q = \\arctan((ct \\mp r_*)/R)$ bring the spacetime into Minkowski's triangle, the causal structure of empty space, with the cluster a timelike tube from $i^-$ to $i^+$ about a regular centre.",
+    ],
+    ("einstein_cluster", "hyperspherical"): [
+        "Florides's cluster of uniform density on its three sphere ($a = \\sqrt{27}\\,r_s$, "
+        "$\\sin\\chi_0 = 1/\\sqrt{3}$) joined at its surface to the Schwarzschild exterior, each point in the "
+        "diagram a 2-sphere of radius $a\\sin\\chi$. Its surface has the areal radius $R = 3\\,r_s$, and there "
+        "is no horizon.",
+        "At the surface $g_{tt} = -(1 - r_s/R)$ on both sides, so $t$ is one coordinate throughout. The tortoise coordinate $r_* = \\int\\sqrt{g_{\\chi\\chi}/(-g_{tt})}\\,d\\chi$ runs from the centre through the surface, and $p, q = \\arctan((ct \\mp r_*)/R)$ bring the spacetime into Minkowski's triangle, the causal structure of empty space, with the cluster a timelike tube from $i^-$ to $i^+$ about a regular centre.",
+    ],
+    ("einstein_cluster", "areal"): [
+        "A cluster with no surface ($e^{2\\Phi} = 1 - r_s/\\sqrt{r^2 + b^2}$, $b = 2\\,r_s$), each point in the "
+        "diagram a 2-sphere of radius $r$. Every sphere has $3m < r$, so there is no horizon.",
+        "The tortoise coordinate $r_* = \\int e^{-\\Phi}(1 - 2m/r)^{-1/2}\\,dr$ runs from the centre to infinity, "
+        "and $p, q = \\arctan((ct \\mp r_*)/3r_s)$ bring the spacetime into Minkowski's triangle, the causal "
+        "structure of empty space.",
     ],
     ("frw", "flat"): [
         "A flat universe of dust, each point in the diagram a 2-sphere. With $k = 0$, $G^r{}_r = 0$ gives $a \\propto \\eta^2$, and the metric "

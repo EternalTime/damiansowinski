@@ -993,6 +993,26 @@ DIMENSIONS = {
     ("tov", "spherical"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Phi": "1", "m": "L",
     },
+    # Einstein's cluster: the mass function is a length, as TOV's is, and here it is a name for
+    # r^2 Phi'/(1 + 2r Phi'), the mass that leaves no pressure along the radius. V and sigma are
+    # ratios, a speed to c and a mass to twice an isotropic radius, and chi is an angle on the
+    # three sphere of radius a.
+    ("einstein_cluster", "areal"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Phi": "1", "m": "L",
+    },
+    ("einstein_cluster", "constant_speed"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "V": "1", "R": "L",
+    },
+    ("einstein_cluster", "isotropic"): {
+        "t": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "\\sigma": "1", "\\rho_0": "L",
+        "a": "1", "b": "1",
+    },
+    ("einstein_cluster", "uniform"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "R": "L",
+    },
+    ("einstein_cluster", "hyperspherical"): {
+        "t": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1", "a": "L", "\\chi_0": "1",
+    },
     # Szekeres's shells: the areal radius R and the shell label r are lengths, as Tolman-Bondi's
     # are, the stereographic coordinates p and q of a shell are pure numbers, and so are S, P
     # and Q, which place and scale them, the sign epsilon, the energy function f, and E.

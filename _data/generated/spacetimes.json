@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 91,
+  "count": 92,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -5178,6 +5178,396 @@
       ]
     },
     {
+      "id": "einstein_cluster",
+      "name": "Einstein's Cluster",
+      "short_name": "Einstein Cluster",
+      "description": "A static ball of particles on circular orbits in every direction, each held on its circle by the gravity of all the others, with no pressure along the radius. Einstein built it in 1939 to argue that no body can be squeezed inside its Schwarzschild radius, and it now serves as a model for halos of dark matter.",
+      "tags": [
+        "Einstein cluster",
+        "star cluster",
+        "circular orbits",
+        "collisionless",
+        "anisotropic",
+        "tangential pressure",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "stellar interior",
+        "matched solution",
+        "mass",
+        "no horizon",
+        "dark matter",
+        "galactic halo",
+        "isotropic coordinates",
+        "three sphere",
+        "conical",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "tov",
+          "kind": "generalisation",
+          "text": "The static sphere with both of its functions free. The cluster is the star whose pressure along the radius vanishes, which ties the redshift function to the mass, $\\partial_r\\Phi = m/(r(r - 2m))$ [lake2006, cardoso2022]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "The vacuum outside the cluster. Einstein found that no circular orbit of a material particle fits inside one and a half Schwarzschild radii, so the cluster never uncovers $r = r_s$ [einstein1939, bonolis2017]."
+        },
+        {
+          "id": "interior_schwarzschild",
+          "kind": "family",
+          "text": "The other ball of uniform density. Space inside it is the same cap of a three sphere as inside Florides's cluster, held up by a pressure that is the same in every direction, and Florides called his own \"a new interior Schwarzschild solution\" [schwarzschild1916b, florides1974, bohmerlobo2008]."
+        },
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "programme",
+          "text": "The answer from the same year that came out the other way. Oppenheimer and Snyder let a ball of dust fall, and it passes through its Schwarzschild radius in a finite time by its own clocks [oppenheimersnyder1939, bonolis2017]."
+        },
+        {
+          "id": "einstein_static",
+          "kind": "programme",
+          "text": "Einstein's first static ball of matter, from 1917: a whole three sphere of uniform density, held still by the cosmological constant. Florides's cluster is a cap of such a sphere, held still by the motion of its particles [einstein1917, bohmerlobo2008]."
+        }
+      ],
+      "references": [
+        "einstein1939",
+        "schwarzschild1916b",
+        "bonolis2017",
+        "oppenheimersnyder1939",
+        "gilbert1954",
+        "hoylefowler1967",
+        "zapolsky1968",
+        "cardoso2022",
+        "florides1974",
+        "bohmerlobo2008",
+        "bohmerharko2007",
+        "lake2006",
+        "einstein1917"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_cluster.json",
+      "charts": [
+        {
+          "id": "areal",
+          "name": "Areal Radius",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "3m < r \\;\\text{(every particle slower than light)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Phi = \\Phi(r)",
+              "description": "Redshift function, dimensionless: a clock held at radius $r$ runs at $e^{\\Phi}$ of the rate $t$ counts. Outside the cluster $e^{2\\Phi} = 1 - 2GM/(c^2r)$, which fixes the constant it would otherwise carry"
+            },
+            {
+              "symbol": "m = \\dfrac{r^2\\,\\partial_r\\Phi}{1 + 2r\\,\\partial_r\\Phi}",
+              "description": "Mass function, a length: $m = GM(r)/c^2$ with $M(r)$ the mass inside the sphere of radius $r$, so $\\partial_r m = 4\\pi Gr^2\\rho/c^2$ for the density $\\rho$, and $m(0) = 0$. Any $m(r)$ with $3m < r$ is a cluster, whose particles circle at the fraction $V$ of the speed of light, $V^2 = m/(r - 2m)$, and whose redshift function follows from $\\partial_r\\Phi = m/(r(r - 2m))$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius. The mass function $m(r)$ is a length and is left free, and the redshift function $\\Phi(r)$ is dimensionless, with $\\partial_r\\Phi = m/(r(r - 2m))$ where no pressure acts along the radius. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -e^{2\\Phi}c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{2m}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{2\\Phi}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r}{r - 2m}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\left(r - 3m\\right)\\partial_r m}{r^2\\left(r - 2m\\right)}",
+          "kretschmann": "K = 4\\left(\\dfrac{\\left(r - m\\right)\\partial_r m}{r^2\\left(r - 2m\\right)} - \\dfrac{2m}{r^3}\\right)^2 + \\dfrac{8\\left(r\\,\\partial_r m - m\\right)^2}{r^6} + \\dfrac{24m^2}{r^6}"
+        },
+        {
+          "id": "constant_speed",
+          "name": "Constant Speed",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, R]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = 0 \\;\\text{(a curvature singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "V",
+              "description": "Speed of the particles as a fraction of $c$, the same at every radius, $0 < V < 1$"
+            },
+            {
+              "symbol": "R",
+              "description": "Areal radius of the cluster, where it joins Schwarzschild's metric with $r_s = 2V^2R/(1 + 2V^2)$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius, inside a cluster of radius $R$ whose particles all circle at the fraction $V$ of the speed of light. Its mass function is $m = V^2r/(1 + 2V^2)$, and $t$ is the time of Schwarzschild's metric outside. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{1}{1 + 2V^2}\\left(\\dfrac{r}{R}\\right)^{2V^2}c^2dt^2 + \\left(1 + 2V^2\\right)dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{1 + 2V^2}\\left(\\dfrac{r}{R}\\right)^{2V^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1 + 2V^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2V^2\\left(1 + V\\right)\\left(1 - V\\right)}{r^2\\left(1 + 2V^2\\right)}",
+          "kretschmann": "K = \\dfrac{4V^4\\left(7 - 2V^2 + V^4\\right)}{r^4\\left(1 + 2V^2\\right)^2}"
+        },
+        {
+          "id": "isotropic",
+          "name": "Isotropic (Einstein)",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\rho_0]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = 0 \\;\\text{(a curvature singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\sigma",
+              "description": "Einstein's constant $\\sigma_0$, the mass inside a sphere over twice its isotropic radius, dimensionless, $0 < \\sigma < 2 - \\sqrt{3}$; the particles circle at the fraction $V$ of the speed of light, $V^2 = 2\\sigma/(1 - \\sigma)^2$"
+            },
+            {
+              "symbol": "\\rho_0",
+              "description": "Isotropic radius of the cluster, Einstein's $r_0$, where it joins Schwarzschild's metric; its areal radius is $R = (1 + \\sigma)^2\\rho_0$"
+            },
+            {
+              "symbol": "a = \\left(1 + \\sigma\\right)^4\\left(\\dfrac{\\rho}{\\rho_0}\\right)^{-4\\sigma/(1 + \\sigma)}",
+              "description": "Einstein's $a$, the factor on the flat space of the isotropic chart, dimensionless"
+            },
+            {
+              "symbol": "b = \\left(\\dfrac{1 - \\sigma}{1 + \\sigma}\\right)^2\\left(\\dfrac{\\rho}{\\rho_0}\\right)^{4\\sigma/(1 - \\sigma^2)}",
+              "description": "Einstein's $b$, the square of the rate of a clock at rest, dimensionless; at the surface it is Schwarzschild's $\\left((1 - \\sigma)/(1 + \\sigma)\\right)^2$"
+            }
+          ],
+          "convention": "We use Einstein's coordinates $(t, \\rho, \\theta, \\phi)$, with $t$ carrying dimensions of time and $\\rho$ the isotropic radius, a length, inside a cluster whose surface is $\\rho = \\rho_0$. The constant $\\sigma$ and Einstein's $a$ and $b$ are dimensionless, and the areal radius is $r = (1 + \\sigma)^2\\rho\\,(\\rho/\\rho_0)^{-2\\sigma/(1 + \\sigma)}$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -b\\,c^2dt^2 + a\\left(d\\rho^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-b"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "a"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\rho^2\\,a"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2\\,a\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4\\sigma\\left(1 - 4\\sigma + \\sigma^2\\right)}{\\rho^2\\left(1 + \\sigma\\right)^2\\left(1 - \\sigma\\right)^2\\,a}",
+          "kretschmann": "K = \\dfrac{16\\sigma^2\\left(7 - 32\\sigma + 54\\sigma^2 - 32\\sigma^3 + 7\\sigma^4\\right)}{\\rho^4\\left(1 + \\sigma\\right)^4\\left(1 - \\sigma\\right)^4\\,a^2}"
+        },
+        {
+          "id": "uniform",
+          "name": "Uniform Density (Florides)",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, R]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the cluster, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "R",
+              "description": "Areal radius of the cluster, $R > \\frac{3}{2}r_s$; its density is $\\rho = 3c^2r_s/(8\\pi GR^3)$ and its mass function $m = r_sr^3/(2R^3)$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius, inside a cluster of radius $R$ and uniform density. Its Schwarzschild radius is $r_s = 2GM/c^2$, and $t$ is the time of Schwarzschild's metric outside. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{R}\\right)^{3/2}\\left(1 - \\dfrac{r_s r^2}{R^3}\\right)^{-1/2}c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s r^2}{R^3}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{R}\\right)^{3/2}\\left(1 - \\dfrac{r_s r^2}{R^3}\\right)^{-1/2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{1 - \\dfrac{r_s r^2}{R^3}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{3r_s\\left(2R^3 - 3r_s\\,r^2\\right)}{2R^3\\left(R^3 - r_s\\,r^2\\right)}",
+          "kretschmann": "K = \\dfrac{3r_s^2\\left(20R^6 - 36r_s\\,r^2\\,R^3 + 19r_s^2\\,r^4\\right)}{4R^6\\left(R^3 - r_s\\,r^2\\right)^2}"
+        },
+        {
+          "id": "hyperspherical",
+          "name": "Hyperspherical",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, \\chi_0]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Radius of the three sphere that space inside the cluster is a cap of, $a = \\sqrt{R^3/r_s}$ for a cluster of areal radius $R$ and Schwarzschild radius $r_s$"
+            },
+            {
+              "symbol": "\\chi_0",
+              "description": "Polar angle of the surface of the cluster, $\\sin\\chi_0 = R/a$, with $\\sin^2\\chi_0 < \\frac{2}{3}$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\chi, \\theta, \\phi)$, with $t$ carrying dimensions of time and $\\chi$ the polar angle on a three sphere of radius $a$, so that the areal radius is $r = a\\sin\\chi$. The cluster of uniform density, of areal radius $R$ and Schwarzschild radius $r_s$, has $a = \\sqrt{R^3/r_s}$ and its surface at $\\chi = \\chi_0$, and $t$ is the time of Schwarzschild's metric outside. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{\\cos^3\\chi_0}{\\cos\\chi}c^2dt^2 + a^2\\left(d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\cos^3\\chi_0}{\\cos\\chi}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6 - 9\\sin^2\\chi}{2a^2\\cos^2\\chi}",
+          "kretschmann": "K = \\dfrac{57\\sin^4\\chi - 108\\sin^2\\chi + 60}{4a^4\\cos^4\\chi}"
+        }
+      ]
+    },
+    {
       "id": "einstein_static",
       "name": "Einstein Static Universe",
       "short_name": "Einstein Static",
@@ -5239,6 +5629,11 @@
           "id": "senovilla",
           "kind": "family",
           "text": "A universe of radiation that also satisfies the strong energy condition and has no singularity, while it contracts, bounces, and expands. It has no compact slice and no point whose light cone converges again [senovilla1998, chinea1992]."
+        },
+        {
+          "id": "einstein_cluster",
+          "kind": "programme",
+          "text": "Einstein's static ball of 1939, a cluster of particles on circular orbits. With uniform density its space is a cap of the same three sphere, held still by the motion of the particles with no cosmological constant [einstein1939, florides1974, bohmerlobo2008]."
         }
       ],
       "references": [
@@ -5261,7 +5656,10 @@
         "schwarzschild1916b",
         "godel1949",
         "senovilla1998",
-        "chinea1992"
+        "chinea1992",
+        "einstein1939",
+        "florides1974",
+        "bohmerlobo2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_static.json",
@@ -16485,6 +16883,11 @@
           "id": "btz",
           "kind": "family",
           "text": "The black hole of three dimensions. Robert Mann and Simon Ross showed in 1993 that dust collapsing under a negative cosmological constant can end as one [mann1993]."
+        },
+        {
+          "id": "einstein_cluster",
+          "kind": "programme",
+          "text": "Einstein's answer of the same year to the same question. His ball of particles on circular orbits cannot be made smaller than one and a half Schwarzschild radii, from which he concluded that Schwarzschild singularities \"do not exist in physical reality\" [einstein1939]."
         }
       ],
       "references": [
@@ -16500,7 +16903,8 @@
         "szekeres1975collapse",
         "schwarzschild1916b",
         "vaidya1966",
-        "mann1993"
+        "mann1993",
+        "einstein1939"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/oppenheimer_snyder.json",
@@ -20042,6 +20446,11 @@
           "id": "einstein_rosen_bridge",
           "kind": "locally_same",
           "text": "Schwarzschild's exterior taken twice and joined at $r = r_s$ by the coordinate $u^2 = r - r_s$, which Einstein and Nathan Rosen read in 1935 as a particle [einstein1935]."
+        },
+        {
+          "id": "einstein_cluster",
+          "kind": "composite",
+          "text": "A ball of particles on circular orbits with Schwarzschild's vacuum outside. Einstein used it in 1939 to argue that matter cannot be packed inside $r = r_s$, since the particles would have to reach the speed of light at one and a half times that radius [einstein1939]."
         }
       ],
       "references": [
@@ -20357,6 +20766,11 @@
           "id": "gravastar",
           "kind": "family",
           "text": "A ball of de Sitter space under a thin shell, with Schwarzschild's vacuum outside. Schwarzschild's star squeezed to $R = r_s$ is one, with the de Sitter radius $r_s$ [mazur2015]."
+        },
+        {
+          "id": "einstein_cluster",
+          "kind": "family",
+          "text": "A ball of the same uniform density and the same space inside, held up by the sideways motion of its particles with no pressure along the radius. Petros Florides found it in 1974 and called it \"a new interior Schwarzschild solution\" [florides1974, bohmerlobo2008]."
         }
       ],
       "references": [
@@ -20372,7 +20786,9 @@
         "oppenheimer1939",
         "oppenheimersnyder1939",
         "mazur2015",
-        "einstein1917"
+        "einstein1917",
+        "florides1974",
+        "bohmerlobo2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/interior_schwarzschild.json",
@@ -24115,6 +24531,11 @@
           "id": "tolman_bondi",
           "kind": "programme",
           "text": "Richard Tolman's other spacetime, dust expanding or collapsing in spherical symmetry with a density that varies with radius, from 1934 [tolman1934]. Five years later he gave the method for static spheres of fluid that Oppenheimer and Volkoff applied in the paper after his [tolman1939]."
+        },
+        {
+          "id": "einstein_cluster",
+          "kind": "special_case",
+          "text": "The star with no pressure along its radius, made of particles circling the centre in every direction. Einstein built it in 1939, the year of Tolman's and of Oppenheimer and Volkoff's papers, and its redshift function follows from its mass, $\\partial_r\\Phi = m/(r(r - 2m))$ [einstein1939, lake2006]."
         }
       ],
       "references": [
@@ -24145,7 +24566,9 @@
         "hartle1967",
         "hartlethorne1968",
         "santos1985",
-        "tolman1934"
+        "tolman1934",
+        "einstein1939",
+        "lake2006"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tov.json",

@@ -511,6 +511,39 @@
     "embedding": "0ccedb0f3c6098dc"
   },
   {
+    "id": "einstein_cluster",
+    "name": "Einstein Cluster",
+    "tags": [
+      "Einstein cluster",
+      "star cluster",
+      "circular orbits",
+      "collisionless",
+      "anisotropic",
+      "tangential pressure",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "stellar interior",
+      "matched solution",
+      "mass",
+      "no horizon",
+      "dark matter",
+      "galactic halo",
+      "isotropic coordinates",
+      "three sphere",
+      "conical",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "e8de1fe647580ba4",
+    "diagrams": "1358f347fde7be67",
+    "conformal": "7807b351c1311ade",
+    "embedding": "ab81073436048cb9"
+  },
+  {
     "id": "einstein_static",
     "name": "Einstein Static",
     "tags": [
@@ -533,7 +566,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "ab6981c4d39f7d88",
+    "version": "4f24319cb8b200d6",
     "diagrams": "9afed8951c5aec50",
     "conformal": "c7734072db0d7622",
     "embedding": "07b92b646e316b86"
@@ -1680,7 +1713,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0e5739522749a91f",
+    "version": "6d90de0e50dfb474",
     "diagrams": "d31b7b7b6c3dd2ef",
     "conformal": "7400ddcb9dd6a817",
     "embedding": "1ecd155079c29ab6"
@@ -2044,7 +2077,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ced6c75b8e06d9b0",
+    "version": "4cace8239b91fac0",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -2067,7 +2100,7 @@
       "idealized model",
       "conformally flat"
     ],
-    "version": "85a0393e27a718f3",
+    "version": "161bec9a6e15d4ca",
     "diagrams": "2c3a4f257a42be77",
     "conformal": "576471fc7fb8c666",
     "embedding": "33dc4c3913188978"
@@ -2439,7 +2472,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "64598b9f3ee90df8",
+    "version": "fb6dae69f7c9b27a",
     "diagrams": "b8a9287744afbad1",
     "conformal": "f4c269030698315c",
     "embedding": "c64f1f900fa70a89"

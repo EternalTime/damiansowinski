@@ -985,6 +985,16 @@ def pg_in(r):
     return f(np.asarray(r, dtype=float)) - f(6.0)
 
 
+# Einstein's cluster as its diagrams draw it: the declared redshift function of the cluster with no
+# surface, in units of its Schwarzschild radius with the core radius b = 2 r_s, and the isotropic
+# radius and the polar angle of the surface of the clusters with R = 3 r_s.
+EC_CORE = "log(1 - 1/sqrt(r**2 + 4))/2"
+EC_CORE_INPUT = ("A cluster with no surface, $e^{2\\Phi} = 1 - r_s/\\sqrt{r^2 + b^2}$, with $r_s$ the Schwarzschild "
+                 "radius of its whole mass and the core radius $b = 2\\,r_s$, so that $m \\to r_s/2$ far away and the "
+                 "fastest particles, near $r = 2.3\\,r_s$, move at $0.37\\,c$.")
+EC_RHO0 = 3 / (6 - 2 * math.sqrt(6)) ** 2
+EC_CHI0 = math.asin(1 / math.sqrt(3))
+
 DIAGRAMS = [
     *[Diagram("aichelburg_sexl", "null_cartesian", view, f"$\\rho = \\rho_0/{rho[2:]}$", ("u", "v"), (-3, 3, -2.5, 3.5),
               "$z\\;[8GE/c^4]$", "$ct\\;[8GE/c^4]$", {"G": 1, "E": "1/8", "rho_0": 1}, {"x": rho, "y": "0"},
@@ -1908,6 +1918,29 @@ DIAGRAMS = [
     Diagram("tov", "spherical", "through", "through the centre", ("t", "r"), (0, 16, -16, 16),
             "$x\\;[GM_\\odot/c^2]$", "$ct\\;[GM_\\odot/c^2]$", {}, EQUATOR, mirror=True, families=SIDEWAYS,
             cones=(4, 8), areal=True, star=POLYTROPE, input=POLYTROPE_INPUT),
+    # Einstein's cluster, in units of its Schwarzschild radius: the areal chart for the declared cluster
+    # with no surface that the embedding diagram draws, Einstein's own at V = 1/2, where m = r/6
+    # and R = 3 r_s, in the areal radius and in his isotropic one, where sigma = 5 - 2 sqrt 6 and
+    # rho_0 = R/(1 + sigma)^2, and Florides's of the same mass and radius in the areal radius and
+    # on its three sphere, a = sqrt(R^3/r_s) and sin(chi_0) = R/a.
+    Diagram("einstein_cluster", "areal", "radial", "$t$ and $r$", ("t", "r"), (0, 8, -4, 4),
+            "$r/r_s$", "$ct/r_s$", {}, EQUATOR, areal=True, functions={"Phi": EC_CORE}, input=EC_CORE_INPUT),
+    Diagram("einstein_cluster", "areal", "through", "through the centre", ("t", "r"), (0, 8, -8, 8),
+            "$x/r_s$", "$ct/r_s$", {}, EQUATOR, mirror=True, families=SIDEWAYS, cones=(4, 8), areal=True,
+            functions={"Phi": EC_CORE}, input=EC_CORE_INPUT),
+    Diagram("einstein_cluster", "constant_speed", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
+            "$r/r_s$", "$ct/r_s$", {"V": "1/2", "R": 3}, EQUATOR, areal=True),
+    Diagram("einstein_cluster", "isotropic", "radial", "$t$ and $\\rho$", ("t", "\\rho"),
+            (0, EC_RHO0, -EC_RHO0 / 2, EC_RHO0 / 2), "$\\rho/r_s$", "$ct/r_s$",
+            {"sigma": "5 - 2*sqrt(6)", "rho_0": "3/(6 - 2*sqrt(6))**2"}, EQUATOR, areal=True),
+    Diagram("einstein_cluster", "uniform", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
+            "$r/r_s$", "$ct/r_s$", {"r_s": 1, "R": 3}, EQUATOR, areal=True),
+    Diagram("einstein_cluster", "uniform", "through", "through the centre", ("t", "r"), (0, 3, -3, 3),
+            "$x/r_s$", "$ct/r_s$", {"r_s": 1, "R": 3}, EQUATOR, mirror=True, families=SIDEWAYS, cones=(4, 8),
+            areal=True),
+    Diagram("einstein_cluster", "hyperspherical", "radial", "$t$ and $\\chi$", ("t", "\\chi"),
+            (0, EC_CHI0, -1.6, 1.6), "$\\chi$", "$ct/r_s$", {"a": "sqrt(27)", "chi_0": "asin(1/sqrt(3))"},
+            EQUATOR, areal=True),
     # The pulse of Weber, Wheeler, and Bonnor, whose metric on the plane of t and rho is conformally
     # flat, so its rays are at 45 degrees for every pulse; it comes in along rho = -ct and goes out
     # along rho = ct.
@@ -4867,6 +4900,53 @@ CAPTIONS = {
         "right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$, and spherical symmetry makes the "
         "two halves mirror images. Rays cross the centre smoothly, where the cones are narrowest and "
         "the Kretschmann scalar is finite, and the surface crosses the line on both sides.",
+    ],
+    ("einstein_cluster", "areal", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) through a cluster with no surface "
+        "($b = 2\\,r_s$), the same at every other angle by spherical symmetry. The rays obey "
+        "$c\\,dt = \\pm e^{-\\Phi}(1 - 2m/r)^{-1/2}\\,dr$.",
+        "The cones are narrowest at the centre, where a clock runs at $e^\\Phi = 0.71$ of the rate $t$ counts, "
+        "and they open toward 45° far away, where $m$ approaches $r_s/2$. They stay open everywhere, since "
+        "$3m < r$ throughout the cluster.",
+    ],
+    ("einstein_cluster", "areal", "through"): [
+        "The line through the centre of the cluster in the plane $\\theta = \\pi/2$: $x = r$ on the right is "
+        "$\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$, and spherical symmetry makes the two halves "
+        "mirror images. Rays cross the centre smoothly, where the cones are narrowest and the Kretschmann scalar "
+        "is finite.",
+    ],
+    ("einstein_cluster", "constant_speed", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole cluster ($r \\in (0, R]$, "
+        "$V = 1/2$, $R = 3\\,r_s$). The rays obey $c\\,dt = \\pm(1 + 2V^2)(r/R)^{-V^2}\\,dr$, so "
+        "$ct \\mp (1 + 2V^2)\\,r\\,(r/R)^{-V^2}/(1 - V^2)$ is constant along each.",
+        "The cones narrow toward the centre and close on it, where the density grows as $1/r^2$ and a clock at "
+        "rest stops, and a ray still reaches the centre in a finite time $t$. Beyond $R$ the spacetime is "
+        "Schwarzschild's exterior.",
+    ],
+    ("einstein_cluster", "isotropic", "radial"): [
+        "The plane of $t$ and $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole cluster in Einstein's "
+        "coordinates ($\\sigma = 5 - 2\\sqrt{6}$, the cluster with $V = 1/2$). The rays obey "
+        "$c\\,dt = \\pm\\sqrt{a/b}\\,d\\rho$.",
+        "The surface is $\\rho_0 = 2.47\\,r_s$, where the areal radius is $3\\,r_s$, and the cones close on the "
+        "centre as they do in the areal radius.",
+    ],
+    ("einstein_cluster", "uniform", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole cluster ($r \\in [0, R]$, "
+        "$R = 3\\,r_s$). The rays obey $c\\,dt = \\pm(1 - r_s/R)^{-3/4}(1 - r_sr^2/R^3)^{-1/4}\\,dr$.",
+        "A clock at the centre runs at $0.74$ of the rate $t$ counts and a clock at the surface at $0.82$, and "
+        "the cones stay open. Beyond $R$ the spacetime is Schwarzschild's exterior.",
+    ],
+    ("einstein_cluster", "uniform", "through"): [
+        "The line through the centre of the cluster in the plane $\\theta = \\pi/2$: $x = r$ on the right is "
+        "$\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$. Rays cross the centre smoothly, where the "
+        "Kretschmann scalar is finite.",
+    ],
+    ("einstein_cluster", "hyperspherical", "radial"): [
+        "The plane of $t$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole cluster "
+        "($\\chi \\in [0, \\chi_0]$, $\\sin\\chi_0 = 1/\\sqrt{3}$, the cluster with $R = 3\\,r_s$ and "
+        "$a = \\sqrt{27}\\,r_s$). The rays obey $c\\,dt = \\pm a\\sqrt{\\cos\\chi/\\cos^3\\chi_0}\\,d\\chi$.",
+        "Past the surface the same metric runs on to the equator of the three sphere, $\\chi = \\pi/2$, where "
+        "the cones open without limit and the particles of a cluster would move at the speed of light.",
     ],
     ("einstein_rosen_waves", "cylindrical", "radial"): [
         "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) through a pulse of Weber, Wheeler, and Bonnor. "

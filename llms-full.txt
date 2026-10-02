@@ -413,6 +413,20 @@ The static, spherically symmetric charged black hole of low energy string theory
 - chart String Metric, Magnetic Charge: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{1 - \dfrac{r_s}{r}}{1 - \dfrac{r_d}{r}}c^2dt^2 + \dfrac{dr^2}{\left(1 - \dfrac{r_s}{r}\right)\left(1 - \dfrac{r_d}{r}\right)} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart String Metric, Electric Charge: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \left(1 - \dfrac{r_d}{r}\right)\left(-\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}}\right) + \left(r - r_d\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Einstein's Cluster
+
+A static ball of particles on circular orbits in every direction, each held on its circle by the gravity of all the others, with no pressure along the radius. Einstein built it in 1939 to argue that no body can be squeezed inside its Schwarzschild radius, and it now serves as a model for halos of dark matter.
+
+- id: `einstein_cluster`
+- tags: Einstein cluster, star cluster, circular orbits, collisionless, anisotropic, tangential pressure, static, stationary, spherically symmetric, stellar interior, matched solution, mass, no horizon, dark matter, galactic halo, isotropic coordinates, three sphere, conical, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/einstein_cluster.json
+- chart Areal Radius: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -e^{2\Phi}c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{2m}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Constant Speed: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{1}{1 + 2V^2}\left(\dfrac{r}{R}\right)^{2V^2}c^2dt^2 + \left(1 + 2V^2\right)dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Isotropic (Einstein): coordinates $(t, \rho, \theta, \phi)$, $$ds^2 = -b\,c^2dt^2 + a\left(d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Uniform Density (Florides): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{R}\right)^{3/2}\left(1 - \dfrac{r_s r^2}{R^3}\right)^{-1/2}c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s r^2}{R^3}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Hyperspherical: coordinates $(t, \chi, \theta, \phi)$, $$ds^2 = -\dfrac{\cos^3\chi_0}{\cos\chi}c^2dt^2 + a^2\left(d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Einstein Static Universe
 
 Albert Einstein's cosmology of 1917: dust spread uniformly through a round three sphere of fixed radius and held at rest by a positive cosmological constant. Minkowski, de Sitter, and anti-de Sitter space are each conformal to a region of it.

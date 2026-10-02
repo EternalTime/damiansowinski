@@ -61,6 +61,11 @@
       "id": "senovilla",
       "kind": "family",
       "text": "A universe of radiation that also satisfies the strong energy condition and has no singularity, while it contracts, bounces, and expands. It has no compact slice and no point whose light cone converges again [senovilla1998, chinea1992]."
+    },
+    {
+      "id": "einstein_cluster",
+      "kind": "programme",
+      "text": "Einstein's static ball of 1939, a cluster of particles on circular orbits. With uniform density its space is a cap of the same three sphere, held still by the motion of the particles with no cosmological constant [einstein1939, florides1974, bohmerlobo2008]."
     }
   ],
   "references": [
@@ -83,7 +88,10 @@
     "schwarzschild1916b",
     "godel1949",
     "senovilla1998",
-    "chinea1992"
+    "chinea1992",
+    "einstein1939",
+    "florides1974",
+    "bohmerlobo2008"
   ],
   "coordinates": [
     {
