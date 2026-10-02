@@ -258,6 +258,11 @@
       "id": "maitra_dust",
       "kind": "generalisation",
       "text": "Samaresh C. Maitra's rotating dust of 1966, which is flat space in cylindrical coordinates when its density is taken to zero, $a \\to \\infty$ [maitra1966, chan2024]."
+    },
+    {
+      "id": "tilted_universes",
+      "kind": "locally_same",
+      "text": "The flat model of the whimper is a part of Minkowski space. George Ellis and A. R. King painted world lines on it that a boost carries into one another, and found a Cauchy horizon with nothing curved anywhere [ellis1974]."
     }
   ],
   "references": [
@@ -336,7 +341,8 @@
     "bondi1962",
     "sachs1962bms",
     "maitra1966",
-    "chan2024"
+    "chan2024",
+    "ellis1974"
   ],
   "coordinates": [
     {

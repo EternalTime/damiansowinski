@@ -116,6 +116,11 @@
       "id": "small_universes",
       "kind": "locally_same",
       "text": "Friedmann's universe with points of space a fixed step apart declared one point, so that space is a torus or another closed form. Every local measurement agrees with Friedmann's, and an observer sees each galaxy many times over [ellis1971, lachiezerey1995]."
+    },
+    {
+      "id": "tilted_universes",
+      "kind": "generalisation",
+      "text": "The open universe of dust with its matter set drifting along one direction. With the tilt $C = 0$ Farnsworth's solution is Friedmann's [anton2023]."
     }
   ],
   "references": [
@@ -178,7 +183,8 @@
     "kopczynski1973",
     "trautman2006",
     "ellis1971",
-    "lachiezerey1995"
+    "lachiezerey1995",
+    "anton2023"
   ],
   "coordinates": [
     {
