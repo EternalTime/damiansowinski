@@ -447,7 +447,8 @@ class Plane:
 
     def lambdify(self, exprs):
         args = [self.x0, self.x1] + [F for _, _, Fs in self.numeric.values() for F in Fs]
-        return sp.lambdify(args, exprs, "numpy")
+        # numpy, and Lambert's function where Kruskal's chart of the white hole holds it.
+        return sp.lambdify(args, exprs, nr.numeric_modules(list(exprs)))
 
     def call(self, f, x0, x1, fvals=None):
         x0, x1 = np.asarray(x0, dtype=float), np.asarray(x1, dtype=float)
@@ -9400,6 +9401,181 @@ def oppenheimer_snyder(ck, src):
     return [v]
 
 
+def white_hole(ck, src):
+    """The white hole: Oppenheimer and Snyder's ball of dust from the singularity it leaves, through
+    its moment of rest at R0 = 2 r_s, to the singularity it falls back to. The drawing is the
+    collapse's, which is its half after the rest, and that half mirrored in the moment of rest,
+    T -> -T, the symmetry t -> -t of the whole. Inside, the dust's conformal time eta runs from 0
+    to 2 pi and T = eta - pi, X = chi. Outside, a point of Kruskal's U and V after the moment of
+    rest, U + V >= 0, is drawn at P(U), Q(V) as the collapse draws it, and one before it at
+    -Q(-U), -P(-V), where U and V have the moment of rest for the origin of Schwarzschild's time;
+    the charts of the page count the retarded time from the surface's crossing of r_s instead, so
+    theirs are U/WH_BOOST and V WH_BOOST of these."""
+    o = Collapse(2.0)
+    c = o.chi0
+    boost = slices.WH_BOOST
+    ext = Plane(src, "white_hole", "exterior_schwarzschild", ("t", "r"), EQUATOR, {"r_s": 1})
+    fink = Plane(src, "white_hole", "exterior_eddington_finkelstein", ("u", "r"), EQUATOR, {"r_s": 1})
+    krus = Plane(src, "white_hole", "exterior_kruskal", ("U", "V"), EQUATOR, {"r_s": 1})
+    T = Tower(-ext.g[0, 0], ext.x1, [1])
+    inner = Plane(src, "white_hole", "interior_comoving", ("\\tau", "\\chi"), EQUATOR,
+                  {"chi_0": sp.nsimplify(c), "a_m": sp.nsimplify(o.am)}, numeric=["a"])
+    conf = Plane(src, "white_hole", "interior_conformal", ("\\eta", "\\chi"), EQUATOR,
+                 {"chi_0": sp.nsimplify(c), "a_m": sp.nsimplify(o.am)})
+    etas = np.linspace(0, 2 * np.pi, 400001)
+    taus = (o.am / 2) * (etas - np.sin(etas))
+
+    def eta_of(tau):
+        return np.interp(tau, taus, etas)
+
+    def scale(tau, chi):
+        e = eta_of(tau)
+        return {"a": ((o.am / 2) * (1 - np.cos(e)), np.sin(e) / (1 - np.cos(e)),
+                      -1 / ((o.am / 2) * (1 - np.cos(e)) ** 2))}
+
+    def inside(tau, chi):
+        e = eta_of(tau) - np.pi
+        return (e - chi) / 2, (e + chi) / 2
+
+    def inside_conformal(eta, chi):
+        return (eta - np.pi - chi) / 2, (eta - np.pi + chi) / 2
+
+    def whole(U, V):
+        """A point of Kruskal's U and V, the moment of rest at U + V = 0."""
+        U, V = np.asarray(U, dtype=float), np.asarray(V, dtype=float)
+        after = U + V >= 0
+        with np.errstate(all="ignore"):
+            p = np.where(after, o.P(np.where(after, U, -V)), -o.Q(np.where(after, V, -U)))
+            q = np.where(after, o.Q(np.where(after, V, -U)), -o.P(np.where(after, U, -V)))
+        return p, q
+
+    def outside(t, r, cell="I"):
+        p, q = T.pq(cell, t, r)
+        return whole(np.tan(p), np.tan(q))
+
+    def outside_fink(u, r):
+        U = -np.exp(-np.asarray(u, dtype=float) / 2)
+        return whole(boost * U, (1 - r) * np.exp(r) / U / boost)
+
+    def outside_kruskal(U, V):
+        return whole(boost * np.asarray(U, dtype=float), np.asarray(V, dtype=float) / boost)
+    ck.chart("White hole, the dust in its proper time", inner, inside, ck.uniform(0.01 * taus[-1], 0.99 * taus[-1]),
+             ck.uniform(0.001, c), lambda tau, chi: (1, 0), scale)
+    ck.chart("White hole, the dust in its conformal time", conf, inside_conformal,
+             ck.uniform(0.05, 2 * np.pi - 0.05), ck.uniform(0.001, c), lambda eta, chi: (1, 0))
+    ck.chart("White hole, the exterior in Schwarzschild's chart", ext, outside, ck.uniform(-12, 12),
+             ck.uniform(2.05, 30), lambda t, r: (1, 0))
+    ck.chart("White hole, the outgoing chart outside r_s", fink, outside_fink, ck.uniform(-0.3, 12),
+             ck.uniform(2.05, 30), lambda u, r: (1, 0))
+    ck.chart("White hole, the outgoing chart inside r_s", fink, outside_fink, ck.uniform(-8, -0.6),
+             ck.uniform(0.1, 0.95), lambda u, r: (1, 1 / r - 1))
+    ck.chart("White hole, Kruskal's chart", krus, outside_kruskal, ck.uniform(-6, -1.3), ck.uniform(-0.15, 6),
+             lambda U, V: (1, 1))
+    ck.limit("White hole: the two halves meet on the moment of rest, T = 0",
+             [sum(whole(-V, V)) for V in (3.0, 10.0, 1e4)], [0, 0, 0], 1e-9)
+    ck.limit("White hole: the past singularity r = 0 is one line, T = -pi",
+             [sum(whole(-V, -1 / V)) for V in (30.0, 100.0, 1e5)], [-PI] * 3, 1e-9)
+    ck.limit("White hole: the past horizon V = 0 is Q = -(pi - 3 chi0)/2", [whole(-5.0, 0.0)[1]],
+             [-(PI - 3 * c) / 2], 1e-7)
+    ck.limit("White hole: the surface crosses r_s at U = -1, V = 0 of the page's Kruskal chart, on eta = 2 chi0",
+             [sum(outside_kruskal(-1.0, 0.0))], [2 * c - PI], 1e-6)
+    ck.limit("White hole: the surface is at rest at u = (pi + ln 2) r_s, r = 2 r_s of the outgoing chart",
+             list(outside_fink(PI + math.log(2), 2.0)), [-c / 2, c / 2], 1e-6)
+    # Marginally anti-trapped and trapped spheres: the areal radius a sin(chi) has a null gradient
+    # on eta = 2 chi and on eta = 2 pi - 2 chi, by the published interior metric.
+    chi = np.linspace(0.02, c, 50)
+    for e, name in ((2 * chi, "eta = 2 chi"), (2 * PI - 2 * chi, "eta = 2 pi - 2 chi")):
+        tau = (o.am / 2) * (e - np.sin(e))
+        a, adot, _ = scale(tau, chi)["a"]
+        _, _, _, h00, h01, h11 = inner.metric(tau, chi, scale)
+        dR = [adot * np.sin(chi), a * np.cos(chi)]
+        ck.limit(f"White hole: the areal radius has a null gradient on {name}",
+                 (h00 * dR[0] ** 2 + 2 * h01 * dR[0] * dR[1] + h11 * dR[1] ** 2) / (dR[1] ** 2 * np.abs(h11)), 0, 1e-6)
+    ck.diverges("White hole: the Kretschmann scalar diverges at the dust's first singularity",
+                inner.kretschmann(taus[-1] * 1e-2, 0.3, scale), inner.kretschmann(taus[-1] * 1e-3, 0.3, scale))
+    ck.diverges("White hole: the Kretschmann scalar diverges at its last",
+                inner.kretschmann(taus[-1] * (1 - 1e-2), 0.3, scale), inner.kretschmann(taus[-1] * (1 - 1e-3), 0.3, scale))
+    ck.diverges("White hole: the Kretschmann scalar diverges at r = 0 outside",
+                ext.kretschmann(0, 1e-2), ext.kretschmann(0, 1e-3))
+    ck.finite("White hole: the centre chi = 0 is regular between the singularities",
+              inner.kretschmann(taus[-1] * np.linspace(0.05, 0.95, 10), np.full(10, 1e-6), scale))
+
+    Xmax = PI + 3 * c
+    iplus, iminus = [3 * c, PI], [3 * c, -PI]
+    v = View("burst", "Interior and exterior", [-0.35, Xmax + 0.35, -PI - 0.3, PI + 0.3])
+    outer_region = [[c, -PI], [c, PI], iplus, [Xmax, 0], iminus]
+    dust = [[0, -PI], [c, -PI], [c, PI], [0, PI]]
+    v.fill("region", outer_region)
+    v.fill("region", dust)
+    v.fill("star", dust)
+    v.fill("cover", outer_region)
+    for eta in (0.5, 1.0, 1.5, 2.0, 2.5, 2.9):
+        v.line("t2", [[[0, eta], [c, eta]], [[0, -eta], [c, -eta]]])
+    v.line("t2", [[[0, 0], [c, 0]]])
+    for x in (c / 3, 2 * c / 3):
+        v.line("r2", [[[x, -PI], [x, PI]]])
+
+    def ext_curve(cls, t, r, cell):
+        P, Q = outside(t, r, cell)
+        keep = Q - P > c + 1e-9
+        v.curve(cls, np.where(keep, P, np.nan), np.where(keep, Q, np.nan))
+    t = spread(-np.inf, np.inf, 4000, 11)
+    for r in (0.3, 0.6, 1.25, 1.6, 2.5, 5, 10):
+        for cell in (("I",) if r > 1 else ("II", "IV")):
+            ext_curve("r", t, np.full_like(t, r), cell)
+    rr = spread(1, np.inf, 2000, 14)
+    for tt in (-10, -5, -2.5, -1, 0, 1, 2.5, 5, 10):
+        ext_curve("t", np.full_like(rr, tt), rr, "I")
+    v.line("event", [[[0, PI - 3 * c], iplus]])
+    v.line("horizon", [[[0, -(PI - 3 * c)], iminus]])
+    v.line("apparent", [[[c, PI - 2 * c], [0, PI]], [[c, -(PI - 2 * c)], [0, -PI]]])
+    v.line("surface", [[[c, -PI], [c, PI]]])
+    v.line("centre", [[[0, -PI], [0, PI]]])
+    v.line("singular", [[[0, PI], iplus]], zig=True)
+    v.line("singular", [[[0, -PI], iminus]], zig=True)
+    v.line("scri", [[iplus, [Xmax, 0]], [iminus, [Xmax, 0]]])
+    for at in (iplus, iminus, [Xmax, 0]):
+        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+    v.label_xt(iplus, "$i^+$", "bl", dx=4, dy=-3)
+    v.label_xt(iminus, "$i^-$", "tl", dx=4, dy=3)
+    v.label_xt([Xmax, 0], "$i^0$", "l", dx=6)
+    v.label_xt([(3 * c + Xmax) / 2, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+    v.label_xt([(3 * c + Xmax) / 2, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+    v.label_xt([1.5 * c, PI], "$r = 0$", "b", dy=-8)
+    v.label_xt([1.5 * c, -PI], "$r = 0$", "t", dy=8)
+    v.label_xt([c / 2, 0.25], "dust", cls="region")
+    v.label_xt([c, 0.9], "$\\chi = \\chi_0$", "l", "small", dx=5)
+    v.legend("star", "the dust, in its conformal time $\\eta$ and $\\chi$, which $\\tau$ and $\\chi$ cover")
+    v.legend("cover", "the Schwarzschild exterior, $r \\ge R$, which $U$ and $V$ cover")
+    v.legend("surface", "the surface $\\chi = \\chi_0$, a radial geodesic of the exterior")
+    v.legend("t2", "$\\eta$ constant inside")
+    v.legend("r2", "$\\chi$ constant inside, the world lines of the dust")
+    v.legend("r", "$r$ constant outside: $0.3$, $0.6$, $1.25$, $1.6$, $2.5$, $5$ and $10\\,r_s$")
+    v.legend("t", "$ct$ constant outside, at $0$, $\\pm 1$, $\\pm 2.5$, $\\pm 5$ and $\\pm 10\\,r_s$")
+    v.legend("horizon", "the past horizon, from $i^-$ to the centre at $\\eta = 3\\chi_0$")
+    v.legend("event", "the event horizon, from the centre at $\\eta = 2\\pi - 3\\chi_0$ to $i^+$")
+    v.legend("apparent", "marginally trapped spheres inside the dust, $\\eta = 2\\chi$ and $\\eta = 2\\pi - 2\\chi$")
+    v.legend("singular", "$r = 0$: the singularities of the dust and of the exterior, where the "
+                         "Kretschmann scalar diverges")
+    v.legend("centre", "$\\chi = 0$, the centre")
+    v.set(settings="$R_0 = 2\\,r_s$, so that $\\chi_0 = \\pi/4$ and $a_m = 2\\sqrt{2}\\,r_s$; the dust leaves its "
+                   "singularity at $\\eta = 0$, is at rest at $\\eta = \\pi$, the line $T = 0$, and falls back to "
+                   "$\\eta = 2\\pi$.")
+    # Each moment of the dust's proper time: inside, the line eta across the dust; outside,
+    # Novikov's slice, the shells that come to rest with it at every R the embedding reaches,
+    # each at the same proper time, through Kruskal's U and V. The surface is the shell from R_0,
+    # so the two meet there, at (chi_0, eta - pi).
+    for m in slices.moments("white_hole"):
+        if abs(m.reach("interior_comoving", "\\chi")[1] - c) > 1e-12 or abs(slices.OS_AM - o.am) > 1e-12:
+            raise SystemExit("White hole: the embedding's core is not the core drawn here")
+        e = float(eta_of(m.time)) - np.pi
+        chi = np.array([0.0, c])
+        _, U, V = slices.wh_shells(m)
+        # Two lines, so that the corner where they meet on the surface is kept exactly.
+        v.slice(m, [((e - chi) / 2, (e + chi) / 2), outside_kruskal(U, V)])
+    return [v]
+
+
 # ---------------------------------------------------------------- Vaidya
 
 def vaidya(ck, src):
@@ -16630,7 +16806,7 @@ DRAWN = {
     "point_particle_2plus1": point_particle_2plus1,
     "interior_schwarzschild": interior_schwarzschild, "gravastar": gravastar, "frw": frw,
     "einstein_cluster": einstein_cluster,
-    "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii,
+    "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii,
     "bartnik_mckinnon": bartnik_mckinnon,
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "reissner_nordstrom_ads": reissner_nordstrom_ads, "c_metric": c_metric,
     "misner": misner, "milne": milne,
@@ -18782,6 +18958,21 @@ CAPTIONS = {
         "X)/2) = \\tanh((\\eta \\pm \\chi)/2)$ sends it into the Einstein static universe. It has the causal "
         "structure of the flat universe, a triangle with the bang along its base and null infinity above, and "
         "differs from it only in where its surfaces of constant $\\eta$ and $\\chi$ lie.",
+    ],
+    ("white_hole", "burst"): [
+        "A spherically symmetric distribution of dust that leaves a singularity, comes to rest ($R_0 = 2\\,r_s$), "
+        "and falls back, each point in the diagram a 2-sphere. Inside, the dust is a closed universe, "
+        "$a^2(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\,d\\Omega^2)$ with $a = a_m\\sin^2(\\eta/2)$, "
+        "already conformal to the Einstein static universe, and it is drawn with $T = \\eta - \\pi$ and $X = \\chi$. "
+        "Outside, $p = P(U)$ and $q = Q(V)$ are functions $P$ and $Q$ of the Kruskal coordinates $U$ and $V$, and three "
+        "conditions fix them completely: the two sides agree on the surface $\\chi = \\chi_0$, a radial geodesic of "
+        "the exterior with energy $\\cos\\chi_0$; the moment of rest is the line $T = 0$, the exterior's symmetry "
+        "$t \\to -t$; and each singularity $r = 0$ is one line, $T = \\pm\\pi$.",
+        "The lower half is Oppenheimer and Snyder's collapse upside down. The past horizon $V = 0$ runs from $i^-$ "
+        "into the dust and reaches the centre at $\\eta = 3\\chi_0$, after the surface has crossed $r_s$ at "
+        "$\\eta = 2\\chi_0$, and no ray from $\\mathscr{I}^-$ arrives below it. Marginally trapped spheres run "
+        "along $\\eta = 2\\chi$ in the lower half and $\\eta = 2\\pi - 2\\chi$ in the upper, timelike curves "
+        "both, and the event horizon leaves the centre at $\\eta = 2\\pi - 3\\chi_0$ for $i^+$.",
     ],
     ("oppenheimer_snyder", "collapse"): [
         "A spherically symmetric distribution of dust collapsing from rest ($R_0 = 2\\,r_s$), "

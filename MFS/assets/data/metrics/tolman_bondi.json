@@ -56,6 +56,11 @@
       "id": "tolman_vii",
       "kind": "programme",
       "text": "Richard Tolman's static spheres of fluid, from 1939. He found eight in closed form, and the density inside a neutron star follows the seventh closely [tolman1939, lattimer2001]."
+    },
+    {
+      "id": "white_hole",
+      "kind": "special_case",
+      "text": "Tolman-Bondi with $E = 0$, a uniform core, and a bang that comes late for it, Igor Novikov's delayed core of 1964 [novikov1965]."
     }
   ],
   "references": [
@@ -84,7 +89,8 @@
     "oppenheimer1939",
     "lemos1992",
     "hellaby1994",
-    "lattimer2001"
+    "lattimer2001",
+    "novikov1965"
   ],
   "coordinates": [
     {

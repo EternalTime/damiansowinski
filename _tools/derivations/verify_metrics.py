@@ -726,6 +726,34 @@ DIMENSIONS = {
     ("oppenheimer_snyder", "exterior_schwarzschild"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
     },
+    # The white hole is that collapse with the time reversed, and its charts carry the same
+    # dimensions: inside, chi is an angle and the scale factor the length, and the conformal time
+    # eta of the cycloid a = a_m sin^2(eta/2) is an angle too; outside, Schwarzschild's chart and
+    # the outgoing Eddington-Finkelstein chart, whose retarded time u is a length.
+    ("white_hole", "interior_comoving"): {
+        "\\tau": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1",
+        "a": "L", "\\chi_0": "1", "a_m": "L",
+    },
+    ("white_hole", "interior_conformal"): {
+        "\\eta": "1", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\chi_0": "1", "a_m": "L",
+    },
+    ("white_hole", "exterior_schwarzschild"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
+    },
+    ("white_hole", "exterior_eddington_finkelstein"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
+    },
+    # Kruskal's null coordinates U and V are numbers, and the factor 4 r_s^3 e^(-r/r_s)/r carries
+    # the area.
+    ("white_hole", "exterior_kruskal"): {
+        "U": "1", "V": "1", "\\theta": "1", "\\phi": "1", "r_s": "L", "r": "L",
+    },
+    # Novikov's chart is Tolman's with no energy function: the shell label r is a length beside the
+    # areal radius, F = 2GM(r)/c^2 is the Schwarzschild radius of the mass inside the shell, and b is
+    # c times the moment the shell leaves the singularity, so q = ct - b is a length as well.
+    ("white_hole", "novikov_comoving"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "F": "L", "b": "L", "q": "L", "R": "L",
+    },
     # u is the retarded time and v the affine parameter along the rays, which is a
     # length, so the wave profile H is dimensionless and the amplitudes of the exact
     # plane wave, multiplying x^2, are curvatures.
@@ -1564,6 +1592,9 @@ HELD = {
     # Podolsky and Belan's x, u and v as functions of the inertial coordinates of the flat space
     # Kundt's waves cross: x is a square root, and every derivative of the three is rational in them.
     ("kundt_waves", "kerr_schild"): ("x", "u", "v"),
+    # The areal radius of Kruskal's chart, Lambert's function of UV: held, a value is
+    # written in r and e^(-r/r_s), as the line element is.
+    ("white_hole", "exterior_kruskal"): ("r",),
 }
 
 # The first derivatives of held names along the coordinates they vary with, written in the names
@@ -1700,6 +1731,9 @@ FUNCTIONS = {
     "ATAN": sp.atan,
     # \\arcsin and \\mathrm{arsinh}, spelled the same way, for Wahlquist's h_1 and h_2.
     "ASINH": sp.asinh, "ASIN": sp.asin,
+    # Lambert's function, the principal branch, written \\mathrm{W}: Kruskal's chart of the white
+    # hole defines the areal radius by it, (1 - r/r_s) e^(r/r_s) = UV.
+    "LAMBERTW": sp.LambertW,
 }
 
 
@@ -1792,6 +1826,8 @@ def _canonical(expression):
     for function, rewrite in _IN_SIN_COS_EXP.items():
         if expression.has(function):
             expression = expression.replace(function, rewrite)
+    if expression.has(sp.LambertW):
+        expression = _lambert(expression)
     if expression.has(sp.Abs, sp.sign, sp.DiracDelta):
         expression = _on_a_kink(expression)
     if any(not atom.args[0].is_Symbol for atom in expression.atoms(sp.sin, sp.cos)):
@@ -1857,6 +1893,26 @@ def _canonical(expression):
     if not value.numerator:
         return sp.Integer(0)
     return value.as_expr().xreplace(halved) if halved else value.as_expr()
+
+
+def _lambert(expression):
+    """The expression with every exponential of Lambert's function written by its defining
+    relation, W(x) e^(W(x)) = x, so that e^(k W(x)) = (x/W(x))^k for a whole k, and W(x) is the one
+    generator left: its derivative, W/(x(1 + W)), is rational in it. Kruskal's chart of the white
+    hole holds e^(-r/r_s) with r = r_s(1 + W(-UV/e)), which this makes a rational function
+    of W, U and V, among which no relation is left."""
+    def written(power):
+        out, rest = sp.Integer(1), sp.Integer(0)
+        for term in sp.Add.make_args(sp.expand(power.args[0])):
+            k, w = term.as_coeff_Mul()
+            if isinstance(w, sp.LambertW) and k.is_Integer:
+                out *= (w.args[0] / w) ** k
+            else:
+                rest += term
+        return out * sp.exp(rest)
+    # The argument is put in one form first, since two spellings of it would be two generators.
+    expression = expression.replace(lambda x: isinstance(x, sp.LambertW), lambda x: sp.LambertW(sp.expand(x.args[0])))
+    return expression.replace(lambda x: isinstance(x, sp.exp) and x.args[0].has(sp.LambertW), written)
 
 
 def _whole_exponents(expression):
@@ -2698,6 +2754,7 @@ class Reader:
         text = text.replace("\\exp", " exp ").replace("\\ln", " log ").replace("\\log", " log ")
         text = text.replace("\\arctan", " ATAN ")
         text = text.replace("\\mathrm{arsinh}", " ASINH ").replace("\\arcsin", " ASIN ")
+        text = text.replace("\\mathrm{W}", " LAMBERTW ")
         text = expand_superscript_braces(text)
         text = text.replace("^", "**")
         # A trig call written bare, as \sin^2\theta or \cot\theta rather than sin(theta).
