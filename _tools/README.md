@@ -989,6 +989,12 @@ The page plays a movie as `wireMovie()` in `_layouts/mfs.html` says: it plays on
 `movieFrame()` in `MFS/assets/turn.js` is the frame shown at each moment of playing, by the movie's `seconds` and `loop`, and the tests run it in Node.
 The button in the top left corner of its frame, in the reset's size and colours and pink while pressed, plays and pauses it, and the label below the drawing names the frame shown.
 The movies of FRW and the Milne universe do not turn under the hand, and every other movie turns while it plays.
+Nothing in that label moves as the movie plays, as the captain asked on 1 October 2026.
+The label holds every frame's name in one cell, each from the cell's left edge, so it is as wide as its widest name at every frame and its place never depends on the frame shown.
+`steady()` in `MFS/assets/turn.js` gives each frame's number, the first after the label's first `=`, the glyphs it lacks of the most any frame's has, in `\hphantom`: a minus and digits in front of it, a point, a stroke and digits behind it.
+So every frame's number fills one box with its point at one place, and a unit after it stands still, in any font whose digits are of one width, as those of MathJax are.
+A frame's label is therefore one formula with its number after an `=`, and `SteadyMovieLabels` in the tests holds every movie to that, the label's place at every frame and camera included.
+The value under the pointer on a spacetime diagram keeps its room in the same way, set from the right in the length of the longer of the plot's two ends.
 The print copy prints the first frame.
 
 `_tools/turn_drag.mjs` turns one figure of each kind in headless Chrome as a reader does, Schwarzschild's surface, Krasnikov's height and Gödel's light cones, with the mouse, the keys, the reset button and, on a phone, a finger.
