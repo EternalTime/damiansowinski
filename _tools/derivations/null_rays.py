@@ -433,6 +433,8 @@ class Diagram:
     fronts: dict = None             # declared Robinson-Trautman initial data, {"epsilon": ...}; see FrontSolver
     boson: dict = None              # a declared boson star, {"sigma_c": ...}; see boson_star.Star
     any_factor: str = None          # a declared conformal factor the drawing holds for every value of
+    edge_horizon: bool = False      # the edge of `where` is a horizon, where g^rr vanishes, and is marked
+                                    # as one; see Plot.zero_set_on_the_edge
     crunch: bool = False            # mark where the metric stops being finite as a singular curve,
                                     # checked on the Kretschmann scalar, and hatch what lies beyond it
     bang: bool = False              # with crunch: the metric stops being finite below the middle of the
@@ -2478,11 +2480,11 @@ DIAGRAMS = [
             "$u/\\sqrt{r_s}$", "$ct/r_s$", {"r_s": 1}, EQUATOR, families=SIDEWAYS, cones=(8, 7), areal=True,
             areal_contours=(1.5, 2.0, 3.0)),
     Diagram("einstein_rosen_bridge", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0.5, 6, -2.75, 2.75),
-            "$r/r_s$", "$ct/r_s$", {"r_s": 1}, EQUATOR, areal=True, where="r - 1"),
+            "$r/r_s$", "$ct/r_s$", {"r_s": 1}, EQUATOR, areal=True, where="r - 1", edge_horizon=True),
     Diagram("einstein_rosen_bridge", "isotropic", "radial", "$t$ and $r$", ("t", "r"), (0, 2, -1.5, 1.5),
             "$r/r_s$", "$ct/r_s$", {"r_s": 1}, EQUATOR, areal=True, areal_contours=(1.5, 2.0)),
     Diagram("einstein_rosen_bridge", "charged_spherical", "radial", "$t$ and $r$", ("t", "r"), (1, 6.5, -2.75, 2.75),
-            "$r/r_s$", "$ct/r_s$", ERB_CHARGED, EQUATOR, areal=True, where="2*r - 3"),
+            "$r/r_s$", "$ct/r_s$", ERB_CHARGED, EQUATOR, areal=True, where="2*r - 3", edge_horizon=True),
     Diagram("einstein_rosen_bridge", "charged_bridge", "radial", "$t$ and $u$", ("t", "u"), (-3, 3, -3, 3),
             "$u/r_q$", "$ct/r_q$", {"r_q": 1}, EQUATOR, families=SIDEWAYS, cones=(8, 7), areal=True,
             areal_contours=(1.5, 2.0, 3.0)),
@@ -9843,6 +9845,32 @@ class Plot:
         lines = contourpy.contour_generator(UU, VV, Z, line_type="Separate").lines(0.0)
         return [rounded(thin(l, 0.0008)) for l in lines if len(l) > 3 and not (drop_edge and on_edge(l))]
 
+    def zero_set_on_the_edge(self, name, keep=None):
+        """The zero set of `name` that is the edge of the row's `where` itself, as the bridge r = r_s
+        is of Einstein and Rosen's spherical chart, where g^rr vanishes. zero_set blanks everything
+        outside `where`, which leaves no change of sign across such a line, so it is found on the
+        whole grid and kept where `where` changes sign within a grid step of every point of it."""
+        if not self.c.spec.where or self.c.surface is not None:
+            return []
+        UU, VV, x0, r = self.grid()
+        Z = self.c.fn[name](x0, r).astype(float)
+        if keep is not None:
+            Z = np.where(keep(x0, r), Z, np.nan)
+        Z = np.where(np.isfinite(Z), Z, np.nan)
+        step = 1.5 / (UU.shape[0] - 1)
+
+        def edge(line):
+            inside = []
+            for du, dv in ((step, 0), (-step, 0), (0, step), (0, -step)):
+                a, b = self.to_chart(self.from_unit(np.clip(line + np.array([du, dv]), 0, 1)))
+                with np.errstate(invalid="ignore"):
+                    inside.append(self.c.fn["where"](a, b) * np.ones(len(line)) > 0)
+            inside = np.array(inside)
+            return bool(np.all(inside.any(axis=0) & ~inside.all(axis=0)))
+
+        lines = contourpy.contour_generator(UU, VV, Z, line_type="Separate").lines(0.0)
+        return [rounded(thin(l, 0.0008)) for l in lines if len(l) > 3 and edge(l)]
+
     def level_sets(self, name, levels):
         UU, VV, x0, r = self.grid()
         generator = contourpy.contour_generator(UU, VV, self.c.fn[name](x0, r).astype(float),
@@ -10117,6 +10145,11 @@ class Plot:
         keep = here if spec.singular_zero else (lambda x0, r: self.claimed(x0, r)) if spec.where_is_infinity else None
         # Inside a declared pulse g^rr takes the pulse's own sign, which marks nothing of the spacetime.
         lines = [] if spec.any_factor or spec.delta else self.zero_set("girr", keep=keep)
+        if spec.edge_horizon:
+            # A horizon that is the edge of the row's `where` is still marked.
+            lines = lines + self.zero_set_on_the_edge("girr")
+            if not lines:
+                raise SystemExit(f"{key(spec)}: g^rr does not vanish on the edge of the row's where")
         if lines:
             out.append({"kind": "grr", "lines": lines})
         if spec.mark_gtt:

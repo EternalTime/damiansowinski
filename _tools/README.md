@@ -433,6 +433,8 @@ Nothing in them is drawn by eye or computed by the page.
 A domain that holds only for some values of a parameter ends in `\;\text{for}\;` and a condition, as FRW's closed case writes `r \in [0, 1/\sqrt{k}) \;\text{for}\; k > 0` beside `r \in [0, \infty) \;\text{for}\; k \le 0`.
 The script hatches a view by the domains whose conditions hold at that view's parameter values, and stops, naming the view, on a condition it cannot evaluate or on two domains for one coordinate that both hold.
 A domain with no `\in`, such as a note on where a horizon sits, is printed and never read.
+A row whose `where` ends on a horizon, as `r - 1` does for the Einstein-Rosen bridge's spherical chart, sets `edge_horizon=True`: nothing is marked outside `where`, so the curve $g^{rr} = 0$ lying on its very edge has no change of sign left to find, and `zero_set_on_the_edge` finds it on the whole grid instead.
+The generator stops if such a row marks nothing, and `EinsteinRosenHorizons` in `_tools/test_build_mfs_data.py` holds every view of the bridge to its horizon marker.
 A domain that is an inequality between the plane's two coordinates, as the $UV < 1$ of Witten's black hole in its Kruskal chart, is no interval of either, so the view's row states it again as `where`, an expression in the chart's plain names that is positive on the spacetime: the view is hatched where it is not positive, and no ray or cone is drawn there.
 
 It needs more than sympy, and takes about nine minutes for the whole collection, the longest single view being FRW drawn through its observer at about a minute and a half:
