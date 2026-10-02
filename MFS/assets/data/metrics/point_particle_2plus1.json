@@ -52,6 +52,11 @@
       "id": "btz",
       "kind": "family",
       "text": "The same world with a negative cosmological constant grows a black hole. The cones lie between anti-de Sitter space and the lightest hole, and two particles that collide hard enough make one [banados1992, matschull1999]."
+    },
+    {
+      "id": "quantum_btz",
+      "kind": "family",
+      "text": "With a negative cosmological constant and quantum fields around it, the cone of a particle is dressed with a horizon, which hides its singularity [emparan2002holograms, emparan2020qbtz]."
     }
   ],
   "references": [
@@ -71,7 +76,9 @@
     "witten1988",
     "deser1984cosmological",
     "banados1992",
-    "matschull1999"
+    "matschull1999",
+    "emparan2002holograms",
+    "emparan2020qbtz"
   ],
   "coordinates": [
     {

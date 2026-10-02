@@ -215,6 +215,26 @@ DIMENSIONS = {
     ("btz", "eddington_finkelstein_outgoing"): {
         "u": "L", "r": "L", "\\tilde\\phi": "1", "\\ell": "L", "M": "1", "J": "L",
     },
+    # The quantum BTZ black hole keeps the BTZ entry's reading of the mass, M = 8 G_3 m/c^2 a number,
+    # with the brane's anti-de Sitter radius l_3 and the backreaction length l both lengths and
+    # Emparan, Frassino and Way's F, kappa and mu numbers, so that l F/r and mu l/r are numbers
+    # beside r^2/l_3^2. The rotation a is a length, which makes a^2/r^2 a number and a/r^2 times
+    # c dt an angle. The advanced and retarded times are lengths.
+    ("quantum_btz", "static"): {
+        "t": "T", "r": "L", "\\phi": "1", "\\ell_3": "L", "M": "1", "\\ell": "L", "F": "1",
+    },
+    ("quantum_btz", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\phi": "1", "\\ell_3": "L", "M": "1", "\\ell": "L", "F": "1",
+    },
+    ("quantum_btz", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\phi": "1", "\\ell_3": "L", "M": "1", "\\ell": "L", "F": "1",
+    },
+    ("quantum_btz", "brane"): {
+        "t": "T", "r": "L", "\\phi": "1", "\\ell_3": "L", "\\kappa": "1", "\\mu": "1", "\\ell": "L",
+    },
+    ("quantum_btz", "rotating"): {
+        "t": "T", "r": "L", "\\phi": "1", "\\ell_3": "L", "\\kappa": "1", "\\mu": "1", "\\ell": "L", "a": "L",
+    },
     # Witten's black hole in two dimensions: lambda is an inverse length and the mass parameter m,
     # the value of e^(-2 Phi) on the horizon, a number. The dilaton chart's w = e^(-2 Phi) and the
     # Kruskal coordinates U and V are numbers, and the advanced and retarded times are lengths.

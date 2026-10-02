@@ -132,6 +132,11 @@
       "id": "plebanski_hacyan",
       "kind": "family",
       "text": "Products that keep anti-de Sitter space of two dimensions as one factor, times a flat plane with a uniform electromagnetic field or times a hyperbolic plane with none [ortaggio2002direct]."
+    },
+    {
+      "id": "quantum_btz",
+      "kind": "family",
+      "text": "A quantum black hole of three dimensions, held on a brane in anti-de Sitter space of four. Its lightest state is anti-de Sitter space of three dimensions, where the stress tensor of the quantum fields vanishes [emparan2002holograms, emparan2020qbtz]."
     }
   ],
   "references": [
@@ -177,7 +182,9 @@
     "son2008",
     "bicak1999",
     "griffiths2004",
-    "ortaggio2002direct"
+    "ortaggio2002direct",
+    "emparan2002holograms",
+    "emparan2020qbtz"
   ],
   "coordinates": [
     {

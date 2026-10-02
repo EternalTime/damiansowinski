@@ -6993,6 +6993,223 @@ def schwarzschild_ads(ck, src):
     return views
 
 
+
+QBTZ = {"ell_3": 1, "M": "1/4", "ell": "15/16", "F": "1/4"}
+QBTZ_CONE = {"ell_3": 1, "kappa": 1, "mu": 6, "ell": "1/3"}
+QBTZ_ROTATING = {"ell_3": 1, "kappa": -1, "mu": "19/8", "ell": "3/19", "a": "sqrt(6)/4"}
+
+
+def _qbtz_hole(ck, name, st, T, ingoing, outgoing, horizon, region, settings, moment=None,
+               first=("static", "Static", "static")):
+    """The views of a static quantum BTZ hole whose H has one positive root and a complex pair, as
+    AdSHoleTower draws Schwarzschild-anti-de Sitter: the chart of t and r over the right exterior,
+    and, where the hole has them, the ingoing and outgoing charts. Each point is a circle."""
+    k, B = T.kp, T.B
+    p, q = T.pq("II", np.array([-1.0, 0, 1]), np.full(3, 1e-9))
+    ck.limit(f"{name}: r -> 0 in the black hole lands on T = pi/2", p + q, [HALF] * 3)
+    p, q = T.pq("I", np.array([-0.5, 0, 0.5]), np.full(3, 1e9))
+    ck.limit(f"{name}: r -> infinity lands on the boundary tan p tan q = -B", np.tan(p) * np.tan(q), [-B] * 3, 1e-6)
+    ck.limit(f"{name}: the boundary crosses T = 0 at X = 2 arctan sqrt(B)", (q - p)[1], 2 * np.arctan(np.sqrt(B)), 1e-8)
+    p, q = T.pq("I", np.array([0.5]), np.array([T.rf[0] * (1 + 1e-12)]))
+    ck.limit(f"{name}: r -> r_+ at fixed t lands on the bifurcation circle", point(p[0], q[0]), [0, 0], 1e-4)
+    K = st.kretschmann
+    ck.diverges(f"{name}: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+    ck.finite(f"{name}: the Kretschmann scalar is finite at r = r_+", K(np.zeros(3), T.rf[0] * np.array([0.999, 1, 1.001])))
+
+    reach = 2 * np.arctan(np.sqrt(B))
+    box = [-reach - 0.3, reach + 0.3, -HALF - 0.25, HALF + 0.25]
+    bp, bq = T.boundary()
+    right = [point(a, b) for a, b in zip(bp, bq)]
+    left = [[-x, t_] for x, t_ in right[::-1]]
+    whole = right + left
+    named = min(right, key=lambda at: abs(at[1] - 1.2))
+    rp = T.rf[0]
+    R_OUT, R_IN, TS = tuple(rp * c for c in (1.1, 1.25, 1.5, 2, 4)), tuple(rp * c for c in (0.4, 0.7, 0.9)), \
+        (-0.8, -0.4, -0.2, 0, 0.2, 0.4, 0.8)
+
+    def edges(v):
+        v.curve("boundary", bp, bq)
+        v.curve("boundary", -bq, -bp)
+        v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+        v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+        v.label_xt([0, HALF], "$r = 0$", "b", dy=-8)
+        v.label_xt([0, -HALF], "$r = 0$", "t", dy=8)
+        v.label_xt(named, "$r \\to \\infty$", "l", "small", dx=6)
+        v.label_xt([-named[0], named[1]], "$r \\to \\infty$", "r", "small", dx=-6)
+        v.label_xt([-Q4, Q4], "$r_+$", "tr", "small", dx=-6, dy=2)
+        v.label_xt([reach / 2 + 0.25, -0.6], "exterior", cls="region")
+        v.label_xt([-reach / 2 - 0.25, -0.6], "exterior", cls="region")
+        v.label_xt([0, 1.15], region[0], cls="region")
+        v.label_xt([0, -1.15], region[1], cls="region")
+        v.legend("horizon", horizon)
+        v.legend("boundary", "the conformal boundary $r \\to \\infty$, timelike")
+        v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+
+    def units(xs):
+        return listed(tuple(float(f"{x:.3g}") for x in xs)) + " in units of $\\ell_3$"
+
+    views = []
+    t = spread(-np.inf, np.inf, 500, 6)
+    v = View(first[0], first[1], box, first[2])
+    v.fill("region", whole)
+    v.fill("cover", [[0, 0]] + right)
+    for r in R_OUT:
+        v.curve("r", *T.pq("I", t, np.full_like(t, r)))
+    rr = spread(rp, np.inf, 500, 14)
+    for tt in TS:
+        v.curve("t", *T.pq("I", np.full_like(rr, tt), rr))
+    edges(v)
+    v.legend("cover", "the region that $t$ and $r > r_+$ cover")
+    v.legend("r", "$r$ constant, at " + units(R_OUT))
+    v.legend("t", "$ct$ constant, in units of $\\ell_3$")
+    views.append(v)
+    for vid, label, system, fmap, null, cover, ws in (
+            ("ingoing", "Ingoing Eddington-Finkelstein", "eddington_finkelstein_ingoing", ingoing, "v",
+             [[0, 0]] + right + [[-HALF, HALF]], (-0.4, 0, 0.4, 0.8, 1.2)),
+            ("outgoing", "Outgoing Eddington-Finkelstein", "eddington_finkelstein_outgoing", outgoing, "u",
+             [[0, 0], [-HALF, -HALF]] + right, (-1.2, -0.8, -0.4, 0, 0.4))):
+        if fmap is None:
+            continue
+        v = View(vid, label, box, system)
+        v.fill("region", whole)
+        v.fill("cover", cover)
+        for r in R_OUT + R_IN:
+            v.curve("r", *fmap(t, np.full_like(t, r)))
+        rr = spread(0, np.inf, 600, 14)
+        for w in ws:
+            v.curve("null", *fmap(np.full_like(rr, w), rr))
+        edges(v)
+        v.legend("cover", f"the region that ${null}$ and $r > 0$ cover")
+        v.legend("r", "$r$ constant, at " + units(R_IN + R_OUT))
+        v.legend("null", f"${null}$ constant, an {vid} light ray")
+        views.append(v)
+    for view in views:
+        view.set(settings=settings)
+    if moment is not None:
+        lo, hi = moment.reach("static", "r")
+        for view in views:
+            view.slice(moment, [through_bifurcation(T, ("I'", "I"), hi, lo)])
+    return views
+
+
+def quantum_btz(ck, src):
+    """Three holes, each maximally extended, each point a circle.
+
+    The hole of the static and Eddington-Finkelstein charts at M = F = 1/4 and l = 15/16 in units of
+    l_3: H = r^2 - 1/4 - 15/(64r) = (r - 3/4)(r^2 + 3r/4 + 5/16)/r, one horizon r_+ = 3/4 with k =
+    H'(r_+)/2 = 23/24 and a complex pair, which is the shape of Schwarzschild-anti-de Sitter's f, so
+    AdSHoleTower draws it: r = 0 on T = +-pi/2 and the conformal boundary on tan p tan q = -B with
+    B = exp(2kR) = 3.67, R = 0.679 the tortoise coordinate at infinity. The conical singularity
+    dressed with a horizon of the brane chart, kappa = +1, mu = 6 and l = 1/3: H = r^2 + 1 - 2/r =
+    (r - 1)(r^2 + r + 2)/r, Schwarzschild-anti-de Sitter's f at r_s = 2 and L = 1 itself, horizon
+    r_+ = 1, B = 13.9. And the rotating hole of the rotating chart at kappa = -1, mu = 19/8, l = 3/19
+    and a^2 = 3/8 with phi divided out, -H c^2dt^2 + dr^2/H with r^2 H = (r - 1)(r - 1/2)(r^2 + 3r/2
+    + 3/4): the tower of Reissner and Nordstrom's hole in anti-de Sitter space, which CarterAdSTower
+    and HyperbolicHoleDrawing draw for reissner_nordstrom_ads, with a timelike ring singularity at
+    r = 0 inside r_- = 1/2, k_+ = 13/16 and k_- = 7/4."""
+    name = "quantum BTZ"
+    st = Plane(src, "quantum_btz", "static", ("t", "r"), {"phi": "0"}, QBTZ)
+    assert st.g[0, 1] == 0 and sp.simplify(st.g[0, 0] * st.g[1, 1] + 1) == 0
+    T = AdSHoleTower(st.gi[1, 1], st.x1)
+    k = T.kp
+    ck.limit(f"{name}: the horizon is the positive root of the published g^rr, r_+ = 3 l_3/4", T.rf, [0.75], 1e-12)
+    ck.limit(f"{name}: the surface gravity is H'(r_+)/2 = 23/(24 l_3)", k, 23 / 24, 1e-12)
+    ck.limit(f"{name}: R = 0.679 l_3 and B = exp(2kR) = 3.67", [T.far, T.B], [0.679, 3.675], 1e-3)
+    rr = np.array([0.1, 0.5, 0.74, 0.76, 1.5, 3.0, 30.0])
+    ck.limit(f"{name}: r* is the tortoise coordinate the other diagrams draw with", T.rstar(rr), slices.qbtz_rstar(rr), 1e-12)
+    for cell, lo, hi, sense in (("I", 0.751, 40, (1, 0)), ("II", 0.01, 0.749, (0, -1)), ("IV", 0.01, 0.749, (0, 1)),
+                                ("I'", 0.751, 40, (-1, 0))):
+        ck.chart(f"{name} static, cell {cell}", st, lambda t, r, c=cell: T.pq(c, t, r),
+                 ck.uniform(-4, 4), ck.uniform(lo, hi), lambda t, r, s=sense: s)
+
+    def ingoing(w, r):
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        return np.arctan(T.UV(r) * np.exp(-k * w)), atan_exp(k * w)
+
+    def outgoing(u, r):
+        u, r = np.asarray(u, dtype=float), np.asarray(r, dtype=float)
+        return -atan_exp(-k * u), np.arctan(-T.UV(r) * np.exp(k * u))
+    ein = Plane(src, "quantum_btz", "eddington_finkelstein_ingoing", ("v", "r"), {"phi": "0"}, QBTZ)
+    ck.chart(f"{name} ingoing Eddington-Finkelstein", ein, ingoing,
+             ck.uniform(-4, 4), ck.uniform(0.01, 40), lambda w, r: (1, -60))
+    eout = Plane(src, "quantum_btz", "eddington_finkelstein_outgoing", ("u", "r"), {"phi": "0"}, QBTZ)
+    ck.chart(f"{name} outgoing Eddington-Finkelstein", eout, outgoing,
+             ck.uniform(-4, 4), ck.uniform(0.01, 40), lambda u, r: (1, 60))
+    ck.limit(f"{name}: the ingoing and static coordinates put one event at one point",
+             ingoing(0.4 + T.rstar(3.0), 3.0), T.pq("I", 0.4, 3.0), 1e-12)
+    ck.limit(f"{name}: the outgoing and static coordinates put one event at one point",
+             outgoing(0.4 - T.rstar(3.0), 3.0), T.pq("I", 0.4, 3.0), 1e-12)
+    moment, = slices.moments("quantum_btz")
+    views = _qbtz_hole(ck, name, st, T, ingoing, outgoing, "the horizon $r_+ = 3\\ell_3/4$",
+                       ("black hole", "white hole"),
+                       "$M = F = 1/4$ and $\\ell = 15\\ell_3/16$, so that $r_+ = 3\\ell_3/4$ and "
+                       "$\\kappa_+ = 23/(24\\ell_3)$.", moment)
+
+    # The dressed cone, in the chart of the C-metric's brane.
+    br = Plane(src, "quantum_btz", "brane", ("t", "r"), {"phi": "0"}, QBTZ_CONE)
+    assert br.g[0, 1] == 0 and sp.simplify(br.g[0, 0] * br.g[1, 1] + 1) == 0
+    C = AdSHoleTower(br.gi[1, 1], br.x1)
+    cone = f"{name}, the dressed cone"
+    ck.limit(f"{cone}: the horizon is the positive root of the published g^rr, r_+ = l_3", C.rf, [1.0], 1e-12)
+    ck.limit(f"{cone}: the surface gravity is 2/l_3 and B = 13.9", [C.kp, C.B], [2.0, 13.904], 1e-3)
+    ck.chart(f"{cone}, exterior", br, lambda t, r: C.pq("I", t, r), ck.uniform(-4, 4), ck.uniform(1.001, 40),
+             lambda t, r: (1, 0))
+    ck.chart(f"{cone}, black hole", br, lambda t, r: C.pq("II", t, r), ck.uniform(-4, 4), ck.uniform(0.01, 0.999),
+             lambda t, r: (0, -1))
+    views += _qbtz_hole(ck, cone, br, C, None, None, "the horizon $r_+ = \\ell_3$", ("black hole", "white hole"),
+                        "$\\kappa = +1$, $\\mu = 6$, and $\\ell = \\ell_3/3$, so that $r_+ = \\ell_3$ and the defect "
+                        "has $\\Delta = 4/11$.", first=("dressed", "Dressed cone", "brane"))
+
+    # The rotating hole, phi divided out.
+    rot = Plane(src, "quantum_btz", "rotating", ("t", "r"), None, QBTZ_ROTATING, quotient="phi")
+    assert rot.g[0, 1] == 0 and sp.simplify(rot.g[0, 0] * rot.g[1, 1] + 1) == 0
+    W = CarterAdSTower(rot)
+    rp, rm = W.rf
+    far = W.far[1]
+    spin = f"{name}, rotating"
+    ck.limit(f"{spin}: the horizons are the positive roots of the published H, r_+ = l_3 and r_- = l_3/2",
+             [rp, rm], [1.0, 0.5], 1e-12)
+    ck.limit(f"{spin}: the surface gravities are 13/(16 l_3) and 7/(4 l_3)", W.kappa, [13 / 16, 7 / 4], 1e-12)
+    tower_checks(ck, spin, rot, W, 0.01, 4)
+    p, q = W.pq("III", np.array([-2.0, 0, 2]), np.full(3, 1e-12))
+    ck.limit(f"{spin}: r -> 0 lands on the vertical line X = pi/2", q - p, [HALF] * 3, 1e-9)
+    t3 = np.array([-1.0, 0, 1])
+    ck.limit(f"{spin}: r -> infinity lands on (-G(t - R), G(-t - R))",
+             np.concatenate(W.pq("I", t3, np.full(3, 1e12))), np.concatenate([-W.G(t3 - far), W.G(-t3 - far)]), 1e-6)
+    K = rot.kretschmann
+    ck.diverges(f"{spin}: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+    ck.finite(f"{spin}: the Kretschmann scalar is finite at both horizons", K(np.zeros(2), np.array([rm, rp])))
+    D = HyperbolicHoleDrawing(W, far)
+    box = [-HALF - 0.85, HALF + 0.85, -PI - 0.1, 3 * PI + 0.1]
+    times = [c / W.kp for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+    rI, rII, rIII = (1.05, 1.2, 1.5, 3.0), (0.6, 0.75, 0.9), (0.1, 0.25, 0.4)
+    v = View("rotating", "Rotating", box, "rotating")
+    D.draw(v, {"I": (rI, times), "II": (rII, times), "IV": (rII, times), "III": (rIII, times)}, cover=[("I", False)])
+    v.label_xt([0, HALF + 0.1], "black hole", cls="region")
+    v.label_xt([0, 1.5 * PI - 0.1], "white hole", cls="region")
+    v.label_xt([0, -HALF], "white hole", cls="region")
+    v.label_xt([0, 2.5 * PI], "black hole", cls="region")
+    for sx in (1, -1):
+        for base in (0, 2 * PI):
+            v.label_xt([sx * 0.9, base + 0.3], "exterior", cls="region")
+            v.label_xt([sx * 1.5, base], "$r \\to \\infty$", "l" if sx > 0 else "r", "small", dx=6 * sx)
+        v.label_xt([sx * 0.95, PI + 0.3], "$r < r_-$", cls="region")
+        v.label_xt([sx * HALF, PI + 0.7], "$r = 0$", "l" if sx > 0 else "r", dx=8 * sx)
+    v.label_xt([Q4, Q4], "$r_+$", "tl", "small", dx=5, dy=1)
+    v.label_xt([Q4, 3 * Q4], "$r_-$", "bl", "small", dx=5, dy=-1)
+    v.set(fade={"top": 0.9, "bottom": 0.9},
+          settings="$\\kappa = -1$, $\\mu = 19/8$, $\\ell = 3\\ell_3/19$, and $a = \\sqrt{6}\\,\\ell_3/4$, so that "
+                   "$r_+ = \\ell_3$ and $r_- = \\ell_3/2$, with $\\kappa_+ = 13/(16\\ell_3)$.")
+    v.legend("horizon", "the horizons $r_+ = \\ell_3$ and $r_- = \\ell_3/2$")
+    v.legend("singular", "$r = 0$, the ring singularity, where the Kretschmann scalar diverges, timelike")
+    v.legend("boundary", "the conformal boundary $r \\to \\infty$, timelike")
+    v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, "
+                  "in units of $\\ell_3$")
+    v.legend("t", "$ct$ constant")
+    v.legend("cover", "the exterior $r > r_+$, which $t$ and $r$ cover")
+    views.append(v)
+    return views
+
 TBH_FLAT = {"mu": 1, "L": 1, "k": 0}
 TBH_MASSLESS = {"mu": 0, "L": 1, "k": -1}
 TBH_NEGATIVE = {"mu": "-120/343", "L": 1, "k": -1}
@@ -21675,7 +21892,7 @@ DRAWN = {
     "nordstrom_scalar": nordstrom_scalar,
     "einstein_1912_static": einstein_1912_static,
     "ab_metrics": ab_metrics,
-    "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "reissner_nordstrom_ads": reissner_nordstrom_ads, "c_metric": c_metric,
+    "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "quantum_btz": quantum_btz, "topological_black_hole": topological_black_hole, "reissner_nordstrom_ads": reissner_nordstrom_ads, "c_metric": c_metric,
     "misner": misner, "milne": milne,
     "gott_time_machine": gott_time_machine,
     "wormhole_time_machine": wormhole_time_machine,
@@ -22844,6 +23061,51 @@ CAPTIONS = {
         "Eddington-Finkelstein coordinates $u$ and $r$ on it, the time reverse of the ingoing ones. They cover "
         "a region inside $r_-$, the white hole above it, and an exterior, and their lines of constant $u$ are "
         "outgoing light rays, which leave $r = 0$, cross $r_-$ and $r_+$ at 45°, and end on the conformal boundary.",
+    ],
+    ("quantum_btz", "static"): [
+        "The quantum BTZ black hole ($M = F = 1/4$, $\\ell = 15\\ell_3/16$, so that $r_+ = 3\\ell_3/4$), maximally "
+        "extended, each point in the diagram a circle of circumference $2\\pi r$. Its tortoise coordinate $r_*$, "
+        "with $dr_*/dr = 1/H$ and $r_*(0) = 0$, tends to a finite value $R = 0.679\\,\\ell_3$ as $r \\to \\infty$, "
+        "and the Kruskal coordinates $U = -e^{-\\kappa_+ u}$ and $V = e^{\\kappa_+ v}$, with $u, v = ct \\mp r_*$ and "
+        "$\\kappa_+ = 23/(24\\ell_3)$, make the metric regular through $r_+$. With $p = \\arctan U$ and "
+        "$q = \\arctan V$ the singularity $r = 0$, where $UV = 1$, lies on the horizontal lines $T = \\pm\\pi/2$, "
+        "and the conformal boundary, where $UV = -e^{2\\kappa_+ R} = -3.67$, on the two timelike curves at the sides.",
+        "The coordinates $t$ and $r > r_+$ cover the right exterior alone. The classical hole of the same mass "
+        "has the square diagram of anti-de Sitter space identified, with $r = 0$ no curvature singularity; with "
+        "the backreaction $r = 0$ is one, and the boundaries bow outward to $X = \\pm 2.18$.",
+    ],
+    ("quantum_btz", "ingoing"): [
+        "The quantum BTZ black hole ($M = F = 1/4$, $\\ell = 15\\ell_3/16$) with the ingoing Eddington-Finkelstein "
+        "coordinates $v$ and $r$ on it. From $V = e^{\\kappa_+ v}$ and $U = UV(r)/V$, one formula for every "
+        "$r > 0$, they cover the exterior and the black hole together, and their lines of constant $v$ are "
+        "ingoing light rays, which leave the conformal boundary, cross the horizon, and end at $r = 0$.",
+    ],
+    ("quantum_btz", "outgoing"): [
+        "The quantum BTZ black hole ($M = F = 1/4$, $\\ell = 15\\ell_3/16$) with the outgoing Eddington-Finkelstein "
+        "coordinates $u$ and $r$ on it, the time reverse of the ingoing ones. From $U = -e^{-\\kappa_+ u}$ and "
+        "$V = UV(r)/U$ they cover the exterior and the white hole, and their lines of constant $u$ are outgoing "
+        "light rays, which leave $r = 0$, cross the horizon outward, and end on the conformal boundary.",
+    ],
+    ("quantum_btz", "dressed"): [
+        "A conical singularity dressed with a horizon ($\\kappa = +1$, $\\mu = 6$, $\\ell = \\ell_3/3$), maximally "
+        "extended, each point a circle of circumference $2\\pi\\Delta r$ with $\\Delta = 4/11$. Here "
+        "$H = r^2/\\ell_3^2 + 1 - 2\\ell_3/r$ vanishes at $r_+ = \\ell_3$, and the diagram is drawn as the static "
+        "hole's is, in the Kruskal coordinates $U$ and $V$ with $\\kappa_+ = 2/\\ell_3$ and the conformal boundary "
+        "where $UV = -13.9$.",
+        "At $\\ell = 0$ the same coordinates cover anti-de Sitter space with a conical defect along $r = 0$, a "
+        "timelike line with nothing to hide it. The backreaction of the quantum fields puts it behind a horizon "
+        "and turns it into a spacelike curvature singularity, $r = 0$ on the horizontal lines $T = \\pm\\pi/2$.",
+    ],
+    ("quantum_btz", "rotating"): [
+        "The rotating quantum BTZ black hole ($\\kappa = -1$, $\\mu = 19/8$, $\\ell = 3\\ell_3/19$, "
+        "$a = \\sqrt{6}\\,\\ell_3/4$), maximally extended, with $\\phi$ divided out: the diagram of "
+        "$-H\\,c^2dt^2 + dr^2/H$, the metric orthogonal to the circles of $\\phi$. Here $r^2H = (r - \\ell_3)"
+        "(r - \\ell_3/2)(r^2 + 3\\ell_3r/2 + 3\\ell_3^2/4)/\\ell_3^2$, so the hole has an outer horizon "
+        "$r_+ = \\ell_3$ and an inner one $r_- = \\ell_3/2$, with $\\kappa_+ = 13/(16\\ell_3)$.",
+        "The regions are those of a charged black hole in anti-de Sitter space: an exterior on each side, a "
+        "black hole above them, a region inside $r_-$ on each side of that, and then a white hole and two more "
+        "exteriors, repeated up and down. Inside $r_-$ the ring singularity $r = 0$ is timelike, where the "
+        "classical rotating hole has none. The coordinates $t$ and $r > r_+$ cover one exterior alone.",
     ],
     ("schwarzschild_ads", "static"): [
         "The Schwarzschild-anti-de Sitter black hole ($r_s = 2L$, so that $r_h = L$), maximally extended, each "

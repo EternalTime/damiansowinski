@@ -16,7 +16,7 @@ born_infeld_charge, penrose_impulsive_wave, exponential_metric, bondi_sachs, pet
 rp3_geon, kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kasner_scalar,
 moving_mirror, gravitational_instantons, small_universes, misner_zapolsky, distorted_schwarzschild,
 cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_bodies,
-tilted_universes, bowers_liang and kasner_magnetic, and Godel's cylindrical chart.
+tilted_universes, bowers_liang, kasner_magnetic and quantum_btz, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -26425,6 +26425,144 @@ def tilted_universes_check(chart, system):
 
 
 CHARTS["tilted_universes"] = [lambda s=s: tilted_universes(s) for s in TILTED_CHARTS]
+
+
+# -- The quantum BTZ black hole ----------------------------------------------------------
+
+QBTZ_CHARTS = ["static", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing", "brane", "rotating"]
+QBTZ_H = "\\dfrac{r^2}{\\ell_3^2} - M - \\dfrac{\\ell F}{r}"
+QBTZ_BRANE_H = "\\dfrac{r^2}{\\ell_3^2} + \\kappa - \\dfrac{\\mu\\ell}{r}"
+QBTZ_ROTATING_H = QBTZ_BRANE_H + " + \\dfrac{a^2}{r^2}"
+
+
+def quantum_btz(system_id):
+    """The black hole of three dimensions with the backreaction of a holographic conformal field
+    theory, as Emparan, Frassino and Way write it (arXiv:2007.15999): the static chart is their
+    (2.37), -H c^2dt^2 + dr^2/H + r^2 dphi^2 with H = r^2/l_3^2 - M - l F/r and M their 8 G_3 M; the
+    two Eddington-Finkelstein charts are built on its tortoise coordinate, dr_*/dr = 1/H; the
+    brane chart is the metric the anti-de Sitter C-metric (2.1) induces at x = 0, before their
+    rescaling (2.36), with H = r^2/l_3^2 + kappa - mu l/r and phi of period 2 pi Delta; and the
+    rotating chart is their (3.10), the metric the rotating C-metric (3.1) induces at x = 0, with
+    a^2/r^2 added to H and the shift a/r^2. quantum_btz_check holds each chart to its source."""
+    def diagonal(H, c2):
+        return f"ds^2 = -\\left({H}\\right){c2}dt^2 + \\dfrac{{dr^2}}{{{H}}} + r^2d\\phi^2"
+    time = "{} \\in (-\\infty, \\infty)"
+    radius = "r \\in (0, \\infty)"
+    horizon = "r = r_+ \\;\\text{(the horizon)}"
+    if system_id == "static":
+        coords, name, parameters = ["t", "r", "\\phi"], "Static", ["\\ell_3", "M", "\\ell", "F"]
+        domains = [time.format("t"), radius, "\\phi \\in [0, 2\\pi)", horizon]
+        line, chart_line = diagonal(QBTZ_H, "c^2"), diagonal(QBTZ_H, "")
+    elif system_id in ("eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing"):
+        w, sign, name = ("v", "+", "Ingoing") if system_id.endswith("ingoing") else ("u", "-", "Outgoing")
+        coords, name, parameters = [w, "r", "\\phi"], name + " Eddington-Finkelstein", ["\\ell_3", "M", "\\ell", "F"]
+        domains = [time.format(w), radius, "\\phi \\in [0, 2\\pi)", horizon]
+        line = chart_line = f"ds^2 = -\\left({QBTZ_H}\\right)d{w}^2 {sign} 2\\,d{w}\\,dr + r^2d\\phi^2"
+    elif system_id == "brane":
+        coords, name, parameters = ["t", "r", "\\phi"], "C-Metric Brane", ["\\ell_3", "\\kappa", "\\mu", "\\ell"]
+        domains = [time.format("t"), radius, "\\phi \\in [0, 2\\pi\\Delta)", horizon]
+        line, chart_line = diagonal(QBTZ_BRANE_H, "c^2"), diagonal(QBTZ_BRANE_H, "")
+    else:
+        coords, name, parameters = ["t", "r", "\\phi"], "Rotating", ["\\ell_3", "\\kappa", "\\mu", "\\ell", "a"]
+        domains = [time.format("t"), radius, "\\phi \\in [0, 2\\pi\\Delta)",
+                   "r = r_\\pm \\;\\text{(the horizons)}"]
+
+        def rotating(c, c2):
+            return (f"ds^2 = -\\left({QBTZ_ROTATING_H}\\right){c2}dt^2 + \\dfrac{{dr^2}}{{{QBTZ_ROTATING_H}}}"
+                    f" + r^2\\left(d\\phi - \\dfrac{{a}}{{r^2}}{c}dt\\right)^2")
+        line, chart_line = rotating("c\\,", "c^2"), rotating("", "")
+    probe = vm.Reader(coords, parameters, ())
+    r = probe.symbol["r"]
+    P = probe.parameters
+    mass = [P[n] for n in ("M", "F", "kappa", "mu", "a") if n in P]
+    spec = {
+        "metric_id": "quantum_btz",
+        "system": {"id": system_id, "name": name, "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        "printer": {"lead": [r, P["ell_3"], P["ell"], *mass], "factors": [*mass, P["ell"], P["ell_3"], r]},
+        "check": lambda chart: quantum_btz_check(chart, system_id),
+        "ricci_scalar": "-\\dfrac{6}{\\ell_3^2}",
+    }
+    # The metric and its inverse are written as the line element writes H.
+    H = QBTZ_BRANE_H if system_id == "brane" else QBTZ_H
+    wrapped = f"\\left({H}\\right)"
+    if system_id in ("static", "brane"):
+        spec["components"] = {"metric_components": {("t", "t"): "-" + wrapped, ("r", "r"): wrapped + "^{-1}"},
+                              "inverse_metric_components": {("t", "t"): "-" + wrapped + "^{-1}", ("r", "r"): H}}
+    elif system_id != "rotating":
+        w = coords[0]
+        spec["components"] = {"metric_components": {(w, w): "-" + wrapped},
+                              "inverse_metric_components": {("r", "r"): H}}
+    if system_id == "rotating":
+        spec["kretschmann"] = "\\dfrac{12}{\\ell_3^4} + \\dfrac{6\\mu^2\\ell^2}{r^6}"
+    elif system_id == "brane":
+        spec["kretschmann"] = "\\dfrac{12}{\\ell_3^4} + \\dfrac{6\\mu^2\\ell^2}{r^6}"
+    else:
+        spec["kretschmann"] = "\\dfrac{12}{\\ell_3^4} + \\dfrac{6\\ell^2F^2}{r^6}"
+    return spec
+
+
+def quantum_btz_check(chart, system):
+    """What each chart is held to before it is written.
+
+    Every chart: the Ricci scalar is -6/l_3^2, so the stress tensor is traceless, and
+    G^a_b - delta^a_b/l_3^2, which is 8 pi G_3 <T^a_b>_0 of Emparan, Frassino and Way's (2.44), is
+    (l F/2r^3) diag(1, 1, -2), their (2.46), with mu for F in the brane chart, and in the rotating
+    chart their (3.19): the same three with mu and one more, 3 l mu a/(2 r^5) in the slot of phi and t.
+    Each Eddington-Finkelstein chart is the static one pulled back along c dt = dv - dr/H or du + dr/H.
+    The brane chart is the static one pulled back along their (2.36), t = Delta t-bar, r = r-bar/Delta
+    and phi = Delta phi-bar, with M = -kappa Delta^2 and F = mu Delta^3 for any Delta, and the rotating
+    chart at a = 0 is the brane chart."""
+    P = chart.reader.parameters
+    geo, g = chart.geo, chart.geo.g
+    x0, r, phi = chart.symbols
+    ell3, ell = P["ell_3"], P["ell"]
+    strength = P["F"] if "F" in P else P["mu"]
+    if vm.norm(geo.ricci_scalar() + 6 / ell3 ** 2) != 0:
+        raise AssertionError(f"quantum_btz: the Ricci scalar of the {system} chart is not -6/l_3^2")
+    einstein = geo.einstein_ll()
+    mixed = sp.Matrix(3, 3, lambda i, j: sum(geo.ginv[i, k] * vm._at(einstein, (k, j)) for k in range(3)))
+    stress = mixed - sp.eye(3) / ell3 ** 2
+    want = sp.diag(1, 1, -2) * ell * strength / (2 * r ** 3)
+    if system == "rotating":
+        want[2, 0] = 3 * ell * strength * P["a"] / (2 * r ** 5)
+    if any(vm.norm(v) != 0 for v in (stress - want)):
+        raise AssertionError(f"quantum_btz: the stress tensor of the {system} chart is not Emparan, Frassino and Way's")
+
+    def other(system_id):
+        source = quantum_btz(system_id)
+        return cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+
+    def same(matrix, what):
+        if any(vm.norm(v) != 0 for v in (matrix - g)):
+            raise AssertionError(f"quantum_btz: the {system} chart is not {what}")
+
+    if system.startswith("eddington_finkelstein"):
+        sign = 1 if system.endswith("ingoing") else -1
+        there = other("static")
+        H = r ** 2 / ell3 ** 2 - P["M"] - ell * P["F"] / r
+        jacobian = sp.Matrix([[1, -sign / H, 0], [0, 1, 0], [0, 0, 1]])
+        at = dict(zip(there.symbols, chart.symbols))
+        at.update({there.reader.parameters[n]: P[n] for n in P})
+        same(jacobian.T * there.geo.g.subs(at) * jacobian, "the static chart pulled back")
+    elif system == "brane":
+        there = other("static")
+        Delta = sp.Symbol("Delta", positive=True)
+        Q = there.reader.parameters
+        at = {Q["ell_3"]: ell3, Q["ell"]: ell, Q["M"]: -P["kappa"] * Delta ** 2, Q["F"]: P["mu"] * Delta ** 3,
+              there.symbols[1]: Delta * r}
+        jacobian = sp.diag(1 / Delta, Delta, 1 / Delta)
+        same(jacobian.T * there.geo.g.subs(at) * jacobian, "the static chart under the rescaling by Delta")
+    elif system == "rotating":
+        there = other("brane")
+        at = dict(zip(there.symbols, chart.symbols))
+        at.update({there.reader.parameters[n]: P[n] for n in there.reader.parameters})
+        if any(vm.norm(v) != 0 for v in (there.geo.g.subs(at) - g.subs(P["a"], 0))):
+            raise AssertionError("quantum_btz: the rotating chart at a = 0 is not the brane chart")
+
+
+CHARTS["quantum_btz"] = [lambda s=s: quantum_btz(s) for s in QBTZ_CHARTS]
 
 
 def write(spec):

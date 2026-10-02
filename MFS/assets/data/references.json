@@ -1,5 +1,5 @@
 {
-  "version": "e4b93aa4d6ad109d",
+  "version": "05b7a0b214aedbb5",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -27673,6 +27673,118 @@
         "eprint": "1507.05534",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/1507.05534"
+      }
+    },
+    "emparan2000branes": {
+      "type": "article",
+      "fields": {
+        "title": "Exact description of black holes on branes",
+        "author": "Emparan, Roberto and Horowitz, Gary T. and Myers, Robert C.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2000",
+        "number": "01",
+        "pages": "007",
+        "year": "2000",
+        "doi": "10.1088/1126-6708/2000/01/007",
+        "eprint": "hep-th/9911043",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2000/01/007"
+      }
+    },
+    "emparan2000branes2": {
+      "type": "article",
+      "fields": {
+        "title": "Exact description of black holes on branes II: comparison with BTZ black holes and black strings",
+        "author": "Emparan, Roberto and Horowitz, Gary T. and Myers, Robert C.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2000",
+        "number": "01",
+        "pages": "021",
+        "year": "2000",
+        "doi": "10.1088/1126-6708/2000/01/021",
+        "eprint": "hep-th/9912135",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2000/01/021"
+      }
+    },
+    "karch2001": {
+      "type": "article",
+      "fields": {
+        "title": "Locally localized gravity",
+        "author": "Karch, Andreas and Randall, Lisa",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2001",
+        "number": "05",
+        "pages": "008",
+        "year": "2001",
+        "doi": "10.1088/1126-6708/2001/05/008",
+        "eprint": "hep-th/0011156",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2001/05/008"
+      }
+    },
+    "emparan2020qbtz": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum BTZ black hole",
+        "author": "Emparan, Roberto and Frassino, Antonia Micol and Way, Benson",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2020",
+        "number": "11",
+        "pages": "137",
+        "year": "2020",
+        "doi": "10.1007/JHEP11(2020)137",
+        "eprint": "2007.15999",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP11(2020)137"
+      }
+    },
+    "emparan2020scc": {
+      "type": "article",
+      "fields": {
+        "title": "Strong cosmic censorship in the BTZ black hole",
+        "author": "Emparan, Roberto and Tomašević, Marija",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2020",
+        "number": "06",
+        "pages": "038",
+        "year": "2020",
+        "doi": "10.1007/JHEP06(2020)038",
+        "eprint": "2002.02083",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP06(2020)038"
+      }
+    },
+    "emparan2022ds3": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes in dS$_3$",
+        "author": "Emparan, Roberto and Pedraza, Juan F. and Svesko, Andrew and Tomašević, Marija and Visser, Manus R.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2022",
+        "number": "11",
+        "pages": "073",
+        "year": "2022",
+        "doi": "10.1007/JHEP11(2022)073",
+        "eprint": "2207.03302",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP11(2022)073"
+      }
+    },
+    "casals2017": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum Backreaction on Three-Dimensional Black Holes and Naked Singularities",
+        "author": "Casals, Marc and Fabbri, Alessandro and Martínez, Cristián and Zanelli, Jorge",
+        "journal": "Physical Review Letters",
+        "volume": "118",
+        "number": "13",
+        "pages": "131102",
+        "year": "2017",
+        "doi": "10.1103/PhysRevLett.118.131102",
+        "eprint": "1608.05366",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.118.131102"
       }
     }
   }

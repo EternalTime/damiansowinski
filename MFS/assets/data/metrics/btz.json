@@ -111,6 +111,11 @@
       "id": "ads_soliton",
       "kind": "dual",
       "text": "The hole without rotation with its time and its angle exchanged. In three dimensions that is anti-de Sitter space itself, and in four or more a smooth spacetime of negative energy [horowitz1998]."
+    },
+    {
+      "id": "quantum_btz",
+      "kind": "generalisation",
+      "text": "The same hole with the backreaction of strongly coupled quantum fields included exactly, read off a black hole on a brane in anti-de Sitter space of four dimensions. One more term in its metric, falling off as $1/r$, puts a curvature singularity at its centre [emparan2002holograms, emparan2020qbtz]."
     }
   ],
   "references": [
@@ -138,7 +143,9 @@
     "cvetic1999",
     "poisson1989",
     "chan1996",
-    "horowitz1998"
+    "horowitz1998",
+    "emparan2002holograms",
+    "emparan2020qbtz"
   ],
   "coordinates": [
     {

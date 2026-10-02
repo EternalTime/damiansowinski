@@ -1319,6 +1319,9 @@ DILATON = {"r_s": 1, "r_d": "1/2"}
 # Schwarzschild-anti-de Sitter at r_s = 2L, where r^3 + L^2 r - L^2 r_s = (r - L)(r^2 + L r + 2L^2)
 # and the horizon is r_h = L, the black hole of Hawking and Page's temperature T_1.
 SADS = {"r_s": 2, "L": 1}
+QBTZ = {"ell_3": 1, "M": "1/4", "ell": "15/16", "F": "1/4"}
+QBTZ_CONE = {"ell_3": 1, "kappa": 1, "mu": 6, "ell": "1/3"}
+QBTZ_ROTATING = {"ell_3": 1, "kappa": -1, "mu": "19/8", "ell": "3/19", "a": "sqrt(6)/4"}
 # The topological black holes as every one of their diagrams draws them, in units of L: the flat
 # hole at mu = L, where r^3 - L^2 mu = (r - L)(r^2 + L r + L^2) and the horizon is r_h = L; the
 # hyperbolic hole without mass, whose horizon is r_h = L too; and the hyperbolic hole of negative
@@ -3482,6 +3485,27 @@ DIAGRAMS = [
     Diagram("btz", "eddington_finkelstein_outgoing", "rotating", "$J = 4\\ell/5$", ("u", "r"), (0, 2, -1, 1),
             "$r/\\ell$", "$(u + r)/\\ell$", {"ell": 1, "M": 1, "J": "4/5"}, to_display=FINKELSTEIN_OUT,
             orient="outgoing", quotient="tildephi", mark_gtt="the ergosurface", cone=BTZ_CONE),
+    # The quantum BTZ black hole: the hole of the hotter branch at M = F = 1/4 with l = 15 l_3/16, whose
+    # horizon is 3 l_3/4, in its static and Eddington-Finkelstein charts; a conical
+    # singularity dressed with a horizon, kappa = +1, mu = 6 and l = l_3/3, horizon l_3, in the chart
+    # of the C-metric's brane; and a rotating hole with horizons l_3 and l_3/2, phi divided out.
+    Diagram("quantum_btz", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 2.4, -1.2, 1.2),
+            "$r/\\ell_3$", "$ct/\\ell_3$", QBTZ, {"phi": "0"}, orient="ingoing"),
+    Diagram("quantum_btz", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$", ("v", "r"),
+            (0, 2.4, -2, 0.4), "$r/\\ell_3$", "$(v - r)/\\ell_3$", QBTZ, {"phi": "0"},
+            to_display=FINKELSTEIN_IN, orient="ingoing"),
+    Diagram("quantum_btz", "eddington_finkelstein_ingoing", "chart", "against $v$", ("v", "r"),
+            (0, 2.4, -0.8, 1.6), "$r/\\ell_3$", "$v/\\ell_3$", QBTZ, {"phi": "0"}, orient="ingoing"),
+    Diagram("quantum_btz", "eddington_finkelstein_outgoing", "finkelstein", "against $u + r$", ("u", "r"),
+            (0, 2.4, -0.4, 2), "$r/\\ell_3$", "$(u + r)/\\ell_3$", QBTZ, {"phi": "0"},
+            to_display=FINKELSTEIN_OUT, orient="outgoing"),
+    Diagram("quantum_btz", "eddington_finkelstein_outgoing", "chart", "against $u$", ("u", "r"),
+            (0, 2.4, -1.6, 0.8), "$r/\\ell_3$", "$u/\\ell_3$", QBTZ, {"phi": "0"}, orient="outgoing"),
+    Diagram("quantum_btz", "brane", "dressed", "a dressed cone", ("t", "r"), (0, 3, -1.5, 1.5),
+            "$r/\\ell_3$", "$ct/\\ell_3$", QBTZ_CONE, {"phi": "0"}, orient="ingoing"),
+    Diagram("quantum_btz", "rotating", "rotating", "$t$ and $r$", ("t", "r"), (0, 2, -1, 1),
+            "$r/\\ell_3$", "$ct/\\ell_3$", QBTZ_ROTATING, orient="ingoing", quotient="phi",
+            mark_gtt="the ergosurface", cone=BTZ_CONE),
     Diagram("taub_nut", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/m$", "$ct/m$", {"m": 1, "l": "1/2"}, EQUATOR, orient="ingoing"),
     Diagram("bertotti_robinson", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
@@ -8245,6 +8269,65 @@ CAPTIONS = {
         "= 2\\ell/\\sqrt{5}$ and at $r_- = \\ell/\\sqrt{5}$.",
         "Between the horizons both edges of every future cone point to larger $r$, the white hole. The "
         "dotted line is the ergosurface, $g_{uu} = 0$ at $r = \\sqrt{M}\\,\\ell$.",
+    ],
+    ("quantum_btz", "static", "radial"): [
+        "The plane of $t$ and $r$ ($\\phi = 0$) of the quantum hole with $M = 1/4$, $F = 1/4$, and $\\ell = "
+        "15\\ell_3/16$, the same at every $\\phi$ by circular symmetry. There $g^{rr} = r^2/\\ell_3^2 - 1/4 - "
+        "15\\ell_3/(64r)$ vanishes at the horizon $r_+ = 3\\ell_3/4$, outside the classical hole's "
+        "$\\sqrt{M}\\,\\ell_3 = \\ell_3/2$, and the cones close on it. Far out the rays flatten, "
+        "and a ray reaches $r \\to \\infty$, the conformal boundary, in a finite time, as in anti-de Sitter space.",
+        "Inside $r_+$, $r$ is the time. We take the future from the ingoing Eddington-Finkelstein chart, which "
+        "makes that region the black hole, every cone pointing to $r = 0$. The Kretschmann scalar "
+        "$12/\\ell_3^4 + 6\\ell^2F^2/r^6$ is finite at $r_+$ and diverges at $r = 0$, a curvature singularity "
+        "that the classical hole does not have.",
+    ],
+    ("quantum_btz", "eddington_finkelstein_ingoing", "finkelstein"): [
+        "The plane of $v$ and $r$ ($\\phi = 0$) of the hole with $M = F = 1/4$ and $\\ell = 15\\ell_3/16$, drawn with "
+        "$v - r$ as the vertical axis so that the ingoing rays, $v = $ const, run at 45°. The outgoing family "
+        "has $dv/dr = 2/(r^2/\\ell_3^2 - 1/4 - 15\\ell_3/(64r))$, so it stands vertical at $r_+ = 3\\ell_3/4$: "
+        "the horizon is an outgoing ray that stays where it is.",
+        "The cones cross $r_+$ smoothly and keep tipping. Inside it both edges of every future cone point to "
+        "smaller $r$, so every future directed ray ends at $r = 0$, where the curvature diverges.",
+    ],
+    ("quantum_btz", "eddington_finkelstein_ingoing", "chart"): [
+        "The same plane of $v$ and $r$ ($\\phi = 0$), drawn against the chart's own coordinates. The ingoing "
+        "family is $v = $ const and runs horizontally here, since $v$ is itself a null coordinate. The outgoing "
+        "family turns vertical at $r_+$ and leans back toward smaller $r$ inside it.",
+    ],
+    ("quantum_btz", "eddington_finkelstein_outgoing", "finkelstein"): [
+        "The plane of $u$ and $r$ ($\\phi = 0$) of the hole with $M = F = 1/4$ and $\\ell = 15\\ell_3/16$, drawn with "
+        "$u + r$ as the vertical axis so that the outgoing rays, $u = $ const, run at 45°. The ingoing family "
+        "stands vertical at $r_+ = 3\\ell_3/4$. Inside $r_+$ both edges of every future cone point to larger "
+        "$r$, so that region is the white hole, which nothing from outside can enter.",
+        "The chart is the time reverse of the ingoing one: its $g_{ur}$ is $-1$ where the ingoing chart's "
+        "$g_{vr}$ is $+1$.",
+    ],
+    ("quantum_btz", "eddington_finkelstein_outgoing", "chart"): [
+        "The same plane of $u$ and $r$ ($\\phi = 0$), drawn against the chart's own coordinates. The outgoing "
+        "family is $u = $ const and runs horizontally here, since $u$ is itself a null coordinate. The ingoing "
+        "family turns vertical at $r_+$ and leans toward larger $r$ inside it.",
+    ],
+    ("quantum_btz", "brane", "dressed"): [
+        "The plane of $t$ and $r$ ($\\phi = 0$) of a conical singularity dressed with a horizon ($\\kappa = +1$, "
+        "$\\mu = 6$, $\\ell = \\ell_3/3$), the same at every $\\phi$. At $\\ell = 0$ the metric has "
+        "$g^{rr} = r^2/\\ell_3^2 + 1$ and $\\phi$ of period $2\\pi\\Delta$ with $\\Delta = 4/11$: anti-de Sitter "
+        "space with a conical defect and no horizon. With the backreaction, $g^{rr} = r^2/\\ell_3^2 + 1 - "
+        "2\\ell_3/r$ vanishes at $r_+ = \\ell_3$, and the cones close there.",
+        "Inside $r_+$, $r$ is the time, and the future taken from the black hole points every cone to $r = 0$, "
+        "where the Kretschmann scalar $12/\\ell_3^4 + 6\\mu^2\\ell^2/r^6$ diverges. The mass, in the static "
+        "chart's units, is $M = -\\Delta^2 = -16/121$.",
+    ],
+    ("quantum_btz", "rotating", "rotating"): [
+        "The plane of $t$ and $r$ of the rotating hole ($\\kappa = -1$, $\\mu = 19/8$, $\\ell = 3\\ell_3/19$, "
+        "$a = \\sqrt{6}\\,\\ell_3/4$) with $\\phi$ divided out, $-H\\,c^2dt^2 + dr^2/H$ with $H = r^2/\\ell_3^2 - 1 - "
+        "\\mu\\ell/r + a^2/r^2$, the metric orthogonal to the circles of $\\phi$. Its null curves are the shadows "
+        "on $t$ and $r$ of the null geodesics of zero angular momentum, each turning in $\\phi$ at "
+        "$d\\phi/d(ct) = a/r^2$, and each cone is the future cone of the directions of zero angular momentum.",
+        "The cones close at both zeros of $H$, the horizons $r_+ = \\ell_3$ and $r_- = \\ell_3/2$. Between them "
+        "$r$ is the time, and the future taken from the black hole points every cone there to smaller $r$; "
+        "inside $r_-$ the lines of constant $r$ are timelike again, down to the ring singularity at $r = 0$. "
+        "The dotted line is the ergosurface, $g_{tt} = 0$ at $r = 1.15\\,\\ell_3$, and between it and $r_+$ "
+        "no observer keeps $\\phi$ fixed.",
     ],
     ("taub_nut", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $l = "
@@ -13591,6 +13674,31 @@ def _sads_rstar(r):
     return 0.25 * np.log(np.abs(r - 1)) - 0.125 * np.log(r * r + r + 2) + 5 / (4 * w) * np.arctan((2 * r + 1) / w)
 
 
+QBTZ_HORIZON = 0.75
+
+
+def _poles_rstar(r, numerator, denominator):
+    """Re sum_i A_i log(r - r_i), the integral of numerator(r)/denominator(r) where the denominator,
+    of higher degree, has simple roots r_i and A_i = numerator(r_i)/denominator'(r_i), up to a
+    constant. A complex pair adds the real part of a logarithm whose argument never crosses its cut."""
+    r = np.asarray(r, dtype=float).astype(complex)
+    roots = np.roots(denominator)
+    slope = np.polyder(np.poly1d(denominator))
+    return sum(np.polyval(numerator, ri) / slope(ri) * np.log(r - ri) for ri in roots).real
+
+
+def _qbtz_rstar(r):
+    """The quantum BTZ hole's tortoise coordinate at l_3 = 1, M = F = 1/4 and l = 15/16, where
+    1/H = r/(r^3 - r/4 - 15/64) and the cubic is (r - 3/4)(r^2 + 3r/4 + 5/16), up to a constant."""
+    return _poles_rstar(r, [1, 0], [1, 0, -0.25, -15 / 64])
+
+
+def _qbtz_rotating_rstar(r):
+    """The rotating quantum BTZ hole's at l_3 = 1, kappa = -1, mu l = 3/8 and a^2 = 3/8, where
+    1/H = r^2/(r^4 - r^2 - 3r/8 + 3/8) and the quartic is (r - 1)(r - 1/2)(r^2 + 3r/2 + 3/4)."""
+    return _poles_rstar(r, [1, 0, 0], [1, 0, -1, -0.375, 0.375])
+
+
 def _bardeen_rstar(r):
     """Bardeen's tortoise coordinate at r_s = 1 and g = 1/3, which the slices share."""
     import slices
@@ -13916,6 +14024,16 @@ CLOSED_FORMS = {
         (lambda u, r: u + 2 * _btz_rstar(r, BTZ_STATIC), lambda u, r: u, _away(1.0)),
     ("btz", "eddington_finkelstein_outgoing", "rotating"):
         (lambda u, r: u + 2 * _btz_rstar(r, BTZ_ROTATING), lambda u, r: u, _away(np.sqrt(0.8), np.sqrt(0.2))),
+    ("quantum_btz", "static", "radial"):
+        (lambda t, r: t + _qbtz_rstar(r), lambda t, r: t - _qbtz_rstar(r), _away(QBTZ_HORIZON)),
+    ("quantum_btz", "eddington_finkelstein_ingoing", "finkelstein"):
+        (lambda v, r: v, lambda v, r: v - 2 * _qbtz_rstar(r), _away(QBTZ_HORIZON)),
+    ("quantum_btz", "eddington_finkelstein_outgoing", "finkelstein"):
+        (lambda u, r: u + 2 * _qbtz_rstar(r), lambda u, r: u, _away(QBTZ_HORIZON)),
+    ("quantum_btz", "brane", "dressed"):
+        (lambda t, r: t + _sads_rstar(r), lambda t, r: t - _sads_rstar(r), _away(1.0)),
+    ("quantum_btz", "rotating", "rotating"):
+        (lambda t, r: t + _qbtz_rotating_rstar(r), lambda t, r: t - _qbtz_rotating_rstar(r), _away(1.0, 0.5)),
     ("schwarzschild", "spherical", "radial"):
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: np.abs(r - 1) > 0.05),
     ("schwarzschild", "eddington_finkelstein_ingoing", "finkelstein"):
