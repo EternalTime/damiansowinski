@@ -218,6 +218,11 @@
       "id": "charged_shell",
       "kind": "composite",
       "text": "A thin shell of charged dust with flat space inside it and Reissner-Nordström's field outside. With more charge than rest mass it falls through both horizons, turns, and leaves into another exterior [delacruz1967]."
+    },
+    {
+      "id": "brill_waves",
+      "kind": "family",
+      "text": "One moment of a spacetime that is flat space with a gravitational wave on it and nothing else. Brill proved in 1959 that the wave's mass is positive and vanishes only when the slice is a moment of Minkowski's spacetime [brill1959]."
     }
   ],
   "references": [
@@ -286,7 +291,8 @@
     "tippett2017",
     "will2014",
     "einstein1914fokker",
-    "delacruz1967"
+    "delacruz1967",
+    "brill1959"
   ],
   "coordinates": [
     {

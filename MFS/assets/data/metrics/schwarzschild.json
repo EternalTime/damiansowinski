@@ -363,6 +363,11 @@
       "id": "born_infeld_charge",
       "kind": "generalisation",
       "text": "Schwarzschild's mass with a charge whose field obeys Born and Infeld's electrodynamics. The mass inside a sphere then grows with its radius, by the energy of the field, and reaches $r_s/2$ far away [hoffmann1935, gibbonsrasheed1995]."
+    },
+    {
+      "id": "brill_waves",
+      "kind": "family",
+      "text": "One moment of a spacetime with gravitational waves in it and no matter. Far away its slice is Schwarzschild's with a positive mass, and a strong enough wave collapses to a black hole [brill1959, alcubierre2000collapse]."
     }
   ],
   "references": [
@@ -464,7 +469,9 @@
     "belinskii1979",
     "deruelle2011",
     "hoffmann1935",
-    "gibbonsrasheed1995"
+    "gibbonsrasheed1995",
+    "brill1959",
+    "alcubierre2000collapse"
   ],
   "coordinates": [
     {
