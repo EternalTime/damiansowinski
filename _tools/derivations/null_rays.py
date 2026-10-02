@@ -3332,6 +3332,20 @@ DIAGRAMS = [
     Diagram("btz", "eddington_finkelstein_outgoing", "rotating", "$J = 4\\ell/5$", ("u", "r"), (0, 2, -1, 1),
             "$r/\\ell$", "$(u + r)/\\ell$", {"ell": 1, "M": 1, "J": "4/5"}, to_display=FINKELSTEIN_OUT,
             orient="outgoing", quotient="tildephi", mark_gtt="the ergosurface", cone=BTZ_CONE),
+    # The draining bathtub, in units of the horizon radius |A|/c, with the swirl B = sqrt(3)|A| that
+    # puts the ergosurface at twice that radius.
+    Diagram("draining_bathtub", "laboratory", "drain", "a drain, $A < 0$", ("t", "r"), (0, 4, -2, 2),
+            "$c\\,r/|A|$", "$c^2t/|A|$", {"A": -1, "B": "sqrt(3)"}, quotient="theta",
+            mark_gtt="the ergosurface", cone=BTZ_CONE),
+    Diagram("draining_bathtub", "laboratory", "spring", "a spring, $A > 0$", ("t", "r"), (0, 4, -2, 2),
+            "$c\\,r/|A|$", "$c^2t/|A|$", {"A": 1, "B": "sqrt(3)"}, quotient="theta",
+            mark_gtt="the ergosurface", cone=BTZ_CONE),
+    Diagram("draining_bathtub", "kerr_like", "exterior", "$T$ and $r$", ("T", "r"), (1, 5, -2, 2),
+            "$c\\,r/|A|$", "$c^2T/|A|$", {"A": -1, "B": "sqrt(3)"}, quotient="phi", tau="T",
+            mark_gtt="the ergosurface", cone=BTZ_CONE),
+    Diagram("draining_bathtub", "vortex_filament", "drain", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$c\\,r/|A|$", "$c^2t/|A|$", {"A": -1, "B": "sqrt(3)"}, {"z": "0"}, quotient="theta",
+            mark_gtt="the ergosurface", cone=BTZ_CONE),
     Diagram("taub_nut", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/m$", "$ct/m$", {"m": 1, "l": "1/2"}, EQUATOR, orient="ingoing"),
     Diagram("bertotti_robinson", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
@@ -7926,6 +7940,41 @@ CAPTIONS = {
         "= 2\\ell/\\sqrt{5}$ and at $r_- = \\ell/\\sqrt{5}$.",
         "Between the horizons both edges of every future cone point to larger $r$, the white hole. The "
         "dotted line is the ergosurface, $g_{uu} = 0$ at $r = \\sqrt{M}\\,\\ell$.",
+    ],
+    ("draining_bathtub", "laboratory", "drain"): [
+        "The plane of $t$ and $r$ of a drain ($A < 0$, $B = \\sqrt{3}\\,|A|$) with $\\theta$ divided out, "
+        "$-c^2dt^2 + (dr - A\\,dt/r)^2$, the metric orthogonal to the circles of $\\theta$. Its null curves are "
+        "the shadows on $t$ and $r$ of the sound rays of zero angular momentum, $dr/dt = A/r \\pm c$: sound "
+        "moving at $c$ through water that carries it inward at $|A|/r$.",
+        "The outgoing rays stand still at the horizon $r = |A|/c$, where the water runs inward as fast as "
+        "sound runs out, and inside it both edges of every future cone point to the drain. The dotted line "
+        "is the ergosurface, $g_{tt} = 0$ at $r = \\sqrt{A^2 + B^2}/c = 2|A|/c$, where the whole speed of the "
+        "water reaches $c$; inside it no sound ray stays at one place in the laboratory. The Kretschmann scalar "
+        "diverges at $r = 0$.",
+    ],
+    ("draining_bathtub", "laboratory", "spring"): [
+        "The plane of $t$ and $r$ of a spring ($A > 0$, $B = \\sqrt{3}\\,A$) with $\\theta$ divided out, "
+        "$-c^2dt^2 + (dr - A\\,dt/r)^2$. The water runs outward at $A/r$, and the sound rays of zero angular "
+        "momentum have $dr/dt = A/r \\pm c$.",
+        "The ingoing rays stand still at $r = A/c$ and no sound from outside crosses it: inside, both edges "
+        "of every future cone point outward, so the spring is a white hole for sound. The dotted line is "
+        "the ergosurface, $g_{tt} = 0$ at $r = 2A/c$, which lies where it does for the drain.",
+    ],
+    ("draining_bathtub", "kerr_like", "exterior"): [
+        "The plane of $T$ and $r$ outside the horizon of a drain ($A < 0$, $B = \\sqrt{3}\\,|A|$) with $\\phi$ "
+        "divided out, $-(1 - A^2/(c^2r^2))\\,c^2dT^2 + dr^2/(1 - A^2/(c^2r^2))$. Its null curves are the shadows "
+        "on $T$ and $r$ of the sound rays of zero angular momentum, $c\\,dT/dr = \\pm 1/(1 - A^2/(c^2r^2))$, "
+        "symmetric in $T$ as Schwarzschild's are in his own time.",
+        "The cones close at the horizon $r = |A|/c$, which is the edge of the chart: $T$ runs to infinity "
+        "there along every ray. The dotted line is the ergosurface, $g_{TT} = 0$ at $r = 2|A|/c$.",
+    ],
+    ("draining_bathtub", "vortex_filament", "drain"): [
+        "The plane of $t$ and $r$ ($z = 0$) of a vortex filament with a line sink ($A < 0$, $B = "
+        "\\sqrt{3}\\,|A|$) with $\\theta$ divided out, the same at every $z$. Its null curves are the shadows on "
+        "$t$ and $r$ of the sound rays that stay at one height and have zero angular momentum, $dr/dt = A/r "
+        "\\pm c$.",
+        "The horizon is the cylinder $r = |A|/c$ and the ergosurface, dotted, the cylinder $r = 2|A|/c$. "
+        "The Kretschmann scalar diverges on the filament, $r = 0$.",
     ],
     ("taub_nut", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $l = "
@@ -13385,6 +13434,16 @@ CLOSED_FORMS = {
         (lambda u, r: u + 2 * _btz_rstar(r, BTZ_STATIC), lambda u, r: u, _away(1.0)),
     ("btz", "eddington_finkelstein_outgoing", "rotating"):
         (lambda u, r: u + 2 * _btz_rstar(r, BTZ_ROTATING), lambda u, r: u, _away(np.sqrt(0.8), np.sqrt(0.2))),
+    # The draining bathtub at |A| = c = 1: dr/dt = -1/r -+ 1 for the drain and 1/r -+ 1 for the spring,
+    # and c dT/dr = -+ r^2/(r^2 - 1) in the Kerr-like chart.
+    **{("draining_bathtub", system, "drain"):
+       (lambda t, r: t + r - np.log(1 + r), lambda t, r: t - r - np.log(np.abs(r - 1)), _away(1.0))
+       for system in ("laboratory", "vortex_filament")},
+    ("draining_bathtub", "laboratory", "spring"):
+        (lambda t, r: t + r + np.log(np.abs(r - 1)), lambda t, r: t - r + np.log(1 + r), _away(1.0)),
+    ("draining_bathtub", "kerr_like", "exterior"):
+        (lambda T, r: T + r + np.log((r - 1) / (r + 1)) / 2, lambda T, r: T - r - np.log((r - 1) / (r + 1)) / 2,
+         _away(1.0)),
     ("schwarzschild", "spherical", "radial"):
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: np.abs(r - 1) > 0.05),
     ("schwarzschild", "eddington_finkelstein_ingoing", "finkelstein"):

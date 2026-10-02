@@ -983,6 +983,13 @@ DIMENSIONS = {
     ("majumdar_papapetrou", "isotropic"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L",
     },
+    # The draining bathtub. Here c is the speed of sound, and the chart is x^0 = ct with that c. The
+    # strengths A and B of the radial flow and of the swirl are a speed times a length.
+    ("draining_bathtub", "laboratory"): {"t": "T", "r": "L", "\\theta": "1", "A": "L**2/T", "B": "L**2/T"},
+    ("draining_bathtub", "kerr_like"): {"T": "T", "r": "L", "\\phi": "1", "A": "L**2/T", "B": "L**2/T"},
+    ("draining_bathtub", "vortex_filament"): {
+        "t": "T", "r": "L", "\\theta": "1", "z": "L", "A": "L**2/T", "B": "L**2/T",
+    },
     # Bonnor's stars of charged dust. The potential U is a pure number, as Majumdar and Papapetrou's
     # is; the mass parameter m = GM/c^2, the radius r_0, the focal radius a and Lemos and Weinberg's
     # core length b are lengths, and the spheroidal u and its surface u_0 are pure numbers.

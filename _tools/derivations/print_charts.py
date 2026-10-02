@@ -14,8 +14,8 @@ israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, mi
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
 born_infeld_charge, penrose_impulsive_wave, exponential_metric, bondi_sachs, petrov_homogeneous, rp3_geon,
 kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kasner_scalar, moving_mirror,
-gravitational_instantons, small_universes, misner_zapolsky, cremmer_scherk, brans_dicke_sphere and
-bonnor_charged_dust, and Godel's cylindrical chart.
+gravitational_instantons, small_universes, misner_zapolsky, cremmer_scherk, brans_dicke_sphere,
+bonnor_charged_dust and draining_bathtub, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -24604,6 +24604,114 @@ def bonnor_charged_dust_check(chart, system):
 
 
 CHARTS["bonnor_charged_dust"] = [lambda s=s: bonnor_charged_dust(s) for s in BCD_CHARTS]
+
+
+# -- The draining bathtub ----------------------------------------------------------------
+
+DB_CHARTS = ["laboratory", "kerr_like", "vortex_filament"]
+
+
+def draining_bathtub(system):
+    """Visser's (1998) acoustic metric of a fluid draining while it turns, with velocity
+    (A r^ + B theta^)/r and c the speed of sound, in three charts:
+
+    laboratory       -c^2dt^2 + (dr - A dt/r)^2 + (r dtheta - B dt/r)^2, his equation for the
+                     draining bathtub in two dimensions of space, with t the time of the laboratory;
+    kerr_like        Basak and Majumdar's (2003) form as Berti, Cardoso and Lemos (2004) correct it,
+                     their (16) and (17): c dt = c dT - A c r dr/(c^2r^2 - A^2) and
+                     dtheta = dphi - A B dr/(r (c^2r^2 - A^2)), which leaves dT dphi the one cross term, their t~ and phi~
+                     written T and phi;
+    vortex_filament  the laboratory chart with dz^2 added, Visser's vortex filament with a line sink.
+
+    Their A is minus Visser's, the flow of a drain having A < 0 in his sign. draining_bathtub_check
+    holds the laboratory charts to Visser's expanded form, to sound moving at c past the fluid, and
+    to his horizon and ergosurface, and the Kerr-like chart to the laboratory chart pulled back."""
+    reals = "(-\\infty, \\infty)"
+    horizon = "r = |A|/c \\;\\text{(the acoustic horizon)}"
+    ergo = "r = \\sqrt{A^2 + B^2}/c \\;\\text{(the ergosurface)}"
+
+    def flow(c):
+        return (f"\\left(dr - \\dfrac{{A}}{{{c}r}}dt\\right)^2"
+                f" + \\left(r\\,d\\theta - \\dfrac{{B}}{{{c}r}}dt\\right)^2")
+    if system == "laboratory":
+        name, coords = "Laboratory", ["t", "r", "\\theta"]
+        domains = ["t \\in " + reals, "r \\in (0, \\infty)", "\\theta \\in [0, 2\\pi)", horizon, ergo]
+        line, chart_line = "ds^2 = -c^2dt^2 + " + flow(""), "ds^2 = -dt^2 + " + flow("c\\,")
+    elif system == "vortex_filament":
+        name, coords = "Vortex Filament", ["t", "r", "\\theta", "z"]
+        domains = ["t \\in " + reals, "r \\in (0, \\infty)", "\\theta \\in [0, 2\\pi)", "z \\in " + reals, horizon, ergo]
+        line, chart_line = "ds^2 = -c^2dt^2 + " + flow("") + " + dz^2", "ds^2 = -dt^2 + " + flow("c\\,") + " + dz^2"
+    else:
+        name, coords = "Kerr-like", ["T", "r", "\\phi"]
+        domains = ["T \\in " + reals, "r \\in (|A|/c, \\infty)", "\\phi \\in [0, 2\\pi)", ergo]
+
+        def kerr(c2, cross):
+            return (f"ds^2 = -\\left(1 - \\dfrac{{A^2 + B^2}}{{c^2r^2}}\\right){c2}dT^2"
+                    " + \\dfrac{dr^2}{1 - \\dfrac{A^2}{c^2r^2}}"
+                    f" - {cross}\\,dT\\,d\\phi + r^2d\\phi^2")
+        line, chart_line = kerr("c^2", "2B"), kerr("", "\\dfrac{2B}{c}")
+    r, A, B = (sp.Symbol(n, real=True) for n in ("r", "A", "B"))
+    c = sp.Symbol("c", positive=True)
+    return {
+        "metric_id": "draining_bathtub",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": ["A", "B"],
+                   "line_element": line},
+        "chart_line_element": chart_line,
+        "printer": {"lead": [c, r, A, B], "factors": [A, B, c, r]},
+        "components": {"metric_components": {
+            (coords[0], coords[0]): "-\\left(1 - \\dfrac{A^2 + B^2}{c^2\\,r^2}\\right)"}},
+        "check": lambda chart: draining_bathtub_check(chart, system),
+    }
+
+
+def draining_bathtub_check(chart, system):
+    X, g, c = chart.symbols, chart.geo.g, chart.reader.c
+    r = X[1]
+    A, B = chart.reader.parameters["A"], chart.reader.parameters["B"]
+    n = len(X)
+
+    def zero(value, what):
+        if sp.simplify(value) != 0:
+            raise AssertionError(f"draining_bathtub: {what} fails in the {system} chart")
+    # Visser's expanded form, with the time the chart's x^0 = ct.
+    visser = sp.zeros(n, n)
+    visser[0, 0] = -(1 - (A ** 2 + B ** 2) / (c ** 2 * r ** 2))
+    visser[0, 1] = visser[1, 0] = -A / (c * r)
+    visser[0, 2] = visser[2, 0] = -B / c
+    visser[1, 1], visser[2, 2] = 1, r ** 2
+    if n == 4:
+        visser[3, 3] = 1
+    if system == "kerr_like":
+        # Berti, Cardoso and Lemos's (16), with their A minus ours.
+        J = sp.Matrix([[1, -A * c * r / (c ** 2 * r ** 2 - A ** 2), 0], [0, 1, 0],
+                       [0, -A * B / (r * (c ** 2 * r ** 2 - A ** 2)), 1]])
+        pulled = J.T * visser * J
+        for i in range(3):
+            for j in range(i, 3):
+                zero(pulled[i, j] - g[i, j], f"the laboratory chart pulled back, slot {i}{j}")
+        zero(g[0, 1], "the vanishing of the cross term in dT dr")
+        zero(g[1, 2], "the vanishing of the cross term in dr dphi")
+        zero(1 / g[1, 1] - (1 - A ** 2 / (c ** 2 * r ** 2)), "g^rr = 1 - A^2/(c^2r^2)")
+        return
+    for i in range(n):
+        for j in range(i, n):
+            zero(visser[i, j] - g[i, j], f"Visser's expanded line element, slot {i}{j}")
+    # Sound moves at c past the fluid: a ray with dx/dt = v + c n is null for every unit n.
+    alpha = sp.Symbol("alpha", real=True)
+    ray = sp.Matrix([1, A / (c * r) + sp.cos(alpha), (B / (c * r) + sp.sin(alpha)) / r] + [0] * (n - 3))
+    zero((ray.T * g * ray)[0, 0], "sound moving at c past the fluid")
+    # The horizon is where the radial speed of the flow is c, and the ergosurface where its whole speed is.
+    ginv = chart.geo.ginv
+    zero(ginv[1, 1] - (1 - A ** 2 / (c ** 2 * r ** 2)), "g^rr = 1 - A^2/(c^2r^2)")
+    zero(g[0, 0].subs(r, sp.sqrt(A ** 2 + B ** 2) / c), "the ergosurface at r = sqrt(A^2 + B^2)/c")
+    zero(g.det() + r ** 2, "the determinant -r^2")
+    # A surface of constant time is the flat plane the fluid moves in.
+    zero(g[1, 1] - 1, "the flat plane of constant t")
+    zero(g[2, 2] - r ** 2, "the flat plane of constant t")
+    zero(chart.geo.ricci_scalar() - 2 * (A ** 2 + B ** 2) / (c ** 2 * r ** 4), "the Ricci scalar 2(A^2 + B^2)/(c^2r^4)")
+
+
+CHARTS["draining_bathtub"] = [lambda s=s: draining_bathtub(s) for s in DB_CHARTS]
 
 
 def write(spec):

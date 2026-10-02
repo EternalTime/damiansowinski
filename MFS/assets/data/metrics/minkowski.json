@@ -253,6 +253,11 @@
       "id": "bondi_sachs",
       "kind": "generalisation",
       "text": "Flat spacetime on its outgoing light cones with four functions added, the form of the metric far from an isolated body that radiates. Its symmetries far away are Poincaré's and the supertranslations besides [bondi1962, sachs1962bms]."
+    },
+    {
+      "id": "draining_bathtub",
+      "kind": "generalisation",
+      "text": "Flat spacetime with the speed of sound for $c$ and water flowing through it. A drain that swirls gives sound a horizon and an ergoregion, in a laboratory that stays flat [visser1998]."
     }
   ],
   "references": [
@@ -329,7 +334,8 @@
     "davies1977",
     "horvath1977",
     "bondi1962",
-    "sachs1962bms"
+    "sachs1962bms",
+    "visser1998"
   ],
   "coordinates": [
     {

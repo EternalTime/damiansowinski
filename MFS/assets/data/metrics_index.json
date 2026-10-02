@@ -205,7 +205,7 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "c5ee52d5677ea282",
+    "version": "7e03bd67e887ca73",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -1182,6 +1182,44 @@
     "diagrams": "e80c22fa8faff2b6",
     "conformal": "9dae987db0ca1df8",
     "embedding": "7ebe08e359710241"
+  },
+  {
+    "id": "draining_bathtub",
+    "name": "Draining Bathtub",
+    "tags": [
+      "analogue gravity",
+      "acoustic black hole",
+      "acoustic metric",
+      "dumb hole",
+      "sound",
+      "fluid flow",
+      "vortex",
+      "black hole",
+      "white hole",
+      "rotating",
+      "rotating black hole",
+      "ergoregion",
+      "ergosphere",
+      "horizon",
+      "event horizon",
+      "superradiance",
+      "Hawking radiation",
+      "Painlevé-Gullstrand",
+      "laboratory experiment",
+      "no field equations",
+      "curvature singularity",
+      "circularly symmetric",
+      "axisymmetric",
+      "stationary",
+      "three-dimensional",
+      "four-dimensional",
+      "Lorentzian",
+      "idealized model"
+    ],
+    "version": "8a749f5e2eb3a9d3",
+    "diagrams": "f15df464f0bd3714",
+    "conformal": "4e349fa775a9fedb",
+    "embedding": "296f0b60caedc6cf"
   },
   {
     "id": "eguchi_hanson",
@@ -2206,7 +2244,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "23bf07a161a99c44",
+    "version": "5d3359c20607a7b2",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -2824,7 +2862,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "0b2540bae9683a5b",
+    "version": "b0a71a02f76cc244",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -3160,7 +3198,7 @@
       "Einstein equations",
       "four-dimensional"
     ],
-    "version": "f094d1f93a59f49b",
+    "version": "856d7b34f1197aad",
     "diagrams": "187982910fdaa5ce",
     "embedding": "90f8432b18d96a76"
   },
@@ -3842,7 +3880,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "2e70eaa59fa9bd3a",
+    "version": "a35752179c268911",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -4179,7 +4217,7 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "3ae3a9e2ddbc9ef0",
+    "version": "4dad1a2e992a376d",
     "diagrams": "9b126a24baab54f6",
     "conformal": "af0aad8daedb8e34",
     "embedding": "d2f10fa2373b33b4"

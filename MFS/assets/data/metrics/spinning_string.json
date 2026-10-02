@@ -87,6 +87,11 @@
       "id": "kopczynski_trautman",
       "kind": "family",
       "text": "The Einstein-Cartan theory applied to a whole universe. Dust with every spin aligned repels itself at high density, and the universe turns round where a big bang would be [kopczynski1973, trautman2006]."
+    },
+    {
+      "id": "draining_bathtub",
+      "kind": "family",
+      "text": "A vortex of water as sound sees it, which Matt Visser set beside the spinning string. Far from the core the string approximates it, and near the core the vortex has a horizon where the string has closed timelike curves [visser1998]."
     }
   ],
   "references": [
@@ -117,7 +122,8 @@
     "anderson1999",
     "som1968",
     "kopczynski1973",
-    "trautman2006"
+    "trautman2006",
+    "visser1998"
   ],
   "coordinates": [
     {

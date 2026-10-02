@@ -111,6 +111,11 @@
       "id": "ads_soliton",
       "kind": "dual",
       "text": "The hole without rotation with its time and its angle exchanged. In three dimensions that is anti-de Sitter space itself, and in four or more a smooth spacetime of negative energy [horowitz1998]."
+    },
+    {
+      "id": "draining_bathtub",
+      "kind": "family",
+      "text": "A rotating black hole of three dimensions for sound, with an ergoregion around its horizon and no field equation behind it. Its Ricci scalar is $2(A^2 + B^2)/(c^2r^4)$, growing toward the drain, where the BTZ hole's is constant [visser1998]."
     }
   ],
   "references": [
@@ -138,7 +143,8 @@
     "cvetic1999",
     "poisson1989",
     "chan1996",
-    "horowitz1998"
+    "horowitz1998",
+    "visser1998"
   ],
   "coordinates": [
     {

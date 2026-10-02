@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 151,
+  "count": 152,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -2507,6 +2507,11 @@
           "id": "ads_soliton",
           "kind": "dual",
           "text": "The hole without rotation with its time and its angle exchanged. In three dimensions that is anti-de Sitter space itself, and in four or more a smooth spacetime of negative energy [horowitz1998]."
+        },
+        {
+          "id": "draining_bathtub",
+          "kind": "family",
+          "text": "A rotating black hole of three dimensions for sound, with an ergoregion around its horizon and no field equation behind it. Its Ricci scalar is $2(A^2 + B^2)/(c^2r^4)$, growing toward the drain, where the BTZ hole's is constant [visser1998]."
         }
       ],
       "references": [
@@ -2534,7 +2539,8 @@
         "cvetic1999",
         "poisson1989",
         "chan1996",
-        "horowitz1998"
+        "horowitz1998",
+        "visser1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz.json",
@@ -12469,6 +12475,331 @@
           ],
           "ricci_scalar": "R = \\dfrac{\\left(f^4\\left(\\partial_\\rho\\omega\\right)^2 + f^4\\left(\\partial_z\\omega\\right)^2 - 4f^2\\,\\rho^2\\,\\partial_\\rho^2\\gamma - 4f^2\\,\\rho^2\\,\\partial_z^2\\gamma + 2f\\,\\rho\\,\\partial_\\rho f + 2f\\,\\rho^2\\,\\partial_\\rho^2 f + 2f\\,\\rho^2\\,\\partial_z^2 f - 3\\rho^2\\left(\\partial_\\rho f\\right)^2 - 3\\rho^2\\left(\\partial_z f\\right)^2\\right)e^{-2\\gamma}}{2f\\,\\rho^2}",
           "kretschmann": "K = \\dfrac{\\left(11f^8\\left(\\partial_\\rho\\omega\\right)^4 + 22f^8\\left(\\partial_\\rho\\omega\\right)^2\\left(\\partial_z\\omega\\right)^2 + 11f^8\\left(\\partial_z\\omega\\right)^4 - 16f^6\\,\\rho^2\\left(\\partial_\\rho\\gamma\\right)^2\\left(\\partial_\\rho\\omega\\right)^2 - 16f^6\\,\\rho^2\\left(\\partial_\\rho\\gamma\\right)^2\\left(\\partial_z\\omega\\right)^2 + 8f^6\\,\\rho\\,\\partial_\\rho\\gamma\\left(\\partial_\\rho\\omega\\right)^2 + 16f^6\\,\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_\\rho\\omega\\,\\partial_\\rho^2\\omega - 16f^6\\,\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_\\rho\\omega\\,\\partial_z^2\\omega - 40f^6\\,\\rho\\,\\partial_\\rho\\gamma\\left(\\partial_z\\omega\\right)^2 + 32f^6\\,\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_z\\omega\\,\\partial_\\rho\\partial_z\\omega - 16f^6\\,\\rho^2\\left(\\partial_z\\gamma\\right)^2\\left(\\partial_\\rho\\omega\\right)^2 - 16f^6\\,\\rho^2\\left(\\partial_z\\gamma\\right)^2\\left(\\partial_z\\omega\\right)^2 + 48f^6\\,\\rho\\,\\partial_z\\gamma\\,\\partial_\\rho\\omega\\,\\partial_z\\omega + 32f^6\\,\\rho^2\\,\\partial_z\\gamma\\,\\partial_\\rho\\omega\\,\\partial_\\rho\\partial_z\\omega - 16f^6\\,\\rho^2\\,\\partial_z\\gamma\\,\\partial_z\\omega\\,\\partial_\\rho^2\\omega + 16f^6\\,\\rho^2\\,\\partial_z\\gamma\\,\\partial_z\\omega\\,\\partial_z^2\\omega - 8f^6\\left(\\partial_\\rho\\omega\\right)^2 + 16f^6\\,\\rho\\,\\partial_\\rho\\omega\\,\\partial_\\rho^2\\omega - 16f^6\\left(\\partial_z\\omega\\right)^2 + 16f^6\\,\\rho\\,\\partial_z\\omega\\,\\partial_\\rho\\partial_z\\omega - 8f^6\\,\\rho^2\\left(\\partial_\\rho^2\\omega\\right)^2 - 16f^6\\,\\rho^2\\left(\\partial_\\rho\\partial_z\\omega\\right)^2 - 8f^6\\,\\rho^2\\left(\\partial_z^2\\omega\\right)^2 + 32f^5\\,\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_\\rho f\\left(\\partial_\\rho\\omega\\right)^2 + 64f^5\\,\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_\\rho f\\left(\\partial_z\\omega\\right)^2 - 32f^5\\,\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_z f\\,\\partial_\\rho\\omega\\,\\partial_z\\omega - 32f^5\\,\\rho^2\\,\\partial_z\\gamma\\,\\partial_\\rho f\\,\\partial_\\rho\\omega\\,\\partial_z\\omega + 64f^5\\,\\rho^2\\,\\partial_z\\gamma\\,\\partial_z f\\left(\\partial_\\rho\\omega\\right)^2 + 32f^5\\,\\rho^2\\,\\partial_z\\gamma\\,\\partial_z f\\left(\\partial_z\\omega\\right)^2 + 56f^5\\,\\rho\\,\\partial_\\rho f\\left(\\partial_\\rho\\omega\\right)^2 - 40f^5\\,\\rho^2\\,\\partial_\\rho f\\,\\partial_\\rho\\omega\\,\\partial_\\rho^2\\omega + 8f^5\\,\\rho^2\\,\\partial_\\rho f\\,\\partial_\\rho\\omega\\,\\partial_z^2\\omega + 64f^5\\,\\rho\\,\\partial_\\rho f\\left(\\partial_z\\omega\\right)^2 - 48f^5\\,\\rho^2\\,\\partial_\\rho f\\,\\partial_z\\omega\\,\\partial_\\rho\\partial_z\\omega - 8f^5\\,\\rho\\,\\partial_z f\\,\\partial_\\rho\\omega\\,\\partial_z\\omega - 48f^5\\,\\rho^2\\,\\partial_z f\\,\\partial_\\rho\\omega\\,\\partial_\\rho\\partial_z\\omega + 8f^5\\,\\rho^2\\,\\partial_z f\\,\\partial_z\\omega\\,\\partial_\\rho^2\\omega - 40f^5\\,\\rho^2\\,\\partial_z f\\,\\partial_z\\omega\\,\\partial_z^2\\omega + 16f^5\\,\\rho^2\\left(\\partial_\\rho\\omega\\right)^2\\,\\partial_\\rho^2 f + 32f^5\\,\\rho^2\\,\\partial_\\rho\\omega\\,\\partial_z\\omega\\,\\partial_\\rho\\partial_z f + 16f^5\\,\\rho^2\\left(\\partial_z\\omega\\right)^2\\,\\partial_z^2 f + 32f^4\\,\\rho^2\\left(\\partial_\\rho\\gamma\\right)^2 + 32f^4\\,\\rho^2\\left(\\partial_z\\gamma\\right)^2 - 66f^4\\,\\rho^2\\left(\\partial_\\rho f\\right)^2\\left(\\partial_\\rho\\omega\\right)^2 - 58f^4\\,\\rho^2\\left(\\partial_\\rho f\\right)^2\\left(\\partial_z\\omega\\right)^2 - 16f^4\\,\\rho^2\\,\\partial_\\rho f\\,\\partial_z f\\,\\partial_\\rho\\omega\\,\\partial_z\\omega - 58f^4\\,\\rho^2\\left(\\partial_z f\\right)^2\\left(\\partial_\\rho\\omega\\right)^2 - 66f^4\\,\\rho^2\\left(\\partial_z f\\right)^2\\left(\\partial_z\\omega\\right)^2 + 16f^4\\,\\rho^4\\left(\\partial_\\rho^2\\gamma\\right)^2 + 32f^4\\,\\rho^4\\,\\partial_\\rho^2\\gamma\\,\\partial_z^2\\gamma + 16f^4\\,\\rho^4\\left(\\partial_z^2\\gamma\\right)^2 - 32f^3\\,\\rho^3\\left(\\partial_\\rho\\gamma\\right)^2\\,\\partial_\\rho f + 16f^3\\,\\rho^3\\,\\partial_\\rho\\gamma\\,\\partial_\\rho^2 f - 16f^3\\,\\rho^3\\,\\partial_\\rho\\gamma\\,\\partial_z^2 f - 32f^3\\,\\rho^3\\left(\\partial_z\\gamma\\right)^2\\,\\partial_\\rho f + 32f^3\\,\\rho^3\\,\\partial_z\\gamma\\,\\partial_\\rho\\partial_z f - 16f^3\\,\\rho^4\\,\\partial_\\rho^2\\gamma\\,\\partial_\\rho^2 f - 16f^3\\,\\rho^4\\,\\partial_\\rho^2\\gamma\\,\\partial_z^2 f - 16f^3\\,\\rho^4\\,\\partial_z^2\\gamma\\,\\partial_\\rho^2 f - 16f^3\\,\\rho^4\\,\\partial_z^2\\gamma\\,\\partial_z^2 f + 16f^2\\,\\rho^4\\left(\\partial_\\rho\\gamma\\right)^2\\left(\\partial_\\rho f\\right)^2 + 16f^2\\,\\rho^4\\left(\\partial_\\rho\\gamma\\right)^2\\left(\\partial_z f\\right)^2 - 8f^2\\,\\rho^3\\,\\partial_\\rho\\gamma\\left(\\partial_\\rho f\\right)^2 - 16f^2\\,\\rho^4\\,\\partial_\\rho\\gamma\\,\\partial_\\rho f\\,\\partial_\\rho^2 f + 16f^2\\,\\rho^4\\,\\partial_\\rho\\gamma\\,\\partial_\\rho f\\,\\partial_z^2 f + 8f^2\\,\\rho^3\\,\\partial_\\rho\\gamma\\left(\\partial_z f\\right)^2 - 32f^2\\,\\rho^4\\,\\partial_\\rho\\gamma\\,\\partial_z f\\,\\partial_\\rho\\partial_z f + 16f^2\\,\\rho^4\\left(\\partial_z\\gamma\\right)^2\\left(\\partial_\\rho f\\right)^2 + 16f^2\\,\\rho^4\\left(\\partial_z\\gamma\\right)^2\\left(\\partial_z f\\right)^2 - 16f^2\\,\\rho^3\\,\\partial_z\\gamma\\,\\partial_\\rho f\\,\\partial_z f - 32f^2\\,\\rho^4\\,\\partial_z\\gamma\\,\\partial_\\rho f\\,\\partial_\\rho\\partial_z f + 16f^2\\,\\rho^4\\,\\partial_z\\gamma\\,\\partial_z f\\,\\partial_\\rho^2 f - 16f^2\\,\\rho^4\\,\\partial_z\\gamma\\,\\partial_z f\\,\\partial_z^2 f + 16f^2\\,\\rho^4\\left(\\partial_\\rho f\\right)^2\\,\\partial_\\rho^2\\gamma + 16f^2\\,\\rho^4\\left(\\partial_\\rho f\\right)^2\\,\\partial_z^2\\gamma + 12f^2\\,\\rho^2\\left(\\partial_\\rho f\\right)^2 + 8f^2\\,\\rho^3\\,\\partial_\\rho f\\,\\partial_\\rho^2 f + 8f^2\\,\\rho^3\\,\\partial_\\rho f\\,\\partial_z^2 f + 16f^2\\,\\rho^4\\left(\\partial_z f\\right)^2\\,\\partial_\\rho^2\\gamma + 16f^2\\,\\rho^4\\left(\\partial_z f\\right)^2\\,\\partial_z^2\\gamma + 12f^2\\,\\rho^4\\left(\\partial_\\rho^2 f\\right)^2 + 8f^2\\,\\rho^4\\,\\partial_\\rho^2 f\\,\\partial_z^2 f + 16f^2\\,\\rho^4\\left(\\partial_\\rho\\partial_z f\\right)^2 + 12f^2\\,\\rho^4\\left(\\partial_z^2 f\\right)^2 - 16f\\,\\rho^3\\left(\\partial_\\rho f\\right)^3 - 16f\\,\\rho^4\\left(\\partial_\\rho f\\right)^2\\,\\partial_\\rho^2 f - 16f\\,\\rho^4\\left(\\partial_\\rho f\\right)^2\\,\\partial_z^2 f - 16f\\,\\rho^3\\,\\partial_\\rho f\\left(\\partial_z f\\right)^2 - 16f\\,\\rho^4\\left(\\partial_z f\\right)^2\\,\\partial_\\rho^2 f - 16f\\,\\rho^4\\left(\\partial_z f\\right)^2\\,\\partial_z^2 f + 11\\rho^4\\left(\\partial_\\rho f\\right)^4 + 22\\rho^4\\left(\\partial_\\rho f\\right)^2\\left(\\partial_z f\\right)^2 + 11\\rho^4\\left(\\partial_z f\\right)^4\\right)e^{-4\\gamma}}{4f^2\\,\\rho^4}"
+        }
+      ]
+    },
+    {
+      "id": "draining_bathtub",
+      "name": "The Draining Bathtub",
+      "short_name": "Draining Bathtub",
+      "description": "The spacetime that sound travels through in a fluid that swirls as it runs down a drain. Sound cannot stand still against the current inside $r = \\sqrt{A^2 + B^2}/c$, an ergoregion, and cannot move outward inside $r = |A|/c$, a horizon, so the vortex is a rotating black hole for sound. It solves no field equation of gravity, and it has been built in a water tank.",
+      "tags": [
+        "analogue gravity",
+        "acoustic black hole",
+        "acoustic metric",
+        "dumb hole",
+        "sound",
+        "fluid flow",
+        "vortex",
+        "black hole",
+        "white hole",
+        "rotating",
+        "rotating black hole",
+        "ergoregion",
+        "ergosphere",
+        "horizon",
+        "event horizon",
+        "superradiance",
+        "Hawking radiation",
+        "Painlevé-Gullstrand",
+        "laboratory experiment",
+        "no field equations",
+        "curvature singularity",
+        "circularly symmetric",
+        "axisymmetric",
+        "stationary",
+        "three-dimensional",
+        "four-dimensional",
+        "Lorentzian",
+        "idealized model"
+      ],
+      "signature": "(-,+,+)",
+      "convention": "Here $c$ is the speed of sound in the fluid, constant throughout it, and it stands wherever the speed of light does in a spacetime of gravity; we keep it explicit. The fluid has radial velocity $A/r$ and tangential velocity $B/r$, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "The rotating black hole of gravity, which the bathtub copies for sound: an ergoregion outside a horizon, and waves that come back amplified. Kerr's spin is bounded by its mass, while the swirl $B$ has, at least in principle, no upper bound [berti2004]."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "A rotating black hole of three dimensions that solves Einstein's equations with a negative cosmological constant. Each has an ergoregion around its horizon, and the BTZ hole's curvature is constant where the bathtub's grows as $1/r^4$ toward the drain [banados1992, visser1998]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "With the swirl switched off the bathtub is of Painlevé and Gullstrand's type, as their form of Schwarzschild's metric is: flat space with a flow running into the hole. The water runs in at $|A|/r$ where Schwarzschild's space falls at $c\\sqrt{r_s/r}$, and no acoustic metric is identical to Schwarzschild's [visser1998, berti2004]."
+        },
+        {
+          "id": "natario",
+          "kind": "family",
+          "text": "The same line element, flat space with a flow through it. Natário's shift vector is the water's velocity here, and his $c$ is the speed of sound [natario2002, visser1998]."
+        },
+        {
+          "id": "spinning_string",
+          "kind": "family",
+          "text": "Another spacetime that turns about an axis, which Visser set beside the vortex to tell the two apart. Far from the core the string approximates the vortex, and near it the string has closed timelike curves where the vortex has none [visser1998]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "The bathtub with the water at rest, $A = B = 0$: flat spacetime with the speed of sound for its $c$. The water itself moves in flat space throughout, and the curvature is for sound alone [visser1998]."
+        }
+      ],
+      "references": [
+        "visser1998",
+        "unruh1981",
+        "barcelo2005",
+        "berti2004",
+        "basak2003",
+        "schutzhold2002",
+        "weinfurtner2011",
+        "torres2017",
+        "barcelo2004",
+        "unruh1995",
+        "banados1992",
+        "natario2002"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/draining_bathtub.json",
+      "charts": [
+        {
+          "id": "laboratory",
+          "name": "Laboratory",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, 2\\pi)",
+            "r = |A|/c \\;\\text{(the acoustic horizon)}",
+            "r = \\sqrt{A^2 + B^2}/c \\;\\text{(the ergosurface)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "A",
+              "description": "Strength of the radial flow, a speed times a length: the fluid's radial velocity is $A/r$, inward for $A < 0$, a drain, and outward for $A > 0$, a spring; $2\\pi|A|$ is the area of fluid crossing each circle per unit time"
+            },
+            {
+              "symbol": "B",
+              "description": "Strength of the swirl, a speed times a length: the fluid's tangential velocity is $B/r$, and $2\\pi B$ is its circulation"
+            }
+          ],
+          "convention": "We use Visser's coordinates $(t, r, \\theta)$: the time $t$ of the laboratory, carrying dimensions of time, and polar coordinates on the plane the fluid moves in, with the drain at $r = 0$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\left(dr - \\dfrac{A}{r}dt\\right)^2 + \\left(r\\,d\\theta - \\dfrac{B}{r}dt\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{A^2 + B^2}{c^2\\,r^2}\\right)"
+            },
+            {
+              "indices": [
+                "t",
+                "r"
+              ],
+              "value": "-\\dfrac{A}{c\\,r}"
+            },
+            {
+              "indices": [
+                "r",
+                "t"
+              ],
+              "value": "-\\dfrac{A}{c\\,r}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\theta"
+              ],
+              "value": "-\\dfrac{B}{c}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "t"
+              ],
+              "value": "-\\dfrac{B}{c}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2A^2 + 2B^2}{c^2\\,r^4}",
+          "kretschmann": "K = \\dfrac{44\\left(A^2 + B^2\\right)^2}{c^4\\,r^8}"
+        },
+        {
+          "id": "kerr_like",
+          "name": "Kerr-like",
+          "coordinates": [
+            "T",
+            "r",
+            "\\phi"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "r \\in (|A|/c, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "r = \\sqrt{A^2 + B^2}/c \\;\\text{(the ergosurface)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "A",
+              "description": "Strength of the radial flow, a speed times a length: the fluid's radial velocity is $A/r$, inward for $A < 0$, a drain, and outward for $A > 0$, a spring; $2\\pi|A|$ is the area of fluid crossing each circle per unit time"
+            },
+            {
+              "symbol": "B",
+              "description": "Strength of the swirl, a speed times a length: the fluid's tangential velocity is $B/r$, and $2\\pi B$ is its circulation"
+            }
+          ],
+          "convention": "We use the coordinates of Basak and Majumdar outside the horizon, written $(T, r, \\phi)$, with $dT = dt + A\\,r\\,dr/(c^2r^2 - A^2)$ and $d\\phi = d\\theta + A\\,B\\,dr/\\left(r\\left(c^2r^2 - A^2\\right)\\right)$ for the laboratory's $t$ and $\\theta$, so that $dT\\,d\\phi$ is the one cross term. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{A^2 + B^2}{c^2r^2}\\right)c^2dT^2 + \\dfrac{dr^2}{1 - \\dfrac{A^2}{c^2r^2}} - 2B\\,dT\\,d\\phi + r^2d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\left(1 - \\dfrac{A^2 + B^2}{c^2\\,r^2}\\right)"
+            },
+            {
+              "indices": [
+                "T",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{B}{c}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "T"
+              ],
+              "value": "-\\dfrac{B}{c}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{c^2\\,r^2}{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2A^2 + 2B^2}{c^2\\,r^4}",
+          "kretschmann": "K = \\dfrac{44\\left(A^2 + B^2\\right)^2}{c^4\\,r^8}"
+        },
+        {
+          "id": "vortex_filament",
+          "name": "Vortex Filament",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "r = |A|/c \\;\\text{(the acoustic horizon)}",
+            "r = \\sqrt{A^2 + B^2}/c \\;\\text{(the ergosurface)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "A",
+              "description": "Strength of the radial flow, a speed times a length: the fluid's radial velocity is $A/r$, inward for $A < 0$, a drain, and outward for $A > 0$, a spring; $2\\pi|A|$ is the area of fluid crossing each circle per unit time"
+            },
+            {
+              "symbol": "B",
+              "description": "Strength of the swirl, a speed times a length: the fluid's tangential velocity is $B/r$, and $2\\pi B$ is its circulation"
+            }
+          ],
+          "convention": "We use Visser's coordinates $(t, r, \\theta, z)$ for a vortex filament with a line sink along the $z$ axis: the laboratory's time $t$, carrying dimensions of time, and cylindrical coordinates about the filament. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\left(dr - \\dfrac{A}{r}dt\\right)^2 + \\left(r\\,d\\theta - \\dfrac{B}{r}dt\\right)^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{A^2 + B^2}{c^2\\,r^2}\\right)"
+            },
+            {
+              "indices": [
+                "t",
+                "r"
+              ],
+              "value": "-\\dfrac{A}{c\\,r}"
+            },
+            {
+              "indices": [
+                "r",
+                "t"
+              ],
+              "value": "-\\dfrac{A}{c\\,r}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\theta"
+              ],
+              "value": "-\\dfrac{B}{c}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "t"
+              ],
+              "value": "-\\dfrac{B}{c}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2A^2 + 2B^2}{c^2\\,r^4}",
+          "kretschmann": "K = \\dfrac{44\\left(A^2 + B^2\\right)^2}{c^4\\,r^8}"
         }
       ]
     },
@@ -23434,6 +23765,11 @@
           "id": "bondi_sachs",
           "kind": "generalisation",
           "text": "The form the metric of an isolated body takes on its outgoing light cones. Kerr's black hole is a member with no news, written in such coordinates by S. J. Fletcher and A. W. C. Lun in 2003 [sachs1962, fletcher2003]."
+        },
+        {
+          "id": "draining_bathtub",
+          "kind": "family",
+          "text": "Kerr's black hole copied in water. Sound in a fluid that swirls down a drain meets an ergoregion and then a horizon, and waves on a draining vortex in a tank have been measured coming back amplified, as waves do from Kerr's ergoregion [visser1998, torres2017]."
         }
       ],
       "references": [
@@ -23495,7 +23831,9 @@
         "belinskii1979",
         "boshkayev2019",
         "sachs1962",
-        "fletcher2003"
+        "fletcher2003",
+        "visser1998",
+        "torres2017"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -30454,6 +30792,11 @@
           "id": "bondi_sachs",
           "kind": "generalisation",
           "text": "Flat spacetime on its outgoing light cones with four functions added, the form of the metric far from an isolated body that radiates. Its symmetries far away are Poincaré's and the supertranslations besides [bondi1962, sachs1962bms]."
+        },
+        {
+          "id": "draining_bathtub",
+          "kind": "generalisation",
+          "text": "Flat spacetime with the speed of sound for $c$ and water flowing through it. A drain that swirls gives sound a horizon and an ergoregion, in a laboratory that stays flat [visser1998]."
         }
       ],
       "references": [
@@ -30530,7 +30873,8 @@
         "davies1977",
         "horvath1977",
         "bondi1962",
-        "sachs1962bms"
+        "sachs1962bms",
+        "visser1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -33919,6 +34263,11 @@
           "id": "lentz",
           "kind": "special_case",
           "text": "Natário's shift vector taken to be a gradient, $(u, v, w) = c\\,\\nabla\\phi$ [lentz2021]."
+        },
+        {
+          "id": "draining_bathtub",
+          "kind": "family",
+          "text": "Natário's line element with water for the flow and the speed of sound for $c$. The shift is a vortex that drains, with speed $A/r$ inward and $B/r$ around, and sound in the water meets a horizon and an ergoregion [visser1998]."
         }
       ],
       "references": [
@@ -33929,7 +34278,8 @@
         "alcubierre2017",
         "dickinson2024exordia",
         "mattingly2021",
-        "lentz2021"
+        "lentz2021",
+        "visser1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/natario.json",
@@ -41661,6 +42011,11 @@
           "id": "bondi_sachs",
           "kind": "generalisation",
           "text": "Schwarzschild's metric in outgoing coordinates with four functions set free, the form the metric of an isolated body takes far away once it radiates. The mass aspect $M(u, \\theta)$ takes the place of $r_s/2$ and falls when gravitational waves leave [bondi1962]."
+        },
+        {
+          "id": "draining_bathtub",
+          "kind": "family",
+          "text": "A black hole for sound of Painlevé and Gullstrand's type, as their form of Schwarzschild's metric is: flat space with water running inward through it, and a horizon where the water reaches the speed of sound. With its swirl switched off the flow falls off as $1/r$ where Schwarzschild's falls as $1/\\sqrt{r}$ [visser1998, berti2004]."
         }
       ],
       "references": [
@@ -41776,7 +42131,9 @@
         "gibbons1977action",
         "bransdicke1961",
         "agnese1995",
-        "bondi1962"
+        "bondi1962",
+        "visser1998",
+        "berti2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -45341,6 +45698,11 @@
           "id": "kopczynski_trautman",
           "kind": "family",
           "text": "The Einstein-Cartan theory applied to a whole universe. Dust with every spin aligned repels itself at high density, and the universe turns round where a big bang would be [kopczynski1973, trautman2006]."
+        },
+        {
+          "id": "draining_bathtub",
+          "kind": "family",
+          "text": "A vortex of water as sound sees it, which Matt Visser set beside the spinning string. Far from the core the string approximates it, and near the core the vortex has a horizon where the string has closed timelike curves [visser1998]."
         }
       ],
       "references": [
@@ -45371,7 +45733,8 @@
         "anderson1999",
         "som1968",
         "kopczynski1973",
-        "trautman2006"
+        "trautman2006",
+        "visser1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/spinning_string.json",

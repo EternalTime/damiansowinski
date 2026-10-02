@@ -10967,6 +10967,66 @@ def btz(ck, src):
                           "length along the surface beyond $r = \\sqrt{2}\\,\\ell$ is measured with $dX^2 + dY^2 - dZ^2$.")]
 
 
+def draining_bathtub(ck, src):
+    """Two moments of a drain at A = -1 and B = sqrt 3 with c = 1, so that the horizon |A|/c is
+    the unit of length and the ergosurface lies at 2, as the spacetime diagrams draw it.
+
+    The laboratory's t = 0 is the plane the water moves in: g_rr = 1 and g_thetatheta = r^2, so
+    rho = r and dz/dr = 0, drawn out to r = 4 with the horizon and the ergosurface marked on it.
+    The Kerr-like chart's T = 0 is another surface, t = log(r^2 - 1)/2: there g_rr = r^2/(r^2 - 1) and g_phiphi = r^2, so dz/dr = 1/sqrt(r^2 - 1) and
+    z = arcosh r, the catenoid rho = cosh z, from its waist on the horizon, where the chart ends,
+    out to r = 5."""
+    params = {"A": -1, "B": "sqrt(3)"}
+    flat = Slice(src, "draining_bathtub", "laboratory", "r", "\\theta", {"t": 0}, params)
+    ck.plane("Draining bathtub, the laboratory's moment", flat, np.linspace(1e-3, 20, 400))
+    top = 4.0
+    size = 2 * top
+    plane = Piece("plane", "sheet", flat, 0.0, top, 0.0, 1,
+                  (("axis", "the drain $r = 0$"), ("edge", "the plane runs on to $r \\to \\infty$")),
+                  [(1.0, "horizon", "$r = |A|/c$"), (2.0, "ergo", None), (3.0, "r", None), (top, "r", None)], size)
+    ck.isometry("Draining bathtub, the plane", plane)
+    ck.radius("Draining bathtub, the plane rho = r", plane, lambda r: r, size)
+    ck.form("Draining bathtub, the plane z = 0", plane, np.zeros_like, size)
+    surface = Surface([plane])
+    fig = figure_of([surface], {"sheet": "cover"}, size, FLAT_CAMERA)
+    ring_label(fig, [0, 0, 0], *plane.at(1.0), "$|A|/c$", side=-1)
+    ring_label(fig, [0, 0, 0], *plane.at(2.0), "$2|A|/c$")
+    ring_label(fig, [0, 0, 0], *plane.at(top), "$4|A|/c$")
+    fig.legend("fill", "cover", "the plane the water moves in, which $t$ and $r$ cover down to the drain")
+    fig.legend("line", "horizon", "the horizon $r = |A|/c$, where the water runs inward at the speed of sound")
+    fig.legend("line", "ergo", "the ergosurface $r = \\sqrt{A^2 + B^2}/c$, where the whole speed of the water is $c$")
+    fig.legend("line", "r", "$r$ constant, at $3|A|/c$ and $4|A|/c$, each of circumference $2\\pi r$")
+    fig.legend("line", "meridian", "$\\theta$ constant, every $15°$")
+    settings = ("$A = -1$ and $c = 1$, so that $|A|/c$ is the unit of every length, and $B = \\sqrt{3}$, so that "
+                "the ergosurface lies at $2|A|/c$.")
+    views = [view("plane", "The laboratory's moment", "$|A|/c$", [surface], fig.done(), settings=settings)]
+
+    sl = Slice(src, "draining_bathtub", "kerr_like", "r", "\\phi", {"T": 0}, params)
+    rh = sl.horizons()[0]
+    ck.add("Draining bathtub: the horizon is at r = |A|/c", abs(rh - 1.0), 1e-12)
+    far = 5.0
+    wide = 2 * far
+    funnel = Piece("funnel", "sheet", sl, rh, far, 0.0, 1,
+                   (("throat", "the waist $r = |A|/c$, the horizon, where the chart of $T$ and $r$ ends"),
+                    ("edge", "the surface runs on, flattening, to $r \\to \\infty$")),
+                   [(rh, "horizon", "$r = |A|/c$"), (2.0, "ergo", None)] + [(r, "r", None) for r in (3.0, 4.0, far)], wide)
+    ck.isometry("Draining bathtub, the funnel", funnel)
+    ck.radius("Draining bathtub, the funnel rho = r", funnel, lambda r: r, wide)
+    ck.form("Draining bathtub, the catenoid z = arcosh(c r/|A|)", funnel, lambda r: np.arccosh(np.maximum(r, 1.0)), wide)
+    cat = Surface([funnel])
+    fig = figure_of([cat], {"sheet": "cover"}, wide)
+    ring_label(fig, [0, 0, 0], *funnel.at(rh), "$|A|/c$", dx=14)
+    ring_label(fig, [0, 0, 0], *funnel.at(2.0), "$2|A|/c$")
+    ring_label(fig, [0, 0, 0], *funnel.at(far), "$5|A|/c$")
+    fig.legend("fill", "cover", "the outside of the horizon, which $T$ and $r$ cover")
+    fig.legend("line", "horizon", "the waist $r = |A|/c$, the horizon")
+    fig.legend("line", "ergo", "the ergosurface $r = \\sqrt{A^2 + B^2}/c$")
+    fig.legend("line", "r", "$r$ constant, at $3|A|/c$, $4|A|/c$ and $5|A|/c$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("funnel", "The moment $T = 0$", "$|A|/c$", [cat], fig.done(), settings=settings))
+    return views
+
+
 def spinning_string(ck, src):
     """The moment t = 0 of the spinning string outside its closed timelike curves, at b = 0.9, the
     deficit the cosmic string is drawn at, and a = 0.9, so that the null circle r_c = a/b is the
@@ -14695,6 +14755,7 @@ DRAWN = {
     "alcubierre": alcubierre,
     "natario": natario,
     "btz": btz,
+    "draining_bathtub": draining_bathtub,
     "c_metric": c_metric,
     "einstein_rosen_waves": einstein_rosen_waves,
     "gowdy": gowdy,
@@ -14890,6 +14951,24 @@ CAPTIONS = {
         "as on the static slice of anti-de Sitter space, and the surface climbs at $dZ/dr = \\sqrt{1 - 1/N^2}$ "
         "from level toward a light cone of Minkowski space, as the hyperboloid of anti-de Sitter space does. Both "
         "parts lie level at the circle, so they meet there with one tangent plane.",
+    ],
+    ("draining_bathtub", "plane"): [
+        "The moment $t = 0$ of the laboratory's clock for a drain ($A < 0$, $B = \\sqrt{3}\\,|A|$), a flat plane, "
+        "every distance along it the metric distance. On the slice the metric is $dr^2 + r^2d\\theta^2$: the "
+        "space sound moves through is the plane the water moves in, and a circle of radius $r$ has "
+        "circumference $2\\pi r$ all the way down to the drain.",
+        "The curvature of this spacetime lies in how its moments are stacked. From one to the next the water "
+        "carries each point of the plane inward at $|A|/r$ and round at $B/r$, faster than sound inside the "
+        "ergosurface $r = 2|A|/c$, and inward faster than sound inside the horizon $r = |A|/c$.",
+    ],
+    ("draining_bathtub", "funnel"): [
+        "The moment $T = 0$ of the Kerr-like chart for the same drain, outside the horizon, drawn as a surface "
+        "in flat space with every distance along it the metric distance. On the slice the metric is "
+        "$dr^2/(1 - A^2/(c^2r^2)) + r^2d\\phi^2$, so the surface climbs at $dz/dr = |A|/\\sqrt{c^2r^2 - A^2}$ and "
+        "is the catenoid $r = (|A|/c)\\cosh(cz/|A|)$, the curve of a hanging chain turned about the axis.",
+        "Its waist is the horizon $r = |A|/c$, where the surface stands vertical and the chart ends. The time "
+        "$T$ differs from the laboratory's $t$ by a function of $r$ that grows without bound toward the "
+        "horizon, so this surface and the flat plane are two cuts through one spacetime.",
     ],
     ("c_metric", "equator"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the C-metric at one moment of $t$ ($\\alpha m = 1/6$, "

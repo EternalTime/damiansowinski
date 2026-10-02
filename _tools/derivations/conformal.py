@@ -9156,6 +9156,155 @@ def cosmic_string(ck, src):
     return views
 
 
+def draining_bathtub(ck, src):
+    """The draining bathtub with its circles divided out, at |A| = c = 1 and B = sqrt 3.
+
+    Orthogonal to the circles of the angle the metric is -f dT^2 + dr^2/f in the Kerr-like chart,
+    f = 1 - 1/r^2, whatever B is, with one horizon at r = 1 and r* = r + ln|(r - 1)/(r + 1)|/2,
+    which vanishes at r = 0. The surface gravity is 1, so U = -exp(-u) and V = exp(v) with
+    u, v = T -+ r* give UV = (1 - r) exp(2r)/(1 + r), analytic through the horizon, and r = 0,
+    where UV = 1, lies on the straight line T = pi/2: Kruskal's diagram for Schwarzschild, cell
+    for cell. The laboratory's time is t = T + ln|r^2 - 1|/2 for the drain, so v = t + r - ln(1 + r)
+    is regular for every r > 0 and the laboratory chart is the ingoing one, q = arctan exp(v) and
+    p = arctan((1 - r) exp(2r - v)/(1 + r)), covering the exterior and the black hole and nothing
+    else: the line V = 0 is t -> -infinity. The spring, A = 1, is the drain with time reversed,
+    (p, q) -> (-q, -p), the exterior and the white hole. The water is all there is of either, so
+    each is drawn alone, with the edge t -> -+infinity where Kruskal's diagram runs on, as
+    Barcelo, Liberati, Sonego and Visser (2004) draw their acoustic holes."""
+    drain = {"A": -1, "B": "sqrt(3)"}
+    # The surface gravity is twice Schwarzschild's in these units, so the arctangents flatten twice as
+    # fast, and the charts are sampled over a third of the range his are.
+    kl = Plane(src, "draining_bathtub", "kerr_like", ("T", "r"), params=drain, quotient="phi")
+    assert kl.g[0, 1] == 0 and sp.simplify(kl.g[0, 0] * kl.g[1, 1] + 1) == 0
+    T = Tower(-kl.g[0, 0], kl.x1, [1, -1])
+    ck.chart("Draining bathtub, Kerr-like, exterior", kl, lambda t, r: T.pq("I", t, r),
+             ck.uniform(-5, 5), ck.uniform(1.001, 6), lambda t, r: (1, 0))
+
+    def ingoing(t, r):
+        t, r = np.asarray(t, dtype=float), np.asarray(r, dtype=float)
+        v = t + r - np.log1p(r)
+        return np.arctan((1 - r) / (1 + r) * np.exp(2 * r - v)), atan_exp(v)
+
+    def outgoing(t, r):
+        p, q = ingoing(-np.asarray(t, dtype=float), r)
+        return -q, -p
+    lab = Plane(src, "draining_bathtub", "laboratory", ("t", "r"), params=drain, quotient="theta")
+    ck.chart("Draining bathtub, laboratory, the drain", lab, ingoing,
+             ck.uniform(-5, 5), ck.uniform(0.01, 6), lambda t, r: (1, -1 / r))
+    spring = Plane(src, "draining_bathtub", "laboratory", ("t", "r"), params={"A": 1, "B": "sqrt(3)"}, quotient="theta")
+    ck.chart("Draining bathtub, laboratory, the spring", spring, outgoing,
+             ck.uniform(-5, 5), ck.uniform(0.01, 6), lambda t, r: (1, 1 / r))
+
+    p, q = ingoing(np.array([-5.0, 0, 5]), np.full(3, 1e-9))
+    ck.limit("Draining bathtub: r -> 0 lands on T = pi/2", p + q, [HALF] * 3)
+    p, q = ingoing(np.array([0.0]), np.array([1e8]))
+    ck.limit("Draining bathtub: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)", point(p[0], q[0]), [PI, 0], 1e-3)
+    p, q = ingoing(np.array([-40.0, -40.0]), np.array([0.5, 3.0]))
+    ck.limit("Draining bathtub: t -> -infinity lands on V = 0", q, [0, 0], 1e-12)
+    rr = np.linspace(0.05, 5, 50)
+    pp, qq = ingoing(0.3 + 0 * rr, rr)
+    ck.limit("Draining bathtub: tan p tan q is UV = (1 - r) e^(2r)/(1 + r)",
+             np.tan(pp) * np.tan(qq), (1 - rr) / (1 + rr) * np.exp(2 * rr), 1e-8)
+    ck.limit("Draining bathtub: the laboratory and Kerr-like coordinates put one event at one point",
+             ingoing(2.0 + np.log(8.0) / 2, 3.0), T.pq("I", 2.0, 3.0), 1e-12)
+    K = lab.kretschmann
+    ck.diverges("Draining bathtub: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+    ck.finite("Draining bathtub: the Kretschmann scalar is finite on the horizon", K(np.zeros(3), np.array([0.999, 1, 1.001])))
+
+    box = [-HALF - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25]
+    whole = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF], [-HALF, HALF]]
+    exterior = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    R_OUT, R_IN, TS = (1.05, 1.25, 1.5, 2, 3), (0.5, 0.75, 0.9), (-4, -2, -1, 0, 1, 2, 4)
+    t = spread(-np.inf, np.inf, 500, 9)
+
+    def edges(v, up=1):
+        """The drain's edges, or with up = -1 the spring's, the same drawing upside down."""
+        v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]]])
+        v.line("horizon", [[[0, 0], [HALF, up * HALF]]])
+        v.line("chartedge", [[[HALF, -up * HALF], [-HALF, up * HALF]]])
+        v.line("singular", [[[-HALF, up * HALF], [HALF, up * HALF]]], zig=True)
+        for at in ((PI, 0), (HALF, HALF), (HALF, -HALF)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+        v.label_xt([HALF, HALF], "$i^+$", "b", dy=-6)
+        v.label_xt([HALF, -HALF], "$i^-$", "t", dy=6)
+        v.label_xt([3 * Q4, Q4], "$\\mathscr{I}^+$", "bl", dx=4, dy=-4)
+        v.label_xt([3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl", dx=4, dy=4)
+        v.label_xt([0, up * HALF], "$r = 0$", "b" if up > 0 else "t", dy=-8 * up)
+        v.label_xt([HALF, -0.95 * up], "outside", cls="region")
+        v.legend("singular", "$r = 0$, the drain, where the Kretschmann scalar diverges" if up > 0 else
+                 "$r = 0$, the spring, where the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+
+    plane, = slices.moments("draining_bathtub", "plane")
+    funnel, = slices.moments("draining_bathtub", "funnel")
+    lo, hi = plane.reach("laboratory", "r")
+    flo, fhi = funnel.reach("kerr_like", "r")
+    r_plane = np.concatenate([np.linspace(max(lo, 1e-9), 0.999, 200), 1 + np.exp(np.linspace(-12, math.log(hi - 1), 200))])
+    r_funnel = flo + np.exp(np.linspace(-30, math.log(fhi - flo), 300))
+
+    def marks(v):
+        v.slice(plane, [ingoing(0 * r_plane, r_plane)])
+        v.slice(funnel, [T.pq("I", 0 * r_funnel, r_funnel)], label="$T = 0$")
+
+    views = []
+    v = View("drain", "A drain, $A < 0$", box, "laboratory")
+    v.fill("region", whole)
+    v.fill("cover", whole)
+    for r in R_OUT + R_IN:
+        v.curve("r", *ingoing(t, np.full_like(t, r)))
+    rr = spread(0, np.inf, 600, 14)
+    for tt in TS:
+        v.curve("t", *ingoing(np.full_like(rr, tt), rr))
+    edges(v)
+    v.label_xt([-Q4 / 2, 1.15], "black hole", cls="region")
+    label_on(v, ingoing(0.0, 2.0), "$2|A|/c$")
+    v.legend("horizon", "the horizon $r = |A|/c$")
+    v.legend("chartedge", "$t \\to -\\infty$, where the laboratory's time begins")
+    v.legend("cover", "the whole of the drain, which $t$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant; $r = 2|A|/c$ is the ergosurface")
+    v.legend("t", "$t$ constant, in units of $|A|/c^2$")
+    marks(v)
+    views.append(v)
+
+    v = View("spring", "A spring, $A > 0$", box, "laboratory")
+    v.fill("region", [[x, -y] for x, y in whole])
+    v.fill("cover", [[x, -y] for x, y in whole])
+    for r in R_OUT + R_IN:
+        v.curve("r", *outgoing(t, np.full_like(t, r)))
+    for tt in TS:
+        v.curve("t", *outgoing(np.full_like(rr, tt), rr))
+    edges(v, -1)
+    v.label_xt([-Q4 / 2, -1.15], "white hole", cls="region")
+    label_on(v, outgoing(0.0, 2.0), "$2A/c$")
+    v.legend("horizon", "the horizon $r = A/c$")
+    v.legend("chartedge", "$t \\to \\infty$, where the laboratory's time ends")
+    v.legend("cover", "the whole of the spring, which $t$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant; $r = 2A/c$ is the ergosurface")
+    v.legend("t", "$t$ constant, in units of $A/c^2$")
+    views.append(v)
+
+    v = View("kerr_like", "Kerr-like", box, "kerr_like")
+    v.fill("region", whole)
+    v.fill("cover", exterior)
+    for r in R_OUT:
+        v.curve("r", *T.pq("I", t, np.full_like(t, r)))
+    rr = spread(1, np.inf, 500, 14)
+    for tt in TS:
+        v.curve("t", *T.pq("I", np.full_like(rr, tt), rr))
+    edges(v)
+    v.label_xt([-Q4 / 2, 1.15], "black hole", cls="region")
+    label_on(v, T.pq("I", 0.0, 2.0), "$2|A|/c$")
+    v.legend("horizon", "the horizon $r = |A|/c$")
+    v.legend("chartedge", "$t \\to -\\infty$, where the laboratory's time begins")
+    v.legend("cover", "the region that $T$ and $r > |A|/c$ cover")
+    v.legend("r", "$r$ constant; $r = 2|A|/c$ is the ergosurface")
+    v.legend("t", "$T$ constant, in units of $|A|/c^2$")
+    marks(v)
+    views.append(v)
+    return views
+
+
 def point_particle_2plus1(ck, src):
     """A point particle in three dimensions at alpha = 3/4, the particle its cone is embedded at.
     The half plane of fixed angle is flat and totally geodesic, -c^2dt^2 + dr^2 in the proper
@@ -21089,6 +21238,7 @@ def moving_mirror(ck, src):
 
 DRAWN = {
     "moving_mirror": moving_mirror,
+    "draining_bathtub": draining_bathtub,
     "lifshitz_spacetime": lifshitz_spacetime,
     "born_infeld_charge": born_infeld_charge,
     "aichelburg_sexl": aichelburg_sexl,
@@ -22111,6 +22261,32 @@ CAPTIONS = {
         "The deficit enters only $g_{\\theta\\theta}$ and $g_{\\phi\\phi}$, so the plane and its triangle are "
         "Minkowski's. The edge $X = 0$ is the monopole, $r = 0$, where the Kretschmann scalar "
         "$4\\Delta^2/\\left((1 - \\Delta)^2r^4\\right)$ diverges, a timelike singularity.",
+    ],
+    ("draining_bathtub", "drain"): [
+        "A drain ($A < 0$) with the circles of $\\theta$ divided out, each point in the diagram a circle of "
+        "circumference $2\\pi r$. The metric orthogonal to the circles is $-f\\,c^2dT^2 + dr^2/f$ with $f = 1 - "
+        "A^2/(c^2r^2)$, whatever the swirl $B$. With $r_h = |A|/c$ and $r_* = r + \\tfrac{1}{2}r_h\\ln|(r - "
+        "r_h)/(r + r_h)|$, the Kruskal coordinates $U = -e^{-u/r_h}$ and $V = e^{v/r_h}$, with $u, v = cT \\mp "
+        "r_*$, make it regular through the horizon, where $UV = e^{2r/r_h}(r_h - r)/(r_h + r)$ vanishes. With "
+        "$p = \\arctan U$ and $q = \\arctan V$ the drain $r = 0$, where $UV = 1$, lies on the line $T = \\pi/2$.",
+        "The laboratory's $t$ and $r > 0$ cover the outside and the black hole, and those two regions are all "
+        "the water there is. Every line of constant $t$ runs from the drain through the horizon out to $i^0$. "
+        "The dashed edge is $t \\to -\\infty$: a sound ray followed back in time reaches it after a finite "
+        "affine length and an endless time on the laboratory's clock.",
+    ],
+    ("draining_bathtub", "spring"): [
+        "A spring ($A > 0$) with the circles of $\\theta$ divided out, the drain with time reversed. The "
+        "laboratory's $t$ and $r > 0$ cover the outside and a white hole: sound leaves the region inside "
+        "$r = A/c$ and none enters it.",
+        "The spring $r = 0$ lies on the line $T = -\\pi/2$, and the dashed edge is $t \\to \\infty$. Sound sent "
+        "inward against the flow approaches the horizon for ever by the laboratory's clock.",
+    ],
+    ("draining_bathtub", "kerr_like"): [
+        "The same drain, with the region the Kerr-like chart covers. The coordinates $T$ and $r > |A|/c$ "
+        "cover the outside alone, and its lines of constant $T$ all meet at the corner where the horizon "
+        "meets the edge $t \\to -\\infty$.",
+        "The time $T = t - (|A|/(2c^2))\\ln(c^2r^2/A^2 - 1)$ runs to $+\\infty$ along the horizon, so the chart "
+        "ends there, while the laboratory's $t$ goes through.",
     ],
     ("btz", "static"): [
         "The black hole without rotation ($M = 1$, $J = 0$), maximally extended, each point in the "

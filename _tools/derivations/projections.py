@@ -123,6 +123,7 @@ class Projection:
     input: str = None
     fields: tuple = ()              # published fields read beyond FIELDS
     functions: dict = field(default_factory=dict)   # a declared function -> its expression
+    rounded: dict = None            # as a flat view's: a parameter -> the decimals its settings show
 
 
 FIELDS = ["coords", "parameters", "metric_components", "inverse_metric_components"]
@@ -675,6 +676,72 @@ def ergoregion(spec, camera=Camera(-90, 30), horizon_between=(1.0, 1.9), ergo_be
     return fig.done(), sl
 
 
+def bathtub(spec, camera=Camera(-90, 30)):
+    """The cones of sound about a drain, the slice of t, r and theta that is the whole of the
+    laboratory chart, drawn polar with r itself as its radius, down to the drain.
+
+    The horizon is the zero of the published g^rr and the ergosurface the zero of the published
+    g_tt outside it, both found by bisection. Cones stand at four places around each of the
+    horizon, the ergosurface and the circle at 8/5 of the ergosurface, those on the ergosurface
+    turned by 45 degrees from the others, oriented by the laboratory's t, which the published
+    g^tt = -1 makes a time everywhere. Before anything is drawn: on the horizon no future
+    generator moves outward and one stays on the circle's cylinder; on the ergosurface g_tt
+    vanishes, so one edge of each cone stands vertical; halfway between the two g_tt is positive,
+    so no future direction stays at one place; and on the outer circle g_tt is negative and
+    generators move both ways in r and in theta. The floor is the moment t = 0 the embedding
+    diagram draws, out to its edge, and on it six streamlines of the water, the spirals
+    r = r_0 exp(A theta/B), each checked against the published metric to be orthogonal to the
+    moment's normal displaced by the flow: along it dr/dtheta = A r/B."""
+    sl = Slice(spec.metric, spec.system, ("t", "r", "\\theta"), "polar", spec.params, spec.fixed)
+    g_tt = lambda r: sl.metric((0.0, r, 0.0))[0, 0]
+    g_rr_up = lambda r: sl.inverse((0.0, r, 0.0))[1, 1]
+    horizon = root(g_rr_up, 0.5, 1.5)
+    ergo = root(g_tt, horizon * (1 + 1e-9), 3.0)
+    between, outer = 0.5 * (horizon + ergo), 1.6 * ergo
+    if not (g_tt(between) > 0 and g_tt(outer) < 0 and sl.inverse((0.0, 0.1, 0.0))[0, 0] < 0):
+        raise SystemExit(f"{key(spec)}: the ergoregion is not where the published g_tt puts it")
+    moves = {}
+    for r in (horizon, between, outer):
+        _, k = generators(sl, (0.0, r, 0.0), "tau", 3600)
+        size = np.linalg.norm(k * [1, 1, r], axis=1)
+        moves[r] = (float((k[:, 1] / size).max()), float((k[:, 1] / size).min()),
+                    float((k[:, 2] * r / size).min()), float(np.hypot(k[:, 1], k[:, 2] * r).min() / size.max()))
+    if not (abs(moves[horizon][0]) < 1e-5 and moves[between][0] > 0 and moves[between][3] > 1e-3
+            and moves[outer][0] > 0 and moves[outer][1] < 0 and moves[outer][2] < 0):
+        raise SystemExit(f"{key(spec)}: the cones do not tip as the flow says: {moves}")
+    # The flow, read from the published metric: the shift is -g_ti/c in the flat plane, so the water's
+    # velocity is (A/r, B/r) and its streamlines have dr/dtheta = A r/B.
+    m = slices.moments(spec.metric, "plane")[0]
+    reach = m.reach(spec.system, "r")[1]
+    g = sl.metric((0.0, ergo, 0.0))
+    radial, swirl = -g[0, 1], -g[0, 2] / ergo
+    if not (radial < 0 < swirl and abs(g[1, 1] - 1) < 1e-12 and abs(g[2, 2] - ergo ** 2) < 1e-12):
+        raise SystemExit(f"{key(spec)}: the published metric is not a drain turning toward +theta")
+    pitch = radial / swirl
+    unit = ergo
+    fig = Figure(spec.view, spec.label, camera)
+    turns = np.linspace(0.0, np.log(reach / 0.05) / -pitch, 400)
+    for k in range(6):
+        r = reach * np.exp(pitch * turns)
+        fig.line("floor", sl.to_drawing((np.zeros_like(r), r, k * np.pi / 3 + turns)))
+    for r, cls in ((outer, "floor"), (reach, "floor"), (horizon, "horizon"), (ergo, "ergo")):
+        fig.line(cls, circle(sl, 0.0, r), closed=True)
+    fig.line("axis", np.array([[0, 0, -0.4], [0, 0, 1.1]]) * unit)
+    cones = []
+    for r, shift in ((horizon, 0.5), (ergo, 0.0), (outer, 0.5)):
+        cones += [(0.0, r, (k + shift) * np.pi / 2) for k in range(4)]
+    drawn = [future_cone(sl, x, 0.32 * unit, orient="tau") for x in cones]
+    for apex, rim in sorted(drawn, key=lambda c: camera.depth(c[0])):
+        fig.cone(apex, rim)
+    fig.slice(m, fills=[[circle(sl, 0.0, reach)]])
+    fig.label(np.array([0, 0, 1.1 * unit]), "$t$", "b", dy=-4)
+    fig.legend("cone", "cone", "future cone of sound")
+    fig.legend("line", "horizon", "the horizon $r = |A|/c$")
+    fig.legend("line", "ergo", "the ergosurface $r = \\sqrt{A^2 + B^2}/c$, where $g_{tt} = 0$")
+    fig.legend("line", "floor", "streamlines of the water, $dr/d\\theta = A\\,r/B$, and the circles $r = 3.2|A|/c$ and $4|A|/c$")
+    return fig.done(), sl
+
+
 class ThroatSlice(Slice):
     """The equator of the extreme Kerr throat in Bardeen and Horowitz's global chart, (tau, y,
     phi), drawn polar with each circle of constant y at the radius 2 + arsinh(y)/sqrt 2 in units
@@ -1119,6 +1186,19 @@ CAPTIONS = {
         "Bardeen and Horowitz likened this region to Kerr's ergosphere, and their vector "
         "$\\partial_\\tau - y\\,\\partial_\\phi$, which turns with the cones, is timelike at every point.",
     ],
+    ("draining_bathtub", "laboratory", "swirl"): [
+        "The whole of a drain ($A < 0$, $B = \\sqrt{3}\\,|A|$) with the laboratory's $t$ up and $r$ and "
+        "$\\theta$ as polar coordinates about the drain. The floor is the moment $t = 0$, with six streamlines "
+        "of the water spiralling in. The cones stand at $t = 0$ at four places around each of three circles: "
+        "$r = 3.2|A|/c$, the ergosurface $r = 2|A|/c$, and the horizon $r = |A|/c$. Each cone is sound leaving "
+        "one event at $c$ in every direction through water that moves, so it is the upright cone of still "
+        "water tipped along the flow.",
+        "On the ergosurface the water moves at $c$, $g_{tt}$ vanishes, and one edge of every cone stands "
+        "vertical: sound sent straight upstream stays where it is. Inside it the cones have tipped past the "
+        "vertical, and no sound stays at one place in the laboratory. On the horizon the inward part of the "
+        "flow alone reaches $c$, and the outermost edge of each cone lies along the cylinder $r = |A|/c$, so "
+        "no future direction leads out.",
+    ],
     ("kerr", "boyer_lindquist", "dragging"): [
         "The equatorial plane ($\\theta = \\pi/2$) with $t$ up and $r$ and $\\phi$ as polar "
         "coordinates about the axis, for $a = 0.9\\,GM/c^2$, down to the horizon $r_+ = "
@@ -1251,6 +1331,9 @@ FIGURES = [
     # Kerr-Taub-NUT at the values of its flat views, in units of m: r_+ = 9/4 and r_E = 2.601.
     Projection("kerr_taub_nut", "boyer_lindquist", "dragging", "light cones on the equator",
                lambda spec: ergoregion(spec, horizon_between=(2.0, 2.39), ergo_below=4.0), nr.KTN, {"theta": "pi/2"}),
+    # The drain of the flat views, in units of the horizon radius |A|/c.
+    Projection("draining_bathtub", "laboratory", "swirl", "cones of sound about the drain", bathtub,
+               {"A": -1, "B": "sqrt(3)"}),
     # The throat of extreme Kerr on its equator, at r_0 = 1, as its flat views are drawn.
     Projection("near_horizon_extreme_kerr", "global", "dragging", "light cones on the equator", throat,
                {"r_0": 1}, {"theta": "pi/2"}),
