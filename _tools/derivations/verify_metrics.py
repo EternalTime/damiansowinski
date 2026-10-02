@@ -508,6 +508,24 @@ DIMENSIONS = {
         "u": "L", "v": "L", "\\rho": "L", "\\phi": "1", "G": "L**3/(M*T**2)", "E": "M*L**2/T**2",
         "\\rho_0": "L",
     },
+    # Hotta and Tanaka's shock in de Sitter space of radius a, a length: 8GE/c^4 is the other
+    # length. The conformal time and the radius of the conformally flat chart are lengths, the
+    # global chart's are angles, and the null coordinates of the others are lengths.
+    ("hotta_tanaka", "conformally_flat"): {
+        "\\eta": "L", "\\rho": "L", "\\theta": "1", "\\phi": "1", "G": "L**3/(M*T**2)", "E": "M*L**2/T**2", "a": "L",
+    },
+    ("hotta_tanaka", "global"): {
+        "\\eta": "1", "\\chi": "1", "\\theta": "1", "\\phi": "1", "G": "L**3/(M*T**2)", "E": "M*L**2/T**2", "a": "L",
+    },
+    ("hotta_tanaka", "kruskal"): {
+        "u": "L", "v": "L", "\\theta": "1", "\\phi": "1", "G": "L**3/(M*T**2)", "E": "M*L**2/T**2", "a": "L",
+    },
+    ("hotta_tanaka", "null_cylindrical"): {
+        "u": "L", "v": "L", "\\rho": "L", "\\phi": "1", "G": "L**3/(M*T**2)", "E": "M*L**2/T**2", "a": "L",
+    },
+    ("hotta_tanaka", "kundt"): {
+        "u": "L", "w": "L", "\\theta": "1", "\\phi": "1", "G": "L**3/(M*T**2)", "E": "M*L**2/T**2", "a": "L",
+    },
     # Bonnor's profile A multiplies (c dt - dz)^2 and is a pure number; his u and v, with
     # sqrt(2) u = ct - z, are lengths, and 8 pi G epsilon/c^4, with epsilon an energy density,
     # is an inverse area, so the uniform beam's A is a pure number as well.
@@ -1520,6 +1538,99 @@ HELD = {
     ("wahlquist", "whittaker"): ("F",),
 }
 
+# The systems whose delta stands on a curved background, where what multiplies it varies across
+# it: the delta is read as a smooth pulse while the tensors are built and taken to its limit
+# where two values are compared. See on_the_shock.
+IMPULSES = {
+    ("hotta_tanaka", "conformally_flat"), ("hotta_tanaka", "global"), ("hotta_tanaka", "kruskal"),
+    ("hotta_tanaka", "null_cylindrical"),
+}
+
+
+class Pulse(sp.Function):
+    """A smooth pulse of its first argument, differentiated as often as its second says: what a
+    delta is read as while the tensors of a system in IMPULSES are built, so that no product of
+    it is reduced before the whole value stands. on_the_shock takes it to the delta."""
+    nargs = 2
+    is_real = True
+
+    def fdiff(self, argindex=1):
+        if argindex != 1:
+            raise sp.function.ArgumentIndexError(self, argindex)
+        return Pulse(self.args[0], self.args[1] + 1)
+
+
+def on_the_shock(expression):
+    """A value that holds a pulse, or a delta, in the limit where the pulse is a delta.
+
+    The value is a polynomial in the pulse d(x) and its derivatives, with coefficients that vary
+    with x. A term with one factor is a distribution, and exactly
+    f(x) d^(k)(x) = sum_j (-1)^j C(k, j) f^(j)(0) d^(k-j)(x), so the shock keeps the coefficient
+    and its derivatives on x = 0 alone. A product of N factors is no distribution, but it has a
+    limit when its coefficient vanishes on the shock fast enough: counting d^(k) as weight k + 1,
+    a product of weight W times x^n scales as the width of the pulse to the power n + 1 - W, so
+    it goes to zero for n >= W, and for n = W - 1 it goes to a multiple of d(x) whose factor is
+    the integral of s^n times the pulses, which for two factors of a pulse even about the shock
+    is odd and vanishes. Such a term is dropped. Any other product is left standing, since no
+    reading of the delta fixes it, and the comparison it enters then fails.
+
+    The argument of the delta is a coordinate, or a sum of two with a unit coefficient on one of
+    them, as eta - chi: the first such coordinate is written as the argument less the rest, so
+    the coefficient on the shock is a function of the others.
+    """
+    expression = sp.sympify(expression).replace(
+        lambda e: isinstance(e, Pulse), lambda e: sp.DiracDelta(e.args[0], e.args[1]))
+    for argument in sorted({d.args[0] for d in expression.atoms(sp.DiracDelta)}, key=sp.default_sort_key):
+        x = sp.Dummy("x", real=True)
+        if argument.is_Symbol:
+            pivot, written = argument, x
+        else:
+            unit = [s for s in sorted(argument.free_symbols, key=sp.default_sort_key)
+                    if sp.diff(argument, s) in (1, -1)]
+            if not unit:
+                continue
+            first = [s for s in unit if sp.diff(argument, s) == 1]
+            pivot = (first or unit)[0]
+            slope = sp.diff(argument, pivot)
+            written = sp.expand((x - (argument - slope * pivot)) / slope)
+        e = expression.subs(pivot, written)
+        orders = sorted({(d.args[1] if len(d.args) > 1 else sp.Integer(0))
+                         for d in e.atoms(sp.DiracDelta) if d.args[0] == x})
+        if not orders:
+            raise NotImplementedError(f"the delta of {argument} is lost in writing {pivot} out")
+        D = {k: sp.Dummy(f"D{k}") for k in range(int(max(orders)) + 1)}
+        e = e.replace(lambda d: isinstance(d, sp.DiracDelta) and d.args[0] == x,
+                      lambda d: D[int(d.args[1]) if len(d.args) > 1 else 0])
+        numerator, denominator = sp.fraction(sp.together(e))
+        if any(denominator.has(d) for d in D.values()):
+            raise NotImplementedError(f"the delta of {argument} stands below a fraction line")
+        gens = [D[k] for k in sorted(D)]
+
+        def on(f):
+            value = norm(f).subs(x, 0)
+            if value.has(sp.nan, sp.zoo, sp.oo):
+                raise NotImplementedError(f"a coefficient of the delta of {argument} is not finite on the shock")
+            return value
+
+        out = sp.Integer(0)
+        for monomial, coefficient in sp.Poly(sp.expand(numerator), *gens).terms():
+            c = coefficient / denominator
+            factors = sum(monomial)
+            if factors == 0:
+                out += c
+            elif factors == 1:
+                k = monomial.index(1)
+                for j in range(k + 1):
+                    out += (-1) ** j * sp.binomial(k, j) * on(sp.diff(c, x, j)) * D[k - j]
+            else:
+                weight = sum((k + 1) * power for k, power in enumerate(monomial))
+                need = weight - 1 if factors == 2 else weight
+                if any(on(sp.diff(c, x, j)) != 0 for j in range(need)):
+                    out += c * sp.Mul(*[g ** power for g, power in zip(gens, monomial)])
+        expression = out.xreplace({D[k]: sp.DiracDelta(x, k) for k in D}).subs(x, argument)
+    return expression
+
+
 GREEK = [
     "theta", "phi", "eta", "omega", "Omega", "ell", "pi", "lambda", "mu", "nu",
     "rho", "sigma", "tau", "chi", "psi", "alpha", "beta", "gamma", "delta",
@@ -2233,8 +2344,11 @@ class Reader:
     typo in a published value becomes an error here rather than a silent new symbol.
     """
 
-    def __init__(self, coords, parameters, time_coords=frozenset(), relations=None, kept=None, held=()):
+    def __init__(self, coords, parameters, time_coords=frozenset(), relations=None, kept=None, held=(),
+                 pulse=False):
         self.coords = list(coords)
+        # A system in IMPULSES reads its delta as a smooth pulse, which surface() takes to its limit.
+        self.pulse = pulse
         self.time_coords = set(time_coords)
         self.symbol = {}
         self.differential = {}
@@ -2280,7 +2394,8 @@ class Reader:
         self.dirac = "delta" not in self.parameters
         if self.dirac:
             for order in range(DIRAC_ORDERS):
-                self.local[f"DIRAC{order}"] = lambda argument, k=order: sp.DiracDelta(argument, k)
+                self.local[f"DIRAC{order}"] = lambda argument, k=order: (
+                    Pulse(argument, sp.Integer(k)) if pulse else sp.DiracDelta(argument, k))
         self.known = set(self.local) | ({KEYWORD_LAMBDA} if "lambda" in self.local else set())
         self.transforms = standard_transformations + (
             split_symbols_custom(lambda name, _=None: name not in self.known),
@@ -2326,6 +2441,7 @@ class Reader:
         the order the system keeps."""
         expression = expression.subs(self.relations)
         expression = expression.subs(self.held).doit() if self.held else expression
+        expression = on_the_shock(expression) if self.pulse else expression
         return self.truncated(expression) if self.order else expression
 
     def truncated(self, expression):
@@ -2644,7 +2760,7 @@ class Dimensions:
         if isinstance(expression, sp.sign):
             self(expression.args[0])
             return sp.Integer(1)
-        if isinstance(expression, sp.DiracDelta):
+        if isinstance(expression, (sp.DiracDelta, Pulse)):
             # The delta carries the inverse of its argument, and each derivative one more.
             order = expression.args[1] if len(expression.args) > 1 else 0
             return self(expression.args[0]) ** -(order + 1)
@@ -3182,7 +3298,7 @@ def check_system(report, metric_id, entry, seconds, dimensions_only=False):
     relations = PARAMETER_RELATIONS.get((metric_id, entry["id"]), {})
     try:
         reader = Reader(coords, parameters, declaration, relations, ORDERS.get((metric_id, entry["id"])),
-                        HELD.get((metric_id, entry["id"]), ()))
+                        HELD.get((metric_id, entry["id"]), ()), (metric_id, entry["id"]) in IMPULSES)
     except LatexError as error:
         report.skip(where, f"parameters unreadable: {error}")
         return

@@ -3533,6 +3533,7 @@ class StacksAndMovies(unittest.TestCase):
               ("bell_szekeres", "ring"): "$\\xi$",
               ("gowdy", "torus"): "$t$", ("light_beam", "ring"): "$u$",
               ("string_wave", "ring"): "$u$", ("simpson_visser", "inside"): "$c\\tau$",
+              ("hotta_tanaka", "ring"): "$\\tau$",
               **{("roberts", case): "$ct$" for case in ("disperses", "threshold", "collapses")},
               ("black_string", "ripple"): "$v$"}
 
@@ -4540,6 +4541,38 @@ BARTNIK_MCKINNON_REACH = {"isotropic": 7.147807396, "tortoise": 24.219163201, "f
 ROBERTS_P = {"disperses": 0.9, "threshold": 1.0, "collapses": 2.0}
 
 
+def hotta_tanaka_moment(tau, system=None, fixed=None):
+    """The sphere of Hotta and Tanaka's Kruskal chart through the embedded ring at the proper time
+    tau, at 8GE/c^4 = a = 1 with the ring at 30 degrees, as its (u, v), or as the event where it
+    meets the plane of another chart's view, in that view's drawn (X, Y): the ring keeps
+    Z_0 + Z_1 = sinh(tau), and behind the shock its distance from the axis and its height along it
+    are Podolsky and Ortaggio's, which fix Z_0 - Z_1 = (R^2 - 1)/(Z_0 + Z_1)."""
+    theta0, g = math.pi / 6, 0.5
+    U = math.sinh(tau)
+    V = U
+    if U > 0:
+        Z = math.sin(theta0) * math.sqrt(1 + U * U) - g / math.sin(theta0) * U
+        Z4 = math.cos(theta0) * math.sqrt(1 + U * U) + g * math.log(1 / math.tan(theta0 / 2)) * U
+        V = (Z * Z + Z4 * Z4 - 1) / U
+    x = (math.sqrt(1 + U * V) - 1) / (math.sqrt(1 + U * V) + 1)
+    u, v = U * (1 - x) / 2, V * (1 - x) / 2
+    if system is None:
+        return u, v
+    if system == "kruskal":
+        return (v - u) / 2, (u + v) / 2
+    if system == "global":
+        return math.pi / 2 + math.atan(v) - math.atan(u), math.atan(u) + math.atan(v) + math.pi / 2
+    if system == "null_cylindrical":
+        k = 1 + fixed * fixed / 4
+        omega = k if U * V == 0 else (-1 + math.sqrt(1 + U * V * k)) / (U * V / 2)
+        return (V - U) * omega / 2, (U + V) * omega / 2
+    # The conformally flat chart near a particle: eta^2 - rho^2 = 2 eta U and rho cos(theta) - 1 = eta (V - U)/2.
+    c, k = math.cos(fixed), (V - U) / 2
+    A, B = c * c - k * k, k + c * c * U
+    eta = next(e for e in ((B + sign * math.sqrt(B * B + A)) / A for sign in (1, -1)) if e < 0 and 1 + k * e > 0)
+    return (1 + k * eta) / c, eta
+
+
 class Slices(unittest.TestCase):
     """Every moment an embedding diagram is cut from is drawn on its spacetime's other diagrams
     where it lies, from the numbers in the files alone, and on nothing else."""
@@ -4551,6 +4584,9 @@ class Slices(unittest.TestCase):
               "siklos/kaigorodov_stationary/plane",
               # Hiscock's simplest model, a hole made and removed by two shells, another spacetime than the one embedded.
               "hiscock/ingoing/shells",
+              # Up to the shock the spheres through Hotta and Tanaka's ring meet the equatorial plane of the
+              # conformally flat chart only as eta goes to minus infinity, and lie on the edge of the Kundt chart.
+              "hotta_tanaka/conformally_flat/equator", "hotta_tanaka/kundt/equator", "hotta_tanaka/kundt/near",
               "btz/stationary/rotating", "btz/eddington_finkelstein_ingoing/rotating",
               "btz/eddington_finkelstein_outgoing/rotating", "conformal btz/rotating",
               # Myers and Perry's plane of rotation in six dimensions, which the embedded transverse plane
@@ -4955,6 +4991,14 @@ class Slices(unittest.TestCase):
         if key == "morgan_morgan/oblate_spheroidal/plane":
             # The plane z = 0 outside the rim, embedded out to Weyl's rho: xi = sqrt(rho^2/a^2 - 1).
             return (lambda X: 0.0), [math.sqrt(self.reach(surface)[1] ** 2 - 1)]
+        if key.startswith("hotta_tanaka/"):
+            # The event where the sphere through the ring meets the view's plane, 15 degrees from a
+            # particle or on the equator, rho = a/4 or 2a in the null cylindrical chart.
+            _, system, plane = key.split("/")
+            fixed = ({"equator": 2.0, "near": 0.25} if system == "null_cylindrical"
+                     else {"equator": math.pi / 2, "near": math.pi / 12})[plane]
+            X_at, Y_at = hotta_tanaka_moment(t, system, fixed)
+            return (lambda X: Y_at + (X - X_at)), [X_at]
         if key.startswith("siklos/"):
             # Siklos's wave front u = v = 0, embedded on the disc out to the coordinate radius the profile
             # ends at: the event (0, 0) of a plane of u and v, and on Kaigorodov's planes the line of zero
@@ -5704,6 +5748,13 @@ class Slices(unittest.TestCase):
                             self.assertLess(abs((u / s + s * v) / 2 - t), 2e-4 * scale, f"{where} at {(X, T)}")
                             self.assertLessEqual(lo - 2e-4 * scale, (s * v - u / s) / 2, where)
                             self.assertLessEqual((s * v - u / s) / 2, hi + 2e-4 * scale, where)
+                    elif metric_id == "hotta_tanaka":
+                        # p = arctan(u) - pi/4 and q = arctan(v + Theta(u)/2) + pi/4 of the Kruskal chart.
+                        (X, T), = points
+                        u = math.tan((T - X) / 2 + math.pi / 4)
+                        v = math.tan((T + X) / 2 - math.pi / 4) - (0.5 if u > 1e-9 else 0.0)
+                        want = hotta_tanaka_moment(t)
+                        self.assertLess(abs(u - want[0]) + abs(v - want[1]), 5e-4, where)
                     elif metric_id == "vaidya":
                         for X, T in points:
                             p, q = (T - X) / 2, (T + X) / 2

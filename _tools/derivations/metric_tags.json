@@ -3364,6 +3364,104 @@
    "\\phi"
   ]
  },
+ "hotta_tanaka/conformally_flat": {
+  "stamp": "97c3ebe95a6125ff",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "3/a**2",
+   "sign": 1
+  },
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "hotta_tanaka/global": {
+  "stamp": "1ec4d603134638b9",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "3/a**2",
+   "sign": 1
+  },
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "hotta_tanaka/kruskal": {
+  "stamp": "075a68a0bab37adb",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "3/a**2",
+   "sign": 1
+  },
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "hotta_tanaka/kundt": {
+  "stamp": "f2c79e42ed832c01",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "3/a**2",
+   "sign": 1
+  },
+  "conformally_flat": false,
+  "killing": [],
+  "sphere": null
+ },
+ "hotta_tanaka/null_cylindrical": {
+  "stamp": "68a42cda616c2291",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "3/a**2",
+   "sign": 1
+  },
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
  "interior_schwarzschild/spherical": {
   "stamp": "46e62a2612df2dd7",
   "relations": {},

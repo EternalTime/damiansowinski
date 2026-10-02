@@ -20,7 +20,7 @@
       "idealized model",
       "Petrov type N"
     ],
-    "version": "40acff4d4b027173",
+    "version": "41a7a7e13309367c",
     "diagrams": "a6fabc19c0e551be",
     "conformal": "2771060b42b8605b",
     "embedding": "9b0e2bc9b72fa37e"
@@ -749,7 +749,7 @@
       "static",
       "spherically symmetric"
     ],
-    "version": "d30647b3dce47a44",
+    "version": "cd9320496186a996",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -1341,6 +1341,36 @@
     "diagrams": "59e4a2b1e790cfcd",
     "conformal": "a8c68e67ec52e67a",
     "embedding": "920063a794e7f34b"
+  },
+  {
+    "id": "hotta_tanaka",
+    "name": "Hotta-Tanaka",
+    "tags": [
+      "gravitational wave",
+      "shock wave",
+      "impulsive wave",
+      "massless particle",
+      "ultrarelativistic",
+      "boosted black hole",
+      "null source",
+      "cosmological constant",
+      "positive cosmological constant",
+      "de Sitter",
+      "cosmological horizon",
+      "Kundt class",
+      "Petrov type N",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model",
+      "Einstein space"
+    ],
+    "version": "64be271696983131",
+    "diagrams": "582c49f296d53450",
+    "conformal": "1c0299b48c135ff5",
+    "embedding": "4a468cbcc8c8e211"
   },
   {
     "id": "israel_wilson_perjes",
@@ -2951,7 +2981,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "6d797e2fb3ede6a7",
+    "version": "9d9048363d559ac4",
     "diagrams": "01986085179076c1",
     "conformal": "da2331625dd4e7df",
     "embedding": "2693e5d4af5edd89"
@@ -3038,7 +3068,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b58cec06e817f6b3",
+    "version": "c6ec825770e5a26a",
     "diagrams": "468d3b17b45fa67c",
     "conformal": "2735322746e26156",
     "embedding": "ad8fbfdcb04765f7"

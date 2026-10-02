@@ -30,6 +30,15 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `null_cartesian/half`, `/eighth` and `/thirtysecond`, the planes $x = \rho_0/2$, $\rho_0/8$ and $\rho_0/32$ at $y = 0$ drawn in $z$ and $ct$ with $u = ct - z$ and $v = ct + z$: four null lines $ct = z + u_k$ at 45°, parallel to the shock $u = 0$; the first, $u = -1$, runs before the shock and the other three behind it.
 - `shock`, the conformal diagram of the plane $x = \rho_0/8$, $y = 0$: the four lines of constant $p = \arctan u_k$, from $\mathscr{I}^-$ to $\mathscr{I}^+$, parallel to the shock.
 
+### Hotta-Tanaka
+
+- The embedding is the sphere of constant $u$ and $v$ of the Kruskal chart through a ring of free particles, at four of the ring's proper times, $\tau = -0.6$, $0$, $0.25$ and $0.5$ in units of $8GE/c^4 = a$.
+  The moment is that sphere, $Z_0 + Z_1 = a\sinh(\tau/a)$ and $Z_0 - Z_1 = (R^2 - a^2)/(Z_0 + Z_1)$ on the hyperboloid, and on a plane of a chart at a fixed place on the wave front it is one event; `hotta_tanaka.md` Step 9 solves each chart's map for it.
+- `kruskal/equator` and `/near`, `global/equator` and `/near`, `null_cylindrical/equator` and `/near`, and `conformally_flat/near`: four events, the first two ahead of the shock and on it, the last two behind it.
+- `conformally_flat/equator`: up to the shock the spheres meet the plane $\theta = \pi/2$ of this chart only as $\eta \to -\infty$, so no slice is drawn.
+- `kundt/equator` and `/near`: the chart covers half of each wave front, and up to the shock the spheres lie on its edge $w = 0$, so no slice is drawn.
+- `shock`, the conformal diagram of the plane $\theta = \pi/2$: the four events, by the map that draws the diagram.
+
 ### Bonnor's beam of light
 
 - The embedding is the wave front $x$, $y$ of six values of Bonnor's $u = (ct - z)/\sqrt{2}$, $u = 0$, $2$, $4$, $6$, $8$ and $10$ in units of the beam's radius $R$, for the single uniform beam.
@@ -702,6 +711,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | spacetime | flat views | figure | conformal diagram |
 | --- | --- | --- | --- |
 | Aichelburg-Sexl | four null lines, three times | none | four null lines |
+| Hotta-Tanaka | four events, seven times; none on the conformally flat equator and the Kundt planes, which the spheres up to the shock do not meet | none | four events |
 | Bonnor's beam of light | six null lines, five times | none, every front covers it | six null lines, twice |
 | Alcubierre | line | floor | none drawn |
 | anti-de Sitter | line, line, line | none | line, line |
