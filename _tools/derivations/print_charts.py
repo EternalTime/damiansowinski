@@ -5,8 +5,8 @@ schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
-damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave and simpson_visser, and Godel's
-cylindrical chart.
+damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser and bardeen, and
+Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -5519,6 +5519,139 @@ def string_wave_check(chart, system):
 
 
 CHARTS["string_wave"] = [lambda s=s: string_wave(s) for s in STRING_WAVE_CHARTS]
+
+
+# -- Bardeen ---------------------------------------------------------------------------
+
+def bardeen_pretty(r, g):
+    """A pretty printer for Bardeen's charts, whose every value is a rational function of r,
+    g^2, r_s and one radical, Q = sqrt(r^2 + g^2). Written in r, Q and r_s, with g^2 = Q^2 - r^2,
+    no relation is left among the generators, so the value factors there, and each factor is
+    then written back: a factor even in Q as a polynomial in r and g, factored, and any other
+    with each odd power of Q as that power of r^2 + g^2, so that the zero of f stands in a
+    denominator as (r^2 + g^2)^{3/2} - r_s r^2 and no radical is ever rationalised away. Two
+    factors that Q -> -Q exchanges are multiplied out first, since r^2 - Q^2 is -g^2."""
+    Q = sp.Symbol("Q", positive=True)
+    square = r ** 2 + g ** 2
+
+    def back(poly):
+        terms = sp.Poly(poly, Q).terms()
+        if all(k % 2 == 0 for (k,), _ in terms):
+            return sp.factor(sp.expand(sum(c * square ** (k // 2) for (k,), c in terms)))
+        return sum(c * (sp.expand(square ** (k // 2)) if k % 2 == 0 else square ** sp.Rational(k, 2))
+                   for (k,), c in terms)
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        value = value.replace(lambda p: p.is_Pow and sp.expand(p.base - square) == 0, lambda p: Q ** (2 * p.exp))
+        value = sp.together(value).subs(g, sp.sqrt(Q ** 2 - r ** 2))
+        if value.has(g) or any(not p.exp.is_Integer for p in value.atoms(sp.Pow)):
+            raise AssertionError(f"bardeen: an odd power of g is left in {value}")
+        powers = {}
+        for f in sp.Mul.make_args(sp.factor(value)):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            powers[base] = powers.get(base, 0) + k
+        # A factor and its image under Q -> -Q, as r - Q and r + Q, are one factor even in Q.
+        for base in list(powers):
+            mirror = sp.expand(base.subs(Q, -Q))
+            other = next((b for b in powers if b != base and sp.expand(b - mirror) * sp.expand(b + mirror) == 0), None)
+            if base != Q and base.has(Q) and other is not None and powers.get(base) == powers.get(other):
+                k = powers.pop(base)
+                del powers[other]
+                powers[sp.expand(base * other)] = k
+        out = sp.Integer(1)
+        for base, k in powers.items():
+            out *= (square ** (k / 2) if base == Q else back(base) ** k if base.has(Q) else base ** k)
+        return out
+
+    return pretty
+
+
+def bardeen(system_id):
+    """Bardeen's regular black hole, f = 1 - r_s r^2/(r^2 + g^2)^{3/2}, in the static chart and
+    in the two Eddington-Finkelstein charts built on its tortoise coordinate, dr_*/dr = 1/f.
+    The parameters are Schwarzschild's r_s and the length g, the charge of Ayon-Beato and
+    Garcia's magnetic monopole, so each chart reduces to Schwarzschild's at g = 0. Every value
+    is printed with the radical kept as a power of r^2 + g^2, by bardeen_pretty, the metric and
+    its inverse are written as the line element writes f, and bardeen_source checks the
+    Einstein tensor against their nonlinear electrodynamics; bardeen.md beside this file is
+    the derivation."""
+    f = "\\left(1 - \\dfrac{r_s\\,r^2}{\\left(r^2 + g^2\\right)^{3/2}}\\right)"
+    bare = "1 - \\dfrac{r_s\\,r^2}{\\left(r^2 + g^2\\right)^{3/2}}"
+    sphere = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    domains = ["r \\in [0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+               "r = r_\\pm \\;\\text{(the horizons, for}\\; g < 2r_s/3\\sqrt{3}\\text{)}"]
+    if system_id == "static":
+        coords = ["t", "r", "\\theta", "\\phi"]
+        name = "Static Spherical"
+        line = "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        chart_line = "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        metric = {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"}
+        inverse = {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}
+    else:
+        null, sign = ("u", "-") if system_id == "eddington_finkelstein_outgoing" else ("v", "+")
+        coords = [null, "r", "\\theta", "\\phi"]
+        name = ("Outgoing" if null == "u" else "Ingoing") + " Eddington-Finkelstein"
+        line = "ds^2 = -" + f + "d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr" + sphere
+        chart_line = line
+        one = "-1" if null == "u" else "1"
+        metric = {(null, null): "-" + f, (null, "r"): one, ("r", null): one}
+        inverse = {(null, "r"): one, ("r", null): one, ("r", "r"): bare}
+    parameters = ["r_s", "g"]
+    probe = vm.Reader(coords, parameters, ())
+    r, rs, g = probe.symbol["r"], probe.parameters["r_s"], probe.parameters["g"]
+    return {
+        "metric_id": "bardeen",
+        "system": {"id": system_id, "name": name, "coords": coords,
+                   "domains": [coords[0] + " \\in (-\\infty, \\infty)"] + domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        "printer": {"lead": [r ** 2 + g ** 2, r, g, rs], "factors": [rs, g, r], "flip": False},
+        "pretty": bardeen_pretty(r, g),
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "ricci_scalar": "\\dfrac{3r_s\\,g^2\\left(4g^2 - r^2\\right)}{\\left(r^2 + g^2\\right)^{7/2}}",
+        "kretschmann": ("\\dfrac{3r_s^2\\left(4r^8 - 12g^2\\,r^6 + 47g^4\\,r^4 - 4g^6\\,r^2 + 8g^8\\right)}"
+                        "{\\left(r^2 + g^2\\right)^7}"),
+        "check": bardeen_source,
+    }
+
+
+def bardeen_source(chart):
+    """Ayon-Beato and Garcia's source (Phys. Lett. B 493, 149, 2000): the monopole field
+    F = g sin(theta) dtheta ^ dphi of the nonlinear electrodynamics with Lagrangian
+    L(F) = (3/(2 s g^2)) (sqrt(2 g^2 F)/(1 + sqrt(2 g^2 F)))^{5/2}, s = g/r_s, whose invariant
+    F = F_{mu nu}F^{mu nu}/4 is g^2/(2r^4) on the monopole. Their Einstein equations are
+    G_mu^nu = 2(L_F F_{mu lambda}F^{nu lambda} - delta_mu^nu L), which for a magnetic field read
+    G^t_t = G^r_r = -2L and G^theta_theta = G^phi_phi = 2(2F L_F - L). The field is closed,
+    and since L_F depends on r alone and sqrt(-g) F^{theta phi} = g/r^2 on it, the field
+    equation d(L_F *F) = 0 holds."""
+    r = chart.reader.symbol["r"]
+    rs, g = chart.reader.parameters["r_s"], chart.reader.parameters["g"]
+    F = sp.Symbol("F", positive=True)
+    root = sp.sqrt(2 * g ** 2 * F)
+    lagrangian = 3 * rs / (2 * g ** 3) * (root / (1 + root)) ** sp.Rational(5, 2)
+    on = {F: g ** 2 / (2 * r ** 4)}
+    L = sp.powdenest(sp.simplify(lagrangian.subs(on)), force=True)
+    LF = sp.powdenest(sp.simplify(sp.diff(lagrangian, F).subs(on)), force=True)
+    mixed = chart.geo.raise_indices(chart.geo.einstein_ll(), 2, (0,))
+    wanted = [-2 * L, -2 * L, 2 * (2 * on[F] * LF - L), 2 * (2 * on[F] * LF - L)]
+    for a in range(4):
+        for b in range(4):
+            if sp.simplify(mixed[a][b] - (wanted[a] if a == b else 0)) != 0:
+                raise AssertionError(f"bardeen: the Einstein tensor misses the monopole's stress in slot "
+                                     f"{chart.coords_tex[a]}{chart.coords_tex[b]}")
+    # With p_r = -rho the strong energy condition is p_t >= 0, G^theta_theta >= 0.
+    # The energy density, -G^t_t/(8 pi), is positive everywhere, and G^theta_theta changes sign
+    # at r^2 = 2g^2/3, inside which the strong energy condition fails.
+    tangential = 3 * rs * g ** 2 * (3 * r ** 2 - 2 * g ** 2) / (2 * (r ** 2 + g ** 2) ** sp.Rational(7, 2))
+    if sp.simplify(wanted[2] - tangential) != 0:
+        raise AssertionError("bardeen: the tangential pressure does not change sign at r^2 = 2g^2/3")
+
+
+BARDEEN_CHARTS = ["static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing"]
+CHARTS["bardeen"] = [lambda s=s: bardeen(s) for s in BARDEEN_CHARTS]
 
 
 def write(spec):
