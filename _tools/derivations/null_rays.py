@@ -334,6 +334,16 @@ LEWIS_CLASS = {"m": 1, "a_1": 1, "b_1": 0, "a_2": 0, "ell": 1}
 STOCKUM_LIGHT = {"n": "1/2", "R": 1, "ell": "exp(-1/2)"}
 STOCKUM_CRITICAL = {"R": 1, "ell": "exp(-1/2)"}
 STOCKUM_HEAVY = {"m": "3/2", "R": 1, "ell": "exp(-1/2)"}
+# Petrov's homogeneous vacuum in units of its one length, and Bonnor's cylinder of radius R, the
+# unit, joined to the dust, ell = R/sqrt(e). The light cones of the plane of t and phi turn through
+# psi/2 = sqrt(3) r/2 ell, so the four planes drawn in Petrov's chart are a quarter of a turn of psi
+# apart, with the time function cos(psi/2) t + sin(psi/2) phi of each.
+PETROV = {"ell": 1}
+PETROV_CYLINDER = {"R": 1, "ell": "exp(-1/2)"}
+PETROV_PLANES = (("upright", "r = 0", "0", "t"),
+                 ("diagonal", "r = \\pi\\ell/2\\sqrt{3}", "pi/(2*sqrt(3))", "t + phi"),
+                 ("sideways", "r = \\pi\\ell/\\sqrt{3}", "pi/sqrt(3)", "phi"),
+                 ("inverted", "r = 2\\pi\\ell/\\sqrt{3}", "2*pi/sqrt(3)", "-t"))
 
 # Bonnor's uniform beam of light as every one of its diagrams draws it: radius R, the unit, and
 # pi G epsilon R^2/c^4 = 1/32, his m, so that A = rho^2/8 inside the beam and (1 + 2 ln rho)/8
@@ -3274,6 +3284,20 @@ DIAGRAMS = [
           ("stockum_critical", "beyond", "r = 5R", "r\\phi/R", "R", STOCKUM_CRITICAL, "5", 5.0, "t"),
           ("stockum_heavy", "surface", "r = R", "r\\phi/R", "R", STOCKUM_HEAVY, "1", 1.0, "t"),
           ("stockum_heavy", "band", "r = 3R", "r\\phi/R", "R", STOCKUM_HEAVY, "3", 3.0, "phi"))],
+    # Petrov's homogeneous vacuum: the plane of t and phi at four values of r in Petrov's chart, each
+    # flat, with cones that have turned through psi/2, and the cylinders of t and phi outside Bonnor's
+    # cylinder of dust, on its surface, where the circle is null, in the band where the circles are
+    # closed timelike curves, and beyond it, where the future is the side of falling t. On the surface
+    # g^tt vanishes with L, so the time function there is t + R phi/c, whose gradient is timelike.
+    *[Diagram("petrov_homogeneous", "petrov", view, f"$t$ and $\\phi$ at ${name}$", ("t", "\\phi"), (-2, 2, -2, 2),
+              "$\\phi/\\ell$", "$ct/\\ell$", PETROV, {"r": at, "z": "0"}, tau=tau, families=SIDEWAYS, cones=(5, 5))
+      for view, name, at, tau in PETROV_PLANES],
+    *[Diagram("petrov_homogeneous", "cylinder", view, f"$t$ and $\\phi$ at ${name}$", ("t", "\\phi"),
+              tuple(s * math.pi * width for s in (-1, 1, -1, 1)), "$r\\phi/R$", "$ct/R$", PETROV_CYLINDER,
+              {"r": at, "z": "0"}, to_display=((0, width), (1, 0)), tau=tau, families=SIDEWAYS, cones=(5, 5),
+              periodic=("\\phi",))
+      for view, name, at, width, tau in (("surface", "r = R", "1", 1.0, "t + phi"), ("band", "r = 3R", "3", 3.0, "phi"),
+                                         ("beyond", "r = 12R", "12", 12.0, "-t"))],
     # The Curzon-Chazy particle on its two totally geodesic planes, the axis and the plane z = 0, in
     # each chart: on the axis the cones close toward R = 0, and in the plane they open.
     Diagram("curzon_chazy", "weyl", "axis", "$t$ and $z$ on the axis", ("t", "z"), (0, 4, -2, 2),
@@ -7890,6 +7914,35 @@ CAPTIONS = {
         "The cylinder of $t$ and $\\phi$ ($r = 3R$, $z = 0$) outside van Stockum's cylinder ($m = 3/2$, $wR = \\sqrt{13}/4$), opened along the line $\\phi = \\pm\\pi$ and drawn with $r\\phi$ across, so that its left and right edges are that one line. The metric on it is $-F\\,c^2dt^2 - 2M\\,c\\,dt\\,d\\phi + L\\,d\\phi^2$, the same at every point, so its null curves are straight, $c\\,dt = (-M \\pm r)\\,d\\phi/F$. Here both $F$ and $L$ are negative, $t$ is a coordinate of space and $\\phi$ a coordinate of time, and the cones lie on their sides, opening toward $+\\phi$.",
         "Every horizontal line, run toward $+\\phi$, points into the future cones, so the circle of constant $t$, $r$, and $z$ is a closed timelike curve, as it is from $r = 1.14\\,R$ to $r = 9.24\\,R$, where $L < 0$. The band repeats each time $r$ grows by the factor $e^{2\\pi/m}$, which Frank Tipler found in 1974.",
     ],
+    # Petrov's homogeneous vacuum.
+    ("petrov_homogeneous", "petrov", "upright"): [
+        "The plane of $t$ and $\\phi$ ($r = 0$, $z = 0$) in Petrov's chart. The metric on a plane of constant $r$ and $z$ is $e^{r/\\ell}(\\cos\\psi\\,(d\\phi^2 - c^2dt^2) - 2\\sin\\psi\\,c\\,dt\\,d\\phi)$, the same at every point of it, so the plane is flat and its null curves are straight lines. At $r = 0$ the phase $\\psi$ vanishes, the metric is $-c^2dt^2 + d\\phi^2$, and the cones stand upright.",
+        "Neither null curve is a null geodesic: light launched toward $+\\phi$ is turned toward smaller $r$ and light launched toward $-\\phi$ toward larger $r$. A symmetry of the spacetime carries this plane onto any other plane of constant $r$ and $z$, so the same holds on each of them.",
+    ],
+    ("petrov_homogeneous", "petrov", "diagonal"): [
+        "The plane of $t$ and $\\phi$ ($r = \\pi\\ell/2\\sqrt{3}$, $z = 0$) in Petrov's chart, where $\\psi = \\pi/2$. Both $g_{tt}$ and $g_{\\phi\\phi}$ vanish and the metric on the plane is $-2e^{r/\\ell}\\,c\\,dt\\,d\\phi$, so the lines of constant $t$ and the lines of constant $\\phi$ are the null curves. The future is the quadrant where $t$ and $\\phi$ both grow: the cones have turned through 45° toward $+\\phi$.",
+        "The cones are as wide here as at $r = 0$, and the plane as flat. The symmetry that shifts $r$ by $\\lambda$ turns the plane of $t$ and $\\phi$ through $\\sqrt{3}\\lambda/2\\ell$ and shrinks it by $e^{-\\lambda/2\\ell}$, which carries the cones at one $r$ onto the cones at another.",
+    ],
+    ("petrov_homogeneous", "petrov", "sideways"): [
+        "The plane of $t$ and $\\phi$ ($r = \\pi\\ell/\\sqrt{3}$, $z = 0$) in Petrov's chart, where $\\psi = \\pi$. The metric on the plane is $e^{r/\\ell}(c^2dt^2 - d\\phi^2)$, with $t$ a coordinate of space and $\\phi$ a coordinate of time, and the cones lie on their sides, opening toward $+\\phi$. Every horizontal line, run toward $+\\phi$, is a timelike curve.",
+        "The coordinate $t$ is spacelike and $\\phi$ timelike from $\\psi = \\pi/2$ to $\\psi = 3\\pi/2$. A turn of $t$ and $\\phi$ into one another moves those values of $r$, so they belong to the chart: the spacetime is the same at every event.",
+    ],
+    ("petrov_homogeneous", "petrov", "inverted"): [
+        "The plane of $t$ and $\\phi$ ($r = 2\\pi\\ell/\\sqrt{3}$, $z = 0$) in Petrov's chart, where $\\psi = 2\\pi$. The metric on the plane is $e^{r/\\ell}(-c^2dt^2 + d\\phi^2)$, the metric at $r = 0$ enlarged. Followed from $r = 0$ the cones have turned through 180°, and the future is the side of falling $t$.",
+        "A rocket can use the turn. It leaves $r = 0$, crosses to a plane where the cones have tipped over, runs back in $t$ there, and returns to $r = 0$ before it left: a closed timelike curve through any event, with every coordinate running over the whole real line.",
+    ],
+    ("petrov_homogeneous", "cylinder", "surface"): [
+        "The cylinder of $t$ and $\\phi$ ($r = R$, $z = 0$) on the surface of van Stockum's dust, opened along the line $\\phi = \\pm\\pi$ and drawn with $r\\phi$ across, so that its left and right edges are that one line. The metric on it is $-F\\,c^2dt^2 - 2M\\,c\\,dt\\,d\\phi + L\\,d\\phi^2$, the same at every point, so its null curves are straight, $c\\,dt = (-M \\pm r)\\,d\\phi/F$. On the surface $F = 1$, $M = R$, and $L = 0$, so one null curve is the circle of constant $t$ itself, a closed null curve, and the other is $c\\,dt = -2R\\,d\\phi$.",
+        "Neither is a null geodesic: light launched along the circle is turned toward the axis and light launched the other way is turned away from it. This cylinder is the plane $r = 0$ of Petrov's chart rolled up along one of its two null directions.",
+    ],
+    ("petrov_homogeneous", "cylinder", "band"): [
+        "The cylinder of $t$ and $\\phi$ ($r = 3R$, $z = 0$) outside van Stockum's dust, opened along the line $\\phi = \\pm\\pi$ and drawn with $r\\phi$ across, so that its left and right edges are that one line. The metric on it is $-F\\,c^2dt^2 - 2M\\,c\\,dt\\,d\\phi + L\\,d\\phi^2$, the same at every point, so its null curves are straight, $c\\,dt = (-M \\pm r)\\,d\\phi/F$. Here $F = -2.62$ and $L = -3.27\\,R^2$, both negative, so $t$ is a coordinate of space and $\\phi$ a coordinate of time, and the cones lie on their sides, opening toward $+\\phi$.",
+        "Every horizontal line, run toward $+\\phi$, points into the future cones, so the circle of constant $t$, $r$, and $z$ is a closed timelike curve, as it is from the surface out to $r = e^{\\pi/\\sqrt{3}}R = 6.13\\,R$, where $L < 0$. The band repeats each time $r$ grows by the factor $e^{2\\pi/\\sqrt{3}} = 37.6$.",
+    ],
+    ("petrov_homogeneous", "cylinder", "beyond"): [
+        "The cylinder of $t$ and $\\phi$ ($r = 12R$, $z = 0$) outside van Stockum's dust, opened along the line $\\phi = \\pm\\pi$ and drawn with $r\\phi$ across, so that its left and right edges are that one line. The metric on it is $-F\\,c^2dt^2 - 2M\\,c\\,dt\\,d\\phi + L\\,d\\phi^2$, the same at every point, so its null curves are straight, $c\\,dt = (-M \\pm r)\\,d\\phi/F$. Here $F = 1.59$ and $L = 12.7\\,R^2$ are positive again, so $t$ is a coordinate of time and the circles of constant $t$ are spacelike.",
+        "Followed outward from the surface the cones have turned through $\\psi/2 = 123°$, past lying on their sides, and the future is the side of falling $t$. A clock at rest here runs backward in van Stockum's $t$, the time of the dust.",
+    ],
     ("levi_civita", "kasner", "radial"): [
         "The plane of $t$ and $r$ ($\\phi = 0$, $z = 0$) of Levi-Civita's cylinder in its Kasner form "
         "($p_0 = p_2 = 2/3$, $p_3 = -1/3$), with $r$ the proper distance from the axis. The metric on it is "
@@ -12151,8 +12204,26 @@ CYLINDERS.update({("lewis", system, view): _lewis_slopes(system, r) for system, 
     ("stockum_light", "surface", 1.0), ("stockum_light", "beyond", 5.0),
     ("stockum_critical", "surface", 1.0), ("stockum_critical", "beyond", 5.0),
     ("stockum_heavy", "surface", 1.0), ("stockum_heavy", "band", 3.0))})
+def _petrov_slopes(r):
+    """The two null slopes c dt/dphi on a cylinder outside Bonnor's dust at R = 1, the one moving
+    left first where F is positive: (-M -+ r)/F."""
+    psi = math.sqrt(3) * math.log(r)
+    f = r * (math.cos(psi) - math.sin(psi) / math.sqrt(3))
+    k = -r * (math.cos(psi) + math.sin(psi) / math.sqrt(3))
+    return tuple(sorted(((k - r) / f, (k + r) / f), reverse=f < 0))
+
+
+CYLINDERS.update({("petrov_homogeneous", "cylinder", view): _petrov_slopes(r)
+                  for view, r in (("surface", 1.0), ("band", 3.0), ("beyond", 12.0))})
 CLOSED_FORMS.update({where: (lambda t, phi, k=left: t - k * phi, lambda t, phi, k=right: t - k * phi, None)
                      for where, (left, right) in CYLINDERS.items()})
+# Petrov's planes of t and phi: the null directions make the angles 3 pi/4 - psi/2 and
+# pi/4 - psi/2 with the phi axis, so each family keeps t cos(angle) - phi sin(angle).
+CLOSED_FORMS.update({
+    ("petrov_homogeneous", "petrov", view): (
+        lambda t, phi, a=3 * math.pi / 4 - turn: t * math.cos(a) - phi * math.sin(a),
+        lambda t, phi, a=math.pi / 4 - turn: t * math.cos(a) - phi * math.sin(a), None)
+    for view, turn in (("upright", 0.0), ("diagonal", math.pi / 4), ("sideways", math.pi / 2), ("inverted", math.pi))})
 # Misner space: in Misner's plane one family keeps psi and the other T e^(psi/2), read through
 # arcsinh so that the drift is measured on a scale the winding does not blow up; in the Milne and
 # Rindler planes each family keeps ln|t| -+ chi or ln xi +- eta, the logarithms of the covering
@@ -12191,6 +12262,8 @@ TURNING = {
     ("lewis", "stockum_light", "surface"): ("away", "away"),
     ("lewis", "stockum_critical", "surface"): ("away", "geodesic"),
     ("lewis", "stockum_heavy", "surface"): ("away", "toward"),
+    # Bonnor's cylinder on its surface, where the right moving null curve is the circle itself.
+    ("petrov_homogeneous", "cylinder", "surface"): ("away", "toward"),
     ("stockum_dust", "cylindrical", "beyond"): ("away", "toward"),
     ("godel", "cylindrical", "inside"): ("away", "geodesic"),
     ("godel", "cylindrical", "beyond"): ("away", "toward"),

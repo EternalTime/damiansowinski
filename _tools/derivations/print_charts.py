@@ -11,8 +11,8 @@ som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, 
 schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis,
-wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice and
-belinski_zakharov, and Godel's cylindrical chart.
+wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice,
+belinski_zakharov and petrov_homogeneous, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -33,7 +33,8 @@ malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_
 majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md,
 witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, mass_inflation.md,
 kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_star.md,
-misner_brill_lindquist.md, lewis.md, tippett_tsang.md and belinski_zakharov.md beside this file.
+misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md and
+petrov_homogeneous.md beside this file.
 """
 import argparse
 import fcntl
@@ -17283,6 +17284,228 @@ def lewis_check(chart, system):
 
 
 CHARTS["lewis"] = [lambda s=s: lewis(s) for s in LEWIS_CHARTS]
+
+
+# -- Petrov's homogeneous vacuum ---------------------------------------------------------
+
+PETROV_CHARTS = ("petrov", "cylinder")
+PETROV_REALS = "(-\\infty, \\infty)"
+
+
+def petrov_homogeneous(system):
+    """Petrov's homogeneous vacuum of 1962, the one vacuum field without a cosmological constant
+    whose group of motions has four parameters and carries any event to any other in one way, in
+    two charts:
+
+    petrov    Petrov's own, his metric 7, in the letters of Gibbons and Gielen's (2.1), with the
+              length ell for his 1/k: a hyperbolic plane of r and z with a flat plane of t and
+              phi over each of its points, whose light cones turn through sqrt(3) r/2 ell;
+    cylinder  Bonnor's reading of 1979, the vacuum outside van Stockum's cylinder of dust of
+              radius R that turns at the angular velocity c/R, in van Stockum's coordinates,
+              which turn with the dust and whose phi is periodic: the heavy cylinder of the
+              Lewis family at m = sqrt(3).
+
+    Every value is printed in the cosine and the sine of the phase psi each chart names.
+    petrov_homogeneous_check holds each chart to its sources, and petrov_homogeneous.md beside
+    this file records them."""
+    PSI = sp.Symbol("psi", positive=True)
+    if system == "petrov":
+        coords = ["t", "r", "\\phi", "z"]
+        parameters = ["\\ell", "\\psi = \\dfrac{\\sqrt{3}\\,r}{\\ell}"]
+        line = ("ds^2 = dr^2 + e^{-2r/\\ell}dz^2 + e^{r/\\ell}\\left(\\cos\\psi\\left(d\\phi^2 - c^2dt^2\\right)"
+                " - 2\\sin\\psi\\,c\\,dt\\,d\\phi\\right)")
+        domains = ["t \\in " + PETROV_REALS, "r \\in " + PETROV_REALS, "\\phi \\in " + PETROV_REALS,
+                   "z \\in " + PETROV_REALS,
+                   "\\cos\\psi < 0 \\;\\text{(} \\partial_t \\text{ is spacelike and } \\partial_\\phi \\text{ timelike)}"]
+        name = "Petrov"
+        components = {}
+    else:
+        coords = ["t", "r", "\\phi", "z"]
+        parameters = ["R", "\\ell",
+                      "\\psi = \\sqrt{3}\\ln\\left(\\dfrac{r}{R}\\right)",
+                      "F = \\dfrac{r}{R}\\left(\\cos\\psi - \\dfrac{\\sin\\psi}{\\sqrt{3}}\\right)",
+                      "M = r\\left(\\cos\\psi + \\dfrac{\\sin\\psi}{\\sqrt{3}}\\right)",
+                      "L = -\\dfrac{2R\\,r\\sin\\psi}{\\sqrt{3}}"]
+        line = ("ds^2 = -F\\,c^2dt^2 - 2M\\,c\\,dt\\,d\\phi + \\dfrac{\\ell^2}{r^2}\\left(dr^2 + dz^2\\right)"
+                " + L\\,d\\phi^2")
+        domains = ["t \\in " + PETROV_REALS, "r \\in [R, \\infty)", "\\phi \\in [0, 2\\pi)", "z \\in " + PETROV_REALS,
+                   "r = R \\;\\text{(the surface of the dust, where the circle of constant } t, r, z \\text{ is null)}",
+                   "F < 0 \\;\\text{(} \\partial_t \\text{ is spacelike)}",
+                   "L < 0 \\;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}"]
+        name = "Dust Cylinder"
+        components = {
+            "metric_components": {("t", "t"): "-F", ("t", "\\phi"): "-M", ("\\phi", "t"): "-M",
+                                  ("\\phi", "\\phi"): "L"},
+            "inverse_metric_components": {("t", "t"): "-\\dfrac{L}{r^2}", ("t", "\\phi"): "-\\dfrac{M}{r^2}",
+                                          ("\\phi", "t"): "-\\dfrac{M}{r^2}", ("\\phi", "\\phi"): "\\dfrac{F}{r^2}"}}
+    probe = vm.Reader(coords, parameters, ())
+    r = probe.symbol["r"]
+
+    def pretty(value):
+        # The phase stands for its definition inside every cosine and sine, and the rest is factored.
+        value = sp.sympify(value).replace(lambda e: isinstance(e, (sp.cos, sp.sin)), lambda e: e.func(PSI))
+        return sp.factor_terms(sp.together(sp.expand(value)))
+
+    return {
+        "metric_id": "petrov_homogeneous",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": line.replace("c\\,dt", "dt").replace("c^2dt", "dt"),
+        "printer": {"lead": [r], "overrides": {PSI: "\\psi"},
+                    "collect": lambda poly, printer: cp.collect_by(poly, [sp.cos(PSI), sp.sin(PSI)], printer)},
+        "pretty": pretty,
+        "components": components,
+        "check": lambda chart: petrov_homogeneous_check(chart, system),
+        "kretschmann": "0",
+    }
+
+
+def petrov_homogeneous_chart(system):
+    spec = petrov_homogeneous(system)
+    return cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+
+
+def petrov_invariants(geo):
+    """The three scalars of a vacuum's curvature that hold no derivative of it: the Kretschmann
+    scalar R_abcd R^abcd, the Chern-Pontryagin scalar, R_abcd times its dual, and the cubic
+    R_ab^cd R_cd^ef R_ef^ab. The Riemann tensor is taken as a 6 by 6 matrix on index pairs."""
+    g, gi = geo.g, geo.ginv
+    n = g.shape[0]
+    pairs = [(a, b) for a in range(n) for b in range(a + 1, n)]
+    lowered = geo.riemann_llll()
+    R = sp.Matrix(len(pairs), len(pairs), lambda i, j: vm._at(lowered, pairs[i] + pairs[j]))
+    lift = sp.Matrix(len(pairs), len(pairs), lambda i, j: gi[pairs[i][0], pairs[j][0]] * gi[pairs[i][1], pairs[j][1]]
+                     - gi[pairs[i][0], pairs[j][1]] * gi[pairs[i][1], pairs[j][0]])
+    mixed = (lift * R).applyfunc(sp.simplify)                 # R^{ab}_{cd} over a < b, c < d
+    kretschmann = sp.simplify(4 * (mixed * mixed).trace())
+    cubic = sp.simplify(8 * (mixed * mixed * mixed).trace())
+    root = sp.sqrt(-g.det())
+    dual = sp.Matrix(len(pairs), len(pairs), lambda i, j: sp.LeviCivita(*(pairs[i] + pairs[j])))
+    # (1/2) eps^{abef} R_efcd R^cd_ab / sqrt(-g), each sum over ordered pairs counted once.
+    pontryagin = sp.simplify(4 * (dual * R * mixed).trace() / root)
+    return kretschmann, pontryagin, cubic
+
+
+def petrov_homogeneous_check(chart, system):
+    """petrov    a vacuum of determinant -1 whose Kretschmann and Chern-Pontryagin scalars both
+                 vanish while the cubic scalar R_ab^cd R_cd^ef R_ef^ab is -48/ell^6; the four
+                 Killing vectors of Gibbons and Gielen's (2.2), which are independent at every
+                 event and close into their algebra (2.3); and their left-invariant frame (3.11),
+                 orthonormal, with the future the vector cos(psi/2) d_t + sin(psi/2) d_phi;
+    cylinder     a vacuum with FL + M^2 = r^2; the published heavy cylinder of `lewis` at
+                 m = sqrt(3), where its w is 1/R; Petrov's chart carried along
+                 r_P = ell ln(r/R), z_P = ell z/R, x^0_P - phi_P = 3^(1/4) x^0 and
+                 sqrt(2 + sqrt 3) phi_P + sqrt(2 - sqrt 3) x^0_P = 3^(1/4) sqrt 2 R phi, Gibbons
+                 and Gielen's map with the time reversed, so that the two charts share a
+                 future on the surface and the dust turns as the published dust does; and, at ell = R/sqrt(e), the
+                 published chart of `stockum_dust` and its first derivative along r on r = R,
+                 where that chart's own R is this one's."""
+    t, r, phi, z = chart.symbols
+    g = chart.geo.g
+    name = {s.name: s for s in chart.reader.allowed}
+    ell = name["ell"]
+
+    def fail(what):
+        raise AssertionError(f"petrov_homogeneous: {what}")
+
+    ricci = chart.geo.ricci_ll()
+    for index in vm._indices(4, 2):
+        if vm.norm(vm._at(ricci, index)) != 0:
+            fail(f"the {system} chart's Ricci tensor does not vanish in slot {index}")
+    kretschmann, pontryagin, cubic = petrov_invariants(chart.geo)
+    if kretschmann != 0 or pontryagin != 0:
+        fail(f"the {system} chart's quadratic scalars are {kretschmann} and {pontryagin}")
+    if sp.simplify(cubic + 48 / ell ** 6) != 0:
+        fail(f"the {system} chart's cubic scalar is {cubic}")
+    root3 = sp.sqrt(3)
+    if system == "petrov":
+        if sp.simplify(g.det() + 1) != 0:
+            fail("the determinant of Petrov's chart is not -1")
+        X = [t, r, phi, z]
+        killing = {"T": [1, 0, 0, 0], "Phi": [0, 0, 1, 0], "Z": [0, 0, 0, 1],
+                   "R": [-(t + root3 * phi) / (2 * ell), 1, (root3 * t - phi) / (2 * ell), z / ell]}
+        for label, xi in killing.items():
+            lie = sp.Matrix(4, 4, lambda a, b: sum(xi[c] * sp.diff(g[a, b], X[c]) + g[c, b] * sp.diff(xi[c], X[a])
+                                                   + g[a, c] * sp.diff(xi[c], X[b]) for c in range(4)))
+            if lie.applyfunc(sp.simplify) != sp.zeros(4, 4):
+                fail(f"{label} is no Killing vector of Petrov's chart")
+        if sp.simplify(sp.Matrix([killing[k] for k in ("T", "Phi", "Z", "R")]).det()) == 0:
+            fail("the four Killing vectors are not independent, so the group is not simply transitive")
+
+        def bracket(u, v):
+            return [sp.simplify(sum(u[c] * sp.diff(v[a], X[c]) - v[c] * sp.diff(u[a], X[c]) for c in range(4)))
+                    for a in range(4)]
+
+        def combined(coefficients):
+            return [sp.simplify(sum(k * killing[label][a] for label, k in coefficients.items())) for a in range(4)]
+        half = sp.Rational(1, 2)
+        algebra = {"T": {"T": half / ell, "Phi": -root3 / (2 * ell)}, "Phi": {"Phi": half / ell, "T": root3 / (2 * ell)},
+                   "Z": {"Z": -1 / ell}}
+        for label, wanted in algebra.items():
+            if bracket(killing["R"], killing[label]) != combined(wanted):
+                fail(f"[R, {label}] is not Gibbons and Gielen's")
+        # The left-invariant frame, and the vector that is future directed at every r.
+        a = root3 * r / (2 * ell)
+        scale = sp.exp(r / (2 * ell))
+        frame = sp.Matrix([[scale * sp.cos(a), 0, scale * sp.sin(a), 0],      # lambda^4, timelike
+                           [0, 1, 0, 0],
+                           [-scale * sp.sin(a), 0, scale * sp.cos(a), 0],     # lambda^3
+                           [0, 0, 0, sp.exp(-r / ell)]])
+        if (frame.T * sp.diag(-1, 1, 1, 1) * frame - g).applyfunc(sp.simplify) != sp.zeros(4, 4):
+            fail("the left-invariant frame is not orthonormal")
+        arrow = sp.Matrix([sp.cos(a), 0, sp.sin(a), 0])
+        if sp.simplify((arrow.T * g * arrow)[0, 0] + sp.exp(r / ell)) != 0:
+            fail("cos(psi/2) d_t + sin(psi/2) d_phi is not timelike of norm -e^(r/ell)")
+        return
+    R = name["R"]
+    P = chart.reader.parameters
+    if sp.simplify(P["F"] * P["L"] + P["M"] ** 2 - r ** 2) != 0:
+        fail("FL + M^2 is not r^2")
+    generator = random.Random(1962)
+
+    def agree(ours, theirs, at, what):
+        for i in range(4):
+            for j in range(i, 4):
+                left, right = (sp.N(sp.sympify(m[i, j]).subs(at), 30) for m in (ours, theirs))
+                if abs(left - right) > sp.Float(10) ** -22 * (1 + abs(left)):
+                    fail(f"the cylinder chart is not {what} in slot {chart.coords_tex[i]}{chart.coords_tex[j]}: "
+                         f"{left} against {right}")
+
+    def published(metric_id, system_id):
+        entry = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == system_id)
+        reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+        there = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+        matrix = sp.Matrix(4, 4, lambda i, j: reader(there.get((entry["coords"][i], entry["coords"][j]), "0")))
+        return reader, matrix.subs(dict(zip([reader.symbol[c] for c in entry["coords"]], chart.symbols)))
+
+    source = petrov_homogeneous_chart("petrov")
+    scale = next(s for s in source.reader.allowed if s.name == "ell")
+    fourth = sp.root(3, 4)
+    plus, minus = sp.sqrt(2 + root3), sp.sqrt(2 - root3)
+    # x^0_P and phi_P in this chart's x^0 and phi.
+    time = (plus * fourth * t + fourth * sp.sqrt(2) * R * phi) / (plus + minus)
+    angle = time - fourth * t
+    image = [time, ell * sp.log(r / R), angle, ell * z / R]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+    carried = J.T * source.geo.g.subs(dict(zip(source.symbols, image)), simultaneous=True).subs(scale, ell) * J
+    reader, heavy = published("lewis", "stockum_heavy")
+    heavy = heavy.subs({next(s for s in reader.allowed if s.name == "m"): root3,
+                        next(s for s in reader.allowed if s.name == "R"): R,
+                        next(s for s in reader.allowed if s.name == "ell"): ell})
+    dust_reader, dust = published("stockum_dust", "cylindrical")
+    dust = dust.subs(dust_reader.parameters["R"], R)
+    for _ in range(3):
+        at = {r: sp.Rational(generator.randint(100, 4000), 97), R: sp.Rational(generator.randint(60, 100), 97),
+              ell: sp.Rational(generator.randint(40, 90), 97)}
+        agree(g, carried, at, "Petrov's chart carried along Gibbons and Gielen's map")
+        agree(g, heavy, at, "the published heavy cylinder of the Lewis family at m = sqrt(3)")
+        joined = {R: at[R], ell: at[R] / sp.sqrt(sp.E)}
+        agree(g.subs(r, R), dust.subs(r, R), joined, "the published dust on the surface")
+        agree(g.diff(r).subs(r, R), dust.diff(r).subs(r, R), joined, "joined smoothly to the published dust")
+
+
+CHARTS["petrov_homogeneous"] = [lambda s=s: petrov_homogeneous(s) for s in PETROV_CHARTS]
 
 
 # -- Wahlquist's rotating fluid --------------------------------------------------------

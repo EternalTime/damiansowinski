@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 128,
+  "count": 129,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -3299,6 +3299,11 @@
           "id": "de_sitter",
           "kind": "family",
           "text": "Where the expanding Bianchi universes end up when the cosmological constant is positive. Robert Wald proved in 1983 that every type but IX approaches de Sitter space exponentially, and that type IX does too when $\\Lambda$ is large enough [wald1983]."
+        },
+        {
+          "id": "petrov_homogeneous",
+          "kind": "family",
+          "text": "A vacuum whose group of four symmetries holds groups of Bianchi's types I and VII. They act on surfaces with a time direction in them, so the spacetime is the same at every time as well [gibbons2008petrov, terzis2009]."
         }
       ],
       "references": [
@@ -3310,7 +3315,9 @@
         "kasner1921",
         "misner1963",
         "kantowski1966",
-        "wald1983"
+        "wald1983",
+        "gibbons2008petrov",
+        "terzis2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bianchi.json",
@@ -11844,6 +11851,11 @@
           "id": "bonnor_rotating_dust",
           "kind": "family",
           "text": "A cloud of rigidly rotating dust with no cosmological constant, flat far away and singular at its centre. Its closed timelike curves stay inside a torus about that centre, where Gödel's pass through every event [bonnor1977cloud, astesiano2024]."
+        },
+        {
+          "id": "petrov_homogeneous",
+          "kind": "family",
+          "text": "A spacetime with nothing in it that is also the same at every event and also holds closed timelike curves. It is the field outside a cylinder of rotating dust [bonnor1979petrov, gibbons2008petrov]."
         }
       ],
       "references": [
@@ -11869,7 +11881,9 @@
         "ori2005",
         "som1968",
         "bonnor1977cloud",
-        "astesiano2024"
+        "astesiano2024",
+        "bonnor1979petrov",
+        "gibbons2008petrov"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/godel.json",
@@ -16666,6 +16680,11 @@
           "id": "belinski_zakharov",
           "kind": "generalisation",
           "text": "Kasner's universe with solitons added. Belinski and Zakharov took it for the seed of their first soliton solutions, among them two pulses of gravitational wave that run apart along a light cone [belinskii1978]."
+        },
+        {
+          "id": "petrov_homogeneous",
+          "kind": "family",
+          "text": "A vacuum that is the same at every time as well as at every place. Joan Josep Ferrando and Juan Antonio Sáez found it in one family with Kasner's, the vacuums of Petrov's type I with a symmetry aligned to the curvature [ferrando2006]."
         }
       ],
       "references": [
@@ -16684,7 +16703,8 @@
         "berger1974",
         "geroch1969",
         "kasner1925",
-        "belinskii1978"
+        "belinskii1978",
+        "ferrando2006"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner.json",
@@ -20313,6 +20333,11 @@
           "id": "neugebauer_meinel",
           "kind": "family",
           "text": "Dust in rigid rotation again, as a finite disc with flat space far away, solved exactly by Neugebauer and Meinel [neugebauer1995]."
+        },
+        {
+          "id": "petrov_homogeneous",
+          "kind": "piece",
+          "text": "The vacuum outside the cylinder when its surface is the null circle $r = R$. William Bonnor showed in 1979 that this exterior is Petrov's homogeneous vacuum [bonnor1979petrov]."
         }
       ],
       "references": [
@@ -20332,7 +20357,8 @@
         "reboucas1983",
         "bonnor1977cloud",
         "bratek2007",
-        "neugebauer1995"
+        "neugebauer1995",
+        "bonnor1979petrov"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/stockum_dust.json",
@@ -20853,6 +20879,11 @@
           "id": "cosmic_string",
           "kind": "special_case",
           "text": "The flat member at rest. At $n = 1$ and $b = q = 0$ only the cone is left, with $a$ setting the missing angle [bronnikov2020]."
+        },
+        {
+          "id": "petrov_homogeneous",
+          "kind": "special_case",
+          "text": "The Lewis class at $m = \\sqrt{3}$, where the Kretschmann scalar vanishes. There the field gains a fourth symmetry and is Petrov's homogeneous vacuum, the same at every event [bonnor1979petrov, bonnor1980]."
         }
       ],
       "references": [
@@ -20868,7 +20899,8 @@
         "tipler1974",
         "stachel1982",
         "maccallum1998",
-        "jensen1992"
+        "jensen1992",
+        "bonnor1979petrov"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/lewis.json",
@@ -28744,6 +28776,257 @@
       ]
     },
     {
+      "id": "petrov_homogeneous",
+      "name": "Petrov Homogeneous Vacuum",
+      "short_name": "Petrov",
+      "description": "An empty spacetime that is curved and still the same at every event: four symmetries carry any event to any other in exactly one way, and no other vacuum without a cosmological constant has such a group. Its light cones turn steadily as one walks along one direction, and it is the field outside a cylinder of dust that spins with the circle round its surface a path of light.",
+      "tags": [
+        "vacuum",
+        "stationary",
+        "homogeneous",
+        "simply transitive group",
+        "group manifold",
+        "rotating",
+        "closed timelike curves",
+        "cylindrical symmetry",
+        "Lewis class",
+        "Petrov type I",
+        "Bianchi classification",
+        "geodesically complete",
+        "hyperbolic space",
+        "causal structure",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "lewis",
+          "kind": "generalisation",
+          "text": "Petrov's vacuum is one of Lewis's rotating cylinders, the member of the Lewis class at $m = \\sqrt{3}$. At that value the field gains a fourth symmetry and becomes the same at every event [bonnor1979petrov, bonnor1980]."
+        },
+        {
+          "id": "stockum_dust",
+          "kind": "composite",
+          "text": "The cylinder of dust that Petrov's vacuum surrounds. William Bonnor showed in 1979 that the field outside it is Petrov's when the dust turns at the angular velocity $c/R$, with $R$ the radius of the cylinder [bonnor1979petrov]."
+        },
+        {
+          "id": "siklos",
+          "kind": "family",
+          "text": "Kaigorodov's spacetime, the simplest of Siklos's waves, is the counterpart with a negative cosmological constant: the other vacuum whose four symmetries reach every event exactly once. Gary Gibbons and Steffen Gielen found its group among the deformations of Petrov's [kaigorodov1962, gibbons2008petrov]."
+        },
+        {
+          "id": "godel",
+          "kind": "family",
+          "text": "Another spacetime that is the same at every event and holds closed timelike curves. Gödel's is filled with rotating dust and Petrov's is empty [godel1949, gibbons2008petrov]."
+        },
+        {
+          "id": "kasner",
+          "kind": "family",
+          "text": "Kasner's universe is the same at every place, and Petrov's at every time as well. Joan Josep Ferrando and Juan Antonio Sáez found both in one family, the vacuums of Petrov's type I with a symmetry aligned to the curvature [ferrando2006]."
+        },
+        {
+          "id": "bianchi",
+          "kind": "family",
+          "text": "Petrov's group holds groups of Bianchi's types I and VII. They act on surfaces with a time direction in them, and a Bianchi cosmology's group acts on space [gibbons2008petrov, terzis2009]."
+        }
+      ],
+      "references": [
+        "petrov1954",
+        "petrov1962",
+        "gibbons2008petrov",
+        "stephani2003",
+        "kaigorodov1962",
+        "ferrando2006",
+        "lanczos1924",
+        "vanstockum1937",
+        "bonnor1979petrov",
+        "bonnor1980",
+        "tipler1974",
+        "hawking1992",
+        "terzis2009",
+        "lewis1932",
+        "costa2021",
+        "godel1949"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/petrov_homogeneous.json",
+      "charts": [
+        {
+          "id": "petrov",
+          "name": "Petrov",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (-\\infty, \\infty)",
+            "\\phi \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\cos\\psi < 0 \\;\\text{(} \\partial_t \\text{ is spacelike and } \\partial_\\phi \\text{ timelike)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "The one length of the solution, Petrov's $1/k$; the plane of $r$ and $z$ is a hyperbolic plane of curvature $-1/\\ell^2$"
+            },
+            {
+              "symbol": "\\psi = \\dfrac{\\sqrt{3}\\,r}{\\ell}",
+              "description": "Phase of the plane of $t$ and $\\phi$, whose light cones turn through $\\psi/2$; the coordinates $t$ and $\\phi$ exchange the parts of time and space each time $\\psi$ grows by $\\pi$"
+            }
+          ],
+          "convention": "We use Petrov's coordinates $(t, r, \\phi, z)$ in the letters of Gibbons and Gielen, with $t$ carrying dimensions of time and $r$, $\\phi$, and $z$ lengths, each running over the whole real line. The future is the side of $\\cos(\\psi/2)\\,\\partial_t + \\sin(\\psi/2)\\,\\partial_\\phi$, which is timelike at every $r$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = dr^2 + e^{-2r/\\ell}dz^2 + e^{r/\\ell}\\left(\\cos\\psi\\left(d\\phi^2 - c^2dt^2\\right) - 2\\sin\\psi\\,c\\,dt\\,d\\phi\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{r/\\ell}\\cos\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "e^{r/\\ell}\\cos\\psi"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-e^{r/\\ell}\\sin\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-e^{r/\\ell}\\sin\\psi"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{-2r/\\ell}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "cylinder",
+          "name": "Dust Cylinder",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [R, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "r = R \\;\\text{(the surface of the dust, where the circle of constant } t, r, z \\text{ is null)}",
+            "F < 0 \\;\\text{(} \\partial_t \\text{ is spacelike)}",
+            "L < 0 \\;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "R",
+              "description": "Radius of the dust cylinder, a length; the vacuum is $r \\ge R$, and the dust turns at the angular velocity $c/R$"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "Petrov's length, the scale of $r$ and $z$; the vacuum joins the dust on the surface where $\\ell = R/\\sqrt{e}$"
+            },
+            {
+              "symbol": "\\psi = \\sqrt{3}\\ln\\left(\\dfrac{r}{R}\\right)",
+              "description": "Phase of van Stockum's functions, zero on the surface, and the phase of Petrov's chart"
+            },
+            {
+              "symbol": "F = \\dfrac{r}{R}\\left(\\cos\\psi - \\dfrac{\\sin\\psi}{\\sqrt{3}}\\right)",
+              "description": "Minus the norm of $\\partial_t$, equal to 1 on the surface and negative from $\\psi = \\pi/3$ to $\\psi = 4\\pi/3$"
+            },
+            {
+              "symbol": "M = r\\left(\\cos\\psi + \\dfrac{\\sin\\psi}{\\sqrt{3}}\\right)",
+              "description": "van Stockum's cross term, a length, equal to $R$ on the surface"
+            },
+            {
+              "symbol": "L = -\\dfrac{2R\\,r\\sin\\psi}{\\sqrt{3}}",
+              "description": "The norm of $\\partial_\\phi$, so that $FL + M^2 = r^2$; it vanishes on the surface, and the circles of constant $t$, $r$, and $z$ are closed timelike curves where it is negative, out to $r = e^{\\pi/\\sqrt{3}}R$"
+            }
+          ],
+          "convention": "We use van Stockum's coordinates $(t, r, \\phi, z)$ outside his dust cylinder of radius $R$, which rotate with the dust at the angular velocity $c/R$, with $t$ carrying dimensions of time, $r$ and $z$ lengths, and $\\phi$ periodic in $2\\pi$. Petrov's radius is $\\ell\\ln(r/R)$, and his $t$ and $\\phi$ are linear in these. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -F\\,c^2dt^2 - 2M\\,c\\,dt\\,d\\phi + \\dfrac{\\ell^2}{r^2}\\left(dr^2 + dz^2\\right) + L\\,d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-F"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-M"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-M"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\ell^2}{r^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{\\ell^2}{r^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "L"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
       "id": "photon_rocket",
       "name": "Kinnersley Photon Rocket",
       "short_name": "Photon Rocket",
@@ -35102,6 +35385,11 @@
           "id": "hotta_tanaka",
           "kind": "family",
           "text": "An impulsive wave of the same kind with a positive cosmological constant: a sphere of fixed area in de Sitter space with a null particle at each pole [hotta1993, podolsky1998impulsive]."
+        },
+        {
+          "id": "petrov_homogeneous",
+          "kind": "family",
+          "text": "Kaigorodov's counterpart with no cosmological constant: the other vacuum whose four symmetries reach every event exactly once. Gary Gibbons and Steffen Gielen found Kaigorodov's group among the deformations of Petrov's [gibbons2008petrov]."
         }
       ],
       "references": [
@@ -35124,7 +35412,8 @@
         "son2008",
         "duval2009",
         "griffiths2004",
-        "hotta1993"
+        "hotta1993",
+        "gibbons2008petrov"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/siklos.json",
