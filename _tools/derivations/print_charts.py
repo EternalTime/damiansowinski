@@ -10,7 +10,7 @@ black_string, myers_perry, black_saturn, near_horizon_extreme_kerr, hartle_thorn
 som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos, kundt_waves,
 schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
-israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis,
+israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis, erez_rosen,
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice and
 belinski_zakharov, and Godel's cylindrical chart.
 
@@ -3213,6 +3213,305 @@ def zipoy_voorhees_charts():
 
 
 CHARTS["zipoy_voorhees"] = zipoy_voorhees_charts
+
+
+# -- Erez and Rosen's quadrupole -----------------------------------------------------------
+
+ER_LOG = "L = \\ln\\left(\\dfrac{x - 1}{x + 1}\\right)"
+ER_PSI = ("\\psi = \\dfrac{L}{2} + \\dfrac{q\\left(3y^2 - 1\\right)}{8}"
+          "\\left(\\left(3x^2 - 1\\right)L + 6x\\right)")
+ER_GAMMA = ("\\gamma = \\dfrac{\\left(1 + q\\right)^2}{2}\\ln\\left(\\dfrac{x^2 - 1}{x^2 - y^2}\\right)"
+            " - \\dfrac{3q\\left(1 - y^2\\right)}{2}\\left(x\\,L + 2\\right)"
+            " + \\dfrac{9q^2\\left(1 - y^2\\right)}{64}\\left(\\left(x^2 - 1\\right)"
+            "\\left(x^2 + y^2 - 9x^2y^2 - 1\\right)L^2"
+            " + 4x\\left(x^2 + 7y^2 - 9x^2y^2 - \\dfrac{5}{3}\\right)L"
+            " + 4\\left(x^2 + 4y^2 - 9x^2y^2 - \\dfrac{4}{3}\\right)\\right)")
+ER_PROLATE_PARAMETERS = ["m", "q", ER_LOG, ER_PSI, ER_GAMMA]
+ER_S_LOG = "L = \\ln\\left(1 - \\dfrac{2m}{r}\\right)"
+ER_S_PSI = ("\\psi = \\dfrac{L}{2} + \\dfrac{q\\left(3\\cos^2\\theta - 1\\right)}{8m^2}"
+            "\\left(\\left(3r^2 - 6mr + 2m^2\\right)L + 6m\\left(r - m\\right)\\right)")
+ER_S_GAMMA = ("\\gamma = \\dfrac{\\left(1 + q\\right)^2}{2}"
+              "\\ln\\left(\\dfrac{r^2 - 2mr}{r^2 - 2mr + m^2\\sin^2\\theta}\\right)"
+              " - \\dfrac{3q\\sin^2\\theta}{2m}\\left(\\left(r - m\\right)L + 2m\\right)"
+              " + \\dfrac{9q^2\\sin^2\\theta}{64m^4}\\left(r\\left(r - 2m\\right)"
+              "\\left(r^2 - 2mr - \\left(9r^2 - 18mr + 8m^2\\right)\\cos^2\\theta\\right)L^2"
+              " + 4m\\left(r - m\\right)\\left(r^2 - 2mr - \\dfrac{2m^2}{3}"
+              " - \\left(9r^2 - 18mr + 2m^2\\right)\\cos^2\\theta\\right)L"
+              " + 4m^2\\left(r^2 - 2mr - \\dfrac{m^2}{3}"
+              " - \\left(9r^2 - 18mr + 5m^2\\right)\\cos^2\\theta\\right)\\right)")
+ER_SPHERICAL_PARAMETERS = ["m", "q", ER_S_LOG, ER_S_PSI, ER_S_GAMMA]
+ER_HELD = ("psi", "gamma")
+
+
+def erez_rosen(system):
+    """Erez and Rosen's quadrupole, the member of Weyl's class whose potential is Schwarzschild's
+    plus q times the quadrupole harmonic that dies away at infinity, P_2(y) Q_2(x):
+    ds^2 = -e^{2 psi} c^2 dt^2 + m^2 e^{-2 psi}(e^{2 gamma}(x^2 - y^2)(dx^2/(x^2 - 1) + dy^2/(1 - y^2))
+    + (x^2 - 1)(1 - y^2) dphi^2), in Erez and Rosen's prolate spheroidal coordinates and in the
+    coordinates x = r/m - 1, y = cos(theta) that are Schwarzschild's at q = 0.
+
+    psi and gamma are names each chart defines, polynomials in the coordinates and in the
+    logarithm L of Schwarzschild's 1 - 2m/r, held as functions of the two coordinates while the
+    tensors are built (vm.HELD), as the first Morgan-Morgan disc's are. `reduce` writes every
+    derivative of gamma by Weyl's quadrature and the second derivative of psi along the radial
+    coordinate by Laplace's equation, which leaves psi's other derivatives with no relation
+    among them, so the Ricci tensor is exactly zero. erez_rosen_check holds each chart to its
+    source, and erez_rosen.md beside this file is the derivation."""
+    D = sp.Derivative
+    spherical = system == "spherical"
+    if not spherical:
+        coords = ["t", "x", "y", "\\phi"]
+        parameters, name = ER_PROLATE_PARAMETERS, "Prolate Spheroidal"
+
+        def line(c2):
+            return (f"ds^2 = -e^{{2\\psi}}{c2}dt^2 + m^2e^{{-2\\psi}}\\left(e^{{2\\gamma}}\\left(x^2 - y^2\\right)"
+                    "\\left(\\dfrac{dx^2}{x^2 - 1} + \\dfrac{dy^2}{1 - y^2}\\right)"
+                    " + \\left(x^2 - 1\\right)\\left(1 - y^2\\right)d\\phi^2\\right)")
+        probe = vm.Reader(coords, parameters, (), held=ER_HELD)
+        a, b, m = probe.symbol["x"], probe.symbol["y"], probe.parameters["m"]
+        domains = ["t \\in (-\\infty, \\infty)", "x \\in (1, \\infty)", "y \\in [-1, 1]", "\\phi \\in [0, 2\\pi)",
+                   "x = 1 \\;\\text{(the singularity, for } q \\neq 0\\text{)}"]
+        named = [(sp.Symbol("ERH"), 1 - b ** 2, "1 - y^2"), (sp.Symbol("ERX"), a ** 2 - 1, "x^2 - 1"),
+                 (sp.Symbol("ERS"), a ** 2 - b ** 2, "x^2 - y^2")]
+        merges = [(1 + b, 1 - b, named[0][0]), (a - 1, a + 1, named[1][0]), (a - b, a + b, named[2][0])]
+        tail = [m, a, b]
+        factors = named_factors(named, merges)
+    else:
+        coords = ["t", "r", "\\theta", "\\phi"]
+        parameters, name = ER_SPHERICAL_PARAMETERS, "Spherical"
+
+        def line(c2):
+            return (f"ds^2 = -e^{{2\\psi}}{c2}dt^2 + e^{{-2\\psi}}\\left(e^{{2\\gamma}}"
+                    "\\left(r^2 - 2mr + m^2\\sin^2\\theta\\right)\\left(\\dfrac{dr^2}{r^2 - 2mr} + d\\theta^2\\right)"
+                    " + \\left(r^2 - 2mr\\right)\\sin^2\\theta\\,d\\phi^2\\right)")
+        probe = vm.Reader(coords, parameters, (), held=ER_HELD)
+        a, b, m = probe.symbol["r"], probe.symbol["\\theta"], probe.parameters["m"]
+        domains = ["t \\in (-\\infty, \\infty)", "r \\in (2m, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                   "r = 2m \\;\\text{(the singularity, for } q \\neq 0\\text{)}"]
+        sigma = a ** 2 - 2 * m * a + m ** 2 * sp.sin(b) ** 2
+        named = [(sp.Symbol("ERS"), sigma, "r^2 - 2mr + m^2\\sin^2\\theta")]
+        tail = [a, m, sp.cos(b), sp.sin(b)]
+        Y, S, S2 = sp.Symbol("ERY"), sp.Symbol("ERSIN"), sp.Symbol("ERSINSQ", positive=True)
+        RHO, SCALED = sp.Symbol("ERRHO", positive=True), sp.Symbol("ERSCALED")
+        plain = named_factors([(SCALED, (RHO - 1) ** 2 - Y ** 2, None)],
+                              [(1 - Y, 1 + Y, S2), (RHO - 1 - Y, RHO - 1 + Y, SCALED)])
+
+        def factors(value):
+            # The metric is even in theta, so a value is a rational function of r, m and
+            # cos(theta), times sin(theta) or not, once each derivative of psi taken an odd number
+            # of times along theta is counted as odd: it is held as sin(theta) times a symbol.
+            # A value is also homogeneous in r and m once a derivative along r counts as an
+            # inverse length, so it is factored in r/m, y = cos(theta) and the held derivatives,
+            # as the prolate spheroidal chart's values are, with (1 - y)(1 + y) = sin^2(theta) and
+            # (r/m - 1 - y)(r/m - 1 + y) the sum of the line element over m^2, and each factor is
+            # then written back in r, m and the derivatives themselves.
+            value = sp.sympify(value)
+            forward, back = {}, {RHO: a / m, SCALED: named[0][0] / m ** 2}
+            for d in value.atoms(sp.Derivative):
+                along = dict(d.variable_count)
+                held = sp.Dummy("h")
+                forward[d] = held * S ** (along.get(b, 0) % 2) / m ** along.get(a, 0)
+                back[held] = d * m ** along.get(a, 0) / S ** (along.get(b, 0) % 2)
+            e = value.xreplace(forward).subs({sp.cos(b): Y, sp.sin(b): S, a: m * RHO})
+            e = sp.together(e)
+            parts = []
+            for side in sp.fraction(e):
+                poly = sp.Poly(sp.expand(side), S)
+                even = sum(c * (1 - Y ** 2) ** (k // 2) for (k,), c in poly.terms() if k % 2 == 0)
+                odd = sum(c * (1 - Y ** 2) ** (k // 2) for (k,), c in poly.terms() if k % 2 == 1)
+                parts.append((sp.expand(even), sp.expand(odd)))
+            (ne, no), (de, do) = parts
+            even, odd = sp.expand(ne * de - (1 - Y ** 2) * no * do), sp.expand(no * de - ne * do)
+            below = sp.expand(de ** 2 - (1 - Y ** 2) * do ** 2)
+            if even != 0 and odd != 0:
+                raise AssertionError("erez_rosen: a value of the spherical chart is neither even nor odd in sin(theta)")
+            out = plain((even if odd == 0 else odd) / below) * (1 if odd == 0 else S)
+            # The number in front is kept apart to the end: sympy spreads a number over a sum when
+            # the two stand alone in a product, and 96(r - m) would be printed 96r - 96m.
+            number, result = sp.Integer(1), sp.Integer(1)
+            for f in sp.Mul.make_args(out):
+                if f.is_Number:
+                    number *= f
+                    continue
+                base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+                top, bottom = sp.fraction(sp.together(base.xreplace(back)))
+                if top.is_Add:
+                    # A sum is written out, with its cosines in the sine wherever they come squared,
+                    # as the sum of the line element is, and the power of sin(theta) every term
+                    # carries is taken out of it.
+                    poly = sp.Poly(sp.expand(top), Y)
+                    top = sp.expand(sum(c * (1 - S ** 2) ** (n // 2) * Y ** (n % 2) for (n,), c in poly.terms()))
+                    common = min(sp.Poly(term, S).degree() for term in sp.Add.make_args(top))
+                    top, bottom = sp.expand(top / S ** common), sp.cancel(bottom / S ** common)
+                result *= (top / bottom) ** k
+            c, result = sp.powsimp(result).subs({S2: sp.sin(b) ** 2}).subs({S: sp.sin(b), Y: sp.cos(b)}).as_coeff_Mul()
+            return _keep_coeff(number * c, result)
+    psi, gam = probe.parameters["psi"], probe.parameters["gamma"]
+    reduce = erez_rosen_reduce(a, b, psi, gam, m if spherical else None)
+    lead = [gam, psi]
+    for g in (gam, psi):
+        lead += [D(g, a), D(g, b)]
+    for g in (gam, psi):
+        lead += [D(g, (a, 2)), D(g, a, b), D(g, (b, 2))]
+    lead += tail
+    derivatives = [D(psi, (a, 2)), D(psi, a, b), D(psi, (b, 2)), D(psi, a), D(psi, b)]
+    def pretty(value):
+        c, rest = factors(sp.sympify(value)).as_coeff_Mul()
+        return _keep_coeff(c, sp.powsimp(rest, combine="exp"))
+
+    def collect(base, p):
+        # Each value is a polynomial in psi's derivatives, grouped by them, and every coefficient
+        # is written in the sums the line element has.
+        e, forward, back = cp.symbolize(sp.expand(base))
+        poly = sp.Poly(e, *[forward.get(g, g) for g in derivatives])
+        if poly.total_degree() == 0:
+            return p.sum_of(base)
+        terms = []
+        for monomial, coeff in sorted(poly.terms(), key=lambda mc: tuple(-k for k in mc[0])):
+            c, rest = factors(coeff.as_expr().xreplace(back)).as_coeff_Mul()
+            terms.append((c, rest * sp.Mul(*[g ** k for g, k in zip(derivatives, monomial)])))
+        return cp.Sum(terms)
+    printer = {"lead": lead, "collect": collect, "named": {s: text for s, _, text in named},
+               "factors": [s for s, _, _ in named] + lead}
+    return {
+        "metric_id": "erez_rosen",
+        "system": {"id": "spherical" if spherical else "prolate_spheroidal", "name": name, "coords": coords,
+                   "domains": domains, "parameters": parameters, "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "pretty": pretty,
+        "reduce": reduce,
+        "check": erez_rosen_check,
+    }
+
+
+def erez_rosen_quadrature(a, b, pa, pb, m=None):
+    """Weyl's quadrature for gamma, its two first derivatives in those of psi: in the prolate
+    spheroidal x and y, or, with the mass parameter given, in r and theta."""
+    if m is None:
+        return ((1 - b ** 2) / (a ** 2 - b ** 2) * (a * (a ** 2 - 1) * pa ** 2 - a * (1 - b ** 2) * pb ** 2
+                                                      - 2 * b * (a ** 2 - 1) * pa * pb),
+                (a ** 2 - 1) / (a ** 2 - b ** 2) * (b * (a ** 2 - 1) * pa ** 2 - b * (1 - b ** 2) * pb ** 2
+                                                      + 2 * a * (1 - b ** 2) * pa * pb))
+    delta = a ** 2 - 2 * m * a
+    sigma = delta + m ** 2 * sp.sin(b) ** 2
+    return (sp.sin(b) / sigma * ((a - m) * sp.sin(b) * (delta * pa ** 2 - pb ** 2) + 2 * delta * sp.cos(b) * pa * pb),
+            -delta * sp.sin(b) / sigma * (sp.cos(b) * (delta * pa ** 2 - pb ** 2) - 2 * (a - m) * sp.sin(b) * pa * pb))
+
+
+def erez_rosen_laplace(a, b, psi, m=None):
+    """Laplace's equation for psi solved for its second derivative along the radial coordinate."""
+    D = sp.Derivative
+    if m is None:
+        return {D(psi, (a, 2)): -(2 * a * D(psi, a) + (1 - b ** 2) * D(psi, (b, 2)) - 2 * b * D(psi, b)) / (a ** 2 - 1)}
+    return {D(psi, (a, 2)): -(2 * (a - m) * D(psi, a) + D(psi, (b, 2)) + sp.cos(b) / sp.sin(b) * D(psi, b))
+            / (a ** 2 - 2 * m * a)}
+
+
+def erez_rosen_reduce(a, b, psi, gam, m=None):
+    """`value` where Weyl's field equations hold: gamma's derivatives by its quadrature and that
+    quadrature's derivatives, then psi's second derivative along the radial coordinate, and its
+    derivatives, by Laplace's equation."""
+    D = sp.Derivative
+    ga, gb = erez_rosen_quadrature(a, b, D(psi, a), D(psi, b), m)
+    second = erez_rosen_laplace(a, b, psi, m)
+    paa = second[D(psi, (a, 2))]
+
+    def reduce(value):
+        value = sp.sympify(value)
+        value = value.subs({D(gam, (a, 2)): sp.diff(ga, a), D(gam, (b, 2)): sp.diff(gb, b),
+                            D(gam, a, b): sp.diff(ga, b)}).doit()
+        value = value.subs({D(gam, a): ga, D(gam, b): gb}).doit()
+        value = value.subs({D(psi, (a, 3)): sp.diff(paa, a), D(psi, (a, 2), b): sp.diff(paa, b)}).doit()
+        return value.subs(second).doit()
+    return reduce
+
+
+def erez_rosen_check(chart):
+    """Each chart: the Ricci tensor is exactly zero; psi solves Laplace's equation and gamma both
+    quadratures, and gamma vanishes on the axis; at q = 0 the two functions are Schwarzschild's.
+    The prolate spheroidal chart: on the axis, where Weyl's z = mx, Geroch's potential
+    -tanh(psi) falls off as m/z + (2/15) q m^3/z^3, a mass m and a quadrupole (2/15) q m^3. The
+    spherical chart: its psi and gamma are the prolate spheroidal chart's at x = r/m - 1 and
+    y = cos(theta), it is that chart pulled back, and at q = 0 it is Schwarzschild's published
+    metric with r_s = 2m."""
+    spherical = chart.coords_tex[1] == "r"
+    t, a, b, phi = chart.symbols
+    m, q = chart.reader.parameters["m"], chart.reader.parameters["q"]
+    psi, gam = chart.reader.parameters["psi"], chart.reader.parameters["gamma"]
+    ricci = chart.geo.ricci_ll()
+    if any(vm.norm(sp.together(ricci[i][j])) != 0 for i in range(4) for j in range(4)):
+        raise AssertionError("erez_rosen: the Ricci tensor does not vanish")
+    P, G = chart.reader.held[psi], chart.reader.held[gam]
+    ga, gb = erez_rosen_quadrature(a, b, sp.diff(P, a), sp.diff(P, b), m if spherical else None)
+    paa = erez_rosen_laplace(a, b, psi, m if spherical else None)[sp.Derivative(psi, (a, 2))]
+    paa = paa.subs(psi, P).doit()
+    axis = 0 if spherical else 1
+    schwarzschild = (sp.log(1 - 2 * m / a) / 2 if spherical else sp.log((a - 1) / (a + 1)) / 2,
+                     (sp.log((a ** 2 - 2 * m * a) / (a ** 2 - 2 * m * a + m ** 2 * sp.sin(b) ** 2)) / 2 if spherical
+                      else sp.log((a ** 2 - 1) / (a ** 2 - b ** 2)) / 2))
+    checks = {"Laplace's equation": sp.diff(P, (a, 2)) - paa,
+              "the quadrature along the radial coordinate": sp.diff(G, a) - ga,
+              "the quadrature along the angle": sp.diff(G, b) - gb,
+              "gamma on the axis": G.subs(b, axis),
+              "Schwarzschild's psi at q = 0": P.subs(q, 0) - schwarzschild[0],
+              "Schwarzschild's gamma at q = 0": G.subs(q, 0) - schwarzschild[1]}
+    for label, value in checks.items():
+        if not gowdy_vanishes(value):
+            raise AssertionError(f"erez_rosen: the {chart.coords_tex[1]} chart misses {label}")
+    if not spherical:
+        # Geroch's moments of a static field are the coefficients of -tanh(psi) on the axis in 1/z.
+        u = sp.Symbol("u", positive=True)
+        xi = sp.series(-sp.tanh(P.subs(b, 1).subs(a, 1 / u)), u, 0, 5).removeO()
+        if sp.expand(xi - u - sp.Rational(2, 15) * q * u ** 3) != 0:
+            raise AssertionError("erez_rosen: the mass and the quadrupole moment are not m and (2/15) q m^3")
+        return
+    spec = erez_rosen("prolate_spheroidal")
+    prolate = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
+                       held=ER_HELD)
+    T, x, y, ph = prolate.symbols
+    at = {T: t, x: a / m - 1, y: sp.cos(b), ph: phi, prolate.reader.parameters["m"]: m,
+          prolate.reader.parameters["q"]: q}
+    there = prolate.reader
+    # The two spellings of each function differ in how their logarithms and their sines are
+    # written, so they are compared as numbers, at six random points in forty digits.
+    rng = random.Random(0)
+    for label, here, name in (("psi", P, "psi"), ("gamma", G, "gamma")):
+        other = there.held[there.parameters[name]].subs(at, simultaneous=True)
+        for _ in range(6):
+            point = {m: sp.Rational(rng.randint(5, 15), 7), q: sp.Rational(rng.randint(-9, 9), 5),
+                     b: sp.Rational(rng.randint(1, 30), 10)}
+            point[a] = point[m] * sp.Rational(rng.randint(21, 90), 10)
+            if abs(sp.N((here - other).subs(point), 40)) > sp.Float("1e-30"):
+                raise AssertionError(f"erez_rosen: the spherical chart's {label} is not the prolate spheroidal chart's")
+    p0, g0 = sp.symbols("p0 g0", real=True)
+    source = prolate.geo.g.subs({there.parameters["psi"]: p0, there.parameters["gamma"]: g0})
+    source = source.subs(at, simultaneous=True)
+    image = [at[u] for u in prolate.symbols]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+    pulled = J.T * source * J
+    here = chart.geo.g.subs({psi: p0, gam: g0})
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify(pulled[i, j] - here[i, j]) != 0:
+                raise AssertionError(f"erez_rosen: the prolate spheroidal chart pulled back misses the spherical "
+                                     f"chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    published = next(c for c in json.loads((METRICS / "schwarzschild.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == "spherical")
+    sch = vm.Reader(published["coords"], [p["symbol"] for p in published["parameters"]], ())
+    swap = {sch.symbol[n]: chart.reader.symbol[n] for n in published["coords"]}
+    swap[sch.parameters["r_s"]] = 2 * m
+    values = {tuple(e["indices"]): e["value"] for e in published["metric_components"]}
+    round_ = chart.geo.g.subs({psi: schwarzschild[0], gam: schwarzschild[1]})
+    for i in range(4):
+        for j in range(4):
+            text = values.get((chart.coords_tex[i], chart.coords_tex[j]), "0")
+            if sp.simplify(sch(text).subs(swap) - round_[i, j]) != 0:
+                raise AssertionError(f"erez_rosen: at q = 0 the spherical chart misses Schwarzschild's published "
+                                     f"metric in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["erez_rosen"] = [lambda s=s: erez_rosen(s) for s in ("prolate_spheroidal", "spherical")]
 
 
 # -- Bonnor's magnetic dipole ------------------------------------------------------------

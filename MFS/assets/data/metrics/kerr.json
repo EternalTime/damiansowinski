@@ -185,6 +185,11 @@
       "id": "belinski_zakharov",
       "kind": "family",
       "text": "Kerr's black hole is two solitons on flat space. Belinski and Zakharov's inverse scattering method returns the Kerr-NUT solution from two poles, real ones for the hole with horizons [belinskii1979]."
+    },
+    {
+      "id": "erez_rosen",
+      "kind": "family",
+      "text": "A static mass with a quadrupole moment $q$. Quevedo and Mashhoon set it spinning, and their metric is Kerr's at $q = 0$ [boshkayev2019]."
     }
   ],
   "references": [
@@ -243,7 +248,8 @@
     "meinel2002",
     "chandrasekhar1986",
     "griffiths1991",
-    "belinskii1979"
+    "belinskii1979",
+    "boshkayev2019"
   ],
   "coordinates": [
     {

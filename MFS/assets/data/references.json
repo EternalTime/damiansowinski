@@ -1,5 +1,5 @@
 {
-  "version": "f303c74201ea9124",
+  "version": "822e44cf255f9015",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -23745,6 +23745,218 @@
         "year": "2001",
         "doi": "10.1017/CBO9780511535253",
         "url": "https://doi.org/10.1017/CBO9780511535253"
+      }
+    },
+    "erez1959": {
+      "type": "article",
+      "fields": {
+        "title": "The gravitational field of a particle possessing a multipole moment",
+        "author": "Erez, G. and Rosen, N.",
+        "journal": "Bulletin of the Research Council of Israel",
+        "volume": "8F",
+        "pages": "47--50",
+        "year": "1959",
+        "url": "https://www.osti.gov/biblio/4201189"
+      }
+    },
+    "doroshkevich1965": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational collapse of nonsymmetric and rotating masses",
+        "author": "Doroshkevich, A. G. and Zel'dovich, Ya. B. and Novikov, I. D.",
+        "journal": "Soviet Physics JETP",
+        "volume": "22",
+        "number": "1",
+        "pages": "122--130",
+        "year": "1966",
+        "url": "http://jetp.ras.ru/cgi-bin/e/index/e/22/1/p122?a=list"
+      }
+    },
+    "young1969": {
+      "type": "article",
+      "fields": {
+        "title": "Exact Metric for a Nonrotating Mass with a Quadrupole Moment",
+        "author": "Young, John H. and Coulter, C. Alton",
+        "journal": "Physical Review",
+        "volume": "184",
+        "number": "5",
+        "pages": "1313--1315",
+        "year": "1969",
+        "doi": "10.1103/PhysRev.184.1313",
+        "url": "https://doi.org/10.1103/PhysRev.184.1313"
+      }
+    },
+    "quevedo1989": {
+      "type": "article",
+      "fields": {
+        "title": "General static axisymmetric solution of {Einstein}'s vacuum field equations in prolate spheroidal coordinates",
+        "author": "Quevedo, Hernando",
+        "journal": "Physical Review D",
+        "volume": "39",
+        "number": "10",
+        "pages": "2904--2911",
+        "year": "1989",
+        "doi": "10.1103/PhysRevD.39.2904",
+        "url": "https://doi.org/10.1103/PhysRevD.39.2904"
+      }
+    },
+    "winicour1968": {
+      "type": "article",
+      "fields": {
+        "title": "Static, Axially Symmetric Point Horizons",
+        "author": "Winicour, Jeffrey and Janis, Allen I. and Newman, Ezra T.",
+        "journal": "Physical Review",
+        "volume": "176",
+        "number": "5",
+        "pages": "1507--1513",
+        "year": "1968",
+        "doi": "10.1103/PhysRev.176.1507",
+        "url": "https://doi.org/10.1103/PhysRev.176.1507"
+      }
+    },
+    "quevedoparkes1989": {
+      "type": "article",
+      "fields": {
+        "title": "Geodesics in the {Erez-Rosen} space-time",
+        "author": "Quevedo, Hernando and Parkes, Linda",
+        "journal": "General Relativity and Gravitation",
+        "volume": "21",
+        "number": "10",
+        "pages": "1047--1072",
+        "year": "1989",
+        "doi": "10.1007/BF00774088",
+        "url": "https://doi.org/10.1007/BF00774088"
+      }
+    },
+    "quevedomashhoon1985": {
+      "type": "article",
+      "fields": {
+        "title": "Exterior gravitational field of a rotating deformed mass",
+        "author": "Quevedo, Hernando and Mashhoon, Bahram",
+        "journal": "Physics Letters A",
+        "volume": "109",
+        "number": "1--2",
+        "pages": "13--18",
+        "year": "1985",
+        "doi": "10.1016/0375-9601(85)90381-0",
+        "url": "https://doi.org/10.1016/0375-9601(85)90381-0"
+      }
+    },
+    "quevedo2012": {
+      "type": "misc",
+      "fields": {
+        "title": "Multipolar Solutions",
+        "author": "Quevedo, Hernando",
+        "year": "2012",
+        "eprint": "1201.1608",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1201.1608"
+      }
+    },
+    "geroch1970": {
+      "type": "article",
+      "fields": {
+        "title": "Multipole Moments. {II}. Curved Space",
+        "author": "Geroch, Robert",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "11",
+        "number": "8",
+        "pages": "2580--2588",
+        "year": "1970",
+        "doi": "10.1063/1.1665427",
+        "url": "https://doi.org/10.1063/1.1665427"
+      }
+    },
+    "hansen1974": {
+      "type": "article",
+      "fields": {
+        "title": "Multipole moments of stationary space-times",
+        "author": "Hansen, R. O.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "15",
+        "number": "1",
+        "pages": "46--52",
+        "year": "1974",
+        "doi": "10.1063/1.1666501",
+        "url": "https://doi.org/10.1063/1.1666501"
+      }
+    },
+    "boshkayev2019": {
+      "type": "article",
+      "fields": {
+        "title": "The {Erez-Rosen} Solution Versus the {Hartle-Thorne} Solution",
+        "author": "Boshkayev, Kuantay and Quevedo, Hernando and Nurbakyt, Gulmira and Malybayev, Algis and Urazalina, Ainur",
+        "journal": "Symmetry",
+        "volume": "11",
+        "number": "10",
+        "pages": "1324",
+        "year": "2019",
+        "doi": "10.3390/sym11101324",
+        "eprint": "1909.10949",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.3390/sym11101324"
+      }
+    },
+    "bini2013": {
+      "type": "article",
+      "fields": {
+        "title": "The {Erez-Rosen} metric and the role of the quadrupole on light propagation",
+        "author": "Bini, Donato and Crosta, Mariateresa and de Felice, Fernando and Geralico, Andrea and Vecchiato, Alberto",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "30",
+        "number": "4",
+        "pages": "045009",
+        "year": "2013",
+        "doi": "10.1088/0264-9381/30/4/045009",
+        "eprint": "1408.5264",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/30/4/045009"
+      }
+    },
+    "memmen2021": {
+      "type": "article",
+      "fields": {
+        "title": "Geometrically thick tori around compact objects with a quadrupole moment",
+        "author": "Memmen, Jan-Menno and Perlick, Volker",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "38",
+        "number": "13",
+        "pages": "135002",
+        "year": "2021",
+        "doi": "10.1088/1361-6382/abfebf",
+        "eprint": "2103.04702",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/abfebf"
+      }
+    },
+    "bini2009": {
+      "type": "article",
+      "fields": {
+        "title": "Generalized {Kerr} spacetime with an arbitrary mass quadrupole moment: geometric properties versus particle motion",
+        "author": "Bini, Donato and Geralico, Andrea and Luongo, Orlando and Quevedo, Hernando",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "26",
+        "number": "22",
+        "pages": "225006",
+        "year": "2009",
+        "doi": "10.1088/0264-9381/26/22/225006",
+        "eprint": "0909.4150",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/26/22/225006"
+      }
+    },
+    "castejon1990": {
+      "type": "article",
+      "fields": {
+        "title": "Superposition of the {Kerr} metric with the generalized {Erez-Rosen} solution",
+        "author": "Castejon-Amenedo, J. and Manko, V. S.",
+        "journal": "Physical Review D",
+        "volume": "41",
+        "number": "6",
+        "pages": "2018--2020",
+        "year": "1990",
+        "doi": "10.1103/PhysRevD.41.2018",
+        "url": "https://doi.org/10.1103/PhysRevD.41.2018"
       }
     }
   }
