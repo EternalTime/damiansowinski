@@ -1415,6 +1415,19 @@ The Schwarzschild black hole in $D \ge 4$ spacetime dimensions, the static vacuu
 - chart Ingoing Eddington-Finkelstein, Five Dimensions: coordinates $(v, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_h^2}{r^2}\right)dv^2 + 2\,dv\,dr + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
 - chart Hyperspherical, Six Dimensions: coordinates $(t, r, \chi, \psi, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_h^3}{r^3}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_h^3}{r^3}} + r^2\left(d\chi^2 + \sin^2\chi\,d\psi^2 + \sin^2\chi\sin^2\psi\,d\theta^2 + \sin^2\chi\sin^2\psi\sin^2\theta\,d\phi^2\right)$$
 
+### Semiclosed World, the Bag of Gold
+
+More than half of a closed Friedmann universe of dust joined to Schwarzschild's exterior behind its throat. The mass seen from outside falls as the dust within grows, and reaches zero as the universe closes.
+
+- id: `semiclosed_world`
+- tags: dust, matched solution, closed universe, three sphere, semiclosed world, bag of gold, throat, Einstein-Rosen bridge, black hole, white hole, mass defect, black hole entropy, curvature singularity, horizon, event horizon, apparent horizon, time symmetric, time-dependent, cosmology, spherically symmetric, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/semiclosed_world.json
+- chart Comoving Dust Interior: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = -c^2d\tau^2 + a^2\left(d\chi^2 + \sin^2\chi\,d\theta^2 + \sin^2\chi\sin^2\theta\,d\phi^2\right)$$
+- chart Conformal Dust Interior: coordinates $(\eta, \chi, \theta, \phi)$, $$ds^2 = \dfrac{a_m^2}{4}\left(1 + \cos\eta\right)^2\left(-d\eta^2 + d\chi^2 + \sin^2\chi\,d\theta^2 + \sin^2\chi\sin^2\theta\,d\phi^2\right)$$
+- chart Schwarzschild Exterior: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Isotropic Exterior: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(\dfrac{4r - r_s}{4r + r_s}\right)^2c^2dt^2 + \left(1 + \dfrac{r_s}{4r}\right)^4\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Senovilla Universe With No Singularity
 
 A universe filled with radiation and arranged around an axis, which contracts, is densest at one moment, and expands again, with no big bang and no singularity anywhere, found by José Senovilla in 1990. It satisfies the energy conditions and is globally hyperbolic, and the singularity theorems leave it alone because it has no closed trapped surface and its expansion falls to zero far from the axis.

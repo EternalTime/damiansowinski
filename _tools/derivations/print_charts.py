@@ -5645,6 +5645,212 @@ def einstein_rosen_bridge_check(chart, system):
 
 CHARTS["einstein_rosen_bridge"] = [lambda s=s: einstein_rosen_bridge(s) for s in ERB_CHARTS]
 
+# -- The semiclosed world -----------------------------------------------------------------
+
+SCW_CHARTS = ["comoving", "conformal", "schwarzschild", "isotropic"]
+SCW_THREE_SPHERE = ("\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2"
+                    " + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)")
+
+
+def semiclosed_world(system):
+    """The semiclosed world of Zel'dovich and Novikov, Wheeler's bag of gold: the ball chi <= chi_0
+    of the closed Friedmann universe of dust with chi_0 past the equator, pi/2 < chi_0 < pi, and
+    Schwarzschild's vacuum outside it. It is Oppenheimer and Snyder's construction, MTW 32.4, with
+    the surface on the far side of the three sphere, as Hsu and Reeb write it (their (8) to (10)):
+    the areal radius falls outward at the surface, so the exterior begins on the far sheet of the
+    Kruskal manifold, runs in through the throat r = r_s and out to infinity, and the mass seen
+    there is r_s = a_m sin^3 chi_0.
+
+    Four charts. Inside, the comoving chart with the scale factor left free, the line element of
+    the published Oppenheimer-Snyder interior, and the conformal chart with the cycloid written
+    out, a = (a_m/2)(1 + cos eta), which is checked to be dust: G^eta_eta = -3 a_m/a^3 and every
+    other component zero. Outside, Schwarzschild's chart, which covers one sheet at a time, and
+    the isotropic chart, which covers both, each checked to be the published Schwarzschild metric
+    carried along its map. semiclosed_world.md records each chart's source."""
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    sphere = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    components, kretschmann, chart_line = {}, None, None
+    if system == "comoving":
+        coords, name = ["\\tau", "\\chi", "\\theta", "\\phi"], "Comoving Dust Interior"
+        parameters = ["a = a(\\tau)", "\\chi_0", "a_m"]
+        domains = ["\\tau \\in (-\\tau_s, \\tau_s)", "\\chi \\in [0, \\chi_0]"] + angles
+        line = "ds^2 = -c^2d\\tau^2 + a^2" + SCW_THREE_SPHERE
+        chart_line = "ds^2 = -d\\tau^2 + a^2" + SCW_THREE_SPHERE
+    elif system == "conformal":
+        coords, name = ["\\eta", "\\chi", "\\theta", "\\phi"], "Conformal Dust Interior"
+        parameters = ["a_m", "\\chi_0"]
+        domains = ["\\eta \\in (-\\pi, \\pi)", "\\chi \\in [0, \\chi_0]"] + angles
+        line = ("ds^2 = \\dfrac{a_m^2}{4}\\left(1 + \\cos\\eta\\right)^2\\left(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\,d\\theta^2"
+                " + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)")
+    elif system == "schwarzschild":
+        coords, name, parameters = ["t", "r", "\\theta", "\\phi"], "Schwarzschild Exterior", ["r_s"]
+        domains = (["t \\in (-\\infty, \\infty)", "r \\in (r_s, \\infty)"] + angles
+                   + ["r \\le R(t) \\;\\text{(on the sheet of the dust)}"])
+        bare = "1 - \\dfrac{r_s}{r}"
+        f = "\\left(" + bare + "\\right)"
+        line = "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "} + r^2" + sphere
+        chart_line = "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{" + bare + "} + r^2" + sphere
+        components = {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                      "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}}
+        kretschmann = "\\dfrac{12r_s^2}{r^6}"
+    else:
+        coords, name, parameters = ["t", "r", "\\theta", "\\phi"], "Isotropic Exterior", ["r_s"]
+        domains = (["t \\in (-\\infty, \\infty)", "r \\in [r_d(t), \\infty)"] + angles
+                   + ["r = r_s/4 \\;\\text{(the throat)}"])
+        f = "\\left(\\dfrac{4r - r_s}{4r + r_s}\\right)^2"
+        space = "\\left(1 + \\dfrac{r_s}{4r}\\right)^4\\left(dr^2 + r^2" + sphere + "\\right)"
+        line = "ds^2 = -" + f + "c^2dt^2 + " + space
+        chart_line = "ds^2 = -" + f + "dt^2 + " + space
+        components = {"metric_components": {("t", "t"): "-" + f, ("r", "r"): "\\left(1 + \\dfrac{r_s}{4r}\\right)^4"}}
+        kretschmann = "\\dfrac{12r_s^2}{r^6}\\left(1 + \\dfrac{r_s}{4r}\\right)^{-12}"
+    probe = vm.Reader(coords, parameters, ())
+    if system == "comoving":
+        lead = [probe.parameters["a"]]
+    elif system == "conformal":
+        lead = [probe.parameters["a_m"]]
+    else:
+        lead = [probe.symbol["r"], probe.parameters["r_s"]]
+    spec = {
+        "metric_id": "semiclosed_world",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line},
+        "chart_line_element": chart_line or line,
+        "printer": {"lead": lead, "flip": False},
+        "components": components,
+        "check": lambda chart: semiclosed_world_check(chart, system),
+    }
+    if kretschmann:
+        spec["kretschmann"] = kretschmann
+    if system == "conformal":
+        spec["pretty"] = semiclosed_world_cycloid(probe.symbol["\\eta"])
+    return spec
+
+
+def semiclosed_world_cycloid(eta):
+    """Every value of the conformal chart as a rational function of cos eta, and of sin eta to
+    the first power at most, factored, so that the scale factor shows as powers of 1 + cos eta."""
+    C, S = sp.Dummy("C"), sp.Dummy("S")
+
+    def pretty(value):
+        value = sp.sympify(value).subs({sp.cos(eta): C, sp.sin(eta): S})
+        top, bottom = sp.fraction(sp.together(value))
+        reduce = lambda e: sp.Poly(sp.expand(e), S).as_expr() if not e.has(S) else sp.rem(sp.expand(e), S ** 2 + C ** 2 - 1, S)
+        top, bottom = reduce(top), reduce(bottom)
+        if bottom.has(S):
+            # a + b S below the line: multiply through by a - b S.
+            b = sp.Poly(bottom, S)
+            conj = b.coeff_monomial(1) - b.coeff_monomial(S) * S
+            top, bottom = reduce(top * conj), reduce(bottom * conj)
+        return sp.factor(sp.cancel(top / bottom)).subs({C: sp.cos(eta), S: sp.sin(eta)})
+    return pretty
+
+
+def semiclosed_world_check(chart, system):
+    """Inside, the comoving chart is the published interior of Oppenheimer and Snyder slot for slot,
+    and the conformal chart is that chart pulled back along c tau = (a_m/2)(eta + sin eta) with
+    a = (a_m/2)(1 + cos eta), is conformally flat, and is dust at rest in it: G^eta_eta = -3 a_m/a^3
+    and no other component, so 8 pi G rho/c^2 = 3 a_m/a^3. Outside, both charts are vacuum and are
+    Schwarzschild's published metric carried along r and along the areal radius (4r + r_s)^2/16r.
+    The matching itself is checked on the two published line elements: on the surface chi = chi_0
+    with r_s = a_m sin^3 chi_0 the areal radius is a sin chi_0, the surface is a radial geodesic of
+    the exterior with energy cos chi_0 per unit mass, negative past the equator, and the unit
+    normal's derivative of the areal radius is cos chi_0 on both sides."""
+    g = chart.geo.g
+    P = chart.reader.parameters
+
+    def published(metric_id, system_id):
+        entry = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == system_id)
+        reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+        there = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+        n = len(entry["coords"])
+        matrix = sp.Matrix(n, n, lambda i, j: reader(there.get((entry["coords"][i], entry["coords"][j]), "0")))
+        return reader, matrix, entry["coords"]
+
+    def same(pulled, what):
+        for i in range(4):
+            for j in range(i, 4):
+                if sp.simplify(pulled[i, j] - g[i, j]) != 0:
+                    raise AssertionError(f"semiclosed_world: the {system} chart is not {what} in slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+    if system in ("comoving", "conformal"):
+        reader, matrix, coords = published("oppenheimer_snyder", "interior_comoving")
+        names = dict(zip([reader.symbol[c] for c in coords[1:]], chart.symbols[1:]))
+        if system == "comoving":
+            names[reader.symbol[coords[0]]] = chart.symbols[0]
+            a_there = reader.parameters["a"]
+            there = matrix.subs(a_there, P["a"]).subs(names, simultaneous=True)
+            same(there, "the published interior of Oppenheimer and Snyder")
+            return
+        eta = chart.symbols[0]
+        am = P["a_m"]
+        a = am * (1 + sp.cos(eta)) / 2
+        tau = am * (eta + sp.sin(eta)) / 2          # c tau, the chart time of the comoving chart
+        there = matrix.subs(reader.parameters["a"], a).subs(names, simultaneous=True)
+        J = sp.diag(sp.diff(tau, eta), 1, 1, 1)
+        same(J.T * there * J, "the published comoving interior pulled back along the cycloid")
+        weyl = chart.geo.weyl_llll()
+        if any(vm.norm(vm._at(weyl, index)) != 0 for index in vm._indices(4, 4)):
+            raise AssertionError("semiclosed_world: the dust is not conformally flat")
+        G = chart.geo.raise_indices(chart.geo.einstein_ll(), 2, (0,))
+        for i in range(4):
+            for j in range(4):
+                want = -3 * am / a ** 3 if i == j == 0 else 0
+                if semiclosed_world_cycloid(eta)(vm._at(G, (i, j)) - want) != 0:
+                    raise AssertionError(f"semiclosed_world: G^a_b of the conformal chart in slot {(i, j)} is not dust's")
+        return
+    rs = P["r_s"]
+    t, x = chart.symbols[:2]
+    ricci = chart.geo.ricci_ll()
+    if any(vm.norm(vm._at(ricci, index)) != 0 for index in vm._indices(4, 2)):
+        raise AssertionError(f"semiclosed_world: the {system} chart is not a vacuum")
+    reader, matrix, coords = published("schwarzschild", "spherical")
+    image = x if system == "schwarzschild" else (4 * x + rs) ** 2 / (16 * x)
+    names = dict(zip([reader.symbol[c] for c in coords[2:]], chart.symbols[2:]))
+    names[reader.parameters["r_s"]] = rs
+    J = sp.diag(1, sp.diff(image, x), 1, 1)
+    there = matrix.subs(names).subs({reader.symbol[coords[0]]: t, reader.symbol[coords[1]]: image}, simultaneous=True)
+    same(J.T * there * J, "Schwarzschild's published metric carried along its map")
+    if system == "schwarzschild":
+        semiclosed_world_matching()
+
+
+def semiclosed_world_matching():
+    """The junction on chi = chi_0, for any chi_0 in (0, pi), with r_s = a_m sin^3 chi_0. The surface
+    is r = R(eta) = a sin chi_0 on the cycloid a = (a_m/2)(1 + cos eta). (1) It is a radial geodesic
+    of the exterior of energy E = cos chi_0 per unit mass: (dR/d tau)^2 = E^2 - (1 - r_s/R), with
+    c d tau = a d eta. (2) The areal radius changes along the unit outward normal at the rate
+    cos chi_0 on the dust's side, (1/a) d(a sin chi)/d chi, and on the vacuum's side that rate is
+    the same E, since for a radial geodesic of Schwarzschild n^mu d_mu r = E. So the extrinsic
+    curvature of the surface agrees and no shell stands on it; past the equator the rate is
+    negative, the areal radius falling outward, which only the far sheet of the exterior offers."""
+    eta, chi0 = sp.symbols("eta chi_0", real=True)
+    am = sp.Symbol("a_m", positive=True)
+    a = am * (1 + sp.cos(eta)) / 2
+    R = a * sp.sin(chi0)
+    rs = am * sp.sin(chi0) ** 3
+    speed = sp.diff(R, eta) / a                       # dR/d(c tau)
+    energy = sp.cos(chi0) ** 2 - (1 - rs / R)
+    if sp.simplify(speed ** 2 - energy) != 0:
+        raise AssertionError("semiclosed_world: the surface is not a radial geodesic of energy cos chi_0")
+    chi = sp.Symbol("chi", real=True)
+    inside = (sp.diff(a * sp.sin(chi), chi) / a).subs(chi, chi0)
+    # Outside, with u = (E/f, dr/d tau) in (ct, r) and f = 1 - r_s/r, the unit normal is
+    # n = (dr/d tau / f, E), so n(r) = E.
+    f = 1 - rs / R
+    u = sp.Matrix([sp.cos(chi0) / f, speed])
+    n = sp.Matrix([speed / f, sp.cos(chi0)])
+    metric = sp.diag(-f, 1 / f)
+    if sp.simplify((u.T * metric * u)[0] + 1) != 0 or sp.simplify((n.T * metric * n)[0] - 1) != 0 \
+            or sp.simplify((u.T * metric * n)[0]) != 0:
+        raise AssertionError("semiclosed_world: the surface's velocity and normal are not a unit frame")
+    if sp.simplify(inside - n[1]) != 0:
+        raise AssertionError("semiclosed_world: the areal radius changes at different rates on the two sides")
+
+
+CHARTS["semiclosed_world"] = [lambda s=s: semiclosed_world(s) for s in SCW_CHARTS]
+
 # -- The Simpson-Visser black bounce -----------------------------------------------------
 
 SV_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"

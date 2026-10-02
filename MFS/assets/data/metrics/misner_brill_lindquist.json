@@ -78,6 +78,11 @@
       "id": "boson_star",
       "kind": "programme",
       "text": "Wheeler's other way to make a body out of fields and geometry alone was the geon, a ball of field held together by its own gravity [wheeler1955]. His wormholes with Misner make mass and charge out of empty space with a handle in it [misner1957]."
+    },
+    {
+      "id": "semiclosed_world",
+      "kind": "family",
+      "text": "One more moment of time symmetry: a closed universe of dust behind a single throat. The name bag of gold began in Wheeler's lectures on data of this kind [marolf2009]."
     }
   ],
   "references": [
@@ -105,7 +110,8 @@
     "kramer1980",
     "kastor1993",
     "brill1994",
-    "wheeler1955"
+    "wheeler1955",
+    "marolf2009"
   ],
   "coordinates": [
     {

@@ -139,6 +139,11 @@
       "id": "bonnor_magnetic_dipole",
       "kind": "limit_source",
       "text": "Two extremal Reissner-Nordström black holes of opposite magnetic charge on one axis. In the limit $b \\to \\infty$ the two are infinitely far apart and each is the extremal hole alone [emparan2000]."
+    },
+    {
+      "id": "semiclosed_world",
+      "kind": "family",
+      "text": "A closed universe of charged dust behind a throat. Moissei Markov and Valeri Frolov found in 1970 that any charge keeps such a universe from closing, and its outside is this metric [markov1970]."
     }
   ],
   "references": [
@@ -176,7 +181,8 @@
     "breitenlohner1994",
     "volkov1999",
     "brill1963",
-    "emparan2000"
+    "emparan2000",
+    "markov1970"
   ],
   "coordinates": [
     {

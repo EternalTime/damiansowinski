@@ -3512,6 +3512,7 @@ class StacksAndMovies(unittest.TestCase):
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
     MOVIES = {("frw", "closed"): "$ct$", ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("vaidya", "shell"): "$v - r$",
+              ("semiclosed_world", "bag"): "$c\\tau$",
               ("bonnor_vaidya", "shell"): "$v - r$",
               ("cosmic_string", "unroll"): "$\\Delta\\phi$", ("point_particle_2plus1", "unroll"): "$\\Delta\\phi$",
               ("milne", "hyperboloids"): "$ct$",
@@ -5319,6 +5320,29 @@ class Slices(unittest.TestCase):
             return ct, [novikov_t(lo, t)[0] if t else lo, novikov_t(hi, t)[0] if t else hi]
         if key == "oppenheimer_snyder/interior_comoving/through":
             return (lambda X: t / (2 * math.sqrt(2))), [0, math.pi / 4]
+        if key in ("semiclosed_world/comoving/dust", "semiclosed_world/conformal/dust"):
+            # A moment of the dust's proper time, in units of a_m = 2 sqrt 2 r_s, or its conformal
+            # time, sqrt 2 (eta + sin eta) = c tau, across the dust to chi_0 = 3 pi/4.
+            eta = bisect(lambda e: math.sqrt(2) * (e + math.sin(e)) - t, 0, math.pi) if t else 0.0
+            return (lambda X: eta if "conformal" in key else t / (2 * math.sqrt(2))), [0, 3 * math.pi / 4]
+        if key in ("semiclosed_world/schwarzschild/radial", "semiclosed_world/isotropic/radial"):
+            # Novikov's shells of the far sheet, from the throat, which rests at r_s, to the shell the
+            # embedding's rim rests at, r_s (s^2 + 1); the isotropic radius of the areal radius r on
+            # that sheet is (r - 1/2 + sqrt(r (r - 1)))/2, and at tau = 0 the isotropic plane holds the
+            # whole moment, from the surface of the dust behind the throat.
+            s_lo, s_hi = self.reach(surface, "comoving_synchronous")
+            top = s_hi * s_hi + 1
+            iso = "isotropic" in key
+            to_x = (lambda r: (r - 0.5 + math.sqrt(r * (r - 1))) / 2) if iso else (lambda r: r)
+            to_r = (lambda X: X * (1 + 1 / (4 * X)) ** 2) if iso else (lambda X: X)
+            if not t:
+                behind = s_lo * s_lo + 1
+                return (lambda X: 0.0), [(behind - 0.5 - math.sqrt(behind * (behind - 1))) / 2 if iso else 1.0, to_x(top)]
+
+            def ct(X):
+                r = min(max(to_r(X), novikov_t(1 + 1e-9, t)[0]), novikov_t(top, t)[0])
+                return novikov_t(bisect(lambda R: novikov_t(R, t)[0] - r, 1 + 1e-9, top), t)[1]
+            return ct, [to_x(novikov_t(top, t)[0])]
         if key.startswith("einstein_rosen_waves/"):
             # A moment ct = T, drawn against rho and ct in both charts, out to the embedding's reach.
             return (lambda X: t), list(self.reach(surface))
@@ -5636,6 +5660,7 @@ class Slices(unittest.TestCase):
                                 h = 2e-4 * (X1 - X0)
                                 slope = (abs(Y_of(min(X + h, X1)) - Y_of(max(X - h, X0 + 1e-9 if key.startswith(
                                     ("schwarzschild/edd", "string_black_hole/edd", "oppenheimer_snyder/ext",
+                                     "semiclosed_world/schwarzschild", "semiclosed_world/isotropic",
                                      "black_string/edd", "black_string/kerr", "kaluza_klein_black_hole/edd",
                                      "kaluza_klein_black_hole/einstein_edd")) else X0))) / (2 * h)
                                          if X0 < X < X1 else 0)
@@ -5826,6 +5851,16 @@ class Slices(unittest.TestCase):
                         inside, outside = mark["lines"]
                         self.assertEqual(inside, [[0, round(eta, 4)], [round(chi0, 4), round(eta, 4)]], where)
                         self.assertLess(math.dist(outside[0], [chi0, eta]), 2e-4, where)
+                    elif metric_id == "semiclosed_world":
+                        # The line T = eta across the dust to chi_0 = 3 pi/4, sqrt 2 (eta + sin eta) = c tau,
+                        # and from the surface Novikov's curve outward through the throat.
+                        chi0 = 3 * math.pi / 4
+                        eta = bisect(lambda e: math.sqrt(2) * (e + math.sin(e)) - t, 0, math.pi) if t else 0.0
+                        inside, outside = mark["lines"]
+                        self.assertEqual(inside, [[0, round(eta, 4)], [round(chi0, 4), round(eta, 4)]], where)
+                        self.assertLess(math.dist(outside[0], [chi0, eta]), 2e-4, where)
+                        self.assertTrue(all(b[0] > a[0] for a, b in zip(outside, outside[1:])), where)
+                        self.assertTrue(all(-2e-4 <= T < math.pi for _, T in outside), where)
                     elif metric_id == "kantowski_sachs" and mark["view"] == "dust":
                         # p, q = arctan(tau -+ r), tau the integral of 2 cos^3(s)/(cos(s) + s sin(s))
                         # from 0 to eta, by Simpson's rule.

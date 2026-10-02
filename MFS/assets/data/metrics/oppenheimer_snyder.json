@@ -72,6 +72,11 @@
       "id": "neugebauer_meinel",
       "kind": "family",
       "text": "Dust that reaches a black hole without falling: a spinning disc whose equilibria run out at the extreme Kerr black hole. Meinel set the two side by side as idealized routes to a black hole [meinel2002]."
+    },
+    {
+      "id": "semiclosed_world",
+      "kind": "family",
+      "text": "The same construction with the cut taken past the equator of the closed universe, $\\chi_0 > \\pi/2$. The dust then lies behind the throat of Schwarzschild's geometry, and the mass seen from outside falls as more of the universe is kept [hsu2008unitarity]."
     }
   ],
   "references": [
@@ -89,7 +94,8 @@
     "vaidya1966",
     "mann1993",
     "einstein1939",
-    "meinel2002"
+    "meinel2002",
+    "hsu2008unitarity"
   ],
   "coordinates": [
     {
