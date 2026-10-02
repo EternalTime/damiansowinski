@@ -377,6 +377,17 @@ The exact gravitational field of a steady beam of light, which William Bonnor fo
 - chart Null Cylindrical, Inside the Beam: coordinates $(u, v, \rho, \phi)$, $$ds^2 = -2\,du\,dv + d\rho^2 + \rho^2d\phi^2 - \dfrac{8\pi G\epsilon}{c^4}\rho^2\,du^2$$
 - chart Null Cylindrical, Outside the Beam: coordinates $(u, v, \rho, \phi)$, $$ds^2 = -2\,du\,dv + d\rho^2 + \rho^2d\phi^2 - \dfrac{8\pi G\epsilon}{c^4}R^2\left(1 + 2\ln\left(\dfrac{\rho}{R}\right)\right)du^2$$
 
+### Bonnor's Rotating Dust Cloud
+
+A stationary, axially symmetric cloud of dust in rigid rotation that thins out to nothing in every direction, found by William Bonnor in 1977. Its total mass is zero, its centre is a singularity of negative mass, and the circles about the axis inside a torus around the centre are closed timelike curves.
+
+- id: `bonnor_rotating_dust`
+- tags: dust, rotating, axisymmetric, stationary, closed timelike curves, asymptotically flat, angular momentum, frame dragging, negative mass, curvature singularity, naked singularity, directional singularity, Petrov type I, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/bonnor_rotating_dust.json
+- chart Cylindrical: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -\left(c\,dt - \dfrac{a^2\rho^2}{r^3}\,d\phi\right)^2 + \rho^2d\phi^2 + e^{a^4\rho^2(\rho^2 - 8z^2)/(8r^8)}\left(d\rho^2 + dz^2\right)$$
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(c\,dt - \dfrac{a^2\sin^2\theta}{r}\,d\phi\right)^2 + r^2\sin^2\theta\,d\phi^2 + e^{a^4\sin^2\theta(9\sin^2\theta - 8)/(8r^4)}\left(dr^2 + r^2d\theta^2\right)$$
+
 ### Bonnor-Vaidya Charged Radiating Star
 
 Vaidya's radiating star with a charge: the field of a spherical body that sends out, or takes in, null dust carrying electric charge as well as energy, found by William Bonnor and Prahlad Vaidya in 1970 as an exact solution of the Einstein-Maxwell equations. Its mass and its charge are functions of a null time, and where both are constant it is the charged black hole of Reissner and Nordström.

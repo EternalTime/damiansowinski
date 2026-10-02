@@ -40,6 +40,11 @@
       "id": "som_raychaudhuri",
       "kind": "family",
       "text": "The same rigidly rotating dust given an electric charge. The factor $e^{-r^2/R^2}$ goes from the line element, and the universe is homogeneous [som1968, reboucas1983]."
+    },
+    {
+      "id": "bonnor_rotating_dust",
+      "kind": "family",
+      "text": "William Bonnor's cloud of 1977, a member of van Stockum's own class of rigidly rotating dust that thins out in every direction. Its total mass is zero and its centre is singular [bonnor1977cloud, bratek2007]."
     }
   ],
   "references": [
@@ -55,7 +60,9 @@
     "godel1949",
     "deser1992time",
     "som1968",
-    "reboucas1983"
+    "reboucas1983",
+    "bonnor1977cloud",
+    "bratek2007"
   ],
   "coordinates": [
     {

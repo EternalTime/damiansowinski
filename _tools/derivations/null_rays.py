@@ -2717,6 +2717,26 @@ DIAGRAMS = [
     Diagram("curzon_chazy", "spherical", "equator", "$t$ and $r$ in the plane $\\theta = \\pi/2$", ("t", "r"), (0, 4, -2, 2),
             "$r/m$", "$ct/m$", {"m": 1}, {**EQUATOR, "phi": "0"},
             lines=(("surface", "r", "1", "$r = m$, the narrowest circle about the axis"),)),
+    # Bonnor's rotating dust cloud in units of a: the axis, which is flat and totally geodesic; the
+    # plane z = 0 from the null circle rho = a out, with the circles of phi divided out, the rays of
+    # no angular momentum; and, in the cylindrical chart, the circles of the plane z = 0 at a/2 and
+    # 3a/2, unrolled as van Stockum's cylinders are, phi scaled by rho.
+    Diagram("bonnor_rotating_dust", "cylindrical", "axis", "$t$ and $z$ on the axis", ("t", "z"), (0, 4, -2, 2),
+            "$z/a$", "$ct/a$", {"a": 1}, {"rho": "0", "phi": "0"}),
+    Diagram("bonnor_rotating_dust", "cylindrical", "equator", "$t$ and $\\rho$ in the plane $z = 0$", ("t", "\\rho"),
+            (1, 5, -2, 2), "$\\rho/a$", "$ct/a$", {"a": 1}, {"z": "0"}, quotient="phi"),
+    Diagram("bonnor_rotating_dust", "cylindrical", "inside", "$t$ and $\\phi$ at $\\rho = a/2$", ("t", "\\phi"),
+            (-math.pi / 2, math.pi / 2, -math.pi / 2, math.pi / 2), "$\\rho\\phi/a$", "$ct/a$", {"a": 1},
+            {"rho": "1/2", "z": "0"}, to_display=((0, 0.5), (1, 0)), orient="vector", families=SIDEWAYS,
+            cones=(5, 5), periodic=("\\phi",)),
+    Diagram("bonnor_rotating_dust", "cylindrical", "outside", "$t$ and $\\phi$ at $\\rho = 3a/2$", ("t", "\\phi"),
+            (-3 * math.pi / 2, 3 * math.pi / 2, -3 * math.pi / 2, 3 * math.pi / 2), "$\\rho\\phi/a$", "$ct/a$",
+            {"a": 1}, {"rho": "3/2", "z": "0"}, to_display=((0, 1.5), (1, 0)), orient="vector",
+            families=SIDEWAYS, cones=(5, 5), periodic=("\\phi",)),
+    Diagram("bonnor_rotating_dust", "spherical", "axis", "$t$ and $r$ on the axis", ("t", "r"), (0, 4, -2, 2),
+            "$r/a$", "$ct/a$", {"a": 1}, {"theta": "0", "phi": "0"}),
+    Diagram("bonnor_rotating_dust", "spherical", "equator", "$t$ and $r$ in the plane $\\theta = \\pi/2$", ("t", "r"),
+            (1, 5, -2, 2), "$r/a$", "$ct/a$", {"a": 1}, {"theta": "pi/2"}, quotient="phi"),
     # Kramer and Neugebauer's two Kerr black holes, drawn as Herdeiro and Rebelo's pair of opposite
     # spins, on its two totally geodesic planes: the axis, where the cones close on the four poles
     # of the horizons, and the plane midway between the holes at phi = 0, which the half turn
@@ -6380,6 +6400,60 @@ CAPTIONS = {
         "The cones are narrowest at $r = m/2$ and open without bound toward $r = 0$, the ring, which every ingoing ray "
         "reaches in a finite time $t$ and where the Kretschmann scalar diverges as $e^{2m^2/r^2}$.",
     ],
+    ("bonnor_rotating_dust", "cylindrical", "axis"): [
+        "The plane of $t$ and $z$ ($\\rho = 0$, $\\phi = 0$) of Bonnor's dust cloud ($a = 1$), its axis of rotation. "
+        "The twist $a^2\\rho^2/r^3$ and the exponent of the conformal factor both vanish on the axis, so the metric "
+        "on it is $-c^2dt^2 + dz^2$, the rays are $ct = \\pm z + $ const at 45°, and no Christoffel symbol turns "
+        "them out of the plane, so they are null geodesics.",
+        "The plane is flat, and the curvature of the spacetime across it is not: on the axis the density of the "
+        "dust is $c^2a^4/2\\pi Gz^6$ and the Kretschmann scalar is $4a^4(8a^4 - 27z^4)/z^{12}$, and both diverge at "
+        "$z = 0$, the singularity, which a ray along the axis reaches in a finite time.",
+    ],
+    ("bonnor_rotating_dust", "cylindrical", "equator"): [
+        "The equatorial plane ($z = 0$) of Bonnor's dust cloud ($a = 1$) drawn in $t$ and $\\rho$, with $\\phi$ left "
+        "out, from the closed null curve $\\rho = a$ outward. The curves are the null geodesics of no angular "
+        "momentum, $c\\,dt/d\\rho = \\pm e^{a^4/16\\rho^4}\\sqrt{1 - a^4/\\rho^4}$, each turning toward $-\\phi$ "
+        "as it goes, $d\\phi = -a^2c\\,dt/(\\rho^3 - a^4/\\rho)$.",
+        "Far out the cones stand at 45°. Toward $\\rho = a$ they open until their edges lie level, and a ray "
+        "reaches that circle in a finite time $t$.",
+    ],
+    ("bonnor_rotating_dust", "cylindrical", "inside"): [
+        "The circle $\\rho = a/2$ of the plane $z = 0$ through time, the cylinder of $t$ and $\\phi$, opened along "
+        "the line $\\phi = \\pm\\pi$ and drawn with $\\rho\\phi/a$ across, so that its left and right edges are that "
+        "one line. The metric on it is $-c^2dt^2 + (2a^2/\\rho)\\,c\\,dt\\,d\\phi + (\\rho^2 - a^4/\\rho^2)\\,d\\phi^2$, "
+        "the same at every point, so its null curves are straight, $c\\,dt = (a^2/\\rho \\pm \\rho)\\,d\\phi$.",
+        "Inside $\\rho = a$ the coefficient $g_{\\phi\\phi}$ is negative and the cones have tipped over past the "
+        "horizontal: every horizontal line, run toward $-\\phi$, points into the future cones, so the circle of "
+        "constant $t$, $\\rho$, and $z$ is a closed timelike curve. Neither family is a null geodesic: light "
+        "launched along the one moving to $+\\phi$ is turned toward the axis, and light launched along the one "
+        "moving to $-\\phi$ away from it.",
+    ],
+    ("bonnor_rotating_dust", "cylindrical", "outside"): [
+        "The circle $\\rho = 3a/2$ of the plane $z = 0$ through time, opened along $\\phi = \\pm\\pi$ in the same "
+        "way. Outside $\\rho = a$ the circle of constant $t$ is spacelike and the horizontal lines lie outside "
+        "every cone. The null curves are $c\\,dt = (a^2/\\rho + \\rho)\\,d\\phi$ moving to $+\\phi$ and "
+        "$c\\,dt = -(\\rho - a^2/\\rho)\\,d\\phi$ moving to $-\\phi$, so the cross term tilts every cone toward "
+        "$-\\phi$: a curve moving that way covers $13/5$ of the $\\phi$ in a given $t$ that one moving the other "
+        "way does.",
+        "Neither family is a null geodesic, and light launched along either is turned away from the axis.",
+    ],
+    ("bonnor_rotating_dust", "spherical", "axis"): [
+        "The plane of $t$ and $r$ ($\\theta = 0$, $\\phi = 0$) of Bonnor's dust cloud ($a = 1$), the upper half of "
+        "its axis of rotation. The twist and the exponent of the conformal factor both carry $\\sin^2\\theta$, so "
+        "the metric on the axis is $-c^2dt^2 + dr^2$, the rays are $ct = \\pm r + $ const at 45°, and no "
+        "Christoffel symbol turns them out of the plane, so they are null geodesics.",
+        "The plane is flat, and the curvature of the spacetime across it is not: on the axis the density of the "
+        "dust is $c^2a^4/2\\pi Gr^6$ and the Kretschmann scalar is $4a^4(8a^4 - 27r^4)/r^{12}$, and both diverge at "
+        "$r = 0$, the singularity, which a ray along the axis reaches in a finite time.",
+    ],
+    ("bonnor_rotating_dust", "spherical", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Bonnor's dust cloud ($a = 1$) drawn in $t$ and $r$, with "
+        "$\\phi$ left out, from the closed null curve $r = a$ outward. The curves are the null geodesics of no "
+        "angular momentum, $c\\,dt/dr = \\pm e^{a^4/16r^4}\\sqrt{1 - a^4/r^4}$, each turning toward $-\\phi$ as it "
+        "goes, $d\\phi = -a^2c\\,dt/(r^3 - a^4/r)$.",
+        "Far out the cones stand at 45°. Toward $r = a$ they open until their edges lie level, and a ray reaches "
+        "that circle in a finite time $t$.",
+    ],
     ("double_kerr", "weyl", "axis"): [
         "The plane of $t$ and $z$ ($\\rho = 0$, $\\phi = 0$) of Herdeiro and Rebelo's pair ($J = GM^2/c$, $\\zeta = 4m$). "
         "The metric on it is $-f\\,c^2dt^2 + (e^{2\\gamma}/f)\\,dz^2$ with $\\omega = 0$, so a ray has "
@@ -9136,6 +9210,15 @@ def _curzon_plane(rho):
     return np.vectorize(one, otypes=[float])(np.asarray(rho, float))
 
 
+def _bonnor_plane(rho):
+    """rho_* in the plane z = 0 of Bonnor's dust cloud at a = 1, for the rays of no angular
+    momentum: the integral from 1 of e^(1/(16 s^4)) sqrt(1 - 1/s^4)."""
+    def one(r):
+        return quad(lambda s: math.exp(1 / (16 * s ** 4)) * math.sqrt(max(0.0, 1 - 1 / s ** 4)), 1, r,
+                    epsabs=1e-13, epsrel=1e-13, limit=200)[0]
+    return np.vectorize(one, otypes=[float])(np.asarray(rho, float))
+
+
 def _zv_axis(r, oblate):
     """r_* on the axis of Zipoy and Voorhees's metric at m = 1, dr_*/dr = f^(-1 - q): at q = 1,
     r + 4 ln(r - 2) - 4/(r - 2), and at q = -1/2, sqrt(r (r - 2)) + 2 ln(sqrt r + sqrt(r - 2))."""
@@ -9987,6 +10070,10 @@ CLOSED_FORMS = {
                                           lambda t, z: z > 0.35) for system in ("weyl", "spherical")},
     **{("curzon_chazy", system, "equator"): (lambda t, r: t + _curzon_plane(r), lambda t, r: t - _curzon_plane(r),
                                              lambda t, r: r > 0.02) for system in ("weyl", "spherical")},
+    **{("bonnor_rotating_dust", system, "axis"): (lambda t, z: t + z, lambda t, z: t - z, None)
+       for system in ("cylindrical", "spherical")},
+    **{("bonnor_rotating_dust", system, "equator"): (lambda t, r: t + _bonnor_plane(r), lambda t, r: t - _bonnor_plane(r),
+                                                     lambda t, r: r > 1.02) for system in ("cylindrical", "spherical")},
     **{("zipoy_voorhees", system, f"{plane}_{shape}"): _zv_forms(star, shape == "oblate", shift, edge)
        for system, shift in (("spherical", 0), ("prolate_spheroidal", 1))
        for shape in ("oblate", "prolate")
@@ -10094,6 +10181,10 @@ CYLINDERS = {
     # Som and Raychaudhuri's block of t and phi is van Stockum's, with R = c/Omega.
     ("som_raychaudhuri", "cylindrical", "inside"): (-0.75, 0.25),
     ("som_raychaudhuri", "cylindrical", "beyond"): (-3.75, -0.75),
+    # Bonnor's dust cloud in its plane z = 0: k = a^2/rho - rho moving left and a^2/rho + rho moving
+    # right, at rho = a/2, inside the null circle, and at 3a/2.
+    ("bonnor_rotating_dust", "cylindrical", "inside"): (1.5, 2.5),
+    ("bonnor_rotating_dust", "cylindrical", "outside"): (-5 / 6, 13 / 6),
 }
 # The spinning string's cylinders: k = -(b r + a) moving left and b r - a moving right, with
 # b r = 0.45 inside and 1.35 outside, in the proper radius and rescaled radius charts, and
@@ -10210,6 +10301,8 @@ TURNING = {
     ("godel", "cylindrical", "beyond"): ("away", "toward"),
     ("som_raychaudhuri", "cylindrical", "inside"): ("away", "geodesic"),
     ("som_raychaudhuri", "cylindrical", "beyond"): ("away", "toward"),
+    ("bonnor_rotating_dust", "cylindrical", "inside"): ("away", "toward"),
+    ("bonnor_rotating_dust", "cylindrical", "outside"): ("away", "away"),
     # The spinning string is flat, so light launched along a circle about it leaves for larger r.
     **{("spinning_string", system, view): ("away", "away")
        for system in ("proper_radius", "helical") for view in ("inside", "outside")},
@@ -10442,6 +10535,8 @@ def verify_turning(specs):
         spec = specs[where]
         _, entry, reader = load(spec.metric, spec.system)
         coords = entry["coords"]
+        # The distance from the axis is r, or rho where r names the distance from a centre.
+        radial = "\\rho" if "\\rho" in coords else "r"
         at = {reader.c: 1}
         at.update({reader.parameters[k]: number(v) for k, v in spec.params.items()})
         by_plain = {reader._plain(n): sym for n, sym in reader.symbol.items()}
@@ -10449,7 +10544,7 @@ def verify_turning(specs):
         at.update({reader.symbol[c]: 0 for c in spec.plane})
         g = np.array(published_matrix(reader, entry, "metric_components").subs(at), dtype=float)
         gamma = {tuple(c["indices"]): float(reader(c["value"]).subs(at))
-                 for c in entry["christoffel"]["variants"]["ull"]["nonzero"] if c["indices"][0] == "r"}
+                 for c in entry["christoffel"]["variants"]["ull"]["nonzero"] if c["indices"][0] == radial}
         i, j = (coords.index(c) for c in spec.plane)
         found = []
         for sign in (-1, 1):
@@ -10458,7 +10553,7 @@ def verify_turning(specs):
             roots = [(-b + e * math.sqrt(b * b - 4 * a * c)) / (2 * a) for e in (-1, 1)]
             lam = next(x for x in roots if g[i, i] * x + g[i, j] * sign < 0)
             k = {spec.plane[0]: lam, spec.plane[1]: sign}
-            terms = [gamma.get((("r",) + (m, n)), 0.0) * k[m] * k[n] for m in k for n in k]
+            terms = [gamma.get(((radial,) + (m, n)), 0.0) * k[m] * k[n] for m in k for n in k]
             accel = -sum(terms)
             scale = sum(abs(x) for x in terms)
             found.append("geodesic" if abs(accel) < 1e-12 * scale else "toward" if accel < 0 else "away")

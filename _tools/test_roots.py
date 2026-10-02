@@ -34,6 +34,16 @@ class Roots(unittest.TestCase):
         y = sp.Symbol("y", positive=True)
         self.assertEqual(vm.norm((x * y) ** sp.Rational(2, 3) - x ** sp.Rational(2, 3) * y ** sp.Rational(2, 3)), 0)
 
+    def test_a_number_in_the_denominator_of_an_exponent_is_taken_out(self):
+        # exp(x/(8(u + v))) squared is exp(x/(4(u + v))), however expand has spread the 8 or the 4
+        # through the sum, as the conformal factor of Bonnor's dust cloud needs.
+        x, u, v = sp.symbols("x u v", positive=True)
+        base = sp.exp(x / (8 * (u + v) ** 2))
+        self.assertEqual(vm.norm(base ** 2 - sp.exp(x / (4 * (u + v) ** 2))), 0)
+        self.assertEqual(vm.norm(base * sp.exp(-x / (8 * u ** 2 + 16 * u * v + 8 * v ** 2)) - 1), 0)
+        self.assertEqual(vm.norm(sp.diff(base, x) - base / (8 * u ** 2 + 16 * u * v + 8 * v ** 2)), 0)
+        self.assertNotEqual(vm.norm(base - sp.exp(x / (4 * (u + v) ** 2))), 0)
+
     def test_a_square_root_is_reduced_as_before(self):
         x = sp.Symbol("x", positive=True)
         self.assertEqual(vm.norm(1 / (1 + sp.sqrt(x)) - (1 - sp.sqrt(x)) / (1 - x)), 0)

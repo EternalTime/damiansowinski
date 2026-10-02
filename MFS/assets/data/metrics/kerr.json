@@ -155,6 +155,11 @@
       "id": "double_kerr",
       "kind": "generalisation",
       "text": "Two Kerr black holes on one axis, built by Dietrich Kramer and Gernot Neugebauer in 1980. The repulsion between the spins does not balance the attraction, and a strut on the axis between the holes holds them apart [kramer1980, neugebauer2009]."
+    },
+    {
+      "id": "bonnor_rotating_dust",
+      "kind": "family",
+      "text": "A cloud of rotating dust whose field far away is Kerr's frame dragging term alone: angular momentum with no mass [bonnor1977cloud, bratek2007]."
     }
   ],
   "references": [
@@ -204,7 +209,9 @@
     "nutku1977",
     "gregory2013",
     "kramer1980",
-    "neugebauer2009"
+    "neugebauer2009",
+    "bonnor1977cloud",
+    "bratek2007"
   ],
   "coordinates": [
     {
