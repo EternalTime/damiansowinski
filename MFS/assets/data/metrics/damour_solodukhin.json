@@ -35,6 +35,11 @@
       "text": "At $\\lambda = 0$ the throat is Schwarzschild's horizon and the wormhole is his black hole. For any other $\\lambda$ a moment of time is the same Flamm's paraboloid, with a throat that stays open [damour2007]."
     },
     {
+      "id": "einstein_rosen_bridge",
+      "kind": "special_case",
+      "text": "At $\\lambda = 0$ the wormhole written in Einstein and Rosen's $u$ is their neutral bridge of 1935, whose throat is a horizon [einstein1935]."
+    },
+    {
       "id": "morris_thorne",
       "kind": "generalisation",
       "text": "The general static wormhole a traveller could cross, with any redshift function $\\Phi$ and shape function $b$. Damour and Solodukhin's is the one with $b = r_s$ and $e^{2\\Phi} = 1 - r_s/r + \\lambda^2$ [morris1988, nandi2022]."

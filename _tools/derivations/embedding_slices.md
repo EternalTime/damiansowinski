@@ -317,6 +317,17 @@ Three spacetimes of one line element, $p = 9/10$, $1$ and $2$, each marked on it
 - `kruskal/plane`: the line $U + V = 0$ through the bifurcation point, $V = -U = \sinh r$ on one side and its mirror, the meridian $\theta = \pi$, on the other.
 - All seven conformal views, the hexagon: the line $T = 0$ through the bifurcation point, out to $r = 3$ in both exteriors.
 
+### Einstein-Rosen bridge
+
+The three embedding views are three spacetimes of one page, each the equator of the moment $t = 0$, and each drawing marks the moment of its own.
+
+- `bridge/radial`, the neutral bridge in $u = \pm\sqrt{r - r_s}$ at $r_s = 1$: the line $ct = 0$ from $u = -\sqrt{5}$ to $\sqrt{5}$, cut to the box at $|u| = 2$.
+- `spherical/radial`, one sheet: the line $ct = 0$ from the bridge $r = r_s$ to the box's edge at $6\,r_s$, which the embedding also reaches.
+- `isotropic/radial`, both sheets in the isotropic radius: the line $ct = 0$ from $r = 0.0114\,r_s$, the sphere of areal radius $6\,r_s$ on the other sheet, to $5.49\,r_s$, cut to the box at $2\,r_s$.
+- `charged_spherical/radial`, one sheet of the charged bridge with a mass: the line $ct = 0$ from $r_+ = 3r_s/2$ to $6\,r_s$.
+- `charged_bridge/radial`, the charged bridge with no mass: the line $ct = 0$ from $u = -5\,r_q$ to $5\,r_q$, cut to the box at $|u| = 3\,r_q$.
+- The five conformal views: the line $T = 0$ through the bifurcation sphere, from the farthest circle on one sheet to the farthest on the other, $6\,r_s$ for the neutral bridge and the charged one with a mass and $\sqrt{26}\,r_q$ for the charged one with no mass.
+
 ### Kaluza-Klein monopole
 
 The cigar is the surface of $r$ and $x_5$ on the half axis $\theta = 0$ at $t = 0$ in Gross and Perry's chart, from the nut $r = 0$ out to $r = 16m$ at $m = 1$.

@@ -425,7 +425,21 @@ Albert Einstein's cosmology of 1917: dust spread uniformly through a round three
 - chart Areal: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + \dfrac{R^2\,dr^2}{R^2 - r^2} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Einstein's Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2 + \dfrac{\left(x\,dx + y\,dy + z\,dz\right)^2}{R^2 - x^2 - y^2 - z^2}$$
 
-### Einstein-Rosen Cylindrical Gravitational Waves
+### Einstein-Rosen Bridge
+
+The model of a particle that Albert Einstein and Nathan Rosen proposed in 1935: two identical sheets of space joined at a smallest sphere, the bridge. The neutral bridge is Schwarzschild's exterior taken twice and joined at $r = r_s$, and the charged bridge is Reissner and Nordström's metric with the sign of the electric term reversed, which needs no mass.
+
+- id: `einstein_rosen_bridge`
+- tags: wormhole, Einstein-Rosen bridge, throat, horizon, event horizon, Flamm's paraboloid, maximal extension, coordinate singularity, causal structure, static, stationary, spherically symmetric, mass, charged, electric charge, electromagnetic field, negative energy, energy condition violation, asymptotically flat, exact solution, Einstein equations, Lorentzian, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_bridge.json
+- chart Einstein-Rosen: coordinates $(t, u, \theta, \phi)$, $$ds^2 = -\dfrac{u^2}{u^2 + r_s}c^2dt^2 + 4\left(u^2 + r_s\right)du^2 + \left(u^2 + r_s\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Schwarzschild: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Isotropic: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(\dfrac{4r - r_s}{4r + r_s}\right)^2c^2dt^2 + \left(1 + \dfrac{r_s}{4r}\right)^4\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Charged, Areal Radius: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r} - \dfrac{r_q^2}{r^2}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r} - \dfrac{r_q^2}{r^2}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Charged Einstein-Rosen: coordinates $(t, u, \theta, \phi)$, $$ds^2 = -\dfrac{u^2}{u^2 + r_q^2}c^2dt^2 + du^2 + \left(u^2 + r_q^2\right)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
+### Einstein-Rosen Waves
 
 Exact vacuum solutions describing gravitational waves with cylindrical wave fronts and a single polarisation, converging on an axis, passing through it and spreading out again. Einstein's equations for them reduce to the flat cylindrical wave equation for one function and a quadrature for a second.
 

@@ -1,7 +1,7 @@
 {
   "id": "einstein_rosen_waves",
-  "name": "Einstein-Rosen Cylindrical Gravitational Waves",
-  "short_name": "Einstein-Rosen",
+  "name": "Einstein-Rosen Waves",
+  "short_name": "Einstein-Rosen Waves",
   "description": "Exact vacuum solutions describing gravitational waves with cylindrical wave fronts and a single polarisation, converging on an axis, passing through it and spreading out again. Einstein's equations for them reduce to the flat cylindrical wave equation for one function and a quadrature for a second.",
   "tags": [
     "vacuum",
@@ -43,6 +43,11 @@
       "id": "senovilla",
       "kind": "family",
       "text": "The same cylindrical symmetry filled with radiation. Senovilla's metric is diagonal with a conformally flat plane of $t$ and $\\rho$, as Einstein and Rosen's is, and it has no singularity anywhere [senovilla1990, fernandezjambrina2002]."
+    },
+    {
+      "id": "einstein_rosen_bridge",
+      "kind": "programme",
+      "text": "Einstein and Rosen's model of a particle, from 1935: two sheets of space joined at a horizon [einstein1935]."
     }
   ],
   "references": [
@@ -70,7 +75,8 @@
     "gowdy1971",
     "gowdy2014",
     "senovilla1990",
-    "fernandezjambrina2002"
+    "fernandezjambrina2002",
+    "einstein1935"
   ],
   "coordinates": [
     {

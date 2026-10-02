@@ -4493,6 +4493,14 @@ class Slices(unittest.TestCase):
                     # Gott and Alpert's planet replaces the apex of the point particle's cone in the same way.
                     "conformal point_particle_2plus1/planet": {"unroll"},
                     "point_particle_2plus1/planet/radial": {"unroll"},
+                    # Einstein and Rosen's neutral bridge, their charged bridge with a mass and the one with
+                    # no mass are three spacetimes of one page: each drawing marks the moment of its own.
+                    **{f"einstein_rosen_bridge/{c}/radial": {"charged", "charged_mass"} for c in ("bridge", "spherical", "isotropic")},
+                    **{f"conformal einstein_rosen_bridge/{c}": {"charged", "charged_mass"} for c in ("bridge", "spherical", "isotropic")},
+                    "einstein_rosen_bridge/charged_spherical/radial": {"neutral", "charged"},
+                    "conformal einstein_rosen_bridge/charged_spherical": {"neutral", "charged"},
+                    "einstein_rosen_bridge/charged_bridge/radial": {"neutral", "charged_mass"},
+                    "conformal einstein_rosen_bridge/charged_bridge": {"neutral", "charged_mass"},
                     # Hayward's static hole and the hole that forms and evaporates are two spacetimes of one
                     # line element: the static and Eddington-Finkelstein drawings mark the static moment, outside
                     # r_+ and inside r_-, and the forming and evaporating ones the slices of constant v - r.
@@ -5067,7 +5075,7 @@ class Slices(unittest.TestCase):
                 return t * (E + 2) / (E - 2)
             x_of = lambda rho: math.log1p(2 * (t + rho) / ((1 + p) * (rho - t))) / 2 if rho > t else math.inf
             return (lambda X: X - math.log(s * (rho_of(X) - t) / 2)), [x_of(lo), x_of(hi)]
-        if key == "damour_solodukhin/isotropic/radial":
+        if key in ("damour_solodukhin/isotropic/radial", "einstein_rosen_bridge/isotropic/radial"):
             # The isotropic radius of the circles the embedding reaches in the areal radius R, at r_s = 1:
             # r = (R - 1/2 + sqrt(R(R - 1)))/2 on one side and 1/(16 r) on the other.
             R = self.reach(surface)[1]

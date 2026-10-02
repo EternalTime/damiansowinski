@@ -1323,6 +1323,22 @@ FLAT = {
                            ("conformal", "radial"), ("kruskal", "plane"),
                            ("eddington_finkelstein_ingoing", "finkelstein"),
                            ("eddington_finkelstein_outgoing", "finkelstein"))},
+    # Einstein and Rosen's bridges, three spacetimes of one page, each drawing marked with the moment of its
+    # own: the neutral bridge at r_s = 1, read in Schwarzschild's r, where u = +-sqrt(r - r_s) and the
+    # isotropic radius runs from r_s^2/16r to r; the charged bridge with a mass in its areal radius;
+    # and the charged bridge with no mass in their u.
+    ("einstein_rosen_bridge", "bridge", "radial"): lambda: one(
+        "einstein_rosen_bridge", lambda m: along(0.0, -math.sqrt(m.reach("spherical", "r")[1] - 1),
+                                                 math.sqrt(m.reach("spherical", "r")[1] - 1)), view_id="neutral"),
+    ("einstein_rosen_bridge", "spherical", "radial"): lambda: one(
+        "einstein_rosen_bridge", lambda m: along(0.0, *m.reach("spherical", "r")), view_id="neutral"),
+    ("einstein_rosen_bridge", "isotropic", "radial"): lambda: one(
+        "einstein_rosen_bridge", lambda m: along(0.0, 1 / (16 * _ds_isotropic(m.reach("spherical", "r")[1])),
+                                                 _ds_isotropic(m.reach("spherical", "r")[1])), view_id="neutral"),
+    ("einstein_rosen_bridge", "charged_spherical", "radial"): lambda: one(
+        "einstein_rosen_bridge", lambda m: along(0.0, *m.reach("charged_spherical", "r")), view_id="charged_mass"),
+    ("einstein_rosen_bridge", "charged_bridge", "radial"): lambda: one(
+        "einstein_rosen_bridge", lambda m: along(0.0, *m.reach("charged_bridge", "u")), view_id="charged"),
     ("minkowski", "spherical", "radial"): lambda: one("minkowski", lambda m: along(0.0, *m.reach("spherical", "r"))),
     # t = (u + v)/2 and r = (v - u)/2, so the moment is u = -r, v = r.
     ("minkowski", "spherical_null", "radial"): lambda: one(
