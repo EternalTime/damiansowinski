@@ -361,6 +361,13 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `tower`, the maximal extension: the outside view is the line $T = 0$ through the outer bifurcation point across the exterior the chart covers, tinted as its cover, and its mirror, and the inside view is the line through the inner bifurcation point above them, across the two regions inside $r_-$.
 - `malament_hogarth`, the same tower with the event beyond the Cauchy horizon marked: the same two lines.
 
+### Bardeen
+
+- The embedding has two views at one moment of $t$, drawn at $t = 0$, at $g = r_s/3$: outside, $r$ from $r_+ = 0.775\,r_s$ to $6\,r_s$ on both sheets through the outer bifurcation sphere; inside, $r$ from the centre to $r_- = 0.301\,r_s$ on both sides of the inner bifurcation sphere.
+- `static/radial`: both views on the line $t = 0$, from $r_+$ to the box's edge at $2\,r_s$ and from $0$ to $r_-$, with the region between the horizons, where $t$ is no time, between them.
+- The Eddington-Finkelstein views: the moment is $v = r_*$ in the ingoing chart and $u = -r_*$ in the outgoing one, with $r_* = 0$ at the centre, each curve running off toward the horizon its view ends on.
+- `tower`, `ingoing` and `outgoing`: the outside view is the line $T = 0$ through the outer bifurcation point, on the outgoing view the line $T = 2\pi$ of the exterior that chart covers, and the inside view is the line $T = \pi$ through the inner bifurcation point, from one centre to the other.
+
 ### Schwarzschild
 
 - The embedding is Flamm's paraboloid, the equator of a moment of constant $t$, drawn at $t = 0$, $r$ from $r_s$ to $6\,r_s$ on both sheets through the bifurcation sphere.
@@ -487,6 +494,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Oppenheimer-Snyder | four lines, four curves | none | four curves |
 | pp-wave | four null lines | none | none drawn |
 | Reissner-Nordström | two lines once redrawn at $r_q = 0.48\,r_s$ | none | two lines, twice |
+| Bardeen | two lines, two curves four times | none | two lines, three times |
 | Schwarzschild | line, four curves | none | line, three times |
 | Schwarzschild-de Sitter | line, four curves | none | line, three times |
 | van Stockum | line, not visible | floor | none drawn |
