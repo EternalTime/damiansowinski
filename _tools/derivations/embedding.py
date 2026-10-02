@@ -3512,6 +3512,52 @@ def elliptic_de_sitter(ck, src):
                         "being Euclidean space scaled by $e^{ct/\\ell}$, so its equator is a plane."])]
 
 
+def rp3_geon(ck, src):
+    """The moment t = 0 of the RP3 geon's one exterior at r_s = 1, the whole of space: Flamm's
+    paraboloid z = 2 sqrt(r_s (r - r_s)) from the throat r = r_s out, one sheet. In Kruskal's
+    spacetime the slice runs on through the throat to a second sheet; in the geon the point of the
+    throat at phi is the point at phi + pi, so the throat circle, of length 2 pi r_s on the page,
+    is a closed geodesic of length pi r_s, which is checked, and the surface is a Mobius band with
+    no edge. The meridians phi = 0 and phi = pi are one geodesic, which runs in to the throat on
+    one side and out again on the other. The isotropic chart's slice, of conformal factor
+    (1 + r_s/4 rho)^4, is checked to be the same paraboloid from rho = r_s/4 out."""
+    sl = Slice(src, "rp3_geon", "schwarzschild", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 1})
+    top, radii = 6.0, (1.5, 2, 3, 4, 5)
+    size = 2 * top
+    sheet = Piece("exterior", "sheet", sl, 1.0, top, 0.0, 1,
+                  (("throat", "the throat $r = r_s$, each point of which is also the point opposite it"),
+                   ("edge", "the paraboloid runs on to $r \\to \\infty$")),
+                  [(1.0, "surface", "$r = r_s$")] + [(r, "r", None) for r in radii] + [(top, "r", "$r = 6\\,r_s$")],
+                  size)
+    ck.isometry("RP3 geon, the exterior", sheet)
+    ck.form("RP3 geon, Flamm's z = 2 sqrt(r_s (r - r_s))", sheet, lambda r: 2 * np.sqrt(np.maximum(r - 1, 0)), size)
+    isotropic = Slice(src, "rp3_geon", "isotropic", "\\rho", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 1})
+    far = (top - 0.5 + math.sqrt(top * (top - 1))) / 2
+    same = Piece("isotropic", "sheet", isotropic, 0.25, far, 0.0, 1, size=size)
+    ck.isometry("RP3 geon, the isotropic chart's slice", same)
+    ck.radius("RP3 geon, the isotropic chart's slice, the circle rho (1 + r_s/4 rho)^2", same,
+              lambda x: x * (1 + 1 / (4 * x)) ** 2, size)
+    ck.form("RP3 geon, the isotropic chart's slice is Flamm's paraboloid", same,
+            lambda x: 2 * np.sqrt(np.maximum(x * (1 + 1 / (4 * x)) ** 2 - 1, 0)), size)
+    # The throat: half of the circle r = r_s closes on itself.
+    ck.add("RP3 geon: the throat is a closed geodesic of length pi r_s",
+           abs(math.pi * float(sl.rho_at(1.0)) - math.pi), 1e-12)
+    surface = Surface([sheet])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    fig.mark("cut", 0, sheet, 0.0)
+    fig.mark("cut", 0, sheet, math.pi)
+    ring_label(fig, [0, 0, 0], 1.0, 0.0, "$r = r_s$", dx=14)
+    ring_label(fig, [0, 0, 0], *sheet.at(3.0), "$3\\,r_s$")
+    ring_label(fig, [0, 0, 0], *sheet.at(top), "$6\\,r_s$")
+    fig.legend("fill", "cover", "the whole moment, drawn out to $r = 6\\,r_s$")
+    fig.legend("line", "r", "$r$ constant, at $1.5$, $2$, $3$, $4$, $5$ and $6\\,r_s$")
+    fig.legend("line", "surface", "the throat $r = r_s$, glued to itself point to opposite point")
+    fig.legend("line", "cut", "a geodesic through the throat, in on one side and out on the opposite one")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("moment", "The moment $t = 0$", "$r_s$", [surface], fig.done(),
+                 settings="$r_s = 1$, the unit of every length.")]
+
+
 def einstein_static(ck, src):
     """The equator of one moment of the hyperspherical chart at R = 1: g_chichi = 1 and
     g_phiphi = sin^2 chi, the round sphere of radius R, rho = sin chi and z = -cos chi from the
@@ -13172,6 +13218,7 @@ DRAWN = {
     "de_sitter": de_sitter,
     "einstein_static": einstein_static,
     "elliptic_de_sitter": elliptic_de_sitter,
+    "rp3_geon": rp3_geon,
     "schwarzschild_de_sitter": schwarzschild_de_sitter,
     "kiselev": kiselev,
     "schwarzschild_ads": schwarzschild_ads,
@@ -13786,6 +13833,18 @@ CAPTIONS = {
         "smallest moment of the closed slicing, in which space is a three sphere of radius "
         "$\\ell\\cosh(ct/\\ell)$ that contracts to this waist and expands after it. The two observers can "
         "never exchange light: each hemisphere lies outside the other observer's past and future alike.",
+    ],
+    ("rp3_geon", "moment"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the geon at the moment $t = 0$, drawn as a surface in "
+        "flat space with every distance along it the metric distance. On it the metric is "
+        "$dr^2/(1 - r_s/r) + r^2d\\phi^2$, Flamm's paraboloid $z = 2\\sqrt{r_s(r - r_s)}$, from the throat "
+        "$r = r_s$ out. Each point of the throat is also the point opposite it, so the one sheet is the whole "
+        "moment and has no edge.",
+        "A geodesic that runs straight in reaches the throat and comes out on the opposite side, on the same sheet. "
+        "The throat itself is a closed geodesic of length $\\pi r_s$, half its circumference on the page, and "
+        "the surface is a Möbius band: carried once along the throat, left and right change places. The whole of "
+        "space is the three dimensional version, the outside of a sphere whose opposite points are one, real "
+        "projective space with a point removed.",
     ],
     ("elliptic_de_sitter", "moment"): [
         "The equatorial plane ($\\theta = \\pi/2$) of elliptic de Sitter space at the moment $t = 0$ of its global "

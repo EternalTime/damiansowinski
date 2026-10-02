@@ -1,5 +1,5 @@
 {
-  "version": "6797e36abb011ca7",
+  "version": "faa20316c78c734d",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -24581,6 +24581,82 @@
         "eprint": "0803.3710",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1007/s10714-008-0678-5"
+      }
+    },
+    "louko1998": {
+      "type": "article",
+      "fields": {
+        "title": "Inextendible {Schwarzschild} black hole with a single exterior: How thermal is the {Hawking} radiation?",
+        "author": "Louko, Jorma and Marolf, Donald",
+        "journal": "Physical Review D",
+        "volume": "58",
+        "number": "2",
+        "pages": "024007",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.58.024007",
+        "eprint": "gr-qc/9802068",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9802068"
+      }
+    },
+    "louko2005": {
+      "type": "article",
+      "fields": {
+        "title": "Geons with spin and charge",
+        "author": "Louko, Jorma and Mann, Robert B. and Marolf, Donald",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "22",
+        "number": "7",
+        "pages": "1451--1467",
+        "year": "2005",
+        "doi": "10.1088/0264-9381/22/7/016",
+        "eprint": "gr-qc/0412012",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0412012"
+      }
+    },
+    "louko2010": {
+      "type": "article",
+      "fields": {
+        "title": "Geon black holes and quantum field theory",
+        "author": "Louko, Jorma",
+        "journal": "Journal of Physics: Conference Series",
+        "volume": "222",
+        "pages": "012038",
+        "year": "2010",
+        "doi": "10.1088/1742-6596/222/1/012038",
+        "eprint": "1001.0124",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1001.0124"
+      }
+    },
+    "gannon1975": {
+      "type": "article",
+      "fields": {
+        "title": "Singularities in nonsimply connected space-times",
+        "author": "Gannon, Dennis",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "16",
+        "number": "12",
+        "pages": "2364--2367",
+        "year": "1975",
+        "doi": "10.1063/1.522498",
+        "url": "https://doi.org/10.1063/1.522498"
+      }
+    },
+    "sorkin1986": {
+      "type": "incollection",
+      "fields": {
+        "title": "Introduction to Topological Geons",
+        "author": "Sorkin, Rafael D.",
+        "booktitle": "Topological Properties and Global Structure of Space-Time",
+        "editor": "Bergmann, P. G. and De Sabbata, V.",
+        "publisher": "Plenum",
+        "address": "New York",
+        "pages": "249--270",
+        "year": "1986",
+        "doi": "10.1007/978-1-4899-3626-4_19",
+        "url": "https://doi.org/10.1007/978-1-4899-3626-4_19"
       }
     }
   }

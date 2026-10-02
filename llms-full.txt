@@ -1493,6 +1493,18 @@ The vacuum field of an isolated body sending out gravitational waves on expandin
 - chart Robinson-Trautman: coordinates $(u, r, x, y)$, $$ds^2 = -2H\,c^2du^2 - 2c\,du\,dr + \dfrac{r^2}{P^2}\left(dx^2 + dy^2\right)$$
 - chart Axisymmetric: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -2H\,c^2du^2 - 2c\,du\,dr + \dfrac{r^2}{f^2}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### RP³ Geon
+
+Schwarzschild's black hole with its second exterior folded onto the first: the Kruskal events $(T, X, \theta, \phi)$ and $(T, -X, \pi - \theta, \phi + \pi)$ are one event. Outside the horizon it is Schwarzschild's spacetime, and behind it the black hole and the white hole are each half of Kruskal's. Space at the moment of time symmetry is real projective space with a point removed, and the spacetime is orientable in time and in space.
+
+- id: `rp3_geon`
+- tags: black hole, white hole, geon, topological geon, topology, real projective space, antipodal identification, topological censorship, single exterior, Kruskal extension, maximal extension, wormhole, throat, Einstein-Rosen bridge, time symmetric, initial data, geometrodynamics, globally hyperbolic, Hawking radiation, Hawking temperature, black hole entropy, black hole thermodynamics, horizon, event horizon, curvature singularity, causal structure, mass, asymptotically flat, isotropic coordinates, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model, vacuum, static, stationary, spherically symmetric
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/rp3_geon.json
+- chart Kruskal: coordinates $(T, X, \theta, \phi)$, $$ds^2 = \dfrac{4r_s^3}{r}e^{-r/r_s}\left(-dT^2 + dX^2\right) + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Schwarzschild Exterior: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Isotropic: coordinates $(t, \rho, \theta, \phi)$, $$ds^2 = -\left(\dfrac{4\rho - r_s}{4\rho + r_s}\right)^2c^2dt^2 + \left(1 + \dfrac{r_s}{4\rho}\right)^4\left(d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Schrödinger Spacetime
 
 Anti-de Sitter space with one term added to its metric, which cuts its symmetries down to those of the free Schrödinger equation: Galilean boosts, a scaling under which time goes as the square of length, and a conserved mass. Dam Thanh Son, and Koushik Balasubramanian and John McGreevy, proposed it in 2008 as the gravitational dual of cold atoms at unitarity. Every event on a surface of constant time has the same future.

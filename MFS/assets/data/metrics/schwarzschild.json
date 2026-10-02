@@ -368,6 +368,11 @@
       "id": "exponential_metric",
       "kind": "family",
       "text": "Papapetrou's and Yilmaz's metric with no horizon, $g_{tt} = -e^{-2m/r}$ with $m = GM/c^2$ in isotropic coordinates. It agrees with Schwarzschild's at first order in $m/r$ and has a wormhole's throat where the horizon would be [boonserm2018]."
+    },
+    {
+      "id": "rp3_geon",
+      "kind": "locally_same",
+      "text": "Schwarzschild's black hole with its second exterior folded onto the first, opposite points of each sphere made one. Outside the horizon nothing changes, and no light sent in from far away comes back out through the fold [friedman1993]."
     }
   ],
   "references": [
@@ -470,7 +475,8 @@
     "deruelle2011",
     "hoffmann1935",
     "gibbonsrasheed1995",
-    "boonserm2018"
+    "boonserm2018",
+    "friedman1993"
   ],
   "coordinates": [
     {
