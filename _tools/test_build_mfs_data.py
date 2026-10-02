@@ -5321,6 +5321,16 @@ class Slices(unittest.TestCase):
             # The line through the body's centre: the equator at t = 0 on both sides of the body.
             lo, hi = self.reach(surface)
             return (lambda X: 0.0), [-hi, -lo, lo, hi]
+        if key == "exponential_metric/cartesian/axis":
+            # The line through r = 0: the equator at t = 0 on both halves, from r = m/3 to 6m.
+            lo, hi = self.reach(surface)
+            return (lambda X: 0.0), [-hi, -lo, lo, hi]
+        if key == "exponential_metric/areal/radial":
+            # The areal radius R = r e^(m/r) covers the near side, from the throat R = e m out.
+            return (lambda X: 0.0), [math.e, self.reach(surface)[1] * math.exp(1 / self.reach(surface)[1])]
+        if key == "exponential_metric/harmonic/radial":
+            # u = 1/r of the isotropic radius the embedding reads.
+            return (lambda X: 0.0), sorted(1 / x for x in self.reach(surface))
         if key == "ppn_metric/areal/radial":
             # The areal radius is the isotropic radius the embedding reads plus gamma m, at gamma = 1.
             return (lambda X: 0.0), [x + 1 for x in self.reach(surface)]

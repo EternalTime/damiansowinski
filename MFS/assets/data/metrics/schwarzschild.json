@@ -363,6 +363,11 @@
       "id": "born_infeld_charge",
       "kind": "generalisation",
       "text": "Schwarzschild's mass with a charge whose field obeys Born and Infeld's electrodynamics. The mass inside a sphere then grows with its radius, by the energy of the field, and reaches $r_s/2$ far away [hoffmann1935, gibbonsrasheed1995]."
+    },
+    {
+      "id": "exponential_metric",
+      "kind": "family",
+      "text": "Papapetrou's and Yilmaz's metric with no horizon, $g_{tt} = -e^{-2m/r}$ with $m = GM/c^2$ in isotropic coordinates. It agrees with Schwarzschild's at first order in $m/r$ and has a wormhole's throat where the horizon would be [boonserm2018]."
     }
   ],
   "references": [
@@ -464,7 +469,8 @@
     "belinskii1979",
     "deruelle2011",
     "hoffmann1935",
-    "gibbonsrasheed1995"
+    "gibbonsrasheed1995",
+    "boonserm2018"
   ],
   "coordinates": [
     {

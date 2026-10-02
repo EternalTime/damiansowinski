@@ -12,7 +12,7 @@ schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis,
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
-born_infeld_charge and penrose_impulsive_wave, and Godel's cylindrical chart.
+born_infeld_charge, penrose_impulsive_wave and exponential_metric, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -20144,6 +20144,268 @@ def piw_check(chart, system, points=6):
 
 
 CHARTS["penrose_impulsive_wave"] = [lambda s=s: penrose_impulsive_wave(s) for s in PIW_CHARTS]
+
+
+# -- The exponential metric of Papapetrou and Yilmaz ---------------------------------------
+
+EXPONENTIAL_CHARTS = ("isotropic", "cartesian", "areal", "harmonic")
+EXPONENTIAL_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+EXPONENTIAL_ISOTROPIC = "r = -\\dfrac{m}{\\mathrm{W}\\left(-m/R\\right)}"
+
+
+def exponential_metric(system):
+    """Papapetrou's (1954) and Yilmaz's (1958) static field of a mass, g_tt = -1/g_rr = -e^{-2m/r},
+    in four charts.
+
+    isotropic  ds^2 = -e^{-2m/r} c^2dt^2 + e^{2m/r}(dr^2 + r^2 dOmega^2), (1.1) of Boonserm,
+               Ngampitipan, Simpson and Visser (2018), with the throat at r = m;
+    cartesian  the same in the Cartesian coordinates of the isotropic chart, Misner's (1995) (3.1)
+               with Phi = -m/r, and r = sqrt(x^2 + y^2 + z^2) a name the chart defines;
+    areal      the curvature coordinates of their (3.9) and (3.14), R = r e^{m/r}, with the isotropic
+               radius r = -m/W(-m/R) held as a function of R, so that e^{m/r} = R/r and every value
+               is a rational function of r, R and m;
+    harmonic   Bronnikov's harmonic coordinate u = 1/r, the branch k = 0 of (53) and (54) of
+               Bronnikov, Fabris and Zhidenko (2011), in which the scalar field is linear in u.
+
+    exponential_metric_check holds each to their (4.1) to (4.11) and to the phantom field of their
+    (9.1), and each after the first to being the first pulled back; exponential_metric.md beside
+    this file is the derivation."""
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    parameters = ["m"]
+    reduce = pretty = geodesics = None
+    held = ()
+    if system == "isotropic":
+        coords, name = ["t", "r", "\\theta", "\\phi"], "Isotropic"
+        domains = (["t \\in (-\\infty, \\infty)", "r \\in (0, \\infty)"] + angles
+                   + ["r = m \\;\\text{(the throat)}", "r \\to 0 \\;\\text{(the singular horizon)}"])
+
+        def line(c2):
+            return f"ds^2 = -e^{{-2m/r}}{c2}dt^2 + e^{{2m/r}}\\left(dr^2 + r^2" + EXPONENTIAL_SPHERE + "\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        x, m = probe.symbol["r"], probe.parameters["m"]
+        printer = {"lead": [x, m], "factors": [m, x], "flip": False}
+        components = {"metric_components": {("t", "t"): "-e^{-2m/r}", ("r", "r"): "e^{2m/r}",
+                                            ("\\theta", "\\theta"): "r^2e^{2m/r}",
+                                            ("\\phi", "\\phi"): "r^2e^{2m/r}\\sin^2\\theta"},
+                      "inverse_metric_components": {("t", "t"): "-e^{2m/r}", ("r", "r"): "e^{-2m/r}"}}
+        kretschmann = "\\dfrac{4m^2\\left(12r^2 - 16mr + 7m^2\\right)e^{-4m/r}}{r^8}"
+        turn = "\\dfrac{2\\left(r - m\\right)}{r^2}"
+        geodesics = [
+            "\\ddot{t} + \\dfrac{2m}{r^2}\\dot{t}\\dot{r} = 0",
+            "\\ddot{r} + \\dfrac{m\\,e^{-4m/r}}{r^2}\\dot{t}^2 - \\dfrac{m}{r^2}\\dot{r}^2 - \\left(r - m\\right)\\dot{\\theta}^2"
+            " - \\left(r - m\\right)\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+            "\\ddot{\\theta} + " + turn + "\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+            "\\ddot{\\phi} + " + turn + "\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"]
+    elif system == "cartesian":
+        coords, name = ["t", "x", "y", "z"], "Cartesian"
+        parameters = ["m", "r = \\sqrt{x^2 + y^2 + z^2}"]
+        domains = ["t \\in (-\\infty, \\infty)", "x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)",
+                   "z \\in (-\\infty, \\infty)", "r > 0 \\;\\text{(off the singular horizon)}",
+                   "r = m \\;\\text{(the throat)}"]
+
+        def line(c2):
+            return f"ds^2 = -e^{{-2m/r}}{c2}dt^2 + e^{{2m/r}}\\left(dx^2 + dy^2 + dz^2\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        m = probe.parameters["m"]
+        x, y, z = (probe.symbol[k] for k in "xyz")
+        rr = sp.Symbol("r", positive=True)
+        printer = {"lead": [rr, m, x, y, z], "factors": [m, x, y, z, rr], "flip": False}
+        pretty = exponential_cartesian(x, y, z, rr)
+        components = {"metric_components": {("t", "t"): "-e^{-2m/r}", **{(k, k): "e^{2m/r}" for k in "xyz"}},
+                      "inverse_metric_components": {("t", "t"): "-e^{2m/r}", **{(k, k): "e^{-2m/r}" for k in "xyz"}}}
+        kretschmann = "\\dfrac{4m^2\\left(12r^2 - 16mr + 7m^2\\right)e^{-4m/r}}{r^8}"
+    elif system == "areal":
+        coords, name = ["t", "R", "\\theta", "\\phi"], "Areal (curvature coordinates)"
+        parameters = ["m", EXPONENTIAL_ISOTROPIC]
+        held = ("r",)
+        domains = (["t \\in (-\\infty, \\infty)", "R \\in (e\\,m, \\infty)"] + angles
+                   + ["R = e\\,m \\;\\text{(the throat, } r = m\\text{)}"])
+
+        def line(c2):
+            return (f"ds^2 = -e^{{-2m/r}}{c2}dt^2 + \\dfrac{{dR^2}}{{\\left(1 - \\dfrac{{m}}{{r}}\\right)^2}} + R^2"
+                    + EXPONENTIAL_SPHERE)
+        probe = vm.Reader(coords, parameters, (), held=held)
+        x, m, rr = probe.symbol["R"], probe.parameters["m"], probe.parameters["r"]
+        printer = {"lead": [rr, x, m], "factors": [m, rr, x], "flip": False}
+        reduce = exponential_areal(probe)
+        pretty = sp.factor
+        components = {"metric_components": {("t", "t"): "-e^{-2m/r}", ("R", "R"): "\\left(1 - \\dfrac{m}{r}\\right)^{-2}"},
+                      "inverse_metric_components": {("t", "t"): "-e^{2m/r}", ("R", "R"): "\\left(1 - \\dfrac{m}{r}\\right)^2"}}
+        kretschmann = "\\dfrac{4m^2\\left(12r^2 - 16mr + 7m^2\\right)}{r^4R^4}"
+    else:
+        coords, name = ["t", "u", "\\theta", "\\phi"], "Harmonic"
+        domains = (["t \\in (-\\infty, \\infty)", "u \\in (0, \\infty)"] + angles
+                   + ["u \\to 0 \\;\\text{(spatial infinity)}", "u = 1/m \\;\\text{(the throat)}",
+                      "u \\to \\infty \\;\\text{(the singular horizon)}"])
+
+        def line(c2):
+            return (f"ds^2 = -e^{{-2m\\,u}}{c2}dt^2 + \\dfrac{{e^{{2m\\,u}}}}{{u^2}}\\left(\\dfrac{{du^2}}{{u^2}} + d\\theta^2"
+                    " + \\sin^2\\theta\\,d\\phi^2\\right)")
+        probe = vm.Reader(coords, parameters, ())
+        x, m = probe.symbol["u"], probe.parameters["m"]
+        printer = {"lead": [x, m], "factors": [m, x], "rising": [x], "flip": False}
+        components = {"metric_components": {("t", "t"): "-e^{-2m\\,u}", ("u", "u"): "\\dfrac{e^{2m\\,u}}{u^4}",
+                                            ("\\theta", "\\theta"): "\\dfrac{e^{2m\\,u}}{u^2}",
+                                            ("\\phi", "\\phi"): "\\dfrac{e^{2m\\,u}\\sin^2\\theta}{u^2}"},
+                      "inverse_metric_components": {("t", "t"): "-e^{2m\\,u}", ("u", "u"): "u^4e^{-2m\\,u}"}}
+        kretschmann = "4m^2\\,u^6\\left(12 - 16m\\,u + 7m^2\\,u^2\\right)e^{-4m\\,u}"
+        turn = "\\dfrac{2\\left(1 - m\\,u\\right)}{u}"
+        geodesics = [
+            "\\ddot{t} - 2m\\,\\dot{t}\\dot{u} = 0",
+            "\\ddot{u} - m\\,u^4e^{-4m\\,u}\\dot{t}^2 - \\dfrac{2 - m\\,u}{u}\\dot{u}^2 + u\\left(1 - m\\,u\\right)\\dot{\\theta}^2"
+            " + u\\left(1 - m\\,u\\right)\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+            "\\ddot{\\theta} - " + turn + "\\dot{u}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+            "\\ddot{\\phi} - " + turn + "\\dot{u}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"]
+    spec = {
+        "metric_id": "exponential_metric",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "components": components,
+        "kretschmann": kretschmann,
+        "check": lambda chart: exponential_metric_check(chart, system),
+    }
+    if pretty:
+        spec["pretty"] = pretty
+    if reduce:
+        spec["reduce"] = reduce
+    if geodesics:
+        spec["geodesics"] = geodesics
+    return spec
+
+
+def exponential_cartesian(x, y, z, r):
+    """A pretty printer for the Cartesian chart: each value factored with the radius written r
+    wherever x^2 + y^2 + z^2 stands whole, one of the squares put by the other two and r^2 where
+    that leaves a shorter value."""
+    def pretty(value):
+        value = sp.factor(sp.sympify(value))
+        forms = [value]
+        for own in (x, y, z):
+            forms.append(sp.factor(sp.expand(value.subs(sp.sqrt(x ** 2 + y ** 2 + z ** 2), r)).subs(
+                own ** 2, r ** 2 - (x ** 2 + y ** 2 + z ** 2 - own ** 2))))
+        return min(forms, key=sp.count_ops)
+
+    return pretty
+
+
+def exponential_areal(reader):
+    """A `reduce` for the areal chart, whose isotropic radius is held as a function r(R). Its
+    definition, r e^{m/r} = R, makes
+
+        d_R r = r^2/(R (r - m)),    e^{m/r} = R/r,
+
+    by which every derivative of r and every exponential is written, so that a value is a rational
+    function of r, R and m, among which no relation is left, and one that vanishes is exactly zero."""
+    R, r, m = reader.symbol["R"], reader.parameters["r"], reader.parameters["m"]
+    rate = r ** 2 / (R * (r - m))
+    rho = sp.Symbol("_rho", positive=True)
+
+    def reduce(value):
+        value = sp.sympify(value)
+        if isinstance(value, sp.MatrixBase):
+            return value.applyfunc(reduce)
+        for _ in range(8):
+            derivatives = value.atoms(sp.Derivative)
+            if not derivatives:
+                break
+            written = {}
+            for d in derivatives:
+                (variable, order), *rest = d.variable_count
+                written[d] = sp.Derivative(rate, (variable, order - 1), *rest).doit()
+            value = value.xreplace(written)
+        else:
+            raise AssertionError("exponential_metric: the derivatives of the isotropic radius do not settle")
+        value = value.subs(r, rho)
+
+        def power(e):
+            k = sp.cancel(e.args[0] * rho / m)
+            if not k.is_Integer:
+                raise AssertionError(f"exponential_metric: an exponential other than a power of e^(m/r) in {value}")
+            return (R / rho) ** k
+        value = value.replace(lambda e: isinstance(e, sp.exp), power)
+        return sp.factor(sp.cancel(sp.together(value))).subs(rho, r)
+
+    return reduce
+
+
+def exponential_metric_check(chart, system):
+    """Each chart against Boonserm, Ngampitipan, Simpson and Visser (2018): the Ricci tensor is
+    -2 d_a phi d_b phi for phi = m/r, their (9.1) with Phi = 2m/r, the stress of a massless scalar
+    field of negative energy, which solves the wave equation; the Ricci scalar is their (4.7) and
+    the Kretschmann scalar their (4.9); the spheres have their least area, 4 pi e^2 m^2, on the
+    throat r = m, their (2.1) to (2.3); and each chart after the first is the first pulled back."""
+    P = chart.reader.parameters
+    m = P["m"]
+    x = chart.symbols[1]
+    g, ginv = chart.geo.g, chart.geo.ginv
+    if system == "isotropic":
+        radius = x
+    elif system == "cartesian":
+        radius = sp.sqrt(sum(s ** 2 for s in chart.symbols[1:]))
+    elif system == "areal":
+        radius = P["r"]
+    else:
+        radius = 1 / x
+    field = m / radius
+    reduce = chart.reduce or (lambda value: value)
+    ricci = chart.geo.ricci_ll()
+    for a, c in vm._indices(4, 2):
+        source = -2 * sp.diff(field, chart.symbols[a]) * sp.diff(field, chart.symbols[c])
+        if vm.norm(reduce(vm._at(ricci, (a, c)) - source)) != 0:
+            raise AssertionError(f"exponential_metric: R_ab is not -2 d_a phi d_b phi in slot {(a, c)} of the {system} chart")
+    # Box phi = 0, d_a(sqrt(-g) g^ab d_b phi) = 0, written through the logarithmic derivative of
+    # the determinant so that no root is taken.
+    det = g.det()
+    box = sum(sp.diff(ginv[a, c] * sp.diff(field, chart.symbols[c]), chart.symbols[a])
+              + sp.diff(det, chart.symbols[a]) / (2 * det) * ginv[a, c] * sp.diff(field, chart.symbols[c])
+              for a in range(4) for c in range(4))
+    if sp.simplify(reduce(box)) != 0:
+        raise AssertionError(f"exponential_metric: the field does not solve the wave equation in the {system} chart")
+    if system == "harmonic":
+        # Box u = 0: the coordinate is harmonic, and the field m u is linear in it.
+        if sp.simplify(sp.diff(ginv[1, 1], x) + sp.diff(det, x) / (2 * det) * ginv[1, 1]) != 0:
+            raise AssertionError("exponential_metric: the coordinate u is not harmonic")
+    if system == "areal":
+        # The held radius: its declared rate against its definition, r = -m/W(-m/R).
+        R = x
+        defined = -m / sp.LambertW(-m / R)
+        if vm.norm(sp.diff(defined, R) - defined ** 2 / (R * (defined - m))) != 0:
+            raise AssertionError("exponential_metric: d_R r is not r^2/(R (r - m))")
+        if vm.norm(defined * sp.exp(m / defined) - R) != 0:
+            raise AssertionError("exponential_metric: r e^(m/r) is not R")
+        if sp.simplify(reduce(chart.geo.ricci_scalar()) + 2 * m ** 2 / (radius ** 2 * R ** 2)) != 0:
+            raise AssertionError("exponential_metric: the Ricci scalar is not -2m^2/(r^2 R^2)")
+    scalar = {"isotropic": -2 * m ** 2 * sp.exp(-2 * m / x) / x ** 4}
+    if system == "isotropic":
+        if vm.norm(chart.geo.ricci_scalar() - scalar["isotropic"]) != 0:
+            raise AssertionError("exponential_metric: the Ricci scalar is not -2m^2 e^(-2m/r)/r^4")
+        area = g[2, 2]
+        if sp.simplify(sp.diff(area, x).subs(x, m)) != 0 or sp.simplify(sp.diff(area, x, 2).subs(x, m) - 2 * sp.E ** 2) != 0:
+            raise AssertionError("exponential_metric: the spheres do not have their least area on r = m")
+        if sp.simplify(area.subs(x, m) - sp.E ** 2 * m ** 2) != 0:
+            raise AssertionError("exponential_metric: the throat's areal radius is not e m")
+        return
+    source = exponential_metric("isotropic")
+    own = cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+    r = own.symbols[1]
+    if system == "cartesian":
+        t, cx, cy, cz = chart.symbols
+        rr = sp.sqrt(cx ** 2 + cy ** 2 + cz ** 2)
+        image = [t, rr, sp.acos(cz / rr), sp.atan2(cy, cx)]
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+        pulled = (J.T * own.geo.g.subs(dict(zip(own.symbols, image)), simultaneous=True) * J).applyfunc(sp.simplify)
+    else:
+        image = [chart.symbols[0], radius, chart.symbols[2], chart.symbols[3]]
+        J = sp.diag(1, sp.diff(radius, x), 1, 1)
+        pulled = J.T * own.geo.g.subs(dict(zip(own.symbols, image)), simultaneous=True) * J
+    for a, c in vm._indices(4, 2):
+        if sp.simplify(reduce(pulled[a, c] - g[a, c])) != 0:
+            raise AssertionError(f"exponential_metric: the {system} chart is not the isotropic chart pulled back in slot {(a, c)}")
+
+
+CHARTS["exponential_metric"] = [lambda s=s: exponential_metric(s) for s in EXPONENTIAL_CHARTS]
 
 
 def write(spec):
