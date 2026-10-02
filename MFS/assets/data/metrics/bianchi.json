@@ -64,6 +64,11 @@
       "id": "kopczynski_trautman",
       "kind": "family",
       "text": "A flat universe of spinning dust in the Einstein-Cartan theory, which turns round where a big bang would be. The Bianchi universes of types I to VIII filled with the same dust can avoid the singularity too, where the torsion outweighs the shear [tafel1973, kopczynski1973]."
+    },
+    {
+      "id": "small_universes",
+      "kind": "family",
+      "text": "Friedmann universes whose space is a torus, which keeps the homogeneity of space and gives up its isotropy. Ya. B. Zel'dovich and A. A. Starobinskii put a universe that expands at three different rates on such a torus in 1984 [zeldovich1984]."
     }
   ],
   "references": [
@@ -81,7 +86,8 @@
     "gibbons2008petrov",
     "terzis2009",
     "tafel1973",
-    "kopczynski1973"
+    "kopczynski1973",
+    "zeldovich1984"
   ],
   "coordinates": [
     {

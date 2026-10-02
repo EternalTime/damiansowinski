@@ -1726,6 +1726,19 @@ DIMENSIONS = {
     ("kopczynski_trautman", "conformal"): {
         "\\eta": "L", "r": "L", "\\theta": "1", "\\phi": "1", "a": "1",
     },
+    # Ellis's small universes: on the torus x, y and z and their periods are comoving lengths and the
+    # scale factor a pure number, as FRW's is, with the conformal time a length; in the hyperbolic
+    # chart chi is a pure number and the scale factor is the radius of curvature of space, a length.
+    ("small_universes", "torus"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "a": "1", "L_1": "L", "L_2": "L", "L_3": "L",
+    },
+    ("small_universes", "torus_conformal"): {
+        "\\eta": "L", "x": "L", "y": "L", "z": "L", "a": "1", "L_1": "L", "L_2": "L", "L_3": "L",
+    },
+    ("small_universes", "hyperbolic"): {"t": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1", "a": "L"},
+    # The horn's x, y and z are pure numbers, y and z flat coordinates on the horospheres of hyperbolic
+    # space with pure numbers for periods, and the scale factor is again the radius of curvature.
+    ("small_universes", "horn"): {"t": "T", "x": "1", "y": "1", "z": "1", "a": "L", "b_2": "1", "b_3": "1"},
     # Hartle and Thorne's exterior: the mass and the spin per unit mass are lengths and the
     # quadrupole moment per unit mass an area, so that Kerr's value is q = a^2. R, the star's
     # radius, enters the domain alone, and the rest are names for the functions of r and theta the

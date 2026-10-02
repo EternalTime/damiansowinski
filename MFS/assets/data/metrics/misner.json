@@ -62,6 +62,11 @@
       "id": "elliptic_de_sitter",
       "kind": "family",
       "text": "De Sitter space with events identified under the antipodal map of its hyperboloid, where Misner space identifies them under a boost. The antipodal map makes no closed timelike curves, and it removes the global direction of time [parikh2003]."
+    },
+    {
+      "id": "small_universes",
+      "kind": "family",
+      "text": "Friedmann universes with points of space identified under translations, as events are identified here under a boost. The translations make space a torus and no closed timelike curve [lachiezerey1995]."
     }
   ],
   "references": [
@@ -83,7 +88,8 @@
     "morris1988prl",
     "ori2005",
     "tippett2017",
-    "parikh2003"
+    "parikh2003",
+    "lachiezerey1995"
   ],
   "coordinates": [
     {
