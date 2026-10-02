@@ -11263,6 +11263,191 @@ def israel_shell_check(chart, system):
 CHARTS["israel_shell"] = [lambda s=s: israel_shell(s) for s in ISRAEL_SHELL_CHARTS]
 
 
+# -- The charged shell of dust ------------------------------------------------------------
+
+CHARGED_SHELL_CHARTS = ("interior", "exterior", "exterior_ingoing", "exterior_outgoing", "exterior_isotropic")
+
+
+def charged_shell(system):
+    """The thin shell of charged dust of de la Cruz and Israel, Nuovo Cimento A 51, 744 (1967),
+    Kuchar, Czech. J. Phys. B 18, 435 (1968), and Boulware, Phys. Rev. D 8, 2363 (1973): flat space
+    inside the shell in the time T of an observer at its centre, and Reissner-Nordstrom's field of
+    the mass r_s and the charge r_q outside it, in four charts. The static chart ends on each
+    horizon\\; the ingoing Eddington-Finkelstein chart follows the shell in through r_+ and r_- to
+    the turn\\; the outgoing one follows it from the turn out through r_- and r_+ into the next
+    exterior\\; and the isotropic chart is the one in which Arnowitt, Deser and Misner, Phys. Rev.
+    120, 313 (1960), let the shell shrink to a point, with chi^2 = (1 + a/rho)(1 + b/rho) the
+    square of their conformal factor, a = r_s/4 + r_q/2 and b = r_s/4 - r_q/2 the lengths of their
+    two potentials psi + phi and psi - phi. The areal radius r is one coordinate on
+    both sides except in the isotropic chart, and the shell is r = R, a function of each chart's
+    time that the chart declares\\; mu = G m/c^2 is the rest mass of the dust as a length. The shell
+    is in no chart, since the time of one side is not the time of the other and g_rr jumps across
+    it. charged_shell_check holds the interior to Minkowski's published spherical chart, the
+    static chart to Reissner-Nordstrom's published metric, every exterior chart to the
+    Einstein-Maxwell equations of a point charge and to being the static chart pulled back, and
+    the isotropic chart at r_q = r_s/2 to Majumdar and Papapetrou's published single hole.
+    _tools/test_charged_shell.py holds the shell's motion to the junction conditions, and
+    charged_shell.md records each chart's source."""
+    sphere = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    mark = ["r = R \\;\\text{(the shell)}"]
+    horizons = ["r = r_\\pm \\;\\text{(the horizons, for}\\; r_q < r_s/2\\text{)}"]
+    if system == "interior":
+        coords, parameters = ["T", "r", "\\theta", "\\phi"], ["r_s", "r_q", "\\mu", "R = R(T)"]
+
+        def line(c2):
+            return "ds^2 = -" + c2 + "dT^2 + dr^2 + r^2" + sphere
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "charged_shell",
+            "system": {"id": system, "name": "Flat Interior", "coords": coords,
+                       "domains": ["T \\in (-\\infty, \\infty)", "r \\in [0, R]"] + angles + mark,
+                       "parameters": parameters, "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"lead": [probe.symbol["r"]], "flip": False},
+            "check": lambda chart: charged_shell_check(chart, system),
+        }
+    f = "\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2}\\right)"
+    bare = "1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2}"
+    scalar = "\\dfrac{4\\left(3r_s^2\\,r^2 - 12r_s\\,r_q^2\\,r + 14r_q^4\\right)}{r^8}"
+    if system == "exterior":
+        coords, parameters = ["t", "r", "\\theta", "\\phi"], ["r_s", "r_q", "\\mu", "R = R(t)"]
+
+        def line(c2):
+            return "ds^2 = -" + f + c2 + "dt^2 + \\dfrac{dr^2}{" + bare + "} + r^2" + sphere
+        probe = vm.Reader(coords, parameters, ())
+        r, rs, rq = probe.symbol["r"], probe.parameters["r_s"], probe.parameters["r_q"]
+        return {
+            "metric_id": "charged_shell",
+            "system": {"id": system, "name": "Reissner-Nordström Exterior", "coords": coords,
+                       "domains": ["t \\in (-\\infty, \\infty)", "r \\in [R, \\infty)"] + angles + mark + horizons,
+                       "parameters": parameters, "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"lead": [r, rs, rq], "factors": [rs, rq, r], "flip": False},
+            "components": {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                           "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}},
+            "kretschmann": scalar,
+            "check": lambda chart: charged_shell_check(chart, system),
+        }
+    if system in ("exterior_ingoing", "exterior_outgoing"):
+        null, sign, one = ("v", "+", "1") if system == "exterior_ingoing" else ("u", "-", "-1")
+        coords, parameters = [null, "r", "\\theta", "\\phi"], ["r_s", "r_q", "\\mu", f"R = R({null})"]
+        line = "ds^2 = -" + f + "d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr + r^2" + sphere
+        probe = vm.Reader(coords, parameters, ())
+        r, rs, rq = probe.symbol["r"], probe.parameters["r_s"], probe.parameters["r_q"]
+        return {
+            "metric_id": "charged_shell",
+            "system": {"id": system,
+                       "name": ("Ingoing" if null == "v" else "Outgoing") + " Eddington-Finkelstein Exterior",
+                       "coords": coords,
+                       "domains": [null + " \\in (-\\infty, \\infty)", "r \\in [R, \\infty)"] + angles + mark + horizons,
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [r, rs, rq], "factors": [rs, rq, r], "flip": False},
+            "components": {"metric_components": {(null, null): "-" + f, (null, "r"): one, ("r", null): one},
+                           "inverse_metric_components": {(null, "r"): one, ("r", null): one, ("r", "r"): bare}},
+            "kretschmann": scalar,
+            "check": lambda chart: charged_shell_check(chart, system),
+        }
+    coords = ["t", "\\rho", "\\theta", "\\phi"]
+    parameters = ["a", "b", "\\mu", "\\epsilon = \\epsilon(t)"]
+    chi2 = "\\left(1 + \\dfrac{a}{\\rho}\\right)^2\\left(1 + \\dfrac{b}{\\rho}\\right)^2"
+
+    def line(c2):
+        return ("ds^2 = -\\dfrac{\\left(\\rho^2 - ab\\right)^2}{\\left(\\rho + a\\right)^2\\left(\\rho + b\\right)^2}"
+                + c2 + "dt^2 + " + chi2 + "\\left(d\\rho^2 + \\rho^2" + sphere + "\\right)")
+    probe = vm.Reader(coords, parameters, ())
+    rho, a, b = probe.symbol["\\rho"], probe.parameters["a"], probe.parameters["b"]
+    return {
+        "metric_id": "charged_shell",
+        "system": {"id": system, "name": "Isotropic Exterior", "coords": coords,
+                   "domains": ["t \\in (-\\infty, \\infty)", "\\rho \\in [\\epsilon, \\infty)"] + angles
+                   + ["\\rho = \\epsilon \\;\\text{(the shell)}",
+                      "\\rho = \\sqrt{ab} \\;\\text{(the outer horizon, for}\\; b > 0\\text{)}"],
+                   "parameters": parameters, "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": {"lead": [rho, a, b], "factors": [a, b, rho], "flip": False},
+        "check": lambda chart: charged_shell_check(chart, system),
+    }
+
+
+def charged_shell_check(chart, system):
+    """The interior is flat and is Minkowski's published spherical chart with its time named T. The
+    static chart is Reissner-Nordstrom's published metric, slot by slot. Every exterior chart
+    carries the Einstein tensor of a point charge's field, G^a_b = (r_q^2/r^4) diag(-1, -1, 1, 1)
+    in the areal radius r, has no Ricci scalar, and is the static chart pulled back: along
+    v = ct + r_* and u = ct - r_* with dr_*/dr = 1/f, and along r = rho chi^2 with
+    chi^2 = (1 + a/rho)(1 + b/rho), a = r_s/4 + r_q/2 and b = r_s/4 - r_q/2. The isotropic chart at
+    b = 0, which is r_q = r_s/2, is Majumdar and Papapetrou's published single hole with m = a."""
+    geo, g = chart.geo, chart.geo.g
+
+    def published(source, there_id, rename=None):
+        there_chart = next(c for c in json.loads((METRICS / f"{source}.json").read_text(encoding="utf-8"))["coordinates"]
+                           if c["id"] == there_id)
+        there = vm.Reader(there_chart["coords"], [p["symbol"] for p in there_chart["parameters"]], ())
+        swap = {there.symbol[a]: chart.reader.symbol[b] for a, b in zip(there_chart["coords"], chart.coords_tex)}
+        for p in there_chart["parameters"]:
+            swap[there.parameters[p["symbol"]]] = (rename or {}).get(p["symbol"], chart.reader.parameters.get(p["symbol"]))
+        values = {tuple(e["indices"]): e["value"] for e in there_chart["metric_components"]}
+        return sp.Matrix(4, 4, lambda i, j: there(values.get((there_chart["coords"][i], there_chart["coords"][j]), "0")).subs(swap))
+
+    def same(matrix, name, at=None):
+        for i in range(4):
+            for j in range(i, 4):
+                if vm.norm((matrix[i, j] - g[i, j]).subs(at or {})) != 0:
+                    raise AssertionError(f"charged_shell: the {system} chart misses {name} in slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+    if system == "interior":
+        same(published("minkowski", "spherical"), "the published metric of minkowski")
+        if vm.norm(geo.kretschmann()) != 0:
+            raise AssertionError("charged_shell: the interior is not flat")
+        return
+    if system == "exterior_isotropic":
+        # a = r_s/4 + r_q/2 and b = r_s/4 - r_q/2, the lengths of Arnowitt, Deser and Misner's two potentials.
+        a, b = chart.reader.parameters["a"], chart.reader.parameters["b"]
+        rs, rq = 2 * (a + b), a - b
+    else:
+        rs, rq = chart.reader.parameters["r_s"], chart.reader.parameters["r_q"]
+    if vm.norm(geo.ricci_scalar()) != 0:
+        raise AssertionError(f"charged_shell: the {system} chart has a Ricci scalar")
+    if system == "exterior":
+        # Reissner-Nordstrom's page takes c = 1 and its time as a length, the chart x^0 = ct of this one.
+        same(published("rn_metric", "spherical"), "the published metric of rn_metric")
+    spec = charged_shell("exterior")
+    static = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    r_static = static.symbols[1]
+    if system == "exterior_isotropic":
+        rho = chart.reader.symbol["\\rho"]
+        areal = (rho + a) * (rho + b) / rho
+        J = sp.eye(4)
+        J[1, 1] = sp.diff(areal, rho)
+    else:
+        areal = chart.reader.symbol["r"]
+        fr = 1 - rs / areal + rq ** 2 / areal ** 2
+        # ct = v - r_* or u + r_*, so d(ct) = dv - dr/f or du + dr/f.
+        J = sp.eye(4)
+        if system != "exterior":
+            J[0, 1] = (-1 if system == "exterior_ingoing" else 1) / fr
+    at = {r_static: areal, static.reader.parameters["r_s"]: rs, static.reader.parameters["r_q"]: rq,
+          **dict(zip(static.symbols[2:], chart.symbols[2:]))}
+    same(J.T * static.geo.g.subs(at) * J, "the static chart pulled back")
+    einstein = (geo.ginv * sp.Matrix(geo.einstein_ll())).tolist()
+    field = rq ** 2 / areal ** 4
+    for i in range(4):
+        for j in range(4):
+            want = 0 if i != j else (-field if i < 2 else field)
+            if vm.norm(einstein[i][j] - want) != 0:
+                raise AssertionError(f"charged_shell: the {system} chart's Einstein tensor is not a point charge's "
+                                     f"field in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    if system == "exterior_isotropic":
+        hole = published("majumdar_papapetrou", "isotropic", {"m": a})
+        same(hole, "the published single hole of majumdar_papapetrou at b = 0", {b: 0})
+
+
+CHARTS["charged_shell"] = [lambda s=s: charged_shell(s) for s in CHARGED_SHELL_CHARTS]
+
+
 # -- Hiscock's evaporating black hole -----------------------------------------------------
 
 HISCOCK_CHARTS = ("ingoing", "outgoing", "flat")
