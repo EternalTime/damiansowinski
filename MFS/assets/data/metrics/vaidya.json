@@ -104,6 +104,11 @@
       "id": "hiscock",
       "kind": "composite",
       "text": "A black hole that evaporates, made of both of Vaidya's metrics. Negative energy falls in along the ingoing one and shrinks the hole, and the outgoing one carries the mass away [hiscock1981outgoing]."
+    },
+    {
+      "id": "white_hole",
+      "kind": "family",
+      "text": "A white hole made of dust, Oppenheimer and Snyder's collapse with the time reversed. Zel'dovich, Novikov, and Starobinsky used Vaidya's metric for the radiation one sends out [zeldovichnovikovstarobinskii1974]."
     }
   ],
   "references": [
@@ -134,7 +139,8 @@
     "wang1997collapse",
     "poisson1989",
     "kobayashi2005",
-    "hiscock1981outgoing"
+    "hiscock1981outgoing",
+    "zeldovichnovikovstarobinskii1974"
   ],
   "coordinates": [
     {

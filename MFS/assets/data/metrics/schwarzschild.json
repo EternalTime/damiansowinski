@@ -318,6 +318,11 @@
       "id": "bonnor_magnetic_dipole",
       "kind": "family",
       "text": "Bonnor's mass with a magnetic dipole moment. With the dipole switched off it keeps a quadrupole and a naked singularity, so Schwarzschild's black hole is not among its cases [emparan2000]."
+    },
+    {
+      "id": "white_hole",
+      "kind": "composite",
+      "text": "A ball of dust coming out through Schwarzschild's past horizon, with his vacuum outside it [novikov1965]."
     }
   ],
   "references": [
@@ -407,7 +412,8 @@
     "lemos1993",
     "brill1963",
     "cook2000",
-    "emparan2000"
+    "emparan2000",
+    "novikov1965"
   ],
   "coordinates": [
     {

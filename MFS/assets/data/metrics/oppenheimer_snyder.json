@@ -72,6 +72,11 @@
       "id": "neugebauer_meinel",
       "kind": "family",
       "text": "Dust that reaches a black hole without falling: a spinning disc whose equilibria run out at the extreme Kerr black hole. Meinel set the two side by side as idealized routes to a black hole [meinel2002]."
+    },
+    {
+      "id": "white_hole",
+      "kind": "dual",
+      "text": "The collapse with the time reversed, a ball of dust that comes out of a singularity. Igor Novikov and Yuval Ne'eman proposed it in 1964 and 1965 as what a quasar is [novikov1965, neeman1965]."
     }
   ],
   "references": [
@@ -89,7 +94,9 @@
     "vaidya1966",
     "mann1993",
     "einstein1939",
-    "meinel2002"
+    "meinel2002",
+    "novikov1965",
+    "neeman1965"
   ],
   "coordinates": [
     {

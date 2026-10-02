@@ -1,5 +1,5 @@
 {
-  "version": "6fdfd439c682e3eb",
+  "version": "90a7afb89f745cce",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -22633,6 +22633,211 @@
         "eprint": "hep-th/0008136",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/hep-th/0008136"
+      }
+    },
+    "novikov1964": {
+      "type": "article",
+      "fields": {
+        "title": "Delayed explosion of a part of the {Fridman} universe, and quasars",
+        "author": "Novikov, I. D.",
+        "journal": "Astronomicheskii Zhurnal",
+        "volume": "41",
+        "number": "6",
+        "pages": "1075--1083",
+        "year": "1964",
+        "url": "https://ui.adsabs.harvard.edu/abs/1964AZh....41.1075N/abstract"
+      }
+    },
+    "novikov1965": {
+      "type": "article",
+      "fields": {
+        "title": "Delayed explosion of a part of the {Fridman} universe, and quasars",
+        "author": "Novikov, I. D.",
+        "journal": "Soviet Astronomy",
+        "volume": "8",
+        "number": "6",
+        "pages": "857--863",
+        "year": "1965",
+        "url": "https://ui.adsabs.harvard.edu/abs/1965SvA.....8..857N/abstract"
+      }
+    },
+    "neeman1965": {
+      "type": "article",
+      "fields": {
+        "title": "Expansion as an energy source in quasi-stellar radio sources",
+        "author": "Ne'eman, Yuval",
+        "journal": "The Astrophysical Journal",
+        "volume": "141",
+        "pages": "1303--1305",
+        "year": "1965",
+        "doi": "10.1086/148218",
+        "url": "https://doi.org/10.1086/148218"
+      }
+    },
+    "neemantauber1967": {
+      "type": "article",
+      "fields": {
+        "title": "The lagging-core model for quasi-stellar sources",
+        "author": "Ne'eman, Yuval and Tauber, Gerald",
+        "journal": "The Astrophysical Journal",
+        "volume": "150",
+        "pages": "755--766",
+        "year": "1967",
+        "doi": "10.1086/149379",
+        "url": "https://doi.org/10.1086/149379"
+      }
+    },
+    "zeldovichnovikov1967": {
+      "type": "article",
+      "fields": {
+        "title": "The hypothesis of cores retarded during expansion and the hot cosmological model",
+        "author": "Zel'dovich, Ya. B. and Novikov, I. D.",
+        "journal": "Soviet Astronomy",
+        "volume": "10",
+        "number": "4",
+        "pages": "602--603",
+        "year": "1967",
+        "url": "https://ui.adsabs.harvard.edu/abs/1967SvA....10..602Z/abstract"
+      }
+    },
+    "neeman1974": {
+      "type": "incollection",
+      "fields": {
+        "title": "Quasar counts and the lagging core model ('white holes')",
+        "author": "Ne'eman, Y.",
+        "booktitle": "Physics of Dense Matter",
+        "editor": "Hansen, C. J.",
+        "series": "Symposium - International Astronomical Union",
+        "volume": "53",
+        "pages": "319--320",
+        "year": "1974",
+        "doi": "10.1017/S0074180900100105",
+        "url": "https://doi.org/10.1017/S0074180900100105"
+      }
+    },
+    "eardley1974": {
+      "type": "article",
+      "fields": {
+        "title": "Death of white holes in the early universe",
+        "author": "Eardley, Douglas M.",
+        "journal": "Physical Review Letters",
+        "volume": "33",
+        "number": "7",
+        "pages": "442--444",
+        "year": "1974",
+        "doi": "10.1103/PhysRevLett.33.442",
+        "url": "https://doi.org/10.1103/PhysRevLett.33.442"
+      }
+    },
+    "zeldovichnovikovstarobinskii1974": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum effects in white holes",
+        "author": "Zel'dovich, Ya. B. and Novikov, I. D. and Starobinskii, A. A.",
+        "journal": "Soviet Physics JETP",
+        "volume": "39",
+        "number": "6",
+        "pages": "933--939",
+        "year": "1974",
+        "url": "http://www.jetp.ras.ru/cgi-bin/e/index/e/39/6/p933?a=list"
+      }
+    },
+    "lakeroeder1976": {
+      "type": "article",
+      "fields": {
+        "title": "Blue-shift surfaces and the stability of white holes",
+        "author": "Lake, K. and Roeder, R. C.",
+        "journal": "Lettere al Nuovo Cimento",
+        "volume": "16",
+        "number": "1",
+        "pages": "17--21",
+        "year": "1976",
+        "doi": "10.1007/BF02719664",
+        "url": "https://doi.org/10.1007/BF02719664"
+      }
+    },
+    "lake1978": {
+      "type": "article",
+      "fields": {
+        "title": "White holes",
+        "author": "Lake, Kayll",
+        "journal": "Nature",
+        "volume": "272",
+        "number": "5654",
+        "pages": "599--601",
+        "year": "1978",
+        "doi": "10.1038/272599a0",
+        "url": "https://doi.org/10.1038/272599a0"
+      }
+    },
+    "hawking1976thermo": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes and thermodynamics",
+        "author": "Hawking, S. W.",
+        "journal": "Physical Review D",
+        "volume": "13",
+        "number": "2",
+        "pages": "191--197",
+        "year": "1976",
+        "doi": "10.1103/PhysRevD.13.191",
+        "url": "https://doi.org/10.1103/PhysRevD.13.191"
+      }
+    },
+    "waldramaswamy1980": {
+      "type": "article",
+      "fields": {
+        "title": "Particle production by white holes",
+        "author": "Wald, Robert M. and Ramaswamy, Sriram",
+        "journal": "Physical Review D",
+        "volume": "21",
+        "number": "10",
+        "pages": "2736--2741",
+        "year": "1980",
+        "doi": "10.1103/PhysRevD.21.2736",
+        "url": "https://doi.org/10.1103/PhysRevD.21.2736"
+      }
+    },
+    "blau1989": {
+      "type": "article",
+      "fields": {
+        "title": "{Dray}-'t {Hooft} geometries and the death of white holes",
+        "author": "Blau, Steven K.",
+        "journal": "Physical Review D",
+        "volume": "39",
+        "number": "10",
+        "pages": "2901--2903",
+        "year": "1989",
+        "doi": "10.1103/PhysRevD.39.2901",
+        "url": "https://doi.org/10.1103/PhysRevD.39.2901"
+      }
+    },
+    "barrabes1993": {
+      "type": "article",
+      "fields": {
+        "title": "Death of white holes",
+        "author": "Barrab\\`es, Claude and Brady, Patrick R. and Poisson, Eric",
+        "journal": "Physical Review D",
+        "volume": "47",
+        "number": "6",
+        "pages": "2383--2387",
+        "year": "1993",
+        "doi": "10.1103/PhysRevD.47.2383",
+        "url": "https://doi.org/10.1103/PhysRevD.47.2383"
+      }
+    },
+    "oripoisson1994": {
+      "type": "article",
+      "fields": {
+        "title": "Death of cosmological white holes",
+        "author": "Ori, Amos and Poisson, Eric",
+        "journal": "Physical Review D",
+        "volume": "50",
+        "number": "10",
+        "pages": "6150--6157",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.50.6150",
+        "url": "https://doi.org/10.1103/PhysRevD.50.6150"
       }
     }
   }

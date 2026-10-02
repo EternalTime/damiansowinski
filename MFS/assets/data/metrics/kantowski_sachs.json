@@ -50,6 +50,11 @@
       "id": "simpson_visser",
       "kind": "special_case",
       "text": "A regular black hole whose inside, where $r$ is a time, is a Kantowski-Sachs cosmology that bounces: its spheres shrink to a least radius $a$ and grow again [bronnikov2022]."
+    },
+    {
+      "id": "white_hole",
+      "kind": "composite",
+      "text": "A white hole holds the vacuum member with its spheres growing: it is the space between the singularity and the dust that comes out of it [novikov1965]."
     }
   ],
   "references": [
@@ -69,7 +74,8 @@
     "szekeres1975",
     "bonnor1977",
     "obregon1998",
-    "bronnikov2022"
+    "bronnikov2022",
+    "novikov1965"
   ],
   "coordinates": [
     {

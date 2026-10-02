@@ -3511,7 +3511,8 @@ class StacksAndMovies(unittest.TestCase):
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
     MOVIES = {("frw", "closed"): "$ct$", ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
-              ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("vaidya", "shell"): "$v - r$",
+              ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("white_hole", "explosion"): "$c\\tau$",
+              ("vaidya", "shell"): "$v - r$",
               ("bonnor_vaidya", "shell"): "$v - r$",
               ("cosmic_string", "unroll"): "$\\Delta\\phi$", ("point_particle_2plus1", "unroll"): "$\\Delta\\phi$",
               ("milne", "hyperboloids"): "$ct$",
@@ -4606,6 +4607,10 @@ class Slices(unittest.TestCase):
               "conformal plebanski_hacyan/plane_static",
               "frw/comoving_spherical/radial", "frw/comoving_spherical/through", "frw/conformal_spherical/radial",
               "tolman_bondi/comoving_synchronous/collapse", "vaidya/eddington_finkelstein_outgoing/shell",
+              # Novikov's vacuole holds the marginally bound core, whose moments are planes, and Kruskal's
+              # view of the white hole is drawn about the surface's way out, a dozen widths of the drawing
+              # from the later moments embedded.
+              "white_hole/novikov_comoving/vacuole", "white_hole/exterior_kruskal/kruskal",
               # Bonnor and Vaidya's leaving shell is the time reverse of the falling shell embedded, and the
               # homothetic chart draws a mass and a charge that grow with the advanced time, another spacetime.
               "bonnor_vaidya/eddington_finkelstein_outgoing/shell", "conformal bonnor_vaidya/leaving",
@@ -5319,6 +5324,39 @@ class Slices(unittest.TestCase):
             return ct, [novikov_t(lo, t)[0] if t else lo, novikov_t(hi, t)[0] if t else hi]
         if key == "oppenheimer_snyder/interior_comoving/through":
             return (lambda X: t / (2 * math.sqrt(2))), [0, math.pi / 4]
+        if key.startswith("white_hole/"):
+            # The collapse with the time reversed: the dust's moment tau is the collapse's moment
+            # pi a_m/2 - tau before the rest, a_m = 2 sqrt 2 r_s.
+            rest = math.pi * math.sqrt(2)
+            if key == "white_hole/interior_comoving/through":
+                return (lambda X: t / (2 * math.sqrt(2))), [0, math.pi / 4]
+            if key == "white_hole/interior_conformal/through":
+                eta = bisect(lambda e: math.sqrt(2) * (e - math.sin(e)) - t, 0, 2 * math.pi)
+                return (lambda X: eta), [0, math.pi / 4]
+            lo, hi = self.reach(surface, "comoving_synchronous")
+            back = max(rest - t, 0.0)
+
+            def shell(X):
+                return bisect(lambda R: novikov_t(R, back)[0] - X, lo, hi) if back else X
+            ends = [novikov_t(lo, back)[0] if back else lo, novikov_t(hi, back)[0] if back else hi]
+            if key == "white_hole/exterior_schwarzschild/radial":
+                return (lambda X: -novikov_t(shell(X), back)[1] if back else 0.0), ends
+
+            def u_plus_r(X):
+                # Kruskal's V of the collapse's shell is e^(-u/2) sqrt(2) e^(1 + pi/2) of the white hole's.
+                # A point rounded past the end of the line, where the curve is steep beside the
+                # surface, is read along the tangent there.
+                if not ends[0] <= X <= ends[1]:
+                    edge = min(max(X, ends[0]), ends[1])
+                    inward = 1e-5 if edge == ends[0] else -1e-5
+                    return u_plus_r(edge) + (u_plus_r(edge + inward) - u_plus_r(edge)) / inward * (X - edge)
+                R = shell(X)
+                eta = bisect(lambda e: 0.5 * R * math.sqrt(R) * (e + math.sin(e)) - back, 0.0, math.pi)
+                k = math.sqrt(R - 1)
+                log_V = (math.log(k * math.cos(eta / 2) + math.sin(eta / 2))
+                         + (X + k * (eta + 0.5 * R * (eta + math.sin(eta)))) / 2)
+                return math.pi + 2 + math.log(2) - 2 * log_V + X
+            return u_plus_r, ends
         if key.startswith("einstein_rosen_waves/"):
             # A moment ct = T, drawn against rho and ct in both charts, out to the embedding's reach.
             return (lambda X: t), list(self.reach(surface))
@@ -5822,6 +5860,16 @@ class Slices(unittest.TestCase):
                         dust = [(X, T) for X, T in points if X <= chi0 + 1e-4]
                         self.assertTrue(dust and all(abs(T - eta) < 2e-4 for _, T in dust), where)
                         # The line crosses the star's surface at (chi_0, eta), where Novikov's
+                        # slice outside meets the dust's moment.
+                        inside, outside = mark["lines"]
+                        self.assertEqual(inside, [[0, round(eta, 4)], [round(chi0, 4), round(eta, 4)]], where)
+                        self.assertLess(math.dist(outside[0], [chi0, eta]), 2e-4, where)
+                    elif metric_id == "white_hole":
+                        chi0 = math.pi / 4
+                        eta = bisect(lambda e: math.sqrt(2) * (e - math.sin(e)) - t, 0, 2 * math.pi) - math.pi
+                        dust = [(X, T) for X, T in points if X <= chi0 + 1e-4]
+                        self.assertTrue(dust and all(abs(T - eta) < 2e-4 for _, T in dust), where)
+                        # The line crosses the core's surface at (chi_0, eta - pi), where Novikov's
                         # slice outside meets the dust's moment.
                         inside, outside = mark["lines"]
                         self.assertEqual(inside, [[0, round(eta, 4)], [round(chi0, 4), round(eta, 4)]], where)

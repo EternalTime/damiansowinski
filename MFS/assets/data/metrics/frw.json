@@ -81,6 +81,11 @@
       "id": "sultana_dyer",
       "kind": "generalisation",
       "text": "The flat universe of dust with a black hole in it from the big bang on: Schwarzschild's metric times $a^2$, with $a \\propto \\eta^2$ [sultana2005]."
+    },
+    {
+      "id": "white_hole",
+      "kind": "composite",
+      "text": "A piece of a Friedmann universe of dust that leaves the big bang late and comes out of its own Schwarzschild sphere, with vacuum around it [novikov1965]."
     }
   ],
   "references": [
@@ -133,7 +138,8 @@
     "coleman1980",
     "bucher1995",
     "senovilla1996",
-    "sultana2005"
+    "sultana2005",
+    "novikov1965"
   ],
   "coordinates": [
     {
