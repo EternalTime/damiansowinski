@@ -825,7 +825,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "877d15ebedce4af3",
+    "version": "63b2edaab402c973",
     "diagrams": "e80c22fa8faff2b6",
     "conformal": "9dae987db0ca1df8",
     "embedding": "7ebe08e359710241"
@@ -1262,7 +1262,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a609c2a6fa86600e",
+    "version": "5354f8dfd62045d5",
     "diagrams": "dfa07fae80435e7d",
     "conformal": "878abf6db42c0334",
     "embedding": "cc9efb7cafec7946"
@@ -1574,7 +1574,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "53e3dfc2a8c729c7",
+    "version": "5d877dca76450203",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -1792,7 +1792,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e339b06dfd526e16",
+    "version": "4ec084e8264a1455",
     "diagrams": "03d90ee0c12cbe63",
     "embedding": "f63088100c538d20"
   },
@@ -2231,7 +2231,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "27093a530677be31",
+    "version": "0e900347d0ff5c7d",
     "diagrams": "fcd9b835546fa10a",
     "conformal": "83b45b101a7e6db4",
     "embedding": "6602c018a8504748"
@@ -2408,10 +2408,39 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a60790a32dd50562",
+    "version": "9d45ba87acb789ad",
     "diagrams": "762c153757fcd27b",
     "conformal": "ad18bb59a6c85dec",
     "embedding": "d2cedaf6a4fa93cb"
+  },
+  {
+    "id": "neugebauer_meinel",
+    "name": "Neugebauer-Meinel Disc",
+    "tags": [
+      "dust",
+      "stationary",
+      "axisymmetric",
+      "rotating",
+      "angular momentum",
+      "mass",
+      "frame dragging",
+      "gravitomagnetic",
+      "ergoregion",
+      "no horizon",
+      "asymptotically flat",
+      "reflection symmetry",
+      "inverse scattering",
+      "throat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "0a2de1a11a45809c",
+    "diagrams": "a6b87d5adfbabe07",
+    "conformal": "02fb2665a736a4d9",
+    "embedding": "1bebbd3e461aed13"
   },
   {
     "id": "oppenheimer_snyder",
@@ -2432,7 +2461,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "6d90de0e50dfb474",
+    "version": "3a754f5f8ff17eca",
     "diagrams": "d31b7b7b6c3dd2ef",
     "conformal": "7400ddcb9dd6a817",
     "embedding": "1ecd155079c29ab6"

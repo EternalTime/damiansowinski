@@ -49,6 +49,11 @@
       "id": "wahlquist",
       "kind": "family",
       "text": "A rotating fluid in closed form that no such exterior fits. Expanded to second order in its rotation, Wahlquist's interior cannot be joined to an asymptotically flat vacuum [bradley2000]."
+    },
+    {
+      "id": "neugebauer_meinel",
+      "kind": "family",
+      "text": "A rotating body solved exactly, a disc of dust at any speed of rotation. Bardeen and Wagoner took it up because studies such as Hartle and Thorne's had assumed slow rotation or weak fields [bardeen1969]."
     }
   ],
   "references": [
@@ -66,7 +71,8 @@
     "schiff1960",
     "ciufolini2004",
     "venkatraman2020",
-    "bradley2000"
+    "bradley2000",
+    "bardeen1969"
   ],
   "coordinates": [
     {

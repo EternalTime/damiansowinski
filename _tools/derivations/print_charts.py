@@ -14148,6 +14148,276 @@ def double_kerr_check(chart):
 CHARTS["double_kerr"] = double_kerr
 
 
+# -- The Neugebauer-Meinel disc ----------------------------------------------------------
+
+NM_CHARTS = ["weyl", "corotating", "bardeen_wagoner", "spheroidal", "black_hole_limit"]
+
+
+def neugebauer_meinel(system):
+    """Neugebauer and Meinel's rigidly rotating disc of dust, in five charts.
+
+    weyl: the coordinates of Weyl, Lewis and Papapetrou as their letter of 1995 writes the metric,
+        ds^2 = e^(-2U) (e^(2k) (drho^2 + dzeta^2) + rho^2 dphi^2) - e^(2U) (c dt + a dphi)^2,
+    with U, a and k free functions of rho and zeta, so that no component assumes a field equation.
+    corotating: the same form in the frame that turns with the disc, phi -> phi - Omega t, with
+    their U', a' and k'. bardeen_wagoner: Bardeen and Wagoner's form of 1969 and 1971,
+        ds^2 = e^(2 alpha) (drho^2 + dzeta^2) + rho^2 e^(-2 nu) (dphi - omega c dt)^2 - e^(2 nu) c^2 dt^2,
+    a lapse and a rate of dragging, real inside the ergoregion, where e^(2U) is negative.
+    spheroidal: that form in the oblate spheroidal coordinates both pairs of authors compute in,
+    rho = rho_0 sqrt((1 + xi^2)(1 - eta^2)) and zeta = rho_0 xi eta, the disc xi = 0.
+    black_hole_limit: the field outside the disc at mu -> mu_0, exact, the extreme Kerr metric as
+    Bardeen and Wagoner's (VIII.2) to (VIII.5) write it, with rho = r sin(theta), zeta = r cos(theta).
+
+    neugebauer_meinel_check holds each free chart to the vacuum equations its parameters state,
+    the charts to one another, the theta functions of nm_disc.py to Ernst's equation, and the limit
+    chart to being a vacuum and Kerr's published chart at a = GM/c^2 pulled back\\; neugebauer_meinel.md
+    beside this file is the derivation."""
+    reals, turn = " \\in (-\\infty, \\infty)", " \\in [0, 2\\pi)"
+    spec = {"metric_id": "neugebauer_meinel", "check": lambda chart: neugebauer_meinel_check(chart, system)}
+    D = sp.Derivative
+    if system in ("weyl", "corotating"):
+        angle = "\\phi" if system == "weyl" else "\\varphi"
+        coords = ["t", "\\rho", "z", angle]
+        parameters = ["U = U(\\rho,z)", "a = a(\\rho,z)", "k = k(\\rho,z)"]
+        positive = ("e^{2U} > 0 \\;\\text{(outside the ergoregion)}" if system == "weyl" else
+                    "e^{2U} > 0 \\;\\text{(inside the surface where the frame moves at the speed of light)}")
+        domains = ["t" + reals, "\\rho \\in [0, \\infty)", "z" + reals, angle + turn,
+                   "z = 0,\\; \\rho \\le \\rho_0 \\;\\text{(the disc)}",
+                   "a = 0 \\;\\text{and}\\; k = 0 \\;\\text{at}\\; \\rho = 0 \\;\\text{(a regular axis)}", positive]
+
+        def line(c):
+            return ("ds^2 = e^{-2U}\\left(e^{2k}\\left(d\\rho^2 + dz^2\\right) + \\rho^2d" + angle + "^2\\right)"
+                    " - e^{2U}\\left(" + c + "dt + a\\,d" + angle + "\\right)^2")
+        probe = vm.Reader(coords, parameters, ())
+        rho, zeta = probe.symbol["\\rho"], probe.symbol["z"]
+        funcs = [probe.parameters[n] for n in ("k", "U", "a")]
+        spec.update({
+            "system": {"id": system, "name": "Weyl-Lewis-Papapetrou" if system == "weyl" else "Corotating",
+                       "coords": coords, "domains": domains, "parameters": parameters, "line_element": line("c\\,")},
+            "chart_line_element": line(""),
+            "components": {"metric_components": {(angle, angle): "\\rho^2e^{-2U} - a^2e^{2U}"},
+                           "inverse_metric_components": {("t", "t"): "-\\dfrac{\\rho^2e^{-2U} - a^2e^{2U}}{\\rho^2}"}},
+        })
+    elif system in ("bardeen_wagoner", "spheroidal"):
+        if system == "bardeen_wagoner":
+            coords, args, name = ["t", "\\rho", "z", "\\phi"], "(\\rho,z)", "Bardeen-Wagoner"
+            constants = []
+            domains = ["t" + reals, "\\rho \\in [0, \\infty)", "z" + reals, "\\phi" + turn,
+                       "z = 0,\\; \\rho \\le \\rho_0 \\;\\text{(the disc)}",
+                       "\\alpha = -\\nu \\;\\text{at}\\; \\rho = 0 \\;\\text{(a regular axis)}"]
+
+            def line(c2, c):
+                return ("ds^2 = -e^{2\\nu}" + c2 + "dt^2 + \\rho^2e^{-2\\nu}\\left(d\\phi - \\omega\\," + c + "dt\\right)^2"
+                        " + e^{2\\alpha}\\left(d\\rho^2 + dz^2\\right)")
+            by_hand = "-e^{2\\nu} + \\rho^2\\omega^2e^{-2\\nu}"
+        else:
+            coords, args, name = ["t", "\\xi", "\\eta", "\\phi"], "(\\xi,\\eta)", "Oblate Spheroidal"
+            constants = ["\\rho_0"]
+            domains = ["t" + reals, "\\xi \\in [0, \\infty)", "\\eta \\in [-1, 1]", "\\phi" + turn,
+                       "\\xi = 0 \\;\\text{(the disc, its upper face}\\; \\eta > 0 \\;\\text{and its lower face}\\; \\eta < 0\\text{)}",
+                       "\\xi = \\eta = 0 \\;\\text{(the rim of the disc)}", "\\eta = \\pm 1 \\;\\text{(the axis)}"]
+
+            def line(c2, c):
+                return ("ds^2 = -e^{2\\nu}" + c2 + "dt^2 + \\rho_0^2\\left(1 + \\xi^2\\right)\\left(1 - \\eta^2\\right)e^{-2\\nu}"
+                        "\\left(d\\phi - \\omega\\," + c + "dt\\right)^2 + \\rho_0^2\\left(\\xi^2 + \\eta^2\\right)e^{2\\alpha}"
+                        "\\left(\\dfrac{d\\xi^2}{1 + \\xi^2} + \\dfrac{d\\eta^2}{1 - \\eta^2}\\right)")
+            by_hand = "-e^{2\\nu} + \\rho_0^2\\left(1 + \\xi^2\\right)\\left(1 - \\eta^2\\right)\\omega^2e^{-2\\nu}"
+        parameters = constants + [f"{n} = {n}{args}" for n in ("\\nu", "\\omega", "\\alpha")]
+        probe = vm.Reader(coords, parameters, ())
+        rho, zeta = probe.symbol[coords[1]], probe.symbol[coords[2]]
+        funcs = [probe.parameters[n] for n in ("alpha", "nu", "omega")]
+        spec.update({
+            "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                       "line_element": line("c^2", "c\\,")},
+            "chart_line_element": line("", ""),
+            "components": {"metric_components": {("t", "t"): by_hand}},
+        })
+    else:
+        coords, parameters = ["t", "r", "\\theta", "\\phi"], ["m"]
+        S = "\\left(\\left(r + m\\right)^2 + m^2\\cos^2\\theta\\right)"
+        A = "\\left(\\left(\\left(r + m\\right)^2 + m^2\\right)^2 - m^2r^2\\sin^2\\theta\\right)"
+
+        def line(c2, c):
+            return ("ds^2 = -\\dfrac{r^2" + S + "}{" + A[6:-7] + "}" + c2 + "dt^2 + \\dfrac{" + A + "\\sin^2\\theta}{" + S[6:-7] + "}"
+                    "\\left(d\\phi - \\dfrac{2m^2\\left(r + m\\right)}{" + A[6:-7] + "}" + c + "dt\\right)^2"
+                    " + \\dfrac{" + S[6:-7] + "}{r^2}\\left(dr^2 + r^2d\\theta^2\\right)")
+        probe = vm.Reader(coords, parameters, ())
+        r, m, theta = probe.symbol["r"], probe.parameters["m"], probe.symbol["\\theta"]
+
+        def pretty(value):
+            # Each value factored with the even powers of the sine in the cosine, or as it stands if shorter.
+            value = sp.factor(sp.sympify(value))
+            cosine = sp.factor(value.replace(
+                lambda p: p.is_Pow and p.base == sp.sin(theta) and p.exp.is_Integer and p.exp > 1,
+                lambda p: sp.sin(theta) ** (int(p.exp) % 2) * (1 - sp.cos(theta) ** 2) ** (int(p.exp) // 2)))
+            return min([value, cosine], key=lambda e: len(str(e)))
+        spec.update({
+            "system": {"id": system, "name": "The Black Hole Limit", "coords": coords,
+                       "domains": ["t" + reals, "r \\in (0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi" + turn,
+                                   "r = 0 \\;\\text{(the horizon, and the throat that leads to the disc)}"],
+                       "parameters": parameters, "line_element": line("c^2", "c\\,")},
+            "chart_line_element": line("", ""),
+            "printer": {"lead": [r, m], "factors": [m, r]},
+            "pretty": pretty,
+        })
+        return spec
+    lead = list(funcs)
+    for g in funcs:
+        lead += [D(g, rho), D(g, zeta)]
+    for g in funcs:
+        lead += [D(g, (rho, 2)), D(g, rho, zeta), D(g, (zeta, 2))]
+    lead.append(rho)
+    if system == "spheroidal":
+        lead += [zeta, probe.parameters["rho_0"]]
+    spec["printer"] = {"lead": lead, "factors": lead}
+    spec["pretty"] = lambda value: sp.powsimp(sp.factor(sp.sympify(value)), combine="exp")
+    if system == "spheroidal":
+        # Each numerator grouped by its monomial in omega and the derivatives of the three functions,
+        # so that the polynomial in xi and eta in front of each is factored once.
+        held = [g for g in lead if isinstance(g, D)] + [funcs[2]]
+        spec["printer"]["collect"] = lambda poly, printer: cp.collect_by(poly, held, printer)
+    return spec
+
+
+def neugebauer_meinel_vacuum(chart, system):
+    """The vacuum equations a chart's parameters state, as replacements: the second derivatives along
+    zeta of its potential and its twist, and both first derivatives of its conformal factor."""
+    rho, zeta = chart.symbols[1], chart.symbols[2]
+    D = sp.Derivative
+    if system in ("weyl", "corotating"):
+        U, a, k = (chart.reader.parameters[n] for n in ("U", "a", "k"))
+        Ur, Uz, ar, az = D(U, rho), D(U, zeta), D(a, rho), D(a, zeta)
+        e = sp.exp(4 * U)
+        second = {D(U, (zeta, 2)): -D(U, (rho, 2)) - Ur / rho - e * (ar ** 2 + az ** 2) / (2 * rho ** 2),
+                  D(a, (zeta, 2)): -D(a, (rho, 2)) + ar / rho - 4 * (Ur * ar + Uz * az)}
+        first = {rho: rho * (Ur ** 2 - Uz ** 2) - e * (ar ** 2 - az ** 2) / (4 * rho),
+                 zeta: 2 * rho * Ur * Uz - e * ar * az / (2 * rho)}
+        return second, k, first
+    nu, om, al = (chart.reader.parameters[n] for n in ("nu", "omega", "alpha"))
+    nr, nz, wr, wz = D(nu, rho), D(nu, zeta), D(om, rho), D(om, zeta)
+    e = sp.exp(-4 * nu)
+    second = {D(nu, (zeta, 2)): -D(nu, (rho, 2)) - nr / rho + rho ** 2 * e * (wr ** 2 + wz ** 2) / 2,
+              D(om, (zeta, 2)): -D(om, (rho, 2)) - 3 * wr / rho + 4 * (nr * wr + nz * wz)}
+    first = {rho: -nr + rho * (nr ** 2 - nz ** 2) - rho ** 3 * e * (wr ** 2 - wz ** 2) / 4,
+             zeta: -nz + 2 * rho * nr * nz - rho ** 3 * e * wr * wz / 2}
+    return second, al, first
+
+
+def neugebauer_meinel_on_shell(chart, system, value):
+    rho, zeta = chart.symbols[1], chart.symbols[2]
+    second, conformal, first = neugebauer_meinel_vacuum(chart, system)
+    D = sp.Derivative
+    value = sp.sympify(value).subs({D(conformal, (rho, 2)): sp.diff(first[rho], rho), D(conformal, (zeta, 2)): sp.diff(first[zeta], zeta),
+                                    D(conformal, rho, zeta): sp.diff(first[rho], zeta)}).doit()
+    value = value.subs({D(conformal, rho): first[rho], D(conformal, zeta): first[zeta]}).doit()
+    return value.subs(second).doit()
+
+
+def neugebauer_meinel_check(chart, system):
+    """weyl, corotating and bardeen_wagoner: the equations the parameters state make every Ricci
+    component vanish and make the quadrature integrable. weyl: the theta functions of nm_disc.py
+    solve Ernst's equation at points in all three arrangements of the branch points, and their a
+    solves its first order equation. corotating: the chart is weyl's with phi -> phi + Omega t, its
+    functions Neugebauer and Meinel's U', a' and k'. bardeen_wagoner: the chart is weyl's with
+    e^(2 nu) = rho^2 e^(2U)/(rho^2 - a^2 e^(4U)), omega = a e^(4U)/(rho^2 - a^2 e^(4U)) and
+    alpha = k - U. spheroidal: the chart is bardeen_wagoner's pulled back. black_hole_limit: its
+    Ricci tensor vanishes and it is Kerr's published chart at a = GM/c^2, r -> r + m, pulled back."""
+    def own(name):
+        other = neugebauer_meinel(name)
+        return cp.Chart(other["system"]["coords"], other["system"]["parameters"], other["chart_line_element"])
+
+    name = f"neugebauer_meinel/{system}"
+    x = chart.symbols
+    if system in ("weyl", "corotating", "bardeen_wagoner"):
+        ricci = chart.geo.ricci_ll()
+        for i in range(4):
+            for j in range(i, 4):
+                if not gowdy_vanishes(neugebauer_meinel_on_shell(chart, system, ricci[i][j])):
+                    raise AssertionError(f"{name}: the stated field equations leave R_{chart.coords_tex[i]}{chart.coords_tex[j]} standing")
+        second, _, first = neugebauer_meinel_vacuum(chart, system)
+        if not gowdy_vanishes((sp.diff(first[x[1]], x[2]) - sp.diff(first[x[2]], x[1])).subs(second).doit()):
+            raise AssertionError(f"{name}: the quadrature is not integrable on the field equations")
+    if system == "weyl":
+        import nm_disc
+        h = 1e-2
+
+        def slope(v):
+            return (v[0] - 8 * v[1] + 8 * v[2] - v[3]) / (12 * h)
+
+        def bend(v, centre):
+            return (-v[0] + 16 * v[1] - 30 * centre + 16 * v[2] - v[3]) / (12 * h * h)
+        for mu, rho, zeta in ((1.0, 2.0, 3.0), (1.0, 0.5, 1.0), (3.0, 1.5, 0.8), (3.0, 0.3, 0.08), (0.5, 1.3, 0.6), (4.0, 1.2, 0.05)):
+            Om = nm_disc.omega_disc(mu)
+            f0 = nm_disc.Point(mu, rho, zeta).ernst()
+            along = [nm_disc.Point(mu, rho + n * h, zeta) for n in (-2, -1, 1, 2)]
+            across = [nm_disc.Point(mu, rho, zeta + n * h).ernst() for n in (-2, -1, 1, 2)]
+            R = [p.ernst() for p in along]
+            fr, fz = slope(R), slope(across)
+            lap = bend(R, f0) + bend(across, f0) + fr / rho
+            if abs(f0.real * lap - fr ** 2 - fz ** 2) > 2e-4 * (abs(fr) ** 2 + abs(fz) ** 2):
+                raise AssertionError(f"{name}: the theta functions miss Ernst's equation at mu = {mu}, rho = {rho}, zeta = {zeta}")
+            # a from the theta functions against d a/d rho = rho e^(-4U) d b/d zeta
+            a = [A / F for F, A, _ in (p.metric(Om) for p in along)]
+            if abs(slope(a) - rho * fz.imag / f0.real ** 2) > 2e-4 * (1 + abs(fz.imag) / f0.real ** 2):
+                raise AssertionError(f"{name}: the theta functions' a misses its equation at mu = {mu}, rho = {rho}, zeta = {zeta}")
+    elif system in ("corotating", "bardeen_wagoner"):
+        weyl = own("weyl")
+        U, a, k = (weyl.reader.parameters[n] for n in ("U", "a", "k"))
+        rho = weyl.symbols[1]
+        there = dict(zip(weyl.symbols, x))
+        g = weyl.geo.g.subs(there, simultaneous=True)
+        U, a, k, rho = (v.subs(there, simultaneous=True) for v in (U, a, k, rho))
+        if system == "corotating":
+            w = sp.Symbol("w", positive=True)                 # Omega/c
+            J = sp.eye(4)
+            J[3, 0] = w                                         # phi = varphi + Omega t
+            g = J.T * g * J
+            e2U = sp.exp(2 * U) * ((1 + w * a) ** 2 - w ** 2 * rho ** 2 * sp.exp(-4 * U))
+            turned = {"U": sp.log(e2U) / 2, "a": (1 - (1 + w * a) * sp.exp(2 * U) / e2U) / w}
+            turned["k"] = k - U + turned["U"]
+            here = {chart.reader.parameters[n]: v for n, v in turned.items()}
+        else:
+            den = rho ** 2 - a ** 2 * sp.exp(4 * U)
+            here = {chart.reader.parameters["nu"]: sp.log(rho ** 2 * sp.exp(2 * U) / den) / 2,
+                    chart.reader.parameters["omega"]: a * sp.exp(4 * U) / den, chart.reader.parameters["alpha"]: k - U}
+        mine = chart.geo.g.subs(here, simultaneous=True)
+        for i in range(4):
+            for j in range(i, 4):
+                if sp.simplify(mine[i, j] - g[i, j]) != 0:
+                    raise AssertionError(f"{name}: the chart is not weyl's in its own functions, slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    elif system == "spheroidal":
+        flat = own("bardeen_wagoner")
+        t, xi, eta, phi = x
+        r0 = chart.reader.parameters["rho_0"]
+        image = [t, r0 * sp.sqrt((1 + xi ** 2) * (1 - eta ** 2)), r0 * xi * eta, phi]
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], x[j]))
+        stand = sp.symbols("NMN NMO NMA")
+        there = {flat.reader.parameters[n]: s for n, s in zip(("nu", "omega", "alpha"), stand)}
+        here = {chart.reader.parameters[n]: s for n, s in zip(("nu", "omega", "alpha"), stand)}
+        pulled = J.T * flat.geo.g.subs(there).subs(dict(zip(flat.symbols, image)), simultaneous=True) * J
+        missed = pulled - chart.geo.g.subs(here)
+        if any(sp.simplify(missed[i, j]) != 0 for i in range(4) for j in range(i, 4)):
+            raise AssertionError(f"{name}: the chart is not Bardeen and Wagoner's pulled back")
+    elif system == "black_hole_limit":
+        ricci = chart.geo.ricci_ll()
+        if any(not gowdy_vanishes(ricci[i][j]) for i in range(4) for j in range(i, 4)):
+            raise AssertionError(f"{name}: the Ricci tensor does not vanish")
+        reader, there, kerr = kaluza_klein_published("kerr", "boyer_lindquist")
+        t, r, theta, phi = x
+        m = chart.reader.parameters["m"]
+        M, spin, G = (reader.parameters[n] for n in ("M", "a", "G"))
+        c = next(s for s in kerr.free_symbols if s.name == "c")
+        at = dict(zip(there, [t, r + m, theta, phi]))
+        kerr = kerr.subs({M: m * c ** 2 / G, spin: m}).subs(at, simultaneous=True)
+        for i in range(4):
+            for j in range(i, 4):
+                if sp.simplify(kerr[i, j] - chart.geo.g[i, j]) != 0:
+                    raise AssertionError(f"{name}: the chart is not Kerr's at a = GM/c^2 with r -> r + m, slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["neugebauer_meinel"] = [lambda s=s: neugebauer_meinel(s) for s in NM_CHARTS]
+
+
 # -- Boson stars and geons -------------------------------------------------------------
 
 BOSON_STAR_CHARTS = ("areal", "isotropic")

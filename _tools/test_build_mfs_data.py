@@ -4617,6 +4617,10 @@ class Slices(unittest.TestCase):
               "bonnor_magnetic_dipole/spheroidal/axis", "conformal bonnor_magnetic_dipole/spheroidal_axis",
               # The axis above the two Kerr black holes, which the embedded plane z = 0 between them does not meet.
               "conformal double_kerr/weyl_axis_outside",
+              # The limit mu -> mu_0 of Neugebauer and Meinel's disc, the extreme Kerr metric; the moment
+              # embedded is the disc's at mu = 3.
+              "neugebauer_meinel/black_hole_limit/axis", "neugebauer_meinel/black_hole_limit/equator",
+              "conformal neugebauer_meinel/limit_axis",
               # The axis of Zipoy and Voorhees's metric, which the embedded equatorial plane does not meet.
               # Kerr-Taub-NUT's regular half axis, which the embedded equatorial plane does not meet, and the
               # equator in Plebanski and Demianski's chart, where the moment's tau changes with the sigma left out.

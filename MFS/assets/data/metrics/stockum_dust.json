@@ -50,6 +50,11 @@
       "id": "bonnor_rotating_dust",
       "kind": "family",
       "text": "William Bonnor's cloud of 1977, a member of van Stockum's own class of rigidly rotating dust that thins out in every direction. Its total mass is zero and its centre is singular [bonnor1977cloud, bratek2007]."
+    },
+    {
+      "id": "neugebauer_meinel",
+      "kind": "family",
+      "text": "Dust in rigid rotation again, as a finite disc with flat space far away, solved exactly by Neugebauer and Meinel [neugebauer1995]."
     }
   ],
   "references": [
@@ -68,7 +73,8 @@
     "som1968",
     "reboucas1983",
     "bonnor1977cloud",
-    "bratek2007"
+    "bratek2007",
+    "neugebauer1995"
   ],
   "coordinates": [
     {

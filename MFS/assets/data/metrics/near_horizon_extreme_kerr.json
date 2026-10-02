@@ -49,6 +49,11 @@
       "id": "anti_de_sitter",
       "kind": "family",
       "text": "Along its axis the throat is exactly an anti-de Sitter space of two dimensions, and its boundary is timelike, as anti-de Sitter's is [bardeen1999]."
+    },
+    {
+      "id": "neugebauer_meinel",
+      "kind": "family",
+      "text": "A spinning disc of dust at the end of its family, $\\mu = \\mu_0$. The space around the disc becomes this throat far from it, as Bardeen and Wagoner found numerically in 1971 and Meinel showed from the exact solution [bardeen1971, meinel2002]."
     }
   ],
   "references": [
@@ -63,7 +68,8 @@
     "dias2009kerr",
     "bredberg2010",
     "compere2017",
-    "gralla2018"
+    "gralla2018",
+    "meinel2002"
   ],
   "coordinates": [
     {

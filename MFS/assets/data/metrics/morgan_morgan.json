@@ -52,6 +52,11 @@
       "id": "zipoy_voorhees",
       "kind": "family",
       "text": "Another static Weyl field, that of a rod with any mass per length. Bičák, Lynden-Bell, and Katz showed that it too arises as the metric of a counterrotating disc [bicak1993]."
+    },
+    {
+      "id": "neugebauer_meinel",
+      "kind": "family",
+      "text": "A disc of dust that all turns one way, rigidly, solved exactly by Neugebauer and Meinel. The two discs agree in Newton's limit, and in this one the rotation drags the frames [bardeen1969, neugebauer1995]."
     }
   ],
   "references": [

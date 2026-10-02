@@ -137,6 +137,11 @@ RETIRED = {
 # that does not speak for the spacetime. A statement about the curvature has to hold in
 # every chart counted, and a symmetry has to show in some chart of every region.
 REGIONS = {
+    "neugebauer_meinel": {
+        "regions": [["weyl", "corotating", "bardeen_wagoner", "spheroidal"]],
+        "why": "black_hole_limit is the limit mu -> mu_0 outside the disc, the extreme Kerr metric, "
+               "and no disc of the family",
+    },
     "black_saturn": {
         "regions": [["weyl", "polar"]],
         "why": "ring is the black ring alone, the Saturn with its hole taken away",
