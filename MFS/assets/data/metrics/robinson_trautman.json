@@ -72,6 +72,11 @@
       "id": "penrose_impulsive_wave",
       "kind": "limit",
       "text": "The impulsive limit of the waves of type N: the profile shrinks to a delta on one spherical front, with flat spacetime on either side of it [podolsky1999expanding]."
+    },
+    {
+      "id": "bondi_sachs",
+      "kind": "generalisation",
+      "text": "The general form of a radiating metric on its outgoing light cones, with the shear of the rays left free. Robinson and Trautman's spacetimes are its members without shear [bondi1962, sachs1962]."
     }
   ],
   "references": [
@@ -102,7 +107,9 @@
     "podolsky2005",
     "podolsky1998",
     "bicak1999",
-    "podolsky1999expanding"
+    "podolsky1999expanding",
+    "bondi1962",
+    "sachs1962"
   ],
   "coordinates": [
     {

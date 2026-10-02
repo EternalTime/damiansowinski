@@ -94,6 +94,11 @@
       "id": "plebanski_hacyan",
       "kind": "family",
       "text": "The same uniform field with a cosmological constant, in the products where one factor is flat: a flat plane of time and space times a sphere, and anti-de Sitter space of two dimensions times a flat plane. In both the energy density of the field matches the cosmological constant [ortaggio2002direct]."
+    },
+    {
+      "id": "cremmer_scherk",
+      "kind": "family",
+      "text": "A sphere held open by a monopole's gauge field in six dimensions, with a cosmological constant chosen so that the other four dimensions are flat where Bertotti and Robinson's two are an anti-de Sitter space [horvath1977]."
     }
   ],
   "references": [
@@ -121,7 +126,8 @@
     "breitenlohner1994",
     "emparan2000",
     "podolskybelan2004",
-    "ortaggio2002direct"
+    "ortaggio2002direct",
+    "horvath1977"
   ],
   "coordinates": [
     {

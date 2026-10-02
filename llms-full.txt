@@ -385,6 +385,17 @@ Schwarzschild's black hole extended along one more direction of space, a static 
 - chart Kerr-Schild: coordinates $(T, r, \theta, \phi, z)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dT^2 + \dfrac{2r_s}{r}c\,dT\,dr + \left(1 + \dfrac{r_s}{r}\right)dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + dz^2$$
 - chart Schwarzschild, Six Dimensions: coordinates $(t, r, \psi, \theta, \phi, z)$, $$ds^2 = -\left(1 - \dfrac{r_h^2}{r^2}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_h^2}{r^2}} + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right) + dz^2$$
 
+### Bondi-Sachs Radiating Metric
+
+The form the metric of an isolated body that sends out gravitational waves takes in coordinates built on its outgoing light cones, given by Hermann Bondi, M. G. J. van der Burg, A. W. K. Metzner, and Rainer Sachs in 1962. In it the mass of the body falls for as long as news of a change in the body reaches infinity, and cannot rise.
+
+- id: `bondi_sachs`
+- tags: vacuum, gravitational wave, radiating, time-dependent, null congruence, retarded time, Bondi mass, news function, mass, asymptotically flat, axisymmetric, reflection symmetry, numerical relativity, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/bondi_sachs.json
+- chart Bondi (axisymmetric): coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\dfrac{V}{r}e^{2\beta}c^2du^2 - 2e^{2\beta}c\,du\,dr + r^2e^{2\gamma}\left(d\theta - U\,c\,du\right)^2 + r^2e^{-2\gamma}\sin^2\theta\,d\phi^2$$
+- chart Inverse luminosity distance: coordinates $(u, \ell, \theta, \phi)$, $$ds^2 = -\ell\,e^{2\beta}V\,c^2du^2 + \dfrac{2e^{2\beta}}{\ell^2}c\,du\,d\ell + \dfrac{e^{2\gamma}}{\ell^2}\left(d\theta - U\,c\,du\right)^2 + \dfrac{e^{-2\gamma}\sin^2\theta}{\ell^2}d\phi^2$$
+
 ### Bonnor Beam of Light
 
 The exact gravitational field of a steady beam of light, which William Bonnor found in 1969, a plane-fronted gravitational wave that keeps pace with the light. A ray moving with the beam feels nothing, a ray moving against it is drawn in, and two beams shining the same way do not attract each other.
@@ -397,6 +408,23 @@ The exact gravitational field of a steady beam of light, which William Bonnor fo
 - chart Null Cartesian: coordinates $(u, v, x, y)$, $$ds^2 = -2\,du\,dv + dx^2 + dy^2 - 2A\,du^2$$
 - chart Null Cylindrical, Inside the Beam: coordinates $(u, v, \rho, \phi)$, $$ds^2 = -2\,du\,dv + d\rho^2 + \rho^2d\phi^2 - \dfrac{8\pi G\epsilon}{c^4}\rho^2\,du^2$$
 - chart Null Cylindrical, Outside the Beam: coordinates $(u, v, \rho, \phi)$, $$ds^2 = -2\,du\,dv + d\rho^2 + \rho^2d\phi^2 - \dfrac{8\pi G\epsilon}{c^4}R^2\left(1 + 2\ln\left(\dfrac{\rho}{R}\right)\right)du^2$$
+
+### Bonnor's Stars of Charged Dust
+
+Stars of dust in which every grain carries just enough charge for its electric repulsion to cancel its gravity, so the dust rests in equilibrium with no pressure, in a ball or in any other shape. William Bonnor built a sphere of it in 1965, and in 1975 he and S. B. P. Wickramasuriya made one whose surface lies as close to its own horizon as one likes, so that light from its centre arrives with a redshift as large as one likes. José Lemos and Erick Weinberg named that limit a quasiblack hole.
+
+- id: `bonnor_charged_dust`
+- tags: dust, charged dust, charged, electric charge, electromagnetic field, Einstein-Maxwell, extremal, static, stationary, spherically symmetric, stellar interior, matched solution, regular centre, no horizon, black hole mimicker, quasiblack hole, gravitational redshift, quasar, harmonic coordinates, isotropic coordinates, mass, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/bonnor_charged_dust.json
+- chart Harmonic: coordinates $(t, x, y, z)$, $$ds^2 = -\dfrac{c^2dt^2}{U^2} + U^2\left(dx^2 + dy^2 + dz^2\right)$$
+- chart Bonnor's Sphere of 1965: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{c^2dt^2}{U^2} + U^2\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Bonnor and Wickramasuriya's Sphere: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{c^2dt^2}{U^2} + U^2\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Isotropic Exterior: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{m}{r}\right)^{-2}c^2dt^2 + \left(1 + \dfrac{m}{r}\right)^2\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Reissner-Nordström Exterior: coordinates $(t, R, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{m}{R}\right)^2c^2dt^2 + \left(1 - \dfrac{m}{R}\right)^{-2}dR^2 + R^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Spheroid Interior: coordinates $(t, u, \theta, \phi)$, $$ds^2 = -\dfrac{c^2dt^2}{U^2} + U^2\left(a^2\left(\sinh^2u + \sin^2\theta\right)\left(du^2 + d\theta^2\right) + a^2\cosh^2u\cos^2\theta\,d\phi^2\right)$$
+- chart Spheroid Exterior: coordinates $(t, u, \theta, \phi)$, $$ds^2 = -\dfrac{c^2dt^2}{U^2} + U^2\left(a^2\left(\sinh^2u + \sin^2\theta\right)\left(du^2 + d\theta^2\right) + a^2\cosh^2u\cos^2\theta\,d\phi^2\right)$$
+- chart Lemos and Weinberg's Cloud: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{c^2dt^2}{U^2} + U^2\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
 ### Bonnor's Magnetic Dipole
 
@@ -467,6 +495,18 @@ The spherical black hole of Einstein-Gauss-Bonnet gravity in five dimensions, wh
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{2\ell^2}\left(1 - \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)\right)dv^2 + 2\,dv\,dr + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
 - chart Hyperspherical, Anti-de Sitter Branch: coordinates $(t, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{2\ell^2}\left(1 + \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)\right)c^2dt^2 + \dfrac{dr^2}{1 + \dfrac{r^2}{2\ell^2}\left(1 + \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)} + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
 
+### Brans-Dicke Static Sphere
+
+The gravitational field outside a static, spherical body in Carl Brans and Robert Dicke's theory of 1961, where a scalar field beside the metric sets the strength of gravity from place to place. With the coupling constant $\omega$ it bends light by $(3 + 2\omega)/(4 + 2\omega)$ of Einstein's value, and where Schwarzschild's horizon would stand its spheres shrink to zero area at infinite curvature, with no horizon to hide them.
+
+- id: `brans_dicke_sphere`
+- tags: static, stationary, spherically symmetric, four-dimensional, Brans-Dicke, scalar field, scalar-tensor theory, Jordan frame, Einstein frame, Mach's principle, alternative theories of gravity, varying gravitational constant, Brans class I, Campanelli-Lousto, naked singularity, curvature singularity, no horizon, wormhole, scalar charge, mass, post-Newtonian, tests of general relativity, light deflection, perihelion precession, solar system, no-hair theorem, isotropic coordinates, harmonic coordinates, asymptotically flat, exact solution, exterior, Lorentzian, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/brans_dicke_sphere.json
+- chart Isotropic: coordinates $(t, \rho, \theta, \phi)$, $$ds^2 = -h^{2/\lambda}c^2dt^2 + \left(1 + \dfrac{B}{\rho}\right)^4h^{2(\lambda - C - 1)/\lambda}\left(d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -A^{m+1}c^2dt^2 + A^{n-1}dr^2 + A^{n}r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Harmonic: coordinates $(t, u, \theta, \phi)$, $$ds^2 = e^{su}\left(-e^{-2bu}c^2dt^2 + \dfrac{k^2e^{2bu}}{\sinh^2(ku)}\left(\dfrac{k^2du^2}{\sinh^2(ku)} + d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Brill's Time-Symmetric Gravitational Waves
 
 One moment of a spacetime that holds gravitational waves and nothing else, which Dieter Brill constructed in 1959. It is a single slice of space, three dimensions with no time, at the moment the wave is at rest, and it satisfies Einstein's constraint equations with no matter anywhere. Brill proved its mass positive, a strong enough wave already lies inside its own apparent horizon, and what the wave does afterwards is known from computer simulations.
@@ -530,6 +570,16 @@ The spacetime of a false vacuum decaying, found by Sidney Coleman and Frank De L
 - chart Open Universe, Conformal Time: coordinates $(\eta, \chi, \theta, \phi)$, $$ds^2 = a^2\left(-d\eta^2 + d\chi^2 + \sinh^2\chi\,d\theta^2 + \sinh^2\chi\sin^2\theta\,d\phi^2\right)$$
 - chart Static, Inside the Wall: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{\Lambda_T r^2}{3}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{\Lambda_T r^2}{3}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Static, Outside the Wall: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{\Lambda_F r^2}{3}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{\Lambda_F r^2}{3}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
+### Cremmer-Scherk Spontaneous Compactification
+
+Minkowski space times a sphere, in six dimensions: the solution of gravity coupled to gauge fields with which Eugene Cremmer and Joël Scherk showed in 1976 that extra dimensions can curl up by the field equations. A magnetic monopole field through the sphere holds it open at one radius, and a cosmological constant of six dimensions keeps the other four dimensions flat.
+
+- id: `cremmer_scherk`
+- tags: static, stationary, six-dimensional, higher dimensions, Kaluza-Klein, compact dimension, spontaneous compactification, product spacetime, homogeneous, Einstein-Yang-Mills, Yang-Mills field, gauge field, magnetic monopole, Dirac quantisation, cosmological constant, positive cosmological constant, string theory, grand unification, no horizon, regular, geodesically complete, exact solution, Lorentzian, Einstein equations, idealized model
+- signature: (-,+,+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/cremmer_scherk.json
+- chart Cartesian: coordinates $(t, x, y, z, \theta, \phi)$, $$ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2 + a^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
 ### Curzon-Chazy Particle
 

@@ -331,7 +331,7 @@
       "homogeneous",
       "product spacetime"
     ],
-    "version": "f131895678c2b9b6",
+    "version": "fc1a50b5b067cdbc",
     "diagrams": "7b995662594f7524",
     "conformal": "d58ee6f7393843e4",
     "embedding": "4b36293b1a64925a"
@@ -428,6 +428,33 @@
     "embedding": "6f1faae1e35e650b"
   },
   {
+    "id": "bondi_sachs",
+    "name": "Bondi-Sachs",
+    "tags": [
+      "vacuum",
+      "gravitational wave",
+      "radiating",
+      "time-dependent",
+      "null congruence",
+      "retarded time",
+      "Bondi mass",
+      "news function",
+      "mass",
+      "asymptotically flat",
+      "axisymmetric",
+      "reflection symmetry",
+      "numerical relativity",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "f66f3c1541b9a8c5",
+    "diagrams": "254f7746e52372ea",
+    "conformal": "ff606c016a700422",
+    "embedding": "3aa6e616aa7f5d53"
+  },
+  {
     "id": "light_beam",
     "name": "Bonnor",
     "tags": [
@@ -450,6 +477,43 @@
     "diagrams": "2342c1618b43b6d4",
     "conformal": "4c22fa7d37693c09",
     "embedding": "7035de7d63ab26a4"
+  },
+  {
+    "id": "bonnor_charged_dust",
+    "name": "Bonnor Charged Dust",
+    "tags": [
+      "dust",
+      "charged dust",
+      "charged",
+      "electric charge",
+      "electromagnetic field",
+      "Einstein-Maxwell",
+      "extremal",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "stellar interior",
+      "matched solution",
+      "regular centre",
+      "no horizon",
+      "black hole mimicker",
+      "quasiblack hole",
+      "gravitational redshift",
+      "quasar",
+      "harmonic coordinates",
+      "isotropic coordinates",
+      "mass",
+      "asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "72aaff7e2c8cd82c",
+    "diagrams": "ac2eb68ee92b57a6",
+    "conformal": "7c7471759c5476fc",
+    "embedding": "0453da68b24b7ab7"
   },
   {
     "id": "bonnor_magnetic_dipole",
@@ -675,6 +739,49 @@
     "embedding": "d857ba18e7d9066a"
   },
   {
+    "id": "brans_dicke_sphere",
+    "name": "Brans-Dicke Sphere",
+    "tags": [
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "four-dimensional",
+      "Brans-Dicke",
+      "scalar field",
+      "scalar-tensor theory",
+      "Jordan frame",
+      "Einstein frame",
+      "Mach's principle",
+      "alternative theories of gravity",
+      "varying gravitational constant",
+      "Brans class I",
+      "Campanelli-Lousto",
+      "naked singularity",
+      "curvature singularity",
+      "no horizon",
+      "wormhole",
+      "scalar charge",
+      "mass",
+      "post-Newtonian",
+      "tests of general relativity",
+      "light deflection",
+      "perihelion precession",
+      "solar system",
+      "no-hair theorem",
+      "isotropic coordinates",
+      "harmonic coordinates",
+      "asymptotically flat",
+      "exact solution",
+      "exterior",
+      "Lorentzian",
+      "idealized model"
+    ],
+    "version": "e41652b31caac30b",
+    "diagrams": "fd0321d9fcdcb54d",
+    "conformal": "c776bb1e86cd5f7d",
+    "embedding": "a1c5b02d8ba65163"
+  },
+  {
     "id": "brill_waves",
     "name": "Brill Waves",
     "tags": [
@@ -811,7 +918,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "25316b6866e3ee9d",
+    "version": "aa7a5332614bebef",
     "diagrams": "0c8055201b356841",
     "conformal": "67014d080f0dd52b",
     "embedding": "2c30edaa0cee4bdc"
@@ -845,6 +952,41 @@
     "diagrams": "df6268c48408964f",
     "conformal": "c502811813a25858",
     "embedding": "eb3e037703b01e9d"
+  },
+  {
+    "id": "cremmer_scherk",
+    "name": "Cremmer-Scherk",
+    "tags": [
+      "static",
+      "stationary",
+      "six-dimensional",
+      "higher dimensions",
+      "Kaluza-Klein",
+      "compact dimension",
+      "spontaneous compactification",
+      "product spacetime",
+      "homogeneous",
+      "Einstein-Yang-Mills",
+      "Yang-Mills field",
+      "gauge field",
+      "magnetic monopole",
+      "Dirac quantisation",
+      "cosmological constant",
+      "positive cosmological constant",
+      "string theory",
+      "grand unification",
+      "no horizon",
+      "regular",
+      "geodesically complete",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "c00cd865a18242b5",
+    "diagrams": "48060486c9b55dec",
+    "conformal": "f7ef5892e08fb949",
+    "embedding": "90144612e008c71d"
   },
   {
     "id": "curzon_chazy",
@@ -1001,7 +1143,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cb6c66bed190e2be",
+    "version": "d946899138bdda3f",
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc"
@@ -1137,7 +1279,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5042a9c9fcd76842",
+    "version": "3d0016cb821ef322",
     "diagrams": "dd0f4a73eb933b73",
     "conformal": "7807b351c1311ade",
     "embedding": "ab81073436048cb9"
@@ -1408,7 +1550,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "7f731b59e6330513",
+    "version": "3e1652905130ae9b",
     "diagrams": "3ae6a5324e2f9841",
     "conformal": "0ad248166c7cdb8f",
     "embedding": "3cdd1185c95f1f46"
@@ -1941,7 +2083,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "58083f91ee283a00",
+    "version": "ae80a83e8da71813",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -2099,7 +2241,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0fdc9bb0a99ffbdf",
+    "version": "23bf07a161a99c44",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -2546,7 +2688,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b3958c32ca0826f7",
+    "version": "d2cb2f9ff5b0ef22",
     "diagrams": "c6edded6cce52897",
     "conformal": "334186f800f59252",
     "embedding": "b9bf3c95064c40a7"
@@ -2717,7 +2859,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "fe0e267da664a542",
+    "version": "0b2540bae9683a5b",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -2875,7 +3017,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0e900347d0ff5c7d",
+    "version": "038ac6328a1b003b",
     "diagrams": "fcd9b835546fa10a",
     "conformal": "83b45b101a7e6db4",
     "embedding": "6602c018a8504748"
@@ -2899,7 +3041,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "7fa9c4f17bd88e4e",
+    "version": "3323e9bd2d9c1ada",
     "diagrams": "1de01953e7c22d84",
     "conformal": "956949c7f4a96538",
     "embedding": "2fb2f35ad8d95922"
@@ -3135,7 +3277,7 @@
       "cosmology",
       "dust"
     ],
-    "version": "cbff644bc78f3f26",
+    "version": "e80f54554365b204",
     "diagrams": "7ca84c063f7c2ca0",
     "conformal": "20e04688ba6cf230",
     "embedding": "3a2c6a2557fbf67a"
@@ -3222,7 +3364,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "dc33db116e524ea7",
+    "version": "72b21b85b013db10",
     "diagrams": "197eec2d67db791c",
     "conformal": "6588b3545cfd1a4f",
     "embedding": "7438e54f373b2e03"
@@ -3319,7 +3461,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5f4904537d07fd04",
+    "version": "698ec9816344876b",
     "diagrams": "aceebee9325d717a",
     "conformal": "b71dae1432ee5efb",
     "embedding": "df75b117652b95bd"
@@ -3350,7 +3492,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a408aabb0b89c132",
+    "version": "43e098149891e543",
     "diagrams": "4fa9e29b17d51d20",
     "conformal": "ec15d211d9118915",
     "embedding": "b7a09dddf9867ddf"
@@ -3399,7 +3541,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "59fb4b4c35f9e593",
+    "version": "f174753a07eb83b3",
     "diagrams": "6e432dbfef4f0d7d",
     "embedding": "a484d91e42495a51"
   },
@@ -3434,7 +3576,7 @@
       "idealized model",
       "stationary"
     ],
-    "version": "dafe0d6f896cadcc",
+    "version": "dd08ac3dac8a3a08",
     "diagrams": "f78be2d481dc49b2",
     "conformal": "c88536bb72659ebe",
     "embedding": "69d23ef08a8a8c79"
@@ -3465,7 +3607,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "45cec185c9503b51",
+    "version": "882103aad9655f69",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -3622,7 +3764,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "49e427fab722fef0",
+    "version": "81039743a0780c3f",
     "diagrams": "53ff4d90bff08988",
     "conformal": "0326c9d2101aa7a6",
     "embedding": "7b7a1d9f63195b3e"
@@ -3735,7 +3877,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5aaaede85649de23",
+    "version": "2e7c18e56a665cdc",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -3758,7 +3900,7 @@
       "idealized model",
       "conformally flat"
     ],
-    "version": "c9f23da4c45951b1",
+    "version": "410614b106b1b9eb",
     "diagrams": "2c3a4f257a42be77",
     "conformal": "576471fc7fb8c666",
     "embedding": "33dc4c3913188978"
@@ -4356,7 +4498,7 @@
       "naked singularity",
       "cosmic censorship"
     ],
-    "version": "5f904d1285fe3183",
+    "version": "c38cddd037a38010",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404"

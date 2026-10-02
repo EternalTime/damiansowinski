@@ -92,6 +92,11 @@
       "id": "charged_shell",
       "kind": "family",
       "text": "One charge in the same balance, spread on a shell. Arnowitt, Deser, and Misner shrank it to a point in 1960 and found the mass fixed by the charge, with the single hole's field outside [arnowitt1960]."
+    },
+    {
+      "id": "bonnor_charged_dust",
+      "kind": "generalisation",
+      "text": "Their metric with matter in it. Dust whose charge density equals its mass density is a source for $U$, and a ball of it can lie as near its own horizon as one likes [bonnor1975, lemos2004]."
     }
   ],
   "references": [
@@ -125,7 +130,9 @@
     "ishihara2006",
     "brill1963",
     "emparan2000",
-    "arnowitt1960"
+    "arnowitt1960",
+    "bonnor1975",
+    "lemos2004"
   ],
   "coordinates": [
     {

@@ -7991,6 +7991,41 @@ def plebanski_hacyan(ck, src):
 
 # ---------------------------------------------------------------- wormholes
 
+def cremmer_scherk(ck, src):
+    """Cremmer and Scherk's Minkowski space times a sphere, drawn by the plane of t and x at unit
+    radius of the sphere: the metric on it is -c^2 dt^2 + dx^2 with x over the whole line, so it is
+    the full diamond, p, q = arctan((ct -+ x)/a), as the plane y = z = 0 of Minkowski space is. Each
+    point of the diamond is a flat plane of y and z times a sphere of radius a."""
+    name = "cremmer_scherk"
+    fixed = {"y": "0", "z": "0", "theta": "pi/2", "phi": "0"}
+    pl = Plane(src, name, "cartesian", ("t", "x"), fixed, {"a": 1})
+    ck.chart("Cremmer-Scherk, the plane of t and x", pl, mink_pq, ck.uniform(-20, 20), ck.uniform(-20, 20),
+             lambda t, x: (1, 0))
+    p, q = mink_pq(np.array([0.0, 0.0]), np.array([1e12, -1e12]))
+    ck.limit("Cremmer-Scherk: x -> +-infinity at fixed t lands on the two corners i^0", q - p, [PI, -PI], 1e-9)
+    p, q = mink_pq(np.array([1e12, -1e12]), np.array([0.0, 0.0]))
+    ck.limit("Cremmer-Scherk: t -> +-infinity at fixed x lands on i^+ and i^-", p + q, [PI, -PI], 1e-9)
+    ck.finite("Cremmer-Scherk: the curvature is the same everywhere",
+              pl.kretschmann(ck.uniform(-5, 5, 50), ck.uniform(-5, 5, 50)))
+
+    equator = slices.moments(name, "equator")[0]
+    ball = slices.moments(name, "sphere")[0]
+    lo, hi = equator.reach("cartesian", "x")
+    along_x = np.linspace(lo, hi, 3)
+    v = View("cartesian", "Cartesian", [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "cartesian")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    grid(v, "r", lambda x, t: mink_pq(t, x), (-4, -2, -1, 0, 1, 2, 4), S_ALL)
+    grid(v, "t", mink_pq, (-4, -2, -1, 0, 1, 2, 4), S_ALL)
+    diamond_edges(v)
+    v.legend("cover", "the whole plane, which $t$ and $x$ cover")
+    v.legend("r", "$x$ constant, at $0$, $\\pm a$, $\\pm 2a$, and $\\pm 4a$")
+    v.legend("t", "$ct$ constant, at the same values")
+    v.slice(equator, [mink_pq(0 * along_x, along_x)])
+    v.slice(ball, points=[mink_pq(0.0, 1.0)], label="$t = 0$, $x = a$")
+    return [v]
+
+
 def ellis_bronnikov(ck, src):
     """The metric on the plane of t and r is -c^2dt^2 + dr^2 with r over the whole line:
     the full diamond, p, q = arctan((ct -+ r)/l), drawn at l = 1."""
@@ -9711,6 +9746,182 @@ def tolman_vii(ck, src):
         lo, hi = star_moment.reach("spherical", "r")
         rr = np.concatenate([np.linspace(lo, R, 40), R + np.geomspace(1e-6, hi - R, 200)])
         v.slice(star_moment, [star(0 * rr, rr)])
+        views.append(v)
+    return views
+
+
+def bonnor_charged_dust(ck, src):
+    """Bonnor's stars at m = 1, each a static spacetime with a regular centre and no horizon, so
+    each is Minkowski's triangle under p, q = arctan((t -+ r*)/l) with r* the integral of
+    sqrt(g_xx/(-g_tt)) from the centre, which is the integral of U^2 times the flat length. The
+    sphere of 1975 and the sphere of 1965, both at r_0 = 2m, are joined at r_0 to the exterior
+    U = 1 + m/r, with g_tt and g_rr continuous there, checked, so t is one coordinate and the
+    star is a timelike tube; the exterior is drawn in the isotropic radius and in the areal
+    radius R = r + m, on the tube of the sphere of 1975. Lemos and Weinberg's cloud, at b = m/2,
+    has no surface, and the harmonic chart is drawn with it on the half line x >= 0, y = z = 0.
+    The spheroid, at a = m and u_0 = 1, is drawn on the upper half of its axis of symmetry,
+    theta = pi/2, where the height is a sinh(u): the axis is fixed by the rotation, so light
+    along it stays on it. Each r* is checked against its closed form where it has one."""
+    R, ell = 2.0, 2.0
+    star_at = nr.BCD_STAR
+    A, B = 1.75, 1 / 16
+    closed = {"sphere_1975": lambda r: A * A * r - 2 * A * B * r ** 3 / 3 + B * B * r ** 5 / 5,
+              "sphere_1965": lambda r: 27 / math.sqrt(8) * np.arctan(r / math.sqrt(8))}
+    outer = Plane(src, "bonnor_charged_dust", "exterior", ("t", "r"), EQUATOR, star_at)
+    areal = Plane(src, "bonnor_charged_dust", "exterior_areal", ("t", "R"), EQUATOR, star_at)
+    views = []
+
+    def tortoise(plane, edge, n=300001):
+        speed = sp.lambdify(plane.x1, sp.sqrt(plane.g[1, 1] / (-plane.g[0, 0])), "numpy")
+        xq = np.linspace(0, edge, n)
+        return xq, cumulative_trapezoid(speed(xq) * np.ones_like(xq), xq, initial=0)
+
+    def outside(r):
+        return r + 2 * np.log(r) - 1 / r
+
+    for system, name, moment_view in (("sphere_1975", "Bonnor and Wickramasuriya's sphere", "star"),
+                                      ("sphere_1965", "Bonnor's sphere of 1965", "star_1965")):
+        inner = Plane(src, "bonnor_charged_dust", system, ("t", "r"), EQUATOR, star_at)
+        for k, what in ((0, "g_tt"), (1, "g_rr")):
+            ck.limit(f"{name}: {what} is continuous at r = r_0",
+                     [float(inner.g[k, k].subs(inner.x1, R))], [float(outer.g[k, k].subs(outer.x1, R))], 1e-12)
+        rq, rsq = tortoise(inner, R)
+        ck.limit(f"{name}: r* is its closed form", rsq[::30000], closed[system](rq[::30000]), 1e-8)
+
+        def rstar(r, rq=rq, rsq=rsq):
+            r = np.asarray(r, dtype=float)
+            with np.errstate(invalid="ignore", divide="ignore"):
+                beyond = rsq[-1] + outside(r) - outside(R)
+            return np.where(r <= R, np.interp(r, rq, rsq), beyond)
+
+        def star(t, r, rstar=rstar):
+            return mink_pq(t, rstar(r), ell)
+        ck.chart(f"{name}, the star", inner, star, ck.uniform(-20, 20), ck.uniform(0.01, 1.99), lambda t, r: (1, 0))
+        ck.chart(f"{name}, the exterior", outer, star, ck.uniform(-20, 20), ck.uniform(2.01, 30), lambda t, r: (1, 0))
+        ck.finite(f"{name}: r = 0 is a regular centre", inner.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+        charts = [(system, "Sphere of 1975" if system == "sphere_1975" else "Sphere of 1965", "r", 0.0)]
+        if system == "sphere_1975":
+            ck.chart(f"{name}, the exterior in the areal radius", areal, lambda t, X: star(t, np.asarray(X) - 1),
+                     ck.uniform(-20, 20), ck.uniform(3.01, 30), lambda t, r: (1, 0))
+            charts += [("exterior", "Isotropic Exterior", "r", 0.0), ("exterior_areal", "Areal Exterior", "R", 1.0)]
+        moment = slices.moments("bonnor_charged_dust", moment_view)[0]
+        for vid, label, letter, shift in charts:
+            v = View(vid, label, [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], vid)
+            v.fill("region", TRIANGLE)
+            ps, qs = mink_pq(S_ALL, rstar(R), ell)
+            v.fill("cover", [[0, -PI]] + [point(p, q) for p, q in zip(ps, qs)] + [[0, PI]])
+            for r in (0.5, 1.0, 1.5):
+                v.curve("r", *star(S_ALL, np.full_like(S_ALL, r)))
+            for r in (3.0, 4.0, 8.0):
+                v.curve("r2", *star(S_ALL, np.full_like(S_ALL, r)))
+            rr = np.concatenate([np.linspace(0, R, 60)[:-1], R + np.exp(np.linspace(-6, 8, 200)) - np.exp(-6)])
+            for t in (-8, -4, -2, 0, 2, 4, 8):
+                v.curve("t", *star(np.full_like(rr, t), rr))
+            v.curve("surface", ps, qs)
+            triangle_edges(v)
+            label_on(v, mink_pq(0, rstar(R), ell), "$r = r_0$" if not shift else "$R = r_0 + m$")
+            v.label_xt([0.35, 0.0], "star", cls="region")
+            v.legend("cover", "the star, which the interior chart covers")
+            v.legend("r", "$r$ constant inside, at $0.5$, $1$ and $1.5\\,m$")
+            v.legend("r2", "$r$ constant outside, at $3$, $4$ and $8\\,m$" if not shift else
+                     "$R$ constant outside, at $4$, $5$ and $9\\,m$")
+            v.legend("t", "$t$ constant, one $t$ on both sides")
+            v.legend("surface", "the surface of the star")
+            v.legend("centre", "$r = 0$, a regular centre")
+            v.set(settings="$m = 1$, the unit of every length, and $r_0 = 2m$.")
+            lo, hi = moment.reach(None, "r")
+            rr = np.concatenate([np.linspace(lo, R, 40), R + np.geomspace(1e-6, hi - R, 200)])
+            v.slice(moment, [star(0 * rr, rr)])
+            views.append(v)
+
+    # Lemos and Weinberg's cloud at b = m/2, in its own chart and as the harmonic chart's U.
+    def cloud_rstar(r):
+        r = np.asarray(r, dtype=float)
+        return r + 2 * np.arcsinh(2 * r) + 2 * np.arctan(2 * r)
+
+    def cloud(t, r):
+        return mink_pq(t, cloud_rstar(r), ell)
+    own = Plane(src, "bonnor_charged_dust", "quasi_black_hole", ("t", "r"), EQUATOR, nr.BCD_CLOUD)
+    line = Plane(src, "bonnor_charged_dust", "harmonic", ("t", "x"), {"y": "0", "z": "0"}, functions={"U": nr.BCD_CLOUD_U})
+    rq, rsq = tortoise(own, 6.0)
+    ck.limit("Lemos and Weinberg's cloud: r* is r + 2 arsinh(2r) + 2 arctan(2r)", rsq[::30000], cloud_rstar(rq[::30000]), 1e-8)
+    ck.chart("Lemos and Weinberg's cloud", own, cloud, ck.uniform(-20, 20), ck.uniform(0.01, 30), lambda t, r: (1, 0))
+    ck.chart("the harmonic chart through the cloud", line, cloud, ck.uniform(-20, 20), ck.uniform(0.01, 30),
+             lambda t, r: (1, 0))
+    ck.finite("Lemos and Weinberg's cloud: r = 0 is a regular centre",
+              own.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+    moment = slices.moments("bonnor_charged_dust", "cloud")[0]
+    for vid, label, letter in (("quasi_black_hole", "The Cloud", "r"), ("harmonic", "Harmonic", "x")):
+        v = View(vid, label, [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], vid)
+        v.fill("region", TRIANGLE)
+        for r in (0.5, 1.0, 2.0, 4.0, 8.0):
+            v.curve("r", *cloud(S_ALL, np.full_like(S_ALL, r)))
+        rr = np.concatenate([np.linspace(0, 2, 60)[:-1], 2 + np.exp(np.linspace(-6, 8, 200)) - np.exp(-6)])
+        for t in (-8, -4, -2, 0, 2, 4, 8):
+            v.curve("t", *cloud(np.full_like(rr, t), rr))
+        triangle_edges(v, centre=f"${letter} = 0$")
+        v.legend("r", f"${letter}$ constant, at $0.5$, $1$, $2$, $4$ and $8\\,m$")
+        v.legend("t", "$t$ constant")
+        v.legend("centre", f"${letter} = 0$, a regular centre")
+        v.set(settings="$m = 1$, the unit of every length, and $b = m/2$.")
+        lo, hi = moment.reach(None, "r")
+        rr = np.linspace(lo, hi, 300)
+        v.slice(moment, [cloud(0 * rr, rr)])
+        views.append(v)
+
+    # The spheroid at a = m and u_0 = 1, on the upper half of its axis.
+    axis = dict(nr.BCD_AXIS)
+    body = Plane(src, "bonnor_charged_dust", "spheroid_interior", ("t", "u"), axis, nr.BCD_SPHEROID)
+    field = Plane(src, "bonnor_charged_dust", "spheroid_exterior", ("t", "u"), axis, nr.BCD_SPHEROID)
+    for k, what in ((0, "g_tt"), (1, "g_uu")):
+        ck.limit(f"the spheroid: {what} is continuous at u = u_0 on the axis",
+                 [float(body.g[k, k].subs(body.x1, 1))], [float(field.g[k, k].subs(field.x1, 1))], 1e-12)
+    uq, usq = tortoise(body, 1.0)
+    speed = sp.lambdify(field.x1, sp.sqrt(field.g[1, 1] / (-field.g[0, 0])), "numpy")
+    wq = np.linspace(1.0, 12.0, 400001)
+    wsq = usq[-1] + cumulative_trapezoid(speed(wq), wq, initial=0)
+
+    def axis_rstar(u):
+        u = np.asarray(u, dtype=float)
+        return np.where(u <= 1.0, np.interp(u, uq, usq), np.interp(u, wq, wsq))
+
+    def spheroid(t, u):
+        return mink_pq(t, axis_rstar(u), ell)
+    ck.chart("the spheroid, inside, on the axis", body, spheroid, ck.uniform(-20, 20), ck.uniform(0.01, 0.99),
+             lambda t, r: (1, 0))
+    ck.chart("the spheroid, outside, on the axis", field, spheroid, ck.uniform(-20, 20), ck.uniform(1.01, 8),
+             lambda t, r: (1, 0))
+    # The spheroid's published Kretschmann scalar, a page of hyperbolic functions that sympy is slow to
+    # simplify, is evaluated on the axis as it stands.
+    body.sources.note("bonnor_charged_dust", "spheroid_interior", ["kretschmann"])
+    K = body.reader(nr.strip_lhs(body.entry["kretschmann"])).subs(body.reader.held).doit().subs(body.subs).subs(body.fixed)
+    ck.finite("the spheroid: the centre of the disc is regular",
+              sp.lambdify(body.x1, K, "numpy")(np.linspace(1e-3, 0.2, 50)))
+    moment = slices.moments("bonnor_charged_dust", "spheroid")[0]
+    for vid, label in (("spheroid_interior", "Spheroid Interior"), ("spheroid_exterior", "Spheroid Exterior")):
+        v = View(vid, label, [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], vid)
+        v.fill("region", TRIANGLE)
+        ps, qs = mink_pq(S_ALL, axis_rstar(1.0), ell)
+        v.fill("cover", [[0, -PI]] + [point(p, q) for p, q in zip(ps, qs)] + [[0, PI]])
+        for u in (0.5,):
+            v.curve("r", *spheroid(S_ALL, np.full_like(S_ALL, u)))
+        for u in (1.5, 2.0, 3.0):
+            v.curve("r2", *spheroid(S_ALL, np.full_like(S_ALL, u)))
+        uu = np.concatenate([np.linspace(0, 1, 60)[:-1], np.linspace(1, 12, 400)])
+        for t in (-8, -4, -2, 0, 2, 4, 8):
+            v.curve("t", *spheroid(np.full_like(uu, t), uu))
+        v.curve("surface", ps, qs)
+        triangle_edges(v, centre="$u = 0$")
+        label_on(v, mink_pq(0, axis_rstar(1.0), ell), "$u = u_0$")
+        v.legend("cover", "the spheroid, which the interior chart covers")
+        v.legend("r", "$u$ constant inside, at $0.5$")
+        v.legend("r2", "$u$ constant outside, at $1.5$, $2$ and $3$")
+        v.legend("t", "$t$ constant, one $t$ on both sides")
+        v.legend("surface", "the surface of the spheroid")
+        v.legend("centre", "$u = 0$, the centre of the disc")
+        v.set(settings="$m = 1$, the unit of every length, $a = m$, and $u_0 = 1$.")
+        if vid == "spheroid_interior":
+            v.slice(moment, points=[spheroid(0.0, 0.0)], label="$t = 0$, $u = 0$")
         views.append(v)
     return views
 
@@ -14248,6 +14459,118 @@ def fisher_jnw(ck, src):
         v.slice(moment, [fmap(0 * along, along)])
         v.set(settings=("$\\gamma = 1/2$ and $b = 1$, the unit of every length, and $\\ell = 4b$; " if length == "b" else
                         "$m = k/2$ and $k = 1$, the unit of every length, so that $b = 2k$, and $\\ell = 8k$; ")
+              + "$p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$.")
+        views.append(v)
+    return views
+
+
+def brans_dicke_sphere(ck, src):
+    """Brans and Dicke's static sphere at omega = 6 and C = -1/4, where lambda = 1, the whole
+    spacetime, each point a 2-sphere, one view for each of its three charts.
+
+    In Campanelli and Lousto's letters m = 0 and n = 1/4, and on the plane of t and r the metric is
+    A^(m+1) (-c^2dt^2 + dr_*^2) with A = 1 - 2 r_0/r and dr_*/dr = A^(-(m - n + 2)/2) = A^(-7/8), whose
+    integral from 2 r_0 is finite: r_* = 16 r_0 A^(1/8) 2F1(2, 1/8; 9/8; A), zero at r = 2 r_0 and
+    without bound. So p, q = arctan((ct -+ r_*)/l) with l = 16 r_0 bring it into Minkowski's triangle
+    with r = 2 r_0 on X = 0, a timelike line where the spheres have zero area and the Kretschmann
+    scalar diverges, and no horizon: the triangle of Fisher's metric, which is this one times
+    phi/phi_0. Brans's isotropic radius, with r = rho (1 + B/rho)^2, is drawn at B = 1, so r_0 = 2B,
+    its lengths and times are twice their count in r_0 and l = 32 B. The harmonic chart is drawn
+    at k = r_0 = 1, r = 2k/(1 - e^(-2ku)); u grows toward the singularity, which is u -> infinity.
+    One event is checked to land on one point through all three maps, and the Kretschmann scalar
+    against its closed form."""
+    ell = 16.0
+    star = nr._bd_rstar
+    to_r = {"spherical": lambda r: np.asarray(r, dtype=float),
+            "isotropic": lambda rho: np.asarray(rho, dtype=float) * (1 + 1 / np.asarray(rho, dtype=float)) ** 2 / 2,
+            "harmonic": lambda u: 2 / (1 - np.exp(-2 * np.asarray(u, dtype=float)))}
+    maps = {cid: (lambda t, x, cid=cid: mink_pq(t, star(to_r[cid](x)), ell)) for cid in ("spherical", "harmonic")}
+    # In the isotropic chart ct is in units of B = r_0/2, so it is halved to be read in r_0.
+    maps["isotropic"] = lambda t, rho: mink_pq(np.asarray(t, dtype=float) / 2, star(to_r["isotropic"](rho)), ell)
+    coords = {"isotropic": "\\rho", "spherical": "r", "harmonic": "u"}
+    params = {"isotropic": nr.BRANS_DICKE, "spherical": nr.BRANS_DICKE_SPHERICAL, "harmonic": nr.BRANS_DICKE_HARMONIC}
+    planes = {cid: Plane(src, "brans_dicke_sphere", cid, ("t", coords[cid]), {**EQUATOR, "phi": "0"}, params[cid])
+              for cid in coords}
+    spans = {"spherical": 2 + np.exp(ck.uniform(-6, 3.5)), "isotropic": 1 + np.exp(ck.uniform(-6, 3.5)),
+             "harmonic": np.exp(ck.uniform(-4, 2))}
+    for cid, plane in planes.items():
+        ck.chart(f"Brans-Dicke, {cid}", plane, maps[cid], ck.uniform(-40, 40), spans[cid], lambda t, x: (1, 0))
+        K = plane.kretschmann
+        if cid == "harmonic":
+            ck.diverges("Brans-Dicke, harmonic: the Kretschmann scalar diverges as u -> infinity", K(0, 6.0), K(0, 9.0))
+        else:
+            # K grows as (r - 2 r_0)^(-5/2), so the spherical chart is read a hundred times nearer its edge.
+            edge, near = (2.0, 1e-4) if cid == "spherical" else (1.0, 1e-2)
+            ck.diverges(f"Brans-Dicke, {cid}: the Kretschmann scalar diverges on the edge r = 2 r_0",
+                        K(0, edge + near), K(0, edge + near / 10))
+        # K = 4 r_0^2 (6 r^2 (n^2 - 2n + 2) - 4 r_0 r (12 - 13n + 6n^2 - n^3) + r_0^2 (48 - 56n + 29n^2 - 8n^3 + n^4))
+        # /(r^6 (r - 2 r_0)^2 A^(2n)) at m = 0, which at n = 1/4 and r_0 = 1 is
+        # (2400 r^2 - 9328 r + 9137)/(64 r^6 (r - 2)^2 A^(1/2)), and 16 times smaller at r_0 = 2 for the same r/r_0.
+        x = spans[cid][:50]
+        r = to_r[cid](x)
+        ck.limit(f"Brans-Dicke, {cid}: the Kretschmann scalar is its closed form",
+                 K(np.zeros(50), x) * (16 if cid == "isotropic" else 1) * (64 * r ** 6 * (r - 2) ** 2 * np.sqrt(1 - 2 / r))
+                 / (2400 * r ** 2 - 9328 * r + 9137), np.ones(50), 1e-6)
+    r = 2 + np.exp(ck.uniform(-6, 3.5))
+    g = planes["spherical"].metric(0 * r, r)
+    h = 1e-6 * (r - 2)
+    ck.limit("Brans-Dicke: the tortoise coordinate has dr_*/dr = sqrt(-g_rr/g_tt)",
+             (star(r + h) - star(r - h)) / (2 * h) / np.sqrt(-g[2] / g[0]), np.ones_like(r), 1e-6)
+    ck.limit("Brans-Dicke: the tortoise coordinate vanishes at the singularity", star(2.0), [0.0], 1e-12)
+    # One event, one point: the sphere r at the time t, in each chart's own coordinate and unit.
+    t, r = ck.uniform(-20, 20), 2 + np.exp(ck.uniform(-4, 3))
+    want = np.array(maps["spherical"](t, r))
+    for cid, got in (("isotropic", maps["isotropic"](2 * t, r - 1 + np.sqrt(r * (r - 2)))),
+                     ("harmonic", maps["harmonic"](t, np.log(r / (r - 2)) / 2))):
+        ck.limit(f"Brans-Dicke: the {cid} chart lands on the points of the spherical chart", np.array(got), want, 1e-9)
+
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    moment = slices.moments("brans_dicke_sphere")[0]
+    reach = np.array(slices._bd_reach(moment, lambda r: r))
+    TS = (-32, -16, -8, 0, 8, 16, 32)
+    table = (
+        ("isotropic", "Isotropic", "\\rho", (1.05, 1.5, 2, 4, 8, 16, 32),
+         "$1.05\\,B$, $1.5\\,B$, $2B$, $4B$, $8B$, $16B$, and $32B$", 8, "$\\rho = 8B$", "$\\rho = B$",
+         lambda r: r - 1 + np.sqrt(r * (r - 2)), 2, "B"),
+        ("spherical", "Spherical", "r", (2.001, 2.1, 2.5, 4, 8, 16, 32),
+         "$2.001\\,r_0$, $2.1\\,r_0$, $2.5\\,r_0$, $4r_0$, $8r_0$, $16r_0$, and $32r_0$", 4, "$r = 4r_0$", "$r = 2r_0$",
+         lambda r: r, 1, "r_0"),
+        ("harmonic", "Harmonic", "u", (0.0625, 0.125, 0.25, 0.5, 1, 2, 4),
+         "$1/16k$, $1/8k$, $1/4k$, $1/2k$, $1/k$, $2/k$, and $4/k$", 0.5, "$u = 1/2k$", "$u \\to \\infty$",
+         lambda r: np.log(r / (r - 2)) / 2, 1, "k"))
+    views = []
+    for cid, name, x, lines, listed, marked, mark, edge, of_r, unit, length in table:
+        fmap = maps[cid]
+        v = View(cid, name, box, cid)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        grid(v, "r", lambda c, t, fmap=fmap, unit=unit: fmap(unit * t, c), lines, S_ALL)
+        grid(v, "t", lambda t, s: mink_pq(t, s, ell), TS, S_POS)
+        v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6),
+                                         ((0, -PI), "$i^-$", "t", 0, 6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label_xt([0, 0.25], edge, "r", dx=-6)
+        label_on(v, fmap(0, marked), mark)
+        v.legend("cover", f"the whole spacetime, which $t$ and ${x}$ cover")
+        v.legend("r", f"${x}$ constant, at {listed}")
+        v.legend("t", {"r_0": "$ct$ constant, every $8r_0$ to $\\pm 16r_0$, and at $\\pm 32r_0$",
+                       "B": "$ct$ constant, every $16B$ to $\\pm 32B$, and at $\\pm 64B$",
+                       "k": "$ct$ constant, every $8k$ to $\\pm 16k$, and at $\\pm 32k$"}[length])
+        v.legend("singular", f"the singularity {edge}, where the spheres have zero area and the Kretschmann scalar "
+                             "diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        along = of_r(reach)
+        v.slice(moment, [fmap(0 * along, along)])
+        v.set(settings={"r_0": "$m = 0$, $n = 1/4$, and $r_0 = 1$, the unit of every length, and $\\ell = 16r_0$; ",
+                        "B": "$C = -1/4$, $\\lambda = 1$, and $B = 1$, the unit of every length, so that $r_0 = 2B$, "
+                             "and $\\ell = 32B$; ",
+                        "k": "$b = 7k/8$, $s = -k/4$, and $k = 1$, the unit of every length, so that $r_0 = k$, "
+                             "and $\\ell = 16k$; "}[length]
               + "$p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$.")
         views.append(v)
     return views
@@ -20032,6 +20355,128 @@ def robinson_trautman(ck, src):
     return [v]
 
 
+# ---------------------------------------------------------------- Bondi and Sachs's radiating metric
+
+class BurstPlane:
+    """The plane of u and r on the axis of Bondi's chart for the burst the spacetime diagram
+    declares, G = c = m_0 = 1, in null coordinates. The outgoing rays are u constant,
+    p = arctan(u/L). An ingoing ray obeys dr/du = g_uu/2 with the published g_uu, and it is named
+    by the advanced time it has before the burst, where the plane is Schwarzschild's of the mass
+    m_0: v = u + 2r + 4 ln(r/2 - 1), and q = arctan(v/L). A ray met during the burst is carried
+    back to u = 0 by integrating, every ray at once and each over its own stretch of u; a ray met
+    after the burst, where the axis is Schwarzschild's of the mass m_0 again, is first carried back
+    to the end of the burst by the advanced time it keeps there."""
+
+    L, STEPS = 40.0, 400
+
+    def __init__(self, plane):
+        self.guu = plane.lambdify([plane.g[0, 0]])
+        self.T = float(nr.BURST["T"])
+
+    @staticmethod
+    def tortoise(r):
+        return r + 2 * np.log(r / 2 - 1)
+
+    def name(self, u, r):
+        u, r = np.broadcast_arrays(np.asarray(u, dtype=float), np.asarray(r, dtype=float))
+        u, r = u.copy(), r.copy()
+        late = u > self.T
+        if late.any():
+            r[late] = RocketPlane.before((u[late] - self.T) / 2 + self.tortoise(r[late]), outside=True)
+            u[late] = self.T
+        during = u > 0
+        if during.any():
+            at, y = u[during], r[during]
+            h = -at / self.STEPS
+
+            def rate(at, y):
+                return np.asarray(self.guu(at, y)[0], dtype=float) / 2
+            for _ in range(self.STEPS):
+                k1 = rate(at, y)
+                k2 = rate(at + h / 2, y + h * k1 / 2)
+                k3 = rate(at + h / 2, y + h * k2 / 2)
+                k4 = rate(at + h, y + h * k3)
+                y, at = y + h * (k1 + 2 * k2 + 2 * k3 + k4) / 6, at + h
+            r[during], u[during] = y, 0.0
+        return u + 2 * self.tortoise(r)
+
+    def pq(self, u, r):
+        return np.arctan(np.asarray(u, dtype=float) / self.L) * np.ones_like(np.asarray(r, dtype=float)), \
+            np.arctan(self.name(u, r) / self.L)
+
+
+def bondi_sachs(ck, src):
+    """The plane of u and r on the axis of symmetry, theta = 0, for the burst the spacetime
+    diagram declares, in m_0 = 1, outside the world tube r = 10 m_0: BurstPlane's null coordinates,
+    in which the region is the part of Schwarzschild's exterior triangle outside the tube, with
+    past null infinity on p = -pi/2 and future null infinity on q = pi/2. Before the burst and
+    after it the plane is checked against schwarzschild.json at r_s = 2 m_0, and the chart of
+    l = 1/r against the same map, so the view names no chart and both show it."""
+    axis = {"theta": "0", "phi": "0"}
+    plane = Plane(src, "bondi_sachs", "bondi", ("u", "r"), axis, functions=nr.BONDI_BURST)
+    inverse = Plane(src, "bondi_sachs", "compactified", ("u", "\\ell"), axis, functions=nr.BONDI_BURST_INVERSE)
+    F = BurstPlane(plane)
+    T, R = F.T, float(nr.BURST["R"])
+    for stage, lo, hi in (("before the burst", -60.0, -0.1), ("during the burst", 0.1, T - 0.1),
+                          ("after the burst", T + 0.1, 80.0)):
+        ck.chart(f"Bondi-Sachs, the axis {stage}", plane, F.pq, ck.uniform(lo, hi, 1200),
+                 ck.uniform(R, 80, 1200), lambda u, r: (1, 60))
+        ck.chart(f"Bondi-Sachs, the axis {stage}, the chart of 1/r", inverse, lambda u, ell: F.pq(u, 1 / ell),
+                 ck.uniform(lo, hi, 1200), ck.uniform(1 / 80, 1 / R, 1200), lambda u, ell: (1, -60 * ell ** 2))
+    out = Plane(src, "schwarzschild", "eddington_finkelstein_outgoing", ("u", "r"), EQUATOR, {"r_s": 2})
+    for stage, lo, hi in (("before", -60.0, -0.1), ("after", T + 0.1, 80.0)):
+        ck.chart(f"Bondi-Sachs: {stage} the burst the axis is Schwarzschild's outgoing chart", out, F.pq,
+                 ck.uniform(lo, hi, 1200), ck.uniform(R, 80, 1200), lambda u, r: (1, 60))
+    u = np.array([-200.0, -30.0, -1.0, 0.0, 5.0, 10.0, 19.0, 20.0, 50.0, 400.0])
+    p, q = F.pq(u, np.full_like(u, 1e9))
+    ck.limit("Bondi-Sachs: r -> infinity along a cone lands on future null infinity, q = pi/2", q, np.full_like(u, HALF), 1e-6)
+    p, q = F.pq(np.full(3, -1e9), np.array([R, 20.0, 80.0]))
+    ck.limit("Bondi-Sachs: u -> -infinity at a fixed r lands on past timelike infinity", np.concatenate([p, q]),
+             np.full(6, -HALF), 1e-6)
+    p, q = F.pq(np.full(3, 1e9), np.array([R, 20.0, 80.0]))
+    ck.limit("Bondi-Sachs: u -> infinity at a fixed r lands on future timelike infinity", np.concatenate([p, q]),
+             np.full(6, HALF), 1e-6)
+
+    v = View("axis", "The axis", [-0.3, PI + 0.3, -PI - 0.3, PI + 0.3])
+    uu = spread(-np.inf, np.inf, 900, 14.0)
+    tube = [point(a, b) for a, b in zip(*F.pq(uu, np.full_like(uu, R)))]
+    region = [point(-HALF, -HALF)] + tube + [point(HALF, HALF), point(-HALF, HALF)]
+    v.fill("region", region)
+    v.fill("cover", region)
+    for r in (20, 40, 80, 160):
+        v.curve("r", *F.pq(uu, np.full_like(uu, float(r))))
+    rr = R + np.concatenate([[0.0], np.geomspace(1e-3, 1e9, 500)])
+    for u0 in (-80, -40, -20, 40, 80):
+        v.curve("null", *F.pq(np.full_like(rr, float(u0)), rr))
+    for u0 in (0.0, T):
+        v.curve("surface", *F.pq(np.full_like(rr, u0), rr))
+    v.curve("boundary", *F.pq(uu, np.full_like(uu, R)))
+    v.segment("scri", (-HALF, HALF), (HALF, HALF))
+    v.segment("scri", (-HALF, -HALF), (-HALF, HALF))
+    for pq, text, anchor, dx, dy in (((HALF, HALF), "$i^+$", "b", 0, -6), ((-HALF, HALF), "$i^0$", "l", 6, 0),
+                                     ((-HALF, -HALF), "$i^-$", "t", 0, 6)):
+        v.point("infinity", pq)
+        v.label(pq, text, anchor, dx=dx, dy=dy)
+    v.label((-0.7, HALF), "$\\mathscr{I}^+$", "bl", dx=4, dy=-4)
+    v.label((-HALF, 0), "$\\mathscr{I}^-$", "tl", dx=4, dy=4)
+    burst = F.pq(np.array([T / 2]), np.array([45.0]))
+    v.label((float(burst[0][0]), float(burst[1][0])), "the burst", "c", "small")
+    v.legend("cover", "the region outside the world tube, which $u$ and $r$ cover")
+    v.legend("r", "$r$ constant on the axis: $20$, $40$, $80$, and $160\\,m_0$")
+    v.legend("null", "$u$ constant, an outgoing light cone: $cu = -80$, $-40$, $-20$, $40$, and $80\\,m_0$")
+    v.legend("surface", "the first and the last cone of the burst, $u = 0$ and $cu = 20\\,m_0$")
+    v.legend("boundary", "the world tube $r = 10\\,m_0$")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    v.set(input=nr.BURST_INPUT, settings="$m_0$ is the unit of every length and of $cu$.",
+          restriction="The axis of symmetry $\\theta = 0$ outside the world tube $r = 10\\,m_0$, a totally geodesic "
+                      "surface, each point in the diagram a single event; off the axis the cones carry the shear "
+                      "and the lines of constant $r$ run otherwise.")
+    for m in slices.moments("bondi_sachs", "sphere", label=slices.BONDI_SPHERE):
+        p, q = F.pq(np.array([10.0]), np.array([10.0]))
+        v.slice(m, points=[(float(p[0]), float(q[0]))])
+    return [v]
+
+
 # ---------------------------------------------------------------- Kinnersley's photon rocket
 
 class RocketPlane:
@@ -20938,7 +21383,7 @@ DRAWN = {
     "rp3_geon": rp3_geon,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "boulware_deser": boulware_deser, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
-    "bertotti_robinson": bertotti_robinson, "plebanski_hacyan": plebanski_hacyan, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
+    "bertotti_robinson": bertotti_robinson, "plebanski_hacyan": plebanski_hacyan, "cremmer_scherk": cremmer_scherk, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string, "spinning_string": spinning_string,
     "point_particle_2plus1": point_particle_2plus1,
     "interior_schwarzschild": interior_schwarzschild, "gravastar": gravastar, "frw": frw,
@@ -20947,6 +21392,7 @@ DRAWN = {
     "semiclosed_world": semiclosed_world,
     "datt_ruban_t_models": datt_ruban_t_models,
     "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii, "misner_zapolsky": misner_zapolsky,
+    "bonnor_charged_dust": bonnor_charged_dust,
     "bartnik_mckinnon": bartnik_mckinnon,
     "nordstrom_scalar": nordstrom_scalar,
     "einstein_1912_static": einstein_1912_static,
@@ -20974,6 +21420,7 @@ DRAWN = {
     "kaluza_klein_monopole": kaluza_klein_monopole,
     "kaluza_klein_black_hole": kaluza_klein_black_hole,
     "fisher_jnw": fisher_jnw,
+    "brans_dicke_sphere": brans_dicke_sphere,
     "exponential_metric": exponential_metric,
     "witten_black_hole": witten_black_hole,
     "roberts": roberts,
@@ -20993,6 +21440,7 @@ DRAWN = {
     "mcvittie": mcvittie,
     "sultana_dyer": sultana_dyer,
     "photon_rocket": photon_rocket,
+    "bondi_sachs": bondi_sachs,
     "hartle_thorne": hartle_thorne,
     "ppn_metric": ppn_metric,
 }
@@ -22729,6 +23177,14 @@ CAPTIONS = {
         "and $x$ on it. They cover the same wedge as the throat coordinates, with "
         "$x = b^2/r$.",
     ],
+    ("cremmer_scherk", "cartesian"): [
+        "The plane of $t$ and $x$ ($y = z = 0$) of Cremmer and Scherk's solution, each point in the diagram a "
+        "flat plane of $y$ and $z$ times a 2-sphere of radius $a$. The metric on the plane is "
+        "$-c^2dt^2 + dx^2$ with $x$ over the whole line, and $p, q = \\arctan((ct \\mp x)/a)$ bring it into "
+        "the full diamond.",
+        "The four large dimensions have the causal structure of Minkowski space, with a null infinity at each "
+        "end of $x$. The sphere adds none: light sent round it stays at one point of the diamond.",
+    ],
     ("plebanski_hacyan", "sphere"): [
         "Plebański and Hacyan's product of a flat plane with a sphere ($\\Lambda = 1/2b^2$), each point in "
         "the diagram a 2-sphere of radius $b$. The metric on the plane of $t$ and $z$ is $-c^2dt^2 + dz^2$ with "
@@ -23339,6 +23795,56 @@ CAPTIONS = {
         "The centre lies on the two null edges on the left: a ray reaches it only as $t \\to \\pm\\infty$, at a "
         "finite affine parameter, which goes as $r^2$. For every $n < 1$ the tortoise coordinate is finite at "
         "$r = 0$ and the centre is a timelike line, as it is for radiation at $n = 1/2$.",
+    ],
+    ("bonnor_charged_dust", "sphere_1975"): [
+        "Bonnor and Wickramasuriya's sphere of charged dust ($r_0 = 2m$) and the extremal Reissner-Nordström field "
+        "outside it, each point in the diagram a 2-sphere. The potential $U$ and its slope are continuous at the "
+        "surface, so $t$ and $r$ are one pair of coordinates throughout.",
+        "Outside $r_0$ the potential is $1 + m/r$ and the horizon of that field, $r = 0$, lies inside the star, where the field does not hold, so the spacetime has no horizon. The tortoise coordinate $r_* = \\int U^2dr$ runs from the centre through the surface, and $p, q = \\arctan((ct \\mp r_*)/2m)$ bring the spacetime into Minkowski's triangle, with the star a timelike tube from $i^-$ to $i^+$.",
+    ],
+    ("bonnor_charged_dust", "sphere_1965"): [
+        "Bonnor's sphere of 1965 ($r_0 = 2m$) and the extremal Reissner-Nordström field outside it, each point in "
+        "the diagram a 2-sphere. The potential $U$ and its slope are continuous at the surface, so $t$ and $r$ are "
+        "one pair of coordinates throughout.",
+        "Outside $r_0$ the potential is $1 + m/r$ and the horizon of that field, $r = 0$, lies inside the star, where the field does not hold, so the spacetime has no horizon. The tortoise coordinate $r_* = \\int U^2dr$ runs from the centre through the surface, and $p, q = \\arctan((ct \\mp r_*)/2m)$ bring the spacetime into Minkowski's triangle, with the star a timelike tube from $i^-$ to $i^+$.",
+    ],
+    ("bonnor_charged_dust", "exterior"): [
+        "The field outside Bonnor and Wickramasuriya's sphere ($r_0 = 2m$) in the isotropic radius $r$, each point "
+        "in the diagram a 2-sphere, with the star a timelike tube from $i^-$ to $i^+$. The horizon of the extremal "
+        "Reissner-Nordström field, $r = 0$, lies inside the tube, where the field does not hold.",
+    ],
+    ("bonnor_charged_dust", "exterior_areal"): [
+        "The field outside Bonnor and Wickramasuriya's sphere in the areal radius $R = r + m$, each point in the "
+        "diagram a 2-sphere of radius $R$, with the surface of the star at $R = r_0 + m = 3m$. The horizon of the "
+        "extremal Reissner-Nordström field, $R = m$, lies inside the tube of the star, where the field does not hold.",
+    ],
+    ("bonnor_charged_dust", "quasi_black_hole"): [
+        "Lemos and Weinberg's cloud of charged dust ($b = m/2$), each point in the diagram a 2-sphere. The cloud "
+        "has no surface and no horizon, and its centre is regular.",
+        "The tortoise coordinate is $r_* = r + 2m\\,\\mathrm{arsinh}(r/b) + (m^2/b)\\arctan(r/b)$, and "
+        "$p, q = \\arctan((ct \\mp r_*)/2m)$ bring the spacetime into Minkowski's triangle. At the centre "
+        "$dr_*/dr = (1 + m/b)^2$, which grows without limit as $b$ goes to zero, so the curves of constant $r$ crowd "
+        "toward the centre.",
+    ],
+    ("bonnor_charged_dust", "harmonic"): [
+        "The half line $x \\ge 0$, $y = z = 0$ through the centre of Lemos and Weinberg's cloud ($b = m/2$) over "
+        "time, the harmonic chart with that cloud's $U$. By spherical symmetry it is the plane of $t$ and $r$ of "
+        "the cloud's own chart, Minkowski's triangle with $p, q = \\arctan((ct \\mp x_*)/2m)$ and "
+        "$x_* = \\int U^2dx$.",
+    ],
+    ("bonnor_charged_dust", "spheroid_interior"): [
+        "The upper half of the axis of symmetry of Bonnor and Wickramasuriya's spheroid ($\\theta = \\pi/2$, "
+        "$a = m$, $u_0 = 1$) over time, each point in the diagram a single event at the height $a\\sinh u$ above "
+        "the centre of the disc. Light sent along the axis stays on it.",
+        "With $u_* = \\int aU^2\\cosh u\\,du$ from the disc through the surface, $p, q = \\arctan((ct \\mp "
+        "u_*)/2m)$ bring the half axis into Minkowski's triangle, with the spheroid a timelike tube from $i^-$ to "
+        "$i^+$.",
+    ],
+    ("bonnor_charged_dust", "spheroid_exterior"): [
+        "The upper half of the axis of symmetry outside Bonnor and Wickramasuriya's spheroid ($\\theta = \\pi/2$, "
+        "$a = m$, $u_0 = 1$) over time, each point in the diagram a single event at the height $a\\sinh u$. "
+        "The lines of constant $u$ outside the spheroid crowd toward null infinity, since the height grows as "
+        "$e^u$.",
     ],
     ("tolman_vii", "spherical"): [
         "A static star whose density falls as $1 - r^2/R^2$ to an empty surface, joined at $R = 2\\,r_s$ "
@@ -24050,6 +24556,34 @@ CAPTIONS = {
         "exterior and the white hole, and their lines of constant $u$ are outgoing light rays, which leave the "
         "singularity and cross the horizon outward.",
     ],
+    ("brans_dicke_sphere", "isotropic"): [
+        "The static sphere of Brans and Dicke's theory in Brans's isotropic radius $\\rho$ ($\\omega = 6$, "
+        "$C = -1/4$, $\\lambda = 1$), each point in the diagram a 2-sphere. On the plane of $t$ and $\\rho$ the "
+        "metric is $h^{2/\\lambda}(-c^2dt^2 + dr_*^2)$ with $h = (\\rho - B)/(\\rho + B)$ and "
+        "$dr_*/d\\rho = h^{1 - (C + 2)/\\lambda}\\left(1 + B/\\rho\\right)^2$, and $r_*$ vanishes at "
+        "$\\rho = B$, so $p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring the spacetime into Minkowski's triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "The edge $X = 0$ is $\\rho = B$, where the spheres have zero area and the Kretschmann scalar diverges: a timelike singularity with no horizon, so light leaving it reaches $\\mathscr{I}^+$. At $C = 0$ the isotropic radius of Schwarzschild's metric runs on "
+        "through $\\rho = B$ into a second exterior, and at the values drawn the spacetime ends there.",
+    ],
+    ("brans_dicke_sphere", "spherical"): [
+        "The static sphere of Brans and Dicke's theory ($m = 0$, $n = 1/4$, which is $\\omega = 6$), each point "
+        "in the diagram a 2-sphere of radius $rA^{n/2}$. On the plane of $t$ and $r$ the metric is "
+        "$A^{m+1}(-c^2dt^2 + dr_*^2)$ with $A = 1 - 2r_0/r$ and $dr_*/dr = A^{-(m - n + 2)/2}$, and $r_*$ "
+        "vanishes at $r = 2r_0$, so $p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring the spacetime into Minkowski's triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "The edge $X = 0$ is $r = 2r_0$, where the spheres have zero area and the Kretschmann scalar diverges: a timelike singularity with no horizon, so light leaving it reaches $\\mathscr{I}^+$. The triangle is Fisher's, whose metric is this one multiplied by "
+        "the scalar field, a factor that moves no light ray. The strip between the edge and the first line "
+        "drawn is the last thousandth of $r_0$ before the singularity, which light takes $6.2\\,r_0/c$ to "
+        "cross: the power of $A$ in $dr_*/dr$ is $7/8$ where Schwarzschild's is $1$, and at $m = n = 0$ the "
+        "integral for $r_*$ diverges at $r = 2r_0$, which is then Schwarzschild's horizon.",
+    ],
+    ("brans_dicke_sphere", "harmonic"): [
+        "The static sphere of Brans and Dicke's theory ($b = 7k/8$, $s = -k/4$, which is $\\omega = 6$) in the "
+        "harmonic coordinate $u$, each point in the diagram a 2-sphere of radius $ke^{(2b+s)u/2}/\\sinh(ku)$. "
+        "On the plane of $t$ and $u$ the metric is $e^{-(2b-s)u}(-c^2dt^2 + dr_*^2)$ with "
+        "$dr_*/du = -k^2e^{2bu}/\\sinh^2(ku)$, and $r_*$ falls to zero as $u \\to \\infty$, so $p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring the spacetime into Minkowski's triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "The edge $X = 0$ is $u \\to \\infty$, where the spheres have zero area and the Kretschmann scalar diverges: a timelike singularity with no horizon, so light leaving it reaches $\\mathscr{I}^+$. Spatial infinity $i^0$ is $u = 0$, and the scalar field "
+        "$\\phi_0e^{-su}$ grows without bound toward the edge.",
+    ],
     ("fisher_jnw", "spherical"): [
         "A static mass with a massless scalar field ($\\gamma = 1/2$), each point in the diagram a 2-sphere of "
         "radius $rf^{(1-\\gamma)/2}$. On the plane of $t$ and $r$ the metric is $f^{\\gamma}(-c^2dt^2 + dr_*^2)$ "
@@ -24133,6 +24667,19 @@ CAPTIONS = {
     ("photon_rocket", "behind"): [
         "The half of the axis behind the rocket through the declared burn, each point in the diagram a single event. The outgoing rays, one for each retarded time, are $p = -\\arctan e^{-(cu - 5m_0)/5m_0}$, and an ingoing ray keeps one $q$. A ray that comes in from $\\mathscr{I}^-$ with the advanced time $v$ of Schwarzschild's exterior before the burn has $q = \\arctan e^{(cv - 15m_0)/10m_0}$, and a ray that leaves the singularity at the retarded time $u_0$ has $q = -\\pi/2 - p(u_0)$, which puts $r = 0$ on the straight line $T = -\\pi/2$.",
         "The singularity lies in the past, a white hole, and the past horizon $q = 0$ divides the light that left it from the light that came in from $\\mathscr{I}^-$. Before the burn that horizon is $r = 2m_0$. As the rocket loses mass the lines of constant $r$ between $0.60\\,m_0$ and $2m_0$, spacelike inside the white hole, turn timelike, and after the burn the plane is Schwarzschild's of the mass $0.30\\,m_0$, whose horizon $r = 2m$ is the edge $u = \\infty$. During the burn the lines of constant $r$ beyond the second zero of $g^{rr}$, which comes in to $4.73\\,m_0$, are spacelike: a ray sent after the rocket from there gains $r$.",
+    ],
+    ("bondi_sachs", "axis"): [
+        "The axis of symmetry of a source that sends out one weak burst of gravitational waves, outside the world "
+        "tube $r = 10\\,m_0$, each point in the diagram a single event. The outgoing rays, one for each retarded "
+        "time, are $p = \\arctan(cu/40m_0)$, and an ingoing ray keeps $q = \\arctan(cv/40m_0)$, with $v$ the "
+        "advanced time $cv = cu + 2r + 4m_0\\ln(r/2m_0 - 1)$ it has before the burst, where the plane is "
+        "Schwarzschild's of the mass $m_0$.",
+        "Bondi's coordinates cover the region between the world tube and future null infinity, and each cone of "
+        "constant $u$ ends on $\\mathscr{I}^+$ at one point, a sphere of directions about the source. The news of "
+        "the burst reaches $\\mathscr{I}^+$ between the two marked cones, and the Bondi mass, read on "
+        "$\\mathscr{I}^+$ one cone at a time, falls there from $m_0$ to $0.9990\\,m_0$. On the axis itself the "
+        "shear vanishes and the mass aspect ends where it began, so the plane is Schwarzschild's of the mass $m_0$ "
+        "before the burst and after it.",
     ],
     ("photon_rocket", "ahead"): [
         "The half of the axis ahead of the rocket through the declared burn, each point in the diagram a single event. The outgoing rays, one for each retarded time, are $p = -\\arctan e^{-(cu - 5m_0)/5m_0}$, and an ingoing ray keeps one $q$. A ray that comes in from $\\mathscr{I}^-$ with the advanced time $v$ of Schwarzschild's exterior before the burn has $q = \\arctan e^{(cv - 15m_0)/10m_0}$, and a ray that leaves the singularity at the retarded time $u_0$ has $q = -\\pi/2 - p(u_0)$, which puts $r = 0$ on the straight line $T = -\\pi/2$.",

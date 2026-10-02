@@ -7719,6 +7719,51 @@ def plebanski_hacyan(ck, src):
     return views
 
 
+def cremmer_scherk(ck, src):
+    """Cremmer and Scherk's Minkowski space times a sphere of radius a = 1. One flat dimension and the
+    sphere's equator at one moment, dx^2 + a^2 dphi^2, is a cylinder: rho = a at the height x, on which
+    x is the distance itself, Duff's hosepipe with the flat dimension for its length. The sphere of
+    theta and phi at one event is the second view. The other two flat dimensions add nothing a
+    surface can show, and the spacetime is static, so one moment is every moment."""
+    name = "Cremmer-Scherk"
+    sl = Slice(src, "cremmer_scherk", "cartesian", "x", "\\phi", {"t": 0, "y": 0, "z": 0, "theta": "pi/2"}, {"a": 1})
+    size = 2.0
+    tube = Piece("cylinder", "sheet", sl, -1.0, 1.0, -1.0, 1,
+                 (("edge", "the cylinder runs on for ever toward $x \\to -\\infty$"),
+                  ("edge", "the cylinder runs on for ever toward $x \\to \\infty$")),
+                 [(k / 2, "r", None) for k in (-2, -1, 0, 1, 2)], size)
+    ck.isometry(f"{name}, a flat dimension and the equator", tube)
+    ck.form(f"{name}, the cylinder at the height x", tube, lambda x: x, size)
+    ck.radius(f"{name}, the cylinder rho = a", tube, lambda x: np.ones_like(x), size)
+    equator = Surface([tube])
+    fig = figure_of([equator], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *tube.at(0.0), "$x = 0$")
+    ring_label(fig, [0, 0, 0], *tube.at(1.0), "$a$")
+    ring_label(fig, [0, 0, 0], *tube.at(-1.0), "$-a$")
+    fig.legend("fill", "cover", "one flat dimension and the sphere's equator at one moment, which $x$ and $\\phi$ cover")
+    fig.legend("line", "r", "$x$ constant, every $a/2$ from $-a$ to $a$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    settings = "$a = 1$, the unit of every length."
+    views = [view("equator", "The equator", "$a$", [equator], fig.done(), settings=settings)]
+
+    sphere_slice = Slice(src, "cremmer_scherk", "cartesian", "\\theta", "\\phi",
+                         {"t": 0, "x": "1", "y": 0, "z": 0}, {"a": 1})
+    ball = Piece("sphere", "sheet", sphere_slice, 0.0, math.pi, 0.0, 1,
+                 (("axis", "the pole $\\theta = 0$"), ("axis", "the pole $\\theta = \\pi$")),
+                 [(math.pi / 4, "r", None), (math.pi / 2, "r", None), (3 * math.pi / 4, "r", None)], size)
+    ck.isometry(f"{name}, the sphere", ball)
+    ck.form(f"{name}, the sphere at the height a(1 - cos theta)", ball, lambda c: 1 - np.cos(c), size)
+    ck.radius(f"{name}, the sphere rho = a sin theta", ball, np.sin, size)
+    sphere = Surface([ball])
+    fig = figure_of([sphere], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *ball.at(math.pi / 2), "$\\theta = \\pi/2$")
+    fig.legend("fill", "cover", "the sphere, which $\\theta$ and $\\phi$ cover but for its poles")
+    fig.legend("line", "r", "$\\theta$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("sphere", "The sphere", "$a$", [sphere], fig.done(), settings=settings))
+    return views
+
+
 # Two of Majumdar and Papapetrou's holes, each of mass parameter m, the unit, at z = +-2m on the
 # axis, as their spacetime diagrams declare.
 MP_TWO_CYLINDRICAL = "1 + 1/sqrt(rho**2 + (z - 2)**2) + 1/sqrt(rho**2 + (z + 2)**2)"
@@ -11083,6 +11128,125 @@ def lewis(ck, src):
                           "$dX^2 + dY^2 - dZ^2$.")]
 
 
+def brans_dicke_sphere(ck, src):
+    """The equatorial plane of Brans and Dicke's static sphere at one moment, at omega = 6 and
+    C = -1/4, where lambda = 1: in Campanelli and Lousto's letters m = 0 and n = 1/4, and r_0 = 1.
+    On the slice the metric is A^(n-1) dr^2 + r^2 A^n dphi^2 with A = 1 - 2 r_0/r, Fisher's slice at
+    gamma = 1 - n = 3/4 and b = 2 r_0, as the two metrics differ by the factor phi/phi_0 alone. It is
+    read in the harmonic chart at k = 1, b = 7/8 and s = -1/4, where the singularity is u -> infinity
+    and nothing cancels on the way to it: e^(-2u) = A, so with w = A^(1/8) = e^(-u/4) the circle of
+    the sphere r has the radius rho = r A^(1/8) = 2w/(1 - w^8), which shrinks to a point at the
+    singularity.
+
+    g_uu - (d rho/du)^2 = w^2 (49 w^8 - 1)/(4 (1 - w^8)^3), which vanishes on A = 1/49,
+    r_e = (2 - n)^2 r_0/(2 (1 - n)) = 49 r_0/24, u = ln 7. Outside it the surface is drawn in flat
+    space, climbing from level as Flamm's paraboloid does, z(w) the integral of
+    2 sqrt(49 s^8 - 1)/(1 - s^8)^(3/2) ds from 7^(-1/4) up to w. Inside it the circles grow faster
+    than the distance out to them, which is checked, and the surface is drawn in three dimensional
+    Minkowski space, falling from level at Z(w), the integral of 2 sqrt(1 - 49 s^8)/(1 - s^8)^(3/2) ds,
+    to the singular point, which it enters along the light cone, dZ/d rho -> 1. Both pieces lie
+    level at r_e, so they meet in one circle with one tangent, checked from the numbers and from the
+    file. Each closed form is checked by a quadrature the drawing never uses, and the spherical and
+    isotropic charts are checked to give the same circles and the same heights.
+
+    The surface closes on the light cone as fast as A does, 1 - (dZ/d rho)^2 -> 64 A, while its
+    radius falls only as A^(1/8), so the difference of d rho and dZ is lost to rounding well before
+    the circles are small: the profile steps toward the point by a hundred and sixtieth of rho at a
+    time, is written to sixteen decimals and stops at u = 12, where A = e^(-24) and the circle has
+    the radius 2 e^(-3) r_0 = 0.1 r_0, a hundred and fiftieth of the drawing's width."""
+    params = {"k": 1, "b": sp.Rational(7, 8), "s": -sp.Rational(1, 4)}
+    fixed = {"t": 0, **EQUATOR}
+
+    def in_w(e, u):
+        # g_phiphi and g_uu - (d rho/du)^2 as factored rational functions of w = e^(-u/4), so that the
+        # second is exactly zero on the level circle, where sympy's hyperbolic form leaves a rounding.
+        w = sp.Symbol("w", positive=True)
+        return sp.factor(sp.simplify(e.rewrite(sp.exp).subs(u, -4 * sp.log(w)))).subs(w, sp.exp(-u / 4))
+    sl = Slice(src, "brans_dicke_sphere", "harmonic", "u", "\\phi", fixed, params, rewrite=in_w)
+    msl = Slice(src, "brans_dicke_sphere", "harmonic", "u", "\\phi", fixed, params, space="minkowski", rewrite=in_w)
+    at = lambda r: math.log(r / (r - 2)) / 2                   # u of the sphere r, in units of r_0
+    level, top, tip = math.log(7), at(8.0), 12.0
+    sl.known = msl.known = {level: sp.log(7), top: sp.log(sp.Rational(4, 3)) / 2}
+    name = "Brans-Dicke"
+    radius = lambda u: 2 * np.exp(-np.asarray(u, dtype=float) / 4) / (1 - np.exp(-2 * np.asarray(u, dtype=float)))
+    size = 2 * float(radius(top))
+    ck.add(f"{name}: the surface lies level where g_rr = (d rho/dr)^2, at r = 49 r_0/24",
+           abs(float(sl.defect_at(np.array([level]))[0])), 1e-12)
+    ck.stops(f"{name}, inside r = 49 r_0/24 in flat space", sl, np.linspace(level, 40, 402)[1:])
+    outward = np.linspace(1e-3, level, 402)[:-1]
+    ck.add(f"{name}: beyond r = 49 r_0/24 no surface in Minkowski space carries the slice, (d rho/du)^2 - g_uu < 0",
+           float(max(0.0, np.max(-msl.defect_at(outward)))), 0.0)
+    if not np.all(msl.defect_at(outward) > 0):
+        ck.items[-1]["ok"] = False
+
+    join = ("at $r = 49r_0/24$ the surface lies level, in Minkowski space nearer the singularity and in flat "
+            "space beyond")
+    rise = sl.rise(top, level)
+    far = Piece("far", "sheet", sl, top, level, rise, -1,
+                (("edge", "the surface runs on, to $r \\to \\infty$"), ("join", join)),
+                [(top, "r", None), (at(6.0), "r", None), (at(4.0), "r", None), (at(3.0), "r", None),
+                 (level, "space", None)], size)
+    steps = int(math.ceil((tip - level) / (4 * math.log(1.00625))))
+    near = Piece("near", "sheet", msl, level, tip, 0.0, -1,
+                 (("join", join),
+                  ("edge", "the surface runs on into the axis along a light cone, to the singularity $r = 2r_0$")),
+                 [(level, "space", None)], size, digits=1e-16,
+                 knots=[level + (tip - level) * k / steps for k in range(1, steps)])
+    for p in (far, near):
+        space = "in Minkowski space" if p.sl.lorentz else "in flat space"
+        ck.isometry(f"{name}, {p.id} {space}", p)
+        ck.radius(f"{name}, {p.id}, rho = r A^(1/8) {space}", p, radius, size)
+    ck.join(f"{name}, far in flat space and near in Minkowski space at r = 49 r_0/24", far, level, near, level)
+    pa, pb = far.data()["points"][-1], near.data()["points"][0]
+    ck.add(f"{name}, far and near as written: one point at r = 49 r_0/24",
+           max(abs(pa[0] - pb[0]), abs(pa[1] - pb[1]), abs(pa[2] - pb[2])), 10.0 ** -min(far.decimals, near.decimals))
+
+    # The closed forms, in w = e^(-u/4), by a quadrature of their own.
+    w_e = 7 ** -0.25
+
+    def flat_height(u):
+        return np.array([quad(lambda s: 2 * math.sqrt(max(49 * s ** 8 - 1, 0.0)) / (1 - s ** 8) ** 1.5, w_e, math.exp(-x / 4),
+                              epsabs=1e-13, epsrel=1e-12)[0] for x in np.atleast_1d(u)])
+
+    def cone_height(u):
+        return np.array([-quad(lambda s: 2 * math.sqrt(max(1 - 49 * s ** 8, 0.0)) / (1 - s ** 8) ** 1.5, math.exp(-x / 4), w_e,
+                               epsabs=1e-13, epsrel=1e-12)[0] for x in np.atleast_1d(u)])
+    ck.form(f"{name}, far, z = the integral of 2 sqrt(49 w^8 - 1)/(1 - w^8)^(3/2)", far, flat_height, size)
+    ck.form(f"{name}, near, Z = -the integral of 2 sqrt(1 - 49 w^8)/(1 - w^8)^(3/2)", near, cone_height, size)
+    ck.add(f"{name}: the surface enters the singular point along the light cone, Z - Z_0 = rho there",
+           abs((near.at(tip)[1] - float(cone_height(200.0)[0])) / near.at(tip)[0] - 1), 1e-3)
+
+    # The other two charts, at r_0 = 1, which is B = 1/2, give the same circles and the same heights.
+    for system, x, own, of_r in (
+            ("spherical", "r", {"r_0": 1, "m": 0, "n": sp.Rational(1, 4)}, lambda r: r),
+            ("isotropic", "\\rho", {"B": sp.Rational(1, 2), "C": -sp.Rational(1, 4), "lambda": 1},
+             lambda r: (r - 1 + math.sqrt(r * (r - 2))) / 2)):
+        other = Slice(src, "brans_dicke_sphere", system, x, "\\phi", fixed, own)
+        mother = Slice(src, "brans_dicke_sphere", system, x, "\\phi", fixed, own, space="minkowski")
+        rs = np.array([49 / 24, 3.0, 4.0, 6.0, 8.0])
+        ck.add(f"{name}: the {system} chart's circles are the same", float(np.max(np.abs(
+            other.rho_at(np.array([of_r(r) for r in rs])) - radius([at(r) for r in rs])))), 1e-12)
+        ck.add(f"{name}: the {system} chart's surface in flat space is the same",
+               abs(other.rise(of_r(49 / 24), of_r(8.0)) - rise), 1e-9)
+        ck.add(f"{name}: the {system} chart's surface in Minkowski space is the same",
+               abs(mother.rise(of_r(2.001), of_r(49 / 24)) - msl.rise(level, at(2.001))), 1e-9)
+
+    surface = Surface([far, near])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *far.at(level), "$r = 49r_0/24$", dx=10)
+    ring_label(fig, [0, 0, 0], *far.at(at(4.0)), "$4r_0$")
+    ring_label(fig, [0, 0, 0], *far.at(top), "$8r_0$")
+    fig.legend("fill", "cover", "the equatorial plane at one moment, from the singularity $r = 2r_0$ out")
+    fig.legend("line", "r", "$r$ constant, at $3r_0$, $4r_0$, $6r_0$, and $8r_0$")
+    fig.legend("line", "space", "$r = 49r_0/24$: Minkowski space inside, flat space beyond")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("equator", "A moment of $t$", "$r_0$", [surface], fig.done(),
+                 settings="$m = 0$, $n = 1/4$, and $r_0 = 1$, the unit of every length; in the harmonic chart "
+                          "$k = r_0$, $b = 7r_0/8$, and $s = -r_0/4$, and in the isotropic chart $B = r_0/2$, "
+                          "$C = -1/4$, and $\\lambda = 1$. Every length along the surface inside $r = 49r_0/24$ is "
+                          "measured with $dX^2 + dY^2 - dZ^2$.")]
+
+
 def fisher_jnw(ck, src):
     """The equatorial plane of Fisher, Janis, Newman and Winicour's scalar field at one moment, at
     gamma = 1/2 and b = 1, the surface Abdolrahimi and Shoom embed. It is read in the harmonic
@@ -13096,6 +13260,50 @@ def robinson_trautman(ck, src):
                  input=nr.RT_INPUT)]
 
 
+def bondi_sachs(ck, src):
+    """The sphere of constant u and r of Bondi's chart, at the world tube r = 10 m_0 and at the
+    middle of the burst the spacetime diagram declares, cu = 10 m_0, where the shear is greatest:
+    its metric is r^2 (e^(2 gamma) dtheta^2 + e^(-2 gamma) sin^2 theta dphi^2), a surface of
+    revolution with circles of radius r e^(-gamma) sin(theta), of area 4 pi r^2 whatever gamma
+    is. gamma is -0.0035 on the equator there, so the equator's radius is 1.0035 r and the
+    meridian from pole to pole 0.9983 pi r: the sphere is oblate by half a percent, the strain
+    of the wave. It stands with its equator at z = 0."""
+    u0, r0 = 10, 10
+    # gamma is handed over as numbers, with its slope: it is a sum of forty terms, and sympy does
+    # not finish simplifying e^(2 gamma) of it in ten minutes. V, beta and U are not in the sphere's
+    # metric.
+    theta = sp.Symbol("theta", real=True)
+    here = {sp.Symbol("u", real=True): u0, sp.Symbol("r", real=True): r0}
+    on_sphere = nr._BURST["gamma"].subs(here)
+    gamma = sp.lambdify(theta, on_sphere, "numpy")
+    slope = sp.lambdify(theta, sp.diff(on_sphere, theta), "numpy")
+    sl = Slice(src, "bondi_sachs", "bondi", "\\theta", "\\phi", {"u": u0, "r": r0},
+               functions={"V": "r", "beta": "0", "U": "0"}, numeric={"gamma": (gamma, slope)})
+    size = 2.0 * r0
+    marks = [(math.pi / 4, "r", None), (math.pi / 2, "r", None), (3 * math.pi / 4, "r", None)]
+    ball = Piece("sphere", "sheet", sl, 0.0, math.pi, -sl.rise(0.0, math.pi / 2), 1,
+                 (("axis", "the pole $\\theta = 0$, on the axis of symmetry"), ("axis", "the pole $\\theta = \\pi$")),
+                 marks, size)
+    where = "Bondi-Sachs, the sphere of the world tube at cu = 10 m_0"
+    ck.isometry(where, ball)
+    ck.radius(f"{where}, rho = r e^(-gamma) sin(theta)", ball, lambda th: r0 * np.exp(-gamma(th)) * np.sin(th), size)
+    ck.add(f"{where}: the equator stands at z = 0", abs(ball.at(math.pi / 2)[1]) / size, FORM)
+    ck.add(f"{where}: the equator's radius is 1.0035 r", abs(round(float(sl.rho_at(math.pi / 2)) / r0, 4) - 1.0035), 0.0)
+    ck.add(f"{where}: the meridian from pole to pole is 0.9983 pi r",
+           abs(round(sl.proper(0.0, math.pi) / (math.pi * r0), 4) - 0.9983), 0.0)
+    pts = np.array(ball.data()["points"])
+    area = float(np.sum(math.pi * (pts[1:, 1] + pts[:-1, 1]) * np.hypot(np.diff(pts[:, 1]), np.diff(pts[:, 2]))))
+    ck.add(f"{where}: the area of the cones drawn is 4 pi r^2", abs(area / (4 * math.pi * r0 ** 2) - 1), 1e-4)
+    sphere = Surface([ball])
+    fig = figure_of([sphere], {"sheet": "cover"}, size)
+    fig.legend("fill", "cover", "the sphere, which $\\theta$ and $\\phi$ cover but for its poles")
+    fig.legend("line", "r", "$\\theta$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("sphere", "The sphere of the world tube", "$m_0$", [sphere], fig.done(),
+                 settings="$m_0$ is the unit of every length; the surface is $cu = 10\\,m_0$, $r = 10\\,m_0$.",
+                 input=nr.BURST_INPUT)]
+
+
 # ct in units of 1/k. Beyond |kct| = 1.1 the cones tip so near the light cone, |drho/dz| = cosh(kct),
 # that a chord turned 0.02 round the axis beside the apex misses the surface by more than ACROSS.
 WALL_MOMENTS = (-1.0, -0.5, 0.0, 0.5, 1.0)
@@ -14304,6 +14512,136 @@ def ab_metrics(ck, src):
                  settings="$b = 1$, the unit of every length, and $z = 0$.")]
 
 
+def bonnor_charged_dust(ck, src):
+    """The moment t = 0 of four of Bonnor's stars, at m = 1. On the equator of a chart
+    -U^{-2}dt^2 + U^2(dr^2 + r^2 dOmega^2) the circle r has the circumference radius rho = r U
+    and g_rr = U^2, so dz/dr = sqrt(U^2 - (U + r U')^2) = sqrt(-r U'(2U + r U')), real wherever
+    -2U <= r U' <= 0, which is checked by quadrature for each interior. The sphere of 1975 and
+    the sphere of 1965, both at r_0 = 2m, are joined at r_0 to the exterior U = 1 + m/r, whose
+    profile is Majumdar and Papapetrou's throat, z = 2w + ln((w - 1)/(w + 1)) with
+    w = sqrt(2r/m + 1); U and U' are continuous at r_0, so each joins with one tangent. Lemos
+    and Weinberg's cloud is drawn at b = m/2 from its centre out. The spheroid, at a = m and
+    u_0 = 1, is drawn in its equatorial plane: the disc u = 0 inside the focal ring, where
+    rho = a U cos(theta) and g_theta_theta = (d rho/d theta)^2, so it is flat; then theta = 0
+    from the ring out, rho = a U cosh(u) and g_uu = a^2 U^2 sinh^2(u), through the surface u_0."""
+    views = []
+    R, top = 2.0, 6.0
+    size = 2 * (top + 1)
+    constants = {"m": 1, "r_0": 2}
+
+    def throat(r):
+        w = np.sqrt(2 * np.asarray(r, dtype=float) + 1)
+        return 2 * w + np.log((w - 1) / (w + 1))
+
+    def bowl(U, dU, z0):
+        def climb(r):
+            return math.sqrt(max(-r * dU(r) * (2 * U(r) + r * dU(r)), 0.0))
+        return lambda r: z0 + np.array([quad(climb, 0.0, float(x), epsabs=1e-12, epsrel=1e-12)[0]
+                                        for x in np.ravel(r)]).reshape(np.shape(r))
+
+    outer = Slice(src, "bonnor_charged_dust", "exterior", "r", "\\phi", {"t": 0, **EQUATOR}, constants)
+    for vid, system, label, name, U, dU, settings in (
+            ("star", "sphere_1975", "The sphere of 1975", "Bonnor and Wickramasuriya's sphere",
+             lambda r: 1 + (3 - r * r / 4) / 4, lambda r: -r / 8,
+             "$m = 1$, the unit of every length, and $r_0 = 2m$, so the redshift of the centre is $3/4$."),
+            ("star_1965", "sphere_1965", "The sphere of 1965", "Bonnor's sphere of 1965",
+             lambda r: 27 ** 0.5 / math.sqrt(8 + r * r), lambda r: -27 ** 0.5 * r / (8 + r * r) ** 1.5,
+             "$m = 1$, the unit of every length, and $r_0 = 2m$, so the redshift of the centre is "
+             "$(3/2)^{3/2} - 1 = 0.84$.")):
+        inner = Slice(src, "bonnor_charged_dust", system, "r", "\\phi", {"t": 0, **EQUATOR}, constants)
+        star = Piece("star", "star", inner, 0.0, R, 0.0, 1,
+                     (("axis", "the centre $r = 0$, where the surface is smooth"),
+                      ("join", "the surface of the star, $r = r_0$")),
+                     [(r, "r", None) for r in (0.5, 1.0, 1.5)], size)
+        zR = float(star.z[-1])
+        ext = Piece("exterior", "sheet", outer, R, top, zR, 1,
+                    (("join", "the surface of the star, $r = r_0$"), ("edge", "the surface runs on to $r \\to \\infty$")),
+                    [(R, "surface", "$r = r_0$")] + [(r, "r", None) for r in (3, 4, 5)] + [(top, "r", None)], size)
+        surface = Surface([star, ext])
+        ck.isometry(f"{name}, the star", star)
+        ck.isometry(f"{name}, the exterior", ext)
+        ck.join(f"{name} meets the exterior at r = r_0", star, R, ext, R)
+        ck.radius(f"{name}, rho = r U", star, lambda r: r * np.vectorize(U)(r), size)
+        ck.radius(f"{name}, the exterior, rho = r + m", ext, lambda r: r + 1, size)
+        ck.form(f"{name}, the bowl dz/dr = sqrt(-r U'(2U + r U'))", star, bowl(U, dU, 0.0), size)
+        ck.form(f"{name}, the exterior is Majumdar and Papapetrou's throat", ext,
+                lambda r: zR + throat(r) - throat(R), size)
+        fig = figure_of([surface], {"star": "star", "sheet": "cover"}, size, Camera(-90, 32))
+        ring_label(fig, [0, 0, 0], *ext.at(R), "$r = r_0$", dx=10)
+        ring_label(fig, [0, 0, 0], *ext.at(top), "$6m$")
+        fig.legend("fill", "star", "the star, $r \\le r_0$")
+        fig.legend("fill", "cover", "the exterior, the extremal Reissner-Nordström field")
+        fig.legend("line", "r", "$r$ constant, at $0.5$, $1$ and $1.5\\,m$ inside and $3$, $4$, $5$ and $6\\,m$ outside")
+        fig.legend("line", "surface", "the surface of the star, $r = r_0$")
+        fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+        views.append(view(vid, label, "$m$", [surface], fig.done(), settings=settings))
+
+    # Lemos and Weinberg's cloud, U = 1 + m/sqrt(r^2 + b^2) at b = m/2.
+    sl = Slice(src, "bonnor_charged_dust", "quasi_black_hole", "r", "\\phi", {"t": 0, **EQUATOR}, {"m": 1, "b": "1/2"})
+    cloud = Piece("cloud", "star", sl, 0.0, top, 0.0, 1,
+                  (("axis", "the centre $r = 0$, where the surface is smooth"),
+                   ("edge", "the surface runs on to $r \\to \\infty$")),
+                  [(r, "r", None) for r in (0.5, 1.0, 2.0, 3.0, 4.0, 5.0)] + [(top, "r", None)], size)
+    ck.isometry("Lemos and Weinberg's cloud", cloud)
+    ck.radius("Lemos and Weinberg's cloud, rho = r U", cloud, lambda r: r * (1 + 1 / np.sqrt(r * r + 0.25)), size)
+    ck.form("Lemos and Weinberg's cloud, dz/dr = sqrt(-r U'(2U + r U'))", cloud,
+            bowl(lambda r: 1 + 1 / math.sqrt(r * r + 0.25), lambda r: -r / (r * r + 0.25) ** 1.5, 0.0), size)
+    surface = Surface([cloud])
+    fig = figure_of([surface], {"star": "star"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *cloud.at(0.5), "$r = b$", dx=10)
+    ring_label(fig, [0, 0, 0], *cloud.at(top), "$6m$")
+    fig.legend("fill", "star", "the cloud, which has no edge")
+    fig.legend("line", "r", "$r$ constant, at $0.5$, $1$, $2$, $3$, $4$, $5$ and $6\\,m$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("cloud", "The cloud", "$m$", [surface], fig.done(),
+                      settings="$m = 1$, the unit of every length, and $b = m/2$, so the redshift of the centre is $2$."))
+
+    # The spheroid at a = m and u_0 = 1, in its equatorial plane.
+    shape = {"m": 1, "a": 1, "u_0": 1}
+    alpha, C0 = math.atan(1 / math.sinh(1.0)), math.cosh(1.0)
+    Uc = 1 + alpha + 1 / (4 * C0)
+    utop = 2.2
+    flat = Slice(src, "bonnor_charged_dust", "spheroid_interior", "\\theta", "\\phi", {"t": 0, "u": 0}, shape)
+    inside = Slice(src, "bonnor_charged_dust", "spheroid_interior", "u", "\\phi", {"t": 0, "theta": 0}, shape)
+    outside = Slice(src, "bonnor_charged_dust", "spheroid_exterior", "u", "\\phi", {"t": 0, "theta": 0}, shape)
+    size = 2 * float(outside.rho_at(utop))
+    half = math.pi / 2
+    disc = Piece("disc", "star", flat, 0.0, half, 0.0, 1,
+                 (("join", "the focal ring $u = 0$, $\\theta = 0$"), ("axis", "the centre of the disc, where the surface is flat")),
+                 [(math.pi / 6, "r", None), (math.pi / 3, "r", None)], size)
+    body = Piece("body", "star", inside, 0.0, 1.0, 0.0, 1,
+                 (("join", "the focal ring $u = 0$, $\\theta = 0$"), ("join", "the surface of the spheroid, $u = u_0$")),
+                 [(0.0, "chartedge", "$u = 0$"), (0.5, "r", None)], size)
+    zs = float(body.z[-1])
+    ext = Piece("exterior", "sheet", outside, 1.0, utop, zs, 1,
+                (("join", "the surface of the spheroid, $u = u_0$"), ("edge", "the surface runs on to $u \\to \\infty$")),
+                [(1.0, "surface", "$u = u_0$"), (1.5, "r", None), (2.0, "r", None), (utop, "r", None)], size)
+    for where, piece in (("the disc", disc), ("the body", body), ("the exterior", ext)):
+        ck.isometry(f"the spheroid, {where}", piece)
+    ck.join("the spheroid, the disc meets the body at the focal ring", disc, 0.0, body, 0.0)
+    ck.join("the spheroid, the body meets the exterior at u = u_0", body, 1.0, ext, 1.0)
+    ck.radius("the spheroid, the disc, rho = a U cos(theta)", disc, lambda th: Uc * np.cos(th), size)
+    ck.form("the spheroid, the disc is flat", disc, lambda th: 0 * th, size)
+    ck.radius("the spheroid, the body, rho = a U cosh(u)", body,
+              lambda u: (1 + alpha + (1 - u ** 4) / (4 * C0)) * np.cosh(u), size)
+    ck.radius("the spheroid, the exterior, rho = a U cosh(u)", ext,
+              lambda u: (1 + np.arctan(1 / np.sinh(u))) * np.cosh(u), size)
+    surface = Surface([disc, body, ext])
+    fig = figure_of([surface], {"star": "star", "sheet": "cover"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *body.at(0.0), "$u = 0$", side=-1, dx=8)
+    ring_label(fig, [0, 0, 0], *ext.at(1.0), "$u = u_0$", dx=10)
+    fig.legend("fill", "star", "the spheroid, $u \\le u_0$")
+    fig.legend("fill", "cover", "the exterior")
+    fig.legend("line", "chartedge", "the focal ring, $u = 0$ and $\\theta = 0$, where the disc ends")
+    fig.legend("line", "r", "$\\theta$ constant, at $30°$ and $60°$ on the disc, and $u$ constant, at $0.5$, $1.5$, $2$ and $2.2$")
+    fig.legend("line", "surface", "the surface of the spheroid, $u = u_0$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("spheroid", "The spheroid", "$m$", [surface], fig.done(),
+                      settings="$m = 1$, the unit of every length, $a = m$, and $u_0 = 1$, so the redshift on the "
+                               "disc $u = 0$ is $0.87$."))
+    return views
+
+
 STATED = {}
 
 
@@ -14438,6 +14776,7 @@ DRAWN = {
     "gravastar": gravastar,
     "tolman_vii": tolman_vii,
     "misner_zapolsky": misner_zapolsky,
+    "bonnor_charged_dust": bonnor_charged_dust,
     "tov": tov,
     "boson_star": boson_star,
     "einstein_cluster": einstein_cluster,
@@ -14477,6 +14816,7 @@ DRAWN = {
     "tolman_bondi": tolman_bondi,
     "bertotti_robinson": bertotti_robinson,
     "plebanski_hacyan": plebanski_hacyan,
+    "cremmer_scherk": cremmer_scherk,
     "lindquist_wheeler_lattice": lindquist_wheeler_lattice,
     "stockum_dust": stockum_dust,
     "taub_nut": taub_nut,
@@ -14557,6 +14897,7 @@ DRAWN = {
     "erez_rosen": erez_rosen,
     "distorted_schwarzschild": distorted_schwarzschild,
     "robinson_trautman": robinson_trautman,
+    "bondi_sachs": bondi_sachs,
     "string_black_hole": string_black_hole,
     "mcvittie": mcvittie,
     "sultana_dyer": sultana_dyer,
@@ -14566,6 +14907,7 @@ DRAWN = {
     "near_horizon_extreme_kerr": near_horizon_extreme_kerr,
     "photon_rocket": photon_rocket,
     "fisher_jnw": fisher_jnw,
+    "brans_dicke_sphere": brans_dicke_sphere,
     "exponential_metric": exponential_metric,
     "roberts": roberts,
     "hartle_thorne": hartle_thorne,
@@ -14630,6 +14972,20 @@ CAPTIONS = {
         "string swings out by $\\ell/2$ and back, the ring crosses the cone the other way, reaching from "
         "$r = 1.5\\,\\ell$ to $2.5\\,\\ell$ on the crest, $u = 0$. A string at rest pulls on nothing. Once the "
         "pulse has passed, the ring is left falling toward the string, the pull Vachaspati found.",
+    ],
+    ("brans_dicke_sphere", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) at one moment of $t$ ($m = 0$, $n = 1/4$, which is "
+        "$\\omega = 6$), from the singularity $r = 2r_0$ out to $r = 8r_0$, in three dimensional Minkowski space "
+        "($dX^2 + dY^2 - dZ^2$) out to the circle $r = 49r_0/24$ and in flat space beyond it, every distance "
+        "along the surface the metric distance.",
+        "On the slice the metric is $A^{n-1}dr^2 + r^2A^{n}d\\phi^2$ with $A = 1 - 2r_0/r$, so the circle of the "
+        "sphere $r$ has radius $rA^{n/2}$, which shrinks to a point at $r = 2r_0$, where Schwarzschild's "
+        "slice has its throat. Inside $r = (2 - n)^2r_0/2(1 - n)$ the circles grow faster than the distance out "
+        "to them, and the surface leaves the singular point along a light cone of Minkowski space and bends "
+        "over until it lies level on that circle. Beyond it the surface climbs in flat space as Flamm's "
+        "paraboloid does, and at $n = 0$ the circle is $r = 2r_0$ and the surface is Flamm's. A body of weak "
+        "gravity has $n = 0.096$ at this $\\omega$, where the level circle is $r = 2.005\\,r_0$ and its radius "
+        "is $1.5\\,r_0$.",
     ],
     ("fisher_jnw", "equator"): [
         "The equatorial plane ($\\theta = \\pi/2$) at one moment of $t$ ($\\gamma = 1/2$), from the singularity "
@@ -14722,6 +15078,18 @@ CAPTIONS = {
         "horizon. There the radius grows with distance from the pole at the rate $(1 - 2\\alpha m)/(1 + 2\\alpha m)$, "
         "one half here, and the rate falls short of 1 by the deficit angle $8\\pi\\alpha m/(1 + 2\\alpha m)$ "
         "divided by $2\\pi$. The area is $16\\pi Cm^2/(1 - 4\\alpha^2m^2) = 13.5\\pi m^2$.",
+    ],
+    ("bondi_sachs", "sphere"): [
+        "The sphere of constant $u$ and $r$ at the world tube ($r = 10\\,m_0$) in the middle of the burst "
+        "($cu = 10\\,m_0$), drawn as a surface in flat space with every distance along it the metric distance. On it "
+        "the metric is $r^2\\left(e^{2\\gamma}d\\theta^2 + e^{-2\\gamma}\\sin^2\\theta\\,d\\phi^2\\right)$, a "
+        "surface of revolution whose circle at $\\theta$ has radius $r\\,e^{-\\gamma}\\sin\\theta$, and its area is "
+        "$4\\pi r^2$ whatever $\\gamma$ is.",
+        "The wave is all in the shape. Here the shear is at its greatest, $\\sigma = -0.037\\,m_0$ on the equator, "
+        "and $\\gamma = -0.0035$ there: the equator has radius $1.0035\\,r$ and the meridian from pole to pole is "
+        "$0.9983\\,\\pi r$ long, an oblate sphere flattened by half a percent. A quarter of the burst earlier and "
+        "later it is prolate by a quarter of a percent, and before the burst it is round. A burst that carries off "
+        "a thousandth of the mass strains space by this much ten masses out.",
     ],
     ("robinson_trautman", "fronts"): [
         "A wave front of the Robinson-Trautman spacetime ($u$ and $r$ constant) at five retarded times, each "
@@ -14826,6 +15194,35 @@ CAPTIONS = {
     ],
     ("bartnik_mckinnon", "n3"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the soliton with three zeros at one moment of $t$ ($b = 0.6970$, mass $0.9953\\,c^2\\ell/G$), where $1 - 2m/r$ falls to $0.0030$ at $r = 1.02\\,\\ell$ and the slope reaches $18.3$. Each further zero deepens the neck, and in the limit of infinitely many zeros it is the infinite throat of the extreme Reissner-Nordström black hole, $1 - 2m/r = (1 - \\ell/r)^2$.",
+    ],
+    ("bonnor_charged_dust", "star"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Bonnor and Wickramasuriya's sphere at one moment of $t$ "
+        "($r_0 = 2m$), drawn as a surface in flat space with every distance along it the metric distance. The "
+        "circle of coordinate radius $r$ has the circumference radius $rU$, and the surface climbs at "
+        "$dz/dr = \\sqrt{-r\\,\\partial_rU\\left(2U + r\\,\\partial_rU\\right)}$: level at the centre, and continuous in "
+        "slope across the surface of the star, since $U$ and $\\partial_rU$ are.",
+        "Outside the star the surface is the throat of the extremal Reissner-Nordström black hole, cut off at "
+        "the circumference radius $r_0 + m = 3m$. As $r_0$ goes to zero the cut moves down the throat without "
+        "end, and the bowl that closes it keeps the proper radius $4m/3$.",
+    ],
+    ("bonnor_charged_dust", "star_1965"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Bonnor's sphere of 1965 at one moment of $t$ ($r_0 = 2m$), "
+        "with the same field outside it as the sphere of 1975 and the same circumference radius $3m$ at its "
+        "surface. Its potential at the centre, $(1 + m/r_0)^{3/2} = 1.84$, is higher than the later sphere's "
+        "$1.75$, so the bowl is deeper.",
+    ],
+    ("bonnor_charged_dust", "cloud"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Lemos and Weinberg's cloud at one moment of $t$ ($b = m/2$), "
+        "drawn as a surface in flat space with every distance along it the metric distance. The surface is level "
+        "at the centre and steepest near $r = b$, and far out it rises as the throat of the extremal black hole "
+        "of the same mass does. As $b$ goes to zero the steep part lengthens into that throat.",
+    ],
+    ("bonnor_charged_dust", "spheroid"): [
+        "The equatorial plane of Bonnor and Wickramasuriya's spheroid at one moment of $t$ ($a = m$, $u_0 = 1$). "
+        "Inside the focal ring it is the disc $u = 0$, on which $U$ is constant, so the disc is flat, with the "
+        "radius $1.87\\,m$. From the ring outward it is the surface $\\theta = 0$, which climbs through the rest "
+        "of the spheroid to its surface $u = u_0$, at the circumference radius $2.63\\,m$, and on into the "
+        "exterior with no break in slope.",
     ],
     ("tolman_vii", "star"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the star at one moment of $t$ ($R = 2\\,r_s$), drawn as a "
@@ -15926,6 +16323,19 @@ CAPTIONS = {
     ("plebanski_hacyan", "sphere"): [
         "The sphere of $\\theta$ and $\\phi$ of the same spacetime at one event of $t$ and $z$, radius "
         "$b = 1/\\sqrt{2\\Lambda}$ and area $2\\pi/\\Lambda$, the same at every $t$ and $z$.",
+    ],
+    ("cremmer_scherk", "equator"): [
+        "One flat dimension and the equator of the sphere ($y = z = 0$, $\\theta = \\pi/2$) of Cremmer and "
+        "Scherk's solution at one moment of $t$, a cylinder of radius $a$ in flat space, $dx^2 + a^2d\\phi^2$, "
+        "with every distance along it the metric distance.",
+        "From far away the cylinder is a line, the dimension $x$, and close up each point of the line is a "
+        "circle of circumference $2\\pi a$, one great circle of the sphere that stands at every point of the "
+        "three flat dimensions.",
+    ],
+    ("cremmer_scherk", "sphere"): [
+        "The sphere of $\\theta$ and $\\phi$ of the same spacetime at one event of $t$, $x$, $y$, and $z$, "
+        "radius $a$ and area $4\\pi a^2 = 2\\pi/\\Lambda$, the same at every event. The monopole's field "
+        "crosses it at right angles with one strength everywhere.",
     ],
     ("plebanski_hacyan", "hyperbolic_plane"): [
         "The surface of $\\theta$ and $\\phi$ of the anti-Nariai universe at one event of $\\tau$ and $\\chi$ "
