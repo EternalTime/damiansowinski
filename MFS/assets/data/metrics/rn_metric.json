@@ -169,6 +169,11 @@
       "id": "bonnor_charged_dust",
       "kind": "composite",
       "text": "A star of charged dust at rest, with the extremal field, $r_q = r_s/2$, outside it. Its surface can lie as near the horizon as one likes, and the redshift of its centre is then as large as one likes [bonnor1975]."
+    },
+    {
+      "id": "three_brane_throat",
+      "kind": "family",
+      "text": "The three-brane of string theory is its cousin in ten dimensions, a charged sheet whose extreme member joins flat space to an infinite throat [gibbons1993]."
     }
   ],
   "references": [

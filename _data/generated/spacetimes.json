@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 157,
+  "count": 158,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1512,6 +1512,11 @@
           "id": "plebanski_hacyan",
           "kind": "family",
           "text": "Products that keep anti-de Sitter space of two dimensions as one factor, times a flat plane with a uniform electromagnetic field or times a hyperbolic plane with none [ortaggio2002direct]."
+        },
+        {
+          "id": "three_brane_throat",
+          "kind": "family",
+          "text": "A sheet of three dimensions in string theory whose throat is anti-de Sitter space of five dimensions times a sphere of five. Maldacena read his correspondence off that throat [maldacena1998]."
         }
       ],
       "references": [
@@ -3998,6 +4003,11 @@
           "id": "cremmer_scherk",
           "kind": "family",
           "text": "A sphere held open by a monopole's gauge field in six dimensions, with a cosmological constant chosen so that the other four dimensions are flat where Bertotti and Robinson's two are an anti-de Sitter space [horvath1977]."
+        },
+        {
+          "id": "three_brane_throat",
+          "kind": "family",
+          "text": "The three-brane of string theory has the same throat six dimensions up, anti-de Sitter space of five dimensions times a sphere of five [gibbons1993]."
         }
       ],
       "references": [
@@ -4975,6 +4985,11 @@
           "id": "black_saturn",
           "kind": "family",
           "text": "A black ring in orbit around a black hole. Where the ring is thin it is a black string bent into a circle, and it is expected to ripple as the string does [elvang2006, elvang2007]."
+        },
+        {
+          "id": "three_brane_throat",
+          "kind": "family",
+          "text": "The extreme member of Horowitz and Strominger's charged black three-branes, a sheet of three dimensions with a horizon and no singularity behind it [horowitz1991, gibbons1995]."
         }
       ],
       "references": [
@@ -4999,7 +5014,8 @@
         "chamblin2000",
         "horowitz2012",
         "elvang2006",
-        "elvang2007"
+        "elvang2007",
+        "gibbons1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/black_string.json",
@@ -12114,6 +12130,11 @@
           "id": "brans_dicke_sphere",
           "kind": "family",
           "text": "The dilaton's ancestor. Brans and Dicke put a scalar field beside the metric in 1961, and the gravity of bosonic string theory at low energy is their theory with $\\omega = -1$ [bransdicke1961, faraoni2016]."
+        },
+        {
+          "id": "three_brane_throat",
+          "kind": "family",
+          "text": "The three-brane of ten dimensions has a horizon with no singularity behind it. Gibbons, Horowitz, and Townsend found it by the analysis that turns the singularity of some extreme dilaton black holes into a horizon in more dimensions [gibbons1995]."
         }
       ],
       "references": [
@@ -12136,7 +12157,8 @@
         "duff1994",
         "horowitz2012",
         "bransdicke1961",
-        "faraoni2016"
+        "faraoni2016",
+        "gibbons1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dilaton_black_hole.json",
@@ -30029,6 +30051,11 @@
           "id": "eih_many_bodies",
           "kind": "family",
           "text": "Many bodies with no charge to hold them apart. They orbit, and their field is known to the first order beyond Newton, where Majumdar and Papapetrou's is exact [einstein1938]."
+        },
+        {
+          "id": "three_brane_throat",
+          "kind": "family",
+          "text": "Parallel three-branes of string theory stand at rest by the same balance, with a harmonic function of the six dimensions across them [dufflu1991, gibbons1995]."
         }
       ],
       "references": [
@@ -30065,7 +30092,9 @@
         "arnowitt1960",
         "bonnor1975",
         "lemos2004",
-        "einstein1938"
+        "einstein1938",
+        "dufflu1991",
+        "gibbons1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/majumdar_papapetrou.json",
@@ -40217,6 +40246,11 @@
           "id": "bonnor_charged_dust",
           "kind": "composite",
           "text": "A star of charged dust at rest, with the extremal field, $r_q = r_s/2$, outside it. Its surface can lie as near the horizon as one likes, and the redshift of its centre is then as large as one likes [bonnor1975]."
+        },
+        {
+          "id": "three_brane_throat",
+          "kind": "family",
+          "text": "The three-brane of string theory is its cousin in ten dimensions, a charged sheet whose extreme member joins flat space to an infinite throat [gibbons1993]."
         }
       ],
       "references": [
@@ -48015,6 +48049,666 @@
       ]
     },
     {
+      "id": "three_brane_throat",
+      "name": "Three-Brane and Its Throat",
+      "short_name": "Three-Brane",
+      "description": "A flat sheet of three dimensions in a spacetime of ten, carrying the charge of the 5-form field of type IIB supergravity. Far from the sheet spacetime is flat, and close to it a throat of infinite length opens, anti-de Sitter space of five dimensions times a sphere of five, both of one radius. Juan Maldacena took the limit that keeps the throat alone in 1997 and conjectured that string theory there is a gauge theory in four dimensions.",
+      "tags": [
+        "static",
+        "stationary",
+        "ten-dimensional",
+        "higher dimensions",
+        "string theory",
+        "supergravity",
+        "three-brane",
+        "D3-brane",
+        "p-brane",
+        "black brane",
+        "brane",
+        "extremal",
+        "supersymmetric",
+        "self-dual",
+        "harmonic function",
+        "multi-centre",
+        "isotropic coordinates",
+        "throat",
+        "near-horizon limit",
+        "anti-de Sitter",
+        "AdS/CFT",
+        "holography",
+        "horizon",
+        "degenerate horizon",
+        "Killing horizon",
+        "no singularity",
+        "asymptotically flat",
+        "soliton",
+        "maximal extension",
+        "reflection symmetry",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(-,+,\\ldots,+)",
+      "convention": "We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\lambda{}_{\\mu\\lambda\\nu}$.",
+      "related": [
+        {
+          "id": "anti_de_sitter",
+          "kind": "family",
+          "text": "The throat is anti-de Sitter space of five dimensions times a sphere, both of radius $L$. Its boundary at large $r$ is where the gauge theory of Maldacena's correspondence lives [maldacena1998, witten1998]."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "family",
+          "text": "The same throat in four dimensions, anti-de Sitter space of two dimensions times a sphere, at the bottom of the extreme charged black hole [gibbons1993]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "family",
+          "text": "The charged black hole. At its largest charge it joins flat space to an infinite throat, as the three-brane does, and an inversion of the radius carries each into itself with every length rescaled [gibbons1993, couch1984]."
+        },
+        {
+          "id": "majumdar_papapetrou",
+          "kind": "family",
+          "text": "Any number of extreme charged black holes at rest, gravity balanced by charge. Parallel three-branes stand at rest by the same balance, their $H$ a harmonic function of the six dimensions across them [dufflu1991, gibbons1995]."
+        },
+        {
+          "id": "black_string",
+          "kind": "family",
+          "text": "Schwarzschild's black hole with a flat direction added, the simplest extended black hole. Horowitz and Strominger gave such objects a charge in ten dimensions, and the three-brane is the extreme member of one of their families [horowitz1991]."
+        },
+        {
+          "id": "dilaton_black_hole",
+          "kind": "family",
+          "text": "The charged black hole of string theory in four dimensions. Gibbons, Horowitz, and Townsend showed that some of its extreme members are branes of more dimensions seen from four, their singularity a horizon like that of the three-brane [gibbons1995]."
+        },
+        {
+          "id": "topological_black_hole",
+          "kind": "family",
+          "text": "The black hole of anti-de Sitter space with a flat horizon. The throat of a three-brane heated a little above its least mass is that black hole in five dimensions times a sphere [maldacena1998]."
+        }
+      ],
+      "references": [
+        "horowitz1991",
+        "dufflu1991",
+        "gibbons1995",
+        "dabholkar1990",
+        "callan1991",
+        "duffstelle1991",
+        "gibbons1993",
+        "guven1992",
+        "couch1984",
+        "polchinski1995",
+        "maldacena1998",
+        "gubser1996",
+        "klebanov1997",
+        "gubser1998",
+        "witten1998"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/three_brane_throat.json",
+      "charts": [
+        {
+          "id": "isotropic",
+          "name": "Isotropic",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z",
+            "\\rho",
+            "\\alpha",
+            "\\beta",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\infty)",
+            "\\alpha \\in [0, \\pi]",
+            "\\beta \\in [0, \\pi]",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Radius of the throat and of its sphere, a length; the brane's charge fixes it, $L^4 = 4\\pi g_s N\\ell_s^4$, where the integer $N$ counts the units of flux of the 5-form field through the sphere, $g_s$ is the string coupling, and $\\ell_s$ is the string length"
+            },
+            {
+              "symbol": "H = 1 + \\dfrac{L^4}{\\rho^4}",
+              "description": "Harmonic function of the six dimensions across the brane, a pure number; it is 1 far from the brane and $L^4/\\rho^4$ in the throat"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z, \\rho, \\alpha, \\beta, \\psi, \\theta, \\phi)$, with $t$ a time, $x$, $y$, and $z$ lengths along the brane, $\\rho$ the isotropic radius in the six dimensions across it, and $\\alpha$, $\\beta$, $\\psi$, $\\theta$, and $\\phi$ the angles on the 5-sphere. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = H^{-1/2}\\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\\right) + H^{1/2}\\left(d\\rho^2 + \\rho^2\\left(d\\alpha^2 + \\sin^2\\alpha\\left(d\\beta^2 + \\sin^2\\beta\\left(d\\psi^2 + \\sin^2\\psi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)\\right)\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\rho^2}{\\sqrt{\\rho^4 + L^4}}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{\\rho^2}{\\sqrt{\\rho^4 + L^4}}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{\\rho^2}{\\sqrt{\\rho^4 + L^4}}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{\\rho^2}{\\sqrt{\\rho^4 + L^4}}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{\\sqrt{\\rho^4 + L^4}}{\\rho^2}"
+            },
+            {
+              "indices": [
+                "\\alpha",
+                "\\alpha"
+              ],
+              "value": "\\sqrt{\\rho^4 + L^4}"
+            },
+            {
+              "indices": [
+                "\\beta",
+                "\\beta"
+              ],
+              "value": "\\sqrt{\\rho^4 + L^4}\\sin^2\\alpha"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\sqrt{\\rho^4 + L^4}\\sin^2\\alpha\\sin^2\\beta"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\sqrt{\\rho^4 + L^4}\\sin^2\\alpha\\sin^2\\beta\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\sqrt{\\rho^4 + L^4}\\sin^2\\alpha\\sin^2\\beta\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{80L^8\\left(12\\rho^8 + L^8\\right)}{\\left(\\rho^4 + L^4\\right)^5}"
+        },
+        {
+          "id": "areal",
+          "name": "Areal Radius",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z",
+            "r",
+            "\\alpha",
+            "\\beta",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "r \\in (L, \\infty)",
+            "\\alpha \\in [0, \\pi]",
+            "\\beta \\in [0, \\pi]",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Radius of the throat and of its sphere, a length; the brane's charge fixes it, $L^4 = 4\\pi g_s N\\ell_s^4$, where the integer $N$ counts the units of flux of the 5-form field through the sphere, $g_s$ is the string coupling, and $\\ell_s$ is the string length"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z, r, \\alpha, \\beta, \\psi, \\theta, \\phi)$, with $t$ a time, $x$, $y$, and $z$ lengths along the brane, $r$ the areal radius of the 5-sphere, $r^4 = \\rho^4 + L^4$ for the isotropic radius $\\rho$, and $\\alpha$, $\\beta$, $\\psi$, $\\theta$, and $\\phi$ the angles on the 5-sphere. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\left(1 - \\dfrac{L^4}{r^4}\\right)^{1/2}\\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\\right) + \\left(1 - \\dfrac{L^4}{r^4}\\right)^{-2}dr^2 + r^2\\left(d\\alpha^2 + \\sin^2\\alpha\\left(d\\beta^2 + \\sin^2\\beta\\left(d\\psi^2 + \\sin^2\\psi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\sqrt{r^4 - L^4}}{r^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{\\sqrt{r^4 - L^4}}{r^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{\\sqrt{r^4 - L^4}}{r^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{\\sqrt{r^4 - L^4}}{r^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r^8}{\\left(r^4 - L^4\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\alpha",
+                "\\alpha"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\beta",
+                "\\beta"
+              ],
+              "value": "r^2\\sin^2\\alpha"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "r^2\\sin^2\\alpha\\sin^2\\beta"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{80L^8\\left(12r^8 - 24r^4\\,L^4 + 13L^8\\right)}{r^{20}}"
+        },
+        {
+          "id": "horizon",
+          "name": "Gibbons-Horowitz-Townsend",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z",
+            "w",
+            "\\alpha",
+            "\\beta",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "w \\in (0, 1)",
+            "\\alpha \\in [0, \\pi]",
+            "\\beta \\in [0, \\pi]",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Radius of the throat and of its sphere, a length; the brane's charge fixes it, $L^4 = 4\\pi g_s N\\ell_s^4$, where the integer $N$ counts the units of flux of the 5-form field through the sphere, $g_s$ is the string coupling, and $\\ell_s$ is the string length"
+            },
+            {
+              "symbol": "r = \\dfrac{L}{\\left(1 - w^4\\right)^{1/4}}",
+              "description": "Areal radius of the 5-sphere, a length, with $\\partial_wr = w^3r/(1 - w^4)$; it is $L$ on the horizon $w = 0$ and grows without bound as $w \\to 1$"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z, w, \\alpha, \\beta, \\psi, \\theta, \\phi)$, with $t$ a time, $x$, $y$, and $z$ lengths along the brane, $w = (1 - L^4/r^4)^{1/4}$ a pure number, and $\\alpha$, $\\beta$, $\\psi$, $\\theta$, and $\\phi$ the angles on the 5-sphere. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = w^2\\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\\right) + r^2\\left(\\dfrac{dw^2}{w^2\\left(1 - w^4\\right)^2} + d\\alpha^2 + \\sin^2\\alpha\\left(d\\beta^2 + \\sin^2\\beta\\left(d\\psi^2 + \\sin^2\\psi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-w^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "w^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "w^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "w^2"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "\\dfrac{r^2}{w^2\\left(1 - w^4\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\alpha",
+                "\\alpha"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\beta",
+                "\\beta"
+              ],
+              "value": "r^2\\sin^2\\alpha"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "r^2\\sin^2\\alpha\\sin^2\\beta"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{80\\left(13w^8 - 2w^4 + 1\\right)\\left(1 - w^4\\right)^2}{r^4}"
+        },
+        {
+          "id": "throat",
+          "name": "Throat",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z",
+            "r",
+            "\\alpha",
+            "\\beta",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\alpha \\in [0, \\pi]",
+            "\\beta \\in [0, \\pi]",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Radius of the throat and of its sphere, a length; the brane's charge fixes it, $L^4 = 4\\pi g_s N\\ell_s^4$, where the integer $N$ counts the units of flux of the 5-form field through the sphere, $g_s$ is the string coupling, and $\\ell_s$ is the string length"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z, r, \\alpha, \\beta, \\psi, \\theta, \\phi)$, with $t$ a time, $x$, $y$, and $z$ lengths along the brane, $r$ a length that falls to zero down the throat, and $\\alpha$, $\\beta$, $\\psi$, $\\theta$, and $\\phi$ the angles on the 5-sphere. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{r^2}{L^2}\\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\\right) + \\dfrac{L^2}{r^2}dr^2 + L^2\\left(d\\alpha^2 + \\sin^2\\alpha\\left(d\\beta^2 + \\sin^2\\beta\\left(d\\psi^2 + \\sin^2\\psi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{L^2}{r^2}"
+            },
+            {
+              "indices": [
+                "\\alpha",
+                "\\alpha"
+              ],
+              "value": "L^2"
+            },
+            {
+              "indices": [
+                "\\beta",
+                "\\beta"
+              ],
+              "value": "L^2\\sin^2\\alpha"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "L^2\\sin^2\\alpha\\sin^2\\beta"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{80}{L^4}"
+        },
+        {
+          "id": "throat_proper",
+          "name": "Throat, Proper Distance",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z",
+            "\\sigma",
+            "\\alpha",
+            "\\beta",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\sigma \\in (-\\infty, \\infty)",
+            "\\alpha \\in [0, \\pi]",
+            "\\beta \\in [0, \\pi]",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Radius of the throat and of its sphere, a length; the brane's charge fixes it, $L^4 = 4\\pi g_s N\\ell_s^4$, where the integer $N$ counts the units of flux of the 5-form field through the sphere, $g_s$ is the string coupling, and $\\ell_s$ is the string length"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z, \\sigma, \\alpha, \\beta, \\psi, \\theta, \\phi)$, with $t$ a time, $x$, $y$, and $z$ lengths along the brane, $\\sigma = L\\ln(r/L)$ the proper distance along the throat for the throat's radial coordinate $r$, and $\\alpha$, $\\beta$, $\\psi$, $\\theta$, and $\\phi$ the angles on the 5-sphere. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = e^{2\\sigma/L}\\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\\right) + d\\sigma^2 + L^2\\left(d\\alpha^2 + \\sin^2\\alpha\\left(d\\beta^2 + \\sin^2\\beta\\left(d\\psi^2 + \\sin^2\\psi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{2\\sigma/L}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "e^{2\\sigma/L}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "e^{2\\sigma/L}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{2\\sigma/L}"
+            },
+            {
+              "indices": [
+                "\\sigma",
+                "\\sigma"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\alpha",
+                "\\alpha"
+              ],
+              "value": "L^2"
+            },
+            {
+              "indices": [
+                "\\beta",
+                "\\beta"
+              ],
+              "value": "L^2\\sin^2\\alpha"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "L^2\\sin^2\\alpha\\sin^2\\beta"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "L^2\\sin^2\\alpha\\sin^2\\beta\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{80}{L^4}"
+        }
+      ]
+    },
+    {
       "id": "tilted_universes",
       "name": "Tilted Universes and the Whimper",
       "short_name": "Tilted Universes",
@@ -49405,6 +50099,11 @@
           "id": "ab_metrics",
           "kind": "special_case",
           "text": "The hyperbolic and the flat hole without the cosmological constant, $L \\to \\infty$, are A II and A III of Ehlers and Kundt's table, with $\\mu = -b$ [hruska2019]."
+        },
+        {
+          "id": "three_brane_throat",
+          "kind": "family",
+          "text": "A three-brane of string theory heated a little above its least mass has this black hole, in five dimensions, in its throat [maldacena1998]."
         }
       ],
       "references": [
@@ -49432,7 +50131,8 @@
         "horowitz1998",
         "caldarelli2001extremal",
         "cardoso2004",
-        "hruska2019"
+        "hruska2019",
+        "maldacena1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/topological_black_hole.json",

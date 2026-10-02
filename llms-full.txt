@@ -1958,6 +1958,20 @@ Edward Teo's rotating traversable wormhole of 1998, the stationary, axially symm
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{16a^2b_0\cos^2\theta}{r}\right)^2c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{b_0}{r}} + \left(r + 16a^2b_0\cos^2\theta\right)^2\left(d\theta^2 + \sin^2\theta\left(d\phi - \dfrac{2ab_0^2}{r^3}c\,dt\right)^2\right)$$
 - chart Proper Radial Distance: coordinates $(t, l, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{16a^2b_0\cos^2\theta}{r}\right)^2c^2dt^2 + dl^2 + \left(r + 16a^2b_0\cos^2\theta\right)^2\left(d\theta^2 + \sin^2\theta\left(d\phi - \dfrac{2ab_0^2}{r^3}c\,dt\right)^2\right)$$
 
+### Three-Brane and Its Throat
+
+A flat sheet of three dimensions in a spacetime of ten, carrying the charge of the 5-form field of type IIB supergravity. Far from the sheet spacetime is flat, and close to it a throat of infinite length opens, anti-de Sitter space of five dimensions times a sphere of five, both of one radius. Juan Maldacena took the limit that keeps the throat alone in 1997 and conjectured that string theory there is a gauge theory in four dimensions.
+
+- id: `three_brane_throat`
+- tags: static, stationary, ten-dimensional, higher dimensions, string theory, supergravity, three-brane, D3-brane, p-brane, black brane, brane, extremal, supersymmetric, self-dual, harmonic function, multi-centre, isotropic coordinates, throat, near-horizon limit, anti-de Sitter, AdS/CFT, holography, horizon, degenerate horizon, Killing horizon, no singularity, asymptotically flat, soliton, maximal extension, reflection symmetry, exact solution, Lorentzian, Einstein equations, idealized model
+- signature: (-,+,\ldots,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/three_brane_throat.json
+- chart Isotropic: coordinates $(t, x, y, z, \rho, \alpha, \beta, \psi, \theta, \phi)$, $$ds^2 = H^{-1/2}\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right) + H^{1/2}\left(d\rho^2 + \rho^2\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\left(d\psi^2 + \sin^2\psi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)\right)\right)\right)$$
+- chart Areal Radius: coordinates $(t, x, y, z, r, \alpha, \beta, \psi, \theta, \phi)$, $$ds^2 = \left(1 - \dfrac{L^4}{r^4}\right)^{1/2}\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right) + \left(1 - \dfrac{L^4}{r^4}\right)^{-2}dr^2 + r^2\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\left(d\psi^2 + \sin^2\psi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)\right)\right)$$
+- chart Gibbons-Horowitz-Townsend: coordinates $(t, x, y, z, w, \alpha, \beta, \psi, \theta, \phi)$, $$ds^2 = w^2\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right) + r^2\left(\dfrac{dw^2}{w^2\left(1 - w^4\right)^2} + d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\left(d\psi^2 + \sin^2\psi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)\right)\right)$$
+- chart Throat: coordinates $(t, x, y, z, r, \alpha, \beta, \psi, \theta, \phi)$, $$ds^2 = \dfrac{r^2}{L^2}\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right) + \dfrac{L^2}{r^2}dr^2 + L^2\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\left(d\psi^2 + \sin^2\psi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)\right)\right)$$
+- chart Throat, Proper Distance: coordinates $(t, x, y, z, \sigma, \alpha, \beta, \psi, \theta, \phi)$, $$ds^2 = e^{2\sigma/L}\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right) + d\sigma^2 + L^2\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\left(d\psi^2 + \sin^2\psi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)\right)\right)$$
+
 ### Tilted Universes and the Whimper
 
 Homogeneous universes whose matter drifts through the surfaces of homogeneity, so that an observer riding with it sees a lopsided sky. In the simplest of them, Farnsworth's dust of 1967, those surfaces turn from spacelike to timelike across a Cauchy horizon, and the light rays along the horizon end where the density and the curvature are finite: a whimper, as George Ellis and A. R. King named it in 1974.
