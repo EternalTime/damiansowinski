@@ -204,6 +204,9 @@ class Slice:
         funcs.update({R.parameters[k]: numeric_function(k, f, df)(R.symbol[x]) for k, (f, df) in (numeric or {}).items()})
 
         def prep(e):
+            # A name the chart defines and holds as a function, as Kastor and Traschen's U, is written out first.
+            if R.held:
+                e = e.subs(R.held).doit()
             for fn, rep in funcs.items():
                 e = e.subs(fn, rep).doit()
             return sp.simplify(e.subs(subs).subs(held_at))
@@ -4354,6 +4357,126 @@ def majumdar_papapetrou(ck, src):
     return views
 
 
+# Two of Kastor and Traschen's holes, each of mass parameter m, the unit, at z = +-2m on the axis,
+# falling together at H = -3c/(32m), as their spacetime diagrams declare; slices.py holds the rate
+# and the last ray of the midplane to reach infinity.
+KT_TWO_CYLINDRICAL = "1/sqrt(rho**2 + (z - 2)**2) + 1/sqrt(rho**2 + (z + 2)**2)"
+KT_THROAT_LO = 1 / 25
+KT_TOP = 8.0
+KT_RINGS = (2.0, 4.0, 6.0)
+
+
+def kt_throat(r):
+    """z(r) of one hole's equator at H tau = 1/2, m = 1, from r = 1/25: the quadrature of
+    sqrt((1/2 + 1/r)^2 - 1/4) = sqrt(r + 1)/r, which is 2w + ln((w - 1)/(w + 1)) with w = sqrt(r + 1),
+    Majumdar and Papapetrou's throat over the areal radius r/2 + 1."""
+    def F(x):
+        w = np.sqrt(np.asarray(x, dtype=float) + 1)
+        return 2 * w + np.log((w - 1) / (w + 1))
+    return F(r) - F(KT_THROAT_LO)
+
+
+def kt_moments():
+    """The moments of the two holes' midplane that are drawn, in m/c: before the horizons join,
+    the event at which they do, and two after."""
+    return (-8.0, round(nr.slices.kt_merger(), 9), -3.0, -1.0)
+
+
+def kt_waist(tau):
+    """rho of the circle in which the event horizon cuts the midplane at c tau, where the last ray
+    of the plane to reach infinity stands then, or None before the horizons join."""
+    ray = nr.slices.kt_last_ray("midplane")
+    if tau <= float(ray(0.0)) + 1e-9:
+        return None
+    lo, hi = 0.0, 1e6
+    for _ in range(200):
+        mid = (lo + hi) / 2
+        lo, hi = (mid, hi) if float(ray(mid)) < tau else (lo, mid)
+    return (lo + hi) / 2
+
+
+def kastor_traschen(ck, src):
+    """One hole at one moment, and the midplane between two as they fall together. One hole,
+    m = 1 and H = -3/16, at H tau = 1/2 in the isotropic chart: the equator is U^2(dr^2 + r^2 dphi^2)
+    with U = 1/2 + 1/r, its circumference radius the areal radius R = r/2 + 1, and
+    dz/dr = sqrt(U^2 - 1/4) = sqrt(r + 1)/r, so over R it is Majumdar and Papapetrou's throat,
+    dz/dR = sqrt(2R - 1)/(R - 1), the same surface at every tau < 0, an infinitely long throat
+    closing on R = m and crossed by the black hole horizon R = 4/3 and the cosmological horizon
+    R = 4. Two holes at z = +-2m, H = -3/32, in the cylindrical chart: the plane z = 0 at c tau
+    from -8 to -1 is a surface of revolution with rho_emb = rho U, U = H tau + 2/sqrt(rho^2 + 4),
+    and dz/drho = sqrt(U^2 - (U + rho U')^2), real since U + rho U' = H tau + 8/(rho^2 + 4)^(3/2)
+    lies between 0 and U while H tau > 0. As tau rises to 0 the term H tau goes, rho U closes on
+    2 rho/sqrt(rho^2 + 4) < 2, and the plane folds up into the floor of one throat of radius 2m.
+    From c tau = -6.1995 the circle where the last ray of the plane to reach infinity stands is
+    marked, the waist of the one event horizon."""
+    name = "Kastor-Traschen"
+    sl = Slice(src, "kastor_traschen", "isotropic", "r", "\\phi", {"tau": "-8/3", **EQUATOR}, {"m": 1, "H": "-3/16"})
+    lo, top = KT_THROAT_LO, KT_TOP
+    size = 2 * (top / 2 + 1)
+    marks = [(lo, "r", None), (2 / 3, "horizon", "$R = 4m/3$"), (2.0, "r", None), (4.0, "r", None),
+             (6.0, "horizon", "$R = 4m$"), (top, "r", None)]
+    throat = Piece("one_hole", "sheet", sl, lo, top, 0.0, 1,
+                   (("edge", "the throat runs on without end toward $r = 0$, its circles closing on the areal "
+                             "radius $m$"),
+                    ("edge", "the surface runs on to $r \\to \\infty$")), marks, size)
+    ck.isometry(f"{name}, one hole", throat)
+    ck.radius(f"{name}, one hole, rho = H tau r + m", throat, lambda r: r / 2 + 1, size)
+    ck.form(f"{name}, one hole, z = 2w + ln((w - 1)/(w + 1)), w = sqrt(r/m + 1)", throat, kt_throat, size)
+    one = Surface([throat])
+    fig = figure_of([one], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *throat.at(2 / 3), "$R = 4m/3$", dx=10)
+    ring_label(fig, [0, 0, 0], *throat.at(6.0), "$R = 4m$", dx=10)
+    fig.legend("fill", "cover", "the moment $c\\tau = -8m/3$, which $r > 0$ and $\\phi$ cover")
+    fig.legend("line", "r", "the circles of areal radius $R = 1.02$, $2$, $3$, and $5$ times $m$")
+    fig.legend("line", "horizon", "the circles $R = 4m/3$ and $R = 4m$, where the moment crosses the black hole "
+                                  "horizon and the cosmological horizon")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views = [view("one_hole", "One hole", "$m$", [one], fig.done(),
+                  settings="$m = 1$, the unit of every length, and $H = -3c/(16m)$, the lukewarm hole, at the "
+                           "moment $H\\tau = 1/2$.")]
+
+    H = nr.slices.KT_H_TWO
+    ray = nr.slices.kt_last_ray("midplane")
+    ck.add(f"{name}: the last ray of the midplane to reach infinity leaves the axis at c tau = -6.1995",
+           abs(nr.slices.kt_merger() + 6.1995268), 1e-6)
+    far = float(ray(1e5)) * 1e5 * H
+    ck.add(f"{name}: far out that ray keeps H tau rho = 2/3, the merged hole's horizon R = 8/3", abs(far - 2 / 3), 1e-4)
+
+    def moment(t):
+        sl = Slice(src, "kastor_traschen", "cylindrical", "\\rho", "\\phi", {"tau": repr(t), "z": 0}, {"H": "-3/32"},
+                   functions={"V": KT_TWO_CYLINDRICAL})
+        waist = kt_waist(t)
+        marks = [(r, "r", None) for r in KT_RINGS] + [(KT_TOP, "r", None)]
+        if waist is not None and 0.05 < waist < KT_TOP:
+            marks.append((waist, "horizon", None))
+            # The marked circle is where that ray stands at this moment.
+            ck.add(f"{name}, c tau = {t:g}: the waist stands on the last ray", abs(float(ray(waist)) - t), 1e-8)
+        plane = Piece("midplane", "sheet", sl, 0.0, KT_TOP, 0.0, 1,
+                      (("axis", "the axis $\\rho = 0$, midway between the holes"),
+                       ("edge", "the surface runs on to $\\rho \\to \\infty$")), sorted(marks), size_two)
+        where = f"{name}, two holes, c tau = {t:g}"
+        ck.isometry(f"{where}, the midplane", plane)
+        ck.radius(f"{where}, rho = rho U", plane, lambda r: r * (H * t + 2 / np.sqrt(r * r + 4)), size_two)
+        return Surface([plane], label=f"$c\\tau = {t:.2f}\\,m$", time=t)
+
+    keys_ = kt_moments()
+    size_two = 2 * KT_TOP * (H * keys_[0] + 2 / math.sqrt(KT_TOP ** 2 + 4))
+    times, keys = movie_values(list(keys_), 0.25)
+    frames = [moment(round(t, 9)) for t in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size_two, meridians=12)
+    fig.legend("fill", "cover", "the plane $z = 0$ at one moment, which $\\rho$ and $\\phi$ cover")
+    fig.legend("line", "r", "$\\rho$ constant, at $2$, $4$, $6$, and $8$ times $m$")
+    fig.legend("line", "horizon", "the circle in which the event horizon cuts the plane, from $c\\tau = -6.20\\,m$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    views.append(view("two_holes", "Two holes", "$m$", surfaces, fig.done(),
+                      movie=movie(frames, "$c\\tau$", times),
+                      settings="$m = 1$, the unit of every length and of $c\\tau$, two holes of mass parameter $m$ on "
+                               "the axis at $z = \\pm 2m$, and $H = -3c/(32m)$, so that "
+                               "$U = H\\tau + 2m/\\sqrt{\\rho^2 + 4m^2}$ on the plane $z = 0$."))
+    return views
+
+
 def stockum_dust(ck, src):
     """The plane z = 0 at one moment, R = 1: g_rr = e^(-r^2), g_phiphi = r^2 (1 - r^2). The
     circles grow out to r = R/sqrt(2) and shrink after, so the surface curls back toward the
@@ -8004,6 +8127,7 @@ DRAWN = {
     "myers_perry": myers_perry,
     "dilaton_black_hole": dilaton_black_hole,
     "majumdar_papapetrou": majumdar_papapetrou,
+    "kastor_traschen": kastor_traschen,
     "melvin": melvin,
     "thin_shell_wormhole": thin_shell_wormhole,
     "teo_wormhole": teo_wormhole,
@@ -8625,6 +8749,28 @@ CAPTIONS = {
         "spacetime diagram the cloud is marginally bound, $E = 0$, falling from rest at infinity, and then "
         "every slice of constant $t$ is flat; released from rest from the same density at $t = 0$, as it is "
         "here, its slices curve.",
+    ],
+    ("kastor_traschen", "one_hole"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of a single hole ($U = H\\tau + m/r$) at the moment "
+        "$c\\tau = -8m/3$, where $H\\tau = 1/2$, drawn as a surface in flat space with every distance along it the "
+        "metric distance. On it the circle of radius $r$ has the areal radius $R = rU = H\\tau r + m$ and "
+        "$g_{RR} = R^2/(R - m)^2$, so $dz/dR = \\sqrt{m(2R - m)}/(R - m)$ at every $\\tau < 0$: each moment is the "
+        "same surface, and the circles of constant $r$ move in along it as the universe contracts.",
+        "The surface crosses the cosmological horizon $R = 4m$ and the black hole horizon $R = 4m/3$ with no throat "
+        "and no widest circle, and inside it falls as $m\\ln r$ without end while its circles close on the radius "
+        "$m$, the infinitely long throat of the extremal Reissner-Nordström black hole. It is drawn down to "
+        "$r = m/25$.",
+    ],
+    ("kastor_traschen", "two_holes"): [
+        "The plane $z = 0$ midway between two holes at $z = \\pm 2m$ as $c\\tau$ runs from $-8\\,m$ to $-m$, each "
+        "moment drawn as a surface in flat space with every distance along it the metric distance. On it "
+        "$U = H\\tau + 2m/\\sqrt{\\rho^2 + 4m^2}$ and the circle of radius $\\rho$ has the circumference "
+        "$2\\pi\\rho U$. Since $H < 0$, $H\\tau$ falls toward zero and every circle shrinks.",
+        "From $c\\tau = -6.20\\,m$ the marked circle is where the event horizon cuts the plane: the horizons of "
+        "the two holes join at the centre at that moment, and the circle is the waist of the one horizon they "
+        "make. As $\\tau \\to 0$ the circumference radius $\\rho U$ closes on $2m\\rho/\\sqrt{\\rho^2 + 4m^2}$, "
+        "which stays below $2m$, so the plane folds up into the floor of a single throat of radius $2m$, that of a "
+        "hole with the mass of both.",
     ],
     ("majumdar_papapetrou", "one_hole"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a single hole ($U = 1 + m/r$) at one moment of $t$, drawn as a "

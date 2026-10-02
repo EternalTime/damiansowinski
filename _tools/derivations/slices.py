@@ -1047,6 +1047,29 @@ def _mp_axis():
     return [Mark(m, points=[(0.0, 0.0)])]
 
 
+KT_LABEL = "$c\\tau = -8m/3$"     # the moment of one of Kastor and Traschen's holes that is embedded, H tau = 1/2
+KT_TAU = -8 / 3
+
+
+def _kt(chart, plane):
+    """Kastor and Traschen's two moments on their flat views. One hole's moment c tau = -8m/3 lies
+    on its own plane of tau and r. Each moment of the midplane between two holes is a line of
+    constant tau across the midplane, at ct = ln(H tau)/H in the comoving chart, and meets the
+    axis through the holes at one event, z = 0."""
+    if chart == "isotropic":
+        return one("kastor_traschen", lambda m: along(KT_TAU, *m.reach("isotropic", "r")), label=KT_LABEL,
+                   view_id="one_hole")
+    marks = []
+    for m in moments("kastor_traschen", "two_holes"):
+        t = float(kt_comoving_t(m.time)) if chart == "comoving" else m.time
+        lo, hi = m.reach("cylindrical", "\\rho")
+        if plane == "axis":
+            marks.append(Mark(m, points=[(t, 0.0)]))
+        else:
+            marks.append(Mark(m, across(t, lo, hi) if plane == "across" else along(t, lo, hi)))
+    return marks
+
+
 def _rt_fronts():
     """Robinson and Trautman's fronts: the fronts of one retarded time differ only in size, and
     the embedding draws each with its own r as the unit, so a moment is the whole outgoing ray
@@ -1271,6 +1294,12 @@ FLAT = {
     ("majumdar_papapetrou", "cylindrical", "radial"): lambda: one(
         "majumdar_papapetrou", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")), view_id="two_holes"),
     ("majumdar_papapetrou", "cartesian", "tz"): _mp_axis,
+    ("kastor_traschen", "cartesian", "tz"): lambda: _kt("cartesian", "axis"),
+    ("kastor_traschen", "cartesian", "tx"): lambda: _kt("cartesian", "across"),
+    ("kastor_traschen", "cylindrical", "radial"): lambda: _kt("cylindrical", "along"),
+    ("kastor_traschen", "isotropic", "radial"): lambda: _kt("isotropic", None),
+    ("kastor_traschen", "comoving", "tz"): lambda: _kt("comoving", "axis"),
+    ("kastor_traschen", "comoving", "tx"): lambda: _kt("comoving", "across"),
     ("taub_nut", "spherical", "radial"): lambda: one("taub_nut", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("near_horizon_extreme_kerr", "poincare", "equator"): lambda: _nhek("poincare"),
     ("near_horizon_extreme_kerr", "inverse_radius", "equator"): lambda: _nhek("inverse_radius"),
@@ -1903,6 +1932,50 @@ def checks():
     slope = (rnds_rstar(rr + 1e-6) - rnds_rstar(rr - 1e-6)) / 2e-6
     report("Reissner-Nordstrom-de Sitter: rnds_rstar has dr_*/dr = 1/f and vanishes at r = 0",
            float(np.max(np.abs(slope * f_s(rr) - 1))) + abs(float(rnds_rstar(0.0))), 1e-6)
+
+    # Kastor and Traschen's one hole: R = H tau r + m and the static time of kt_static_t pull the
+    # lukewarm hole's static plane, at r_s = 2m, back onto the isotropic chart's, and r_* of kt_rstar
+    # has dr_*/dR = 1/f. Two holes: H tau = e^{Ht} pulls the Cartesian chart's time back onto the
+    # comoving chart's, where g_tt = -(d tau/dt)^2/U^2 and g_xx = U^2 with a Omega for U.
+    g_s, (ts, rs_, *_) = metric("reissner_nordstrom_de_sitter", "static", {"r_s": 2, "r_q": 1, "Lambda": "27/256"})
+    g_k, (tk, rk, *_) = metric("kastor_traschen", "isotropic", {"m": 1, "H": "-3/16"})
+    f_s = sp.lambdify(rs_, -g_s[0, 0], "numpy")
+    plane = sp.lambdify((tk, rk), g_k[:2, :2], "numpy")
+    miss = 0.0
+    for tau, r in zip(rng.uniform(-4, 4, 60), rng.uniform(0.2, 8, 60)):
+        R = KT_H_ONE * tau * r + 1
+        if R < 0.05 or abs(tau) < 0.05 or min(abs(R - a) for a in (1.0,) + KT_ONE_ROOTS) < 0.05:
+            continue
+        h = 1e-6
+        dT = [(kt_static_t(tau + h, r) - kt_static_t(tau - h, r)) / (2 * h),
+              (kt_static_t(tau, r + h) - kt_static_t(tau, r - h)) / (2 * h)]
+        J = np.array([dT, [KT_H_ONE * r, KT_H_ONE * tau]])
+        pulled = J.T @ np.diag([-f_s(R), 1 / f_s(R)]) @ J
+        there = np.array(plane(tau, r), dtype=float)
+        miss = max(miss, float(np.max(np.abs(pulled - there) / (1 + np.abs(there)))))
+    report("Kastor-Traschen: kt_static_t pulls the lukewarm hole's static plane back onto one hole's isotropic plane", miss, 1e-6)
+    RR = rng.uniform(0.05, 5, 40)
+    RR = RR[np.min(np.abs(RR[:, None] - np.array(KT_ONE_ROOTS)[None, :]), axis=1) > 0.05]
+    slope = (kt_rstar(RR + 1e-6) - kt_rstar(RR - 1e-6)) / 2e-6
+    report("Kastor-Traschen: kt_rstar has dr_*/dR = 1/f and vanishes at R = 0",
+           float(np.max(np.abs(slope * f_s(RR) - 1))) + abs(float(kt_rstar(0.0))), 1e-6)
+    _, entry_c, reader_c = nr.load("kastor_traschen", "cartesian")
+    _, entry_m, reader_m = nr.load("kastor_traschen", "comoving")
+    g_c = nr.published_matrix(reader_c, entry_c, "metric_components").subs(reader_c.held).doit()
+    g_m = nr.published_matrix(reader_m, entry_m, "metric_components").subs(reader_m.held).doit()
+    tau_c, t_m = reader_c.symbol["\\tau"], reader_m.symbol["t"]
+    W = sp.Symbol("W", positive=True)
+    at_c = {reader_c.c: 1, reader_c.parameters["H"]: KT_H_TWO, reader_c.parameters["V"]: W}
+    at_m = {reader_m.c: 1, reader_m.parameters["H"]: KT_H_TWO, reader_m.parameters["V"]: W}
+    image = sp.exp(KT_H_TWO * t_m) / KT_H_TWO
+    pulled = [g_c[0, 0].subs(at_c).subs(tau_c, image) * sp.diff(image, t_m) ** 2, g_c[1, 1].subs(at_c).subs(tau_c, image)]
+    own = [g_m[0, 0].subs(at_m), g_m[1, 1].subs(at_m)]
+    miss = max(abs(float((a - b).subs({t_m: t, W: w}))) / (1 + abs(float(b.subs({t_m: t, W: w}))))
+               for a, b in zip(pulled, own) for t, w in zip(rng.uniform(0, 24, 20), rng.uniform(0.1, 3, 20)))
+    report("Kastor-Traschen: H tau = e^{Ht} pulls the Cartesian chart back onto the comoving one", miss, 1e-10)
+    report("Kastor-Traschen: kt_comoving_t inverts H tau = e^{Ht}",
+           float(np.max(np.abs(np.exp(KT_H_TWO * kt_comoving_t(np.array([-12.0, -3.0, -1.0]))) / KT_H_TWO
+                               - np.array([-12.0, -3.0, -1.0])))), 1e-12)
 
     # The travelling wave on a string: x = X - A, y = Y - B and v = V - 2A'(X - A) - 2B'(Y - B) -
     # int_0^u (A'^2 + B'^2) carry the moving string chart onto the isotropic one, for the declared
