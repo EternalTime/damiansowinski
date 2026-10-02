@@ -325,6 +325,21 @@ class Slice:
             self.exact[float(z)] = z
         return [float(z) for z in roots]
 
+    def horizon_between(self, lo, hi):
+        """The zero of 1/g_xx between lo and hi where it is no algebraic function of x, as the
+        metric of Born and Infeld's point charge is none, whose mass function is an elliptic
+        integral: found in eighty digits and remembered to that many, so that slope() and the
+        quadrature beside it treat it as they treat a root horizons() finds."""
+        value = sp.lambdify(self.x, 1 / self.gxx, "mpmath")
+        with mpmath.workdps(90):
+            root = mpmath.findroot(value, (mpmath.mpf(lo), mpmath.mpf(hi)), solver="anderson",
+                                   tol=mpmath.mpf(10) ** -80)
+            if not lo < root < hi or abs(value(root)) > mpmath.mpf(10) ** -75:
+                raise SystemExit(f"{self.metric_id}/{self.system_id}: no zero of 1/g_xx between {lo} and {hi}")
+            z = sp.Float(mpmath.nstr(root, 85), 85)
+        self.exact[float(z)] = z
+        return float(z)
+
     def _radical(self, e):
         """Whether e holds a power of x that is not a whole one, as Bardeen's (r^2 + g^2)^(3/2)."""
         return any(not p.exp.is_Integer and p.base.has(self.x) for p in e.atoms(sp.Pow))
@@ -3049,6 +3064,121 @@ def bardeen(ck, src):
     fig.legend("line", "horizon", "the widest circle $r = r_-$, where the slice crosses the inner horizon")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
     views.append(view("inside", "Inside $r_-$", "$r_s$", [inside], fig.done(), settings=settings, stops=[between]))
+    return views
+
+
+def born_infeld_charge(ck, src):
+    """Born and Infeld's point charge at r_q = r_0/2, in units of r_0, as its other diagrams draw
+    it. On the equator of a moment of t the metric is dr^2/f + r^2 dphi^2 with f = 1 - 2m/r, so
+    dz/dr = sqrt(2m/(r - 2m)), with m the mass inside r.
+
+    Hoffmann's particle, r_s = 0.6180 r_0, whose whole mass is the energy of its field: m
+    vanishes at the centre as r_q^2 r/r_0^2, so 2m/r tends to 2 r_q^2/r_0^2 = 1/2 and the surface
+    leaves the centre as a cone of slope sqrt(2 r_q^2/(r_0^2 - 2 r_q^2)) = 1, the conical
+    singularity, where the Kretschmann scalar grows as 16 r_q^4/(r_0^4 r^4). There is no horizon,
+    and far out the surface rises as Flamm's paraboloid of the same mass, dz/dr -> sqrt(r_s/r).
+
+    The black hole, r_s = 2 r_0: m is positive at the centre, f has one zero, r_h = 1.8666 r_0,
+    and the slice runs through the bifurcation sphere into a second exterior, as Schwarzschild's
+    does. The horizon is no root of a polynomial, since m is an elliptic integral, so
+    Slice.horizon_between finds it in eighty digits. Both heights are checked against scipy's
+    quadrature of the slope, with m from nr.born_infeld_mass."""
+    from scipy.integrate import quad
+    name = "Born-Infeld"
+    held = {"t": 0, **EQUATOR}
+
+    def slope_of(params):
+        rs, rq = float(sp.sympify(params["r_s"])), float(sp.sympify(params["r_q"]))
+        return lambda r: math.sqrt(2 * float(nr.born_infeld_mass(r, rs, rq)) / (r - 2 * float(nr.born_infeld_mass(r, rs, rq))))
+
+    # Hoffmann's particle: a cone at the centre that opens into Flamm's paraboloid far away.
+    sl = Slice(src, "born_infeld_charge", "static", "r", "\\phi", held, nr.BI_PARTICLE)
+    top, radii = 4.0, (1.0, 2.0, 3.0)
+    size = 2 * top
+    slope = slope_of(nr.BI_PARTICLE)
+    cone = Piece("particle", "sheet", sl, 0.0, top, 0.0, 1,
+                 (("apex", "the centre $r = 0$, a conical singularity, where the Kretschmann scalar diverges"),
+                  ("edge", "the surface runs on to $r \\to \\infty$")),
+                 [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+    ck.isometry(f"{name}, the particle", cone)
+    ck.radius(f"{name}, the particle, rho = r", cone, lambda r: r, size)
+    ck.form(f"{name}, the particle, the quadrature of sqrt(2m/(r - 2m))", cone,
+            lambda r: np.array([quad(slope, 1e-12, x, epsabs=1e-12, epsrel=1e-12, limit=200)[0] if x > 0 else 0.0
+                                for x in np.atleast_1d(r)]), size)
+    ck.add(f"{name}, the particle: g^rr tends to 1 - 2 r_q^2/r_0^2 = 1/2 at the centre, and the cone's slope to 1",
+           abs(1 / float(sl.gxx_at(1e-5)) - 0.5) + abs(slope(1e-5) - 1), 1e-8)
+    ck.add(f"{name}, the particle: g^rr is positive everywhere, so there is no horizon",
+           float(max(0.0, -np.min(1 / sl.gxx_at(np.geomspace(1e-9, 1e6, 4000))))), 0.0)
+    ck.add(f"{name}, the particle: far out the slope is Flamm's sqrt(r_s/r)",
+           abs(slope(1e6) / math.sqrt(float(sp.sympify(nr.BI_PARTICLE["r_s"])) / 1e6) - 1), 1e-5)
+    particle = Surface([cone])
+    fig = figure_of([particle], {"sheet": "cover"}, size, Camera(-90, 20))
+    ring_label(fig, [0, 0, 0], *cone.at(1.0), "$r = r_0$", side=-1, clear=True)
+    ring_label(fig, [0, 0, 0], *cone.at(top), "$4\\,r_0$", side=-1)
+    fig.legend("fill", "cover", "the whole of the moment, which $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1$, $2$, $3$ and $4\\,r_0$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views = [view("particle", "Hoffmann's particle", "$r_0$", [particle], fig.done(),
+                  settings="$r_0 = 1$, the unit of every length, $r_q = r_0/2$, and $r_s = 0.618\\,r_0$, the mass "
+                           "of the field alone.")]
+
+    # The black hole: the same charge with more mass than its field holds.
+    sl = Slice(src, "born_infeld_charge", "static", "r", "\\phi", held, nr.BI_HOLE)
+    rh = sl.horizon_between(1.5, 2.0)
+    ck.add(f"{name}, the black hole: the horizon is at 1.8666 r_0", abs(rh - nr.BI_HORIZON), 1e-12)
+    ck.add(f"{name}, the black hole: g^rr vanishes at one radius only",
+           float(np.sum(np.diff(np.sign(1 / sl.gxx_at(np.geomspace(1e-6, 1e6, 20000)))) != 0)) - 1, 0.0)
+    ck.stops(f"{name}, inside the horizon", sl, np.linspace(0, rh, 402)[1:-1])
+    top, radii = 8.0, (3.0, 4.0, 5.0, 6.0, 7.0)
+    size = 2 * top
+    end = "the surface runs on to $r \\to \\infty$"
+    near = Piece("exterior", "sheet", sl, rh, top, 0.0, 1,
+                 (("throat", "the throat $r = r_h$, the bifurcation sphere, where the other exterior begins"),
+                  ("edge", end)),
+                 [(rh, "horizon", "$r = r_h$")] + [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+    far = Piece("other_exterior", "sheet2", sl, rh, top, 0.0, -1,
+                (("throat", "the throat $r = r_h$"), ("edge", end)),
+                [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+    for p in (near, far):
+        ck.isometry(f"{name}, the black hole, {p.id}", p)
+    ck.join(f"{name}, the black hole, the two sheets at the throat", near, rh, far, rh)
+    slope = slope_of(nr.BI_HOLE)
+
+    rs, rq = float(nr.BI_HOLE["r_s"]), float(sp.sympify(nr.BI_HOLE["r_q"]))
+    Wh = math.sqrt(rh ** 4 + 1)
+    first, second = rq ** 2 / (rh ** 2 + Wh), -2 * rq ** 2 * rh / (Wh * (rh ** 2 + Wh))    # dm/dr and its slope at r_h
+
+    def in_q(q):
+        # The slope diverges as an inverse square root at the throat, so the height is taken in q,
+        # r = r_h + q^2, and next to the throat r - 2m is its series there, (1 - 2m') q^2 - m'' q^4,
+        # since r and 2m cancel to the last digits of a float.
+        r = rh + q * q
+        if q < 1e-3:
+            return 2 * math.sqrt(2 * float(nr.born_infeld_mass(r, rs, rq)) / (1 - 2 * first - second * q * q))
+        return 2 * q * slope(r)
+
+    def height(r):
+        return np.array([quad(in_q, 0.0, math.sqrt(max(x - rh, 0.0)), epsabs=1e-12, epsrel=1e-12, limit=200)[0]
+                         for x in np.atleast_1d(r)])
+    for p in (near, far):
+        ck.form(f"{name}, the black hole, {p.id}, the quadrature of sqrt(2m/(r - 2m))", p,
+                lambda r, s=p.sense: s * height(r), size)
+        ck.radius(f"{name}, the black hole, {p.id}, rho = r", p, lambda r: r, size)
+    hole = Surface([near, far])
+    fig = figure_of([hole], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], rh, 0.0, "$r = r_h$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(4.0), "$4\\,r_0$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$8\\,r_0$")
+    fig.legend("fill", "cover", "the exterior $r > r_h$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $3$, $4$, $5$, $6$, $7$ and $8\\,r_0$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_h$, where the slice crosses the horizon")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("hole", "The black hole", "$r_0$", [hole], fig.done(),
+                      settings="$r_0 = 1$, the unit of every length, $r_q = r_0/2$, and $r_s = 2\\,r_0$, so that "
+                               "the horizon is at $r_h = 1.867\\,r_0$.",
+                      stops=["Inside the horizon, $r < r_h$, $g_{rr} < 0$: $r$ is a time there, and a slice of "
+                             "constant $t$ is not a moment of space."]))
     return views
 
 
@@ -12044,6 +12174,7 @@ DRAWN = {
     "van_den_broeck": van_den_broeck,
     "rn_metric": rn_metric,
     "bardeen": bardeen,
+    "born_infeld_charge": born_infeld_charge,
     "de_sitter": de_sitter,
     "einstein_static": einstein_static,
     "schwarzschild_de_sitter": schwarzschild_de_sitter,
@@ -12540,6 +12671,28 @@ CAPTIONS = {
         "The two sides meet smoothly at the throat $r = r_s$, the smallest circle. Clocks at rest there run at "
         "the rate $\\lambda$ of clocks far away, so the surface is the same at every moment, and light and "
         "matter cross from one side to the other.",
+    ],
+    ("born_infeld_charge", "particle"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Hoffmann's particle ($r_q = r_0/2$, $r_s = 0.618\\,r_0$) at "
+        "one moment of $t$, drawn as a surface in flat space with every distance along it the metric distance. On "
+        "it the metric is $dr^2/(1 - 2m/r) + r^2d\\phi^2$, so $dz/dr = \\sqrt{2m/(r - 2m)}$, with $m$ the mass "
+        "inside $r$.",
+        "The whole mass is the energy of the field, so $m$ vanishes at the centre, as $r_q^2r/r_0^2$. There "
+        "$2m/r \\to 2r_q^2/r_0^2 = 1/2$, and the surface leaves the centre as a cone of slope $1$: a circle of "
+        "radius $r$ about the centre lies a proper distance $\\sqrt{2}\\,r$ from it. The apex is Hoffmann's conical "
+        "singularity, where the Kretschmann scalar grows as $16r_q^4/(r_0^4r^4)$. Far out the surface rises as "
+        "Flamm's paraboloid of the same mass does, $dz/dr \\to \\sqrt{r_s/r}$.",
+    ],
+    ("born_infeld_charge", "hole"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the same charge with more mass than its field holds "
+        "($r_q = r_0/2$, $r_s = 2\\,r_0$) at one moment of $t$, drawn as a surface in flat space with every "
+        "distance along it the metric distance. Here $m$ is positive at the centre, $g^{rr} = 1 - 2m/r$ vanishes "
+        "at $r_h = 1.867\\,r_0$, and the surface stands vertical there.",
+        "The slice passes through the bifurcation sphere $r = r_h$, its throat, into a second exterior, the same "
+        "surface turned over, as Schwarzschild's does through $r_s$. Maxwell's field would put the throat at "
+        "$1.8660\\,r_0$, the outer horizon of Reissner and Nordström's black hole of the same mass and charge, "
+        "and Born and Infeld's field, which holds less energy, moves it out to $1.8666\\,r_0$. Inside the horizon "
+        "$r$ is a time, and no slice of constant $t$ enters there.",
     ],
     ("bardeen", "outside"): [
         "The equatorial plane ($\\theta = \\pi/2$) of Bardeen's black hole at one moment of $t$ outside its "

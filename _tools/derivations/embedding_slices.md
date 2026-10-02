@@ -517,6 +517,14 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - The Eddington-Finkelstein views: the moment is $v = r_*$ in the ingoing chart and $u = -r_*$ in the outgoing one, with $r_* = 0$ at the centre, each curve running off toward the horizon its view ends on.
 - `tower`, `ingoing` and `outgoing`: the outside view is the line $T = 0$ through the outer bifurcation point, on the outgoing view the line $T = 2\pi$ of the exterior that chart covers, and the inside view is the line $T = \pi$ through the inner bifurcation point, from one centre to the other.
 
+### Born and Infeld's point charge
+
+- The embedding has two views at one moment of $t$, drawn at $t = 0$, in units of $r_0$ at $r_q = r_0/2$: Hoffmann's particle, $r$ from the centre to $4\,r_0$, and the black hole, $r$ from $r_h = 1.867\,r_0$ to $8\,r_0$ on both sheets through the bifurcation sphere.
+- The two are two spacetimes of one line element, so each drawing marks the moment of its own.
+- `static/particle` and `static/hole`: the line $t = 0$, from the centre or from $r_h$ to the box's edge at $4\,r_0$.
+- The Eddington-Finkelstein views: the moment is $v = r_*$ in the ingoing chart and $u = -r_*$ in the outgoing one, with $r_* = 0$ at the centre, the black hole's curve running off toward the horizon.
+- The conformal views: the particle's moment is the line $T = 0$ from the centre toward $i^0$, and the black hole's the line $T = 0$ through the bifurcation point.
+
 ### Schwarzschild
 
 - The embedding is Flamm's paraboloid, the equator of a moment of constant $t$, drawn at $t = 0$, $r$ from $r_s$ to $6\,r_s$ on both sheets through the bifurcation sphere.
@@ -771,6 +779,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | pp-wave | four null lines | none | none drawn |
 | Reissner-Nordström | two lines once redrawn at $r_q = 0.48\,r_s$ | none | two lines, twice |
 | Bardeen | two lines, two curves four times | none | two lines, three times |
+| Born-Infeld point charge | two lines, six curves | none | line, six times |
 | Schwarzschild | line, four curves | none | line, three times |
 | Kiselev | two lines, four curves; line and curve for the matter alone | none | line, four times; line, twice |
 | Schwarzschild-de Sitter | line, four curves | none | line, three times |
