@@ -675,6 +675,49 @@
     "embedding": "d857ba18e7d9066a"
   },
   {
+    "id": "brans_dicke_sphere",
+    "name": "Brans-Dicke Sphere",
+    "tags": [
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "four-dimensional",
+      "Brans-Dicke",
+      "scalar field",
+      "scalar-tensor theory",
+      "Jordan frame",
+      "Einstein frame",
+      "Mach's principle",
+      "alternative theories of gravity",
+      "varying gravitational constant",
+      "Brans class I",
+      "Campanelli-Lousto",
+      "naked singularity",
+      "curvature singularity",
+      "no horizon",
+      "wormhole",
+      "scalar charge",
+      "mass",
+      "post-Newtonian",
+      "tests of general relativity",
+      "light deflection",
+      "perihelion precession",
+      "solar system",
+      "no-hair theorem",
+      "isotropic coordinates",
+      "harmonic coordinates",
+      "asymptotically flat",
+      "exact solution",
+      "exterior",
+      "Lorentzian",
+      "idealized model"
+    ],
+    "version": "e41652b31caac30b",
+    "diagrams": "fd0321d9fcdcb54d",
+    "conformal": "c776bb1e86cd5f7d",
+    "embedding": "a1c5b02d8ba65163"
+  },
+  {
     "id": "brill_waves",
     "name": "Brill Waves",
     "tags": [
@@ -1036,7 +1079,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cb6c66bed190e2be",
+    "version": "d946899138bdda3f",
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc"
@@ -1408,7 +1451,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "7f731b59e6330513",
+    "version": "3e1652905130ae9b",
     "diagrams": "3ae6a5324e2f9841",
     "conformal": "0ad248166c7cdb8f",
     "embedding": "3cdd1185c95f1f46"
@@ -2899,7 +2942,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "7fa9c4f17bd88e4e",
+    "version": "3323e9bd2d9c1ada",
     "diagrams": "1de01953e7c22d84",
     "conformal": "956949c7f4a96538",
     "embedding": "2fb2f35ad8d95922"
@@ -3135,7 +3178,7 @@
       "cosmology",
       "dust"
     ],
-    "version": "cbff644bc78f3f26",
+    "version": "e80f54554365b204",
     "diagrams": "7ca84c063f7c2ca0",
     "conformal": "20e04688ba6cf230",
     "embedding": "3a2c6a2557fbf67a"
@@ -3222,7 +3265,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "dc33db116e524ea7",
+    "version": "72b21b85b013db10",
     "diagrams": "197eec2d67db791c",
     "conformal": "6588b3545cfd1a4f",
     "embedding": "7438e54f373b2e03"
@@ -3735,7 +3778,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "eb765a3a641dd811",
+    "version": "acf544a28ecefd37",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
