@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 120,
+  "count": 121,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -9306,6 +9306,11 @@
           "id": "misner_brill_lindquist",
           "kind": "family",
           "text": "A slice of space with two bridges in it, each leading to a sheet of its own, which Dieter Brill and Richard Lindquist wrote down in 1963 [brill1963]. Charles Misner's slice of 1960 joins the two mouths to each other and makes a wormhole within one sheet [misner1960]."
+        },
+        {
+          "id": "semiclosed_world",
+          "kind": "family",
+          "text": "The bridge with one of its sheets closed off by a universe of dust. Wheeler's bag of gold is reached by passing through the bridge [marolf2009]."
         }
       ],
       "references": [
@@ -9327,7 +9332,8 @@
         "bronnikov1973",
         "einstein1937",
         "brill1963",
-        "misner1960"
+        "misner1960",
+        "marolf2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_bridge.json",
@@ -10409,6 +10415,11 @@
           "id": "sultana_dyer",
           "kind": "generalisation",
           "text": "The flat universe of dust with a black hole in it from the big bang on: Schwarzschild's metric times $a^2$, with $a \\propto \\eta^2$ [sultana2005]."
+        },
+        {
+          "id": "semiclosed_world",
+          "kind": "composite",
+          "text": "More than half of a closed Friedmann universe of dust with Schwarzschild's vacuum beyond its edge. From outside it is a black hole, and at a fixed mass the universe behind it can be as large as one likes [marolf2009]."
         }
       ],
       "references": [
@@ -10461,7 +10472,8 @@
         "coleman1980",
         "bucher1995",
         "senovilla1996",
-        "sultana2005"
+        "sultana2005",
+        "marolf2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -23114,6 +23126,11 @@
           "id": "boson_star",
           "kind": "programme",
           "text": "Wheeler's other way to make a body out of fields and geometry alone was the geon, a ball of field held together by its own gravity [wheeler1955]. His wormholes with Misner make mass and charge out of empty space with a handle in it [misner1957]."
+        },
+        {
+          "id": "semiclosed_world",
+          "kind": "family",
+          "text": "One more moment of time symmetry: a closed universe of dust behind a single throat. The name bag of gold began in Wheeler's lectures on data of this kind [marolf2009]."
         }
       ],
       "references": [
@@ -23141,7 +23158,8 @@
         "kramer1980",
         "kastor1993",
         "brill1994",
-        "wheeler1955"
+        "wheeler1955",
+        "marolf2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner_brill_lindquist.json",
@@ -26307,6 +26325,11 @@
           "id": "neugebauer_meinel",
           "kind": "family",
           "text": "Dust that reaches a black hole without falling: a spinning disc whose equilibria run out at the extreme Kerr black hole. Meinel set the two side by side as idealized routes to a black hole [meinel2002]."
+        },
+        {
+          "id": "semiclosed_world",
+          "kind": "family",
+          "text": "The same construction with the cut taken past the equator of the closed universe, $\\chi_0 > \\pi/2$. The dust then lies behind the throat of Schwarzschild's geometry, and the mass seen from outside falls as more of the universe is kept [hsu2008unitarity]."
         }
       ],
       "references": [
@@ -26324,7 +26347,8 @@
         "vaidya1966",
         "mann1993",
         "einstein1939",
-        "meinel2002"
+        "meinel2002",
+        "hsu2008unitarity"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/oppenheimer_snyder.json",
@@ -28814,6 +28838,11 @@
           "id": "bonnor_magnetic_dipole",
           "kind": "limit_source",
           "text": "Two extremal Reissner-Nordström black holes of opposite magnetic charge on one axis. In the limit $b \\to \\infty$ the two are infinitely far apart and each is the extremal hole alone [emparan2000]."
+        },
+        {
+          "id": "semiclosed_world",
+          "kind": "family",
+          "text": "A closed universe of charged dust behind a throat. Moissei Markov and Valeri Frolov found in 1970 that any charge keeps such a universe from closing, and its outside is this metric [markov1970]."
         }
       ],
       "references": [
@@ -28851,7 +28880,8 @@
         "breitenlohner1994",
         "volkov1999",
         "brill1963",
-        "emparan2000"
+        "emparan2000",
+        "markov1970"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -31119,6 +31149,11 @@
           "id": "bonnor_magnetic_dipole",
           "kind": "family",
           "text": "Bonnor's mass with a magnetic dipole moment. With the dipole switched off it keeps a quadrupole and a naked singularity, so Schwarzschild's black hole is not among its cases [emparan2000]."
+        },
+        {
+          "id": "semiclosed_world",
+          "kind": "composite",
+          "text": "A closed universe of dust sewn onto the second sheet of the extended solution, behind the throat. Yakov Zel'dovich and Igor Novikov studied it in 1962, and it goes by the name of Wheeler's bag of gold [zelmanov1965, marolf2009]."
         }
       ],
       "references": [
@@ -31208,7 +31243,9 @@
         "lemos1993",
         "brill1963",
         "cook2000",
-        "emparan2000"
+        "emparan2000",
+        "zelmanov1965",
+        "marolf2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -32542,6 +32579,336 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{240r_h^6}{r^{10}}"
+        }
+      ]
+    },
+    {
+      "id": "semiclosed_world",
+      "name": "Semiclosed World, the Bag of Gold",
+      "short_name": "Semiclosed World",
+      "description": "More than half of a closed Friedmann universe of dust joined to Schwarzschild's exterior behind its throat. The mass seen from outside falls as the dust within grows, and reaches zero as the universe closes.",
+      "tags": [
+        "dust",
+        "matched solution",
+        "closed universe",
+        "three sphere",
+        "semiclosed world",
+        "bag of gold",
+        "throat",
+        "Einstein-Rosen bridge",
+        "black hole",
+        "white hole",
+        "mass defect",
+        "black hole entropy",
+        "curvature singularity",
+        "horizon",
+        "event horizon",
+        "apparent horizon",
+        "time symmetric",
+        "time-dependent",
+        "cosmology",
+        "spherically symmetric",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and $r_s = 2GM/c^2$ is the Schwarzschild radius of the mass seen from outside. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "family",
+          "text": "The same cut of a closed universe of dust taken short of the equator, $\\chi_0 < \\pi/2$. There the surface faces the outside directly, and the dust is a star that collapses [oppenheimersnyder1939]."
+        },
+        {
+          "id": "frw",
+          "kind": "piece",
+          "text": "The inside of the bag: the ball $\\chi \\le \\chi_0$ of a closed Friedmann universe of dust, more than half of it, from its bang to its crunch."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "The outside, entered from behind. The surface of the dust lies on the second sheet of the extended solution, with the throat between it and the observer who measures the mass [hsu2008unitarity]."
+        },
+        {
+          "id": "einstein_rosen_bridge",
+          "kind": "family",
+          "text": "The throat the bag hangs by. Einstein and Rosen's bridge joins two sheets of Schwarzschild's exterior, and here the second sheet ends at the surface of the dust and is closed with a universe [marolf2009]."
+        },
+        {
+          "id": "tolman_bondi",
+          "kind": "generalisation",
+          "text": "Dust whose density and energy vary from shell to shell. The semiclosed world is uniform dust inside $\\chi_0$ and none outside, and the throat Novikov discussed is what later authors named the neck of a Tolman-Bondi model [krasinski2001novikov]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "family",
+          "text": "The outside of the charged version. Markov and Frolov found that a closed universe of charged dust cannot close, and opens through a narrow throat into this exterior [markov1970]."
+        },
+        {
+          "id": "misner_brill_lindquist",
+          "kind": "family",
+          "text": "Other moments of time symmetry, with several throats and no dust. Wheeler's own bag of gold was a piece of such a moment, pinched off where the conformal factor passes through zero [marolf2009]."
+        }
+      ],
+      "references": [
+        "oppenheimersnyder1939",
+        "hsu2008unitarity",
+        "zelmanov1965",
+        "novikov1964",
+        "krasinski2001novikov",
+        "wheeler1964",
+        "marolf2009",
+        "fuller1962",
+        "markov1970",
+        "frolov1990closed",
+        "bekenstein1973",
+        "hawking1975",
+        "hsu2008monsters",
+        "chakravarty2021"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/semiclosed_world.json",
+      "charts": [
+        {
+          "id": "comoving",
+          "name": "Comoving Dust Interior",
+          "coordinates": [
+            "\\tau",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\tau_s, \\tau_s)",
+            "\\chi \\in [0, \\chi_0]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(\\tau)",
+              "description": "Scale factor of the dust, a length ($a > 0$), obeying $2a\\ddot{a}+\\dot{a}^2+1 = 0$"
+            },
+            {
+              "symbol": "\\chi_0",
+              "description": "Comoving polar angle of the surface of the dust ($\\pi/2 < \\chi_0 < \\pi$), past the equator of the three sphere, fixed by $\\sin^2\\chi_0 = r_s/R_0$ with $R_0 = a_m\\sin\\chi_0$ the greatest areal radius of the surface"
+            },
+            {
+              "symbol": "a_m",
+              "description": "Scale factor at the moment of greatest expansion, the radius of the three sphere the dust is cut from, tied to the exterior mass by $r_s = a_m\\sin^3\\chi_0$"
+            }
+          ],
+          "convention": "We use comoving coordinates $(\\tau, \\chi, \\theta, \\phi)$, where $\\tau$ is the proper time of the dust, zero at the moment of greatest expansion, $\\chi$ is a dimensionless comoving polar angle, and the scale factor $a(\\tau)$ carries the length. The dust begins and ends at $a = 0$, at $\\tau = \\mp\\tau_s$ with $\\tau_s = \\dfrac{\\pi a_m}{2c}$. We take components in the chart $x^0 = c\\tau$, a dot on the scale factor is $\\dot{a} = \\dfrac{1}{c}\\dfrac{da}{d\\tau}$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2d\\tau^2 + a^2\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6a\\,\\partial_\\tau^2 a + 6\\left(\\partial_\\tau a\\right)^2 + 6}{a^2}",
+          "kretschmann": "K = \\dfrac{12a^2\\left(\\partial_\\tau^2 a\\right)^2 + 24\\left(\\partial_\\tau a\\right)^2 + 12\\left(\\partial_\\tau a\\right)^4 + 12}{a^4}"
+        },
+        {
+          "id": "conformal",
+          "name": "Conformal Dust Interior",
+          "coordinates": [
+            "\\eta",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (-\\pi, \\pi)",
+            "\\chi \\in [0, \\chi_0]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a_m",
+              "description": "Scale factor at the moment of greatest expansion, the radius of the three sphere the dust is cut from, tied to the exterior mass by $r_s = a_m\\sin^3\\chi_0$"
+            },
+            {
+              "symbol": "\\chi_0",
+              "description": "Comoving polar angle of the surface of the dust ($\\pi/2 < \\chi_0 < \\pi$), past the equator of the three sphere, fixed by $\\sin^2\\chi_0 = r_s/R_0$ with $R_0 = a_m\\sin\\chi_0$ the greatest areal radius of the surface"
+            }
+          ],
+          "convention": "We use the conformal time $\\eta$ of the dust, a dimensionless angle with $a\\,d\\eta = c\\,d\\tau$ for its proper time $\\tau$, and the comoving polar angle $\\chi$. The scale factor is $a = \\tfrac{1}{2}a_m(1 + \\cos\\eta)$, greatest at $\\eta = 0$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{a_m^2}{4}\\left(1 + \\cos\\eta\\right)^2\\left(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-\\dfrac{a_m^2\\left(\\cos\\eta + 1\\right)^2}{4}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{a_m^2\\left(\\cos\\eta + 1\\right)^2}{4}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{a_m^2\\left(\\cos\\eta + 1\\right)^2\\sin^2\\chi}{4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{a_m^2\\left(\\cos\\eta + 1\\right)^2\\sin^2\\chi\\sin^2\\theta}{4}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{24}{a_m^2\\left(\\cos\\eta + 1\\right)^3}",
+          "kretschmann": "K = \\dfrac{960}{a_m^4\\left(\\cos\\eta + 1\\right)^6}"
+        },
+        {
+          "id": "schwarzschild",
+          "name": "Schwarzschild Exterior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_s, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r \\le R(t) \\;\\text{(on the sheet of the dust)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass a distant observer measures, $r_s = 2GM/c^2 = a_m\\sin^3\\chi_0$"
+            }
+          ],
+          "convention": "We use Schwarzschild coordinates $(t, r, \\theta, \\phi)$ on either sheet of the exterior, with $t$ carrying dimensions of time and $t = 0$ at the moment of greatest expansion, and $R(t)$ is the areal radius of the surface of the dust. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "isotropic",
+          "name": "Isotropic Exterior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [r_d(t), \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s/4 \\;\\text{(the throat)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass a distant observer measures, $r_s = 2GM/c^2 = a_m\\sin^3\\chi_0$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the isotropic radius, so the areal radius is $r(1 + r_s/4r)^2$, and $r_d(t)$ is the isotropic radius of the surface of the dust. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(\\dfrac{4r - r_s}{4r + r_s}\\right)^2c^2dt^2 + \\left(1 + \\dfrac{r_s}{4r}\\right)^4\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(\\dfrac{4r - r_s}{4r + r_s}\\right)^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 + \\dfrac{r_s}{4r}\\right)^4"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\left(4r + r_s\\right)^4}{256r^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(4r + r_s\\right)^4\\sin^2\\theta}{256r^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}\\left(1 + \\dfrac{r_s}{4r}\\right)^{-12}"
         }
       ]
     },
@@ -35667,6 +36034,11 @@
           "id": "tolman_vii",
           "kind": "programme",
           "text": "Richard Tolman's static spheres of fluid, from 1939. He found eight in closed form, and the density inside a neutron star follows the seventh closely [tolman1939, lattimer2001]."
+        },
+        {
+          "id": "semiclosed_world",
+          "kind": "special_case",
+          "text": "Uniform dust out past the equator of a closed universe and vacuum beyond, joined at a throat. Igor Novikov discussed that throat in 1964, a few years before other authors named it the neck of the general model [krasinski2001novikov]."
         }
       ],
       "references": [
@@ -35695,7 +36067,8 @@
         "oppenheimer1939",
         "lemos1992",
         "hellaby1994",
-        "lattimer2001"
+        "lattimer2001",
+        "krasinski2001novikov"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tolman_bondi.json",

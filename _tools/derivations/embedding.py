@@ -6107,6 +6107,147 @@ def oppenheimer_snyder(ck, src):
                        "dust is.")]
 
 
+class NovikovSheets(RestCloud):
+    """Schwarzschild's vacuum on both sheets as clocks released from rest at t = 0, r_s = 1: the
+    shell labelled s rests at R = s^2 + 1, s > 0 on one sheet and s < 0 on the other, with the
+    throat s = 0 between them, and falls on its cycloid R = ((s^2 + 1)/2)(1 + cos eta),
+    t = (s^2 + 1)^(3/2)(eta + sin eta)/2. It is Tolman-Bondi's comoving chart with no dust and
+    E = -1/(2(s^2 + 1)), Novikov's chart of the whole Kruskal manifold, MTW (31.12), s his R*.
+    dR/ds carries the factor s written out, since g_ss = (dR/ds)^2 (s^2 + 1)/s^2 is finite on the
+    throat only as their ratio."""
+
+    E = "-1/(2*(r**2 + 1))"
+
+    def __init__(self):
+        super().__init__(lambda s: (s * s + 1.0) ** -3, lambda s: -6 * s * (s * s + 1.0) ** -4)
+
+    def fields(self, s, t):
+        s = np.asarray(s, dtype=float)
+        top = s * s + 1
+        e = self.eta(s, t)
+        c, sn = np.cos(e), np.sin(e)
+        de = -3 * s * (e + sn) / (top * (1 + c))
+        half = np.cos(e / 2)
+        R = top * (1 + c) / 2
+        return {"R": R, "R_r": s * ((1 + c) + 1.5 * sn * (e + sn) / (1 + c)),
+                "R_t": -np.tan(e / 2) / np.sqrt(top), "R_tt": -1 / (2 * R ** 2),
+                "R_tr": s * np.tan(e / 2) / top ** 1.5 - de / (2 * np.sqrt(top) * half ** 2),
+                "E": -1 / (2 * top), "E_r": s / top ** 2,
+                "M": np.full_like(s, 0.5), "M_r": np.zeros_like(s), "eta": e}
+
+    def slice(self, src, t):
+        return super().slice(src, t, self.E)
+
+    def horizon(self, t):
+        """The label s > 0 of the shells at R = r_s at the time t > 0, one on each sheet, at +s and -s."""
+        from scipy.optimize import brentq
+        return brentq(lambda x: float(self.fields(np.array([x]), t)["R"][0]) - 1.0, 0.0, 10.0, xtol=1e-15)
+
+
+def semiclosed_world(ck, src):
+    """The semiclosed world at chi_0 = 3 pi/4, a_m = 2 sqrt(2) r_s, the complement on the three sphere
+    of the star Oppenheimer and Snyder's page draws: the same mass r_s = a_m sin^3 chi_0 and the same
+    greatest radius of the surface, R_0 = 2 r_s. The moment of greatest expansion and four later
+    moments of the dust's proper time, until just before the throat closes at c tau = pi r_s/2.
+
+    Inside, the published comoving chart at a = (a_m/2)(1 + cos eta), c tau = (a_m/2)(eta + sin eta),
+    checked to make the published G^chi_chi vanish: a sphere of radius a from its pole past its
+    equator to chi_0. Outside, the moment carries on as the moment of clocks released from rest
+    with the dust on both sheets, NovikovSheets: from the surface, s = cot chi_0 = -1, in through
+    the throat s = 0 and out on the far sheet to R = 4 r_s. The two meet with one tangent,
+    1 + 2E = 1 - r_s/R_0 = cos^2 chi_0, the areal radius falling outward on both sides. At tau = 0
+    the outside is Flamm's paraboloid on both sheets, which is checked in the tolman_bondi chart
+    and again in this spacetime's own isotropic and Schwarzschild charts. Marginally trapped
+    spheres stand at chi = pi/2 -+ eta/2 in the dust and at R = r_s on each sheet."""
+    R0, chi0 = 2.0, 3 * math.pi / 4
+    am = R0 / math.sin(chi0)
+    s0 = 1 / math.tan(chi0)                 # -sqrt(R0 - 1)
+    top = 4.0
+    s_top = math.sqrt(top - 1)
+    size = 2 * top
+    sheets = NovikovSheets()
+    Gcc = einstein(src, "semiclosed_world", "comoving", "\\chi")
+    etas = np.linspace(0.05, 0.95 * math.pi, 50)
+    half = np.cos(etas / 2)
+    ck.add("Semiclosed world: a = (a_m/2)(1 + cos eta) makes the published G^chi_chi vanish",
+           float(np.max(np.abs(Gcc(a=am * half ** 2, a_tau=-np.tan(etas / 2), a_tautau=-1 / (2 * am * half ** 4)))
+                        * (am * half ** 2) ** 2)), 1e-9)
+    sheets.check(ck, src, "Semiclosed world outside", np.concatenate([np.linspace(s0, -0.05, 30), np.linspace(0.05, s_top, 30)]),
+                 [0.0, 0.5, 1.0, 1.5])
+    from scipy.optimize import brentq
+
+    def moment(tau):
+        eta = brentq(lambda e: am * (e + math.sin(e)) / 2 - tau, 0.0, math.pi, xtol=1e-15) if tau > 0 else 0.0
+        a = am * (1 + math.cos(eta)) / 2
+        where = f"Semiclosed world, c tau = {tau:.4f} r_s"
+        inner = Slice(src, "semiclosed_world", "comoving", "\\chi", "\\phi", {"tau": "0", **EQUATOR},
+                      {"chi_0": "3*pi/4", "a_m": repr(am)}, {"a": repr(a)})
+        outer = sheets.slice(src, tau)
+        dust_marks = [(math.pi / 4, "r", None), (math.pi / 2, "r", None), (chi0, "surface", None)]
+        out_marks = [(0.0, "throat", None), (math.sqrt(2.0), "r", None), (s_top, "r", None)]
+        if tau > 0:
+            edge = sheets.horizon(tau)
+            out_marks += [(-edge, "horizon", None), (edge, "horizon", None)]
+            dust_marks += [(math.pi / 2 - eta / 2, "horizon", None), (math.pi / 2 + eta / 2, "horizon", None)]
+        ext = Piece("exterior", "sheet", outer, s0, s_top, 0.0, 1,
+                    (("join", "the surface of the dust"), ("edge", "the slice runs on to $r \\to \\infty$")), out_marks, size)
+        dust = Piece("dust", "star", inner, 0.0, chi0, 0.0, 1,
+                     (("axis", "the centre $\\chi = 0$, where the sphere is smooth"), ("join", "the surface $\\chi = \\chi_0$")),
+                     dust_marks, size)
+        # The rim of the drawing, the clocks released at r = 4 r_s on the far sheet, stands at
+        # z = 0 at every moment, and the throat and the dust hang below it.
+        ext.z = ext.z - ext.z[-1]
+        dust.z = dust.z + (ext.z[0] - dust.z[-1])
+        ck.isometry(f"{where}, the dust", dust)
+        ck.isometry(f"{where}, outside", ext)
+        ck.join(f"{where}, the dust meets the outside", dust, chi0, ext, s0)
+        ck.form(f"{where}, the dust is a sphere of radius a", dust,
+                lambda c, a=a, z0=dust.z[0]: z0 + a * (1 - np.cos(c)), size)
+        ck.radius(f"{where}, the throat has the radius r_s cos^2(eta/2) of its own cycloid", ext,
+                  lambda s, t=tau: sheets.fields(s, t)["R"], size)
+        if tau == 0:
+            z_throat = ext.at(0.0)[1]
+            ck.form(f"{where}, outside it is Flamm's paraboloid on both sheets", ext,
+                    lambda s: z_throat + 2 * s, size)
+            # This spacetime's own two charts of the exterior draw the same surface: the isotropic
+            # radius r_s/4 at the throat, and Schwarzschild's r on the far sheet.
+            iso = lambda R, sheet: (R - 0.5 + sheet * math.sqrt(R * (R - 1))) / 2
+            isotropic = Slice(src, "semiclosed_world", "isotropic", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 1})
+            both = Piece("isotropic", "sheet", isotropic, iso(R0, -1), iso(top, 1), -2.0, 1, size=size, knots=(0.25,))
+            ck.isometry(f"{where}, the isotropic chart", both)
+            ck.form(f"{where}, the isotropic chart draws Flamm's paraboloid through the throat", both,
+                    lambda r: 2 * (4 * r - 1) / (4 * np.sqrt(r)) , size)
+            schw = Slice(src, "semiclosed_world", "schwarzschild", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 1})
+            for name, hi in (("the far sheet", top), ("the sheet of the dust", R0)):
+                sheet = Piece("schwarzschild", "sheet", schw, 1.0, hi, 0.0, 1, size=size)
+                ck.isometry(f"{where}, Schwarzschild's chart on {name}", sheet)
+                ck.form(f"{where}, Schwarzschild's chart on {name} draws Flamm's z = 2 sqrt(r_s (r - r_s))", sheet,
+                        lambda r: 2 * np.sqrt(np.maximum(r - 1, 0)), size)
+        return Surface([dust, ext], label=f"$c\\tau = {tau:.2f}\\,r_s$", time=tau)
+
+    # The movie runs at a steady proper time of the dust, a frame about every 0.03 r_s of c tau.
+    taus, keys = movie_values([0.0, 0.6, 1.1, 1.4, 1.5], 0.03)
+    frames = [moment(t) for t in taus]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"star": "star", "sheet": "cover"}, size)
+    fig.legend("fill", "star", "the dust, a sphere of radius $a(\\tau)$ from its pole past its equator to $\\chi_0$, "
+                               "which $\\tau$ and $\\chi$ cover")
+    fig.legend("fill", "cover", "outside it, the moment of clocks released from rest with the dust, on both sheets")
+    fig.legend("line", "r", "$\\chi$ constant in the dust, at $\\pi/4$ and at the equator $\\pi/2$, and on the far "
+                            "sheet the clocks released at $3$ and $4\\,r_s$")
+    fig.legend("line", "surface", "the surface of the dust, $\\chi = \\chi_0$")
+    fig.legend("line", "throat", "the throat, the smallest sphere, $r = r_s$ at $\\tau = 0$")
+    fig.legend("line", "horizon", "marginally trapped spheres, the areal radius $2GM/c^2$ for the mass $M$ within")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("bag", "The bag and its throat", "$r_s$", surfaces, fig.done(),
+                 movie=movie(frames, "$c\\tau$", [f.time for f in frames]),
+                 settings="$\\chi_0 = 3\\pi/4$ and $a_m = 2\\sqrt{2}\\,r_s$, so that the surface reaches $2\\,r_s$, with "
+                          "$r_s = 1$ the unit of every length; the moments are the dust's proper time $\\tau$ since "
+                          "the greatest expansion.",
+                 input="Outside the dust, the slices of Tolman-Bondi's comoving chart with no dust in it, each shell "
+                       "of clocks released from rest when the dust is, on both sides of the throat.")]
+
+
 VERTICAL = 2   # the Tolman-Bondi cloud is drawn this many times taller than its embedding
 
 
@@ -11716,6 +11857,7 @@ DRAWN = {
     "vaidya": vaidya,
     "bonnor_vaidya": bonnor_vaidya,
     "oppenheimer_snyder": oppenheimer_snyder,
+    "semiclosed_world": semiclosed_world,
     "tolman_bondi": tolman_bondi,
     "bertotti_robinson": bertotti_robinson,
     "plebanski_hacyan": plebanski_hacyan,
@@ -12730,6 +12872,10 @@ CAPTIONS = {
         "through the flat interior, where nothing yet marks it, to meet the shell at $r_s$, where it stays. "
         "Once the shell has reached the centre the whole slice is Schwarzschild's, and the paraboloid runs "
         "on through the horizon to close in a spike at the singularity $r = 0$.",
+    ],
+    ("semiclosed_world", "bag"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of a semiclosed world from its greatest expansion to $c\\tau = 1.50\\,r_s$, just before its throat closes, each moment drawn as a surface in flat space with every distance along it the metric distance. The dust is a sphere of radius $a(\\tau)$ kept from its pole past its equator to $\\chi_0 = 3\\pi/4$, the bag, and it hangs from the outside world by the throat. Above the throat the surface flares out toward infinity, and an observer up there measures the mass $M$ with $2GM/c^2 = a_m\\sin^3\\chi_0$, a twelfth of the mass of the dust in the bag counted grain by grain.",
+        "At $\\tau = 0$ the outside is Flamm's paraboloid on both sheets: the stretch behind the throat, from the surface of the dust in to $r_s$, and the far sheet beyond it. The moment then carries on as the moment of clocks released from rest with the dust, Igor Novikov's slicing, and the throat shrinks along its own cycloid to nothing at $c\\tau = \\pi r_s/2$, while the bag has barely begun to fall: at the last moment drawn its radius is still $0.93\\,a_m$. The circles of areal radius $2GM/c^2$ leave the throat on both sides, and two more open out from the equator of the bag.",
     ],
     ("oppenheimer_snyder", "collapse"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a star of dust collapsing from rest, as the dust's own time "

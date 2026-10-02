@@ -81,6 +81,11 @@
       "id": "sultana_dyer",
       "kind": "generalisation",
       "text": "The flat universe of dust with a black hole in it from the big bang on: Schwarzschild's metric times $a^2$, with $a \\propto \\eta^2$ [sultana2005]."
+    },
+    {
+      "id": "semiclosed_world",
+      "kind": "composite",
+      "text": "More than half of a closed Friedmann universe of dust with Schwarzschild's vacuum beyond its edge. From outside it is a black hole, and at a fixed mass the universe behind it can be as large as one likes [marolf2009]."
     }
   ],
   "references": [
@@ -133,7 +138,8 @@
     "coleman1980",
     "bucher1995",
     "senovilla1996",
-    "sultana2005"
+    "sultana2005",
+    "marolf2009"
   ],
   "coordinates": [
     {

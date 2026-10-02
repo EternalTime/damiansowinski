@@ -76,6 +76,14 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `poincare/tx`: the Poincaré chart has the same $t$ and $x = b^2/r$, which carries one line element onto the other, so the equator is the line $ct = 0$ from $x = b/e$ to $eb$ and the sphere the point $x = b$.
 - `static` and `poincare`, the strip of the first factor, each point a sphere of radius $b$: the line $T = 0$ over the same stretch of $r$ and the point at $r = b$, the same on both, since the two charts cover the same wedge.
 
+### Semiclosed world
+
+- The embedding is five moments of the dust's proper time since its greatest expansion, $c\tau = 0$, $0.6$, $1.1$, $1.4$ and $1.5\,r_s$, at $\chi_0 = 3\pi/4$ and $a_m = 2\sqrt{2}\,r_s$. Inside it is the comoving chart's moment of constant $\tau$, $\chi$ from $0$ to $3\pi/4$; outside it is Igor Novikov's slice on both sheets, the clocks released from rest with the dust, labelled by $s$ with the areal radius $r_s(s^2 + 1)$ at rest, from the surface $s = -1$ through the throat $s = 0$ to $s = \sqrt{3}$.
+- `comoving/dust`, drawn in units of $a_m$: five lines of constant $c\tau/a_m$ across the dust. `conformal/dust`: the same five moments as lines of constant $\eta$, with $\tfrac{1}{2}a_m(\eta + \sin\eta) = c\tau$.
+- `schwarzschild/radial`, the far sheet: curves. The shells $s > 0$ are Novikov's, as on Oppenheimer-Snyder's exterior, each moment drawn where $r > r_s$; at $\tau = 0$ it is the line $ct = 0$ from the throat to the embedding's rim at $4\,r_s$.
+- `isotropic/radial`: at $\tau = 0$ the line $t = 0$ from the surface of the dust behind the throat, $r = 0.043\,r_s$, through the throat to the rim; afterwards the shells of the far sheet as curves in $t$ and the isotropic radius. The shells behind the throat then lie at negative $t$ of this chart, whose time runs to the past there, below the plane drawn.
+- the four conformal views, one drawing: each moment is the line $T = \eta$ across the dust and, from the surface, Novikov's curve through Kruskal's $U$ and $V$ of each shell on both sheets, `slices.novikov_sheets`, carried by `Bag`'s $P$ and $Q$.
+
 ### Plebański-Hacyan and anti-Nariai
 
 - The embedding has three views. Two are of the flat plane times a sphere at the moment $t = 0$: the equator, $z$ from $-b$ to $b$ with $\phi$, and the sphere of $\theta$ and $\phi$ at one event, drawn at $z = b$. The third is anti-Nariai's hyperbolic plane of $\theta$ and $\phi$ at the event $\tau = 0$, $\chi = 1$.
@@ -764,6 +772,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Reissner-Nordström | two lines once redrawn at $r_q = 0.48\,r_s$ | none | two lines, twice |
 | Bardeen | two lines, two curves four times | none | two lines, three times |
 | Schwarzschild | line, four curves | none | line, three times |
+| semiclosed world | five lines, twice; line and four curves, twice | none | five curves, four times |
 | Kiselev | two lines, four curves; line and curve for the matter alone | none | line, four times; line, twice |
 | Schwarzschild-de Sitter | line, four curves | none | line, three times |
 | Siklos waves | event, three times; line, five times | none | curve, five times |

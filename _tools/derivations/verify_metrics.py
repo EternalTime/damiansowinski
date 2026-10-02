@@ -726,6 +726,22 @@ DIMENSIONS = {
     ("oppenheimer_snyder", "exterior_schwarzschild"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
     },
+    # The semiclosed world is the same construction with the surface past the equator of the three
+    # sphere. Its conformal time eta is an angle, with the cycloid written out in a_m, and the
+    # isotropic radius is a length.
+    ("semiclosed_world", "comoving"): {
+        "\\tau": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1",
+        "a": "L", "\\chi_0": "1", "a_m": "L",
+    },
+    ("semiclosed_world", "conformal"): {
+        "\\eta": "1", "\\chi": "1", "\\theta": "1", "\\phi": "1", "a_m": "L", "\\chi_0": "1",
+    },
+    ("semiclosed_world", "schwarzschild"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
+    },
+    ("semiclosed_world", "isotropic"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
+    },
     # u is the retarded time and v the affine parameter along the rays, which is a
     # length, so the wave profile H is dimensionless and the amplitudes of the exact
     # plane wave, multiplying x^2, are curvatures.
