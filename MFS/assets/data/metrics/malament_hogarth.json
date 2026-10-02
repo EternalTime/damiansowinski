@@ -45,6 +45,11 @@
       "id": "minkowski",
       "kind": "conformal",
       "text": "Earman and Norton's toy example of 1993 is Minkowski space with one event removed and the metric multiplied by a factor that grows without bound toward it [earman1993]. Its light cones are Minkowski's, and Minkowski space itself is globally hyperbolic, so it lacks the property."
+    },
+    {
+      "id": "nordstrom_scalar",
+      "kind": "family",
+      "text": "The same line element with a field equation for the factor. In Nordström's theory of gravity $\\Omega$ is the gravitational potential, fixed by the matter [einstein1914fokker]."
     }
   ],
   "references": [
@@ -54,7 +59,8 @@
     "etesi2002",
     "shagrir2003",
     "welch2008",
-    "manchak2010"
+    "manchak2010",
+    "einstein1914fokker"
   ],
   "coordinates": [
     {

@@ -355,6 +355,26 @@
       "text": "Schwarzschild's black hole is two solitons on flat space with no rotation, in Belinski and Zakharov's inverse scattering method [belinskii1979]."
     },
     {
+      "id": "nordstrom_scalar",
+      "kind": "programme",
+      "text": "The field of a point mass in the scalar theory Einstein's displaced. Nordström's metric is $(1 - GM/c^2r)^2$ times Minkowski's: the same redshift to first order, light that goes straight, and a perihelion that turns backwards [deruelle2011]."
+    },
+    {
+      "id": "born_infeld_charge",
+      "kind": "generalisation",
+      "text": "Schwarzschild's mass with a charge whose field obeys Born and Infeld's electrodynamics. The mass inside a sphere then grows with its radius, by the energy of the field, and reaches $r_s/2$ far away [hoffmann1935, gibbonsrasheed1995]."
+    },
+    {
+      "id": "exponential_metric",
+      "kind": "family",
+      "text": "Papapetrou's and Yilmaz's metric with no horizon, $g_{tt} = -e^{-2m/r}$ with $m = GM/c^2$ in isotropic coordinates. It agrees with Schwarzschild's at first order in $m/r$ and has a wormhole's throat where the horizon would be [boonserm2018]."
+    },
+    {
+      "id": "rp3_geon",
+      "kind": "locally_same",
+      "text": "Schwarzschild's black hole with its second exterior folded onto the first, opposite points of each sphere made one. Outside the horizon nothing changes, and no light sent in from far away comes back out through the fold [friedman1993]."
+    },
+    {
       "id": "erez_rosen",
       "kind": "generalisation",
       "text": "Schwarzschild's mass with a quadrupole moment added, in a number $q$. Any $q \\neq 0$ turns the horizon into a naked singularity, which Doroshkevich, Zel'dovich, and Novikov used to argue that a collapsing star sheds its quadrupole [doroshkevich1965]."
@@ -457,6 +477,11 @@
     "novikov1965",
     "lindquist1957",
     "belinskii1979",
+    "deruelle2011",
+    "hoffmann1935",
+    "gibbonsrasheed1995",
+    "boonserm2018",
+    "friedman1993",
     "doroshkevich1965"
   ],
   "coordinates": [
