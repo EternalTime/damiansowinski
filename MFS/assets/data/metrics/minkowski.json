@@ -238,6 +238,11 @@
       "id": "moving_mirror",
       "kind": "locally_same",
       "text": "Two dimensions of Minkowski space with a mirror for a left edge. Let the mirror accelerate and the empty space to its right fills with radiation, thermal if the mirror's world line closes on a light ray [fulling1976, davies1977]."
+    },
+    {
+      "id": "tilted_universes",
+      "kind": "locally_same",
+      "text": "The flat model of the whimper is a part of Minkowski space. George Ellis and A. R. King painted world lines on it that a boost carries into one another, and found a Cauchy horizon with nothing curved anywhere [ellis1974]."
     }
   ],
   "references": [
@@ -311,7 +316,8 @@
     "brill1959",
     "hruska2019",
     "fulling1976",
-    "davies1977"
+    "davies1977",
+    "ellis1974"
   ],
   "coordinates": [
     {

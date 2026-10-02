@@ -4874,6 +4874,10 @@ class Slices(unittest.TestCase):
               "small_universes/hyperbolic/radial",
               # Hiscock's simplest model, a hole made and removed by two shells, another spacetime than the one embedded.
               "hiscock/ingoing/shells",
+              # The flat model of the whimper, another spacetime than Farnsworth's dust, whose surface of
+              # homogeneity is embedded.
+              "tilted_universes/flat_model/model", "tilted_universes/inertial/model",
+              "conformal tilted_universes/flat_model", "conformal tilted_universes/inertial",
               # Up to the shock the spheres through Hotta and Tanaka's ring meet the equatorial plane of the
               # conformally flat chart only as eta goes to minus infinity, and lie on the edge of the Kundt chart.
               "hotta_tanaka/conformally_flat/equator", "hotta_tanaka/kundt/equator", "hotta_tanaka/kundt/near",
@@ -5397,6 +5401,10 @@ class Slices(unittest.TestCase):
             # time across every cell, at the conformal time 2 (3t/2)^(1/3) on the conformal chart.
             height = 2 * (1.5 * t) ** (1 / 3) if key.split("/")[1] == "torus_conformal" else t
             return (lambda X: height), None
+        if key.startswith("tilted_universes/"):
+            # Farnsworth's dust is embedded on its surface eta = 3, which is u = (sinh 3 - 3)/2 W, from its rim up.
+            height = 3.0 if key.split("/")[1] == "farnsworth" else (math.sinh(3.0) - 3.0) / 2
+            return (lambda X: height), list(self.reach(surface))
         if key == "small_universes/horn/along":
             # The horn is embedded at the moment a = a_0, ct = (6/5 - (11/50) ln 11) a_0, from its rim up.
             return (lambda X: 1.2 - 0.22 * math.log(11)), list(self.reach(surface))
@@ -6812,6 +6820,15 @@ class Slices(unittest.TestCase):
                         self.assertTrue(all(X >= -1e-9 for X, _ in points), where)
                         v_end = 4 + 4 * math.tan(qs[-1])
                         self.assertLess(abs((v_end - t) - 6), 2e-2 * (1 + v_end * v_end / 16), where)
+                    elif metric_id == "tilted_universes":
+                        # tan p = V and tan q = U are k e^(r/a) and k' e^(-r/a) on a surface of constant eta, so
+                        # their product is one number along the slice, positive above the horizon, and the
+                        # slice runs from the rim toward the whimper, q falling.
+                        products = [math.tan((T - X) / 2) * math.tan((T + X) / 2) for X, T in points]
+                        self.assertGreater(min(products), 0, where)
+                        self.assertLess(max(products) - min(products), 2e-2 * max(products), where)
+                        qs = [(T + X) / 2 for X, T in points]
+                        self.assertTrue(all(b < a for a, b in zip(qs, qs[1:])), where)
                     else:
                         self.assertTrue(all(abs(T) < 2e-4 for _, T in points), where)
 

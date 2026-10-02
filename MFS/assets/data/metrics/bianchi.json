@@ -69,6 +69,11 @@
       "id": "small_universes",
       "kind": "family",
       "text": "Friedmann universes whose space is a torus, which keeps the homogeneity of space and gives up its isotropy. Ya. B. Zel'dovich and A. A. Starobinskii put a universe that expands at three different rates on such a torus in 1984 [zeldovich1984]."
+    },
+    {
+      "id": "tilted_universes",
+      "kind": "special_case",
+      "text": "Bianchi universes whose matter drifts through the surfaces of homogeneity. A. R. King and George Ellis worked out in 1973 how the expansion, the rotation, and the shear of such matter go with the group type [king1973]."
     }
   ],
   "references": [
@@ -87,7 +92,8 @@
     "terzis2009",
     "tafel1973",
     "kopczynski1973",
-    "zeldovich1984"
+    "zeldovich1984",
+    "king1973"
   ],
   "coordinates": [
     {

@@ -1739,6 +1739,14 @@ DIMENSIONS = {
     # The horn's x, y and z are pure numbers, y and z flat coordinates on the horospheres of hyperbolic
     # space with pure numbers for periods, and the scale factor is again the radius of curvature.
     ("small_universes", "horn"): {"t": "T", "x": "1", "y": "1", "z": "1", "a": "L", "b_2": "1", "b_3": "1"},
+    # The tilted universes of Bianchi's type V: r, y and z are pure numbers, as the horn's are, the
+    # time u = ct + Cr of the surfaces of homogeneity is a length, and so are the tilt C, the two
+    # scale factors X and Y, and W, which sets the density of Farnsworth's dust; his parameter eta
+    # is a pure number. The flat model's inertial coordinates are a time and three lengths.
+    ("tilted_universes", "homogeneous"): {"u": "L", "r": "1", "y": "1", "z": "1", "C": "L", "X": "L", "Y": "L"},
+    ("tilted_universes", "farnsworth"): {"\\eta": "1", "r": "1", "y": "1", "z": "1", "C": "L", "W": "L", "X": "L"},
+    ("tilted_universes", "flat_model"): {"u": "L", "r": "1", "y": "1", "z": "1", "C": "L"},
+    ("tilted_universes", "inertial"): {"T": "T", "x": "L", "\\xi": "L", "\\zeta": "L", "C": "L"},
     # Hartle and Thorne's exterior: the mass and the spin per unit mass are lengths and the
     # quadrupole moment per unit mass an area, so that Kerr's value is q = a^2. R, the star's
     # radius, enters the domain alone, and the rest are names for the functions of r and theta the

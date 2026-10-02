@@ -13675,6 +13675,216 @@ def small_universes_horn(ck, src):
     return v
 
 
+class TiltedDust:
+    """Farnsworth's tilted dust on its plane of eta and r at W = C = 1, y and z held fixed, each
+    point a plane, and the null coordinates that carry it across its Cauchy horizon.
+
+    The metric on the plane is -(Y d eta - C dr)^2 + X^2 dr^2 with Y = sinh^2(eta/2) and
+    X = Y - coth(eta/2), so a ray has dr/d eta = Y/(C + X) or Y/(C - X) and keeps r - F_+(eta) or
+    r - F_-(eta), the integrals of the two. X runs from 0 at eta_s = 1.9684, the singularity, through
+    C at eta_H = 2.3730, the horizon, where the second integrand has a simple pole of residue -a,
+    a = Y/(dX/d eta) there. So F_- = G - a ln|eta - eta_H| + a ln(eta_H - eta_s) with G the integral of
+    Y/(C - X) + a/(eta - eta_H), which is regular, and
+
+        V = (eta - eta_H)/(eta_H - eta_s) e^((r - G)/a),    U = e^(-(r - F_+)/a)
+
+    are null coordinates regular on the horizon, V = 0, as Kruskal's are on Schwarzschild's. With
+    p = arctan V and q = arctan U: on the singularity -V U = 1, the line X = q - p = pi/2; r -> +infinity
+    is q = 0; and eta -> infinity is p = pi/2 or q = pi/2. The flat model has the same shape with
+    V = cT - x = (u - C) e^r and U = cT + x = (u + C) e^(-r)."""
+
+    def __init__(self):
+        tables = nr.tilted_null_tables()
+        self.eta_s, self.eta_H, self.a = tables["eta_s"], tables["eta_H"], tables["a"]
+        self.etas, self.F_plus, self.G, self.affine = (tables[k] for k in ("etas", "F_plus", "G", "affine"))
+
+    @staticmethod
+    def scale(eta):
+        h = np.asarray(eta, dtype=float) / 2
+        Y = np.sinh(h) ** 2
+        return Y, Y - np.cosh(h) / np.sinh(h)
+
+    @staticmethod
+    def eta_of(u):
+        """Farnsworth's parameter at the time u: the root of (sinh(eta) - eta)/2 = u, by Newton's method."""
+        u = np.asarray(u, dtype=float)
+        eta = np.where(u < 1, np.cbrt(12 * u), np.log(4 * u + 4))
+        for _ in range(60):
+            eta = eta - (np.sinh(eta) - eta - 2 * u) / np.maximum(np.cosh(eta) - 1, 1e-300)
+        return eta
+
+    def pq(self, eta, r):
+        eta, r = np.asarray(eta, dtype=float), np.asarray(r, dtype=float)
+        G, F = np.interp(eta, self.etas, self.G), np.interp(eta, self.etas, self.F_plus)
+        side = (eta - self.eta_H) / (self.eta_H - self.eta_s)
+        with np.errstate(all="ignore"):
+            p = np.sign(side) * atan_exp((r - G) / self.a + np.log(np.abs(side)))
+        return np.where(side == 0, 0.0, p), atan_exp(-(r - F) / self.a)
+
+    def pq_u(self, u, r):
+        return self.pq(self.eta_of(u), r)
+
+    def functions(self, u, r):
+        """X and Y of the homogeneous chart with their first two derivatives along u."""
+        eta = self.eta_of(u)
+        Y, X = self.scale(eta)
+        P = np.cosh(eta / 2) / np.sinh(eta / 2)
+        Y2 = -(P ** 2 - 1) / (2 * Y)
+        Y3 = P * (P ** 2 - 1) / Y ** 2
+        return {"X": (X, P - Y2, Y2 - Y3), "Y": (Y, P, Y2)}
+
+
+def tilted_flat_pq(u, r):
+    """The flat model in Minkowski's diamond: V = cT - x = (u - C) e^r and U = cT + x = (u + C) e^(-r) at C = 1."""
+    u, r = np.asarray(u, dtype=float), np.asarray(r, dtype=float)
+    with np.errstate(all="ignore"):
+        p = np.sign(u - 1) * atan_exp(r + np.log(np.abs(u - 1)))
+    return np.where(u == 1, 0.0, p), atan_exp(np.log(u + 1) - r)
+
+
+def tilted_universes(ck, src):
+    """Farnsworth's tilted dust and the flat model of the whimper, each on its plane of the time and r,
+    y and z held fixed, which the reflections of y and of z leave fixed, so it is totally geodesic.
+
+    Both fill one quadrilateral of Minkowski's diamond, TiltedDust's: the corner (pi/2, -pi/2), the
+    corner (-pi/2, pi/2), i+ at (0, pi) and the corner (pi/2, pi/2). Its right edge, X = pi/2, is
+    where the matter begins: Farnsworth's singularity X = 0, on which the published Kretschmann
+    scalar is checked to diverge, and in the flat model the hyperbola every line of the matter
+    touches. Its lower left edge, q = 0, is r -> infinity: the whimper, which the generators of the
+    horizon reach at a finite affine distance, with the published Kretschmann scalar finite. The
+    horizon is p = 0, from the origin to (pi/2, pi/2), and the two upper edges are reached by a ray
+    only at an infinite value of its affine parameter, the integral of X Y d eta."""
+    dust = TiltedDust()
+    fixed = {"y": "0", "z": "0"}
+    far = Plane(src, "tilted_universes", "farnsworth", ("\\eta", "r"), fixed, nr.TILTED_DUST)
+    hom = Plane(src, "tilted_universes", "homogeneous", ("u", "r"), fixed, {"C": 1}, numeric=["X", "Y"])
+    flat = Plane(src, "tilted_universes", "flat_model", ("u", "r"), fixed, {"C": 1})
+    inertial = Plane(src, "tilted_universes", "inertial", ("T", "x"), {"xi": "0", "zeta": "0"}, {"C": 1})
+    up = lambda a, b: (1, 0)  # noqa: E731
+    ck.chart("tilted universes, Farnsworth's dust", far, dust.pq, ck.uniform(dust.eta_s + 0.01, 8), ck.uniform(-3, 3), up)
+    ck.chart("tilted universes, the homogeneous time", hom, dust.pq_u, ck.uniform(0.8, 30), ck.uniform(-3, 3), up,
+             dust.functions)
+    ck.chart("tilted universes, the flat model", flat, tilted_flat_pq, ck.uniform(0.01, 30), ck.uniform(-3, 3), up)
+    ck.chart("tilted universes, inertial coordinates", inertial, mink_pq, ck.uniform(-20, 20), ck.uniform(-20, 20), up)
+    r = ck.uniform(-3, 3, 50)
+    ck.diverges("tilted universes: X = 0 is a curvature singularity",
+                far.kretschmann(np.full(50, dust.eta_s + 1e-4), r), far.kretschmann(np.full(50, dust.eta_s + 1e-5), r))
+    ck.finite("tilted universes: the Kretschmann scalar is finite on the horizon and toward the whimper",
+              far.kretschmann(np.full(50, dust.eta_H), np.linspace(0, 40, 50)))
+    p, q = dust.pq(np.full(50, dust.eta_s), r)
+    ck.limit("tilted universes: the singularity X = 0 lands on X = pi/2", q - p, np.full(50, HALF), 1e-9)
+    p, q = dust.pq(np.full(50, dust.eta_H), r)
+    ck.limit("tilted universes: the horizon X = C lands on p = 0", p, np.zeros(50), 1e-12)
+    p, q = dust.pq(np.full(50, 3.0), np.full(50, 400.0))
+    ck.limit("tilted universes: r -> infinity lands on q = 0", q, np.zeros(50), 1e-12)
+    p, q = dust.pq(np.full(50, 59.0), r)
+    ck.limit("tilted universes: eta -> infinity lands on i+", np.concatenate([p, q]), np.full(100, HALF), 1e-6)
+    ck.limit("tilted universes: the upper edges are at infinite affine parameter",
+             [float(1 / np.interp(e, dust.etas, dust.affine)) for e in (20.0, 40.0)], [0.0, 0.0], 1e-10)
+    # The flat model is the inertial chart along cT - x = (u - C) e^r and cT + x = (u + C) e^(-r).
+    u, rr = ck.uniform(0.01, 5, 50), ck.uniform(-2, 2, 50)
+    T, x = (u * np.cosh(rr) - np.sinh(rr)), (np.cosh(rr) - u * np.sinh(rr))
+    pf, qf = tilted_flat_pq(u, rr)
+    pm, qm = mink_pq(T, x)
+    ck.limit("tilted universes: the flat model is the inertial chart carried along its map",
+             np.concatenate([pf - pm, qf - qm]), np.zeros(100), 1e-9)
+
+    A, O, B, top, E = [HALF, -HALF], [0.0, 0.0], [-HALF, HALF], [0.0, PI], [HALF, HALF]
+    region = [A, B, top, E]
+    box = [-HALF - 0.55, HALF + 0.55, -HALF - 0.3, PI + 0.3]
+    views = []
+
+    def frame(v, matter):
+        v.fill("region", region)
+        v.fill("cover", region)
+        v.line("horizon", [[O, E]])
+        v.line("scri", [[B, top], [top, E]])
+        v.layers.append({"kind": "point", "class": "infinity", "at": [0.0, round(PI, 4)]})
+        v.label_xt(top, "$i^+$", "b", dy=-6)
+        v.label_xt([-HALF / 2, 1.5 * HALF], "$\\mathscr{I}^+$", "br", dx=-5, dy=-3)
+        v.label_xt([HALF / 2, 1.5 * HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        if matter:
+            v.label_xt([HALF, 0], matter, "l", dx=6)
+        v.legend("scri", "future null infinity $\\mathscr{I}^+$")
+
+    rs = (-3, -1.5, 0, 1.5, 3)
+    r_legend = "$r$ constant, at $0$, $\\pm 3/2$, and $\\pm 3$: the world lines of the {matter}"
+    whimper = ("the whimper, $r \\to \\infty$, where the rays along the horizon end at a finite affine distance "
+               "and the Kretschmann scalar stays finite")
+    bang = "the singularity $X = 0$, where the density and the Kretschmann scalar diverge"
+    for vid, label, system, fmap, times, s, t_legend in (
+            ("farnsworth", "Farnsworth's dust", "farnsworth", dust.pq, (2.1, 2.25, 2.6, 3, 4, 6),
+             spread(dust.eta_s, np.inf, 500, 12),
+             "$\\eta$ constant, the surfaces of homogeneity: timelike at $2.1$ and $2.25$, under the horizon, and "
+             "spacelike at $2.6$, $3$, $4$, and $6$"),
+            ("homogeneous", "Homogeneous time", "homogeneous", dust.pq_u, (1, 1.25, 2, 3, 5, 10),
+             spread(float(nr.TILTED_U_S), np.inf, 500, 12),
+             "$u$ constant, the surfaces of homogeneity: timelike at $W$ and $5W/4$, under the horizon, and "
+             "spacelike at $2W$, $3W$, $5W$, and $10W$")):
+        v = View(vid, label, box, system)
+        frame(v, "$X = 0$")
+        grid(v, "r", lambda c, t, fmap=fmap: fmap(t, c), rs, s)
+        grid(v, "t", fmap, times, S_ALL)
+        v.line("singular", [[E, A]], zig=True)
+        v.line("singular", [[A, B]], zig=True)
+        v.label_xt([-0.45, 0.45], "the whimper", "tr", dx=-6, dy=4)
+        v.legend("cover", "the whole of the dust's spacetime, which $r$ covers with $\\eta$ or with $u$")
+        v.legend("r", r_legend.format(matter="dust"))
+        v.legend("t", t_legend)
+        v.legend("horizon", "the Cauchy horizon, $X = C$, a null surface of homogeneity")
+        v.legend("singular", bang)
+        v.legend("singular", whimper)
+        v.set(input=nr.TILTED_INPUT)
+        for m in slices.moments("tilted_universes", label=slices.TILTED_LABEL):
+            reach = np.linspace(*m.reach("farnsworth", "r"), 200)
+            v.slice(m, [dust.pq(np.full_like(reach, slices.TILTED_MOMENT), reach)])
+        views.append(v)
+
+    v = View("flat_model", "Flat model", box, "flat_model")
+    frame(v, "$u = 0$")
+    grid(v, "r", lambda c, t: tilted_flat_pq(t, c), rs, S_POS)
+    grid(v, "t", tilted_flat_pq, (0.5, 0.75, 1.5, 2, 3, 5), S_ALL)
+    v.line("boundary", [[E, A]])
+    v.line("boundary", [[A, B]])
+    v.point("removed", (0, 0))
+    v.label_xt([-0.45, 0.45], "$x = -cT$", "tr", "coord", dx=-6, dy=4)
+    v.legend("cover", "the part of Minkowski space the matter fills, which $u$ and $r$ cover")
+    v.legend("r", r_legend.format(matter="matter, straight lines"))
+    v.legend("t", "$u$ constant, the surfaces of homogeneity: timelike at $C/2$ and $3C/4$, under the horizon, and "
+                  "spacelike at $3C/2$, $2C$, $3C$, and $5C$")
+    v.legend("horizon", "the Cauchy horizon, $u = C$, half of the light cone of the origin")
+    v.legend("boundary", "the hyperbola $u = 0$, which every line of the matter touches, on the right, and the null "
+                         "line $x = -cT$, which none reaches, on the lower left")
+    v.legend("removed", "the origin, where the rays along the horizon end")
+    v.set(settings="$C = 1$, the scale of $p = \\arctan((cT - x)/C)$ and $q = \\arctan((cT + x)/C)$.")
+    views.append(v)
+
+    def clipped(T, x):
+        T, x = np.asarray(T, dtype=float), np.asarray(x, dtype=float)
+        p, q = mink_pq(T, x)
+        inside = (T + x > 0) & (x * x - T * T < 1)
+        return np.where(inside, p, np.nan), np.where(inside, q, np.nan)
+
+    v = View("inertial", "Inertial coordinates", box, "inertial")
+    frame(v, None)
+    grid(v, "r", lambda c, t: clipped(t, c), (-2, -1, 0, 1, 2), S_ALL)
+    grid(v, "t", clipped, (-1, 0, 1, 2, 4), S_ALL)
+    v.line("boundary", [[E, A]])
+    v.line("boundary", [[A, B]])
+    v.point("removed", (0, 0))
+    v.label_xt([-0.45, 0.45], "$x = -cT$", "tr", "coord", dx=-6, dy=4)
+    v.legend("cover", "the part of Minkowski space the matter fills, which $T$ and $x$ cover")
+    v.legend("r", "$x$ constant, at $0$, $\\pm C$, and $\\pm 2C$")
+    v.legend("t", "$cT$ constant, at $-C$, $0$, $C$, $2C$, and $4C$")
+    v.legend("horizon", "the Cauchy horizon, $x = cT$, half of the light cone of the origin")
+    v.legend("boundary", "the hyperbola $x^2 - c^2T^2 = C^2$, which every line of the matter touches, on the right, "
+                         "and the null line $x = -cT$, which none reaches, on the lower left")
+    v.legend("removed", "the origin, where the rays along the horizon end")
+    v.set(settings="$C = 1$, the scale of $p = \\arctan((cT - x)/C)$ and $q = \\arctan((cT + x)/C)$.")
+    views.append(v)
+    return views
+
+
 def levi_civita(ck, src):
     """Levi-Civita's half plane of fixed phi and z at sigma = 1/4, in Weyl's coordinates and in
     the Kasner form.
@@ -20375,6 +20585,7 @@ DRAWN = {
     "curzon_chazy": curzon_chazy,
     "kopczynski_trautman": kopczynski_trautman,
     "small_universes": small_universes,
+    "tilted_universes": tilted_universes,
     "bonnor_rotating_dust": bonnor_rotating_dust,
     "double_kerr": double_kerr,
     "neugebauer_meinel": neugebauer_meinel,
@@ -23156,6 +23367,40 @@ CAPTIONS = {
         "The big bang is the segment along the bottom, and the two upper edges are future null infinity, one far "
         "down the horn, where the tori are large, and one far up it, where they are small. A ray reaches either "
         "only at an infinite value of its affine parameter.",
+    ],
+    ("tilted_universes", "farnsworth"): [
+        "The plane of $\\eta$ and $r$ of Farnsworth's dust at $y = z = 0$, each point in the diagram a plane of $y$ "
+        "and $z$. A ray keeps $r - \\int Y\\,d\\eta/(C + X)$ or $r - \\int Y\\,d\\eta/(C - X)$, with "
+        "$Y = W\\sinh^2(\\eta/2)$, and the second integrand has a pole on the horizon, so $p$ and $q$ are the "
+        "arctangents of exponentials of the two, as Kruskal's coordinates are of Schwarzschild's.",
+        "The dust leaves the timelike singularity $X = 0$ on the right, crosses the Cauchy horizon into the "
+        "homogeneous universe above it, and ends at $i^+$. The lower left edge is the whimper: a ray along the "
+        "horizon reaches it at a finite affine distance into the past, with the density and the Kretschmann "
+        "scalar finite all the way. Ellis and King drew this shape for a universe that begins with both a "
+        "whimper and a bang [ellis1974].",
+    ],
+    ("tilted_universes", "homogeneous"): [
+        "The same plane ruled by the time $u$ of the surfaces of homogeneity, each point in the diagram a plane "
+        "of $y$ and $z$. Under the horizon the surfaces of constant $u$ are timelike and run from the lower "
+        "corner to the right corner, and above it they are spacelike and cross the whole universe from left to "
+        "right.",
+        "The universe above the horizon is spatially homogeneous, and the region under it is stationary: the "
+        "motion along a surface of constant $u$ is a motion in time there. Each world line of the dust spends "
+        "the time $0.70\\,W/c$ under the horizon.",
+    ],
+    ("tilted_universes", "flat_model"): [
+        "The plane of $u$ and $r$ of the flat model at $y = z = 0$, a part of Minkowski's diamond, with "
+        "$p = \\arctan((u - C)e^r/C)$ and $q = \\arctan((u + C)e^{-r}/C)$. The matter leaves the hyperbola $u = 0$ "
+        "on the right, crosses the Cauchy horizon, and fills the inside of the future light cone of the origin, "
+        "where the surfaces of constant $u$ are spacelike.",
+        "The lower left edge is the null line $x = -cT$ of the inertial coordinates, which the lines of the "
+        "matter approach as $r \\to \\infty$. Space is flat there, and only the matter ends on it: a ray along "
+        "the horizon, followed into the past, crosses every line of the matter before it reaches the origin.",
+    ],
+    ("tilted_universes", "inertial"): [
+        "The same part of Minkowski's diamond ruled by the inertial coordinates $T$ and $x$ at $\\xi = \\zeta = 0$, with "
+        "$p, q = \\arctan((cT \\mp x)/C)$. The right edge is the hyperbola $x^2 - c^2T^2 = C^2$ and the lower left "
+        "edge the null line $x = -cT$.",
     ],
     ("melvin", "cylindrical"): [
         "The half plane of $t$ and $\\rho$ of Melvin's universe at fixed $\\phi$ and $z$, totally geodesic. The metric "

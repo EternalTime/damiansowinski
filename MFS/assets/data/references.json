@@ -1,5 +1,5 @@
 {
-  "version": "33e192772ab33499",
+  "version": "165459a4d7f47589",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -26060,6 +26060,165 @@
         "eprint": "1012.2324",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/1012.2324"
+      }
+    },
+    "king1973": {
+      "type": "article",
+      "fields": {
+        "title": "Tilted homogeneous cosmological models",
+        "author": "King, A. R. and Ellis, G. F. R.",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "31",
+        "number": "3",
+        "pages": "209--242",
+        "year": "1973",
+        "doi": "10.1007/BF01646266",
+        "url": "https://doi.org/10.1007/BF01646266"
+      }
+    },
+    "ellis1974": {
+      "type": "article",
+      "fields": {
+        "title": "Was the big bang a whimper?",
+        "author": "Ellis, G. F. R. and King, A. R.",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "38",
+        "number": "2",
+        "pages": "119--156",
+        "year": "1974",
+        "doi": "10.1007/BF01651508",
+        "url": "https://doi.org/10.1007/BF01651508"
+      }
+    },
+    "farnsworth1967": {
+      "type": "article",
+      "fields": {
+        "title": "Some New General Relativistic Dust Metrics Possessing Isometries",
+        "author": "Farnsworth, David L.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "8",
+        "number": "12",
+        "pages": "2315--2317",
+        "year": "1967",
+        "doi": "10.1063/1.1705157",
+        "url": "https://doi.org/10.1063/1.1705157"
+      }
+    },
+    "shepley1969": {
+      "type": "article",
+      "fields": {
+        "title": "A cosmological model in which \"singularity\" does not require a \"matter singularity\"",
+        "author": "Shepley, L. C.",
+        "journal": "Physics Letters A",
+        "volume": "28",
+        "number": "10",
+        "pages": "695--696",
+        "year": "1969",
+        "doi": "10.1016/0375-9601(69)90692-6",
+        "url": "https://doi.org/10.1016/0375-9601(69)90692-6"
+      }
+    },
+    "collins1974": {
+      "type": "article",
+      "fields": {
+        "title": "Tilting at cosmological singularities",
+        "author": "Collins, C. B.",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "39",
+        "number": "2",
+        "pages": "131--151",
+        "year": "1974",
+        "doi": "10.1007/BF01608392",
+        "url": "https://doi.org/10.1007/BF01608392"
+      }
+    },
+    "siklos1978": {
+      "type": "article",
+      "fields": {
+        "title": "Occurrence of whimper singularities",
+        "author": "Siklos, S. T. C.",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "58",
+        "number": "3",
+        "pages": "255--272",
+        "year": "1978",
+        "doi": "10.1007/BF01614223",
+        "url": "https://doi.org/10.1007/BF01614223"
+      }
+    },
+    "eliot1925": {
+      "type": "book",
+      "fields": {
+        "title": "Poems 1909--1925",
+        "author": "Eliot, T. S.",
+        "publisher": "Faber and Gwyer",
+        "address": "London",
+        "year": "1925",
+        "url": "https://openlibrary.org/works/OL1142276W"
+      }
+    },
+    "secrest2021": {
+      "type": "article",
+      "fields": {
+        "title": "A Test of the Cosmological Principle with Quasars",
+        "author": "Secrest, Nathan J. and von Hausegger, Sebastian and Rameez, Mohamed and Mohayaee, Roya and Sarkar, Subir and Colin, Jacques",
+        "journal": "The Astrophysical Journal Letters",
+        "volume": "908",
+        "number": "2",
+        "pages": "L51",
+        "year": "2021",
+        "doi": "10.3847/2041-8213/abdd40",
+        "eprint": "2009.14826",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2009.14826"
+      }
+    },
+    "krishnan2023": {
+      "type": "article",
+      "fields": {
+        "title": "Dipole cosmology: the {Copernican} paradigm beyond {FLRW}",
+        "author": "Krishnan, Chethan and Mondol, Ranjini and Sheikh-Jabbari, M. M.",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2023",
+        "number": "07",
+        "pages": "020",
+        "year": "2023",
+        "doi": "10.1088/1475-7516/2023/07/020",
+        "eprint": "2209.14918",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2209.14918"
+      }
+    },
+    "allahyari2025": {
+      "type": "article",
+      "fields": {
+        "title": "Big Bang in dipole cosmology",
+        "author": "Allahyari, A. and Ebrahimian, E. and Mondol, R. and Sheikh-Jabbari, M. M.",
+        "journal": "The European Physical Journal C",
+        "volume": "85",
+        "number": "2",
+        "pages": "119",
+        "year": "2025",
+        "doi": "10.1140/epjc/s10052-025-13799-6",
+        "eprint": "2307.15791",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2307.15791"
+      }
+    },
+    "anton2023": {
+      "type": "article",
+      "fields": {
+        "title": "Modelling the emergence of cosmic anisotropy from non-linear structures",
+        "author": "Anton, Theodore and Clifton, Timothy",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "40",
+        "number": "14",
+        "pages": "145004",
+        "year": "2023",
+        "doi": "10.1088/1361-6382/acdbfd",
+        "eprint": "2302.05715",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2302.05715"
       }
     }
   }

@@ -14,7 +14,7 @@ israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, mi
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
 born_infeld_charge, penrose_impulsive_wave, exponential_metric, petrov_homogeneous, rp3_geon,
 kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kasner_scalar, moving_mirror,
-gravitational_instantons and small_universes, and Godel's
+gravitational_instantons, small_universes and tilted_universes, and Godel's
 cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
@@ -37,7 +37,7 @@ majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photo
 witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, mass_inflation.md,
 kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_star.md,
 misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, petrov_homogeneous.md,
-brill_waves.md and gravitational_instantons.md beside this file.
+brill_waves.md, gravitational_instantons.md and tilted_universes.md beside this file.
 """
 import argparse
 import fcntl
@@ -23485,6 +23485,357 @@ def small_universes_check(chart, system):
 
 
 CHARTS["small_universes"] = [lambda s=s: small_universes(s) for s in SMALL_CHARTS]
+
+
+# -- Tilted universes and the whimper ------------------------------------------------------
+
+TILTED_CHARTS = ("homogeneous", "farnsworth", "flat_model", "inertial")
+TILTED_REALS = "(-\\infty, \\infty)"
+TILTED_SPACE = ["r \\in " + TILTED_REALS, "y \\in " + TILTED_REALS, "z \\in " + TILTED_REALS]
+TILTED_PLANES = "\\left(dy^2 + dz^2\\right)"
+TILTED_X = "X = W\\sinh^2(\\eta/2) - C\\coth(\\eta/2)"
+TILTED_NAMED = sp.Symbol("TILTEDX", positive=True)
+
+
+def tilted_universes(system):
+    """Tilted homogeneous universes, King and Ellis, Commun. Math. Phys. 31, 209 (1973), and the
+    whimper of Ellis and King, Commun. Math. Phys. 38, 119 (1974), on the simplest of them, the
+    locally rotationally symmetric universes of Bianchi's type V, whose dust solution is
+    Farnsworth's, J. Math. Phys. 8, 2315 (1967).
+
+    Four charts. The homogeneous chart is Farnsworth's comoving chart with u = ct + Cr for its time,
+    -(du - C dr)^2 + X(u)^2 dr^2 + e^(-2r) Y(u)^2 (dy^2 + dz^2), X and Y free, so no component assumes
+    a field equation: the surfaces of homogeneity are those of constant u, the matter moves along
+    the lines of constant r, y and z, and C is the tilt. Farnsworth's chart writes his dust solution
+    in the parameter eta of the open Friedmann universe, Y = W sinh^2(eta/2), du = Y d eta and
+    X = Y - C dY/du = W sinh^2(eta/2) - C coth(eta/2). The flat model is its member with no matter,
+    W = 0, where Y = u + C and X = u, which is Minkowski space: Ellis and King's model of the
+    whimper with the two dimensions they left out. The inertial chart is the same space in the
+    coordinates in which it is flat. tilted_universes.md records each chart's source."""
+    def check(chart):
+        return tilted_universes_check(chart, system)
+    if system == "homogeneous":
+        coords, parameters = ["u", "r", "y", "z"], ["C", "X = X(u)", "Y = Y(u)"]
+        line = "ds^2 = -\\left(du - C\\,dr\\right)^2 + X^2dr^2 + e^{-2r}Y^2" + TILTED_PLANES
+        probe = vm.Reader(coords, parameters, ())
+        X, Y, C = probe.parameters["X"], probe.parameters["Y"], probe.parameters["C"]
+        return {
+            "metric_id": "tilted_universes",
+            "system": {"id": system, "name": "Homogeneous Time", "coords": coords,
+                       "domains": ["u \\in " + TILTED_REALS] + TILTED_SPACE
+                       + ["X = C \;\\text{(a Cauchy horizon)}"],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"primed": ["X", "Y"], "lead": [X, Y, C]},
+            "components": {"metric_components": {("r", "r"): "X^2 - C^2"}},
+            "check": check,
+        }
+    if system == "farnsworth":
+        coords, parameters = ["\\eta", "r", "y", "z"], ["C", "W", TILTED_X]
+        line = ("ds^2 = -\\left(W\\sinh^2(\\eta/2)\\,d\\eta - C\\,dr\\right)^2 + X^2dr^2"
+                " + W^2e^{-2r}\\sinh^4(\\eta/2)" + TILTED_PLANES)
+        probe = vm.Reader(coords, parameters, ())
+        eta = probe.symbol["\\eta"]
+        forms = TiltedParametric(probe)
+        return {
+            "metric_id": "tilted_universes",
+            "system": {"id": system, "name": "Farnsworth's Dust", "coords": coords,
+                       "domains": ["\\eta \\in (0, \\infty)"] + TILTED_SPACE
+                       + ["X > 0 \;\\text{(where the density is positive)}",
+                          "X = C \;\\text{(the Cauchy horizon)}"],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [TILTED_NAMED, probe.parameters["W"], probe.parameters["C"]],
+                        "arguments": {eta / 2: "\\eta/2"}, "overrides": {TILTED_NAMED: "X"}},
+            "pretty": forms.pretty,
+            "components": {"metric_components": {("r", "r"): "X^2 - C^2"},
+                           "inverse_metric_components": {("r", "r"): "\\dfrac{1}{X^2}"}},
+            "ricci_scalar": "\\dfrac{3}{W\\,X\\sinh^4(\\eta/2)}",
+            "kretschmann": ("\\dfrac{3\\left(5W^2\\sinh^6(\\eta/2) + 4C^2\\cosh^2(\\eta/2)\\right)}"
+                            "{W^4\\,X^2\\sinh^{14}(\\eta/2)}"),
+            "check": check,
+        }
+    if system == "flat_model":
+        coords, parameters = ["u", "r", "y", "z"], ["C"]
+        line = "ds^2 = -\\left(du - C\\,dr\\right)^2 + u^2dr^2 + e^{-2r}\\left(u + C\\right)^2" + TILTED_PLANES
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "tilted_universes",
+            "system": {"id": system, "name": "Flat Model", "coords": coords,
+                       "domains": ["u \\in (0, \\infty)"] + TILTED_SPACE
+                       + ["u = C \;\\text{(the Cauchy horizon)}"],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [probe.symbol["u"], probe.parameters["C"]]},
+            "components": {"metric_components": {("r", "r"): "u^2 - C^2"}},
+            "bare_scalar": True,
+            "check": check,
+        }
+    coords, parameters = ["T", "x", "\\xi", "\\zeta"], ["C"]
+    probe = vm.Reader(coords, parameters, ())
+    return {
+        "metric_id": "tilted_universes",
+        "system": {"id": system, "name": "Inertial", "coords": coords,
+                   "domains": ["T \\in " + TILTED_REALS, "x \\in " + TILTED_REALS, "\\xi \\in " + TILTED_REALS,
+                               "\\zeta \\in " + TILTED_REALS, "cT + x > 0",
+                               "x^2 + \\xi^2 + \\zeta^2 - c^2T^2 < C^2",
+                               "x^2 + \\xi^2 + \\zeta^2 = c^2T^2 \;\\text{(the Cauchy horizon)}"],
+                   "parameters": parameters,
+                   "line_element": "ds^2 = -c^2dT^2 + dx^2 + d\\xi^2 + d\\zeta^2"},
+        "chart_line_element": "ds^2 = -dT^2 + dx^2 + d\\xi^2 + d\\zeta^2",
+        "printer": {"lead": [probe.c]},
+        "bare_scalar": True,
+        "check": check,
+    }
+
+
+class TiltedParametric:
+    """The `pretty` of Farnsworth's chart, whose every value is a rational function of
+    t = coth(eta/2), W and C, since sinh^2(eta/2) = 1/(t^2 - 1) and dt/d eta = -(t^2 - 1)/2.
+
+    A value is factored there. A factor that is a polynomial in X = W/(t^2 - 1) - C t and C alone
+    once W is written (X + C t)(t^2 - 1), as X, X - C and X + C are, is written so, and any other
+    factor in sinh(eta/2) and cosh(eta/2): times sinh^n(eta/2) it is homogeneous of even degree n in
+    the two, and an even power of the cosine is written by cosh^2 = 1 + sinh^2, so that one cosine
+    at most is left in a term."""
+
+    def __init__(self, reader):
+        self.eta = reader.symbol["\\eta"]
+        self.W, self.C = reader.parameters["W"], reader.parameters["C"]
+        self.t = sp.Symbol("_t", positive=True)
+        self.E = sp.Symbol("_E", positive=True)
+        self.S, self.K = sp.Symbol("_S", positive=True), sp.Symbol("_K", positive=True)
+
+    def rational(self, value):
+        """The value as a cancelled fraction in t, W and C."""
+        half = self.eta / 2
+        value = sp.sympify(value).rewrite(sp.exp)
+        value = value.replace(lambda e: isinstance(e, sp.exp) and sp.expand(e.args[0] / half).is_Integer,
+                              lambda e: self.E ** sp.expand(e.args[0] / half))
+        if value.has(self.eta):
+            raise AssertionError(f"tilted_universes: a function of eta other than those of eta/2 in {value}")
+        num, den = sp.fraction(sp.cancel(sp.together(value)))
+
+        def even(side):
+            # e^(eta/2) stands only in even powers once the fraction is balanced, and e^eta = (t + 1)/(t - 1).
+            poly = sp.Poly(sp.expand(side), self.E)
+            low = min(k for (k,) in poly.monoms())
+            if any((k - low) % 2 for (k,) in poly.monoms()):
+                raise AssertionError(f"tilted_universes: an odd power of e^(eta/2) in {value}")
+            top = max(k for (k,) in poly.monoms())
+            half_degree = (top - low) // 2
+            return (sum(c * (self.t + 1) ** ((k - low) // 2) * (self.t - 1) ** (half_degree - (k - low) // 2)
+                        for (k,), c in poly.terms()), low, half_degree)
+
+        (num, low_n, deg_n), (den, low_d, deg_d) = even(num), even(den)
+        if (low_n - low_d) % 2:
+            raise AssertionError(f"tilted_universes: an odd power of e^(eta/2) in {value}")
+        shift = (low_n - low_d) // 2
+        out = num / den * (self.t - 1) ** (deg_d - deg_n) * ((self.t + 1) / (self.t - 1)) ** shift
+        return sp.cancel(sp.together(out))
+
+    def in_hyperbolics(self, base):
+        """An irreducible factor in t as (its power of sinh(eta/2) below the line, what stands above it)."""
+        if not base.has(self.t):
+            return 0, base
+        poly = sp.Poly(base, self.t)
+        n = poly.degree() + poly.degree() % 2
+        out = sp.Integer(0)
+        for (i,), coefficient in poly.terms():
+            j = n - i
+            if i % 2:
+                out += coefficient * self.K * self.S ** j * (1 + self.S ** 2) ** ((i - 1) // 2)
+            else:
+                out += coefficient * self.S ** j * (1 + self.S ** 2) ** (i // 2)
+        return n, sp.expand(out)
+
+    def named(self, base):
+        """The factor as (a power of t^2 - 1, a polynomial in X and C), or None where it is no such."""
+        X = TILTED_NAMED
+        written = sp.factor(sp.expand(base.subs(self.W, (X + self.C * self.t) * (self.t ** 2 - 1))))
+        power, rest = 0, sp.Integer(1)
+        for factor in sp.Mul.make_args(written):
+            b, k = factor.as_base_exp()
+            if sp.expand(b - (self.t - 1)) == 0 or sp.expand(b - (self.t + 1)) == 0:
+                power += k
+            else:
+                rest *= factor
+        if rest.has(self.t) or not rest.has(X) or power % 2:
+            return None
+        return power // 2, rest
+
+    def back(self, value):
+        return value.subs({self.S: sp.sinh(self.eta / 2), self.K: sp.cosh(self.eta / 2)})
+
+    def pretty(self, value):
+        x = self.rational(value)
+        if x == 0:
+            return sp.Integer(0)
+        # The number in front is kept apart, so that it is not multiplied into a sum.
+        number, out, sines = sp.Integer(1), sp.Integer(1), 0
+        num, den = sp.fraction(x)
+        pairs = {}
+        for side, sign in ((num, 1), (den, -1)):
+            for factor in sp.Mul.make_args(sp.factor(side)):
+                base, power = factor.as_base_exp()
+                if base.is_Number:
+                    number *= base ** (sign * power)
+                    continue
+                # t - 1 and t + 1 together are 1/sinh^2(eta/2).
+                for s in (1, -1):
+                    if sp.expand(base - (self.t + s)) == 0:
+                        pairs[s] = pairs.get(s, 0) + sign * power
+                        break
+                else:
+                    own = self.named(base) if base.has(self.W) else None
+                    if own is not None:
+                        k, rest = own
+                        sines -= 2 * k * sign * power
+                        content, rest = rest.as_coeff_Mul()
+                        number *= content ** (sign * power)
+                        out *= rest ** (sign * power)
+                        continue
+                    n, above = self.in_hyperbolics(base)
+                    sines -= sign * power * n
+                    content, above = sp.factor(above).as_coeff_Mul()
+                    number *= content ** (sign * power)
+                    out *= above ** (sign * power)
+        both = min(pairs.get(1, 0), pairs.get(-1, 0)) if pairs.get(1, 0) * pairs.get(-1, 0) > 0 else 0
+        if pairs.get(1, 0) < 0 and pairs.get(-1, 0) < 0:
+            both = max(pairs.get(1, 0), pairs.get(-1, 0))
+        sines -= 2 * both
+        for s in (1, -1):
+            left = pairs.get(s, 0) - both
+            if left:
+                # t + 1 and t - 1 alone are (cosh +- sinh)/sinh.
+                out *= (self.K + s * self.S) ** left
+                sines -= left
+        return _keep_coeff(number, self.back(out * self.S ** sines))
+
+
+def tilted_universes_map(u, r, y, z, C):
+    """The inertial T, x, xi and zeta of the flat model's event (u, r, y, z): u n - C dn/dr with n the
+    unit hyperboloid in horospheres, mirrored in x so that the matter comes in from the right, as
+    Ellis and King draw it. T + x = (u + C) e^(-r) and T - x = (u - C) e^r + (u + C) e^(-r) (y^2 + z^2)."""
+    plus = (u + C) * sp.exp(-r)
+    minus = (u - C) * sp.exp(r) + (u + C) * sp.exp(-r) * (y ** 2 + z ** 2)
+    return [(plus + minus) / 2, (plus - minus) / 2, plus * y, plus * z]
+
+
+def tilted_universes_check(chart, system):
+    """What each chart is held to before it is written.
+
+    The homogeneous chart: translations of y and z, the rotation of their plane, and the motion
+    d_r + y d_y + z d_z are isometries, with the brackets of Bianchi's type V, and all of them keep u,
+    so the surfaces of constant u are homogeneous; the lines of constant r, y and z are geodesics of
+    proper time u/c along them, and their velocity makes with the normal of those surfaces the
+    hyperbolic angle whose tangent is C/X; and with C = 0 and X = Y the chart is the published horn
+    of small_universes, Friedmann's open universe. Farnsworth's chart is that chart along
+    du = W sinh^2(eta/2) d eta with Y = W sinh^2(eta/2) and X = Y - C dY/du, it is dust at rest in it of
+    density 3/(W X sinh^4(eta/2)) and nothing else, and its Weyl tensor vanishes at C = 0. The flat
+    model is the homogeneous chart with X = u and Y = u + C, Farnsworth's X = Y - C dY/du with W = 0,
+    and its Riemann tensor vanishes. The inertial chart is flat, and the flat model is that chart
+    pulled back along tilted_universes_map."""
+    geo, g, P = chart.geo, chart.geo.g, chart.reader.parameters
+
+    def homogeneous_chart():
+        spec = tilted_universes("homogeneous")
+        return cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+
+    if system == "homogeneous":
+        u, r, y, z = chart.symbols
+        X, Y, C = P["X"], P["Y"], P["C"]
+        fields = {"y": [0, 0, 1, 0], "z": [0, 0, 0, 1], "turn": [0, 0, -z, y], "r": [0, 1, y, z]}
+        for name, xi in fields.items():
+            lie = sp.Matrix(4, 4, lambda a, b: sum(
+                xi[k] * sp.diff(g[a, b], chart.symbols[k]) + g[k, b] * sp.diff(xi[k], chart.symbols[a])
+                + g[a, k] * sp.diff(xi[k], chart.symbols[b]) for k in range(4)))
+            if any(sp.simplify(v) != 0 for v in lie):
+                raise AssertionError(f"tilted_universes: the motion {name} is no isometry of the homogeneous chart")
+            if xi[0] != 0:
+                raise AssertionError(f"tilted_universes: the motion {name} does not keep u")
+
+        def bracket(a, b):
+            return [sum(a[k] * sp.diff(b[i], chart.symbols[k]) - b[k] * sp.diff(a[i], chart.symbols[k])
+                        for k in range(4)) for i in range(4)]
+        # Bianchi's type V: [d_y, d_z] = 0, [xi, d_y] = -d_y and [xi, d_z] = -d_z.
+        if bracket(fields["y"], fields["z"]) != [0, 0, 0, 0] or bracket(fields["r"], fields["y"]) != [0, 0, -1, 0] \
+                or bracket(fields["r"], fields["z"]) != [0, 0, 0, -1]:
+            raise AssertionError("tilted_universes: the motions do not have the brackets of Bianchi's type V")
+        gamma = geo.christoffel_ull()
+        if g[0, 0] != -1 or any(sp.simplify(gamma[a][0][0]) != 0 for a in range(4)):
+            raise AssertionError("tilted_universes: the lines of constant r, y and z are not geodesics of proper time u")
+        # The unit normal of u = constant is -du/sqrt(-g^uu), and -u.n = cosh(beta) = X/sqrt(X^2 - C^2).
+        if sp.simplify(geo.ginv[0, 0] + (X ** 2 - C ** 2) / X ** 2) != 0:
+            raise AssertionError("tilted_universes: the tilt of the homogeneous chart is not tanh(beta) = C/X")
+        entry = next(c for c in json.loads((METRICS / "small_universes.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == "horn")
+        reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+        there = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+        names = entry["coords"]
+        horn = sp.Matrix(4, 4, lambda i, j: reader(there.get((names[i], names[j]), "0")))
+        a = reader.parameters["a"]
+        t = reader.symbol["t"]
+        scale = sp.Function("tilted_a")(u)
+        horn = horn.subs(a, scale).subs({reader.symbol["x"]: r, reader.symbol["y"]: y, reader.symbol["z"]: z})
+        mine = g.subs(C, 0).subs({X: scale, Y: scale})
+        if any(sp.simplify(v) != 0 for v in (horn - mine)):
+            raise AssertionError("tilted_universes: the homogeneous chart with no tilt and X = Y is not the published horn")
+        return
+    if system == "farnsworth":
+        eta, r, y, z = chart.symbols
+        W, C = P["W"], P["C"]
+        s = sp.sinh(eta / 2)
+        Yd = W * s ** 2
+        Xd = W * s ** 2 - C * sp.cosh(eta / 2) / s
+        source = homogeneous_chart()
+        Q = source.reader.parameters
+        # dY/du = (dY/d eta)/Y, so X = Y - C dY/du is the chart's own X.
+        if sp.simplify((Yd - C * sp.diff(Yd, eta) / Yd - Xd).rewrite(sp.exp)) != 0:
+            raise AssertionError("tilted_universes: Farnsworth's X is not Y - C dY/du")
+        there = source.geo.g.subs({Q["X"]: Xd, Q["Y"]: Yd, Q["C"]: C}).subs(
+            dict(zip(source.symbols[1:], chart.symbols[1:])))
+        J = sp.diag(Yd, 1, 1, 1)
+        if any(sp.simplify((v).rewrite(sp.exp)) != 0 for v in (J.T * there * J - g)):
+            raise AssertionError("tilted_universes: Farnsworth's chart is not the homogeneous chart along du = Y d eta")
+        # Dust at rest: G_ab = rho u_a u_b with u_a = (-Y, C, 0, 0) and rho = 3W/(X Y^2).
+        density = 3 / (W * Xd * s ** 4)
+        velocity = [-Yd, C, 0, 0]
+        einstein = geo.einstein_ll()
+        for i in range(4):
+            for j in range(4):
+                if vm.norm(vm._at(einstein, (i, j)) - density * velocity[i] * velocity[j]) != 0:
+                    raise AssertionError(f"tilted_universes: Farnsworth's chart is not dust in slot {(i, j)}")
+        weyl = geo.weyl_llll()
+        if any(vm.norm(sp.sympify(vm._at(weyl, index)).subs(C, 0)) != 0 for index in vm._indices(4, 4)):
+            raise AssertionError("tilted_universes: Farnsworth's chart with no tilt is not conformally flat")
+        return
+    if system == "flat_model":
+        u, r, y, z = chart.symbols
+        C = P["C"]
+        source = homogeneous_chart()
+        Q = source.reader.parameters
+        there = source.geo.g.subs({Q["X"]: source.symbols[0], Q["Y"]: source.symbols[0] + Q["C"]}).subs(Q["C"], C).subs(
+            dict(zip(source.symbols, chart.symbols)))
+        if any(sp.simplify(v) != 0 for v in (there - g)):
+            raise AssertionError("tilted_universes: the flat model is not the homogeneous chart with X = u and Y = u + C")
+        riemann = geo.riemann_llll()
+        if any(vm.norm(vm._at(riemann, index)) != 0 for index in vm._indices(4, 4)):
+            raise AssertionError("tilted_universes: the flat model is not flat")
+        image = tilted_universes_map(u, r, y, z, C)
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+        if any(sp.simplify(v) != 0 for v in (J.T * sp.diag(-1, 1, 1, 1) * J - g)):
+            raise AssertionError("tilted_universes: the flat model is not Minkowski space pulled back")
+        # The interval from the origin is C^2 - u^2, so u = C is the light cone of the origin.
+        interval = -image[0] ** 2 + image[1] ** 2 + image[2] ** 2 + image[3] ** 2
+        if sp.simplify(interval - (C ** 2 - u ** 2)) != 0:
+            raise AssertionError("tilted_universes: the surfaces of constant u are not at a constant interval from the origin")
+        return
+    if g != sp.diag(-1, 1, 1, 1):
+        raise AssertionError("tilted_universes: the inertial chart is not Minkowski's")
+
+
+CHARTS["tilted_universes"] = [lambda s=s: tilted_universes(s) for s in TILTED_CHARTS]
 
 
 def write(spec):

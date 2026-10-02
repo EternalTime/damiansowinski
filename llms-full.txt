@@ -1828,6 +1828,19 @@ Edward Teo's rotating traversable wormhole of 1998, the stationary, axially symm
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{16a^2b_0\cos^2\theta}{r}\right)^2c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{b_0}{r}} + \left(r + 16a^2b_0\cos^2\theta\right)^2\left(d\theta^2 + \sin^2\theta\left(d\phi - \dfrac{2ab_0^2}{r^3}c\,dt\right)^2\right)$$
 - chart Proper Radial Distance: coordinates $(t, l, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{16a^2b_0\cos^2\theta}{r}\right)^2c^2dt^2 + dl^2 + \left(r + 16a^2b_0\cos^2\theta\right)^2\left(d\theta^2 + \sin^2\theta\left(d\phi - \dfrac{2ab_0^2}{r^3}c\,dt\right)^2\right)$$
 
+### Tilted Universes and the Whimper
+
+Homogeneous universes whose matter drifts through the surfaces of homogeneity, so that an observer riding with it sees a lopsided sky. In the simplest of them, Farnsworth's dust of 1967, those surfaces turn from spacelike to timelike across a Cauchy horizon, and the light rays along the horizon end where the density and the curvature are finite: a whimper, as George Ellis and A. R. King named it in 1974.
+
+- id: `tilted_universes`
+- tags: cosmology, spatially homogeneous, homogeneous, anisotropic, tilted, Bianchi V, Bianchi classification, locally rotationally symmetric, dust, whimper, Cauchy horizon, intermediate singularity, curvature singularity, big bang, expanding universe, hyperbolic space, cosmic dipole, comoving, time-dependent, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/tilted_universes.json
+- chart Homogeneous Time: coordinates $(u, r, y, z)$, $$ds^2 = -\left(du - C\,dr\right)^2 + X^2dr^2 + e^{-2r}Y^2\left(dy^2 + dz^2\right)$$
+- chart Farnsworth's Dust: coordinates $(\eta, r, y, z)$, $$ds^2 = -\left(W\sinh^2(\eta/2)\,d\eta - C\,dr\right)^2 + X^2dr^2 + W^2e^{-2r}\sinh^4(\eta/2)\left(dy^2 + dz^2\right)$$
+- chart Flat Model: coordinates $(u, r, y, z)$, $$ds^2 = -\left(du - C\,dr\right)^2 + u^2dr^2 + e^{-2r}\left(u + C\right)^2\left(dy^2 + dz^2\right)$$
+- chart Inertial: coordinates $(T, x, \xi, \zeta)$, $$ds^2 = -c^2dT^2 + dx^2 + d\xi^2 + d\zeta^2$$
+
 ### Tippett-Tsang Time Machine
 
 A bubble of curved spacetime whose centre runs round a circle in the plane of $t$ and $x$, proposed by Benjamin Tippett and David Tsang in a preprint of 2013 and a paper of 2017. Inside the bubble spacetime is flat in Rindler's form with an angle for its time, so the world line of a rider who keeps accelerating closes on itself. Outside is Minkowski space, and the wall between the two violates the null energy condition, carries naked singularities, and leaves the spacetime with no consistent arrow of time.
