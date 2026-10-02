@@ -357,7 +357,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "65af7b483ec302d6",
+    "version": "97f784a7bc3cd3f4",
     "diagrams": "034dc4a9fdeb21a8",
     "embedding": "726e24d2db3acd3e"
   },
@@ -857,7 +857,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "63b2edaab402c973",
+    "version": "79d2f52ce47c8c6f",
     "diagrams": "e80c22fa8faff2b6",
     "conformal": "9dae987db0ca1df8",
     "embedding": "7ebe08e359710241"
@@ -1005,7 +1005,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "6f22f73a80e6a3ba",
+    "version": "8979e5d4015737d9",
     "diagrams": "dc0f3031798ca092",
     "conformal": "2876dfbbabbb4b26",
     "embedding": "f736444606912902"
@@ -1229,7 +1229,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4e58c8875d756ae6",
+    "version": "4065b5f6a0b40e65",
     "diagrams": "2af1bbf417683eb3",
     "conformal": "431800db7085dc77",
     "embedding": "f0d7a1bdcd0620df"
@@ -1267,6 +1267,30 @@
     "diagrams": "1e2a338fbaeb162f",
     "conformal": "c44e7367505c4a14",
     "embedding": "eb3c3b7b2d474485"
+  },
+  {
+    "id": "belinski_zakharov",
+    "name": "Gravitational Solitons",
+    "tags": [
+      "vacuum",
+      "cosmology",
+      "inhomogeneous",
+      "gravitational wave",
+      "soliton",
+      "inverse scattering",
+      "Kasner",
+      "exact solution",
+      "time-dependent",
+      "curvature singularity",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "8c2e2cabc3b8ef8b",
+    "diagrams": "9f49d55edfa17437",
+    "conformal": "06e065e27b7e360f",
+    "embedding": "ad3b787488c249a5"
   },
   {
     "id": "hartle_thorne",
@@ -1589,7 +1613,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1a79b98e311f77c9",
+    "version": "4146115ad2ce9079",
     "diagrams": "a84952c23e2fa052",
     "embedding": "e2698f474fe29ce2"
   },
@@ -1665,7 +1689,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4d5d07c7b557cb65",
+    "version": "5343bcdd0e18fcf1",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -1781,7 +1805,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a9ea6ea234eeec6a",
+    "version": "ed3b5db55ede7851",
     "diagrams": "442206dfc206d069",
     "conformal": "8508e743b0676aa7",
     "embedding": "f046af1ffaff68d9"
@@ -2471,7 +2495,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "565ca73e9e6b2c8b",
+    "version": "83ef4e35af659089",
     "diagrams": "fbe2465fce912260",
     "conformal": "1a4a12f584d5c79c",
     "embedding": "d6b5347d467d964c"
@@ -3078,7 +3102,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0f8458ce2ed3c1f6",
+    "version": "c737cacc1a87a58d",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"

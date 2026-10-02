@@ -68,6 +68,11 @@
       "id": "neugebauer_meinel",
       "kind": "programme",
       "text": "Another solution from Gernot Neugebauer's inverse methods in Jena: a rigidly rotating disc of dust, solved with Reinhard Meinel as a boundary value problem for Ernst's equation fifteen years after the two holes [neugebauer1995, neugebauer2003]."
+    },
+    {
+      "id": "belinski_zakharov",
+      "kind": "family",
+      "text": "The Bäcklund transformations behind the double Kerr solution coincide with the soliton transformations of Belinski and Zakharov [alekseev2010]."
     }
   ],
   "references": [
@@ -97,7 +102,8 @@
     "hahn1964",
     "holst2016",
     "neugebauer1995",
-    "neugebauer2003"
+    "neugebauer2003",
+    "alekseev2010"
   ],
   "coordinates": [
     {

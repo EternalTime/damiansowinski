@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 127,
+  "count": 128,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -3436,6 +3436,11 @@
           "id": "majumdar_papapetrou",
           "kind": "family",
           "text": "Black holes held apart by electric charge, in four dimensions. Saturn's ring and hole carry no charge, and rotation does the holding [elvang2007]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "family",
+          "text": "The method that made black Saturn. Belinski and Zakharov found it in 1978 in four dimensions, where two solitons on flat space are Kerr's black hole [belinskii1978, belinskii1979]."
         }
       ],
       "references": [
@@ -8556,6 +8561,11 @@
           "id": "neugebauer_meinel",
           "kind": "programme",
           "text": "Another solution from Gernot Neugebauer's inverse methods in Jena: a rigidly rotating disc of dust, solved with Reinhard Meinel as a boundary value problem for Ernst's equation fifteen years after the two holes [neugebauer1995, neugebauer2003]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "family",
+          "text": "The Bäcklund transformations behind the double Kerr solution coincide with the soliton transformations of Belinski and Zakharov [alekseev2010]."
         }
       ],
       "references": [
@@ -8585,7 +8595,8 @@
         "hahn1964",
         "holst2016",
         "neugebauer1995",
-        "neugebauer2003"
+        "neugebauer2003",
+        "alekseev2010"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/double_kerr.json",
@@ -10167,6 +10178,11 @@
           "id": "einstein_rosen_bridge",
           "kind": "programme",
           "text": "Einstein and Rosen's model of a particle, from 1935: two sheets of space joined at a horizon [einstein1935]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "family",
+          "text": "Belinski and Zakharov's solution of one soliton, with its time and its direction of travel exchanged, is a cylindrical solitary wave that runs in to the axis and is reflected from it [belinskii1978]."
         }
       ],
       "references": [
@@ -10195,7 +10211,8 @@
         "gowdy2014",
         "senovilla1990",
         "fernandezjambrina2002",
-        "einstein1935"
+        "einstein1935",
+        "belinskii1978"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_waves.json",
@@ -12437,6 +12454,11 @@
           "id": "senovilla",
           "kind": "family",
           "text": "An inhomogeneous cosmology with the same two commuting symmetries of space, filled with radiation and arranged around an axis. Every geodesic in it runs on for ever, with no singularity at either end of time [ruiz1992, chinea1992]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "family",
+          "text": "The same field equations with $\\theta$ unrolled into a line. Belinski and Zakharov's inverse scattering method adds solitons to any known solution with these two symmetries, by algebra alone [belinskii1978]."
         }
       ],
       "references": [
@@ -12463,7 +12485,8 @@
         "ringstrom2009",
         "ellismaccallum1969",
         "ruiz1992",
-        "chinea1992"
+        "chinea1992",
+        "belinskii1978"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gowdy.json",
@@ -13012,6 +13035,260 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        }
+      ]
+    },
+    {
+      "id": "belinski_zakharov",
+      "name": "Belinski-Zakharov Gravitational Solitons",
+      "short_name": "Gravitational Solitons",
+      "description": "Exact vacuum solutions made by the inverse scattering method of Vladimir Belinski and Vladimir Zakharov, which adds solitons to a known solution by algebra alone. Their wave of two solitons on a Kasner universe that expands alike in two directions is two pulses of gravitational wave, which leave the singularity as one and run apart along the light cone.",
+      "tags": [
+        "vacuum",
+        "cosmology",
+        "inhomogeneous",
+        "gravitational wave",
+        "soliton",
+        "inverse scattering",
+        "Kasner",
+        "exact solution",
+        "time-dependent",
+        "curvature singularity",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "kasner",
+          "kind": "special_case",
+          "text": "The seed. With no soliton added, $P = 0$, $Q = 0$, and $f = \\sqrt{w/ct}$, the metric is the Kasner universe that expands alike along $x$ and $y$ [belinskii1978]."
+        },
+        {
+          "id": "gowdy",
+          "kind": "family",
+          "text": "The same two Killing vectors and the same field equations, with the direction the waves travel along closed into a circle. Belinski and Zakharov counted Gowdy's closed universes among the solutions their form of the metric holds [belinskii1978, gowdy1971]."
+        },
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "Trade the time for a second direction of space and add two solitons to flat space, and the result is the Kerr-NUT solution. Kerr's black hole is the one with two real poles and no NUT parameter [belinskii1979]."
+        },
+        {
+          "id": "kerr_taub_nut",
+          "kind": "family",
+          "text": "Two stationary solitons on flat space, in full. Real poles give the solution with horizons and a complex conjugate pair the one with none [belinskii1979]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "Two stationary solitons on flat space with the rotation switched off [belinskii1979]."
+        },
+        {
+          "id": "double_kerr",
+          "kind": "family",
+          "text": "Two Kerr black holes on one axis, built by Neugebauer's Bäcklund transformations, which coincide with Belinski and Zakharov's soliton transformations [kramer1980, alekseev2010]."
+        },
+        {
+          "id": "einstein_rosen_waves",
+          "kind": "family",
+          "text": "Reverse the sign of $f$ and $t$ becomes a radius and $z$ the time. One soliton on a flat seed is then a cylindrical solitary wave that runs in to the axis and is reflected from it [belinskii1978]."
+        },
+        {
+          "id": "black_saturn",
+          "kind": "family",
+          "text": "The same method in five dimensions. Elvang and Figueras took solitons out of a static seed and put them back turned, and got a black ring in balance around a black hole [elvang2007]."
+        },
+        {
+          "id": "myers_perry",
+          "kind": "family",
+          "text": "Pomeransky derived the Myers-Perry black hole of five dimensions as two solitons, his test of the method in $D$ dimensions with $D - 2$ commuting Killing vectors [pomeransky2006]."
+        }
+      ],
+      "references": [
+        "gardner1967",
+        "geroch1972",
+        "alekseev2010",
+        "maison1978",
+        "belinskii1978",
+        "gowdy1971",
+        "belinskii1979",
+        "harrison1978",
+        "neugebauer1979",
+        "kramer1980",
+        "belinsky1980",
+        "carr1983",
+        "ibanez1983",
+        "boyd1991",
+        "belinski2001",
+        "pomeransky2006",
+        "elvang2007"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/belinski_zakharov.json",
+      "charts": [
+        {
+          "id": "pole",
+          "name": "Pole Coordinates",
+          "coordinates": [
+            "\\tau",
+            "\\xi",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "\\tau \\in (0, \\infty)",
+            "\\xi \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "w",
+              "description": "Length that sets the scale ($w > 0$), the imaginary part of the constant in Belinski and Zakharov's pole trajectory"
+            },
+            {
+              "symbol": "\\beta",
+              "description": "Dimensionless, with $\\cosh\\beta$ and $\\sinh\\beta$ the two constants of Belinski and Zakharov whose squares differ by one; at $\\beta = 0$ the metric is diagonal and the wave has one polarisation"
+            },
+            {
+              "symbol": "N = \\cosh^2\\beta\\sinh^2\\tau + \\sinh^2\\beta\\cosh^2\\xi",
+              "description": "Dimensionless function of $\\tau$ and $\\xi$, positive at every event"
+            }
+          ],
+          "convention": "We use the coordinates $(\\tau, \\xi, x, y)$ in which Belinski and Zakharov's pole trajectories are elementary, with $\\tau$ the time and $\\xi$ along the direction the waves travel, both pure numbers, and $x$ and $y$ lengths along the two Killing vectors. The length $w$ carries the scale, so no factor of $c$ appears. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{w^2N}{\\sqrt{\\sinh\\tau\\cosh\\xi}}\\left(-d\\tau^2 + d\\xi^2\\right) + \\dfrac{\\sinh\\tau\\cosh\\xi}{N}\\left(\\left(N + 2 + 2\\cosh\\beta\\cosh\\tau\\right)dx^2 - 4\\sinh\\beta\\sinh\\xi\\,dx\\,dy + \\left(N + 2 - 2\\cosh\\beta\\cosh\\tau\\right)dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{w^2N}{\\sqrt{\\sinh\\tau\\cosh\\xi}}"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "\\dfrac{w^2N}{\\sqrt{\\sinh\\tau\\cosh\\xi}}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{\\left(N + 2 + 2\\cosh\\beta\\cosh\\tau\\right)\\sinh\\tau\\cosh\\xi}{N}"
+            },
+            {
+              "indices": [
+                "x",
+                "y"
+              ],
+              "value": "-\\dfrac{2\\sinh\\beta\\sinh\\tau\\sinh\\xi\\cosh\\xi}{N}"
+            },
+            {
+              "indices": [
+                "y",
+                "x"
+              ],
+              "value": "-\\dfrac{2\\sinh\\beta\\sinh\\tau\\sinh\\xi\\cosh\\xi}{N}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{\\left(N + 2 - 2\\cosh\\beta\\cosh\\tau\\right)\\sinh\\tau\\cosh\\xi}{N}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{3\\cosh^8\\beta\\cosh^{12}\\tau + 18\\cosh^8\\beta\\cosh^{10}\\tau\\cosh^2\\xi - 18\\cosh^8\\beta\\cosh^{10}\\tau + 45\\cosh^8\\beta\\cosh^8\\tau\\cosh^4\\xi - 90\\cosh^8\\beta\\cosh^8\\tau\\cosh^2\\xi + 45\\cosh^8\\beta\\cosh^8\\tau + 60\\cosh^8\\beta\\cosh^6\\tau\\cosh^6\\xi - 180\\cosh^8\\beta\\cosh^6\\tau\\cosh^4\\xi + 180\\cosh^8\\beta\\cosh^6\\tau\\cosh^2\\xi - 60\\cosh^8\\beta\\cosh^6\\tau + 45\\cosh^8\\beta\\cosh^4\\tau\\cosh^8\\xi - 180\\cosh^8\\beta\\cosh^4\\tau\\cosh^6\\xi + 270\\cosh^8\\beta\\cosh^4\\tau\\cosh^4\\xi - 180\\cosh^8\\beta\\cosh^4\\tau\\cosh^2\\xi + 45\\cosh^8\\beta\\cosh^4\\tau + 18\\cosh^8\\beta\\cosh^2\\tau\\cosh^{10}\\xi - 90\\cosh^8\\beta\\cosh^2\\tau\\cosh^8\\xi + 180\\cosh^8\\beta\\cosh^2\\tau\\cosh^6\\xi - 180\\cosh^8\\beta\\cosh^2\\tau\\cosh^4\\xi + 90\\cosh^8\\beta\\cosh^2\\tau\\cosh^2\\xi - 18\\cosh^8\\beta\\cosh^2\\tau + 3\\cosh^8\\beta\\cosh^{12}\\xi - 18\\cosh^8\\beta\\cosh^{10}\\xi + 45\\cosh^8\\beta\\cosh^8\\xi - 60\\cosh^8\\beta\\cosh^6\\xi + 45\\cosh^8\\beta\\cosh^4\\xi - 18\\cosh^8\\beta\\cosh^2\\xi + 3\\cosh^8\\beta - 612\\cosh^6\\beta\\cosh^8\\tau\\cosh^4\\xi - 120\\cosh^6\\beta\\cosh^6\\tau\\cosh^6\\xi + 2448\\cosh^6\\beta\\cosh^6\\tau\\cosh^4\\xi + 432\\cosh^6\\beta\\cosh^4\\tau\\cosh^8\\xi + 360\\cosh^6\\beta\\cosh^4\\tau\\cosh^6\\xi - 3672\\cosh^6\\beta\\cosh^4\\tau\\cosh^4\\xi - 72\\cosh^6\\beta\\cosh^2\\tau\\cosh^{10}\\xi - 864\\cosh^6\\beta\\cosh^2\\tau\\cosh^8\\xi - 360\\cosh^6\\beta\\cosh^2\\tau\\cosh^6\\xi + 2448\\cosh^6\\beta\\cosh^2\\tau\\cosh^4\\xi - 12\\cosh^6\\beta\\cosh^{12}\\xi + 72\\cosh^6\\beta\\cosh^{10}\\xi + 432\\cosh^6\\beta\\cosh^8\\xi + 120\\cosh^6\\beta\\cosh^6\\xi - 612\\cosh^6\\beta\\cosh^4\\xi + 630\\cosh^4\\beta\\cosh^8\\tau\\cosh^4\\xi - 780\\cosh^4\\beta\\cosh^6\\tau\\cosh^6\\xi - 2520\\cosh^4\\beta\\cosh^6\\tau\\cosh^4\\xi - 936\\cosh^4\\beta\\cosh^4\\tau\\cosh^8\\xi + 2340\\cosh^4\\beta\\cosh^4\\tau\\cosh^6\\xi + 3780\\cosh^4\\beta\\cosh^4\\tau\\cosh^4\\xi + 108\\cosh^4\\beta\\cosh^2\\tau\\cosh^{10}\\xi + 1872\\cosh^4\\beta\\cosh^2\\tau\\cosh^8\\xi - 2340\\cosh^4\\beta\\cosh^2\\tau\\cosh^6\\xi - 2520\\cosh^4\\beta\\cosh^2\\tau\\cosh^4\\xi + 18\\cosh^4\\beta\\cosh^{12}\\xi - 108\\cosh^4\\beta\\cosh^{10}\\xi - 936\\cosh^4\\beta\\cosh^8\\xi + 780\\cosh^4\\beta\\cosh^6\\xi + 630\\cosh^4\\beta\\cosh^4\\xi + 840\\cosh^2\\beta\\cosh^6\\tau\\cosh^6\\xi + 396\\cosh^2\\beta\\cosh^4\\tau\\cosh^8\\xi - 2520\\cosh^2\\beta\\cosh^4\\tau\\cosh^6\\xi - 72\\cosh^2\\beta\\cosh^2\\tau\\cosh^{10}\\xi - 792\\cosh^2\\beta\\cosh^2\\tau\\cosh^8\\xi + 2520\\cosh^2\\beta\\cosh^2\\tau\\cosh^6\\xi - 12\\cosh^2\\beta\\cosh^{12}\\xi + 72\\cosh^2\\beta\\cosh^{10}\\xi + 396\\cosh^2\\beta\\cosh^8\\xi - 840\\cosh^2\\beta\\cosh^6\\xi + 63\\cosh^4\\tau\\cosh^8\\xi + 18\\cosh^2\\tau\\cosh^{10}\\xi - 126\\cosh^2\\tau\\cosh^8\\xi + 3\\cosh^{12}\\xi - 18\\cosh^{10}\\xi + 63\\cosh^8\\xi}{4w^4\\,N^6\\sinh^3\\tau\\cosh^3\\xi}"
+        },
+        {
+          "id": "canonical",
+          "name": "Belinski and Zakharov's Chart",
+          "coordinates": [
+            "t",
+            "z",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "t \\in (0, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "w",
+              "description": "Length that makes $x$ and $y$ lengths ($w > 0$)"
+            },
+            {
+              "symbol": "f = f(t,z)",
+              "description": "Dimensionless function of $t$ and $z$; in a vacuum $\\partial_t\\ln f = -\\dfrac{1}{2ct} + \\dfrac{ct}{2}\\left(\\left(\\partial_tP\\right)^2 + \\left(\\partial_zP\\right)^2 + e^{2P}\\left(\\left(\\partial_tQ\\right)^2 + \\left(\\partial_zQ\\right)^2\\right)\\right)$ and $\\partial_z\\ln f = ct\\left(\\partial_tP\\,\\partial_zP + e^{2P}\\partial_tQ\\,\\partial_zQ\\right)$, with $\\partial_t$ the derivative along $ct$"
+            },
+            {
+              "symbol": "P = P(t,z)",
+              "description": "Wave amplitude, a dimensionless function of $t$ and $z$; the spacetime is a vacuum exactly where $\\partial_t^2P + \\dfrac{1}{ct}\\partial_tP - \\partial_z^2P = e^{2P}\\left(\\left(\\partial_tQ\\right)^2 - \\left(\\partial_zQ\\right)^2\\right)$ together with the equations for $Q$ and $f$"
+            },
+            {
+              "symbol": "Q = Q(t,z)",
+              "description": "Twist of the two polarisations, a dimensionless function of $t$ and $z$, with $Q = 0$ the diagonal case; in a vacuum $\\partial_t^2Q + \\dfrac{1}{ct}\\partial_tQ - \\partial_z^2Q = -2\\left(\\partial_tP\\,\\partial_tQ - \\partial_zP\\,\\partial_zQ\\right)$"
+            }
+          ],
+          "convention": "We use coordinates $(t, z, x, y)$, with $t$ carrying dimensions of time, $z$ a length along the direction the waves travel, and $x$ and $y$ lengths along the two Killing vectors. The functions $f$, $P$, and $Q$ stand free in every component, and no component assumes a field equation. We take components in the chart $x^0 = ct$, so $\\partial_t$ of a function is its derivative along $ct$ and $\\dot{t}$ in the geodesic equations means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = f\\left(-c^2dt^2 + dz^2\\right) + \\dfrac{ct}{w}\\left(e^{P}\\left(dx + Q\\,dy\\right)^2 + e^{-P}dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-f"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "f"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{ct\\,e^{P}}{w}"
+            },
+            {
+              "indices": [
+                "x",
+                "y"
+              ],
+              "value": "\\dfrac{Q\\,ct\\,e^{P}}{w}"
+            },
+            {
+              "indices": [
+                "y",
+                "x"
+              ],
+              "value": "\\dfrac{Q\\,ct\\,e^{P}}{w}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{ct\\left(Q^2e^{2P} + 1\\right)e^{-P}}{w}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{f^2\\,c^2t^2\\left(\\partial_t P\\right)^2 - f^2\\,c^2t^2\\left(\\partial_z P\\right)^2 + f^2\\,c^2t^2e^{2P}\\left(\\partial_t Q\\right)^2 - f^2\\,c^2t^2e^{2P}\\left(\\partial_z Q\\right)^2 - f^2 + 2f\\,c^2t^2\\,\\partial_t^2 f - 2f\\,c^2t^2\\,\\partial_z^2 f - 2c^2t^2\\left(\\partial_t f\\right)^2 + 2c^2t^2\\left(\\partial_z f\\right)^2}{2f^3\\,c^2t^2}",
+          "kretschmann": "K = \\dfrac{3f^4\\,c^4t^4\\left(\\partial_t P\\right)^4 - 6f^4\\,c^4t^4\\left(\\partial_t P\\right)^2\\left(\\partial_z P\\right)^2 + 38f^4\\,c^4t^4e^{2P}\\left(\\partial_t P\\right)^2\\left(\\partial_t Q\\right)^2 - 30f^4\\,c^4t^4e^{2P}\\left(\\partial_t P\\right)^2\\left(\\partial_z Q\\right)^2 + 2f^4\\,c^2t^2\\left(\\partial_t P\\right)^2 - 16f^4\\,c^4t^4e^{2P}\\partial_t P\\,\\partial_z P\\,\\partial_t Q\\,\\partial_z Q + 16f^4\\,c^3t^3e^{2P}\\partial_t P\\left(\\partial_t Q\\right)^2 + 32f^4\\,c^4t^4e^{2P}\\partial_t P\\,\\partial_t Q\\,\\partial_t^2 Q - 16f^4\\,c^3t^3e^{2P}\\partial_t P\\left(\\partial_z Q\\right)^2 - 32f^4\\,c^4t^4e^{2P}\\partial_t P\\,\\partial_z Q\\,\\partial_t\\partial_z Q + 16f^4\\,c^3t^3\\,\\partial_t P\\,\\partial_t^2 P + 3f^4\\,c^4t^4\\left(\\partial_z P\\right)^4 - 30f^4\\,c^4t^4e^{2P}\\left(\\partial_z P\\right)^2\\left(\\partial_t Q\\right)^2 + 38f^4\\,c^4t^4e^{2P}\\left(\\partial_z P\\right)^2\\left(\\partial_z Q\\right)^2 - 2f^4\\,c^2t^2\\left(\\partial_z P\\right)^2 - 32f^4\\,c^4t^4e^{2P}\\partial_z P\\,\\partial_t Q\\,\\partial_t\\partial_z Q + 32f^4\\,c^4t^4e^{2P}\\partial_z P\\,\\partial_z Q\\,\\partial_z^2 Q - 16f^4\\,c^3t^3\\,\\partial_z P\\,\\partial_t\\partial_z P + 11f^4\\,c^4t^4e^{4P}\\left(\\partial_t Q\\right)^4 - 22f^4\\,c^4t^4e^{4P}\\left(\\partial_t Q\\right)^2\\left(\\partial_z Q\\right)^2 - 16f^4\\,c^4t^4e^{2P}\\left(\\partial_t Q\\right)^2\\,\\partial_t^2 P + 2f^4\\,c^2t^2e^{2P}\\left(\\partial_t Q\\right)^2 + 32f^4\\,c^4t^4e^{2P}\\partial_t Q\\,\\partial_z Q\\,\\partial_t\\partial_z P + 16f^4\\,c^3t^3e^{2P}\\partial_t Q\\,\\partial_t^2 Q + 11f^4\\,c^4t^4e^{4P}\\left(\\partial_z Q\\right)^4 - 16f^4\\,c^4t^4e^{2P}\\left(\\partial_z Q\\right)^2\\,\\partial_z^2 P - 2f^4\\,c^2t^2e^{2P}\\left(\\partial_z Q\\right)^2 - 16f^4\\,c^3t^3e^{2P}\\partial_z Q\\,\\partial_t\\partial_z Q + 8f^4\\,c^4t^4\\left(\\partial_t^2 P\\right)^2 - 16f^4\\,c^4t^4\\left(\\partial_t\\partial_z P\\right)^2 + 8f^4\\,c^4t^4\\left(\\partial_z^2 P\\right)^2 + 8f^4\\,c^4t^4e^{2P}\\left(\\partial_t^2 Q\\right)^2 - 16f^4\\,c^4t^4e^{2P}\\left(\\partial_t\\partial_z Q\\right)^2 + 8f^4\\,c^4t^4e^{2P}\\left(\\partial_z^2 Q\\right)^2 + 3f^4 - 12f^3\\,c^3t^3\\,\\partial_t f\\left(\\partial_t P\\right)^2 - 8f^3\\,c^4t^4e^{2P}\\partial_t f\\,\\partial_t P\\left(\\partial_t Q\\right)^2 + 24f^3\\,c^4t^4e^{2P}\\partial_t f\\,\\partial_t P\\left(\\partial_z Q\\right)^2 - 8f^3\\,c^4t^4\\,\\partial_t f\\,\\partial_t P\\,\\partial_t^2 P - 8f^3\\,c^4t^4\\,\\partial_t f\\,\\partial_t P\\,\\partial_z^2 P + 4f^3\\,c^3t^3\\,\\partial_t f\\left(\\partial_z P\\right)^2 - 16f^3\\,c^4t^4e^{2P}\\partial_t f\\,\\partial_z P\\,\\partial_t Q\\,\\partial_z Q + 16f^3\\,c^4t^4\\,\\partial_t f\\,\\partial_z P\\,\\partial_t\\partial_z P - 12f^3\\,c^3t^3e^{2P}\\partial_t f\\left(\\partial_t Q\\right)^2 - 8f^3\\,c^4t^4e^{2P}\\partial_t f\\,\\partial_t Q\\,\\partial_t^2 Q - 8f^3\\,c^4t^4e^{2P}\\partial_t f\\,\\partial_t Q\\,\\partial_z^2 Q + 4f^3\\,c^3t^3e^{2P}\\partial_t f\\left(\\partial_z Q\\right)^2 + 16f^3\\,c^4t^4e^{2P}\\partial_t f\\,\\partial_z Q\\,\\partial_t\\partial_z Q + 4f^3\\,ct\\,\\partial_t f + 8f^3\\,c^3t^3\\,\\partial_z f\\,\\partial_t P\\,\\partial_z P - 16f^3\\,c^4t^4e^{2P}\\partial_z f\\,\\partial_t P\\,\\partial_t Q\\,\\partial_z Q + 16f^3\\,c^4t^4\\,\\partial_z f\\,\\partial_t P\\,\\partial_t\\partial_z P + 24f^3\\,c^4t^4e^{2P}\\partial_z f\\,\\partial_z P\\left(\\partial_t Q\\right)^2 - 8f^3\\,c^4t^4e^{2P}\\partial_z f\\,\\partial_z P\\left(\\partial_z Q\\right)^2 - 8f^3\\,c^4t^4\\,\\partial_z f\\,\\partial_z P\\,\\partial_t^2 P - 8f^3\\,c^4t^4\\,\\partial_z f\\,\\partial_z P\\,\\partial_z^2 P + 8f^3\\,c^3t^3e^{2P}\\partial_z f\\,\\partial_t Q\\,\\partial_z Q + 16f^3\\,c^4t^4e^{2P}\\partial_z f\\,\\partial_t Q\\,\\partial_t\\partial_z Q - 8f^3\\,c^4t^4e^{2P}\\partial_z f\\,\\partial_z Q\\,\\partial_t^2 Q - 8f^3\\,c^4t^4e^{2P}\\partial_z f\\,\\partial_z Q\\,\\partial_z^2 Q + 4f^2\\,c^4t^4\\left(\\partial_t f\\right)^2\\left(\\partial_t P\\right)^2 - 4f^2\\,c^4t^4\\left(\\partial_t f\\right)^2\\left(\\partial_z P\\right)^2 + 4f^2\\,c^4t^4e^{2P}\\left(\\partial_t f\\right)^2\\left(\\partial_t Q\\right)^2 - 4f^2\\,c^4t^4e^{2P}\\left(\\partial_t f\\right)^2\\left(\\partial_z Q\\right)^2 + 4f^2\\,c^2t^2\\left(\\partial_t f\\right)^2 - 4f^2\\,c^4t^4\\left(\\partial_z f\\right)^2\\left(\\partial_t P\\right)^2 + 4f^2\\,c^4t^4\\left(\\partial_z f\\right)^2\\left(\\partial_z P\\right)^2 - 4f^2\\,c^4t^4e^{2P}\\left(\\partial_z f\\right)^2\\left(\\partial_t Q\\right)^2 + 4f^2\\,c^4t^4e^{2P}\\left(\\partial_z f\\right)^2\\left(\\partial_z Q\\right)^2 - 4f^2\\,c^2t^2\\left(\\partial_z f\\right)^2 + 4f^2\\,c^4t^4\\left(\\partial_t^2 f\\right)^2 - 8f^2\\,c^4t^4\\,\\partial_t^2 f\\,\\partial_z^2 f + 4f^2\\,c^4t^4\\left(\\partial_z^2 f\\right)^2 - 8f\\,c^4t^4\\left(\\partial_t f\\right)^2\\,\\partial_t^2 f + 8f\\,c^4t^4\\left(\\partial_t f\\right)^2\\,\\partial_z^2 f + 8f\\,c^4t^4\\left(\\partial_z f\\right)^2\\,\\partial_t^2 f - 8f\\,c^4t^4\\left(\\partial_z f\\right)^2\\,\\partial_z^2 f + 4c^4t^4\\left(\\partial_t f\\right)^4 - 8c^4t^4\\left(\\partial_t f\\right)^2\\left(\\partial_z f\\right)^2 + 4c^4t^4\\left(\\partial_z f\\right)^4}{4f^6\\,c^4t^4}"
         }
       ]
     },
@@ -16384,6 +16661,11 @@
           "id": "nariai",
           "kind": "programme",
           "text": "Edward Kasner found this solution too. In 1921, the year of his anisotropic vacuum, he presented the product of two equal spheres as a solution with a cosmological constant, the positive signature form of Nariai's metric [kasner1925, kasner1921]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "generalisation",
+          "text": "Kasner's universe with solitons added. Belinski and Zakharov took it for the seed of their first soliton solutions, among them two pulses of gravitational wave that run apart along a light cone [belinskii1978]."
         }
       ],
       "references": [
@@ -16401,7 +16683,8 @@
         "ringstrom2010",
         "berger1974",
         "geroch1969",
-        "kasner1925"
+        "kasner1925",
+        "belinskii1978"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner.json",
@@ -17023,6 +17306,11 @@
           "id": "chandrasekhar_xanthopoulos",
           "kind": "locally_same",
           "text": "Two plane gravitational waves whose collision makes the inside of Kerr. Between their fronts the metric is Kerr's between its two horizons, with $t$ and $\\phi$ running along the fronts and $\\phi$ unrolled, and the waves end on the inner horizon [chandrasekhar1986, griffiths1991]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "family",
+          "text": "Kerr's black hole is two solitons on flat space. Belinski and Zakharov's inverse scattering method returns the Kerr-NUT solution from two poles, real ones for the hole with horizons [belinskii1979]."
         }
       ],
       "references": [
@@ -17080,7 +17368,8 @@
         "mars2001",
         "meinel2002",
         "chandrasekhar1986",
-        "griffiths1991"
+        "griffiths1991",
+        "belinskii1979"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -18113,6 +18402,11 @@
           "id": "wahlquist",
           "kind": "generalisation",
           "text": "The Kerr-NUT metric with a rigidly rotating perfect fluid laid over it in the same region, which is how Wahlquist described his solution. With the fluid taken away his family is the Kerr-NUT vacuum [wahlquist1968, mars2001]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "family",
+          "text": "The whole Kerr-NUT solution is two solitons added to flat space by Belinski and Zakharov's inverse scattering method [belinskii1979]."
         }
       ],
       "references": [
@@ -18136,7 +18430,8 @@
         "mathgenealogymiller",
         "emond2022",
         "wahlquist1968",
-        "mars2001"
+        "mars2001",
+        "belinskii1979"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr_taub_nut.json",
@@ -25614,6 +25909,11 @@
           "id": "black_saturn",
           "kind": "limit_source",
           "text": "A Myers-Perry black hole with a black ring turning in balance around it. In the limit of a ring shrunk to nothing it is the hole with one spin again [elvang2007]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "family",
+          "text": "Pomeransky derived the hole of five dimensions as two solitons, by Belinski and Zakharov's inverse scattering method [pomeransky2006]."
         }
       ],
       "references": [
@@ -25634,7 +25934,8 @@
         "page2007",
         "murata2008",
         "grossperry1983",
-        "elvang2007"
+        "elvang2007",
+        "pomeransky2006"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/myers_perry.json",
@@ -32832,6 +33133,11 @@
           "id": "lindquist_wheeler_lattice",
           "kind": "composite",
           "text": "A closed universe tiled with pieces of this geometry: $N$ equal masses on a three sphere, each keeping Schwarzschild's vacuum out to a sphere in free fall [lindquist1957]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "family",
+          "text": "Schwarzschild's black hole is two solitons on flat space with no rotation, in Belinski and Zakharov's inverse scattering method [belinskii1979]."
         }
       ],
       "references": [
@@ -32929,7 +33235,8 @@
         "zelmanov1965",
         "marolf2009",
         "novikov1965",
-        "lindquist1957"
+        "lindquist1957",
+        "belinskii1979"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",

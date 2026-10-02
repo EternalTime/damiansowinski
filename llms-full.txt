@@ -702,6 +702,17 @@ A star with no horizon and no singularity that passes for a black hole from outs
 - chart Interior Tortoise: coordinates $(t, x, \theta, \phi)$, $$ds^2 = \dfrac{C}{\cosh^2\left(\dfrac{\sqrt{C}\,x}{L}\right)}\left(-c^2dt^2 + dx^2\right) + L^2\tanh^2\left(\dfrac{\sqrt{C}\,x}{L}\right)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Schwarzschild Exterior: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Belinski-Zakharov Gravitational Solitons
+
+Exact vacuum solutions made by the inverse scattering method of Vladimir Belinski and Vladimir Zakharov, which adds solitons to a known solution by algebra alone. Their wave of two solitons on a Kasner universe that expands alike in two directions is two pulses of gravitational wave, which leave the singularity as one and run apart along the light cone.
+
+- id: `belinski_zakharov`
+- tags: vacuum, cosmology, inhomogeneous, gravitational wave, soliton, inverse scattering, Kasner, exact solution, time-dependent, curvature singularity, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/belinski_zakharov.json
+- chart Pole Coordinates: coordinates $(\tau, \xi, x, y)$, $$ds^2 = \dfrac{w^2N}{\sqrt{\sinh\tau\cosh\xi}}\left(-d\tau^2 + d\xi^2\right) + \dfrac{\sinh\tau\cosh\xi}{N}\left(\left(N + 2 + 2\cosh\beta\cosh\tau\right)dx^2 - 4\sinh\beta\sinh\xi\,dx\,dy + \left(N + 2 - 2\cosh\beta\cosh\tau\right)dy^2\right)$$
+- chart Belinski and Zakharov's Chart: coordinates $(t, z, x, y)$, $$ds^2 = f\left(-c^2dt^2 + dz^2\right) + \dfrac{ct}{w}\left(e^{P}\left(dx + Q\,dy\right)^2 + e^{-P}dy^2\right)$$
+
 ### Hartle-Thorne Slowly Rotating Star
 
 The gravitational field outside a slowly rotating star, through second order in its spin: Schwarzschild's exterior, the dragging of inertial frames, and a quadrupole moment set by the star's interior. Far from the star it is the field of Lense and Thirring, whose frame dragging Gravity Probe B measured around the Earth.

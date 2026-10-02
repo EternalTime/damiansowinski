@@ -239,6 +239,15 @@ DIMENSIONS = {
     ("gowdy", "sphere"): {
         "t": "1", "\\theta": "1", "\\sigma": "1", "\\delta": "1", "L": "L", "P": "1", "Q": "1", "a": "1",
     },
+    # Belinski and Zakharov's solitons: the pole chart's tau and xi are pure numbers and the length
+    # w carries the scale, x and y lengths along the Killing vectors; the canonical chart's t is a
+    # time and its three functions pure numbers.
+    ("belinski_zakharov", "pole"): {
+        "\\tau": "1", "\\xi": "1", "x": "L", "y": "L", "w": "L", "\\beta": "1", "N": "1",
+    },
+    ("belinski_zakharov", "canonical"): {
+        "t": "T", "z": "L", "x": "L", "y": "L", "w": "L", "f": "1", "P": "1", "Q": "1",
+    },
     # B = sqrt(G) B_0/c^2 folds the field in Gaussian units into an inverse length, so B rho and
     # B r sin(theta) are pure numbers; Ernst's hole keeps Schwarzschild's r_s = 2GM/c^2.
     ("melvin", "cylindrical"): {
@@ -3319,13 +3328,21 @@ class Geometry:
     def kretschmann(self):
         def build():
             lower = self.riemann_llll()
-            # One index at a time, so each component is a sum of n terms rather than n^4.
-            upper = self.raise_indices(lower, 4, (0, 1, 2, 3))
-            return self.settle(sum(
-                lower[a][b][cc][d] * upper[a][b][cc][d]
-                for a in range(self.n) for b in range(self.n)
-                for cc in range(self.n) for d in range(self.n)
-            ))
+            # The Riemann tensor is antisymmetric in each pair of its indices, so the sum over all
+            # four runs over the pairs a < b and c < d alone, four times, and a pair is raised by
+            # the metric of bivectors, g^{a alpha} g^{b beta} - g^{a beta} g^{b alpha}: one pair at
+            # a time, so that each component is a sum over the pairs and never over n^4 terms.
+            # Raising every component one index at a time took three minutes on Belinski and
+            # Zakharov's wave, and this takes seconds.
+            pairs = [(a, b) for a in range(self.n) for b in range(a + 1, self.n)]
+            lift = {(p, q): self.settle(self.ginv[p[0], q[0]] * self.ginv[p[1], q[1]]
+                                        - self.ginv[p[0], q[1]] * self.ginv[p[1], q[0]])
+                    for p in pairs for q in pairs}
+            half = {(p, q): self.settle(sum(lift[p, r] * lower[r[0]][r[1]][q[0]][q[1]] for r in pairs))
+                    for p in pairs for q in pairs}
+            upper = {(p, q): self.settle(sum(half[p, r] * lift[r, q] for r in pairs))
+                     for p in pairs for q in pairs}
+            return self.settle(4 * sum(lower[p[0]][p[1]][q[0]][q[1]] * upper[p, q] for p in pairs for q in pairs))
         return self._timed("kretschmann", build)
 
     def weyl_llll(self):

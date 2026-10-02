@@ -11,7 +11,8 @@ som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, 
 schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis,
-wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric and lindquist_wheeler_lattice, and Godel's cylindrical chart.
+wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice and
+belinski_zakharov, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -32,7 +33,7 @@ malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_
 majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md,
 witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, mass_inflation.md,
 kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_star.md,
-misner_brill_lindquist.md, lewis.md and tippett_tsang.md beside this file.
+misner_brill_lindquist.md, lewis.md, tippett_tsang.md and belinski_zakharov.md beside this file.
 """
 import argparse
 import fcntl
@@ -11325,6 +11326,104 @@ def rooted_hyperbolic(arguments, root):
     return pretty
 
 
+def factored_hyperbolic(arguments, root, named=None):
+    """A `pretty` for a chart whose values are 1 or 1/sqrt(root) times a rational function of the
+    hyperbolic functions of several `arguments`, as Belinski and Zakharov's wave is of tau, xi and
+    beta. rooted_hyperbolic reduces a value by sinh^2 = cosh^2 - 1 over all the arguments at once
+    and factors it in twice as many generators, which did not finish on a Christoffel symbol of
+    that chart in two minutes. Here the value is factored as the checker hands it back, in the
+    exponentials E of the arguments, among which no relation holds, and each irreducible factor,
+    of degree 2m in an E, is written E^m (A + sinh B) with A and B polynomials in cosh, by
+    E^n + E^-n = 2 T_n(cosh) and E^n - E^-n = 2 sinh U_(n-1)(cosh), Chebyshev's polynomials; the
+    powers E^m of the two sides cancel, a bare E counting as one. E - 1 and E + 1 are 2 sqrt(E) times sinh and cosh of half
+    the argument, and their powers a and b are written (sinh/2)^((a+b)/2) ((cosh - 1)/sinh)^((a-b)/2).
+    `named` is handed each factor with the names (S, C) of every argument's sinh and cosh, to write
+    one the chart names."""
+    halves = [sp.Symbol(f"_H{i}", positive=True) for i in range(len(arguments))]
+    wholes = [sp.Symbol(f"_E{i}", positive=True) for i in range(len(arguments))]
+    names = [sp.symbols(f"_S{i} _C{i}", positive=True) for i in range(len(arguments))]
+
+    def fractional(e):
+        return any(not p.exp.is_Integer for p in e.atoms(sp.Pow) if p.exp.is_Rational)
+
+    def convert(poly):
+        shift = []
+        for E, (S, C) in zip(wholes, names):
+            p = sp.Poly(poly, E)
+            if p.degree() % 2:
+                raise ValueError(f"the factor {poly} is of odd degree in an exponential")
+            m = p.degree() // 2
+            coeff = {n - m: c for (n,), c in p.terms()}
+            poly = coeff.get(0, sp.Integer(0))
+            for n in range(1, m + 1):
+                a, b = coeff.get(n, 0), coeff.get(-n, 0)
+                poly += (a + b) * sp.chebyshevt(n, C) + (a - b) * S * sp.chebyshevu(n - 1, C)
+            poly = sp.expand(poly)
+            shift.append(m)
+        return poly, shift
+
+    def side(expr):
+        constant, factors = sp.factor_list(expr, *wholes)
+        total = [sp.Integer(0)] * len(wholes)
+        half = [[0, 0] for _ in wholes]
+        out = sp.Integer(1)
+        for f, k in factors:
+            for i, E in enumerate(wholes):
+                if f == E:
+                    total[i] += k
+                    break
+                which = 0 if sp.expand(f - (E - 1)) == 0 else 1 if sp.expand(f - (E + 1)) == 0 else None
+                if which is not None:
+                    half[i][which] += k
+                    total[i] += sp.Rational(k, 2)
+                    constant *= 2 ** k
+                    break
+            else:
+                h, shift = convert(f)
+                content, primitive = sp.primitive(h)
+                constant *= content ** k
+                total = [a + k * b for a, b in zip(total, shift)]
+                out *= (named(primitive, names) if named else primitive) ** k
+        return constant, out, total, half
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        for k in range(2):
+            x = vm.norm(value * root ** sp.Rational(k, 2))
+            if not fractional(x):
+                break
+        else:
+            raise ValueError(f"{value} is no power of the square root of {root} times a rational function")
+        for argument, H in zip(arguments, halves):
+            x = x.replace(lambda e, a=argument: isinstance(e, sp.exp) and sp.expand(2 * e.args[0] / a).is_Integer,
+                          lambda e, a=argument, H=H: H ** sp.expand(2 * e.args[0] / a))
+        if x.has(sp.exp):
+            raise ValueError(f"{value} keeps an exponential of none of the arguments")
+        sides = []
+        for s in sp.fraction(sp.cancel(x)):
+            p = sp.Poly(s, *halves)
+            if any(n % 2 for monom in p.monoms() for n in monom):
+                raise ValueError(f"{value} is no function of the arguments")
+            sides.append(sp.Poly.from_dict({tuple(n // 2 for n in monom): c for monom, c in p.terms()},
+                                           *wholes).as_expr())
+        (number, top, up, half_up), (below, bottom, down, half_down) = side(sides[0]), side(sides[1])
+        if up != down:
+            raise ValueError(f"{value} keeps a bare exponential")
+        out = top / bottom
+        for (S, C), above, under in zip(names, half_up, half_down):
+            a, b = above[0] - under[0], above[1] - under[1]
+            if (a + b) % 2:
+                raise ValueError(f"{value} keeps a function of half an argument")
+            out *= (S / 2) ** ((a + b) // 2) * ((C - 1) / S) ** ((a - b) // 2)
+        back = {}
+        for argument, (S, C) in zip(arguments, names):
+            back.update({S: sp.sinh(argument), C: sp.cosh(argument)})
+        return _keep_coeff(sp.cancel(number / below), out.subs(back) / root ** sp.Rational(k, 2))
+    return pretty
+
+
 def senovilla_fluid(chart):
     """G_mu nu = (eps + p) u_mu u_nu + p g_mu nu in every slot, for the fluid at rest in the chart,
     u = dx^0-normalised, with eps = 15a^2/(cosh^4(act) cosh^4(3a rho)) and p = eps/3 in units of
@@ -16485,6 +16584,241 @@ def misner_brill_lindquist_check(chart):
 
 
 CHARTS["misner_brill_lindquist"] = [lambda s=s: misner_brill_lindquist(s) for s in TWO_HOLE_CHARTS]
+
+
+# -- Belinski and Zakharov's gravitational solitons --------------------------------------
+
+BZ_CHARTS = ["pole", "canonical"]
+BZ_N = "\\cosh^2\\beta\\sinh^2\\tau + \\sinh^2\\beta\\cosh^2\\xi"
+BZ_POLE_LINE = ("ds^2 = \\dfrac{w^2N}{\\sqrt{\\sinh\\tau\\cosh\\xi}}\\left(-d\\tau^2 + d\\xi^2\\right)"
+                " + \\dfrac{\\sinh\\tau\\cosh\\xi}{N}\\left(\\left(N + 2 + 2\\cosh\\beta\\cosh\\tau\\right)dx^2"
+                " - 4\\sinh\\beta\\sinh\\xi\\,dx\\,dy + \\left(N + 2 - 2\\cosh\\beta\\cosh\\tau\\right)dy^2\\right)")
+_BZ_UP, _BZ_DOWN = "N + 2 + 2\\cosh\\beta\\cosh\\tau", "N + 2 - 2\\cosh\\beta\\cosh\\tau"
+_BZ_AREA = "\\sinh\\tau\\cosh\\xi"
+BZ_POLE_METRIC = {
+    ("\\tau", "\\tau"): "-\\dfrac{w^2N}{\\sqrt{" + _BZ_AREA + "}}", ("\\xi", "\\xi"): "\\dfrac{w^2N}{\\sqrt{" + _BZ_AREA + "}}",
+    ("x", "x"): "\\dfrac{\\left(" + _BZ_UP + "\\right)" + _BZ_AREA + "}{N}",
+    ("x", "y"): "-\\dfrac{2\\sinh\\beta\\sinh\\tau\\sinh\\xi\\cosh\\xi}{N}",
+    ("y", "x"): "-\\dfrac{2\\sinh\\beta\\sinh\\tau\\sinh\\xi\\cosh\\xi}{N}",
+    ("y", "y"): "\\dfrac{\\left(" + _BZ_DOWN + "\\right)" + _BZ_AREA + "}{N}"}
+BZ_POLE_INVERSE = {
+    ("\\tau", "\\tau"): "-\\dfrac{\\sqrt{" + _BZ_AREA + "}}{w^2N}", ("\\xi", "\\xi"): "\\dfrac{\\sqrt{" + _BZ_AREA + "}}{w^2N}",
+    ("x", "x"): "\\dfrac{" + _BZ_DOWN + "}{N" + _BZ_AREA + "}",
+    ("x", "y"): "\\dfrac{2\\sinh\\beta\\sinh\\xi}{N" + _BZ_AREA + "}",
+    ("y", "x"): "\\dfrac{2\\sinh\\beta\\sinh\\xi}{N" + _BZ_AREA + "}",
+    ("y", "y"): "\\dfrac{" + _BZ_UP + "}{N" + _BZ_AREA + "}"}
+BZ_BLOCK = "\\left(e^{P}\\left(dx + Q\\,dy\\right)^2 + e^{-P}dy^2\\right)"
+
+
+def belinski_zakharov(system):
+    """Belinski and Zakharov's solitons, Sov. Phys. JETP 48, 985 (1978). The pole chart is their
+    wave of two solitons on the Kasner universe with s_1 = s_2 = 1/2, their (5.10) to (5.12), in
+    the coordinates of their (5.14) and (5.15), alpha = w sinh(tau) cosh(xi) and
+    w_1 - beta = -w cosh(tau) sinh(xi) with w their w_2, in which the pole's modulus and phase are
+    elementary, (5.16), and the conformal factor is the one (5.10) prints; cosh(beta) and
+    sinh(beta) are their p_1 and p_2. The canonical chart is their block form (1.1) in alpha = ct,
+    f(-c^2dt^2 + dz^2) + g_ab dx^a dx^b with det g = c^2t^2, the block written in Gowdy's P and Q,
+    its three functions free and no component assuming a field equation. belinski_zakharov_check
+    holds each chart to its source, and belinski_zakharov.md beside this file is the derivation."""
+    if system == "pole":
+        coords = ["\\tau", "\\xi", "x", "y"]
+        parameters = ["w", "\\beta", "N = " + BZ_N]
+        probe = vm.Reader(coords, parameters, ())
+        tau, xi, beta = probe.symbol["\\tau"], probe.symbol["\\xi"], probe.parameters["beta"]
+        N = sp.Symbol("_N", positive=True)
+
+        def named(factor, names):
+            # N, written as the printer writes every factor, in cosh alone, is given its name.
+            (St, Ct), (Sx, Cx), (Sb, Cb) = names
+            reduced = sp.expand(Cb ** 2 * (Ct ** 2 - 1) + (Cb ** 2 - 1) * Cx ** 2)
+            return N if sp.expand(factor - reduced) == 0 else -N if sp.expand(factor + reduced) == 0 else factor
+
+        lead = [probe.parameters["w"], N] + [h(a) for a in (beta, tau, xi) for h in (sp.cosh, sp.sinh)]
+        return {
+            "metric_id": "belinski_zakharov",
+            "system": {"id": "pole", "name": "Pole Coordinates", "coords": coords,
+                       "domains": ["\\tau \\in (0, \\infty)", "\\xi \\in (-\\infty, \\infty)",
+                                   "x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)"],
+                       "parameters": parameters, "line_element": BZ_POLE_LINE},
+            "chart_line_element": BZ_POLE_LINE,
+            "printer": {"lead": lead, "factors": lead, "overrides": {N: "N"}},
+            "pretty": factored_hyperbolic([tau, xi, beta], sp.sinh(tau) * sp.cosh(xi), named),
+            "components": {"metric_components": BZ_POLE_METRIC, "inverse_metric_components": BZ_POLE_INVERSE},
+            "check": belinski_zakharov_check,
+        }
+    coords = ["t", "z", "x", "y"]
+    parameters = ["w", "f = f(t,z)", "P = P(t,z)", "Q = Q(t,z)"]
+    probe = vm.Reader(coords, parameters, ())
+    x0, z = probe.symbol["t"], probe.symbol["z"]
+    f, P, Q = (probe.parameters[n] for n in ("f", "P", "Q"))
+    D = sp.Derivative
+    lead = [probe.parameters["w"], f, P, Q]
+    for h in (f, P, Q):
+        lead += [D(h, x0), D(h, z)]
+    for h in (P, Q, f):
+        lead += [D(h, (x0, 2)), D(h, x0, z), D(h, (z, 2))]
+    lead.append(x0)
+    return {
+        "metric_id": "belinski_zakharov",
+        "system": {"id": "canonical", "name": "Belinski and Zakharov's Chart", "coords": coords,
+                   "domains": ["t \\in (0, \\infty)", "z \\in (-\\infty, \\infty)", "x \\in (-\\infty, \\infty)",
+                               "y \\in (-\\infty, \\infty)"],
+                   "parameters": parameters,
+                   "line_element": "ds^2 = f\\left(-c^2dt^2 + dz^2\\right) + \\dfrac{ct}{w}" + BZ_BLOCK},
+        "chart_line_element": "ds^2 = f\\left(-dt^2 + dz^2\\right) + \\dfrac{t}{w}" + BZ_BLOCK,
+        "time": "t",
+        "printer": {"lead": lead, "factors": lead},
+        "pretty": lambda value: sp.powsimp(sp.factor(sp.sympify(value)), combine="exp"),
+        # The time stands in every value as ct, written as the line element writes it.
+        "rewrite": [("t^4\\,c^4", "c^4t^4"), ("t^3\\,c^3", "c^3t^3"), ("t^2\\,c^2", "c^2t^2"), ("t\\,c", "ct")],
+        "kretschmann_text": belinski_zakharov_scalar,
+        "check": belinski_zakharov_check,
+    }
+
+
+def belinski_zakharov_scalar(chart):
+    """The canonical chart's Kretschmann scalar as one expanded sum over its denominator,
+    4 c^4 t^4 f^6. sympy's factor did not finish on it in twenty minutes, and the sum has no factor
+    to find: it is built in a second and printed in a tenth of one."""
+    top, bottom = sp.fraction(sp.together(chart.named_time(chart.geo.kretschmann())))
+    return chart.printer(sp.powsimp(sp.expand(top) / sp.factor(bottom), combine="exp"))
+
+
+def belinski_zakharov_wave(tau, xi, beta):
+    """The wave of two solitons as Belinski and Zakharov's (5.10) to (5.12) and (5.16) print it,
+    in units of w: the conformal factor of -dtau^2 + dxi^2 and the block (g_xx, g_xy, g_yy), from
+    their sigma = rho^2/alpha^2 = tanh^2(tau/2), sin^2(phi) = 1/cosh^2(xi), H, Q, p_1 and p_2,
+    with the constant C_1 = 1/4."""
+    p1, p2 = sp.cosh(beta), sp.sinh(beta)
+    alpha = sp.sinh(tau) * sp.cosh(xi)
+    sigma = sp.tanh(tau / 2) ** 2
+    sin2 = 1 / sp.cosh(xi) ** 2
+    cos_2phi, sin_2phi = 1 - 2 * sin2, 2 * sp.tanh(xi) / sp.cosh(xi)
+    H = 1 + sigma ** 2 - 2 * sigma * cos_2phi
+    Q = p1 ** 2 * H - (1 - sigma) ** 2
+    conformal = alpha ** sp.Rational(3, 2) * Q / (4 * sigma)
+    gxx = alpha / Q * (p1 ** 2 * H - (1 - sigma) ** 2 * cos_2phi + 2 * p1 * (1 - sigma ** 2) * sin2)
+    gyy = alpha / Q * (p1 ** 2 * H - (1 - sigma) ** 2 * cos_2phi - 2 * p1 * (1 - sigma ** 2) * sin2)
+    gxy = -alpha / Q * p2 * (1 - sigma) ** 2 * sin_2phi
+    return conformal, gxx, gxy, gyy
+
+
+def belinski_zakharov_vacuum(x0, z, f, P, Q):
+    """The vacuum equations the canonical chart's parameters state, in the chart coordinate
+    x^0 = ct: the two wave equations as replacements for the second time derivatives of P and Q,
+    and both first derivatives of ln f."""
+    D = sp.Derivative
+    e = sp.exp(2 * P)
+    waves = {D(P, (x0, 2)): D(P, (z, 2)) - D(P, x0) / x0 + e * (D(Q, x0) ** 2 - D(Q, z) ** 2),
+             D(Q, (x0, 2)): D(Q, (z, 2)) - D(Q, x0) / x0 - 2 * (D(P, x0) * D(Q, x0) - D(P, z) * D(Q, z))}
+    first = {x0: -1 / (2 * x0) + x0 / 2 * (D(P, x0) ** 2 + D(P, z) ** 2 + e * (D(Q, x0) ** 2 + D(Q, z) ** 2)),
+             z: x0 * (D(P, x0) * D(P, z) + e * D(Q, x0) * D(Q, z))}
+    return waves, first
+
+
+def belinski_zakharov_check(chart):
+    g = chart.geo.g
+    if chart.coords_tex[0] == "\\tau":
+        ricci = chart.geo.ricci_ll()
+        for i in range(4):
+            for j in range(i, 4):
+                if vm.norm(ricci[i][j]) != 0:
+                    raise AssertionError(f"belinski_zakharov: the wave of two solitons is no vacuum in slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+        tau, xi = chart.symbols[:2]
+        w, beta = chart.reader.parameters["w"], chart.reader.parameters["beta"]
+        conformal, gxx, gxy, gyy = belinski_zakharov_wave(tau, xi, beta)
+        printed = {(0, 0): -w ** 2 * conformal, (1, 1): w ** 2 * conformal, (2, 2): gxx, (2, 3): gxy, (3, 3): gyy}
+        rng = random.Random(1978)
+        for _ in range(3):
+            at = {tau: sp.Rational(rng.randint(200, 3000), 1000), xi: sp.Rational(rng.randint(-2500, 2500), 1000),
+                  beta: sp.Rational(rng.randint(-1500, 1500), 1000), w: sp.Rational(rng.randint(500, 2000), 1000)}
+            for (i, j), value in printed.items():
+                if abs((g[i, j] - value).xreplace(at).evalf(40)) > sp.Float(10) ** -30:
+                    raise AssertionError("belinski_zakharov: the pole chart misses Belinski and Zakharov's (5.10) "
+                                         f"in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+        # det g_ab = alpha^2, their (1.4), and the diagonal metric diag(alpha/sigma, alpha sigma) at beta = 0.
+        alpha = sp.sinh(tau) * sp.cosh(xi)
+        if vm.norm(g[2, 2] * g[3, 3] - g[2, 3] ** 2 - alpha ** 2) != 0:
+            raise AssertionError("belinski_zakharov: the block of x and y has not the determinant alpha^2")
+        sigma = (sp.cosh(tau) - 1) / (sp.cosh(tau) + 1)
+        flat = g.subs(beta, 0)
+        if vm.norm(flat[2, 2] - alpha / sigma) != 0 or vm.norm(flat[3, 3] - alpha * sigma) != 0 or flat[2, 3] != 0:
+            raise AssertionError("belinski_zakharov: the wave at beta = 0 is not diag(alpha/sigma, alpha sigma)")
+        return
+    x0, z = chart.symbols[:2]
+    w = chart.reader.parameters["w"]
+    f, P, Q = (chart.reader.parameters[n] for n in ("f", "P", "Q"))
+    D = sp.Derivative
+    waves, first = belinski_zakharov_vacuum(x0, z, f, P, Q)
+
+    def on_shell(value):
+        value = sp.sympify(value)
+        value = value.subs({D(f, (x0, 2)): sp.diff(f * first[x0], x0), D(f, (z, 2)): sp.diff(f * first[z], z),
+                            D(f, x0, z): sp.diff(f * first[x0], z)}).doit()
+        value = value.subs({D(f, x0): f * first[x0], D(f, z): f * first[z]}).doit()
+        for _ in range(4):
+            higher = {}
+            for d in value.atoms(D):
+                counts = dict(d.variable_count)
+                for target, replacement in waves.items():
+                    if d.expr == target.expr and counts.get(x0, 0) >= 2:
+                        rest = [(v, n - (2 if v == x0 else 0)) for v, n in d.variable_count]
+                        rest = [(v, n) for v, n in rest if n]
+                        higher[d] = sp.diff(replacement, *rest) if rest else replacement
+            if not higher:
+                break
+            value = value.subs(higher).doit()
+        return value
+
+    ricci = chart.geo.ricci_ll()
+    for i in range(4):
+        for j in range(i, 4):
+            if not gowdy_vanishes(on_shell(ricci[i][j])):
+                raise AssertionError(f"belinski_zakharov: the stated field equations leave R_{chart.coords_tex[i]}"
+                                     f"{chart.coords_tex[j]} standing")
+    # The wave of two solitons: the pole chart pulled back, ct = w sinh(tau) cosh(xi) and
+    # z = w cosh(tau) sinh(xi), gives f, P and Q, which solve the stated equations.
+    tau, xi, beta = sp.symbols("tau xi beta", real=True)
+    spec = belinski_zakharov("pole")
+    pole = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    there = pole.geo.g.subs({pole.symbols[0]: tau, pole.symbols[1]: xi, pole.reader.parameters["beta"]: beta,
+                             pole.reader.parameters["w"]: w}, simultaneous=True)
+    sigma_ = sp.cosh(xi) ** 2 + sp.sinh(tau) ** 2
+    alpha = sp.sinh(tau) * sp.cosh(xi)
+    wave = {"f": there[1, 1] / (w ** 2 * sigma_), "P": sp.log(there[2, 2] / alpha), "Q": there[2, 3] / there[2, 2]}
+    # d/d(ct) and d/dz of a function of tau and xi, by the inverse of the map's Jacobian.
+    def d0(h):
+        return (sp.cosh(tau) * sp.cosh(xi) * sp.diff(h, tau) - sp.sinh(tau) * sp.sinh(xi) * sp.diff(h, xi)) / (w * sigma_)
+
+    def dz(h):
+        return (-sp.sinh(tau) * sp.sinh(xi) * sp.diff(h, tau) + sp.cosh(tau) * sp.cosh(xi) * sp.diff(h, xi)) / (w * sigma_)
+
+    values = {x0: w * alpha, f: wave["f"], P: wave["P"], Q: wave["Q"]}
+    for name, h in (("f", f), ("P", P), ("Q", Q)):
+        values.update({D(h, x0): d0(wave[name]), D(h, z): dz(wave[name]), D(h, (x0, 2)): d0(d0(wave[name])),
+                       D(h, (z, 2)): dz(dz(wave[name])), D(h, x0, z): d0(dz(wave[name]))})
+    equations = [target - replacement for target, replacement in waves.items()]
+    equations += [D(f, x0) / f - first[x0], D(f, z) / f - first[z]]
+    rng = random.Random(1979)
+    for _ in range(3):
+        at = {tau: sp.Rational(rng.randint(300, 2500), 1000), xi: sp.Rational(rng.randint(-2000, 2000), 1000),
+              beta: sp.Rational(rng.randint(-1500, 1500), 1000), w: sp.Rational(rng.randint(500, 2000), 1000)}
+        for equation in equations:
+            number = equation.xreplace(values).xreplace(at).evalf(40)
+            if abs(number) > sp.Float(10) ** -28:
+                raise AssertionError("belinski_zakharov: the wave of two solitons misses the canonical chart's "
+                                     f"field equations by {number}")
+        # The canonical metric at the wave's functions is the pole chart's, carried along the map.
+        J = sp.Matrix([[w * sp.cosh(tau) * sp.cosh(xi), w * sp.sinh(tau) * sp.sinh(xi), 0, 0],
+                       [w * sp.sinh(tau) * sp.sinh(xi), w * sp.cosh(tau) * sp.cosh(xi), 0, 0],
+                       [0, 0, 1, 0], [0, 0, 0, 1]])
+        pulled = (J.T * chart.geo.g.xreplace(values) * J - there).xreplace(at).evalf(40)
+        if max(abs(e) for e in pulled) > sp.Float(10) ** -28:
+            raise AssertionError("belinski_zakharov: the canonical chart at the wave's functions misses the pole chart")
+
+
+CHARTS["belinski_zakharov"] = [lambda s=s: belinski_zakharov(s) for s in BZ_CHARTS]
 
 
 # -- The Lewis metrics -------------------------------------------------------------------

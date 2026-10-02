@@ -627,6 +627,41 @@ GOWDY_HOLE_INPUT = ("The inside of Schwarzschild's horizon, $Q = 0$, $e^{2a} = (
                     "his time.")
 
 
+def _bz_wave():
+    """Belinski and Zakharov's wave of two solitons at w = 1 and cosh(beta) = 5/4, sinh(beta) = 3/4,
+    as strings in the plain names of the canonical chart, t being ct: with
+    S = sqrt((t^2 - z^2 - 1)^2 + 4 t^2), sinh^2(tau) = (S + t^2 - z^2 - 1)/2 and
+    cosh^2(xi) = (S - t^2 + z^2 + 1)/2 solve t = sinh(tau) cosh(xi), z = cosh(tau) sinh(xi), and
+    N = (25 sinh^2(tau) + 9 cosh^2(xi))/16, f = N/(S sqrt(t)), e^P = (N + 2 + (5/2) cosh(tau))/N and
+    Q = -(3/2) sinh(xi)/(N + 2 + (5/2) cosh(tau))."""
+    d = "(t**2 - z**2 - 1)"
+    s = f"sqrt({d}**2 + 4*t**2)"
+    sh2, ch2 = f"(({s} + {d})/2)", f"(({s} - {d})/2)"
+    cosh_tau = f"sqrt({sh2} + 1)"
+    n = f"((25*{sh2} + 9*{ch2})/16)"
+    top = f"({n} + 2 + 5*{cosh_tau}/2)"
+    return {"f": f"{n}/({s}*sqrt(t))", "P": f"log({top}/{n})", "Q": f"-3*z/(2*{cosh_tau}*{top})"}
+
+
+BZ_INPUT = ("The wave of two solitons at $w = 1$ and $\\cosh\\beta = 5/4$: with $ct = w\\sinh\\tau\\cosh\\xi$ and "
+            "$z = w\\cosh\\tau\\sinh\\xi$, $f = N/\\left(\\left(\\sinh^2\\tau + \\cosh^2\\xi\\right)\\sqrt{ct/w}\\right)$, "
+            "$e^{P} = (N + 2 + 2\\cosh\\beta\\cosh\\tau)/N$, and "
+            "$Q = -2\\sinh\\beta\\sinh\\xi/(N + 2 + 2\\cosh\\beta\\cosh\\tau)$, checked to solve this spacetime's "
+            "own field equations.")
+BZ_SOLVES = (("t", "t"), ("t", "z"), ("z", "z"), ("x", "x"), ("y", "y"))
+# The light cone of the event t = 0, z = 0, each ray marked through a point away from the
+# singular edge, where no ray can be started: (legend of the ray moving left, of the one moving right).
+BZ_CONE = {"pole": ("the ray $\\xi = -\\tau$ from the event $t = 0$, $z = 0$, which one pulse runs along",
+                    "the ray $\\xi = \\tau$ from that event, which the other pulse runs along"),
+           "canonical": ("the ray $z = -ct$ from the event $t = 0$, $z = 0$, which one pulse runs along",
+                         "the ray $z = ct$ from that event, which the other pulse runs along")}
+
+
+def _bz_cone(chart):
+    left, right = BZ_CONE[chart]
+    return (("shell", {"x0": "1", "r": "-1"}, 0, left), ("shell", {"x0": "1", "r": "1"}, 1, right))
+
+
 def _gowdy_solves(time):
     return ((time, time), (time, "\\theta"), ("\\theta", "\\theta"), ("\\sigma", "\\sigma"), ("\\delta", "\\delta"))
 
@@ -3177,6 +3212,17 @@ DIAGRAMS = [
             "$\\theta$", "$-\\tau$", {"L": 1}, {"sigma": "0", "delta": "0"}, to_display=((0, 1), (-1, 0)), tau="-tau",
             families=SIDEWAYS, periodic=("\\theta",), functions=_gowdy_wave("exp(-tau)"),
             solves=_gowdy_solves("\\tau"), input=GOWDY_INPUT),
+    # Belinski and Zakharov's wave of two solitons: both planes are conformally flat, so the rays
+    # are at 45 degrees, and the light cone z = +-ct of the canonical chart is xi = +-tau.
+    # Each conformal factor is infinite on the singular edge, where g^rr vanishes with it, so
+    # where_is_infinity keeps that zero from being marked as a horizon would be.
+    Diagram("belinski_zakharov", "pole", "plane", "$\\tau$ and $\\xi$", ("\\tau", "\\xi"), (-3, 3, 0, 3),
+            "$\\xi$", "$\\tau$", {"w": 1, "beta": "log(2)"}, {"x": "0", "y": "0"}, tau="tau", families=SIDEWAYS,
+            where_is_infinity=True, marked=_bz_cone("pole")),
+    Diagram("belinski_zakharov", "canonical", "plane", "$t$ and $z$", ("t", "z"), (-6, 6, 0, 6),
+            "$z/w$", "$ct/w$", {"w": 1}, {"x": "0", "y": "0"}, families=SIDEWAYS,
+            functions=_bz_wave(), solves=BZ_SOLVES, input=BZ_INPUT, where_is_infinity=True,
+            marked=_bz_cone("canonical")),
     # The sphere chart, for the inside of Schwarzschild's horizon, r = L(1 - cos t) with r_s = 2L:
     # the plane is conformally flat for every wave, so the rays are t -+ theta = const.
     Diagram("gowdy", "sphere", "plane", "$t$ and $\\theta$", ("t", "\\theta"), (0, math.pi, 0, math.pi),
@@ -7471,6 +7517,23 @@ CAPTIONS = {
         "at $\\tau$ whose $\\theta$ differ by more than $2e^{-\\tau}$ do not meet, and each $\\theta$ reaches "
         "the singularity with its own asymptotic velocity, $v(\\theta) = \\tfrac{1}{2}\\cos\\theta$.",
     ],
+    ("belinski_zakharov", "pole", "plane"): [
+        "The plane of $\\tau$ and $\\xi$ ($x = 0$, $y = 0$) of the wave of two solitons, $w = 1$ and "
+        "$\\cosh\\beta = 5/4$. The metric on it is $w^2N(\\sinh\\tau\\cosh\\xi)^{-1/2}(-d\\tau^2 + d\\xi^2)$, and the "
+        "factor drops out of the null condition, so the rays are at 45°. No Christoffel symbol turns them out of "
+        "the plane, so they are null geodesics.",
+        "The whole singularity is the edge $\\tau = 0$, and the marked rays $\\xi = \\pm\\tau$ are the light cone "
+        "$z = \\pm ct$ of Belinski and Zakharov's chart, with $ct = w\\sinh\\tau\\cosh\\xi$ and "
+        "$z = w\\cosh\\tau\\sinh\\xi$. The two pulses run along them.",
+    ],
+    ("belinski_zakharov", "canonical", "plane"): [
+        "The plane of $t$ and $z$ ($x = 0$, $y = 0$) of the same wave. The metric on it is "
+        "$f(-c^2dt^2 + dz^2)$, and the factor drops out of the null condition, so for every $f$ the rays are at "
+        "45°, and they are null geodesics.",
+        "The two pulses leave the singularity $t = 0$ as one, about $z = 0$, and run apart along the marked rays "
+        "$z = \\pm ct$. Far ahead of them and far behind them $x$ and $y$ expand alike, as in the Kasner universe "
+        "the wave was built on.",
+    ],
     ("gowdy", "sphere", "plane"): [
         "The plane of $t$ and $\\theta$ ($\\sigma = 0$, $\\delta = 0$) of the inside of Schwarzschild's horizon "
         "as a Gowdy universe on $S^2 \\times S^1$, the edges $\\theta = 0$ and $\\theta = \\pi$ the poles of the "
@@ -11700,6 +11763,8 @@ CLOSED_FORMS = {
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), None),
     ("israel_shell", "exterior_ingoing", "shell"):
         (lambda v, r: v, lambda v, r: v - 2 * _rstar(r, [1]), _away(1)),
+    ("belinski_zakharov", "pole", "plane"): (lambda tau, xi: tau + xi, lambda tau, xi: tau - xi, lambda tau, xi: tau > 0.02),
+    ("belinski_zakharov", "canonical", "plane"): (lambda t, z: t + z, lambda t, z: t - z, lambda t, z: t > 0.02),
     ("gowdy", "areal", "plane"): (lambda t, th: t + th, lambda t, th: t - th, lambda t, th: t > 0.02),
     ("gowdy", "sphere", "plane"): (lambda t, th: t + th, lambda t, th: t - th, None),
     ("gowdy", "logarithmic", "plane"): (lambda tau, th: np.exp(-tau) + th, lambda tau, th: np.exp(-tau) - th, None),

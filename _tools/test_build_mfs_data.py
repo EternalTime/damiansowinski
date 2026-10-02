@@ -3190,7 +3190,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         computed, so it has no embedding diagram."""
         RELIEF = 0.05
         flat = {"minkowski", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres", "light_beam",
-                "chandrasekhar_xanthopoulos"}
+                "chandrasekhar_xanthopoulos", "belinski_zakharov"}
         # The domain wall's moment ct = 0, when the wall stops, is the flat disc of radius 1/k taken
         # twice and joined at its rim; the moments either side of it are the cones it opens into.
         # Hayward's hole forms from flat space and leaves flat space behind: the first and the last
@@ -3310,7 +3310,8 @@ class EmbeddingDiagrams(unittest.TestCase):
         self.assertEqual({name for name, data in self.embedding.items()
                           if any("height" in view for view in data["views"])},
                          {"alcubierre", "krasnikov", "natario", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose",
-                          "bell_szekeres", "light_beam", "tippett_tsang", "chandrasekhar_xanthopoulos"})
+                          "bell_szekeres", "light_beam", "tippett_tsang", "chandrasekhar_xanthopoulos",
+                          "belinski_zakharov"})
 
     def test_a_grid_that_is_not_one_is_refused(self):
         def spoil(change, words):
@@ -3527,7 +3528,7 @@ class StacksAndMovies(unittest.TestCase):
     September 2026, from the numbers written and nothing else."""
 
     STACKS = {"kasner": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
-              "bell_szekeres": 3.0, "light_beam": 0.4, "chandrasekhar_xanthopoulos": 3.0}   # the height of a unit of time
+              "bell_szekeres": 3.0, "light_beam": 0.4, "chandrasekhar_xanthopoulos": 3.0, "belinski_zakharov": 2.0}   # the height of a unit of time
     # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
@@ -3555,6 +3556,7 @@ class StacksAndMovies(unittest.TestCase):
               ("kasner", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
               ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$",
               ("bell_szekeres", "ring"): "$\\xi$", ("chandrasekhar_xanthopoulos", "ring"): "$\\psi$",
+              ("belinski_zakharov", "ring"): "$\\tau$",
               ("gowdy", "torus"): "$t$", ("light_beam", "ring"): "$u$",
               ("string_wave", "ring"): "$u$", ("simpson_visser", "inside"): "$c\\tau$",
               ("hotta_tanaka", "ring"): "$\\tau$",
@@ -5548,6 +5550,10 @@ class Slices(unittest.TestCase):
             # The event on sigma = 0 at tau = t, u = v = sin(t/2): drawn against v - u and u + v, or
             # against sigma and tau.
             return (lambda X: 2 * math.sin(t / 2) if "/double_null/" in key else t), [0.0]
+        if key.startswith("belinski_zakharov/"):
+            # The event on xi = 0 at tau = t, which is z = 0 at ct = w sinh(t): drawn against xi and tau, or
+            # against z and ct, at w = 1.
+            return (lambda X: math.sinh(t) if "/canonical/" in key else t), [0.0]
         if key.startswith("bell_szekeres/"):
             # The event on eta = 0 at xi = t, with a = b = 1: u = v = t/2 drawn against v - u and u + v;
             # xi against eta; chi = t - pi/2 against rho; U = V = -cos t/(sqrt 2 (1 + sin t)) drawn
@@ -6227,6 +6233,10 @@ class Slices(unittest.TestCase):
                         # The event u = v = sin(t/2) where both waves have passed, drawn with p, q = u, v.
                         for X, T in points:
                             self.assertLess(abs(X) + abs(T - 2 * math.sin(t / 2)), 2e-4, where)
+                    elif metric_id == "belinski_zakharov":
+                        # The event on xi = 0 at tau = t, z = 0 at ct = w sinh(t): X = 0 and T = 2 arctan(sinh t).
+                        for X, T in points:
+                            self.assertLess(abs(X) + abs(T - 2 * math.atan(math.sinh(t))), 2e-4, where)
                     elif metric_id == "bell_szekeres":
                         # The event on eta = 0 at xi = t: on the plane x = y = 0, p = q = t/2 at a = b = 1,
                         # and on the strip of the anti-de Sitter factor, rho = 0 at chi = t - pi/2.
