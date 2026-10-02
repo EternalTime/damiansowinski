@@ -341,7 +341,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "336a25ce674b863b",
+    "version": "894c4c0d4d414aa3",
     "diagrams": "99a9f8a21a100275",
     "conformal": "6c2254de11290b3b",
     "embedding": "759b3c0dec35465e"
@@ -488,7 +488,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "00a77de2e613b45b",
+    "version": "bcf86f59a5e8d739",
     "diagrams": "7b3fbccc74f5b578",
     "conformal": "13e145da297e8d51",
     "embedding": "8c16d5714cfa992a"
@@ -725,7 +725,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ed2125ad2b5dcec5",
+    "version": "0855c66b0a8921e5",
     "diagrams": "a8296e17dab2de95",
     "conformal": "5aa345afee4654d8",
     "embedding": "46d9d6d9484b8e00"
@@ -783,7 +783,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "da7c124309969b8c",
+    "version": "c4fc026d498fa019",
     "diagrams": "2bebc0757ae1bb04",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -1190,7 +1190,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "aef88f1c7a5bc038",
+    "version": "a56b06d7c18071f1",
     "diagrams": "6a553e7d399d3c52",
     "conformal": "956949c7f4a96538",
     "embedding": "2fb2f35ad8d95922"
@@ -1430,7 +1430,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "18946dc022760112",
+    "version": "cbeab1b9ebac55df",
     "diagrams": "4565bff8ba921a42",
     "conformal": "fb9ce65c8d285c0e",
     "embedding": "1f6d4a7541295881"
@@ -1542,7 +1542,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a9598b481475c35a",
+    "version": "d86e6d068533d6db",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -1678,6 +1678,42 @@
     "diagrams": "9987ad5f20cc062e",
     "conformal": "94cab2e957646c35",
     "embedding": "ad4896f7b32bbeec"
+  },
+  {
+    "id": "simpson_visser",
+    "name": "Simpson-Visser",
+    "tags": [
+      "regular black hole",
+      "black bounce",
+      "black hole",
+      "wormhole",
+      "traversable",
+      "one way wormhole",
+      "black hole mimicker",
+      "throat",
+      "horizon",
+      "event horizon",
+      "extremal horizon",
+      "white hole",
+      "exotic matter",
+      "energy condition violation",
+      "phantom field",
+      "nonlinear electrodynamics",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "non-vacuum",
+      "asymptotically flat",
+      "causal structure",
+      "maximal extension",
+      "Lorentzian",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "0544baf6439c6186",
+    "diagrams": "b272a6aeea9e0b62",
+    "conformal": "09d52a3611b8d1c6",
+    "embedding": "044c6a18e30bb001"
   },
   {
     "id": "spinning_string",
@@ -1868,7 +1904,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "140f3c8935a61444",
+    "version": "3b5410885a6ca4cd",
     "diagrams": "87052dae566b6395",
     "conformal": "99424b00c9e94c1b",
     "embedding": "1e162e2bfa0db4eb"

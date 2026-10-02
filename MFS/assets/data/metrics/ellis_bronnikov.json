@@ -44,6 +44,11 @@
       "id": "damour_solodukhin",
       "kind": "family",
       "text": "Another member of Morris and Thorne's family, Schwarzschild's metric with the horizon opened into a throat by one small number, so that from outside it looks like a black hole [damour2007]."
+    },
+    {
+      "id": "simpson_visser",
+      "kind": "generalisation",
+      "text": "The Ellis-Bronnikov wormhole given a mass. Once the Schwarzschild radius of that mass passes the throat's radius, the throat sits behind a horizon and the wormhole is a black hole with a bounce inside [simpson2019, tsukamoto2021]."
     }
   ],
   "references": [
@@ -60,7 +65,9 @@
     "takahashi2013",
     "teo1998",
     "kleihaus2014",
-    "damour2007"
+    "damour2007",
+    "simpson2019",
+    "tsukamoto2021"
   ],
   "coordinates": [
     {

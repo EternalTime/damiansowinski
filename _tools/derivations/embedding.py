@@ -6445,6 +6445,203 @@ def domain_wall(ck, src):
                         "space carries the slice; Minkowski space carries it."])]
 
 
+SV_BOUNCE_MOMENTS = (0.75, 0.4, 0.0, -0.4, -0.75)    # r in units of r_s, between the horizons +-sqrt(3)/2 of a = r_s/2
+
+
+def sv_height(a, lo):
+    """The height of Simpson and Visser's slice of constant t above its circle at lo, r_s = 1: the
+    quadrature of dz/dr = sqrt(rho/(rho - r_s) - r^2/rho^2) with rho = sqrt(r^2 + a^2), by scipy."""
+    def slope(r):
+        rho = math.sqrt(r * r + a * a)
+        return math.sqrt(rho / (rho - 1) - r * r / (rho * rho))
+
+    def height(r):
+        return np.array([quad(slope, lo, x, epsabs=1e-12, epsrel=1e-12, limit=200)[0] for x in np.atleast_1d(r)])
+    return height
+
+
+def sv_proper_time(r, a=0.5):
+    """The proper time, in r_s/c, that an observer at fixed t between the horizons of the black bounce
+    takes from the horizon r = sqrt(r_s^2 - a^2) to r: the quadrature of sqrt(rho/(r_s - rho)), taken in
+    s with r = h - (h - r)s^2, which makes the integrand finite on the horizon."""
+    h = math.sqrt(1 - a * a)
+
+    def rate(s):
+        x = h - (h - r) * s * s
+        rho = math.sqrt(x * x + a * a)
+        return 2 * (h - r) * s * math.sqrt(rho / max(1 - rho, 1e-300))
+    return quad(rate, 0, 1, epsabs=1e-12, epsrel=1e-12, limit=200)[0]
+
+
+def simpson_visser(ck, src):
+    """Four views at r_s = 1, one for each thing the black bounce is.
+
+    The black bounce, a = r_s/2, outside its horizon: the equator of t = 0 read in Tsukamoto's areal
+    radius, where g_rhorho = rho^3/((rho - r_s)(rho^2 - a^2)) is rational and the horizon is the
+    root rho = r_s, on both sheets through the bifurcation sphere out to rho = 6 r_s, as
+    Schwarzschild's; dz/drho = sqrt(g_rhorho - 1) is greater than Flamm's at every radius, which
+    is checked, and the height is checked against scipy's quadrature of it.
+
+    The same black bounce between its horizons, where r is the time: the equator of a moment of
+    constant r in Simpson and Visser's chart has the metric (r_s/rho - 1) c^2 dt^2 + rho^2 dphi^2
+    with rho = sqrt(r^2 + a^2) constant on it, a flat cylinder of radius rho on which the stretch
+    |ct| <= r_s is 2 r_s sqrt(r_s/rho - 1) long. Five moments from r = 0.75 r_s to -0.75 r_s, played
+    as a movie with a frame every 0.05 r_s of r, each frame's value the proper time since the
+    horizon of an observer at fixed t, so it runs at a steady proper time: the cylinder narrows to
+    the radius a at r = 0 and widens again, the bounce.
+
+    The one way wormhole, a = r_s: the equator of t = 0 in Simpson and Visser's chart on the side
+    r > 0, where g_rr = rho/(rho - r_s) grows as 2 r_s^2/r^2 toward r = 0, an infinitely long throat
+    whose circles close on the radius r_s, drawn from r = r_s/50 out to 6 r_s.
+
+    The traversable wormhole, a = 2 r_s: the equator of t = 0 in Simpson and Visser's chart, one
+    piece through the throat r = 0 from -6 r_s to 6 r_s, with dz/dr = sqrt(2) at the throat; at
+    r_s = 0 the slope is a/rho, Ellis and Bronnikov's catenoid, which is checked."""
+    views = []
+
+    # The black bounce outside its horizon.
+    params = {"r_s": 1, "a": "1/2"}
+    sl = Slice(src, "simpson_visser", "areal", "\\rho", "\\phi", {"t": 0, **EQUATOR}, params)
+    top, radii = 6.0, (1.5, 2, 3, 4, 5)
+    size = 2 * top
+    ck.add("Simpson-Visser: the horizon of a = r_s/2 is the root rho = r_s of the published g^rhorho",
+           abs(sl.horizons()[0] - 1.0), 1e-12)
+    near = Piece("exterior", "sheet", sl, 1.0, top, 0.0, 1,
+                 (("throat", "the throat $\\rho = r_s$, the bifurcation sphere, where the other exterior begins"),
+                  ("edge", "the surface runs on to $\\rho \\to \\infty$")),
+                 [(1.0, "horizon", "$\\rho = r_s$")] + [(r, "r", None) for r in radii] + [(top, "r", "$\\rho = 6\\,r_s$")],
+                 size)
+    far = Piece("other_exterior", "sheet2", sl, 1.0, top, 0.0, -1,
+                (("throat", "the throat $\\rho = r_s$"), ("edge", "the surface runs on to $\\rho \\to \\infty$")),
+                [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+
+    def climb(rho):
+        return np.array([quad(lambda s: 2 * s * math.sqrt(max(
+            (1 + s * s) ** 3 / (s * s * ((1 + s * s) ** 2 - 0.25)) - 1, 0.0)), 0, math.sqrt(max(x - 1, 0.0)),
+            epsabs=1e-12, epsrel=1e-12, limit=200)[0] for x in np.atleast_1d(rho)])
+    for piece in (near, far):
+        ck.isometry(f"Simpson-Visser, a = r_s/2, {piece.id}", piece)
+        ck.form(f"Simpson-Visser, a = r_s/2, {piece.id}, the quadrature of sqrt(g_rhorho - 1)", piece,
+                lambda rho, k=piece.sense: k * climb(rho), size)
+    ck.join("Simpson-Visser, a = r_s/2, the two sheets at the throat", near, 1.0, far, 1.0)
+    rho = np.linspace(1.001, 40, 400)
+    ck.add("Simpson-Visser: the slice of a = r_s/2 is steeper than Flamm's paraboloid at every radius",
+           float(max(0.0, np.max(1 / (1 - 1 / rho) - sl.gxx_at(rho)))), 0.0)
+    outside = Surface([near, far])
+    fig = figure_of([outside], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], 1.0, 0.0, "$\\rho = r_s$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(3.0), "$3\\,r_s$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$6\\,r_s$")
+    fig.legend("fill", "cover", "one exterior, outside the horizon, which $t$ and $\\rho$ cover")
+    fig.legend("line", "r", "$\\rho$ constant, at $1.5$, $2$, $3$, $4$, $5$ and $6\\,r_s$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $\\rho = r_s$, where the slice crosses the horizon")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("outside", "Black bounce, outside", "$r_s$", [outside], fig.done(),
+                      settings="$r_s = 1$, the unit of every length, and $a = r_s/2$, read in the areal radius "
+                               "$\\rho = \\sqrt{r^2 + a^2}$."))
+
+    # The black bounce between its horizons.
+    reach, tube_size = 1.0, 2.5
+    marks = [(-0.5, "r", None), (0.0, "r", None), (0.5, "r", None)]
+    ends = (("edge", "the cylinder runs on for ever toward $t \\to -\\infty$"),
+            ("edge", "the cylinder runs on for ever toward $t \\to \\infty$"))
+
+    def moment(r):
+        inside = Slice(src, "simpson_visser", "spherical", "t", "\\phi", {"r": repr(r), "theta": "pi/2"}, params)
+        radius = math.sqrt(r * r + 0.25)
+        stretch = math.sqrt(1 / radius - 1)
+        piece = Piece("tube", "sheet", inside, -reach, reach, -stretch * reach, 1, ends, marks, tube_size)
+        where = f"Simpson-Visser, a = r_s/2, r = {r:+.2f} r_s"
+        ck.isometry(where, piece)
+        ck.radius(f"{where}, rho = sqrt(r^2 + a^2)", piece, lambda t: np.full_like(t, radius), tube_size)
+        ck.form(f"{where}, z = sqrt(r_s/rho - 1) ct", piece, lambda t: stretch * t, tube_size)
+        return Surface([piece], label=f"$r = {r:g}\\,r_s$" if r else "$r = 0$", time=sv_proper_time(r))
+
+    falls, keys = movie_values([-r for r in SV_BOUNCE_MOMENTS], 0.05)
+    frames = [moment(round(-r, 9) + 0.0) for r in falls]
+    bounce = [frames[i] for i in keys]
+    ck.add("Simpson-Visser: the cylinder is narrowest at r = 0, of radius a",
+           abs(min(float(f.pieces[0].rho[0]) for f in frames) - 0.5), 1e-7)
+    ck.add("Simpson-Visser: the proper time between the horizons is twice the time to r = 0",
+           abs(sv_proper_time(-math.sqrt(0.75)) - 2 * sv_proper_time(0.0)), 1e-9)
+    fig = movie_figure(frames, {"sheet": "cover"}, tube_size, meridians=12)
+    fig.legend("fill", "cover", "the stretch $|ct| \\le r_s$ of the equator of a moment, which $t$ and $\\phi$ cover")
+    fig.legend("line", "r", "$t$ constant, at $-r_s/2c$, $0$ and $r_s/2c$, each a circle of circumference $2\\pi\\rho$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    views.append(view("inside", "Black bounce, inside", "$r_s$", bounce, fig.done(),
+                      movie=movie(frames, "$c\\tau$", [f.time for f in frames]),
+                      settings="$r_s = 1$, the unit of every length, and $a = r_s/2$, with the moments in the order "
+                               "of the proper time $\\tau$ of an observer at fixed $t$ since the horizon "
+                               "$r = 0.87\\,r_s$."))
+
+    # The one way wormhole.
+    sl = Slice(src, "simpson_visser", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 1, "a": 1})
+    lo, top = SV_THROAT_LO, 6.0
+    size = 2 * math.sqrt(top ** 2 + 1)
+    radii = (0.1, 0.25, 0.5, 1.0, 2.0, 3.0, 4.0, 5.0)
+    throat = Piece("throat", "sheet", sl, lo, top, 0.0, 1,
+                   (("edge", "the throat runs on without end toward the horizon $r = 0$, its circles closing on "
+                             "the radius $r_s$"),
+                    ("edge", "the surface runs on to $r \\to \\infty$")),
+                   [(lo, "r", None)] + [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+    ck.isometry("Simpson-Visser, a = r_s", throat)
+    ck.radius("Simpson-Visser, a = r_s, rho = sqrt(r^2 + r_s^2)", throat, lambda r: np.sqrt(r * r + 1), size)
+    ck.form("Simpson-Visser, a = r_s, the quadrature of its height", throat, sv_height(1.0, lo), size)
+    r = np.array([1e-3, 1e-4, 1e-5])
+    ck.add("Simpson-Visser: toward r = 0 the g_rr of a = r_s grows as 2 r_s^2/r^2",
+           float(np.max(np.abs(sl.gxx_at(r) * r * r / 2 - 1))), 1e-3)
+    null = Surface([throat])
+    fig = figure_of([null], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *throat.at(lo), "$r = r_s/50$")
+    ring_label(fig, [0, 0, 0], *throat.at(2.0), "$2\\,r_s$")
+    ring_label(fig, [0, 0, 0], *throat.at(top), "$6\\,r_s$")
+    fig.legend("fill", "cover", "the equator at one moment, on the side $r > 0$, which $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1/50$, $1/10$, $1/4$, $1/2$, $1$, $2$, $3$, $4$, $5$ and $6$ times $r_s$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("null", "One way wormhole", "$r_s$", [null], fig.done(),
+                      settings="$r_s = 1$, the unit of every length, and $a = r_s$."))
+
+    # The traversable wormhole.
+    sl = Slice(src, "simpson_visser", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 1, "a": 2})
+    top = 6.0
+    size = 2 * math.sqrt(top ** 2 + 4)
+    steps = (1.0, 2.0, 3.0, 4.0, 5.0)
+    height = sv_height(2.0, 0.0)
+    whole = Piece("whole", "sheet", sl, -top, top, -float(height(top)[0]), 1,
+                  (("edge", "the side $r < 0$ runs on to $r \\to -\\infty$"),
+                   ("edge", "the side $r > 0$ runs on to $r \\to \\infty$")),
+                  [(-top, "r", None)] + [(-r, "r", None) for r in reversed(steps)] + [(0.0, "throat", "$r = 0$")]
+                  + [(r, "r", None) for r in steps] + [(top, "r", None)], size)
+    ck.isometry("Simpson-Visser, a = 2 r_s, through the throat", whole)
+    ck.radius("Simpson-Visser, a = 2 r_s, rho = sqrt(r^2 + a^2)", whole, lambda r: np.sqrt(r * r + 4), size)
+    ck.form("Simpson-Visser, a = 2 r_s, the quadrature of its height", whole,
+            lambda r: np.sign(r) * height(np.abs(r)), size)
+    tip = sl.slope(0.0, "+")
+    ck.add("Simpson-Visser: at the throat of a = 2 r_s, dz/dr = sqrt(a/(a - r_s)) = sqrt(2)",
+           abs(float(tip[1] / math.sqrt(tip[0] ** 2 + tip[1] ** 2)) - 1.0)
+           + abs(math.sqrt(float(sl.gxx_at(0.0))) - math.sqrt(2)), 1e-9)
+    massless = Slice(src, "simpson_visser", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 0, "a": 2})
+    r = np.linspace(-6, 6, 241)
+    ck.add("Simpson-Visser: at r_s = 0 the slope is a/rho, Ellis and Bronnikov's catenoid",
+           float(np.max(np.abs(np.sqrt(np.maximum(massless.defect_at(r), 0)) - 2 / np.sqrt(r * r + 4)))), 1e-12)
+    wormhole = Surface([whole])
+    fig = figure_of([wormhole], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *whole.at(0.0), "$r = 0$", dx=14)
+    ring_label(fig, [0, 0, 0], *whole.at(3.0), "$3\\,r_s$")
+    ring_label(fig, [0, 0, 0], *whole.at(-3.0), "$-3\\,r_s$")
+    fig.legend("fill", "cover", "the whole slice, which $t$ and $r$ cover from one side to the other")
+    fig.legend("line", "r", "$r$ constant, every $r_s$ from $-6\\,r_s$ to $6\\,r_s$")
+    fig.legend("line", "throat", "the throat $r = 0$, the smallest circle, of radius $a$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("wormhole", "Traversable wormhole", "$r_s$", [wormhole], fig.done(),
+                      settings="$r_s = 1$, the unit of every length, and $a = 2\\,r_s$."))
+    return views
+
+
+SV_THROAT_LO = 1 / 50                   # r in r_s where the drawing of the one way wormhole's throat begins
+
+
 KS_DUST_MOMENTS = (0.0, 0.3, 0.6, 0.9, 1.2)         # eta, the dust chart's parametric time, from the widest moment on
 KS_VACUUM_MOMENTS = (0.9, 0.7, 0.5, 0.3, 0.1)       # T in units of r_s, toward the singularity
 
@@ -6799,6 +6996,7 @@ DRAWN = {
     "thin_shell_wormhole": thin_shell_wormhole,
     "teo_wormhole": teo_wormhole,
     "damour_solodukhin": damour_solodukhin,
+    "simpson_visser": simpson_visser,
     "levi_civita": levi_civita,
     "kantowski_sachs": kantowski_sachs,
     "curzon_chazy": curzon_chazy,
@@ -6999,6 +7197,45 @@ CAPTIONS = {
         "$dz/dr = \\sqrt{r_s/(a - r_s)} = 2$, so the surface turns through a finite angle there. The crease "
         "is the shell, whose surface energy density $-(c^4/2\\pi Ga)\\sqrt{1 - r_s/a}$ is negative, since the "
         "throat flares out on both sides.",
+    ],
+    ("simpson_visser", "outside"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the black bounce ($a = r_s/2$) at one moment of $t$, outside "
+        "the horizon, drawn as a surface in flat space with every distance along it the metric distance. In the "
+        "areal radius $\\rho$ the metric on it is $d\\rho^2/\\left((1 - r_s/\\rho)(1 - a^2/\\rho^2)\\right) + "
+        "\\rho^2d\\phi^2$, so the surface climbs at $dz/d\\rho = \\sqrt{g_{\\rho\\rho} - 1}$, steeper than Flamm's "
+        "paraboloid at every radius and close to it far from the horizon.",
+        "The slice passes through the bifurcation sphere $\\rho = r_s$, the throat of the surface, into a second "
+        "exterior, as Schwarzschild's does. The sphere of least area, $\\rho = a$, lies inside the horizon, to "
+        "the future of this moment.",
+    ],
+    ("simpson_visser", "inside"): [
+        "The equator of a moment of constant $r$ between the horizons of the black bounce ($a = r_s/2$), where "
+        "$r$ is the time, drawn as a surface in flat space with every distance along it the metric distance. On "
+        "it the metric is $(r_s/\\rho - 1)c^2dt^2 + \\rho^2d\\phi^2$ with $\\rho = \\sqrt{r^2 + a^2}$ constant, a "
+        "flat cylinder of radius $\\rho$ on which the stretch $|ct| \\le r_s$ is $2r_s\\sqrt{r_s/\\rho - 1}$ long.",
+        "The movie runs from the horizon $r = 0.87\\,r_s$ toward the horizon $r = -0.87\\,r_s$ at a steady "
+        "proper time of an observer at fixed $t$, who takes $3.7\\,r_s/c$ from one to the other. The cylinder "
+        "narrows and lengthens as the inside of Schwarzschild's horizon does, until at $r = 0$ its radius is "
+        "$a$ and the stretch is $2r_s\\sqrt{r_s/a - 1}$ long, $2\\,r_s$ here. From there it widens and shortens "
+        "through the same moments in reverse: the bounce.",
+    ],
+    ("simpson_visser", "null"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the one way wormhole ($a = r_s$) at one moment of $t$, on "
+        "the side $r > 0$, drawn as a surface in flat space with every distance along it the metric distance. On "
+        "it the metric is $dr^2/(1 - r_s/\\rho) + \\rho^2d\\phi^2$ with $\\rho = \\sqrt{r^2 + r_s^2}$.",
+        "Toward $r = 0$ the component $g_{rr}$ grows as $2r_s^2/r^2$, so the distance along the surface to "
+        "$r = 0$ grows as $\\sqrt{2}\\,r_s\\ln(r_s/r)$ without end while the circles close on the radius $r_s$: "
+        "an infinitely long throat, as the extremal Reissner-Nordström black hole has, drawn from $r = r_s/50$ "
+        "out to $6\\,r_s$.",
+    ],
+    ("simpson_visser", "wormhole"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the traversable wormhole ($a = 2\\,r_s$) at one moment of "
+        "$t$, drawn as a surface in flat space with every distance along it the metric distance. On it the "
+        "metric is $dr^2/(1 - r_s/\\rho) + \\rho^2d\\phi^2$ with $\\rho = \\sqrt{r^2 + a^2}$, one piece through "
+        "the throat $r = 0$, the smallest circle, of radius $a$.",
+        "The surface climbs at $dz/dr = \\sqrt{\\rho/(\\rho - r_s) - r^2/\\rho^2}$, which is $\\sqrt{a/(a - r_s)} = "
+        "\\sqrt{2}$ at the throat. With $r_s = 0$ the slope is $a/\\rho$, the catenoid of the Ellis-Bronnikov "
+        "wormhole, and the mass makes the surface steeper at every radius.",
     ],
     ("damour_solodukhin", "wormhole"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Damour-Solodukhin wormhole at one moment of $t$, "

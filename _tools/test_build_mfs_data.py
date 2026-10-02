@@ -3093,7 +3093,7 @@ class StacksAndMovies(unittest.TestCase):
               ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$",
               ("bell_szekeres", "ring"): "$\\xi$",
               ("gowdy", "torus"): "$t$", ("light_beam", "ring"): "$u$",
-              ("string_wave", "ring"): "$u$"}
+              ("string_wave", "ring"): "$u$", ("simpson_visser", "inside"): "$c\\tau$"}
 
     def setUp(self):
         self.embedding = embedding_files()
@@ -3678,6 +3678,27 @@ class TurningUnderTheHand(unittest.TestCase):
         self.assertLess(cones["left"]["facing"], 0)
 
 
+# Simpson and Visser's three geometries at r_s = 1, and the embedding views each one's drawings mark.
+SV_A = {"bounce": 0.5, "null": 1.0, "wormhole": 2.0}
+SV_MOMENTS = ("outside", "inside", "null", "wormhole")
+SV_MOMENTS_OF = {"bounce": ("outside", "inside"), "null": ("null",), "wormhole": ("wormhole",)}
+
+
+def sv_rstar(r, a):
+    """The tortoise coordinate of Simpson and Visser's black bounce at r_s = 1, dr_*/dr = rho/(rho - 1) with
+    rho = sqrt(r^2 + a^2), odd in r: a logarithm of the two horizons where a < 1, a pole at r = 0 where
+    a = 1, and two arctangents where a > 1."""
+    rho = math.sqrt(r * r + a * a)
+    out = r + math.asinh(r / a)
+    if a < 1:
+        h = math.sqrt(1 - a * a)
+        return out + math.log(abs((r - h) * (r - h * rho) / ((r + h) * (r + h * rho)))) / (2 * h)
+    if a == 1:
+        return out - (1 + rho) / r
+    k = math.sqrt(a * a - 1)
+    return out + (math.atan(r / k) + math.atan(r / (k * rho))) / k
+
+
 def bisect(f, lo, hi, steps=200):
     """A root of f on [lo, hi], where f changes sign."""
     flo = f(lo)
@@ -3889,7 +3910,20 @@ class Slices(unittest.TestCase):
                     **{f"teo_wormhole/{s}/{surface}": {other} for s in ("spherical", "proper_radial")
                        for surface, other in (("axis", "equator"), ("equator", "throat"))},
                     **{f"conformal teo_wormhole/{s}_{surface}": {other} for s in ("spherical", "proper_radial")
-                       for surface, other in (("axis", "equator"), ("equator", "throat"))}}
+                       for surface, other in (("axis", "equator"), ("equator", "throat"))},
+                    # Simpson and Visser's black bounce, one way wormhole and traversable wormhole are three
+                    # spacetimes of one line element, a = r_s/2, r_s and 2 r_s, each drawing marking its own
+                    # moments. The outgoing chart's region between the horizons is the white hole, where the
+                    # black hole's moments of constant r do not lie.
+                    **{f"simpson_visser/{s}/{case}": set(SV_MOMENTS) - set(own) | (
+                        {"inside"} if s.endswith("outgoing") else set())
+                       for s in ("spherical", "areal", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing")
+                       for case, own in SV_MOMENTS_OF.items()},
+                    **{f"conformal simpson_visser/{s}_{case}": set(SV_MOMENTS) - set(own)
+                       for s in ("spherical", "areal", "ingoing", "outgoing") for case, own in SV_MOMENTS_OF.items()}}
+    # The surfaces of a view that a drawing does not mark though it marks the view's others: the areal
+    # chart of the black bounce is drawn on the side r > 0, where the moments of r < 0 do not lie.
+    HIDDEN_SURFACES = {"simpson_visser/areal/bounce": {("inside", 3), ("inside", 4)}}
 
     def reach(self, surface, system=None, reference=False):
         xs = [x for piece in surface["pieces"] if "points" in piece and (reference or not piece.get("reference"))
@@ -3903,7 +3937,8 @@ class Slices(unittest.TestCase):
             if where in self.HIDDEN:
                 self.assertEqual(marks, [], where)
                 continue
-            every = [m for m in self.every(metric_id) if m[0] not in self.HIDDEN_VIEWS.get(where, set())]
+            every = [m for m in self.every(metric_id) if m[0] not in self.HIDDEN_VIEWS.get(where, set())
+                     and m[:2] not in self.HIDDEN_SURFACES.get(where, set())]
             self.assertEqual(marks, every, where)
             drawn += len(marks)
         self.assertGreater(drawn, 100)
@@ -4154,6 +4189,23 @@ class Slices(unittest.TestCase):
             R = self.reach(surface)[1]
             r = (R - 0.5 + math.sqrt(R * (R - 1))) / 2
             return (lambda X: 0.0), [1 / (16 * r), r]
+        if key.startswith("simpson_visser/"):
+            # The moment t = 0 of one of Simpson and Visser's geometries at r_s = 1: level in the two
+            # charts of t, v - r = r_* - r in the ingoing chart and u + r = r - r_* in the outgoing one. The
+            # black bounce's exterior is embedded in the areal radius rho, the others in r, and
+            # rho^2 = r^2 + a^2; a moment through the throat reaches rho = a.
+            _, chart, case = key.split("/")
+            a = SV_A[case]
+            lo, hi = self.reach(surface)
+            if case == "bounce":
+                lo, hi = (math.sqrt(rho * rho - a * a) for rho in (lo, hi))
+            if chart == "areal":
+                near = 0.0 if lo < 0 < hi else min(abs(lo), abs(hi))
+                return (lambda X: 0.0), [math.sqrt(near * near + a * a), math.sqrt(max(lo * lo, hi * hi) + a * a)]
+            if chart == "spherical":
+                return (lambda X: 0.0), [lo, hi]
+            sign = 1 if chart.endswith("ingoing") else -1
+            return (lambda X: sign * (sv_rstar(X, a) - X)), [lo, hi]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))
@@ -4182,6 +4234,9 @@ class Slices(unittest.TestCase):
                         if mark["fills"]:
                             self.check_region_from_above(key, view, surface, mark)
                             continue
+                        if key.startswith("simpson_visser/") and mark["view"] == "inside":
+                            checked += self.check_bounce_moment(key, view, surface, mark)
+                            continue
                         Y_of, ends = self.flat_expected(key, view, surface, mark)
                         for line in mark["lines"] + [[p] for p in mark["points"]]:
                             for u in line:
@@ -4199,6 +4254,33 @@ class Slices(unittest.TestCase):
                                 at_reach = ends is not None and any(abs(X - e) < 1.5e-4 * (X1 - X0) for e in ends)
                                 self.assertTrue(edge or at_reach, f"{key} {mark['label']} stops at {u}")
         self.assertGreater(checked, 200)
+
+    def sv_inside_r(self, surface):
+        """The r of a moment of the black bounce between its horizons, a = r_s/2: its cylinder's radius is
+        sqrt(r^2 + a^2), and r is positive before the proper time of r = 0, the third moment's."""
+        radius = surface["pieces"][0]["points"][0][1]
+        inside = next(v for v in self.embedding["simpson_visser"]["views"] if v["id"] == "inside")
+        turn = inside["surfaces"][2]["time"]
+        return math.copysign(math.sqrt(max(radius * radius - 0.25, 0.0)), turn - surface["time"])
+
+    def check_bounce_moment(self, key, view, surface, mark):
+        """A moment of constant r between the horizons of the black bounce, a = r_s/2: one upright line
+        at r, or at rho = sqrt(r^2 + a^2) in the areal chart, over the stretch |ct| <= r_s the cylinder
+        reaches, about t = 0 or, in the ingoing chart, about v = r_*."""
+        X0, X1, Y0, Y1 = view["box"]
+        chart = key.split("/")[1]
+        r = self.sv_inside_r(surface)
+        at = math.sqrt(r * r + 0.25) if chart == "areal" else r
+        middle = sv_rstar(r, 0.5) - r if chart.endswith("ingoing") else 0.0
+        t0, t1 = self.reach(surface)
+        self.assertEqual(len(mark["lines"]), 1, key)
+        (line,) = mark["lines"]
+        for u in line:
+            self.assertAlmostEqual(X0 + u[0] * (X1 - X0), at, delta=1.5e-4 * (X1 - X0), msg=f"{key} {mark['label']}")
+        ends = sorted(Y0 + u[1] * (Y1 - Y0) for u in (line[0], line[-1]))
+        for got, want in zip(ends, (middle + t0, middle + t1)):
+            self.assertAlmostEqual(got, max(Y0, min(Y1, want)), delta=1.5e-4 * (Y1 - Y0), msg=f"{key} {mark['label']}")
+        return len(line)
 
     def check_region_from_above(self, key, view, surface, mark):
         """Kerr's equator from above: the plane outside the horizon, the box less the disc of r_+."""
@@ -4430,6 +4512,13 @@ class Slices(unittest.TestCase):
                         self.assertGreater(met, 3, where)
                     elif metric_id == "rn_metric" and mark["view"] == "inside":
                         self.assertTrue(all(abs(T - math.pi) < 2e-4 for _, T in points), where)
+                    elif metric_id == "simpson_visser" and mark["view"] == "inside":
+                        # Kruskal's square of the black bounce, a = r_s/2: p, q = arctan e^(-+k(ct -+ r_*)) with
+                        # k = sqrt(3)/4, so tan p tan q = e^(2 k r_*) on the moment of constant r.
+                        want = math.exp(2 * math.sqrt(3) / 4 * sv_rstar(self.sv_inside_r(surface), 0.5))
+                        for X, T in points:
+                            tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            self.assertLess(abs(tp * tq - want), 2e-3 * (1 + tp * tp) * (1 + tq * tq), f"{where} at {(X, T)}")
                     else:
                         self.assertTrue(all(abs(T) < 2e-4 for _, T in points), where)
 

@@ -359,6 +359,76 @@ def _ds_isotropic(R):
     return (R - 0.5 + math.sqrt(R * (R - 1))) / 2
 
 
+SV_A = {"bounce": 0.5, "null": 1.0, "wormhole": 2.0}      # a in r_s of each of Simpson and Visser's geometries
+SV_MOMENT = {"bounce": "outside", "null": "null", "wormhole": "wormhole"}
+
+
+def sv_rstar(r, a):
+    """The tortoise coordinate of Simpson and Visser's black bounce at r_s = 1, as null_rays._sv_rstar."""
+    r = np.asarray(r, float)
+    rho = np.sqrt(r * r + a * a)
+    out = r + np.arcsinh(r / a)
+    if a < 1:
+        h = math.sqrt(1 - a * a)
+        return out + np.log(np.abs((r - h) * (r - h * rho) / ((r + h) * (r + h * rho)))) / (2 * h)
+    if a == 1:
+        return out - (1 + rho) / r
+    k = math.sqrt(a * a - 1)
+    return out + (np.arctan(r / k) + np.arctan(r / (k * rho))) / k
+
+
+def sv_reach(case):
+    """The moment t = 0 of one of Simpson and Visser's geometries and the r it reaches: the black
+    bounce's exterior is read in the areal radius rho, where r = sqrt(rho^2 - a^2)."""
+    m = moments("simpson_visser", SV_MOMENT[case])[0]
+    if case == "bounce":
+        return m, tuple(math.sqrt(rho * rho - 0.25) for rho in m.reach("areal", "\\rho"))
+    return m, m.reach("spherical", "r")
+
+
+def sv_inside_r(m):
+    """The r of a moment of the black bounce between its horizons, at a = r_s/2: its cylinder's radius
+    is sqrt(r^2 + a^2), and r is positive before the proper time of r = 0, the third moment's."""
+    radius = m.surface["pieces"][0]["points"][0][1]
+    turn = moments("simpson_visser", "inside")[2].time
+    return math.copysign(math.sqrt(max(radius * radius - 0.25, 0.0)), turn - m.time) if radius > 0.5 else 0.0
+
+
+def simpson_visser(chart, case):
+    """The moments of Simpson and Visser's geometry `case` on its plane in `chart`, as (x^0, r). The
+    moment t = 0 is level in the two charts of t, from r to rho = sqrt(r^2 + a^2) in the areal chart,
+    and v = r_* or u = -r_* in the Eddington-Finkelstein charts. The black bounce's moments of
+    constant r between the horizons are each the stretch |ct| <= r_s the embedding reaches, upright
+    at r about t = 0 and about v = r_* in the ingoing chart, and at rho in the areal chart, which is
+    drawn on the side r > 0 and so holds the moments down to r = 0."""
+    a = SV_A[case]
+    m, (lo, hi) = sv_reach(case)
+    sign = {"eddington_finkelstein_ingoing": 1, "eddington_finkelstein_outgoing": -1}.get(chart, 0)
+    if sign:
+        r = near(lo, hi) if case == "bounce" else np.linspace(lo, hi, N)
+        marks = [Mark(m, [np.column_stack([sign * sv_rstar(r, a), r])])]
+    elif chart == "areal":
+        # A moment through the throat reaches it from both sides, each half the line from rho = a out.
+        nearest = 0.0 if lo < 0 < hi else min(abs(lo), abs(hi))
+        marks = [Mark(m, along(0.0, math.sqrt(nearest ** 2 + a * a), math.sqrt(max(lo * lo, hi * hi) + a * a)))]
+    else:
+        marks = [Mark(m, along(0.0, lo, hi))]
+    if case != "bounce" or sign < 0:
+        # The outgoing chart's region between the horizons is the white hole, where the black hole's
+        # moments do not lie.
+        return marks
+    for inside in moments("simpson_visser", "inside"):
+        r = sv_inside_r(inside)
+        if chart == "areal" and r < 0:
+            # The areal chart is drawn on the side r > 0, up to the sphere of least area.
+            continue
+        t0, t1 = inside.reach("spherical", "t")
+        x = math.sqrt(r * r + a * a) if chart == "areal" else r
+        shift = sign * float(sv_rstar(r, a)) if sign else 0.0
+        marks.append(Mark(inside, [[(t0 + shift, x), (t1 + shift, x)]]))
+    return marks
+
+
 def one(metric_id, lines_of, label=None, view_id=None):
     """Each moment of a spacetime as the lines lines_of(moment) returns."""
     return [Mark(m, lines_of(m), label=label) for m in moments(metric_id, view_id)]
@@ -731,6 +801,10 @@ FLAT = {
     ("damour_solodukhin", "einstein_rosen", "radial"): lambda: one(
         "damour_solodukhin", lambda m: along(0.0, -math.sqrt(m.reach("spherical", "r")[1] - 1),
                                              math.sqrt(m.reach("spherical", "r")[1] - 1))),
+    # Simpson and Visser's three geometries, each on its own plane in each of the four charts.
+    **{("simpson_visser", chart, case): (lambda chart=chart, case=case: simpson_visser(chart, case))
+       for chart in ("spherical", "areal", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing")
+       for case in SV_A},
     ("minkowski", "spherical", "radial"): lambda: one("minkowski", lambda m: along(0.0, *m.reach("spherical", "r"))),
     # t = (u + v)/2 and r = (v - u)/2, so the moment is u = -r, v = r.
     ("minkowski", "spherical_null", "radial"): lambda: one(

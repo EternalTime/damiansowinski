@@ -5,7 +5,7 @@ schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
-damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter and string_wave, and Godel's
+damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave and simpson_visser, and Godel's
 cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
@@ -4630,6 +4630,220 @@ def damour_solodukhin_check(chart, system):
 
 
 CHARTS["damour_solodukhin"] = [lambda s=s: damour_solodukhin(s) for s in DS_CHARTS]
+
+# -- The Simpson-Visser black bounce -----------------------------------------------------
+
+SV_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+SV_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+SV_REALS = "(-\\infty, \\infty)"
+SV_RADIUS = "\\rho = \\sqrt{r^2 + a^2}"
+SV_CHARTS = ["spherical", "areal", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing"]
+
+
+def simpson_visser(system):
+    """Simpson and Visser's black bounce, Schwarzschild's metric with sqrt(r^2 + a^2) written for
+    the areal radius and dr left as it is, in four charts, each with r_s = 2Gm/c^2. Their own
+    keeps t and lets r run over the whole line; the sphere r = 0 has the least area,
+    4 pi a^2, and f = 1 - r_s/sqrt(r^2 + a^2) vanishes at r = +-sqrt(r_s^2 - a^2) when a < r_s.
+    Tsukamoto's standard radial coordinate rho = sqrt(r^2 + a^2), the areal radius, covers one
+    side of r = 0 at a time, and in it g_tt and the spheres are Schwarzschild's. Simpson,
+    Martin-Moruno and Visser's two Eddington-Finkelstein charts, u = ct - r_* and
+    v = ct + r_* with dr_*/dr = 1/f, are regular on the horizons. The charts with r
+    name rho = sqrt(r^2 + a^2) and print every value in r, a and rho. Each chart after the first
+    is checked to be the first pulled back, and every chart against Simpson and Visser's
+    G^t_t = a^2(rho - 2r_s)/rho^5, G^r_r = -a^2/rho^4, G^theta_theta = a^2(2 rho - r_s)/(2 rho^5),
+    R = a^2(3r_s - 2 rho)/rho^5 and Kretschmann scalar, against Schwarzschild's vacuum at a = 0
+    and against Ellis and Bronnikov's K = 12a^4/rho^8 at r_s = 0. simpson_visser.md derives each."""
+    areal = system == "areal"
+    parameters = ["r_s", "a"] + ([] if areal else [SV_RADIUS])
+    if system == "spherical":
+        coords, name = ["t", "r", "\\theta", "\\phi"], "Simpson-Visser"
+        f = "\\left(1 - \\dfrac{r_s}{\\sqrt{r^2 + a^2}}\\right)"
+        bare = "1 - \\dfrac{r_s}{\\sqrt{r^2 + a^2}}"
+        rest = "\\dfrac{dr^2}{" + bare + "} + \\left(r^2 + a^2\\right)" + SV_SPHERE
+        line, chart_line = "ds^2 = -" + f + "c^2dt^2 + " + rest, "ds^2 = -" + f + "dt^2 + " + rest
+        domains = (["t \\in " + SV_REALS, "r \\in " + SV_REALS] + SV_ANGLES
+                   + ["r = 0 \\;\\text{(the sphere of least area)}",
+                      "r = \\pm\\sqrt{r_s^2 - a^2} \\;\\text{(the horizons, where } a < r_s\\text{)}"])
+        g = "\\left(1 - \\dfrac{r_s}{\\rho}\\right)"
+        components = {"metric_components": {("t", "t"): "-" + g, ("r", "r"): g + "^{-1}",
+                                            ("\\theta", "\\theta"): "\\rho^2"},
+                      "inverse_metric_components": {("t", "t"): "-" + g + "^{-1}", ("r", "r"): "1 - \\dfrac{r_s}{\\rho}",
+                                                    ("\\theta", "\\theta"): "\\dfrac{1}{\\rho^2}"}}
+    elif areal:
+        coords, name = ["t", "\\rho", "\\theta", "\\phi"], "Areal Radius"
+        f = "\\left(1 - \\dfrac{r_s}{\\rho}\\right)"
+        rest = ("\\dfrac{d\\rho^2}{\\left(1 - \\dfrac{r_s}{\\rho}\\right)\\left(1 - \\dfrac{a^2}{\\rho^2}\\right)}"
+                " + \\rho^2" + SV_SPHERE)
+        line, chart_line = "ds^2 = -" + f + "c^2dt^2 + " + rest, "ds^2 = -" + f + "dt^2 + " + rest
+        domains = (["t \\in " + SV_REALS, "\\rho \\in [a, \\infty)"] + SV_ANGLES
+                   + ["\\rho = a \\;\\text{(the sphere of least area)}",
+                      "\\rho = r_s \\;\\text{(the horizon, where } a < r_s\\text{)}"])
+        components = {"metric_components": {
+                          ("t", "t"): "-" + f,
+                          ("\\rho", "\\rho"): f + "^{-1}\\left(1 - \\dfrac{a^2}{\\rho^2}\\right)^{-1}"},
+                      "inverse_metric_components": {
+                          ("t", "t"): "-" + f + "^{-1}",
+                          ("\\rho", "\\rho"): f + "\\left(1 - \\dfrac{a^2}{\\rho^2}\\right)"}}
+    else:
+        null, sign = ("u", "-") if system == "eddington_finkelstein_outgoing" else ("v", "+")
+        coords = [null, "r", "\\theta", "\\phi"]
+        name = ("Outgoing" if null == "u" else "Ingoing") + " Eddington-Finkelstein"
+        f = "\\left(1 - \\dfrac{r_s}{\\sqrt{r^2 + a^2}}\\right)"
+        line = ("ds^2 = -" + f + "d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr + \\left(r^2 + a^2\\right)"
+                + SV_SPHERE)
+        chart_line = line
+        domains = ([null + " \\in " + SV_REALS, "r \\in " + SV_REALS] + SV_ANGLES
+                   + ["r = 0 \\;\\text{(the sphere of least area)}",
+                      "r = \\pm\\sqrt{r_s^2 - a^2} \\;\\text{(the horizons, where } a < r_s\\text{)}"])
+        one = "-1" if null == "u" else "1"
+        g = "\\left(1 - \\dfrac{r_s}{\\rho}\\right)"
+        components = {"metric_components": {(null, null): "-" + g, (null, "r"): one, ("r", null): one,
+                                            ("\\theta", "\\theta"): "\\rho^2"},
+                      "inverse_metric_components": {(null, "r"): one, ("r", null): one,
+                                                    ("r", "r"): "1 - \\dfrac{r_s}{\\rho}",
+                                                    ("\\theta", "\\theta"): "\\dfrac{1}{\\rho^2}"}}
+    probe = vm.Reader(coords, parameters, ())
+    x, rs, a = probe.symbol[coords[1]], probe.parameters["r_s"], probe.parameters["a"]
+    if areal:
+        # rho^2 - a^2 is written whole, the square of Simpson and Visser's r.
+        whole = sp.Symbol("SVw")
+        named = {whole: "\\rho^2 - a^2"}
+
+        def pretty(value):
+            out, powers = _factor_powers(sp.sympify(value))
+            flipped = powers.pop(a - x, 0)
+            down, up = powers.pop(x - a, 0) + flipped, powers.pop(x + a, 0)
+            if down != up:
+                raise AssertionError(f"rho - a and rho + a stand to different powers in {value}")
+            out *= (-1) ** flipped * whole ** down
+            for base, k in powers.items():
+                out *= base ** k
+            return out
+
+        printer = {"lead": [x, rs, a], "factors": [rs, a, x], "flip": False, "named": named}
+        kretschmann = ("\\dfrac{3r_s^2\\left(4\\rho^4 - 12a^2\\rho^2 + 11a^4\\right)"
+                       " + 16a^2\\,r_s\\,\\rho\\left(\\rho^2 - 2a^2\\right) + 12a^4\\rho^2}{\\rho^{10}}")
+    else:
+        rho = sp.Symbol("rho", positive=True)
+        pretty = simpson_visser_radius(x, a, rho)
+        printer = {"lead": [rho, x, rs, a], "factors": [rs, a, x, rho], "flip": False}
+        kretschmann = ("\\dfrac{3r_s^2\\left(4r^4 - 4a^2r^2 + 3a^4\\right) + 16a^2\\,r_s\\left(r^2 - a^2\\right)\\rho"
+                       " + 12a^4\\rho^2}{\\rho^{10}}")
+    spec = {
+        "metric_id": "simpson_visser",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line},
+        "chart_line_element": chart_line,
+        "printer": printer,
+        "pretty": pretty,
+        "components": components,
+        "check": lambda chart: simpson_visser_check(chart, system),
+    }
+    if kretschmann:
+        spec["kretschmann"] = kretschmann
+    return spec
+
+
+def simpson_visser_radius(r, a, rho):
+    """A pretty printer for a chart that names rho = sqrt(r^2 + a^2): every power of r^2 + a^2 is a
+    power of rho, a^2 is written rho^2 - r^2 while the value is factored, so that r and rho are
+    generators with no relation between them, and each factor is then written in whichever of its
+    three forms has the fewest terms: in r, a and at most one rho, as Simpson and Visser write
+    2r^2 - a^2, in r and rho, or in rho and a."""
+    square = r ** 2 + a ** 2
+
+    def forms(base):
+        linear = sp.Poly(base, rho)
+        with_a = sp.expand(sum(c * rho ** (k % 2) * square ** (k // 2) for (k,), c in linear.terms()))
+        even = sp.Poly(base, r)
+        candidates = [with_a, sp.expand(base)]
+        if all(k % 2 == 0 for (k,), _ in even.terms()):
+            candidates.append(sp.expand(sum(c * (rho ** 2 - a ** 2) ** (k // 2) for (k,), c in even.terms())))
+        return candidates
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        value = value.replace(lambda p: p.is_Pow and sp.expand(p.base - square) == 0, lambda p: rho ** (2 * p.exp))
+        value = sp.factor(sp.together(value.subs(a, sp.sqrt(rho ** 2 - r ** 2))))
+        if value.has(sp.sqrt(rho ** 2 - r ** 2)):
+            raise AssertionError(f"an odd power of a stands in {value}")
+        out, powers = _factor_powers(value)
+        flipped = powers.pop(r - rho, 0)
+        down, up = powers.pop(rho - r, 0) + flipped, powers.pop(rho + r, 0)
+        if down != up:
+            raise AssertionError(f"rho - r and rho + r stand to different powers in {value}")
+        out *= (-1) ** flipped * a ** (2 * down)
+        for base, k in powers.items():
+            if base.is_Add:
+                base = min(forms(base), key=lambda e: len(sp.Add.make_args(e)))
+                if base.could_extract_minus_sign() and k.is_Integer:
+                    base, out = -base, out * (-1) ** k
+            out *= base ** k
+        return out
+
+    return pretty
+
+
+def simpson_visser_check(chart, system):
+    """Simpson and Visser's curvature in every chart, with rho the areal radius: G^t_t =
+    a^2(rho - 2r_s)/rho^5, G^r_r = -a^2/rho^4 and G^theta_theta = a^2(2 rho - r_s)/(2 rho^5) in the
+    diagonal charts, theirs with m = r_s/2, R = a^2(3r_s - 2 rho)/rho^5 and their Kretschmann
+    scalar. At a = 0 the Ricci tensor vanishes, Schwarzschild's vacuum, and at
+    r_s = 0 the Kretschmann scalar is Ellis and Bronnikov's 12a^4/rho^8. Each chart after the
+    first is Simpson and Visser's pulled back, the areal chart on both sides of r = 0."""
+    rs, a = chart.reader.parameters["r_s"], chart.reader.parameters["a"]
+    x = chart.symbols[1]
+    rho = x if system == "areal" else sp.sqrt(x ** 2 + a ** 2)
+    r2 = rho ** 2 - a ** 2
+    G = chart.geo.raise_indices(chart.geo.einstein_ll(), 2, (0,))
+    expected = {(2, 2): a ** 2 * (2 * rho - rs) / (2 * rho ** 5), (3, 3): a ** 2 * (2 * rho - rs) / (2 * rho ** 5)}
+    if system in ("spherical", "areal"):
+        expected.update({(0, 0): a ** 2 * (rho - 2 * rs) / rho ** 5, (1, 1): -a ** 2 / rho ** 4})
+    for slot, value in expected.items():
+        if vm.norm(vm._at(G, slot) - value) != 0:
+            raise AssertionError(f"simpson_visser: G^a_b in slot {slot} of the {system} chart is not {value}")
+    if vm.norm(chart.geo.ricci_scalar() - a ** 2 * (3 * rs - 2 * rho) / rho ** 5) != 0:
+        raise AssertionError(f"simpson_visser: the Ricci scalar of the {system} chart is not Simpson and Visser's")
+    K = chart.geo.kretschmann()
+    theirs = (3 * rs ** 2 * (4 * r2 ** 2 - 4 * a ** 2 * r2 + 3 * a ** 4) + 16 * a ** 2 * rs * (r2 - a ** 2) * rho
+              + 12 * a ** 4 * rho ** 2) / rho ** 10
+    if vm.norm(K - theirs) != 0:
+        raise AssertionError(f"simpson_visser: the Kretschmann scalar of the {system} chart is not Simpson and Visser's")
+    if vm.norm(theirs.subs(rs, 0) - 12 * a ** 4 / rho ** 8) != 0:
+        raise AssertionError("simpson_visser: the Kretschmann scalar at r_s = 0 is not Ellis and Bronnikov's")
+    ricci = chart.geo.ricci_ll()
+    if any(sp.simplify(sp.sympify(vm._at(ricci, index)).subs(a, 0)) != 0 for index in vm._indices(4, 2)):
+        raise AssertionError(f"simpson_visser: the {system} chart is not vacuum at a = 0")
+    if system == "spherical":
+        return
+    source = simpson_visser("spherical")
+    own = cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+    t, r = own.symbols[:2]
+    names = dict(zip(own.symbols[2:], chart.symbols[2:]))
+    names.update({own.reader.parameters[n]: chart.reader.parameters[n] for n in ("r_s", "a")})
+    w = chart.symbols[0]
+    if system == "areal":
+        # r = +-sqrt(rho^2 - a^2), one sign on each side of the sphere of least area.
+        maps = [([w, side * sp.sqrt(x ** 2 - a ** 2)], sp.diag(1, side * x / sp.sqrt(x ** 2 - a ** 2), 1, 1))
+                for side in (1, -1)]
+    else:
+        # ct = u + r_* or v - r_*, with dr_*/dr = 1/f.
+        side = 1 if system == "eddington_finkelstein_outgoing" else -1
+        f = 1 - rs / sp.sqrt(x ** 2 + a ** 2)
+        maps = [([w, x], sp.Matrix([[1, side / f, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]))]
+    for image, J in maps:
+        at = {r: image[1]}
+        pulled = J.T * own.geo.g.subs(names).subs(at, simultaneous=True) * J
+        # The areal radius is positive, so sqrt(rho^2) is rho.
+        difference = (pulled - chart.geo.g).applyfunc(lambda e: sp.simplify(sp.powdenest(sp.simplify(e), force=True)))
+        if difference != sp.zeros(4, 4):
+            raise AssertionError(f"simpson_visser: the {system} chart is not Simpson and Visser's pulled back")
+
+
+CHARTS["simpson_visser"] = [lambda s=s: simpson_visser(s) for s in SV_CHARTS]
 
 
 # -- Ori's time machine ------------------------------------------------------------------

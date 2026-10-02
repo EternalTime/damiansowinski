@@ -66,6 +66,11 @@
       "id": "reissner_nordstrom_de_sitter",
       "kind": "generalisation",
       "text": "The charged black hole in a universe with a positive cosmological constant. A cosmological horizon joins the two of Reissner-Nordström, and at $r_q = r_s/2$ it has the temperature of the black hole horizon [romans1992]."
+    },
+    {
+      "id": "simpson_visser",
+      "kind": "family",
+      "text": "A regular black hole with the same tower of universes, two horizons to each black hole, and another asymptotically flat region where this one has its timelike singularity [simpson2019]."
     }
   ],
   "references": [
@@ -89,7 +94,8 @@
     "garfinkle1991",
     "horowitz1992",
     "earman1993",
-    "romans1992"
+    "romans1992",
+    "simpson2019"
   ],
   "coordinates": [
     {

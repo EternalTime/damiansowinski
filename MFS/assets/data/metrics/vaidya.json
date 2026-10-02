@@ -39,6 +39,11 @@
       "id": "photon_rocket",
       "kind": "generalisation",
       "text": "Vaidya's star shining more to one side than the other. The recoil of the light accelerates it, at a rate William Kinnersley left free in 1969 [kinnersley1969, podolsky2008]."
+    },
+    {
+      "id": "simpson_visser",
+      "kind": "family",
+      "text": "Vaidya's mass that depends on the null time, put into Simpson and Visser's regular black hole. A wormhole that accretes enough null dust grows a horizon around its throat [simpson2019vaidya]."
     }
   ],
   "references": [
@@ -55,7 +60,8 @@
     "kuroda1984",
     "papapetrou1985",
     "dwivedi1989",
-    "podolsky2008"
+    "podolsky2008",
+    "simpson2019vaidya"
   ],
   "coordinates": [
     {

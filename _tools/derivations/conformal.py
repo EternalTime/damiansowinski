@@ -4434,6 +4434,437 @@ def thin_shell_wormhole(ck, src):
     return views
 
 
+class BounceTower(Tower):
+    """Simpson and Visser's black bounce with a < r_s, at r_s = 1: f = 1 - r_s/sqrt(r^2 + a^2) has
+    the two simple roots r = +-h, h = sqrt(r_s^2 - a^2), each of surface gravity h/2r_s^2, and
+    the tortoise coordinate of null_rays._sv_rstar is odd in r, so r*(0) = 0, runs to -infinity
+    at r = h and at r -> -infinity and to +infinity at r = -h, as the tortoise coordinate of a
+    Tower with two roots does. f is no rational function, so the residues are not Tower's partial
+    fractions; the surface gravity and dr*/dr = 1/f are checked against the published metric by
+    the function that draws with it. Both horizons have one surface gravity, so the one Kruskal
+    coordinate is smooth across both."""
+
+    def __init__(self, a):
+        h = math.sqrt(1 - a * a)
+        self.a, self.rf, self.kp = a, [h, -h], h / 2
+
+    def rstar(self, r):
+        with np.errstate(divide="ignore", invalid="ignore"):
+            return nr._sv_rstar(r, self.a)
+
+
+def simpson_visser(ck, src):
+    """Simpson and Visser's three geometries at r_s = 1, each drawn in all four charts. On the
+    plane of t and r the metric is f(-c^2dt^2 + dr_*^2) with f = 1 - r_s/sqrt(r^2 + a^2) and
+    dr_*/dr = 1/f, the tortoise coordinate of null_rays._sv_rstar, odd in r.
+
+    a = r_s/2, the black bounce: f has the simple roots r = +-h, h = sqrt(3)/2, of one surface
+    gravity, so the diagram is a BounceTower, Carter's tower for the axis of Kerr: exteriors I and
+    I', the black hole II, whose horizons are r = h below and r = -h above, the asymptotically
+    flat regions III and III' of r < -h, and the same again above. r = 0 has r_* = 0, where
+    G(u) + G(-v) = pi/2 for every t, so the sphere of least area is the straight line T = pi/2
+    through the middle of II, and of every copy of it. Simpson and Visser's t and r cover I, II and
+    III, the areal radius I and the half of II below r = 0, the ingoing chart I, II and III', and
+    the outgoing chart III', the white hole above it and the exterior above that.
+
+    a = r_s, the one way wormhole: f has a double root at r = 0, so there is no surface gravity,
+    and each region is placed by the arctangents of u, v = (ct -+ r_*)/l, as Majumdar and
+    Papapetrou's hole is, with l = 2 r_s:
+
+        E_k   r > 0    p = k pi + arctan u,        q = k pi + arctan v
+        B_k   r < 0    p = (k + 1) pi + arctan u,  q = k pi + arctan v
+
+    v runs on from E_k into B_k and u from B_k into E_(k+1), so the map is continuous across each
+    horizon. Every region is a whole diamond, the E_k about X = 0 and the B_k about X = -pi, and
+    the drawing moves all of them by pi/2 to the right to stand in the middle of its box.
+
+    a = 2 r_s, the traversable wormhole: r_* runs over the whole line and p, q = arctan((ct -+
+    r_*)/l) with l = 4 r_s give the full diamond, the throat on its axis.
+
+    Each map is checked against the published metric of every chart it is drawn for: the charts of
+    t on each region, the areal chart through r = sqrt(rho^2 - a^2), and each Eddington-Finkelstein
+    chart across the horizons it covers, with a future directed vector of that chart."""
+    charts = {"spherical": ("t", "r"), "areal": ("t", "\\rho"),
+              "ingoing": ("v", "r"), "outgoing": ("u", "r")}
+    system = {"spherical": "spherical", "areal": "areal", "ingoing": "eddington_finkelstein_ingoing",
+              "outgoing": "eddington_finkelstein_outgoing"}
+    planes = {(case, cid): Plane(src, "simpson_visser", system[cid], plane, EQUATOR, {"r_s": 1, "a": a})
+              for case, a in (("bounce", "1/2"), ("null", 1), ("wormhole", 2)) for cid, plane in charts.items()}
+
+    def static(t, r):
+        return (1, 0)
+
+    def falling(a):
+        # A future directed timelike vector of the ingoing chart, (1, (f - 1)/2), at every r.
+        return lambda v, r: (1, -0.5 / np.sqrt(np.asarray(r, dtype=float) ** 2 + a * a))
+
+    def rising(a):
+        return lambda u, r: (1, 0.5 / np.sqrt(np.asarray(r, dtype=float) ** 2 + a * a))
+
+    for (case, cid), a in (((c, k), {"bounce": 0.5, "null": 1.0, "wormhole": 2.0}[c]) for c, k in planes):
+        if cid != "spherical":
+            continue
+        pl = planes[(case, cid)]
+        assert pl.g[0, 1] == 0 and sp.simplify(pl.g[0, 0] * pl.g[1, 1] + 1) == 0
+        r = np.concatenate([ck.uniform(-30, -1.2, 200), ck.uniform(1.2, 30, 200)]) if a <= 1 else ck.uniform(-30, 30, 400)
+        g = pl.metric(0 * r, r)
+        hstep = 1e-6 * np.maximum(1, np.abs(r))
+        ck.limit(f"Simpson-Visser, a = {a:g} r_s: the tortoise coordinate has dr_*/dr = the published g_rr",
+                 (nr._sv_rstar(r + hstep, a) - nr._sv_rstar(r - hstep, a)) / (2 * hstep) / g[2], np.ones_like(r), 1e-6)
+        ck.limit(f"Simpson-Visser, a = {a:g} r_s: the tortoise coordinate is odd in r",
+                 nr._sv_rstar(r, a) + nr._sv_rstar(-r, a), 0 * r, 1e-9)
+        ck.finite(f"Simpson-Visser, a = {a:g} r_s: the curvature is finite beside r = 0",
+                  pl.kretschmann(np.zeros(50), ck.uniform(-0.01, 0.01, 50) + (0.011 if a == 1 else 0.0)))
+        ck.limit(f"Simpson-Visser, a = {a:g} r_s: the Kretschmann scalar at r = 0 is (9 r_s^2 - 16 a r_s + 12 a^2)/a^6",
+                 pl.kretschmann(np.zeros(1), np.full(1, 1e-7)), [(9 - 16 * a + 12 * a * a) / a ** 6], 1e-5)
+
+    views = []
+
+    # ---- a = r_s/2, the black bounce
+    a = 0.5
+    T = BounceTower(a)
+    rp, rm = T.rf
+    pl = planes[("bounce", "spherical")]
+    root = sp.sqrt(3) / 2
+    ck.limit("Simpson-Visser, a = r_s/2: the published g^rr vanishes at r = +-sqrt(r_s^2 - a^2)",
+             [float(pl.gi[1, 1].subs(pl.x1, root)), float(pl.gi[1, 1].subs(pl.x1, -root))], [0.0, 0.0], 1e-12)
+    ck.limit("Simpson-Visser, a = r_s/2: the surface gravity of both horizons is sqrt(r_s^2 - a^2)/2 r_s^2",
+             [float(sp.diff(pl.gi[1, 1], pl.x1).subs(pl.x1, root)) / 2, -float(sp.diff(pl.gi[1, 1], pl.x1).subs(pl.x1, -root)) / 2],
+             [T.kp, T.kp], 1e-12)
+    tower_checks(ck, "Simpson-Visser, a = r_s/2", pl, T, -40, 12)
+    pq0 = T.pq("III", np.array([0.0]), np.array([-1e9]))
+    ck.limit("Simpson-Visser, a = r_s/2: r -> -infinity at t = 0 lands on the far i0, (X, T) = (pi, pi)",
+             point(pq0[0][0], pq0[1][0]), [PI, PI], 1e-3)
+    ts = np.array([-6.0, -1.0, 0.0, 2.0, 7.0])
+    pb, qb = T.pq("II", ts, np.zeros(5))
+    ck.limit("Simpson-Visser, a = r_s/2: r = 0 is the straight line T = pi/2 of the black hole", pb + qb, [HALF] * 5, 1e-12)
+
+    def areal_bounce(t, rho):
+        r = np.sqrt(np.asarray(rho, dtype=float) ** 2 - a * a)
+        return T.pq("I", t, r)
+
+    def cells(maps, x0, r):
+        """(p, q) of points of an Eddington-Finkelstein chart, the cell chosen by r."""
+        x0, r = np.asarray(x0, dtype=float), np.asarray(r, dtype=float)
+        p, q = np.empty_like(r), np.empty_like(r)
+        for mask, fmap in ((r > rp, maps[0]), ((r < rp) & (r > rm), maps[1]), (r < rm, maps[2])):
+            if mask.any():
+                p[mask], q[mask] = fmap(x0[mask], r[mask])
+        return p, q
+
+    def ingoing_bounce(v, r):
+        # v = ct + r_* in I and II, and the static time of III' runs backward along it.
+        return cells((lambda v, r: T.pq("I", v - T.rstar(r), r), lambda v, r: T.pq("II", v - T.rstar(r), r),
+                      lambda v, r: T.pq("III'", T.rstar(r) - v, r)), v, r)
+
+    def outgoing_bounce(u, r):
+        # u is constant along p in III', in the white hole above it and in the exterior above that.
+        return cells((lambda u, r: reflect(*T.pq("I", -u - T.rstar(r), r), True),
+                      lambda u, r: reflect(*T.pq("II", -u - T.rstar(r), r), True),
+                      lambda u, r: T.pq("III'", -u - T.rstar(r), r)), u, r)
+
+    ck.chart("Simpson-Visser, a = r_s/2, areal radius, exterior", planes[("bounce", "areal")], areal_bounce,
+             ck.uniform(-12, 12), ck.uniform(1.001, 40), static)
+    ck.chart("Simpson-Visser, a = r_s/2, areal radius, inside the horizon", planes[("bounce", "areal")],
+             lambda t, rho: T.pq("II", t, np.sqrt(np.asarray(rho, dtype=float) ** 2 - a * a)),
+             ck.uniform(-12, 12), ck.uniform(0.501, 0.999), lambda t, rho: (0, -1))
+    for lo, hi, name in ((rp + 1e-3, 30, "exterior"), (rm + 1e-3, rp - 1e-3, "between the horizons"), (-30, rm - 1e-3, "r < r_-")):
+        ck.chart(f"Simpson-Visser, a = r_s/2, ingoing chart, {name}", planes[("bounce", "ingoing")], ingoing_bounce,
+                 ck.uniform(-10, 10), ck.uniform(lo, hi), falling(a))
+        ck.chart(f"Simpson-Visser, a = r_s/2, outgoing chart, {name}", planes[("bounce", "outgoing")], outgoing_bounce,
+                 ck.uniform(-10, 10), ck.uniform(lo, hi), rising(a))
+    vs = np.array([-3.0, 0.5, 4.0])
+    for name, fmap, fixed in (("ingoing", ingoing_bounce, 1), ("outgoing", outgoing_bounce, 0)):
+        for h0 in (rp, rm):
+            hi_, lo_ = fmap(vs, np.full(3, h0 + 1e-7)), fmap(vs, np.full(3, h0 - 1e-7))
+            ck.limit(f"Simpson-Visser, a = r_s/2: the {name} chart is continuous across r = {h0:+.3f}",
+                     np.array(hi_)[fixed], np.array(lo_)[fixed], 1e-5)
+
+    D = TowerDrawing(T, False, -np.inf)
+    box = [-PI - 0.45, PI + 0.45, -PI - 0.1, 3 * PI + 0.1]
+    times = [c / T.kp for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+    rI = nice_all(even_radii(T, "I", 4, rp, np.inf), [rp])
+    rII = nice_all(even_radii(T, "II", 4, rm, rp), [rm, rp])
+    rIII = nice_all(even_radii(T, "III", 4, -np.inf, rm), [rm])
+    outside = slices.moments("simpson_visser", "outside")[0]
+    reach = [math.sqrt(x * x - a * a) for x in outside.reach("areal", "\\rho")]
+    bounce_cover = {
+        "spherical": ([("I", False), ("II", False), ("III", False)],
+                      "one exterior, one black hole and one region $r < r_-$, which $t$ and $r$ cover"),
+        "areal": ([("I", False)], "one exterior and the half of its black hole before $r = 0$, which $t$ and $\\rho$ cover"),
+        "ingoing": ([("I", False), ("II", False), ("III'", False)],
+                    "one exterior, its black hole and the region $r < r_-$ beyond it, which $v$ and $r$ cover"),
+        "outgoing": ([("III'", False), ("II", True), ("I", True)],
+                     "one region $r < r_-$, the white hole to its future and the exterior beyond that, which $u$ and $r$ cover"),
+    }
+    for cid in charts:
+        cover, covered = bounce_cover[cid]
+        v = View(f"{cid}_bounce", "$a = r_s/2$", box, system[cid])
+        null_chart = cid in ("ingoing", "outgoing")
+        grid_times = [] if null_chart else times
+        D.draw(v, {"I": (rI, grid_times), "II": (rII, grid_times), "IV": (rII, grid_times), "III": (rIII, grid_times)},
+               cover=cover)
+        if cid == "areal":
+            v.fill("cover", [[0, 0], [HALF, HALF], [-HALF, HALF]])
+        for base in (-HALF, HALF, 3 * HALF, 5 * HALF):
+            v.line("throat", [[[-HALF, base], [HALF, base]]])
+        if cid == "ingoing":
+            for c in times:
+                q0 = float(T.G(-c))
+                v.segment("t", (-HALF, q0), (PI, q0))
+        if cid == "outgoing":
+            for c in times:
+                p0 = PI - float(T.G(c))
+                v.segment("t", (p0, 0), (p0, 3 * HALF))
+        D.labels(v)
+        for label in v.labels:
+            # The regions' names stand clear of the line r = 0 through the middle of each.
+            if label["text"] in ("black hole", "white hole"):
+                label["at"][1] = round(label["at"][1] + (-0.5 if label["text"] == "black hole" else 0.5)
+                                       * (1 if abs(label["at"][1] - HALF) < 0.5 or abs(label["at"][1] - 3 * HALF) < 0.5 else -1), 4)
+        v.label_xt([0, HALF], "$r = 0$", "b", "small", dy=-3)
+        v.set(fade={"top": 0.9, "bottom": 0.9})
+        v.legend("cover", covered)
+        radius = "\\rho" if cid == "areal" else "r"
+        shown = (lambda xs: listed([nice(math.sqrt(x * x + a * a)) for x in xs])) if cid == "areal" else listed
+        v.legend("r", f"${radius}$ constant: {shown(rI)} outside, {shown(rII)} between the horizons, "
+                      f"{shown(rIII)} beyond $r_-$, in units of $r_s$")
+        v.legend("t", {"ingoing": "$v$ constant, a light ray moving in", "outgoing": "$u$ constant, a light ray moving out"}
+                 .get(cid, "$t$ constant"))
+        v.legend("horizon", "the horizons $r_\\pm = \\pm\\sqrt{r_s^2 - a^2} = \\pm 0.87\\,r_s$, where $\\rho = r_s$")
+        v.legend("throat", "$r = 0$, the sphere of least area, a spacelike surface, where the Kretschmann scalar is $256/r_s^4$")
+        v.legend("scri", "null infinity, of $r \\to +\\infty$ and of $r \\to -\\infty$")
+        v.slice(outside, [through_bifurcation(T, ("I'", "I"), reach[1], reach[0])])
+        stretch = np.linspace(-1, 1, 41)
+        for m in slices.moments("simpson_visser", "inside"):
+            v.slice(m, [T.pq("II", stretch, np.full_like(stretch, slices.sv_inside_r(m)))])
+        v.set(settings="$r_s = 1$ and $a = 1/2$, so that $r_\\pm = \\pm 0.866\\,r_s$ and $\\kappa = 0.433/r_s$ at both; "
+                       "each region by Kruskal's $\\arctan e^{\\mp\\kappa(ct \\mp r_*)}$.")
+        views.append(v)
+
+    # ---- a = r_s, the one way wormhole
+    a, ell = 1.0, 2.0
+
+    def rs_null(r):
+        with np.errstate(divide="ignore", invalid="ignore"):
+            return nr._sv_rstar(r, 1.0)
+
+    def E(k):
+        return lambda t, r: (k * PI - Q4 + np.arctan((np.asarray(t, dtype=float) - rs_null(r)) / ell),
+                             k * PI + Q4 + np.arctan((np.asarray(t, dtype=float) + rs_null(r)) / ell))
+
+    def B(k):
+        return lambda t, r: ((k + 1) * PI - Q4 + np.arctan((np.asarray(t, dtype=float) - rs_null(r)) / ell),
+                             k * PI + Q4 + np.arctan((np.asarray(t, dtype=float) + rs_null(r)) / ell))
+
+    def sided(right, left):
+        def fmap(x0, r):
+            x0, r = np.asarray(x0, dtype=float), np.asarray(r, dtype=float)
+            p, q = np.empty_like(r), np.empty_like(r)
+            for mask, f in ((r > 0, right), (r < 0, left)):
+                if mask.any():
+                    p[mask], q[mask] = f(x0[mask], r[mask])
+            return p, q
+        return fmap
+
+    ingoing_null = sided(lambda v, r: E(0)(v - rs_null(r), r), lambda v, r: B(0)(v - rs_null(r), r))
+    outgoing_null = sided(lambda u, r: E(1)(u + rs_null(r), r), lambda u, r: B(0)(u + rs_null(r), r))
+    pl = planes[("null", "spherical")]
+    span = 20
+    ck.chart("Simpson-Visser, a = r_s, a region r > 0", pl, E(0), ck.uniform(-span, span), ck.uniform(1e-2, 40), static)
+    ck.chart("Simpson-Visser, a = r_s, a region r < 0", pl, B(0), ck.uniform(-span, span), ck.uniform(-40, -1e-2), static)
+    ck.chart("Simpson-Visser, a = r_s, areal radius", planes[("null", "areal")],
+             lambda t, rho: E(0)(t, np.sqrt(np.asarray(rho, dtype=float) ** 2 - 1)), ck.uniform(-span, span),
+             ck.uniform(1.001, 40), static)
+    for lo, hi, name in ((1e-2, 30, "r > 0"), (-30, -1e-2, "r < 0")):
+        ck.chart(f"Simpson-Visser, a = r_s, ingoing chart, {name}", planes[("null", "ingoing")], ingoing_null,
+                 ck.uniform(-10, 10), ck.uniform(lo, hi), falling(a))
+        ck.chart(f"Simpson-Visser, a = r_s, outgoing chart, {name}", planes[("null", "outgoing")], outgoing_null,
+                 ck.uniform(-10, 10), ck.uniform(lo, hi), rising(a))
+    for name, fmap, fixed in (("ingoing", ingoing_null, 1), ("outgoing", outgoing_null, 0)):
+        ck.limit(f"Simpson-Visser, a = r_s: the {name} chart is continuous across the horizon r = 0",
+                 np.array(fmap(vs, np.full(3, 1e-6)))[fixed], np.array(fmap(vs, np.full(3, -1e-6)))[fixed], 1e-4)
+    p, q = E(0)(ts, np.full(5, 1e-9))
+    ck.limit("Simpson-Visser, a = r_s: r -> 0 from r > 0 lands on the horizon p = pi/4", p, [Q4] * 5, 1e-6)
+    p, q = B(0)(ts, np.full(5, -1e-9))
+    ck.limit("Simpson-Visser, a = r_s: r -> 0 from r < 0 lands on the next horizon q = 3 pi/4", q, [3 * Q4] * 5, 1e-6)
+    ck.limit("Simpson-Visser, a = r_s: the horizon is the double root r = 0 of the published g^rr",
+             [float(pl.gi[1, 1].subs(pl.x1, 0)), float(sp.diff(pl.gi[1, 1], pl.x1).subs(pl.x1, 0))], [0.0, 0.0], 1e-12)
+
+    box = [-3 * HALF - 0.45, 3 * HALF + 0.45, -PI - 0.1, 3 * PI + 0.1]
+    T0, T1 = box[2], box[3]
+
+    def cell_polygon(kind, k):
+        base = 2 * k * PI
+        if kind == "E":
+            pts = [[HALF, base - PI], [-HALF, base], [HALF, base + PI], [3 * HALF, base]]
+        else:
+            pts = [[-HALF, base], [-3 * HALF, base + PI], [-HALF, base + 2 * PI], [HALF, base + PI]]
+        return clip_polygon(pts, T0, T1)
+
+    def clipped(p, q):
+        X, Tt = xt(p, q)
+        bad = (Tt < T0) | (Tt > T1)
+        return np.where(bad, np.nan, p), np.where(bad, np.nan, q)
+
+    null_cells = [("B", -1), ("E", 0), ("B", 0), ("E", 1), ("B", 1)]
+    null_cover = {
+        "spherical": ([("E", 0), ("B", 0)], "one region $r > 0$ and one region $r < 0$, which $t$ and $r$ cover"),
+        "areal": ([("E", 0)], "one region $r > 0$, which $t$ and $\\rho$ cover"),
+        "ingoing": ([("E", 0), ("B", 0)], "one region $r > 0$ and the region $r < 0$ to its future, which $v$ and $r$ cover"),
+        "outgoing": ([("B", 0), ("E", 1)], "one region $r < 0$ and the region $r > 0$ to its future, which $u$ and $r$ cover"),
+    }
+    null_times = (-6.0, -2.0, 0.0, 2.0, 6.0)
+    radii = (0.25, 0.5, 1.0, 2.0, 4.0)
+    moment = slices.moments("simpson_visser", "null")[0]
+    t = spread(-np.inf, np.inf, 500, 10)
+    for cid in charts:
+        cover, covered = null_cover[cid]
+        v = View(f"{cid}_null", "$a = r_s$", box, system[cid])
+        null_chart = cid in ("ingoing", "outgoing")
+        for kind, k in null_cells:
+            v.fill("region", cell_polygon(kind, k))
+        for kind, k in cover:
+            v.fill("cover", cell_polygon(kind, k))
+        for kind, k in null_cells:
+            fmap, sign = (E(k), 1) if kind == "E" else (B(k), -1)
+            for x in radii:
+                v.curve("r", *clipped(*fmap(t, np.full_like(t, sign * x))))
+            xs = spread(0.0, np.inf, 600, 16) * sign
+            for tt in ([] if null_chart else null_times):
+                v.curve("t", *clipped(*fmap(np.full_like(xs, tt), xs)))
+        if cid == "ingoing":
+            for c in null_times:
+                q0 = Q4 + math.atan(c / ell)
+                v.segment("t", (-3 * Q4, q0), (5 * Q4, q0))
+        if cid == "outgoing":
+            for c in null_times:
+                p0 = 3 * Q4 + math.atan(c / ell)
+                v.segment("t", (p0, -Q4), (p0, 7 * Q4))
+        for k in (-1, 0, 1):
+            base = 2 * k * PI
+            v.line("horizon", [clip_polygon_line([[-HALF, base], [HALF, base + PI]], T0, T1),
+                               clip_polygon_line([[HALF, base + PI], [-HALF, base + 2 * PI]], T0, T1)])
+            v.line("scri", [clip_polygon_line([[HALF, base - PI], [3 * HALF, base]], T0, T1),
+                            clip_polygon_line([[3 * HALF, base], [HALF, base + PI]], T0, T1),
+                            clip_polygon_line([[-HALF, base], [-3 * HALF, base + PI]], T0, T1),
+                            clip_polygon_line([[-3 * HALF, base + PI], [-HALF, base + 2 * PI]], T0, T1)])
+        for k in (0, 1):
+            base = 2 * k * PI
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(3 * HALF, 4), round(base, 4)]})
+            v.label_xt([3 * HALF, base], "$i^0$", "l", dx=6)
+            v.label_xt([5 * Q4, base + Q4], "$\\mathscr{I}^+$", "bl", dx=4, dy=-3)
+            v.label_xt([5 * Q4, base - Q4], "$\\mathscr{I}^-$", "tl", dx=4, dy=3)
+            v.label_xt([HALF, base + 0.45], "$r > 0$", cls="region")
+        for base in (PI,):
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(-3 * HALF, 4), round(base, 4)]})
+            v.label_xt([-3 * HALF, base], "$i^0$", "r", dx=-6)
+            v.label_xt([-5 * Q4, base + Q4], "$\\mathscr{I}^+$", "br", dx=-4, dy=-3)
+            v.label_xt([-5 * Q4, base - Q4], "$\\mathscr{I}^-$", "tr", dx=-4, dy=3)
+            v.label_xt([-HALF, base + 0.45], "$r < 0$", cls="region")
+        v.label_xt([0, HALF], "$r = 0$", "tl", "small", dx=5, dy=1)
+        v.set(fade={"top": 0.9, "bottom": 0.9})
+        v.legend("cover", covered)
+        if cid == "areal":
+            v.legend("r", "$\\rho$ constant, at " + listed([nice(math.sqrt(x * x + 1)) for x in radii]) + " times $r_s$")
+        else:
+            v.legend("r", f"$r$ constant, at $\\pm$ {listed(radii)} times $r_s$")
+        v.legend("t", {"ingoing": "$v$ constant, a light ray moving in", "outgoing": "$u$ constant, a light ray moving out"}
+                 .get(cid, "$t$ constant"))
+        v.legend("horizon", "the horizon $r = 0$, the sphere of least area, a null surface with no surface gravity")
+        v.legend("scri", "null infinity, of $r \\to +\\infty$ and of $r \\to -\\infty$")
+        lo, hi = moment.reach("spherical", "r")
+        rr = np.geomspace(lo, hi, 400)
+        v.slice(moment, [E(0)(np.zeros_like(rr), rr)])
+        v.set(settings="$r_s = 1$, $a = 1$, and $\\ell = 2\\,r_s$; each region by $\\arctan((ct \\mp r_*)/\\ell)$, moved by "
+                       "$\\pi$ from one region to the next.")
+        views.append(v)
+
+    # ---- a = 2 r_s, the traversable wormhole
+    a, ell = 2.0, 4.0
+
+    def rs_worm(r):
+        return nr._sv_rstar(r, 2.0)
+
+    worm = {"spherical": lambda t, r: mink_pq(t, rs_worm(r), ell),
+            "areal": lambda t, rho: mink_pq(t, rs_worm(np.sqrt(np.asarray(rho, dtype=float) ** 2 - 4)), ell),
+            "ingoing": lambda v, r: mink_pq(np.asarray(v, dtype=float) - rs_worm(r), rs_worm(r), ell),
+            "outgoing": lambda u, r: mink_pq(np.asarray(u, dtype=float) + rs_worm(r), rs_worm(r), ell)}
+    ck.chart("Simpson-Visser, a = 2 r_s", planes[("wormhole", "spherical")], worm["spherical"],
+             ck.uniform(-40, 40), ck.uniform(-40, 40), static)
+    ck.chart("Simpson-Visser, a = 2 r_s, areal radius", planes[("wormhole", "areal")], worm["areal"],
+             ck.uniform(-40, 40), ck.uniform(2.001, 40), static)
+    ck.chart("Simpson-Visser, a = 2 r_s, ingoing chart", planes[("wormhole", "ingoing")], worm["ingoing"],
+             ck.uniform(-40, 40), ck.uniform(-40, 40), falling(a))
+    ck.chart("Simpson-Visser, a = 2 r_s, outgoing chart", planes[("wormhole", "outgoing")], worm["outgoing"],
+             ck.uniform(-40, 40), ck.uniform(-40, 40), rising(a))
+    ck.limit("Simpson-Visser, a = 2 r_s: the tortoise coordinate vanishes at the throat", rs_worm(0.0), [0.0], 1e-12)
+    tt, rr = ck.uniform(-20, 20), ck.uniform(0.05, 20)
+    want = np.array(worm["spherical"](tt, rr))
+    for cid, got in (("areal", worm["areal"](tt, np.sqrt(rr * rr + 4))), ("ingoing", worm["ingoing"](tt + rs_worm(rr), rr)),
+                     ("outgoing", worm["outgoing"](tt - rs_worm(rr), rr))):
+        ck.limit(f"Simpson-Visser, a = 2 r_s: the {cid} chart lands on the points of Simpson and Visser's", np.array(got), want, 1e-9)
+
+    box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    moment = slices.moments("simpson_visser", "wormhole")[0]
+    lo, hi = moment.reach("spherical", "r")
+    xs = np.linspace(lo, hi, 401)
+    TS = (-16, -8, -4, 0, 4, 8, 16)
+    radii = (1.0, 2.0, 4.0, 8.0)
+    for cid in charts:
+        v = View(f"{cid}_wormhole", "$a = 2\\,r_s$", box, system[cid])
+        v.fill("region", DIAMOND)
+        v.fill("cover", TRIANGLE if cid == "areal" else DIAMOND)
+        for radius in radii:
+            v.curve("r", *worm["spherical"](S_ALL, np.full_like(S_ALL, radius)))
+            v.curve("r2" if cid == "areal" else "r", *worm["spherical"](S_ALL, np.full_like(S_ALL, -radius)))
+        if cid in ("spherical", "areal"):
+            grid(v, "t", lambda t, x: mink_pq(t, x, ell), TS, S_ALL)
+        elif cid == "ingoing":
+            for c in TS:
+                v.segment("t", (-HALF, math.atan(c / ell)), (HALF, math.atan(c / ell)))
+        else:
+            for c in TS:
+                v.segment("t", (math.atan(c / ell), -HALF), (math.atan(c / ell), HALF))
+        v.line("throat", [[[0, -PI], [0, PI]]])
+        diamond_edges(v)
+        v.label_xt([0, 0.3], "throat", "l", "small", dx=6)
+        if cid == "areal":
+            label_on(v, worm["spherical"](0, 2.0), "$\\rho = 2.8\\,r_s$")
+            v.legend("cover", "the side $r > 0$, which $t$ and $\\rho$ cover")
+            v.legend("r", "$\\rho$ constant, at " + listed([nice(math.sqrt(x * x + 4)) for x in radii]) + " times $r_s$")
+            v.legend("r2", "the same radii on the other side")
+        else:
+            label_on(v, worm["spherical"](0, 2.0), "$r = 2\\,r_s$")
+            v.legend("cover", "the whole spacetime, which $" + charts[cid][0] + "$ and $r$ cover")
+            v.legend("r", "$r$ constant, at $\\pm 1$, $\\pm 2$, $\\pm 4$ and $\\pm 8$ times $r_s$")
+        v.legend("t", {"ingoing": "$v$ constant, a light ray moving toward $r \\to -\\infty$, every $4\\,r_s$ to $\\pm 8\\,r_s$, and at $\\pm 16\\,r_s$",
+                       "outgoing": "$u$ constant, a light ray moving toward $r \\to \\infty$, every $4\\,r_s$ to $\\pm 8\\,r_s$, and at $\\pm 16\\,r_s$"}
+                 .get(cid, "$ct$ constant, every $4\\,r_s$ to $\\pm 8\\,r_s$, and at $\\pm 16\\,r_s$"))
+        v.legend("throat", "the throat $r = 0$, the sphere of least area, a timelike surface")
+        v.slice(moment, [worm["spherical"](0 * xs, xs)])
+        v.set(settings="$r_s = 1$, $a = 2$, and $\\ell = 4\\,r_s$; $p = \\arctan((ct - r_*)/\\ell)$ and "
+                       "$q = \\arctan((ct + r_*)/\\ell)$, with $r_*$ the tortoise coordinate, zero at the throat.")
+        views.append(v)
+    return views
+
+
+def clip_polygon_line(pts, T0, T1):
+    """The part of a straight segment, given in (X, T), between the lines T = T0 and T = T1, or
+    nothing where it lies outside them."""
+    (xa, ta), (xb, tb) = pts
+    if max(ta, tb) <= T0 or min(ta, tb) >= T1:
+        return []
+    out = []
+    for x, tt in ((xa, ta), (xb, tb)):
+        if tt < T0 or tt > T1:
+            edge = T0 if tt < T0 else T1
+            s_ = (edge - ta) / (tb - ta)
+            x, tt = xa + s_ * (xb - xa), edge
+        out.append([x, tt])
+    return out
+
+
 def damour_solodukhin(ck, src):
     """Damour and Solodukhin's wormhole at r_s = 1 and lambda = 1/5, one view for each chart. On its
     plane of t and r the metric is (1 - r_s/r + lambda^2)(-c^2dt^2 + dr_*^2), with the tortoise
@@ -8332,6 +8763,7 @@ DRAWN = {
     "thin_shell_wormhole": thin_shell_wormhole,
     "teo_wormhole": teo_wormhole,
     "damour_solodukhin": damour_solodukhin,
+    "simpson_visser": simpson_visser,
     "levi_civita": levi_civita,
     "kaluza_klein_monopole": kaluza_klein_monopole,
     "curzon_chazy": curzon_chazy,
@@ -9249,6 +9681,80 @@ CAPTIONS = {
         "The same wormhole in Schwarzschild's coordinates on one side of the throat, where $\\ell = r - a$. "
         "They cover the right half of the diamond and end at the throat $r = a$, and the same coordinates "
         "on the other side cover the left half.",
+    ],
+    ("simpson_visser", "spherical_bounce"): [
+        "The black bounce ($a = r_s/2$), each point in the diagram a 2-sphere of radius $\\rho = \\sqrt{r^2 + a^2}$. "
+        "The metric on the plane of $t$ and $r$ is $(1 - r_s/\\rho)\\left(-c^2dt^2 + dr_*^2\\right)$, and Kruskal's "
+        "exponentials of $ct \\mp r_*$ carry each region into a diamond, as for the Reissner-Nordström black "
+        "hole. The two horizons $r_\\pm = \\pm\\sqrt{r_s^2 - a^2}$ have one surface gravity, "
+        "$\\sqrt{r_s^2 - a^2}/2r_s^2$.",
+        "Where Schwarzschild's diagram has its singularity, the black hole holds the sphere of least area "
+        "$r = 0$, a spacelike surface that every observer inside the horizon crosses. Beyond it $r$ is negative "
+        "and the areal radius grows again, out through the second horizon into another asymptotically flat "
+        "region with its own $i^0$ and $\\mathscr{I}^\\pm$. That region has a black hole to its future too, so "
+        "the diagram repeats upward and downward without end.",
+    ],
+    ("simpson_visser", "areal_bounce"): [
+        "The same black bounce in the areal radius $\\rho$, which covers one side of the sphere of least area "
+        "at a time: an exterior and the half of its black hole before $r = 0$, both tinted. On $\\rho = a$ the "
+        "coordinate turns back, with $g_{\\rho\\rho}$ diverging and the curvature finite.",
+    ],
+    ("simpson_visser", "ingoing_bounce"): [
+        "The same black bounce in the ingoing Eddington-Finkelstein chart. Each line of constant $v$ is a light "
+        "ray moving in, and the chart follows it from an exterior through the black hole, across the sphere of "
+        "least area, and out through the second horizon into a region $r < r_-$, the three regions tinted.",
+    ],
+    ("simpson_visser", "outgoing_bounce"): [
+        "The same black bounce in the outgoing Eddington-Finkelstein chart. Each line of constant $u$ is a "
+        "light ray moving out, and the chart follows it from a region $r < r_-$ through the white hole to that "
+        "region's future, across the white hole's sphere of least area, and out into the exterior beyond, the "
+        "three regions tinted.",
+    ],
+    ("simpson_visser", "spherical_null"): [
+        "The one way wormhole ($a = r_s$), each point in the diagram a 2-sphere of radius "
+        "$\\rho = \\sqrt{r^2 + r_s^2}$. The horizon $r = 0$ is a double root of $1 - r_s/\\rho$, so it has no "
+        "surface gravity and Kruskal's exponential is not available. We place each region by "
+        "$p, q = \\arctan((ct \\mp r_*)/\\ell)$, moved by $\\pi$ from one region to the next.",
+        "The regions $r > 0$ stand on the right and the regions $r < 0$ on the left, each asymptotically flat "
+        "with its own $i^0$ and $\\mathscr{I}^\\pm$. Light crosses the horizon from a region on one side into "
+        "the next region up on the other, and nothing crosses back, so the diagram climbs in a zigzag without "
+        "end. The horizon is the sphere of least area, a null surface, and along a moment of $t$ it lies an "
+        "infinite distance away.",
+    ],
+    ("simpson_visser", "areal_null"): [
+        "The same one way wormhole in the areal radius $\\rho$, which covers one region $r > 0$, tinted, and "
+        "ends on the horizon $\\rho = r_s$.",
+    ],
+    ("simpson_visser", "ingoing_null"): [
+        "The same one way wormhole in the ingoing Eddington-Finkelstein chart. Each line of constant $v$ is a "
+        "light ray moving in, which the chart follows across the horizon from a region $r > 0$ into the region "
+        "$r < 0$ to its future, both tinted.",
+    ],
+    ("simpson_visser", "outgoing_null"): [
+        "The same one way wormhole in the outgoing Eddington-Finkelstein chart. Each line of constant $u$ is a "
+        "light ray moving out, which the chart follows across the horizon from a region $r < 0$ into the region "
+        "$r > 0$ to its future, both tinted.",
+    ],
+    ("simpson_visser", "spherical_wormhole"): [
+        "The traversable wormhole ($a = 2\\,r_s$), each point in the diagram a 2-sphere of radius "
+        "$\\rho = \\sqrt{r^2 + a^2}$. The metric on the plane of $t$ and $r$ is "
+        "$(1 - r_s/\\rho)\\left(-c^2dt^2 + dr_*^2\\right)$, with the tortoise coordinate $r_*$ running over the "
+        "whole line, zero at the throat, and $p, q = \\arctan((ct \\mp r_*)/\\ell)$ bring it into the full diamond.",
+        "The two ends are two asymptotically flat regions, each with its own $i^0$ and $\\mathscr{I}^\\pm$, "
+        "joined at the throat $r = 0$, a timelike surface. The factor $1 - r_s/\\rho$ is at least $1 - r_s/a$, "
+        "so light crosses the throat both ways and there is no horizon.",
+    ],
+    ("simpson_visser", "areal_wormhole"): [
+        "The same wormhole in the areal radius $\\rho$, which covers the right half of the diamond and ends at "
+        "the throat $\\rho = a$. The same coordinates on the other side cover the left half.",
+    ],
+    ("simpson_visser", "ingoing_wormhole"): [
+        "The same wormhole in the ingoing Eddington-Finkelstein chart, whose lines of constant $v$ are the light "
+        "rays moving toward $r \\to -\\infty$, straight lines at 45° here. The chart covers the whole diamond.",
+    ],
+    ("simpson_visser", "outgoing_wormhole"): [
+        "The same wormhole in the outgoing Eddington-Finkelstein chart, whose lines of constant $u$ are the "
+        "light rays moving toward $r \\to \\infty$, straight lines at 45° here. The chart covers the whole diamond.",
     ],
     ("damour_solodukhin", "spherical"): [
         "The Damour-Solodukhin wormhole ($\\lambda = 0.2$) in its own coordinates on one side of the throat, each "

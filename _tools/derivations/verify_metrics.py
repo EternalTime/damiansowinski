@@ -728,6 +728,20 @@ DIMENSIONS = {
     ("damour_solodukhin", "einstein_rosen"): {
         "t": "T", "u": "L**(1/2)", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\lambda": "1",
     },
+    # Simpson and Visser's a is a length beside Schwarzschild's r_s, and rho = sqrt(r^2 + a^2) is the
+    # areal radius, a name in the charts that keep their r and the coordinate of Tsukamoto's.
+    ("simpson_visser", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "a": "L", "\\rho": "L",
+    },
+    ("simpson_visser", "areal"): {
+        "t": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "a": "L",
+    },
+    ("simpson_visser", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "a": "L", "\\rho": "L",
+    },
+    ("simpson_visser", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "a": "L", "\\rho": "L",
+    },
     ("stockum_dust", "cylindrical"): {
         "t": "L", "r": "L", "\\phi": "1", "z": "L", "R": "L",
     },
