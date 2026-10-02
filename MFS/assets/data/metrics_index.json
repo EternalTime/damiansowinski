@@ -781,7 +781,7 @@
       "static",
       "spherically symmetric"
     ],
-    "version": "a4b9076357c26e3a",
+    "version": "cedc7108abbcf557",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -951,7 +951,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "4f24319cb8b200d6",
+    "version": "474bf811b6476d5f",
     "diagrams": "9afed8951c5aec50",
     "conformal": "c7734072db0d7622",
     "embedding": "07b92b646e316b86"
@@ -1009,6 +1009,44 @@
     "diagrams": "dc0f3031798ca092",
     "conformal": "2876dfbbabbb4b26",
     "embedding": "f736444606912902"
+  },
+  {
+    "id": "elliptic_de_sitter",
+    "name": "Elliptic de Sitter",
+    "tags": [
+      "de Sitter",
+      "positive cosmological constant",
+      "cosmological constant",
+      "maximally symmetric",
+      "constant curvature",
+      "not time orientable",
+      "topology",
+      "cosmological horizon",
+      "horizon",
+      "causal structure",
+      "holography",
+      "inflation",
+      "expanding universe",
+      "cosmology",
+      "homogeneous",
+      "isotropic",
+      "geodesically complete",
+      "no singularity",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model",
+      "Einstein space",
+      "conformally flat",
+      "stationary",
+      "static",
+      "spherically symmetric"
+    ],
+    "version": "4542e5de64bc3cb8",
+    "diagrams": "e73839d0a0529179",
+    "conformal": "2fed97c5ab6ddc3d",
+    "embedding": "954af1b6ad40d276"
   },
   {
     "id": "ellis_bronnikov",
@@ -2303,7 +2341,7 @@
       "conformally flat",
       "Einstein equations"
     ],
-    "version": "8163c025b0fa1bce",
+    "version": "04f2e2ed24febd65",
     "diagrams": "62b5c96261ee76e9",
     "conformal": "62cc3d3fab22417e",
     "embedding": "74f663204d97446f"

@@ -595,6 +595,20 @@ Exact vacuum solutions describing gravitational waves with cylindrical wave fron
 - chart Cylindrical: coordinates $(t, \rho, \phi, z)$, $$ds^2 = e^{2(\gamma - \psi)}\left(-c^2dt^2 + d\rho^2\right) + \rho^2e^{-2\psi}d\phi^2 + e^{2\psi}dz^2$$
 - chart Null: coordinates $(u, v, \phi, z)$, $$ds^2 = -e^{2(\gamma - \psi)}du\,dv + \dfrac{(v - u)^2}{4}e^{-2\psi}d\phi^2 + e^{2\psi}dz^2$$
 
+### Elliptic de Sitter Space
+
+De Sitter space with every event identified with the event opposite it on the hyperboloid, $X \sim -X$. One observer's horizon then bounds the whole world and future and past infinity are a single sphere. The spacetime has no closed timelike curves and no global direction of time.
+
+- id: `elliptic_de_sitter`
+- tags: de Sitter, positive cosmological constant, cosmological constant, maximally symmetric, constant curvature, not time orientable, topology, cosmological horizon, horizon, causal structure, holography, inflation, expanding universe, cosmology, homogeneous, isotropic, geodesically complete, no singularity, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model, Einstein space, conformally flat, stationary, static, spherically symmetric
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/elliptic_de_sitter.json
+- chart Global: coordinates $(t, \chi, \theta, \phi)$, $$ds^2 = -c^2dt^2 + \ell^2\cosh^2(ct/\ell)\left(d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Conformal: coordinates $(\eta, \chi, \theta, \phi)$, $$ds^2 = \dfrac{\ell^2}{\cos^2\eta}\left(-d\eta^2 + d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Kruskal: coordinates $(U, V, \theta, \phi)$, $$ds^2 = \dfrac{\ell^2}{\left(1 - UV\right)^2}\left(-4\,dU\,dV + \left(1 + UV\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Static: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r^2}{\ell^2}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r^2}{\ell^2}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Planar: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + e^{2ct/\ell}\left(dx^2 + dy^2 + dz^2\right)$$
+
 ### Ellis-Bronnikov Traversable Wormhole
 
 A static, spherically symmetric traversable wormhole with zero redshift function, also known as the drainhole metric.

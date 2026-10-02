@@ -778,6 +778,13 @@ DIMENSIONS = {
     ("nariai", "conformal"): {
         "\\eta": "1", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\Lambda": "1/L**2",
     },
+    # Elliptic de Sitter space: the one length is the de Sitter radius; the global chart's chi, the
+    # conformal chart's eta and chi and the Kruskal chart's U and V are pure numbers.
+    ("elliptic_de_sitter", "global"): {"t": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
+    ("elliptic_de_sitter", "conformal"): {"\\eta": "1", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
+    ("elliptic_de_sitter", "kruskal"): {"U": "1", "V": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
+    ("elliptic_de_sitter", "static"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
+    ("elliptic_de_sitter", "planar"): {"t": "T", "x": "L", "y": "L", "z": "L", "\\ell": "L"},
     # The collapse is two charts. Inside, the comoving polar angle chi is dimensionless
     # and the scale factor carries the length, so an areal radius is a sin(chi) and a dot
     # on a is dimensionless; chi_0 marks the surface and a_m is the scale factor at

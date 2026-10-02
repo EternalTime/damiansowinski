@@ -3337,6 +3337,51 @@ def de_sitter(ck, src):
                         "being Euclidean space scaled by $e^{Ht}$, so its equator is a plane."])]
 
 
+def elliptic_de_sitter(ck, src):
+    """The moment t = 0 of the global chart at l = 1, the whole of space: g_chichi = 1 and
+    g_phiphi = sin^2 chi from the observer at chi = 0 to the equator chi = pi/2, the hemisphere
+    rho = sin chi, z = -cos chi of a sphere of radius l. Opposite points of its rim are one point,
+    so the surface is a real projective plane, of which the hemisphere is the part that stands in
+    flat space. The meridians phi = 0 and phi = pi are one geodesic through the observer, which
+    leaves through the rim and comes back in at the opposite point, closed after the length pi l,
+    half the great circle's, which is checked. The static chart's slice t = 0, g_rr = 1/(1 - r^2),
+    is checked to be the same hemisphere short of its rim."""
+    sl = Slice(src, "elliptic_de_sitter", "global", "\\chi", "\\phi", {"t": 0, **EQUATOR}, {"ell": 1})
+    flat_slices(ck, src, "elliptic_de_sitter", "planar")
+    size = 2.0
+    half = Piece("hemisphere", "sheet", sl, 0.0, math.pi / 2, -1.0, 1,
+                 (("axis", "the observer at $\\chi = 0$, the pole of the hemisphere"),
+                  ("edge", "the equator $\\chi = \\pi/2$, the rim, each point of which is also the point opposite it")),
+                 [(math.pi / 6, "r", None), (math.pi / 3, "r", None), (math.pi / 2, "surface", "$\\chi = \\pi/2$")], size)
+    ck.isometry("elliptic de Sitter, the hemisphere", half)
+    ck.radius("elliptic de Sitter, the hemisphere rho = l sin chi", half, np.sin, size)
+    ck.form("elliptic de Sitter, the hemisphere z = -l cos chi", half, lambda chi: -np.cos(chi), size)
+    static = Slice(src, "elliptic_de_sitter", "static", "r", "\\phi", {"t": 0, **EQUATOR}, {"ell": 1})
+    patch = Piece("patch", "sheet", static, 0.0, static.horizons()[0], -1.0, 1, size=size)
+    ck.isometry("elliptic de Sitter, the static chart's slice", patch)
+    ck.form("elliptic de Sitter, the static chart's slice z = -sqrt(l^2 - r^2)", patch,
+            lambda r: -np.sqrt(np.maximum(1 - r * r, 0)), size)
+    # The closed geodesic: twice the meridian's length from the pole to the rim.
+    chi = np.linspace(0.0, math.pi / 2, 2001)
+    length = 2 * float(np.sum(np.hypot(np.diff(np.sin(chi)), np.diff(-np.cos(chi)))))
+    ck.add("elliptic de Sitter: the geodesic through the observer closes after the length pi l",
+           abs(length - math.pi), 1e-6)
+    surface = Surface([half])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    fig.mark("cut", 0, half, 0.0)
+    fig.mark("cut", 0, half, math.pi)
+    ring_label(fig, [0, 0, 0], *half.at(math.pi / 2), "$\\chi = \\pi/2$", dx=10)
+    fig.legend("fill", "cover", "the whole moment, a hemisphere of radius $\\ell$")
+    fig.legend("line", "r", "$\\chi$ constant, at $\\pi/6$ and $\\pi/3$")
+    fig.legend("line", "surface", "the equator $\\chi = \\pi/2$, the rim, glued to itself point to opposite point")
+    fig.legend("line", "cut", "a geodesic through the observer, closed through the rim, of length $\\pi\\ell$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("moment", "The moment $t = 0$", "$\\ell$", [surface], fig.done(),
+                 settings="$\\ell = 1$, the unit of every length.",
+                 stops=["Every slice of constant $t$ of the planar chart is flat, $e^{2ct/\\ell}(dx^2 + dy^2 + dz^2)$ "
+                        "being Euclidean space scaled by $e^{ct/\\ell}$, so its equator is a plane."])]
+
+
 def einstein_static(ck, src):
     """The equator of one moment of the hyperspherical chart at R = 1: g_chichi = 1 and
     g_phiphi = sin^2 chi, the round sphere of radius R, rho = sin chi and z = -cos chi from the
@@ -12544,6 +12589,7 @@ DRAWN = {
     "bardeen": bardeen,
     "de_sitter": de_sitter,
     "einstein_static": einstein_static,
+    "elliptic_de_sitter": elliptic_de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter,
     "kiselev": kiselev,
     "schwarzschild_ads": schwarzschild_ads,
@@ -13119,6 +13165,18 @@ CAPTIONS = {
         "smallest moment of the closed slicing, in which space is a three sphere of radius "
         "$\\ell\\cosh(ct/\\ell)$ that contracts to this waist and expands after it. The two observers can "
         "never exchange light: each hemisphere lies outside the other observer's past and future alike.",
+    ],
+    ("elliptic_de_sitter", "moment"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of elliptic de Sitter space at the moment $t = 0$ of its global "
+        "chart, drawn as a surface in flat space with every distance along it the metric distance. On it the "
+        "metric is $\\ell^2\\left(d\\chi^2 + \\sin^2\\chi\\,d\\phi^2\\right)$, a hemisphere of radius $\\ell$ "
+        "about the observer at $\\chi = 0$. Each point of the rim $\\chi = \\pi/2$ is also the point opposite it, "
+        "so the hemisphere is the whole moment and has no edge.",
+        "A geodesic through the observer leaves through the rim, comes back in at the opposite point, and closes "
+        "after the length $\\pi\\ell$, half the great circle of de Sitter's sphere. The largest distance between "
+        "two points is $\\pi\\ell/2$, from the observer to the rim, which is the observer's horizon $r = \\ell$ of "
+        "the static chart at this moment. The whole of space is the three dimensional version, a ball whose "
+        "boundary sphere is glued to itself in the same way.",
     ],
     ("einstein_static", "sphere"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Einstein static universe at one moment of $t$, "
