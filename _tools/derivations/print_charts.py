@@ -12,8 +12,8 @@ schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis,
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
-born_infeld_charge, penrose_impulsive_wave, exponential_metric, petrov_homogeneous and rp3_geon, and
-Godel's cylindrical chart.
+born_infeld_charge, penrose_impulsive_wave, exponential_metric, petrov_homogeneous, rp3_geon and
+kopczynski_trautman, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -20869,6 +20869,182 @@ def exponential_metric_check(chart, system):
 
 
 CHARTS["exponential_metric"] = [lambda s=s: exponential_metric(s) for s in EXPONENTIAL_CHARTS]
+
+
+# -- Kopczynski and Trautman's universe with torsion ----------------------------------------
+
+KT_CHARTS = ("comoving_cartesian", "comoving_spherical", "conformal")
+KT_REALS = "(-\\infty, \\infty)"
+KT_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+KT_SCALE = "a = \\left(1 + \\dfrac{c^2t^2}{\\ell^2}\\right)^{1/3}"
+KT_SPHERE = "dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+
+
+def kopczynski_trautman(system):
+    """Kopczynski's universe of spinning dust in the Einstein-Cartan theory, as Trautman's
+    article of 2006 writes it: the flat Robertson-Walker line element with the scale factor of
+    his modified Friedmann equation (33), (1/2) R'^2 - M/R + (3/2) S^2/R^4 = 0 at G = c = 1.
+    Counted from its least value the scale factor is a^3 = 1 + c^2t^2/l^2 with
+    l = c/sqrt(6 pi G rho_0), rho_0 the density of the dust at the bounce, so that
+    (da/d(ct))^2 = (4/9l^2)(1/a - 1/a^4). The two comoving charts name a and print every value in
+    a, ct and l; the conformal chart leaves a(eta) free, as the published conformal chart of
+    `frw` does, and its parameter states the equation it solves. kopczynski_trautman_check holds
+    each to the Einstein tensor of the dust and its spin; kopczynski_trautman.md derives each."""
+    if system == "conformal":
+        coords, parameters = ["\\eta", "r", "\\theta", "\\phi"], ["a = a(\\eta)"]
+        line = "ds^2 = a^2\\left(-d\\eta^2 + " + KT_SPHERE + "\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        a = probe.parameters["a"]
+        eta = probe.symbol["\\eta"]
+        return {
+            "metric_id": "kopczynski_trautman",
+            "system": {"id": "conformal", "name": "Conformal Time", "coords": coords,
+                       "domains": ["\\eta \\in " + KT_REALS, "r \\in [0, \\infty)"] + KT_ANGLES,
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [sp.Derivative(a, (eta, 2)), sp.Derivative(a, eta), a, probe.symbol["r"]]},
+            "check": lambda chart: kopczynski_trautman_check(chart, system),
+        }
+    parameters = ["\\ell", KT_SCALE]
+    scale = "\\left(1 + \\dfrac{{c2}t^2}{\\ell^2}\\right)^{2/3}"
+    if system == "comoving_cartesian":
+        coords, name = ["t", "x", "y", "z"], "Comoving Cartesian"
+        space = "dx^2 + dy^2 + dz^2"
+        domains = [f"{c} \\in {KT_REALS}" for c in coords]
+        components = {"metric_components": {(s, s): "a^2" for s in "xyz"},
+                      "inverse_metric_components": {(s, s): "\\dfrac{1}{a^2}" for s in "xyz"}}
+        geodesics = ["\\ddot{t} + \\dfrac{2ct}{3\\ell^2a}\\left(\\dot{x}^2 + \\dot{y}^2 + \\dot{z}^2\\right) = 0"] + [
+            "\\ddot{" + s + "} + \\dfrac{4ct}{3\\ell^2a^3}\\dot{t}\\dot{" + s + "} = 0" for s in "xyz"]
+    else:
+        coords, name = ["t", "r", "\\theta", "\\phi"], "Comoving Spherical"
+        space = KT_SPHERE
+        domains = ["t \\in " + KT_REALS, "r \\in [0, \\infty)"] + KT_ANGLES
+        components = {"metric_components": {("r", "r"): "a^2", ("\\theta", "\\theta"): "a^2r^2"},
+                      "inverse_metric_components": {("r", "r"): "\\dfrac{1}{a^2}",
+                                                    ("\\theta", "\\theta"): "\\dfrac{1}{a^2r^2}"}}
+        rate = "\\dfrac{4ct}{3\\ell^2a^3}"
+        geodesics = [
+            "\\ddot{t} + \\dfrac{2ct}{3\\ell^2a}\\left(\\dot{r}^2 + r^2\\dot{\\theta}^2 + r^2\\sin^2\\theta\\,\\dot{\\phi}^2\\right) = 0",
+            "\\ddot{r} + " + rate + "\\dot{t}\\dot{r} - r\\,\\dot{\\theta}^2 - r\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+            "\\ddot{\\theta} + " + rate + "\\dot{t}\\dot{\\theta} + \\dfrac{2}{r}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+            "\\ddot{\\phi} + " + rate + "\\dot{t}\\dot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"]
+    probe = vm.Reader(coords, parameters, ())
+    t, ell, c = probe.symbol["t"], probe.parameters["ell"], probe.c
+    A = sp.Symbol("KTa", positive=True)
+    s = sp.Symbol("KTs", real=True)
+
+    def named(value):
+        """The value, in the file's time, written in the scale factor a, with at most one ct left."""
+        value = sp.sympify(value).subs(t, ell * s / c)
+        value = value.replace(lambda p: p.is_Pow and not p.exp.is_Integer and p.exp.is_Rational,
+                              lambda p: _kt_root(p, s, ell, A))
+        value = sp.cancel(sp.together(sp.powsimp(sp.powdenest(value, force=True), force=True)))
+        if value.atoms(sp.Pow) and any(not p.exp.is_Integer for p in value.atoms(sp.Pow)):
+            raise AssertionError(f"kopczynski_trautman: a root is left in {value}")
+        num, den = sp.fraction(value)
+        num, den = (sp.expand(sum(coeff * s ** (k % 2) * (A ** 3 - 1) ** (k // 2)
+                                  for (k,), coeff in sp.Poly(side, s).terms())) for side in (num, den))
+        return sp.cancel(num / den).subs(s, c * t / ell)
+
+    def pretty(value):
+        # Factored in a^3, so that a^3 - 1 = c^2t^2/l^2 and 4 - a^3 stand whole.
+        cube = sp.Symbol("KTcube", positive=True)
+        out = sp.Integer(1)
+        for side, sign in zip(sp.fraction(sp.cancel(named(value))), (1, -1)):
+            poly = sp.Poly(side, A)
+            low = min(k for (k,), _ in poly.terms()) if side != 0 else 0
+            rest = sp.cancel(side / A ** low)
+            if all(k % 3 == 0 for (k,), _ in sp.Poly(rest, A).terms()):
+                rest = sp.factor(rest.subs(A, cube ** sp.Rational(1, 3))).subs(cube, A ** 3)
+            else:
+                rest = sp.factor(rest)
+            out *= (A ** low * rest) ** sign
+        return out
+
+    return {
+        "metric_id": "kopczynski_trautman",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": "ds^2 = -c^2dt^2 + a^2\\left(" + space + "\\right)"},
+        "chart_line_element": "ds^2 = -dt^2 + " + scale.replace("{c2}", "") + "\\left(" + space + "\\right)",
+        "printer": {"lead": [A, t, ell] + [probe.symbol[x] for x in coords[1:2]],
+                    "factors": [ell, c, t, A] + [probe.symbol[x] for x in coords[1:2]], "overrides": {A: "a"}},
+        "time": "t",
+        "pretty": pretty,
+        "bracketed": lambda value: sp.expand(named(sp.sympify(value).subs(t, c * t))),
+        "rewrite": [("c\\,t", "ct"), ("\\ell^2\\,a", "\\ell^2a"), ("\\ell^4\\,a", "\\ell^4a"), ("ct\\,r^2", "ct\\,r^2")],
+        "components": components,
+        "ricci_scalar": "\\dfrac{4\\left(a^3 + 2\\right)}{3\\ell^2a^6}",
+        "kretschmann": "\\dfrac{16\\left(5a^6 - 16a^3 + 20\\right)}{27\\ell^4a^{12}}",
+        "geodesics": geodesics,
+        "check": lambda chart: kopczynski_trautman_check(chart, system),
+    }
+
+
+def _kt_root(power, s, ell, A):
+    """A fractional power of a multiple of 1 + s^2 as that power of a^3."""
+    if not power.base.has(s):
+        return power
+    ratio = sp.cancel(power.base / (1 + s ** 2))
+    if ratio.has(s):
+        raise AssertionError(f"kopczynski_trautman: {power} is no power of 1 + c^2t^2/l^2")
+    return sp.powdenest(ratio ** power.exp, force=True) * A ** (3 * power.exp)
+
+
+def kopczynski_trautman_check(chart, system):
+    """Each chart against Trautman's equations. With u the dust's four-velocity, the Einstein
+    tensor of the Christoffel connection is (8 pi G/c^4) times that of a fluid with the energy
+    density rho c^2 - 2 pi G sigma^2/c^2 and the pressure -2 pi G sigma^2/c^2, his effective
+    stress tensor for dust of density rho and spin density sigma: in the lengths of the charts,
+    G^t_t = -(4/3l^2)(1/a^3 - 1/a^6) and G^x_x = (4/3l^2)/a^6, with rho and sigma falling as
+    1/a^3. The Weyl tensor vanishes. The spherical chart is the Cartesian one pulled back, and
+    the conformal chart is the spherical one carried along a d(eta) = c dt, where its free
+    a(eta) obeys a'^2 = 4(a - 1/a^2)/9l^2, the equation its parameter states."""
+    geo = chart.geo
+    weyl = geo.weyl_llll()
+    if any(vm.norm(vm._at(weyl, index)) != 0 for index in vm._indices(4, 4)):
+        raise AssertionError(f"kopczynski_trautman: the {system} chart is not conformally flat")
+    lowered = geo.einstein_ll()
+    # Every chart is diagonal, so the index is raised slot by slot.
+    mixed = [[geo.ginv[i, i] * vm._at(lowered, (i, j)) for j in range(4)] for i in range(4)]
+    if system == "conformal":
+        eta = chart.symbols[0]
+        a = chart.reader.parameters["a"]
+        ell = sp.Symbol("ell", positive=True)
+        first = 4 * (a - a ** -2) / (9 * ell ** 2)
+        rates = {sp.Derivative(a, (eta, 2)): sp.Rational(2, 9) * (1 + 2 / a ** 3) / ell ** 2}
+        scale = a
+        on_shell = lambda e: sp.simplify(sp.sympify(e).subs(rates).subs(sp.Derivative(a, eta) ** 2, first))  # noqa: E731
+        # The second derivative is the first equation differentiated.
+        if sp.simplify(sp.diff(first, eta) - 2 * sp.Derivative(a, eta) * rates[sp.Derivative(a, (eta, 2))]) != 0:
+            raise AssertionError("kopczynski_trautman: a'' is not the derivative of the equation for a'^2")
+    else:
+        t = chart.symbols[0]
+        ell = chart.reader.parameters["ell"]
+        scale = (1 + t ** 2 / ell ** 2) ** sp.Rational(1, 3)
+        on_shell = sp.simplify
+        if system == "comoving_spherical":
+            source = kopczynski_trautman("comoving_cartesian")
+            there = cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+            _, r, theta, phi = chart.symbols
+            image = [t, r * sp.sin(theta) * sp.cos(phi), r * sp.sin(theta) * sp.sin(phi), r * sp.cos(theta)]
+            J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+            old = there.geo.g.subs({there.symbols[0]: t, there.reader.parameters["ell"]: ell})
+            if (J.T * old * J - geo.g).applyfunc(sp.simplify) != sp.zeros(4, 4):
+                raise AssertionError("kopczynski_trautman: the spherical chart is not the Cartesian one pulled back")
+        # Trautman's (33) in these lengths: (da/d(ct))^2 = (4/9l^2)(1/a - 1/a^4).
+        if sp.simplify(sp.diff(scale, t) ** 2 - 4 * (1 / scale - 1 / scale ** 4) / (9 * ell ** 2)) != 0:
+            raise AssertionError("kopczynski_trautman: the scale factor does not solve the modified Friedmann equation")
+    density = sp.Rational(4, 3) * (scale ** -3 - scale ** -6) / ell ** 2
+    pressure = -sp.Rational(4, 3) * scale ** -6 / ell ** 2
+    for i in range(4):
+        for j in range(4):
+            wanted = 0 if i != j else (-density if i == 0 else pressure)
+            if on_shell(vm._at(mixed, (i, j)) - wanted) != 0:
+                raise AssertionError(f"kopczynski_trautman: the Einstein tensor of the {system} chart is not that of "
+                                     f"the dust and its spin in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["kopczynski_trautman"] = [lambda s=s: kopczynski_trautman(s) for s in KT_CHARTS]
 
 
 def write(spec):

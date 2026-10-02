@@ -3267,8 +3267,11 @@ class EmbeddingDiagrams(unittest.TestCase):
         # inside the last ray has reached r = 3m_0/2 and the mass still inside the rim is under m_0/20.
         # Nordstrom's universe of dust is conformally flat with a factor that depends on the time alone,
         # so each of its moments is a flat plane, on which its rings of galaxies grow and shrink.
+        # Kopczynski and Trautman's universe is a flat Friedmann universe, so each of its moments is a
+        # flat plane too, on which its rings of dust shrink until the turn and grow again.
         flat_moments = {("domain_wall", "moments", 2), ("hayward", "history", 0), ("hayward", "history", 5),
-                        ("hiscock", "history", 5), *(("nordstrom_scalar", "dust", k) for k in range(5))}
+                        ("hiscock", "history", 5), *(("nordstrom_scalar", "dust", k) for k in range(5)),
+                        *(("kopczynski_trautman", "universe", k) for k in range(5))}
         self.assertNotIn("lentz", self.embedding)
         self.assertNotIn("embedding", next(m for m in read(build.INDEX_FILE) if m["id"] == "lentz"))
         for name, data in self.embedding.items():
@@ -3603,6 +3606,7 @@ class StacksAndMovies(unittest.TestCase):
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
     MOVIES = {("frw", "closed"): "$ct$", ("nordstrom_scalar", "dust"): "$ct$",
+              ("kopczynski_trautman", "universe"): "$ct$",
               ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("white_hole", "explosion"): "$c\\tau$",
               ("vaidya", "shell"): "$v - r$",
@@ -4770,6 +4774,14 @@ BARTNIK_MCKINNON_REACH = {"isotropic": 7.147807396, "tortoise": 24.219163201, "f
 ROBERTS_P = {"disperses": 0.9, "threshold": 1.0, "collapses": 2.0}
 
 
+def kopczynski_trautman_eta(t, n=2000):
+    """The conformal time of Kopczynski and Trautman's universe at the proper time t, in units of l:
+    the integral of dt/(1 + t^2)^(1/3) from the turn, by Simpson's rule."""
+    h = t / n
+    f = [(1 + (k * h) ** 2) ** (-1 / 3) for k in range(n + 1)]
+    return h / 3 * (f[0] + f[-1] + 4 * sum(f[1:-1:2]) + 2 * sum(f[2:-1:2]))
+
+
 def hotta_tanaka_moment(tau, system=None, fixed=None):
     """The sphere of Hotta and Tanaka's Kruskal chart through the embedded ring at the proper time
     tau, at 8GE/c^4 = a = 1 with the ring at 30 degrees, as its (u, v), or as the event where it
@@ -5321,6 +5333,13 @@ class Slices(unittest.TestCase):
         if key == "nordstrom_scalar/dust/radial":
             # A moment of the inertial time, from the centre to the galaxy at r = L.
             return (lambda X: t), list(self.reach(surface))
+        if key.startswith("kopczynski_trautman/"):
+            # A moment of the dust's time, out to the dust at r = l: the line of that time on the comoving
+            # charts, through the centre on the Cartesian one, and of eta(t) on the conformal chart.
+            lo, hi = self.reach(surface)
+            system = key.split("/")[1]
+            height = kopczynski_trautman_eta(t) if system == "conformal" else t
+            return (lambda X: height), ([-hi, hi] if system == "comoving_cartesian" else [lo, hi])
         if key == "ppn_metric/cartesian/axis":
             # The line through the body's centre: the equator at t = 0 on both sides of the body.
             lo, hi = self.reach(surface)
@@ -6506,6 +6525,11 @@ class Slices(unittest.TestCase):
                         for X, T in points:
                             self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2) - 2 * t), 2e-3,
                                             f"{where} at {(X, T)}")
+                    elif metric_id == "kopczynski_trautman":
+                        # p, q = arctan((eta -+ r)/l), so tan p + tan q = 2 eta(t)/l on a moment of the dust's time.
+                        for X, T in points:
+                            self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2)
+                                                - 2 * kopczynski_trautman_eta(t)), 2e-3, f"{where} at {(X, T)}")
                     elif metric_id == "coleman_de_luccia":
                         # p, q = arctan(e^(eta -+ chi)) with eta = ln tan(c tau/2), so tan p tan q = tan^2(c tau/2).
                         for X, T in points:

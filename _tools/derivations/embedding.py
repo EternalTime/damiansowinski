@@ -10046,6 +10046,44 @@ def nordstrom_scalar(ck, src):
     return views
 
 
+def kopczynski_trautman(ck, src):
+    """The equator of space in Kopczynski and Trautman's universe. A moment of the proper time t has
+    g_rr = a^2 and g_phiphi = a^2 r^2 with a = (1 + c^2t^2/l^2)^(1/3): a flat plane on which the grain
+    of dust at the comoving radius r stands the distance a r from the centre. It is drawn out to
+    r = l at five moments from ct = -3 l to 3 l, through the turn at t = 0, where the disc is
+    smallest, and played as a movie with a frame every 0.1 l of ct."""
+    named = (-3.0, -1.5, 0.0, 1.5, 3.0)
+    size = 2 * 10 ** (1 / 3)
+
+    def name(t):
+        return f"$ct/\\ell = {t + 0.0:g}$"
+
+    def moment(t):
+        a = (1 + t * t) ** (1 / 3)
+        sl = Slice(src, "kopczynski_trautman", "comoving_spherical", "r", "\\phi", {"t": repr(float(t)), **EQUATOR},
+                   {"ell": 1})
+        disc = Piece("disc", "sheet", sl, 0.0, 1.0, 0.0, 1,
+                     (("axis", "the grain of dust at $r = 0$"), ("edge", "the plane runs on, to $r \\to \\infty$")),
+                     [(0.25, "r", None), (0.5, "r", None), (0.75, "r", None), (1.0, "r", None)], size)
+        where = f"Kopczynski-Trautman at ct = {t:g} l"
+        ck.plane(where, sl, np.linspace(1e-3, 20, 200))
+        ck.isometry(where, disc)
+        ck.radius(f"{where}, rho = a r", disc, lambda r, a=a: a * r, size)
+        ck.form(f"{where}, a plane", disc, lambda r: 0 * r, size)
+        return Surface([disc], label=name(t), time=t)
+
+    times, keys = movie_values(list(named), 0.1)
+    times = [round(t, 10) for t in times]
+    frames = [moment(t) for t in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the equator of the moment, a flat plane, out to the dust at $r = \\ell$")
+    fig.legend("line", "r", "dust at rest at $r = \\ell/4$, $\\ell/2$, $3\\ell/4$, and $\\ell$, circles of radius $ar$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("universe", "The universe through its turn", "$\\ell$", surfaces, fig.done(),
+                 movie=movie(frames, "$ct$", times), settings="$\\ell = 1$, the unit of every length.")]
+
+
 def btz(ck, src):
     """The moment t = 0 of the hole without rotation, M = 1 and J = 0 at l = 1, as its conformal
     diagram's square draws it, through both exteriors as one surface. g_rr = 1/N^2 with N^2 =
@@ -13275,6 +13313,7 @@ DRAWN = {
     "krasnikov": krasnikov,
     "tippett_tsang": tippett_tsang,
     "nordstrom_scalar": nordstrom_scalar,
+    "kopczynski_trautman": kopczynski_trautman,
     "alcubierre": alcubierre,
     "natario": natario,
     "btz": btz,
@@ -14207,6 +14246,16 @@ CAPTIONS = {
         "Time enters through the factor $\\cosh^2(act)$ alone, so every moment has one shape: the surface shrinks until "
         "the bounce at $t = 0$, and then grows. Far from the axis a circle's radius grows as the $2/3$ power of its "
         "distance from the axis, and the surface opens ever more slowly.",
+    ],
+    ("kopczynski_trautman", "universe"): [
+        "The equator ($\\theta = \\pi/2$) of space in Kopczyński and Trautman's universe as the dust's time runs "
+        "from $ct = -3\\,\\ell$ to $3\\,\\ell$, each moment drawn as a surface in flat space with every distance "
+        "along it the metric distance. Each moment is a flat plane, on which the dust at the comoving radius $r$ "
+        "stands a distance $ar$ from the centre, with $a = (1 + c^2t^2/\\ell^2)^{1/3}$.",
+        "The dust keeps its places in the chart while every distance between its grains shrinks until $t = 0$, "
+        "where $a = 1$, and grows again. The turn is smooth: near it $a \\approx 1 + c^2t^2/3\\ell^2$, and the "
+        "expansion accelerates until $a^3 = 4$, at $ct = \\sqrt{3}\\,\\ell$, after which the dust slows it as in "
+        "Friedmann's universe.",
     ],
     ("melvin", "universe"): [
         "The plane $z = 0$ of Melvin's universe at one moment ($B = 1$), drawn as a surface in flat space with "
