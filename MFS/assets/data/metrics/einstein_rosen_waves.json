@@ -53,6 +53,11 @@
       "id": "belinski_zakharov",
       "kind": "family",
       "text": "Belinski and Zakharov's solution of one soliton, with its time and its direction of travel exchanged, is a cylindrical solitary wave that runs in to the axis and is reflected from it [belinskii1978]."
+    },
+    {
+      "id": "brill_waves",
+      "kind": "family",
+      "text": "A bundle of gravitational waves of finite extent, known at one moment only. Brill proved in 1959, with no approximation, that its mass is positive [brill1959]."
     }
   ],
   "references": [
@@ -82,7 +87,8 @@
     "senovilla1990",
     "fernandezjambrina2002",
     "einstein1935",
-    "belinskii1978"
+    "belinskii1978",
+    "brill1959"
   ],
   "coordinates": [
     {

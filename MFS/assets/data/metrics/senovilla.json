@@ -50,6 +50,11 @@
       "id": "einstein_static",
       "kind": "family",
       "text": "A complete universe that satisfies the strong energy condition, as Senovilla's does. It has compact slices and points whose light cones converge again, and it escapes the theorems because the generic condition fails along its world lines at rest [senovilla1998]."
+    },
+    {
+      "id": "kopczynski_trautman",
+      "kind": "family",
+      "text": "Another universe that bounces with no singularity, this one of spinning dust in the Einstein-Cartan theory. It is homogeneous and it violates an energy condition of the singularity theorems, which Senovilla's universe keeps [hehl1974, trautman2006]."
     }
   ],
   "references": [
@@ -64,7 +69,9 @@
     "ruiz1992",
     "fernandezjambrina2002",
     "raychaudhuri1998",
-    "senovilla1996"
+    "senovilla1996",
+    "hehl1974",
+    "trautman2006"
   ],
   "coordinates": [
     {

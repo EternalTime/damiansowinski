@@ -225,6 +225,31 @@
       "text": "The inside and the outside of a light cone, glued back together with a warp. The cone carries a spherical gravitational wave one instant thick [penrose1972impulsive, podolsky2000snapping]."
     },
     {
+      "id": "brill_waves",
+      "kind": "family",
+      "text": "One moment of a spacetime that is flat space with a gravitational wave on it and nothing else. Brill proved in 1959 that the wave's mass is positive and vanishes only when the slice is a moment of Minkowski's spacetime [brill1959]."
+    },
+    {
+      "id": "ab_metrics",
+      "kind": "generalisation",
+      "text": "Flat spacetime with a tachyon in it. At $b = 0$ A II and B I are the inside and the outside of the cone $T^2 = X^2 + Y^2$ about a spacelike line of Minkowski space [hruska2019]."
+    },
+    {
+      "id": "moving_mirror",
+      "kind": "locally_same",
+      "text": "Two dimensions of Minkowski space with a mirror for a left edge. Let the mirror accelerate and the empty space to its right fills with radiation, thermal if the mirror's world line closes on a light ray [fulling1976, davies1977]."
+    },
+    {
+      "id": "einstein_1912_static",
+      "kind": "generalisation",
+      "text": "Flat spacetime with a speed of light that varies from place to place, Einstein's static gravity of 1912. Its uniform field is Minkowski space in Rindler's coordinates [einstein1912]."
+    },
+    {
+      "id": "cremmer_scherk",
+      "kind": "family",
+      "text": "Minkowski space with a sphere of one radius at every point, a solution of gravity with gauge fields in six dimensions [horvath1977]."
+    },
+    {
       "id": "bondi_sachs",
       "kind": "generalisation",
       "text": "Flat spacetime on its outgoing light cones with four functions added, the form of the metric far from an isolated body that radiates. Its symmetries far away are Poincaré's and the supertranslations besides [bondi1962, sachs1962bms]."
@@ -298,6 +323,11 @@
     "einstein1914fokker",
     "delacruz1967",
     "podolsky2000snapping",
+    "brill1959",
+    "hruska2019",
+    "fulling1976",
+    "davies1977",
+    "horvath1977",
     "bondi1962",
     "sachs1962bms"
   ],

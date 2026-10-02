@@ -51,6 +51,16 @@
       "id": "misner",
       "kind": "family",
       "text": "Flat space with events identified under a boost, as de Sitter space is here under the antipodal map. Misner's identification makes closed timelike curves, and the antipodal one makes none [misner1967, parikh2003]."
+    },
+    {
+      "id": "rp3_geon",
+      "kind": "family",
+      "text": "A black hole folded by the antipodal map with the direction of time kept, so that it has one exterior and still tells future from past. Folding Kruskal's spacetime with time reversed, as de Sitter space is folded here, is the elliptic interpretation Gibbons examined [gibbons1986elliptic, louko1998]."
+    },
+    {
+      "id": "small_universes",
+      "kind": "family",
+      "text": "Friedmann universes with points of space identified under translations, as events of de Sitter space are identified here under the antipodal map. Space becomes a torus, and each galaxy is seen many times over [lachiezerey1995]."
     }
   ],
   "references": [
@@ -63,7 +73,9 @@
     "parikh2003",
     "spradlin2003",
     "aguirre2003",
-    "misner1967"
+    "misner1967",
+    "louko1998",
+    "lachiezerey1995"
   ],
   "coordinates": [
     {
