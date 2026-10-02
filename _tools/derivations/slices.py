@@ -757,6 +757,82 @@ def rnds_static_t(tau, r):
 RNDS_INSIDE_T = float(rnds_static_t(-0.5 / RNDS_H, 0.35))
 
 
+# Kastor and Traschen's holes as every diagram draws them, falling together, H < 0, in units of
+# the mass parameter m of one hole. One hole alone at H = -3c/(16m) is the lukewarm hole of the
+# Reissner-Nordstrom-de Sitter diagrams, r_s = 2m and 4m|H|/c = 3/4, so its horizons are twice
+# RNDS_ROOTS. Two holes of mass parameter m each, on the axis at z = +-2m, at H = -3c/(32m), half
+# that rate, merge into the same lukewarm hole of mass parameter 2m, whose horizons are at the
+# areal radii 8m/3 and 8m, the values H tau r + 2m takes far from the pair.
+KT_H_ONE = -3 / 16
+KT_H_TWO = -3 / 32
+KT_ONE_ROOTS = tuple(2 * a for a in RNDS_ROOTS)
+
+
+def kt_potential(plane, x):
+    """V of the two holes on the axis through them and on the plane midway between them."""
+    x = np.asarray(x, dtype=float)
+    if plane == "axis":
+        return 1 / np.abs(x - 2) + 1 / np.abs(x + 2)
+    return 2 / np.sqrt(x * x + 4)
+
+
+@functools.lru_cache(maxsize=None)
+def kt_last_ray(plane):
+    """c tau along the last ray of a plane of the two holes to reach infinity, as a function of
+    the distance x > 2 along the axis or x >= 0 across the midplane: the event horizon there.
+
+    An outgoing ray has d(c tau)/dx = U^2, U = H tau + V. With R = H tau x and y = ln x that is
+    dR/dy = R + H(R + xV)^2, and far from the pair, where xV -> 2, the right hand side vanishes at
+    R = 2/3 and R = 6, the horizons of the merged hole less its mass parameter 2: a ray above
+    R = 2/3 runs on to R = 6, the cosmological horizon, a ray below it falls to U = 0, and the
+    one ray that tends to R = 2/3 divides them, as Brill, Horowitz, Kastor and Traschen argue
+    from their (4.6). The slope of the right hand side at R = 2/3 is +1/2, so that ray is found
+    by integrating inward from x = 1e7, where every ray closes on it."""
+    from scipy.integrate import solve_ivp
+    H = KT_H_TWO
+    lo = 2 + 1e-4 if plane == "axis" else 1e-9
+
+    def slope(y, R):
+        x = math.exp(y)
+        return [R[0] + H * (R[0] + x * float(kt_potential(plane, x))) ** 2]
+    ray = solve_ivp(slope, [math.log(1e7), math.log(lo)], [2 / 3], rtol=1e-12, atol=1e-14, dense_output=True)
+
+    def tau(x):
+        x = np.maximum(np.asarray(x, dtype=float), lo)
+        return ray.sol(np.log(x))[0] / (H * x)
+    return tau
+
+
+def kt_merger():
+    """c tau at which the event horizon first reaches the midplane, at the midpoint of the pair,
+    where the last ray of the midplane leaves the axis: -6.1995 m."""
+    return float(kt_last_ray("midplane")(0.0))
+
+
+def kt_comoving_t(tau):
+    """The comoving chart's ct at the cosmological time tau < 0 of two holes: H tau = e^{Ht}."""
+    return np.log(KT_H_TWO * np.asarray(tau, dtype=float)) / KT_H_TWO
+
+
+def kt_static_t(tau, r):
+    """The static time cT of the event of one hole's isotropic chart at tau and r, m = 1 and
+    H = -3/16, with the areal radius R = H tau r + 1: cT = ln|H tau|/H + F(R), F' = H R^2/((R - 1) f)
+    and f = (1 - 1/R)^2 - 9R^2/256, Brill, Horowitz, Kastor and Traschen's (2.4). F is a sum of
+    logarithms c_a ln|R - a| over a = 1 and the four roots of f, c_a = (16/3) a^4/prod_b (a - b)."""
+    R = KT_H_ONE * np.asarray(tau, dtype=float) * np.asarray(r, dtype=float) + 1
+    poles = (1.0,) + KT_ONE_ROOTS
+    F = sum(np.log(np.abs(R - a)) * ((16 / 3) * a ** 4 / math.prod(a - b for b in poles if b != a)) for a in poles)
+    return np.log(np.abs(KT_H_ONE * tau)) / KT_H_ONE + F
+
+
+def kt_rstar(R):
+    """One hole's tortoise coordinate at m = 1 and H = -3/16, sum_i ln|1 - R/R_i|/f'(R_i) over the
+    four roots, with 1/f'(R_i) = -256 R_i^2/(9 prod_j (R_i - R_j)), which vanishes at R = 0."""
+    R = np.asarray(R, dtype=float)
+    return sum(np.log(np.abs(1 - R / a)) * (-256 * a * a / (9 * math.prod(a - b for b in KT_ONE_ROOTS if b != a)))
+               for a in KT_ONE_ROOTS)
+
+
 def _rnds(chart):
     """The three moments of the lukewarm hole on each of its planes: the static t = 0 between r_+
     and r_c and inside r_-, and the moment H tau = 1 of the cosmological chart, on which the
