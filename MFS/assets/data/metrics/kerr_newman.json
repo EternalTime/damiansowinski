@@ -69,6 +69,11 @@
       "id": "dilaton_black_hole",
       "kind": "family",
       "text": "The charged black hole of low energy string theory. Ashoke Sen set it spinning in 1992, which makes his solution string theory's counterpart of Kerr-Newman, with mass, charge, and angular momentum [sen1992]."
+    },
+    {
+      "id": "israel_wilson_perjes",
+      "kind": "family",
+      "text": "With charge equal to mass, Kerr and Newman's metric is one spinning source of Israel, Wilson, and Perjés's fields, which hold any number of such sources in balance [hartle1972, perjes1971]."
     }
   ],
   "references": [
@@ -93,7 +98,9 @@
     "carter1968separable",
     "bardeen1999",
     "etesi2002",
-    "sen1992"
+    "sen1992",
+    "hartle1972",
+    "perjes1971"
   ],
   "coordinates": [
     {

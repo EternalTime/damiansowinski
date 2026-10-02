@@ -1,5 +1,5 @@
 {
-  "version": "04d4ccb3f9992779",
+  "version": "a4a7502dc1eabd43",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -18988,6 +18988,76 @@
         "eprint": "2302.02379",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/2302.02379"
+      }
+    },
+    "tod1983": {
+      "type": "article",
+      "fields": {
+        "title": "All metrics admitting super-covariantly constant spinors",
+        "author": "Tod, K. P.",
+        "journal": "Physics Letters B",
+        "volume": "121",
+        "number": "4",
+        "pages": "241--244",
+        "year": "1983",
+        "doi": "10.1016/0370-2693(83)90797-9",
+        "url": "https://doi.org/10.1016/0370-2693(83)90797-9"
+      }
+    },
+    "parker1973": {
+      "type": "article",
+      "fields": {
+        "title": "Metric of two spinning charged sources in equilibrium",
+        "author": "Parker, Leonard and Ruffini, Remo and Wilkins, Daniel",
+        "journal": "Physical Review D",
+        "volume": "7",
+        "number": "10",
+        "pages": "2874--2879",
+        "year": "1973",
+        "doi": "10.1103/PhysRevD.7.2874",
+        "url": "https://doi.org/10.1103/PhysRevD.7.2874"
+      }
+    },
+    "brill1964": {
+      "type": "article",
+      "fields": {
+        "title": "Electromagnetic fields in a homogeneous, nonisotropic universe",
+        "author": "Brill, Dieter R.",
+        "journal": "Physical Review",
+        "volume": "133",
+        "number": "3B",
+        "pages": "B845--B848",
+        "year": "1964",
+        "doi": "10.1103/PhysRev.133.B845",
+        "url": "https://doi.org/10.1103/PhysRev.133.B845"
+      }
+    },
+    "kallosh1994iwp": {
+      "type": "article",
+      "fields": {
+        "title": "Supersymmetry and stationary solutions in dilaton-axion gravity",
+        "author": "Kallosh, Renata and Kastor, David and Ort\\'in, Tom\\'as and Torma, Tibor",
+        "journal": "Physical Review D",
+        "volume": "50",
+        "number": "10",
+        "pages": "6374--6384",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.50.6374",
+        "eprint": "hep-th/9406059",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9406059"
+      }
+    },
+    "kallosh1994anomaly": {
+      "type": "article",
+      "fields": {
+        "title": "Supersymmetry, trace anomaly and naked singularities",
+        "author": "Kallosh, Renata and Ort\\'in, Tom\\'as",
+        "journal": "arXiv preprint arXiv:hep-th/9404006",
+        "year": "1994",
+        "eprint": "hep-th/9404006",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9404006"
       }
     }
   }

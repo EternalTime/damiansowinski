@@ -1711,6 +1711,14 @@ FLAT = {
     ("majumdar_papapetrou", "cylindrical", "radial"): lambda: one(
         "majumdar_papapetrou", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")), view_id="two_holes"),
     ("majumdar_papapetrou", "cartesian", "tz"): _mp_axis,
+    ("israel_wilson_perjes", "cylindrical", "midplane"): lambda: one(
+        "israel_wilson_perjes", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")), view_id="two_sources"),
+    ("israel_wilson_perjes", "spheroidal", "axis"): lambda: one(
+        "israel_wilson_perjes", lambda m: along(0.0, *m.reach("spheroidal", "r")), view_id="spinning"),
+    ("israel_wilson_perjes", "spheroidal", "principal"): lambda: one(
+        "israel_wilson_perjes", lambda m: along(0.0, *m.reach("spheroidal", "r")), view_id="spinning"),
+    ("israel_wilson_perjes", "spherical", "radial"): lambda: one(
+        "israel_wilson_perjes", lambda m: along(0.0, *m.reach("spherical", "r")), view_id="charged_nut"),
     ("kastor_traschen", "cartesian", "tz"): lambda: _kt("cartesian", "axis"),
     ("kastor_traschen", "cartesian", "tx"): lambda: _kt("cartesian", "across"),
     ("kastor_traschen", "cylindrical", "radial"): lambda: _kt("cylindrical", "along"),

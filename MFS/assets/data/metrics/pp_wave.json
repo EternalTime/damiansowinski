@@ -68,6 +68,11 @@
       "id": "siklos",
       "kind": "generalisation",
       "text": "The pp-waves given a negative cosmological constant. They cross anti-de Sitter space on fronts that are hyperbolic planes [siklos1985, podolsky1998]."
+    },
+    {
+      "id": "israel_wilson_perjes",
+      "kind": "family",
+      "text": "Tod's other class. A spacetime with a supercovariantly constant spinor is a pp-wave where the spinor's Killing vector is null everywhere, and one of Israel, Wilson, and Perjés's fields where it is timelike [tod1983, chrusciel2006]."
     }
   ],
   "references": [
@@ -100,7 +105,9 @@
     "garfinkle1990",
     "anderson1999",
     "siklos1985",
-    "podolsky1998"
+    "podolsky1998",
+    "tod1983",
+    "chrusciel2006"
   ],
   "coordinates": [
     {

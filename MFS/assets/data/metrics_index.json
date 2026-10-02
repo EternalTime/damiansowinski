@@ -1072,6 +1072,37 @@
     "embedding": "920063a794e7f34b"
   },
   {
+    "id": "israel_wilson_perjes",
+    "name": "Israel-Wilson-Perjés",
+    "tags": [
+      "electrovacuum",
+      "stationary",
+      "axisymmetric",
+      "charged",
+      "rotating",
+      "angular momentum",
+      "electric charge",
+      "mass",
+      "electromagnetic field",
+      "Einstein-Maxwell",
+      "harmonic function",
+      "superposition",
+      "supersymmetric",
+      "naked singularity",
+      "ring singularity",
+      "NUT parameter",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "62b64a4735650fdf",
+    "diagrams": "46f7eaaecdbd1ba2",
+    "conformal": "82c544ce8dcb28c0",
+    "embedding": "5af191b3a00d29f2"
+  },
+  {
     "id": "kaluza_klein_black_hole",
     "name": "Kaluza-Klein Black Holes",
     "tags": [
@@ -1353,7 +1384,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "369c0eff1aa3917f",
+    "version": "a492e946a6a4dcf7",
     "diagrams": "1e74e2bd30acc12c",
     "conformal": "76f39633ed5e928c",
     "embedding": "21f2586270043652"
@@ -1534,7 +1565,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "2ef87028def7ba83",
+    "version": "08c8c7d715ed0915",
     "diagrams": "c6edded6cce52897",
     "conformal": "334186f800f59252",
     "embedding": "b9bf3c95064c40a7"
@@ -2065,7 +2096,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "39b286a85a8728cf",
+    "version": "a975537ea8cf5d50",
     "diagrams": "6e432dbfef4f0d7d",
     "embedding": "a484d91e42495a51"
   },
@@ -2642,7 +2673,7 @@
       "idealized model",
       "not asymptotically flat"
     ],
-    "version": "7aa13cabf880b8bc",
+    "version": "58a4ed6d94f0b8a5",
     "diagrams": "86d43f7abeacc5f4",
     "embedding": "30d5a7483e08a078"
   },

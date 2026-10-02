@@ -12289,6 +12289,54 @@ def morris_thorne(ck, src):
     return views
 
 
+def israel_wilson_perjes(ck, src):
+    """The spinning source at m = a = 1 on its axis of rotation, theta = 0, a totally geodesic
+    line through the middle of the ring. The metric on it is f(-c^2dt^2 + dr_*^2) with
+    f = (r^2 + a^2)/((r + m)^2 + a^2), which has no zero, and dr_*/dr = 1/f, so
+    r_* = r + m ln((r^2 + a^2)/a^2) + (m^2/a) arctan(r/a), null_rays._iwp_rstar, runs over the
+    whole line with r: p, q = arctan((ct -+ r_*)/l) at l = 2m give the full diamond, with no
+    horizon, r -> +infinity on the right and the region of negative r, where the mass is -m, on
+    the left. The ring singularity lies off the axis, on the equator, so the curvature is finite
+    on the whole diagram. The charts of free functions and of the source of complex mass have no
+    view."""
+    axis = Plane(src, "israel_wilson_perjes", "spheroidal", ("t", "r"), {"theta": "0", "phi": "0"}, {"m": 1, "a": 1})
+    ell = 2.0
+    through = lambda t, r: mink_pq(t, nr._iwp_rstar(r), ell)
+    ck.chart("Israel-Wilson-Perjes, the axis of the spinning source", axis, through, ck.uniform(-20, 20),
+             ck.uniform(-20, 20), lambda t, r: (1, 0))
+    ck.finite("Israel-Wilson-Perjes: the curvature is finite on the axis through the ring",
+              axis.kretschmann(ck.uniform(-5, 5, 200), ck.uniform(-3, 3, 200)))
+    ck.limit("Israel-Wilson-Perjes: the tortoise coordinate vanishes at r = 0", nr._iwp_rstar(0.0), [0.0], 1e-12)
+    p, q = through(np.zeros(2), np.array([1e9, -1e9]))
+    ck.limit("Israel-Wilson-Perjes: r -> +-infinity at t = 0 lands on the two i0, (X, T) = (+-pi, 0)",
+             np.concatenate([point(p[0], q[0]), point(p[1], q[1])]), [PI, 0, -PI, 0], 1e-3)
+    box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    v = View("spheroidal_axis", "The axis", box, "spheroidal")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    for r in (1.0, 2.0, 4.0, 8.0):
+        v.curve("r", *through(S_ALL, np.full_like(S_ALL, r)))
+        v.curve("r2", *through(S_ALL, np.full_like(S_ALL, -r)))
+    v.curve("throat", *through(S_ALL, np.zeros_like(S_ALL)))
+    label_on(v, through(0, 1.0), "$r = m$")
+    label_on(v, through(0, -1.0), "$r = -m$")
+    grid(v, "t", through, (-8, -4, -2, 0, 2, 4, 8), S_ALL)
+    diamond_edges(v)
+    v.legend("cover", "the whole axis, which $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, at $1$, $2$, $4$, and $8\\,m$")
+    v.legend("r2", "$r$ constant, at $-1$, $-2$, $-4$, and $-8\\,m$")
+    v.legend("t", "$ct$ constant, at $0$, $\\pm 2$, $\\pm 4$, and $\\pm 8\\,m$")
+    v.legend("throat", "$r = 0$, the middle of the ring")
+    v.set(restriction="The axis of rotation $\\theta = 0$ only, a totally geodesic line, each point in the diagram a "
+                      "single event.",
+          settings="$m = 1$ and $a = m$.")
+    moment = slices.moments("israel_wilson_perjes", "spinning")[0]
+    lo, hi = moment.reach("spheroidal", "r")
+    rs = np.linspace(lo, hi, 200)
+    v.slice(moment, [through(0 * rs, rs)])
+    return [v]
+
+
 def teo_wormhole(ck, src):
     """Teo's example at b_0 = 1 on its two totally geodesic surfaces, each in both charts.
 
@@ -18443,6 +18491,7 @@ DRAWN = {
     "melvin": melvin, "senovilla": senovilla,
     "thin_shell_wormhole": thin_shell_wormhole,
     "teo_wormhole": teo_wormhole,
+    "israel_wilson_perjes": israel_wilson_perjes,
     "damour_solodukhin": damour_solodukhin,
     "einstein_rosen_bridge": einstein_rosen_bridge,
     "simpson_visser": simpson_visser,
@@ -19871,6 +19920,14 @@ CAPTIONS = {
         "A line of constant $t$ is a moment of the observers who fall from rest far away. It leaves the surface of "
         "the star later than the moment of Hartle and Thorne's $t$ through the same event at infinity, since "
         "those observers' clocks run ahead by $\\int\\sqrt{2m/r}\\,dr/(c(1 - 2m/r))$.",
+    ],
+    ("israel_wilson_perjes", "spheroidal_axis"): [
+        "The axis of rotation of the spinning source ($a = m$), each point in the diagram a single event. On the "
+        "axis the metric is $f(-c^2dt^2 + dr_*^2)$ with $f = (r^2 + a^2)/((r + m)^2 + a^2)$ and $dr_* = dr/f$, so "
+        "$p, q = \\arctan((ct \\mp r_*)/2m)$ bring it into the full diamond.",
+        "$f$ has no zero, so there is no horizon, and $r_*$ runs over the whole line with $r$. The axis passes "
+        "through the middle of the ring at $r = 0$ into a second asymptotically flat region, $r < 0$, where the "
+        "mass is $-m$. The ring singularity, $r = -m$ on the equator, lies off the axis.",
     ],
     ("teo_wormhole", "spherical_axis"): [
         "The axis of rotation of Teo's wormhole ($a = 1/4$), each point in the diagram a single event. On "

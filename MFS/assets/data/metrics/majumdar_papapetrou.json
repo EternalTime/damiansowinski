@@ -57,6 +57,11 @@
       "id": "reissner_nordstrom_de_sitter",
       "kind": "family",
       "text": "The charged black hole in de Sitter space. With charge equal to mass it is the single hole of David Kastor and Jennie Traschen's solutions of 1993, Majumdar and Papapetrou's holes in a universe with $\\Lambda > 0$, where they move and merge [kastor1993]."
+    },
+    {
+      "id": "israel_wilson_perjes",
+      "kind": "generalisation",
+      "text": "The same charges set spinning. Israel, Wilson, and Perjés let $U$ be complex, and the black holes among their fields are these static ones [hartle1972, chrusciel2006]."
     }
   ],
   "references": [

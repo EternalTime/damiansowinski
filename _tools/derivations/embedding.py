@@ -112,6 +112,7 @@ import mpmath
 import numpy as np
 import sympy as sp
 from scipy.integrate import IntegrationWarning, quad
+from scipy.optimize import brentq
 from sympy.utilities.lambdify import implemented_function
 
 HERE = Path(__file__).resolve().parent
@@ -5820,6 +5821,128 @@ def stockum_dust(ck, src):
                         "curves, so a surface of constant $t$ is not a moment of space there."])]
 
 
+def israel_wilson_perjes(ck, src):
+    """Three moments t = 0, one for each chart. The source of complex mass at m = 1 and l = 1/2,
+    in the spherical chart: on the equator g_tphi vanishes with cos(theta), g_rr = (r^2 + l^2)/
+    (r - m)^2 and the circumference radius is sqrt(r^2 + l^2), so dz/dr grows as
+    sqrt(m^2 + l^2)/(r - m) toward the horizon, an infinitely long throat, drawn from
+    r = m + m/50 out to 6m. The spinning source at m = a = 1, in the spheroidal chart: the
+    equator of the slice of constant t, where g_tphi drops out, with g_rr = (r + m)^2/(r^2 + a^2)
+    and the circumference radius sqrt(g_phiphi); it has no throat, and the construction stops
+    where g_rr = (drho/dr)^2, at r = -0.21 m, inside which the circles turn null at r = -0.60 m, both
+    found here and checked. The two sources the spacetime diagram declares, in the cylindrical
+    chart: the plane z = 0 midway between them, g_rhorho = W^2 and g_phiphi = W^2 rho^2 -
+    omega^2/W^2, which stops at rho = 1.56 m, outside the circle rho = 0.73 m where the circles
+    turn null."""
+    views = []
+
+    sl = Slice(src, "israel_wilson_perjes", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"m": 1, "l": "1/2"})
+    lo, top = 1 + IWP_THROAT_LO, 6.0
+    size = 2 * float(sl.rho_at(top))
+    radii = (1.1, 1.25, 1.5, 2.0, 3.0, 4.0, 5.0)
+    throat = Piece("charged_nut", "sheet", sl, lo, top, 0.0, 1,
+                   (("edge", "the throat runs on without end toward the horizon $r = m$, its circles closing on "
+                             "the circumference radius $\\sqrt{m^2 + l^2}$"),
+                    ("edge", "the surface runs on to $r \\to \\infty$")),
+                   [(lo, "r", None)] + [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+    ck.isometry("Israel-Wilson-Perjes, the source of complex mass", throat)
+    ck.radius("Israel-Wilson-Perjes, the source of complex mass, rho = sqrt(r^2 + l^2)", throat,
+              lambda r: np.sqrt(r * r + 0.25), size)
+    one = Surface([throat])
+    fig = figure_of([one], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *throat.at(lo), "$r = 1.02\\,m$")
+    ring_label(fig, [0, 0, 0], *throat.at(2.0), "$r = 2m$")
+    ring_label(fig, [0, 0, 0], *throat.at(top), "$6m$")
+    fig.legend("fill", "cover", "the equator at one moment, which $t$ and $r > m$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1.02$, $1.1$, $1.25$, $1.5$, $2$, $3$, $4$, $5$ and $6$ times $m$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("charged_nut", "The source of complex mass", "$m$", [one], fig.done(), system="spherical",
+                      settings="$m = 1$, the unit of every length, and $l = m/2$."))
+
+    sl = Slice(src, "israel_wilson_perjes", "spheroidal", "r", "\\phi", {"t": 0, **EQUATOR}, {"m": 1, "a": 1})
+    # The drawing begins at the first hundredth of m outside the radius where g_rr = (drho/dr)^2.
+    last = brentq(lambda r: float(sl.defect_at(r)), -0.4, 0.0, xtol=1e-13)
+    stop = math.ceil(last * 100) / 100
+    null = brentq(lambda R: R ** 4 + R ** 2 + 2 * R - 1, 0.0, 1.0, xtol=1e-14) - 1
+    ck.add("Israel-Wilson-Perjes, the spinning source: the circles turn null where R^4 + a^2 R^2 + 2 a^2 m R = a^2 m^2, "
+           "R = r + m", abs(float(sl.gpp_at(null))), 1e-9)
+    ck.stops("Israel-Wilson-Perjes, the spinning source, between the null circle and the last surface", sl,
+             np.linspace(null, last, 202)[1:-1])
+    inside = sl.gpp_at(np.linspace(-1, null, 202)[1:-1])
+    ck.add("Israel-Wilson-Perjes, the spinning source: inside the null circle g_phiphi < 0",
+           float(max(0.0, np.max(inside))), 0.0)
+    top = 6.0
+    size = 2 * float(sl.rho_at(top))
+    sheet = Piece("spinning", "sheet", sl, stop, top, 0.0, 1,
+                  (("stops", "the circles shrink faster than the distance in to them, and nothing in flat space "
+                             "carries the slice on"),
+                   ("edge", "the surface runs on to $r \\to \\infty$")),
+                  [(stop, "chartedge", None), (0.0, "r", None)] + [(r, "r", None) for r in (1.0, 2.0, 3.0, 4.0, 5.0, top)],
+                  size)
+    ck.isometry("Israel-Wilson-Perjes, the spinning source", sheet)
+    ck.radius("Israel-Wilson-Perjes, the spinning source, rho = sqrt(g_phiphi)", sheet,
+              lambda r: np.sqrt(((r + 1) ** 2 + 1) ** 2 - (r * r + 1)) / (r + 1), size)
+    spin = Surface([sheet])
+    fig = figure_of([spin], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *sheet.at(0.0), "$r = 0$")
+    ring_label(fig, [0, 0, 0], *sheet.at(top), "$6m$")
+    fig.legend("fill", "cover", "the equator at one moment, which $t$, $r$ and $\\phi$ cover")
+    fig.legend("line", "r", "$r$ constant, at $0$, $1$, $2$, $3$, $4$, $5$ and $6$ times $m$")
+    fig.legend("line", "chartedge", f"$r = {stop:.2f}\\,m$, where the drawing stops")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("spinning", "The spinning source", "$m$", [spin], fig.done(), system="spheroidal",
+                      settings="$m = 1$, the unit of every length, and $a = m$.",
+                      stops=[f"From $r = {stop:.2f}\\,m$ inward the circles shrink faster than the distance in to them "
+                             "and no surface of revolution in flat space carries the slice on.",
+                             f"Inside $r = {null:.2f}\\,m$ the circles about the axis are closed timelike curves, so a "
+                             "surface of constant $t$ is not a moment of space there. The ring singularity is $r = -m$."]))
+
+    sl = Slice(src, "israel_wilson_perjes", "cylindrical", "\\rho", "\\phi", {"t": 0, "z": 0}, functions=nr.IWP_TWO)
+
+    def twisted(rho):
+        s = np.sqrt(rho * rho + 4)
+        W, omega = 1 + 2 / s, 4 / s + 4 / (s * s)
+        return W * W * rho * rho - omega * omega / (W * W)
+
+    last = brentq(lambda r: float(sl.defect_at(r)), 1.2, 2.0, xtol=1e-13)
+    stop = math.ceil(last * 100) / 100
+    null = brentq(twisted, 0.3, 1.2, xtol=1e-14)
+    ck.add("Israel-Wilson-Perjes, two sources: the circles turn null where W^4 rho^2 = omega^2",
+           abs(float(sl.gpp_at(null))), 1e-9)
+    ck.stops("Israel-Wilson-Perjes, two sources, between the null circle and the last surface", sl,
+             np.linspace(null, last, 202)[1:-1])
+    inside = sl.gpp_at(np.linspace(0, null, 202)[1:-1])
+    ck.add("Israel-Wilson-Perjes, two sources: inside the null circle g_phiphi < 0", float(max(0.0, np.max(inside))), 0.0)
+    top = 8.0
+    size = 2 * float(sl.rho_at(top))
+    plane = Piece("two_sources", "sheet", sl, stop, top, 0.0, 1,
+                  (("stops", "the circles shrink faster than the distance in to them, and nothing in flat space "
+                             "carries the slice on"),
+                   ("edge", "the surface runs on to $\\rho \\to \\infty$")),
+                  [(stop, "chartedge", None)] + [(r, "r", None) for r in (2.0, 3.0, 4.0, 5.0, 6.0, 7.0, top)], size)
+    ck.isometry("Israel-Wilson-Perjes, two sources, the midplane", plane)
+    ck.radius("Israel-Wilson-Perjes, two sources, rho = sqrt(W^2 rho^2 - omega^2/W^2)", plane,
+              lambda r: np.sqrt(twisted(r)), size)
+    two = Surface([plane])
+    fig = figure_of([two], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *plane.at(2.0), "$\\rho = 2m$")
+    ring_label(fig, [0, 0, 0], *plane.at(top), "$8m$")
+    fig.legend("fill", "cover", "the plane $z = 0$ at one moment, which $t$, $\\rho$ and $\\phi$ cover")
+    fig.legend("line", "r", "$\\rho$ constant, at $2$, $3$, $4$, $5$, $6$, $7$ and $8$ times $m$")
+    fig.legend("line", "chartedge", f"$\\rho = {stop:.2f}\\,m$, where the drawing stops")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("two_sources", "Two sources", "$m$", [two], fig.done(), system="cylindrical",
+                      settings="$m = 1$, the unit of every length, and $l = m/2$.", input=nr.IWP_TWO_INPUT,
+                      stops=[f"From $\\rho = {stop:.2f}\\,m$ inward the circles shrink faster than the distance in to "
+                             "them and no surface of revolution in flat space carries the slice on.",
+                             f"Inside $\\rho = {null:.2f}\\,m$ the circles about the axis are closed timelike curves, "
+                             "round the stretch of the axis between the sources where $\\omega$ does not vanish."]))
+    return views
+
+
+IWP_THROAT_LO = 1 / 50
+
+
 def taub_nut(ck, src):
     """The equator of a slice of constant t at m = 1 and l = 1/2, as the spacetime diagram draws
     Taub-NUT: g_tphi carries cos(theta) and vanishes there, so the slice has g_rr = (r^2 + l^2)/
@@ -9875,6 +9998,7 @@ DRAWN = {
     "bertotti_robinson": bertotti_robinson,
     "stockum_dust": stockum_dust,
     "taub_nut": taub_nut,
+    "israel_wilson_perjes": israel_wilson_perjes,
     "godel": godel,
     "som_raychaudhuri": som_raychaudhuri,
     "kerr": kerr,
@@ -10830,6 +10954,31 @@ CAPTIONS = {
         "At $r = 0.83\\,R$ the circles shrink faster than the distance out to them and the drawing stops. At "
         "$r = R$ they are null, and beyond it they are closed timelike curves, which Willem Jacob van Stockum "
         "found in 1937, more than a decade before Gödel's universe.",
+    ],
+    ("israel_wilson_perjes", "charged_nut"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the source of complex mass at one moment of $t$, drawn as a "
+        "surface in flat space with every distance along it the metric distance. The twist enters $g_{t\\phi}$ "
+        "through $\\cos\\theta$, which vanishes on the equator, where $g_{rr} = (r^2 + l^2)/(r - m)^2$ and the "
+        "circumference radius is $\\sqrt{r^2 + l^2}$.",
+        "Toward the horizon $r = m$ the surface falls as $\\sqrt{m^2 + l^2}\\,\\ln(r - m)$ without end while its "
+        "circles close on the radius $\\sqrt{m^2 + l^2}$: an infinitely long throat, as each of Majumdar and "
+        "Papapetrou's holes has, drawn down to $r = 1.02\\,m$.",
+    ],
+    ("israel_wilson_perjes", "spinning"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the spinning source at one moment of $t$, drawn as a surface "
+        "in flat space with every distance along it the metric distance. On it $g_{rr} = (r + m)^2/(r^2 + a^2)$, and "
+        "the circle of constant $r$ has the circumference radius $\\sqrt{g_{\\phi\\phi}}$, with "
+        "$g_{\\phi\\phi} = (((r + m)^2 + a^2)^2 - a^2(r^2 + a^2))/(r + m)^2$.",
+        "The surface has no throat and no horizon. It runs in through $r = 0$, the ring of radius $a$ of the flat "
+        "background, and far out it rises as Flamm's paraboloid of the mass $m$ does, $dz/dr \\to \\sqrt{2m/r}$.",
+    ],
+    ("israel_wilson_perjes", "two_sources"): [
+        "The plane $z = 0$ midway between the two sources at one moment of $t$, drawn as a surface in flat space "
+        "with every distance along it the metric distance. On it $g_{\\rho\\rho} = W^2$, and the circle of "
+        "coordinate radius $\\rho$ has the circumference radius $\\sqrt{W^2\\rho^2 - \\omega^2/W^2}$, which the "
+        "twist makes smaller than the $\\rho W$ of two sources at rest.",
+        "Far out the surface rises as Flamm's paraboloid of the total mass $2m$ does, "
+        "$dz/d\\rho \\to \\sqrt{4m/\\rho}$.",
     ],
     ("taub_nut", "equator"): [
         "The equatorial plane ($\\theta = \\pi/2$) of Taub-NUT space at one moment of $t$, drawn as a surface in "

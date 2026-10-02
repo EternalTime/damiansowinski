@@ -4675,6 +4675,13 @@ class Slices(unittest.TestCase):
                     "point_particle_2plus1/planet/radial": {"unroll"},
                     # Einstein and Rosen's neutral bridge, their charged bridge with a mass and the one with
                     # no mass are three spacetimes of one page: each drawing marks the moment of its own.
+                    # Israel, Wilson and Perjes's spinning source, source of complex mass and two sources are
+                    # three spacetimes of one construction, each drawing marking the moment of its own.
+                    "israel_wilson_perjes/cylindrical/midplane": {"charged_nut", "spinning"},
+                    "israel_wilson_perjes/spheroidal/axis": {"charged_nut", "two_sources"},
+                    "israel_wilson_perjes/spheroidal/principal": {"charged_nut", "two_sources"},
+                    "conformal israel_wilson_perjes/spheroidal_axis": {"charged_nut", "two_sources"},
+                    "israel_wilson_perjes/spherical/radial": {"spinning", "two_sources"},
                     **{f"einstein_rosen_bridge/{c}/radial": {"charged", "charged_mass"} for c in ("bridge", "spherical", "isotropic")},
                     **{f"conformal einstein_rosen_bridge/{c}": {"charged", "charged_mass"} for c in ("bridge", "spherical", "isotropic")},
                     "einstein_rosen_bridge/charged_spherical/radial": {"neutral", "charged"},
