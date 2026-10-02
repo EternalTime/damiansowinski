@@ -66,6 +66,11 @@
       "id": "misner_brill_lindquist",
       "kind": "programme",
       "text": "Wormhole data from Misner and Wheeler's programme of 1957. Its one hole in isotropic coordinates is the geon's moment $t = 0$ before the fold [misner1957]."
+    },
+    {
+      "id": "btz_multi_holes_wormholes",
+      "kind": "family",
+      "text": "Black holes of three dimensions with one exterior and a handle behind the horizon, made by identifying points of anti-de Sitter space. Their authors called them topological geons too [aminneborg1998]."
     }
   ],
   "references": [
@@ -80,7 +85,8 @@
     "louko2010",
     "gibbons1986elliptic",
     "gannon1975",
-    "louko2005"
+    "louko2005",
+    "aminneborg1998"
   ],
   "coordinates": [
     {

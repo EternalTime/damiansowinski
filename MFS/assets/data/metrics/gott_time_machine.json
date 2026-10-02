@@ -67,6 +67,11 @@
       "id": "tippett_tsang",
       "kind": "family",
       "text": "A time machine that fits in a box. Tippett and Tsang counted Gott's strings among the models that need matter spread out to infinity, and built a compact bubble in 2017, whose wall needs exotic matter [tippett2017]."
+    },
+    {
+      "id": "btz_multi_holes_wormholes",
+      "kind": "family",
+      "text": "Sören Holst carried Gott's pair to anti-de Sitter space in a chart with Poincaré's disc at every moment, the sausage coordinates in which the black holes and wormholes of three dimensions were then drawn [holst1996, aminneborg1998]."
     }
   ],
   "references": [
@@ -92,7 +97,8 @@
     "dedeo2002",
     "morris1988prl",
     "ori2005",
-    "tippett2017"
+    "tippett2017",
+    "aminneborg1998"
   ],
   "coordinates": [
     {

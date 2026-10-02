@@ -16,7 +16,8 @@ born_infeld_charge, penrose_impulsive_wave, exponential_metric, bondi_sachs, pet
 rp3_geon, kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kasner_scalar,
 moving_mirror, gravitational_instantons, small_universes, misner_zapolsky, distorted_schwarzschild,
 cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_bodies,
-tilted_universes, bowers_liang and kasner_magnetic, and Godel's cylindrical chart.
+tilted_universes, bowers_liang, kasner_magnetic and btz_multi_holes_wormholes, and Godel's
+cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -41,6 +42,7 @@ misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, pet
 brill_waves.md, gravitational_instantons.md and brans_dicke_sphere.md beside this file.
 brill_waves.md, gravitational_instantons.md and tilted_universes.md beside this file.
 brill_waves.md, gravitational_instantons.md, brans_dicke_sphere.md and bowers_liang.md beside this file.
+btz_multi_holes_wormholes.md beside this file records the charts of the many black holes of three dimensions.
 """
 import argparse
 import fcntl
@@ -26425,6 +26427,157 @@ def tilted_universes_check(chart, system):
 
 
 CHARTS["tilted_universes"] = [lambda s=s: tilted_universes(s) for s in TILTED_CHARTS]
+
+
+# -- Many black holes and wormholes in three dimensions -----------------------------------
+
+BTZ_MULTI_CHARTS = ["sausage", "stereographic", "free_fall", "exterior"]
+
+
+def btz_multi_holes_wormholes(system):
+    """The four charts in which Brill, Steif, and Aminneborg, Bengtsson, Brill, Holst and Peldan
+    describe anti-de Sitter space of three dimensions cut along totally geodesic timelike surfaces
+    and glued back together. Each is a chart of anti-de Sitter space, and the identifications live
+    in the domains and the drawings, since no line element can carry them.
+
+    sausage: Brill's lectures (5), Aminneborg et al. (B.6) with l = 1, static, each moment of t
+    Poincare's disc of radius l. Its domain is the time between the two events where the glued
+    surfaces meet, |ct| < pi l/2.
+    stereographic: Brill's lectures (14), Aminneborg et al. (A.3), conformally flat, centred on the
+    event where the surfaces meet, so that each of them is a plane through the origin.
+    free_fall: Brill's lectures (10), -c^2dT^2 + cos^2(cT/l) times the metric of the moment of time
+    symmetry, here on Poincare's disc, his (16), as his section 3 says to take it.
+    exterior: Brill's lectures (18), Aminneborg et al. (1), the chart of Banados, Teitelboim and
+    Zanelli without rotation, outside one horizon.
+
+    btz_multi_check holds each to R_mu_nu = -(2/l^2) g_mu_nu and to being the surface
+    -U^2 - V^2 + X^2 + Y^2 = -l^2 of flat space of signature (-, -, +, +) pulled back."""
+    disc = "\\dfrac{4\\ell^4}{\\left(\\ell^2 - \\rho^2\\right)^2}\\left(d\\rho^2 + \\rho^2d\\phi^2\\right)"
+    lapse = "\\dfrac{r^2}{\\ell^2} - M"
+    charts = {
+        "sausage": {
+            "name": "Sausage", "coords": ["t", "\\rho", "\\phi"], "parameters": ["\\ell"],
+            "domains": ["t \\in \\left(-\\pi\\ell/2c,\\, \\pi\\ell/2c\\right)", "\\rho \\in [0, \\ell)",
+                        "\\phi \\in [0, 2\\pi)"],
+            "line": lambda c, c2: ("ds^2 = -\\left(\\dfrac{\\ell^2 + \\rho^2}{\\ell^2 - \\rho^2}\\right)^2"
+                                   f"{c2}dt^2 + {disc}")},
+        "stereographic": {
+            "name": "Stereographic", "coords": ["\\tau", "x", "y"], "parameters": ["\\ell"],
+            "domains": ["\\tau \\in (-\\infty, 0)", "x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)",
+                        "x^2 + y^2 - c^2\\tau^2 < 4\\ell^2"],
+            "line": lambda c, c2: (f"ds^2 = \\dfrac{{-{c2}d\\tau^2 + dx^2 + dy^2}}"
+                                   f"{{\\left(1 - \\dfrac{{x^2 + y^2 - {c2}\\tau^2}}{{4\\ell^2}}\\right)^2}}")},
+        "free_fall": {
+            "name": "Free Fall", "coords": ["T", "\\rho", "\\phi"], "parameters": ["\\ell"],
+            "domains": ["T \\in \\left(-\\pi\\ell/2c,\\, \\pi\\ell/2c\\right)", "\\rho \\in [0, \\ell)",
+                        "\\phi \\in [0, 2\\pi)"],
+            "line": lambda c, c2: (f"ds^2 = -{c2}dT^2 + \\cos^2({c}T/\\ell)\\,{disc}")},
+        "exterior": {
+            "name": "Exterior", "coords": ["t", "r", "\\phi"], "parameters": ["\\ell", "M"],
+            "domains": ["t \\in (-\\infty, \\infty)", "r \\in \\left(\\sqrt{M}\\,\\ell,\\, \\infty\\right)",
+                        "\\phi \\in [0, 2\\pi)"],
+            "line": lambda c, c2: (f"ds^2 = -\\left({lapse}\\right){c2}dt^2 + \\dfrac{{dr^2}}{{{lapse}}}"
+                                   " + r^2d\\phi^2")},
+    }
+    chart = charts[system]
+    probe = vm.Reader(chart["coords"], chart["parameters"], ())
+    ell = probe.parameters["ell"]
+    x = [probe.symbol[name] for name in chart["coords"]]
+    printing = {
+        "sausage": lambda: {"printer": {"lead": [x[1], ell]}},
+        "stereographic": lambda: {"printer": {"lead": [x[1], x[2], x[0], ell],
+                                              "factors": [probe.c, x[0], x[1], x[2], ell]}, "time": "\\tau"},
+        "free_fall": lambda: {"printer": {"lead": [x[1], ell],
+                                          "arguments": {probe.c * x[0] / ell: "cT/\\ell",
+                                                        2 * probe.c * x[0] / ell: "2cT/\\ell"}},
+                              "time": "T", "pretty": btz_multi_trig(x[0] / ell)},
+        "exterior": lambda: {"printer": {"lead": [x[1], probe.parameters["M"], ell]}},
+    }[system]()
+    return {
+        "metric_id": "btz_multi_holes_wormholes",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": chart["parameters"], "line_element": chart["line"]("c", "c^2")},
+        "chart_line_element": chart["line"]("", ""),
+        "ricci_scalar": "-\\dfrac{6}{\\ell^2}", "kretschmann": "\\dfrac{12}{\\ell^4}",
+        "check": lambda c: btz_multi_check(c, system),
+        **printing,
+    }
+
+
+def btz_multi_trig(angle):
+    """Each value that holds the time simplified by trigonometry, so that 1 - sin^2 reads as cos^2
+    and a ratio of sine to cosine as a tangent\\; a value without it stays as sympy factors it."""
+    def pretty(value):
+        value = sp.sympify(value)
+        if not value.has(sp.sin, sp.cos, sp.tan):
+            return sp.factor(value)
+        out = sp.factor(sp.trigsimp(sp.factor(value)))
+        return out.replace(lambda e: e.is_Add and sp.expand(e + sp.sin(angle) ** 2 - 1) == 0,
+                           lambda e: sp.cos(angle) ** 2)
+    return pretty
+
+
+def btz_multi_embedding(chart, system):
+    """(U, V, X, Y) on -U^2 - V^2 + X^2 + Y^2 = -l^2 as functions of the chart's coordinates, with
+    the chart's time already c times it. U = 0 is the moment of time symmetry in every chart, and
+    U = l, V = X = Y = 0 the event where the glued surfaces meet."""
+    x0, x1, x2 = chart.symbols
+    ell = chart.reader.parameters["ell"]
+    if system == "sausage":
+        # Aminneborg et al. (B.4) and (B.5), with their T and U our V and U.
+        grow = ell * (ell ** 2 + x1 ** 2) / (ell ** 2 - x1 ** 2)
+        flat = 2 * ell ** 2 * x1 / (ell ** 2 - x1 ** 2)
+        return [grow * sp.sin(x0 / ell), grow * sp.cos(x0 / ell), flat * sp.cos(x2), flat * sp.sin(x2)]
+    if system == "stereographic":
+        # Brill's lectures (13), projected from the event antipodal to the origin: with
+        # s = (x^2 + y^2 - c^2 tau^2)/(4 l^2), U = l (1 + s)/(1 - s) and (V, X, Y) = (-c tau, x, y)/(1 - s),
+        # so that tau grows toward the future, to the origin from below.
+        s = (x1 ** 2 + x2 ** 2 - x0 ** 2) / (4 * ell ** 2)
+        return [ell * (1 + s) / (1 - s), -x0 / (1 - s), x1 / (1 - s), x2 / (1 - s)]
+    if system == "free_fall":
+        # Brill's lectures (9), with the hyperbolic plane of the moment T = 0 on Poincare's disc.
+        grow = ell * (ell ** 2 + x1 ** 2) / (ell ** 2 - x1 ** 2)
+        flat = 2 * ell ** 2 * x1 / (ell ** 2 - x1 ** 2)
+        return [ell * sp.sin(x0 / ell), grow * sp.cos(x0 / ell), flat * sp.cos(x0 / ell) * sp.cos(x2),
+                flat * sp.cos(x0 / ell) * sp.sin(x2)]
+    # Brill's lectures (8), with phi -> sqrt(M) phi, r -> r/sqrt(M) and t -> sqrt(M) t, his (18).
+    M = chart.reader.parameters["M"]
+    root = sp.sqrt(M)
+    out = sp.sqrt(x1 ** 2 / M - ell ** 2)
+    return [out * sp.sinh(root * x0 / ell), x1 / root * sp.cosh(root * x2), x1 / root * sp.sinh(root * x2),
+            out * sp.cosh(root * x0 / ell)]
+
+
+def btz_multi_check(chart, system):
+    """Each chart solves R_mu_nu = -(2/l^2) g_mu_nu, and is the metric -dU^2 - dV^2 + dX^2 + dY^2
+    pulled back onto the surface -U^2 - V^2 + X^2 + Y^2 = -l^2 by btz_multi_embedding."""
+    ell = chart.reader.parameters["ell"]
+    ricci = chart.geo.ricci_ll()
+    for a in range(3):
+        for b in range(3):
+            if vm.norm(vm._at(ricci, (a, b)) + 2 * chart.geo.g[a, b] / ell ** 2) != 0:
+                raise AssertionError(f"btz_multi_holes_wormholes: R + (2/l^2) g does not vanish in slot "
+                                     f"{chart.coords_tex[a]}{chart.coords_tex[b]} of the {system} chart")
+    Z = btz_multi_embedding(chart, system)
+    positive = {s: sp.Symbol(s.name + "_", positive=True) for s in chart.reader.parameters.values()}
+    positive.update({s: sp.Symbol(s.name + "_", real=True) for s in chart.symbols})
+    Z = [z.subs(positive) for z in Z]
+    here = [positive[s] for s in chart.symbols]
+    lp = positive[ell]
+    surface = -Z[0] ** 2 - Z[1] ** 2 + Z[2] ** 2 + Z[3] ** 2 + lp ** 2
+    if sp.simplify(surface.rewrite(sp.exp)) != 0:
+        raise AssertionError(f"btz_multi_holes_wormholes: the {system} chart leaves the surface of anti-de Sitter space")
+    J = sp.Matrix([[sp.diff(z, v) for v in here] for z in Z])
+    pulled = J.T * sp.diag(-1, -1, 1, 1) * J
+    g = chart.geo.g.subs(positive)
+    for i in range(3):
+        for j in range(i, 3):
+            if sp.simplify((pulled[i, j] - g[i, j]).rewrite(sp.exp)) != 0:
+                raise AssertionError(f"btz_multi_holes_wormholes: the embedding pulled back misses the {system} "
+                                     f"chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["btz_multi_holes_wormholes"] = [lambda s=s: btz_multi_holes_wormholes(s) for s in BTZ_MULTI_CHARTS]
 
 
 def write(spec):

@@ -137,6 +137,12 @@ RETIRED = {
 # that does not speak for the spacetime. A statement about the curvature has to hold in
 # every chart counted, and a symmetry has to show in some chart of every region.
 REGIONS = {
+    "btz_multi_holes_wormholes": {
+        "regions": [["sausage", "stereographic", "free_fall"]],
+        "why": "exterior covers the outside of one horizon alone, where the hole is static; the Killing "
+               "vector of that chart extends to no symmetry of the whole spacetime (Brill 1996, section 4; "
+               "Aminneborg, Bengtsson, Brill, Holst and Peldan 1998, section V)",
+    },
     "moving_mirror": {
         "regions": [["inertial", "null", "mirror_rest"]],
         "why": "thermal, collapse and rindler are three mirrors, Carlitz and Willey's, the one that imitates a "

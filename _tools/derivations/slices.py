@@ -1403,6 +1403,25 @@ def _ads_poincare():
     return [Mark(m, across(0.0, 0.0, x))]
 
 
+def _btz_multi(system):
+    """The moment of time symmetry of many black holes and wormholes, the hyperbolic plane t = 0 of the
+    sausage chart out to the embedding's reach in rho, at l = 1. On the planes through the axis it
+    is rho itself in the sausage and free fall charts, whose T = 0 is the same moment with the same
+    rho. In the stereographic chart it is the hyperbola c tau = -2(1 + rho^2)/(1 - rho^2) over
+    x = 4 rho/(1 - rho^2), since U = 0 there and (V, X) = (-c tau, x)/2. In the exterior chart it
+    is t = 0 from the horizon r_+ = 2 arccosh(2)/pi out to the edge of the sheet on phi = 0, where
+    V = r/sqrt(M)."""
+    m, = moments("btz_multi_holes_wormholes")
+    lo, hi = m.reach("sausage", "\\rho")
+    if system in ("sausage", "free_fall"):
+        return [Mark(m, along(0.0, lo, hi))]
+    if system == "stereographic":
+        rho = np.linspace(lo, hi, N)
+        return [Mark(m, [np.column_stack([-2 * (1 + rho ** 2) / (1 - rho ** 2), 4 * rho / (1 - rho ** 2)])])]
+    horizon = 2 * math.acosh(2) / math.pi
+    return [Mark(m, along(0.0, horizon, horizon * (1 + hi ** 2) / (1 - hi ** 2)))]
+
+
 def btz_rstar(r):
     """The BTZ hole's r_* = (1/2) ln|(r - 1)/(r + 1)| at M = 1, l = 1, vanishing as r -> infinity,
     which fixes the Eddington-Finkelstein charts' v = ct + r_* and u = ct - r_*."""
@@ -2156,6 +2175,10 @@ FLAT = {
     ("bondi_sachs", "compactified", "equator"): _bondi_sphere(inverse=True),
     ("robinson_trautman", "axisymmetric", "equator"): _rt_fronts,
     ("btz", "stationary", "static"): lambda: _btz(),
+    ("btz_multi_holes_wormholes", "sausage", "fold"): lambda: _btz_multi("sausage"),
+    ("btz_multi_holes_wormholes", "stereographic", "fold"): lambda: _btz_multi("stereographic"),
+    ("btz_multi_holes_wormholes", "free_fall", "fold"): lambda: _btz_multi("free_fall"),
+    ("btz_multi_holes_wormholes", "exterior", "radial"): lambda: _btz_multi("exterior"),
     ("btz", "eddington_finkelstein_ingoing", "static"): lambda: _btz(1),
     ("btz", "eddington_finkelstein_outgoing", "static"): lambda: _btz(-1),
     ("reissner_nordstrom_de_sitter", "static", "radial"): lambda: _rnds("static"),

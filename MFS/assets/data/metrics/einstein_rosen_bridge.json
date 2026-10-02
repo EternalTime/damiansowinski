@@ -92,6 +92,11 @@
       "id": "ab_metrics",
       "kind": "family",
       "text": "B I continued through $r = b$ is a bridge of the same kind, two asymptotically flat regions joined at a neck [hruska2019]."
+    },
+    {
+      "id": "btz_multi_holes_wormholes",
+      "kind": "family",
+      "text": "Bridges of three dimensions with a negative cosmological constant, where one junction can join any number of exteriors, each the outside of a BTZ black hole [brill1996, steif1996]."
     }
   ],
   "references": [
@@ -118,7 +123,9 @@
     "clifton2012",
     "hoffmann1935",
     "tahvildarzadeh2011",
-    "hruska2019"
+    "hruska2019",
+    "brill1996",
+    "steif1996"
   ],
   "coordinates": [
     {

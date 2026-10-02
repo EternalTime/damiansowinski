@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 157,
+  "count": 158,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1512,6 +1512,11 @@
           "id": "plebanski_hacyan",
           "kind": "family",
           "text": "Products that keep anti-de Sitter space of two dimensions as one factor, times a flat plane with a uniform electromagnetic field or times a hyperbolic plane with none [ortaggio2002direct]."
+        },
+        {
+          "id": "btz_multi_holes_wormholes",
+          "kind": "locally_same",
+          "text": "In three dimensions, anti-de Sitter space cut along several timelike surfaces and glued back together is a spacetime with many black holes, or one black hole with a wormhole inside [brill1996, aminneborg1998]."
         }
       ],
       "references": [
@@ -1557,7 +1562,9 @@
         "son2008",
         "bicak1999",
         "griffiths2004",
-        "ortaggio2002direct"
+        "ortaggio2002direct",
+        "brill1996",
+        "aminneborg1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -2507,6 +2514,11 @@
           "id": "ads_soliton",
           "kind": "dual",
           "text": "The hole without rotation with its time and its angle exchanged. In three dimensions that is anti-de Sitter space itself, and in four or more a smooth spacetime of negative energy [horowitz1998]."
+        },
+        {
+          "id": "btz_multi_holes_wormholes",
+          "kind": "composite",
+          "text": "More cuts through anti-de Sitter space make several BTZ exteriors joined behind their horizons, or one exterior with a handle inside. Dieter Brill and Alan Steif found the first in 1995 [brill1996, steif1996, aminneborg1998]."
         }
       ],
       "references": [
@@ -2534,7 +2546,10 @@
         "cvetic1999",
         "poisson1989",
         "chan1996",
-        "horowitz1998"
+        "horowitz1998",
+        "brill1996",
+        "steif1996",
+        "aminneborg1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz.json",
@@ -14723,6 +14738,11 @@
           "id": "ab_metrics",
           "kind": "family",
           "text": "B I continued through $r = b$ is a bridge of the same kind, two asymptotically flat regions joined at a neck [hruska2019]."
+        },
+        {
+          "id": "btz_multi_holes_wormholes",
+          "kind": "family",
+          "text": "Bridges of three dimensions with a negative cosmological constant, where one junction can join any number of exteriors, each the outside of a BTZ black hole [brill1996, steif1996]."
         }
       ],
       "references": [
@@ -14749,7 +14769,9 @@
         "clifton2012",
         "hoffmann1935",
         "tahvildarzadeh2011",
-        "hruska2019"
+        "hruska2019",
+        "brill1996",
+        "steif1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_bridge.json",
@@ -17993,6 +18015,11 @@
           "id": "tippett_tsang",
           "kind": "family",
           "text": "A time machine that fits in a box. Tippett and Tsang counted Gott's strings among the models that need matter spread out to infinity, and built a compact bubble in 2017, whose wall needs exotic matter [tippett2017]."
+        },
+        {
+          "id": "btz_multi_holes_wormholes",
+          "kind": "family",
+          "text": "Sören Holst carried Gott's pair to anti-de Sitter space in a chart with Poincaré's disc at every moment, the sausage coordinates in which the black holes and wormholes of three dimensions were then drawn [holst1996, aminneborg1998]."
         }
       ],
       "references": [
@@ -18018,7 +18045,8 @@
         "dedeo2002",
         "morris1988prl",
         "ori2005",
-        "tippett2017"
+        "tippett2017",
+        "aminneborg1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gott_time_machine.json",
@@ -30369,6 +30397,305 @@
       ]
     },
     {
+      "id": "btz_multi_holes_wormholes",
+      "name": "Many Black Holes and Wormholes in Three Dimensions",
+      "short_name": "Many Black Holes and Wormholes in Three Dimensions",
+      "description": "Anti-de Sitter space of three dimensions cut along timelike surfaces and glued back together, which makes any number of black holes joined behind their horizons, or one black hole with a wormhole of any genus inside it. Every exterior is that of a Bañados-Teitelboim-Zanelli black hole, and the whole spacetime is drawn on Poincaré's disc.",
+      "tags": [
+        "black hole",
+        "multiple black holes",
+        "wormhole",
+        "BTZ black hole",
+        "anti-de Sitter",
+        "negative cosmological constant",
+        "cosmological constant",
+        "constant curvature",
+        "hyperbolic space",
+        "multiply connected",
+        "topology",
+        "topological geon",
+        "topological censorship",
+        "time symmetric",
+        "initial data",
+        "closed universe",
+        "Misner space",
+        "horizon",
+        "event horizon",
+        "causal structure",
+        "AdS/CFT",
+        "holography",
+        "three-dimensional",
+        "2+1 dimensional gravity",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model",
+        "Einstein space",
+        "conformally flat"
+      ],
+      "signature": "(-,+,+)",
+      "convention": "We keep factors of $c$ explicit. Each chart covers a part of anti-de Sitter space of radius $\\ell$, and the spacetime is the region of it between timelike surfaces that are identified in pairs.",
+      "related": [
+        {
+          "id": "btz",
+          "kind": "piece",
+          "text": "Outside each horizon the spacetime is exactly the exterior of a BTZ black hole without rotation. One pair of glued surfaces alone makes that hole whole [brill1996]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "locally_same",
+          "text": "Every point of these spacetimes has a neighbourhood that is anti-de Sitter space of three dimensions. They differ from it only in which points count as the same [brill1996, aminneborg1998]."
+        },
+        {
+          "id": "point_particle_2plus1",
+          "kind": "family",
+          "text": "Glue the two edges of a wedge of the hyperbolic plane and you get a point particle where the strip between two lines gives a black hole. Steif put particles and holes on the same disc and found when a horizon forms around them [steif1996]."
+        },
+        {
+          "id": "topological_black_hole",
+          "kind": "family",
+          "text": "The same construction in four dimensions, by four of the same authors. Åminneborg, Bengtsson, Holst, and Peldán identified points of anti-de Sitter space there and got horizons of genus two or more [aminneborg1996]."
+        },
+        {
+          "id": "rp3_geon",
+          "kind": "family",
+          "text": "A black hole with one exterior and a topology of its own behind the horizon, made from Schwarzschild's spacetime by an identification. Åminneborg and his coauthors gave it as the example of such a hole in four dimensions [aminneborg1998, friedman1993]."
+        },
+        {
+          "id": "misner_brill_lindquist",
+          "kind": "family",
+          "text": "A moment of rest holding many black holes in four dimensions. There two holes may or may not share an outer horizon, and in three dimensions with an open universe they always do [brill1996, steif1996]."
+        },
+        {
+          "id": "einstein_rosen_bridge",
+          "kind": "family",
+          "text": "The moment of rest of one hole is a bridge between two outsides, which Steif set beside Einstein and Rosen's. With three or more outsides the bridge becomes a junction [steif1996, brill1996]."
+        },
+        {
+          "id": "misner",
+          "kind": "family",
+          "text": "Minkowski space identified under a boost. These spacetimes end where their glued surfaces cross, in a singularity of Misner's kind with the curvature finite [brill1996, misner1967]."
+        },
+        {
+          "id": "gott_time_machine",
+          "kind": "family",
+          "text": "Sören Holst put Gott's time machine in anti-de Sitter space using the chart in which these spacetimes are drawn, with Poincaré's disc at every moment. With Hans-Jürgen Matschull he showed that the pair of particles there is a rotating BTZ hole [holst1996, holst1999]."
+        }
+      ],
+      "references": [
+        "banados1993",
+        "brill2000",
+        "banados1992",
+        "brill1996",
+        "steif1996",
+        "misner1967",
+        "aminneborg1998",
+        "friedman1993",
+        "balasubramanian2014",
+        "skenderis2011",
+        "aminneborg1996",
+        "holst1996",
+        "holst1999"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz_multi_holes_wormholes.json",
+      "charts": [
+        {
+          "id": "sausage",
+          "name": "Sausage",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in \\left(-\\pi\\ell/2c,\\, \\pi\\ell/2c\\right)",
+            "\\rho \\in [0, \\ell)",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Anti-de Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = -1/\\ell^2$"
+            }
+          ],
+          "convention": "We use sausage coordinates $(t, \\rho, \\phi)$, with $t$ carrying dimensions of time and $\\rho$ a length, in which every moment of $t$ is Poincaré's disc of radius $\\ell$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(\\dfrac{\\ell^2 + \\rho^2}{\\ell^2 - \\rho^2}\\right)^2c^2dt^2 + \\dfrac{4\\ell^4}{\\left(\\ell^2 - \\rho^2\\right)^2}\\left(d\\rho^2 + \\rho^2d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\left(\\rho^2 + \\ell^2\\right)^2}{\\left(\\rho + \\ell\\right)^2\\left(\\rho - \\ell\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{4\\ell^4}{\\left(\\rho + \\ell\\right)^2\\left(\\rho - \\ell\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{4\\rho^2\\,\\ell^4}{\\left(\\rho + \\ell\\right)^2\\left(\\rho - \\ell\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{12}{\\ell^4}"
+        },
+        {
+          "id": "stereographic",
+          "name": "Stereographic",
+          "coordinates": [
+            "\\tau",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, 0)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "x^2 + y^2 - c^2\\tau^2 < 4\\ell^2"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Anti-de Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = -1/\\ell^2$"
+            }
+          ],
+          "convention": "We use stereographic coordinates $(\\tau, x, y)$, with $\\tau$ carrying dimensions of time and $x$ and $y$ lengths, centred on the event $\\tau = x = y = 0$ at which the identified surfaces meet. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{-c^2d\\tau^2 + dx^2 + dy^2}{\\left(1 - \\dfrac{x^2 + y^2 - c^2\\tau^2}{4\\ell^2}\\right)^2}",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{16\\ell^4}{\\left(x^2 + y^2 - c^2\\,\\tau^2 - 4\\ell^2\\right)^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{16\\ell^4}{\\left(x^2 + y^2 - c^2\\,\\tau^2 - 4\\ell^2\\right)^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{16\\ell^4}{\\left(x^2 + y^2 - c^2\\,\\tau^2 - 4\\ell^2\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{12}{\\ell^4}"
+        },
+        {
+          "id": "free_fall",
+          "name": "Free Fall",
+          "coordinates": [
+            "T",
+            "\\rho",
+            "\\phi"
+          ],
+          "domains": [
+            "T \\in \\left(-\\pi\\ell/2c,\\, \\pi\\ell/2c\\right)",
+            "\\rho \\in [0, \\ell)",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Anti-de Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = -1/\\ell^2$"
+            }
+          ],
+          "convention": "We use coordinates $(T, \\rho, \\phi)$, with $T$ the proper time of the observers who fall freely from rest at the moment of time symmetry $T = 0$, and $\\rho$ and $\\phi$ their place on Poincaré's disc at that moment. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dT^2 + \\cos^2(cT/\\ell)\\,\\dfrac{4\\ell^4}{\\left(\\ell^2 - \\rho^2\\right)^2}\\left(d\\rho^2 + \\rho^2d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{4\\ell^4\\cos^2(cT/\\ell)}{\\left(\\rho + \\ell\\right)^2\\left(\\rho - \\ell\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{4\\rho^2\\,\\ell^4\\cos^2(cT/\\ell)}{\\left(\\rho + \\ell\\right)^2\\left(\\rho - \\ell\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{12}{\\ell^4}"
+        },
+        {
+          "id": "exterior",
+          "name": "Exterior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in \\left(\\sqrt{M}\\,\\ell,\\, \\infty\\right)",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Anti-de Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = -1/\\ell^2$"
+            },
+            {
+              "symbol": "M",
+              "description": "Mass of the black hole seen from one exterior, dimensionless, $M = 8Gm/c^2$ for a hole of mass $m$, with $G$ Newton's constant in three dimensions; its horizon is a circle of length $2\\pi\\sqrt{M}\\,\\ell$"
+            }
+          ],
+          "convention": "We use Schwarzschild coordinates $(t, r, \\phi)$ outside one horizon, with $t$ carrying dimensions of time and $2\\pi r$ the length of a circle of $\\phi$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(\\dfrac{r^2}{\\ell^2} - M\\right)c^2dt^2 + \\dfrac{dr^2}{\\dfrac{r^2}{\\ell^2} - M} + r^2d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{M\\,\\ell^2 - r^2}{\\ell^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\ell^2}{r^2 - M\\,\\ell^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{12}{\\ell^4}"
+        }
+      ]
+    },
+    {
       "id": "mass_inflation",
       "name": "Mass Inflation Inside a Charged Black Hole",
       "short_name": "Mass Inflation",
@@ -32112,6 +32439,11 @@
           "id": "small_universes",
           "kind": "family",
           "text": "Friedmann universes with points of space identified under translations, as events are identified here under a boost. The translations make space a torus and no closed timelike curve [lachiezerey1995]."
+        },
+        {
+          "id": "btz_multi_holes_wormholes",
+          "kind": "family",
+          "text": "Anti-de Sitter space of three dimensions cut and glued under several boosts at once. Each black hole's singularity is of the kind Misner space has, with the curvature finite [brill1996]."
         }
       ],
       "references": [
@@ -32134,7 +32466,8 @@
         "ori2005",
         "tippett2017",
         "parikh2003",
-        "lachiezerey1995"
+        "lachiezerey1995",
+        "brill1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner.json",
@@ -32418,6 +32751,11 @@
           "id": "brill_waves",
           "kind": "family",
           "text": "The same kind of moment with gravitational waves where the holes are. Brill's slice of 1959 has no poles in $\\psi$ and no throats, only a wave of freely chosen shape, and a positive mass all the same [brill1959]."
+        },
+        {
+          "id": "btz_multi_holes_wormholes",
+          "kind": "family",
+          "text": "Brill's moment of rest for many black holes in three dimensions, cut from the hyperbolic plane and glued. The one constraint there is that the slice has constant negative curvature [brill1996]."
         }
       ],
       "references": [
@@ -32450,7 +32788,8 @@
         "wheeler1983",
         "clifton2012",
         "friedman1993",
-        "brill1959"
+        "brill1959",
+        "brill1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner_brill_lindquist.json",
@@ -38976,6 +39315,11 @@
           "id": "btz",
           "kind": "family",
           "text": "The same world with a negative cosmological constant grows a black hole. The cones lie between anti-de Sitter space and the lightest hole, and two particles that collide hard enough make one [banados1992, matschull1999]."
+        },
+        {
+          "id": "btz_multi_holes_wormholes",
+          "kind": "family",
+          "text": "With a negative cosmological constant the same cutting and gluing makes black holes, any number of them joined behind their horizons. Alan Steif put particles and holes on one hyperbolic plane in 1995 [steif1996, brill1996]."
         }
       ],
       "references": [
@@ -38995,7 +39339,9 @@
         "witten1988",
         "deser1984cosmological",
         "banados1992",
-        "matschull1999"
+        "matschull1999",
+        "steif1996",
+        "brill1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/point_particle_2plus1.json",
@@ -41769,6 +42115,11 @@
           "id": "misner_brill_lindquist",
           "kind": "programme",
           "text": "Wormhole data from Misner and Wheeler's programme of 1957. Its one hole in isotropic coordinates is the geon's moment $t = 0$ before the fold [misner1957]."
+        },
+        {
+          "id": "btz_multi_holes_wormholes",
+          "kind": "family",
+          "text": "Black holes of three dimensions with one exterior and a handle behind the horizon, made by identifying points of anti-de Sitter space. Their authors called them topological geons too [aminneborg1998]."
         }
       ],
       "references": [
@@ -41783,7 +42134,8 @@
         "louko2010",
         "gibbons1986elliptic",
         "gannon1975",
-        "louko2005"
+        "louko2005",
+        "aminneborg1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rp3_geon.json",
@@ -49405,6 +49757,11 @@
           "id": "ab_metrics",
           "kind": "special_case",
           "text": "The hyperbolic and the flat hole without the cosmological constant, $L \\to \\infty$, are A II and A III of Ehlers and Kundt's table, with $\\mu = -b$ [hruska2019]."
+        },
+        {
+          "id": "btz_multi_holes_wormholes",
+          "kind": "family",
+          "text": "The cutting and gluing done in three dimensions, where the handles sit behind the horizon and the outsides are those of BTZ holes. Four of the five authors made the topological holes of four dimensions [aminneborg1996, aminneborg1998]."
         }
       ],
       "references": [
@@ -49432,7 +49789,8 @@
         "horowitz1998",
         "caldarelli2001extremal",
         "cardoso2004",
-        "hruska2019"
+        "hruska2019",
+        "aminneborg1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/topological_black_hole.json",
