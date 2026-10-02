@@ -578,6 +578,14 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `spherical/through`: the line $ct = 0$ from $x = -16$ to $16$.
 - `spherical`, the half diamond: the line $T = 0$ from the centre through the surface to $r = 28.76$.
 
+### Bonnor-Vaidya
+
+- The embedding is four moments of constant $v - r$ in the ingoing chart, $-3$, $-2$, $-1$ and $-0.4608\,M$, each from $r = 0$ to $4\,M$, flat inside the charged shell, which crosses the moment at $r = -(v - r)$; the last is the moment the shell reaches $r = q^2/2M$.
+- `eddington_finkelstein_ingoing/shell`, drawn against $v - r$: four horizontal lines from $r = 0$ to $4\,M$.
+- `eddington_finkelstein_outgoing/shell` and the conformal view `leaving` draw the leaving shell, the time reverse: not visible.
+- `homothetic/scaling` draws the collapse of a mass and a charge that grow with the advanced time, another spacetime: not visible.
+- `shell` and `bounce`, the conformal views: each moment through the flat map inside the shell and the tower's ingoing map outside it, met at the shell; every moment lies before the turn, so it is the same curve on both.
+
 ### Vaidya
 
 - The embedding is four moments of constant $v - r$ in the ingoing chart, $-3$, $-1.5$, $-0.5$ and $1\,r_s$, since a moment of constant $v$ is a light cone; each runs from $r = 0$ to $4\,r_s$, flat inside the shell, which falls along $v = 0$ and so crosses the moment at $r = -(v - r)$, and Flamm's paraboloid moved in by $r_s$ outside it.

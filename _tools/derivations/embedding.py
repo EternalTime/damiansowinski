@@ -4603,6 +4603,83 @@ def vaidya(ck, src):
                        "mass of the shell, as in the conformal diagram.")]
 
 
+def bonnor_vaidya(ck, src):
+    """The charged shell the other diagrams draw: the ingoing chart with m = q = 0 for v < 0 and
+    m = M = 1, q = 24/25 for v > 0. A slice of constant v is null, so the moments are slices of
+    constant v - r = T, on which the published metric pulls back, with v = T + r, to
+    (1 + 2m/r - q^2/r^2) dr^2 + r^2 dphi^2. Inside the shell, at r < -T, the surface is a flat
+    disc, which is checked; outside, dz/dr = sqrt(2M/r - q^2/r^2), so with s = sqrt(2Mr - q^2)
+    z = 2s - 2q arctan(s/q), which lies level on the sphere r = q^2/2M and has no real height
+    inside it. The shell folds the surface where the two meet, by the angle whose tangent is
+    sqrt(2M/R - q^2/R^2) at the shell's radius R = -T, and the fold is gone when the shell
+    reaches q^2/2M = 288/625, where its energy density changes sign: the last moment drawn. The
+    event horizon, u = v - 2r = -2 r_+ inside and r = r_+ = 32/25 outside, is r = T + 2 r_+ on
+    the disc while the shell is outside r_+; r_- = 18/25 is marked once the shell is inside it."""
+    top = 4.0
+    size = 2 * top
+    q, rp, rm = nr.slices.BV_Q, nr.slices.BV_RP, nr.slices.BV_RM
+    turn = q * q / 2
+    rim = ("edge", "the surface runs on, climbing as $2\\sqrt{2Mr}$, to $r \\to \\infty$")
+
+    def slice_at(T, m, charge):
+        return Slice(src, "bonnor_vaidya", "eddington_finkelstein_ingoing", "r", "\\phi", {"theta": "pi/2"}, {},
+                     {"m": m, "q": charge}, along={"v": f"{T!r} + r"})
+
+    def height(r):
+        root = np.sqrt(np.maximum(2 * r - q * q, 0.0))
+        return 2 * root - 2 * q * np.arctan(root / q)
+
+    def moment(T):
+        where = f"Bonnor-Vaidya, v - r = {T:g}"
+        R = -T
+        flat, hole = slice_at(T, "0", "0"), slice_at(T, "1", "Rational(24, 25)")
+        ck.plane(f"{where}, inside the shell", flat, np.linspace(1e-3, R, 200))
+        inside = Piece("inside", "sheet", flat, 0.0, R, 0.0, 1,
+                       (("axis", "the centre $r = 0$, where space is flat until the shell arrives"),
+                        ("crease", "the shell of charged radiation, where the surface folds")),
+                       [(R, "surface", None)] + ([(T + 2 * rp, "horizon", None)] if 0 < T + 2 * rp < R else []), size)
+        outside = Piece("outside", "sheet", hole, R, top, 0.0, 1, (("crease", "the shell"), rim),
+                        [(x, "horizon", None) for x in (rm, rp) if R < x] + [(r, "r", None) for r in (2.0, 3.0, top) if r > R],
+                        size, digits=None if R > turn else LORENTZ_DIGITS)
+            # Leaving the sphere q^2/2M the surface climbs as (r - q^2/2M)^(3/2), so the last moment's
+        # first chords are short and nearly level, and its profile is written to more decimals.
+        # The rim of the drawing, r = 4M, stands at z = 0 at every moment.
+        shift = -outside.z[-1]
+        inside.z, outside.z = inside.z + shift, outside.z + shift
+        ck.add(f"{where}, the two sides meet at the shell: one point",
+               float(np.max(np.abs(np.array(inside.at(R)) - outside.at(R)))), JOIN)
+        ck.form(f"{where}, outside the shell z = 2s - 2q arctan(s/q), s = sqrt(2Mr - q^2)", outside,
+                lambda r, R=R, shift=shift: height(r) - height(R) + shift, size)
+        if R > turn:
+            tangent = outside.sl.slope(R, "+")
+            ck.add(f"{where}, the fold at the shell is sqrt(2M/R - q^2/R^2)",
+                   abs(float(tangent[1] / tangent[0]) - math.sqrt(2 / R - q * q / R ** 2)), 1e-6)
+        for p in (inside, outside):
+            ck.isometry(f"{where}, {p.id}", p)
+        return Surface([inside, outside], label=f"$v - r = {T:g}\\,M$", time=T)
+
+    # A frame every M/16 of v - r, which holds each moment of the flat views, and the last on the
+    # sphere q^2/2M itself.
+    frames = [moment(-3.0 + k / 16) for k in range(41)] + [moment(-turn)]
+    ck.add("Bonnor-Vaidya: the surface lies level at the shell when it reaches q^2/2M",
+           abs(float(frames[-1].pieces[1].sl.slope(turn, "+")[1])), 1e-6)
+    surfaces = [frames[k] for k in (0, 16, 32, 41)]
+    fig = movie_figure(frames, {"sheet": "cover"}, size)
+    fig.legend("fill", "cover", "the slice of constant $v - r$, which $v$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $2$, $3$ and $4\\,M$")
+    fig.legend("line", "surface", "the shell of charged radiation, where the surface folds")
+    fig.legend("line", "horizon", "the event horizon, which forms at the centre at $v = -2r_+$ and grows through flat "
+                                  "space to meet the shell at $r_+ = 1.28\\,M$, and the sphere $r_- = 0.72\\,M$ once "
+                                  "the shell is inside it")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("shell", "The falling charged shell", "$M$", surfaces, fig.done(),
+                 movie=movie(frames, "$v - r$", [f.time for f in frames]),
+                 settings="$M = 1$, the unit of every length, and $q = 0.96\\,M$; each moment is a slice of constant "
+                          "$v - r$.",
+                 input="A falling shell of charged null dust, $m = q = 0$ for $v < 0$ and $m = M$, $q = 0.96\\,M$ for "
+                       "$v > 0$, as in the conformal diagram.")]
+
+
 def photon_rocket(ck, src):
     """Kinnersley's rocket through the burn its spacetime diagrams declare, in units of the mass
     m_0 it starts with: the surface theta = pi/2 of the rectilinear chart, the rays that leave
@@ -9242,6 +9319,7 @@ DRAWN = {
     "hayward": hayward,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "vaidya": vaidya,
+    "bonnor_vaidya": bonnor_vaidya,
     "oppenheimer_snyder": oppenheimer_snyder,
     "tolman_bondi": tolman_bondi,
     "bertotti_robinson": bertotti_robinson,
@@ -10019,6 +10097,20 @@ CAPTIONS = {
         "wherever $\\alpha r$ is large, and inside it the surface is the paraboloid of the lighter mass, "
         "$z^2 = 8mr$ with $m = 0.30\\,m_0$. The circle $r = 2m$ shrinks from $2\\,m_0$ to $0.60\\,m_0$ while the "
         "light of the burn passes it.",
+    ],
+    ("bonnor_vaidya", "shell"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of space around a shell of charged radiation falling inward, from "
+        "$v - r = -3\\,M$ to $-0.46\\,M$, each moment drawn as a surface in flat space with every distance along "
+        "it the metric distance. A slice of constant $v$ is a light cone, so the moments are slices of constant "
+        "$v - r$, which carry the metric $(1 + 2m/r - q^2/r^2)\\,dr^2 + r^2d\\phi^2$. Inside the shell "
+        "$m = q = 0$ and the surface is a flat disc. Outside it $m = M$ and $q = 0.96\\,M$, and the surface "
+        "climbs at $dz/dr = \\sqrt{2M/r - q^2/r^2}$, more gently than Vaidya's paraboloid $z^2 = 8Mr$ at every "
+        "radius.",
+        "The energy of the shell folds the surface where the two meet, by the slope $\\sqrt{2M/R - q^2/R^2}$ at "
+        "the shell's radius $R$. The fold sharpens until the shell reaches $R = q^2/M$ and then flattens, and at "
+        "$R = q^2/2M = 0.46\\,M$ it is gone: there the energy density of the shell is zero, and the last "
+        "moment is drawn. The event horizon forms at the centre at $v = -2.56\\,M$ and grows through the flat "
+        "interior to meet the shell at $r_+ = 1.28\\,M$, where it stays.",
     ],
     ("vaidya", "shell"): [
         "The equatorial plane ($\\theta = \\pi/2$) of space around a shell of radiation falling inward, from "

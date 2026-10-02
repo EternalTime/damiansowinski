@@ -1,0 +1,5511 @@
+{
+  "id": "bonnor_vaidya",
+  "name": "Bonnor-Vaidya Charged Radiating Star",
+  "short_name": "Bonnor-Vaidya",
+  "description": "Vaidya's radiating star with a charge: the field of a spherical body that sends out, or takes in, null dust carrying electric charge as well as energy, found by William Bonnor and Prahlad Vaidya in 1970 as an exact solution of the Einstein-Maxwell equations. Its mass and its charge are functions of a null time, and where both are constant it is the charged black hole of Reissner and Nordström.",
+  "tags": [
+    "null dust",
+    "charged null dust",
+    "charged",
+    "electric charge",
+    "electromagnetic field",
+    "Einstein-Maxwell",
+    "radiating",
+    "accreting",
+    "spherically symmetric",
+    "time-dependent",
+    "black hole",
+    "charged black hole",
+    "mass",
+    "horizon",
+    "event horizon",
+    "apparent horizon",
+    "Cauchy horizon",
+    "inner horizon",
+    "curvature singularity",
+    "naked singularity",
+    "weak energy condition",
+    "energy conditions",
+    "third law",
+    "self-similar",
+    "homothetic",
+    "Vaidya",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We work in units with $c = 1$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "Light carries energy away from a star, and Vaidya's metric follows the mass of the star as it goes [vaidya1951]. Could the light carry electric charge away too? The question came up at Queen Elizabeth College in London, where Prahlad Vaidya was visiting William Bonnor on a British Council exchange, and their answer reached the journal on 10 April 1970 [bonnor1970]. They gave solutions of the Einstein-Maxwell equations \"describing the emission of charged null fluid from a spherically symmetric body\" [bonnor1970]. A null fluid is a stream of light, every parcel of it moving straight out at the speed of light, and theirs carries charge along with its energy [bonnor1970]. About nature they were candid: charged null fluid \"is a model for a charged photon fluid, though whether the latter exists in nature remains to be seen\" [bonnor1970].¶The recipe is Vaidya's own, used twice: take the charged black hole of Reissner and Nordström and let its mass $m$ and its charge $q$ both depend on the moment at which a light ray leaves the star, so that each ray carries off a little of both [bonnor1970, ori1991charged]. The metric keeps Reissner-Nordström's $1 - 2m/r + q^2/r^2$, with $m$ and $q$ now changing from one ray to the next [ori1991charged]. Its electric field surprised them: it \"varies as $r^{-2}$, and is parallel to the direction of energy propagation\" [bonnor1970]. In Vaidya's earlier radiating star with a field, they noted, the field lies across the rays and falls off as $1/r$ [bonnor1970]. The line element itself was already on paper: it turns up in February 1968 in Jerzy Plebański and John Stachel's sorting of the Einstein tensors possible in spherical symmetry, two years before Bonnor and Vaidya gave it a physical reading [plebanski1968, bick2026].¶Run the film backward and the charged light falls in, onto a charged black hole or onto empty space, and there the metric misbehaves: close in, the dust has negative energy [ori1991charged]. Its energy density is proportional to $\\dot m - q\\dot q/r$, with the dot a derivative along the rays, so it is negative inside the radius $r_c = q\\dot q/\\dot m$ whenever the charge grows with the mass [ori1991charged]. From 1980 to 1991 that was taken as it stood, the dust moving on geodesics with the negative energy accepted [kehle2024]. The negative energy was even put to work: in Yasuhito Kaminaga's model of 1990 it shrinks a charged black hole away, as evaporation would [kaminaga1990, chatterjee2016]. Kayll Lake and T. Zannias let the mass and the charge grow in step with the advanced time, so that the collapse looks the same at every scale, and found that it generically ends in a naked singularity [lake1991, koh2024]. To Amos Ori it was \"rather disturbing\" that a model as simple as \"a stream of massless charged particles\" should lead to \"the undesired result of negative energies\" [ori1991charged].¶The earlier readings had left out the electric force [chatterjee2016]. A charge falling toward a like charge is pushed back, light or not, and Ori derived from the Einstein-Maxwell equations an equation of motion for the dust with a Lorentz force in it [ori1991charged]. Picture a ball thrown up a hill: the dust loses energy all the way in, and at $r_c$ its energy \"has been reduced to zero\" [ori1991charged]. There it turns round and leaves along an outgoing ray, gaining energy as it goes [ori1991charged]. Where the turning surface is spacelike, the spacetime to its future is a piece of Bonnor and Vaidya's outgoing metric, and \"charged null fluid always satisfies the weak energy condition\" [ori1991charged].¶Can a charged black hole be fed until its two horizons merge and its surface gravity drops to zero, all in a finite time? Werner Israel's third law of black hole mechanics of 1986 says no, provided the infalling matter has a bounded energy tensor and positive energy near the apparent horizon [israel1986]. He and B. T. Sullivan had tried it on this dust in 1980 and found the extreme state within reach only where the dust has negative energy [sullivan1980, kehle2022]. With Ori's bounce the energy is positive everywhere, and the hole gets there all the same: Christoph Kehle and Ryan Unger built bouncing dust in 2024 in which \"a subextremal Reissner-Nordström apparent horizon can evolve into an extremal Reissner-Nordström event horizon in finite advanced time\" [kehle2024]. Their first counterexample to the third law, of 2022, uses a charged scalar field that starts from regular initial data [kehle2022].¶With the charge held fixed and only the mass varying, the same metric plays \"a very important role\" in Eric Poisson and Israel's mass inflation, the unbounded growth of the mass function at the inner horizon of a charged black hole [poisson1990, chatterjee2016]. Ori's bounce left one case open: where the turning surface is timelike the dust going in crosses the dust coming out, and for that \"as yet the analytic form of such a solution is unknown\" [ori1991charged]. By 2016 the bounce had been carried to higher dimensions and to anti-de Sitter space, by Soumyabrata Chatterjee, Suman Ganguli, and Amitabh Virmani [chatterjee2016]. The timelike case was reached in 2026, when David Bick showed that any timelike curve segment in the plane of time and radius of Minkowski or Reissner-Nordström spacetime is the bounce of some beam of charged null dust sent in from past null infinity [bick2026]. Kehle and Unger list what is still wrong with the dust: its density is unbounded along the bounce, and there its equations do not fix the future from initial data [kehle2024].",
+  "related": [
+    {
+      "id": "vaidya",
+      "kind": "special_case",
+      "text": "The same star with no charge to shed. With $q = 0$ the metric is Vaidya's [vaidya1951]."
+    },
+    {
+      "id": "rn_metric",
+      "kind": "special_case",
+      "text": "The charged black hole that neither gains nor loses. With $m$ and $q$ constant the metric is Reissner-Nordström's in Eddington-Finkelstein coordinates, with $r_s = 2m$ and $r_q = q$ [ori1991charged]."
+    },
+    {
+      "id": "schwarzschild",
+      "kind": "special_case",
+      "text": "No charge and a constant mass. The metric is then Schwarzschild's in Eddington-Finkelstein coordinates, with $r_s = 2m$."
+    }
+  ],
+  "references": [
+    "vaidya1951",
+    "bonnor1970",
+    "ori1991charged",
+    "plebanski1968",
+    "bick2026",
+    "kehle2024",
+    "kaminaga1990",
+    "chatterjee2016",
+    "lake1991",
+    "koh2024",
+    "israel1986",
+    "sullivan1980",
+    "kehle2022",
+    "poisson1990"
+  ],
+  "coordinates": [
+    {
+      "id": "eddington_finkelstein_outgoing",
+      "name": "Outgoing Eddington-Finkelstein",
+      "coords": [
+        "u",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "r^2 - 2mr + q^2 = 0 \\;\\text{(the marginally trapped spheres)}",
+        "r\\,\\partial_u m = q\\,\\partial_u q \\;\\text{(where the energy density of the null dust changes sign)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "m = m(u)",
+          "description": "Mass inside the sphere of radius $r$ at the retarded time $u$, a length, $m = GM/c^2$"
+        },
+        {
+          "symbol": "q = q(u)",
+          "description": "Charge inside that sphere, a length, $q^2 = GQ^2/(4\\pi\\epsilon_0c^4)$"
+        }
+      ],
+      "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded time $u$ a length and $r$ the areal radius. The mass $m(u)$ and the charge $q(u)$ are functions of $u$ alone, both lengths. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r} + \\dfrac{q^2}{r^2}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "-\\left(1 - \\dfrac{2m}{r} + \\dfrac{q^2}{r^2}\\right)"
+        },
+        {
+          "indices": [
+            "u",
+            "r"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "r^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "r^2\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "r"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1 - \\dfrac{2m}{r} + \\dfrac{q^2}{r^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{r^4\\,\\partial_u m - q\\,r^3\\,\\partial_u q - \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r^2 - 2m\\,r + q^2}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(r^2 - 2m\\,r + q^2\\right)\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{r\\,\\partial_u m - q\\,\\partial_u q}{r^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "r^2\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\,r - 3q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{2m\\,r - 3q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\,r - 3q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{2m\\,r - 3q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2m\\,r - 3q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(2m\\,r - 3q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r\\,\\partial_u m - q\\,\\partial_u q}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "-\\dfrac{r\\,\\partial_u m - q\\,\\partial_u q}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(r\\,\\partial_u m - q\\,\\partial_u q\\right)\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(r\\,\\partial_u m - q\\,\\partial_u q\\right)\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r^4\\,\\partial_u m - q\\,r^3\\,\\partial_u q - \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "-\\dfrac{r^4\\,\\partial_u m - q\\,r^3\\,\\partial_u q - \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^4\\,\\partial_u m - q\\,r^3\\,\\partial_u q - \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{r^4\\,\\partial_u m - q\\,r^3\\,\\partial_u q - \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(2m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2m\\,r - q^2}{r^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\,r - 3q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{2m\\,r - 3q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\,r - 3q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{2m\\,r - 3q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r^4\\,\\partial_u m - q\\,r^3\\,\\partial_u q - \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "\\dfrac{r^4\\,\\partial_u m - q\\,r^3\\,\\partial_u q - \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r^4\\,\\partial_u m - q\\,r^3\\,\\partial_u q - \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "-\\dfrac{r^4\\,\\partial_u m - q\\,r^3\\,\\partial_u q - \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(r^4\\,\\partial_u m - q\\,r^3\\,\\partial_u q - \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)\\right)\\sin^2\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(r^4\\,\\partial_u m - q\\,r^3\\,\\partial_u q - \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)\\right)\\sin^2\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(r^4\\,\\partial_u m - q\\,r^3\\,\\partial_u q - \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)\\right)\\sin^2\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(r^4\\,\\partial_u m - q\\,r^3\\,\\partial_u q - \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)\\right)\\sin^2\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\left(q^2\\sin^2\\theta - 2m\\,r\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\left(q^2\\sin^2\\theta - 2m\\,r\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\left(q^2\\sin^2\\theta - 2m\\,r\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\left(q^2\\sin^2\\theta - 2m\\,r\\sin^2\\theta\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{2r^4\\,\\partial_u m - 2q\\,r^3\\,\\partial_u q - q^2\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{q^2\\sin^2\\theta}{r^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{2r\\,\\partial_u m - 2q\\,\\partial_u q}{r^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^4\\,\\partial_u m - 2q\\,r^3\\,\\partial_u q + q^2\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{q^2}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{q^2\\csc^2\\theta}{r^6}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = \\dfrac{8\\left(6m^2\\,r^2 - 12m\\,q^2\\,r + 7q^4\\right)}{r^8}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{2r^4\\,\\partial_u m - 2q\\,r^3\\,\\partial_u q - q^2\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{q^2\\sin^2\\theta}{r^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{2r\\,\\partial_u m - 2q\\,\\partial_u q}{r^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r^4\\,\\partial_u m - 2q\\,r^3\\,\\partial_u q + q^2\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{q^2}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{q^2\\csc^2\\theta}{r^6}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\,r - 2q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{2m\\,r - 2q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\,r - 2q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{2m\\,r - 2q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{2\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\,r - 2q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2m\\,r - 2q^2}{r^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\,r - 2q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{2m\\,r - 2q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\,r - 2q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{2m\\,r - 2q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)\\sin^2\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)\\sin^2\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)\\sin^2\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)\\sin^2\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "2\\left(m\\,r - q^2\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-2\\left(m\\,r - q^2\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-2\\left(m\\,r - q^2\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "2\\left(m\\,r - q^2\\right)\\sin^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} - \\dfrac{m\\,r - q^2}{r^3}\\dot{u}^2 + r\\,\\dot{\\theta}^2 + r\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{r} - \\dfrac{r^4\\,\\partial_u m - q\\,r^3\\,\\partial_u q - \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^5}\\dot{u}^2 + \\dfrac{2m\\,r - 2q^2}{r^3}\\dot{u}\\dot{r} - \\dfrac{r^2 - 2m\\,r + q^2}{r}\\dot{\\theta}^2 - \\dfrac{\\left(r^2 - 2m\\,r + q^2\\right)\\sin^2\\theta}{r}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2}{r}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "eddington_finkelstein_ingoing",
+      "name": "Ingoing Eddington-Finkelstein",
+      "coords": [
+        "v",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "v \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "r^2 - 2mr + q^2 = 0 \\;\\text{(the marginally trapped spheres)}",
+        "r\\,\\partial_v m = q\\,\\partial_v q \\;\\text{(where the energy density of the null dust changes sign)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "m = m(v)",
+          "description": "Mass inside the sphere of radius $r$ at the advanced time $v$, a length, $m = GM/c^2$"
+        },
+        {
+          "symbol": "q = q(v)",
+          "description": "Charge inside that sphere, a length, $q^2 = GQ^2/(4\\pi\\epsilon_0c^4)$"
+        }
+      ],
+      "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v$ a length and $r$ the areal radius. The mass $m(v)$ and the charge $q(v)$ are functions of $v$ alone, both lengths. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r} + \\dfrac{q^2}{r^2}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "-\\left(1 - \\dfrac{2m}{r} + \\dfrac{q^2}{r^2}\\right)"
+        },
+        {
+          "indices": [
+            "v",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "r",
+            "v"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "r^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "r^2\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "v",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "r",
+            "v"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1 - \\dfrac{2m}{r} + \\dfrac{q^2}{r^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "v"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{r^4\\,\\partial_v m - q\\,r^3\\,\\partial_v q + \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r^2 - 2m\\,r + q^2}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(r^2 - 2m\\,r + q^2\\right)\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{r\\,\\partial_v m - q\\,\\partial_v q}{r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "v"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "r^2\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\,r - 3q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "r",
+                  "v"
+                ],
+                "value": "-\\dfrac{2m\\,r - 3q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "v",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\,r - 3q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r",
+                  "v"
+                ],
+                "value": "\\dfrac{2m\\,r - 3q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\theta",
+                  "v",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\theta",
+                  "\\theta",
+                  "v"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "v",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2m\\,r - 3q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "r",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\left(2m\\,r - 3q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "v",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r\\,\\partial_v m - q\\,\\partial_v q}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "v"
+                ],
+                "value": "-\\dfrac{r\\,\\partial_v m - q\\,\\partial_v q}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(r\\,\\partial_v m - q\\,\\partial_v q\\right)\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\left(r\\,\\partial_v m - q\\,\\partial_v q\\right)\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "v",
+                  "v",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r^4\\,\\partial_v m - q\\,r^3\\,\\partial_v q + \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "v",
+                  "\\theta",
+                  "v"
+                ],
+                "value": "\\dfrac{r^4\\,\\partial_v m - q\\,r^3\\,\\partial_v q + \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^4\\,\\partial_v m - q\\,r^3\\,\\partial_v q + \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "\\dfrac{r^4\\,\\partial_v m - q\\,r^3\\,\\partial_v q + \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "v",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "v",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "v",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "v"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(2m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2m\\,r - q^2}{r^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "v",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\,r - 3q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "r",
+                  "v"
+                ],
+                "value": "\\dfrac{2m\\,r - 3q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "v",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\,r - 3q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "r",
+                  "v"
+                ],
+                "value": "-\\dfrac{2m\\,r - 3q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\theta",
+                  "v",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r^4\\,\\partial_v m - q\\,r^3\\,\\partial_v q + \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\theta",
+                  "\\theta",
+                  "v"
+                ],
+                "value": "-\\dfrac{r^4\\,\\partial_v m - q\\,r^3\\,\\partial_v q + \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "v",
+                  "v",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r^4\\,\\partial_v m - q\\,r^3\\,\\partial_v q + \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "v",
+                  "\\theta",
+                  "v"
+                ],
+                "value": "\\dfrac{r^4\\,\\partial_v m - q\\,r^3\\,\\partial_v q + \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "v",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "v"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "v",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "v",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "v",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "v"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(r^4\\,\\partial_v m - q\\,r^3\\,\\partial_v q + \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)\\right)\\sin^2\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\left(r^4\\,\\partial_v m - q\\,r^3\\,\\partial_v q + \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)\\right)\\sin^2\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(r^4\\,\\partial_v m - q\\,r^3\\,\\partial_v q + \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)\\right)\\sin^2\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(r^4\\,\\partial_v m - q\\,r^3\\,\\partial_v q + \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)\\right)\\sin^2\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\left(q^2\\sin^2\\theta - 2m\\,r\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\left(q^2\\sin^2\\theta - 2m\\,r\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\left(q^2\\sin^2\\theta - 2m\\,r\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\left(q^2\\sin^2\\theta - 2m\\,r\\sin^2\\theta\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{2r^4\\,\\partial_v m - 2q\\,r^3\\,\\partial_v q + q^2\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r"
+                ],
+                "value": "-\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v"
+                ],
+                "value": "-\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{q^2\\sin^2\\theta}{r^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "-\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v"
+                ],
+                "value": "\\dfrac{2r\\,\\partial_v m - 2q\\,\\partial_v q}{r^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "r"
+                ],
+                "value": "-\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v"
+                ],
+                "value": "-\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^4\\,\\partial_v m - 2q\\,r^3\\,\\partial_v q - q^2\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{q^2}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{q^2\\csc^2\\theta}{r^6}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = \\dfrac{8\\left(6m^2\\,r^2 - 12m\\,q^2\\,r + 7q^4\\right)}{r^8}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{2r^4\\,\\partial_v m - 2q\\,r^3\\,\\partial_v q + q^2\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r"
+                ],
+                "value": "-\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v"
+                ],
+                "value": "-\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{q^2\\sin^2\\theta}{r^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "-\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v"
+                ],
+                "value": "\\dfrac{2r\\,\\partial_v m - 2q\\,\\partial_v q}{r^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "r"
+                ],
+                "value": "-\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v"
+                ],
+                "value": "-\\dfrac{q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2r^4\\,\\partial_v m - 2q\\,r^3\\,\\partial_v q - q^2\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{q^2}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{q^2\\csc^2\\theta}{r^6}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\,r - 2q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "r",
+                  "v"
+                ],
+                "value": "-\\dfrac{2m\\,r - 2q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "v",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\,r - 2q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r",
+                  "v"
+                ],
+                "value": "\\dfrac{2m\\,r - 2q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\theta",
+                  "v",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\theta",
+                  "\\theta",
+                  "v"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "v",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "r",
+                  "v"
+                ],
+                "value": "-\\dfrac{2\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "v",
+                  "v",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "v",
+                  "\\theta",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "v",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "v",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "v",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "v"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2m\\,r - 2q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2m\\,r - 2q^2}{r^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "v",
+                  "r"
+                ],
+                "value": "-\\dfrac{2m\\,r - 2q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "r",
+                  "v"
+                ],
+                "value": "\\dfrac{2m\\,r - 2q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "v",
+                  "r"
+                ],
+                "value": "\\dfrac{2m\\,r - 2q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "r",
+                  "v"
+                ],
+                "value": "-\\dfrac{2m\\,r - 2q^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\theta",
+                  "v",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\theta",
+                  "\\theta",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "v",
+                  "v",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "v",
+                  "\\theta",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "v",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "v"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "v",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "v",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "v",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "v"
+                ],
+                "value": "-\\dfrac{m\\,r - q^2}{r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)\\sin^2\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)\\sin^2\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)\\sin^2\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)\\sin^2\\theta}{r^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "v",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "v",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\left(m\\,r - q^2\\right)\\sin^2\\theta}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "2\\left(m\\,r - q^2\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-2\\left(m\\,r - q^2\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-2\\left(m\\,r - q^2\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "2\\left(m\\,r - q^2\\right)\\sin^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{v} + \\dfrac{m\\,r - q^2}{r^3}\\dot{v}^2 - r\\,\\dot{\\theta}^2 - r\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{r} + \\dfrac{r^4\\,\\partial_v m - q\\,r^3\\,\\partial_v q + \\left(m\\,r - q^2\\right)\\left(r^2 - 2m\\,r + q^2\\right)}{r^5}\\dot{v}^2 - \\dfrac{2m\\,r - 2q^2}{r^3}\\dot{v}\\dot{r} - \\dfrac{r^2 - 2m\\,r + q^2}{r}\\dot{\\theta}^2 - \\dfrac{\\left(r^2 - 2m\\,r + q^2\\right)\\sin^2\\theta}{r}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2}{r}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "homothetic",
+      "name": "Homothetic",
+      "coords": [
+        "V",
+        "R",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "V \\in (-\\infty, \\infty)",
+        "R \\in (0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "V \\to -\\infty \\;\\text{(the first ray, }v = 0\\text{, flat space before it)}",
+        "2\\mu R^3 - MR^2 + 2M^2R - MQ^2 = 0 \\;\\text{(the rays that keep their }R\\text{)}",
+        "R = Q^2/M \\;\\text{(where the energy density of the null dust changes sign)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "M",
+          "description": "Mass scale, a length: the mass is $m = Me^{\\mu V/M}$, which grows as $\\mu v$ in the advanced time $v = (M/\\mu)e^{\\mu V/M}$"
+        },
+        {
+          "symbol": "Q",
+          "description": "Charge scale, a length: the charge is $q = Qe^{\\mu V/M}$, in proportion to the mass"
+        },
+        {
+          "symbol": "\\mu",
+          "description": "Rate $dm/dv$ at which the mass grows, a pure number"
+        }
+      ],
+      "convention": "We use coordinates $(V, R, \\theta, \\phi)$, both lengths, for the mass and the charge that grow in proportion to the advanced time $v$: $V$ is its logarithm, $v = (M/\\mu)e^{\\mu V/M}$, and $R = rM/m$ is the areal radius $r$ in units of the mass $m = \\mu v$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = e^{2\\mu V/M}\\left(-\\left(1 - \\dfrac{2M}{R} + \\dfrac{Q^2}{R^2} - \\dfrac{2\\mu R}{M}\\right)dV^2 + 2\\,dV\\,dR + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "V",
+            "V"
+          ],
+          "value": "\\dfrac{\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)e^{2\\mu\\,V/M}}{M\\,R^2}"
+        },
+        {
+          "indices": [
+            "V",
+            "R"
+          ],
+          "value": "e^{2\\mu\\,V/M}"
+        },
+        {
+          "indices": [
+            "R",
+            "V"
+          ],
+          "value": "e^{2\\mu\\,V/M}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "R^2e^{2\\mu\\,V/M}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "R^2e^{2\\mu\\,V/M}\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "V",
+            "R"
+          ],
+          "value": "e^{-2\\mu\\,V/M}"
+        },
+        {
+          "indices": [
+            "R",
+            "V"
+          ],
+          "value": "e^{-2\\mu\\,V/M}"
+        },
+        {
+          "indices": [
+            "R",
+            "R"
+          ],
+          "value": "-\\dfrac{\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)e^{-2\\mu\\,V/M}}{M\\,R^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{e^{-2\\mu\\,V/M}}{R^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{e^{-2\\mu\\,V/M}\\csc^2\\theta}{R^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "V",
+                  "V",
+                  "V"
+                ],
+                "value": "\\dfrac{\\mu\\,R^3 + M^2\\,R - M\\,Q^2}{M\\,R^3}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-R"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-R\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "R",
+                  "V",
+                  "V"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)}{M\\,R^5}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "V",
+                  "R"
+                ],
+                "value": "\\dfrac{\\mu\\,R^3 - M^2\\,R + M\\,Q^2}{M\\,R^3}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "R",
+                  "V"
+                ],
+                "value": "\\dfrac{\\mu\\,R^3 - M^2\\,R + M\\,Q^2}{M\\,R^3}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2}{M\\,R}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)\\sin^2\\theta}{M\\,R}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "V",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\mu}{M}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "V"
+                ],
+                "value": "\\dfrac{\\mu}{M}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\mu}{M}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "\\dfrac{\\mu}{M}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "R",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{R}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "R"
+                ],
+                "value": "\\dfrac{1}{R}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "R",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{R}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "R"
+                ],
+                "value": "\\dfrac{1}{R}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "V",
+                  "V",
+                  "V"
+                ],
+                "value": "\\dfrac{\\mu\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)e^{2\\mu\\,V/M}}{M^2\\,R^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "V",
+                  "R"
+                ],
+                "value": "\\dfrac{\\left(\\mu\\,R^3 - M^2\\,R + M\\,Q^2\\right)e^{2\\mu\\,V/M}}{M\\,R^3}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "R",
+                  "V"
+                ],
+                "value": "\\dfrac{\\left(\\mu\\,R^3 - M^2\\,R + M\\,Q^2\\right)e^{2\\mu\\,V/M}}{M\\,R^3}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\mu\\,R^2e^{2\\mu\\,V/M}}{M}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "V",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\mu\\,R^2e^{2\\mu\\,V/M}}{M}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "V"
+                ],
+                "value": "\\dfrac{\\mu\\,R^2e^{2\\mu\\,V/M}}{M}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\mu\\,R^2e^{2\\mu\\,V/M}\\sin^2\\theta}{M}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\mu\\,R^2e^{2\\mu\\,V/M}\\sin^2\\theta}{M}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "\\dfrac{\\mu\\,R^2e^{2\\mu\\,V/M}\\sin^2\\theta}{M}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "V",
+                  "V"
+                ],
+                "value": "\\dfrac{\\left(\\mu\\,R^3 + M^2\\,R - M\\,Q^2\\right)e^{2\\mu\\,V/M}}{M\\,R^3}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-R\\,e^{2\\mu\\,V/M}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "R",
+                  "\\theta"
+                ],
+                "value": "R\\,e^{2\\mu\\,V/M}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "R"
+                ],
+                "value": "R\\,e^{2\\mu\\,V/M}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-R\\,e^{2\\mu\\,V/M}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "R",
+                  "\\phi"
+                ],
+                "value": "R\\,e^{2\\mu\\,V/M}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "R"
+                ],
+                "value": "R\\,e^{2\\mu\\,V/M}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-R^2e^{2\\mu\\,V/M}\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "R^2e^{2\\mu\\,V/M}\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "R^2e^{2\\mu\\,V/M}\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "V",
+                  "V",
+                  "V",
+                  "R"
+                ],
+                "value": "\\dfrac{2M\\,R - 3Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "V",
+                  "R",
+                  "V"
+                ],
+                "value": "-\\dfrac{2M\\,R - 3Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "R",
+                  "V",
+                  "R"
+                ],
+                "value": "-\\dfrac{2M\\,R - 3Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "R",
+                  "R",
+                  "V"
+                ],
+                "value": "\\dfrac{2M\\,R - 3Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\theta",
+                  "V",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{M\\,R - Q^2}{R^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\theta",
+                  "\\theta",
+                  "V"
+                ],
+                "value": "\\dfrac{M\\,R - Q^2}{R^2}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\theta",
+                  "R",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{M\\,R - Q^2}{R^2}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\theta",
+                  "\\theta",
+                  "R"
+                ],
+                "value": "\\dfrac{M\\,R - Q^2}{R^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\phi",
+                  "R",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\phi",
+                  "\\phi",
+                  "R"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "V",
+                  "V",
+                  "R"
+                ],
+                "value": "-\\dfrac{\\left(2M\\,R - 3Q^2\\right)\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)}{M\\,R^6}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "V",
+                  "R",
+                  "V"
+                ],
+                "value": "\\dfrac{\\left(2M\\,R - 3Q^2\\right)\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)}{M\\,R^6}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\theta",
+                  "V",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\mu\\left(M\\,R - Q^2\\right)}{M\\,R}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\theta",
+                  "\\theta",
+                  "V"
+                ],
+                "value": "-\\dfrac{\\mu\\left(M\\,R - Q^2\\right)}{M\\,R}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\phi",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\mu\\left(M\\,R - Q^2\\right)\\sin^2\\theta}{M\\,R}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\phi",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "-\\dfrac{\\mu\\left(M\\,R - Q^2\\right)\\sin^2\\theta}{M\\,R}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "V",
+                  "V",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)\\left(\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)}{M\\,R^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "V",
+                  "\\theta",
+                  "V"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)\\left(\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)}{M\\,R^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)\\left(\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)}{M\\,R^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)\\left(\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)}{M\\,R^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "V",
+                  "R",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{M\\,R - Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "V",
+                  "\\theta",
+                  "R"
+                ],
+                "value": "-\\dfrac{M\\,R - Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "R",
+                  "V",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{M\\,R - Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "R",
+                  "\\theta",
+                  "V"
+                ],
+                "value": "-\\dfrac{M\\,R - Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "R",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{M\\,R - Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "\\phi",
+                  "R"
+                ],
+                "value": "-\\dfrac{M\\,R - Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "R",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{M\\,R - Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "R",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "-\\dfrac{M\\,R - Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2M\\,R - Q^2\\right)\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(2M\\,R - Q^2\\right)\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2M\\,R - Q^2}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2M\\,R - Q^2}{R^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "V",
+                  "R",
+                  "V",
+                  "R"
+                ],
+                "value": "-\\dfrac{\\left(2M\\,R - 3Q^2\\right)e^{2\\mu\\,V/M}}{R^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "R",
+                  "R",
+                  "V"
+                ],
+                "value": "\\dfrac{\\left(2M\\,R - 3Q^2\\right)e^{2\\mu\\,V/M}}{R^4}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "V",
+                  "V",
+                  "R"
+                ],
+                "value": "\\dfrac{\\left(2M\\,R - 3Q^2\\right)e^{2\\mu\\,V/M}}{R^4}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "V",
+                  "R",
+                  "V"
+                ],
+                "value": "-\\dfrac{\\left(2M\\,R - 3Q^2\\right)e^{2\\mu\\,V/M}}{R^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\theta",
+                  "V",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)\\left(\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)e^{2\\mu\\,V/M}}{M\\,R^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\theta",
+                  "\\theta",
+                  "V"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)\\left(\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)e^{2\\mu\\,V/M}}{M\\,R^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "V",
+                  "V",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)\\left(\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)e^{2\\mu\\,V/M}}{M\\,R^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "V",
+                  "\\theta",
+                  "V"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)\\left(\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)e^{2\\mu\\,V/M}}{M\\,R^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\theta",
+                  "R",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}}{R^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\theta",
+                  "\\theta",
+                  "R"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}}{R^2}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\theta",
+                  "V",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}}{R^2}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\theta",
+                  "\\theta",
+                  "V"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "V",
+                  "R",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "V",
+                  "\\theta",
+                  "R"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "R",
+                  "V",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "R",
+                  "\\theta",
+                  "V"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}}{R^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)\\left(\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{M\\,R^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)\\left(\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{M\\,R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)\\left(\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{M\\,R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)\\left(\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{M\\,R^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "R",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "\\phi",
+                  "R"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\phi",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\phi",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "R",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "\\phi",
+                  "R"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "R",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "R",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\left(Q^2e^{2\\mu\\,V/M}\\sin^2\\theta - 2M\\,R\\,e^{2\\mu\\,V/M}\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\left(Q^2e^{2\\mu\\,V/M}\\sin^2\\theta - 2M\\,R\\,e^{2\\mu\\,V/M}\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\left(Q^2e^{2\\mu\\,V/M}\\sin^2\\theta - 2M\\,R\\,e^{2\\mu\\,V/M}\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\left(Q^2e^{2\\mu\\,V/M}\\sin^2\\theta - 2M\\,R\\,e^{2\\mu\\,V/M}\\sin^2\\theta\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "V",
+                  "V"
+                ],
+                "value": "\\dfrac{2\\mu\\,M\\,R^4 - 4\\mu\\,Q^2\\,R^3 + M\\,Q^2\\,R^2 - 2M^2\\,Q^2\\,R + M\\,Q^4}{M\\,R^6}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "R"
+                ],
+                "value": "-\\dfrac{Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "V"
+                ],
+                "value": "-\\dfrac{Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{Q^2}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{Q^2\\sin^2\\theta}{R^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "V",
+                  "V"
+                ],
+                "value": "-\\dfrac{Q^2e^{-2\\mu\\,V/M}}{R^4}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "R"
+                ],
+                "value": "-\\dfrac{Q^2e^{-2\\mu\\,V/M}}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{Q^2e^{-2\\mu\\,V/M}}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{Q^2e^{-2\\mu\\,V/M}}{R^4}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "V"
+                ],
+                "value": "\\dfrac{2\\mu\\left(M\\,R - Q^2\\right)e^{-2\\mu\\,V/M}}{M\\,R^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "V",
+                  "R"
+                ],
+                "value": "-\\dfrac{Q^2e^{-4\\mu\\,V/M}}{R^4}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "V"
+                ],
+                "value": "-\\dfrac{Q^2e^{-4\\mu\\,V/M}}{R^4}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "R"
+                ],
+                "value": "\\dfrac{\\left(2\\mu\\,R^4 - Q^2\\,R^2 + 2M\\,Q^2\\,R - Q^4\\right)e^{-4\\mu\\,V/M}}{R^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{Q^2e^{-4\\mu\\,V/M}}{R^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{Q^2e^{-4\\mu\\,V/M}\\csc^2\\theta}{R^6}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = \\dfrac{8\\left(6M^2\\,R^2 - 12M\\,Q^2\\,R + 7Q^4\\right)e^{-4\\mu\\,V/M}}{R^8}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "V",
+                  "V"
+                ],
+                "value": "\\dfrac{2\\mu\\,M\\,R^4 - 4\\mu\\,Q^2\\,R^3 + M\\,Q^2\\,R^2 - 2M^2\\,Q^2\\,R + M\\,Q^4}{M\\,R^6}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "R"
+                ],
+                "value": "-\\dfrac{Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "V"
+                ],
+                "value": "-\\dfrac{Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{Q^2}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{Q^2\\sin^2\\theta}{R^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "V",
+                  "V"
+                ],
+                "value": "-\\dfrac{Q^2e^{-2\\mu\\,V/M}}{R^4}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "R"
+                ],
+                "value": "-\\dfrac{Q^2e^{-2\\mu\\,V/M}}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{Q^2e^{-2\\mu\\,V/M}}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{Q^2e^{-2\\mu\\,V/M}}{R^4}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "V"
+                ],
+                "value": "\\dfrac{2\\mu\\left(M\\,R - Q^2\\right)e^{-2\\mu\\,V/M}}{M\\,R^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "V",
+                  "R"
+                ],
+                "value": "-\\dfrac{Q^2e^{-4\\mu\\,V/M}}{R^4}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "V"
+                ],
+                "value": "-\\dfrac{Q^2e^{-4\\mu\\,V/M}}{R^4}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "R"
+                ],
+                "value": "\\dfrac{\\left(2\\mu\\,R^4 - Q^2\\,R^2 + 2M\\,Q^2\\,R - Q^4\\right)e^{-4\\mu\\,V/M}}{R^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{Q^2e^{-4\\mu\\,V/M}}{R^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{Q^2e^{-4\\mu\\,V/M}\\csc^2\\theta}{R^6}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "V",
+                  "V",
+                  "V",
+                  "R"
+                ],
+                "value": "\\dfrac{2M\\,R - 2Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "V",
+                  "R",
+                  "V"
+                ],
+                "value": "-\\dfrac{2M\\,R - 2Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "R",
+                  "V",
+                  "R"
+                ],
+                "value": "-\\dfrac{2M\\,R - 2Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "R",
+                  "R",
+                  "V"
+                ],
+                "value": "\\dfrac{2M\\,R - 2Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\theta",
+                  "V",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{M\\,R - Q^2}{R^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\theta",
+                  "\\theta",
+                  "V"
+                ],
+                "value": "\\dfrac{M\\,R - Q^2}{R^2}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\theta",
+                  "R",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{M\\,R - Q^2}{R^2}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\theta",
+                  "\\theta",
+                  "R"
+                ],
+                "value": "\\dfrac{M\\,R - Q^2}{R^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\phi",
+                  "R",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\phi",
+                  "\\phi",
+                  "R"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "V",
+                  "V",
+                  "R"
+                ],
+                "value": "-\\dfrac{2\\left(M\\,R - Q^2\\right)\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)}{M\\,R^6}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "V",
+                  "R",
+                  "V"
+                ],
+                "value": "\\dfrac{2\\left(M\\,R - Q^2\\right)\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)}{M\\,R^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "V",
+                  "V",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)}{M\\,R^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "V",
+                  "\\theta",
+                  "V"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)}{M\\,R^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)}{M\\,R^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)}{M\\,R^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "V",
+                  "R",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{M\\,R - Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "V",
+                  "\\theta",
+                  "R"
+                ],
+                "value": "-\\dfrac{M\\,R - Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "R",
+                  "V",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{M\\,R - Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "R",
+                  "\\theta",
+                  "V"
+                ],
+                "value": "-\\dfrac{M\\,R - Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "R",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{M\\,R - Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "\\phi",
+                  "R"
+                ],
+                "value": "-\\dfrac{M\\,R - Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "R",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{M\\,R - Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "R",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "-\\dfrac{M\\,R - Q^2}{R^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\left(M\\,R - Q^2\\right)\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2\\left(M\\,R - Q^2\\right)\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2M\\,R - 2Q^2}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2M\\,R - 2Q^2}{R^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "V",
+                  "R",
+                  "V",
+                  "R"
+                ],
+                "value": "-\\dfrac{2\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}}{R^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "R",
+                  "R",
+                  "V"
+                ],
+                "value": "\\dfrac{2\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}}{R^4}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "V",
+                  "V",
+                  "R"
+                ],
+                "value": "\\dfrac{2\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}}{R^4}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "V",
+                  "R",
+                  "V"
+                ],
+                "value": "-\\dfrac{2\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}}{R^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\theta",
+                  "V",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)e^{2\\mu\\,V/M}}{M\\,R^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\theta",
+                  "\\theta",
+                  "V"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)e^{2\\mu\\,V/M}}{M\\,R^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "V",
+                  "V",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)e^{2\\mu\\,V/M}}{M\\,R^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "V",
+                  "\\theta",
+                  "V"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)e^{2\\mu\\,V/M}}{M\\,R^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\theta",
+                  "R",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}}{R^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\theta",
+                  "\\theta",
+                  "R"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}}{R^2}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\theta",
+                  "V",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}}{R^2}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\theta",
+                  "\\theta",
+                  "V"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "V",
+                  "R",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "V",
+                  "\\theta",
+                  "R"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "R",
+                  "V",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "R",
+                  "\\theta",
+                  "V"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}}{R^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{M\\,R^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{M\\,R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{M\\,R^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{M\\,R^4}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "R",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "\\phi",
+                  "\\phi",
+                  "R"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\phi",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\phi",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "R",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "V",
+                  "\\phi",
+                  "R"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "R",
+                  "V",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "R",
+                  "\\phi",
+                  "V"
+                ],
+                "value": "-\\dfrac{\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta}{R^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "2\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-2\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-2\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "2\\left(M\\,R - Q^2\\right)e^{2\\mu\\,V/M}\\sin^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{V} + \\dfrac{\\mu\\,R^3 + M^2\\,R - M\\,Q^2}{M\\,R^3}\\dot{V}^2 - R\\,\\dot{\\theta}^2 - R\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{R} - \\dfrac{\\left(M\\,R - Q^2\\right)\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)}{M\\,R^5}\\dot{V}^2 + \\dfrac{2\\mu\\,R^3 - 2M^2\\,R + 2M\\,Q^2}{M\\,R^3}\\dot{V}\\dot{R} + \\dfrac{\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2}{M\\,R}\\dot{\\theta}^2 + \\dfrac{\\left(\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)\\sin^2\\theta}{M\\,R}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2\\mu}{M}\\dot{V}\\dot{\\theta} + \\dfrac{2}{R}\\dot{R}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2\\mu}{M}\\dot{V}\\dot{\\phi} + \\dfrac{2}{R}\\dot{R}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    }
+  ]
+}

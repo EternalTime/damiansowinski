@@ -84,6 +84,11 @@
       "id": "roberts",
       "kind": "family",
       "text": "A massless scalar field falling in where Vaidya has null dust. Anzhong Wang and Henrique de Oliveira cut Roberts's collapse along a light ray and joined Vaidya's outgoing radiation to it, which gives the black hole it makes a finite mass [wang1997collapse]."
+    },
+    {
+      "id": "bonnor_vaidya",
+      "kind": "generalisation",
+      "text": "Vaidya's star shedding charge as well as mass. William Bonnor and Vaidya let the charge inside each sphere depend on the retarded time too, and with no charge their metric is Vaidya's [bonnor1970]."
     }
   ],
   "references": [

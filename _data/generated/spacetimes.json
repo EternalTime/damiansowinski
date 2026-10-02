@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 92,
+  "count": 93,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -3280,6 +3280,296 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
+      "id": "bonnor_vaidya",
+      "name": "Bonnor-Vaidya Charged Radiating Star",
+      "short_name": "Bonnor-Vaidya",
+      "description": "Vaidya's radiating star with a charge: the field of a spherical body that sends out, or takes in, null dust carrying electric charge as well as energy, found by William Bonnor and Prahlad Vaidya in 1970 as an exact solution of the Einstein-Maxwell equations. Its mass and its charge are functions of a null time, and where both are constant it is the charged black hole of Reissner and Nordström.",
+      "tags": [
+        "null dust",
+        "charged null dust",
+        "charged",
+        "electric charge",
+        "electromagnetic field",
+        "Einstein-Maxwell",
+        "radiating",
+        "accreting",
+        "spherically symmetric",
+        "time-dependent",
+        "black hole",
+        "charged black hole",
+        "mass",
+        "horizon",
+        "event horizon",
+        "apparent horizon",
+        "Cauchy horizon",
+        "inner horizon",
+        "curvature singularity",
+        "naked singularity",
+        "weak energy condition",
+        "energy conditions",
+        "third law",
+        "self-similar",
+        "homothetic",
+        "Vaidya",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We work in units with $c = 1$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "vaidya",
+          "kind": "special_case",
+          "text": "The same star with no charge to shed. With $q = 0$ the metric is Vaidya's [vaidya1951]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "special_case",
+          "text": "The charged black hole that neither gains nor loses. With $m$ and $q$ constant the metric is Reissner-Nordström's in Eddington-Finkelstein coordinates, with $r_s = 2m$ and $r_q = q$ [ori1991charged]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "No charge and a constant mass. The metric is then Schwarzschild's in Eddington-Finkelstein coordinates, with $r_s = 2m$."
+        }
+      ],
+      "references": [
+        "vaidya1951",
+        "bonnor1970",
+        "ori1991charged",
+        "plebanski1968",
+        "bick2026",
+        "kehle2024",
+        "kaminaga1990",
+        "chatterjee2016",
+        "lake1991",
+        "koh2024",
+        "israel1986",
+        "sullivan1980",
+        "kehle2022",
+        "poisson1990"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bonnor_vaidya.json",
+      "charts": [
+        {
+          "id": "eddington_finkelstein_outgoing",
+          "name": "Outgoing Eddington-Finkelstein",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r^2 - 2mr + q^2 = 0 \\;\\text{(the marginally trapped spheres)}",
+            "r\\,\\partial_u m = q\\,\\partial_u q \\;\\text{(where the energy density of the null dust changes sign)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m = m(u)",
+              "description": "Mass inside the sphere of radius $r$ at the retarded time $u$, a length, $m = GM/c^2$"
+            },
+            {
+              "symbol": "q = q(u)",
+              "description": "Charge inside that sphere, a length, $q^2 = GQ^2/(4\\pi\\epsilon_0c^4)$"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded time $u$ a length and $r$ the areal radius. The mass $m(u)$ and the charge $q(u)$ are functions of $u$ alone, both lengths. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r} + \\dfrac{q^2}{r^2}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r} + \\dfrac{q^2}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8\\left(6m^2\\,r^2 - 12m\\,q^2\\,r + 7q^4\\right)}{r^8}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r^2 - 2mr + q^2 = 0 \\;\\text{(the marginally trapped spheres)}",
+            "r\\,\\partial_v m = q\\,\\partial_v q \\;\\text{(where the energy density of the null dust changes sign)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m = m(v)",
+              "description": "Mass inside the sphere of radius $r$ at the advanced time $v$, a length, $m = GM/c^2$"
+            },
+            {
+              "symbol": "q = q(v)",
+              "description": "Charge inside that sphere, a length, $q^2 = GQ^2/(4\\pi\\epsilon_0c^4)$"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v$ a length and $r$ the areal radius. The mass $m(v)$ and the charge $q(v)$ are functions of $v$ alone, both lengths. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r} + \\dfrac{q^2}{r^2}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r} + \\dfrac{q^2}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8\\left(6m^2\\,r^2 - 12m\\,q^2\\,r + 7q^4\\right)}{r^8}"
+        },
+        {
+          "id": "homothetic",
+          "name": "Homothetic",
+          "coordinates": [
+            "V",
+            "R",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "V \\in (-\\infty, \\infty)",
+            "R \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "V \\to -\\infty \\;\\text{(the first ray, }v = 0\\text{, flat space before it)}",
+            "2\\mu R^3 - MR^2 + 2M^2R - MQ^2 = 0 \\;\\text{(the rays that keep their }R\\text{)}",
+            "R = Q^2/M \\;\\text{(where the energy density of the null dust changes sign)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "M",
+              "description": "Mass scale, a length: the mass is $m = Me^{\\mu V/M}$, which grows as $\\mu v$ in the advanced time $v = (M/\\mu)e^{\\mu V/M}$"
+            },
+            {
+              "symbol": "Q",
+              "description": "Charge scale, a length: the charge is $q = Qe^{\\mu V/M}$, in proportion to the mass"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Rate $dm/dv$ at which the mass grows, a pure number"
+            }
+          ],
+          "convention": "We use coordinates $(V, R, \\theta, \\phi)$, both lengths, for the mass and the charge that grow in proportion to the advanced time $v$: $V$ is its logarithm, $v = (M/\\mu)e^{\\mu V/M}$, and $R = rM/m$ is the areal radius $r$ in units of the mass $m = \\mu v$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = e^{2\\mu V/M}\\left(-\\left(1 - \\dfrac{2M}{R} + \\dfrac{Q^2}{R^2} - \\dfrac{2\\mu R}{M}\\right)dV^2 + 2\\,dV\\,dR + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "V",
+                "V"
+              ],
+              "value": "\\dfrac{\\left(2\\mu\\,R^3 - M\\,R^2 + 2M^2\\,R - M\\,Q^2\\right)e^{2\\mu\\,V/M}}{M\\,R^2}"
+            },
+            {
+              "indices": [
+                "V",
+                "R"
+              ],
+              "value": "e^{2\\mu\\,V/M}"
+            },
+            {
+              "indices": [
+                "R",
+                "V"
+              ],
+              "value": "e^{2\\mu\\,V/M}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "R^2e^{2\\mu\\,V/M}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "R^2e^{2\\mu\\,V/M}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8\\left(6M^2\\,R^2 - 12M\\,Q^2\\,R + 7Q^4\\right)e^{-4\\mu\\,V/M}}{R^8}"
         }
       ]
     },
@@ -18769,6 +19059,11 @@
           "id": "reissner_nordstrom_ads",
           "kind": "generalisation",
           "text": "The charged black hole in anti-de Sitter space. At fixed charge its small and large black holes are like the liquid and the gas of a van der Waals fluid [chamblin1999]."
+        },
+        {
+          "id": "bonnor_vaidya",
+          "kind": "generalisation",
+          "text": "Reissner-Nordström with its mass and its charge carried in or out by charged light. William Bonnor and Prahlad Vaidya made both functions of a null time in 1970, and with both held constant their metric is Reissner-Nordström's [bonnor1970]."
         }
       ],
       "references": [
@@ -20451,6 +20746,11 @@
           "id": "einstein_cluster",
           "kind": "composite",
           "text": "A ball of particles on circular orbits with Schwarzschild's vacuum outside. Einstein used it in 1939 to argue that matter cannot be packed inside $r = r_s$, since the particles would have to reach the speed of light at one and a half times that radius [einstein1939]."
+        },
+        {
+          "id": "bonnor_vaidya",
+          "kind": "generalisation",
+          "text": "Schwarzschild's metric with a charge added and both the mass and the charge carried off by light. With no charge and a constant mass Bonnor and Vaidya's metric is Schwarzschild's in Eddington-Finkelstein coordinates."
         }
       ],
       "references": [
@@ -25209,6 +25509,11 @@
           "id": "roberts",
           "kind": "family",
           "text": "A massless scalar field falling in where Vaidya has null dust. Anzhong Wang and Henrique de Oliveira cut Roberts's collapse along a light ray and joined Vaidya's outgoing radiation to it, which gives the black hole it makes a finite mass [wang1997collapse]."
+        },
+        {
+          "id": "bonnor_vaidya",
+          "kind": "generalisation",
+          "text": "Vaidya's star shedding charge as well as mass. William Bonnor and Vaidya let the charge inside each sphere depend on the retarded time too, and with no charge their metric is Vaidya's [bonnor1970]."
         }
       ],
       "references": [
