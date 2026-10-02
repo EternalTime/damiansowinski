@@ -47,6 +47,11 @@
       "id": "curzon_chazy",
       "kind": "special_case",
       "text": "The rod shrunk to a point at fixed mass, $q \\to \\infty$ and $m \\to 0$ with $(1 + q)m$ fixed [herrera1999]."
+    },
+    {
+      "id": "fisher_jnw",
+      "kind": "family",
+      "text": "The same $g_{tt} = -f^{\\delta}$ on a spacetime that stays spherical and pays for it with a massless scalar field. It too has a naked singularity where Schwarzschild's horizon was [chowdhury2012]."
     }
   ],
   "references": [

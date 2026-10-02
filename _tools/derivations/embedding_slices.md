@@ -256,6 +256,15 @@ Three spacetimes of one line element at $r_s = 1$, each marked on its own drawin
 - `null`, the one way wormhole's equator at $t = 0$ from $r = r_s/50$ to $6\,r_s$: the line $ct = 0$ on `spherical/null`, from $\rho = 1.0002\,r_s$ on `areal/null`, the curve $v = r_*$ or $u = -r_*$ on the Eddington-Finkelstein planes, and the line $T = 0$ of one region $r > 0$ on the conformal views.
 - `wormhole`, the traversable wormhole's equator at $t = 0$ from $r = -6\,r_s$ to $6\,r_s$: the line $ct = 0$ across `spherical/wormhole`, from the throat $\rho = a$ out on `areal/wormhole`, the curve $v = r_*$ or $u = -r_*$ on the Eddington-Finkelstein planes, and the line $T = 0$ through the throat on the conformal views.
 
+### Fisher-Janis-Newman-Winicour scalar field
+
+- The embedding is the equator at one moment of $t$, drawn at $t = 0$ at $\gamma = 1/2$ and $b = 1$, read in the harmonic chart at $k = 1/2$ from $u = \ln(4/3)$, the sphere $r = 4b$, to $u = 17.5$, where $r - b = 2.5 \times 10^{-8}\,b$.
+- `spherical/radial`: the line $ct = 0$ from $r = b$ to $4b$, with $r = b/(1 - e^{-bu})$.
+- `jnw/radial`: the same line in $R = r - 3b/4$, from $b/4$ to $13b/4$.
+- `isotropic/radial`: the same line in the isotropic radius $(r - b/2 + \sqrt{r(r - b)})/2$, from $b/4$ to $3.48\,b$.
+- `harmonic/radial`, drawn in units of $1/k$ at $k = 1$, so at half the embedding's $u$: the line $ct = 0$ from $ku = 0.144$ to $8.75$, cut to the box at $ku = 4$.
+- All four conformal views, the triangle: the line $T = 0$ from the singularity on $X = 0$ out to the sphere $r = 4b$, the same on each.
+
 ### Kaluza-Klein monopole
 
 The cigar is the surface of $r$ and $x_5$ on the half axis $\theta = 0$ at $t = 0$ in Gross and Perry's chart, from the nut $r = 0$ out to $r = 16m$ at $m = 1$.

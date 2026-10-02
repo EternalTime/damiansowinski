@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 72,
+  "count": 73,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -4696,6 +4696,11 @@
           "id": "simpson_visser",
           "kind": "generalisation",
           "text": "The Ellis-Bronnikov wormhole given a mass. Once the Schwarzschild radius of that mass passes the throat's radius, the throat sits behind a horizon and the wormhole is a black hole with a bounce inside [simpson2019, tsukamoto2021]."
+        },
+        {
+          "id": "fisher_jnw",
+          "kind": "dual",
+          "text": "The same equations with an ordinary scalar field, one of positive energy. The throat closes to a point of infinite curvature, a naked singularity, and $\\sin(ku)$ in Bronnikov's harmonic coordinate becomes $\\sinh(ku)$ [bronnikov1973, bronnikov2011]."
         }
       ],
       "references": [
@@ -4714,7 +4719,8 @@
         "kleihaus2014",
         "damour2007",
         "simpson2019",
-        "tsukamoto2021"
+        "tsukamoto2021",
+        "bronnikov2011"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ellis_bronnikov.json",
@@ -4774,6 +4780,350 @@
           ],
           "ricci_scalar": "R = -2\\dfrac{\\ell^2}{(r^2+\\ell^2)^2}",
           "kretschmann": "K = 12\\dfrac{\\ell^4}{(r^2+\\ell^2)^4}"
+        }
+      ]
+    },
+    {
+      "id": "fisher_jnw",
+      "name": "Fisher-Janis-Newman-Winicour Scalar Field",
+      "short_name": "Fisher-Janis-Newman-Winicour",
+      "description": "The static, spherically symmetric spacetime of a mass that also carries a massless scalar field, found by I. Z. Fisher in 1948 and found again by Allen Janis, Ezra Newman, and Jeffrey Winicour in 1968. For any scalar charge, however small, the sphere where Schwarzschild's horizon would stand has zero area and infinite curvature, and no horizon hides it.",
+      "tags": [
+        "non-vacuum",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "scalar field",
+        "massless scalar field",
+        "minimally coupled scalar field",
+        "Einstein-scalar",
+        "scalar charge",
+        "mass",
+        "naked singularity",
+        "singularity",
+        "curvature singularity",
+        "timelike singularity",
+        "no horizon",
+        "no-hair theorem",
+        "black hole mimicker",
+        "photon sphere",
+        "gravitational lensing",
+        "cosmic censorship",
+        "Janis-Newman-Winicour",
+        "JNW",
+        "Fisher solution",
+        "Wyman solution",
+        "anti-Fisher",
+        "harmonic coordinates",
+        "isotropic coordinates",
+        "asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The parameter $b$ is a length and $\\gamma$ a pure number, and the mass $M$ has $2GM/c^2 = \\gamma b$. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The case with no scalar field, $\\gamma = 1$, where $r = b$ is the horizon $r_s$. Add the smallest scalar charge and that sphere shrinks to a point of infinite curvature [janis1968]."
+        },
+        {
+          "id": "zipoy_voorhees",
+          "kind": "family",
+          "text": "The same $g_{tt} = -(1 - b/r)^{\\gamma}$ with no scalar field: Zipoy and Voorhees's metric stays a vacuum and loses its spherical symmetry. Anirban Chowdhury, Mandar Patil, Daniele Malafarina, and Pankaj Joshi worked out the accretion disks of both side by side in 2012 [chowdhury2012]."
+        },
+        {
+          "id": "ellis_bronnikov",
+          "kind": "dual",
+          "text": "Flip the sign of the scalar field's energy and Fisher's solution becomes the anti-Fisher family, whose member with no mass is this wormhole. In the harmonic coordinate the change is $\\sinh(ku) \\to \\sin(ku)$ [bronnikov1973, bronnikov2011]."
+        }
+      ],
+      "references": [
+        "fisher1948",
+        "malomuzh2009",
+        "bergmann1957",
+        "bronnikov2011",
+        "abdolrahimi2010",
+        "buchdahl1959reciprocal",
+        "janis1968",
+        "wyman1981",
+        "agnese1985",
+        "virbhadra1997",
+        "chase1970",
+        "bekenstein1972",
+        "bronnikov1973",
+        "ellis1973",
+        "bronnikov1979",
+        "xanthopoulos1989",
+        "virbhadra1998",
+        "claudel2001",
+        "virbhadra2002",
+        "eht2022metric",
+        "chowdhury2012"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/fisher_jnw.json",
+      "charts": [
+        {
+          "id": "spherical",
+          "name": "Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (b, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = b \\;\\text{(the singularity, for } \\gamma < 1\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Value of $r$ at the singularity, a length: $b = 2\\sqrt{G^2M^2/c^4 + q^2}$ for a mass $M$ and a scalar charge $q$, itself a length"
+            },
+            {
+              "symbol": "\\gamma",
+              "description": "Share of the mass in $b$, a pure number with $0 < \\gamma \\le 1$: $\\gamma = 2GM/(c^2b)$; $\\gamma = 1$ is Schwarzschild's metric with $r_s = b$"
+            },
+            {
+              "symbol": "f = 1 - \\dfrac{b}{r}",
+              "description": "Schwarzschild's function with $b$ for $r_s$; the scalar field is $\\varphi = \\sqrt{(1 - \\gamma^2)c^4/16\\pi G}\\,\\ln f$, with $R_{\\mu\\nu} = (8\\pi G/c^4)\\,\\partial_\\mu\\varphi\\,\\partial_\\nu\\varphi$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ that are Schwarzschild's at $\\gamma = 1$, with $t$ carrying dimensions of time and $r$ a length, and write $f = 1 - b/r$. The areal radius is $rf^{(1-\\gamma)/2}$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -f^{\\gamma}c^2dt^2 + \\dfrac{dr^2}{f^{\\gamma}} + f^{1-\\gamma}r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-f^{\\gamma}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{f^{\\gamma}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2f^{1-\\gamma}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2f^{1-\\gamma}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{b^2\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)f^{\\gamma}}{2r^2\\left(r - b\\right)^2}",
+          "kretschmann": "K = \\dfrac{b^2\\left(48\\gamma^2\\,r^2 - 16b\\,\\gamma\\,r\\left(1 + \\gamma\\right)\\left(1 + 2\\gamma\\right) + b^2\\left(1 + \\gamma\\right)^2\\left(3 + 2\\gamma + 7\\gamma^2\\right)\\right)f^{2\\gamma}}{4r^4\\left(r - b\\right)^4}"
+        },
+        {
+          "id": "jnw",
+          "name": "Janis-Newman-Winicour",
+          "coordinates": [
+            "t",
+            "R",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "R \\in (b(1-\\gamma)/2, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "R = b(1-\\gamma)/2 \\;\\text{(the singularity, for } \\gamma < 1\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "A length: $b = 2\\sqrt{G^2M^2/c^4 + q^2}$ for a mass $M$ and a scalar charge $q$, itself a length"
+            },
+            {
+              "symbol": "\\gamma",
+              "description": "Share of the mass in $b$, a pure number with $0 < \\gamma \\le 1$: $\\gamma = 2GM/(c^2b)$; $\\gamma = 1$ is Schwarzschild's metric with $r_s = b$"
+            },
+            {
+              "symbol": "f = \\dfrac{2R - b(1-\\gamma)}{2R + b(1+\\gamma)}",
+              "description": "The ratio $1 - b/r$ of the spherical chart; the scalar field is $\\varphi = \\sqrt{(1 - \\gamma^2)c^4/16\\pi G}\\,\\ln f$, with $R_{\\mu\\nu} = (8\\pi G/c^4)\\,\\partial_\\mu\\varphi\\,\\partial_\\nu\\varphi$"
+            }
+          ],
+          "convention": "We use coordinates $(t, R, \\theta, \\phi)$, with $t$ carrying dimensions of time and $R = r - b(1 + \\gamma)/2$ a length, and write $f = (2R - b(1 - \\gamma))/(2R + b(1 + \\gamma))$. Janis, Newman, and Winicour's parameters are $r_0 = \\gamma b$ and $\\mu = 1/\\gamma$, and Fisher's function is $Z = cR$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -f^{\\gamma}c^2dt^2 + \\dfrac{dR^2}{f^{\\gamma}} + f^{1-\\gamma}\\left(R + \\dfrac{b(1+\\gamma)}{2}\\right)^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-f^{\\gamma}"
+            },
+            {
+              "indices": [
+                "R",
+                "R"
+              ],
+              "value": "\\dfrac{1}{f^{\\gamma}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(R + \\dfrac{b(1+\\gamma)}{2}\\right)^2f^{1-\\gamma}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(R + \\dfrac{b(1+\\gamma)}{2}\\right)^2f^{1-\\gamma}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{8b^2\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)f^{\\gamma}}{\\left(2R + b\\left(1 + \\gamma\\right)\\right)^2\\left(2R - b\\left(1 - \\gamma\\right)\\right)^2}",
+          "kretschmann": "K = \\dfrac{64b^2\\left(48\\gamma^2\\,R^2 - 16b\\,\\gamma\\,R\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right) + 3b^2\\left(1 + \\gamma\\right)^2\\left(1 - \\gamma\\right)^2\\right)f^{2\\gamma}}{\\left(2R + b\\left(1 + \\gamma\\right)\\right)^4\\left(2R - b\\left(1 - \\gamma\\right)\\right)^4}"
+        },
+        {
+          "id": "isotropic",
+          "name": "Isotropic",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in (b/4, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = b/4 \\;\\text{(the singularity, for } \\gamma < 1\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Four times the value of $\\rho$ at the singularity, a length: $b = 2\\sqrt{G^2M^2/c^4 + q^2}$ for a mass $M$ and a scalar charge $q$, itself a length"
+            },
+            {
+              "symbol": "\\gamma",
+              "description": "Share of the mass in $b$, a pure number with $0 < \\gamma \\le 1$: $\\gamma = 2GM/(c^2b)$; $\\gamma = 1$ is Schwarzschild's metric with $r_s = b$"
+            },
+            {
+              "symbol": "h = \\dfrac{4\\rho - b}{4\\rho + b}",
+              "description": "The square root of the ratio $1 - b/r$ of the spherical chart; the scalar field is $\\varphi = \\sqrt{(1 - \\gamma^2)c^4/4\\pi G}\\,\\ln h$, with $R_{\\mu\\nu} = (8\\pi G/c^4)\\,\\partial_\\mu\\varphi\\,\\partial_\\nu\\varphi$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\theta, \\phi)$, with $t$ carrying dimensions of time and $\\rho$ the isotropic radius, a length with $r = \\rho\\left(1 + b/4\\rho\\right)^2$, and write $h = (4\\rho - b)/(4\\rho + b)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -h^{2\\gamma}c^2dt^2 + \\left(1 + \\dfrac{b}{4\\rho}\\right)^4h^{2(1-\\gamma)}\\left(d\\rho^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-h^{2\\gamma}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\left(1 + \\dfrac{b}{4\\rho}\\right)^4h^{2(1-\\gamma)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\rho^2\\left(1 + \\dfrac{b}{4\\rho}\\right)^4h^{2(1-\\gamma)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2\\left(1 + \\dfrac{b}{4\\rho}\\right)^4h^{2(1-\\gamma)}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{32768b^2\\,\\rho^4\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)h^{2\\gamma}}{\\left(4\\rho - b\\right)^4\\left(4\\rho + b\\right)^4}",
+          "kretschmann": "K = \\dfrac{67108864b^2\\,\\rho^6\\left(768\\gamma^2\\,\\rho^4 - 256b\\,\\gamma\\,\\rho^3\\left(1 + 2\\gamma^2\\right) + 16b^2\\,\\rho^2\\left(3 + 8\\gamma^2 + 7\\gamma^4\\right) - 16b^3\\,\\gamma\\,\\rho\\left(1 + 2\\gamma^2\\right) + 3b^4\\,\\gamma^2\\right)h^{4\\gamma}}{\\left(4\\rho - b\\right)^8\\left(4\\rho + b\\right)^8}"
+        },
+        {
+          "id": "harmonic",
+          "name": "Harmonic",
+          "coordinates": [
+            "t",
+            "u",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "u \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "u \\to 0 \\;\\text{(spatial infinity)}",
+            "u \\to \\infty \\;\\text{(the singularity, for } m < k\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass as a length, $m = GM/c^2 = \\gamma b/2$, with $0 < m \\le k$; $m = k$ is Schwarzschild's metric"
+            },
+            {
+              "symbol": "k",
+              "description": "A length, $k = b/2 = \\sqrt{m^2 + q^2}$ for a scalar charge $q$; the scalar field is $\\varphi = -\\sqrt{(k^2 - m^2)c^4/4\\pi G}\\,u$, with $R_{\\mu\\nu} = (8\\pi G/c^4)\\,\\partial_\\mu\\varphi\\,\\partial_\\nu\\varphi$"
+            }
+          ],
+          "convention": "We use coordinates $(t, u, \\theta, \\phi)$, with $t$ carrying dimensions of time and $u$ an inverse length, the harmonic coordinate with $e^{-2ku} = 1 - b/r$. The lengths are $k = b/2$ and $m = \\gamma b/2$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -e^{-2mu}c^2dt^2 + \\dfrac{k^2e^{2mu}}{\\sinh^2(ku)}\\left(\\dfrac{k^2du^2}{\\sinh^2(ku)} + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{-2m\\,u}"
+            },
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{k^4e^{2m\\,u}}{\\sinh^4\\left(k\\,u\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{k^2e^{2m\\,u}}{\\sinh^2\\left(k\\,u\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{k^2e^{2m\\,u}\\sin^2\\theta}{\\sinh^2\\left(k\\,u\\right)}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\left(k + m\\right)\\left(k - m\\right)e^{-2m\\,u}\\sinh^4\\left(k\\,u\\right)}{k^4}",
+          "kretschmann": "K = \\dfrac{4e^{-4mu}\\sinh^6(ku)\\left(\\left(3k^4 + 14k^2m^2 + 7m^4\\right)\\sinh^2(ku) - 8km\\left(k^2 + 2m^2\\right)\\sinh(ku)\\cosh(ku) + 12k^2m^2\\right)}{k^8}"
         }
       ]
     },
@@ -13629,6 +13979,11 @@
           "id": "hayward",
           "kind": "generalisation",
           "text": "Schwarzschild's black hole with a ball of de Sitter space of radius $\\ell$ where the singularity was, and a second horizon around it. At $\\ell = 0$ it is Schwarzschild's, with $r_s = 2m$ [hayward2006]."
+        },
+        {
+          "id": "fisher_jnw",
+          "kind": "generalisation",
+          "text": "Schwarzschild's mass with a massless scalar field around it. However weak the field, the horizon shrinks to a point of infinite curvature with nothing to hide it [fisher1948, janis1968]."
         }
       ],
       "references": [
@@ -13681,7 +14036,9 @@
         "ori2005",
         "simpson2019",
         "ayonbeato2000",
-        "hayward2006"
+        "hayward2006",
+        "fisher1948",
+        "janis1968"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -17913,6 +18270,11 @@
           "id": "curzon_chazy",
           "kind": "special_case",
           "text": "The rod shrunk to a point at fixed mass, $q \\to \\infty$ and $m \\to 0$ with $(1 + q)m$ fixed [herrera1999]."
+        },
+        {
+          "id": "fisher_jnw",
+          "kind": "family",
+          "text": "The same $g_{tt} = -f^{\\delta}$ on a spacetime that stays spherical and pays for it with a massless scalar field. It too has a naked singularity where Schwarzschild's horizon was [chowdhury2012]."
         }
       ],
       "references": [

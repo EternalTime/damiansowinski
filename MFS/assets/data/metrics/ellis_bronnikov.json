@@ -49,6 +49,11 @@
       "id": "simpson_visser",
       "kind": "generalisation",
       "text": "The Ellis-Bronnikov wormhole given a mass. Once the Schwarzschild radius of that mass passes the throat's radius, the throat sits behind a horizon and the wormhole is a black hole with a bounce inside [simpson2019, tsukamoto2021]."
+    },
+    {
+      "id": "fisher_jnw",
+      "kind": "dual",
+      "text": "The same equations with an ordinary scalar field, one of positive energy. The throat closes to a point of infinite curvature, a naked singularity, and $\\sin(ku)$ in Bronnikov's harmonic coordinate becomes $\\sinh(ku)$ [bronnikov1973, bronnikov2011]."
     }
   ],
   "references": [
@@ -67,7 +72,8 @@
     "kleihaus2014",
     "damour2007",
     "simpson2019",
-    "tsukamoto2021"
+    "tsukamoto2021",
+    "bronnikov2011"
   ],
   "coordinates": [
     {

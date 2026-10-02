@@ -200,6 +200,11 @@
       "id": "hayward",
       "kind": "generalisation",
       "text": "Schwarzschild's black hole with a ball of de Sitter space of radius $\\ell$ where the singularity was, and a second horizon around it. At $\\ell = 0$ it is Schwarzschild's, with $r_s = 2m$ [hayward2006]."
+    },
+    {
+      "id": "fisher_jnw",
+      "kind": "generalisation",
+      "text": "Schwarzschild's mass with a massless scalar field around it. However weak the field, the horizon shrinks to a point of infinite curvature with nothing to hide it [fisher1948, janis1968]."
     }
   ],
   "references": [
@@ -252,7 +257,9 @@
     "ori2005",
     "simpson2019",
     "ayonbeato2000",
-    "hayward2006"
+    "hayward2006",
+    "fisher1948",
+    "janis1968"
   ],
   "coordinates": [
     {

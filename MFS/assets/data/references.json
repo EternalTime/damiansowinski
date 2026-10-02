@@ -1,5 +1,5 @@
 {
-  "version": "8d5643726eb9341b",
+  "version": "594250b3b75ac0a0",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -13660,6 +13660,268 @@
         "eprint": "2303.11696",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1007/s10773-023-05454-1"
+      }
+    },
+    "fisher1948": {
+      "type": "article",
+      "fields": {
+        "title": "Scalar mesostatic field with regard for gravitational effects",
+        "author": "Fisher, I. Z.",
+        "journal": "Zhurnal Eksperimental'noi i Teoreticheskoi Fiziki",
+        "volume": "18",
+        "pages": "636--640",
+        "year": "1948",
+        "eprint": "gr-qc/9911008",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9911008"
+      }
+    },
+    "malomuzh2009": {
+      "type": "article",
+      "fields": {
+        "title": "Iosif Zalmanovich Fisher (1919-1995)",
+        "author": "Malomuzh, N. P. and Rodnikova, M. N.",
+        "journal": "Russian Journal of Physical Chemistry A",
+        "volume": "83",
+        "number": "11",
+        "pages": "2004--2005",
+        "year": "2009",
+        "doi": "10.1134/S003602440911034X",
+        "url": "https://doi.org/10.1134/S003602440911034X"
+      }
+    },
+    "bergmann1957": {
+      "type": "article",
+      "fields": {
+        "title": "Space-Time Structure of a Static Spherically Symmetric Scalar Field",
+        "author": "Bergmann, Otto and Leipnik, Roy",
+        "journal": "Physical Review",
+        "volume": "107",
+        "number": "4",
+        "pages": "1157--1161",
+        "year": "1957",
+        "doi": "10.1103/PhysRev.107.1157",
+        "url": "https://doi.org/10.1103/PhysRev.107.1157"
+      }
+    },
+    "buchdahl1959reciprocal": {
+      "type": "article",
+      "fields": {
+        "title": "Reciprocal Static Metrics and Scalar Fields in the General Theory of Relativity",
+        "author": "Buchdahl, H. A.",
+        "journal": "Physical Review",
+        "volume": "115",
+        "number": "5",
+        "pages": "1325--1328",
+        "year": "1959",
+        "doi": "10.1103/PhysRev.115.1325",
+        "url": "https://doi.org/10.1103/PhysRev.115.1325"
+      }
+    },
+    "janis1968": {
+      "type": "article",
+      "fields": {
+        "title": "Reality of the {Schwarzschild} Singularity",
+        "author": "Janis, Allen I. and Newman, Ezra T. and Winicour, Jeffrey",
+        "journal": "Physical Review Letters",
+        "volume": "20",
+        "number": "16",
+        "pages": "878--880",
+        "year": "1968",
+        "doi": "10.1103/PhysRevLett.20.878",
+        "url": "https://doi.org/10.1103/PhysRevLett.20.878"
+      }
+    },
+    "wyman1981": {
+      "type": "article",
+      "fields": {
+        "title": "Static spherically symmetric scalar fields in general relativity",
+        "author": "Wyman, Max",
+        "journal": "Physical Review D",
+        "volume": "24",
+        "number": "4",
+        "pages": "839--841",
+        "year": "1981",
+        "doi": "10.1103/PhysRevD.24.839",
+        "url": "https://doi.org/10.1103/PhysRevD.24.839"
+      }
+    },
+    "agnese1985": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitation without black holes",
+        "author": "Agnese, A. G. and La Camera, M.",
+        "journal": "Physical Review D",
+        "volume": "31",
+        "number": "6",
+        "pages": "1280--1286",
+        "year": "1985",
+        "doi": "10.1103/PhysRevD.31.1280",
+        "url": "https://doi.org/10.1103/PhysRevD.31.1280"
+      }
+    },
+    "virbhadra1997": {
+      "type": "article",
+      "fields": {
+        "title": "{Janis-Newman-Winicour} and {Wyman} Solutions are the Same",
+        "author": "Virbhadra, K. S.",
+        "journal": "International Journal of Modern Physics A",
+        "volume": "12",
+        "number": "27",
+        "pages": "4831--4835",
+        "year": "1997",
+        "doi": "10.1142/S0217751X97002577",
+        "eprint": "gr-qc/9701021",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0217751X97002577"
+      }
+    },
+    "chase1970": {
+      "type": "article",
+      "fields": {
+        "title": "Event horizons in static scalar-vacuum space-times",
+        "author": "Chase, J. E.",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "19",
+        "number": "4",
+        "pages": "276--288",
+        "year": "1970",
+        "doi": "10.1007/BF01646635",
+        "url": "https://doi.org/10.1007/BF01646635"
+      }
+    },
+    "bekenstein1972": {
+      "type": "article",
+      "fields": {
+        "title": "Nonexistence of Baryon Number for Static Black Holes",
+        "author": "Bekenstein, Jacob D.",
+        "journal": "Physical Review D",
+        "volume": "5",
+        "number": "6",
+        "pages": "1239--1246",
+        "year": "1972",
+        "doi": "10.1103/PhysRevD.5.1239",
+        "url": "https://doi.org/10.1103/PhysRevD.5.1239"
+      }
+    },
+    "bronnikov1979": {
+      "type": "article",
+      "fields": {
+        "title": "Scalar field and gravitational instability",
+        "author": "Bronnikov, K. A. and Khodunov, A. V.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "11",
+        "number": "1",
+        "pages": "13--18",
+        "year": "1979",
+        "doi": "10.1007/BF00756667",
+        "url": "https://doi.org/10.1007/BF00756667"
+      }
+    },
+    "bronnikov2011": {
+      "type": "article",
+      "fields": {
+        "title": "On the stability of scalar-vacuum space-times",
+        "author": "Bronnikov, K. A. and Fabris, J. C. and Zhidenko, A.",
+        "journal": "The European Physical Journal C",
+        "volume": "71",
+        "number": "11",
+        "pages": "1791",
+        "year": "2011",
+        "doi": "10.1140/epjc/s10052-011-1791-2",
+        "eprint": "1109.6576",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1140/epjc/s10052-011-1791-2"
+      }
+    },
+    "xanthopoulos1989": {
+      "type": "article",
+      "fields": {
+        "title": "{Einstein} gravity coupled to a massless scalar field in arbitrary spacetime dimensions",
+        "author": "Xanthopoulos, Basilis C. and Zannias, Thomas",
+        "journal": "Physical Review D",
+        "volume": "40",
+        "number": "8",
+        "pages": "2564--2567",
+        "year": "1989",
+        "doi": "10.1103/PhysRevD.40.2564",
+        "url": "https://doi.org/10.1103/PhysRevD.40.2564"
+      }
+    },
+    "abdolrahimi2010": {
+      "type": "article",
+      "fields": {
+        "title": "Analysis of the {Fisher} solution",
+        "author": "Abdolrahimi, Shohreh and Shoom, Andrey A.",
+        "journal": "Physical Review D",
+        "volume": "81",
+        "number": "2",
+        "pages": "024035",
+        "year": "2010",
+        "doi": "10.1103/PhysRevD.81.024035",
+        "eprint": "0911.5380",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.81.024035"
+      }
+    },
+    "virbhadra1998": {
+      "type": "article",
+      "fields": {
+        "title": "Role of the scalar field in gravitational lensing",
+        "author": "Virbhadra, K. S. and Narasimha, D. and Chitre, S. M.",
+        "journal": "Astronomy and Astrophysics",
+        "volume": "337",
+        "pages": "1--8",
+        "year": "1998",
+        "eprint": "astro-ph/9801174",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/astro-ph/9801174"
+      }
+    },
+    "claudel2001": {
+      "type": "article",
+      "fields": {
+        "title": "The geometry of photon surfaces",
+        "author": "Claudel, Clarissa-Marie and Virbhadra, K. S. and Ellis, G. F. R.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "42",
+        "number": "2",
+        "pages": "818--838",
+        "year": "2001",
+        "doi": "10.1063/1.1308507",
+        "eprint": "gr-qc/0005050",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1063/1.1308507"
+      }
+    },
+    "virbhadra2002": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational lensing by naked singularities",
+        "author": "Virbhadra, K. S. and Ellis, G. F. R.",
+        "journal": "Physical Review D",
+        "volume": "65",
+        "number": "10",
+        "pages": "103004",
+        "year": "2002",
+        "doi": "10.1103/PhysRevD.65.103004",
+        "url": "https://doi.org/10.1103/PhysRevD.65.103004"
+      }
+    },
+    "eht2022metric": {
+      "type": "article",
+      "fields": {
+        "title": "First Sagittarius A* Event Horizon Telescope Results. VI. Testing the Black Hole Metric",
+        "author": "{Event Horizon Telescope Collaboration} and Akiyama, Kazunori and others",
+        "journal": "The Astrophysical Journal Letters",
+        "volume": "930",
+        "number": "2",
+        "pages": "L17",
+        "year": "2022",
+        "doi": "10.3847/2041-8213/ac6756",
+        "eprint": "2311.09484",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.3847/2041-8213/ac6756"
       }
     }
   }

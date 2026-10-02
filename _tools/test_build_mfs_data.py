@@ -4347,6 +4347,16 @@ class Slices(unittest.TestCase):
         if key == "kaluza_klein_monopole/taub_nut/radial":
             # The Taub-NUT radius is rho = r + 2m, at m = 1, of the circles the cigar reaches in r.
             return (lambda X: 0.0), [r + 2 for r in self.reach(surface)]
+        if key.startswith("fisher_jnw/"):
+            # The embedding is read in the harmonic chart at k = 1/2 and b = 1, where e^(-u) = 1 - b/r: the
+            # harmonic plane draws ku at k = 1, half of that u, and the other three the radii r reached, as
+            # r itself, as R = r - 3b/4, and as the isotropic radius (r - 1/2 + sqrt(r(r - 1)))/2.
+            lo, hi = self.reach(surface)
+            if key == "fisher_jnw/harmonic/radial":
+                return (lambda X: 0.0), [lo / 2, hi / 2]
+            of_r = {"spherical": lambda r: r, "jnw": lambda r: r - 0.75,
+                    "isotropic": lambda r: (r - 0.5 + math.sqrt(r * (r - 1))) / 2}[key.split("/")[1]]
+            return (lambda X: 0.0), [of_r(1 / (1 - math.exp(-u))) for u in (hi, lo)]
         if key == "damour_solodukhin/isotropic/radial":
             # The isotropic radius of the circles the embedding reaches in the areal radius R, at r_s = 1:
             # r = (R - 1/2 + sqrt(R(R - 1)))/2 on one side and 1/(16 r) on the other.
