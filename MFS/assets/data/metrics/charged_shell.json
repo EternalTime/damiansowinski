@@ -70,6 +70,11 @@
       "id": "mass_inflation",
       "kind": "programme",
       "text": "What becomes of the inner horizon the shell crosses on its way out. With radiation falling in behind the collapse, Eric Poisson and Werner Israel found the mass function growing without limit there [poisson1989]."
+    },
+    {
+      "id": "bonnor_charged_dust",
+      "kind": "family",
+      "text": "The balanced shell filled in: dust whose charge density equals its mass density all through a ball, at rest at any radius, with the same extremal field outside [bonnor1965]."
     }
   ],
   "references": [
@@ -90,7 +95,8 @@
     "penrose1968",
     "brady1999",
     "poisson1989",
-    "ori1991charged"
+    "ori1991charged",
+    "bonnor1965"
   ],
   "coordinates": [
     {

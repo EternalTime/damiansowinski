@@ -66,6 +66,11 @@
       "id": "wahlquist",
       "kind": "family",
       "text": "A ball of fluid that rotates, in closed form. At rest it is Whittaker's sphere, whose $\\mu + 3p$ is uniform as the energy density of Schwarzschild's star is [whittaker1968, wahlquist1968]."
+    },
+    {
+      "id": "bonnor_charged_dust",
+      "kind": "family",
+      "text": "A star of dust held up by electric repulsion, with no pressure. The redshift of its centre has no bound [bonnor1975]."
     }
   ],
   "references": [
@@ -86,7 +91,8 @@
     "bohmerlobo2008",
     "raghoonundun2015",
     "whittaker1968",
-    "wahlquist1968"
+    "wahlquist1968",
+    "bonnor1975"
   ],
   "coordinates": [
     {

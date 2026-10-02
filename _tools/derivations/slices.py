@@ -2423,6 +2423,27 @@ FLAT = {
     ("majumdar_papapetrou", "cylindrical", "radial"): lambda: one(
         "majumdar_papapetrou", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")), view_id="two_holes"),
     ("majumdar_papapetrou", "cartesian", "tz"): _mp_axis,
+    # Bonnor's stars: each sphere's equator lies on the plane of t and r of its own chart, and the
+    # sphere of 1975's on the two exterior planes as well, the areal radius being r + m; the cloud's
+    # on its own plane and on the harmonic chart's line through its centre; and the spheroid's
+    # equatorial plane meets its axis at one event, the centre of the disc u = 0.
+    ("bonnor_charged_dust", "sphere_1975", "radial"): lambda: one(
+        "bonnor_charged_dust", lambda m: along(0.0, *m.reach("sphere_1975", "r")), view_id="star"),
+    ("bonnor_charged_dust", "sphere_1975", "through"): lambda: one(
+        "bonnor_charged_dust", lambda m: along(0.0, *m.reach("sphere_1975", "r")), view_id="star"),
+    ("bonnor_charged_dust", "sphere_1965", "radial"): lambda: one(
+        "bonnor_charged_dust", lambda m: along(0.0, *m.reach("sphere_1965", "r")), view_id="star_1965"),
+    ("bonnor_charged_dust", "exterior", "radial"): lambda: one(
+        "bonnor_charged_dust", lambda m: along(0.0, *m.reach("exterior", "r")), view_id="star"),
+    ("bonnor_charged_dust", "exterior_areal", "radial"): lambda: one(
+        "bonnor_charged_dust", lambda m: along(0.0, *(r + 1 for r in m.reach("exterior", "r"))), view_id="star"),
+    ("bonnor_charged_dust", "quasi_black_hole", "radial"): lambda: one(
+        "bonnor_charged_dust", lambda m: along(0.0, *m.reach("quasi_black_hole", "r")), view_id="cloud"),
+    ("bonnor_charged_dust", "harmonic", "tx"): lambda: one(
+        "bonnor_charged_dust", lambda m: across(0.0, *m.reach("quasi_black_hole", "r")), view_id="cloud"),
+    ("bonnor_charged_dust", "spheroid_interior", "axis"): lambda: [
+        Mark(moments("bonnor_charged_dust", "spheroid", label="$t = 0$, $u = 0$")[0], points=[(0.0, 0.0)])],
+    ("bonnor_charged_dust", "spheroid_exterior", "axis"): lambda: [],
     ("israel_wilson_perjes", "cylindrical", "midplane"): lambda: one(
         "israel_wilson_perjes", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")), view_id="two_sources"),
     ("israel_wilson_perjes", "spheroidal", "axis"): lambda: one(

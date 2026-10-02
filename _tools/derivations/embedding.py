@@ -13503,6 +13503,136 @@ def ab_metrics(ck, src):
                  settings="$b = 1$, the unit of every length, and $z = 0$.")]
 
 
+def bonnor_charged_dust(ck, src):
+    """The moment t = 0 of four of Bonnor's stars, at m = 1. On the equator of a chart
+    -U^{-2}dt^2 + U^2(dr^2 + r^2 dOmega^2) the circle r has the circumference radius rho = r U
+    and g_rr = U^2, so dz/dr = sqrt(U^2 - (U + r U')^2) = sqrt(-r U'(2U + r U')), real wherever
+    -2U <= r U' <= 0, which is checked by quadrature for each interior. The sphere of 1975 and
+    the sphere of 1965, both at r_0 = 2m, are joined at r_0 to the exterior U = 1 + m/r, whose
+    profile is Majumdar and Papapetrou's throat, z = 2w + ln((w - 1)/(w + 1)) with
+    w = sqrt(2r/m + 1); U and U' are continuous at r_0, so each joins with one tangent. Lemos
+    and Weinberg's cloud is drawn at b = m/2 from its centre out. The spheroid, at a = m and
+    u_0 = 1, is drawn in its equatorial plane: the disc u = 0 inside the focal ring, where
+    rho = a U cos(theta) and g_theta_theta = (d rho/d theta)^2, so it is flat; then theta = 0
+    from the ring out, rho = a U cosh(u) and g_uu = a^2 U^2 sinh^2(u), through the surface u_0."""
+    views = []
+    R, top = 2.0, 6.0
+    size = 2 * (top + 1)
+    constants = {"m": 1, "r_0": 2}
+
+    def throat(r):
+        w = np.sqrt(2 * np.asarray(r, dtype=float) + 1)
+        return 2 * w + np.log((w - 1) / (w + 1))
+
+    def bowl(U, dU, z0):
+        def climb(r):
+            return math.sqrt(max(-r * dU(r) * (2 * U(r) + r * dU(r)), 0.0))
+        return lambda r: z0 + np.array([quad(climb, 0.0, float(x), epsabs=1e-12, epsrel=1e-12)[0]
+                                        for x in np.ravel(r)]).reshape(np.shape(r))
+
+    outer = Slice(src, "bonnor_charged_dust", "exterior", "r", "\\phi", {"t": 0, **EQUATOR}, constants)
+    for vid, system, label, name, U, dU, settings in (
+            ("star", "sphere_1975", "The sphere of 1975", "Bonnor and Wickramasuriya's sphere",
+             lambda r: 1 + (3 - r * r / 4) / 4, lambda r: -r / 8,
+             "$m = 1$, the unit of every length, and $r_0 = 2m$, so the redshift of the centre is $3/4$."),
+            ("star_1965", "sphere_1965", "The sphere of 1965", "Bonnor's sphere of 1965",
+             lambda r: 27 ** 0.5 / math.sqrt(8 + r * r), lambda r: -27 ** 0.5 * r / (8 + r * r) ** 1.5,
+             "$m = 1$, the unit of every length, and $r_0 = 2m$, so the redshift of the centre is "
+             "$(3/2)^{3/2} - 1 = 0.84$.")):
+        inner = Slice(src, "bonnor_charged_dust", system, "r", "\\phi", {"t": 0, **EQUATOR}, constants)
+        star = Piece("star", "star", inner, 0.0, R, 0.0, 1,
+                     (("axis", "the centre $r = 0$, where the surface is smooth"),
+                      ("join", "the surface of the star, $r = r_0$")),
+                     [(r, "r", None) for r in (0.5, 1.0, 1.5)], size)
+        zR = float(star.z[-1])
+        ext = Piece("exterior", "sheet", outer, R, top, zR, 1,
+                    (("join", "the surface of the star, $r = r_0$"), ("edge", "the surface runs on to $r \\to \\infty$")),
+                    [(R, "surface", "$r = r_0$")] + [(r, "r", None) for r in (3, 4, 5)] + [(top, "r", None)], size)
+        surface = Surface([star, ext])
+        ck.isometry(f"{name}, the star", star)
+        ck.isometry(f"{name}, the exterior", ext)
+        ck.join(f"{name} meets the exterior at r = r_0", star, R, ext, R)
+        ck.radius(f"{name}, rho = r U", star, lambda r: r * np.vectorize(U)(r), size)
+        ck.radius(f"{name}, the exterior, rho = r + m", ext, lambda r: r + 1, size)
+        ck.form(f"{name}, the bowl dz/dr = sqrt(-r U'(2U + r U'))", star, bowl(U, dU, 0.0), size)
+        ck.form(f"{name}, the exterior is Majumdar and Papapetrou's throat", ext,
+                lambda r: zR + throat(r) - throat(R), size)
+        fig = figure_of([surface], {"star": "star", "sheet": "cover"}, size, Camera(-90, 32))
+        ring_label(fig, [0, 0, 0], *ext.at(R), "$r = r_0$", dx=10)
+        ring_label(fig, [0, 0, 0], *ext.at(top), "$6m$")
+        fig.legend("fill", "star", "the star, $r \\le r_0$")
+        fig.legend("fill", "cover", "the exterior, the extremal Reissner-Nordström field")
+        fig.legend("line", "r", "$r$ constant, at $0.5$, $1$ and $1.5\\,m$ inside and $3$, $4$, $5$ and $6\\,m$ outside")
+        fig.legend("line", "surface", "the surface of the star, $r = r_0$")
+        fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+        views.append(view(vid, label, "$m$", [surface], fig.done(), settings=settings))
+
+    # Lemos and Weinberg's cloud, U = 1 + m/sqrt(r^2 + b^2) at b = m/2.
+    sl = Slice(src, "bonnor_charged_dust", "quasi_black_hole", "r", "\\phi", {"t": 0, **EQUATOR}, {"m": 1, "b": "1/2"})
+    cloud = Piece("cloud", "star", sl, 0.0, top, 0.0, 1,
+                  (("axis", "the centre $r = 0$, where the surface is smooth"),
+                   ("edge", "the surface runs on to $r \\to \\infty$")),
+                  [(r, "r", None) for r in (0.5, 1.0, 2.0, 3.0, 4.0, 5.0)] + [(top, "r", None)], size)
+    ck.isometry("Lemos and Weinberg's cloud", cloud)
+    ck.radius("Lemos and Weinberg's cloud, rho = r U", cloud, lambda r: r * (1 + 1 / np.sqrt(r * r + 0.25)), size)
+    ck.form("Lemos and Weinberg's cloud, dz/dr = sqrt(-r U'(2U + r U'))", cloud,
+            bowl(lambda r: 1 + 1 / math.sqrt(r * r + 0.25), lambda r: -r / (r * r + 0.25) ** 1.5, 0.0), size)
+    surface = Surface([cloud])
+    fig = figure_of([surface], {"star": "star"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *cloud.at(0.5), "$r = b$", dx=10)
+    ring_label(fig, [0, 0, 0], *cloud.at(top), "$6m$")
+    fig.legend("fill", "star", "the cloud, which has no edge")
+    fig.legend("line", "r", "$r$ constant, at $0.5$, $1$, $2$, $3$, $4$, $5$ and $6\\,m$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("cloud", "The cloud", "$m$", [surface], fig.done(),
+                      settings="$m = 1$, the unit of every length, and $b = m/2$, so the redshift of the centre is $2$."))
+
+    # The spheroid at a = m and u_0 = 1, in its equatorial plane.
+    shape = {"m": 1, "a": 1, "u_0": 1}
+    alpha, C0 = math.atan(1 / math.sinh(1.0)), math.cosh(1.0)
+    Uc = 1 + alpha + 1 / (4 * C0)
+    utop = 2.2
+    flat = Slice(src, "bonnor_charged_dust", "spheroid_interior", "\\theta", "\\phi", {"t": 0, "u": 0}, shape)
+    inside = Slice(src, "bonnor_charged_dust", "spheroid_interior", "u", "\\phi", {"t": 0, "theta": 0}, shape)
+    outside = Slice(src, "bonnor_charged_dust", "spheroid_exterior", "u", "\\phi", {"t": 0, "theta": 0}, shape)
+    size = 2 * float(outside.rho_at(utop))
+    half = math.pi / 2
+    disc = Piece("disc", "star", flat, 0.0, half, 0.0, 1,
+                 (("join", "the focal ring $u = 0$, $\\theta = 0$"), ("axis", "the centre of the disc, where the surface is flat")),
+                 [(math.pi / 6, "r", None), (math.pi / 3, "r", None)], size)
+    body = Piece("body", "star", inside, 0.0, 1.0, 0.0, 1,
+                 (("join", "the focal ring $u = 0$, $\\theta = 0$"), ("join", "the surface of the spheroid, $u = u_0$")),
+                 [(0.0, "chartedge", "$u = 0$"), (0.5, "r", None)], size)
+    zs = float(body.z[-1])
+    ext = Piece("exterior", "sheet", outside, 1.0, utop, zs, 1,
+                (("join", "the surface of the spheroid, $u = u_0$"), ("edge", "the surface runs on to $u \\to \\infty$")),
+                [(1.0, "surface", "$u = u_0$"), (1.5, "r", None), (2.0, "r", None), (utop, "r", None)], size)
+    for where, piece in (("the disc", disc), ("the body", body), ("the exterior", ext)):
+        ck.isometry(f"the spheroid, {where}", piece)
+    ck.join("the spheroid, the disc meets the body at the focal ring", disc, 0.0, body, 0.0)
+    ck.join("the spheroid, the body meets the exterior at u = u_0", body, 1.0, ext, 1.0)
+    ck.radius("the spheroid, the disc, rho = a U cos(theta)", disc, lambda th: Uc * np.cos(th), size)
+    ck.form("the spheroid, the disc is flat", disc, lambda th: 0 * th, size)
+    ck.radius("the spheroid, the body, rho = a U cosh(u)", body,
+              lambda u: (1 + alpha + (1 - u ** 4) / (4 * C0)) * np.cosh(u), size)
+    ck.radius("the spheroid, the exterior, rho = a U cosh(u)", ext,
+              lambda u: (1 + np.arctan(1 / np.sinh(u))) * np.cosh(u), size)
+    surface = Surface([disc, body, ext])
+    fig = figure_of([surface], {"star": "star", "sheet": "cover"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *body.at(0.0), "$u = 0$", side=-1, dx=8)
+    ring_label(fig, [0, 0, 0], *ext.at(1.0), "$u = u_0$", dx=10)
+    fig.legend("fill", "star", "the spheroid, $u \\le u_0$")
+    fig.legend("fill", "cover", "the exterior")
+    fig.legend("line", "chartedge", "the focal ring, $u = 0$ and $\\theta = 0$, where the disc ends")
+    fig.legend("line", "r", "$\\theta$ constant, at $30°$ and $60°$ on the disc, and $u$ constant, at $0.5$, $1.5$, $2$ and $2.2$")
+    fig.legend("line", "surface", "the surface of the spheroid, $u = u_0$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("spheroid", "The spheroid", "$m$", [surface], fig.done(),
+                      settings="$m = 1$, the unit of every length, $a = m$, and $u_0 = 1$, so the redshift on the "
+                               "disc $u = 0$ is $0.87$."))
+    return views
+
+
 STATED = {}
 
 
@@ -13519,6 +13649,7 @@ DRAWN = {
     "interior_schwarzschild": interior_schwarzschild,
     "gravastar": gravastar,
     "tolman_vii": tolman_vii,
+    "bonnor_charged_dust": bonnor_charged_dust,
     "tov": tov,
     "boson_star": boson_star,
     "einstein_cluster": einstein_cluster,
@@ -13901,6 +14032,35 @@ CAPTIONS = {
     ],
     ("bartnik_mckinnon", "n3"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the soliton with three zeros at one moment of $t$ ($b = 0.6970$, mass $0.9953\\,c^2\\ell/G$), where $1 - 2m/r$ falls to $0.0030$ at $r = 1.02\\,\\ell$ and the slope reaches $18.3$. Each further zero deepens the neck, and in the limit of infinitely many zeros it is the infinite throat of the extreme Reissner-Nordström black hole, $1 - 2m/r = (1 - \\ell/r)^2$.",
+    ],
+    ("bonnor_charged_dust", "star"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Bonnor and Wickramasuriya's sphere at one moment of $t$ "
+        "($r_0 = 2m$), drawn as a surface in flat space with every distance along it the metric distance. The "
+        "circle of coordinate radius $r$ has the circumference radius $rU$, and the surface climbs at "
+        "$dz/dr = \\sqrt{-r\\,\\partial_rU\\left(2U + r\\,\\partial_rU\\right)}$: level at the centre, and continuous in "
+        "slope across the surface of the star, since $U$ and $\\partial_rU$ are.",
+        "Outside the star the surface is the throat of the extremal Reissner-Nordström black hole, cut off at "
+        "the circumference radius $r_0 + m = 3m$. As $r_0$ goes to zero the cut moves down the throat without "
+        "end, and the bowl that closes it keeps the proper radius $4m/3$.",
+    ],
+    ("bonnor_charged_dust", "star_1965"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Bonnor's sphere of 1965 at one moment of $t$ ($r_0 = 2m$), "
+        "with the same field outside it as the sphere of 1975 and the same circumference radius $3m$ at its "
+        "surface. Its potential at the centre, $(1 + m/r_0)^{3/2} = 1.84$, is higher than the later sphere's "
+        "$1.75$, so the bowl is deeper.",
+    ],
+    ("bonnor_charged_dust", "cloud"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Lemos and Weinberg's cloud at one moment of $t$ ($b = m/2$), "
+        "drawn as a surface in flat space with every distance along it the metric distance. The surface is level "
+        "at the centre and steepest near $r = b$, and far out it rises as the throat of the extremal black hole "
+        "of the same mass does. As $b$ goes to zero the steep part lengthens into that throat.",
+    ],
+    ("bonnor_charged_dust", "spheroid"): [
+        "The equatorial plane of Bonnor and Wickramasuriya's spheroid at one moment of $t$ ($a = m$, $u_0 = 1$). "
+        "Inside the focal ring it is the disc $u = 0$, on which $U$ is constant, so the disc is flat, with the "
+        "radius $1.87\\,m$. From the ring outward it is the surface $\\theta = 0$, which climbs through the rest "
+        "of the spheroid to its surface $u = u_0$, at the circumference radius $2.63\\,m$, and on into the "
+        "exterior with no break in slope.",
     ],
     ("tolman_vii", "star"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the star at one moment of $t$ ($R = 2\\,r_s$), drawn as a "
