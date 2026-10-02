@@ -265,6 +265,10 @@ OVERRULED = {
     ("coleman_de_luccia", "static"): (
         False, "each vacuum is static in its own chart, and the wall between them, at r = r_w, "
                "accelerates outward through both, so the bubble as a whole has no time translation"),
+    ("penrose_impulsive_wave", "spherically symmetric"): (
+        False, "behind the wave the space is Minkowski's and its chart is spherical, but the front carries "
+               "the two ends of the string and the space ahead of it is the string's cone, so the "
+               "spacetime keeps only the rotations about the string"),
     ("israel_shell", "vacuum"): (
         False, "both regions are empty and the shell of dust between them is in no chart, since g_rr "
                "jumps across it; the spacetime has matter on r = R"),

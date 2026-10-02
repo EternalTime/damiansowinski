@@ -818,6 +818,37 @@ def _israel_shell(view):
     return [Mark(m, found) for m in moments("israel_shell") for found in [lines(m)] if found]
 
 
+PIW_BETA = 0.5          # 1 - 4G mu/c^2 of the string every drawing of Penrose's wave takes
+
+
+def _penrose_wave(view):
+    """Penrose's impulsive wave: each moment is the plane across the string at the inertial time t
+    behind the wave, from the centre to the front r = ct, and at the time T = t/beta of the string's
+    rest frame ahead of it, from the front R = cT out. On the equator of the retarded chart the first
+    is u = ct - r and the second, by Podolsky and Griffiths's map at rho = 1,
+    cT = (2r + (1 + beta^2) u)/(2 beta) and R = (2r + (1 - beta^2) u)/(2 beta), is
+    u = 2(ct - r)/(1 + beta^2), out to the r where R is the embedding's rim. The null chart's planes
+    of constant rho and phi = 0 meet a moment in one event behind the wave, at x = rho (ct - z) on
+    z = 0: V = ct/sqrt(2) and U = (rho^2 - 1) ct/sqrt(2), on the front itself at rho = 1."""
+    b = PIW_BETA
+    out = []
+    for m in moments("penrose_impulsive_wave"):
+        ct = m.time
+        if view == "behind":
+            out.append(Mark(m, along(ct, *m.reach("behind", "r"))))
+        elif view == "ahead":
+            out.append(Mark(m, along(ct / b, *m.reach("ahead", "R"))))
+        elif view == "retarded":
+            rim = m.reach("ahead", "R")[1]
+            # R = rim on the slice: 2r + (1 - b^2) 2(ct - r)/(1 + b^2) = 2 b rim.
+            far = (b * rim * (1 + b * b) - (1 - b * b) * ct) / (2 * b * b)
+            out.append(Mark(m, [[(ct, 0.0), (0.0, ct)], [(0.0, ct), (2 * (ct - far) / (1 + b * b), far)]]))
+        else:
+            rho = {"unit": 1.0, "near": 0.5}[view]
+            out.append(Mark(m, points=[((rho * rho - 1) * ct / math.sqrt(2), ct / math.sqrt(2))]))
+    return out
+
+
 def one(metric_id, lines_of, label=None, view_id=None):
     """Each moment of a spacetime as the lines lines_of(moment) returns."""
     return [Mark(m, lines_of(m), label=label) for m in moments(metric_id, view_id)]
@@ -2365,6 +2396,13 @@ FLAT = {
     ("vaidya", "eddington_finkelstein_ingoing", "shell"): lambda: one(
         "vaidya", lambda m: [[(m.time + r, r) for r in m.reach("eddington_finkelstein_ingoing", "r")]]),
     # Israel's shell of dust: the flat moment inside the shell, and v - r = w outside it.
+    ("penrose_impulsive_wave", "behind", "radial"): lambda: _penrose_wave("behind"),
+    ("penrose_impulsive_wave", "ahead", "radial"): lambda: _penrose_wave("ahead"),
+    ("penrose_impulsive_wave", "retarded", "equator"): lambda: _penrose_wave("retarded"),
+    # The plane 30 degrees from the string holds no event of the plane across it.
+    ("penrose_impulsive_wave", "retarded", "near"): lambda: [],
+    ("penrose_impulsive_wave", "null", "unit"): lambda: _penrose_wave("unit"),
+    ("penrose_impulsive_wave", "null", "near"): lambda: _penrose_wave("near"),
     ("israel_shell", "interior", "radial"): lambda: _israel_shell("radial"),
     ("israel_shell", "interior", "through"): lambda: _israel_shell("through"),
     ("israel_shell", "exterior", "radial"): lambda: _israel_shell("schwarzschild"),

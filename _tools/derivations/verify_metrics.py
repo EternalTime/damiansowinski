@@ -1255,6 +1255,18 @@ DIMENSIONS = {
     ("hiscock", "flat"): {
         "u": "L", "v": "L", "\\theta": "1", "\\phi": "1",
     },
+    # Penrose's spherical impulsive wave for a snapping string: the null coordinates U and V of
+    # Podolsky and Griffiths are lengths and rho is a stereographic coordinate on the wave front, a
+    # pure number; u and r of the retarded chart are lengths; k and beta are pure numbers, and so
+    # is the step Theta each continuous chart defines.
+    ("penrose_impulsive_wave", "null"): {
+        "U": "L", "V": "L", "\\rho": "1", "\\phi": "1", "k": "1", "\\Theta": "1",
+    },
+    ("penrose_impulsive_wave", "retarded"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "k": "1", "\\Theta": "1",
+    },
+    ("penrose_impulsive_wave", "behind"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1"},
+    ("penrose_impulsive_wave", "ahead"): {"T": "T", "R": "L", "\\phi": "1", "z": "L", "\\beta": "1"},
     # Israel's shell of dust: flat space inside in the time T of its centre, Schwarzschild's vacuum
     # outside in Schwarzschild's time t and in the advanced time v, a length. R, the areal radius of
     # the shell, and mu = G m/c^2, the rest mass of the dust as a length, enter the domains and the

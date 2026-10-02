@@ -730,6 +730,16 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `exterior_ingoing/shell`, drawn against $v - r$: level lines from the shell, or from $r = 0$, to $4\,r_s$.
 - The conformal views: each moment through the flat map inside the shell and the ingoing chart's map outside it, met at the shell.
 
+### Penrose's impulsive wave
+
+- The embedding is four moments of the plane across the string through the break, $ct = \ell/4$, $\ell$, $7\ell/4$ and $5\ell/2$ behind the wave, each carried on ahead of the wave as the moment $T = t/\beta$ of the string's rest frame, which it meets on the front; `penrose_impulsive_wave.md` Step 6 is the map.
+- `behind/radial`: level lines $t = t_k$ from the centre to the front.
+- `ahead/radial`: level lines $T = t_k/\beta$ from the front, $R = cT$, to $8\,\ell$.
+- `retarded/equator`, drawn against $u + r$: a level line from the centre to the front, and ahead of it the line $u = 2(ct_k - r)/(1 + \beta^2)$, out to the edge of the drawing.
+- `retarded/near`, the plane $30°$ from the string, holds no event of the plane across it: none drawn.
+- `null/unit` and `null/near`: each plane meets each moment in one event behind or on the front, $V = ct_k/\sqrt2$ and $U = (\rho^2 - 1)ct_k/\sqrt2$: four points.
+- The conformal views of the retarded chart and of either side: each moment through Minkowski's map behind the front and the string's frame's ahead of it, met on the front; the null chart's view: four points on the front.
+
 ### Vaidya
 
 - The embedding is four moments of constant $v - r$ in the ingoing chart, $-3$, $-1.5$, $-0.5$ and $1\,r_s$, since a moment of constant $v$ is a light cone; each runs from $r = 0$ to $4\,r_s$, flat inside the shell, which falls along $v = 0$ and so crosses the moment at $r = -(v - r)$, and Flamm's paraboloid moved in by $r_s$ outside it.
@@ -795,6 +805,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Lifshitz | line in each static chart and on each plane of $t$ and $x$, curve in each null chart | not visible: $t$ left out | six curves |
 | Wahlquist | line on each view of Wahlquist's chart and of Whittaker's; not visible on Mars's two | none | none drawn |
 | Israel's shell | level lines inside the shell and against $v - r$, curves in Schwarzschild's chart | none | four curves |
+| Penrose's impulsive wave | level lines either side of the front, a bent line on the retarded equator, points on the null planes; none on the plane $30°$ from the string | none | four curves, four points on the null plane |
 | Vaidya | three lines, four with the box taken to $-3\,r_s$; not visible on the outgoing view | none | four curves |
 
 As drawn in 4de26cc, the Krasnikov tube's slice is a line, Reissner-Nordström's are two lines, and Vaidya's ingoing view carries all four lines.

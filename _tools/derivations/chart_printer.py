@@ -532,6 +532,44 @@ def kink(x, then=sp.factor):
     return pretty, overrides
 
 
+# -- a step --------------------------------------------------------------------------------
+
+def step(x, ahead, then=sp.factor):
+    """A `pretty` for a metric that holds x only as x times a step at x = 0, as Penrose's impulsive
+    wave holds U Theta(U), and the placeholders it prints with, as (pretty, overrides).
+
+    The chart defines the step as a name, Theta = (1 + sgn(x))/2 where `ahead` is 1 and
+    (1 - sgn(x))/2 where it is -1, so the checker hands every value back in x and sgn(x), with a
+    delta of x where the first derivative of the metric jumps. Here a value is read on each side
+    of x = 0, sgn(x) = `ahead` and its opposite, and written once for both: as it stands where the
+    two sides agree; with x written x Theta where the side behind is the side ahead at x = 0; and
+    as the side behind plus Theta times the difference where it is neither. The delta's term
+    closes the value."""
+    step_, x_step, d = sp.Symbol("Theta"), sp.Symbol("_step" + x.name), sp.Symbol("_delta" + x.name)
+    name = tex_name(x.name)
+    overrides = {step_: "\\Theta", x_step: name + "\\Theta", d: "\\delta(" + name + ")"}
+    s = sp.sign(x)
+
+    def same(a, b):
+        return sp.simplify(a - b) == 0
+
+    def pretty(value):
+        v = sp.sympify(value).replace(lambda e: isinstance(e, sp.Abs) and e.args[0] == x, lambda e: x * s)
+        v = v.xreplace({sp.DiracDelta(x): d})
+        impulse, smooth = sp.diff(v, d), v.subs(d, 0)
+        if not same(v, smooth + impulse * d):
+            raise ValueError(f"{value} is not linear in the delta of {x}")
+        front, behind = (sp.together(smooth.subs(s, side)) for side in (ahead, -ahead))
+        if same(front, behind):
+            body = then(front)
+        elif same(front.subs(x, 0), behind):
+            body = then(front).subs(x, x_step)
+        else:
+            body = then(behind) + step_ * then(sp.together(front - behind))
+        return body + d * then(sp.together(impulse.subs(s, ahead)))
+    return pretty, overrides
+
+
 # -- regrouping a numerator ------------------------------------------------------------
 
 def symbolize(expr):

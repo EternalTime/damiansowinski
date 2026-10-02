@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 125,
+  "count": 126,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -81,6 +81,11 @@
           "id": "hotta_tanaka",
           "kind": "limit_source",
           "text": "Aichelburg and Sexl's boost done to the Schwarzschild-de Sitter black hole. Its shock is a sphere of fixed area on a cosmological horizon, and this plane is its limit as the cosmological constant goes to zero [hotta1993, podolsky1999nonexpanding]."
+        },
+        {
+          "id": "penrose_impulsive_wave",
+          "kind": "family",
+          "text": "The same cut and paste done along a light cone, which makes an impulsive wave on a sphere that expands [penrose1972impulsive, podolsky1999expanding]."
         }
       ],
       "references": [
@@ -14065,6 +14070,11 @@
           "id": "siklos",
           "kind": "family",
           "text": "The waves of anti-de Sitter space with plane fronts. The same boost done to the Schwarzschild-anti-de Sitter black hole gives an impulsive member of that family, with one null particle on a hyperboloidal front [podolsky1998impulsive]."
+        },
+        {
+          "id": "penrose_impulsive_wave",
+          "kind": "family",
+          "text": "An impulsive wave on a sphere that expands at the speed of light through flat spacetime, built by the same cut and paste along a light cone [podolsky1999expanding]."
         }
       ],
       "references": [
@@ -14084,7 +14094,8 @@
         "gao2000",
         "leblond2002",
         "aalsma2020",
-        "aalsma2021"
+        "aalsma2021",
+        "podolsky1999expanding"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hotta_tanaka.json",
@@ -18676,6 +18687,11 @@
           "id": "chandrasekhar_xanthopoulos",
           "kind": "family",
           "text": "Waves with a shock behind each impulse and their polarizations out of line. They focus each other onto a horizon, the inner horizon of Kerr, on the surface where these waves have their singularity [chandrasekhar1986]."
+        },
+        {
+          "id": "penrose_impulsive_wave",
+          "kind": "programme",
+          "text": "Penrose's impulsive wave with a spherical front, made by cutting flat spacetime along a light cone and gluing it back with a warp [penrose1972impulsive]."
         }
       ],
       "references": [
@@ -18694,7 +18710,8 @@
         "bell1974",
         "griffiths1991",
         "szekeres1975",
-        "eardley2002"
+        "eardley2002",
+        "penrose1972impulsive"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/khan_penrose.json",
@@ -23292,6 +23309,11 @@
           "id": "ppn_metric",
           "kind": "generalisation",
           "text": "Flat spacetime with a slowly moving body in it and gravity weak, written so that every metric theory of gravity fits. Take the mass away, $m = 0$, and it is flat again [will2014]."
+        },
+        {
+          "id": "penrose_impulsive_wave",
+          "kind": "composite",
+          "text": "The inside and the outside of a light cone, glued back together with a warp. The cone carries a spherical gravitational wave one instant thick [penrose1972impulsive, podolsky2000snapping]."
         }
       ],
       "references": [
@@ -23358,7 +23380,8 @@
         "podolskybelan2004",
         "israel1966",
         "tippett2017",
-        "will2014"
+        "will2014",
+        "podolsky2000snapping"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -28040,6 +28063,338 @@
       ]
     },
     {
+      "id": "penrose_impulsive_wave",
+      "name": "Penrose's Spherical Impulsive Wave",
+      "short_name": "Penrose Impulsive Wave",
+      "description": "Flat spacetime cut along the future light cone of one event and joined again with a warp, which leaves a spherical gravitational wave one instant thick expanding at the speed of light. With the warp of a cosmic string it is the wave a string sends out when it snaps, with the cone of the string ahead of the wave and plain flat space behind it.",
+      "tags": [
+        "vacuum",
+        "gravitational wave",
+        "impulsive wave",
+        "spherical wave",
+        "cut and paste",
+        "cosmic string",
+        "snapping cosmic string",
+        "topological defect",
+        "angular deficit",
+        "conical",
+        "Robinson-Trautman",
+        "Petrov type N",
+        "vanishing scalar invariants",
+        "null source",
+        "axisymmetric",
+        "expanding",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The string's mass per unit length $\\mu$ enters through $\\beta = 1 - 4G\\mu/c^2$ and $k = (1 - \\beta^2)/4$, and $\\delta$ is the Dirac delta. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "minkowski",
+          "kind": "piece",
+          "text": "Flat spacetime on both sides of the wave. Penrose cut it along the light cone of one event and glued the halves back with a warp [penrose1972impulsive, podolsky2000snapping]."
+        },
+        {
+          "id": "cosmic_string",
+          "kind": "piece",
+          "text": "The cone ahead of the wave. With the warp $h = Z^\\beta$ the flat space outside the front is the string's, and the wave is what it sends out when it snaps [podolsky2000snapping]."
+        },
+        {
+          "id": "robinson_trautman",
+          "kind": "limit_source",
+          "text": "Penrose's wave is the limit of a Robinson-Trautman wave of type N as its profile shrinks to an impulse [podolsky1999expanding]."
+        },
+        {
+          "id": "aichelburg_sexl",
+          "kind": "family",
+          "text": "Penrose's cut and paste along a null plane, where this one is cut along a light cone. The shock of a massless particle is one of the plane waves it makes [podolsky1999expanding, aichelburg1971]."
+        },
+        {
+          "id": "pp_wave",
+          "kind": "family",
+          "text": "The waves with plane fronts, whose impulsive members are the other kind Penrose's cut and paste makes [podolsky1999expanding]."
+        },
+        {
+          "id": "hotta_tanaka",
+          "kind": "family",
+          "text": "An impulsive wave on a sphere that keeps its size, in de Sitter space, built by the same cut and paste along a cosmological horizon [podolsky1999nonexpanding]."
+        },
+        {
+          "id": "khan_penrose",
+          "kind": "programme",
+          "text": "Penrose's impulsive waves with plane fronts, two of them colliding head on. He and K. A. Khan found that exact spacetime in 1971 [khan1971]."
+        }
+      ],
+      "references": [
+        "penrose1972impulsive",
+        "podolsky2000snapping",
+        "podolsky1999expanding",
+        "aichelburg1971",
+        "hogan1993",
+        "hogan1994",
+        "vilenkin1981",
+        "gleiser1989splitting",
+        "bicak1989",
+        "bicak1990",
+        "podolsky2003geodesics",
+        "robinson1960",
+        "hogan1992",
+        "hogan1995",
+        "podolsky1999nonexpanding",
+        "khan1971"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/penrose_impulsive_wave.json",
+      "charts": [
+        {
+          "id": "null",
+          "name": "Null",
+          "coordinates": [
+            "U",
+            "V",
+            "\\rho",
+            "\\phi"
+          ],
+          "domains": [
+            "U \\in (-\\infty, \\infty)",
+            "V \\in (0, \\infty)",
+            "\\rho \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "U = 0 \\;\\text{(the wave front)}",
+            "V\\rho^2 = kU \\;\\text{(the string, ahead of the wave)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "k",
+              "description": "Strength of the wave, $k = (1 - \\beta^2)/4$, for a string of mass per unit length $\\mu$ that leaves the fraction $\\beta = 1 - 4G\\mu/c^2$ of the full angle around it"
+            },
+            {
+              "symbol": "\\Theta = \\tfrac{1}{2}\\left(1 + \\mathrm{sgn}(U)\\right)",
+              "description": "The step at the wave front, $1$ ahead of the wave, where $U > 0$, and $0$ behind it"
+            }
+          ],
+          "convention": "We use the null coordinates $U$ and $V$, both lengths, with $\\rho$ and $\\phi$ polar coordinates on the stereographic plane $Z = \\rho e^{i\\phi}$ of the wave front $U = 0$, and $\\mathrm{sgn}(U)$ is the sign of $U$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = 2\\,dU\\,dV + 2\\left(V + \\dfrac{k\\,U\\Theta}{\\rho^2}\\right)^2d\\rho^2 + 2\\rho^2\\left(V - \\dfrac{k\\,U\\Theta}{\\rho^2}\\right)^2d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "U",
+                "V"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "V",
+                "U"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "2\\left(V + \\dfrac{k\\,U\\Theta}{\\rho^2}\\right)^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "2\\rho^2\\left(V - \\dfrac{k\\,U\\Theta}{\\rho^2}\\right)^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "retarded",
+          "name": "Retarded Spherical",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in (0, \\pi)",
+            "\\phi \\in [0, 2\\pi)",
+            "u = 0 \\;\\text{(the wave front)}",
+            "r\\sin^2\\theta = -2ku \\;\\text{(the string, ahead of the wave)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "k",
+              "description": "Strength of the wave, $k = (1 - \\beta^2)/4$, for a string of mass per unit length $\\mu$ that leaves the fraction $\\beta = 1 - 4G\\mu/c^2$ of the full angle around it"
+            },
+            {
+              "symbol": "\\Theta = \\tfrac{1}{2}\\left(1 - \\mathrm{sgn}(u)\\right)",
+              "description": "The step at the wave front, $1$ ahead of the wave, where $u < 0$, and $0$ behind it"
+            }
+          ],
+          "convention": "We use a retarded coordinate $u$ and a radius $r$, both lengths, with $u = ct - r$ behind the wave for the inertial time $t$ there, $\\theta$ measured from the string, and $\\mathrm{sgn}(u)$ the sign of $u$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -du^2 - 2\\,du\\,dr + \\left(r - \\dfrac{2k\\,u\\Theta}{\\sin^2\\theta}\\right)^2d\\theta^2 + \\sin^2\\theta\\left(r + \\dfrac{2k\\,u\\Theta}{\\sin^2\\theta}\\right)^2d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(r - \\dfrac{2k\\,u\\Theta}{\\sin^2\\theta}\\right)^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\sin^2\\theta\\left(r + \\dfrac{2k\\,u\\Theta}{\\sin^2\\theta}\\right)^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "behind",
+          "name": "Behind the Wave",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (0, \\infty)",
+            "r \\in [0, ct)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = ct \\;\\text{(the wave front)}"
+          ],
+          "parameters": [],
+          "convention": "We use the inertial time $t$ and spherical coordinates $(r, \\theta, \\phi)$ about the event where the string snaps, with $\\theta$ measured from the line the string lay along. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "ahead",
+          "name": "Ahead of the Wave",
+          "coordinates": [
+            "T",
+            "R",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "R \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "R^2 + z^2 = c^2T^2 \\;\\text{(the wave front, for } T > 0\\text{, with the wave inside it)}",
+            "R = 0 \\;\\text{(the string, a conical singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\beta",
+              "description": "Fraction of the full angle left around the string, $\\beta = 1 - 4G\\mu/c^2$, so that the deficit angle is $2\\pi(1 - \\beta)$"
+            }
+          ],
+          "convention": "We use coordinates $(T, R, \\phi, z)$ at rest with the string, with $T$ carrying dimensions of time, $R$ the proper distance from the string, and $z$ the proper length along it, and we take $\\phi$ periodic in $2\\pi$. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dT^2 + dR^2 + \\beta^2R^2d\\phi^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "R",
+                "R"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\beta^2\\,R^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
       "id": "photon_rocket",
       "name": "Kinnersley Photon Rocket",
       "short_name": "Photon Rocket",
@@ -29404,6 +29759,11 @@
           "id": "chandrasekhar_xanthopoulos",
           "kind": "composite",
           "text": "Two plane waves of this family, each an impulse with a shock wave behind it, sent at each other head on. They focus each other onto a horizon [chandrasekhar1986]."
+        },
+        {
+          "id": "penrose_impulsive_wave",
+          "kind": "family",
+          "text": "An impulsive wave with a spherical front, the other kind Penrose's cut and paste makes beside the impulsive waves with plane fronts [podolsky1999expanding]."
         }
       ],
       "references": [
@@ -29443,7 +29803,8 @@
         "balasubramanian2008",
         "duval2009",
         "bicak1999",
-        "chandrasekhar1986"
+        "chandrasekhar1986",
+        "podolsky1999expanding"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/pp_wave.json",
@@ -31383,6 +31744,11 @@
           "id": "kundt_waves",
           "kind": "family",
           "text": "The waves of the same type whose rays do not expand. A wave of type N without twist belongs to one class or the other, with or without a cosmological constant [bicak1999]."
+        },
+        {
+          "id": "penrose_impulsive_wave",
+          "kind": "limit",
+          "text": "The impulsive limit of the waves of type N: the profile shrinks to a delta on one spherical front, with flat spacetime on either side of it [podolsky1999expanding]."
         }
       ],
       "references": [
@@ -31412,7 +31778,8 @@
         "cornish2000",
         "podolsky2005",
         "podolsky1998",
-        "bicak1999"
+        "bicak1999",
+        "podolsky1999expanding"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/robinson_trautman.json",
@@ -39049,6 +39416,11 @@
           "id": "point_particle_2plus1",
           "kind": "special_case",
           "text": "The string with the dimension along it taken away. A slice across the string is the space around a point mass in a world of two dimensions, the cone Andrzej Staruszkiewicz found in 1963 [staruszkiewicz1963, deser1984]."
+        },
+        {
+          "id": "penrose_impulsive_wave",
+          "kind": "composite",
+          "text": "A string that snaps. Ahead of the wave it sends out the cone is still there, and behind the wave space is flat with no wedge missing [gleiser1989splitting, podolsky2000snapping]."
         }
       ],
       "references": [
@@ -39075,7 +39447,9 @@
         "deser1992time",
         "bronnikov2020",
         "garfinkle1990",
-        "staruszkiewicz1963"
+        "staruszkiewicz1963",
+        "gleiser1989splitting",
+        "podolsky2000snapping"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/cosmic_string.json",
