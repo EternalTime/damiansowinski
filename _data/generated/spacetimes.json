@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 132,
+  "count": 133,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -5846,6 +5846,11 @@
           "id": "misner_brill_lindquist",
           "kind": "programme",
           "text": "Wheeler's geometrodynamics had a second way to get mass with no matter, the wormhole. Charles Misner's slice of 1960 has two masses at rest that are the two mouths of one wormhole in empty space [misner1957, misner1960]."
+        },
+        {
+          "id": "brill_waves",
+          "kind": "programme",
+          "text": "Dieter Brill weighed a bundle of gravitational waves at one moment in 1959 and proved its mass positive [brill1959]. With James Hartle he built the gravitational geon five years later [brillhartle1964]."
         }
       ],
       "references": [
@@ -5875,7 +5880,8 @@
         "bartnik1988",
         "volkov1999",
         "misner1957",
-        "misner1960"
+        "misner1960",
+        "brill1959"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/boson_star.json",
@@ -6403,6 +6409,260 @@
           ],
           "ricci_scalar": "R = \\dfrac{4r_0^2\\left(r^2 + W\\right)\\left(2r^4 - 4r^2\\,W - 3W^2\\right)}{r^2\\,W^3\\left(W - r^2\\right)}",
           "kretschmann": "K = \\dfrac{16r_0^4\\left(4r^{12} - 8r^{10}\\,W + 4r^6\\,W^3 + 7r^4\\,W^4 + 3W^6\\right)}{r^4\\,W^6\\left(W - r^2\\right)^2}"
+        }
+      ]
+    },
+    {
+      "id": "brill_waves",
+      "name": "Brill's Time-Symmetric Gravitational Waves",
+      "short_name": "Brill Waves",
+      "description": "One moment of a spacetime that holds gravitational waves and nothing else, which Dieter Brill constructed in 1959. It is a single slice of space, three dimensions with no time, at the moment the wave is at rest, and it satisfies Einstein's constraint equations with no matter anywhere. Brill proved its mass positive, a strong enough wave already lies inside its own apparent horizon, and what the wave does afterwards is known from computer simulations.",
+      "tags": [
+        "three-dimensional",
+        "Riemannian",
+        "no time",
+        "initial data",
+        "spatial slice",
+        "time symmetric",
+        "constraint equations",
+        "Hamiltonian constraint",
+        "gravitational wave",
+        "Brill wave",
+        "axisymmetric",
+        "conformal transformation",
+        "positive energy",
+        "positive mass theorem",
+        "mass",
+        "apparent horizon",
+        "minimal surface",
+        "trapped surface",
+        "critical collapse",
+        "gravitational collapse",
+        "geometrodynamics",
+        "geon",
+        "numerical relativity",
+        "numerical solution",
+        "asymptotically flat",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(+,+,+)",
+      "convention": "Every coordinate is spatial, so no component carries a factor of $c$, and a dot in the geodesic equations is a derivative with respect to arc length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. A mass $M$ enters as the length $GM/c^2$.",
+      "related": [
+        {
+          "id": "misner_brill_lindquist",
+          "kind": "family",
+          "text": "The same kind of moment with black holes in it. Set $q = 0$ and give $\\psi$ poles, and Brill's slice becomes the one he and Richard Lindquist built in 1963 for two holes at rest [brill1963, cook2000]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "family",
+          "text": "The wave gone quiet. With $q = 0$ the only regular $\\psi$ that goes to $1$ far away is $1$ itself, and the slice is a moment of Minkowski's flat spacetime [brill1959]."
+        },
+        {
+          "id": "einstein_rosen_waves",
+          "kind": "family",
+          "text": "Gravitational waves with cylindrical fronts, known exactly for all time. Weber and Wheeler argued for their reality in 1957, two years before Brill weighed his [weber1957, brill1959]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "Far from the wave the slice approaches that of Schwarzschild's mass at the moment $t = 0$, in isotropic coordinates [alcubierre2000, cook2000]. A wave strong enough to collapse leaves a black hole behind [alcubierre2000collapse]."
+        },
+        {
+          "id": "semiclosed_world",
+          "kind": "family",
+          "text": "One more moment of time symmetry: a closed universe of dust behind a throat. A Brill wave turned up to its critical amplitude closes off as well, into a compact universe with nothing in it but the wave [omurchadha1993]."
+        },
+        {
+          "id": "roberts",
+          "kind": "family",
+          "text": "A scalar field on the threshold between dispersing and collapsing to a black hole, in closed form. Brill's waves have the same two fates, with the threshold of Holz's wave at $a = 4.70$ [hilditch2017]."
+        },
+        {
+          "id": "boson_star",
+          "kind": "programme",
+          "text": "Wheeler's geon was a ball of waves held together by its own gravity, mass without matter [wheeler1955]. Brill and James Hartle built the geon of gravitational waves in 1964 [brillhartle1964]."
+        }
+      ],
+      "references": [
+        "brill1959",
+        "cook2000",
+        "omurchadha1993",
+        "schoen1979",
+        "witten1981",
+        "wheeler1964",
+        "eppley1977",
+        "beig1991",
+        "holz1993",
+        "hilditch2017",
+        "alcubierre2000",
+        "alcubierre2000collapse",
+        "abrahams1993",
+        "hilditch2013",
+        "brill1963",
+        "weber1957",
+        "wheeler1955",
+        "brillhartle1964"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/brill_waves.json",
+      "charts": [
+        {
+          "id": "cylindrical",
+          "name": "Brill",
+          "coordinates": [
+            "\\rho",
+            "z",
+            "\\phi"
+          ],
+          "domains": [
+            "\\rho \\in [0, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "q = 0 \\;\\text{at}\\; \\rho = 0 \\;\\text{(a regular axis)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\psi = \\psi(\\rho,z)",
+              "description": "The conformal factor, a pure number that goes to $1 + GM/2c^2r$ far away, with $r = \\sqrt{\\rho^2 + z^2}$ and $M$ the mass of the wave. The slice satisfies the constraint where $\\partial_\\rho^2\\psi + \\partial_\\rho\\psi/\\rho + \\partial_z^2\\psi + \\tfrac{1}{4}\\psi\\left(\\partial_\\rho^2 q + \\partial_z^2 q\\right) = 0$; no component assumes it"
+            },
+            {
+              "symbol": "q = q(\\rho,z)",
+              "description": "The shape of the wave, a pure number chosen freely, which vanishes on the axis with its first derivative along $\\rho$ and falls off faster than $1/r$ far away. Holz, Miller, Wakano, and Wheeler's is $q = a(\\rho/\\lambda)^2e^{-r^2/\\lambda^2}$ and Eppley's is $q = a(\\rho/\\lambda)^2/(1 + (r/\\lambda)^n)$ with $n \\geq 4$, each with an amplitude $a$, a pure number, and a width $\\lambda$, a length"
+            }
+          ],
+          "convention": "We use Brill's cylindrical coordinates $(\\rho, z, \\phi)$ about the axis of symmetry $\\rho = 0$, with $\\rho$ and $z$ lengths.",
+          "line_element": "ds^2 = \\psi^4\\left(e^{2q}\\left(d\\rho^2 + dz^2\\right) + \\rho^2d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\psi^4e^{2q}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\psi^4e^{2q}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\psi^4\\,\\rho^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\left(4\\left(\\rho\\,\\partial_\\rho^2\\psi + \\partial_\\rho\\psi + \\rho\\,\\partial_z^2\\psi\\right) + \\rho\\,\\psi\\left(\\partial_\\rho^2 q + \\partial_z^2 q\\right)\\right)}{\\rho\\,\\psi^5\\,e^{2q}}",
+          "kretschmann": "K = \\dfrac{4\\left(\\psi^4\\left(2\\rho^2\\,\\partial_\\rho^2 q\\,\\partial_z^2 q + \\rho^2\\left(\\partial_\\rho^2 q\\right)^2 + \\rho^2\\left(\\partial_z^2 q\\right)^2 + 2\\left(\\partial_\\rho q\\right)^2 + 2\\left(\\partial_z q\\right)^2\\right) + 4\\psi^3\\,\\rho\\left(2\\left(\\partial_\\rho q\\right)^2\\,\\partial_\\rho\\psi + 2\\partial_\\rho\\psi\\left(\\partial_z q\\right)^2 + \\rho\\,\\partial_\\rho^2 q\\,\\partial_\\rho^2\\psi + \\rho\\,\\partial_\\rho^2 q\\,\\partial_z^2\\psi + \\rho\\,\\partial_\\rho^2\\psi\\,\\partial_z^2 q + \\rho\\,\\partial_z^2 q\\,\\partial_z^2\\psi - \\partial_\\rho q\\,\\partial_\\rho^2\\psi + \\partial_\\rho q\\,\\partial_z^2\\psi - 2\\partial_\\rho\\partial_z\\psi\\,\\partial_z q\\right) - 4\\psi^2\\left(4\\rho^2\\,\\partial_\\rho q\\,\\partial_\\rho\\partial_z\\psi\\,\\partial_z\\psi + 2\\rho^2\\,\\partial_\\rho q\\,\\partial_\\rho\\psi\\,\\partial_\\rho^2\\psi - 2\\rho^2\\,\\partial_\\rho q\\,\\partial_\\rho\\psi\\,\\partial_z^2\\psi + 4\\rho^2\\,\\partial_\\rho\\partial_z\\psi\\,\\partial_\\rho\\psi\\,\\partial_z q - 2\\rho^2\\,\\partial_\\rho^2\\psi\\,\\partial_z q\\,\\partial_z\\psi + 2\\rho^2\\,\\partial_z q\\,\\partial_z\\psi\\,\\partial_z^2\\psi - 6\\rho\\,\\partial_\\rho\\psi\\,\\partial_z q\\,\\partial_z\\psi - 2\\rho^2\\left(\\partial_\\rho q\\right)^2\\left(\\partial_\\rho\\psi\\right)^2 - 2\\rho^2\\left(\\partial_\\rho q\\right)^2\\left(\\partial_z\\psi\\right)^2 - 2\\rho^2\\left(\\partial_\\rho\\psi\\right)^2\\left(\\partial_z q\\right)^2 - 2\\rho^2\\left(\\partial_z q\\right)^2\\left(\\partial_z\\psi\\right)^2 + \\rho^2\\,\\partial_\\rho^2 q\\left(\\partial_z\\psi\\right)^2 + \\rho^2\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_\\rho^2 q + \\rho^2\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z^2 q + \\rho^2\\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2 q - 3\\rho\\,\\partial_\\rho q\\left(\\partial_\\rho\\psi\\right)^2 + 3\\rho\\,\\partial_\\rho q\\left(\\partial_z\\psi\\right)^2 - 2\\rho^2\\,\\partial_\\rho^2\\psi\\,\\partial_z^2\\psi - 2\\rho\\,\\partial_\\rho\\psi\\,\\partial_\\rho^2\\psi - 2\\rho\\,\\partial_\\rho\\psi\\,\\partial_z^2\\psi - 2\\rho^2\\left(\\partial_\\rho\\partial_z\\psi\\right)^2 - 2\\rho^2\\left(\\partial_\\rho^2\\psi\\right)^2 - 2\\rho^2\\left(\\partial_z^2\\psi\\right)^2 - 2\\left(\\partial_\\rho\\psi\\right)^2\\right) + 8\\psi\\,\\rho\\left(3\\rho\\,\\partial_\\rho q\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 + 3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z q\\,\\partial_z\\psi - 6\\rho\\,\\partial_\\rho\\partial_z\\psi\\,\\partial_\\rho\\psi\\,\\partial_z\\psi + 3\\rho\\,\\partial_\\rho q\\left(\\partial_\\rho\\psi\\right)^3 + \\rho\\,\\partial_\\rho^2\\psi\\left(\\partial_z\\psi\\right)^2 + 3\\rho\\,\\partial_z q\\left(\\partial_z\\psi\\right)^3 - 2\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_\\rho^2\\psi + \\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z^2\\psi - 2\\rho\\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2\\psi + \\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 + \\left(\\partial_\\rho\\psi\\right)^3\\right) + 24\\rho^2\\left(\\left(\\partial_\\rho\\psi\\right)^2 + \\left(\\partial_z\\psi\\right)^2\\right)^2\\right)e^{-4q}}{\\psi^{12}\\rho^2}"
+        },
+        {
+          "id": "spherical",
+          "name": "Spherical",
+          "coordinates": [
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "q = 0 \\;\\text{at}\\; \\theta = 0, \\pi \\;\\text{(a regular axis)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\psi = \\psi(r,\\theta)",
+              "description": "The conformal factor, a pure number that goes to $1 + GM/2c^2r$ far away, with $M$ the mass of the wave. The slice satisfies the constraint where $\\partial_r^2\\psi + 2\\partial_r\\psi/r + \\left(\\partial_\\theta^2\\psi + \\cot\\theta\\,\\partial_\\theta\\psi\\right)/r^2 + \\tfrac{1}{4}\\psi\\left(\\partial_r^2 q + \\partial_r q/r + \\partial_\\theta^2 q/r^2\\right) = 0$; no component assumes it"
+            },
+            {
+              "symbol": "q = q(r,\\theta)",
+              "description": "The shape of the wave, a pure number chosen freely, which vanishes on the axis with its first derivative along $\\theta$ and falls off faster than $1/r$ far away. Eppley's is $q = a(r\\sin\\theta/\\lambda)^2/(1 + (r/\\lambda)^n)$ with $n \\geq 4$ and Holz, Miller, Wakano, and Wheeler's is $q = a(r\\sin\\theta/\\lambda)^2e^{-r^2/\\lambda^2}$, each with an amplitude $a$, a pure number, and a width $\\lambda$, a length"
+            }
+          ],
+          "convention": "We use Eppley's spherical coordinates $(r, \\theta, \\phi)$, with $r$ a length, $\\rho = r\\sin\\theta$, and $z = r\\cos\\theta$ in Brill's chart.",
+          "line_element": "ds^2 = \\psi^4\\left(e^{2q}\\left(dr^2 + r^2d\\theta^2\\right) + r^2\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\psi^4e^{2q}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\psi^4\\,r^2e^{2q}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\psi^4\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\left(4\\left(r^2\\,\\partial_r^2\\psi + 2r\\,\\partial_r\\psi + \\partial_\\theta^2\\psi + \\cot\\theta\\,\\partial_\\theta\\psi\\right) + \\psi\\left(r^2\\,\\partial_r^2 q + r\\,\\partial_r q + \\partial_\\theta^2 q\\right)\\right)}{r^2\\,\\psi^5\\,e^{2q}}",
+          "kretschmann": "K = \\dfrac{4\\left(\\psi^4\\left(2r^2\\,\\partial_\\theta^2 q\\,\\partial_r^2 q\\,\\sin^2\\theta + 2r^3\\,\\partial_r q\\,\\partial_r^2 q\\,\\sin^2\\theta + 2r\\,\\partial_\\theta^2 q\\,\\partial_r q\\,\\sin^2\\theta + r^2\\left(\\partial_r q\\right)^2\\,\\sin^2\\theta + r^4\\left(\\partial_r^2 q\\right)^2\\,\\sin^2\\theta + \\left(\\partial_\\theta^2 q\\right)^2\\,\\sin^2\\theta + 2r^2\\left(\\partial_r q\\right)^2 + 2\\left(\\partial_\\theta q\\right)^2\\right) + 4\\psi^3\\left(2r^2\\,\\partial_\\theta\\psi\\left(\\partial_r q\\right)^2\\,\\cos\\theta + 2r^3\\left(\\partial_r q\\right)^2\\,\\partial_r\\psi\\,\\sin\\theta + 2r\\left(\\partial_\\theta q\\right)^2\\,\\partial_r\\psi\\,\\sin\\theta + r^2\\,\\partial_\\theta q\\,\\partial_r^2\\psi\\,\\cos\\theta + r^2\\,\\partial_\\theta^2 q\\,\\partial_r^2\\psi\\,\\sin\\theta + r^2\\,\\partial_\\theta^2\\psi\\,\\partial_r^2 q\\,\\sin\\theta - 2r^2\\,\\partial_r q\\,\\partial_r\\partial_\\theta\\psi\\,\\cos\\theta + 2r^2\\,\\partial_r q\\,\\partial_r\\psi\\,\\sin\\theta + r^3\\,\\partial_r\\psi\\,\\partial_r^2 q\\,\\sin\\theta + r^4\\,\\partial_r^2 q\\,\\partial_r^2\\psi\\,\\sin\\theta + 2\\left(\\partial_\\theta q\\right)^2\\,\\partial_\\theta\\psi\\,\\cos\\theta - 2r\\,\\partial_\\theta q\\,\\partial_r\\partial_\\theta\\psi\\,\\sin\\theta - r\\,\\partial_\\theta q\\,\\partial_r\\psi\\,\\cos\\theta + 2r\\,\\partial_\\theta\\psi\\,\\partial_r q\\,\\cos\\theta + r\\,\\partial_\\theta^2 q\\,\\partial_r\\psi\\,\\sin\\theta + 2r\\,\\partial_\\theta^2\\psi\\,\\partial_r q\\,\\sin\\theta + 2\\partial_\\theta q\\,\\partial_\\theta\\psi\\,\\sin\\theta - \\partial_\\theta q\\,\\partial_\\theta^2\\psi\\,\\cos\\theta + \\partial_\\theta^2 q\\,\\partial_\\theta^2\\psi\\,\\sin\\theta\\right)\\sin\\theta + 4\\psi^2\\left(6r^2\\,\\partial_\\theta\\psi\\,\\partial_r q\\,\\partial_r\\psi\\,\\sin\\theta\\cos\\theta + 2r^2\\,\\partial_\\theta q\\,\\partial_\\theta\\psi\\,\\partial_r^2\\psi\\,\\sin^2\\theta - 4r^2\\,\\partial_\\theta q\\,\\partial_r\\partial_\\theta\\psi\\,\\partial_r\\psi\\,\\sin^2\\theta - 4r^2\\,\\partial_\\theta\\psi\\,\\partial_r q\\,\\partial_r\\partial_\\theta\\psi\\,\\sin^2\\theta + 2r^2\\,\\partial_\\theta^2\\psi\\,\\partial_r q\\,\\partial_r\\psi\\,\\sin^2\\theta - 2r^4\\,\\partial_r q\\,\\partial_r\\psi\\,\\partial_r^2\\psi\\,\\sin^2\\theta + 8r\\,\\partial_\\theta q\\,\\partial_\\theta\\psi\\,\\partial_r\\psi\\,\\sin^2\\theta - 3r^2\\,\\partial_\\theta q\\left(\\partial_r\\psi\\right)^2\\,\\sin\\theta\\cos\\theta + 2r^2\\left(\\partial_\\theta q\\right)^2\\left(\\partial_r\\psi\\right)^2\\,\\sin^2\\theta + 2r^2\\left(\\partial_\\theta\\psi\\right)^2\\left(\\partial_r q\\right)^2\\,\\sin^2\\theta + 2r^4\\left(\\partial_r q\\right)^2\\left(\\partial_r\\psi\\right)^2\\,\\sin^2\\theta - 2\\partial_\\theta q\\,\\partial_\\theta\\psi\\,\\partial_\\theta^2\\psi\\,\\sin^2\\theta + 2r^2\\,\\partial_\\theta\\psi\\,\\partial_r^2\\psi\\,\\sin\\theta\\cos\\theta - r^2\\,\\partial_\\theta^2 q\\left(\\partial_r\\psi\\right)^2\\,\\sin^2\\theta - r^2\\left(\\partial_\\theta\\psi\\right)^2\\,\\partial_r^2 q\\,\\sin^2\\theta + 4r^3\\,\\partial_r q\\left(\\partial_r\\psi\\right)^2\\,\\sin^2\\theta - r^4\\left(\\partial_r\\psi\\right)^2\\,\\partial_r^2 q\\,\\sin^2\\theta + 2\\left(\\partial_\\theta q\\right)^2\\left(\\partial_\\theta\\psi\\right)^2\\,\\sin^2\\theta + 3\\partial_\\theta q\\left(\\partial_\\theta\\psi\\right)^2\\,\\sin\\theta\\cos\\theta + 6r\\,\\partial_\\theta\\psi\\,\\partial_r\\psi\\,\\sin\\theta\\cos\\theta + 2r^2\\,\\partial_\\theta^2\\psi\\,\\partial_r^2\\psi\\,\\sin^2\\theta + 4r^3\\,\\partial_r\\psi\\,\\partial_r^2\\psi\\,\\sin^2\\theta - \\left(\\partial_\\theta\\psi\\right)^2\\,\\partial_\\theta^2 q\\,\\sin^2\\theta + 2\\partial_\\theta\\psi\\,\\partial_\\theta^2\\psi\\,\\sin\\theta\\cos\\theta - 4r\\,\\partial_\\theta\\psi\\,\\partial_r\\partial_\\theta\\psi\\,\\sin^2\\theta + 6r\\,\\partial_\\theta^2\\psi\\,\\partial_r\\psi\\,\\sin^2\\theta + 2r^2\\left(\\partial_r\\partial_\\theta\\psi\\right)^2\\,\\sin^2\\theta + 6r^2\\left(\\partial_r\\psi\\right)^2\\,\\sin^2\\theta + 2r^4\\left(\\partial_r^2\\psi\\right)^2\\,\\sin^2\\theta + 2\\left(\\partial_\\theta^2\\psi\\right)^2\\,\\sin^2\\theta + 2\\left(\\partial_\\theta\\psi\\right)^2\\right) + 8\\psi\\left(3r^2\\,\\partial_\\theta q\\,\\partial_\\theta\\psi\\left(\\partial_r\\psi\\right)^2\\,\\sin\\theta + 3r^2\\left(\\partial_\\theta\\psi\\right)^2\\,\\partial_r q\\,\\partial_r\\psi\\,\\sin\\theta - 6r^2\\,\\partial_\\theta\\psi\\,\\partial_r\\partial_\\theta\\psi\\,\\partial_r\\psi\\,\\sin\\theta + r^2\\,\\partial_\\theta\\psi\\left(\\partial_r\\psi\\right)^2\\,\\cos\\theta + r^2\\,\\partial_\\theta^2\\psi\\left(\\partial_r\\psi\\right)^2\\,\\sin\\theta + r^2\\left(\\partial_\\theta\\psi\\right)^2\\,\\partial_r^2\\psi\\,\\sin\\theta + 3r^4\\,\\partial_r q\\left(\\partial_r\\psi\\right)^3\\,\\sin\\theta - 2r^4\\left(\\partial_r\\psi\\right)^2\\,\\partial_r^2\\psi\\,\\sin\\theta + 5r\\left(\\partial_\\theta\\psi\\right)^2\\,\\partial_r\\psi\\,\\sin\\theta - 2\\left(\\partial_\\theta\\psi\\right)^2\\,\\partial_\\theta^2\\psi\\,\\sin\\theta + 3\\partial_\\theta q\\left(\\partial_\\theta\\psi\\right)^3\\,\\sin\\theta + 2r^3\\left(\\partial_r\\psi\\right)^3\\,\\sin\\theta + \\left(\\partial_\\theta\\psi\\right)^3\\,\\cos\\theta\\right)\\sin\\theta + 24\\left(r^2\\left(\\partial_r\\psi\\right)^2 + \\left(\\partial_\\theta\\psi\\right)^2\\right)^2\\sin^2\\theta\\right)e^{-4q}\\csc^2\\theta}{\\psi^{12}\\,r^4}"
+        },
+        {
+          "id": "three_dimensional",
+          "name": "Without Axial Symmetry",
+          "coordinates": [
+            "\\rho",
+            "z",
+            "\\phi"
+          ],
+          "domains": [
+            "\\rho \\in [0, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "q = 0 \\;\\text{at}\\; \\rho = 0 \\;\\text{(a regular axis)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\psi = \\psi(\\rho,z,\\phi)",
+              "description": "The conformal factor, a pure number that goes to $1 + GM/2c^2r$ far away, with $r = \\sqrt{\\rho^2 + z^2}$ and $M$ the mass of the wave. The slice satisfies the constraint where its scalar curvature vanishes, $R = 0$; no component assumes it"
+            },
+            {
+              "symbol": "q = q(\\rho,z,\\phi)",
+              "description": "The shape of the wave, a pure number chosen freely, which vanishes on the axis with its first derivative along $\\rho$ and falls off faster than $1/r$ far away. Alcubierre and others' is $q = a(\\rho/\\lambda)^2e^{-r^2/\\lambda^2}\\left(1 + b\\,\\rho^2\\cos^2(n\\phi)/(\\lambda^2 + \\rho^2)\\right)$, with the amplitude $a$ and $b$ pure numbers, $n$ an integer, and the width $\\lambda$ a length; with $b = 0$ it is Holz, Miller, Wakano, and Wheeler's"
+            }
+          ],
+          "convention": "We use Brill's cylindrical coordinates $(\\rho, z, \\phi)$, with $\\rho$ and $z$ lengths, and let both functions depend on the angle $\\phi$ as well.",
+          "line_element": "ds^2 = \\psi^4\\left(e^{2q}\\left(d\\rho^2 + dz^2\\right) + \\rho^2d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\psi^4e^{2q}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\psi^4e^{2q}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\psi^4\\,\\rho^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\left(\\psi\\left(3e^{2q}\\left(\\partial_\\phi q\\right)^2 + 2e^{2q}\\partial_\\phi^2 q + \\rho^2\\,\\partial_\\rho^2 q + \\rho^2\\,\\partial_z^2 q\\right) + 4\\left(2e^{2q}\\partial_\\phi q\\,\\partial_\\phi\\psi + e^{2q}\\partial_\\phi^2\\psi + \\rho^2\\,\\partial_\\rho^2\\psi + \\rho^2\\,\\partial_z^2\\psi + \\rho\\,\\partial_\\rho\\psi\\right)\\right)e^{-2q}}{\\psi^5\\,\\rho^2}",
+          "kretschmann": "K = \\dfrac{4\\left(\\psi^4\\left(2\\rho^2e^{2q}\\left(\\partial_\\phi q\\right)^2\\,\\partial_\\rho^2 q + 2\\rho^2e^{2q}\\left(\\partial_\\phi q\\right)^2\\,\\partial_z^2 q - 4\\rho\\,e^{2q}\\partial_\\phi q\\,\\partial_\\rho\\partial_\\phi q + 4e^{4q}\\left(\\partial_\\phi q\\right)^2\\,\\partial_\\phi^2 q + 2\\rho^2e^{2q}\\left(\\partial_\\rho\\partial_\\phi q\\right)^2 + 2\\rho^2e^{2q}\\left(\\partial_z\\partial_\\phi q\\right)^2 + 2\\rho^4\\,\\partial_\\rho^2 q\\,\\partial_z^2 q + 2e^{2q}\\left(\\partial_\\phi q\\right)^2 + 3e^{4q}\\left(\\partial_\\phi q\\right)^4 + 2e^{4q}\\left(\\partial_\\phi^2 q\\right)^2 + 2\\rho^2\\left(\\partial_\\rho q\\right)^2 + 2\\rho^2\\left(\\partial_z q\\right)^2 + \\rho^4\\left(\\partial_\\rho^2 q\\right)^2 + \\rho^4\\left(\\partial_z^2 q\\right)^2\\right) + 4\\psi^3\\left(2\\rho^2e^{2q}\\partial_\\phi q\\,\\partial_\\phi\\psi\\,\\partial_\\rho^2 q + 2\\rho^2e^{2q}\\partial_\\phi q\\,\\partial_\\phi\\psi\\,\\partial_z^2 q - 2\\rho^2e^{2q}\\partial_\\phi q\\,\\partial_\\rho\\partial_\\phi q\\,\\partial_\\rho\\psi - 2\\rho^2e^{2q}\\partial_\\phi q\\,\\partial_z\\partial_\\phi q\\,\\partial_z\\psi + 2\\rho^2e^{2q}\\left(\\partial_\\phi q\\right)^2\\,\\partial_\\rho^2\\psi + 2\\rho^2e^{2q}\\left(\\partial_\\phi q\\right)^2\\,\\partial_z^2\\psi + 2e^{4q}\\partial_\\phi q\\,\\partial_\\phi\\psi\\,\\partial_\\phi^2 q + 4\\rho\\,e^{2q}\\left(\\partial_\\phi q\\right)^2\\,\\partial_\\rho\\psi + \\rho^2e^{2q}\\partial_\\phi^2 q\\,\\partial_\\rho^2\\psi + \\rho^2e^{2q}\\partial_\\phi^2 q\\,\\partial_z^2\\psi + 2\\rho^2e^{2q}\\partial_\\rho\\partial_\\phi q\\,\\partial_\\rho\\partial_\\phi\\psi + 2\\rho^2e^{2q}\\partial_z\\partial_\\phi q\\,\\partial_z\\partial_\\phi\\psi - 2\\rho\\,e^{2q}\\partial_\\phi q\\,\\partial_\\rho\\partial_\\phi\\psi - 2\\rho\\,e^{2q}\\partial_\\phi\\psi\\,\\partial_\\rho\\partial_\\phi q + 2\\rho\\,e^{2q}\\partial_\\phi^2 q\\,\\partial_\\rho\\psi + 2e^{4q}\\left(\\partial_\\phi q\\right)^2\\,\\partial_\\phi^2\\psi + 4e^{4q}\\left(\\partial_\\phi q\\right)^3\\,\\partial_\\phi\\psi + 2e^{2q}\\partial_\\phi q\\,\\partial_\\phi\\psi + 2e^{4q}\\partial_\\phi^2 q\\,\\partial_\\phi^2\\psi + 2\\rho^3\\,\\partial_\\rho\\psi\\left(\\partial_z q\\right)^2 + 2\\rho^3\\left(\\partial_\\rho q\\right)^2\\,\\partial_\\rho\\psi - \\rho^3\\,\\partial_\\rho q\\,\\partial_\\rho^2\\psi + \\rho^3\\,\\partial_\\rho q\\,\\partial_z^2\\psi - 2\\rho^3\\,\\partial_\\rho\\partial_z\\psi\\,\\partial_z q + \\rho^4\\,\\partial_\\rho^2 q\\,\\partial_\\rho^2\\psi + \\rho^4\\,\\partial_\\rho^2 q\\,\\partial_z^2\\psi + \\rho^4\\,\\partial_\\rho^2\\psi\\,\\partial_z^2 q + \\rho^4\\,\\partial_z^2 q\\,\\partial_z^2\\psi\\right) + 4\\psi^2\\left(6\\rho^2e^{2q}\\partial_\\phi q\\,\\partial_\\phi\\psi\\,\\partial_\\rho^2\\psi + 6\\rho^2e^{2q}\\partial_\\phi q\\,\\partial_\\phi\\psi\\,\\partial_z^2\\psi - 4\\rho^2e^{2q}\\partial_\\phi q\\,\\partial_\\rho\\partial_\\phi\\psi\\,\\partial_\\rho\\psi - 4\\rho^2e^{2q}\\partial_\\phi q\\,\\partial_z\\partial_\\phi\\psi\\,\\partial_z\\psi - 6\\rho^2e^{2q}\\partial_\\phi\\psi\\,\\partial_\\rho\\partial_\\phi q\\,\\partial_\\rho\\psi - 6\\rho^2e^{2q}\\partial_\\phi\\psi\\,\\partial_z\\partial_\\phi q\\,\\partial_z\\psi + 14\\rho\\,e^{2q}\\partial_\\phi q\\,\\partial_\\phi\\psi\\,\\partial_\\rho\\psi + 2\\rho^2e^{2q}\\left(\\partial_\\phi q\\right)^2\\left(\\partial_\\rho\\psi\\right)^2 + 2\\rho^2e^{2q}\\left(\\partial_\\phi q\\right)^2\\left(\\partial_z\\psi\\right)^2 + 2\\rho^2e^{2q}\\left(\\partial_\\phi\\psi\\right)^2\\,\\partial_\\rho^2 q + 2\\rho^2e^{2q}\\left(\\partial_\\phi\\psi\\right)^2\\,\\partial_z^2 q + \\rho^2e^{2q}\\partial_\\phi^2 q\\left(\\partial_\\rho\\psi\\right)^2 + \\rho^2e^{2q}\\partial_\\phi^2 q\\left(\\partial_z\\psi\\right)^2 + 4e^{4q}\\partial_\\phi q\\,\\partial_\\phi\\psi\\,\\partial_\\phi^2\\psi + 2\\rho^2e^{2q}\\partial_\\phi^2\\psi\\,\\partial_\\rho^2\\psi + 2\\rho^2e^{2q}\\partial_\\phi^2\\psi\\,\\partial_z^2\\psi + 6e^{4q}\\left(\\partial_\\phi q\\right)^2\\left(\\partial_\\phi\\psi\\right)^2 - 4\\rho\\,e^{2q}\\partial_\\phi\\psi\\,\\partial_\\rho\\partial_\\phi\\psi + 4\\rho\\,e^{2q}\\partial_\\phi^2\\psi\\,\\partial_\\rho\\psi + 6\\rho^3\\,\\partial_\\rho\\psi\\,\\partial_z q\\,\\partial_z\\psi - 4\\rho^4\\,\\partial_\\rho q\\,\\partial_\\rho\\partial_z\\psi\\,\\partial_z\\psi - 2\\rho^4\\,\\partial_\\rho q\\,\\partial_\\rho\\psi\\,\\partial_\\rho^2\\psi + 2\\rho^4\\,\\partial_\\rho q\\,\\partial_\\rho\\psi\\,\\partial_z^2\\psi - 4\\rho^4\\,\\partial_\\rho\\partial_z\\psi\\,\\partial_\\rho\\psi\\,\\partial_z q + 2\\rho^4\\,\\partial_\\rho^2\\psi\\,\\partial_z q\\,\\partial_z\\psi - 2\\rho^4\\,\\partial_z q\\,\\partial_z\\psi\\,\\partial_z^2\\psi - 2e^{4q}\\left(\\partial_\\phi\\psi\\right)^2\\,\\partial_\\phi^2 q + 2\\rho^2e^{2q}\\left(\\partial_\\rho\\partial_\\phi\\psi\\right)^2 + 2\\rho^2e^{2q}\\left(\\partial_z\\partial_\\phi\\psi\\right)^2 + 2\\rho^4\\left(\\partial_\\rho q\\right)^2\\left(\\partial_\\rho\\psi\\right)^2 + 2\\rho^4\\left(\\partial_\\rho q\\right)^2\\left(\\partial_z\\psi\\right)^2 + 2\\rho^4\\left(\\partial_\\rho\\psi\\right)^2\\left(\\partial_z q\\right)^2 + 2\\rho^4\\left(\\partial_z q\\right)^2\\left(\\partial_z\\psi\\right)^2 + 3\\rho^3\\,\\partial_\\rho q\\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho^3\\,\\partial_\\rho q\\left(\\partial_z\\psi\\right)^2 - \\rho^4\\,\\partial_\\rho^2 q\\left(\\partial_z\\psi\\right)^2 - \\rho^4\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_\\rho^2 q - \\rho^4\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z^2 q - \\rho^4\\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2 q + 2\\rho^3\\,\\partial_\\rho\\psi\\,\\partial_\\rho^2\\psi + 2\\rho^3\\,\\partial_\\rho\\psi\\,\\partial_z^2\\psi + 2\\rho^4\\,\\partial_\\rho^2\\psi\\,\\partial_z^2\\psi + 2e^{2q}\\left(\\partial_\\phi\\psi\\right)^2 + 2e^{4q}\\left(\\partial_\\phi^2\\psi\\right)^2 + 2\\rho^2\\left(\\partial_\\rho\\psi\\right)^2 + 2\\rho^4\\left(\\partial_\\rho\\partial_z\\psi\\right)^2 + 2\\rho^4\\left(\\partial_\\rho^2\\psi\\right)^2 + 2\\rho^4\\left(\\partial_z^2\\psi\\right)^2\\right) + 8\\psi\\left(5\\rho^2e^{2q}\\partial_\\phi q\\,\\partial_\\phi\\psi\\left(\\partial_\\rho\\psi\\right)^2 + 5\\rho^2e^{2q}\\partial_\\phi q\\,\\partial_\\phi\\psi\\left(\\partial_z\\psi\\right)^2 - 6\\rho^2e^{2q}\\partial_\\phi\\psi\\,\\partial_\\rho\\partial_\\phi\\psi\\,\\partial_\\rho\\psi - 6\\rho^2e^{2q}\\partial_\\phi\\psi\\,\\partial_z\\partial_\\phi\\psi\\,\\partial_z\\psi + \\rho^2e^{2q}\\left(\\partial_\\phi\\psi\\right)^2\\,\\partial_\\rho^2\\psi + \\rho^2e^{2q}\\left(\\partial_\\phi\\psi\\right)^2\\,\\partial_z^2\\psi + \\rho^2e^{2q}\\partial_\\phi^2\\psi\\left(\\partial_\\rho\\psi\\right)^2 + \\rho^2e^{2q}\\partial_\\phi^2\\psi\\left(\\partial_z\\psi\\right)^2 + 4\\rho\\,e^{2q}\\left(\\partial_\\phi\\psi\\right)^2\\,\\partial_\\rho\\psi + 3\\rho^4\\,\\partial_\\rho q\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 + 3\\rho^4\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z q\\,\\partial_z\\psi - 6\\rho^4\\,\\partial_\\rho\\partial_z\\psi\\,\\partial_\\rho\\psi\\,\\partial_z\\psi - 2e^{4q}\\left(\\partial_\\phi\\psi\\right)^2\\,\\partial_\\phi^2\\psi + 2e^{4q}\\partial_\\phi q\\left(\\partial_\\phi\\psi\\right)^3 + \\rho^3\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 + 3\\rho^4\\,\\partial_\\rho q\\left(\\partial_\\rho\\psi\\right)^3 + \\rho^4\\,\\partial_\\rho^2\\psi\\left(\\partial_z\\psi\\right)^2 + 3\\rho^4\\,\\partial_z q\\left(\\partial_z\\psi\\right)^3 - 2\\rho^4\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_\\rho^2\\psi + \\rho^4\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z^2\\psi - 2\\rho^4\\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2\\psi + \\rho^3\\left(\\partial_\\rho\\psi\\right)^3\\right) + 24\\left(e^{2q}\\left(\\partial_\\phi\\psi\\right)^2 + \\rho^2\\left(\\partial_\\rho\\psi\\right)^2 + \\rho^2\\left(\\partial_z\\psi\\right)^2\\right)^2\\right)e^{-4q}}{\\psi^{12}\\rho^4}"
         }
       ]
     },
@@ -11009,6 +11269,11 @@
           "id": "belinski_zakharov",
           "kind": "family",
           "text": "Belinski and Zakharov's solution of one soliton, with its time and its direction of travel exchanged, is a cylindrical solitary wave that runs in to the axis and is reflected from it [belinskii1978]."
+        },
+        {
+          "id": "brill_waves",
+          "kind": "family",
+          "text": "A bundle of gravitational waves of finite extent, known at one moment only. Brill proved in 1959, with no approximation, that its mass is positive [brill1959]."
         }
       ],
       "references": [
@@ -11038,7 +11303,8 @@
         "senovilla1990",
         "fernandezjambrina2002",
         "einstein1935",
-        "belinskii1978"
+        "belinskii1978",
+        "brill1959"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_waves.json",
@@ -25192,6 +25458,11 @@
           "id": "charged_shell",
           "kind": "composite",
           "text": "A thin shell of charged dust with flat space inside it and Reissner-Nordström's field outside. With more charge than rest mass it falls through both horizons, turns, and leaves into another exterior [delacruz1967]."
+        },
+        {
+          "id": "brill_waves",
+          "kind": "family",
+          "text": "One moment of a spacetime that is flat space with a gravitational wave on it and nothing else. Brill proved in 1959 that the wave's mass is positive and vanishes only when the slice is a moment of Minkowski's spacetime [brill1959]."
         }
       ],
       "references": [
@@ -25260,7 +25531,8 @@
         "tippett2017",
         "will2014",
         "einstein1914fokker",
-        "delacruz1967"
+        "delacruz1967",
+        "brill1959"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -25885,6 +26157,11 @@
           "id": "lindquist_wheeler_lattice",
           "kind": "family",
           "text": "A whole universe of such holes. Put $N$ of them on a three sphere in place of flat space and the same construction gives one moment of Lindquist and Wheeler's lattice exactly [wheeler1983, clifton2012]."
+        },
+        {
+          "id": "brill_waves",
+          "kind": "family",
+          "text": "The same kind of moment with gravitational waves where the holes are. Brill's slice of 1959 has no poles in $\\psi$ and no throats, only a wave of freely chosen shape, and a positive mass all the same [brill1959]."
         }
       ],
       "references": [
@@ -25915,7 +26192,8 @@
         "wheeler1955",
         "marolf2009",
         "wheeler1983",
-        "clifton2012"
+        "clifton2012",
+        "brill1959"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner_brill_lindquist.json",
@@ -33227,6 +33505,11 @@
           "id": "bartnik_mckinnon",
           "kind": "family",
           "text": "A static soliton on a threshold of collapse. For a Yang-Mills field Choptuik, Chmaj, and Bizoń found black holes that begin at a finite mass, with the first Bartnik-McKinnon soliton as the critical solution [choptuik1996]."
+        },
+        {
+          "id": "brill_waves",
+          "kind": "family",
+          "text": "Gravitational waves with nothing else in them, known at one moment. Evolved on a computer they disperse when weak and collapse to a black hole when strong, with the threshold of Holz's wave at $a = 4.70$ [hilditch2017]."
         }
       ],
       "references": [
@@ -33244,7 +33527,8 @@
         "frolov2000",
         "christodoulou1994",
         "christodoulou1999",
-        "choptuik1996"
+        "choptuik1996",
+        "hilditch2017"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/roberts.json",
@@ -34710,6 +34994,11 @@
           "id": "born_infeld_charge",
           "kind": "generalisation",
           "text": "Schwarzschild's mass with a charge whose field obeys Born and Infeld's electrodynamics. The mass inside a sphere then grows with its radius, by the energy of the field, and reaches $r_s/2$ far away [hoffmann1935, gibbonsrasheed1995]."
+        },
+        {
+          "id": "brill_waves",
+          "kind": "family",
+          "text": "One moment of a spacetime with gravitational waves in it and no matter. Far away its slice is Schwarzschild's with a positive mass, and a strong enough wave collapses to a black hole [brill1959, alcubierre2000collapse]."
         }
       ],
       "references": [
@@ -34811,7 +35100,9 @@
         "belinskii1979",
         "deruelle2011",
         "hoffmann1935",
-        "gibbonsrasheed1995"
+        "gibbonsrasheed1995",
+        "brill1959",
+        "alcubierre2000collapse"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -36217,6 +36508,11 @@
           "id": "misner_brill_lindquist",
           "kind": "family",
           "text": "Other moments of time symmetry, with several throats and no dust. Wheeler's own bag of gold was a piece of such a moment, pinched off where the conformal factor passes through zero [marolf2009]."
+        },
+        {
+          "id": "brill_waves",
+          "kind": "family",
+          "text": "A moment of time symmetry with no dust and no throat to begin with, only gravitational waves. Turned up to its critical amplitude the wave closes its slice into a compact universe of its own [omurchadha1993]."
         }
       ],
       "references": [
@@ -36233,7 +36529,8 @@
         "bekenstein1973",
         "hawking1975",
         "hsu2008monsters",
-        "chakravarty2021"
+        "chakravarty2021",
+        "omurchadha1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/semiclosed_world.json",
