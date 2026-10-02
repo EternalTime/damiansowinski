@@ -1623,6 +1623,17 @@ DIMENSIONS = {
     ("sultana_dyer", "eddington_finkelstein_ingoing"): {
         "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\eta_0": "L",
     },
+    # Kopczynski and Trautman's universe: l = c/sqrt(6 pi G rho_0) is a length, the scale factor a pure
+    # number that is one at the bounce, and the conformal time a length, as FRW's is.
+    ("kopczynski_trautman", "comoving_cartesian"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "\\ell": "L", "a": "1",
+    },
+    ("kopczynski_trautman", "comoving_spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\ell": "L", "a": "1",
+    },
+    ("kopczynski_trautman", "conformal"): {
+        "\\eta": "L", "r": "L", "\\theta": "1", "\\phi": "1", "a": "1",
+    },
     # Hartle and Thorne's exterior: the mass and the spin per unit mass are lengths and the
     # quadrupole moment per unit mass an area, so that Kerr's value is q = a^2. R, the star's
     # radius, enters the domain alone, and the rest are names for the functions of r and theta the

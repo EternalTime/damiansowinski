@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 136,
+  "count": 137,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -3316,6 +3316,11 @@
           "id": "petrov_homogeneous",
           "kind": "family",
           "text": "A vacuum whose group of four symmetries holds groups of Bianchi's types I and VII. They act on surfaces with a time direction in them, so the spacetime is the same at every time as well [gibbons2008petrov, terzis2009]."
+        },
+        {
+          "id": "kopczynski_trautman",
+          "kind": "family",
+          "text": "A flat universe of spinning dust in the Einstein-Cartan theory, which turns round where a big bang would be. The Bianchi universes of types I to VIII filled with the same dust can avoid the singularity too, where the torsion outweighs the shear [tafel1973, kopczynski1973]."
         }
       ],
       "references": [
@@ -3329,7 +3334,9 @@
         "kantowski1966",
         "wald1983",
         "gibbons2008petrov",
-        "terzis2009"
+        "terzis2009",
+        "tafel1973",
+        "kopczynski1973"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bianchi.json",
@@ -12471,6 +12478,11 @@
           "id": "nordstrom_scalar",
           "kind": "family",
           "text": "The flat universe in Nordström's scalar theory of gravity. His field equation gives dust the scale factor $1 - \\eta^2/\\eta_0^2$ in conformal time, with $\\eta_0$ a constant, a universe that expands from a bang and falls back into a crunch [sundrum2003]."
+        },
+        {
+          "id": "kopczynski_trautman",
+          "kind": "special_case",
+          "text": "The flat universe of dust in the Einstein-Cartan theory, every particle spinning about one axis. The spins repel at high density, so its scale factor is $(1 + c^2t^2/\\ell^2)^{1/3}$, with $\\ell$ a length, and it turns round at $t = 0$ with no big bang [kopczynski1973, trautman2006]."
         }
       ],
       "references": [
@@ -12528,7 +12540,9 @@
         "novikov1965",
         "lindquist1957",
         "clifton2009",
-        "sundrum2003"
+        "sundrum2003",
+        "kopczynski1973",
+        "trautman2006"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -21189,6 +21203,257 @@
           ],
           "ricci_scalar": "R = \\dfrac{3\\left(\\tau + \\rho\\right)}{r_q^2\\,\\rho}",
           "kretschmann": "K = \\dfrac{2\\left(\\tau + \\rho\\right)^2}{r_q^4\\,\\rho^2}"
+        }
+      ]
+    },
+    {
+      "id": "kopczynski_trautman",
+      "name": "Kopczyński-Trautman Universe With Torsion",
+      "short_name": "Kopczyński-Trautman",
+      "description": "A flat universe of dust whose particles all spin about one axis, in the Einstein-Cartan theory, where the spin of matter gives spacetime torsion as its energy gives it curvature. The spins repel at high density, so the universe contracts to a least size, turns round, and expands, with no singularity. W. Kopczyński found the first such universes in 1972 and 1973, and Andrzej Trautman argued from them in 1973 that spin and torsion may avert gravitational singularities.",
+      "tags": [
+        "cosmology",
+        "Einstein-Cartan theory",
+        "torsion",
+        "spin",
+        "dust",
+        "bounce",
+        "no singularity",
+        "singularity theorems",
+        "homogeneous",
+        "isotropic",
+        "comoving",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "idealized model",
+        "conformally flat",
+        "spherically symmetric",
+        "four-dimensional"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The length $\\ell = c/\\sqrt{6\\pi G\\rho_0}$ sets every scale, with $\\rho_0$ the mass density of the dust at $t = 0$. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, of the Christoffel connection, which carries no torsion.",
+      "related": [
+        {
+          "id": "frw",
+          "kind": "generalisation",
+          "text": "The same line element with the scale factor left free. This universe is the flat one whose scale factor solves Friedmann's equation with the repulsion of the spins added to it [trautman2006]."
+        },
+        {
+          "id": "senovilla",
+          "kind": "family",
+          "text": "Another universe that contracts, turns round, and expands with no singularity. Senovilla's is a solution of general relativity that keeps the energy conditions and has no closed trapped surface, and this one violates an energy condition through the spin of its dust [chinea1992, hehl1974]."
+        },
+        {
+          "id": "bianchi",
+          "kind": "family",
+          "text": "Homogeneous universes that expand at different rates in different directions. Filled with spinning dust in the Einstein-Cartan theory, universes of Bianchi types I to VIII can avoid the singularity too, where the torsion outweighs the shear [tafel1973, kopczynski1973]."
+        },
+        {
+          "id": "spinning_string",
+          "kind": "family",
+          "text": "Spin as a source of gravity along a line. Harald Soleng built a cosmic string in the Einstein-Cartan theory in 1992, its spin polarised along its axis, with the spinning string's spacetime outside it [soleng1992]."
+        }
+      ],
+      "references": [
+        "trautman2006",
+        "cartan1923",
+        "hehl2007",
+        "kibble1961",
+        "trautman1973",
+        "penrose1965",
+        "hawkingpenrose1970",
+        "senovilla1998",
+        "kopczynski1972",
+        "kopczynski1973",
+        "poplawski2010",
+        "stewart1973",
+        "hehl1974",
+        "kerlick1975",
+        "hehl1976",
+        "kuchowicz1978",
+        "chinea1992",
+        "tafel1973",
+        "soleng1992"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kopczynski_trautman.json",
+      "charts": [
+        {
+          "id": "comoving_cartesian",
+          "name": "Comoving Cartesian",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Length that sets every scale, $\\ell = c/\\sqrt{6\\pi G\\rho_0}$, with $\\rho_0$ the mass density of the dust at $t = 0$, where it is greatest; the spin density there is $\\sigma_0 = c^2\\sqrt{\\rho_0/2\\pi G}$"
+            },
+            {
+              "symbol": "a = \\left(1 + \\dfrac{c^2t^2}{\\ell^2}\\right)^{1/3}",
+              "description": "Scale factor, least at $t = 0$, where $a = 1$; the mass density is $\\rho_0/a^3$ and the spin density $\\sigma_0/a^3$"
+            }
+          ],
+          "convention": "We use Trautman's coordinates $(t, x, y, z)$, at rest with the dust, with $t$ its proper time and $x$, $y$, and $z$ lengths measured at $t = 0$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "a^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4\\left(a^3 + 2\\right)}{3\\ell^2a^6}",
+          "kretschmann": "K = \\dfrac{16\\left(5a^6 - 16a^3 + 20\\right)}{27\\ell^4a^{12}}"
+        },
+        {
+          "id": "comoving_spherical",
+          "name": "Comoving Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Length that sets every scale, $\\ell = c/\\sqrt{6\\pi G\\rho_0}$, with $\\rho_0$ the mass density of the dust at $t = 0$, where it is greatest; the spin density there is $\\sigma_0 = c^2\\sqrt{\\rho_0/2\\pi G}$"
+            },
+            {
+              "symbol": "a = \\left(1 + \\dfrac{c^2t^2}{\\ell^2}\\right)^{1/3}",
+              "description": "Scale factor, least at $t = 0$, where $a = 1$; the mass density is $\\rho_0/a^3$ and the spin density $\\sigma_0/a^3$"
+            }
+          ],
+          "convention": "We use the proper time $t$ of the dust and a comoving radius $r$, the areal radius of the sphere through a point divided by $a$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4\\left(a^3 + 2\\right)}{3\\ell^2a^6}",
+          "kretschmann": "K = \\dfrac{16\\left(5a^6 - 16a^3 + 20\\right)}{27\\ell^4a^{12}}"
+        },
+        {
+          "id": "conformal",
+          "name": "Conformal Time",
+          "coordinates": [
+            "\\eta",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(\\eta)",
+              "description": "Scale factor, the solution of $(\\partial_\\eta a)^2 = 4(a - a^{-2})/9\\ell^2$ with $a = 1$ at $\\eta = 0$, where it is least"
+            }
+          ],
+          "convention": "We use the conformal time $\\eta$, a length with $a\\,d\\eta = c\\,dt$ and $\\eta = 0$ at $t = 0$, and the comoving radius $r$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = a^2\\left(-d\\eta^2 + dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-a^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6\\partial_\\eta^2 a}{a^3}",
+          "kretschmann": "K = \\dfrac{12a^2\\left(\\partial_\\eta^2 a\\right)^2 - 24a\\,\\partial_\\eta^2 a\\left(\\partial_\\eta a\\right)^2 + 24\\left(\\partial_\\eta a\\right)^4}{a^8}"
         }
       ]
     },
@@ -37812,6 +38077,11 @@
           "id": "einstein_static",
           "kind": "family",
           "text": "A complete universe that satisfies the strong energy condition, as Senovilla's does. It has compact slices and points whose light cones converge again, and it escapes the theorems because the generic condition fails along its world lines at rest [senovilla1998]."
+        },
+        {
+          "id": "kopczynski_trautman",
+          "kind": "family",
+          "text": "Another universe that bounces with no singularity, this one of spinning dust in the Einstein-Cartan theory. It is homogeneous and it violates an energy condition of the singularity theorems, which Senovilla's universe keeps [hehl1974, trautman2006]."
         }
       ],
       "references": [
@@ -37826,7 +38096,9 @@
         "ruiz1992",
         "fernandezjambrina2002",
         "raychaudhuri1998",
-        "senovilla1996"
+        "senovilla1996",
+        "hehl1974",
+        "trautman2006"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/senovilla.json",
@@ -39267,6 +39539,11 @@
           "id": "point_particle_2plus1",
           "kind": "special_case",
           "text": "A slice across the string with the spin taken away. Deser, Jackiw, and 't Hooft met the spinning string as a spinning particle in three dimensions, in the paper that gives the cones of the particles without spin [deser1984]."
+        },
+        {
+          "id": "kopczynski_trautman",
+          "kind": "family",
+          "text": "The Einstein-Cartan theory applied to a whole universe. Dust with every spin aligned repels itself at high density, and the universe turns round where a big bang would be [kopczynski1973, trautman2006]."
         }
       ],
       "references": [
@@ -39295,7 +39572,9 @@
         "cornish1994",
         "kaloper1997",
         "anderson1999",
-        "som1968"
+        "som1968",
+        "kopczynski1973",
+        "trautman2006"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/spinning_string.json",

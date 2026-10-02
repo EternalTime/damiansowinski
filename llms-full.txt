@@ -977,6 +977,18 @@ Schwarzschild's black hole with one more term in its metric, a power of the radi
 - chart Free Matter, Hyperbolic: coordinates $(\eta, \chi, \theta, \phi)$, $$ds^2 = 4r_q^2e^{-2\chi}\left(-d\eta^2 + d\chi^2 + \sinh^2\chi\,\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Free Matter, Conformally Flat: coordinates $(\tau, \rho, \theta, \phi)$, $$ds^2 = \dfrac{4r_q^2}{\left(\tau + \rho\right)^2}\left(-d\tau^2 + d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### Kopczyński-Trautman Universe With Torsion
+
+A flat universe of dust whose particles all spin about one axis, in the Einstein-Cartan theory, where the spin of matter gives spacetime torsion as its energy gives it curvature. The spins repel at high density, so the universe contracts to a least size, turns round, and expands, with no singularity. W. Kopczyński found the first such universes in 1972 and 1973, and Andrzej Trautman argued from them in 1973 that spin and torsion may avert gravitational singularities.
+
+- id: `kopczynski_trautman`
+- tags: cosmology, Einstein-Cartan theory, torsion, spin, dust, bounce, no singularity, singularity theorems, homogeneous, isotropic, comoving, time-dependent, exact solution, Lorentzian, idealized model, conformally flat, spherically symmetric, four-dimensional
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kopczynski_trautman.json
+- chart Comoving Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + a^2\left(dx^2 + dy^2 + dz^2\right)$$
+- chart Comoving Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + a^2\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Conformal Time: coordinates $(\eta, r, \theta, \phi)$, $$ds^2 = a^2\left(-d\eta^2 + dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Krasnikov Tube
 
 A tube of modified spacetime laid down along the path of an outbound ship, flat inside but with its light cones tipped so far open that the trip home can be superluminal. The outbound leg is no faster than light, yet the round trip can be made arbitrarily short by clocks left at home, and holding the tube open takes negative energy density.
