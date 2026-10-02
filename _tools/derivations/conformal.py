@@ -8769,6 +8769,57 @@ def einstein_cluster(ck, src):
     return [views[0], views[1], views[2], views[3], v]
 
 
+# ---------------------------------------------------------------- Bartnik and McKinnon's soliton
+
+def bartnik_mckinnon(ck, src):
+    """Bartnik and McKinnon's soliton with one zero of the Yang-Mills amplitude, in units of ell, as
+    bartnik_mckinnon.py solves it and the spacetime diagrams declare it. Its tortoise coordinate
+    xi, with dxi/dr = 1/(sigma N), runs from 0 at the regular centre to infinity, since N = 1 - 2m/r
+    has no zero, and p, q = arctan((t -+ xi)/(8 ell)) bring the spacetime into Minkowski's triangle.
+    The map is checked in each of the four charts, whose radial coordinates are functions of one
+    another, so one drawing serves them all."""
+    soliton = nr.bm_soliton.soliton(1)
+    scale = 8.0
+
+    def of_r(t, r):
+        return mink_pq(t, soliton.tortoise(np.asarray(r, dtype=float).ravel()).reshape(np.shape(r)), scale)
+    charts = (("areal", "r", nr.BM_AREAL, {"ell": 1}, lambda t, r: of_r(t, r), ck.uniform(0.01, 30)),
+              ("isotropic", "\\rho", nr.BM_ISOTROPIC, {},
+               lambda t, rho: of_r(t, soliton.from_isotropic(np.ravel(rho)).reshape(np.shape(rho))), ck.uniform(0.01, 30)),
+              ("tortoise", "\\xi", nr.BM_TORTOISE, {}, lambda t, xi: mink_pq(t, xi, scale), ck.uniform(0.01, 60)),
+              ("flow", "\\tau", nr.BM_FLOW, {},
+               lambda t, tau: of_r(t, soliton.from_isotropic(np.exp(np.ravel(tau))).reshape(np.shape(tau))),
+               ck.uniform(-4, 3)))
+    planes = {}
+    for system, x, functions, params, to_pq, radii in charts:
+        planes[system] = Plane(src, "bartnik_mckinnon", system, ("t", x), EQUATOR, params, functions=functions)
+        ck.chart(f"Bartnik-McKinnon, {system}", planes[system], to_pq, ck.uniform(-40, 40), radii, lambda t, r: (1, 0))
+    ck.finite("Bartnik-McKinnon: the centre is regular",
+              planes["areal"].kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+    grid = np.geomspace(1e-3, 1e4, 4000)
+    ck.limit("Bartnik-McKinnon: no horizon, N = 1 - 2m/r is positive", [float(np.min(soliton.jet(grid)["N"]) > 0.24)], [1], 0.5)
+    v = View("soliton", "One zero", [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25])
+    v.fill("region", TRIANGLE)
+    node = nr.BM_NODE
+    for r in (1.0, 2.0, 4.0, 8.0, 16.0):
+        v.curve("r", *of_r(S_ALL, np.full_like(S_ALL, r)))
+    v.curve("surface", *of_r(S_ALL, np.full_like(S_ALL, node)))
+    rr = np.exp(np.linspace(-6, 12, 300)) - np.exp(-6)
+    for t in (-32, -16, -8, 0, 8, 16, 32):
+        v.curve("t", *of_r(np.full_like(rr, float(t)), rr))
+    triangle_edges(v)
+    v.legend("r", "$r$ constant, at $1$, $2$, $4$, $8$ and $16\\,\\ell$")
+    v.legend("surface", f"the sphere on which $w = 0$, $r = {node:.2f}\\,\\ell$")
+    v.legend("t", "$ct$ constant, at $0$, $\\pm 8$, $\\pm 16$ and $\\pm 32\\,\\ell$")
+    v.legend("centre", "$r = 0$, a regular centre")
+    v.set(settings="$\\ell = 1$, the unit of every length.", input=nr.BM_INPUT)
+    moment = slices.moments("bartnik_mckinnon", "n1")[0]
+    lo, hi = moment.reach("areal", "r")
+    rr = np.linspace(lo, hi, 200)
+    v.slice(moment, [of_r(0 * rr, rr)])
+    return [v]
+
+
 # ---------------------------------------------------------------- FRW
 
 def frw(ck, src):
@@ -15543,6 +15594,7 @@ DRAWN = {
     "interior_schwarzschild": interior_schwarzschild, "gravastar": gravastar, "frw": frw,
     "einstein_cluster": einstein_cluster,
     "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii,
+    "bartnik_mckinnon": bartnik_mckinnon,
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "reissner_nordstrom_ads": reissner_nordstrom_ads, "c_metric": c_metric,
     "misner": misner, "milne": milne,
     "gott_time_machine": gott_time_machine,
@@ -17483,6 +17535,10 @@ CAPTIONS = {
         "The tortoise coordinate $r_* = \\int e^{-\\Phi}(1 - 2m/r)^{-1/2}\\,dr$ runs from the centre to infinity, "
         "and $p, q = \\arctan((ct \\mp r_*)/3r_s)$ bring the spacetime into Minkowski's triangle, the causal "
         "structure of empty space.",
+    ],
+    ("bartnik_mckinnon", "soliton"): [
+        "The soliton whose Yang-Mills amplitude $w$ has one zero, each point in the diagram a 2-sphere of radius $r$. Every sphere has $2m < r$, so there is no horizon, and the centre is regular.",
+        "The tortoise coordinate $\\xi = \\int dr/(\\sigma(1 - 2m/r))$ runs from the centre to infinity, and $p, q = \\arctan((ct \\mp \\xi)/8\\ell)$ bring the spacetime into Minkowski's triangle, the causal structure of empty space. The curves of constant $r$ crowd toward the centre, since light takes $7.88\\,\\ell/c$ of $t$ to cross the first $\\ell$ of radius.",
     ],
     ("tolman_vii", "spherical"): [
         "A static star whose density falls as $1 - r^2/R^2$ to an empty surface, joined at $R = 2\\,r_s$ "

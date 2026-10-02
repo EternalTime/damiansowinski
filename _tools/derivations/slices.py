@@ -717,6 +717,11 @@ def _boson_star_isotropic(m):
     import boson_star
     lo, hi = m.reach("areal", "r")
     return along(0.0, *(float(x) for x in boson_star.star().isotropic().rho_of([lo, hi])))
+def _bm_radial(which, r):
+    """The isotropic radius or the tortoise coordinate of the sphere of areal radius r on Bartnik
+    and McKinnon's soliton with one zero, in units of ell."""
+    import bartnik_mckinnon
+    return float(getattr(bartnik_mckinnon.soliton(1), which)(r)[0])
 
 
 def one(metric_id, lines_of, label=None, view_id=None):
@@ -2008,6 +2013,16 @@ FLAT = {
     ("boson_star", "isotropic", "radial"): lambda: one("boson_star", _boson_star_isotropic),
     ("tov", "spherical", "radial"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tov", "spherical", "through"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
+    # Bartnik and McKinnon's soliton with one zero at t = 0, from its centre to the edge of its embedding
+    # diagram, in the areal radius and in the three radial coordinates that are functions of it.
+    ("bartnik_mckinnon", "areal", "radial"): lambda: one("bartnik_mckinnon", lambda m: along(0.0, *m.reach("areal", "r")), view_id="n1"),
+    ("bartnik_mckinnon", "areal", "through"): lambda: one("bartnik_mckinnon", lambda m: along(0.0, *m.reach("areal", "r")), view_id="n1"),
+    ("bartnik_mckinnon", "isotropic", "radial"): lambda: one(
+        "bartnik_mckinnon", lambda m: along(0.0, 0.0, _bm_radial("isotropic", m.reach("areal", "r")[1])), view_id="n1"),
+    ("bartnik_mckinnon", "tortoise", "radial"): lambda: one(
+        "bartnik_mckinnon", lambda m: along(0.0, 0.0, _bm_radial("tortoise", m.reach("areal", "r")[1])), view_id="n1"),
+    ("bartnik_mckinnon", "flow", "radial"): lambda: one(
+        "bartnik_mckinnon", lambda m: along(0.0, -50.0, math.log(_bm_radial("isotropic", m.reach("areal", "r")[1]))), view_id="n1"),
     ("einstein_cluster", "areal", "radial"): lambda: one("einstein_cluster", lambda m: along(0.0, *m.reach("areal", "r")), view_id="core"),
     ("einstein_cluster", "areal", "through"): lambda: one("einstein_cluster", lambda m: along(0.0, *m.reach("areal", "r")), view_id="core"),
     ("einstein_cluster", "constant_speed", "radial"): lambda: one("einstein_cluster", lambda m: along(0.0, *m.reach("constant_speed", "r")), view_id="speed"),

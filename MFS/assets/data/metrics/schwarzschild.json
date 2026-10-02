@@ -298,6 +298,11 @@
       "id": "boson_star",
       "kind": "generalisation",
       "text": "Schwarzschild's vacuum with a ball of scalar field in its middle, held together by its own gravity. The ball has a regular centre and no horizon, and far from it the metric is Schwarzschild's [liebling2023]."
+    },
+    {
+      "id": "bartnik_mckinnon",
+      "kind": "family",
+      "text": "A ball of Yang-Mills field with no horizon, whose far field approaches Schwarzschild's. Pushed one way it collapses to a Schwarzschild black hole, and pushed the other it explodes [bartnik1988, zhou1991]."
     }
   ],
   "references": [
@@ -381,7 +386,9 @@
     "neugebauer2012",
     "hawking1977",
     "gibbonshawking1979",
-    "liebling2023"
+    "liebling2023",
+    "bartnik1988",
+    "zhou1991"
   ],
   "coordinates": [
     {

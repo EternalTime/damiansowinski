@@ -226,6 +226,7 @@ from scipy.special import expi as scipy_expi
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 import boson_star as bs  # noqa: E402
+import bartnik_mckinnon as bm_soliton  # noqa: E402
 import build_mfs_data as build  # noqa: E402
 import ori_shell  # noqa: E402
 import slices  # noqa: E402
@@ -1325,9 +1326,65 @@ class hiscock_r_out(sp.Function):
     _imp_ = staticmethod(hiscock_edge)
 
 
+# Bartnik and McKinnon's soliton as every one of its diagrams draws it, in units of the length ell:
+# the soliton whose Yang-Mills amplitude w has n zeros, solved by bartnik_mckinnon.py, n = 1 unless a
+# row says otherwise. Each declared function takes n for its second argument, and sympy
+# differentiates it by the next of its chain, whose numbers are the field equations' own.
+def _bm_function(name, value, rate=None, doc=None):
+    def fdiff(self, argindex=1):
+        if argindex != 1 or rate is None:
+            raise sp.ArgumentIndexError(self, argindex)
+        return rate(*self.args)
+    return type(name, (sp.Function,), {"nargs": 2, "is_real": True, "_imp_": staticmethod(value), "fdiff": fdiff,
+                                       "__doc__": doc})
+
+
+def _bm_jet(key):
+    return lambda r, n: bm_soliton.soliton(int(np.ravel(n)[0])).jet(np.asarray(r, dtype=float).ravel())[key].reshape(np.shape(r))
+
+
+def _bm_of(method, *extra):
+    return lambda x, n: getattr(bm_soliton.soliton(int(np.ravel(n)[0])), method)(
+        np.asarray(x, dtype=float).ravel(), *extra).reshape(np.shape(x))
+
+
+bm_d2m = _bm_function("bm_d2m", _bm_jet("d2m"))
+bm_dm = _bm_function("bm_dm", _bm_jet("dm"), lambda r, n: bm_d2m(r, n))
+bm_m = _bm_function("bm_m", _bm_jet("m"), lambda r, n: bm_dm(r, n),
+                    "The mass function m(r)/ell of the soliton with n zeros, at r/ell.")
+bm_d2delta = _bm_function("bm_d2delta", _bm_jet("d2delta"))
+bm_ddelta = _bm_function("bm_ddelta", _bm_jet("ddelta"), lambda r, n: bm_d2delta(r, n))
+bm_delta = _bm_function("bm_delta", _bm_jet("delta"), lambda r, n: bm_ddelta(r, n),
+                        "delta = -ln sigma of the soliton with n zeros, at r/ell.")
+bm_d2N = _bm_function("bm_d2N", _bm_jet("d2N"))
+bm_dN = _bm_function("bm_dN", _bm_jet("dN"), lambda r, n: bm_d2N(r, n))
+bm_N = _bm_function("bm_N", _bm_jet("N"), lambda r, n: bm_dN(r, n),
+                    "N = 1 - 2m/r of the soliton with n zeros, at r/ell.")
+bm_d2k = _bm_function("bm_d2k", _bm_of("stretch", 2))
+bm_dk = _bm_function("bm_dk", _bm_of("stretch", 1), lambda rho, n: bm_d2k(rho, n))
+bm_k = _bm_function("bm_k", _bm_of("stretch"), lambda rho, n: bm_dk(rho, n),
+                    "r/rho of the soliton with n zeros at the isotropic radius rho/ell, finite at the centre.")
+bm_r = _bm_function("bm_r", _bm_of("from_tortoise"), lambda x, n: sp.exp(-bm_delta(bm_r(x, n), n)) * bm_N(bm_r(x, n), n),
+                    "The areal radius r/ell of the soliton with n zeros at the tortoise coordinate xi/ell: dr/dxi = sigma N.")
+BM_UNITS = "with $\\ell$ the unit of every length"
+BM_INPUT = ("The soliton whose Yang-Mills amplitude $w$ has one zero, the solution of the Einstein-Yang-Mills "
+            "equations regular at the centre and flat far away that starts as $w = 1 - br^2/\\ell^2$ with "
+            "$b = 0.4537$, found by numerical integration. Its mass is $0.8286\\,c^2\\ell/G$, and $\\sigma$ rises "
+            "from $0.1264$ at the centre to $1$ far away.")
+BM_AREAL = {"m": "bm_m(r, 1)", "sigma": "exp(-bm_delta(r, 1))"}
+BM_ISOTROPIC = {"f": "exp(-2*bm_delta(rho*bm_k(rho, 1), 1))*bm_N(rho*bm_k(rho, 1), 1)",
+                "h": "exp(-2*bm_delta(rho*bm_k(rho, 1), 1))*bm_N(rho*bm_k(rho, 1), 1)*bm_k(rho, 1)**2"}
+BM_TORTOISE = {"F": "exp(-2*bm_delta(bm_r(xi, 1), 1))*bm_N(bm_r(xi, 1), 1)", "r": "bm_r(xi, 1)"}
+# Breitenlohner, Forgacs and Maison's tau with its constant fixed by tau = ln(rho/ell), rho the isotropic radius.
+BM_FLOW = {"A": "exp(-bm_delta(exp(tau)*bm_k(exp(tau), 1), 1))", "N": "sqrt(bm_N(exp(tau)*bm_k(exp(tau), 1), 1))",
+           "r": "exp(tau)*bm_k(exp(tau), 1)"}
+BM_NODE = 1.5457        # the zero of w, in ell
+
 # Functions a row's `functions` may name beside the elementary ones, each a sympy function
 # that carries its own derivative and its own numbers.
-DECLARED_FUNCTIONS = {"teo_rho": teo_rho, "teo_sigma": teo_sigma, "ori_mass_behind": ori_mass_behind,
+DECLARED_FUNCTIONS = {**{f.__name__: f for f in (bm_m, bm_dm, bm_d2m, bm_delta, bm_ddelta, bm_d2delta, bm_N, bm_dN,
+                                                 bm_d2N, bm_k, bm_dk, bm_d2k, bm_r)},
+                      "teo_rho": teo_rho, "teo_sigma": teo_sigma, "ori_mass_behind": ori_mass_behind,
                       "ori_influx_behind": ori_influx_behind, "ori_shell_behind": ori_shell_behind,
                       "hiscock_m_out": hiscock_m_out, "hiscock_dm_out": hiscock_dm_out,
                       "hiscock_d2m_out": hiscock_d2m_out, "hiscock_r_out": hiscock_r_out}
@@ -2555,6 +2612,25 @@ DIAGRAMS = [
     Diagram("tov", "spherical", "through", "through the centre", ("t", "r"), (0, 16, -16, 16),
             "$x\\;[GM_\\odot/c^2]$", "$ct\\;[GM_\\odot/c^2]$", {}, EQUATOR, mirror=True, families=SIDEWAYS,
             cones=(4, 8), areal=True, star=POLYTROPE, input=POLYTROPE_INPUT),
+    # Bartnik and McKinnon's soliton with one zero, in units of ell, on its plane of the time and the
+    # radial coordinate in each of its four charts; every row marks the sphere on which w vanishes.
+    Diagram("bartnik_mckinnon", "areal", "radial", "$t$ and $r$", ("t", "r"), (0, 8, -4, 4),
+            "$r/\\ell$", "$ct/\\ell$", {"ell": 1}, EQUATOR, areal=True, functions=BM_AREAL, input=BM_INPUT,
+            lines=(("surface", "r", repr(BM_NODE), "the sphere on which $w = 0$"),)),
+    Diagram("bartnik_mckinnon", "areal", "through", "through the centre", ("t", "r"), (0, 8, -8, 8),
+            "$x/\\ell$", "$ct/\\ell$", {"ell": 1}, EQUATOR, mirror=True, families=SIDEWAYS, cones=(4, 8), areal=True,
+            functions=BM_AREAL, input=BM_INPUT,
+            lines=(("surface", "r", repr(BM_NODE), "the sphere on which $w = 0$"),)),
+    Diagram("bartnik_mckinnon", "isotropic", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 8, -4, 4),
+            "$\\rho/\\ell$", "$ct/\\ell$", {}, EQUATOR, areal=True, functions=BM_ISOTROPIC, input=BM_INPUT,
+            lines=(("surface", "r", repr(float(bm_soliton.soliton(1).isotropic(BM_NODE)[0])), "the sphere on which $w = 0$"),)),
+    Diagram("bartnik_mckinnon", "tortoise", "radial", "$t$ and $\\xi$", ("t", "\\xi"), (0, 24, -12, 12),
+            "$\\xi/\\ell$", "$ct/\\ell$", {}, EQUATOR, areal=True, functions=BM_TORTOISE, input=BM_INPUT,
+            lines=(("surface", "r", repr(float(bm_soliton.soliton(1).tortoise(BM_NODE)[0])), "the sphere on which $w = 0$"),)),
+    Diagram("bartnik_mckinnon", "flow", "radial", "$t$ and $\\tau$", ("t", "\\tau"), (-4, 2, -3, 3),
+            "$\\tau$", "$ct/\\ell$", {}, EQUATOR, areal=True, functions=BM_FLOW, input=BM_INPUT,
+            lines=(("surface", "r", repr(math.log(float(bm_soliton.soliton(1).isotropic(BM_NODE)[0]))),
+                    "the sphere on which $w = 0$"),)),
     # Einstein's cluster, in units of its Schwarzschild radius: the areal chart for the declared cluster
     # with no surface that the embedding diagram draws, Einstein's own at V = 1/2, where m = r/6
     # and R = 3 r_s, in the areal radius and in his isotropic one, where sigma = 5 - 2 sqrt 6 and
@@ -6161,6 +6237,25 @@ CAPTIONS = {
         "two halves mirror images. Rays cross the centre smoothly, where the cones are narrowest and "
         "the Kretschmann scalar is finite, and the surface crosses the line on both sides.",
     ],
+    ("bartnik_mckinnon", "areal", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) through the soliton whose Yang-Mills amplitude $w$ has one zero, the same at every other angle by spherical symmetry. The rays obey $c\\,dt = \\pm dr/(\\sigma(1 - 2m/r))$.",
+        "The cones are narrowest at the centre, where a clock runs at $\\sigma = 0.126$ of the rate $t$ counts, and they open toward 45° far away. They stay open everywhere, since $1 - 2m/r$ is never less than $0.242$, its value at $r = 1.60\\,\\ell$, and the soliton has no horizon. On the sphere $r = 1.55\\,\\ell$ the amplitude passes through $w = 0$, its value in the field of a magnetic monopole.",
+    ],
+    ("bartnik_mckinnon", "areal", "through"): [
+        "The line through the centre of the soliton in the plane $\\theta = \\pi/2$: $x = r$ on the right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$, and spherical symmetry makes the two halves mirror images. Rays cross the centre smoothly, where the cones are narrowest and the Kretschmann scalar is finite, and the sphere on which $w = 0$ crosses the line on both sides.",
+    ],
+    ("bartnik_mckinnon", "isotropic", "radial"): [
+        "The plane of $t$ and $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$) through the same soliton in the isotropic radius, in which space at one moment of $t$ is flat space stretched by the factor $h/f$. The rays obey $c\\,dt = \\pm\\sqrt{h}\\,d\\rho/f$.",
+        "The stretch is greatest at the centre, where $r = 4.24\\,\\rho$, so the core takes up little of the plane: the sphere $r = \\ell$ is at $\\rho = 0.30\\,\\ell$ and the sphere on which $w = 0$ at $\\rho = 0.65\\,\\ell$. A ray at the centre climbs $33.6$ units of $ct$ for each unit of $\\rho$, and far away $\\rho$ approaches $r - 0.83\\,\\ell$ and the cones open toward 45°.",
+    ],
+    ("bartnik_mckinnon", "tortoise", "radial"): [
+        "The plane of $t$ and $\\xi$ ($\\theta = \\pi/2$, $\\phi = 0$) through the same soliton in the tortoise coordinate. The plane is $F$ times a flat one, so every ray runs at 45°, with $ct \\pm \\xi$ constant.",
+        "Light from the centre reaches the sphere at $\\xi$ after the time $\\xi/c$ of $t$, and the core is slow to cross: the sphere $r = \\ell$ lies at $\\xi = 7.88\\,\\ell$ and the sphere on which $w = 0$ at $11.73\\,\\ell$, while the next $6.45\\,\\ell$ of radius, out to $r = 8\\,\\ell$, take $12.49\\,\\ell$ more.",
+    ],
+    ("bartnik_mckinnon", "flow", "radial"): [
+        "The plane of $t$ and $\\tau$ ($\\theta = \\pi/2$, $\\phi = 0$) through the same soliton, with the constant in $\\tau$ chosen so that $\\tau = \\ln(\\rho/\\ell)$ for the isotropic radius $\\rho$. The rays obey $c\\,dt = \\pm r\\,d\\tau/(AN)$.",
+        "Each unit of $\\tau$ multiplies the isotropic radius by $e$, so the centre lies at $\\tau \\to -\\infty$, where the cones open wide along $\\tau$, and far away they close up as $e^\\tau$. The sphere on which $w = 0$ is at $\\tau = -0.43$.",
+    ],
     ("einstein_cluster", "areal", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) through a cluster with no surface "
         "($b = 2\\,r_s$), the same at every other angle by spherical symmetry. The rays obey "
@@ -8974,6 +9069,15 @@ def _teo_axis(r):
             + np.sqrt(2) * np.arctanh(np.sqrt((r - 1) / (2 * r))))
 
 
+def _bm_tortoise(x, through=None):
+    """The tortoise coordinate, in ell, of the sphere at the areal radius x on Bartnik and McKinnon's
+    soliton with one zero, or at the isotropic radius x where `through` names the solver's inverse."""
+    soliton = bm_soliton.soliton(1)
+    x = np.asarray(x, dtype=float)
+    r = getattr(soliton, through)(x.ravel()) if through else x.ravel()
+    return soliton.tortoise(r).reshape(x.shape)
+
+
 def _gravastar_x(r):
     """The tortoise coordinate inside the gravastar the diagrams draw, dx/dr = 1/(sqrt(C)(1 - r^2/L^2))."""
     return 2 / math.sqrt(GRAVASTAR_C) * np.arctanh(np.asarray(r, float) / 2)
@@ -9762,6 +9866,19 @@ CLOSED_FORMS = {
     ("gravastar", "interior_tortoise", "radial"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("gravastar", "exterior", "radial"):
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), None),
+    # Bartnik and McKinnon's soliton with one zero: ct -+ xi in every chart, with xi the tortoise
+    # coordinate of the sphere, which bartnik_mckinnon.py integrates along with the solution and the
+    # tracing never uses.
+    ("bartnik_mckinnon", "areal", "radial"):
+        (lambda t, r: t + _bm_tortoise(r), lambda t, r: t - _bm_tortoise(r), None),
+    ("bartnik_mckinnon", "areal", "through"):
+        (lambda t, r: t + _bm_tortoise(r), lambda t, r: t - _bm_tortoise(r), None),
+    ("bartnik_mckinnon", "isotropic", "radial"):
+        (lambda t, rho: t + _bm_tortoise(rho, "from_isotropic"), lambda t, rho: t - _bm_tortoise(rho, "from_isotropic"), None),
+    ("bartnik_mckinnon", "tortoise", "radial"): (lambda t, xi: t + xi, lambda t, xi: t - xi, None),
+    ("bartnik_mckinnon", "flow", "radial"):
+        (lambda t, tau: t + _bm_tortoise(np.exp(tau), "from_isotropic"),
+         lambda t, tau: t - _bm_tortoise(np.exp(tau), "from_isotropic"), None),
     # Mass inflation: an ingoing ray keeps its v, and an outgoing one the radius at which it crosses
     # one ingoing ray, carried there by ori_shell.py's own integrators, which the tracing does not use.
     # Inside the inner apparent horizon a ray comes from r = 0 and may never have crossed that

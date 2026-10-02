@@ -68,6 +68,11 @@
       "id": "boson_star",
       "kind": "family",
       "text": "A star with no equation of state: a scalar field held up by the uncertainty principle, whose stress along the radius differs from its stress across it. Its largest mass is $0.633\\,M_P^2/m$ for bosons of mass $m$, with $M_P$ the Planck mass [ruffini1969, liebling2023]."
+    },
+    {
+      "id": "bartnik_mckinnon",
+      "kind": "special_case",
+      "text": "The static sphere whose matter is a Yang-Mills field, $e^{2\\Phi} = \\sigma^2(1 - 2m/r)$. It has no surface, its stress along the radius differs from its stress across it, and its two functions are known only numerically [bartnik1988, volkov1999]."
     }
   ],
   "references": [
@@ -103,7 +108,9 @@
     "lake2006",
     "lattimer2001",
     "ruffini1969",
-    "liebling2023"
+    "liebling2023",
+    "bartnik1988",
+    "volkov1999"
   ],
   "coordinates": [
     {

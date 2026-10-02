@@ -4533,6 +4533,8 @@ class RobertsCollapse(unittest.TestCase):
 
 
 # p of each outcome of Roberts's collapse, as its drawings name them.
+# The sphere r = 8 ell of Bartnik and McKinnon's soliton with one zero in its three other radial coordinates.
+BARTNIK_MCKINNON_REACH = {"isotropic": 7.147807396, "tortoise": 24.219163201, "flow": 1.966805652}
 ROBERTS_P = {"disperses": 0.9, "threshold": 1.0, "collapses": 2.0}
 
 
@@ -4687,6 +4689,12 @@ class Slices(unittest.TestCase):
     # one line element: the static and Eddington-Finkelstein drawings are the black hole's, and the
     # Barriola-Vilenkin drawings the monopole's.
     HIDDEN_VIEWS = {"conformal cosmic_string/gott": {"unroll"},
+                    # Bartnik and McKinnon's solitons with one, two and three zeros are three spacetimes
+                    # of one line element, and every drawing but the embedding diagram is the first's.
+                    **{f"{place}bartnik_mckinnon/{s}": {"n2", "n3"}
+                       for place, s in [("conformal ", "soliton")] + [("", f"{chart}/{view}") for chart, view in (
+                           ("areal", "radial"), ("areal", "through"), ("isotropic", "radial"), ("tortoise", "radial"),
+                           ("flow", "radial"))]},
                     # Randall and Sundrum's one wall and their two walls are two spacetimes of one line
                     # element: each drawing marks the moment of its own.
                     **{f"randall_sundrum/{s}": {"two_walls"} for s in ("proper_distance/ty", "conformal/tw", "poincare/tz")},
@@ -5451,6 +5459,11 @@ class Slices(unittest.TestCase):
                 return (lambda X: 0.0), [lo, hi]
             sign = 1 if chart.endswith("ingoing") else -1
             return (lambda X: sign * (sv_rstar(X, a) - X)), [lo, hi]
+        if key.startswith("bartnik_mckinnon/") and "/areal/" not in key:
+            # The sphere r = 8 ell the embedding reaches, on the soliton with one zero: its isotropic
+            # radius, its tortoise coordinate and its tau = ln(rho/ell), which bartnik_mckinnon.py
+            # integrates and test_bartnik_mckinnon.py holds to these numbers.
+            return (lambda X: 0.0), [0.0, BARTNIK_MCKINNON_REACH[key.split("/")[1]]]
         if key == "gravastar/interior_tortoise/radial":
             # The tortoise coordinate of the circles the embedding reaches inside the shell, at L = 2 and
             # C = 64/195: x = (L/sqrt(C)) artanh(r/L).

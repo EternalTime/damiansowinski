@@ -65,6 +65,11 @@
       "id": "gravastar",
       "kind": "family",
       "text": "Another star with no horizon offered as a stand in for a black hole, a ball of de Sitter space under a thin shell [mazur2004]."
+    },
+    {
+      "id": "bartnik_mckinnon",
+      "kind": "family",
+      "text": "A ball of Yang-Mills field held together by its own gravity, also known only numerically. It comes as a ladder of solitons counted by the zeros of the field, and every one of them is unstable [bartnik1988, volkov1999]."
     }
   ],
   "references": [
@@ -90,7 +95,9 @@
     "janis1968",
     "melvin1964",
     "einstein1939",
-    "mazur2004"
+    "mazur2004",
+    "bartnik1988",
+    "volkov1999"
   ],
   "coordinates": [
     {

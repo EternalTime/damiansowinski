@@ -74,6 +74,11 @@
       "id": "kerr",
       "kind": "family",
       "text": "The rotating black hole has a throat of its own. James Bardeen and Gary Horowitz took the limit toward the horizon of an extreme Kerr hole in 1999 and found a vacuum solution with many of the properties of AdS$_2 \\times$ S$^2$ [bardeen1999]."
+    },
+    {
+      "id": "bartnik_mckinnon",
+      "kind": "limit_source",
+      "text": "Balls of Yang-Mills field with a regular centre, one for each number $n$ of zeros of the field. In the limit $n \\to \\infty$ the metric at the edge of their core tends to AdS$_2 \\times$ S$^2$ [breitenlohner1994]."
     }
   ],
   "references": [
@@ -97,7 +102,8 @@
     "melvin1964",
     "bell1974",
     "griffiths1991",
-    "romans1992"
+    "romans1992",
+    "breitenlohner1994"
   ],
   "coordinates": [
     {

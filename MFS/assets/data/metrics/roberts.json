@@ -47,6 +47,11 @@
       "id": "vaidya",
       "kind": "family",
       "text": "Anzhong Wang and Henrique de Oliveira cut Roberts's collapse along a light ray and joined it to Vaidya's outgoing radiation, which gives the black hole a finite mass [wang1997collapse]. Let the field's strength $pv/2$ be any function $\\alpha(v)$ and Roberts's metric still solves Einstein's equations, with null dust like Vaidya's flowing in beside the scalar field [roberts1996]."
+    },
+    {
+      "id": "bartnik_mckinnon",
+      "kind": "family",
+      "text": "A static soliton on a threshold of collapse. For a Yang-Mills field Choptuik, Chmaj, and Bizoń found black holes that begin at a finite mass, with the first Bartnik-McKinnon soliton as the critical solution [choptuik1996]."
     }
   ],
   "references": [
@@ -63,7 +68,8 @@
     "frolov1999",
     "frolov2000",
     "christodoulou1994",
-    "christodoulou1999"
+    "christodoulou1999",
+    "choptuik1996"
   ],
   "coordinates": [
     {

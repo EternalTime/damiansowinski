@@ -220,6 +220,38 @@
     "embedding": "1585df5452ac5572"
   },
   {
+    "id": "bartnik_mckinnon",
+    "name": "Bartnik-McKinnon Soliton",
+    "tags": [
+      "soliton",
+      "particle-like solution",
+      "Yang-Mills field",
+      "Einstein-Yang-Mills",
+      "gauge field",
+      "numerical solution",
+      "sphaleron",
+      "regular centre",
+      "no horizon",
+      "asymptotically flat",
+      "instability",
+      "critical collapse",
+      "anisotropic",
+      "mass",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "isotropic coordinates",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "2b9529707f1e520f",
+    "diagrams": "04a29fa582f0c7a2",
+    "conformal": "acaf9c7da5b177a4",
+    "embedding": "b0d9da588a8a0e63"
+  },
+  {
     "id": "bell_szekeres",
     "name": "Bell-Szekeres",
     "tags": [
@@ -269,7 +301,7 @@
       "homogeneous",
       "product spacetime"
     ],
-    "version": "d4326330d3ae5c89",
+    "version": "70548250bddf9b44",
     "diagrams": "7b995662594f7524",
     "conformal": "d58ee6f7393843e4",
     "embedding": "4b36293b1a64925a"
@@ -462,7 +494,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "44db90962747e1e5",
+    "version": "3cbd37304b78a423",
     "diagrams": "d8f5e35c3b0e6fe2",
     "conformal": "7b86209f53558e97",
     "embedding": "c3dc5db3068ad454"
@@ -796,7 +828,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "7ba666fbd68707fd",
+    "version": "be10339083c8c9f7",
     "diagrams": "1358f347fde7be67",
     "conformal": "7807b351c1311ade",
     "embedding": "ab81073436048cb9"
@@ -2403,7 +2435,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "55e3ae17bbb4346b",
+    "version": "b4a0baadc347bad6",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -2526,7 +2558,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5de37cc225f22f95",
+    "version": "6def0b8803f1ff3b",
     "diagrams": "a0d99b1047fc15a8",
     "conformal": "be314e331ea79c30",
     "embedding": "7d4fbd4e5c072163"
@@ -2625,7 +2657,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5a279849b1344288",
+    "version": "d6b41ad20040c606",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -3087,7 +3119,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1059e537916f6036",
+    "version": "eeb73341d65edb46",
     "diagrams": "b8a9287744afbad1",
     "conformal": "f4c269030698315c",
     "embedding": "c64f1f900fa70a89"
