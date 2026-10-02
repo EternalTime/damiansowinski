@@ -282,6 +282,13 @@ MYERS_ONE = {"mu": 1, "a": "3/5"}
 MYERS_EQUAL = {"mu": 1, "a": "2/5"}
 MYERS_SIX = {"mu": 1, "a": "3/2"}
 MYERS_CONE = "future cone of no angular momentum"
+
+# Podolsky and Ovcharenko's Kerr hole in Bertotti and Robinson's field as its diagrams draw it,
+# in units of m: the spinning hole at a = 4m/5 in the field B = 1/(4m), where I_1 = 49/50,
+# I_2 = 24/25 and the conicity is C = 60025/61374, so that r_+ = 1.684 m and r_- = 0.405 m; the
+# hole with no spin in the same field, where C = 16/17 and the horizon is r_h = 32m/15.
+KBR = {"m": 1, "a": "4/5", "B": "1/4", "C": "60025/61374"}
+KBR_STATIC = {"m": 1, "B": "1/4", "C": "16/17"}
 # Black Saturn: the hole with no angular momentum of its own inside a ring in balance, kappa = (7/8,
 # 9/16, 3/7) and beta = 0, where c_1^2 = 147/64, in units of L. On the plane of the ring, rho = 0, the
 # four functions of Weyl's chart are rational in z: BS_OUTSIDE for z < 3/7, outside the ring, and
@@ -3643,6 +3650,17 @@ DIAGRAMS = [
             (-3, 3, -3, 3), "$r\\cos\\phi/(GM/c^2)$", "$r\\sin\\phi/(GM/c^2)$",
             {"G": 1, "M": 1, "a": "9/10"}, {"theta": "pi/2"}, to_display=POLAR, cones=(0, 0),
             principal=True, leaves=("t",), ring=12, inside=True, mark_gtt="the ergosurface"),
+    # Podolsky and Ovcharenko's Kerr hole in Bertotti and Robinson's field. The axis, whose plane of t
+    # and r is Kerr's times Omega^-2 with Q in place of Delta, and the equator with the circles of phi
+    # divided out; the hole with no spin on its equator, with the innermost stable circular orbit.
+    Diagram("kerr_bertotti_robinson", "boyer_lindquist", "radial", "$t$ and $r$ on the axis", ("t", "r"),
+            (0, 4, -2, 2), "$r/m$", "$ct/m$", KBR, {"theta": "0", "phi": "0"}, orient="ingoing"),
+    Diagram("kerr_bertotti_robinson", "boyer_lindquist", "equator", "the equator, $\\phi$ divided out", ("t", "r"),
+            (0, 4, -2, 2), "$r/m$", "$ct/m$", KBR, {"theta": "pi/2"}, orient="ingoing", quotient="phi",
+            mark_gtt="the ergosurface", cone=MYERS_CONE),
+    Diagram("kerr_bertotti_robinson", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 8, -4, 4),
+            "$r/m$", "$ct/m$", KBR_STATIC, EQUATOR, orient="ingoing",
+            lines=(("surface", "r", "32/5", "the innermost stable circular orbit, $r = 3r_h$"),)),
     # Kerr-de Sitter and Kerr-anti-de Sitter. Carter's chart: the axis, where the plane of t and r
     # holds its rays, and the principal null congruence on the equator, in t and r and from above.
     # The chart turned to the frame that does not rotate at infinity has the same t and r, so only
@@ -8572,6 +8590,33 @@ CAPTIONS = {
         "no null direction, while the principal rays, already turning, cross it smoothly. The "
         "cones close at both horizons, where $\\Delta = 0$, and point to smaller $r$ between them. "
         "The ingoing rays end on the ring singularity at $r = 0$, which lies in this plane.",
+    ],
+    ("kerr_bertotti_robinson", "boyer_lindquist", "radial"): [
+        "The plane of $t$ and $r$ on the rotation axis ($\\theta = 0$) of Podolský and Ovcharenko's spinning hole "
+        "($a = 4m/5$, $B = 1/(4m)$). On the axis the circles of $\\phi$ shrink to points and the metric on the plane is "
+        "$\\Omega^{-2}\\left(-Q\\,c^2dt^2/(r^2 + a^2) + (r^2 + a^2)\\,dr^2/Q\\right)$, so the rays run at "
+        "$dr/d(ct) = \\pm Q/(r^2 + a^2)$, with the conformal factor dropping out. No Christoffel symbol turns them out "
+        "of the plane, so they are null geodesics.",
+        "The cones close where $\\Delta$ vanishes, at $r_+ = 1.684\\,m$ and $r_- = 0.405\\,m$, and between them they "
+        "point to smaller $r$, following the ingoing family. The magnetic field runs along this axis, and the domain "
+        "of the chart begins at $r_+$.",
+    ],
+    ("kerr_bertotti_robinson", "boyer_lindquist", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the spinning hole drawn in $t$ and $r$ with $\\phi$ divided out "
+        "($a = 4m/5$, $B = 1/(4m)$): the metric orthogonal to the circles of $\\phi$, $-N\\,c^2dt^2 + F\\,dr^2/Q$. Its "
+        "null curves are the shadows on $t$ and $r$ of the null geodesics of zero angular momentum, each turning in "
+        "$\\phi$ at $d\\phi/d(ct) = \\omega/C$, and each cone is the future cone of the directions of zero angular "
+        "momentum. The cones close at $r_+ = 1.684\\,m$ and $r_- = 0.405\\,m$.",
+        "The dotted line is the ergosurface, $g_{tt} = 0$ at $r = 2.021\\,m$, where $Q = a^2$; in Kerr's metric it stands "
+        "at $r = 2m$. Inside $r_-$ every ray ends at $r = 0$, the ring, where the curvature grows without bound.",
+    ],
+    ("kerr_bertotti_robinson", "static", "radial"): [
+        "The plane of $t$ and $r$ on the equator ($\\theta = \\pi/2$, $\\phi = 0$) of the hole with no spin "
+        "($B = 1/(4m)$). The conformal factor $\\Omega^{-2}$ multiplies the whole line element and leaves the rays as "
+        "they are, $dr/d(ct) = \\pm f$, and no Christoffel symbol turns them out of the plane, so they are null geodesics.",
+        "The cones close on the horizon $r_h = 32m/15$, outside Schwarzschild's $2m$, and inside it every cone points to "
+        "$r = 0$, where the Kretschmann scalar diverges. The line at $r = 32m/5$ is the innermost stable circular orbit, "
+        "three times $r_h$ as in Schwarzschild's metric.",
     ],
     ("kerr", "boyer_lindquist", "above"): [
         "The equatorial plane ($\\theta = \\pi/2$) seen from above, along the axis from "

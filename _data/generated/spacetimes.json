@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 157,
+  "count": 158,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -3998,6 +3998,11 @@
           "id": "cremmer_scherk",
           "kind": "family",
           "text": "A sphere held open by a monopole's gauge field in six dimensions, with a cosmological constant chosen so that the other four dimensions are flat where Bertotti and Robinson's two are an anti-de Sitter space [horvath1977]."
+        },
+        {
+          "id": "kerr_bertotti_robinson",
+          "kind": "generalisation",
+          "text": "Put a spinning black hole into Bertotti and Robinson's field and it is Podolský and Ovcharenko's hole of 2025, which is this universe again when its mass is taken away [podolsky2025]."
         }
       ],
       "references": [
@@ -4026,7 +4031,8 @@
         "emparan2000",
         "podolskybelan2004",
         "ortaggio2002direct",
-        "horvath1977"
+        "horvath1977",
+        "podolsky2025"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bertotti_robinson.json",
@@ -9044,6 +9050,11 @@
           "id": "distorted_schwarzschild",
           "kind": "family",
           "text": "A static black hole bent by matter far away, with nothing on its axis. Its horizon is smooth all the way round, with no string or strut to meet [fairhurst2001]."
+        },
+        {
+          "id": "kerr_bertotti_robinson",
+          "kind": "family",
+          "text": "A spinning hole in Bertotti and Robinson's magnetic field. Its static member is the one that does not accelerate in a family that also holds the C-metric set in that field [ovcharenko2026]."
         }
       ],
       "references": [
@@ -9074,7 +9085,8 @@
         "emparan2000",
         "dias2003",
         "bicak2009",
-        "fairhurst2001"
+        "fairhurst2001",
+        "ovcharenko2026"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/c_metric.json",
@@ -24468,6 +24480,11 @@
           "id": "bondi_sachs",
           "kind": "generalisation",
           "text": "The form the metric of an isolated body takes on its outgoing light cones. Kerr's black hole is a member with no news, written in such coordinates by S. J. Fletcher and A. W. C. Lun in 2003 [sachs1962, fletcher2003]."
+        },
+        {
+          "id": "kerr_bertotti_robinson",
+          "kind": "generalisation",
+          "text": "Kerr's hole in a magnetic field that points along its axis and is uniform far away, an exact solution of type D. With the field switched off it is Kerr's metric again [podolsky2025]."
         }
       ],
       "references": [
@@ -24529,7 +24546,8 @@
         "belinskii1979",
         "boshkayev2019",
         "sachs1962",
-        "fletcher2003"
+        "fletcher2003",
+        "podolsky2025"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -24611,6 +24629,307 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{48G^2M^2\\left(r^2 - a^2\\cos^2\\theta\\right)\\left(\\left(r^2 + a^2\\cos^2\\theta\\right)^2 - 16r^2a^2\\cos^2\\theta\\right)}{c^4\\left(r^2 + a^2\\cos^2\\theta\\right)^6}"
+        }
+      ]
+    },
+    {
+      "id": "kerr_bertotti_robinson",
+      "name": "Kerr-Bertotti-Robinson Black Hole",
+      "short_name": "Kerr-Bertotti-Robinson",
+      "description": "Kerr's rotating black hole in a magnetic field that points along its axis of rotation and is uniform far away, the exact solution of the Einstein-Maxwell equations that Jiří Podolský and Hryhorii Ovcharenko found in 2025. It is of Petrov type D, it is Kerr's metric with the field switched off and Bertotti and Robinson's universe with the mass taken away, and the spinning hole carries an electric charge.",
+      "tags": [
+        "electrovacuum",
+        "Einstein-Maxwell",
+        "electromagnetic field",
+        "magnetic field",
+        "uniform field",
+        "rotating",
+        "rotating black hole",
+        "black hole",
+        "charged black hole",
+        "electric charge",
+        "stationary",
+        "axisymmetric",
+        "angular momentum",
+        "mass",
+        "ergoregion",
+        "frame dragging",
+        "ring singularity",
+        "curvature singularity",
+        "horizon",
+        "event horizon",
+        "Cauchy horizon",
+        "not asymptotically flat",
+        "Petrov type D",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The mass parameter $m$ and the spin parameter $a$ are lengths, and the field strength $B$ is an inverse length. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "kerr",
+          "kind": "special_case",
+          "text": "Switch the field off, $B = 0$, and Podolský and Ovcharenko's metric is Kerr's in Boyer and Lindquist's coordinates, with $m = GM/c^2$ [podolsky2025]."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "special_case",
+          "text": "With the mass taken away, $m = 0$, the metric is Bertotti and Robinson's uniform field, with spheres of radius $1/(B\\sqrt{1 - B^2a^2})$ [podolsky2025]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "With no spin and no field, $a = 0$ and $B = 0$, it is Schwarzschild's black hole with $r_s = 2m$."
+        },
+        {
+          "id": "kerr_newman",
+          "kind": "family",
+          "text": "Kerr and Newman's charged hole belongs with this one to a larger family of type D, which is Kerr and Newman's metric at $B = 0$ and holds this hole at one special value of its charge [ovcharenko2026b]."
+        },
+        {
+          "id": "melvin",
+          "kind": "family",
+          "text": "The other universe made of a uniform magnetic field. Marco Astorino found that Melvin's field and Bertotti and Robinson's carry the same potential, one in a geometry with cylindrical symmetry and the other in one with spherical symmetry [astorino2025]."
+        },
+        {
+          "id": "c_metric",
+          "kind": "family",
+          "text": "The accelerating black hole. Set in Bertotti and Robinson's field it joins one family of type D with the static member of this hole, which is the one that does not accelerate [ovcharenko2026]."
+        }
+      ],
+      "references": [
+        "podolsky2025",
+        "ernst1976b",
+        "ernst1976c",
+        "harrison1968",
+        "gibbons2013",
+        "bertotti1959",
+        "robinson1959",
+        "levicivita1917",
+        "alekseev1996",
+        "ovcharenko2026",
+        "vandenbergh2020",
+        "plebanski1976",
+        "wang2026",
+        "gray2026",
+        "astorino2025",
+        "wald1974",
+        "ovcharenko2026b"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr_bertotti_robinson.json",
+      "charts": [
+        {
+          "id": "boyer_lindquist",
+          "name": "Podolský-Ovcharenko (Boyer-Lindquist)",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_+, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\Delta = 0 \\;\\text{(the horizons } r_\\pm = I_1\\dfrac{mI_2 \\pm \\sqrt{m^2I_2 - a^2I_1^2}}{I_1^2 - B^2m^2I_2}\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass parameter, a length; at $B = 0$ it is Kerr's $GM/c^2$ with $M$ the mass of the hole"
+            },
+            {
+              "symbol": "a",
+              "description": "Spin parameter, a length, with $aB < 1$; a horizon exists only for $a^2I_1^2 \\le m^2I_2$, and at $a = 0$ the metric is the static hole's. The electric flux through any sphere round the hole is that of the charge $q = c^2C\\,maB\\sqrt{I_2}/(\\sqrt{G}\\,I_1)$, in Gaussian units"
+            },
+            {
+              "symbol": "B",
+              "description": "Strength of the field, an inverse length, $B = \\sqrt{G}\\,B_0/c^2$ with $B_0$ the field in Gaussian units; at $B = 0$ the metric is Kerr's, and at $m = 0$ it is Bertotti and Robinson's universe with spheres of radius $1/(B\\sqrt{I_2})$. The vector potential is twice the real part of the one-form $\\dfrac{c^2}{\\sqrt{G}}\\,\\dfrac{1}{2B}\\left(\\partial_r\\Omega\\,\\dfrac{a\\,c\\,dt - \\left(r^2 + a^2\\right)C\\,d\\phi}{r + ia\\cos\\theta} + \\dfrac{i\\,\\partial_\\theta\\Omega}{\\sin\\theta}\\,\\dfrac{c\\,dt - aC\\sin^2\\theta\\,d\\phi}{r + ia\\cos\\theta} + \\left(\\Omega - 1\\right)C\\,d\\phi\\right)$"
+            },
+            {
+              "symbol": "I_1 = 1 - \\dfrac{B^2a^2}{2}",
+              "description": "The first of Podolský and Ovcharenko's two constants, a pure number, 1 where the spin or the field vanishes"
+            },
+            {
+              "symbol": "I_2 = 1 - B^2a^2",
+              "description": "The second of their constants, a pure number, positive for $aB < 1$"
+            },
+            {
+              "symbol": "C",
+              "description": "The conicity, $C = \\dfrac{I_1^2}{I_1^2 + B^2\\left(m^2I_2 - a^2I_1^2\\right)}$, which is $1/P$ on the axis; with it both halves of the axis are regular for $\\phi$ of period $2\\pi$"
+            },
+            {
+              "symbol": "\\Delta = \\left(1 - \\dfrac{B^2m^2I_2}{I_1^2}\\right)r^2 - \\dfrac{2mI_2}{I_1}r + a^2",
+              "description": "The quadratic whose roots are the horizons $r_\\pm$; at $B = 0$ it is Kerr's $r^2 - 2mr + a^2$"
+            },
+            {
+              "symbol": "\\Sigma = r^2 + a^2\\cos^2\\theta",
+              "description": "Kerr's $\\Sigma$, which vanishes only on the ring $r = 0$, $\\theta = \\pi/2$"
+            },
+            {
+              "symbol": "P = 1 + B^2\\left(\\dfrac{m^2I_2}{I_1^2} - a^2\\right)\\cos^2\\theta",
+              "description": "The function of the polar angle in Podolský and Ovcharenko's line element, 1 on the equator and $1/C$ on the axis"
+            },
+            {
+              "symbol": "Q = \\left(1 + B^2r^2\\right)\\Delta",
+              "description": "The function of the radius in their line element, which vanishes on the horizons"
+            },
+            {
+              "symbol": "\\Omega = \\sqrt{1 + B^2r^2 - B^2\\Delta\\cos^2\\theta}",
+              "description": "The conformal factor of their line element, $ds^2 = \\Omega^{-2}\\left(-\\dfrac{Q}{\\Sigma}\\left(c\\,dt - aC\\sin^2\\theta\\,d\\phi\\right)^2 + \\dfrac{\\Sigma}{Q}dr^2 + \\dfrac{\\Sigma}{P}d\\theta^2 + \\dfrac{P\\sin^2\\theta}{\\Sigma}\\left(a\\,c\\,dt - \\left(r^2 + a^2\\right)C\\,d\\phi\\right)^2\\right)$; on a horizon $\\Omega^2 = 1 + B^2r^2$ at every $\\theta$"
+            },
+            {
+              "symbol": "A = P\\left(r^2 + a^2\\right)^2 - a^2Q\\sin^2\\theta",
+              "description": "The combination Podolský and Ovcharenko write $R$; the circle of $\\phi$ has the squared radius $C^2A\\sin^2\\theta/(\\Sigma\\Omega^2)$"
+            },
+            {
+              "symbol": "\\omega = \\dfrac{a\\left(P\\left(r^2 + a^2\\right) - Q\\right)}{A}",
+              "description": "Dragging rate, an inverse length: an observer with no angular momentum circles at $d\\phi/dt = c\\,\\omega/C$; on a horizon it is $a/(r^2 + a^2)$ at every $\\theta$"
+            },
+            {
+              "symbol": "N = \\dfrac{PQ\\Sigma}{A\\Omega^2}",
+              "description": "The squared lapse of the slices of constant $t$"
+            },
+            {
+              "symbol": "F = \\dfrac{\\Sigma}{\\Omega^2}",
+              "description": "The factor on the plane of $r$ and $\\theta$"
+            },
+            {
+              "symbol": "W = \\dfrac{A\\sin^2\\theta}{\\Sigma\\Omega^2}",
+              "description": "The squared radius of the circle of $\\phi$ over $C^2$"
+            }
+          ],
+          "convention": "We use Podolský and Ovcharenko's coordinates $(t, r, \\theta, \\phi)$, which are Boyer and Lindquist's at $B = 0$, with $t$ carrying dimensions of time and $\\phi$ their angle divided by $C$, and write their line element in the functions $N$, $F$, $W$, and $\\omega$ that the parameters define. The horizons are at the roots $r_\\pm$ of $\\Delta$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -N\\,c^2dt^2 + F\\left(\\dfrac{dr^2}{Q} + \\dfrac{d\\theta^2}{P}\\right) + W\\left(C\\,d\\phi - \\omega\\,c\\,dt\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\omega^2\\,W - N"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-\\omega\\,W\\,C"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-\\omega\\,W\\,C"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{F}{Q}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{F}{P}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "W\\,C^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{N\\,F^2\\,W^3\\,P\\left(\\partial_\\theta\\omega\\right)^2 + N\\,F^2\\,W^3\\,Q\\left(\\partial_r\\omega\\right)^2 - N^2\\,F^2\\,W\\,\\partial_\\theta W\\,\\partial_\\theta P + N^2\\,F^2\\,P\\left(\\partial_\\theta W\\right)^2 - N^2\\,F^2\\,W\\,\\partial_r W\\,\\partial_r Q + N^2\\,F^2\\,Q\\left(\\partial_r W\\right)^2 - N^2\\,F\\,W^2\\,\\partial_\\theta F\\,\\partial_\\theta P + 2N^2\\,W^2\\,P\\left(\\partial_\\theta F\\right)^2 - N^2\\,F\\,W^2\\,\\partial_r F\\,\\partial_r Q + 2N^2\\,W^2\\,Q\\left(\\partial_r F\\right)^2 - N\\,F^2\\,W^2\\,\\partial_\\theta N\\,\\partial_\\theta P - N\\,F^2\\,W\\,P\\,\\partial_\\theta N\\,\\partial_\\theta W + F^2\\,W^2\\,P\\left(\\partial_\\theta N\\right)^2 - N\\,F^2\\,W^2\\,\\partial_r N\\,\\partial_r Q - N\\,F^2\\,W\\,Q\\,\\partial_r N\\,\\partial_r W + F^2\\,W^2\\,Q\\left(\\partial_r N\\right)^2 - 2N^2\\,F^2\\,W\\,P\\,\\partial_\\theta^2 W - 2N^2\\,F^2\\,W\\,Q\\,\\partial_r^2 W - 2N^2\\,F\\,W^2\\,P\\,\\partial_\\theta^2 F - 2N^2\\,F\\,W^2\\,Q\\,\\partial_r^2 F - 2N\\,F^2\\,W^2\\,P\\,\\partial_\\theta^2 N - 2N\\,F^2\\,W^2\\,Q\\,\\partial_r^2 N}{2N^2\\,F^3\\,W^2}",
+          "kretschmann": "K = \\dfrac{4N^2\\,F^4\\,W^4\\,Q^2\\left(\\partial_r^2 N\\right)^2 - 4N\\,F^4\\,W^4\\,Q^2\\,\\partial_r^2 N\\left(\\partial_r N\\right)^2 - 4N^2\\,F^3\\,W^4\\,Q^2\\,\\partial_r^2 N\\,\\partial_r N\\,\\partial_r F + 4N^2\\,F^4\\,W^4\\,Q\\,\\partial_r^2 N\\,\\partial_r N\\,\\partial_r Q + 4N^2\\,F^3\\,W^4\\,Q\\,P\\,\\partial_r^2 N\\,\\partial_\\theta N\\,\\partial_\\theta F - 12N^2\\,F^4\\,W^5\\,Q^2\\,\\partial_r^2 N\\left(\\partial_r\\omega\\right)^2 + 8N^2\\,F^4\\,W^4\\,Q\\,P\\left(\\partial_r\\partial_\\theta N\\right)^2 - 8N\\,F^4\\,W^4\\,Q\\,P\\,\\partial_r\\partial_\\theta N\\,\\partial_r N\\,\\partial_\\theta N - 8N^2\\,F^3\\,W^4\\,Q\\,P\\,\\partial_r\\partial_\\theta N\\,\\partial_r N\\,\\partial_\\theta F - 8N^2\\,F^3\\,W^4\\,Q\\,P\\,\\partial_r\\partial_\\theta N\\,\\partial_\\theta N\\,\\partial_r F - 24N^2\\,F^4\\,W^5\\,Q\\,P\\,\\partial_r\\partial_\\theta N\\,\\partial_r\\omega\\,\\partial_\\theta\\omega + 4N^2\\,F^4\\,W^4\\,P^2\\left(\\partial_\\theta^2 N\\right)^2 + 4N^2\\,F^3\\,W^4\\,Q\\,P\\,\\partial_\\theta^2 N\\,\\partial_r N\\,\\partial_r F - 4N\\,F^4\\,W^4\\,P^2\\,\\partial_\\theta^2 N\\left(\\partial_\\theta N\\right)^2 - 4N^2\\,F^3\\,W^4\\,P^2\\,\\partial_\\theta^2 N\\,\\partial_\\theta N\\,\\partial_\\theta F + 4N^2\\,F^4\\,W^4\\,P\\,\\partial_\\theta^2 N\\,\\partial_\\theta N\\,\\partial_\\theta P - 12N^2\\,F^4\\,W^5\\,P^2\\,\\partial_\\theta^2 N\\left(\\partial_\\theta\\omega\\right)^2 + 4N^4\\,F^2\\,W^4\\,Q^2\\left(\\partial_r^2 F\\right)^2 + 8N^4\\,F^2\\,W^4\\,Q\\,P\\,\\partial_r^2 F\\,\\partial_\\theta^2 F - 8N^4\\,F\\,W^4\\,Q^2\\,\\partial_r^2 F\\left(\\partial_r F\\right)^2 + 4N^4\\,F^2\\,W^4\\,Q\\,\\partial_r^2 F\\,\\partial_r F\\,\\partial_r Q - 8N^4\\,F\\,W^4\\,Q\\,P\\,\\partial_r^2 F\\left(\\partial_\\theta F\\right)^2 + 4N^4\\,F^2\\,W^4\\,Q\\,\\partial_r^2 F\\,\\partial_\\theta F\\,\\partial_\\theta P + 4N^4\\,F^2\\,W^4\\,P^2\\left(\\partial_\\theta^2 F\\right)^2 - 8N^4\\,F\\,W^4\\,Q\\,P\\,\\partial_\\theta^2 F\\left(\\partial_r F\\right)^2 + 4N^4\\,F^2\\,W^4\\,P\\,\\partial_\\theta^2 F\\,\\partial_r F\\,\\partial_r Q - 8N^4\\,F\\,W^4\\,P^2\\,\\partial_\\theta^2 F\\left(\\partial_\\theta F\\right)^2 + 4N^4\\,F^2\\,W^4\\,P\\,\\partial_\\theta^2 F\\,\\partial_\\theta F\\,\\partial_\\theta P + 4N^4\\,F^4\\,W^2\\,Q^2\\left(\\partial_r^2 W\\right)^2 - 4N^4\\,F^3\\,W^2\\,Q^2\\,\\partial_r^2 W\\,\\partial_r F\\,\\partial_r W + 4N^4\\,F^3\\,W^2\\,Q\\,P\\,\\partial_r^2 W\\,\\partial_\\theta F\\,\\partial_\\theta W - 4N^4\\,F^4\\,W\\,Q^2\\,\\partial_r^2 W\\left(\\partial_r W\\right)^2 + 4N^4\\,F^4\\,W^2\\,Q\\,\\partial_r^2 W\\,\\partial_r W\\,\\partial_r Q + 4N^3\\,F^4\\,W^4\\,Q^2\\,\\partial_r^2 W\\left(\\partial_r\\omega\\right)^2 + 8N^4\\,F^4\\,W^2\\,Q\\,P\\left(\\partial_r\\partial_\\theta W\\right)^2 - 8N^4\\,F^3\\,W^2\\,Q\\,P\\,\\partial_r\\partial_\\theta W\\,\\partial_r F\\,\\partial_\\theta W - 8N^4\\,F^3\\,W^2\\,Q\\,P\\,\\partial_r\\partial_\\theta W\\,\\partial_\\theta F\\,\\partial_r W - 8N^4\\,F^4\\,W\\,Q\\,P\\,\\partial_r\\partial_\\theta W\\,\\partial_r W\\,\\partial_\\theta W + 8N^3\\,F^4\\,W^4\\,Q\\,P\\,\\partial_r\\partial_\\theta W\\,\\partial_r\\omega\\,\\partial_\\theta\\omega + 4N^4\\,F^4\\,W^2\\,P^2\\left(\\partial_\\theta^2 W\\right)^2 + 4N^4\\,F^3\\,W^2\\,Q\\,P\\,\\partial_\\theta^2 W\\,\\partial_r F\\,\\partial_r W - 4N^4\\,F^3\\,W^2\\,P^2\\,\\partial_\\theta^2 W\\,\\partial_\\theta F\\,\\partial_\\theta W - 4N^4\\,F^4\\,W\\,P^2\\,\\partial_\\theta^2 W\\left(\\partial_\\theta W\\right)^2 + 4N^4\\,F^4\\,W^2\\,P\\,\\partial_\\theta^2 W\\,\\partial_\\theta W\\,\\partial_\\theta P + 4N^3\\,F^4\\,W^4\\,P^2\\,\\partial_\\theta^2 W\\left(\\partial_\\theta\\omega\\right)^2 - 8N^3\\,F^4\\,W^5\\,Q^2\\left(\\partial_r^2\\omega\\right)^2 + 8N^2\\,F^4\\,W^5\\,Q^2\\,\\partial_r^2\\omega\\,\\partial_r N\\,\\partial_r\\omega + 8N^3\\,F^3\\,W^5\\,Q^2\\,\\partial_r^2\\omega\\,\\partial_r F\\,\\partial_r\\omega - 8N^3\\,F^3\\,W^5\\,Q\\,P\\,\\partial_r^2\\omega\\,\\partial_\\theta F\\,\\partial_\\theta\\omega - 24N^3\\,F^4\\,W^4\\,Q^2\\,\\partial_r^2\\omega\\,\\partial_r W\\,\\partial_r\\omega - 8N^3\\,F^4\\,W^5\\,Q\\,\\partial_r^2\\omega\\,\\partial_r\\omega\\,\\partial_r Q - 16N^3\\,F^4\\,W^5\\,Q\\,P\\left(\\partial_r\\partial_\\theta\\omega\\right)^2 + 8N^2\\,F^4\\,W^5\\,Q\\,P\\,\\partial_r\\partial_\\theta\\omega\\,\\partial_r N\\,\\partial_\\theta\\omega + 8N^2\\,F^4\\,W^5\\,Q\\,P\\,\\partial_r\\partial_\\theta\\omega\\,\\partial_\\theta N\\,\\partial_r\\omega + 16N^3\\,F^3\\,W^5\\,Q\\,P\\,\\partial_r\\partial_\\theta\\omega\\,\\partial_r F\\,\\partial_\\theta\\omega + 16N^3\\,F^3\\,W^5\\,Q\\,P\\,\\partial_r\\partial_\\theta\\omega\\,\\partial_\\theta F\\,\\partial_r\\omega - 24N^3\\,F^4\\,W^4\\,Q\\,P\\,\\partial_r\\partial_\\theta\\omega\\,\\partial_r W\\,\\partial_\\theta\\omega - 24N^3\\,F^4\\,W^4\\,Q\\,P\\,\\partial_r\\partial_\\theta\\omega\\,\\partial_\\theta W\\,\\partial_r\\omega - 8N^3\\,F^4\\,W^5\\,P^2\\left(\\partial_\\theta^2\\omega\\right)^2 + 8N^2\\,F^4\\,W^5\\,P^2\\,\\partial_\\theta^2\\omega\\,\\partial_\\theta N\\,\\partial_\\theta\\omega - 8N^3\\,F^3\\,W^5\\,Q\\,P\\,\\partial_\\theta^2\\omega\\,\\partial_r F\\,\\partial_r\\omega + 8N^3\\,F^3\\,W^5\\,P^2\\,\\partial_\\theta^2\\omega\\,\\partial_\\theta F\\,\\partial_\\theta\\omega - 24N^3\\,F^4\\,W^4\\,P^2\\,\\partial_\\theta^2\\omega\\,\\partial_\\theta W\\,\\partial_\\theta\\omega - 8N^3\\,F^4\\,W^5\\,P\\,\\partial_\\theta^2\\omega\\,\\partial_\\theta\\omega\\,\\partial_\\theta P + F^4\\,W^4\\,Q^2\\left(\\partial_r N\\right)^4 + 2N\\,F^3\\,W^4\\,Q^2\\left(\\partial_r N\\right)^3\\,\\partial_r F - 2N\\,F^4\\,W^4\\,Q\\left(\\partial_r N\\right)^3\\,\\partial_r Q + 2F^4\\,W^4\\,Q\\,P\\left(\\partial_r N\\right)^2\\left(\\partial_\\theta N\\right)^2 + 2N\\,F^3\\,W^4\\,Q\\,P\\left(\\partial_r N\\right)^2\\,\\partial_\\theta N\\,\\partial_\\theta F + 2N^2\\,F^2\\,W^4\\,Q^2\\left(\\partial_r N\\right)^2\\left(\\partial_r F\\right)^2 - 2N^2\\,F^3\\,W^4\\,Q\\left(\\partial_r N\\right)^2\\,\\partial_r F\\,\\partial_r Q + 2N^2\\,F^2\\,W^4\\,Q\\,P\\left(\\partial_r N\\right)^2\\left(\\partial_\\theta F\\right)^2 + N^2\\,F^4\\,W^2\\,Q^2\\left(\\partial_r N\\right)^2\\left(\\partial_r W\\right)^2 + 4N\\,F^4\\,W^5\\,Q^2\\left(\\partial_r N\\right)^2\\left(\\partial_r\\omega\\right)^2 - 4N\\,F^4\\,W^5\\,Q\\,P\\left(\\partial_r N\\right)^2\\left(\\partial_\\theta\\omega\\right)^2 + N^2\\,F^4\\,W^4\\left(\\partial_r N\\right)^2\\left(\\partial_r Q\\right)^2 + 2N\\,F^3\\,W^4\\,Q\\,P\\,\\partial_r N\\left(\\partial_\\theta N\\right)^2\\,\\partial_r F + 2N^2\\,F^3\\,W^4\\,Q\\,\\partial_r N\\,\\partial_\\theta N\\,\\partial_r F\\,\\partial_\\theta P + 2N^2\\,F^3\\,W^4\\,P\\,\\partial_r N\\,\\partial_\\theta N\\,\\partial_\\theta F\\,\\partial_r Q + 2N^2\\,F^4\\,W^2\\,Q\\,P\\,\\partial_r N\\,\\partial_\\theta N\\,\\partial_r W\\,\\partial_\\theta W + 16N\\,F^4\\,W^5\\,Q\\,P\\,\\partial_r N\\,\\partial_\\theta N\\,\\partial_r\\omega\\,\\partial_\\theta\\omega + 2N^2\\,F^3\\,W^5\\,Q^2\\,\\partial_r N\\,\\partial_r F\\left(\\partial_r\\omega\\right)^2 - 10N^2\\,F^3\\,W^5\\,Q\\,P\\,\\partial_r N\\,\\partial_r F\\left(\\partial_\\theta\\omega\\right)^2 + 12N^2\\,F^3\\,W^5\\,Q\\,P\\,\\partial_r N\\,\\partial_\\theta F\\,\\partial_r\\omega\\,\\partial_\\theta\\omega + 14N^2\\,F^4\\,W^4\\,Q^2\\,\\partial_r N\\,\\partial_r W\\left(\\partial_r\\omega\\right)^2 + 14N^2\\,F^4\\,W^4\\,Q\\,P\\,\\partial_r N\\,\\partial_r W\\left(\\partial_\\theta\\omega\\right)^2 - 2N^2\\,F^4\\,W^5\\,Q\\,\\partial_r N\\left(\\partial_r\\omega\\right)^2\\,\\partial_r Q + F^4\\,W^4\\,P^2\\left(\\partial_\\theta N\\right)^4 + 2N\\,F^3\\,W^4\\,P^2\\left(\\partial_\\theta N\\right)^3\\,\\partial_\\theta F - 2N\\,F^4\\,W^4\\,P\\left(\\partial_\\theta N\\right)^3\\,\\partial_\\theta P + 2N^2\\,F^2\\,W^4\\,Q\\,P\\left(\\partial_\\theta N\\right)^2\\left(\\partial_r F\\right)^2 + 2N^2\\,F^2\\,W^4\\,P^2\\left(\\partial_\\theta N\\right)^2\\left(\\partial_\\theta F\\right)^2 - 2N^2\\,F^3\\,W^4\\,P\\left(\\partial_\\theta N\\right)^2\\,\\partial_\\theta F\\,\\partial_\\theta P + N^2\\,F^4\\,W^2\\,P^2\\left(\\partial_\\theta N\\right)^2\\left(\\partial_\\theta W\\right)^2 - 4N\\,F^4\\,W^5\\,Q\\,P\\left(\\partial_\\theta N\\right)^2\\left(\\partial_r\\omega\\right)^2 + 4N\\,F^4\\,W^5\\,P^2\\left(\\partial_\\theta N\\right)^2\\left(\\partial_\\theta\\omega\\right)^2 + N^2\\,F^4\\,W^4\\left(\\partial_\\theta N\\right)^2\\left(\\partial_\\theta P\\right)^2 + 12N^2\\,F^3\\,W^5\\,Q\\,P\\,\\partial_\\theta N\\,\\partial_r F\\,\\partial_r\\omega\\,\\partial_\\theta\\omega - 10N^2\\,F^3\\,W^5\\,Q\\,P\\,\\partial_\\theta N\\,\\partial_\\theta F\\left(\\partial_r\\omega\\right)^2 + 2N^2\\,F^3\\,W^5\\,P^2\\,\\partial_\\theta N\\,\\partial_\\theta F\\left(\\partial_\\theta\\omega\\right)^2 + 14N^2\\,F^4\\,W^4\\,Q\\,P\\,\\partial_\\theta N\\,\\partial_\\theta W\\left(\\partial_r\\omega\\right)^2 + 14N^2\\,F^4\\,W^4\\,P^2\\,\\partial_\\theta N\\,\\partial_\\theta W\\left(\\partial_\\theta\\omega\\right)^2 - 2N^2\\,F^4\\,W^5\\,P\\,\\partial_\\theta N\\left(\\partial_\\theta\\omega\\right)^2\\,\\partial_\\theta P + 4N^4\\,W^4\\,Q^2\\left(\\partial_r F\\right)^4 - 4N^4\\,F\\,W^4\\,Q\\left(\\partial_r F\\right)^3\\,\\partial_r Q + 8N^4\\,W^4\\,Q\\,P\\left(\\partial_r F\\right)^2\\left(\\partial_\\theta F\\right)^2 - 4N^4\\,F\\,W^4\\,Q\\left(\\partial_r F\\right)^2\\,\\partial_\\theta F\\,\\partial_\\theta P + 2N^4\\,F^2\\,W^2\\,Q^2\\left(\\partial_r F\\right)^2\\left(\\partial_r W\\right)^2 + 2N^4\\,F^2\\,W^2\\,Q\\,P\\left(\\partial_r F\\right)^2\\left(\\partial_\\theta W\\right)^2 - 4N^3\\,F^2\\,W^5\\,Q^2\\left(\\partial_r F\\right)^2\\left(\\partial_r\\omega\\right)^2 - 4N^3\\,F^2\\,W^5\\,Q\\,P\\left(\\partial_r F\\right)^2\\left(\\partial_\\theta\\omega\\right)^2 + N^4\\,F^2\\,W^4\\left(\\partial_r F\\right)^2\\left(\\partial_r Q\\right)^2 - 4N^4\\,F\\,W^4\\,P\\,\\partial_r F\\left(\\partial_\\theta F\\right)^2\\,\\partial_r Q + 2N^4\\,F^2\\,W^4\\,\\partial_r F\\,\\partial_\\theta F\\,\\partial_r Q\\,\\partial_\\theta P + 2N^4\\,F^3\\,W\\,Q^2\\,\\partial_r F\\left(\\partial_r W\\right)^3 - 2N^4\\,F^3\\,W^2\\,Q\\,\\partial_r F\\left(\\partial_r W\\right)^2\\,\\partial_r Q + 2N^4\\,F^3\\,W\\,Q\\,P\\,\\partial_r F\\,\\partial_r W\\left(\\partial_\\theta W\\right)^2 + 2N^4\\,F^3\\,W^2\\,Q\\,\\partial_r F\\,\\partial_r W\\,\\partial_\\theta W\\,\\partial_\\theta P + 10N^3\\,F^3\\,W^4\\,Q^2\\,\\partial_r F\\,\\partial_r W\\left(\\partial_r\\omega\\right)^2 + 14N^3\\,F^3\\,W^4\\,Q\\,P\\,\\partial_r F\\,\\partial_r W\\left(\\partial_\\theta\\omega\\right)^2 - 4N^3\\,F^3\\,W^4\\,Q\\,P\\,\\partial_r F\\,\\partial_\\theta W\\,\\partial_r\\omega\\,\\partial_\\theta\\omega + 4N^3\\,F^3\\,W^5\\,Q\\,\\partial_r F\\left(\\partial_r\\omega\\right)^2\\,\\partial_r Q - 4N^3\\,F^3\\,W^5\\,Q\\,\\partial_r F\\,\\partial_r\\omega\\,\\partial_\\theta\\omega\\,\\partial_\\theta P + 4N^4\\,W^4\\,P^2\\left(\\partial_\\theta F\\right)^4 - 4N^4\\,F\\,W^4\\,P\\left(\\partial_\\theta F\\right)^3\\,\\partial_\\theta P + 2N^4\\,F^2\\,W^2\\,Q\\,P\\left(\\partial_\\theta F\\right)^2\\left(\\partial_r W\\right)^2 + 2N^4\\,F^2\\,W^2\\,P^2\\left(\\partial_\\theta F\\right)^2\\left(\\partial_\\theta W\\right)^2 - 4N^3\\,F^2\\,W^5\\,Q\\,P\\left(\\partial_\\theta F\\right)^2\\left(\\partial_r\\omega\\right)^2 - 4N^3\\,F^2\\,W^5\\,P^2\\left(\\partial_\\theta F\\right)^2\\left(\\partial_\\theta\\omega\\right)^2 + N^4\\,F^2\\,W^4\\left(\\partial_\\theta F\\right)^2\\left(\\partial_\\theta P\\right)^2 + 2N^4\\,F^3\\,W\\,Q\\,P\\,\\partial_\\theta F\\left(\\partial_r W\\right)^2\\,\\partial_\\theta W + 2N^4\\,F^3\\,W^2\\,P\\,\\partial_\\theta F\\,\\partial_r W\\,\\partial_\\theta W\\,\\partial_r Q - 4N^3\\,F^3\\,W^4\\,Q\\,P\\,\\partial_\\theta F\\,\\partial_r W\\,\\partial_r\\omega\\,\\partial_\\theta\\omega + 2N^4\\,F^3\\,W\\,P^2\\,\\partial_\\theta F\\left(\\partial_\\theta W\\right)^3 - 2N^4\\,F^3\\,W^2\\,P\\,\\partial_\\theta F\\left(\\partial_\\theta W\\right)^2\\,\\partial_\\theta P + 14N^3\\,F^3\\,W^4\\,Q\\,P\\,\\partial_\\theta F\\,\\partial_\\theta W\\left(\\partial_r\\omega\\right)^2 + 10N^3\\,F^3\\,W^4\\,P^2\\,\\partial_\\theta F\\,\\partial_\\theta W\\left(\\partial_\\theta\\omega\\right)^2 - 4N^3\\,F^3\\,W^5\\,P\\,\\partial_\\theta F\\,\\partial_r\\omega\\,\\partial_\\theta\\omega\\,\\partial_r Q + 4N^3\\,F^3\\,W^5\\,P\\,\\partial_\\theta F\\left(\\partial_\\theta\\omega\\right)^2\\,\\partial_\\theta P + N^4\\,F^4\\,Q^2\\left(\\partial_r W\\right)^4 - 2N^4\\,F^4\\,W\\,Q\\left(\\partial_r W\\right)^3\\,\\partial_r Q + 2N^4\\,F^4\\,Q\\,P\\left(\\partial_r W\\right)^2\\left(\\partial_\\theta W\\right)^2 - 20N^3\\,F^4\\,W^3\\,Q^2\\left(\\partial_r W\\right)^2\\left(\\partial_r\\omega\\right)^2 - 12N^3\\,F^4\\,W^3\\,Q\\,P\\left(\\partial_r W\\right)^2\\left(\\partial_\\theta\\omega\\right)^2 + N^4\\,F^4\\,W^2\\left(\\partial_r W\\right)^2\\left(\\partial_r Q\\right)^2 - 16N^3\\,F^4\\,W^3\\,Q\\,P\\,\\partial_r W\\,\\partial_\\theta W\\,\\partial_r\\omega\\,\\partial_\\theta\\omega - 10N^3\\,F^4\\,W^4\\,Q\\,\\partial_r W\\left(\\partial_r\\omega\\right)^2\\,\\partial_r Q + N^4\\,F^4\\,P^2\\left(\\partial_\\theta W\\right)^4 - 2N^4\\,F^4\\,W\\,P\\left(\\partial_\\theta W\\right)^3\\,\\partial_\\theta P - 12N^3\\,F^4\\,W^3\\,Q\\,P\\left(\\partial_\\theta W\\right)^2\\left(\\partial_r\\omega\\right)^2 - 20N^3\\,F^4\\,W^3\\,P^2\\left(\\partial_\\theta W\\right)^2\\left(\\partial_\\theta\\omega\\right)^2 + N^4\\,F^4\\,W^2\\left(\\partial_\\theta W\\right)^2\\left(\\partial_\\theta P\\right)^2 - 10N^3\\,F^4\\,W^4\\,P\\,\\partial_\\theta W\\left(\\partial_\\theta\\omega\\right)^2\\,\\partial_\\theta P + 11N^2\\,F^4\\,W^6\\,Q^2\\left(\\partial_r\\omega\\right)^4 + 22N^2\\,F^4\\,W^6\\,Q\\,P\\left(\\partial_r\\omega\\right)^2\\left(\\partial_\\theta\\omega\\right)^2 - 2N^3\\,F^4\\,W^5\\left(\\partial_r\\omega\\right)^2\\left(\\partial_r Q\\right)^2 + 11N^2\\,F^4\\,W^6\\,P^2\\left(\\partial_\\theta\\omega\\right)^4 - 2N^3\\,F^4\\,W^5\\left(\\partial_\\theta\\omega\\right)^2\\left(\\partial_\\theta P\\right)^2}{4N^4\\,F^6\\,W^4}"
+        },
+        {
+          "id": "static",
+          "name": "Schwarzschild-Bertotti-Robinson",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "f = 0 \\;\\text{(the horizon } r_h = \\dfrac{2m}{1 - B^2m^2}\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass parameter, a length, with $Bm < 1$; at $B = 0$ it is Schwarzschild's $GM/c^2$ with $M$ the mass of the hole"
+            },
+            {
+              "symbol": "B",
+              "description": "Strength of the field, an inverse length, $B = \\sqrt{G}\\,B_0/c^2$ with $B_0$ the field in Gaussian units; at $B = 0$ the metric is Schwarzschild's, and at $m = 0$ it is Bertotti and Robinson's universe with spheres of radius $1/B$. The vector potential is the one-form $\\dfrac{c^2}{\\sqrt{G}}\\,\\dfrac{C}{B}\\left(\\Omega - 1 - r\\,\\partial_r\\Omega\\right)d\\phi$"
+            },
+            {
+              "symbol": "C",
+              "description": "The conicity, $C = \\dfrac{1}{1 + B^2m^2}$, which is $1/P$ on the axis; with it both halves of the axis are regular for $\\phi$ of period $2\\pi$"
+            },
+            {
+              "symbol": "P = 1 + B^2m^2\\cos^2\\theta",
+              "description": "The function of the polar angle in Podolský and Ovcharenko's line element, 1 on the equator and $1/C$ on the axis"
+            },
+            {
+              "symbol": "f = \\left(1 + B^2r^2\\right)\\left(1 - B^2m^2 - \\dfrac{2m}{r}\\right)",
+              "description": "The function of the radius in their line element, which vanishes on the horizon $r_h$, where the surface gravity is $c^2\\left(1 + B^2m^2\\right)^2/(4m)$"
+            },
+            {
+              "symbol": "\\Omega = \\sqrt{1 + B^2r^2 - B^2\\left(\\left(1 - B^2m^2\\right)r^2 - 2mr\\right)\\cos^2\\theta}",
+              "description": "The conformal factor; it is $\\sqrt{1 + B^2r^2}$ on the equator and on the horizon, and $1 + B^2mr$ on the axis"
+            }
+          ],
+          "convention": "We use Podolský and Ovcharenko's coordinates $(t, r, \\theta, \\phi)$ for the hole with no spin, $a = 0$, with $t$ carrying dimensions of time and $\\phi$ their angle divided by $C$. The horizon is at $r_h = 2m/(1 - B^2m^2)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{1}{\\Omega^2}\\left(-f\\,c^2dt^2 + \\dfrac{dr^2}{f} + r^2\\left(\\dfrac{d\\theta^2}{P} + C^2P\\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{f}{\\Omega^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{f\\,\\Omega^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r^2}{P\\,\\Omega^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{P\\,C^2\\,r^2\\sin^2\\theta}{\\Omega^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{48m^2\\left(1 + B^2mr\\cos^2\\theta\\right)^2\\Omega^4}{r^6} + \\dfrac{8B^4\\left(f\\,P\\sin^2\\theta + \\left(1 - B^2m^2\\left(1 - 2\\cos^2\\theta\\right) + B^2mr\\left(2 - \\left(1 - B^2m^2\\right)\\cos^2\\theta\\right)\\right)^2\\cos^2\\theta\\right)^2}{\\Omega^4}"
         }
       ]
     },
@@ -25384,6 +25703,11 @@
           "id": "kerr_taub_nut",
           "kind": "family",
           "text": "Kerr's black hole with a NUT parameter where this one has a charge. Marek Demiański and Ezra Newman's electrovacuum solutions of 1966 carry both, and a magnetic charge too [manko2006]."
+        },
+        {
+          "id": "kerr_bertotti_robinson",
+          "kind": "family",
+          "text": "A spinning hole in Bertotti and Robinson's uniform magnetic field, which carries a charge of its own. Kerr and Newman's hole and this one are members of one larger family of type D [ovcharenko2026b]."
         }
       ],
       "references": [
@@ -25411,7 +25735,8 @@
         "sen1992",
         "hartle1972",
         "perjes1971",
-        "manko2006"
+        "manko2006",
+        "ovcharenko2026b"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr_newman.json",
@@ -30980,6 +31305,11 @@
           "id": "kasner_magnetic",
           "kind": "dual",
           "text": "Melvin's universe with its radius continued to imaginary values, which turns the radius into a time. The static bundle of field lines becomes an expanding universe with a uniform field along one axis, the solution Gerald Rosen found in 1962 [kastor2015, rosen1962]."
+        },
+        {
+          "id": "kerr_bertotti_robinson",
+          "kind": "family",
+          "text": "A spinning black hole in the other uniform magnetic field, Bertotti and Robinson's. The two fields carry the same potential in geometries of different symmetry, cylindrical here and spherical there [astorino2025]."
         }
       ],
       "references": [
@@ -31011,7 +31341,8 @@
         "emparan2000",
         "fairhurst2001",
         "kastor2015",
-        "rosen1962"
+        "rosen1962",
+        "astorino2025"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/melvin.json",
@@ -42934,6 +43265,11 @@
           "id": "bowers_liang",
           "kind": "composite",
           "text": "A star of uniform density with unequal pressures, and Schwarzschild's vacuum outside it. Given enough pressure across the radius, its surface can lie at any radius outside $r_s$ [bowers1974]."
+        },
+        {
+          "id": "kerr_bertotti_robinson",
+          "kind": "generalisation",
+          "text": "Schwarzschild's hole set spinning in a magnetic field that is uniform far away. With no field and no spin it is Schwarzschild's metric, and with no spin alone its horizon moves outward as the field grows [podolsky2025]."
         }
       ],
       "references": [
@@ -43052,7 +43388,8 @@
         "agnese1995",
         "bondi1962",
         "will2014",
-        "bowers1974"
+        "bowers1974",
+        "podolsky2025"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",

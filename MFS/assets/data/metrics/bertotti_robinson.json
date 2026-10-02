@@ -99,6 +99,11 @@
       "id": "cremmer_scherk",
       "kind": "family",
       "text": "A sphere held open by a monopole's gauge field in six dimensions, with a cosmological constant chosen so that the other four dimensions are flat where Bertotti and Robinson's two are an anti-de Sitter space [horvath1977]."
+    },
+    {
+      "id": "kerr_bertotti_robinson",
+      "kind": "generalisation",
+      "text": "Put a spinning black hole into Bertotti and Robinson's field and it is Podolský and Ovcharenko's hole of 2025, which is this universe again when its mass is taken away [podolsky2025]."
     }
   ],
   "references": [
@@ -127,7 +132,8 @@
     "emparan2000",
     "podolskybelan2004",
     "ortaggio2002direct",
-    "horvath1977"
+    "horvath1977",
+    "podolsky2025"
   ],
   "coordinates": [
     {

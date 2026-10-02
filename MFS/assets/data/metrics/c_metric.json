@@ -111,6 +111,11 @@
       "id": "distorted_schwarzschild",
       "kind": "family",
       "text": "A static black hole bent by matter far away, with nothing on its axis. Its horizon is smooth all the way round, with no string or strut to meet [fairhurst2001]."
+    },
+    {
+      "id": "kerr_bertotti_robinson",
+      "kind": "family",
+      "text": "A spinning hole in Bertotti and Robinson's magnetic field. Its static member is the one that does not accelerate in a family that also holds the C-metric set in that field [ovcharenko2026]."
     }
   ],
   "references": [
@@ -141,7 +146,8 @@
     "emparan2000",
     "dias2003",
     "bicak2009",
-    "fairhurst2001"
+    "fairhurst2001",
+    "ovcharenko2026"
   ],
   "coordinates": [
     {
