@@ -478,6 +478,16 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `static`, `ingoing` and `outgoing`, the conformal diagram: the outside moment is the line $T = 0$ through the outer bifurcation point across both exteriors; the inside moment is the line through the inner bifurcation point above them, $T = \pi$, on the static and ingoing views, whose charts cover an inner region there, and the line $T = -\pi$ through the inner bifurcation point below on the outgoing view, whose chart covers an inner region there.
 - `history`, the conformal diagram: each moment is the curve $v - r = T$ from the centre on $X = 0$ out to $r = 6\,m_0$.
 
+### The topological black holes
+
+- The embedding has two views in units of $L$: the black string's moment $t = 0$, $z = 0$ at $\mu = L$, $r$ from the throat $r_h = L$ to $3L$ on both exteriors, and the horizon of the hyperbolic hole without mass at one moment, its bifurcation surface.
+- `static/flat` and `black_string/radial`: the line $ct = 0$ from $r_h$ to the box's edge at $3L$.
+- `eddington_finkelstein_ingoing/flat` and `eddington_finkelstein_outgoing/flat`: with $r_*(0) = 0$ the string's moment is $v = r_*$ and $u = -r_*$ outside $r_h$, which runs off at the horizon; against $v - r$ it lies below $-1.5\,L$, so those planes are drawn from $-3L$ to $0$ and from $0$ to $3L$.
+- `brane/tz`: the line $ct = 0$ from $z = L/3$ to the horizon $z_h = L$, since $z = L^2/r$.
+- `static/massless` and `hyperbolic/massless`: the hyperbolic horizon is the point $t = 0$, $r = r_h$; it lies at $v \to -\infty$ and $u \to +\infty$, off both Eddington-Finkelstein planes.
+- The views of the hole of negative mass mark nothing: it is another spacetime than the two embedded.
+- The conformal views mark the string's moment as the line $T = 0$ through the bifurcation surface on every flat view, and the hyperbolic horizon as the point where the horizons cross on every view of the hole without mass.
+
 ### The threaded black hole
 
 - The embedding has two views at $b = 0.9$ and $r_s = 1$: the equator of the static chart's $t = 0$, $r$ from $r_s$ to $6\,r_s$ on both sheets through the bifurcation sphere, and the horizon itself, the bifurcation sphere, $\theta$ from $0$ to $\pi$.

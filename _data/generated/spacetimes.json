@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 79,
+  "count": 80,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -551,6 +551,11 @@
           "id": "godel",
           "kind": "family",
           "text": "A rotating universe of dust built on anti-de Sitter space of three dimensions, with its metric stretched by $\\sqrt{2}$ along a family of timelike lines and a flat direction added [godel1949]. Marianne Rooman and Philippe Spindel showed in 1998 that anti-de Sitter space is the boundary between such spaces that are causally safe and those with closed timelike curves [rooman1998]."
+        },
+        {
+          "id": "topological_black_hole",
+          "kind": "generalisation",
+          "text": "Anti-de Sitter space sliced by hyperbolic planes has a horizon at $r = L$, and with points identified that horizon is a black hole's, of genus two or more [aminneborg1996]. Adding mass gives the family [mann1997]."
         }
       ],
       "references": [
@@ -580,7 +585,9 @@
         "henneaux1985",
         "bardeen1999",
         "godel1949",
-        "rooman1998"
+        "rooman1998",
+        "aminneborg1996",
+        "mann1997"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -1120,6 +1127,11 @@
           "id": "oppenheimer_snyder",
           "kind": "family",
           "text": "Dust collapsing to a black hole in four dimensions. Robert Mann and Simon Ross carried the collapse over to three in 1993, where dust falling under a negative cosmological constant ends as a BTZ black hole [mann1993]."
+        },
+        {
+          "id": "topological_black_hole",
+          "kind": "family",
+          "text": "The same identification of points carried to four dimensions, where the horizon comes out a torus or a surface of genus two or more [aminneborg1996]."
         }
       ],
       "references": [
@@ -1141,7 +1153,8 @@
         "deser1992time",
         "hawking1999rotation",
         "solodukhin2005",
-        "damour2007"
+        "damour2007",
+        "aminneborg1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz.json",
@@ -17726,6 +17739,11 @@
           "id": "kerr_de_sitter",
           "kind": "generalisation",
           "text": "The same black hole set spinning. Its boundary turns into a rotating Einstein universe [hawking1999rotation]."
+        },
+        {
+          "id": "topological_black_hole",
+          "kind": "generalisation",
+          "text": "The same metric function with $k$ where it has $1$: a flat horizon for $k = 0$ and a hyperbolic one for $k = -1$ [lemos1995, mann1997]."
         }
       ],
       "references": [
@@ -20427,6 +20445,491 @@
           ],
           "ricci_scalar": "R = \\dfrac{4\\partial_r m + 2\\left(r\\,\\partial_r m - 2r + 3m\\right)\\partial_r\\Phi - 2r\\left(r - 2m\\right)\\left(\\left(\\partial_r\\Phi\\right)^2 + \\partial_r^2\\Phi\\right)}{r^2}",
           "kretschmann": "K = 4\\left(\\dfrac{\\left(r - 2m\\right)\\left(\\left(\\partial_r\\Phi\\right)^2 + \\partial_r^2\\Phi\\right)}{r} - \\dfrac{\\left(r\\,\\partial_r m - m\\right)\\partial_r\\Phi}{r^2}\\right)^2 + \\dfrac{8\\left(r - 2m\\right)^2\\left(\\partial_r\\Phi\\right)^2}{r^4} + \\dfrac{8\\left(r\\,\\partial_r m - m\\right)^2}{r^6} + \\dfrac{16m^2}{r^6}"
+        }
+      ]
+    },
+    {
+      "id": "topological_black_hole",
+      "name": "Topological Black Holes in Anti-de Sitter Space",
+      "short_name": "Topological Black Holes",
+      "description": "Black holes in anti-de Sitter space whose horizons are planes, cylinders, tori, or closed surfaces of genus two or more, the static vacuum solutions with a negative cosmological constant over a surface of constant curvature. The flat one is the black brane of holography, and the hyperbolic one is a black hole even with no mass or a negative one.",
+      "tags": [
+        "vacuum",
+        "vacuum solution",
+        "static",
+        "stationary",
+        "black hole",
+        "black brane",
+        "black string",
+        "planar black hole",
+        "toroidal black hole",
+        "hyperbolic black hole",
+        "topological black hole",
+        "higher genus horizon",
+        "horizon topology",
+        "topological censorship",
+        "mass",
+        "negative mass",
+        "cosmological constant",
+        "negative cosmological constant",
+        "anti-de Sitter",
+        "AdS/CFT",
+        "holography",
+        "black hole thermodynamics",
+        "singularity",
+        "curvature singularity",
+        "coordinate singularity",
+        "horizon",
+        "event horizon",
+        "inner horizon",
+        "white hole",
+        "maximal extension",
+        "causal structure",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The anti-de Sitter radius $L$, a length, fixes the cosmological constant through $\\Lambda = -3/L^2$. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "schwarzschild_ads",
+          "kind": "special_case",
+          "text": "The member of the family with a round horizon, $k = 1$, where $\\mu$ is the Schwarzschild radius $r_s$."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "special_case",
+          "text": "The hyperbolic hole without mass, $k = -1$ and $\\mu = 0$, is anti-de Sitter space at every point. Its horizon is a black hole's once points are identified [aminneborg1996]."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "The black hole of three dimensions, made by identifying points of anti-de Sitter space. Åminneborg, Bengtsson, Holst, and Peldán repeated the construction in four [aminneborg1996]."
+        }
+      ],
+      "references": [
+        "hawking1972",
+        "galloway1999",
+        "brill1997",
+        "birmingham1999",
+        "lemos1995planar",
+        "lemos1995",
+        "huang1995",
+        "lemos1996",
+        "aminneborg1996",
+        "banados1993",
+        "mann1997",
+        "mann1997negative",
+        "vanzo1997",
+        "friedman1993",
+        "emparan1999",
+        "witten1998thermal",
+        "hartnoll2009",
+        "kovtun2005",
+        "hartnoll2008",
+        "casini2011"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/topological_black_hole.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Static",
+          "coordinates": [
+            "t",
+            "r",
+            "\\rho",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\rho \\in [0, 1/\\sqrt{k}) \\;\\text{for}\\; k > 0",
+            "\\rho \\in [0, \\infty) \\;\\text{for}\\; k \\le 0",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_h \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\mu",
+              "description": "Mass parameter, a length, equal to the Schwarzschild radius $2GM/c^2$ of a mass $M$ when $k = 1$"
+            },
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+            },
+            {
+              "symbol": "k",
+              "description": "Curvature of the horizon's own metric: $1$ for a sphere, $0$ for a plane, a cylinder or a torus, $-1$ for a hyperbolic plane or a closed surface of genus two or more"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\rho, \\phi)$, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$. The surfaces of constant $t$ and $r$ have the metric $r^2\\left(d\\rho^2/(1 - k\\rho^2) + \\rho^2d\\phi^2\\right)$, of constant curvature $k/r^2$. The horizon $r_h$ is the largest root of $k - \\mu/r + r^2/L^2$.",
+          "line_element": "ds^2 = -\\left(k - \\dfrac{\\mu}{r} + \\dfrac{r^2}{L^2}\\right)c^2dt^2 + \\dfrac{dr^2}{k - \\dfrac{\\mu}{r} + \\dfrac{r^2}{L^2}} + r^2\\left(\\dfrac{d\\rho^2}{1 - k\\rho^2} + \\rho^2d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(k - \\dfrac{\\mu}{r} + \\dfrac{r^2}{L^2}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(k - \\dfrac{\\mu}{r} + \\dfrac{r^2}{L^2}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{r^2}{1 - k\\rho^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\,\\rho^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{12\\mu^2}{r^6} + \\dfrac{24}{L^4}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "r",
+            "\\rho",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\rho \\in [0, 1/\\sqrt{k}) \\;\\text{for}\\; k > 0",
+            "\\rho \\in [0, \\infty) \\;\\text{for}\\; k \\le 0",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_h \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\mu",
+              "description": "Mass parameter, a length, equal to the Schwarzschild radius $2GM/c^2$ of a mass $M$ when $k = 1$"
+            },
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+            },
+            {
+              "symbol": "k",
+              "description": "Curvature of the horizon's own metric: $1$ for a sphere, $0$ for a plane, a cylinder or a torus, $-1$ for a hyperbolic plane or a closed surface of genus two or more"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\rho, \\phi)$, with the advanced time $v = ct + r_*$ a length, where $dr_*/dr = \\left(k - \\mu/r + r^2/L^2\\right)^{-1}$ and $r_* = 0$ at $r = 0$. The surfaces of constant $v$ and $r$ have the metric $r^2\\left(d\\rho^2/(1 - k\\rho^2) + \\rho^2d\\phi^2\\right)$, of constant curvature $k/r^2$. The horizon $r_h$ is the largest root of $k - \\mu/r + r^2/L^2$.",
+          "line_element": "ds^2 = -\\left(k - \\dfrac{\\mu}{r} + \\dfrac{r^2}{L^2}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(\\dfrac{d\\rho^2}{1 - k\\rho^2} + \\rho^2d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(k - \\dfrac{\\mu}{r} + \\dfrac{r^2}{L^2}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{r^2}{1 - k\\rho^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\,\\rho^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{12\\mu^2}{r^6} + \\dfrac{24}{L^4}"
+        },
+        {
+          "id": "eddington_finkelstein_outgoing",
+          "name": "Outgoing Eddington-Finkelstein",
+          "coordinates": [
+            "u",
+            "r",
+            "\\rho",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\rho \\in [0, 1/\\sqrt{k}) \\;\\text{for}\\; k > 0",
+            "\\rho \\in [0, \\infty) \\;\\text{for}\\; k \\le 0",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_h \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\mu",
+              "description": "Mass parameter, a length, equal to the Schwarzschild radius $2GM/c^2$ of a mass $M$ when $k = 1$"
+            },
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+            },
+            {
+              "symbol": "k",
+              "description": "Curvature of the horizon's own metric: $1$ for a sphere, $0$ for a plane, a cylinder or a torus, $-1$ for a hyperbolic plane or a closed surface of genus two or more"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\rho, \\phi)$, with the retarded time $u = ct - r_*$ a length, where $dr_*/dr = \\left(k - \\mu/r + r^2/L^2\\right)^{-1}$ and $r_* = 0$ at $r = 0$. The surfaces of constant $u$ and $r$ have the metric $r^2\\left(d\\rho^2/(1 - k\\rho^2) + \\rho^2d\\phi^2\\right)$, of constant curvature $k/r^2$. The horizon $r_h$ is the largest root of $k - \\mu/r + r^2/L^2$.",
+          "line_element": "ds^2 = -\\left(k - \\dfrac{\\mu}{r} + \\dfrac{r^2}{L^2}\\right)du^2 - 2\\,du\\,dr + r^2\\left(\\dfrac{d\\rho^2}{1 - k\\rho^2} + \\rho^2d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(k - \\dfrac{\\mu}{r} + \\dfrac{r^2}{L^2}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{r^2}{1 - k\\rho^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\,\\rho^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{12\\mu^2}{r^6} + \\dfrac{24}{L^4}"
+        },
+        {
+          "id": "black_string",
+          "name": "Black String",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "r = r_h \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\mu",
+              "description": "Mass parameter, a length"
+            },
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\phi, z)$, with $t$ carrying dimensions of time, $\\phi$ an angle around the string, and $z$ a length along it, and take components in the chart $x^0 = ct$. The horizon is the cylinder $r_h = (\\mu L^2)^{1/3}$.",
+          "line_element": "ds^2 = -\\left(\\dfrac{r^2}{L^2} - \\dfrac{\\mu}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{\\dfrac{r^2}{L^2} - \\dfrac{\\mu}{r}} + r^2d\\phi^2 + \\dfrac{r^2}{L^2}dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(\\dfrac{r^2}{L^2} - \\dfrac{\\mu}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(\\dfrac{r^2}{L^2} - \\dfrac{\\mu}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{r^2}{L^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{12\\mu^2}{r^6} + \\dfrac{24}{L^4}"
+        },
+        {
+          "id": "brane",
+          "name": "Black Brane",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (0, \\infty)",
+            "z = z_h \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "z_h",
+              "description": "Horizon, a length, $z_h = L^2/r_h$"
+            },
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z)$, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$. The length $z = L^2/r$, with $r$ the radius of the static chart at $k = 0$ and $r_h$ its value on the horizon, vanishes on the conformal boundary.",
+          "line_element": "ds^2 = \\dfrac{L^2}{z^2}\\left(-\\left(1 - \\dfrac{z^3}{z_h^3}\\right)c^2dt^2 + dx^2 + dy^2 + \\dfrac{dz^2}{1 - \\dfrac{z^3}{z_h^3}}\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{L^2}{z^2}\\left(1 - \\dfrac{z^3}{z_h^3}\\right)"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{L^2}{z^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{L^2}{z^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{L^2}{z^2}\\left(1 - \\dfrac{z^3}{z_h^3}\\right)^{-1}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{12}{L^4}\\left(2 + \\dfrac{z^6}{z_h^6}\\right)"
+        },
+        {
+          "id": "hyperbolic",
+          "name": "Hyperbolic",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_+ \\;\\text{(the event horizon)}",
+            "r = r_- \\;\\text{(the inner horizon, for } \\mu < 0 \\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\mu",
+              "description": "Mass parameter, a length of either sign, no less than $-2L/(3\\sqrt{3})$"
+            },
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$. The surfaces of constant $t$ and $r$ are hyperbolic planes of curvature $-1/r^2$, or closed surfaces of genus two or more cut from them. The horizons $r_- < r_+$ are the positive roots of $-1 - \\mu/r + r^2/L^2$, and $r_-$ exists only for $\\mu < 0$.",
+          "line_element": "ds^2 = -\\left(-1 - \\dfrac{\\mu}{r} + \\dfrac{r^2}{L^2}\\right)c^2dt^2 + \\dfrac{dr^2}{-1 - \\dfrac{\\mu}{r} + \\dfrac{r^2}{L^2}} + r^2\\left(d\\theta^2 + \\sinh^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(-1 - \\dfrac{\\mu}{r} + \\dfrac{r^2}{L^2}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(-1 - \\dfrac{\\mu}{r} + \\dfrac{r^2}{L^2}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sinh^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{12\\mu^2}{r^6} + \\dfrac{24}{L^4}"
         }
       ]
     },

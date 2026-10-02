@@ -707,6 +707,18 @@ DILATON = {"r_s": 1, "r_d": "1/2"}
 # Schwarzschild-anti-de Sitter at r_s = 2L, where r^3 + L^2 r - L^2 r_s = (r - L)(r^2 + L r + 2L^2)
 # and the horizon is r_h = L, the black hole of Hawking and Page's temperature T_1.
 SADS = {"r_s": 2, "L": 1}
+# The topological black holes as every one of their diagrams draws them, in units of L: the flat
+# hole at mu = L, where r^3 - L^2 mu = (r - L)(r^2 + L r + L^2) and the horizon is r_h = L; the
+# hyperbolic hole without mass, whose horizon is r_h = L too; and the hyperbolic hole of negative
+# mass mu = -120L/343, where r^3 - L^2 r - L^2 mu = (r - 5L/7)(r - 3L/7)(r + 8L/7).
+TBH_FLAT = {"mu": 1, "L": 1, "k": 0}
+TBH_MASSLESS = {"mu": 0, "L": 1, "k": -1}
+TBH_NEGATIVE = {"mu": "-120/343", "L": 1, "k": -1}
+TBH_POINT = {"rho": "1/2", "phi": "0"}
+TBH_THETA = {"theta": "1", "phi": "0"}
+TBH_CASES = (("flat", "$k = 0$", TBH_FLAT, (0, 3, -1.5, 1.5)),
+             ("massless", "$k = -1$, $\\mu = 0$", TBH_MASSLESS, (0, 3, -1.5, 1.5)),
+             ("negative", "$k = -1$, $\\mu < 0$", TBH_NEGATIVE, (0, 1.5, -0.75, 0.75)))
 # Bardeen's regular black hole at g = r_s/3, below the extremal 2 r_s/(3 sqrt 3) = 0.385 r_s: two
 # horizons, r_- = 0.301 r_s and r_+ = 0.775 r_s, about a regular centre.
 BARDEEN = {"r_s": 1, "g": "1/3"}
@@ -1056,6 +1068,26 @@ DIAGRAMS = [
             tau="v - r", areal=True, functions={"m": HAYWARD_MASS}, input=HAYWARD_INPUT, cones=(11, 14),
             lines=(("shell", "x0", "0", "the first radiation arrives, $v = 0$"),
                    ("shell", "x0", "8", "the last of the mass is gone, $v = 8\\,m_0$"))),
+    *[Diagram("topological_black_hole", "static", view, label, ("t", "r"), box, "$r/L$", "$ct/L$", params,
+              TBH_POINT, orient="ingoing") for view, label, params, box in TBH_CASES],
+    # Against v - r the static moment t = 0 of the flat hole, v = r_*, lies below -1.5 L, and against
+    # u + r above 1.5 L, so those planes are drawn lower and higher by half their height, as the BTZ hole's are.
+    *[Diagram("topological_black_hole", "eddington_finkelstein_ingoing", view, label, ("v", "r"),
+              box if view == "negative" else (0, 3, -3, 0), "$r/L$",
+              "$(v - r)/L$", params, TBH_POINT, to_display=FINKELSTEIN_IN, orient="ingoing")
+      for view, label, params, box in TBH_CASES],
+    *[Diagram("topological_black_hole", "eddington_finkelstein_outgoing", view, label, ("u", "r"),
+              box if view == "negative" else (0, 3, 0, 3), "$r/L$",
+              "$(u + r)/L$", params, TBH_POINT, to_display=FINKELSTEIN_OUT, orient="outgoing")
+      for view, label, params, box in TBH_CASES],
+    Diagram("topological_black_hole", "black_string", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
+            "$r/L$", "$ct/L$", {"mu": 1, "L": 1}, {"phi": "0", "z": "0"}, orient="ingoing"),
+    # In z = L^2/r the black hole is the region beyond z_h, so the future there is toward larger z.
+    Diagram("topological_black_hole", "brane", "tz", "$t$ and $z$", ("t", "z"), (0, 3, -1.5, 1.5),
+            "$z/L$", "$ct/L$", {"z_h": 1, "L": 1}, {"x": "0", "y": "0"}, orient="outgoing", families=SIDEWAYS),
+    *[Diagram("topological_black_hole", "hyperbolic", view, label.partition(", ")[2], ("t", "r"), box, "$r/L$",
+              "$ct/L$", {k: v for k, v in params.items() if k != "k"}, TBH_THETA, orient="ingoing")
+      for view, label, params, box in TBH_CASES[1:]],
     Diagram("global_monopole", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_s$", "$ct/r_s$", GM, EQUATOR, orient="ingoing", areal=True),
     Diagram("global_monopole", "conical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
@@ -2438,6 +2470,97 @@ CAPTIONS = {
         "trapped. Its outer part is the outer trapping horizon and its inner part the inner one. An outgoing "
         "ray inside the curve loses $r$, and gains it again once the curve has closed or its inner part has "
         "swept past the ray. Each such ray reaches infinity, so this spacetime has no event horizon.",
+    ],
+    **{("topological_black_hole", system, "flat"): [
+        "The plane of $t$ and $r$ (" + at + ") of the flat hole ($k = 0$, $\\mu = L$), the same at every "
+        "other point of the horizon by symmetry. The cones close at the horizon $r_h = (\\mu L^2)^{1/3} = L$, "
+        "where $g^{rr} = r^2/L^2 - \\mu/r$ vanishes and $c\\,dt/dr = \\pm(r^2/L^2 - \\mu/r)^{-1}$ diverges. Far "
+        "out the rays flatten, and a ray reaches $r \\to \\infty$, the conformal boundary, in a finite time, "
+        "as in anti-de Sitter space.",
+        "Inside $r_h$, $r$ is the time. We take the future from the ingoing Eddington-Finkelstein chart, "
+        "which makes that region the black hole, every cone pointing to $r = 0$. The Kretschmann scalar "
+        "$12\\mu^2/r^6 + 24/L^4$ is finite at $r_h$ and diverges only at $r = 0$.",
+    ] for system, at in (("static", "$\\rho = 1/2$, $\\phi = 0$"),)},
+    **{("topological_black_hole", system, "massless"): [
+        "The plane of $t$ and $r$ (" + at + ") of the hyperbolic hole without mass ($k = -1$, $\\mu = 0$). "
+        "The cones close at the horizon $r_h = L$, where $g^{rr} = r^2/L^2 - 1$ vanishes, and the rays are "
+        "those of the BTZ hole at $M = 1$, $c\\,dt/dr = \\pm L^2/(r^2 - L^2)$.",
+        "Inside $r_h$, $r$ is the time, and we take the future from the ingoing Eddington-Finkelstein "
+        "chart, every cone pointing to $r = 0$. The Kretschmann scalar is $24/L^4$ at every point, that of "
+        "anti-de Sitter space, and at $r = 0$ the surfaces of constant $t$ and $r$ shrink to zero area.",
+    ] for system, at in (("static", "$\\rho = 1/2$, $\\phi = 0$"), ("hyperbolic", "$\\theta = 1$, $\\phi = 0$"))},
+    **{("topological_black_hole", system, "negative"): [
+        "The plane of $t$ and $r$ (" + at + ") of the hyperbolic hole of negative mass ($k = -1$, "
+        "$\\mu = -120L/343$), where $g^{rr} = (r - 5L/7)(r - 3L/7)(r + 8L/7)/(L^2r)$. The cones close at the "
+        "event horizon $r_+ = 5L/7$ and again at the inner horizon $r_- = 3L/7$.",
+        "Between the horizons $r$ is the time, and we take the future from the ingoing Eddington-Finkelstein "
+        "chart, every cone pointing to smaller $r$. Inside $r_-$, $t$ is a time again, so the singularity "
+        "$r = 0$, where the Kretschmann scalar $12\\mu^2/r^6 + 24/L^4$ diverges, is timelike, as in the "
+        "Reissner-Nordström hole.",
+    ] for system, at in (("static", "$\\rho = 1/2$, $\\phi = 0$"), ("hyperbolic", "$\\theta = 1$, $\\phi = 0$"))},
+    ("topological_black_hole", "eddington_finkelstein_ingoing", "flat"): [
+        "The plane of $v$ and $r$ ($\\rho = 1/2$, $\\phi = 0$) of the flat hole ($k = 0$, $\\mu = L$), with "
+        "$v - r$ as the vertical axis, so that the ingoing rays, $v = $ const, run at 45°. The outgoing family "
+        "has $dv/dr = 2(r^2/L^2 - \\mu/r)^{-1}$, so it stands vertical at $r_h = L$: the horizon is an "
+        "outgoing ray that stays where it is.",
+        "The cones cross $r_h$ smoothly and keep tipping. Inside, both edges of every future cone point to "
+        "smaller $r$, so every future directed ray ends at $r = 0$. Far outside, the outgoing edge leans toward "
+        "the ingoing one, since $dv/dr$ falls as $2L^2/r^2$.",
+    ],
+    ("topological_black_hole", "eddington_finkelstein_ingoing", "massless"): [
+        "The plane of $v$ and $r$ ($\\rho = 1/2$, $\\phi = 0$) of the hyperbolic hole without mass ($k = -1$, "
+        "$\\mu = 0$), with $v - r$ as the vertical axis, so that the ingoing rays, $v = $ const, run at 45°. "
+        "The outgoing family, $dv/dr = 2L^2/(r^2 - L^2)$, stands vertical at the horizon $r_h = L$.",
+        "The cones cross $r_h$ smoothly, and inside it both edges of every future cone point to smaller $r$. "
+        "The curvature is that of anti-de Sitter space at every point of the plane, $r = 0$ included.",
+    ],
+    ("topological_black_hole", "eddington_finkelstein_ingoing", "negative"): [
+        "The plane of $v$ and $r$ ($\\rho = 1/2$, $\\phi = 0$) of the hyperbolic hole of negative mass "
+        "($k = -1$, $\\mu = -120L/343$), with $v - r$ as the vertical axis, so that the ingoing rays, "
+        "$v = $ const, run at 45°. The outgoing family stands vertical at both horizons, $r_+ = 5L/7$ and "
+        "$r_- = 3L/7$.",
+        "Between the horizons both edges of every future cone point to smaller $r$. Inside $r_-$ the "
+        "outgoing edge points to larger $r$ again, so a ray there need not reach the singularity $r = 0$.",
+    ],
+    ("topological_black_hole", "eddington_finkelstein_outgoing", "flat"): [
+        "The plane of $u$ and $r$ ($\\rho = 1/2$, $\\phi = 0$) of the flat hole ($k = 0$, $\\mu = L$), with "
+        "$u + r$ as the vertical axis, so that the outgoing rays, $u = $ const, run at 45°. The ingoing family "
+        "stands vertical at $r_h = L$. Inside $r_h$ both edges of every future cone point to larger $r$: this "
+        "is the white hole, which nothing from outside can enter.",
+        "The chart is the time reverse of the ingoing one: its $g_{ur}$ is $-1$ where the ingoing chart's "
+        "$g_{vr}$ is $+1$.",
+    ],
+    ("topological_black_hole", "eddington_finkelstein_outgoing", "massless"): [
+        "The plane of $u$ and $r$ ($\\rho = 1/2$, $\\phi = 0$) of the hyperbolic hole without mass ($k = -1$, "
+        "$\\mu = 0$), with $u + r$ as the vertical axis, so that the outgoing rays, $u = $ const, run at 45°. "
+        "The ingoing family, $du/dr = -2L^2/(r^2 - L^2)$, stands vertical at the horizon $r_h = L$, and inside "
+        "it both edges of every future cone point to larger $r$.",
+    ],
+    ("topological_black_hole", "eddington_finkelstein_outgoing", "negative"): [
+        "The plane of $u$ and $r$ ($\\rho = 1/2$, $\\phi = 0$) of the hyperbolic hole of negative mass "
+        "($k = -1$, $\\mu = -120L/343$), with $u + r$ as the vertical axis, so that the outgoing rays, "
+        "$u = $ const, run at 45°. The ingoing family stands vertical at both horizons, $r_+ = 5L/7$ and "
+        "$r_- = 3L/7$.",
+        "Between the horizons both edges of every future cone point to larger $r$, the white hole. Inside "
+        "$r_-$ the ingoing edge points to smaller $r$ again, toward the timelike singularity $r = 0$.",
+    ],
+    ("topological_black_hole", "black_string", "radial"): [
+        "The plane of $t$ and $r$ ($\\phi = 0$, $z = 0$) of the black string ($\\mu = L$), the same at every "
+        "$\\phi$ and $z$ by the symmetry of the cylinder. The cones close at the horizon "
+        "$r_h = (\\mu L^2)^{1/3} = L$, where $g^{rr} = r^2/L^2 - \\mu/r$ vanishes, and far out a ray reaches "
+        "$r \\to \\infty$ in a finite time $t$.",
+        "Inside $r_h$, $r$ is the time. We take the future from the ingoing Eddington-Finkelstein chart, "
+        "which makes that region the black hole, every cone pointing to the axis $r = 0$, where the "
+        "Kretschmann scalar $12\\mu^2/r^6 + 24/L^4$ diverges.",
+    ],
+    ("topological_black_hole", "brane", "tz"): [
+        "The plane of $t$ and $z$ ($x = 0$, $y = 0$) of the black brane ($z_h = L$), the same at every $x$ "
+        "and $y$. The left edge $z = 0$ is the conformal boundary, where the rays run at 45° as in the "
+        "Poincaré patch of anti-de Sitter space. The cones close at the horizon $z_h$, where "
+        "$g^{zz} = (z^2/L^2)(1 - z^3/z_h^3)$ vanishes and $c\\,dt/dz = \\pm(1 - z^3/z_h^3)^{-1}$ diverges.",
+        "Beyond $z_h$, $z$ is the time. We take the future toward larger $z$, which makes that region the "
+        "black hole. The Kretschmann scalar $(12/L^4)(2 + z^6/z_h^6)$ is finite at $z_h$ and grows without "
+        "bound as $z \\to \\infty$.",
     ],
     ("global_monopole", "static", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of Letelier's black hole in a cloud of strings, "
@@ -6653,6 +6776,50 @@ def _hayward_away(x, r):
     return (np.abs(r - 6 / 7) > 0.05) & (np.abs(r - 12 / 7) > 0.05)
 
 
+def _tbh_rstar(case):
+    """The topological black holes' tortoise coordinates in units of L, up to a constant. The flat hole at
+    mu = 1, 1/f = r/((r - 1)(r^2 + r + 1)): (1/3) ln|r - 1| - (1/6) ln(r^2 + r + 1) + arctan((2r + 1)/sqrt 3)/
+    sqrt 3. The hyperbolic hole without mass, 1/f = 1/(r^2 - 1): (1/2) ln|(r - 1)/(r + 1)|. The hyperbolic
+    hole at mu = -120/343, the sum of ln|r - r_i|/f'(r_i) over the roots 5/7, 3/7 and -8/7:
+    (35/26) ln|r - 5/7| - (21/22) ln|r - 3/7| - (56/143) ln(r + 8/7)."""
+    w = np.sqrt(3.0)
+    return {
+        "flat": lambda r: (np.log(np.abs(r - 1)) / 3 - np.log(r * r + r + 1) / 6
+                           + np.arctan((2 * r + 1) / w) / w),
+        "massless": lambda r: 0.5 * np.log(np.abs((r - 1) / (r + 1))),
+        "negative": lambda r: (35 / 26 * np.log(np.abs(r - 5 / 7)) - 21 / 22 * np.log(np.abs(r - 3 / 7))
+                               - 56 / 143 * np.log(r + 8 / 7)),
+    }[case]
+
+
+def _tbh_zstar(z):
+    """The black brane's tortoise coordinate at z_h = 1, the integral of 1/(1 - z^3):
+    -(1/3) ln|1 - z| + (1/6) ln(z^2 + z + 1) + arctan((2z + 1)/sqrt 3)/sqrt 3."""
+    w = np.sqrt(3.0)
+    return -np.log(np.abs(1 - z)) / 3 + np.log(z * z + z + 1) / 6 + np.arctan((2 * z + 1) / w) / w
+
+
+def _tbh_closed():
+    """The closed forms of every view of the topological black holes: c t +- r_*, v and v - 2 r_*,
+    u + 2 r_* and u, and for the brane c t +- z_*."""
+    away = {"flat": _away(1.0), "massless": _away(1.0), "negative": _away(5 / 7, 3 / 7)}
+    forms = {}
+    for case in away:
+        rs = _tbh_rstar(case)
+        static = (lambda t, r, rs=rs: t + rs(r), lambda t, r, rs=rs: t - rs(r), away[case])
+        forms[("topological_black_hole", "static", case)] = static
+        if case != "flat":
+            forms[("topological_black_hole", "hyperbolic", case)] = static
+        forms[("topological_black_hole", "eddington_finkelstein_ingoing", case)] = (
+            lambda v, r: v, lambda v, r, rs=rs: v - 2 * rs(r), away[case])
+        forms[("topological_black_hole", "eddington_finkelstein_outgoing", case)] = (
+            lambda u, r, rs=rs: u + 2 * rs(r), lambda u, r: u, away[case])
+    forms[("topological_black_hole", "black_string", "radial")] = forms[("topological_black_hole", "static", "flat")]
+    forms[("topological_black_hole", "brane", "tz")] = (
+        lambda t, z: t + _tbh_zstar(z), lambda t, z: t - _tbh_zstar(z), _away(1.0))
+    return forms
+
+
 def _sds_away(x, r):
     return (np.abs(r - 1.0852) > 0.05) & (np.abs(r - 3.2146) > 0.05)
 
@@ -6869,6 +7036,7 @@ CLOSED_FORMS = {
         (lambda v, r: v, lambda v, r: v - 2 * _hayward_rstar(r), _hayward_away),
     ("hayward", "eddington_finkelstein_outgoing", "finkelstein"):
         (lambda u, r: u + 2 * _hayward_rstar(r), lambda u, r: u, _hayward_away),
+    **_tbh_closed(),
     ("schwarzschild_de_sitter", "static", "radial"):
         (lambda t, r: t + _sds_rstar(r), lambda t, r: t - _sds_rstar(r), _sds_away),
     ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "finkelstein"):

@@ -69,7 +69,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1a55d7ccf94ea761",
+    "version": "66c1d1b1e7123fc1",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -142,7 +142,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "516f658217626ff6",
+    "version": "c961b824fe6f4f2a",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -1968,7 +1968,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "75f3f58ab15f8d33",
+    "version": "f05b7ae8e25b2e52",
     "diagrams": "1fc6612302f13cf4",
     "conformal": "01527c3f93dbe1c9",
     "embedding": "d3f0fd120a6d665b"
@@ -2247,6 +2247,52 @@
     "diagrams": "b8a9287744afbad1",
     "conformal": "f4c269030698315c",
     "embedding": "c64f1f900fa70a89"
+  },
+  {
+    "id": "topological_black_hole",
+    "name": "Topological Black Holes",
+    "tags": [
+      "vacuum",
+      "vacuum solution",
+      "static",
+      "stationary",
+      "black hole",
+      "black brane",
+      "black string",
+      "planar black hole",
+      "toroidal black hole",
+      "hyperbolic black hole",
+      "topological black hole",
+      "higher genus horizon",
+      "horizon topology",
+      "topological censorship",
+      "mass",
+      "negative mass",
+      "cosmological constant",
+      "negative cosmological constant",
+      "anti-de Sitter",
+      "AdS/CFT",
+      "holography",
+      "black hole thermodynamics",
+      "singularity",
+      "curvature singularity",
+      "coordinate singularity",
+      "horizon",
+      "event horizon",
+      "inner horizon",
+      "white hole",
+      "maximal extension",
+      "causal structure",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "caac21ff8ce62fd0",
+    "diagrams": "70598c77af726b80",
+    "conformal": "243a2de40edb7f43",
+    "embedding": "930f06c7003fad35"
   },
   {
     "id": "vaidya",

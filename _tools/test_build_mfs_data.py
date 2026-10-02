@@ -4170,7 +4170,15 @@ class Slices(unittest.TestCase):
               # Painleve-Gullstrand line element, which agrees with Hartle and Thorne's to first order in the
               # spin and no further, while the moment embedded is one of Hartle and Thorne's t.
               "hartle_thorne/hartle_thorne/axis", "hartle_thorne/painleve_gullstrand/axis",
-              "hartle_thorne/painleve_gullstrand/equator", "conformal hartle_thorne/painleve_gullstrand"}
+              "hartle_thorne/painleve_gullstrand/equator", "conformal hartle_thorne/painleve_gullstrand",
+              # The hyperbolic hole of negative mass, another spacetime than the flat hole and the hyperbolic
+              # hole without mass whose moments are embedded, and the Eddington-Finkelstein planes of the hole
+              # without mass, which its bifurcation surface lies off.
+              *[f"topological_black_hole/{s}/negative" for s in (
+                  "static", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing", "hyperbolic")],
+              *[f"conformal topological_black_hole/{s}_negative" for s in ("static", "ingoing", "outgoing", "hyperbolic")],
+              "topological_black_hole/eddington_finkelstein_ingoing/massless",
+              "topological_black_hole/eddington_finkelstein_outgoing/massless"}
 
     def setUp(self):
         self.diagrams, self.conformal, self.embedding = diagram_files(), conformal_files(), embedding_files()
@@ -4232,6 +4240,17 @@ class Slices(unittest.TestCase):
                         "kerr_ingoing/axis_ads", "kerr_outgoing/axis_ads", "kerr_schild/axis_ads")},
                     **{f"conformal kerr_de_sitter/{v}": {"anti_de_sitter"} for v in ("axis", "ingoing", "outgoing")},
                     **{f"conformal kerr_de_sitter/{v}": {"de_sitter"} for v in ("axis_ads", "ingoing_ads", "outgoing_ads")},
+                    # The flat topological black hole and the hyperbolic one without mass are two spacetimes of
+                    # one line element: the flat drawings mark the black string's moment and the massless ones the
+                    # hyperbolic horizon.
+                    **{f"topological_black_hole/{s}": {"horizon"} for s in (
+                        "static/flat", "eddington_finkelstein_ingoing/flat", "eddington_finkelstein_outgoing/flat",
+                        "black_string/radial", "brane/tz")},
+                    **{f"conformal topological_black_hole/{v}": {"horizon"} for v in (
+                        "static_flat", "ingoing_flat", "outgoing_flat", "string", "brane")},
+                    **{f"topological_black_hole/{s}/massless": {"string"} for s in ("static", "hyperbolic")},
+                    **{f"conformal topological_black_hole/{v}_massless": {"string"} for v in (
+                        "static", "ingoing", "outgoing", "hyperbolic")},
                     **{f"global_monopole/{s}": {"monopole"} for s in (
                         "static/radial", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
                         "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
@@ -4464,6 +4483,24 @@ class Slices(unittest.TestCase):
             sign = 1 if "ingoing" in key else -1
             finkelstein = key.endswith("finkelstein")
             return (lambda X: sign * (bardeen_rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
+        if key.startswith("topological_black_hole/") and not mark["lines"]:
+            # The hyperbolic horizon's bifurcation surface, the point t = 0, r = r_h = L of the static planes.
+            return (lambda X: 0.0), [1.0]
+        if key == "topological_black_hole/brane/tz":
+            # The black string's t = 0 on the brane's plane, where z = L^2/r.
+            lo, hi = self.reach(surface)
+            return (lambda X: 0.0), [1 / hi, 1 / lo]
+        if key.startswith("topological_black_hole/eddington_finkelstein"):
+            # At mu = 1 and L = 1, 1/f = r/((r - 1)(r^2 + r + 1)), and r_* = (1/3) ln|1 - r| - (1/6) ln(r^2 + r + 1)
+            # + (arctan((2r + 1)/sqrt 3) - pi/6)/sqrt 3, which vanishes at r = 0. Static t = 0 is v = r_* and
+            # u = -r_*, drawn against v - r and u + r.
+            sign = 1 if "ingoing" in key else -1
+            w = math.sqrt(3)
+
+            def rstar(r):
+                return (math.log(abs(1 - r)) / 3 - math.log(r * r + r + 1) / 6
+                        + (math.atan((2 * r + 1) / w) - math.pi / 6) / w)
+            return (lambda X: sign * (rstar(X) - X)), list(self.reach(surface))
         if key.startswith("schwarzschild_ads/eddington_finkelstein"):
             # At r_s = 2 and L = 1, 1/f = r/((r - 1)(r^2 + r + 2)), and r_* = (1/4) ln|1 - r| - (1/8) ln((r^2 + r +
             # 2)/2) + (5/(4 sqrt 7))(arctan((2r + 1)/sqrt 7) - arctan(1/sqrt 7)), which vanishes at r = 0.

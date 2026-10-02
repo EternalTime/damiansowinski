@@ -993,6 +993,39 @@ def _hayward(sign=0):
     return out
 
 
+def tbh_rstar(r):
+    """The flat topological black hole's tortoise coordinate at mu = 1 and L = 1, where 1/f =
+    r/((r - 1)(r^2 + r + 1)), as the Eddington-Finkelstein charts fix it, vanishing at r = 0:
+    r_* = (1/3) ln|1 - r| - (1/6) ln(r^2 + r + 1) + (arctan((2r + 1)/sqrt 3) - pi/6)/sqrt 3."""
+    r = np.asarray(r, dtype=float)
+    w = math.sqrt(3.0)
+    return (np.log(np.abs(1 - r)) / 3 - np.log(r * r + r + 1) / 6
+            + (np.arctan((2 * r + 1) / w) - math.pi / 6) / w)
+
+
+def _tbh(sign=0, brane=False):
+    """The black string's moment t = 0, the flat hole's, from the throat r_h = 1 out: along r in
+    the static chart and in Lemos's (sign 0), in the ingoing (1) or outgoing (-1) chart as
+    v = r_* or u = -r_*, crowding toward the horizon, where the curve runs off, and on the
+    brane's plane along z = L^2/r, from the horizon z_h = 1 toward the boundary."""
+    m, = moments("topological_black_hole", "string")
+    lo, hi = m.reach("black_string", "r")
+    if brane:
+        return [Mark(m, along(0.0, 1 / hi, 1 / lo))]
+    if not sign:
+        return [Mark(m, along(0.0, lo, hi))]
+    r = near(lo, hi)
+    return [Mark(m, [np.column_stack([sign * tbh_rstar(r), r])])]
+
+
+def _tbh_horizon():
+    """The hyperbolic hole's horizon at one moment, mu = 0: the bifurcation surface, the point
+    t = 0, r = r_h = 1 of the static planes. In an Eddington-Finkelstein chart it lies at
+    v -> -infinity or u -> +infinity, off the chart."""
+    m, = moments("topological_black_hole", "horizon", label="$t = 0$, $r = r_h$")
+    return [Mark(m, points=[(0.0, 1.0)])]
+
+
 def _c_metric(y):
     """The C-metric's two moments on a plane of its axis: the equator's t = 0, which meets the
     axis along t = 0 over the same r as it reaches on the equator, and the black hole horizon,
@@ -1127,6 +1160,13 @@ FLAT = {
     ("schwarzschild_ads", "eddington_finkelstein_ingoing", "chart"): lambda: _sads(1),
     ("schwarzschild_ads", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _sads(-1),
     ("schwarzschild_ads", "eddington_finkelstein_outgoing", "chart"): lambda: _sads(-1),
+    ("topological_black_hole", "static", "flat"): lambda: _tbh(),
+    ("topological_black_hole", "black_string", "radial"): lambda: _tbh(),
+    ("topological_black_hole", "eddington_finkelstein_ingoing", "flat"): lambda: _tbh(1),
+    ("topological_black_hole", "eddington_finkelstein_outgoing", "flat"): lambda: _tbh(-1),
+    ("topological_black_hole", "brane", "tz"): lambda: _tbh(brane=True),
+    ("topological_black_hole", "static", "massless"): lambda: _tbh_horizon(),
+    ("topological_black_hole", "hyperbolic", "massless"): lambda: _tbh_horizon(),
     ("schwarzschild", "spherical", "radial"): lambda: one("schwarzschild", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("schwarzschild", "eddington_finkelstein_ingoing", "finkelstein"): lambda: schwarzschild_t(1),
     ("schwarzschild", "eddington_finkelstein_ingoing", "chart"): lambda: schwarzschild_t(1),
@@ -1446,6 +1486,12 @@ HIDDEN = {
     ("btz", "eddington_finkelstein_ingoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "eddington_finkelstein_outgoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
+    **{("topological_black_hole", system, "negative"): "the hyperbolic hole of negative mass, another spacetime than the flat hole and the hyperbolic hole without mass whose moments are embedded"
+       for system in ("static", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing", "hyperbolic")},
+    **{("topological_black_hole", f"{system}_negative"): "the hyperbolic hole of negative mass, another spacetime than the flat hole and the hyperbolic hole without mass whose moments are embedded"
+       for system in ("static", "ingoing", "outgoing", "hyperbolic")},
+    **{("topological_black_hole", f"eddington_finkelstein_{way}", "massless"): "the bifurcation surface of the hyperbolic hole without mass lies off both Eddington-Finkelstein charts, and the string's moment is the flat hole's"
+       for way in ("ingoing", "outgoing")},
     ("frw", "comoving_spherical", "radial"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",
     ("frw", "comoving_spherical", "through"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",
     ("frw", "conformal_spherical", "radial"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",

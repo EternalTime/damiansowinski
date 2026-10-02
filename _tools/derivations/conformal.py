@@ -5475,6 +5475,467 @@ def schwarzschild_ads(ck, src):
     return views
 
 
+TBH_FLAT = {"mu": 1, "L": 1, "k": 0}
+TBH_MASSLESS = {"mu": 0, "L": 1, "k": -1}
+TBH_NEGATIVE = {"mu": "-120/343", "L": 1, "k": -1}
+TBH_POINT = {"rho": "1/2", "phi": "0"}
+TBH_THETA = {"theta": "1", "phi": "0"}
+TBH_EF = (("ingoing", "eddington_finkelstein_ingoing", "v"), ("outgoing", "eddington_finkelstein_outgoing", "u"))
+
+
+class HyperbolicHoleDrawing(AdSAxisDrawing):
+    """The cells of the hyperbolic hole of negative mass: a Tower's, each exterior ending on the
+    conformal boundary, the timelike curve (-G(t - R), G(-t - R)) with R the limit of r* as
+    r -> infinity, and each region inside r_- on the singularity r = 0, which r*(0) = 0 puts on
+    the vertical lines X = +-pi/2."""
+
+    def __init__(self, T, far):
+        TowerDrawing.__init__(self, T, True, 1e-3)
+        self.far = far
+
+    def end(self, cell, n=500):
+        s = spread(-np.inf, np.inf, n, 9)
+        p, q = -self.T.G(s - self.far), self.T.G(-s - self.far)
+        return (p, q) if cell == "I" else (-p, -q)
+
+    def polygon(self, cell, up=False):
+        if cell in ("I", "I'"):
+            return AdSAxisDrawing.polygon(self, cell, up)
+        return TowerDrawing.polygon(self, cell, up)
+
+    def edges(self, v, cell, up=False):
+        if cell in ("I", "I'"):
+            return AdSAxisDrawing.edges(self, v, cell, up)
+        return TowerDrawing.edges(self, v, cell, up)
+
+
+def tbh_flat(ck, src):
+    """The flat hole at mu = L and L = 1, where f = r^2 - 1/r = (r - 1)(r^2 + r + 1)/r, the horizon
+    is r_h = 1 and k = f'(1)/2 = 3/2. AdSHoleTower's r* vanishes at r = 0 and tends to
+    R = pi/(3 sqrt 3) as r -> infinity, and Kruskal's U = -exp(-k u), V = exp(k v) give
+
+        UV = (1 - r)(r^2 + r + 1)^(-1/2) exp(sqrt 3 (arctan((2r + 1)/sqrt 3) - pi/6)),
+
+    1 at r = 0, 0 on the horizon and -B = -exp(pi/sqrt 3) = -6.134 on the conformal boundary. With
+    p = arctan U and q = arctan V the singularity lies on T = +-pi/2 and the boundary on
+    tan p tan q = -B, which reaches X = 2 arctan sqrt(B) = 2.374 on T = 0: the diagram of
+    Schwarzschild-anti-de Sitter, with other numbers. The ray that leaves the right boundary at
+    t = 0 meets r = 0 at X = 2 arctan sqrt(B) - pi/2 = 0.803, on its own side of the axis. Lemos's
+    chart is the static chart with the plane written as a cylinder, and the brane's z = 1/r puts
+    the boundary at z = 0 and the horizon at z_h = 1."""
+    name = "flat topological black hole"
+    st = Plane(src, "topological_black_hole", "static", ("t", "r"), TBH_POINT, TBH_FLAT)
+    assert st.g[0, 1] == 0 and sp.simplify(st.g[0, 0] * st.g[1, 1] + 1) == 0
+    T = AdSHoleTower(st.gi[1, 1], st.x1)
+    k, R, B = T.kp, T.far, T.B
+    ck.limit(f"{name}: the horizon is the positive root of the published g^rr, at r_h = L", T.rf, [1.0], 1e-12)
+    ck.limit(f"{name}: the surface gravity is f'(r_h)/2 = 3/(2L)", k, 1.5, 1e-12)
+    string = Plane(src, "topological_black_hole", "black_string", ("t", "r"), {"phi": "0", "z": "0"}, {"mu": 1, "L": 1})
+    brane = Plane(src, "topological_black_hole", "brane", ("t", "z"), {"x": "0", "y": "0"}, {"z_h": 1, "L": 1})
+    for label, plane in (("static", st), ("black string", string)):
+        ck.chart(f"{name} {label}, exterior", plane, lambda t, r: T.pq("I", t, r),
+                 ck.uniform(-4, 4), ck.uniform(1.001, 40), lambda t, r: (1, 0))
+        ck.chart(f"{name} {label}, black hole", plane, lambda t, r: T.pq("II", t, r),
+                 ck.uniform(-4, 4), ck.uniform(0.01, 0.999), lambda t, r: (0, -1))
+        ck.chart(f"{name} {label}, white hole", plane, lambda t, r: T.pq("IV", t, r),
+                 ck.uniform(-4, 4), ck.uniform(0.01, 0.999), lambda t, r: (0, 1))
+        ck.chart(f"{name} {label}, other exterior", plane, lambda t, r: T.pq("I'", t, r),
+                 ck.uniform(-4, 4), ck.uniform(1.001, 40), lambda t, r: (-1, 0))
+    ck.chart(f"{name} brane, exterior", brane, lambda t, z: T.pq("I", t, 1 / np.asarray(z, dtype=float)),
+             ck.uniform(-4, 4), ck.uniform(0.025, 0.999), lambda t, z: (1, 0))
+    ck.chart(f"{name} brane, black hole", brane, lambda t, z: T.pq("II", t, 1 / np.asarray(z, dtype=float)),
+             ck.uniform(-4, 4), ck.uniform(1.001, 100), lambda t, z: (0, 1))
+
+    def ingoing(w, r):
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        return np.arctan(T.UV(r) * np.exp(-k * w)), atan_exp(k * w)
+
+    def outgoing(u, r):
+        u, r = np.asarray(u, dtype=float), np.asarray(r, dtype=float)
+        return -atan_exp(-k * u), np.arctan(-T.UV(r) * np.exp(k * u))
+    ein = Plane(src, "topological_black_hole", "eddington_finkelstein_ingoing", ("v", "r"), TBH_POINT, TBH_FLAT)
+    ck.chart(f"{name} ingoing Eddington-Finkelstein", ein, ingoing,
+             ck.uniform(-4, 4), ck.uniform(0.01, 40), lambda w, r: (1, -60))
+    eout = Plane(src, "topological_black_hole", "eddington_finkelstein_outgoing", ("u", "r"), TBH_POINT, TBH_FLAT)
+    ck.chart(f"{name} outgoing Eddington-Finkelstein", eout, outgoing,
+             ck.uniform(-4, 4), ck.uniform(0.01, 40), lambda u, r: (1, 60))
+
+    rr = np.linspace(0.05, 5, 50)
+    w3 = np.sqrt(3)
+    closed = (1 - rr) / np.sqrt(rr * rr + rr + 1) * np.exp(w3 * (np.arctan((2 * rr + 1) / w3) - np.pi / 6))
+    ck.limit(f"{name}: UV is (1 - r)(r^2 + r + 1)^(-1/2) exp(sqrt 3 (arctan((2r + 1)/sqrt 3) - pi/6))",
+             T.UV(rr), closed, 1e-12)
+    for cell, sel in (("I", rr > 1.001), ("II", rr < 0.999)):
+        pp, qq = T.pq(cell, 0.3 + 0 * rr[sel], rr[sel])
+        ck.limit(f"{name}, {cell}: tan p tan q is Kruskal's UV", np.tan(pp) * np.tan(qq), T.UV(rr[sel]), 1e-8)
+    ck.limit(f"{name}: r* vanishes at r = 0", T.rstar(np.array([0.0, 1e-9])), [0, 0], 1e-8)
+    ck.limit(f"{name}: r* tends to R as r -> infinity", T.rstar(np.array([1e9])), [R], 1e-8)
+    ck.limit(f"{name}: R = pi L/(3 sqrt 3) and B = exp(2kR) = exp(pi/sqrt 3) = 6.134",
+             [R, B, B], [np.pi / (3 * w3), np.exp(np.pi / w3), 6.134], 1e-3)
+    ck.limit(f"{name}: R is pi/(3 sqrt 3) to rounding", R, np.pi / (3 * w3), 1e-12)
+    p, q = T.pq("II", np.array([-1.0, 0, 1]), np.full(3, 1e-9))
+    ck.limit(f"{name}: r -> 0 in the black hole lands on T = pi/2", p + q, [HALF] * 3)
+    p, q = T.pq("I", np.array([-0.5, 0, 0.5]), np.full(3, 1e9))
+    ck.limit(f"{name}: r -> infinity lands on the boundary tan p tan q = -B", np.tan(p) * np.tan(q), [-B] * 3, 1e-6)
+    ck.limit(f"{name}: the boundary crosses T = 0 at X = 2 arctan sqrt(B)", (q - p)[1], 2 * np.arctan(np.sqrt(B)), 1e-8)
+    p, q = T.pq("I", np.array([0.5]), np.array([1 + 1e-12]))
+    ck.limit(f"{name}: r -> r_h at fixed t lands on the bifurcation surface", point(p[0], q[0]), [0, 0], 1e-4)
+    ck.limit(f"{name}: the ingoing and static coordinates put one event at one point",
+             ingoing(0.4 + T.rstar(3.0), 3.0), T.pq("I", 0.4, 3.0), 1e-12)
+    ck.limit(f"{name}: the outgoing and static coordinates put one event at one point",
+             outgoing(0.4 - T.rstar(3.0), 3.0), T.pq("I", 0.4, 3.0), 1e-12)
+    p, q = ingoing(np.array([R]), np.array([1e-12]))
+    ray = 2 * np.arctan(np.sqrt(B)) - HALF
+    ck.limit(f"{name}: the ray leaving the boundary at t = 0 meets r = 0 at X = 2 arctan sqrt(B) - pi/2, "
+             "on its own side", [(q - p)[0], (p + q)[0]], [ray, HALF], 1e-9)
+    ck.limit(f"{name}: that X is 0.803", ray, 0.803, 1e-3)
+    K = st.kretschmann
+    ck.diverges(f"{name}: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+    ck.finite(f"{name}: the Kretschmann scalar is finite at r = r_h", K(np.zeros(3), np.array([0.999, 1, 1.001])))
+    ck.diverges(f"{name}: the brane's Kretschmann scalar diverges as z -> infinity",
+                brane.kretschmann(0, 1e2), brane.kretschmann(0, 1e3))
+
+    reach = 2 * np.arctan(np.sqrt(B))
+    box = [-reach - 0.3, reach + 0.3, -HALF - 0.25, HALF + 0.25]
+    bp, bq = T.boundary()
+    right = [point(a, b) for a, b in zip(bp, bq)]
+    left = [[-x, t_] for x, t_ in right[::-1]]
+    whole = right + left
+    named = min(right, key=lambda at: abs(at[1] - 1.2))
+    R_OUT, R_IN, TS = (1.1, 1.25, 1.5, 2, 4), (0.4, 0.7, 0.9), (-0.8, -0.4, -0.2, 0, 0.2, 0.4, 0.8)
+    Z_OUT = (0.25, 0.5, 0.7, 0.85, 0.95)
+
+    def edges(v, far="$r \\to \\infty$", horizon="$r_h$", zero="$r = 0$"):
+        v.curve("boundary", bp, bq)
+        v.curve("boundary", -bq, -bp)
+        v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+        v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+        v.label_xt([0, HALF], zero, "b", dy=-8)
+        v.label_xt([0, -HALF], zero, "t", dy=8)
+        v.label_xt(named, far, "l", "small", dx=6)
+        v.label_xt([-named[0], named[1]], far, "r", "small", dx=-6)
+        v.label_xt([-Q4, Q4], horizon, "tr", "small", dx=-6, dy=2)
+        v.label_xt([1.45, -0.6], "exterior", cls="region")
+        v.label_xt([-1.45, -0.6], "exterior", cls="region")
+        v.label_xt([0, 1.15], "black hole", cls="region")
+        v.label_xt([0, -1.15], "white hole", cls="region")
+
+    def legends(v):
+        v.legend("horizon", "the horizon $r_h = L$")
+        v.legend("boundary", "the conformal boundary $r \\to \\infty$, timelike")
+        v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+
+    views = []
+    t = spread(-np.inf, np.inf, 500, 6)
+    for vid, label, system in (("static_flat", "$k = 0$", "static"), ("string", "Black String", "black_string")):
+        v = View(vid, label, box, system)
+        v.fill("region", whole)
+        v.fill("cover", [[0, 0]] + right)
+        for r in R_OUT:
+            v.curve("r", *T.pq("I", t, np.full_like(t, r)))
+        rr = spread(1, np.inf, 500, 14)
+        for tt in TS:
+            v.curve("t", *T.pq("I", np.full_like(rr, tt), rr))
+        edges(v)
+        legends(v)
+        label_on(v, T.pq("I", 0.0, 1.5), "$1.5\\,L$")
+        v.legend("cover", "the region that $t$ and $r > r_h$ cover")
+        v.legend("r", "$r$ constant, at " + listed(R_OUT) + " in units of $L$")
+        v.legend("t", "$ct$ constant, in units of $L$")
+        views.append(v)
+
+    v = View("brane", "Black Brane", box, "brane")
+    v.fill("region", whole)
+    v.fill("cover", [[0, 0]] + right)
+    for z in Z_OUT:
+        v.curve("r", *T.pq("I", t, np.full_like(t, 1 / z)))
+    rr = spread(1, np.inf, 500, 14)
+    for tt in TS:
+        v.curve("t", *T.pq("I", np.full_like(rr, tt), rr))
+    edges(v, far="$z = 0$", horizon="$z_h$", zero="$z \\to \\infty$")
+    label_on(v, T.pq("I", 0.0, 2.0), "$0.5\\,L$")
+    v.legend("horizon", "the horizon $z_h = L$")
+    v.legend("boundary", "the conformal boundary $z = 0$, timelike")
+    v.legend("singular", "$z \\to \\infty$, where the Kretschmann scalar diverges")
+    v.legend("cover", "the region that $t$ and $z < z_h$ cover")
+    v.legend("r", "$z$ constant, at " + listed(Z_OUT) + " in units of $L$")
+    v.legend("t", "$ct$ constant, in units of $L$")
+    views.append(v)
+
+    rr = spread(0, np.inf, 600, 14)
+    for (vid, system, null), fmap, corner, ws in zip(TBH_EF, (ingoing, outgoing), ([-HALF, HALF], [-HALF, -HALF]),
+                                                    ((-0.4, 0, 0.4, 0.8, 1.2), (-1.2, -0.8, -0.4, 0, 0.4))):
+        v = View(f"{vid}_flat", "$k = 0$", box, system)
+        v.fill("region", whole)
+        v.fill("cover", ([[0, 0]] + right + [corner]) if vid == "ingoing" else ([[0, 0], corner] + right))
+        for r in R_OUT + R_IN:
+            v.curve("r", *fmap(t, np.full_like(t, r)))
+        for w in ws:
+            v.curve("null", *fmap(np.full_like(rr, w), rr))
+        edges(v)
+        legends(v)
+        v.legend("cover", f"the region that ${null}$ and $r > 0$ cover")
+        v.legend("r", "$r$ constant, at " + listed(R_IN + R_OUT) + " in units of $L$")
+        v.legend("null", f"${null}$ constant, an {vid} light ray")
+        views.append(v)
+    for view in views:
+        if view.d["id"] == "brane":
+            view.set(settings="$z_h = L$, so that $\\kappa = 3/(2L)$.")
+        else:
+            view.set(settings="$k = 0$ and $\\mu = L$, so that $r_h = L$ and $\\kappa = 3/(2L)$.")
+    # The embedded moment t = 0 of the black string: through the bifurcation surface into both
+    # exteriors, as far out as the surface reaches.
+    moment, = slices.moments("topological_black_hole", "string")
+    lo, hi = moment.reach("black_string", "r")
+    for view in views:
+        view.slice(moment, [through_bifurcation(T, ("I'", "I"), hi, lo)])
+    return views
+
+
+def tbh_massless(ck, src):
+    """The hyperbolic hole without mass, mu = 0 and k = -1 at L = 1: f = r^2 - 1, the BTZ hole's N^2
+    at M = 1 and J = 0, so the plane of t and r is that hole's and BTZTower draws it, r* =
+    (1/2) ln|(r - 1)/(r + 1)| vanishing both at r = 0 and as r -> infinity. Kruskal's UV is
+    (1 - r)/(1 + r): -1 on the conformal boundary, which lies on X = +-pi/2, and 1 at r = 0, on
+    T = +-pi/2, a square. The curvature is anti-de Sitter space's at every point, r = 0 included."""
+    name = "massless hyperbolic hole"
+    st = Plane(src, "topological_black_hole", "static", ("t", "r"), TBH_POINT, TBH_MASSLESS)
+    hy = Plane(src, "topological_black_hole", "hyperbolic", ("t", "r"), TBH_THETA, {"mu": 0, "L": 1})
+    assert st.g[0, 1] == 0 and sp.simplify(st.g[0, 0] * st.g[1, 1] + 1) == 0
+    T = BTZTower(st.gi[1, 1], st.x1)
+    ck.limit(f"{name}: the horizon is the root of the published g^rr, at r_h = L", T.rf, [1.0], 1e-12)
+    for label, plane in (("static", st), ("hyperbolic", hy)):
+        ck.chart(f"{name} {label}, exterior", plane, lambda t, r: T.pq("I", t, r),
+                 ck.uniform(-15, 15), ck.uniform(1.001, 40), lambda t, r: (1, 0))
+        ck.chart(f"{name} {label}, black hole", plane, lambda t, r: T.pq("II", t, r),
+                 ck.uniform(-15, 15), ck.uniform(0.01, 0.999), lambda t, r: (0, -1))
+        ck.chart(f"{name} {label}, white hole", plane, lambda t, r: T.pq("IV", t, r),
+                 ck.uniform(-15, 15), ck.uniform(0.01, 0.999), lambda t, r: (0, 1))
+        ck.chart(f"{name} {label}, other exterior", plane, lambda t, r: T.pq("I'", t, r),
+                 ck.uniform(-15, 15), ck.uniform(1.001, 40), lambda t, r: (-1, 0))
+
+    def ingoing(w, r):
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        return np.arctan((1 - r) / (1 + r) * np.exp(-w)), atan_exp(w)
+
+    def outgoing(u, r):
+        u, r = np.asarray(u, dtype=float), np.asarray(r, dtype=float)
+        return -atan_exp(-u), np.arctan((r - 1) / (r + 1) * np.exp(u))
+    ein = Plane(src, "topological_black_hole", "eddington_finkelstein_ingoing", ("v", "r"), TBH_POINT, TBH_MASSLESS)
+    ck.chart(f"{name} ingoing Eddington-Finkelstein", ein, ingoing,
+             ck.uniform(-15, 15), ck.uniform(0.01, 40), lambda w, r: (1, -60))
+    eout = Plane(src, "topological_black_hole", "eddington_finkelstein_outgoing", ("u", "r"), TBH_POINT, TBH_MASSLESS)
+    ck.chart(f"{name} outgoing Eddington-Finkelstein", eout, outgoing,
+             ck.uniform(-15, 15), ck.uniform(0.01, 40), lambda u, r: (1, 60))
+    p, q = T.pq("II", np.array([-5.0, 0, 5]), np.full(3, 1e-9))
+    ck.limit(f"{name}: r -> 0 in the black hole lands on T = pi/2", p + q, [HALF] * 3)
+    p, q = T.pq("I", np.array([-5.0, 0, 5]), np.full(3, 1e9))
+    ck.limit(f"{name}: r -> infinity lands on the boundary X = pi/2", q - p, [HALF] * 3, 1e-8)
+    p, q = T.pq("I", np.array([3.0]), np.array([1 + 1e-12]))
+    ck.limit(f"{name}: r -> r_h at fixed t lands on the bifurcation surface", point(p[0], q[0]), [0, 0], 1e-4)
+    rr = np.linspace(0.05, 5, 50)
+    for cell, sel in (("I", rr > 1.001), ("II", rr < 0.999)):
+        pp, qq = T.pq(cell, 0.3 + 0 * rr[sel], rr[sel])
+        ck.limit(f"{name}, {cell}: tan p tan q is Kruskal's UV = (1 - r)/(1 + r)",
+                 np.tan(pp) * np.tan(qq), (1 - rr[sel]) / (1 + rr[sel]), 1e-8)
+    ck.limit(f"{name}: the ingoing and static coordinates put one event at one point",
+             ingoing(2.0 + T.rstar(3.0), 3.0), T.pq("I", 2.0, 3.0), 1e-12)
+    ck.limit(f"{name}: the outgoing and static coordinates put one event at one point",
+             outgoing(2.0 - T.rstar(3.0), 3.0), T.pq("I", 2.0, 3.0), 1e-12)
+    ck.limit(f"{name}: the Kretschmann scalar is 24/L^4 at r = 0, at r_h and beyond",
+             st.kretschmann(np.zeros(3), np.array([1e-9, 1.0, 5.0])), [24.0] * 3, 1e-9)
+
+    box = [-HALF - 0.55, HALF + 0.55, -HALF - 0.25, HALF + 0.25]
+    square = [[HALF, -HALF], [HALF, HALF], [-HALF, HALF], [-HALF, -HALF]]
+    R_OUT, R_IN, TS = (1.25, 1.5, 2, 3), (0.25, 0.5, 0.75), (-2, -1, 0, 1, 2)
+
+    def edges(v):
+        v.line("boundary", [[[HALF, -HALF], [HALF, HALF]], [[-HALF, -HALF], [-HALF, HALF]]])
+        v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+        v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+        v.label_xt([0, HALF], "$r = 0$", "b", dy=-8)
+        v.label_xt([0, -HALF], "$r = 0$", "t", dy=8)
+        v.label_xt([HALF, 0.9], "$r \\to \\infty$", "l", "small", dx=6)
+        v.label_xt([-HALF, 0.9], "$r \\to \\infty$", "r", "small", dx=-6)
+        v.label_xt([-Q4, Q4], "$r_h$", "tr", "small", dx=-6, dy=2)
+        v.label_xt([0.3, -0.62], "exterior", cls="region")
+        v.label_xt([-0.3, 0.62], "exterior", cls="region")
+        v.label_xt([0, 1.2], "black hole", cls="region")
+        v.label_xt([0, -1.2], "white hole", cls="region")
+        v.legend("horizon", "the horizon $r_h = L$")
+        v.legend("boundary", "the conformal boundary $r \\to \\infty$, timelike")
+        v.legend("singular", "$r = 0$, where the surfaces of constant $t$ and $r$ shrink to zero area and the "
+                             "curvature is finite")
+
+    views = []
+    t = spread(-np.inf, np.inf, 500, 9)
+    for vid, label, system in (("static_massless", "$k = -1$, $\\mu = 0$", "static"),
+                               ("hyperbolic_massless", "$\\mu = 0$", "hyperbolic")):
+        v = View(vid, label, box, system)
+        v.fill("region", square)
+        v.fill("cover", [[0, 0], [HALF, -HALF], [HALF, HALF]])
+        for r in R_OUT:
+            v.curve("r", *T.pq("I", t, np.full_like(t, r)))
+        rr = spread(1, np.inf, 500, 14)
+        for tt in TS:
+            v.curve("t", *T.pq("I", np.full_like(rr, tt), rr))
+        edges(v)
+        for r, text in ((1.25, "$1.25\\,L$"), (2, "$2L$")):
+            label_on(v, T.pq("I", 0.0, r), text)
+        v.legend("cover", "the region that $t$ and $r > r_h$ cover")
+        v.legend("r", "$r$ constant")
+        v.legend("t", "$ct$ constant, in units of $L$")
+        views.append(v)
+    rr = spread(0, np.inf, 600, 14)
+    for (vid, system, null), fmap, corner in zip(TBH_EF, (ingoing, outgoing), ([-HALF, HALF], [-HALF, -HALF])):
+        v = View(f"{vid}_massless", "$k = -1$, $\\mu = 0$", box, system)
+        v.fill("region", square)
+        v.fill("cover", [[0, 0], [HALF, -HALF], [HALF, HALF], corner] if vid == "ingoing"
+               else [[0, 0], [HALF, HALF], [HALF, -HALF], corner])
+        for r in R_OUT + R_IN:
+            v.curve("r", *fmap(t, np.full_like(t, r)))
+        for w in (-3, -2, -1, 0, 1, 2, 3):
+            v.curve("null", *fmap(np.full_like(rr, w), rr))
+        edges(v)
+        v.legend("cover", f"the region that ${null}$ and $r > 0$ cover")
+        v.legend("r", "$r$ constant")
+        v.legend("null", f"${null}$ constant, an {vid} light ray")
+        views.append(v)
+    for view in views:
+        view.set(settings="$\\mu = 0$, so that $r_h = L$ and $\\kappa = 1/L$.")
+    # The embedded horizon at one moment: the bifurcation surface, the point where the horizons cross.
+    moment, = slices.moments("topological_black_hole", "horizon", label="$t = 0$, $r = r_h$")
+    for view in views:
+        view.slice(moment, points=[(0.0, 0.0)])
+    return views
+
+
+def tbh_negative(ck, src):
+    """The hyperbolic hole of negative mass, mu = -120L/343 and k = -1 at L = 1, where
+    f = (r - 5/7)(r - 3/7)(r + 8/7)/r: an event horizon r_+ = 5/7 and an inner horizon r_- = 3/7,
+    with k_+ = 13/35 and k_- = 11/21. 1/f is a sum of simple poles at the three roots, so
+    BTZTower's r* = (35/26) ln|1 - 7r/5| - (21/22) ln|1 - 7r/3| - (56/143) ln(1 + 7r/8) vanishes at
+    r = 0, which puts the singularity on the vertical lines X = +-pi/2 beside each region inside
+    r_-, and tends to R = -0.3035 as r -> infinity, which puts the conformal boundary on the
+    timelike curve (-G(t - R), G(-t - R)) beside each exterior. The cells are those of
+    Reissner-Nordstrom's tower, with the boundary where that tower has its null infinity. The
+    ingoing chart covers an exterior, the black hole and the region inside r_- to its left, and
+    the outgoing chart is its time reverse."""
+    name = "negative mass hyperbolic hole"
+    st = Plane(src, "topological_black_hole", "static", ("t", "r"), TBH_POINT, TBH_NEGATIVE)
+    hy = Plane(src, "topological_black_hole", "hyperbolic", ("t", "r"), TBH_THETA, {"mu": "-120/343", "L": 1})
+    assert st.g[0, 1] == 0 and sp.simplify(st.g[0, 0] * st.g[1, 1] + 1) == 0
+    T = BTZTower(st.gi[1, 1], st.x1)
+    rp, rm = T.rf
+    far = float(-sum(A * np.log(abs(ri)) for A, ri in zip(T.Ap, T.poles)))
+    ck.limit(f"{name}: the horizons are the positive roots of the published g^rr", [rp, rm], [5 / 7, 3 / 7], 1e-12)
+    ck.limit(f"{name}: the surface gravities are 13/(35 L) and 11/(21 L)",
+             [float(T.kappa[0]), float(T.kappa[1])], [13 / 35, 11 / 21], 1e-12)
+    for label, plane in (("static", st), ("hyperbolic", hy)):
+        tower_checks(ck, f"{name} {label}", plane, T, 0.01, 6)
+    rr = np.array([0.1, 0.3, 0.5, 0.6, 1.0, 3.0])
+    closed = (35 / 26 * np.log(np.abs(1 - 7 * rr / 5)) - 21 / 22 * np.log(np.abs(1 - 7 * rr / 3))
+              - 56 / 143 * np.log(1 + 7 * rr / 8))
+    ck.limit(f"{name}: r* is (35/26) ln|1 - 7r/5| - (21/22) ln|1 - 7r/3| - (56/143) ln(1 + 7r/8)",
+             T.rstar(rr), closed, 1e-12)
+    ck.limit(f"{name}: r* tends to R = -0.3035 L as r -> infinity", [float(T.rstar(1e12)), far], [far, -0.3035], 1e-4)
+
+    def ingoing(w, r):
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        gu = T.G(w - 2 * T.rstar(r))
+        return np.where(r > rp, -gu, np.where(r > rm, gu, PI - gu)), T.G(-w) + 0 * r
+
+    def outgoing(u, r):
+        return reflect(*ingoing(-np.asarray(u, dtype=float), r), True)
+    ein = Plane(src, "topological_black_hole", "eddington_finkelstein_ingoing", ("v", "r"), TBH_POINT, TBH_NEGATIVE)
+    eout = Plane(src, "topological_black_hole", "eddington_finkelstein_outgoing", ("u", "r"), TBH_POINT, TBH_NEGATIVE)
+    f = sp.lambdify(st.x1, st.gi[1, 1], "numpy")
+    for label, plane, fmap, sign in (("ingoing", ein, ingoing, 1), ("outgoing", eout, outgoing, -1)):
+        for lo, hi in ((0.01, rm), (rm, rp), (rp, 30)):
+            ck.chart(f"{name}, {label} Eddington-Finkelstein, {lo:.2f} < r < {hi:.2f}", plane, fmap,
+                     ck.uniform(-6, 6), ck.uniform(lo + 1e-3, hi - 1e-3),
+                     lambda w, r, s=sign: (1, -s * (1 + np.abs(f(r)))))
+    ck.limit(f"{name}: the ingoing and static coordinates put one event at one point",
+             np.concatenate([ingoing(0.4 + T.rstar(r), r) for r in (0.6, 2.0)]),
+             np.concatenate([T.pq(c, 0.4, r) for c, r in (("II", 0.6), ("I", 2.0))]), 1e-12)
+    ck.limit(f"{name}: the outgoing and static coordinates put one event at one point, a period up the tower",
+             np.array(outgoing(0.4 - T.rstar(2.0), 2.0), dtype=float),
+             np.array(reflect(*T.pq("I", -0.4, 2.0), True), dtype=float), 1e-12)
+    t3 = np.array([-1.0, 0, 1])
+    ck.limit(f"{name}: r -> infinity lands on (-G(t - R), G(-t - R))",
+             np.concatenate(T.pq("I", t3, np.full(3, 1e12))), np.concatenate([-T.G(t3 - far), T.G(-t3 - far)]), 1e-6)
+    p, q = T.pq("III", np.array([-6.0, 0, 6]), np.full(3, 1e-12))
+    ck.limit(f"{name}: r -> 0 lands on the vertical line X = pi/2", q - p, [HALF] * 3, 1e-9)
+    K = st.kretschmann
+    ck.diverges(f"{name}: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+    ck.finite(f"{name}: the Kretschmann scalar is finite at both horizons", K(np.zeros(2), np.array([rm, rp])))
+
+    D = HyperbolicHoleDrawing(T, far)
+    box = [-HALF - 0.85, HALF + 0.85, -PI - 0.1, 3 * PI + 0.1]
+    times = [c / T.kp for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+    rI, rII, rIII = (0.8, 1.0, 1.5, 3.0), (0.5, 0.6, 0.66), (0.1, 0.25, 0.38)
+    grids = {"I": (rI, times), "II": (rII, times), "IV": (rII, times), "III": (rIII, times)}
+
+    def dressed(v, cover):
+        D.draw(v, grids, cover=cover)
+        v.label_xt([0, HALF + 0.1], "black hole", cls="region")
+        v.label_xt([0, 1.5 * PI - 0.1], "white hole", cls="region")
+        v.label_xt([0, -HALF], "white hole", cls="region")
+        v.label_xt([0, 2.5 * PI], "black hole", cls="region")
+        for sx in (1, -1):
+            for base in (0, 2 * PI):
+                v.label_xt([sx * 0.9, base + 0.3], "exterior", cls="region")
+                v.label_xt([sx * 1.5, base], "$r \\to \\infty$", "l" if sx > 0 else "r", "small", dx=6 * sx)
+            v.label_xt([sx * 0.95, PI + 0.3], "$r < r_-$", cls="region")
+            v.label_xt([sx * HALF, PI + 0.7], "$r = 0$", "l" if sx > 0 else "r", dx=8 * sx)
+        v.label_xt([Q4, Q4], "$r_+$", "tl", "small", dx=5, dy=1)
+        v.label_xt([Q4, 3 * Q4], "$r_-$", "bl", "small", dx=5, dy=-1)
+        v.set(fade={"top": 0.9, "bottom": 0.9},
+              settings="$\\mu = -120L/343$, so that $r_+ = 5L/7$ and $r_- = 3L/7$, with $\\kappa_+ = 13/(35L)$.")
+        v.legend("horizon", "the horizons $r_+ = 5L/7$ and $r_- = 3L/7$")
+        v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges, timelike")
+        v.legend("boundary", "the conformal boundary $r \\to \\infty$, timelike")
+
+    views = []
+    for vid, label, system in (("static_negative", "$k = -1$, $\\mu < 0$", "static"),
+                               ("hyperbolic_negative", "$\\mu < 0$", "hyperbolic")):
+        v = View(vid, label, box, system)
+        dressed(v, [("I", False)])
+        v.legend("cover", "the exterior $r > r_+$, which $t$ and $r$ cover")
+        v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, "
+                      "in units of $L$")
+        v.legend("t", "$ct$ constant")
+        views.append(v)
+    for (vid, system, null), fmap, cover, text in zip(
+            TBH_EF, (ingoing, outgoing),
+            ([("I", False), ("II", False), ("III'", False)], [("I", True), ("II", True), ("III'", False)]),
+            ("an exterior, the black hole, and a region inside $r_-$, which $v$ and $r > 0$ cover",
+             "a region inside $r_-$, the white hole, and an exterior, which $u$ and $r > 0$ cover")):
+        v = View(f"{vid}_negative", "$k = -1$, $\\mu < 0$", box, system)
+        dressed(v, cover)
+        for lo_, hi_ in ((0, rm), (rm, rp), (rp, np.inf)):
+            rr = spread(lo_, hi_, 600, 16)
+            for w in (-3.5, -1.2, 1.2, 3.5):
+                v.curve("null", *fmap(np.full_like(rr, w), rr))
+        v.legend("cover", text)
+        v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, "
+                      "in units of $L$")
+        v.legend("t", "$ct$ constant")
+        v.legend("null", f"${null}$ constant, an {vid} light ray")
+        views.append(v)
+    return views
+
+
+def topological_black_hole(ck, src):
+    """Three spacetimes of one line element, f = k - mu/r + r^2/L^2: the flat hole, the hyperbolic
+    hole without mass and the hyperbolic hole of negative mass, each drawn in every chart that
+    holds it. The views are ordered by chart, as the page shows them."""
+    views = tbh_flat(ck, src) + tbh_massless(ck, src) + tbh_negative(ck, src)
+    order = ["static", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing", "black_string", "brane",
+             "hyperbolic"]
+    return sorted(views, key=lambda v: order.index(v.d["system"]))
+
+
 def bertotti_robinson(ck, src):
     """AdS2 of radius b times a sphere of radius b: the strip of AdS2 is the whole diagram.
     Both coordinate systems are the Poincare patch of it, the throat's r becoming the
@@ -10707,7 +11168,7 @@ DRAWN = {
     "cosmic_string": cosmic_string, "spinning_string": spinning_string,
     "interior_schwarzschild": interior_schwarzschild, "frw": frw,
     "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "tov": tov,
-    "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "c_metric": c_metric,
+    "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "c_metric": c_metric,
     "misner": misner, "milne": milne,
     "gott_time_machine": gott_time_machine,
     "wormhole_time_machine": wormhole_time_machine,
@@ -11339,6 +11800,93 @@ CAPTIONS = {
         "meets the line the rays arrive from the region between the two branches, and the line is the black hole "
         "horizon; below it they arrive from smaller $R$, on the part Lake and Abdelqader found to be the white "
         "hole horizon of the Schwarzschild-de Sitter spacetime.",
+    ],
+    **{("topological_black_hole", vid): [
+        lead + " Its tortoise coordinate $r_*$, with $dr_*/dr = (r^2/L^2 - \\mu/r)^{-1}$ and $r_*(0) = 0$, tends "
+        "to a finite value $R = \\pi L/(3\\sqrt{3})$ as $r \\to \\infty$, and the Kruskal coordinates "
+        "$U = -e^{-\\kappa u}$ and $V = e^{\\kappa v}$, with $u, v = ct \\mp r_*$ and $\\kappa = 3/(2L)$, make the "
+        "metric regular through $r_h$. With $p = \\arctan U$ and $q = \\arctan V$ the singularity $r = 0$, where "
+        "$UV = 1$, lies on the horizontal lines $T = \\pm\\pi/2$, and the conformal boundary, where "
+        "$UV = -e^{\\pi/\\sqrt{3}} = -6.13$, on the two timelike curves at the sides.",
+        "The coordinates $t$ and $r > r_h$ cover the right exterior alone. The horizon is the pair of null lines "
+        "$U = 0$ and $V = 0$, crossing at the bifurcation surface. A light ray that leaves a boundary at $t = 0$ "
+        "meets $r = 0$ at $X = \\pm 0.80$, on its own side of the axis, so the diagram is wider than the square "
+        "of the BTZ black hole, as the Schwarzschild-anti-de Sitter diagram is.",
+    ] for vid, lead in (
+        ("static_flat", "The flat hole ($k = 0$, $\\mu = L$, so that $r_h = L$), maximally extended, each point in "
+                        "the diagram a flat plane of constant $t$ and $r$."),
+        ("string", "The black string ($\\mu = L$, so that $r_h = L$), maximally extended, each point in the "
+                   "diagram a cylinder of circumference $2\\pi r$."))},
+    ("topological_black_hole", "brane"): [
+        "The black brane ($z_h = L$), maximally extended, each point in the diagram a plane of $x$ and $y$. "
+        "With $r = L^2/z$ its plane of $t$ and $z$ is the flat hole's plane of $t$ and $r$ at $\\mu = L$: the "
+        "conformal boundary $z = 0$ lies on the two timelike curves at the sides, the horizon $z_h$ on the pair "
+        "of null lines through the middle, and the singularity $z \\to \\infty$ on the horizontal lines "
+        "$T = \\pm\\pi/2$.",
+        "The coordinates $t$ and $z < z_h$ cover the right exterior alone, and each line of constant $z$ is a "
+        "line of constant $r = L^2/z$ of the static chart.",
+    ],
+    ("topological_black_hole", "ingoing_flat"): [
+        "The flat hole ($k = 0$, $\\mu = L$) with the ingoing Eddington-Finkelstein coordinates $v$ and $r$ on "
+        "it. From $V = e^{\\kappa v}$, with $\\kappa = 3/(2L)$ the surface gravity, and $U = UV(r)/V$, one formula "
+        "for every $r > 0$, they cover the exterior and the black hole together, and their lines of constant $v$ "
+        "are ingoing light rays, which leave the conformal boundary, cross the horizon at 45°, and end at $r = 0$.",
+    ],
+    ("topological_black_hole", "outgoing_flat"): [
+        "The flat hole ($k = 0$, $\\mu = L$) with the outgoing Eddington-Finkelstein coordinates $u$ and $r$ on "
+        "it, the time reverse of the ingoing ones. From $U = -e^{-\\kappa u}$, with $\\kappa = 3/(2L)$ the surface "
+        "gravity, and $V = UV(r)/U$ they cover the exterior and the white hole, and their lines of constant $u$ "
+        "are outgoing light rays, which leave $r = 0$, cross the horizon outward, and end on the conformal boundary.",
+    ],
+    **{("topological_black_hole", vid): [
+        "The hyperbolic hole without mass ($k = -1$, $\\mu = 0$, so that $r_h = L$), maximally extended, each "
+        "point in the diagram a hyperbolic plane of curvature $-1/r^2$. Its plane of $t$ and $r$ is the BTZ "
+        "black hole's at $M = 1$: with $r_* = \\frac{L}{2}\\ln|(r - L)/(r + L)|$, which vanishes as "
+        "$r \\to \\infty$, the Kruskal coordinates $U = -e^{-\\kappa u}$ and $V = e^{\\kappa v}$, with "
+        "$u, v = ct \\mp r_*$ and $\\kappa = 1/L$, give $UV = (L - r)/(L + r)$. With $p = \\arctan U$ and "
+        "$q = \\arctan V$ the conformal boundary, $UV = -1$, lies on the vertical lines $X = \\pm\\pi/2$, and "
+        "$r = 0$, where $UV = 1$, on the horizontal lines $T = \\pm\\pi/2$: a square.",
+        "The coordinates $t$ and $r > r_h$ cover the right exterior alone. The Kretschmann scalar is $24/L^4$ "
+        "at every point, that of anti-de Sitter space, and on $r = 0$ the hyperbolic planes shrink to zero area.",
+    ] for vid in ("static_massless", "hyperbolic_massless")},
+    ("topological_black_hole", "ingoing_massless"): [
+        "The hyperbolic hole without mass ($k = -1$, $\\mu = 0$) with the ingoing Eddington-Finkelstein "
+        "coordinates $v$ and $r$ on it. From $V = e^{\\kappa v}$, with $\\kappa = 1/L$ the surface gravity, and "
+        "$U = (L - r)/((L + r)V)$, one formula for every $r > 0$, they cover the exterior and the black hole "
+        "together, and their lines of constant $v$ are ingoing light rays, which cross the horizon at 45° and "
+        "end at $r = 0$.",
+    ],
+    ("topological_black_hole", "outgoing_massless"): [
+        "The hyperbolic hole without mass ($k = -1$, $\\mu = 0$) with the outgoing Eddington-Finkelstein "
+        "coordinates $u$ and $r$ on it, the time reverse of the ingoing ones. From $U = -e^{-\\kappa u}$, with "
+        "$\\kappa = 1/L$ the surface gravity, and $V = (L - r)/((L + r)U)$ they cover the exterior and the white "
+        "hole, and their lines of constant $u$ are outgoing light rays, which leave $r = 0$ and cross the "
+        "horizon outward.",
+    ],
+    **{("topological_black_hole", vid): [
+        "The hyperbolic hole of negative mass ($k = -1$, $\\mu = -120L/343$), maximally extended, each point in "
+        "the diagram a hyperbolic plane of curvature $-1/r^2$. Here $f = -1 - \\mu/r + r^2/L^2$ has the roots "
+        "$r_+ = 5L/7$, $r_- = 3L/7$, and $-8L/7$, and $r_* = \\sum_i \\ln|1 - r/r_i|/f'(r_i)$ over the three "
+        "vanishes at $r = 0$ and tends to $R = -0.304\\,L$ as $r \\to \\infty$. Every region is placed by "
+        "$\\arctan e^{-\\kappa u}$ and $\\arctan e^{\\kappa v}$, with $u, v = ct \\mp r_*$ and "
+        "$\\kappa = 13/(35L)$ the surface gravity of $r_+$, so every line crosses $r_+$ smoothly and $r_-$ with "
+        "a corner.",
+        "The tower is the Reissner-Nordström hole's: an exterior, the black hole across $r_+$, and across the "
+        "inner horizon $r_-$ a region whose singularity $r = 0$ is timelike, then a white hole and the next "
+        "exterior, without end. Each exterior ends on the conformal boundary, a timelike curve, where "
+        "Reissner-Nordström's ends on null infinity. The coordinates $t$ and $r > r_+$ cover one exterior.",
+    ] for vid in ("static_negative", "hyperbolic_negative")},
+    ("topological_black_hole", "ingoing_negative"): [
+        "The hyperbolic hole of negative mass ($k = -1$, $\\mu = -120L/343$) with the ingoing "
+        "Eddington-Finkelstein coordinates $v$ and $r$ on it. One chart covers an exterior, the black hole, and "
+        "a region inside $r_-$, and its lines of constant $v$ are ingoing light rays, which leave the conformal "
+        "boundary, cross $r_+$ and $r_-$ at 45°, and end at $r = 0$.",
+    ],
+    ("topological_black_hole", "outgoing_negative"): [
+        "The hyperbolic hole of negative mass ($k = -1$, $\\mu = -120L/343$) with the outgoing "
+        "Eddington-Finkelstein coordinates $u$ and $r$ on it, the time reverse of the ingoing ones. They cover "
+        "a region inside $r_-$, the white hole above it, and an exterior, and their lines of constant $u$ are "
+        "outgoing light rays, which leave $r = 0$, cross $r_-$ and $r_+$ at 45°, and end on the conformal boundary.",
     ],
     ("schwarzschild_ads", "static"): [
         "The Schwarzschild-anti-de Sitter black hole ($r_s = 2L$, so that $r_h = L$), maximally extended, each "

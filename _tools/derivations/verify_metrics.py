@@ -809,6 +809,29 @@ DIMENSIONS = {
     ("schwarzschild_ads", "eddington_finkelstein_ingoing"): {
         "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "L": "L",
     },
+    # The topological black holes keep anti-de Sitter's radius L and a mass parameter mu, a length,
+    # which is Schwarzschild-anti-de Sitter's r_s at k = 1. The curvature k of the horizon's own
+    # metric and its radial coordinate rho carry no dimension. Lemos's string has an angle phi and
+    # a length z; the brane's x, y and z are lengths, as in anti-de Sitter's Poincare patch, and
+    # its horizon z_h = L^2/r_h is one too.
+    ("topological_black_hole", "static"): {
+        "t": "T", "r": "L", "\\rho": "1", "\\phi": "1", "\\mu": "L", "L": "L", "k": "1",
+    },
+    ("topological_black_hole", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\rho": "1", "\\phi": "1", "\\mu": "L", "L": "L", "k": "1",
+    },
+    ("topological_black_hole", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\rho": "1", "\\phi": "1", "\\mu": "L", "L": "L", "k": "1",
+    },
+    ("topological_black_hole", "black_string"): {
+        "t": "T", "r": "L", "\\phi": "1", "z": "L", "\\mu": "L", "L": "L",
+    },
+    ("topological_black_hole", "brane"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "z_h": "L", "L": "L",
+    },
+    ("topological_black_hole", "hyperbolic"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\mu": "L", "L": "L",
+    },
     # The charged black hole in de Sitter space keeps the three lengths of its parents: r_s, the
     # charge radius r_q and Lambda, a curvature. Its cosmological chart, which exists at
     # r_q = r_s/2, carries the Hubble rate H, a frequency with 3H^2/c^2 = Lambda, as de Sitter's
