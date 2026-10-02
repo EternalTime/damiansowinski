@@ -739,6 +739,34 @@
     "embedding": "d857ba18e7d9066a"
   },
   {
+    "id": "bowers_liang",
+    "name": "Bowers-Liang Star",
+    "tags": [
+      "anisotropic pressure",
+      "tangential pressure",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "stellar interior",
+      "compactness",
+      "maximum mass",
+      "quasar",
+      "regular centre",
+      "no horizon",
+      "matched solution",
+      "mass",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "015fea84fd0fa07f",
+    "diagrams": "e3a9b0855962b188",
+    "conformal": "956299fadfc78f36",
+    "embedding": "0147ab391063a7a6"
+  },
+  {
     "id": "brans_dicke_sphere",
     "name": "Brans-Dicke Sphere",
     "tags": [
@@ -1244,7 +1272,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3d0016cb821ef322",
+    "version": "ebb679d164e04789",
     "diagrams": "dd0f4a73eb933b73",
     "conformal": "7807b351c1311ade",
     "embedding": "ab81073436048cb9"
@@ -1707,7 +1735,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "89343b9f6e12c3b0",
+    "version": "747ab33d5451cd47",
     "diagrams": "1e2a338fbaeb162f",
     "conformal": "c44e7367505c4a14",
     "embedding": "eb3c3b7b2d474485"
@@ -2924,7 +2952,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "965c74521b210a74",
+    "version": "24c44d4aa7debc95",
     "diagrams": "2c65ad1429b364b5",
     "conformal": "3e3154576237c154",
     "embedding": "70179775226b526c"
@@ -3842,7 +3870,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "2e70eaa59fa9bd3a",
+    "version": "18c049b8e1b1840d",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -3865,7 +3893,7 @@
       "idealized model",
       "conformally flat"
     ],
-    "version": "410614b106b1b9eb",
+    "version": "0cb0045da84618f1",
     "diagrams": "2c3a4f257a42be77",
     "conformal": "576471fc7fb8c666",
     "embedding": "33dc4c3913188978"
@@ -4393,7 +4421,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "2317b3f2016caa20",
+    "version": "00f9ad992113271b",
     "diagrams": "b8a9287744afbad1",
     "conformal": "f4c269030698315c",
     "embedding": "c64f1f900fa70a89"

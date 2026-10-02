@@ -9674,6 +9674,73 @@ def misner_zapolsky(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- Bowers and Liang's anisotropic star
+
+def bowers_liang(ck, src):
+    """Bowers and Liang's star with Q = 1/4, r <= R, joined at Schwarzschild's limit R = 9 r_s/8
+    to the Schwarzschild exterior of the schwarzschild entry. g_tt is continuous at R, checked,
+    so t is one coordinate, and r* = int sqrt(g_rr/(-g_tt)) dr runs from the centre through the
+    surface, which it reaches at 8.28 r_s; p, q = arctan((t -+ r*)/(9 r_s)) give Minkowski's
+    triangle with the star a timelike tube."""
+    R, scale = 1.125, 9.0
+    inner = Plane(src, "bowers_liang", "areal", ("t", "r"), EQUATOR, nr.BOWERS_LIANG_STAR)
+    outer = Plane(src, "schwarzschild", "spherical", ("t", "r"), EQUATOR, {"r_s": 1})
+    ck.limit("Bowers-Liang: g_tt is continuous at r = R",
+             [float(inner.g[0, 0].subs(inner.x1, R))], [float(outer.g[0, 0].subs(outer.x1, R))], 1e-12)
+    ck.limit("Bowers-Liang: g_rr is continuous at r = R",
+             [float(inner.g[1, 1].subs(inner.x1, R))], [float(outer.g[1, 1].subs(outer.x1, R))], 1e-12)
+    speed = sp.lambdify(inner.x1, sp.sqrt(inner.g[1, 1] / (-inner.g[0, 0])), "numpy")
+    rq = np.linspace(0, R, 300001)
+    rsq = cumulative_trapezoid(speed(rq), rq, initial=0)
+    ck.limit("Bowers-Liang: light crosses the star in 8.28 r_s/c of t", [float(rsq[-1])], [8.2818], 1e-4)
+
+    def rstar(r):
+        r = np.asarray(r, dtype=float)
+        with np.errstate(invalid="ignore", divide="ignore"):
+            outside = rsq[-1] + (r + np.log(np.abs(r - 1))) - (R + np.log(R - 1))
+        return np.where(r <= R, np.interp(r, rq, rsq), outside)
+
+    def star(t, r):
+        return mink_pq(t, rstar(r), scale)
+    ck.chart("Bowers-Liang, the star", inner, star, ck.uniform(-60, 60), ck.uniform(0.01, 1.12),
+             lambda t, r: (1, 0))
+    ck.chart("Bowers-Liang, the exterior", outer, star, ck.uniform(-60, 60), ck.uniform(1.13, 30),
+             lambda t, r: (1, 0))
+    ck.finite("Bowers-Liang: r = 0 is a regular centre",
+              inner.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+
+    v = View("areal", "Areal Radius", [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "areal")
+    v.fill("region", TRIANGLE)
+    # S_ALL is spread for a unit scale, so the times along a curve are spread for this one.
+    times = S_ALL * scale
+    ps, qs = mink_pq(times, rstar(R), scale)
+    v.fill("cover", [[0, -PI]] + [point(p, q) for p, q in zip(ps, qs)] + [[0, PI]])
+    for r in (0.375, 0.75):
+        v.curve("r", *star(times, np.full_like(times, r)))
+    for r in (2.0, 4.0, 16.0):
+        v.curve("r2", *star(times, np.full_like(times, r)))
+    rr = np.concatenate([np.linspace(0, R, 60)[:-1], R + np.exp(np.linspace(-6, 9, 200)) - np.exp(-6)])
+    for t in (-36, -18, -9, 0, 9, 18, 36):
+        v.curve("t", *star(np.full_like(rr, t), rr))
+    v.curve("surface", ps, qs)
+    triangle_edges(v)
+    label_on(v, mink_pq(0, rstar(R), scale), "$r = R$")
+    v.label_xt([0.35, 0.0], "star", cls="region")
+    v.legend("cover", "the star, which the interior solution covers")
+    v.legend("r", "$r$ constant inside, at $0.375$ and $0.75\\,r_s$")
+    v.legend("r2", "$r$ constant outside, at $2$, $4$ and $16\\,r_s$")
+    v.legend("t", "$t$ constant, one $t$ on both sides, at $0$, $\\pm 9$, $\\pm 18$ and $\\pm 36\\,r_s/c$")
+    v.legend("surface", "the surface of the star")
+    v.legend("centre", "$r = 0$, a regular centre")
+    v.set(settings="$Q = 1/4$ and $R = 9r_s/8$.")
+    star_moment = slices.moments("bowers_liang")[0]
+    # The star is read in its own chart and the exterior in Schwarzschild's, and the slice crosses both.
+    lo, hi = star_moment.reach(coordinate="r")
+    rr = np.concatenate([np.linspace(lo, R, 40), R + np.geomspace(1e-6, hi - R, 200)])
+    v.slice(star_moment, [star(0 * rr, rr)])
+    return [v]
+
+
 # ---------------------------------------------------------------- Tolman's solution VII
 
 def tolman_vii(ck, src):
@@ -21117,7 +21184,7 @@ DRAWN = {
     "lindquist_wheeler_lattice": lindquist_wheeler_lattice,
     "semiclosed_world": semiclosed_world,
     "datt_ruban_t_models": datt_ruban_t_models,
-    "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii, "misner_zapolsky": misner_zapolsky,
+    "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "bowers_liang": bowers_liang, "boson_star": boson_star, "tolman_vii": tolman_vii, "misner_zapolsky": misner_zapolsky,
     "bonnor_charged_dust": bonnor_charged_dust,
     "bartnik_mckinnon": bartnik_mckinnon,
     "nordstrom_scalar": nordstrom_scalar,
@@ -23568,6 +23635,16 @@ CAPTIONS = {
         "$a = m$, $u_0 = 1$) over time, each point in the diagram a single event at the height $a\\sinh u$. "
         "The lines of constant $u$ outside the spheroid crowd toward null infinity, since the height grows as "
         "$e^u$.",
+    ],
+    ("bowers_liang", "areal"): [
+        "A static star of uniform density with unequal pressures ($Q = 1/4$), joined at Schwarzschild's limit "
+        "($R = 9r_s/8$) to the Schwarzschild exterior, each point in the diagram a 2-sphere of radius $r$. The "
+        "central pressure is finite, as it is for every $r_s/R < 1 - 3^{-1/Q} = 80/81$, and the star has no "
+        "horizon.",
+        "At the surface $g_{tt} = -(1 - r_s/R)$ on both sides, so $t$ is one coordinate throughout. The "
+        "tortoise coordinate $r_* = \\int\\sqrt{g_{rr}/(-g_{tt})}\\,dr$ runs from the centre through the "
+        "surface, which it reaches at $8.3\\,r_s$, and $p, q = \\arctan((ct \\mp r_*)/9r_s)$ bring the "
+        "spacetime into Minkowski's triangle, with the star a timelike tube from $i^-$ to $i^+$.",
     ],
     ("tolman_vii", "spherical"): [
         "A static star whose density falls as $1 - r^2/R^2$ to an empty surface, joined at $R = 2\\,r_s$ "
