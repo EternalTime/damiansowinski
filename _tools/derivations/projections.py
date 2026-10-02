@@ -241,6 +241,10 @@ def generators(sl, x, orient="vector", n=RIM):
         e0 = J @ np.array([1.0, 0.0, 0.0])
     elif orient == "tau":
         e0 = -np.linalg.inv(G) @ (Ji.T @ np.array([1.0, 0.0, 0.0]))
+    elif not isinstance(orient, str):
+        # A vector of the slice's own coordinates, for a spacetime with no arrow of time of its
+        # own, as Tippett and Tsang's has none: the figure says which way it takes the future.
+        e0 = J @ np.asarray(orient, dtype=float)
     else:
         raise ValueError(orient)
     norm = e0 @ G @ e0
@@ -807,6 +811,92 @@ def bubble(spec, camera=Camera(-90, 30), later=0.75):
     return fig.done(), sl
 
 
+def time_machine_ring(spec, camera=Camera(-62, 20), size=0.26):
+    """Tippett and Tsang's bubble on the slice z = 0 of t, x and y, drawn cartesian with t up: the
+    wall h = 1/2, a closed timelike curve inside it and future light cones.
+
+    On this slice the declared bubble is the tube y^4 + (xi^2 - A^2)^2 < R^4 round the circle
+    xi = A of the plane of ct and x, with xi^2 = x^2 + c^2t^2, a ring standing on its edge. Its wall
+    is drawn as the four circles where it meets y = 0 and xi = A and as its sections at twelve
+    angles lambda of that plane, each checked to lie where the declared h is 1/2. The circle
+    xi = A, y = 0 is checked against the published metric to be timelike all the way round, with
+    g(u, u) = -xi^2 (1 - 2(1 - h) sin^2(lambda)) for u = d/d lambda, within a hundredth of -xi^2
+    since the declared h is 0.9993 at the centre of the box. Cones stand at eight
+    places round that circle, oriented by d/d lambda, counterclockwise, at four places on the axis
+    of the ring and at four outside it, oriented by t: the choice of Tippett and Tsang's figure 3,
+    and each is a time direction where it is used, which generators() checks."""
+    sl = Slice(spec.metric, spec.system, ("t", "x", "y"), "cartesian", spec.params, spec.fixed,
+               spec.functions)
+    h = sp.lambdify(sl.symbols, sl.prep(sl.reader.parameters["h"]), "numpy")
+    # The sizes are read off the declared h: it is 1/2 on y = 0 at xi^2 = A^2 -+ R^2.
+    inner = root(lambda x: float(h(0.0, x, 0.0)) - 0.5, 0.3, 1.0)
+    outer = root(lambda x: float(h(0.0, x, 0.0)) - 0.5, 1.0, 1.5)
+    A = float(np.sqrt((inner ** 2 + outer ** 2) / 2))
+    R = float(np.sqrt((outer ** 2 - inner ** 2) / 2))
+    if not abs(float(h(0.0, A, R)) - 0.5) < 1e-12:
+        raise SystemExit(f"{key(spec)}: the declared bubble is not the box y^4 + (xi^2 - A^2)^2 = R^4")
+
+    def ring(xi, y, n=241):
+        a = np.linspace(0, 2 * np.pi, n)
+        return np.column_stack([xi * np.cos(a), np.full(n, y), xi * np.sin(a)])
+
+    def section(lam, n=161):
+        b = np.linspace(0, 2 * np.pi, n)
+        u, v = np.cos(b), np.sign(np.sin(b)) * np.sqrt(np.abs(np.sin(b)))      # u^2 + v^4 = 1
+        xi = np.sqrt(A * A + R * R * u)
+        return np.column_stack([xi * np.cos(lam), R * v, xi * np.sin(lam)])
+
+    wall = [ring(inner, 0.0), ring(outer, 0.0), ring(A, R), ring(A, -R)] + [section(k * np.pi / 6) for k in range(12)]
+    miss = max(float(np.abs(h(P[:, 2], P[:, 0], P[:, 1]) - 0.5).max()) for P in wall)
+    if not miss < 1e-9:
+        raise SystemExit(f"{key(spec)}: a line of the wall misses h = 1/2 by {miss:.1e}")
+    for lam in np.linspace(0, 2 * np.pi, 97):
+        at = (A * np.sin(lam), A * np.cos(lam), 0.0)
+        u = np.array([at[1], -at[0], 0.0])              # d/d lambda = x d_ct - ct d_x
+        centre = float(h(*at))
+        wanted = -A * A * (1 - 2 * (1 - centre) * np.sin(lam) ** 2)
+        if not (abs(u @ sl.metric(at) @ u - wanted) < 1e-12 * A * A and wanted < -0.99 * A * A):
+            raise SystemExit(f"{key(spec)}: the circle xi = A is not timelike at lambda = {lam}")
+
+    fig = Figure(spec.view, spec.label, camera)
+    reach = 1.9 * A
+    for y in (-reach, 0.0, reach):
+        fig.line("floor", np.array([[-reach, y, 0], [reach, y, 0]]))
+    for x in (-reach, 0.0, reach):
+        fig.line("floor", np.array([[x, -reach, 0], [x, reach, 0]]))
+    fig.line("axis", np.array([[0, 0, -1.7 * A], [0, 0, 1.7 * A]]))
+    for P in wall:
+        fig.line("edge", P)
+    fig.line("ctc", ring(A, 0.0))
+    cones = []
+    for k in range(8):
+        lam = (k + 0.5) * np.pi / 4
+        at = (A * np.sin(lam), A * np.cos(lam), 0.0)
+        cones.append(future_cone(sl, at, size, (at[1], -at[0], 0.0)))
+    for t in (-1.5 * A, -0.5 * A, 0.5 * A, 1.5 * A):
+        cones.append(future_cone(sl, (t, 0.0, 0.0), size, "tau"))
+    for x in (-1.7 * A, 1.7 * A):
+        for t in (-0.9 * A, 0.9 * A):
+            cones.append(future_cone(sl, (t, x, 0.0), size, "tau"))
+    for apex, rim in sorted(cones, key=lambda c: camera.depth(c[0])):
+        fig.cone(apex, rim)
+    # The moment the embedding diagram draws, ct = A/2 over the plane of its height.
+    m = slices.moments(spec.metric, label="$ct = A/2$")[0]
+    u, v = m.grid()["u"], m.grid()["v"]
+    if not (u[-1] <= reach and v[-1] <= reach):
+        raise SystemExit(f"{key(spec)}: the embedding's plane passes the floor's edge")
+    fig.slice(m, fills=[[np.array([[u[0], v[0], slices.TIPPETT_TSANG_T], [u[-1], v[0], slices.TIPPETT_TSANG_T],
+                                   [u[-1], v[-1], slices.TIPPETT_TSANG_T], [u[0], v[-1], slices.TIPPETT_TSANG_T],
+                                   [u[0], v[0], slices.TIPPETT_TSANG_T]])]])
+    fig.label(np.array([0, 0, 1.7 * A]), "$t$", "b", dy=-4)
+    fig.label(np.array([reach, 0, 0]), "$x$", "l", dx=4)
+    fig.label(np.array([0, reach, 0]), "$y$", "l", dx=4)
+    fig.legend("line", "ctc", "a closed timelike curve, $x^2 + c^2t^2 = A^2$")
+    fig.legend("line", "edge", "the wall of the bubble, $h = 1/2$")
+    fig.legend("cone", "cone", "future light cone")
+    return fig.done(), sl
+
+
 CAPTIONS = {
     ("gott_time_machine", "centre_of_momentum", "loop"): [
         "The slice $z = 0$ of $t$, $x$, and $y$ in the centre of momentum frame, $t$ up, for two strings "
@@ -820,6 +910,17 @@ CAPTIONS = {
         "-3\\ell/2$ at $t = 0$. It returns below the lower string in the same way, through the event $E$, and "
         "arrives at $A$ as it leaves. Each of the four stretches lies inside the future light cone at its start, "
         "so the whole is a closed timelike curve.",
+    ],
+    ("tippett_tsang", "cartesian", "ring"): [
+        "The slice $z = 0$ of $t$, $x$, and $y$, $t$ up, with Tippett and Tsang's bubble. Its wall is a tube bent "
+        "round the circle $x^2 + c^2t^2 = A^2$, a ring standing on its edge in the plane of $t$ and $x$. A cut "
+        "of the ring at one $t$ is what someone outside sees at that moment: no bubble before $ct = "
+        "-\\sqrt{A^2 + R^2}$, then one that splits in two, two at rest at $t = 0$, and one again before it "
+        "disappears.",
+        "Inside the tube the light cones turn with the angle $\\lambda$ of the plane of $t$ and $x$, so a rider "
+        "who stays at the centre of the box follows the circle drawn, a closed timelike curve. We take the future "
+        "counterclockwise round that circle and upward outside the bubble, as Tippett and Tsang did. On the side "
+        "$x < 0$ the cones inside the tube point down in $t$ beside cones outside that point up.",
     ],
     ("lifshitz_spacetime", "poincare", "rays"): [
         "The plane $y = 0$ seen from the side, $t$ left out, with $x$ across and the depth $u$ down from the "
@@ -1107,6 +1208,9 @@ FIGURES = [
                lambda spec: wormhole_trip(spec), {"b": 1}, {"Y": "0"},
                input="Mouths of radius $b = r_0$ that start $D = 10\\,r_0$ apart, the right one on a round trip "
                      "with rapidity $\\eta = \\tfrac{3}{2}\\sin^3(2\\pi\\tau/P)$ and $P = 54\\,r_0/c$."),
+    # Tippett and Tsang's bubble as its flat views declare it, in units of A.
+    Projection("tippett_tsang", "cartesian", "ring", "the bubble in three dimensions", time_machine_ring, {},
+               {"z": "0"}, input=nr.TT_INPUT, functions={"h": nr.TT_H}),
     # Alcubierre's bubble at the speed and with the profile its flat view declares.
     Projection("alcubierre", "cartesian", "bubble", "the bubble in three dimensions", bubble, {}, {"z": "0"},
                input="$v_s = 2$, and Alcubierre's own profile, "

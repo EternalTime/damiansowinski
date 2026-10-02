@@ -7810,6 +7810,82 @@ def alcubierre(ck, src):
                         f"is fastest, $\\theta = {most:.4f}\\,c/R$.")]
 
 
+def tippett_tsang(ck, src):
+    """How far Tippett and Tsang's bubble turns the light cone, drawn as a height over the plane
+    z = 0 at ct = A/2, for the bubble the spacetime diagrams declare, in units of A. On the plane of
+    t and x the published metric is N [-(cos(chi) c dt + sin(chi) dx)^2 + (cos(chi) dx - sin(chi) c dt)^2]
+    with tan(2 chi) = g_tx/g_xx, so the two null directions stand 45 degrees on either side of an
+    axis turned by chi from the t axis toward -x: chi = (1/2) atan2(g_tx, g_xx), 0 outside the
+    bubble and the angle lambda of the plane of ct and x inside it, counted from the nearer half
+    of the x axis. At ct = A/2 the two boxes stand about x = +-sqrt(3) A/2, where lambda is 30 and
+    150 degrees, so the height is pi/6 in the one and -pi/6 in the other, and it rises toward the
+    inner walls, where lambda is nearest 90 degrees. This moment of t is a moment of space
+    everywhere, since c^2t^2 < (A^2 - R^2)/2, which is checked on the published g_xx. Over
+    |x| <= 1.6 A and |y| <= 1.2 A on a Cartesian grid with its lines every A/5, with the level
+    lines where the turn is half that at the centre of each box marked. The height is a plot
+    over the coordinates and no embedding. _tools/derivations/tippett_tsang.md is the derivation."""
+    T = 0.5
+    src.note("tippett_tsang", "cartesian", FIELDS)
+    _, entry, R = nr.load("tippett_tsang", "cartesian")
+    g = nr.published_matrix(R, entry, "metric_components")
+    names = {R._plain(n): s_ for n, s_ in R.symbol.items()}
+    h = R.parameters["h"]
+    bubble = sp.sympify(nr.TT_H, locals=names)
+    t, x, y, z = (R.symbol[c] for c in ("t", "x", "y", "z"))
+    at = {t: T, z: 0, R.c: 1}
+    gxx, gtx, gtt = (sp.lambdify((x, y), g[i, j].subs(h, bubble).subs(at), "numpy") for i, j in ((1, 1), (0, 1), (0, 0)))
+
+    def height(X, Y):
+        X, Y = np.asarray(X, dtype=float), np.asarray(Y, dtype=float)
+        return 0.5 * np.arctan2(gtx(X, Y), gxx(X, Y))
+    pts = np.random.default_rng(5).uniform([-1.6, -1.2], [1.6, 1.2], (4000, 2))
+    chi = height(pts[:, 0], pts[:, 1])
+    a, b, c_ = gtt(pts[:, 0], pts[:, 1]), gtx(pts[:, 0], pts[:, 1]), gxx(pts[:, 0], pts[:, 1])
+    miss = 0.0
+    for side in (1, -1):
+        k0, k1 = np.cos(chi + side * np.pi / 4), -np.sin(chi + side * np.pi / 4)
+        miss = max(miss, float(np.max(np.abs(a * k0 * k0 + 2 * b * k0 * k1 + c_ * k1 * k1))))
+    ck.add("Tippett-Tsang: the directions 45 degrees either side of the axis turned by chi are null", miss, 1e-12)
+    ck.exact("Tippett-Tsang: the moment ct = A/2 is a moment of space, g_xx > 0 on it",
+             bool(np.all(c_ > 0)) and bool(np.all(gxx(np.linspace(-1.6, 1.6, 6401), 0.0) > 0)))
+    centre = math.sqrt(3) / 2
+    ck.add("Tippett-Tsang: at the centre of the right box the cone is turned by 30 degrees, to a thousandth",
+           abs(float(height(centre, 0.0)) - math.pi / 6), 1e-3)
+    ck.add("Tippett-Tsang: at the centre of the left box it is turned by as much the other way",
+           abs(float(height(-centre, 0.0)) + float(height(centre, 0.0))), 1e-12)
+    ck.add("Tippett-Tsang: outside both boxes it is not turned", abs(float(height(0.0, 0.0))) + abs(float(height(1.5, 1.0))), 1e-9)
+    wide, deep = 1.6, 1.2
+    size = 2 * wide
+    along = [round(-wide + 0.2 * n, 10) for n in range(17)]
+    across = [round(-deep + 0.2 * n, 10) for n in range(13)]
+    plane = GridPiece("plane", "sheet", "cartesian", along, across, height, "tippett_tsang", "cartesian",
+                      "the plane runs on, flat, where $h = 0$", size, {"u": along[1:-1], "v": across[1:-1]})
+    X, Y = plane.plane()
+    ck.add("Tippett-Tsang: the height at every node is half the angle of the published g_tx and g_xx",
+           float(np.max(np.abs(plane.Z - height(X, Y)))), 1e-7)
+    ck.add("Tippett-Tsang: every triangle of the grid lies on the height, in space", plane.sag() / size, GRID_SAG)
+    curves = []
+    for sign, side in ((1, "right"), (-1, "left")):
+        found = level_curves(plane, sign * math.pi / 12)
+        ck.exact(f"Tippett-Tsang: the turn of 15 degrees is one closed curve round the {side} box",
+                 len(found) == 1 and found[0][1])
+        C = finely(np.vstack([found[0][0], found[0][0][:1]]), size / 360)[:-1]
+        ck.exact(f"Tippett-Tsang: that curve lies on the {side}", bool(np.all(np.sign(C[:, 0]) == sign)))
+        ck.on_piece(f"Tippett-Tsang, the curve on the {side}", plane, C)
+        curves.append(Curve(plane, "wall", C, closed=True))
+    surface = Surface([plane], curves=curves)
+    fig = figure_of([surface], {"sheet": "cover"}, size, HEIGHT_CAMERA)
+    fig.legend("fill", "cover", "the turn of the light cone as a height over the plane $z = 0$ at $ct = A/2$")
+    fig.legend("line", "grid", "$x$ constant and $y$ constant, every $A/5$")
+    fig.legend("line", "wall", "where the cone is turned by $15°$, half the turn at the centre of each box")
+    most = float(np.max(plane.Z))
+    return [view("plane", "The two bubbles", "$A$", [surface], fig.done(),
+                 settings="$ct = A/2$ and $z = 0$, with $A = 1$, the unit of every length.",
+                 input=nr.TT_INPUT,
+                 height="$\\tfrac{1}{2}\\arctan(g_{tx}/g_{xx})$ in radians, a height of $A$ for a turn of one radian: "
+                        f"$\\pm\\pi/6$ at the centres of the two boxes and $\\pm{most:.4f}$ at their inner walls.")]
+
+
 def natario(ck, src):
     """The energy density of the observers who ride the slices, drawn as a height over the plane
     z = 0 of the ship's path at t = 0, with the zero expansion field the spacetime diagram
@@ -11745,6 +11821,7 @@ DRAWN = {
     "pp_wave": pp_wave, "khan_penrose": khan_penrose, "bell_szekeres": bell_szekeres,
     "light_beam": light_beam,
     "krasnikov": krasnikov,
+    "tippett_tsang": tippett_tsang,
     "alcubierre": alcubierre,
     "natario": natario,
     "btz": btz,
@@ -13538,6 +13615,17 @@ CAPTIONS = {
         "it. At $cu = 0.66\\,L$ every particle reaches the $x$ axis at once, and past it the ring turns inside out. "
         "Roger Penrose showed in 1965 that this focusing keeps every plane wave spacetime from being globally "
         "hyperbolic.",
+    ],
+    ("tippett_tsang", "plane"): [
+        "The turn of the light cone in Tippett and Tsang's bubble, drawn as a height over the plane $z = 0$ at the "
+        "moment $ct = A/2$, the height the angle alone ($A$ for one radian). On the plane of $t$ and $x$ the two "
+        "null directions stand $45°$ on either side of an axis, and the height is the angle of that axis from "
+        "the $t$ axis: $0$ outside the bubble, where the cone is upright, and inside it the angle $\\lambda$ of "
+        "the plane of $t$ and $x$.",
+        "At this moment someone outside sees two boxes, about $x = \\pm\\sqrt{3}A/2$, on their way back toward each "
+        "other. In the right one the cone is turned by $30°$ and in the left one by as much the other way, more "
+        "toward the inner walls and less toward the outer. A rider in the right box is on her way up the circle; "
+        "in the left box she has been over the top, and her future points down in $t$.",
     ],
     ("krasnikov", "plane"): [
         "The tilt of the light cone in the Krasnikov tube, $1 - k$, drawn as a height over the plane of the tube's "

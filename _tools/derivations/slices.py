@@ -873,6 +873,15 @@ def _krasnikov():
 
 
 KRASNIKOV_T = 5.0               # ct of the height, in rho_0, as the embedding's settings state
+TIPPETT_TSANG_T = 0.5           # ct of the height, in A, as the embedding's settings state
+
+
+def _tippett_tsang(event):
+    """Tippett and Tsang's moment ct = A/2 over the width of the height's plane, each point of it
+    carried into a chart by `event`, x -> (the chart's time, its drawn coordinate)."""
+    m = moments("tippett_tsang", label="$ct = A/2$")[0]
+    u = m.grid()["u"]
+    return [Mark(m, [[event(x) for x in np.linspace(u[0], u[-1], 321)]])]
 
 
 def _rn(view_id):
@@ -2022,6 +2031,11 @@ FLAT = {
     ("alcubierre", "cartesian", "tx"): lambda: one("alcubierre", lambda m: across(0.0, 0.0, m.grid()["u"][-1])),
     ("natario", "cartesian_flow", "tx"): lambda: one("natario", lambda m: across(0.0, 0.0, m.grid()["u"][-1])),
     ("krasnikov", "cylindrical", "tx"): _krasnikov,
+    # Tippett and Tsang's moment ct = A/2 across the whole plane of the height, |x| <= 1.6 A, and in the
+    # polar chart the same line, xi sin(lambda) = A/2.
+    ("tippett_tsang", "cartesian", "tx"): lambda: _tippett_tsang(lambda x: (TIPPETT_TSANG_T, x)),
+    ("tippett_tsang", "polar", "strip"): lambda: _tippett_tsang(
+        lambda x: (math.atan2(TIPPETT_TSANG_T, x), math.hypot(TIPPETT_TSANG_T, x))),
     # Van Den Broeck's pocket at t = 0, read in the proper distance l: the comoving radius of the
     # circle at l is vdb_radius(l), which is also |x| on the axis of the Cartesian chart at t = 0.
     ("van_den_broeck", "proper_radial", "radial"): lambda: one(
@@ -2255,6 +2269,8 @@ HIDDEN = {
     ("plebanski_hacyan", "plane"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
     ("plebanski_hacyan", "plane_null"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
     ("plebanski_hacyan", "plane_static"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
+    ("tippett_tsang", "interior", "tx"): "the flat spacetime inside the bubble continued over the whole plane, another spacetime than the bubble whose moment is embedded",
+    ("tippett_tsang", "rindler", "plane"): "the flat spacetime inside the bubble continued over the whole plane, another spacetime than the bubble whose moment is embedded",
     ("siklos", "kaigorodov_stationary", "plane"): "the region x < 0 of Siklos's chart, another region than the one whose wave front is embedded",
     ("btz", "stationary", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "eddington_finkelstein_ingoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",

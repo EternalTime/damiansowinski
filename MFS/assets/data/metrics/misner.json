@@ -52,6 +52,11 @@
       "id": "ori_time_machine",
       "kind": "generalisation",
       "text": "Misner space with a gravitational wave added. Amos Ori's vacuum core of 2005 is curved, and its closed null geodesics are isolated circles, where Misner's fill the whole horizon [ori2005]."
+    },
+    {
+      "id": "tippett_tsang",
+      "kind": "composite",
+      "text": "A bubble whose inside is Misner space's Rindler region, the time $\\eta$ running once round $2\\pi$, set in Minkowski space by a wall of exotic matter [tippett2017]."
     }
   ],
   "references": [
@@ -71,7 +76,8 @@
     "berkooz2004",
     "banados1993",
     "morris1988prl",
-    "ori2005"
+    "ori2005",
+    "tippett2017"
   ],
   "coordinates": [
     {
