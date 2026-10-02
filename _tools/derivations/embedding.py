@@ -10976,6 +10976,51 @@ def einstein_1912_static(ck, src):
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
     return [view("equator", "The equator", "$m$", [surface], fig.done(),
                  settings="$m = 1$, the unit of every length.")]
+TILTED_MOMENT = 3.0     # the eta of the surface of homogeneity of Farnsworth's dust that is embedded
+
+
+def tilted_universes(ck, src):
+    """The slice z = 0 of one surface of homogeneity of Farnsworth's dust above its Cauchy horizon,
+    eta = 3 at W = C = 1, as its other diagrams draw the dust. The metric on it is
+    (X^2 - C^2) dr^2 + Y^2 e^(-2r) dy^2, a hyperbolic plane whose radius of curvature is
+    l = sqrt(X^2 - C^2), ruled by the horocycles of constant r. The strip 0 <= y < 2 pi of it is rolled
+    up, y for the angle, so the circle at r has the radius Y e^(-r) and the surface rises at
+    dz/dr = sqrt(l^2 - Y^2 e^(-2r)): Beltrami's pseudosphere of radius l, from its rim r = ln(Y/l),
+    where the circles have grown as fast as the distance out to them, three units of r up the horn.
+    Below the rim g_rr < (drho/dr)^2, which is checked, and no surface of revolution carries it.
+    l falls to zero on the horizon, where X = C."""
+    eta = TILTED_MOMENT
+    Y = math.sinh(eta / 2) ** 2
+    X = Y - 1 / math.tanh(eta / 2)
+    ell = math.sqrt(X * X - 1)
+    rim = math.log(Y / ell)
+    size = 2 * ell
+    sl = Slice(src, "tilted_universes", "farnsworth", "r", "y", {"eta": repr(eta), "z": 0}, dict(nr.TILTED_DUST))
+    horn = Piece("horn", "sheet", sl, rim, rim + 3.0, 0.0, 1,
+                 (("stops", "the rim $r = 0.32$, below which the circles grow faster than the distance out to them"),
+                  ("edge", "the horn runs on, narrowing, to $r \\to \\infty$")),
+                 [(1.0, "r", None), (2.0, "r", None), (3.0, "r", None)], size)
+    where = "tilted universes, a surface of homogeneity"
+    ck.add(f"{where}: the radius of curvature at eta = 3 is 3.28 W and the rim is at r = 0.32",
+           max(abs(round(ell, 2) - 3.28), abs(round(rim, 2) - 0.32)), 1e-12)
+    ck.isometry(where, horn)
+    ck.radius(f"{where}, rho = Y e^(-r)", horn, lambda r: Y * np.exp(-r), size)
+    # The tractrix of radius l: z = l (artanh(s) - s) with s = sqrt(1 - (Y e^(-r)/l)^2).
+    ck.form(f"{where}, the pseudosphere z = l (artanh(s) - s)", horn,
+            lambda r: ell * (np.arctanh(np.sqrt(1 - (Y * np.exp(-r) / ell) ** 2))
+                             - np.sqrt(1 - (Y * np.exp(-r) / ell) ** 2)), size)
+    below = np.linspace(rim - 3.0, rim - 1e-3, 200)
+    ck.add(f"{where}: below the rim the circles outgrow the distance, Y e^(-r) > l",
+           0.0 if np.all(Y * np.exp(-below) > ell) else 1.0, 0.5)
+    surface = Surface([horn])
+    fig = figure_of([surface], {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the strip $0 \\le y < 2\\pi$ of the slice $z = 0$ of the surface $\\eta = 3$, rolled up, "
+                                "from the rim $r = 0.32$ up the horn")
+    fig.legend("line", "r", "$r$ constant, at $1$, $2$, and $3$, each a circle of circumference $2\\pi Ye^{-r}$")
+    fig.legend("line", "meridian", "$y$ constant, every $30°$")
+    return [view("homogeneity", "A surface of homogeneity", "$W$", [surface], fig.done(),
+                 settings="Farnsworth's dust with $W$ the unit of every length and the tilt $C = W$, on the surface "
+                          "$\\eta = 3$, where $Y = 4.53\\,W$ and $X = 3.43\\,W$.")]
 
 
 def btz(ck, src):
@@ -14940,6 +14985,7 @@ DRAWN = {
     "kopczynski_trautman": kopczynski_trautman,
     "ab_metrics": ab_metrics,
     "small_universes": small_universes,
+    "tilted_universes": tilted_universes,
     "alcubierre": alcubierre,
     "natario": natario,
     "btz": btz,
@@ -16058,6 +16104,16 @@ CAPTIONS = {
         "The surface begins at the rim $x = 0$. Below it the circles grow faster than the distance out to them, "
         "and no surface of revolution in flat space carries them. Up the horn the circles shrink without limit "
         "while the curvature stays $-1/a_0^2$ at every point.",
+    ],
+    ("tilted_universes", "homogeneity"): [
+        "The slice $z = 0$ of one surface of homogeneity of Farnsworth's dust, $\\eta = 3$, drawn as a surface in "
+        "flat space with every distance along it the metric distance. On it the metric is "
+        "$(X^2 - C^2)\\,dr^2 + Y^2e^{-2r}dy^2$, a hyperbolic plane whose radius of curvature is "
+        "$\\sqrt{X^2 - C^2} = 3.28\\,W$. A strip of it one turn of $y$ wide is rolled up into Eugenio Beltrami's "
+        "pseudosphere, and the plane itself runs on in $y$ without closing.",
+        "The surface begins at the rim $r = 0.32$. Below it the circles grow faster than the distance out to them, "
+        "and no surface of revolution in flat space carries them. The radius of curvature falls to zero on the "
+        "Cauchy horizon, where $X = C$, and under the horizon the surfaces of homogeneity are timelike.",
     ],
     ("melvin", "universe"): [
         "The plane $z = 0$ of Melvin's universe at one moment ($B = 1$), drawn as a surface in flat space with "

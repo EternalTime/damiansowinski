@@ -64,6 +64,11 @@
       "id": "misner",
       "kind": "family",
       "text": "Flat spacetime with events identified under a boost, as space is identified here under translations. Misner's identification makes closed timelike curves, and the torus makes none [misner1967]."
+    },
+    {
+      "id": "tilted_universes",
+      "kind": "family",
+      "text": "The horn's coordinates with $y$ and $z$ left open and the matter drifting along $x$. Farnsworth's dust is the open universe of dust given such a tilt [anton2023]."
     }
   ],
   "references": [
@@ -92,7 +97,8 @@
     "petersen2023",
     "martinbenito2011",
     "desitter1917",
-    "misner1967"
+    "misner1967",
+    "anton2023"
   ],
   "coordinates": [
     {

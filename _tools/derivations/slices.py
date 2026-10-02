@@ -1017,6 +1017,8 @@ def _penrose_wave(view):
     return out
 
 
+TILTED_MOMENT = 3.0                        # the eta of the surface of Farnsworth's dust that is embedded
+TILTED_LABEL = "$\\eta = 3$"
 SMALL_NOW = 1.2 - 0.22 * math.log(11)      # the moment the small universes' horn is embedded at, in a_0
 
 
@@ -2890,6 +2892,12 @@ FLAT = {
     # The horn is embedded at the moment its spacetime diagram starts the dust from, ct = 6/5 - (11/50) ln 11.
     ("small_universes", "horn", "along"): lambda: one(
         "small_universes", lambda m: along(SMALL_NOW, *m.reach("horn", "x")), view_id="horn"),
+    # Farnsworth's dust is embedded on its surface of homogeneity eta = 3, where u = (sinh 3 - 3)/2 W.
+    ("tilted_universes", "farnsworth", "dust"): lambda: one(
+        "tilted_universes", lambda m: along(TILTED_MOMENT, *m.reach("farnsworth", "r")), label=TILTED_LABEL),
+    ("tilted_universes", "homogeneous", "dust"): lambda: one(
+        "tilted_universes", lambda m: along((math.sinh(TILTED_MOMENT) - TILTED_MOMENT) / 2, *m.reach("farnsworth", "r")),
+        label=TILTED_LABEL),
     ("oppenheimer_snyder", "interior_comoving", "through"): _os_interior,
     ("semiclosed_world", "comoving", "dust"): lambda: _scw_dust(False),
     ("semiclosed_world", "conformal", "dust"): lambda: _scw_dust(True),
@@ -2964,6 +2972,8 @@ FLAT_METRICS = {key[0] for key in FLAT}
 # The moving mirror's embedding view is a height over a stretch of spacetime, t and x both.
 MIRROR_NO_MOMENT = "the radiation is drawn as a height over a region of the plane of t and x, which is no moment of the spacetime"
 HIDDEN = {
+    ("tilted_universes", "flat_model", "model"): "the flat model, another spacetime than Farnsworth's dust, whose surface of homogeneity is embedded",
+    ("tilted_universes", "inertial", "model"): "the flat model, another spacetime than Farnsworth's dust, whose surface of homogeneity is embedded",
     ("datt_ruban_t_models", "comoving", "tube"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",
     ("datt_ruban_t_models", "ruban", "tube"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",
     ("datt_ruban_t_models", "areal", "expansion"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",
