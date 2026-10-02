@@ -5862,9 +5862,14 @@ def _sads_rstar(r):
     return 0.25 * np.log(np.abs(r - 1)) - 0.125 * np.log(r * r + r + 2) + 5 / (4 * w) * np.arctan((2 * r + 1) / w)
 
 
+def _bardeen_rstar(r):
+    """Bardeen's tortoise coordinate at r_s = 1 and g = 1/3, which the slices share."""
+    import slices
+    return slices.bardeen_rstar(r)
+
+
 def _bardeen_away(x, r):
-    lo, hi = slices.BARDEEN_HORIZONS
-    return (np.abs(r - lo) > 0.05) & (np.abs(r - hi) > 0.05)
+    return (np.abs(r - 0.30096) > 0.05) & (np.abs(r - 0.77542) > 0.05)
 
 
 def _sds_away(x, r):
@@ -6050,11 +6055,11 @@ CLOSED_FORMS = {
     ("reissner_nordstrom_de_sitter", "cosmological", "plane"):
         (lambda tau, rho: _rnds_cosmic(tau, rho, 1), lambda tau, rho: _rnds_cosmic(tau, rho, -1), _rnds_cosmic_away),
     ("bardeen", "static", "radial"):
-        (lambda t, r: t + slices.bardeen_rstar(r), lambda t, r: t - slices.bardeen_rstar(r), _bardeen_away),
+        (lambda t, r: t + _bardeen_rstar(r), lambda t, r: t - _bardeen_rstar(r), _bardeen_away),
     ("bardeen", "eddington_finkelstein_ingoing", "finkelstein"):
-        (lambda v, r: v, lambda v, r: v - 2 * slices.bardeen_rstar(r), _bardeen_away),
+        (lambda v, r: v, lambda v, r: v - 2 * _bardeen_rstar(r), _bardeen_away),
     ("bardeen", "eddington_finkelstein_outgoing", "finkelstein"):
-        (lambda u, r: u + 2 * slices.bardeen_rstar(r), lambda u, r: u, _bardeen_away),
+        (lambda u, r: u + 2 * _bardeen_rstar(r), lambda u, r: u, _bardeen_away),
     ("schwarzschild_de_sitter", "static", "radial"):
         (lambda t, r: t + _sds_rstar(r), lambda t, r: t - _sds_rstar(r), _sds_away),
     ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "finkelstein"):

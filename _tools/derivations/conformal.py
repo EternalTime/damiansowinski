@@ -93,6 +93,7 @@ import sys
 import time
 from pathlib import Path
 
+import mpmath
 import numpy as np
 import sympy as sp
 from scipy import integrate, special
@@ -1330,8 +1331,10 @@ def reflect(p, q, up):
 class TowerDrawing:
     """The cells of a Tower, drawn with their grids and edges."""
 
-    def __init__(self, T, singular, rmin):
-        self.T, self.singular, self.rmin = T, singular, rmin
+    def __init__(self, T, singular, rmin, regular=False):
+        # `singular` says the tower ends on r = 0, and `regular` that r = 0 is a centre there,
+        # as Bardeen's is, drawn as a centre where Reissner-Nordstrom's is drawn as a singularity.
+        self.T, self.singular, self.rmin, self.regular = T, singular, rmin, regular
         self.rp, self.rm = T.rf[0], T.rf[1]
 
     def r_range(self, cell):
@@ -1387,7 +1390,10 @@ class TowerDrawing:
             ps, qs = self.singularity()
             if cell == "III'":
                 ps, qs = qs, ps
-            v.curve("singular", *reflect(ps, qs, up), zig=True, tol=0.01)
+            if self.regular:
+                v.curve("centre", *reflect(ps, qs, up))
+            else:
+                v.curve("singular", *reflect(ps, qs, up), zig=True, tol=0.01)
         elif cell == "III":
             seg("scri", (0, HALF), (0, PI))
             seg("scri", (0, PI), (HALF, PI))
@@ -2439,6 +2445,172 @@ def reissner_nordstrom(ck, src):
                 "inside $r_-$ would lie within $10^{-6}$ of the singularity.")
     for view in views:
         view.set(settings=settings)
+    return views
+
+
+# ---------------------------------------------------------------- Bardeen
+
+class BardeenTower(Tower):
+    """A Tower for Bardeen's f = 1 - r_s r^2/(r^2 + g^2)^(3/2) at r_s = 1 and g = 1/3, which is no
+    rational function of r, so 1/f has no partial fractions in closed form. It has two simple
+    poles on r > 0, at the horizons, of residue A_i = 1/f'(r_i), and
+
+        r* = int_0^r (1/f - sum_i A_i/(s - r_i)) ds + sum_i A_i ln|1 - r/r_i|,
+
+    the first term the integral of a smooth function, which slices.bardeen_rstar sums. It
+    vanishes at r = 0, as a Tower's does and as the Eddington-Finkelstein charts fix it, and the
+    cells are a Tower's, written in G(u) = arctan exp(-k+ u). The roots, the residues and the
+    surface gravities are taken in forty digits from the published g^rr."""
+
+    def __init__(self, f, r):
+        self.f_sym = f
+        value, slope = sp.lambdify(r, f, "mpmath"), sp.lambdify(r, sp.diff(f, r), "mpmath")
+        with mpmath.workdps(40):
+            exact = [mpmath.findroot(value, x) for x in slices.BARDEEN_HORIZONS[::-1]]
+            self.rf = [float(x) for x in exact]
+            self.Af = [float(1 / slope(x)) for x in exact]
+        self.kappa = [abs(1 / (2 * a)) for a in self.Af]
+        self.kp = self.kappa[0]
+        assert self.Af[0] > 0 > self.Af[1], "the outer horizon is not where f rises through zero"
+
+    def rstar(self, r):
+        return slices.bardeen_rstar(r)
+
+
+BARDEEN = {"r_s": 1, "g": "1/3"}
+
+
+def bardeen(ck, src):
+    """The tower of Bardeen's regular black hole at g = r_s/3: Reissner-Nordstrom's, with each
+    timelike singularity replaced by a regular centre.
+
+    f = 1 - r_s r^2/(r^2 + g^2)^(3/2) has two simple zeros, r+ = 0.7754 and r- = 0.3010 r_s, with
+    k-/k+ = 3.16, so the cells are a Tower's: I outside r+, II between the horizons, III inside
+    r-, and r*(0) = 0 puts r = 0 on the vertical lines X = +-pi/2, where the Kretschmann scalar
+    is 24 r_s^2/g^6 and the published metric is that of a regular centre, f -> 1. An ingoing ray
+    reaches that centre at a finite v and goes on as an outgoing one, so the tower is the whole
+    spacetime and every cell III is closed on its far side by its own centre.
+
+    The static chart covers one cell of each kind, each with its own t. The ingoing chart's v
+    runs on across both horizons: with q = G(-v) in I and II, the cell beyond r- is III', read
+    with the static time t' = r* - v, so that its q = G(t' - r*) is the same function of v. The
+    outgoing chart is its reflection (p, q) -> (pi - q, pi - p) with v = -u, the isometry t -> -t
+    of the tower, which carries I, II and III' onto the exterior, the white hole and the same
+    III' above them."""
+    st = Plane(src, "bardeen", "static", ("t", "r"), EQUATOR, BARDEEN)
+    assert st.g[0, 1] == 0 and sp.simplify(st.g[0, 0] * st.g[1, 1] + 1) == 0
+    T = BardeenTower(st.gi[1, 1], st.x1)
+    rp, rm = T.rf
+    name = "Bardeen"
+    tower_checks(ck, name, st, T, 0.01, 15)
+    ck.limit(f"{name}: the horizons are the zeros of the published g^rr, 0.7754 and 0.3010 r_s", [rp, rm],
+             slices.BARDEEN_HORIZONS[::-1], 1e-12)
+    ck.limit(f"{name}: the surface gravities are 0.3431 and 1.0844 per r_s", T.kappa, [0.3431, 1.0844], 1e-4)
+    p, q = T.pq("III", np.array([-6.0, 0, 6]), np.full(3, 1e-12))
+    ck.limit(f"{name}: r -> 0 lands on the vertical line X = pi/2", q - p, [HALF] * 3, 1e-9)
+    K = st.kretschmann
+    ck.settles(f"{name}: the Kretschmann scalar settles at the centre r = 0", K(np.zeros(2), np.full(2, 1e-3)),
+               K(np.zeros(2), np.full(2, 1e-4)))
+    ck.limit(f"{name}: the Kretschmann scalar at the centre is 24 r_s^2/g^6", K(0, 1e-6) / (24 * 3 ** 6), 1.0, 1e-9)
+    ck.finite(f"{name}: the Kretschmann scalar is finite at both horizons", K(np.zeros(2), np.array([rp, rm])))
+
+    def ingoing(w, r):
+        """(p, q) of the ingoing chart's (v, r): I and II with t = v - r*, and III' with t' = r* - v."""
+        w, r = np.broadcast_arrays(np.asarray(w, dtype=float), np.asarray(r, dtype=float))
+        rs = T.rstar(r)
+        p, q = np.empty(r.shape), np.empty(r.shape)
+        for cell, sel, t in (("I", r > rp, w - rs), ("II", (r <= rp) & (r >= rm), w - rs), ("III'", r < rm, rs - w)):
+            if sel.any():
+                u, v = t[sel] - rs[sel], t[sel] + rs[sel]
+                G = T.G
+                p[sel], q[sel] = {"I": (-G(u), G(-v)), "II": (G(u), G(-v)), "III'": (np.pi - G(-v), G(u))}[cell]
+        return p, q
+
+    def outgoing(u, r):
+        p, q = ingoing(-np.asarray(u, dtype=float), r)
+        return np.pi - q, np.pi - p
+    ein = Plane(src, "bardeen", "eddington_finkelstein_ingoing", ("v", "r"), EQUATOR, BARDEEN)
+    eout = Plane(src, "bardeen", "eddington_finkelstein_outgoing", ("u", "r"), EQUATOR, BARDEEN)
+    for lo, hi, where in ((rp + 1e-3, 40, "outside r+"), (rm + 1e-3, rp - 1e-3, "between the horizons"),
+                          (0.01, rm - 1e-3, "inside r-")):
+        ck.chart(f"{name} ingoing Eddington-Finkelstein, {where}", ein, ingoing,
+                 ck.uniform(-15, 15), ck.uniform(lo, hi), lambda w, r: (1, -60))
+        ck.chart(f"{name} outgoing Eddington-Finkelstein, {where}", eout, outgoing,
+                 ck.uniform(-15, 15), ck.uniform(lo, hi), lambda u, r: (1, 60))
+    ck.limit(f"{name}: the ingoing and static coordinates put one event at one point",
+             ingoing(0.4 + T.rstar(3.0), 3.0), T.pq("I", 0.4, 3.0), 1e-12)
+    ck.limit(f"{name}: an ingoing ray keeps its q across both horizons",
+             ingoing(np.full(3, 0.7), np.array([2.0, 0.5, 0.1]))[1], [float(T.G(-0.7))] * 3, 1e-12)
+    ck.limit(f"{name}: the outgoing and static coordinates put one event at one point, in the exterior a period up",
+             outgoing(0.4 - T.rstar(3.0), 3.0), reflect(*T.pq("I", -0.4, 3.0), True), 1e-12)
+
+    D = TowerDrawing(T, True, 0.0, regular=True)
+    box = [-PI - 0.45, PI + 0.45, -PI - 0.1, 3 * PI + 0.1]
+    times = [c / T.kp for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+    rI = nice_all(even_radii(T, "I", 4, rp, np.inf), [rp])
+    rII = nice_all(even_radii(T, "II", 4, rm, rp), [rm, rp])
+    # The Kruskal coordinate of the outer horizon crowds most of the region inside r- against its
+    # centre, so two radii are named there by hand beside the two that cross the cell evenly.
+    rIII = [0.1, 0.2] + nice_all(even_radii(T, "III", 2, 0, rm, xmax=HALF), [0, rm, 0.1, 0.2])
+    grids = {"I": (rI, times), "II": (rII, times), "IV": (rII, times), "III": (rIII, times)}
+    horizons = f"the horizons $r_+ = {rp:.3f}\\,r_s$ and $r_- = {rm:.3f}\\,r_s$"
+
+    def finish(v):
+        D.labels(v)
+        v.set(fade={"top": 0.9, "bottom": 0.9})
+        v.legend("horizon", horizons)
+        v.legend("centre", "$r = 0$, a regular centre, where the Kretschmann scalar is $24r_s^2/g^6$")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+
+    views = []
+    v = View("tower", "Maximal extension", box, "static")
+    D.draw(v, grids, cover=[("I", False), ("II", False), ("III", False)])
+    finish(v)
+    v.legend("cover", "one exterior, one region between the horizons and one inside $r_-$, which "
+                      "$t$ and $r$ cover")
+    v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, "
+                  "in units of $r_s$")
+    v.legend("t", "$t$ constant")
+    views.append(v)
+
+    t = spread(-np.inf, np.inf, 500, 10)
+    rr = np.concatenate([spread(0, rm, 300, 14), spread(rm, rp, 300, 14), spread(rp, np.inf, 300, 14)])
+    covers = {"ingoing": [("I", False), ("II", False), ("III'", False)],
+              "outgoing": [("III'", False), ("II", True), ("I", True)]}
+    for vid, label, system, chart, coordinate, rays, way in (
+            ("ingoing", "Ingoing Eddington-Finkelstein", "eddington_finkelstein_ingoing", ingoing, "v",
+             (-4, -2, 0, 2, 4), "an ingoing"),
+            ("outgoing", "Outgoing Eddington-Finkelstein", "eddington_finkelstein_outgoing", outgoing, "u",
+             (-4, -2, 0, 2, 4), "an outgoing")):
+        v = View(vid, label, box, system)
+        for cell, up in TOWER:
+            v.fill("region", D.polygon(cell, up))
+        for cell, up in covers[vid]:
+            v.fill("cover", D.polygon(cell, up))
+        for r in rI + rII + rIII:
+            v.curve("r", *chart(t, np.full_like(t, r)))
+        for w in rays:
+            v.curve("null", *chart(np.full_like(rr, float(w)), rr))
+        for cell, up in TOWER:
+            D.edges(v, cell, up)
+        finish(v)
+        v.legend("cover", f"the region that ${coordinate}$ and $r$ cover")
+        v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, "
+                      "in units of $r_s$")
+        v.legend("null", f"${coordinate}$ constant, {way} light ray, at " + listed(rays) + " in units of $r_s$")
+        views.append(v)
+    settings = (f"$g = r_s/3$, so that $r_+ = {rp:.3f}\\,r_s$, $r_- = {rm:.3f}\\,r_s$, and "
+                "$\\kappa_-/\\kappa_+ = 3.16$.")
+    outside, inside = slices.moments("bardeen", "outside")[0], slices.moments("bardeen", "inside")[0]
+    # Outside r_+ the moment runs in to the outer bifurcation sphere at r_+, and inside r_- from
+    # one centre out to the inner bifurcation sphere at r_- and on to the other centre.
+    low = through_bifurcation(T, ("I'", "I"), *outside.reach("static", "r")[::-1])
+    mid = through_bifurcation(T, ("III'", "III"), *inside.reach("static", "r"))
+    for view in views:
+        view.set(settings=settings)
+        # The outgoing chart's exterior is the one a period up, where the same moment is the reflected line.
+        view.slice(outside, [reflect(*low, True) if view.d["id"] == "outgoing" else low])
+        view.slice(inside, [mid])
     return views
 
 
@@ -8742,7 +8914,7 @@ DRAWN = {
     "light_beam": light_beam,
     "kantowski_sachs": kantowski_sachs,
     "domain_wall": domain_wall,
-    "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom,
+    "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "bardeen": bardeen,
     "kerr": kerr, "kerr_newman": kerr_newman, "de_sitter": de_sitter,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
@@ -9448,6 +9620,43 @@ CAPTIONS = {
         "The coordinates $t$ and $r > 0$ cover one exterior. Its moment $t = 0$ runs from spatial infinity "
         "down the infinitely long throat toward the corner $X = -\\pi$, $T = 0$, where the past and future "
         "horizons meet at an infinite distance.",
+    ],
+    ("bardeen", "tower"): [
+        "Bardeen's regular black hole, maximally extended, each point in the diagram a 2-sphere of radius $r$. "
+        "The extension is a tower of regions that repeats up and down without end, as Reissner-Nordström's "
+        "does, and every region inside $r_-$ ends on a regular centre $r = 0$ where Reissner-Nordström's ends on "
+        "a timelike singularity. The tortoise coordinate $r_*$, with $dr_*/dr = (1 - r_sr^2/(r^2 + g^2)^{3/2})^{-1}$ "
+        "and $r_*(0) = 0$, has a logarithm at each horizon, $\\pm\\frac{1}{2\\kappa_\\pm}\\ln|r/r_\\pm - 1|$, "
+        "and we integrate the rest of it numerically.",
+        "We place every region by the Kruskal coordinate of the outer horizon, $p = \\pm\\arctan "
+        "e^{-\\kappa_+ u}$ and $q = \\pm\\arctan e^{\\kappa_+ v}$ with $u, v = ct \\mp r_*$, and the "
+        "regions above the inner horizon are the reflection $(p, q) \\to (\\pi - q, \\pi - p)$ of "
+        "those below. This map is smooth across $r_+$ and puts the centre $r = 0$ exactly on the "
+        "vertical lines $X = \\pm\\pi/2$, where it is timelike. Across $r_-$ it is continuous and "
+        "cannot also be smooth, because the late light rays that reach $\\mathscr{I}^+$ are the rays "
+        "that pile up at the Cauchy horizon $r_-$, and one function of the ray has to serve both.",
+        "The coordinates $t$ and $r$ cover one region of each kind: an exterior, a region between the "
+        "horizons, and a region inside $r_-$. Between the horizons their $t$ alone cannot tell the black "
+        "hole from the white hole, and we take the region to be the black hole an infalling observer enters. "
+        "A light ray that reaches a centre passes through it and leaves through the horizons above, into "
+        "the next exterior up the tower.",
+    ],
+    ("bardeen", "ingoing"): [
+        "The same tower, with the region that the ingoing Eddington-Finkelstein coordinates $v$ and $r$ cover "
+        "tinted, each point in the diagram a 2-sphere of radius $r$. The advanced time $v = ct + r_*$ is "
+        "constant along each ingoing light ray, which runs from $\\mathscr{I}^-$ of the exterior across $r_+$, "
+        "through the black hole, across $r_-$, and on to the regular centre $r = 0$, which it reaches at a "
+        "finite $v$.",
+        "The chart ends where those rays end, on the centre. The lines of constant $r$ cross the lines of "
+        "constant $v$ once each, in all three regions.",
+    ],
+    ("bardeen", "outgoing"): [
+        "The same tower, with the region that the outgoing Eddington-Finkelstein coordinates $u$ and $r$ cover "
+        "tinted, each point in the diagram a 2-sphere of radius $r$. The retarded time $u = ct - r_*$ is "
+        "constant along each outgoing light ray, which leaves the regular centre $r = 0$, crosses $r_-$ into a "
+        "white hole, crosses $r_+$, and reaches $\\mathscr{I}^+$ of the exterior above.",
+        "This chart is the time reverse of the ingoing one. The two share the region inside $r_-$ on the left, "
+        "which the ingoing rays of the lower exterior enter and the outgoing rays of the upper exterior leave.",
     ],
     ("rn_metric", "tower"): [
         "The Reissner-Nordström spacetime, maximally extended, each point in the diagram a "
