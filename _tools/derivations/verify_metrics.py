@@ -1164,6 +1164,14 @@ DIMENSIONS = {
     ("tov", "spherical"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Phi": "1", "m": "L",
     },
+    # A boson star: the lapse and the radial function are pure numbers, as the alpha and a of
+    # Liebling and Palenzuela's line element are.
+    ("boson_star", "areal"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\alpha": "1", "a": "1",
+    },
+    ("boson_star", "isotropic"): {
+        "t": "T", "R": "L", "\\theta": "1", "\\phi": "1", "\\alpha": "1", "\\psi": "1",
+    },
     # Einstein's cluster: the mass function is a length, as TOV's is, and here it is a name for
     # r^2 Phi'/(1 + 2r Phi'), the mass that leaves no pressure along the radius. V and sigma are
     # ratios, a speed to c and a mass to twice an isotropic radius, and chi is an angle on the

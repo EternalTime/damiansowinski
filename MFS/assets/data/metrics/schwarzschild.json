@@ -293,6 +293,11 @@
       "id": "eguchi_hanson",
       "kind": "family",
       "text": "A gravitational instanton, as Schwarzschild's black hole continued to Euclidean signature is. Each closes on a 2-sphere that Gibbons and Hawking call a bolt, and Schwarzschild's bolt is its horizon [hawking1977, gibbonshawking1979]."
+    },
+    {
+      "id": "boson_star",
+      "kind": "generalisation",
+      "text": "Schwarzschild's vacuum with a ball of scalar field in its middle, held together by its own gravity. The ball has a regular centre and no horizon, and far from it the metric is Schwarzschild's [liebling2023]."
     }
   ],
   "references": [
@@ -375,7 +380,8 @@
     "bach1922",
     "neugebauer2012",
     "hawking1977",
-    "gibbonshawking1979"
+    "gibbonshawking1979",
+    "liebling2023"
   ],
   "coordinates": [
     {

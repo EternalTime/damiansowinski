@@ -225,6 +225,7 @@ from scipy.special import expi as scipy_expi
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
+import boson_star as bs  # noqa: E402
 import build_mfs_data as build  # noqa: E402
 import ori_shell  # noqa: E402
 import slices  # noqa: E402
@@ -398,6 +399,7 @@ class Diagram:
                                     # edge, as Kiselev's 2(tau + rho)^2/rho^2 does toward tau = 0 on rho = 0
     star: dict = None               # a declared polytrope, {"K": ..., "rho_c": ...}; see StarSolver
     fronts: dict = None             # declared Robinson-Trautman initial data, {"epsilon": ...}; see FrontSolver
+    boson: dict = None              # a declared boson star, {"sigma_c": ...}; see boson_star.Star
     any_factor: str = None          # a declared conformal factor the drawing holds for every value of
     crunch: bool = False            # mark where the metric stops being finite as a singular curve,
                                     # checked on the Kretschmann scalar, and hatch what lies beyond it
@@ -723,6 +725,8 @@ FRW_DUST = {"funcs": ["a"], "eqs": [["r", "r"]], "rates": [1.0], "params": {"k":
 # The Oppenheimer-Snyder dust released from rest at a = a_m, which is the unit, at tau = 0.
 OS_DUST = {"funcs": ["a"], "eqs": [["\\chi", "\\chi"]], "rates": [0.0], "start": [1.0], "origin": "reference"}
 
+# The boson star every drawing of it declares: the heaviest ground state, Kaup's limit.
+BOSON = {"sigma_c": repr(bs.SIGMA_C)}
 # The polytrope the conformal diagram declares, and what it makes of the star.
 POLYTROPE = {"K": 100, "rho_c": "1.28e-3"}
 POLYTROPE_INPUT = ("A polytrope, $p = K\\rho_0^2$ with rest mass density $\\rho_0$ and energy density "
@@ -2536,6 +2540,15 @@ DIAGRAMS = [
             families=SIDEWAYS, cones=(5, 5), periodic=("\\phi",)),
     Diagram("som_raychaudhuri", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2), "$x/r_c$", "$ct/r_c$",
             {"Omega": 1}, {"y": "0", "z": "0"}, orient="vector", families=SIDEWAYS),
+    # The heaviest boson star, in units of the boson's reduced Compton wavelength 1/mu: the areal
+    # chart out to 2.5 times the radius that holds 99% of its mass, and the isotropic chart beside it.
+    Diagram("boson_star", "areal", "radial", "$t$ and $r$", ("t", "r"), (0, 20, -10, 10),
+            "$\\mu r$", "$\\mu ct$", {}, EQUATOR, areal=True, boson=BOSON, input=bs.INPUT),
+    Diagram("boson_star", "areal", "through", "through the centre", ("t", "r"), (0, 20, -20, 20),
+            "$\\mu x$", "$\\mu ct$", {}, EQUATOR, mirror=True, families=SIDEWAYS, cones=(4, 8), areal=True,
+            boson=BOSON, input=bs.INPUT),
+    Diagram("boson_star", "isotropic", "radial", "$t$ and $R$", ("t", "R"), (0, 20, -10, 10),
+            "$\\mu R$", "$\\mu ct$", {}, EQUATOR, areal=True, boson=BOSON, input=bs.INPUT),
     Diagram("tov", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 16, -8, 8),
             "$r\\;[GM_\\odot/c^2]$", "$ct\\;[GM_\\odot/c^2]$", {}, EQUATOR, areal=True, star=POLYTROPE,
             input=POLYTROPE_INPUT),
@@ -6109,6 +6122,27 @@ CAPTIONS = {
         "timelike curves circle each world line of the dust beyond $r_c$, through $y$ as well as $x$, so they "
         "cross this plane.",
     ],
+    ("boson_star", "areal", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) through the heaviest boson star, the same at "
+        "every other angle by spherical symmetry. The metric functions $\\alpha$ and $a$ come from $G^t{}_t$, "
+        "$G^r{}_r$, and the wave equation of the field, integrated numerically, and the rays obey "
+        "$c\\,dt = \\pm(a/\\alpha)\\,dr$.",
+        "The cones are narrowest at the centre, where a clock runs at $\\alpha = 0.69$ of the rate $t$ counts, "
+        "and they open toward 45° far away. They stay open everywhere, since $2GM(r)/(c^2r)$, with $M(r)$ the "
+        "mass inside $r$, never passes $0.24$, so the star has no horizon.",
+    ],
+    ("boson_star", "areal", "through"): [
+        "The line through the centre of the star in the plane $\\theta = \\pi/2$: $x = r$ on the right is "
+        "$\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$, and spherical symmetry makes the two halves "
+        "mirror images. Rays cross the centre smoothly, where the cones are narrowest and the Kretschmann "
+        "scalar is finite, and run straight through the star, since light does not couple to the field.",
+    ],
+    ("boson_star", "isotropic", "radial"): [
+        "The plane of $t$ and $R$ ($\\theta = \\pi/2$, $\\phi = 0$) through the same star in the isotropic "
+        "radius, where the areal radius is $r = \\psi^2R$ and the rays obey $c\\,dt = \\pm(\\psi^2/\\alpha)\\,dR$. "
+        "The conformal factor is $\\psi = 1.17$ at the centre and falls toward $1$ far away, so the sphere "
+        "that holds 99% of the mass sits at a smaller $R$ than its areal radius.",
+    ],
     ("tov", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) through a star of fluid with a polytrope "
         "for its equation of state, the same at every other angle by spherical symmetry. Its mass and redshift "
@@ -7167,6 +7201,12 @@ def star_solver(metric_id, system_id, star):
     return _SOLVERS[key]
 
 
+def boson_solver(system_id, boson):
+    """The declared boson star in the chart of one of its views, the areal or the isotropic one."""
+    star = bs.star(float(number(boson["sigma_c"])))
+    return star.isotropic() if system_id == "isotropic" else star
+
+
 def dust_solver(metric_id, system_id, time_name, dust):
     key = (metric_id, system_id, json.dumps(dust, sort_keys=True))
     if key not in _SOLVERS:
@@ -7217,6 +7257,7 @@ class Chart:
         self.fixed_vals = [float(number(spec.fixed[name])) for name in spec.fixed]
         self.solver = (dust_solver(spec.metric, spec.system, spec.plane[0], spec.dust) if spec.dust
                        else star_solver(spec.metric, spec.system, spec.star) if spec.star
+                       else boson_solver(spec.system, spec.boson) if spec.boson
                        else front_solver(spec.fronts, float(number(spec.fixed["theta"]))) if spec.fronts else None)
 
         def prep(expr):
@@ -8266,6 +8307,14 @@ class Plot:
             line = clip_unit(np.array([self.to_unit(self.to_display(x0, R)) for x0 in (-1e6, 1e6)]))
             out.append({"kind": "surface", "lines": [rounded(line)],
                         "legend": "the surface of the star, where the pressure falls to zero"})
+        if spec.boson:
+            # The star has no surface, so the sphere holding 99% of its mass is marked in its place.
+            star = bs.star(float(number(spec.boson["sigma_c"])))
+            R = star.radius()
+            R = float(star.isotropic().rho_of(R)[0]) if spec.system == "isotropic" else R
+            line = clip_unit(np.array([self.to_unit(self.to_display(x0, R)) for x0 in (-1e6, 1e6)]))
+            out.append({"kind": "surface", "lines": [rounded(line)],
+                        "legend": "the sphere that holds 99% of the mass"})
         for kind, at, family, legend, *toward in spec.marked:
             lines = [inside_unit(line) for line in self.marked(at, family, toward[0] if toward else None)]
             out.append({"kind": kind, "lines": [rounded(thin(line, 0.0006)) for line in lines], "legend": legend})
@@ -8703,6 +8752,24 @@ def _front_misses(fronts):
     return {k: float(v) for k, v in out.items()}
 
 
+def boson_checks(spec, chart):
+    """A declared boson star solves the one field equation its construction did not use, the
+    published G^theta_theta against the field's stress across the radius, is the star its
+    declared input states, and has no horizon: 2M(r)/r stays below 1."""
+    star = bs.star(float(number(spec.boson["sigma_c"])))
+    miss = float(np.max(np.abs(star.theta_theta(np.linspace(0.05, 0.98 * star.edge, 400)))))
+    if not miss < 1e-9 or star.stated() or not star.compactness()[0] < 1:
+        raise SystemExit(f"{key(spec)}: the boson star misses G^theta_theta by {miss:.1e}, or is not the star "
+                         f"its input states: {star.stated()}")
+    if spec.system == "isotropic":
+        # The isotropic chart draws the same star: on its plane r = psi^2 R is the areal radius.
+        iso = chart.solver
+        R = np.linspace(0.1, 30, 300)
+        r = iso.values(R)["psi"][0] ** 2 * R
+        if float(np.max(np.abs(iso.rho_of(r) - R))) > 1e-9:
+            raise SystemExit(f"{key(spec)}: psi^2 R is not the areal radius of the star's isotropic radius")
+
+
 def star_checks(spec, star):
     """A declared star solves the one field equation its construction did not use, the
     published G^theta_theta = 8 pi p, and is the star its declared input says it is."""
@@ -8719,7 +8786,7 @@ def draw(spec):
     chart = Chart(spec)
     plot = Plot(chart)
     families = plot.rays()
-    fields = (BASE_FIELDS + (["einstein_tensor"] if spec.dust or spec.star or spec.solves else [])
+    fields = (BASE_FIELDS + (["einstein_tensor"] if spec.dust or spec.star or spec.boson or spec.solves else [])
               + (["ricci_tensor"] if spec.fronts else [])
               + (PRINCIPAL_FIELDS if spec.principal else []) + (QUOTIENT_FIELDS if spec.quotient else []))
     if spec.principal:
@@ -8730,6 +8797,8 @@ def draw(spec):
         star_checks(spec, chart.solver)
     if spec.fronts:
         front_checks(key(spec), spec.fronts)
+    if spec.boson:
+        boson_checks(spec, chart)
     if spec.any_factor:
         factor_check(spec, chart)
     if spec.solves:

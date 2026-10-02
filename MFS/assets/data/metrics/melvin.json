@@ -56,6 +56,11 @@
       "id": "schwarzschild",
       "kind": "family",
       "text": "The black hole Frederick Ernst set in Melvin's universe in 1976. Ernst's metric is Schwarzschild's at $B = 0$ and Melvin's universe at $r_s = 0$ [ernst1976b]."
+    },
+    {
+      "id": "boson_star",
+      "kind": "family",
+      "text": "Wheeler's geon carried from light to a scalar field with mass, where it makes a star: a ball of field held together by its own gravity, which Kaup named a Klein-Gordon geon [kaup1968]."
     }
   ],
   "references": [
@@ -82,7 +87,8 @@
     "tseytlin1995",
     "bertotti1959",
     "robinson1959",
-    "bonnor1969light"
+    "bonnor1969light",
+    "kaup1968"
   ],
   "coordinates": [
     {

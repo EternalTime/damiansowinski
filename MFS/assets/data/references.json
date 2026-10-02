@@ -1,5 +1,5 @@
 {
-  "version": "9f01bdde6c97be44",
+  "version": "ed1c0a78328d82a8",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -20584,6 +20584,267 @@
         "howpublished": "Slides of a talk at the Visualization Workshop, Komaba Campus, University of Tokyo, 14--15 March 2020",
         "year": "2020",
         "url": "https://homes.luddy.indiana.edu/hansona/papers/TokyoVizConf-Mar20.pdf"
+      }
+    },
+    "kaup1968": {
+      "type": "article",
+      "fields": {
+        "title": "{Klein-Gordon} Geon",
+        "author": "Kaup, David J.",
+        "journal": "Physical Review",
+        "volume": "172",
+        "number": "5",
+        "pages": "1331--1342",
+        "year": "1968",
+        "doi": "10.1103/PhysRev.172.1331",
+        "url": "https://doi.org/10.1103/PhysRev.172.1331"
+      }
+    },
+    "ruffini1969": {
+      "type": "article",
+      "fields": {
+        "title": "Systems of Self-Gravitating Particles in General Relativity and the Concept of an Equation of State",
+        "author": "Ruffini, Remo and Bonazzola, Silvano",
+        "journal": "Physical Review",
+        "volume": "187",
+        "number": "5",
+        "pages": "1767--1783",
+        "year": "1969",
+        "doi": "10.1103/PhysRev.187.1767",
+        "url": "https://doi.org/10.1103/PhysRev.187.1767"
+      }
+    },
+    "liebling2023": {
+      "type": "article",
+      "fields": {
+        "title": "Dynamical boson stars",
+        "author": "Liebling, Steven L. and Palenzuela, Carlos",
+        "journal": "Living Reviews in Relativity",
+        "volume": "26",
+        "number": "1",
+        "pages": "1",
+        "year": "2023",
+        "doi": "10.1007/s41114-023-00043-4",
+        "eprint": "1202.5809",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1202.5809"
+      }
+    },
+    "brillhartle1964": {
+      "type": "article",
+      "fields": {
+        "title": "Method of the Self-Consistent Field in General Relativity and its Application to the Gravitational Geon",
+        "author": "Brill, Dieter R. and Hartle, James B.",
+        "journal": "Physical Review",
+        "volume": "135",
+        "number": "1B",
+        "pages": "B271--B278",
+        "year": "1964",
+        "doi": "10.1103/PhysRev.135.B271",
+        "url": "https://doi.org/10.1103/PhysRev.135.B271"
+      }
+    },
+    "anderson1997": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational geons revisited",
+        "author": "Anderson, Paul R. and Brill, Dieter R.",
+        "journal": "Physical Review D",
+        "volume": "56",
+        "number": "8",
+        "pages": "4824--4833",
+        "year": "1997",
+        "doi": "10.1103/PhysRevD.56.4824",
+        "eprint": "gr-qc/9610074",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9610074"
+      }
+    },
+    "derrick1964": {
+      "type": "article",
+      "fields": {
+        "title": "Comments on Nonlinear Wave Equations as Models for Elementary Particles",
+        "author": "Derrick, G. H.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "5",
+        "number": "9",
+        "pages": "1252--1254",
+        "year": "1964",
+        "doi": "10.1063/1.1704233",
+        "url": "https://doi.org/10.1063/1.1704233"
+      }
+    },
+    "feinblum1968": {
+      "type": "article",
+      "fields": {
+        "title": "Stable States of a Scalar Particle in Its Own Gravational Field",
+        "author": "Feinblum, David A. and McKinley, William A.",
+        "journal": "Physical Review",
+        "volume": "168",
+        "number": "5",
+        "pages": "1445--1450",
+        "year": "1968",
+        "doi": "10.1103/PhysRev.168.1445",
+        "url": "https://doi.org/10.1103/PhysRev.168.1445"
+      }
+    },
+    "colpi1986": {
+      "type": "article",
+      "fields": {
+        "title": "Boson Stars: Gravitational Equilibria of Self-Interacting Scalar Fields",
+        "author": "Colpi, Monica and Shapiro, Stuart L. and Wasserman, Ira",
+        "journal": "Physical Review Letters",
+        "volume": "57",
+        "number": "20",
+        "pages": "2485--2488",
+        "year": "1986",
+        "doi": "10.1103/PhysRevLett.57.2485",
+        "url": "https://doi.org/10.1103/PhysRevLett.57.2485"
+      }
+    },
+    "schunck2003": {
+      "type": "article",
+      "fields": {
+        "title": "General relativistic boson stars",
+        "author": "Schunck, Franz E. and Mielke, Eckehard W.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "20",
+        "number": "20",
+        "pages": "R301--R356",
+        "year": "2003",
+        "doi": "10.1088/0264-9381/20/20/201",
+        "eprint": "0801.0307",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0801.0307"
+      }
+    },
+    "gleiser1989": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational stability of scalar matter",
+        "author": "Gleiser, Marcelo and Watkins, Richard",
+        "journal": "Nuclear Physics B",
+        "volume": "319",
+        "number": "3",
+        "pages": "733--746",
+        "year": "1989",
+        "doi": "10.1016/0550-3213(89)90627-5",
+        "url": "https://doi.org/10.1016/0550-3213(89)90627-5"
+      }
+    },
+    "lee1989": {
+      "type": "article",
+      "fields": {
+        "title": "Stability of mini-boson stars",
+        "author": "Lee, T. D. and Pang, Yang",
+        "journal": "Nuclear Physics B",
+        "volume": "315",
+        "number": "2",
+        "pages": "477--516",
+        "year": "1989",
+        "doi": "10.1016/0550-3213(89)90365-9",
+        "url": "https://doi.org/10.1016/0550-3213(89)90365-9"
+      }
+    },
+    "seidel1990": {
+      "type": "article",
+      "fields": {
+        "title": "Dynamical evolution of boson stars: Perturbing the ground state",
+        "author": "Seidel, Edward and Suen, Wai-Mo",
+        "journal": "Physical Review D",
+        "volume": "42",
+        "number": "2",
+        "pages": "384--403",
+        "year": "1990",
+        "doi": "10.1103/PhysRevD.42.384",
+        "url": "https://doi.org/10.1103/PhysRevD.42.384"
+      }
+    },
+    "seidel1991": {
+      "type": "article",
+      "fields": {
+        "title": "Oscillating soliton stars",
+        "author": "Seidel, Edward and Suen, Wai-Mo",
+        "journal": "Physical Review Letters",
+        "volume": "66",
+        "number": "13",
+        "pages": "1659--1662",
+        "year": "1991",
+        "doi": "10.1103/PhysRevLett.66.1659",
+        "url": "https://doi.org/10.1103/PhysRevLett.66.1659"
+      }
+    },
+    "seidel1994": {
+      "type": "article",
+      "fields": {
+        "title": "Formation of solitonic stars through gravitational cooling",
+        "author": "Seidel, Edward and Suen, Wai-Mo",
+        "journal": "Physical Review Letters",
+        "volume": "72",
+        "number": "16",
+        "pages": "2516--2519",
+        "year": "1994",
+        "doi": "10.1103/PhysRevLett.72.2516",
+        "eprint": "gr-qc/9309015",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9309015"
+      }
+    },
+    "yoshida1997": {
+      "type": "article",
+      "fields": {
+        "title": "Rotating boson stars in general relativity",
+        "author": "Yoshida, Shijun and Eriguchi, Yoshiharu",
+        "journal": "Physical Review D",
+        "volume": "56",
+        "number": "2",
+        "pages": "762--771",
+        "year": "1997",
+        "doi": "10.1103/PhysRevD.56.762",
+        "url": "https://doi.org/10.1103/PhysRevD.56.762"
+      }
+    },
+    "brito2016": {
+      "type": "article",
+      "fields": {
+        "title": "{Proca} stars: Gravitating {Bose-Einstein} condensates of massive spin 1 particles",
+        "author": "Brito, Richard and Cardoso, Vitor and Herdeiro, Carlos A. R. and Radu, Eugen",
+        "journal": "Physics Letters B",
+        "volume": "752",
+        "pages": "291--295",
+        "year": "2016",
+        "doi": "10.1016/j.physletb.2015.11.051",
+        "eprint": "1508.05395",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1508.05395"
+      }
+    },
+    "calderonbustillo2021": {
+      "type": "article",
+      "fields": {
+        "title": "{GW190521} as a Merger of {Proca} Stars: A Potential New Vector Boson of $8.7 \\times 10^{-13}$ {eV}",
+        "author": "{Calder\\'on Bustillo}, Juan and Sanchis-Gual, Nicolas and Torres-Forn{\\'e}, Alejandro and Font, Jos{\\'e} A. and Vajpeyi, Avi and Smith, Rory and Herdeiro, Carlos and Radu, Eugen and Leong, Samson H. W.",
+        "journal": "Physical Review Letters",
+        "volume": "126",
+        "number": "8",
+        "pages": "081101",
+        "year": "2021",
+        "doi": "10.1103/PhysRevLett.126.081101",
+        "eprint": "2009.05376",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2009.05376"
+      }
+    },
+    "lai2004": {
+      "type": "misc",
+      "fields": {
+        "title": "A Numerical Study of Boson Stars",
+        "author": "Lai, Chi-Wai",
+        "howpublished": "PhD thesis, The University of British Columbia",
+        "year": "2004",
+        "eprint": "gr-qc/0410040",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0410040"
       }
     }
   }

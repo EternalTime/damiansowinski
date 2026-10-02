@@ -10,7 +10,7 @@ black_string, myers_perry, black_saturn, near_horizon_extreme_kerr, hartle_thorn
 som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos,
 schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
-israel_wilson_perjes, sultana_dyer, kerr_taub_nut and eguchi_hanson, and Godel's cylindrical chart.
+israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson and boson_star, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -30,7 +30,7 @@ The derivations these charts rest on, and the reason each was chosen, are in tov
 malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_sitter.md,
 majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md,
 witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, mass_inflation.md,
-kaluza_klein_black_hole.md, israel_wilson_perjes.md and eguchi_hanson.md beside this file.
+kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md and boson_star.md beside this file.
 """
 import argparse
 import itertools
@@ -14038,6 +14038,164 @@ def double_kerr_check(chart):
 
 
 CHARTS["double_kerr"] = double_kerr
+
+
+# -- Boson stars and geons -------------------------------------------------------------
+
+BOSON_STAR_CHARTS = ("areal", "isotropic")
+BS_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+BS_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+
+
+def boson_star(system):
+    """A static ball of field held together by its own gravity, with the two functions of its
+    metric left free in each chart, since no closed form is known for either. The polar-areal
+    chart is Liebling and Palenzuela's (33), with their lapse alpha and radial function a, the
+    chart their equations (37) to (39) are integrated in; the isotropic chart is their (47), with
+    the conformal factor psi, which Lai's Appendix D reaches from the first by dR/dr = aR/r.
+    boson_star_check holds the first to the Einstein-Klein-Gordon equations of the field
+    phi_0(r) e^{i omega t}: wherever the published G^t_t and G^r_r equal the field's stresses and
+    the field solves its wave equation, the published G^theta_theta equals its stress as well,
+    and with no field it is Schwarzschild's published metric. The second is held to being the
+    first pulled back. Each Kretschmann scalar is written over the four independent components of
+    the Riemann tensor in a static observer's frame; boson_star.md beside this file is the
+    derivation."""
+    if system == "areal":
+        coords, name = ["t", "r", "\\theta", "\\phi"], "Polar Areal"
+        parameters = ["\\alpha = \\alpha(r)", "a = a(r)"]
+        domains = ["t \\in (-\\infty, \\infty)", "r \\in [0, \\infty)"] + BS_ANGLES
+
+        def line(c2):
+            return f"ds^2 = -\\alpha^2{c2}dt^2 + a^2dr^2 + r^2" + BS_SPHERE
+        probe = vm.Reader(coords, parameters, ())
+        x, al, a = probe.symbol["r"], probe.parameters["alpha"], probe.parameters["a"]
+        printer = {"lead": [al, a, x], "factors": [al, a, x]}
+        # 4 A^2 + 8 B^2 + 8 C^2 + 4 D^2 over the frame components t r t r, t theta t theta,
+        # r theta r theta and theta phi theta phi.
+        kretschmann = ("4\\left(\\dfrac{a\\,\\partial_r^2\\alpha - \\partial_r a\\,\\partial_r\\alpha}{\\alpha\\,a^3}\\right)^2"
+                       " + \\dfrac{8\\left(\\partial_r\\alpha\\right)^2}{\\alpha^2a^4r^2}"
+                       " + \\dfrac{8\\left(\\partial_r a\\right)^2}{a^6r^2}"
+                       " + \\dfrac{4\\left(a^2 - 1\\right)^2}{a^4r^4}")
+    else:
+        coords, name = ["t", "R", "\\theta", "\\phi"], "Isotropic"
+        parameters = ["\\alpha = \\alpha(R)", "\\psi = \\psi(R)"]
+        domains = ["t \\in (-\\infty, \\infty)", "R \\in [0, \\infty)"] + BS_ANGLES
+
+        def line(c2):
+            return f"ds^2 = -\\alpha^2{c2}dt^2 + \\psi^4\\left(dR^2 + R^2" + BS_SPHERE + "\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        x, al, psi = probe.symbol["R"], probe.parameters["alpha"], probe.parameters["psi"]
+        printer = {"lead": [al, psi, x], "factors": [al, psi, x]}
+        kretschmann = ("4\\left(\\dfrac{\\psi\\,\\partial_R^2\\alpha - 2\\partial_R\\alpha\\,\\partial_R\\psi}{\\alpha\\,\\psi^5}\\right)^2"
+                       " + \\dfrac{8\\left(\\psi + 2R\\,\\partial_R\\psi\\right)^2\\left(\\partial_R\\alpha\\right)^2}{\\alpha^2\\psi^{10}R^2}"
+                       " + \\dfrac{32\\left(R\\,\\psi\\,\\partial_R^2\\psi - R\\left(\\partial_R\\psi\\right)^2 + \\psi\\,\\partial_R\\psi\\right)^2}{\\psi^{12}R^2}"
+                       " + \\dfrac{64\\left(\\psi + R\\,\\partial_R\\psi\\right)^2\\left(\\partial_R\\psi\\right)^2}{\\psi^{12}R^2}")
+    spec = {
+        "metric_id": "boson_star",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "check": lambda chart: boson_star_check(chart, system),
+    }
+    if kretschmann:
+        spec["kretschmann"] = kretschmann
+    return spec
+
+
+def boson_star_stress(alpha, a, sigma, slope, omega):
+    """8 pi G/c^4 times the mixed stress tensor of the field sigma(r) e^{i omega t}, with sigma =
+    sqrt(4 pi G) phi_0/c^2, the unit of length 1/mu and c = 1: its t t, r r and theta theta
+    components, the last the same as phi phi. T_ab = (d_a phi* d_b phi + d_a phi d_b phi*)/2 -
+    g_ab (g^cd d_c phi* d_d phi + mu^2 |phi|^2)/2, Liebling and Palenzuela's (10) with their (12)."""
+    kinetic, gradient, mass = omega ** 2 * sigma ** 2 / alpha ** 2, slope ** 2 / a ** 2, sigma ** 2
+    return (-(kinetic + gradient + mass), kinetic + gradient - mass, kinetic - gradient - mass)
+
+
+def boson_star_check(chart, system):
+    """The areal chart carries the Einstein-Klein-Gordon system: G^t_t and G^r_r set to the
+    field's stresses give a' and alpha', the wave equation gives sigma'', and with those three
+    put in, G^theta_theta is the field's stress across the radius, which is the Bianchi identity.
+    No Einstein component stands off the diagonal, and at sigma = 0 with a^-2 = alpha^2 =
+    1 - r_s/r the chart is Schwarzschild's published metric."""
+    if system == "isotropic":
+        return boson_star_pullback(chart)
+    t, r, th, ph = chart.symbols
+    P = chart.reader.parameters
+    alpha, a = P["alpha"], P["a"]
+    geo = chart.geo
+    mixed = geo.raise_indices(geo.einstein_ll(), 2, (0,))
+    for i in range(4):
+        for j in range(4):
+            if i != j and vm.norm(mixed[i][j]) != 0:
+                raise AssertionError(f"boson_star/{system}: G^{i}_{j} does not vanish")
+    sigma = sp.Function("BSsigma")(r)
+    omega = sp.Symbol("BSomega", positive=True)
+    A1, L1, S1, S2 = sp.symbols("BSa1 BSalpha1 BSsigma1 BSsigma2")
+    stress = boson_star_stress(alpha, a, sigma, S1, omega)
+    held = {sp.Derivative(a, r): A1, sp.Derivative(alpha, r): L1}
+    first = sp.solve([sp.together(mixed[0][0]).subs(held) - stress[0], sp.together(mixed[1][1]).subs(held) - stress[1]],
+                     [A1, L1], dict=True)[0]
+    # The wave equation, Box phi = mu^2 phi, for phi = sigma(r) e^{i omega t}.
+    wave = -(2 / r + first[L1] / alpha - first[A1] / a) * S1 - a ** 2 * (omega ** 2 / alpha ** 2 - 1) * sigma
+    rules = {sp.Derivative(sigma, (r, 2)): wave, sp.Derivative(sigma, r): S1}
+
+    # Plain symbols stand for the three functions while a derivative along r is taken by the chain
+    # rule, so that d/dr sees only the r written in an expression.
+    AL, AA, SG = sp.symbols("BSalpha BSa BSsigma0")
+    plain = {alpha: AL, a: AA, sigma: SG}
+    da, dalpha, d2sigma = (e.subs(plain) for e in (first[A1], first[L1], wave))
+
+    def along(e):
+        """The derivative along r of an expression in r, alpha, a, sigma and sigma'."""
+        return (sp.diff(e, r) + sp.diff(e, AL) * dalpha + sp.diff(e, AA) * da
+                + sp.diff(e, SG) * S1 + sp.diff(e, S1) * d2sigma)
+    second = {sp.Derivative(a, (r, 2)): along(da), sp.Derivative(alpha, (r, 2)): along(dalpha)}
+    for i in (2, 3):
+        miss = (mixed[i][i].subs(second).subs({sp.Derivative(a, r): da, sp.Derivative(alpha, r): dalpha})
+                - stress[2]).subs(plain)
+        if sp.simplify(miss) != 0:
+            raise AssertionError(f"boson_star/{system}: G^{i}_{i} is not the field's stress across the radius")
+    # With no field, a^-2 = alpha^2 = 1 - r_s/r is Schwarzschild's published metric.
+    entry = next(c for c in json.loads((METRICS / "schwarzschild.json").read_text(encoding="utf-8"))["coordinates"]
+                 if c["id"] == "spherical")
+    reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+    there = {tuple(e["indices"]): reader(e["value"]) for e in entry["metric_components"]}
+    rs = reader.parameters["r_s"]
+    names = dict(zip([reader.symbol[c] for c in entry["coords"]], chart.symbols))
+    lapse = sp.sqrt(1 - rs / r)
+    for i, x in enumerate(entry["coords"]):
+        mine = geo.g[i, i].subs({alpha: lapse, a: 1 / lapse})
+        if sp.simplify(mine - there[(x, x)].subs(names)) != 0:
+            raise AssertionError(f"boson_star/{system}: with no field the chart is not Schwarzschild's in slot {x}{x}")
+    for name, value, there in ((A1, first[A1], 1 / lapse), (L1, first[L1], lapse)):
+        if sp.simplify(value.subs({sigma: 0, S1: 0}).subs({alpha: lapse, a: 1 / lapse}) - sp.diff(there, r)) != 0:
+            raise AssertionError(f"boson_star/{system}: with no field {name} is not Schwarzschild's")
+
+
+def boson_star_pullback(chart):
+    """The isotropic chart is the polar-areal one carried along r = psi^2 R, where the areal
+    chart's radial function is a = psi/(psi + 2 R psi'), which is dR/dr = aR/r, and the lapse is
+    the same function of the point."""
+    t, R, th, ph = chart.symbols
+    alpha, psi = chart.reader.parameters["alpha"], chart.reader.parameters["psi"]
+    source = boson_star("areal")
+    own = cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+    radius = psi ** 2 * R
+    names = dict(zip(own.symbols[2:], chart.symbols[2:]))
+    there = own.geo.g.subs(names, simultaneous=True)
+    there = there.subs({own.reader.parameters["alpha"]: alpha,
+                        own.reader.parameters["a"]: psi / (psi + 2 * R * sp.diff(psi, R))}, simultaneous=True)
+    there = there.subs(own.symbols[1], radius)
+    J = sp.diag(1, sp.diff(radius, R), 1, 1)
+    pulled = J.T * there * J
+    for i in range(4):
+        for j in range(4):
+            if sp.simplify(pulled[i, j] - chart.geo.g[i, j]) != 0:
+                raise AssertionError(f"boson_star/isotropic: slot {i}{j} is not the polar-areal chart pulled back")
+
+
+CHARTS["boson_star"] = [lambda s=s: boson_star(s) for s in BOSON_STAR_CHARTS]
 
 
 def write(spec):

@@ -61,6 +61,11 @@
       "id": "tolman_vii",
       "kind": "family",
       "text": "A static star of the same year whose fluid presses equally in every direction, with a density that falls as the square of the radius. Richard Tolman's paper was received on 3 January 1939, four months before Einstein's [tolman1939, einstein1939]."
+    },
+    {
+      "id": "boson_star",
+      "kind": "family",
+      "text": "Another star whose stress along the radius differs from its stress across it, made of a scalar field with no particles circling [ruffini1969]."
     }
   ],
   "references": [
@@ -77,7 +82,8 @@
     "bohmerharko2007",
     "lake2006",
     "einstein1917",
-    "tolman1939"
+    "tolman1939",
+    "ruffini1969"
   ],
   "coordinates": [
     {
