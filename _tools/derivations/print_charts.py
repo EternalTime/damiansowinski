@@ -25587,7 +25587,7 @@ def tilted_universes(system):
             "metric_id": "tilted_universes",
             "system": {"id": system, "name": "Homogeneous Time", "coords": coords,
                        "domains": ["u \\in " + TILTED_REALS] + TILTED_SPACE
-                       + ["X = C \;\\text{(a Cauchy horizon)}"],
+                       + ["X = C \\;\\text{(a Cauchy horizon)}"],
                        "parameters": parameters, "line_element": line},
             "chart_line_element": line,
             "printer": {"primed": ["X", "Y"], "lead": [X, Y, C]},
@@ -25605,8 +25605,8 @@ def tilted_universes(system):
             "metric_id": "tilted_universes",
             "system": {"id": system, "name": "Farnsworth's Dust", "coords": coords,
                        "domains": ["\\eta \\in (0, \\infty)"] + TILTED_SPACE
-                       + ["X > 0 \;\\text{(where the density is positive)}",
-                          "X = C \;\\text{(the Cauchy horizon)}"],
+                       + ["X > 0 \\;\\text{(where the density is positive)}",
+                          "X = C \\;\\text{(the Cauchy horizon)}"],
                        "parameters": parameters, "line_element": line},
             "chart_line_element": line,
             "printer": {"lead": [TILTED_NAMED, probe.parameters["W"], probe.parameters["C"]],
@@ -25627,7 +25627,7 @@ def tilted_universes(system):
             "metric_id": "tilted_universes",
             "system": {"id": system, "name": "Flat Model", "coords": coords,
                        "domains": ["u \\in (0, \\infty)"] + TILTED_SPACE
-                       + ["u = C \;\\text{(the Cauchy horizon)}"],
+                       + ["u = C \\;\\text{(the Cauchy horizon)}"],
                        "parameters": parameters, "line_element": line},
             "chart_line_element": line,
             "printer": {"lead": [probe.symbol["u"], probe.parameters["C"]]},
@@ -25643,7 +25643,7 @@ def tilted_universes(system):
                    "domains": ["T \\in " + TILTED_REALS, "x \\in " + TILTED_REALS, "\\xi \\in " + TILTED_REALS,
                                "\\zeta \\in " + TILTED_REALS, "cT + x > 0",
                                "x^2 + \\xi^2 + \\zeta^2 - c^2T^2 < C^2",
-                               "x^2 + \\xi^2 + \\zeta^2 = c^2T^2 \;\\text{(the Cauchy horizon)}"],
+                               "x^2 + \\xi^2 + \\zeta^2 = c^2T^2 \\;\\text{(the Cauchy horizon)}"],
                    "parameters": parameters,
                    "line_element": "ds^2 = -c^2dT^2 + dx^2 + d\\xi^2 + d\\zeta^2"},
         "chart_line_element": "ds^2 = -dT^2 + dx^2 + d\\xi^2 + d\\zeta^2",
