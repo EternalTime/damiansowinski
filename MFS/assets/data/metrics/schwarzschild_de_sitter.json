@@ -51,7 +51,7 @@
     },
     {
       "id": "nariai",
-      "kind": "special_case",
+      "kind": "limit",
       "text": "The limit $\\Lambda r_s^2 \\to 4/9$, where the black hole horizon meets the cosmological horizon. Paul Ginsparg and Malcolm Perry showed in 1983 that the region between them stays regular and becomes Nariai's solution [ginsparg1983]."
     },
     {

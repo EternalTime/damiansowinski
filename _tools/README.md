@@ -35,8 +35,10 @@ The entries are shown in the order they are written, so put the closest relation
 
 | `kind` | the spacetime named is | answered by |
 | --- | --- | --- |
-| `special_case` | this one at a value of a parameter, or a limit of it | `generalisation` |
+| `special_case` | this one at a value of a parameter | `generalisation` |
 | `generalisation` | this one with a parameter, a dimension, or a freedom added | `special_case` |
+| `limit` | this one in a limit that no value of its parameters reaches: a boost to the speed of light, a zoom on a horizon, two horizons made to meet | `limit_source` |
+| `limit_source` | the spacetime this one is a limit of | `limit` |
 | `piece` | a part this one is cut or glued from, as Schwarzschild is of Oppenheimer-Snyder | `composite` |
 | `composite` | a spacetime built with this one as a part | `piece` |
 | `family` | a member of the same family or construction, or the same idea in another setting | `family` |
@@ -45,12 +47,19 @@ The entries are shown in the order they are written, so put the closest relation
 | `locally_same` | the same geometry locally, differing by identifications or by the region covered | `locally_same` |
 | `programme` | another result of the same discoverer's programme, or its historical counterpart | `programme` |
 
+A special case and a limit are told apart on the metric as the page has it, as the captain asked on 2 October 2026.
+If setting a parameter to a value gives the other metric, it is a special case; if the coordinates have to be rescaled as the parameter runs to the end of its range, it is a limit.
+So $\Lambda = 0$, written $L \to \infty$ on the anti-de Sitter pages, is a special case, and the Aichelburg-Sexl boost, the Bertotti-Robinson throat and Nariai's solution are limits.
+An approach in a region with no parameter sent anywhere, as Melvin's universe approaches Levi-Civita's far from its axis, is neither, and stays `family`.
+Both lines of a limit say so, by the word limit or by an arrow such as $m \to \infty$.
+These four kinds carry a direction, from the special case to the general spacetime and from the limit to its source, which a graph of the relations draws as an arrow.
+
 `text` is one to three sentences on why, written to stand under the other spacetime's name, in the captain's voice and under every rule the histories keep: no dashes, no machinery, no contrast standing in for a definition, no epigram.
 It is short, plain, and a little playful, and it never says how many spacetimes there are.
 Each side of a relation has its own wording: Schwarzschild's entry for Kerr and Kerr's entry for Schwarzschild say the same fact from the two ends.
 A claim that is not elementary carries a citation, `[key]` as in a history, and each key it cites that the history does not is added to `references` after the history's, in the order the entries first cite them, so the page numbers them in reading order.
 
-The build refuses a spacetime with no `related`, an entry with a missing or stray field, an `id` with no metric file, a spacetime listing itself or another twice, a kind outside the table, a text of more than three sentences, a citation its `references` does not hold, a relation the other file does not answer, and an answer of the wrong kind, naming each.
+The build refuses a spacetime with no `related`, an entry with a missing or stray field, an `id` with no metric file, a spacetime listing itself or another twice, a kind outside the table, a text of more than three sentences, a citation its `references` does not hold, a limit whose text does not say so, a relation the other file does not answer, and an answer of the wrong kind, naming each.
 `relation_problems` in `build_mfs_data.py` holds those rules and the class `Relations` in the tests holds them to the files on disk.
 
 `_layouts/mfs.html` and `publications.markdown` do not read `references.json`; each parses `references.bib` in the browser with its own small reader.

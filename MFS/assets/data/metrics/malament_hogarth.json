@@ -28,9 +28,24 @@
       "text": "The charged black hole has the property too, as John Earman and John Norton noted in 1993 [earman1993]."
     },
     {
+      "id": "kerr",
+      "kind": "special_case",
+      "text": "The rotating black hole has the property. Gábor Etesi and István Németi put the computer on an orbit around one in 2002 and sent the observer in, and by the time the observer reaches the inner horizon every signal the computer will ever send has arrived [etesi2002]."
+    },
+    {
+      "id": "kerr_newman",
+      "kind": "special_case",
+      "text": "The black hole with both spin and charge. Etesi and Németi counted it among the Malament-Hogarth spacetimes in 2002, beside anti-de Sitter space and Reissner-Nordström [etesi2002]."
+    },
+    {
       "id": "godel",
       "kind": "special_case",
       "text": "In Gödel's universe every event is a Malament-Hogarth event [earman1993]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "conformal",
+      "text": "Earman and Norton's toy example of 1993 is Minkowski space with one event removed and the metric multiplied by a factor that grows without bound toward it [earman1993]. Its light cones are Minkowski's, and Minkowski space itself is globally hyperbolic, so it lacks the property."
     }
   ],
   "references": [

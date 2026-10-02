@@ -110,6 +110,36 @@
       "id": "string_wave",
       "kind": "generalisation",
       "text": "Flat spacetime with a cosmic string through it and a wave running along the string. Take the string's mass to zero and a change of coordinates brings Minkowski back [anderson1999]."
+    },
+    {
+      "id": "kerr",
+      "kind": "generalisation",
+      "text": "Flat spacetime with a spinning mass in it. With the mass taken out, $M = 0$, Kerr's metric is flat again, in spheroidal coordinates built on a ring of radius $a$ [gibbons2017]."
+    },
+    {
+      "id": "einstein_rosen_waves",
+      "kind": "generalisation",
+      "text": "Flat spacetime with gravitational waves closing in on an axis and spreading out again. Karel Kuchař proved in 1971 that their canonical formalism is that of cylindrical scalar waves in Minkowski space [kuchar1971]."
+    },
+    {
+      "id": "alcubierre",
+      "kind": "generalisation",
+      "text": "Flat spacetime with a bubble moving through it. Inside the bubble and far from it spacetime stays flat, and all of the curvature is in the bubble's wall [alcubierre1994]."
+    },
+    {
+      "id": "krasnikov",
+      "kind": "composite",
+      "text": "A tube of flat spacetime laid through flat spacetime, the two joined by a thin curved wall. Inside the tube the light cones are opened out, so a ship comes home sooner than light could have outside it [krasnikov1998, everett1997]."
+    },
+    {
+      "id": "thin_shell_wormhole",
+      "kind": "composite",
+      "text": "Two copies of Minkowski space with a region cut from each and the edges identified make a wormhole whose matter sits only on the join, as Matt Visser showed in 1989 [visser1989prd]."
+    },
+    {
+      "id": "malament_hogarth",
+      "kind": "conformal",
+      "text": "Remove one event from Minkowski space and multiply the metric by a factor that grows without bound toward it, and one observer can see the whole endless future of another in a finite time of their own [earman1993]. Itamar Pitowsky had tried the same in Minkowski space itself in 1990, where the traveller's acceleration must grow without bound [pitowsky1990]."
     }
   ],
   "references": [
@@ -149,7 +179,15 @@
     "bonnor1969light",
     "friedman1990",
     "morris1988prl",
-    "anderson1999"
+    "anderson1999",
+    "gibbons2017",
+    "kuchar1971",
+    "alcubierre1994",
+    "krasnikov1998",
+    "everett1997",
+    "visser1989prd",
+    "earman1993",
+    "pitowsky1990"
   ],
   "coordinates": [
     {

@@ -82,6 +82,66 @@
       "id": "hartle_thorne",
       "kind": "generalisation",
       "text": "The field outside a slowly rotating star, to second order in its spin. The star's quadrupole moment is free, and at Kerr's value, $Q = J^2/M$, the field is Kerr's metric to that order [hartlethorne1968]."
+    },
+    {
+      "id": "malament_hogarth",
+      "kind": "generalisation",
+      "text": "Kerr's black hole is a Malament-Hogarth spacetime. An observer falling to the inner horizon has by then received every signal a computer orbiting outside will ever send, however long it runs [etesi2002]."
+    },
+    {
+      "id": "rn_metric",
+      "kind": "family",
+      "text": "The charged black hole, which has an inner horizon as Kerr's does and spherical symmetry besides. Eric Poisson and Werner Israel took it in 1989 as a simple spherical model of the inside of a spinning hole, and found the mass within the inner horizon growing without bound [poisson1989, poisson1990]."
+    },
+    {
+      "id": "taub_nut",
+      "kind": "family",
+      "text": "Schwarzschild's metric with a twist $l$ where Kerr's has a spin $a$. Jerzy Plebański and Marek Demiański's family of 1976 holds both parameters at once [plebanski1976, griffiths2005]."
+    },
+    {
+      "id": "zipoy_voorhees",
+      "kind": "family",
+      "text": "The static field of a rod, which deforms Schwarzschild's metric by a quadrupole. Akira Tomimatsu and Humitaka Sato found a spinning vacuum solution in 1972 that is Kerr's metric at one value of its angular momentum and a Zipoy-Voorhees metric at none [tomimatsu1972, kodamahikida2003]."
+    },
+    {
+      "id": "tangherlini",
+      "kind": "family",
+      "text": "The static black hole of $D$ dimensions. Robert Myers and Malcolm Perry found its spinning family in 1986, the counterparts of Kerr's metric in higher dimensions, where a black hole can turn in several planes at once [myers1986, emparan2008]."
+    },
+    {
+      "id": "c_metric",
+      "kind": "family",
+      "text": "A black hole with an acceleration where Kerr's has a spin. Jerzy Plebański and Marek Demiański put both into one family in 1976, and the spinning C-metric is Kerr's metric when the acceleration vanishes [plebanski1976, griffiths2005]."
+    },
+    {
+      "id": "bertotti_robinson",
+      "kind": "family",
+      "text": "The throat of an extremal charged black hole, AdS$_2 \\times$ S$^2$. James Bardeen and Gary Horowitz found in 1999 that the limit toward the horizon of an extreme Kerr black hole is its vacuum counterpart, with a timelike boundary at infinity as well [bardeen1999]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "special_case",
+      "text": "Kerr's metric with the mass taken out, $M = 0$, which is flat, in spheroidal coordinates built on a ring of radius $a$. Gary Gibbons and Mikhail Volkov pointed out in 2017 that the ring stays and joins two flat regions, so at $M = 0$ Kerr's spacetime is Minkowski space only locally [gibbons2017]."
+    },
+    {
+      "id": "aichelburg_sexl",
+      "kind": "family",
+      "text": "The shock wave of a black hole boosted to the speed of light. Valeria Ferrari and Paolo Pendenza boosted Kerr's along its axis in 1990, and took the limit to be the field of massless particles on a ring of radius $a$ [ferrari1990]."
+    },
+    {
+      "id": "vaidya",
+      "kind": "family",
+      "text": "A star that shines. Prahalad Vaidya and L. K. Patel found a radiating Kerr metric in 1973, a field of flowing radiation with Kerr's symmetry that is Kerr's metric when the radiation is switched off [vaidya1973]."
+    },
+    {
+      "id": "khan_penrose",
+      "kind": "family",
+      "text": "Two impulsive plane waves colliding. With their polarisations out of line the collision is Yavuz Nutku and Mustafa Halil's solution, which Subrahmanyan Chandrasekhar and Valeria Ferrari derived in 1984 from the simplest solution of an equation of Ernst's type, as Kerr's metric is derived [chandrasekhar1984ferrari, nutku1977]."
+    },
+    {
+      "id": "string_black_hole",
+      "kind": "family",
+      "text": "Schwarzschild's black hole with a cosmic string through it. Ruth Gregory, David Kubizňák, and Danielle Wills put the string through a Kerr black hole in 2013 and found its effect conical in a frame turning with the hole [gregory2013]."
     }
   ],
   "references": [
@@ -113,7 +173,21 @@
     "carter1968separable",
     "myers1986",
     "bardeen1999",
-    "hartlethorne1968"
+    "hartlethorne1968",
+    "etesi2002",
+    "poisson1989",
+    "poisson1990",
+    "plebanski1976",
+    "griffiths2005",
+    "tomimatsu1972",
+    "kodamahikida2003",
+    "emparan2008",
+    "gibbons2017",
+    "ferrari1990",
+    "vaidya1973",
+    "chandrasekhar1984ferrari",
+    "nutku1977",
+    "gregory2013"
   ],
   "coordinates": [
     {

@@ -79,6 +79,11 @@
       "id": "bardeen",
       "kind": "family",
       "text": "The regular black hole of 1968. Bardeen's closes over a regular centre with de Sitter space at its core, where the black bounce opens through a throat into another universe [ansoldi2008, simpson2019]."
+    },
+    {
+      "id": "hayward",
+      "kind": "family",
+      "text": "A regular black hole with a centre and a core of de Sitter space. Simpson and Visser counted Hayward's among the traditional regular black holes, which close over a regular centre where theirs opens through a throat [simpson2019, hayward2006]."
     }
   ],
   "references": [
@@ -99,7 +104,8 @@
     "vagnozzi2023",
     "riaz2022",
     "damour2007",
-    "ansoldi2008"
+    "ansoldi2008",
+    "hayward2006"
   ],
   "coordinates": [
     {

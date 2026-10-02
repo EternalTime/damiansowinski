@@ -33,6 +33,21 @@
       "id": "malament_hogarth",
       "kind": "generalisation",
       "text": "Every event of Gödel's universe is a Malament-Hogarth event, one with a worldline of infinite proper length in its past [earman1993]."
+    },
+    {
+      "id": "einstein_static",
+      "kind": "family",
+      "text": "The other universe of dust that neither expands nor contracts. Gödel wrote that the two are the only spatially homogeneous solutions with matter whose world lines stay equidistant, and that his cosmological constant has the opposite sign to Einstein's [godel1949]."
+    },
+    {
+      "id": "anti_de_sitter",
+      "kind": "family",
+      "text": "Gödel's universe is a line times a space of three dimensions, and Gödel described that space as one of constant curvature, which is anti-de Sitter space, stretched by $\\sqrt{2}$ along a family of timelike lines [godel1949]. Marianne Rooman and Philippe Spindel showed in 1998 that anti-de Sitter space is the boundary between the stretchings that are causally safe and those with closed timelike curves [rooman1998]."
+    },
+    {
+      "id": "ori_time_machine",
+      "kind": "family",
+      "text": "A time machine made to start at a definite moment, inside a finite region of vacuum. Amos Ori set it against Gödel's universe, which holds its closed timelike curves from the start [ori2005]."
     }
   ],
   "references": [
@@ -53,7 +68,9 @@
     "malament1985",
     "manchak2011",
     "stephenson2008",
-    "earman1993"
+    "earman1993",
+    "rooman1998",
+    "ori2005"
   ],
   "coordinates": [
     {

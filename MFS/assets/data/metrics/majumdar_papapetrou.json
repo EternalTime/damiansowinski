@@ -41,8 +41,8 @@
     },
     {
       "id": "bertotti_robinson",
-      "kind": "special_case",
-      "text": "The geometry down the throat of each hole. Near any one of them $U \\approx m_i/|\\mathbf{x} - \\mathbf{x}_i|$, and the metric is that of AdS$_2 \\times$ S$^2$."
+      "kind": "limit",
+      "text": "The geometry down the throat of each hole. In the limit toward any one of them $U \\approx m_i/|\\mathbf{x} - \\mathbf{x}_i|$, and the metric is that of AdS$_2 \\times$ S$^2$."
     },
     {
       "id": "kaluza_klein_monopole",
@@ -53,6 +53,11 @@
       "id": "kastor_traschen",
       "kind": "generalisation",
       "text": "The same holes in a universe with a positive cosmological constant, where they ride the expansion and no longer stand still. Holes that fall together merge [kastor1993, brill1994]."
+    },
+    {
+      "id": "reissner_nordstrom_de_sitter",
+      "kind": "family",
+      "text": "The charged black hole in de Sitter space. With charge equal to mass it is the single hole of David Kastor and Jennie Traschen's solutions of 1993, Majumdar and Papapetrou's holes in a universe with $\\Lambda > 0$, where they move and merge [kastor1993]."
     }
   ],
   "references": [

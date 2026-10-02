@@ -34,6 +34,16 @@
       "id": "van_den_broeck",
       "kind": "family",
       "text": "A warp bubble with a roomy pocket folded inside it. Krasnikov called the fold Van Den Broeck's trick, and with a pocket of his own brought the exotic matter of a shortcut down to about a milligram [krasnikov2003]."
+    },
+    {
+      "id": "wormhole_time_machine",
+      "kind": "family",
+      "text": "A wormhole made into a time machine by putting its two mouths out of step. Two Krasnikov tubes that do not overlap make one too, as Allen Everett and Thomas Roman showed in 1997 [everett1997]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "piece",
+      "text": "Spacetime is flat outside the tube and flat again inside it, where the light cones are opened out. All of the curvature is in the tube's thin wall [everett1997]."
     }
   ],
   "references": [

@@ -55,6 +55,11 @@
       "id": "photon_rocket",
       "kind": "family",
       "text": "Light as the source again, here streaming out of a point mass and pushing it along. Bonnor named its rectilinear case the photon rocket in 1994 [bonnor1994]."
+    },
+    {
+      "id": "vaidya",
+      "kind": "family",
+      "text": "Light as the source again, here streaming out of a star evenly in all directions. Prahalad Vaidya found the field around the star in 1951 [vaidya1951]."
     }
   ],
   "references": [
@@ -76,7 +81,8 @@
     "ratzel2016",
     "bonnor2009",
     "bonnor1954",
-    "bonnor1994"
+    "bonnor1994",
+    "vaidya1951"
   ],
   "coordinates": [
     {

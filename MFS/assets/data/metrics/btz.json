@@ -71,6 +71,16 @@
       "id": "kerr_de_sitter",
       "kind": "family",
       "text": "The rotating black hole of anti-de Sitter space in four dimensions. Its boundary is a rotating Einstein universe too, one dimension up [hawking1999rotation]."
+    },
+    {
+      "id": "damour_solodukhin",
+      "kind": "family",
+      "text": "Schwarzschild's metric with a constant $\\lambda^2$ added to $-g_{tt}$, a wormhole that passes for a black hole. Sergey Solodukhin made that change first in the BTZ black hole, in 2005, to restore unitarity [solodukhin2005, damour2007]."
+    },
+    {
+      "id": "oppenheimer_snyder",
+      "kind": "family",
+      "text": "Dust collapsing to a black hole in four dimensions. Robert Mann and Simon Ross carried the collapse over to three in 1993, where dust falling under a negative cosmological constant ends as a BTZ black hole [mann1993]."
     }
   ],
   "references": [
@@ -90,7 +100,9 @@
     "misner1967",
     "holst1999",
     "deser1992time",
-    "hawking1999rotation"
+    "hawking1999rotation",
+    "solodukhin2005",
+    "damour2007"
   ],
   "coordinates": [
     {

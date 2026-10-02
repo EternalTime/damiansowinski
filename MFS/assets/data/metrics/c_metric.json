@@ -72,6 +72,21 @@
       "id": "kerr_de_sitter",
       "kind": "family",
       "text": "A black hole with a spin and a cosmological constant where this one has an acceleration. Plebański and Demiański put all three into one family of solutions [kamran2009, plebanski1976]."
+    },
+    {
+      "id": "kerr",
+      "kind": "family",
+      "text": "A black hole with a spin where this one has an acceleration. Plebański and Demiański's family holds both, and Jerry Griffiths and Jiří Podolský wrote it in 2005 in a form that is Kerr's metric with no acceleration and the C-metric with no rotation [plebanski1976, griffiths2005]."
+    },
+    {
+      "id": "rn_metric",
+      "kind": "family",
+      "text": "The charged black hole at rest. William Kinnersley and Martin Walker gave the accelerating mass a charge in 1970, and the horizons of their solution resemble Reissner-Nordström's, with one more for the acceleration [kinnersley1970]."
+    },
+    {
+      "id": "dilaton_black_hole",
+      "kind": "family",
+      "text": "The charged black hole of string theory. Fay Dowker, Jerome Gauntlett, David Kastor, and Jennie Traschen wrote the C-metric for a pair of them in 1994, oppositely charged and accelerating apart [dowker1994]."
     }
   ],
   "references": [

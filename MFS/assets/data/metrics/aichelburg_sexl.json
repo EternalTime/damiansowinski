@@ -27,8 +27,8 @@
   "related": [
     {
       "id": "schwarzschild",
-      "kind": "generalisation",
-      "text": "The Aichelburg-Sexl shock is Schwarzschild's field boosted to the speed of light with its energy held fixed, which flattens it onto a null plane [aichelburg1971]."
+      "kind": "limit_source",
+      "text": "The Aichelburg-Sexl shock is a limit of Schwarzschild's field: the boost is taken to the speed of light with the energy held fixed, which flattens the field onto a null plane [aichelburg1971]."
     },
     {
       "id": "pp_wave",
@@ -49,6 +49,16 @@
       "id": "string_wave",
       "kind": "family",
       "text": "Another pp-wave whose profile is harmonic off a line. Here the line is the path of a massless particle, there a cosmic string carrying a wave [garfinkle1990]."
+    },
+    {
+      "id": "kerr",
+      "kind": "family",
+      "text": "The rotating black hole, boosted the same way. Valeria Ferrari and Paolo Pendenza took the limit along its axis in 1990 and found the field of massless particles on a ring [ferrari1990]."
+    },
+    {
+      "id": "khan_penrose",
+      "kind": "family",
+      "text": "Two impulsive waves colliding, each with a plane front of the same strength everywhere, which focus each other onto a singularity [khan1971]. Two Aichelburg-Sexl shocks meeting head on close a trapped surface around the collision, as Penrose found in 1974 [eardley2002]."
     }
   ],
   "references": [
@@ -74,7 +84,8 @@
     "yoshino2003",
     "sperhake2008",
     "east2013",
-    "garfinkle1990"
+    "garfinkle1990",
+    "khan1971"
   ],
   "coordinates": [
     {

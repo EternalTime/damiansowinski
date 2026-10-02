@@ -37,8 +37,8 @@
     },
     {
       "id": "zipoy_voorhees",
-      "kind": "generalisation",
-      "text": "The Weyl field of a rod. With the rod shrunk to a point at fixed mass it becomes the Curzon-Chazy particle [herrera1999]."
+      "kind": "limit_source",
+      "text": "The Weyl field of a rod. In the limit of the rod shrunk to a point at fixed mass it becomes the Curzon-Chazy particle [herrera1999]."
     }
   ],
   "references": [

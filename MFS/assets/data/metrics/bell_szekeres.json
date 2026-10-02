@@ -48,6 +48,11 @@
       "id": "minkowski",
       "kind": "piece",
       "text": "Ahead of both waves, where $u < 0$ and $v < 0$, the spacetime is flat [griffiths1991]."
+    },
+    {
+      "id": "szekeres",
+      "kind": "programme",
+      "text": "Peter Szekeres's other spacetime, dust cosmologies with no symmetry, from the year after this one [szekeres1975]."
     }
   ],
   "references": [
@@ -65,7 +70,8 @@
     "chandrasekhar1988",
     "konkowski1991",
     "dorca1993",
-    "gurses2003"
+    "gurses2003",
+    "szekeres1975"
   ],
   "coordinates": [
     {

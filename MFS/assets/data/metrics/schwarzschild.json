@@ -113,8 +113,8 @@
     },
     {
       "id": "aichelburg_sexl",
-      "kind": "special_case",
-      "text": "Schwarzschild's field boosted to the speed of light, with the mass sent to zero as the energy stays fixed [aichelburg1971]."
+      "kind": "limit",
+      "text": "The limit of Schwarzschild's field boosted toward the speed of light, with the mass sent to zero as the energy stays fixed [aichelburg1971]."
     },
     {
       "id": "kantowski_sachs",
@@ -215,6 +215,21 @@
       "id": "hartle_thorne",
       "kind": "generalisation",
       "text": "The field outside a star that turns slowly. Rotation adds the dragging of inertial frames at first order in the spin and a quadrupole moment at second [hartlethorne1968]."
+    },
+    {
+      "id": "melvin",
+      "kind": "family",
+      "text": "A universe of magnetic field lines held together by their own gravity. Frederick Ernst put Schwarzschild's black hole inside it in 1976, and with the field switched off, $B = 0$, his metric is Schwarzschild's [ernst1976b]."
+    },
+    {
+      "id": "frw",
+      "kind": "family",
+      "text": "The expanding universe. Albert Einstein and Ernst Straus joined the two in 1945, with Schwarzschild's vacuum filling a hole cut from a Friedmann universe of dust [einstein1945]. Oppenheimer and Snyder's star is the reverse, a ball of that universe inside Schwarzschild's vacuum [oppenheimersnyder1939]."
+    },
+    {
+      "id": "kasner",
+      "kind": "limit",
+      "text": "A limit of Schwarzschild's metric with the mass sent to infinity. Robert Geroch showed in 1969 that the limit depends on the coordinates carried along: in one set it is Minkowski space, and in another, which stays inside the horizon, it is a Kasner universe [geroch1969]."
     }
   ],
   "references": [
@@ -271,7 +286,10 @@
     "fisher1948",
     "janis1968",
     "gregorylaflamme1993",
-    "hartlethorne1968"
+    "hartlethorne1968",
+    "ernst1976b",
+    "einstein1945",
+    "geroch1969"
   ],
   "coordinates": [
     {

@@ -39,6 +39,11 @@
       "id": "minkowski",
       "kind": "locally_same",
       "text": "Each side of the wall is the inside of the hyperboloid $X^2 + Y^2 + Z^2 = 1/k^2 + c^2T^2$ in Minkowski space [ipser1984, caldwell1996]."
+    },
+    {
+      "id": "de_sitter",
+      "kind": "family",
+      "text": "The wall itself is a de Sitter space of $2 + 1$ dimensions, a sphere that shrinks to the radius $1/k$ and grows again [caldwell1996]."
     }
   ],
   "references": [

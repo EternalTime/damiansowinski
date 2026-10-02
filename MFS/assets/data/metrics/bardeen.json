@@ -52,8 +52,8 @@
     },
     {
       "id": "de_sitter",
-      "kind": "piece",
-      "text": "The core of Bardeen's black hole. Near the centre $f \\approx 1 - r_sr^2/g^3$, de Sitter's static metric with $\\Lambda = 3r_s/g^3$ [ansoldi2008]."
+      "kind": "limit",
+      "text": "The core of Bardeen's black hole. Near the centre $f \\approx 1 - r_sr^2/g^3$, de Sitter's static metric with $\\Lambda = 3r_s/g^3$, and in the limit $g \\to \\infty$ at fixed $r_s/g^3$ the whole metric is de Sitter's [ansoldi2008]."
     },
     {
       "id": "simpson_visser",

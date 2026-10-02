@@ -57,6 +57,11 @@
       "id": "gowdy",
       "kind": "generalisation",
       "text": "The Taub universe is a Gowdy spacetime on $S^3$. Its extension past the Big Bang is the reason strong cosmic censorship is stated for generic initial data [gowdy2014]."
+    },
+    {
+      "id": "kerr",
+      "kind": "family",
+      "text": "Schwarzschild's metric with a spin $a$ where this one has the twist $l$. Jerzy Plebański and Marek Demiański's family of 1976 holds both, and Jerry Griffiths and Jiří Podolský worked out in 2005 how its parameters become $a$ and $l$ [plebanski1976, griffiths2005]."
     }
   ],
   "references": [
@@ -75,7 +80,9 @@
     "misner1967",
     "grossperry1983",
     "mazur1986",
-    "gowdy2014"
+    "gowdy2014",
+    "plebanski1976",
+    "griffiths2005"
   ],
   "coordinates": [
     {

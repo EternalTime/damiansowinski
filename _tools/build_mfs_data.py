@@ -582,10 +582,15 @@ def check_citations(metrics, entries):
 # What one spacetime is to another, as the `kind` of an entry of `related` names it, and the
 # kind the other spacetime's entry has to carry back. A kind says what the spacetime named is
 # to the one listing it: Kerr is a `generalisation` on Schwarzschild's page, and Schwarzschild
-# a `special_case` on Kerr's. _tools/README.md says what each one covers.
+# a `special_case` on Kerr's. A `special_case` is reached at a value of a parameter, and a
+# `limit` only as a parameter runs to the end of its range with the coordinates rescaled on
+# the way, as the Aichelburg-Sexl shock is of Schwarzschild's field; the spacetime it is a
+# limit of is its `limit_source`. _tools/README.md says what each one covers.
 RELATION_KINDS = {
     "special_case": "generalisation",
     "generalisation": "special_case",
+    "limit": "limit_source",
+    "limit_source": "limit",
     "piece": "composite",
     "composite": "piece",
     "family": "family",
@@ -595,6 +600,9 @@ RELATION_KINDS = {
     "programme": "programme",
 }
 RELATION_SENTENCES = 3
+# A relation that is a limit says so, by the word or by an arrow such as $m \to \infty$.
+LIMIT_KINDS = ("limit", "limit_source")
+LIMIT_SAID = re.compile(r"\blimits?\b|\\to\b")
 CITATION = re.compile(r"\[([A-Za-z0-9_, ]+)\]")
 
 
@@ -647,6 +655,9 @@ def relation_problems(metrics):
                 problems.append(f"{where} runs past {RELATION_SENTENCES} sentences")
             if text != text.strip() or not re.search(r"[.?!][\"')]*(?: \[[A-Za-z0-9_, ]+\]\.?)?$", text):
                 problems.append(f"{where} does not end at the end of a sentence")
+            if kind in LIMIT_KINDS and not LIMIT_SAID.search(text):
+                problems.append(f"{where} is filed as a {kind} and does not say so, by the word limit "
+                                "or by an arrow such as $m \\to \\infty$")
             for key in cited_keys(text):
                 if key not in metric.get("references", []):
                     problems.append(f"{where} cites {key!r}, which {name} does not list in its references")

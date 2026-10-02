@@ -70,6 +70,11 @@
       "id": "near_horizon_extreme_kerr",
       "kind": "family",
       "text": "A vacuum with no cosmological constant that still carries an anti-de Sitter space of two dimensions along its axis, and a timelike boundary of its own [bardeen1999]."
+    },
+    {
+      "id": "godel",
+      "kind": "family",
+      "text": "A rotating universe of dust built on anti-de Sitter space of three dimensions, with its metric stretched by $\\sqrt{2}$ along a family of timelike lines and a flat direction added [godel1949]. Marianne Rooman and Philippe Spindel showed in 1998 that anti-de Sitter space is the boundary between such spaces that are causally safe and those with closed timelike curves [rooman1998]."
     }
   ],
   "references": [
@@ -97,7 +102,9 @@
     "robinson1959",
     "hogarth1992",
     "henneaux1985",
-    "bardeen1999"
+    "bardeen1999",
+    "godel1949",
+    "rooman1998"
   ],
   "coordinates": [
     {

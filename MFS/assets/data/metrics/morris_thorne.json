@@ -63,6 +63,11 @@
       "id": "simpson_visser",
       "kind": "special_case",
       "text": "Schwarzschild's metric with $\\sqrt{r^2 + a^2}$ written for $r$. While $a > r_s$ it is one of these wormholes, and for smaller $a$ a horizon closes over the throat [simpson2019]."
+    },
+    {
+      "id": "alcubierre",
+      "kind": "family",
+      "text": "A bubble that carries a ship faster than light, with no wormhole. Miguel Alcubierre wrote in 1994 that it needs exotic matter \"just as it happens with wormholes\" [alcubierre1994]."
     }
   ],
   "references": [
@@ -83,7 +88,8 @@
     "damour2007",
     "nandi2022",
     "krasnikov2003",
-    "simpson2019"
+    "simpson2019",
+    "alcubierre1994"
   ],
   "coordinates": [
     {

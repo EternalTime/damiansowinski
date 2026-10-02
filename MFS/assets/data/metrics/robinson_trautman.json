@@ -55,6 +55,11 @@
       "id": "photon_rocket",
       "kind": "special_case",
       "text": "A member with pure radiation in place of the vacuum, whose fronts stay round while the body accelerates on the recoil of its light. Its news function vanishes, so it sends out no gravitational waves [dain1996, cornish2000]."
+    },
+    {
+      "id": "vaidya",
+      "kind": "special_case",
+      "text": "The member with round wave fronts and pure radiation in place of the vacuum, a star that shines evenly. Jiří Podolský and Otakar Svítek showed in 2005 that the other members with pure radiation approach it [podolsky2005]."
     }
   ],
   "references": [
@@ -81,7 +86,8 @@
     "rezzolla2010",
     "brinkmann1925",
     "dain1996",
-    "cornish2000"
+    "cornish2000",
+    "podolsky2005"
   ],
   "coordinates": [
     {
