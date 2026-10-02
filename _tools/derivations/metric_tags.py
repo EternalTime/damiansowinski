@@ -147,6 +147,11 @@ REGIONS = {
         "why": "kerr_ingoing runs on through the horizon into one of the extensions, where Kerr's "
                "metric is stationary; where the waves have passed both Killing vectors are spacelike",
     },
+    "nordstrom_scalar": {
+        "regions": [["conformal"]],
+        "why": "spherical, uniform and dust are three solutions of the theory, a point mass, a uniform "
+               "field and a universe of dust, each with symmetries its general spacetime lacks",
+    },
     "black_saturn": {
         "regions": [["weyl", "polar"]],
         "why": "ring is the black ring alone, the Saturn with its hole taken away",
@@ -170,6 +175,10 @@ REGIONS = {
     "israel_shell": {
         "regions": [["interior"], ["exterior", "exterior_ingoing"]],
         "why": "the flat space inside the shell and the vacuum outside it are two regions of one spacetime",
+    },
+    "charged_shell": {
+        "regions": [["interior"], ["exterior", "exterior_ingoing", "exterior_outgoing", "exterior_isotropic"]],
+        "why": "the flat space inside the shell and the charge's field outside it are two regions of one spacetime",
     },
     "kaluza_klein_black_hole": {
         "regions": [["electric", "eddington_finkelstein_ingoing", "magnetic", "dyonic"]],
@@ -277,6 +286,10 @@ OVERRULED = {
     ("coleman_de_luccia", "static"): (
         False, "each vacuum is static in its own chart, and the wall between them, at r = r_w, "
                "accelerates outward through both, so the bubble as a whole has no time translation"),
+    ("penrose_impulsive_wave", "spherically symmetric"): (
+        False, "behind the wave the space is Minkowski's and its chart is spherical, but the front carries "
+               "the two ends of the string and the space ahead of it is the string's cone, so the "
+               "spacetime keeps only the rotations about the string"),
     ("israel_shell", "vacuum"): (
         False, "both regions are empty and the shell of dust between them is in no chart, since g_rr "
                "jumps across it; the spacetime has matter on r = R"),
@@ -298,6 +311,14 @@ OVERRULED = {
         False, "each cell is a piece of Schwarzschild's geometry, static and spherically symmetric in its own "
                "chart, and its boundary moves through it, so the lattice of cells has no time translation and "
                "only the discrete symmetry of its tiling"),
+    ("charged_shell", "stationary"): (
+        False, "each side is static in its own chart, and the shell between them, at r = R, "
+               "moves through both, so the spacetime as a whole has no time translation; the balanced "
+               "shell at rest, mu = r_q = r_s/2, is the one member that has"),
+    ("charged_shell", "static"): (
+        False, "each side is static in its own chart, and the shell between them, at r = R, "
+               "moves through both, so the spacetime as a whole has no time translation; the balanced "
+               "shell at rest, mu = r_q = r_s/2, is the one member that has"),
     ("black_saturn", "vacuum"): (
         True, "V, Omega, W and nu are left free in Weyl's chart and the polar chart; black Saturn "
               "is the solution of the vacuum equations their parameters define, which "

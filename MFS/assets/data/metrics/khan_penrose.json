@@ -62,6 +62,11 @@
       "id": "chandrasekhar_xanthopoulos",
       "kind": "family",
       "text": "Waves with a shock behind each impulse and their polarizations out of line. They focus each other onto a horizon, the inner horizon of Kerr, on the surface where these waves have their singularity [chandrasekhar1986]."
+    },
+    {
+      "id": "penrose_impulsive_wave",
+      "kind": "programme",
+      "text": "Penrose's impulsive wave with a spherical front, made by cutting flat spacetime along a light cone and gluing it back with a warp [penrose1972impulsive]."
     }
   ],
   "references": [
@@ -80,7 +85,8 @@
     "bell1974",
     "griffiths1991",
     "szekeres1975",
-    "eardley2002"
+    "eardley2002",
+    "penrose1972impulsive"
   ],
   "coordinates": [
     {

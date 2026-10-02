@@ -361,6 +361,74 @@ def bardeen_rstar(r):
     return total + sum(a * math.log(abs(1 - r / ri)) for ri, a in poles if r != ri)
 
 
+# Born and Infeld's point charge as every diagram draws it, in units of r_0 at r_q = r_0/2: (r_s, r_q)
+# of Hoffmann's particle, whose whole mass is the energy of its field, and of the black hole.
+BORN_INFELD = {"particle": (math.gamma(0.25) ** 2 / (12 * math.sqrt(math.pi)), 0.5), "hole": (2.0, 0.5)}
+
+
+def carlson_rf(x, y, z):
+    """Carlson's symmetric elliptic integral R_F, by his duplication theorem."""
+    for _ in range(60):
+        lam = math.sqrt(x * y) + math.sqrt(y * z) + math.sqrt(z * x)
+        x, y, z = (x + lam) / 4, (y + lam) / 4, (z + lam) / 4
+        mean = (x + y + z) / 3
+        if max(abs(x - mean), abs(y - mean), abs(z - mean)) < 1e-9 * mean:
+            break
+    X, Y, Z = 1 - x / mean, 1 - y / mean, 1 - z / mean
+    e2, e3 = X * Y - Z * Z, X * Y * Z
+    return (1 - e2 / 10 + e3 / 14 + e2 * e2 / 24 - 3 * e2 * e3 / 44) / math.sqrt(mean)
+
+
+def elliptic_f(phi, m):
+    """The incomplete elliptic integral of the first kind, F(phi | m), for an amplitude up to pi."""
+    if phi > math.pi / 2:
+        return 2 * carlson_rf(0.0, 1 - m, 1.0) - elliptic_f(math.pi - phi, m)
+    s = math.sin(phi)
+    return s * carlson_rf(1 - s * s, 1 - m * s * s, 1.0)
+
+
+def born_infeld_f(r, case):
+    """g^rr = 1 - 2m/r of Born and Infeld's point charge, with the mass function as the charts define it,
+    m = r_s/2 + r_q^2 r/(3 (r^2 + W)) - (r_q^2/(3 r_0)) F(2 arctan(r_0/r) | 1/2), W = sqrt(r^4 + r_0^4)."""
+    rs, rq = BORN_INFELD[case]
+    W = math.sqrt(r ** 4 + 1)
+    m = rs / 2 + rq ** 2 * r / (3 * (r * r + W)) - rq ** 2 / 3 * elliptic_f(2 * math.atan2(1.0, r), 0.5)
+    return 1 - 2 * m / r
+
+
+def born_infeld_horizon():
+    """The black hole's one horizon, the zero of g^rr, by bisection."""
+    lo, hi = 1.5, 2.2
+    for _ in range(200):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if born_infeld_f(lo, "hole") * born_infeld_f(mid, "hole") > 0 else (lo, mid)
+    return 0.5 * (lo + hi)
+
+
+def born_infeld_rstar(r, case):
+    """The tortoise coordinate of Born and Infeld's point charge, dr_*/dr = 1/f and r_* = 0 at the
+    centre, without numpy, as Bardeen's is summed above: the particle's 1/f is smooth, and the black
+    hole's has one pole, at the horizon, of residue 1/f'(r_h) = r_h/(1 - 2 r_q^2/(r_h^2 + W))."""
+    poles = []
+    if case == "hole":
+        rh, rq = born_infeld_horizon(), BORN_INFELD[case][1]
+        poles = [(rh, rh / (1 - 2 * rq ** 2 / (rh * rh + math.sqrt(rh ** 4 + 1))))]
+    nodes = (0.0, 0.5384693101056831, -0.5384693101056831, 0.906179845938664, -0.906179845938664)
+    weights = (0.5688888888888889, 0.47862867049936647, 0.47862867049936647, 0.23692688505618908, 0.23692688505618908)
+
+    def smooth(x):
+        return 1 / born_infeld_f(x, case) - sum(a / (x - ri) for ri, a in poles)
+    cuts = sorted({0.0, r} | {ri for ri, _ in poles if ri < r})
+    total = 0.0
+    for lo, hi in zip(cuts, cuts[1:]):
+        panels = max(1, math.ceil((hi - lo) / 0.05))
+        width = (hi - lo) / panels
+        for k in range(panels):
+            mid = lo + (k + 0.5) * width
+            total += 0.5 * width * sum(w * smooth(mid + 0.5 * width * n) for n, w in zip(nodes, weights))
+    return total + sum(a * math.log(abs(1 - r / ri)) for ri, a in poles if r != ri)
+
+
 class PublishedFilesAreCurrent(unittest.TestCase):
     def test_check_mode_passes(self):
         self.assertEqual(build.main(["--check"]), 0)
@@ -3197,8 +3265,10 @@ class EmbeddingDiagrams(unittest.TestCase):
         # moments of its movie, before the radiation reaches the rim and after the last of it has left.
         # Hiscock's hole leaves flat space behind as well: at the last moment of its movie the flat disc
         # inside the last ray has reached r = 3m_0/2 and the mass still inside the rim is under m_0/20.
+        # Nordstrom's universe of dust is conformally flat with a factor that depends on the time alone,
+        # so each of its moments is a flat plane, on which its rings of galaxies grow and shrink.
         flat_moments = {("domain_wall", "moments", 2), ("hayward", "history", 0), ("hayward", "history", 5),
-                        ("hiscock", "history", 5)}
+                        ("hiscock", "history", 5), *(("nordstrom_scalar", "dust", k) for k in range(5))}
         self.assertNotIn("lentz", self.embedding)
         self.assertNotIn("embedding", next(m for m in read(build.INDEX_FILE) if m["id"] == "lentz"))
         for name, data in self.embedding.items():
@@ -3532,12 +3602,15 @@ class StacksAndMovies(unittest.TestCase):
     # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
-    MOVIES = {("frw", "closed"): "$ct$", ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
+    MOVIES = {("frw", "closed"): "$ct$", ("nordstrom_scalar", "dust"): "$ct$",
+              ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("white_hole", "explosion"): "$c\\tau$",
               ("vaidya", "shell"): "$v - r$",
               ("semiclosed_world", "bag"): "$c\\tau$",
               ("lindquist_wheeler_lattice", "lattice"): "$c\\tau$",
               ("bonnor_vaidya", "shell"): "$v - r$", ("israel_shell", "shell"): "$v - r$",
+              ("charged_shell", "bounce"): "$v - r$",
+              ("penrose_impulsive_wave", "snap"): "$ct$",
               ("cosmic_string", "unroll"): "$\\Delta\\phi$", ("point_particle_2plus1", "unroll"): "$\\Delta\\phi$",
               ("milne", "hyperboloids"): "$ct$",
               ("coleman_de_luccia", "hyperboloids"): "$c\\tau$",
@@ -3677,7 +3750,7 @@ class StacksAndMovies(unittest.TestCase):
         # Tolman-Bondi's cloud stand at z = 0 in every frame, and the
         # Malament-Hogarth well only deepens as the removed event nears.
         for metric_id, piece in (("malament_hogarth", "flat"), ("oppenheimer_snyder", "exterior"), ("vaidya", None),
-                                 ("israel_shell", None), ("tolman_bondi", "exterior")):
+                                 ("israel_shell", None), ("charged_shell", None), ("tolman_bondi", "exterior")):
             view = self.embedding[metric_id]["views"][0]
             for frame in view["movie"]["frames"]:
                 outer = frame["pieces"][-1] if piece is None else next(p for p in frame["pieces"] if p["id"] == piece)
@@ -4328,6 +4401,76 @@ def israel_event(p, q):
     return v, r
 
 
+# The charged shell of dust as its diagrams draw it, r_s = 1, r_q = 12/25 and mu = 1/5, written here
+# again from the junction condition alone. With E = 1/(2 mu), k = (r_q^2 - mu^2)/(2 mu),
+# l = (r_q^2 + mu^2)/(2 mu) and a = E^2 - 1, the shell is R = k(E + cosh eta)/a at the flat time
+# T = k(eta + E sinh eta)/a^(3/2) inside it, and its advanced time outside obeys
+# dv/d(eta) = (R/sqrt(a))/(beta - Rdot), beta = E - l/R and Rdot = sqrt(a) sinh eta/(E + cosh eta),
+# with v = r_* at the turn, eta = 0; on the way out v = -v(-eta) + 2 r_*.
+CHARGED_RQ, CHARGED_MU, CHARGED_RP, CHARGED_RM = 12 / 25, 1 / 5, 16 / 25, 9 / 25
+CHARGED_E = 1 / (2 * CHARGED_MU)
+CHARGED_K = (CHARGED_RQ ** 2 - CHARGED_MU ** 2) / (2 * CHARGED_MU)
+CHARGED_L = (CHARGED_RQ ** 2 + CHARGED_MU ** 2) / (2 * CHARGED_MU)
+CHARGED_A = CHARGED_E ** 2 - 1
+CHARGED_ETA_P = math.acosh(CHARGED_A * CHARGED_RP / CHARGED_K - CHARGED_E)
+CHARGED_ETA_M = math.acosh(CHARGED_A * CHARGED_RM / CHARGED_K - CHARGED_E)
+
+
+def charged_radius(eta):
+    return CHARGED_K * (CHARGED_E + math.cosh(eta)) / CHARGED_A
+
+
+def charged_inner_time(eta):
+    return CHARGED_K * (eta + CHARGED_E * math.sinh(eta)) / CHARGED_A ** 1.5
+
+
+def charged_rstar(r):
+    """Reissner-Nordstrom's tortoise coordinate, zero at r = 0."""
+    gap = CHARGED_RP - CHARGED_RM
+    return (r + CHARGED_RP ** 2 / gap * math.log(max(abs(r / CHARGED_RP - 1), 1e-300))
+            - CHARGED_RM ** 2 / gap * math.log(max(abs(r / CHARGED_RM - 1), 1e-300)))
+
+
+def _charged_rate(eta):
+    R = charged_radius(eta)
+    speed = math.sqrt(CHARGED_A) * math.sinh(eta) / (CHARGED_E + math.cosh(eta))
+    return R / math.sqrt(CHARGED_A) / (CHARGED_E - CHARGED_L / R - speed)
+
+
+def charged_advanced(eta):
+    """v on the shell, by Simpson's rule from the turn."""
+    back = -abs(eta)
+    n = 2 * max(8, int(abs(back) * 400))
+    h = -back / n
+    total = _charged_rate(back) + _charged_rate(0.0) + sum((4 if i % 2 else 2) * _charged_rate(back + i * h) for i in range(1, n))
+    way_in = charged_rstar(charged_radius(0.0)) - total * h / 3
+    return way_in if eta <= 0 else -way_in + 2 * charged_rstar(charged_radius(eta))
+
+
+def charged_on_slice(w):
+    """eta where the slice v - r = w meets the shell."""
+    return bisect(lambda eta: charged_advanced(eta) - charged_radius(eta) - w, -12.0, CHARGED_ETA_M - 1e-12, 60)
+
+
+def charged_event(p, q, length):
+    """The v and r of the event outside the shell that the conformal diagram draws at (p, q), with
+    length the L of p, q = arctan((cT -+ r)/L) inside the shell. The outgoing ray p left the shell
+    where T - R = L tan p, and keeps v - 2r_* in whichever of the three stretches of r it left in;
+    the ingoing ray q meets the shell where T + R = L tan q, and has the shell's v there."""
+    left = bisect(lambda eta: charged_inner_time(eta) - charged_radius(eta) - length * math.tan(p), -12.0, 12.0, 80)
+    met = bisect(lambda eta: charged_inner_time(eta) + charged_radius(eta) - length * math.tan(q), -12.0, 12.0, 80)
+    v = charged_advanced(met)
+    keeps = charged_advanced(left) - 2 * charged_rstar(charged_radius(left))
+    if left < -CHARGED_ETA_P:
+        lo, hi = CHARGED_RP + 1e-13, 1e3
+    elif left < -CHARGED_ETA_M:
+        lo, hi = CHARGED_RP - 1e-13, CHARGED_RM + 1e-13
+    else:
+        lo, hi = 1e-9, CHARGED_RM - 1e-13
+    # v - 2r_* falls with r outside r_+ and inside r_-, and rises with it between the horizons.
+    return v, bisect(lambda r: -(v - 2 * charged_rstar(r) - keeps), lo, hi, 200)
+
+
 class Lukewarm:
     """The lukewarm charged black hole in de Sitter space as every diagram draws it, r_s = 1, r_q = 1/2 and
     Lambda = 27/64, H = 3/8: f = (1 - 1/(2r))^2 - 9r^2/64 has the roots 2, 2/3, (2 sqrt 7 - 4)/3 and
@@ -4669,6 +4812,10 @@ class Slices(unittest.TestCase):
     HIDDEN = {# The flat interior of Tippett and Tsang's bubble continued over the whole plane, another
               # spacetime than the bubble whose moment is embedded.
               "tippett_tsang/interior/tx", "tippett_tsang/rindler/plane",
+              # A plane wave and the uniform field of Nordstrom's theory, other spacetimes than the point
+              # mass and the dust universe whose moments are embedded.
+              "nordstrom_scalar/conformal/tx", "nordstrom_scalar/uniform/tz",
+              "conformal nordstrom_scalar/conformal", "conformal nordstrom_scalar/uniform",
               # The region x < 0 of Siklos's chart, another region than the one whose wave front is embedded.
               "siklos/kaigorodov_stationary/plane",
               # Kundt's waves with no cosmological constant, other spacetimes than the waves in de Sitter
@@ -4813,6 +4960,8 @@ class Slices(unittest.TestCase):
               # The solitons of five and of three dimensions, other spacetimes than the soliton of four
               # dimensions whose moment is embedded.
               "ads_soliton/five_dimensional/radial", "ads_soliton/three_dimensional/radial",
+              # The plane 30 degrees from the string of Penrose's wave holds no event of the plane across it.
+              "penrose_impulsive_wave/retarded/near",
               "conformal ads_soliton/five_dimensional", "conformal ads_soliton/three_dimensional"}
 
     def setUp(self):
@@ -4855,6 +5004,10 @@ class Slices(unittest.TestCase):
     # one line element: the static and Eddington-Finkelstein drawings are the black hole's, and the
     # Barriola-Vilenkin drawings the monopole's.
     HIDDEN_VIEWS = {"conformal cosmic_string/gott": {"unroll"},
+                    # Nordstrom's point mass and his universe of dust are two spacetimes of one theory,
+                    # each drawing marking the moments of its own.
+                    "nordstrom_scalar/spherical/radial": {"dust"}, "conformal nordstrom_scalar/spherical": {"dust"},
+                    "nordstrom_scalar/dust/radial": {"point_mass"}, "conformal nordstrom_scalar/dust": {"point_mass"},
                     # The flat plane times a sphere and the anti-Nariai universe are two spacetimes, and
                     # each chart's drawings mark the surfaces of its own.
                     **{where: {"hyperbolic_plane"} for where in (
@@ -4863,6 +5016,16 @@ class Slices(unittest.TestCase):
                     **{where: {"equator", "sphere"} for where in (
                         "plebanski_hacyan/anti_nariai/wedge", "plebanski_hacyan/anti_nariai_static/radial",
                         "conformal plebanski_hacyan/anti_nariai", "conformal plebanski_hacyan/anti_nariai_static")},
+                    # The charged shell that falls and turns and the balanced shell at rest are two
+                    # spacetimes of one page: the isotropic chart's drawings mark the moment of the
+                    # shell at rest, and every other drawing the moments of the falling shell.
+                    **{f"charged_shell/{s}": {"point"} for s in (
+                        "interior/radial", "interior/through", "exterior/radial", "exterior/inside",
+                        "exterior_ingoing/shell", "exterior_outgoing/shell")},
+                    **{f"conformal charged_shell/{v}": {"point"} for v in (
+                        "interior", "exterior", "exterior_ingoing", "exterior_outgoing")},
+                    "charged_shell/exterior_isotropic/point": {"bounce"},
+                    "conformal charged_shell/exterior_isotropic": {"bounce"},
                     # Wahlquist's rotating body and Whittaker's sphere are two spacetimes, the second the
                     # first with no rotation, and each chart's drawings mark the moment of its own.
                     **{f"wahlquist/wahlquist/{v}": {"static"} for v in ("equator", "disc")},
@@ -4908,6 +5071,15 @@ class Slices(unittest.TestCase):
                         "static/radial", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
                         "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
                     **{f"conformal hayward/{v}": {"history"} for v in ("static", "ingoing", "outgoing")},
+                    # Hoffmann's particle and the black hole of the same charge are two spacetimes of one
+                    # line element: each drawing marks the moment of its own.
+                    **{f"born_infeld_charge/{s}": {"hole"} for s in (
+                        "static/particle", "eddington_finkelstein_ingoing/particle", "eddington_finkelstein_outgoing/particle")},
+                    **{f"conformal born_infeld_charge/{v}": {"hole"} for v in ("particle", "particle_ingoing", "particle_outgoing")},
+                    **{f"born_infeld_charge/{s}": {"particle"} for s in (
+                        "static/hole", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
+                        "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
+                    **{f"conformal born_infeld_charge/{v}": {"particle"} for v in ("hole", "hole_ingoing", "hole_outgoing")},
                     "hayward/evaporating/history": {"outside", "inside"},
                     "conformal hayward/history": {"outside", "inside"},
                     # Kerr-de Sitter and Kerr-anti-de Sitter are two spacetimes of one line element, each
@@ -5078,10 +5250,15 @@ class Slices(unittest.TestCase):
     # the cell at rest or contracting.
     # The flat interior of Israel's shell ends where the shell reaches the centre, at v - r = 0.52 r_s, so
     # the last moment, v - r = r_s, has no part in it.
+    # The charged shell is inside r_- only from v - r = -0.25 r_s on, so the first two moments have no
+    # part in the static chart inside r_- nor in the outgoing chart, which shares only that region with
+    # the ingoing one.
     HIDDEN_SURFACES = {"lindquist_wheeler_lattice/schwarzschild_cell/radial": {("lattice", 2), ("lattice", 3)},
                        "lindquist_wheeler_lattice/cosmological_time/radial": {("lattice", k) for k in range(4)},
                        "conformal lindquist_wheeler_lattice/expanding": {("lattice", k) for k in range(4)},
                        "simpson_visser/areal/bounce": {("inside", 3), ("inside", 4)},
+                       "charged_shell/exterior/inside": {("bounce", 0), ("bounce", 1)},
+                       "charged_shell/exterior_outgoing/shell": {("bounce", 0), ("bounce", 1)},
                        "israel_shell/interior/radial": {("shell", 3)},
                        "israel_shell/interior/through": {("shell", 3)},
                        "hiscock/ingoing/history": {("history", 5)},
@@ -5141,10 +5318,23 @@ class Slices(unittest.TestCase):
             of_x = {"kaigorodov_horospheric": lambda x: -math.log(x),
                     "kaigorodov_homogeneous": lambda x: math.log(x) / 2}.get(key.split("/")[1], lambda x: x)
             return (lambda X: 0.0), sorted(of_x(x) for x in ((2 - top) / (2 + top), (2 + top) / (2 - top)))
+        if key == "nordstrom_scalar/dust/radial":
+            # A moment of the inertial time, from the centre to the galaxy at r = L.
+            return (lambda X: t), list(self.reach(surface))
         if key == "ppn_metric/cartesian/axis":
             # The line through the body's centre: the equator at t = 0 on both sides of the body.
             lo, hi = self.reach(surface)
             return (lambda X: 0.0), [-hi, -lo, lo, hi]
+        if key == "exponential_metric/cartesian/axis":
+            # The line through r = 0: the equator at t = 0 on both halves, from r = m/3 to 6m.
+            lo, hi = self.reach(surface)
+            return (lambda X: 0.0), [-hi, -lo, lo, hi]
+        if key == "exponential_metric/areal/radial":
+            # The areal radius R = r e^(m/r) covers the near side, from the throat R = e m out.
+            return (lambda X: 0.0), [math.e, self.reach(surface)[1] * math.exp(1 / self.reach(surface)[1])]
+        if key == "exponential_metric/harmonic/radial":
+            # u = 1/r of the isotropic radius the embedding reads.
+            return (lambda X: 0.0), sorted(1 / x for x in self.reach(surface))
         if key == "ppn_metric/areal/radial":
             # The areal radius is the isotropic radius the embedding reads plus gamma m, at gamma = 1.
             return (lambda X: 0.0), [x + 1 for x in self.reach(surface)]
@@ -5310,6 +5500,14 @@ class Slices(unittest.TestCase):
             sign = 1 if "ingoing" in key else -1
             finkelstein = key.endswith("finkelstein")
             return (lambda X: sign * (bardeen_rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
+        if key.startswith("born_infeld_charge/eddington_finkelstein"):
+            # In units of r_0 at r_q = r_0/2 the static t = 0 is v = r_* and u = -r_*, with dr_*/dr = 1/f and
+            # r_* = 0 at the centre, drawn against v - r and u + r or against v and u: the whole of it for
+            # Hoffmann's particle, and for the black hole a curve that runs off toward the horizon.
+            sign = 1 if "ingoing" in key else -1
+            case = "particle" if key.endswith("/particle") else "hole"
+            lean = 0 if key.endswith("/chart") else 1
+            return (lambda X: sign * (born_infeld_rstar(X, case) - lean * X)), list(self.reach(surface))
         if key in ("ads_soliton/horowitz_myers/radial", "ads_soliton/poincare/tz"):
             # The soliton's t = 0, embedded in the proper distance rho from the tip, at r_0 = L = 1:
             # r = cosh^(2/3)(3 rho/2) on Horowitz and Myers's plane and z = 1/r on the Poincare plane.
@@ -5525,6 +5723,37 @@ class Slices(unittest.TestCase):
             return (lambda X: math.log(t)), list(self.reach(surface))
         if key in ("vaidya/eddington_finkelstein_ingoing/shell", "bonnor_vaidya/eddington_finkelstein_ingoing/shell"):
             return (lambda X: t), list(self.reach(surface))
+        if key.startswith("charged_shell/"):
+            # The balanced shell at rest: t = 0 in the isotropic chart, from the shell out. The falling
+            # shell: the slice v - r = t outside the shell, level against v - r, the curve
+            # ct = t + r - r_* in the static chart, outside r_+ and inside r_-, and u + r = t + 2r - 2r_*
+            # in the outgoing chart inside r_-; inside the shell, the moment of the flat time T at which
+            # that slice meets the shell.
+            if key == "charged_shell/exterior_isotropic/point":
+                return (lambda X: 0.0), list(self.reach(surface, "exterior_isotropic"))
+            if key == "charged_shell/exterior_ingoing/shell":
+                return (lambda X: t), list(self.reach(surface, "exterior_ingoing"))
+            if key.startswith("charged_shell/exterior/"):
+                return (lambda X: t + X - charged_rstar(X)), list(self.reach(surface, "exterior_ingoing"))
+            if key == "charged_shell/exterior_outgoing/shell":
+                return (lambda X: t + 2 * X - 2 * charged_rstar(X)), list(self.reach(surface, "exterior_ingoing"))
+            level = charged_inner_time(charged_on_slice(t))
+            return (lambda X: level), list(self.reach(surface, "interior"))
+        if key.startswith("penrose_impulsive_wave/"):
+            # Penrose's wave at beta = 1/2: the moment t behind the front and T = t/beta ahead of it. On the
+            # retarded equator, drawn against r and u + r, that is ct out to the front and
+            # r + 2(ct - r)/(1 + beta^2) beyond it. A null plane of constant rho meets it in the one event
+            # V = ct/sqrt(2), U = (rho^2 - 1) ct/sqrt(2), drawn at (U + V)/2 and (V - U)/2.
+            b = 0.5
+            if key.endswith("behind/radial"):
+                return (lambda X: t), list(self.reach(surface, "behind"))
+            if key.endswith("ahead/radial"):
+                return (lambda X: t / b), list(self.reach(surface, "ahead"))
+            if key.endswith("retarded/equator"):
+                return (lambda X: t if X <= t else X + 2 * (t - X) / (1 + b * b)), [0.0, t]
+            rho = {"unit": 1.0, "near": 0.5}[key.rsplit("/", 1)[1]]
+            at = rho * rho * t / (2 * math.sqrt(2))
+            return (lambda X: (2 - rho * rho) * t / (2 * math.sqrt(2)) + (X - at)), [at]
         if key.startswith("israel_shell/"):
             # Israel's shell: the slice v - r = t outside the shell, level against v - r, and in
             # Schwarzschild's chart the curve ct = t - ln(r - 1), which leaves the drawing toward r_s;
@@ -5820,6 +6049,19 @@ class Slices(unittest.TestCase):
                 "vr": ((lambda X: -0.5 / max(X, 1e-9) ** 2 - X), [math.exp(lo), math.exp(hi)]),
                 "vs": ((lambda X: -0.5 / max(X, 1e-9) - X / 2), [math.exp(2 * lo), math.exp(2 * hi)]),
             }[view_id]
+        if key.startswith("elliptic_de_sitter/"):
+            # Elliptic de Sitter space's moment t = 0 of the global chart at l = 1, over the embedding's
+            # reach in chi: the line eta = 0; U = -V with V = tan(pi/4 - chi/2), drawn against (V - U)/2 = V
+            # at (U + V)/2 = 0; the static t = 0 with r = sin chi; and t = -ln(1 + x^2)/2 with x = tan chi
+            # in the planar chart, which leaves the box before the rim.
+            lo, hi = self.reach(surface)
+            return {
+                "global": ((lambda X: 0.0), [lo, hi]),
+                "conformal": ((lambda X: 0.0), [lo, hi]),
+                "kruskal": ((lambda X: 0.0), [math.tan(math.pi / 4 - hi / 2), math.tan(math.pi / 4 - lo / 2)]),
+                "static": ((lambda X: 0.0), [math.sin(lo), math.sin(hi)]),
+                "planar": ((lambda X: -0.5 * math.log1p(X * X)), None),
+            }[key.split("/")[1]]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))
@@ -6056,6 +6298,48 @@ class Slices(unittest.TestCase):
                             else:
                                 continue
                             self.assertLess(abs(v - r - t), 2e-3 * (1 + abs(v)), f"{where} at {(X, T)}")
+                    elif metric_id == "charged_shell" and view["id"] == "exterior_isotropic":
+                        # The balanced shell at rest: t = 0 is the level line T = 0 on both sides.
+                        for line in mark["lines"]:
+                            for X, T in line:
+                                self.assertLess(abs(T), 1e-3, f"{where} at {(X, T)}")
+                    elif metric_id == "charged_shell":
+                        # Inside the shell p, q = arctan((cT -+ r)/L) with L the shell's T + R where it comes
+                        # back to r_-: the moment is the flat time at which the slice v - r = t meets the
+                        # shell, out to the shell. Outside it each point is carried back along its two rays
+                        # to the shell, charged_event, and lies on v - r = t.
+                        length = charged_inner_time(CHARGED_ETA_M) + CHARGED_RM
+                        on_shell = charged_on_slice(t)
+                        level, edge = charged_inner_time(on_shell), charged_radius(on_shell)
+                        inside, outside = mark["lines"]
+                        for X, T in inside:
+                            a, b = length * math.tan((T - X) / 2), length * math.tan((T + X) / 2)
+                            self.assertLess(abs((a + b) / 2 - level), 2e-3 * (1 + a * a + b * b), f"{where} at {(X, T)}")
+                            self.assertLessEqual((b - a) / 2, edge + 2e-3 * (1 + a * a + b * b), where)
+                        self.assertLess(math.dist(inside[-1], outside[0]), 2e-4, where)
+                        for X, T in outside[1:]:
+                            v, r = charged_event((T - X) / 2, (T + X) / 2, length)
+                            if min(abs(r - CHARGED_RP), abs(r - CHARGED_RM)) < 0.02:
+                                continue        # on a horizon the rounded point's ray is not well enough known
+                            self.assertLess(abs(v - r - t), 5e-3 * (1 + abs(v)), f"{where} at {(X, T)}")
+                    elif metric_id == "penrose_impulsive_wave":
+                        # At beta = 1/2: behind the front p, q = arctan(ct -+ r), so ct = (tan p + tan q)/2 is t;
+                        # ahead of it p = arctan((cT - R)/beta), q = arctan(beta (cT + R)), so cT is t/beta; the two
+                        # lines meet on the front. On the null plane rho = 1 the event is U = 0, V = t/sqrt(2).
+                        if view["id"] == "null":
+                            (X, T), = mark["points"]
+                            self.assertLess(abs(math.tan((T - X) / 2)) + abs(math.tan((T + X) / 2) - t / math.sqrt(2)),
+                                            2e-3, where)
+                        else:
+                            inside, outside = mark["lines"]
+                            for X, T in inside:
+                                a, b = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                                self.assertLess(abs((a + b) / 2 - t), 2e-3 * (1 + a * a + b * b), f"{where} at {(X, T)}")
+                            for X, T in outside:
+                                a, b = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                                self.assertLess(abs((a / 2 + 2 * b) / 2 - 2 * t), 2e-3 * (1 + a * a + b * b),
+                                                f"{where} at {(X, T)}")
+                            self.assertLess(math.dist(inside[-1], outside[0]), 2e-4, where)
                     elif metric_id == "israel_shell":
                         # Inside the shell p, q = arctan(3(cT -+ r)/7): the moment is the flat time at which
                         # the slice v - r = t meets the shell, out to the shell. Outside it each point is
@@ -6207,6 +6491,11 @@ class Slices(unittest.TestCase):
                             self.assertLess(abs(out - back), 5e-3 * (1 + out), f"{where} at {(X, T)}")
                             met += 1
                         self.assertGreater(met, 5, where)
+                    elif metric_id == "nordstrom_scalar" and mark["view"] == "dust":
+                        # p, q = arctan((ct -+ r)/L), so tan p + tan q = 2ct/L on a moment of the inertial time.
+                        for X, T in points:
+                            self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2) - 2 * t), 2e-3,
+                                            f"{where} at {(X, T)}")
                     elif metric_id == "coleman_de_luccia":
                         # p, q = arctan(e^(eta -+ chi)) with eta = ln tan(c tau/2), so tan p tan q = tan^2(c tau/2).
                         for X, T in points:

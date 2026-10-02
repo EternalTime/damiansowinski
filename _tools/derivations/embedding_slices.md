@@ -535,6 +535,14 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - The Eddington-Finkelstein views: the moment is $v = r_*$ in the ingoing chart and $u = -r_*$ in the outgoing one, with $r_* = 0$ at the centre, each curve running off toward the horizon its view ends on.
 - `tower`, `ingoing` and `outgoing`: the outside view is the line $T = 0$ through the outer bifurcation point, on the outgoing view the line $T = 2\pi$ of the exterior that chart covers, and the inside view is the line $T = \pi$ through the inner bifurcation point, from one centre to the other.
 
+### Born and Infeld's point charge
+
+- The embedding has two views at one moment of $t$, drawn at $t = 0$, in units of $r_0$ at $r_q = r_0/2$: Hoffmann's particle, $r$ from the centre to $4\,r_0$, and the black hole, $r$ from $r_h = 1.867\,r_0$ to $8\,r_0$ on both sheets through the bifurcation sphere.
+- The two are two spacetimes of one line element, so each drawing marks the moment of its own.
+- `static/particle` and `static/hole`: the line $t = 0$, from the centre or from $r_h$ to the box's edge at $4\,r_0$.
+- The Eddington-Finkelstein views: the moment is $v = r_*$ in the ingoing chart and $u = -r_*$ in the outgoing one, with $r_* = 0$ at the centre, the black hole's curve running off toward the horizon.
+- The conformal views: the particle's moment is the line $T = 0$ from the centre toward $i^0$, and the black hole's the line $T = 0$ through the bifurcation point.
+
 ### Schwarzschild
 
 - The embedding is Flamm's paraboloid, the equator of a moment of constant $t$, drawn at $t = 0$, $r$ from $r_s$ to $6\,r_s$ on both sheets through the bifurcation sphere.
@@ -740,6 +748,26 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `exterior_ingoing/shell`, drawn against $v - r$: level lines from the shell, or from $r = 0$, to $4\,r_s$.
 - The conformal views: each moment through the flat map inside the shell and the ingoing chart's map outside it, met at the shell.
 
+### The charged shell
+
+- The embedding's first view is four moments of the falling shell, $v - r = -1.5$, $-0.5$, $0$ and $1\,r_s$ of the ingoing chart outside the shell, each carried on inside the shell as the moment of the flat time $T$ at which it meets the shell: the shell outside $r_+$, between the horizons, just past its turn, and climbing back toward $r_-$.
+- `interior/radial` and `interior/through`: level lines $T = T(w)$ from the centre to the shell.
+- `exterior/radial`: the curves $ct = w + r - r_*$ outside $r_+$, which leave the drawing toward $r_+$.
+- `exterior/inside`: the same curves inside $r_-$, for the two moments at which the shell is inside $r_-$; the first two are not visible.
+- `exterior_ingoing/shell`, drawn against $v - r$: level lines from the shell to $2\,r_s$.
+- `exterior_outgoing/shell`, drawn against $u + r$: the curves $u + r = w + 2r - 2r_*$ inside $r_-$, the one region the two null charts share, for the same two moments.
+- The first four conformal views: each moment through the flat map inside the shell and the ingoing chart's map outside it, met at the shell.
+- The second view is the balanced shell at rest, another spacetime of the same page, at $t = 0$: a level line from the shell out on `exterior_isotropic/point`, and the level line $T = 0$ of the fifth conformal view; no drawing of the falling shell marks it, and its own mark no moment of the falling shell.
+### Penrose's impulsive wave
+
+- The embedding is four moments of the plane across the string through the break, $ct = \ell/4$, $\ell$, $7\ell/4$ and $5\ell/2$ behind the wave, each carried on ahead of the wave as the moment $T = t/\beta$ of the string's rest frame, which it meets on the front; `penrose_impulsive_wave.md` Step 6 is the map.
+- `behind/radial`: level lines $t = t_k$ from the centre to the front.
+- `ahead/radial`: level lines $T = t_k/\beta$ from the front, $R = cT$, to $8\,\ell$.
+- `retarded/equator`, drawn against $u + r$: a level line from the centre to the front, and ahead of it the line $u = 2(ct_k - r)/(1 + \beta^2)$, out to the edge of the drawing.
+- `retarded/near`, the plane $30°$ from the string, holds no event of the plane across it: none drawn.
+- `null/unit` and `null/near`: each plane meets each moment in one event behind or on the front, $V = ct_k/\sqrt2$ and $U = (\rho^2 - 1)ct_k/\sqrt2$: four points.
+- The conformal views of the retarded chart and of either side: each moment through Minkowski's map behind the front and the string's frame's ahead of it, met on the front; the null chart's view: four points on the front.
+
 ### Vaidya
 
 - The embedding is four moments of constant $v - r$ in the ingoing chart, $-3$, $-1.5$, $-0.5$ and $1\,r_s$, since a moment of constant $v$ is a light cone; each runs from $r = 0$ to $4\,r_s$, flat inside the shell, which falls along $v = 0$ and so crosses the moment at $r = -(v - r)$, and Flamm's paraboloid moved in by $r_s$ outside it.
@@ -790,6 +818,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | pp-wave | four null lines | none | none drawn |
 | Reissner-Nordström | two lines once redrawn at $r_q = 0.48\,r_s$ | none | two lines, twice |
 | Bardeen | two lines, two curves four times | none | two lines, three times |
+| Born-Infeld point charge | two lines, six curves | none | line, six times |
 | Schwarzschild | line, four curves | none | line, three times |
 | semiclosed world | five lines, twice; line and four curves, twice | none | five curves, four times |
 | Kiselev | two lines, four curves; line and curve for the matter alone | none | line, four times; line, twice |
@@ -806,6 +835,8 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Lifshitz | line in each static chart and on each plane of $t$ and $x$, curve in each null chart | not visible: $t$ left out | six curves |
 | Wahlquist | line on each view of Wahlquist's chart and of Whittaker's; not visible on Mars's two | none | none drawn |
 | Israel's shell | level lines inside the shell and against $v - r$, curves in Schwarzschild's chart | none | four curves |
+| The charged shell | level lines inside the shell, against $v - r$ and in the isotropic chart; curves in the static chart and against $u + r$ | none | four curves, and a level line for the shell at rest |
+| Penrose's impulsive wave | level lines either side of the front, a bent line on the retarded equator, points on the null planes; none on the plane $30°$ from the string | none | four curves, four points on the null plane |
 | Vaidya | three lines, four with the box taken to $-3\,r_s$; not visible on the outgoing view | none | four curves |
 
 As drawn in 4de26cc, the Krasnikov tube's slice is a line, Reissner-Nordström's are two lines, and Vaidya's ingoing view carries all four lines.
