@@ -2,7 +2,7 @@
 
 Israel, Wilson and Perjés's metric, as Hartle and Hawking write it (Commun. Math. Phys. 26, 87, 1972, their 4.1), is
 
-$$ds^2 = -|U|^{-2}\left(c\,dt + \boldsymbol\omega\cdot d\mathbf{x}\right)^2 + |U|^2\,d\mathbf{x}\cdot d\mathbf{x},\qquad \nabla^2U = 0,\qquad \nabla\times\boldsymbol\omega = i\left(U\nabla\bar U - \bar U\nabla U\right),$$
+$$ds^2 = -|U|^{-2}\left(c\,dt + \vec{\omega}\cdot d\mathbf{x}\right)^2 + |U|^2\,d\mathbf{x}\cdot d\mathbf{x},\qquad \nabla^2U = 0,\qquad \nabla\times\vec{\omega} = i\left(U\nabla\bar U - \bar U\nabla U\right),$$
 
 with $U$ complex and both operators those of flat space.
 The sources are Perjés (Phys. Rev. Lett. 27, 1668, 1971) and Israel and Wilson (J. Math. Phys. 13, 865, 1972).
@@ -10,12 +10,12 @@ Its three charts are written by `_tools/derivations/print_charts.py --metric isr
 
 ## Step 1. The charts and their sources
 
-The cylindrical chart is Hartle and Hawking's (4.1) for an axisymmetric $U$, with $\boldsymbol\omega$ given its one component along $\phi$ as in their (4.22):
+The cylindrical chart is Hartle and Hawking's (4.1) for an axisymmetric $U$, with $\vec{\omega}$ given its one component along $\phi$ as in their (4.22):
 
 $$ds^2 = -\frac{\left(c\,dt + \omega\,d\phi\right)^2}{W^2} + W^2\left(d\rho^2 + \rho^2d\phi^2 + dz^2\right),\qquad W = |U|.$$
 
 $W$ and $\omega$ are left free in every tensor, so no component assumes a field equation.
-The general Cartesian chart, with $W$ and three components of $\boldsymbol\omega$ free in three coordinates, is not published: with four free functions of three coordinates its curvature had not printed after eight minutes on 2 October 2026, where the cylindrical chart takes twenty seconds.
+The general Cartesian chart, with $W$ and three components of $\vec{\omega}$ free in three coordinates, is not published: with four free functions of three coordinates its curvature had not printed after eight minutes on 2 October 2026, where the cylindrical chart takes twenty seconds.
 
 The oblate spheroidal chart is one source at an imaginary place, the case Israel and Wilson worked out, which Hartle and Hawking report as "the charged Kerr metric with equal charge and mass".
 With $\rho = \sqrt{r^2 + a^2}\sin\theta$ and $z = r\cos\theta$, flat space is $\Sigma_0\left(dr^2/(r^2 + a^2) + d\theta^2\right) + (r^2 + a^2)\sin^2\theta\,d\phi^2$ with $\Sigma_0 = r^2 + a^2\cos^2\theta$, and

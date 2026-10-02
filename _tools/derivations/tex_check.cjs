@@ -86,12 +86,22 @@ for (const folder of ['metrics', 'diagrams', 'conformal']) {
   }
 }
 
+// A string is set once however many places print it: the components of a curvature repeat.
+const failures = new Map();
+function failure(source) {
+  if (!failures.has(source)) {
+    const html = adaptor.outerHTML(doc.convert(source, {display: false}));
+    failures.set(source, /<mjx-merror|data-mjx-error|mathcolor="red"|color:\s*red/i.test(html)
+      ? (html.match(/data-mjx-error="([^"]*)"/) || [])[1] || 'an undefined command' : null);
+  }
+  return failures.get(source);
+}
+
 let bad = 0;
 for (const [file, where, source] of items) {
-  const html = adaptor.outerHTML(doc.convert(source, {display: false}));
-  if (/<mjx-merror|data-mjx-error|mathcolor="red"|color:\s*red/i.test(html)) {
+  const reason = failure(source);
+  if (reason) {
     bad++;
-    const reason = (html.match(/data-mjx-error="([^"]*)"/) || [])[1] || 'an undefined command';
     console.error(`${file} ${where}: ${reason}\n    ${source}`);
   }
 }

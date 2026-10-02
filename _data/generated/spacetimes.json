@@ -10879,12 +10879,12 @@
         "idealized model"
       ],
       "signature": "(-,+,+,+)",
-      "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The complex potential $U$ solves Laplace's equation on flat space, and $\\nabla \\times \\boldsymbol{\\omega} = i\\left(U\\nabla\\bar{U} - \\bar{U}\\nabla U\\right)$.",
+      "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The complex potential $U$ solves Laplace's equation on flat space, and $\\nabla \\times \\vec{\\omega} = i\\left(U\\nabla\\bar{U} - \\bar{U}\\nabla U\\right)$.",
       "related": [
         {
           "id": "majumdar_papapetrou",
           "kind": "special_case",
-          "text": "The same balanced charges at rest. A real $U$ has $\\boldsymbol{\\omega} = 0$, and the metric is Majumdar and Papapetrou's [hartle1972]."
+          "text": "The same balanced charges at rest. A real $U$ has $\\vec{\\omega} = 0$, and the metric is Majumdar and Papapetrou's [hartle1972]."
         },
         {
           "id": "kerr_newman",
@@ -10944,7 +10944,7 @@
             },
             {
               "symbol": "\\omega = \\omega(\\rho,z)",
-              "description": "The component $\\omega_\\phi$ of $\\boldsymbol{\\omega}$, a length, fixed by $U$ up to a constant; no component assumes its equation"
+              "description": "The component $\\omega_\\phi$ of $\\vec{\\omega}$, a length, fixed by $U$ up to a constant; no component assumes its equation"
             }
           ],
           "convention": "We use coordinates $(t, \\rho, \\phi, z)$ for axisymmetric fields, with $t$ carrying dimensions of time and $\\rho$ and $z$ lengths, and take components in the chart $x^0 = ct$. The metric holds $W = |U|$ and the one component $\\omega = \\omega_\\phi$, with $\\partial_z\\omega = -2\\rho\\,\\mathrm{Im}\\left(\\bar{U}\\,\\partial_\\rho U\\right)$ and $\\partial_\\rho\\omega = 2\\rho\\,\\mathrm{Im}\\left(\\bar{U}\\,\\partial_z U\\right)$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",

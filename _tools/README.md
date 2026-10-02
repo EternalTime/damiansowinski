@@ -419,7 +419,7 @@ reports whether the published files are still what the folder says they should b
 
     python3 -m unittest discover -s _tools
 
-runs the tests, which include that check.
+runs the tests, which include that check and the TeX check under "Conformal diagrams" below, for which they need mathjax-full in `/tmp/mfs-node`.
 The check covers the symbols as well: "Every symbol is defined" above says what it refuses.
 
 ## Spacetime diagrams
@@ -828,7 +828,10 @@ sympy never reads the typesetting, so this is the check that catches a value tha
     npm install --prefix /tmp/mfs-node mathjax-full
     node _tools/derivations/tex_check.cjs /tmp/mfs-node
 
-On 29 September 2026 it set all 24210 strings.
+`_tools/test_tex_check.py` runs it with the tests, and fails rather than skips where node or mathjax-full is missing, so a page whose mathematics would print as an error box cannot land.
+`MFS_NODE` names another folder than `/tmp/mfs-node` for it to find mathjax-full in.
+It does not load the `boldsymbol` package, so a vector is written `\mathbf{x}` when its letter is Latin and `\vec{\omega}` when it is Greek, which `\mathbf` leaves light.
+On 2 October 2026 it set all 157522 strings, each distinct one once.
 It does not read the embedding files yet, so a caption, setting or label of an embedding diagram that MathJax cannot set shows only on the page.
 
 ## Embedding diagrams
