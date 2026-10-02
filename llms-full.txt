@@ -957,7 +957,7 @@ A charged black hole in a universe with a positive cosmological constant, the st
 A massless scalar field falling in from infinity onto empty space, an exact solution of Einstein's equations that Mark Roberts found as a counterexample to cosmic censorship. It looks the same at every scale, and one number $p$ decides how it ends: for $p < 1$ the field passes through the centre and leaves flat space behind, for $p > 1$ it makes a black hole, and at $p = 1$ it leaves a null singularity.
 
 - id: `roberts`
-- tags: non-vacuum, scalar field, massless scalar field, minimally coupled scalar field, Einstein-scalar, spherically symmetric, time-dependent, dynamical, self-similar, homothetic, gravitational collapse, critical collapse, critical phenomena, black hole, apparent horizon, naked singularity, null singularity, singularity, curvature singularity, cosmic censorship, Choptuik, double null coordinates, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- tags: scalar field, massless scalar field, minimally coupled scalar field, Einstein-scalar, spherically symmetric, time-dependent, self-similar, homothetic, gravitational collapse, critical collapse, critical phenomena, black hole, apparent horizon, naked singularity, null singularity, curvature singularity, cosmic censorship, Choptuik, double null coordinates, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
 - signature: (-,+,+,+)
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/roberts.json
 - chart Double Null: coordinates $(u, v, \theta, \phi)$, $$ds^2 = -du\,dv + \dfrac{(1-p^2)v^2 - 2uv + u^2}{4}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
