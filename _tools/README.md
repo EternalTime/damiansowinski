@@ -706,6 +706,8 @@ It needs the same environment as `null_rays.py` and takes a few seconds for the 
     python3 _tools/build_mfs_data.py
 
 `--metric <metric_id>` redraws one spacetime, and `--verify` prints every check and writes nothing.
+A drawing added with `--metric` alone never runs the others, so run the whole collection once before a commit: a new function spliced into the end of its neighbour takes that neighbour's `return views`, and the redraw of everything is what fails.
+`_tools/test_derivations_source.py` reads the scripts without running them and holds every drawing to a closing `return` and every module in `_tools/derivations` to one definition of each top-level function and class, since Python keeps the later of two in silence.
 
 Every map drawn is checked by the function that draws with it, at random points of the region it covers, against the published metric and inverse metric: lines of constant drawn null coordinate are light rays, the two families are distinct, the future is up, and the published inverse on the surface is the inverse of the published metric there.
 Each spacetime adds the limits that place its horizons, infinities and singularities, and the published Kretschmann scalar must diverge wherever a line is drawn as a singularity and stay finite on every centre or throat drawn as regular.
