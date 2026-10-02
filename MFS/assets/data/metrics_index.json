@@ -976,7 +976,7 @@
       "idealized model",
       "conformally flat"
     ],
-    "version": "c9254bc584f63728",
+    "version": "cff1281174106227",
     "diagrams": "df6268c48408964f",
     "conformal": "c502811813a25858",
     "embedding": "eb3e037703b01e9d"
@@ -1130,7 +1130,7 @@
       "static",
       "spherically symmetric"
     ],
-    "version": "8e4e78d1f2cc5969",
+    "version": "b5bafac5b9ce65ac",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -1479,7 +1479,7 @@
       "static",
       "spherically symmetric"
     ],
-    "version": "7ba2454722ca153e",
+    "version": "0fc87af1c485e26c",
     "diagrams": "e73839d0a0529179",
     "conformal": "2fed97c5ab6ddc3d",
     "embedding": "954af1b6ad40d276"
@@ -1741,10 +1741,45 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "4fc5b58169cb5def",
+    "version": "ab1f660c986bf236",
     "diagrams": "b4937a90691eba2b",
     "conformal": "14c873edf7fb75dc",
     "embedding": "c0db8a34cdba1339"
+  },
+  {
+    "id": "self_creating_universe",
+    "name": "Gott-Li",
+    "tags": [
+      "de Sitter",
+      "positive cosmological constant",
+      "cosmological constant",
+      "constant curvature",
+      "closed timelike curves",
+      "chronology horizon",
+      "Cauchy horizon",
+      "chronology protection",
+      "self consistency",
+      "time machine",
+      "topology",
+      "multiply connected",
+      "boost",
+      "Misner space",
+      "inflation",
+      "expanding universe",
+      "cosmology",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model",
+      "Einstein space",
+      "conformally flat",
+      "spherically symmetric"
+    ],
+    "version": "c6b59d949a30d82e",
+    "diagrams": "191b6b9173acf816",
+    "conformal": "35a311cdf85fc005",
+    "embedding": "68a424a34e86e2ad"
   },
   {
     "id": "gowdy",
@@ -2167,7 +2202,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c0cc0b17a6e8429f",
+    "version": "9f9b5fa68928d0f5",
     "diagrams": "af83133484b3c126",
     "conformal": "5aa345afee4654d8",
     "embedding": "46d9d6d9484b8e00"
@@ -2815,7 +2850,7 @@
       "four-dimensional",
       "conformally flat"
     ],
-    "version": "97d081119d48af50",
+    "version": "abd84fbb7839ddc2",
     "diagrams": "ed541b2735366dcf",
     "conformal": "69af72b1ccf43777",
     "embedding": "04c50f64f4cf864e"
@@ -2993,7 +3028,7 @@
       "conformally flat",
       "Einstein equations"
     ],
-    "version": "1634bdd8d5f13645",
+    "version": "43e7d5283576c479",
     "diagrams": "8b3c9d02bd75c817",
     "conformal": "62cc3d3fab22417e",
     "embedding": "74f663204d97446f"

@@ -886,6 +886,16 @@ DIMENSIONS = {
     ("elliptic_de_sitter", "kruskal"): {"U": "1", "V": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
     ("elliptic_de_sitter", "static"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
     ("elliptic_de_sitter", "planar"): {"t": "T", "x": "L", "y": "L", "z": "L", "\\ell": "L"},
+    # Gott and Li's de Sitter space identified under a boost: beta is a length, the period of ct
+    # in the static chart and of l in the Kantowski-Sachs chart, and r_0 the de Sitter radius.
+    ("self_creating_universe", "static"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\beta": "L"},
+    ("self_creating_universe", "kantowski_sachs"): {
+        "\\tau": "T", "l": "L", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\beta": "L"},
+    ("self_creating_universe", "steady_state"): {
+        "\\tau": "T", "x": "L", "y": "L", "z": "L", "r_0": "L", "\\beta": "L"},
+    ("self_creating_universe", "conformal"): {
+        "\\eta": "L", "\\rho": "L", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\beta": "L"},
     # The collapse is two charts. Inside, the comoving polar angle chi is dimensionless
     # and the scale factor carries the length, so an areal radius is a sin(chi) and a dot
     # on a is dimensionless; chi_0 marks the surface and a_m is the scale factor at

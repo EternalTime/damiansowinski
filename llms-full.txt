@@ -885,6 +885,19 @@ J. Richard Gott's exact solution of 1991: two straight, parallel cosmic strings 
 - chart Grant Rindler: coordinates $(\eta, \xi, Y, z)$, $$ds^2 = -\xi^2d\eta^2 + d\xi^2 + dY^2 + dz^2$$
 - chart Grant Milne: coordinates $(\tau, \chi, Y, z)$, $$ds^2 = -c^2d\tau^2 + c^2\tau^2d\chi^2 + dY^2 + dz^2$$
 
+### Gott and Li's Self-Creating Universe
+
+De Sitter space with each event identified with its images under a boost, proposed by J. Richard Gott and Li-Xin Li in 1998. It begins in a region of closed timelike curves of finite spacetime volume, with no earliest event, and a Cauchy horizon separates that region from an inflating universe in which nothing returns to its own past.
+
+- id: `self_creating_universe`
+- tags: de Sitter, positive cosmological constant, cosmological constant, constant curvature, closed timelike curves, chronology horizon, Cauchy horizon, chronology protection, self consistency, time machine, topology, multiply connected, boost, Misner space, inflation, expanding universe, cosmology, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model, Einstein space, conformally flat, spherically symmetric
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/self_creating_universe.json
+- chart Static: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r^2}{r_0^2}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r^2}{r_0^2}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Kantowski-Sachs: coordinates $(\tau, l, \theta, \phi)$, $$ds^2 = -c^2d\tau^2 + \sinh^2(c\tau/r_0)\,dl^2 + r_0^2\cosh^2(c\tau/r_0)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Steady state: coordinates $(\tau, x, y, z)$, $$ds^2 = -c^2d\tau^2 + e^{2c\tau/r_0}\left(dx^2 + dy^2 + dz^2\right)$$
+- chart Conformal: coordinates $(\eta, \rho, \theta, \phi)$, $$ds^2 = \dfrac{r_0^2}{\eta^2}\left(-d\eta^2 + d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Gowdy Cosmologies
 
 Closed vacuum universes holding gravitational waves that travel along one direction, with two commuting spacelike Killing vectors and space $T^3$, $S^3$, or $S^2 \times S^1$. Einstein's equations for them reduce to two coupled wave equations in one space dimension and a quadrature, and near the singularity each point of space approaches a Kasner universe of its own.

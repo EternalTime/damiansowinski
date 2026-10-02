@@ -1377,6 +1377,152 @@ def elliptic_de_sitter_check(chart, system):
             raise AssertionError("elliptic_de_sitter: the planar chart is not X_0 + X_4 = l exp(ct/l)")
 
 
+# -- Gott and Li's self-creating universe ------------------------------------------------
+
+SCU_CHARTS = ("static", "kantowski_sachs", "steady_state", "conformal")
+# The image of an event under the boost of rapidity beta/r_0 in the plane of V and W, as the
+# substitution of each chart's coordinates in order, a time coordinate standing for x^0 = ct.
+SCU_BOOST = {
+    "static": lambda r0, beta, t, r, theta, phi: (t + beta, r, theta, phi),
+    "kantowski_sachs": lambda r0, beta, tau, l, theta, phi: (tau, l + beta, theta, phi),
+    "steady_state": lambda r0, beta, tau, x, y, z: (tau + beta, *(sp.exp(-beta / r0) * q for q in (x, y, z))),
+    "conformal": lambda r0, beta, eta, rho, theta, phi: (sp.exp(-beta / r0) * eta, sp.exp(-beta / r0) * rho,
+                                                           theta, phi),
+}
+
+
+def scu_embedding(system, coords, r0):
+    """(V, W, X, Y, Z) of Gott and Li's hyperboloid W^2 + X^2 + Y^2 + Z^2 - V^2 = r_0^2, their
+    equation (61), at the chart's coordinates: their (63) in the static chart, (73) in region F,
+    and (74) solved for the steady-state chart, with eta = -r_0 exp(-c tau/r_0) of (76) in the
+    conformal one."""
+    a, b, c, d = coords
+    if system == "steady_state":
+        rho2, e = b ** 2 + c ** 2 + d ** 2, sp.exp(a / r0)
+        return [r0 * sp.sinh(a / r0) + e * rho2 / (2 * r0), r0 * sp.cosh(a / r0) - e * rho2 / (2 * r0),
+                e * b, e * c, e * d]
+    n = [sp.sin(c) * sp.cos(d), sp.sin(c) * sp.sin(d), sp.cos(c)]
+    if system == "static":
+        s = sp.sqrt(r0 ** 2 - b ** 2)
+        V, W, R = s * sp.sinh(a / r0), s * sp.cosh(a / r0), b
+    elif system == "kantowski_sachs":
+        V, W, R = r0 * sp.sinh(a / r0) * sp.cosh(b / r0), r0 * sp.sinh(a / r0) * sp.sinh(b / r0), r0 * sp.cosh(a / r0)
+    else:
+        V, W, R = (a ** 2 - b ** 2 - r0 ** 2) / (2 * a), (b ** 2 - a ** 2 - r0 ** 2) / (2 * a), -r0 * b / a
+    return [V, W, R * n[0], R * n[1], R * n[2]]
+
+
+def self_creating_universe(system):
+    """Gott and Li's multiply connected de Sitter space, Phys. Rev. D 58, 023501 (1998), section IX:
+    the hyperboloid of their (61) with each event identified with its images under a boost in the
+    plane of V and W. Four charts, each theirs: the static chart (64) of region R, where the boost
+    shifts t by beta and every line of constant r is a closed timelike curve; the Kantowski-Sachs
+    chart (72) of region F, where it shifts l; the steady-state chart (75), which covers R, F and the
+    Cauchy horizon between them, and where the boost shifts tau and shrinks x, y and z; and the
+    conformally flat chart (77), where it is a dilation. self_creating_universe_check holds each to
+    the hyperboloid pulled back, to R_mu_nu = (3/r_0^2) g_mu_nu and no Weyl tensor, and its stated
+    identification to that boost. self_creating_universe.md records each chart's source."""
+    sphere, angles = EDS_SPHERE, EDS_ANGLES
+    shrink = "e^{-\\beta/r_0}"
+    glue = "\;\\text{(the boost)}"
+    charts = {
+        "static": {
+            "name": "Static", "coords": ["t", "r", "\\theta", "\\phi"],
+            "domains": ["t \\in [0, \\beta/c)", "r \\in [0, r_0)"] + angles
+                       + ["r = r_0 \;\\text{(Cauchy horizon)}"],
+            "line": lambda c: (f"ds^2 = -\\left(1 - \\dfrac{{r^2}}{{r_0^2}}\\right){c + '^2' if c else ''}dt^2 + "
+                               f"\\dfrac{{dr^2}}{{1 - \\dfrac{{r^2}}{{r_0^2}}}} + r^2{sphere}")},
+        "kantowski_sachs": {
+            "name": "Kantowski-Sachs", "coords": ["\\tau", "l", "\\theta", "\\phi"],
+            "domains": ["\\tau \\in (0, \\infty)", "l \\in [0, \\beta)"] + angles
+                       + ["\\tau = 0 \;\\text{(Cauchy horizon)}"],
+            "line": lambda c: (f"ds^2 = -{c + '^2' if c else ''}d\\tau^2 + \\sinh^2({c}\\tau/r_0)\\,dl^2 + "
+                               f"r_0^2\\cosh^2({c}\\tau/r_0){sphere}")},
+        "steady_state": {
+            "name": "Steady state", "coords": ["\\tau", "x", "y", "z"],
+            "domains": ["\\tau \\in [0, \\beta/c)", "x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)",
+                        "z \\in (-\\infty, \\infty)",
+                        f"(\\tau, x, y, z) \\sim (\\tau + \\beta/c, {shrink}x, {shrink}y, {shrink}z)" + glue,
+                        "x^2 + y^2 + z^2 = r_0^2e^{-2c\\tau/r_0} \;\\text{(Cauchy horizon)}"],
+            "line": lambda c: (f"ds^2 = -{c + '^2' if c else ''}d\\tau^2 + e^{{2{c}\\tau/r_0}}"
+                               "\\left(dx^2 + dy^2 + dz^2\\right)")},
+        "conformal": {
+            "name": "Conformal", "coords": ["\\eta", "\\rho", "\\theta", "\\phi"],
+            "domains": [f"\\eta \\in [-r_0, -r_0{shrink})", "\\rho \\in [0, \\infty)"] + angles
+                       + [f"(\\eta, \\rho, \\theta, \\phi) \\sim ({shrink}\\eta, {shrink}\\rho, \\theta, \\phi)" + glue,
+                          "\\rho = -\\eta \;\\text{(Cauchy horizon)}"],
+            "line": lambda c: (f"ds^2 = \\dfrac{{r_0^2}}{{\\eta^2}}\\left(-d\\eta^2 + d\\rho^2 + \\rho^2{sphere}\\right)")},
+    }
+    chart = charts[system]
+    probe = vm.Reader(chart["coords"], ["r_0", "\\beta"], ())
+    r0 = probe.parameters["r_0"]
+    first = probe.symbol[chart["coords"][0]]
+    f, bare = "\\left(1 - \\dfrac{r^2}{r_0^2}\\right)", "1 - \\dfrac{r^2}{r_0^2}"
+    printing = {
+        "static": lambda: {"printer": {"lead": [r0], "rising": [probe.symbol["r"]], "flip": False},
+                           "components": {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                                          "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}}},
+        "kantowski_sachs": lambda: {"printer": {"lead": [r0], "arguments": {probe.c * first / r0: "c\\tau/r_0"}},
+                                    "time": "\\tau", "pretty": nariai_hyperbolic(probe.c * first / r0)},
+        "steady_state": lambda: {"printer": {"lead": [r0]}, "time": "\\tau"},
+        "conformal": lambda: {"printer": {"lead": [r0]}},
+    }[system]()
+    return {
+        "metric_id": "self_creating_universe",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": ["r_0", "\\beta"], "line_element": chart["line"]("c")},
+        "chart_line_element": chart["line"](""),
+        "check": lambda c: self_creating_universe_check(c, system),
+        **printing,
+    }
+
+
+def self_creating_universe_check(chart, system):
+    """The chart is Gott and Li's hyperboloid pulled back, an Einstein space with Lambda = 3/r_0^2
+    and no Weyl tensor, and its stated identification is the boost of rapidity beta/r_0 in the plane
+    of V and W, which leaves X, Y and Z alone. The static chart lies in W > |V|, their region R; the
+    Kantowski-Sachs chart in V > |W|, their region F; the steady-state and conformal charts in
+    W + V > 0, which is R, F and the horizon between them."""
+    r0, beta = chart.reader.parameters["r_0"], chart.reader.parameters["beta"]
+    positive = {r0: sp.Symbol("r0_", positive=True), beta: sp.Symbol("beta_", positive=True)}
+
+    def zero(expr):
+        return sp.simplify(sp.expand_trig(sp.sympify(expr).subs(positive).rewrite(sp.exp))) == 0
+
+    P = scu_embedding(system, chart.symbols, r0)
+    J = sp.Matrix([[sp.diff(P_I, v) for v in chart.symbols] for P_I in P])
+    pulled = J.T * sp.diag(-1, 1, 1, 1, 1) * J
+    g = chart.geo.g
+    for i in range(4):
+        for j in range(i, 4):
+            if not zero(pulled[i, j] - g[i, j]):
+                raise AssertionError(f"self_creating_universe: the hyperboloid pulled back misses the {system} chart "
+                                     f"in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    if not zero(-P[0] ** 2 + sum(p ** 2 for p in P[1:]) - r0 ** 2):
+        raise AssertionError(f"self_creating_universe: the {system} chart leaves the hyperboloid")
+    ricci = chart.geo.ricci_ll()
+    if any(vm.norm(ricci[a][b] - 3 * g[a, b] / r0 ** 2) != 0 for a in range(4) for b in range(4)):
+        raise AssertionError(f"self_creating_universe: R_mu_nu is not (3/r_0^2) g_mu_nu in the {system} chart")
+    if any(vm.norm(value) != 0 for value in sp.flatten(chart.geo.weyl_llll())):
+        raise AssertionError(f"self_creating_universe: the {system} chart has a Weyl tensor")
+    image = dict(zip(chart.symbols, SCU_BOOST[system](r0, beta, *chart.symbols)))
+    moved = [p.subs(image, simultaneous=True) for p in P]
+    b = beta / r0
+    boosted = [P[0] * sp.cosh(b) + P[1] * sp.sinh(b), P[1] * sp.cosh(b) + P[0] * sp.sinh(b), *P[2:]]
+    if not all(zero(m - q) for m, q in zip(moved, boosted)):
+        raise AssertionError(f"self_creating_universe: the {system} chart's identification is not the boost")
+    # The region each chart covers, by the invariants of the boost.
+    a, x1 = chart.symbols[0], chart.symbols[1]
+    region = {
+        "static": P[1] ** 2 - P[0] ** 2 - (r0 ** 2 - x1 ** 2),
+        "kantowski_sachs": P[0] ** 2 - P[1] ** 2 - r0 ** 2 * sp.sinh(a / r0) ** 2,
+        "steady_state": P[0] + P[1] - r0 * sp.exp(a / r0),
+        "conformal": P[0] + P[1] + r0 ** 2 / a,
+    }[system]
+    if not zero(region):
+        raise AssertionError(f"self_creating_universe: the {system} chart is not on the region its text names")
+
+
 # -- Aichelburg-Sexl ------------------------------------------------------------------
 
 def aichelburg_sexl(system):
@@ -2917,6 +3063,7 @@ MELVIN_GEODESICS = [
 
 CHARTS["melvin"] = [lambda s=s: melvin(s) for s in ("cylindrical", "ernst")]
 CHARTS["elliptic_de_sitter"] = [lambda s=s: elliptic_de_sitter(s) for s in EDS_CHARTS]
+CHARTS["self_creating_universe"] = [lambda s=s: self_creating_universe(s) for s in SCU_CHARTS]
 CHARTS["schwarzschild_ads"] = [lambda s=s: schwarzschild_ads(s) for s in SADS_CHARTS]
 CHARTS["topological_black_hole"] = [lambda s=s: topological_black_hole(s) for s in TBH_CHARTS]
 

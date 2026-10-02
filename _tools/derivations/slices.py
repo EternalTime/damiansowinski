@@ -1344,6 +1344,19 @@ def _eds(chart):
     return [Mark(m, [np.column_stack([-0.5 * np.log1p(x * x), x])])]
 
 
+def _scu_steady(m):
+    """A moment c tau = tau_k of Gott and Li's Kantowski-Sachs chart on the plane y = z = 0 of the steady
+    state chart, r_0 = 1: the sphere has radius cosh(tau_k) = x exp(tau), so x = cosh(tau_k) exp(-tau), on
+    the side phi = 0 that the embedding draws."""
+    tau = np.linspace(-12.0, 30.0, 4 * N + 1)
+    return [np.column_stack([tau, math.cosh(m.time) * np.exp(-tau)])]
+
+
+def _scu_conformal(m):
+    """The same moment in the conformal time eta = -exp(-tau): the straight line rho = -eta cosh(tau_k)."""
+    return [[(-BIG, BIG * math.cosh(m.time)), (0.0, 0.0)]]
+
+
 def _es_areal(m):
     """The Einstein static universe's moment in its areal chart, R = 1: r = sin chi over the
     near hemisphere the embedding reaches, chi from 0 to pi/2."""
@@ -2655,6 +2668,13 @@ FLAT = {
     # coordinates T = -c^2t_k^2/4, every psi; checks() carries the one chart onto the other.
     ("misner", "misner", "plane"): lambda: one("misner", lambda m: across(-m.time * m.time / 4, 0.0, BIG)),
     ("misner", "milne", "plane"): lambda: one("misner", lambda m: across(m.time, 0.0, BIG)),
+    # Gott and Li's moments are the Kantowski-Sachs time tau = tau_k, every l. On the plane y = z = 0 of the
+    # steady state chart, theta = pi/2 and phi = 0, the same moment is x = cosh(tau_k) exp(-tau), and in its
+    # conformal time the straight line rho = -eta cosh(tau_k); checks() carries the one chart onto the other.
+    ("self_creating_universe", "kantowski_sachs", "plane"):
+        lambda: one("self_creating_universe", lambda m: across(m.time, 0.0, BIG)),
+    ("self_creating_universe", "steady_state", "tx"): lambda: one("self_creating_universe", _scu_steady),
+    ("self_creating_universe", "conformal", "through"): lambda: one("self_creating_universe", _scu_conformal),
     # Gott's moments are Grant's Milne time tau = tau_k, every chi.
     ("gott_time_machine", "grant_milne", "plane"): lambda: one("gott_time_machine", lambda m: across(m.time, 0.0, BIG)),
     # Ori's moments are his t = t_k on the slice y = 0, every z. The central circle has T = t, and
@@ -3127,6 +3147,8 @@ HIDDEN = {
        for half in ("behind", "ahead")},
     ("frw", "flat"): "the flat universe's conformal diagram; the moments embedded are the closed universe's",
     ("misner", "rindler", "plane"): "the region T > 0 beyond the chronology horizon, which no moment of the contracting region meets",
+    ("self_creating_universe", "static", "through"): "the region of closed timelike curves before the Cauchy horizon, which no moment of the inflating region meets",
+    ("self_creating_universe", "static"): "the region of closed timelike curves before the Cauchy horizon, which no moment of the inflating region meets",
     ("misner", "rindler"): "the region T > 0 beyond the chronology horizon, which no moment of the contracting region meets",
     ("gott_time_machine", "grant_rindler", "plane"): "the region of closed timelike curves beyond the chronology horizon, which no moment of Grant's Milne time meets",
     ("gott_time_machine", "grant_rindler"): "the region of closed timelike curves beyond the chronology horizon, which no moment of Grant's Milne time meets",
@@ -3569,6 +3591,28 @@ def checks():
     miss = max(abs(float((pulled - g_n[:2, :2]).subs({tn: a, cn: b})[i, j]))
                for a, b in zip(rng.uniform(-3, -0.1, 20), rng.uniform(-3, 3, 20)) for i in range(2) for j in range(2))
     report("Misner: T = -t^2/4, psi = 2 chi - ln(t^2/4) pulls Misner's plane back onto the Milne plane", miss, 1e-12)
+
+    # Gott and Li: tau_s = l + ln sinh(tau) and x = cosh(tau) exp(-tau_s) carry the Kantowski-Sachs plane of
+    # tau and l onto the steady state plane of tau_s and x, both being W + V = sinh(tau) e^l = exp(tau_s)
+    # and the sphere's radius cosh(tau) = x exp(tau_s), so the moment tau = tau_k is x = cosh(tau_k) exp(-tau_s);
+    # and eta = -exp(-tau_s), rho = x carry the steady state plane onto the conformal one.
+    scu = {"r_0": 1, "beta": "2*pi"}
+    g_k, (tk, lk, *_) = metric("self_creating_universe", "kantowski_sachs", scu)
+    g_s, (ts_, xs_, *_) = metric("self_creating_universe", "steady_state", scu)
+    g_e, (ee, re_, *_) = metric("self_creating_universe", "conformal", scu)
+    new = [lk + sp.log(sp.sinh(tk)), sp.cosh(tk) * sp.exp(-lk) / sp.sinh(tk)]
+    J = sp.Matrix([[sp.diff(f, v) for v in (tk, lk)] for f in new])
+    pulled = J.T * g_s[:2, :2].subs({ts_: new[0], xs_: new[1]}, simultaneous=True) * J
+    miss = max(abs(float((pulled - g_k[:2, :2]).subs({tk: a, lk: b})[i, j]))
+               for a, b in zip(rng.uniform(0.1, 3, 20), rng.uniform(-3, 3, 20)) for i in range(2) for j in range(2))
+    report("Gott-Li: tau_s = l + ln sinh(tau), x = cosh(tau) exp(-tau_s) pulls the steady state plane back onto "
+           "the Kantowski-Sachs plane", miss, 1e-10)
+    new = [-sp.exp(-ts_), xs_]
+    J = sp.Matrix([[sp.diff(f, v) for v in (ts_, xs_)] for f in new])
+    pulled = J.T * g_e[:2, :2].subs({ee: new[0], re_: new[1]}, simultaneous=True) * J
+    miss = max(abs(float((pulled - g_s[:2, :2]).subs({ts_: a, xs_: b})[i, j]))
+               for a, b in zip(rng.uniform(-2, 2, 20), rng.uniform(0, 3, 20)) for i in range(2) for j in range(2))
+    report("Gott-Li: eta = -exp(-tau_s), rho = x pulls the conformal plane back onto the steady state plane", miss, 1e-10)
 
     # Ori: T = t + a(x^2 - y^2)/2 - e(x^2 + y^2) carries the foliation onto the vacuum core at
     # f = a(x^2 - y^2)/2, so the moment t = t_k is T = t_k on the central circle and T = t_k - 3/2 at
