@@ -1840,14 +1840,12 @@
     "id": "roberts",
     "name": "Roberts",
     "tags": [
-      "non-vacuum",
       "scalar field",
       "massless scalar field",
       "minimally coupled scalar field",
       "Einstein-scalar",
       "spherically symmetric",
       "time-dependent",
-      "dynamical",
       "self-similar",
       "homothetic",
       "gravitational collapse",
@@ -1857,7 +1855,6 @@
       "apparent horizon",
       "naked singularity",
       "null singularity",
-      "singularity",
       "curvature singularity",
       "cosmic censorship",
       "Choptuik",
@@ -1868,7 +1865,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "282d8d28feccdc53",
+    "version": "5de37cc225f22f95",
     "diagrams": "a0d99b1047fc15a8",
     "conformal": "be314e331ea79c30",
     "embedding": "7d4fbd4e5c072163"
