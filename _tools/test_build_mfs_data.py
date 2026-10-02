@@ -3535,6 +3535,7 @@ class StacksAndMovies(unittest.TestCase):
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("vaidya", "shell"): "$v - r$",
               ("semiclosed_world", "bag"): "$c\\tau$",
               ("bonnor_vaidya", "shell"): "$v - r$", ("israel_shell", "shell"): "$v - r$",
+              ("penrose_impulsive_wave", "snap"): "$ct$",
               ("cosmic_string", "unroll"): "$\\Delta\\phi$", ("point_particle_2plus1", "unroll"): "$\\Delta\\phi$",
               ("milne", "hyperboloids"): "$ct$",
               ("coleman_de_luccia", "hyperboloids"): "$c\\tau$",
@@ -4797,6 +4798,8 @@ class Slices(unittest.TestCase):
               # The solitons of five and of three dimensions, other spacetimes than the soliton of four
               # dimensions whose moment is embedded.
               "ads_soliton/five_dimensional/radial", "ads_soliton/three_dimensional/radial",
+              # The plane 30 degrees from the string of Penrose's wave holds no event of the plane across it.
+              "penrose_impulsive_wave/retarded/near",
               "conformal ads_soliton/five_dimensional", "conformal ads_soliton/three_dimensional"}
 
     def setUp(self):
@@ -5449,6 +5452,21 @@ class Slices(unittest.TestCase):
             return (lambda X: math.log(t)), list(self.reach(surface))
         if key in ("vaidya/eddington_finkelstein_ingoing/shell", "bonnor_vaidya/eddington_finkelstein_ingoing/shell"):
             return (lambda X: t), list(self.reach(surface))
+        if key.startswith("penrose_impulsive_wave/"):
+            # Penrose's wave at beta = 1/2: the moment t behind the front and T = t/beta ahead of it. On the
+            # retarded equator, drawn against r and u + r, that is ct out to the front and
+            # r + 2(ct - r)/(1 + beta^2) beyond it. A null plane of constant rho meets it in the one event
+            # V = ct/sqrt(2), U = (rho^2 - 1) ct/sqrt(2), drawn at (U + V)/2 and (V - U)/2.
+            b = 0.5
+            if key.endswith("behind/radial"):
+                return (lambda X: t), list(self.reach(surface, "behind"))
+            if key.endswith("ahead/radial"):
+                return (lambda X: t / b), list(self.reach(surface, "ahead"))
+            if key.endswith("retarded/equator"):
+                return (lambda X: t if X <= t else X + 2 * (t - X) / (1 + b * b)), [0.0, t]
+            rho = {"unit": 1.0, "near": 0.5}[key.rsplit("/", 1)[1]]
+            at = rho * rho * t / (2 * math.sqrt(2))
+            return (lambda X: (2 - rho * rho) * t / (2 * math.sqrt(2)) + (X - at)), [at]
         if key.startswith("israel_shell/"):
             # Israel's shell: the slice v - r = t outside the shell, level against v - r, and in
             # Schwarzschild's chart the curve ct = t - ln(r - 1), which leaves the drawing toward r_s;
@@ -5975,6 +5993,24 @@ class Slices(unittest.TestCase):
                             else:
                                 continue
                             self.assertLess(abs(v - r - t), 2e-3 * (1 + abs(v)), f"{where} at {(X, T)}")
+                    elif metric_id == "penrose_impulsive_wave":
+                        # At beta = 1/2: behind the front p, q = arctan(ct -+ r), so ct = (tan p + tan q)/2 is t;
+                        # ahead of it p = arctan((cT - R)/beta), q = arctan(beta (cT + R)), so cT is t/beta; the two
+                        # lines meet on the front. On the null plane rho = 1 the event is U = 0, V = t/sqrt(2).
+                        if view["id"] == "null":
+                            (X, T), = mark["points"]
+                            self.assertLess(abs(math.tan((T - X) / 2)) + abs(math.tan((T + X) / 2) - t / math.sqrt(2)),
+                                            2e-3, where)
+                        else:
+                            inside, outside = mark["lines"]
+                            for X, T in inside:
+                                a, b = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                                self.assertLess(abs((a + b) / 2 - t), 2e-3 * (1 + a * a + b * b), f"{where} at {(X, T)}")
+                            for X, T in outside:
+                                a, b = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                                self.assertLess(abs((a / 2 + 2 * b) / 2 - 2 * t), 2e-3 * (1 + a * a + b * b),
+                                                f"{where} at {(X, T)}")
+                            self.assertLess(math.dist(inside[-1], outside[0]), 2e-4, where)
                     elif metric_id == "israel_shell":
                         # Inside the shell p, q = arctan(3(cT -+ r)/7): the moment is the flat time at which
                         # the slice v - r = t meets the shell, out to the shell. Outside it each point is

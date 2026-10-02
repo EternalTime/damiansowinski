@@ -5780,6 +5780,116 @@ def israel_shell(ck, src):
                        "diagram.")]
 
 
+PIW_BETA = 0.5                  # 1 - 4G mu/c^2 of the string every drawing of Penrose's wave takes
+PIW_RING = 2.0                  # the ring of particles at rest ahead of the wave, R = 2 l
+PIW_TOP = 8.0                   # the rim of the drawing, R = 8 l, where a circle has the radius 4 l
+
+
+def piw_ahead(u, r, beta=PIW_BETA):
+    """(cT, R) of the string's rest frame at the event (u, r) of the retarded chart's equator ahead of
+    the wave, u < 0: Podolsky and Griffiths's transformation (4) and (5) with epsilon = 1 and
+    h = Z^beta at rho = 1, U = -u/sqrt(2) and V = sqrt(2) r."""
+    return (2 * r + (1 + beta ** 2) * u) / (2 * beta), (2 * r + (1 - beta ** 2) * u) / (2 * beta)
+
+
+def piw_ring(ct, beta=PIW_BETA, R0=PIW_RING):
+    """The radius of the ring of free particles at the moment ct behind the wave: at rest on R = R0
+    ahead of it, where the front reaches it at ct = beta R0, r = beta R0, and from then on falling
+    toward the centre at the speed c (1 - beta^2)/(1 + beta^2), since a ray of the retarded chart's
+    equator is straight in u and r on both sides of the front."""
+    return beta * R0 - (1 - beta ** 2) / (1 + beta ** 2) * (ct - beta * R0)
+
+
+def penrose_impulsive_wave(ck, src):
+    """Penrose's spherical impulsive wave for a string that snaps, beta = 1 - 4G mu/c^2 = 1/2, on the
+    plane through the break and across the string. Behind the wave the moment t of the inertial
+    chart there is a flat disc of radius ct, which is checked. Ahead of it the moment T of the
+    string's rest frame is the string's cone, dR^2 + beta^2 R^2 dphi^2, of half angle arcsin(beta),
+    from the front R = cT outward. The two meet on the front where T = t/beta: by piw_ahead the
+    event (u, r) = (0, ct) of the retarded chart is (cT, R) = (ct/beta, ct/beta), and its circle has
+    the circumference 2 pi ct from both sides. piw_ahead is checked against the published retarded
+    chart: on the slice u = ct_0 - r ahead of the wave the published metric pulls back to
+    dr^2 + (r + 2k(ct_0 - r))^2 dphi^2, and the cone's pulls back along piw_ahead to the same.
+
+    A ring of free particles rests on R = 2 l ahead of the wave. The front reaches it at ct = l, and
+    behind the front it falls toward the centre at 3c/5, piw_ring, which is c (1 - beta^2)/(1 + beta^2):
+    Podolsky and Steinbauer's speed per unit proper time, delta (1 - delta/2)/(1 - delta) = 3/4 at
+    delta = 1 - beta = 1/2, is gamma v for v = 3/5. Played from ct = l/4 to 5l/2, a frame every l/16."""
+    beta, top = PIW_BETA, PIW_TOP
+    size = top
+    slope = math.sqrt(1 - beta ** 2)
+    rim = ("edge", "the cone runs on to $R \\to \\infty$")
+    k = (1 - beta ** 2) / 4
+
+    # The map ahead of the wave against the published retarded chart, on its slices of constant u + r.
+    for c0 in (0.5, 1.0, 2.0):
+        sl = Slice(src, "penrose_impulsive_wave", "retarded", "r", "\\phi", {"theta": "pi/2"}, nr.PIW,
+                   along={"u": f"{c0!r} - r"})
+        r = np.linspace(c0 + 0.05, c0 + 4, 60)
+        T, R = piw_ahead(c0 - r, r)
+        ck.add(f"Penrose's wave: beta R of the string's frame is the published circle, u + r = {c0:g}",
+               float(np.max(np.abs(beta * R - sl.rho_at(r)))), 1e-12)
+        ck.add(f"Penrose's wave: the published circle is r + 2k(ct - r), u + r = {c0:g}",
+               float(np.max(np.abs(sl.rho_at(r) - (r + 2 * k * (c0 - r))))), 1e-12)
+        dT, dR = np.gradient(T, r), np.gradient(R, r)
+        ck.add(f"Penrose's wave: the cone's metric pulled back along the map is the published g_rr, u + r = {c0:g}",
+               float(np.max(np.abs(-dT ** 2 + dR ** 2 - sl._gxx(r)))), 1e-9)
+    ck.add("Penrose's wave: on the front the string's frame reads cT = R = ct/beta",
+           float(np.max(np.abs(np.array(piw_ahead(0.0, 1.0)) - 1 / beta))), 1e-14)
+    ck.add("Penrose's wave: the ring's speed behind the front is 3c/5, and gamma v is 3/4",
+           abs((piw_ring(1.0) - piw_ring(2.0)) - 0.6) + abs(0.6 / math.sqrt(1 - 0.36) - (1 - beta) * (1 + beta) / (2 * beta)),
+           1e-14)
+    # A particle at rest ahead of the wave, R = R0, is a straight line of the retarded chart with
+    # dr/du = -(1 - beta^2)/2, and behind the front, where ct = u + r, that is dr/d(ct) = -3/5.
+    u = np.linspace(-3, -0.1, 30)
+    r_rest = beta * PIW_RING - (1 - beta ** 2) * u / 2
+    ck.add("Penrose's wave: the ring at rest is the line r = beta R_0 - (1 - beta^2) u/2 of the retarded chart",
+           float(np.max(np.abs(piw_ahead(u, r_rest)[1] - PIW_RING))), 1e-12)
+    ck.add("Penrose's wave: that line runs on behind the front as the ring falling at 3c/5",
+           abs((-(1 - beta ** 2) / 2) / (1 - (1 - beta ** 2) / 2) + 0.6), 1e-14)
+
+    def moment(ct):
+        where = f"Penrose's wave, ct = {ct:g}"
+        front = ct / beta
+        flat = Slice(src, "penrose_impulsive_wave", "behind", "r", "\\phi", {"theta": "pi/2", "t": repr(ct)})
+        cone = Slice(src, "penrose_impulsive_wave", "ahead", "R", "\\phi", {"T": repr(front), "z": 0}, {"beta": "1/2"})
+        ck.plane(f"{where}, behind the wave", flat, np.linspace(1e-3 * ct, ct, 200))
+        ring = piw_ring(ct)
+        hit = ct > beta * PIW_RING + 1e-9      # on the frame where the front reaches the ring, the ring is on it
+        inside = Piece("inside", "sheet", flat, 0.0, ct, 0.0, 1,
+                       (("axis", "the event where the string snapped, with flat space around it"),
+                        ("crease", "the wave front, where the surface folds")),
+                       [(ct, "surface", None)] + ([(ring, "particles", None)] if hit and ring < ct - 1e-9 else []), size)
+        outside = Piece("outside", "sheet", cone, front, top, 0.0, 1, (("crease", "the wave front"), rim),
+                        ([(PIW_RING, "particles", None)] if not hit else [])
+                        + [(R, "r", None) for R in (4.0, 6.0, top) if R > front + 1e-9], size)
+        # The rim of the drawing, R = 8 l, stands at z = 0 at every moment.
+        shift = -outside.z[-1]
+        inside.z, outside.z = inside.z + shift, outside.z + shift
+        ck.add(f"{where}, the two sides meet on the front: one circle",
+               float(np.max(np.abs(np.array(inside.at(ct)) - outside.at(front)))), JOIN)
+        ck.form(f"{where}, ahead of the wave z = sqrt(1 - beta^2) (R - 8 l)", outside,
+                lambda R: slope * (R - top), size)
+        ck.radius(f"{where}, ahead of the wave rho = beta R", outside, lambda R: beta * R, size)
+        for p in (inside, outside):
+            ck.isometry(f"{where}, {p.id}", p)
+        return Surface([inside, outside], label=f"$ct = {ct:g}\\,\\ell$", time=ct)
+
+    frames = [moment(n / 16) for n in range(4, 41)]
+    surfaces = [frames[n] for n in (0, 12, 24, 36)]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, Camera(-90, 20))
+    fig.legend("fill", "cover", "the plane across the string, flat behind the wave and the string's cone ahead of it")
+    fig.legend("line", "surface", "the wave front, where the surface folds")
+    fig.legend("line", "particles", "the ring of free particles, at rest on $R = 2\\,\\ell$ until the front reaches it")
+    fig.legend("line", "r", "$R$ constant, at $4$, $6$ and $8\\,\\ell$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("snap", "The string snapping", "$\\ell$", surfaces, fig.done(),
+                 movie=movie(frames, "$ct$", [f.time for f in frames]),
+                 settings="$\\beta = 1/2$, a string that leaves half of the full angle around it, with $\\ell$ any "
+                          "length; each moment is a slice of constant $t$ behind the wave and of constant "
+                          "$T = t/\\beta$ ahead of it.")]
+
+
 def bonnor_vaidya(ck, src):
     """The charged shell the other diagrams draw: the ingoing chart with m = q = 0 for v < 0 and
     m = M = 1, q = 24/25 for v > 0. A slice of constant v is null, so the moments are slices of
@@ -12202,6 +12312,7 @@ DRAWN = {
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "vaidya": vaidya,
     "israel_shell": israel_shell,
+    "penrose_impulsive_wave": penrose_impulsive_wave,
     "bonnor_vaidya": bonnor_vaidya,
     "oppenheimer_snyder": oppenheimer_snyder,
     "semiclosed_world": semiclosed_world,
@@ -13222,6 +13333,18 @@ CAPTIONS = {
         "through the flat interior, where nothing yet marks it, to meet the shell at $r_s$, where it stays. "
         "Once the shell has reached the centre the whole slice is Schwarzschild's, and the paraboloid runs "
         "on through the horizon to close in a spike at the singularity $r = 0$.",
+    ],
+    ("penrose_impulsive_wave", "snap"): [
+        "The plane through the break and across the string ($\\theta = \\pi/2$ behind the wave, $z = 0$ ahead of "
+        "it), from $ct = \\ell/4$ to $5\\ell/2$, each moment drawn as a surface in flat space with every distance "
+        "along it the metric distance. Ahead of the wave the plane is the string's cone, of half angle "
+        "$\\arcsin\\beta = 30°$, on which a circle at the distance $R$ from the string has the circumference "
+        "$2\\pi\\beta R$. Behind the wave the string is gone and the plane is a level disc of radius $ct$. The "
+        "wave front is the circle where the two meet, and the disc grows at the speed of light as the cone "
+        "flattens onto it.",
+        "A ring of free particles rests on the cone at $R = 2\\,\\ell$. The front reaches every particle of it at "
+        "$ct = \\ell$, and from then on the ring falls across the disc toward the centre at $3c/5$, the speed "
+        "$c\\,(1 - \\beta^2)/(1 + \\beta^2)$.",
     ],
     ("israel_shell", "shell"): [
         "The equatorial plane ($\\theta = \\pi/2$) of space around a shell of dust falling inward from rest at "

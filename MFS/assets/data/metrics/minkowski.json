@@ -208,6 +208,11 @@
       "id": "ppn_metric",
       "kind": "generalisation",
       "text": "Flat spacetime with a slowly moving body in it and gravity weak, written so that every metric theory of gravity fits. Take the mass away, $m = 0$, and it is flat again [will2014]."
+    },
+    {
+      "id": "penrose_impulsive_wave",
+      "kind": "composite",
+      "text": "The inside and the outside of a light cone, glued back together with a warp. The cone carries a spherical gravitational wave one instant thick [penrose1972impulsive, podolsky2000snapping]."
     }
   ],
   "references": [
@@ -274,7 +279,8 @@
     "podolskybelan2004",
     "israel1966",
     "tippett2017",
-    "will2014"
+    "will2014",
+    "podolsky2000snapping"
   ],
   "coordinates": [
     {

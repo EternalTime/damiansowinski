@@ -20,7 +20,7 @@
       "idealized model",
       "Petrov type N"
     ],
-    "version": "41a7a7e13309367c",
+    "version": "b2fb95db18378b15",
     "diagrams": "a6fabc19c0e551be",
     "conformal": "2771060b42b8605b",
     "embedding": "9b0e2bc9b72fa37e"
@@ -1399,7 +1399,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "64be271696983131",
+    "version": "5ebb867ccf4c428e",
     "diagrams": "582c49f296d53450",
     "conformal": "1c0299b48c135ff5",
     "embedding": "4a468cbcc8c8e211"
@@ -1805,7 +1805,7 @@
       "idealized model",
       "Einstein equations"
     ],
-    "version": "d485d81c6494f027",
+    "version": "8e14f14575625163",
     "diagrams": "39424436cf59ea7f",
     "conformal": "6fa408bb4e46f514",
     "embedding": "0633d69609fb99f8"
@@ -2219,7 +2219,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "2f4eff4ae6883843",
+    "version": "254d58be464eccc6",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -2643,6 +2643,38 @@
     "embedding": "7438e54f373b2e03"
   },
   {
+    "id": "penrose_impulsive_wave",
+    "name": "Penrose Impulsive Wave",
+    "tags": [
+      "vacuum",
+      "gravitational wave",
+      "impulsive wave",
+      "spherical wave",
+      "cut and paste",
+      "cosmic string",
+      "snapping cosmic string",
+      "topological defect",
+      "angular deficit",
+      "conical",
+      "Robinson-Trautman",
+      "Petrov type N",
+      "vanishing scalar invariants",
+      "null source",
+      "axisymmetric",
+      "expanding",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "30f8e534a0d1f880",
+    "diagrams": "e88c36460f2d0d45",
+    "conformal": "0658bc8d7d0d08b1",
+    "embedding": "bfee67da3b69aec1"
+  },
+  {
     "id": "photon_rocket",
     "name": "Photon Rocket",
     "tags": [
@@ -2754,7 +2786,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "56703bfaac897db4",
+    "version": "59fb4b4c35f9e593",
     "diagrams": "6e432dbfef4f0d7d",
     "embedding": "a484d91e42495a51"
   },
@@ -2977,7 +3009,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "15a6c2d3fd158de3",
+    "version": "49e427fab722fef0",
     "diagrams": "53ff4d90bff08988",
     "conformal": "0326c9d2101aa7a6",
     "embedding": "7b7a1d9f63195b3e"
@@ -3678,7 +3710,7 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "800ddb402872d052",
+    "version": "f52953d5802d680d",
     "diagrams": "a5eedeb1a3fee9e3",
     "conformal": "23c762685b735685",
     "embedding": "aa10dc85dcfab188"

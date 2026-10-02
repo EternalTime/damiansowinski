@@ -11,7 +11,7 @@ som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, 
 schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis,
-wahlquist, plebanski_hacyan, tippett_tsang and ppn_metric, and Godel's cylindrical chart.
+wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric and penrose_impulsive_wave, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -18255,6 +18255,213 @@ def cx_check(chart, system, points=8):
 
 
 CHARTS["chandrasekhar_xanthopoulos"] = [lambda s=s: chandrasekhar_xanthopoulos(s) for s in CX_CHARTS]
+
+
+# -- Penrose's spherical impulsive wave ----------------------------------------------------
+
+PIW_CHARTS = ["null", "retarded", "behind", "ahead"]
+PIW_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+
+
+def piw_charts():
+    """The four charts of the wave a snapping cosmic string sends out, each with its coordinates,
+    parameters, domains and line elements; penrose_impulsive_wave.md beside this file derives each."""
+    return {
+        "null": {
+            "coords": ["U", "V", "\\rho", "\\phi"],
+            "parameters": ["k", "\\Theta = \\tfrac{1}{2}\\left(1 + \\mathrm{sgn}(U)\\right)"],
+            "domains": ["U \\in (-\\infty, \\infty)", "V \\in (0, \\infty)", "\\rho \\in (0, \\infty)",
+                        "\\phi \\in [0, 2\\pi)", "U = 0 \\;\\text{(the wave front)}",
+                        "V\\rho^2 = kU \\;\\text{(the string, ahead of the wave)}"],
+            "line": "ds^2 = 2\\,dU\\,dV + 2\\left(V + \\dfrac{k\\,U\\Theta}{\\rho^2}\\right)^2d\\rho^2"
+                    " + 2\\rho^2\\left(V - \\dfrac{k\\,U\\Theta}{\\rho^2}\\right)^2d\\phi^2",
+            "metric": {("\\rho", "\\rho"): "2\\left(V + \\dfrac{k\\,U\\Theta}{\\rho^2}\\right)^2",
+                       ("\\phi", "\\phi"): "2\\rho^2\\left(V - \\dfrac{k\\,U\\Theta}{\\rho^2}\\right)^2"},
+            "ahead": 1},
+        "retarded": {
+            "coords": ["u", "r", "\\theta", "\\phi"],
+            "parameters": ["k", "\\Theta = \\tfrac{1}{2}\\left(1 - \\mathrm{sgn}(u)\\right)"],
+            "domains": ["u \\in (-\\infty, \\infty)", "r \\in (0, \\infty)", "\\theta \\in (0, \\pi)",
+                        "\\phi \\in [0, 2\\pi)", "u = 0 \\;\\text{(the wave front)}",
+                        "r\\sin^2\\theta = -2ku \\;\\text{(the string, ahead of the wave)}"],
+            "line": "ds^2 = -du^2 - 2\\,du\\,dr + \\left(r - \\dfrac{2k\\,u\\Theta}{\\sin^2\\theta}\\right)^2d\\theta^2"
+                    " + \\sin^2\\theta\\left(r + \\dfrac{2k\\,u\\Theta}{\\sin^2\\theta}\\right)^2d\\phi^2",
+            "metric": {("\\theta", "\\theta"): "\\left(r - \\dfrac{2k\\,u\\Theta}{\\sin^2\\theta}\\right)^2",
+                       ("\\phi", "\\phi"): "\\sin^2\\theta\\left(r + \\dfrac{2k\\,u\\Theta}{\\sin^2\\theta}\\right)^2"},
+            "ahead": -1},
+        "behind": {
+            "coords": ["t", "r", "\\theta", "\\phi"], "parameters": [],
+            "domains": ["t \\in (0, \\infty)", "r \\in [0, ct)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                        "r = ct \\;\\text{(the wave front)}"],
+            "line": "ds^2 = -c^2dt^2 + dr^2 + r^2" + PIW_SPHERE,
+            "chart": "ds^2 = -dt^2 + dr^2 + r^2" + PIW_SPHERE},
+        "ahead": {
+            "coords": ["T", "R", "\\phi", "z"], "parameters": ["\\beta"],
+            "domains": ["T \\in (-\\infty, \\infty)", "R \\in (0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                        "z \\in (-\\infty, \\infty)",
+                        "R^2 + z^2 = c^2T^2 \\;\\text{(the wave front, for } T > 0\\text{, with the wave inside it)}",
+                        "R = 0 \\;\\text{(the string, a conical singularity)}"],
+            "line": "ds^2 = -c^2dT^2 + dR^2 + \\beta^2R^2d\\phi^2 + dz^2",
+            "chart": "ds^2 = -dT^2 + dR^2 + \\beta^2R^2d\\phi^2 + dz^2"},
+    }
+
+
+def penrose_impulsive_wave(system):
+    """Penrose's spherical impulsive wave for the warp of a cosmic string, h(Z) = Z^beta, in four
+    charts. The null chart is the continuous metric of J. Podolsky and J. B. Griffiths, Class.
+    Quantum Grav. 17, 1401 (2000), eq. (15) with epsilon = 0 and their H_1 = k/Z^2 of eq. (17), on
+    Z = rho e^{i phi}, where the square of the modulus is diagonal. The retarded chart is the same
+    eq. (15) with epsilon = 1 at V = sqrt(2) r, U = -u/sqrt(2) and rho = cot(theta/2). The other two
+    are the flat pieces: Minkowski's spherical chart behind the wave and the string's cone ahead of
+    it. piw_check holds each continuous chart to a vanishing Ricci tensor, to a curvature that is a
+    delta on the front alone, and to the flat metric on either side pulled back along Podolsky and
+    Griffiths's transformations (3) to (5); penrose_impulsive_wave.md is the derivation."""
+    chart = piw_charts()[system]
+    spec = {
+        "metric_id": "penrose_impulsive_wave",
+        "system": {"id": system, "name": {"null": "Null", "retarded": "Retarded Spherical",
+                                           "behind": "Behind the Wave", "ahead": "Ahead of the Wave"}[system],
+                   "coords": chart["coords"], "domains": chart["domains"], "parameters": chart["parameters"],
+                   "line_element": chart["line"]},
+        "chart_line_element": chart.get("chart", chart["line"]),
+        "check": lambda built: piw_check(built, system),
+    }
+    probe = vm.Reader(chart["coords"], chart["parameters"], ())
+    if system in ("null", "retarded"):
+        x, k = probe.symbol[chart["coords"][0]], probe.parameters["k"]
+
+        def then(e):
+            return sp.factor(sp.together(e))
+
+        pretty, overrides = cp.step(x, chart["ahead"], then)
+        delta = next(p for p in overrides if p.name.startswith("_delta"))
+        x_step = next(p for p in overrides if p.name.startswith("_step"))
+        rest = [probe.symbol[n] for n in chart["coords"][1:]]
+        spec.update({
+            "pretty": pretty, "bracketed": pretty,
+            "printer": {"lead": rest + [x, x_step], "factors": [k] + rest + [x, x_step], "last": [delta],
+                        "overrides": overrides, "flip": False},
+            "components": {"metric_components": chart["metric"]},
+            "kretschmann": "0",
+        })
+    else:
+        spec["printer"] = {"lead": list(probe.parameters.values()) + [probe.symbol[n] for n in chart["coords"][:2]]}
+        spec["time"] = chart["coords"][0]
+    return spec
+
+
+def piw_flat(epsilon, U, V, rho, phi, beta):
+    """Inertial coordinates (cT, X, Y, Z) of the flat space on either side of the wave front, as
+    functions of Podolsky and Griffiths's U, V and Z = rho e^{i phi}: their (3) behind the wave,
+    and ahead of it their (4) and (5) with h = Z^beta, for which h''/h' = (beta - 1)/Z and
+    h''/h' - 2h'/h = -(1 + beta)/Z, so that with p = 1 + epsilon rho^2 and k = (1 - beta^2)/4
+
+        A = rho^(1 - beta)/(beta p),   B = rho^(1 + beta)/(beta p),   C = h/(beta p rho^(beta - 1)),
+        D = rho^(1 - beta) (p (1 - beta)^2/(4 rho^2) + epsilon beta)/beta,
+        E = rho^(1 + beta) (p (1 + beta)^2/(4 rho^2) - epsilon beta)/beta,
+        F = h p k/(beta rho^(1 + beta)),
+
+    and v = AV - DU, u = BV - EU, eta = CV - FU. The flat metric is -2 du dv + 2 |d eta|^2, with
+    sqrt(2) u = cT + Z and sqrt(2) v = cT - Z, and the angle of eta is beta phi ahead of the wave."""
+    p = 1 + epsilon * rho ** 2
+    k = (1 - beta ** 2) / 4
+    behind_u, behind_v, behind_eta = rho ** 2 * V / p - U, V / p - epsilon * U, V * rho / p
+    A, B, C = rho ** (1 - beta) / (beta * p), rho ** (1 + beta) / (beta * p), rho / (beta * p)
+    D = rho ** (1 - beta) * (p * (1 - beta) ** 2 / (4 * rho ** 2) + epsilon * beta) / beta
+    E = rho ** (1 + beta) * (p * (1 + beta) ** 2 / (4 * rho ** 2) - epsilon * beta) / beta
+    F = p * k / (beta * rho)
+    ahead_u, ahead_v, ahead_eta = B * V - E * U, A * V - D * U, C * V - F * U
+    root = sp.sqrt(2)
+
+    def inertial(u, v, eta, angle):
+        return [(u + v) / root, root * eta * sp.cos(angle), root * eta * sp.sin(angle), (u - v) / root]
+
+    return inertial(behind_u, behind_v, behind_eta, phi), inertial(ahead_u, ahead_v, ahead_eta, beta * phi)
+
+
+def piw_check(chart, system, points=6):
+    """Each continuous chart is a vacuum whose Riemann tensor is a delta on the wave front and
+    nothing else, with R_{U rho U rho} = -2kV delta(U)/rho^2 = -R_{U phi U phi}/rho^2 in the null
+    chart, and its metric on either side of the front is Minkowski's pulled back along piw_flat, at
+    random points and strings in forty digits. The chart ahead of the wave is the published conical
+    chart of cosmic_string at 1 - 4G mu/c^2 = beta, and the chart behind it the published spherical
+    chart of minkowski."""
+    name = f"penrose_impulsive_wave {system}"
+
+    def published(metric_id, system_id):
+        entry = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == system_id)
+        reader = vm.Reader(entry["coords"], [q["symbol"] for q in entry["parameters"]], ())
+        there = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+        n = len(entry["coords"])
+        return reader, sp.Matrix(n, n, lambda i, j: reader(there.get((entry["coords"][i], entry["coords"][j]), "0")))
+
+    if system == "behind":
+        reader, matrix = published("minkowski", "spherical")
+        names = dict(zip([reader.symbol[n] for n in ("t", "r", "\\theta", "\\phi")], chart.symbols))
+        if vm.norm(matrix.subs(names) - chart.geo.g) != sp.zeros(4, 4):
+            raise AssertionError(f"{name}: not Minkowski's published spherical chart")
+        return
+    if system == "ahead":
+        reader, matrix = published("cosmic_string", "conical")
+        names = dict(zip([reader.symbol[n] for n in ("t", "r", "\\phi", "z")], chart.symbols))
+        beta = chart.reader.parameters["beta"]
+        names[reader.parameters["mu"]] = (1 - beta) * reader.c ** 2 / (4 * reader.parameters["G"])
+        if vm.norm(matrix.subs(names) - chart.geo.g) != sp.zeros(4, 4):
+            raise AssertionError(f"{name}: not the published cone of cosmic_string at 1 - 4G mu/c^2 = beta")
+        return
+    x = chart.symbols[0]
+    k = chart.reader.parameters["k"]
+    ahead = 1 if system == "null" else -1
+    ricci = chart.geo.ricci_ll()
+    if any(vm.norm(vm._at(ricci, index)) != 0 for index in vm._indices(4, 2)):
+        raise AssertionError(f"{name}: not a vacuum")
+    riemann = chart.geo.riemann_llll()
+    delta, held = sp.DiracDelta(x), sp.Symbol("PIWdelta")
+    for index in vm._indices(4, 4):
+        value = sp.sympify(vm._at(riemann, index)).xreplace({delta: held})
+        if vm.norm(value.subs(held, 0)) != 0 or vm.norm(sp.diff(value, held, 2)) != 0:
+            raise AssertionError(f"{name}: the curvature is not a delta on the wave front alone")
+    if system == "null":
+        V, rho = chart.symbols[1:3]
+        for index, expected in (((0, 2, 0, 2), -2 * k * V * delta / rho ** 2), ((0, 3, 0, 3), 2 * k * V * delta)):
+            if vm.norm(vm._at(riemann, index) - expected) != 0:
+                raise AssertionError(f"{name}: R_{index} is not {expected}")
+    if vm.norm(sp.sympify(chart.geo.kretschmann())) != 0:
+        raise AssertionError(f"{name}: the Kretschmann scalar does not vanish")
+    # Either side of the front against the flat space it is, through Podolsky and Griffiths's maps.
+    U, V, rho, phi, beta = sp.symbols("U V rho phi beta", positive=True)
+    if system == "null":
+        epsilon, own = 0, [U, V, rho, phi]
+        at = dict(zip(chart.symbols, own))
+    else:
+        epsilon = 1
+        u, r, theta = sp.symbols("u r theta", real=True)
+        own = [u, r, theta, phi]
+        at = dict(zip(chart.symbols, own))
+    eta = sp.diag(-1, 1, 1, 1)
+    rng = random.Random(17)
+    for side, image in zip((-ahead, ahead), piw_flat(epsilon, U, V, rho, phi, beta)):
+        if system == "retarded":
+            image = [e.subs({U: -u / sp.sqrt(2), V: sp.sqrt(2) * r, rho: sp.cot(theta / 2)}) for e in image]
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], own[j]))
+        mine = chart.geo.g.subs(sp.sign(x), side).subs(at).subs(k, (1 - beta ** 2) / 4)
+        difference = J.T * eta * J - mine
+        for _ in range(points):
+            point = {beta: sp.Rational(rng.randint(30, 95), 100), phi: sp.Rational(rng.randint(1, 600), 100)}
+            if system == "null":
+                point.update({V: sp.Rational(rng.randint(10, 60), 10), rho: sp.Rational(rng.randint(8, 30), 10),
+                              U: (1 if side == ahead else -1) * sp.Rational(rng.randint(1, 30), 10)})
+            else:
+                point.update({r: sp.Rational(rng.randint(10, 60), 10), theta: sp.Rational(rng.randint(60, 250), 100),
+                              u: side * sp.Rational(rng.randint(1, 30), 10)})
+            worst = max(abs(sp.N(difference[i, j].subs(point), 40)) for i in range(4) for j in range(4))
+            if worst > sp.Float("1e-30"):
+                raise AssertionError(f"{name}: the flat metric pulled back misses the chart's by {worst} at {point}, "
+                                     f"on the side sgn = {side}")
+
+
+CHARTS["penrose_impulsive_wave"] = [lambda s=s: penrose_impulsive_wave(s) for s in PIW_CHARTS]
 
 
 def write(spec):

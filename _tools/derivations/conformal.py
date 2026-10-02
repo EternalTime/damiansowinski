@@ -15547,6 +15547,187 @@ def aichelburg_sexl(ck, src):
     return [v]
 
 
+PIW_BETA = 0.5          # 1 - 4G mu/c^2 of the string every drawing of Penrose's wave takes
+
+
+def penrose_impulsive_wave(ck, src):
+    """Penrose's spherical impulsive wave for a string that snaps, beta = 1/2 and k = 3/16.
+
+    On the equator of the retarded chart the metric is -du^2 - 2 du dr on both sides of the front
+    u = 0, which is -du dw with w = u + 2r, so p = arctan(u), q = arctan(u + 2r) bring the half plane
+    of fixed theta = pi/2 and phi into Minkowski's triangle, with the front on p = 0 and every ray
+    one straight line across it. Behind the wave u = ct - r, so the map is Minkowski's own,
+    p, q = arctan(ct -+ r), and the flat space there is the part p > 0 of the triangle. Ahead of
+    it, by Podolsky and Griffiths's map at rho = 1, cT - R = beta u and cT + R = (u + 2r)/beta, so
+    p = arctan((cT - R)/beta) and q = arctan(beta (cT + R)): the cone is the part p < 0 outside the
+    string R = 0, the curve tan q = beta^2 tan p from the centre down to i-. All three maps are
+    checked against their charts and against one another along the front. The plane is totally
+    geodesic, since no published Christoffel symbol with an upper theta or phi has both lower indices
+    in the plane.
+
+    The null chart's plane rho = 1, phi = 0 has the metric 2 dU dV, so p = -arctan(U) and q = arctan(V)
+    bring it into the part of a diamond with V > 0, the front on p = 0 and the string, ahead of it,
+    on V = kU."""
+    beta, k = PIW_BETA, (1 - PIW_BETA ** 2) / 4
+    params = {"k": "3/16"}
+
+    def retarded(u, r):
+        u, r = np.asarray(u, dtype=float), np.asarray(r, dtype=float)
+        return np.arctan(u), np.arctan(u + 2 * r)
+
+    def ahead(T, R):
+        T, R = np.asarray(T, dtype=float), np.asarray(R, dtype=float)
+        return np.arctan((T - R) / beta), np.arctan(beta * (T + R))
+
+    def null(U, V):
+        return -np.arctan(np.asarray(U, dtype=float)), np.arctan(np.asarray(V, dtype=float))
+
+    ret = Plane(src, "penrose_impulsive_wave", "retarded", ("u", "r"), EQUATOR, params)
+    beh = Plane(src, "penrose_impulsive_wave", "behind", ("t", "r"), EQUATOR)
+    ahe = Plane(src, "penrose_impulsive_wave", "ahead", ("T", "R"), {"phi": "0", "z": "0"}, {"beta": "1/2"})
+    nul = Plane(src, "penrose_impulsive_wave", "null", ("U", "V"), {"rho": "1", "phi": "0"}, params)
+    r = ck.uniform(0.01, 20)
+    ck.chart("Penrose's wave retarded, behind the front", ret, retarded, ck.uniform(0.01, 20), r, lambda u, r: (1, 0))
+    u = -ck.uniform(0.01, 20)
+    ck.chart("Penrose's wave retarded, ahead of the front", ret, retarded, u, -2 * k * u + ck.uniform(0.01, 20),
+             lambda u, r: (1, 0))
+    t = ck.uniform(0.01, 20)
+    ck.chart("Penrose's wave behind", beh, mink_pq, t, t * ck.uniform(0.001, 0.999), lambda t, r: (1, 0))
+    T = ck.uniform(-20, 20)
+    ck.chart("Penrose's wave ahead", ahe, ahead, T, np.maximum(T, 0) + ck.uniform(0.01, 20), lambda T, R: (1, 0))
+    U = ck.uniform(-20, 20)
+    ck.chart("Penrose's wave null", nul, null, U, k * np.maximum(U, 0) + ck.uniform(0.01, 20), lambda U, V: (-1, 1))
+    s = np.linspace(0.05, 30, 60)
+    ck.limit("Penrose's wave: the maps behind and ahead of the front agree along it, where cT = R = ct/beta",
+             np.concatenate(ahead(s / beta, s / beta)), np.concatenate(mink_pq(s, s)), 1e-12)
+    us = -np.linspace(0.05, 30, 60)
+    rs = -2 * k * us + np.linspace(0.05, 9, 60)
+    ck.limit("Penrose's wave: the retarded chart's map ahead of the front is the string's frame's",
+             np.concatenate(ahead((2 * rs + (1 + beta ** 2) * us) / (2 * beta), (2 * rs + (1 - beta ** 2) * us) / (2 * beta))),
+             np.concatenate(retarded(us, rs)), 1e-12)
+    ck.limit("Penrose's wave: the string R = 0 is the curve tan q = beta^2 tan p",
+             np.tan(ahead(us, 0 * us)[1]) - beta ** 2 * np.tan(ahead(us, 0 * us)[0]), np.zeros(60), 1e-12)
+    # Each plane is totally geodesic: no published Christoffel symbol with its upper index off the
+    # plane has both lower indices on it.
+    for plane, name, on in ((ret, "retarded", ("u", "r")), (nul, "null", ("U", "V"))):
+        src.note("penrose_impulsive_wave", name, ["christoffel"])
+        turned = [c["indices"] for c in plane.entry["christoffel"]["variants"]["ull"]["nonzero"]
+                  if c["indices"][0] not in on and c["indices"][1] in on and c["indices"][2] in on]
+        ck.limit(f"Penrose's wave: the {name} chart's plane is totally geodesic", np.array([float(len(turned))]),
+                 np.zeros(1), 0.5)
+
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    S = spread(-np.inf, 0, 400, 10)
+    string = [point(p, q) for p, q in zip(*ahead(S, 0 * S))]
+    region = [[0, PI], [PI, 0], [0, -PI]] + string + [[0, 0]]
+    flat = [[0, 0], [0, PI], [HALF, HALF]]
+    cone = [[0, 0], [HALF, HALF], [PI, 0], [0, -PI]] + string + [[0, 0]]
+
+    def frame(v, cover, legend):
+        v.fill("region", region)
+        for polygon in cover:
+            v.fill("cover", polygon)
+        v.line("centre", [[[0, 0], [0, PI]]])
+        v.line("world", [string + [[0, 0]]])
+        v.line("surface", [[[0, 0], [HALF, HALF]]])
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6),
+                                         ((0, -PI), "$i^-$", "t", 0, 6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(at[0], 4), round(at[1], 4)]})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([3 * Q4, Q4 + 0.35], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label_xt([Q4, Q4], "the wave front", "tl", "small", dx=6, dy=4)
+        v.label_xt([0, -1.2], "the string", "r", "small", dx=-6)
+        v.legend("cover", legend)
+        v.legend("surface", "the wave front, the light cone of the event where the string snaps")
+        v.legend("world", "the string, a conical singularity, whole until it snaps")
+        v.legend("centre", "the centre behind the wave, a regular axis")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        v.set(settings="$\\beta = 1/2$, so that $k = 3/16$, with $\\ell$ any length, the unit of every length.",
+              restriction="The half plane across the string through the break only ($\\theta = \\pi/2$ behind the wave, "
+                          "$z = 0$ ahead of it, fixed $\\phi$), totally geodesic, each point in the diagram a circle "
+                          "around the string's axis.")
+
+    views = []
+    v = View("retarded", "Retarded spherical", box, "retarded")
+    for u0 in (-4, -2, -1, 1, 2, 4):
+        rr = spread(max(0.0, -2 * k * u0), np.inf, 400, 10)
+        v.curve("t", *retarded(np.full_like(rr, u0), rr))
+    for r0 in (0.5, 1, 2, 4):
+        uu = spread(-r0 / (2 * k), np.inf, 500, 10)
+        v.curve("r", *retarded(uu, np.full_like(uu, r0)))
+    frame(v, [flat, cone], "the plane on both sides of the front, which $u$ and $r$ cover")
+    v.legend("r", "$r$ constant, at $\\ell/2$, $\\ell$, $2\\ell$, and $4\\ell$")
+    v.legend("t", "$u$ constant, an outgoing light ray, at $\\pm\\ell$, $\\pm 2\\ell$, and $\\pm 4\\ell$")
+    views.append(v)
+
+    v = View("behind", "Behind the wave", box, "behind")
+    for r0 in (0.5, 1, 2, 4):
+        tt = spread(r0, np.inf, 400, 10)
+        v.curve("r", *mink_pq(tt, np.full_like(tt, r0)))
+    for t0 in (1, 2, 4):
+        rr = np.linspace(0, t0, 200)
+        v.curve("t", *mink_pq(np.full_like(rr, t0), rr))
+    frame(v, [flat], "the flat space behind the wave, which $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, at $\\ell/2$, $\\ell$, $2\\ell$, and $4\\ell$")
+    v.legend("t", "$ct$ constant, at $\\ell$, $2\\ell$, and $4\\ell$")
+    views.append(v)
+
+    v = View("ahead", "Ahead of the wave", box, "ahead")
+    for R0 in (1, 2, 4, 8):
+        TT = spread(-np.inf, R0, 400, 10)
+        v.curve("r", *ahead(TT, np.full_like(TT, R0)))
+    for T0 in (-4, -2, -1, 0, 1, 2, 4):
+        RR = spread(max(T0, 0.0), np.inf, 400, 10)
+        v.curve("t", *ahead(np.full_like(RR, T0), RR))
+    frame(v, [cone], "the cone ahead of the wave, which $T$ and $R$ cover")
+    v.legend("r", "$R$ constant, at $\\ell$, $2\\ell$, $4\\ell$, and $8\\ell$")
+    v.legend("t", "$cT$ constant, at $0$, $\\pm\\ell$, $\\pm 2\\ell$, and $\\pm 4\\ell$")
+    views.append(v)
+    for v in views:
+        for m in slices.moments("penrose_impulsive_wave"):
+            rr = np.linspace(*m.reach("behind", "r"), 50)
+            RR = np.linspace(*m.reach("ahead", "R"), 50)
+            v.slice(m, [mink_pq(np.full_like(rr, m.time), rr), ahead(np.full_like(RR, m.time / beta), RR)])
+
+    v = View("null", "Null", [-HALF - 0.35, PI + 0.35, -1.0, PI + 0.25], "null")
+    W = spread(0, np.inf, 400, 10)
+    edge = [point(p, q) for p, q in zip(*null(W, k * W))]
+    part = [[0, 0], [-HALF, HALF], [0, PI], [PI, 0]] + edge[::-1]
+    v.fill("region", part)
+    v.fill("cover", part)
+    for U0 in (-4, -2, -1, 1, 2, 4):
+        VV = spread(max(0.0, k * U0), np.inf, 400, 10)
+        v.curve("null", *null(np.full_like(VV, U0), VV))
+    for V0 in (0.5, 1, 2, 4):
+        UU = spread(-np.inf, V0 / k, 500, 10)
+        v.curve("null", *null(UU, np.full_like(UU, V0)))
+    v.line("chartedge", [[[0, 0], [-HALF, HALF]]])
+    v.line("world", [edge])
+    v.line("surface", [[[0, 0], [HALF, HALF]]])
+    v.line("scri", [[[-HALF, HALF], [0, PI]], [[0, PI], [PI, 0]]])
+    for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6)):
+        v.layers.append({"kind": "point", "class": "infinity", "at": [round(at[0], 4), round(at[1], 4)]})
+        v.label_xt(at, text, anchor, dx=dx, dy=dy)
+    v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+    v.label_xt([Q4, Q4], "the wave front", "tl", "small", dx=6, dy=4)
+    v.legend("cover", "the part of the plane with $V > 0$, which $U$ and $V$ cover")
+    v.legend("null", "$U$ constant and $V$ constant, every one a light ray, at $\\pm\\ell$, $\\pm 2\\ell$, and "
+                     "$\\pm 4\\ell$ and at $\\ell/2$, $\\ell$, $2\\ell$, and $4\\ell$")
+    v.legend("surface", "the wave front, $U = 0$")
+    v.legend("world", "the string ahead of the wave, on $V = kU$")
+    v.legend("chartedge", "$V = 0$, the generator of the front that every cone $U = $ const shares")
+    v.legend("scri", "null infinity $\\mathscr{I}^+$")
+    v.set(settings="$\\beta = 1/2$, so that $k = 3/16$, with $\\ell$ any length, the unit of $U$ and $V$.",
+          restriction="The plane $\\rho = 1$, $\\phi = 0$ only, totally geodesic, each point in the diagram a single "
+                      "event.")
+    for m in slices.moments("penrose_impulsive_wave"):
+        v.slice(m, points=[null(0.0, m.time / math.sqrt(2))])
+    views.append(v)
+    return views
+
+
 HT_JUMP = -0.5      # the jump in v of a ray crossing Hotta and Tanaka's shock on its equator, in units of 8GE/c^4 = a
 
 
@@ -17263,6 +17444,7 @@ def lifshitz_spacetime(ck, src):
 DRAWN = {
     "lifshitz_spacetime": lifshitz_spacetime,
     "aichelburg_sexl": aichelburg_sexl,
+    "penrose_impulsive_wave": penrose_impulsive_wave,
     "hotta_tanaka": hotta_tanaka,
     "kiselev": kiselev,
     "near_horizon_extreme_kerr": near_horizon_extreme_kerr,
@@ -19279,6 +19461,35 @@ CAPTIONS = {
         "both sides and run smoothly through the throat at $l = 0$. With $\\Phi = 0$ the metric "
         "on the plane is $-c^2dt^2 + dl^2$, and $p, q = \\arctan((ct \\mp l)/b_0)$ bring it into "
         "the diamond.",
+    ],
+    ("penrose_impulsive_wave", "retarded"): [
+        "The half plane of $u$ and $r$ on the equator ($\\theta = \\pi/2$, fixed $\\phi$), totally geodesic. The metric "
+        "on it is $-du^2 - 2\\,du\\,dr$ on both sides of the wave front, so $p = \\arctan(u/\\ell)$ and "
+        "$q = \\arctan((u + 2r)/\\ell)$ bring it into Minkowski's triangle, and a light ray crosses the front as one "
+        "straight line.",
+        "The front is the ray $u = 0$, from the event where the string snaps to $\\mathscr{I}^+$. Behind it the "
+        "space is flat down to a regular centre. Ahead of it the plane ends on the string, $r = -2ku$, which is "
+        "whole before the snap and afterward lies beyond the front.",
+    ],
+    ("penrose_impulsive_wave", "behind"): [
+        "The half plane of $t$ and $r$ ($\\theta = \\pi/2$, fixed $\\phi$) behind the wave, which $p, q = "
+        "\\arctan((ct \\mp r)/\\ell)$ bring into the part of Minkowski's triangle above the wave front. The front "
+        "is the ray $r = ct$, the chart's edge, and across it lies the cone of the string.",
+    ],
+    ("penrose_impulsive_wave", "ahead"): [
+        "The half plane of $T$ and $R$ ($z = 0$, fixed $\\phi$) ahead of the wave, which $p = \\arctan((cT - "
+        "R)/\\beta\\ell)$ and $q = \\arctan(\\beta(cT + R)/\\ell)$ bring into the triangle below the wave front, so "
+        "that it joins the flat space behind the front along the front itself. The string stands on $R = 0$ until "
+        "$T = 0$, and after that the chart ends on the front, the ray $R = cT$.",
+        "The string's gravity is its deficit angle $2\\pi(1 - \\beta)$, which shows in the circles around it: each "
+        "has the circumference $2\\pi\\beta R$. Behind the front a circle of radius $r$ has the full $2\\pi r$.",
+    ],
+    ("penrose_impulsive_wave", "null"): [
+        "The plane of $U$ and $V$ ($\\rho = 1$, $\\phi = 0$), totally geodesic. The metric on it is $2\\,dU\\,dV$, "
+        "so $p = -\\arctan(U/\\ell)$ and $q = \\arctan(V/\\ell)$ bring it into part of Minkowski's diamond, with "
+        "the future toward smaller $U$ and larger $V$.",
+        "The wave front is the ray $U = 0$. The chart covers $V > 0$, and ahead of the wave it ends on the string, "
+        "where $V = kU$.",
     ],
     ("cosmic_string", "conical"): [
         "The half plane of $t$ and $r$ at fixed $\\phi$ and $z$, totally geodesic. The metric on it is $-c^2dt^2 + dr^2$, so "

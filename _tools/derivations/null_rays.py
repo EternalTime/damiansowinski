@@ -1742,6 +1742,9 @@ EC_CORE_INPUT = ("A cluster with no surface, $e^{2\\Phi} = 1 - r_s/\\sqrt{r^2 + 
 EC_RHO0 = 3 / (6 - 2 * math.sqrt(6)) ** 2
 EC_CHI0 = math.asin(1 / math.sqrt(3))
 
+# Penrose's wave for the string every drawing of it takes: beta = 1 - 4G mu/c^2 = 1/2, k = (1 - beta^2)/4.
+PIW = {"k": "3/16"}
+
 DIAGRAMS = [
     *[Diagram("hotta_tanaka", "conformally_flat", view, f"$\\theta = {tex}$", ("\\eta", "\\rho"), (0, 4, -4.3, -0.3),
               "$\\rho/a$", "$\\eta/a$", HT, {"theta": theta, "phi": "0"}, tau="eta", delta=AS_PULSE, step=0.0005,
@@ -3287,6 +3290,26 @@ DIAGRAMS = [
             functions={"R": "israel_r_adv(v)"}, where="r - israel_r_adv(v)", input=ISRAEL_INPUT,
             singular_runs=True, singular_where_claimed=True,
             curves=(("shell", "israel_r_adv(v)", "the shell of dust, $r = R$"),)),
+    # Penrose's spherical impulsive wave for a string that snaps, at beta = 1/2, k = 3/16: the two
+    # continuous charts, whose planes cross the wave front, and the flat chart on either side of it. The
+    # null chart's plane is drawn against V + U and V - U, the retarded chart's against u + r, the
+    # inertial time behind the wave, on the equator and 30 degrees from the string, where the plane ends
+    # on the string, r sin^2(theta) = -2ku.
+    *[Diagram("penrose_impulsive_wave", "null", view, f"$\\rho = {tex}$", ("U", "V"), (-3, 3, 0, 4),
+              "$(U + V)/2\\ell$", "$(V - U)/2\\ell$", PIW, {"rho": rho, "phi": "0"}, to_display=((0.5, 0.5), (-0.5, 0.5)),
+              tau="V - U", families=SIDEWAYS, where=f"V*({rho})**2 - 3*U/16",
+              lines=(("shell", "x0", "0", "the wave front, $U = 0$"),))
+      for view, (rho, tex) in (("unit", ("1", "1")), ("near", ("1/2", "1/2")))],
+    *[Diagram("penrose_impulsive_wave", "retarded", view, label, ("u", "r"), (0, 4, -2, 4),
+              "$r/\\ell$", "$(u + r)/\\ell$", PIW, {"theta": theta, "phi": "0"}, to_display=FINKELSTEIN_OUT, tau="u + r",
+              where=f"r*sin({theta})**2 + 3*u/8", lines=(("shell", "x0", "0", "the wave front, $u = 0$"),))
+      for view, (theta, label) in (("equator", ("pi/2", "the equator")), ("near", ("pi/6", "$\\theta = 30°$")))],
+    Diagram("penrose_impulsive_wave", "behind", "radial", "$t$ and $r$", ("t", "r"), (0, 4, 0, 4),
+            "$r/\\ell$", "$ct/\\ell$", {}, EQUATOR, areal=True, where="t - r",
+            marked=(("shell", {"x0": "0", "r": "0"}, 1, "the wave front, $r = ct$"),)),
+    Diagram("penrose_impulsive_wave", "ahead", "radial", "$T$ and $R$", ("T", "R"), (0, 8, -2, 6),
+            "$R/\\ell$", "$cT/\\ell$", {"beta": "1/2"}, {"phi": "0", "z": "0"}, tau="T", where="R - T",
+            marked=(("shell", {"x0": "0", "r": "0"}, 1, "the wave front, $R = cT$"),)),
     # The semiclosed world at chi_0 = 3 pi/4, a_m = 2 sqrt(2) r_s, as its conformal diagram draws it:
     # the dust from bang to crunch in its proper time and in its conformal time, the far sheet of
     # the exterior in Schwarzschild's chart, and both sheets in the isotropic chart from the moment
@@ -7698,6 +7721,45 @@ CAPTIONS = {
         "before its centre becomes singular. The event horizon leaves the centre at "
         "$ct = -0.42\\,r_b$, well before any of this, and outside the cloud it runs along the dotted "
         "curve, the sphere $R = 2GM/c^2$.",
+    ],
+    **{("penrose_impulsive_wave", "null", view): [
+        f"The plane of $U$ and $V$ ($\\rho = {tex}$, $\\phi = 0$), drawn against $(U + V)/2$ and $(V - U)/2$, for "
+        "the string with $\\beta = 1/2$, so that $k = 3/16$, with $\\ell$ any length. Only $g_{UV}$ is nonzero on it, so the light rays are "
+        "the lines $U = $ const and $V = $ const, and the future is toward smaller $U$ and larger $V$. The wave "
+        "front is the ray $U = 0$, with the cone of the string ahead of it, where $U > 0$, and flat space with no "
+        "string behind it.",
+        "No Christoffel symbol turns a ray out of the plane, so every curve drawn is a null geodesic, and a ray "
+        f"crosses the front with no kink. The plane ends where $V\\rho^2 = kU$, here $V = {edge}$, which is the "
+        "string, and on $V = 0$, the one generator of the front that every cone $U = $ const shares.",
+    ] for view, tex, edge in (("unit", "1", "3U/16"), ("near", "1/2", "3U/4"))},
+    ("penrose_impulsive_wave", "retarded", "equator"): [
+        "The plane of $u$ and $r$ on the equator ($\\theta = \\pi/2$, $\\phi = 0$), drawn with $u + r$ as the "
+        "vertical axis, for the string with $\\beta = 1/2$, so that $k = 3/16$, with $\\ell$ any length. Behind the wave $u + r$ is the "
+        "inertial time $ct$. The metric on the plane is $-du^2 - 2\\,du\\,dr$ on both sides of the wave front "
+        "$u = 0$, so the outgoing rays are the lines $u = $ const, the ingoing ones $u + 2r = $ const, and "
+        "every ray is at 45°.",
+        "No Christoffel symbol turns a ray out of the plane, so every curve drawn is a null geodesic, and one "
+        "that meets the front crosses it with no kink: the wave's curvature, $R_{u\\theta u\\theta} = "
+        "-2kr\\,\\delta(u)/\\sin^2\\theta$, acts across the plane. Ahead of the wave the plane ends on the string, "
+        "where $r = -2ku$.",
+    ],
+    ("penrose_impulsive_wave", "retarded", "near"): [
+        "The plane of $u$ and $r$ at $30°$ from the string ($\\theta = \\pi/6$, $\\phi = 0$), drawn with $u + r$ as "
+        "the vertical axis, for the string with $\\beta = 1/2$, with $\\ell$ any length. The rays are those of the equator, $u = $ const "
+        "and $u + 2r = $ const. Ahead of the wave the plane ends on the string sooner, where "
+        "$r\\sin^2\\theta = -2ku$, which here is $r = -3u/2$.",
+    ],
+    ("penrose_impulsive_wave", "behind", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) behind the wave, where space is flat, the "
+        "same at every angle, with $\\ell$ any length. The metric on it is $-c^2dt^2 + dr^2$, and every ray is at 45°. The chart ends on "
+        "the wave front, the outgoing ray $r = ct$ from the event where the string snaps, and an outgoing ray "
+        "that leaves the centre later never reaches it.",
+    ],
+    ("penrose_impulsive_wave", "ahead", "radial"): [
+        "The plane of $T$ and $R$ ($\\phi = 0$, $z = 0$) ahead of the wave, through the break and across the "
+        "string, for $\\beta = 1/2$, with $\\ell$ any length. The metric on it is $-c^2dT^2 + dR^2$, the cone's, and every ray is at 45°. "
+        "Before $T = 0$ the string stands whole on $R = 0$. After it the chart ends on the wave front, the "
+        "outgoing ray $R = cT$, and an ingoing ray that meets the front passes into the flat space behind it.",
     ],
     ("israel_shell", "interior", "radial"): [
         "The plane of $T$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) inside the shell, drawn for the shell that falls "
