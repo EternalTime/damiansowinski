@@ -1,5 +1,5 @@
 {
-  "version": "d51faac267709269",
+  "version": "04d4ccb3f9992779",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -18840,6 +18840,154 @@
         "eprint": "hep-th/0601079",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.73.084013"
+      }
+    },
+    "hiscock1981outgoing": {
+      "type": "article",
+      "fields": {
+        "title": "Models of evaporating black holes. {II}. Effects of the outgoing created radiation",
+        "author": "Hiscock, William A.",
+        "journal": "Physical Review D",
+        "volume": "23",
+        "number": "12",
+        "pages": "2823--2827",
+        "year": "1981",
+        "doi": "10.1103/PhysRevD.23.2823",
+        "url": "https://doi.org/10.1103/PhysRevD.23.2823"
+      }
+    },
+    "hawking1974": {
+      "type": "article",
+      "fields": {
+        "title": "Black hole explosions?",
+        "author": "Hawking, S. W.",
+        "journal": "Nature",
+        "volume": "248",
+        "number": "5443",
+        "pages": "30--31",
+        "year": "1974",
+        "doi": "10.1038/248030a0",
+        "url": "https://doi.org/10.1038/248030a0"
+      }
+    },
+    "davies1976": {
+      "type": "article",
+      "fields": {
+        "title": "Energy-momentum tensor near an evaporating black hole",
+        "author": "Davies, P. C. W. and Fulling, S. A. and Unruh, W. G.",
+        "journal": "Physical Review D",
+        "volume": "13",
+        "number": "10",
+        "pages": "2720--2723",
+        "year": "1976",
+        "doi": "10.1103/PhysRevD.13.2720",
+        "url": "https://doi.org/10.1103/PhysRevD.13.2720"
+      }
+    },
+    "hiscock1982shell": {
+      "type": "article",
+      "fields": {
+        "title": "Creation of particles by shell-focusing singularities",
+        "author": "Hiscock, William A. and Williams, Leslie G. and Eardley, Douglas M.",
+        "journal": "Physical Review D",
+        "volume": "26",
+        "number": "4",
+        "pages": "751--760",
+        "year": "1982",
+        "doi": "10.1103/PhysRevD.26.751",
+        "url": "https://doi.org/10.1103/PhysRevD.26.751"
+      }
+    },
+    "kuroda1984evaporating": {
+      "type": "article",
+      "fields": {
+        "title": "{Vaidya} Spacetime as an Evaporating Black Hole",
+        "author": "Kuroda, Yuhji",
+        "journal": "Progress of Theoretical Physics",
+        "volume": "71",
+        "number": "6",
+        "pages": "1422--1425",
+        "year": "1984",
+        "doi": "10.1143/PTP.71.1422",
+        "url": "https://doi.org/10.1143/PTP.71.1422"
+      }
+    },
+    "waugh1986": {
+      "type": "article",
+      "fields": {
+        "title": "Double-null coordinates for the {Vaidya} metric",
+        "author": "Waugh, B. and Lake, Kayll",
+        "journal": "Physical Review D",
+        "volume": "34",
+        "number": "10",
+        "pages": "2978--2984",
+        "year": "1986",
+        "doi": "10.1103/PhysRevD.34.2978",
+        "url": "https://doi.org/10.1103/PhysRevD.34.2978"
+      }
+    },
+    "lubbe2009": {
+      "type": "article",
+      "fields": {
+        "title": "Conformal properties of an evaporating black hole model",
+        "author": "Lübbe, Christian and Tod, Paul",
+        "journal": "General Relativity and Gravitation",
+        "volume": "41",
+        "number": "1",
+        "pages": "7--19",
+        "year": "2009",
+        "doi": "10.1007/s10714-008-0646-0",
+        "eprint": "0803.0482",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0803.0482"
+      }
+    },
+    "bianchi2015": {
+      "type": "article",
+      "fields": {
+        "title": "Entanglement entropy production in gravitational collapse: covariant regularization and solvable models",
+        "author": "Bianchi, Eugenio and De Lorenzo, Tommaso and Smerlak, Matteo",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2015",
+        "number": "6",
+        "pages": "180",
+        "year": "2015",
+        "doi": "10.1007/JHEP06(2015)180",
+        "eprint": "1409.0144",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1409.0144"
+      }
+    },
+    "martindussaud2019": {
+      "type": "article",
+      "fields": {
+        "title": "Evaporating black-to-white hole",
+        "author": "Martin-Dussaud, Pierre and Rovelli, Carlo",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "36",
+        "number": "24",
+        "pages": "245002",
+        "year": "2019",
+        "doi": "10.1088/1361-6382/ab5097",
+        "eprint": "1905.07251",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1905.07251"
+      }
+    },
+    "guo2023": {
+      "type": "article",
+      "fields": {
+        "title": "Page curves and entanglement islands for the step-function {Vaidya} model of evaporating black holes",
+        "author": "Guo, Chang-Zhong and Gan, Wen-Cong and Shu, Fu-Wen",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2023",
+        "number": "5",
+        "pages": "042",
+        "year": "2023",
+        "doi": "10.1007/JHEP05(2023)042",
+        "eprint": "2302.02379",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2302.02379"
       }
     }
   }

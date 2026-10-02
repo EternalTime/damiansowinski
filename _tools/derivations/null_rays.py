@@ -1010,10 +1010,144 @@ class ori_shell_behind(sp.Function):
         return ori_shell.shell().radius_behind(np.minimum(v, -1e-300))
 
 
+# Hiscock's evaporating black hole as every one of its diagrams draws it, in units of the mass m_0
+# of the shell of light that makes the hole, which falls in along v = 0. From v_1 = 2 to v_0 = 8
+# negative energy falls in and the mass inside the surface of pair creation is N(v) =
+# cos^2(pi (v - 2)/12), which starts and ends with no slope, so that dN/dv -> 0 as N -> 0, the
+# condition Hiscock found necessary. The surface is r = R = 3 N(v), outside the apparent horizon
+# r = 2 N by half its radius; on it g^rr = 1/3, and the retarded time of the outgoing chart beyond
+# it, continuous in the induced metric, has du/dv = 1 - 2 R'/g^rr = 1 - 18 N', so u = v - 18 N(v),
+# normalised to u = v - 2r in the flat space left at the end: u_1 = -16 and u_0 = v_0 = 8. Beyond
+# the surface the mass is M(u) = N(v(u)), the same on both sides of it, so the surface has no
+# surface energy density; hiscock.md derives the tension it has. Before u_1 the outgoing chart is
+# Schwarzschild's, u = v - 2 r_* - 12 - 4 ln 2 with r_* = r + 2 ln(r/2 - 1), and begins on the shell.
+HISCOCK_V1, HISCOCK_V0, HISCOCK_DELAY = 2.0, 8.0, 18.0
+HISCOCK_SHIFT = 12 + 4 * math.log(2)        # v - 2 r_* - u in Schwarzschild's region
+HISCOCK_MASS = "Heaviside(v)*cos(pi*(Min(Max(v, 2), 8) - 2)/12)**2"
+HISCOCK_EDGE = "3*cos(pi*(Min(Max(v, 2), 8) - 2)/12)**2 + 1000*Heaviside(2 - v)"
+HISCOCK_HORIZON = {"x0": "31/4", "r": "0.00766033576251"}       # the event horizon at v = 7.75
+HISCOCK_UNITS = "with $m_0$ the mass of the shell and the unit of every length"
+HISCOCK_INPUT = ("$m(v) = 0$ before $v = 0$, $m_0$ until $v_1 = 2\\,m_0$, and $m_0\\cos^2(\\pi(v - v_1)/12m_0)$ until "
+                 "$v_0 = 8\\,m_0$: a shell of light of mass $m_0$ makes the hole, and negative energy falling in "
+                 "evaporates it. The surface of pair creation is $R = 3m$.")
+HISCOCK_OUT_INPUT = ("$m(u)$ is the mass of the ingoing chart on the surface of pair creation $R = 3m$, where "
+                     "$u = v - 18m$: it is $m_0$ until $u_1 = -16\\,m_0$ and zero from $u_0 = 8\\,m_0$, and the "
+                     "radiation between carries positive energy outward.")
+HISCOCK_SHELLS_INPUT = ("$m(v) = m_0$ from $v = 0$ to $v_1 = 6\\,m_0$ and zero before and after: a shell of light of "
+                        "mass $m_0$ makes the hole and a shell of mass $-m_0$ removes it.")
+HISCOCK_FLAT_INPUT = ("The flat space left after the evaporation, beyond the last ray $u_0 = 8\\,m_0$ of the outgoing "
+                      "chart, " + HISCOCK_UNITS + ".")
+
+
+def hiscock_mass(v):
+    """N(v), the mass inside the surface of pair creation, HISCOCK_MASS as numbers."""
+    v = np.asarray(v, dtype=float)
+    return np.where(v > 0, np.cos(np.pi * (np.clip(v, HISCOCK_V1, HISCOCK_V0) - HISCOCK_V1) / 12) ** 2, 0.0)
+
+
+def _hiscock_table():
+    v = np.linspace(HISCOCK_V1, HISCOCK_V0, 4001)
+    return v - HISCOCK_DELAY * hiscock_mass(v), v
+
+
+def hiscock_advanced(u):
+    """The advanced time v at which the outgoing ray u leaves the surface of pair creation, the
+    root of v - 18 N(v) = u between v_1 and v_0, by Newton's rule from a table of the map, which
+    rises everywhere; u_1 = -16 and u_0 = 8 are its ends."""
+    u = np.asarray(u, dtype=float)
+    table = hiscock_advanced.__dict__.setdefault("table", _hiscock_table())
+    v = np.interp(u, *table)
+    for _ in range(6):
+        angle = np.pi * (v - HISCOCK_V1) / 6
+        v = np.clip(v - (v - HISCOCK_DELAY * np.cos(angle / 2) ** 2 - u) / (1 + HISCOCK_DELAY * np.pi / 12 * np.sin(angle)),
+                    HISCOCK_V1, HISCOCK_V0)
+    return v
+
+
+def hiscock_out(u, order=0):
+    """M(u), the mass of the outgoing chart, and with order 1 or 2 its first or second derivative:
+    M = N(v(u)), M' = N'/(1 - 18 N') and M'' = N''/(1 - 18 N')^3."""
+    u = np.asarray(u, dtype=float)
+    v = hiscock_advanced(u)
+    during = (u > HISCOCK_V1 - HISCOCK_DELAY) & (u < HISCOCK_V0)
+    angle = np.pi * (v - HISCOCK_V1) / 6
+    d1, d2 = -np.pi / 12 * np.sin(angle), -np.pi ** 2 / 72 * np.cos(angle)
+    if order == 0:
+        return np.where(u <= HISCOCK_V1 - HISCOCK_DELAY, 1.0, np.where(during, hiscock_mass(v), 0.0))
+    stretch = 1 - HISCOCK_DELAY * d1
+    return np.where(during, d1 / stretch if order == 1 else d2 / stretch ** 3, 0.0)
+
+
+def hiscock_edge(u):
+    """The inner edge of the outgoing chart at the retarded time u: the collapsing shell v = 0
+    before u_1, r = 2(1 + W(exp(-(u + 12 + 4 ln 2)/4 - 1))) with W Lambert's function, and the
+    surface of pair creation R = 3 M(u) from u_1 on."""
+    from scipy.special import lambertw
+    u = np.asarray(u, dtype=float)
+    early = np.minimum(u, HISCOCK_V1 - HISCOCK_DELAY)
+    shell = 2 * (1 + lambertw(np.exp(-(early + HISCOCK_SHIFT) / 4 - 1)).real)
+    return np.where(u < HISCOCK_V1 - HISCOCK_DELAY, shell, 3 * hiscock_out(u))
+
+
+def hiscock_meets(T):
+    """The advanced time at which the slice v - r = T meets the surface of pair creation, the root
+    of v - 3N(v) = T between v_1 and v_0, for T from -1 to 8."""
+    lo, hi = HISCOCK_V1, HISCOCK_V0
+    for _ in range(80):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if mid - 3 * float(hiscock_mass(mid)) < T else (lo, mid)
+    return 0.5 * (lo + hi)
+
+
+def hiscock_outer_time(T):
+    """The u + r of the slice outside the surface of pair creation that meets the slice v - r = T
+    on it: there u = v - 18N and r = 3N, so u + r = v - 15N(v) at v = hiscock_meets(T). From T = 8
+    on, when the hole is gone, it is T itself."""
+    if T >= HISCOCK_V0:
+        return T
+    v = hiscock_meets(T)
+    return v - 15 * float(hiscock_mass(v))
+
+
+class hiscock_m_out(sp.Function):
+    """M(u) of Hiscock's outgoing chart, a declared function a row may name: sympy differentiates
+    it by hiscock_out's own derivatives, and lambdify evaluates it with hiscock_out."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(hiscock_out)
+
+    def fdiff(self, argindex=1):
+        return hiscock_dm_out(self.args[0])
+
+
+class hiscock_dm_out(sp.Function):
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(lambda u: hiscock_out(u, 1))
+
+    def fdiff(self, argindex=1):
+        return hiscock_d2m_out(self.args[0])
+
+
+class hiscock_d2m_out(sp.Function):
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(lambda u: hiscock_out(u, 2))
+
+
+class hiscock_r_out(sp.Function):
+    """The inner edge of Hiscock's outgoing chart, hiscock_edge, as a declared function."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(hiscock_edge)
+
+
 # Functions a row's `functions` may name beside the elementary ones, each a sympy function
 # that carries its own derivative and its own numbers.
 DECLARED_FUNCTIONS = {"teo_rho": teo_rho, "teo_sigma": teo_sigma, "ori_mass_behind": ori_mass_behind,
-                      "ori_influx_behind": ori_influx_behind, "ori_shell_behind": ori_shell_behind}
+                      "ori_influx_behind": ori_influx_behind, "ori_shell_behind": ori_shell_behind,
+                      "hiscock_m_out": hiscock_m_out, "hiscock_dm_out": hiscock_dm_out,
+                      "hiscock_d2m_out": hiscock_d2m_out, "hiscock_r_out": hiscock_r_out}
 TEO_RADIUS = "b_0*teo_rho(l/b_0)"
 TEO_RADIUS_INPUT = ("$r(l)$ from Teo's $l = \\pm\\left(\\sqrt{r(r - b_0)} + b_0\\ln\\left(\\sqrt{r/b_0} + "
                     "\\sqrt{r/b_0 - 1}\\right)\\right)$, inverted by Newton's method.")
@@ -1331,6 +1465,38 @@ DIAGRAMS = [
             lines=(("event", "x0", "0", "the Cauchy horizon, $v = 0$, where the mass function diverges"),
                    ("surface", "x0", repr(MI_V2_AT_V0), "the tail begins")),
             marked=(("shell", {"x0": repr(MI_V2_AT_V0), "r": "1"}, 1, "the shell"),)),
+    # Hiscock's evaporating black hole, HISCOCK_MASS: the ingoing chart inside the surface of pair
+    # creation, hatched beyond it, with the event horizon traced back from the last point of the
+    # singularity; the outgoing chart beyond the surface; the simplest model, two shells; and the
+    # flat space left at the end. Outgoing rays converge on the event horizon toward the past, so it
+    # is traced back from the end, by scipy from r = 0.0007 at v = 7.9, inside the apparent horizon
+    # r = 2N = 0.0014, to HISCOCK_HORIZON at v = 7.75, where r = 0.0077, and drawn from there to the
+    # past only: rays part from it toward the future, and its last stretch lies on the edge r = 0.
+    Diagram("hiscock", "ingoing", "history", "forming and evaporating", ("v", "r"), (0, 5, -5, 8.5),
+            "$r/m_0$", "$(v - r)/m_0$", {}, EQUATOR, to_display=FINKELSTEIN_IN, tau="v - r", areal=True,
+            functions={"m": HISCOCK_MASS, "R": HISCOCK_EDGE}, input=HISCOCK_INPUT, cones=(9, 14),
+            singular_runs=True,
+            lines=(("shell", "x0", "0", "the shell of light, $v = 0$"),),
+            where="3*cos(pi*(Min(Max(v, 2), 8) - 2)/12)**2 + 1000*Heaviside(2 - v) - r",
+            marked=(("event", HISCOCK_HORIZON, 1, "the event horizon", "past"),)),
+    Diagram("hiscock", "ingoing", "shells", "two shells", ("v", "r"), (0, 5, -5, 8.5),
+            "$r/m_0$", "$(v - r)/m_0$", {}, EQUATOR, to_display=FINKELSTEIN_IN, tau="v - r", areal=True,
+            functions={"m": "Heaviside(v) - Heaviside(v - 6)", "R": "1000"}, input=HISCOCK_SHELLS_INPUT,
+            cones=(9, 14), singular_runs=True,
+            lines=(("shell", "x0", "0", "the shells, $v = 0$ and $v = v_1$"),
+                   ("shell", "x0", "6", "the shells, $v = 0$ and $v = v_1$")),
+            marked=(("event", {"x0": "6 - 1/1000", "r": "sqrt(2/1000)"}, 1, "the event horizon", "past"),
+                    ("mark", {"x0": "6 + 1/1000", "r": "1/2000"}, 1, "the Cauchy horizon", "future"))),
+    Diagram("hiscock", "outgoing", "history", "the radiation leaving", ("u", "r"), (0, 9, -18, 12),
+            "$r/m_0$", "$(u + r)/m_0$", {}, EQUATOR, to_display=FINKELSTEIN_OUT, tau="u + r", areal=True,
+            functions={"m": "hiscock_m_out(u)", "R": "hiscock_r_out(u)"}, input=HISCOCK_OUT_INPUT, cones=(9, 15),
+            where="r - hiscock_r_out(u)", singular_where_claimed=True,
+            lines=(("shell", "x0", "-16", "the first and the last of the radiation, $u_1$ and $u_0$"),
+                   ("shell", "x0", "8", "the first and the last of the radiation, $u_1$ and $u_0$"))),
+    Diagram("hiscock", "flat", "after", "after the hole", ("u", "v"), (0, 4, 8, 12),
+            "$(v - u)/2m_0$", "$(u + v)/2m_0$", {}, EQUATOR, to_display=NULL_TO_TR, tau="u + v", areal=True,
+            where="u - 8", input=HISCOCK_FLAT_INPUT,
+            lines=(("mark", "x0", "8", "the Cauchy horizon, $u = u_0$"),)),
     *[Diagram("topological_black_hole", "static", view, label, ("t", "r"), box, "$r/L$", "$ct/L$", params,
               TBH_POINT, orient="ingoing") for view, label, params, box in TBH_CASES],
     # Against v - r the static moment t = 0 of the flat hole, v = r_*, lies below -1.5 L, and against
@@ -3312,6 +3478,48 @@ CAPTIONS = {
         "trapped. Its outer part is the outer trapping horizon and its inner part the inner one. An outgoing "
         "ray inside the curve loses $r$, and gains it again once the curve has closed or its inner part has "
         "swept past the ray. Each such ray reaches infinity, so this spacetime has no event horizon.",
+    ],
+    ("hiscock", "ingoing", "history"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of a black hole that forms and evaporates, drawn "
+        "with $v - r$ as the vertical axis so that the ingoing rays, $v$ constant, run at 45°, each point in the "
+        "plane a 2-sphere of area $4\\pi r^2$. A shell of light of mass $m_0$ falls in along $v = 0$ and makes the "
+        "hole, and from $v_1 = 2\\,m_0$ to $v_0 = 8\\,m_0$ negative energy falls in and the mass drops to zero. "
+        "The chart ends on the surface of pair creation, $R = 3m$, which shrinks with the mass onto the centre at "
+        "$v_0$.",
+        "On the apparent horizon $r = 2m$, where $g^{rr}$ vanishes, the outgoing rays stand still, and inside it "
+        "both edges of every future cone point to smaller $r$. While the mass falls it moves inward as a timelike "
+        "curve. The event horizon is the outgoing ray that reaches the centre just as the mass runs out: it leaves "
+        "the centre at $v = -3.41\\,m_0$, before the shell arrives, and stays inside the apparent horizon to "
+        "the end, so light that starts between the two escapes. The singularity $r = 0$, where the Kretschmann "
+        "scalar $48m^2/r^6$ diverges, lasts from $v = 0$ to $v_0$.",
+    ],
+    ("hiscock", "ingoing", "shells"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the simplest of the models, drawn with "
+        "$v - r$ as the vertical axis. A shell of light of mass $m_0$ falls in along $v = 0$ and a shell of mass "
+        "$-m_0$ follows along $v_1 = 6\\,m_0$, with flat space before the first, Schwarzschild's metric between "
+        "them, and flat space again after the second.",
+        "The event horizon is the outgoing ray that reaches the centre as the second shell does, and the "
+        "singularity ends there. Inside $r = 2m_0$ an outgoing ray loses $r$, and one that is still above the "
+        "event horizon when the second shell passes escapes into the flat space beyond. The outgoing ray from "
+        "the last point of the singularity is the Cauchy horizon, along which Hiscock found the energy flux of a "
+        "quantum field diverging.",
+    ],
+    ("hiscock", "outgoing", "history"): [
+        "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the surface of pair creation, drawn "
+        "with $u + r$ as the vertical axis so that the outgoing rays, $u$ constant, run at 45°. Each outgoing ray "
+        "carries the mass $m(u)$ it left the surface with, $m_0$ until $u_1 = -16\\,m_0$ and zero from "
+        "$u_0 = 8\\,m_0$, and the radiation between them has positive energy. The chart begins on the collapsing "
+        "shell before $u_1$ and on the surface $R = 3m$ after it.",
+        "The ray $u_0$ is the Cauchy horizon, the first light from the last point of the singularity, and beyond "
+        "it the plane is Minkowski's, with a regular centre. Everywhere on the plane $g^{rr} = 1 - 2m/r$ is "
+        "positive, so no sphere here is trapped. A distant observer reads the mass off the rays as they arrive "
+        "and sees it fall to zero with $dm/du \\to 0$.",
+    ],
+    ("hiscock", "flat", "after"): [
+        "The plane of $u$ and $v$ ($\\theta = \\pi/2$, $\\phi = 0$) after the hole has gone, drawn with "
+        "$r = (v - u)/2$ across and $(u + v)/2$ up, so that every ray runs at 45°. The chart begins on the Cauchy "
+        "horizon $u_0 = 8\\,m_0$, the outgoing ray from the last point of the singularity, and its left edge is "
+        "the centre $v = u$, a regular centre once more.",
     ],
     **{("topological_black_hole", system, "flat"): [
         "The plane of $t$ and $r$ (" + at + ") of the flat hole ($k = 0$, $\\mu = L$), the same at every "
@@ -7088,7 +7296,7 @@ class Plot:
         Z = self.c.fn[name](x0, r).astype(float)
         if keep is not None:
             Z = np.where(keep(x0, r), Z, np.nan)
-        if self.c.surface is not None:
+        if self.c.surface is not None or self.c.spec.where:
             Z = np.where(self.c.outside(x0, r), np.nan, Z)
         Z = np.where(np.isfinite(Z), Z, np.nan)
         lines = contourpy.contour_generator(UU, VV, Z, line_type="Separate").lines(0.0)
@@ -8744,6 +8952,12 @@ CLOSED_FORMS = {
         (lambda u, x: u + 2 * _witten_xstar(x), lambda u, x: u, lambda u, x: np.abs(x) > 0.02),
     # Roberts's collapse: the advanced and the retarded null coordinate v and u, in each chart's own coordinates.
     **{("roberts", "double_null", case): (lambda u, v: v, lambda u, v: u, None) for case in ROBERTS_CASES},
+    # Hiscock's evaporating hole: an ingoing ray keeps v and an outgoing one u, whatever the mass
+    # does; the other family of each Vaidya chart has no closed form for the declared mass.
+    ("hiscock", "ingoing", "history"): (lambda v, r: v, None, None),
+    ("hiscock", "ingoing", "shells"): (lambda v, r: v, None, None),
+    ("hiscock", "outgoing", "history"): (None, lambda u, r: u, None),
+    ("hiscock", "flat", "after"): (lambda u, v: v, lambda u, v: u, None),
     **{("roberts", "advanced", case): (lambda v, r: v, lambda v, r, p=float(Fraction(p)): (1 + p) * v - 2 * r, None)
        for case, (_, p) in ROBERTS_CASES.items()},
     **{("roberts", "areal", case):

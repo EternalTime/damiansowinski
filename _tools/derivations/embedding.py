@@ -202,7 +202,8 @@ class Slice:
         held_at = {names[k]: sp.sympify(v) for k, v in fixed.items()}
         moved = {names[k]: sp.sympify(v, locals=names) for k, v in along.items()}
         held_at.update(moved)
-        funcs = {R.parameters[k]: sp.sympify(v, locals=names) for k, v in (functions or {}).items()}
+        funcs = {R.parameters[k]: sp.sympify(v, locals={**nr.DECLARED_FUNCTIONS, **names})
+                 for k, v in (functions or {}).items()}
         self.numeric = bool(numeric)
         funcs.update({R.parameters[k]: numeric_function(k, f, df)(R.symbol[x]) for k, (f, df) in (numeric or {}).items()})
 
@@ -5101,6 +5102,130 @@ def bonnor_vaidya(ck, src):
                        "$v > 0$, as in the conformal diagram.")]
 
 
+def hiscock(ck, src):
+    """Hiscock's evaporating black hole as its spacetime diagrams declare it, null_rays.HISCOCK_MASS,
+    in units of the mass m_0 of the shell of light that makes the hole. A slice of constant v or of
+    constant u is null, so a moment is a slice of constant v - r = T inside the surface of pair
+    creation, on which the ingoing chart pulls back to (1 + 2m/r) dr^2 + r^2 dphi^2 with m taken
+    at v = T + r, and, from T = -1 on, when the surface exists, a slice of constant u + r = T'
+    outside it, on which the outgoing chart pulls back to the same form with m taken at u = T' - r.
+    The two meet on the surface, the circle r = R = 3N(v) with v - 3N(v) = T, where u = v - 18N,
+    so T' = v - 15N(v); the mass is the same on both sides of it, so the profile dz/dr =
+    sqrt(2m/r) has no fold there. Before T = -1 the whole slice lies in flat space and in
+    Schwarzschild's metric, and from T = 8 on it is the slice u + r = T of the outgoing chart, flat
+    inside the last ray u_0 = 8, the circle r = (T - 8)/2."""
+    top = 6.0
+    size = 2 * top
+    name = "Hiscock"
+    v1, v0 = nr.HISCOCK_V1, nr.HISCOCK_V0
+    rim = ("edge", "the surface runs on to $r \\to \\infty$")
+    axis = ("axis", "the centre $r = 0$, where space is flat")
+    apex = ("apex", "the singularity $r = 0$, where the surface closes in a spike")
+
+    def moment(T):
+        where = f"{name}, v - r = {T:g}"
+        rings = [(r, "r", None) for r in (2.0, 4.0, top)]
+        shell = [(-T, "surface", None)] if 0 < -T < top else []
+        if T < v1 - 3:
+            # No surface of pair creation yet: flat inside the shell, Schwarzschild's metric outside.
+            sl = Slice(src, "hiscock", "ingoing", "r", "\\phi", {"theta": "pi/2"}, {},
+                       {"m": "Heaviside(v)", "R": "1000"}, along={"v": f"{T!r} + r"})
+            marks = rings + shell + ([(2.0, "horizon", None)] if T > -2 else [])
+            whole = Piece("whole", "sheet", sl, 0.0, top, 0.0, 1, (apex if T >= 0 else axis, rim),
+                          [m for m in marks if m[1] != "r" or m[0] != 2.0 or T <= -2], size)
+            pieces, edge = [whole], None
+        elif T < v0:
+            vs = nr.hiscock_meets(T)
+            N = float(nr.hiscock_mass(vs))
+            edge, outer = 3 * N, vs - 15 * N
+            inside = Slice(src, "hiscock", "ingoing", "r", "\\phi", {"theta": "pi/2"}, {},
+                           {"m": nr.HISCOCK_MASS, "R": nr.HISCOCK_EDGE}, along={"v": f"{T!r} + r"})
+            outside = Slice(src, "hiscock", "outgoing", "r", "\\phi", {"theta": "pi/2"}, {},
+                            {"m": "hiscock_m_out(u)", "R": "hiscock_r_out(u)"}, along={"u": f"{outer!r} - r"})
+            # The apparent horizon on this slice, r = 2N(T + r), inside the surface of pair creation.
+            low = max(0.0, -T) + 1e-9
+            grid = np.linspace(low, edge, 2000)
+            vals = grid - 2 * nr.hiscock_mass(T + grid)
+            horizon = []
+            for a, b, fa, fb in zip(grid[:-1], grid[1:], vals[:-1], vals[1:]):
+                if fa * fb < 0:
+                    for _ in range(80):
+                        mid = 0.5 * (a + b)
+                        a, b = (mid, b) if (mid - 2 * float(nr.hiscock_mass(T + mid))) * fa > 0 else (a, mid)
+                    horizon.append((0.5 * (a + b), "horizon", None))
+            first = [(outer + 16, "surface", None)] if edge < outer + 16 < top else []
+            knots = [k for k in (-T, v1 - T) if 0 < k < edge]
+            a = Piece("inside", "sheet", inside, 0.0, edge, 0.0, 1,
+                      (apex if T >= 0 else axis, ("join", "the surface of pair creation")),
+                      [m for m in shell + horizon if m[0] < edge] + [(edge, "wall", None)], size, knots=knots)
+            b = Piece("outside", "sheet", outside, edge, top, 0.0, 1, (("join", "the surface of pair creation"), rim),
+                      [m for m in rings if m[0] > edge] + first, size, knots=[k for k in (outer + 16,) if edge < k < top])
+            a.z = a.z - a.z[-1] + b.z[0]
+            pieces = [a, b]
+            ck.add(f"{where}, the two charts meet on the surface of pair creation: one point",
+                   float(np.max(np.abs(np.array(a.at(edge)) - b.at(edge)))), JOIN)
+            ck.add(f"{where}, the mass is the same on both sides of the surface",
+                   abs(float(nr.hiscock_out(outer - edge)) - N), 1e-12)
+        else:
+            sl = Slice(src, "hiscock", "outgoing", "r", "\\phi", {"theta": "pi/2"}, {},
+                       {"m": "hiscock_m_out(u)", "R": "hiscock_r_out(u)"}, along={"u": f"{T!r} - r"})
+            last = (T - v0) / 2
+            marks = rings + [(r, "surface", None) for r in (last, T + 16) if 0 < r < top]
+            whole = Piece("whole", "sheet", sl, 0.0, top, 0.0, 1, (axis, rim), marks, size,
+                          knots=[k for k in (last,) if 0 < k < top])
+            pieces, edge = [whole], None
+            if last >= top:
+                ck.plane(f"{where}, no mass on the slice", sl, np.linspace(1e-3, top, 200))
+        # The rim of the drawing, r = 6 m_0, stands at z = 0 at every moment.
+        shift = -pieces[-1].z[-1]
+        for piece in pieces:
+            piece.z = piece.z + shift
+
+        beyond = nr.hiscock_outer_time(T) if edge is not None else None
+
+        def mass(r, T=T, edge=edge, beyond=beyond):
+            """The mass on the slice at the radius r, written out from the declared model."""
+            if T < v1 - 3:
+                return 1.0 if T + r > 0 else 0.0
+            if T >= v0:
+                return float(nr.hiscock_out(T - r))
+            if r <= edge:
+                return float(nr.hiscock_mass(T + r))
+            return float(nr.hiscock_out(beyond - r))
+
+        def height(r, piece):
+            out = []
+            for x in np.atleast_1d(r):
+                cuts = sorted(k for k in {-T, v1 - T, (T - v0) / 2, edge or 0.0} if x < k < top)
+                out.append(-quad(lambda y: math.sqrt(2 * mass(y) / y), x, top, points=cuts or None,
+                                 epsabs=1e-11, epsrel=1e-11, limit=400)[0])
+            return np.array(out)
+        for piece in pieces:
+            ck.form(f"{where}, {piece.id}, against the quadrature of sqrt(2m/r)", piece,
+                    lambda r, piece=piece: height(r, piece), size)
+            ck.isometry(f"{where}, {piece.id}", piece)
+        return Surface(pieces, label=f"$v - r = {T:g}\\,m_0$", time=T)
+
+    # A frame every m_0/4 of T, which holds each moment of the flat views.
+    frames = [moment(-5.0 + k / 4) for k in range(65)]
+    surfaces = [frames[k] for k in (0, 12, 24, 36, 48, 64)]
+    fig = movie_figure(frames, {"sheet": "cover"}, size)
+    fig.legend("fill", "cover", "the slice of constant $v - r$ inside the surface of pair creation and of constant "
+                                "$u + r$ outside it")
+    fig.legend("line", "r", "$r$ constant, at $2$, $4$ and $6\\,m_0$")
+    fig.legend("line", "surface", "the shell of light $v = 0$, and the first and the last of the outgoing radiation, "
+                                  "$u_1$ and $u_0$")
+    fig.legend("line", "wall", "the surface of pair creation, $r = R$")
+    fig.legend("line", "horizon", "the apparent horizon $r = 2m$, where $g^{rr}$ vanishes")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("history", "Forming and evaporating", "$m_0$", surfaces, fig.done(),
+                 movie=movie(frames, "$v - r$", [f.time for f in frames]),
+                 settings="$m_0 = 1$, the mass of the shell and the unit of every length; each moment is a slice of "
+                          "constant $v - r$ inside the surface of pair creation and, from $v - r = -m_0$ on, of "
+                          "constant $u + r$ outside it, named by its $v - r$.",
+                 input=nr.HISCOCK_INPUT + " " + nr.HISCOCK_OUT_INPUT)]
+
+
 def photon_rocket(ck, src):
     """Kinnersley's rocket through the burn its spacetime diagrams declare, in units of the mass
     m_0 it starts with: the surface theta = pi/2 of the rectilinear chart, the rays that leave
@@ -9741,6 +9866,7 @@ DRAWN = {
     "siklos": siklos,
     "hayward": hayward,
     "mass_inflation": mass_inflation,
+    "hiscock": hiscock,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "vaidya": vaidya,
     "bonnor_vaidya": bonnor_vaidya,
@@ -10580,6 +10706,20 @@ CAPTIONS = {
         "$R = q^2/2M = 0.46\\,M$ it is gone: there the energy density of the shell is zero, and the last "
         "moment is drawn. The event horizon forms at the centre at $v = -2.56\\,M$ and grows through the flat "
         "interior to meet the shell at $r_+ = 1.28\\,M$, where it stays.",
+    ],
+    ("hiscock", "history"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of space around a black hole that forms and evaporates, from "
+        "$v - r = -5\\,m_0$ to $11\\,m_0$, each moment drawn as a surface in flat space with every distance along "
+        "it the metric distance. A slice of constant $v$ or of constant $u$ is a light cone, so the moments are "
+        "slices of constant $v - r$ inside the surface of pair creation and of constant $u + r$ outside it, "
+        "spacelike everywhere, and both carry the metric $(1 + 2m/r)\\,dr^2 + r^2d\\phi^2$ with $m$ taken on each "
+        "circle. The mass is the same on the two sides of the surface of pair creation, so the slope "
+        "$dz/dr = \\sqrt{2m/r}$ is too, and nothing folds there.",
+        "Inside the shell of light the surface is a flat disc, and once the shell has reached the centre it closes "
+        "in a spike at the singularity. While the hole evaporates the mass is least on the surface of pair "
+        "creation, which shrinks onto the centre at $v - r = 8\\,m_0$ and takes the spike with it. After that a "
+        "flat disc grows from the centre at half the speed of light in $v - r$, its rim the last ray $u_0$, and "
+        "the radiation ahead of it carries the curvature away.",
     ],
     ("vaidya", "shell"): [
         "The equatorial plane ($\\theta = \\pi/2$) of space around a shell of radiation falling inward, from "

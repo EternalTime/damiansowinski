@@ -395,7 +395,8 @@ class Plane:
         self.subs = {R.c: 1}
         self.subs.update({R.parameters[k]: sp.sympify(v) for k, v in (params or {}).items()})
         self.fixed = {self.names[k]: sp.sympify(v) for k, v in (fixed or {}).items()}
-        self.functions = {name: sp.sympify(text, locals=self.names) for name, text in (functions or {}).items()}
+        self.functions = {name: sp.sympify(text, locals={**nr.DECLARED_FUNCTIONS, **self.names})
+                          for name, text in (functions or {}).items()}
         self.axis = (self.names[axis[0]], sp.sympify(axis[1])) if axis else None
         self.numeric = {}
         for name in numeric:
@@ -13622,6 +13623,345 @@ def vaidya(ck, src):
     return [v]
 
 
+# ---------------------------------------------------------------- Hiscock
+
+HISCOCK_STEP = 0.002
+
+
+def hiscock_phi(x):
+    """The compactification of both null labels of Hiscock's hole: arctan((x + 1)/3) up to x = 0,
+    where the shell reaches the centre, and from there Phi(0) + (pi/2 - Phi(0)) x/(x + 12), which
+    rises to pi/2 slowly enough to leave room for the evaporation, whose last ingoing ray comes
+    from x = 23.8 at past null infinity. Only advanced times at past null infinity are positive."""
+    x = np.asarray(x, dtype=float)
+    at0 = math.atan(1 / 3)
+    late = np.maximum(x, 0.0)
+    return np.where(x <= 0, np.arctan((np.minimum(x, 0.0) + 1) / 3), at0 + (HALF - at0) * late / (late + 12))
+
+
+def _hiscock_march(x, r, stop, slope, h=HISCOCK_STEP):
+    """r carried from each x back to `stop` along dr/dx = slope(x, r), by the classical Runge-Kutta
+    rule in steps that end on the multiples of HISCOCK_STEP, so that events side by side take the
+    same steps and their difference keeps the rule's order."""
+    x, r = np.broadcast_arrays(np.asarray(x, dtype=float), np.asarray(r, dtype=float))
+    x, r = x.copy(), r.copy()
+    for _ in range(int(40 / h)):
+        on = x > stop + 1e-13
+        if not on.any():
+            break
+        xa, ra = x[on], r[on]
+        step = np.minimum(xa - (np.ceil(xa / h - 1e-9) - 1) * h, xa - stop)
+        k1 = slope(xa, ra)
+        k2 = slope(xa - step / 2, ra - step * k1 / 2)
+        k3 = slope(xa - step / 2, ra - step * k2 / 2)
+        k4 = slope(xa - step, ra - step * k3)
+        x[on], r[on] = xa - step, ra - step * (k1 + 2 * k2 + 2 * k3 + k4) / 6
+    return r
+
+
+def hiscock_left_centre(v, r):
+    """The advanced time w at which the outgoing light ray through each event (v, r) of Hiscock's
+    ingoing chart left the centre of the flat space inside the shell. Before the shell, v < 0, it
+    is v - 2r. While the hole evaporates, 2 < v < 8, the ray is integrated back to v = 2 as
+    d(r^2)/dv = r - 2N, which stays smooth where r and N are both small. In Schwarzschild's metric
+    between, v - 2r - 4 ln|r/2 - 1| is constant along the ray, which meets the shell v = 0 at
+    r_0 = 2(1 + W(+-exp(-k/4 - 1))), Lambert's function with the upper sign outside r = 2 and the
+    lower inside, and w = -2 r_0."""
+    from scipy.special import lambertw
+    v, r = np.broadcast_arrays(np.asarray(v, dtype=float), np.asarray(r, dtype=float))
+    late = v > nr.HISCOCK_V1
+    y2 = _hiscock_march(np.where(late, v, nr.HISCOCK_V1), r * r, nr.HISCOCK_V1,
+                        lambda x, y: np.sqrt(np.maximum(y, 0.0)) - 2 * nr.hiscock_mass(x))
+    r2 = np.where(late, np.sqrt(np.maximum(y2, 0.0)), r)
+    v2 = np.minimum(v, nr.HISCOCK_V1)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        k = v2 - 2 * r2 - 4 * np.log(np.abs(r2 / 2 - 1))
+        r0 = np.where(r2 == 2, 2.0, 2 * (1 + lambertw(np.sign(r2 - 2) * np.exp(-k / 4 - 1)).real))
+    return np.where(v <= 0, v - 2 * r, -2 * r0)
+
+
+def hiscock_retarded(u):
+    """The same label w for the outgoing ray u of Hiscock's outgoing chart, u < u_0 = 8: before
+    u_1 = -16 the ray comes through Schwarzschild's metric from the shell, at the radius
+    null_rays.hiscock_edge, and from u_1 on it leaves the surface of pair creation at the advanced
+    time null_rays.hiscock_advanced, at r = 3N."""
+    u = np.asarray(u, dtype=float)
+    vs = nr.hiscock_advanced(np.clip(u, nr.HISCOCK_V1 - nr.HISCOCK_DELAY, nr.HISCOCK_V0))
+    return np.where(u < nr.HISCOCK_V1 - nr.HISCOCK_DELAY, -2 * nr.hiscock_edge(u),
+                    hiscock_left_centre(vs, 3 * nr.hiscock_mass(vs)))
+
+
+def hiscock_arrives(u, r):
+    """The advanced time at past null infinity of the ingoing light ray through each event (u, r)
+    of Hiscock's outgoing chart, u <= 8: the ray is integrated back to u_1 = -16 by dr/du =
+    -(1 - 2M/r)/2, in steps of 0.01, where r >= 3M and grows, and before u_1 the metric is Schwarzschild's and v = u + 2r + 4 ln(r/2 - 1) + 12 +
+    4 ln 2. This is the label every ingoing ray is drawn by: inside the surface of pair creation
+    the ray v has it where it crossed the surface, hiscock_past(v), which is v itself up to
+    v_1 = 2, and a ray of the flat space after the hole where it crossed the last ray u_0 = 8."""
+    u, r = np.broadcast_arrays(np.asarray(u, dtype=float), np.asarray(r, dtype=float))
+    first = nr.HISCOCK_V1 - nr.HISCOCK_DELAY
+    late = u > first
+    r1 = np.where(late, _hiscock_march(np.where(late, u, first), np.maximum(r, 1e-12), first,
+                                       lambda x, y: -(1 - 2 * nr.hiscock_out(x) / y) / 2, h=0.01), r)
+    u1 = np.minimum(u, first)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        return u1 + 2 * r1 + 4 * np.log(r1 / 2 - 1) + nr.HISCOCK_SHIFT
+
+
+def hiscock_past(v):
+    """The advanced time at past null infinity of the ingoing ray v of Hiscock's ingoing chart: v
+    itself until the evaporation starts at v_1 = 2, and from there to v_0 = 8 hiscock_arrives
+    where the ray crossed the surface of pair creation, at u = v - 18N and r = 3N."""
+    v = np.asarray(v, dtype=float)
+    vs = np.clip(v, nr.HISCOCK_V1, nr.HISCOCK_V0)
+    N = nr.hiscock_mass(vs)
+    return np.where(v <= nr.HISCOCK_V1, v, hiscock_arrives(vs - nr.HISCOCK_DELAY * N, 3 * N))
+
+
+def hiscock_past_flat(v):
+    """The same label for the ingoing ray v = u + 2r of the flat space after the hole, v >= 8,
+    which crossed the last ray u_0 = 8 at r = (v - 8)/2."""
+    v = np.asarray(v, dtype=float)
+    return hiscock_arrives(np.full(v.shape, nr.HISCOCK_V0), np.maximum(v - nr.HISCOCK_V0, 0.0) / 2)
+
+
+def hiscock_ends(w):
+    """The advanced time at which the outgoing ray that left the centre at w, between the event
+    horizon's w and 0, reaches the singularity r = 0: -2 r_0 - 4 ln(1 - r_0/2) with r_0 = -w/2 if
+    that is before v = 2, and otherwise by integrating d(r^2)/dv = r - 2N on from v = 2."""
+    from scipy.integrate import solve_ivp
+    out = []
+    for r0 in -np.atleast_1d(np.asarray(w, dtype=float)) / 2:
+        k = -2 * r0 - 4 * math.log(1 - r0 / 2)
+        if k <= nr.HISCOCK_V1:
+            out.append(k)
+            continue
+        from scipy.special import lambertw
+        r2 = 2 * (1 + lambertw(-math.exp(-(k - nr.HISCOCK_V1) / 4 - 1)).real)
+        hit = lambda x, y: y[0]
+        hit.terminal, hit.direction = True, -1
+        sol = solve_ivp(lambda x, y: [math.sqrt(max(y[0], 0.0)) - 2 * float(nr.hiscock_mass(x))], [nr.HISCOCK_V1, nr.HISCOCK_V0],
+                        [r2 * r2], events=hit, rtol=1e-11, atol=1e-14, max_step=0.01)
+        out.append(sol.t_events[0][0] if len(sol.t_events[0]) else nr.HISCOCK_V0)
+    return np.array(out)
+
+
+def hiscock(ck, src):
+    """Hiscock's evaporating black hole as its spacetime diagrams declare it, null_rays.HISCOCK_MASS,
+    in units of the mass m_0 of the shell of light that makes the hole, one diagram of the whole.
+
+    Every ingoing ray is drawn by its advanced time at past null infinity, v_-, and q = Phi(v_-)
+    with Phi = hiscock_phi, arctan((x + 1)/3) for x < 0. In the outgoing chart v_- is hiscock_arrives, the ray traced
+    back to Schwarzschild's region; in the ingoing chart it is hiscock_past of the coordinate v,
+    which is v itself until the evaporation starts; in the flat space after the hole it is
+    hiscock_past_flat(u + 2r). Every outgoing ray that does not start on the singularity's last
+    point or after it left the centre of the flat space inside the shell at an advanced time w,
+    hiscock_left_centre, and p = Phi(w), which puts that centre, w = v, on X = 0. The event
+    horizon is w_H = -3.412, the ray that reaches r = 0 as the mass runs out at v_0 = 8. A ray of
+    the flat space after the hole, u > 8, left the new centre at v = u, and p is q's own function
+    of u moved down, Phi(hiscock_past_flat(u)) - X_A with X_A = q_A - Phi(w_H) and q_A the q of
+    the last point of the singularity, which is continuous across the last ray u_0 = 8, the
+    Cauchy horizon, and puts the new centre on the straight line X = X_A.
+
+    Checked: each map against the published metric of its chart, region by region; the two charts
+    against each other on the surface of pair creation and where both are Schwarzschild's; the
+    maps on both sides of the shell and of the last ray; the centres; and the Kretschmann scalar,
+    which diverges on r = 0 while there is mass and is finite on both centres."""
+    name = "Hiscock"
+    Phi = hiscock_phi
+    v1, v0, first = nr.HISCOCK_V1, nr.HISCOCK_V0, nr.HISCOCK_V1 - nr.HISCOCK_DELAY
+    ingoing = Plane(src, "hiscock", "ingoing", ("v", "r"), EQUATOR, {},
+                    functions={"m": nr.HISCOCK_MASS, "R": nr.HISCOCK_EDGE})
+    outgoing = Plane(src, "hiscock", "outgoing", ("u", "r"), EQUATOR, {},
+                     functions={"m": "hiscock_m_out(u)", "R": "hiscock_r_out(u)"})
+    flat = Plane(src, "hiscock", "flat", ("u", "v"), EQUATOR, {})
+    w_h = float(hiscock_left_centre(*(float(nr.number(x)) for x in nr.HISCOCK_HORIZON.values())))
+    q8 = float(Phi(hiscock_past_flat(np.array([v0]))[0]))
+    X_A = q8 - float(Phi(w_h))
+
+    def inner(v, r):
+        return Phi(hiscock_left_centre(v, r)), Phi(hiscock_past(v)) + 0 * np.asarray(r, dtype=float)
+
+    def outer(u, r):
+        """The outgoing chart: the radiation and Schwarzschild's region before u_0 = 8, flat space after."""
+        u, r = np.broadcast_arrays(np.asarray(u, dtype=float), np.asarray(r, dtype=float))
+        before = u < v0
+        ub, rb = np.where(before, u, 0.0), np.where(before, r, 4.0)
+        ua = np.where(before, v0, u)
+        return (np.where(before, Phi(hiscock_retarded(ub)), Phi(hiscock_past_flat(ua)) - X_A),
+                np.where(before, Phi(hiscock_arrives(ub, rb)), Phi(hiscock_past_flat(ua + 2 * r))))
+
+    def after(u, v):
+        return Phi(hiscock_past_flat(u)) - X_A, Phi(hiscock_past_flat(v))
+
+    rng = ck.rng
+    n = 160
+    ck.chart(f"{name}, ingoing chart, flat inside the shell", ingoing, inner, rng.uniform(-12, -0.05, n),
+             rng.uniform(0.05, 12, n), lambda v, r: (1, -60))
+    ck.chart(f"{name}, ingoing chart, Schwarzschild's region", ingoing, inner, rng.uniform(0.05, 1.95, n),
+             rng.uniform(0.05, 12, n), lambda v, r: (1, -60))
+    vs = rng.uniform(2.05, 7.2, n)
+    ck.chart(f"{name}, ingoing chart, inside the surface of pair creation", ingoing, inner, vs,
+             rng.uniform(0.1, 0.95, n) * 3 * nr.hiscock_mass(vs), lambda v, r: (1, -60))
+    us = rng.uniform(-30, first - 0.05, n)
+    ck.chart(f"{name}, outgoing chart, before the first radiation", outgoing, outer, us,
+             nr.hiscock_edge(us) + rng.uniform(0.3, 12, n), lambda u, r: (1, 60))
+    us = rng.uniform(first + 0.05, 7.0, n)
+    ck.chart(f"{name}, outgoing chart, in the radiation", outgoing, outer, us,
+             nr.hiscock_edge(us) + rng.uniform(0.05, 12, n), lambda u, r: (1, 60))
+    ck.chart(f"{name}, outgoing chart, after the hole", outgoing, outer, rng.uniform(8.05, 20, n),
+             rng.uniform(0.05, 12, n), lambda u, r: (1, 60))
+    us = rng.uniform(8.05, 20, n)
+    ck.chart(f"{name}, double null chart, after the hole", flat, after, us, us + rng.uniform(0.1, 20, n),
+             lambda u, v: (1, 1))
+
+    # The two charts on the surface of pair creation, and where both are Schwarzschild's.
+    vs = np.linspace(2.0, 7.5, 45)
+    ck.limit(f"{name}: the two charts put the surface of pair creation at one place",
+             np.array(inner(vs, 3 * nr.hiscock_mass(vs))),
+             np.array(outer(vs - nr.HISCOCK_DELAY * nr.hiscock_mass(vs), 3 * nr.hiscock_mass(vs))), 1e-9)
+    vs, rs = rng.uniform(0.1, 1.9, 60), rng.uniform(3.2, 12, 60)
+    ck.limit(f"{name}: the two charts agree in Schwarzschild's region outside r = 3",
+             np.array(inner(vs, rs)),
+             np.array(outer(vs - 2 * rs - 4 * np.log(rs / 2 - 1) - nr.HISCOCK_SHIFT, rs)), 1e-9)
+    rs = np.linspace(0.05, 10, 60)
+    ck.limit(f"{name}: the two sides put the shell v = 0 at one place", np.array(inner(np.full_like(rs, -1e-9), rs)),
+             np.array(inner(np.full_like(rs, 1e-9), rs)), 1e-7)
+    ws = np.linspace(-12, -0.1, 40)
+    ck.limit(f"{name}: the centre inside the shell lies on X = 0", np.subtract(*inner(ws, np.zeros_like(ws))), 0 * ws, 1e-12)
+    us = np.linspace(8.1, 30, 40)
+    ck.limit(f"{name}: the centre after the hole lies on X = X_A", np.subtract(*outer(us, np.zeros_like(us))[::-1]),
+             np.full_like(us, X_A), 1e-12)
+    rs = np.linspace(0.2, 10, 30)
+    ck.limit(f"{name}: the two sides put the last ray u_0 = 8 at one place",
+             np.array(outer(np.full_like(rs, v0 - 1e-6), rs)), np.array(outer(np.full_like(rs, v0 + 1e-6), rs)), 1e-4)
+    ck.limit(f"{name}: the event horizon leaves the centre at v = -3.412 m_0", [w_h], [-3.412], 1e-3)
+    ck.limit(f"{name}: the rays just outside the event horizon leave the centre just before it",
+             [float(hiscock_retarded(7.99)) - w_h], [0.0], 1e-3)
+    ck.limit(f"{name}: the last ingoing ray of the ingoing chart is the first of the flat space after",
+             [float(hiscock_past(np.array([v0 - 1e-7]))[0])], [float(hiscock_past_flat(np.array([v0]))[0])], 1e-5)
+    ck.diverges(f"{name}: the Kretschmann scalar diverges at r = 0 while there is mass",
+                ingoing.kretschmann(np.array([0.5, 2.0, 5.0, 7.0]), np.full(4, 1e-4)),
+                ingoing.kretschmann(np.array([0.5, 2.0, 5.0, 7.0]), np.full(4, 1e-5)))
+    ck.finite(f"{name}: r = 0 before the shell is a regular centre",
+              ingoing.kretschmann(np.linspace(-9, -1, 20), np.full(20, 1e-6)))
+    ck.finite(f"{name}: r = 0 after the hole is a regular centre",
+              outgoing.kretschmann(np.linspace(8.5, 20, 20), np.full(20, 1e-6)))
+
+    # The corners: B where the shell reaches the centre, A the last point of the singularity.
+    q0, p_h = float(Phi(0.0)), float(Phi(w_h))
+    top = HALF - X_A                     # p of i+
+    S = (float(Phi(hiscock_retarded(np.array([first]))[0])), float(Phi(v1)))      # where the surface of pair creation begins
+    ws = w_h + (0.0 - w_h) * (1 - np.cos(np.linspace(0, np.pi, 160))) / 2
+    ws = ws[1:-1]
+    sing_p = np.concatenate([[p_h], Phi(ws), [q0]])
+    sing_q = np.concatenate([[q8], Phi(hiscock_past(hiscock_ends(ws))), [q0]])
+    vs = v1 + (v0 - v1) * np.linspace(0, 1, 240)[:-1] ** 1.0
+    wall_p = np.append(Phi(hiscock_left_centre(vs, 3 * nr.hiscock_mass(vs))), p_h)
+    wall_q = np.append(Phi(hiscock_past(vs)), q8)
+    hor_p = np.append(Phi(hiscock_left_centre(vs, 2 * nr.hiscock_mass(vs))), p_h)
+    hor_q = np.append(Phi(hiscock_past(vs)), q8)
+    p4 = float(Phi(-4.0))               # the ray that stands at r = 2 until the evaporation starts
+    ck.limit(f"{name}: the singularity is spacelike, v falling as w rises along it",
+             [max(float(np.max(np.diff(sing_q))), 0.0)], [0.0], 1e-6)
+    ck.limit(f"{name}: the apparent horizon starts on the ray w = -4 m_0", [hor_p[0]], [p4], 1e-9)
+
+    v = View("history", "Forming and evaporating", [-0.35, PI + 0.35, -PI - 0.25, PI - X_A + 0.35])
+    whole = ([point(-HALF, -HALF), point(q0, q0)] + [point(a, b) for a, b in zip(sing_p[::-1], sing_q[::-1])]
+             + [point(top, HALF), point(-HALF, HALF)])
+    inside = ([point(-HALF, -HALF), point(q0, q0)] + [point(a, b) for a, b in zip(sing_p[::-1], sing_q[::-1])]
+              + [point(a, b) for a, b in zip(wall_p[::-1], wall_q[::-1])] + [point(-HALF, S[1])])
+    outside = ([point(-HALF, S[1])] + [point(a, b) for a, b in zip(wall_p, wall_q)]
+               + [point(top, HALF), point(-HALF, HALF)])
+    trapped = ([point(p4, q0), point(p4, S[1])] + [point(a, b) for a, b in zip(hor_p, hor_q)]
+               + [point(a, b) for a, b in zip(sing_p, sing_q)])
+    v.fill("region", whole)
+    v.fill("cover", inside)
+    v.fill("cover2", outside)
+    v.fill("past", trapped)
+
+    back = -spread(0, np.inf, 400, 10)[::-1]
+    late = v0 + spread(0, np.inf, 400, 10)
+    for r in (0.5, 1.0, 2.0, 4.0, 8.0):
+        if r < 3:
+            v_end = v1 + 12 / np.pi * math.acos(math.sqrt(r / 3))
+            u_start = v_end - nr.HISCOCK_DELAY * r / 3
+        else:
+            v_end = v1
+            u_start = v1 - 2 * r - 4 * math.log(r / 2 - 1) - nr.HISCOCK_SHIFT
+        a = inner(back, np.full_like(back, r))
+        mid = np.linspace(1e-9, v_end, 300)
+        b = inner(mid, np.full_like(mid, r))
+        us = np.linspace(u_start, v0 - 1e-9, 500)
+        c = outer(us, np.full_like(us, r))
+        d = outer(late, np.full_like(late, r))
+        v.curve("r", np.concatenate([a[0], b[0]]), np.concatenate([a[1], b[1]]))
+        v.curve("r2", np.concatenate([c[0], d[0]]), np.concatenate([c[1], d[1]]))
+    v.segment("surface", (-HALF, q0), (q0, q0))
+    v.curve("chartedge", wall_p, wall_q)
+    v.curve("apparent", np.concatenate([[p4, p4], hor_p]), np.concatenate([[q0, S[1]], hor_q]))
+    v.segment("event", (p_h, p_h), (p_h, q8))
+    v.segment("horizon", (p_h, q8), (p_h, HALF))
+    v.segment("centre", (-HALF, -HALF), (q0, q0))
+    v.segment("centre", (p_h, q8), (top, HALF))
+    v.curve("singular", sing_p, sing_q, zig=True)
+    v.segment("scri", (top, HALF), (-HALF, HALF))
+    v.segment("scri", (-HALF, HALF), (-HALF, -HALF))
+    for pq, text, anchor, dx, dy in (((-HALF, -HALF), "$i^-$", "t", 0, 6), ((-HALF, HALF), "$i^0$", "l", 6, 0),
+                                     ((top, HALF), "$i^+$", "b", 0, -6)):
+        v.point("infinity", pq)
+        v.label(pq, text, anchor, dx=dx, dy=dy)
+    v.label((-1.15, HALF), "$\\mathscr{I}^+$", "bl", dx=4, dy=-3)
+    v.label((-HALF, -0.2), "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+    v.label((-0.6, -0.6), "$r = 0$", "r", dx=-6)
+    v.label(((p_h + top) / 2, (q8 + HALF) / 2), "$r = 0$", "r", dx=-6)
+    v.label((float(sing_p[80]), float(sing_q[80])), "$r = 0$", "b", dy=-8)
+    v.label((-1.2, q0), "the shell, $v = 0$", "tl", "small", dx=4, dy=3)
+    v.label((p_h, 0.1), "event horizon", "l", "small", dx=5)
+    v.label((p_h, (q8 + HALF) / 2), "Cauchy horizon", "tl", "small", dx=5, dy=4)
+    v.legend("cover", "the ingoing chart: flat space, Schwarzschild's metric, and the hole inside the surface of "
+                      "pair creation")
+    v.legend("cover2", "the outgoing chart: the radiation, and the flat space left after the hole")
+    v.legend("past", "the trapped region, where $g^{rr} < 0$")
+    v.legend("r", "$r$ constant, at $0.5$, $1$, $2$, $4$ and $8\\,m_0$")
+    v.legend("r2", "the same radii in the outgoing chart")
+    v.legend("surface", "the shell of light $v = 0$")
+    v.legend("chartedge", "the surface of pair creation, $R = 3m$, where the two charts meet")
+    v.legend("apparent", "the apparent horizon $r = 2m$")
+    v.legend("event", "the event horizon, from the centre at $v = -3.41\\,m_0$ to the last point of the singularity")
+    v.legend("horizon", "the Cauchy horizon, the ray $u_0$ from that point")
+    v.legend("singular", "$r = 0$ while there is mass, where the Kretschmann scalar diverges")
+    v.legend("centre", "$r = 0$ before the shell and after the hole, a regular centre")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    v.set(settings="$m_0 = 1$, the mass of the shell and the unit of every length.",
+          input=nr.HISCOCK_INPUT + " " + nr.HISCOCK_OUT_INPUT)
+    for moment in slices.moments("hiscock", "history"):
+        v.slice(moment, [hiscock_moment(moment, inner, outer)])
+    return [v]
+
+
+def hiscock_moment(moment, inner, outer):
+    """A moment of Hiscock's embedding diagram as (p, q): the slice v - r = T through the ingoing
+    chart's map over the pieces read in that chart, and the slice u + r = T' through the outgoing
+    chart's over the others, T' = T before the hole is gone made the time at which the two meet."""
+    T = moment.time
+    ps, qs = [], []
+    for system, fmap in (("ingoing", inner), ("outgoing", outer)):
+        try:
+            lo, hi = moment.reach(system, "r")
+        except ValueError:
+            continue
+        # A moment that starts on the singularity is drawn from just beside it.
+        rr = lo + (hi - lo) * np.linspace(0, 1, 400)[0 if system == "outgoing" or T < 0 or lo > 0 else 1:]
+        if system == "ingoing":
+            p, q = fmap(T + rr, rr)
+        else:
+            p, q = fmap(nr.hiscock_outer_time(T) - rr, rr)
+        ps.append(p)
+        qs.append(q)
+    return np.concatenate(ps), np.concatenate(qs)
+
+
 # ---------------------------------------------------------------- McVittie
 
 MCV_H0 = 1 / math.sqrt(15)      # H_0 r_s/c, which is Lambda r_s^2 = 1/5, the value Kottler's diagrams take
@@ -18080,7 +18420,7 @@ DRAWN = {
     "domain_wall": domain_wall,
     "randall_sundrum": randall_sundrum,
     "coleman_de_luccia": coleman_de_luccia,
-    "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "bardeen": bardeen, "mass_inflation": mass_inflation,
+    "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "hiscock": hiscock, "bardeen": bardeen, "mass_inflation": mass_inflation,
     "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "de_sitter": de_sitter,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "boulware_deser": boulware_deser, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
@@ -20472,6 +20812,21 @@ CAPTIONS = {
         "horizon, and an observer who stays there sees the shell cross $r_+$ and nothing after. Outside the shell "
         "the metric is Reissner-Nordström's, read in ingoing coordinates before the turn and in outgoing "
         "coordinates after it.",
+    ],
+    ("hiscock", "history"): [
+        "A black hole that forms from a shell of light and evaporates, each point in the diagram a 2-sphere. "
+        "Every event keeps the advanced time $v_-$ its ingoing ray had at $\\mathscr{I}^-$, and its outgoing ray "
+        "left the centre of the flat space inside the shell at the advanced time $w$. Before the shell arrives "
+        "$p = \\arctan((w + m_0)/3m_0)$ and $q$ is the same function of $v_-$, which puts that centre on the "
+        "straight line $X = 0$. A ray of the flat space left after the hole starts at the new centre, and its "
+        "$p$ is the $q$ of the ingoing ray it starts as, moved down to be continuous across the last ray $u_0$, "
+        "which puts the new centre on a second vertical line.",
+        "The event horizon is the outgoing ray that reaches $r = 0$ just as the mass runs out, the last point of "
+        "the singularity, and the ray that goes on from that point is the Cauchy horizon: every event above it has "
+        "the end of the singularity in its past. The apparent horizon stands on one ray while the hole is "
+        "Schwarzschild's and is timelike while the mass falls, so it ends inside the event horizon's future, at "
+        "the same point. The radiation crosses $\\mathscr{I}^+$ between the rays $u_1$ and $u_0$, crowded against "
+        "the Cauchy horizon by the redshift of the light that left just outside the horizon.",
     ],
     ("vaidya", "shell"): [
         "A spacetime into which a spherical shell of null dust of mass $M$ falls along $v = 0$, each point in the "

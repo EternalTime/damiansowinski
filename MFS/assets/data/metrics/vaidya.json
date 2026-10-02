@@ -99,6 +99,11 @@
       "id": "boulware_deser",
       "kind": "family",
       "text": "The black hole of Einstein-Gauss-Bonnet gravity in five dimensions. Tsutomu Kobayashi made its mass a function of $v$ in 2005, a Vaidya solution of that theory [kobayashi2005]."
+    },
+    {
+      "id": "hiscock",
+      "kind": "composite",
+      "text": "A black hole that evaporates, made of both of Vaidya's metrics. Negative energy falls in along the ingoing one and shrinks the hole, and the outgoing one carries the mass away [hiscock1981outgoing]."
     }
   ],
   "references": [
@@ -128,7 +133,8 @@
     "podolsky2005",
     "wang1997collapse",
     "poisson1989",
-    "kobayashi2005"
+    "kobayashi2005",
+    "hiscock1981outgoing"
   ],
   "coordinates": [
     {

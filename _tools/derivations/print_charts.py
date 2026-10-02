@@ -10281,6 +10281,135 @@ def gravastar_check(chart, system):
 CHARTS["gravastar"] = [lambda s=s: gravastar(s) for s in GRAVASTAR_CHARTS]
 
 
+# -- Hiscock's evaporating black hole -----------------------------------------------------
+
+HISCOCK_CHARTS = ("ingoing", "outgoing", "flat")
+
+
+def hiscock(system_id):
+    """Hiscock's evaporating black hole, Phys. Rev. D 23, 2813 and 2823 (1981), in the five
+    patches Martin-Dussaud and Rovelli write out, Class. Quantum Grav. 36, 245002 (2019), eqs.
+    (17) to (21), and Lubbe and Tod's (1) and (2), Gen. Relativ. Gravit. 41, 7 (2009): the ingoing
+    Vaidya metric with the mass a function m(v) of advanced time, which is flat space inside the
+    collapsing shell, Schwarzschild's metric while the mass is constant and the evaporating hole
+    while negative energy flows in; the outgoing Vaidya metric with the mass a function m(u) of
+    retarded time, outside the surface of pair creation r = R; and flat space in its own double
+    null coordinates, r = (v - u)/2. The units are Hiscock's, G = c = 1, with the mass a length.
+    hiscock_check holds each Vaidya chart to its one Einstein component, the flux of null dust, to
+    Schwarzschild's published metric where the mass is constant and to flat space where it
+    vanishes, and the flat chart to a vanishing Riemann tensor and to being the ingoing chart
+    without mass pulled back. hiscock.md records each chart's source and the junction."""
+    sphere = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    if system_id == "flat":
+        coords = ["u", "v", "\\theta", "\\phi"]
+        line = "ds^2 = -du\\,dv + \\dfrac{(v - u)^2}{4}" + sphere
+        probe = vm.Reader(coords, [], ())
+        return {
+            "metric_id": "hiscock",
+            "system": {"id": system_id, "name": "Flat Double Null", "coords": coords,
+                       "domains": ["u \\in (-\\infty, \\infty)", "v \\in (u, \\infty)"] + angles
+                       + ["v = u \\;\\text{(the centre)}"],
+                       "parameters": [], "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [probe.symbol["v"], probe.symbol["u"]], "flip": False},
+            "components": {"metric_components": {("u", "v"): "-\\dfrac{1}{2}", ("v", "u"): "-\\dfrac{1}{2}",
+                                                 ("\\theta", "\\theta"): "\\dfrac{(v - u)^2}{4}",
+                                                 ("\\phi", "\\phi"): "\\dfrac{(v - u)^2}{4}\\sin^2\\theta"},
+                           "inverse_metric_components": {("u", "v"): "-2", ("v", "u"): "-2"}},
+            "check": hiscock_check,
+        }
+    null, sign, edge = ("v", "+", "r \\in [0, R]") if system_id == "ingoing" else ("u", "-", "r \\in [R, \\infty)")
+    coords = [null, "r", "\\theta", "\\phi"]
+    parameters = [f"m = m({null})", f"R = R({null})"]
+    f, bare = "\\left(1 - \\dfrac{2m}{r}\\right)", "1 - \\dfrac{2m}{r}"
+    line = "ds^2 = -" + f + "d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr + r^2" + sphere
+    one = "1" if null == "v" else "-1"
+    probe = vm.Reader(coords, parameters, ())
+    r, m = probe.symbol["r"], probe.parameters["m"]
+    dm = sp.Derivative(m, probe.symbol[null])
+    marks = ["r = R \\;\\text{(the surface of pair creation)}", "r = 2m \\;\\text{(the apparent horizon)}"]
+    return {
+        "metric_id": "hiscock",
+        "system": {"id": system_id, "name": ("Ingoing" if null == "v" else "Outgoing") + " Vaidya", "coords": coords,
+                   "domains": [null + " \\in (-\\infty, \\infty)", edge] + angles
+                   + (marks if null == "v" else marks[:1]),
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": line,
+        # The rate of change of the mass stands apart from what Schwarzschild's chart has already.
+        "printer": {"lead": [dm, r, m], "factors": [m, r, dm], "flip": False,
+                    "collect": lambda poly, pr: cp.collect_by(poly, [dm], pr)},
+        "components": {"metric_components": {(null, null): "-" + f, (null, "r"): one, ("r", null): one},
+                       "inverse_metric_components": {(null, "r"): one, ("r", null): one, ("r", "r"): bare}},
+        "kretschmann": "\\dfrac{48m^2}{r^6}",
+        "check": hiscock_check,
+    }
+
+
+def hiscock_check(chart):
+    """Vaidya's metric has one Einstein component, G_vv = 2m'/r^2 in advanced time and G_uu =
+    -2m'/r^2 in retarded time, the energy density of null dust moving in or out: negative where
+    the mass falls along v and positive where it falls along u. With the mass constant each chart
+    is Schwarzschild's published Eddington-Finkelstein chart at r_s = 2m slot by slot, and without
+    mass it is flat. The flat chart has no curvature and is the ingoing chart without mass along
+    v = v, r = (v - u)/2."""
+    geo, g = chart.geo, chart.geo.g
+    if chart.coords_tex[:2] == ["u", "v"]:
+        ricci = geo.ricci_ll()
+        if any(vm.norm(ricci[a][b]) != 0 for a in range(4) for b in range(4)) or vm.norm(geo.kretschmann()) != 0:
+            raise AssertionError("hiscock: the double null chart is not flat")
+        spec = hiscock("ingoing")
+        vaidya = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+        u, v = chart.symbols[:2]
+        J = sp.Matrix([[0, 1, 0, 0], [-sp.Rational(1, 2), sp.Rational(1, 2), 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]])
+        at = {vaidya.symbols[0]: v, vaidya.symbols[1]: (v - u) / 2, vaidya.reader.parameters["m"]: 0,
+              **dict(zip(vaidya.symbols[2:], chart.symbols[2:]))}
+        pulled = J.T * vaidya.geo.g.subs(at).doit() * J
+        for i in range(4):
+            for j in range(i, 4):
+                if vm.norm(pulled[i, j] - g[i, j]) != 0:
+                    raise AssertionError(f"hiscock: the ingoing chart without mass pulled back misses the double "
+                                         f"null chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+        return
+    null = chart.coords_tex[0]
+    x0, r = chart.symbols[0], chart.reader.symbol["r"]
+    m = chart.reader.parameters["m"]
+    want = sp.zeros(4, 4)
+    want[0, 0] = (1 if null == "v" else -1) * 2 * sp.diff(m, x0) / r ** 2
+    einstein = geo.einstein_ll()
+    for a in range(4):
+        for b in range(4):
+            if vm.norm(vm._at(einstein, (a, b)) - want[a, b]) != 0:
+                raise AssertionError(f"hiscock: the Einstein tensor is not the flux of null dust in slot "
+                                     f"{chart.coords_tex[a]}{chart.coords_tex[b]}")
+    system = "eddington_finkelstein_" + ("ingoing" if null == "v" else "outgoing")
+    published = next(c for c in json.loads((METRICS / "schwarzschild.json").read_text(encoding="utf-8"))
+                     ["coordinates"] if c["id"] == system)
+    there = vm.Reader(published["coords"], [p["symbol"] for p in published["parameters"]], ())
+    mass = sp.Symbol("mass", positive=True)
+    swap = {there.symbol[n]: chart.reader.symbol[n] for n in published["coords"]}
+    swap[there.parameters["r_s"]] = 2 * mass
+    values = {tuple(e["indices"]): e["value"] for e in published["metric_components"]}
+    for i in range(4):
+        for j in range(4):
+            text = values.get((chart.coords_tex[i], chart.coords_tex[j]), "0")
+            if vm.norm(there(text).subs(swap) - g[i, j].subs(m, mass)) != 0:
+                raise AssertionError(f"hiscock: the {null} chart with a constant mass misses Schwarzschild's published "
+                                     f"metric in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    flat = cp.Chart(chart.coords_tex, [], chart_line(null))
+    if vm.norm(flat.geo.kretschmann()) != 0:
+        raise AssertionError(f"hiscock: the {null} chart without mass is not flat")
+
+
+def chart_line(null):
+    """The Vaidya chart's line element without mass, flat space in a null time and the radius."""
+    return ("ds^2 = -d" + null + "^2 " + ("+" if null == "v" else "-") + " 2\\,d" + null
+            + "\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)")
+
+
+CHARTS["hiscock"] = [lambda s=s: hiscock(s) for s in HISCOCK_CHARTS]
+
+
 # -- Siklos waves and the Kaigorodov spacetime ---------------------------------------------
 
 SIKLOS_CHARTS = ("siklos", "ozsvath_robinson_rozga", "kaigorodov", "kaigorodov_poincare", "kaigorodov_horospheric",
