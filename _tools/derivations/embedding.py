@@ -13072,7 +13072,124 @@ STATED = {}
 
 # ---------------------------------------------------------------- the tables
 
+MIRROR_HALF = 3.0               # half the width of the height's plane, in 1/kappa
+MIRROR_CENTRE = 3.5             # kappa x at the middle of it
+
+
+def moving_mirror(ck, src):
+    """The energy the mirror of Good, Anderson and Evans radiates, drawn as a height over the plane
+    of t and x to its right, at kappa = 1.
+
+    The spacetime is flat and has one dimension of space, so a moment of it is a half line and
+    there is no surface to embed; what makes it what it is is the flux of energy the mirror sends
+    to the right, which is constant along each ray u = ct - x. In the chart that brings the mirror
+    to rest the metric is C (-c^2dT^2 + dX^2) with C = 1 + 1/(kappa (X - cT)) a function of
+    U = cT - X alone, and for the vacuum of the modes of U and v, where the curvature vanishes,
+    Davies, Fulling and Unruh's (1976) formula gives
+
+        T_UU = -(hbar c^2 / 12 pi) C^(1/2) d_U^2 C^(-1/2),
+
+    which in the inertial u, with dU/du = 1/C, is T_uu = T_UU / C^2. The height is read from the
+    published g_XX of that chart by this formula and never from a closed form. It is checked
+    against Fulling and Davies's form (3/2)(p''/p')^2 - p'''/p' over 24 pi for
+    p = -W(e^(-kappa u))/kappa, and against (4.2) of Good, Anderson and Evans (2016),
+
+        F = (hbar c^2 kappa^2 / 48 pi) (4W + 1)/(W + 1)^4,   W = W(e^(-kappa u)),
+
+    which rises from zero to the thermal flux hbar c^2 kappa^2/48 pi. The plane is 0.5 <= kappa x
+    <= 6.5, -3 <= kappa ct <= 3, all of it to the right of the mirror, whose world line passes
+    kappa x = 0.45 at kappa ct = -3 and recedes; the height is 2/kappa for the thermal flux; and
+    the level line marked is the ray kappa u = ln 2 - 1/2 of their (4.5), on which the flux is
+    16/27 of its last value and rising fastest. moving_mirror.md is the derivation."""
+    from scipy.special import lambertw
+    src.note("moving_mirror", "collapse", FIELDS)
+    _, entry, R = nr.load("moving_mirror", "collapse")
+    g = nr.published_matrix(R, entry, "metric_components")
+    T, X, kappa = R.symbol["T"], R.symbol["X"], R.parameters["kappa"]
+    ck.exact("Moving mirror: the published metric is a factor times the flat metric of T and X",
+             sp.simplify(g[0, 0] + g[1, 1]) == 0 and g[0, 1] == 0)
+    U = sp.Symbol("U", negative=True)
+    factor = sp.simplify(g[1, 1].subs({R.c: 1, kappa: 1}).subs(X, T - U))
+    ck.exact("Moving mirror: the factor depends on cT - X alone", T not in factor.free_symbols)
+    # 24 pi T_uu, by Davies, Fulling and Unruh's formula, over the thermal value kappa^2/2.
+    flux = sp.simplify(-2 * sp.sqrt(factor) * sp.diff(1 / sp.sqrt(factor), U, 2) / factor ** 2) * 2
+    of_U = sp.lambdify(U, flux, "numpy")
+
+    def W(u):
+        return lambertw(np.exp(-np.asarray(u, dtype=float))).real
+
+    def ratio(u):
+        """The flux on the ray u over the thermal flux, from the published factor at U = -W(e^(-u))."""
+        return of_U(-W(u))
+
+    uu = np.linspace(-12, 8, 2001)
+    w = W(uu)
+    ck.add("Moving mirror: the flux of the published factor is (4W + 1)/(W + 1)^4 of the thermal flux",
+           float(np.max(np.abs(ratio(uu) - (4 * w + 1) / (w + 1) ** 4))), 1e-12)
+    # Fulling and Davies's form, with p = -W(e^(-u)): p' = W/(1 + W), and so on by W' = -W/(1 + W).
+    s = sp.Symbol("s", real=True)
+    p = -sp.LambertW(sp.exp(-s))
+    schwarzian = sp.lambdify(s, 2 * (sp.Rational(3, 2) * (sp.diff(p, s, 2) / sp.diff(p, s)) ** 2
+                                     - sp.diff(p, s, 3) / sp.diff(p, s)), nr.numeric_modules(p))
+    inner = np.linspace(-8, 6, 701)
+    ck.add("Moving mirror: it is (3/2)(p''/p')^2 - p'''/p' for p = -W(e^(-u))",
+           float(np.max(np.abs(ratio(inner) - schwarzian(inner)))), 1e-9)
+    ck.add("Moving mirror: the flux rises from zero, as 4/W^3 far in the past", float(ratio(np.array(-40.0))), 1e-4)
+    ck.add("Moving mirror: and settles to the thermal flux", abs(float(ratio(np.array(40.0))) - 1), 1e-12)
+    ck.exact("Moving mirror: the flux is nowhere negative and rises all the way",
+             bool(np.all(ratio(uu) >= 0) and np.all(np.diff(ratio(uu)) > 0)))
+    steepest = math.log(2) - 0.5
+    ck.add("Moving mirror: on the ray u = ln 2 - 1/2 the flux is 16/27 of the thermal flux",
+           abs(float(ratio(np.array(steepest))) - 16 / 27), 1e-12)
+    rate = np.gradient(ratio(uu), uu)
+    ck.add("Moving mirror: and rises fastest there", abs(float(uu[np.argmax(rate)]) - steepest), 0.011)
+
+    top = MIRROR_HALF
+    size = 2 * top
+    # The mirror lies to the left of the plane at every moment of it.
+    tt = np.linspace(-top, top, 601)
+    mirror = -tt - lambertw(2 * np.exp(-2 * tt)).real / 2
+    ck.exact("Moving mirror: the whole plane lies to the right of the mirror",
+             bool(np.all(mirror < MIRROR_CENTRE - top)))
+
+    # The drawing's X runs along ct and its Y along x from the middle of the plane, away from the eye,
+    # so that the late rays, which carry the most, pass nearest.
+    def height(Xd, Yd):
+        return 2 * ratio(np.asarray(Xd, dtype=float) - (np.asarray(Yd, dtype=float) + MIRROR_CENTRE))
+    lines = [-top + n for n in range(7)]
+    plane = GridPiece("plane", "sheet", "cartesian", lines, lines, height, "moving_mirror", "collapse",
+                      "the plane runs on to the right, and to the left as far as the mirror", size,
+                      {"u": lines[1:-1], "v": lines[1:-1]})
+    Xn, Yn = plane.plane()
+    ck.add("Moving mirror: the height at every node is twice the flux over the thermal flux",
+           float(np.max(np.abs(plane.Z - height(Xn, Yn)))), 1e-7)
+    ck.add("Moving mirror: every triangle of the grid lies on the height, in space", plane.sag() / size, GRID_SAG)
+    found = level_curves(plane, 32 / 27)
+    ck.exact("Moving mirror: the flux is 16/27 of the thermal flux on one line across the plane",
+             len(found) == 1 and not found[0][1])
+    ray = finely(found[0][0], size / 360)
+    ck.add("Moving mirror: that line is the ray u = ln 2 - 1/2, to the triangles' height",
+           float(np.max(np.abs(ray[:, 0] - ray[:, 1] - MIRROR_CENTRE - steepest))), 5 * GRID_SAG * size)
+    ck.on_piece("Moving mirror, the ray", plane, ray)
+    surface = Surface([plane], curves=[Curve(plane, "path", ray)])
+    fig = figure_of([surface], {"sheet": "cover"}, size, HEIGHT_CAMERA)
+    fig.legend("fill", "cover", "the flux of energy to the right as a height over the plane of $t$ and $x$")
+    fig.legend("line", "grid", "$x$ constant and $ct$ constant, every $1/\\kappa$")
+    fig.legend("line", "path", "the ray $\\kappa u = \\ln 2 - 1/2$, where the flux is $16/27$ of the thermal flux and "
+                               "rising fastest")
+    return [view("flux", "The radiation", "$1/\\kappa$", [surface], fig.done(),
+                 settings="$\\kappa = 1$, with $1/\\kappa$ the unit of every length; the plane is "
+                          "$-3 \\le \\kappa ct \\le 3$ across and $0.5 \\le \\kappa x \\le 6.5$ away from the eye.",
+                 input="The mirror of Good, Anderson, and Evans, $z = -ct - \\mathrm{W}(2e^{-2\\kappa ct})/2\\kappa$ "
+                       "with $\\mathrm{W}$ Lambert's function, which lies to the left of the plane throughout.",
+                 height="$F$ is the flux of energy along the ray $u = ct - x$, drawn at a height of $2/\\kappa$ for the "
+                        "thermal flux $\\hbar c^2\\kappa^2/48\\pi$.",
+                 stops=["A moment of constant $t$ itself, which is a half line, the part of the $x$ axis to the "
+                        "right of the mirror."])]
+
+
 DRAWN = {
+    "moving_mirror": moving_mirror,
     "aichelburg_sexl": aichelburg_sexl,
     "hotta_tanaka": hotta_tanaka,
     "schwarzschild": schwarzschild,
@@ -15156,6 +15273,17 @@ CAPTIONS = {
         "other. In the right one the cone is turned by $30°$ and in the left one by as much the other way, more "
         "toward the inner walls and less toward the outer. A rider in the right box is on her way up the circle; "
         "in the left box she has been over the top, and her future points down in $t$.",
+    ],
+    ("moving_mirror", "flux"): [
+        "The energy that the mirror of Good, Anderson, and Evans radiates, drawn as a height over the plane of $t$ "
+        "and $x$ to its right ($\\kappa = 1$), the height the flux $F$ alone ($2/\\kappa$ for the thermal flux "
+        "$\\hbar c^2\\kappa^2/48\\pi$). The flux is the same all along a ray $u = ct - x$, so the surface is one "
+        "profile carried along the rays, which run from the near left to the far right.",
+        "Early rays left a mirror that was nearly at rest and carry almost nothing, so the far left of the plane "
+        "lies flat. The flux is $\\tfrac{\\hbar c^2\\kappa^2}{48\\pi}(4\\mathrm{W} + 1)/(\\mathrm{W} + 1)^4$ with "
+        "$\\mathrm{W} = \\mathrm{W}(e^{-\\kappa u})$: it rises fastest on the marked ray, where it is $16/27$ of the "
+        "thermal flux, and on the near right it levels off at the thermal flux, the steady glow of a black hole of "
+        "radius $r_s = 1/2\\kappa$. No ray carries negative energy.",
     ],
     ("krasnikov", "plane"): [
         "The tilt of the light cone in the Krasnikov tube, $1 - k$, drawn as a height over the plane of the tube's "

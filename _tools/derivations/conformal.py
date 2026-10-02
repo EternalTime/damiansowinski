@@ -18967,7 +18967,243 @@ def lifshitz_spacetime(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- the moving mirror
+
+def moving_mirror(ck, src):
+    """Fulling and Davies's moving mirror: the part of the flat plane's diamond to the right of the
+    mirror's world line, at kappa = 1.
+
+    With u = ct - x and v = ct + x the metric is -du dv, and p = arctan u, q = arctan v bring the
+    plane into Minkowski's diamond. A mirror is the curve v = p(u) there:
+
+      Carlitz and Willey's    v = -e^(-u), from i- to the point (p, q) = (pi/2, 0) of the left
+                              future null infinity, where the ray v = 0 that no light catches up
+                              with the mirror after also ends;
+      Good, Anderson, Evans   v = -W(e^(-u)), between the same two points;
+      uniform acceleration    uv = -1 with u < 0, on which arctan v = pi/2 + arctan u, the vertical
+                              line X = q - p = pi/2 from the right past null infinity to the right
+                              future one.
+
+    The chart that brings a mirror to rest has U = p(u), so u = f(U) with f = U - ln(-U) for the
+    second mirror, and T, X = (v + U)/2, (v - U)/2; Rindler's coordinates have u = -e^(xi - eta) and
+    v = e^(xi + eta). Each map is checked null and future directed against its chart's published
+    metric, each mirror's ends against the points above, the mirror at rest in its own chart against
+    its world line in the inertial one, and one event in every chart of each mirror against itself.
+    """
+    lambertw = special.lambertw
+    box = [-HALF - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+
+    def W(x):
+        return lambertw(np.asarray(x, dtype=float)).real
+
+    # Each mirror as its position z(t), its ray tracing function p(u), and the inverse f of that.
+    z = {"thermal": lambda t: -t - W(np.exp(-2 * t)), "collapse": lambda t: -t - W(2 * np.exp(-2 * t)) / 2,
+         "uniform": lambda t: np.sqrt(1 + t ** 2)}
+    trace = {"thermal": lambda u: -np.exp(-u), "collapse": lambda u: -W(np.exp(-u)), "uniform": lambda u: -1 / u}
+    back = {"thermal": lambda U: -np.log(-U), "collapse": lambda U: U - np.log(-U)}
+
+    def null_map(u, v):
+        return np.arctan(np.asarray(u, dtype=float)), np.arctan(np.asarray(v, dtype=float))
+
+    def rest_map(case):
+        def fmap(U, v):
+            U = np.asarray(U, dtype=float)
+            with np.errstate(divide="ignore", invalid="ignore"):
+                return np.arctan(back[case](U)), np.arctan(np.asarray(v, dtype=float))
+        return fmap
+
+    def tx_map(case):
+        return lambda T, X: rest_map(case)(np.asarray(T, dtype=float) - X, np.asarray(T, dtype=float) + X)
+
+    def rindler(eta, xi):
+        eta, xi = np.asarray(eta, dtype=float), np.asarray(xi, dtype=float)
+        return np.arctan(-np.exp(xi - eta)), np.arctan(np.exp(xi + eta))
+
+    planes = {
+        "inertial": Plane(src, "moving_mirror", "inertial", ("t", "x")),
+        "null": Plane(src, "moving_mirror", "null", ("u", "v")),
+        "thermal": Plane(src, "moving_mirror", "thermal", ("T", "X"), None, {"kappa": 1}),
+        "collapse": Plane(src, "moving_mirror", "collapse", ("T", "X"), None, {"kappa": 1}),
+        "rindler": Plane(src, "moving_mirror", "rindler", ("\\eta", "\\xi"), None, {"kappa": 1}),
+        "rest": Plane(src, "moving_mirror", "mirror_rest", ("U", "v"), None, None, {"f": "U - log(-U)"}),
+    }
+    for case in ("thermal", "collapse", "uniform"):
+        t = ck.uniform(-5, 5)
+        ck.chart(f"Moving mirror, inertial chart, {case} mirror", planes["inertial"], mink_pq, t,
+                 z[case](t) + ck.uniform(0.01, 10), lambda t, x: (1, 0))
+    u = ck.uniform(-5, 5)
+    ck.chart("Moving mirror, null chart", planes["null"], null_map, u, trace["collapse"](u) + ck.uniform(0.01, 10),
+             lambda u, v: (1, 1))
+    U = -ck.uniform(0.01, 8)
+    ck.chart("Moving mirror, mirror at rest", planes["rest"], rest_map("collapse"), U, U + ck.uniform(0.01, 10),
+             lambda U, v: (1, 1))
+    for case in ("thermal", "collapse"):
+        X = ck.uniform(0.01, 6)
+        ck.chart(f"Moving mirror, {case} chart", planes[case], tx_map(case), X - ck.uniform(0.01, 8), X,
+                 lambda T, X: (1, 0))
+    ck.chart("Moving mirror, Rindler chart", planes["rindler"], rindler, ck.uniform(-3, 3), ck.uniform(0.01, 3),
+             lambda eta, xi: (1, 0))
+
+    for case in ("thermal", "collapse"):
+        pp, qq = null_map(np.array([-1e9, 1e9]), trace[case](np.array([-1e9, 1e9])))
+        ck.limit(f"Moving mirror: the {case} mirror leaves i-, (X, T) = (0, -pi)", point(pp[0], qq[0]), [0, -PI], 1e-6)
+        ck.limit(f"Moving mirror: the {case} mirror ends on the left future null infinity at v = 0, "
+                 "(X, T) = (-pi/2, pi/2)", point(pp[1], qq[1]), [-HALF, HALF], 1e-6)
+        # The mirror at rest in its own chart, X = 0, is its world line x = z(t) of the inertial chart.
+        TT = -np.exp(np.linspace(-3, 2, 30))
+        pp, qq = tx_map(case)(TT, 0 * TT)
+        uu, vv = np.tan(pp), np.tan(qq)
+        ck.limit(f"Moving mirror: X = 0 of the {case} chart is the world line x = z(t)",
+                 (vv - uu) / 2 - z[case]((uu + vv) / 2), 0 * TT, 1e-9)
+        # One event in the inertial, the null and the mirror's own charts.
+        T0, X0 = -1.3, 0.8
+        here = tx_map(case)(T0, X0)
+        u0, v0 = back[case](T0 - X0), T0 + X0
+        ck.limit(f"Moving mirror: the inertial chart puts an event of the {case} chart at one point",
+                 mink_pq((u0 + v0) / 2, (v0 - u0) / 2), here, 1e-12)
+        ck.limit(f"Moving mirror: the null chart puts an event of the {case} chart at one point", null_map(u0, v0), here, 1e-12)
+    uu = -np.exp(np.linspace(-6, 6, 40))
+    pp, qq = null_map(uu, trace["uniform"](uu))
+    ck.limit("Moving mirror: the uniformly accelerating mirror is the line X = pi/2", qq - pp, np.full_like(uu, HALF), 1e-12)
+    eta = np.linspace(-3, 3, 30)
+    pp, qq = rindler(eta, 0 * eta)
+    ck.limit("Moving mirror: xi = 0 of Rindler's chart is the hyperbola x^2 - t^2 = 1", np.tan(pp) * np.tan(qq),
+             -np.ones_like(eta), 1e-9)
+    ck.limit("Moving mirror: Rindler's chart and the inertial one put an event at one point",
+             rindler(0.4, 0.9), mink_pq(math.exp(0.9) * math.sinh(0.4), math.exp(0.9) * math.cosh(0.4)), 1e-12)
+
+    s_all = spread(-np.inf, np.inf, 900, 12)
+    END, PAST, FUTURE_R, PAST_R = [-HALF, HALF], [0, -PI], [HALF, HALF], [HALF, -HALF]
+
+    def mirror_line(case):
+        """The mirror's world line as (p, q), from its past end to its future end."""
+        if case == "uniform":
+            uu = -np.exp(np.linspace(30, -30, 600))
+            return null_map(uu, trace[case](uu))
+        return null_map(s_all, trace[case](s_all))
+
+    def region(case):
+        """The spacetime as a polygon: the mirror's world line, then the infinities it leaves on its
+        right, back to where the mirror began."""
+        line = nr.thin(np.column_stack(xt(*mirror_line(case))), 0.002)
+        if case == "uniform":
+            return [PAST_R] + line.tolist() + [FUTURE_R, [PI, 0]]
+        return [PAST] + line.tolist() + [END, [0, PI], [PI, 0]]
+
+    def edges(v, case, system):
+        v.fill("region", region(case))
+        v.fill("cover", region(case))
+        v.curve("world", *mirror_line(case))
+        if case == "uniform":
+            v.line("scri", [[FUTURE_R, [PI, 0]], [[PI, 0], PAST_R]])
+            ends = ((PI, 0, "$i^0$", "l", 6, 0),)
+            v.label_xt([3 * Q4, Q4], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+            v.label_xt([3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+            v.legend("world", "the mirror, the hyperbola $x^2 - c^2t^2 = 1/\\kappa^2$")
+        else:
+            v.line("scri", [[END, [0, PI]], [[0, PI], [PI, 0]], [[PI, 0], PAST]])
+            v.line("horizon", [[END, PAST_R]])
+            ends = ((PI, 0, "$i^0$", "l", 6, 0), (0, PI, "$i^+$", "b", 0, -6), (0, -PI, "$i^-$", "t", 0, 6))
+            v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+            v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+            v.label_xt([-Q4, 3 * Q4], "$\\mathscr{I}^+$", "br", dx=-5, dy=-3)
+            v.label_xt([0.3, -0.3], "$v = 0$", "bl", "small", dx=3, dy=-2)
+            v.legend("world", "the mirror" + {"inertial": ", $x = z(t)$", "null": ", $v = p(u)$", "mirror_rest": ", $U = v$"}
+                     .get(system, ", $X = 0$"))
+            v.legend("horizon", "the last ray to reach the mirror, $v = 0$, a horizon")
+        for X, T, text, anchor, dx, dy in ends:
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded([X, T])})
+            v.label_xt([X, T], text, anchor, dx=dx, dy=dy)
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+
+    views = []
+    inputs = {"thermal": "Carlitz and Willey's mirror, $z = -ct - \\mathrm{W}(e^{-2\\kappa ct})/\\kappa$ with "
+                         "$\\mathrm{W}$ Lambert's function.",
+              "collapse": "The mirror of Good, Anderson, and Evans, $z = -ct - \\mathrm{W}(2e^{-2\\kappa ct})/2\\kappa$ "
+                          "with $\\mathrm{W}$ Lambert's function.",
+              "uniform": "A mirror of uniform acceleration, $z = \\sqrt{1/\\kappa^2 + c^2t^2}$."}
+    for case, label in (("thermal", "Inertial, thermal"), ("collapse", "Inertial, collapse"), ("uniform", "Inertial, uniform")):
+        v = View("inertial_" + case, label, box, "inertial")
+        edges(v, case, "inertial")
+        for x in (-2, -1, 0, 1, 2, 4):
+            xs = np.full_like(s_all, float(x))
+            pp, qq = mink_pq(s_all, xs)
+            keep = xs > z[case](s_all)
+            v.curve("r", np.where(keep, pp, np.nan), np.where(keep, qq, np.nan))
+        for t in (-4, -2, -1, 0, 1, 2, 4):
+            xs = z[case](float(t)) + spread(0, np.inf, 500, 12)
+            v.curve("t", *mink_pq(np.full_like(xs, float(t)), xs))
+        v.legend("cover", "the spacetime, to the right of the mirror, which $t$ and $x$ cover")
+        v.legend("r", "$x$ constant, in units of $1/\\kappa$")
+        v.legend("t", "$ct$ constant")
+        v.set(settings="$\\kappa = 1$.", input=inputs[case])
+        views.append(v)
+
+    def rays(v, case, arrive):
+        """Rays that arrive along each v of `arrive` and leave the mirror along u = f(v)."""
+        for vk in arrive:
+            uk = float(back[case](vk))
+            v.line("null", [[point(-HALF, math.atan(vk)), point(math.atan(uk), math.atan(vk)),
+                             point(math.atan(uk), HALF)]])
+
+    arrive = (-4, -2, -1, -0.5, -0.25, -0.125, -0.0625)
+    v = View("null", "Null", box, "null")
+    edges(v, "collapse", "null")
+    rays(v, "collapse", arrive)
+    v.legend("cover", "the spacetime, to the right of the mirror, which $u$ and $v$ cover")
+    v.legend("null", "light rays that arrive at $\\kappa v = -4$, $-2$, $-1$, and on by halves to $-1/16$, and their "
+                     "reflections")
+    v.set(settings="$\\kappa = 1$.", input="The mirror of Good, Anderson, and Evans, $p = -\\mathrm{W}(e^{-\\kappa u})/\\kappa$ "
+                                           "with $\\mathrm{W}$ Lambert's function.")
+    views.append(v)
+
+    v = View("mirror_rest", "Mirror at Rest", box, "mirror_rest")
+    edges(v, "collapse", "mirror_rest")
+    fmap = rest_map("collapse")
+    for c in (-4, -3, -2, -1, -0.5):
+        # A line of constant U leaves the mirror at v = U and runs to v = infinity.
+        vs = c + spread(0, np.inf, 400, 12)
+        v.curve("null", *fmap(np.full_like(vs, c), vs))
+    for c in (-4, -3, -2, -1, -0.5, 0.5, 1, 2, 4):
+        # A line of constant v comes from U = -infinity to the mirror at U = v, or to U = 0 if v > 0.
+        Us = min(c, 0.0) - spread(0, np.inf, 400, 12)
+        v.curve("null", *fmap(Us, np.full_like(Us, c)))
+    v.legend("cover", "the spacetime, which $U < 0$ and $v > U$ cover")
+    v.legend("null", "$U$ constant, at $\\kappa U = -4$, $-3$, $-2$, $-1$, and $-1/2$, and $v$ constant, at the same "
+                     "values and at $\\kappa v = 1/2$, $1$, $2$, and $4$, every one a light ray")
+    v.set(settings="$\\kappa = 1$.", input="The mirror of Good, Anderson, and Evans, $f = U - \\ln(-\\kappa U)/\\kappa$.")
+    views.append(v)
+
+    for case, label in (("thermal", "Thermal Mirror"), ("collapse", "Collapse Mirror")):
+        v = View(case, label, box, case)
+        edges(v, case, case)
+        fmap = tx_map(case)
+        for X in (0.5, 1, 2, 4):
+            Ts = X - spread(0, np.inf, 600, 14)
+            v.curve("r", *fmap(Ts, np.full_like(Ts, float(X))))
+        for T in (-4, -2, -1, -0.5, 0.5, 1, 2):
+            Xs = max(T, 0.0) + spread(0, np.inf, 500, 12)
+            v.curve("t", *fmap(np.full_like(Xs, float(T)), Xs))
+        v.legend("cover", "the spacetime, which $X > 0$ and $X > cT$ cover")
+        v.legend("r", "$X$ constant, at rest with the mirror, at $\\kappa X = 1/2$, $1$, $2$, and $4$")
+        v.legend("t", "$cT$ constant, at $\\kappa cT = -4$, $-2$, $-1$, $-1/2$, $1/2$, $1$, and $2$")
+        v.set(settings="$\\kappa = 1$.")
+        views.append(v)
+
+    v = View("rindler", "Rindler", box, "rindler")
+    edges(v, "uniform", "rindler")
+    grid(v, "r", lambda xi, eta: rindler(eta, xi), (0.5, 1, 1.5, 2), S_ALL)
+    grid(v, "t", rindler, (-2, -1, -0.5, 0, 0.5, 1, 2), spread(0, np.inf, 500, 12))
+    v.legend("cover", "the spacetime, which $\\xi > 0$ covers")
+    v.legend("r", "$\\xi$ constant, a uniformly accelerating observer, at $\\kappa\\xi = 1/2$, $1$, $3/2$, and $2$")
+    v.legend("t", "$\\eta$ constant, at $\\kappa c\\eta = 0$, $\\pm 1/2$, $\\pm 1$, and $\\pm 2$")
+    v.set(settings="$\\kappa = 1$.")
+    views.append(v)
+    return views
+
+
 DRAWN = {
+    "moving_mirror": moving_mirror,
     "lifshitz_spacetime": lifshitz_spacetime,
     "born_infeld_charge": born_infeld_charge,
     "aichelburg_sexl": aichelburg_sexl,
@@ -22105,6 +22341,75 @@ CAPTIONS = {
         "The shell is outside $r = a$, so the spacetime has no horizon and every ray from the centre reaches "
         "$\\mathscr{I}^+$. As $\\epsilon \\to 0$ the lapse on the shell falls to zero and a ray takes ever longer "
         "to cross the throat, which is Arnowitt, Deser, and Misner's point charge.",
+    ],
+    ("moving_mirror", "inertial_thermal"): [
+        "Flat spacetime to the right of Carlitz and Willey's mirror ($\\kappa = 1$), each point in the diagram a "
+        "single event. With $u = ct - x$ and $v = ct + x$ the metric is $-du\\,dv$, and $p = \\arctan(\\kappa u)$ and $q = \\arctan(\\kappa v)$ bring the plane into a diamond, drawn with $T = p + q$ up and $X = q - p$ across, so light rays run at 45°. The spacetime is the part of the diamond to the right of the mirror's world line.",
+        "The mirror leaves $i^-$ and ends on the left future null infinity, at the point where the ray $v = 0$ ends. "
+        "Light from $\\mathscr{I}^-$ with $v < 0$ is reflected and reaches the right $\\mathscr{I}^+$. Light with "
+        "$v > 0$ passes behind the mirror's end and reaches the left $\\mathscr{I}^+$, so to an observer on the right "
+        "the ray $v = 0$ is a horizon, as the last ray through the centre of a collapsing star is.",
+    ],
+    ("moving_mirror", "inertial_collapse"): [
+        "Flat spacetime to the right of the mirror of Good, Anderson, and Evans ($\\kappa = 1$), each point in the "
+        "diagram a single event. With $u = ct - x$ and $v = ct + x$ the metric is $-du\\,dv$, and $p = \\arctan(\\kappa u)$ and $q = \\arctan(\\kappa v)$ bring the plane into a diamond, drawn with $T = p + q$ up and $X = q - p$ across, so light rays run at 45°. The spacetime is the part of the diamond to the right of the mirror's "
+        "world line.",
+        "The mirror leaves $i^-$ nearly at rest, along the lines of constant $x$, and ends on the left future null "
+        "infinity where the ray $v = 0$ ends. Every ray with $v < 0$ is reflected to the right $\\mathscr{I}^+$, and "
+        "every ray with $v > 0$ reaches the left $\\mathscr{I}^+$ without meeting the mirror. Fold the diagram of a "
+        "shell of light collapsing to a black hole along its centre and the centre lies where this mirror does.",
+    ],
+    ("moving_mirror", "inertial_uniform"): [
+        "Flat spacetime to the right of a uniformly accelerating mirror ($\\kappa = 1$), each point in the diagram a "
+        "single event. With $u = ct - x$ and $v = ct + x$ the metric is $-du\\,dv$, and $p = \\arctan(\\kappa u)$ and $q = \\arctan(\\kappa v)$ bring the plane into a diamond, drawn with $T = p + q$ up and $X = q - p$ across, so light rays run at 45°. On the hyperbola $uv = -1/\\kappa^2$ the two angles differ by $\\pi/2$, so the mirror "
+        "is the vertical line $X = \\pi/2$.",
+        "The mirror comes in from the right $\\mathscr{I}^-$ and goes out to the right $\\mathscr{I}^+$, and every "
+        "ray that enters the spacetime is reflected and leaves it. The spacetime has one null infinity in the past "
+        "and one in the future, and no horizon.",
+    ],
+    ("moving_mirror", "null"): [
+        "Flat spacetime to the right of the mirror of Good, Anderson, and Evans in its null coordinates "
+        "($\\kappa = 1$), each point in the diagram a single event. The lines of constant $u$ and of constant $v$ "
+        "are light rays, the 45° lines of the diamond, with $p = \\arctan(\\kappa u)$ and $q = \\arctan(\\kappa v)$.",
+        "Each ray drawn comes in along $v$, meets the mirror, and leaves along $u = v - \\ln(-\\kappa v)/\\kappa$. The "
+        "rays that arrive at $\\kappa v = -4$ and $-2$ leave about as far apart as they came. Those that arrive at "
+        "$-1/4$, $-1/8$, and $-1/16$, each half as far ahead of the last ray, leave nearly $\\ln 2/\\kappa$ apart.",
+    ],
+    ("moving_mirror", "mirror_rest"): [
+        "Flat spacetime to the right of the mirror of Good, Anderson, and Evans in the coordinates $U$ and $v$ that "
+        "bring it to rest ($\\kappa = 1$), each point in the diagram a single event. The inertial $u$ is "
+        "$U - \\ln(-\\kappa U)/\\kappa$, and the diagram is drawn with $p = \\arctan(\\kappa u)$ and "
+        "$q = \\arctan(\\kappa v)$.",
+        "The mirror is the line $U = v$, and a ray that arrives along $v$ leaves along the line of constant $U$ with "
+        "the same value. The whole of the left future null infinity is $U = 0$, the end of the chart. Rays with "
+        "$v > 0$ run to it without meeting the mirror.",
+    ],
+    ("moving_mirror", "thermal"): [
+        "Flat spacetime to the right of Carlitz and Willey's mirror in the coordinates $T$ and $X$ in which it "
+        "stands still ($\\kappa = 1$), each point in the diagram a single event. With $cT - X = -e^{-\\kappa u}/\\kappa$ "
+        "and $cT + X = v$ the diagram is drawn with $p = \\arctan(\\kappa u)$ and $q = \\arctan(\\kappa v)$.",
+        "The lines of constant $X$ leave $i^-$ beside the mirror and end on the left future null infinity, at "
+        "$v = 2X$, each one a copy of the mirror's world line moved along $v$. The lines of constant $T < 0$ start "
+        "on the mirror and run to $i^0$. Those of constant $T > 0$ start on the left $\\mathscr{I}^+$, which is "
+        "$X = cT$.",
+    ],
+    ("moving_mirror", "collapse"): [
+        "Flat spacetime to the right of the mirror of Good, Anderson, and Evans in the coordinates $T$ and $X$ in "
+        "which it stands still ($\\kappa = 1$), each point in the diagram a single event. With $U = cT - X$, "
+        "$u = U - \\ln(-\\kappa U)/\\kappa$, and $cT + X = v$ the diagram is drawn with $p = \\arctan(\\kappa u)$ and "
+        "$q = \\arctan(\\kappa v)$.",
+        "Near $i^-$ the lines of constant $T$ and $X$ are close to those of an inertial frame, since the mirror "
+        "starts nearly at rest. Later the lines of constant $X$ follow the mirror toward the left future null "
+        "infinity, which is $X = cT$, and each ends there at $v = 2X$.",
+    ],
+    ("moving_mirror", "rindler"): [
+        "Flat spacetime to the right of a uniformly accelerating mirror in Rindler's coordinates ($\\kappa = 1$), "
+        "each point in the diagram a single event. With $u = -e^{\\kappa(\\xi - c\\eta)}/\\kappa$ and "
+        "$v = e^{\\kappa(\\xi + c\\eta)}/\\kappa$ the diagram is drawn with $p = \\arctan(\\kappa u)$ and "
+        "$q = \\arctan(\\kappa v)$.",
+        "The mirror is the line $\\xi = 0$, and every line of constant $\\xi$ is a hyperbola, an observer with the "
+        "proper acceleration $c^2\\kappa e^{-\\kappa\\xi}$. The chart is static: a step in $\\eta$ carries each of "
+        "those lines into itself, and the mirror with them.",
     ],
     ("vaidya", "shell"): [
         "A spacetime into which a spherical shell of null dust of mass $M$ falls along $v = 0$, each point in the "

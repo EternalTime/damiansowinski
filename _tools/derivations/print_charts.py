@@ -12,7 +12,7 @@ schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis,
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
-born_infeld_charge, penrose_impulsive_wave and exponential_metric, and Godel's cylindrical chart.
+born_infeld_charge, penrose_impulsive_wave, exponential_metric and moving_mirror, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -20406,6 +20406,205 @@ def exponential_metric_check(chart, system):
 
 
 CHARTS["exponential_metric"] = [lambda s=s: exponential_metric(s) for s in EXPONENTIAL_CHARTS]
+
+# -- The moving mirror of Fulling and Davies -----------------------------------------------
+
+MIRROR_CHARTS = ("inertial", "null", "mirror_rest", "thermal", "collapse", "rindler")
+MIRROR_REALS = "(-\\infty, \\infty)"
+
+
+def moving_mirror(system):
+    """Fulling and Davies's (1976) flat spacetime of two dimensions to the right of a perfectly
+    reflecting mirror, in six charts.
+
+    inertial     ds^2 = -c^2dt^2 + dx^2 with the mirror on x = z(t): (2.1) of Good, Anderson and
+                 Evans (2016), the setting of Fulling and Davies (1976);
+    null         ds^2 = -du dv with u = ct - x, v = ct + x and the mirror on v = p(u), p the
+                 ray tracing function: (2.2) and (2.9) of Good, Anderson and Evans (2016);
+    mirror_rest  U = p(u) and v, the conformal map of Davies and Fulling that Akal, Kusuki, Shiba,
+                 Takayanagi and Wei (2021) write as their (1), which brings the mirror to rest on
+                 U = v: ds^2 = -f'(U) dU dv with u = f(U) the inverse of p;
+    thermal      that chart for Carlitz and Willey's (1987) mirror, p = -e^(-kappa u)/kappa, Table I
+                 of Good, Anderson and Evans (2013), in cT = (v + U)/2 and X = (v - U)/2;
+    collapse     the same for the mirror of Good, Anderson and Evans (2016), their (2.18) at
+                 v_H = 0, u = U - ln(-kappa U)/kappa;
+    rindler      Rindler's coordinates in their conformal form, in which a mirror of proper
+                 acceleration c^2 kappa stands at xi = 0: the fixed surface of Davies (1975) and the
+                 'static universe' of Fulling and Davies (1976).
+
+    moving_mirror_check holds every chart flat, each after the first to being the inertial chart
+    pulled back, and the flux of energy each mirror radiates, from the conformal factor of its
+    chart by the formula of Davies, Fulling and Unruh (1976), to the Schwarzian form of Fulling and
+    Davies, (4.1) to (4.3) of Good, Anderson and Evans (2016). moving_mirror.md is the derivation."""
+    time = None
+    components = {}
+    if system == "inertial":
+        name, coords, parameters = "Inertial", ["t", "x"], ["z = z(t)"]
+        domains = ["t \\in " + MIRROR_REALS, "x \\in " + MIRROR_REALS,
+                   "x > z(t) \\;\\text{(to the right of the mirror)}"]
+
+        def line(c2):
+            return f"ds^2 = -{c2}dt^2 + dx^2"
+    elif system == "null":
+        name, coords, parameters = "Null", ["u", "v"], ["p = p(u)"]
+        domains = ["u \\in " + MIRROR_REALS, "v \\in " + MIRROR_REALS,
+                   "v > p(u) \\;\\text{(to the right of the mirror)}"]
+
+        def line(c2):
+            return "ds^2 = -du\\,dv"
+    elif system == "mirror_rest":
+        name, coords, parameters = "Mirror at Rest", ["U", "v"], ["f = f(U)"]
+        domains = ["p(-\\infty) < U < p(\\infty) \\;\\text{(the values the ray tracing function takes)}",
+                   "v \\in " + MIRROR_REALS, "v > U \\;\\text{(to the right of the mirror)}",
+                   "U = v \\;\\text{(the mirror)}"]
+
+        def line(c2):
+            return "ds^2 = -f'\\,dU\\,dv"
+    elif system in ("thermal", "collapse"):
+        name = "Thermal Mirror" if system == "thermal" else "Collapse Mirror"
+        coords, parameters, time = ["T", "X"], ["\\kappa"], "T"
+        domains = ["T \\in " + MIRROR_REALS, "X \\in (0, \\infty)",
+                   "X > cT \\;\\text{(the chart ends on } X = cT\\text{, where the inertial } u \\to \\infty\\text{)}",
+                   "X = 0 \\;\\text{(the mirror)}"]
+        if system == "thermal":
+            def line(c2):
+                c = "c" if c2 else ""
+                return f"ds^2 = \\dfrac{{-{c2}dT^2 + dX^2}}{{\\kappa\\left(X - {c}T\\right)}}"
+            components = {"metric_components": {("T", "T"): "-\\dfrac{1}{\\kappa\\left(X - cT\\right)}",
+                                                ("X", "X"): "\\dfrac{1}{\\kappa\\left(X - cT\\right)}"},
+                          "inverse_metric_components": {("T", "T"): "-\\kappa\\left(X - cT\\right)",
+                                                        ("X", "X"): "\\kappa\\left(X - cT\\right)"}}
+        else:
+            def line(c2):
+                c = "c" if c2 else ""
+                return (f"ds^2 = \\left(1 + \\dfrac{{1}}{{\\kappa\\left(X - {c}T\\right)}}\\right)"
+                        f"\\left(-{c2}dT^2 + dX^2\\right)")
+            factor = "1 + \\dfrac{1}{\\kappa\\left(X - cT\\right)}"
+            components = {"metric_components": {("T", "T"): "-\\left(" + factor + "\\right)", ("X", "X"): factor}}
+    else:
+        name, coords, parameters = "Rindler", ["\\eta", "\\xi"], ["\\kappa"]
+        domains = ["\\eta \\in " + MIRROR_REALS, "\\xi \\in (0, \\infty)", "\\xi = 0 \\;\\text{(the mirror)}"]
+
+        def line(c2):
+            return f"ds^2 = e^{{2\\kappa\\xi}}\\left(-{c2}d\\eta^2 + d\\xi^2\\right)"
+        components = {"metric_components": {("\\eta", "\\eta"): "-e^{2\\kappa\\xi}", ("\\xi", "\\xi"): "e^{2\\kappa\\xi}"},
+                      "inverse_metric_components": {("\\eta", "\\eta"): "-e^{-2\\kappa\\xi}",
+                                                    ("\\xi", "\\xi"): "e^{-2\\kappa\\xi}"}}
+    probe = vm.Reader(coords, parameters, ())
+    lead = [probe.symbol[c] for c in reversed(coords)] + [v for k, v in probe.parameters.items() if k == "kappa"]
+    printer = {"lead": lead, "flip": False}
+    pretty = None
+    if system == "mirror_rest":
+        printer["primed"] = ["f"]
+    if time:
+        # Every value depends on T and X through X - cT alone, and is written in it.
+        D = sp.Symbol("MirrorD", positive=True)
+        T, X, kappa = probe.symbol["T"], probe.symbol["X"], probe.parameters["kappa"]
+        printer = {"lead": [D, kappa], "factors": [kappa, D], "named": {D: "X - cT"}, "flip": False}
+
+        def pretty(value):
+            # The time arrives written cT, as the file prints it.
+            return sp.factor(sp.sympify(value).subs(X, D + probe.c * T))
+    spec = {
+        "metric_id": "moving_mirror",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "components": components,
+        "ricci_scalar": "0",
+        "kretschmann": "0",
+        "check": lambda chart: moving_mirror_check(chart, system),
+    }
+    if time:
+        spec["time"] = time
+        spec["pretty"] = pretty
+    return spec
+
+
+def mirror_flux(factor, U, f):
+    """24 pi times the flux of energy to the right of a mirror at rest on U = v in the metric
+    -C dU dv, T_uu = -(1/12 pi) C^(1/2) d_U^2 C^(-1/2) (dU/du)^2, Davies, Fulling and Unruh's
+    (1976) formula for the vacuum of the modes of U and v where the curvature vanishes, carried to
+    the inertial u = f(U)."""
+    return sp.simplify(-2 * sp.sqrt(factor) * sp.diff(1 / sp.sqrt(factor), U, 2) / sp.diff(f, U) ** 2)
+
+
+def moving_mirror_check(chart, system):
+    """Every chart is flat; each after the inertial one is the inertial chart pulled back along the
+    map its convention states; and the flux each mirror radiates, from its chart's conformal factor
+    by mirror_flux, is Fulling and Davies's Schwarzian form, (3/2)(p2/p1)^2 - p3/p1 over 24 pi with
+    pn the nth derivative of p: kappa^2/48 pi at every time for Carlitz and Willey's mirror,
+    kappa^2 (4W + 1)/(48 pi (W + 1)^4) with W = W(e^(-kappa u)) for the mirror of Good, Anderson
+    and Evans, their (4.2), which is the mirror z = -t - W(2 e^(-2 kappa t))/(2 kappa) of their
+    (2.14), and zero for a mirror of uniform acceleration."""
+    a, b = chart.symbols
+    g = chart.geo.g
+    riemann = chart.geo.riemann_llll()
+    for slot in vm._indices(2, 4):
+        if sp.simplify(vm._at(riemann, slot)) != 0:
+            raise AssertionError(f"moving_mirror: the {system} chart is not flat")
+    if system == "inertial":
+        return
+    kappa = chart.reader.parameters.get("kappa")
+    flat = sp.diag(-1, 1)
+
+    def pulled(image):
+        """The inertial metric at the image (x^0, x) of the chart's coordinates, pulled back."""
+        J = sp.Matrix(2, 2, lambda i, j: sp.diff(image[i], (a, b)[j]))
+        return (J.T * flat * J).applyfunc(sp.simplify)
+
+    if system == "null":
+        # u = x^0 - x and v = x^0 + x.
+        target = pulled(((a + b) / 2, (b - a) / 2))
+    elif system == "mirror_rest":
+        f = chart.reader.parameters["f"]
+        target = pulled(((f + b) / 2, (b - f) / 2))
+        # With p the inverse of f, p2/p1 = -f2/f1^2 and p3/p1 = 3 f2^2/f1^4 - f3/f1^3.
+        f1, f2, f3 = (sp.diff(f, a, n) for n in (1, 2, 3))
+        schwarzian = sp.Rational(3, 2) * (f2 / f1 ** 2) ** 2 - (3 * f2 ** 2 / f1 ** 4 - f3 / f1 ** 3)
+        if sp.simplify(mirror_flux(f1, a, f) - schwarzian) != 0:
+            raise AssertionError("moving_mirror: the flux of the conformal factor is not the Schwarzian of p")
+    elif system in ("thermal", "collapse"):
+        U, v = a - b, a + b
+        u = -sp.log(-kappa * U) / kappa + (U if system == "collapse" else 0)
+        target = pulled(((u + v) / 2, (v - u) / 2))
+        # The flux, in the null coordinate W = U of the chart, whose factor is du/dU.
+        W = sp.Symbol("MirrorU", negative=True)
+        f = -sp.log(-kappa * W) / kappa + (W if system == "collapse" else 0)
+        flux = mirror_flux(sp.diff(f, W), W, f)
+        t = sp.Symbol("Mirrort", real=True)
+        if system == "thermal":
+            want = kappa ** 2 / 2
+            # The mirror's world line U = v is z = -t - W(e^(-2 kappa t))/kappa.
+            z = -t - sp.LambertW(sp.exp(-2 * kappa * t)) / kappa
+            on = (t + z) + sp.exp(-kappa * (t - z)) / kappa
+        else:
+            lam = -kappa * W            # W(e^(-kappa u)) on the ray u = f(U): lam e^lam = e^(-kappa u)
+            want = kappa ** 2 * (4 * lam + 1) / (2 * (lam + 1) ** 4)
+            z = -t - sp.LambertW(2 * sp.exp(-2 * kappa * t)) / (2 * kappa)
+            on = (t - z) - ((t + z) - sp.log(-kappa * (t + z)) / kappa)
+        if sp.simplify(flux - want) != 0:
+            raise AssertionError(f"moving_mirror: the flux of the {system} mirror is not its closed form")
+        for value in (sp.Rational(-3, 2), 0, sp.Rational(1, 3), 2):
+            if abs(sp.N(on.subs({t: value, kappa: sp.Rational(7, 5)}), 30)) > 1e-25:
+                raise AssertionError(f"moving_mirror: the {system} mirror's world line is not on U = v")
+    else:
+        target = pulled((sp.exp(kappa * b) * sp.sinh(kappa * a) / kappa, sp.exp(kappa * b) * sp.cosh(kappa * a) / kappa))
+        # The mirror xi = 0 is the hyperbola x^2 - (ct)^2 = 1/kappa^2, of proper acceleration kappa,
+        # and its ray tracing function p = -1/(kappa^2 u) is a Moebius map, whose flux vanishes.
+        W = sp.Symbol("MirrorU", positive=True)
+        f = -1 / (kappa ** 2 * W)
+        if mirror_flux(sp.diff(f, W), W, f) != 0:
+            raise AssertionError("moving_mirror: a uniformly accelerating mirror radiates")
+    for i in range(2):
+        for j in range(2):
+            if sp.simplify((target[i, j] - g[i, j]).rewrite(sp.exp)) != 0:
+                raise AssertionError(f"moving_mirror: the {system} chart is not the inertial chart pulled back "
+                                     f"in slot {(i, j)}")
+
+
+CHARTS["moving_mirror"] = [lambda s=s: moving_mirror(s) for s in MIRROR_CHARTS]
 
 
 def write(spec):

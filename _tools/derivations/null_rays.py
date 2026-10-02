@@ -416,6 +416,8 @@ class Diagram:
     curves: tuple = ()              # (kind, r as an expression in the plane's time, legend): a world line
                                     # drawn and named, as a shell whose radius the row declares; it is
                                     # drawn where the expression is positive
+    signed_curves: bool = False     # the world lines of `curves` are of a coordinate that takes either
+                                    # sign, as a mirror's x does, and are drawn wherever they are finite
     surface: str = None             # r at which a star's surface is released from rest; see Surface
     surface_legend: str = None      # what that surface is, where it is no star's
     surface_whole: tuple = None     # (x^0 of the moment of rest, legend[, (dx^0, dr)]): the surface before that
@@ -1225,6 +1227,90 @@ ERB_CHARGED = {"r_s": 1, "r_q": "sqrt(3)/2"}
 FJNW = {"b": 1, "gamma": "1/2"}
 FJNW_HARMONIC = {"m": "1/2", "k": 1}
 EXPONENTIAL = {"m": 1}          # the exponential metric of Papapetrou and Yilmaz, in units of m = GM/c^2
+# The moving mirror of Fulling and Davies, in units of 1/kappa: Carlitz and Willey's mirror, which
+# radiates thermally at every time, the mirror of Good, Anderson and Evans, which creates particles
+# as a collapsing shell of light does, and a mirror of uniform acceleration, each as its world line
+# x = z(t), as its ray tracing function v = p(u), and as the inverse u = f(U) of that.
+MIRROR = {"kappa": 1}
+MIRROR_Z = {"thermal": "-t - LambertW(exp(-2*t))", "collapse": "-t - LambertW(2*exp(-2*t))/2",
+            "uniform": "sqrt(1 + t**2)"}
+MIRROR_P = {"thermal": "-exp(-u)", "collapse": "-LambertW(exp(-u))"}
+MIRROR_F = {"thermal": "-log(-U)", "collapse": "U - log(-U)"}
+MIRROR_NAME = {"thermal": "Carlitz and Willey's mirror", "collapse": "The mirror of Good, Anderson, and Evans",
+               "uniform": "A mirror of uniform acceleration"}
+MIRROR_LABEL = {"thermal": "thermal", "collapse": "collapse", "uniform": "uniform"}
+MIRROR_INPUT = {
+    ("inertial", "thermal"): "$z = -ct - \\mathrm{W}(e^{-2\\kappa ct})/\\kappa$ with $\\mathrm{W}$ Lambert's function",
+    ("inertial", "collapse"): "$z = -ct - \\mathrm{W}(2e^{-2\\kappa ct})/2\\kappa$ with $\\mathrm{W}$ Lambert's function",
+    ("inertial", "uniform"): "$z = \\sqrt{1/\\kappa^2 + c^2t^2}$",
+    ("null", "thermal"): "$p = -e^{-\\kappa u}/\\kappa$",
+    ("null", "collapse"): "$p = -\\mathrm{W}(e^{-\\kappa u})/\\kappa$ with $\\mathrm{W}$ Lambert's function",
+    ("mirror_rest", "thermal"): "$f = -\\ln(-\\kappa U)/\\kappa$",
+    ("mirror_rest", "collapse"): "$f = U - \\ln(-\\kappa U)/\\kappa$",
+}
+MIRROR_LAST = "the last ray to reach the mirror, $v = 0$, a horizon"
+MIRROR_WORLD = "the mirror"
+# The rays each view marks arrive at these v, and leave the mirror where u = f(v).
+MIRROR_V = {"thermal": (-2, -1, -0.5, -0.25, -0.125), "collapse": (-2, -1, -0.5, -0.25, -0.125),
+            "uniform": (0.5, 1, 2, 4)}
+MIRROR_U = {"thermal": lambda v: -math.log(-v), "collapse": lambda v: v - math.log(-v), "uniform": lambda v: -1 / v}
+MIRROR_RAYS = {"thermal": "five rays that arrive at $\\kappa v = -2$, $-1$, $-1/2$, $-1/4$, and $-1/8$, and their reflections",
+               "collapse": "five rays that arrive at $\\kappa v = -2$, $-1$, $-1/2$, $-1/4$, and $-1/8$, and their reflections",
+               "uniform": "four rays that arrive at $\\kappa v = 1/2$, $1$, $2$, and $4$, and their reflections"}
+
+
+def _mirror_rows():
+    """The moving mirror's views: each mirror in the inertial and the null chart, the two with a
+    horizon in the chart that brings a mirror to rest and in their own charts of T and X, and the
+    uniformly accelerating one in Rindler's chart. A marked ray is seeded a millionth to the right
+    of the point where it meets the mirror, and traced both ways from there."""
+    eps = 1e-6
+    rows = []
+
+    def marks(case, at):
+        out = [("shell", {"x0": repr(a), "r": repr(b)}, "both", MIRROR_RAYS[case])
+               for a, b in (at(v, MIRROR_U[case](v)) for v in MIRROR_V[case])]
+        return tuple(out)
+
+    def text(chart, case):
+        return f"{MIRROR_NAME[case]}, {MIRROR_INPUT[(chart, case)]}, at $\\kappa = 1$."
+
+    for case in ("thermal", "collapse", "uniform"):
+        horizon = () if case == "uniform" else (("event", {"x0": "1", "r": "-1"}, 0, MIRROR_LAST),)
+        z = MIRROR_Z[case]
+        rows.append(Diagram(
+            "moving_mirror", "inertial", case, "$t$ and $x$, " + MIRROR_LABEL[case],
+            ("t", "x"), (0, 6, -3, 3) if case == "uniform" else (-3, 3, -3, 3), "$\\kappa x$", "$\\kappa ct$", {}, {},
+            families=SIDEWAYS, functions={"z": z}, input=text("inertial", case), where=f"x - ({z})",
+            curves=(("world", z, MIRROR_WORLD),), signed_curves=True,
+            marked=marks(case, lambda v, u: ((u + v) / 2, (v - u) / 2 + eps)) + horizon))
+    for case in ("thermal", "collapse"):
+        q = MIRROR_P[case]
+        rows.append(Diagram(
+            "moving_mirror", "null", case, "$u$ and $v$, " + MIRROR_LABEL[case],
+            ("u", "v"), (-3, 3, -3, 3), "$\\kappa(v - u)/2$", "$\\kappa(u + v)/2$", {}, {}, to_display=NULL_TO_TR,
+            tau="u + v", families=SIDEWAYS, functions={"p": q}, input=text("null", case), where=f"v - ({q})",
+            curves=(("world", q, MIRROR_WORLD),), signed_curves=True,
+            marked=marks(case, lambda v, u: (u, v + eps)) + (("event", {"x0": "2", "r": "0"}, 0, MIRROR_LAST),)))
+    for case in ("thermal", "collapse"):
+        rows.append(Diagram(
+            "moving_mirror", "mirror_rest", case, "$U$ and $v$, " + MIRROR_LABEL[case],
+            ("U", "v"), (0, 4, -3, 1), "$\\kappa(v - U)/2$", "$\\kappa(U + v)/2$", {}, {}, to_display=NULL_TO_TR,
+            tau="U + v", families=SIDEWAYS, functions={"f": MIRROR_F[case]}, input=text("mirror_rest", case),
+            where="Min(v - U, -U)", curves=(("world", "U", MIRROR_WORLD),), signed_curves=True,
+            marked=marks(case, lambda v, u: (v - eps, v)) + (("event", {"x0": "-2", "r": "0"}, 0, MIRROR_LAST),)))
+    for case in ("thermal", "collapse"):
+        rows.append(Diagram(
+            "moving_mirror", case, "tx", "$T$ and $X$", ("T", "X"), (0, 4, -3, 1), "$\\kappa X$", "$\\kappa cT$",
+            MIRROR, {}, tau="T", families=SIDEWAYS, where="X - T", lines=(("world", "r", "0", MIRROR_WORLD),),
+            marked=marks(case, lambda v, u: (v, eps)) + (("event", {"x0": "-1", "r": "1"}, 0, MIRROR_LAST),)))
+    rows.append(Diagram(
+        "moving_mirror", "rindler", "tx", "$\\eta$ and $\\xi$", ("\\eta", "\\xi"), (0, 4, -2, 2), "$\\kappa\\xi$",
+        "$\\kappa c\\eta$", MIRROR, {}, tau="eta", families=SIDEWAYS, lines=(("world", "r", "0", MIRROR_WORLD),),
+        marked=marks("uniform", lambda v, u: (math.log(v), eps))))
+    return rows
+
+
 # Roberts's collapsing scalar field for its three outcomes: p = 9/10, where the field disperses, the
 # threshold p = 1, and p = 2, where it makes a black hole. Nothing in it sets a scale, so lengths
 # are in any unit ell.
@@ -2560,6 +2646,8 @@ DIAGRAMS = [
     Diagram("witten_black_hole", "eddington_finkelstein_outgoing", "finkelstein", "against $u + x$",
             ("u", "x"), (-1.5, 2.5, -2, 2), "$\\lambda x$", "$\\lambda(u + x)$", WITTEN,
             to_display=FINKELSTEIN_OUT, tau="u + x"),
+    # The moving mirror of Fulling and Davies at kappa = 1: see _mirror_rows.
+    *_mirror_rows(),
     # Roberts's collapsing scalar field, one view for each of its three outcomes in each chart. The
     # double null chart is drawn against (v - u)/2 and (u + v)/2, Roberts's v and r against r and
     # (1 + p) v - r, which are sqrt(1 + p) times the diagonal chart's rho and ct, the areal chart
@@ -5913,6 +6001,105 @@ CAPTIONS = {
         "$du/d(ct) = \\pm e^{-2}/m^2$. A ray reaches neither end in a finite time $t$. The scalar field of negative "
         "energy that sources the metric is proportional to $u$. The faint vertical lines are the spheres of areal "
         "radius $3m$ and $4m$, one of each on either side of the throat.",
+    ],
+    ("moving_mirror", "inertial", "thermal"): [
+        "The plane of $t$ and $x$ to the right of Carlitz and Willey's mirror ($\\kappa = 1$), each point in the "
+        "diagram a single event. The mirror comes in from the left, turns at $x = -1/2\\kappa$, and recedes with its "
+        "world line closing on the light ray $v = ct + x = 0$. Spacetime is flat, so every ray runs at 45° and every "
+        "cone is the same.",
+        "A ray moving left is reflected where it meets the mirror, and one that arrives along $v$ leaves along "
+        "$u = ct - x = -\\ln(-\\kappa v)/\\kappa$. The five rays marked arrive at $\\kappa v = -2$, $-1$, $-1/2$, $-1/4$, "
+        "and $-1/8$, each half as far ahead of the last ray as the one before it, and they leave evenly spaced, "
+        "$\\ln 2/\\kappa$ apart. A wave reflected at $u$ comes back stretched by the factor $e^{\\kappa u}$, and the flux "
+        "of energy to the right is $\\hbar c^2\\kappa^2/48\\pi$ at every $u$. A ray with $v > 0$ does not reach the "
+        "mirror, so $v = 0$ is a horizon.",
+    ],
+    ("moving_mirror", "inertial", "collapse"): [
+        "The plane of $t$ and $x$ to the right of the mirror of Good, Anderson, and Evans ($\\kappa = 1$), each point "
+        "in the diagram a single event. Early on the mirror drifts along $z = \\ln(-\\kappa ct)/2\\kappa$, slower and "
+        "slower, and later it recedes with its world line closing on the light ray $v = ct + x = 0$.",
+        "A ray that arrives along $v$ leaves along $u = v - \\ln(-\\kappa v)/\\kappa$, the relation between the retarded "
+        "times inside and outside a shell of light that collapses to a black hole of radius $r_s = 1/2\\kappa$. The "
+        "five rays marked arrive at $\\kappa v = -2$, $-1$, $-1/2$, $-1/4$, and $-1/8$ and leave $1.69$, $1.19$, "
+        "$0.94$, and $0.82$ apart in $\\kappa u$, a spacing that tends to $\\ln 2$. The flux of energy to the right "
+        "rises from zero to $\\hbar c^2\\kappa^2/48\\pi$. A ray with $v > 0$ does not reach the mirror, so $v = 0$ is a "
+        "horizon.",
+    ],
+    ("moving_mirror", "inertial", "uniform"): [
+        "The plane of $t$ and $x$ to the right of a uniformly accelerating mirror ($\\kappa = 1$), the hyperbola "
+        "$x^2 - c^2t^2 = 1/\\kappa^2$, each point in the diagram a single event. The mirror comes in from the right, "
+        "stops at $x = 1/\\kappa$, and goes back out, with the proper acceleration $c^2\\kappa$ throughout.",
+        "A ray that arrives along $v$ leaves along $u = -1/\\kappa^2v$. The four rays marked arrive at "
+        "$\\kappa v = 1/2$, $1$, $2$, and $4$ and leave at $\\kappa u = -2$, $-1$, $-1/2$, and $-1/4$. The map from "
+        "$v$ to $u$ is a ratio of linear functions, for which the flux of Fulling and Davies's formula vanishes, "
+        "so this mirror stretches the light it reflects and radiates no energy.",
+    ],
+    ("moving_mirror", "null", "thermal"): [
+        "The plane of $u$ and $v$ to the right of Carlitz and Willey's mirror ($\\kappa = 1$), drawn with "
+        "$(u + v)/2$ up and $(v - u)/2$ across, each point in the diagram a single event. Only $g_{uv}$ is nonzero, so "
+        "the light rays are the lines of constant $u$ and of constant $v$, at 45°.",
+        "The mirror is the curve $v = p(u) = -e^{-\\kappa u}/\\kappa$, which stays below $v = 0$ for every $u$. The "
+        "five rays marked arrive at $\\kappa v = -2$, $-1$, $-1/2$, $-1/4$, and $-1/8$ and leave at "
+        "$\\kappa u = -\\ln 2$, $0$, $\\ln 2$, $2\\ln 2$, and $3\\ln 2$. A ray with $v > 0$ does not reach the mirror, "
+        "so $v = 0$ is a horizon.",
+    ],
+    ("moving_mirror", "null", "collapse"): [
+        "The plane of $u$ and $v$ to the right of the mirror of Good, Anderson, and Evans ($\\kappa = 1$), drawn with "
+        "$(u + v)/2$ up and $(v - u)/2$ across, each point in the diagram a single event. Only $g_{uv}$ is nonzero, so "
+        "the light rays are the lines of constant $u$ and of constant $v$, at 45°.",
+        "The mirror is the curve $v = p(u) = -\\mathrm{W}(e^{-\\kappa u})/\\kappa$, with $\\mathrm{W}$ Lambert's "
+        "function. Far in the past it runs along $v = u + \\ln(-\\kappa u)/\\kappa$, close to a mirror at rest, and far "
+        "in the future along $v = -e^{-\\kappa u}/\\kappa$, Carlitz and Willey's mirror. The five rays marked arrive "
+        "at $\\kappa v = -2$, $-1$, $-1/2$, $-1/4$, and $-1/8$ and leave at $\\kappa u = -2.69$, $-1$, $0.19$, "
+        "$1.14$, and $1.95$.",
+    ],
+    ("moving_mirror", "mirror_rest", "thermal"): [
+        "The plane of $U$ and $v$ for Carlitz and Willey's mirror ($\\kappa = 1$), drawn with $(U + v)/2$ up and "
+        "$(v - U)/2$ across, each point in the diagram a single event. The mirror stands on the left edge, $U = v$, "
+        "and the metric is $dU\\,dv/\\kappa U$, the flat metric of $U$ and $v$ times a factor, so the light rays run "
+        "at 45°.",
+        "The chart ends on $U = 0$, the hatched edge, which is $u \\to \\infty$, so the whole future of the mirror lies "
+        "below the corner $U = v = 0$. The five rays marked reach the mirror at $\\kappa U = \\kappa v = -2$, $-1$, "
+        "$-1/2$, $-1/4$, and $-1/8$, crowding toward that corner, where the last ray, $v = 0$, arrives. The factor "
+        "$-1/\\kappa U$ grows without bound toward $U = 0$, and equal steps of $u$ are steps of $U$ that shrink as "
+        "$e^{-\\kappa u}$.",
+    ],
+    ("moving_mirror", "mirror_rest", "collapse"): [
+        "The plane of $U$ and $v$ for the mirror of Good, Anderson, and Evans ($\\kappa = 1$), drawn with "
+        "$(U + v)/2$ up and $(v - U)/2$ across, each point in the diagram a single event. The mirror stands on the "
+        "left edge, $U = v$, and the metric is $-(1 - 1/\\kappa U)\\,dU\\,dv$, so the light rays run at 45°.",
+        "Far down the diagram the factor $1 - 1/\\kappa U$ is close to $1$, and $U$ and $v$ are the null coordinates "
+        "of a mirror at rest. Toward the hatched edge $U = 0$, which is $u \\to \\infty$, it grows as $-1/\\kappa U$, "
+        "the factor of Carlitz and Willey's mirror. The five rays marked reach the mirror at "
+        "$\\kappa U = \\kappa v = -2$, $-1$, $-1/2$, $-1/4$, and $-1/8$, and the last ray, $v = 0$, arrives at the "
+        "corner $U = v = 0$.",
+    ],
+    ("moving_mirror", "thermal", "tx"): [
+        "The plane of $T$ and $X$ ($\\kappa = 1$), in which Carlitz and Willey's mirror stands still at $X = 0$, each "
+        "point in the diagram a single event. The metric is the flat metric of $T$ and $X$ divided by "
+        "$\\kappa(X - cT)$, so the light rays run at 45°.",
+        "The chart ends on $X = cT$, the hatched edge, where the factor $1/\\kappa(X - cT)$ diverges: that edge is "
+        "$u \\to \\infty$ for the inertial $u = ct - x$, and the mirror takes all of its future to reach $T = 0$. The "
+        "five rays marked reach the mirror at $\\kappa cT = -2$, $-1$, $-1/2$, $-1/4$, and $-1/8$, and the last ray, "
+        "$v = cT + X = 0$, arrives at the corner. A ray with $v > 0$ runs into the edge without meeting the mirror.",
+    ],
+    ("moving_mirror", "collapse", "tx"): [
+        "The plane of $T$ and $X$ ($\\kappa = 1$), in which the mirror of Good, Anderson, and Evans stands still at "
+        "$X = 0$, each point in the diagram a single event. The metric is the flat metric of $T$ and $X$ times "
+        "$1 + 1/\\kappa(X - cT)$, so the light rays run at 45°.",
+        "Far below the hatched edge the factor is close to $1$ and $T$ and $X$ are close to inertial coordinates, the "
+        "mirror all but at rest. The chart ends on $X = cT$, where the factor diverges and the inertial $u = ct - x$ "
+        "runs to infinity. The five rays marked reach the mirror at $\\kappa cT = -2$, $-1$, $-1/2$, $-1/4$, and "
+        "$-1/8$, and the last ray, $v = cT + X = 0$, arrives at the corner.",
+    ],
+    ("moving_mirror", "rindler", "tx"): [
+        "The plane of $\\eta$ and $\\xi$ ($\\kappa = 1$), Rindler's coordinates, in which a uniformly accelerating "
+        "mirror stands still at $\\xi = 0$, each point in the diagram a single event. The metric is the flat metric "
+        "of $\\eta$ and $\\xi$ times $e^{2\\kappa\\xi}$, so the light rays run at 45°.",
+        "The factor depends on $\\xi$ alone, so this chart is static, and the mirror is at rest in it for all of "
+        "$\\eta$. The four rays marked arrive at $\\kappa v = 1/2$, $1$, $2$, and $4$ for the inertial $v = ct + x$ "
+        "and reach the mirror at $\\kappa c\\eta = \\ln(\\kappa v)$, evenly spaced, $\\ln 2$ apart. This mirror "
+        "radiates no energy.",
     ],
     ("hartle_thorne", "hartle_thorne", "axis"): [
         "The plane of $t$ and $r$ on the axis of rotation ($\\theta = 0$) from the surface of the star out "
@@ -10520,11 +10707,12 @@ class Plot:
         """A world line r = radius(x^0) a row declares in `curves`, through the drawing, in the unit
         square, over the times at which the radius is positive and one more, where it ends."""
         x0 = self.c.x0
-        f = sp.lambdify(x0, sp.sympify(radius, locals={str(x0): x0, **DECLARED_FUNCTIONS}), "numpy")
+        expr = sp.sympify(radius, locals={str(x0): x0, **DECLARED_FUNCTIONS})
+        f = sp.lambdify(x0, expr, numeric_modules(expr))
         t = np.linspace(*self.x0_range(), 4001)
         with np.errstate(all="ignore"):
             R = np.broadcast_to(np.asarray(f(t), dtype=float), t.shape)
-        keep = np.isfinite(R) & (R > 0)
+        keep = np.isfinite(R) & ((R > 0) | self.c.spec.signed_curves)
         if keep.sum() < 2:
             raise SystemExit(f"{key(self.c.spec)}: the world line r = {radius} does not cross the drawing")
         last = np.flatnonzero(keep)[-1]
@@ -12359,6 +12547,14 @@ CLOSED_FORMS = {
     ("exponential_metric", "harmonic", "radial"):
         (lambda t, u: t - _curzon_axis(1 / u), lambda t, u: t + _curzon_axis(1 / u),
          lambda t, u: (u > 0.05) & (u < 1 / 0.35)),
+    # The moving mirror: every chart is flat or conformally flat in its two coordinates, so the sum and
+    # the difference of them are constant along the rays, or the null coordinates themselves.
+    **{("moving_mirror", "inertial", case): (lambda t, x: t + x, lambda t, x: t - x, None)
+       for case in ("thermal", "collapse", "uniform")},
+    **{("moving_mirror", chart, case): (lambda u, v: v, lambda u, v: u, None)
+       for chart in ("null", "mirror_rest") for case in ("thermal", "collapse")},
+    **{("moving_mirror", chart, "tx"): (lambda T, X: T + X, lambda T, X: T - X, None)
+       for chart in ("thermal", "collapse", "rindler")},
     # Witten's black hole at lambda = m = 1: the tortoise coordinate is ln sinh r in his own chart,
     # ln|e^(2x) - 1|/2 in the charts of x and ln|w - 1|/2 in the dilaton chart, and it is sigma itself.
     ("witten_black_hole", "witten", "radial"):

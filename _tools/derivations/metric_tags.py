@@ -137,6 +137,12 @@ RETIRED = {
 # that does not speak for the spacetime. A statement about the curvature has to hold in
 # every chart counted, and a symmetry has to show in some chart of every region.
 REGIONS = {
+    "moving_mirror": {
+        "regions": [["inertial", "null", "mirror_rest"]],
+        "why": "thermal, collapse and rindler are three mirrors, Carlitz and Willey's, the one that imitates a "
+               "collapse, and the uniformly accelerating one, which alone is at rest in a static chart; a mirror "
+               "on a general world line leaves the spacetime to its right no symmetry",
+    },
     "neugebauer_meinel": {
         "regions": [["weyl", "corotating", "bardeen_wagoner", "spheroidal"]],
         "why": "black_hole_limit is the limit mu -> mu_0 outside the disc, the extreme Kerr metric, "

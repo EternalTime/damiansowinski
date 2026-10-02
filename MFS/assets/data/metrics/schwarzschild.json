@@ -368,6 +368,11 @@
       "id": "exponential_metric",
       "kind": "family",
       "text": "Papapetrou's and Yilmaz's metric with no horizon, $g_{tt} = -e^{-2m/r}$ with $m = GM/c^2$ in isotropic coordinates. It agrees with Schwarzschild's at first order in $m/r$ and has a wormhole's throat where the horizon would be [boonserm2018]."
+    },
+    {
+      "id": "moving_mirror",
+      "kind": "family",
+      "text": "Flat spacetime of two dimensions with a receding mirror in place of the centre of a collapsing star. The mirror radiates as a Schwarzschild black hole of radius $r_s = 1/2\\kappa$ does, with no curvature anywhere [davies1977, good2016]."
     }
   ],
   "references": [
@@ -470,7 +475,9 @@
     "deruelle2011",
     "hoffmann1935",
     "gibbonsrasheed1995",
-    "boonserm2018"
+    "boonserm2018",
+    "davies1977",
+    "good2016"
   ],
   "coordinates": [
     {
