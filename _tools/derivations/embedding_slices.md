@@ -102,6 +102,13 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `anti_nariai` and `anti_nariai_static`, the strip of the anti-de Sitter factor: the point at $\tau = 0$, $\chi = 1$, the same on both.
 - `plane/uw`, `plane_null/uv`, `plane_static/wedge` and their conformal views carry no slice: anti-de Sitter space times a flat plane is another spacetime than the two embedded, and its moment is itself a flat plane.
 
+### Cremmer-Scherk
+
+- The embedding has two views at the moment $t = 0$: one flat dimension with the sphere's equator, $x$ from $-a$ to $a$ with $\phi$ at $y = z = 0$, and the sphere of $\theta$ and $\phi$ at one event, drawn at $x = a$.
+- `cartesian/tx`: the cylinder is the line $ct = 0$ from $x = -a$ to $a$; the sphere is the point $ct = 0$, $x = a$ on it.
+- `cartesian/circle`, the plane of $t$ and $\phi$ at $x = y = z = 0$: the cylinder meets it in its ring $x = 0$, the whole line $ct = 0$ from $\phi = 0$ to $2\pi$. The sphere stands at $x = a$, off this plane, and is not marked.
+- `cartesian`, the diamond of the plane of $t$ and $x$: the line $T = 0$ from $x = -a$ to $a$ and the point at $x = a$.
+
 ### Near-horizon extreme Kerr
 
 - The embedding has two views at the moment $\tau = 0$ of the global chart: the equator, $y$ from $-2.25$ to $2.25$ with $\phi$, and the sphere of $\theta$ and $\phi$ at one event, drawn at $y = 0$.
@@ -808,6 +815,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Bell-Szekeres | four events, five times; not visible on the regular view, which lies off $\eta = 0$ | none | four events, five times |
 | Bertotti-Robinson | line and point, twice | none | line and point, twice |
 | Plebański-Hacyan | line and point, twice; point, twice; none on the three views of the product with a flat plane | none | line and point, twice; point, twice; none on the three views of the product with a flat plane |
+| Cremmer-Scherk | line and point; line on the plane of the time and $\phi$ | none | line and point |
 | Bianchi I | four lines | none | none drawn |
 | cosmic string | none | whole drawing | line, line |
 | de Sitter | line, line, curve | none | line, line |

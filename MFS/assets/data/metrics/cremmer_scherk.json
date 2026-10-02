@@ -1,0 +1,1621 @@
+{
+  "id": "cremmer_scherk",
+  "name": "Cremmer-Scherk Spontaneous Compactification",
+  "short_name": "Cremmer-Scherk",
+  "description": "Minkowski space times a sphere, in six dimensions: the solution of gravity coupled to gauge fields with which Eugene Cremmer and Joël Scherk showed in 1976 that extra dimensions can curl up by the field equations. A magnetic monopole field through the sphere holds it open at one radius, and a cosmological constant of six dimensions keeps the other four dimensions flat.",
+  "tags": [
+    "static",
+    "stationary",
+    "six-dimensional",
+    "higher dimensions",
+    "Kaluza-Klein",
+    "compact dimension",
+    "spontaneous compactification",
+    "product spacetime",
+    "homogeneous",
+    "Einstein-Yang-Mills",
+    "Yang-Mills field",
+    "gauge field",
+    "magnetic monopole",
+    "Dirac quantisation",
+    "cosmological constant",
+    "positive cosmological constant",
+    "string theory",
+    "grand unification",
+    "no horizon",
+    "regular",
+    "geodesically complete",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+,+,+)",
+  "convention": "We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "The dual models of the early 1970s, the theories that grew into string theory, came with more room than anyone had asked for: they predict the dimension of spacetime, 26 for one model and 10 for another [cremmer2008]. Eugene Cremmer and Joël Scherk, at the École Normale Supérieure in Paris, rolled the spare dimensions into a torus and found that the good results of the models survived [cremmer2008]. Oskar Klein had made the same move in 1926 with one extra dimension, a circle too small to see [klein1926, duff1994]. A torus is flat, though, and its radii are whatever one chooses [cremmer2008]. Would the field equations roll the dimensions up by themselves, and say how tightly?¶Their answer came in 1976, in a world of six dimensions [cremmer1976, horvath1977]. Gravity there is joined by the gauge field of the group SO(3) and by Higgs fields, and the solution is, in their words, \"the direct product of the Minkowski space by a compact internal space of constant curvature\" [cremmer1976, horvath1977]. The internal space is a sphere, and the line element is $$ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2 + a^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right),$$ the flat spacetime of special relativity with a sphere of radius $a$ at each of its points [horvath1977]. Michael Duff's picture of Klein's circle is a hosepipe, which \"at large distances\" looks like a line, and here the hose has a sphere for its cross section [duff1994]. Cremmer and Scherk called it spontaneous compactification [cremmer1976].¶A magnetic monopole keeps the sphere from shrinking to nothing: the gauge field on the sphere is a monopole's with the radial direction left out, and its flux through the sphere comes in whole units, as the charge of Paul Dirac's monopole does [horvath1977, dirac1931]. Zalán Horváth and László Palla joined Cremmer and Scherk in 1977, and the four wrote the field on the two overlapping caps of Tai Tsun Wu and Chen Ning Yang, with any whole charge $n$ [horvath1977, wu1975]. The field equations then allow one radius, $a^2 = 8\\pi Gk/e^2$ in units with $\\hbar = c = 1$, where $G$ is the gravitational constant of six dimensions, $e$ the gauge coupling, and $k$ the sum of the squared charges, equal to 1 for the monopole of 1976 [horvath1977]. The four large dimensions come out flat when the cosmological constant of six dimensions, \"an adjustable constant\" in the four authors' words, is set to $\\Lambda = 1/2a^2$ [horvath1977].¶Someone living in the four large dimensions meets the sphere as a spectrum of particle masses [horvath1977]. A field spread over the sphere splits into harmonics, each one a particle, and a scalar of charge $q$ in the harmonic $J$ has the mass $\\sqrt{J(J + 1) - q^2}/a$ [horvath1977]. The radius is set by the gravitational constant, so \"all of the non-zero masses obtained this way will be of the order of the Planck's mass\" [horvath1977]. Cremmer and Scherk had found the same split in 1976: \"singlets have the lowest energy, non-singlet states having huge masses\" [cremmer1976]. The four authors proposed it as the superstrong symmetry breaking that, in grand unified theories, separates quarks from leptons [horvath1977].¶Six dimensions and SO(3) were the first case: by 1977 Cremmer and Scherk had the phenomenon \"in arbitrary space-time dimensions\" with the gauge group SO($N$), and by the same method they recovered the monopole for SO(3) and the instanton for SO(4) [cremmer1977]. J. F. Luciani, in the same laboratory, found such solutions for \"an arbitrary compact gauge group\" and with no Higgs fields, the internal space being the group itself or one of its coset spaces [luciani1978, horvath1977]. S. Randjbar-Daemi, Abdus Salam, and J. Strathdee kept only Maxwell's field in six dimensions in 1983, with a monopole of charge $n = \\pm 1, \\pm 2, \\dots$ on the sphere, and showed that the solution with four flat dimensions is classically stable [randjbar1983].¶The matter fields were put in to do the job, and Peter G. O. Freund and Mark A. Rubin objected in 1980 that \"such complication of the original theory is contrary to the spirit of unification\" [freund1980]. They used a field that supergravity in eleven dimensions already has, and found that it curls up either seven dimensions or four [freund1980]. Steven Weinberg's name for adding matter to hold the dimensions, as J. M. Overduin and P. S. Wesson retell it, is the fable of \"stone soup\", a stew of rocks that turns out to need vegetables, meat, and spices as well [overduin1997]. In 1985, P. Candelas, Gary T. Horowitz, Andrew Strominger, and Edward Witten found that a string theory of ten dimensions compactifies spontaneously to four on a Calabi-Yau manifold of six [candelas1985, duff1994].",
+  "related": [
+    {
+      "id": "plebanski_hacyan",
+      "kind": "family",
+      "text": "The same balance in four dimensions: a flat plane of time and space times a sphere of radius $b$, held by a uniform electromagnetic field, with $\\Lambda = 1/2b^2$ [ortaggio2002direct]. Cremmer and Scherk's solution has four flat dimensions where that one has two."
+    },
+    {
+      "id": "bertotti_robinson",
+      "kind": "family",
+      "text": "A sphere held open by an electromagnetic field in four dimensions with no cosmological constant. The other two dimensions then curve into an anti-de Sitter space, as the large dimensions of Freund and Rubin's solutions do [bertotti1959, freund1980]."
+    },
+    {
+      "id": "kaluza_klein_monopole",
+      "kind": "family",
+      "text": "A monopole in the theory of Kaluza and Klein, where the extra dimension is a circle and nothing but gravity is there. Here the monopole's field lies along the extra dimensions and holds them at one size [grossperry1983, horvath1977]."
+    },
+    {
+      "id": "randall_sundrum",
+      "kind": "family",
+      "text": "Lisa Randall and Raman Sundrum's \"alternative to compactification\": a fifth dimension of infinite size, with gravity held near a wall by the curvature of anti-de Sitter space [randall1999b]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "family",
+      "text": "The four large dimensions are Minkowski space, and every surface of constant $\\theta$ and $\\phi$ is a copy of it [horvath1977]."
+    }
+  ],
+  "references": [
+    "cremmer2008",
+    "klein1926",
+    "duff1994",
+    "cremmer1976",
+    "horvath1977",
+    "dirac1931",
+    "wu1975",
+    "cremmer1977",
+    "luciani1978",
+    "randjbar1983",
+    "freund1980",
+    "overduin1997",
+    "candelas1985",
+    "ortaggio2002direct",
+    "bertotti1959",
+    "grossperry1983",
+    "randall1999b"
+  ],
+  "coordinates": [
+    {
+      "id": "cartesian",
+      "name": "Cartesian",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "z",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "Radius of the sphere, a length; the field equations fix it, $a^2 = 8\\pi Gk/e^2$ in units with $\\hbar = c = 1$, where $G$ is the gravitational constant of six dimensions, $e$ is the gauge coupling, and $k$ is the sum of the squared charges of the monopole field, and they hold with the cosmological constant $\\Lambda = 1/2a^2$"
+        }
+      ],
+      "convention": "We use coordinates $(t, x, y, z, \\theta, \\phi)$, with $t$ a time, $x$, $y$, and $z$ lengths along the flat dimensions, and $\\theta$ and $\\phi$ the angles on the sphere. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2 + a^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "a^2\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{a^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "a^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "a^2\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "1"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "a^2\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-a^2\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-a^2\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "a^2\\sin^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\sin^2\\theta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{a^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{a^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\csc^2\\theta}{a^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{2}{a^2}",
+      "kretschmann": "K = \\dfrac{4}{a^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{a^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{a^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{a^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{a^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{a^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{a^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{a^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{a^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{a^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{a^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{a^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{a^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\theta",
+                  "x",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\theta",
+                  "\\theta",
+                  "x"
+                ],
+                "value": "\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\theta",
+                  "y",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\theta",
+                  "\\theta",
+                  "y"
+                ],
+                "value": "\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\phi",
+                  "x",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\phi",
+                  "\\phi",
+                  "x"
+                ],
+                "value": "\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3}{20a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{3}{20a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "x",
+                  "x",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3}{20a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "x",
+                  "\\theta",
+                  "x"
+                ],
+                "value": "-\\dfrac{3}{20a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "y",
+                  "y",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3}{20a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "y",
+                  "\\theta",
+                  "y"
+                ],
+                "value": "-\\dfrac{3}{20a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3}{20a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "-\\dfrac{3}{20a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3}{20a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{3}{20a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x",
+                  "x",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3}{20a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x",
+                  "\\phi",
+                  "x"
+                ],
+                "value": "-\\dfrac{3}{20a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3}{20a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "-\\dfrac{3}{20a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3}{20a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{3}{20a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3\\sin^2\\theta}{5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3\\sin^2\\theta}{5}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3}{5}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3}{5}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{10a^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\theta",
+                  "x",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\theta",
+                  "\\theta",
+                  "x"
+                ],
+                "value": "\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\theta",
+                  "y",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\theta",
+                  "\\theta",
+                  "y"
+                ],
+                "value": "\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "x",
+                  "x",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "x",
+                  "\\theta",
+                  "x"
+                ],
+                "value": "-\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "y",
+                  "y",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "y",
+                  "\\theta",
+                  "y"
+                ],
+                "value": "-\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "-\\dfrac{3}{20}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\phi",
+                  "x",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\phi",
+                  "\\phi",
+                  "x"
+                ],
+                "value": "\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x",
+                  "x",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "x",
+                  "\\phi",
+                  "x"
+                ],
+                "value": "-\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "-\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{3\\sin^2\\theta}{20}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3a^2\\sin^2\\theta}{5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3a^2\\sin^2\\theta}{5}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3a^2\\sin^2\\theta}{5}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3a^2\\sin^2\\theta}{5}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{x} = 0",
+        "\\ddot{y} = 0",
+        "\\ddot{z} = 0",
+        "\\ddot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    }
+  ]
+}

@@ -313,6 +313,10 @@ LIFSHITZ_PLANE = {"x": "0", "y": "0"}
 # anti-Nariai's hold a point of its hyperbolic plane off the pole theta = 0.
 PH_PLANE = {"x": "0", "y": "0"}
 PH_HYPERBOLIC = {"theta": "1", "phi": "0"}
+# Cremmer and Scherk's plane of the time and x holds the other flat dimensions and a point of the
+# sphere's equator fixed, and their plane of the time and phi one point of the flat dimensions.
+CS_LARGE = {"y": "0", "z": "0", "theta": "pi/2", "phi": "0"}
+CS_EQUATOR = {"x": "0", "y": "0", "z": "0", "theta": "pi/2"}
 POLAR = "polar"                         # (phi, r) drawn from above: X = r cos phi, Y = r sin phi
 PRINCIPAL_CONE = "future cone of the principal plane"
 BTZ_CONE = "future cone of no angular momentum"
@@ -3096,6 +3100,13 @@ DIAGRAMS = [
             input=LW_INPUT + " The radius $a(\\tau)$ is solved from this spacetime's own $G^\\chi{}_\\chi = 0$, at rest "
                              "with $a = a_m$ at $\\tau = 0$, which is the lattice's own "
                              "$\\dot{a}^2 = a_m/a - 1$."),
+    # Cremmer and Scherk's Minkowski space times a sphere, in units of the sphere's radius: a plane of the
+    # time and one flat dimension, and the plane of the time and the sphere's equator, which closes on itself.
+    Diagram("cremmer_scherk", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2),
+            "$x/a$", "$ct/a$", {"a": 1}, CS_LARGE, families=SIDEWAYS),
+    Diagram("cremmer_scherk", "cartesian", "circle", "$t$ and $\\phi$", ("t", "\\phi"),
+            (0, 2 * math.pi, -math.pi, math.pi), "$\\phi$", "$ct/a$", {"a": 1}, CS_EQUATOR, families=SIDEWAYS,
+            periodic=("\\phi",)),
     Diagram("interior_schwarzschild", "spherical", "radial", "$t$ and $r$", ("t", "r"),
             (0, 1.5, -0.75, 0.75), "$r/r_s$", "$t/r_s$", {"r_s": 1, "R": "3/2"}, EQUATOR,
             areal=True),
@@ -7482,6 +7493,21 @@ CAPTIONS = {
         "$ct \\pm (a/2)\\ln((r - a)/(r + a))$ constant along it.",
         "The massless hyperbolic black hole of anti-de Sitter space has this $g_{tt}$ with $r$ its areal radius. "
         "Here every surface of $\\theta$ and $\\phi$ has the one radius $a$.",
+    ],
+    ("cremmer_scherk", "cartesian", "tx"): [
+        "The plane of $t$ and $x$ ($y = z = 0$, $\\theta = \\pi/2$, $\\phi = 0$) of Cremmer and Scherk's "
+        "solution, one of the three flat dimensions against time, each point in the plane a flat plane of $y$ "
+        "and $z$ times a 2-sphere of radius $a$. The rays are at 45°, with $ct \\pm x$ constant along them.",
+        "Light sent along the large dimensions travels as it does in special relativity, at any radius of the "
+        "sphere.",
+    ],
+    ("cremmer_scherk", "cartesian", "circle"): [
+        "The plane of $t$ and $\\phi$ ($x = y = z = 0$, $\\theta = \\pi/2$), the equator of the sphere "
+        "against time, $-c^2dt^2 + a^2d\\phi^2$, with $\\phi = 0$ and $2\\pi$ one line. The rays are at 45°, "
+        "with $ct \\pm a\\phi$ constant along them.",
+        "A ray sent round the equator is back where it started after the time $2\\pi a/c$, having gone nowhere "
+        "in $x$, $y$, and $z$. To an observer in the large dimensions a neutral scalar wave on the sphere is a "
+        "particle at rest, of mass $\\hbar\\sqrt{J(J + 1)}/ac$ for integer $J$.",
     ],
     ("interior_schwarzschild", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole domain of the "
@@ -13109,6 +13135,9 @@ CLOSED_FORMS = {
     ("plebanski_hacyan", "anti_nariai_static", "radial"):
         (lambda t, r: t + 0.5 * np.log((r - 1) / (r + 1)), lambda t, r: t - 0.5 * np.log((r - 1) / (r + 1)),
          lambda t, r: r > 1.05),
+    # Cremmer and Scherk's flat dimensions and the equator of their sphere at unit radius: ct -+ x and ct -+ phi.
+    ("cremmer_scherk", "cartesian", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
+    ("cremmer_scherk", "cartesian", "circle"): (lambda t, f: t + f, lambda t, f: t - f, None),
     ("anti_de_sitter", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("bertotti_robinson", "poincare", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     # The throat of extreme Kerr at r_0 = 1: each plane is conformal to a chart of AdS2, whose rays
