@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 124,
+  "count": 125,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -1952,6 +1952,11 @@
           "id": "mass_inflation",
           "kind": "family",
           "text": "Ori's model of a charged hole with radiation crossing it, whose mass function grows without limit at the inner horizon. Carried over to Bardeen's metric it gives an exponentially growing mass at the inner horizon as well [carballorubio2021]."
+        },
+        {
+          "id": "born_infeld_charge",
+          "kind": "family",
+          "text": "A point charge of Born and Infeld's nonlinear electrodynamics, to which Hoffmann gave its gravity in 1935. Its charge is electric and its centre a conical point or a singularity, where Bardeen's monopole has a regular centre [hoffmann1935, gibbonsrasheed1995]."
         }
       ],
       "references": [
@@ -1976,7 +1981,9 @@
         "poisson1990",
         "simpson2019",
         "mazur2004",
-        "carballorubio2021"
+        "carballorubio2021",
+        "hoffmann1935",
+        "gibbonsrasheed1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bardeen.json",
@@ -5427,6 +5434,332 @@
       ]
     },
     {
+      "id": "born_infeld_charge",
+      "name": "Born-Infeld Point Charge",
+      "short_name": "Born-Infeld Point Charge",
+      "description": "The gravitational field of a point charge in Born and Infeld's electrodynamics, where the electric field stays finite at the charge, which Banesh Hoffmann found in 1935. With its whole mass in its field the charge is a particle with no horizon and a conical point at its centre, and with more mass it is a black hole with one horizon.",
+      "tags": [
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "charged",
+        "electric charge",
+        "mass",
+        "point charge",
+        "electromagnetic mass",
+        "nonlinear electrodynamics",
+        "Born-Infeld electrodynamics",
+        "electromagnetic field",
+        "particle-like solution",
+        "geon",
+        "conical singularity",
+        "curvature singularity",
+        "naked singularity",
+        "timelike singularity",
+        "no horizon",
+        "black hole",
+        "charged black hole",
+        "horizon",
+        "event horizon",
+        "string theory",
+        "causal structure",
+        "maximal extension",
+        "asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The mass, the charge, and Born and Infeld's greatest field enter as the lengths $r_s$, $r_q$, and $r_0$, and $\\mathrm{F}(\\varphi \\mid k^2) = \\int_0^\\varphi d\\vartheta/\\sqrt{1 - k^2\\sin^2\\vartheta}$ is the incomplete elliptic integral of the first kind. We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "rn_metric",
+          "kind": "special_case",
+          "text": "Born and Infeld's point charge with Maxwell's field. At $r_0 = 0$ the radical $W$ is $r^2$, the mass inside $r$ is $r_s/2 - r_q^2/2r$, and the metric is Reissner and Nordström's [rasheed1997]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The same spacetime with no charge. At $r_q = 0$ the mass inside every radius is $r_s/2$, and the metric is Schwarzschild's."
+        },
+        {
+          "id": "einstein_rosen_bridge",
+          "kind": "programme",
+          "text": "The other particle of 1935. Einstein and Rosen, who pointed out the conical point at the centre of Hoffmann's particle, made theirs a bridge between two sheets, with no centre in it [einstein1935, tahvildarzadeh2011]."
+        },
+        {
+          "id": "bardeen",
+          "kind": "family",
+          "text": "Another black hole of a nonlinear electrodynamics. Bardeen's charge is magnetic and its centre is regular, where the electric charge of Born and Infeld's theory leaves a conical point or a singularity [ayonbeato2000, bronnikov2001]."
+        },
+        {
+          "id": "boulware_deser",
+          "kind": "family",
+          "text": "String theory's correction to Einstein's gravity, beside its correction to Maxwell's field. The Gauss-Bonnet term gives the metric function a radical of the same kind, the square root of $r^4$ plus a constant, and David Wiltshire solved for both corrections together in 1988 [boulware1985, wiltshire1988]."
+        }
+      ],
+      "references": [
+        "borninfeld1934",
+        "born1933",
+        "rasheed1997",
+        "gibbonsrasheed1995",
+        "hoffmann1935",
+        "cirilolombardo2005",
+        "tahvildarzadeh2011",
+        "hoffmanninfeld1937",
+        "fradkintseytlin1985",
+        "fernandokrug2003",
+        "garcia1984",
+        "breton2003",
+        "demianski1986",
+        "cirilolombardo2004",
+        "ayonbeato2000",
+        "bronnikov2001",
+        "einstein1935",
+        "boulware1985",
+        "wiltshire1988"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/born_infeld_charge.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Static Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_h \\;\\text{(the horizons, where}\\; r = 2m\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the whole mass, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius, $r_q^2 = Q^2 G / (4\\pi\\epsilon_0 c^4)$, where $Q$ is the electric charge"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Born and Infeld's radius, $r_0^2 = Q/(4\\pi\\epsilon_0 b)$, where the Coulomb field of the charge would reach their greatest field strength $b$. Maxwell's theory is $r_0 = 0$"
+            },
+            {
+              "symbol": "W = \\sqrt{r^4 + r_0^4}",
+              "description": "The radical of Born and Infeld's field, $E = Q/(4\\pi\\epsilon_0 W)$, which is $r^2$ in Maxwell's theory"
+            },
+            {
+              "symbol": "m = \\dfrac{r_s}{2} + \\dfrac{r_q^2\\,r}{3\\left(r^2 + W\\right)} - \\dfrac{r_q^2}{3r_0}\\,\\mathrm{F}\\left(2\\arctan\\left(\\dfrac{r_0}{r}\\right) \\mid \\dfrac{1}{2}\\right)",
+              "description": "Mass inside the radius $r$, as a length: $dm/dr = r_q^2/(r^2 + W)$, the energy of the field in a shell, and $m \\to r_s/2$ far away. At the centre $m = r_s/2 - 1.2360\\,r_q^2/r_0$, which is positive, zero, or negative as the mass exceeds, equals, or falls short of the energy of the field. A horizon is a radius $r_h$ at which $r = 2m$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{2m}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{2m}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4r_q^2\\left(W - r^2\\right)}{r^2\\,W\\left(r^2 + W\\right)}",
+          "kretschmann": "K = \\dfrac{16}{r^6}\\left(\\left(m - \\dfrac{r_q^2\\,r}{W}\\right)^2 + \\left(m - \\dfrac{r_q^2\\,r}{r^2 + W}\\right)^2 + m^2\\right)"
+        },
+        {
+          "id": "eddington_finkelstein_outgoing",
+          "name": "Outgoing Eddington-Finkelstein",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_h \\;\\text{(the horizons, where}\\; r = 2m\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the whole mass, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius, $r_q^2 = Q^2 G / (4\\pi\\epsilon_0 c^4)$, where $Q$ is the electric charge"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Born and Infeld's radius, $r_0^2 = Q/(4\\pi\\epsilon_0 b)$, where the Coulomb field of the charge would reach their greatest field strength $b$. Maxwell's theory is $r_0 = 0$"
+            },
+            {
+              "symbol": "W = \\sqrt{r^4 + r_0^4}",
+              "description": "The radical of Born and Infeld's field, $E = Q/(4\\pi\\epsilon_0 W)$, which is $r^2$ in Maxwell's theory"
+            },
+            {
+              "symbol": "m = \\dfrac{r_s}{2} + \\dfrac{r_q^2\\,r}{3\\left(r^2 + W\\right)} - \\dfrac{r_q^2}{3r_0}\\,\\mathrm{F}\\left(2\\arctan\\left(\\dfrac{r_0}{r}\\right) \\mid \\dfrac{1}{2}\\right)",
+              "description": "Mass inside the radius $r$, as a length: $dm/dr = r_q^2/(r^2 + W)$, the energy of the field in a shell, and $m \\to r_s/2$ far away. At the centre $m = r_s/2 - 1.2360\\,r_q^2/r_0$, which is positive, zero, or negative as the mass exceeds, equals, or falls short of the energy of the field. A horizon is a radius $r_h$ at which $r = 2m$"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded time $u = ct - r_*$ a length, where $dr_*/dr = \\left(1 - 2m/r\\right)^{-1}$ and $r_* = 0$ at $r = 0$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4r_q^2\\left(W - r^2\\right)}{r^2\\,W\\left(r^2 + W\\right)}",
+          "kretschmann": "K = \\dfrac{16}{r^6}\\left(\\left(m - \\dfrac{r_q^2\\,r}{W}\\right)^2 + \\left(m - \\dfrac{r_q^2\\,r}{r^2 + W}\\right)^2 + m^2\\right)"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_h \\;\\text{(the horizons, where}\\; r = 2m\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the whole mass, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius, $r_q^2 = Q^2 G / (4\\pi\\epsilon_0 c^4)$, where $Q$ is the electric charge"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Born and Infeld's radius, $r_0^2 = Q/(4\\pi\\epsilon_0 b)$, where the Coulomb field of the charge would reach their greatest field strength $b$. Maxwell's theory is $r_0 = 0$"
+            },
+            {
+              "symbol": "W = \\sqrt{r^4 + r_0^4}",
+              "description": "The radical of Born and Infeld's field, $E = Q/(4\\pi\\epsilon_0 W)$, which is $r^2$ in Maxwell's theory"
+            },
+            {
+              "symbol": "m = \\dfrac{r_s}{2} + \\dfrac{r_q^2\\,r}{3\\left(r^2 + W\\right)} - \\dfrac{r_q^2}{3r_0}\\,\\mathrm{F}\\left(2\\arctan\\left(\\dfrac{r_0}{r}\\right) \\mid \\dfrac{1}{2}\\right)",
+              "description": "Mass inside the radius $r$, as a length: $dm/dr = r_q^2/(r^2 + W)$, the energy of the field in a shell, and $m \\to r_s/2$ far away. At the centre $m = r_s/2 - 1.2360\\,r_q^2/r_0$, which is positive, zero, or negative as the mass exceeds, equals, or falls short of the energy of the field. A horizon is a radius $r_h$ at which $r = 2m$"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v = ct + r_*$ a length, where $dr_*/dr = \\left(1 - 2m/r\\right)^{-1}$ and $r_* = 0$ at $r = 0$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4r_q^2\\left(W - r^2\\right)}{r^2\\,W\\left(r^2 + W\\right)}",
+          "kretschmann": "K = \\dfrac{16}{r^6}\\left(\\left(m - \\dfrac{r_q^2\\,r}{W}\\right)^2 + \\left(m - \\dfrac{r_q^2\\,r}{r^2 + W}\\right)^2 + m^2\\right)"
+        }
+      ]
+    },
+    {
       "id": "boson_star",
       "name": "Boson Stars and Geons",
       "short_name": "Boson Star",
@@ -5718,6 +6051,11 @@
           "id": "vaidya",
           "kind": "family",
           "text": "A black hole fed by a stream of radiation, its mass a function of the advanced time $v$. Tsutomu Kobayashi let the mass of this hole depend on $v$ in the same way in 2005, in Eddington-Finkelstein coordinates, with a null fluid for the radiation [kobayashi2005]."
+        },
+        {
+          "id": "born_infeld_charge",
+          "kind": "family",
+          "text": "String theory's correction to Maxwell's field, beside its correction to Einstein's gravity. The metric of Born and Infeld's point charge has a radical of the same kind, the square root of $r^4$ plus a constant, and David Wiltshire solved for both corrections together in 1988 [gibbonsrasheed1995, wiltshire1988]."
         }
       ],
       "references": [
@@ -5739,7 +6077,9 @@
         "gurses2020",
         "fernandes2022",
         "cai2002",
-        "kobayashi2005"
+        "kobayashi2005",
+        "gibbonsrasheed1995",
+        "wiltshire1988"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/boulware_deser.json",
@@ -9788,6 +10128,11 @@
           "id": "misner_brill_lindquist",
           "kind": "family",
           "text": "A slice of space with two bridges in it, each leading to a sheet of its own, which Dieter Brill and Richard Lindquist wrote down in 1963 [brill1963]. Charles Misner's slice of 1960 joins the two mouths to each other and makes a wormhole within one sheet [misner1960]."
+        },
+        {
+          "id": "born_infeld_charge",
+          "kind": "programme",
+          "text": "Hoffmann's particle of the same year, a point charge of Born and Infeld's electrodynamics whose whole mass is the energy of its field. Einstein and Rosen pointed out to him the conical point left at its centre [hoffmann1935, tahvildarzadeh2011]."
         }
       ],
       "references": [
@@ -9809,7 +10154,9 @@
         "bronnikov1973",
         "einstein1937",
         "brill1963",
-        "misner1960"
+        "misner1960",
+        "hoffmann1935",
+        "tahvildarzadeh2011"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_bridge.json",
@@ -30064,6 +30411,11 @@
           "id": "bonnor_magnetic_dipole",
           "kind": "limit_source",
           "text": "Two extremal Reissner-Nordström black holes of opposite magnetic charge on one axis. In the limit $b \\to \\infty$ the two are infinitely far apart and each is the extremal hole alone [emparan2000]."
+        },
+        {
+          "id": "born_infeld_charge",
+          "kind": "generalisation",
+          "text": "This charge with a limit on its field. Born and Infeld's electrodynamics keeps the field of a point charge finite, so the energy of the field is finite too, and the charge is a black hole with one horizon or two, or a particle with no horizon and a conical point at its centre [hoffmann1935, gibbonsrasheed1995]."
         }
       ],
       "references": [
@@ -30101,7 +30453,9 @@
         "breitenlohner1994",
         "volkov1999",
         "brill1963",
-        "emparan2000"
+        "emparan2000",
+        "hoffmann1935",
+        "gibbonsrasheed1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -32384,6 +32738,11 @@
           "id": "ppn_metric",
           "kind": "generalisation",
           "text": "Schwarzschild's far field with a number in front of each term, $\\beta$ on $m^2/r^2$ in $g_{tt}$ and $\\gamma$ on $m/r$ in the metric of space. Every test in the solar system measures those numbers, and at $\\beta = \\gamma = 1$ the field is Schwarzschild's [thornewill1971]."
+        },
+        {
+          "id": "born_infeld_charge",
+          "kind": "generalisation",
+          "text": "Schwarzschild's mass with a charge whose field obeys Born and Infeld's electrodynamics. The mass inside a sphere then grows with its radius, by the energy of the field, and reaches $r_s/2$ far away [hoffmann1935, gibbonsrasheed1995]."
         }
       ],
       "references": [
@@ -32477,7 +32836,9 @@
         "israel1966",
         "griffiths1991",
         "ferrari1988",
-        "thornewill1971"
+        "thornewill1971",
+        "hoffmann1935",
+        "gibbonsrasheed1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",

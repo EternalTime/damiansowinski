@@ -333,6 +333,11 @@
       "id": "ppn_metric",
       "kind": "generalisation",
       "text": "Schwarzschild's far field with a number in front of each term, $\\beta$ on $m^2/r^2$ in $g_{tt}$ and $\\gamma$ on $m/r$ in the metric of space. Every test in the solar system measures those numbers, and at $\\beta = \\gamma = 1$ the field is Schwarzschild's [thornewill1971]."
+    },
+    {
+      "id": "born_infeld_charge",
+      "kind": "generalisation",
+      "text": "Schwarzschild's mass with a charge whose field obeys Born and Infeld's electrodynamics. The mass inside a sphere then grows with its radius, by the energy of the field, and reaches $r_s/2$ far away [hoffmann1935, gibbonsrasheed1995]."
     }
   ],
   "references": [
@@ -426,7 +431,9 @@
     "israel1966",
     "griffiths1991",
     "ferrari1988",
-    "thornewill1971"
+    "thornewill1971",
+    "hoffmann1935",
+    "gibbonsrasheed1995"
   ],
   "coordinates": [
     {

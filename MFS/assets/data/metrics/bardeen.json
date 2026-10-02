@@ -72,6 +72,11 @@
       "id": "mass_inflation",
       "kind": "family",
       "text": "Ori's model of a charged hole with radiation crossing it, whose mass function grows without limit at the inner horizon. Carried over to Bardeen's metric it gives an exponentially growing mass at the inner horizon as well [carballorubio2021]."
+    },
+    {
+      "id": "born_infeld_charge",
+      "kind": "family",
+      "text": "A point charge of Born and Infeld's nonlinear electrodynamics, to which Hoffmann gave its gravity in 1935. Its charge is electric and its centre a conical point or a singularity, where Bardeen's monopole has a regular centre [hoffmann1935, gibbonsrasheed1995]."
     }
   ],
   "references": [
@@ -96,7 +101,9 @@
     "poisson1990",
     "simpson2019",
     "mazur2004",
-    "carballorubio2021"
+    "carballorubio2021",
+    "hoffmann1935",
+    "gibbonsrasheed1995"
   ],
   "coordinates": [
     {

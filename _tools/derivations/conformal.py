@@ -3021,6 +3021,271 @@ def bardeen(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- Born and Infeld's point charge
+
+class BornInfeldTower(Tower):
+    """The tower of the black hole of Born and Infeld's point charge at r_q = r_0/2 and
+    r_s = 2 r_0, f = 1 - 2m/r with m an elliptic integral, whose one root r_h = 1.8666 r_0 is no
+    root of a polynomial. Its tortoise coordinate is ln|1 - r/r_h|/2k and the integral of a smooth
+    function, slices.born_infeld_rstar, with r*(0) = 0. The root and the surface gravity
+    k = f'(r_h)/2 are taken in forty digits from the published g^rr."""
+
+    def __init__(self, f, r):
+        self.f_sym = f
+        value, slope = sp.lambdify(r, f, "mpmath"), sp.lambdify(r, sp.diff(f, r), "mpmath")
+        with mpmath.workdps(40):
+            root = mpmath.findroot(value, mpmath.mpf(slices.BORN_INFELD_HORIZON))
+            self.rf = [float(root)]
+            self.kp = float(slope(root) / 2)
+        assert self.kp > 0, "the horizon is not where f rises through zero"
+
+    def rstar(self, r):
+        return slices.born_infeld_rstar(r, "hole")
+
+
+BI_ELL = 2.0            # the length that scales Hoffmann's particle onto Minkowski's triangle, in r_0
+
+
+def born_infeld_charge(ck, src):
+    """Born and Infeld's point charge at r_q = r_0/2, in units of r_0: Hoffmann's particle,
+    r_s = 0.6180 r_0, and the black hole, r_s = 2 r_0, each in its three charts.
+
+    The particle has f = 1 - 2m/r > 0 at every radius, from 1/2 at the centre to 1 far away, so
+    its tortoise coordinate runs from 0 at r = 0 to infinity and p, q = arctan((ct -+ r*)/l), with
+    l = 2 r_0, draw the plane of t and r as Minkowski's triangle: the centre on X = 0, timelike,
+    where the Kretschmann scalar diverges as 16 r_q^4/(r_0^4 r^4), and null infinity on the two
+    slanted edges. The Eddington-Finkelstein coordinates are v = ct + r* and u = ct - r*, so each
+    covers the same triangle.
+
+    The black hole is Kruskal and Szekeres's square by p = arctan U, q = arctan V with
+    U = -exp(-k u), V = exp(k v), u, v = ct -+ r* and k = f'(r_h)/2 = 0.2490/r_0 the surface
+    gravity, so that UV = sign(r_h - r) exp(2 k r*). With more mass than the field holds m is
+    positive at the centre, f falls to minus infinity there as Schwarzschild's does, r* is finite
+    and with r*(0) = 0 the singularity UV = 1 is the pair of straight lines T = +-pi/2, spacelike.
+    The ingoing coordinates are V = exp(k v), U = (UV)(r)/V, one formula for every r > 0 covering
+    I and II, and the outgoing ones their time reverse."""
+    name = "Born-Infeld"
+    views = []
+
+    # Hoffmann's particle.
+    st = Plane(src, "born_infeld_charge", "static", ("t", "r"), EQUATOR, nr.BI_PARTICLE)
+    assert st.g[0, 1] == 0 and sp.simplify(st.g[0, 0] * st.g[1, 1] + 1) == 0
+
+    def rstar(r):
+        return slices.born_infeld_rstar(r, "particle")
+
+    def static(t, r):
+        return mink_pq(t, rstar(r), BI_ELL)
+
+    def ingoing(w, r):
+        rs = rstar(r)
+        return mink_pq(np.asarray(w, dtype=float) - rs, rs, BI_ELL)
+
+    def outgoing(u, r):
+        rs = rstar(r)
+        return mink_pq(np.asarray(u, dtype=float) + rs, rs, BI_ELL)
+    f_at = sp.lambdify(st.x1, st.gi[1, 1], "numpy")
+    ein = Plane(src, "born_infeld_charge", "eddington_finkelstein_ingoing", ("v", "r"), EQUATOR, nr.BI_PARTICLE)
+    eout = Plane(src, "born_infeld_charge", "eddington_finkelstein_outgoing", ("u", "r"), EQUATOR, nr.BI_PARTICLE)
+    for label, plane, fmap in (("static", st, static), ("ingoing Eddington-Finkelstein", ein, ingoing),
+                               ("outgoing Eddington-Finkelstein", eout, outgoing)):
+        ck.chart(f"{name}, the particle, {label}", plane, fmap, ck.uniform(-20, 20, 400), ck.uniform(0.02, 20, 400),
+                 lambda t, r: (1, 0))
+    rr = np.array([0.05, 0.3, 1.0, 3.0, 30.0])
+    ck.limit(f"{name}, the particle: dr*/dr = 1/f", (rstar(rr + 1e-6) - rstar(rr - 1e-6)) / 2e-6 * f_at(rr), np.ones(5), 1e-6)
+    ck.limit(f"{name}, the particle: r* vanishes at r = 0", [float(rstar(0.0))], [0], 1e-12)
+    ck.limit(f"{name}, the particle: f tends to 1 - 2 r_q^2/r_0^2 = 1/2 at the centre and is positive everywhere",
+             [float(f_at(1e-5)), float(np.min(f_at(np.geomspace(1e-5, 1e5, 2000))) > 0)], [0.5, 1], 1e-8)
+    p, q = static(np.array([-3.0, 0, 3]), np.full(3, 1e-12))
+    ck.limit(f"{name}, the particle: r -> 0 lands on X = 0", q - p, [0] * 3, 1e-9)
+    K = st.kretschmann
+    ck.diverges(f"{name}, the particle: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+    ck.limit(f"{name}, the particle: r^4 K tends to 16 r_q^4/r_0^4 = 1 at r = 0", [float(K(0, 1e-3)) * 1e-12], [1], 1e-4)
+    ck.limit(f"{name}, the particle: the three charts put one event at one point",
+             np.concatenate([ingoing(0.4 + rstar(3.0), 3.0), outgoing(0.4 - rstar(3.0), 3.0)]),
+             np.concatenate([static(0.4, 3.0)] * 2), 1e-12)
+
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    radii, times, rays = (0.5, 1, 2, 4), (-8, -4, -2, 0, 2, 4, 8), (-8, -4, -2, 0, 2, 4, 8)
+    moment = slices.moments("born_infeld_charge", "particle")[0]
+    along_r = np.linspace(*moment.reach("static", "r"), 200)
+    settings = "$r_q = r_0/2$ and $r_s = 0.618\\,r_0$, the mass of the field alone, with $\\ell = 2\\,r_0$."
+
+    def finish(v):
+        v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6),
+                                         ((0, -PI), "$i^-$", "t", 0, 6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label_xt([0, 0.25], "$r = 0$", "r", dx=-6)
+        label_on(v, static(0, 1), "$r = r_0$")
+        label_on(v, static(0, 4), "$4\\,r_0$")
+        v.set(settings=settings)
+        v.legend("r", "$r$ constant, at $0.5$, $1$, $2$ and $4\\,r_0$")
+        v.legend("singular", "$r = 0$, the conical singularity, where the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        v.slice(moment, [static(0 * along_r, along_r)])
+
+    v = View("particle", "Hoffmann's particle", box, "static")
+    v.fill("region", TRIANGLE)
+    v.fill("cover", TRIANGLE)
+    grid(v, "r", lambda r, t: static(t, r), radii, S_ALL)
+    grid(v, "t", static, times, S_POS)
+    v.legend("cover", "the whole spacetime, which $t$ and $r$ cover")
+    v.legend("t", "$ct$ constant, at " + listed(times) + " in units of $r_0$")
+    finish(v)
+    views.append(v)
+    for vid, system, fmap, coordinate, way in (
+            ("particle_ingoing", "eddington_finkelstein_ingoing", ingoing, "v", "an ingoing"),
+            ("particle_outgoing", "eddington_finkelstein_outgoing", outgoing, "u", "an outgoing")):
+        v = View(vid, "Hoffmann's particle", box, system)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        grid(v, "r", lambda r, w, fmap=fmap: fmap(w, r), radii, S_ALL)
+        grid(v, "null", fmap, rays, S_POS)
+        v.legend("cover", f"the whole spacetime, which ${coordinate}$ and $r$ cover")
+        v.legend("null", f"${coordinate}$ constant, {way} light ray, at " + listed(rays) + " in units of $r_0$")
+        finish(v)
+        views.append(v)
+
+    # The black hole.
+    sph = Plane(src, "born_infeld_charge", "static", ("t", "r"), EQUATOR, nr.BI_HOLE)
+    assert sph.g[0, 1] == 0 and sp.simplify(sph.g[0, 0] * sph.g[1, 1] + 1) == 0
+    T = BornInfeldTower(sph.gi[1, 1], sph.x1)
+    k, rh = T.kp, T.rf[0]
+    ck.limit(f"{name}, the black hole: the horizon is the zero of the published g^rr, 1.8666 r_0", [rh],
+             [slices.BORN_INFELD_HORIZON], 1e-12)
+    ck.limit(f"{name}, the black hole: the surface gravity is 0.2490 per r_0", [k], [0.2490], 1e-4)
+    for cell, region, lo, hi, future in (("I", "exterior", rh + 0.002, 12, (1, 0)), ("II", "black hole", 0.02, rh - 0.002, (0, -1)),
+                                         ("IV", "white hole", 0.02, rh - 0.002, (0, 1)),
+                                         ("I'", "other exterior", rh + 0.002, 12, (-1, 0))):
+        ck.chart(f"{name}, the black hole, {region}", sph, lambda t, r, cell=cell: T.pq(cell, t, r),
+                 ck.uniform(-12, 12, 400), ck.uniform(lo, hi, 400), lambda t, r, future=future: future)
+    rr = np.array([0.1, 0.5, 1.0, 1.7, 2.5, 5.0, 30.0])
+    hole_f = sp.lambdify(sph.x1, sph.gi[1, 1], "numpy")
+    ck.limit(f"{name}, the black hole: dr*/dr = 1/f", (T.rstar(rr + 1e-6) - T.rstar(rr - 1e-6)) / 2e-6 * hole_f(rr),
+             np.ones(7), 1e-6)
+    ck.limit(f"{name}, the black hole: r* vanishes at r = 0", [float(T.rstar(0.0))], [0], 1e-12)
+    ck.limit(f"{name}, the black hole: f has one zero", [float(np.sum(np.diff(np.sign(hole_f(np.geomspace(1e-6, 1e6, 20000)))) != 0))],
+             [1], 0.5)
+
+    def uv(r):
+        r = np.asarray(r, dtype=float)
+        with np.errstate(over="ignore"):
+            return np.sign(rh - r) * np.exp(2 * k * T.rstar(r))
+
+    def hole_in(w, r):
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        with np.errstate(over="ignore"):
+            return np.arctan(uv(r) * np.exp(-k * w)), atan_exp(k * w)
+
+    def hole_out(u, r):
+        u, r = np.asarray(u, dtype=float), np.asarray(r, dtype=float)
+        with np.errstate(over="ignore"):
+            return -atan_exp(-k * u), np.arctan(-uv(r) * np.exp(k * u))
+    hin = Plane(src, "born_infeld_charge", "eddington_finkelstein_ingoing", ("v", "r"), EQUATOR, nr.BI_HOLE)
+    ck.chart(f"{name}, the black hole, ingoing Eddington-Finkelstein", hin, hole_in,
+             ck.uniform(-12, 12, 400), ck.uniform(0.05, 12, 400), lambda w, r: (1, -300))
+    hout = Plane(src, "born_infeld_charge", "eddington_finkelstein_outgoing", ("u", "r"), EQUATOR, nr.BI_HOLE)
+    ck.chart(f"{name}, the black hole, outgoing Eddington-Finkelstein", hout, hole_out,
+             ck.uniform(-12, 12, 400), ck.uniform(0.05, 12, 400), lambda u, r: (1, 300))
+    p, q = T.pq("II", np.array([-10.0, 0, 10]), np.full(3, 1e-9))
+    ck.limit(f"{name}, the black hole: r -> 0 lands on T = pi/2", p + q, [HALF] * 3)
+    p, q = T.pq("I", np.array([0.0]), np.array([1e8]))
+    ck.limit(f"{name}, the black hole: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)", point(p[0], q[0]), [PI, 0], 1e-3)
+    p, q = T.pq("I", np.array([1.5 / k]), np.array([rh * (1 + 1e-12)]))
+    ck.limit(f"{name}, the black hole: r -> r_h at fixed t lands on the bifurcation sphere", point(p[0], q[0]), [0, 0], 1e-4)
+    K = sph.kretschmann
+    ck.diverges(f"{name}, the black hole: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+    ck.limit(f"{name}, the black hole: r^6 K tends to 48 m(0)^2 at r = 0, Schwarzschild's of the mass at the centre",
+             [float(K(0, 1e-4)) * 1e-24 / (48 * float(nr.born_infeld_mass(1e-9, 2.0, 0.5)) ** 2)], [1], 1e-3)
+    ck.finite(f"{name}, the black hole: the Kretschmann scalar is finite at r = r_h", K(np.zeros(3), np.array([rh - 0.001, rh, rh + 0.001])))
+    rs3 = float(T.rstar(3.0))
+    ck.limit(f"{name}, the black hole: the ingoing and static coordinates put one event at one point",
+             hole_in(2.0 + rs3, 3.0), T.pq("I", 2.0, 3.0), 1e-12)
+    ck.limit(f"{name}, the black hole: the outgoing and static coordinates put one event at one point",
+             hole_out(2.0 - rs3, 3.0), T.pq("I", 2.0, 3.0), 1e-12)
+
+    box = [-PI - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25]
+    hexagon = [[PI, 0], [HALF, HALF], [-HALF, HALF], [-PI, 0], [-HALF, -HALF], [HALF, -HALF]]
+    exterior = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    R_OUT, R_IN, TS = (2.5, 3, 4, 6, 10), (0.5, 1, 1.5), (-12, -6, -3, 0, 3, 6, 12)
+
+    def edges(v):
+        v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]],
+                        [[-PI, 0], [-HALF, HALF]], [[-PI, 0], [-HALF, -HALF]]])
+        v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+        v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+        for at in ((PI, 0), (-PI, 0), (HALF, HALF), (HALF, -HALF), (-HALF, HALF), (-HALF, -HALF)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+        v.label_xt([-PI, 0], "$i^0$", "r", dx=-6)
+        for sx in (1, -1):
+            v.label_xt([sx * HALF, HALF], "$i^+$", "b", dy=-6)
+            v.label_xt([sx * HALF, -HALF], "$i^-$", "t", dy=6)
+            v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-4)
+            v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=4)
+        v.label_xt([0, HALF], "$r = 0$", "b", dy=-8)
+        v.label_xt([0, -HALF], "$r = 0$", "t", dy=8)
+        v.label_xt([-Q4, Q4], "$r = r_h$", "tr", "small", dx=-6, dy=2)
+        v.label_xt([HALF, -0.95], "exterior", cls="region")
+        v.label_xt([-HALF, 0], "exterior", cls="region")
+        v.label_xt([0, 1.15], "black hole", cls="region")
+        v.label_xt([0, -1.15], "white hole", cls="region")
+        v.set(settings="$r_q = r_0/2$ and $r_s = 2\\,r_0$, so that $r_h = 1.867\\,r_0$ and $\\kappa = 0.249/r_0$.")
+        v.legend("horizon", "the horizon $r = r_h$")
+        v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+
+    hole = slices.moments("born_infeld_charge", "hole")[0]
+    lo, hi = hole.reach("static", "r")
+    ends = np.linspace(lo, hi, 2)
+    left, right = T.pq("I'", 0 * ends, ends[::-1]), T.pq("I", 0 * ends, ends)
+    hole_moment = (hole, [(np.concatenate([left[0], right[0]]), np.concatenate([left[1], right[1]]))])
+
+    t = spread(-np.inf, np.inf, 500, 9 / k)
+    v = View("hole", "The black hole", box, "static")
+    v.fill("region", hexagon)
+    v.fill("cover", exterior)
+    for r in R_OUT:
+        v.curve("r", *T.pq("I", t, np.full_like(t, r)))
+    out = spread(rh, np.inf, 500, 14)
+    for tt in TS:
+        v.curve("t", *T.pq("I", np.full_like(out, tt), out))
+    edges(v)
+    for r, text in ((2.5, "$2.5\\,r_0$"), (4, "$4\\,r_0$")):
+        label_on(v, T.pq("I", 0.0, r), text)
+    v.legend("cover", "the region that $t$ and $r > r_h$ cover")
+    v.legend("r", "$r$ constant, at " + listed(R_OUT) + " in units of $r_0$")
+    v.legend("t", "$ct$ constant, at " + listed(TS) + " in units of $r_0$")
+    v.slice(*hole_moment)
+    views.append(v)
+
+    rr = spread(0, np.inf, 600, 14)
+    for vid, system, fmap, coordinate, way, cover in (
+            ("hole_ingoing", "eddington_finkelstein_ingoing", hole_in, "v", "an ingoing",
+             [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF], [-HALF, HALF]]),
+            ("hole_outgoing", "eddington_finkelstein_outgoing", hole_out, "u", "an outgoing",
+             [[0, 0], [-HALF, -HALF], [HALF, -HALF], [PI, 0], [HALF, HALF]])):
+        v = View(vid, "The black hole", box, system)
+        v.fill("region", hexagon)
+        v.fill("cover", cover)
+        for r in R_OUT + R_IN:
+            v.curve("r", *fmap(t, np.full_like(t, r)))
+        for w in (-12, -8, -4, 0, 4, 8, 12):
+            v.curve("null", *fmap(np.full_like(rr, w), rr))
+        edges(v)
+        v.legend("cover", f"the region that ${coordinate}$ and $r > 0$ cover")
+        v.legend("r", "$r$ constant, at " + listed(R_IN + R_OUT) + " in units of $r_0$")
+        v.legend("null", f"${coordinate}$ constant, {way} light ray, at $-12$, $-8$, $-4$, $0$, $4$, $8$ and $12\\,r_0$")
+        v.slice(*hole_moment)
+        views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- Hayward
 
 HAYWARD_ELL2 = 144 / 343            # ell^2 in units of m^2, ell = 12m/(7 sqrt 7)
@@ -16979,6 +17244,7 @@ def lifshitz_spacetime(ck, src):
 
 DRAWN = {
     "lifshitz_spacetime": lifshitz_spacetime,
+    "born_infeld_charge": born_infeld_charge,
     "aichelburg_sexl": aichelburg_sexl,
     "hotta_tanaka": hotta_tanaka,
     "kiselev": kiselev,
@@ -18362,6 +18628,53 @@ CAPTIONS = {
         "The coordinates $t$ and $r > 0$ cover one exterior. Its moment $t = 0$ runs from spatial infinity "
         "down the infinitely long throat toward the corner $X = -\\pi$, $T = 0$, where the past and future "
         "horizons meet at an infinite distance.",
+    ],
+    ("born_infeld_charge", "particle"): [
+        "Hoffmann's particle ($r_q = r_0/2$, $r_s = 0.618\\,r_0$), whole, each point in the diagram a 2-sphere of "
+        "radius $r$. Here $g^{rr} = 1 - 2m/r$ is positive at every radius, so the tortoise coordinate $r_*$, with "
+        "$dr_*/dr = (1 - 2m/r)^{-1}$ and $r_* = 0$ at $r = 0$, grows without bound, and "
+        "$p, q = \\arctan((ct \\mp r_*)/\\ell)$ draw the spacetime as Minkowski's triangle.",
+        "The left edge is the centre $r = 0$, the conical singularity, and it is timelike: a light ray from "
+        "$\\mathscr{I}^-$ reaches it at a finite $t$. There is no horizon, so light from every event, the "
+        "singularity included, reaches $\\mathscr{I}^+$. The coordinates $t$ and $r$ cover the whole spacetime.",
+    ],
+    ("born_infeld_charge", "particle_ingoing"): [
+        "The same triangle with the ingoing Eddington-Finkelstein coordinates $v$ and $r$ on it, each point in the "
+        "diagram a 2-sphere of radius $r$. The advanced time $v = ct + r_*$ is constant along each ingoing light "
+        "ray, which runs from $\\mathscr{I}^-$ to the conical singularity $r = 0$ and reaches it at a finite $v$. "
+        "The coordinates cover the whole spacetime, as $t$ and $r$ do.",
+    ],
+    ("born_infeld_charge", "particle_outgoing"): [
+        "The same triangle with the outgoing Eddington-Finkelstein coordinates $u$ and $r$ on it, each point in "
+        "the diagram a 2-sphere of radius $r$. The retarded time $u = ct - r_*$ is constant along each outgoing "
+        "light ray, which leaves the conical singularity $r = 0$ at a finite $u$ and runs on to $\\mathscr{I}^+$. "
+        "The coordinates cover the whole spacetime, as $t$ and $r$ do.",
+    ],
+    ("born_infeld_charge", "hole"): [
+        "The black hole ($r_q = r_0/2$, $r_s = 2\\,r_0$), maximally extended, each point in the diagram a "
+        "2-sphere of radius $r$. The Kruskal coordinates $U = -e^{-\\kappa u}$ and $V = e^{\\kappa v}$, with "
+        "$u, v = ct \\mp r_*$, $dr_*/dr = (1 - 2m/r)^{-1}$, and the surface gravity $\\kappa = 0.249/r_0$, make "
+        "the metric regular through $r = r_h$. We take $r_* = 0$ at $r = 0$, so with $p = \\arctan U$ and "
+        "$q = \\arctan V$ the singularity $UV = 1$ lies on the straight lines $T = \\pm\\pi/2$.",
+        "The coordinates $t$ and $r > r_h$ cover the right exterior alone. The horizon is the pair of null lines "
+        "$U = 0$ and $V = 0$, crossing at the bifurcation sphere. With more mass than the field holds, $m$ is "
+        "positive at the centre and $g^{rr}$ falls to $-\\infty$ there, so both singularities are spacelike and "
+        "the diagram is Schwarzschild's, where Reissner and Nordström's black hole of the same mass and charge "
+        "has a tower of regions and timelike singularities.",
+    ],
+    ("born_infeld_charge", "hole_ingoing"): [
+        "The whole of the black hole ($r_q = r_0/2$, $r_s = 2\\,r_0$) with the ingoing Eddington-Finkelstein "
+        "coordinates $v$ and $r$ on it, each point in the diagram a 2-sphere of radius $r$. From "
+        "$V = e^{\\kappa v}$ and $U = UV(r)/V$, one formula for every $r > 0$, they cover the exterior and the "
+        "black hole together, and their lines of constant $v$ are ingoing light rays, which cross the horizon at "
+        "45° and end at $r = 0$.",
+    ],
+    ("born_infeld_charge", "hole_outgoing"): [
+        "The whole of the black hole ($r_q = r_0/2$, $r_s = 2\\,r_0$) with the outgoing Eddington-Finkelstein "
+        "coordinates $u$ and $r$ on it, the time reverse of the ingoing ones, each point in the diagram a "
+        "2-sphere of radius $r$. From $U = -e^{-\\kappa u}$ and $V = UV(r)/U$ they cover the exterior and the "
+        "white hole, and their lines of constant $u$ are outgoing light rays, which leave $r = 0$ and cross the "
+        "horizon outward.",
     ],
     ("bardeen", "tower"): [
         "Bardeen's regular black hole, maximally extended, each point in the diagram a 2-sphere of radius $r$. "

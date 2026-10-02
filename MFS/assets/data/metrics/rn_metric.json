@@ -139,6 +139,11 @@
       "id": "bonnor_magnetic_dipole",
       "kind": "limit_source",
       "text": "Two extremal Reissner-Nordström black holes of opposite magnetic charge on one axis. In the limit $b \\to \\infty$ the two are infinitely far apart and each is the extremal hole alone [emparan2000]."
+    },
+    {
+      "id": "born_infeld_charge",
+      "kind": "generalisation",
+      "text": "This charge with a limit on its field. Born and Infeld's electrodynamics keeps the field of a point charge finite, so the energy of the field is finite too, and the charge is a black hole with one horizon or two, or a particle with no horizon and a conical point at its centre [hoffmann1935, gibbonsrasheed1995]."
     }
   ],
   "references": [
@@ -176,7 +181,9 @@
     "breitenlohner1994",
     "volkov1999",
     "brill1963",
-    "emparan2000"
+    "emparan2000",
+    "hoffmann1935",
+    "gibbonsrasheed1995"
   ],
   "coordinates": [
     {
