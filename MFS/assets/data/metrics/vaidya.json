@@ -114,6 +114,11 @@
       "id": "white_hole",
       "kind": "family",
       "text": "A white hole made of dust, Oppenheimer and Snyder's collapse with the time reversed. Zel'dovich, Novikov, and Starobinsky used Vaidya's metric for the radiation one sends out [zeldovichnovikovstarobinskii1974]."
+    },
+    {
+      "id": "bondi_sachs",
+      "kind": "generalisation",
+      "text": "Vaidya's metric with the mass allowed to differ from one direction to another and the spheres allowed to change shape. Gravitational waves then carry mass off as Vaidya's light does [bondi1962]."
     }
   ],
   "references": [
@@ -147,7 +152,8 @@
     "hiscock1981outgoing",
     "israel1966",
     "adler2005",
-    "zeldovichnovikovstarobinskii1974"
+    "zeldovichnovikovstarobinskii1974",
+    "bondi1962"
   ],
   "coordinates": [
     {

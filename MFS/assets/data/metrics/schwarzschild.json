@@ -368,6 +368,11 @@
       "id": "exponential_metric",
       "kind": "family",
       "text": "Papapetrou's and Yilmaz's metric with no horizon, $g_{tt} = -e^{-2m/r}$ with $m = GM/c^2$ in isotropic coordinates. It agrees with Schwarzschild's at first order in $m/r$ and has a wormhole's throat where the horizon would be [boonserm2018]."
+    },
+    {
+      "id": "bondi_sachs",
+      "kind": "generalisation",
+      "text": "Schwarzschild's metric in outgoing coordinates with four functions set free, the form the metric of an isolated body takes far away once it radiates. The mass aspect $M(u, \\theta)$ takes the place of $r_s/2$ and falls when gravitational waves leave [bondi1962]."
     }
   ],
   "references": [
@@ -470,7 +475,8 @@
     "deruelle2011",
     "hoffmann1935",
     "gibbonsrasheed1995",
-    "boonserm2018"
+    "boonserm2018",
+    "bondi1962"
   ],
   "coordinates": [
     {

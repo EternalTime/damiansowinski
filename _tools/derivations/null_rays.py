@@ -883,6 +883,70 @@ ROCKET_INPUT = ("A burn from $u = 0$ to $cu = 10\\,m_0$ along the first axis, wi
                 "$2/5$, a speed of $0.38\\,c$. The mass is $m = m_0e^{-3w}$ from the mass $m_0$ at the start, the least loss that keeps the density "
                 "of the radiation positive in every direction, and ends at $0.30\\,m_0$.")
 RT_FRONTS = {"epsilon": "4/5"}
+
+# Bondi and Sachs's metric is drawn for a weak burst from a source that does not rotate: its
+# quadrupole moment makes one swing, Q = q sin^6(pi u/T) for 0 <= u <= T, the shear is
+# sigma = d_u^2 Q sin^2 theta, and V, beta, U and gamma are Bondi, van der Burg and Metzner's
+# expansion in 1/r through the orders they give, in units G = c = m_0 = 1 with m_0 the mass
+# before the burst. bondi_sachs.md Step 3 writes the expansion out, and burst_checks holds it to
+# the published Ricci tensor.
+BURST = {"T": 20, "q": "1/4", "R": 10}
+
+
+def bondi_burst(T=BURST["T"], q=BURST["q"]):
+    """The declared burst: V, beta, U and gamma of Bondi's chart as expressions in u, r and theta,
+    Schwarzschild's before u = 0, with the shear sigma and the mass aspect M, and beside them the
+    mass radiated, 8/15 of the integral of the square of d_u^3 Q, which is the mean over the
+    sphere of what M loses."""
+    u, r, th, w = sp.symbols("u r theta w", real=True)
+    T, q = sp.sympify(T), sp.sympify(q)
+    Q = q * sp.sin(sp.pi * w / T) ** 6
+
+    def integral(f):
+        F = sp.integrate(sp.expand(f.rewrite(sp.exp)), w)
+        F = sp.expand(sp.expand(F.rewrite(sp.exp)).rewrite(sp.cos))
+        return sp.expand(F - F.subs(w, 0))
+    A1, a = sp.diff(Q, w), sp.diff(Q, w, 2)
+    E = integral(sp.diff(a, w) ** 2)
+    F, I2, J = integral(E), integral(a ** 2), integral(a * E)
+    G = integral(F)
+    s, x = sp.sin(th), sp.cos(th)
+    P2 = (3 * x ** 2 - 1) / 2
+
+    def branch(Q, A1, a, E, F, G, I2, J):
+        # The mass aspect M, Bondi's N and the coefficient of 1/r^3 in gamma, each carried along u
+        # from Schwarzschild's values by Bondi's three supplementary equations.
+        sigma = a * s ** 2
+        M = 1 + 4 * a * P2 - E * s ** 4
+        n1, n3 = 4 * A1, sp.Rational(4, 3) * F - 2 * a ** 2
+        N = n1 * s * x + n3 * s ** 3 * x
+        C3 = ((A1 / 2 + Q) * s ** 2 + 2 * I2 * s ** 2 * P2 - J * s ** 6 / 2
+              + (G / 3 - I2 / 2) * s ** 2 * (s ** 2 - 2 * x ** 2))
+        dN = n1 * (2 * x ** 2 - s ** 2) + n3 * (4 * s ** 2 * x ** 2 - s ** 4)
+        return {"V": r - 2 * M - (dN - a ** 2 * s ** 2 * (16 * x ** 2 + s ** 2 / 2)) / r,
+                "beta": -sigma ** 2 / (4 * r ** 2),
+                "U": -4 * a * s * x / r ** 2 + (2 * N + 10 * a ** 2 * s ** 3 * x) / r ** 3,
+                "gamma": sigma / r + C3 / r ** 3, "sigma": sigma, "M": M}
+    zero = sp.Integer(0)
+    before = branch(*[zero] * 8)
+    during = {k: v.subs(w, u) for k, v in branch(Q, A1, a, E, F, G, I2, J).items()}
+    ET, FT, late = E.subs(w, T), F.subs(w, T), u - T
+    after = branch(zero, zero, zero, ET, FT + ET * late, G.subs(w, T) + FT * late + ET * late ** 2 / 2,
+                   I2.subs(w, T), J.subs(w, T))
+    whole = {k: sp.Piecewise((before[k], u < 0), (during[k], u < T), (after[k], True)) for k in before}
+    return whole, {"radiated": sp.Rational(8, 15) * ET, "shear": a.subs(w, u), "news": sp.diff(a, w).subs(w, u)}
+
+
+_BURST, BURST_FACTS = bondi_burst()
+BONDI_BURST = {k: str(_BURST[k]) for k in ("V", "beta", "U", "gamma")}
+BONDI_BURST_INVERSE = {k: str(_BURST[k].subs(sp.Symbol("r", real=True), 1 / sp.Symbol("ell", real=True)))
+                       for k in ("V", "beta", "U", "gamma")}
+BURST_INPUT = ("A burst from a source of mass $m_0$ whose quadrupole moment makes one swing, "
+               "$Q = \\tfrac{1}{4}m_0^3\\sin^6(\\pi cu/20m_0)$ from $u = 0$ to $cu = 20\\,m_0$: the shear is "
+               "$\\sigma = \\partial_u^2Q\\,\\sin^2\\theta$, and $V$, $\\beta$, $U$, and $\\gamma$ are Bondi, van der Burg, "
+               "and Metzner's expansion in $1/r$ through the orders they give, $\\gamma$ and $U$ through $r^{-3}$, "
+               "$\\beta$ through $r^{-2}$, and $V$ through $r^{-1}$. The Ricci tensor those orders leave is $1.4\\%$ of the "
+               "curvature at $r = 10\\,m_0$ and falls as $1/r$ beyond it.")
 RT_INPUT = ("The first front $f(0, \\theta)^2 = f_0^2\\left(1 - \\epsilon^2\\cos^2\\theta\\right)$ at "
             "$\\epsilon = 4/5$, with $f_0^2 = \\ln\\left((1 + \\epsilon)/(1 - \\epsilon)\\right)/(2\\epsilon)$ so that "
             "every front has the area $4\\pi r^2$, and after it the solution of the Robinson-Trautman equation, "
@@ -3808,6 +3872,25 @@ DIAGRAMS = [
             "$r/m$", "$(cu + r)/m$", {}, EQUATOR, to_display=FINKELSTEIN_OUT, orient="outgoing",
             fronts=RT_FRONTS, input=RT_INPUT, singular_runs=True,
             lines=(("shell", "x0", "0", "the first front, $u = 0$"),)),
+    # Bondi's chart for the declared burst, on the equator and on the axis: sigma is even about the
+    # equator and vanishes on the axis, so U and every Gamma^theta of the plane vanish on both and
+    # the null curves drawn are null geodesics. The expansion in 1/r is for large r, so the views
+    # start at the world tube r = 10 m_0. The chart of l = 1/r runs to future null infinity, l = 0.
+    Diagram("bondi_sachs", "bondi", "equator", "the equator", ("u", "r"), (10, 40, 10, 60),
+            "$r/m_0$", "$(cu + r)/m_0$", {}, EQUATOR, to_display=FINKELSTEIN_OUT, orient="outgoing",
+            functions=BONDI_BURST, input=BURST_INPUT,
+            lines=(("shell", "x0", "0", "the burst starts, $u = 0$"),
+                   ("shell", "x0", "20", "the burst ends, $cu = 20\\,m_0$"))),
+    Diagram("bondi_sachs", "bondi", "axis", "the axis", ("u", "r"), (10, 40, 10, 60),
+            "$r/m_0$", "$(cu + r)/m_0$", {}, {"theta": "0", "phi": "0"}, to_display=FINKELSTEIN_OUT,
+            orient="outgoing", functions=BONDI_BURST, input=BURST_INPUT, kretschmann=False,
+            lines=(("shell", "x0", "0", "the burst starts, $u = 0$"),
+                   ("shell", "x0", "20", "the burst ends, $cu = 20\\,m_0$"))),
+    Diagram("bondi_sachs", "compactified", "equator", "the equator", ("u", "\\ell"), (0, 12.5, -2, 22),
+            "$100\\,m_0\\ell$", "$cu/m_0$", {}, EQUATOR, to_display=((0, 100), (1, 0)), orient="outgoing",
+            families=("outgoing", "ingoing"), functions=BONDI_BURST_INVERSE, input=BURST_INPUT,
+            lines=(("shell", "x0", "0", "the burst starts, $u = 0$"),
+                   ("shell", "x0", "20", "the burst ends, $cu = 20\\,m_0$"))),
     # Kinnersley's photon rocket on the two halves of the axis it flies along, where sin(theta) = 0
     # kills g_u theta and every Gamma^theta of the plane, so the null curves are null geodesics.
     # The rectilinear chart measures theta in the rocket's rest frame from the direction opposite
@@ -8668,6 +8751,38 @@ CAPTIONS = {
         "from the first front on, and inside it they gain $r$ and every future cone points to larger $r$, a "
         "white hole with $r = 0$ in its past. By $cu = 3m$ the fronts are round to within $0.2\\%$, and "
         "this plane and the axis's are both Schwarzschild's in outgoing coordinates.",
+    ],
+    ("bondi_sachs", "bondi", "equator"): [
+        "The plane of $u$ and $r$ on the equator ($\\theta = \\pi/2$, $\\phi = 0$) outside the world tube "
+        "$r = 10\\,m_0$, drawn with $cu + r$ as the vertical axis so that the outgoing rays, $u$ constant, run at 45°. "
+        "Each outgoing ray is one point of every sphere its cone crosses, and $r$ is the luminosity distance along it. "
+        "The shear is even about the equator, so $U$ vanishes here and the null curves drawn are null geodesics.",
+        "The ingoing rays obey $dr/d(cu) = -V/2r$. Before the burst $V = r - 2m_0$ and the plane is Schwarzschild's in "
+        "outgoing coordinates. The cones between $u = 0$ and $cu = 20\\,m_0$ carry the news, which reaches "
+        "$\\partial_u\\sigma = \\pm 0.019$ on the equator, and the shear swings between $-0.037\\,m_0$ and "
+        "$0.019\\,m_0$, a strain $\\sigma/r$ of four parts in a thousand at the world tube. The mass aspect on the "
+        "equator ends at $0.9981\\,m_0$, and the Bondi mass, its mean over the sphere, at $0.9990\\,m_0$.",
+    ],
+    ("bondi_sachs", "bondi", "axis"): [
+        "The plane of $u$ and $r$ on the axis of symmetry ($\\theta = 0$) outside the world tube $r = 10\\,m_0$, drawn "
+        "with $cu + r$ as the vertical axis so that the outgoing rays, $u$ constant, run at 45°. The shear "
+        "$\\sigma = \\partial_u^2Q\\,\\sin^2\\theta$ vanishes on the axis with $\\gamma$, $\\beta$, and $U$, so the null "
+        "curves drawn are null geodesics and the plane's metric is $-(V/r)\\,c^2du^2 - 2c\\,du\\,dr$.",
+        "No waves leave along the axis of an axisymmetric source, and the mass aspect there, "
+        "$M = m_0 + 4\\,\\partial_u^2Q$, ends where it began. During the burst it swings between $0.85\\,m_0$ and "
+        "$1.08\\,m_0$ with the quadrupole moment, and the ingoing rays, $dr/d(cu) = -V/2r$, run faster or slower "
+        "with it. Before the burst and after it this plane is Schwarzschild's of the mass $m_0$.",
+    ],
+    ("bondi_sachs", "compactified", "equator"): [
+        "The plane of $u$ and $\\ell = 1/r$ on the equator ($\\theta = \\pi/2$, $\\phi = 0$), from $r = 8\\,m_0$ out to "
+        "future null infinity, the edge $\\ell = 0$. The outgoing rays are the horizontal lines $u$ constant, and each "
+        "reaches $\\ell = 0$ at the retarded time it left the source. The ingoing rays obey "
+        "$d\\ell/d(cu) = \\ell^3V/2$, which vanishes at $\\ell = 0$: there the future cone closes onto the edge, so "
+        "null infinity is itself a surface made of light rays.",
+        "The news arrives on the stretch of the edge between $u = 0$ and $cu = 20\\,m_0$. Along the edge "
+        "$\\gamma/\\ell \\to \\sigma$ and $(1/\\ell - V)/2 \\to M$, so the shear and the mass aspect are read "
+        "off the first two terms of the metric there, and the Bondi mass falls from $m_0$ to $0.9990\\,m_0$ "
+        "across the burst.",
     ],
     ("photon_rocket", "rectilinear", "behind"): [
         "The plane of $u$ and $r$ on the axis behind the rocket ($\\theta = 0$), drawn with $cu + r$ as the vertical axis so that the outgoing rays, $u$ constant, run at 45°. Each outgoing ray left the rocket at the retarded time $u$, and $r$ is the affine distance along it. On the axis $\\sin\\theta = 0$ removes $g_{u\\theta}$ and every $\\Gamma^\\theta$ of the plane, so the null curves drawn are null geodesics.",

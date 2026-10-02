@@ -60,6 +60,11 @@
       "id": "light_beam",
       "kind": "family",
       "text": "Light as the source again, here a steady beam of parallel rays with no rocket to push. William Bonnor found its exact field in 1969 [bonnor1969light]."
+    },
+    {
+      "id": "bondi_sachs",
+      "kind": "generalisation",
+      "text": "The rectilinear chart is Bondi's chart of 1962 with $\\beta = \\gamma = 0$ and $U = -\\alpha\\sin\\theta$. Bondi and Sachs's metric keeps all four functions and holds the sources that send out gravitational waves as well [bondi1962]."
     }
   ],
   "references": [
@@ -79,7 +84,8 @@
     "gurses2002",
     "podolsky2006",
     "hogan2020",
-    "bonnor1969light"
+    "bonnor1969light",
+    "bondi1962"
   ],
   "coordinates": [
     {

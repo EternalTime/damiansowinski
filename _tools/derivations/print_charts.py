@@ -12,7 +12,7 @@ schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis,
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
-born_infeld_charge, penrose_impulsive_wave and exponential_metric, and Godel's cylindrical chart.
+born_infeld_charge, penrose_impulsive_wave, exponential_metric and bondi_sachs, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -20406,6 +20406,130 @@ def exponential_metric_check(chart, system):
 
 
 CHARTS["exponential_metric"] = [lambda s=s: exponential_metric(s) for s in EXPONENTIAL_CHARTS]
+
+
+# -- Bondi and Sachs's radiating metric ----------------------------------------------------
+
+BONDI_SACHS_CHARTS = ["bondi", "compactified"]
+
+
+def bondi_sachs(system):
+    """Bondi, van der Burg and Metzner's metric of an axisymmetric isolated source that does not
+    rotate, -(V/r) e^(2 beta) du^2 - 2 e^(2 beta) du dr + r^2 e^(2 gamma) (dtheta - U du)^2
+    + r^2 e^(-2 gamma) sin^2 theta dphi^2, the case of Sachs's general metric with one polarisation,
+    in the two charts its literature uses: theirs, with the luminosity distance r, and the chart of
+    l = 1/r in which Penrose's rescaled metric is written, as Maedler and Winicour's review has it.
+    V, beta, U and gamma are left free in every tensor, so no component assumes a field equation;
+    bondi_sachs_check holds the chart to the members it is said to contain, and bondi_sachs.md
+    records each chart's source and why Sachs's six functions of four coordinates are not printed."""
+    if system == "bondi":
+        x, name = "r", "Bondi (axisymmetric)"
+        line = ("ds^2 = -\\dfrac{V}{r}e^{2\\beta}{2}du^2 - 2e^{2\\beta}{1}du\\,dr"
+                " + r^2e^{2\\gamma}\\left(d\\theta - U\\,{1}du\\right)^2 + r^2e^{-2\\gamma}\\sin^2\\theta\\,d\\phi^2")
+    else:
+        x, name = "\\ell", "Inverse luminosity distance"
+        line = ("ds^2 = -\\ell\\,e^{2\\beta}V\\,{2}du^2 + \\dfrac{2e^{2\\beta}}{\\ell^2}{1}du\\,d\\ell"
+                " + \\dfrac{e^{2\\gamma}}{\\ell^2}\\left(d\\theta - U\\,{1}du\\right)^2"
+                " + \\dfrac{e^{-2\\gamma}\\sin^2\\theta}{\\ell^2}d\\phi^2")
+    coords = ["u", x, "\\theta", "\\phi"]
+    parameters = [f"{f} = {f}(u,{x},\\theta)" for f in ("V", "\\beta", "U", "\\gamma")]
+    return {
+        "metric_id": "bondi_sachs",
+        "system": {"id": system, "name": name, "coords": coords,
+                   "domains": ["u \\in (-\\infty, \\infty)", x + " \\in (0, \\infty)",
+                               "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"],
+                   "parameters": parameters,
+                   "line_element": line.replace("{2}", "c^2").replace("{1}", "c\\,")},
+        "chart_line_element": line.replace("{2}", "").replace("{1}", ""),
+        "printer": {},
+        "check": lambda chart: bondi_sachs_check(chart, system),
+        "kretschmann_text": bondi_sachs_scalar,
+    }
+
+
+def bondi_sachs_scalar(chart):
+    """The Kretschmann scalar as one expanded sum over its denominator, as Belinski and Zakharov's
+    canonical chart prints its own: four free functions of three coordinates leave the sum no
+    factor to find, and sympy's factor did not finish on it in a quarter of an hour."""
+    top, bottom = sp.fraction(sp.together(chart.geo.kretschmann()))
+    return chart.printer(sp.powsimp(sp.expand(top) / sp.factor(bottom), combine="exp"))
+
+
+def bondi_sachs_check(chart, system):
+    """Bondi's chart holds, each at its own V, beta, U and gamma: the published outgoing
+    Eddington-Finkelstein chart of schwarzschild (V = r - r_s), the published chart of vaidya
+    (V = r - 2Gm(u)/c^2), the published rectilinear chart of photon_rocket (U = -alpha sin theta,
+    V = r - 2m - 2 alpha r^2 cos theta), and the published axisymmetric chart of robinson_trautman
+    carried along r -> f r (gamma = 0, e^(2 beta) = f, U = d_theta f / r, V = r (2H + 2r d_u f
+    + (d_theta f)^2)/f); it is flat at V = r; and R_rr = 4 d_r beta / r - 2 (d_r gamma)^2, the
+    first of Bondi's main equations. The chart of l = 1/r is Bondi's pulled back."""
+    name = f"bondi_sachs {system}"
+    u, x, theta, phi = chart.symbols
+    V, beta, U, gamma = (chart.reader.parameters[k] for k in ("V", "beta", "U", "gamma"))
+
+    def member(v, b=0, w=0, g=0):
+        return chart.geo.g.subs({V: v, beta: b, U: w, gamma: g}, simultaneous=True)
+
+    def published(metric_id, system_id):
+        entry = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == system_id)
+        reader = vm.Reader(entry["coords"], [q["symbol"] for q in entry["parameters"]], ())
+        there = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+        names = dict(zip([reader.symbol[n] for n in entry["coords"]], chart.symbols))
+        matrix = sp.Matrix(4, 4, lambda i, j: reader(there.get((entry["coords"][i], entry["coords"][j]), "0")))
+        return reader, matrix.subs(names, simultaneous=True)
+
+    if system == "compactified":
+        spec = bondi_sachs("bondi")
+        own = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+        here = {"V": V, "beta": beta, "U": U, "gamma": gamma}
+        image = dict(zip(own.symbols, [u, 1 / x, theta, phi]))
+        there = own.geo.g.subs(image, simultaneous=True).replace(
+            lambda e: isinstance(e, AppliedUndef), lambda e: here[e.func.__name__])
+        J = sp.diag(1, -1 / x ** 2, 1, 1)
+        pulled = J.T * there * J
+        if vm.norm(pulled - chart.geo.g) != sp.zeros(4, 4):
+            raise AssertionError(f"{name}: not Bondi's chart pulled back along r = 1/l")
+        return
+
+    r = x
+    reader, matrix = published("schwarzschild", "eddington_finkelstein_outgoing")
+    if vm.norm(matrix - member(r - reader.parameters["r_s"])) != sp.zeros(4, 4):
+        raise AssertionError(f"{name}: V = r - r_s is not Schwarzschild's published outgoing chart")
+    reader, matrix = published("vaidya", "eddington_finkelstein_outgoing")
+    mass = reader.parameters["m"].subs(dict(zip([reader.symbol["u"]], [u])))
+    if vm.norm(matrix - member(r - 2 * reader.parameters["G"] * mass / reader.c ** 2)) != sp.zeros(4, 4):
+        raise AssertionError(f"{name}: V = r - 2Gm(u)/c^2 is not Vaidya's published chart")
+    reader, matrix = published("photon_rocket", "rectilinear")
+    m, alpha = (reader.parameters[k].subs(reader.symbol["u"], u) for k in ("m", "alpha"))
+    rocket = member(r - 2 * m - 2 * alpha * r ** 2 * sp.cos(theta), w=-alpha * sp.sin(theta))
+    if vm.norm(matrix - rocket) != sp.zeros(4, 4):
+        raise AssertionError(f"{name}: not the published rectilinear chart of the photon rocket")
+    # Robinson and Trautman's fronts: their affine r is f times the luminosity distance.
+    reader, matrix = published("robinson_trautman", "axisymmetric")
+    old = dict(zip([reader.symbol[n] for n in ("u", "\\theta")], [u, theta]))
+    f = reader.parameters["f"].subs(old, simultaneous=True)
+    H = reader.parameters["H"]
+    affine = f * r
+    carried = matrix.subs(r, affine)
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff([u, affine, theta, phi][i], chart.symbols[j]))
+    carried = J.T * carried * J
+    H_there = H.subs(dict(zip(H.args, [u, affine, theta])), simultaneous=True)
+    fronts = member(r * (2 * H_there + 2 * r * sp.diff(f, u) + sp.diff(f, theta) ** 2) / f,
+                    b=sp.log(f) / 2, w=sp.diff(f, theta) / r)
+    if any(sp.simplify(e) != 0 for e in (carried - fronts)):
+        raise AssertionError(f"{name}: not Robinson and Trautman's published chart carried along r -> f r")
+    flat = {V: r, beta: 0, U: 0, gamma: 0}
+    riemann = chart.geo.riemann_llll()
+    if any(vm.norm(sp.sympify(vm._at(riemann, index)).subs(flat, simultaneous=True).doit()) != 0
+           for index in vm._indices(4, 4)):
+        raise AssertionError(f"{name}: V = r is not flat")
+    main = 4 * sp.diff(beta, r) / r - 2 * sp.diff(gamma, r) ** 2
+    if vm.norm(sp.sympify(chart.geo.ricci_ll()[1][1]) - main) != 0:
+        raise AssertionError(f"{name}: R_rr is not 4 d_r beta / r - 2 (d_r gamma)^2")
+
+
+CHARTS["bondi_sachs"] = [lambda s=s: bondi_sachs(s) for s in BONDI_SACHS_CHARTS]
 
 
 def write(spec):

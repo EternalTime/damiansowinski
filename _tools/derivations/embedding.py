@@ -11994,6 +11994,50 @@ def robinson_trautman(ck, src):
                  input=nr.RT_INPUT)]
 
 
+def bondi_sachs(ck, src):
+    """The sphere of constant u and r of Bondi's chart, at the world tube r = 10 m_0 and at the
+    middle of the burst the spacetime diagram declares, cu = 10 m_0, where the shear is greatest:
+    its metric is r^2 (e^(2 gamma) dtheta^2 + e^(-2 gamma) sin^2 theta dphi^2), a surface of
+    revolution with circles of radius r e^(-gamma) sin(theta), of area 4 pi r^2 whatever gamma
+    is. gamma is -0.0035 on the equator there, so the equator's radius is 1.0035 r and the
+    meridian from pole to pole 0.9983 pi r: the sphere is oblate by half a percent, the strain
+    of the wave. It stands with its equator at z = 0."""
+    u0, r0 = 10, 10
+    # gamma is handed over as numbers, with its slope: it is a sum of forty terms, and sympy does
+    # not finish simplifying e^(2 gamma) of it in ten minutes. V, beta and U are not in the sphere's
+    # metric.
+    theta = sp.Symbol("theta", real=True)
+    here = {sp.Symbol("u", real=True): u0, sp.Symbol("r", real=True): r0}
+    on_sphere = nr._BURST["gamma"].subs(here)
+    gamma = sp.lambdify(theta, on_sphere, "numpy")
+    slope = sp.lambdify(theta, sp.diff(on_sphere, theta), "numpy")
+    sl = Slice(src, "bondi_sachs", "bondi", "\\theta", "\\phi", {"u": u0, "r": r0},
+               functions={"V": "r", "beta": "0", "U": "0"}, numeric={"gamma": (gamma, slope)})
+    size = 2.0 * r0
+    marks = [(math.pi / 4, "r", None), (math.pi / 2, "r", None), (3 * math.pi / 4, "r", None)]
+    ball = Piece("sphere", "sheet", sl, 0.0, math.pi, -sl.rise(0.0, math.pi / 2), 1,
+                 (("axis", "the pole $\\theta = 0$, on the axis of symmetry"), ("axis", "the pole $\\theta = \\pi$")),
+                 marks, size)
+    where = "Bondi-Sachs, the sphere of the world tube at cu = 10 m_0"
+    ck.isometry(where, ball)
+    ck.radius(f"{where}, rho = r e^(-gamma) sin(theta)", ball, lambda th: r0 * np.exp(-gamma(th)) * np.sin(th), size)
+    ck.add(f"{where}: the equator stands at z = 0", abs(ball.at(math.pi / 2)[1]) / size, FORM)
+    ck.add(f"{where}: the equator's radius is 1.0035 r", abs(round(float(sl.rho_at(math.pi / 2)) / r0, 4) - 1.0035), 0.0)
+    ck.add(f"{where}: the meridian from pole to pole is 0.9983 pi r",
+           abs(round(sl.proper(0.0, math.pi) / (math.pi * r0), 4) - 0.9983), 0.0)
+    pts = np.array(ball.data()["points"])
+    area = float(np.sum(math.pi * (pts[1:, 1] + pts[:-1, 1]) * np.hypot(np.diff(pts[:, 1]), np.diff(pts[:, 2]))))
+    ck.add(f"{where}: the area of the cones drawn is 4 pi r^2", abs(area / (4 * math.pi * r0 ** 2) - 1), 1e-4)
+    sphere = Surface([ball])
+    fig = figure_of([sphere], {"sheet": "cover"}, size)
+    fig.legend("fill", "cover", "the sphere, which $\\theta$ and $\\phi$ cover but for its poles")
+    fig.legend("line", "r", "$\\theta$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("sphere", "The sphere of the world tube", "$m_0$", [sphere], fig.done(),
+                 settings="$m_0$ is the unit of every length; the surface is $cu = 10\\,m_0$, $r = 10\\,m_0$.",
+                 input=nr.BURST_INPUT)]
+
+
 # ct in units of 1/k. Beyond |kct| = 1.1 the cones tip so near the light cone, |drho/dz| = cosh(kct),
 # that a chord turned 0.02 round the axis beside the apex misses the surface by more than ACROSS.
 WALL_MOMENTS = (-1.0, -0.5, 0.0, 0.5, 1.0)
@@ -13190,6 +13234,7 @@ DRAWN = {
     "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
     "zipoy_voorhees": zipoy_voorhees,
     "robinson_trautman": robinson_trautman,
+    "bondi_sachs": bondi_sachs,
     "string_black_hole": string_black_hole,
     "mcvittie": mcvittie,
     "sultana_dyer": sultana_dyer,
@@ -13344,6 +13389,18 @@ CAPTIONS = {
         "horizon. There the radius grows with distance from the pole at the rate $(1 - 2\\alpha m)/(1 + 2\\alpha m)$, "
         "one half here, and the rate falls short of 1 by the deficit angle $8\\pi\\alpha m/(1 + 2\\alpha m)$ "
         "divided by $2\\pi$. The area is $16\\pi Cm^2/(1 - 4\\alpha^2m^2) = 13.5\\pi m^2$.",
+    ],
+    ("bondi_sachs", "sphere"): [
+        "The sphere of constant $u$ and $r$ at the world tube ($r = 10\\,m_0$) in the middle of the burst "
+        "($cu = 10\\,m_0$), drawn as a surface in flat space with every distance along it the metric distance. On it "
+        "the metric is $r^2\\left(e^{2\\gamma}d\\theta^2 + e^{-2\\gamma}\\sin^2\\theta\\,d\\phi^2\\right)$, a "
+        "surface of revolution whose circle at $\\theta$ has radius $r\\,e^{-\\gamma}\\sin\\theta$, and its area is "
+        "$4\\pi r^2$ whatever $\\gamma$ is.",
+        "The wave is all in the shape. Here the shear is at its greatest, $\\sigma = -0.037\\,m_0$ on the equator, "
+        "and $\\gamma = -0.0035$ there: the equator has radius $1.0035\\,r$ and the meridian from pole to pole is "
+        "$0.9983\\,\\pi r$ long, an oblate sphere flattened by half a percent. A quarter of the burst earlier and "
+        "later it is prolate by a quarter of a percent, and before the burst it is round. A burst that carries off "
+        "a thousandth of the mass strains space by this much ten masses out.",
     ],
     ("robinson_trautman", "fronts"): [
         "A wave front of the Robinson-Trautman spacetime ($u$ and $r$ constant) at five retarded times, each "

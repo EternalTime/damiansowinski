@@ -5295,6 +5295,13 @@ class Slices(unittest.TestCase):
         if key == "morgan_morgan/oblate_spheroidal/plane":
             # The plane z = 0 outside the rim, embedded out to Weyl's rho: xi = sqrt(rho^2/a^2 - 1).
             return (lambda X: 0.0), [math.sqrt(self.reach(surface)[1] ** 2 - 1)]
+        if key.startswith("bondi_sachs/"):
+            # The sphere cu = 10 m_0, r = 10 m_0 is one event of each plane: r = 10 and cu + r = 20 on
+            # Bondi's axes, 100 m_0 l = 10 and cu = 10 on the chart of l = 1/r.
+            self.assertEqual((mark["lines"], len(mark["points"])), ([], 1), key)
+            X0, X1 = view["box"][:2]
+            self.assertAlmostEqual(X0 + mark["points"][0][0] * (X1 - X0), 10.0, delta=2e-3, msg=key)
+            return (lambda X: 10.0 if key.endswith("compactified/equator") else 20.0), [10.0]
         if key.startswith("hotta_tanaka/"):
             # The event where the sphere through the ring meets the view's plane, 15 degrees from a
             # particle or on the equator, rho = a/4 or 2a in the null cylindrical chart.
@@ -6240,6 +6247,19 @@ class Slices(unittest.TestCase):
                             self.assertLess(abs((tp + tq) / 2 - t), 2e-4 * scale, where)
                             self.assertLessEqual(lo - 2e-4 * scale, (tq - tp) / 2, where)
                             self.assertLessEqual((tq - tp) / 2, hi + 2e-4 * scale, where)
+                    elif metric_id == "bondi_sachs":
+                        # The sphere cu = 10 m_0, r = 10 m_0 is one event of the axis: on the cone
+                        # p = arctan(10/40) and on the world tube the view draws.
+                        ((X, T),) = points
+                        self.assertLess(abs((T - X) / 2 - math.atan(0.25)), 2e-4, where)
+                        tube = next(layer["points"] for layer in view["layers"] if layer["class"] == "boundary")
+
+                        def off(a, b):
+                            (ax, ay), (bx, by) = a, b
+                            k = ((X - ax) * (bx - ax) + (T - ay) * (by - ay)) / ((bx - ax) ** 2 + (by - ay) ** 2)
+                            k = min(max(k, 0.0), 1.0)
+                            return math.hypot(X - ax - k * (bx - ax), T - ay - k * (by - ay))
+                        self.assertLess(min(off(a, b) for a, b in zip(tube, tube[1:])), 5e-3, where)
                     elif metric_id == "domain_wall":
                         # Each side is Minkowski's triangle cut at the wall X = pi/2, the side z > 0
                         # mirrored in it, and the moment kct runs along cT = R tanh(kct) on both.
