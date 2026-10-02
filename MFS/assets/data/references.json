@@ -1,5 +1,5 @@
 {
-  "version": "8d74f88157b239ab",
+  "version": "402d2c838b492e0a",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -9237,6 +9237,114 @@
         "year": "1981",
         "doi": "10.1063/1.525130",
         "url": "https://doi.org/10.1063/1.525130"
+      }
+    },
+    "king1975": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes and magnetic fields",
+        "author": "King, A. R. and Lasota, J. P. and Kundt, W.",
+        "journal": "Physical Review D",
+        "volume": "12",
+        "number": "10",
+        "pages": "3037--3042",
+        "year": "1975",
+        "doi": "10.1103/PhysRevD.12.3037",
+        "url": "https://doi.org/10.1103/PhysRevD.12.3037"
+      }
+    },
+    "bicak1985": {
+      "type": "article",
+      "fields": {
+        "title": "Magnetic fluxes across black holes",
+        "author": "Bičák, J. and Janiš, V.",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "212",
+        "number": "4",
+        "pages": "899--915",
+        "year": "1985",
+        "doi": "10.1093/mnras/212.4.899",
+        "url": "https://doi.org/10.1093/mnras/212.4.899"
+      }
+    },
+    "gibbons2014": {
+      "type": "article",
+      "fields": {
+        "title": "Thermodynamics of magnetized {Kerr-Newman} black holes",
+        "author": "Gibbons, G. W. and Pang, Yi and Pope, C. N.",
+        "journal": "Physical Review D",
+        "volume": "89",
+        "number": "4",
+        "pages": "044029",
+        "year": "2014",
+        "doi": "10.1103/PhysRevD.89.044029",
+        "eprint": "1310.3286",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1310.3286"
+      }
+    },
+    "booth2015": {
+      "type": "article",
+      "fields": {
+        "title": "Insights from {Melvin-Kerr-Newman} spacetimes",
+        "author": "Booth, Ivan and Hunt, Matthew and Palomo-Lozano, Alberto and Kunduri, Hari K.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "32",
+        "number": "23",
+        "pages": "235025",
+        "year": "2015",
+        "doi": "10.1088/0264-9381/32/23/235025",
+        "eprint": "1502.07388",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1502.07388"
+      }
+    },
+    "bicak2015": {
+      "type": "article",
+      "fields": {
+        "title": "Near-horizon description of extremal magnetized stationary black holes and {Meissner} effect",
+        "author": "Bičák, Jiří and Hejda, Filip",
+        "journal": "Physical Review D",
+        "volume": "92",
+        "number": "10",
+        "pages": "104006",
+        "year": "2015",
+        "doi": "10.1103/PhysRevD.92.104006",
+        "eprint": "1510.01911",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1510.01911"
+      }
+    },
+    "astorino2016": {
+      "type": "article",
+      "fields": {
+        "title": "Mass of {Kerr-Newman} black holes in an external magnetic field",
+        "author": "Astorino, M. and Compère, G. and Oliveri, R. and Vandevoorde, N.",
+        "journal": "Physical Review D",
+        "volume": "94",
+        "number": "2",
+        "pages": "024019",
+        "year": "2016",
+        "doi": "10.1103/PhysRevD.94.024019",
+        "eprint": "1602.08110",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1602.08110"
+      }
+    },
+    "podolsky2025": {
+      "type": "article",
+      "fields": {
+        "title": "{Kerr} Black Hole in a Uniform {Bertotti-Robinson} Magnetic Field: An Exact Solution",
+        "author": "Podolský, Jiří and Ovcharenko, Hryhorii",
+        "journal": "Physical Review Letters",
+        "volume": "135",
+        "number": "18",
+        "pages": "181401",
+        "year": "2025",
+        "doi": "10.1103/rfgv-ybz5",
+        "eprint": "2507.05199",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2507.05199"
       }
     },
     "radu2002": {
@@ -27052,6 +27160,163 @@
         "url": "https://doi.org/10.1103/PhysRevD.77.064003"
       }
     },
+    "visser1998": {
+      "type": "article",
+      "fields": {
+        "title": "Acoustic black holes: horizons, ergospheres and {Hawking} radiation",
+        "author": "Visser, Matt",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "15",
+        "number": "6",
+        "pages": "1767--1791",
+        "year": "1998",
+        "doi": "10.1088/0264-9381/15/6/024",
+        "eprint": "gr-qc/9712010",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/15/6/024"
+      }
+    },
+    "unruh1981": {
+      "type": "article",
+      "fields": {
+        "title": "Experimental Black-Hole Evaporation?",
+        "author": "Unruh, W. G.",
+        "journal": "Physical Review Letters",
+        "volume": "46",
+        "number": "21",
+        "pages": "1351--1353",
+        "year": "1981",
+        "doi": "10.1103/PhysRevLett.46.1351",
+        "url": "https://doi.org/10.1103/PhysRevLett.46.1351"
+      }
+    },
+    "unruh1995": {
+      "type": "article",
+      "fields": {
+        "title": "Sonic analogue of black holes and the effects of high frequencies on black hole evaporation",
+        "author": "Unruh, W. G.",
+        "journal": "Physical Review D",
+        "volume": "51",
+        "number": "6",
+        "pages": "2827--2838",
+        "year": "1995",
+        "doi": "10.1103/PhysRevD.51.2827",
+        "eprint": "gr-qc/9409008",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.51.2827"
+      }
+    },
+    "barcelo2005": {
+      "type": "article",
+      "fields": {
+        "title": "Analogue Gravity",
+        "author": "Barcel\\'o, Carlos and Liberati, Stefano and Visser, Matt",
+        "journal": "Living Reviews in Relativity",
+        "volume": "8",
+        "number": "1",
+        "pages": "12",
+        "year": "2005",
+        "doi": "10.12942/lrr-2005-12",
+        "eprint": "gr-qc/0505065",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.12942/lrr-2005-12"
+      }
+    },
+    "schutzhold2002": {
+      "type": "article",
+      "fields": {
+        "title": "Gravity wave analogues of black holes",
+        "author": "Sch\\\"utzhold, Ralf and Unruh, William G.",
+        "journal": "Physical Review D",
+        "volume": "66",
+        "number": "4",
+        "pages": "044019",
+        "year": "2002",
+        "doi": "10.1103/PhysRevD.66.044019",
+        "eprint": "gr-qc/0205099",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.66.044019"
+      }
+    },
+    "basak2003": {
+      "type": "article",
+      "fields": {
+        "title": "`Superresonance' from a rotating acoustic black hole",
+        "author": "Basak, Soumen and Majumdar, Parthasarathi",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "20",
+        "number": "18",
+        "pages": "3907--3913",
+        "year": "2003",
+        "doi": "10.1088/0264-9381/20/18/304",
+        "eprint": "gr-qc/0203059",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/20/18/304"
+      }
+    },
+    "berti2004": {
+      "type": "article",
+      "fields": {
+        "title": "Quasinormal modes and classical wave propagation in analogue black holes",
+        "author": "Berti, Emanuele and Cardoso, Vitor and Lemos, Jos\\'e P. S.",
+        "journal": "Physical Review D",
+        "volume": "70",
+        "number": "12",
+        "pages": "124006",
+        "year": "2004",
+        "doi": "10.1103/PhysRevD.70.124006",
+        "eprint": "gr-qc/0408099",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.70.124006"
+      }
+    },
+    "barcelo2004": {
+      "type": "article",
+      "fields": {
+        "title": "Causal structure of analogue spacetimes",
+        "author": "Barcel\\'o, Carlos and Liberati, Stefano and Sonego, Sebastiano and Visser, Matt",
+        "journal": "New Journal of Physics",
+        "volume": "6",
+        "pages": "186",
+        "year": "2004",
+        "doi": "10.1088/1367-2630/6/1/186",
+        "eprint": "gr-qc/0408022",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1367-2630/6/1/186"
+      }
+    },
+    "weinfurtner2011": {
+      "type": "article",
+      "fields": {
+        "title": "Measurement of Stimulated {Hawking} Emission in an Analogue System",
+        "author": "Weinfurtner, Silke and Tedford, Edmund W. and Penrice, Matthew C. J. and Unruh, William G. and Lawrence, Gregory A.",
+        "journal": "Physical Review Letters",
+        "volume": "106",
+        "number": "2",
+        "pages": "021302",
+        "year": "2011",
+        "doi": "10.1103/PhysRevLett.106.021302",
+        "eprint": "1008.1911",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.106.021302"
+      }
+    },
+    "torres2017": {
+      "type": "article",
+      "fields": {
+        "title": "Rotational superradiant scattering in a vortex flow",
+        "author": "Torres, Theo and Patrick, Sam and Coutant, Antonin and Richartz, Maur\\'icio and Tedford, Edmund W. and Weinfurtner, Silke",
+        "journal": "Nature Physics",
+        "volume": "13",
+        "number": "9",
+        "pages": "833--836",
+        "year": "2017",
+        "doi": "10.1038/nphys4151",
+        "eprint": "1612.06180",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1038/nphys4151"
+      }
+    },
     "maitra1966": {
       "type": "article",
       "fields": {
@@ -27673,6 +27938,198 @@
         "eprint": "1507.05534",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/1507.05534"
+      }
+    },
+    "strominger1996": {
+      "type": "article",
+      "fields": {
+        "title": "Microscopic origin of the {Bekenstein-Hawking} entropy",
+        "author": "Strominger, Andrew and Vafa, Cumrun",
+        "journal": "Physics Letters B",
+        "volume": "379",
+        "number": "1-4",
+        "pages": "99--104",
+        "year": "1996",
+        "doi": "10.1016/0370-2693(96)00345-0",
+        "eprint": "hep-th/9601029",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0370-2693(96)00345-0"
+      }
+    },
+    "callan1996": {
+      "type": "article",
+      "fields": {
+        "title": "D-brane approach to black hole quantum mechanics",
+        "author": "Callan, Curtis G. and Maldacena, Juan M.",
+        "journal": "Nuclear Physics B",
+        "volume": "472",
+        "number": "3",
+        "pages": "591--608",
+        "year": "1996",
+        "doi": "10.1016/0550-3213(96)00225-8",
+        "eprint": "hep-th/9602043",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0550-3213(96)00225-8"
+      }
+    },
+    "horowitz1996": {
+      "type": "article",
+      "fields": {
+        "title": "Nonextremal black hole microstates and U-duality",
+        "author": "Horowitz, Gary T. and Maldacena, Juan M. and Strominger, Andrew",
+        "journal": "Physics Letters B",
+        "volume": "383",
+        "number": "2",
+        "pages": "151--159",
+        "year": "1996",
+        "doi": "10.1016/0370-2693(96)00738-1",
+        "eprint": "hep-th/9603109",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0370-2693(96)00738-1"
+      }
+    },
+    "cvetic1996dyonic": {
+      "type": "article",
+      "fields": {
+        "title": "Dyonic BPS saturated black holes of heterotic string on a six-torus",
+        "author": "Cvetič, Mirjam and Youm, Donam",
+        "journal": "Physical Review D",
+        "volume": "53",
+        "number": "2",
+        "pages": "R584--R588",
+        "year": "1996",
+        "doi": "10.1103/PhysRevD.53.R584",
+        "eprint": "hep-th/9507090",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.53.R584"
+      }
+    },
+    "cvetic1996static": {
+      "type": "article",
+      "fields": {
+        "title": "General static spherically symmetric black holes of the heterotic string on a six-torus",
+        "author": "Cvetič, Mirjam and Youm, Donam",
+        "journal": "Nuclear Physics B",
+        "volume": "472",
+        "number": "1-2",
+        "pages": "249--267",
+        "year": "1996",
+        "doi": "10.1016/0550-3213(96)00219-2",
+        "eprint": "hep-th/9512127",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0550-3213(96)00219-2"
+      }
+    },
+    "cvetic1996rotating": {
+      "type": "article",
+      "fields": {
+        "title": "General rotating five-dimensional black holes of toroidally compactified heterotic string",
+        "author": "Cvetič, Mirjam and Youm, Donam",
+        "journal": "Nuclear Physics B",
+        "volume": "476",
+        "number": "1-2",
+        "pages": "118--132",
+        "year": "1996",
+        "doi": "10.1016/0550-3213(96)00355-0",
+        "eprint": "hep-th/9603100",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0550-3213(96)00355-0"
+      }
+    },
+    "tseytlin1996extreme": {
+      "type": "article",
+      "fields": {
+        "title": "Extreme dyonic black holes in string theory",
+        "author": "Tseytlin, A. A.",
+        "journal": "Modern Physics Letters A",
+        "volume": "11",
+        "number": "9",
+        "pages": "689--713",
+        "year": "1996",
+        "doi": "10.1142/S0217732396000709",
+        "eprint": "hep-th/9601177",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0217732396000709"
+      }
+    },
+    "tseytlin1996harmonic": {
+      "type": "article",
+      "fields": {
+        "title": "Harmonic superpositions of M-branes",
+        "author": "Tseytlin, A. A.",
+        "journal": "Nuclear Physics B",
+        "volume": "475",
+        "number": "1-2",
+        "pages": "149--163",
+        "year": "1996",
+        "doi": "10.1016/0550-3213(96)00328-8",
+        "eprint": "hep-th/9604035",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0550-3213(96)00328-8"
+      }
+    },
+    "maldacena1996": {
+      "type": "article",
+      "fields": {
+        "title": "Statistical entropy of four-dimensional extremal black holes",
+        "author": "Maldacena, Juan M. and Strominger, Andrew",
+        "journal": "Physical Review Letters",
+        "volume": "77",
+        "number": "3",
+        "pages": "428--429",
+        "year": "1996",
+        "doi": "10.1103/PhysRevLett.77.428",
+        "eprint": "hep-th/9603060",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.77.428"
+      }
+    },
+    "johnson1996": {
+      "type": "article",
+      "fields": {
+        "title": "Entropy of 4D extremal black holes",
+        "author": "Johnson, Clifford V. and Khuri, Ramzi R. and Myers, Robert C.",
+        "journal": "Physics Letters B",
+        "volume": "378",
+        "number": "1-4",
+        "pages": "78--86",
+        "year": "1996",
+        "doi": "10.1016/0370-2693(96)00383-8",
+        "eprint": "hep-th/9603061",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0370-2693(96)00383-8"
+      }
+    },
+    "horowitz1996four": {
+      "type": "article",
+      "fields": {
+        "title": "Statistical entropy of nonextremal four-dimensional black holes and U-duality",
+        "author": "Horowitz, Gary T. and Lowe, David A. and Maldacena, Juan M.",
+        "journal": "Physical Review Letters",
+        "volume": "77",
+        "number": "3",
+        "pages": "430--433",
+        "year": "1996",
+        "doi": "10.1103/PhysRevLett.77.430",
+        "eprint": "hep-th/9603195",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.77.430"
+      }
+    },
+    "polchinski1995": {
+      "type": "article",
+      "fields": {
+        "title": "Dirichlet branes and Ramond-Ramond charges",
+        "author": "Polchinski, Joseph",
+        "journal": "Physical Review Letters",
+        "volume": "75",
+        "number": "26",
+        "pages": "4724--4727",
+        "year": "1995",
+        "doi": "10.1103/PhysRevLett.75.4724",
+        "eprint": "hep-th/9510017",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.75.4724"
       }
     },
     "gott1998": {

@@ -33,6 +33,7 @@ them, and `null_rays.py --slices` rewrites only the slices of every diagram file
 """
 
 import functools
+from fractions import Fraction
 import json
 import math
 import re
@@ -320,6 +321,102 @@ def kkbh_rstar(r, a=1.0):
     the Einstein metric of four dimensions alike."""
     with np.errstate(divide="ignore"):
         return kkbh_smooth(r, a) + math.sqrt(1 + a) * np.log(np.abs(np.asarray(r, dtype=float) - 1))
+
+
+# The black holes of string theory with three and four charges as every diagram draws them. Off
+# extremality r_0 is the unit and the charge radii are unequal; the extreme holes are drawn in
+# units of r_2; and the areal chart of three equal charges at r_0 = 3 r_q/4, so that its horizons
+# stand at 5 r_q/4 and r_q.
+SBC = {
+    "five_charges": {"r_0": 1, "r_1": "1/2", "r_2": 1, "r_3": "3/2"},
+    "five_extreme": {"r_1": "1/2", "r_2": 1, "r_3": 2},
+    "five_areal": {"r_0": "3/4", "r_q": 1},
+    "four_charges": {"r_0": 1, "r_1": "1/2", "r_2": 1, "r_3": "3/2", "r_4": 2},
+    "four_extreme": {"r_1": "1/2", "r_2": 1, "r_3": "3/2", "r_4": 2},
+}
+SBC_FIVE = {"psi": "pi/2", "theta": "pi/2", "phi": "0"}
+SBC_FOUR = {"theta": "pi/2", "phi": "0"}
+
+
+def sbc_charges(chart):
+    return [float(Fraction(str(v))) for k, v in sorted(SBC[chart].items()) if k not in ("r_0", "r_q")]
+
+
+@functools.lru_cache(maxsize=None)
+def _sbc_parts(chart):
+    """The tortoise coordinate of a chart of the black holes of string theory, r_* = the integral of
+    sqrt(-g_rr/g_tt), as its poles and a smooth rest. With S the root of the product of r^2 + r_i^2
+    in five dimensions and of r + r_i in four, dr_*/dr is S/(r(r^2 - 1)), S/r^3, S/(r(r - 1)) and
+    S/r^2 for the charts of three charges, the extreme three, four charges and the extreme four.
+    Each is L/D plus a smooth rest, with D that denominator and L the polynomial that carries the
+    poles, and the rest is (S^2 - L^2)/(D (S + L)), where S^2 - L^2 is a polynomial that the poles
+    divide exactly, so nothing is lost to cancellation near a pole. Returned: the rest as a
+    function, and the integral of L/D."""
+    q = sbc_charges(chart)
+    five, extreme = chart.startswith("five"), chart.endswith("extreme")
+    P = np.polynomial.Polynomial
+    x = P([0, 1])
+    square = P([1])
+    for a in q:
+        square = square * ((x * x + a * a) if five else (x + a))
+    S = lambda r: np.sqrt(square(r))                                        # noqa: E731
+    S0, S1 = float(S(0.0)), float(S(1.0))
+    if five and not extreme:
+        A, B = S1 / 2, -S0
+        L, D, cut = A * x * (x + 1) + B * (x * x - 1), x * (x * x - 1), x * (x - 1)
+        rest_den = lambda r: (r + 1) * (S(r) + L(r))                        # noqa: E731
+        poles = lambda r: A * np.log(np.abs(r - 1)) + B * np.log(r)         # noqa: E731
+        kappa = 1 / (2 * A)
+    elif five:
+        C = S0 * sum(1 / (a * a) for a in q) / 2
+        L, D, cut = P([S0, 0, C]), x ** 3, x ** 4
+        rest_den = lambda r: (S(r) + L(r)) / r                              # noqa: E731
+        poles = lambda r: -S0 / (2 * r * r) + C * np.log(r)                 # noqa: E731
+        kappa = 0.0
+    elif not extreme:
+        A, B = S1, -S0
+        L, D, cut = A * x + B * (x - 1), x * (x - 1), x * (x - 1)
+        rest_den = lambda r: S(r) + L(r)                                    # noqa: E731
+        poles = lambda r: A * np.log(np.abs(r - 1)) + B * np.log(r)         # noqa: E731
+        kappa = 1 / (2 * A)
+    else:
+        C = S0 * sum(1 / a for a in q) / 2
+        L, D, cut = P([S0, C]), x ** 2, x ** 2
+        rest_den = lambda r: S(r) + L(r)                                    # noqa: E731
+        poles = lambda r: -S0 / r + C * np.log(r)                           # noqa: E731
+        kappa = 0.0
+    top, remainder = divmod(square - L * L, cut)
+    assert np.max(np.abs(remainder.coef)) < 1e-9 * np.max(np.abs(top.coef)), chart
+    rest = lambda r: top(r) / rest_den(r)                                   # noqa: E731
+    return rest, poles, kappa
+
+
+def sbc_kappa(chart):
+    """The surface gravity of the event horizon in units of c^2/r_0: 1/sqrt((1 + r_1^2)(1 + r_2^2)(1 + r_3^2))
+    in five dimensions and 1/(2 sqrt((1 + r_1)(1 + r_2)(1 + r_3)(1 + r_4))) in four, the charge
+    radii in units of r_0, and zero for an extreme hole."""
+    return _sbc_parts(chart)[2]
+
+
+def sbc_rstar(chart, r):
+    """r_*(r) of a chart of the black holes of string theory at the parameters SBC draws it at, the
+    smooth rest integrated from r = 0 by quadrature."""
+    from scipy.integrate import quad
+    rest, poles, _ = _sbc_parts(chart)
+    r = np.asarray(r, dtype=float)
+    smooth = np.vectorize(lambda v: quad(rest, 0.0, v, epsabs=1e-13, epsrel=1e-13, limit=200)[0])(r)
+    with np.errstate(divide="ignore"):
+        return smooth + poles(r)
+
+
+def sbc_areal_rstar(rho):
+    """The tortoise coordinate of the areal chart at r_0 = 3/4, r_q = 1: horizons p = 5/4 and q = 1,
+    rho + (p^3 ln|(rho - p)/(rho + p)| - q^3 ln|(rho - q)/(rho + q)|)/(2(p^2 - q^2))."""
+    rho = np.asarray(rho, dtype=float)
+    p, q = 1.25, 1.0
+    with np.errstate(divide="ignore"):
+        return rho + (p ** 3 * np.log(np.abs((rho - p) / (rho + p)))
+                      - q ** 3 * np.log(np.abs((rho - q) / (rho + q)))) / (2 * (p * p - q * q))
 
 
 def kkbh_t(view_id):
@@ -1436,6 +1533,32 @@ def _btz(sign=0):
     return [Mark(m, [np.column_stack([sign * btz_rstar(r), r])])]
 
 
+def bathtub_shift(r):
+    """How far the Kerr-like chart's time runs ahead of the laboratory's for the drain the
+    diagrams draw, A = -1 and c = 1: T = t - ln(r^2 - 1)/2, from dT = dt + A r dr/(c^2r^2 - A^2)."""
+    r = np.asarray(r, dtype=float)
+    return -0.5 * np.log(r * r - 1)
+
+
+def _bathtub(system):
+    """The two moments of the draining bathtub on a plane of time and r. The laboratory's t = 0,
+    the flat plane, is a line of constant t in the laboratory chart and the curve T = -ln(r^2 - 1)/2
+    in the Kerr-like chart, outside the horizon; the Kerr-like chart's T = 0, the catenoid, is a line
+    of constant T there and the curve t = ln(r^2 - 1)/2 in the laboratory chart. Each curve runs
+    off toward the horizon, so its points crowd there."""
+    plane, = moments("draining_bathtub", "plane")
+    funnel, = moments("draining_bathtub", "funnel")
+    lo, hi = plane.reach("laboratory", "r")
+    flo, fhi = funnel.reach("kerr_like", "r")
+    if system == "laboratory":
+        r = near(flo, fhi)
+        return [Mark(plane, along(0.0, lo, hi)),
+                Mark(funnel, [np.column_stack([-bathtub_shift(r), r])], label="$T = 0$")]
+    r = near(flo, hi)
+    return [Mark(plane, [np.column_stack([bathtub_shift(r), r])]),
+            Mark(funnel, along(0.0, flo, fhi), label="$T = 0$")]
+
+
 def sads_rstar(r):
     """Schwarzschild-anti-de Sitter's tortoise coordinate at r_s = 2 and L = 1, where 1/f =
     r/((r - 1)(r^2 + r + 2)), as the Eddington-Finkelstein charts fix it, vanishing at r = 0:
@@ -2163,12 +2286,18 @@ FLAT = {
        for sign, suffix in (("de_sitter", ""), ("anti_de_sitter", "_ads"))},
     ("kerr_taub_nut", "boyer_lindquist", "principal"): lambda: one("kerr_taub_nut", lambda m: along(0.0, *m.reach("boyer_lindquist", "r"))),
     ("kerr_taub_nut", "boyer_lindquist", "above"): lambda: kerr_above("kerr_taub_nut"),
+    # Ernst and Wild's hole: the moment t = 0 is one surface in both charts, whose azimuths differ
+    # by a function of t alone, and it meets each plane of t and r along t = 0 outside r_+.
+    **{("kerr_melvin", system, view): lambda: one("kerr_melvin", lambda m: along(0.0, *m.reach("boyer_lindquist", "r")))
+       for system in ("boyer_lindquist", "rotating") for view in ("radial", "equator")},
     ("robinson_trautman", "axisymmetric", "axis"): _rt_fronts,
     ("bondi_sachs", "bondi", "equator"): _bondi_sphere(),
     ("bondi_sachs", "bondi", "axis"): _bondi_sphere(),
     ("bondi_sachs", "compactified", "equator"): _bondi_sphere(inverse=True),
     ("robinson_trautman", "axisymmetric", "equator"): _rt_fronts,
     ("btz", "stationary", "static"): lambda: _btz(),
+    ("draining_bathtub", "laboratory", "drain"): lambda: _bathtub("laboratory"),
+    ("draining_bathtub", "kerr_like", "exterior"): lambda: _bathtub("kerr_like"),
     ("btz", "eddington_finkelstein_ingoing", "static"): lambda: _btz(1),
     ("btz", "eddington_finkelstein_outgoing", "static"): lambda: _btz(-1),
     ("reissner_nordstrom_de_sitter", "static", "radial"): lambda: _rnds("static"),
@@ -2434,6 +2563,16 @@ FLAT = {
     ("global_monopole", "eddington_finkelstein_outgoing", "chart"): lambda: monopole_t(-1),
     # The dilaton black hole at r_d = r_s/2: the Einstein metric's moment on the static and
     # Eddington-Finkelstein planes, and each string metric's moment on its own plane.
+    ("string_bh_three_four_charges", "five_charges", "radial"): lambda: one(
+        "string_bh_three_four_charges", lambda m: along(0.0, *m.reach("five_charges", "r")), view_id="five_charges"),
+    ("string_bh_three_four_charges", "five_extreme", "radial"): lambda: one(
+        "string_bh_three_four_charges", lambda m: along(0.0, *m.reach("five_extreme", "r")), view_id="five_extreme"),
+    ("string_bh_three_four_charges", "five_areal", "radial"): lambda: one(
+        "string_bh_three_four_charges", lambda m: along(0.0, *m.reach("five_areal", "\\rho")), view_id="five_areal"),
+    ("string_bh_three_four_charges", "four_charges", "radial"): lambda: one(
+        "string_bh_three_four_charges", lambda m: along(0.0, *m.reach("four_charges", "r")), view_id="four_charges"),
+    ("string_bh_three_four_charges", "four_extreme", "radial"): lambda: one(
+        "string_bh_three_four_charges", lambda m: along(0.0, *m.reach("four_extreme", "r")), view_id="four_extreme"),
     ("dilaton_black_hole", "static", "radial"): lambda: one(
         "dilaton_black_hole", lambda m: along(0.0, *m.reach("static", "r")), view_id="einstein"),
     ("dilaton_black_hole", "eddington_finkelstein_ingoing", "finkelstein"): lambda: dilaton_t(1),
@@ -3056,6 +3195,8 @@ HIDDEN = {
     ("tippett_tsang", "interior", "tx"): "the flat spacetime inside the bubble continued over the whole plane, another spacetime than the bubble whose moment is embedded",
     ("tippett_tsang", "rindler", "plane"): "the flat spacetime inside the bubble continued over the whole plane, another spacetime than the bubble whose moment is embedded",
     ("siklos", "kaigorodov_stationary", "plane"): "the region x < 0 of Siklos's chart, another region than the one whose wave front is embedded",
+    ("draining_bathtub", "laboratory", "spring"): "the spring, A > 0, another spacetime than the drain whose moments are embedded",
+    ("draining_bathtub", "vortex_filament", "drain"): "the vortex filament of four dimensions, another spacetime than the drain in the plane whose moments are embedded",
     ("btz", "stationary", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "eddington_finkelstein_ingoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "eddington_finkelstein_outgoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
@@ -3079,6 +3220,7 @@ HIDDEN = {
     **{("kerr_taub_nut", view): "the regular half of the axis, which the embedded equatorial plane does not meet"
        for view in ("axis", "ingoing", "outgoing")},
     ("kerr_taub_nut", "plebanski", "principal"): "the moment of constant t is a surface on which tau changes with sigma, the coordinate the drawing leaves out",
+    ("kerr_melvin", "boyer_lindquist", "tube"): "the hole in a stronger field, B = 3/(4m), than the one whose equator is embedded",
     ("frw", "comoving_spherical", "radial"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",
     ("frw", "comoving_spherical", "through"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",
     ("frw", "conformal_spherical", "radial"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",
@@ -3885,6 +4027,20 @@ def checks():
     miss = max(abs(complex((pulled - g_x).subs({xx: a, thx: c})[i, j])) for a, c in zip(
         rng.uniform(0.2, 4, 20), rng.uniform(0.2, 2.9, 20)) for i in range(4) for j in range(4))
     report("NHEK: x = r_0^2/r pulls the Poincare chart back onto the inverse radius one", miss, 1e-10)
+    # The draining bathtub: t = T + ln(r^2 - 1)/2 and theta = phi + sqrt(3) ln((r^2 - 1)/r^2)/2, the map
+    # of Berti, Cardoso and Lemos's (16) integrated at A = -1 and B = sqrt 3, pulls the laboratory chart
+    # back onto the Kerr-like one in every slot.
+    drain = {"A": -1, "B": "sqrt(3)"}
+    g_lab, (tl, rl, thl) = metric("draining_bathtub", "laboratory", drain)
+    g_kl, (Tk, rk, phk) = metric("draining_bathtub", "kerr_like", drain)
+    image = [Tk + sp.log(rk ** 2 - 1) / 2, rk, phk + sp.sqrt(3) * sp.log((rk ** 2 - 1) / rk ** 2) / 2]
+    J = sp.Matrix(3, 3, lambda i, j: sp.diff(image[i], (Tk, rk, phk)[j]))
+    pulled = J.T * g_lab.subs(dict(zip((tl, rl, thl), image)), simultaneous=True) * J
+    miss = max(abs(complex((pulled - g_kl).subs(rk, a)[i, j])) for a in rng.uniform(1.05, 5, 20)
+               for i in range(3) for j in range(3))
+    report("Draining bathtub: t = T + ln(r^2 - 1)/2 pulls the laboratory chart back onto the Kerr-like one", miss, 1e-10)
+    miss = float(np.max(np.abs(bathtub_shift(np.array([1.5, 2.0, 4.0])) + 0.5 * np.log(np.array([1.25, 3.0, 15.0])))))
+    report("Draining bathtub: the laboratory's t = 0 is T = -ln(r^2 - 1)/2", miss, 1e-14)
     return failures
 
 

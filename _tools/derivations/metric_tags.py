@@ -401,6 +401,40 @@ OVERRULED = {
 }
 
 
+def _witness(reader, symbols):
+    """A function giving the exact value of an expression in a chart's held names at one point
+    of rational coordinates and parameters, with the names and their derivatives written out by
+    their definitions there. The angles get a rational sine and cosine."""
+    import sympy as sp
+    rng = random.Random(0)
+    free = set(symbols) | {s for value in reader.held.values() for s in value.free_symbols}
+    at = {s: sp.Rational(rng.randint(11, 40), rng.randint(7, 10)) for s in sorted(free, key=str)}
+    trig = {}
+    for s in symbols:
+        trig[sp.sin(s)], trig[sp.cos(s)] = sp.Rational(3, 5), sp.Rational(4, 5)
+    held = set(reader.held)
+    known = {}
+
+    def number(e):
+        return sp.cancel(e.subs(trig).subs(at))
+
+    def value(expression):
+        atoms = expression.atoms(sp.Derivative) | (expression.atoms(sp.core.function.AppliedUndef) & held)
+        for atom in atoms - set(known):
+            out = atom
+            for _ in reader.held:
+                out = out.subs(reader.held).doit()
+            known[atom] = number(out)
+        out = expression.xreplace({a: known[a] for a in atoms})
+        # Any symbol the definitions do not hold, as c or the rate of a turning azimuth, gets a
+        # rational value of its own.
+        for s in sorted(out.free_symbols - set(at), key=str):
+            at[s] = sp.Rational(rng.randint(11, 40), rng.randint(7, 10))
+        out = number(out)
+        return out if out.is_number else 0
+    return value
+
+
 def facts_of(metric, facts):
     """The facts of one metric file's charts, by chart id."""
     return {entry["id"]: facts[f"{metric['id']}/{entry['id']}"]
@@ -567,15 +601,31 @@ def compute(metric_id, entry, seconds):
     geometry = vm.geometry_of(g, symbols, seconds, reader)
     n = len(coords)
 
+    witness = _witness(reader, symbols) if vm.held_alone(reader) else None
+    # Such a chart's value is written out name by name, each put in canonical form on its own.
+    written = reader.written if witness is not None else reader.surface
+
     def zero(expression):
-        return vm.norm(reader.surface(sp.sympify(expression))) == 0
+        expression = sp.sympify(expression)
+        # A chart that holds names, as Ernst and Wild's does, has a value written out only once
+        # it vanishes at a point of rational coordinates: one that does not vanish there is not
+        # zero, and its canonical form, written out, can take minutes.
+        if witness is not None and expression != 0 and witness(expression) != 0:
+            return False
+        return vm.norm(written(expression)) == 0
 
     ricci = geometry.ricci_ll()
     ricci_flat = all(zero(ricci[a][b]) for a in range(n) for b in range(a, n))
 
     einstein = None
-    if not ricci_flat:
-        k = vm.norm(reader.surface(geometry.ricci_scalar())) / n
+    # A chart that holds names is no Einstein space if its Ricci tensor is not R/n times the metric
+    # at the one point, and then its Ricci scalar, minutes to write out, is never asked for.
+    apart = False
+    if witness is not None and not ricci_flat:
+        there = witness(geometry.ricci_scalar()) / n
+        apart = any(witness(ricci[a][b] - there * g[a, b]) != 0 for a in range(n) for b in range(a, n))
+    if not ricci_flat and not apart:
+        k = vm.norm(written(geometry.ricci_scalar())) / n
         constant = not (k.free_symbols & set(symbols)) and not k.atoms(sp.core.function.AppliedUndef) \
             and not k.atoms(sp.DiracDelta, sp.sign, sp.Abs)
         if constant and all(zero(ricci[a][b] - k * g[a, b]) for a in range(n) for b in range(a, n)):

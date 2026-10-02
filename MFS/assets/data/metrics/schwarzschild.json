@@ -438,6 +438,16 @@
       "id": "bowers_liang",
       "kind": "composite",
       "text": "A star of uniform density with unequal pressures, and Schwarzschild's vacuum outside it. Given enough pressure across the radius, its surface can lie at any radius outside $r_s$ [bowers1974]."
+    },
+    {
+      "id": "draining_bathtub",
+      "kind": "family",
+      "text": "A black hole for sound of Painlevé and Gullstrand's type, as their form of Schwarzschild's metric is: flat space with water running inward through it, and a horizon where the water reaches the speed of sound. With its swirl switched off the flow falls off as $1/r$ where Schwarzschild's falls as $1/\\sqrt{r}$ [visser1998, berti2004]."
+    },
+    {
+      "id": "kerr_melvin",
+      "kind": "generalisation",
+      "text": "A spinning black hole in a magnetic universe. With no spin and no field, $a = 0$ and $B = 0$, it is Schwarzschild's black hole [ernst1976c]."
     }
   ],
   "references": [
@@ -556,7 +566,10 @@
     "agnese1995",
     "bondi1962",
     "will2014",
-    "bowers1974"
+    "bowers1974",
+    "visser1998",
+    "berti2004",
+    "ernst1976c"
   ],
   "coordinates": [
     {

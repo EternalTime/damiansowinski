@@ -1116,6 +1116,16 @@ CX_KERR = {"m": 1, "a": "4/5"}
 # in units of m, so that r_+ = 9/4 and r_- = -1/4 and no ring singularity is left.
 KTN = {"m": 1, "a": 1, "l": "5/4"}
 
+# Ernst and Wild's Kerr hole in Melvin's universe as its diagrams draw it: a = 4m/5, so that the
+# horizons are r_+ = 8m/5 and r_- = 2m/5, in the field B = 1/(4m) of Ernst's hole on the melvin page,
+# where k = 401/400. KM_TURNING turns the second chart with the horizon, Omega = omega_+/k with
+# omega_+ = a/(2 m r_+) + a m B^4 (r_+ + m)/2 = 813/3200. KM_STRONG is the field B = 3/(4m) of the
+# figure of the ergoregion, strong enough that the tube beside the axis begins four m from the hole.
+KM = {"m": 1, "a": "4/5", "B": "1/4"}
+KM_TURNING = {**KM, "Omega": "813/3208"}
+KM_STRONG = {"m": 1, "a": "4/5", "B": "3/4"}
+KM_CONE = "future cone of no angular momentum"
+
 # The Aichelburg-Sexl shock on the plane of u and v at three distances from the source, in units
 # of 8GE/c^4 with rho_0 = 8GE/c^4: each ray moving left jumps along the shock by -ln(rho/rho_0),
 # ln 2, ln 8 and ln 32, the same step of ln 4 between neighbours. The delta is drawn as a pulse of
@@ -2549,6 +2559,17 @@ DIAGRAMS = [
             to_display=FINKELSTEIN_OUT, tau=RNADS_TIME_OUT, areal=True),
     Diagram("reissner_nordstrom_ads", "eddington_finkelstein_outgoing", "chart", "against $u$",
             ("u", "r"), (0, 3, -0.5, 2.5), "$r/L$", "$u/L$", RNADS, EQUATOR, tau=RNADS_TIME_OUT, areal=True),
+    # The black holes of string theory with three and four charges, at the parameters slices.SBC names.
+    Diagram("string_bh_three_four_charges", "five_charges", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/r_0$", "$ct/r_0$", slices.SBC["five_charges"], slices.SBC_FIVE, orient="ingoing", areal=True),
+    Diagram("string_bh_three_four_charges", "five_extreme", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r/r_2$", "$ct/r_2$", slices.SBC["five_extreme"], slices.SBC_FIVE, areal=True),
+    Diagram("string_bh_three_four_charges", "five_areal", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 5, -2.5, 2.5),
+            "$\\rho/r_q$", "$ct/r_q$", slices.SBC["five_areal"], slices.SBC_FIVE, orient="ingoing", areal=True),
+    Diagram("string_bh_three_four_charges", "four_charges", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/r_0$", "$ct/r_0$", slices.SBC["four_charges"], slices.SBC_FOUR, orient="ingoing", areal=True),
+    Diagram("string_bh_three_four_charges", "four_extreme", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r/r_2$", "$ct/r_2$", slices.SBC["four_extreme"], slices.SBC_FOUR, areal=True),
     Diagram("tangherlini", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_h$", "$ct/r_h$", {"r_h": 1}, TANGHERLINI_FIVE, orient="ingoing", areal=True),
     Diagram("tangherlini", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
@@ -3507,6 +3528,20 @@ DIAGRAMS = [
     Diagram("btz", "eddington_finkelstein_outgoing", "rotating", "$J = 4\\ell/5$", ("u", "r"), (0, 2, -1, 1),
             "$r/\\ell$", "$(u + r)/\\ell$", {"ell": 1, "M": 1, "J": "4/5"}, to_display=FINKELSTEIN_OUT,
             orient="outgoing", quotient="tildephi", mark_gtt="the ergosurface", cone=BTZ_CONE),
+    # The draining bathtub, in units of the horizon radius |A|/c, with the swirl B = sqrt(3)|A| that
+    # puts the ergosurface at twice that radius.
+    Diagram("draining_bathtub", "laboratory", "drain", "a drain, $A < 0$", ("t", "r"), (0, 4, -2, 2),
+            "$c\\,r/|A|$", "$c^2t/|A|$", {"A": -1, "B": "sqrt(3)"}, quotient="theta",
+            mark_gtt="the ergosurface", cone=BTZ_CONE),
+    Diagram("draining_bathtub", "laboratory", "spring", "a spring, $A > 0$", ("t", "r"), (0, 4, -2, 2),
+            "$c\\,r/|A|$", "$c^2t/|A|$", {"A": 1, "B": "sqrt(3)"}, quotient="theta",
+            mark_gtt="the ergosurface", cone=BTZ_CONE),
+    Diagram("draining_bathtub", "kerr_like", "exterior", "$T$ and $r$", ("T", "r"), (1, 5, -2, 2),
+            "$c\\,r/|A|$", "$c^2T/|A|$", {"A": -1, "B": "sqrt(3)"}, quotient="phi", tau="T",
+            mark_gtt="the ergosurface", cone=BTZ_CONE),
+    Diagram("draining_bathtub", "vortex_filament", "drain", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$c\\,r/|A|$", "$c^2t/|A|$", {"A": -1, "B": "sqrt(3)"}, {"z": "0"}, quotient="theta",
+            mark_gtt="the ergosurface", cone=BTZ_CONE),
     Diagram("taub_nut", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/m$", "$ct/m$", {"m": 1, "l": "1/2"}, EQUATOR, orient="ingoing"),
     Diagram("bertotti_robinson", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
@@ -4111,6 +4146,19 @@ DIAGRAMS = [
     Diagram("melvin", "ernst", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_s$", "$ct/r_s$", {"r_s": 1, "B": "1/2"}, EQUATOR, orient="ingoing",
             lines=(("surface", "r", "4", "$r = 2/B$, the widest circle of the equator"),)),
+    # Ernst and Wild's Kerr hole in Melvin's universe. The axis, whose plane of t and r is Kerr's
+    # times the constant k, and the equator with the circles of phi divided out, whose plane is
+    # Kerr's times H: the rays of both are Kerr's, and the field shows in the ergosurface. The
+    # second chart turns with the horizon, and its g_tt is negative from the horizon out on the equator.
+    Diagram("kerr_melvin", "boyer_lindquist", "radial", "$t$ and $r$ on the axis", ("t", "r"), (0, 4, -2, 2),
+            "$r/m$", "$ct/m$", KM, {"theta": "0", "phi": "0"}, orient="ingoing"),
+    Diagram("kerr_melvin", "boyer_lindquist", "equator", "the equator, $\\phi$ divided out", ("t", "r"), (0, 4, -2, 2),
+            "$r/m$", "$ct/m$", KM, {"theta": "pi/2"}, orient="ingoing", quotient="phi",
+            mark_gtt="the ergosurface", cone=KM_CONE),
+    Diagram("kerr_melvin", "rotating", "radial", "$t$ and $r$ on the axis", ("t", "r"), (0, 4, -2, 2),
+            "$r/m$", "$ct/m$", KM_TURNING, {"theta": "0", "tildephi": "0"}, orient="ingoing"),
+    Diagram("kerr_melvin", "rotating", "equator", "the equator, $\\tilde\\phi$ divided out", ("t", "r"), (0, 4, -2, 2),
+            "$r/m$", "$ct/m$", KM_TURNING, {"theta": "pi/2"}, orient="ingoing", quotient="tildephi", cone=KM_CONE),
     # Levi-Civita's plane of t and its radius at sigma = 1/4, where the Kasner exponents are
     # (2/3, 2/3, -1/3), in Weyl's coordinates and in the Kasner form, whose r is the proper distance.
     Diagram("levi_civita", "weyl", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 4, -2, 2),
@@ -5633,6 +5681,47 @@ CAPTIONS = {
         "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a "
         "null coordinate. The ingoing family turns vertical at both horizons and leans toward larger $r$ "
         "between them.",
+    ],
+    ("string_bh_three_four_charges", "five_charges", "radial"): [
+        "The plane of $t$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$) of the hole of three charges "
+        "($r_1 = r_0/2$, $r_2 = r_0$, $r_3 = 3r_0/2$), the same at every fixed angle by hyperspherical symmetry. "
+        "There $c\\,dt/dr = \\pm\\sqrt{H_1H_2H_3}/f$, so the cones close at the event horizon $r = r_0$, where $f = 0$, "
+        "and are narrower than Tangherlini's at every radius, since each of the three harmonic functions is greater than 1.",
+        "Inside $r_0$ the same components make $r$ the time, and the future is the one an ingoing ray carries "
+        "across the horizon, which makes that region the black hole. Its cones point to $r = 0$, the inner horizon, "
+        "a sphere of circumference radius $(r_1r_2r_3)^{1/3} = 0.91\\,r_0$ where the Kretschmann scalar is finite.",
+    ],
+    ("string_bh_three_four_charges", "five_extreme", "radial"): [
+        "The plane of $t$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$) of the extreme hole of three charges "
+        "($r_1 = r_2/2$, $r_3 = 2r_2$). There $c\\,dt/dr = \\pm\\sqrt{H_1H_2H_3}$, which grows as $r_1r_2r_3/r^3$ "
+        "toward $r = 0$, so the cones close there and an ingoing ray reaches $r = 0$ only as $t \\to +\\infty$.",
+        "$r = 0$ is the horizon, a 3-sphere of circumference radius $(r_1r_2r_3)^{1/3} = r_2$, where the "
+        "Kretschmann scalar is finite.",
+    ],
+    ("string_bh_three_four_charges", "five_areal", "radial"): [
+        "The plane of $t$ and $\\rho$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$) of the hole of three equal charges "
+        "($r_0 = 3r_q/4$), the Reissner-Nordström black hole of five dimensions. The cones close at the event "
+        "horizon $\\rho = 5r_q/4$ and at the inner horizon $\\rho = r_q$, the two radii where $g^{\\rho\\rho} = 0$.",
+        "Between the horizons $\\rho$ is the time and every cone points inward, with the future taken from an "
+        "ingoing ray. Inside $r_q$ the hole is static again, down to the singularity $\\rho = 0$, where the "
+        "Kretschmann scalar diverges.",
+    ],
+    ("string_bh_three_four_charges", "four_charges", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the hole of four charges ($r_1 = r_0/2$, "
+        "$r_2 = r_0$, $r_3 = 3r_0/2$, $r_4 = 2r_0$), the same at every angle by spherical symmetry. There "
+        "$c\\,dt/dr = \\pm\\sqrt{H_1H_2H_3H_4}/f$, so the cones close at the event horizon $r = r_0$ and are narrower "
+        "than Schwarzschild's at every radius.",
+        "Inside $r_0$ the same components make $r$ the time, and the future is the one an ingoing ray carries "
+        "across the horizon. Its cones point to $r = 0$, the inner horizon, a sphere of circumference radius "
+        "$(r_1r_2r_3r_4)^{1/4} = 1.11\\,r_0$ where the Kretschmann scalar is finite.",
+    ],
+    ("string_bh_three_four_charges", "four_extreme", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the extreme hole of four charges "
+        "($r_1 = r_2/2$, $r_3 = 3r_2/2$, $r_4 = 2r_2$). There $c\\,dt/dr = \\pm\\sqrt{H_1H_2H_3H_4}$, which grows as "
+        "$\\sqrt{r_1r_2r_3r_4}/r^2$ toward $r = 0$, so the cones close there and an ingoing ray reaches $r = 0$ "
+        "only as $t \\to +\\infty$.",
+        "$r = 0$ is the horizon, a sphere of circumference radius $(r_1r_2r_3r_4)^{1/4} = 1.11\\,r_2$, where the "
+        "Kretschmann scalar is finite. With the four charges equal this is the single hole of Majumdar and Papapetrou.",
     ],
     ("tangherlini", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$) in five dimensions, the same at every fixed angle by hyperspherical "
@@ -8308,6 +8397,41 @@ CAPTIONS = {
         "Between the horizons both edges of every future cone point to larger $r$, the white hole. The "
         "dotted line is the ergosurface, $g_{uu} = 0$ at $r = \\sqrt{M}\\,\\ell$.",
     ],
+    ("draining_bathtub", "laboratory", "drain"): [
+        "The plane of $t$ and $r$ of a drain ($A < 0$, $B = \\sqrt{3}\\,|A|$) with $\\theta$ divided out, "
+        "$-c^2dt^2 + (dr - A\\,dt/r)^2$, the metric orthogonal to the circles of $\\theta$. Its null curves are "
+        "the shadows on $t$ and $r$ of the sound rays of zero angular momentum, $dr/dt = A/r \\pm c$: sound "
+        "moving at $c$ through water that carries it inward at $|A|/r$.",
+        "The outgoing rays stand still at the horizon $r = |A|/c$, where the water runs inward as fast as "
+        "sound runs out, and inside it both edges of every future cone point to the drain. The dotted line "
+        "is the ergosurface, $g_{tt} = 0$ at $r = \\sqrt{A^2 + B^2}/c = 2|A|/c$, where the whole speed of the "
+        "water reaches $c$; inside it no sound ray stays at one place in the laboratory. The Kretschmann scalar "
+        "diverges at $r = 0$.",
+    ],
+    ("draining_bathtub", "laboratory", "spring"): [
+        "The plane of $t$ and $r$ of a spring ($A > 0$, $B = \\sqrt{3}\\,A$) with $\\theta$ divided out, "
+        "$-c^2dt^2 + (dr - A\\,dt/r)^2$. The water runs outward at $A/r$, and the sound rays of zero angular "
+        "momentum have $dr/dt = A/r \\pm c$.",
+        "The ingoing rays stand still at $r = A/c$ and no sound from outside crosses it: inside, both edges "
+        "of every future cone point outward, so the spring is a white hole for sound. The dotted line is "
+        "the ergosurface, $g_{tt} = 0$ at $r = 2A/c$, which lies where it does for the drain.",
+    ],
+    ("draining_bathtub", "kerr_like", "exterior"): [
+        "The plane of $T$ and $r$ outside the horizon of a drain ($A < 0$, $B = \\sqrt{3}\\,|A|$) with $\\phi$ "
+        "divided out, $-(1 - A^2/(c^2r^2))\\,c^2dT^2 + dr^2/(1 - A^2/(c^2r^2))$. Its null curves are the shadows "
+        "on $T$ and $r$ of the sound rays of zero angular momentum, $c\\,dT/dr = \\pm 1/(1 - A^2/(c^2r^2))$, "
+        "symmetric in $T$ as Schwarzschild's are in his own time.",
+        "The cones close at the horizon $r = |A|/c$, which is the edge of the chart: $T$ runs to infinity "
+        "there along every ray. The dotted line is the ergosurface, $g_{TT} = 0$ at $r = 2|A|/c$.",
+    ],
+    ("draining_bathtub", "vortex_filament", "drain"): [
+        "The plane of $t$ and $r$ ($z = 0$) of a vortex filament with a line sink ($A < 0$, $B = "
+        "\\sqrt{3}\\,|A|$) with $\\theta$ divided out, the same at every $z$. Its null curves are the shadows on "
+        "$t$ and $r$ of the sound rays that stay at one height and have zero angular momentum, $dr/dt = A/r "
+        "\\pm c$.",
+        "The horizon is the cylinder $r = |A|/c$ and the ergosurface, dotted, the cylinder $r = 2|A|/c$. "
+        "The Kretschmann scalar diverges on the filament, $r = 0$.",
+    ],
     ("taub_nut", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $l = "
         "m/2$. There $g^{rr}$ vanishes at $r_+ = m + \\sqrt{m^2 + l^2}$, about $2.118\\,m$, and "
@@ -9719,6 +9843,52 @@ CAPTIONS = {
         "On the equator and on the axis no Christoffel symbol turns them out of the plane, so there they are null "
         "geodesics. The cones close at the horizon $r = r_s$, and inside it every cone points to $r = 0$, where the "
         "Kretschmann scalar diverges.",
+    ],
+    ("kerr_melvin", "boyer_lindquist", "radial"): [
+        "The plane of $t$ and $r$ on the rotation axis ($\\theta = 0$) of Ernst and Wild's black hole ($a = 4m/5$, "
+        "$B = 1/(4m)$). On the axis $H = k$ and $A = (r^2 + a^2)^2$, so the metric on the plane is the constant $k$ "
+        "times that of Kerr's axis, $-\\Delta\\,c^2dt^2/(r^2 + a^2) + (r^2 + a^2)\\,dr^2/\\Delta$, and the rays are "
+        "Kerr's, $dr/d(ct) = \\pm\\Delta/(r^2 + a^2)$. No Christoffel symbol turns them out of the plane, so they are "
+        "null geodesics. The cones close where $\\Delta$ vanishes, at $r_+ = 8m/5$ and at $r_- = 2m/5$, and between them "
+        "they point to smaller $r$, following the ingoing family.",
+        "The domain of the chart begins at $r_+$. The magnetic field runs along this axis and leaves the plane "
+        "Kerr's but for $k$; the ergoregion that reaches infinity lies off it, in a tube beside the axis, where "
+        "$g_{tt} > 0$.",
+    ],
+    ("kerr_melvin", "boyer_lindquist", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Ernst and Wild's black hole drawn in $t$ and $r$ with $\\phi$ "
+        "divided out ($a = 4m/5$, $B = 1/(4m)$): the metric orthogonal to the circles of $\\phi$, which is $H$ times "
+        "Kerr's. Its null curves are the shadows on $t$ and $r$ of the null geodesics of zero angular momentum, each "
+        "turning in $\\phi$ at $d\\phi/d(ct) = \\omega/k$, and each cone is the future cone of the directions of zero "
+        "angular momentum. They run at $dr/d(ct) = \\pm\\Delta/\\sqrt{A}$, as Kerr's do, and the cones close at "
+        "$r_+ = 8m/5$ and $r_- = 2m/5$.",
+        "The dotted line is the ergosurface, $g_{tt} = 0$ at $r = 1.942\\,m$, and between it and $r_+$ no observer "
+        "keeps $\\phi$ fixed. In Kerr's metric it stands at $r = 2m$, and the field draws it in. The dragging rate "
+        "$\\omega$ falls with $r$ as Kerr's does out to $r = 7.95\\,m$, where the circle of $\\phi$ is widest, and grows "
+        "beyond, as $3amB^4r/8$ far away. Inside $r_-$ every ray ends at $r = 0$, the ring, where the curvature grows "
+        "without bound.",
+    ],
+    ("kerr_melvin", "rotating", "radial"): [
+        "The plane of $t$ and $r$ on the rotation axis ($\\theta = 0$) of Ernst and Wild's black hole ($a = 4m/5$, "
+        "$B = 1/(4m)$). On the axis $H = k$ and $A = (r^2 + a^2)^2$, so the metric on the plane is the constant $k$ "
+        "times that of Kerr's axis, $-\\Delta\\,c^2dt^2/(r^2 + a^2) + (r^2 + a^2)\\,dr^2/\\Delta$, and the rays are "
+        "Kerr's, $dr/d(ct) = \\pm\\Delta/(r^2 + a^2)$. No Christoffel symbol turns them out of the plane, so they are "
+        "null geodesics. The cones close where $\\Delta$ vanishes, at $r_+ = 8m/5$ and at $r_- = 2m/5$, and between them "
+        "they point to smaller $r$, following the ingoing family.",
+        "The axis is fixed by the rotation, so the plane is the same for every rate $\\Omega$ at which the azimuth "
+        "turns, and the domain of the chart begins at $r_+$.",
+    ],
+    ("kerr_melvin", "rotating", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Ernst and Wild's black hole drawn in $t$ and $r$ with "
+        "$\\tilde\\phi$ divided out ($a = 4m/5$, $B = 1/(4m)$), for the azimuth that turns with the horizon, "
+        "$\\Omega = \\omega/k$ at $r_+$, which is $0.2534/m$. The metric orthogonal to the circles is the same for "
+        "every $\\Omega$, $H$ times Kerr's, so the rays are those of the chart at rest, $dr/d(ct) = \\pm\\Delta/\\sqrt{A}$, "
+        "each turning in $\\tilde\\phi$ at $d\\tilde\\phi/d(ct) = \\omega/k - \\Omega$, and each cone is the future cone "
+        "of the directions of zero angular momentum.",
+        "In this chart $\\partial_t$ is the null generator of the horizon, and on the equator $g_{tt}$ is negative "
+        "from $r_+$ all the way out: an observer can turn with the hole at every radius. Around Kerr's hole the same "
+        "observer would outrun light at $r = 2.87\\,m$; here $H$ grows as $B^4r^4/16$ and shrinks the circles before "
+        "that can happen.",
     ],
     ("point_particle_2plus1", "conical", "radial"): [
         "The plane of $t$ and $r$ ($\\phi = 0$) around a point particle ($\\alpha = 3/4$), each point in the plane "
@@ -13978,6 +14148,16 @@ CLOSED_FORMS = {
         (lambda u, r: u + 2 * _btz_rstar(r, BTZ_STATIC), lambda u, r: u, _away(1.0)),
     ("btz", "eddington_finkelstein_outgoing", "rotating"):
         (lambda u, r: u + 2 * _btz_rstar(r, BTZ_ROTATING), lambda u, r: u, _away(np.sqrt(0.8), np.sqrt(0.2))),
+    # The draining bathtub at |A| = c = 1: dr/dt = -1/r -+ 1 for the drain and 1/r -+ 1 for the spring,
+    # and c dT/dr = -+ r^2/(r^2 - 1) in the Kerr-like chart.
+    **{("draining_bathtub", system, "drain"):
+       (lambda t, r: t + r - np.log(1 + r), lambda t, r: t - r - np.log(np.abs(r - 1)), _away(1.0))
+       for system in ("laboratory", "vortex_filament")},
+    ("draining_bathtub", "laboratory", "spring"):
+        (lambda t, r: t + r + np.log(np.abs(r - 1)), lambda t, r: t - r + np.log(1 + r), _away(1.0)),
+    ("draining_bathtub", "kerr_like", "exterior"):
+        (lambda T, r: T + r + np.log((r - 1) / (r + 1)) / 2, lambda T, r: T - r - np.log((r - 1) / (r + 1)) / 2,
+         _away(1.0)),
     ("schwarzschild", "spherical", "radial"):
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: np.abs(r - 1) > 0.05),
     ("schwarzschild", "eddington_finkelstein_ingoing", "finkelstein"):
@@ -14013,6 +14193,12 @@ CLOSED_FORMS = {
         (lambda t, rho: t + _rstar(rho, [2, 1]), lambda t, rho: t - _rstar(rho, [2, 1]), _away(2.0, 1.0)),
     ("kaluza_klein_black_hole", "einstein_eddington_finkelstein", "finkelstein"):
         (lambda v, r: v, lambda v, r: v - 2 * _kkbh_rstar(r), _away(1.0)),
+    **{("string_bh_three_four_charges", chart, "radial"):
+       (lambda t, r, c=chart: t + slices.sbc_rstar(c, r), lambda t, r, c=chart: t - slices.sbc_rstar(c, r),
+        _away(1.0) if chart.endswith("charges") else (lambda t, r: r > 0.05))
+       for chart in ("five_charges", "five_extreme", "four_charges", "four_extreme")},
+    ("string_bh_three_four_charges", "five_areal", "radial"):
+        (lambda t, rho: t + slices.sbc_areal_rstar(rho), lambda t, rho: t - slices.sbc_areal_rstar(rho), _away(1.25, 1.0)),
     ("tangherlini", "spherical", "radial"):
         (lambda t, r: t + _tangherlini_rstar(r), lambda t, r: t - _tangherlini_rstar(r), _away(1.0)),
     ("tangherlini", "eddington_finkelstein_ingoing", "finkelstein"):

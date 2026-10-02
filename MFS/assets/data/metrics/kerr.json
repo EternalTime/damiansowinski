@@ -195,6 +195,16 @@
       "id": "bondi_sachs",
       "kind": "generalisation",
       "text": "The form the metric of an isolated body takes on its outgoing light cones. Kerr's black hole is a member with no news, written in such coordinates by S. J. Fletcher and A. W. C. Lun in 2003 [sachs1962, fletcher2003]."
+    },
+    {
+      "id": "draining_bathtub",
+      "kind": "family",
+      "text": "Kerr's black hole copied in water. Sound in a fluid that swirls down a drain meets an ergoregion and then a horizon, and waves on a draining vortex in a tank have been measured coming back amplified, as waves do from Kerr's ergoregion [visser1998, torres2017]."
+    },
+    {
+      "id": "kerr_melvin",
+      "kind": "generalisation",
+      "text": "Kerr's black hole set in Melvin's magnetic universe by Ernst and Wild in 1976. At $B = 0$ it is Kerr's metric, and in any other field the hole carries the charge $2amB$ [ernst1976c, gibbons2013]."
     }
   ],
   "references": [
@@ -256,7 +266,11 @@
     "belinskii1979",
     "boshkayev2019",
     "sachs1962",
-    "fletcher2003"
+    "fletcher2003",
+    "visser1998",
+    "torres2017",
+    "ernst1976c",
+    "gibbons2013"
   ],
   "coordinates": [
     {
