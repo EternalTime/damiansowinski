@@ -98,7 +98,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "c9a7d9364ba36321",
+    "version": "5f7f5d39c5106f9d",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -331,7 +331,7 @@
       "homogeneous",
       "product spacetime"
     ],
-    "version": "22f6fe5316e75e81",
+    "version": "62ce6ddb315c85d1",
     "diagrams": "7b995662594f7524",
     "conformal": "d58ee6f7393843e4",
     "embedding": "4b36293b1a64925a"
@@ -422,7 +422,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "16426bca90bb5db6",
+    "version": "88a2158832e1b0ec",
     "diagrams": "54fe7a1cf641db39",
     "conformal": "ef75cb2ee29e15d6",
     "embedding": "6f1faae1e35e650b"
@@ -1171,7 +1171,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9039fc0dd72e086e",
+    "version": "5e70053718acb635",
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc"
@@ -2907,7 +2907,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ff3eef7084a37e53",
+    "version": "cc640ed07e277c62",
     "diagrams": "c6edded6cce52897",
     "conformal": "334186f800f59252",
     "embedding": "b9bf3c95064c40a7"
@@ -3866,7 +3866,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "2b9a9e10092ab33f",
+    "version": "79039bf92d6ca8ca",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -4644,6 +4644,50 @@
     "embedding": "1154c266ff9d9f93"
   },
   {
+    "id": "three_brane_throat",
+    "name": "Three-Brane",
+    "tags": [
+      "static",
+      "stationary",
+      "ten-dimensional",
+      "higher dimensions",
+      "string theory",
+      "supergravity",
+      "three-brane",
+      "D3-brane",
+      "p-brane",
+      "black brane",
+      "brane",
+      "extremal",
+      "supersymmetric",
+      "self-dual",
+      "harmonic function",
+      "multi-centre",
+      "isotropic coordinates",
+      "throat",
+      "near-horizon limit",
+      "anti-de Sitter",
+      "AdS/CFT",
+      "holography",
+      "horizon",
+      "degenerate horizon",
+      "Killing horizon",
+      "no singularity",
+      "asymptotically flat",
+      "soliton",
+      "maximal extension",
+      "reflection symmetry",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "06579253ae61a1ee",
+    "diagrams": "e574af654990108c",
+    "conformal": "631507c8e742808c",
+    "embedding": "7006f557a81541c6"
+  },
+  {
     "id": "tilted_universes",
     "name": "Tilted Universes",
     "tags": [
@@ -4812,7 +4856,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "3a5f520eede67cea",
+    "version": "e6c0929a25dd0310",
     "diagrams": "70598c77af726b80",
     "conformal": "243a2de40edb7f43",
     "embedding": "930f06c7003fad35"

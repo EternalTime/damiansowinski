@@ -137,6 +137,11 @@
       "id": "btz_multi_holes_wormholes",
       "kind": "locally_same",
       "text": "In three dimensions, anti-de Sitter space cut along several timelike surfaces and glued back together is a spacetime with many black holes, or one black hole with a wormhole inside [brill1996, aminneborg1998]."
+    },
+    {
+      "id": "three_brane_throat",
+      "kind": "family",
+      "text": "A sheet of three dimensions in string theory whose throat is anti-de Sitter space of five dimensions times a sphere of five. Maldacena read his correspondence off that throat [maldacena1998]."
     }
   ],
   "references": [

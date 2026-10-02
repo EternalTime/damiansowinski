@@ -109,6 +109,11 @@
       "id": "string_bh_three_four_charges",
       "kind": "limit_source",
       "text": "The extreme black holes of string theory end in this throat, in the limit toward the horizon. Strominger and Vafa's hole of five dimensions has the same throat with a 3-sphere [strominger1996]."
+    },
+    {
+      "id": "three_brane_throat",
+      "kind": "family",
+      "text": "The three-brane of string theory has the same throat six dimensions up, anti-de Sitter space of five dimensions times a sphere of five [gibbons1993]."
     }
   ],
   "references": [

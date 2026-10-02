@@ -7915,6 +7915,74 @@ def cremmer_scherk(ck, src):
     return views
 
 
+THREE_BRANE_LO = 1 / 20
+THREE_BRANE_POINT = {"t": 0, "x": 0, "y": 0, "z": 0, "alpha": "pi/2", "beta": "pi/2", "psi": "pi/2", "theta": "pi/2"}
+
+
+def three_brane_height(rho):
+    """z(rho) of the three-brane's surface at L = 1, from rho = 1/20: the quadrature of
+    sqrt(g_rho_rho - (dR/drho)^2) = sqrt(2 rho^4 + 1)/(rho (rho^4 + 1)^(3/4)), with
+    R = (rho^4 + 1)^(1/4) the circumference radius."""
+    def slope(x):
+        return math.sqrt(2 * x ** 4 + 1) / (x * (x ** 4 + 1) ** 0.75)
+    return np.array([quad(slope, THREE_BRANE_LO, float(x), epsabs=1e-12, epsrel=1e-12)[0]
+                     for x in np.atleast_1d(rho)])
+
+
+def three_brane_throat(ck, src):
+    """The three-brane at L = 1, in two views of one moment of t at one point of the brane. In the
+    isotropic chart the surface of rho and phi, a great circle of the 5-sphere at each radius, has
+    g_rho_rho = sqrt(1 + 1/rho^4) and the circumference radius R = (rho^4 + 1)^(1/4), so
+    dz/drho = sqrt(2 rho^4 + 1)/(rho (rho^4 + 1)^(3/4)): flat far away, and toward the horizon
+    rho = 0 it falls as ln(rho) without end while R closes on L, an infinitely long throat, drawn
+    from rho = L/20 out to 3L. The throat alone, in the chart of the proper distance sigma, is
+    d(sigma)^2 + L^2 d(phi)^2, the cylinder of radius L with sigma for its height. The brane's own
+    three dimensions and the rest of the sphere add nothing a surface can show."""
+    name = "The three-brane"
+    sl = Slice(src, "three_brane_throat", "isotropic", "\\rho", "\\phi", THREE_BRANE_POINT, {"L": 1})
+    lo, top = THREE_BRANE_LO, 3.0
+    size = 2 * (top + 1)
+    radii = (0.1, 0.25, 0.5, 1.0, 2.0)
+    throat = Piece("brane", "sheet", sl, lo, top, 0.0, 1,
+                   (("edge", "the throat runs on without end toward the horizon $\\rho = 0$, its circles closing "
+                             "on the radius $L$"),
+                    ("edge", "the surface runs on to $\\rho \\to \\infty$")),
+                   [(lo, "r", None)] + [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+    ck.isometry(f"{name}, a great circle of the sphere at each radius", throat)
+    ck.radius(f"{name}, rho = (rho^4 + L^4)^(1/4)", throat, lambda r: (r ** 4 + 1) ** 0.25, size)
+    ck.form(f"{name}, the quadrature of sqrt(2 rho^4 + 1)/(rho (rho^4 + 1)^(3/4))", throat, three_brane_height, size)
+    whole = Surface([throat])
+    fig = figure_of([whole], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *throat.at(lo), "$\\rho = L/20$")
+    ring_label(fig, [0, 0, 0], *throat.at(1.0), "$\\rho = L$")
+    ring_label(fig, [0, 0, 0], *throat.at(top), "$3L$")
+    fig.legend("fill", "cover", "the surface of $\\rho$ and $\\phi$ at one moment, which $t$ and $\\rho > 0$ cover")
+    fig.legend("line", "r", "$\\rho$ constant, at $1/20$, $1/10$, $1/4$, $1/2$, $1$, $2$ and $3$ times $L$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    settings = "$L = 1$, the unit of every length."
+    views = [view("brane", "The brane and its throat", "$L$", [whole], fig.done(), settings=settings)]
+
+    sl = Slice(src, "three_brane_throat", "throat_proper", "\\sigma", "\\phi", THREE_BRANE_POINT, {"L": 1})
+    size = 2.0
+    tube = Piece("cylinder", "sheet", sl, -1.0, 1.0, -1.0, 1,
+                 (("edge", "the cylinder runs on for ever toward the horizon, $\\sigma \\to -\\infty$"),
+                  ("edge", "the cylinder runs on for ever toward $\\sigma \\to \\infty$")),
+                 [(k / 2, "r", None) for k in (-2, -1, 0, 1, 2)], size)
+    ck.isometry(f"{name}, the throat alone", tube)
+    ck.form(f"{name}, the cylinder at the height sigma", tube, lambda x: x, size)
+    ck.radius(f"{name}, the cylinder rho = L", tube, lambda x: np.ones_like(x), size)
+    alone = Surface([tube])
+    fig = figure_of([alone], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *tube.at(0.0), "$\\sigma = 0$")
+    ring_label(fig, [0, 0, 0], *tube.at(1.0), "$L$")
+    ring_label(fig, [0, 0, 0], *tube.at(-1.0), "$-L$")
+    fig.legend("fill", "cover", "the surface of $\\sigma$ and $\\phi$ at one moment, which $t$ and $\\sigma$ cover")
+    fig.legend("line", "r", "$\\sigma$ constant, every $L/2$ from $-L$ to $L$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("throat", "The throat alone", "$L$", [alone], fig.done(), settings=settings))
+    return views
+
+
 # Two of Majumdar and Papapetrou's holes, each of mass parameter m, the unit, at z = +-2m on the
 # axis, as their spacetime diagrams declare.
 MP_TWO_CYLINDRICAL = "1 + 1/sqrt(rho**2 + (z - 2)**2) + 1/sqrt(rho**2 + (z + 2)**2)"
@@ -15430,6 +15498,7 @@ DRAWN = {
     "bertotti_robinson": bertotti_robinson,
     "plebanski_hacyan": plebanski_hacyan,
     "cremmer_scherk": cremmer_scherk,
+    "three_brane_throat": three_brane_throat,
     "lindquist_wheeler_lattice": lindquist_wheeler_lattice,
     "stockum_dust": stockum_dust,
     "taub_nut": taub_nut,
@@ -17017,6 +17086,24 @@ CAPTIONS = {
     ("plebanski_hacyan", "sphere"): [
         "The sphere of $\\theta$ and $\\phi$ of the same spacetime at one event of $t$ and $z$, radius "
         "$b = 1/\\sqrt{2\\Lambda}$ and area $2\\pi/\\Lambda$, the same at every $t$ and $z$.",
+    ],
+    ("three_brane_throat", "brane"): [
+        "The surface of $\\rho$ and $\\phi$ ($x = y = z = 0$, $\\alpha = \\beta = \\psi = \\theta = \\pi/2$) of the three-brane at one moment of $t$, a great circle of "
+        "the 5-sphere at each radius, drawn as a surface in flat space with every distance along it the metric "
+        "distance. On it $g_{\\rho\\rho} = \\sqrt{1 + L^4/\\rho^4}$ and the circumference radius is "
+        "$(\\rho^4 + L^4)^{1/4}$, so the surface is a flat plane far from the brane.",
+        "Toward the horizon $\\rho = 0$ the surface falls as $L\\ln\\rho$ without end while its circles close "
+        "on the radius $L$: the throat is infinitely long, and it is drawn down to $\\rho = L/20$. Down the "
+        "throat the surface tends to the cylinder of anti-de Sitter space times a sphere, "
+        "$L^2d\\rho^2/\\rho^2 + L^2d\\phi^2$.",
+    ],
+    ("three_brane_throat", "throat"): [
+        "The surface of $\\sigma$ and $\\phi$ ($x = y = z = 0$, $\\alpha = \\beta = \\psi = \\theta = \\pi/2$) of the throat alone at one moment of $t$, a cylinder of "
+        "radius $L$ in flat space, $d\\sigma^2 + L^2d\\phi^2$, with every distance along it the metric "
+        "distance.",
+        "The limit that keeps the throat alone removes the flat plane at the top of the surface of the three-brane, "
+        "and the cylinder runs on without end both ways. Every circle is one great circle of a 5-sphere of "
+        "radius $L$.",
     ],
     ("cremmer_scherk", "equator"): [
         "One flat dimension and the equator of the sphere ($y = z = 0$, $\\theta = \\pi/2$) of Cremmer and "

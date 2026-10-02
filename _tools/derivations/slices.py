@@ -2741,6 +2741,23 @@ FLAT = {
     ("near_horizon_extreme_kerr", "global", "equator"): lambda: _nhek("global"),
     ("bertotti_robinson", "static", "radial"): lambda: _br("static"),
     ("bertotti_robinson", "poincare", "tx"): lambda: _br("poincare"),
+    # The three-brane's moment t = 0 over the embedding's reach in the isotropic radius, at L = 1: the
+    # areal radius is (rho^4 + 1)^(1/4) and Gibbons, Horowitz and Townsend's w is rho/(rho^4 + 1)^(1/4).
+    # The throat alone is another spacetime, the limit, with its own cylinder: its moment over the reach
+    # in the proper distance sigma, where r = e^sigma.
+    ("three_brane_throat", "isotropic", "radial"): lambda: one(
+        "three_brane_throat", lambda m: along(0.0, *m.reach("isotropic", "\\rho")), view_id="brane"),
+    ("three_brane_throat", "areal", "radial"): lambda: one(
+        "three_brane_throat", lambda m: along(0.0, *((x ** 4 + 1) ** 0.25 for x in m.reach("isotropic", "\\rho"))),
+        view_id="brane"),
+    ("three_brane_throat", "horizon", "radial"): lambda: one(
+        "three_brane_throat", lambda m: along(0.0, *(x / (x ** 4 + 1) ** 0.25 for x in m.reach("isotropic", "\\rho"))),
+        view_id="brane"),
+    ("three_brane_throat", "throat", "radial"): lambda: one(
+        "three_brane_throat", lambda m: along(0.0, *(math.exp(x) for x in m.reach("throat_proper", "\\sigma"))),
+        view_id="throat"),
+    ("three_brane_throat", "throat_proper", "radial"): lambda: one(
+        "three_brane_throat", lambda m: along(0.0, *m.reach("throat_proper", "\\sigma")), view_id="throat"),
     ("cremmer_scherk", "cartesian", "tx"): lambda: _cremmer_scherk("tx"),
     ("cremmer_scherk", "cartesian", "circle"): lambda: _cremmer_scherk("circle"),
     ("plebanski_hacyan", "sphere", "tz"): lambda: _plebanski_hacyan("sphere"),
