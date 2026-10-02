@@ -54,6 +54,11 @@
       "id": "de_sitter",
       "kind": "piece",
       "text": "The core of Bardeen's black hole. Near the centre $f \\approx 1 - r_sr^2/g^3$, de Sitter's static metric with $\\Lambda = 3r_s/g^3$ [ansoldi2008]."
+    },
+    {
+      "id": "simpson_visser",
+      "kind": "family",
+      "text": "Another black hole with no singularity. Where Bardeen's has a regular centre, Simpson and Visser's has a throat of radius $a$, and its inside bounces into another universe [simpson2019]."
     }
   ],
   "references": [
@@ -75,7 +80,8 @@
     "hayward2006",
     "bardeen2014",
     "carballorubio2018",
-    "poisson1990"
+    "poisson1990",
+    "simpson2019"
   ],
   "coordinates": [
     {

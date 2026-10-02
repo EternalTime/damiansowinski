@@ -148,6 +148,47 @@
     "embedding": "bf931d9df3013c58"
   },
   {
+    "id": "bardeen",
+    "name": "Bardeen",
+    "tags": [
+      "regular black hole",
+      "nonsingular black hole",
+      "black hole",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "mass",
+      "magnetic monopole",
+      "magnetic charge",
+      "nonlinear electrodynamics",
+      "non-vacuum",
+      "de Sitter core",
+      "regular centre",
+      "singularity theorems",
+      "strong energy condition",
+      "weak energy condition",
+      "energy conditions",
+      "horizon",
+      "event horizon",
+      "Cauchy horizon",
+      "inner horizon",
+      "extremal black hole",
+      "mass inflation",
+      "causal structure",
+      "maximal extension",
+      "asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "ffa8260224c1ab61",
+    "diagrams": "af782319d0ede812",
+    "conformal": "7ea8e08d66397efe",
+    "embedding": "1585df5452ac5572"
+  },
+  {
     "id": "bell_szekeres",
     "name": "Bell-Szekeres",
     "tags": [
@@ -369,7 +410,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "94efce8f47c340ab",
+    "version": "1cd0414771b61ee5",
     "diagrams": "b1166493c0272984",
     "conformal": "f0585b2da42de10b",
     "embedding": "168a0415f5dda720"
@@ -1430,7 +1471,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cbeab1b9ebac55df",
+    "version": "695175fd0b35d359",
     "diagrams": "4565bff8ba921a42",
     "conformal": "fb9ce65c8d285c0e",
     "embedding": "1f6d4a7541295881"
@@ -1542,7 +1583,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d86e6d068533d6db",
+    "version": "f137e42571d20dfa",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -1710,7 +1751,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0544baf6439c6186",
+    "version": "eb4b048e2d67a231",
     "diagrams": "b272a6aeea9e0b62",
     "conformal": "09d52a3611b8d1c6",
     "embedding": "044c6a18e30bb001"

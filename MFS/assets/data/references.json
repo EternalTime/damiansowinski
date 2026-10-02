@@ -1,5 +1,5 @@
 {
-  "version": "6d462789cc77c927",
+  "version": "3d1f38ba650493b8",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -13306,6 +13306,238 @@
         "eprint": "2206.03729",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/2206.03729"
+      }
+    },
+    "sakharov1966": {
+      "type": "article",
+      "fields": {
+        "title": "The initial stage of an expanding universe and the appearance of a nonuniform distribution of matter",
+        "author": "Sakharov, Andrei D.",
+        "journal": "Soviet Physics JETP",
+        "volume": "22",
+        "pages": "241--249",
+        "year": "1966",
+        "url": "https://inspirehep.net/literature/2953308"
+      }
+    },
+    "gliner1966": {
+      "type": "article",
+      "fields": {
+        "title": "Algebraic properties of the energy-momentum tensor and vacuum-like states of matter",
+        "author": "Gliner, Erast B.",
+        "journal": "Soviet Physics JETP",
+        "volume": "22",
+        "pages": "378--382",
+        "year": "1966",
+        "url": "https://inspirehep.net/literature/2953207"
+      }
+    },
+    "frolov1989": {
+      "type": "article",
+      "fields": {
+        "title": "Through a black hole into a new universe?",
+        "author": "Frolov, Valeri P. and Markov, Moissei A. and Mukhanov, Viatcheslav F.",
+        "journal": "Physics Letters B",
+        "volume": "216",
+        "number": "3--4",
+        "pages": "272--276",
+        "year": "1989",
+        "doi": "10.1016/0370-2693(89)91114-3",
+        "url": "https://doi.org/10.1016/0370-2693(89)91114-3"
+      }
+    },
+    "frolov1990closed": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes as possible sources of closed and semiclosed worlds",
+        "author": "Frolov, Valeri P. and Markov, Moissei A. and Mukhanov, Viatcheslav F.",
+        "journal": "Physical Review D",
+        "volume": "41",
+        "number": "2",
+        "pages": "383--394",
+        "year": "1990",
+        "doi": "10.1103/PhysRevD.41.383",
+        "url": "https://doi.org/10.1103/PhysRevD.41.383"
+      }
+    },
+    "dymnikova1992": {
+      "type": "article",
+      "fields": {
+        "title": "Vacuum nonsingular black hole",
+        "author": "Dymnikova, Irina",
+        "journal": "General Relativity and Gravitation",
+        "volume": "24",
+        "number": "3",
+        "pages": "235--242",
+        "year": "1992",
+        "doi": "10.1007/BF00760226",
+        "url": "https://doi.org/10.1007/BF00760226"
+      }
+    },
+    "borde1994": {
+      "type": "article",
+      "fields": {
+        "title": "Open and closed universes, initial singularities, and inflation",
+        "author": "Borde, Arvind",
+        "journal": "Physical Review D",
+        "volume": "50",
+        "number": "6",
+        "pages": "3692--3702",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.50.3692",
+        "eprint": "gr-qc/9403049",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9403049"
+      }
+    },
+    "mars1996": {
+      "type": "article",
+      "fields": {
+        "title": "Models of regular {Schwarzschild} black holes satisfying weak energy conditions",
+        "author": "Mars, Marc and Mart\\'in-Prats, M. Merc\\`e and Senovilla, Jos\\'e M. M.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "13",
+        "number": "5",
+        "pages": "L51--L58",
+        "year": "1996",
+        "doi": "10.1088/0264-9381/13/5/003",
+        "url": "https://doi.org/10.1088/0264-9381/13/5/003"
+      }
+    },
+    "borde1997": {
+      "type": "article",
+      "fields": {
+        "title": "Regular black holes and topology change",
+        "author": "Borde, Arvind",
+        "journal": "Physical Review D",
+        "volume": "55",
+        "number": "12",
+        "pages": "7615--7617",
+        "year": "1997",
+        "doi": "10.1103/PhysRevD.55.7615",
+        "eprint": "gr-qc/9612057",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9612057"
+      }
+    },
+    "ayonbeato1998": {
+      "type": "article",
+      "fields": {
+        "title": "Regular black hole in general relativity coupled to nonlinear electrodynamics",
+        "author": "Ay\\'on-Beato, Eloy and Garc\\'ia, Alberto",
+        "journal": "Physical Review Letters",
+        "volume": "80",
+        "number": "23",
+        "pages": "5056--5059",
+        "year": "1998",
+        "doi": "10.1103/PhysRevLett.80.5056",
+        "eprint": "gr-qc/9911046",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9911046"
+      }
+    },
+    "ayonbeato2000": {
+      "type": "article",
+      "fields": {
+        "title": "The {Bardeen} model as a nonlinear magnetic monopole",
+        "author": "Ay\\'on-Beato, Eloy and Garc\\'ia, Alberto",
+        "journal": "Physics Letters B",
+        "volume": "493",
+        "number": "1--2",
+        "pages": "149--152",
+        "year": "2000",
+        "doi": "10.1016/S0370-2693(00)01125-4",
+        "eprint": "gr-qc/0009077",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0009077"
+      }
+    },
+    "bronnikov2001": {
+      "type": "article",
+      "fields": {
+        "title": "Regular magnetic black holes and monopoles from nonlinear electrodynamics",
+        "author": "Bronnikov, Kirill A.",
+        "journal": "Physical Review D",
+        "volume": "63",
+        "number": "4",
+        "pages": "044005",
+        "year": "2001",
+        "doi": "10.1103/PhysRevD.63.044005",
+        "eprint": "gr-qc/0006014",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0006014"
+      }
+    },
+    "hayward2006": {
+      "type": "article",
+      "fields": {
+        "title": "Formation and evaporation of nonsingular black holes",
+        "author": "Hayward, Sean A.",
+        "journal": "Physical Review Letters",
+        "volume": "96",
+        "number": "3",
+        "pages": "031103",
+        "year": "2006",
+        "doi": "10.1103/PhysRevLett.96.031103",
+        "eprint": "gr-qc/0506126",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0506126"
+      }
+    },
+    "ansoldi2008": {
+      "type": "article",
+      "fields": {
+        "title": "Spherical black holes with regular center: a review of existing models including a recent realization with {Gaussian} sources",
+        "author": "Ansoldi, Stefano",
+        "journal": "arXiv preprint arXiv:0802.0330",
+        "year": "2008",
+        "eprint": "0802.0330",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0802.0330"
+      }
+    },
+    "zaslavskii2010": {
+      "type": "article",
+      "fields": {
+        "title": "Regular black holes and energy conditions",
+        "author": "Zaslavskii, Oleg B.",
+        "journal": "Physics Letters B",
+        "volume": "688",
+        "number": "4--5",
+        "pages": "278--280",
+        "year": "2010",
+        "doi": "10.1016/j.physletb.2010.04.031",
+        "eprint": "1004.2362",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1004.2362"
+      }
+    },
+    "bardeen2014": {
+      "type": "article",
+      "fields": {
+        "title": "Black hole evaporation without an event horizon",
+        "author": "Bardeen, James M.",
+        "journal": "arXiv preprint arXiv:1406.4098",
+        "year": "2014",
+        "eprint": "1406.4098",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1406.4098"
+      }
+    },
+    "carballorubio2018": {
+      "type": "article",
+      "fields": {
+        "title": "On the viability of regular black holes",
+        "author": "Carballo-Rubio, Ra\\'ul and Di Filippo, Francesco and Liberati, Stefano and Pacilio, Costantino and Visser, Matt",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2018",
+        "number": "7",
+        "pages": "023",
+        "year": "2018",
+        "doi": "10.1007/JHEP07(2018)023",
+        "eprint": "1805.02675",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1805.02675"
       }
     }
   }
