@@ -67,6 +67,11 @@
       "id": "misner_brill_lindquist",
       "kind": "family",
       "text": "A slice of space with two bridges in it, each leading to a sheet of its own, which Dieter Brill and Richard Lindquist wrote down in 1963 [brill1963]. Charles Misner's slice of 1960 joins the two mouths to each other and makes a wormhole within one sheet [misner1960]."
+    },
+    {
+      "id": "semiclosed_world",
+      "kind": "family",
+      "text": "The bridge with one of its sheets closed off by a universe of dust. Wheeler's bag of gold is reached by passing through the bridge [marolf2009]."
     }
   ],
   "references": [
@@ -88,7 +93,8 @@
     "bronnikov1973",
     "einstein1937",
     "brill1963",
-    "misner1960"
+    "misner1960",
+    "marolf2009"
   ],
   "coordinates": [
     {

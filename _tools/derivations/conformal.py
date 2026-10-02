@@ -9400,6 +9400,289 @@ def oppenheimer_snyder(ck, src):
     return [v]
 
 
+# ---------------------------------------------------------------- the semiclosed world
+
+class Bag:
+    """The semiclosed world, r_s = 1: the dust in its own conformal time and the exterior fitted
+    to it, as Collapse fits the exterior of a star, for a surface past the equator of the three
+    sphere and through the whole cycloid, from the bang at eta = -pi to the crunch at eta = pi.
+
+    Inside, p = (eta - chi)/2 and q = (eta + chi)/2, a rectangle. The surface chi = chi0 is the
+    shell of Novikov's chart that rests at R0 = 1/sin^2 chi0 on the far sheet, with k = cot chi0
+    negative, and in Kruskal's coordinates it is, in closed form,
+
+        V = (k cos(eta/2) + sin(eta/2)) exp((r + k(eta + (R0/2)(eta + sin eta)))/2),
+        U = (sin(eta/2) - k cos(eta/2)) exp((r - k(eta + (R0/2)(eta + sin eta)))/2),
+
+    with r = R0 cos^2(eta/2), so that UV = (1 - r) e^r: it leaves the past singularity UV = 1 with
+    U and V negative, crosses U = 0 and then V = 0 on the far side of the bifurcation sphere, and
+    ends on the future singularity. Outside, the drawing is P(U) and Q(V), fixed by the surface,
+    P(U_s(eta)) = (eta - chi0)/2 and Q(V_s(eta)) = (eta + chi0)/2, and by the two singularities
+    being the lines T = +-pi: Q(V) = pi - P(1/V) and P(U) = pi - Q(1/U) above the surface's
+    last rays, and -pi in place of pi below its first. The moment of greatest expansion is then
+    the line T = 0 by the symmetry U <-> -V, which is checked."""
+
+    def __init__(self, chi0):
+        self.chi0 = chi0
+        self.k = 1 / math.tan(chi0)
+        self.R0 = self.k ** 2 + 1
+        self.am = self.R0 / math.sin(chi0)
+        tail = np.pi - 0.2 * np.logspace(0, -6, 20000)[1:]
+        half = np.concatenate([np.linspace(0, np.pi - 0.2, 20000), tail, [np.pi]])
+        eta = np.concatenate([-half[:0:-1], half])
+        U, V, R = self.surface(eta)
+        # Near the bang and the crunch U and V stall below double precision, as Collapse's do, so
+        # from the moment of rest outward only the points that still move in both are kept, and
+        # the last of them stand for the two ends, eta = -+pi, which they reach to a part in 1e-12.
+        middle = len(eta) // 2
+        keep = [middle]
+        for step in (1, -1):
+            last = middle
+            for i in range(middle + step, len(eta) if step > 0 else -1, step):
+                if step * (U[i] - U[last]) > 0 and step * (V[i] - V[last]) > 0:
+                    keep.append(i)
+                    last = i
+        keep = np.array(sorted(keep))
+        self.eta, self.U, self.V, self.R = eta[keep], U[keep].copy(), V[keep].copy(), R[keep]
+        self.eta[0], self.eta[-1] = -np.pi, np.pi
+        assert np.all(np.diff(self.U) > 0) and np.all(np.diff(self.V) > 0), "the surface is not monotone"
+
+    def surface(self, eta):
+        eta = np.asarray(eta, dtype=float)
+        r = self.R0 * np.cos(eta / 2) ** 2
+        phase = self.k * (eta + 0.5 * self.R0 * (eta + np.sin(eta)))
+        V = (self.k * np.cos(eta / 2) + np.sin(eta / 2)) * np.exp((r + phase) / 2)
+        U = (np.sin(eta / 2) - self.k * np.cos(eta / 2)) * np.exp((r - phase) / 2)
+        return U, V, r
+
+    def _p(self, U):
+        return (np.interp(U, self.U, self.eta) - self.chi0) / 2
+
+    def _q(self, V):
+        return (np.interp(V, self.V, self.eta) + self.chi0) / 2
+
+    def P(self, U):
+        U = np.asarray(U, dtype=float)
+        with np.errstate(divide="ignore"):
+            over = 1 / np.where(U == 0, 1e-300, U)
+        return np.where(U > self.U[-1], np.pi - self._q(over), np.where(U < self.U[0], -np.pi - self._q(over), self._p(U)))
+
+    def Q(self, V):
+        V = np.asarray(V, dtype=float)
+        with np.errstate(divide="ignore"):
+            over = 1 / np.where(V == 0, 1e-300, V)
+        return np.where(V > self.V[-1], np.pi - self._p(over), np.where(V < self.V[0], -np.pi - self._p(over), self._q(V)))
+
+
+def semiclosed_world(ck, src):
+    """The semiclosed world at chi_0 = 3 pi/4, a_m = 2 sqrt(2) r_s, in one view for each of its
+    four charts, all on the one drawing Bag makes: the dust a rectangle of chi and eta, and
+    Kruskal's manifold to the right of the surface, the sheet of the dust, the bifurcation sphere
+    at X = 3 chi_0 - pi, and the far sheet out to i0 at X = pi + 3 chi_0. Schwarzschild's t is
+    taken future directed on each sheet; the isotropic chart's one t runs to the past on the
+    sheet of the dust, as a static time must on the other side of a bifurcation sphere."""
+    c = 3 * PI / 4
+    b = Bag(c)
+    ext = Plane(src, "semiclosed_world", "schwarzschild", ("t", "r"), EQUATOR, {"r_s": 1})
+    iso = Plane(src, "semiclosed_world", "isotropic", ("t", "r"), EQUATOR, {"r_s": 1})
+    T = Tower(-ext.g[0, 0], ext.x1, [1])
+    params = {"chi_0": sp.nsimplify(c / sp.pi) * sp.pi, "a_m": sp.nsimplify(b.am)}
+    comoving = Plane(src, "semiclosed_world", "comoving", ("\\tau", "\\chi"), EQUATOR, params, numeric=["a"])
+    conformal = Plane(src, "semiclosed_world", "conformal", ("\\eta", "\\chi"), EQUATOR, params)
+    etas = np.linspace(-np.pi, np.pi, 400001)
+    taus = (b.am / 2) * (etas + np.sin(etas))
+
+    def eta_of(tau):
+        return np.interp(tau, taus, etas)
+
+    def scale(tau, chi):
+        e = eta_of(tau)
+        return {"a": ((b.am / 2) * (1 + np.cos(e)), -np.sin(e) / (1 + np.cos(e)),
+                      -1 / ((b.am / 2) * (1 + np.cos(e)) ** 2))}
+
+    def inside(eta, chi):
+        return (eta - chi) / 2, (eta + chi) / 2
+
+    def outside(t, r, cell="I"):
+        """Schwarzschild's t and r of a cell, t future directed on the sheet of the dust, I'."""
+        p, q = T.pq(cell, -np.asarray(t, dtype=float) if cell == "I'" else t, r)
+        return b.P(np.tan(p)), b.Q(np.tan(q))
+
+    def areal(x):
+        return x * (1 + 1 / (4 * x)) ** 2
+
+    def isotropic(t, x):
+        """The isotropic chart: the far sheet outside x = r_s/4 and the sheet of the dust inside it."""
+        t, x = np.broadcast_arrays(np.asarray(t, dtype=float), np.asarray(x, dtype=float))
+        far = outside(t, areal(x), "I")
+        near = outside(-t, areal(x), "I'")
+        return np.where(x > 0.25, far[0], near[0]), np.where(x > 0.25, far[1], near[1])
+
+    half_life = taus[-1]
+    ck.chart("Semiclosed world, the dust in its proper time", comoving, lambda tau, chi: inside(eta_of(tau), chi),
+             ck.uniform(-0.98 * half_life, 0.98 * half_life), ck.uniform(0.001, c), lambda tau, chi: (1, 0), scale)
+    ck.chart("Semiclosed world, the dust in its conformal time", conformal, inside,
+             ck.uniform(-0.98 * PI, 0.98 * PI), ck.uniform(0.001, c), lambda eta, chi: (1, 0))
+    ck.chart("Semiclosed world, Schwarzschild's chart on the far sheet", ext, outside, ck.uniform(-12, 12),
+             ck.uniform(1.05, 30), lambda t, r: (1, 0))
+    ck.chart("Semiclosed world, Schwarzschild's chart on the sheet of the dust", ext,
+             lambda t, r: outside(t, r, "I'"), ck.uniform(-3, 3), ck.uniform(1.02, 1.6), lambda t, r: (1, 0))
+    ck.chart("Semiclosed world, the isotropic chart on the far sheet", iso, isotropic, ck.uniform(-12, 12),
+             ck.uniform(0.3, 30), lambda t, x: (1, 0))
+    ck.chart("Semiclosed world, the isotropic chart on the sheet of the dust", iso, isotropic, ck.uniform(-3, 3),
+             ck.uniform(0.12, 0.22), lambda t, x: (-1, 0))
+    ck.limit("Semiclosed world: the surface leaves r = 0 on UV = 1 and ends on it",
+             [b.U[0] * b.V[0], b.U[-1] * b.V[-1]], [1.0, 1.0], 1e-9)
+    ck.limit("Semiclosed world: the surface's two ends are each other's mirror, U <-> -V",
+             [b.U[0] + b.V[-1], b.V[0] + b.U[-1]], [0, 0], 1e-9)
+    ck.limit("Semiclosed world: the moment of greatest expansion is one line, P(-V) + Q(V) = 0",
+             [b.P(-V) + b.Q(V) for V in (-30.0, -1.0, -0.01, 0.02, 3.0, 1e4)], [0] * 6, 1e-9)
+    ck.limit("Semiclosed world: the future singularity is one line, P(1/V) + Q(V) = pi",
+             [b.P(1 / V) + b.Q(V) for V in (0.01, 0.5, 30.0, 1e5)], [PI] * 4, 1e-9)
+    ck.limit("Semiclosed world: the past singularity is one line, P(1/V) + Q(V) = -pi",
+             [b.P(1 / V) + b.Q(V) for V in (-0.01, -0.5, -30.0, -1e5)], [-PI] * 4, 1e-9)
+    ck.limit("Semiclosed world: the horizons U = 0 and V = 0 are P = -(3 chi0 - pi)/2 and Q = (3 chi0 - pi)/2",
+             [b.P(0.0), b.Q(0.0)], [-(3 * c - PI) / 2, (3 * c - PI) / 2], 1e-7)
+    ck.limit("Semiclosed world: the surface crosses r = r_s at eta = -+(2 chi0 - pi)",
+             [b.eta[np.argmin(np.abs(b.U))], b.eta[np.argmin(np.abs(b.V))]], [PI - 2 * c, 2 * c - PI], 1e-3)
+    # Marginally trapped spheres: the areal radius a sin(chi) has a null gradient on
+    # eta = +-(pi - 2 chi), by the published conformal chart.
+    chi = np.linspace(0.02, c, 60)
+    for sign in (1, -1):
+        e = sign * (PI - 2 * chi)
+        a = (b.am / 2) * (1 + np.cos(e))
+        _, _, _, h00, h01, h11 = conformal.metric(e, chi)
+        dR = [-(b.am / 2) * np.sin(e) * np.sin(chi), a * np.cos(chi)]
+        ck.limit(f"Semiclosed world: the areal radius has a null gradient on eta = {'+' if sign > 0 else '-'}(pi - 2 chi)",
+                 (h00 * dR[0] ** 2 + 2 * h01 * dR[0] * dR[1] + h11 * dR[1] ** 2) * a ** 2 / b.am ** 2, 0, 1e-9)
+    ck.diverges("Semiclosed world: the Kretschmann scalar diverges at the crunch",
+                conformal.kretschmann(PI * (1 - 1e-2), 0.3), conformal.kretschmann(PI * (1 - 1e-3), 0.3))
+    ck.diverges("Semiclosed world: the Kretschmann scalar diverges at the bang",
+                conformal.kretschmann(-PI * (1 - 1e-2), 0.3), conformal.kretschmann(-PI * (1 - 1e-3), 0.3))
+    ck.diverges("Semiclosed world: the Kretschmann scalar diverges at r = 0 outside",
+                ext.kretschmann(0, 1e-2), ext.kretschmann(0, 1e-3))
+    ck.finite("Semiclosed world: the centre chi = 0 is regular between the bang and the crunch",
+              conformal.kretschmann(PI * np.linspace(-0.7, 0.7, 10), np.full(10, 1e-6)))
+    ck.limit("Semiclosed world: slices.novikov_sheets puts the surface where the Bag does",
+             [float(b.P(slices.novikov_sheets(np.array([b.k]), (b.am / 2) * (e + np.sin(e)))[0])[0])
+              for e in (0.0, 0.5, 1.0)], [(e - c) / 2 for e in (0.0, 0.5, 1.0)], 1e-6)
+
+    Xmax, bif = PI + 3 * c, 3 * c - PI
+    iplus, iminus, i0 = [3 * c, PI], [3 * c, -PI], [Xmax, 0]
+    dust = [[0, -PI], [c, -PI], [c, PI], [0, PI]]
+    outer_region = [[c, -PI], iminus, i0, iplus, [c, PI]]
+    sheets = [[c, PI - 2 * c], [bif, 0], [c, 2 * c - PI]], [[bif, 0], iminus, i0, iplus]
+    t_all = spread(-np.inf, np.inf, 2000, 11)
+
+    def ext_curve(v, cls, p, q):
+        P, Q = np.asarray(p, dtype=float), np.asarray(q, dtype=float)
+        keep = Q - P > c + 1e-9
+        v.curve(cls, np.where(keep, P, np.nan), np.where(keep, Q, np.nan))
+
+    def base(vid, label, system, cover):
+        v = View(vid, label, [-0.4, Xmax + 0.4, -PI - 0.35, PI + 0.35], system)
+        v.fill("region", outer_region)
+        v.fill("region", dust)
+        v.fill("star", dust)
+        for polygon in cover:
+            v.fill("cover", polygon)
+        return v
+
+    def edges(v):
+        v.line("event", [[[3 * c - 2 * PI, -PI], iplus]])
+        v.line("horizon", [[[3 * c - 2 * PI, PI], iminus]])
+        v.line("apparent", [[[0, PI], [HALF, 0], [c, 2 * c - PI]], [[0, -PI], [HALF, 0], [c, PI - 2 * c]]])
+        v.line("surface", [[[c, -PI], [c, PI]]])
+        v.line("centre", [[[0, -PI], [0, PI]]])
+        v.line("singular", [[[0, PI], iplus], [[0, -PI], iminus]], zig=True)
+        v.line("scri", [[iplus, i0], [iminus, i0]])
+        for at in (iplus, iminus, i0):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt(iplus, "$i^+$", "bl", dx=4, dy=-3)
+        v.label_xt(iminus, "$i^-$", "tl", dx=4, dy=3)
+        v.label_xt(i0, "$i^0$", "l", dx=6)
+        v.label_xt([(3 * c + Xmax) / 2, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([(3 * c + Xmax) / 2, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label_xt([2 * c, PI], "$r = 0$", "b", dy=-8)
+        v.label_xt([2 * c, -PI], "$r = 0$", "t", dy=8)
+        v.label_xt([c / 2, 0.3], "dust", cls="region")
+        v.label_xt([c, -2.2], "$\\chi = \\chi_0$", "l", "small", dx=5)
+        v.legend("star", "the dust, more than half of a closed universe")
+        v.legend("surface", "the surface $\\chi = \\chi_0$, a radial geodesic of the exterior behind the throat")
+        v.legend("event", "the event horizon $r = r_s$, which meets the surface at $\\eta = \\pi - 2\\chi_0$ and "
+                          "the bang at $\\chi = 3\\chi_0 - 2\\pi$")
+        v.legend("horizon", "the horizon of the white hole, its mirror image in time")
+        v.legend("apparent", "marginally trapped spheres inside the dust, $\\eta = \\pm(\\pi - 2\\chi)$")
+        v.legend("singular", "$r = 0$: the bang and the crunch inside and the two singularities outside, where the "
+                             "Kretschmann scalar diverges")
+        v.legend("centre", "$\\chi = 0$, the centre")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        v.set(settings="$\\chi_0 = 3\\pi/4$ and $a_m = 2\\sqrt{2}\\,r_s$, so that the surface reaches $2\\,r_s$; "
+                       "$\\eta$ is the conformal time of the dust, zero at the greatest expansion.")
+        # Each moment of the dust's proper time: inside, the line eta across the dust; outside,
+        # the shells released from rest with it on both sheets, through Kruskal's U and V.
+        for m in slices.moments("semiclosed_world"):
+            lo, hi = m.reach("comoving_synchronous", "r")
+            if abs(m.reach("comoving", "\\chi")[1] - c) > 1e-12 or abs(lo - b.k) > 1e-12:
+                raise SystemExit("Semiclosed world: the embedding's dust is not the dust drawn here")
+            e = float(eta_of(m.time))
+            chi = np.array([0.0, c])
+            U, V, _ = slices.novikov_sheets(np.linspace(lo, hi, 801), m.time)
+            v.slice(m, [((e - chi) / 2, (e + chi) / 2), (b.P(U), b.Q(V))])
+
+    views = []
+    for vid, label, lines, legend in (
+            ("comoving", "Comoving dust", [(b.am / 2) * (e + np.sin(e)) for e in np.linspace(-0.875, 0.875, 8) * PI],
+             "$\\tau$ constant, the moments of the dust's own time, drawn every $\\pi/4$ of $\\eta$"),
+            ("conformal", "Conformal dust", np.linspace(-0.875, 0.875, 8) * PI,
+             "$\\eta$ constant, every $\\pi/4$")):
+        v = base(vid, label, vid, [dust])
+        for value in lines:
+            e = float(eta_of(value)) if vid == "comoving" else float(value)
+            v.line("t2", [[[0, e], [c, e]]])
+        for x in (c / 3, 2 * c / 3):
+            v.line("r2", [[[x, -PI], [x, PI]]])
+        edges(v)
+        v.legend("cover", "the dust, which " + ("$\\tau$" if vid == "comoving" else "$\\eta$") + " and $\\chi$ cover")
+        v.legend("t2", legend)
+        v.legend("r2", "$\\chi$ constant, the world lines of the dust, at $\\pi/4$ and at the equator $\\pi/2$")
+        views.append(v)
+
+    radii = {"I": (1.25, 1.6, 2.5, 5, 10), "I'": (1.1, 1.3, 1.6, 1.9), "II": (0.3, 0.6, 0.9), "IV": (0.3, 0.6, 0.9)}
+    v = base("schwarzschild", "Schwarzschild exterior", "schwarzschild", sheets)
+    for cell, values in radii.items():
+        if cell in ("I", "I'"):
+            for r in values:
+                ext_curve(v, "r", *outside(t_all, np.full_like(t_all, r), cell))
+    rr = spread(1, np.inf, 2000, 14)
+    for tt in (-10, -5, -2.5, -1, 0, 1, 2.5, 5, 10):
+        ext_curve(v, "t", *outside(np.full_like(rr, tt), rr, "I"))
+    for tt in (-1, 0, 1):
+        ext_curve(v, "t", *outside(np.full_like(rr, tt), rr, "I'"))
+    edges(v)
+    v.legend("cover", "the two sheets of the exterior, each of which $t$ and $r > r_s$ cover")
+    v.legend("r", "$r$ constant: $1.25$, $1.6$, $2.5$, $5$ and $10\\,r_s$ on the far sheet, and $1.1$, $1.3$, $1.6$ "
+                  "and $1.9\\,r_s$ on the sheet of the dust")
+    v.legend("t", "$ct$ constant, in units of $r_s$")
+    views.append(v)
+
+    v = base("isotropic", "Isotropic exterior", "isotropic", sheets)
+    far_x, near_x = (0.4, 0.75, 1.5, 4, 9), (0.2, 0.15, 0.12, 0.1)
+    for x in far_x + near_x:
+        ext_curve(v, "r", *isotropic(t_all, np.full_like(t_all, x)))
+    xx = np.concatenate([0.25 - 0.25 / (1 + np.exp(np.linspace(-14, 14, 1500)))[::-1],
+                         0.25 + np.exp(np.linspace(-14, 14, 2000))])
+    for tt in (-10, -5, -2.5, -1, 0, 1, 2.5, 5, 10):
+        ext_curve(v, "t", *isotropic(np.full_like(xx, tt), xx))
+    edges(v)
+    v.legend("cover", "the two sheets of the exterior, which $t$ and the isotropic radius $r$ cover together")
+    v.legend("r", "the isotropic radius $r$ constant: $0.4$, $0.75$, $1.5$, $4$ and $9\\,r_s$ on the far sheet, "
+                  "and $0.2$, $0.15$, $0.12$ and $0.1\\,r_s$ on the sheet of the dust")
+    v.legend("t", "$ct$ constant, in units of $r_s$, each line running through the throat $r = r_s/4$")
+    views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- Vaidya
 
 def vaidya(ck, src):
@@ -16999,6 +17282,7 @@ DRAWN = {
     "point_particle_2plus1": point_particle_2plus1,
     "interior_schwarzschild": interior_schwarzschild, "gravastar": gravastar, "frw": frw,
     "einstein_cluster": einstein_cluster,
+    "semiclosed_world": semiclosed_world,
     "oppenheimer_snyder": oppenheimer_snyder, "vaidya": vaidya, "israel_shell": israel_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii,
     "bartnik_mckinnon": bartnik_mckinnon,
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "reissner_nordstrom_ads": reissner_nordstrom_ads, "c_metric": c_metric,
@@ -19179,6 +19463,23 @@ CAPTIONS = {
         "X)/2) = \\tanh((\\eta \\pm \\chi)/2)$ sends it into the Einstein static universe. It has the causal "
         "structure of the flat universe, a triangle with the bang along its base and null infinity above, and "
         "differs from it only in where its surfaces of constant $\\eta$ and $\\chi$ lie.",
+    ],
+    ("semiclosed_world", "comoving"): [
+        "A semiclosed world ($\\chi_0 = 3\\pi/4$), each point in the diagram a 2-sphere, with the dust ruled in its proper time $\\tau$. The dust is the rectangle on the left, a closed universe drawn in its conformal time $\\eta$ and $\\chi$ from the bang to the crunch. To its right is Kruskal's extension of Schwarzschild's exterior, entered from behind: first the sheet behind the throat, then the bifurcation sphere at $X = 3\\chi_0 - \\pi$, then the far sheet out to $i^0$.",
+        "Outside, $p = P(U)$ and $q = Q(V)$ are functions $P$ and $Q$ of the Kruskal coordinates $U$ and $V$, and three conditions fix them: the two sides agree on the surface $\\chi = \\chi_0$, a radial geodesic of the exterior with energy $\\cos\\chi_0$, which is negative; the bang and the singularity of the white hole are the line $T = -\\pi$; and the crunch and the singularity of the black hole are the line $T = \\pi$.",
+        "The event horizon cuts across the dust from the bang at $\\chi = 3\\chi_0 - 2\\pi$, so only the corner of the dust below it can send light to $\\mathscr{I}^+$. Every moment drawn here crosses the throat within $1.5\\,r_s/c$ of the greatest expansion, a small part of the dust's life of $\\pi a_m/c$.",
+    ],
+    ("semiclosed_world", "conformal"): [
+        "A semiclosed world ($\\chi_0 = 3\\pi/4$), each point in the diagram a 2-sphere, with the dust ruled in its conformal time $\\eta$. In $\\eta$ and $\\chi$ the metric of the dust is $a^2(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\,d\\Omega^2)$, already conformal to the Einstein static universe, so the dust is drawn as it stands, $T = \\eta$ and $X = \\chi$.",
+        "Marginally trapped spheres lie on $\\eta = \\pm(\\pi - 2\\chi)$, two lines that cross on the equator at the moment of greatest expansion and meet the surface where it crosses $r_s$, at $\\eta = \\pm(2\\chi_0 - \\pi)$. Between them the spheres above $\\eta = 0$ are trapped and those below it are the time reverse.",
+    ],
+    ("semiclosed_world", "schwarzschild"): [
+        "A semiclosed world ($\\chi_0 = 3\\pi/4$), each point in the diagram a 2-sphere, with the exterior ruled in Schwarzschild's $t$ and $r$. The coordinates cover the two sheets one at a time: the diamond on the right out to $i^0$, and the sliver between the surface of the dust and the two horizons, where $r$ runs from $r_s$ up to the surface at $R(t) \\le 2\\,r_s$. On each sheet $t$ is taken to increase toward the future.",
+        "The black hole and the white hole are the regions above and below the crossing of the horizons, and $t$ and $r$ reach neither. An observer on the far sheet sees a black hole of mass $M$ with $2GM/c^2 = a_m\\sin^3\\chi_0$ and never sees the dust behind it fall.",
+    ],
+    ("semiclosed_world", "isotropic"): [
+        "A semiclosed world ($\\chi_0 = 3\\pi/4$), each point in the diagram a 2-sphere, with the exterior ruled in $t$ and the isotropic radius $r$. These coordinates cover both sheets together, the far one where $r > r_s/4$ and the one behind the throat where $r < r_s/4$, and each line of constant $t$ runs through the bifurcation sphere from one to the other.",
+        "The time $t$ is a single static coordinate, so behind the throat it increases toward the past, and the lines of constant $t$ that rise on the right fall on the left.",
     ],
     ("oppenheimer_snyder", "collapse"): [
         "A spherically symmetric distribution of dust collapsing from rest ($R_0 = 2\\,r_s$), "

@@ -56,6 +56,11 @@
       "id": "tolman_vii",
       "kind": "programme",
       "text": "Richard Tolman's static spheres of fluid, from 1939. He found eight in closed form, and the density inside a neutron star follows the seventh closely [tolman1939, lattimer2001]."
+    },
+    {
+      "id": "semiclosed_world",
+      "kind": "special_case",
+      "text": "Uniform dust out past the equator of a closed universe and vacuum beyond, joined at a throat. Igor Novikov discussed that throat in 1964, a few years before other authors named it the neck of the general model [krasinski2001novikov]."
     }
   ],
   "references": [
@@ -84,7 +89,8 @@
     "oppenheimer1939",
     "lemos1992",
     "hellaby1994",
-    "lattimer2001"
+    "lattimer2001",
+    "krasinski2001novikov"
   ],
   "coordinates": [
     {

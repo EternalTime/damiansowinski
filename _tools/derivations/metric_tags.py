@@ -201,6 +201,10 @@ REGIONS = {
         "regions": [["interior_comoving"], ["exterior_schwarzschild"]],
         "why": "the dust ball and the vacuum outside it are two regions of one spacetime",
     },
+    "semiclosed_world": {
+        "regions": [["comoving", "conformal"], ["schwarzschild", "isotropic"]],
+        "why": "the dust behind the throat and the vacuum outside it are two regions of one spacetime",
+    },
     "ori_time_machine": {
         "regions": [["foliation", "brinkmann"]],
         "why": "vacuum_core leaves f free; the core is a vacuum where f is harmonic in x "
