@@ -1134,7 +1134,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "958ced10f28587ec",
+    "version": "69fee32bc195d55b",
     "diagrams": "703438847ca6a35b",
     "conformal": "7f7b3ad43c1f628e",
     "embedding": "759b3c0dec35465e"
@@ -1467,6 +1467,36 @@
     "embedding": "d878e36cfb97e520"
   },
   {
+    "id": "einstein_dirac_maxwell_wormhole",
+    "name": "Einstein-Dirac-Maxwell",
+    "tags": [
+      "wormhole",
+      "traversable",
+      "throat",
+      "no horizon",
+      "exotic matter",
+      "energy condition violation",
+      "Einstein-Dirac-Maxwell",
+      "Dirac field",
+      "electric charge",
+      "charged",
+      "electromagnetic field",
+      "braneworld",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "583c60de4cc29420",
+    "diagrams": "8ed3da1d15c6836e",
+    "conformal": "29a0a2bdfee14a28",
+    "embedding": "5f6b7e20a1d2a9dd"
+  },
+  {
     "id": "eih_many_bodies",
     "name": "Einstein-Infeld-Hoffmann",
     "tags": [
@@ -1524,7 +1554,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "da59a7c135158a9a",
+    "version": "3c26ca14df17737a",
     "diagrams": "8393e9b253125f33",
     "conformal": "c45f19da93e85da3",
     "embedding": "626bd0932cbe6704"
@@ -1607,7 +1637,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "040f2c06582c7094",
+    "version": "f3230cf63192cb96",
     "diagrams": "7b3fbccc74f5b578",
     "conformal": "13e145da297e8d51",
     "embedding": "8c16d5714cfa992a"
@@ -3402,7 +3432,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "74929458f3b4a874",
+    "version": "ae483ccfba45f876",
     "diagrams": "1de01953e7c22d84",
     "conformal": "956949c7f4a96538",
     "embedding": "2fb2f35ad8d95922"
@@ -3968,7 +3998,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "46d5a389885de8fb",
+    "version": "ed949d51f7f4050a",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -5084,7 +5114,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ce9d8434eb3cabe8",
+    "version": "3cd87c89c38eb513",
     "diagrams": "d3c0cce1a6061334",
     "conformal": "651a421afaa54900",
     "embedding": "c9905ef896f1be24"

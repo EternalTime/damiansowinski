@@ -184,6 +184,11 @@
       "id": "brill_charged_taub_nut",
       "kind": "generalisation",
       "text": "Reissner and Nordström's hole with a NUT parameter $l$. The twist takes the singularity out of $r = 0$, and where too much charge would bare it, $r_q^2 > r_s^2/4 + l^2$, Brill's metric is a wormhole [brill1964, clement2016]."
+    },
+    {
+      "id": "einstein_dirac_maxwell_wormhole",
+      "kind": "family",
+      "text": "A static wormhole of Einstein-Dirac-Maxwell theory whose $g_{tt}$ is the extreme black hole's. As its charge grows to the radius of its throat it becomes that black hole, $r_q = r_s/2$ [blazquez2021]."
     }
   ],
   "references": [
@@ -231,7 +236,8 @@
     "bonnor1975",
     "horowitz1996four",
     "brill1964",
-    "clement2016"
+    "clement2016",
+    "blazquez2021"
   ],
   "coordinates": [
     {

@@ -1,5 +1,5 @@
 {
-  "version": "10a0366b68f7fe7e",
+  "version": "74bf5615064f62cd",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -28720,6 +28720,118 @@
         "eprint": "2608.21672",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/2608.21672"
+      }
+    },
+    "blazquez2021": {
+      "type": "article",
+      "fields": {
+        "title": "Traversable wormholes in Einstein-Dirac-Maxwell theory",
+        "author": "Bl\\'azquez-Salcedo, Jose Luis and Knoll, Christian and Radu, Eugen",
+        "journal": "Physical Review Letters",
+        "volume": "126",
+        "number": "10",
+        "pages": "101102",
+        "year": "2021",
+        "doi": "10.1103/PhysRevLett.126.101102",
+        "eprint": "2010.07317",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.126.101102"
+      }
+    },
+    "blazquez2020": {
+      "type": "article",
+      "fields": {
+        "title": "Constructing spherically symmetric Einstein-Dirac systems with multiple spinors: Ansatz, wormholes and other analytical solutions",
+        "author": "Bl\\'azquez-Salcedo, Jose Luis and Knoll, Christian",
+        "journal": "The European Physical Journal C",
+        "volume": "80",
+        "number": "2",
+        "pages": "174",
+        "year": "2020",
+        "doi": "10.1140/epjc/s10052-020-7706-3",
+        "eprint": "1910.03565",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1140/epjc/s10052-020-7706-3"
+      }
+    },
+    "danielson2021": {
+      "type": "article",
+      "fields": {
+        "title": "Bl\\'azquez-Salcedo-Knoll-Radu wormholes are not solutions to the Einstein-Dirac-Maxwell equations",
+        "author": "Danielson, Daine L. and Satishchandran, Gautam and Wald, Robert M. and Weinbaum, Robert J.",
+        "journal": "Physical Review D",
+        "volume": "104",
+        "number": "12",
+        "pages": "124055",
+        "year": "2021",
+        "doi": "10.1103/PhysRevD.104.124055",
+        "eprint": "2108.13361",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.104.124055"
+      }
+    },
+    "konoplya2022": {
+      "type": "article",
+      "fields": {
+        "title": "Traversable wormholes in general relativity",
+        "author": "Konoplya, R. A. and Zhidenko, A.",
+        "journal": "Physical Review Letters",
+        "volume": "128",
+        "number": "9",
+        "pages": "091104",
+        "year": "2022",
+        "doi": "10.1103/PhysRevLett.128.091104",
+        "eprint": "2106.05034",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.128.091104"
+      }
+    },
+    "bolokhov2021": {
+      "type": "article",
+      "fields": {
+        "title": "A note on ``Traversable wormholes in Einstein-Dirac-Maxwell theory''",
+        "author": "Bolokhov, S. V. and Bronnikov, K. A. and Krasnikov, S. and Skvortsova, M. V.",
+        "journal": "Gravitation and Cosmology",
+        "volume": "27",
+        "number": "4",
+        "pages": "401--402",
+        "year": "2021",
+        "doi": "10.1134/S0202289321040034",
+        "eprint": "2104.10933",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1134/S0202289321040034"
+      }
+    },
+    "bronnikovkim2003": {
+      "type": "article",
+      "fields": {
+        "title": "Possible wormholes in a brane world",
+        "author": "Bronnikov, K. A. and Kim, Sung-Won",
+        "journal": "Physical Review D",
+        "volume": "67",
+        "number": "6",
+        "pages": "064027",
+        "year": "2003",
+        "doi": "10.1103/PhysRevD.67.064027",
+        "eprint": "gr-qc/0212112",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.67.064027"
+      }
+    },
+    "kain2023": {
+      "type": "article",
+      "fields": {
+        "title": "Are Einstein-Dirac-Maxwell wormholes traversable?",
+        "author": "Kain, Ben",
+        "journal": "Physical Review D",
+        "volume": "108",
+        "number": "4",
+        "pages": "044019",
+        "year": "2023",
+        "doi": "10.1103/PhysRevD.108.044019",
+        "eprint": "2305.11217",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.108.044019"
       }
     }
   }
