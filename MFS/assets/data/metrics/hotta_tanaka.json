@@ -48,6 +48,11 @@
       "id": "siklos",
       "kind": "family",
       "text": "The waves of anti-de Sitter space with plane fronts. The same boost done to the Schwarzschild-anti-de Sitter black hole gives an impulsive member of that family, with one null particle on a hyperboloidal front [podolsky1998impulsive]."
+    },
+    {
+      "id": "penrose_impulsive_wave",
+      "kind": "family",
+      "text": "An impulsive wave on a sphere that expands at the speed of light through flat spacetime, built by the same cut and paste along a light cone [podolsky1999expanding]."
     }
   ],
   "references": [
@@ -67,7 +72,8 @@
     "gao2000",
     "leblond2002",
     "aalsma2020",
-    "aalsma2021"
+    "aalsma2021",
+    "podolsky1999expanding"
   ],
   "coordinates": [
     {
