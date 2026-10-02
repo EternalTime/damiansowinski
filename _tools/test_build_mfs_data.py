@@ -4700,6 +4700,8 @@ class Slices(unittest.TestCase):
               # Painleve-Gullstrand line element, which agrees with Hartle and Thorne's to first order in the
               # spin and no further, while the moment embedded is one of Hartle and Thorne's t.
               "hartle_thorne/hartle_thorne/axis", "hartle_thorne/painleve_gullstrand/axis",
+              # The rotating post-Newtonian body's axis, which the embedded equatorial plane does not meet.
+              "ppn_metric/rotating/axis",
               # Mars's angle is divided out along another Killing vector than the fluid's, and its circles
               # each run through every moment of Wahlquist's t.
               "wahlquist/mars/equator", "wahlquist/mars_ingoing/equator",
@@ -5032,6 +5034,13 @@ class Slices(unittest.TestCase):
             of_x = {"kaigorodov_horospheric": lambda x: -math.log(x),
                     "kaigorodov_homogeneous": lambda x: math.log(x) / 2}.get(key.split("/")[1], lambda x: x)
             return (lambda X: 0.0), sorted(of_x(x) for x in ((2 - top) / (2 + top), (2 + top) / (2 - top)))
+        if key == "ppn_metric/cartesian/axis":
+            # The line through the body's centre: the equator at t = 0 on both sides of the body.
+            lo, hi = self.reach(surface)
+            return (lambda X: 0.0), [-hi, -lo, lo, hi]
+        if key == "ppn_metric/areal/radial":
+            # The areal radius is the isotropic radius the embedding reads plus gamma m, at gamma = 1.
+            return (lambda X: 0.0), [x + 1 for x in self.reach(surface)]
         if key.startswith("schrodinger_spacetime/"):
             # Schrodinger spacetime's plane of x and r, t = 0 and xi = 0, or T = 0 and V = 0: the event
             # (0, 0) of a plane of the time and the null coordinate at one depth.

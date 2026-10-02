@@ -11,7 +11,7 @@ som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, 
 schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis,
-wahlquist and plebanski_hacyan, and Godel's cylindrical chart.
+wahlquist, plebanski_hacyan and ppn_metric, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -7867,6 +7867,273 @@ def hartle_thorne_check(chart):
 
 
 CHARTS["hartle_thorne"] = [lambda s=s: hartle_thorne(s) for s in HT_CHARTS]
+
+
+# -- The parametrised post-Newtonian metric ------------------------------------------------
+
+PPN_CHARTS = ["isotropic", "cartesian", "areal", "rotating"]
+
+
+def ppn_metric(system):
+    """The field of a body at rest to post-Newtonian order, with Eddington's numbers in front of
+    its terms, in four charts.
+
+    isotropic  the form of Eddington, Robertson and Schiff, ds^2 = -(1 - 2m/r + 2 beta m^2/r^2) c^2dt^2
+               + (1 + 2 gamma m/r)(dr^2 + r^2 dOmega^2), the standard post-Newtonian gauge for a
+               spherical body at rest, with m = GM/c^2;
+    cartesian  the same in the Cartesian coordinates the standard gauge is written in, with
+               r = sqrt(x^2 + y^2 + z^2) a name the chart defines;
+    areal      the same carried to the areal radius r + gamma m, where the spheres have area
+               4 pi r^2 and beta - gamma stands in front of m^2/r^2;
+    rotating   the isotropic chart with the dragging of inertial frames by the body's angular
+               momentum J = Mca, Will's (2014) equation (70), g_0j = -(1/2)(4 gamma + 4 + alpha_1) V_j,
+               for a body at rest in the preferred frame, written 4 Delta a m sin^2(theta)/r with
+               Delta = (1 + gamma + alpha_1/4)/2, which is 1 in general relativity.
+
+    Each is kept to post-Newtonian orders, which vm.ORDERS declares: a component is a polynomial
+    in m and a cut where the post-Newtonian metric stops fixing it, and is printed order by
+    order. ppn_metric_check holds each chart to what it claims before it is written, and
+    ppn_metric.md beside this file is the derivation."""
+    lapse = "1 - \\dfrac{2m}{r} + \\dfrac{2\\beta m^2}{r^2}"
+    space = "1 + \\dfrac{2\\gamma m}{r}"
+    domains = ["t \\in (-\\infty, \\infty)", "r \\in (R, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+               "r = R \\;\\text{(the surface of the body)}"]
+    coords = ["t", "r", "\\theta", "\\phi"]
+    parameters = ["m", "\\beta", "\\gamma", "R"]
+    sphere = "\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)"
+    if system == "isotropic":
+        name = "Eddington-Robertson-Schiff (isotropic)"
+        line = "ds^2 = -\\left(" + lapse + "\\right){c2}dt^2 + \\left(" + space + "\\right)" + sphere
+    elif system == "cartesian":
+        name = "Standard post-Newtonian gauge (Cartesian)"
+        coords = ["t", "x", "y", "z"]
+        parameters = ["m", "\\beta", "\\gamma", "R", "r = \\sqrt{x^2 + y^2 + z^2}"]
+        domains = ["t \\in (-\\infty, \\infty)", "x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)",
+                   "z \\in (-\\infty, \\infty)", "r > R \\;\\text{(outside the body)}"]
+        line = ("ds^2 = -\\left(" + lapse + "\\right){c2}dt^2 + \\left(" + space
+                + "\\right)\\left(dx^2 + dy^2 + dz^2\\right)")
+    elif system == "areal":
+        name = "Eddington (areal radius)"
+        lapse = "1 - \\dfrac{2m}{r} + \\dfrac{2\\left(\\beta - \\gamma\\right)m^2}{r^2}"
+        line = ("ds^2 = -\\left(" + lapse + "\\right){c2}dt^2 + \\left(" + space
+                + "\\right)dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2")
+    else:
+        name = "Rotating body (isotropic)"
+        parameters = ["m", "a", "\\beta", "\\gamma", "\\alpha_1", "R",
+                      "\\Delta = \\dfrac{1}{2}\\left(1 + \\gamma + \\dfrac{\\alpha_1}{4}\\right)"]
+        line = ("ds^2 = -\\left(" + lapse + "\\right){c2}dt^2 + \\left(" + space + "\\right)" + sphere
+                + " - \\dfrac{4\\Delta am\\sin^2\\theta}{r}{c}dt\\,d\\phi")
+
+    def written(c):
+        return line.replace("{c2}", "c^2" if c else "").replace("{c}", "c\\," if c else "")
+
+    probe = vm.Reader(coords, parameters, ())
+    m, beta, gamma = (probe.parameters[k] for k in ("m", "beta", "gamma"))
+    small = [m]
+    names = {}
+    if system == "cartesian":
+        x, y, z = (probe.symbol[k] for k in "xyz")
+        r = sp.Symbol("r", positive=True)
+        lead = [m, r, x, y, z]
+        factors = [beta, gamma, m, x, y, z, r]
+    else:
+        r, th = probe.symbol["r"], probe.symbol["\\theta"]
+        lead = [m, r, sp.cos(th), sp.sin(th)]
+        factors = [beta, gamma, m, r, sp.cos(th), sp.sin(th)]
+    if system == "rotating":
+        a, alpha = probe.parameters["a"], probe.parameters["alpha_1"]
+        drag = sp.Symbol("Delta", positive=True)
+        names = {(1 + gamma + alpha / 4) / 2: drag}
+        small = [m, a]
+        lead = [a] + lead
+        factors = [drag, beta, gamma, a, m, r, sp.cos(th), sp.sin(th)]
+    spec = {
+        "metric_id": "ppn_metric",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": written(True)},
+        "chart_line_element": written(False),
+        "printer": {"lead": lead, "factors": factors, "rising": small},
+        "check": lambda chart: ppn_metric_check(chart, system),
+    }
+    distance = (x, y, z, r) if system == "cartesian" else None
+    # A sum that has to stand in a bracket is written term by term, with no factor taken out of it.
+    spec["pretty"], spec["bracketed"] = ppn_orders(small, names, distance), ppn_orders(small, names, distance, False)
+    inverse_lapse = "-\\left(" + lapse + "\\right)^{-1}"
+    inverse_space = "\\left(" + space + "\\right)^{-1}"
+    # The metric as the line element writes it, and its inverse written whole.
+    if system == "cartesian":
+        spec["components"] = {
+            "metric_components": {("t", "t"): "-\\left(" + lapse + "\\right)",
+                                  **{(k, k): space for k in "xyz"}},
+            "inverse_metric_components": {("t", "t"): inverse_lapse, **{(k, k): inverse_space for k in "xyz"}}}
+    elif system == "areal":
+        spec["components"] = {
+            "metric_components": {("t", "t"): "-\\left(" + lapse + "\\right)", ("r", "r"): space},
+            "inverse_metric_components": {("t", "t"): inverse_lapse, ("r", "r"): inverse_space}}
+    else:
+        spec["components"] = {
+            "metric_components": {
+                ("t", "t"): "-\\left(" + lapse + "\\right)", ("r", "r"): space,
+                ("\\theta", "\\theta"): "r^2\\left(" + space + "\\right)",
+                ("\\phi", "\\phi"): "r^2\\sin^2\\theta\\left(" + space + "\\right)"},
+            "inverse_metric_components": {
+                ("t", "t"): inverse_lapse, ("r", "r"): inverse_space,
+                ("\\theta", "\\theta"): "\\dfrac{1}{r^2}" + inverse_space,
+                ("\\phi", "\\phi"): "\\dfrac{1}{r^2\\sin^2\\theta}" + inverse_space}}
+    if system == "rotating":
+        # With the dragging term the inverse is that of the block of t and phi, whose determinant
+        # over r^2 sin^2(theta) is written D.
+        drag_text = "-\\dfrac{2\\Delta am\\sin^2\\theta}{r}"
+        block = ("\\left(\\left(" + lapse + "\\right)\\left(" + space + "\\right) + "
+                 "\\dfrac{4\\Delta^2a^2m^2\\sin^2\\theta}{r^4}\\right)^{-1}")
+        spec["components"]["metric_components"].update({("t", "\\phi"): drag_text, ("\\phi", "t"): drag_text})
+        spec["components"]["inverse_metric_components"].update({
+            ("t", "t"): "-\\left(" + space + "\\right)" + block,
+            ("t", "\\phi"): "-\\dfrac{2\\Delta am}{r^3}" + block,
+            ("\\phi", "t"): "-\\dfrac{2\\Delta am}{r^3}" + block,
+            ("\\phi", "\\phi"): "\\dfrac{1}{r^2\\sin^2\\theta}\\left(" + lapse + "\\right)" + block})
+    return spec
+
+
+def ppn_orders(small, names, cartesian, gathered=True):
+    """A value of a post-Newtonian chart, a polynomial in the mass and the spin, written order by
+    order, each coefficient factored. `names` maps a combination of the parameters to the symbol
+    the chart names it by, as the rotating chart names (1 + gamma + alpha_1/4)/2, which a
+    coefficient that holds it as a factor is written with. In the Cartesian chart every power of
+    x^2 + y^2 + z^2 is written as a power of r, and the numerator left over in whichever two of
+    x, y and z, with r, leave it shortest. A power of a sine or a cosine that every order carries
+    is written once, in front of the sum, unless `gathered` is off."""
+
+    def distance(e):
+        x, y, z, r = cartesian
+        e = sp.factor(sp.together(sp.sympify(e))).subs(x ** 2 + y ** 2 + z ** 2, r ** 2)
+        numerator, denominator = sp.fraction(e)
+        forms = [sp.factor(sp.expand(numerator))]
+        for gone, kept in ((z, (x, y)), (y, (x, z)), (x, (y, z))):
+            poly = sp.Poly(sp.expand(numerator), gone)
+            forms.append(sp.factor(sp.expand(sum(
+                c * gone ** (k % 2) * (r ** 2 - kept[0] ** 2 - kept[1] ** 2) ** (k // 2) for (k,), c in poly.terms()))))
+        best = min(forms, key=lambda f: (len(sp.Add.make_args(sp.expand(f))), sp.count_ops(f)))
+        # A factor that mixes the parameters with the coordinates is gathered by its powers of the coordinates.
+        gathered = [sp.collect(sp.expand(f), [x, y, z, r], sp.factor)
+                    if f.is_Add and f.free_symbols & {x, y, z, r} and f.free_symbols - {x, y, z, r} else f
+                    for f in sp.Mul.make_args(best)]
+        return (best if gathered == list(sp.Mul.make_args(best)) else sp.Mul(*gathered)) / denominator
+
+    def coefficient(e):
+        e = distance(e) if cartesian else sp.factor(e)
+        for combination, symbol in names.items():
+            marked = sp.factor(sp.expand(e).subs(sp.expand(combination), symbol))
+            ratio = sp.cancel(e / combination)
+            if not any(ratio.has(s) for s in combination.free_symbols):
+                e = symbol * (distance(ratio) if cartesian else sp.factor(ratio))
+            elif not any(marked.has(s) for s in combination.free_symbols):
+                e = marked
+        return e
+
+    def pretty(value):
+        value = sp.sympify(value)
+        for combination, symbol in names.items():
+            value = value.subs(symbol, combination)
+        if cartesian:
+            value = value.subs(cartesian[3], sp.sqrt(cartesian[0] ** 2 + cartesian[1] ** 2 + cartesian[2] ** 2))
+        poly = sp.Poly(sp.expand(value), *small)
+        terms = [(sp.Mul(*[s ** k for s, k in zip(small, powers)]), coefficient(c)) for powers, c in poly.terms()]
+        # A power of a sine or a cosine that every order carries is written once, in front.
+        common = sp.Integer(1)
+        if len(terms) > 1 and gathered:
+            powers = [sp.factor(c).as_powers_dict() for _, c in terms]
+            for base in set(powers[0]):
+                if isinstance(base, (sp.sin, sp.cos)):
+                    k = min(p.get(base, 0) for p in powers)
+                    if k > 0:
+                        common *= base ** k
+        return common * sp.Add(*[power * coefficient(sp.cancel(c / common)) if common != 1 else power * c
+                                 for power, c in terms])
+
+    return pretty
+
+
+def ppn_metric_check(chart, system):
+    """What the four charts are held to before anything is written.
+
+    Every chart: at beta = gamma = 1, and alpha_1 = 0 where it stands, the Ricci tensor vanishes at
+    every order kept, and R_tt at second order in m and R_ij at first each vanish for no other values,
+    so that general relativity's vacuum is that one point of the plane of beta and gamma.
+    isotropic: at beta = gamma = 1 the chart is Schwarzschild's metric in isotropic coordinates,
+        -((1 - m/2r)/(1 + m/2r))^2 dt^2 + (1 + m/2r)^4 (dr^2 + r^2 dOmega^2), g_tt through second order
+        in m and g_ij through first.
+    cartesian: the isotropic chart pulled back along x = r sin(theta) cos(phi) and its companions.
+    areal: the isotropic chart carried along r -> r - gamma m, the areal radius to first order in m.
+    rotating: the isotropic chart at a = 0, and Lense and Thirring's field, the published chart
+        of hartle_thorne, at beta = gamma = 1, alpha_1 = 0 and first order in m."""
+    reader = chart.reader
+    m, beta, gamma = (reader.parameters[k] for k in ("m", "beta", "gamma"))
+    general = {beta: 1, gamma: 1}
+    if system == "rotating":
+        general[reader.parameters["alpha_1"]] = 0
+    ricci = chart.geo.ricci_ll()
+    if any(vm.norm(ricci[i][j].subs(general)) != 0 for i in range(4) for j in range(4)):
+        raise AssertionError(f"ppn_metric: the Ricci tensor of the {system} chart does not vanish at beta = gamma = 1")
+    if vm.norm(ricci[0][0]) == 0 or vm.norm(ricci[0][0].subs(beta, 1)) == 0 or vm.norm(ricci[1][1]) == 0:
+        raise AssertionError(f"ppn_metric: the Ricci tensor of the {system} chart vanishes away from beta = gamma = 1")
+    g = chart.geo.g
+    if system == "cartesian":
+        t, x, y, z = chart.symbols
+        other = cp.Chart(*ppn_arguments("isotropic"), order=vm.ORDERS[("ppn_metric", "isotropic")])
+        T, r, th, ph = other.symbols
+        # The radius is taken positive, so that the root of its square is the radius.
+        radius = sp.Symbol("ppn_radius", positive=True)
+        images = [T, radius * sp.sin(th) * sp.cos(ph), radius * sp.sin(th) * sp.sin(ph), radius * sp.cos(th)]
+        at = dict(zip(chart.symbols, images))
+        jacobian = sp.Matrix(4, 4, lambda i, j: sp.diff(images[i], (T, radius, th, ph)[j]))
+        pulled = jacobian.T * g.subs(at, simultaneous=True).applyfunc(sp.simplify) * jacobian
+        theirs = other.geo.g.subs({r: radius, other.reader.parameters["m"]: m, other.reader.parameters["beta"]: beta,
+                                   other.reader.parameters["gamma"]: gamma}, simultaneous=True)
+        if any(sp.simplify(pulled[i, j] - theirs[i, j]) != 0 for i in range(4) for j in range(4)):
+            raise AssertionError("ppn_metric: the Cartesian chart is not the isotropic chart pulled back")
+        return
+    t, r, th, ph = chart.symbols
+    if system == "isotropic":
+        exact = sp.diag(-((1 - m / (2 * r)) / (1 + m / (2 * r))) ** 2, *[(1 + m / (2 * r)) ** 4 * f
+                                                                    for f in (1, r ** 2, r ** 2 * sp.sin(th) ** 2)])
+        misses = [(i, reader.through(exact[i, i] - g[i, i].subs(general), 4 if i == 0 else 2)) for i in range(4)]
+        if any(value != 0 for _, value in misses):
+            raise AssertionError(f"ppn_metric: the isotropic chart is not Schwarzschild's at beta = gamma = 1, {misses}")
+        return
+    isotropic = sp.diag(-(1 - 2 * m / r + 2 * beta * m ** 2 / r ** 2),
+                        *[(1 + 2 * gamma * m / r) * f for f in (1, r ** 2, r ** 2 * sp.sin(th) ** 2)])
+    if system == "areal":
+        carried = isotropic.subs(r, r - gamma * m)
+        misses = [(i, reader.through(carried[i, i] - g[i, i], 4 if i == 0 else 2)) for i in range(4)]
+        if any(value != 0 for _, value in misses):
+            raise AssertionError(f"ppn_metric: the areal chart is not the isotropic chart at r - gamma m, {misses}")
+        return
+    a, alpha = reader.parameters["a"], reader.parameters["alpha_1"]
+    if any(vm.norm((g[i, j] - isotropic[i, j]).subs(a, 0)) != 0 for i in range(4) for j in range(4)):
+        raise AssertionError("ppn_metric: the rotating chart is not the isotropic chart at a = 0")
+    published = json.loads((METRICS / "hartle_thorne.json").read_text(encoding="utf-8"))
+    entry = next(e for e in published["coordinates"] if e["id"] == "lense_thirring")
+    theirs = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+    weak = vm.metric_from_line_element(theirs, entry["line_element"].replace("c^2", "").replace("c\\,", ""),
+                                       entry["coords"])
+    weak = weak.subs({theirs.symbol[k]: reader.symbol[k] for k in entry["coords"]}, simultaneous=True)
+    weak = weak.subs({theirs.parameters[k]: reader.parameters[k] for k in ("m", "a")}, simultaneous=True)
+    linear = {m: sp.Symbol("ppn_first") * m}
+    for i in range(4):
+        for j in range(4):
+            difference = (g[i, j].subs(general) - weak[i, j]).subs(linear)
+            if vm.norm(sp.series(difference, sp.Symbol("ppn_first"), 0, 2).removeO()) != 0:
+                raise AssertionError(f"ppn_metric: the rotating chart is not Lense and Thirring's in slot {i}{j}")
+
+
+def ppn_arguments(system):
+    spec = ppn_metric(system)
+    return (spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"], spec["printer"],
+            spec["pretty"])
+
+
+CHARTS["ppn_metric"] = [lambda s=s: ppn_metric(s) for s in PPN_CHARTS]
 
 
 # -- Kerr-de Sitter ----------------------------------------------------------------------
