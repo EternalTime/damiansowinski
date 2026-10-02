@@ -57,6 +57,11 @@
       "id": "fisher_jnw",
       "kind": "family",
       "text": "The same field equations, Einstein's with a massless scalar field, solved for a static sphere [janis1968]."
+    },
+    {
+      "id": "kasner_magnetic",
+      "kind": "family",
+      "text": "Kasner's universe with a magnetic field in place of the scalar field. Kenneth Jacobs put the two contents together in 1969, a stiff fluid and a field along one axis [jacobs1969]."
     }
   ],
   "references": [
@@ -71,7 +76,8 @@
     "andersson2001",
     "fournodavlos2023",
     "frenkel2020",
-    "janis1968"
+    "janis1968",
+    "jacobs1969"
   ],
   "coordinates": [
     {

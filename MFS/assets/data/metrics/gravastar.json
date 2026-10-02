@@ -72,6 +72,11 @@
       "id": "israel_shell",
       "kind": "family",
       "text": "A thin shell of dust with flat space inside and nothing to hold it up, so it falls and makes a black hole [israel1966]."
+    },
+    {
+      "id": "bowers_liang",
+      "kind": "family",
+      "text": "A star of uniform density held up by unequal pressures. It can be more compact than $R = \\frac{9}{8}r_s$ with a positive pressure along the radius throughout and no shell [bowers1974]."
     }
   ],
   "references": [
@@ -93,7 +98,8 @@
     "abbott2025tgr",
     "visser1989nuclphysb",
     "hayward2006",
-    "liebling2023"
+    "liebling2023",
+    "bowers1974"
   ],
   "coordinates": [
     {

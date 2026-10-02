@@ -47,6 +47,11 @@
       "id": "small_universes",
       "kind": "generalisation",
       "text": "Milne's universe with matter let in and its hyperbolic space rolled up into a closed form. With $a = ct$ and nothing in it, the hyperbolic small universe is Milne's at each point."
+    },
+    {
+      "id": "tilted_universes",
+      "kind": "generalisation",
+      "text": "Milne's universe with its particles aimed to miss the origin. Straight world lines that each pass one event at the distance $C$ fill a part of flat spacetime with a Cauchy horizon in it, Ellis and King's picture of the whimper [ellis1974]."
     }
   ],
   "references": [
@@ -76,7 +81,8 @@
     "turok2004",
     "benoitlevy2012",
     "coleman1980",
-    "bucher1995"
+    "bucher1995",
+    "ellis1974"
   ],
   "coordinates": [
     {

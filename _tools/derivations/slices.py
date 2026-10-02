@@ -254,6 +254,24 @@ def string_hole(sign=0):
     return [Mark(equator, [np.column_stack([sign * (r + np.log(r - 1)), r])])]
 
 
+def distorted_hole(system, plane, shape):
+    """The two moments of Schwarzschild's black hole in a tidal field, m = 1, for one shape. The
+    horizon at t = 0, the bifurcation surface, is one point of every plane: x = 1, r = 2m, the end
+    z = m of the rod on Weyl's axis and rho = 0 in his equatorial plane. The equatorial plane's
+    t = 0 lies on the equatorial planes, over the r it reaches, with x = r/m - 1 and
+    rho = m sqrt(x^2 - 1); it does not meet the axis."""
+    horizon = moments("distorted_schwarzschild", f"horizon_{shape}", label="$t = 0$, the horizon")[0]
+    at = {"prolate_spheroidal": 1.0, "spherical": 2.0, "weyl": 1.0 if plane == "axis" else 0.0}[system]
+    marks = [Mark(horizon, points=[(0.0, at)])]
+    if plane == "equator":
+        equator = moments("distorted_schwarzschild", shape)[0]
+        lo, hi = equator.reach("spherical", "r")
+        to = {"prolate_spheroidal": lambda r: r - 1, "spherical": lambda r: r,
+              "weyl": lambda r: math.sqrt(max((r - 1) ** 2 - 1, 0.0))}[system]
+        marks.insert(0, Mark(equator, along(0.0, to(lo), to(hi))))
+    return marks
+
+
 def teo_proper(r):
     """Teo's proper radial distance from the throat at b_0 = 1, his eq. (28)."""
     return math.sqrt(r * (r - 1)) + math.log(math.sqrt(r) + math.sqrt(r - 1))
@@ -999,6 +1017,8 @@ def _penrose_wave(view):
     return out
 
 
+TILTED_MOMENT = 3.0                        # the eta of the surface of Farnsworth's dust that is embedded
+TILTED_LABEL = "$\\eta = 3$"
 SMALL_NOW = 1.2 - 0.22 * math.log(11)      # the moment the small universes' horn is embedded at, in a_0
 
 
@@ -2550,6 +2570,10 @@ FLAT = {
     ("bonnor_charged_dust", "spheroid_interior", "axis"): lambda: [
         Mark(moments("bonnor_charged_dust", "spheroid", label="$t = 0$, $u = 0$")[0], points=[(0.0, 0.0)])],
     ("bonnor_charged_dust", "spheroid_exterior", "axis"): lambda: [],
+    ("eih_many_bodies", "harmonic", "axis"): lambda: one(
+        "eih_many_bodies", lambda m: across(0.0, *m.reach("harmonic", "y")), view_id="midplane"),
+    ("eih_many_bodies", "standard", "axis"): lambda: one(
+        "eih_many_bodies", lambda m: across(0.0, *m.reach("harmonic", "y")), view_id="midplane"),
     ("israel_wilson_perjes", "cylindrical", "midplane"): lambda: one(
         "israel_wilson_perjes", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")), view_id="two_sources"),
     ("israel_wilson_perjes", "spheroidal", "axis"): lambda: one(
@@ -2611,6 +2635,8 @@ FLAT = {
         "kasner_scalar", lambda m: across(kasner_scalar_five(m.time), 0.0, BIG)),
     ("kasner_scalar", "kaluza_klein", "Tw"): lambda: one(
         "kasner_scalar", lambda m: across(kasner_scalar_five(m.time), 0.0, BIG)),
+    ("kasner_magnetic", "kasner_time", "tx"): lambda: one("kasner_magnetic", lambda m: across(m.time, 0.0, BIG)),
+    ("kasner_magnetic", "kasner_time", "tz"): lambda: one("kasner_magnetic", lambda m: across(m.time, 0.0, BIG)),
     ("bianchi", "type_i_cartesian", "tx"): lambda: one("bianchi", lambda m: across(m.time, 0.0, BIG)),
     ("kantowski_sachs", "comoving", "tr"): lambda: _kantowski_sachs("comoving"),
     ("kantowski_sachs", "dust", "etar"): lambda: _kantowski_sachs("dust"),
@@ -2620,6 +2646,12 @@ FLAT = {
     ("godel", "cartesian", "tx"): lambda: one("godel", lambda m: across(0.0, 0.0, 2 * m.reach("cylindrical", "r")[1])),
     ("godel", "cylindrical", "inside"): lambda: one("godel", _godel_cylinder(math.asinh(1.0) / 2)),
     ("stockum_dust", "cylindrical", "inside"): lambda: one("stockum_dust", _godel_cylinder(0.5)),
+    # Maitra's plane z = 0 at t = 0, which the embedding draws from the axis to 6a: the line t = 0 of
+    # the plane of t and r, and of each cylinder inside that reach, every phi.
+    ("maitra_dust", "cylindrical", "radial"): lambda: one(
+        "maitra_dust", lambda m: along(0.0, *m.reach("cylindrical", "r"))),
+    ("maitra_dust", "cylindrical", "near"): lambda: one("maitra_dust", _godel_cylinder(1.0)),
+    ("maitra_dust", "cylindrical", "far"): lambda: one("maitra_dust", _godel_cylinder(5.0)),
     # Som and Raychaudhuri's plane y = 0 is phi = 0 and pi with the same t, where x = +-r.
     ("som_raychaudhuri", "cartesian", "tx"): lambda: one(
         "som_raychaudhuri", lambda m: across(0.0, 0.0, m.reach("cylindrical", "r")[1])),
@@ -2818,6 +2850,10 @@ FLAT = {
     **{("zipoy_voorhees", "prolate_spheroidal", f"equator_{shape}"): lambda shape=shape: one(
         "zipoy_voorhees", lambda m: along(0.0, *(r - 1 for r in m.reach("spherical", "r"))), view_id=shape)
        for shape in ("oblate", "prolate")},
+    **{("distorted_schwarzschild", system, f"{plane}_{shape}"):
+       lambda system=system, plane=plane, shape=shape: distorted_hole(system, plane, shape)
+       for system in ("prolate_spheroidal", "spherical", "weyl") for plane in ("axis", "equator")
+       for shape in ("oblate", "prolate")},
     # Erez and Rosen's equatorial plane at t = 0 for each deformation, the same way.
     **{("erez_rosen", "spherical", f"equator_{shape}"): lambda shape=shape: one(
         "erez_rosen", lambda m: along(0.0, *m.reach("spherical", "r")), view_id=shape)
@@ -2825,6 +2861,8 @@ FLAT = {
     **{("erez_rosen", "prolate_spheroidal", f"equator_{shape}"): lambda shape=shape: one(
         "erez_rosen", lambda m: along(0.0, *(r - 1 for r in m.reach("spherical", "r"))), view_id=shape)
        for shape in ("prolate", "oblate")},
+    ("bowers_liang", "areal", "radial"): lambda: one("bowers_liang", lambda m: along(0.0, *m.reach("areal", "r"))),
+    ("bowers_liang", "areal", "through"): lambda: one("bowers_liang", lambda m: along(0.0, *m.reach("areal", "r"))),
     ("tolman_vii", "spherical", "radial"): lambda: one("tolman_vii", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tolman_vii", "spherical", "through"): lambda: one("tolman_vii", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tolman_vii", "tolman", "radial"): lambda: one("tolman_vii", lambda m: along(0.0, *m.reach("spherical", "r"))),
@@ -2886,6 +2924,12 @@ FLAT = {
     # The horn is embedded at the moment its spacetime diagram starts the dust from, ct = 6/5 - (11/50) ln 11.
     ("small_universes", "horn", "along"): lambda: one(
         "small_universes", lambda m: along(SMALL_NOW, *m.reach("horn", "x")), view_id="horn"),
+    # Farnsworth's dust is embedded on its surface of homogeneity eta = 3, where u = (sinh 3 - 3)/2 W.
+    ("tilted_universes", "farnsworth", "dust"): lambda: one(
+        "tilted_universes", lambda m: along(TILTED_MOMENT, *m.reach("farnsworth", "r")), label=TILTED_LABEL),
+    ("tilted_universes", "homogeneous", "dust"): lambda: one(
+        "tilted_universes", lambda m: along((math.sinh(TILTED_MOMENT) - TILTED_MOMENT) / 2, *m.reach("farnsworth", "r")),
+        label=TILTED_LABEL),
     ("oppenheimer_snyder", "interior_comoving", "through"): _os_interior,
     ("semiclosed_world", "comoving", "dust"): lambda: _scw_dust(False),
     ("semiclosed_world", "conformal", "dust"): lambda: _scw_dust(True),
@@ -2960,6 +3004,10 @@ FLAT_METRICS = {key[0] for key in FLAT}
 # The moving mirror's embedding view is a height over a stretch of spacetime, t and x both.
 MIRROR_NO_MOMENT = "the radiation is drawn as a height over a region of the plane of t and x, which is no moment of the spacetime"
 HIDDEN = {
+    ("tilted_universes", "flat_model", "model"): "the flat model, another spacetime than Farnsworth's dust, whose surface of homogeneity is embedded",
+    ("tilted_universes", "inertial", "model"): "the flat model, another spacetime than Farnsworth's dust, whose surface of homogeneity is embedded",
+    ("kasner_magnetic", "rosen", "etax"): "the axisymmetric universe, exponents (0, 0, 1), another spacetime than the one embedded",
+    ("kasner_magnetic", "rosen", "etaz"): "the axisymmetric universe, exponents (0, 0, 1), another spacetime than the one embedded",
     ("datt_ruban_t_models", "comoving", "tube"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",
     ("datt_ruban_t_models", "ruban", "tube"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",
     ("datt_ruban_t_models", "areal", "expansion"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",

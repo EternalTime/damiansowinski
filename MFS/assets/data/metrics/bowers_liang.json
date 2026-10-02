@@ -1,0 +1,1514 @@
+{
+  "id": "bowers_liang",
+  "name": "Bowers and Liang's Anisotropic Star",
+  "short_name": "Bowers-Liang Star",
+  "description": "A static star of uniform density whose pressure across the radius differs from its pressure along the radius. Richard Bowers and E. P. T. Liang solved it in 1974: with the sideways pressure the greater of the two, it holds more mass and reddens its light more than Schwarzschild's star of the same density can.",
+  "tags": [
+    "anisotropic pressure",
+    "tangential pressure",
+    "static",
+    "stationary",
+    "spherically symmetric",
+    "stellar interior",
+    "compactness",
+    "maximum mass",
+    "quasar",
+    "regular centre",
+    "no horizon",
+    "matched solution",
+    "mass",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "The quasar 4C 25.5 has a redshift of 2.358 [bowers1974]. In 1973 Richard Bowers and E. P. T. Liang counted it \"far from resolved\" whether quasars \"are local or must be cosmologically explained\" [bowers1974]. A local quasar would owe its redshift to gravity, its light reddened on the climb off a compact body, and the simplest such body falls short: Karl Schwarzschild's star of uniform density reddens its light by $z = 2$ at most, at $R = \\frac{9}{8}r_s$, where its central pressure is infinite [schwarzschild1916b, bowers1974]. By Hermann Bondi's argument of 1964 no fluid of positive density does better than $z = 4.77$, whatever its equation of state [bondi1964, bowers1974].¶Both limits assume a pressure that is the same in every direction, and Bowers and Liang, at the Center for Relativity Theory in Austin, Texas, saw no reason why matter at such densities should oblige [bowers1974]. Neutrons that pair in a $p$ state may make a superfluid whose energy gap depends on direction, and above $4 \\times 10^{14}$ grams per cubic centimeter cold matter may freeze into a solid core [bowers1974]. In a star such matter has two pressures, $p_r$ along the radius and $p_\\perp$ across it, and the equation of hydrostatic equilibrium gains one term, $2(p_\\perp - p_r)/r$ [bowers1974]. Squeeze a shell of the star harder across the radius than along it and the shell pushes outward, which helps to carry the weight above it [bowers1974]. The same term stands in Newton's equation of equilibrium [bowers1974].¶To see how much one term can do, they kept Schwarzschild's uniform density and chose the difference of the two pressures so that the equation integrates by hand [bowers1974]. In units with $G = c = 1$ the choice is $p_\\perp - p_r = Cr^2(\\rho + p_r)(\\rho + 3p_r)/(1 - 2m/r)$, with $m$ the mass inside the radius $r$ and $C$ a constant, and they made it \"primarily because it allows us to explicitly integrate the structure equations rather than for any particular physical reasons\" [bowers1974]. The square roots in Schwarzschild's pressure become powers $Q = 1/2 - 3C/4\\pi$, and the central pressure is infinite at $r_s/R = 1 - 3^{-1/Q}$ [bowers1974]. At $Q = 1/2$ that is Schwarzschild's $8/9$, and as $Q$ falls to zero it tends to 1, \"a configuration uniformly filling up to its own Schwarzschild radius\" [bowers1974]. That last star holds 19 percent more mass than Schwarzschild's heaviest of the same density, and the redshift of its surface has no upper limit [bowers1974].¶Within the model, then, \"anisotropy is capable of explaining quasar redshifts larger than 2\", and a redshift of 2.358 takes $Q = 0.45$, close to Schwarzschild's $1/2$ [bowers1974]. Bowers and Liang judged the model \"too hypothetical to allow us to draw firm conclusions\" [bowers1974]. They put two pressures into Bondi's argument, which asks for no equation of state, and found that the redshift of a surface grows by about the fraction by which the pressures differ, and is infinite only where that fraction is [bowers1974]. Tying quasars to compact stars this way, they concluded, \"seems in general to involve inconceivably large anisotropies\" [bowers1974].¶At the far end of the family, as $Q \\to 0$, the pressure along the radius vanishes and the pressure across it holds up the whole star [bowers1974]. Petros Florides published that star the same spring, a ball of uniform density with no stress along its radius, and took it for a cluster of particles on circular orbits [florides1974]. How compact can two pressures make a star? Håkan Andréasson settled it in 2008 for every static sphere with $p_r \\ge 0$ and $p_r + 2p_\\perp \\le \\Omega\\rho c^2$: such a sphere has $r_s/R \\le 1 - 1/(1 + 2\\Omega)^2$ [andreasson2008]. At $\\Omega = 1$ that is the $8/9$ of Schwarzschild and Hans Buchdahl, so a star past it needs pressures that add up to more than its energy density, and at $\\Omega = 3$, which holds for any matter that obeys the dominant energy condition, the limit is $48/49$ [andreasson2008, buchdahl1959].¶The star came back in 2002, when Krsna Dev and Marcelo Gleiser set other anisotropies beside Bowers and Liang's, and a year later they put it through Subrahmanyan Chandrasekhar's test of radial pulsations [dev2002, dev2003]. Where the pressure across the radius is the greater, the star stays stable down to a smaller adiabatic index than a star of equal pressures [dev2003]. Kent Yagi and Nicolás Yunes had another use for it in 2015: two pressures let a star of uniform density come close to $R = r_s$, so they set such stars spinning slowly and watched their multipole moments approach those of a black hole [yagi2015bald]. By 2019 the complaint of Guilherme Raposo, Paolo Pani, Miguel Bezares, Carlos Palenzuela, and Vitor Cardoso was that no solution of the kind \"arises from a consistent covariant model\" [raposo2019]. They built a model that is covariant, and its stars too \"can be as compact and as massive as black holes\" [raposo2019].",
+  "related": [
+    {
+      "id": "interior_schwarzschild",
+      "kind": "special_case",
+      "text": "Bowers and Liang's star with equal pressures. At $Q = 1/2$ the power $N^{1/Q}$ is Schwarzschild's $\\frac{1}{4}\\left(3\\sqrt{1 - r_s/R} - \\sqrt{Z}\\right)^2$, and the Weyl tensor vanishes [schwarzschild1916b, bowers1974]."
+    },
+    {
+      "id": "einstein_cluster",
+      "kind": "limit",
+      "text": "The limit $Q \\to 0$, where the pressure along the radius vanishes. The star is then Florides's cluster of uniform density, held up by the pressure across the radius alone, with $-g_{tt} = (1 - r_s/R)^{3/2}/\\sqrt{Z}$ [florides1974]."
+    },
+    {
+      "id": "schwarzschild",
+      "kind": "piece",
+      "text": "The vacuum outside the star. The pressure along the radius vanishes at $r = R$, where $g_{tt} = -(1 - r_s/R)$ on both sides, and the pressure across the radius jumps to zero there [bowers1974]."
+    },
+    {
+      "id": "tov",
+      "kind": "generalisation",
+      "text": "The static sphere with its two functions $\\Phi(r)$ and $m(r)$ free. Bowers and Liang's equation of equilibrium is Tolman, Oppenheimer, and Volkoff's with one term more, $2(p_\\perp - p_r)/r$ [bowers1974, oppenheimer1939]."
+    },
+    {
+      "id": "gravastar",
+      "kind": "family",
+      "text": "Another body that can be more compact than $R = \\frac{9}{8}r_s$, a ball of de Sitter space under a shell. A gravastar with no shell needs unequal pressures in its crust, as this star has throughout [cattoen2005]."
+    },
+    {
+      "id": "misner_zapolsky",
+      "kind": "family",
+      "text": "The sphere whose density falls as $1/r^2$. Krsna Dev and Marcelo Gleiser gave it unequal pressures in 2002, in the paper where they took up Bowers and Liang's star [dev2002]."
+    }
+  ],
+  "references": [
+    "bowers1974",
+    "schwarzschild1916b",
+    "bondi1964",
+    "florides1974",
+    "andreasson2008",
+    "buchdahl1959",
+    "dev2002",
+    "dev2003",
+    "yagi2015bald",
+    "raposo2019",
+    "oppenheimer1939",
+    "cattoen2005"
+  ],
+  "coordinates": [
+    {
+      "id": "areal",
+      "name": "Areal Radius",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in [0, R]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "parameters": [
+        {
+          "symbol": "R",
+          "description": "Radius of the star, where the pressure along the radius vanishes and Schwarzschild's vacuum begins"
+        },
+        {
+          "symbol": "r_s",
+          "description": "Schwarzschild radius of the star, $r_s = 2GM/c^2$ with $M$ its mass; the density is uniform, $\\rho = 3c^2r_s/(8\\pi GR^3)$"
+        },
+        {
+          "symbol": "Q",
+          "description": "Bowers and Liang's exponent, a pure number with $Q > 0$, which is $Q = 1/2 - 3C/(4\\pi)$ with $C$ their anisotropy constant. The pressure $p_\\perp$ across the radius is $p_\\perp = p_r + (1 - 2Q)(2\\pi G/3c^4)\\,r^2(\\rho c^2 + p_r)(\\rho c^2 + 3p_r)/Z$: at $Q = 1/2$ the two are equal and the star is Schwarzschild's, and the central pressure is finite for $r_s/R < 1 - 3^{-1/Q}$"
+        },
+        {
+          "symbol": "Z = 1 - \\dfrac{r_s r^2}{R^3}",
+          "description": "The component $g^{rr} = 1 - 2Gm(r)/(c^2r)$, with $m(r) = Mr^3/R^3$ the mass inside radius $r$; at the surface it is $1 - r_s/R$"
+        },
+        {
+          "symbol": "N = \\dfrac{1}{2}\\left(3\\left(1 - \\dfrac{r_s}{R}\\right)^{Q} - Z^{Q}\\right)",
+          "description": "A pure number whose power $1/Q$ is $-g_{tt}$, with $\\partial_rN = Qr_srNP/(R^3Z)$; at the surface $N^{1/Q} = 1 - r_s/R$, and $N$ vanishes at the centre of the star whose central pressure is infinite"
+        },
+        {
+          "symbol": "P = \\dfrac{2Z^{Q}}{3\\left(1 - \\dfrac{r_s}{R}\\right)^{Q} - Z^{Q}}",
+          "description": "A pure number, $P = Z^Q/N = 1 + 3p_r/(\\rho c^2)$, with $\\partial_rP = -Qr_srP(P + 2)/(R^3Z)$; it falls from the centre to $1$ at the surface, where the pressure along the radius vanishes"
+        }
+      ],
+      "convention": "We use Bowers and Liang's sphere of uniform density in coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius. The star has radius $R$ and Schwarzschild radius $r_s = 2GM/c^2$, and $t$ is the time of Schwarzschild's metric outside. We write $Z$ for $g^{rr}$, $N^{1/Q}$ for $-g_{tt}$, and $P$ for $1 + 3p_r/(\\rho c^2)$, with $p_r$ the pressure along the radius and $\\rho$ the density. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -N^{1/Q}c^2dt^2 + \\dfrac{dr^2}{Z} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-N^{1/Q}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{1}{Z}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "r^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "r^2\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1}{N^{1/Q}}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "Z"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\,r\\,P}{2R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\,r\\,P}{2R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\,r\\,P\\,N^{1/Q}}{2R^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\,r}{R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r\\,Z"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r\\,Z\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s\\,r\\,P\\,N^{1/Q}}{2R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s\\,r\\,P\\,N^{1/Q}}{2R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\,r\\,P\\,N^{1/Q}}{2R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\,r}{R^3\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "r^2\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\,P\\left(\\left(1 - Z\\right)\\left(2Q - 1\\right)\\left(P + 2\\right) - 2Z\\right)}{4R^3\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s\\,P\\left(\\left(1 - Z\\right)\\left(2Q - 1\\right)\\left(P + 2\\right) - 2Z\\right)}{4R^3\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\,r^2\\,P}{2R^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\,r^2\\,P}{2R^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\,r^2\\,P\\sin^2\\theta}{2R^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\,r^2\\,P\\sin^2\\theta}{2R^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\,P\\,N^{1/Q}\\left(\\left(1 - Z\\right)\\left(2Q - 1\\right)\\left(P + 2\\right) - 2Z\\right)}{4R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s\\,P\\,N^{1/Q}\\left(\\left(1 - Z\\right)\\left(2Q - 1\\right)\\left(P + 2\\right) - 2Z\\right)}{4R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s\\,r^2}{R^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s\\,r^2}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\,r^2}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s\\,r^2}{R^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\,r^2\\sin^2\\theta}{R^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s\\,r^2\\sin^2\\theta}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\,r^2\\sin^2\\theta}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\,r^2\\sin^2\\theta}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\,P\\,N^{1/Q}}{2R^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\,P\\,N^{1/Q}}{2R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\,P\\,N^{1/Q}}{2R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\,P\\,N^{1/Q}}{2R^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s}{R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s}{R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{R^3\\,Z}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\,P\\,N^{1/Q}\\left(2Z - \\left(1 - Z\\right)\\left(2Q - 1\\right)\\left(P + 2\\right)\\right)}{4R^3\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s\\,P\\,N^{1/Q}\\left(2Z - \\left(1 - Z\\right)\\left(2Q - 1\\right)\\left(P + 2\\right)\\right)}{4R^3\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s\\,P\\,N^{1/Q}\\left(2Z - \\left(1 - Z\\right)\\left(2Q - 1\\right)\\left(P + 2\\right)\\right)}{4R^3\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\,P\\,N^{1/Q}\\left(2Z - \\left(1 - Z\\right)\\left(2Q - 1\\right)\\left(P + 2\\right)\\right)}{4R^3\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s\\,r^2\\,P\\,N^{1/Q}}{2R^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s\\,r^2\\,P\\,N^{1/Q}}{2R^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\,r^2\\,P\\,N^{1/Q}}{2R^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\,r^2\\,P\\,N^{1/Q}}{2R^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\,r^2\\,P\\,N^{1/Q}\\sin^2\\theta}{2R^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s\\,r^2\\,P\\,N^{1/Q}\\sin^2\\theta}{2R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\,r^2\\,P\\,N^{1/Q}\\sin^2\\theta}{2R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\,r^2\\,P\\,N^{1/Q}\\sin^2\\theta}{2R^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s\\,r^2}{R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s\\,r^2}{R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\,r^2}{R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\,r^2}{R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\,r^2\\sin^2\\theta}{R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s\\,r^2\\sin^2\\theta}{R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\,r^2\\sin^2\\theta}{R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\,r^2\\sin^2\\theta}{R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\,r^4\\sin^2\\theta}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\,r^4\\sin^2\\theta}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\,r^4\\sin^2\\theta}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s\\,r^4\\sin^2\\theta}{R^3}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\,P\\,N^{1/Q}\\left(6Z - \\left(1 - Z\\right)\\left(2Q - 1\\right)\\left(P + 2\\right)\\right)}{4R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\left(\\left(1 - Z\\right)P\\left(2Q - 1\\right)\\left(P + 2\\right) - 2Z\\left(P - 4\\right)\\right)}{4R^3\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s\\,r^2\\left(4 - P\\right)}{2R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\,r^2\\left(4 - P\\right)\\sin^2\\theta}{2R^3}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\,P\\left(\\left(1 - Z\\right)\\left(2Q - 1\\right)\\left(P + 2\\right) - 6Z\\right)}{4R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\left(\\left(1 - Z\\right)P\\left(2Q - 1\\right)\\left(P + 2\\right) - 2Z\\left(P - 4\\right)\\right)}{4R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s\\left(4 - P\\right)}{2R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\left(4 - P\\right)}{2R^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\,P\\left(6Z - \\left(1 - Z\\right)\\left(2Q - 1\\right)\\left(P + 2\\right)\\right)}{4R^3\\,Z\\,N^{1/Q}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\left(\\left(1 - Z\\right)P\\left(2Q - 1\\right)\\left(P + 2\\right) - 2Z\\left(P - 4\\right)\\right)}{4R^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s\\left(4 - P\\right)}{2r^2\\,R^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\left(4 - P\\right)\\csc^2\\theta}{2r^2\\,R^3}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{r_s\\left(\\left(1 - Z\\right)P\\left(2Q - 1\\right)\\left(P + 2\\right) - 6Z\\left(P - 2\\right)\\right)}{2R^3\\,Z}",
+      "kretschmann": "K = \\dfrac{r_s^2\\left(12Z^2\\left(P^2 + 4\\right) - 4Z\\left(1 - Z\\right)P^2\\left(2Q - 1\\right)\\left(P + 2\\right) + \\left(1 - Z\\right)^2\\,P^2\\left(2Q - 1\\right)^2\\left(P + 2\\right)^2\\right)}{4R^6\\,Z^2}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3r_s\\,N^{1/Q}}{R^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\left(P - 1\\right)}{R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s\\,r^2\\left(4Z\\left(P - 1\\right) - \\left(1 - Z\\right)P\\left(2Q - 1\\right)\\left(P + 2\\right)\\right)}{4R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\,r^2\\left(4Z\\left(P - 1\\right) - \\left(1 - Z\\right)P\\left(2Q - 1\\right)\\left(P + 2\\right)\\right)\\sin^2\\theta}{4R^3\\,Z}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3r_s}{R^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\left(P - 1\\right)}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s\\left(4Z\\left(P - 1\\right) - \\left(1 - Z\\right)P\\left(2Q - 1\\right)\\left(P + 2\\right)\\right)}{4R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\left(4Z\\left(P - 1\\right) - \\left(1 - Z\\right)P\\left(2Q - 1\\right)\\left(P + 2\\right)\\right)}{4R^3\\,Z}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3r_s}{R^3\\,N^{1/Q}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\,Z\\left(P - 1\\right)}{R^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s\\left(4Z\\left(P - 1\\right) - \\left(1 - Z\\right)P\\left(2Q - 1\\right)\\left(P + 2\\right)\\right)}{4r^2\\,R^3\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\left(4Z\\left(P - 1\\right) - \\left(1 - Z\\right)P\\left(2Q - 1\\right)\\left(P + 2\\right)\\right)\\csc^2\\theta}{4r^2\\,R^3\\,Z}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^2\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)}{12R^6\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^2\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)}{12R^6\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^4\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)}{24R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^4\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)}{24R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^4\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)}{24R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^4\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)}{24R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^4\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)\\sin^2\\theta}{24R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^4\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)\\sin^2\\theta}{24R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^4\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)\\sin^2\\theta}{24R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^4\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)\\sin^2\\theta}{24R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^2\\,P\\,N^{1/Q}\\left(2Q - 1\\right)\\left(P + 2\\right)}{12R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^2\\,P\\,N^{1/Q}\\left(2Q - 1\\right)\\left(P + 2\\right)}{12R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^2\\,P\\,N^{1/Q}\\left(2Q - 1\\right)\\left(P + 2\\right)}{24R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^2\\,P\\,N^{1/Q}\\left(2Q - 1\\right)\\left(P + 2\\right)}{24R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^2\\,P\\,N^{1/Q}\\left(2Q - 1\\right)\\left(P + 2\\right)}{24R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^2\\,P\\,N^{1/Q}\\left(2Q - 1\\right)\\left(P + 2\\right)}{24R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^2\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)}{24R^6\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^2\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)}{24R^6\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^2\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)}{24R^6\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^2\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)}{24R^6\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^4\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)\\sin^2\\theta}{12R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^4\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)\\sin^2\\theta}{12R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^4\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)}{12R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^4\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)}{12R^6\\,Z}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^2\\,P\\,N^{1/Q}\\left(2Q - 1\\right)\\left(P + 2\\right)}{12R^6\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^2\\,P\\,N^{1/Q}\\left(2Q - 1\\right)\\left(P + 2\\right)}{12R^6\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^2\\,P\\,N^{1/Q}\\left(2Q - 1\\right)\\left(P + 2\\right)}{12R^6\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^2\\,P\\,N^{1/Q}\\left(2Q - 1\\right)\\left(P + 2\\right)}{12R^6\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^4\\,P\\,N^{1/Q}\\left(2Q - 1\\right)\\left(P + 2\\right)}{24R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^4\\,P\\,N^{1/Q}\\left(2Q - 1\\right)\\left(P + 2\\right)}{24R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^4\\,P\\,N^{1/Q}\\left(2Q - 1\\right)\\left(P + 2\\right)}{24R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^4\\,P\\,N^{1/Q}\\left(2Q - 1\\right)\\left(P + 2\\right)}{24R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^4\\,P\\,N^{1/Q}\\left(2Q - 1\\right)\\left(P + 2\\right)\\sin^2\\theta}{24R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^4\\,P\\,N^{1/Q}\\left(2Q - 1\\right)\\left(P + 2\\right)\\sin^2\\theta}{24R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^4\\,P\\,N^{1/Q}\\left(2Q - 1\\right)\\left(P + 2\\right)\\sin^2\\theta}{24R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^4\\,P\\,N^{1/Q}\\left(2Q - 1\\right)\\left(P + 2\\right)\\sin^2\\theta}{24R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^4\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)}{24R^6\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^4\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)}{24R^6\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^4\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)}{24R^6\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^4\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)}{24R^6\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^4\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)\\sin^2\\theta}{24R^6\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^4\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)\\sin^2\\theta}{24R^6\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^4\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)\\sin^2\\theta}{24R^6\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^4\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)\\sin^2\\theta}{24R^6\\,Z^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^6\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)\\sin^2\\theta}{12R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^6\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)\\sin^2\\theta}{12R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s^2\\,r^6\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)\\sin^2\\theta}{12R^6\\,Z}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s^2\\,r^6\\,P\\left(2Q - 1\\right)\\left(P + 2\\right)\\sin^2\\theta}{12R^6\\,Z}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{r_s\\,r\\,P}{R^3\\,Z}\\dot{t}\\dot{r} = 0",
+        "\\ddot{r} + \\dfrac{r_s\\,r\\,P\\,N^{1/Q}}{2R^3}\\dot{t}^2 + \\dfrac{r_s\\,r}{R^3\\,Z}\\dot{r}^2 - r\\,Z\\,\\dot{\\theta}^2 - r\\,Z\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2}{r}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    }
+  ]
+}

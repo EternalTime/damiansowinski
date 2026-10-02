@@ -51,6 +51,11 @@
       "id": "curzon_chazy",
       "kind": "family",
       "text": "A static vacuum field built on the potential of a point, as Bonnor's cloud is in van Stockum's class. Each has a singularity at the origin whose strength depends on the direction of approach [gautreau1967, ilyas2017, astesiano2024]."
+    },
+    {
+      "id": "maitra_dust",
+      "kind": "family",
+      "text": "Dust in differential rotation filling all of space about an axis, regular everywhere. Bonnor and B. R. Steadman fitted a vacuum around a cylinder of it in 2009 and found no closed timelike curves inside or out [maitra1966, bonnor2009maitra]."
     }
   ],
   "references": [
@@ -69,7 +74,9 @@
     "zingg2007",
     "bonnor2005cloud",
     "godel1949",
-    "gautreau1967"
+    "gautreau1967",
+    "maitra1966",
+    "bonnor2009maitra"
   ],
   "coordinates": [
     {

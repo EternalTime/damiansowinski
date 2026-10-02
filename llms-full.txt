@@ -495,6 +495,16 @@ The spherical black hole of Einstein-Gauss-Bonnet gravity in five dimensions, wh
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{2\ell^2}\left(1 - \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)\right)dv^2 + 2\,dv\,dr + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
 - chart Hyperspherical, Anti-de Sitter Branch: coordinates $(t, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{2\ell^2}\left(1 + \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)\right)c^2dt^2 + \dfrac{dr^2}{1 + \dfrac{r^2}{2\ell^2}\left(1 + \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)} + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
 
+### Bowers and Liang's Anisotropic Star
+
+A static star of uniform density whose pressure across the radius differs from its pressure along the radius. Richard Bowers and E. P. T. Liang solved it in 1974: with the sideways pressure the greater of the two, it holds more mass and reddens its light more than Schwarzschild's star of the same density can.
+
+- id: `bowers_liang`
+- tags: anisotropic pressure, tangential pressure, static, stationary, spherically symmetric, stellar interior, compactness, maximum mass, quasar, regular centre, no horizon, matched solution, mass, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/bowers_liang.json
+- chart Areal Radius: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -N^{1/Q}c^2dt^2 + \dfrac{dr^2}{Z} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Brans-Dicke Static Sphere
 
 The gravitational field outside a static, spherical body in Carl Brans and Robert Dicke's theory of 1961, where a scalar field beside the metric sets the strength of gravity from place to place. With the coupling constant $\omega$ it bends light by $(3 + 2\omega)/(4 + 2\omega)$ of Einstein's value, and where Schwarzschild's horizon would stand its spheres shrink to zero area at infinite curvature, with no horizon to hide them.
@@ -645,6 +655,18 @@ The static, spherically symmetric charged black hole of low energy string theory
 - chart String Metric, Magnetic Charge: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{1 - \dfrac{r_s}{r}}{1 - \dfrac{r_d}{r}}c^2dt^2 + \dfrac{dr^2}{\left(1 - \dfrac{r_s}{r}\right)\left(1 - \dfrac{r_d}{r}\right)} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart String Metric, Electric Charge: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \left(1 - \dfrac{r_d}{r}\right)\left(-\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}}\right) + \left(r - r_d\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Schwarzschild Black Hole in a Tidal Field
+
+Schwarzschild's black hole in the quadrupole field of distant matter, a static vacuum solution of Weyl's class that A. G. Doroshkevich, Yakov Zel'dovich, and Igor Novikov gave in 1965, and the simplest of the distorted black holes of Robert Geroch and James Hartle. The tidal field flattens or stretches the horizon and leaves it regular; it grows with distance, so the solution holds between the horizon and the matter that distorts it.
+
+- id: `distorted_schwarzschild`
+- tags: vacuum, static, stationary, axisymmetric, Weyl class, harmonic function, black hole, mass, quadrupole, tidal field, distorted black hole, horizon, Killing horizon, curvature singularity, not asymptotically flat, prolate spheroidal coordinates, no-hair theorem, black hole uniqueness, black hole thermodynamics, Hawking temperature, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/distorted_schwarzschild.json
+- chart Prolate Spheroidal: coordinates $(t, x, y, \phi)$, $$ds^2 = -\dfrac{x - 1}{x + 1}e^{2U}c^2dt^2 + m^2\left(x + 1\right)^2e^{-2U}\left(e^{2V}\left(\dfrac{dx^2}{x^2 - 1} + \dfrac{dy^2}{1 - y^2}\right) + \left(1 - y^2\right)d\phi^2\right)$$
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r}\right)e^{2U}c^2dt^2 + e^{-2U}\left(e^{2V}\left(\dfrac{dr^2}{1 - \dfrac{2m}{r}} + r^2d\theta^2\right) + r^2\sin^2\theta\,d\phi^2\right)$$
+- chart Weyl: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -e^{2\psi}c^2dt^2 + e^{-2\psi}\left(e^{2\gamma}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2\right)$$
+
 ### Double Kerr Solution
 
 Two Kerr black holes on one axis of symmetry, the stationary vacuum solution Dietrich Kramer and Gernot Neugebauer built in 1980 by two Bäcklund transformations of flat space. The repulsion between the spins does not balance the attraction of the masses, so a strut on the axis between the horizons holds the holes apart.
@@ -717,6 +739,17 @@ Einstein's theory of static gravity from his Prague year: space stays flat and t
 - chart Uniform Field: coordinates $(t, x, y, z)$, $$ds^2 = -\dfrac{a^2z^2}{c^4}c^2dt^2 + dx^2 + dy^2 + dz^2$$
 - chart Outside a Body, February: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{m}{r}\right)^2c^2dt^2 + dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Outside a Body, March: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{m}{2r}\right)^4c^2dt^2 + dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
+### Einstein-Infeld-Hoffmann Field of Many Bodies
+
+The gravitational field of $N$ slowly moving bodies to the first order beyond Newton, the order at which the vacuum field equations fix how the bodies move. It is an approximate spacetime with a definite metric, the one the planets and the binary pulsar are timed in.
+
+- id: `eih_many_bodies`
+- tags: post-Newtonian, weak field, approximate solution, many bodies, two-body problem, problem of motion, equations of motion, point masses, binary, binary pulsar, periastron advance, perihelion precession, solar system, harmonic coordinates, gravitomagnetic, time-dependent, no horizon, Lorentzian, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/eih_many_bodies.json
+- chart Einstein, Infeld, and Hoffmann (harmonic): coordinates $(t, x, y, z)$, $$ds^2 = -\left(1 - 2U + 2U^2 - 2\psi - \partial_t^2\chi\right)c^2dt^2 - 8\left(V_1\,dx + V_2\,dy + V_3\,dz\right)c\,dt + \left(1 + 2U\right)\left(dx^2 + dy^2 + dz^2\right)$$
+- chart Standard post-Newtonian gauge: coordinates $(t, x, y, z)$, $$ds^2 = -\left(1 - 2U + 2U^2 - 2\psi\right)c^2dt^2 - \left(\left(8V_1 + \partial_t\partial_x\chi\right)dx + \left(8V_2 + \partial_t\partial_y\chi\right)dy + \left(8V_3 + \partial_t\partial_z\chi\right)dz\right)c\,dt + \left(1 + 2U\right)\left(dx^2 + dy^2 + dz^2\right)$$
 
 ### Einstein-Rosen Bridge
 
@@ -1040,6 +1073,17 @@ An anisotropic vacuum cosmology that expands along some axes while contracting a
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/kasner.json
 - chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2 dt^2 + t^{2p_1} dx^2 + t^{2p_2} dy^2 + t^{2p_3} dz^2$$
 
+### Kasner Universe with a Magnetic Field
+
+Kasner's anisotropic universe threaded by a uniform magnetic field along one axis, with no matter in it. The tension of the field pulls that axis to nothing at both ends of time, and the universe passes from one Kasner vacuum at early times to another at late times.
+
+- id: `kasner_magnetic`
+- tags: electrovacuum, electromagnetic field, magnetic field, anisotropic, cosmology, Kasner, Bianchi classification, spatially homogeneous, homogeneous, curvature singularity, spacelike singularity, big bang, time-dependent, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kasner_magnetic.json
+- chart Kasner's time: coordinates $(t, x, y, z)$, $$ds^2 = \left(1 + b^2t^{2p_3}\right)^2\left(-c^2dt^2 + t^{2p_1}dx^2 + t^{2p_2}dy^2\right) + \dfrac{t^{2p_3}}{\left(1 + b^2t^{2p_3}\right)^2}dz^2$$
+- chart Rosen (axisymmetric): coordinates $(\eta, x, y, z)$, $$ds^2 = -\dfrac{\ell^2}{\left(1 + \cos\eta\right)^4}d\eta^2 + \dfrac{dx^2 + dy^2}{\left(1 + \cos\eta\right)^2} + \sin^2\eta\,dz^2$$
+
 ### Kasner Universe with a Scalar Field
 
 Kasner's anisotropic universe filled with a massless scalar field, which is also a fluid whose pressure equals its energy density. The field loosens Kasner's second condition, so all three axes can shrink together toward the singularity, and the oscillations of the vacuum come to a stop.
@@ -1248,6 +1292,16 @@ A closed universe that holds nothing but $N$ equal masses, one at the centre of 
 - chart Cosmological Time: coordinates $(\tau, r, \theta, \phi)$, $$ds^2 = -\dfrac{1}{E}\left(1 - \dfrac{r_s}{r}\right)c^2d\tau^2 - \dfrac{2}{E}\sqrt{E - 1 + \dfrac{r_s}{r}}\,c\,d\tau\,dr + \dfrac{dr^2}{E} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Lindquist-Wheeler Comoving: coordinates $(\tau, \rho, \theta, \phi)$, $$ds^2 = -c^2d\tau^2 + \dfrac{(\partial_\rho r)^2}{1 - \dfrac{r_s}{\rho}}d\rho^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Comparison Hypersphere: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = -c^2d\tau^2 + a^2\left(d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
+### Maitra's Rotating Dust
+
+A stationary, cylindrically symmetric universe of dust that turns faster near its axis than far from it, found by Samaresh C. Maitra in 1966. It has no cosmological constant and no closed timelike curves, and its density falls from $c^2/8\pi Ga^2$ on the axis toward zero far away.
+
+- id: `maitra_dust`
+- tags: dust, rotating, cylindrical symmetry, axisymmetric, cosmology, exact solution, stationary, inhomogeneous, geodesically complete, no singularity, regular, causal structure, frame dragging, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/maitra_dust.json
+- chart Cylindrical: coordinates $(t, r, \phi, z)$, $$ds^2 = -\left(c\,dt - k\,d\phi\right)^2 + r^2d\phi^2 + e^{\gamma}\left(dr^2 + dz^2\right)$$
 
 ### Majumdar-Papapetrou Extremal Black Holes
 
@@ -1915,6 +1969,19 @@ Edward Teo's rotating traversable wormhole of 1998, the stationary, axially symm
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/teo_wormhole.json
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{16a^2b_0\cos^2\theta}{r}\right)^2c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{b_0}{r}} + \left(r + 16a^2b_0\cos^2\theta\right)^2\left(d\theta^2 + \sin^2\theta\left(d\phi - \dfrac{2ab_0^2}{r^3}c\,dt\right)^2\right)$$
 - chart Proper Radial Distance: coordinates $(t, l, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{16a^2b_0\cos^2\theta}{r}\right)^2c^2dt^2 + dl^2 + \left(r + 16a^2b_0\cos^2\theta\right)^2\left(d\theta^2 + \sin^2\theta\left(d\phi - \dfrac{2ab_0^2}{r^3}c\,dt\right)^2\right)$$
+
+### Tilted Universes and the Whimper
+
+Homogeneous universes whose matter drifts through the surfaces of homogeneity, so that an observer riding with it sees a lopsided sky. In the simplest of them, Farnsworth's dust of 1967, those surfaces turn from spacelike to timelike across a Cauchy horizon, and the light rays along the horizon end where the density and the curvature are finite: a whimper, as George Ellis and A. R. King named it in 1974.
+
+- id: `tilted_universes`
+- tags: cosmology, spatially homogeneous, homogeneous, anisotropic, tilted, Bianchi V, Bianchi classification, locally rotationally symmetric, dust, whimper, Cauchy horizon, intermediate singularity, curvature singularity, big bang, expanding universe, hyperbolic space, cosmic dipole, comoving, time-dependent, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/tilted_universes.json
+- chart Homogeneous Time: coordinates $(u, r, y, z)$, $$ds^2 = -\left(du - C\,dr\right)^2 + X^2dr^2 + e^{-2r}Y^2\left(dy^2 + dz^2\right)$$
+- chart Farnsworth's Dust: coordinates $(\eta, r, y, z)$, $$ds^2 = -\left(W\sinh^2(\eta/2)\,d\eta - C\,dr\right)^2 + X^2dr^2 + W^2e^{-2r}\sinh^4(\eta/2)\left(dy^2 + dz^2\right)$$
+- chart Flat Model: coordinates $(u, r, y, z)$, $$ds^2 = -\left(du - C\,dr\right)^2 + u^2dr^2 + e^{-2r}\left(u + C\right)^2\left(dy^2 + dz^2\right)$$
+- chart Inertial: coordinates $(T, x, \xi, \zeta)$, $$ds^2 = -c^2dT^2 + dx^2 + d\xi^2 + d\zeta^2$$
 
 ### Tippett-Tsang Time Machine
 

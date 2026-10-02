@@ -78,6 +78,11 @@
       "id": "misner_zapolsky",
       "kind": "special_case",
       "text": "The star at the end of the sequence, with $p = \\rho c^2/3$ and an infinite central density, where the equations have the exact solution $m = 3r/14$. Oppenheimer and Volkoff called it \"a unique unstable singular solution\" [oppenheimer1939]."
+    },
+    {
+      "id": "bowers_liang",
+      "kind": "special_case",
+      "text": "A star of uniform density with two pressures, where $m = Mr^3/R^3$ with $M$ the mass and $R$ the radius of the star. Its equation of equilibrium has one term more, $2(p_\\perp - p_r)/r$, with $p_r$ the pressure along the radius and $p_\\perp$ the pressure across it [bowers1974]."
     }
   ],
   "references": [
@@ -115,7 +120,8 @@
     "ruffini1969",
     "liebling2023",
     "bartnik1988",
-    "volkov1999"
+    "volkov1999",
+    "bowers1974"
   ],
   "coordinates": [
     {

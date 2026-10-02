@@ -97,6 +97,11 @@
       "id": "bonnor_charged_dust",
       "kind": "generalisation",
       "text": "Their metric with matter in it. Dust whose charge density equals its mass density is a source for $U$, and a ball of it can lie as near its own horizon as one likes [bonnor1975, lemos2004]."
+    },
+    {
+      "id": "eih_many_bodies",
+      "kind": "family",
+      "text": "Many bodies with no charge to hold them apart. They orbit, and their field is known to the first order beyond Newton, where Majumdar and Papapetrou's is exact [einstein1938]."
     }
   ],
   "references": [
@@ -132,7 +137,8 @@
     "emparan2000",
     "arnowitt1960",
     "bonnor1975",
-    "lemos2004"
+    "lemos2004",
+    "einstein1938"
   ],
   "coordinates": [
     {

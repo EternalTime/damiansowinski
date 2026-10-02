@@ -69,6 +69,11 @@
       "id": "erez_rosen",
       "kind": "family",
       "text": "Erez and Rosen's deformation of Schwarzschild's metric, which adds a quadrupole term to the rod's potential and keeps the mass at $m$ for every $q$ [memmen2021]. With the stretch by $\\delta$ applied to it too, it agrees with Hartle and Thorne's static exterior to first order in the quadrupole [boshkayev2019]."
+    },
+    {
+      "id": "distorted_schwarzschild",
+      "kind": "family",
+      "text": "Schwarzschild's rod with the potential of distant matter added to it in Weyl's class. That deformation comes from outside the body, and the horizon stays regular under it [geroch1982]."
     }
   ],
   "references": [
@@ -94,7 +99,8 @@
     "bicak1993",
     "emparan2000",
     "memmen2021",
-    "boshkayev2019"
+    "boshkayev2019",
+    "geroch1982"
   ],
   "coordinates": [
     {

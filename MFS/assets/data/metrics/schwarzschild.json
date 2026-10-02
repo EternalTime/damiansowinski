@@ -415,6 +415,11 @@
       "text": "Einstein's own first field outside a body, three years before Schwarzschild's. Its space is flat and only its clocks feel the mass, so it bends light by half as much [einstein1911]."
     },
     {
+      "id": "distorted_schwarzschild",
+      "kind": "generalisation",
+      "text": "Schwarzschild's black hole with distant matter pulling on it. The quadrupole tidal field bends the horizon out of round and leaves it regular, and at $q = 0$ the metric is Schwarzschild's [doroshkevich1965, geroch1982]."
+    },
+    {
       "id": "brans_dicke_sphere",
       "kind": "generalisation",
       "text": "The field outside a static body in Brans and Dicke's theory, where a scalar field sets the strength of gravity. With the scalar charge $C = 0$ it is Schwarzschild's metric, and with any other the horizon gives way to a singularity [bransdicke1961, agnese1995]."
@@ -423,6 +428,16 @@
       "id": "bondi_sachs",
       "kind": "generalisation",
       "text": "Schwarzschild's metric in outgoing coordinates with four functions set free, the form the metric of an isolated body takes far away once it radiates. The mass aspect $M(u, \\theta)$ takes the place of $r_s/2$ and falls when gravitational waves leave [bondi1962]."
+    },
+    {
+      "id": "eih_many_bodies",
+      "kind": "generalisation",
+      "text": "Many bodies in slow motion. Close to each the field is Schwarzschild's far from its horizon, and between them it is known to the first order beyond Newton [will2014]."
+    },
+    {
+      "id": "bowers_liang",
+      "kind": "composite",
+      "text": "A star of uniform density with unequal pressures, and Schwarzschild's vacuum outside it. Given enough pressure across the radius, its surface can lie at any radius outside $r_s$ [bowers1974]."
     },
     {
       "id": "draining_bathtub",
@@ -541,9 +556,12 @@
     "davies1977",
     "good2016",
     "gibbons1977action",
+    "geroch1982",
     "bransdicke1961",
     "agnese1995",
     "bondi1962",
+    "will2014",
+    "bowers1974",
     "visser1998",
     "berti2004"
   ],
