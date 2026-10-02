@@ -1361,6 +1361,11 @@ DIMENSIONS = {
     # so that Omega r^2/c is a length beside c dt.
     ("som_raychaudhuri", "cylindrical"): {"t": "T", "r": "L", "\\phi": "1", "z": "L", "\\Omega": "1/T"},
     ("som_raychaudhuri", "cartesian"): {"t": "T", "x": "L", "y": "L", "z": "L", "\\Omega": "1/T"},
+    # Maitra's dust keeps c. Its a is the one length of the solution, 8 pi G rho/c^2 = 1/a^2 on the
+    # axis; s and gamma are numbers and k is a length, so that k dphi stands beside c dt.
+    ("maitra_dust", "cylindrical"): {
+        "t": "T", "r": "L", "\\phi": "1", "z": "L", "a": "L", "s": "1", "k": "L", "\\gamma": "1",
+    },
     # Bonnor's rotating dust cloud keeps c, and its a is a length, a^2 = 2h = 2GJ/c^3, so that
     # a^2 rho^2/r^3 is a length beside c dt; r = sqrt(rho^2 + z^2) is the name the cylindrical chart defines.
     ("bonnor_rotating_dust", "cylindrical"): {"t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "a": "L", "r": "L"},
@@ -1958,6 +1963,9 @@ HELD = {
     # The isotropic radius of the exponential metric's areal chart, Lambert's function of m/R:
     # held, a value is a rational function of r, R and m.
     ("exponential_metric", "areal"): ("r",),
+    # Maitra's two functions, each a logarithm of 1 + s beside powers of the root s: held, a value
+    # is a rational function of r, a, s, k and e^gamma.
+    ("maitra_dust", "cylindrical"): ("k", "gamma"),
 }
 
 # The first derivatives of held names along the coordinates they vary with, written in the names
@@ -2009,6 +2017,11 @@ RATES = {
     # dm/dr is the energy of the field in a shell, r_q^2/(r^2 + W), which is 4 pi G r^2 rho/c^4.
     **{("born_infeld_charge", chart): {"m": {"r": "\\dfrac{r_q^2}{r^2 + W}"}}
        for chart in ("static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing")},
+    # Maitra's k and gamma: k' = (s - 1) a/2r and gamma' = -k'^2/2r, Chan and Santos's (47) and (49).
+    ("maitra_dust", "cylindrical"): {
+        "k": {"r": "\\dfrac{2r}{a\\left(1 + s\\right)}"},
+        "gamma": {"r": "-\\dfrac{2r}{a^2\\left(1 + s\\right)^2}"},
+    },
 }
 
 # The systems whose delta stands on a curved background, where what multiplies it varies across

@@ -61,6 +61,11 @@
       "id": "petrov_homogeneous",
       "kind": "family",
       "text": "A spacetime with nothing in it that is also the same at every event and also holds closed timelike curves. It is the field outside a cylinder of rotating dust [bonnor1979petrov, gibbons2008petrov]."
+    },
+    {
+      "id": "maitra_dust",
+      "kind": "family",
+      "text": "A stationary universe of rotating dust with no cosmological constant and no closed timelike curves, which Samaresh C. Maitra found in 1966. Its dust shears and thins out away from an axis, where Gödel's turns rigidly and is the same everywhere [maitra1966, chan2024]."
     }
   ],
   "references": [
@@ -88,7 +93,9 @@
     "bonnor1977cloud",
     "astesiano2024",
     "bonnor1979petrov",
-    "gibbons2008petrov"
+    "gibbons2008petrov",
+    "maitra1966",
+    "chan2024"
   ],
   "coordinates": [
     {
