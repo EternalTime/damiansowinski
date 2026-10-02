@@ -1104,6 +1104,20 @@ def _tbh_horizon():
     return [Mark(m, points=[(0.0, 1.0)])]
 
 
+def _siklos(depth=None):
+    """Siklos's wave front u = 0, v = 0, read on the disc out to the circle a proper distance 2L
+    from its centre. A plane of u and v at one place on the front meets it at the event (0, 0).
+    Kaigorodov's planes with a Killing direction divided out and y = 0 meet it along the line of
+    zero v, or t, or U, or V, over the diameter eta = 0 of the disc, where Siklos's
+    x = L(2L - xi)/(2L + xi), and `depth` writes that x in the plane's own coordinate."""
+    m, = moments("siklos", "front", label="$u = v = 0$")
+    if depth is None:
+        return [Mark(m, points=[(0.0, 0.0)])]
+    _, top = m.reach("ozsvath_robinson_rozga", "\\xi")
+    ends = sorted(depth(x) for x in ((2 - top) / (2 + top), (2 + top) / (2 - top)))
+    return [Mark(m, along(0.0, *ends))]
+
+
 def _c_metric(y):
     """The C-metric's two moments on a plane of its axis: the equator's t = 0, which meets the
     axis along t = 0 over the same r as it reaches on the equator, and the black hole horizon,
@@ -1537,6 +1551,14 @@ FLAT = {
     **{("string_wave", "moving_string", view): lambda X=X: [
         Mark(m, points=[(m.time, string_wave_V(m.time, X))]) for m in moments("string_wave")]
        for view, X in (("behind", -0.25), ("ahead", 0.75))},
+    # Siklos's wave front u = v = 0: an event on each plane of u and v, and the line of zero v, t, U
+    # or V on each of Kaigorodov's planes, with x = e^(-rho) = e^(2Z) in units of L.
+    **{("siklos", system, view): lambda: _siklos()
+       for system, view in (("siklos", "near"), ("siklos", "far"), ("ozsvath_robinson_rozga", "centre"))},
+    **{("siklos", system, "depth"): lambda: _siklos(lambda x: x)
+       for system in ("kaigorodov", "kaigorodov_poincare", "kaigorodov_kundt")},
+    ("siklos", "kaigorodov_horospheric", "depth"): lambda: _siklos(lambda x: -math.log(x)),
+    ("siklos", "kaigorodov_homogeneous", "depth"): lambda: _siklos(lambda x: math.log(x) / 2),
     # The wave front u = u_k, every v.
     ("pp_wave", "exact_plane_wave", "tz"): lambda: one("pp_wave", lambda m: [[(m.time, -BIG), (m.time, BIG)]]),
     **{("aichelburg_sexl", "null_cartesian", view): lambda: one("aichelburg_sexl", lambda m: [[(m.time, -BIG), (m.time, BIG)]])
@@ -1615,6 +1637,7 @@ FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.
 HIDDEN = {
+    ("siklos", "kaigorodov_stationary", "plane"): "the region x < 0 of Siklos's chart, another region than the one whose wave front is embedded",
     ("btz", "stationary", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "eddington_finkelstein_ingoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "eddington_finkelstein_outgoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",

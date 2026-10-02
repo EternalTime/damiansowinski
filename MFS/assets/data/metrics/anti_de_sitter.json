@@ -92,6 +92,11 @@
       "id": "coleman_de_luccia",
       "kind": "composite",
       "text": "A bubble of anti-de Sitter space growing in a vacuum of higher energy. Seen from inside it is an open universe that falls back on itself after a time $\\pi L/c$ [coleman1980]."
+    },
+    {
+      "id": "siklos",
+      "kind": "generalisation",
+      "text": "Anti-de Sitter space with a gravitational wave crossing it. The profile $H$ of a pp-wave goes inside the bracket of the Poincaré patch, and at $H = 0$ the wave is gone [siklos1985, podolsky1998]."
     }
   ],
   "references": [
@@ -125,7 +130,9 @@
     "aminneborg1996",
     "mann1997",
     "randall1999b",
-    "coleman1980"
+    "coleman1980",
+    "siklos1985",
+    "podolsky1998"
   ],
   "coordinates": [
     {

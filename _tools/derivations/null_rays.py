@@ -668,6 +668,20 @@ STRING_WAVE_PROFILE_INPUT = ("The string's own travelling wave, $F = -2\\ell(br/
                              "B''\\sin\\phi)$, for the pulse $A = (\\ell/2)\\,e^{-4u^2/\\ell^2}$, $B = 0$ on a "
                              "string with $b = 1/2$, whose cone lacks half a turn.")
 STRING_WAVE_CREST = (("shell", "x0", "0", "the crest of the pulse, $u = 0$"),)
+
+# Siklos's waves, in units of the anti-de Sitter radius L: the free charts are drawn for
+# Kaigorodov's profile under a pulse, H = exp(-4u^2) x^3, which solves Siklos's equation since u
+# never enters it, and which is h = LH/x = exp(-4u^2) p^2/q^2 on the disc; Kaigorodov's own
+# charts are drawn with the Killing direction d/du divided out, d/dx in the Poincare chart.
+SIKLOS = {"L": 1}
+SIKLOS_PULSE = {"H": "exp(-4*u**2)*x**3"}
+SIKLOS_DISC_PULSE = {"h": "exp(-4*u**2)*(1 - (xi**2 + eta**2)/4)**2/((1 + xi/2)**2 + eta**2/4)**2"}
+SIKLOS_INPUT = ("Kaigorodov's profile switched on and off, $H = e^{-4u^2/L^2}x^3/L^3$, which solves "
+                "$\\partial_x^2H + \\partial_y^2H - (2/x)\\,\\partial_xH = 0$.")
+SIKLOS_DISC_INPUT = ("Kaigorodov's profile switched on and off, $h = e^{-4u^2/L^2}p^2/q^2$, which solves "
+                     "$p^2(\\partial_\\xi^2h + \\partial_\\eta^2h) = 2h/L^2$.")
+SIKLOS_CREST = (("shell", "x0", "0", "the crest of the pulse, $u = 0$"),)
+SIKLOS_CONE = "future cone of no momentum along ${}$"
 GOTT_STRINGS = {"mu": "1/12", "G": 1, "v": "4/5", "d": "1/2", "alpha": "pi/3", "gamma": "5/3"}
 
 # Morris, Thorne and Yurtsever's round trip, in the throat radius r_0 and with c = 1: the right
@@ -2061,6 +2075,35 @@ DIAGRAMS = [
               LB_BOX, "$z/R$", "$ct/R$", LB, {"rho": str(n), "phi": "0"}, to_display=LB_NULL_TO_TZ,
               tau="u + v", families=LB_FAMILIES)
       for view, n in (("twice", 2), ("four", 4))],
+    # Siklos's waves. The free charts on the plane of u and v at a fixed place on the wave front,
+    # drawn against (v - u)/2 and (u + v)/2 with the declared pulse; Kaigorodov's spacetime on the
+    # plane of its null coordinate v and its depth with the spacelike Killing direction d/du divided
+    # out and y = 0, a totally geodesic slice, in each chart that holds the region x > 0, the
+    # Poincare chart with d/dx divided out instead; and the stationary region on its plane of u and v.
+    *[Diagram("siklos", "siklos", view, label, ("u", "v"), (-2, 2, -2, 2), "$(v - u)/2L$", "$(u + v)/2L$",
+              SIKLOS, {"x": x, "y": "0"}, to_display=NULL_TO_TR, tau="u + v", families=SIDEWAYS,
+              functions=SIKLOS_PULSE, lines=SIKLOS_CREST, input=SIKLOS_INPUT)
+      for view, label, x in (("near", "$x = L$", "1"), ("far", "$x = 3L/2$", "3/2"))],
+    Diagram("siklos", "ozsvath_robinson_rozga", "centre", "$\\xi = \\eta = 0$", ("u", "v"), (-2, 2, -2, 2),
+            "$(v - u)/2L$", "$(u + v)/2L$", SIKLOS, {"xi": "0", "eta": "0"}, to_display=NULL_TO_TR, tau="u + v",
+            families=SIDEWAYS, functions=SIKLOS_DISC_PULSE, lines=SIKLOS_CREST, input=SIKLOS_DISC_INPUT),
+    Diagram("siklos", "kaigorodov", "depth", "$v$ and $x$", ("v", "x"), (0, 2, -1.5, 1.5), "$x/L$", "$v/L$",
+            SIKLOS, {"y": "0"}, tau="v", families=SIDEWAYS, quotient="u", cone=SIKLOS_CONE.format("u")),
+    Diagram("siklos", "kaigorodov_poincare", "depth", "$t$ and $z$", ("t", "z"), (0, 2, -1.5, 1.5), "$z/L$",
+            "$ct/L$", SIKLOS, {"y": "0"}, families=SIDEWAYS, quotient="x", cone=SIKLOS_CONE.format("x")),
+    Diagram("siklos", "kaigorodov_horospheric", "depth", "$v$ and $\\rho$", ("v", "\\rho"), (-0.75, 1.5, -1.5, 1.5),
+            "$\\rho/L$", "$v/L$", SIKLOS, {"y": "0"}, tau="v", families=SIDEWAYS, quotient="u",
+            cone=SIKLOS_CONE.format("u")),
+    Diagram("siklos", "kaigorodov_stationary", "plane", "$u$ and $v$", ("u", "v"), (-2, 2, -2, 2),
+            "$(v - u)/2L$", "$(u + v)/2L$", SIKLOS, {"rho": "0", "y": "0"}, to_display=NULL_TO_TR, tau="u + v",
+            families=SIDEWAYS),
+    Diagram("siklos", "kaigorodov_homogeneous", "depth", "$U$ and $Z$", ("U", "Z"), (-0.5, 0.35, -1.5, 1.5),
+            "$Z$", "$-U/L$", {"L": 1, "k": "1/10"}, {"y": "0"}, to_display=((0, 1), (-1, 0)), tau="-U*exp(5*Z)",
+            families=SIDEWAYS, quotient="X",
+            cone=SIKLOS_CONE.format("X")),
+    Diagram("siklos", "kaigorodov_kundt", "depth", "$V$ and $x$", ("V", "x"), (0.25, 2, -1.5, 1.5),
+            "$x$", "$V/L$", SIKLOS, {"y": "0"}, tau="V*x**2", families=SIDEWAYS, quotient="U",
+            cone=SIKLOS_CONE.format("U")),
 ]
 
 
@@ -5026,6 +5069,82 @@ CAPTIONS = {
         "Krtouš, and Podolský do beyond the acceleration horizon, so that the cones point to smaller $y$ and "
         "every future directed ray reaches null infinity. Beyond $y = 3$ they point to larger $y$, into the "
         "black hole, whose singularity lies at $y = \\infty$.",
+    ],
+    **{("siklos", "siklos", view): [
+        f"The plane of $u$ and $v$ (${x}$, $y = 0$), at one place on the wave front, drawn with $(v - u)/2$ "
+        "across and $(u + v)/2$ up. On it the metric is $(L^2/x^2)(-2\\,du\\,dv + H\\,du^2)$, so away from the "
+        "pulse the cones stand at 45°, as in anti-de Sitter space, and inside it they lean the way the wave "
+        "travels. The rays moving right keep their $u$ and travel with the wave, and a curve moving left is "
+        f"carried along $v$ by $\\tfrac{{1}}{{2}}\\int H\\,du = {shift}\\,L$ in crossing the pulse.",
+        "The rays moving right are null geodesics, and away from the pulse so are the curves moving left. "
+        "Inside it light crossing the wave is pushed toward larger $x$, "
+        "$\\ddot{x} = \\tfrac{1}{2}\\partial_xH\\,\\dot{u}^2$, out of this plane, so there a curve moving left "
+        "is a null curve of the plane.",
+    ] for view, x, shift in (("near", "x = L", "0.44"), ("far", "x = 3L/2", "1.50"))},
+    ("siklos", "ozsvath_robinson_rozga", "centre"): [
+        "The plane of $u$ and $v$ at the centre of the disc ($\\xi = \\eta = 0$), which is $x = L$, $y = 0$ of "
+        "Siklos's chart, drawn with $(v - u)/2$ across and $(u + v)/2$ up. There $p = q = 1$ and the metric "
+        "of the plane is $-2\\,du\\,dv + h\\,du^2$, that of a pp-wave. The rays moving right keep their $u$ and "
+        "travel with the wave, and a curve moving left is carried along $v$ by "
+        "$\\tfrac{1}{2}\\int h\\,du = 0.44\\,L$ in crossing the pulse.",
+        "The rays moving right are null geodesics, and away from the pulse so are the curves moving left. "
+        "Inside it light crossing the wave is pushed toward negative $\\xi$, "
+        "$\\ddot{\\xi} = -(3h/2L)\\,\\dot{u}^2$, out of this plane, so there a curve moving left is a null "
+        "curve of the plane.",
+    ],
+    ("siklos", "kaigorodov", "depth"): [
+        "The plane of $v$ and $x$ ($y = 0$) with $u$ divided out, $-(L^5/x^5)\\,dv^2 + (L^2/x^2)\\,dx^2$, the "
+        "metric orthogonal to the lines of $u$. Its null curves are the shadows on $v$ and $x$ of the null "
+        "geodesics with no momentum along $u$, each moving in $u$ at $du/dv = L^3/x^3$, and each cone is the "
+        "future cone of those directions.",
+        "The rays keep $v \\pm \\tfrac{2}{5}x^{5/2}/L^{3/2}$. They reach the conformal boundary $x = 0$ at a "
+        "finite $v$, as light reaches anti-de Sitter's. The cones close toward larger $x$: the singularity "
+        "$x \\to \\infty$ lies at $v = \\pm\\infty$, a finite affine distance away, and no curvature scalar "
+        "diverges there, only the tidal forces on whatever falls in.",
+    ],
+    ("siklos", "kaigorodov_poincare", "depth"): [
+        "The plane of $t$ and $z$ ($y = 0$) with $x$ divided out, "
+        "$(L^2/z^2)\\left(-c^2dt^2/(1 + z^3/2L^3) + dz^2\\right)$, the metric orthogonal to the lines of $x$. "
+        "Its null curves are the shadows on $t$ and $z$ of the null geodesics with no momentum along $x$, each "
+        "moving in $x$ at $dx/d(ct) = z^3/(z^3 + 2L^3)$, and each cone is the future cone of those directions.",
+        "Near the conformal boundary $z = 0$ the cones stand at 45°, as on the Poincaré patch of anti-de Sitter "
+        "space, and a ray reaches the boundary at a finite $t$. Deeper in the wave drags the light along $x$ "
+        "and the cones close, $c\\,dt = \\pm\\sqrt{1 + z^3/2L^3}\\,dz$, so the singularity $z \\to \\infty$ "
+        "lies at $t = \\pm\\infty$.",
+    ],
+    ("siklos", "kaigorodov_horospheric", "depth"): [
+        "The plane of $v$ and $\\rho$ ($y = 0$) with $u$ divided out, $-e^{5\\rho/L}dv^2 + d\\rho^2$, the metric "
+        "orthogonal to the lines of $u$. Its null curves are the shadows on $v$ and $\\rho$ of the null "
+        "geodesics with no momentum along $u$, each moving in $u$ at $du/dv = e^{3\\rho/L}$, and each cone is "
+        "the future cone of those directions.",
+        "The rays keep $v \\pm \\tfrac{2}{5}Le^{-5\\rho/2L}$. Toward the conformal boundary, $\\rho \\to \\infty$, "
+        "the cones open without limit, and a ray arrives there at a finite $v$. Toward the singularity, "
+        "$\\rho \\to -\\infty$, they close, and the singularity lies at $v = \\pm\\infty$.",
+    ],
+    ("siklos", "kaigorodov_stationary", "plane"): [
+        "The plane of $u$ and $v$ ($\\rho = 0$, $y = 0$) in the region $x < 0$ of Siklos's chart, drawn with "
+        "$(v - u)/2$ across and $(u + v)/2$ up. On it the metric is $-du^2 - 2\\,du\\,dv$, the same at every "
+        "event, so every cone is the same cone, opened wide toward the left. A line of constant $v$ is "
+        "timelike here, the world line of an observer at rest in this stationary region.",
+        "The rays moving right keep their $u$ and are null geodesics. A curve moving left keeps $v + u/2$, and "
+        "light sent along it is turned toward larger $\\rho$, $\\ddot{\\rho} = (3/2L)\\,\\dot{u}^2$, out of "
+        "this plane, so it is a null curve of the plane.",
+    ],
+    ("siklos", "kaigorodov_homogeneous", "depth"): [
+        "The plane of $U$ and $Z$ ($y = 0$) with $X$ divided out, drawn at $k = 1/10$. Its null curves are the "
+        "shadows on $U$ and $Z$ of the null geodesics with no momentum along $X$, the rays of Siklos's plane "
+        "of $v$ and $x$ with $x = Le^{2Z}$ and $v = -Ue^{5Z}$, and each cone is the future cone of those "
+        "directions.",
+        "The rays keep $(U \\pm \\tfrac{2}{5}L)e^{5Z}$, so the lines $U = \\pm 2L/5$ are two of them, and the "
+        "future is the direction of decreasing $Ue^{5Z}$. The conformal boundary is $Z \\to -\\infty$ and the "
+        "singularity $Z \\to \\infty$.",
+    ],
+    ("siklos", "kaigorodov_kundt", "depth"): [
+        "The plane of $V$ and $x$ ($y = 0$) with $U$ divided out. Its null curves are the shadows on $V$ and "
+        "$x$ of the null geodesics with no momentum along $U$, the rays of Siklos's plane of $v$ and $x$ with "
+        "$v = Vx^2/\\sqrt{2}$ and $Lx$ for his $x$, and each cone is the future cone of those directions.",
+        "The rays keep $Vx^2/\\sqrt{2} \\pm \\tfrac{2}{5}Lx^{5/2}$, and the future is the direction of "
+        "increasing $Vx^2$. The conformal boundary is $x = 0$ and the singularity $x \\to \\infty$.",
     ],
 }
 
@@ -8020,6 +8139,36 @@ CLOSED_FORMS.update({
     **{("string_wave", "moving_string", view): (lambda u, V, shift=_string_wave_shift(X): V - shift(u),
                                                 lambda u, V: u, None)
        for view, X in (("behind", -0.25), ("ahead", 0.75))},
+})
+def _siklos_zstar(z):
+    """The tortoise coordinate of Kaigorodov's Poincare plane with x divided out, the integral of
+    sqrt(1 + s^3/2) from the boundary, by a quadrature the tracing does not use."""
+    return np.array([quad(lambda s: math.sqrt(1 + s ** 3 / 2), 0.0, x, epsabs=1e-13, epsrel=1e-13)[0]
+                     for x in np.atleast_1d(z)]).reshape(np.shape(z))
+
+
+# Siklos's waves at L = 1. On the plane of u and v a curve moving left keeps v minus half the
+# integral of H, which for the pulse is x^3 sqrt(pi) erf(2u)/8, and a ray moving right keeps u. With
+# d/du divided out Kaigorodov's plane is -x^-5 dv^2 + x^-2 dx^2, whose rays keep v -+ (2/5) x^(5/2),
+# written in each chart's own coordinates, and with d/dx divided out the Poincare plane's keep
+# t -+ z_*. The stationary plane at rho = 0 is -du^2 - 2 du dv, whose other family keeps v + u/2.
+CLOSED_FORMS.update({
+    **{("siklos", "siklos", view): (lambda u, v, x=x: v - x ** 3 * math.sqrt(math.pi) * scipy_erf(2 * u) / 8,
+                                     lambda u, v: u, None)
+       for view, x in (("near", 1.0), ("far", 1.5))},
+    ("siklos", "ozsvath_robinson_rozga", "centre"): (
+        lambda u, v: v - math.sqrt(math.pi) * scipy_erf(2 * u) / 8, lambda u, v: u, None),
+    ("siklos", "kaigorodov", "depth"): (lambda v, x: v + 0.4 * x ** 2.5, lambda v, x: v - 0.4 * x ** 2.5,
+                                        lambda v, x: x > 0.02),
+    ("siklos", "kaigorodov_poincare", "depth"): (lambda t, z: t + _siklos_zstar(z), lambda t, z: t - _siklos_zstar(z),
+                                                 lambda t, z: z > 0.02),
+    ("siklos", "kaigorodov_horospheric", "depth"): (lambda v, rho: v - 0.4 * np.exp(-2.5 * rho),
+                                                    lambda v, rho: v + 0.4 * np.exp(-2.5 * rho), None),
+    ("siklos", "kaigorodov_stationary", "plane"): (lambda u, v: v + u / 2, lambda u, v: u, None),
+    ("siklos", "kaigorodov_homogeneous", "depth"): (lambda U, Z: (0.4 - U) * np.exp(5 * Z),
+                                                    lambda U, Z: (-0.4 - U) * np.exp(5 * Z), None),
+    ("siklos", "kaigorodov_kundt", "depth"): (lambda V, x: V * x ** 2 / math.sqrt(2) + 0.4 * x ** 2.5,
+                                              lambda V, x: V * x ** 2 / math.sqrt(2) - 0.4 * x ** 2.5, None),
 })
 CLOSED_FORMS.update({where: (lambda t, phi, k=left: t - k * phi, lambda t, phi, k=right: t - k * phi, None)
                      for where, (left, right) in CYLINDERS.items()})

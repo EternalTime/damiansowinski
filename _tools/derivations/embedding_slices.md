@@ -520,6 +520,15 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `static`, `ingoing` and `outgoing`, the conformal diagram: the outside moment is the line $T = 0$ through the outer bifurcation point across both exteriors; the inside moment is the line through the inner bifurcation point above them, $T = \pi$, on the static and ingoing views, whose charts cover an inner region there, and the line $T = -\pi$ through the inner bifurcation point below on the outgoing view, whose chart covers an inner region there.
 - `history`, the conformal diagram: each moment is the curve $v - r = T$ from the centre on $X = 0$ out to $r = 6\,m_0$.
 
+### Siklos waves
+
+- The embedding has one view in units of $L$: the wave front $u = v = 0$, read on the disc of the chart of Ozsváth, Robinson and Rózga out to the circle a proper distance $2L$ from its centre, $\xi^2 + \eta^2 = 4L^2\tanh^2 1$.
+- `siklos/near`, `siklos/far` and `ozsvath_robinson_rozga/centre`: a plane of $u$ and $v$ at one place on the front meets it at the event $u = v = 0$, the centre of the drawing; $x = L$ is the centre of the disc and $x = 3L/2$ is $\xi = -2L/5$, inside the last circle.
+- `kaigorodov/depth`, `kaigorodov_poincare/depth` and `kaigorodov_kundt/depth`: with a Killing direction divided out and $y = 0$ the front is the line of zero $v$, $t$ or $V$ over the diameter $\eta = 0$, where $x = L(2L - \xi)/(2L + \xi)$ runs from $Le^{-2}$ to $Le^{2}$, so the line starts at $0.135\,L$ and ends on the box.
+- `kaigorodov_horospheric/depth` and `kaigorodov_homogeneous/depth`: the same line with $x = Le^{-\rho/L} = Le^{2Z}$, from $\rho = -2L$ to $2L$ and from $Z = -1$ to $1$, across the whole box.
+- `kaigorodov_stationary/plane` marks nothing: the region $x < 0$ is another region than the one whose front is embedded.
+- The conformal views mark the front as the curve $v = 0$, or $t = 0$, from $x = Le^{-2}$ to $Le^{2}$.
+
 ### The topological black holes
 
 - The embedding has two views in units of $L$: the black string's moment $t = 0$, $z = 0$ at $\mu = L$, $r$ from the throat $r_h = L$ to $3L$ on both exteriors, and the horizon of the hyperbolic hole without mass at one moment, its bifurcation surface.
@@ -599,6 +608,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Bardeen | two lines, two curves four times | none | two lines, three times |
 | Schwarzschild | line, four curves | none | line, three times |
 | Schwarzschild-de Sitter | line, four curves | none | line, three times |
+| Siklos waves | event, three times; line, five times | none | curve, five times |
 | van Stockum | line, not visible | floor | none drawn |
 | Szekeres | not visible, twice | none | none drawn |
 | Taub-NUT | line | none | none drawn |

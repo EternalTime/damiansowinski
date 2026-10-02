@@ -4965,6 +4965,228 @@
   ],
   "sphere": null
  },
+ "siklos/kaigorodov": {
+  "stamp": "d6538c9ab90c282d",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-3/L**2",
+   "sign": -1
+  },
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "u",
+    "timelike": false,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "v",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "siklos/kaigorodov_homogeneous": {
+  "stamp": "d9ad653d932448c5",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-3/L**2",
+   "sign": -1
+  },
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "X",
+    "timelike": false,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "siklos/kaigorodov_horospheric": {
+  "stamp": "67e96fdae9c25b09",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-3/L**2",
+   "sign": -1
+  },
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "u",
+    "timelike": false,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "v",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "siklos/kaigorodov_kundt": {
+  "stamp": "2b798fd4ea4d0146",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-3/L**2",
+   "sign": -1
+  },
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "U",
+    "timelike": false,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "siklos/kaigorodov_poincare": {
+  "stamp": "155ee6793e9736c6",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-3/L**2",
+   "sign": -1
+  },
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "x",
+    "timelike": false,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "siklos/kaigorodov_stationary": {
+  "stamp": "4e51c0c5d746260b",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-3/L**2",
+   "sign": -1
+  },
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "u",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "v",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "siklos/ozsvath_robinson_rozga": {
+  "stamp": "ce33d13fd1679efa",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "v",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "siklos/siklos": {
+  "stamp": "3cec2efff562a0a1",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "v",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
  "simpson_visser/areal": {
   "stamp": "3624917abf31a662",
   "relations": {},

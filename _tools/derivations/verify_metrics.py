@@ -1037,6 +1037,20 @@ DIMENSIONS = {
     ("point_particle_2plus1", "moving"): {
         "t": "T", "x": "L", "y": "L", "\\alpha": "1", "v": "L/T", "\\gamma": "1",
     },
+    # Siklos's waves: every coordinate of his chart is a length, the null ones included, and the
+    # profile H is a pure number, as Kaigorodov's x^3/L^3 is. The disc's xi and eta are lengths and
+    # its profile h = LH/x is pure, as are the two functions p and q. The homogeneous form's Z is a
+    # pure number and its k one too, and the Kundt form's x and y are pure, L times them Siklos's.
+    ("siklos", "siklos"): {"u": "L", "v": "L", "x": "L", "y": "L", "L": "L", "H": "1"},
+    ("siklos", "ozsvath_robinson_rozga"): {
+        "u": "L", "v": "L", "\\xi": "L", "\\eta": "L", "L": "L", "h": "1", "p": "1", "q": "1",
+    },
+    ("siklos", "kaigorodov"): {"u": "L", "v": "L", "x": "L", "y": "L", "L": "L"},
+    ("siklos", "kaigorodov_poincare"): {"t": "T", "x": "L", "y": "L", "z": "L", "L": "L"},
+    ("siklos", "kaigorodov_horospheric"): {"u": "L", "v": "L", "y": "L", "\\rho": "L", "L": "L"},
+    ("siklos", "kaigorodov_stationary"): {"u": "L", "v": "L", "y": "L", "\\rho": "L", "L": "L"},
+    ("siklos", "kaigorodov_homogeneous"): {"U": "L", "X": "L", "y": "L", "Z": "1", "L": "L", "k": "1"},
+    ("siklos", "kaigorodov_kundt"): {"U": "L", "V": "L", "x": "1", "y": "1", "L": "L"},
 }
 
 # What a field carries when every coordinate is a length; the indices supply the rest.
