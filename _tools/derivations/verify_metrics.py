@@ -781,6 +781,20 @@ DIMENSIONS = {
     },
     ("myers_perry", "boyer_lindquist_six"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\chi": "1", "\\psi": "1", "\\mu": "L**3", "a": "L",
+    # Kastor and Traschen's holes: the potential V of the holes is a pure number, as Majumdar and
+    # Papapetrou's U is, and so are U = H tau + V, the scale factor a = e^{Ht} and Omega = 1 + V/a,
+    # each a name its chart defines; H is a frequency with 3H^2/c^2 = Lambda, as de Sitter's is.
+    ("kastor_traschen", "cartesian"): {
+        "\\tau": "T", "x": "L", "y": "L", "z": "L", "H": "1/T", "V": "1", "U": "1",
+    },
+    ("kastor_traschen", "cylindrical"): {
+        "\\tau": "T", "\\rho": "L", "\\phi": "1", "z": "L", "H": "1/T", "V": "1", "U": "1",
+    },
+    ("kastor_traschen", "isotropic"): {
+        "\\tau": "T", "r": "L", "\\theta": "1", "\\phi": "1", "H": "1/T", "m": "L", "U": "1",
+    },
+    ("kastor_traschen", "comoving"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "H": "1/T", "a": "1", "V": "1", "\\Omega": "1",
     },
     # Schwarzschild-anti-de Sitter keeps Schwarzschild's r_s and anti-de Sitter's radius, which the
     # entry calls L and the dimensional pass calls L as well, as for anti-de Sitter space itself.

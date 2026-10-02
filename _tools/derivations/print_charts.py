@@ -7207,6 +7207,251 @@ def near_horizon_extreme_kerr_pullback(chart, system_id):
 CHARTS["near_horizon_extreme_kerr"] = [lambda s=s: near_horizon_extreme_kerr(s) for s in NHEK_CHARTS]
 
 
+# -- Kastor-Traschen ---------------------------------------------------------------------
+
+KT_CHARTS = ["cartesian", "cylindrical", "isotropic", "comoving"]
+KT_FLAT = {"cartesian": "dx^2 + dy^2 + dz^2", "cylindrical": "d\\rho^2 + \\rho^2d\\phi^2 + dz^2",
+           "isotropic": "dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)", "comoving": "dx^2 + dy^2 + dz^2"}
+KT_SPACE = {"cartesian": (["x", "y", "z"], ["x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)",
+                                            "z \\in (-\\infty, \\infty)"]),
+            "cylindrical": (["\\rho", "\\phi", "z"], ["\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                                                      "z \\in (-\\infty, \\infty)"]),
+            "isotropic": (["r", "\\theta", "\\phi"], ["r \\in (0, \\infty)", "\\theta \\in [0, \\pi]",
+                                                      "\\phi \\in [0, 2\\pi)"])}
+KT_SPACE["comoving"] = KT_SPACE["cartesian"]
+
+
+def kastor_traschen(system_id):
+    """Kastor and Traschen's charged black holes in de Sitter space, -c^2 dtau^2/U^2 + U^2 times
+    flat space with U = H tau + V, in the four charts its literature uses: the Cartesian chart of
+    Brill, Horowitz, Kastor and Traschen with V = V(x,y,z) left free, the cylindrical chart of
+    holes strung along one axis, V = V(rho,z), the isotropic chart of one hole, V = m/r, and
+    Kastor and Traschen's own comoving chart, H tau = e^{Ht}, where the metric is
+    -c^2 dt^2/Omega^2 + a^2 Omega^2 times flat space with a = e^{Ht} and Omega = 1 + V/a. The free
+    V is left free in every tensor, so no component assumes Laplace's equation. Every value is
+    printed in U, or in a and Omega, a name each chart defines, by writing the time out of it:
+    c tau = c(U - V)/H and V = a(Omega - 1), after which no time stands in any value.
+    kastor_traschen_check holds the Cartesian chart to the Einstein-Maxwell equations with
+    Lambda = 3H^2/c^2 and every other chart to the Cartesian one pulled back, and the isotropic
+    chart to the lukewarm hole's cosmological chart at r_s = 2m\\; kastor_traschen.md records
+    the choices."""
+    space, domains = KT_SPACE[system_id]
+    flat = KT_FLAT[system_id]
+    potential = {"cartesian": "V = V(x,y,z)", "cylindrical": "V = V(\\rho,z)", "comoving": "V = V(x,y,z)"}
+    if system_id == "comoving":
+        coords, name = ["t"] + space, "Comoving"
+        parameters = ["H", "a = e^{Ht}", potential[system_id], "\\Omega = 1 + \\dfrac{V}{a}"]
+        line = "ds^2 = -\\dfrac{c^2dt^2}{\\Omega^2} + a^2\\Omega^2\\left(" + flat + "\\right)"
+        # The symbol t is x^0 = ct in the geometry, so the rate that multiplies it is H/c there.
+        Omega = "\\left(1 + e^{-Ht/c}V\\right)"
+        chart_line = "ds^2 = -\\dfrac{dt^2}{" + Omega + "^2} + e^{2Ht/c}" + Omega + "^2\\left(" + flat + "\\right)"
+        time_domain = ["t \\in (-\\infty, \\infty)"]
+        notes = ["(x, y, z) \\neq \\mathbf{x}_i \\;\\text{(the horizons)}"]
+    else:
+        coords = ["\\tau"] + space
+        name = system_id.capitalize()
+        if system_id == "isotropic":
+            parameters = ["H", "m", "U = H\\tau + \\dfrac{m}{r}"]
+            U = "\\left(\\dfrac{H\\tau}{c} + \\dfrac{m}{r}\\right)"
+            time_domain = ["\\tau \\in (-m/(Hr), \\infty) \\;\\text{for}\\; H > 0",
+                           "\\tau \\in (-\\infty, -m/(Hr)) \\;\\text{for}\\; H < 0"]
+            notes = ["r = 0 \\;\\text{(the horizons)}", "U = 0 \\;\\text{(the singularity)}",
+                     "rU = H\\tau r + m \\;\\text{(areal radius)}"]
+        else:
+            parameters = ["H", potential[system_id], "U = H\\tau + V"]
+            U = "\\left(\\dfrac{H\\tau}{c} + V\\right)"
+            time_domain = ["\\tau \\in (-V/H, \\infty) \\;\\text{for}\\; H > 0",
+                           "\\tau \\in (-\\infty, -V/H) \\;\\text{for}\\; H < 0"]
+            notes = [("(x, y, z) \\neq \\mathbf{x}_i" if system_id == "cartesian" else "(\\rho, z) \\neq (0, z_i)")
+                     + " \\;\\text{(the horizons)}", "U = 0 \\;\\text{(the singularity)}"]
+        line = "ds^2 = -\\dfrac{c^2d\\tau^2}{U^2} + U^2\\left(" + flat + "\\right)"
+        chart_line = "ds^2 = -\\dfrac{d\\tau^2}{" + U + "^2} + " + U + "^2\\left(" + flat + "\\right)"
+    probe = vm.Reader(coords, parameters, ())
+    forms = KastorTraschenForms(probe, system_id)
+    spec = {
+        "metric_id": "kastor_traschen",
+        "system": {"id": system_id, "name": name, "coords": coords, "domains": time_domain + domains + notes,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        "time": coords[0],
+        "printer": forms.printer,
+        "pretty": forms.pretty,
+        "bracketed": forms.bracketed,
+        "reduce": forms.reduce,
+        "check": kastor_traschen_check,
+    }
+    if system_id == "isotropic":
+        spec["ricci_scalar"] = "\\dfrac{12H^2}{c^2}"
+        # Reissner and Nordstrom's scalar at charge equal to mass and the areal radius rU, plus de Sitter's.
+        spec["kretschmann"] = ("\\dfrac{8m^2\\left(6r^2\\,U^2 - 12m\\,r\\,U + 7m^2\\right)}{r^8\\,U^8}"
+                               " + \\dfrac{24H^4}{c^4}")
+    return spec
+
+
+class KastorTraschenForms:
+    """How a value of a Kastor-Traschen chart is written. Each chart defines a name for the one
+    sum its metric is built on, U = H tau + V in the charts of tau and Omega = 1 + V/a with
+    a = e^{Ht} in the comoving chart, and the time enters every value through that sum alone,
+    so `pretty` writes the time out by it and factors what is left: no tau and no t stands in
+    any printed value. `reduce` writes the name out again where a printed value is read back."""
+
+    def __init__(self, reader, system_id):
+        self.reader, self.c = reader, reader.c
+        self.H = reader.parameters["H"]
+        self.time = reader.symbol[reader.coords[0]]
+        self.comoving = system_id == "comoving"
+        if self.comoving:
+            V = self.V = reader.parameters["V"]
+            self.a, self.Omega = sp.Symbol("KTa", positive=True), sp.Symbol("KTOmega", positive=True)
+            self.held = {reader.parameters["Omega"]: 1 + V * sp.exp(-self.H * self.time)}
+            lead = [self.Omega, self.a, self.H, self.c]
+            overrides = {self.a: "a", self.Omega: "\\Omega"}
+            names = [self.Omega]
+        else:
+            self.U = sp.Symbol("KTU", positive=True)
+            if system_id == "isotropic":
+                self.V = reader.parameters["m"] / reader.symbol["r"]
+                self.held = {}
+            else:
+                self.V = reader.parameters["V"]
+                self.held = {reader.parameters["U"]: self.H * self.time + self.V}
+            lead = [self.U, self.H, self.c]
+            overrides = {self.U: "U"}
+            names = [self.U]
+        self.printer = {"lead": lead + ([reader.symbol["r"], reader.parameters["m"]] if system_id == "isotropic" else []),
+                        "factors": [self.c, self.H]
+                        + ([reader.parameters["m"], reader.symbol["r"]] if system_id == "isotropic" else [])
+                        + ([self.a] if self.comoving else []) + names,
+                        "overrides": overrides, "flip": False}
+        if system_id != "isotropic":
+            self.printer["collect"] = lambda poly, printer: cp.collect_by(poly, names, printer)
+
+    def named(self, value):
+        """The value with the time written out of it by the chart's named sum."""
+        value = sp.sympify(value)
+        if self.comoving:
+            value = sp.expand(value).rewrite(sp.exp)
+            value = value.replace(lambda e: isinstance(e, sp.exp) and e.has(self.time),
+                                  lambda e: self.a ** sp.cancel(e.args[0] / (self.H * self.time)))
+            value = sp.powsimp(sp.powdenest(value, force=True))
+            # V itself is written out only where it stands outside a derivative.
+            held = {d: sp.Dummy() for d in value.atoms(sp.Derivative)}
+            value = value.xreplace(held).xreplace({self.V: self.a * (self.Omega - 1)})
+            return value.xreplace({dummy: d for d, dummy in held.items()})
+        return value.subs(self.time, (self.U - self.V) / self.H)
+
+    def pretty(self, value):
+        return sp.factor(self.named(value))
+
+    def bracketed(self, value):
+        # Chart.single_term hands this the value in the chart x^0, which pretty takes with the bare time.
+        return sp.expand(self.named(sp.sympify(value).subs(self.time, self.c * self.time)))
+
+    def reduce(self, value):
+        value = sp.sympify(value)
+        return vm.norm(value.subs(self.held).doit() if self.held else value)
+
+
+def kastor_traschen_check(chart):
+    """The Cartesian chart against the Einstein-Maxwell equations with a cosmological constant:
+    with A = c dtau/U in units where G = c = 4 pi epsilon_0 = 1 and Lambda = 3H^2,
+    G_mn + Lambda g_mn = 2(F_ma F_n^a - g_mn F^2/4) once d_z^2 V is replaced by
+    -d_x^2 V - d_y^2 V, and Maxwell's equations div F = 0 reduce to Laplace's for V; at H = 0
+    the chart is Majumdar and Papapetrou's. Every other chart against the Cartesian one."""
+    if chart.coords_tex[:2] != ["\\tau", "x"]:
+        kastor_traschen_pullback(chart)
+        return
+    X, V, H, c = chart.symbols, chart.reader.parameters["V"], chart.reader.parameters["H"], chart.reader.c
+    U = H * X[0] / c + V
+    g, gi = chart.geo.g, chart.geo.ginv
+    A = [1 / U, 0, 0, 0]
+    F = sp.Matrix(4, 4, lambda a, b: sp.diff(A[b], X[a]) - sp.diff(A[a], X[b]))
+    Fu = gi * F * gi
+    F2 = sum(F[a, b] * Fu[a, b] for a in range(4) for b in range(4))
+    stress = sp.Matrix(4, 4, lambda a, b: 2 * (sum(F[a, k] * F[b, d] * gi[k, d] for k in range(4) for d in range(4))
+                                              - g[a, b] * F2 / 4))
+    einstein = sp.Matrix(4, 4, lambda a, b: sp.sympify(chart.geo.einstein_ll()[a][b]))
+    laplace = sp.Derivative(V, (X[1], 2)) + sp.Derivative(V, (X[2], 2)) + sp.Derivative(V, (X[3], 2))
+    harmonic = {sp.Derivative(V, (X[3], 2)): sp.Derivative(V, (X[3], 2)) - laplace}
+    cosmological = 3 * H ** 2 / c ** 2
+    for a in range(4):
+        for b in range(a, 4):
+            if vm.norm((einstein[a, b] + cosmological * g[a, b] - stress[a, b]).subs(harmonic)) != 0:
+                raise AssertionError(f"kastor_traschen: G_{a}{b} + Lambda g_{a}{b} is not the Maxwell stress for harmonic V")
+    root = sp.sqrt(-g.det())
+    for b in range(4):
+        divergence = sum(sp.diff(root * Fu[a, b], X[a]) for a in range(4)) / root
+        if vm.norm(divergence - (laplace / U ** 2 if b == 0 else 0)) != 0:
+            raise AssertionError(f"kastor_traschen: Maxwell's equation {b} is not Laplace's for V")
+    # At H = 0 the chart is Majumdar and Papapetrou's Cartesian chart with their U for V.
+    mp = majumdar_papapetrou("cartesian")
+    static = cp.Chart(mp["system"]["coords"], mp["system"]["parameters"], mp["chart_line_element"])
+    at = dict(zip(static.symbols, X))
+    still = static.geo.g.subs(static.reader.parameters["U"], sp.Function("W")(*static.symbols[1:])).subs(at)
+    moving = g.subs(H, 0).subs(V, sp.Function("W")(*X[1:]))
+    if any(vm.norm(still[a, b] - moving[a, b]) != 0 for a in range(4) for b in range(4)):
+        raise AssertionError("kastor_traschen: the Cartesian chart at H = 0 is not Majumdar and Papapetrou's")
+
+
+def kastor_traschen_pullback(chart):
+    """Each chart against the Cartesian one: the Cartesian metric with V = V(rho cos phi,
+    rho sin phi, z) pulled back to cylindrical coordinates, with V = m/sqrt(x^2 + y^2 + z^2)
+    pulled back to spherical ones, and pulled back along H tau = e^{Ht} to the comoving chart,
+    minus the chart's own metric, vanish in every slot. The isotropic chart is also the lukewarm
+    Reissner-Nordstrom-de Sitter hole's cosmological chart at r_s = 2m, slot by slot."""
+    cart = ["\\tau", "x", "y", "z"]
+    reader = vm.Reader(cart, ["H", "V = V(x,y,z)"], ())
+    c = reader.c
+    g = vm.metric_from_line_element(
+        reader, "ds^2 = -\\dfrac{d\\tau^2}{\\left(\\dfrac{H\\tau}{c} + V\\right)^2} + \\left(\\dfrac{H\\tau}{c} + V\\right)^2"
+                "\\left(dx^2 + dy^2 + dz^2\\right)", cart)
+    X = [reader.symbol[name] for name in cart]
+    Vc, Hc = reader.parameters["V"], reader.parameters["H"]
+    H = chart.reader.parameters["H"]
+    g = g.subs(Hc, H)
+    t, a, b, k = chart.symbols
+    W = sp.Function("W")
+    kind = chart.coords_tex[1] if chart.coords_tex[0] == "\\tau" else "t"
+    if kind == "\\rho":
+        image = [t, a * sp.cos(b), a * sp.sin(b), k]
+        g = g.subs(Vc, W(*X[1:]))
+        at = {W(*image[1:]): chart.reader.parameters["V"]}
+    elif kind == "r":
+        image = [t, a * sp.sin(b) * sp.cos(k), a * sp.sin(b) * sp.sin(k), a * sp.cos(b)]
+        g = g.subs(Vc, chart.reader.parameters["m"] / sp.sqrt(X[1] ** 2 + X[2] ** 2 + X[3] ** 2))
+        at = {}
+    else:
+        # c tau = (c/H) e^{Ht}, and the symbols tau and t are x^0 = c tau and x^0 = ct here.
+        image = [c * sp.exp(H * t / c) / H, a, b, k]
+        g = g.subs(Vc, W(*X[1:]))
+        at = {W(a, b, k): chart.reader.parameters["V"]}
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+    pulled = (J.T * g.subs(dict(zip(X, image)), simultaneous=True) * J).subs(at)
+    # The radius and rho are positive on the chart, which is what takes sqrt(r^2) to r.
+    positive = sp.Symbol("positive_radius", positive=True)
+    for i in range(4):
+        for j in range(i, 4):
+            miss = pulled[i, j] - chart.geo.g[i, j]
+            if kind != "t":
+                miss = sp.simplify(miss.subs(a, positive)).subs(positive, a)
+            if vm.norm(sp.simplify(miss)) != 0:
+                raise AssertionError(f"kastor_traschen: the Cartesian metric pulled back misses the "
+                                     f"{chart.coords_tex[1]} chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    if kind == "r":
+        spec = reissner_nordstrom_de_sitter("cosmological")
+        lukewarm = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+        at = dict(zip(lukewarm.symbols, chart.symbols))
+        at.update({lukewarm.reader.parameters["r_s"]: 2 * chart.reader.parameters["m"],
+                   lukewarm.reader.parameters["H"]: H})
+        for i in range(4):
+            if vm.norm(lukewarm.geo.g[i, i].subs(at, simultaneous=True) - chart.geo.g[i, i]) != 0:
+                raise AssertionError("kastor_traschen: one hole is not the lukewarm hole's cosmological chart "
+                                     f"at r_s = 2m in slot {chart.coords_tex[i]}{chart.coords_tex[i]}")
+
+
+CHARTS["kastor_traschen"] = [lambda s=s: kastor_traschen(s) for s in KT_CHARTS]
+
+
 def write(spec):
     start = time.time()
     chart = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
