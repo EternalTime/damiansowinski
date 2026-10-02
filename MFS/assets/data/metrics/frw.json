@@ -81,6 +81,11 @@
       "id": "sultana_dyer",
       "kind": "generalisation",
       "text": "The flat universe of dust with a black hole in it from the big bang on: Schwarzschild's metric times $a^2$, with $a \\propto \\eta^2$ [sultana2005]."
+    },
+    {
+      "id": "lindquist_wheeler_lattice",
+      "kind": "family",
+      "text": "A closed universe with its dust gathered into $N$ equal masses on a regular lattice. It expands and recollapses on Friedmann's cycloid, to a largest radius that approaches Friedmann's as $N$ grows [lindquist1957, clifton2009]."
     }
   ],
   "references": [
@@ -133,7 +138,9 @@
     "coleman1980",
     "bucher1995",
     "senovilla1996",
-    "sultana2005"
+    "sultana2005",
+    "lindquist1957",
+    "clifton2009"
   ],
   "coordinates": [
     {

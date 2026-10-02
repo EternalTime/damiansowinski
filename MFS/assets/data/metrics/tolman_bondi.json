@@ -56,6 +56,11 @@
       "id": "tolman_vii",
       "kind": "programme",
       "text": "Richard Tolman's static spheres of fluid, from 1939. He found eight in closed form, and the density inside a neutron star follows the seventh closely [tolman1939, lattimer2001]."
+    },
+    {
+      "id": "lindquist_wheeler_lattice",
+      "kind": "family",
+      "text": "Each cell of the lattice, in Lindquist and Wheeler's comoving coordinates, is this metric with no dust in it: every shell carries the same mass, and $E = -r_s/2r$ for the shell that turns around at $r$ [lindquist1957]."
     }
   ],
   "references": [
@@ -84,7 +89,8 @@
     "oppenheimer1939",
     "lemos1992",
     "hellaby1994",
-    "lattimer2001"
+    "lattimer2001",
+    "lindquist1957"
   ],
   "coordinates": [
     {

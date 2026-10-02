@@ -953,7 +953,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0ca6656165726f2a",
+    "version": "1582d12949c57124",
     "diagrams": "76bab86a529ed941",
     "conformal": "c45f19da93e85da3",
     "embedding": "626bd0932cbe6704"
@@ -1062,7 +1062,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "7e55432b2a7c5459",
+    "version": "1b0608ccc6396beb",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -1572,7 +1572,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "bcc20efa71452b3b",
+    "version": "db92df98446c360a",
     "diagrams": "aa8f329620c5927d",
     "conformal": "52493b5ac50704d6",
     "embedding": "c4aa8198bba8d575"
@@ -1959,6 +1959,42 @@
     "embedding": "cd98817c46caeee2"
   },
   {
+    "id": "lindquist_wheeler_lattice",
+    "name": "Lindquist-Wheeler Lattice",
+    "tags": [
+      "cosmology",
+      "closed universe",
+      "expanding universe",
+      "big bang",
+      "lattice universe",
+      "black hole lattice",
+      "multiple black holes",
+      "approximate solution",
+      "Schwarzschild-cell method",
+      "Wigner-Seitz",
+      "inhomogeneous",
+      "backreaction",
+      "three sphere",
+      "regular polytope",
+      "time-dependent",
+      "comoving",
+      "mass",
+      "horizon",
+      "curvature singularity",
+      "Flamm's paraboloid",
+      "matched solution",
+      "vacuum",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "8db7e8c732dd714f",
+    "diagrams": "06a24c0c502bf8a1",
+    "conformal": "e174596b63171289",
+    "embedding": "bc12998ea149ca7e"
+  },
+  {
     "id": "majumdar_papapetrou",
     "name": "Majumdar-Papapetrou",
     "tags": [
@@ -2227,7 +2263,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "f3e28a3cf84accf4",
+    "version": "8de6c5bcb48ee077",
     "embedding": "0c96027fa617beeb"
   },
   {
@@ -2513,7 +2549,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3a754f5f8ff17eca",
+    "version": "647ea49ac4415f3b",
     "diagrams": "d31b7b7b6c3dd2ef",
     "conformal": "7400ddcb9dd6a817",
     "embedding": "1ecd155079c29ab6"
@@ -2943,7 +2979,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f346570d6df9c464",
+    "version": "693e7198726524a7",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -3381,7 +3417,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c0c08d1ef4cb8505",
+    "version": "bacdfd5dd3de5ada",
     "diagrams": "b997809f786afa14",
     "embedding": "aefa04627c7f6154"
   },

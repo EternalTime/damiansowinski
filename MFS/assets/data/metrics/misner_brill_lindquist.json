@@ -78,6 +78,11 @@
       "id": "boson_star",
       "kind": "programme",
       "text": "Wheeler's other way to make a body out of fields and geometry alone was the geon, a ball of field held together by its own gravity [wheeler1955]. His wormholes with Misner make mass and charge out of empty space with a handle in it [misner1957]."
+    },
+    {
+      "id": "lindquist_wheeler_lattice",
+      "kind": "family",
+      "text": "A whole universe of such holes. Put $N$ of them on a three sphere in place of flat space and the same construction gives one moment of Lindquist and Wheeler's lattice exactly [wheeler1983, clifton2012]."
     }
   ],
   "references": [
@@ -105,7 +110,9 @@
     "kramer1980",
     "kastor1993",
     "brill1994",
-    "wheeler1955"
+    "wheeler1955",
+    "wheeler1983",
+    "clifton2012"
   ],
   "coordinates": [
     {
