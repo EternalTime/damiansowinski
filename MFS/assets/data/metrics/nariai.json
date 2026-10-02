@@ -48,6 +48,11 @@
       "id": "bertotti_robinson",
       "kind": "family",
       "text": "The same kind of product, anti-de Sitter space of two dimensions and a sphere, filled with a uniform electromagnetic field. In Bruno Bertotti's solution of 1959 the two curvatures differ by an amount proportional to the field [bertotti1959, krasinski1999]."
+    },
+    {
+      "id": "reissner_nordstrom_de_sitter",
+      "kind": "generalisation",
+      "text": "The charged black hole in de Sitter space. Take away its charge and let its black hole horizon meet the cosmological one, and the metric is Nariai's [romans1992]."
     }
   ],
   "references": [
@@ -63,7 +68,8 @@
     "dias2003",
     "bousso1998",
     "bousso1998proliferation",
-    "cardoso2004"
+    "cardoso2004",
+    "romans1992"
   ],
   "coordinates": [
     {

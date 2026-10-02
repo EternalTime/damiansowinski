@@ -2854,6 +2854,369 @@ def schwarzschild_de_sitter(ck, src):
     return views
 
 
+class ChargedKottler:
+    """The charged black hole in de Sitter space, f = 1 - r_s/r + r_q^2/r^2 - Lambda r^2/3 with
+    r_s = 1, whose horizons r_- < r_+ < r_c are the positive roots of the published g^rr and whose
+    fourth root is negative.
+
+    1/f has no polynomial part, so r* = sum_i A_i ln|1 - r/r_i| with A_i = 1/f'(r_i), which
+    vanishes at r = 0 and tends to R = -sum_i A_i ln|r_i| as r -> infinity. With u, v = t -+ r* in
+    each region's own static coordinates, every region is drawn through Kottler's one function
+    g(x) = arctan exp(-a x - b sqrt(x^2 + 1)), a, b = (k_+ +- k_c)/2, which is, up to a factor that
+    tends to 1, the Kruskal coordinate of the black hole horizon as x -> +infinity and of the
+    cosmological horizon as x -> -infinity. A line of constant p or q runs along black hole and
+    cosmological horizons outside r_+ and along inner horizons inside it, so one function of the
+    ray has to serve all three, and it cannot be smooth at all of them: the drawing is continuous
+    with a continuous tangent through r_+ and r_c, and continuous through r_-, as the tower of
+    Reissner and Nordstrom's black hole is. The regions, as cells of side pi/2 in (p, q):
+
+        S    static, r_+ < r < r_c         p = -g(u),      q = g(-v)
+        S'   the static region beyond r_+   p = g(u),       q = -g(-v)
+        S''  the static region beyond r_c   p = g(u) - pi,  q = pi - g(-v)
+        C+   expanding, r > r_c            p = -g(u),      q = pi - g(-v)
+        C-   contracting, r > r_c          p = g(u) - pi,  q = g(-v)
+        B    black hole, r_- < r < r_+     p = g(u),       q = g(-v)
+        W    white hole, r_- < r < r_+     p = -g(u),      q = -g(-v)
+        Ib   r < r_-, beyond B's edge u = -infinity, which the ingoing chart reaches
+                                           p = pi - g(u),  q = g(-v)
+        Ia   r < r_-, beyond B's edge v = +infinity
+                                           p = g(u),       q = pi - g(-v)
+        Ib-, Ia-   their images below W under the time reflection (p, q) -> (-q, -p)
+                                           p = -g(u),      q = g(-v) - pi
+                                           p = g(u) - pi,  q = -g(-v)
+
+    with t the static coordinate of each. Inside r_- the tortoise coordinate runs from 0 at
+    r = 0 to +infinity at r_-, so the singularity is u = v, the timelike curve
+    (pi - g(t), g(-t)) in Ib and (g(t), pi - g(-t)) in Ia, from a side corner of B to a side
+    corner of the white hole above it, a straight vertical line where k_+ = k_c, since then
+    g(x) + g(-x) = pi/2. The pattern repeats with period pi in p and q.
+    """
+
+    def __init__(self, plane):
+        r = plane.x1
+        numerator = sp.numer(sp.together(plane.gi[1, 1]))
+        roots = sorted(float(z) for z in sp.Poly(numerator, r).real_roots())
+        self.rn, self.rm, self.rp, self.rc = roots
+        self.f = sp.lambdify(r, plane.gi[1, 1], "numpy")
+        fp = sp.lambdify(r, sp.diff(plane.gi[1, 1], r), "numpy")
+        self.A = [1 / float(fp(ri)) for ri in roots]
+        self.km, self.kp, self.kc = -float(fp(self.rm)) / 2, float(fp(self.rp)) / 2, -float(fp(self.rc)) / 2
+        self.R = -sum(A * math.log(abs(ri)) for A, ri in zip(self.A, roots))
+        self.roots = roots
+
+    def rstar(self, r):
+        r = np.asarray(r, dtype=float)
+        with np.errstate(divide="ignore"):
+            return sum(A * np.log(np.abs(1 - r / ri)) for A, ri in zip(self.A, self.roots))
+
+    def g(self, x):
+        x = np.asarray(x, dtype=float)
+        a, b = (self.kp + self.kc) / 2, (self.kp - self.kc) / 2
+        return atan_exp(-a * x - b * np.sqrt(x * x + 1))
+
+    def cell(self, r, ingoing):
+        """The cell a chart regular on the future horizons (ingoing) or the past ones holds r in."""
+        r = np.asarray(r, dtype=float)
+        names = ("Ib", "B", "S", "C-") if ingoing else ("Ia-", "W", "S", "C+")
+        return np.select([r < self.rm, r < self.rp, r < self.rc], names[:3], names[3])
+
+    def pq(self, cell, t, r):
+        t = np.asarray(t, dtype=float)
+        rs = self.rstar(r)
+        return self.null(cell, t - rs, t + rs)
+
+    def null(self, cell, u, v):
+        g = self.g
+        return {"S": lambda: (-g(u), g(-v)), "S'": lambda: (g(u), -g(-v)),
+                "S''": lambda: (g(u) - PI, PI - g(-v)), "C+": lambda: (-g(u), PI - g(-v)),
+                "C-": lambda: (g(u) - PI, g(-v)), "B": lambda: (g(u), g(-v)), "W": lambda: (-g(u), -g(-v)),
+                "Ib": lambda: (PI - g(u), g(-v)), "Ia": lambda: (g(u), PI - g(-v)),
+                "Ib-": lambda: (-g(u), g(-v) - PI), "Ia-": lambda: (g(u) - PI, -g(-v))}[cell]()
+
+    def across(self, cells, t, r):
+        """(p, q) of events whose cells are named one by one, as a chart that crosses horizons has them."""
+        t, r = np.broadcast_arrays(np.asarray(t, dtype=float), np.asarray(r, dtype=float))
+        p, q = np.full(r.shape, np.nan), np.full(r.shape, np.nan)
+        for name in np.unique(cells):
+            at = cells == name
+            p[at], q[at] = self.pq(str(name), t[at], r[at])
+        return p, q
+
+    def singularity(self, cell, n=700):
+        t = spread(-np.inf, np.inf, n, 40)
+        return self.null(cell, t, t)
+
+    def infinity(self, sign=1, n=700):
+        """Future infinity r -> infinity in C+, or with sign -1 past infinity in C-, its image
+        under the time reflection, (p, q) -> (-q, -p)."""
+        t = spread(-np.inf, np.inf, n, 40)
+        p, q = -self.g(t - self.R), PI - self.g(-t - self.R)
+        return (p, q) if sign > 0 else (-q, -p)
+
+
+RNDS = {"r_s": 1, "r_q": "1/2", "Lambda": "27/64"}
+
+
+def reissner_nordstrom_de_sitter(ck, src):
+    """The maximal extension of the charged black hole in de Sitter space, which Laue and Weiss
+    and then Brill and Hayward described, drawn for the lukewarm hole, r_s = 1, r_q = 1/2 and
+    Lambda = 27/64, through the map of ChargedKottler above: one static region with the black and
+    white holes on one side of it and the expanding and contracting regions on the other, the
+    regions inside r_- that the black hole leads to and the white hole comes from, and the next
+    static region on either side. The static chart covers S; the ingoing Eddington-Finkelstein
+    chart Ib, B, S and C-, with q from v and p from u = v - 2r* in each; the outgoing one Ib-, W, S
+    and C+; and the cosmological chart Ia-, W, S and C+, through the areal radius
+    r = H tau rho + 1/2 and the static time of slices.rnds_static_t, which is continuous through
+    tau = 0 and makes u continuous through r_+ and r_c and v through r_-. The singularities are
+    the straight lines X = +-pi/2, since the lukewarm hole has k_+ = k_c."""
+    name = "Reissner-Nordstrom-de Sitter"
+    st = Plane(src, "reissner_nordstrom_de_sitter", "static", ("t", "r"), EQUATOR, RNDS)
+    assert st.g[0, 1] == 0 and sp.simplify(st.g[0, 0] * st.g[1, 1] + 1) == 0
+    K = ChargedKottler(st)
+    rm, rp, rc = K.rm, K.rp, K.rc
+    ck.limit(f"{name}: the horizons are the roots of the published g^rr",
+             [rm, rp, rc, K.rn], [(2 * math.sqrt(7) - 4) / 3, 2 / 3, 2, -(2 * math.sqrt(7) + 4) / 3], 1e-12)
+    probe = np.array([0.2, 0.55, 1.2, 5.0])
+    ck.limit(f"{name}: dr*/dr = 1/f", (K.rstar(probe + 1e-6) - K.rstar(probe - 1e-6)) / 2e-6 * K.f(probe),
+             [1, 1, 1, 1], 1e-6)
+    ck.limit(f"{name}: the lukewarm hole's black hole and cosmological horizons share the surface gravity 3/16",
+             [K.kp, K.kc], [3 / 16, 3 / 16], 1e-12)
+    ck.limit(f"{name}: the residues are -1/2k_-, 1/2k_+ and -1/2k_c",
+             [K.A[1] * 2 * K.km, K.A[2] * 2 * K.kp, K.A[3] * 2 * K.kc], [-1, 1, -1], 1e-12)
+    span = 15
+    inner, hole, static, beyond = (0.01, rm - 1e-3), (rm + 1e-3, rp - 1e-3), (rp + 1e-3, rc - 1e-3), (rc + 1e-3, 60)
+    for cell, (lo, hi), future in (("S", static, (1, 0)), ("S'", static, (-1, 0)), ("S''", static, (-1, 0)),
+                                   ("B", hole, (0, -1)), ("W", hole, (0, 1)), ("C+", beyond, (0, 1)),
+                                   ("C-", beyond, (0, -1)), ("Ib", inner, (1, 0)), ("Ia", inner, (-1, 0)),
+                                   ("Ib-", inner, (1, 0)), ("Ia-", inner, (-1, 0))):
+        ck.chart(f"{name} static, {cell}", st, lambda t, r, c=cell: K.pq(c, t, r),
+                 ck.uniform(-span, span), ck.uniform(lo, hi), lambda t, r, f=future: f)
+
+    def ingoing(w, r):
+        w, r = np.broadcast_arrays(np.asarray(w, dtype=float), np.asarray(r, dtype=float))
+        return K.across(K.cell(r, True), w - K.rstar(r), r)
+
+    def outgoing(u, r):
+        u, r = np.broadcast_arrays(np.asarray(u, dtype=float), np.asarray(r, dtype=float))
+        cells = np.where(K.cell(r, False) == "Ia-", "Ib-", K.cell(r, False))
+        return K.across(cells, u + K.rstar(r), r)
+
+    def cosmic(tau, rho):
+        tau, rho = np.broadcast_arrays(np.asarray(tau, dtype=float), np.asarray(rho, dtype=float))
+        r = slices.RNDS_H * tau * rho + 0.5
+        with np.errstate(divide="ignore", invalid="ignore"):
+            return K.across(K.cell(r, False), slices.rnds_static_t(tau, r), r)
+    ein = Plane(src, "reissner_nordstrom_de_sitter", "eddington_finkelstein_ingoing", ("v", "r"), EQUATOR, RNDS)
+    eout = Plane(src, "reissner_nordstrom_de_sitter", "eddington_finkelstein_outgoing", ("u", "r"), EQUATOR, RNDS)
+    cos = Plane(src, "reissner_nordstrom_de_sitter", "cosmological", ("\\tau", "\\rho"), EQUATOR,
+                {"r_s": 1, "H": "3/8"})
+    for label, plane, fmap, sign in (("ingoing", ein, ingoing, 1), ("outgoing", eout, outgoing, -1)):
+        for lo, hi in (inner, hole, static, beyond):
+            # d_v - (1 + |f|) d_r for the ingoing chart and d_u + (1 + |f|) d_r for the outgoing
+            # one are timelike wherever f < 2, and where f is larger, inside r_-, d_v and d_u are.
+            ck.chart(f"{name} {label} Eddington-Finkelstein, {lo:.2f} < r < {hi:.2f}",
+                     plane, fmap, ck.uniform(-span, span), ck.uniform(lo, hi),
+                     lambda w, r, s=sign: (1, np.where(K.f(r) < 1.5, -s * (1 + np.abs(K.f(r))), 0.0)))
+    for lo, hi in ((0.05, rm - 1e-2), (rm + 1e-2, 0.49), (0.51, rp - 1e-2), (rp + 1e-2, rc - 1e-2), (rc + 1e-2, 12)):
+        # Points of the cosmological plane by their areal radius: tau < 0 inside r_s/2 and tau > 0 outside.
+        r = ck.uniform(lo, hi)
+        tau = ck.uniform(0.3, 6) * (1 if lo > 0.5 else -1)
+        ck.chart(f"{name} cosmological, {lo:.2f} < r < {hi:.2f}", cos, cosmic, tau,
+                 (r - 0.5) / (slices.RNDS_H * tau), lambda t, x: (1, 0))
+
+    ck.limit(f"{name}: the ingoing and static coordinates put one event at one point",
+             np.concatenate([ingoing(2.0 + K.rstar(r), r) for r in (0.3, 0.55, 1.2, 5.0)]),
+             np.concatenate([K.pq(c, 2.0, r) for c, r in (("Ib", 0.3), ("B", 0.55), ("S", 1.2), ("C-", 5.0))]), 1e-12)
+    ck.limit(f"{name}: the outgoing and static coordinates put one event at one point",
+             np.concatenate([outgoing(2.0 - K.rstar(r), r) for r in (0.3, 0.55, 1.2, 5.0)]),
+             np.concatenate([K.pq(c, 2.0, r) for c, r in (("Ib-", 0.3), ("W", 0.55), ("S", 1.2), ("C+", 5.0))]), 1e-12)
+    # The cosmological chart crosses r_+ and r_c with u and r_- with v, as the outgoing and the
+    # ingoing chart do: an event a hair to either side of each horizon lands on one point.
+    # Toward r_- the coordinate that runs off does so against the surface gravity of the other
+    # horizons, as exp(-k_+ |r*|) with r* growing only as ln|r - r_-|/2k_-, so a hair's breadth
+    # from r_- the drawing is still some thousandths from the horizon it closes on.
+    for tau, r0, what, tol in ((2.0, rp, "r_+", 1e-6), (2.0, rc, "r_c", 1e-6), (-2.0, rm, "r_-", 1e-2)):
+        both = [cosmic(tau, (r0 + d - 0.5) / (slices.RNDS_H * tau)) for d in (-1e-9, 1e-9)]
+        ck.limit(f"{name}: the cosmological chart is continuous through {what}",
+                 np.ravel(both[0]), np.ravel(both[1]), tol)
+    ck.limit(f"{name}: the cosmological chart is continuous through tau = 0, the sphere r = r_s/2",
+             np.ravel(cosmic(1e-9, 1.0)), np.ravel(cosmic(-1e-9, 1.0)), 1e-6)
+    for t in (-3.0, 0.0, 3.0):
+        ck.limit(f"{name}: r -> r_+ at t = {t:g} lands on the black hole's bifurcation sphere",
+                 point(*K.pq("S", t, rp * (1 + 1e-13))), [0, 0], 1e-4)
+        ck.limit(f"{name}: r -> r_c at t = {t:g} lands on the cosmological bifurcation sphere",
+                 point(*K.pq("S", t, rc * (1 - 1e-13))), [PI, 0], 1e-4)
+        ck.limit(f"{name}: r -> r_- at t = {t:g} lands on the inner bifurcation sphere",
+                 np.concatenate([point(*K.pq("B", t, rm * (1 + 1e-13))), point(*K.pq("Ib", t, rm * (1 - 1e-13)))]),
+                 [0, PI, 0, PI], 2e-2)
+    t = np.array([-5.0, 0, 5])
+    ck.limit(f"{name}: r -> 0 inside r_- lands on the singularity (pi - g(t), g(-t))",
+             np.concatenate(K.pq("Ib", t, np.full(3, 1e-12))), np.concatenate([PI - K.g(t), K.g(-t)]), 1e-9)
+    ck.limit(f"{name}: r -> infinity in the expanding region lands on (-g(t - R), pi - g(-t - R))",
+             np.concatenate(K.pq("C+", t, np.full(3, 1e9))), np.concatenate([-K.g(t - K.R), PI - K.g(-t - K.R)]), 1e-6)
+    ck.diverges(f"{name}: the Kretschmann scalar diverges at r = 0", st.kretschmann(0, 1e-2), st.kretschmann(0, 1e-3))
+    ck.finite(f"{name}: the Kretschmann scalar is finite at the three horizons",
+              st.kretschmann(np.zeros(3), np.array([rm, rp, rc])))
+
+    H = HALF
+    scri, past_scri = K.infinity(1), K.infinity(-1)
+    sing = {c: K.singularity(c) for c in ("Ib", "Ia", "Ib-", "Ia-")}
+
+    def region(cell):
+        if cell == "C+":
+            return [(-H, H), (-H, PI)] + list(zip(*scri))[::-1] + [(0, H)]
+        if cell == "C-":
+            return [(-H, H), (-PI, H)] + list(zip(*past_scri)) + [(-H, 0)]
+        if cell in sing:
+            # A triangle between two inner horizons and the singularity, which closes it.
+            corner = {"Ib": (H, H), "Ia": (H, H), "Ib-": (-H, -H), "Ia-": (-H, -H)}[cell]
+            curve = list(zip(*sing[cell]))
+            return [curve[-1], corner, curve[0]] + curve
+        p0, q0 = {"S": (-H, 0), "S'": (0, -H), "S''": (-PI, H), "B": (0, 0), "W": (-H, -H)}[cell]
+        return [(p0, q0), (p0 + H, q0), (p0 + H, q0 + H), (p0, q0 + H)]
+    CELLS = ["S'", "B", "W", "S", "C+", "C-", "S''", "Ib", "Ia", "Ib-", "Ia-"]
+    t_all = spread(-np.inf, np.inf, 500, 9)
+
+    def edges(v):
+        v.line("horizon", [[point(0, -H), point(0, H)], [point(-H, 0), point(H, 0)]])
+        v.line("horizon", [[point(-H, 0), point(-H, PI)], [point(-PI, H), point(0, H)]])
+        v.line("horizon", [[point(H, -H), point(H, 0)], [point(0, -H), point(H, -H)]])
+        v.line("horizon", [[point(-PI, H), point(-PI, PI)], [point(-PI, PI), point(-H, PI)]])
+        # The inner horizons: the two future edges of the black hole and the edges beyond them,
+        # and the same below the white hole.
+        v.line("horizon", [[point(0, H), point(PI, H)], [point(H, 0), point(H, PI)]])
+        v.line("horizon", [[point(0, -H), point(-PI, -H)], [point(-H, 0), point(-H, -PI)]])
+        for cell in sing:
+            v.curve("singular", *sing[cell], zig=True, tol=0.004)
+        v.curve("scri", *scri, tol=0.004)
+        v.curve("scri", *past_scri, tol=0.004)
+        for cx in (-H, H, 3 * H):
+            for ct in (H, -H):
+                v.layers.append({"kind": "point", "class": "infinity", "at": [round(cx, 4), round(ct, 4)]})
+        v.label_xt([3 * H, H], "$i^+$", "b", dy=-6)
+        v.label_xt([3 * H, -H], "$i^-$", "t", dy=6)
+        # At the corners the singularities leave from, the name stands beside the point.
+        for cx, side, dx in ((H, "l", 7), (-H, "r", -7)):
+            v.label_xt([cx, H], "$i^+$", "b" + side, dx=dx, dy=-4)
+            v.label_xt([cx, -H], "$i^-$", "t" + side, dx=dx, dy=4)
+        v.label_xt([0, H], "black hole", cls="region")
+        v.label_xt([0, -H], "white hole", cls="region")
+        v.label_xt([PI, 1.2], "expanding", cls="region")
+        v.label_xt([PI, -1.2], "contracting", cls="region")
+        for cx in (-H, H, 3 * H):
+            v.label_xt([cx, -0.45], "static", cls="region")
+        v.label_xt([PI, 1.62], "$\\mathscr{I}^+$", "b", dy=-3)
+        v.label_xt([PI, -1.62], "$\\mathscr{I}^-$", "t", dy=3)
+        for cx, anchor, dx in ((H, "l", 6), (-H, "r", -6)):
+            v.label_xt([cx, PI], "$r = 0$", anchor, dx=dx)
+            v.label_xt([cx, -PI], "$r = 0$", anchor, dx=dx)
+        v.label_xt([Q4, Q4], "$r_+$", "tr", "small", dx=-5, dy=1)
+        v.label_xt([PI - Q4, Q4], "$r_c$", "tl", "small", dx=5, dy=1)
+        v.label_xt([Q4, PI - Q4], "$r_-$", "bl", "small", dx=5, dy=-1)
+        v.legend("horizon", f"the inner horizons $r_- = {rm:.3g}\\,r_s$, the black hole horizons $r_+ = 2\\,r_s/3$, "
+                            "and the cosmological horizons $r_c = 2\\,r_s$")
+        v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges, timelike")
+        v.legend("scri", "future and past infinity $\\mathscr{I}^\\pm$, spacelike")
+
+    between, = slices.moments("reissner_nordstrom_de_sitter", "between")
+    inside, = slices.moments("reissner_nordstrom_de_sitter", "inside")
+    moment, = slices.moments("reissner_nordstrom_de_sitter", "cosmological", label=slices.RNDS_LABEL)
+    lo, hi = between.reach("static", "r")
+    # The static moments end on bifurcation spheres, where the map of the static chart is 0/0; the
+    # limits above place them at (p, q) = (0, 0), (-pi/2, pi/2) and (pi/2, pi/2), and the next
+    # static region's black hole sphere at (-pi, pi).
+    rr = np.linspace(lo, hi, 9)[1:-1]
+    a, b = K.pq("S", 0 * rr, rr), K.pq("S''", 0 * rr, rr[::-1])
+    between_line = [(np.concatenate([[0], a[0], [-H], b[0], [-PI]]), np.concatenate([[0], a[1], [H], b[1], [PI]]))]
+    lo, hi = inside.reach("static", "r")
+    rr = np.linspace(lo, hi, 9)[:-1]
+    a, b = K.pq("Ib", 0 * rr, rr), K.pq("Ia", 0 * rr, rr[::-1])
+    above = (np.concatenate([a[0], [H], b[0]]), np.concatenate([a[1], [H], b[1]]))
+    # Below the white hole the cosmological chart's moment is cT = RNDS_INSIDE_T of its own continuous
+    # static time, in Ia- and through the inner bifurcation sphere at the same time in Ib-.
+    c, d = K.pq("Ia-", slices.RNDS_INSIDE_T + 0 * rr, rr), K.pq("Ib-", slices.RNDS_INSIDE_T + 0 * rr, rr[::-1])
+    below = (np.concatenate([c[0], [-H], d[0]]), np.concatenate([c[1], [-H], d[1]]))
+    inside_line = {1: [above], -1: [(-above[1], -above[0])], 0: [below]}
+    lo, hi = moment.reach("cosmological", "\\rho")
+    xs = np.concatenate([lo + (hi - lo) * np.geomspace(1e-6, 1, 400)])
+    cosmic_line = [cosmic(np.full_like(xs, slices.RNDS_TAU), xs)]
+
+    def mark(v, sign):
+        v.slice(between, between_line)
+        v.slice(inside, inside_line[sign])
+        v.slice(moment, cosmic_line)
+    box = [-PI - 0.3, 2 * PI + 0.3, -3 * HALF - 0.3, 3 * HALF + 0.3]
+    R_III, R_IN, R_S, R_OUT = (0.15, 0.3), (0.5, 0.6), (0.8, 1.0, 1.3, 1.6, 1.85), (2.5, 4.0, 8.0)
+    TS = (-16, -8, -4, 0, 4, 8, 16)
+    views = []
+
+    def frame(v, cover):
+        for cell in CELLS:
+            v.fill("region", [point(*pq) for pq in region(cell)])
+        for cell in cover:
+            v.fill("cover", [point(*pq) for pq in region(cell)])
+
+    v = View("static", "Static", box, "static")
+    frame(v, ["S"])
+    for r in R_S:
+        v.curve("r", *K.pq("S", t_all, np.full_like(t_all, r)))
+    rr = spread(rp, rc, 600, 16)
+    for tt in TS:
+        v.curve("t", *K.pq("S", np.full_like(rr, tt), rr))
+    edges(v)
+    v.legend("cover", "the static region $r_+ < r < r_c$, which $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, at " + listed(R_S) + " in units of $r_s$")
+    v.legend("t", "$ct$ constant, in units of $r_s$")
+    mark(v, 1)
+    views.append(v)
+
+    for vid, label, system, fmap, cells, null_text, sign in (
+            ("ingoing", "Ingoing Eddington-Finkelstein", "eddington_finkelstein_ingoing", ingoing,
+             ["Ib", "B", "S", "C-"], "$v$ constant, an ingoing light ray", 1),
+            ("outgoing", "Outgoing Eddington-Finkelstein", "eddington_finkelstein_outgoing", outgoing,
+             ["Ib-", "W", "S", "C+"], "$u$ constant, an outgoing light ray", -1)):
+        v = View(vid, label, box, system)
+        frame(v, cells)
+        for r in R_III + R_IN + R_S + R_OUT:
+            v.curve("r", *fmap(t_all, np.full_like(t_all, r)))
+        for lo_, hi_ in ((0, rm), (rm, rp), (rp, rc), (rc, np.inf)):
+            rr = spread(lo_, hi_, 600, 16)
+            for w in (-16, -8, 0, 8, 16):
+                v.curve("null", *fmap(np.full_like(rr, w), rr))
+        edges(v)
+        v.legend("cover", ("the region inside $r_-$, the black hole, the static region, and the contracting region, "
+                           "which $v$ and $r > 0$ cover" if vid == "ingoing" else
+                           "the region inside $r_-$, the white hole, the static region, and the expanding region, "
+                           "which $u$ and $r > 0$ cover"))
+        v.legend("r", "$r$ constant, at " + listed(R_III + R_IN + R_S + R_OUT) + " in units of $r_s$")
+        v.legend("null", null_text)
+        mark(v, sign)
+        views.append(v)
+
+    v = View("cosmological", "Cosmological", box, "cosmological")
+    frame(v, ["Ia-", "W", "S", "C+"])
+    for rho in (0.25, 0.5, 1.0, 2.0):
+        # A circle of constant rho runs from the singularity, at H tau rho = -1/2, to future infinity.
+        tau = -0.5 / (slices.RNDS_H * rho) + np.exp(np.linspace(-14, 6, 900))
+        v.curve("r", *cosmic(tau, np.full_like(tau, rho)))
+    for tau in (-4.0, -2.0, -1.0, 1.0, 2.0, 4.0, 8.0):
+        top = -0.5 / (slices.RNDS_H * tau) if tau < 0 else np.inf
+        xs = np.exp(np.linspace(-14, 9, 900)) if tau > 0 else top / (1 + np.exp(np.linspace(14, -14, 900)))
+        v.curve("t", *cosmic(np.full_like(xs, tau), xs))
+    edges(v)
+    v.legend("cover", "the region inside $r_-$, the white hole, the static region, and the expanding region, which "
+                      "$\\tau$ and $\\rho > 0$ cover")
+    v.legend("r", "$\\rho$ constant, at " + listed((0.25, 0.5, 1.0, 2.0)) + " in units of $r_s$")
+    v.legend("t", "$c\\tau$ constant, at $-4$, $-2$, $-1$, $1$, $2$, $4$ and $8$ in units of $r_s$")
+    mark(v, 0)
+    views.append(v)
+    for view in views:
+        view.set(settings=f"$r_q = r_s/2$ and $\\Lambda = 27/(64\\,r_s^2)$, the lukewarm hole, so that "
+                          f"$r_- = {rm:.3g}\\,r_s$, $r_+ = 2\\,r_s/3$, $r_c = 2\\,r_s$, and "
+                          "$\\kappa_+ = \\kappa_c = 3/(16\\,r_s)$.")
+    return views
+
+
 def kerr_axis(ck, src, metric_id, params, name):
     """The symmetry axis theta = 0, where the published metric is, in the limit,
     -Delta/(r^2 + a^2) c^2dt^2 + (r^2 + a^2)/Delta dr^2, with g_tt g_rr = -1 checked: a tower
@@ -7949,6 +8312,7 @@ DRAWN = {
     "domain_wall": domain_wall,
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom,
     "kerr": kerr, "kerr_newman": kerr_newman, "de_sitter": de_sitter,
+    "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
     "bertotti_robinson": bertotti_robinson, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string, "spinning_string": spinning_string,
@@ -8576,6 +8940,41 @@ CAPTIONS = {
         "coordinates $u$ and $r$ on it, the time reverse of the ingoing ones. From $U = -e^{-\\kappa u}$ and "
         "$V = UV(r)/U$ they cover the exterior and the white hole, and their lines of constant $u$ are outgoing "
         "light rays, which leave $r = 0$, cross the horizon outward, and end on the conformal boundary.",
+    ],
+    ("reissner_nordstrom_de_sitter", "static"): [
+        "The charged black hole in de Sitter space, maximally extended, drawn for the lukewarm hole ($r_q = r_s/2$, $\\Lambda = 27/(64\\,r_s^2)$), each point in the diagram "
+        "a 2-sphere of radius $r$. Its tortoise coordinate is $r_* = \\sum_i \\ln|1 - r/r_i|/f'(r_i)$ over the four "
+        "roots $r_i$ of $f = 1 - r_s/r + r_q^2/r^2 - \\Lambda r^2/3$, the fourth of them negative, so that "
+        "$r_*(0) = 0$, and $u, v = ct \\mp r_*$ in each region. We place every region by $p = \\pm\\arctan W(u)$ and "
+        "$q = \\pm\\arctan W(-v)$, shifted by $\\pi$ where the region lies beyond a cosmological or an inner horizon, "
+        "with $W(x) = e^{-\\kappa x}$ and $\\kappa = \\kappa_+ = \\kappa_c = 3/(16\\,r_s)$, the Kruskal coordinate of the "
+        "black hole horizon and of the cosmological one, so every line crosses those with a continuous tangent. "
+        "The inner horizon has another surface gravity, and lines cross it with a corner.",
+        "The coordinates $t$ and $r_+ < r < r_c$ cover one static region, with the black hole above the white hole "
+        "across $r_+$ and the expanding region above the contracting one across $r_c$. The black hole ends on two "
+        "inner horizons $r_-$; beyond each lies a region whose singularity $r = 0$ is timelike, and beyond those a "
+        "white hole that opens onto further static regions. The pattern repeats without end across the plane, up "
+        "and down as well as left and right, and future and past infinity are spacelike curves.",
+    ],
+    ("reissner_nordstrom_de_sitter", "ingoing"): [
+        "The same spacetime with the ingoing Eddington-Finkelstein coordinates $v$ and $r$ on it. With $q$ from $v$ "
+        "and $u = v - 2r_*$, one chart covers the contracting region, the static region, the black hole, and a "
+        "region inside $r_-$ together, and its lines of constant $v$ are ingoing light rays, which start on "
+        "$\\mathscr{I}^-$, cross all three horizons at 45° and end at $r = 0$.",
+    ],
+    ("reissner_nordstrom_de_sitter", "outgoing"): [
+        "The same spacetime with the outgoing Eddington-Finkelstein coordinates $u$ and $r$ on it, the time "
+        "reverse of the ingoing chart. With $p$ from $u$ and $v = u + 2r_*$, one chart covers a region inside "
+        "$r_-$, the white hole, the static region, and the expanding region together, and its lines of constant "
+        "$u$ are outgoing light rays, which leave $r = 0$, cross all three horizons at 45° and end on "
+        "$\\mathscr{I}^+$.",
+    ],
+    ("reissner_nordstrom_de_sitter", "cosmological"): [
+        "The same spacetime with the cosmological coordinates $\\tau$ and $\\rho$ on it. The areal radius is "
+        "$r = H\\tau\\rho + r_s/2$, and one chart covers a region inside $r_-$, the white hole, the static region, and "
+        "the expanding region together, from the singularity on $H\\tau\\rho = -r_s/2$ to $\\mathscr{I}^+$. The "
+        "surface $\\tau = 0$ is $r = r_s/2$, inside the white hole, and every surface of constant $\\tau$ is "
+        "spacelike.",
     ],
     ("schwarzschild_de_sitter", "static"): [
         "Kottler's spacetime, maximally extended, each point in the diagram a 2-sphere of radius $r$. "

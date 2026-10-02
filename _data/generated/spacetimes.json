@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 67,
+  "count": 68,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -1821,6 +1821,11 @@
           "id": "bell_szekeres",
           "kind": "locally_same",
           "text": "Two plane electromagnetic shock waves that collide head on leave this geometry between their fronts, with $b = 1/\\sqrt{2ab}$ set by the strengths $a$ and $b$ of the two waves. It lasts as far as the Killing-Cauchy horizon where the waves focus each other [bell1974, griffiths1991]."
+        },
+        {
+          "id": "reissner_nordstrom_de_sitter",
+          "kind": "generalisation",
+          "text": "The charged black hole in de Sitter space. The throat of its cold member is a product of a two dimensional spacetime and a sphere, and at $\\Lambda = 0$ that product is Bertotti and Robinson's [romans1992]."
         }
       ],
       "references": [
@@ -1843,7 +1848,8 @@
         "bonnor1954",
         "melvin1964",
         "bell1974",
-        "griffiths1991"
+        "griffiths1991",
+        "romans1992"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bertotti_robinson.json",
@@ -10188,6 +10194,11 @@
           "id": "bertotti_robinson",
           "kind": "family",
           "text": "The same kind of product, anti-de Sitter space of two dimensions and a sphere, filled with a uniform electromagnetic field. In Bruno Bertotti's solution of 1959 the two curvatures differ by an amount proportional to the field [bertotti1959, krasinski1999]."
+        },
+        {
+          "id": "reissner_nordstrom_de_sitter",
+          "kind": "generalisation",
+          "text": "The charged black hole in de Sitter space. Take away its charge and let its black hole horizon meet the cosmological one, and the metric is Nariai's [romans1992]."
         }
       ],
       "references": [
@@ -10203,7 +10214,8 @@
         "dias2003",
         "bousso1998",
         "bousso1998proliferation",
-        "cardoso2004"
+        "cardoso2004",
+        "romans1992"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/nariai.json",
@@ -11663,6 +11675,11 @@
           "id": "malament_hogarth",
           "kind": "generalisation",
           "text": "Reissner-Nordström is a Malament-Hogarth spacetime, as John Earman and John Norton noted in 1993 [earman1993]."
+        },
+        {
+          "id": "reissner_nordstrom_de_sitter",
+          "kind": "generalisation",
+          "text": "The charged black hole in a universe with a positive cosmological constant. A cosmological horizon joins the two of Reissner-Nordström, and at $r_q = r_s/2$ it has the temperature of the black hole horizon [romans1992]."
         }
       ],
       "references": [
@@ -11685,7 +11702,8 @@
         "gibbons1993",
         "garfinkle1991",
         "horowitz1992",
-        "earman1993"
+        "earman1993",
+        "romans1992"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -11749,6 +11767,375 @@
           ],
           "ricci_scalar": "0",
           "kretschmann": "\\dfrac{56r_q^4 - 48r r_q^2 r_s + 12r^2 r_s^2}{r^8}"
+        }
+      ]
+    },
+    {
+      "id": "reissner_nordstrom_de_sitter",
+      "name": "Reissner-Nordström-de Sitter Black Hole",
+      "short_name": "Reissner-Nordström-de Sitter",
+      "description": "A charged black hole in a universe with a positive cosmological constant, the static, spherically symmetric solution of the Einstein-Maxwell equations. It has an inner horizon, a black hole horizon, and a cosmological horizon, and when its charge equals its mass the last two radiate at the same temperature.",
+      "tags": [
+        "electrovacuum",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "charged",
+        "charged black hole",
+        "black hole",
+        "electric charge",
+        "mass",
+        "electromagnetic field",
+        "cosmological constant",
+        "positive cosmological constant",
+        "de Sitter",
+        "singularity",
+        "curvature singularity",
+        "coordinate singularity",
+        "horizon",
+        "event horizon",
+        "Cauchy horizon",
+        "inner horizon",
+        "cosmological horizon",
+        "white hole",
+        "maximal extension",
+        "causal structure",
+        "strong cosmic censorship",
+        "lukewarm",
+        "extremal",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "Einstein-Maxwell",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, the charge radius $r_q$ has $r_q^2 = Q^2G/(4\\pi\\epsilon_0c^4)$, and the cosmological constant $\\Lambda$ carries an inverse length squared. The horizons $r_- < r_+ < r_c$ are the three positive roots of $1 - r_s/r + r_q^2/r^2 - \\Lambda r^2/3$. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "rn_metric",
+          "kind": "special_case",
+          "text": "This black hole with $\\Lambda = 0$. The cosmological horizon moves off to infinity, and the inner and black hole horizons stay."
+        },
+        {
+          "id": "schwarzschild_de_sitter",
+          "kind": "special_case",
+          "text": "This black hole with no charge, $r_q = 0$. The inner horizon goes, and the two horizons left have different temperatures [gibbons1977]."
+        },
+        {
+          "id": "nariai",
+          "kind": "special_case",
+          "text": "The double horizon with no charge. At $r_q = 0$ and $\\Lambda r_s^2 = 4/9$ the black hole and cosmological horizons coincide, and the metric is Nariai's [romans1992]."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "special_case",
+          "text": "The throat of the cold black hole at $\\Lambda = 0$. Near a degenerate horizon the geometry is a product of a two dimensional spacetime of constant curvature and a sphere, and without a cosmological constant it is Bertotti and Robinson's [romans1992]."
+        }
+      ],
+      "references": [
+        "romans1992",
+        "brill1994global",
+        "reissner1916",
+        "nordstrom1918",
+        "kottler1918",
+        "laue1977",
+        "lake1979",
+        "kastor1993",
+        "mann1995",
+        "gibbons1977",
+        "mellor1989",
+        "montero2020",
+        "hollands2020",
+        "simpson1973",
+        "poisson1990",
+        "brady1998",
+        "mellor1990",
+        "cardoso2018",
+        "hintz2018",
+        "hintz2017",
+        "dias2018rough"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/reissner_nordstrom_de_sitter.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Static Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_- \\;\\text{(inner horizon)}",
+            "r = r_+ \\;\\text{(black hole horizon)}",
+            "r = r_c \\;\\text{(cosmological horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius, $r_q^2 = Q^2 G / (4\\pi\\epsilon_0 c^4)$"
+            },
+            {
+              "symbol": "\\Lambda",
+              "description": "Cosmological constant, $\\Lambda > 0$, carrying an inverse length squared"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2} - \\dfrac{\\Lambda r^2}{3}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2} - \\dfrac{\\Lambda r^2}{3}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2} - \\dfrac{\\Lambda r^2}{3}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2} - \\dfrac{\\Lambda r^2}{3}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6} - \\dfrac{48r_s\\,r_q^2}{r^7} + \\dfrac{56r_q^4}{r^8} + \\dfrac{8\\Lambda^2}{3}"
+        },
+        {
+          "id": "eddington_finkelstein_outgoing",
+          "name": "Outgoing Eddington-Finkelstein",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_- \\;\\text{(inner horizon)}",
+            "r = r_+ \\;\\text{(black hole horizon)}",
+            "r = r_c \\;\\text{(cosmological horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius, $r_q^2 = Q^2 G / (4\\pi\\epsilon_0 c^4)$"
+            },
+            {
+              "symbol": "\\Lambda",
+              "description": "Cosmological constant, $\\Lambda > 0$, carrying an inverse length squared"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded time $u = ct - r_*$ a length, where $dr_*/dr = \\left(1 - r_s/r + r_q^2/r^2 - \\Lambda r^2/3\\right)^{-1}$ and $r_* = 0$ at $r = 0$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2} - \\dfrac{\\Lambda r^2}{3}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2} - \\dfrac{\\Lambda r^2}{3}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6} - \\dfrac{48r_s\\,r_q^2}{r^7} + \\dfrac{56r_q^4}{r^8} + \\dfrac{8\\Lambda^2}{3}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_- \\;\\text{(inner horizon)}",
+            "r = r_+ \\;\\text{(black hole horizon)}",
+            "r = r_c \\;\\text{(cosmological horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius, $r_q^2 = Q^2 G / (4\\pi\\epsilon_0 c^4)$"
+            },
+            {
+              "symbol": "\\Lambda",
+              "description": "Cosmological constant, $\\Lambda > 0$, carrying an inverse length squared"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v = ct + r_*$ a length, where $dr_*/dr = \\left(1 - r_s/r + r_q^2/r^2 - \\Lambda r^2/3\\right)^{-1}$ and $r_* = 0$ at $r = 0$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2} - \\dfrac{\\Lambda r^2}{3}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2} - \\dfrac{\\Lambda r^2}{3}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6} - \\dfrac{48r_s\\,r_q^2}{r^7} + \\dfrac{56r_q^4}{r^8} + \\dfrac{8\\Lambda^2}{3}"
+        },
+        {
+          "id": "cosmological",
+          "name": "Cosmological",
+          "coordinates": [
+            "\\tau",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-r_s/(2H\\rho), \\infty)",
+            "\\rho \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = H\\tau\\rho + r_s/2 \\;\\text{(areal radius)}",
+            "2H\\tau\\rho + r_s = 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "H",
+              "description": "Hubble rate, $H = c\\sqrt{\\Lambda/3}$, a frequency, with $2Hr_s < c$"
+            }
+          ],
+          "convention": "We use the cosmological time $\\tau$ and a comoving isotropic radius $\\rho$, a length, for the lukewarm hole $r_q = r_s/2$, with the Hubble rate $H = c\\sqrt{\\Lambda/3}$ in place of $\\Lambda$ and the areal radius $r = H\\tau\\rho + r_s/2$. We take components in the chart $x^0 = c\\tau$, so a dot on $\\tau$ in the geodesic equations means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(H\\tau + \\dfrac{r_s}{2\\rho}\\right)^{-2}c^2d\\tau^2 + \\left(H\\tau + \\dfrac{r_s}{2\\rho}\\right)^2\\left(d\\rho^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{4\\rho^2}{\\left(2H\\tau\\rho + r_s\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{\\left(2H\\tau\\rho + r_s\\right)^2}{4\\rho^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\left(2H\\tau\\rho + r_s\\right)^2}{4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(2H\\tau\\rho + r_s\\right)^2\\sin^2\\theta}{4}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12H^2}{c^2}",
+          "kretschmann": "K = \\dfrac{128r_s^2\\left(24H^2\\tau^2\\rho^2 + r_s^2\\right)}{\\left(2H\\tau\\rho + r_s\\right)^8} + \\dfrac{24H^4}{c^4}"
         }
       ]
     },
@@ -12860,6 +13247,11 @@
           "id": "mcvittie",
           "kind": "generalisation",
           "text": "A mass in a universe whose expansion rate changes in time. Where $H$ is constant it is Schwarzschild-de Sitter [kaloper2010, carrera2010]."
+        },
+        {
+          "id": "reissner_nordstrom_de_sitter",
+          "kind": "generalisation",
+          "text": "Kottler's black hole with an electric charge. The charge adds an inner horizon, and at $r_q = r_s/2$ the black hole and the universe around it have the same temperature [romans1992]."
         }
       ],
       "references": [
@@ -12880,7 +13272,8 @@
         "islam1983",
         "rindler2007",
         "kaloper2010",
-        "carrera2010"
+        "carrera2010",
+        "romans1992"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_de_sitter.json",
