@@ -495,6 +495,16 @@ The spherical black hole of Einstein-Gauss-Bonnet gravity in five dimensions, wh
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{2\ell^2}\left(1 - \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)\right)dv^2 + 2\,dv\,dr + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
 - chart Hyperspherical, Anti-de Sitter Branch: coordinates $(t, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{2\ell^2}\left(1 + \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)\right)c^2dt^2 + \dfrac{dr^2}{1 + \dfrac{r^2}{2\ell^2}\left(1 + \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)} + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
 
+### Bowers and Liang's Anisotropic Star
+
+A static star of uniform density whose pressure across the radius differs from its pressure along the radius. Richard Bowers and E. P. T. Liang solved it in 1974: with the sideways pressure the greater of the two, it holds more mass and reddens its light more than Schwarzschild's star of the same density can.
+
+- id: `bowers_liang`
+- tags: anisotropic pressure, tangential pressure, static, stationary, spherically symmetric, stellar interior, compactness, maximum mass, quasar, regular centre, no horizon, matched solution, mass, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/bowers_liang.json
+- chart Areal Radius: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -N^{1/Q}c^2dt^2 + \dfrac{dr^2}{Z} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Brans-Dicke Static Sphere
 
 The gravitational field outside a static, spherical body in Carl Brans and Robert Dicke's theory of 1961, where a scalar field beside the metric sets the strength of gravity from place to place. With the coupling constant $\omega$ it bends light by $(3 + 2\omega)/(4 + 2\omega)$ of Einstein's value, and where Schwarzschild's horizon would stand its spheres shrink to zero area at infinite curvature, with no horizon to hide them.

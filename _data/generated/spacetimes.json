@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 155,
+  "count": 156,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -8213,6 +8213,160 @@
       ]
     },
     {
+      "id": "bowers_liang",
+      "name": "Bowers and Liang's Anisotropic Star",
+      "short_name": "Bowers-Liang Star",
+      "description": "A static star of uniform density whose pressure across the radius differs from its pressure along the radius. Richard Bowers and E. P. T. Liang solved it in 1974: with the sideways pressure the greater of the two, it holds more mass and reddens its light more than Schwarzschild's star of the same density can.",
+      "tags": [
+        "anisotropic pressure",
+        "tangential pressure",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "stellar interior",
+        "compactness",
+        "maximum mass",
+        "quasar",
+        "regular centre",
+        "no horizon",
+        "matched solution",
+        "mass",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "interior_schwarzschild",
+          "kind": "special_case",
+          "text": "Bowers and Liang's star with equal pressures. At $Q = 1/2$ the power $N^{1/Q}$ is Schwarzschild's $\\frac{1}{4}\\left(3\\sqrt{1 - r_s/R} - \\sqrt{Z}\\right)^2$, and the Weyl tensor vanishes [schwarzschild1916b, bowers1974]."
+        },
+        {
+          "id": "einstein_cluster",
+          "kind": "limit",
+          "text": "The limit $Q \\to 0$, where the pressure along the radius vanishes. The star is then Florides's cluster of uniform density, held up by the pressure across the radius alone, with $-g_{tt} = (1 - r_s/R)^{3/2}/\\sqrt{Z}$ [florides1974]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "The vacuum outside the star. The pressure along the radius vanishes at $r = R$, where $g_{tt} = -(1 - r_s/R)$ on both sides, and the pressure across the radius jumps to zero there [bowers1974]."
+        },
+        {
+          "id": "tov",
+          "kind": "generalisation",
+          "text": "The static sphere with its two functions $\\Phi(r)$ and $m(r)$ free. Bowers and Liang's equation of equilibrium is Tolman, Oppenheimer, and Volkoff's with one term more, $2(p_\\perp - p_r)/r$ [bowers1974, oppenheimer1939]."
+        },
+        {
+          "id": "gravastar",
+          "kind": "family",
+          "text": "Another body that can be more compact than $R = \\frac{9}{8}r_s$, a ball of de Sitter space under a shell. A gravastar with no shell needs unequal pressures in its crust, as this star has throughout [cattoen2005]."
+        },
+        {
+          "id": "misner_zapolsky",
+          "kind": "family",
+          "text": "The sphere whose density falls as $1/r^2$. Krsna Dev and Marcelo Gleiser gave it unequal pressures in 2002, in the paper where they took up Bowers and Liang's star [dev2002]."
+        }
+      ],
+      "references": [
+        "bowers1974",
+        "schwarzschild1916b",
+        "bondi1964",
+        "florides1974",
+        "andreasson2008",
+        "buchdahl1959",
+        "dev2002",
+        "dev2003",
+        "yagi2015bald",
+        "raposo2019",
+        "oppenheimer1939",
+        "cattoen2005"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bowers_liang.json",
+      "charts": [
+        {
+          "id": "areal",
+          "name": "Areal Radius",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, R]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "R",
+              "description": "Radius of the star, where the pressure along the radius vanishes and Schwarzschild's vacuum begins"
+            },
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the star, $r_s = 2GM/c^2$ with $M$ its mass; the density is uniform, $\\rho = 3c^2r_s/(8\\pi GR^3)$"
+            },
+            {
+              "symbol": "Q",
+              "description": "Bowers and Liang's exponent, a pure number with $Q > 0$, which is $Q = 1/2 - 3C/(4\\pi)$ with $C$ their anisotropy constant. The pressure $p_\\perp$ across the radius is $p_\\perp = p_r + (1 - 2Q)(2\\pi G/3c^4)\\,r^2(\\rho c^2 + p_r)(\\rho c^2 + 3p_r)/Z$: at $Q = 1/2$ the two are equal and the star is Schwarzschild's, and the central pressure is finite for $r_s/R < 1 - 3^{-1/Q}$"
+            },
+            {
+              "symbol": "Z = 1 - \\dfrac{r_s r^2}{R^3}",
+              "description": "The component $g^{rr} = 1 - 2Gm(r)/(c^2r)$, with $m(r) = Mr^3/R^3$ the mass inside radius $r$; at the surface it is $1 - r_s/R$"
+            },
+            {
+              "symbol": "N = \\dfrac{1}{2}\\left(3\\left(1 - \\dfrac{r_s}{R}\\right)^{Q} - Z^{Q}\\right)",
+              "description": "A pure number whose power $1/Q$ is $-g_{tt}$, with $\\partial_rN = Qr_srNP/(R^3Z)$; at the surface $N^{1/Q} = 1 - r_s/R$, and $N$ vanishes at the centre of the star whose central pressure is infinite"
+            },
+            {
+              "symbol": "P = \\dfrac{2Z^{Q}}{3\\left(1 - \\dfrac{r_s}{R}\\right)^{Q} - Z^{Q}}",
+              "description": "A pure number, $P = Z^Q/N = 1 + 3p_r/(\\rho c^2)$, with $\\partial_rP = -Qr_srP(P + 2)/(R^3Z)$; it falls from the centre to $1$ at the surface, where the pressure along the radius vanishes"
+            }
+          ],
+          "convention": "We use Bowers and Liang's sphere of uniform density in coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius. The star has radius $R$ and Schwarzschild radius $r_s = 2GM/c^2$, and $t$ is the time of Schwarzschild's metric outside. We write $Z$ for $g^{rr}$, $N^{1/Q}$ for $-g_{tt}$, and $P$ for $1 + 3p_r/(\\rho c^2)$, with $p_r$ the pressure along the radius and $\\rho$ the density. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -N^{1/Q}c^2dt^2 + \\dfrac{dr^2}{Z} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-N^{1/Q}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{Z}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{r_s\\left(\\left(1 - Z\\right)P\\left(2Q - 1\\right)\\left(P + 2\\right) - 6Z\\left(P - 2\\right)\\right)}{2R^3\\,Z}",
+          "kretschmann": "K = \\dfrac{r_s^2\\left(12Z^2\\left(P^2 + 4\\right) - 4Z\\left(1 - Z\\right)P^2\\left(2Q - 1\\right)\\left(P + 2\\right) + \\left(1 - Z\\right)^2\\,P^2\\left(2Q - 1\\right)^2\\left(P + 2\\right)^2\\right)}{4R^6\\,Z^2}"
+        }
+      ]
+    },
+    {
       "id": "brans_dicke_sphere",
       "name": "Brans-Dicke Static Sphere",
       "short_name": "Brans-Dicke Sphere",
@@ -13207,6 +13361,11 @@
           "id": "bonnor_charged_dust",
           "kind": "family",
           "text": "A star of dust held up by its electric charge. Bonnor and Wickramasuriya set it beside Einstein's cluster as a body of well understood matter, and its surface can lie as near its horizon as one likes [bonnor1975]."
+        },
+        {
+          "id": "bowers_liang",
+          "kind": "limit_source",
+          "text": "A star of uniform density with pressure both along the radius and across it. In the limit $Q \\to 0$ of Bowers and Liang's exponent the pressure along the radius vanishes, and the star is Florides's uniform cluster [bowers1974, florides1974]."
         }
       ],
       "references": [
@@ -13228,7 +13387,8 @@
         "bartnik1988",
         "volkov1999",
         "morgan1969",
-        "bonnor1975"
+        "bonnor1975",
+        "bowers1974"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_cluster.json",
@@ -18559,6 +18719,11 @@
           "id": "israel_shell",
           "kind": "family",
           "text": "A thin shell of dust with flat space inside and nothing to hold it up, so it falls and makes a black hole [israel1966]."
+        },
+        {
+          "id": "bowers_liang",
+          "kind": "family",
+          "text": "A star of uniform density held up by unequal pressures. It can be more compact than $R = \\frac{9}{8}r_s$ with a positive pressure along the radius throughout and no shell [bowers1974]."
         }
       ],
       "references": [
@@ -18580,7 +18745,8 @@
         "abbott2025tgr",
         "visser1989nuclphysb",
         "hayward2006",
-        "liebling2023"
+        "liebling2023",
+        "bowers1974"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gravastar.json",
@@ -32374,6 +32540,11 @@
           "id": "oppenheimer_snyder",
           "kind": "programme",
           "text": "The collapse this star points to. Oppenheimer and Volkoff ended their paper on stars too heavy for any equilibrium, whose nonstatic solutions were \"now being investigated\", and Oppenheimer and Hartland Snyder followed one through later that year [oppenheimer1939, oppenheimersnyder1939]."
+        },
+        {
+          "id": "bowers_liang",
+          "kind": "family",
+          "text": "A star of uniform density with unequal pressures, from 1974. Krsna Dev and Marcelo Gleiser took it up in 2002 before they gave the $1/r^2$ sphere unequal pressures of its own [bowers1974, dev2002]."
         }
       ],
       "references": [
@@ -32388,7 +32559,8 @@
         "sorkin1981",
         "schwarzschild1916b",
         "buchdahl1959",
-        "oppenheimersnyder1939"
+        "oppenheimersnyder1939",
+        "bowers1974"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner_zapolsky.json",
@@ -42535,6 +42707,11 @@
           "id": "eih_many_bodies",
           "kind": "generalisation",
           "text": "Many bodies in slow motion. Close to each the field is Schwarzschild's far from its horizon, and between them it is known to the first order beyond Newton [will2014]."
+        },
+        {
+          "id": "bowers_liang",
+          "kind": "composite",
+          "text": "A star of uniform density with unequal pressures, and Schwarzschild's vacuum outside it. Given enough pressure across the radius, its surface can lie at any radius outside $r_s$ [bowers1974]."
         }
       ],
       "references": [
@@ -42652,7 +42829,8 @@
         "bransdicke1961",
         "agnese1995",
         "bondi1962",
-        "will2014"
+        "will2014",
+        "bowers1974"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -42918,6 +43096,11 @@
           "id": "bonnor_charged_dust",
           "kind": "family",
           "text": "A star of dust held up by electric repulsion, with no pressure. The redshift of its centre has no bound [bonnor1975]."
+        },
+        {
+          "id": "bowers_liang",
+          "kind": "generalisation",
+          "text": "Schwarzschild's star with a pressure across the radius that differs from the pressure along it. With the sideways pressure the greater it stays in equilibrium inside $R = \\frac{9}{8}r_s$, and at Bowers and Liang's exponent $Q = 1/2$ it is Schwarzschild's [bowers1974]."
         }
       ],
       "references": [
@@ -42939,7 +43122,8 @@
         "raghoonundun2015",
         "whittaker1968",
         "wahlquist1968",
-        "bonnor1975"
+        "bonnor1975",
+        "bowers1974"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/interior_schwarzschild.json",
@@ -48805,6 +48989,11 @@
           "id": "misner_zapolsky",
           "kind": "special_case",
           "text": "The star at the end of the sequence, with $p = \\rho c^2/3$ and an infinite central density, where the equations have the exact solution $m = 3r/14$. Oppenheimer and Volkoff called it \"a unique unstable singular solution\" [oppenheimer1939]."
+        },
+        {
+          "id": "bowers_liang",
+          "kind": "special_case",
+          "text": "A star of uniform density with two pressures, where $m = Mr^3/R^3$ with $M$ the mass and $R$ the radius of the star. Its equation of equilibrium has one term more, $2(p_\\perp - p_r)/r$, with $p_r$ the pressure along the radius and $p_\\perp$ the pressure across it [bowers1974]."
         }
       ],
       "references": [
@@ -48842,7 +49031,8 @@
         "ruffini1969",
         "liebling2023",
         "bartnik1988",
-        "volkov1999"
+        "volkov1999",
+        "bowers1974"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tov.json",
