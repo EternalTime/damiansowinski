@@ -353,6 +353,11 @@
       "id": "belinski_zakharov",
       "kind": "family",
       "text": "Schwarzschild's black hole is two solitons on flat space with no rotation, in Belinski and Zakharov's inverse scattering method [belinskii1979]."
+    },
+    {
+      "id": "exponential_metric",
+      "kind": "family",
+      "text": "Papapetrou's and Yilmaz's metric with no horizon, $g_{tt} = -e^{-2m/r}$ with $m = GM/c^2$ in isotropic coordinates. It agrees with Schwarzschild's at first order in $m/r$ and has a wormhole's throat where the horizon would be [boonserm2018]."
     }
   ],
   "references": [
@@ -451,7 +456,8 @@
     "marolf2009",
     "novikov1965",
     "lindquist1957",
-    "belinskii1979"
+    "belinskii1979",
+    "boonserm2018"
   ],
   "coordinates": [
     {

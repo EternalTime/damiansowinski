@@ -299,11 +299,11 @@ class Slice:
             self.gpp, self.defect = rewrite(self.gpp, self.x), rewrite(self.defect, self.x)
             self.rho = sp.sqrt(self.gpp)
             self.drho = sp.diff(self.gpp, self.x) / (2 * self.rho)
-        self._gxx = sp.lambdify(self.x, self.gxx, "numpy")
-        self._gpp = sp.lambdify(self.x, self.gpp, "numpy")
-        self._rho = sp.lambdify(self.x, self.rho, "numpy")
-        self._drho = sp.lambdify(self.x, self.drho, "numpy")
-        self._defect = sp.lambdify(self.x, self.defect, "numpy")
+        self._gxx = sp.lambdify(self.x, self.gxx, nr.numeric_modules(self.gxx))
+        self._gpp = sp.lambdify(self.x, self.gpp, nr.numeric_modules(self.gpp))
+        self._rho = sp.lambdify(self.x, self.rho, nr.numeric_modules(self.rho))
+        self._drho = sp.lambdify(self.x, self.drho, nr.numeric_modules(self.drho))
+        self._defect = sp.lambdify(self.x, self.defect, nr.numeric_modules(self.defect))
         self.exact = {}             # a float the drawing uses -> the exact number it stands for
         self._near = {}
 
@@ -9827,6 +9827,125 @@ def fisher_jnw(ck, src):
                           "$dX^2 + dY^2 - dZ^2$.")]
 
 
+def exponential_metric(ck, src):
+    """The equatorial plane of the exponential metric at one moment, at m = 1, read in the isotropic
+    chart, where the slice is e^(2m/r)(dr^2 + r^2 dphi^2) and the circle of the sphere r has the
+    radius rho = r e^(m/r), least on the throat r = m, where it is e m.
+
+    g_rr - (d rho/dr)^2 = e^(2m/r) (m/r)(2 - m/r), which is positive for r > m/2 and vanishes on
+    r = m/2, the circle of radius e^2 m/2 on the far side of the throat. From that circle out the
+    surface is drawn in flat space, z(r) the integral of e^(m/r) sqrt((m/r)(2 - m/r)) from m/2:
+    it lies level on r = m/2, stands vertical on the throat, and flattens beyond it as Flamm's
+    paraboloid does, since dz/dr -> sqrt(2m/r). Inside r = m/2 the circles grow faster than the
+    distance out to them, which is checked, and the surface is drawn in three dimensional Minkowski
+    space, Z(r) the integral of e^(m/r) sqrt((m/r)(m/r - 2)), to r = m/3, where the circle has the
+    radius e^3 m/3, about that of r = 6m on the near side. Both parts lie level on r = m/2, so they
+    meet in one circle with one tangent. Each closed form is checked by a quadrature the drawing
+    never uses, and the harmonic, areal and Cartesian charts are checked to give the same circles
+    and the same heights."""
+    params = {"m": 1}
+    fixed = {"t": 0, **EQUATOR}
+    name = "The exponential metric"
+    sl = Slice(src, "exponential_metric", "isotropic", "r", "\\phi", fixed, params)
+    msl = Slice(src, "exponential_metric", "isotropic", "r", "\\phi", fixed, params, space="minkowski")
+    level, throat, top, tip = 0.5, 1.0, 6.0, 1 / 3
+    sl.known = msl.known = {level: sp.Rational(1, 2), tip: sp.Rational(1, 3)}
+    radius = lambda r: np.asarray(r, dtype=float) * np.exp(1 / np.asarray(r, dtype=float))
+    size = 2 * float(radius(top))
+    ck.add(f"{name}: the surface lies level where g_rr = (d rho/dr)^2, at r = m/2",
+           abs(float(sl.defect_at(np.array([level]))[0])), 1e-12)
+    ck.stops(f"{name}, inside r = m/2 in flat space", sl, np.linspace(0.05, level, 402)[:-1])
+    outward = np.linspace(level, 40, 402)[1:]
+    ck.add(f"{name}: beyond r = m/2 no surface in Minkowski space carries the slice, (d rho/dr)^2 - g_rr < 0",
+           float(max(0.0, np.max(-msl.defect_at(outward)))), 0.0)
+    if not np.all(msl.defect_at(outward) > 0):
+        ck.items[-1]["ok"] = False
+    ck.add(f"{name}: the circles are smallest on r = m, of radius e m",
+           abs(float(radius(throat)) - math.e) + abs(float(sl._at(sl._drho, throat))), 1e-12)
+
+    join = "at $r = m/2$ the surface lies level, in Minkowski space nearer $r = 0$ and in flat space beyond"
+    radii = (1.5, 2.0, 3.0, 4.0, 5.0)
+    outer = Piece("outer", "sheet", sl, level, top, 0.0, 1,
+                  (("join", join), ("edge", "the near side runs on, flattening, to $r \\to \\infty$")),
+                  [(level, "space", None), (0.75, "r", None), (throat, "throat", "$r = m$")]
+                  + [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+    steps = int(math.ceil(math.log(level / tip) / math.log(1.02)))
+    deep = Piece("deep", "sheet", msl, tip, level, -msl.rise(tip, level), 1,
+                 (("edge", "the far side runs on, its circles growing without bound, to $r \\to 0$"), ("join", join)),
+                 [(tip, "r", None), (0.4, "r", None), (level, "space", None)], size, digits=LORENTZ_DIGITS,
+                 knots=[tip * (level / tip) ** (k / steps) for k in range(1, steps)])
+    for p in (outer, deep):
+        space = "in Minkowski space" if p.sl.lorentz else "in flat space"
+        ck.isometry(f"{name}, {p.id} {space}", p)
+        ck.radius(f"{name}, {p.id}, rho = r e^(m/r) {space}", p, radius, size)
+    ck.join(f"{name}, in Minkowski space and in flat space at r = m/2", deep, level, outer, level)
+    pa, pb = deep.data()["points"][-1], outer.data()["points"][0]
+    ck.add(f"{name}, the two parts as written: one point at r = m/2",
+           max(abs(pa[1] - pb[1]), abs(pa[2] - pb[2])), 10.0 ** -min(deep.decimals, outer.decimals))
+    ck.add(f"{name}: the surface stands vertical on the throat",
+           float(np.max(np.abs(sl.slope(throat, "+") - [0.0, 1.0]))), 1e-12)
+
+    # The closed forms, by a quadrature of their own.
+    def flat_height(r):
+        return np.array([quad(lambda s: math.exp(1 / s) * math.sqrt(max((2 - 1 / s) / s, 0.0)), level, x,
+                              epsabs=1e-13, epsrel=1e-12)[0] for x in np.atleast_1d(r)])
+
+    def cone_height(r):
+        return np.array([-quad(lambda s: math.exp(1 / s) * math.sqrt(max((1 / s - 2) / s, 0.0)), x, level,
+                               epsabs=1e-13, epsrel=1e-12)[0] for x in np.atleast_1d(r)])
+    ck.form(f"{name}, outer, z = the integral of e^(m/r) sqrt((m/r)(2 - m/r))", outer, flat_height, size)
+    ck.form(f"{name}, deep, Z = -the integral of e^(m/r) sqrt((m/r)(m/r - 2))", deep, cone_height, size)
+    ck.add(f"{name}: toward r = 0 the surface tends to the light cone, dZ/d rho -> 1",
+           abs(float(np.sqrt(-msl.defect_at(1e-2)) / abs(msl._at(msl._drho, 1e-2))) - 1), 1e-3)
+    far_out = 1e4
+    ck.add(f"{name}: far out the surface climbs as Flamm's paraboloid does, dz/dr -> sqrt(2m/r)",
+           abs(float(np.sqrt(sl.defect_at(far_out)) / math.sqrt(2 / far_out)) - 1), 1e-3)
+
+    # The harmonic chart, u = 1/r, the areal chart on the near side, R = r e^(m/r), and the Cartesian
+    # chart turned about its origin give the same circles and the same heights.
+    rs = np.array([0.4, 0.5, 0.75, 1.5, 2.0, 4.0, 6.0])
+    rise, fall = sl.rise(level, top), msl.rise(tip, level)
+    harmonic = Slice(src, "exponential_metric", "harmonic", "u", "\\phi", fixed, params)
+    mharmonic = Slice(src, "exponential_metric", "harmonic", "u", "\\phi", fixed, params, space="minkowski")
+    ck.add(f"{name}: the harmonic chart's circles are the same",
+           float(np.max(np.abs(harmonic.rho_at(1 / rs) - radius(rs)))), 1e-12)
+    ck.add(f"{name}: the harmonic chart's surface in flat space is the same",
+           abs(harmonic.rise(1 / top, 1 / level) - rise), 1e-9)
+    ck.add(f"{name}: the harmonic chart's surface in Minkowski space is the same",
+           abs(mharmonic.rise(1 / level, 1 / tip) - fall), 1e-9)
+    cartesian = Slice(src, "exponential_metric", "cartesian", "x", None, {"t": 0, "z": 0}, params, turn="y")
+    mcartesian = Slice(src, "exponential_metric", "cartesian", "x", None, {"t": 0, "z": 0}, params, turn="y",
+                       space="minkowski")
+    ck.add(f"{name}: the Cartesian chart's circles are the same",
+           float(np.max(np.abs(cartesian.rho_at(rs) - radius(rs)))), 1e-12)
+    ck.add(f"{name}: the Cartesian chart's surface in flat space is the same",
+           abs(cartesian.rise(level, top) - rise), 1e-9)
+    ck.add(f"{name}: the Cartesian chart's surface in Minkowski space is the same",
+           abs(mcartesian.rise(tip, level) - fall), 1e-9)
+    areal = Slice(src, "exponential_metric", "areal", "R", "\\phi", fixed, params)
+    near = np.array([1.5, 2.0, 4.0, 6.0])
+    ck.add(f"{name}: the areal chart's circles are the same",
+           float(np.max(np.abs(areal.rho_at(radius(near)) - radius(near)))), 1e-12)
+    ck.add(f"{name}: the areal chart's surface is the same from r = 1.5 m out",
+           abs(areal.rise(float(radius(1.5)), float(radius(top))) - sl.rise(1.5, top)), 1e-9)
+
+    surface = Surface([deep, outer])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *outer.at(throat), "$r = m$", dx=14)
+    ring_label(fig, [0, 0, 0], *outer.at(level), "$m/2$", dx=10)
+    ring_label(fig, [0, 0, 0], *outer.at(3.0), "$3\\,m$")
+    ring_label(fig, [0, 0, 0], *outer.at(top), "$6\\,m$")
+    fig.legend("fill", "cover", "the equatorial plane at one moment, from $r = m/3$ on the far side to $r = 6\\,m$ on the near")
+    fig.legend("line", "r", "$r$ constant, at $1.5$, $2$, $3$, $4$, $5$, and $6\\,m$ on the near side and at $3m/4$, "
+                           "$2m/5$, and $m/3$ on the far side")
+    fig.legend("line", "throat", "the throat $r = m$, the smallest circle, of radius $e\\,m$")
+    fig.legend("line", "space", "$r = m/2$: Minkowski space nearer $r = 0$, flat space beyond")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("wormhole", "A moment of $t$", "$m$", [surface], fig.done(),
+                 settings="$m = 1$, the unit of every length. Every length along the surface inside $r = m/2$ is "
+                          "measured with $dX^2 + dY^2 - dZ^2$.")]
+
+
 NHEK_REACH = 2.25               # |y| the throat is drawn out to, past the floor of its figure of cones
 
 
@@ -12552,6 +12671,7 @@ DRAWN = {
     "near_horizon_extreme_kerr": near_horizon_extreme_kerr,
     "photon_rocket": photon_rocket,
     "fisher_jnw": fisher_jnw,
+    "exponential_metric": exponential_metric,
     "roberts": roberts,
     "hartle_thorne": hartle_thorne,
     "wahlquist": wahlquist,
@@ -12616,6 +12736,19 @@ CAPTIONS = {
         "Minkowski space and bends over until it lies level on that circle. Beyond it the surface climbs in "
         "flat space as Flamm's paraboloid does, and at $\\gamma = 1$ the circle is $r = b$ and the surface is "
         "Flamm's. Both parts lie level at the circle, so they meet there with one tangent plane.",
+    ],
+    ("exponential_metric", "wormhole"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the exponential metric at one moment of $t$, from $r = m/3$ on "
+        "the far side of the throat to $r = 6\\,m$ on the near side, in three dimensional Minkowski space "
+        "($dX^2 + dY^2 - dZ^2$) inside the circle $r = m/2$ and in flat space beyond it, every distance along the "
+        "surface the metric distance.",
+        "On the slice the metric is $e^{2m/r}(dr^2 + r^2d\\phi^2)$, so the circle of the sphere $r$ has radius "
+        "$\\rho = re^{m/r}$, smallest on the throat $r = m$, where it is $e\\,m$ and the surface stands vertical. On the "
+        "near side the surface climbs and flattens as Flamm's paraboloid does, $dz/dr \\to \\sqrt{2m/r}$. On the "
+        "far side the circles widen again toward $r = 0$, and inside $r = m/2$ they grow faster than the distance "
+        "out to them, so from that circle on the surface climbs in Minkowski space, at a slope that tends to the "
+        "light cone's, $dZ/d\\rho \\to 1$. Both parts lie level on $r = m/2$, the circle of radius $e^2m/2$, and "
+        "meet there with one tangent plane.",
     ],
     **{("roberts", case): [
         f"The equator ($\\theta = \\pi/2$) of a moment of Roberts's time $t$ ($p = {value}$), where the field is, out to "
