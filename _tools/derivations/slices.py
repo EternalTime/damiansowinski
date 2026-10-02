@@ -412,6 +412,19 @@ def myers_perry_t(view_id):
     return [Mark(m, [np.column_stack([r + 0.625 * np.log((r - 0.8) / (r + 0.8)), r])])]
 
 
+def black_saturn_t(view):
+    """Black Saturn's moment t = 0 on the plane of its ring, as far as its embedding reaches: the piece
+    outside the ring on Weyl's plane of t and z there, the piece about the hole on the plane between the
+    ring and the hole, and the outside piece's part with z < 0 on the polar chart's theta = pi/2, where
+    z = -r^2/2."""
+    m = moments("black_saturn", "plane")[0]
+    pieces = {p["id"]: [q[0] for q in p["points"]] for p in m.surface["pieces"]}
+    if view == "far":
+        return [Mark(m, along(0.0, 0.0, math.sqrt(-2 * min(pieces["outside"]))))]
+    z = pieces["outside" if view == "outside" else "between"]
+    return [Mark(m, along(0.0, min(z), max(z)))]
+
+
 def novikov(R, tau):
     """A shell of dust released from rest at areal radius R at t = 0, r_s = 1, at its proper
     time tau: its areal radius r and its Schwarzschild t, from the cycloid
@@ -1616,6 +1629,10 @@ FLAT = {
         "myers_perry", lambda m: along(0.0, *m.reach("equal_spins", "\\rho")), view_id="fibre"),
     ("myers_perry", "boyer_lindquist_six", "transverse"): lambda: one(
         "myers_perry", lambda m: along(0.0, *m.reach("boyer_lindquist_six", "r")), view_id="six"),
+    # Black Saturn's plane of the ring at t = 0, on each plane of Weyl's chart and of the polar chart.
+    ("black_saturn", "weyl", "outside"): lambda: black_saturn_t("outside"),
+    ("black_saturn", "weyl", "between"): lambda: black_saturn_t("between"),
+    ("black_saturn", "polar", "far"): lambda: black_saturn_t("far"),
     # The Kaluza-Klein monopole's cigar, the half axis theta = 0 at t = 0, on its plane of t and the radius
     # in each chart; the Taub-NUT radius is rho = r + 2m.
     ("kaluza_klein_monopole", "gross_perry", "radial"): lambda: one(
@@ -1999,6 +2016,8 @@ HIDDEN = {
     ("wormhole_time_machine", "lorentz"): "the flat space outside the mouths, with the mouths drawn as world lines; the moment embedded runs through the throat",
     ("frw", "open"): "the open universe's conformal diagram; the moments embedded are the closed universe's",
     ("myers_perry", "boyer_lindquist_six", "rotation"): "the plane of rotation in six dimensions, theta = pi/2, which the embedded transverse plane theta = 0 meets nowhere outside the horizon",
+    ("black_saturn", "ring", "outside"): "the ring alone, with no hole inside it; the moment embedded is the Saturn's",
+    ("black_saturn", "ring", "inside"): "the ring alone, with no hole inside it; the moment embedded is the Saturn's",
     ("near_horizon_extreme_kerr", "near_nhek", "equator"): "the patch ct > r_0^2/r of the Poincare chart, to the future of the ray that leaves the boundary at t = 0, which the moment tau = 0 embedded does not enter",
     ("near_horizon_extreme_kerr", "near_nhek"): "the patch ct > r_0^2/r of the Poincare chart, to the future of the ray that leaves the boundary at t = 0, which the moment tau = 0 embedded does not enter",
     **{("hartle_thorne", system, "axis"): "the axis of rotation, which the embedded equatorial plane does not meet"

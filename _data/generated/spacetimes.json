@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 101,
+  "count": 102,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -2572,6 +2572,594 @@
       ]
     },
     {
+      "id": "black_saturn",
+      "name": "Black Saturn",
+      "short_name": "Black Saturn",
+      "description": "A black ring turning in balance around a spherical black hole in five dimensions, the exact vacuum solution Henriette Elvang and Pau Figueras built in 2007 by the inverse scattering method. Rotation alone holds the two apart, each drags the other around, and one mass and angular momentum can be shared between them in a continuum of ways.",
+      "tags": [
+        "vacuum",
+        "stationary",
+        "rotating",
+        "black hole",
+        "black ring",
+        "multiple black holes",
+        "axisymmetric",
+        "angular momentum",
+        "mass",
+        "frame dragging",
+        "ergoregion",
+        "horizon",
+        "event horizon",
+        "horizon topology",
+        "black hole uniqueness",
+        "conical singularity",
+        "asymptotically flat",
+        "higher dimensions",
+        "five-dimensional",
+        "soliton",
+        "inverse scattering",
+        "rod structure",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+,+)",
+      "convention": "The spacetime has five dimensions, with $G$ Newton's constant there. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "myers_perry",
+          "kind": "limit",
+          "text": "Black Saturn with its ring taken away. In the limit $\\kappa_3 \\to \\kappa_2$ and then $\\kappa_2 \\to 0$ the ring's horizon shrinks to nothing and leaves the Myers-Perry black hole with one spin [elvang2007]."
+        },
+        {
+          "id": "tangherlini",
+          "kind": "family",
+          "text": "The static black hole of five dimensions. A Saturn whose hole turns against its ring can have the same mass and no angular momentum at infinity, so those two numbers do not single it out [elvang2007]."
+        },
+        {
+          "id": "black_string",
+          "kind": "family",
+          "text": "A thin black ring is a black string bent into a circle and set spinning. It is expected to share the string's Gregory-Laflamme instability [elvang2006, elvang2007]."
+        },
+        {
+          "id": "majumdar_papapetrou",
+          "kind": "family",
+          "text": "Black holes held apart by electric charge, in four dimensions. Saturn's ring and hole carry no charge, and rotation does the holding [elvang2007]."
+        }
+      ],
+      "references": [
+        "elvang2007",
+        "majumdar1947",
+        "papapetrou1947",
+        "kramer1980",
+        "emparan2002",
+        "elvang2006",
+        "belinskii1978",
+        "belinskii1979",
+        "pomeransky2006",
+        "elvang2009",
+        "tangherlini1963",
+        "gibbons2002",
+        "elvang2007phases",
+        "chrusciel2010",
+        "szybka2011",
+        "emparan2008"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/black_saturn.json",
+      "charts": [
+        {
+          "id": "weyl",
+          "name": "Weyl",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "z",
+            "\\psi",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\psi \\in [0, 2\\pi)",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = 0,\\; \\kappa_3 \\le z \\le \\kappa_2 \\;\\text{(the horizon of the ring)}",
+            "\\rho = 0,\\; \\kappa_1 \\le z \\le 1 \\;\\text{(the horizon of the hole)}",
+            "\\rho = 0,\\; z < \\kappa_3 \\;\\text{or}\\; \\kappa_2 < z < \\kappa_1 \\;\\text{(the plane of the ring)}",
+            "\\rho = 0,\\; z > 1 \\;\\text{(the plane across it, through the hole)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Length that sets the scale ($L > 0$): the mass, the angular momentum and every radius are fixed multiples of its powers"
+            },
+            {
+              "symbol": "\\kappa_1",
+              "description": "Dimensionless, with $0 < \\kappa_3 \\le \\kappa_2 < \\kappa_1 \\le 1$: on the axis $\\rho = 0$ the horizon of the hole is $\\kappa_1 \\le z \\le 1$, and $\\kappa_1 = 1$ leaves the ring alone"
+            },
+            {
+              "symbol": "\\kappa_2",
+              "description": "Dimensionless: on the axis the horizon of the ring is $\\kappa_3 \\le z \\le \\kappa_2$, and $\\kappa_2 < z < \\kappa_1$ is the plane of the ring between the ring and the hole"
+            },
+            {
+              "symbol": "\\kappa_3",
+              "description": "Dimensionless: on the axis $z < \\kappa_3$ is the plane of the ring outside the ring"
+            },
+            {
+              "symbol": "\\beta",
+              "description": "Dimensionless, the $\\bar c_2$ of Elvang and Figueras: the hole's own angular momentum, which vanishes at $\\beta = 0$. The ring and the hole are in balance, with no conical membrane between them, where $\\left(1 + \\kappa_2\\beta\\right)^2 = \\dfrac{\\left(\\kappa_1 - \\kappa_2\\right)^2}{\\kappa_1\\left(1 - \\kappa_2\\right)\\left(1 - \\kappa_3\\right)\\left(\\kappa_1 - \\kappa_3\\right)}$"
+            },
+            {
+              "symbol": "c_1 = \\sqrt{\\dfrac{2\\kappa_1\\kappa_2}{\\kappa_3}}",
+              "description": "The parameter of the soliton that sets the ring turning, in units of $L$; at this value the metric is smooth across $\\rho = 0$, $z = 0$"
+            },
+            {
+              "symbol": "c_2 = \\beta\\,c_1\\left(1 - \\kappa_2\\right)",
+              "description": "The parameter of the soliton that sets the hole turning, in units of $L$"
+            },
+            {
+              "symbol": "q = \\dfrac{\\beta\\,c_1}{1 + \\kappa_2\\beta}",
+              "description": "Shift of $t$ along $\\psi$, in units of $L$, with which $g_{t\\psi}$ vanishes at infinity"
+            },
+            {
+              "symbol": "k = \\dfrac{1}{1 + \\kappa_2\\beta}",
+              "description": "Constant with which $g_{\\rho\\rho}$ at infinity is flat space's and the circles of $\\psi$ and $\\phi$ close smoothly with the period $2\\pi$"
+            },
+            {
+              "symbol": "\\mu_1 = \\sqrt{\\rho^2 + z^2} - z",
+              "description": "Soliton of the rod end $z = 0$, where the seed's rod of negative density began"
+            },
+            {
+              "symbol": "\\mu_2 = \\sqrt{\\rho^2 + \\left(z - 1\\right)^2} - \\left(z - 1\\right)",
+              "description": "Soliton of the rod end $z = 1$, where the hole's horizon meets the plane across the ring's"
+            },
+            {
+              "symbol": "\\mu_3 = \\sqrt{\\rho^2 + \\left(z - \\kappa_1\\right)^2} - \\left(z - \\kappa_1\\right)",
+              "description": "Soliton of the rod end $z = \\kappa_1$, where the hole's horizon meets the plane of the ring"
+            },
+            {
+              "symbol": "\\mu_4 = \\sqrt{\\rho^2 + \\left(z - \\kappa_2\\right)^2} - \\left(z - \\kappa_2\\right)",
+              "description": "Soliton of the rod end $z = \\kappa_2$, the inner edge of the ring"
+            },
+            {
+              "symbol": "\\mu_5 = \\sqrt{\\rho^2 + \\left(z - \\kappa_3\\right)^2} - \\left(z - \\kappa_3\\right)",
+              "description": "Soliton of the rod end $z = \\kappa_3$, the outer edge of the ring"
+            },
+            {
+              "symbol": "R_1 = \\sqrt{\\rho^2 + z^2}",
+              "description": "Distance from the rod end $z = 0$ in the flat half plane of $\\rho$ and $z$"
+            },
+            {
+              "symbol": "R_2 = \\sqrt{\\rho^2 + \\left(z - 1\\right)^2}",
+              "description": "Distance from the rod end $z = 1$ in that half plane"
+            },
+            {
+              "symbol": "M_0 = \\mu_2\\mu_5^2\\left(\\mu_1 - \\mu_3\\right)^2\\left(\\mu_2 - \\mu_4\\right)^2\\left(\\rho^2 + \\mu_1\\mu_2\\right)^2\\left(\\rho^2 + \\mu_1\\mu_4\\right)^2\\left(\\rho^2 + \\mu_2\\mu_3\\right)^2",
+              "description": "The seed's part of $H_x$, the static ring and hole"
+            },
+            {
+              "symbol": "M_1 = \\mu_1^2\\mu_2\\mu_3\\mu_4\\mu_5\\,\\rho^2\\left(\\mu_1 - \\mu_2\\right)^2\\left(\\mu_2 - \\mu_4\\right)^2\\left(\\mu_1 - \\mu_5\\right)^2\\left(\\rho^2 + \\mu_2\\mu_3\\right)^2",
+              "description": "The part of $H_x$ that the ring's rotation adds"
+            },
+            {
+              "symbol": "M_2 = \\mu_2\\mu_3\\mu_4\\mu_5\\,\\rho^2\\left(\\mu_1 - \\mu_2\\right)^2\\left(\\mu_1 - \\mu_3\\right)^2\\left(\\rho^2 + \\mu_1\\mu_4\\right)^2\\left(\\rho^2 + \\mu_2\\mu_5\\right)^2",
+              "description": "The part of $H_x$ that the hole's rotation adds"
+            },
+            {
+              "symbol": "M_3 = 2\\mu_1\\mu_2\\mu_3\\mu_4\\mu_5\\left(\\mu_1 - \\mu_3\\right)\\left(\\mu_1 - \\mu_5\\right)\\left(\\mu_2 - \\mu_4\\right)\\left(\\rho^2 + \\mu_1^2\\right)\\left(\\rho^2 + \\mu_2^2\\right)\\left(\\rho^2 + \\mu_1\\mu_4\\right)\\left(\\rho^2 + \\mu_2\\mu_3\\right)\\left(\\rho^2 + \\mu_2\\mu_5\\right)",
+              "description": "The part of $H_x$ linear in each rotation"
+            },
+            {
+              "symbol": "M_4 = \\mu_1^2\\mu_2\\mu_3^2\\mu_4^2\\left(\\mu_1 - \\mu_5\\right)^2\\left(\\rho^2 + \\mu_1\\mu_2\\right)^2\\left(\\rho^2 + \\mu_2\\mu_5\\right)^2",
+              "description": "The part of $H_x$ quadratic in each rotation"
+            },
+            {
+              "symbol": "F = \\mu_1\\mu_5\\left(\\mu_1 - \\mu_3\\right)^2\\left(\\mu_2 - \\mu_4\\right)^2\\left(\\rho^2 + \\mu_1\\mu_3\\right)\\left(\\rho^2 + \\mu_2\\mu_3\\right)\\left(\\rho^2 + \\mu_1\\mu_4\\right)\\left(\\rho^2 + \\mu_2\\mu_4\\right)\\left(\\rho^2 + \\mu_2\\mu_5\\right)\\left(\\rho^2 + \\mu_3\\mu_5\\right)\\left(\\rho^2 + \\mu_1^2\\right)\\left(\\rho^2 + \\mu_2^2\\right)\\left(\\rho^2 + \\mu_3^2\\right)\\left(\\rho^2 + \\mu_4^2\\right)\\left(\\rho^2 + \\mu_5^2\\right)",
+              "description": "Common denominator of $H_x$, $H_y$, and $\\omega_\\psi$"
+            },
+            {
+              "symbol": "H_x = \\dfrac{M_0 + c_1^2\\,M_1 + c_2^2\\,M_2 + c_1\\,c_2\\,M_3 + c_1^2\\,c_2^2\\,M_4}{F}",
+              "description": "Elvang and Figueras's $H_x$"
+            },
+            {
+              "symbol": "H_y = \\dfrac{\\mu_3}{\\mu_4F}\\left(\\dfrac{\\mu_1}{\\mu_2}M_0 - \\dfrac{\\rho^2}{\\mu_1\\mu_2}c_1^2\\,M_1 - \\dfrac{\\mu_1\\mu_2}{\\rho^2}c_2^2\\,M_2 + c_1\\,c_2\\,M_3 + \\dfrac{\\mu_2}{\\mu_1}c_1^2\\,c_2^2\\,M_4\\right)",
+              "description": "Elvang and Figueras's $H_y$, with $g_{tt} = -H_y/H_x$, so it vanishes on the ergosurfaces"
+            },
+            {
+              "symbol": "G_y = \\dfrac{\\mu_3\\mu_5}{\\mu_4}",
+              "description": "Elvang and Figueras's $G_y$ in units of $L^2$, the part of the metric the solitons leave as the seed had it"
+            },
+            {
+              "symbol": "P = \\left(\\rho^2 + \\mu_3\\mu_4\\right)^2\\left(\\rho^2 + \\mu_1\\mu_5\\right)\\left(\\rho^2 + \\mu_4\\mu_5\\right)",
+              "description": "Elvang and Figueras's $P$"
+            },
+            {
+              "symbol": "\\omega_\\psi = \\dfrac{2}{F}\\sqrt{\\dfrac{G_y}{\\rho^2}}\\left(c_1\\,R_1\\sqrt{M_0\\,M_1} - c_2\\,R_2\\sqrt{M_0\\,M_2} + c_1^2\\,c_2\\,R_2\\sqrt{M_1\\,M_4} - c_1\\,c_2^2\\,R_1\\sqrt{M_2\\,M_4}\\right)",
+              "description": "Elvang and Figueras's $\\omega_\\psi$ in units of $L$, with $g_{t\\psi} = -L\\left(\\omega_\\psi + qH_y\\right)/H_x$"
+            },
+            {
+              "symbol": "V = V(\\rho,z)",
+              "description": "Dimensionless function: $L\\,e^{V}$ is the radius of the circle of $\\psi$ through a point. For black Saturn $e^{2V} = \\dfrac{G_yH_x^2 - \\left(\\omega_\\psi + qH_y\\right)^2}{H_xH_y}$, and in a vacuum $\\partial_\\rho^2V + \\dfrac{1}{\\rho}\\partial_\\rho V + \\partial_z^2V = -\\dfrac{1}{2}e^{4V - 2W}\\left(\\left(\\partial_\\rho\\Omega\\right)^2 + \\left(\\partial_z\\Omega\\right)^2\\right)$"
+            },
+            {
+              "symbol": "\\Omega = \\Omega(\\rho,z)",
+              "description": "Dimensionless function: $c\\,\\Omega/L$ is the angular velocity about the hole, seen from infinity, of an observer with no angular momentum, the dragging of frames. For black Saturn $\\Omega = \\dfrac{\\omega_\\psi + qH_y}{H_x}e^{-2V}$, and in a vacuum $\\partial_\\rho^2\\Omega + \\dfrac{1}{\\rho}\\partial_\\rho\\Omega + \\partial_z^2\\Omega = -\\left(4\\partial_\\rho V - 2\\partial_\\rho W\\right)\\partial_\\rho\\Omega - \\left(4\\partial_z V - 2\\partial_z W\\right)\\partial_z\\Omega$"
+            },
+            {
+              "symbol": "W = W(\\rho,z)",
+              "description": "Dimensionless function: $L^2\\rho\\,e^{V - W}$ is the area of the torus of $\\psi$ and $\\phi$ through a point over $4\\pi^2$. For black Saturn $e^{2W} = G_y$, and in a vacuum $\\partial_\\rho^2W + \\dfrac{1}{\\rho}\\partial_\\rho W + \\partial_z^2W = 0$, Laplace's equation with axial symmetry in flat space"
+            },
+            {
+              "symbol": "\\nu = \\nu(\\rho,z)",
+              "description": "Dimensionless function, the conformal factor of the half plane of $\\rho$ and $z$. For black Saturn $e^{2\\nu} = k^2H_xP$, and in a vacuum $\\partial_z\\nu = -\\partial_zW + \\rho\\left(2\\partial_\\rho V\\,\\partial_z V + 2\\partial_\\rho W\\,\\partial_z W - \\partial_\\rho V\\,\\partial_z W - \\partial_z V\\,\\partial_\\rho W\\right) - \\dfrac{\\rho}{2}e^{4V - 2W}\\partial_\\rho\\Omega\\,\\partial_z\\Omega$, with a like equation for $\\partial_\\rho\\nu$"
+            }
+          ],
+          "convention": "We use Weyl's canonical coordinates $(t, \\rho, z, \\psi, \\phi)$ in units of $L^2$, the $\\rho/L^2$ and $\\bar z$ of Elvang and Figueras, so $\\rho$ and $z$ are pure numbers and $t$ carries dimensions of time. The functions $V$, $\\Omega$, $W$, and $\\nu$ stand free in every component, and no component assumes a field equation. We take components in the chart $x^0 = ct$, so $\\dot{t}$ in the geodesic equations means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -e^{2W - 2V}c^2dt^2 + L^2\\left(e^{2V}\\left(d\\psi - \\dfrac{\\Omega}{L}c\\,dt\\right)^2 + \\rho^2e^{-2W}d\\phi^2 + e^{2\\nu}\\left(d\\rho^2 + dz^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{2W - 2V} + \\Omega^2e^{2V}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\psi"
+              ],
+              "value": "-L\\,\\Omega\\,e^{2V}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "t"
+              ],
+              "value": "-L\\,\\Omega\\,e^{2V}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "L^2e^{2\\nu}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "L^2e^{2\\nu}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "L^2e^{2V}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "L^2\\,\\rho^2e^{-2W}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{\\left(4\\rho\\,e^{2W}\\left(\\partial_\\rho V\\right)^2 - 4\\rho\\,e^{2W}\\partial_\\rho V\\,\\partial_\\rho W + 4\\rho\\,e^{2W}\\left(\\partial_z V\\right)^2 - 4\\rho\\,e^{2W}\\partial_z V\\,\\partial_z W + 4\\rho\\,e^{2W}\\left(\\partial_\\rho W\\right)^2 - 4e^{2W}\\partial_\\rho W + 4\\rho\\,e^{2W}\\left(\\partial_z W\\right)^2 - \\rho\\,e^{4V}\\left(\\partial_\\rho\\Omega\\right)^2 - \\rho\\,e^{4V}\\left(\\partial_z\\Omega\\right)^2 + 4\\rho\\,e^{2W}\\partial_\\rho^2\\nu + 4\\rho\\,e^{2W}\\partial_z^2\\nu\\right)e^{-2\\nu - 2W}}{2L^2\\,\\rho}",
+          "kretschmann": "K = \\dfrac{\\left(64\\rho^2e^{4W}\\left(\\partial_\\rho\\nu\\right)^2\\left(\\partial_\\rho V\\right)^2 - 64\\rho^2e^{4W}\\left(\\partial_\\rho\\nu\\right)^2\\,\\partial_\\rho V\\,\\partial_\\rho W + 64\\rho^2e^{4W}\\left(\\partial_\\rho\\nu\\right)^2\\left(\\partial_z V\\right)^2 - 64\\rho^2e^{4W}\\left(\\partial_\\rho\\nu\\right)^2\\,\\partial_z V\\,\\partial_z W + 64\\rho^2e^{4W}\\left(\\partial_\\rho\\nu\\right)^2\\left(\\partial_\\rho W\\right)^2 - 64\\rho\\,e^{4W}\\left(\\partial_\\rho\\nu\\right)^2\\,\\partial_\\rho W + 64\\rho^2e^{4W}\\left(\\partial_\\rho\\nu\\right)^2\\left(\\partial_z W\\right)^2 - 16\\rho^2e^{4V + 2W}\\left(\\partial_\\rho\\nu\\right)^2\\left(\\partial_\\rho\\Omega\\right)^2 - 16\\rho^2e^{4V + 2W}\\left(\\partial_\\rho\\nu\\right)^2\\left(\\partial_z\\Omega\\right)^2 + 32e^{4W}\\left(\\partial_\\rho\\nu\\right)^2 - 96\\rho^2e^{4W}\\partial_\\rho\\nu\\left(\\partial_\\rho V\\right)^2\\,\\partial_\\rho W - 64\\rho^2e^{4W}\\partial_\\rho\\nu\\,\\partial_\\rho V\\,\\partial_z V\\,\\partial_z W + 96\\rho^2e^{4W}\\partial_\\rho\\nu\\,\\partial_\\rho V\\left(\\partial_\\rho W\\right)^2 + 32\\rho^2e^{4W}\\partial_\\rho\\nu\\,\\partial_\\rho V\\left(\\partial_z W\\right)^2 + 32\\rho^2e^{4V + 2W}\\partial_\\rho\\nu\\,\\partial_\\rho V\\left(\\partial_\\rho\\Omega\\right)^2 + 96\\rho^2e^{4V + 2W}\\partial_\\rho\\nu\\,\\partial_\\rho V\\left(\\partial_z\\Omega\\right)^2 - 64\\rho^2e^{4W}\\partial_\\rho\\nu\\,\\partial_\\rho V\\,\\partial_\\rho^2 V + 64\\rho^2e^{4W}\\partial_\\rho\\nu\\,\\partial_\\rho V\\,\\partial_z^2 V + 32\\rho^2e^{4W}\\partial_\\rho\\nu\\,\\partial_\\rho V\\,\\partial_\\rho^2 W - 32\\rho^2e^{4W}\\partial_\\rho\\nu\\,\\partial_\\rho V\\,\\partial_z^2 W - 32\\rho^2e^{4W}\\partial_\\rho\\nu\\left(\\partial_z V\\right)^2\\,\\partial_\\rho W + 64\\rho^2e^{4W}\\partial_\\rho\\nu\\,\\partial_z V\\,\\partial_\\rho W\\,\\partial_z W - 64\\rho^2e^{4V + 2W}\\partial_\\rho\\nu\\,\\partial_z V\\,\\partial_\\rho\\Omega\\,\\partial_z\\Omega - 128\\rho^2e^{4W}\\partial_\\rho\\nu\\,\\partial_z V\\,\\partial_\\rho\\partial_z V + 64\\rho^2e^{4W}\\partial_\\rho\\nu\\,\\partial_z V\\,\\partial_\\rho\\partial_z W - 96\\rho\\,e^{4W}\\partial_\\rho\\nu\\left(\\partial_\\rho W\\right)^2 + 8\\rho^2e^{4V + 2W}\\partial_\\rho\\nu\\,\\partial_\\rho W\\left(\\partial_\\rho\\Omega\\right)^2 - 40\\rho^2e^{4V + 2W}\\partial_\\rho\\nu\\,\\partial_\\rho W\\left(\\partial_z\\Omega\\right)^2 + 32\\rho^2e^{4W}\\partial_\\rho\\nu\\,\\partial_\\rho W\\,\\partial_\\rho^2 V - 32\\rho^2e^{4W}\\partial_\\rho\\nu\\,\\partial_\\rho W\\,\\partial_z^2 V - 64\\rho^2e^{4W}\\partial_\\rho\\nu\\,\\partial_\\rho W\\,\\partial_\\rho^2 W + 64\\rho^2e^{4W}\\partial_\\rho\\nu\\,\\partial_\\rho W\\,\\partial_z^2 W + 64e^{4W}\\partial_\\rho\\nu\\,\\partial_\\rho W - 32\\rho\\,e^{4W}\\partial_\\rho\\nu\\left(\\partial_z W\\right)^2 + 48\\rho^2e^{4V + 2W}\\partial_\\rho\\nu\\,\\partial_z W\\,\\partial_\\rho\\Omega\\,\\partial_z\\Omega + 64\\rho^2e^{4W}\\partial_\\rho\\nu\\,\\partial_z W\\,\\partial_\\rho\\partial_z V - 128\\rho^2e^{4W}\\partial_\\rho\\nu\\,\\partial_z W\\,\\partial_\\rho\\partial_z W + 16\\rho^2e^{4V + 2W}\\partial_\\rho\\nu\\,\\partial_\\rho\\Omega\\,\\partial_\\rho^2\\Omega - 16\\rho^2e^{4V + 2W}\\partial_\\rho\\nu\\,\\partial_\\rho\\Omega\\,\\partial_z^2\\Omega + 32\\rho^2e^{4V + 2W}\\partial_\\rho\\nu\\,\\partial_z\\Omega\\,\\partial_\\rho\\partial_z\\Omega + 32\\rho\\,e^{4W}\\partial_\\rho\\nu\\,\\partial_\\rho^2 W - 32\\rho\\,e^{4W}\\partial_\\rho\\nu\\,\\partial_z^2 W + 64\\rho^2e^{4W}\\left(\\partial_z\\nu\\right)^2\\left(\\partial_\\rho V\\right)^2 - 64\\rho^2e^{4W}\\left(\\partial_z\\nu\\right)^2\\,\\partial_\\rho V\\,\\partial_\\rho W + 64\\rho^2e^{4W}\\left(\\partial_z\\nu\\right)^2\\left(\\partial_z V\\right)^2 - 64\\rho^2e^{4W}\\left(\\partial_z\\nu\\right)^2\\,\\partial_z V\\,\\partial_z W + 64\\rho^2e^{4W}\\left(\\partial_z\\nu\\right)^2\\left(\\partial_\\rho W\\right)^2 - 64\\rho\\,e^{4W}\\left(\\partial_z\\nu\\right)^2\\,\\partial_\\rho W + 64\\rho^2e^{4W}\\left(\\partial_z\\nu\\right)^2\\left(\\partial_z W\\right)^2 - 16\\rho^2e^{4V + 2W}\\left(\\partial_z\\nu\\right)^2\\left(\\partial_\\rho\\Omega\\right)^2 - 16\\rho^2e^{4V + 2W}\\left(\\partial_z\\nu\\right)^2\\left(\\partial_z\\Omega\\right)^2 + 32e^{4W}\\left(\\partial_z\\nu\\right)^2 - 32\\rho^2e^{4W}\\partial_z\\nu\\left(\\partial_\\rho V\\right)^2\\,\\partial_z W - 64\\rho^2e^{4W}\\partial_z\\nu\\,\\partial_\\rho V\\,\\partial_z V\\,\\partial_\\rho W + 64\\rho^2e^{4W}\\partial_z\\nu\\,\\partial_\\rho V\\,\\partial_\\rho W\\,\\partial_z W - 64\\rho^2e^{4V + 2W}\\partial_z\\nu\\,\\partial_\\rho V\\,\\partial_\\rho\\Omega\\,\\partial_z\\Omega - 128\\rho^2e^{4W}\\partial_z\\nu\\,\\partial_\\rho V\\,\\partial_\\rho\\partial_z V + 64\\rho^2e^{4W}\\partial_z\\nu\\,\\partial_\\rho V\\,\\partial_\\rho\\partial_z W - 96\\rho^2e^{4W}\\partial_z\\nu\\left(\\partial_z V\\right)^2\\,\\partial_z W + 32\\rho^2e^{4W}\\partial_z\\nu\\,\\partial_z V\\left(\\partial_\\rho W\\right)^2 + 96\\rho^2e^{4W}\\partial_z\\nu\\,\\partial_z V\\left(\\partial_z W\\right)^2 + 96\\rho^2e^{4V + 2W}\\partial_z\\nu\\,\\partial_z V\\left(\\partial_\\rho\\Omega\\right)^2 + 32\\rho^2e^{4V + 2W}\\partial_z\\nu\\,\\partial_z V\\left(\\partial_z\\Omega\\right)^2 + 64\\rho^2e^{4W}\\partial_z\\nu\\,\\partial_z V\\,\\partial_\\rho^2 V - 64\\rho^2e^{4W}\\partial_z\\nu\\,\\partial_z V\\,\\partial_z^2 V - 32\\rho^2e^{4W}\\partial_z\\nu\\,\\partial_z V\\,\\partial_\\rho^2 W + 32\\rho^2e^{4W}\\partial_z\\nu\\,\\partial_z V\\,\\partial_z^2 W - 64\\rho\\,e^{4W}\\partial_z\\nu\\,\\partial_\\rho W\\,\\partial_z W + 48\\rho^2e^{4V + 2W}\\partial_z\\nu\\,\\partial_\\rho W\\,\\partial_\\rho\\Omega\\,\\partial_z\\Omega + 64\\rho^2e^{4W}\\partial_z\\nu\\,\\partial_\\rho W\\,\\partial_\\rho\\partial_z V - 128\\rho^2e^{4W}\\partial_z\\nu\\,\\partial_\\rho W\\,\\partial_\\rho\\partial_z W - 40\\rho^2e^{4V + 2W}\\partial_z\\nu\\,\\partial_z W\\left(\\partial_\\rho\\Omega\\right)^2 + 8\\rho^2e^{4V + 2W}\\partial_z\\nu\\,\\partial_z W\\left(\\partial_z\\Omega\\right)^2 - 32\\rho^2e^{4W}\\partial_z\\nu\\,\\partial_z W\\,\\partial_\\rho^2 V + 32\\rho^2e^{4W}\\partial_z\\nu\\,\\partial_z W\\,\\partial_z^2 V + 64\\rho^2e^{4W}\\partial_z\\nu\\,\\partial_z W\\,\\partial_\\rho^2 W - 64\\rho^2e^{4W}\\partial_z\\nu\\,\\partial_z W\\,\\partial_z^2 W + 64e^{4W}\\partial_z\\nu\\,\\partial_z W + 32\\rho^2e^{4V + 2W}\\partial_z\\nu\\,\\partial_\\rho\\Omega\\,\\partial_\\rho\\partial_z\\Omega - 16\\rho^2e^{4V + 2W}\\partial_z\\nu\\,\\partial_z\\Omega\\,\\partial_\\rho^2\\Omega + 16\\rho^2e^{4V + 2W}\\partial_z\\nu\\,\\partial_z\\Omega\\,\\partial_z^2\\Omega + 64\\rho\\,e^{4W}\\partial_z\\nu\\,\\partial_\\rho\\partial_z W + 48\\rho^2e^{4W}\\left(\\partial_\\rho V\\right)^4 - 96\\rho^2e^{4W}\\left(\\partial_\\rho V\\right)^3\\,\\partial_\\rho W + 96\\rho^2e^{4W}\\left(\\partial_\\rho V\\right)^2\\left(\\partial_z V\\right)^2 - 96\\rho^2e^{4W}\\left(\\partial_\\rho V\\right)^2\\,\\partial_z V\\,\\partial_z W + 144\\rho^2e^{4W}\\left(\\partial_\\rho V\\right)^2\\left(\\partial_\\rho W\\right)^2 - 64\\rho\\,e^{4W}\\left(\\partial_\\rho V\\right)^2\\,\\partial_\\rho W + 32\\rho^2e^{4W}\\left(\\partial_\\rho V\\right)^2\\left(\\partial_z W\\right)^2 - 152\\rho^2e^{4V + 2W}\\left(\\partial_\\rho V\\right)^2\\left(\\partial_\\rho\\Omega\\right)^2 - 120\\rho^2e^{4V + 2W}\\left(\\partial_\\rho V\\right)^2\\left(\\partial_z\\Omega\\right)^2 + 32\\rho^2e^{4W}\\left(\\partial_\\rho V\\right)^2\\,\\partial_\\rho^2 W + 32e^{4W}\\left(\\partial_\\rho V\\right)^2 - 96\\rho^2e^{4W}\\partial_\\rho V\\left(\\partial_z V\\right)^2\\,\\partial_\\rho W + 224\\rho^2e^{4W}\\partial_\\rho V\\,\\partial_z V\\,\\partial_\\rho W\\,\\partial_z W - 64\\rho\\,e^{4W}\\partial_\\rho V\\,\\partial_z V\\,\\partial_z W - 64\\rho^2e^{4V + 2W}\\partial_\\rho V\\,\\partial_z V\\,\\partial_\\rho\\Omega\\,\\partial_z\\Omega + 64\\rho^2e^{4W}\\partial_\\rho V\\,\\partial_z V\\,\\partial_\\rho\\partial_z W - 96\\rho^2e^{4W}\\partial_\\rho V\\left(\\partial_\\rho W\\right)^3 + 64\\rho\\,e^{4W}\\partial_\\rho V\\left(\\partial_\\rho W\\right)^2 - 96\\rho^2e^{4W}\\partial_\\rho V\\,\\partial_\\rho W\\left(\\partial_z W\\right)^2 + 120\\rho^2e^{4V + 2W}\\partial_\\rho V\\,\\partial_\\rho W\\left(\\partial_\\rho\\Omega\\right)^2 + 88\\rho^2e^{4V + 2W}\\partial_\\rho V\\,\\partial_\\rho W\\left(\\partial_z\\Omega\\right)^2 + 64\\rho^2e^{4W}\\partial_\\rho V\\,\\partial_\\rho W\\,\\partial_\\rho^2 V - 64\\rho^2e^{4W}\\partial_\\rho V\\,\\partial_\\rho W\\,\\partial_\\rho^2 W - 32e^{4W}\\partial_\\rho V\\,\\partial_\\rho W + 32\\rho\\,e^{4W}\\partial_\\rho V\\left(\\partial_z W\\right)^2 + 32\\rho^2e^{4V + 2W}\\partial_\\rho V\\,\\partial_z W\\,\\partial_\\rho\\Omega\\,\\partial_z\\Omega + 64\\rho^2e^{4W}\\partial_\\rho V\\,\\partial_z W\\,\\partial_\\rho\\partial_z V - 64\\rho^2e^{4W}\\partial_\\rho V\\,\\partial_z W\\,\\partial_\\rho\\partial_z W - 64\\rho^2e^{4V + 2W}\\partial_\\rho V\\,\\partial_\\rho\\Omega\\,\\partial_\\rho^2\\Omega - 64\\rho^2e^{4V + 2W}\\partial_\\rho V\\,\\partial_z\\Omega\\,\\partial_\\rho\\partial_z\\Omega + 48\\rho^2e^{4W}\\left(\\partial_z V\\right)^4 - 96\\rho^2e^{4W}\\left(\\partial_z V\\right)^3\\,\\partial_z W + 32\\rho^2e^{4W}\\left(\\partial_z V\\right)^2\\left(\\partial_\\rho W\\right)^2 + 144\\rho^2e^{4W}\\left(\\partial_z V\\right)^2\\left(\\partial_z W\\right)^2 - 120\\rho^2e^{4V + 2W}\\left(\\partial_z V\\right)^2\\left(\\partial_\\rho\\Omega\\right)^2 - 152\\rho^2e^{4V + 2W}\\left(\\partial_z V\\right)^2\\left(\\partial_z\\Omega\\right)^2 + 32\\rho^2e^{4W}\\left(\\partial_z V\\right)^2\\,\\partial_z^2 W - 96\\rho^2e^{4W}\\partial_z V\\left(\\partial_\\rho W\\right)^2\\,\\partial_z W + 32\\rho\\,e^{4W}\\partial_z V\\,\\partial_\\rho W\\,\\partial_z W + 32\\rho^2e^{4V + 2W}\\partial_z V\\,\\partial_\\rho W\\,\\partial_\\rho\\Omega\\,\\partial_z\\Omega + 64\\rho^2e^{4W}\\partial_z V\\,\\partial_\\rho W\\,\\partial_\\rho\\partial_z V - 64\\rho^2e^{4W}\\partial_z V\\,\\partial_\\rho W\\,\\partial_\\rho\\partial_z W - 96\\rho^2e^{4W}\\partial_z V\\left(\\partial_z W\\right)^3 + 88\\rho^2e^{4V + 2W}\\partial_z V\\,\\partial_z W\\left(\\partial_\\rho\\Omega\\right)^2 + 120\\rho^2e^{4V + 2W}\\partial_z V\\,\\partial_z W\\left(\\partial_z\\Omega\\right)^2 + 64\\rho^2e^{4W}\\partial_z V\\,\\partial_z W\\,\\partial_z^2 V - 64\\rho^2e^{4W}\\partial_z V\\,\\partial_z W\\,\\partial_z^2 W - 64\\rho^2e^{4V + 2W}\\partial_z V\\,\\partial_\\rho\\Omega\\,\\partial_\\rho\\partial_z\\Omega - 64\\rho^2e^{4V + 2W}\\partial_z V\\,\\partial_z\\Omega\\,\\partial_z^2\\Omega + 48\\rho^2e^{4W}\\left(\\partial_\\rho W\\right)^4 - 96\\rho\\,e^{4W}\\left(\\partial_\\rho W\\right)^3 + 96\\rho^2e^{4W}\\left(\\partial_\\rho W\\right)^2\\left(\\partial_z W\\right)^2 - 40\\rho^2e^{4V + 2W}\\left(\\partial_\\rho W\\right)^2\\left(\\partial_\\rho\\Omega\\right)^2 - 16\\rho^2e^{4V + 2W}\\left(\\partial_\\rho W\\right)^2\\left(\\partial_z\\Omega\\right)^2 - 32\\rho^2e^{4W}\\left(\\partial_\\rho W\\right)^2\\,\\partial_\\rho^2 V + 80e^{4W}\\left(\\partial_\\rho W\\right)^2 - 96\\rho\\,e^{4W}\\partial_\\rho W\\left(\\partial_z W\\right)^2 - 48\\rho^2e^{4V + 2W}\\partial_\\rho W\\,\\partial_z W\\,\\partial_\\rho\\Omega\\,\\partial_z\\Omega - 64\\rho^2e^{4W}\\partial_\\rho W\\,\\partial_z W\\,\\partial_\\rho\\partial_z V + 16\\rho\\,e^{4V + 2W}\\partial_\\rho W\\left(\\partial_\\rho\\Omega\\right)^2 + 16\\rho^2e^{4V + 2W}\\partial_\\rho W\\,\\partial_\\rho\\Omega\\,\\partial_\\rho^2\\Omega + 16\\rho^2e^{4V + 2W}\\partial_\\rho W\\,\\partial_z\\Omega\\,\\partial_\\rho\\partial_z\\Omega + 64\\rho\\,e^{4W}\\partial_\\rho W\\,\\partial_\\rho^2 W + 48\\rho^2e^{4W}\\left(\\partial_z W\\right)^4 - 16\\rho^2e^{4V + 2W}\\left(\\partial_z W\\right)^2\\left(\\partial_\\rho\\Omega\\right)^2 - 40\\rho^2e^{4V + 2W}\\left(\\partial_z W\\right)^2\\left(\\partial_z\\Omega\\right)^2 - 32\\rho^2e^{4W}\\left(\\partial_z W\\right)^2\\,\\partial_z^2 V + 32e^{4W}\\left(\\partial_z W\\right)^2 + 16\\rho\\,e^{4V + 2W}\\partial_z W\\,\\partial_\\rho\\Omega\\,\\partial_z\\Omega + 16\\rho^2e^{4V + 2W}\\partial_z W\\,\\partial_\\rho\\Omega\\,\\partial_\\rho\\partial_z\\Omega + 16\\rho^2e^{4V + 2W}\\partial_z W\\,\\partial_z\\Omega\\,\\partial_z^2\\Omega + 64\\rho\\,e^{4W}\\partial_z W\\,\\partial_\\rho\\partial_z W + 11\\rho^2e^{8V}\\left(\\partial_\\rho\\Omega\\right)^4 + 22\\rho^2e^{8V}\\left(\\partial_\\rho\\Omega\\right)^2\\left(\\partial_z\\Omega\\right)^2 + 32\\rho^2e^{4V + 2W}\\left(\\partial_\\rho\\Omega\\right)^2\\,\\partial_\\rho^2 V - 24\\rho^2e^{4V + 2W}\\left(\\partial_\\rho\\Omega\\right)^2\\,\\partial_\\rho^2 W - 8e^{4V + 2W}\\left(\\partial_\\rho\\Omega\\right)^2 + 64\\rho^2e^{4V + 2W}\\partial_\\rho\\Omega\\,\\partial_z\\Omega\\,\\partial_\\rho\\partial_z V - 48\\rho^2e^{4V + 2W}\\partial_\\rho\\Omega\\,\\partial_z\\Omega\\,\\partial_\\rho\\partial_z W + 11\\rho^2e^{8V}\\left(\\partial_z\\Omega\\right)^4 + 32\\rho^2e^{4V + 2W}\\left(\\partial_z\\Omega\\right)^2\\,\\partial_z^2 V - 24\\rho^2e^{4V + 2W}\\left(\\partial_z\\Omega\\right)^2\\,\\partial_z^2 W + 32\\rho^2e^{4W}\\left(\\partial_\\rho^2 V\\right)^2 - 32\\rho^2e^{4W}\\partial_\\rho^2 V\\,\\partial_\\rho^2 W + 64\\rho^2e^{4W}\\left(\\partial_\\rho\\partial_z V\\right)^2 - 64\\rho^2e^{4W}\\partial_\\rho\\partial_z V\\,\\partial_\\rho\\partial_z W + 32\\rho^2e^{4W}\\left(\\partial_z^2 V\\right)^2 - 32\\rho^2e^{4W}\\partial_z^2 V\\,\\partial_z^2 W + 32\\rho^2e^{4W}\\left(\\partial_\\rho^2 W\\right)^2 + 64\\rho^2e^{4W}\\left(\\partial_\\rho\\partial_z W\\right)^2 + 32\\rho^2e^{4W}\\left(\\partial_z^2 W\\right)^2 - 8\\rho^2e^{4V + 2W}\\left(\\partial_\\rho^2\\Omega\\right)^2 - 16\\rho^2e^{4V + 2W}\\left(\\partial_\\rho\\partial_z\\Omega\\right)^2 - 8\\rho^2e^{4V + 2W}\\left(\\partial_z^2\\Omega\\right)^2 + 16\\rho^2e^{4W}\\left(\\partial_\\rho^2\\nu\\right)^2 + 32\\rho^2e^{4W}\\partial_\\rho^2\\nu\\,\\partial_z^2\\nu + 16\\rho^2e^{4W}\\left(\\partial_z^2\\nu\\right)^2\\right)e^{-4\\nu - 4W}}{4L^4\\,\\rho^2}"
+        },
+        {
+          "id": "polar",
+          "name": "Polar",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\psi",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi/2]",
+            "\\psi \\in [0, 2\\pi)",
+            "\\phi \\in [0, 2\\pi)",
+            "\\theta = 0,\\; z = \\dfrac{r^2}{2L^2},\\; \\kappa_3 \\le z \\le \\kappa_2 \\;\\text{(the horizon of the ring)}",
+            "\\theta = 0,\\; z = \\dfrac{r^2}{2L^2},\\; \\kappa_1 \\le z \\le 1 \\;\\text{(the horizon of the hole)}",
+            "\\theta = \\pi/2 \\;\\text{and}\\; \\theta = 0,\\; z = \\dfrac{r^2}{2L^2} < \\kappa_3 \\;\\text{or}\\; \\kappa_2 < z < \\kappa_1 \\;\\text{(the plane of the ring)}",
+            "\\theta = 0,\\; z = \\dfrac{r^2}{2L^2} > 1 \\;\\text{(the plane across it, through the hole)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Length that sets the scale ($L > 0$): the mass, the angular momentum and every radius are fixed multiples of its powers"
+            },
+            {
+              "symbol": "\\kappa_1",
+              "description": "Dimensionless, with $0 < \\kappa_3 \\le \\kappa_2 < \\kappa_1 \\le 1$: on the axis $\\rho = 0$ the horizon of the hole is $\\kappa_1 \\le z \\le 1$, and $\\kappa_1 = 1$ leaves the ring alone"
+            },
+            {
+              "symbol": "\\kappa_2",
+              "description": "Dimensionless: on the axis the horizon of the ring is $\\kappa_3 \\le z \\le \\kappa_2$, and $\\kappa_2 < z < \\kappa_1$ is the plane of the ring between the ring and the hole"
+            },
+            {
+              "symbol": "\\kappa_3",
+              "description": "Dimensionless: on the axis $z < \\kappa_3$ is the plane of the ring outside the ring"
+            },
+            {
+              "symbol": "\\beta",
+              "description": "Dimensionless, the $\\bar c_2$ of Elvang and Figueras: the hole's own angular momentum, which vanishes at $\\beta = 0$. The ring and the hole are in balance, with no conical membrane between them, where $\\left(1 + \\kappa_2\\beta\\right)^2 = \\dfrac{\\left(\\kappa_1 - \\kappa_2\\right)^2}{\\kappa_1\\left(1 - \\kappa_2\\right)\\left(1 - \\kappa_3\\right)\\left(\\kappa_1 - \\kappa_3\\right)}$"
+            },
+            {
+              "symbol": "c_1 = \\sqrt{\\dfrac{2\\kappa_1\\kappa_2}{\\kappa_3}}",
+              "description": "The parameter of the soliton that sets the ring turning, in units of $L$; at this value the metric is smooth across $\\rho = 0$, $z = 0$"
+            },
+            {
+              "symbol": "c_2 = \\beta\\,c_1\\left(1 - \\kappa_2\\right)",
+              "description": "The parameter of the soliton that sets the hole turning, in units of $L$"
+            },
+            {
+              "symbol": "q = \\dfrac{\\beta\\,c_1}{1 + \\kappa_2\\beta}",
+              "description": "Shift of $t$ along $\\psi$, in units of $L$, with which $g_{t\\psi}$ vanishes at infinity"
+            },
+            {
+              "symbol": "k = \\dfrac{1}{1 + \\kappa_2\\beta}",
+              "description": "Constant with which $g_{\\rho\\rho}$ at infinity is flat space's and the circles of $\\psi$ and $\\phi$ close smoothly with the period $2\\pi$"
+            },
+            {
+              "symbol": "\\rho = \\dfrac{r^2\\sin\\theta\\cos\\theta}{L^2}",
+              "description": "Weyl's $\\rho$ in units of $L^2$"
+            },
+            {
+              "symbol": "z = \\dfrac{r^2\\left(\\cos^2\\theta - \\sin^2\\theta\\right)}{2L^2}",
+              "description": "Weyl's $z$ in units of $L^2$, measured from the rod end where the seed's rod of negative density began"
+            },
+            {
+              "symbol": "\\mu_1 = \\sqrt{\\rho^2 + z^2} - z",
+              "description": "Soliton of the rod end $z = 0$, where the seed's rod of negative density began"
+            },
+            {
+              "symbol": "\\mu_2 = \\sqrt{\\rho^2 + \\left(z - 1\\right)^2} - \\left(z - 1\\right)",
+              "description": "Soliton of the rod end $z = 1$, where the hole's horizon meets the plane across the ring's"
+            },
+            {
+              "symbol": "\\mu_3 = \\sqrt{\\rho^2 + \\left(z - \\kappa_1\\right)^2} - \\left(z - \\kappa_1\\right)",
+              "description": "Soliton of the rod end $z = \\kappa_1$, where the hole's horizon meets the plane of the ring"
+            },
+            {
+              "symbol": "\\mu_4 = \\sqrt{\\rho^2 + \\left(z - \\kappa_2\\right)^2} - \\left(z - \\kappa_2\\right)",
+              "description": "Soliton of the rod end $z = \\kappa_2$, the inner edge of the ring"
+            },
+            {
+              "symbol": "\\mu_5 = \\sqrt{\\rho^2 + \\left(z - \\kappa_3\\right)^2} - \\left(z - \\kappa_3\\right)",
+              "description": "Soliton of the rod end $z = \\kappa_3$, the outer edge of the ring"
+            },
+            {
+              "symbol": "R_1 = \\sqrt{\\rho^2 + z^2}",
+              "description": "Distance from the rod end $z = 0$ in the flat half plane of $\\rho$ and $z$"
+            },
+            {
+              "symbol": "R_2 = \\sqrt{\\rho^2 + \\left(z - 1\\right)^2}",
+              "description": "Distance from the rod end $z = 1$ in that half plane"
+            },
+            {
+              "symbol": "M_0 = \\mu_2\\mu_5^2\\left(\\mu_1 - \\mu_3\\right)^2\\left(\\mu_2 - \\mu_4\\right)^2\\left(\\rho^2 + \\mu_1\\mu_2\\right)^2\\left(\\rho^2 + \\mu_1\\mu_4\\right)^2\\left(\\rho^2 + \\mu_2\\mu_3\\right)^2",
+              "description": "The seed's part of $H_x$, the static ring and hole"
+            },
+            {
+              "symbol": "M_1 = \\mu_1^2\\mu_2\\mu_3\\mu_4\\mu_5\\,\\rho^2\\left(\\mu_1 - \\mu_2\\right)^2\\left(\\mu_2 - \\mu_4\\right)^2\\left(\\mu_1 - \\mu_5\\right)^2\\left(\\rho^2 + \\mu_2\\mu_3\\right)^2",
+              "description": "The part of $H_x$ that the ring's rotation adds"
+            },
+            {
+              "symbol": "M_2 = \\mu_2\\mu_3\\mu_4\\mu_5\\,\\rho^2\\left(\\mu_1 - \\mu_2\\right)^2\\left(\\mu_1 - \\mu_3\\right)^2\\left(\\rho^2 + \\mu_1\\mu_4\\right)^2\\left(\\rho^2 + \\mu_2\\mu_5\\right)^2",
+              "description": "The part of $H_x$ that the hole's rotation adds"
+            },
+            {
+              "symbol": "M_3 = 2\\mu_1\\mu_2\\mu_3\\mu_4\\mu_5\\left(\\mu_1 - \\mu_3\\right)\\left(\\mu_1 - \\mu_5\\right)\\left(\\mu_2 - \\mu_4\\right)\\left(\\rho^2 + \\mu_1^2\\right)\\left(\\rho^2 + \\mu_2^2\\right)\\left(\\rho^2 + \\mu_1\\mu_4\\right)\\left(\\rho^2 + \\mu_2\\mu_3\\right)\\left(\\rho^2 + \\mu_2\\mu_5\\right)",
+              "description": "The part of $H_x$ linear in each rotation"
+            },
+            {
+              "symbol": "M_4 = \\mu_1^2\\mu_2\\mu_3^2\\mu_4^2\\left(\\mu_1 - \\mu_5\\right)^2\\left(\\rho^2 + \\mu_1\\mu_2\\right)^2\\left(\\rho^2 + \\mu_2\\mu_5\\right)^2",
+              "description": "The part of $H_x$ quadratic in each rotation"
+            },
+            {
+              "symbol": "F = \\mu_1\\mu_5\\left(\\mu_1 - \\mu_3\\right)^2\\left(\\mu_2 - \\mu_4\\right)^2\\left(\\rho^2 + \\mu_1\\mu_3\\right)\\left(\\rho^2 + \\mu_2\\mu_3\\right)\\left(\\rho^2 + \\mu_1\\mu_4\\right)\\left(\\rho^2 + \\mu_2\\mu_4\\right)\\left(\\rho^2 + \\mu_2\\mu_5\\right)\\left(\\rho^2 + \\mu_3\\mu_5\\right)\\left(\\rho^2 + \\mu_1^2\\right)\\left(\\rho^2 + \\mu_2^2\\right)\\left(\\rho^2 + \\mu_3^2\\right)\\left(\\rho^2 + \\mu_4^2\\right)\\left(\\rho^2 + \\mu_5^2\\right)",
+              "description": "Common denominator of $H_x$, $H_y$, and $\\omega_\\psi$"
+            },
+            {
+              "symbol": "H_x = \\dfrac{M_0 + c_1^2\\,M_1 + c_2^2\\,M_2 + c_1\\,c_2\\,M_3 + c_1^2\\,c_2^2\\,M_4}{F}",
+              "description": "Elvang and Figueras's $H_x$"
+            },
+            {
+              "symbol": "H_y = \\dfrac{\\mu_3}{\\mu_4F}\\left(\\dfrac{\\mu_1}{\\mu_2}M_0 - \\dfrac{\\rho^2}{\\mu_1\\mu_2}c_1^2\\,M_1 - \\dfrac{\\mu_1\\mu_2}{\\rho^2}c_2^2\\,M_2 + c_1\\,c_2\\,M_3 + \\dfrac{\\mu_2}{\\mu_1}c_1^2\\,c_2^2\\,M_4\\right)",
+              "description": "Elvang and Figueras's $H_y$, with $g_{tt} = -H_y/H_x$, so it vanishes on the ergosurfaces"
+            },
+            {
+              "symbol": "G_y = \\dfrac{\\mu_3\\mu_5}{\\mu_4}",
+              "description": "Elvang and Figueras's $G_y$ in units of $L^2$, the part of the metric the solitons leave as the seed had it"
+            },
+            {
+              "symbol": "P = \\left(\\rho^2 + \\mu_3\\mu_4\\right)^2\\left(\\rho^2 + \\mu_1\\mu_5\\right)\\left(\\rho^2 + \\mu_4\\mu_5\\right)",
+              "description": "Elvang and Figueras's $P$"
+            },
+            {
+              "symbol": "\\omega_\\psi = \\dfrac{2}{F}\\sqrt{\\dfrac{G_y}{\\rho^2}}\\left(c_1\\,R_1\\sqrt{M_0\\,M_1} - c_2\\,R_2\\sqrt{M_0\\,M_2} + c_1^2\\,c_2\\,R_2\\sqrt{M_1\\,M_4} - c_1\\,c_2^2\\,R_1\\sqrt{M_2\\,M_4}\\right)",
+              "description": "Elvang and Figueras's $\\omega_\\psi$ in units of $L$, with $g_{t\\psi} = -L\\left(\\omega_\\psi + qH_y\\right)/H_x$"
+            },
+            {
+              "symbol": "V = V(r,\\theta)",
+              "description": "Dimensionless function: $L\\,e^{V}$ is the radius of the circle of $\\psi$ through a point. For black Saturn $e^{2V} = \\dfrac{G_yH_x^2 - \\left(\\omega_\\psi + qH_y\\right)^2}{H_xH_y}$, as a function of $r$ and $\\theta$ through $\\rho$ and $z$"
+            },
+            {
+              "symbol": "\\Omega = \\Omega(r,\\theta)",
+              "description": "Dimensionless function: $c\\,\\Omega/L$ is the angular velocity about the hole, seen from infinity, of an observer with no angular momentum, the dragging of frames. For black Saturn $\\Omega = \\dfrac{\\omega_\\psi + qH_y}{H_x}e^{-2V}$, as a function of $r$ and $\\theta$ through $\\rho$ and $z$"
+            },
+            {
+              "symbol": "W = W(r,\\theta)",
+              "description": "Dimensionless function: $L^2\\rho\\,e^{V - W}$ is the area of the torus of $\\psi$ and $\\phi$ through a point over $4\\pi^2$. For black Saturn $e^{2W} = G_y$, as a function of $r$ and $\\theta$ through $\\rho$ and $z$"
+            },
+            {
+              "symbol": "\\nu = \\nu(r,\\theta)",
+              "description": "Dimensionless function, the conformal factor of the half plane of $\\rho$ and $z$. For black Saturn $e^{2\\nu} = k^2H_xP$, as a function of $r$ and $\\theta$ through $\\rho$ and $z$"
+            }
+          ],
+          "convention": "We use the polar coordinates $(t, r, \\theta, \\psi, \\phi)$ of Elvang and Figueras, with $r$ a length, in which flat space is $-c^2dt^2 + dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\psi^2 + r^2\\cos^2\\theta\\,d\\phi^2$. The functions $V$, $\\Omega$, $W$, and $\\nu$ are those of Weyl's chart and stand free in every component. We take components in the chart $x^0 = ct$, so $\\dot{t}$ in the geodesic equations means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -e^{2W - 2V}c^2dt^2 + L^2e^{2V}\\left(d\\psi - \\dfrac{\\Omega}{L}c\\,dt\\right)^2 + \\dfrac{r^4\\sin^2\\theta\\cos^2\\theta}{L^2}e^{-2W}d\\phi^2 + \\dfrac{r^2e^{2\\nu}}{L^2}\\left(dr^2 + r^2d\\theta^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{2W - 2V} + \\Omega^2e^{2V}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\psi"
+              ],
+              "value": "-L\\,\\Omega\\,e^{2V}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "t"
+              ],
+              "value": "-L\\,\\Omega\\,e^{2V}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r^2e^{2\\nu}}{L^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r^4e^{2\\nu}}{L^2}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "L^2e^{2V}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{r^4\\left(\\sin\\theta + 1\\right)\\left(\\sin\\theta - 1\\right)e^{-2W}\\sin^2\\theta}{L^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{L^2\\left(4e^{2W}\\partial_\\theta^2\\nu\\,\\sin\\theta - 4e^{2W}\\partial_\\theta^2\\nu\\,\\sin^3\\theta + 4r^2e^{2W}\\partial_r^2\\nu\\,\\sin\\theta - 4r^2e^{2W}\\partial_r^2\\nu\\,\\sin^3\\theta - e^{4V}\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin\\theta + e^{4V}\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^3\\theta - r^2e^{4V}\\left(\\partial_r\\Omega\\right)^2\\,\\sin\\theta + r^2e^{4V}\\left(\\partial_r\\Omega\\right)^2\\,\\sin^3\\theta - 4e^{2W}\\partial_\\theta W\\,\\cos\\theta + 8e^{2W}\\partial_\\theta W\\,\\sin^2\\theta\\cos\\theta + 4e^{2W}\\left(\\partial_\\theta W\\right)^2\\,\\sin\\theta - 4e^{2W}\\left(\\partial_\\theta W\\right)^2\\,\\sin^3\\theta - 8r\\,e^{2W}\\partial_r W\\,\\sin\\theta + 8r\\,e^{2W}\\partial_r W\\,\\sin^3\\theta + 4r^2e^{2W}\\left(\\partial_r W\\right)^2\\,\\sin\\theta - 4r^2e^{2W}\\left(\\partial_r W\\right)^2\\,\\sin^3\\theta - 4e^{2W}\\partial_\\theta V\\,\\partial_\\theta W\\,\\sin\\theta + 4e^{2W}\\partial_\\theta V\\,\\partial_\\theta W\\,\\sin^3\\theta + 4e^{2W}\\left(\\partial_\\theta V\\right)^2\\,\\sin\\theta - 4e^{2W}\\left(\\partial_\\theta V\\right)^2\\,\\sin^3\\theta - 4r^2e^{2W}\\partial_r V\\,\\partial_r W\\,\\sin\\theta + 4r^2e^{2W}\\partial_r V\\,\\partial_r W\\,\\sin^3\\theta + 4r^2e^{2W}\\left(\\partial_r V\\right)^2\\,\\sin\\theta - 4r^2e^{2W}\\left(\\partial_r V\\right)^2\\,\\sin^3\\theta + 4r\\,e^{2W}\\partial_r\\nu\\,\\sin\\theta - 4r\\,e^{2W}\\partial_r\\nu\\,\\sin^3\\theta\\right)e^{-2\\nu - 2W}\\csc\\theta}{2r^4\\left(\\sin\\theta + 1\\right)\\left(\\sin\\theta - 1\\right)}",
+          "kretschmann": "K = \\dfrac{\\left(\\sin^2\\theta + 2\\sin\\theta + 1\\right)\\left(64L^4\\,r^4e^{4W}\\left(\\partial_r\\nu\\right)^2\\left(\\partial_r V\\right)^2\\,\\sin^2\\theta - 64L^4\\,r^4e^{4W}\\left(\\partial_r\\nu\\right)^2\\left(\\partial_r V\\right)^2\\,\\sin^4\\theta - 64L^4\\,r^4e^{4W}\\left(\\partial_r\\nu\\right)^2\\,\\partial_r V\\,\\partial_r W\\,\\sin^2\\theta + 64L^4\\,r^4e^{4W}\\left(\\partial_r\\nu\\right)^2\\,\\partial_r V\\,\\partial_r W\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\left(\\partial_r\\nu\\right)^2\\left(\\partial_\\theta V\\right)^2\\,\\sin^2\\theta - 64L^4\\,r^2e^{4W}\\left(\\partial_r\\nu\\right)^2\\left(\\partial_\\theta V\\right)^2\\,\\sin^4\\theta - 64L^4\\,r^2e^{4W}\\left(\\partial_r\\nu\\right)^2\\,\\partial_\\theta V\\,\\partial_\\theta W\\,\\sin^2\\theta + 64L^4\\,r^2e^{4W}\\left(\\partial_r\\nu\\right)^2\\,\\partial_\\theta V\\,\\partial_\\theta W\\,\\sin^4\\theta + 64L^4\\,r^4e^{4W}\\left(\\partial_r\\nu\\right)^2\\left(\\partial_r W\\right)^2\\,\\sin^2\\theta - 64L^4\\,r^4e^{4W}\\left(\\partial_r\\nu\\right)^2\\left(\\partial_r W\\right)^2\\,\\sin^4\\theta - 128L^4\\,r^3e^{4W}\\left(\\partial_r\\nu\\right)^2\\,\\partial_r W\\,\\sin^2\\theta + 128L^4\\,r^3e^{4W}\\left(\\partial_r\\nu\\right)^2\\,\\partial_r W\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\left(\\partial_r\\nu\\right)^2\\left(\\partial_\\theta W\\right)^2\\,\\sin^2\\theta - 64L^4\\,r^2e^{4W}\\left(\\partial_r\\nu\\right)^2\\left(\\partial_\\theta W\\right)^2\\,\\sin^4\\theta + 128L^4\\,r^2e^{4W}\\left(\\partial_r\\nu\\right)^2\\,\\partial_\\theta W\\,\\sin^3\\theta\\cos\\theta - 64L^4\\,r^2e^{4W}\\left(\\partial_r\\nu\\right)^2\\,\\partial_\\theta W\\,\\sin\\theta\\cos\\theta - 16L^4\\,r^4e^{4V + 2W}\\left(\\partial_r\\nu\\right)^2\\left(\\partial_r\\Omega\\right)^2\\,\\sin^2\\theta + 16L^4\\,r^4e^{4V + 2W}\\left(\\partial_r\\nu\\right)^2\\left(\\partial_r\\Omega\\right)^2\\,\\sin^4\\theta - 16L^4\\,r^2e^{4V + 2W}\\left(\\partial_r\\nu\\right)^2\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^2\\theta + 16L^4\\,r^2e^{4V + 2W}\\left(\\partial_r\\nu\\right)^2\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^4\\theta + 16L^4\\,r^2e^{4W}\\left(\\partial_r\\nu\\right)^2\\,\\sin^2\\theta - 16L^4\\,r^2e^{4W}\\left(\\partial_r\\nu\\right)^2\\,\\sin^4\\theta + 32L^4\\,r^2e^{4W}\\left(\\partial_r\\nu\\right)^2 - 96L^4\\,r^4e^{4W}\\partial_r\\nu\\left(\\partial_r V\\right)^2\\,\\partial_r W\\,\\sin^2\\theta + 96L^4\\,r^4e^{4W}\\partial_r\\nu\\left(\\partial_r V\\right)^2\\,\\partial_r W\\,\\sin^4\\theta + 192L^4\\,r^3e^{4W}\\partial_r\\nu\\left(\\partial_r V\\right)^2\\,\\sin^2\\theta - 192L^4\\,r^3e^{4W}\\partial_r\\nu\\left(\\partial_r V\\right)^2\\,\\sin^4\\theta - 64L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_r V\\,\\partial_\\theta V\\,\\partial_\\theta W\\,\\sin^2\\theta + 64L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_r V\\,\\partial_\\theta V\\,\\partial_\\theta W\\,\\sin^4\\theta + 96L^4\\,r^4e^{4W}\\partial_r\\nu\\,\\partial_r V\\left(\\partial_r W\\right)^2\\,\\sin^2\\theta - 96L^4\\,r^4e^{4W}\\partial_r\\nu\\,\\partial_r V\\left(\\partial_r W\\right)^2\\,\\sin^4\\theta - 192L^4\\,r^3e^{4W}\\partial_r\\nu\\,\\partial_r V\\,\\partial_r W\\,\\sin^2\\theta + 192L^4\\,r^3e^{4W}\\partial_r\\nu\\,\\partial_r V\\,\\partial_r W\\,\\sin^4\\theta + 32L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_r V\\left(\\partial_\\theta W\\right)^2\\,\\sin^2\\theta - 32L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_r V\\left(\\partial_\\theta W\\right)^2\\,\\sin^4\\theta + 32L^4\\,r^4e^{4V + 2W}\\partial_r\\nu\\,\\partial_r V\\left(\\partial_r\\Omega\\right)^2\\,\\sin^2\\theta - 32L^4\\,r^4e^{4V + 2W}\\partial_r\\nu\\,\\partial_r V\\left(\\partial_r\\Omega\\right)^2\\,\\sin^4\\theta + 96L^4\\,r^2e^{4V + 2W}\\partial_r\\nu\\,\\partial_r V\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^2\\theta - 96L^4\\,r^2e^{4V + 2W}\\partial_r\\nu\\,\\partial_r V\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^4\\theta - 64L^4\\,r^4e^{4W}\\partial_r\\nu\\,\\partial_r V\\,\\partial_r^2 V\\,\\sin^2\\theta + 64L^4\\,r^4e^{4W}\\partial_r\\nu\\,\\partial_r V\\,\\partial_r^2 V\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_r V\\,\\partial_\\theta^2 V\\,\\sin^2\\theta - 64L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_r V\\,\\partial_\\theta^2 V\\,\\sin^4\\theta + 32L^4\\,r^4e^{4W}\\partial_r\\nu\\,\\partial_r V\\,\\partial_r^2 W\\,\\sin^2\\theta - 32L^4\\,r^4e^{4W}\\partial_r\\nu\\,\\partial_r V\\,\\partial_r^2 W\\,\\sin^4\\theta - 32L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_r V\\,\\partial_\\theta^2 W\\,\\sin^2\\theta + 32L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_r V\\,\\partial_\\theta^2 W\\,\\sin^4\\theta - 32L^4\\,r^2e^{4W}\\partial_r\\nu\\left(\\partial_\\theta V\\right)^2\\,\\partial_r W\\,\\sin^2\\theta + 32L^4\\,r^2e^{4W}\\partial_r\\nu\\left(\\partial_\\theta V\\right)^2\\,\\partial_r W\\,\\sin^4\\theta + 256L^4\\,r\\,e^{4W}\\partial_r\\nu\\left(\\partial_\\theta V\\right)^2\\,\\sin^2\\theta - 256L^4\\,r\\,e^{4W}\\partial_r\\nu\\left(\\partial_\\theta V\\right)^2\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_\\theta V\\,\\partial_r W\\,\\partial_\\theta W\\,\\sin^2\\theta - 64L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_\\theta V\\,\\partial_r W\\,\\partial_\\theta W\\,\\sin^4\\theta - 256L^4\\,r\\,e^{4W}\\partial_r\\nu\\,\\partial_\\theta V\\,\\partial_\\theta W\\,\\sin^2\\theta + 256L^4\\,r\\,e^{4W}\\partial_r\\nu\\,\\partial_\\theta V\\,\\partial_\\theta W\\,\\sin^4\\theta - 64L^4\\,r^2e^{4V + 2W}\\partial_r\\nu\\,\\partial_\\theta V\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^2\\theta + 64L^4\\,r^2e^{4V + 2W}\\partial_r\\nu\\,\\partial_\\theta V\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^4\\theta - 128L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_\\theta V\\,\\partial_r\\partial_\\theta V\\,\\sin^2\\theta + 128L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_\\theta V\\,\\partial_r\\partial_\\theta V\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_\\theta V\\,\\partial_r\\partial_\\theta W\\,\\sin^2\\theta - 64L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_\\theta V\\,\\partial_r\\partial_\\theta W\\,\\sin^4\\theta + 128L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_r W\\,\\partial_\\theta W\\,\\sin^3\\theta\\cos\\theta - 64L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_r W\\,\\partial_\\theta W\\,\\sin\\theta\\cos\\theta + 8L^4\\,r^4e^{4V + 2W}\\partial_r\\nu\\,\\partial_r W\\left(\\partial_r\\Omega\\right)^2\\,\\sin^2\\theta - 8L^4\\,r^4e^{4V + 2W}\\partial_r\\nu\\,\\partial_r W\\left(\\partial_r\\Omega\\right)^2\\,\\sin^4\\theta - 40L^4\\,r^2e^{4V + 2W}\\partial_r\\nu\\,\\partial_r W\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^2\\theta + 40L^4\\,r^2e^{4V + 2W}\\partial_r\\nu\\,\\partial_r W\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^4\\theta + 32L^4\\,r^4e^{4W}\\partial_r\\nu\\,\\partial_r W\\,\\partial_r^2 V\\,\\sin^2\\theta - 32L^4\\,r^4e^{4W}\\partial_r\\nu\\,\\partial_r W\\,\\partial_r^2 V\\,\\sin^4\\theta - 32L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_r W\\,\\partial_\\theta^2 V\\,\\sin^2\\theta + 32L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_r W\\,\\partial_\\theta^2 V\\,\\sin^4\\theta - 64L^4\\,r^4e^{4W}\\partial_r\\nu\\,\\partial_r W\\,\\partial_r^2 W\\,\\sin^2\\theta + 64L^4\\,r^4e^{4W}\\partial_r\\nu\\,\\partial_r W\\,\\partial_r^2 W\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_r W\\,\\partial_\\theta^2 W\\,\\sin^2\\theta - 64L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_r W\\,\\partial_\\theta^2 W\\,\\sin^4\\theta - 192L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_r W\\,\\sin^2\\theta + 192L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_r W\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_r W + 192L^4\\,r\\,e^{4W}\\partial_r\\nu\\left(\\partial_\\theta W\\right)^2\\,\\sin^2\\theta - 192L^4\\,r\\,e^{4W}\\partial_r\\nu\\left(\\partial_\\theta W\\right)^2\\,\\sin^4\\theta + 48L^4\\,r^2e^{4V + 2W}\\partial_r\\nu\\,\\partial_\\theta W\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^2\\theta - 48L^4\\,r^2e^{4V + 2W}\\partial_r\\nu\\,\\partial_\\theta W\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_\\theta W\\,\\partial_r\\partial_\\theta V\\,\\sin^2\\theta - 64L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_\\theta W\\,\\partial_r\\partial_\\theta V\\,\\sin^4\\theta - 128L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_\\theta W\\,\\partial_r\\partial_\\theta W\\,\\sin^2\\theta + 128L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_\\theta W\\,\\partial_r\\partial_\\theta W\\,\\sin^4\\theta + 256L^4\\,r\\,e^{4W}\\partial_r\\nu\\,\\partial_\\theta W\\,\\sin^3\\theta\\cos\\theta - 128L^4\\,r\\,e^{4W}\\partial_r\\nu\\,\\partial_\\theta W\\,\\sin\\theta\\cos\\theta - 48L^4\\,r^3e^{4V + 2W}\\partial_r\\nu\\left(\\partial_r\\Omega\\right)^2\\,\\sin^2\\theta + 48L^4\\,r^3e^{4V + 2W}\\partial_r\\nu\\left(\\partial_r\\Omega\\right)^2\\,\\sin^4\\theta + 16L^4\\,r^4e^{4V + 2W}\\partial_r\\nu\\,\\partial_r\\Omega\\,\\partial_r^2\\Omega\\,\\sin^2\\theta - 16L^4\\,r^4e^{4V + 2W}\\partial_r\\nu\\,\\partial_r\\Omega\\,\\partial_r^2\\Omega\\,\\sin^4\\theta - 16L^4\\,r^2e^{4V + 2W}\\partial_r\\nu\\,\\partial_r\\Omega\\,\\partial_\\theta^2\\Omega\\,\\sin^2\\theta + 16L^4\\,r^2e^{4V + 2W}\\partial_r\\nu\\,\\partial_r\\Omega\\,\\partial_\\theta^2\\Omega\\,\\sin^4\\theta - 64L^4\\,r\\,e^{4V + 2W}\\partial_r\\nu\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^2\\theta + 64L^4\\,r\\,e^{4V + 2W}\\partial_r\\nu\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^4\\theta + 32L^4\\,r^2e^{4V + 2W}\\partial_r\\nu\\,\\partial_\\theta\\Omega\\,\\partial_r\\partial_\\theta\\Omega\\,\\sin^2\\theta - 32L^4\\,r^2e^{4V + 2W}\\partial_r\\nu\\,\\partial_\\theta\\Omega\\,\\partial_r\\partial_\\theta\\Omega\\,\\sin^4\\theta + 64L^4\\,r^3e^{4W}\\partial_r\\nu\\,\\partial_r^2 W\\,\\sin^2\\theta - 64L^4\\,r^3e^{4W}\\partial_r\\nu\\,\\partial_r^2 W\\,\\sin^4\\theta - 128L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_r\\partial_\\theta W\\,\\sin^3\\theta\\cos\\theta + 64L^4\\,r^2e^{4W}\\partial_r\\nu\\,\\partial_r\\partial_\\theta W\\,\\sin\\theta\\cos\\theta - 64L^4\\,r\\,e^{4W}\\partial_r\\nu\\,\\partial_\\theta^2 W\\,\\sin^2\\theta + 64L^4\\,r\\,e^{4W}\\partial_r\\nu\\,\\partial_\\theta^2 W\\,\\sin^4\\theta + 32L^4\\,r^3e^{4W}\\partial_r\\nu\\,\\partial_r^2\\nu\\,\\sin^2\\theta - 32L^4\\,r^3e^{4W}\\partial_r\\nu\\,\\partial_r^2\\nu\\,\\sin^4\\theta + 32L^4\\,r\\,e^{4W}\\partial_r\\nu\\,\\partial_\\theta^2\\nu\\,\\sin^2\\theta - 32L^4\\,r\\,e^{4W}\\partial_r\\nu\\,\\partial_\\theta^2\\nu\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\left(\\partial_\\theta\\nu\\right)^2\\left(\\partial_r V\\right)^2\\,\\sin^2\\theta - 64L^4\\,r^2e^{4W}\\left(\\partial_\\theta\\nu\\right)^2\\left(\\partial_r V\\right)^2\\,\\sin^4\\theta - 64L^4\\,r^2e^{4W}\\left(\\partial_\\theta\\nu\\right)^2\\,\\partial_r V\\,\\partial_r W\\,\\sin^2\\theta + 64L^4\\,r^2e^{4W}\\left(\\partial_\\theta\\nu\\right)^2\\,\\partial_r V\\,\\partial_r W\\,\\sin^4\\theta + 64L^4e^{4W}\\left(\\partial_\\theta\\nu\\right)^2\\left(\\partial_\\theta V\\right)^2\\,\\sin^2\\theta - 64L^4e^{4W}\\left(\\partial_\\theta\\nu\\right)^2\\left(\\partial_\\theta V\\right)^2\\,\\sin^4\\theta - 64L^4e^{4W}\\left(\\partial_\\theta\\nu\\right)^2\\,\\partial_\\theta V\\,\\partial_\\theta W\\,\\sin^2\\theta + 64L^4e^{4W}\\left(\\partial_\\theta\\nu\\right)^2\\,\\partial_\\theta V\\,\\partial_\\theta W\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\left(\\partial_\\theta\\nu\\right)^2\\left(\\partial_r W\\right)^2\\,\\sin^2\\theta - 64L^4\\,r^2e^{4W}\\left(\\partial_\\theta\\nu\\right)^2\\left(\\partial_r W\\right)^2\\,\\sin^4\\theta - 128L^4\\,r\\,e^{4W}\\left(\\partial_\\theta\\nu\\right)^2\\,\\partial_r W\\,\\sin^2\\theta + 128L^4\\,r\\,e^{4W}\\left(\\partial_\\theta\\nu\\right)^2\\,\\partial_r W\\,\\sin^4\\theta + 64L^4e^{4W}\\left(\\partial_\\theta\\nu\\right)^2\\left(\\partial_\\theta W\\right)^2\\,\\sin^2\\theta - 64L^4e^{4W}\\left(\\partial_\\theta\\nu\\right)^2\\left(\\partial_\\theta W\\right)^2\\,\\sin^4\\theta + 128L^4e^{4W}\\left(\\partial_\\theta\\nu\\right)^2\\,\\partial_\\theta W\\,\\sin^3\\theta\\cos\\theta - 64L^4e^{4W}\\left(\\partial_\\theta\\nu\\right)^2\\,\\partial_\\theta W\\,\\sin\\theta\\cos\\theta - 16L^4\\,r^2e^{4V + 2W}\\left(\\partial_\\theta\\nu\\right)^2\\left(\\partial_r\\Omega\\right)^2\\,\\sin^2\\theta + 16L^4\\,r^2e^{4V + 2W}\\left(\\partial_\\theta\\nu\\right)^2\\left(\\partial_r\\Omega\\right)^2\\,\\sin^4\\theta - 16L^4e^{4V + 2W}\\left(\\partial_\\theta\\nu\\right)^2\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^2\\theta + 16L^4e^{4V + 2W}\\left(\\partial_\\theta\\nu\\right)^2\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^4\\theta + 32L^4e^{4W}\\left(\\partial_\\theta\\nu\\right)^2 - 32L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\left(\\partial_r V\\right)^2\\,\\partial_\\theta W\\,\\sin^2\\theta + 32L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\left(\\partial_r V\\right)^2\\,\\partial_\\theta W\\,\\sin^4\\theta - 64L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_r V\\,\\partial_\\theta V\\,\\partial_r W\\,\\sin^2\\theta + 64L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_r V\\,\\partial_\\theta V\\,\\partial_r W\\,\\sin^4\\theta + 64L^4\\,r\\,e^{4W}\\partial_\\theta\\nu\\,\\partial_r V\\,\\partial_\\theta V\\,\\sin^2\\theta - 64L^4\\,r\\,e^{4W}\\partial_\\theta\\nu\\,\\partial_r V\\,\\partial_\\theta V\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_r V\\,\\partial_r W\\,\\partial_\\theta W\\,\\sin^2\\theta - 64L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_r V\\,\\partial_r W\\,\\partial_\\theta W\\,\\sin^4\\theta - 32L^4\\,r\\,e^{4W}\\partial_\\theta\\nu\\,\\partial_r V\\,\\partial_\\theta W\\,\\sin^2\\theta + 32L^4\\,r\\,e^{4W}\\partial_\\theta\\nu\\,\\partial_r V\\,\\partial_\\theta W\\,\\sin^4\\theta - 64L^4\\,r^2e^{4V + 2W}\\partial_\\theta\\nu\\,\\partial_r V\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^2\\theta + 64L^4\\,r^2e^{4V + 2W}\\partial_\\theta\\nu\\,\\partial_r V\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^4\\theta - 128L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_r V\\,\\partial_r\\partial_\\theta V\\,\\sin^2\\theta + 128L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_r V\\,\\partial_r\\partial_\\theta V\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_r V\\,\\partial_r\\partial_\\theta W\\,\\sin^2\\theta - 64L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_r V\\,\\partial_r\\partial_\\theta W\\,\\sin^4\\theta - 96L^4e^{4W}\\partial_\\theta\\nu\\left(\\partial_\\theta V\\right)^2\\,\\partial_\\theta W\\,\\sin^2\\theta + 96L^4e^{4W}\\partial_\\theta\\nu\\left(\\partial_\\theta V\\right)^2\\,\\partial_\\theta W\\,\\sin^4\\theta + 32L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta V\\left(\\partial_r W\\right)^2\\,\\sin^2\\theta - 32L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta V\\left(\\partial_r W\\right)^2\\,\\sin^4\\theta - 32L^4\\,r\\,e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta V\\,\\partial_r W\\,\\sin^2\\theta + 32L^4\\,r\\,e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta V\\,\\partial_r W\\,\\sin^4\\theta + 96L^4e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta V\\left(\\partial_\\theta W\\right)^2\\,\\sin^2\\theta - 96L^4e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta V\\left(\\partial_\\theta W\\right)^2\\,\\sin^4\\theta + 96L^4\\,r^2e^{4V + 2W}\\partial_\\theta\\nu\\,\\partial_\\theta V\\left(\\partial_r\\Omega\\right)^2\\,\\sin^2\\theta - 96L^4\\,r^2e^{4V + 2W}\\partial_\\theta\\nu\\,\\partial_\\theta V\\left(\\partial_r\\Omega\\right)^2\\,\\sin^4\\theta + 32L^4e^{4V + 2W}\\partial_\\theta\\nu\\,\\partial_\\theta V\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^2\\theta - 32L^4e^{4V + 2W}\\partial_\\theta\\nu\\,\\partial_\\theta V\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta V\\,\\partial_r^2 V\\,\\sin^2\\theta - 64L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta V\\,\\partial_r^2 V\\,\\sin^4\\theta - 64L^4e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta V\\,\\partial_\\theta^2 V\\,\\sin^2\\theta + 64L^4e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta V\\,\\partial_\\theta^2 V\\,\\sin^4\\theta - 32L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta V\\,\\partial_r^2 W\\,\\sin^2\\theta + 32L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta V\\,\\partial_r^2 W\\,\\sin^4\\theta + 32L^4e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta V\\,\\partial_\\theta^2 W\\,\\sin^2\\theta - 32L^4e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta V\\,\\partial_\\theta^2 W\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\left(\\partial_r W\\right)^2\\,\\sin^3\\theta\\cos\\theta - 32L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\left(\\partial_r W\\right)^2\\,\\sin\\theta\\cos\\theta - 64L^4\\,r\\,e^{4W}\\partial_\\theta\\nu\\,\\partial_r W\\,\\partial_\\theta W\\,\\sin^2\\theta + 64L^4\\,r\\,e^{4W}\\partial_\\theta\\nu\\,\\partial_r W\\,\\partial_\\theta W\\,\\sin^4\\theta + 48L^4\\,r^2e^{4V + 2W}\\partial_\\theta\\nu\\,\\partial_r W\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^2\\theta - 48L^4\\,r^2e^{4V + 2W}\\partial_\\theta\\nu\\,\\partial_r W\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_r W\\,\\partial_r\\partial_\\theta V\\,\\sin^2\\theta - 64L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_r W\\,\\partial_r\\partial_\\theta V\\,\\sin^4\\theta - 128L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_r W\\,\\partial_r\\partial_\\theta W\\,\\sin^2\\theta + 128L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_r W\\,\\partial_r\\partial_\\theta W\\,\\sin^4\\theta - 192L^4\\,r\\,e^{4W}\\partial_\\theta\\nu\\,\\partial_r W\\,\\sin^3\\theta\\cos\\theta + 96L^4\\,r\\,e^{4W}\\partial_\\theta\\nu\\,\\partial_r W\\,\\sin\\theta\\cos\\theta + 192L^4e^{4W}\\partial_\\theta\\nu\\left(\\partial_\\theta W\\right)^2\\,\\sin^3\\theta\\cos\\theta - 96L^4e^{4W}\\partial_\\theta\\nu\\left(\\partial_\\theta W\\right)^2\\,\\sin\\theta\\cos\\theta - 40L^4\\,r^2e^{4V + 2W}\\partial_\\theta\\nu\\,\\partial_\\theta W\\left(\\partial_r\\Omega\\right)^2\\,\\sin^2\\theta + 40L^4\\,r^2e^{4V + 2W}\\partial_\\theta\\nu\\,\\partial_\\theta W\\left(\\partial_r\\Omega\\right)^2\\,\\sin^4\\theta + 8L^4e^{4V + 2W}\\partial_\\theta\\nu\\,\\partial_\\theta W\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^2\\theta - 8L^4e^{4V + 2W}\\partial_\\theta\\nu\\,\\partial_\\theta W\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^4\\theta - 32L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta W\\,\\partial_r^2 V\\,\\sin^2\\theta + 32L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta W\\,\\partial_r^2 V\\,\\sin^4\\theta + 32L^4e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta W\\,\\partial_\\theta^2 V\\,\\sin^2\\theta - 32L^4e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta W\\,\\partial_\\theta^2 V\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta W\\,\\partial_r^2 W\\,\\sin^2\\theta - 64L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta W\\,\\partial_r^2 W\\,\\sin^4\\theta - 64L^4e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta W\\,\\partial_\\theta^2 W\\,\\sin^2\\theta + 64L^4e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta W\\,\\partial_\\theta^2 W\\,\\sin^4\\theta - 256L^4e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta W\\,\\sin^2\\theta + 256L^4e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta W\\,\\sin^4\\theta + 64L^4e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta W - 16L^4\\,r\\,e^{4V + 2W}\\partial_\\theta\\nu\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^2\\theta + 16L^4\\,r\\,e^{4V + 2W}\\partial_\\theta\\nu\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^4\\theta + 32L^4\\,r^2e^{4V + 2W}\\partial_\\theta\\nu\\,\\partial_r\\Omega\\,\\partial_r\\partial_\\theta\\Omega\\,\\sin^2\\theta - 32L^4\\,r^2e^{4V + 2W}\\partial_\\theta\\nu\\,\\partial_r\\Omega\\,\\partial_r\\partial_\\theta\\Omega\\,\\sin^4\\theta - 16L^4\\,r^2e^{4V + 2W}\\partial_\\theta\\nu\\,\\partial_\\theta\\Omega\\,\\partial_r^2\\Omega\\,\\sin^2\\theta + 16L^4\\,r^2e^{4V + 2W}\\partial_\\theta\\nu\\,\\partial_\\theta\\Omega\\,\\partial_r^2\\Omega\\,\\sin^4\\theta + 16L^4e^{4V + 2W}\\partial_\\theta\\nu\\,\\partial_\\theta\\Omega\\,\\partial_\\theta^2\\Omega\\,\\sin^2\\theta - 16L^4e^{4V + 2W}\\partial_\\theta\\nu\\,\\partial_\\theta\\Omega\\,\\partial_\\theta^2\\Omega\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_r^2 W\\,\\sin^3\\theta\\cos\\theta - 32L^4\\,r^2e^{4W}\\partial_\\theta\\nu\\,\\partial_r^2 W\\,\\sin\\theta\\cos\\theta + 128L^4\\,r\\,e^{4W}\\partial_\\theta\\nu\\,\\partial_r\\partial_\\theta W\\,\\sin^2\\theta - 128L^4\\,r\\,e^{4W}\\partial_\\theta\\nu\\,\\partial_r\\partial_\\theta W\\,\\sin^4\\theta - 64L^4e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta^2 W\\,\\sin^3\\theta\\cos\\theta + 32L^4e^{4W}\\partial_\\theta\\nu\\,\\partial_\\theta^2 W\\,\\sin\\theta\\cos\\theta + 48L^4\\,r^4e^{4W}\\left(\\partial_r V\\right)^4\\,\\sin^2\\theta - 48L^4\\,r^4e^{4W}\\left(\\partial_r V\\right)^4\\,\\sin^4\\theta - 96L^4\\,r^4e^{4W}\\left(\\partial_r V\\right)^3\\,\\partial_r W\\,\\sin^2\\theta + 96L^4\\,r^4e^{4W}\\left(\\partial_r V\\right)^3\\,\\partial_r W\\,\\sin^4\\theta + 96L^4\\,r^2e^{4W}\\left(\\partial_r V\\right)^2\\left(\\partial_\\theta V\\right)^2\\,\\sin^2\\theta - 96L^4\\,r^2e^{4W}\\left(\\partial_r V\\right)^2\\left(\\partial_\\theta V\\right)^2\\,\\sin^4\\theta - 96L^4\\,r^2e^{4W}\\left(\\partial_r V\\right)^2\\,\\partial_\\theta V\\,\\partial_\\theta W\\,\\sin^2\\theta + 96L^4\\,r^2e^{4W}\\left(\\partial_r V\\right)^2\\,\\partial_\\theta V\\,\\partial_\\theta W\\,\\sin^4\\theta + 144L^4\\,r^4e^{4W}\\left(\\partial_r V\\right)^2\\left(\\partial_r W\\right)^2\\,\\sin^2\\theta - 144L^4\\,r^4e^{4W}\\left(\\partial_r V\\right)^2\\left(\\partial_r W\\right)^2\\,\\sin^4\\theta - 224L^4\\,r^3e^{4W}\\left(\\partial_r V\\right)^2\\,\\partial_r W\\,\\sin^2\\theta + 224L^4\\,r^3e^{4W}\\left(\\partial_r V\\right)^2\\,\\partial_r W\\,\\sin^4\\theta + 32L^4\\,r^2e^{4W}\\left(\\partial_r V\\right)^2\\left(\\partial_\\theta W\\right)^2\\,\\sin^2\\theta - 32L^4\\,r^2e^{4W}\\left(\\partial_r V\\right)^2\\left(\\partial_\\theta W\\right)^2\\,\\sin^4\\theta - 152L^4\\,r^4e^{4V + 2W}\\left(\\partial_r V\\right)^2\\left(\\partial_r\\Omega\\right)^2\\,\\sin^2\\theta + 152L^4\\,r^4e^{4V + 2W}\\left(\\partial_r V\\right)^2\\left(\\partial_r\\Omega\\right)^2\\,\\sin^4\\theta - 120L^4\\,r^2e^{4V + 2W}\\left(\\partial_r V\\right)^2\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^2\\theta + 120L^4\\,r^2e^{4V + 2W}\\left(\\partial_r V\\right)^2\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^4\\theta + 32L^4\\,r^4e^{4W}\\left(\\partial_r V\\right)^2\\,\\partial_r^2 W\\,\\sin^2\\theta - 32L^4\\,r^4e^{4W}\\left(\\partial_r V\\right)^2\\,\\partial_r^2 W\\,\\sin^4\\theta + 288L^4\\,r^2e^{4W}\\left(\\partial_r V\\right)^2\\,\\sin^2\\theta - 288L^4\\,r^2e^{4W}\\left(\\partial_r V\\right)^2\\,\\sin^4\\theta - 96L^4\\,r^2e^{4W}\\partial_r V\\left(\\partial_\\theta V\\right)^2\\,\\partial_r W\\,\\sin^2\\theta + 96L^4\\,r^2e^{4W}\\partial_r V\\left(\\partial_\\theta V\\right)^2\\,\\partial_r W\\,\\sin^4\\theta + 224L^4\\,r^2e^{4W}\\partial_r V\\,\\partial_\\theta V\\,\\partial_r W\\,\\partial_\\theta W\\,\\sin^2\\theta - 224L^4\\,r^2e^{4W}\\partial_r V\\,\\partial_\\theta V\\,\\partial_r W\\,\\partial_\\theta W\\,\\sin^4\\theta + 128L^4\\,r^2e^{4W}\\partial_r V\\,\\partial_\\theta V\\,\\partial_r W\\,\\sin^3\\theta\\cos\\theta - 64L^4\\,r^2e^{4W}\\partial_r V\\,\\partial_\\theta V\\,\\partial_r W\\,\\sin\\theta\\cos\\theta - 256L^4\\,r\\,e^{4W}\\partial_r V\\,\\partial_\\theta V\\,\\partial_\\theta W\\,\\sin^2\\theta + 256L^4\\,r\\,e^{4W}\\partial_r V\\,\\partial_\\theta V\\,\\partial_\\theta W\\,\\sin^4\\theta - 64L^4\\,r^2e^{4V + 2W}\\partial_r V\\,\\partial_\\theta V\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^2\\theta + 64L^4\\,r^2e^{4V + 2W}\\partial_r V\\,\\partial_\\theta V\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\partial_r V\\,\\partial_\\theta V\\,\\partial_r\\partial_\\theta W\\,\\sin^2\\theta - 64L^4\\,r^2e^{4W}\\partial_r V\\,\\partial_\\theta V\\,\\partial_r\\partial_\\theta W\\,\\sin^4\\theta - 256L^4\\,r\\,e^{4W}\\partial_r V\\,\\partial_\\theta V\\,\\sin^3\\theta\\cos\\theta + 128L^4\\,r\\,e^{4W}\\partial_r V\\,\\partial_\\theta V\\,\\sin\\theta\\cos\\theta - 96L^4\\,r^4e^{4W}\\partial_r V\\left(\\partial_r W\\right)^3\\,\\sin^2\\theta + 96L^4\\,r^4e^{4W}\\partial_r V\\left(\\partial_r W\\right)^3\\,\\sin^4\\theta + 224L^4\\,r^3e^{4W}\\partial_r V\\left(\\partial_r W\\right)^2\\,\\sin^2\\theta - 224L^4\\,r^3e^{4W}\\partial_r V\\left(\\partial_r W\\right)^2\\,\\sin^4\\theta - 96L^4\\,r^2e^{4W}\\partial_r V\\,\\partial_r W\\left(\\partial_\\theta W\\right)^2\\,\\sin^2\\theta + 96L^4\\,r^2e^{4W}\\partial_r V\\,\\partial_r W\\left(\\partial_\\theta W\\right)^2\\,\\sin^4\\theta - 64L^4\\,r^2e^{4W}\\partial_r V\\,\\partial_r W\\,\\partial_\\theta W\\,\\sin^3\\theta\\cos\\theta + 32L^4\\,r^2e^{4W}\\partial_r V\\,\\partial_r W\\,\\partial_\\theta W\\,\\sin\\theta\\cos\\theta + 120L^4\\,r^4e^{4V + 2W}\\partial_r V\\,\\partial_r W\\left(\\partial_r\\Omega\\right)^2\\,\\sin^2\\theta - 120L^4\\,r^4e^{4V + 2W}\\partial_r V\\,\\partial_r W\\left(\\partial_r\\Omega\\right)^2\\,\\sin^4\\theta + 88L^4\\,r^2e^{4V + 2W}\\partial_r V\\,\\partial_r W\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^2\\theta - 88L^4\\,r^2e^{4V + 2W}\\partial_r V\\,\\partial_r W\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^4\\theta + 64L^4\\,r^4e^{4W}\\partial_r V\\,\\partial_r W\\,\\partial_r^2 V\\,\\sin^2\\theta - 64L^4\\,r^4e^{4W}\\partial_r V\\,\\partial_r W\\,\\partial_r^2 V\\,\\sin^4\\theta - 64L^4\\,r^4e^{4W}\\partial_r V\\,\\partial_r W\\,\\partial_r^2 W\\,\\sin^2\\theta + 64L^4\\,r^4e^{4W}\\partial_r V\\,\\partial_r W\\,\\partial_r^2 W\\,\\sin^4\\theta - 288L^4\\,r^2e^{4W}\\partial_r V\\,\\partial_r W\\,\\sin^2\\theta + 288L^4\\,r^2e^{4W}\\partial_r V\\,\\partial_r W\\,\\sin^4\\theta + 128L^4\\,r\\,e^{4W}\\partial_r V\\left(\\partial_\\theta W\\right)^2\\,\\sin^2\\theta - 128L^4\\,r\\,e^{4W}\\partial_r V\\left(\\partial_\\theta W\\right)^2\\,\\sin^4\\theta + 32L^4\\,r^2e^{4V + 2W}\\partial_r V\\,\\partial_\\theta W\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^2\\theta - 32L^4\\,r^2e^{4V + 2W}\\partial_r V\\,\\partial_\\theta W\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\partial_r V\\,\\partial_\\theta W\\,\\partial_r\\partial_\\theta V\\,\\sin^2\\theta - 64L^4\\,r^2e^{4W}\\partial_r V\\,\\partial_\\theta W\\,\\partial_r\\partial_\\theta V\\,\\sin^4\\theta - 64L^4\\,r^2e^{4W}\\partial_r V\\,\\partial_\\theta W\\,\\partial_r\\partial_\\theta W\\,\\sin^2\\theta + 64L^4\\,r^2e^{4W}\\partial_r V\\,\\partial_\\theta W\\,\\partial_r\\partial_\\theta W\\,\\sin^4\\theta + 128L^4\\,r\\,e^{4W}\\partial_r V\\,\\partial_\\theta W\\,\\sin^3\\theta\\cos\\theta - 64L^4\\,r\\,e^{4W}\\partial_r V\\,\\partial_\\theta W\\,\\sin\\theta\\cos\\theta + 32L^4\\,r^3e^{4V + 2W}\\partial_r V\\left(\\partial_r\\Omega\\right)^2\\,\\sin^2\\theta - 32L^4\\,r^3e^{4V + 2W}\\partial_r V\\left(\\partial_r\\Omega\\right)^2\\,\\sin^4\\theta - 64L^4\\,r^4e^{4V + 2W}\\partial_r V\\,\\partial_r\\Omega\\,\\partial_r^2\\Omega\\,\\sin^2\\theta + 64L^4\\,r^4e^{4V + 2W}\\partial_r V\\,\\partial_r\\Omega\\,\\partial_r^2\\Omega\\,\\sin^4\\theta + 192L^4\\,r\\,e^{4V + 2W}\\partial_r V\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^2\\theta - 192L^4\\,r\\,e^{4V + 2W}\\partial_r V\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^4\\theta - 64L^4\\,r^2e^{4V + 2W}\\partial_r V\\,\\partial_\\theta\\Omega\\,\\partial_r\\partial_\\theta\\Omega\\,\\sin^2\\theta + 64L^4\\,r^2e^{4V + 2W}\\partial_r V\\,\\partial_\\theta\\Omega\\,\\partial_r\\partial_\\theta\\Omega\\,\\sin^4\\theta - 64L^4\\,r^3e^{4W}\\partial_r V\\,\\partial_r^2 V\\,\\sin^2\\theta + 64L^4\\,r^3e^{4W}\\partial_r V\\,\\partial_r^2 V\\,\\sin^4\\theta + 128L^4\\,r\\,e^{4W}\\partial_r V\\,\\partial_\\theta^2 V\\,\\sin^2\\theta - 128L^4\\,r\\,e^{4W}\\partial_r V\\,\\partial_\\theta^2 V\\,\\sin^4\\theta + 32L^4\\,r^3e^{4W}\\partial_r V\\,\\partial_r^2 W\\,\\sin^2\\theta - 32L^4\\,r^3e^{4W}\\partial_r V\\,\\partial_r^2 W\\,\\sin^4\\theta - 64L^4\\,r\\,e^{4W}\\partial_r V\\,\\partial_\\theta^2 W\\,\\sin^2\\theta + 64L^4\\,r\\,e^{4W}\\partial_r V\\,\\partial_\\theta^2 W\\,\\sin^4\\theta + 48L^4e^{4W}\\left(\\partial_\\theta V\\right)^4\\,\\sin^2\\theta - 48L^4e^{4W}\\left(\\partial_\\theta V\\right)^4\\,\\sin^4\\theta - 96L^4e^{4W}\\left(\\partial_\\theta V\\right)^3\\,\\partial_\\theta W\\,\\sin^2\\theta + 96L^4e^{4W}\\left(\\partial_\\theta V\\right)^3\\,\\partial_\\theta W\\,\\sin^4\\theta + 32L^4\\,r^2e^{4W}\\left(\\partial_\\theta V\\right)^2\\left(\\partial_r W\\right)^2\\,\\sin^2\\theta - 32L^4\\,r^2e^{4W}\\left(\\partial_\\theta V\\right)^2\\left(\\partial_r W\\right)^2\\,\\sin^4\\theta - 64L^4\\,r\\,e^{4W}\\left(\\partial_\\theta V\\right)^2\\,\\partial_r W\\,\\sin^2\\theta + 64L^4\\,r\\,e^{4W}\\left(\\partial_\\theta V\\right)^2\\,\\partial_r W\\,\\sin^4\\theta + 144L^4e^{4W}\\left(\\partial_\\theta V\\right)^2\\left(\\partial_\\theta W\\right)^2\\,\\sin^2\\theta - 144L^4e^{4W}\\left(\\partial_\\theta V\\right)^2\\left(\\partial_\\theta W\\right)^2\\,\\sin^4\\theta + 128L^4e^{4W}\\left(\\partial_\\theta V\\right)^2\\,\\partial_\\theta W\\,\\sin^3\\theta\\cos\\theta - 64L^4e^{4W}\\left(\\partial_\\theta V\\right)^2\\,\\partial_\\theta W\\,\\sin\\theta\\cos\\theta - 120L^4\\,r^2e^{4V + 2W}\\left(\\partial_\\theta V\\right)^2\\left(\\partial_r\\Omega\\right)^2\\,\\sin^2\\theta + 120L^4\\,r^2e^{4V + 2W}\\left(\\partial_\\theta V\\right)^2\\left(\\partial_r\\Omega\\right)^2\\,\\sin^4\\theta - 152L^4e^{4V + 2W}\\left(\\partial_\\theta V\\right)^2\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^2\\theta + 152L^4e^{4V + 2W}\\left(\\partial_\\theta V\\right)^2\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^4\\theta + 32L^4e^{4W}\\left(\\partial_\\theta V\\right)^2\\,\\partial_\\theta^2 W\\,\\sin^2\\theta - 32L^4e^{4W}\\left(\\partial_\\theta V\\right)^2\\,\\partial_\\theta^2 W\\,\\sin^4\\theta + 128L^4e^{4W}\\left(\\partial_\\theta V\\right)^2\\,\\sin^2\\theta - 128L^4e^{4W}\\left(\\partial_\\theta V\\right)^2\\,\\sin^4\\theta + 32L^4e^{4W}\\left(\\partial_\\theta V\\right)^2 - 96L^4\\,r^2e^{4W}\\partial_\\theta V\\left(\\partial_r W\\right)^2\\,\\partial_\\theta W\\,\\sin^2\\theta + 96L^4\\,r^2e^{4W}\\partial_\\theta V\\left(\\partial_r W\\right)^2\\,\\partial_\\theta W\\,\\sin^4\\theta - 64L^4\\,r^2e^{4W}\\partial_\\theta V\\left(\\partial_r W\\right)^2\\,\\sin^3\\theta\\cos\\theta + 32L^4\\,r^2e^{4W}\\partial_\\theta V\\left(\\partial_r W\\right)^2\\,\\sin\\theta\\cos\\theta + 192L^4\\,r\\,e^{4W}\\partial_\\theta V\\,\\partial_r W\\,\\partial_\\theta W\\,\\sin^2\\theta - 192L^4\\,r\\,e^{4W}\\partial_\\theta V\\,\\partial_r W\\,\\partial_\\theta W\\,\\sin^4\\theta + 32L^4\\,r^2e^{4V + 2W}\\partial_\\theta V\\,\\partial_r W\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^2\\theta - 32L^4\\,r^2e^{4V + 2W}\\partial_\\theta V\\,\\partial_r W\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\partial_\\theta V\\,\\partial_r W\\,\\partial_r\\partial_\\theta V\\,\\sin^2\\theta - 64L^4\\,r^2e^{4W}\\partial_\\theta V\\,\\partial_r W\\,\\partial_r\\partial_\\theta V\\,\\sin^4\\theta - 64L^4\\,r^2e^{4W}\\partial_\\theta V\\,\\partial_r W\\,\\partial_r\\partial_\\theta W\\,\\sin^2\\theta + 64L^4\\,r^2e^{4W}\\partial_\\theta V\\,\\partial_r W\\,\\partial_r\\partial_\\theta W\\,\\sin^4\\theta + 128L^4\\,r\\,e^{4W}\\partial_\\theta V\\,\\partial_r W\\,\\sin^3\\theta\\cos\\theta - 64L^4\\,r\\,e^{4W}\\partial_\\theta V\\,\\partial_r W\\,\\sin\\theta\\cos\\theta - 96L^4e^{4W}\\partial_\\theta V\\left(\\partial_\\theta W\\right)^3\\,\\sin^2\\theta + 96L^4e^{4W}\\partial_\\theta V\\left(\\partial_\\theta W\\right)^3\\,\\sin^4\\theta - 128L^4e^{4W}\\partial_\\theta V\\left(\\partial_\\theta W\\right)^2\\,\\sin^3\\theta\\cos\\theta + 64L^4e^{4W}\\partial_\\theta V\\left(\\partial_\\theta W\\right)^2\\,\\sin\\theta\\cos\\theta + 88L^4\\,r^2e^{4V + 2W}\\partial_\\theta V\\,\\partial_\\theta W\\left(\\partial_r\\Omega\\right)^2\\,\\sin^2\\theta - 88L^4\\,r^2e^{4V + 2W}\\partial_\\theta V\\,\\partial_\\theta W\\left(\\partial_r\\Omega\\right)^2\\,\\sin^4\\theta + 120L^4e^{4V + 2W}\\partial_\\theta V\\,\\partial_\\theta W\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^2\\theta - 120L^4e^{4V + 2W}\\partial_\\theta V\\,\\partial_\\theta W\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^4\\theta + 64L^4e^{4W}\\partial_\\theta V\\,\\partial_\\theta W\\,\\partial_\\theta^2 V\\,\\sin^2\\theta - 64L^4e^{4W}\\partial_\\theta V\\,\\partial_\\theta W\\,\\partial_\\theta^2 V\\,\\sin^4\\theta - 64L^4e^{4W}\\partial_\\theta V\\,\\partial_\\theta W\\,\\partial_\\theta^2 W\\,\\sin^2\\theta + 64L^4e^{4W}\\partial_\\theta V\\,\\partial_\\theta W\\,\\partial_\\theta^2 W\\,\\sin^4\\theta - 128L^4e^{4W}\\partial_\\theta V\\,\\partial_\\theta W\\,\\sin^2\\theta + 128L^4e^{4W}\\partial_\\theta V\\,\\partial_\\theta W\\,\\sin^4\\theta - 32L^4e^{4W}\\partial_\\theta V\\,\\partial_\\theta W - 128L^4\\,r\\,e^{4V + 2W}\\partial_\\theta V\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^2\\theta + 128L^4\\,r\\,e^{4V + 2W}\\partial_\\theta V\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^4\\theta - 64L^4\\,r^2e^{4V + 2W}\\partial_\\theta V\\,\\partial_r\\Omega\\,\\partial_r\\partial_\\theta\\Omega\\,\\sin^2\\theta + 64L^4\\,r^2e^{4V + 2W}\\partial_\\theta V\\,\\partial_r\\Omega\\,\\partial_r\\partial_\\theta\\Omega\\,\\sin^4\\theta - 64L^4e^{4V + 2W}\\partial_\\theta V\\,\\partial_\\theta\\Omega\\,\\partial_\\theta^2\\Omega\\,\\sin^2\\theta + 64L^4e^{4V + 2W}\\partial_\\theta V\\,\\partial_\\theta\\Omega\\,\\partial_\\theta^2\\Omega\\,\\sin^4\\theta - 256L^4\\,r\\,e^{4W}\\partial_\\theta V\\,\\partial_r\\partial_\\theta V\\,\\sin^2\\theta + 256L^4\\,r\\,e^{4W}\\partial_\\theta V\\,\\partial_r\\partial_\\theta V\\,\\sin^4\\theta + 128L^4\\,r\\,e^{4W}\\partial_\\theta V\\,\\partial_r\\partial_\\theta W\\,\\sin^2\\theta - 128L^4\\,r\\,e^{4W}\\partial_\\theta V\\,\\partial_r\\partial_\\theta W\\,\\sin^4\\theta + 48L^4\\,r^4e^{4W}\\left(\\partial_r W\\right)^4\\,\\sin^2\\theta - 48L^4\\,r^4e^{4W}\\left(\\partial_r W\\right)^4\\,\\sin^4\\theta - 192L^4\\,r^3e^{4W}\\left(\\partial_r W\\right)^3\\,\\sin^2\\theta + 192L^4\\,r^3e^{4W}\\left(\\partial_r W\\right)^3\\,\\sin^4\\theta + 96L^4\\,r^2e^{4W}\\left(\\partial_r W\\right)^2\\left(\\partial_\\theta W\\right)^2\\,\\sin^2\\theta - 96L^4\\,r^2e^{4W}\\left(\\partial_r W\\right)^2\\left(\\partial_\\theta W\\right)^2\\,\\sin^4\\theta + 192L^4\\,r^2e^{4W}\\left(\\partial_r W\\right)^2\\,\\partial_\\theta W\\,\\sin^3\\theta\\cos\\theta - 96L^4\\,r^2e^{4W}\\left(\\partial_r W\\right)^2\\,\\partial_\\theta W\\,\\sin\\theta\\cos\\theta - 40L^4\\,r^4e^{4V + 2W}\\left(\\partial_r W\\right)^2\\left(\\partial_r\\Omega\\right)^2\\,\\sin^2\\theta + 40L^4\\,r^4e^{4V + 2W}\\left(\\partial_r W\\right)^2\\left(\\partial_r\\Omega\\right)^2\\,\\sin^4\\theta - 16L^4\\,r^2e^{4V + 2W}\\left(\\partial_r W\\right)^2\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^2\\theta + 16L^4\\,r^2e^{4V + 2W}\\left(\\partial_r W\\right)^2\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^4\\theta - 32L^4\\,r^4e^{4W}\\left(\\partial_r W\\right)^2\\,\\partial_r^2 V\\,\\sin^2\\theta + 32L^4\\,r^4e^{4W}\\left(\\partial_r W\\right)^2\\,\\partial_r^2 V\\,\\sin^4\\theta + 224L^4\\,r^2e^{4W}\\left(\\partial_r W\\right)^2\\,\\sin^2\\theta - 224L^4\\,r^2e^{4W}\\left(\\partial_r W\\right)^2\\,\\sin^4\\theta + 32L^4\\,r^2e^{4W}\\left(\\partial_r W\\right)^2 - 192L^4\\,r\\,e^{4W}\\partial_r W\\left(\\partial_\\theta W\\right)^2\\,\\sin^2\\theta + 192L^4\\,r\\,e^{4W}\\partial_r W\\left(\\partial_\\theta W\\right)^2\\,\\sin^4\\theta - 48L^4\\,r^2e^{4V + 2W}\\partial_r W\\,\\partial_\\theta W\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^2\\theta + 48L^4\\,r^2e^{4V + 2W}\\partial_r W\\,\\partial_\\theta W\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^4\\theta - 64L^4\\,r^2e^{4W}\\partial_r W\\,\\partial_\\theta W\\,\\partial_r\\partial_\\theta V\\,\\sin^2\\theta + 64L^4\\,r^2e^{4W}\\partial_r W\\,\\partial_\\theta W\\,\\partial_r\\partial_\\theta V\\,\\sin^4\\theta - 384L^4\\,r\\,e^{4W}\\partial_r W\\,\\partial_\\theta W\\,\\sin^3\\theta\\cos\\theta + 192L^4\\,r\\,e^{4W}\\partial_r W\\,\\partial_\\theta W\\,\\sin\\theta\\cos\\theta + 40L^4\\,r^3e^{4V + 2W}\\partial_r W\\left(\\partial_r\\Omega\\right)^2\\,\\sin^2\\theta - 40L^4\\,r^3e^{4V + 2W}\\partial_r W\\left(\\partial_r\\Omega\\right)^2\\,\\sin^4\\theta - 32L^4\\,r^2e^{4V + 2W}\\partial_r W\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^3\\theta\\cos\\theta + 16L^4\\,r^2e^{4V + 2W}\\partial_r W\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin\\theta\\cos\\theta + 16L^4\\,r^4e^{4V + 2W}\\partial_r W\\,\\partial_r\\Omega\\,\\partial_r^2\\Omega\\,\\sin^2\\theta - 16L^4\\,r^4e^{4V + 2W}\\partial_r W\\,\\partial_r\\Omega\\,\\partial_r^2\\Omega\\,\\sin^4\\theta - 80L^4\\,r\\,e^{4V + 2W}\\partial_r W\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^2\\theta + 80L^4\\,r\\,e^{4V + 2W}\\partial_r W\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^4\\theta + 16L^4\\,r^2e^{4V + 2W}\\partial_r W\\,\\partial_\\theta\\Omega\\,\\partial_r\\partial_\\theta\\Omega\\,\\sin^2\\theta - 16L^4\\,r^2e^{4V + 2W}\\partial_r W\\,\\partial_\\theta\\Omega\\,\\partial_r\\partial_\\theta\\Omega\\,\\sin^4\\theta + 32L^4\\,r^3e^{4W}\\partial_r W\\,\\partial_r^2 V\\,\\sin^2\\theta - 32L^4\\,r^3e^{4W}\\partial_r W\\,\\partial_r^2 V\\,\\sin^4\\theta - 64L^4\\,r\\,e^{4W}\\partial_r W\\,\\partial_\\theta^2 V\\,\\sin^2\\theta + 64L^4\\,r\\,e^{4W}\\partial_r W\\,\\partial_\\theta^2 V\\,\\sin^4\\theta + 64L^4\\,r^3e^{4W}\\partial_r W\\,\\partial_r^2 W\\,\\sin^2\\theta - 64L^4\\,r^3e^{4W}\\partial_r W\\,\\partial_r^2 W\\,\\sin^4\\theta - 128L^4\\,r^2e^{4W}\\partial_r W\\,\\partial_r\\partial_\\theta W\\,\\sin^3\\theta\\cos\\theta + 64L^4\\,r^2e^{4W}\\partial_r W\\,\\partial_r\\partial_\\theta W\\,\\sin\\theta\\cos\\theta + 128L^4\\,r\\,e^{4W}\\partial_r W\\,\\partial_\\theta^2 W\\,\\sin^2\\theta - 128L^4\\,r\\,e^{4W}\\partial_r W\\,\\partial_\\theta^2 W\\,\\sin^4\\theta + 48L^4e^{4W}\\left(\\partial_\\theta W\\right)^4\\,\\sin^2\\theta - 48L^4e^{4W}\\left(\\partial_\\theta W\\right)^4\\,\\sin^4\\theta + 192L^4e^{4W}\\left(\\partial_\\theta W\\right)^3\\,\\sin^3\\theta\\cos\\theta - 96L^4e^{4W}\\left(\\partial_\\theta W\\right)^3\\,\\sin\\theta\\cos\\theta - 16L^4\\,r^2e^{4V + 2W}\\left(\\partial_\\theta W\\right)^2\\left(\\partial_r\\Omega\\right)^2\\,\\sin^2\\theta + 16L^4\\,r^2e^{4V + 2W}\\left(\\partial_\\theta W\\right)^2\\left(\\partial_r\\Omega\\right)^2\\,\\sin^4\\theta - 40L^4e^{4V + 2W}\\left(\\partial_\\theta W\\right)^2\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^2\\theta + 40L^4e^{4V + 2W}\\left(\\partial_\\theta W\\right)^2\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^4\\theta - 32L^4e^{4W}\\left(\\partial_\\theta W\\right)^2\\,\\partial_\\theta^2 V\\,\\sin^2\\theta + 32L^4e^{4W}\\left(\\partial_\\theta W\\right)^2\\,\\partial_\\theta^2 V\\,\\sin^4\\theta - 192L^4e^{4W}\\left(\\partial_\\theta W\\right)^2\\,\\sin^2\\theta + 192L^4e^{4W}\\left(\\partial_\\theta W\\right)^2\\,\\sin^4\\theta + 80L^4e^{4W}\\left(\\partial_\\theta W\\right)^2 + 128L^4\\,r\\,e^{4V + 2W}\\partial_\\theta W\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^2\\theta - 128L^4\\,r\\,e^{4V + 2W}\\partial_\\theta W\\,\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^4\\theta + 16L^4\\,r^2e^{4V + 2W}\\partial_\\theta W\\,\\partial_r\\Omega\\,\\partial_r\\partial_\\theta\\Omega\\,\\sin^2\\theta - 16L^4\\,r^2e^{4V + 2W}\\partial_\\theta W\\,\\partial_r\\Omega\\,\\partial_r\\partial_\\theta\\Omega\\,\\sin^4\\theta - 32L^4e^{4V + 2W}\\partial_\\theta W\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^3\\theta\\cos\\theta + 16L^4e^{4V + 2W}\\partial_\\theta W\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin\\theta\\cos\\theta + 16L^4e^{4V + 2W}\\partial_\\theta W\\,\\partial_\\theta\\Omega\\,\\partial_\\theta^2\\Omega\\,\\sin^2\\theta - 16L^4e^{4V + 2W}\\partial_\\theta W\\,\\partial_\\theta\\Omega\\,\\partial_\\theta^2\\Omega\\,\\sin^4\\theta + 128L^4\\,r\\,e^{4W}\\partial_\\theta W\\,\\partial_r\\partial_\\theta V\\,\\sin^2\\theta - 128L^4\\,r\\,e^{4W}\\partial_\\theta W\\,\\partial_r\\partial_\\theta V\\,\\sin^4\\theta - 128L^4\\,r\\,e^{4W}\\partial_\\theta W\\,\\partial_r\\partial_\\theta W\\,\\sin^2\\theta + 128L^4\\,r\\,e^{4W}\\partial_\\theta W\\,\\partial_r\\partial_\\theta W\\,\\sin^4\\theta - 128L^4e^{4W}\\partial_\\theta W\\,\\partial_\\theta^2 W\\,\\sin^3\\theta\\cos\\theta + 64L^4e^{4W}\\partial_\\theta W\\,\\partial_\\theta^2 W\\,\\sin\\theta\\cos\\theta + 11L^4\\,r^4e^{8V}\\left(\\partial_r\\Omega\\right)^4\\,\\sin^2\\theta - 11L^4\\,r^4e^{8V}\\left(\\partial_r\\Omega\\right)^4\\,\\sin^4\\theta + 22L^4\\,r^2e^{8V}\\left(\\partial_r\\Omega\\right)^2\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^2\\theta - 22L^4\\,r^2e^{8V}\\left(\\partial_r\\Omega\\right)^2\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^4\\theta + 32L^4\\,r^4e^{4V + 2W}\\left(\\partial_r\\Omega\\right)^2\\,\\partial_r^2 V\\,\\sin^2\\theta - 32L^4\\,r^4e^{4V + 2W}\\left(\\partial_r\\Omega\\right)^2\\,\\partial_r^2 V\\,\\sin^4\\theta - 24L^4\\,r^4e^{4V + 2W}\\left(\\partial_r\\Omega\\right)^2\\,\\partial_r^2 W\\,\\sin^2\\theta + 24L^4\\,r^4e^{4V + 2W}\\left(\\partial_r\\Omega\\right)^2\\,\\partial_r^2 W\\,\\sin^4\\theta - 72L^4\\,r^2e^{4V + 2W}\\left(\\partial_r\\Omega\\right)^2\\,\\sin^2\\theta + 72L^4\\,r^2e^{4V + 2W}\\left(\\partial_r\\Omega\\right)^2\\,\\sin^4\\theta + 64L^4\\,r^2e^{4V + 2W}\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\partial_r\\partial_\\theta V\\,\\sin^2\\theta - 64L^4\\,r^2e^{4V + 2W}\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\partial_r\\partial_\\theta V\\,\\sin^4\\theta - 48L^4\\,r^2e^{4V + 2W}\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\partial_r\\partial_\\theta W\\,\\sin^2\\theta + 48L^4\\,r^2e^{4V + 2W}\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\partial_r\\partial_\\theta W\\,\\sin^4\\theta + 64L^4\\,r\\,e^{4V + 2W}\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin^3\\theta\\cos\\theta - 32L^4\\,r\\,e^{4V + 2W}\\partial_r\\Omega\\,\\partial_\\theta\\Omega\\,\\sin\\theta\\cos\\theta + 16L^4\\,r^3e^{4V + 2W}\\partial_r\\Omega\\,\\partial_r^2\\Omega\\,\\sin^2\\theta - 16L^4\\,r^3e^{4V + 2W}\\partial_r\\Omega\\,\\partial_r^2\\Omega\\,\\sin^4\\theta - 32L^4\\,r\\,e^{4V + 2W}\\partial_r\\Omega\\,\\partial_\\theta^2\\Omega\\,\\sin^2\\theta + 32L^4\\,r\\,e^{4V + 2W}\\partial_r\\Omega\\,\\partial_\\theta^2\\Omega\\,\\sin^4\\theta + 11L^4e^{8V}\\left(\\partial_\\theta\\Omega\\right)^4\\,\\sin^2\\theta - 11L^4e^{8V}\\left(\\partial_\\theta\\Omega\\right)^4\\,\\sin^4\\theta + 32L^4e^{4V + 2W}\\left(\\partial_\\theta\\Omega\\right)^2\\,\\partial_\\theta^2 V\\,\\sin^2\\theta - 32L^4e^{4V + 2W}\\left(\\partial_\\theta\\Omega\\right)^2\\,\\partial_\\theta^2 V\\,\\sin^4\\theta - 24L^4e^{4V + 2W}\\left(\\partial_\\theta\\Omega\\right)^2\\,\\partial_\\theta^2 W\\,\\sin^2\\theta + 24L^4e^{4V + 2W}\\left(\\partial_\\theta\\Omega\\right)^2\\,\\partial_\\theta^2 W\\,\\sin^4\\theta - 32L^4e^{4V + 2W}\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^2\\theta + 32L^4e^{4V + 2W}\\left(\\partial_\\theta\\Omega\\right)^2\\,\\sin^4\\theta - 8L^4e^{4V + 2W}\\left(\\partial_\\theta\\Omega\\right)^2 + 64L^4\\,r\\,e^{4V + 2W}\\partial_\\theta\\Omega\\,\\partial_r\\partial_\\theta\\Omega\\,\\sin^2\\theta - 64L^4\\,r\\,e^{4V + 2W}\\partial_\\theta\\Omega\\,\\partial_r\\partial_\\theta\\Omega\\,\\sin^4\\theta + 32L^4\\,r^4e^{4W}\\left(\\partial_r^2 V\\right)^2\\,\\sin^2\\theta - 32L^4\\,r^4e^{4W}\\left(\\partial_r^2 V\\right)^2\\,\\sin^4\\theta - 32L^4\\,r^4e^{4W}\\partial_r^2 V\\,\\partial_r^2 W\\,\\sin^2\\theta + 32L^4\\,r^4e^{4W}\\partial_r^2 V\\,\\partial_r^2 W\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\left(\\partial_r\\partial_\\theta V\\right)^2\\,\\sin^2\\theta - 64L^4\\,r^2e^{4W}\\left(\\partial_r\\partial_\\theta V\\right)^2\\,\\sin^4\\theta - 64L^4\\,r^2e^{4W}\\partial_r\\partial_\\theta V\\,\\partial_r\\partial_\\theta W\\,\\sin^2\\theta + 64L^4\\,r^2e^{4W}\\partial_r\\partial_\\theta V\\,\\partial_r\\partial_\\theta W\\,\\sin^4\\theta + 32L^4e^{4W}\\left(\\partial_\\theta^2 V\\right)^2\\,\\sin^2\\theta - 32L^4e^{4W}\\left(\\partial_\\theta^2 V\\right)^2\\,\\sin^4\\theta - 32L^4e^{4W}\\partial_\\theta^2 V\\,\\partial_\\theta^2 W\\,\\sin^2\\theta + 32L^4e^{4W}\\partial_\\theta^2 V\\,\\partial_\\theta^2 W\\,\\sin^4\\theta + 32L^4\\,r^4e^{4W}\\left(\\partial_r^2 W\\right)^2\\,\\sin^2\\theta - 32L^4\\,r^4e^{4W}\\left(\\partial_r^2 W\\right)^2\\,\\sin^4\\theta + 64L^4\\,r^2e^{4W}\\left(\\partial_r\\partial_\\theta W\\right)^2\\,\\sin^2\\theta - 64L^4\\,r^2e^{4W}\\left(\\partial_r\\partial_\\theta W\\right)^2\\,\\sin^4\\theta + 32L^4e^{4W}\\left(\\partial_\\theta^2 W\\right)^2\\,\\sin^2\\theta - 32L^4e^{4W}\\left(\\partial_\\theta^2 W\\right)^2\\,\\sin^4\\theta - 8L^4\\,r^4e^{4V + 2W}\\left(\\partial_r^2\\Omega\\right)^2\\,\\sin^2\\theta + 8L^4\\,r^4e^{4V + 2W}\\left(\\partial_r^2\\Omega\\right)^2\\,\\sin^4\\theta - 16L^4\\,r^2e^{4V + 2W}\\left(\\partial_r\\partial_\\theta\\Omega\\right)^2\\,\\sin^2\\theta + 16L^4\\,r^2e^{4V + 2W}\\left(\\partial_r\\partial_\\theta\\Omega\\right)^2\\,\\sin^4\\theta - 8L^4e^{4V + 2W}\\left(\\partial_\\theta^2\\Omega\\right)^2\\,\\sin^2\\theta + 8L^4e^{4V + 2W}\\left(\\partial_\\theta^2\\Omega\\right)^2\\,\\sin^4\\theta + 16L^4\\,r^4e^{4W}\\left(\\partial_r^2\\nu\\right)^2\\,\\sin^2\\theta - 16L^4\\,r^4e^{4W}\\left(\\partial_r^2\\nu\\right)^2\\,\\sin^4\\theta + 32L^4\\,r^2e^{4W}\\partial_r^2\\nu\\,\\partial_\\theta^2\\nu\\,\\sin^2\\theta - 32L^4\\,r^2e^{4W}\\partial_r^2\\nu\\,\\partial_\\theta^2\\nu\\,\\sin^4\\theta + 16L^4e^{4W}\\left(\\partial_\\theta^2\\nu\\right)^2\\,\\sin^2\\theta - 16L^4e^{4W}\\left(\\partial_\\theta^2\\nu\\right)^2\\,\\sin^4\\theta\\right)}{8r^8e^{4W}e^{4\\nu}\\sin^2\\theta\\cos^2\\theta - 4r^8e^{4W}e^{4\\nu}\\sin^2\\theta\\cos^4\\theta + 8r^8e^{4W}e^{4\\nu}\\sin^3\\theta\\cos^2\\theta}"
+        },
+        {
+          "id": "ring",
+          "name": "Ring Coordinates, the Ring Alone",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "\\psi",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in [-1, 1]",
+            "y \\in (-1/\\nu, -1]",
+            "\\psi \\in \\left[0, \\dfrac{2\\pi\\sqrt{1 - \\lambda}}{1 - \\nu}\\right)",
+            "\\phi \\in \\left[0, \\dfrac{2\\pi\\sqrt{1 - \\lambda}}{1 - \\nu}\\right)",
+            "y = -1/\\nu \\;\\text{(the horizon)}",
+            "y = -1/\\lambda \\;\\text{(the ergosurface)}",
+            "x = y = -1 \\;\\text{(infinity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "R",
+              "description": "Length that sets the scale of the ring ($R > 0$)"
+            },
+            {
+              "symbol": "\\nu",
+              "description": "Dimensionless, $0 < \\nu \\le \\lambda < 1$: the horizon is $y = -1/\\nu$, and a small $\\nu$ is a thin ring"
+            },
+            {
+              "symbol": "\\lambda",
+              "description": "Dimensionless: the ergosurface is $y = -1/\\lambda$. The ring holds itself open, with no conical membrane inside it, where $\\lambda = 2\\nu/(1 + \\nu^2)$"
+            },
+            {
+              "symbol": "C = \\sqrt{\\lambda\\left(\\lambda - \\nu\\right)\\dfrac{1 + \\lambda}{1 - \\lambda}}",
+              "description": "Constant of the rotation, real for $\\nu \\le \\lambda < 1$; it vanishes at $\\lambda = \\nu$, the static ring"
+            }
+          ],
+          "convention": "We use ring coordinates $(t, x, y, \\psi, \\phi)$ for the black ring with no hole inside it, $\\kappa_1 = 1$ and $\\beta = 0$ in Weyl's chart: $y$ labels the rings about the circle $y \\to -\\infty$ and $x$ runs from the outside of each, $x = -1$, to the inside, $x = 1$. We take components in the chart $x^0 = ct$, so $\\dot{t}$ in the geodesic equations means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{1 + \\lambda y}{1 + \\lambda x}\\left(c\\,dt - C\\,R\\,\\dfrac{1 + y}{1 + \\lambda y}d\\psi\\right)^2 + \\dfrac{R^2\\left(1 + \\lambda x\\right)}{\\left(x - y\\right)^2}\\left(-\\dfrac{\\left(1 - y^2\\right)\\left(1 + \\nu y\\right)}{1 + \\lambda y}d\\psi^2 - \\dfrac{dy^2}{\\left(1 - y^2\\right)\\left(1 + \\nu y\\right)} + \\dfrac{dx^2}{\\left(1 - x^2\\right)\\left(1 + \\nu x\\right)} + \\dfrac{\\left(1 - x^2\\right)\\left(1 + \\nu x\\right)}{1 + \\lambda x}d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\lambda\\,y + 1}{\\lambda\\,x + 1}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\psi"
+              ],
+              "value": "\\dfrac{C\\,R\\left(y + 1\\right)}{\\lambda\\,x + 1}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "t"
+              ],
+              "value": "\\dfrac{C\\,R\\left(y + 1\\right)}{\\lambda\\,x + 1}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "-\\dfrac{R^2\\left(\\lambda\\,x + 1\\right)}{\\left(x + 1\\right)\\left(\\nu\\,x + 1\\right)\\left(x - 1\\right)\\left(y - x\\right)^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{R^2\\left(\\lambda\\,x + 1\\right)}{\\left(y + 1\\right)\\left(\\nu\\,y + 1\\right)\\left(y - 1\\right)\\left(y - x\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{R^2\\left(y + 1\\right)\\left(\\lambda^2\\,y^2 - \\lambda\\,\\nu\\,y^2 + \\lambda\\,y^2 - \\nu\\,y^2 + \\lambda^2\\,\\nu\\,x^2\\,y - \\lambda\\,\\nu\\,x^2\\,y - 2\\lambda^2\\,x\\,y + 4\\lambda\\,\\nu\\,x\\,y - 2\\lambda\\,x\\,y + \\lambda^2\\,y - \\lambda\\,\\nu\\,y + \\nu\\,y - y - \\lambda^2\\,\\nu\\,x^2 + 2\\lambda^2\\,x^2 - \\lambda\\,\\nu\\,x^2 - 2\\lambda^2\\,x + 2\\lambda\\,x - \\lambda + 1\\right)}{\\left(\\lambda\\,x + 1\\right)\\left(\\lambda - 1\\right)\\left(y - x\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{R^2\\left(x + 1\\right)\\left(\\nu\\,x + 1\\right)\\left(x - 1\\right)}{\\left(y - x\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{3\\left(y - x\\right)^4\\left(8\\lambda^4\\,\\nu^2\\,x^4\\,y^2 + 32\\lambda^3\\,\\nu^2\\,x^3\\,y^2 + 48\\lambda^2\\,\\nu^2\\,x^2\\,y^2 + 32\\lambda\\,\\nu^2\\,x\\,y^2 + 8\\nu^2\\,y^2 - 4\\lambda^4\\,\\nu^2\\,x^5\\,y + 4\\lambda^4\\,\\nu\\,x^4\\,y - 16\\lambda^3\\,\\nu^2\\,x^4\\,y + 4\\lambda^4\\,\\nu^2\\,x^3\\,y + 24\\lambda^3\\,\\nu\\,x^3\\,y - 36\\lambda^2\\,\\nu^2\\,x^3\\,y + 12\\lambda^4\\,\\nu\\,x^2\\,y + 36\\lambda^2\\,\\nu\\,x^2\\,y - 40\\lambda\\,\\nu^2\\,x^2\\,y + 24\\lambda^3\\,\\nu\\,x\\,y - 12\\lambda^2\\,\\nu^2\\,x\\,y + 16\\lambda\\,\\nu\\,x\\,y - 16\\nu^2\\,x\\,y + 12\\lambda^2\\,\\nu\\,y - 8\\lambda\\,\\nu^2\\,y + 3\\lambda^4\\,\\nu^2\\,x^6 + 14\\lambda^3\\,\\nu^2\\,x^5 - 2\\lambda^4\\,\\nu^2\\,x^4 + 27\\lambda^2\\,\\nu^2\\,x^4 - 8\\lambda^4\\,\\nu\\,x^3 + 4\\lambda^3\\,\\nu^2\\,x^3 + 16\\lambda^2\\,\\nu\\,x^3 + 8\\lambda\\,\\nu^2\\,x^3 + 3\\lambda^4\\,\\nu^2\\,x^2 - 4\\lambda^4\\,x^2 + 16\\lambda^3\\,\\nu\\,x^2 - 18\\lambda^2\\,\\nu^2\\,x^2 + 16\\lambda^2\\,x^2 - 16\\lambda\\,\\nu\\,x^2 + 8\\nu^2\\,x^2 + 16\\lambda^4\\,\\nu\\,x - 10\\lambda^3\\,\\nu^2\\,x + 24\\lambda^3\\,x - 40\\lambda^2\\,\\nu\\,x + 8\\lambda\\,\\nu^2\\,x + 16\\lambda^4 - 16\\lambda^3\\,\\nu + 3\\lambda^2\\,\\nu^2 - 4\\lambda^2\\right)}{2R^4\\left(\\lambda\\,x + 1\\right)^6}"
+        }
+      ]
+    },
+    {
       "id": "black_string",
       "name": "Black String",
       "short_name": "Black String",
@@ -2631,6 +3219,11 @@
           "id": "kaluza_klein_black_hole",
           "kind": "generalisation",
           "text": "The black string with its extra direction a circle, set moving around it. Seen from four dimensions the moving string is an electrically charged black hole [horowitz2012]."
+        },
+        {
+          "id": "black_saturn",
+          "kind": "family",
+          "text": "A black ring in orbit around a black hole. Where the ring is thin it is a black string bent into a circle, and it is expected to ripple as the string does [elvang2006, elvang2007]."
         }
       ],
       "references": [
@@ -2653,7 +3246,9 @@
         "figueras2023",
         "grossperry1983",
         "chamblin2000",
-        "horowitz2012"
+        "horowitz2012",
+        "elvang2006",
+        "elvang2007"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/black_string.json",
@@ -15407,6 +16002,11 @@
           "id": "israel_wilson_perjes",
           "kind": "generalisation",
           "text": "The same charges set spinning. Israel, Wilson, and Perjés let $U$ be complex, and the black holes among their fields are these static ones [hartle1972, chrusciel2006]."
+        },
+        {
+          "id": "black_saturn",
+          "kind": "family",
+          "text": "Two black objects of five dimensions held apart with no charge: a ring kept from falling onto the hole at its centre by rotation [elvang2007]."
         }
       ],
       "references": [
@@ -15432,7 +16032,8 @@
         "contopoulos1990",
         "shipley2016",
         "hawking1977",
-        "ruback1986"
+        "ruback1986",
+        "elvang2007"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/majumdar_papapetrou.json",
@@ -18240,6 +18841,11 @@
           "id": "kaluza_klein_monopole",
           "kind": "family",
           "text": "Another vacuum solution of five dimensions built on squashed 3-spheres. With equal spins this black hole stretches its Hopf circles, and the monopole shrinks its own to a point at the centre [grossperry1983, emparan2008]."
+        },
+        {
+          "id": "black_saturn",
+          "kind": "limit_source",
+          "text": "A Myers-Perry black hole with a black ring turning in balance around it. In the limit of a ring shrunk to nothing it is the hole with one spin again [elvang2007]."
         }
       ],
       "references": [
@@ -18259,7 +18865,8 @@
         "frolov2007",
         "page2007",
         "murata2008",
-        "grossperry1983"
+        "grossperry1983",
+        "elvang2007"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/myers_perry.json",
@@ -24382,6 +24989,11 @@
           "id": "boulware_deser",
           "kind": "generalisation",
           "text": "Tangherlini's black hole of five dimensions with the curvature squared term of string theory added to the action. The term brings a length $\\ell$ with it, and at $\\ell = 0$ the metric is Tangherlini's [boulware1985]."
+        },
+        {
+          "id": "black_saturn",
+          "kind": "family",
+          "text": "A black ring in balance around a spinning hole. With the two turning against each other it can match Tangherlini's hole in mass and in having no angular momentum, so in five dimensions those two numbers do not fix the black hole [elvang2007]."
         }
       ],
       "references": [
@@ -24404,7 +25016,8 @@
         "cms2011",
         "emparan2013",
         "grossperry1983",
-        "boulware1985"
+        "boulware1985",
+        "elvang2007"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tangherlini.json",

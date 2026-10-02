@@ -53,6 +53,11 @@
       "id": "kaluza_klein_monopole",
       "kind": "family",
       "text": "Another vacuum solution of five dimensions built on squashed 3-spheres. With equal spins this black hole stretches its Hopf circles, and the monopole shrinks its own to a point at the centre [grossperry1983, emparan2008]."
+    },
+    {
+      "id": "black_saturn",
+      "kind": "limit_source",
+      "text": "A Myers-Perry black hole with a black ring turning in balance around it. In the limit of a ring shrunk to nothing it is the hole with one spin again [elvang2007]."
     }
   ],
   "references": [
@@ -72,7 +77,8 @@
     "frolov2007",
     "page2007",
     "murata2008",
-    "grossperry1983"
+    "grossperry1983",
+    "elvang2007"
   ],
   "coordinates": [
     {

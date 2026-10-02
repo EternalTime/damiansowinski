@@ -259,6 +259,41 @@
     "embedding": "7fea7a854b8ceca4"
   },
   {
+    "id": "black_saturn",
+    "name": "Black Saturn",
+    "tags": [
+      "vacuum",
+      "stationary",
+      "rotating",
+      "black hole",
+      "black ring",
+      "multiple black holes",
+      "axisymmetric",
+      "angular momentum",
+      "mass",
+      "frame dragging",
+      "ergoregion",
+      "horizon",
+      "event horizon",
+      "horizon topology",
+      "black hole uniqueness",
+      "conical singularity",
+      "asymptotically flat",
+      "higher dimensions",
+      "five-dimensional",
+      "soliton",
+      "inverse scattering",
+      "rod structure",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "65af7b483ec302d6",
+    "diagrams": "034dc4a9fdeb21a8",
+    "embedding": "726e24d2db3acd3e"
+  },
+  {
     "id": "black_string",
     "name": "Black String",
     "tags": [
@@ -289,7 +324,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "696baa8b2518dd5f",
+    "version": "16426bca90bb5db6",
     "diagrams": "54fe7a1cf641db39",
     "conformal": "ef75cb2ee29e15d6",
     "embedding": "6f1faae1e35e650b"
@@ -1565,7 +1600,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "08c8c7d715ed0915",
+    "version": "a98acd9dae6b976f",
     "diagrams": "c6edded6cce52897",
     "conformal": "334186f800f59252",
     "embedding": "b9bf3c95064c40a7"
@@ -1875,7 +1910,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "7744550d8715656f",
+    "version": "565ca73e9e6b2c8b",
     "diagrams": "fbe2465fce912260",
     "conformal": "1a4a12f584d5c79c",
     "embedding": "d6b5347d467d964c"
@@ -2473,7 +2508,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "8c7145a653c0cae5",
+    "version": "ce34ccc282263bf1",
     "diagrams": "d1e087098b20d92d",
     "conformal": "94cab2e957646c35",
     "embedding": "68458b3281a24534"

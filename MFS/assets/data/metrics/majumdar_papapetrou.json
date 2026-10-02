@@ -62,6 +62,11 @@
       "id": "israel_wilson_perjes",
       "kind": "generalisation",
       "text": "The same charges set spinning. Israel, Wilson, and Perjés let $U$ be complex, and the black holes among their fields are these static ones [hartle1972, chrusciel2006]."
+    },
+    {
+      "id": "black_saturn",
+      "kind": "family",
+      "text": "Two black objects of five dimensions held apart with no charge: a ring kept from falling onto the hole at its centre by rotation [elvang2007]."
     }
   ],
   "references": [
@@ -87,7 +92,8 @@
     "contopoulos1990",
     "shipley2016",
     "hawking1977",
-    "ruback1986"
+    "ruback1986",
+    "elvang2007"
   ],
   "coordinates": [
     {

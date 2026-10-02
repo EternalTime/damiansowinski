@@ -137,6 +137,10 @@ RETIRED = {
 # that does not speak for the spacetime. A statement about the curvature has to hold in
 # every chart counted, and a symmetry has to show in some chart of every region.
 REGIONS = {
+    "black_saturn": {
+        "regions": [["weyl", "polar"]],
+        "why": "ring is the black ring alone, the Saturn with its hole taken away",
+    },
     "cosmic_string": {
         "regions": [["conical"]],
         "why": "interior_cap is Gott's model of the string's own core; the spacetime of "
@@ -217,6 +221,10 @@ OVERRULED = {
     ("coleman_de_luccia", "static"): (
         False, "each vacuum is static in its own chart, and the wall between them, at r = r_w, "
                "accelerates outward through both, so the bubble as a whole has no time translation"),
+    ("black_saturn", "vacuum"): (
+        True, "V, Omega, W and nu are left free in Weyl's chart and the polar chart; black Saturn "
+              "is the solution of the vacuum equations their parameters define, which "
+              "print_charts.py holds to a vanishing Ricci tensor"),
     ("einstein_rosen_waves", "vacuum"): (
         True, "psi and gamma are left free in both charts; the waves are the solutions of "
               "the vacuum equations, a wave equation for psi and a quadrature for gamma"),

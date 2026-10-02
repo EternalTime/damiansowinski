@@ -4549,6 +4549,8 @@ class Slices(unittest.TestCase):
               # Myers and Perry's plane of rotation in six dimensions, which the embedded transverse plane
               # theta = 0 meets nowhere outside the horizon.
               "myers_perry/boyer_lindquist_six/rotation",
+              # Black Saturn's ring alone, a spacetime with no hole in it; the moment embedded is the Saturn's.
+              "black_saturn/ring/outside", "black_saturn/ring/inside",
               "frw/comoving_spherical/radial", "frw/comoving_spherical/through", "frw/conformal_spherical/radial",
               "tolman_bondi/comoving_synchronous/collapse", "vaidya/eddington_finkelstein_outgoing/shell",
               # Bonnor and Vaidya's leaving shell is the time reverse of the falling shell embedded, and the
@@ -5022,6 +5024,14 @@ class Slices(unittest.TestCase):
             if which == "cosmological":
                 return (lambda X: L.static_t(1 / L.H, X) + sign * L.rstar(X) - lean * X), [lo + 0.5, hi + 0.5]
             return (lambda X: sign * L.rstar(X) - lean * X), [lo, hi]
+        if key.startswith("black_saturn/"):
+            # The plane of Black Saturn's ring is embedded in two pieces, outside the ring and about the
+            # hole, and t = 0 is marked on each plane along its own piece; on the polar chart's
+            # theta = pi/2 the outside piece is z = -r^2/2, from r = 0 out.
+            ends = {p["id"]: [p["points"][0][0], p["points"][-1][0]] for p in surface["pieces"]}
+            if key.endswith("/far"):
+                return (lambda X: 0.0), [0.0, math.sqrt(-2 * ends["outside"][0])]
+            return (lambda X: 0.0), ends[key.rsplit("/", 1)[1]]
         if key.startswith("myers_perry/ingoing_kerr"):
             # One spin in five dimensions at mu = 1 and a = 3/5, r_+ = 4/5: Boyer-Lindquist t = 0 is v = r_*,
             # r_* = r + (5/8) ln((r - 4/5)/(r + 4/5)), drawn against v - r, on either plane.

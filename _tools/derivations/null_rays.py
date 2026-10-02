@@ -275,6 +275,27 @@ MYERS_ONE = {"mu": 1, "a": "3/5"}
 MYERS_EQUAL = {"mu": 1, "a": "2/5"}
 MYERS_SIX = {"mu": 1, "a": "3/2"}
 MYERS_CONE = "future cone of no angular momentum"
+# Black Saturn: the hole with no angular momentum of its own inside a ring in balance, kappa = (7/8,
+# 9/16, 3/7) and beta = 0, where c_1^2 = 147/64, in units of L. On the plane of the ring, rho = 0, the
+# four functions of Weyl's chart are rational in z: BS_OUTSIDE for z < 3/7, outside the ring, and
+# BS_BETWEEN for 9/16 < z < 7/8, between the ring and the hole; black_saturn.md derives them, and
+# black_saturn_axis in print_charts.py holds them to Elvang and Figueras's functions. BS_FAR is
+# BS_OUTSIDE on the half theta = pi/2 of the polar chart, where z = -r^2/2. The ring alone is drawn in
+# balance at nu = 1/2, lambda = 4/5, the ring of least angular momentum for its mass.
+BS = {"L": 1, "kappa_1": "7/8", "kappa_2": "9/16", "kappa_3": "3/7", "beta": 0}
+_BS_Q = "(784*z**3 - 2345*z**2 + 2527*z - 939)"
+BS_OUTSIDE = {"V": f"log(-2*{_BS_Q}/(49*(z - 1)*(16*z - 9)))/2", "Omega": f"21*sqrt(3)*(8*z - 7)/{_BS_Q}",
+              "W": "log(-4*(7*z - 3)*(8*z - 7)/(7*(16*z - 9)))/2",
+              "nu": "log(-7*(16*z - 9)/(4*(7*z - 3)*(8*z - 7)))/2"}
+BS_BETWEEN = {"V": "log(-14*z*(z - 1)/(7*z - 3))/2", "Omega": "3*sqrt(3)/(16*z)",
+              "W": "log(-7*(8*z - 7)*(16*z - 9)/(64*(7*z - 3)))/2",
+              "nu": "log(-64*(7*z - 3)/(7*(8*z - 7)*(16*z - 9)))/2"}
+BS_FAR = {name: text.replace("z", "(-r**2/2)") for name, text in BS_OUTSIDE.items()}
+BS_RING = {"R": 1, "nu": "1/2", "lambda": "4/5"}
+BS_CONE = "future cone of no angular momentum"
+BS_INPUT = ("Elvang and Figueras's functions on the plane of the ring, $\\rho = 0$, for a hole with no angular "
+            "momentum of its own inside a ring in balance, $\\kappa_1 = 7/8$, $\\kappa_2 = 9/16$, "
+            "$\\kappa_3 = 3/7$, and $\\beta = 0$, where each is rational in $z$.")
 # Randall and Sundrum's planes of t and the fifth coordinate hold the three coordinates along the wall fixed.
 RS_WALL = {"x_1": "0", "x_2": "0", "x_3": "0"}
 POLAR = "polar"                         # (phi, r) drawn from above: X = r cos phi, Y = r sin phi
@@ -1394,6 +1415,28 @@ DIAGRAMS = [
     Diagram("myers_perry", "boyer_lindquist_six", "rotation", "the plane of rotation", ("t", "r"), (0, 4, -2, 2),
             "$r/\\mu^{1/3}$", "$ct/\\mu^{1/3}$", MYERS_SIX, {"theta": "pi/2", "chi": "pi/2", "psi": "0"}, orient="ingoing",
             quotient="phi", mark_gtt="the ergosurface", cone=MYERS_CONE),
+    # Black Saturn on the plane of the ring, where the circles of phi have shrunk to points, with the
+    # circles of psi divided out: outside the ring and between the ring and the hole in Weyl's chart,
+    # and from the far side of the plane out to infinity in the polar chart. The functions the charts
+    # leave free are Elvang and Figueras's on that plane, so no row reads the Kretschmann scalar, whose
+    # derivatives across the plane the plane's own functions do not hold. The ring alone, in balance,
+    # is drawn on the same plane in ring coordinates, outside the ring, x = -1, and inside it, x = 1.
+    Diagram("black_saturn", "weyl", "outside", "outside the ring", ("t", "z"), (-1.5, 0.5, -1, 1),
+            "$z$", "$ct/L$", BS, {"rho": "0", "phi": "0"}, quotient="psi", mark_gtt="the ergosurface", cone=BS_CONE,
+            functions=BS_OUTSIDE, input=BS_INPUT, where="Rational(3, 7) - z", kretschmann=False),
+    Diagram("black_saturn", "weyl", "between", "between the ring and the hole", ("t", "z"), (0.55, 0.8875, -2, 2),
+            "$z$", "$ct/L$", BS, {"rho": "0", "phi": "0"}, quotient="psi", cone=BS_CONE,
+            functions=BS_BETWEEN, input=BS_INPUT, where="(z - Rational(9, 16))*(Rational(7, 8) - z)",
+            kretschmann=False),
+    Diagram("black_saturn", "polar", "far", "the far side of the plane", ("t", "r"), (0, 4, -2, 2),
+            "$r/L$", "$ct/L$", BS, {"theta": "pi/2", "phi": "0"}, quotient="psi", cone=BS_CONE,
+            functions=BS_FAR, input=BS_INPUT, kretschmann=False),
+    Diagram("black_saturn", "ring", "outside", "outside the ring", ("t", "y"), (-2, -1, -2, 2),
+            "$y$", "$ct/R$", BS_RING, {"x": "-1", "phi": "0"}, quotient="psi", mark_gtt="the ergosurface",
+            cone=BS_CONE, tau="t"),
+    Diagram("black_saturn", "ring", "inside", "inside the ring", ("t", "y"), (-2, -1, -2, 2),
+            "$y$", "$ct/R$", BS_RING, {"x": "1", "phi": "0"}, quotient="psi", mark_gtt="the ergosurface",
+            cone=BS_CONE, tau="t"),
     Diagram("schwarzschild_ads", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
             "$r/L$", "$ct/L$", SADS, EQUATOR, orient="ingoing", areal=True),
     Diagram("schwarzschild_ads", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
@@ -3291,6 +3334,59 @@ CAPTIONS = {
         "The dotted line is the ergosurface, $g_{tt} = 0$ at $r = \\mu^{1/3}$. In this plane the horizon is a "
         "circle of circumference radius $(r_+^2 + a^2)/r_+ = 5.86\\,\\mu^{1/3}$, and across the plane it is a "
         "2-sphere of radius $r_+$, fourteen times smaller: the pancake of Emparan and Myers.",
+    ],
+    ("black_saturn", "weyl", "outside"): [
+        "The plane of the ring ($\\rho = 0$, $\\phi = 0$) outside the ring, drawn in $t$ and $z$ with $\\psi$ "
+        "divided out, each point in the plane a circle of $\\psi$, for a hole with no angular momentum of its own "
+        "inside a ring in balance ($\\kappa_1 = 7/8$, $\\kappa_2 = 9/16$, $\\kappa_3 = 3/7$, $\\beta = 0$). Its null "
+        "curves are the shadows on $t$ and $z$ of the null geodesics with no angular momentum, which run at "
+        "$dz/d(ct) = \\pm e^{W - V - \\nu}/L$ and turn about the hole at $d\\psi/d(ct) = \\Omega/L$. The cones close "
+        "at the outer edge of the ring, $z = 3/7$, where $\\Omega$ has risen to the ring's angular velocity, "
+        "$c/(\\sqrt{3}\\,L)$.",
+        "The dotted line is the ergosurface, $g_{tt} = 0$ at $z = 0$, and between it and the ring no observer "
+        "keeps $\\psi$ fixed. Far from the ring $z$ is $-r^2/(2L^2)$ for the distance $r$ in the plane, so the "
+        "rays there run at $dz/d(ct) = \\pm\\sqrt{2|z|}/L$, the speed of light in a coordinate that grows as the "
+        "square of the distance.",
+    ],
+    ("black_saturn", "weyl", "between"): [
+        "The plane of the ring ($\\rho = 0$, $\\phi = 0$) between the ring and the hole, drawn in $t$ and $z$ with "
+        "$\\psi$ divided out, for the Saturn of $\\kappa_1 = 7/8$, $\\kappa_2 = 9/16$, $\\kappa_3 = 3/7$, and "
+        "$\\beta = 0$. The cones close at both ends of the gap, the inner edge of the ring, $z = 9/16$, and the "
+        "circle where the hole's horizon meets the plane, $z = 7/8$, so a ray of no angular momentum launched in "
+        "the gap ends on one horizon or the other.",
+        "The whole gap lies inside the ergoregion: $g_{tt} = (896z^2 - 1483z + 615)/(128(1 - z)(7z - 3))$ is "
+        "positive from one horizon to the other, the ergoregions of the ring and of the hole having merged. The "
+        "dragging of frames there is $\\Omega = 3\\sqrt{3}/(16z)$, which falls from the ring's angular velocity, "
+        "$c/(\\sqrt{3}\\,L)$, to the hole's, $3\\sqrt{3}\\,c/(14L)$. The hole has no angular momentum of its own, "
+        "and its horizon turns because the ring drags it.",
+    ],
+    ("black_saturn", "polar", "far"): [
+        "The plane of the ring ($\\theta = \\pi/2$, $\\phi = 0$) on the far side of the point $z = 0$ from the "
+        "ring, drawn in $t$ and $r$ with $\\psi$ divided out, for the Saturn of $\\kappa_1 = 7/8$, "
+        "$\\kappa_2 = 9/16$, $\\kappa_3 = 3/7$, and $\\beta = 0$, where $z = -r^2/(2L^2)$. The null geodesics with "
+        "no angular momentum run at $dr/d(ct) = \\pm L\\,e^{W - V - \\nu}/r$, which tends to $\\pm 1$ far out, where "
+        "the metric tends to flat space's.",
+        "The left edge, $r = 0$, is the point $z = 0$ of Weyl's chart, where the ergosurface crosses the plane and "
+        "the polar coordinates end. The ring lies beyond it on $\\theta = 0$, between $r = 0.93\\,L$ and "
+        "$1.06\\,L$, and the hole between $1.32\\,L$ and $1.41\\,L$.",
+    ],
+    ("black_saturn", "ring", "outside"): [
+        "The plane of the ring alone ($x = -1$, $\\phi = 0$) outside it, drawn in $t$ and $y$ with $\\psi$ divided "
+        "out, for the ring in balance of least angular momentum for its mass ($\\nu = 1/2$, "
+        "$\\lambda = 4/5$). Its null curves are the shadows of the null geodesics with no angular momentum, and "
+        "the cones close at the horizon, $y = -2$. The right edge, $y = -1$, is infinity, which a ray reaches "
+        "only as $t \\to \\pm\\infty$.",
+        "The dotted line is the ergosurface, $g_{tt} = 0$ at $y = -1/\\lambda = -5/4$, and between it and the "
+        "horizon no observer keeps $\\psi$ fixed.",
+    ],
+    ("black_saturn", "ring", "inside"): [
+        "The plane of the ring alone ($x = 1$, $\\phi = 0$) on the disc inside it, drawn in $t$ "
+        "and $y$ with $\\psi$ divided out ($\\nu = 1/2$, $\\lambda = 4/5$). The cones close at the horizon, "
+        "$y = -2$, and the right edge, $y = -1$, is the centre of the disc, where the circles of $\\psi$ shrink "
+        "to a point and a ray crosses to the other side.",
+        "The dotted line is the ergosurface, $y = -5/4$. With no hole at the centre the ring's ergoregion is a "
+        "tube about the ring, and the middle of the disc lies outside it; in the Saturn of Weyl's chart the "
+        "ergoregion reaches all the way across the gap to the hole.",
     ],
     ("schwarzschild_ads", "static", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $r_s = 2L$, the same at every "
@@ -7139,6 +7235,12 @@ def quotient_checks(chart, n=241):
     derivatives along the two drawn coordinates taken by central differences and none along
     the coordinate divided out, which nothing depends on; the orbits of that coordinate are
     checked spacelike, g_kk > 0. Returns the worst of each and refuses the view past GEODESIC.
+
+    A view on an axis, where a circle has shrunk to a point, holds components that are not finite
+    there, as Black Saturn's Gamma^phi_rho phi = 1/rho on the plane of its ring and its ring
+    chart's g_xx at x = -1. Each multiplies a component of the tangent that vanishes, the one
+    along a coordinate held fixed, and is counted as contributing nothing; one that multiplied a
+    component that does not vanish would leave the check not finite, and the view refused.
     """
     spec, q = chart.spec, chart.quotient
     r = np.linspace(spec.box[0], spec.box[1], n)[1:-1]
@@ -7161,6 +7263,10 @@ def quotient_checks(chart, n=241):
         raise SystemExit(f"{key(spec)}: the orbits of {spec.quotient} are not spacelike everywhere on the view")
     geodesic, null, finite = [], [], np.ones(r.size, dtype=bool)
     for f, K in enumerate(here):
+        # A component that is not finite on an axis and multiplies a vanishing part of the tangent.
+        idle = (K[:, :, None] * K[:, None, :]) == 0
+        G = np.where(idle[:, None, :, :] & ~np.isfinite(G), 0.0, G)
+        g = np.where(idle & ~np.isfinite(g), 0.0, g)
         dK = K[:, q.a:q.a + 1] * along[0][f] + K[:, q.b:q.b + 1] * along[1][f]
         GKK = np.einsum("nabc,nb,nc->na", G, K, K)
         acc = dK + GKK
@@ -8438,6 +8544,28 @@ def _myers_rstar(r, D=5):
     return r + np.real(sum(np.log(1 - r.astype(complex) / ri) / (3 * ri ** 2 + 2.25) for ri in roots))
 
 
+def _bs_slow(z, between=False):
+    """dct/dz of a ray of no angular momentum on the plane of Black Saturn's ring, e^(nu + V - W) at
+    L = 1, for the Saturn the rows draw: outside the ring, z < 3/7, the square root of
+    (9 - 16z) Q/(8 (1 - z)(3 - 7z)^2 (7 - 8z)^2) with Q = 939 - 2527z + 2345z^2 - 784z^3, and between
+    the ring and the hole, 9/16 < z < 7/8, of 8192 z (1 - z)(7z - 3)/(7 (7 - 8z)^2 (16z - 9)^2)."""
+    z = np.asarray(z, float)
+    with np.errstate(all="ignore"):
+        if between:
+            return np.sqrt(8192 * z * (1 - z) * (7 * z - 3) / (7 * (7 - 8 * z) ** 2 * (16 * z - 9) ** 2))
+        Q = 939 - 2527 * z + 2345 * z ** 2 - 784 * z ** 3
+        return np.sqrt((9 - 16 * z) * Q / (8 * (1 - z) * (3 - 7 * z) ** 2 * (7 - 8 * z) ** 2))
+
+
+def _bs_star(z, between=False):
+    """The tortoise coordinate of that plane, the quadrature of _bs_slow from z = -1 outside the ring
+    and from z = 23/32, the middle of the gap, between the ring and the hole."""
+    from scipy.integrate import quad
+    start = 0.71875 if between else -1.0
+    one = np.vectorize(lambda x: quad(lambda u: float(_bs_slow(u, between)), start, x, epsabs=1e-12, epsrel=1e-12)[0])
+    return one(np.asarray(z, float))
+
+
 def _away(*radii):
     return lambda x0, r: np.all([np.abs(r - h) > 0.05 for h in radii], axis=0)
 
@@ -8813,6 +8941,13 @@ CLOSED_FORMS = {
         (lambda v, r: v, lambda v, r: v - 2 * _myers_rstar(r), _away(0.8)),
     ("myers_perry", "boyer_lindquist_six", "transverse"):
         (lambda t, r: t + _myers_rstar(r, 6), lambda t, r: t - _myers_rstar(r, 6), _away(0.4131104345566232)),
+    ("black_saturn", "weyl", "outside"):
+        (lambda t, z: t + _bs_star(z), lambda t, z: t - _bs_star(z), lambda t, z: z < 3 / 7 - 0.02),
+    ("black_saturn", "weyl", "between"):
+        (lambda t, z: t + _bs_star(z, True), lambda t, z: t - _bs_star(z, True),
+         lambda t, z: (z > 9 / 16 + 0.01) & (z < 7 / 8 - 0.01)),
+    ("black_saturn", "polar", "far"):
+        (lambda t, r: t - _bs_star(-r ** 2 / 2), lambda t, r: t + _bs_star(-r ** 2 / 2), lambda t, r: r > 0.05),
     ("kaluza_klein_monopole", "gross_perry", "radial"):
         (lambda t, r: t + _kk_rstar(r), lambda t, r: t - _kk_rstar(r), lambda t, r: r > 0.05),
     ("kaluza_klein_monopole", "hopf", "radial"):

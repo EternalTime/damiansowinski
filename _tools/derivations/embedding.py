@@ -4782,6 +4782,83 @@ def myers_perry(ck, src):
     return views
 
 
+def black_saturn(ck, src):
+    """Black Saturn's plane of the ring at one moment of t, as far as flat space carries it.
+
+    The Saturn is the one the spacetime diagrams draw, kappa = (7/8, 9/16, 3/7) and beta = 0, a hole
+    with no angular momentum of its own inside a ring in balance, in units of L. On the plane of the
+    ring, rho = 0, the slice is the surface of z and psi with g_zz = L^2 e^(2 nu) and circles of
+    radius L e^V, and Elvang and Figueras's functions are rational in z there, null_rays.BS_OUTSIDE
+    and BS_BETWEEN. Outside the ring, z < 3/7, the circle at z has the radius
+    sqrt(2 Q/(49 (1 - z)(9 - 16z))) with Q = 939 - 2527z + 2345z^2 - 784z^3, which tends to
+    sqrt(-2z) L, the flat plane's, far out. Between the ring and the hole, 9/16 < z < 7/8, it is
+    sqrt(14 z (1 - z)/(7z - 3)), 7 L/10 where the hole's horizon meets the plane, and g_zz diverges
+    there as at a throat, so the surface stands vertical: the slice runs through the bifurcation
+    surface of the hole's horizon.
+
+    Near the ring the circles shrink inward faster than the distance in to them, the rotation
+    having widened them: g_zz - (d rho/dz)^2 is negative from z = 0.242 to within 0.005 of the
+    ring's outer edge, and from within 0.005 of its inner edge to z = 0.787. So two pieces are
+    drawn, the plane from far out in to z = 0.242, and the band from z = 0.787 in to the hole,
+    each lying level where it stops, and they are set with those two circles at one height. The
+    ring's own edges have the radii sqrt(15/2) L and sqrt(147/40) L, which is checked."""
+    from scipy.optimize import brentq
+    plane = {"t": 0, "rho": 0, "phi": 0}
+    outside = Slice(src, "black_saturn", "weyl", "z", "\\psi", plane, nr.BS, functions=nr.BS_OUTSIDE)
+    between = Slice(src, "black_saturn", "weyl", "z", "\\psi", plane, nr.BS, functions=nr.BS_BETWEEN)
+    far, outer, inner = -8.0, 3 / 7, 9 / 16
+    hole = max(between.horizons())
+    ck.add("Black Saturn: the hole's horizon meets the plane at z = 7/8", abs(hole - 7 / 8), 1e-12)
+
+    def spare(sl):
+        return lambda z: float(sl.gxx_at(z) - sl._drho(z) ** 2)
+    stop_out = brentq(spare(outside), 0.0, 0.3, xtol=1e-14)
+    stop_in = brentq(spare(between), 0.75, 0.82, xtol=1e-14)
+    ck.add("Black Saturn: outside the ring the surface stops at z = 0.242", abs(stop_out - 0.242), 5e-4)
+    ck.add("Black Saturn: between the ring and the hole the surface begins at z = 0.787", abs(stop_in - 0.787), 5e-4)
+    ck.stops("Black Saturn, the plane near the ring's outer edge", outside, np.linspace(stop_out, outer - 0.005, 202)[1:-1])
+    ck.stops("Black Saturn, the plane near the ring's inner edge", between, np.linspace(inner + 0.005, stop_in, 202)[1:-1])
+    ck.add("Black Saturn: the ring's outer edge has the radius sqrt(15/2) L",
+           abs(float(outside.rho_at(outer - 1e-12)) - math.sqrt(7.5)), 1e-6)
+    ck.add("Black Saturn: the ring's inner edge has the radius sqrt(147/40) L",
+           abs(float(between.rho_at(inner + 1e-12)) - math.sqrt(147 / 40)), 1e-6)
+    size = 2 * float(outside.rho_at(far))
+    why = "where the circles shrink inward faster than the distance in to them, and the surface stops"
+    sheet = Piece("outside", "sheet", outside, far, stop_out, float(outside.rise(far, stop_out)), -1,
+                  (("edge", "the surface runs on to $z \\to -\\infty$, a flat plane"), ("stops", "$z = 0.242$, " + why)),
+                  [(z, "r", None) for z in (far, -4.5, -2.0, -0.5)] + [(0.0, "ergo", None), (stop_out, "space", None)], size,
+                  knots=tuple(np.linspace(-1.0, stop_out, 40)[:-1]) + tuple(-np.geomspace(1.0, 8.0, 24)[1:-1]),
+                  digits=LORENTZ_DIGITS)
+    band = Piece("between", "sheet", between, stop_in, hole, 0.0, -1,
+                 (("stops", "$z = 0.787$, " + why),
+                  ("throat", "the circle $z = 7/8$, where the slice crosses the hole's horizon")),
+                 [(stop_in, "space", None), (hole, "horizon", "the hole")], size)
+    for piece in (sheet, band):
+        ck.isometry(f"Black Saturn, the plane of the ring, {piece.id}", piece)
+    ck.radius("Black Saturn, outside the ring, rho = sqrt(2Q/(49(1 - z)(9 - 16z)))", sheet,
+              lambda z: np.sqrt(2 * (939 - 2527 * z + 2345 * z ** 2 - 784 * z ** 3) / (49 * (1 - z) * (9 - 16 * z))), size)
+    ck.radius("Black Saturn, between the ring and the hole, rho = sqrt(14z(1 - z)/(7z - 3))", band,
+              lambda z: np.sqrt(14 * z * (1 - z) / (7 * z - 3)), size)
+    ck.add("Black Saturn: the hole meets the plane on a circle of radius 7 L/10", abs(band.at(hole)[0] - 0.7), 1e-6)
+    ck.add("Black Saturn: far out the circle at z has the flat plane's radius sqrt(-2z) L",
+           abs(float(outside.rho_at(-1e8)) / math.sqrt(2e8) - 1), 1e-6)
+    ck.add("Black Saturn: the slice stands vertical at the hole's edge", abs(float(between.slope(hole, "-")[0])), 1e-6)
+    surface = Surface([sheet, band])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *band.at(hole), "the hole", dx=10)
+    ring_label(fig, [0, 0, 0], *sheet.at(far), "$z = -8$")
+    fig.legend("fill", "cover", "the plane of the ring at one moment, where flat space carries it")
+    fig.legend("line", "r", "$z$ constant, at $-1/2$, $-2$, $-9/2$, and $-8$")
+    fig.legend("line", "ergo", "the ergosurface, $z = 0$")
+    fig.legend("line", "space", "the two circles where the surface stops, with the ring between them")
+    fig.legend("line", "horizon", "the circle where the slice crosses the hole's horizon")
+    fig.legend("line", "meridian", "$\\psi$ constant, every $15°$")
+    return [view("plane", "The plane of the ring", "$L$", [surface], fig.done(),
+                 settings="$L = 1$, the unit of every length, $\\kappa_1 = 7/8$, $\\kappa_2 = 9/16$, "
+                          "$\\kappa_3 = 3/7$, and $\\beta = 0$, on the surface of $z$ and $\\psi$ ($\\rho = 0$).",
+                 input=nr.BS_INPUT)]
+
+
 def kaluza_klein_monopole(ck, src):
     """The Kaluza-Klein monopole's surface of r and x_5 on the half axis theta = 0 at t = 0, m = 1,
     in Gross and Perry's chart, where the potential 4m(1 - cos theta) d phi vanishes. On it the
@@ -10091,6 +10168,7 @@ DRAWN = {
     "kaluza_klein_black_hole": kaluza_klein_black_hole,
     "witten_black_hole": witten_black_hole,
     "myers_perry": myers_perry,
+    "black_saturn": black_saturn,
     "dilaton_black_hole": dilaton_black_hole,
     "majumdar_papapetrou": majumdar_papapetrou,
     "kastor_traschen": kastor_traschen,
@@ -11184,6 +11262,17 @@ CAPTIONS = {
         "rotation stretches it against the 2-sphere it is fibred over, whose radius is $\\rho/2$, and at "
         "the throat $\\rho_+$ its radius is $\\sqrt{\\mu}$ for every spin. The dotted circle is the "
         "ergosurface $\\rho = \\sqrt{\\mu}$.",
+    ],
+    ("black_saturn", "plane"): [
+        "The plane of the ring ($\\rho = 0$) of black Saturn at one moment of $t$, drawn as a surface in flat "
+        "space with every distance along it the metric distance, for a hole with no angular momentum of its own "
+        "inside a ring in balance. Far out it is the flat plane. At the centre it stands vertical on the circle "
+        "of radius $0.7\\,L$ where the slice crosses the hole's horizon.",
+        "Near the ring the rotation has widened the circles of $\\psi$, which shrink inward faster than the "
+        "distance in to them, and flat space carries no such surface: the plane stops at $z = 0.242$ and the "
+        "band about the hole begins at $z = 0.787$, each lying level there. Between those two circles lies the "
+        "ring, whose outer and inner edges have the radii $2.74\\,L$ and $1.92\\,L$. The dotted circle is the "
+        "ergosurface, $z = 0$.",
     ],
     ("myers_perry", "six"): [
         "The plane of $r$ and $\\psi$ ($\\theta = 0$, $\\chi = \\pi/2$), transverse to the rotation, of the "
