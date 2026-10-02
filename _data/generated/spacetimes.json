@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 134,
+  "count": 135,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -3311,6 +3311,11 @@
           "id": "de_sitter",
           "kind": "family",
           "text": "Where the expanding Bianchi universes end up when the cosmological constant is positive. Robert Wald proved in 1983 that every type but IX approaches de Sitter space exponentially, and that type IX does too when $\\Lambda$ is large enough [wald1983]."
+        },
+        {
+          "id": "kasner_scalar",
+          "kind": "special_case",
+          "text": "Type I filled with a stiff fluid or a massless scalar field, whose three scale factors are powers of the time [jacobs1968, belinskii1973]."
         }
       ],
       "references": [
@@ -3322,7 +3327,9 @@
         "kasner1921",
         "misner1963",
         "kantowski1966",
-        "wald1983"
+        "wald1983",
+        "jacobs1968",
+        "belinskii1973"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bianchi.json",
@@ -12060,6 +12067,11 @@
           "id": "exponential_metric",
           "kind": "limit",
           "text": "The limit $\\gamma \\to \\infty$ with $\\gamma b = 2m$ held fixed, where $f^\\gamma \\to e^{-2m/r}$. It takes the scalar field's energy negative, and the naked singularity opens into the throat of a wormhole [makukov2018]."
+        },
+        {
+          "id": "kasner_scalar",
+          "kind": "family",
+          "text": "The homogeneous solution of the same field equations, Einstein's with a massless scalar field, with a different rate of expansion along each axis [belinskii1973]."
         }
       ],
       "references": [
@@ -12087,7 +12099,8 @@
         "chowdhury2012",
         "roberts1996",
         "liebling2023",
-        "makukov2018"
+        "makukov2018",
+        "belinskii1973"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/fisher_jnw.json",
@@ -12453,6 +12466,11 @@
           "id": "nordstrom_scalar",
           "kind": "family",
           "text": "The flat universe in Nordström's scalar theory of gravity. His field equation gives dust the scale factor $1 - \\eta^2/\\eta_0^2$ in conformal time, with $\\eta_0$ a constant, a universe that expands from a bang and falls back into a crunch [sundrum2003]."
+        },
+        {
+          "id": "kasner_scalar",
+          "kind": "generalisation",
+          "text": "The flat Friedmann universe of a stiff fluid, with scale factor $t^{1/3}$, given a different exponent along each axis [jacobs1968]."
         }
       ],
       "references": [
@@ -12510,7 +12528,8 @@
         "novikov1965",
         "lindquist1957",
         "clifton2009",
-        "sundrum2003"
+        "sundrum2003",
+        "jacobs1968"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -18196,6 +18215,11 @@
           "id": "belinski_zakharov",
           "kind": "generalisation",
           "text": "Kasner's universe with solitons added. Belinski and Zakharov took it for the seed of their first soliton solutions, among them two pulses of gravitational wave that run apart along a light cone [belinskii1978]."
+        },
+        {
+          "id": "kasner_scalar",
+          "kind": "generalisation",
+          "text": "Kasner's universe with a massless scalar field in it. The squares of the exponents then sum to $1 - q^2$, and for $q^2 > 1/2$ all three axes shrink toward the singularity [belinskii1973]."
         }
       ],
       "references": [
@@ -18214,7 +18238,8 @@
         "berger1974",
         "geroch1969",
         "kasner1925",
-        "belinskii1978"
+        "belinskii1978",
+        "belinskii1973"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner.json",
@@ -18282,6 +18307,305 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = -\\dfrac{16 p_1 p_2 p_3}{c^4 t^4}"
+        }
+      ]
+    },
+    {
+      "id": "kasner_scalar",
+      "name": "Kasner Universe with a Scalar Field",
+      "short_name": "Kasner with a Scalar Field",
+      "description": "Kasner's anisotropic universe filled with a massless scalar field, which is also a fluid whose pressure equals its energy density. The field loosens Kasner's second condition, so all three axes can shrink together toward the singularity, and the oscillations of the vacuum come to a stop.",
+      "tags": [
+        "scalar field",
+        "massless scalar field",
+        "minimally coupled scalar field",
+        "Einstein-scalar",
+        "stiff fluid",
+        "anisotropic",
+        "cosmology",
+        "Kasner",
+        "Bianchi classification",
+        "spatially homogeneous",
+        "homogeneous",
+        "curvature singularity",
+        "spacelike singularity",
+        "big bang",
+        "BKL",
+        "Kaluza-Klein",
+        "higher dimensions",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "five-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The massless scalar field $\\varphi$ enters through $R_{\\mu\\nu} = (8\\pi G/c^4)\\,\\partial_\\mu\\varphi\\,\\partial_\\nu\\varphi$ in four dimensions, and every component assumes the two conditions on the exponents of its chart.",
+      "related": [
+        {
+          "id": "kasner",
+          "kind": "special_case",
+          "text": "The universe with the field switched off. At $q = 0$ the squares of the exponents sum to one, and one axis has to stretch toward the singularity [kasner1921]."
+        },
+        {
+          "id": "frw",
+          "kind": "special_case",
+          "text": "At $q^2 = 2/3$ all three exponents are $1/3$, and the metric is the flat Friedmann universe of a stiff fluid, with scale factor $t^{1/3}$ [jacobs1968]."
+        },
+        {
+          "id": "bianchi",
+          "kind": "generalisation",
+          "text": "This universe is Bianchi type I, flat space with three scale factors, filled with a stiff fluid or a massless scalar field [jacobs1968]."
+        },
+        {
+          "id": "mixmaster",
+          "kind": "family",
+          "text": "In vacuum the Mixmaster universe bounces from one Kasner epoch to the next without end. A massless scalar field stops the bounces after a finite number, and the universe goes on as this one does, with all three exponents positive [belinskii1973]."
+        },
+        {
+          "id": "fisher_jnw",
+          "kind": "family",
+          "text": "The same field equations, Einstein's with a massless scalar field, solved for a static sphere [janis1968]."
+        }
+      ],
+      "references": [
+        "jacobs1968",
+        "zeldovich1962",
+        "kasner1921",
+        "belinskii1973",
+        "lifshitz1963",
+        "bkl1970",
+        "kaluza1921",
+        "damour2003",
+        "andersson2001",
+        "fournodavlos2023",
+        "frenkel2020",
+        "janis1968"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner_scalar.json",
+      "charts": [
+        {
+          "id": "synchronous",
+          "name": "Synchronous",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (0, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "t \\to 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "p_1",
+              "description": "Exponent along $x$, with $p_1 + p_2 + p_3 = 1$"
+            },
+            {
+              "symbol": "p_2",
+              "description": "Exponent along $y$, with $p_1^2 + p_2^2 + p_3^2 = 1 - q^2$"
+            },
+            {
+              "symbol": "p_3",
+              "description": "Exponent along $z$; the two conditions leave two of the four numbers free, and where $q^2 > 1/2$ all three exponents are positive"
+            },
+            {
+              "symbol": "q",
+              "description": "Strength of the scalar field, a pure number with $q^2 \\le 2/3$: $\\varphi = (qc^2/\\sqrt{8\\pi G})\\ln t$. At $q = 0$ the metric is Kasner's vacuum, and at $q^2 = 2/3$ it is isotropic, $p_1 = p_2 = p_3 = 1/3$"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z)$, with $t$ the proper time of an observer at rest, and evaluate the powers $t^{2p_i}$ with $t$ in a fixed unit of time, so they are dimensionless and the lengths sit in $x$, $y$, and $z$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + t^{2p_1}dx^2 + t^{2p_2}dy^2 + t^{2p_3}dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "t^{2p_1}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "t^{2p_2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "t^{2p_3}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{q^2}{c^2\\,t^2}",
+          "kretschmann": "K = \\dfrac{3q^4 - 16p_1\\,p_2\\,p_3}{c^4\\,t^4}"
+        },
+        {
+          "id": "logarithmic",
+          "name": "Logarithmic time",
+          "coordinates": [
+            "\\tau",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\tau \\to \\infty \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "p_1",
+              "description": "Exponent along $x$, with $p_1 + p_2 + p_3 = 1$"
+            },
+            {
+              "symbol": "p_2",
+              "description": "Exponent along $y$, with $p_1^2 + p_2^2 + p_3^2 = 1 - q^2$"
+            },
+            {
+              "symbol": "p_3",
+              "description": "Exponent along $z$; the two conditions leave two of the four numbers free, and where $q^2 > 1/2$ all three exponents are positive"
+            },
+            {
+              "symbol": "q",
+              "description": "Strength of the scalar field, a pure number with $q^2 \\le 2/3$: $\\varphi = -(qc^2/\\sqrt{8\\pi G})\\,\\tau$, linear in $\\tau$. At $q = 0$ the metric is Kasner's vacuum, and at $q^2 = 2/3$ it is isotropic, $p_1 = p_2 = p_3 = 1/3$"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "A length, $\\ell = ct_0$, with $t_0$ the unit of time of the synchronous chart"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, x, y, z)$, with $\\tau = -\\ln(t/t_0)$ a pure number that grows without bound toward the singularity, $t$ the proper time of the synchronous chart, and $\\ell = ct_0$ a length. We take components in the chart $x^0 = \\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\ell^2e^{-2\\tau}d\\tau^2 + e^{-2p_1\\tau}dx^2 + e^{-2p_2\\tau}dy^2 + e^{-2p_3\\tau}dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\ell^2e^{-2\\tau}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "e^{-2p_1\\tau}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "e^{-2p_2\\tau}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{-2p_3\\tau}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{q^2e^{2\\tau}}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{\\left(3q^4 - 16p_1\\,p_2\\,p_3\\right)e^{4\\tau}}{\\ell^4}"
+        },
+        {
+          "id": "kaluza_klein",
+          "name": "Five dimensions (Kaluza-Klein)",
+          "coordinates": [
+            "T",
+            "x",
+            "y",
+            "z",
+            "w"
+          ],
+          "domains": [
+            "T \\in (0, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "w \\in (-\\infty, \\infty)",
+            "T \\to 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "s_1",
+              "description": "Exponent along $x$ in five dimensions, with $s_1 + s_2 + s_3 + s_5 = 1$; the exponent of four dimensions along $x$ is $p_1 = (2s_1 + s_5)/(2 + s_5)$"
+            },
+            {
+              "symbol": "s_2",
+              "description": "Exponent along $y$, with $s_1^2 + s_2^2 + s_3^2 + s_5^2 = 1$; in four dimensions $p_2 = (2s_2 + s_5)/(2 + s_5)$"
+            },
+            {
+              "symbol": "s_3",
+              "description": "Exponent along $z$; in four dimensions $p_3 = (2s_3 + s_5)/(2 + s_5)$"
+            },
+            {
+              "symbol": "s_5",
+              "description": "Exponent along $w$, the extra dimension: the strength of the scalar field of four dimensions is $q = \\sqrt{6}\\,s_5/(2 + s_5)$, and at $s_5 = 0$ the metric is Kasner's vacuum with a flat line added"
+            }
+          ],
+          "convention": "We use coordinates $(T, x, y, z, w)$ of five dimensions, with $w$ along the extra dimension, and evaluate the powers of $T$ with $T$ in a fixed unit of time. The metric of four dimensions is $\\sqrt{g_{ww}}$ times the first four terms, with $t \\propto T^{1 + s_5/2}$ its proper time and $\\varphi = (c^2/\\sqrt{8\\pi G})\\sqrt{3/2}\\,s_5\\ln T$. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dT^2 + T^{2s_1}dx^2 + T^{2s_2}dy^2 + T^{2s_3}dz^2 + T^{2s_5}dw^2",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "T^{2s_1}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "T^{2s_2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "T^{2s_3}"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "T^{2s_5}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = -\\dfrac{8\\left(s_1\\,s_2\\,s_3\\,s_5 + 2\\left(s_1\\,s_2\\,s_3 + s_1\\,s_2\\,s_5 + s_1\\,s_3\\,s_5 + s_2\\,s_3\\,s_5\\right)\\right)}{c^4\\,T^4}"
         }
       ]
     },
@@ -26568,6 +26892,11 @@
           "id": "eguchi_hanson",
           "kind": "family",
           "text": "A space of four dimensions with no time and the Mixmaster universe's symmetry, that of the 3-sphere. Belinskii, Gibbons, Page, and Pope solved its self dual case with all three axes unequal, and the one solution without a singularity has two axes equal: the Eguchi-Hanson space [belinskii1978bianchi, eguchihanson1979]."
+        },
+        {
+          "id": "kasner_scalar",
+          "kind": "family",
+          "text": "A massless scalar field stops the Mixmaster oscillations after a finite number, and the universe then runs to its singularity as this one does, shrinking along all three axes [belinskii1973]."
         }
       ],
       "references": [
@@ -26591,7 +26920,8 @@
         "misner1963",
         "gowdy2014",
         "belinskii1978bianchi",
-        "eguchihanson1979"
+        "eguchihanson1979",
+        "belinskii1973"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mixmaster.json",

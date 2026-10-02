@@ -186,6 +186,12 @@ REGIONS = {
                "holes reduce to, which carries a Maxwell field and a scalar field; the entry's "
                "spacetime is the vacuum of five dimensions",
     },
+    "kasner_scalar": {
+        "regions": [["synchronous", "logarithmic"]],
+        "why": "kaluza_klein prints Kasner's vacuum of five dimensions, whose reduction along its "
+               "fifth dimension is this universe; the entry's spacetime is the one of four "
+               "dimensions, with the scalar field in it",
+    },
     "kastor_traschen": {
         "regions": [["cartesian", "comoving"]],
         "why": "isotropic is the single hole, which alone is spherically symmetric, and "

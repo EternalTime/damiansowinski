@@ -153,6 +153,13 @@ def near(lo, hi, n=N, crowd=1e-9):
     return lo + (hi - lo) * np.geomspace(crowd, 1.0, n)
 
 
+def kasner_scalar_five(t):
+    """The time T of Kasner's vacuum of five dimensions at the proper time t of the universe of
+    four it reduces to, t = T^(1 + s_5/2)/(1 + s_5/2), at the s_5 the diagrams draw."""
+    k = 1 + 10 / (13 * math.sqrt(6) - 10)
+    return (k * t) ** (1 / k)
+
+
 def gravastar_x(r):
     """The tortoise coordinate inside the gravastar the diagrams draw, L = 2 and C = 64/195."""
     return 2 / math.sqrt(64 / 195) * math.atanh(r / 2)
@@ -2409,6 +2416,16 @@ FLAT = {
         "gowdy", lambda m: along(-math.log(m.time), *m.reach("areal", "\\theta"))),
     ("kasner", "cartesian", "tx"): lambda: one("kasner", lambda m: across(m.time, 0.0, BIG)),
     ("kasner", "cartesian", "tz"): lambda: one("kasner", lambda m: across(m.time, 0.0, BIG)),
+    # Kasner's universe with a scalar field: a moment of t is the line tau = -ln t of the logarithmic
+    # chart, and in the vacuum of five dimensions the moment T = ((1 + s_5/2) t)^(1/(1 + s_5/2)).
+    ("kasner_scalar", "synchronous", "tx"): lambda: one("kasner_scalar", lambda m: across(m.time, 0.0, BIG)),
+    ("kasner_scalar", "synchronous", "tz"): lambda: one("kasner_scalar", lambda m: across(m.time, 0.0, BIG)),
+    ("kasner_scalar", "logarithmic", "taux"): lambda: one(
+        "kasner_scalar", lambda m: across(-math.log(m.time), 0.0, BIG)),
+    ("kasner_scalar", "kaluza_klein", "Tx"): lambda: one(
+        "kasner_scalar", lambda m: across(kasner_scalar_five(m.time), 0.0, BIG)),
+    ("kasner_scalar", "kaluza_klein", "Tw"): lambda: one(
+        "kasner_scalar", lambda m: across(kasner_scalar_five(m.time), 0.0, BIG)),
     ("bianchi", "type_i_cartesian", "tx"): lambda: one("bianchi", lambda m: across(m.time, 0.0, BIG)),
     ("kantowski_sachs", "comoving", "tr"): lambda: _kantowski_sachs("comoving"),
     ("kantowski_sachs", "dust", "etar"): lambda: _kantowski_sachs("dust"),

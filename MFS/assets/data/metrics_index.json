@@ -322,7 +322,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1dabc18cb30095dc",
+    "version": "f9d1beb4f5dd4817",
     "diagrams": "d6268bdae97d9fd7",
     "embedding": "7fea7a854b8ceca4"
   },
@@ -1224,7 +1224,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e06d389dbe0ceafd",
+    "version": "7f731b59e6330513",
     "diagrams": "3ae6a5324e2f9841",
     "conformal": "0ad248166c7cdb8f",
     "embedding": "3cdd1185c95f1f46"
@@ -1247,7 +1247,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "cd94e9fcc7ef895f",
+    "version": "04c3405d7ea207e7",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -1766,9 +1766,42 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4146115ad2ce9079",
+    "version": "fe8b510e356b7d1c",
     "diagrams": "a84952c23e2fa052",
     "embedding": "e2698f474fe29ce2"
+  },
+  {
+    "id": "kasner_scalar",
+    "name": "Kasner with a Scalar Field",
+    "tags": [
+      "scalar field",
+      "massless scalar field",
+      "minimally coupled scalar field",
+      "Einstein-scalar",
+      "stiff fluid",
+      "anisotropic",
+      "cosmology",
+      "Kasner",
+      "Bianchi classification",
+      "spatially homogeneous",
+      "homogeneous",
+      "curvature singularity",
+      "spacelike singularity",
+      "big bang",
+      "BKL",
+      "Kaluza-Klein",
+      "higher dimensions",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "five-dimensional",
+      "idealized model"
+    ],
+    "version": "275cde3e65f2f1b4",
+    "diagrams": "8b8ed11a7a64599d",
+    "embedding": "592f4ab4aaa693fe"
   },
   {
     "id": "kastor_traschen",
@@ -2525,7 +2558,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a3c18d524fa1a317",
+    "version": "39f03a3c778fa1ed",
     "embedding": "1762ae2364403f3b"
   },
   {

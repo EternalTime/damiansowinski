@@ -12,7 +12,7 @@ schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis,
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
-born_infeld_charge, penrose_impulsive_wave and exponential_metric, and Godel's cylindrical chart.
+born_infeld_charge, penrose_impulsive_wave, exponential_metric and kasner_scalar, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -20406,6 +20406,301 @@ def exponential_metric_check(chart, system):
 
 
 CHARTS["exponential_metric"] = [lambda s=s: exponential_metric(s) for s in EXPONENTIAL_CHARTS]
+
+
+# -- Kasner's universe with a scalar field ---------------------------------------------
+
+KASNER_SCALAR_CHARTS = ("synchronous", "logarithmic", "kaluza_klein")
+
+
+def time_powers(time, time_tex, c, state):
+    """A pretty printer for a chart whose every value is one monomial in the time raised to an
+    exponent that holds a parameter, as t^{2p_1 - 1}. The chart's line element writes the power as
+    (x^0/c)^{2p_1}, which is t^{2p_1} once x^0 is written ct, so the powers of c and of the time are
+    gathered first, with both positive. The printer writes rational exponents only, so the power is
+    handed to it as a placeholder whose text is the time with its whole exponent, above the line,
+    or below it with the signs turned where every term of the exponent is negative. A value with
+    no parameter in its exponent is factored and printed as it stands."""
+    table = {}
+
+    def pretty(value):
+        a, b = sp.Dummy(positive=True), sp.Dummy(positive=True)
+        value = sp.together(sp.sympify(value)).subs({time: a, c: b})
+        value = sp.powsimp(sp.expand_power_base(sp.powdenest(value, force=True), force=True), combine="exp")
+        value = value.subs({a: time, b: c})
+        exponent, rest = sp.Integer(0), sp.Integer(1)
+        for f in sp.Mul.make_args(value):
+            base, k = f.as_base_exp()
+            if base == time:
+                exponent += k
+            else:
+                rest *= f
+        if rest.has(time):
+            raise AssertionError(f"{value} is not one monomial in {time}")
+        exponent = sp.expand(exponent)
+        out = sp.factor(rest)
+        if exponent.is_Number:
+            return out * time ** exponent
+        printer = state["printer"]
+        negative = all(term.as_coeff_Mul()[0].is_negative for term in sp.Add.make_args(exponent))
+        shown, side = (-exponent, -1) if negative else (exponent, 1)
+        text = time_tex + "^{" + printer.positive_first(shown) + "}"
+        placeholder = table.setdefault(text, sp.Symbol(f"TIMEPOWER{len(table)}", positive=True))
+        printer.overrides[placeholder] = text
+        return out * placeholder ** side
+
+    return pretty
+
+
+class OnSurface:
+    """A chart's Geometry with the curvature it has where the chart's exponents obey their two
+    conditions. The Christoffel symbols and the Riemann tensor are those of free exponents, which
+    hold there too. The Ricci tensor and the two scalars are handed in, written in the exponents
+    and the strength of the field, and the Einstein and Weyl tensors are built from them and the
+    Riemann tensor; kasner_scalar_check holds each to the tensor of free exponents on the
+    checker's own parametrisation of the surface before anything is printed."""
+
+    def __init__(self, geo, ricci, scalar, kretschmann):
+        self._geo, self._ricci, self._scalar, self._kretschmann = geo, ricci, scalar, kretschmann
+
+    def __getattr__(self, name):
+        return getattr(self._geo, name)
+
+    def ricci_ll(self):
+        return self._ricci
+
+    def ricci_scalar(self):
+        return self._scalar
+
+    def kretschmann(self):
+        return self._kretschmann
+
+    def einstein_ll(self):
+        n, g = self._geo.n, self._geo.g
+        return [[sp.factor(self._ricci[a][b] - g[a, b] * self._scalar / 2) for b in range(n)] for a in range(n)]
+
+    def weyl_llll(self):
+        n, g, R, S = self._geo.n, self._geo.g, self._ricci, self._scalar
+        riemann = self._geo.riemann_llll()
+        out = [[[[sp.Integer(0)] * n for _ in range(n)] for _ in range(n)] for _ in range(n)]
+        for a, b, c, d in vm._indices(n, 4):
+            out[a][b][c][d] = sp.factor(
+                riemann[a][b][c][d]
+                - (g[a, c] * R[b][d] - g[a, d] * R[b][c] - g[b, c] * R[a][d] + g[b, d] * R[a][c]) / (n - 2)
+                + S * (g[a, c] * g[b, d] - g[a, d] * g[b, c]) / ((n - 1) * (n - 2)))
+        return out
+
+
+def kasner_scalar(system):
+    """Kasner's universe with a massless scalar field, the exact solution (2.6) to (2.8) of
+    Belinskii and Khalatnikov (1972), in three charts.
+
+    synchronous   ds^2 = -c^2dt^2 + t^{2p_1}dx^2 + t^{2p_2}dy^2 + t^{2p_3}dz^2, their (2.6), with
+                  sum p_i = 1 and sum p_i^2 = 1 - q^2, their (2.8), and the field q ln t, their
+                  (2.7); the metric is Jacobs's (1968) Zel'dovich universe, his (49);
+    logarithmic   the time tau = -ln(t/t_0), in which the scale factors and the field are linear
+                  in the time, (3.21) to (3.25) of Damour, Henneaux and Nicolai (2003);
+    kaluza_klein  Kasner's vacuum of five dimensions, their (4.5) and (4.6), whose reduction along
+                  w is the synchronous chart by their fourth footnote.
+
+    Every value assumes the two conditions on its chart's exponents. kasner_scalar_check holds the
+    stated curvature to the tensors of free exponents on the surface, and kasner_scalar.md beside
+    this file is the derivation."""
+    state = {}
+    flat = ["x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)", "z \\in (-\\infty, \\infty)"]
+
+    def check(chart):
+        state["printer"] = chart.printer
+        kasner_scalar_check(chart, system)
+
+    spec = {"metric_id": "kasner_scalar", "check": check}
+    if system == "synchronous":
+        coords, parameters = ["t", "x", "y", "z"], ["p_1", "p_2", "p_3", "q"]
+
+        def line(c2, t):
+            return f"ds^2 = -{c2}dt^2 + {t}^{{2p_1}}dx^2 + {t}^{{2p_2}}dy^2 + {t}^{{2p_3}}dz^2"
+        probe = vm.Reader(coords, parameters, ())
+        time = probe.symbol["t"]
+        names = [probe.parameters[n] for n in ("q", "p_1", "p_2", "p_3")]
+        spec.update({
+            "system": {"id": system, "name": "Synchronous", "coords": coords,
+                       "domains": ["t \\in (0, \\infty)"] + flat + ["t \\to 0 \;\\text{(the singularity)}"],
+                       "parameters": parameters, "line_element": line("c^2", "t")},
+            "chart_line_element": line("", "\\left(\\dfrac{t}{c}\\right)"),
+            "time": "t",
+            "printer": {"lead": names + [time], "factors": names + [probe.c, time]},
+            "pretty": time_powers(time, "t", probe.c, state),
+            "components": {
+                "metric_components": {(k, k): f"t^{{2p_{i}}}" for i, k in enumerate("xyz", 1)},
+                "inverse_metric_components": {(k, k): f"t^{{-2p_{i}}}" for i, k in enumerate("xyz", 1)}},
+        })
+    elif system == "logarithmic":
+        coords, parameters = ["\\tau", "x", "y", "z"], ["p_1", "p_2", "p_3", "q", "\\ell"]
+        line = ("ds^2 = -\\ell^2e^{-2\\tau}d\\tau^2 + e^{-2p_1\\tau}dx^2 + e^{-2p_2\\tau}dy^2 + e^{-2p_3\\tau}dz^2")
+        probe = vm.Reader(coords, parameters, ())
+        tau = probe.symbol["\\tau"]
+        names = [probe.parameters[n] for n in ("q", "p_1", "p_2", "p_3", "ell")]
+        spec.update({
+            "system": {"id": system, "name": "Logarithmic time", "coords": coords,
+                       "domains": ["\\tau \\in (-\\infty, \\infty)"] + flat
+                                  + ["\\tau \\to \\infty \;\\text{(the singularity)}"],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": names + [tau], "factors": names + [tau]},
+            "pretty": kasner_scalar_exponentials(tau, state),
+            "components": {
+                "metric_components": {("\\tau", "\\tau"): "-\\ell^2e^{-2\\tau}",
+                                      **{(k, k): f"e^{{-2p_{i}\\tau}}" for i, k in enumerate("xyz", 1)}},
+                "inverse_metric_components": {("\\tau", "\\tau"): "-\\dfrac{e^{2\\tau}}{\\ell^2}",
+                                              **{(k, k): f"e^{{2p_{i}\\tau}}" for i, k in enumerate("xyz", 1)}}},
+        })
+    else:
+        coords, parameters = ["T", "x", "y", "z", "w"], ["s_1", "s_2", "s_3", "s_5"]
+
+        def line(c2, t):
+            return (f"ds^2 = -{c2}dT^2 + {t}^{{2s_1}}dx^2 + {t}^{{2s_2}}dy^2 + {t}^{{2s_3}}dz^2"
+                    f" + {t}^{{2s_5}}dw^2")
+        probe = vm.Reader(coords, parameters, ())
+        time = probe.symbol["T"]
+        names = [probe.parameters[n] for n in parameters]
+        axes = list(zip("xyzw", (1, 2, 3, 5)))
+        spec.update({
+            "system": {"id": system, "name": "Five dimensions (Kaluza-Klein)", "coords": coords,
+                       "domains": ["T \\in (0, \\infty)"] + flat + ["w \\in (-\\infty, \\infty)",
+                                                                    "T \\to 0 \;\\text{(the singularity)}"],
+                       "parameters": parameters, "line_element": line("c^2", "T")},
+            "chart_line_element": line("", "\\left(\\dfrac{T}{c}\\right)"),
+            "time": "T",
+            "printer": {"lead": names + [time], "factors": names + [probe.c, time]},
+            "pretty": time_powers(time, "T", probe.c, state),
+            "components": {
+                "metric_components": {(k, k): f"T^{{2s_{i}}}" for k, i in axes},
+                "inverse_metric_components": {(k, k): f"T^{{-2s_{i}}}" for k, i in axes}},
+            "kretschmann": "-\\dfrac{8\\left(s_1\\,s_2\\,s_3\\,s_5 + 2\\left(s_1\\,s_2\\,s_3 + s_1\\,s_2\\,s_5"
+                           " + s_1\\,s_3\\,s_5 + s_2\\,s_3\\,s_5\\right)\\right)}{c^4\\,T^4}",
+        })
+    return spec
+
+
+def kasner_scalar_exponentials(tau, state):
+    """A pretty printer for the logarithmic chart, whose every value is a rational function of the
+    exponents times one exponential of the time: the exponentials are gathered into one, handed
+    to the printer as a placeholder with the time written last, e^{2(1 - p_1)\tau}, and the rest
+    is factored."""
+    table = {}
+
+    def pretty(value):
+        value = sp.powsimp(sp.expand_power_base(sp.powdenest(sp.together(sp.sympify(value)), force=True), force=True),
+                           combine="exp", force=True)
+        argument, rest = sp.Integer(0), sp.Integer(1)
+        for f in sp.Mul.make_args(value):
+            base, k = f.as_base_exp()
+            if isinstance(base, sp.exp):
+                argument += base.args[0] * k
+            elif base == sp.E:
+                argument += k
+            else:
+                rest *= f
+        if rest.has(tau):
+            raise AssertionError(f"{value} is not one exponential of {tau}")
+        out = sp.factor(rest)
+        rate = sp.factor(sp.cancel(argument / tau))
+        if rate == 0:
+            return out
+        if rate.has(tau):
+            raise AssertionError(f"the exponent of {value} is not linear in {tau}")
+        printer = state["printer"]
+        number, body = rate.as_coeff_Mul()
+        if body.is_Add:
+            # The bracket leads with its positive terms, 2(1 - p_1) for -2(p_1 - 1).
+            if number.is_negative and body.as_coeff_Add()[0].is_negative:
+                number, body = -number, -body
+            head = "" if number == 1 else "-" if number == -1 else printer.expr(number)
+            text = head + "\\left(" + printer.positive_first(body) + "\\right)"
+        else:
+            text = printer.expr(rate)
+            if body != 1:
+                text += "\\,"
+        if text in ("1", "-1"):
+            text = text[:-1]
+        text = "e^{" + text + "\\tau}"
+        placeholder = table.setdefault(text, sp.Symbol(f"TIMEEXP{len(table)}", positive=True))
+        printer.overrides[placeholder] = text
+        return out * placeholder
+
+    return pretty
+
+
+def kasner_scalar_check(chart, system):
+    """Each chart against Belinskii and Khalatnikov (1972), on the checker's own parametrisation of
+    the surface its exponents live on. In four dimensions the Ricci tensor is the stress of the
+    field q ln t, their (2.5) and (2.7), R_ab = d_a phi d_b phi in their units, which is that of
+    a fluid at rest with its pressure equal to its energy density; the field solves the wave
+    equation, their (2.4); and the Kretschmann scalar is (3q^4 - 16 p_1 p_2 p_3)/(c^4 t^4). The
+    logarithmic chart is the synchronous one pulled back along t = t_0 e^{-tau}. The chart of five
+    dimensions is a vacuum, their (4.5) and (4.6), and its reduction along w, their (3.28) and
+    fourth footnote, has exponents on the surface of four dimensions. The stated curvature then
+    stands in for the chart's, so that it is what is printed."""
+    reader, geo = chart.reader, chart.geo
+    P = reader.parameters
+    n = geo.n
+    x0 = chart.symbols[0]
+    relations = vm.PARAMETER_RELATIONS[("kasner_scalar", system)]
+    surface = {P[name]: sp.sympify(value) for name, value in relations.items()}
+
+    def on(value):
+        return vm.norm(sp.sympify(value).subs(surface))
+
+    ricci = [[sp.Integer(0)] * n for _ in range(n)]
+    if system == "kaluza_klein":
+        s = [P[name] for name in ("s_1", "s_2", "s_3", "s_5")]
+        triples = s[0] * s[1] * s[2] + s[0] * s[1] * s[3] + s[0] * s[2] * s[3] + s[1] * s[2] * s[3]
+        scalar = sp.Integer(0)
+        kretschmann = -8 * (2 * triples + s[0] * s[1] * s[2] * s[3]) / x0 ** 4
+        # The reduction: the metric of four dimensions is sqrt(g_ww) times the first four terms, in
+        # the proper time t = T^(1 + s_5/2)/(1 + s_5/2), so its exponents are (2 s_i + s_5)/(2 + s_5),
+        # and the field sqrt(3/2) s_5 ln T is q ln t with q = sqrt(6) s_5/(2 + s_5).
+        p = [(2 * k + s[3]) / (2 + s[3]) for k in s[:3]]
+        q2 = 6 * s[3] ** 2 / (2 + s[3]) ** 2
+        if on(sum(p) - 1) != 0 or on(sum(k ** 2 for k in p) - 1 + q2) != 0:
+            raise AssertionError("kasner_scalar: the reduction of the vacuum of five dimensions is off the surface")
+    else:
+        p, q = [P[name] for name in ("p_1", "p_2", "p_3")], P["q"]
+        # In the chart's own time the field is q ln x^0 or -q tau, up to a constant.
+        field = q * sp.log(x0) if system == "synchronous" else -q * x0
+        ricci[0][0] = sp.diff(field, x0) ** 2
+        scalar = geo.ginv[0, 0] * ricci[0][0]
+        kretschmann = (3 * q ** 4 - 16 * p[0] * p[1] * p[2]) * geo.ginv[0, 0] ** 2 * sp.diff(field, x0) ** 4 / q ** 4
+        det = geo.g.det()
+        box = sp.diff(geo.ginv[0, 0] * sp.diff(field, x0), x0) + sp.diff(det, x0) / (2 * det) * geo.ginv[0, 0] * sp.diff(field, x0)
+        if on(box) != 0:
+            raise AssertionError(f"kasner_scalar: the field does not solve the wave equation in the {system} chart")
+        # A fluid at rest with p = rho: G^t_t = -G^x_x = -G^y_y = -G^z_z on the surface.
+        einstein = geo.raise_indices(geo.einstein_ll(), 2, (0,))
+        if any(on(einstein[0][0] + einstein[k][k]) != 0 for k in (1, 2, 3)):
+            raise AssertionError(f"kasner_scalar: the stress is not that of a stiff fluid in the {system} chart")
+    stated = OnSurface(geo, ricci, scalar, kretschmann)
+    for name, rank in (("ricci_ll", 2), ("einstein_ll", 2), ("weyl_llll", 4)):
+        free, there = getattr(geo, name)(), getattr(stated, name)()
+        for index in vm._indices(n, rank):
+            if on(vm._at(free, index) - vm._at(there, index)) != 0:
+                raise AssertionError(f"kasner_scalar: {name} is misstated in slot {index} of the {system} chart")
+    if on(geo.ricci_scalar() - scalar) != 0 or on(geo.kretschmann() - kretschmann) != 0:
+        raise AssertionError(f"kasner_scalar: a scalar is misstated in the {system} chart")
+    if system == "logarithmic":
+        # t = t_0 e^(-tau): x^0 = ell e^(-tau), and the powers are read with t in the unit t_0 = ell/c.
+        source = cp.Chart(["t", "x", "y", "z"], ["p_1", "p_2", "p_3", "q"],
+                          kasner_scalar("synchronous")["chart_line_element"])
+        ell = P["ell"]
+        same = {source.reader.parameters[name]: P[name] for name in ("p_1", "p_2", "p_3", "q")}
+        old = source.geo.g.subs(same).subs(source.reader.c, ell).subs(source.symbols[0], ell * sp.exp(-x0))
+        jacobian = sp.diag(-ell * sp.exp(-x0), 1, 1, 1)
+        if (jacobian.T * old * jacobian - geo.g).applyfunc(lambda e: sp.simplify(sp.powdenest(e, force=True))) != sp.zeros(4):
+            raise AssertionError("kasner_scalar: the logarithmic chart is not the synchronous one pulled back")
+    chart.geo = stated
+
+
+CHARTS["kasner_scalar"] = [lambda s=s: kasner_scalar(s) for s in KASNER_SCALAR_CHARTS]
 
 
 def write(spec):

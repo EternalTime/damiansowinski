@@ -476,6 +476,19 @@ DIMENSIONS = {
     ("kasner", "cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "p_1": "1", "p_2": "1", "p_3": "1",
     },
+    # Kasner's universe with a scalar field: the exponents and the strength q of the field are pure
+    # numbers, and a power of the time whose exponent holds one is read with the time in a fixed
+    # unit, as Kasner's is. The logarithmic time tau = -ln(t/t_0) is a pure number and ell = c t_0
+    # a length, and the chart of five dimensions has the extra coordinate w for a length.
+    ("kasner_scalar", "synchronous"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "p_1": "1", "p_2": "1", "p_3": "1", "q": "1",
+    },
+    ("kasner_scalar", "logarithmic"): {
+        "\\tau": "1", "x": "L", "y": "L", "z": "L", "p_1": "1", "p_2": "1", "p_3": "1", "q": "1", "\\ell": "L",
+    },
+    ("kasner_scalar", "kaluza_klein"): {
+        "T": "T", "x": "L", "y": "L", "z": "L", "w": "L", "s_1": "1", "s_2": "1", "s_3": "1", "s_5": "1",
+    },
     # The other entry that keeps G and a mass explicit rather than folding them into a
     # length. The spin per unit mass a = J/(Mc) is a length, which is what makes
     # r^2 + a^2cos^2(theta) and r^2 - 2GMr/c^2 + a^2 areas.
@@ -1737,6 +1750,30 @@ PARAMETER_RELATIONS = {
         "p_0": "2*s/(4*s**2 - 2*s + 1)",
         "p_2": "(1 - 2*s)/(4*s**2 - 2*s + 1)",
         "p_3": "2*s*(2*s - 1)/(4*s**2 - 2*s + 1)",
+    },
+    # Belinskii and Khalatnikov's surface, sum p_i = 1 and sum p_i^2 = 1 - q^2, a sphere of which
+    # Kasner's circle is the equator q = 0. A point of it is the point u of Kasner's circle drawn
+    # toward the isotropic point (1/3, 1/3, 1/3) by the factor (3v^2 - 2)/(3v^2 + 2), which leaves
+    # q = 4v/(3v^2 + 2): rational in u and v, and every point with q not zero is reached.
+    ("kasner_scalar", "synchronous"): {
+        "p_1": "1/3 + (3*v**2 - 2)/(3*v**2 + 2)*(-u/(1 + u + u**2) - 1/3)",
+        "p_2": "1/3 + (3*v**2 - 2)/(3*v**2 + 2)*((1 + u)/(1 + u + u**2) - 1/3)",
+        "p_3": "1/3 + (3*v**2 - 2)/(3*v**2 + 2)*(u*(1 + u)/(1 + u + u**2) - 1/3)",
+        "q": "4*v/(3*v**2 + 2)",
+    },
+    ("kasner_scalar", "logarithmic"): {
+        "p_1": "1/3 + (3*v**2 - 2)/(3*v**2 + 2)*(-u/(1 + u + u**2) - 1/3)",
+        "p_2": "1/3 + (3*v**2 - 2)/(3*v**2 + 2)*((1 + u)/(1 + u + u**2) - 1/3)",
+        "p_3": "1/3 + (3*v**2 - 2)/(3*v**2 + 2)*(u*(1 + u)/(1 + u + u**2) - 1/3)",
+        "q": "4*v/(3*v**2 + 2)",
+    },
+    # Kasner's vacuum of five dimensions, sum s_a = sum s_a^2 = 1: the second point where the line
+    # from (1, 0, 0, 0) along (-(a + b + 1), a, b, 1) meets the sphere.
+    ("kasner_scalar", "kaluza_klein"): {
+        "s_1": "1 - 2*(a + b + 1)**2/((a + b + 1)**2 + a**2 + b**2 + 1)",
+        "s_2": "2*a*(a + b + 1)/((a + b + 1)**2 + a**2 + b**2 + 1)",
+        "s_3": "2*b*(a + b + 1)/((a + b + 1)**2 + a**2 + b**2 + 1)",
+        "s_5": "2*(a + b + 1)/((a + b + 1)**2 + a**2 + b**2 + 1)",
     },
 }
 
