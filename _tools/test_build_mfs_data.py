@@ -4095,7 +4095,7 @@ class TurningLightConeFigures(unittest.TestCase):
         checked = {f"{v['metric']}/{v['view']}" for v in turn_check(self)["figures"]}
         self.assertEqual(checked, set(self.figures))
         self.assertEqual(checked, {"alcubierre/bubble", "godel/tipping", "gott_time_machine/loop", "kerr/dragging", "kerr_de_sitter/dragging",
-                                   "kerr_newman/dragging", "near_horizon_extreme_kerr/dragging", "point_particle_2plus1/wedge",
+                                   "kerr_newman/dragging", "kerr_taub_nut/dragging", "near_horizon_extreme_kerr/dragging", "point_particle_2plus1/wedge",
                                    "som_raychaudhuri/tipping", "spinning_string/tipping", "stockum_dust/tipping",
                                    "wormhole_time_machine/trip"})
 
@@ -4598,6 +4598,11 @@ class Slices(unittest.TestCase):
               "curzon_chazy/weyl/axis", "curzon_chazy/spherical/axis",
               "conformal curzon_chazy/weyl_axis", "conformal curzon_chazy/spherical_axis",
               # The axis of Zipoy and Voorhees's metric, which the embedded equatorial plane does not meet.
+              # Kerr-Taub-NUT's regular half axis, which the embedded equatorial plane does not meet, and the
+              # equator in Plebanski and Demianski's chart, where the moment's tau changes with the sigma left out.
+              *[f"kerr_taub_nut/{s}/axis" for s in ("one_string", "kerr_ingoing", "kerr_outgoing")],
+              *[f"conformal kerr_taub_nut/{v}" for v in ("axis", "ingoing", "outgoing")],
+              "kerr_taub_nut/plebanski/principal",
               *[f"zipoy_voorhees/{s}/axis_{k}" for s in ("spherical", "prolate_spheroidal") for k in ("oblate", "prolate")],
               *[f"conformal zipoy_voorhees/{s}_axis_{k}" for s in ("spherical", "prolate_spheroidal")
                 for k in ("oblate", "prolate")],

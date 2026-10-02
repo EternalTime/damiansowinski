@@ -5013,6 +5013,106 @@ def kerr_newman(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- Kerr-Taub-NUT
+
+KTN = {"m": 1, "a": 1, "l": "5/4"}
+
+
+def kerr_taub_nut(ck, src):
+    """The half of the axis that is regular, theta = 0 in the chart with one Misner string, where
+    the published metric is -Delta/(r^2 + (a + l)^2) c^2 dt_N^2 + (r^2 + (a + l)^2)/Delta dr^2 with
+    g_tt g_rr = -1 checked: a tower with two simple roots and no singularity, as Kerr's axis is,
+    r running on to a second asymptotically flat end at r -> -infinity. It is the surface Miller's
+    second extension covers, the one that keeps the bifurcation spheres and the northern half axis.
+    Drawn at m = 1, a = 1 and l = 5/4, where r_+ = 9/4 and r_- = -1/4, so that r = 0 lies between
+    the horizons. The ingoing Kerr chart covers I, II and III' through q = G(-v) and u = v - 2r*, and
+    the outgoing one III', the white hole above it and the exterior above that, through p and
+    v = u + 2r*.
+    """
+    name = "Kerr-Taub-NUT axis"
+    pl = Plane(src, "kerr_taub_nut", "one_string", ("t_N", "r"), {"phi": "0"}, KTN, axis=("theta", "0"))
+    assert pl.g[0, 1] == 0 and sp.simplify(pl.g[0, 0] * pl.g[1, 1] + 1) == 0
+    roots = sorted([x for x in sp.solve(sp.numer(sp.together(pl.gi[1, 1])), pl.x1) if x.is_real], reverse=True)
+    T = Tower(-pl.g[0, 0], pl.x1, roots)
+    rp, rm = T.rf
+    ck.limit(f"{name}: the horizons are the roots of the published g^rr, 9m/4 and -m/4", [rp, rm], [2.25, -0.25], 1e-12)
+    tower_checks(ck, name, pl, T, -40, 30)
+    p, q = T.pq("III", np.array([0.0]), np.array([-1e9]))
+    ck.limit(f"{name}: r -> -infinity at t = 0 lands on the far i0, (X, T) = (pi, pi)", point(p[0], q[0]), [PI, PI], 1e-3)
+    ck.finite(f"{name}: the Kretschmann scalar is finite along the axis, at r = 0 and at both horizons",
+              pl.kretschmann(np.zeros(5), np.array([-1e-3, 0.0, 1e-3, rp, rm])))
+
+    def ingoing(w, r):
+        """(p, q) of the event (v, r) of the ingoing Kerr chart: q = G(-v) in I and II and, in III',
+        the mirror of III, q = G(u) read with u and v exchanged, which is G(-v) again."""
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        t = w - T.rstar(r)
+        cell = np.where(r > rp, 0, np.where(r > rm, 1, 2))
+        # III' is the mirror of III, whose static time runs the other way, so q = G(-v) there as in II.
+        ps, qs = zip(*[T.pq("I", t, r), T.pq("II", t, r), T.pq("III'", -t, r)])
+        return np.choose(cell, ps), np.choose(cell, qs)
+
+    def outgoing(u, r):
+        """(p, q) of the event (u, r) of the outgoing Kerr chart: III', and above it the white hole
+        and the exterior of the next period, the cells II and I reflected."""
+        u, r = np.asarray(u, dtype=float), np.asarray(r, dtype=float)
+        t = u + T.rstar(r)
+        cell = np.where(r > rp, 0, np.where(r > rm, 1, 2))
+        ps, qs = zip(*[reflect(*T.pq(c, -t, r), up) for c, up in (("I", True), ("II", True))] + [T.pq("III'", -t, r)])
+        return np.choose(cell, ps), np.choose(cell, qs)
+
+    kin = Plane(src, "kerr_taub_nut", "kerr_ingoing", ("v", "r"), {"tildephi": "0"}, KTN, axis=("theta", "0"))
+    kout = Plane(src, "kerr_taub_nut", "kerr_outgoing", ("u", "r"), {"tildephi": "0"}, KTN, axis=("theta", "0"))
+    f = sp.lambdify(pl.x1, -pl.g[0, 0], "numpy")
+    for label, plane, fmap, sign in (("ingoing", kin, ingoing, 1), ("outgoing", kout, outgoing, -1)):
+        for lo, hi in ((-40, rm), (rm, rp), (rp, 40)):
+            # d_v - (1 + |f|) d_r and d_u + (1 + |f|) d_r are timelike everywhere and raise T.
+            ck.chart(f"{name}, {label} Kerr chart, {lo:.2f} < r < {hi:.2f}", plane, fmap,
+                     ck.uniform(-12, 12), ck.uniform(lo + 1e-3, hi - 1e-3),
+                     lambda w, r, s=sign: (1, -s * (1 + np.abs(f(r)))))
+    probe = np.array([-3.0, 1.0, 5.0])
+    ck.limit(f"{name}: the ingoing and static coordinates put one event at one point",
+             np.concatenate(ingoing(2.0 + T.rstar(probe), probe)),
+             np.concatenate([np.array([T.pq(c, s * 2.0, r)[i] for c, s, r in zip(("III'", "II", "I"), (-1, 1, 1), probe)])
+                             for i in (0, 1)]), 1e-12)
+    w = np.array([-3.0, 0.5, 4.0])
+    for r in (-3.0, 1.0, 5.0):
+        ck.limit(f"{name}: an ingoing ray keeps its q and an outgoing ray its p at r = {r:g}",
+                 np.concatenate([ingoing(w, np.full(3, r))[1] - ingoing(w, np.full(3, 6.0))[1],
+                                 outgoing(w, np.full(3, r))[0] - outgoing(w, np.full(3, -6.0))[0]]), np.zeros(6), 1e-12)
+
+    D = TowerDrawing(T, False, -np.inf)
+    box = [-PI - 0.45, PI + 0.45, -PI - 0.1, 3 * PI + 0.1]
+    times = [c / T.kp for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+    rI = nice_all(even_radii(T, "I", 4, rp, np.inf), [rp])
+    rII = nice_all(even_radii(T, "II", 4, rm, rp), [rm, rp])
+    rIII = nice_all(even_radii(T, "III", 5, -np.inf, rm), [rm])
+    grids = {"I": (rI, times), "II": (rII, times), "IV": (rII, times), "III": (rIII, times)}
+    restriction = ("The northern half of the axis, $\\theta = 0$, only, a totally geodesic surface, regular in the "
+                   "charts whose time is $t_N$. The Misner string lies along the southern half, $\\theta = \\pi$, "
+                   "off this surface, and with $l > a$ the spacetime has no curvature singularity.")
+    views = []
+    for view_id, label, chart, cover, what in (
+            ("axis", "Regular half axis", "one_string", [("I", False)], "the exterior $r > r_+$, which $t_N$ and $r$ cover"),
+            ("ingoing", "Ingoing Kerr", "kerr_ingoing", [("I", False), ("II", False), ("III'", False)],
+             "an exterior, the black hole, and a region $r < r_-$, which $v$ and $r$ cover"),
+            ("outgoing", "Outgoing Kerr", "kerr_outgoing", [("III'", False), ("II", True), ("I", True)],
+             "a region $r < r_-$, the white hole, and an exterior, which $u$ and $r$ cover")):
+        v = View(view_id, label, box, chart)
+        D.draw(v, grids, cover=cover)
+        D.labels(v)
+        v.set(fade={"top": 0.9, "bottom": 0.9}, restriction=restriction,
+              settings="$m = 1$, the unit of every length, $a = m$, and $l = 5m/4$.")
+        v.legend("cover", what)
+        v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, "
+                      "in units of $m$")
+        v.legend("t", "$ct_N$ constant")
+        v.legend("horizon", "the horizons on the axis, $r_+ = 9m/4$ and $r_- = -m/4$")
+        v.legend("scri", "null infinity, of $r \\to +\\infty$ and of $r \\to -\\infty$")
+        views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- Kerr-de Sitter and Kerr-anti-de Sitter
 
 KDS = {"r_s": 1, "a": "9/20", "Lambda": "1/5"}
@@ -15192,7 +15292,7 @@ DRAWN = {
     "ads_soliton": ads_soliton,
     "coleman_de_luccia": coleman_de_luccia,
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "hiscock": hiscock, "bardeen": bardeen, "mass_inflation": mass_inflation,
-    "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "de_sitter": de_sitter,
+    "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "kerr_taub_nut": kerr_taub_nut, "de_sitter": de_sitter,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "boulware_deser": boulware_deser, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
     "bertotti_robinson": bertotti_robinson, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
@@ -16302,6 +16402,16 @@ CAPTIONS = {
         "the expanding region together, from the singularity on $H\\tau\\rho = -r_s/2$ to $\\mathscr{I}^+$. The "
         "surface $\\tau = 0$ is $r = r_s/2$, inside the white hole, and every surface of constant $\\tau$ is "
         "spacelike.",
+    ],
+    ("kerr_taub_nut", "axis"): [
+        "The northern half of the axis, $\\theta = 0$, of the Kerr-Taub-NUT spacetime extended through its horizons, each point in the diagram a single event of the axis. In the charts whose time is $t_N$ the metric on it is $-f\\,c^2dt_N^2 + dr^2/f$ with $f = \\Delta/(r^2 + (a + l)^2)$, whose two roots are the horizons $r_- < r_+$. Every region is placed by $\\arctan e^{-\\kappa_+u}$ and $\\arctan e^{\\kappa_+v}$, the Kruskal coordinates of $r_+$ brought in from infinity, where $u, v = ct_N \\mp r_*$, $dr_*/dr = 1/f$, and $\\kappa_+ = f'(r_+)/2$ is the surface gravity of $r_+$.",
+        "The tower is that of Kerr's axis: an exterior, the black hole across $r_+$, and across the inner horizon $r_-$ a region where $r$ runs on to $-\\infty$, a second asymptotically flat end, then a white hole and the next exterior, without end. With $l > a$ the curvature is finite everywhere, and $r_- = -m/4$ is negative, so $r = 0$ is an ordinary place inside the black hole. This is James Miller's extension that keeps the spheres where the horizons cross and the northern half of the axis. The Misner string runs along the southern half.",
+    ],
+    ("kerr_taub_nut", "ingoing"): [
+        "The regular half of the axis with the ingoing Kerr coordinates $v$ and $r$ on it. One chart covers an exterior, the black hole, and a region inside $r_-$. Ingoing light rays, $v$ constant, run at 45° from past null infinity across $r_+$ and $r_-$ to the null infinity of $r \\to -\\infty$.",
+    ],
+    ("kerr_taub_nut", "outgoing"): [
+        "The regular half of the axis with the outgoing Kerr coordinates $u$ and $r$ on it, the time reverse of the ingoing ones. They cover a region inside $r_-$, the white hole above it, and the exterior above that. Outgoing light rays, $u$ constant, run at 45° from the null infinity of $r \\to -\\infty$ across $r_-$ and $r_+$ to future null infinity.",
     ],
     ("kerr_de_sitter", "axis"): [
         "The symmetry axis $\\theta = 0$ of the maximally extended Kerr-de Sitter spacetime, each point in the diagram a single event of the axis. On it the metric is $-f\\,c^2dt^2 + dr^2/f$ with $f = \\Delta_r/(r^2 + a^2)$, whose four roots are the horizons $r_n < 0 < r_- < r_+ < r_c$. The tortoise coordinate is $r_* = \\sum_i \\ln|1 - r/r_i|/f'(r_i)$, which vanishes at $r = 0$, and $u, v = ct \\mp r_*$ in each region. We place every region by $p = \\pm\\arctan W(u)$ and $q = \\pm\\arctan W(-v)$, shifted by $\\pi$ where the region lies beyond $r_c$ or $r_-$, with $W(x) = \\exp(-ax - b\\sqrt{x^2 + r_s^2})$ and $a, b = (\\kappa_+ \\pm \\kappa_c)/2$. Every line then crosses $r_+$ and $r_c$ with a continuous tangent and turns a corner at $r_-$ and $r_n$.",

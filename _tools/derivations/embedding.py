@@ -2927,6 +2927,50 @@ def kerr_newman(ck, src):
                           f"$r_Q = 0.5\\,GM/c^2$, so that $r_+ = {rp:.3f}\\,GM/c^2$ and $r_E = {ergo:.3f}\\,GM/c^2$.")]
 
 
+# Kerr-Taub-NUT as every one of its diagrams draws it: Kerr's limiting spin a = m with a twist
+# l = 5m/4 above it, so that the horizons are r_+ = 9m/4 and r_- = -m/4 and no ring singularity is left.
+KTN = {"m": 1, "a": 1, "l": "5/4"}
+
+
+def kerr_taub_nut(ck, src):
+    """The equatorial slice of constant Boyer-Lindquist t outside r+, where g_tphi drops out:
+    rho = sqrt(g_phiphi), the circumference radius, and g_rr = Sigma/Delta. At m = 1, a = 1 and
+    l = 5/4 the horizon is r_+ = 9/4, where rho = (r_+^2 + a^2 + l^2)/sqrt(r_+^2 + l^2), and
+    g_tt vanishes on the equator where Delta = a^2, at r = 1 + sqrt(41)/4. The slice runs
+    through the bifurcation sphere into a second exterior, as Kerr's does."""
+    name = "Kerr-Taub-NUT"
+    sl = Slice(src, "kerr_taub_nut", "boyer_lindquist", "r", "\\phi", {"t": 0, **EQUATOR}, KTN)
+    rp = sl.horizons()[0]
+    ck.add(f"{name}: the outer horizon is the larger root of the published g^rr, 9m/4", abs(rp - 2.25), 1e-11)
+    _, entry, R = nr.load("kerr_taub_nut", "boyer_lindquist")
+    src.note("kerr_taub_nut", "boyer_lindquist", FIELDS)
+    subs = {R.c: 1, R.symbol["\\theta"]: sp.pi / 2}
+    subs.update({R.parameters[k]: sp.sympify(v) for k, v in KTN.items()})
+    gtt = sp.together(nr.published_matrix(R, entry, "metric_components")[0, 0].subs(subs))
+    ergo, = [float(z) for z in sp.Poly(sp.numer(gtt), R.symbol["r"]).real_roots() if z > rp]
+    ck.add(f"{name}: g_tt vanishes on the equator where Delta = a^2, at r = 1 + sqrt(41)/4",
+           abs(ergo - (1 + math.sqrt(41) / 4)), 1e-11)
+    top, radii = 8.0, (3.0, 4.0, 5.0, 6.0, 7.0)
+    size = 2 * float(sl.rho_at(top))
+    near, far = two_sheets(ck, name, sl, rp, top, radii, size, [(rp, "horizon", "$r = r_+$"), (ergo, "ergo", None)])
+    ck.add(f"{name}: the throat's circumference radius is (r+^2 + a^2 + l^2)/sqrt(r+^2 + l^2)",
+           abs(near.at(rp)[0] - (rp * rp + 1 + 25 / 16) / math.sqrt(rp * rp + 25 / 16)), 1e-6)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(rp), "$r = r_+$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(ergo), "$r_E$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$8\\,m$")
+    fig.legend("fill", "cover", "the exterior $r > r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $3$, $4$, $5$, $6$, $7$ and $8\\,m$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the outer horizon")
+    fig.legend("line", "ergo", f"the edge of the ergoregion, $r_E = {ergo:.3f}\\,m$ on the equator")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("equator", "The equator", "$m$", [surface], fig.done(),
+                 settings="$m = 1$, the unit of every length, $a = m$, and $l = 5m/4$, so that $r_+ = 9m/4$, "
+                          f"$r_- = -m/4$, and $r_E = {ergo:.3f}\\,m$ is the radius of the ergosurface on the equator.")]
+
+
 # Kerr-de Sitter as every one of its diagrams draws it: with Lambda > 0 at Kerr's spin and Kottler's
 # cosmological constant, a = 0.45 r_s and Lambda = 0.2/r_s^2, and with Lambda < 0 at Hawking and
 # Page's r_s = 2 l with a = l/2, in units of l = sqrt(-3/Lambda).
@@ -10274,6 +10318,7 @@ DRAWN = {
     "kerr": kerr,
     "kerr_newman": kerr_newman,
     "kerr_de_sitter": kerr_de_sitter,
+    "kerr_taub_nut": kerr_taub_nut,
     "cosmic_string": cosmic_string,
     "point_particle_2plus1": point_particle_2plus1,
     "frw": frw,
@@ -10980,6 +11025,18 @@ CAPTIONS = {
         "The surface leaves the centre $r = 0$, where the Kretschmann scalar diverges, widens to the horizon "
         "$r = r_q$, where it stands vertical, and runs on through the bifurcation sphere into a second static "
         "region, the same surface turned over, which closes at a centre of its own.",
+    ],
+    ("kerr_taub_nut", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the Kerr-Taub-NUT black hole at one moment of Boyer-Lindquist $t$ "
+        "($a = m$, $l = 5m/4$), drawn as a surface in flat space with every distance along it the metric distance. "
+        "The cross term $g_{t\\phi}$ drops out at constant $t$, and the drawing's distance from the axis is the "
+        "circumference radius $\\sqrt{g_{\\phi\\phi}}$, which at the throat is "
+        "$(r_+^2 + a^2 + l^2)/\\sqrt{r_+^2 + l^2}$. As Kerr's does, the slice passes through the bifurcation sphere "
+        "at $r_+$, its throat, into a second exterior.",
+        "The dotted circle is the edge of the ergoregion on the equator, where $\\Delta = a^2$, inside which nothing "
+        "can stand still against the rotation. At $a = m$ the slice of Kerr's black hole has a throat of infinite "
+        "length. Here the twist keeps the horizons apart, at $r_+ = 9m/4$ and $r_- = -m/4$, and the throat is a "
+        "circle a finite distance in.",
     ],
     ("kerr_de_sitter", "de_sitter"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Kerr-de Sitter black hole at one moment of Boyer-Lindquist $t$ "

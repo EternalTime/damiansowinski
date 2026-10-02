@@ -767,6 +767,20 @@ The most general stationary black hole solution, carrying mass, angular momentum
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/kerr_newman.json
 - chart Kerr-Newman (Boyer-Lindquist): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{\dfrac{2GMr}{c^2} - r_Q^2}{r^2 + a^2\cos^2\theta}\right)c^2 dt^2 - \dfrac{2a\sin^2\theta\left(\dfrac{2GMr}{c^2} - r_Q^2\right)}{r^2 + a^2\cos^2\theta}c\,dt\,d\phi + \dfrac{r^2 + a^2\cos^2\theta}{r^2 + a^2 - \dfrac{2GMr}{c^2} + r_Q^2}dr^2 + \left(r^2 + a^2\cos^2\theta\right)d\theta^2 + \left(r^2 + a^2 + \dfrac{a^2\sin^2\theta\left(\dfrac{2GMr}{c^2} - r_Q^2\right)}{r^2 + a^2\cos^2\theta}\right)\sin^2\theta\,d\phi^2$$
 
+### Kerr-Taub-NUT Black Hole
+
+Kerr's rotating black hole with a NUT parameter, the vacuum solution Marek Demiański and Ezra Newman found in 1966. It is Kerr's metric at $l = 0$ and the Taub-NUT metric at $a = 0$, it carries Misner strings along its axis, and for $|l| > |a|$ it has no curvature singularity.
+
+- id: `kerr_taub_nut`
+- tags: vacuum, rotating, rotating black hole, black hole, stationary, axisymmetric, angular momentum, mass, NUT parameter, gravitomagnetic, closed timelike curves, ergosphere, frame dragging, ring singularity, curvature singularity, horizon, event horizon, Cauchy horizon, Petrov type D, separable, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kerr_taub_nut.json
+- chart Boyer-Lindquist: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{\Delta}{\Sigma}\left(c\,dt - \chi\,d\phi\right)^2 + \dfrac{\Sigma}{\Delta}dr^2 + \Sigma\,d\theta^2 + \dfrac{\sin^2\theta}{\Sigma}\left(a\,c\,dt - \left(r^2 + a^2 + l^2\right)d\phi\right)^2$$
+- chart One Misner String: coordinates $(t_N, r, \theta, \phi)$, $$ds^2 = -\dfrac{\Delta}{\Sigma}\left(c\,dt_N - \chi\,d\phi\right)^2 + \dfrac{\Sigma}{\Delta}dr^2 + \Sigma\,d\theta^2 + \dfrac{\sin^2\theta}{\Sigma}\left(a\,c\,dt_N - \left(r^2 + \left(a + l\right)^2\right)d\phi\right)^2$$
+- chart Ingoing Kerr: coordinates $(v, r, \theta, \tilde\phi)$, $$ds^2 = -\dfrac{\Delta}{\Sigma}\left(dv - \chi\,d\tilde\phi\right)^2 + 2\,dr\left(dv - \chi\,d\tilde\phi\right) + \Sigma\,d\theta^2 + \dfrac{\sin^2\theta}{\Sigma}\left(a\,dv - \left(r^2 + \left(a + l\right)^2\right)d\tilde\phi\right)^2$$
+- chart Outgoing Kerr: coordinates $(u, r, \theta, \tilde\phi)$, $$ds^2 = -\dfrac{\Delta}{\Sigma}\left(du - \chi\,d\tilde\phi\right)^2 - 2\,dr\left(du - \chi\,d\tilde\phi\right) + \Sigma\,d\theta^2 + \dfrac{\sin^2\theta}{\Sigma}\left(a\,du - \left(r^2 + \left(a + l\right)^2\right)d\tilde\phi\right)^2$$
+- chart Plebański-Demiański: coordinates $(\tau, q, p, \sigma)$, $$ds^2 = -\dfrac{Q}{p^2 + q^2}\left(d\tau - p^2\,d\sigma\right)^2 + \dfrac{p^2 + q^2}{Q}dq^2 + \dfrac{p^2 + q^2}{P}dp^2 + \dfrac{P}{p^2 + q^2}\left(d\tau + q^2\,d\sigma\right)^2$$
+
 ### Khan-Penrose Colliding Plane Waves
 
 Two impulsive plane gravitational waves colliding head on in flat space. Each focuses the other, and the vacuum where both have passed ends in a spacelike curvature singularity.

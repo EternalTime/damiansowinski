@@ -979,6 +979,20 @@ CAPTIONS = {
         "past the edge of the floor, and from it to the cosmological horizon $r_c = 3.232\\,r_s$ nothing can stay "
         "at fixed $\\phi$ either.",
     ],
+    ("kerr_taub_nut", "boyer_lindquist", "dragging"): [
+        "The equatorial plane ($\\theta = \\pi/2$) with $t$ up and $r$ and $\\phi$ as polar coordinates about the "
+        "axis, for $a = m$ and $l = 5m/4$, down to the horizon $r_+ = 9m/4$, where the chart ends. The cones stand at "
+        "$t = 0$ at four places around each of three circles: $r = 3r_E/2$, the ergosurface $r_E = 2.601\\,m$, and "
+        "halfway between $r_E$ and $r_+$. On the outer circle they stand nearly upright, and closer in the cross term "
+        "$g_{t\\phi} = a(\\Delta - r^2 - a^2 - l^2)/\\Sigma$ tips them toward $+\\phi$, counterclockwise seen from "
+        "above, the way the hole turns.",
+        "On the ergosurface $g_{tt} = -(\\Delta - a^2)/\\Sigma$ vanishes, so $\\partial_t$ is null and one edge of "
+        "every cone stands vertical, along a curve of fixed $r$ and $\\phi$. Inside it every future direction, "
+        "timelike or null, moves toward $+\\phi$, and nothing can stay at fixed $\\phi$. The twist enters the "
+        "equator through $\\Sigma = r^2 + l^2$ and $\\Delta$ alone. With $l \\neq 0$ the reflection "
+        "$\\theta \\to \\pi - \\theta$ is no symmetry, so of the light rays that start in this plane only some "
+        "stay in it, the principal null rays among them.",
+    ],
     ("kerr_newman", "boyer_lindquist", "dragging"): [
         "The equatorial plane ($\\theta = \\pi/2$) with $t$ up and $r$ and $\\phi$ as polar "
         "coordinates about the axis, for $a = 0.6\\,GM/c^2$ and $r_Q = 0.5\\,GM/c^2$, down to the "
@@ -1049,6 +1063,9 @@ FIGURES = [
     # the floor.
     Projection("kerr_de_sitter", "boyer_lindquist", "dragging", "$\\Lambda > 0$, light cones on the equator",
                lambda spec: ergoregion(spec, horizon_between=(0.6, 1.0), ergo_below=2.0), nr.KDS, {"theta": "pi/2"}),
+    # Kerr-Taub-NUT at the values of its flat views, in units of m: r_+ = 9/4 and r_E = 2.601.
+    Projection("kerr_taub_nut", "boyer_lindquist", "dragging", "light cones on the equator",
+               lambda spec: ergoregion(spec, horizon_between=(2.0, 2.39), ergo_below=4.0), nr.KTN, {"theta": "pi/2"}),
     # The throat of extreme Kerr on its equator, at r_0 = 1, as its flat views are drawn.
     Projection("near_horizon_extreme_kerr", "global", "dragging", "light cones on the equator", throat,
                {"r_0": 1}, {"theta": "pi/2"}),

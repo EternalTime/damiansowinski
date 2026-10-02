@@ -278,6 +278,11 @@
       "id": "sultana_dyer",
       "kind": "conformal",
       "text": "Schwarzschild's metric multiplied by the square of the scale factor of a universe of dust, which leaves every light ray where it was and sets the horizon growing with the universe [sultana2005]."
+    },
+    {
+      "id": "kerr_taub_nut",
+      "kind": "generalisation",
+      "text": "Schwarzschild's black hole with a spin $a$ and a NUT parameter $l$ at once. With $a = l = 0$ it is Schwarzschild's metric."
     }
   ],
   "references": [

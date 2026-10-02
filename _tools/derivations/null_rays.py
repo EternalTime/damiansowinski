@@ -701,6 +701,9 @@ KADS = {"r_s": 2, "a": "1/2", "Lambda": -3}
 KDS_SPLIT = 2.0
 KDS_AXIS = {"theta": "0", "phi": "0"}
 KDS_KERR_AXIS = {"theta": "0", "tildephi": "0"}
+# Kerr-Taub-NUT as its diagrams draw it: Kerr's limiting spin a = m with a twist l = 5m/4 above it,
+# in units of m, so that r_+ = 9/4 and r_- = -1/4 and no ring singularity is left.
+KTN = {"m": 1, "a": 1, "l": "5/4"}
 
 # The Aichelburg-Sexl shock on the plane of u and v at three distances from the source, in units
 # of 8GE/c^4 with rho_0 = 8GE/c^4: each ray moving left jumps along the shock by -ln(rho/rho_0),
@@ -2242,6 +2245,26 @@ DIAGRAMS = [
             "$r/r_s$", "$c\\tau/r_s$", KDS, {"theta": "0", "psi": "0"}, tau="tau"),
     Diagram("kerr_de_sitter", "kerr_schild", "axis_ads", "$\\Lambda < 0$, the axis", ("\\tau", "r"), (0, 3, -1.5, 1.5),
             "$r/\\ell$", "$c\\tau/\\ell$", KADS, {"theta": "0", "psi": "0"}, tau="tau"),
+    # Kerr-Taub-NUT. With a Misner string on each half of the axis the Boyer-Lindquist chart has no
+    # plane of t and r that holds its rays, so it draws the principal null congruence on the equator,
+    # in t and r and from above. The chart with one string draws the regular half of the axis, and
+    # the Kerr charts run through both horizons there. Plebanski and Demianski's chart draws the
+    # principal rays on p = l, the equator, in tau and q.
+    Diagram("kerr_taub_nut", "boyer_lindquist", "principal", "principal null rays, $t$ and $r$", ("t", "r"),
+            (0, 6, -3, 3), "$r/m$", "$ct/m$", KTN, {"theta": "pi/2"}, orient="ingoing", principal=True,
+            leaves=("phi",), mark_gtt="the ergosurface", cone=PRINCIPAL_CONE),
+    Diagram("kerr_taub_nut", "boyer_lindquist", "above", "principal null rays from above", ("\\phi", "r"),
+            (-5, 5, -5, 5), "$r\\cos\\phi/m$", "$r\\sin\\phi/m$", KTN, {"theta": "pi/2"}, to_display=POLAR,
+            cones=(0, 0), principal=True, leaves=("t",), ring=12, inside=True, mark_gtt="the ergosurface"),
+    Diagram("kerr_taub_nut", "one_string", "axis", "$t_N$ and $r$ on the regular axis", ("t_N", "r"), (0, 6, -3, 3),
+            "$r/m$", "$ct_N/m$", KTN, {"theta": "0", "phi": "0"}, orient="ingoing"),
+    Diagram("kerr_taub_nut", "kerr_ingoing", "axis", "$v$ and $r$ on the regular axis", ("v", "r"), (-2, 6, -4, 4),
+            "$r/m$", "$(v - r)/m$", KTN, KDS_KERR_AXIS, to_display=FINKELSTEIN_IN, orient="ingoing"),
+    Diagram("kerr_taub_nut", "kerr_outgoing", "axis", "$u$ and $r$ on the regular axis", ("u", "r"), (-2, 6, -4, 4),
+            "$r/m$", "$(u + r)/m$", KTN, KDS_KERR_AXIS, to_display=FINKELSTEIN_OUT, orient="outgoing"),
+    Diagram("kerr_taub_nut", "plebanski", "principal", "principal null rays, $\\tau$ and $q$", ("\\tau", "q"),
+            (0, 6, -3, 3), "$q/m$", "$\\tau/m$", KTN, {"p": "5/4"}, orient="ingoing", tau="tau", principal=True,
+            leaves=("sigma",), mark_gtt="the ergosurface", cone=PRINCIPAL_CONE),
     Diagram("kerr_newman", "boyer_lindquist", "radial", "$t$ and $r$ on the axis", ("t", "r"),
             (0, 4, -2, 2), "$r/(GM/c^2)$", "$ct/(GM/c^2)$",
             {"G": 1, "M": 1, "a": "3/5", "r_Q": "1/2"}, {"theta": "0", "phi": "0"},
@@ -5546,6 +5569,29 @@ CAPTIONS = {
     ],
     ("kerr_de_sitter", "kerr_schild", "axis_ads"): [
         "The plane of $\\tau$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $r_s = 2\\ell$ and $a = \\ell/2$, with $\\Lambda = -3/\\ell^2$. On the axis the ingoing rays have $d(c\\tau)/dr = -1/(1 + r^2/\\ell^2)$, as in anti-de Sitter space, whatever the mass, since the null vector of the Kerr-Schild form is tangent to them. The outgoing rays stand vertical at $r_- = 0.137\\,\\ell$ and $r_+ = 0.859\\,\\ell$, and the chart runs through both.",
+    ],
+    ("kerr_taub_nut", "boyer_lindquist", "principal"): [
+        "The equatorial plane ($\\theta = \\pi/2$) drawn in $t$ and $r$, with $\\phi$ left out, for $a = m$ and $l = 5m/4$. Its rays are the principal null congruence, the light rays that run straight in and straight out: the two null directions of the plane of $\\partial_r$ and $(r^2 + a^2 + l^2)\\,\\partial_t + a\\,\\partial_\\phi$, which are the repeated principal null directions of the Weyl tensor. Every ray turns as it goes, at $d\\phi/dr = \\pm a/\\Delta$, and the curves drawn are the rays' projections, $d(ct)/dr = \\pm(r^2 + a^2 + l^2)/\\Delta$, the same at every $\\theta$.",
+        "The rays are null geodesics, and each cone is the future cone of the principal plane. The cones close at $r_+ = 9m/4$, and inside it they point to smaller $r$, following the ingoing family. The dotted line is the ergosurface, $g_{tt} = 0$, at $r = 2.601\\,m$ on the equator, and between it and $r_+$ nothing, light included, can keep $\\phi$ fixed. With $l > a$ the equator holds no singularity: $\\Sigma = r^2 + l^2$ there, and the rays run on through $r = 0$ toward the inner horizon at $r_- = -m/4$.",
+    ],
+    ("kerr_taub_nut", "boyer_lindquist", "above"): [
+        "The equatorial plane ($\\theta = \\pi/2$) outside the horizon seen from above, with $r$ and $\\phi$ drawn as polar coordinates and $t$ left out, for $a = m$ and $l = 5m/4$. Its rays are the principal null congruence, each turning at $d\\phi/dr = \\pm a/\\Delta$, so both families wind counterclockwise, the way the hole turns: the ingoing rays as they fall and the outgoing rays as they climb.",
+        "At $r_+ = 9m/4$ the angle $\\phi$ runs to infinity along every ray, as $t$ does, so the rays wind without end onto the horizon. The winding is in the coordinate $\\phi$ alone: along an ingoing ray $\\tilde\\phi = \\phi + \\int a\\,dr/\\Delta$ stays fixed, and in it the ray crosses the horizon at a finite angle. The dotted circle is the ergosurface, $r = 2.601\\,m$ on the equator.",
+    ],
+    ("kerr_taub_nut", "one_string", "axis"): [
+        "The plane of $t_N$ and $r$ on the northern half of the axis ($\\theta = 0$, $\\phi = 0$), drawn for $a = m$ and $l = 5m/4$. In this chart $\\chi$ vanishes there, the half axis is regular, and the curves drawn are null geodesics, the paths light takes. On it $g^{rr} = \\Delta/(r^2 + (a + l)^2)$ vanishes at $r_+ = 9m/4$, where the cones close, since $d(ct_N)/dr = \\pm(r^2 + (a + l)^2)/\\Delta$ diverges there.",
+        "The domain of the chart begins at $r_+$. Inside it we take the future from the ingoing Kerr chart, which makes the region between the horizons the black hole, where every cone points to smaller $r$. The Kretschmann scalar stays finite all the way down the axis, $r = 0$ included, since $\\Sigma = r^2 + (a + l)^2$ has no zero there.",
+    ],
+    ("kerr_taub_nut", "kerr_ingoing", "axis"): [
+        "The plane of $v$ and $r$ on the northern half of the axis ($\\theta = 0$, $\\tilde\\phi = 0$), drawn for $a = m$ and $l = 5m/4$ with $v - r$ as the vertical axis, so that the ingoing rays, $v = $ const, run at 45°. The outgoing family has $dv/dr = 2(r^2 + (a + l)^2)/\\Delta$, so it stands vertical at $r_+ = 9m/4$ and at $r_- = -m/4$: each horizon is an outgoing ray that stays where it is.",
+        "The chart crosses $r_+$ into the black hole, where both edges of every future cone point to smaller $r$. An ingoing ray passes $r = 0$, where the curvature is finite, crosses the inner horizon at negative $r$, and runs on toward $r \\to -\\infty$, where the cones open again.",
+    ],
+    ("kerr_taub_nut", "kerr_outgoing", "axis"): [
+        "The plane of $u$ and $r$ on the northern half of the axis ($\\theta = 0$, $\\tilde\\phi = 0$), drawn for $a = m$ and $l = 5m/4$ with $u + r$ as the vertical axis, so that the outgoing rays, $u = $ const, run at 45°. The ingoing family stands vertical at $r_- = -m/4$ and at $r_+ = 9m/4$. Between them both edges of every future cone point to larger $r$: this is the white hole, which nothing from outside can enter.",
+    ],
+    ("kerr_taub_nut", "plebanski", "principal"): [
+        "The surface $p = l$, the equatorial plane, drawn in $\\tau$ and $q$, with $\\sigma$ left out, for $a = m$ and $l = 5m/4$. Its rays are the principal null congruence, on which $d\\tau + q^2\\,d\\sigma = 0$ and $d\\tau - p^2\\,d\\sigma = \\pm(p^2 + q^2)\\,dq/Q$, so the curves drawn have $d\\tau/dq = \\pm q^2/Q$ at every $p$, and $\\sigma$ changes along each at $d\\sigma/dq = \\mp 1/Q$.",
+        "The rays are null geodesics, and each cone is the future cone of the principal plane. The cones close at the horizon $q_+ = 9m/4$ and point to smaller $q$ inside it. At $q = 0$ the projections stand level, since $d\\tau/dq$ vanishes there. The dotted line is the ergosurface, $g_{\\tau\\tau} = 0$, where $Q = P$, at $q = 2.601\\,m$.",
     ],
     ("kerr_newman", "boyer_lindquist", "radial"): [
         "The plane of $t$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $a = "
@@ -9735,6 +9781,23 @@ def _kerr_de_sitter_forms():
 
 
 CLOSED_FORMS.update(_kerr_de_sitter_forms())
+
+
+def _kerr_taub_nut_forms():
+    """Kerr-Taub-NUT's regular half axis in each chart that draws it: ct_N -+ r_* in the chart with
+    one string, v and v - 2r_* in the ingoing Kerr chart, u + 2r_* and u in the outgoing one, with
+    slices.py's r_*, dr_*/dr = (r^2 + (a + l)^2)/Delta, zero at r = 0."""
+    import slices
+    star = slices.ktn_rstar()
+
+    def away(x, r):
+        return np.all([np.abs(r - z) > 0.05 for z in (-0.25, 2.25)], axis=0)
+    return {("kerr_taub_nut", "one_string", "axis"): (lambda t, r: t + star(r), lambda t, r: t - star(r), away),
+            ("kerr_taub_nut", "kerr_ingoing", "axis"): (lambda v, r: v, lambda v, r: v - 2 * star(r), away),
+            ("kerr_taub_nut", "kerr_outgoing", "axis"): (lambda u, r: u + 2 * star(r), lambda u, r: u, away)}
+
+
+CLOSED_FORMS.update(_kerr_taub_nut_forms())
 
 # Hartle and Thorne's star: the tortoise coordinate of ht_star on the axis and on the equator, and
 # the two quadratures of the Painleve-Gullstrand plane, which is Schwarzschild's on both.
