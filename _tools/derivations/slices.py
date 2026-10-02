@@ -1071,6 +1071,41 @@ def _hayward(sign=0):
     return out
 
 
+# The charged black hole in anti-de Sitter space as every diagram draws it, L = 1, r_s = 27/8 and
+# r_q^2 = 11/8: r^2 f = (r - 1)(r - 1/2)(r^2 + 3r/2 + 11/4), with the roots below and the residues
+# 1/f'(r_i) of 1/f at them, which sum to zero.
+RNADS_ROOTS = (1.0, 0.5, complex(-0.75, math.sqrt(35) / 4), complex(-0.75, -math.sqrt(35) / 4))
+RNADS_RESIDUES = (8 / 21, -2 / 15, complex(-13 / 105, -math.sqrt(35) / 35), complex(-13 / 105, math.sqrt(35) / 35))
+
+
+def rnads_rstar(r):
+    """The tortoise coordinate of the charged black hole in anti-de Sitter space at L = 1, r_s = 27/8
+    and r_q^2 = 11/8, as the Eddington-Finkelstein charts fix it, vanishing at r = 0:
+    r_* = Re sum_i ln(1 - r/r_i)/f'(r_i) over the four roots of r^2 f, which is
+    (8/21) ln|1 - r| - (2/15) ln|1 - 2r| plus the complex pair's part, and tends to 0.4052 as
+    r -> infinity."""
+    r = np.asarray(r, dtype=float)
+    with np.errstate(divide="ignore"):
+        return sum(A * np.log((1 - r / z).astype(complex)) for A, z in zip(RNADS_RESIDUES, RNADS_ROOTS)).real
+
+
+def _rnads(sign=0):
+    """The moment t = 0 of the charged black hole in anti-de Sitter space, outside r_+ = 1 and inside
+    r_- = 1/2: along r in its static chart (sign 0), and in its ingoing (1) or outgoing (-1) chart
+    as v = r_* or u = -r_*, each part crowding toward its horizon, where the curve runs off. The
+    static t of the region inside r_- is the one the same r_* gives there."""
+    out = []
+    for view_id in ("outside", "inside"):
+        m, = moments("reissner_nordstrom_ads", view_id)
+        lo, hi = m.reach("static", "r")
+        if not sign:
+            out.append(Mark(m, along(0.0, lo, hi)))
+            continue
+        r = near(lo, hi) if view_id == "outside" else (lo + hi) - near(lo, hi)[::-1]
+        out.append(Mark(m, [np.column_stack([sign * rnads_rstar(r), r])]))
+    return out
+
+
 def tbh_rstar(r):
     """The flat topological black hole's tortoise coordinate at mu = 1 and L = 1, where 1/f =
     r/((r - 1)(r^2 + r + 1)), as the Eddington-Finkelstein charts fix it, vanishing at r = 0:
@@ -1247,6 +1282,11 @@ FLAT = {
     # v - r = T, every r the embedding reaches.
     ("hayward", "evaporating", "history"): lambda: one(
         "hayward", lambda m: [[(m.time + r, r) for r in m.reach("evaporating", "r")]], view_id="history"),
+    ("reissner_nordstrom_ads", "static", "radial"): lambda: _rnads(),
+    ("reissner_nordstrom_ads", "eddington_finkelstein_ingoing", "finkelstein"): lambda: _rnads(1),
+    ("reissner_nordstrom_ads", "eddington_finkelstein_ingoing", "chart"): lambda: _rnads(1),
+    ("reissner_nordstrom_ads", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _rnads(-1),
+    ("reissner_nordstrom_ads", "eddington_finkelstein_outgoing", "chart"): lambda: _rnads(-1),
     ("schwarzschild_ads", "static", "radial"): lambda: _sads(),
     ("schwarzschild_ads", "eddington_finkelstein_ingoing", "finkelstein"): lambda: _sads(1),
     ("schwarzschild_ads", "eddington_finkelstein_ingoing", "chart"): lambda: _sads(1),

@@ -99,6 +99,11 @@
       "id": "einstein_rosen_bridge",
       "kind": "dual",
       "text": "Einstein and Nathan Rosen's particle of 1935. Its charged bridge is this metric continued to $r_q^2 \\to -r_q^2$, which leaves one horizon at any mass, even none [einstein1935]."
+    },
+    {
+      "id": "reissner_nordstrom_ads",
+      "kind": "generalisation",
+      "text": "The charged black hole in anti-de Sitter space. At fixed charge its small and large black holes are like the liquid and the gas of a van der Waals fluid [chamblin1999]."
     }
   ],
   "references": [
@@ -128,7 +133,8 @@
     "hayward2006",
     "kinnersley1970",
     "bonnor1970",
-    "einstein1935"
+    "einstein1935",
+    "chamblin1999"
   ],
   "coordinates": [
     {

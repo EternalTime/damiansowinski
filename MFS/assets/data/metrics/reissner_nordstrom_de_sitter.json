@@ -75,6 +75,11 @@
       "id": "majumdar_papapetrou",
       "kind": "family",
       "text": "Any number of black holes with charge equal to mass, at rest together when $\\Lambda = 0$. David Kastor and Jennie Traschen found their counterpart with $\\Lambda > 0$ in 1993, and one of its holes alone is the lukewarm black hole [kastor1993]."
+    },
+    {
+      "id": "reissner_nordstrom_ads",
+      "kind": "family",
+      "text": "The charged black hole with a negative cosmological constant. At $r_q = r_s/2$, where this one is lukewarm, that one is supersymmetric and a naked singularity [romans1992]."
     }
   ],
   "references": [

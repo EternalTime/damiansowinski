@@ -63,6 +63,11 @@
       "id": "topological_black_hole",
       "kind": "generalisation",
       "text": "The same metric function with $k$ where it has $1$: a flat horizon for $k = 0$ and a hyperbolic one for $k = -1$ [lemos1995, mann1997]."
+    },
+    {
+      "id": "reissner_nordstrom_ads",
+      "kind": "generalisation",
+      "text": "The same black hole with an electric charge. It gains an inner horizon, and at fixed charge a small black hole that is stable [chamblin1999]."
     }
   ],
   "references": [
@@ -89,7 +94,8 @@
     "vanzo1997",
     "kastor2009",
     "banados1992",
-    "hawking1999rotation"
+    "hawking1999rotation",
+    "chamblin1999"
   ],
   "coordinates": [
     {

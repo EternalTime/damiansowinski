@@ -965,6 +965,18 @@ The unique static, spherically symmetric vacuum solution to the Einstein-Maxwell
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{r^2 - r_s r + r_q^2}{r^2}\,dt^2 + \dfrac{r^2}{r^2 - r_s r + r_q^2}\,dr^2 + r^2 d\Omega^2$$
 
+### Reissner-Nordström-anti-de Sitter Black Hole
+
+A charged black hole in anti-de Sitter space, the static, spherically symmetric solution of the Einstein-Maxwell equations with a negative cosmological constant. It has an inner horizon and an event horizon inside a timelike boundary at infinity, and at fixed charge its small and large black holes behave as the liquid and the gas of a van der Waals fluid do.
+
+- id: `reissner_nordstrom_ads`
+- tags: electrovacuum, static, stationary, spherically symmetric, charged, charged black hole, black hole, electric charge, mass, electromagnetic field, cosmological constant, negative cosmological constant, anti-de Sitter, AdS/CFT, holography, black hole thermodynamics, van der Waals, phase transition, superradiance, curvature singularity, coordinate singularity, horizon, event horizon, Cauchy horizon, inner horizon, white hole, maximal extension, causal structure, strong cosmic censorship, supersymmetry, extremal, exact solution, Lorentzian, Einstein equations, Einstein-Maxwell, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/reissner_nordstrom_ads.json
+- chart Static Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r} + \dfrac{r_q^2}{r^2} + \dfrac{r^2}{L^2}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r} + \dfrac{r_q^2}{r^2} + \dfrac{r^2}{L^2}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r} + \dfrac{r_q^2}{r^2} + \dfrac{r^2}{L^2}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r} + \dfrac{r_q^2}{r^2} + \dfrac{r^2}{L^2}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Reissner-Nordström-de Sitter Black Hole
 
 A charged black hole in a universe with a positive cosmological constant, the static, spherically symmetric solution of the Einstein-Maxwell equations. It has an inner horizon, a black hole horizon, and a cosmological horizon, and when its charge equals its mass the last two radiate at the same temperature.

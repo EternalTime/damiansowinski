@@ -97,6 +97,11 @@
       "id": "siklos",
       "kind": "generalisation",
       "text": "Anti-de Sitter space with a gravitational wave crossing it. The profile $H$ of a pp-wave goes inside the bracket of the Poincaré patch, and at $H = 0$ the wave is gone [siklos1985, podolsky1998]."
+    },
+    {
+      "id": "reissner_nordstrom_ads",
+      "kind": "generalisation",
+      "text": "Anti-de Sitter space with a charged black hole put in. For the field theory on the boundary the charge is a charge density [chamblin1999]."
     }
   ],
   "references": [
@@ -132,7 +137,8 @@
     "randall1999b",
     "coleman1980",
     "siklos1985",
-    "podolsky1998"
+    "podolsky1998",
+    "chamblin1999"
   ],
   "coordinates": [
     {
