@@ -86,6 +86,11 @@
       "id": "topological_black_hole",
       "kind": "family",
       "text": "The same identification of points carried to four dimensions, where the horizon comes out a torus or a surface of genus two or more [aminneborg1996]."
+    },
+    {
+      "id": "witten_black_hole",
+      "kind": "family",
+      "text": "A black hole in two dimensions, found in string theory. Times a circle, it is the string dual of the BTZ hole without rotation [horowitz1993]."
     }
   ],
   "references": [

@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 81,
+  "count": 82,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -1138,6 +1138,11 @@
           "id": "topological_black_hole",
           "kind": "family",
           "text": "The same identification of points carried to four dimensions, where the horizon comes out a torus or a surface of genus two or more [aminneborg1996]."
+        },
+        {
+          "id": "witten_black_hole",
+          "kind": "family",
+          "text": "A black hole in two dimensions, found in string theory. Times a circle, it is the string dual of the BTZ hole without rotation [horowitz1993]."
         }
       ],
       "references": [
@@ -4388,6 +4393,11 @@
           "id": "c_metric",
           "kind": "family",
           "text": "Two black holes accelerating apart. Dowker, Gauntlett, Kastor, and Traschen generalised it in 1994 to a pair of oppositely charged dilaton black holes, and used it to describe their creation in a magnetic field [dowker1994]."
+        },
+        {
+          "id": "witten_black_hole",
+          "kind": "limit",
+          "text": "In the limit of the extremal magnetic charge, the region around the horizon is closely approximated by Witten's black hole in two dimensions times a sphere [giddings1992]."
         }
       ],
       "references": [
@@ -17692,6 +17702,11 @@
           "id": "randall_sundrum",
           "kind": "family",
           "text": "Schwarzschild's black hole on a wall in five dimensions is a black string that reaches away from the wall into the fifth [chamblin2000]."
+        },
+        {
+          "id": "witten_black_hole",
+          "kind": "family",
+          "text": "A black hole of string theory with one dimension of space. Its Kruskal diagram matches Schwarzschild's region by region [witten1991]."
         }
       ],
       "references": [
@@ -17763,7 +17778,8 @@
         "ernst1976b",
         "einstein1945",
         "geroch1969",
-        "chamblin2000"
+        "chamblin2000",
+        "witten1991"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -22592,6 +22608,395 @@
           ],
           "ricci_scalar": "R = -\\dfrac{2\\left(4a - 3r_s\\right)\\delta(\\ell)}{a^2}",
           "kretschmann": "K = \\dfrac{12r_s^2}{\\left(a + |\\ell|\\right)^6} \\;\\text{for}\\; \\ell \\neq 0"
+        }
+      ]
+    },
+    {
+      "id": "witten_black_hole",
+      "name": "Witten's Black Hole in Two Dimensions",
+      "short_name": "Witten",
+      "description": "A black hole in two spacetime dimensions, a solution of the low energy equations of string theory for a metric and a dilaton, and an exact string background. It has a horizon, a spacelike singularity, and Kruskal's diagram, and its Hawking temperature is the same for every mass. With matter added it is the model of Callan, Giddings, Harvey, and Strominger for a black hole that forms and evaporates.",
+      "tags": [
+        "black hole",
+        "two-dimensional",
+        "dilaton",
+        "dilaton gravity",
+        "string theory",
+        "low energy string theory",
+        "exact conformal field theory",
+        "gauged WZW model",
+        "cigar",
+        "Euclidean black hole",
+        "linear dilaton",
+        "CGHS model",
+        "Hawking radiation",
+        "black hole evaporation",
+        "information paradox",
+        "Page curve",
+        "horizon",
+        "event horizon",
+        "singularity",
+        "Kruskal extension",
+        "static",
+        "asymptotically flat",
+        "lower-dimensional gravity",
+        "exact solution",
+        "Lorentzian",
+        "idealized model"
+      ],
+      "signature": "(-,+)",
+      "convention": "We keep factors of $c$ explicit. The metric and the dilaton $\\Phi$ solve $R_{\\mu\\nu} + 2\\nabla_\\mu\\nabla_\\nu\\Phi = 0$, with $\\lambda$ an inverse length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "Schwarzschild's plane of $t$ and $r$ has the same horizon, singularity, and Kruskal diagram. Witten matched the regions of his hole to Schwarzschild's one by one [witten1991]."
+        },
+        {
+          "id": "dilaton_black_hole",
+          "kind": "limit_source",
+          "text": "The charged black hole of string theory in four dimensions. In the limit of its extremal magnetic charge, the region around its horizon is closely approximated by Witten's hole times a sphere [giddings1992]."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "The black hole of three dimensions. Without rotation it is dual, as a string background, to Witten's hole times a circle [horowitz1993]."
+        }
+      ],
+      "references": [
+        "horowitz1992",
+        "witten1991",
+        "mandal1991",
+        "grumiller2002",
+        "dijkgraaf1992",
+        "giddings1992",
+        "hawking1975",
+        "hawking1976",
+        "callan1992",
+        "strominger1995",
+        "gautason2020",
+        "russo1992",
+        "horowitz1993"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/witten_black_hole.json",
+      "charts": [
+        {
+          "id": "witten",
+          "name": "Witten",
+          "coordinates": [
+            "t",
+            "r"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "r = 0 \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\lambda",
+              "description": "Scale of the dilaton's potential, an inverse length; the curvature on the horizon is $4\\lambda^2$ and the Hawking temperature is $\\hbar c\\lambda/2\\pi k_B$ for every mass"
+            }
+          ],
+          "convention": "We use coordinates $(t, r)$, with $t$ carrying dimensions of time and $r$ the proper distance from the horizon, and the dilaton is $\\Phi = \\Phi_0 - \\ln\\cosh(\\lambda r)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the derivative of $ct$.",
+          "line_element": "ds^2 = -\\tanh^2(\\lambda r)\\,c^2dt^2 + dr^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\tanh^2(\\lambda r)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4\\lambda^2}{\\cosh^2(\\lambda r)}",
+          "kretschmann": "K = \\dfrac{16\\lambda^4}{\\cosh^4(\\lambda r)}"
+        },
+        {
+          "id": "schwarzschild_gauge",
+          "name": "Schwarzschild Gauge",
+          "coordinates": [
+            "t",
+            "x"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "x = \\ln(m)/2\\lambda \\;\\text{(the horizon)}",
+            "x \\to -\\infty \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\lambda",
+              "description": "Scale of the dilaton's potential, an inverse length; the curvature on the horizon is $4\\lambda^2$ and the Hawking temperature is $\\hbar c\\lambda/2\\pi k_B$ for every mass"
+            },
+            {
+              "symbol": "m",
+              "description": "Mass parameter, dimensionless and positive, $m = e^{-2\\Phi_0}$ with $\\Phi_0$ the dilaton on the horizon; the mass of the hole is proportional to $\\lambda m$"
+            }
+          ],
+          "convention": "We use coordinates $(t, x)$, with $t$ carrying dimensions of time and $x$ a length along which the dilaton is linear, $\\Phi = -\\lambda x$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the derivative of $ct$.",
+          "line_element": "ds^2 = -\\left(1 - m\\,e^{-2\\lambda x}\\right)c^2dt^2 + \\dfrac{dx^2}{1 - m\\,e^{-2\\lambda x}}",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - m\\,e^{-2\\lambda x}\\right)"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\left(1 - m\\,e^{-2\\lambda x}\\right)^{-1}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\lambda^2m\\,e^{-2\\lambda x}",
+          "kretschmann": "K = 16\\lambda^4m^2e^{-4\\lambda x}"
+        },
+        {
+          "id": "dilaton",
+          "name": "Dilaton",
+          "coordinates": [
+            "t",
+            "w"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "w \\in (0, \\infty)",
+            "w = m \\;\\text{(the horizon)}",
+            "w = 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\lambda",
+              "description": "Scale of the dilaton's potential, an inverse length; the curvature on the horizon is $4\\lambda^2$ and the Hawking temperature is $\\hbar c\\lambda/2\\pi k_B$ for every mass"
+            },
+            {
+              "symbol": "m",
+              "description": "Mass parameter, dimensionless and positive, $m = e^{-2\\Phi_0}$ with $\\Phi_0$ the dilaton on the horizon; the mass of the hole is proportional to $\\lambda m$"
+            }
+          ],
+          "convention": "We use coordinates $(t, w)$, with $t$ carrying dimensions of time and $w = e^{-2\\Phi}$ dimensionless, the dilaton $\\Phi$ itself serving as the spatial coordinate. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the derivative of $ct$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{m}{w}\\right)c^2dt^2 + \\dfrac{dw^2}{4\\lambda^2w\\left(w - m\\right)}",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{m}{w}\\right)"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "\\dfrac{1}{4\\lambda^2\\,w\\left(w - m\\right)}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4\\lambda^2m}{w}",
+          "kretschmann": "K = \\dfrac{16\\lambda^4m^2}{w^2}"
+        },
+        {
+          "id": "conformal",
+          "name": "Conformal",
+          "coordinates": [
+            "t",
+            "\\sigma"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\sigma \\in (-\\infty, \\infty)",
+            "\\sigma \\to -\\infty \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\lambda",
+              "description": "Scale of the dilaton's potential, an inverse length; the curvature on the horizon is $4\\lambda^2$ and the Hawking temperature is $\\hbar c\\lambda/2\\pi k_B$ for every mass"
+            },
+            {
+              "symbol": "m",
+              "description": "Mass parameter, dimensionless and positive, $m = e^{-2\\Phi_0}$ with $\\Phi_0$ the dilaton on the horizon; the mass of the hole is proportional to $\\lambda m$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\sigma)$, with $t$ carrying dimensions of time and $\\sigma$ a length, the tortoise coordinate, and the dilaton is $\\Phi = -\\tfrac{1}{2}\\ln\\left(e^{2\\lambda\\sigma} + m\\right)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the derivative of $ct$.",
+          "line_element": "ds^2 = \\dfrac{-c^2dt^2 + d\\sigma^2}{1 + m\\,e^{-2\\lambda\\sigma}}",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{1 + m\\,e^{-2\\lambda\\sigma}}"
+            },
+            {
+              "indices": [
+                "\\sigma",
+                "\\sigma"
+              ],
+              "value": "\\dfrac{1}{1 + m\\,e^{-2\\lambda\\sigma}}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4\\lambda^2m}{e^{2\\lambda\\sigma} + m}",
+          "kretschmann": "K = \\dfrac{16\\lambda^4m^2}{\\left(e^{2\\lambda\\sigma} + m\\right)^2}"
+        },
+        {
+          "id": "kruskal",
+          "name": "Kruskal",
+          "coordinates": [
+            "U",
+            "V"
+          ],
+          "domains": [
+            "U \\in (-\\infty, \\infty)",
+            "V \\in (-\\infty, \\infty)",
+            "UV < 1",
+            "UV = 0 \\;\\text{(the horizons)}",
+            "UV = 1 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\lambda",
+              "description": "Scale of the dilaton's potential, an inverse length; the curvature on the horizon is $4\\lambda^2$ and the Hawking temperature is $\\hbar c\\lambda/2\\pi k_B$ for every mass"
+            },
+            {
+              "symbol": "m",
+              "description": "Mass parameter, dimensionless and positive, $m = e^{-2\\Phi_0}$ with $\\Phi_0$ the dilaton on the horizon; the mass of the hole is proportional to $\\lambda m$"
+            }
+          ],
+          "convention": "We use null coordinates $(U, V)$, both dimensionless, and the dilaton is $\\Phi = -\\tfrac{1}{2}\\ln\\left(m(1 - UV)\\right)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\dfrac{dU\\,dV}{\\lambda^2\\left(1 - UV\\right)}",
+          "metric_components": [
+            {
+              "indices": [
+                "U",
+                "V"
+              ],
+              "value": "-\\dfrac{1}{2\\lambda^2\\left(1 - U\\,V\\right)}"
+            },
+            {
+              "indices": [
+                "V",
+                "U"
+              ],
+              "value": "-\\dfrac{1}{2\\lambda^2\\left(1 - U\\,V\\right)}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4\\lambda^2}{1 - UV}",
+          "kretschmann": "K = \\dfrac{16\\lambda^4}{\\left(1 - UV\\right)^2}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "x"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "x = \\ln(m)/2\\lambda \\;\\text{(the horizon)}",
+            "x \\to -\\infty \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\lambda",
+              "description": "Scale of the dilaton's potential, an inverse length; the curvature on the horizon is $4\\lambda^2$ and the Hawking temperature is $\\hbar c\\lambda/2\\pi k_B$ for every mass"
+            },
+            {
+              "symbol": "m",
+              "description": "Mass parameter, dimensionless and positive, $m = e^{-2\\Phi_0}$ with $\\Phi_0$ the dilaton on the horizon; the mass of the hole is proportional to $\\lambda m$"
+            }
+          ],
+          "convention": "We use coordinates $(v, x)$, with the advanced time $v = ct + x + \\ln\\left|1 - m\\,e^{-2\\lambda x}\\right|/2\\lambda$ a length, and the dilaton is $\\Phi = -\\lambda x$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(1 - m\\,e^{-2\\lambda x}\\right)dv^2 + 2\\,dv\\,dx",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - m\\,e^{-2\\lambda x}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "x",
+                "v"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 4\\lambda^2m\\,e^{-2\\lambda x}",
+          "kretschmann": "K = 16\\lambda^4m^2e^{-4\\lambda x}"
+        },
+        {
+          "id": "eddington_finkelstein_outgoing",
+          "name": "Outgoing Eddington-Finkelstein",
+          "coordinates": [
+            "u",
+            "x"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "x = \\ln(m)/2\\lambda \\;\\text{(the horizon)}",
+            "x \\to -\\infty \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\lambda",
+              "description": "Scale of the dilaton's potential, an inverse length; the curvature on the horizon is $4\\lambda^2$ and the Hawking temperature is $\\hbar c\\lambda/2\\pi k_B$ for every mass"
+            },
+            {
+              "symbol": "m",
+              "description": "Mass parameter, dimensionless and positive, $m = e^{-2\\Phi_0}$ with $\\Phi_0$ the dilaton on the horizon; the mass of the hole is proportional to $\\lambda m$"
+            }
+          ],
+          "convention": "We use coordinates $(u, x)$, with the retarded time $u = ct - x - \\ln\\left|1 - m\\,e^{-2\\lambda x}\\right|/2\\lambda$ a length, and the dilaton is $\\Phi = -\\lambda x$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(1 - m\\,e^{-2\\lambda x}\\right)du^2 - 2\\,du\\,dx",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - m\\,e^{-2\\lambda x}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "x"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "u"
+              ],
+              "value": "-1"
+            }
+          ],
+          "ricci_scalar": "R = 4\\lambda^2m\\,e^{-2\\lambda x}",
+          "kretschmann": "K = 16\\lambda^4m^2e^{-4\\lambda x}"
         }
       ]
     },

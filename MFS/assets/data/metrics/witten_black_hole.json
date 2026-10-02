@@ -1,0 +1,2348 @@
+{
+  "id": "witten_black_hole",
+  "name": "Witten's Black Hole in Two Dimensions",
+  "short_name": "Witten",
+  "description": "A black hole in two spacetime dimensions, a solution of the low energy equations of string theory for a metric and a dilaton, and an exact string background. It has a horizon, a spacelike singularity, and Kruskal's diagram, and its Hawking temperature is the same for every mass. With matter added it is the model of Callan, Giddings, Harvey, and Strominger for a black hole that forms and evaporates.",
+  "tags": [
+    "black hole",
+    "two-dimensional",
+    "dilaton",
+    "dilaton gravity",
+    "string theory",
+    "low energy string theory",
+    "exact conformal field theory",
+    "gauged WZW model",
+    "cigar",
+    "Euclidean black hole",
+    "linear dilaton",
+    "CGHS model",
+    "Hawking radiation",
+    "black hole evaporation",
+    "information paradox",
+    "Page curve",
+    "horizon",
+    "event horizon",
+    "singularity",
+    "Kruskal extension",
+    "static",
+    "asymptotically flat",
+    "lower-dimensional gravity",
+    "exact solution",
+    "Lorentzian",
+    "idealized model"
+  ],
+  "signature": "(-,+)",
+  "convention": "We keep factors of $c$ explicit. The metric and the dilaton $\\Phi$ solve $R_{\\mu\\nu} + 2\\nabla_\\mu\\nabla_\\nu\\Phi = 0$, with $\\lambda$ an inverse length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "How much of a black hole survives when space has one dimension? In general relativity, none of it: in two dimensions Einstein's equation becomes trivial, and there is no analog of Schwarzschild's solution [horowitz1992]. String theory puts a scalar field beside the metric, the dilaton, and its low energy equations keep their content in two dimensions [horowitz1992]. Gravity and the dilaton together have no waves to carry, zero degrees of freedom by Gary Horowitz's count, and they still have black hole solutions, labelled by a mass $M$ [horowitz1992]. Horowitz wrote them with the dilaton $\\phi$ itself as the radial coordinate, $r$ proportional to $e^{-2\\phi}$: $ds^2 = -(1 - M/r)dt^2 + k\\,dr^2/4r(r - M)$, with $k$ a constant of the theory [horowitz1992].¶The hole turned up in 1991 inside a conformal field theory that Edward Witten was building, a gauged Wess-Zumino-Witten model for the group $SL(2, \\mathbb{R})$ with a one dimensional subgroup divided out [witten1991]. The string in that model moves on a surface with the metric $dr^2 + \\tanh^2 r\\,d\\theta^2$, which he described as a \"semi-infinite cigar\": a rounded tip at $r = 0$ and, far from it, a cylinder of fixed radius, which is how a Euclidean black hole looks far away, flat space times a circle whose size sets its temperature [witten1991]. Turning the angle into a time, $\\theta = it$, gave him $dr^2 - \\tanh^2 r\\,dt^2$, with the tip of the cigar as the horizon [witten1991]. Coordinates $u$ and $v$ in the manner of Kruskal carried the metric through it as $-du\\,dv/(1 - uv)$ and on to a curvature singularity at $uv = 1$, and Witten matched the regions of the plane one by one to those of Schwarzschild's solution [witten1991]. Where is the mass? Witten found it in the dilaton: a constant added to the dilaton changes nothing far away, and the mass of the hole is proportional to its exponential [witten1991].¶The same geometry came out of the string's own equations that year: Gautam Mandal, Anirvan Sengupta, and Spenta Wadia solved the conditions a string imposes on a metric and a dilaton in two dimensions, and found a family of solutions with one parameter [mandal1991]. In what they called a \"Schwarzschild-like gauge\" the dilaton is linear in the spatial coordinate $\\eta$ and $g_{tt} = 1 - a\\,e^{Q\\eta}$, with a horizon where it vanishes [mandal1991]. They credited Witten with pointing out to them that the solution is a black hole [mandal1991]. Daniel Grumiller, Wolfgang Kummer, and Dmitri Vassilevich, reviewing gravity with a dilaton in two dimensions in 2002, wrote the hole in the gauge of Eddington and Finkelstein, whose coordinates run through the horizon [grumiller2002].¶Horowitz gave the reason for studying a black hole in two dimensions when Schwarzschild's is at hand: here one can go beyond the low energy equations, since Witten's model is an exact conformal field theory [horowitz1992]. Robbert Dijkgraaf, Herman Verlinde, and Erik Verlinde used it to scatter strings off the hole, and found Hawking radiation in the string's propagator [dijkgraaf1992]. A duality of the string theory, they showed, exchanges the horizon with the singularity [dijkgraaf1992]. Steven Giddings and Andrew Strominger looked down the throat of a larger hole, the magnetically charged dilaton black hole of four dimensions near its extremal charge, and found the region around its horizon closely approximated by the two dimensional hole times a sphere [giddings1992]. Multiplied by a line it is a black string in three dimensions [horowitz1992].¶Can a black hole be followed from its birth to its end? Black holes radiate, Stephen Hawking had found, and in 1976 he argued that a hole which forms and then evaporates turns a pure quantum state into a mixed one [hawking1975, hawking1976]. Curtis Callan, Giddings, Jeffrey Harvey, and Strominger wanted a model simple enough to check him in, and in 1992 they took Witten's hole, with one scale $\\lambda$ and matter fields added [callan1992]. Their classical theory can be solved exactly: a pulse of matter sent into the empty solution, where the dilaton is linear, leaves a black hole behind, however weak the pulse [callan1992]. The hole then radiates, and at late times the flux of energy far away settles to $\\lambda^2/48$ for each matter field, the same for every mass [callan1992]. In units with $\\hbar = c = k_B = 1$ the temperature of the hole is $\\lambda/2\\pi$, which does not depend on its mass either [strominger1995, gautason2020].¶On what the radiation does to the hole that emits it, Callan and his coauthors guessed that the matter radiates all its energy away before a horizon forms, and called their picture speculative [callan1992]. The model became solvable with the energy of the radiation included once Jorge Russo, Leonard Susskind, and Lárus Thorlacius added a term to its action [russo1992, gautason2020]. In their solution matter arriving above a threshold flux forms a singularity inside an apparent horizon, and as the hole evaporates the horizon recedes and meets the singularity after a finite proper time [russo1992]. Friðrik Gautason, Lukas Schneiderbauer, Watse Sybesma, and Thorlacius computed the entropy of the radiation of a hole evaporating in that model, using the quantum Ryu-Takayanagi formula, and found that it rises until a third of the hole's lifetime has passed and falls after that, the Page curve expected of an evaporation that is unitary [gautason2020].",
+  "related": [
+    {
+      "id": "schwarzschild",
+      "kind": "family",
+      "text": "Schwarzschild's plane of $t$ and $r$ has the same horizon, singularity, and Kruskal diagram. Witten matched the regions of his hole to Schwarzschild's one by one [witten1991]."
+    },
+    {
+      "id": "dilaton_black_hole",
+      "kind": "limit_source",
+      "text": "The charged black hole of string theory in four dimensions. In the limit of its extremal magnetic charge, the region around its horizon is closely approximated by Witten's hole times a sphere [giddings1992]."
+    },
+    {
+      "id": "btz",
+      "kind": "family",
+      "text": "The black hole of three dimensions. Without rotation it is dual, as a string background, to Witten's hole times a circle [horowitz1993]."
+    }
+  ],
+  "references": [
+    "horowitz1992",
+    "witten1991",
+    "mandal1991",
+    "grumiller2002",
+    "dijkgraaf1992",
+    "giddings1992",
+    "hawking1975",
+    "hawking1976",
+    "callan1992",
+    "strominger1995",
+    "gautason2020",
+    "russo1992",
+    "horowitz1993"
+  ],
+  "coordinates": [
+    {
+      "id": "witten",
+      "name": "Witten",
+      "coords": [
+        "t",
+        "r"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "r = 0 \\;\\text{(the horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\lambda",
+          "description": "Scale of the dilaton's potential, an inverse length; the curvature on the horizon is $4\\lambda^2$ and the Hawking temperature is $\\hbar c\\lambda/2\\pi k_B$ for every mass"
+        }
+      ],
+      "convention": "We use coordinates $(t, r)$, with $t$ carrying dimensions of time and $r$ the proper distance from the horizon, and the dilaton is $\\Phi = \\Phi_0 - \\ln\\cosh(\\lambda r)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the derivative of $ct$.",
+      "line_element": "ds^2 = -\\tanh^2(\\lambda r)\\,c^2dt^2 + dr^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\tanh^2(\\lambda r)"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\coth^2(\\lambda r)"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\lambda}{\\sinh\\left(\\lambda\\,r\\right)\\cosh\\left(\\lambda\\,r\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\lambda}{\\sinh\\left(\\lambda\\,r\\right)\\cosh\\left(\\lambda\\,r\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\lambda\\sinh\\left(\\lambda\\,r\\right)}{\\cosh^3\\left(\\lambda\\,r\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\lambda\\sinh\\left(\\lambda\\,r\\right)}{\\cosh^3\\left(\\lambda\\,r\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\lambda\\sinh\\left(\\lambda\\,r\\right)}{\\cosh^3\\left(\\lambda\\,r\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\lambda\\sinh\\left(\\lambda\\,r\\right)}{\\cosh^3\\left(\\lambda\\,r\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\lambda^2}{\\cosh^2\\left(\\lambda\\,r\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\lambda^2}{\\cosh^2\\left(\\lambda\\,r\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\lambda^2\\sinh^2\\left(\\lambda\\,r\\right)}{\\cosh^4\\left(\\lambda\\,r\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\lambda^2\\sinh^2\\left(\\lambda\\,r\\right)}{\\cosh^4\\left(\\lambda\\,r\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\lambda^2\\sinh^2\\left(\\lambda\\,r\\right)}{\\cosh^4\\left(\\lambda\\,r\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\lambda^2\\sinh^2\\left(\\lambda\\,r\\right)}{\\cosh^4\\left(\\lambda\\,r\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\lambda^2\\sinh^2\\left(\\lambda\\,r\\right)}{\\cosh^4\\left(\\lambda\\,r\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\lambda^2\\sinh^2\\left(\\lambda\\,r\\right)}{\\cosh^4\\left(\\lambda\\,r\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\lambda^2\\sinh^2\\left(\\lambda\\,r\\right)}{\\cosh^4\\left(\\lambda\\,r\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\lambda^2}{\\cosh^2\\left(\\lambda\\,r\\right)}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\lambda^2}{\\cosh^2\\left(\\lambda\\,r\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\lambda^2}{\\cosh^2\\left(\\lambda\\,r\\right)}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\lambda^2}{\\sinh^2\\left(\\lambda\\,r\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\lambda^2}{\\cosh^2\\left(\\lambda\\,r\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{4\\lambda^2}{\\cosh^2(\\lambda r)}",
+      "kretschmann": "K = \\dfrac{16\\lambda^4}{\\cosh^4(\\lambda r)}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2\\lambda}{\\sinh\\left(\\lambda\\,r\\right)\\cosh\\left(\\lambda\\,r\\right)}\\dot{t}\\dot{r} = 0",
+        "\\ddot{r} + \\dfrac{\\lambda\\sinh\\left(\\lambda\\,r\\right)}{\\cosh^3\\left(\\lambda\\,r\\right)}\\dot{t}^2 = 0"
+      ]
+    },
+    {
+      "id": "schwarzschild_gauge",
+      "name": "Schwarzschild Gauge",
+      "coords": [
+        "t",
+        "x"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "x = \\ln(m)/2\\lambda \\;\\text{(the horizon)}",
+        "x \\to -\\infty \\;\\text{(the singularity)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\lambda",
+          "description": "Scale of the dilaton's potential, an inverse length; the curvature on the horizon is $4\\lambda^2$ and the Hawking temperature is $\\hbar c\\lambda/2\\pi k_B$ for every mass"
+        },
+        {
+          "symbol": "m",
+          "description": "Mass parameter, dimensionless and positive, $m = e^{-2\\Phi_0}$ with $\\Phi_0$ the dilaton on the horizon; the mass of the hole is proportional to $\\lambda m$"
+        }
+      ],
+      "convention": "We use coordinates $(t, x)$, with $t$ carrying dimensions of time and $x$ a length along which the dilaton is linear, $\\Phi = -\\lambda x$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the derivative of $ct$.",
+      "line_element": "ds^2 = -\\left(1 - m\\,e^{-2\\lambda x}\\right)c^2dt^2 + \\dfrac{dx^2}{1 - m\\,e^{-2\\lambda x}}",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(1 - m\\,e^{-2\\lambda x}\\right)"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\left(1 - m\\,e^{-2\\lambda x}\\right)^{-1}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(1 - m\\,e^{-2\\lambda x}\\right)^{-1}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1 - m\\,e^{-2\\lambda x}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\lambda\\,m\\,e^{-2\\lambda\\,x}}{1 - m\\,e^{-2\\lambda\\,x}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{\\lambda\\,m\\,e^{-2\\lambda\\,x}}{1 - m\\,e^{-2\\lambda\\,x}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\lambda\\,m\\,e^{-2\\lambda\\,x}}{1 - m\\,e^{-2\\lambda\\,x}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t"
+                ],
+                "value": "\\lambda\\,m\\left(1 - m\\,e^{-2\\lambda\\,x}\\right)e^{-2\\lambda\\,x}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\lambda\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\lambda\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t"
+                ],
+                "value": "\\lambda\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\lambda\\,m\\,e^{-2\\lambda\\,x}}{\\left(1 - m\\,e^{-2\\lambda\\,x}\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}}{1 - m\\,e^{-2\\lambda\\,x}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}}{1 - m\\,e^{-2\\lambda\\,x}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "2\\lambda^2\\,m\\left(1 - m\\,e^{-2\\lambda\\,x}\\right)e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-2\\lambda^2\\,m\\left(1 - m\\,e^{-2\\lambda\\,x}\\right)e^{-2\\lambda\\,x}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-2\\lambda^2\\,m\\left(1 - m\\,e^{-2\\lambda\\,x}\\right)e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}}{1 - m\\,e^{-2\\lambda\\,x}}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}}{1 - m\\,e^{-2\\lambda\\,x}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2\\lambda^2\\,m\\left(1 - m\\,e^{-2\\lambda\\,x}\\right)e^{-2\\lambda\\,x}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 4\\lambda^2m\\,e^{-2\\lambda x}",
+      "kretschmann": "K = 16\\lambda^4m^2e^{-4\\lambda x}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2\\lambda\\,m\\,e^{-2\\lambda\\,x}}{1 - m\\,e^{-2\\lambda\\,x}}\\dot{t}\\dot{x} = 0",
+        "\\ddot{x} + \\lambda\\,m\\left(1 - m\\,e^{-2\\lambda\\,x}\\right)e^{-2\\lambda\\,x}\\dot{t}^2 - \\dfrac{\\lambda\\,m\\,e^{-2\\lambda\\,x}}{1 - m\\,e^{-2\\lambda\\,x}}\\dot{x}^2 = 0"
+      ]
+    },
+    {
+      "id": "dilaton",
+      "name": "Dilaton",
+      "coords": [
+        "t",
+        "w"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "w \\in (0, \\infty)",
+        "w = m \\;\\text{(the horizon)}",
+        "w = 0 \\;\\text{(the singularity)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\lambda",
+          "description": "Scale of the dilaton's potential, an inverse length; the curvature on the horizon is $4\\lambda^2$ and the Hawking temperature is $\\hbar c\\lambda/2\\pi k_B$ for every mass"
+        },
+        {
+          "symbol": "m",
+          "description": "Mass parameter, dimensionless and positive, $m = e^{-2\\Phi_0}$ with $\\Phi_0$ the dilaton on the horizon; the mass of the hole is proportional to $\\lambda m$"
+        }
+      ],
+      "convention": "We use coordinates $(t, w)$, with $t$ carrying dimensions of time and $w = e^{-2\\Phi}$ dimensionless, the dilaton $\\Phi$ itself serving as the spatial coordinate. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the derivative of $ct$.",
+      "line_element": "ds^2 = -\\left(1 - \\dfrac{m}{w}\\right)c^2dt^2 + \\dfrac{dw^2}{4\\lambda^2w\\left(w - m\\right)}",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(1 - \\dfrac{m}{w}\\right)"
+        },
+        {
+          "indices": [
+            "w",
+            "w"
+          ],
+          "value": "\\dfrac{1}{4\\lambda^2\\,w\\left(w - m\\right)}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{w}{w - m}"
+        },
+        {
+          "indices": [
+            "w",
+            "w"
+          ],
+          "value": "4\\lambda^2\\,w\\left(w - m\\right)"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "\\dfrac{m}{2w\\left(w - m\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "\\dfrac{m}{2w\\left(w - m\\right)}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\lambda^2\\,m\\left(w - m\\right)}{w}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w",
+                  "w"
+                ],
+                "value": "-\\dfrac{2w - m}{2w\\left(w - m\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "-\\dfrac{m}{2w^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "-\\dfrac{m}{2w^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{m}{2w^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w",
+                  "w"
+                ],
+                "value": "-\\dfrac{2w - m}{8\\lambda^2\\,w^2\\left(w - m\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t",
+                  "w"
+                ],
+                "value": "\\dfrac{m}{2w^2\\left(w - m\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "w",
+                  "t"
+                ],
+                "value": "-\\dfrac{m}{2w^2\\left(w - m\\right)}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "\\dfrac{2\\lambda^2\\,m\\left(w - m\\right)}{w^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\lambda^2\\,m\\left(w - m\\right)}{w^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t",
+                  "w"
+                ],
+                "value": "-\\dfrac{m}{2w^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "w",
+                  "t"
+                ],
+                "value": "\\dfrac{m}{2w^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "\\dfrac{m}{2w^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "-\\dfrac{m}{2w^3}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\lambda^2\\,m\\left(w - m\\right)}{w^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "\\dfrac{m}{2w^2\\left(w - m\\right)}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\lambda^2\\,m}{w}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "\\dfrac{2\\lambda^2\\,m}{w}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\lambda^2\\,m}{w - m}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "8\\lambda^4\\,m\\left(w - m\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{4\\lambda^2m}{w}",
+      "kretschmann": "K = \\dfrac{16\\lambda^4m^2}{w^2}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{m}{w\\left(w - m\\right)}\\dot{t}\\dot{w} = 0",
+        "\\ddot{w} + \\dfrac{2\\lambda^2\\,m\\left(w - m\\right)}{w}\\dot{t}^2 - \\dfrac{2w - m}{2w\\left(w - m\\right)}\\dot{w}^2 = 0"
+      ]
+    },
+    {
+      "id": "conformal",
+      "name": "Conformal",
+      "coords": [
+        "t",
+        "\\sigma"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "\\sigma \\in (-\\infty, \\infty)",
+        "\\sigma \\to -\\infty \\;\\text{(the horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\lambda",
+          "description": "Scale of the dilaton's potential, an inverse length; the curvature on the horizon is $4\\lambda^2$ and the Hawking temperature is $\\hbar c\\lambda/2\\pi k_B$ for every mass"
+        },
+        {
+          "symbol": "m",
+          "description": "Mass parameter, dimensionless and positive, $m = e^{-2\\Phi_0}$ with $\\Phi_0$ the dilaton on the horizon; the mass of the hole is proportional to $\\lambda m$"
+        }
+      ],
+      "convention": "We use coordinates $(t, \\sigma)$, with $t$ carrying dimensions of time and $\\sigma$ a length, the tortoise coordinate, and the dilaton is $\\Phi = -\\tfrac{1}{2}\\ln\\left(e^{2\\lambda\\sigma} + m\\right)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the derivative of $ct$.",
+      "line_element": "ds^2 = \\dfrac{-c^2dt^2 + d\\sigma^2}{1 + m\\,e^{-2\\lambda\\sigma}}",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1}{1 + m\\,e^{-2\\lambda\\sigma}}"
+        },
+        {
+          "indices": [
+            "\\sigma",
+            "\\sigma"
+          ],
+          "value": "\\dfrac{1}{1 + m\\,e^{-2\\lambda\\sigma}}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(1 + m\\,e^{-2\\lambda\\sigma}\\right)"
+        },
+        {
+          "indices": [
+            "\\sigma",
+            "\\sigma"
+          ],
+          "value": "1 + m\\,e^{-2\\lambda\\sigma}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\sigma"
+                ],
+                "value": "\\dfrac{\\lambda\\,m}{e^{2\\lambda\\,\\sigma} + m}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\sigma",
+                  "t"
+                ],
+                "value": "\\dfrac{\\lambda\\,m}{e^{2\\lambda\\,\\sigma} + m}"
+              },
+              {
+                "indices": [
+                  "\\sigma",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\lambda\\,m}{e^{2\\lambda\\,\\sigma} + m}"
+              },
+              {
+                "indices": [
+                  "\\sigma",
+                  "\\sigma",
+                  "\\sigma"
+                ],
+                "value": "\\dfrac{\\lambda\\,m}{e^{2\\lambda\\,\\sigma} + m}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\sigma"
+                ],
+                "value": "-\\dfrac{\\lambda\\,m\\,e^{2\\lambda\\,\\sigma}}{\\left(e^{2\\lambda\\,\\sigma} + m\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\sigma",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\lambda\\,m\\,e^{2\\lambda\\,\\sigma}}{\\left(e^{2\\lambda\\,\\sigma} + m\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\sigma",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\lambda\\,m\\,e^{2\\lambda\\,\\sigma}}{\\left(e^{2\\lambda\\,\\sigma} + m\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\sigma",
+                  "\\sigma",
+                  "\\sigma"
+                ],
+                "value": "\\dfrac{\\lambda\\,m\\,e^{2\\lambda\\,\\sigma}}{\\left(e^{2\\lambda\\,\\sigma} + m\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\sigma",
+                  "t",
+                  "\\sigma"
+                ],
+                "value": "\\dfrac{2\\lambda^2\\,m\\,e^{2\\lambda\\,\\sigma}}{\\left(e^{2\\lambda\\,\\sigma} + m\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\sigma",
+                  "\\sigma",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\lambda^2\\,m\\,e^{2\\lambda\\,\\sigma}}{\\left(e^{2\\lambda\\,\\sigma} + m\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\sigma",
+                  "t",
+                  "t",
+                  "\\sigma"
+                ],
+                "value": "\\dfrac{2\\lambda^2\\,m\\,e^{2\\lambda\\,\\sigma}}{\\left(e^{2\\lambda\\,\\sigma} + m\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\sigma",
+                  "t",
+                  "\\sigma",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\lambda^2\\,m\\,e^{2\\lambda\\,\\sigma}}{\\left(e^{2\\lambda\\,\\sigma} + m\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\sigma",
+                  "t",
+                  "\\sigma"
+                ],
+                "value": "-\\dfrac{2\\lambda^2\\,m\\,e^{4\\lambda\\,\\sigma}}{\\left(e^{2\\lambda\\,\\sigma} + m\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\sigma",
+                  "\\sigma",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\lambda^2\\,m\\,e^{4\\lambda\\,\\sigma}}{\\left(e^{2\\lambda\\,\\sigma} + m\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\sigma",
+                  "t",
+                  "t",
+                  "\\sigma"
+                ],
+                "value": "\\dfrac{2\\lambda^2\\,m\\,e^{4\\lambda\\,\\sigma}}{\\left(e^{2\\lambda\\,\\sigma} + m\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\sigma",
+                  "t",
+                  "\\sigma",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\lambda^2\\,m\\,e^{4\\lambda\\,\\sigma}}{\\left(e^{2\\lambda\\,\\sigma} + m\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\lambda^2\\,m\\,e^{2\\lambda\\,\\sigma}}{\\left(e^{2\\lambda\\,\\sigma} + m\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\sigma",
+                  "\\sigma"
+                ],
+                "value": "\\dfrac{2\\lambda^2\\,m\\,e^{2\\lambda\\,\\sigma}}{\\left(e^{2\\lambda\\,\\sigma} + m\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\lambda^2\\,m}{e^{2\\lambda\\,\\sigma} + m}"
+              },
+              {
+                "indices": [
+                  "\\sigma",
+                  "\\sigma"
+                ],
+                "value": "\\dfrac{2\\lambda^2\\,m}{e^{2\\lambda\\,\\sigma} + m}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-2\\lambda^2\\,m\\,e^{-2\\lambda\\,\\sigma}"
+              },
+              {
+                "indices": [
+                  "\\sigma",
+                  "\\sigma"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,\\sigma}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{4\\lambda^2m}{e^{2\\lambda\\sigma} + m}",
+      "kretschmann": "K = \\dfrac{16\\lambda^4m^2}{\\left(e^{2\\lambda\\sigma} + m\\right)^2}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2\\lambda\\,m}{e^{2\\lambda\\,\\sigma} + m}\\dot{t}\\dot{\\sigma} = 0",
+        "\\ddot{\\sigma} + \\dfrac{\\lambda\\,m}{e^{2\\lambda\\,\\sigma} + m}\\dot{t}^2 + \\dfrac{\\lambda\\,m}{e^{2\\lambda\\,\\sigma} + m}\\dot{\\sigma}^2 = 0"
+      ]
+    },
+    {
+      "id": "kruskal",
+      "name": "Kruskal",
+      "coords": [
+        "U",
+        "V"
+      ],
+      "domains": [
+        "U \\in (-\\infty, \\infty)",
+        "V \\in (-\\infty, \\infty)",
+        "UV < 1",
+        "UV = 0 \\;\\text{(the horizons)}",
+        "UV = 1 \\;\\text{(the singularity)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\lambda",
+          "description": "Scale of the dilaton's potential, an inverse length; the curvature on the horizon is $4\\lambda^2$ and the Hawking temperature is $\\hbar c\\lambda/2\\pi k_B$ for every mass"
+        },
+        {
+          "symbol": "m",
+          "description": "Mass parameter, dimensionless and positive, $m = e^{-2\\Phi_0}$ with $\\Phi_0$ the dilaton on the horizon; the mass of the hole is proportional to $\\lambda m$"
+        }
+      ],
+      "convention": "We use null coordinates $(U, V)$, both dimensionless, and the dilaton is $\\Phi = -\\tfrac{1}{2}\\ln\\left(m(1 - UV)\\right)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -\\dfrac{dU\\,dV}{\\lambda^2\\left(1 - UV\\right)}",
+      "metric_components": [
+        {
+          "indices": [
+            "U",
+            "V"
+          ],
+          "value": "-\\dfrac{1}{2\\lambda^2\\left(1 - U\\,V\\right)}"
+        },
+        {
+          "indices": [
+            "V",
+            "U"
+          ],
+          "value": "-\\dfrac{1}{2\\lambda^2\\left(1 - U\\,V\\right)}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "U",
+            "V"
+          ],
+          "value": "-2\\lambda^2\\left(1 - U\\,V\\right)"
+        },
+        {
+          "indices": [
+            "V",
+            "U"
+          ],
+          "value": "-2\\lambda^2\\left(1 - U\\,V\\right)"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "U",
+                  "U"
+                ],
+                "value": "\\dfrac{V}{1 - U\\,V}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "V",
+                  "V"
+                ],
+                "value": "\\dfrac{U}{1 - U\\,V}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "V",
+                  "V"
+                ],
+                "value": "-\\dfrac{U}{2\\lambda^2\\left(1 - U\\,V\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U",
+                  "U"
+                ],
+                "value": "-\\dfrac{V}{2\\lambda^2\\left(1 - U\\,V\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "U",
+                  "U",
+                  "V"
+                ],
+                "value": "-\\dfrac{1}{\\left(1 - U\\,V\\right)^2}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "U",
+                  "V",
+                  "U"
+                ],
+                "value": "\\dfrac{1}{\\left(1 - U\\,V\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "V",
+                  "U",
+                  "V"
+                ],
+                "value": "\\dfrac{1}{\\left(1 - U\\,V\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "V",
+                  "V",
+                  "U"
+                ],
+                "value": "-\\dfrac{1}{\\left(1 - U\\,V\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "V",
+                  "U",
+                  "V"
+                ],
+                "value": "-\\dfrac{1}{2\\lambda^2\\left(1 - U\\,V\\right)^3}"
+              },
+              {
+                "indices": [
+                  "U",
+                  "V",
+                  "V",
+                  "U"
+                ],
+                "value": "\\dfrac{1}{2\\lambda^2\\left(1 - U\\,V\\right)^3}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U",
+                  "U",
+                  "V"
+                ],
+                "value": "\\dfrac{1}{2\\lambda^2\\left(1 - U\\,V\\right)^3}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U",
+                  "V",
+                  "U"
+                ],
+                "value": "-\\dfrac{1}{2\\lambda^2\\left(1 - U\\,V\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "V"
+                ],
+                "value": "-\\dfrac{1}{\\left(1 - U\\,V\\right)^2}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U"
+                ],
+                "value": "-\\dfrac{1}{\\left(1 - U\\,V\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "U"
+                ],
+                "value": "\\dfrac{2\\lambda^2}{1 - U\\,V}"
+              },
+              {
+                "indices": [
+                  "V",
+                  "V"
+                ],
+                "value": "\\dfrac{2\\lambda^2}{1 - U\\,V}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "U",
+                  "V"
+                ],
+                "value": "-4\\lambda^4"
+              },
+              {
+                "indices": [
+                  "V",
+                  "U"
+                ],
+                "value": "-4\\lambda^4"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{4\\lambda^2}{1 - UV}",
+      "kretschmann": "K = \\dfrac{16\\lambda^4}{\\left(1 - UV\\right)^2}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{U} + \\dfrac{V}{1 - U\\,V}\\dot{U}^2 = 0",
+        "\\ddot{V} + \\dfrac{U}{1 - U\\,V}\\dot{V}^2 = 0"
+      ]
+    },
+    {
+      "id": "eddington_finkelstein_ingoing",
+      "name": "Ingoing Eddington-Finkelstein",
+      "coords": [
+        "v",
+        "x"
+      ],
+      "domains": [
+        "v \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "x = \\ln(m)/2\\lambda \\;\\text{(the horizon)}",
+        "x \\to -\\infty \\;\\text{(the singularity)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\lambda",
+          "description": "Scale of the dilaton's potential, an inverse length; the curvature on the horizon is $4\\lambda^2$ and the Hawking temperature is $\\hbar c\\lambda/2\\pi k_B$ for every mass"
+        },
+        {
+          "symbol": "m",
+          "description": "Mass parameter, dimensionless and positive, $m = e^{-2\\Phi_0}$ with $\\Phi_0$ the dilaton on the horizon; the mass of the hole is proportional to $\\lambda m$"
+        }
+      ],
+      "convention": "We use coordinates $(v, x)$, with the advanced time $v = ct + x + \\ln\\left|1 - m\\,e^{-2\\lambda x}\\right|/2\\lambda$ a length, and the dilaton is $\\Phi = -\\lambda x$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -\\left(1 - m\\,e^{-2\\lambda x}\\right)dv^2 + 2\\,dv\\,dx",
+      "metric_components": [
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "-\\left(1 - m\\,e^{-2\\lambda x}\\right)"
+        },
+        {
+          "indices": [
+            "v",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "x",
+            "v"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "v",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "x",
+            "v"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1 - m\\,e^{-2\\lambda x}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v"
+                ],
+                "value": "\\lambda\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "x"
+                ],
+                "value": "-\\lambda\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "v"
+                ],
+                "value": "-\\lambda\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "v"
+                ],
+                "value": "\\lambda\\,m\\left(1 - m\\,e^{-2\\lambda\\,x}\\right)e^{-2\\lambda\\,x}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "x"
+                ],
+                "value": "-\\lambda\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "v"
+                ],
+                "value": "-\\lambda\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "v"
+                ],
+                "value": "\\lambda\\,m\\,e^{-2\\lambda\\,x}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v",
+                  "x"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "x",
+                  "v"
+                ],
+                "value": "-2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "v",
+                  "x"
+                ],
+                "value": "-2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x",
+                  "v"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "v",
+                  "x"
+                ],
+                "value": "2\\lambda^2\\,m\\left(1 - m\\,e^{-2\\lambda\\,x}\\right)e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "x",
+                  "v"
+                ],
+                "value": "-2\\lambda^2\\,m\\left(1 - m\\,e^{-2\\lambda\\,x}\\right)e^{-2\\lambda\\,x}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "v",
+                  "x"
+                ],
+                "value": "-2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "v"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "v",
+                  "x"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "x",
+                  "v"
+                ],
+                "value": "-2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "-2\\lambda^2\\,m\\left(1 - m\\,e^{-2\\lambda\\,x}\\right)e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "x"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2\\lambda^2\\,m\\left(1 - m\\,e^{-2\\lambda\\,x}\\right)e^{-2\\lambda\\,x}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 4\\lambda^2m\\,e^{-2\\lambda x}",
+      "kretschmann": "K = 16\\lambda^4m^2e^{-4\\lambda x}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{v} + \\lambda\\,m\\,e^{-2\\lambda\\,x}\\dot{v}^2 = 0",
+        "\\ddot{x} + \\lambda\\,m\\left(1 - m\\,e^{-2\\lambda\\,x}\\right)e^{-2\\lambda\\,x}\\dot{v}^2 - 2\\lambda\\,m\\,e^{-2\\lambda\\,x}\\dot{v}\\dot{x} = 0"
+      ]
+    },
+    {
+      "id": "eddington_finkelstein_outgoing",
+      "name": "Outgoing Eddington-Finkelstein",
+      "coords": [
+        "u",
+        "x"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "x = \\ln(m)/2\\lambda \\;\\text{(the horizon)}",
+        "x \\to -\\infty \\;\\text{(the singularity)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\lambda",
+          "description": "Scale of the dilaton's potential, an inverse length; the curvature on the horizon is $4\\lambda^2$ and the Hawking temperature is $\\hbar c\\lambda/2\\pi k_B$ for every mass"
+        },
+        {
+          "symbol": "m",
+          "description": "Mass parameter, dimensionless and positive, $m = e^{-2\\Phi_0}$ with $\\Phi_0$ the dilaton on the horizon; the mass of the hole is proportional to $\\lambda m$"
+        }
+      ],
+      "convention": "We use coordinates $(u, x)$, with the retarded time $u = ct - x - \\ln\\left|1 - m\\,e^{-2\\lambda x}\\right|/2\\lambda$ a length, and the dilaton is $\\Phi = -\\lambda x$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -\\left(1 - m\\,e^{-2\\lambda x}\\right)du^2 - 2\\,du\\,dx",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "-\\left(1 - m\\,e^{-2\\lambda x}\\right)"
+        },
+        {
+          "indices": [
+            "u",
+            "x"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "u"
+          ],
+          "value": "-1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "x"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1 - m\\,e^{-2\\lambda x}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\lambda\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "\\lambda\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "\\lambda\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u"
+                ],
+                "value": "\\lambda\\,m\\left(1 - m\\,e^{-2\\lambda\\,x}\\right)e^{-2\\lambda\\,x}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\lambda\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\lambda\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u"
+                ],
+                "value": "\\lambda\\,m\\,e^{-2\\lambda\\,x}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "-2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "2\\lambda^2\\,m\\left(1 - m\\,e^{-2\\lambda\\,x}\\right)e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-2\\lambda^2\\,m\\left(1 - m\\,e^{-2\\lambda\\,x}\\right)e^{-2\\lambda\\,x}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-2\\lambda^2\\,m\\left(1 - m\\,e^{-2\\lambda\\,x}\\right)e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x"
+                ],
+                "value": "-2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u"
+                ],
+                "value": "-2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x"
+                ],
+                "value": "-2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u"
+                ],
+                "value": "-2\\lambda^2\\,m\\,e^{-2\\lambda\\,x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2\\lambda^2\\,m\\left(1 - m\\,e^{-2\\lambda\\,x}\\right)e^{-2\\lambda\\,x}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 4\\lambda^2m\\,e^{-2\\lambda x}",
+      "kretschmann": "K = 16\\lambda^4m^2e^{-4\\lambda x}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} - \\lambda\\,m\\,e^{-2\\lambda\\,x}\\dot{u}^2 = 0",
+        "\\ddot{x} + \\lambda\\,m\\left(1 - m\\,e^{-2\\lambda\\,x}\\right)e^{-2\\lambda\\,x}\\dot{u}^2 + 2\\lambda\\,m\\,e^{-2\\lambda\\,x}\\dot{u}\\dot{x} = 0"
+      ]
+    }
+  ]
+}

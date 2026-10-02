@@ -275,6 +275,17 @@ Three spacetimes of one line element at $r_s = 1$, each marked on its own drawin
 - `harmonic/radial`, drawn in units of $1/k$ at $k = 1$, so at half the embedding's $u$: the line $ct = 0$ from $ku = 0.144$ to $8.75$, cut to the box at $ku = 4$.
 - All four conformal views, the triangle: the line $T = 0$ from the singularity on $X = 0$ out to the sphere $r = 4b$, the same on each.
 
+### Witten's black hole in two dimensions
+
+- The embedding is the Euclidean section, Witten's cigar, read in his chart at $\lambda = 1$ from the horizon $r = 0$ to $\lambda r = 3$; its meridians $\theta = 0$ and $\theta = \pi$ are the moment $t = 0$ on the two sides of the horizon, the line along which the Euclidean and Lorentzian sections meet, and that moment is what every other diagram marks.
+- `witten/radial`: the line $ct = 0$ from $r = 0$ to $3$.
+- `schwarzschild_gauge/radial`: the same line in $x = \ln\cosh r$, from the horizon $x = 0$ to $2.31$, at $m = 1$.
+- `dilaton/radial`: the same line in $w = \cosh^2 r$, from $w = 1$ to the box's edge.
+- `conformal/radial`: the same line in $\sigma = \ln\sinh r$, from the box's edge, since the horizon is $\sigma \to -\infty$, to $2.30$.
+- `eddington_finkelstein_ingoing/finkelstein` and `eddington_finkelstein_outgoing/finkelstein`: the curves $v = \sigma(x)$ and $u = -\sigma(x)$, $\sigma = \tfrac{1}{2}\ln(e^{2x} - 1)$, which run off the box toward the horizon.
+- `kruskal/plane`: the line $U + V = 0$ through the bifurcation point, $V = -U = \sinh r$ on one side and its mirror, the meridian $\theta = \pi$, on the other.
+- All seven conformal views, the hexagon: the line $T = 0$ through the bifurcation point, out to $r = 3$ in both exteriors.
+
 ### Kaluza-Klein monopole
 
 The cigar is the surface of $r$ and $x_5$ on the half axis $\theta = 0$ at $t = 0$ in Gross and Perry's chart, from the nut $r = 0$ out to $r = 16m$ at $m = 1$.

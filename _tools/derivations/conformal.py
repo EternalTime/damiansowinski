@@ -8741,6 +8741,242 @@ def myers_perry(ck, src):
     return views
 
 
+def witten_black_hole(ck, src):
+    """Witten's black hole in two dimensions, compactified by p = arctan U, q = arctan V, at
+    lambda = m = 1.
+
+    His Kruskal coordinates are V = sinh(r) e^t and U = -sinh(r) e^(-t) outside the horizon, where
+    UV = -sinh^2 r, and the metric -dU dV/(1 - UV) is regular through UV = 0. Since
+    tan(p + q) = (U + V)/(1 - UV), the singularity UV = 1 is exactly the pair of straight lines
+    T = +-pi/2, and the diagram is Kruskal's hexagon for Schwarzschild's black hole, each point a
+    single event. In every chart UV = 1 - e^(-2 Phi)/m: it is -sinh^2 r, 1 - e^(2x), 1 - w and
+    -e^(2 sigma), so sigma = ln sinh r = ln(e^(2x) - 1)/2 = ln(w - 1)/2 outside, with
+    V, U = +-e^(sigma +- t), and inside the black hole V, U = a e^(+-t) with a = sqrt(1 - e^(2x)).
+    The ingoing coordinates are V = e^v, U = (1 - e^(2x))/V, one formula for every x, covering the
+    exterior and the black hole; the outgoing ones their time reverse.
+    """
+    W = {"lambda": 1, "m": 1}
+    planes = {
+        "witten": Plane(src, "witten_black_hole", "witten", ("t", "r"), None, {"lambda": 1}),
+        "schwarzschild_gauge": Plane(src, "witten_black_hole", "schwarzschild_gauge", ("t", "x"), None, W),
+        "dilaton": Plane(src, "witten_black_hole", "dilaton", ("t", "w"), None, W),
+        "conformal": Plane(src, "witten_black_hole", "conformal", ("t", "\\sigma"), None, W),
+        "kruskal": Plane(src, "witten_black_hole", "kruskal", ("U", "V"), None, W),
+        "ingoing": Plane(src, "witten_black_hole", "eddington_finkelstein_ingoing", ("v", "x"), None, W),
+        "outgoing": Plane(src, "witten_black_hole", "eddington_finkelstein_outgoing", ("u", "x"), None, W),
+    }
+
+    def log(x):
+        with np.errstate(divide="ignore", invalid="ignore"):
+            return np.log(np.asarray(x, dtype=float))
+
+    def cell(name, t, s):
+        """(p, q) in a region at the static time t, s the logarithm of sqrt|UV| there: sigma outside
+        the horizon and ln a inside it."""
+        t, s = np.asarray(t, dtype=float), np.asarray(s, dtype=float)
+        a, b = atan_exp(s - t), atan_exp(s + t)
+        return {"I": (-a, b), "II": (a, b), "IV": (-a, -b), "I'": (a, -b)}[name]
+
+    # The logarithm of sqrt|UV| in each chart of t: sigma outside the horizon and ln a inside it.
+    half_log = {
+        "witten": lambda r: log(np.sinh(r)),
+        "schwarzschild_gauge": lambda x: log(np.abs(np.expm1(2 * np.asarray(x, dtype=float)))) / 2,
+        "dilaton": lambda w: log(np.abs(np.asarray(w, dtype=float) - 1)) / 2,
+        "conformal": lambda sigma: np.asarray(sigma, dtype=float),
+    }
+
+    def static(chart, name):
+        return lambda t, x: cell(name, t, half_log[chart](x))
+
+    def kruskal(U, V):
+        return np.arctan(np.asarray(U, dtype=float)), np.arctan(np.asarray(V, dtype=float))
+
+    def ingoing(v, x):
+        v, x = np.asarray(v, dtype=float), np.asarray(x, dtype=float)
+        return np.arctan(-np.expm1(2 * x) * np.exp(-v)), atan_exp(v)
+
+    def outgoing(u, x):
+        u, x = np.asarray(u, dtype=float), np.asarray(x, dtype=float)
+        return -atan_exp(-u), np.arctan(np.expm1(2 * x) * np.exp(u))
+
+    ck.chart("Witten's black hole, Witten's chart", planes["witten"], static("witten", "I"),
+             ck.uniform(-5, 5), ck.uniform(0.01, 5), lambda t, r: (1, 0))
+    ck.chart("Witten's black hole, conformal chart", planes["conformal"], static("conformal", "I"),
+             ck.uniform(-5, 5), ck.uniform(-5, 5), lambda t, r: (1, 0))
+    for chart, out, inside in (("schwarzschild_gauge", (0.001, 5), (-4, -0.001)), ("dilaton", (1.001, 60), (0.01, 0.999))):
+        for name, span, future in (("I", out, (1, 0)), ("II", inside, (0, -1)), ("IV", inside, (0, 1)), ("I'", out, (-1, 0))):
+            ck.chart(f"Witten's black hole, {chart} chart, {name}", planes[chart], static(chart, name),
+                     ck.uniform(-5, 5), ck.uniform(*span), lambda t, x, future=future: future)
+    UU, VV = ck.uniform(-3, 3), ck.uniform(-3, 3)
+    keep = UU * VV < 0.98
+    ck.chart("Witten's black hole, Kruskal chart", planes["kruskal"], kruskal, UU[keep], VV[keep], lambda U, V: (1, 1))
+    # d_v - (1 + e^(-2x)) d_x has the norm -3 - e^(-2x) at m = 1, timelike and future directed at every x.
+    ck.chart("Witten's black hole, ingoing Eddington-Finkelstein", planes["ingoing"], ingoing,
+             ck.uniform(-5, 5), ck.uniform(-3, 5), lambda v, x: (1, -(1 + np.exp(-2 * x))))
+    ck.chart("Witten's black hole, outgoing Eddington-Finkelstein", planes["outgoing"], outgoing,
+             ck.uniform(-5, 5), ck.uniform(-3, 5), lambda u, x: (1, 1 + np.exp(-2 * x)))
+
+    gauge = static("schwarzschild_gauge", "II")
+    pp, qq = gauge(np.array([-3.0, 0, 3]), np.full(3, -20.0))
+    ck.limit("Witten's black hole: x -> -infinity in the black hole lands on T = pi/2", pp + qq, [HALF] * 3)
+    pp, qq = static("conformal", "I")(np.array([0.0]), np.array([30.0]))
+    ck.limit("Witten's black hole: sigma -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)", point(pp[0], qq[0]), [PI, 0], 1e-9)
+    pp, qq = static("witten", "I")(np.array([2.0]), np.array([1e-12]))
+    ck.limit("Witten's black hole: r -> 0 at fixed t lands on the bifurcation point", point(pp[0], qq[0]), [0, 0], 1e-9)
+    rr = np.linspace(0.05, 4, 40)
+    pp, qq = static("witten", "I")(0.3 + 0 * rr, rr)
+    ck.limit("Witten's black hole: tan p tan q is UV = -sinh^2(lambda r) outside", np.tan(pp) * np.tan(qq) / np.sinh(rr) ** 2,
+             -np.ones_like(rr), 1e-9)
+    xx = np.linspace(-3, -0.05, 40)
+    pp, qq = gauge(0.3 + 0 * xx, xx)
+    ck.limit("Witten's black hole: tan p tan q is UV = 1 - e^(2 lambda x)/m in the black hole", np.tan(pp) * np.tan(qq),
+             -np.expm1(2 * xx), 1e-9)
+    # One event, t = 0.7 at the proper distance r = 1.3 from the horizon, in all seven charts.
+    t0, r0 = 0.7, 1.3
+    x0, w0, s0 = math.log(math.cosh(r0)), math.cosh(r0) ** 2, math.log(math.sinh(r0))
+    here = static("witten", "I")(t0, r0)
+    for name, got in (("the Schwarzschild gauge", static("schwarzschild_gauge", "I")(t0, x0)),
+                      ("the dilaton chart", static("dilaton", "I")(t0, w0)),
+                      ("the conformal chart", static("conformal", "I")(t0, s0)),
+                      ("the Kruskal chart", kruskal(-math.sinh(r0) * math.exp(-t0), math.sinh(r0) * math.exp(t0))),
+                      ("the ingoing chart", ingoing(t0 + s0, x0)), ("the outgoing chart", outgoing(t0 - s0, x0))):
+        ck.limit(f"Witten's black hole: {name} puts the event of Witten's chart at one point", got, here, 1e-12)
+    K = planes["dilaton"].kretschmann
+    ck.diverges("Witten's black hole: the Kretschmann scalar diverges as e^(-2 Phi) = w -> 0", K(0, 1e-4), K(0, 1e-5))
+    ck.finite("Witten's black hole: the Kretschmann scalar is finite at the horizon w = m",
+              K(np.zeros(3), np.array([0.999, 1, 1.001])))
+    ck.finite("Witten's black hole: the Kretschmann scalar is finite at the horizon UV = 0",
+              planes["kruskal"].kretschmann(np.array([0.0, 0.5, 0.0]), np.array([0.0, 0.0, -0.5])))
+
+    box = [-PI - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25]
+    hexagon = [[PI, 0], [HALF, HALF], [-HALF, HALF], [-PI, 0], [-HALF, -HALF], [HALF, -HALF]]
+    exterior = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    with_hole = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF], [-HALF, HALF]]
+    with_white = [[0, 0], [-HALF, -HALF], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    TS = (-3, -2, -1, 0, 1, 2, 3)
+
+    def edges(v, horizon, singular, horizon_legend, singular_legend):
+        v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]],
+                        [[-PI, 0], [-HALF, HALF]], [[-PI, 0], [-HALF, -HALF]]])
+        v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+        v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+        for at in ((PI, 0), (-PI, 0), (HALF, HALF), (HALF, -HALF), (-HALF, HALF), (-HALF, -HALF)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+        v.label_xt([-PI, 0], "$i^0$", "r", dx=-6)
+        for sx in (1, -1):
+            v.label_xt([sx * HALF, HALF], "$i^+$", "b", dy=-6)
+            v.label_xt([sx * HALF, -HALF], "$i^-$", "t", dy=6)
+            v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-4)
+            v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=4)
+        v.label_xt([0, HALF], singular, "b", dy=-8)
+        v.label_xt([0, -HALF], singular, "t", dy=8)
+        v.label_xt([-Q4, Q4], horizon, "tr", "small", dx=-6, dy=2)
+        v.label_xt([HALF, -0.95], "exterior", cls="region")
+        v.label_xt([-HALF, 0], "exterior", cls="region")
+        v.label_xt([0, 1.15], "black hole", cls="region")
+        v.label_xt([0, -1.15], "white hole", cls="region")
+        v.legend("horizon", horizon_legend)
+        v.legend("singular", singular_legend)
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+
+    cigar = slices.moments("witten_black_hole")[0]
+    lo, hi = cigar.reach("witten", "r")
+    reach = half_log["witten"](np.array([lo, hi]))
+    left, right = cell("I'", 0.0, reach[::-1]), cell("I", 0.0, reach)
+    moment = [(np.concatenate([left[0], right[0]]), np.concatenate([left[1], right[1]]))]
+
+    t = spread(-np.inf, np.inf, 500, 9)
+    views = []
+
+    def static_view(vid, label, chart, cover, out, inside, names, grid_legend, cover_legend):
+        """A view of a chart of t: its lines of constant position outside the horizon and, where the
+        chart runs on inside it, in the black hole, and its lines of constant t."""
+        v = View(vid, label, box, chart)
+        v.fill("region", hexagon)
+        v.fill("cover", cover)
+        for x in out:
+            v.curve("r", *static(chart, "I")(t, np.full_like(t, x)))
+        for x in inside:
+            v.curve("r", *static(chart, "II")(t, np.full_like(t, x)))
+        s = spread(-np.inf, np.inf, 500, 14)
+        for tt in TS:
+            v.curve("t", *cell("I", np.full_like(s, tt), s))
+            if inside:
+                v.curve("t", *cell("II", np.full_like(s, tt), -np.exp(s)))
+        edges(v, *names)
+        v.legend("cover", cover_legend)
+        v.legend("r", grid_legend)
+        v.legend("t", "$ct$ constant, in units of $1/\\lambda$")
+        v.slice(cigar, moment)
+        views.append(v)
+        return v
+
+    v = static_view("witten", "Witten", "witten", exterior, (0.25, 0.5, 1, 2), (),
+                    ("$r = 0$", "$\\Phi \\to \\infty$", "the horizon $r = 0$",
+                     "the singularity, where the dilaton $\\Phi$ and the Kretschmann scalar diverge"),
+                    "$r$ constant", "the region that $t$ and $r > 0$ cover")
+    for r, text in ((0.5, "$\\lambda r = 0.5$"), (2, "$2$")):
+        label_on(v, static("witten", "I")(0.0, r), text)
+    v = static_view("schwarzschild_gauge", "Schwarzschild Gauge", "schwarzschild_gauge", with_hole,
+                    (0.1, 0.35, 0.75, 1.5), (-0.1, -0.35, -1),
+                    ("$x = 0$", "$x \\to -\\infty$", "the horizon $x = \\ln(m)/2\\lambda$, which is $x = 0$ at $m = 1$",
+                     "the singularity $x \\to -\\infty$, where the Kretschmann scalar diverges"),
+                    "$x$ constant", "the regions that $t$ and $x$ cover, with the future toward smaller $x$ inside the horizon")
+    for x, text in ((0.35, "$\\lambda x = 0.35$"), (1.5, "$1.5$")):
+        label_on(v, static("schwarzschild_gauge", "I")(0.0, x), text)
+    v = static_view("dilaton", "Dilaton", "dilaton", with_hole, (1.25, 2, 4, 10), (0.25, 0.5, 0.75),
+                    ("$w = m$", "$w = 0$", "the horizon $w = m$",
+                     "the singularity $w = 0$, where the Kretschmann scalar diverges"),
+                    "$w$ constant, a line of constant dilaton",
+                    "the regions that $t$ and $w$ cover, with the future toward smaller $w$ inside the horizon")
+    for w, text in ((2, "$w = 2m$"), (10, "$10\\,m$")):
+        label_on(v, static("dilaton", "I")(0.0, w), text)
+    v = static_view("conformal", "Conformal", "conformal", exterior, (-2, -1, 0, 1, 2), (),
+                    ("$\\sigma \\to -\\infty$", "$\\Phi \\to \\infty$", "the horizon $\\sigma \\to -\\infty$",
+                     "the singularity, where the dilaton $\\Phi$ and the Kretschmann scalar diverge"),
+                    "$\\sigma$ constant", "the region that $t$ and $\\sigma$ cover")
+    for sigma, text in ((0, "$\\lambda\\sigma = 0$"), (2, "$2$")):
+        label_on(v, static("conformal", "I")(0.0, sigma), text)
+
+    v = View("kruskal", "Kruskal", box, "kruskal")
+    v.fill("region", hexagon)
+    v.fill("cover", hexagon)
+    for c in (-2, -1, -0.5, 0.5, 1, 2):
+        # A line of constant U runs from V = -infinity to the singularity V = 1/U or to V = infinity,
+        # and a line of constant V the same way in U.
+        far = min(HALF, HALF - math.atan(c)) if c > 0 else HALF
+        near_ = max(-HALF, -HALF - math.atan(c)) if c < 0 else -HALF
+        v.line("null", [[point(math.atan(c), near_), point(math.atan(c), far)]])
+        v.line("null", [[point(near_, math.atan(c)), point(far, math.atan(c))]])
+    edges(v, "$UV = 0$", "$UV = 1$", "the horizons $UV = 0$", "the singularity $UV = 1$, where the Kretschmann scalar diverges")
+    v.legend("cover", "the region that $U$ and $V$ cover, $UV < 1$")
+    v.legend("null", "$U$ or $V$ constant, a light ray, at $\\pm 0.5$, $\\pm 1$ and $\\pm 2$")
+    v.slice(cigar, moment)
+    views.append(v)
+
+    xs_out, xs_in = (0.1, 0.35, 0.75, 1.5), (-0.1, -0.35, -1)
+    xx = spread(-np.inf, np.inf, 600, 14)
+    for vid, label, chart, fmap, cover, null, way in (
+            ("ingoing", "Ingoing Eddington-Finkelstein", "eddington_finkelstein_ingoing", ingoing, with_hole, "v", "an ingoing"),
+            ("outgoing", "Outgoing Eddington-Finkelstein", "eddington_finkelstein_outgoing", outgoing, with_white, "u", "an outgoing")):
+        v = View(vid, label, box, chart)
+        v.fill("region", hexagon)
+        v.fill("cover", cover)
+        for x in xs_out + xs_in:
+            v.curve("r", *fmap(t, np.full_like(t, x)))
+        for c in (-3, -2, -1, 0, 1, 2, 3):
+            v.curve("null", *fmap(np.full_like(xx, c), xx))
+        edges(v, "$x = 0$", "$x \\to -\\infty$", "the horizon $x = \\ln(m)/2\\lambda$, which is $x = 0$ at $m = 1$",
+              "the singularity $x \\to -\\infty$, where the Kretschmann scalar diverges")
+        v.legend("cover", f"the region that ${null}$ and $x$ cover")
+        v.legend("r", "$x$ constant")
+        v.legend("null", f"${null}$ constant, {way} light ray")
+        v.slice(cigar, moment)
+        views.append(v)
+    return views
+
+
 def kaluza_klein_monopole(ck, src):
     """The Kaluza-Klein monopole's plane of t and its radius at m = 1, in each of its three polar
     charts.
@@ -11331,6 +11567,7 @@ DRAWN = {
     "levi_civita": levi_civita,
     "kaluza_klein_monopole": kaluza_klein_monopole,
     "fisher_jnw": fisher_jnw,
+    "witten_black_hole": witten_black_hole,
     "myers_perry": myers_perry,
     "curzon_chazy": curzon_chazy,
     "zipoy_voorhees": zipoy_voorhees,
@@ -13049,6 +13286,65 @@ CAPTIONS = {
         "triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
         "The edge $X = 0$ is the nut $\\rho = 2m$, a regular centre where the Kretschmann scalar is "
         "$3/(32m^4)$, and the monopole has no horizon.",
+    ],
+    ("witten_black_hole", "witten"): [
+        "Witten's black hole, maximally extended, each point in the diagram a single event. With "
+        "$V = \\sinh(\\lambda r)\\,e^{\\lambda ct}$ and $U = -\\sinh(\\lambda r)\\,e^{-\\lambda ct}$ the metric is "
+        "$-dU\\,dV/\\lambda^2(1 - UV)$, regular through the horizon $r = 0$, where $UV = -\\sinh^2(\\lambda r)$ "
+        "vanishes. With $p = \\arctan U$ and $q = \\arctan V$ the singularity $UV = 1$ lies exactly on the "
+        "straight lines $T = \\pm\\pi/2$, since $\\tan(p + q) = (U + V)/(1 - UV)$ diverges there.",
+        "The coordinates $t$ and $r > 0$ cover the right exterior alone. The horizon is the pair of null lines "
+        "$U = 0$ and $V = 0$, crossing at the bifurcation point. The black hole above it ends on $T = \\pi/2$, "
+        "the white hole below it begins on $T = -\\pi/2$, and both singularities are spacelike. The diagram is "
+        "that of Schwarzschild's black hole in Kruskal's coordinates.",
+    ],
+    ("witten_black_hole", "schwarzschild_gauge"): [
+        "Witten's black hole with the Schwarzschild gauge's $t$ and $x$ on it ($m = 1$), each point in the "
+        "diagram a single event. In the Kruskal coordinates $UV = 1 - e^{2\\lambda x}/m$, negative outside the "
+        "horizon $x = \\ln(m)/2\\lambda$ and positive inside it, where the lines of constant $x$ are spacelike "
+        "and run across the black hole from side to side.",
+        "The coordinates cover the right exterior and, with the future toward smaller $x$, the black hole; the "
+        "horizon between them is $t \\to \\infty$. The dilaton is $-\\lambda x$, so the lines of constant $x$ are "
+        "lines of constant dilaton, and the singularity $x \\to -\\infty$ lies on $T = \\pi/2$.",
+    ],
+    ("witten_black_hole", "dilaton"): [
+        "Witten's black hole with $t$ and $w = e^{-2\\Phi}$ on it ($m = 1$), each point in the diagram a single "
+        "event. In the Kruskal coordinates $UV = 1 - w/m$, so the horizon is $w = m$ and the singularity "
+        "$UV = 1$ is $w = 0$, on $T = \\pm\\pi/2$.",
+        "The coordinates cover the right exterior and, with the future toward smaller $w$, the black hole. "
+        "Every line of constant $w$ is a line of constant dilaton: timelike outside the horizon, where the "
+        "gradient of the dilaton is spacelike, and spacelike inside it, where the gradient is timelike.",
+    ],
+    ("witten_black_hole", "conformal"): [
+        "Witten's black hole with the conformal chart's $t$ and $\\sigma$ on it ($m = 1$), each point in the "
+        "diagram a single event. The Kruskal coordinates are $V = e^{\\lambda(ct + \\sigma)}/\\sqrt{m}$ and "
+        "$U = -e^{-\\lambda(ct - \\sigma)}/\\sqrt{m}$, so the lines of constant $ct \\pm \\sigma$ are the light rays "
+        "of the diagram.",
+        "The coordinates cover the right exterior alone. The horizon is $\\sigma \\to -\\infty$ and spatial "
+        "infinity $i^0$ is $\\sigma \\to \\infty$, where the metric is flat and the dilaton is linear in "
+        "$\\sigma$.",
+    ],
+    ("witten_black_hole", "kruskal"): [
+        "Witten's black hole in its Kruskal coordinates, compactified by $p = \\arctan U$ and $q = \\arctan V$ "
+        "and drawn with $T = p + q$ up and $X = q - p$ across, each point in the diagram a single event. The "
+        "lines of constant $U$ and of constant $V$ are light rays, straight at 45°.",
+        "The coordinates cover the whole diagram: two exteriors, the black hole, and the white hole. The "
+        "horizons are $U = 0$ and $V = 0$, and since $\\tan(p + q) = (U + V)/(1 - UV)$ the singularity $UV = 1$ "
+        "lies exactly on the straight lines $T = \\pm\\pi/2$.",
+    ],
+    ("witten_black_hole", "ingoing"): [
+        "Witten's black hole with the ingoing Eddington-Finkelstein coordinates $v$ and $x$ on it ($m = 1$), "
+        "each point in the diagram a single event. From $V = e^{\\lambda v}/\\sqrt{m}$ and "
+        "$U = \\left(1 - e^{2\\lambda x}/m\\right)/V$, one formula for every $x$, they cover the exterior and the "
+        "black hole together, and their lines of constant $v$ are ingoing light rays, which cross the horizon "
+        "at 45° and end on the singularity.",
+    ],
+    ("witten_black_hole", "outgoing"): [
+        "Witten's black hole with the outgoing Eddington-Finkelstein coordinates $u$ and $x$ on it ($m = 1$), "
+        "the time reverse of the ingoing ones, each point in the diagram a single event. From "
+        "$U = -e^{-\\lambda u}/\\sqrt{m}$ and $V = \\left(e^{2\\lambda x}/m - 1\\right)/(-U)$ they cover the "
+        "exterior and the white hole, and their lines of constant $u$ are outgoing light rays, which leave the "
+        "singularity and cross the horizon outward.",
     ],
     ("fisher_jnw", "spherical"): [
         "A static mass with a massless scalar field ($\\gamma = 1/2$), each point in the diagram a 2-sphere of "

@@ -66,6 +66,11 @@
       "id": "c_metric",
       "kind": "family",
       "text": "Two black holes accelerating apart. Dowker, Gauntlett, Kastor, and Traschen generalised it in 1994 to a pair of oppositely charged dilaton black holes, and used it to describe their creation in a magnetic field [dowker1994]."
+    },
+    {
+      "id": "witten_black_hole",
+      "kind": "limit",
+      "text": "In the limit of the extremal magnetic charge, the region around the horizon is closely approximated by Witten's black hole in two dimensions times a sphere [giddings1992]."
     }
   ],
   "references": [

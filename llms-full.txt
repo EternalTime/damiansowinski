@@ -1144,6 +1144,22 @@ Matt Visser's traversable wormhole of 1989: two copies of the Schwarzschild exte
 - chart Schwarzschild: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Through the Throat: coordinates $(t, \ell, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{a + |\ell|}\right)c^2dt^2 + \dfrac{d\ell^2}{1 - \dfrac{r_s}{a + |\ell|}} + \left(a + |\ell|\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Witten's Black Hole in Two Dimensions
+
+A black hole in two spacetime dimensions, a solution of the low energy equations of string theory for a metric and a dilaton, and an exact string background. It has a horizon, a spacelike singularity, and Kruskal's diagram, and its Hawking temperature is the same for every mass. With matter added it is the model of Callan, Giddings, Harvey, and Strominger for a black hole that forms and evaporates.
+
+- id: `witten_black_hole`
+- tags: black hole, two-dimensional, dilaton, dilaton gravity, string theory, low energy string theory, exact conformal field theory, gauged WZW model, cigar, Euclidean black hole, linear dilaton, CGHS model, Hawking radiation, black hole evaporation, information paradox, Page curve, horizon, event horizon, singularity, Kruskal extension, static, asymptotically flat, lower-dimensional gravity, exact solution, Lorentzian, idealized model
+- signature: (-,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/witten_black_hole.json
+- chart Witten: coordinates $(t, r)$, $$ds^2 = -\tanh^2(\lambda r)\,c^2dt^2 + dr^2$$
+- chart Schwarzschild Gauge: coordinates $(t, x)$, $$ds^2 = -\left(1 - m\,e^{-2\lambda x}\right)c^2dt^2 + \dfrac{dx^2}{1 - m\,e^{-2\lambda x}}$$
+- chart Dilaton: coordinates $(t, w)$, $$ds^2 = -\left(1 - \dfrac{m}{w}\right)c^2dt^2 + \dfrac{dw^2}{4\lambda^2w\left(w - m\right)}$$
+- chart Conformal: coordinates $(t, \sigma)$, $$ds^2 = \dfrac{-c^2dt^2 + d\sigma^2}{1 + m\,e^{-2\lambda\sigma}}$$
+- chart Kruskal: coordinates $(U, V)$, $$ds^2 = -\dfrac{dU\,dV}{\lambda^2\left(1 - UV\right)}$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, x)$, $$ds^2 = -\left(1 - m\,e^{-2\lambda x}\right)dv^2 + 2\,dv\,dx$$
+- chart Outgoing Eddington-Finkelstein: coordinates $(u, x)$, $$ds^2 = -\left(1 - m\,e^{-2\lambda x}\right)du^2 - 2\,du\,dx$$
+
 ### Zipoy-Voorhees Deformed Mass
 
 A static, axially symmetric vacuum field whose Weyl potential is Newton's potential of a uniform rod, found by Georges Darmois in 1927, David Zipoy in 1966, and B. H. Voorhees in 1970, and also called the $\gamma$ metric and the $q$ metric. It deforms Schwarzschild's metric by a quadrupole, and for every deformation a naked curvature singularity stands where the horizon was.

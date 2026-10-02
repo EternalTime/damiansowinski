@@ -142,7 +142,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "c961b824fe6f4f2a",
+    "version": "ba5a5c95098e7a00",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -493,7 +493,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3db76458658e42b2",
+    "version": "77476914418576c0",
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc"
@@ -1943,7 +1943,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "80a9ae10878760ef",
+    "version": "5be1e1d5a055f65c",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -2456,6 +2456,42 @@
     "diagrams": "d3c0cce1a6061334",
     "conformal": "651a421afaa54900",
     "embedding": "c9905ef896f1be24"
+  },
+  {
+    "id": "witten_black_hole",
+    "name": "Witten",
+    "tags": [
+      "black hole",
+      "two-dimensional",
+      "dilaton",
+      "dilaton gravity",
+      "string theory",
+      "low energy string theory",
+      "exact conformal field theory",
+      "gauged WZW model",
+      "cigar",
+      "Euclidean black hole",
+      "linear dilaton",
+      "CGHS model",
+      "Hawking radiation",
+      "black hole evaporation",
+      "information paradox",
+      "Page curve",
+      "horizon",
+      "event horizon",
+      "singularity",
+      "Kruskal extension",
+      "static",
+      "asymptotically flat",
+      "lower-dimensional gravity",
+      "exact solution",
+      "Lorentzian",
+      "idealized model"
+    ],
+    "version": "46a6a0375ce7b8e1",
+    "diagrams": "20e4b54fd89e7fb9",
+    "conformal": "f6b963bc340f323d",
+    "embedding": "05b4e9f05b7ea873"
   },
   {
     "id": "zipoy_voorhees",
