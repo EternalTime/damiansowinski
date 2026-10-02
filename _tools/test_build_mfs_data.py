@@ -4206,7 +4206,7 @@ class TurningLightConeFigures(unittest.TestCase):
                                    "kerr_newman/dragging", "kerr_taub_nut/dragging", "kundt_waves/fronts",
                                    "near_horizon_extreme_kerr/dragging", "point_particle_2plus1/wedge",
                                    "som_raychaudhuri/tipping", "spinning_string/tipping", "stockum_dust/tipping",
-                                   "bonnor_rotating_dust/tipping", "tippett_tsang/ring",
+                                   "bonnor_rotating_dust/tipping", "maitra_dust/tipping", "tippett_tsang/ring",
                                    "wormhole_time_machine/trip", "petrov_homogeneous/turning"})
 
     def test_at_its_own_camera_the_page_draws_the_published_figure(self):
@@ -5924,6 +5924,7 @@ class Slices(unittest.TestCase):
                 return (lambda X: -math.sqrt(X * X - 2 * t)), None
             return (lambda X: t - 1.5 if key.endswith("/vacuum_core/off_centre") else t), None
         if key.startswith(("godel/cylindrical", "stockum_dust/cylindrical", "som_raychaudhuri/cylindrical",
+                           "maitra_dust/cylindrical",
                            "bonnor_rotating_dust/cylindrical/outside",
                            "minkowski/rindler")):
             return (lambda X: 0.0), None

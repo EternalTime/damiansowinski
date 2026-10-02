@@ -238,6 +238,11 @@
       "id": "moving_mirror",
       "kind": "locally_same",
       "text": "Two dimensions of Minkowski space with a mirror for a left edge. Let the mirror accelerate and the empty space to its right fills with radiation, thermal if the mirror's world line closes on a light ray [fulling1976, davies1977]."
+    },
+    {
+      "id": "maitra_dust",
+      "kind": "generalisation",
+      "text": "Samaresh C. Maitra's rotating dust of 1966, which is flat space in cylindrical coordinates when its density is taken to zero, $a \\to \\infty$ [maitra1966, chan2024]."
     }
   ],
   "references": [
@@ -311,7 +316,9 @@
     "brill1959",
     "hruska2019",
     "fulling1976",
-    "davies1977"
+    "davies1977",
+    "maitra1966",
+    "chan2024"
   ],
   "coordinates": [
     {

@@ -509,7 +509,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "32e77d66e25d2611",
+    "version": "fde00aecaa6137eb",
     "diagrams": "f0fbc5b3a954d5c0",
     "conformal": "35ac3817c45f10f9",
     "embedding": "b7f898b0ae23639c"
@@ -1456,7 +1456,7 @@
       "idealized model",
       "negative cosmological constant"
     ],
-    "version": "5fd049f1e9a71421",
+    "version": "014dc5089c11acc6",
     "diagrams": "7bf82d9d4b9ce74d",
     "embedding": "05f185c5abaada89"
   },
@@ -2309,7 +2309,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0ae217e5c8a2d733",
+    "version": "86efcfe21977ac94",
     "diagrams": "03d90ee0c12cbe63",
     "embedding": "f63088100c538d20"
   },
@@ -2388,7 +2388,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5968f91d664f544d",
+    "version": "4ca8336582898194",
     "diagrams": "4ab32fd3e8390e5e",
     "conformal": "ef3ef065649addc5",
     "embedding": "77935accaa9e62b5"
@@ -2458,6 +2458,32 @@
     "diagrams": "79ea70865a3595d1",
     "conformal": "e174596b63171289",
     "embedding": "bc12998ea149ca7e"
+  },
+  {
+    "id": "maitra_dust",
+    "name": "Maitra Rotating Dust",
+    "tags": [
+      "dust",
+      "rotating",
+      "cylindrical symmetry",
+      "axisymmetric",
+      "cosmology",
+      "exact solution",
+      "stationary",
+      "inhomogeneous",
+      "geodesically complete",
+      "no singularity",
+      "regular",
+      "causal structure",
+      "frame dragging",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "528c38cc171d6c63",
+    "diagrams": "6e297744e2657a6c",
+    "embedding": "8764c8fb21edf33b"
   },
   {
     "id": "majumdar_papapetrou",
@@ -2659,7 +2685,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "ce105f7bdbef53f8",
+    "version": "a1350dd5115af571",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -3948,7 +3974,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "717f78630746b89d",
+    "version": "8e345104af520247",
     "diagrams": "24d791c0188bc8ef",
     "embedding": "96ddbe0d3bf719ac"
   },

@@ -1,0 +1,2187 @@
+{
+  "id": "maitra_dust",
+  "name": "Maitra's Rotating Dust",
+  "short_name": "Maitra Rotating Dust",
+  "description": "A stationary, cylindrically symmetric universe of dust that turns faster near its axis than far from it, found by Samaresh C. Maitra in 1966. It has no cosmological constant and no closed timelike curves, and its density falls from $c^2/8\\pi Ga^2$ on the axis toward zero far away.",
+  "tags": [
+    "dust",
+    "rotating",
+    "cylindrical symmetry",
+    "axisymmetric",
+    "cosmology",
+    "exact solution",
+    "stationary",
+    "inhomogeneous",
+    "geodesically complete",
+    "no singularity",
+    "regular",
+    "causal structure",
+    "frame dragging",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "Maitra's universe is dust and nothing else, turning steadily about one axis, fast near the axis and more slowly far from it [maitra1966, chan2024]. Nothing in it expands or collapses, and the dust needs neither pressure nor a cosmological constant to hold its place: every grain circles the axis in free fall [chan2024]. Its author, Samaresh C. Maitra, was at the University of Maryland, where he took his doctorate under Charles Misner in 1968 [maitra1966, mathgenealogymaitra]. He put the selling point in the title of his paper of 1966, a cosmological solution \"with $\\Lambda = 0$ and without Closed Timelike Lines\" [maitra1966].¶Why advertise the lack of something? Two earlier universes of rotating dust both let a traveler meet her own past [vanstockum1937, godel1949]. In Willem Jacob van Stockum's cylinder of 1937 a rocket far enough from the axis can circle around to the event it left [vanstockum1937]. Kurt Gödel's universe of 1949 allows the same trip through every one of its events, and it needs a negative cosmological constant besides [godel1949]. Maitra's universe has no cosmological constant, and no closed timelike curve passes through any of its events [maitra1966].¶How does his dust get away with it? Van Stockum's dust and Gödel's turn rigidly, like a wheel, and far from the axis their light cones tip over until a circle around the axis lies inside them [vanstockum1937, godel1949]. Maitra's dust shears: it turns as water does around a drain, each ring at its own rate, sliding past the rings on either side [chan2024]. Its light cones lean the way the dust goes, more and more with distance, and at no distance do they lean far enough to take in a circle, so no path a traveler could follow returns to its start [maitra1966, chan2024]. Shear is paid for in matter, since it lowers the density that a given rotation can support, and Maitra's dust is densest on the axis and thins out with distance [chan2024].¶\"Analytic and complete\" was Maitra's own description of his solution, and by 1968 a third word had joined those two: his thesis is titled \"A Stationary and Complete, but Unstable, Inhomogeneous Cosmological Solution of Einstein's Equations\" [maitra1966, mathgenealogymaitra]. Other dust of the same symmetry behaves worse [king1974, vishveshwara1977]. With one function left free to choose, the general stationary solution for dust with cylindrical symmetry came in 1974 from A. R. King at University College London, who spent the freedom on \"new types of singularity\" [king1974]. The next year Jeffrey Winicour reduced every stationary rotating dust with an axis of symmetry to quadratures [winicour1975]. He and C. V. Vishveshwara followed light through the fastest cylinders in 1977, where the cones sent out from the axis turn around and refocus on it, and they tied the refocusing to \"acausal behavior\" [vishveshwara1977].¶Andrzej Krasiński, sorting rotating dust by its symmetries in 1998, found Maitra's solution among King's, marked off by a timelike Killing field of unit length and by two further conditions, of which he wrote that he \"was not able to interpret\" them \"in invariant terms\" [krasinski1998rotating]. Could a spinning cylinder of the stuff sit in empty space? William Bonnor and B. R. Steadman tried it: they cut the universe off at a finite radius, fitted a vacuum around it, and reported \"no closed timelike curves in the interior or exterior\" [bonnor2009maitra, maccallum2015]. Deriving the solution afresh in 2024 by integrating the field equations directly, R. Chan and N. O. Santos showed that it is the only stationary, cylindrically symmetric dust with shear whose axis is regular [chan2024]. They also found that the vacuum around such a cylinder has to belong to the Weyl class of Thomas Lewis's solutions, and that shearing dust packs less mass into each unit of length than rigid dust can [lewis1932, chan2024].",
+  "related": [
+    {
+      "id": "stockum_dust",
+      "kind": "family",
+      "text": "Willem Jacob van Stockum's cylinder of dust in rigid rotation, whose circles about the axis are closed timelike curves beyond $r = R$. Maitra's dust is that cylinder allowed to shear, and near the axis its line element is van Stockum's at $R = 2a$ [vanstockum1937, chan2024]."
+    },
+    {
+      "id": "godel",
+      "kind": "family",
+      "text": "Kurt Gödel's rotating dust of 1949, homogeneous, with a negative cosmological constant and closed timelike curves through every event. Maitra's dust has neither [godel1949, maitra1966]."
+    },
+    {
+      "id": "som_raychaudhuri",
+      "kind": "family",
+      "text": "Charged dust in rigid rotation with no cosmological constant, where the circles about any grain are closed timelike curves beyond $r = c/\\Omega$. Maitra's dust carries no charge and shears, and its circles stay spacelike [som1968, chan2024]."
+    },
+    {
+      "id": "bonnor_rotating_dust",
+      "kind": "family",
+      "text": "William Bonnor's cloud of rigidly rotating dust, flat far away, with a singular centre and closed timelike curves around it. Bonnor and B. R. Steadman later fitted a vacuum around a cylinder of Maitra's dust and found no closed timelike curves inside or out [bonnor1977cloud, bonnor2009maitra]."
+    },
+    {
+      "id": "lewis",
+      "kind": "piece",
+      "text": "The vacuum around a cylinder of Maitra's dust cut off at a finite radius. R. Chan and N. O. Santos showed that it has to be of the Weyl class of Lewis's solutions [lewis1932, chan2024]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "special_case",
+      "text": "The dust thinned to nothing, $a \\to \\infty$, where $k$ and $\\gamma$ vanish and the line element is flat space in cylindrical coordinates [chan2024]."
+    }
+  ],
+  "references": [
+    "maitra1966",
+    "chan2024",
+    "mathgenealogymaitra",
+    "vanstockum1937",
+    "godel1949",
+    "king1974",
+    "vishveshwara1977",
+    "winicour1975",
+    "krasinski1998rotating",
+    "bonnor2009maitra",
+    "maccallum2015",
+    "lewis1932",
+    "som1968",
+    "bonnor1977cloud"
+  ],
+  "coordinates": [
+    {
+      "id": "cylindrical",
+      "name": "Cylindrical",
+      "coords": [
+        "t",
+        "r",
+        "\\phi",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in [0, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "z \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "The one length of the solution: the density of the dust on the axis is $\\rho_0 = c^2/8\\pi G a^2$"
+        },
+        {
+          "symbol": "s = \\sqrt{1 + \\dfrac{4r^2}{a^2}}",
+          "description": "A function of the radius that is $1$ on the axis and grows as $2r/a$ far from it; the density of the dust is $c^2/8\\pi G$ times the Ricci scalar, $\\rho = 4\\rho_0\\,e^{-\\gamma}/s(s + 1)^2$"
+        },
+        {
+          "symbol": "k = \\dfrac{a}{2}\\left(s - 1 - \\ln\\left(\\dfrac{s + 1}{2}\\right)\\right)",
+          "description": "The twist of the chart, a length, with $dk/dr = 2r/a(s + 1)$, which is less than $1$; so $k < r$ at every radius, and $g^{tt} = -(1 - k^2/r^2)$ is negative everywhere"
+        },
+        {
+          "symbol": "\\gamma = \\dfrac{1}{4} - \\dfrac{1}{2\\left(s + 1\\right)} - \\dfrac{1}{2}\\ln\\left(\\dfrac{s + 1}{2}\\right)",
+          "description": "The logarithm of the factor on $dr^2 + dz^2$, with $d\\gamma/dr = -2r/a^2(s + 1)^2$; it vanishes on the axis and falls as $-\\tfrac{1}{2}\\ln(r/a)$ far from it"
+        }
+      ],
+      "convention": "We use Maitra's cylindrical coordinates $(t, r, \\phi, z)$ about the axis of rotation, in the letters of Chan and Santos, with $t$ carrying dimensions of time, $\\phi$ periodic in $2\\pi$, and $r$ chosen so that the metric of $t$ and $\\phi$ alone has the determinant $-r^2$. The lines of constant $r$, $\\phi$, and $z$ are geodesics along which $t$ is proper time, and the dust circles the axis through them toward $-\\phi$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -\\left(c\\,dt - k\\,d\\phi\\right)^2 + r^2d\\phi^2 + e^{\\gamma}\\left(dr^2 + dz^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "t",
+            "\\phi"
+          ],
+          "value": "k"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "t"
+          ],
+          "value": "k"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "e^{\\gamma}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "e^{\\gamma}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "r^2 - k^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{r^2 - k^2}{r^2}"
+        },
+        {
+          "indices": [
+            "t",
+            "\\phi"
+          ],
+          "value": "\\dfrac{k}{r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "t"
+          ],
+          "value": "\\dfrac{k}{r^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "e^{-\\gamma}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "e^{-\\gamma}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{k}{a\\,r\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{k}{a\\,r\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\,s^2 - 4a\\,s\\,k + 4k^2 - 4a\\,k - a^2}{4a\\,r\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{a^2\\,s^2 - 4a\\,s\\,k + 4k^2 - 4a\\,k - a^2}{4a\\,r\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\,e^{-\\gamma}}{a\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{r\\,e^{-\\gamma}}{a\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{r}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{r}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{r}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{r}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\left(a\\,s - 2k + a\\right)e^{-\\gamma}}{a\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{a\\,r\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{a\\,r\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a\\,s - k + a}{a\\,r\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{a\\,s - k + a}{a\\,r\\left(s + 1\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r}{a\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r}{a\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r}{a\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{r}{a\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r}{a\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{r}{a\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{r\\,e^{\\gamma}}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{r\\,e^{\\gamma}}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{r\\,e^{\\gamma}}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{r\\,e^{\\gamma}}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\left(a\\,s - 2k + a\\right)}{a\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\left(a\\,s - 2k + a\\right)}{a\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r\\left(a\\,s - 2k + a\\right)}{a\\left(s + 1\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{k\\,e^{-\\gamma}}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{k\\,e^{-\\gamma}}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{k\\,e^{-\\gamma}}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{k\\,e^{-\\gamma}}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{a\\,s^2 - 3s\\,k + a\\,s - 4k}{a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\,s^2 - 3s\\,k + a\\,s - 4k}{a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3a^2\\,s^3 - 12a\\,s^2\\,k + 4a^2\\,s^2 + 12s\\,k^2 - 12a\\,s\\,k - 3a^2\\,s + 16k^2 - 4a^2}{4a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{3a^2\\,s^3 - 12a\\,s^2\\,k + 4a^2\\,s^2 + 12s\\,k^2 - 12a\\,s\\,k - 3a^2\\,s + 16k^2 - 4a^2}{4a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(a^2\\,s^2 - 4k^2 - a^2\\right)e^{-\\gamma}}{4a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(a^2\\,s^2 - 4k^2 - a^2\\right)e^{-\\gamma}}{4a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{k}{a^3\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{k}{a^3\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{a^2\\,s^2 - 4a\\,s\\,k + 4k^2 - 4a\\,k - a^2}{4a^3\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\,s^2 - 4a\\,s\\,k + 4k^2 - 4a\\,k - a^2}{4a^3\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{e^{-\\gamma}}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{-\\gamma}}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{e^{-\\gamma}}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{-\\gamma}}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(3a\\,s^2 - 4s\\,k + a\\,s - 4a\\right)e^{-\\gamma}}{4a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(3a\\,s^2 - 4s\\,k + a\\,s - 4a\\right)e^{-\\gamma}}{4a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(3a\\,s^2 - 4s\\,k + a\\,s - 4a\\right)e^{-\\gamma}}{4a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(3a\\,s^2 - 4s\\,k + a\\,s - 4a\\right)e^{-\\gamma}}{4a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(a^2\\,s^3 - 3a\\,s^2\\,k + 2s\\,k^2 - a\\,s\\,k - a^2\\,s + 4a\\,k\\right)e^{-\\gamma}}{2a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(a^2\\,s^3 - 3a\\,s^2\\,k + 2s\\,k^2 - a\\,s\\,k - a^2\\,s + 4a\\,k\\right)e^{-\\gamma}}{2a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{s - 2}{a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{s - 2}{a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{s - 2}{a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{s - 2}{a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{3s + 4}{a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{3s + 4}{a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2a\\,s^2 - 3s\\,k + 2a\\,s - 4k}{a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2a\\,s^2 - 3s\\,k + 2a\\,s - 4k}{a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{a^3\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{a^3\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{a\\,s - k + a}{a^3\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a\\,s - k + a}{a^3\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(s - 1\\right)e^{-\\gamma}}{4a\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(s - 1\\right)e^{-\\gamma}}{4a\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(s - 1\\right)e^{-\\gamma}}{4a\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(s - 1\\right)e^{-\\gamma}}{4a\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(s - 1\\right)\\left(a\\,s - 2k + a\\right)e^{-\\gamma}}{4a\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(s - 1\\right)\\left(a\\,s - 2k + a\\right)e^{-\\gamma}}{4a\\left(s + 1\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3a\\,s^2 - 4s\\,k + a\\,s - 4a}{4a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{3a\\,s^2 - 4s\\,k + a\\,s - 4a}{4a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3a\\,s^2 - 4s\\,k + a\\,s - 4a}{4a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{3a\\,s^2 - 4s\\,k + a\\,s - 4a}{4a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{3a\\,s^2 - 4s\\,k + a\\,s - 4a}{4a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{3a\\,s^2 - 4s\\,k + a\\,s - 4a}{4a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{3a\\,s^2 - 4s\\,k + a\\,s - 4a}{4a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{3a\\,s^2 - 4s\\,k + a\\,s - 4a}{4a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(s - 1\\right)e^{-\\gamma}}{4\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(s - 1\\right)e^{-\\gamma}}{4\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(s - 1\\right)e^{-\\gamma}}{4\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(s - 1\\right)e^{-\\gamma}}{4\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{s - 1}{4a\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{s - 1}{4a\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{s - 1}{4a\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{s - 1}{4a\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{s - 1}{4a\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{s - 1}{4a\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{s - 1}{4a\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{s - 1}{4a\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\,s^3 - 3a\\,s^2\\,k + 2s\\,k^2 - a\\,s\\,k - a^2\\,s + 4a\\,k}{2a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{a^2\\,s^3 - 3a\\,s^2\\,k + 2s\\,k^2 - a\\,s\\,k - a^2\\,s + 4a\\,k}{2a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\,s^3 - 3a\\,s^2\\,k + 2s\\,k^2 - a\\,s\\,k - a^2\\,s + 4a\\,k}{2a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{a^2\\,s^3 - 3a\\,s^2\\,k + 2s\\,k^2 - a\\,s\\,k - a^2\\,s + 4a\\,k}{2a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(s - 2\\right)e^{\\gamma}}{a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(s - 2\\right)e^{\\gamma}}{a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(s - 2\\right)e^{\\gamma}}{a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(s - 2\\right)e^{\\gamma}}{a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(s - 1\\right)\\left(a\\,s - 2k + a\\right)}{4a\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(s - 1\\right)\\left(a\\,s - 2k + a\\right)}{4a\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(s - 1\\right)\\left(a\\,s - 2k + a\\right)}{4a\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(s - 1\\right)\\left(a\\,s - 2k + a\\right)}{4a\\left(s + 1\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2e^{-\\gamma}}{a^2\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(a\\,s^2 - 2s\\,k - a\\right)e^{-\\gamma}}{a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(a\\,s^2 - 2s\\,k - a\\right)e^{-\\gamma}}{a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2}{a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{2}{a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(a^2\\,s^3 - 4a\\,s^2\\,k + 4s\\,k^2 - a^2\\,s + 4a\\,k\\right)e^{-\\gamma}}{2a^2\\,s\\left(s + 1\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\left(a\\,s - 2k\\right)e^{-\\gamma}}{a^3\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\left(a\\,s - 2k\\right)e^{-\\gamma}}{a^3\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(a\\,s - 2k + a\\right)\\left(a\\,s - 2k - a\\right)e^{-\\gamma}}{a^3\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2e^{-\\gamma}}{a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{2e^{-\\gamma}}{a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{4e^{-\\gamma}}{a^3\\,s\\left(s + 1\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(a^2\\,s^3 - 4a\\,s^2\\,k + 4s\\,k^2 - a^2\\,s + 4a\\,k\\right)e^{-\\gamma}}{a^4\\,s\\left(s + 1\\right)^3\\left(s - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\left(a\\,s^2 - 2s\\,k - a\\right)e^{-\\gamma}}{a^4\\,s\\left(s + 1\\right)^3\\left(s - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\left(a\\,s^2 - 2s\\,k - a\\right)e^{-\\gamma}}{a^4\\,s\\left(s + 1\\right)^3\\left(s - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2e^{-2\\gamma}}{a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{2e^{-2\\gamma}}{a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{8e^{-\\gamma}}{a^4\\left(s + 1\\right)^3\\left(s - 1\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{4e^{-\\gamma}}{a^2\\,s\\left(s + 1\\right)^2}",
+      "kretschmann": "K = \\dfrac{4\\left(3s^3 - 3s^2 + 4s + 12\\right)e^{-2\\gamma}}{a^4\\,s^2\\left(s + 1\\right)^5}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2e^{-\\gamma}}{a^2\\,s\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(a\\,s - 2k - a\\right)e^{-\\gamma}}{a^2\\,s\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(a\\,s - 2k - a\\right)e^{-\\gamma}}{a^2\\,s\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(a\\,s - 2k - a\\right)^2e^{-\\gamma}}{2a^2\\,s\\left(s + 1\\right)}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\left(a\\,s - 2k + a\\right)e^{-\\gamma}}{a^3\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(a\\,s - 2k + a\\right)\\left(a\\,s - 2k - a\\right)e^{-\\gamma}}{a^3\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{4e^{-\\gamma}}{a^3\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\left(a\\,s - 2k - a\\right)e^{-\\gamma}}{a^3\\,s\\left(s + 1\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(a\\,s - 2k + a\\right)^2e^{-\\gamma}}{a^4\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\left(a\\,s - 2k + a\\right)e^{-\\gamma}}{a^4\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\left(a\\,s - 2k + a\\right)e^{-\\gamma}}{a^4\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{8e^{-\\gamma}}{a^4\\,s\\left(s + 1\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{k\\left(3s - 2\\right)e^{-\\gamma}}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{k\\left(3s - 2\\right)e^{-\\gamma}}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{k\\left(3s - 2\\right)e^{-\\gamma}}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{k\\left(3s - 2\\right)e^{-\\gamma}}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{3s\\,k - a\\,s + 6k - a}{3a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{3s\\,k - a\\,s + 6k - a}{3a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{3s\\,k - a\\,s + 6k - a}{3a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3s\\,k - a\\,s + 6k - a}{3a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\,s^3 - 4a\\,s^2\\,k + 2a^2\\,s^2 + 4s\\,k^2 - 4a\\,s\\,k - a^2\\,s + 8k^2 - 2a^2}{4a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{a^2\\,s^3 - 4a\\,s^2\\,k + 2a^2\\,s^2 + 4s\\,k^2 - 4a\\,s\\,k - a^2\\,s + 8k^2 - 2a^2}{4a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{a^2\\,s^3 - 4a\\,s^2\\,k + 2a^2\\,s^2 + 4s\\,k^2 - 4a\\,s\\,k - a^2\\,s + 8k^2 - 2a^2}{4a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\,s^3 - 4a\\,s^2\\,k + 2a^2\\,s^2 + 4s\\,k^2 - 4a\\,s\\,k - a^2\\,s + 8k^2 - 2a^2}{4a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(3s - 2\\right)\\left(a^2\\,s^2 - 4k^2 - a^2\\right)e^{-\\gamma}}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(3s - 2\\right)\\left(a^2\\,s^2 - 4k^2 - a^2\\right)e^{-\\gamma}}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{3a\\,s^2 - 3s\\,k + 2a\\,s - 6k - a}{3a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{3a\\,s^2 - 3s\\,k + 2a\\,s - 6k - a}{3a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3a\\,s^2 - 3s\\,k + 2a\\,s - 6k - a}{3a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{3a\\,s^2 - 3s\\,k + 2a\\,s - 6k - a}{3a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{e^{-\\gamma}}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{-\\gamma}}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(3a\\,s^2 + 3a\\,s - 4k - 6a\\right)e^{-\\gamma}}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(3a\\,s^2 + 3a\\,s - 4k - 6a\\right)e^{-\\gamma}}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(3a\\,s^2 + 3a\\,s - 4k - 6a\\right)e^{-\\gamma}}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(3a\\,s^2 + 3a\\,s - 4k - 6a\\right)e^{-\\gamma}}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(3a^2\\,s^3 - 6a\\,s^2\\,k - a^2\\,s^2 - 6a\\,s\\,k - 3a^2\\,s + 4k^2 + 12a\\,k + a^2\\right)e^{-\\gamma}}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(3a^2\\,s^3 - 6a\\,s^2\\,k - a^2\\,s^2 - 6a\\,s\\,k - 3a^2\\,s + 4k^2 + 12a\\,k + a^2\\right)e^{-\\gamma}}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{3s - 2}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{3s - 2}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{3s - 2}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{3s - 2}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(3s - 2\\right)e^{-\\gamma}}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(3s - 2\\right)e^{-\\gamma}}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{s + 2}{a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{s + 2}{a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{s + 2}{a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{s + 2}{a^3\\,s\\left(s + 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(3s - 1\\right)e^{-\\gamma}}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(3s - 1\\right)e^{-\\gamma}}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(3a\\,s^2 - 12s\\,k + 3a\\,s + 4k - 6a\\right)e^{-\\gamma}}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(3a\\,s^2 - 12s\\,k + 3a\\,s + 4k - 6a\\right)e^{-\\gamma}}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(3a\\,s^2 - 12s\\,k + 3a\\,s + 4k - 6a\\right)e^{-\\gamma}}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(3a\\,s^2 - 12s\\,k + 3a\\,s + 4k - 6a\\right)e^{-\\gamma}}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(6a\\,s^2\\,k - a^2\\,s^2 - 12s\\,k^2 + 6a\\,s\\,k + 4k^2 - 12a\\,k + a^2\\right)e^{-\\gamma}}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(6a\\,s^2\\,k - a^2\\,s^2 - 12s\\,k^2 + 6a\\,s\\,k + 4k^2 - 12a\\,k + a^2\\right)e^{-\\gamma}}{12a^2\\,s\\left(s + 1\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3a\\,s^2 + 3a\\,s - 4k - 6a}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{3a\\,s^2 + 3a\\,s - 4k - 6a}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3a\\,s^2 + 3a\\,s - 4k - 6a}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{3a\\,s^2 + 3a\\,s - 4k - 6a}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{3a\\,s^2 + 3a\\,s - 4k - 6a}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{3a\\,s^2 + 3a\\,s - 4k - 6a}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{3a\\,s^2 + 3a\\,s - 4k - 6a}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{3a\\,s^2 + 3a\\,s - 4k - 6a}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(s - 1\\right)\\left(3s - 2\\right)e^{-\\gamma}}{12s\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(s - 1\\right)\\left(3s - 2\\right)e^{-\\gamma}}{12s\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(s - 1\\right)\\left(3s - 2\\right)e^{-\\gamma}}{12s\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(s - 1\\right)\\left(3s - 2\\right)e^{-\\gamma}}{12s\\left(s + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{3s - 1}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{3s - 1}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{3s - 1}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{3s - 1}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{3a\\,s^2 - 12s\\,k + 3a\\,s + 4k - 6a}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3a\\,s^2 - 12s\\,k + 3a\\,s + 4k - 6a}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{3a\\,s^2 - 12s\\,k + 3a\\,s + 4k - 6a}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{3a\\,s^2 - 12s\\,k + 3a\\,s + 4k - 6a}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{3a\\,s^2 - 12s\\,k + 3a\\,s + 4k - 6a}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3a\\,s^2 - 12s\\,k + 3a\\,s + 4k - 6a}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{3a\\,s^2 - 12s\\,k + 3a\\,s + 4k - 6a}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{3a\\,s^2 - 12s\\,k + 3a\\,s + 4k - 6a}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3a^2\\,s^3 - 6a\\,s^2\\,k - a^2\\,s^2 - 6a\\,s\\,k - 3a^2\\,s + 4k^2 + 12a\\,k + a^2}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{3a^2\\,s^3 - 6a\\,s^2\\,k - a^2\\,s^2 - 6a\\,s\\,k - 3a^2\\,s + 4k^2 + 12a\\,k + a^2}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3a^2\\,s^3 - 6a\\,s^2\\,k - a^2\\,s^2 - 6a\\,s\\,k - 3a^2\\,s + 4k^2 + 12a\\,k + a^2}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{3a^2\\,s^3 - 6a\\,s^2\\,k - a^2\\,s^2 - 6a\\,s\\,k - 3a^2\\,s + 4k^2 + 12a\\,k + a^2}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(3s - 2\\right)e^{\\gamma}}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(3s - 2\\right)e^{\\gamma}}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(3s - 2\\right)e^{\\gamma}}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(3s - 2\\right)e^{\\gamma}}{3a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{6a\\,s^2\\,k - a^2\\,s^2 - 12s\\,k^2 + 6a\\,s\\,k + 4k^2 - 12a\\,k + a^2}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{6a\\,s^2\\,k - a^2\\,s^2 - 12s\\,k^2 + 6a\\,s\\,k + 4k^2 - 12a\\,k + a^2}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{6a\\,s^2\\,k - a^2\\,s^2 - 12s\\,k^2 + 6a\\,s\\,k + 4k^2 - 12a\\,k + a^2}{12a^2\\,s\\left(s + 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{6a\\,s^2\\,k - a^2\\,s^2 - 12s\\,k^2 + 6a\\,s\\,k + 4k^2 - 12a\\,k + a^2}{12a^2\\,s\\left(s + 1\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2k}{a\\,r\\left(s + 1\\right)}\\dot{t}\\dot{r} - \\dfrac{a^2\\,s^2 - 4a\\,s\\,k + 4k^2 - 4a\\,k - a^2}{2a\\,r\\left(s + 1\\right)}\\dot{r}\\dot{\\phi} = 0",
+        "\\ddot{r} - \\dfrac{2r\\,e^{-\\gamma}}{a\\left(s + 1\\right)}\\dot{t}\\dot{\\phi} - \\dfrac{r}{a^2\\left(s + 1\\right)^2}\\dot{r}^2 - \\dfrac{r\\left(a\\,s - 2k + a\\right)e^{-\\gamma}}{a\\left(s + 1\\right)}\\dot{\\phi}^2 + \\dfrac{r}{a^2\\left(s + 1\\right)^2}\\dot{z}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{a\\,r\\left(s + 1\\right)}\\dot{t}\\dot{r} + \\dfrac{2a\\,s - 2k + 2a}{a\\,r\\left(s + 1\\right)}\\dot{r}\\dot{\\phi} = 0",
+        "\\ddot{z} - \\dfrac{2r}{a^2\\left(s + 1\\right)^2}\\dot{r}\\dot{z} = 0"
+      ]
+    }
+  ]
+}

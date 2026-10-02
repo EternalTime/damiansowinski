@@ -43,6 +43,11 @@
       "id": "minkowski",
       "kind": "special_case",
       "text": "The dust at rest, $\\Omega = 0$, where the density vanishes and the line element is flat space in cylindrical coordinates."
+    },
+    {
+      "id": "maitra_dust",
+      "kind": "family",
+      "text": "Uncharged dust that turns faster near its axis than far from it, with no magnetic field to help. Its circles about the axis stay spacelike at every radius [maitra1966, chan2024]."
     }
   ],
   "references": [
@@ -61,7 +66,9 @@
     "gauntlett2003",
     "hikida2003",
     "drukker2003",
-    "soleng1994"
+    "soleng1994",
+    "maitra1966",
+    "chan2024"
   ],
   "coordinates": [
     {
