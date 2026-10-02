@@ -173,6 +173,35 @@
     "embedding": "0e56a5456f5e3b52"
   },
   {
+    "id": "bach_weyl_ring",
+    "name": "Bach-Weyl Ring",
+    "tags": [
+      "vacuum",
+      "static",
+      "stationary",
+      "axisymmetric",
+      "Weyl class",
+      "harmonic function",
+      "mass",
+      "curvature singularity",
+      "naked singularity",
+      "directional singularity",
+      "ring singularity",
+      "reflection symmetry",
+      "no horizon",
+      "asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "83b27af9724484fa",
+    "diagrams": "dc13a758c6ce9e83",
+    "conformal": "a879de23f7faf4b3",
+    "embedding": "c140dd553d561027"
+  },
+  {
     "id": "btz",
     "name": "Bañados-Teitelboim-Zanelli",
     "tags": [
@@ -1011,7 +1040,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a16441d6dc573562",
+    "version": "c8730a3cb530867b",
     "diagrams": "8b39c6bef80d5718",
     "conformal": "573aa16b0b411fe4",
     "embedding": "a9676c6465fbce1c"
@@ -1442,7 +1471,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e13c93e2fb6b67f0",
+    "version": "2bce0e471b7cef72",
     "diagrams": "94462e128eea5d3d",
     "conformal": "73d1aa078d3b894f",
     "embedding": "e21547bef3d58f8e"
@@ -2206,7 +2235,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "23bf07a161a99c44",
+    "version": "25df14ee482872d7",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -2653,7 +2682,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d2cb2f9ff5b0ef22",
+    "version": "8abbb2147f02c737",
     "diagrams": "c6edded6cce52897",
     "conformal": "334186f800f59252",
     "embedding": "b9bf3c95064c40a7"
@@ -2982,7 +3011,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "038ac6328a1b003b",
+    "version": "a827d57363ff0ba6",
     "diagrams": "fcd9b835546fa10a",
     "conformal": "83b45b101a7e6db4",
     "embedding": "6602c018a8504748"
@@ -3842,7 +3871,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "2e70eaa59fa9bd3a",
+    "version": "9dfd8c5fb75c9151",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -4691,7 +4720,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4ef8f5966f0b96f8",
+    "version": "1d1fe2b38f473b59",
     "diagrams": "c383ba43920e5b0b",
     "conformal": "f06e536b192c099c",
     "embedding": "633fa78640daea0a"

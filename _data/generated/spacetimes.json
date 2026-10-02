@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 151,
+  "count": 152,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -2392,6 +2392,313 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        }
+      ]
+    },
+    {
+      "id": "bach_weyl_ring",
+      "name": "Bach-Weyl Ring",
+      "short_name": "Bach-Weyl Ring",
+      "description": "The static vacuum field of a thin circular ring of matter in Weyl's class, written down by Rudolf Bach in 1922 in a paper with a supplement by Hermann Weyl. Its Weyl potential is Newton's potential of a hoop, a complete elliptic integral. The ring is a naked singularity that lies a finite distance away from outside and an infinite distance away from inside.",
+      "tags": [
+        "vacuum",
+        "static",
+        "stationary",
+        "axisymmetric",
+        "Weyl class",
+        "harmonic function",
+        "mass",
+        "curvature singularity",
+        "naked singularity",
+        "directional singularity",
+        "ring singularity",
+        "reflection symmetry",
+        "no horizon",
+        "asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The mass parameter $m = GM/c^2$ and the ring's radius $a$ are lengths. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "curzon_chazy",
+          "kind": "special_case",
+          "text": "The ring with its radius shrunk to nothing. At $a = 0$ Newton's potential of the hoop is that of a point, and the metric is Curzon and Chazy's [semerak2016]."
+        },
+        {
+          "id": "morgan_morgan",
+          "kind": "family",
+          "text": "Static discs in Weyl's class, built on Newton's potential of a disc as the ring is on that of a hoop."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "A Weyl field too, built on Newton's potential of a rod on the axis [antoci2001]. M. Basovník and Oldřich Semerák set the ring around Schwarzschild's hole and found the curvature inside the horizon strongly changed [basovnik2016]."
+        },
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "Kerr's singularity is a ring as well, and a spinning one. Oldřich Semerák compared the two and found Kerr's ring the simpler [semerak2016]."
+        },
+        {
+          "id": "majumdar_papapetrou",
+          "kind": "family",
+          "text": "Extremal black holes strung evenly around a circle, in the limit of infinitely many, make a ring with the same Newtonian potential. Its distance from the centre is finite where Bach and Weyl's is infinite [semerak2016]."
+        },
+        {
+          "id": "erez_rosen",
+          "kind": "family",
+          "text": "A Weyl field too, built on the potential of Schwarzschild's rod with a quadrupole term added, where Bach and Weyl's is built on a hoop's."
+        },
+        {
+          "id": "zipoy_voorhees",
+          "kind": "family",
+          "text": "The Weyl field of a rod on the axis. Bach's other field of 1922 is built from two such rods [antoci2001]."
+        }
+      ],
+      "references": [
+        "goenner2004",
+        "bach1922",
+        "bach2012",
+        "semerak2016",
+        "weyl1917",
+        "antoci2001",
+        "hoenselaers1995",
+        "dafonseca2005",
+        "scott1986a",
+        "semerak1999",
+        "basovnik2016"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bach_weyl_ring.json",
+      "charts": [
+        {
+          "id": "weyl",
+          "name": "Weyl",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "(\\rho, z) \\neq (a, 0) \\;\\text{(the ring)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass parameter, a length, $m = GM/c^2$ with $M$ the mass of the ring, measured at spatial infinity"
+            },
+            {
+              "symbol": "a",
+              "description": "Radius of the ring in Weyl's coordinates, a length; the ring is the circle $\\rho = a$, $z = 0$, and $a = 0$ is the Curzon-Chazy particle"
+            },
+            {
+              "symbol": "l_2 = \\sqrt{\\left(\\rho + a\\right)^2 + z^2}",
+              "description": "Greatest distance from the point to the ring in the flat space of Weyl's coordinates; the least distance is $l_1 = \\sqrt{(\\rho - a)^2 + z^2}$"
+            },
+            {
+              "symbol": "\\kappa = \\dfrac{4a\\rho}{l_2^2}",
+              "description": "Parameter of the two elliptic integrals, the square of their modulus; $1 - \\kappa = l_1^2/l_2^2$, so $\\kappa = 0$ on the axis and $\\kappa \\to 1$ at the ring"
+            },
+            {
+              "symbol": "\\psi = -\\dfrac{2m\\,\\mathrm{K}\\left(\\kappa\\right)}{\\pi\\,l_2}",
+              "description": "Weyl's first function, with $c^2\\psi$ Newton's potential of a uniform ring of mass $M$ and radius $a$; $\\mathrm{K}(\\kappa) = \\int_0^{\\pi/2}d\\alpha/\\sqrt{1 - \\kappa\\sin^2\\alpha}$ is the complete elliptic integral of the first kind. It solves Laplace's equation, $\\partial_\\rho^2\\psi + \\dfrac{1}{\\rho}\\partial_\\rho\\psi + \\partial_z^2\\psi = 0$, in the flat space of $\\rho$, $\\phi$, and $z$; on the axis $\\psi = -m/\\sqrt{z^2 + a^2}$, and at the ring $\\psi \\to -\\infty$ as $(m/\\pi a)\\ln(l_1/8a)$"
+            },
+            {
+              "symbol": "\\gamma = -\\dfrac{m^2}{4\\pi^2a^2\\rho}\\left(\\left(\\rho + a\\right)\\left(\\mathrm{E}\\left(\\kappa\\right) - \\mathrm{K}\\left(\\kappa\\right)\\right)^2 + \\dfrac{\\left(\\rho - a\\right)\\left(\\mathrm{E}\\left(\\kappa\\right) - \\left(1 - \\kappa\\right)\\mathrm{K}\\left(\\kappa\\right)\\right)^2}{1 - \\kappa}\\right)",
+              "description": "Weyl's second function, with $\\mathrm{E}(\\kappa) = \\int_0^{\\pi/2}\\sqrt{1 - \\kappa\\sin^2\\alpha}\\,d\\alpha$ the complete elliptic integral of the second kind; it is fixed by $\\psi$ through $\\partial_\\rho\\gamma = \\rho\\left(\\left(\\partial_\\rho\\psi\\right)^2 - \\left(\\partial_z\\psi\\right)^2\\right)$ and $\\partial_z\\gamma = 2\\rho\\,\\partial_\\rho\\psi\\,\\partial_z\\psi$, and is zero on the axis, which is then free of conical singularities"
+            }
+          ],
+          "convention": "We use Weyl's canonical coordinates $(t, \\rho, \\phi, z)$, with $t$ carrying dimensions of time and $\\rho$ and $z$ lengths, and write $\\mathrm{K}$ and $\\mathrm{E}$ for the complete elliptic integrals of the first and second kinds with parameter $\\kappa$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -e^{2\\psi}c^2dt^2 + e^{-2\\psi}\\left(e^{2\\gamma}\\left(d\\rho^2 + dz^2\\right) + \\rho^2d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{2\\psi}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "e^{2\\gamma - 2\\psi}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{2\\gamma - 2\\psi}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2e^{-2\\psi}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{16\\left(\\rho^2\\left(\\partial_\\rho\\partial_z\\psi\\right)^2 - 6\\rho^3\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi\\,\\partial_\\rho\\partial_z\\psi + 6\\rho^2\\,\\partial_\\rho\\psi\\,\\partial_z\\psi\\,\\partial_\\rho\\partial_z\\psi + 2\\rho^3\\left(\\partial_z\\psi\\right)^3\\,\\partial_\\rho\\partial_z\\psi + \\rho^2\\left(\\partial_z^2\\psi\\right)^2 + 2\\rho^3\\left(\\partial_\\rho\\psi\\right)^3\\,\\partial_z^2\\psi - 3\\rho^2\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z^2\\psi - 6\\rho^3\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2\\psi + \\rho\\,\\partial_\\rho\\psi\\,\\partial_z^2\\psi + 3\\rho^2\\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2\\psi + \\rho^4\\left(\\partial_\\rho\\psi\\right)^6 - 3\\rho^3\\left(\\partial_\\rho\\psi\\right)^5 + 3\\rho^4\\left(\\partial_\\rho\\psi\\right)^4\\left(\\partial_z\\psi\\right)^2 + 4\\rho^2\\left(\\partial_\\rho\\psi\\right)^4 - 6\\rho^3\\left(\\partial_\\rho\\psi\\right)^3\\left(\\partial_z\\psi\\right)^2 - 3\\rho\\left(\\partial_\\rho\\psi\\right)^3 + 3\\rho^4\\left(\\partial_\\rho\\psi\\right)^2\\left(\\partial_z\\psi\\right)^4 + 3\\rho^2\\left(\\partial_\\rho\\psi\\right)^2\\left(\\partial_z\\psi\\right)^2 + \\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho^3\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^4 + \\rho^4\\left(\\partial_z\\psi\\right)^6 + 3\\rho^2\\left(\\partial_z\\psi\\right)^4\\right)e^{-4\\gamma + 4\\psi}}{\\rho^2}"
+        },
+        {
+          "id": "toroidal",
+          "name": "Toroidal",
+          "coordinates": [
+            "t",
+            "\\zeta",
+            "\\sigma",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\zeta \\in [0, \\infty)",
+            "\\sigma \\in [0, 2\\pi)",
+            "\\phi \\in [0, 2\\pi)",
+            "(\\zeta, \\sigma) \\neq (0, 0) \\;\\text{(spatial infinity)}",
+            "\\zeta \\to \\infty \\;\\text{(the ring)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass parameter, a length, $m = GM/c^2$ with $M$ the mass of the ring, measured at spatial infinity"
+            },
+            {
+              "symbol": "a",
+              "description": "Radius of the ring in Weyl's coordinates, a length; the ring is the limit $\\zeta \\to \\infty$, and a surface of constant $\\zeta$ is a torus around it"
+            },
+            {
+              "symbol": "\\kappa = 1 - e^{-2\\zeta}",
+              "description": "Parameter of the two elliptic integrals, the square of their modulus; $\\kappa = 0$ on the axis and $\\kappa \\to 1$ at the ring"
+            },
+            {
+              "symbol": "\\psi = -\\dfrac{\\sqrt{2}\\,m}{\\pi a}e^{-\\zeta/2}\\sqrt{\\cosh\\zeta - \\cos\\sigma}\\,\\mathrm{K}\\left(\\kappa\\right)",
+              "description": "Weyl's first function, with $c^2\\psi$ Newton's potential of a uniform ring of mass $M$ and radius $a$; $\\mathrm{K}(\\kappa) = \\int_0^{\\pi/2}d\\alpha/\\sqrt{1 - \\kappa\\sin^2\\alpha}$ is the complete elliptic integral of the first kind. It solves Laplace's equation, $\\partial_\\zeta\\left(\\dfrac{\\sinh\\zeta}{\\cosh\\zeta - \\cos\\sigma}\\partial_\\zeta\\psi\\right) + \\partial_\\sigma\\left(\\dfrac{\\sinh\\zeta}{\\cosh\\zeta - \\cos\\sigma}\\partial_\\sigma\\psi\\right) = 0$, and at the ring $\\psi \\to -\\infty$ as $-(m/\\pi a)\\,\\zeta$"
+            },
+            {
+              "symbol": "\\gamma = -\\dfrac{m^2}{4\\pi^2a^2\\sinh\\zeta}\\left(\\left(e^{\\zeta} - \\cos\\sigma\\right)\\left(\\mathrm{E}\\left(\\kappa\\right) - \\mathrm{K}\\left(\\kappa\\right)\\right)^2 - \\left(e^{-\\zeta} - \\cos\\sigma\\right)\\left(e^{\\zeta}\\mathrm{E}\\left(\\kappa\\right) - e^{-\\zeta}\\mathrm{K}\\left(\\kappa\\right)\\right)^2\\right)",
+              "description": "Weyl's second function, with $\\mathrm{E}(\\kappa) = \\int_0^{\\pi/2}\\sqrt{1 - \\kappa\\sin^2\\alpha}\\,d\\alpha$ the complete elliptic integral of the second kind; it is fixed by $\\psi$ through $\\partial_\\zeta\\gamma = \\dfrac{\\sinh\\zeta}{\\cosh\\zeta - \\cos\\sigma}\\left(\\left(1 - \\cosh\\zeta\\cos\\sigma\\right)\\left(\\left(\\partial_\\zeta\\psi\\right)^2 - \\left(\\partial_\\sigma\\psi\\right)^2\\right) - 2\\sinh\\zeta\\sin\\sigma\\,\\partial_\\zeta\\psi\\,\\partial_\\sigma\\psi\\right)$ and $\\partial_\\sigma\\gamma = \\dfrac{\\sinh\\zeta}{\\cosh\\zeta - \\cos\\sigma}\\left(\\sinh\\zeta\\sin\\sigma\\left(\\left(\\partial_\\zeta\\psi\\right)^2 - \\left(\\partial_\\sigma\\psi\\right)^2\\right) + 2\\left(1 - \\cosh\\zeta\\cos\\sigma\\right)\\partial_\\zeta\\psi\\,\\partial_\\sigma\\psi\\right)$, and is zero on the axis, which is then free of conical singularities"
+            }
+          ],
+          "convention": "We use toroidal coordinates $(t, \\zeta, \\sigma, \\phi)$ about the ring, with $t$ carrying dimensions of time and $\\zeta$ and $\\sigma$ pure numbers, and write $\\mathrm{K}$ and $\\mathrm{E}$ for the complete elliptic integrals of the first and second kinds with parameter $\\kappa$. Weyl's canonical coordinates are $\\rho = a\\sinh\\zeta/(\\cosh\\zeta - \\cos\\sigma)$ and $z = a\\sin\\sigma/(\\cosh\\zeta - \\cos\\sigma)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -e^{2\\psi}c^2dt^2 + \\dfrac{a^2e^{-2\\psi}}{\\left(\\cosh\\zeta - \\cos\\sigma\\right)^2}\\left(e^{2\\gamma}\\left(d\\zeta^2 + d\\sigma^2\\right) + \\sinh^2\\zeta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{2\\psi}"
+            },
+            {
+              "indices": [
+                "\\zeta",
+                "\\zeta"
+              ],
+              "value": "\\dfrac{a^2e^{2\\gamma - 2\\psi}}{\\left(\\cosh\\zeta - \\cos\\sigma\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\sigma",
+                "\\sigma"
+              ],
+              "value": "\\dfrac{a^2e^{2\\gamma - 2\\psi}}{\\left(\\cosh\\zeta - \\cos\\sigma\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{a^2e^{-2\\psi}\\sinh^2\\zeta}{\\left(\\cosh\\zeta - \\cos\\sigma\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{16\\left(\\cosh\\zeta - \\cos\\sigma\\right)^2\\left(\\left(\\cosh\\zeta - \\cos\\sigma\\right)^2\\left(\\partial_\\sigma^2\\psi\\right)^2\\,\\sinh^2\\zeta - 2\\left(\\cos\\sigma\\cosh\\zeta - 1\\right)\\left(\\cosh\\zeta - \\cos\\sigma\\right)\\left(\\partial_\\zeta\\psi\\right)^3\\,\\partial_\\sigma^2\\psi\\,\\sinh^3\\zeta - 6\\left(\\cosh\\zeta - \\cos\\sigma\\right)\\left(\\partial_\\zeta\\psi\\right)^2\\,\\partial_\\sigma\\psi\\,\\partial_\\sigma^2\\psi\\,\\sin\\sigma\\sinh^4\\zeta - 3\\left(\\cosh\\zeta - \\cos\\sigma\\right)^2\\left(\\partial_\\zeta\\psi\\right)^2\\,\\partial_\\sigma^2\\psi\\,\\sinh^2\\zeta + 6\\left(\\cos\\sigma\\cosh\\zeta - 1\\right)\\left(\\cosh\\zeta - \\cos\\sigma\\right)\\partial_\\zeta\\psi\\left(\\partial_\\sigma\\psi\\right)^2\\,\\partial_\\sigma^2\\psi\\,\\sinh^3\\zeta - \\left(\\cosh\\zeta - \\cos\\sigma\\right)\\left(2\\sinh^2\\zeta + \\cos\\sigma\\cosh\\zeta - 1\\right)\\partial_\\zeta\\psi\\,\\partial_\\sigma^2\\psi\\,\\sinh\\zeta + 2\\left(\\cosh\\zeta - \\cos\\sigma\\right)\\left(\\partial_\\sigma\\psi\\right)^3\\,\\partial_\\sigma^2\\psi\\,\\sin\\sigma\\sinh^4\\zeta + 3\\left(\\cosh\\zeta - \\cos\\sigma\\right)^2\\left(\\partial_\\sigma\\psi\\right)^2\\,\\partial_\\sigma^2\\psi\\,\\sinh^2\\zeta + \\left(\\cosh\\zeta - \\cos\\sigma\\right)\\partial_\\sigma\\psi\\,\\partial_\\sigma^2\\psi\\,\\sin\\sigma\\sinh^2\\zeta + \\left(\\cosh\\zeta - \\cos\\sigma\\right)^2\\left(\\partial_\\zeta\\psi\\right)^6\\,\\sinh^4\\zeta + 3\\left(\\cos\\sigma\\cosh\\zeta - 1\\right)\\left(\\cosh\\zeta - \\cos\\sigma\\right)\\left(\\partial_\\zeta\\psi\\right)^5\\,\\sinh^3\\zeta + 3\\left(\\cosh\\zeta - \\cos\\sigma\\right)^2\\left(\\partial_\\zeta\\psi\\right)^4\\left(\\partial_\\sigma\\psi\\right)^2\\,\\sinh^4\\zeta + 3\\left(\\cosh\\zeta - \\cos\\sigma\\right)\\left(\\partial_\\zeta\\psi\\right)^4\\,\\partial_\\sigma\\psi\\,\\sin\\sigma\\sinh^4\\zeta + \\left(2\\cos\\sigma\\sinh^2\\zeta\\cosh\\zeta - 3\\sin^2\\sigma\\sinh^2\\zeta + 2\\sinh^2\\zeta - 8\\cos\\sigma\\cosh\\zeta - 4\\sin^2\\sigma + 8\\right)\\left(\\partial_\\zeta\\psi\\right)^4\\,\\sinh^2\\zeta + 6\\left(\\cos\\sigma\\cosh\\zeta - 1\\right)\\left(\\cosh\\zeta - \\cos\\sigma\\right)\\left(\\partial_\\zeta\\psi\\right)^3\\left(\\partial_\\sigma\\psi\\right)^2\\,\\sinh^3\\zeta + 4\\left(\\sinh^2\\zeta + 2\\cos\\sigma\\cosh\\zeta - 2\\right)\\left(\\partial_\\zeta\\psi\\right)^3\\,\\partial_\\sigma\\psi\\,\\sin\\sigma\\sinh^3\\zeta - \\left(\\cosh\\zeta - \\cos\\sigma\\right)\\left(2\\partial_\\zeta\\partial_\\sigma\\psi\\,\\sin\\sigma\\sinh^3\\zeta - 3\\sinh^2\\zeta - 3\\cos\\sigma\\cosh\\zeta + 3\\right)\\left(\\partial_\\zeta\\psi\\right)^3\\,\\sinh\\zeta + 3\\left(\\cosh\\zeta - \\cos\\sigma\\right)^2\\left(\\partial_\\zeta\\psi\\right)^2\\left(\\partial_\\sigma\\psi\\right)^4\\,\\sinh^4\\zeta + 6\\left(\\cosh\\zeta - \\cos\\sigma\\right)\\left(\\partial_\\zeta\\psi\\right)^2\\left(\\partial_\\sigma\\psi\\right)^3\\,\\sin\\sigma\\sinh^4\\zeta + 3\\left(2\\sin^2\\sigma\\sinh^2\\zeta + \\sinh^2\\zeta - 2\\cos\\sigma\\cosh\\zeta - \\sin^2\\sigma + 2\\right)\\left(\\partial_\\zeta\\psi\\right)^2\\left(\\partial_\\sigma\\psi\\right)^2\\,\\sinh^2\\zeta + 6\\left(\\cosh\\zeta - \\cos\\sigma\\right)\\left(\\partial_\\zeta\\partial_\\sigma\\psi\\,\\cos\\sigma\\sinh\\zeta\\cosh\\zeta - \\partial_\\zeta\\partial_\\sigma\\psi\\,\\sinh\\zeta + \\sin\\sigma\\right)\\left(\\partial_\\zeta\\psi\\right)^2\\,\\partial_\\sigma\\psi\\,\\sinh^2\\zeta + \\left(\\sinh^4\\zeta + \\cos\\sigma\\sinh^2\\zeta\\cosh\\zeta - 2\\cos\\sigma\\cosh\\zeta - \\sin^2\\sigma + 2\\right)\\left(\\partial_\\zeta\\psi\\right)^2 + 3\\left(\\cos\\sigma\\cosh\\zeta - 1\\right)\\left(\\cosh\\zeta - \\cos\\sigma\\right)\\partial_\\zeta\\psi\\left(\\partial_\\sigma\\psi\\right)^4\\,\\sinh^3\\zeta + 4\\partial_\\zeta\\psi\\left(\\partial_\\sigma\\psi\\right)^3\\,\\sin\\sigma\\sinh^5\\zeta + 3\\left(2\\partial_\\zeta\\partial_\\sigma\\psi\\,\\sin\\sigma\\sinh\\zeta + 1\\right)\\left(\\cosh\\zeta - \\cos\\sigma\\right)\\partial_\\zeta\\psi\\left(\\partial_\\sigma\\psi\\right)^2\\,\\sinh^3\\zeta + \\left(6\\partial_\\zeta\\partial_\\sigma\\psi\\,\\sinh^3\\zeta + \\sin\\sigma\\sinh^2\\zeta - 12\\partial_\\zeta\\partial_\\sigma\\psi\\,\\cos\\sigma\\sinh\\zeta\\cosh\\zeta - 6\\partial_\\zeta\\partial_\\sigma\\psi\\,\\sin^2\\sigma\\sinh\\zeta + 12\\partial_\\zeta\\partial_\\sigma\\psi\\,\\sinh\\zeta + \\sin\\sigma\\cos\\sigma\\cosh\\zeta - \\sin\\sigma\\right)\\partial_\\zeta\\psi\\,\\partial_\\sigma\\psi\\,\\sinh\\zeta + 2\\left(\\cosh\\zeta - \\cos\\sigma\\right)\\partial_\\zeta\\psi\\,\\partial_\\zeta\\partial_\\sigma\\psi\\,\\sin\\sigma\\sinh^2\\zeta + \\left(\\cosh\\zeta - \\cos\\sigma\\right)^2\\left(\\partial_\\sigma\\psi\\right)^6\\,\\sinh^4\\zeta + 3\\left(\\cosh\\zeta - \\cos\\sigma\\right)\\left(\\partial_\\sigma\\psi\\right)^5\\,\\sin\\sigma\\sinh^4\\zeta - \\left(2\\cos\\sigma\\sinh^2\\zeta\\cosh\\zeta - \\sin^2\\sigma\\sinh^2\\zeta - 5\\sinh^2\\zeta + 6\\cos\\sigma\\cosh\\zeta + 3\\sin^2\\sigma - 6\\right)\\left(\\partial_\\sigma\\psi\\right)^4\\,\\sinh^2\\zeta - \\left(\\cosh\\zeta - \\cos\\sigma\\right)\\left(2\\partial_\\zeta\\partial_\\sigma\\psi\\,\\cos\\sigma\\sinh\\zeta\\cosh\\zeta - 2\\partial_\\zeta\\partial_\\sigma\\psi\\,\\sinh\\zeta - 3\\sin\\sigma\\right)\\left(\\partial_\\sigma\\psi\\right)^3\\,\\sinh^2\\zeta + \\left(\\cosh\\zeta - \\cos\\sigma\\right)\\left(\\cosh\\zeta + \\cos\\sigma\\right)\\left(\\partial_\\sigma\\psi\\right)^2\\,\\sinh^2\\zeta + 2\\left(\\cosh\\zeta - \\cos\\sigma\\right)\\partial_\\sigma\\psi\\,\\partial_\\zeta\\partial_\\sigma\\psi\\,\\sinh^3\\zeta + \\left(\\cosh\\zeta - \\cos\\sigma\\right)^2\\left(\\partial_\\zeta\\partial_\\sigma\\psi\\right)^2\\,\\sinh^2\\zeta\\right)e^{-4\\gamma + 4\\psi}}{a^4\\sinh^2\\zeta}"
+        },
+        {
+          "id": "oblate_spheroidal",
+          "name": "Oblate Spheroidal",
+          "coordinates": [
+            "t",
+            "\\xi",
+            "\\eta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\xi \\in [0, \\infty)",
+            "\\eta \\in [-1, 1]",
+            "\\phi \\in [0, 2\\pi)",
+            "(\\xi, \\eta) \\neq (0, 0) \\;\\text{(the ring)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass parameter, a length, $m = GM/c^2$ with $M$ the mass of the ring, measured at spatial infinity"
+            },
+            {
+              "symbol": "a",
+              "description": "Radius of the ring in Weyl's coordinates, a length; the ring is the circle $\\xi = 0$, $\\eta = 0$, the rim of the disc $\\xi = 0$ it spans"
+            },
+            {
+              "symbol": "\\kappa = \\dfrac{1 - \\eta^2}{1 + \\xi^2}",
+              "description": "Parameter of the two elliptic integrals in Landen's form, the square of $(l_2 - l_1)/(l_2 + l_1)$ with $l_1$ and $l_2$ the least and greatest distances from the point to the ring in the flat space of Weyl's coordinates; $\\kappa = 0$ on the axis and $\\kappa = 1$ on the disc $\\xi = 0$ at its rim, the ring"
+            },
+            {
+              "symbol": "\\psi = -\\dfrac{2m\\,\\mathrm{K}\\left(\\kappa\\right)}{\\pi a\\sqrt{1 + \\xi^2}}",
+              "description": "Weyl's first function, with $c^2\\psi$ Newton's potential of a uniform ring of mass $M$ and radius $a$; $\\mathrm{K}(\\kappa) = \\int_0^{\\pi/2}d\\alpha/\\sqrt{1 - \\kappa\\sin^2\\alpha}$ is the complete elliptic integral of the first kind. It solves Laplace's equation, $\\partial_\\xi\\left(\\left(1 + \\xi^2\\right)\\partial_\\xi\\psi\\right) + \\partial_\\eta\\left(\\left(1 - \\eta^2\\right)\\partial_\\eta\\psi\\right) = 0$, and on the axis $\\psi = -m/\\left(a\\sqrt{1 + \\xi^2}\\right)$; in Weyl's chart the same function is written with the parameter $1 - l_1^2/l_2^2$"
+            },
+            {
+              "symbol": "\\gamma = -\\dfrac{2m^2}{\\pi^2a^2\\left(\\xi^2 + \\eta^2\\right)^2}\\left(\\left(1 - \\eta^2\\right)^2\\mathrm{K}\\left(\\kappa\\right)^2 + \\left(1 - \\eta^2\\right)\\left(\\left(1 + \\xi^2\\right)\\left(\\mathrm{E}\\left(\\kappa\\right)^2 + 2\\mathrm{E}\\left(\\kappa\\right)\\mathrm{K}\\left(\\kappa\\right) - 2\\mathrm{K}\\left(\\kappa\\right)^2\\right) - 2\\mathrm{E}\\left(\\kappa\\right)\\mathrm{K}\\left(\\kappa\\right)\\right) + \\left(1 + \\xi^2\\right)\\left(\\mathrm{E}\\left(\\kappa\\right) - \\mathrm{K}\\left(\\kappa\\right)\\right)\\left(\\left(1 + \\xi^2\\right)\\left(\\mathrm{E}\\left(\\kappa\\right) - \\mathrm{K}\\left(\\kappa\\right)\\right) - 2\\mathrm{E}\\left(\\kappa\\right)\\right)\\right)",
+              "description": "Weyl's second function, with $\\mathrm{E}(\\kappa) = \\int_0^{\\pi/2}\\sqrt{1 - \\kappa\\sin^2\\alpha}\\,d\\alpha$ the complete elliptic integral of the second kind; it is fixed by $\\psi$ through $\\partial_\\xi\\gamma = \\dfrac{1 - \\eta^2}{\\xi^2 + \\eta^2}\\left(\\xi\\left(1 + \\xi^2\\right)\\left(\\partial_\\xi\\psi\\right)^2 - \\xi\\left(1 - \\eta^2\\right)\\left(\\partial_\\eta\\psi\\right)^2 - 2\\eta\\left(1 + \\xi^2\\right)\\partial_\\xi\\psi\\,\\partial_\\eta\\psi\\right)$ and $\\partial_\\eta\\gamma = \\dfrac{1 + \\xi^2}{\\xi^2 + \\eta^2}\\left(\\eta\\left(1 + \\xi^2\\right)\\left(\\partial_\\xi\\psi\\right)^2 - \\eta\\left(1 - \\eta^2\\right)\\left(\\partial_\\eta\\psi\\right)^2 + 2\\xi\\left(1 - \\eta^2\\right)\\partial_\\xi\\psi\\,\\partial_\\eta\\psi\\right)$, and is zero on the axis, which is then free of conical singularities"
+            }
+          ],
+          "convention": "We use oblate spheroidal coordinates $(t, \\xi, \\eta, \\phi)$, with $t$ carrying dimensions of time and $\\xi$ and $\\eta$ pure numbers, and write $\\mathrm{K}$ and $\\mathrm{E}$ for the complete elliptic integrals of the first and second kinds with parameter $\\kappa$. Weyl's canonical coordinates are $\\rho = a\\sqrt{(1 + \\xi^2)(1 - \\eta^2)}$ and $z = a\\xi\\eta$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -e^{2\\psi}c^2dt^2 + a^2e^{-2\\psi}\\left(e^{2\\gamma}\\left(\\xi^2 + \\eta^2\\right)\\left(\\dfrac{d\\xi^2}{1 + \\xi^2} + \\dfrac{d\\eta^2}{1 - \\eta^2}\\right) + \\left(1 + \\xi^2\\right)\\left(1 - \\eta^2\\right)d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{2\\psi}"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "\\dfrac{a^2\\left(\\xi^2 + \\eta^2\\right)e^{2\\gamma - 2\\psi}}{1 + \\xi^2}"
+            },
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "\\dfrac{a^2\\left(\\xi^2 + \\eta^2\\right)e^{2\\gamma - 2\\psi}}{1 - \\eta^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)e^{-2\\psi}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{16\\left(\\left(1 - \\eta^2\\right)^2\\left(\\xi^2 + \\eta^2\\right)\\left(\\partial_\\eta^2\\psi\\right)^2 + 2\\xi\\left(1 - \\eta^2\\right)^2\\left(1 + \\xi^2\\right)^2\\left(\\partial_\\xi\\psi\\right)^3\\,\\partial_\\eta^2\\psi - 6\\eta\\left(1 - \\eta^2\\right)^2\\left(1 + \\xi^2\\right)^2\\left(\\partial_\\xi\\psi\\right)^2\\,\\partial_\\eta\\psi\\,\\partial_\\eta^2\\psi - 3\\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)\\left(\\xi^2 + \\eta^2\\right)\\left(\\partial_\\xi\\psi\\right)^2\\,\\partial_\\eta^2\\psi - 6\\xi\\left(1 - \\eta^2\\right)^3\\left(1 + \\xi^2\\right)\\partial_\\xi\\psi\\left(\\partial_\\eta\\psi\\right)^2\\,\\partial_\\eta^2\\psi + \\xi\\left(3\\xi^2 + \\eta^2 + 2\\right)\\left(1 - \\eta^2\\right)\\partial_\\xi\\psi\\,\\partial_\\eta^2\\psi + 2\\eta\\left(1 - \\eta^2\\right)^3\\left(1 + \\xi^2\\right)\\left(\\partial_\\eta\\psi\\right)^3\\,\\partial_\\eta^2\\psi + 3\\left(1 - \\eta^2\\right)^2\\left(\\xi^2 + \\eta^2\\right)\\left(\\partial_\\eta\\psi\\right)^2\\,\\partial_\\eta^2\\psi - \\eta\\left(3\\xi^2 + \\eta^2 + 2\\right)\\left(1 - \\eta^2\\right)\\partial_\\eta\\psi\\,\\partial_\\eta^2\\psi + \\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)^4\\left(\\partial_\\xi\\psi\\right)^6 - 3\\xi\\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)^3\\left(\\partial_\\xi\\psi\\right)^5 + 3\\left(1 - \\eta^2\\right)^2\\left(1 + \\xi^2\\right)^3\\left(\\partial_\\xi\\psi\\right)^4\\left(\\partial_\\eta\\psi\\right)^2 + 3\\eta\\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)^3\\left(\\partial_\\xi\\psi\\right)^4\\,\\partial_\\eta\\psi - \\left(3\\xi^2\\,\\eta^2 - 6\\xi^2 - \\eta^2 - 2\\right)\\left(1 + \\xi^2\\right)^2\\left(\\partial_\\xi\\psi\\right)^4 - 6\\xi\\left(1 - \\eta^2\\right)^2\\left(1 + \\xi^2\\right)^2\\left(\\partial_\\xi\\psi\\right)^3\\left(\\partial_\\eta\\psi\\right)^2 - 10\\xi\\,\\eta\\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)^2\\left(\\partial_\\xi\\psi\\right)^3\\,\\partial_\\eta\\psi + \\left(2\\xi^4\\,\\eta^3\\,\\partial_\\xi\\partial_\\eta\\psi - 2\\xi^4\\,\\eta\\,\\partial_\\xi\\partial_\\eta\\psi - 6\\xi^3 + 4\\xi^2\\,\\eta^3\\,\\partial_\\xi\\partial_\\eta\\psi - 4\\xi^2\\,\\eta\\,\\partial_\\xi\\partial_\\eta\\psi - 3\\xi\\,\\eta^2 - 3\\xi + 2\\eta^3\\,\\partial_\\xi\\partial_\\eta\\psi - 2\\eta\\,\\partial_\\xi\\partial_\\eta\\psi\\right)\\left(1 + \\xi^2\\right)\\left(\\partial_\\xi\\psi\\right)^3 + 3\\left(1 - \\eta^2\\right)^3\\left(1 + \\xi^2\\right)^2\\left(\\partial_\\xi\\psi\\right)^2\\left(\\partial_\\eta\\psi\\right)^4 + 6\\eta\\left(1 - \\eta^2\\right)^2\\left(1 + \\xi^2\\right)^2\\left(\\partial_\\xi\\psi\\right)^2\\left(\\partial_\\eta\\psi\\right)^3 + 3\\left(4\\xi^2\\,\\eta^2 + \\xi^2 + 5\\eta^2\\right)\\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)\\left(\\partial_\\xi\\psi\\right)^2\\left(\\partial_\\eta\\psi\\right)^2 - 3\\left(2\\xi^3\\,\\eta^4\\,\\partial_\\xi\\partial_\\eta\\psi - 4\\xi^3\\,\\eta^2\\,\\partial_\\xi\\partial_\\eta\\psi + 2\\xi^3\\,\\partial_\\xi\\partial_\\eta\\psi - 2\\xi^2\\,\\eta + 2\\xi\\,\\eta^4\\,\\partial_\\xi\\partial_\\eta\\psi - 4\\xi\\,\\eta^2\\,\\partial_\\xi\\partial_\\eta\\psi + 2\\xi\\,\\partial_\\xi\\partial_\\eta\\psi - 3\\eta^3 + \\eta\\right)\\left(1 + \\xi^2\\right)\\left(\\partial_\\xi\\psi\\right)^2\\,\\partial_\\eta\\psi + \\left(3\\xi^4 + 3\\xi^2 - \\eta^2 + 1\\right)\\left(\\partial_\\xi\\psi\\right)^2 - 3\\xi\\left(1 - \\eta^2\\right)^3\\left(1 + \\xi^2\\right)\\partial_\\xi\\psi\\left(\\partial_\\eta\\psi\\right)^4 + 6\\xi\\,\\eta\\left(1 - \\eta^2\\right)^2\\left(1 + \\xi^2\\right)\\partial_\\xi\\psi\\left(\\partial_\\eta\\psi\\right)^3 - 3\\left(2\\xi^2\\,\\eta^3\\,\\partial_\\xi\\partial_\\eta\\psi - 2\\xi^2\\,\\eta\\,\\partial_\\xi\\partial_\\eta\\psi + \\xi + 2\\eta^3\\,\\partial_\\xi\\partial_\\eta\\psi - 2\\eta\\,\\partial_\\xi\\partial_\\eta\\psi\\right)\\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)\\partial_\\xi\\psi\\left(\\partial_\\eta\\psi\\right)^2 - \\left(6\\xi^4\\,\\eta^2\\,\\partial_\\xi\\partial_\\eta\\psi - 6\\xi^4\\,\\partial_\\xi\\partial_\\eta\\psi + 6\\xi^3\\,\\eta + 6\\xi^2\\,\\eta^4\\,\\partial_\\xi\\partial_\\eta\\psi - 6\\xi^2\\,\\partial_\\xi\\partial_\\eta\\psi + 2\\xi\\,\\eta^3 + 4\\xi\\,\\eta + 6\\eta^4\\,\\partial_\\xi\\partial_\\eta\\psi - 6\\eta^2\\,\\partial_\\xi\\partial_\\eta\\psi\\right)\\partial_\\xi\\psi\\,\\partial_\\eta\\psi - 2\\eta\\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)\\partial_\\xi\\psi\\,\\partial_\\xi\\partial_\\eta\\psi + \\left(1 - \\eta^2\\right)^4\\left(1 + \\xi^2\\right)\\left(\\partial_\\eta\\psi\\right)^6 + 3\\eta\\left(1 - \\eta^2\\right)^3\\left(1 + \\xi^2\\right)\\left(\\partial_\\eta\\psi\\right)^5 + \\left(\\xi^2 - 2\\right)\\left(1 - \\eta^2\\right)^3\\left(\\partial_\\eta\\psi\\right)^4 + \\left(2\\xi\\,\\eta^4\\,\\partial_\\xi\\partial_\\eta\\psi - 4\\xi\\,\\eta^2\\,\\partial_\\xi\\partial_\\eta\\psi + 2\\xi\\,\\partial_\\xi\\partial_\\eta\\psi - 3\\eta\\right)\\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)\\left(\\partial_\\eta\\psi\\right)^3 + \\left(2\\xi^2\\,\\eta^2 + \\xi^2 + \\eta^4 + \\eta^2 + 1\\right)\\left(\\partial_\\eta\\psi\\right)^2 - 2\\xi\\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)\\partial_\\eta\\psi\\,\\partial_\\xi\\partial_\\eta\\psi + \\left(1 - \\eta^2\\right)\\left(1 + \\xi^2\\right)\\left(\\xi^2 + \\eta^2\\right)\\left(\\partial_\\xi\\partial_\\eta\\psi\\right)^2\\right)e^{-4\\gamma + 4\\psi}}{a^4\\left(\\xi^2 + \\eta^2\\right)^3}"
         }
       ]
     },
@@ -10569,6 +10876,11 @@
           "id": "erez_rosen",
           "kind": "family",
           "text": "A Weyl field too, built on the potential of Schwarzschild's rod with a quadrupole term added, where Curzon and Chazy's is built on a point's [bicak2000, boshkayev2019]."
+        },
+        {
+          "id": "bach_weyl_ring",
+          "kind": "generalisation",
+          "text": "The particle spread around a circle of radius $a$ in Weyl's coordinates. At $a = 0$ Bach and Weyl's ring is the Curzon-Chazy particle [semerak2016]."
         }
       ],
       "references": [
@@ -10596,7 +10908,8 @@
         "astesiano2024",
         "bicak1993",
         "emparanteo2001",
-        "boshkayev2019"
+        "boshkayev2019",
+        "semerak2016"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/curzon_chazy.json",
@@ -15038,6 +15351,11 @@
           "id": "curzon_chazy",
           "kind": "family",
           "text": "Another member of Weyl's class, built on the Newtonian potential of a point. Erez and Rosen's is built on the potential of Schwarzschild's rod with a quadrupole term added [bicak2000, boshkayev2019]."
+        },
+        {
+          "id": "bach_weyl_ring",
+          "kind": "family",
+          "text": "A Weyl field too, built on Newton's potential of a hoop, where Erez and Rosen's is built on a rod's with a quadrupole term added."
         }
       ],
       "references": [
@@ -23434,6 +23752,11 @@
           "id": "bondi_sachs",
           "kind": "generalisation",
           "text": "The form the metric of an isolated body takes on its outgoing light cones. Kerr's black hole is a member with no news, written in such coordinates by S. J. Fletcher and A. W. C. Lun in 2003 [sachs1962, fletcher2003]."
+        },
+        {
+          "id": "bach_weyl_ring",
+          "kind": "family",
+          "text": "A ring singularity with no spin and no horizon, the static field of a hoop of matter. Oldřich Semerák compared the two rings and found Kerr's the simpler [semerak2016]."
         }
       ],
       "references": [
@@ -23495,7 +23818,8 @@
         "belinskii1979",
         "boshkayev2019",
         "sachs1962",
-        "fletcher2003"
+        "fletcher2003",
+        "semerak2016"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -28815,6 +29139,11 @@
           "id": "bonnor_charged_dust",
           "kind": "generalisation",
           "text": "Their metric with matter in it. Dust whose charge density equals its mass density is a source for $U$, and a ball of it can lie as near its own horizon as one likes [bonnor1975, lemos2004]."
+        },
+        {
+          "id": "bach_weyl_ring",
+          "kind": "family",
+          "text": "A ring of uncharged matter with the same Newtonian potential as a circle of infinitely many extremal black holes. Oldřich Semerák found that the charged ring lies a finite distance from its centre and Bach and Weyl's an infinite one [semerak2016]."
         }
       ],
       "references": [
@@ -28850,7 +29179,8 @@
         "emparan2000",
         "arnowitt1960",
         "bonnor1975",
-        "lemos2004"
+        "lemos2004",
+        "semerak2016"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/majumdar_papapetrou.json",
@@ -32009,6 +32339,11 @@
           "id": "bonnor_charged_dust",
           "kind": "family",
           "text": "Dust held up by its charge, in a sphere or a spheroid. Flattened to a disc the spheroid keeps a finite redshift, as these discs do, and shrunk at a fixed shape its redshift has no limit [bonnor1975]."
+        },
+        {
+          "id": "bach_weyl_ring",
+          "kind": "family",
+          "text": "A Weyl field built on Newton's potential of a hoop, as the discs are on that of a disc. The hoop is a singularity, and the discs are sheets of counterrotating dust."
         }
       ],
       "references": [
@@ -41661,6 +41996,11 @@
           "id": "bondi_sachs",
           "kind": "generalisation",
           "text": "Schwarzschild's metric in outgoing coordinates with four functions set free, the form the metric of an isolated body takes far away once it radiates. The mass aspect $M(u, \\theta)$ takes the place of $r_s/2$ and falls when gravitational waves leave [bondi1962]."
+        },
+        {
+          "id": "bach_weyl_ring",
+          "kind": "family",
+          "text": "The Weyl field of a hoop, where Schwarzschild's is that of a rod on the axis [antoci2001]. A ring set around the hole changes the curvature inside the horizon strongly [basovnik2016]."
         }
       ],
       "references": [
@@ -41776,7 +42116,9 @@
         "gibbons1977action",
         "bransdicke1961",
         "agnese1995",
-        "bondi1962"
+        "bondi1962",
+        "antoci2001",
+        "basovnik2016"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -50947,6 +51289,11 @@
           "id": "erez_rosen",
           "kind": "family",
           "text": "Erez and Rosen's deformation of Schwarzschild's metric, which adds a quadrupole term to the rod's potential and keeps the mass at $m$ for every $q$ [memmen2021]. With the stretch by $\\delta$ applied to it too, it agrees with Hartle and Thorne's static exterior to first order in the quadrupole [boshkayev2019]."
+        },
+        {
+          "id": "bach_weyl_ring",
+          "kind": "family",
+          "text": "The Weyl field of a hoop about the axis, where Zipoy and Voorhees's is that of a rod along it."
         }
       ],
       "references": [

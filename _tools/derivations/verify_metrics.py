@@ -323,6 +323,20 @@ DIMENSIONS = {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "q": "1", "L": "1", "\\psi": "1",
         "\\gamma": "1",
     },
+    # Bach and Weyl's ring: m = GM/c^2 and the ring's radius a in Weyl's coordinates are lengths,
+    # l_2 is the greatest distance to the ring and kappa the parameter of the elliptic integrals.
+    ("bach_weyl_ring", "weyl"): {
+        "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "m": "L", "a": "L", "l_2": "L", "\\kappa": "1",
+        "\\psi": "1", "\\gamma": "1",
+    },
+    ("bach_weyl_ring", "toroidal"): {
+        "t": "T", "\\zeta": "1", "\\sigma": "1", "\\phi": "1", "m": "L", "a": "L", "\\kappa": "1",
+        "\\psi": "1", "\\gamma": "1",
+    },
+    ("bach_weyl_ring", "oblate_spheroidal"): {
+        "t": "T", "\\xi": "1", "\\eta": "1", "\\phi": "1", "m": "L", "a": "L", "\\kappa": "1", "\\psi": "1",
+        "\\gamma": "1",
+    },
     # m is half the mass as a length and b the dipole moment over the mass, a length; P, Q, Y
     # and Z are Bonnor's four polynomials, each an area.
     ("bonnor_magnetic_dipole", "spheroidal"): {
@@ -1999,6 +2013,9 @@ HELD = {
     # the logarithm of Schwarzschild's 1 - 2m/r: held, as the first Morgan-Morgan disc's are.
     ("erez_rosen", "prolate_spheroidal"): ("psi", "gamma"),
     ("erez_rosen", "spherical"): ("psi", "gamma"),
+    # Weyl's two functions for Bach and Weyl's ring, complete elliptic integrals over radicals:
+    # held, as Erez and Rosen's are.
+    **{("bach_weyl_ring", chart): ("psi", "gamma") for chart in ("weyl", "toroidal", "oblate_spheroidal")},
     # Wahlquist's h_1 and h_2, and Mars's U and V, each a function of one coordinate that holds
     # that coordinate bare beside its sine, so that its derivatives are algebraic in the function.
     ("wahlquist", "wahlquist"): ("h_1", "h_2"),
@@ -2075,6 +2092,42 @@ RATES = {
                            "\\left(\\cos\\theta\\left(\\left(r^2 - 2mr\\right)\\left(\\partial_r\\psi\\right)^2"
                            " - \\left(\\partial_\\theta\\psi\\right)^2\\right)"
                            " - 2\\left(r - m\\right)\\sin\\theta\\,\\partial_r\\psi\\,\\partial_\\theta\\psi\\right)"},
+    },
+    # Bach and Weyl's ring: psi's derivatives hold the two complete elliptic integrals, whose own
+    # derivatives are written in the two again, and gamma's are Weyl's quadrature in each chart.
+    ("bach_weyl_ring", "weyl"): {
+        "psi": {"\\rho": "\\dfrac{m}{\\pi\\rho\\,l_2}\\left(\\mathrm{K}\\left(\\kappa\\right)"
+                         " - \\dfrac{\\left(a^2 - \\rho^2 + z^2\\right)\\mathrm{E}\\left(\\kappa\\right)}"
+                         "{\\left(1 - \\kappa\\right)l_2^2}\\right)",
+                "z": "\\dfrac{2m\\,z\\,\\mathrm{E}\\left(\\kappa\\right)}{\\pi\\left(1 - \\kappa\\right)l_2^3}"},
+        "gamma": {"\\rho": "\\rho\\left(\\left(\\partial_\\rho\\psi\\right)^2 - \\left(\\partial_z\\psi\\right)^2\\right)",
+                  "z": "2\\rho\\,\\partial_\\rho\\psi\\,\\partial_z\\psi"},
+    },
+    # The toroidal chart's rates of psi are written with no psi in them: psi, the radical and K are
+    # related, and a rate written in all three would be compared as if they were not.
+    ("bach_weyl_ring", "toroidal"): {
+        "psi": {"\\zeta": "-\\dfrac{\\sqrt{2}\\,m}{\\pi a}e^{-\\zeta/2}\\sqrt{\\cosh\\zeta - \\cos\\sigma}\\left("
+                          "\\dfrac{\\mathrm{K}\\left(\\kappa\\right)}{2}\\left(\\dfrac{\\sinh\\zeta}{\\cosh\\zeta - \\cos\\sigma} - \\coth\\zeta\\right)"
+                          " + \\dfrac{e^{\\zeta}\\mathrm{E}\\left(\\kappa\\right)}{2\\sinh\\zeta}\\right)",
+                "\\sigma": "-\\dfrac{\\sqrt{2}\\,m}{\\pi a}e^{-\\zeta/2}\\sqrt{\\cosh\\zeta - \\cos\\sigma}"
+                           "\\dfrac{\\mathrm{K}\\left(\\kappa\\right)\\sin\\sigma}{2\\left(\\cosh\\zeta - \\cos\\sigma\\right)}"},
+        "gamma": {"\\zeta": "\\dfrac{\\sinh\\zeta}{\\cosh\\zeta - \\cos\\sigma}\\left(\\left(1 - \\cosh\\zeta\\cos\\sigma\\right)"
+                            "\\left(\\left(\\partial_\\zeta\\psi\\right)^2 - \\left(\\partial_\\sigma\\psi\\right)^2\\right)"
+                            " - 2\\sinh\\zeta\\sin\\sigma\\,\\partial_\\zeta\\psi\\,\\partial_\\sigma\\psi\\right)",
+                  "\\sigma": "\\dfrac{\\sinh\\zeta}{\\cosh\\zeta - \\cos\\sigma}\\left(\\sinh\\zeta\\sin\\sigma"
+                             "\\left(\\left(\\partial_\\zeta\\psi\\right)^2 - \\left(\\partial_\\sigma\\psi\\right)^2\\right)"
+                             " + 2\\left(1 - \\cosh\\zeta\\cos\\sigma\\right)\\partial_\\zeta\\psi\\,\\partial_\\sigma\\psi\\right)"},
+    },
+    ("bach_weyl_ring", "oblate_spheroidal"): {
+        "psi": {"\\xi": "\\dfrac{2m\\,\\xi\\,\\mathrm{E}\\left(\\kappa\\right)}{\\pi a\\sqrt{1 + \\xi^2}\\left(\\xi^2 + \\eta^2\\right)}",
+                "\\eta": "\\dfrac{2m\\,\\eta\\sqrt{1 + \\xi^2}\\left(\\mathrm{E}\\left(\\kappa\\right) - \\left(1 - \\kappa\\right)\\mathrm{K}\\left(\\kappa\\right)\\right)}"
+                         "{\\pi a\\left(1 - \\eta^2\\right)\\left(\\xi^2 + \\eta^2\\right)}"},
+        "gamma": {"\\xi": "\\dfrac{1 - \\eta^2}{\\xi^2 + \\eta^2}\\left(\\xi\\left(1 + \\xi^2\\right)\\left(\\partial_\\xi\\psi\\right)^2"
+                          " - \\xi\\left(1 - \\eta^2\\right)\\left(\\partial_\\eta\\psi\\right)^2"
+                          " - 2\\eta\\left(1 + \\xi^2\\right)\\partial_\\xi\\psi\\,\\partial_\\eta\\psi\\right)",
+                  "\\eta": "\\dfrac{1 + \\xi^2}{\\xi^2 + \\eta^2}\\left(\\eta\\left(1 + \\xi^2\\right)\\left(\\partial_\\xi\\psi\\right)^2"
+                           " - \\eta\\left(1 - \\eta^2\\right)\\left(\\partial_\\eta\\psi\\right)^2"
+                           " + 2\\xi\\left(1 - \\eta^2\\right)\\partial_\\xi\\psi\\,\\partial_\\eta\\psi\\right)"},
     },
     ("misner_zapolsky", "tolman_v"): {"Z": {"r": "\\dfrac{7Z - 4}{3r}"}},
     # dm/dr is the energy of the field in a shell, r_q^2/(r^2 + W), which is 4 pi G r^2 rho/c^4.
@@ -2226,6 +2279,72 @@ class EllipticF(sp.Function):
         return sp.Expr._from_mpmath(value, prec)
 
 
+class EllipticK(sp.Function):
+    """The complete elliptic integral of the first kind, K(m), the integral of
+    1/sqrt(1 - m sin^2 t) from t = 0 to pi/2, with m the parameter, the square of the modulus:
+    what the reader reads \\mathrm{K}\\left(m\\right) as. It is sympy's elliptic_k under a name of
+    its own, as EllipticF is, so that it carries its own numbers for lambdify, and its derivative
+    is (E - (1 - m) K)/(2 m (1 - m))."""
+    nargs = 1
+    is_real = True
+
+    @classmethod
+    def eval(cls, m):
+        if m == 0:
+            return sp.pi / 2
+
+    @staticmethod
+    def _imp_(m):
+        import mpmath
+        if isinstance(m, mpmath.mpf):
+            return mpmath.ellipk(m)
+        from scipy.special import ellipk
+        return ellipk(m)
+
+    def fdiff(self, argindex=1):
+        (m,) = self.args
+        return (EllipticE(m) - (1 - m) * EllipticK(m)) / (2 * m * (1 - m))
+
+    def _eval_evalf(self, prec):
+        import mpmath
+        m = self.args[0]._to_mpmath(prec + 20)
+        with mpmath.workprec(prec + 20):
+            value = mpmath.ellipk(m)
+        return sp.Expr._from_mpmath(value, prec)
+
+
+class EllipticE(sp.Function):
+    """The complete elliptic integral of the second kind, E(m), the integral of
+    sqrt(1 - m sin^2 t) from t = 0 to pi/2, with m the parameter: what the reader reads
+    \\mathrm{E}\\left(m\\right) as. Its derivative is (E - K)/(2 m)."""
+    nargs = 1
+    is_real = True
+
+    @classmethod
+    def eval(cls, m):
+        if m == 0:
+            return sp.pi / 2
+
+    @staticmethod
+    def _imp_(m):
+        import mpmath
+        if isinstance(m, mpmath.mpf):
+            return mpmath.ellipe(m)
+        from scipy.special import ellipe
+        return ellipe(m)
+
+    def fdiff(self, argindex=1):
+        (m,) = self.args
+        return (EllipticE(m) - EllipticK(m)) / (2 * m)
+
+    def _eval_evalf(self, prec):
+        import mpmath
+        m = self.args[0]._to_mpmath(prec + 20)
+        with mpmath.workprec(prec + 20):
+            value = mpmath.ellipe(m)
+        return sp.Expr._from_mpmath(value, prec)
+
+
 FUNCTIONS = {
     "sin": sp.sin, "cos": sp.cos, "tan": sp.tan, "cot": sp.cot,
     "sec": sp.sec, "csc": sp.csc, "sinh": sp.sinh, "cosh": sp.cosh,
@@ -2242,6 +2361,9 @@ FUNCTIONS = {
     # The incomplete elliptic integral of the first kind, \\mathrm{F}(\\varphi \\mid m), for the mass
     # function of Born and Infeld's point charge.
     "ELLIPF": EllipticF,
+    # The complete elliptic integrals of the first and second kinds, \\mathrm{K}(m) and
+    # \\mathrm{E}(m) with m the parameter, for the potential of Bach and Weyl's ring.
+    "ELLIPK": EllipticK, "ELLIPE": EllipticE,
 }
 
 
@@ -3290,6 +3412,7 @@ class Reader:
         text = text.replace("\\mathrm{arsinh}", " ASINH ").replace("\\arcsin", " ASIN ")
         text = text.replace("\\mathrm{W}", " LAMBERTW ")
         text = text.replace("\\mathrm{F}", " ELLIPF ").replace("\\mid", ",")
+        text = text.replace("\\mathrm{K}", " ELLIPK ").replace("\\mathrm{E}", " ELLIPE ")
         text = expand_superscript_braces(text)
         text = text.replace("^", "**")
         # A trig call written bare, as \sin^2\theta or \cot\theta rather than sin(theta).

@@ -1993,6 +1993,20 @@ def _morgan_morgan_centre():
     return [Mark(m, points=[(0.0, 0.0)])]
 
 
+def _bach_weyl_centre(at):
+    """The disc inside Bach and Weyl's ring, at t = 0, meets the axis at one event, the centre of
+    the ring: z = 0 in Weyl's chart, sigma = pi in the toroidal one and xi = 0 in the oblate
+    spheroidal one."""
+    m = moments("bach_weyl_ring", "inside", label="$t = 0$, the centre of the ring")[0]
+    return [Mark(m, points=[(0.0, at)])]
+
+
+def _bach_weyl_plane(view_id, of_rho):
+    """One side of the plane of Bach and Weyl's ring at t = 0, from Weyl's rho to the drawn coordinate."""
+    return one("bach_weyl_ring", lambda m: along(0.0, *sorted(of_rho(r) for r in m.reach("weyl", "\\rho"))),
+               view_id=view_id)
+
+
 def _bonnor_dipole_strut():
     """The equatorial plane of Bonnor's dipole at t = 0 meets the axis between the two black holes
     at one event, t = 0 and theta = pi/2, the tip of the embedded cone."""
@@ -2754,6 +2768,16 @@ FLAT = {
     ("neugebauer_meinel", "spheroidal", "axis"): lambda: _nm_centre("$t = 0$, $\\xi = 0$"),
     # The plane z = 0 of the first Morgan-Morgan disc at t = 0: Weyl's rho from the axis out, the
     # oblate spheroidal chart's eta across the disc and its xi = sqrt(rho^2/a^2 - 1) outside the rim.
+    # Bach and Weyl's plane z = 0 at t = 0, outside the ring and on the disc inside it.
+    ("bach_weyl_ring", "weyl", "outside"): lambda: _bach_weyl_plane("outside", lambda r: r),
+    ("bach_weyl_ring", "weyl", "inside"): lambda: _bach_weyl_plane("inside", lambda r: r),
+    ("bach_weyl_ring", "weyl", "axis"): lambda: _bach_weyl_centre(0.0),
+    ("bach_weyl_ring", "toroidal", "axis"): lambda: _bach_weyl_centre(math.pi),
+    ("bach_weyl_ring", "toroidal", "outer"): lambda: _bach_weyl_plane("outside", lambda r: 2 * math.atanh(1 / r)),
+    ("bach_weyl_ring", "toroidal", "inner"): lambda: _bach_weyl_plane("inside", lambda r: 2 * math.atanh(r)),
+    ("bach_weyl_ring", "oblate_spheroidal", "axis"): lambda: _bach_weyl_centre(0.0),
+    ("bach_weyl_ring", "oblate_spheroidal", "plane"): lambda: _bach_weyl_plane("outside", lambda r: math.sqrt(r * r - 1)),
+    ("bach_weyl_ring", "oblate_spheroidal", "disc"): lambda: _bach_weyl_plane("inside", lambda r: math.sqrt(1 - r * r)),
     ("morgan_morgan", "weyl", "plane"): lambda: one("morgan_morgan", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
     ("morgan_morgan", "weyl", "axis"): _morgan_morgan_centre,
     ("morgan_morgan", "oblate_spheroidal", "axis"): _morgan_morgan_centre,

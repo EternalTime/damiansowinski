@@ -423,6 +423,11 @@
       "id": "bondi_sachs",
       "kind": "generalisation",
       "text": "Schwarzschild's metric in outgoing coordinates with four functions set free, the form the metric of an isolated body takes far away once it radiates. The mass aspect $M(u, \\theta)$ takes the place of $r_s/2$ and falls when gravitational waves leave [bondi1962]."
+    },
+    {
+      "id": "bach_weyl_ring",
+      "kind": "family",
+      "text": "The Weyl field of a hoop, where Schwarzschild's is that of a rod on the axis [antoci2001]. A ring set around the hole changes the curvature inside the horizon strongly [basovnik2016]."
     }
   ],
   "references": [
@@ -538,7 +543,9 @@
     "gibbons1977action",
     "bransdicke1961",
     "agnese1995",
-    "bondi1962"
+    "bondi1962",
+    "antoci2001",
+    "basovnik2016"
   ],
   "coordinates": [
     {

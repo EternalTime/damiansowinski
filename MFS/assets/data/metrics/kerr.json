@@ -195,6 +195,11 @@
       "id": "bondi_sachs",
       "kind": "generalisation",
       "text": "The form the metric of an isolated body takes on its outgoing light cones. Kerr's black hole is a member with no news, written in such coordinates by S. J. Fletcher and A. W. C. Lun in 2003 [sachs1962, fletcher2003]."
+    },
+    {
+      "id": "bach_weyl_ring",
+      "kind": "family",
+      "text": "A ring singularity with no spin and no horizon, the static field of a hoop of matter. Oldřich Semerák compared the two rings and found Kerr's the simpler [semerak2016]."
     }
   ],
   "references": [
@@ -256,7 +261,8 @@
     "belinskii1979",
     "boshkayev2019",
     "sachs1962",
-    "fletcher2003"
+    "fletcher2003",
+    "semerak2016"
   ],
   "coordinates": [
     {

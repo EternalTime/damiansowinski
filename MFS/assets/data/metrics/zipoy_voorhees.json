@@ -69,6 +69,11 @@
       "id": "erez_rosen",
       "kind": "family",
       "text": "Erez and Rosen's deformation of Schwarzschild's metric, which adds a quadrupole term to the rod's potential and keeps the mass at $m$ for every $q$ [memmen2021]. With the stretch by $\\delta$ applied to it too, it agrees with Hartle and Thorne's static exterior to first order in the quadrupole [boshkayev2019]."
+    },
+    {
+      "id": "bach_weyl_ring",
+      "kind": "family",
+      "text": "The Weyl field of a hoop about the axis, where Zipoy and Voorhees's is that of a rod along it."
     }
   ],
   "references": [

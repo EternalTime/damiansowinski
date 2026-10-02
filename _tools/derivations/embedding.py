@@ -12294,6 +12294,101 @@ def curzon_chazy(ck, src):
                         "space carries the slice on."])]
 
 
+def bach_weyl_ring(ck, src):
+    """The plane z = 0 of Bach and Weyl's ring at t = 0 in Weyl's chart, at m = a/2 in units of the
+    ring's radius a, on each side of the ring.
+
+    On it g_rhorho = e^(2 gamma - 2 psi) and g_phiphi = rho^2 e^(-2 psi), so the circle of Weyl's
+    radius rho has radius rho e^(-psi) on the surface, which diverges at the ring from both sides,
+    and the slice is a surface of revolution in flat space where e^(2 gamma) >= (1 - rho d_rho psi)^2.
+    Outside the ring that holds from rho = 1.116 a outward, found here: a funnel that narrows to a
+    neck of radius 2.075 a at rho = 1.220 a, where rho d_rho psi = 1, and widens again toward the
+    ring until it lies level, inside which the circles grow faster than the distance in to them,
+    which is checked. On the disc inside the ring gamma is small and rho d_rho psi is negative, so
+    every circle out to rho = 0.993 a grows faster than the distance out to it, which is checked,
+    and the disc is drawn in Minkowski space, as anti-de Sitter's equator is, from the axis to
+    rho = 0.98 a. The oblate spheroidal chart's plane eta = 0 and disc xi = 0 are checked to give
+    the same circles; the toroidal chart is held to Weyl's by the conformal diagrams, since sympy's
+    simplify does not finish on its slice."""
+    from scipy.optimize import brentq
+    name = "Bach-Weyl"
+    fixed = {"t": 0, "z": 0}
+    sl = Slice(src, "bach_weyl_ring", "weyl", "\\rho", "\\phi", fixed, nr.BW)
+    stop = float(brentq(lambda r: float(sl.defect_at(r)), 1.05, 1.2, xtol=1e-14))
+    neck = float(brentq(lambda r: float(sl.rho_at(r + 1e-7) - sl.rho_at(r - 1e-7)), 1.15, 1.3, xtol=1e-12))
+    ck.stops(f"{name}, between the ring and the first surface", sl, np.linspace(1.002, stop, 202)[:-1])
+    top = 4.0
+    size = 2 * float(sl.rho_at(top))
+
+    def radius(r):
+        return np.array([x * math.exp(-nr._bach_weyl_numbers(x, 0.0)[0]) for x in np.atleast_1d(r)])
+    plane = Piece("plane", "sheet", sl, stop, top, 0.0, 1,
+                  (("stops", "the circles grow faster than the distance in to them, and nothing in flat space carries the slice on"),
+                   ("edge", "the surface runs on to $\\rho \\to \\infty$")),
+                  [(stop, "chartedge", None), (neck, "surface", "the neck"), (2.0, "r", None), (3.0, "r", None),
+                   (top, "r", "$4\\,a$")], size, digits=LORENTZ_DIGITS)
+    ck.isometry(f"{name}, the plane outside the ring", plane)
+    ck.radius(f"{name}, the plane outside the ring, rho e^(-psi)", plane, radius, size)
+    ck.add(f"{name}: the narrowest circle is at rho = 1.220 a, of radius 2.075 a",
+           abs(neck - 1.2201112) + abs(float(np.min(plane.rho)) - 2.0751327), 1e-4)
+    ck.add(f"{name}: the surface starts at rho = 1.116 a", abs(stop - 1.11565), 1e-4)
+    xs = plane.x[1:]
+    for label, other, at in (
+            ("oblate spheroidal chart's plane eta = 0",
+             Slice(src, "bach_weyl_ring", "oblate_spheroidal", "\\xi", "\\phi", {"t": 0, "eta": 0}, nr.BW),
+             np.sqrt(xs ** 2 - 1)),):
+        ck.add(f"{name}, the {label} has the same circles", float(np.max(np.abs(other.rho_at(at) - sl.rho_at(xs)))), 1e-9)
+    outside = Surface([plane])
+    fig = figure_of([outside], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *plane.at(neck), f"${neck:.2f}\\,a$", dx=10)
+    ring_label(fig, [0, 0, 0], *plane.at(stop), f"${stop:.2f}\\,a$", side=-1)
+    ring_label(fig, [0, 0, 0], *plane.at(top), "$4\\,a$")
+    fig.legend("fill", "cover", "the plane $z = 0$ outside the ring at $t = 0$, which $\\rho$ and $\\phi$ cover")
+    fig.legend("line", "r", "$\\rho$ constant, at $2$, $3$ and $4\\,a$")
+    fig.legend("line", "surface", f"the narrowest circle, of radius ${float(np.min(plane.rho)):.2f}\\,a$, at $\\rho = {neck:.2f}\\,a$")
+    fig.legend("line", "chartedge", f"$\\rho = {stop:.2f}\\,a$, where the drawing stops")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    settings = "$m = GM/c^2 = a/2$, with the radius $a$ of the ring in Weyl's coordinates the unit of every length."
+    views = [view("outside", "Outside the ring", "$a$", [outside], fig.done(), settings=settings,
+                  stops=[f"Between the ring and $\\rho = {stop:.4f}\\,a$ the circles grow faster than the distance in to "
+                         "them, $g_{\\rho\\rho} < (\\partial_\\rho\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution "
+                         "in flat space carries the slice on."])]
+
+    inner = Slice(src, "bach_weyl_ring", "weyl", "\\rho", "\\phi", fixed, nr.BW, space="minkowski")
+    ck.stops(f"{name}, the disc inside the ring in flat space", sl, np.linspace(1e-3, 0.99, 400))
+    edge = 0.98
+    # gamma is 0/0 on the axis as Weyl's chart writes it, so the disc starts a step from it that the
+    # file's digits round to the axis itself.
+    lo = 1e-11
+    disc_size = 2 * float(inner.rho_at(edge))
+    disc = Piece("disc", "sheet", inner, lo, edge, 0.0, 1,
+                 (("axis", "the centre of the ring, $\\rho = 0$"),
+                  ("edge", "the sheet runs on toward the ring, an infinite distance away")),
+                 [(0.25, "r", None), (0.5, "r", None), (0.75, "r", None), (0.9, "r", None), (edge, "r", "$0.98\\,a$")],
+                 disc_size)
+    ck.isometry(f"{name}, the disc inside the ring", disc)
+    ck.radius(f"{name}, the disc inside the ring, rho e^(-psi)", disc, radius, disc_size)
+    xs = disc.x[5:]
+    for label, other, at in (
+            ("oblate spheroidal chart's disc xi = 0",
+             Slice(src, "bach_weyl_ring", "oblate_spheroidal", "\\eta", "\\phi", {"t": 0, "xi": 0}, nr.BW),
+             np.sqrt(1 - xs ** 2)),):
+        ck.add(f"{name}, the {label} has the same circles", float(np.max(np.abs(other.rho_at(at) - sl.rho_at(xs)))), 1e-8)
+    inside = Surface([disc])
+    fig = figure_of([inside], {"sheet": "cover"}, disc_size)
+    ring_label(fig, [0, 0, 0], *disc.at(0.5), "$\\rho = a/2$")
+    ring_label(fig, [0, 0, 0], *disc.at(edge), "$0.98\\,a$")
+    fig.legend("fill", "cover", "the disc inside the ring at $t = 0$, which $\\rho$ and $\\phi$ cover")
+    fig.legend("line", "r", "$\\rho$ constant, at $0.25$, $0.5$, $0.75$, $0.9$ and $0.98\\,a$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("inside", "Inside the ring, in Minkowski space", "$a$", [inside], fig.done(),
+                      settings=settings + " Every length along the sheet is measured with $dX^2 + dY^2 - dZ^2$.",
+                      stops=["From the axis to $\\rho = 0.993\\,a$ the circles grow faster than the distance out to them, "
+                             "$g_{\\rho\\rho} < (\\partial_\\rho\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution in "
+                             "flat space carries the disc; Minkowski space carries it."]))
+    return views
+
+
 def morgan_morgan(ck, src):
     """The plane z = 0 of the first Morgan-Morgan disc at t = 0, the disc and the vacuum plane round
     it, in Weyl's chart at m = a/5 in units of the disc's radius a.
@@ -14726,6 +14821,7 @@ DRAWN = {
     "lewis": lewis,
     "kantowski_sachs": kantowski_sachs,
     "curzon_chazy": curzon_chazy,
+    "bach_weyl_ring": bach_weyl_ring,
     "double_kerr": double_kerr,
     "neugebauer_meinel": neugebauer_meinel,
     "morgan_morgan": morgan_morgan,
@@ -15686,6 +15782,24 @@ CAPTIONS = {
         "The disc is a cap, smooth at its centre and steepest at the rim, where the dust moves at $0.94\\,c$, and the "
         "vacuum plane round it flattens with distance. The two meet at the rim with one tangent, and the curvature of "
         "the spacetime diverges there; the same plane at every moment is the same surface.",
+    ],
+    ("bach_weyl_ring", "outside"): [
+        "The plane $z = 0$ of the Bach-Weyl ring outside the ring at one moment ($m = a/2$), drawn as a surface in flat "
+        "space with every distance along it the metric distance. On it $g_{\\rho\\rho} = e^{2\\gamma - 2\\psi}$ and the "
+        "circle of Weyl's radius $\\rho$ has circumference $2\\pi\\rho\\,e^{-\\psi}$, least, $2\\pi \\times 2.08\\,a$, at "
+        "$\\rho = 1.22\\,a$, and growing without bound toward the ring.",
+        "The surface narrows from far out to a neck and widens again toward the ring, until it lies level at "
+        "$\\rho = 1.12\\,a$, where the drawing stops. The ring itself is a proper distance $0.24\\,a$ further in, a "
+        "circle of infinite circumference.",
+    ],
+    ("bach_weyl_ring", "inside"): [
+        "The disc inside the Bach-Weyl ring at one moment ($z = 0$, $\\rho < a$, $m = a/2$), drawn as a surface in three "
+        "dimensional Minkowski space with every distance along it, measured with $dX^2 + dY^2 - dZ^2$, the metric "
+        "distance. The potential deepens from the centre toward the ring, so each circle, of circumference "
+        "$2\\pi\\rho\\,e^{-\\psi}$, grows faster than the distance out to it, which no surface of revolution in flat "
+        "space allows.",
+        "The sheet is flat at the centre of the ring and steepens toward its edge, drawn to $\\rho = 0.98\\,a$. Beyond "
+        "it the ring lies an infinite proper distance away, and its circumference is infinite.",
     ],
     ("curzon_chazy", "equator"): [
         "The plane $z = 0$ of the Curzon-Chazy particle at one moment ($m = 1$), drawn as a surface in flat space "

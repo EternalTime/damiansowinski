@@ -16424,6 +16424,233 @@ def morgan_morgan(ck, src):
     return views
 
 
+BACH_WEYL_SCALE = 4.0   # the length l of p, q = arctan((ct -+ x_*)/l), in units of the ring's radius a
+
+# Each view of Bach and Weyl's ring: (id, label, chart, drawn coordinate, coordinates held fixed, the
+# surface, Weyl's z on the axis or rho in the plane as a function of the drawn coordinate and its
+# inverse, the constants of the coordinate drawn, the name of the coordinate as TeX).
+BACH_WEYL_VIEWS = (
+    ("weyl_axis", "The axis", "weyl", "z", {"rho": nr.BW_AXIS, "phi": "0"}, "axis",
+     lambda z: z, lambda z: z, (-4, -2, -1, 1, 2, 4), "z"),
+    ("weyl_outside", "The plane outside the ring", "weyl", "\\rho", {"phi": "0", "z": "0"}, "outside",
+     lambda r: r, lambda r: r, (1.5, 2, 4, 8), "\\rho"),
+    ("weyl_inside", "The plane inside the ring", "weyl", "\\rho", {"phi": "0", "z": "0"}, "inside",
+     lambda r: r, lambda r: r, (0.5, 0.9, 0.99), "\\rho"),
+    ("toroidal_axis", "The axis", "toroidal", "\\sigma", {"zeta": nr.BW_AXIS, "phi": "0"}, "axis",
+     lambda s: 1 / np.tan(s / 2), lambda z: 2 * np.arctan2(1.0, z), (0.5, 1.0, 2.0, 4.283, 5.283, 5.783), "\\sigma"),
+    ("toroidal_outer", "The plane outside the ring", "toroidal", "\\zeta", {"sigma": "0", "phi": "0"}, "outside",
+     lambda x: 1 / np.tanh(x / 2), lambda r: 2 * np.arctanh(1 / r), (0.25, 0.5, 1, 2), "\\zeta"),
+    ("toroidal_inner", "The plane inside the ring", "toroidal", "\\zeta", {"sigma": "pi", "phi": "0"}, "inside",
+     lambda x: np.tanh(x / 2), lambda r: 2 * np.arctanh(r), (1, 3, 5), "\\zeta"),
+    ("oblate_axis", "The axis", "oblate_spheroidal", "\\xi", {"eta": "1", "phi": "0"}, "half",
+     lambda x: x, lambda z: z, (1, 2, 4, 8), "\\xi"),
+    ("oblate_plane", "The plane outside the ring", "oblate_spheroidal", "\\xi", {"eta": "0", "phi": "0"}, "outside",
+     lambda x: np.sqrt(1 + x * x), lambda r: np.sqrt(r * r - 1), (1, 2, 4, 8), "\\xi"),
+    ("oblate_disc", "The disc inside the ring", "oblate_spheroidal", "\\eta", {"xi": "0", "phi": "0"}, "inside",
+     lambda e: np.sqrt(1 - e * e), lambda r: np.sqrt(1 - r * r), (0.9, 0.5, 0.15), "\\eta"),
+)
+
+
+def bach_weyl_ring(ck, src):
+    """Bach and Weyl's ring at m = a/2 on its two totally geodesic surfaces, in units of the ring's
+    radius a, with p, q = arctan((ct -+ x_*)/l) and x_* the tortoise coordinate of each surface.
+
+    The axis, on which the metric is -e^(2 psi)c^2dt^2 + e^(-2 psi)dz^2 with psi = -m/sqrt(z^2 + a^2)
+    regular everywhere, is Minkowski's diamond, in Weyl's z and in the toroidal sigma, and the half
+    of it above the ring's plane in the oblate spheroidal xi is the triangle with the centre of the
+    ring on X = 0. The plane outside the ring, on which rho_* is the integral of e^(gamma - 2 psi)
+    from the ring and converges there, is the triangle with the ring a timelike singularity on
+    X = 0; the Kretschmann scalar is checked to diverge toward it. The plane inside the ring, on
+    which rho_* is the same integral from the axis and grows without bound toward the ring, is
+    the whole triangle with the axis on X = 0: the ring is its two far edges, which light reaches
+    only as t -> +-infinity. One event is checked to land on one point through all three charts."""
+    ell = BACH_WEYL_SCALE
+    axis_star, plane_star = nr._bach_weyl_star("weyl_axis"), nr._bach_weyl_star("weyl_plane")
+    name = "Bach-Weyl"
+    settings = ("The ring at $m = a/2$, with the radius $a$ of the ring in Weyl's coordinates the unit of every "
+                f"length, and $\\ell = {ell:g}\\,a$.")
+    outside_moment = slices.moments("bach_weyl_ring", "outside")[0]
+    inside_moment = slices.moments("bach_weyl_ring", "inside", label="$t = 0$")[0]
+    centre_moment = slices.moments("bach_weyl_ring", "inside", label="$t = 0$, the centre of the ring")[0]
+    TS = (-8, -4, -2, 0, 2, 4, 8)
+    corners = (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6), ((0, -PI), "$i^-$", "t", 0, 6))
+    wide, half = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25], [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    # Weyl's rho inside the ring crowding toward it, and outside it running from it to infinity.
+    inner_rho = np.concatenate([np.linspace(0.0, 0.9, 120), 1 - np.geomspace(0.1, 2e-3, 180)[1:]])
+    outer_rho = 1 + np.concatenate([np.geomspace(1e-4, 1.0, 120), np.geomspace(1.0, 4e3, 180)[1:]])
+    axis_z = spread(-np.inf, np.inf, 400, 9) * ell
+    views, landed = [], {}
+    for vid, label, system, coord, fixed, kind, weyl_of, of_weyl, constants, tex in BACH_WEYL_VIEWS:
+        star = axis_star if kind in ("axis", "half") else plane_star
+
+        def pq(t, x, star=star, weyl_of=weyl_of):
+            xs = star(weyl_of(np.asarray(x, dtype=float)))
+            t = np.asarray(t, dtype=float)
+            return np.arctan((t - xs) / ell), np.arctan((t + xs) / ell)
+        plane = Plane(src, "bach_weyl_ring", system, ("t", coord), fixed, nr.BW)
+        samples = of_weyl(np.linspace(*{"axis": (-20, 20), "half": (0.02, 20), "outside": (1.05, 20),
+                                        "inside": (0.05, 0.95)}[kind], 400))
+        # The drawn coordinate may fall as Weyl's rises, as sigma and zeta do, and X then falls with it.
+        rising = 1 if float(weyl_of(samples[-1])) > float(weyl_of(samples[0])) and samples[-1] > samples[0] else -1
+        ck.chart(f"{name} {vid}", plane, pq, ck.uniform(-20, 20, 400), np.sort(samples), lambda t, x, s=rising: (1, 0))
+        landed[vid] = pq
+        v = View(vid, label, wide if kind == "axis" else half, system)
+        if kind == "axis":
+            v.fill("region", DIAMOND)
+            v.fill("cover", DIAMOND)
+            xs_all = of_weyl(axis_z)
+            grid(v, "r", lambda x, t, pq=pq: pq(t, x), constants, S_ALL)
+            grid(v, "surface", lambda x, t, pq=pq: pq(t, x), (float(of_weyl(0.0)),), S_ALL)
+            grid(v, "t", pq, TS, xs_all)
+            diamond_edges(v)
+            label_on(v, pq(0, of_weyl(2.0)), "$z = 2\\,a$")
+            v.legend("cover", f"the whole axis, which $t$ and ${tex}$ cover")
+            v.legend("r", f"${tex}$ constant" + (", at $\\pm 1$, $\\pm 2$ and $\\pm 4\\,a$" if tex == "z" else
+                                               ", at $0.5$, $1$ and $2$ and at $2\\pi$ less each"))
+            v.legend("t", "$ct$ constant, in units of $a$")
+            v.legend("surface", "the centre of the ring, " + ("$z = 0$" if tex == "z" else "$\\sigma = \\pi$"))
+            v.slice(centre_moment, points=[pq(0.0, float(of_weyl(0.0)))], label="$t = 0$, the centre of the ring")
+            v.set(restriction="The axis only, totally geodesic, each point in the diagram a single event.",
+                  settings=settings)
+        else:
+            v.fill("region", TRIANGLE)
+            v.fill("cover", TRIANGLE)
+            v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+            for at, text, anchor, dx, dy in corners:
+                v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+                if kind != "inside" or at[0] == 0:
+                    v.label_xt(at, text, anchor, dx=dx, dy=dy)
+            xs_all = of_weyl({"half": np.abs(axis_z[axis_z >= 0]), "outside": outer_rho, "inside": inner_rho}[kind])
+            grid(v, "r", lambda x, t, pq=pq: pq(t, x), constants, S_ALL)
+            grid(v, "t", pq, TS, xs_all)
+            edge = float(of_weyl({"half": 0.0, "outside": 1.0, "inside": 0.0}[kind]))
+            edge_text = f"${tex} = {edge:g}$" if math.isfinite(edge) else f"${tex} \\to \\infty$"
+            v.label_xt([0, 0.25], edge_text, "r", dx=-6)
+            v.legend("r", f"${tex}$ constant, at " + ", ".join(f"${c:g}$" for c in constants))
+            v.legend("t", "$ct$ constant, in units of $a$")
+            if kind == "half":
+                v.line("surface", [[[0, -PI], [0, PI]]])
+                v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+                v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+                v.legend("cover", f"the axis above the plane of the ring, which $t$ and ${tex}$ cover")
+                v.legend("surface", f"{edge_text}, the centre of the ring, beyond which the axis runs on below the plane")
+                v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+                v.slice(centre_moment, points=[pq(0.0, edge)], label="$t = 0$, the centre of the ring")
+                v.set(restriction="The half axis $\\eta = 1$ only, totally geodesic, each point in the diagram a single "
+                                  "event.", settings=settings)
+            elif kind == "outside":
+                v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+                v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+                v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+                v.legend("cover", f"the plane of the ring outside it, which $t$ and ${tex}$ cover")
+                v.legend("singular", "the ring, " + ("$\\rho = a$" if tex == "\\rho" else "$\\zeta \\to \\infty$"
+                                                    if tex == "\\zeta" else "$\\xi = 0$")
+                         + ", where the Kretschmann scalar diverges")
+                v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+                lo, hi = outside_moment.reach("weyl", "\\rho")
+                r = of_weyl(np.linspace(lo, hi, 60))
+                v.slice(outside_moment, [pq(0 * r, r)])
+                v.set(restriction="The half plane of the ring outside it at fixed $\\phi$ only, totally geodesic, each "
+                                  "point in the diagram a single event.", settings=settings)
+            else:
+                v.line("centre", [[[0, -PI], [0, PI]]])
+                v.label_xt([HALF, HALF], "the ring", "bl", dx=5, dy=-3)
+                v.label_xt([HALF, -HALF], "the ring", "tl", dx=5, dy=3)
+                v.legend("cover", f"the disc inside the ring, which $t$ and ${tex}$ cover")
+                v.legend("centre", f"{edge_text}, the axis, through the centre of the ring")
+                v.legend("scri", "the ring, " + ("$\\rho \\to a$" if tex == "\\rho" else "$\\zeta \\to \\infty$"
+                                                if tex == "\\zeta" else "$\\eta \\to 0$")
+                         + ", which light from the disc reaches only as $t \\to \\pm\\infty$")
+                lo, hi = inside_moment.reach("weyl", "\\rho")
+                r = of_weyl(np.linspace(lo, hi, 60))
+                v.slice(inside_moment, [pq(0 * r, r)])
+                v.set(restriction="The disc inside the ring at fixed $\\phi$ only, totally geodesic, each point in the "
+                                  "diagram a single event.", settings=settings)
+        views.append(v)
+        # The Kretschmann scalar is taken as the spacetime diagrams take it, as numbers from the
+        # published scalar with psi and gamma written out: sympy's simplify does not finish on it.
+        if vid in ("weyl_outside", "weyl_axis"):
+            row = next(d for d in nr.DIAGRAMS if (d.metric, d.system, d.view) ==
+                       ("bach_weyl_ring", "weyl", "outside" if vid == "weyl_outside" else "axis"))
+            scalar = nr.Chart(row).fn["K"]
+        if vid == "weyl_outside":
+            ck.diverges(f"{name}: the Kretschmann scalar diverges toward the ring from outside",
+                        float(scalar(0.0, 1.02)), float(scalar(0.0, 1.01)))
+        if vid == "weyl_axis":
+            ck.finite(f"{name}: the Kretschmann scalar is finite on the axis",
+                      np.array([float(scalar(0.0, z)) for z in (-2.0, 0.0, 1.5)]))
+            g00, _, g11, *_ = plane.metric(np.zeros(3), np.array([-2.0, 0.0, 1.5]))
+            ck.limit(f"{name}: g_tt g_zz = -1 on the axis", g00 * g11, [-1.0] * 3, 1e-7)
+            ck.limit(f"{name}: psi = -m/a at the centre of the ring", 0.5 * np.log(-g00[1]), -0.5, 1e-7)
+    # One event through all three charts: z = 1.5 a on the axis, rho = 2 a outside, rho = a/2 inside.
+    one = [np.max(np.abs(np.array(landed["weyl_axis"](0.4, 1.5)) - np.array(landed["toroidal_axis"](0.4, 2 * math.atan2(1.0, 1.5))))),
+           np.max(np.abs(np.array(landed["weyl_axis"](0.4, 1.5)) - np.array(landed["oblate_axis"](0.4, 1.5)))),
+           np.max(np.abs(np.array(landed["weyl_outside"](0.4, 2.0)) - np.array(landed["toroidal_outer"](0.4, 2 * math.atanh(0.5))))),
+           np.max(np.abs(np.array(landed["weyl_outside"](0.4, 2.0)) - np.array(landed["oblate_plane"](0.4, math.sqrt(3.0))))),
+           np.max(np.abs(np.array(landed["weyl_inside"](0.4, 0.5)) - np.array(landed["toroidal_inner"](0.4, 2 * math.atanh(0.5))))),
+           np.max(np.abs(np.array(landed["weyl_inside"](0.4, 0.5)) - np.array(landed["oblate_disc"](0.4, math.sqrt(0.75)))))]
+    ck.limit(f"{name}: one event lands on one point through all three charts", one, [0.0] * 6, 1e-8)
+    ck.limit(f"{name}: light from the axis is at rho = 0.99 a at ct = 3.67 a", float(plane_star(0.99)), 3.6697, 1e-3)
+    ck.limit(f"{name}: light from rho = 2 a outside reaches the ring at ct = 2.00 a", float(plane_star(2.0)), 1.9951, 1e-3)
+    return views
+
+
+def _bach_weyl_captions():
+    """The captions of the nine views of Bach and Weyl's ring."""
+    m = "($m = a/2$)"
+
+    def maps(x):
+        return f"the maps $p = \\arctan((ct - {x}_*)/\\ell)$ and $q = \\arctan((ct + {x}_*)/\\ell)$"
+    out = {}
+    for vid, of, star in (
+            ("weyl_axis", "$\\rho = 0$", "$z_* = \\int_0^z e^{-2\\psi}dz'$"),
+            ("toroidal_axis", "$\\zeta = 0$, where $z = a\\cot(\\sigma/2)$,", "$z_* = \\int_0^z e^{-2\\psi}dz'$")):
+        out[vid] = [
+            f"The axis {of} of the Bach-Weyl ring {m}, each point in the diagram a single event. The metric on it is "
+            f"$-e^{{2\\psi}}c^2dt^2 + e^{{-2\\psi}}dz^2$ with $\\psi = -m/\\sqrt{{z^2 + a^2}}$, and with {star} {maps("z")} bring "
+            "it into the whole diamond, drawn with $T = p + q$ up and $X = q - p$ across.",
+            "The axis threads the ring through its centre, where the curvature is finite, and runs to infinity on both "
+            "sides, so the diagram is that of a line of flat space. Since $g_{tt}g_{zz} = -1$, $z$ is an affine parameter "
+            "along every light ray.",
+        ]
+    out["oblate_axis"] = [
+        f"The half axis $\\eta = 1$ of the Bach-Weyl ring {m}, where $z = a\\xi$, each point in the diagram a single "
+        f"event. The metric on it is $-e^{{2\\psi}}c^2dt^2 + a^2e^{{-2\\psi}}d\\xi^2$, and with "
+        f"$\\xi_* = a\\int_0^\\xi e^{{-2\\psi}}d\\xi'$ {maps('\\xi')} bring it into Minkowski's triangle, drawn with $T = p + q$ up "
+        "and $X = q - p$ across.",
+        "The edge $X = 0$ is the centre of the ring, $\\xi = 0$, a regular point. The half axis below the plane of the "
+        "ring, $\\eta = -1$, is the mirror image of this triangle in that edge.",
+    ]
+    for vid, where, star in (
+            ("weyl_outside", "$z = 0$, $\\rho > a$", "$\\rho_* = \\int_a^\\rho e^{\\gamma - 2\\psi}d\\rho'$"),
+            ("toroidal_outer", "$\\sigma = 0$, where $\\rho = a\\coth(\\zeta/2)$,",
+             "$\\rho_* = \\int_a^\\rho e^{\\gamma - 2\\psi}d\\rho'$"),
+            ("oblate_plane", "$\\eta = 0$, where $\\rho = a\\sqrt{1 + \\xi^2}$,",
+             "$\\rho_* = \\int_a^\\rho e^{\\gamma - 2\\psi}d\\rho'$")):
+        out[vid] = [
+            f"The plane of the Bach-Weyl ring outside the ring {m}, {where} at fixed $\\phi$, each point in the diagram "
+            f"a single event. With {star}, which converges at the ring, {maps('\\rho')} bring it into Minkowski's triangle, drawn "
+            "with $T = p + q$ up and $X = q - p$ across.",
+            "The edge $X = 0$ is the ring, a timelike singularity where the Kretschmann scalar diverges. It lies a "
+            "finite proper distance from every event of the plane, and light from $\\rho = 2a$ reaches it in "
+            "$ct = 2.00\\,a$.",
+        ]
+    for vid, where in (
+            ("weyl_inside", "$z = 0$, $\\rho < a$"),
+            ("toroidal_inner", "$\\sigma = \\pi$, where $\\rho = a\\tanh(\\zeta/2)$,"),
+            ("oblate_disc", "$\\xi = 0$, where $\\rho = a\\sqrt{1 - \\eta^2}$,")):
+        out[vid] = [
+            f"The disc inside the Bach-Weyl ring {m}, {where} at fixed $\\phi$, each point in the diagram a single "
+            f"event. With $\\rho_* = \\int_0^\\rho e^{{\\gamma - 2\\psi}}d\\rho'$, which grows without bound toward the "
+            f"ring, {maps('\\rho')} bring it into the whole of Minkowski's triangle, drawn with $T = p + q$ up and $X = q - p$ "
+            "across.",
+            "The edge $X = 0$ is the axis, and the two far edges are the ring. Light from the axis is at "
+            "$\\rho = 0.99\\,a$ at $ct = 3.67\\,a$ and at $0.999\\,a$ only at $ct = 3 \\times 10^7\\,a$, and it reaches "
+            "the ring at no finite $t$; the proper distance to the ring is infinite as well.",
+        ]
+    return out
+
+
 DOUBLE_KERR_SCALE = 4.0   # the length l of p, q = arctan((ct -+ x_*)/l), in units of m
 
 
@@ -21158,6 +21385,7 @@ DRAWN = {
     "double_kerr": double_kerr,
     "neugebauer_meinel": neugebauer_meinel,
     "morgan_morgan": morgan_morgan,
+    "bach_weyl_ring": bach_weyl_ring,
     "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
     "zipoy_voorhees": zipoy_voorhees,
     "erez_rosen": erez_rosen,
@@ -21375,6 +21603,7 @@ CAPTIONS = {
         "Minkowski space, drawn with $T = p + q$ up and $X = q - p$ across.",
         "The strut is the timelike line $\\rho = 0$ on the left, and no horizon crosses the plane.",
     ],
+    **{("bach_weyl_ring", view): text for view, text in _bach_weyl_captions().items()},
     ("morgan_morgan", "weyl_axis"): [
         "The axis $\\rho = 0$ of the first Morgan-Morgan disc ($m = a/5$), each point in the diagram a single event. "
         "The metric on it is $-e^{2\\psi}c^2dt^2 + e^{-2\\psi}dz^2$, and with $z_* = \\int_0^z e^{-2\\psi}dz'$ the maps "

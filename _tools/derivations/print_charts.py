@@ -17787,6 +17787,394 @@ def morgan_morgan_check(chart):
 CHARTS["morgan_morgan"] = [lambda s=s: morgan_morgan(s) for s in ("weyl", "oblate")]
 
 
+# -- Bach and Weyl's ring -----------------------------------------------------------------
+
+BW_K, BW_E = "\\mathrm{K}\\left(\\kappa\\right)", "\\mathrm{E}\\left(\\kappa\\right)"
+BW_L2 = "l_2 = \\sqrt{\\left(\\rho + a\\right)^2 + z^2}"
+BW_KAPPA = "\\kappa = \\dfrac{4a\\rho}{l_2^2}"
+BW_PSI = f"\\psi = -\\dfrac{{2m\\,{BW_K}}}{{\\pi\\,l_2}}"
+BW_GAMMA = ("\\gamma = -\\dfrac{m^2}{4\\pi^2a^2\\rho}\\left(\\left(\\rho + a\\right)"
+            f"\\left({BW_E} - {BW_K}\\right)^2"
+            f" + \\dfrac{{\\left(\\rho - a\\right)\\left({BW_E} - \\left(1 - \\kappa\\right){BW_K}\\right)^2}}"
+            "{1 - \\kappa}\\right)")
+BW_WEYL_PARAMETERS = ["m", "a", BW_L2, BW_KAPPA, BW_PSI, BW_GAMMA]
+BW_T_KAPPA = "\\kappa = 1 - e^{-2\\zeta}"
+BW_T_PSI = ("\\psi = -\\dfrac{\\sqrt{2}\\,m}{\\pi a}e^{-\\zeta/2}\\sqrt{\\cosh\\zeta - \\cos\\sigma}\\,"
+            f"{BW_K}")
+BW_T_GAMMA = ("\\gamma = -\\dfrac{m^2}{4\\pi^2a^2\\sinh\\zeta}\\left(\\left(e^{\\zeta} - \\cos\\sigma\\right)"
+              f"\\left({BW_E} - {BW_K}\\right)^2"
+              " - \\left(e^{-\\zeta} - \\cos\\sigma\\right)"
+              f"\\left(e^{{\\zeta}}{BW_E} - e^{{-\\zeta}}{BW_K}\\right)^2\\right)")
+BW_TOROIDAL_PARAMETERS = ["m", "a", BW_T_KAPPA, BW_T_PSI, BW_T_GAMMA]
+# The oblate spheroidal chart writes the two integrals at Landen's parameter, (1 - eta^2)/(1 + xi^2),
+# the square of (l_2 - l_1)/(l_2 + l_1), which is rational in the coordinates: K(1 - l_1^2/l_2^2) =
+# ((l_1 + l_2)/l_2) K(kappa), and the only radical left is the sqrt(1 + xi^2) below psi.
+BW_O_KAPPA = "\\kappa = \\dfrac{1 - \\eta^2}{1 + \\xi^2}"
+BW_O_PSI = f"\\psi = -\\dfrac{{2m\\,{BW_K}}}{{\\pi a\\sqrt{{1 + \\xi^2}}}}"
+BW_O_GAMMA = ("\\gamma = -\\dfrac{2m^2}{\\pi^2a^2\\left(\\xi^2 + \\eta^2\\right)^2}\\left("
+              f"\\left(1 - \\eta^2\\right)^2{BW_K}^2"
+              " + \\left(1 - \\eta^2\\right)\\left(\\left(1 + \\xi^2\\right)"
+              f"\\left({BW_E}^2 + 2{BW_E}{BW_K} - 2{BW_K}^2\\right) - 2{BW_E}{BW_K}\\right)"
+              f" + \\left(1 + \\xi^2\\right)\\left({BW_E} - {BW_K}\\right)"
+              f"\\left(\\left(1 + \\xi^2\\right)\\left({BW_E} - {BW_K}\\right) - 2{BW_E}\\right)\\right)")
+BW_OBLATE_PARAMETERS = ["m", "a", BW_O_KAPPA, BW_O_PSI, BW_O_GAMMA]
+BW_HELD = ("psi", "gamma")
+BW_SYSTEMS = ("weyl", "toroidal", "oblate_spheroidal")
+
+
+def bach_weyl_ring(system):
+    """Bach and Weyl's ring, the member of Weyl's class whose potential is Newton's potential of
+    a circular ring of mass m and radius a in Weyl's coordinates,
+    ds^2 = -e^{2 psi} c^2 dt^2 + e^{-2 psi}(e^{2 gamma}(drho^2 + dz^2) + rho^2 dphi^2),
+    psi = -2 m K(kappa)/(pi l_2), with kappa = 4 a rho/l_2^2 the parameter of the complete
+    elliptic integrals and l_2 the greatest distance to the ring, in Weyl's chart, in toroidal
+    coordinates about the ring, rho = a sinh(zeta)/(cosh(zeta) - cos(sigma)) and
+    z = a sin(sigma)/(cosh(zeta) - cos(sigma)), and in the oblate spheroidal coordinates
+    rho = a sqrt((1 + xi^2)(1 - eta^2)), z = a xi eta.
+
+    psi and gamma are names each chart defines, held as functions of the two coordinates while
+    the tensors are built (vm.HELD), as Erez and Rosen's are. `reduce` writes every derivative
+    of gamma by Weyl's quadrature and the second derivative of psi along the first of the two
+    coordinates by Laplace's equation, which leaves psi's other derivatives with no relation
+    among them, so the Ricci tensor is exactly zero. bach_weyl_ring_check holds each chart to
+    Semerak's formulas, and bach_weyl_ring.md beside this file is the derivation."""
+    D = sp.Derivative
+    c2 = "{c2}"
+    if system == "weyl":
+        coords, parameters, name = ["t", "\\rho", "\\phi", "z"], BW_WEYL_PARAMETERS, "Weyl"
+        text = ("ds^2 = -e^{2\\psi}{c2}dt^2 + e^{-2\\psi}\\left(e^{2\\gamma}\\left(d\\rho^2 + dz^2\\right)"
+                " + \\rho^2d\\phi^2\\right)")
+        domains = ["t \\in (-\\infty, \\infty)", "\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                   "z \\in (-\\infty, \\infty)", "(\\rho, z) \\neq (a, 0) \\;\\text{(the ring)}"]
+        first, second = "\\rho", "z"
+    elif system == "toroidal":
+        coords, parameters, name = ["t", "\\zeta", "\\sigma", "\\phi"], BW_TOROIDAL_PARAMETERS, "Toroidal"
+        text = ("ds^2 = -e^{2\\psi}{c2}dt^2 + \\dfrac{a^2e^{-2\\psi}}{\\left(\\cosh\\zeta - \\cos\\sigma\\right)^2}"
+                "\\left(e^{2\\gamma}\\left(d\\zeta^2 + d\\sigma^2\\right) + \\sinh^2\\zeta\\,d\\phi^2\\right)")
+        domains = ["t \\in (-\\infty, \\infty)", "\\zeta \\in [0, \\infty)", "\\sigma \\in [0, 2\\pi)",
+                   "\\phi \\in [0, 2\\pi)", "(\\zeta, \\sigma) \\neq (0, 0) \\;\\text{(spatial infinity)}",
+                   "\\zeta \\to \\infty \\;\\text{(the ring)}"]
+        first, second = "\\zeta", "\\sigma"
+    else:
+        coords, parameters, name = ["t", "\\xi", "\\eta", "\\phi"], BW_OBLATE_PARAMETERS, "Oblate Spheroidal"
+        text = ("ds^2 = -e^{2\\psi}{c2}dt^2 + a^2e^{-2\\psi}\\left(e^{2\\gamma}\\left(\\xi^2 + \\eta^2\\right)"
+                "\\left(\\dfrac{d\\xi^2}{1 + \\xi^2} + \\dfrac{d\\eta^2}{1 - \\eta^2}\\right)"
+                " + \\left(1 + \\xi^2\\right)\\left(1 - \\eta^2\\right)d\\phi^2\\right)")
+        domains = ["t \\in (-\\infty, \\infty)", "\\xi \\in [0, \\infty)", "\\eta \\in [-1, 1]", "\\phi \\in [0, 2\\pi)",
+                   "(\\xi, \\eta) \\neq (0, 0) \\;\\text{(the ring)}"]
+        first, second = "\\xi", "\\eta"
+    line = lambda c: text.replace(c2, c)  # noqa: E731
+    probe = vm.Reader(coords, parameters, (), held=BW_HELD)
+    x, y = probe.symbol[first], probe.symbol[second]
+    psi, gam = probe.parameters["psi"], probe.parameters["gamma"]
+    reduce = bach_weyl_ring_reduce(system, x, y, psi, gam)
+    lead = [gam, psi]
+    for g in (gam, psi):
+        lead += [D(g, x), D(g, y)]
+    for g in (gam, psi):
+        lead += [D(g, (x, 2)), D(g, x, y), D(g, (y, 2))]
+    derivatives = [D(psi, (x, 2)), D(psi, x, y), D(psi, (y, 2)), D(psi, x), D(psi, y)]
+    named = []
+    if system == "weyl":
+        lead += [x]
+        factors = sp.factor
+    elif system == "toroidal":
+        lead += [probe.parameters["a"], sp.sinh(x), sp.cosh(x), sp.sin(y), sp.cos(y)]
+        factors = bach_weyl_ring_toroidal_factors(x, y)
+    else:
+        lead += [probe.parameters["a"], x, y]
+        named = [(sp.Symbol("BWH"), 1 - y ** 2, "1 - \\eta^2"), (sp.Symbol("BWX"), 1 + x ** 2, "1 + \\xi^2"),
+                 (sp.Symbol("BWS"), x ** 2 + y ** 2, "\\xi^2 + \\eta^2")]
+        factors = named_factors(named, [(1 + y, 1 - y, named[0][0])])
+
+    def pretty(value):
+        c, rest = factors(sp.sympify(value)).as_coeff_Mul()
+        return _keep_coeff(c, sp.powsimp(rest, combine="exp"))
+
+    def collect(base, p):
+        # Each value is a polynomial in psi's derivatives, grouped by them, and every coefficient
+        # is written in the sums the line element has.
+        e, forward, back = cp.symbolize(sp.expand(base))
+        poly = sp.Poly(e, *[forward.get(g, g) for g in derivatives])
+        if poly.total_degree() == 0:
+            return p.sum_of(base)
+        terms = []
+        for monomial, coeff in sorted(poly.terms(), key=lambda mc: tuple(-k for k in mc[0])):
+            c, rest = factors(coeff.as_expr().xreplace(back)).as_coeff_Mul()
+            terms.append((c, rest * sp.Mul(*[g ** k for g, k in zip(derivatives, monomial)])))
+        return cp.Sum(terms)
+    printer = {"lead": lead, "collect": collect, "named": {q: t for q, _, t in named},
+               "factors": [q for q, _, _ in named] + lead}
+    return {
+        "metric_id": "bach_weyl_ring",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "pretty": pretty,
+        "reduce": reduce,
+        "check": bach_weyl_ring_check,
+    }
+
+
+def bach_weyl_ring_toroidal_factors(zeta, sigma):
+    """A factoring for the toroidal chart. The metric holds zeta in cosh(zeta) and sinh^2(zeta)
+    and sigma in cos(sigma), so a value is a rational function of C = cosh(zeta) and
+    Y = cos(sigma), times sinh(zeta) or not and times sin(sigma) or not, once each derivative of
+    psi taken an odd number of times along a coordinate counts as odd in it: it is held as the
+    sine times a symbol, the value is factored in C, Y and the symbols, and each factor is then
+    written back in the derivatives themselves. The checker's Geometry hands a value back in
+    e^zeta, so it is read as a rational function of T = e^zeta, and a polynomial in T over a power
+    of T is written in C and S = sinh(zeta) by Chebyshev's polynomials,
+    T^j + T^-j = 2 T_j(C) and T^j - T^-j = 2 S U_(j-1)(C), with no power of C + S multiplied out."""
+    C, Y, T = sp.symbols("BWC BWY BWT")
+    S, Z = sp.symbols("BWS BWZ")
+
+    def by_sine(side):
+        """The even and odd parts of a polynomial in Z, with Z^2 = 1 - Y^2."""
+        out = [sp.Integer(0), sp.Integer(0)]
+        for (k,), c in sp.Poly(side, Z).terms():
+            out[k % 2] += c * (1 - Y ** 2) ** (k // 2)
+        return out
+
+    def by_sinh(side, shift):
+        """side/T^shift as a(C) + S b(C), for a polynomial `side` in T."""
+        a, b = sp.Integer(0), sp.Integer(0)
+        terms = {k - shift: c for (k,), c in sp.Poly(side, T).terms()}
+        for k in sorted({abs(k) for k in terms}):
+            up, down = terms.get(k, 0), terms.get(-k, 0)
+            if k == 0:
+                a += up
+                continue
+            a += (up + down) * sp.chebyshevt_poly(k, C)
+            b += (up - down) * sp.chebyshevu_poly(k - 1, C)
+        return sp.expand(a), sp.expand(b)
+
+    def factors(value):
+        value = sp.sympify(value)
+        forward, back = {}, {}
+        sinh = (T ** 2 - 1) / (2 * T)
+        for d in value.atoms(sp.Derivative):
+            along = dict(d.variable_count)
+            i, j = along.get(zeta, 0) % 2, along.get(sigma, 0) % 2
+            held = sp.Dummy("h")
+            forward[d] = held * sinh ** i * Z ** j
+            back[held] = d / (S ** i * Z ** j)
+        e = value.xreplace(forward)
+        e = e.replace(lambda u: isinstance(u, sp.exp) and sp.expand(u.args[0] / zeta).is_Integer,
+                      lambda u: T ** sp.expand(u.args[0] / zeta))
+        e = e.subs({sp.sinh(zeta): sinh, sp.cosh(zeta): (T ** 2 + 1) / (2 * T), sp.sin(sigma): Z, sp.cos(sigma): Y})
+        top, bottom = (sp.expand(side) for side in sp.fraction(sp.together(e)))
+        if top == 0:
+            return sp.Integer(0)
+        if bottom.has(Z):
+            # sin(sigma) below the line is cleared by its conjugate, (b0 + b1 Z)(b0 - b1 Z) = b0^2 - b1^2 (1 - Y^2).
+            b0, b1 = by_sine(bottom)
+            top, bottom = sp.expand(top * (b0 - b1 * Z)), sp.expand(b0 ** 2 - b1 ** 2 * (1 - Y ** 2))
+        # The line below is centred on the middle of its powers of T, where it is a(C) or S b(C).
+        span = [k for (k,), _ in sp.Poly(bottom, T).terms()]
+        if (min(span) + max(span)) % 2:
+            raise AssertionError("bach_weyl_ring: a value of the toroidal chart holds a half angle below the line")
+        shift = (min(span) + max(span)) // 2
+        da, db = by_sinh(bottom, shift)
+        if da != 0 and db != 0:
+            raise AssertionError("bach_weyl_ring: a value of the toroidal chart has no one parity below the line")
+        found = []
+        for j, part in enumerate(by_sine(top)):
+            for i, piece in enumerate(by_sinh(sp.expand(part), shift)):
+                if piece != 0:
+                    found.append((i, j, piece))
+        if not found:
+            return sp.Integer(0)
+        if len(found) != 1:
+            raise AssertionError("bach_weyl_ring: a value of the toroidal chart has no one parity in its sines")
+        i, j, tv = found[0]
+        # A sine below the line is brought above it: 1/S = S/(C^2 - 1).
+        bv = da if db == 0 else db * (C ** 2 - 1)
+        i += 0 if db == 0 else 1
+        tv = tv * (C ** 2 - 1) ** (i // 2)
+        out = sp.factor(sp.cancel(tv / bv)) * S ** (i % 2) * Z ** j
+        number, result = sp.Integer(1), sp.Integer(1)
+        for f in sp.Mul.make_args(out):
+            if f.is_Number:
+                number *= f
+                continue
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            result *= base ** k
+        # (C - 1)(C + 1) is sinh^2 and (1 - Y)(1 + Y) is sin^2, wherever the two stand to one power.
+        powers = result.as_powers_dict()
+        for lo, hi, square, sign in ((C - 1, C + 1, S ** 2, 1), (Y - 1, Y + 1, Z ** 2, -1)):
+            k1, k2 = powers.get(lo, 0), powers.get(hi, 0)
+            k = min(k1, k2) if k1 > 0 and k2 > 0 else max(k1, k2) if k1 < 0 and k2 < 0 else 0
+            if k:
+                result = result / (lo * hi) ** k * square ** k
+                number *= sign ** k
+        # Each held symbol is written back as its derivative over the sines it carried, and the
+        # powers of the sines that every term of a sum then holds are taken out of the sum.
+        written = sp.Integer(1)
+        for f in sp.Mul.make_args(sp.powsimp(result)):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            if base.is_Add:
+                top, bottom = sp.fraction(sp.together(base.xreplace(back)))
+                # The cosines are written in the sines wherever they come squared, as the line
+                # element writes sinh^2, and the sines every term then holds are taken out.
+                top = sp.expand(sum(c * (1 + S ** 2) ** (p // 2) * C ** (p % 2) * (1 - Z ** 2) ** (q // 2) * Y ** (q % 2)
+                                    for (p, q), c in sp.Poly(sp.expand(top), C, Y).terms()))
+                for sine in (S, Z):
+                    common = min(sp.Poly(term, sine).degree() for term in sp.Add.make_args(top))
+                    top, bottom = sp.expand(top / sine ** common), bottom / sine ** common
+                written *= (top / bottom) ** k
+            else:
+                written *= f.xreplace(back)
+        result = sp.powsimp(written).subs({S: sp.sinh(zeta), C: sp.cosh(zeta), Z: sp.sin(sigma), Y: sp.cos(sigma)})
+        c, result = result.as_coeff_Mul()
+        return _keep_coeff(number * c, result)
+    return factors
+
+
+def bach_weyl_ring_quadrature(system, x, y, px, py):
+    """Weyl's quadrature for gamma, its two first derivatives in those of psi, in each chart."""
+    if system != "toroidal":
+        return morgan_morgan_quadrature(x, y, px, py, system == "oblate_spheroidal")
+    d, turn = sp.cosh(x) - sp.cos(y), 1 - sp.cosh(x) * sp.cos(y)
+    return (sp.sinh(x) / d * (turn * (px ** 2 - py ** 2) - 2 * sp.sinh(x) * sp.sin(y) * px * py),
+            sp.sinh(x) / d * (sp.sinh(x) * sp.sin(y) * (px ** 2 - py ** 2) + 2 * turn * px * py))
+
+
+def bach_weyl_ring_laplace(system, x, y, psi):
+    """Laplace's equation for psi solved for its second derivative along the first coordinate."""
+    D = sp.Derivative
+    if system != "toroidal":
+        return morgan_morgan_laplace(x, y, psi, system == "oblate_spheroidal")
+    d = sp.cosh(x) - sp.cos(y)
+    return {D(psi, (x, 2)): -D(psi, (y, 2)) - (1 - sp.cosh(x) * sp.cos(y)) / (sp.sinh(x) * d) * D(psi, x)
+            + sp.sin(y) / d * D(psi, y)}
+
+
+def bach_weyl_ring_reduce(system, x, y, psi, gam):
+    """`value` where Weyl's field equations hold, as morgan_morgan_reduce writes it."""
+    D = sp.Derivative
+    gx, gy = bach_weyl_ring_quadrature(system, x, y, D(psi, x), D(psi, y))
+    second = bach_weyl_ring_laplace(system, x, y, psi)
+    pxx = second[D(psi, (x, 2))]
+
+    def reduce(value):
+        value = sp.sympify(value)
+        value = value.subs({D(gam, (x, 2)): sp.diff(gx, x), D(gam, (y, 2)): sp.diff(gy, y),
+                            D(gam, x, y): sp.diff(gx, y)}).doit()
+        value = value.subs({D(gam, x): gx, D(gam, y): gy}).doit()
+        value = value.subs({D(psi, (x, 3)): sp.diff(pxx, x), D(psi, (x, 2), y): sp.diff(pxx, y)}).doit()
+        return value.subs(second).doit()
+    return reduce
+
+
+def bach_weyl_ring_image(system, x, y, a):
+    """Weyl's rho and z at a point of the chart."""
+    if system == "toroidal":
+        d = sp.cosh(x) - sp.cos(y)
+        return a * sp.sinh(x) / d, a * sp.sin(y) / d
+    if system == "oblate_spheroidal":
+        return a * sp.sqrt((1 + x ** 2) * (1 - y ** 2)), a * x * y
+    return x, y
+
+
+def bach_weyl_ring_check(chart):
+    """Each chart: the Ricci tensor is exactly zero; the rates the checker declares are Laplace's
+    equation and Weyl's quadrature, since the reader holds each to the definitions; psi and
+    gamma are Semerak's (2016) equations (10) and (11) at Weyl's rho and z of the point, the
+    chart is Weyl's pulled back, and gamma vanishes on the axis. Weyl's chart: at a = 0 the
+    functions are Curzon and Chazy's, -m/R and -m^2 rho^2/(2 R^4), psi falls off as -m/R, and
+    on the axis psi = -m/sqrt(z^2 + a^2)."""
+    system = {"\\rho": "weyl", "\\zeta": "toroidal", "\\xi": "oblate_spheroidal"}[chart.coords_tex[1]]
+    reader = chart.reader
+    x = chart.symbols[1]
+    y = chart.symbols[3] if system == "weyl" else chart.symbols[2]
+    phi = chart.symbols[2] if system == "weyl" else chart.symbols[3]
+    m, a = reader.parameters["m"], reader.parameters["a"]
+    psi, gam = reader.parameters["psi"], reader.parameters["gamma"]
+    ricci = chart.geo.ricci_ll()
+    if any(vm.norm(sp.together(ricci[i][j])) != 0 for i in range(4) for j in range(4)):
+        raise AssertionError("bach_weyl_ring: the Ricci tensor does not vanish")
+    # The declared rates are the field equations: gamma's are the quadrature, and psi's solve
+    # Laplace's equation, which is the integrability of that quadrature.
+    declared = vm.Reader(chart.coords_tex, [str(p) for p in bach_weyl_ring(system)["system"]["parameters"]], (),
+                         held=BW_HELD, rates=vm.RATES[("bach_weyl_ring", system)])
+    dpsi, dgam = (declared.parameters[n] for n in ("psi", "gamma"))
+    X, Y = declared.symbol[chart.coords_tex[1]], declared.symbol[chart.coords_tex[3 if system == "weyl" else 2]]
+    px, py = declared.rates[dpsi][X], declared.rates[dpsi][Y]
+    gx, gy = bach_weyl_ring_quadrature(system, X, Y, px, py)
+    out = lambda e: e.subs(declared.held).subs(declared.held).doit()  # noqa: E731
+    if vm.norm(out(declared.rates[dgam][X] - gx)) != 0 or vm.norm(out(declared.rates[dgam][Y] - gy)) != 0:
+        raise AssertionError(f"bach_weyl_ring: the {system} chart's rates of gamma are not Weyl's quadrature")
+    pxx = bach_weyl_ring_laplace(system, X, Y, dpsi)[sp.Derivative(dpsi, (X, 2))]
+    pxx = pxx.subs({sp.Derivative(dpsi, (Y, 2)): sp.diff(out(py), Y), sp.Derivative(dpsi, X): out(px),
+                    sp.Derivative(dpsi, Y): out(py)})
+    if vm.norm(sp.diff(out(px), X) - pxx) != 0:
+        raise AssertionError(f"bach_weyl_ring: the {system} chart's psi does not solve Laplace's equation")
+    # Semerak's (10) and (11), as numbers in forty digits at six random points of the chart.
+    P, G = reader.held[psi], reader.held[gam]
+    P, G = (e.subs(reader.held).subs(reader.held) for e in (P, G))
+    rho, z = bach_weyl_ring_image(system, x, y, a)
+    rng = random.Random(0)
+    for _ in range(6):
+        point = {m: sp.Rational(rng.randint(3, 15), 7), a: sp.Rational(rng.randint(5, 15), 7)}
+        if system == "weyl":
+            point.update({x: sp.Rational(rng.randint(1, 40), 9), y: sp.Rational(rng.randint(-30, 30), 11)})
+        elif system == "toroidal":
+            point.update({x: sp.Rational(rng.randint(1, 30), 10), y: sp.Rational(rng.randint(1, 61), 10)})
+        else:
+            point.update({x: sp.Rational(rng.randint(1, 30), 10), y: sp.Rational(rng.randint(-9, 9), 10)})
+        r0, z0, m0, a0 = (sp.N(e.subs(point), 50) for e in (rho, z, m, a))
+        l1, l2 = sp.sqrt((r0 - a0) ** 2 + z0 ** 2), sp.sqrt((r0 + a0) ** 2 + z0 ** 2)
+        k2 = 1 - l1 ** 2 / l2 ** 2
+        K, E = sp.N(vm.EllipticK(k2), 50), sp.N(vm.EllipticE(k2), 50)
+        nu = -2 * m0 * K / (sp.pi * l2)
+        lam = -m0 ** 2 / (4 * sp.pi ** 2 * a0 ** 2 * r0) * ((r0 + a0) * (E - K) ** 2
+                                                           + (r0 - a0) * (E - (1 - k2) * K) ** 2 / (1 - k2))
+        for label, here, there in (("psi", P, nu), ("gamma", G, lam)):
+            if abs(sp.N(here.subs(point), 50) - sp.N(there, 50)) > sp.Float("1e-30"):
+                raise AssertionError(f"bach_weyl_ring: the {system} chart's {label} is not Semerak's")
+    if system != "weyl":
+        spec = bach_weyl_ring("weyl")
+        weyl = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
+                        held=BW_HELD)
+        p0, g0 = sp.symbols("p0 g0", real=True)
+        image = [chart.symbols[0], rho, phi, z]
+        at = dict(zip(weyl.symbols, image))
+        source = weyl.geo.g.subs({weyl.reader.parameters["psi"]: p0, weyl.reader.parameters["gamma"]: g0})
+        source = source.subs(at, simultaneous=True)
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+        pulled = J.T * source * J
+        here = chart.geo.g.subs({psi: p0, gam: g0})
+        for i in range(4):
+            for j in range(i, 4):
+                if sp.simplify((pulled[i, j] - here[i, j]).rewrite(sp.exp)) != 0:
+                    raise AssertionError(f"bach_weyl_ring: Weyl's chart pulled back misses the {system} chart "
+                                         f"in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+        return
+    # At a = 0 the ring is Curzon and Chazy's particle; far away psi -> -m/R; on the axis
+    # psi = -m/sqrt(z^2 + a^2) and gamma = 0.
+    R = sp.sqrt(x ** 2 + y ** 2)
+    if sp.simplify(P.subs(a, 0) + m / R) != 0:
+        raise AssertionError("bach_weyl_ring: at a = 0 psi is not Curzon and Chazy's")
+    if sp.simplify(P.subs(x, 0) + m / sp.sqrt(y ** 2 + a ** 2)) != 0:
+        raise AssertionError("bach_weyl_ring: on the axis psi is not -m/sqrt(z^2 + a^2)")
+    tiny = sp.Rational(1, 10 ** 12)
+    point = {m: sp.Rational(7, 5), x: sp.Rational(3, 2), y: sp.Rational(4, 5)}
+    curzon = (-m ** 2 * x ** 2 / (2 * R ** 4)).subs(point)
+    if abs(sp.N(G.subs(point).subs(a, tiny), 40) - sp.N(curzon, 40)) > sp.Float("1e-20"):
+        raise AssertionError("bach_weyl_ring: toward a = 0 gamma is not Curzon and Chazy's")
+    point = {m: sp.Rational(7, 5), a: sp.Rational(6, 5), y: sp.Rational(4, 5)}
+    if abs(sp.N(G.subs(point).subs(x, tiny), 40)) > sp.Float("1e-20"):
+        raise AssertionError("bach_weyl_ring: gamma does not vanish on the axis")
+    far = sp.Integer(10) ** 9
+    if abs(sp.N((P * R).subs(point).subs(x, far), 40) + sp.Rational(7, 5)) > sp.Float("1e-8"):
+        raise AssertionError("bach_weyl_ring: psi does not fall off as -m/R")
+
+
+CHARTS["bach_weyl_ring"] = [lambda s=s: bach_weyl_ring(s) for s in BW_SYSTEMS]
+
+
 # -- Bonnor's rotating dust cloud ---------------------------------------------------------
 
 def bonnor_rotating_dust(system):
