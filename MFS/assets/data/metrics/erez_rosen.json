@@ -53,6 +53,11 @@
       "id": "curzon_chazy",
       "kind": "family",
       "text": "Another member of Weyl's class, built on the Newtonian potential of a point. Erez and Rosen's is built on the potential of Schwarzschild's rod with a quadrupole term added [bicak2000, boshkayev2019]."
+    },
+    {
+      "id": "bach_weyl_ring",
+      "kind": "family",
+      "text": "A Weyl field too, built on Newton's potential of a hoop, where Erez and Rosen's is built on a rod's with a quadrupole term added."
     }
   ],
   "references": [

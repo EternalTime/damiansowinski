@@ -5267,6 +5267,17 @@ class Slices(unittest.TestCase):
                        for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
                     **{f"conformal zipoy_voorhees/{s}_equator_{k}": {o} for s in ("spherical", "prolate_spheroidal")
                        for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
+                    # Bach and Weyl's plane is embedded in two views, outside the ring and on the disc inside
+                    # it, and each drawing lies on one of them: the axis meets the disc alone, at its centre.
+                    **{f"bach_weyl_ring/{s}/{v}": {hidden} for s, v, hidden in (
+                        ("weyl", "axis", "outside"), ("weyl", "outside", "inside"), ("weyl", "inside", "outside"),
+                        ("toroidal", "axis", "outside"), ("toroidal", "outer", "inside"),
+                        ("toroidal", "inner", "outside"), ("oblate_spheroidal", "axis", "outside"),
+                        ("oblate_spheroidal", "plane", "inside"), ("oblate_spheroidal", "disc", "outside"))},
+                    **{f"conformal bach_weyl_ring/{v}": {hidden} for v, hidden in (
+                        ("weyl_axis", "outside"), ("weyl_outside", "inside"), ("weyl_inside", "outside"),
+                        ("toroidal_axis", "outside"), ("toroidal_outer", "inside"), ("toroidal_inner", "outside"),
+                        ("oblate_axis", "outside"), ("oblate_plane", "inside"), ("oblate_disc", "outside"))},
                     # So are Erez and Rosen's prolate and oblate masses.
                     **{f"erez_rosen/{s}/equator_{k}": {o} for s in ("spherical", "prolate_spheroidal")
                        for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
@@ -5402,6 +5413,16 @@ class Slices(unittest.TestCase):
         if key == "morgan_morgan/oblate_spheroidal/plane":
             # The plane z = 0 outside the rim, embedded out to Weyl's rho: xi = sqrt(rho^2/a^2 - 1).
             return (lambda X: 0.0), [math.sqrt(self.reach(surface)[1] ** 2 - 1)]
+        if key.startswith("bach_weyl_ring/"):
+            # The plane z = 0 on one side of the ring, embedded between two of Weyl's rho, in each chart's
+            # own coordinate; the axis meets the disc inside the ring at its centre, sigma = pi in the
+            # toroidal chart.
+            lo, hi = self.reach(surface)
+            of_rho = {"toroidal/axis": lambda r: math.pi, "toroidal/outer": lambda r: 2 * math.atanh(1 / r),
+                      "toroidal/inner": lambda r: 2 * math.atanh(r),
+                      "oblate_spheroidal/plane": lambda r: math.sqrt(r * r - 1),
+                      "oblate_spheroidal/disc": lambda r: math.sqrt(1 - r * r)}.get(key.split("/", 1)[1], lambda r: r)
+            return (lambda X: 0.0), sorted(of_rho(r) for r in (lo, hi))
         if key.startswith("bondi_sachs/"):
             # The sphere cu = 10 m_0, r = 10 m_0 is one event of each plane: r = 10 and cu + r = 20 on
             # Bondi's axes, 100 m_0 l = 10 and cu = 10 on the chart of l = 1/r.

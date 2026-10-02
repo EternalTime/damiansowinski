@@ -209,6 +209,7 @@ carries it into the square with the view's own map and box.
 import argparse
 import json
 import keyword
+import functools
 import math
 import sys
 from dataclasses import dataclass, field, replace
@@ -853,6 +854,11 @@ def _morgan_morgan_plane():
 MM_INPUT = ("The first disc of Morgan and Morgan's family at $m = a/5$, with $m = GM/c^2$ for a disc of mass $M$ and "
             "radius $a$: $\\psi$ and $\\gamma$ are the two functions the oblate spheroidal chart defines, written in "
             "$\\rho$ and $z$.")
+# Every drawing of Bach and Weyl's ring is at m = a/2, in units of the ring's radius a in Weyl's
+# coordinates. gamma is 0/0 on the axis as its closed form is written, a factor that vanishes
+# as rho^2 over rho, so a view of the axis is taken at BW_AXIS from it, where gamma is below 10^-9.
+BW = {"m": "1/2", "a": 1}
+BW_AXIS = "1/10**4"
 # Bonnor's magnetic dipole as every one of its diagrams draws it: m = 1 and b = 2 sqrt 2, so that
 # sqrt(m^2 + b^2) = 3m and the axis between the two black holes is r = 4m.
 BONNOR_DIPOLE = {"m": 1, "b": "2*sqrt(2)"}
@@ -4014,6 +4020,31 @@ DIAGRAMS = [
             (0, 4, -2, 2), "$\\xi$", "$ct/a$", MM, {"eta": "0", "phi": "0"}),
     Diagram("morgan_morgan", "oblate_spheroidal", "disc", "$t$ and $\\eta$ on the disc", ("t", "\\eta"),
             (0, 1, -0.5, 0.5), "$\\eta$", "$ct/a$", MM, {"xi": "0", "phi": "0"}),
+    # Bach and Weyl's ring at m = a/2 on its two totally geodesic planes, the axis and the plane of
+    # the ring, in each chart. Weyl's chart draws the whole axis and the plane outside the ring
+    # and inside it, two views, since a ray from outside ends at the ring; the toroidal chart draws the axis, zeta = 0, and the plane outside the ring,
+    # sigma = 0, and inside it, sigma = pi; the oblate spheroidal chart draws the axis above the
+    # ring, the plane outside it, eta = 0, and the disc the ring spans, xi = 0.
+    Diagram("bach_weyl_ring", "weyl", "axis", "$t$ and $z$ on the axis", ("t", "z"), (-3, 3, -3, 3),
+            "$z/a$", "$ct/a$", BW, {"rho": BW_AXIS, "phi": "0"}, families=SIDEWAYS,
+            lines=(("shell", "r", "0", "the centre of the ring, $z = 0$"),)),
+    Diagram("bach_weyl_ring", "weyl", "outside", "$t$ and $\\rho$ in the plane outside the ring", ("t", "\\rho"),
+            (1, 5, -2, 2), "$\\rho/a$", "$ct/a$", BW, {"phi": "0", "z": "0"}),
+    Diagram("bach_weyl_ring", "weyl", "inside", "$t$ and $\\rho$ in the plane inside the ring", ("t", "\\rho"),
+            (0, 1, -1, 1), "$\\rho/a$", "$ct/a$", BW, {"phi": "0", "z": "0"}),
+    Diagram("bach_weyl_ring", "toroidal", "axis", "$t$ and $\\sigma$ on the axis", ("t", "\\sigma"),
+            (0, 2 * math.pi, -math.pi, math.pi), "$\\sigma$", "$ct/a$", BW, {"zeta": BW_AXIS, "phi": "0"},
+            families=SIDEWAYS, lines=(("shell", "r", "pi", "the centre of the ring, $\\sigma = \\pi$"),)),
+    Diagram("bach_weyl_ring", "toroidal", "outer", "$t$ and $\\zeta$ in the plane outside the ring", ("t", "\\zeta"),
+            (0, 4, -2, 2), "$\\zeta$", "$ct/a$", BW, {"sigma": "0", "phi": "0"}),
+    Diagram("bach_weyl_ring", "toroidal", "inner", "$t$ and $\\zeta$ in the plane inside the ring", ("t", "\\zeta"),
+            (0, 6, -3, 3), "$\\zeta$", "$ct/a$", BW, {"sigma": "pi", "phi": "0"}),
+    Diagram("bach_weyl_ring", "oblate_spheroidal", "axis", "$t$ and $\\xi$ on the axis", ("t", "\\xi"), (0, 4, -2, 2),
+            "$\\xi$", "$ct/a$", BW, {"eta": "1", "phi": "0"}),
+    Diagram("bach_weyl_ring", "oblate_spheroidal", "plane", "$t$ and $\\xi$ in the plane $\\eta = 0$", ("t", "\\xi"),
+            (0, 4, -2, 2), "$\\xi$", "$ct/a$", BW, {"eta": "0", "phi": "0"}),
+    Diagram("bach_weyl_ring", "oblate_spheroidal", "disc", "$t$ and $\\eta$ on the disc $\\xi = 0$", ("t", "\\eta"),
+            (0, 1, -1, 1), "$\\eta$", "$ct/a$", BW, {"xi": "0", "phi": "0"}),
     # Zipoy and Voorhees's metric on its two totally geodesic planes, the axis and the equatorial
     # plane, in each chart, for the oblate q = 1 and the prolate q = -1/2. The prolate equator's
     # curvature diverges only as the 3/2 power, so its rows declare the edge singular.
@@ -9090,6 +9121,82 @@ CAPTIONS = {
         "left edge the circles have the circumference $4\\pi m$ of the throat, and $\\omega$ has risen to $1/2m$, "
         "the angular velocity of the horizon and of the disc.",
     ],
+    ("bach_weyl_ring", "weyl", "axis"): [
+        "The plane of $t$ and $z$ ($\\rho = 0$, $\\phi = 0$) of the Bach-Weyl ring ($m = a/2$), the axis that threads "
+        "the ring through its centre, $z = 0$. On the axis $\\gamma = 0$ and $\\psi = -m/\\sqrt{z^2 + a^2}$, so the metric "
+        "is $-e^{2\\psi}c^2dt^2 + e^{-2\\psi}dz^2$ and a ray has $c\\,dt/dz = \\pm e^{2m/\\sqrt{z^2 + a^2}}$; every rotation "
+        "about the axis fixes the plane, so the rays are null geodesics.",
+        "The cones are narrowest at the centre of the ring, where $c\\,dt/dz = \\pm e^{2m/a} = \\pm 2.72$, and open toward "
+        "the cones of flat space far away. The curvature is finite on the whole axis, and light from the centre reaches "
+        "infinity with the redshift $e^{m/a} - 1 = 0.65$.",
+    ],
+    ("bach_weyl_ring", "weyl", "outside"): [
+        "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$, $\\rho > a$) of the Bach-Weyl ring ($m = a/2$), the plane "
+        "of the ring outside it. A ray has $c\\,dt/d\\rho = \\pm e^{\\gamma - 2\\psi}$, and the reflection $z \\to -z$ "
+        "fixes the plane, so the rays are null geodesics.",
+        "The ring is the left edge, $\\rho = a$, where the Kretschmann scalar diverges. Toward it "
+        "$\\gamma \\to -\\infty$ and the cones open flat, and light from $\\rho = 2a$ arrives at $ct = 2.00\\,a$.",
+    ],
+    ("bach_weyl_ring", "weyl", "inside"): [
+        "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$, $\\rho < a$) of the Bach-Weyl ring ($m = a/2$), the disc "
+        "inside the ring, from the axis on the left to the ring on the right. A ray has "
+        "$c\\,dt/d\\rho = \\pm e^{\\gamma - 2\\psi}$, and the reflection $z \\to -z$ fixes the plane, so the rays are "
+        "null geodesics.",
+        "At the axis $c\\,dt/d\\rho = \\pm e^{2m/a} = \\pm 2.72$. Toward the ring $\\gamma \\to +\\infty$ and the cones "
+        "close: light from the axis is at $\\rho = 0.99\\,a$ at $ct = 3.67\\,a$ and never reaches the ring.",
+    ],
+    ("bach_weyl_ring", "toroidal", "axis"): [
+        "The axis $\\zeta = 0$ of the Bach-Weyl ring ($m = a/2$) in $t$ and $\\sigma$ at $\\phi = 0$, where "
+        "$z = a\\cot(\\sigma/2)$: the centre of the ring is $\\sigma = \\pi$ and both edges are spatial infinity. A ray has "
+        "$c\\,dt/d\\sigma = \\pm a\\,e^{-2\\psi}/(1 - \\cos\\sigma)$, and every rotation about the axis fixes the plane, so "
+        "the rays are null geodesics.",
+        "The cones close toward both edges because $\\sigma$ reaches $0$ and $2\\pi$ only at $z = \\pm\\infty$. At the "
+        "centre $c\\,dt/d\\sigma = \\pm a\\,e^{2m/a}/2 = \\pm 1.36\\,a$.",
+    ],
+    ("bach_weyl_ring", "toroidal", "outer"): [
+        "The half plane $\\sigma = 0$ of the Bach-Weyl ring ($m = a/2$) in $t$ and $\\zeta$ at $\\phi = 0$, the plane of "
+        "the ring outside it, where $\\rho = a\\coth(\\zeta/2)$. A ray has "
+        "$c\\,dt/d\\zeta = \\pm a\\,e^{\\gamma - 2\\psi}/(\\cosh\\zeta - 1)$, and the reflection $\\sigma \\to -\\sigma$ fixes "
+        "the plane, so the rays are null geodesics.",
+        "Spatial infinity is the left edge, $\\zeta = 0$, and the ring is $\\zeta \\to \\infty$. Toward the ring "
+        "$\\gamma$ falls as $-(m^2/2\\pi^2a^2)\\,e^{\\zeta}$, the cones open flat, and light crosses from "
+        "$\\zeta = 2$ to the ring in $ct = 0.71\\,a$.",
+    ],
+    ("bach_weyl_ring", "toroidal", "inner"): [
+        "The half plane $\\sigma = \\pi$ of the Bach-Weyl ring ($m = a/2$) in $t$ and $\\zeta$ at $\\phi = 0$, the disc "
+        "the ring spans, where $\\rho = a\\tanh(\\zeta/2)$. A ray has "
+        "$c\\,dt/d\\zeta = \\pm a\\,e^{\\gamma - 2\\psi}/(\\cosh\\zeta + 1)$, and the reflection $\\sigma \\to 2\\pi - \\sigma$ "
+        "fixes the plane, so the rays are null geodesics.",
+        "The axis is the left edge, $\\zeta = 0$, and the ring is $\\zeta \\to \\infty$. Toward the ring $\\gamma$ grows as "
+        "$(m^2/2\\pi^2a^2)\\,e^{\\zeta}$, so the cones close faster than any exponential of $\\zeta$, and the proper "
+        "distance to the ring and the time light takes to reach it are both infinite.",
+    ],
+    ("bach_weyl_ring", "oblate_spheroidal", "axis"): [
+        "The half axis $\\eta = 1$ of the Bach-Weyl ring ($m = a/2$) in $t$ and $\\xi$ at $\\phi = 0$, the axis above the "
+        "plane of the ring, where $z = a\\xi$. The metric on it is $-e^{2\\psi}c^2dt^2 + a^2e^{-2\\psi}d\\xi^2$ with "
+        "$\\psi = -m/(a\\sqrt{1 + \\xi^2})$, so a ray has $c\\,dt/d\\xi = \\pm a\\,e^{-2\\psi}$, and every rotation about "
+        "the axis fixes the plane, so the rays are null geodesics.",
+        "The left edge is the centre of the ring, $\\xi = 0$, a regular point, where $c\\,dt/d\\xi = \\pm 2.72\\,a$. The "
+        "cones open toward those of flat space as $\\xi$ grows.",
+    ],
+    ("bach_weyl_ring", "oblate_spheroidal", "plane"): [
+        "The half plane $\\eta = 0$ of the Bach-Weyl ring ($m = a/2$) in $t$ and $\\xi$ at $\\phi = 0$, the plane of the "
+        "ring outside it, where $\\rho = a\\sqrt{1 + \\xi^2}$. A ray has "
+        "$c\\,dt/d\\xi = \\pm a\\,\\xi\\,e^{\\gamma - 2\\psi}/\\sqrt{1 + \\xi^2}$, and the reflection $\\eta \\to -\\eta$ "
+        "fixes the plane, so the rays are null geodesics.",
+        "The ring is the left edge, $\\xi = 0$, where the Kretschmann scalar diverges. The cones open flat toward it, "
+        "since $\\gamma \\to -\\infty$ there, and light from $\\xi = \\sqrt{3}$, which is $\\rho = 2a$, arrives at "
+        "$ct = 2.00\\,a$.",
+    ],
+    ("bach_weyl_ring", "oblate_spheroidal", "disc"): [
+        "The disc $\\xi = 0$ of the Bach-Weyl ring ($m = a/2$) in $t$ and $\\eta$ at $\\phi = 0$, the disc the ring "
+        "spans, from the ring, $\\eta = 0$, to its centre, $\\eta = 1$, where $\\rho = a\\sqrt{1 - \\eta^2}$. A ray has "
+        "$c\\,dt/d\\eta = \\pm a\\,\\eta\\,e^{\\gamma - 2\\psi}/\\sqrt{1 - \\eta^2}$, and the reflection through the disc "
+        "fixes the plane, so the rays are null geodesics.",
+        "The disc is empty: $\\psi$ and $\\gamma$ are smooth across it, and it carries no matter. The cones close "
+        "toward the centre, where $\\eta$ is stationary in $\\rho$, and toward the ring, which light from the centre "
+        "never reaches.",
+    ],
     ("morgan_morgan", "weyl", "axis"): [
         "The plane of $t$ and $z$ ($\\rho = 0$, $\\phi = 0$) of the first Morgan-Morgan disc ($m = a/5$), crossed by "
         "the disc at its centre, $z = 0$. The metric on it is $-e^{2\\psi}c^2dt^2 + e^{-2\\psi}dz^2$, so a ray has "
@@ -12808,6 +12915,74 @@ def _zv_equator(r, oblate):
     return np.vectorize(one, otypes=[float])(np.asarray(r, float))
 
 
+def _bach_weyl_numbers(rho, z):
+    """psi and gamma of Bach and Weyl's ring at a = 1 and m = 1/2 as floats, from Semerak's closed
+    forms in Weyl's rho and z; on the axis gamma is zero."""
+    from scipy.special import ellipe, ellipk
+    m = 0.5
+    l1s, l2s = (rho - 1) ** 2 + z * z, (rho + 1) ** 2 + z * z
+    kappa = 4 * rho / l2s
+    K, E = ellipk(kappa), ellipe(kappa)
+    psi = -2 * m * K / (math.pi * math.sqrt(l2s))
+    if rho < 1e-9:
+        return psi, 0.0
+    gamma = -m * m / (4 * math.pi ** 2 * rho) * ((rho + 1) * (E - K) ** 2 + (rho - 1) * (l2s * E - l1s * K) ** 2 / (l1s * l2s))
+    return psi, gamma
+
+
+def _bach_weyl_star(view):
+    """The tortoise coordinate of Bach and Weyl's ring along a view's spatial coordinate, the
+    integral of sqrt(-g_xx/g_tt): e^{-2 psi} along z on the axis, from the centre of the ring,
+    and e^{gamma - 2 psi} along rho in the plane z = 0, from the axis inside the ring, where it
+    grows without bound toward the ring, and from the ring outside it, where it converges. The
+    toroidal and oblate spheroidal views are the same two integrals at Weyl's rho and z of the
+    point: on the axis z = a cot(sigma/2) = a xi; in the plane rho = a coth(zeta/2) and
+    a sqrt(1 + xi^2) outside the ring, a tanh(zeta/2) and a sqrt(1 - eta^2) inside it."""
+    return _bach_weyl_stars()[view]
+
+
+@functools.lru_cache(maxsize=None)
+def _bach_weyl_stars():
+    """The tortoise coordinates of every view, each integral taken from the nearest node of a table
+    of the integral up to that node, so that a point far along costs one short quadrature."""
+    def slope_axis(s):
+        return math.exp(-2 * _bach_weyl_numbers(0.0, s)[0])
+
+    def slope(rho):
+        psi, gamma = _bach_weyl_numbers(rho, 0.0)
+        return math.exp(gamma - 2 * psi) if gamma - 2 * psi < 700 else math.inf
+
+    def table(f, nodes):
+        totals = [0.0]
+        for a, b in zip(nodes, nodes[1:]):
+            totals.append(totals[-1] + quad(f, a, b, epsabs=1e-13, epsrel=1e-13, limit=200)[0])
+        nodes = np.asarray(nodes)
+
+        def value(x):
+            k = min(max(int(np.searchsorted(nodes, x)) - 1, 0), len(nodes) - 1)
+            return totals[k] + quad(f, nodes[k], x, epsabs=1e-13, epsrel=1e-13, limit=200)[0]
+        return value
+    on_axis = table(slope_axis, [0.0] + list(np.geomspace(0.05, 1e7, 400)))
+    inside = table(slope, list(1 - np.geomspace(1.0, 1e-4, 600)))
+    # Toward the ring from outside the integrand falls to zero faster than any power.
+    outside = table(slope, [1.0] + list(1 + np.geomspace(1e-3, 1e7, 600)))
+
+    def axis(z):
+        return math.copysign(on_axis(abs(z)), z)
+
+    def plane(rho):
+        return inside(rho) if rho < 1 else outside(rho)
+
+    one = {"weyl_axis": axis, "weyl_plane": plane,
+           "toroidal_axis": lambda s: axis(1 / math.tan(s / 2)),
+           "toroidal_outer": lambda x: plane(1 / math.tanh(x / 2)),
+           "toroidal_inner": lambda x: plane(math.tanh(x / 2)),
+           "oblate_axis": axis,
+           "oblate_plane": lambda x: plane(math.sqrt(1 + x * x)),
+           "oblate_disc": lambda e: plane(math.sqrt(1 - e * e))}
+    return {view: (lambda x, f=f: np.vectorize(f, otypes=[float])(np.asarray(x, float))) for view, f in one.items()}
+
+
 def _erez_rosen_numbers(lnd, y, q):
     """psi and gamma of Erez and Rosen's quadrupole at m = 1 as floats, from the closed forms in
     x and y, at x = 1 + d with ln(d) given, so that a point too near x = 1 for x itself to hold
@@ -13867,6 +14042,18 @@ CLOSED_FORMS = {
                                                         lambda t, r: t - r - 2 * np.log(r) + 2 / r, lambda t, r: r > 0.05),
     ("neugebauer_meinel", "black_hole_limit", "equator"): (lambda t, r: t + _nm_star("limit")(r),
                                                            lambda t, r: t - _nm_star("limit")(r), lambda t, r: r > 0.05),
+    **{("bach_weyl_ring", system, view): (lambda t, x, k=key, s=sign: t + s * _bach_weyl_star(k)(x),
+                                          lambda t, x, k=key, s=sign: t - s * _bach_weyl_star(k)(x), mask)
+       for system, view, key, sign, mask in (
+           ("weyl", "axis", "weyl_axis", 1, None),
+           ("weyl", "outside", "weyl_plane", 1, lambda t, r: r > 1.03),
+           ("weyl", "inside", "weyl_plane", 1, lambda t, r: r < 0.97),
+           ("toroidal", "axis", "toroidal_axis", -1, lambda t, s: (s > 0.3) & (s < 2 * math.pi - 0.3)),
+           ("toroidal", "outer", "toroidal_outer", -1, lambda t, x: (x > 0.3) & (x < 3.5)),
+           ("toroidal", "inner", "toroidal_inner", 1, lambda t, x: x < 4.2),
+           ("oblate_spheroidal", "axis", "oblate_axis", 1, None),
+           ("oblate_spheroidal", "plane", "oblate_plane", 1, lambda t, x: x > 0.25),
+           ("oblate_spheroidal", "disc", "oblate_disc", -1, lambda t, e: (e > 0.25) & (e < 0.999)))},
     ("morgan_morgan", "weyl", "axis"): (lambda t, z: t + _morgan_morgan_star("weyl_axis")(z),
                                         lambda t, z: t - _morgan_morgan_star("weyl_axis")(z), None),
     ("morgan_morgan", "weyl", "plane"): (lambda t, r: t + _morgan_morgan_star("weyl_plane")(r),

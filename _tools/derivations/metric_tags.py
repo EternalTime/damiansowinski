@@ -367,6 +367,10 @@ OVERRULED = {
     ("double_kerr", "vacuum"): (
         True, "f, omega and gamma are left free; the two Kerr black holes are a solution of "
               "the vacuum equations, Ernst's equation for f and omega and a quadrature for gamma"),
+    ("bach_weyl_ring", "vacuum"): (
+        True, "psi and gamma are held as functions while each chart's tensors are built; they are the "
+              "solution of the vacuum equations, Laplace's equation and Weyl's quadrature, that each "
+              "chart's parameters write out, which print_charts.py holds to a vanishing Ricci tensor"),
     ("morgan_morgan", "vacuum"): (
         True, "psi and gamma are left free in Weyl's chart; off the disc the field is the solution "
               "of the vacuum equations, Laplace's equation and a quadrature, that the oblate "

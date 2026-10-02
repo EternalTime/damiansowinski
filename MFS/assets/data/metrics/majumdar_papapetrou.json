@@ -97,6 +97,11 @@
       "id": "bonnor_charged_dust",
       "kind": "generalisation",
       "text": "Their metric with matter in it. Dust whose charge density equals its mass density is a source for $U$, and a ball of it can lie as near its own horizon as one likes [bonnor1975, lemos2004]."
+    },
+    {
+      "id": "bach_weyl_ring",
+      "kind": "family",
+      "text": "A ring of uncharged matter with the same Newtonian potential as a circle of infinitely many extremal black holes. Oldřich Semerák found that the charged ring lies a finite distance from its centre and Bach and Weyl's an infinite one [semerak2016]."
     }
   ],
   "references": [
@@ -132,7 +137,8 @@
     "emparan2000",
     "arnowitt1960",
     "bonnor1975",
-    "lemos2004"
+    "lemos2004",
+    "semerak2016"
   ],
   "coordinates": [
     {

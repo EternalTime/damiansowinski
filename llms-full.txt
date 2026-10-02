@@ -287,6 +287,18 @@ A Schwarzschild black hole with a straight cosmic string through it. Off the axi
 - chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + b^2\sin^2\theta\,d\phi^2\right)$$
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + b^2\sin^2\theta\,d\phi^2\right)$$
 
+### Bach-Weyl Ring
+
+The static vacuum field of a thin circular ring of matter in Weyl's class, written down by Rudolf Bach in 1922 in a paper with a supplement by Hermann Weyl. Its Weyl potential is Newton's potential of a hoop, a complete elliptic integral. The ring is a naked singularity that lies a finite distance away from outside and an infinite distance away from inside.
+
+- id: `bach_weyl_ring`
+- tags: vacuum, static, stationary, axisymmetric, Weyl class, harmonic function, mass, curvature singularity, naked singularity, directional singularity, ring singularity, reflection symmetry, no horizon, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/bach_weyl_ring.json
+- chart Weyl: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -e^{2\psi}c^2dt^2 + e^{-2\psi}\left(e^{2\gamma}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2\right)$$
+- chart Toroidal: coordinates $(t, \zeta, \sigma, \phi)$, $$ds^2 = -e^{2\psi}c^2dt^2 + \dfrac{a^2e^{-2\psi}}{\left(\cosh\zeta - \cos\sigma\right)^2}\left(e^{2\gamma}\left(d\zeta^2 + d\sigma^2\right) + \sinh^2\zeta\,d\phi^2\right)$$
+- chart Oblate Spheroidal: coordinates $(t, \xi, \eta, \phi)$, $$ds^2 = -e^{2\psi}c^2dt^2 + a^2e^{-2\psi}\left(e^{2\gamma}\left(\xi^2 + \eta^2\right)\left(\dfrac{d\xi^2}{1 + \xi^2} + \dfrac{d\eta^2}{1 - \eta^2}\right) + \left(1 + \xi^2\right)\left(1 - \eta^2\right)d\phi^2\right)$$
+
 ### Bañados-Teitelboim-Zanelli Black Hole
 
 A rotating black hole in three spacetime dimensions with a negative cosmological constant. It has constant negative curvature everywhere, being anti-de Sitter space with points identified by a discrete boost, and it carries a temperature and an entropy that can be computed exactly.

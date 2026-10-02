@@ -61,6 +61,11 @@
       "id": "erez_rosen",
       "kind": "family",
       "text": "A Weyl field too, built on the potential of Schwarzschild's rod with a quadrupole term added, where Curzon and Chazy's is built on a point's [bicak2000, boshkayev2019]."
+    },
+    {
+      "id": "bach_weyl_ring",
+      "kind": "generalisation",
+      "text": "The particle spread around a circle of radius $a$ in Weyl's coordinates. At $a = 0$ Bach and Weyl's ring is the Curzon-Chazy particle [semerak2016]."
     }
   ],
   "references": [
@@ -88,7 +93,8 @@
     "astesiano2024",
     "bicak1993",
     "emparanteo2001",
-    "boshkayev2019"
+    "boshkayev2019",
+    "semerak2016"
   ],
   "coordinates": [
     {
