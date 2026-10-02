@@ -133,6 +133,11 @@
       "id": "datt_ruban_t_models",
       "kind": "generalisation",
       "text": "De Sitter space sliced into tubes $\\mathbb{R} \\times S^2$ and filled with dust that differs from shell to shell, Ruban's T-model of 1969 [ruban1969]."
+    },
+    {
+      "id": "gravitational_instantons",
+      "kind": "family",
+      "text": "De Sitter space in imaginary time is a 4-sphere, the simplest compact gravitational instanton. The complex projective plane and Page's space are two more with a positive cosmological constant [gibbonshawking1979, page2009]."
     }
   ],
   "references": [
@@ -175,7 +180,9 @@
     "hotta1993",
     "schrodinger1956",
     "parikh2003",
-    "ruban1969"
+    "ruban1969",
+    "gibbonshawking1979",
+    "page2009"
   ],
   "coordinates": [
     {

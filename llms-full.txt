@@ -813,6 +813,23 @@ A star with no horizon and no singularity that passes for a black hole from outs
 - chart Interior Tortoise: coordinates $(t, x, \theta, \phi)$, $$ds^2 = \dfrac{C}{\cosh^2\left(\dfrac{\sqrt{C}\,x}{L}\right)}\left(-c^2dt^2 + dx^2\right) + L^2\tanh^2\left(\dfrac{\sqrt{C}\,x}{L}\right)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Schwarzschild Exterior: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Gravitational Instantons
+
+Spaces of four dimensions with no time in them, the solutions of Einstein's equations with Riemannian signature that Stephen Hawking, Gary Gibbons, Don Page, and Christopher Pope found in 1977 and 1978. The first is Schwarzschild's black hole in imaginary time, which closes smoothly on its horizon only if that time is a circle of length $4\pi r_s$, the inverse of Hawking's temperature. The others are the two Taub-NUT instantons, the spaces with many centres, the complex projective plane, and Page's space.
+
+- id: `gravitational_instantons`
+- tags: four-dimensional, gravitational instanton, Riemannian, Euclidean signature, no time, Euclidean Schwarzschild, imaginary time, Hawking temperature, black hole thermodynamics, Euclidean quantum gravity, path integral, cigar, nut, bolt, nuts and bolts, self-dual, Taub-NUT, Taub-bolt, Gibbons-Hawking, multi-centre, complex projective plane, Fubini-Study, Kähler, Page metric, cosmological constant, positive cosmological constant, compact, Euler characteristic, regular, exact solution, Einstein equations, idealized model
+- signature: (+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/gravitational_instantons.json
+- chart Euclidean Schwarzschild: coordinates $(\tau, r, \theta, \phi)$, $$ds^2 = \left(1 - \dfrac{r_s}{r}\right)d\tau^2 + \left(1 - \dfrac{r_s}{r}\right)^{-1}dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Regular at the Bolt: coordinates $(x, \tau, \theta, \phi)$, $$ds^2 = \dfrac{r^4}{r_s^4}dx^2 + \dfrac{x^2}{4r_s^2}d\tau^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Self-Dual Taub-NUT: coordinates $(r, \theta, \phi, \tau)$, $$ds^2 = \dfrac{r + n}{r - n}dr^2 + \left(r^2 - n^2\right)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + \dfrac{r - n}{r + n}\left(d\tau + 2n\cos\theta\,d\phi\right)^2$$
+- chart Taub-Bolt: coordinates $(r, \theta, \phi, \tau)$, $$ds^2 = \dfrac{2\left(r^2 - n^2\right)}{\left(r - 2n\right)\left(2r - n\right)}dr^2 + \left(r^2 - n^2\right)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + \dfrac{\left(r - 2n\right)\left(2r - n\right)}{2\left(r^2 - n^2\right)}\left(d\tau + 2n\cos\theta\,d\phi\right)^2$$
+- chart Multi-Centre: coordinates $(\rho, z, \phi, \tau)$, $$ds^2 = V\left(d\rho^2 + dz^2 + \rho^2d\phi^2\right) + V^{-1}\left(d\tau + \omega\,d\phi\right)^2$$
+- chart Complex Projective Plane: coordinates $(r, \theta, \phi, \psi)$, $$ds^2 = \left(1 + \dfrac{\Lambda r^2}{6}\right)^{-2}dr^2 + \dfrac{r^2}{4}\left(1 + \dfrac{\Lambda r^2}{6}\right)^{-1}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + \dfrac{r^2}{4}\left(1 + \dfrac{\Lambda r^2}{6}\right)^{-2}\left(d\psi + \cos\theta\,d\phi\right)^2$$
+- chart Complex Projective Plane, Distance: coordinates $(\chi, \theta, \phi, \psi)$, $$ds^2 = d\chi^2 + \dfrac{L^2}{4}\sin^2(\chi/L)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + \dfrac{L^2}{4}\sin^2(\chi/L)\cos^2(\chi/L)\left(d\psi + \cos\theta\,d\phi\right)^2$$
+- chart Page: coordinates $(\chi, \theta, \phi, \psi)$, $$ds^2 = \dfrac{3\left(1 + \nu^2\right)}{\Lambda}\left(\dfrac{Q}{P}d\chi^2 + \dfrac{Q}{N}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + \dfrac{4\nu^2P\sin^2\chi}{N^2Q}\left(d\psi + \cos\theta\,d\phi\right)^2\right)$$
+
 ### Belinski-Zakharov Gravitational Solitons
 
 Exact vacuum solutions made by the inverse scattering method of Vladimir Belinski and Vladimir Zakharov, which adds solitons to a known solution by algebra alone. Their wave of two solitons on a Kasner universe that expands alike in two directions is two pulses of gravitational wave, which leave the singularity as one and run apart along the light cone.

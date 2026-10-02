@@ -1097,6 +1097,26 @@ DIMENSIONS = {
     ("eguchi_hanson", "two_centre"): {
         "\\rho": "L", "z": "L", "\\psi": "1", "\\tau": "L", "a": "L", "R_1": "L", "R_2": "L", "V": "1", "\\omega": "L",
     },
+    # The gravitational instantons of 1977 and 1978 are Riemannian, as the Eguchi-Hanson space is:
+    # every coordinate is spatial and none is a time. The imaginary time tau is a length, r_s and
+    # the nut parameter n are lengths, Lambda an inverse area, and Page's nu a pure number. The
+    # regular chart's x is a length and its r a name for the areal radius. The multi-centre chart's
+    # V is a pure number and omega, which multiplies d phi beside d tau, a length.
+    ("gravitational_instantons", "schwarzschild"): {"\\tau": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L"},
+    ("gravitational_instantons", "regular"): {
+        "x": "L", "\\tau": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r": "L",
+    },
+    ("gravitational_instantons", "taub_nut"): {"r": "L", "\\theta": "1", "\\phi": "1", "\\tau": "L", "n": "L"},
+    ("gravitational_instantons", "taub_bolt"): {"r": "L", "\\theta": "1", "\\phi": "1", "\\tau": "L", "n": "L"},
+    ("gravitational_instantons", "multi_centre"): {
+        "\\rho": "L", "z": "L", "\\phi": "1", "\\tau": "L", "V": "1", "\\omega": "L",
+    },
+    ("gravitational_instantons", "cp2"): {"r": "L", "\\theta": "1", "\\phi": "1", "\\psi": "1", "\\Lambda": "1/L**2"},
+    ("gravitational_instantons", "cp2_distance"): {"\\chi": "L", "\\theta": "1", "\\phi": "1", "\\psi": "1", "L": "L"},
+    ("gravitational_instantons", "page"): {
+        "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\psi": "1", "\\Lambda": "1/L**2", "\\nu": "1",
+        "P": "1", "Q": "1", "N": "1",
+    },
     # Misner's and Brill and Lindquist's initial data are one moment, a Riemannian space of three
     # dimensions: every coordinate is spatial. The conformal factors psi, chi and Psi are pure numbers,
     # the bispherical coordinates are pure numbers, and their scale a and the one hole's r_s are lengths.
