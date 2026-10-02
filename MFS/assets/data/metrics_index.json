@@ -98,7 +98,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "122194bf1507b037",
+    "version": "b0286b52696edefd",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -205,7 +205,7 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "c5ee52d5677ea282",
+    "version": "0de1baad78de14af",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -872,7 +872,7 @@
       "idealized model",
       "stationary"
     ],
-    "version": "1d3050d1ef86fe25",
+    "version": "d3e6905bc08f8fd8",
     "diagrams": "60cc56f450326363",
     "conformal": "d6c09caa82c5caf6",
     "embedding": "8cf5301ea3792cef"
@@ -3631,7 +3631,7 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "f75a839f1b459d1a",
+    "version": "a4a3ca8febe641d8",
     "diagrams": "31e9dff1390f00d4",
     "conformal": "354a17ef203ec712",
     "embedding": "925f9f623e566c24"
@@ -3654,6 +3654,50 @@
     "version": "f174753a07eb83b3",
     "diagrams": "6e432dbfef4f0d7d",
     "embedding": "a484d91e42495a51"
+  },
+  {
+    "id": "quantum_btz",
+    "name": "Quantum BTZ",
+    "tags": [
+      "negative cosmological constant",
+      "cosmological constant",
+      "anti-de Sitter",
+      "black hole",
+      "BTZ black hole",
+      "rotating black hole",
+      "mass",
+      "angular momentum",
+      "horizon",
+      "event horizon",
+      "Cauchy horizon",
+      "curvature singularity",
+      "ring singularity",
+      "conical singularity",
+      "naked singularity",
+      "cosmic censorship",
+      "strong cosmic censorship",
+      "causal structure",
+      "black hole thermodynamics",
+      "black hole entropy",
+      "Hawking temperature",
+      "AdS/CFT",
+      "holography",
+      "braneworld",
+      "quantum field theory in curved spacetime",
+      "semiclassical gravity",
+      "2+1 dimensional gravity",
+      "circularly symmetric",
+      "exact solution",
+      "Lorentzian",
+      "idealized model",
+      "static",
+      "stationary",
+      "three-dimensional"
+    ],
+    "version": "7c71987c49aea04a",
+    "diagrams": "9e27900d07c618e4",
+    "conformal": "4fb359269e6b0ef1",
+    "embedding": "aa11b776d61eb469"
   },
   {
     "id": "randall_sundrum",
@@ -3686,7 +3730,7 @@
       "idealized model",
       "stationary"
     ],
-    "version": "dd08ac3dac8a3a08",
+    "version": "90c1b56ee6c56056",
     "diagrams": "f78be2d481dc49b2",
     "conformal": "c88536bb72659ebe",
     "embedding": "69d23ef08a8a8c79"

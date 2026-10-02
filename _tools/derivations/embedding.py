@@ -4121,6 +4121,83 @@ def schwarzschild_ads(ck, src):
                           "the surface beyond $r = 1.26\\,L$ is measured with $dX^2 + dY^2 - dZ^2$.")]
 
 
+
+def quantum_btz(ck, src):
+    """The moment t = 0 of the quantum BTZ hole at M = F = 1/4 and l = 15 l_3/16 in units of l_3, as
+    its conformal diagram draws it, through both exteriors as one surface. g_rr = 1/H with H =
+    r^2 - 1/4 - 15/(64r) = (r - 3/4)(r^2 + 3r/4 + 5/16)/r and g_phiphi = r^2, so in flat space dz/dr =
+    sqrt(1/H - 1): the slice runs through the bifurcation circle r_+ = 3/4, its throat, into the
+    second exterior, and lies level where H = 1, at the root 1.202 of 64r^3 - 80r - 15.
+    Farther out 1/H < 1, the circles grow faster than the distance out to them, which is checked,
+    and the slice is drawn on in three dimensional Minkowski space, climbing at dZ/dr = sqrt(1 -
+    1/H) toward a light cone of that space, as the BTZ hole's own does; between r_+ and the level
+    circle no surface of Minkowski space carries it, which is checked as well. Each exterior is a
+    piece in flat space and a piece in Minkowski space started at the height where the first ends;
+    both lie level at the join, so they meet in one circle with one tangent, which is checked from
+    the numbers and from the file. The drawing stops at r = 2.5, where the throat keeps a third of
+    the width."""
+    params = {"ell_3": 1, "M": "1/4", "ell": "15/16", "F": "1/4"}
+    sl = Slice(src, "quantum_btz", "static", "r", "\\phi", {"t": 0}, params)
+    msl = Slice(src, "quantum_btz", "static", "r", "\\phi", {"t": 0}, params, space="minkowski")
+    rp = sl.horizons()[0]
+    # The level circle is named exactly for the slope there, the largest root of 64r^3 - 80r - 15.
+    exact = sp.CRootOf(64 * sp.Symbol("r") ** 3 - 80 * sp.Symbol("r") - 15, 2)
+    level = float(exact)
+    sl.known = msl.known = {level: exact}
+    top = 2.5
+    size = 2 * top
+    name = "quantum BTZ"
+    ck.add(f"{name}: the horizon is at r_+ = 3 l_3/4", abs(rp - 0.75), 1e-12)
+    ck.add(f"{name}: the surface lies level where H = 1, at the root of 64r^3 - 80r - 15",
+           abs(float(sl.defect_at(np.array([level]))[0])), 1e-12)
+    ck.add(f"{name}: that root is 1.202, as the labels round it", abs(level - 1.202), 5e-4)
+    ck.stops(f"{name}, beyond the level circle in flat space", sl, np.linspace(level, 40, 402)[1:])
+    inward = np.linspace(rp, level, 402)[1:-1]
+    ck.add(f"{name}: between r_+ and the level circle no surface in Minkowski space carries the slice, "
+           "(drho/dr)^2 - g_rr < 0", float(max(0.0, np.max(-msl.defect_at(inward)))), 0.0)
+    if not np.all(msl.defect_at(inward) > 0):
+        ck.items[-1]["ok"] = False
+
+    join = "at $r = 1.20\\,\\ell_3$ the surface lies level, in flat space nearer the horizon and in Minkowski space beyond"
+    edge = "the sheet runs on toward a light cone, to $r \\to \\infty$"
+    near = Piece("exterior", "sheet", sl, rp, level, 0.0, 1,
+                 (("throat", "the throat $r = r_+$, the bifurcation circle, where the other exterior begins"), ("join", join)),
+                 [(rp, "horizon", "$r = r_+$"), (0.95, "r", None), (level, "space", None)], size)
+    out = Piece("exterior_minkowski", "sheet", msl, level, top, near.at(level)[1], 1, (("join", join), ("edge", edge)),
+                [(1.75, "r", None), (top, "r", None)], size)
+    far = Piece("other_exterior", "sheet2", sl, rp, level, 0.0, -1, (("throat", "the throat $r = r_+$"), ("join", join)),
+                [(0.95, "r2", None), (level, "space", None)], size)
+    far_out = Piece("other_exterior_minkowski", "sheet2", msl, level, top, far.at(level)[1], -1,
+                    (("join", join), ("edge", edge)), [(1.75, "r2", None), (top, "r2", None)], size)
+    for p in (near, out, far, far_out):
+        space = "in Minkowski space" if p.sl.lorentz else "in flat space"
+        ck.isometry(f"{name}, {p.id} {space}", p)
+        ck.radius(f"{name}, {p.id}, rho = r {space}", p, lambda r: r, size)
+    ck.join(f"{name}, the two sheets at the throat", near, rp, far, rp)
+    for a, b in ((near, out), (far, far_out)):
+        ck.join(f"{name}, {a.id} in flat space and {b.id} in Minkowski space at the level circle", a, level, b, level)
+        # And as the file holds them: the last point of the one is the first of the other, to
+        # the rounding of the coarser of the two.
+        pa, pb = a.data()["points"][-1], b.data()["points"][0]
+        ck.add(f"{name}, {a.id} and {b.id} as written: one point at the level circle",
+               max(abs(pa[0] - pb[0]), abs(pa[1] - pb[1]), abs(pa[2] - pb[2])), 10.0 ** -min(a.decimals, b.decimals))
+
+    surface = Surface([near, out, far, far_out])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], rp, 0.0, "$r = r_+$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(level), "$1.20\\,\\ell_3$")
+    ring_label(fig, [0, 0, 0], *out.at(top), "$2.5\\,\\ell_3$")
+    fig.legend("fill", "cover", "the exterior $r > r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $0.95\\,\\ell_3$, $1.75\\,\\ell_3$ and $2.5\\,\\ell_3$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the horizon")
+    fig.legend("line", "space", "$r = 1.20\\,\\ell_3$, where $g_{rr} = 1$: flat space inside, Minkowski space beyond")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("throat", "Through the throat", "$\\ell_3$", [surface], fig.done(),
+                 settings="$\\ell_3 = 1$, the unit of every length, with $M = F = 1/4$ and $\\ell = 15\\ell_3/16$, so that "
+                          "$r_+ = 3\\ell_3/4$. Every length along the surface beyond $r = 1.20\\,\\ell_3$ is "
+                          "measured with $dX^2 + dY^2 - dZ^2$.")]
+
 def topological_black_hole(ck, src):
     """Two views, in units of L. The black string: the moment t = 0, z = 0 of Lemos's chart at
     mu = L, where the horizon, the root of the published g^rr, is r_h = 1. g_rr = 1/f with f = r^2
@@ -15030,6 +15107,7 @@ DRAWN = {
     "schwarzschild_de_sitter": schwarzschild_de_sitter,
     "kiselev": kiselev,
     "schwarzschild_ads": schwarzschild_ads,
+    "quantum_btz": quantum_btz,
     "reissner_nordstrom_ads": reissner_nordstrom_ads,
     "topological_black_hole": topological_black_hole,
     "ads_soliton": ads_soliton,
@@ -15804,6 +15882,18 @@ CAPTIONS = {
         "the same at every moment.",
         "The areal radius $r = R\\sin\\chi$ and Einstein's projected coordinates cover the hemisphere "
         "$\\chi < \\pi/2$ and end at the equator $r = R$, where the surface stands vertical.",
+    ],
+    ("quantum_btz", "throat"): [
+        "The moment $t = 0$ of the quantum hole ($M = F = 1/4$, $\\ell = 15\\ell_3/16$) through both of its exteriors, "
+        "joined at the bifurcation circle $r = r_+$, in flat space out to the circle $r = 1.20\\,\\ell_3$ and in "
+        "three dimensional Minkowski space ($dX^2 + dY^2 - dZ^2$) beyond it, every distance along the surface the "
+        "metric distance.",
+        "On the slice the metric is $dr^2/H + r^2d\\phi^2$ with $H = r^2/\\ell_3^2 - M - \\ell F/r$. Inside the circle "
+        "$H < 1$ and the surface climbs at $dz/dr = \\sqrt{1/H - 1}$, from vertical at the throat to level where "
+        "$H = 1$. Beyond it the circles grow faster than the distance out to them, as on the static slice of "
+        "anti-de Sitter space, and the surface climbs at $dZ/dr = \\sqrt{1 - 1/H}$ toward a light cone of "
+        "Minkowski space. The throat, $r_+ = 3\\ell_3/4$, is wider than the classical hole's "
+        "$\\ell_3/2$ at the same mass.",
     ],
     ("schwarzschild_ads", "throat"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Schwarzschild-anti-de Sitter black hole at the moment "

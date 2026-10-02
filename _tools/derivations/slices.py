@@ -1447,6 +1447,27 @@ def _sads(sign=0):
     return [Mark(m, [np.column_stack([sign * sads_rstar(r), r])])]
 
 
+
+def qbtz_rstar(r):
+    """The quantum BTZ hole's tortoise coordinate at l_3 = 1, M = F = 1/4 and l = 15/16, as the
+    Eddington-Finkelstein charts fix it, vanishing at r = 0: 1/H = r/(r^3 - r/4 - 15/64), whose cubic
+    has the root 3/4 and a complex pair, so r_* = Re sum_i A_i ln(1 - r/r_i) with A_i = r_i/(3r_i^2 - 1/4)."""
+    r = np.asarray(r, dtype=float).astype(complex)
+    roots = np.roots([1, 0, -0.25, -15 / 64])
+    return sum(ri / (3 * ri * ri - 0.25) * np.log(1 - r / ri) for ri in roots).real
+
+
+def _qbtz(sign=0):
+    """The moment t = 0 of the quantum BTZ hole, from the throat r_+ = 3/4 out: along r in its
+    static chart (sign 0), and in its ingoing (1) or outgoing (-1) chart as v = r_* or u = -r_*,
+    crowding toward the horizon, where the curve runs off."""
+    m, = moments("quantum_btz")
+    lo, hi = m.reach("static", "r")
+    if not sign:
+        return [Mark(m, along(0.0, lo, hi))]
+    r = near(lo, hi)
+    return [Mark(m, [np.column_stack([sign * qbtz_rstar(r), r])])]
+
 RNDS_ROOTS = (2.0, 2 / 3, (2 * math.sqrt(7) - 4) / 3, -(2 * math.sqrt(7) + 4) / 3)
 RNDS_H = 3 / 8                  # H r_s/c of the lukewarm hole every diagram draws
 RNDS_LABEL = "$\\tau = 1/H$"      # the name of that moment on every drawing
@@ -2194,6 +2215,11 @@ FLAT = {
     ("reissner_nordstrom_ads", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _rnads(-1),
     ("reissner_nordstrom_ads", "eddington_finkelstein_outgoing", "chart"): lambda: _rnads(-1),
     ("schwarzschild_ads", "static", "radial"): lambda: _sads(),
+    ("quantum_btz", "static", "radial"): lambda: _qbtz(),
+    ("quantum_btz", "eddington_finkelstein_ingoing", "finkelstein"): lambda: _qbtz(1),
+    ("quantum_btz", "eddington_finkelstein_ingoing", "chart"): lambda: _qbtz(1),
+    ("quantum_btz", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _qbtz(-1),
+    ("quantum_btz", "eddington_finkelstein_outgoing", "chart"): lambda: _qbtz(-1),
     ("schwarzschild_ads", "eddington_finkelstein_ingoing", "finkelstein"): lambda: _sads(1),
     ("schwarzschild_ads", "eddington_finkelstein_ingoing", "chart"): lambda: _sads(1),
     ("schwarzschild_ads", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _sads(-1),
@@ -3037,6 +3063,10 @@ HIDDEN = {
     ("tippett_tsang", "rindler", "plane"): "the flat spacetime inside the bubble continued over the whole plane, another spacetime than the bubble whose moment is embedded",
     ("siklos", "kaigorodov_stationary", "plane"): "the region x < 0 of Siklos's chart, another region than the one whose wave front is embedded",
     ("btz", "stationary", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
+    ("quantum_btz", "brane", "dressed"): "a conical singularity dressed with a horizon, kappa = +1, another spacetime than the hole of positive mass whose moment is embedded",
+    ("quantum_btz", "rotating", "rotating"): "the rotating hole, horizons l_3 and l_3/2, another spacetime than the hole without rotation whose moment is embedded",
+    ("quantum_btz", "dressed"): "a conical singularity dressed with a horizon, kappa = +1, another spacetime than the hole of positive mass whose moment is embedded",
+    ("quantum_btz", "rotating"): "the rotating hole, horizons l_3 and l_3/2, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "eddington_finkelstein_ingoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "eddington_finkelstein_outgoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",

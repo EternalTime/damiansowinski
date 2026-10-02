@@ -111,6 +111,11 @@
       "id": "distorted_schwarzschild",
       "kind": "family",
       "text": "A static black hole bent by matter far away, with nothing on its axis. Its horizon is smooth all the way round, with no string or strut to meet [fairhurst2001]."
+    },
+    {
+      "id": "quantum_btz",
+      "kind": "family",
+      "text": "The C-metric in anti-de Sitter space, cut along its surface $x = 0$ where a brane sits. By holography the metric on the brane is a black hole of three dimensions with quantum fields around it [emparan2000branes2, emparan2020qbtz]."
     }
   ],
   "references": [
@@ -141,7 +146,9 @@
     "emparan2000",
     "dias2003",
     "bicak2009",
-    "fairhurst2001"
+    "fairhurst2001",
+    "emparan2000branes2",
+    "emparan2020qbtz"
   ],
   "coordinates": [
     {

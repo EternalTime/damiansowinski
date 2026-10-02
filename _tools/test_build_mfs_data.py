@@ -4894,6 +4894,10 @@ class Slices(unittest.TestCase):
               "hotta_tanaka/conformally_flat/equator", "hotta_tanaka/kundt/equator", "hotta_tanaka/kundt/near",
               "btz/stationary/rotating", "btz/eddington_finkelstein_ingoing/rotating",
               "btz/eddington_finkelstein_outgoing/rotating", "conformal btz/rotating",
+              # The quantum BTZ hole's dressed cone and rotating hole, other spacetimes than the hole of
+              # positive mass without rotation whose moment is embedded.
+              "quantum_btz/brane/dressed", "quantum_btz/rotating/rotating", "conformal quantum_btz/dressed",
+              "conformal quantum_btz/rotating",
               # Myers and Perry's plane of rotation in six dimensions, which the embedded transverse plane
               # theta = 0 meets nowhere outside the horizon.
               "myers_perry/boyer_lindquist_six/rotation",
@@ -5698,6 +5702,17 @@ class Slices(unittest.TestCase):
             def rstar(r):
                 return (0.25 * math.log(abs(1 - r)) - 0.125 * math.log((r * r + r + 2) / 2)
                         + 5 / (4 * w) * (math.atan((2 * r + 1) / w) - math.atan(1 / w)))
+            return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
+        if key.startswith("quantum_btz/eddington_finkelstein"):
+            # At l_3 = 1, M = F = 1/4 and l = 15/16, 1/H = r/(r^3 - r/4 - 15/64) with the root 3/4 and a
+            # complex pair -3/8 +- i sqrt(11)/8, and r_* = Re sum_i A_i ln(1 - r/r_i), A_i = r_i/(3r_i^2 - 1/4), vanishes at r = 0.
+            # Static t = 0 is v = r_* and u = -r_*, drawn against v - r and u + r or against v and u.
+            sign = 1 if "ingoing" in key else -1
+            finkelstein = key.endswith("finkelstein")
+            roots = [0.75, complex(-0.375, math.sqrt(11) / 8), complex(-0.375, -math.sqrt(11) / 8)]
+
+            def rstar(r):
+                return sum(ri / (3 * ri * ri - 0.25) * cmath.log(1 - r / ri) for ri in roots).real
             return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
         if key.startswith("reissner_nordstrom_ads/eddington_finkelstein"):
             # At L = 1, r_s = 27/8 and r_q^2 = 11/8, r^2 f = (r - 1)(r - 1/2)(r^2 + 3r/2 + 11/4), and

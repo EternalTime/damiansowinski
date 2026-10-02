@@ -1664,6 +1664,20 @@ A class of exact solutions describing gravitational waves with plane fronts and 
 - chart Brinkmann: coordinates $(u, v, x, y)$, $$ds^2 = H\,c^2du^2 - 2c\,du\,dv + dx^2 + dy^2$$
 - chart Exact Plane Wave: coordinates $(u, v, x, y)$, $$ds^2 = \left(A\left(x^2 - y^2\right) + 2Bxy\right)c^2du^2 - 2c\,du\,dv + dx^2 + dy^2$$
 
+### Quantum BTZ Black Hole
+
+The black hole of three dimensions with the backreaction of strongly coupled quantum fields included exactly, read off a black hole on a brane in anti-de Sitter space of four dimensions. One more term in the metric of Bañados, Teitelboim, and Zanelli, $-\ell F/r$, puts a curvature singularity at its centre and hides the conical singularities of negative mass behind horizons.
+
+- id: `quantum_btz`
+- tags: negative cosmological constant, cosmological constant, anti-de Sitter, black hole, BTZ black hole, rotating black hole, mass, angular momentum, horizon, event horizon, Cauchy horizon, curvature singularity, ring singularity, conical singularity, naked singularity, cosmic censorship, strong cosmic censorship, causal structure, black hole thermodynamics, black hole entropy, Hawking temperature, AdS/CFT, holography, braneworld, quantum field theory in curved spacetime, semiclassical gravity, 2+1 dimensional gravity, circularly symmetric, exact solution, Lorentzian, idealized model, static, stationary, three-dimensional
+- signature: (-,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/quantum_btz.json
+- chart Static: coordinates $(t, r, \phi)$, $$ds^2 = -\left(\dfrac{r^2}{\ell_3^2} - M - \dfrac{\ell F}{r}\right)c^2dt^2 + \dfrac{dr^2}{\dfrac{r^2}{\ell_3^2} - M - \dfrac{\ell F}{r}} + r^2d\phi^2$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \phi)$, $$ds^2 = -\left(\dfrac{r^2}{\ell_3^2} - M - \dfrac{\ell F}{r}\right)dv^2 + 2\,dv\,dr + r^2d\phi^2$$
+- chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \phi)$, $$ds^2 = -\left(\dfrac{r^2}{\ell_3^2} - M - \dfrac{\ell F}{r}\right)du^2 - 2\,du\,dr + r^2d\phi^2$$
+- chart C-Metric Brane: coordinates $(t, r, \phi)$, $$ds^2 = -\left(\dfrac{r^2}{\ell_3^2} + \kappa - \dfrac{\mu\ell}{r}\right)c^2dt^2 + \dfrac{dr^2}{\dfrac{r^2}{\ell_3^2} + \kappa - \dfrac{\mu\ell}{r}} + r^2d\phi^2$$
+- chart Rotating: coordinates $(t, r, \phi)$, $$ds^2 = -\left(\dfrac{r^2}{\ell_3^2} + \kappa - \dfrac{\mu\ell}{r} + \dfrac{a^2}{r^2}\right)c^2dt^2 + \dfrac{dr^2}{\dfrac{r^2}{\ell_3^2} + \kappa - \dfrac{\mu\ell}{r} + \dfrac{a^2}{r^2}} + r^2\left(d\phi - \dfrac{a}{r^2}c\,dt\right)^2$$
+
 ### Randall-Sundrum Braneworld
 
 A flat wall with three dimensions of space in anti-de Sitter space of five dimensions, found by Lisa Randall and Raman Sundrum in 1999. Every length along the wall's directions shrinks as $e^{-k|y|}$ with the distance $y$ from it, which between two walls turns the Planck scale into the weak scale, and with one wall keeps gravity four dimensional beside a fifth dimension of infinite size.
