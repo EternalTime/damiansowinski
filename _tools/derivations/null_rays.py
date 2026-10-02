@@ -2457,6 +2457,19 @@ RP3_EDGE = "the edge $X = 0$, glued to itself by the antipodal map of the sphere
 # Gott and Li's self-creating universe is drawn at the de Sitter radius 1 and their beta = 2 pi r_0.
 SCU = {"r_0": 1, "beta": "2*pi"}
 SCU_HORIZON_X = "the Cauchy horizon, $x = \\pm r_0e^{-c\\tau/r_0}$"
+# The tent of many black holes and wormholes in three dimensions at alpha = sqrt(2/3) and l = 1, on the
+# plane phi = pi/4 of the sausage chart: positive between the glued surfaces, zero on the fold.
+BTZ_MULTI_TENT = "2*cos(t)/sqrt(3) - 2*rho/(1 + rho**2)"
+BTZ_MULTI_FOLD = ("Piecewise((2*cos(t)/(sqrt(3) + sqrt(3 - 4*cos(t)**2)), (cos(t) < sqrt(3)/2) & ({side})), "
+                  "(nan, True))")
+BTZ_MULTI_FOLD_LEGEND = "a fold of the tent, where two glued surfaces cross: the singularity"
+BTZ_MULTI_HORIZON = "the event horizon"
+BTZ_MULTI_INPUT = ("Anti-de Sitter space between the four totally geodesic surfaces $2\\ell\\rho\\cos(\\phi - "
+                   "k\\pi/2) = \\alpha(\\ell^2 + \\rho^2)\\cos(ct/\\ell)$ of the sausage chart, for integer $k$ from "
+                   "$0$ to $3$, at $\\alpha = \\sqrt{2/3}$, where $\\alpha$ is the hyperbolic tangent of each "
+                   "surface's distance from the axis at the moment of time symmetry in units of $\\ell$. Opposite surfaces glued make the wormhole with one "
+                   "exterior and a torus inside, of mass $M = (2\\,\\mathrm{arccosh}\\,2/\\pi)^2 \\approx 0.703$, "
+                   "and adjacent surfaces glued make three black holes.")
 
 DIAGRAMS = [
     *[Diagram("hotta_tanaka", "conformally_flat", view, f"$\\theta = {tex}$", ("\\eta", "\\rho"), (0, 4, -4.3, -0.3),
@@ -3542,6 +3555,38 @@ DIAGRAMS = [
     Diagram("draining_bathtub", "vortex_filament", "drain", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$c\\,r/|A|$", "$c^2t/|A|$", {"A": -1, "B": "sqrt(3)"}, {"z": "0"}, quotient="theta",
             mark_gtt="the ergosurface", cone=BTZ_CONE),
+    # Many black holes and wormholes in three dimensions at l = 1: the tent of Aminneborg, Bengtsson, Brill,
+    # Holst and Peldan, anti-de Sitter space between the four surfaces X = +-alpha V and Y = +-alpha V of
+    # the embedding, at alpha = sqrt(2/3), drawn on the plane through two opposite folds, where adjacent
+    # surfaces cross: 2 rho/(1 + rho^2) = sqrt(2) alpha cos t in the sausage chart, from infinity at
+    # ct_P = pi l/6 to the axis at pi l/2, and the line x = -sqrt(2) alpha c tau in the stereographic chart
+    # with the tent turned so that the folds lie over the x axis. The horizon is the past light cone of the
+    # fold's end at infinity, the two rays through the axis at ct = -pi l/3. The free fall chart stops
+    # short of the folds, and the exterior chart is the outside of the wormhole's one horizon, whose
+    # length is four times the distance arccosh(2) l between adjacent surfaces.
+    Diagram("btz_multi_holes_wormholes", "sausage", "fold", "$t$ and $\\rho$", ("t", "\\rho"),
+            (0, 1, -math.pi / 2, math.pi / 2), "$\\rho/\\ell$", "$ct/\\ell$", {"ell": 1}, {"phi": "pi/4"},
+            mirror=True, families=SIDEWAYS, cones=(5, 9), where=BTZ_MULTI_TENT, where_is_infinity=True,
+            curves=(("shell", BTZ_MULTI_FOLD.format(side="t > 0"), BTZ_MULTI_FOLD_LEGEND),
+                    ("shell", BTZ_MULTI_FOLD.format(side="t < 0"), BTZ_MULTI_FOLD_LEGEND)),
+            marked=(("event", {"x0": "-pi/3", "r": "0"}, 1, BTZ_MULTI_HORIZON, "future"),),
+            input=BTZ_MULTI_INPUT),
+    Diagram("btz_multi_holes_wormholes", "stereographic", "fold", "$\\tau$ and $x$", ("\\tau", "x"),
+            (0, 5, -9, 0), "$x/\\ell$", "$c\\tau/\\ell$", {"ell": 1}, {"y": "0"}, tau="tau",
+            mirror=True, families=SIDEWAYS, cones=(5, 8), where="Min(4 - x**2 + tau**2, -2*tau/sqrt(3) - x)",
+            where_is_infinity=True,
+            curves=(("shell", "Piecewise((-2*tau/sqrt(3), tau > -2*sqrt(3)), (nan, True))", BTZ_MULTI_FOLD_LEGEND),),
+            marked=(("event", {"x0": "-2*sqrt(3) - 4", "r": "0"}, 1, BTZ_MULTI_HORIZON, "future"),),
+            input=BTZ_MULTI_INPUT + " The tent is turned by $45°$ about its axis, so that two of its folds lie "
+                                    "over the $x$ axis."),
+    Diagram("btz_multi_holes_wormholes", "free_fall", "fold", "$T$ and $\\rho$", ("T", "\\rho"),
+            (0, 1, -math.pi / 2, math.pi / 2), "$\\rho/\\ell$", "$cT/\\ell$", {"ell": 1}, {"phi": "pi/4"},
+            tau="T", mirror=True, families=SIDEWAYS, cones=(5, 9), where="1 - rho", where_is_infinity=True,
+            marked=(("event", {"x0": "-pi/3", "r": "0"}, 1, BTZ_MULTI_HORIZON, "future"),),
+            input=BTZ_MULTI_INPUT),
+    Diagram("btz_multi_holes_wormholes", "exterior", "radial", "$t$ and $r$", ("t", "r"), (0.5, 3.5, -1.5, 1.5),
+            "$r/\\ell$", "$ct/\\ell$", {"ell": 1, "M": "(2*acosh(2)/pi)**2"}, {"phi": "0"},
+            where="r - 2*acosh(2)/pi", edge_horizon=True, rounded={"M": "0.703"}, input=BTZ_MULTI_INPUT),
     Diagram("taub_nut", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/m$", "$ct/m$", {"m": 1, "l": "1/2"}, EQUATOR, orient="ingoing"),
     Diagram("bertotti_robinson", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
@@ -8338,6 +8383,43 @@ CAPTIONS = {
         "The two marked rays are the last in the plane to reach infinity. They cross on the axis at "
         "$ct = 5.79\\,m$, the event at which the horizons of the two holes join, and from then on they trace the "
         "circle in which the one event horizon cuts the plane, which grows as $|x| = (2m/3)e^{-Ht}$.",
+    ],
+    ("btz_multi_holes_wormholes", "sausage", "fold"): [
+        "The plane of $t$ and $\\rho$ through the axis of the tent and two opposite folds ($\\phi = \\pi/4$ on "
+        "the right and $5\\pi/4$ on the left), totally geodesic. The metric on it is $(-c^2dt^2 + \\ell^2d\\sigma^2)"
+        "/\\cos^2\\sigma$ with $\\sigma = 2\\arctan(\\rho/\\ell)$, so light runs along $ct = \\pm 2\\ell\\arctan(\\rho/\\ell) + $ "
+        "const and crosses from the axis to infinity, $\\rho = \\ell$, in the time $\\pi\\ell/2c$.",
+        "Two glued surfaces lean together over each opening of the tent and cross along a fold, which leaves "
+        "infinity at $ct_P = \\pi\\ell/6$ and reaches the axis at $\\pi\\ell/2$, where all the surfaces meet. The "
+        "curvature on the fold is that of every other point, $K = 12/\\ell^4$, and the fold is singular as "
+        "Misner space is. Each opening lasts from $-t_P$ to $t_P$, and the event horizon is the past light cone "
+        "of its last point: it is born on the axis at $ct = -\\pi\\ell/3$, after the spacetime itself.",
+    ],
+    ("btz_multi_holes_wormholes", "stereographic", "fold"): [
+        "The plane of $\\tau$ and $x$ ($y = 0$) through the axis of the tent and two opposite folds, conformal to "
+        "the flat plane, so light runs at 45°. The origin is the event where all the glued surfaces meet, each "
+        "of them a plane through it and each fold a straight line, here $x = \\pm 2c\\tau/\\sqrt{3}$.",
+        "Infinity is the hyperbola $x^2 - c^2\\tau^2 = 4\\ell^2$, which each fold meets at $c\\tau = "
+        "-2\\sqrt{3}\\,\\ell$, the last point of an opening. The event horizon is the past light cone of that "
+        "point, and the two halves of it meet on the axis at $c\\tau = -(4 + 2\\sqrt{3})\\ell$, before the moment of "
+        "time symmetry, the hyperbola $c^2\\tau^2 - x^2 = 4\\ell^2$.",
+    ],
+    ("btz_multi_holes_wormholes", "free_fall", "fold"): [
+        "The plane of $T$ and $\\rho$ through the axis of the tent and two opposite openings ($\\phi = \\pi/4$ "
+        "on the right and $5\\pi/4$ on the left), each vertical line the world line of an observer falling "
+        "freely from rest at $T = 0$. The metric on it is $-c^2dT^2 + \\cos^2(cT/\\ell)\\,4\\ell^4d\\rho^2/"
+        "(\\ell^2 - \\rho^2)^2$, so the cones open toward $cT = \\pm\\pi\\ell/2$, where every distance between "
+        "the observers shrinks to zero.",
+        "In these coordinates the glued surfaces stand still and the folds lie beyond the top edge. The event "
+        "horizon leaves the axis at $cT = -\\pi\\ell/3$ and overtakes every observer before $cT = \\pi\\ell/2$.",
+    ],
+    ("btz_multi_holes_wormholes", "exterior", "radial"): [
+        "The plane of $t$ and $r$ ($\\phi = 0$) outside the horizon of the wormhole ($M \\approx 0.703$, "
+        "$r_+ = \\sqrt{M}\\,\\ell \\approx 0.838\\,\\ell$), the same at every $\\phi$. The cones close at the "
+        "horizon, where $g^{rr} = r^2/\\ell^2 - M$ vanishes, and a ray reaches $r \\to \\infty$ in a finite time, "
+        "as in anti-de Sitter space.",
+        "Out here the spacetime is the exterior of a Bañados-Teitelboim-Zanelli hole of the same mass. The "
+        "static symmetry along $t$ holds in this region alone.",
     ],
     ("btz", "stationary", "static"): [
         "The plane of $t$ and $r$ ($\\phi = 0$) of the hole without rotation ($M = 1$, $J = 0$), the "
@@ -13730,6 +13812,8 @@ def _away(*radii):
 
 
 BTZ_STATIC, BTZ_ROTATING = (1.0, 0.0), (0.8, 0.2)
+# The wormhole's exterior: r_+^2 = M l^2 with r_+ = 2 arccosh(2) l/pi, and no inner horizon.
+BTZ_MULTI_EXTERIOR = ((2 * np.arccosh(2) / np.pi) ** 2, 0.0)
 
 
 def _sds_rstar(r):
@@ -14135,6 +14219,16 @@ CLOSED_FORMS = {
     **{("light_beam", "null_cylindrical_exterior", view):
        (lambda u, v, n=n: v + (1 + 2 * math.log(n)) / 8 * u, lambda u, v: u, None)
        for view, n in (("twice", 2), ("four", 4))},
+    ("btz_multi_holes_wormholes", "sausage", "fold"):
+        (lambda t, rho: t + 2 * np.arctan(rho), lambda t, rho: t - 2 * np.arctan(rho), None),
+    ("btz_multi_holes_wormholes", "stereographic", "fold"): (lambda tau, x: tau + x, lambda tau, x: tau - x, None),
+    ("btz_multi_holes_wormholes", "free_fall", "fold"):
+        (lambda T, rho: np.arcsinh(np.tan(T)) + 2 * np.arctanh(rho),
+         lambda T, rho: np.arcsinh(np.tan(T)) - 2 * np.arctanh(rho),
+         lambda T, rho: (np.abs(T) < 1.45) & (rho < 0.98)),
+    ("btz_multi_holes_wormholes", "exterior", "radial"):
+        (lambda t, r: t + _btz_rstar(r, BTZ_MULTI_EXTERIOR), lambda t, r: t - _btz_rstar(r, BTZ_MULTI_EXTERIOR),
+         _away(2 * np.arccosh(2) / np.pi)),
     ("btz", "stationary", "static"):
         (lambda t, r: t + _btz_rstar(r, BTZ_STATIC), lambda t, r: t - _btz_rstar(r, BTZ_STATIC), _away(1.0)),
     ("btz", "stationary", "rotating"):

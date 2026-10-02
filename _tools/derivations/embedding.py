@@ -11406,6 +11406,120 @@ def draining_bathtub(ck, src):
     return views
 
 
+BTZ_MULTI_ALPHA = math.sqrt(2.0 / 3.0)
+
+
+def btz_multi_geodesic(normal, along):
+    """The points of the geodesic of the hyperbolic plane -V^2 + X^2 + Y^2 = -1 that lies in the plane
+    through the origin with the unit normal `normal` = (n_V, n_X, n_Y), at the signed distances `along`
+    from its point nearest the axis, as (V, X, Y)."""
+    nV, nX, nY = normal
+    b = math.asinh(nV)
+    turn = math.atan2(nY, nX)
+    near = np.array([math.cosh(b), math.sinh(b) * math.cos(turn), math.sinh(b) * math.sin(turn)])
+    tangent = np.array([0.0, -math.sin(turn), math.cos(turn)])
+    s = np.asarray(along, dtype=float)[:, None]
+    return np.cosh(s) * near + np.sinh(s) * tangent
+
+
+def btz_multi_holes_wormholes(ck, src):
+    """The moment of time symmetry, t = 0 of the sausage chart at l = 1, with the four geodesics along
+    which the tent of Aminneborg, Bengtsson, Brill, Holst and Peldan cuts it. The moment is the
+    hyperbolic plane, g_rhorho = 4/(1 - rho^2)^2 and g_phiphi = 4 rho^2/(1 - rho^2)^2, whose circles
+    grow faster than the distance out to them at every rho > 0, which is checked: in three
+    dimensional Minkowski space it is the hyperboloid Z = (1 + rho^2)/(1 - rho^2) - 1 over the
+    radius 2 rho/(1 - rho^2), Brill's figure 5 and Steif's (3.2).
+
+    The four cuts are the geodesics X = +-alpha V and Y = +-alpha V at alpha = sqrt(2/3), each at
+    the distance b = artanh(alpha) from the axis, sinh(b) = sqrt 2. Adjacent cuts are a distance d
+    apart with cosh d = sinh^2 b = 2, along their common perpendicular, which lies at the distance
+    h from the axis with tanh h = 1/(sqrt 2 alpha), cosh h = 2. Glued opposite, the four
+    perpendicular segments close into the wormhole's one horizon, of length 4 d = 2 pi sqrt(M),
+    and glued adjacent they close into three, of lengths d, d and 2 d. Each segment is checked
+    to lie on the surface, to meet both of its cuts at right angles, and to have the length d."""
+    params = {"ell": 1}
+    sl = Slice(src, "btz_multi_holes_wormholes", "sausage", "\\rho", "\\phi", {"t": 0}, params, space="minkowski")
+    ck.stops("many black holes, the moment t = 0 in flat space", sl, np.linspace(1e-3, 0.99, 400))
+    top = 0.8
+    reach = 2 * top / (1 - top ** 2)
+    size = 2 * reach
+    sheet = Piece("sheet", "sheet", sl, 0.0, top, 0.0, 1,
+                  (("axis", "the axis of the tent, $\\rho = 0$"),
+                   ("edge", "the sheet runs on toward the light cone, to $\\rho \\to \\ell$")),
+                  [(r, "r", None) for r in (0.2, 0.4, 0.6, top)], size)
+    cone = FormPiece("cone", sl, np.linspace(0.0, top, 81), lambda r: 2 * r / (1 - r * r),
+                     lambda r: 2 * r / (1 - r * r) - 1.0,
+                     (("apex", "the apex of the light cone, a distance $\\ell$ below the axis"),
+                      ("edge", "the cone runs on")), size)
+    ck.isometry("many black holes, the sheet", sheet)
+    ck.form("many black holes, the hyperboloid Z = (1 + rho^2)/(1 - rho^2) - 1", sheet,
+            lambda r: (1 + r * r) / (1 - r * r) - 1, size)
+    ck.radius("many black holes, the circle of rho has the radius 2 rho/(1 - rho^2)", sheet,
+              lambda r: 2 * r / (1 - r * r), size)
+
+    alpha = BTZ_MULTI_ALPHA
+    b = math.atanh(alpha)
+    d = math.acosh(math.sinh(b) ** 2)
+    h = math.atanh(1 / (math.sqrt(2) * alpha))
+    ck.add("many black holes: sinh b = sqrt 2 at alpha = sqrt(2/3)", abs(math.sinh(b) - math.sqrt(2)), 1e-12)
+    ck.add("many black holes: adjacent cuts are arccosh(2) apart", abs(d - math.acosh(2)), 1e-12)
+    ck.add("many black holes: the wormhole's horizon 4 d is 2 pi sqrt(M) at M = (2 arccosh(2)/pi)^2",
+           abs(4 * d - 2 * math.pi * math.sqrt((2 * math.acosh(2) / math.pi) ** 2)), 1e-12)
+    eta = np.diag([-1.0, 1.0, 1.0])
+    vtop = (1 + top ** 2) / (1 - top ** 2)
+
+    def on_sheet(P):
+        """(V, X, Y) on the hyperboloid as the drawing's (X, Y, Z), with Z = V - 1."""
+        return np.column_stack([P[:, 1], P[:, 2], P[:, 0] - 1.0])
+
+    curves, normals = [], []
+    for k in range(4):
+        turn = k * math.pi / 2
+        n = np.array([math.sinh(b), math.cosh(b) * math.cos(turn), math.cosh(b) * math.sin(turn)])
+        normals.append(n)
+        far = math.acosh(vtop / math.cosh(b))
+        P = btz_multi_geodesic(n, np.linspace(-far, far, 161))
+        ck.add(f"many black holes, cut {k}: on the hyperbolic plane", float(np.max(np.abs(np.einsum("ij,jk,ik->i", P, eta, P) + 1))), 1e-9)
+        ck.add(f"many black holes, cut {k}: on its plane through the origin, X cos + Y sin = alpha V",
+               float(np.max(np.abs(P @ eta @ n))), 1e-9)
+        step = np.diff(P, axis=0)
+        chord = np.sqrt(np.einsum("ij,jk,ik->i", step, eta, step))
+        ck.add(f"many black holes, cut {k}: each chord is the chord of its step in arc length",
+               float(np.max(np.abs(chord - 2 * np.sinh(far / 160)))), 1e-9)
+        ck.on_piece(f"many black holes, cut {k}", sheet, on_sheet(P))
+        curves.append(Curve(sheet, "cut", on_sheet(P)))
+    for k in range(4):
+        turn = k * math.pi / 2 + math.pi / 4
+        m = np.array([math.sinh(h), math.cosh(h) * math.cos(turn), math.cosh(h) * math.sin(turn)])
+        for n in (normals[k], normals[(k + 1) % 4]):
+            ck.add(f"many black holes, horizon segment {k}: at right angles to its cut", abs(float(m @ eta @ n)), 1e-12)
+        P = btz_multi_geodesic(m, np.linspace(-d / 2, d / 2, 41))
+        for end, n in ((P[0], normals[k]), (P[-1], normals[(k + 1) % 4])):
+            ck.add(f"many black holes, horizon segment {k}: ends on its cut", abs(float(end @ eta @ n)), 1e-9)
+        ck.on_piece(f"many black holes, horizon segment {k}", sheet, on_sheet(P))
+        curves.append(Curve(sheet, "horizon", on_sheet(P)))
+
+    surface = Surface([sheet, cone], curves=curves)
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *sheet.at(0.4), "$0.4\\,\\ell$")
+    ring_label(fig, [0, 0, 0], *sheet.at(top), "$0.8\\,\\ell$")
+    fig.legend("fill", "cover", "the hyperbolic plane, the moment $t = 0$ before any cutting")
+    fig.legend("line", "cut", "the four cuts, straight lines of the plane; the spacetime's moment is the region "
+                              "between them, with the cuts glued in pairs")
+    fig.legend("line", "horizon", "the shortest paths between adjacent cuts, each of length $\\mathrm{arccosh}\\,2"
+                                  "\\;\\ell$, which close into the horizons once the cuts are glued")
+    fig.legend("line", "r", "$\\rho$ constant, at $0.2$, $0.4$, $0.6$ and $0.8\\,\\ell$")
+    fig.legend("line", "reference", "the light cone of the Minkowski space it is drawn in, which the sheet nears as "
+                                    "$\\rho \\to \\ell$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("moment", "The moment of time symmetry", "$\\ell$", [surface], fig.done(),
+                 settings="$\\ell = 1$, the unit of every length, and $\\alpha = \\sqrt{2/3}$, the hyperbolic tangent "
+                          "of each cut's distance from the axis in units of $\\ell$. Every length along the sheet is "
+                          "measured with $dX^2 + dY^2 - dZ^2$.",
+                 stops=["At every $\\rho > 0$ the circles grow faster than the distance out to them, and no surface "
+                        "of revolution in flat space carries the moment; Minkowski space carries it."])]
+
+
 def spinning_string(ck, src):
     """The moment t = 0 of the spinning string outside its closed timelike curves, at b = 0.9, the
     deficit the cosmic string is drawn at, and a = 0.9, so that the null circle r_c = a/b is the
@@ -15361,6 +15475,7 @@ DRAWN = {
     "natario": natario,
     "btz": btz,
     "draining_bathtub": draining_bathtub,
+    "btz_multi_holes_wormholes": btz_multi_holes_wormholes,
     "c_metric": c_metric,
     "einstein_rosen_waves": einstein_rosen_waves,
     "gowdy": gowdy,
@@ -15546,6 +15661,19 @@ CAPTIONS = {
         "$g_{RR} = 1$. Beyond that circle it climbs at $dz/dR = \\sqrt{g_{RR} - 1}$, which tends to "
         "$\\sqrt{1/b^2 - 1}$, the slope of the Vilenkin-Gott cone. Both parts lie level at the circle, so they "
         "meet there with one tangent plane.",
+    ],
+    ("btz_multi_holes_wormholes", "moment"): [
+        "The moment of time symmetry ($t = 0$ of the sausage chart) before the cutting, the whole hyperbolic "
+        "plane, drawn as a surface in three dimensional Minkowski space with every distance along it, measured "
+        "with $dX^2 + dY^2 - dZ^2$, the metric distance. It is one sheet of the hyperboloid $(Z + \\ell)^2 - X^2 - "
+        "Y^2 = \\ell^2$, and each straight line of the plane is the sheet's intersection with a plane through the "
+        "apex of the light cone.",
+        "The four cuts stand a distance $\\ell\\,\\mathrm{artanh}\\,\\alpha$ from the axis, and the spacetime's moment "
+        "is the region between them, with four ends that run out to infinity. Glue opposite cuts and the four "
+        "dashed segments join into one closed loop of length $4\\,\\mathrm{arccosh}\\,2\\;\\ell$, the horizon of a "
+        "wormhole with one exterior and a torus inside. Glue adjacent cuts and they close into three loops, of "
+        "lengths $\\mathrm{arccosh}\\,2\\;\\ell$ twice and $2\\,\\mathrm{arccosh}\\,2\\;\\ell$, the horizons of three "
+        "black holes.",
     ],
     ("btz", "throat"): [
         "The moment $t = 0$ of the hole without rotation ($M = 1$, $J = 0$) through both of its exteriors, "

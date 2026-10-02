@@ -116,6 +116,11 @@
       "id": "draining_bathtub",
       "kind": "family",
       "text": "A rotating black hole of three dimensions for sound, with an ergoregion around its horizon and no field equation behind it. Its Ricci scalar is $2(A^2 + B^2)/(c^2r^4)$, growing toward the drain, where the BTZ hole's is constant [visser1998]."
+    },
+    {
+      "id": "btz_multi_holes_wormholes",
+      "kind": "composite",
+      "text": "More cuts through anti-de Sitter space make several BTZ exteriors joined behind their horizons, or one exterior with a handle inside. Dieter Brill and Alan Steif found the first in 1995 [brill1996, steif1996, aminneborg1998]."
     }
   ],
   "references": [
@@ -144,7 +149,10 @@
     "poisson1989",
     "chan1996",
     "horowitz1998",
-    "visser1998"
+    "visser1998",
+    "brill1996",
+    "steif1996",
+    "aminneborg1998"
   ],
   "coordinates": [
     {

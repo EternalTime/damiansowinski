@@ -72,6 +72,11 @@
       "id": "self_creating_universe",
       "kind": "conformal",
       "text": "De Sitter space identified under a boost, which a conformal map relates to Misner space. Gott and Li carried the Rindler vacuum across in 1998 and found its stress energy finite on the horizon when the boost has rapidity $2\\pi$ [gott1998]."
+    },
+    {
+      "id": "btz_multi_holes_wormholes",
+      "kind": "family",
+      "text": "Anti-de Sitter space of three dimensions cut and glued under several boosts at once. Each black hole's singularity is of the kind Misner space has, with the curvature finite [brill1996]."
     }
   ],
   "references": [
@@ -95,7 +100,8 @@
     "tippett2017",
     "parikh2003",
     "lachiezerey1995",
-    "gott1998"
+    "gott1998",
+    "brill1996"
   ],
   "coordinates": [
     {
