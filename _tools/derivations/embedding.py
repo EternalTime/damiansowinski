@@ -6455,6 +6455,120 @@ def white_hole(ck, src):
                        "dust does.")]
 
 
+def lindquist_wheeler_lattice(ck, src):
+    """Lindquist and Wheeler's lattice of eight cells at four moments of the proper time tau of the
+    cell boundaries, from the moment of time symmetry toward the crunch, r_s = 1: the comparison
+    hypersphere of radius a = (a_m/2)(1 + cos e), c tau = (a_m/2)(e + sin e), between the two cells
+    centred on its poles, and in each of those cells Lindquist and Wheeler's comoving chart at the
+    same tau, every shell rho on its own cycloid r = (rho/2)(1 + cos eta), c tau = (rho^(3/2)/2)(eta +
+    sin eta). On it g_rhorho = (d_rho r)^2/(1 - 1/rho), so in the areal radius the surface climbs at
+    dz/dr = 1/sqrt(rho - 1), and where it meets the hypersphere, at rho = r_m = 1/sin^2(psi), its
+    tangent has dr/dl = sqrt(1 - 1/r_m) = cos(psi), the hypersphere's own at chi = psi: the tangency
+    Lindquist and Wheeler ask for, which holds at every moment and is checked. At tau = 0 the cell is
+    Flamm's paraboloid from the throat to r_m. A shell rho reaches r = 0 at c tau = (pi/2) rho^(3/2),
+    so from c tau = pi/2 on the funnel ends in a point on the shell that has just got there. The
+    cycloids are checked to make the published G^rho_rho of the comoving chart vanish and the
+    hypersphere's cycloid its G^chi_chi."""
+    name = "lindquist_wheeler_lattice"
+    psi, rm, am = nr.LW_PSI, nr.LW_RM, nr.LW_AM
+    size = 2 * am + 4.0
+    from scipy.optimize import brentq
+
+    # The shells' own field equation, 2 r d_tau^2 r + (d_tau r)^2 + 1/rho = 0, along the cycloids.
+    _, entry, reader = nr.load(name, "lindquist_wheeler")
+    src.note(name, "lindquist_wheeler", ["einstein_tensor"])
+    published = next(c["value"] for c in entry["einstein_tensor"]["variants"]["ul"]["nonzero"]
+                     if c["indices"] == ["\\rho", "\\rho"])
+    tau_s, rho_s = reader.symbol["\\tau"], reader.symbol["\\rho"]
+    shell = reader.parameters["r"]
+    plain = sp.symbols("r0 r1 r2")
+    G = reader(published).subs({sp.Derivative(shell, (tau_s, 2)): plain[2], sp.Derivative(shell, tau_s): plain[1]})
+    G = sp.lambdify((plain[0], plain[1], plain[2], rho_s),
+                    G.subs(shell, plain[0]).subs({reader.c: 1, reader.parameters["r_s"]: 1}), "numpy")
+    rhos, taus = np.meshgrid(np.linspace(1.05, rm, 40), np.linspace(0.0, 1.5, 30))
+    eta = nr._lw_eta(taus, rhos)
+    jets = [nr._lw_jet(i, 0)(eta, rhos) for i in range(3)]
+    ck.add("Lindquist-Wheeler: each shell's cycloid makes the published G^rho_rho vanish",
+           float(np.max(np.abs(G(jets[0], jets[1], jets[2], rhos)) * jets[0] ** 3)), 1e-9)
+    Gcc = einstein(src, name, "comparison_hypersphere", "\\chi")
+    es = np.linspace(0.05, 0.95 * math.pi, 50)
+    half = np.cos(es / 2)
+    ck.add("Lindquist-Wheeler: a = (a_m/2)(1 + cos e) makes the hypersphere's published G^chi_chi vanish",
+           float(np.max(np.abs(Gcc(a=am * half ** 2, a_tau=-np.tan(es / 2), a_tautau=-1 / (2 * am * half ** 4)))
+                        * (am * half ** 2) ** 2)), 1e-9)
+    ck.add("Lindquist-Wheeler: the boundary shell is the hypersphere's, r(tau, r_m) = a sin(psi)",
+           float(np.max(np.abs(nr._lw_jet(0, 0)(es, rm) - am * half ** 2 * math.sin(psi)))), 1e-12)
+    ck.add("Lindquist-Wheeler: eight cells of equal volume, 8 (2 psi - sin 2 psi) = 2 pi",
+           abs(nr.LW_CELLS * (2 * psi - math.sin(2 * psi)) - 2 * math.pi), 1e-12)
+
+    def moment(e):
+        a = am * (1 + math.cos(e)) / 2
+        tau = am * (e + math.sin(e)) / 2
+        where = f"Lindquist-Wheeler, e = {e / math.pi:.4f} pi"
+
+        def value(i, j):
+            return lambda x: nr._lw_jet(i, j)(nr._lw_eta(tau, np.atleast_1d(x)), np.atleast_1d(np.asarray(x, dtype=float))
+                                              ).reshape(np.shape(x))
+        cell = Slice(src, name, "lindquist_wheeler", "\\rho", "\\phi", {"tau": repr(tau), **EQUATOR}, {"r_s": 1},
+                     numeric={"r": (value(0, 0), value(0, 1))})
+        sphere = Slice(src, name, "comparison_hypersphere", "\\chi", "\\phi", {"tau": "0", **EQUATOR},
+                       {"psi": repr(psi), "r_s": 1}, {"a": repr(a)})
+        # The innermost shell still there: the throat, or the shell that has just reached r = 0.
+        open_throat = tau <= math.pi / 2
+        lo = 1.0 if open_throat else (2 * tau / math.pi) ** (2 / 3)
+        start = (("throat", "the throat $\\rho = r_s$, where the far sheet of the mass begins") if open_throat
+                 else ("apex", "the shell that has just reached $r = 0$"))
+        marks = [(rm, "surface", None)]
+        inner = float(value(0, 0)(np.array([lo * (1 + 1e-9)]))[0])
+        if open_throat and e == 0:
+            marks.insert(0, (lo, "horizon", None))
+        elif inner < 1 < a * math.sin(psi):
+            marks.insert(0, (brentq(lambda x: float(value(0, 0)(np.array([x]))[0]) - 1, lo * (1 + 1e-9), rm), "horizon", None))
+        band = Piece("hypersphere", "star", sphere, psi, math.pi - psi, -a * math.cos(psi), 1,
+                     (("join", "the boundary of the cell about $\\chi = 0$"), ("join", "the boundary of the cell about $\\chi = \\pi$")),
+                     [(math.pi / 2, "r", None)], size)
+        near = Piece("cell", "sheet", cell, lo, rm, 0.0, 1, (start, ("join", "the boundary of the cell, $\\rho = r_m$")),
+                     marks, size)
+        far = Piece("far_cell", "sheet", cell, lo, rm, 0.0, -1, (start, ("join", "the boundary of the cell, $\\rho = r_m$")),
+                    [(x, "surface" if c == "surface" else c, t) for x, c, t in marks], size)
+        near.z = near.z + (band.z[0] - near.z[-1])
+        far.z = far.z + (band.z[-1] - far.z[-1])
+        for label, piece in (("the cell about chi = 0", near), ("the hypersphere", band), ("the cell about chi = pi", far)):
+            ck.isometry(f"{where}, {label}", piece)
+        ck.join(f"{where}, the cell about chi = 0 is tangent to the hypersphere", near, rm, band, psi)
+        ck.join(f"{where}, the cell about chi = pi is tangent to the hypersphere", band, math.pi - psi, far, rm)
+        ck.form(f"{where}, the hypersphere is a sphere of radius a", band, lambda c, a=a: -a * np.cos(c), size)
+        if e == 0:
+            ck.form(f"{where}, the cell is Flamm's paraboloid", near,
+                    lambda x, z0=near.z[0]: z0 + 2 * np.sqrt(np.maximum(x - 1, 0)), size)
+        return Surface([near, band, far], label=f"$c\\tau = {tau:.2f}\\,r_s$", time=tau)
+
+    # The movie runs through the moments at a steady proper time of the boundaries, a frame about every
+    # 0.07 r_s of c tau.
+    es = [f * math.pi for f in (0.0, 0.35, 0.6, 0.8)]
+    taus, keys = movie_values([am * (e + math.sin(e)) / 2 for e in es], 0.07)
+    frames = [moment(es[keys.index(i)] if i in keys else
+                     brentq(lambda e, t=t: am * (e + math.sin(e)) / 2 - t, 0.0, math.pi, xtol=1e-15))
+              for i, t in enumerate(taus)]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover", "star": "star"}, size)
+    fig.legend("fill", "cover", "the two cells centred on $\\chi = 0$ and $\\chi = \\pi$, each a piece of Schwarzschild's geometry")
+    fig.legend("fill", "star", "the comparison hypersphere of radius $a(\\tau)$ between them, where the other six cells lie")
+    fig.legend("line", "surface", "the boundary of a cell, $\\rho = r_m$ and $\\chi = \\psi$ or $\\pi - \\psi$")
+    fig.legend("line", "horizon", "the sphere $r = r_s$ in a cell, at $\\tau = 0$ its throat")
+    fig.legend("line", "r", "the equator $\\chi = \\pi/2$, on which four more cells are centred")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("lattice", "The lattice", "$r_s$", surfaces, fig.done(),
+                 movie=movie(frames, "$c\\tau$", [f.time for f in frames]),
+                 settings=f"$N = {nr.LW_CELLS}$, so that $\\psi = {psi:.3f}$, $r_m = {rm:.3f}\\,r_s$, and "
+                          f"$a_m = {am:.3f}\\,r_s$, with $r_s = 1$ the unit of every length; the moments are the proper "
+                          "time $\\tau$ of the cell boundaries since they were at rest.",
+                 input="In each cell, the slices of Lindquist and Wheeler's comoving chart, every shell on the cycloid "
+                       "$r = \\tfrac{\\rho}{2}(1 + \\cos\\eta)$, $c\\tau = \\tfrac{\\rho}{2}\\sqrt{\\rho/r_s}\\,(\\eta + \\sin\\eta)$; "
+                       "between them the hypersphere of radius $a = \\tfrac{a_m}{2}(1 + \\cos\\eta)$, "
+                       "$c\\tau = \\tfrac{a_m}{2}(\\eta + \\sin\\eta)$.")]
+
+
 VERTICAL = 2   # the Tolman-Bondi cloud is drawn this many times taller than its embedding
 
 
@@ -12297,6 +12411,7 @@ DRAWN = {
     "tolman_bondi": tolman_bondi,
     "bertotti_robinson": bertotti_robinson,
     "plebanski_hacyan": plebanski_hacyan,
+    "lindquist_wheeler_lattice": lindquist_wheeler_lattice,
     "stockum_dust": stockum_dust,
     "taub_nut": taub_nut,
     "israel_wilson_perjes": israel_wilson_perjes,
@@ -13328,6 +13443,20 @@ CAPTIONS = {
     ("semiclosed_world", "bag"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a semiclosed world from its greatest expansion to $c\\tau = 1.50\\,r_s$, just before its throat closes, each moment drawn as a surface in flat space with every distance along it the metric distance. The dust is a sphere of radius $a(\\tau)$ kept from its pole past its equator to $\\chi_0 = 3\\pi/4$, the bag, and it hangs from the outside world by the throat. Above the throat the surface flares out toward infinity, and an observer up there measures the mass $M$ with $2GM/c^2 = a_m\\sin^3\\chi_0$, a twelfth of the mass of the dust in the bag counted grain by grain.",
         "At $\\tau = 0$ the outside is Flamm's paraboloid on both sheets: the stretch behind the throat, from the surface of the dust in to $r_s$, and the far sheet beyond it. The moment then carries on as the moment of clocks released from rest with the dust, Igor Novikov's slicing, and the throat shrinks along its own cycloid to nothing at $c\\tau = \\pi r_s/2$, while the bag has barely begun to fall: at the last moment drawn its radius is still $0.93\\,a_m$. The circles of areal radius $2GM/c^2$ leave the throat on both sides, and two more open out from the equator of the bag.",
+    ],
+    ("lindquist_wheeler_lattice", "lattice"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the lattice of eight cells through the centres of two "
+        "opposite cells, as the proper time $\\tau$ of the cell boundaries runs from their moment of rest to "
+        "$c\\tau = 3.36\\,r_s$, each moment drawn as a surface in flat space with every distance along it the "
+        "metric distance. Each cell is a funnel of Schwarzschild's geometry, the moment of clocks falling "
+        "freely with the boundary, and it meets the comparison hypersphere of radius $a(\\tau)$ with one "
+        "tangent: along the proper distance $l$ across the boundary, $dr/dl = \\sqrt{1 - r_s/r_m} = \\cos\\psi$ "
+        "on both sides. That tangency is "
+        "the condition Richard Lindquist and John Wheeler built the lattice on in 1957.",
+        "At $\\tau = 0$ each funnel is Flamm's paraboloid, open at its throat $r = r_s$. As the hypersphere "
+        "shrinks the funnels shrink with it and keep their angle $\\psi$. The shells nearest the throat reach "
+        "$r = 0$ first, at $c\\tau = \\pi r_s/2$, and from then on each funnel ends in a point. The expansion "
+        "before $\\tau = 0$ is the same run of moments in reverse.",
     ],
     ("oppenheimer_snyder", "collapse"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a star of dust collapsing from rest, as the dust's own time "

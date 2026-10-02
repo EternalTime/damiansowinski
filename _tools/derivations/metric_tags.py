@@ -187,6 +187,12 @@ REGIONS = {
         "why": "simplest_wave and kerr_schild are one wave of the family, whose profile alone "
                "does not depend on u",
     },
+    "lindquist_wheeler_lattice": {
+        "regions": [["schwarzschild_cell", "cosmological_time"]],
+        "why": "lindquist_wheeler leaves the areal radius of the shells free, a vacuum where each shell "
+               "obeys its equation, as the other two charts take it, and comparison_hypersphere is the "
+               "sphere the cells are tangent to, a closed universe of dust that is no part of the lattice",
+    },
     "majumdar_papapetrou": {
         "regions": [["cartesian"]],
         "why": "isotropic is the single hole, which alone is spherically symmetric, and "
@@ -280,6 +286,18 @@ OVERRULED = {
     ("israel_shell", "static"): (
         False, "each side is static in its own chart, and the shell between them, at r = R, "
                "falls through both, so the spacetime as a whole has no time translation"),
+    ("lindquist_wheeler_lattice", "stationary"): (
+        False, "each cell is a piece of Schwarzschild's geometry, static and spherically symmetric in its own "
+               "chart, and its boundary moves through it, so the lattice of cells has no time translation and "
+               "only the discrete symmetry of its tiling"),
+    ("lindquist_wheeler_lattice", "static"): (
+        False, "each cell is a piece of Schwarzschild's geometry, static and spherically symmetric in its own "
+               "chart, and its boundary moves through it, so the lattice of cells has no time translation and "
+               "only the discrete symmetry of its tiling"),
+    ("lindquist_wheeler_lattice", "spherically symmetric"): (
+        False, "each cell is a piece of Schwarzschild's geometry, static and spherically symmetric in its own "
+               "chart, and its boundary moves through it, so the lattice of cells has no time translation and "
+               "only the discrete symmetry of its tiling"),
     ("black_saturn", "vacuum"): (
         True, "V, Omega, W and nu are left free in Weyl's chart and the polar chart; black Saturn "
               "is the solution of the vacuum equations their parameters define, which "

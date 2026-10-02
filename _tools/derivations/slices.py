@@ -595,6 +595,41 @@ def wh_finkelstein():
     return out
 
 
+# Lindquist and Wheeler's lattice as every drawing of it draws it: eight cells, the tiling of the
+# 3-sphere by cubes whose masses Bentivegna and Korzynski evolved. A cell of equal volume has the
+# angular radius psi on the comparison hypersphere with N (2 psi - sin 2 psi) = 2 pi, its boundary
+# turns round at r_m = r_s/sin^2(psi) and the hypersphere at a_m = r_s/sin^3(psi).
+def lw_psi(cells):
+    """The angular radius of one of N cells of equal volume on the 3-sphere."""
+    lo, hi = 0.0, math.pi / 2
+    for _ in range(200):
+        mid = (lo + hi) / 2
+        lo, hi = (mid, hi) if cells * (2 * mid - math.sin(2 * mid)) < 2 * math.pi else (lo, mid)
+    return (lo + hi) / 2
+
+
+LW_CELLS = 8
+LW_PSI = lw_psi(LW_CELLS)
+LW_RM = 1 / math.sin(LW_PSI) ** 2          # the boundary's largest radius, in r_s
+LW_AM = 1 / math.sin(LW_PSI) ** 3          # the hypersphere's largest radius, in r_s
+
+
+def lw_cell():
+    """A moment of the lattice in one cell's Schwarzschild chart: Novikov's slice, the shells of
+    Lindquist and Wheeler's comoving chart from the innermost the embedding reaches to the
+    boundary, each at the boundary's proper time, drawn where r > r_s, where the chart ends."""
+    out = []
+    for m in moments("lindquist_wheeler_lattice"):
+        lo, hi = m.reach("lindquist_wheeler", "\\rho")
+        R = near(lo, hi, 2001, 1e-6)
+        r, t, _ = novikov(R, m.time)
+        keep = (r > 1) & np.isfinite(t)
+        # A moment after the boundary has crossed r_s lies wholly inside the horizon, beyond the chart.
+        if keep.any():
+            out.append(Mark(m, [np.column_stack([t[keep], r[keep]])]))
+    return out
+
+
 def kerr_above(metric_id):
     """The equator of the moment seen from above with t left out: the whole plane outside
     the horizon, as far as the embedding reaches, as a region of (phi, r)."""
@@ -2410,6 +2445,15 @@ FLAT = {
         "white_hole", lambda m: [[(wh_eta(m.time), lo) for lo in m.reach("interior_comoving", "\\chi")]]),
     ("white_hole", "exterior_schwarzschild", "radial"): wh_exterior,
     ("white_hole", "exterior_eddington_finkelstein", "finkelstein"): wh_finkelstein,
+    # The lattice's moments: Novikov's slice in a cell's Schwarzschild chart, a line of constant tau in the
+    # comoving chart from the innermost shell left to the boundary, and on the hypersphere, whose
+    # view is drawn in a_m, the line of constant tau between the two cells drawn.
+    ("lindquist_wheeler_lattice", "schwarzschild_cell", "radial"): lw_cell,
+    ("lindquist_wheeler_lattice", "lindquist_wheeler", "shells"):
+        lambda: one("lindquist_wheeler_lattice", lambda m: [[(m.time, x) for x in m.reach("lindquist_wheeler", "\\rho")]]),
+    ("lindquist_wheeler_lattice", "comparison_hypersphere", "radial"):
+        lambda: one("lindquist_wheeler_lattice",
+                    lambda m: [[(m.time / LW_AM, x) for x in m.reach("comparison_hypersphere", "\\chi")]]),
     # v - r = w, every r the embedding reaches.
     ("c_metric", "spherical", "inner"): lambda: _c_metric(False),
     ("c_metric", "spherical", "outer"): lambda: _c_metric(False),
@@ -2452,9 +2496,11 @@ HIDDEN = {
     ("hotta_tanaka", "conformally_flat", "equator"): "the spheres through the ring up to the shock meet the plane theta = pi/2 of this chart only as eta goes to minus infinity",
     **{("hotta_tanaka", "kundt", view): "the Kundt chart covers half of each wave front, and the spheres through the ring up to the shock lie on its edge w = 0"
        for view in ("equator", "near")},
+    ("lindquist_wheeler_lattice", "cosmological_time", "radial"): "the moments embedded are of the cell while it contracts, and this chart covers it while it expands",
     ("plebanski_hacyan", "plane", "uw"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
     ("plebanski_hacyan", "plane_null", "uv"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
     ("plebanski_hacyan", "plane_static", "wedge"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
+    ("lindquist_wheeler_lattice", "cosmological_time"): "the moments embedded are of the cell while it contracts, and this chart covers it while it expands",
     ("plebanski_hacyan", "plane"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
     ("plebanski_hacyan", "plane_null"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
     ("plebanski_hacyan", "plane_static"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",

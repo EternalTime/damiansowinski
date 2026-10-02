@@ -68,6 +68,11 @@
       "id": "misner_brill_lindquist",
       "kind": "family",
       "text": "Two uncharged black holes at rest in a universe with no cosmological constant. Only their first moment is in closed form, and the collision that follows is known from computer simulations [brill1963, sperhake2015]."
+    },
+    {
+      "id": "lindquist_wheeler_lattice",
+      "kind": "family",
+      "text": "A universe of uncharged black holes with no cosmological constant, known only approximately: each hole keeps Schwarzschild's geometry inside its cell, and the lattice of cells expands and recollapses [lindquist1957]."
     }
   ],
   "references": [
@@ -85,7 +90,8 @@
     "kastor1996",
     "gibbons2010",
     "brill1963",
-    "sperhake2015"
+    "sperhake2015",
+    "lindquist1957"
   ],
   "coordinates": [
     {

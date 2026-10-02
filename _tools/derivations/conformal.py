@@ -9859,6 +9859,249 @@ def white_hole(ck, src):
     return [v]
 
 
+def lindquist_wheeler_lattice(ck, src):
+    """One cell of Lindquist and Wheeler's lattice of eight, r_s = 1, and its comparison hypersphere.
+
+    A cell is a piece of Schwarzschild's spacetime, drawn in Kruskal and Szekeres's extension by
+    p = arctan U, q = arctan V as Schwarzschild's is: what lies between the shell rho = r_s of
+    Lindquist and Wheeler's comoving chart, the world line of the throat, on which U = V and so
+    X = 0, and the boundary rho = r_m, the radial geodesic at rest at r_m at t = 0. A comoving shell
+    rho at the cycloid parameter eta, r = rho cos^2(eta/2), has
+        V = (k cos(eta/2) + sin(eta/2)) exp((r + k(eta + (rho/2)(eta + sin eta)))/2),  k = sqrt(rho - 1),
+    Misner, Thorne and Wheeler's (31.10) through Kruskal's V, as slices.novikov_kruskal writes it, and
+    U(eta) = -V(-eta), the reflection of t, so that U V = (1 - r) e^r whatever the sign of eta. The
+    boundary crosses r = r_s at eta = +-(pi - 2 psi) and ends on r = 0. Schwarzschild's chart covers
+    the part outside the horizons. Clifton and Ferreira's chart is u = (tau - tau_m)/sqrt(E) + G(r),
+    with dG/dr = r (W/sqrt(E) - 1)/(r - 1), W = sqrt(E - 1 + 1/r), regular at r = 1, and G(r_m) =
+    -r_*(r_m), so that the boundary's turn is t = 0; then U = -exp(-u/2) and V = (r - 1) e^r/(-U),
+    and it covers the cell before the slice tau = tau_m.
+
+    The hypersphere is a closed universe of dust, a = (a_m/2)(1 + cos e) and c tau = (a_m/2)(e +
+    sin e), conformal to the rectangle of e and chi: p = (e - chi)/2, q = (e + chi)/2, each point a
+    sphere, with the bang on T = -pi and the crunch on T = pi."""
+    name = "lindquist_wheeler_lattice"
+    psi, rm, am = slices.LW_PSI, slices.LW_RM, slices.LW_AM
+    E = math.cos(psi) ** 2
+    tau_m = HALF * rm ** 1.5
+    cell = Plane(src, name, "schwarzschild_cell", ("t", "r"), EQUATOR, {"r_s": 1, "psi": sp.Float(psi)})
+    assert cell.g[0, 1] == 0 and sp.simplify(cell.g[0, 0] * cell.g[1, 1] + 1) == 0
+    T = Tower(-cell.g[0, 0], cell.x1, [1])
+    ck.chart("Lindquist-Wheeler cell, Schwarzschild's chart", cell, lambda t, r: T.pq("I", t, r),
+             ck.uniform(-15, 15), ck.uniform(1.001, rm), lambda t, r: (1, 0))
+
+    def shell(eta, rho):
+        """(p, q) of the comoving shell rho at its cycloid parameter eta."""
+        eta, rho = np.asarray(eta, dtype=float), np.asarray(rho, dtype=float)
+        k = np.sqrt(np.maximum(rho - 1, 0))
+        r = rho * np.cos(eta / 2) ** 2
+        lift = k * (eta + rho / 2 * (eta + np.sin(eta))) / 2
+        V = (k * np.cos(eta / 2) + np.sin(eta / 2)) * np.exp(r / 2 + lift)
+        U = -(k * np.cos(eta / 2) - np.sin(eta / 2)) * np.exp(r / 2 - lift)
+        return np.arctan(U), np.arctan(V)
+
+    def comoving(tau, rho):
+        return shell(nr._lw_eta(tau, rho), rho)
+    lw = Plane(src, name, "lindquist_wheeler", ("\\tau", "\\rho"), EQUATOR, {"r_s": 1}, functions={"r": "lw_r(tau, rho)"})
+    rho = ck.uniform(1.02, rm)
+    ck.chart("Lindquist-Wheeler cell, the comoving chart", lw, comoving, ck.uniform(-0.9, 0.9) * HALF * rho ** 1.5, rho,
+             lambda tau, rho: (1, 0))
+
+    # G in s = sqrt(r_m - r), where it is smooth: dG/ds = -2 s g(r_m - s^2).
+    def g(r):
+        with np.errstate(invalid="ignore", divide="ignore"):
+            return np.where(np.abs(r - 1) < 1e-7, -1 / (2 * E),
+                            r * (np.sqrt(np.maximum(E - 1 + 1 / r, 0)) / math.sqrt(E) - 1) / (r - 1))
+    s_end = math.sqrt(rm - 1e-4)
+    primitive = solve_ivp(lambda s, y: [-2 * s * g(rm - s * s)], (0, s_end), [-float(T.rstar(rm))], rtol=1e-12, atol=1e-13,
+                          method="DOP853", dense_output=True)
+
+    def cosmological(tau, r):
+        tau, r = np.asarray(tau, dtype=float), np.asarray(r, dtype=float)
+        u = (tau - tau_m) / math.sqrt(E) + primitive.sol(np.sqrt(np.maximum(rm - r, 0)))[0]
+        with np.errstate(over="ignore"):
+            return -atan_exp(-u / 2), np.arctan((r - 1) * np.exp(r + u / 2))
+    cosmo = Plane(src, name, "cosmological_time", ("\\tau", "r"), EQUATOR, {"r_s": 1, "E": sp.Float(E)})
+    ck.chart("Lindquist-Wheeler cell, the cosmological time chart", cosmo, cosmological, ck.uniform(-6, tau_m),
+             ck.uniform(0.02, rm - 0.01), lambda tau, r: (1, np.sqrt(np.maximum(E - 1 + 1 / r, 0))))
+
+    # One event through the three maps: the shell rho at eta, Schwarzschild's t of it, and the cosmological
+    # time of it, sqrt(E) t = tau - tau_m + F(r) - F(r_m) with dF/dr = W/(1 - 1/r).
+    for eta0, rho0 in ((-0.4, 1.5), (0.3, 1.3), (-1.0, rm)):
+        k = math.sqrt(rho0 - 1)
+        r0 = rho0 * math.cos(eta0 / 2) ** 2
+        t0 = math.log(abs((k + math.tan(eta0 / 2)) / (k - math.tan(eta0 / 2)))) + k * (eta0 + rho0 / 2 * (eta0 + math.sin(eta0)))
+        ck.limit(f"Lindquist-Wheeler: the comoving and Schwarzschild's charts put the shell {rho0:.2f} at eta = {eta0} at one point",
+                 shell(eta0, rho0), T.pq("I", t0, r0), 1e-10)
+        F = integrate.quad(lambda x: math.sqrt(max(E - 1 + 1 / x, 0.0)) / (1 - 1 / x), rm, r0)[0]
+        ck.limit(f"Lindquist-Wheeler: so does the cosmological time chart, shell {rho0:.2f} at eta = {eta0}",
+                 cosmological(tau_m + math.sqrt(E) * t0 - F, r0), T.pq("I", t0, r0), 1e-8)
+    eta_h = PI - 2 * psi
+    X_rest = float(xt(*shell(0.0, rm))[0])
+    ck.limit("Lindquist-Wheeler: the boundary is at rest at r_m on T = 0", xt(*shell(0.0, rm)),
+             [2 * math.atan(math.sqrt((rm - 1) * math.exp(rm))), 0], 1e-12)
+    ck.limit("Lindquist-Wheeler: the boundary crosses r = r_s at eta = pi - 2 psi, on U = 0",
+             [shell(eta_h, rm)[0], rm * math.cos(eta_h / 2) ** 2], [0, 1], 1e-12)
+    ck.limit("Lindquist-Wheeler: the boundary ends on r = 0, T = pi/2", [sum(shell(PI, rm))], [HALF], 1e-12)
+    ck.limit("Lindquist-Wheeler: the shell rho = r_s, the throat, is the line X = 0",
+             xt(*shell(np.linspace(-3, 3, 7), np.ones(7)))[0], np.zeros(7), 1e-12)
+    ck.limit("Lindquist-Wheeler: the boundary's proper time from rest to r = 0 is (pi/2) r_m^(3/2), the hypersphere's (pi/2) a_m",
+             [tau_m], [HALF * am], 1e-12)
+    K = cell.kretschmann
+    ck.diverges("Lindquist-Wheeler: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+    ck.finite("Lindquist-Wheeler: the Kretschmann scalar is finite at r = r_s", K(np.zeros(3), np.array([0.999, 1, 1.001])))
+
+    # The cell: between the throat's world line X = 0 and the boundary.
+    etas = PI * np.tanh(np.linspace(-6, 6, 1201))
+    etas[0], etas[-1] = -PI, PI
+    edge = np.array([point(*shell(e, rm)) for e in etas])
+    X_end = float(edge[-1][0])
+    # The boundary as it is drawn, thinned as every curve is; `edge` keeps every point for the clipping.
+    drawn = runs(*shell(etas, np.full_like(etas, rm)))[0]
+    region = [[0.0, -HALF]] + drawn + [[0.0, HALF]]
+    up, down = point(*shell(eta_h, rm)), point(*shell(-eta_h, rm))
+    box = [-0.45, X_rest + 0.75, -HALF - 0.3, HALF + 0.3]
+    moments = slices.moments(name)
+
+    def inside(p, q):
+        """Where points lie in the cell: X >= 0 and left of the boundary at their height."""
+        X, Tt = xt(p, q)
+        return (X >= -1e-12) & (X <= np.interp(Tt, edge[:, 1], edge[:, 0]) + 1e-9)
+
+    def clipped(v, cls, p, q):
+        keep = inside(p, q)
+        v.curve(cls, np.where(keep, p, np.nan), np.where(keep, q, np.nan))
+
+    def edges(v):
+        v.line("surface", [drawn])
+        v.line("throat", [[[0, -HALF], [0, HALF]]])
+        v.line("horizon", [[[0, 0], up], [[0, 0], down]])
+        v.line("singular", [[[0, HALF], [X_end, HALF]], [[0, -HALF], [X_end, -HALF]]], zig=True)
+        v.label_xt([X_end / 2, HALF], "$r = 0$", "b", dy=-8)
+        v.label_xt([X_end / 2, -HALF], "$r = 0$", "t", dy=8)
+        v.label_xt([X_rest, 0], "$r = r_m$", "l", "small", dx=6)
+        v.label_xt([up[0] / 2, up[1] / 2], "$r = r_s$", "br", "small", dx=-4, dy=-2)
+        v.label_xt([X_rest + 0.35, 0.9], "the next cell", cls="region")
+        v.legend("surface", "the boundary of the cell, the shell $\\rho = r_m$ in radial free fall")
+        v.legend("throat", "the shell $\\rho = r_s$, the throat, beyond which lies the far sheet of the mass")
+        v.legend("horizon", "the horizons $r = r_s$")
+        v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+        v.set(settings=f"$N = {slices.LW_CELLS}$, so that $\\psi = {psi:.3f}$ and $r_m = {rm:.3f}\\,r_s$, with $r_s = 1$ "
+                       "the unit of every length.")
+
+    def slice_all(v):
+        for m in moments:
+            lo, hi = m.reach("lindquist_wheeler", "\\rho")
+            R = slices.near(lo, hi, 801, 1e-9)
+            v.slice(m, [comoving(np.full_like(R, m.time), R)])
+    views = []
+
+    v = View("cell", "Schwarzschild cell", box, "schwarzschild_cell")
+    v.fill("region", region)
+    outer = [at for at in drawn if abs(at[1]) < up[1]]
+    v.fill("cover", [[0, 0]] + [down] + outer + [up])
+    t = spread(-np.inf, np.inf, 500, 9)
+    for r in (1.1, 1.25, 1.4, 1.55):
+        clipped(v, "r", *T.pq("I", t, np.full_like(t, r)))
+    rr = spread(1, rm, 500, 14)
+    for tt in (-2, -1, 0, 1, 2):
+        clipped(v, "t", *T.pq("I", np.full_like(rr, tt), rr))
+    edges(v)
+    v.legend("cover", "the part of the cell outside the horizons, which $t$ and $r > r_s$ cover")
+    v.legend("r", "$r$ constant: $1.1$, $1.25$, $1.4$ and $1.55\\,r_s$")
+    v.legend("t", "$ct$ constant, every $r_s$")
+    slice_all(v)
+    views.append(v)
+
+    v = View("expanding", "Cosmological time", box, "cosmological_time")
+    v.fill("region", region)
+    rr = rm - np.linspace(0, math.sqrt(rm - 1e-3), 600) ** 2
+    last = np.array(runs(*cosmological(np.full_like(rr, tau_m), rr))[0])
+    last = last[last[:, 0] >= 0]
+    rising = [at for at in drawn if at[1] < 0]
+    v.fill("cover", [[0.0, -HALF]] + rising + last.tolist() + [[0.0, float(last[-1][1])]])
+    for r in (0.5, 0.75, 1.25, 1.5):
+        tt = np.linspace(-12, tau_m, 800)
+        clipped(v, "r", *cosmological(tt, np.full_like(tt, r)))
+    for f in (0.25, 0.5, 0.75, 1.0):
+        clipped(v, "t", *cosmological(np.full_like(rr, f * tau_m), rr))
+    edges(v)
+    v.legend("cover", "the cell while it expands, before the slice $\\tau = \\tau_m$ through the boundary at rest, which $\\tau$ and $r$ cover")
+    v.legend("r", "$r$ constant: $0.5$, $0.75$, $1.25$ and $1.5\\,r_s$")
+    v.legend("t", "$\\tau$ constant, at a quarter, a half, three quarters and the whole of $\\tau_m = \\pi r_m^{3/2}/2c\\sqrt{r_s}$")
+    views.append(v)
+
+    v = View("shells", "Comoving shells", box, "lindquist_wheeler")
+    v.fill("region", region)
+    v.fill("cover", region)
+    ee = PI * np.tanh(np.linspace(-6, 6, 801))
+    for rho0 in (1.15, 1.3, 1.45):
+        v.curve("r", *shell(ee, np.full_like(ee, rho0)))
+    for tau0 in (-2.5, -1.5, -0.75, 0.75, 1.5, 2.5):
+        R = slices.near(max(1.0, (2 * abs(tau0) / PI) ** (2 / 3)), rm, 801, 1e-9)
+        v.curve("t", *comoving(np.full_like(R, tau0), R))
+    edges(v)
+    v.legend("cover", "the cell, which $\\tau$ and $\\rho$ cover from the throat to the boundary")
+    v.legend("r", "$\\rho$ constant, the world lines of shells in free fall: $1.15$, $1.3$ and $1.45\\,r_s$")
+    v.legend("t", "$c\\tau$ constant: $\\pm 0.75$, $\\pm 1.5$ and $\\pm 2.5\\,r_s$")
+    slice_all(v)
+    views.append(v)
+
+    # The comparison hypersphere, a_m = 1: the rectangle of the cycloid parameter and chi.
+    sphere = Plane(src, name, "comparison_hypersphere", ("\\tau", "\\chi"), EQUATOR, {"psi": sp.Float(psi), "r_s": 1},
+                   numeric=["a"])
+
+    def scale(tau, chi):
+        e = nr._lw_eta(tau, 1.0)
+        return {"a": ((1 + np.cos(e)) / 2, -np.sin(e) / (1 + np.cos(e)), -2 / (1 + np.cos(e)) ** 2)}
+
+    def round_map(tau, chi):
+        e = nr._lw_eta(tau, 1.0)
+        return (e - chi) / 2, (e + chi) / 2
+    ck.chart("Lindquist-Wheeler, the comparison hypersphere", sphere, round_map, ck.uniform(-0.98 * HALF, 0.98 * HALF),
+             ck.uniform(0.001, PI - 0.001), lambda tau, chi: (1, 0), scale)
+    near, nearer = HALF * (1 - 1e-2), HALF * (1 - 1e-3)
+    ck.diverges("Lindquist-Wheeler: the hypersphere's Kretschmann scalar diverges at the crunch",
+                sphere.kretschmann(near, 0.3, scale), sphere.kretschmann(nearer, 0.3, scale))
+    ck.diverges("Lindquist-Wheeler: the hypersphere's Kretschmann scalar diverges at the bang",
+                sphere.kretschmann(-near, 0.3, scale), sphere.kretschmann(-nearer, 0.3, scale))
+    ck.finite("Lindquist-Wheeler: the hypersphere is regular at chi = 0",
+              sphere.kretschmann(HALF * np.linspace(-0.9, 0.9, 10), np.full(10, 1e-6), scale))
+    v = View("hypersphere", "Comparison hypersphere", [-0.4, PI + 0.4, -PI - 0.35, PI + 0.35], "comparison_hypersphere")
+    whole = [[0, -PI], [PI, -PI], [PI, PI], [0, PI]]
+    v.fill("region", whole)
+    v.fill("cover", whole)
+    v.fill("star", [[0, -PI], [psi, -PI], [psi, PI], [0, PI]])
+    v.fill("star", [[PI - psi, -PI], [PI, -PI], [PI, PI], [PI - psi, PI]])
+    for e in (-2.5, -1.5, -0.75, 0.75, 1.5, 2.5):
+        v.line("t", [[[0, e], [PI, e]]])
+    v.line("r", [[[HALF, -PI], [HALF, PI]]])
+    v.line("surface", [[[psi, -PI], [psi, PI]], [[PI - psi, -PI], [PI - psi, PI]]])
+    v.line("centre", [[[0, -PI], [0, PI]], [[PI, -PI], [PI, PI]]])
+    v.line("chartedge", [[[0, 0], [PI, 0]]])
+    v.line("singular", [[[0, PI], [PI, PI]], [[0, -PI], [PI, -PI]]], zig=True)
+    v.label_xt([HALF, PI], "$a = 0$", "b", dy=-8)
+    v.label_xt([HALF, -PI], "$a = 0$", "t", dy=8)
+    v.label_xt([psi / 2, -2.0], "cell", cls="region")
+    v.label_xt([PI - psi / 2, -2.0], "cell", cls="region")
+    v.label_xt([psi, 2.0], "$\\chi = \\psi$", "l", "small", dx=5)
+    v.legend("cover", "the hypersphere from its bang to its crunch, which $\\tau$ and $\\chi$ cover")
+    v.legend("star", "the cells centred on $\\chi = 0$ and $\\chi = \\pi$, out to their boundaries")
+    v.legend("t", "$\\tau$ constant, at the cycloid's parameter $\\eta = \\pm 0.75$, $\\pm 1.5$ and $\\pm 2.5$")
+    v.legend("r", "$\\chi = \\pi/2$, the equator, on which four more cells are centred")
+    v.legend("surface", "the boundaries of the two cells, $\\chi = \\psi$ and $\\chi = \\pi - \\psi$")
+    v.legend("centre", "$\\chi = 0$ and $\\chi = \\pi$, the centres of the two cells")
+    v.legend("chartedge", "the moment of rest, $\\tau = 0$, where $a = a_m$")
+    v.legend("singular", "$a = 0$, the bang below and the crunch above, where the Kretschmann scalar diverges")
+    v.set(settings=f"$N = {slices.LW_CELLS}$, so that $\\psi = {psi:.3f}$, with $a_m = 1$ the unit of every length.")
+    for m in moments:
+        lo, hi = m.reach("comparison_hypersphere", "\\chi")
+        e = float(nr._lw_eta(m.time / am, 1.0))
+        chi = np.array([lo, hi])
+        v.slice(m, [((e - chi) / 2, (e + chi) / 2)])
+    views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- Vaidya
 
 def vaidya(ck, src):
@@ -17458,6 +17701,7 @@ DRAWN = {
     "point_particle_2plus1": point_particle_2plus1,
     "interior_schwarzschild": interior_schwarzschild, "gravastar": gravastar, "frw": frw,
     "einstein_cluster": einstein_cluster,
+    "lindquist_wheeler_lattice": lindquist_wheeler_lattice,
     "semiclosed_world": semiclosed_world,
     "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii,
     "bartnik_mckinnon": bartnik_mckinnon,
@@ -19671,6 +19915,49 @@ CAPTIONS = {
         "$\\eta = 2\\chi_0$, and no ray from $\\mathscr{I}^-$ arrives below it. Marginally trapped spheres run "
         "along $\\eta = 2\\chi$ in the lower half and $\\eta = 2\\pi - 2\\chi$ in the upper, timelike curves "
         "both, and the event horizon leaves the centre at $\\eta = 2\\pi - 3\\chi_0$ for $i^+$.",
+    ],
+    ("lindquist_wheeler_lattice", "cell"): [
+        "One cell of the lattice of eight, each point in the diagram a 2-sphere. The cell is a piece of "
+        "Schwarzschild's spacetime, drawn as Kruskal and Szekeres's extension is, with $T = p + q$ up and "
+        "$X = q - p$ across for $p = \\arctan U$ and $q = \\arctan V$ of the Kruskal coordinates $U$ and $V$, and "
+        "light at 45°. It lies between the "
+        "world line of the throat, on the left, and the boundary on the right, a sphere in radial free fall "
+        "that leaves the singularity below, is at rest at $r_m$ on $T = 0$, and falls into the singularity "
+        "above.",
+        "Schwarzschild's $t$ and $r$ cover the part of the cell outside the horizons, the wedge between them "
+        "and the boundary. Everything to the right of the boundary belongs to the next cell, which has a "
+        "diagram of its own, the mirror image of this one.",
+    ],
+    ("lindquist_wheeler_lattice", "expanding"): [
+        "One cell of the lattice of eight, each point in the diagram a 2-sphere, drawn as Kruskal and "
+        "Szekeres's extension of Schwarzschild's spacetime is, with $T = p + q$ up and $X = q - p$ across "
+        "and light at 45°. Clifton and Ferreira's $\\tau$ and $r$ cover the cell while it expands: from the "
+        "singularity below, across the horizon that light leaves through, up to the slice $\\tau = \\tau_m$ "
+        "on which the boundary comes to rest.",
+        "Each surface of constant $\\tau$ meets the boundary at a right angle, which is what lets "
+        "neighbouring cells share it. The contracting cell is the mirror image of this region in $T = 0$, "
+        "with the sign of the root reversed, and the two leave a gap between the slices through the "
+        "boundary's turn, as Rex Liu pointed out in 2015.",
+    ],
+    ("lindquist_wheeler_lattice", "shells"): [
+        "One cell of the lattice of eight, each point in the diagram a 2-sphere, drawn as Kruskal and "
+        "Szekeres's extension of Schwarzschild's spacetime is, with $T = p + q$ up and $X = q - p$ across "
+        "and light at 45°. Lindquist and Wheeler's $\\tau$ and $\\rho$ cover the whole cell, from the "
+        "throat $\\rho = r_s$ on the left to the boundary $\\rho = r_m$ on the right. Each shell leaves the "
+        "singularity below, is at rest on $T = 0$, and returns to the singularity above.",
+        "The surfaces of constant $\\tau$ are the moments of the lattice, each meeting the boundary at a "
+        "right angle. The inner shells have the shorter lives, so a surface later than $c\\tau = \\pi r_s/2$ "
+        "starts on the singularity.",
+    ],
+    ("lindquist_wheeler_lattice", "hypersphere"): [
+        "The comparison hypersphere from the centre of one cell to the centre of the cell opposite, each "
+        "point in the diagram a 2-sphere. It is a closed universe of dust, conformal to the rectangle of its "
+        "cycloid parameter $\\eta$ and $\\chi$, drawn with $T = \\eta$ up and $X = \\chi$ across, and light at "
+        "45°. Its radius is $a = \\tfrac{a_m}{2}(1 + \\cos\\eta)$ at $c\\tau = \\tfrac{a_m}{2}(\\eta + "
+        "\\sin\\eta)$, from the bang at $\\eta = -\\pi$ to the crunch at $\\eta = \\pi$.",
+        "The boundary of a cell is a line of constant $\\chi$, and at each $\\tau$ its areal radius "
+        "$a\\sin\\psi$ is the radius of the cell's boundary in Schwarzschild's geometry. A light ray crosses "
+        "the hypersphere from $\\chi = 0$ to $\\chi = \\pi$ once between the bang and the crunch.",
     ],
     ("oppenheimer_snyder", "collapse"): [
         "A spherically symmetric distribution of dust collapsing from rest ($R_0 = 2\\,r_s$), "

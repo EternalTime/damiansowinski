@@ -87,6 +87,11 @@
       "id": "white_hole",
       "kind": "dual",
       "text": "The collapse with the time reversed, a ball of dust that comes out of a singularity. Igor Novikov and Yuval Ne'eman proposed it in 1964 and 1965 as what a quasar is [novikov1965, neeman1965]."
+    },
+    {
+      "id": "lindquist_wheeler_lattice",
+      "kind": "family",
+      "text": "The collapsing star turned inside out: Schwarzschild's vacuum fills each cell of a closed universe, and the boundary of a cell falls along the radial geodesic that the star's surface follows here [lindquist1957]."
     }
   ],
   "references": [
@@ -108,7 +113,8 @@
     "israel1966",
     "hsu2008unitarity",
     "novikov1965",
-    "neeman1965"
+    "neeman1965",
+    "lindquist1957"
   ],
   "coordinates": [
     {

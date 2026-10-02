@@ -421,6 +421,8 @@ class Diagram:
                                     # moment as well as after it, coming out of the singularity, with the
                                     # direction of the static Killing vector there where it is not d/dx^0;
                                     # see Surface
+    cell: tuple = None              # (r, "rest" or "bang"): the radius at which a cell's boundary turns round,
+                                    # and where x^0 = 0 is; see CellBoundary
     singular_runs: bool = False     # mark a singular stretch of an edge, not only a whole edge
     singular_where_claimed: bool = False  # judge a singular edge only inside the published domains
     singular_near: float = 1e-5     # how near an edge singular_runs takes the Kretschmann scalar, in the unit
@@ -432,6 +434,8 @@ class Diagram:
     any_factor: str = None          # a declared conformal factor the drawing holds for every value of
     crunch: bool = False            # mark where the metric stops being finite as a singular curve,
                                     # checked on the Kretschmann scalar, and hatch what lies beyond it
+    bang: bool = False              # with crunch: the metric stops being finite below the middle of the
+                                    # drawing too, on a bang, as a cell's shells both leave r = 0 and return
     solves: tuple = ()              # published Einstein components the declared functions must zero
     singular_zero: str = None       # an expression in the chart's plain names whose zero set the row
                                     # declares a curvature singularity, where the Kretschmann scalar
@@ -813,6 +817,8 @@ WH_KRUSKAL_REST = ("-exp(-pi/2)/sqrt(2)", "sqrt(2)*exp(2 + pi/2)")
 WH_F = "Piecewise((r**3, r < 1), (1, r < 4), ((r/4)**3, True))"
 WH_B = "Piecewise((3, r < 1), (4 - r, r < 4), (0, True))"
 WH_SURFACE = "the surface of the core, a radial geodesic that comes out of $r = 0$, stops at $2r_s$, and falls back"
+# The comparison hypersphere of Lindquist and Wheeler's lattice: dust at rest at its largest, drawn from bang to crunch.
+LW_DUST = {"funcs": ["a"], "eqs": [["\\chi", "\\chi"]], "rates": [0.0], "start": [1.0], "origin": "rest"}
 
 # The boson star every drawing of it declares: the heaviest ground state, Kaup's limit.
 BOSON = {"sigma_c": repr(bs.SIGMA_C)}
@@ -1549,6 +1555,84 @@ BM_FLOW = {"A": "exp(-bm_delta(exp(tau)*bm_k(exp(tau), 1), 1))", "N": "sqrt(bm_N
            "r": "exp(tau)*bm_k(exp(tau), 1)"}
 BM_NODE = 1.5457        # the zero of w, in ell
 
+# Lindquist and Wheeler's lattice of eight cells, whose numbers slices.py holds for every drawing of it.
+LW_CELLS, LW_PSI, LW_RM, LW_AM = slices.LW_CELLS, slices.LW_PSI, slices.LW_RM, slices.LW_AM
+LW_TM = math.pi / 2 * LW_RM ** 1.5         # the boundary's proper time from the bang to its turn, in r_s/c
+LW_INPUT = (f"The lattice of $N = {LW_CELLS}$ cells, each a cube on the hypersphere, where $\\psi = {LW_PSI:.3f}$: the "
+            f"boundary of a cell turns around at $r_m = r_s/\\sin^2\\psi = {LW_RM:.3f}\\,r_s$ and the hypersphere at "
+            f"$a_m = r_s/\\sin^3\\psi = {LW_AM:.3f}\\,r_s$.")
+
+
+def _lw_eta_one(want):
+    """The root of eta + sin(eta) = want in [-pi, pi] for one number, by Newton's step kept inside
+    a bracket, and NaN where there is none. A value within rounding of +-pi is the end itself, the
+    shell at r = 0."""
+    if not abs(want) <= math.pi * (1 + 1e-12):
+        return math.nan
+    sign, want = (1.0 if want >= 0 else -1.0), abs(want)
+    if want >= math.pi:
+        return sign * math.pi
+    lo, hi = 0.0, math.pi
+    x = want / 2 if want < 2 else math.pi - (6 * (math.pi - want)) ** (1 / 3)
+    for _ in range(100):
+        f = x + math.sin(x) - want
+        lo, hi = (lo, x) if f > 0 else (x, hi)
+        slope = 1 + math.cos(x)
+        step = x - f / slope if slope > 1e-300 else 0.5 * (lo + hi)
+        if not lo < step < hi:
+            step = 0.5 * (lo + hi)
+        if step == x or hi - lo < 1e-16:
+            break
+        x = step
+    return sign * x
+
+
+def _lw_eta(tau, rho):
+    """The cycloid parameter of the shell rho at the proper time tau, r_s = c = 1: the root of
+    eta + sin(eta) = 2 tau/rho^(3/2) in [-pi, pi], and NaN where the shell has no such time."""
+    tau, rho = np.broadcast_arrays(np.asarray(tau, dtype=float), np.asarray(rho, dtype=float))
+    with np.errstate(invalid="ignore", divide="ignore"):
+        want = 2 * tau / rho ** 1.5
+    return np.array([_lw_eta_one(w) for w in want.ravel().tolist()]).reshape(want.shape)
+
+
+@lru_cache(maxsize=None)
+def _lw_jet(i, j):
+    """The derivative d_tau^i d_rho^j of the areal radius r = (rho/2)(1 + cos eta) of the shell rho
+    at fixed tau, as a numpy function of (eta, rho): along tau, d_eta over (rho^(3/2)/2)(1 + cos eta),
+    and along rho, d_rho - (3/2 rho)(eta + sin eta)/(1 + cos eta) d_eta, which is what holding
+    tau = (rho^(3/2)/2)(eta + sin eta) fixed asks."""
+    eta, rho = sp.symbols("eta rho", real=True)
+    expr = rho / 2 * (1 + sp.cos(eta))
+    for _ in range(i):
+        expr = sp.diff(expr, eta) / (rho ** sp.Rational(3, 2) / 2 * (1 + sp.cos(eta)))
+    for _ in range(j):
+        expr = sp.diff(expr, rho) - 3 * (eta + sp.sin(eta)) / (2 * rho * (1 + sp.cos(eta))) * sp.diff(expr, eta)
+    return sp.lambdify((eta, rho), sp.simplify(expr), "numpy")
+
+
+def _lw_function(i, j):
+    def value(tau, rho):
+        with np.errstate(invalid="ignore", divide="ignore"):
+            return _lw_jet(i, j)(_lw_eta(tau, rho), np.asarray(rho, dtype=float)) * np.ones(np.broadcast(tau, rho).shape)
+
+    def fdiff(self, argindex=1):
+        if i + j >= 4:
+            raise sp.ArgumentIndexError(self, argindex)
+        return _lw_function(i + (argindex == 1), j + (argindex == 2))(*self.args)
+    name = "lw_r" if i == j == 0 else f"lw_r_{i}{j}"
+    if name not in _LW_MADE:
+        _LW_MADE[name] = type(name, (sp.Function,), {
+            "nargs": 2, "is_real": True, "_imp_": staticmethod(value), "fdiff": fdiff,
+            "__doc__": "The areal radius r/r_s of the comoving shell rho at the proper time c tau/r_s, the cycloid "
+                       "that turns round at r = rho at tau = 0, and its derivatives."})
+    return _LW_MADE[name]
+
+
+_LW_MADE = {}
+lw_r = _lw_function(0, 0)
+
+
 # Functions a row's `functions` may name beside the elementary ones, each a sympy function
 # that carries its own derivative and its own numbers.
 DECLARED_FUNCTIONS = {**{f.__name__: f for f in (bm_m, bm_dm, bm_d2m, bm_delta, bm_ddelta, bm_d2delta, bm_N, bm_dN,
@@ -1557,7 +1641,8 @@ DECLARED_FUNCTIONS = {**{f.__name__: f for f in (bm_m, bm_dm, bm_d2m, bm_delta, 
                       "ori_influx_behind": ori_influx_behind, "ori_shell_behind": ori_shell_behind,
                       "hiscock_m_out": hiscock_m_out, "hiscock_dm_out": hiscock_dm_out,
                       "hiscock_d2m_out": hiscock_d2m_out, "hiscock_r_out": hiscock_r_out,
-                      "israel_r_out": israel_r_out, "israel_r_adv": israel_r_adv}
+                      "israel_r_out": israel_r_out, "israel_r_adv": israel_r_adv,
+                      "lw_r": lw_r}
 
 
 # Neugebauer and Meinel's disc as every one of its diagrams draws it: mu = 3, the disc whose Ernst
@@ -2727,6 +2812,34 @@ DIAGRAMS = [
             (0, 3, -1.5, 1.5), "$\\chi$", "$\\tau$", {"a": 1}, PH_HYPERBOLIC, tau="tau"),
     Diagram("plebanski_hacyan", "anti_nariai_static", "radial", "$t$ and $r$", ("t", "r"), (1, 4, -1.5, 1.5),
             "$r/a$", "$ct/a$", {"a": 1}, PH_HYPERBOLIC),
+    # Lindquist and Wheeler's lattice of eight cells: one cell in Schwarzschild's coordinates, in
+    # Clifton and Ferreira's cosmological time while it expands, in Lindquist and Wheeler's comoving
+    # coordinates, each shell on its own cycloid, and the comparison hypersphere, a closed universe
+    # of dust released from rest at its largest.
+    Diagram("lindquist_wheeler_lattice", "schwarzschild_cell", "radial", "$t$ and $r$", ("t", "r"), (0, 2, -6, 6),
+            "$r/r_s$", "$ct/r_s$", {"r_s": 1, "psi": repr(LW_PSI)}, EQUATOR, orient="ingoing", areal=True,
+            cell=(repr(LW_RM), "rest"),
+            input=LW_INPUT + " The boundary is at rest at $r_m$ at $t = 0$."),
+    Diagram("lindquist_wheeler_lattice", "cosmological_time", "radial", "$\\tau$ and $r$", ("\\tau", "r"),
+            (0, 1.8, 0, 3.6), "$r/r_s$", "$c\\tau/r_s$", {"r_s": 1, "E": repr(math.cos(LW_PSI) ** 2)}, EQUATOR,
+            tau="tau", areal=True, cell=(repr(LW_RM), "bang"),
+            input=LW_INPUT + f" Here $E = \\cos^2\\psi = {math.cos(LW_PSI) ** 2:.3f}$, and the boundary leaves $r = 0$ at "
+                             "$\\tau = 0$."),
+    Diagram("lindquist_wheeler_lattice", "lindquist_wheeler", "shells", "$\\tau$ and $\\rho$", ("\\tau", "\\rho"),
+            (1, 1.75, -3.6, 3.6), "$\\rho/r_s$", "$c\\tau/r_s$", {"r_s": 1}, EQUATOR, tau="tau", areal=True,
+            functions={"r": "lw_r(tau, rho)"}, solves=(("\\rho", "\\rho"),), crunch=True, bang=True,
+            lines=(("surface", "r", repr(LW_RM), "the boundary of the cell, $\\rho = r_m$"),),
+            input=LW_INPUT + " Each shell is the cycloid $r = \\tfrac{\\rho}{2}(1 + \\cos\\eta)$, "
+                             "$c\\tau = \\tfrac{\\rho}{2}\\sqrt{\\rho/r_s}\\,(\\eta + \\sin\\eta)$, checked to solve this "
+                             "spacetime's own $G^\\rho{}_\\rho = 0$."),
+    Diagram("lindquist_wheeler_lattice", "comparison_hypersphere", "radial", "$\\tau$ and $\\chi$", ("\\tau", "\\chi"),
+            (0, math.pi, -math.pi / 2, math.pi / 2), "$\\chi$", "$c\\tau/a_m$",
+            {"psi": repr(LW_PSI)}, EQUATOR, tau="tau", areal=True, dust=LW_DUST,
+            lines=(("surface", "r", repr(LW_PSI), "the boundary of the cell about $\\chi = 0$, $\\chi = \\psi$"),
+                   ("surface", "r", repr(math.pi - LW_PSI), "the boundary of the cell about $\\chi = \\pi$")),
+            input=LW_INPUT + " The radius $a(\\tau)$ is solved from this spacetime's own $G^\\chi{}_\\chi = 0$, at rest "
+                             "with $a = a_m$ at $\\tau = 0$, which is the lattice's own "
+                             "$\\dot{a}^2 = a_m/a - 1$."),
     Diagram("interior_schwarzschild", "spherical", "radial", "$t$ and $r$", ("t", "r"),
             (0, 1.5, -0.75, 0.75), "$r/r_s$", "$t/r_s$", {"r_s": 1, "R": "3/2"}, EQUATOR,
             areal=True),
@@ -3983,6 +4096,46 @@ CAPTIONS = {
     **LB_CAPTIONS,
     **HT_CAPTIONS,
     **{("aichelburg_sexl", "null_cartesian", view): _as_caption(rho[2:]) for view, rho in AS_RHO.items()},
+    ("lindquist_wheeler_lattice", "schwarzschild_cell", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) about the mass at the centre of one cell, "
+        "where the metric is Schwarzschild's. The boundary of the cell rises out of $r_s$ as $t \\to -\\infty$, "
+        "is at rest at $r_m$ at $t = 0$, and falls back to $r_s$ as $t \\to +\\infty$, along a radial geodesic. "
+        "The cell is everything inside it, and beyond it lies the next cell, with a mass and a chart of its own.",
+        "The boundary's clock reads a finite time between the two ends, $\\pi r_m^{3/2}/c\\sqrt{r_s}$ from $r = 0$ "
+        "back to $r = 0$, most of which these coordinates leave out, since they stop at $r_s$. The surfaces "
+        "of constant $t$ of neighbouring cells meet at an angle on the boundary once it moves, which is why "
+        "the lattice takes another time.",
+    ],
+    ("lindquist_wheeler_lattice", "cosmological_time", "radial"): [
+        "The plane of $\\tau$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) in one expanding cell. Every shell that "
+        "falls freely with the boundary's energy has $\\tau$ for its proper time and crosses the surfaces of "
+        "constant $\\tau$ at a right angle, so neighbouring cells agree on those surfaces where they touch. "
+        "The boundary leaves $r = 0$ at $\\tau = 0$ and comes to rest at $r_m$, where the root in the metric "
+        "vanishes and the coordinates end.",
+        "The singularity $r = 0$ lies in the past of every point, and the horizon $r = r_s$ is the one light "
+        "leaves through: outgoing rays cross it and ingoing rays never do. The cell at each moment is the "
+        "ball inside the boundary, down to $r = 0$.",
+    ],
+    ("lindquist_wheeler_lattice", "lindquist_wheeler", "shells"): [
+        "The plane of $\\tau$ and $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$) in one cell. Each vertical line is a "
+        "shell in free fall, labelled by the radius $\\rho$ at which it is at rest at $\\tau = 0$, and the "
+        "surface $\\tau = 0$ is the moment of time symmetry of the whole lattice. The shell $\\rho$ leaves "
+        "$r = 0$ at $c\\tau = -\\tfrac{\\pi}{2}\\rho\\sqrt{\\rho/r_s}$ and returns to it after the same time, so "
+        "the singularity is the pair of curves that close the diagram above and below.",
+        "The shells near the throat, $\\rho \\to r_s$, live for $\\pi r_s/c$ and the boundary for "
+        "$\\pi r_m^{3/2}/c\\sqrt{r_s}$. A surface of constant $\\tau$ later than $\\pi r_s/2c$ therefore ends "
+        "on the singularity at the shell that has just reached it, and the cell is what remains outside.",
+    ],
+    ("lindquist_wheeler_lattice", "comparison_hypersphere", "radial"): [
+        "The plane of $\\tau$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) on the comparison hypersphere, from "
+        "the centre of one cell at $\\chi = 0$ to the centre of the cell opposite at $\\chi = \\pi$. The "
+        "hypersphere is a closed universe of dust with the lattice's largest radius $a_m$: it leaves $a = 0$ "
+        "at $c\\tau = -\\pi a_m/2$, is at rest at $\\tau = 0$, and returns to $a = 0$ at $c\\tau = \\pi a_m/2$. "
+        "Its light rays obey $c\\,d\\tau = \\pm a\\,d\\chi$.",
+        "The boundary of a cell is a line of constant $\\chi$, and its areal radius $a\\sin\\psi$ is the "
+        "radius $r$ of the boundary in the Schwarzschild cell at the same proper time. Between the two "
+        "boundaries drawn lie the other six cells of the lattice.",
+    ],
     ("schwarzschild", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), the same at every fixed angle "
         "by spherical symmetry. Outside $r_s$ the cones narrow toward "
@@ -8295,6 +8448,8 @@ class DustSolver:
         # The chart's time is shifted so that the singularity before the reference instant is
         # t = 0, or, with origin "reference", left with the reference instant at t = 0, as for
         # dust released from rest there and collapsing to its singularity after it.
+        # With origin "rest" the reference instant is t = 0 too, and the dust is drawn on both
+        # sides of it, from its bang to its crunch, as a closed universe at its largest is.
         self.t_sing = self.back.t_events[0][0] if origin == "bang" else 0.0
         self.t_ref = -self.t_sing       # the reference instant, in time since the singularity
         # With origin "rest" the reference instant is t = 0 as well, a moment of time symmetry, and
@@ -8775,7 +8930,8 @@ class Chart:
         self.fn["dtaur"] = self.lambdify(sp.diff(tau, self.xr))
 
         self.prep = prep
-        self.surface = Surface(self, number(spec.surface), spec.surface_whole) if spec.surface else None
+        self.surface = (Surface(self, number(spec.surface), spec.surface_whole) if spec.surface
+                        else CellBoundary(self, number(spec.cell[0]), spec.cell[1]) if spec.cell else None)
         self.same_as_grr = True
         if spec.areal:
             # R^2 = g_theta theta. Derivatives are taken of R^2 and divided by 2R, so that a
@@ -8851,7 +9007,10 @@ class Chart:
         expression a row declares in `where` is not positive."""
         gone = np.zeros(np.broadcast(np.asarray(x0), np.asarray(r)).shape, dtype=bool)
         with np.errstate(invalid="ignore"):
-            if self.surface is not None:
+            if self.spec.cell:
+                # A cell is what lies inside its boundary, and only while the boundary is there.
+                gone = gone | ~(np.asarray(r) <= self.surface(np.asarray(x0, dtype=float)))
+            elif self.surface is not None:
                 gone = gone | (np.asarray(r) < self.surface(np.asarray(x0, dtype=float)))
             if self.spec.where:
                 gone = gone | ~(self.fn["where"](x0, r) > 0)
@@ -9000,6 +9159,74 @@ class Surface:
     def __call__(self, x0):
         x0 = np.asarray(x0, dtype=float)
         return np.where((x0 >= self.t[0]) & (x0 <= self.t[-1]), np.interp(x0, self.t, self.r), np.nan)
+
+
+class CellBoundary(Surface):
+    """The boundary of a cell of Lindquist and Wheeler's lattice: the radial timelike geodesic that
+    turns round at r0, with the cell inside it, r <= R, and nothing drawn outside.
+
+    From "rest" it is the star's surface and its mirror image in x^0 = 0, in a chart that is
+    static and regular at r0. From the "bang" it is the expanding half alone, in a chart singular
+    at r0, as Clifton and Ferreira's is: it starts a part in 1e8 inside r0 with the energy
+    -u_0 = sqrt(-g_00(r0)) of rest there and unit speed, runs back in proper time by the published
+    Christoffel symbols until r < r0/1000, and x^0 = 0 is the bang, the rest of the way taken as
+    r ~ (x^0)^(2/3). Unit speed and the energy are checked against the published metric."""
+
+    legend = "the boundary of the cell, in radial free fall"
+
+    def __init__(self, chart, r0, start):
+        self.start = start
+        if start == "rest":
+            super().__init__(chart, r0)
+            return
+        entry, reader = chart.entry, chart.reader
+        names = chart.spec.plane
+        gamma = {tuple(c["indices"]): c["value"] for c in entry["christoffel"]["variants"]["ull"]["nonzero"]}
+
+        def one(f, t, r):
+            return float(f(np.array([t]), np.array([r]))[0])
+        G = {(a, b, c): (chart.lambdify(chart.prep(reader(gamma[(names[a], names[b], names[c])])))
+                        if (names[a], names[b], names[c]) in gamma else (lambda x0, r: np.zeros(np.shape(r))))
+             for a in (0, 1) for b in (0, 1) for c in (0, 1)}
+        g00, g0r, grr = chart.fn["g00"], chart.fn["g0r"], chart.fn["grr"]
+        r0 = float(r0)
+        r1 = r0 * (1 - 1e-8)
+        energy = math.sqrt(-one(g00, 0.0, r0 * (1 - 1e-14)))
+        a, b, c = one(g00, 0.0, r1), one(g0r, 0.0, r1), one(grr, 0.0, r1)
+        # -(a u0 + b ur) = e and a u0^2 + 2 b u0 ur + c ur^2 = -1, the root with ur > 0.
+        ur = math.sqrt(max((energy ** 2 + a) / (b * b - a * c), 0.0))
+        u0 = (energy + b * ur) / -a
+
+        def rhs(_, y):
+            t, r, v = y[0], y[1], (y[2], y[3])
+            acc = [-sum(one(G[(k, i, j)], t, r) * v[i] * v[j] for i in (0, 1) for j in (0, 1)) for k in (0, 1)]
+            return [v[0], v[1], acc[0], acc[1]]
+
+        def small(_, y):
+            return y[1] - r0 / 1000
+        small.terminal = True
+        sol = solve_ivp(rhs, (0, -1e4), [0.0, r1, u0, ur], events=small, rtol=1e-12, atol=1e-14, method="DOP853",
+                        max_step=0.01)
+        t, r, td, rd = (v[::-1] for v in sol.y)
+        ga, gb, gc = (np.array([one(f, x, y) for x, y in zip(t, r)]) for f in (g00, g0r, grr))
+        speed = np.abs(ga * td ** 2 + 2 * gb * td * rd + gc * rd ** 2 + 1)
+        drift = np.ptp(-(ga * td + gb * rd))
+        if not (speed.max() < 1e-8 and drift < 1e-8 and np.all(np.diff(t) > 0) and np.all(np.diff(r) > 0)):
+            raise SystemExit(f"{key(chart.spec)}: the boundary misses unit speed by {speed.max():.1e} "
+                             f"or its energy drifts by {drift:.1e}")
+        bang = t[0] - 2 * r[0] * td[0] / (3 * rd[0])
+        # From the bang to the first point traced the radius is r ~ (x^0)^(2/3), given at enough points
+        # that the straight lines between them follow it.
+        first = (t[0] - bang) * np.linspace(0, 1, 41)[:-1] ** 1.5
+        self.t = np.concatenate([first, t - bang])
+        self.r = np.concatenate([r[0] * (first / (t[0] - bang)) ** (2 / 3), r])
+        self.energy = energy
+
+    def __call__(self, x0):
+        x0 = np.asarray(x0, dtype=float)
+        if self.start == "rest":
+            return super().__call__(np.abs(x0))
+        return np.where((x0 >= 0) & (x0 <= self.t[-1]), np.interp(x0, self.t, self.r), np.nan)
 
 
 def _as_lambda(reader, name, rep):
@@ -9601,19 +9828,27 @@ class Plot:
         """The curve past which the metric stops being finite, found up each vertical line of the
         drawing by bisection, and checked to be a curvature singularity: the Kretschmann scalar
         passes 1e8 and grows fiftyfold between 1e-4 and 1e-5 of the drawing short of it."""
+        if self.c.spec.bang:
+            # A bang below and a crunch above: each is looked for from the middle of the drawing.
+            return self._crunch_curves(n, 0.5, 1.0) + self._crunch_curves(n, 0.5, 0.0)
+        return self._crunch_curves(n, 0.0, 1.0, either=True)
+
+    def _crunch_curves(self, n, start, end, either=False):
+        """crunch_curves along each vertical line from the height `start`, where the metric is to be
+        finite, to the height `end`, where it is not."""
         points, runs = [], []
         for u in np.linspace(0.002, 0.998, n):
-            ends = [self.finite(*self.to_chart(self.from_unit(np.array([u, v])))) for v in (0.0, 1.0)]
-            if ends[0] == ends[1]:
+            ends = [self.finite(*self.to_chart(self.from_unit(np.array([u, v])))) for v in (start, end)]
+            if ends[0] == ends[1] or not (either or ends[0]):
                 if points:
                     runs.append(points)
                 points = []
                 continue
-            # The metric is finite at the foot of the line and not at its head, a crunch, or the other
-            # way about, a bang, as the delayed singularity of the white hole's shells is; `side` is
-            # the way from the curve into the spacetime.
-            side = -1 if ends[0] else 1
-            lo, hi = (0.0, 1.0) if ends[0] else (1.0, 0.0)
+            # The metric is finite at `start` and not at `end`, or with `either` the other way about,
+            # as the delayed singularity of the white hole's shells is, a bang at the foot of the line;
+            # `side` is the way from the curve into the spacetime.
+            lo, hi = (start, end) if ends[0] else (end, start)
+            side = 1.0 if lo > hi else -1.0
             for _ in range(60):
                 mid = 0.5 * (lo + hi)
                 lo, hi = (mid, hi) if self.finite(*self.to_chart(self.from_unit(np.array([u, mid])))) else (lo, mid)
@@ -9845,7 +10080,7 @@ class Plot:
             out.append({"kind": kind, "points": [rounded(u)], "legend": legend})
         for kind, radius, legend in spec.curves:
             out.append({"kind": kind, "lines": [rounded(thin(self.world_line(radius), 0.0006))], "legend": legend})
-        if spec.surface:
+        if spec.surface or spec.cell:
             out.append({"kind": "surface", "lines": [rounded(thin(self.surface_line(), 0.0006))],
                         "legend": spec.surface_legend or self.c.surface.legend})
         if spec.star:
@@ -10133,7 +10368,10 @@ def settings(spec, entry):
     names.update({vm.Reader._plain(c): c for c in entry["coords"]})
     parts = []
     for plain, value in list(spec.params.items()) + list(spec.fixed.items()):
-        shown = sp.latex(number(value), ln_notation=True)
+        value = number(value)
+        # A value that is the root of an equation, as the angle of a lattice's cell is, is shown to four figures.
+        shown = (f"{float(value):.4g}" if value.is_Float and len(repr(float(value)).replace(".", "").strip("0")) > 6
+                 else sp.latex(value, ln_notation=True))
         parts.append(f"${names[plain]} = {shown}$")
     return ", ".join(parts)
 
@@ -12026,6 +12264,58 @@ CLOSED_FORMS.update({
     # In the homothetic chart an ingoing ray keeps V.
     ("bonnor_vaidya", "homothetic", "scaling"): (lambda V, R: V, None, None),
 })
+
+
+def _lw_forms():
+    """Closed forms of the null rays of Lindquist and Wheeler's lattice, r_s = c = 1. In a cell they
+    keep Schwarzschild's t + r_* and t - r_*. In Clifton and Ferreira's chart sqrt(E) t = tau + F(r)
+    with dF/dr = W/(1 - 1/r) and W = sqrt(E - 1 + 1/r), so the outgoing rays keep tau/sqrt(E) plus the
+    integral of r (W/sqrt(E) - 1)/(r - 1), regular at the horizon, and the ingoing ones tau/sqrt(E) plus
+    the integral of r (W/sqrt(E) + 1)/(r - 1) on either side of it. In the comoving chart t is Novikov's,
+    t = ln|(q + tan(eta/2))/(q - tan(eta/2))| + q (eta + (rho/2)(eta + sin eta)) with q = sqrt(rho - 1)
+    (Misner, Thorne and Wheeler, (31.10)), and on the hypersphere the rays keep eta + chi and
+    eta - chi, with eta the cycloid's parameter, which is its conformal time."""
+    E = math.cos(LW_PSI) ** 2
+
+    def W(r):
+        return math.sqrt(max(E - 1 + 1 / r, 0.0))
+
+    def out(tau, r):
+        return np.array([t / math.sqrt(E) + quad(lambda x: x * (W(x) / math.sqrt(E) - 1) / (x - 1), 1.3, x1,
+                                                 points=[1.0] if (x1 - 1) * 0.3 < 0 else None, limit=400)[0]
+                         for t, x1 in zip(np.ravel(tau), np.ravel(r))])
+
+    def into(tau, r):
+        return np.array([t / math.sqrt(E) + quad(lambda x: x * (W(x) / math.sqrt(E) + 1) / (x - 1),
+                                                 1.3 if x1 > 1 else 0.5, x1, limit=400)[0]
+                         for t, x1 in zip(np.ravel(tau), np.ravel(r))])
+
+    def novikov(tau, rho):
+        eta, q = _lw_eta(tau, rho), np.sqrt(rho - 1)
+        t = np.log(np.abs((q + np.tan(eta / 2)) / (q - np.tan(eta / 2)))) + q * (eta + rho / 2 * (eta + np.sin(eta)))
+        return t, rho / 2 * (1 + np.cos(eta))
+
+    def comoving(sign):
+        def form(tau, rho):
+            t, r = novikov(tau, rho)
+            return t + sign * _rstar(r, [1])
+        return form
+    name = "lindquist_wheeler_lattice"
+    return {
+        (name, "schwarzschild_cell", "radial"):
+            (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: np.abs(r - 1) > 0.05),
+        (name, "cosmological_time", "radial"): (into, out, lambda tau, r: (np.abs(r - 1) > 0.05) & (r > 0.05)),
+        (name, "lindquist_wheeler", "shells"):
+            (comoving(1), comoving(-1),
+             # Away from the horizon, the crunch and the throat rho = 1, where the comoving chart ends.
+             lambda tau, rho: (np.abs(novikov(tau, rho)[1] - 1) > 0.05) & (novikov(tau, rho)[1] > 0.1 * rho) & (rho > 1.02)),
+        (name, "comparison_hypersphere", "radial"):
+            (lambda tau, chi: _lw_eta(tau, 1.0) + chi, lambda tau, chi: _lw_eta(tau, 1.0) - chi,
+             lambda tau, chi: np.abs(tau) < 1.4),
+    }
+
+
+CLOSED_FORMS.update(_lw_forms())
 
 
 def verify(metrics=()):
