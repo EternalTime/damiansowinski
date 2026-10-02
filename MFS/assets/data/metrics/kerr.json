@@ -62,6 +62,11 @@
       "id": "simpson_visser",
       "kind": "family",
       "text": "Kerr's metric with $\\sqrt{r^2 + \\ell^2}$ written for the Boyer-Lindquist radius and $dr$ left alone is the rotating black bounce of Mazza, Franzin, and Liberati, a regular black hole or a wormhole depending on $\\ell$ [mazza2021]."
+    },
+    {
+      "id": "kerr_de_sitter",
+      "kind": "generalisation",
+      "text": "Kerr's black hole in a universe with a cosmological constant of either sign. At $\\Lambda = 0$ Carter's metric is Kerr's [carter1968separable]."
     }
   ],
   "references": [
@@ -89,7 +94,8 @@
     "teo1998",
     "obregon1998",
     "garfinkle1999",
-    "mazza2021"
+    "mazza2021",
+    "carter1968separable"
   ],
   "coordinates": [
     {

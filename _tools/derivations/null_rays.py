@@ -167,7 +167,8 @@ Markers
               diverges too slowly for that; the same test is then taken at 1e-20 and 1e-30
               of the chart's unit from the curve, in 60 digits.
   hatch       outside the entry's published domains, parsed by the same Reader; a domain
-              ending at the undeclared r_+ is read at the outermost zero of g^rr.
+              ending at the undeclared r_+ is read at the outermost zero of g^rr, and one from
+              r_+ to the undeclared r_c at the two outermost zeros.
 
 
 Declared inputs
@@ -552,6 +553,15 @@ RNDS_STATIC = 1.2979848366419
 # which lies between 0 and 2/f wherever f > 0, since f < 1 + r_q^2/r^2; v - r alone is spacelike where f > 2.
 RNDS_TIME_IN = "v - r + atan(2*r)/2"
 RNDS_TIME_OUT = "u + r - atan(2*r)/2"
+# Kerr-de Sitter at Kerr's spin and Kottler's cosmological constant, a = 0.45 r_s and
+# Lambda = 0.2/r_s^2, so that r_- = 0.279, r_+ = 0.785 and r_c = 3.232 r_s, and Kerr-anti-de Sitter
+# at r_s = 2 l and a = l/2 with l = sqrt(-3/Lambda) the unit, so that r_- = 0.137 and r_+ = 0.859 l.
+# KDS_SPLIT is a radius between r_+ and r_c, where both orientations agree with t.
+KDS = {"r_s": 1, "a": "9/20", "Lambda": "1/5"}
+KADS = {"r_s": 2, "a": "1/2", "Lambda": -3}
+KDS_SPLIT = 2.0
+KDS_AXIS = {"theta": "0", "phi": "0"}
+KDS_KERR_AXIS = {"theta": "0", "tildephi": "0"}
 
 # The Aichelburg-Sexl shock on the plane of u and v at three distances from the source, in units
 # of 8GE/c^4 with rho_0 = 8GE/c^4: each ray moving left jumps along the shock by -ln(rho/rho_0),
@@ -1246,6 +1256,43 @@ DIAGRAMS = [
             (-3, 3, -3, 3), "$r\\cos\\phi/(GM/c^2)$", "$r\\sin\\phi/(GM/c^2)$",
             {"G": 1, "M": 1, "a": "9/10"}, {"theta": "pi/2"}, to_display=POLAR, cones=(0, 0),
             principal=True, leaves=("t",), ring=12, inside=True, mark_gtt="the ergosurface"),
+    # Kerr-de Sitter and Kerr-anti-de Sitter. Carter's chart: the axis, where the plane of t and r
+    # holds its rays, and the principal null congruence on the equator, in t and r and from above.
+    # The chart turned to the frame that does not rotate at infinity has the same t and r, so only
+    # its view from above is new. The Kerr charts and the Kerr-Schild chart run through the
+    # horizons on the axis.
+    Diagram("kerr_de_sitter", "boyer_lindquist", "axis", "$\\Lambda > 0$, the axis", ("t", "r"), (0, 4, -2, 2),
+            "$r/r_s$", "$ct/r_s$", KDS, KDS_AXIS, orient="split", split=KDS_SPLIT),
+    Diagram("kerr_de_sitter", "boyer_lindquist", "principal", "$\\Lambda > 0$, principal null rays", ("t", "r"),
+            (0, 4, -2, 2), "$r/r_s$", "$ct/r_s$", KDS, {"theta": "pi/2"}, orient="split", split=KDS_SPLIT,
+            principal=True, leaves=("phi",), mark_gtt="the ergosurfaces", cone=PRINCIPAL_CONE),
+    Diagram("kerr_de_sitter", "boyer_lindquist", "above", "$\\Lambda > 0$, from above", ("\\phi", "r"),
+            (-3.4, 3.4, -3.4, 3.4), "$r\\cos\\phi/r_s$", "$r\\sin\\phi/r_s$", KDS, {"theta": "pi/2"},
+            to_display=POLAR, cones=(0, 0), principal=True, leaves=("t",), ring=12, inside=True,
+            mark_gtt="the ergosurfaces"),
+    Diagram("kerr_de_sitter", "boyer_lindquist", "axis_ads", "$\\Lambda < 0$, the axis", ("t", "r"),
+            (0, 3, -1.5, 1.5), "$r/\\ell$", "$ct/\\ell$", KADS, KDS_AXIS, orient="ingoing"),
+    Diagram("kerr_de_sitter", "boyer_lindquist", "principal_ads", "$\\Lambda < 0$, principal null rays", ("t", "r"),
+            (0.2, 3.2, -1.5, 1.5), "$r/\\ell$", "$ct/\\ell$", KADS, {"theta": "pi/2"}, orient="ingoing",
+            principal=True, leaves=("phi",), mark_gtt="the ergosurface", cone=PRINCIPAL_CONE),
+    Diagram("kerr_de_sitter", "nonrotating", "above", "$\\Lambda > 0$, from above", ("\\Phi", "r"),
+            (-3.4, 3.4, -3.4, 3.4), "$r\\cos\\Phi/r_s$", "$r\\sin\\Phi/r_s$", KDS, {"theta": "pi/2"},
+            to_display=POLAR, cones=(0, 0), principal=True, leaves=("t",), ring=12, inside=True),
+    Diagram("kerr_de_sitter", "nonrotating", "above_ads", "$\\Lambda < 0$, from above", ("\\Phi", "r"),
+            (-3, 3, -3, 3), "$r\\cos\\Phi/\\ell$", "$r\\sin\\Phi/\\ell$", KADS, {"theta": "pi/2"},
+            to_display=POLAR, cones=(0, 0), principal=True, leaves=("t",), ring=12, inside=True),
+    Diagram("kerr_de_sitter", "kerr_ingoing", "axis", "$\\Lambda > 0$, the axis", ("v", "r"), (0, 4, -2, 2),
+            "$r/r_s$", "$(v - r)/r_s$", KDS, KDS_KERR_AXIS, to_display=FINKELSTEIN_IN, tau="v - r"),
+    Diagram("kerr_de_sitter", "kerr_ingoing", "axis_ads", "$\\Lambda < 0$, the axis", ("v", "r"), (0, 3, -3, 0),
+            "$r/\\ell$", "$(v - r)/\\ell$", KADS, KDS_KERR_AXIS, to_display=FINKELSTEIN_IN, orient="ingoing"),
+    Diagram("kerr_de_sitter", "kerr_outgoing", "axis", "$\\Lambda > 0$, the axis", ("u", "r"), (0, 4, -2, 2),
+            "$r/r_s$", "$(u + r)/r_s$", KDS, KDS_KERR_AXIS, to_display=FINKELSTEIN_OUT, tau="u + r"),
+    Diagram("kerr_de_sitter", "kerr_outgoing", "axis_ads", "$\\Lambda < 0$, the axis", ("u", "r"), (0, 3, 0, 3),
+            "$r/\\ell$", "$(u + r)/\\ell$", KADS, KDS_KERR_AXIS, to_display=FINKELSTEIN_OUT, orient="outgoing"),
+    Diagram("kerr_de_sitter", "kerr_schild", "axis", "$\\Lambda > 0$, the axis", ("\\tau", "r"), (0, 4, -2, 2),
+            "$r/r_s$", "$c\\tau/r_s$", KDS, {"theta": "0", "psi": "0"}, tau="tau"),
+    Diagram("kerr_de_sitter", "kerr_schild", "axis_ads", "$\\Lambda < 0$, the axis", ("\\tau", "r"), (0, 3, -1.5, 1.5),
+            "$r/\\ell$", "$c\\tau/\\ell$", KADS, {"theta": "0", "psi": "0"}, tau="tau"),
     Diagram("kerr_newman", "boyer_lindquist", "radial", "$t$ and $r$ on the axis", ("t", "r"),
             (0, 4, -2, 2), "$r/(GM/c^2)$", "$ct/(GM/c^2)$",
             {"G": 1, "M": 1, "a": "3/5", "r_Q": "1/2"}, {"theta": "0", "phi": "0"},
@@ -3132,6 +3179,52 @@ CAPTIONS = {
         "crosses the horizon at a finite angle. The dotted circle is the ergosurface, "
         "$r = 2GM/c^2$ on the equator, and between it and $r_+$ nothing, light included, can keep "
         "$\\phi$ fixed.",
+    ],
+    ("kerr_de_sitter", "boyer_lindquist", "axis"): [
+        "The plane of $t$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $a = 0.45\\,r_s$ and $\\Lambda = 0.2/r_s^2$. On the axis the curves drawn are null geodesics, the paths light takes, and $g^{rr} = \\Delta_r/(r^2 + a^2)$ vanishes at $r_- = 0.279$, $r_+ = 0.785$, and $r_c = 3.232\\,r_s$. The cones close at each of them, since $d(ct)/dr = \\pm(r^2 + a^2)/\\Delta_r$ diverges there.",
+        "The domain of the chart is the region between $r_+$ and $r_c$, where $t$ is a time. Inside $r_+$ and beyond $r_c$ the components alone do not fix which way is future. We take it from the ingoing Kerr chart inside $r_+$, which makes the region between $r_-$ and $r_+$ the black hole, and from the outgoing one beyond $r_c$, which makes that region the expanding universe. The Kretschmann scalar stays finite at $r = 0$ on the axis, because the ring singularity lies in the equatorial plane.",
+    ],
+    ("kerr_de_sitter", "boyer_lindquist", "principal"): [
+        "The equatorial plane ($\\theta = \\pi/2$) drawn in $t$ and $r$, with $\\phi$ left out, for $a = 0.45\\,r_s$ and $\\Lambda = 0.2/r_s^2$. Its rays are the principal null congruence, the light rays that run straight in and straight out: the two null directions of the plane of $\\partial_r$ and $(r^2 + a^2)\\,\\partial_t + a\\Xi\\,\\partial_\\phi$, which are the repeated principal null directions of the Weyl tensor. Every ray turns as it goes, at $d\\phi/dr = \\pm a\\Xi/\\Delta_r$, and the curves drawn are the rays' projections, $d(ct)/dr = \\pm(r^2 + a^2)/\\Delta_r$, the same at every $\\theta$.",
+        "The rays are null geodesics, and each cone is the future cone of the principal plane. The cones close at $r_- = 0.279$, $r_+ = 0.785$, and $r_c = 3.232\\,r_s$. The dotted lines are the two ergosurfaces, $g_{tt} = 0$, at $r = 1.105$ and $3.173\\,r_s$ on the equator. Between $r_+$ and the first nothing, light included, can keep $\\phi$ fixed against the turning of the black hole, and between the second and $r_c$ nothing can keep it fixed against the turning of the cosmological horizon. The ingoing rays end on the ring singularity at $r = 0$, which lies in this plane.",
+    ],
+    ("kerr_de_sitter", "boyer_lindquist", "above"): [
+        "The equatorial plane ($\\theta = \\pi/2$) between the horizons seen from above, with $r$ and $\\phi$ drawn as polar coordinates and $t$ left out, for $a = 0.45\\,r_s$ and $\\Lambda = 0.2/r_s^2$. Its rays are the principal null congruence, each turning at $d\\phi/dr = \\pm a\\Xi/\\Delta_r$, so both families wind counterclockwise, the way the hole turns: the ingoing rays as they fall and the outgoing rays as they climb.",
+        "At $r_+$ and at $r_c$ the angle $\\phi$ runs to infinity along every ray, as $t$ does, so the rays wind without end onto both horizons. The winding is in the coordinate $\\phi$ alone: along an ingoing ray $\\tilde\\phi = \\phi + \\int a\\Xi\\,dr/\\Delta_r$ stays fixed, and in it the ray crosses each horizon at a finite angle. The dotted circles are the ergosurfaces, $r = 1.105$ and $3.173\\,r_s$ on the equator.",
+    ],
+    ("kerr_de_sitter", "boyer_lindquist", "axis_ads"): [
+        "The plane of $t$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $r_s = 2\\ell$ and $a = \\ell/2$, with $\\Lambda = -3/\\ell^2$. On the axis the curves drawn are null geodesics, the paths light takes, and $g^{rr} = \\Delta_r/(r^2 + a^2)$ vanishes at $r_- = 0.137\\,\\ell$ and $r_+ = 0.859\\,\\ell$, where the cones close. Far out $d(ct)/dr \\to \\pm\\ell^2/r^2$, so a ray reaches $r \\to \\infty$ in a finite $t$, as in anti-de Sitter space.",
+        "The domain of the chart begins at $r_+$. Inside it we take the future from the ingoing Kerr chart, which makes the region between the horizons the black hole, where every cone points to smaller $r$. The Kretschmann scalar stays finite at $r = 0$ on the axis, because the ring singularity lies in the equatorial plane.",
+    ],
+    ("kerr_de_sitter", "boyer_lindquist", "principal_ads"): [
+        "The equatorial plane ($\\theta = \\pi/2$) drawn in $t$ and $r$, with $\\phi$ left out, for $r_s = 2\\ell$ and $a = \\ell/2$, with $\\Lambda = -3/\\ell^2$. Its rays are the principal null congruence, each turning at $d\\phi/dr = \\pm a\\Xi/\\Delta_r$, and the curves drawn are the rays' projections, $d(ct)/dr = \\pm(r^2 + a^2)/\\Delta_r$, the same at every $\\theta$.",
+        "The rays are null geodesics, and each cone is the future cone of the principal plane. The cones close at $r_+ = 0.859\\,\\ell$ and point to smaller $r$ inside it. The dotted line is the ergosurface, $g_{tt} = 0$, at $r = 0.939\\,\\ell$ on the equator, and between it and $r_+$ nothing, light included, can keep $\\phi$ fixed.",
+    ],
+    ("kerr_de_sitter", "nonrotating", "above"): [
+        "The equatorial plane ($\\theta = \\pi/2$) between the horizons seen from above, with $r$ and $\\Phi$ drawn as polar coordinates and $t$ left out, for $a = 0.45\\,r_s$ and $\\Lambda = 0.2/r_s^2$. In the frame that does not rotate as $r \\to \\infty$ the principal null rays turn at $d\\Phi/dr = \\pm a\\left(1 - \\Lambda r^2/3\\right)/\\Delta_r$, less than in Carter's coordinates by the factor $(1 - \\Lambda r^2/3)/\\Xi$, which falls from $0.946$ at $r_+$ to $0.299$ at $r_c$. The rays still wind without end onto both horizons, where $\\Delta_r = 0$.",
+    ],
+    ("kerr_de_sitter", "nonrotating", "above_ads"): [
+        "The equatorial plane ($\\theta = \\pi/2$) outside the horizon seen from above, with $r$ and $\\Phi$ drawn as polar coordinates and $t$ left out, for $r_s = 2\\ell$ and $a = \\ell/2$, with $\\Lambda = -3/\\ell^2$. The angle $\\Phi$ is that of the frame that does not rotate at infinity, in which the conformal boundary is an Einstein universe at rest. The principal null rays turn at $d\\Phi/dr = \\pm a\\left(1 + r^2/\\ell^2\\right)/\\Delta_r$, which dies away as $a/r^2$ far out, and they wind without end onto the horizon $r_+ = 0.859\\,\\ell$. In this frame the horizon turns at $\\Omega = ac\\left(1 + r_+^2/\\ell^2\\right)/(r_+^2 + a^2) = 0.879\\,c/\\ell$, slower than light at the boundary.",
+    ],
+    ("kerr_de_sitter", "kerr_ingoing", "axis"): [
+        "The plane of $v$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $a = 0.45\\,r_s$ and $\\Lambda = 0.2/r_s^2$ with $v - r$ as the vertical axis, so that the ingoing rays, $v = $ const, run at 45°. The outgoing family has $dv/dr = 2(r^2 + a^2)/\\Delta_r$, so it stands vertical at $r_- = 0.279$, $r_+ = 0.785$, and $r_c = 3.232\\,r_s$: each horizon is an outgoing ray that stays where it is.",
+        "The chart crosses $r_c$ from the contracting region in the past of the static one, and $r_+$ into the black hole, where both edges of every future cone point to smaller $r$. Inside $r_-$ the cones open again, and an ingoing ray reaches $r = 0$, the centre of the ring's disc, in a finite $v$.",
+    ],
+    ("kerr_de_sitter", "kerr_ingoing", "axis_ads"): [
+        "The plane of $v$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $r_s = 2\\ell$ and $a = \\ell/2$, with $\\Lambda = -3/\\ell^2$ with $v - r$ as the vertical axis, so that the ingoing rays, $v = $ const, run at 45°. The outgoing family has $dv/dr = 2(r^2 + a^2)/\\Delta_r$ and stands vertical at $r_- = 0.137\\,\\ell$ and $r_+ = 0.859\\,\\ell$. Between the horizons both edges of every future cone point to smaller $r$, and inside $r_-$ the cones open again.",
+    ],
+    ("kerr_de_sitter", "kerr_outgoing", "axis"): [
+        "The plane of $u$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $a = 0.45\\,r_s$ and $\\Lambda = 0.2/r_s^2$ with $u + r$ as the vertical axis, so that the outgoing rays, $u = $ const, run at 45°. The ingoing family stands vertical at $r_-$, $r_+$, and $r_c$. Between $r_-$ and $r_+$ both edges of every future cone point to larger $r$: this is the white hole, which nothing from outside can enter. Beyond $r_c$ they point to larger $r$ as well, into the expanding region.",
+    ],
+    ("kerr_de_sitter", "kerr_outgoing", "axis_ads"): [
+        "The plane of $u$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $r_s = 2\\ell$ and $a = \\ell/2$, with $\\Lambda = -3/\\ell^2$ with $u + r$ as the vertical axis, so that the outgoing rays, $u = $ const, run at 45°. The ingoing family stands vertical at $r_- = 0.137\\,\\ell$ and $r_+ = 0.859\\,\\ell$, and between them both edges of every future cone point to larger $r$, out of the white hole.",
+    ],
+    ("kerr_de_sitter", "kerr_schild", "axis"): [
+        "The plane of $\\tau$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $a = 0.45\\,r_s$ and $\\Lambda = 0.2/r_s^2$. On the axis the ingoing rays have $d(c\\tau)/dr = -1/(1 - \\Lambda r^2/3)$, as in de Sitter space, whatever the mass, since the null vector of the Kerr-Schild form is tangent to them. The outgoing rays stand vertical at $r_-$, $r_+$, and $r_c$, and the chart runs through all three.",
+        "The chart ends at $r = \\sqrt{3/\\Lambda} = 3.873\\,r_s$, the horizon of the de Sitter background, which lies beyond $r_c = 3.232\\,r_s$.",
+    ],
+    ("kerr_de_sitter", "kerr_schild", "axis_ads"): [
+        "The plane of $\\tau$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $r_s = 2\\ell$ and $a = \\ell/2$, with $\\Lambda = -3/\\ell^2$. On the axis the ingoing rays have $d(c\\tau)/dr = -1/(1 + r^2/\\ell^2)$, as in anti-de Sitter space, whatever the mass, since the null vector of the Kerr-Schild form is tangent to them. The outgoing rays stand vertical at $r_- = 0.137\\,\\ell$ and $r_+ = 0.859\\,\\ell$, and the chart runs through both.",
     ],
     ("kerr_newman", "boyer_lindquist", "radial"): [
         "The plane of $t$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $a = "
@@ -5359,8 +5452,9 @@ def clip_unit(line):
     return None if lo >= hi else np.array([a + lo * d, a + hi * d])
 
 
-def outer_root(chart, x0=0.0):
-    """The outermost zero of g^rr along the drawn radial range at x^0, where r_+ sits."""
+def outer_root(chart, x0=0.0, back=0):
+    """The outermost zero of g^rr along the drawn radial range at x^0, where r_+ sits, or with
+    `back` the zero that many inward of it, as r_+ lies one inside a cosmological horizon r_c."""
     lo, hi = chart.spec.box[0], chart.spec.box[1]
     if chart.spec.to_display == POLAR:
         lo, hi = 0.0, float(np.hypot(np.max(np.abs(chart.spec.box[:2])), np.max(np.abs(chart.spec.box[2:]))))
@@ -5368,12 +5462,9 @@ def outer_root(chart, x0=0.0):
     f = chart.fn["girr"](np.full_like(X, x0), X)
     crossings = np.where(np.sign(f[:-1]) * np.sign(f[1:]) < 0)[0]
     zeros = np.flatnonzero(f == 0)
-    if not crossings.size and not zeros.size:
-        return None
-    if zeros.size and (not crossings.size or X[zeros[-1]] > X[crossings[-1]]):
-        return float(X[zeros[-1]])
-    i = crossings[-1]
-    return float(X[i] - f[i] * (X[i + 1] - X[i]) / (f[i + 1] - f[i]))
+    roots = sorted([float(X[i] - f[i] * (X[i + 1] - X[i]) / (f[i + 1] - f[i])) for i in crossings]
+                   + [float(X[i]) for i in zeros])
+    return roots[-1 - back] if len(roots) > back else None
 
 
 DOMAIN_CONDITION = "\\;\\text{for}\\;"
@@ -5432,6 +5523,9 @@ def parse_domains(chart):
             if s in ("\\infty", "+\\infty", "-\\infty"):
                 ends.append(None)
             elif s == "r_+":
+                # Inside a cosmological horizon r_c, the outermost zero, r_+ is the next one in.
+                ends.append(outer_root(chart, back=1 if body[cut + 1:].strip() == "r_c" else 0))
+            elif s == "r_c":
                 ends.append(outer_root(chart))
             else:
                 subs = {chart.reader.c: 1}
@@ -6511,6 +6605,33 @@ def _kerr_forms(a, rQ=0.0):
 for _metric, _forms in (("kerr", _kerr_forms(0.9)), ("kerr_newman", _kerr_forms(0.6, 0.5))):
     CLOSED_FORMS[(_metric, "boyer_lindquist", "principal")] = _forms[0]
     CLOSED_FORMS[(_metric, "boyer_lindquist", "above")] = _forms[1]
+
+
+def _kerr_de_sitter_forms():
+    """Kerr-de Sitter's axis in each chart, for each sign of Lambda: ct -+ r_* in Carter's chart,
+    v and v - 2r_* in the ingoing Kerr chart, u + 2r_* and u in the outgoing one, and in the
+    Kerr-Schild chart c tau - s -+ r_* with s = c(tau - t), whose ingoing form is c tau plus the
+    primitive of 1/(1 - Lambda r^2/3), de Sitter's own. r_* and s are slices.py's, zero at r = 0."""
+    import slices
+    out = {}
+    for sign, suffix, edges in (("de_sitter", "", (0.2787501957398, 0.7847845522526, 3.2322636072011, 15 ** 0.5)),
+                                ("anti_de_sitter", "_ads", (0.1368868045598, 0.8594395618858))):
+        star, shift = slices.kds_rstar(sign), slices.kds_schild(sign)
+
+        def away(x, r, edges=edges):
+            return np.all([np.abs(r - z) > 0.05 for z in edges], axis=0)
+        out[("kerr_de_sitter", "boyer_lindquist", "axis" + suffix)] = (
+            lambda t, r, f=star: t + f(r), lambda t, r, f=star: t - f(r), away)
+        out[("kerr_de_sitter", "kerr_ingoing", "axis" + suffix)] = (
+            lambda v, r: v, lambda v, r, f=star: v - 2 * f(r), away)
+        out[("kerr_de_sitter", "kerr_outgoing", "axis" + suffix)] = (
+            lambda u, r, f=star: u + 2 * f(r), lambda u, r: u, away)
+        out[("kerr_de_sitter", "kerr_schild", "axis" + suffix)] = (
+            lambda T, r, f=star, g=shift: T - g(r) + f(r), lambda T, r, f=star, g=shift: T - g(r) - f(r), away)
+    return out
+
+
+CLOSED_FORMS.update(_kerr_de_sitter_forms())
 
 
 def verify(metrics=()):

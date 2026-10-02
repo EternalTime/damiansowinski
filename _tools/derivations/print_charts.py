@@ -5999,6 +5999,337 @@ def hayward_check(chart):
 CHARTS["hayward"] = [lambda s=s: hayward(s) for s in HAYWARD_CHARTS]
 
 
+# -- Kerr-de Sitter ----------------------------------------------------------------------
+
+KDS_CHARTS = ["boyer_lindquist", "nonrotating", "kerr_ingoing", "kerr_outgoing", "kerr_schild"]
+# The four names every chart defines, as Carter's metric is always written.
+KDS_PARAMETERS = ["r_s", "a", "\\Lambda",
+                  "\\Xi = 1 + \\dfrac{\\Lambda a^2}{3}",
+                  "\\rho = \\sqrt{r^2 + a^2\\cos^2\\theta}",
+                  "\\Delta_r = \\left(r^2 + a^2\\right)\\left(1 - \\dfrac{\\Lambda r^2}{3}\\right) - r_s r",
+                  "\\Delta_\\theta = 1 + \\dfrac{\\Lambda a^2}{3}\\cos^2\\theta"]
+
+
+class KerrDeSitterForms:
+    """How a value of Kerr-de Sitter is written: in the four names the charts define.
+
+    The checker hands every value back as a rational function of r, a, Lambda, r_s, sin(theta)
+    and cos(theta). Here it is factored with the even powers of the sine written in the cosine,
+    which is the angle rho and Delta_theta are written in; each factor that is a multiple of
+    rho^2, Delta_r, Delta_theta or Xi is written by its name, (u + v)(u - v) is written
+    u^2 - v^2, and every sum left over is written in the shortest of the forms `regrouped`
+    tries. `joined` puts two such values over one denominator without multiplying them out,
+    which is how the Riemann tensor is written as the Weyl tensor plus the part that carries
+    Lambda."""
+
+    def __init__(self, reader):
+        self.r, self.theta = reader.symbol["r"], reader.symbol["\\theta"]
+        self.rs, self.a, self.L = (reader.parameters[k] for k in ("r_s", "a", "Lambda"))
+        self.s, self.c = sp.sin(self.theta), sp.cos(self.theta)
+        self.C = sp.Symbol("KDS_cos")
+        self.Xi, self.rho = sp.Symbol("Xi", positive=True), sp.Symbol("rho", positive=True)
+        self.Dr, self.Dth = sp.Symbol("Delta_r"), sp.Symbol("Delta_theta", positive=True)
+        r, a, L, C = self.r, self.a, self.L, self.C
+        self.radial = (r ** 2 + a ** 2) * (1 - L * r ** 2 / 3) - self.rs * r
+        self.named = [(self.Xi, 1 + L * a ** 2 / 3), (self.rho ** 2, r ** 2 + a ** 2 * C ** 2),
+                      (self.Dr, self.radial), (self.Dth, 1 + L * a ** 2 * C ** 2 / 3)]
+
+    def printer(self):
+        return {"lead": [self.r, self.a, self.c, self.s], "rising": [self.L, self.rs], "flip": False,
+                "overrides": {self.Dth: "\\Delta_\\theta"},
+                "factors": [self.L, self.a, self.r, self.rs, self.Xi, self.rho, self.Dr, self.Dth]}
+
+    def in_cosine(self, e):
+        s = self.s
+        e = e.replace(lambda p: p.is_Pow and p.base == s and p.exp.is_Integer and p.exp > 1,
+                      lambda p: s ** (int(p.exp) % 2) * (1 - self.c ** 2) ** (int(p.exp) // 2))
+        return e.subs(self.c, self.C)
+
+    def in_sine(self, e):
+        C = self.C
+        return sp.expand(e.replace(lambda p: p.is_Pow and p.base == C and p.exp.is_Integer and p.exp > 1,
+                                   lambda p: C ** (int(p.exp) % 2) * (1 - self.s ** 2) ** (int(p.exp) // 2)))
+
+    def name_of(self, base):
+        for placeholder, polynomial in self.named:
+            ratio = sp.cancel(base / polynomial)
+            if ratio.is_Number:
+                return ratio * placeholder
+        return None
+
+    def product(self, value, depth=0):
+        """A rational function of r, a, Lambda, r_s, the cosine and sin(theta), factored."""
+        out, powers, C, s = sp.Integer(1), {}, self.C, self.s
+        for f in sp.Mul.make_args(sp.factor(value)):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            powers[base] = powers.get(base, 0) + k
+        pairs = [b for b in powers if b.is_Add and len(b.args) == 2]
+        for i, one in enumerate(pairs):
+            for other in pairs[i + 1:]:
+                both = sp.expand(one * other)
+                k = min(powers[one], powers[other], key=abs) if powers[one] * powers[other] > 0 else 0
+                if k and len(sp.Add.make_args(both)) == 2:
+                    powers[one] -= k
+                    powers[other] -= k
+                    powers[both] = powers.get(both, 0) + k
+        for base, sign in ((sp.expand(1 - C ** 2), 1), (sp.expand(C ** 2 - 1), -1)):
+            k = powers.pop(base, 0)
+            if k:
+                powers[s] = powers.get(s, 0) + 2 * k
+                out *= sp.Integer(sign) ** k
+        factors = []
+        for base, k in powers.items():
+            if k == 0:
+                continue
+            if base.is_Add:
+                named = self.name_of(base)
+                base = named if named is not None else self.regrouped(base, depth)
+            if (base ** k).is_Number:
+                out *= base ** k
+            else:
+                factors.append(base ** k)
+        # Every factor multiplied in one step, the number last and held in front of a lone sum, as
+        # the 3 of 3(r^2 - a^2 cos^2(theta)): a number multiplied onto a sum alone is carried into it.
+        rest = sp.Mul(*factors)
+        number, rest = (out * rest.as_coeff_Mul()[0], rest.as_coeff_Mul()[1])
+        return sp.Mul(number, rest, evaluate=False) if rest.is_Add and number != 1 else sp.Mul(number, rest)
+
+    @staticmethod
+    def summed(terms):
+        """The terms as one sum, their common numerical factor in front of it."""
+        terms = [t.as_coeff_Mul() + (monomial,) for t, monomial in terms if t != 0]
+        content = sp.gcd_list([number for number, _, _ in terms])
+        if all(number < 0 for number, _, _ in terms):
+            content = -content
+        # The number, the factored coefficient and the monomial multiplied in one step: a number
+        # multiplied onto a sum alone would be carried into it.
+        return sp.Mul(content, sp.Add(*[sp.Mul(number / content, rest, monomial) for number, rest, monomial in terms],
+                                      evaluate=False), evaluate=False)
+
+    def regrouped(self, base, depth):
+        """A sum that is none of the named ones, in the shortest of: as it stands in the cosine
+        or in the sine; grouped by the powers of r_s, of Lambda or of both, each coefficient
+        factored in its turn; and, with r_s r written as (r^2 + a^2)(1 - Lambda r^2/3) - Delta_r,
+        grouped by the powers of Delta_r."""
+        candidates = [base, self.in_sine(base)]
+        if depth == 0:
+            for generators in ((self.rs,), (self.rs, self.L), (self.L,)):
+                polynomial = sp.Poly(base, *generators)
+                if len(polynomial.terms()) > 1:
+                    candidates.append(self.summed([
+                        (self.product(coefficient, 1), sp.Mul(*[g ** e for g, e in zip(generators, monomial)]))
+                        for monomial, coefficient in polynomial.terms()]))
+            if base.has(self.rs):
+                swapped = sp.expand(base.subs(self.rs, (self.radial + self.rs * self.r - self.Dr) / self.r))
+                if sp.denom(sp.together(swapped)).is_Number:
+                    candidates.append(self.summed([(self.product(coefficient, 1), self.Dr ** k)
+                                                   for (k,), coefficient in sp.Poly(swapped, self.Dr).terms()]))
+        return min(candidates, key=lambda e: len(str(e)))
+
+    def pretty(self, value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        return self.product(self.in_cosine(sp.together(value))).subs(self.C, self.c)
+
+    @staticmethod
+    def _powers(e):
+        number, rest = e.as_coeff_Mul()
+        powers = {}
+        for f in sp.Mul.make_args(rest):
+            if f == 1:
+                continue
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            powers[base] = powers.get(base, 0) + k
+        return number, powers
+
+    def joined(self, pieces):
+        """The sum of the pieces, each a product as `pretty` writes one, over their common
+        denominator, with whatever every numerator shares taken out in front."""
+        fractions = [sp.fraction(piece) for piece in pieces]
+        bottoms = [self._powers(d) for _, d in fractions]
+        number = sp.ilcm(*[n for n, _ in bottoms])
+        low = {}
+        for _, powers in bottoms:
+            for base, k in powers.items():
+                low[base] = max(low.get(base, 0), k)
+        tops = []
+        for (top, _), (n, powers) in zip(fractions, bottoms):
+            c, own = self._powers(top)
+            for base, k in low.items():
+                if k != powers.get(base, 0):
+                    own[base] = own.get(base, 0) + k - powers.get(base, 0)
+            tops.append((c * number / n, own))
+        content = sp.gcd_list([c for c, _ in tops])
+        shared = {base: min(own.get(base, 0) for _, own in tops) for base in tops[0][1]}
+        terms = [sp.Mul(c / content, *[base ** (k - shared.get(base, 0)) for base, k in own.items()])
+                 for c, own in tops]
+        return (content * sp.Mul(*[base ** k for base, k in shared.items()]) * sp.Add(*terms, evaluate=False)
+                / (number * sp.Mul(*[base ** k for base, k in low.items()])))
+
+
+def kerr_de_sitter_line(system, c):
+    """The line element of a chart, with c the text that stands before the differential of its
+    time: empty in the chart x^0 = ct, and c where the time is the named one."""
+    tetrad = ("\\dfrac{\\rho^2}{\\Delta_\\theta}d\\theta^2 + \\dfrac{\\Delta_\\theta\\sin^2\\theta}{\\rho^2}"
+              "\\left(a\\,{T} - \\dfrac{r^2 + a^2}{\\Xi}d{P}\\right)^2")
+    principal = "\\left({T} - \\dfrac{a\\sin^2\\theta}{\\Xi}d{P}\\right)"
+    if system == "boyer_lindquist":
+        line = ("ds^2 = -\\dfrac{\\Delta_r}{\\rho^2}" + principal + "^2 + \\dfrac{\\rho^2}{\\Delta_r}dr^2 + " + tetrad)
+        return line.replace("{T}", c + "dt").replace("{P}", "\\phi")
+    if system == "nonrotating":
+        return ("ds^2 = -\\dfrac{\\Delta_r}{\\Xi^2\\rho^2}\\left(\\Delta_\\theta\\," + c + "dt - a\\sin^2\\theta\\,d\\Phi\\right)^2"
+                " + \\dfrac{\\rho^2}{\\Delta_r}dr^2 + \\dfrac{\\rho^2}{\\Delta_\\theta}d\\theta^2"
+                " + \\dfrac{\\Delta_\\theta\\sin^2\\theta}{\\Xi^2\\rho^2}\\left(a\\left(1 - \\dfrac{\\Lambda r^2}{3}\\right)" + c
+                + "dt - \\left(r^2 + a^2\\right)d\\Phi\\right)^2")
+    if system in ("kerr_ingoing", "kerr_outgoing"):
+        null, sign = ("v", "+") if system == "kerr_ingoing" else ("u", "-")
+        line = ("ds^2 = -\\dfrac{\\Delta_r}{\\rho^2}" + principal + "^2 " + sign + " 2\\,dr" + principal + " + " + tetrad)
+        return line.replace("{T}", "d" + null).replace("{P}", "\\tilde\\phi")
+    static = "\\left(1 - \\dfrac{\\Lambda r^2}{3}\\right)"
+    radial = "\\dfrac{\\rho^2}{" + static + "\\left(r^2 + a^2\\right)}"
+    return ("ds^2 = -\\dfrac{\\Delta_\\theta}{\\Xi}" + static + c.replace("c", "c^2") + "d\\tau^2 + " + radial + "dr^2"
+            " + \\dfrac{\\rho^2}{\\Delta_\\theta}d\\theta^2 + \\dfrac{r^2 + a^2}{\\Xi}\\sin^2\\theta\\,d\\psi^2"
+            " + \\dfrac{r_s r}{\\rho^2}\\left(\\dfrac{\\Delta_\\theta}{\\Xi}" + c + "d\\tau + " + radial + "dr"
+            " - \\dfrac{a\\sin^2\\theta}{\\Xi}d\\psi\\right)^2")
+
+
+def kerr_de_sitter(system):
+    """Carter's rotating black hole with a cosmological constant of either sign, in five charts:
+    his own, which is Boyer and Lindquist's at Lambda = 0; the same chart turned at the angular
+    velocity a Lambda c/3, in which the frame at infinity does not rotate; the ingoing and
+    outgoing Kerr charts, along the two principal null congruences; and the Kerr-Schild chart
+    of Gibbons, Lu, Page and Pope, the de Sitter metric in spheroidal coordinates plus r_s r/rho^2
+    times the square of a null one form. kerr_de_sitter_check holds each chart to
+    R_mu_nu = Lambda g_mu_nu, to Riemann = Weyl + (Lambda/3)(g g - g g), and each chart after
+    the first to being the first pulled back. kerr_de_sitter.md beside this file is the
+    derivation."""
+    time, angle, name = {"boyer_lindquist": ("t", "\\phi", "Boyer-Lindquist"),
+                         "nonrotating": ("t", "\\Phi", "Nonrotating at Infinity"),
+                         "kerr_ingoing": ("v", "\\tilde\\phi", "Ingoing Kerr"),
+                         "kerr_outgoing": ("u", "\\tilde\\phi", "Outgoing Kerr"),
+                         "kerr_schild": ("\\tau", "\\psi", "Kerr-Schild")}[system]
+    coords = [time, "r", "\\theta", angle]
+    forms = KerrDeSitterForms(vm.Reader(coords, KDS_PARAMETERS, ()))
+    timed = time in ("t", "\\tau")
+    # Carter's chart and the one turned from it hold between two roots of Delta_r, and are published
+    # for the region outside the event horizon; the Kerr charts run through every root; and the
+    # Kerr-Schild chart's own time and angle fail where the de Sitter background's static chart does.
+    if system in ("boyer_lindquist", "nonrotating"):
+        radial = ["r \\in (r_+, r_c) \\;\\text{for}\\; \\Lambda > 0", "r \\in (r_+, \\infty) \\;\\text{for}\\; \\Lambda \\le 0"]
+        notes = ["\\Delta_r = 0 \\;\\text{(the event horizon } r_+ \\text{ and, for } \\Lambda > 0 \\text{, the cosmological horizon } r_c\\text{)}"]
+    else:
+        radial = (["r \\in (-\\infty, \\infty)"] if system != "kerr_schild" else
+                  ["r \\in \\left(-\\sqrt{3/\\Lambda}, \\sqrt{3/\\Lambda}\\right) \\;\\text{for}\\; \\Lambda > 0",
+                   "r \\in (-\\infty, \\infty) \\;\\text{for}\\; \\Lambda \\le 0"])
+        notes = ["\\Delta_r = 0 \\;\\text{(the horizons)}", "\\rho = 0 \\;\\text{(the ring singularity)}"]
+    domains = [time + " \\in (-\\infty, \\infty)"] + radial + ["\\theta \\in [0, \\pi]", angle + " \\in [0, 2\\pi)"] + notes
+    spec = {
+        "metric_id": "kerr_de_sitter",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains,
+                   "parameters": KDS_PARAMETERS, "line_element": kerr_de_sitter_line(system, "c\\," if timed else "")},
+        "chart_line_element": kerr_de_sitter_line(system, ""),
+        "printer": forms.printer(),
+        "pretty": forms.pretty,
+        "bracketed": forms.pretty,
+        "check": lambda chart: kerr_de_sitter_check(chart, system),
+        "after": lambda math, chart: kerr_de_sitter_riemann(math, chart, forms),
+        "ricci_scalar": "4\\Lambda",
+        "kretschmann": ("\\dfrac{12r_s^2\\left(r^2 - a^2\\cos^2\\theta\\right)\\left(\\rho^4 - 16a^2r^2\\cos^2\\theta\\right)}"
+                        "{\\rho^{12}} + \\dfrac{8\\Lambda^2}{3}"),
+    }
+    if system == "boyer_lindquist":
+        block = "\\left(\\left(r^2 + a^2\\right)\\Delta_\\theta - \\Delta_r\\right)"
+        square = "\\left(\\left(r^2 + a^2\\right)^2\\Delta_\\theta - a^2\\Delta_r\\sin^2\\theta\\right)"
+        lapse = "\\left(\\Delta_r - a^2\\Delta_\\theta\\sin^2\\theta\\right)"
+        cross = "-\\dfrac{a" + block + "\\sin^2\\theta}{\\Xi\\rho^2}"
+        up = "-\\dfrac{a\\,\\Xi" + block + "}{\\rho^2\\Delta_r\\Delta_\\theta}"
+        spec["components"] = {
+            "metric_components": {("t", "t"): "-\\dfrac{\\Delta_r - a^2\\Delta_\\theta\\sin^2\\theta}{\\rho^2}",
+                                  ("t", "\\phi"): cross, ("\\phi", "t"): cross,
+                                  ("\\phi", "\\phi"): "\\dfrac{" + square + "\\sin^2\\theta}{\\Xi^2\\rho^2}"},
+            "inverse_metric_components": {
+                ("t", "t"): "-\\dfrac{\\left(r^2 + a^2\\right)^2\\Delta_\\theta - a^2\\Delta_r\\sin^2\\theta}"
+                            "{\\rho^2\\Delta_r\\Delta_\\theta}",
+                ("t", "\\phi"): up, ("\\phi", "t"): up,
+                ("\\phi", "\\phi"): "\\dfrac{\\Xi^2" + lapse + "}{\\rho^2\\Delta_r\\Delta_\\theta\\sin^2\\theta}"}}
+    return spec
+
+
+def kerr_de_sitter_jacobian(chart, system):
+    """d(Boyer-Lindquist coordinate)/d(the chart's), in the chart x^0 = ct of both."""
+    r = chart.symbols[1]
+    rs, a, L, Xi, Dr = (chart.reader.parameters[k] for k in ("r_s", "a", "Lambda", "Xi", "Delta_r"))
+    if system == "nonrotating":
+        # phi = Phi + (a Lambda/3) ct
+        return sp.Matrix([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [a * L / 3, 0, 0, 1]])
+    if system in ("kerr_ingoing", "kerr_outgoing"):
+        # dv = c dt + (r^2 + a^2) dr/Delta_r and d(phi~) = d(phi) + a Xi dr/Delta_r, and their mirror for u
+        sign = 1 if system == "kerr_ingoing" else -1
+        return sp.Matrix([[1, -sign * (r ** 2 + a ** 2) / Dr, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0],
+                          [0, -sign * a * Xi / Dr, 0, 1]])
+    # c d(tau) = c dt + r_s r dr/((1 - Lambda r^2/3) Delta_r) and
+    # d(psi) = d(phi) - (a Lambda/3) c dt + a r_s r dr/((r^2 + a^2) Delta_r)
+    static = 1 - L * r ** 2 / 3
+    time = -rs * r / (static * Dr)
+    return sp.Matrix([[1, time, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0],
+                      [a * L / 3, a * L * time / 3 - a * rs * r / ((r ** 2 + a ** 2) * Dr), 0, 1]])
+
+
+def kerr_de_sitter_check(chart, system):
+    g, geo, L = chart.geo.g, chart.geo, chart.reader.parameters["Lambda"]
+    ricci, riemann, weyl = geo.ricci_ll(), geo.riemann_llll(), geo.weyl_llll()
+    for i in range(4):
+        for j in range(4):
+            if vm.norm(ricci[i][j] - L * g[i, j]) != 0:
+                raise AssertionError(f"kerr_de_sitter/{system}: R_mu_nu is not Lambda g_mu_nu in slot {i}{j}")
+    for i, j, k, l in itertools.product(range(4), repeat=4):
+        constant = L * (g[i, k] * g[j, l] - g[i, l] * g[j, k]) / 3
+        if vm.norm(riemann[i][j][k][l] - weyl[i][j][k][l] - constant) != 0:
+            raise AssertionError(f"kerr_de_sitter/{system}: Riemann is not Weyl plus the constant curvature part")
+    if system == "boyer_lindquist":
+        return
+    spec = kerr_de_sitter("boyer_lindquist")
+    source = cp.Chart(spec["system"]["coords"], KDS_PARAMETERS, spec["chart_line_element"])
+    at = dict(zip(source.symbols, chart.symbols))
+    jacobian = kerr_de_sitter_jacobian(chart, system)
+    pulled = jacobian.T * source.geo.g.subs(at, simultaneous=True) * jacobian
+    for i in range(4):
+        for j in range(i, 4):
+            if vm.norm(pulled[i, j] - g[i, j]) != 0:
+                raise AssertionError(f"kerr_de_sitter/{system}: the Boyer-Lindquist chart pulled back misses slot "
+                                     f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+def kerr_de_sitter_riemann(math, chart, forms):
+    """The Riemann tensor written as the Weyl tensor, which is Kerr's with the four names in
+    place of Kerr's, plus (Lambda/3)(g g - g g), the two over one denominator."""
+    geo = chart.geo
+    riemann, weyl = geo.riemann_llll(), geo.weyl_llll()
+    blocks = {"llll": (riemann, weyl),
+              "ulll": (geo.raise_indices(riemann, 4, (0,)), geo.raise_indices(weyl, 4, (0,)))}
+    parts = {}
+    for whole, traceless in blocks.values():
+        for index in vm._indices(4, 4):
+            value, conformal = vm._at(whole, index), vm._at(traceless, index)
+            constant = vm.norm(value - conformal)
+            if value != 0 and conformal != 0 and constant != 0:
+                parts[value], parts[-value] = (conformal, constant), (-conformal, -constant)
+
+    def split(value):
+        found = parts.get(sp.sympify(value))
+        return forms.joined([forms.pretty(part) for part in found]) if found else forms.pretty(value)
+
+    chart.pretty = chart.bracketed = split
+    for variance, (whole, _) in blocks.items():
+        math["riemann"]["variants"][variance]["nonzero"] = chart.block(whole, 4)
+    chart.pretty = chart.bracketed = forms.pretty
+    return math
+
+
+CHARTS["kerr_de_sitter"] = [lambda s=s: kerr_de_sitter(s) for s in KDS_CHARTS]
+
+
 def write(spec):
     start = time.time()
     chart = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],

@@ -373,6 +373,15 @@ class Slice:
         # A join at an irrational value, as the spinning string's level circle, is named exactly
         # in `known` by the function that draws it, since nsimplify finds only the simplest surds.
         x0 = self.exact.get(x, getattr(self, "known", {}).get(x, sp.nsimplify(x)))
+        if x0.has(sp.CRootOf):
+            # A root with no form in radicals, as Kerr-anti-de Sitter's level circle, where sympy's
+            # limit does not finish: g_xx is finite there and both components are continuous, so
+            # they are evaluated at the root itself to forty digits, a square that vanishes there
+            # to within the rounding read as zero.
+            def at(e):
+                return complex(e.subs(self.x, x0).evalf(40)).real
+            squared = sign * at(self.defect / self.gxx)
+            return np.array([at(self.drho / sp.sqrt(self.gxx)), math.sqrt(squared) if squared > 1e-25 else 0.0])
         return np.array([float(sp.limit(e, self.x, x0, side)) for e in
                          (self.drho / sp.sqrt(self.gxx), sp.sqrt(sign * self.defect / self.gxx))])
 
@@ -2575,6 +2584,155 @@ def kerr_newman(ck, src):
     return [view("equator", "The equator", "$GM/c^2$", [surface], fig.done(),
                  settings="$G = c = M = 1$, so that $GM/c^2$ is the unit of every length, $a = 0.6\\,GM/c^2$ and "
                           f"$r_Q = 0.5\\,GM/c^2$, so that $r_+ = {rp:.3f}\\,GM/c^2$ and $r_E = {ergo:.3f}\\,GM/c^2$.")]
+
+
+# Kerr-de Sitter as every one of its diagrams draws it: with Lambda > 0 at Kerr's spin and Kottler's
+# cosmological constant, a = 0.45 r_s and Lambda = 0.2/r_s^2, and with Lambda < 0 at Hawking and
+# Page's r_s = 2 l with a = l/2, in units of l = sqrt(-3/Lambda).
+KDS = {"r_s": 1, "a": "9/20", "Lambda": "1/5"}
+KADS = {"r_s": 2, "a": "1/2", "Lambda": -3}
+
+
+def kerr_de_sitter_ergo(src, params):
+    """The positive radii where the published g_tt of the Boyer-Lindquist chart vanishes on the
+    equator, the edges of the ergoregions there, smallest first."""
+    _, entry, R = nr.load("kerr_de_sitter", "boyer_lindquist")
+    src.note("kerr_de_sitter", "boyer_lindquist", FIELDS)
+    subs = {R.c: 1, R.symbol["\\theta"]: sp.pi / 2}
+    subs.update({R.parameters[k]: sp.sympify(v) for k, v in params.items()})
+    gtt = sp.together(nr.published_matrix(R, entry, "metric_components")[0, 0].subs(subs))
+    return sorted(float(z) for z in sp.Poly(sp.numer(gtt), R.symbol["r"]).real_roots() if z > 0)
+
+
+def kerr_de_sitter(ck, src):
+    """The equatorial slice of constant Boyer-Lindquist t, where g_tphi drops out, for each sign
+    of Lambda: rho = sqrt(g_phiphi), the circumference radius, and g_rr = r^2/Delta_r.
+
+    With Lambda > 0, at r_s = 1, a = 9/20 and Lambda = 1/5, Delta_r has the roots r_- = 0.279,
+    r_+ = 0.785 and r_c = 3.232 and a fourth at -4.296. Between r_+ and r_c g_rr exceeds
+    (drho/dr)^2 throughout, which the quadrature itself would refuse otherwise, so the surface
+    stands in flat space from the throat r_+, vertical there, to its widest circle r_c, vertical
+    again, and runs on through the cosmological bifurcation sphere into the next stationary
+    region, the same surface turned over, as Kottler's does. On a horizon Delta_r = 0, so
+    rho = (r^2 + a^2)/(Xi r), which is checked at both. g_tt vanishes on the equator where
+    Delta_r = a^2, at two radii between the horizons: the ergoregion of the black hole reaches
+    out to the first, and the ergoregion of the cosmological horizon in to the second.
+
+    With Lambda = -3, at r_s = 2 and a = 1/2, r_+ = 0.859. The surface climbs in flat space from
+    the throat to the circle where g_rr = (drho/dr)^2 and lies level there; beyond it the circles
+    grow faster than the distance out to them, as on the slice of anti-de Sitter space, and it is
+    drawn on in three dimensional Minkowski space, as Schwarzschild-anti-de Sitter's is. The
+    level circle is a root of a polynomial of the tenth degree, taken as the exact algebraic
+    number it is."""
+    fixed_at = {"t": 0, **EQUATOR}
+
+    def circumference(r, params):
+        a, L = float(sp.Rational(params["a"])), float(sp.Rational(params["Lambda"]))
+        return (r * r + a * a) / ((1 + L * a * a / 3) * r)
+
+    # ---- Lambda > 0
+    name = "Kerr-de Sitter"
+    sl = Slice(src, "kerr_de_sitter", "boyer_lindquist", "r", "\\phi", fixed_at, KDS)
+    rc, rp, rm, rn = sl.horizons()
+    ck.add(f"{name}: the horizons are the roots of the published g^rr on the equator",
+           abs(rm - 0.2787501957398) + abs(rp - 0.7847845522526) + abs(rc - 3.2322636072011) + abs(rn + 4.2957983551936), 1e-11)
+    inner, outer = kerr_de_sitter_ergo(src, KDS)
+    ck.add(f"{name}: g_tt vanishes on the equator at two radii between the horizons, where Delta_r = a^2",
+           0.0 if rp < inner < outer < rc else 1.0, 0.5)
+    size = 2 * float(sl.rho_at(rc))
+    radii = (1.5, 2.0, 2.5)
+    near = Piece("stationary", "sheet", sl, rp, rc, 0.0, 1,
+                 (("throat", "the throat $r = r_+$, the bifurcation sphere of the event horizon, where the slice "
+                             "runs on into another stationary region"),
+                  ("join", "the widest circle $r = r_c$, the bifurcation sphere of the cosmological horizon, where "
+                           "the slice runs on into the next stationary region")),
+                 [(rp, "horizon", "$r = r_+$"), (inner, "ergo", None)] + [(r, "r", None) for r in radii]
+                 + [(outer, "ergo", None), (rc, "horizon", "$r = r_c$")], size)
+    far = Piece("next", "sheet2", sl, rp, rc, 2 * near.z[-1], -1,
+                (("throat", "the throat $r = r_+$ of the next black hole"), ("join", "the widest circle $r = r_c$")),
+                [(rp, "horizon", None)] + [(r, "r2", None) for r in radii], size)
+    for p in (near, far):
+        ck.isometry(f"{name}, the {p.id} region", p)
+    ck.join(f"{name}, the two stationary regions at r_c", near, rc, far, rc)
+    ck.add(f"{name}: the circumference radius of a horizon is (r^2 + a^2)/(Xi r)",
+           abs(near.at(rp)[0] - circumference(rp, KDS)) + abs(near.at(rc)[0] - circumference(rc, KDS)), 1e-6)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(rp), "$r = r_+$", dx=10)
+    ring_label(fig, [0, 0, 0], *near.at(rc), "$r = r_c$", dx=10)
+    fig.legend("fill", "cover", "the region $r_+ < r < r_c$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1.5$, $2$ and $2.5\\,r_s$")
+    fig.legend("line", "r2", "the same radii in the next stationary region")
+    fig.legend("line", "horizon", "the throats $r = r_+$ and the widest circle $r = r_c$, where the slice crosses the horizons")
+    fig.legend("line", "ergo", f"the edges of the two ergoregions, $r = {inner:.3f}$ and ${outer:.3f}\\,r_s$ on the equator")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views = [view("de_sitter", "$\\Lambda > 0$", "$r_s$", [surface], fig.done(),
+                  settings="$r_s = 1$, the unit of every length, $a = 0.45\\,r_s$, and $\\Lambda = 0.2/r_s^2$, so that "
+                           f"$r_+ = {rp:.3f}\\,r_s$ and $r_c = {rc:.3f}\\,r_s$.")]
+
+    # ---- Lambda < 0
+    name = "Kerr-anti-de Sitter"
+    sl = Slice(src, "kerr_de_sitter", "boyer_lindquist", "r", "\\phi", fixed_at, KADS)
+    msl = Slice(src, "kerr_de_sitter", "boyer_lindquist", "r", "\\phi", fixed_at, KADS, space="minkowski")
+    rp = sl.horizons()[0]
+    ck.add(f"{name}: the event horizon is the larger root of the published g^rr", abs(rp - 0.8594395618858), 1e-11)
+    ergo, = kerr_de_sitter_ergo(src, KADS)
+    levels = [z for z in sp.Poly(sp.numer(sp.together(sl.defect)), sl.x).real_roots() if z > rp]
+    ck.add(f"{name}: g_rr = (drho/dr)^2 at one radius outside the horizon", abs(len(levels) - 1), 0.5)
+    exact_level = levels[0]
+    level = float(exact_level)
+    sl.known = msl.known = {level: exact_level}
+    top = 3.0
+    size = 2 * float(sl.rho_at(top))
+    ck.add(f"{name}: the surface lies level where g_rr = (drho/dr)^2",
+           abs(float(sl.defect_at(np.array([level]))[0])), 1e-10)
+    ck.stops(f"{name}, beyond the level circle in flat space", sl, np.linspace(level, 40, 402)[1:])
+    inward = np.linspace(rp, level, 402)[1:-1]
+    ck.add(f"{name}: between r_+ and the level circle no surface in Minkowski space carries the slice, "
+           "(drho/dr)^2 - g_rr < 0", float(max(0.0, np.max(-msl.defect_at(inward)))), 0.0)
+    if not np.all(msl.defect_at(inward) > 0):
+        ck.items[-1]["ok"] = False
+    join = (f"at $r = {level:.3f}\\,\\ell$ the surface lies level, in flat space nearer the horizon and in "
+            "Minkowski space beyond")
+    edge = "the sheet runs on toward a light cone, to $r \\to \\infty$"
+    near = Piece("exterior", "sheet", sl, rp, level, 0.0, 1,
+                 (("throat", "the throat $r = r_+$, the bifurcation sphere, where the other exterior begins"), ("join", join)),
+                 [(rp, "horizon", "$r = r_+$"), (ergo, "ergo", None), (level, "space", None)], size)
+    out = Piece("exterior_minkowski", "sheet", msl, level, top, near.at(level)[1], 1, (("join", join), ("edge", edge)),
+                [(2.0, "r", None), (top, "r", None)], size)
+    far = Piece("other_exterior", "sheet2", sl, rp, level, 0.0, -1, (("throat", "the throat $r = r_+$"), ("join", join)),
+                [(level, "space", None)], size)
+    far_out = Piece("other_exterior_minkowski", "sheet2", msl, level, top, far.at(level)[1], -1,
+                    (("join", join), ("edge", edge)), [(2.0, "r2", None), (top, "r2", None)], size)
+    for p in (near, out, far, far_out):
+        space = "in Minkowski space" if p.sl.lorentz else "in flat space"
+        ck.isometry(f"{name}, {p.id} {space}", p)
+    ck.join(f"{name}, the two sheets at the throat", near, rp, far, rp)
+    for a, b in ((near, out), (far, far_out)):
+        ck.join(f"{name}, {a.id} in flat space and {b.id} in Minkowski space at the level circle", a, level, b, level)
+        pa, pb = a.data()["points"][-1], b.data()["points"][0]
+        ck.add(f"{name}, {a.id} and {b.id} as written: one point at the level circle",
+               max(abs(pa[0] - pb[0]), abs(pa[1] - pb[1]), abs(pa[2] - pb[2])), 10.0 ** -min(a.decimals, b.decimals))
+    ck.add(f"{name}: the circumference radius of the horizon is (r_+^2 + a^2)/(Xi r_+)",
+           abs(near.at(rp)[0] - circumference(rp, KADS)), 1e-6)
+    surface = Surface([near, out, far, far_out])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(rp), "$r = r_+$", dx=14)
+    ring_label(fig, [0, 0, 0], *out.at(2.0), "$2\\ell$")
+    ring_label(fig, [0, 0, 0], *out.at(top), "$3\\ell$")
+    fig.legend("fill", "cover", "the exterior $r > r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $2\\ell$ and $3\\ell$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the horizon")
+    fig.legend("line", "ergo", f"the edge of the ergoregion, $r = {ergo:.3f}\\,\\ell$ on the equator")
+    fig.legend("line", "space", f"$r = {level:.3f}\\,\\ell$, where $g_{{rr}} = (d\\rho/dr)^2$: flat space inside, "
+                                "Minkowski space beyond")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("anti_de_sitter", "$\\Lambda < 0$", "$\\ell$", [surface], fig.done(),
+                      settings="$\\ell = \\sqrt{-3/\\Lambda} = 1$, the unit of every length, $r_s = 2\\ell$, and "
+                               f"$a = \\ell/2$, so that $r_+ = {rp:.3f}\\,\\ell$. Every length along the surface beyond "
+                               f"$r = {level:.3f}\\,\\ell$ is measured with $dX^2 + dY^2 - dZ^2$."))
+    return views
 
 
 def de_sitter(ck, src):
@@ -7341,6 +7499,7 @@ DRAWN = {
     "godel": godel,
     "kerr": kerr,
     "kerr_newman": kerr_newman,
+    "kerr_de_sitter": kerr_de_sitter,
     "cosmic_string": cosmic_string,
     "frw": frw,
     "milne": milne,
@@ -7802,6 +7961,31 @@ CAPTIONS = {
         "turned over, and through its throat at $r_h$ into another, a chain of throats and widest circles "
         "without end, one period of which is drawn. Identifying the two throats closes the slice into a space "
         "of topology $S^1 \\times S^2$.",
+    ],
+    ("kerr_de_sitter", "de_sitter"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the Kerr-de Sitter black hole at one moment of Boyer-Lindquist $t$ "
+        "($a = 0.45\\,r_s$, $\\Lambda = 0.2/r_s^2$), between the event horizon and the cosmological horizon, drawn as a "
+        "surface in flat space with every distance along it the metric distance. The rotation's $g_{t\\phi}$ drops out "
+        "at constant $t$. The drawing's distance from the axis is the circumference radius $\\sqrt{g_{\\phi\\phi}}$, "
+        "which on a horizon is $(r^2 + a^2)/(\\Xi r)$, and $g_{rr} = r^2/\\Delta_r$, so the surface stands vertical at "
+        "the throat $r_+$, its smallest circle, and at $r_c$, its widest.",
+        "The slice runs through the bifurcation sphere at $r_c$ into the next stationary region, the same surface "
+        "turned over, and through its throat at $r_+$ into another, a chain without end, as Kottler's slice is; one "
+        "period is drawn. The dotted circles are where $g_{tt} = 0$ on the equator, $\\Delta_r = a^2$. Inside the "
+        "smaller one nothing can stand still against the rotation of the black hole, and beyond the larger one "
+        "nothing can stand still against the cosmological horizon, which turns at $ac\\,\\Xi/(r_c^2 + a^2)$ in these "
+        "coordinates.",
+    ],
+    ("kerr_de_sitter", "anti_de_sitter"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the Kerr-anti-de Sitter black hole at one moment of "
+        "Boyer-Lindquist $t$ ($r_s = 2\\ell$, $a = \\ell/2$) through both of its exteriors, joined at the bifurcation "
+        "sphere $r = r_+$, in flat space out to the circle where $g_{rr} = (d\\rho/dr)^2$ and in three dimensional "
+        "Minkowski space ($dX^2 + dY^2 - dZ^2$) beyond it, every distance along the surface the metric distance.",
+        "The drawing's distance from the axis is the circumference radius $\\rho = \\sqrt{g_{\\phi\\phi}}$, which at "
+        "the throat is $(r_+^2 + a^2)/(\\Xi r_+)$, larger than Kerr's by $1/\\Xi = 4/3$. Near the throat the surface "
+        "climbs in flat space, from vertical to level. Beyond the level circle the circles grow faster than the "
+        "distance out to them, as on the static slice of anti-de Sitter space, and the surface climbs toward a light "
+        "cone of Minkowski space. The dotted circle is the edge of the ergoregion, where $g_{tt} = 0$.",
     ],
     ("curzon_chazy", "equator"): [
         "The plane $z = 0$ of the Curzon-Chazy particle at one moment ($m = 1$), drawn as a surface in flat space "

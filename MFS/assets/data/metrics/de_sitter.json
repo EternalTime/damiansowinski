@@ -66,6 +66,11 @@
       "id": "hayward",
       "kind": "generalisation",
       "text": "A black hole whose core is a ball of de Sitter space, with $\\Lambda = 3/\\ell^2$ whatever the mass [hayward2006, frolov2016]."
+    },
+    {
+      "id": "kerr_de_sitter",
+      "kind": "generalisation",
+      "text": "De Sitter space with a rotating black hole put in. With the mass taken out again, Carter's metric is de Sitter space in spheroidal coordinates [akcay2011]."
     }
   ],
   "references": [
@@ -89,7 +94,8 @@
     "ortaggio2002",
     "ansoldi2008",
     "hayward2006",
-    "frolov2016"
+    "frolov2016",
+    "akcay2011"
   ],
   "coordinates": [
     {

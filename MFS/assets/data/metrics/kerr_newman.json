@@ -50,6 +50,11 @@
       "id": "rn_metric",
       "kind": "special_case",
       "text": "Kerr-Newman with the spin switched off, $a = 0$, a charged black hole that does not turn."
+    },
+    {
+      "id": "kerr_de_sitter",
+      "kind": "family",
+      "text": "Kerr's black hole with a cosmological constant where this one has a charge. Carter found both in one family by asking the Hamilton-Jacobi equation to separate [carter1968separable]."
     }
   ],
   "references": [
@@ -70,7 +75,8 @@
     "robinson1975",
     "mazur1982",
     "ruffini1971",
-    "gibbons1975"
+    "gibbons1975",
+    "carter1968separable"
   ],
   "coordinates": [
     {

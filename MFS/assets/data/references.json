@@ -1,5 +1,5 @@
 {
-  "version": "594250b3b75ac0a0",
+  "version": "15d94a485c7f60c0",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -13922,6 +13922,317 @@
         "eprint": "2311.09484",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.3847/2041-8213/ac6756"
+      }
+    },
+    "carter1968separable": {
+      "type": "article",
+      "fields": {
+        "title": "Hamilton-Jacobi and Schrödinger separable solutions of Einstein's equations",
+        "author": "Carter, Brandon",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "10",
+        "number": "4",
+        "pages": "280--310",
+        "year": "1968",
+        "doi": "10.1007/BF03399503",
+        "url": "https://doi.org/10.1007/BF03399503"
+      }
+    },
+    "demianski1973": {
+      "type": "article",
+      "fields": {
+        "title": "Some new solutions of the Einstein equations of astrophysical interest",
+        "author": "Demiański, Marek",
+        "journal": "Acta Astronomica",
+        "volume": "23",
+        "number": "3",
+        "pages": "197--232",
+        "year": "1973",
+        "url": "https://ui.adsabs.harvard.edu/abs/1973AcA....23..197D"
+      }
+    },
+    "henneaux1985": {
+      "type": "article",
+      "fields": {
+        "title": "Asymptotically anti-de Sitter spaces",
+        "author": "Henneaux, Marc and Teitelboim, Claudio",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "98",
+        "number": "3",
+        "pages": "391--424",
+        "year": "1985",
+        "doi": "10.1007/BF01205790",
+        "url": "https://doi.org/10.1007/BF01205790"
+      }
+    },
+    "hawking1999rotation": {
+      "type": "article",
+      "fields": {
+        "title": "Rotation and the AdS/CFT correspondence",
+        "author": "Hawking, S. W. and Hunter, C. J. and Taylor-Robinson, M. M.",
+        "journal": "Physical Review D",
+        "volume": "59",
+        "number": "6",
+        "pages": "064005",
+        "year": "1999",
+        "doi": "10.1103/PhysRevD.59.064005",
+        "eprint": "hep-th/9811056",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.59.064005"
+      }
+    },
+    "hawking2000": {
+      "type": "article",
+      "fields": {
+        "title": "Charged and rotating AdS black holes and their CFT duals",
+        "author": "Hawking, S. W. and Reall, H. S.",
+        "journal": "Physical Review D",
+        "volume": "61",
+        "number": "2",
+        "pages": "024014",
+        "year": "2000",
+        "doi": "10.1103/PhysRevD.61.024014",
+        "eprint": "hep-th/9908109",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.61.024014"
+      }
+    },
+    "caldarelli2000": {
+      "type": "article",
+      "fields": {
+        "title": "Thermodynamics of Kerr-Newman-AdS black holes and conformal field theories",
+        "author": "Caldarelli, Marco M. and Cognola, Guido and Klemm, Dietmar",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "17",
+        "number": "2",
+        "pages": "399--420",
+        "year": "2000",
+        "doi": "10.1088/0264-9381/17/2/310",
+        "eprint": "hep-th/9908022",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/17/2/310"
+      }
+    },
+    "gibbons2004prl": {
+      "type": "article",
+      "fields": {
+        "title": "Rotating black holes in higher dimensions with a cosmological constant",
+        "author": "Gibbons, G. W. and Lü, H. and Page, Don N. and Pope, C. N.",
+        "journal": "Physical Review Letters",
+        "volume": "93",
+        "number": "17",
+        "pages": "171102",
+        "year": "2004",
+        "doi": "10.1103/PhysRevLett.93.171102",
+        "eprint": "hep-th/0409155",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.93.171102"
+      }
+    },
+    "gibbons2005kds": {
+      "type": "article",
+      "fields": {
+        "title": "The general Kerr-de Sitter metrics in all dimensions",
+        "author": "Gibbons, G. W. and Lü, H. and Page, Don N. and Pope, C. N.",
+        "journal": "Journal of Geometry and Physics",
+        "volume": "53",
+        "number": "1",
+        "pages": "49--73",
+        "year": "2005",
+        "doi": "10.1016/j.geomphys.2004.05.001",
+        "eprint": "hep-th/0404008",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.geomphys.2004.05.001"
+      }
+    },
+    "gibbons2005firstlaw": {
+      "type": "article",
+      "fields": {
+        "title": "The first law of thermodynamics for Kerr-anti-de Sitter black holes",
+        "author": "Gibbons, G. W. and Perry, M. J. and Pope, C. N.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "22",
+        "number": "9",
+        "pages": "1503--1526",
+        "year": "2005",
+        "doi": "10.1088/0264-9381/22/9/002",
+        "eprint": "hep-th/0408217",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/22/9/002"
+      }
+    },
+    "akcay2011": {
+      "type": "article",
+      "fields": {
+        "title": "The Kerr-de Sitter universe",
+        "author": "Akcay, Sarp and Matzner, Richard A.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "28",
+        "number": "8",
+        "pages": "085012",
+        "year": "2011",
+        "doi": "10.1088/0264-9381/28/8/085012",
+        "eprint": "1011.0479",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/28/8/085012"
+      }
+    },
+    "cardoso2004kads": {
+      "type": "article",
+      "fields": {
+        "title": "Small Kerr-anti-de Sitter black holes are unstable",
+        "author": "Cardoso, Vitor and Dias, Óscar J. C.",
+        "journal": "Physical Review D",
+        "volume": "70",
+        "number": "8",
+        "pages": "084011",
+        "year": "2004",
+        "doi": "10.1103/PhysRevD.70.084011",
+        "eprint": "hep-th/0405006",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.70.084011"
+      }
+    },
+    "holzegel2013decay": {
+      "type": "article",
+      "fields": {
+        "title": "Decay properties of Klein-Gordon fields on Kerr-AdS spacetimes",
+        "author": "Holzegel, Gustav and Smulevici, Jacques",
+        "journal": "Communications on Pure and Applied Mathematics",
+        "volume": "66",
+        "number": "11",
+        "pages": "1751--1802",
+        "year": "2013",
+        "doi": "10.1002/cpa.21470",
+        "eprint": "1110.6794",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1002/cpa.21470"
+      }
+    },
+    "holzegel2014": {
+      "type": "article",
+      "fields": {
+        "title": "Quasimodes and a lower bound on the uniform energy decay rate for Kerr-AdS spacetimes",
+        "author": "Holzegel, Gustav and Smulevici, Jacques",
+        "journal": "Analysis \\& PDE",
+        "volume": "7",
+        "number": "5",
+        "pages": "1057--1090",
+        "year": "2014",
+        "doi": "10.2140/apde.2014.7.1057",
+        "eprint": "1303.5944",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.2140/apde.2014.7.1057"
+      }
+    },
+    "booth1999": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmological pair production of charged and rotating black holes",
+        "author": "Booth, I. S. and Mann, R. B.",
+        "journal": "Nuclear Physics B",
+        "volume": "539",
+        "number": "1-2",
+        "pages": "267--306",
+        "year": "1999",
+        "doi": "10.1016/S0550-3213(98)00756-1",
+        "eprint": "gr-qc/9806056",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0550-3213(98)00756-1"
+      }
+    },
+    "lake2015": {
+      "type": "article",
+      "fields": {
+        "title": "Global structure of Kerr-de Sitter spacetimes",
+        "author": "Lake, Kayll and Zannias, Thomas",
+        "journal": "Physical Review D",
+        "volume": "92",
+        "number": "8",
+        "pages": "084003",
+        "year": "2015",
+        "doi": "10.1103/PhysRevD.92.084003",
+        "eprint": "1507.08984",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.92.084003"
+      }
+    },
+    "borthwick2018": {
+      "type": "article",
+      "fields": {
+        "title": "Maximal Kerr-de Sitter spacetimes",
+        "author": "Borthwick, Jack",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "35",
+        "number": "21",
+        "pages": "215006",
+        "year": "2018",
+        "doi": "10.1088/1361-6382/aae3dc",
+        "eprint": "1805.00243",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/aae3dc"
+      }
+    },
+    "dias2018": {
+      "type": "article",
+      "fields": {
+        "title": "Strong cosmic censorship in de Sitter space",
+        "author": "Dias, Oscar J. C. and Eperon, Felicity C. and Reall, Harvey S. and Santos, Jorge E.",
+        "journal": "Physical Review D",
+        "volume": "97",
+        "number": "10",
+        "pages": "104060",
+        "year": "2018",
+        "doi": "10.1103/PhysRevD.97.104060",
+        "eprint": "1801.09694",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.97.104060"
+      }
+    },
+    "stuchlik2004": {
+      "type": "article",
+      "fields": {
+        "title": "Equatorial circular orbits in the Kerr-de Sitter spacetimes",
+        "author": "Stuchlík, Zdeněk and Slaný, Petr",
+        "journal": "Physical Review D",
+        "volume": "69",
+        "number": "6",
+        "pages": "064001",
+        "year": "2004",
+        "doi": "10.1103/PhysRevD.69.064001",
+        "eprint": "gr-qc/0307049",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.69.064001"
+      }
+    },
+    "kamran2009": {
+      "type": "article",
+      "fields": {
+        "title": "Editorial note to: Brandon Carter, Black hole equilibrium states Part I. Analytic and geometric properties of the Kerr solutions",
+        "author": "Kamran, Niky and Krasiński, Andrzej",
+        "journal": "General Relativity and Gravitation",
+        "volume": "41",
+        "number": "12",
+        "pages": "2867--2871",
+        "year": "2009",
+        "doi": "10.1007/s10714-009-0887-6",
+        "url": "https://doi.org/10.1007/s10714-009-0887-6"
+      }
+    },
+    "hintz2018kds": {
+      "type": "article",
+      "fields": {
+        "title": "The global non-linear stability of the Kerr-de Sitter family of black holes",
+        "author": "Hintz, Peter and Vasy, András",
+        "journal": "Acta Mathematica",
+        "volume": "220",
+        "number": "1",
+        "pages": "1--206",
+        "year": "2018",
+        "doi": "10.4310/ACTA.2018.v220.n1.a1",
+        "eprint": "1606.04014",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.4310/ACTA.2018.v220.n1.a1"
       }
     }
   }

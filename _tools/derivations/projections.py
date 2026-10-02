@@ -581,7 +581,7 @@ def godel(spec):
     return about_axis(spec, sl, (0.5, 1.5), ("r = r_c", "r = 3r_c/2"))
 
 
-def ergoregion(spec, camera=Camera(-90, 30)):
+def ergoregion(spec, camera=Camera(-90, 30), horizon_between=(1.0, 1.9), ergo_below=3.0):
     """The light cones of a rotating hole on its equator, the slice theta = pi/2 of t, r and
     phi, drawn polar with r itself as its radius, down to the horizon.
 
@@ -594,12 +594,15 @@ def ergoregion(spec, camera=Camera(-90, 30)):
     outer. The floor reaches out to 7 r_E/4 and stops at r_+, where the chart does, and the
     cones and the axis are sized against r_E. The cones are narrower than van Stockum's, since
     t runs fast against proper time near the hole, so they are drawn larger. With a cone every
-    45 degrees round the ergosurface no label fits beside its circles, so the legend names them."""
+    45 degrees round the ergosurface no label fits beside its circles, so the legend names them.
+    `horizon_between` brackets r_+ and `ergo_below` lies beyond r_E, in the units of the row, Kerr's
+    GM/c^2 by default; Kerr-de Sitter, drawn in units of r_s with a second ergosurface next to its
+    cosmological horizon, names its own."""
     sl = Slice(spec.metric, spec.system, ("t", "r", "\\phi"), "polar", spec.params, spec.fixed)
     g_tt = lambda r: sl.metric((0.0, r, 0.0))[0, 0]
     g_rr_up = lambda r: sl.inverse((0.0, r, 0.0))[1, 1]
-    horizon = root(g_rr_up, 1.0, 1.9)
-    ergo = root(g_tt, horizon * (1 + 1e-9), 3.0)
+    horizon = root(g_rr_up, *horizon_between)
+    ergo = root(g_tt, horizon * (1 + 1e-9), ergo_below)
     inner, outer = 0.5 * (horizon + ergo), 1.5 * ergo
     if not (g_tt(inner) > 0 and g_tt(outer) < 0 and sl.inverse((0.0, inner, 0.0))[0, 0] < 0):
         raise SystemExit(f"{key(spec)}: the ergoregion is not where the published g_tt puts it")
@@ -814,6 +817,20 @@ CAPTIONS = {
         "also close in $r$, as $g_{rr} = r^2/\\Delta$ grows without bound where $\\Delta = r^2 - "
         "2GMr/c^2 + a^2$ falls to zero.",
     ],
+    ("kerr_de_sitter", "boyer_lindquist", "dragging"): [
+        "The equatorial plane ($\\theta = \\pi/2$) with $t$ up and $r$ and $\\phi$ as polar coordinates about the "
+        "axis, for $a = 0.45\\,r_s$ and $\\Lambda = 0.2/r_s^2$, down to the event horizon $r_+ = 0.785\\,r_s$, where "
+        "the chart ends. Light moving in this plane stays in it, since the reflection $\\theta \\to \\pi - \\theta$ "
+        "leaves it fixed. The cones stand at $t = 0$ at four places around each of three circles: $r = 3r_E/2$, the "
+        "black hole's ergosurface $r_E = 1.105\\,r_s$, and halfway between $r_E$ and $r_+$. On the outer circle they "
+        "stand nearly upright, and closer in the cross term $g_{t\\phi}$ tips them toward $+\\phi$, counterclockwise "
+        "seen from above, the way the hole turns.",
+        "On the ergosurface $g_{tt}$ vanishes, so $\\partial_t$ is null and one edge of every cone stands vertical, "
+        "along a curve of fixed $r$ and $\\phi$. Inside it every future direction, timelike or null, moves toward "
+        "$+\\phi$, and nothing can stay at fixed $\\phi$. A second ergosurface lies farther out, at $r = 3.173\\,r_s$, "
+        "past the edge of the floor, and from it to the cosmological horizon $r_c = 3.232\\,r_s$ nothing can stay "
+        "at fixed $\\phi$ either.",
+    ],
     ("kerr_newman", "boyer_lindquist", "dragging"): [
         "The equatorial plane ($\\theta = \\pi/2$) with $t$ up and $r$ and $\\phi$ as polar "
         "coordinates about the axis, for $a = 0.6\\,GM/c^2$ and $r_Q = 0.5\\,GM/c^2$, down to the "
@@ -868,6 +885,11 @@ FIGURES = [
                {"G": 1, "M": 1, "a": "9/10"}, {"theta": "pi/2"}),
     Projection("kerr_newman", "boyer_lindquist", "dragging", "light cones on the equator", ergoregion,
                {"G": 1, "M": 1, "a": "3/5", "r_Q": "1/2"}, {"theta": "pi/2"}),
+    # Kerr-de Sitter at the values of its flat views, in units of r_s: r_+ = 0.785 and the black
+    # hole's ergosurface r_E = 1.105, with the cosmological horizon's ergosurface, at 3.173, beyond
+    # the floor.
+    Projection("kerr_de_sitter", "boyer_lindquist", "dragging", "$\\Lambda > 0$, light cones on the equator",
+               lambda spec: ergoregion(spec, horizon_between=(0.6, 1.0), ergo_below=2.0), nr.KDS, {"theta": "pi/2"}),
 ]
 
 

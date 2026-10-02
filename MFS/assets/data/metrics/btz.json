@@ -66,6 +66,11 @@
       "id": "spinning_string",
       "kind": "family",
       "text": "The spinning point particle of gravity in three dimensions with no cosmological constant, drawn out along a line into a string. It has no horizon, and its closed timelike curves lie close to the source [deser1984, deser1992time]."
+    },
+    {
+      "id": "kerr_de_sitter",
+      "kind": "family",
+      "text": "The rotating black hole of anti-de Sitter space in four dimensions. Its boundary is a rotating Einstein universe too, one dimension up [hawking1999rotation]."
     }
   ],
   "references": [
@@ -84,7 +89,8 @@
     "maloney2010",
     "misner1967",
     "holst1999",
-    "deser1992time"
+    "deser1992time",
+    "hawking1999rotation"
   ],
   "coordinates": [
     {

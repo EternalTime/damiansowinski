@@ -60,6 +60,11 @@
       "id": "malament_hogarth",
       "kind": "generalisation",
       "text": "Anti-de Sitter space is a Malament-Hogarth spacetime, where one observer can see the whole endless future of another in a finite time of their own [hogarth1992]."
+    },
+    {
+      "id": "kerr_de_sitter",
+      "kind": "generalisation",
+      "text": "Anti-de Sitter space with a rotating black hole put in. Henneaux and Teitelboim took it as the prototype for every isolated system in anti-de Sitter space [henneaux1985]."
     }
   ],
   "references": [
@@ -85,7 +90,8 @@
     "banados1993",
     "bertotti1959",
     "robinson1959",
-    "hogarth1992"
+    "hogarth1992",
+    "henneaux1985"
   ],
   "coordinates": [
     {

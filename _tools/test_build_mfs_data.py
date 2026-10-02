@@ -12,6 +12,7 @@ import decimal
 import io
 import itertools
 import json
+import cmath
 import math
 import re
 import shutil
@@ -3767,7 +3768,7 @@ class TurningLightConeFigures(unittest.TestCase):
     def test_every_figure_of_light_cones_turns(self):
         checked = {f"{v['metric']}/{v['view']}" for v in turn_check(self)["figures"]}
         self.assertEqual(checked, set(self.figures))
-        self.assertEqual(checked, {"alcubierre/bubble", "godel/tipping", "gott_time_machine/loop", "kerr/dragging",
+        self.assertEqual(checked, {"alcubierre/bubble", "godel/tipping", "gott_time_machine/loop", "kerr/dragging", "kerr_de_sitter/dragging",
                                    "kerr_newman/dragging", "spinning_string/tipping", "stockum_dust/tipping", "wormhole_time_machine/trip"})
 
     def test_at_its_own_camera_the_page_draws_the_published_figure(self):
@@ -4063,6 +4064,17 @@ class Slices(unittest.TestCase):
                     **{f"conformal hayward/{v}": {"history"} for v in ("static", "ingoing", "outgoing")},
                     "hayward/evaporating/history": {"outside", "inside"},
                     "conformal hayward/history": {"outside", "inside"},
+                    # Kerr-de Sitter and Kerr-anti-de Sitter are two spacetimes of one line element, each
+                    # marked on the drawings made at its own sign of Lambda.
+                    **{f"kerr_de_sitter/{s}": {"anti_de_sitter"} for s in (
+                        "boyer_lindquist/axis", "boyer_lindquist/principal", "boyer_lindquist/above",
+                        "boyer_lindquist/dragging", "nonrotating/above", "kerr_ingoing/axis", "kerr_outgoing/axis",
+                        "kerr_schild/axis")},
+                    **{f"kerr_de_sitter/{s}": {"de_sitter"} for s in (
+                        "boyer_lindquist/axis_ads", "boyer_lindquist/principal_ads", "nonrotating/above_ads",
+                        "kerr_ingoing/axis_ads", "kerr_outgoing/axis_ads", "kerr_schild/axis_ads")},
+                    **{f"conformal kerr_de_sitter/{v}": {"anti_de_sitter"} for v in ("axis", "ingoing", "outgoing")},
+                    **{f"conformal kerr_de_sitter/{v}": {"de_sitter"} for v in ("axis_ads", "ingoing_ads", "outgoing_ads")},
                     **{f"global_monopole/{s}": {"monopole"} for s in (
                         "static/radial", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
                         "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
@@ -4188,6 +4200,35 @@ class Slices(unittest.TestCase):
             # v = ct + r_* and u = ct - r_*, r_* = (1/2) ln|(r - 1)/(r + 1)|, drawn against v - r and u + r.
             sign = 1 if "ingoing" in key else -1
             return (lambda X: sign * (0.5 * math.log(abs((X - 1) / (X + 1))) - X)), list(self.reach(surface))
+        if key.startswith(("kerr_de_sitter/kerr_", "kerr_de_sitter/kerr_schild")):
+            # Static t = 0 is v = r_*, u = -r_* and c tau = s, drawn against v - r, u + r and c tau:
+            # dr_*/dr = (r^2 + a^2)/Delta_r and ds/dr = r_s r/((1 - Lambda r^2/3) Delta_r), both zero at
+            # r = 0, each the real part of a sum over the simple poles of its integrand, of residue times
+            # ln(1 - r/pole). The poles are the two horizons r_- and r_+, the other two roots of Delta_r,
+            # which are the roots of the quadratic left when those are divided out, and +-sqrt(3/Lambda).
+            rs, a, L, rm, rp = ((2.0, 0.5, -3.0, 0.1368868045598, 0.8594395618858) if key.endswith("_ads") else
+                                (1.0, 0.45, 0.2, 0.2787501957398, 0.7847845522526))
+            c = -L / 3
+            pair = cmath.sqrt((rm + rp) ** 2 - 4 * a * a / (c * rm * rp))
+            roots = [rm, rp, (-(rm + rp) + pair) / 2, (-(rm + rp) - pair) / 2]
+            cut = cmath.sqrt(3 / L)
+
+            def delta(z):
+                return (z * z + a * a) * (1 - L * z * z / 3) - rs * z
+
+            def slope(z):
+                return 2 * z * (1 - L * z * z / 3) - 2 * L * z * (z * z + a * a) / 3 - rs
+
+            def rstar(r):
+                return sum((z * z + a * a) / slope(z) * cmath.log(1 - r / z) for z in roots).real
+
+            def shift(r):
+                horizons = sum(rs * z / ((1 - L * z * z / 3) * slope(z)) * cmath.log(1 - r / z) for z in roots)
+                return (horizons + sum(rs * z / (-2 * L * z / 3 * delta(z)) * cmath.log(1 - r / z) for z in (cut, -cut))).real
+            if "kerr_schild" in key:
+                return shift, list(self.reach(surface))
+            sign = 1 if "ingoing" in key else -1
+            return (lambda X: sign * (rstar(X) - X)), list(self.reach(surface))
         if key.startswith("schwarzschild_de_sitter/eddington_finkelstein"):
             # At r_s = 1 and Lambda = 1/5 the roots of f are those of r^3 - 15r + 15, by Viete's
             # trigonometric solution, and r_* = sum_i ln|1 - r/r_i|/f'(r_i), which vanishes at r = 0.
@@ -4524,11 +4565,17 @@ class Slices(unittest.TestCase):
         return len(line)
 
     def check_region_from_above(self, key, view, surface, mark):
-        """Kerr's equator from above: the plane outside the horizon, the box less the disc of r_+."""
+        """Kerr's equator from above: the plane outside the horizon, the box less the disc of r_+,
+        or, where the embedding ends inside the box, as Kerr-de Sitter's does at its cosmological
+        horizon, the ring out to the circle where it ends."""
         X0, X1, Y0, Y1 = view["box"]
-        lo = self.reach(surface)[0]
+        lo, hi = self.reach(surface)
         outer, hole = mark["fills"][0]
-        self.assertEqual(sorted(map(tuple, outer)), sorted([(0, 0), (1, 0), (1, 1), (0, 1)]), key)
+        if hi < min(X1, Y1) * (1 + 1e-9):
+            for u in outer:
+                self.assertAlmostEqual(math.hypot(X0 + u[0] * (X1 - X0), Y0 + u[1] * (Y1 - Y0)), hi, delta=2e-3, msg=key)
+        else:
+            self.assertEqual(sorted(map(tuple, outer)), sorted([(0, 0), (1, 0), (1, 1), (0, 1)]), key)
         for u in hole:
             self.assertAlmostEqual(math.hypot(X0 + u[0] * (X1 - X0), Y0 + u[1] * (Y1 - Y0)), lo, delta=2e-3, msg=key)
 
