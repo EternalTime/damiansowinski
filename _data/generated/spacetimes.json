@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 66,
+  "count": 67,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -331,6 +331,11 @@
           "id": "natario",
           "kind": "generalisation",
           "text": "Warp drives with any shift vector $(u, v, w)$. José Natário found one in 2002 that neither expands nor contracts space anywhere [natario2002]."
+        },
+        {
+          "id": "van_den_broeck",
+          "kind": "generalisation",
+          "text": "Alcubierre's bubble with a factor $B^2$ on its space, which hides a pocket 200 m across inside a bubble a few femtometres wide. That brings the negative energy down to a few solar masses [vandenbroeck1999]."
         },
         {
           "id": "lentz",
@@ -7153,6 +7158,11 @@
           "id": "alcubierre",
           "kind": "family",
           "text": "The warp bubble, whose pilot is cut off from the bubble wall and can neither raise it nor steer it [alcubierre1994, everett1997]."
+        },
+        {
+          "id": "van_den_broeck",
+          "kind": "family",
+          "text": "A warp bubble with a roomy pocket folded inside it. Krasnikov called the fold Van Den Broeck's trick, and with a pocket of his own brought the exotic matter of a shortcut down to about a milligram [krasnikov2003]."
         }
       ],
       "references": [
@@ -9698,6 +9708,11 @@
           "id": "damour_solodukhin",
           "kind": "special_case",
           "text": "The member with the constant shape function $b = r_s$ and $e^{2\\Phi} = 1 - r_s/r + \\lambda^2$, which Thibault Damour and Sergey Solodukhin made in 2007 to pass for a Schwarzschild black hole [damour2007, nandi2022]."
+        },
+        {
+          "id": "van_den_broeck",
+          "kind": "family",
+          "text": "Van Den Broeck's pocket in the proper distance $l$ is this line element with $\\Phi = 0$ and the far side closed off at a centre, a throat that opens onto a room [krasnikov2003]."
         }
       ],
       "references": [
@@ -9716,7 +9731,8 @@
         "visser1989nuclphysb",
         "teo1998",
         "damour2007",
-        "nandi2022"
+        "nandi2022",
+        "krasnikov2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/morris_thorne.json",
@@ -14974,6 +14990,262 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{48G^2m^2}{c^4 r^6}"
+        }
+      ]
+    },
+    {
+      "id": "van_den_broeck",
+      "name": "Van Den Broeck Warp Drive",
+      "short_name": "Van Den Broeck",
+      "description": "Alcubierre's warp bubble with the space inside it expanded by a large factor, so that a bubble microscopic from outside opens through a narrow neck onto a pocket large enough for a ship. Shrinking the bubble's surface brings the negative energy it needs from far beyond the mass of the visible universe down to a few solar masses.",
+      "tags": [
+        "warp drive",
+        "faster-than-light",
+        "exotic matter",
+        "negative energy",
+        "energy condition violation",
+        "quantum inequality",
+        "time-dependent",
+        "non-vacuum",
+        "dynamical",
+        "idealized model",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "causality violation"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep every factor of $c$ explicit. The Riemann tensor is $R^\\mu{}_{\\nu\\rho\\sigma} = \\partial_\\rho\\Gamma^\\mu{}_{\\nu\\sigma} - \\partial_\\sigma\\Gamma^\\mu{}_{\\nu\\rho} + \\Gamma^\\mu{}_{\\rho\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma} - \\Gamma^\\mu{}_{\\sigma\\lambda}\\Gamma^\\lambda{}_{\\nu\\rho}$ and the Ricci tensor its standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "alcubierre",
+          "kind": "special_case",
+          "text": "Van Den Broeck's drive with $B = 1$ everywhere. Every slice of Alcubierre's bubble is flat, and Van Den Broeck's has a pocket curved into it [vandenbroeck1999]."
+        },
+        {
+          "id": "krasnikov",
+          "kind": "family",
+          "text": "The other shortcut built from negative energy. Pierre Gravel and Jean-Luc Plante lowered the mass of the tube in 2004 in the spirit of Van Den Broeck's pocket [gravel2004, lobo2004]."
+        },
+        {
+          "id": "morris_thorne",
+          "kind": "family",
+          "text": "In the proper distance $l$ the pocket is Morris and Thorne's line element with $\\Phi = 0$, closed off at a centre where $r = 0$, so its neck is a wormhole throat that opens onto a room [krasnikov2003]."
+        }
+      ],
+      "references": [
+        "pfenning1997",
+        "ford1996",
+        "vandenbroeck1999",
+        "vandenbroeck1999b",
+        "krasnikov1998",
+        "coule1998",
+        "krasnikov2003",
+        "gravel2004",
+        "lobo2004",
+        "bobrick2021"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/van_den_broeck.json",
+      "charts": [
+        {
+          "id": "cartesian",
+          "name": "Cartesian",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "v_s = v_s(t)",
+              "description": "Bubble velocity in units of $c$, a function of $t$ alone. The centre of the pocket follows the world line $x = x_s(t)$ with $dx_s/dt = c\\,v_s(t)$, a timelike geodesic whose proper time is $t$, and $v_s > 1$ is allowed. Van Den Broeck takes $v_s$ constant for his estimates. The prime is the derivative along the chart coordinate, $v_s' = dv_s/d(ct)$, so it carries an inverse length."
+            },
+            {
+              "symbol": "f = f(t,x,y,z)",
+              "description": "Alcubierre's shape function, dimensionless, here an arbitrary function of the four coordinates. Van Den Broeck takes a function of $r_s = \\sqrt{(x - x_s(t))^2 + y^2 + z^2}$, the coordinate distance from the centre, with $f = 1$ for $r_s < R$, $0 < f \\le 1$ across the wall $R \\le r_s < R + \\Delta$, and $f = 0$ for $r_s \\ge R + \\Delta$. No component needs that choice, and none assumes $\\partial_t f = -v_s\\,\\partial_x f$."
+            },
+            {
+              "symbol": "B = B(t,x,y,z)",
+              "description": "Expansion factor of space, dimensionless, here an arbitrary function of the four coordinates. Van Den Broeck takes a twice differentiable function of $r_s$ with $B = 1 + \\alpha$ in the pocket $r_s < \\tilde{R}$, $1 < B \\le 1 + \\alpha$ across the neck $\\tilde{R} \\le r_s < \\tilde{R} + \\tilde{\\Delta}$, and $B = 1$ for $r_s \\ge \\tilde{R} + \\tilde{\\Delta}$, with $R > \\tilde{R} + \\tilde{\\Delta}$, so the neck sits inside the wall of the bubble. Every length inside the pocket is $1 + \\alpha$ times its coordinate length. Where $B = 1$ the metric is Alcubierre's."
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z)$, with $t$ carrying dimensions of time and $x$, $y$, and $z$ lengths. The velocity $v_s$ of the bubble is in units of $c$, and the shape function $f$ and the expansion factor $B$ are dimensionless functions of all four coordinates. We take components in the chart $x^0 = ct$, where $\\partial_t = c^{-1}\\partial/\\partial t$ and $v_s' = dv_s/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + B^2\\left(\\left(dx - v_s f\\,c\\,dt\\right)^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\left(v_s\\,B\\,f + 1\\right)\\left(v_s\\,B\\,f - 1\\right)"
+            },
+            {
+              "indices": [
+                "t",
+                "x"
+              ],
+              "value": "-v_s\\,B^2\\,f"
+            },
+            {
+              "indices": [
+                "x",
+                "t"
+              ],
+              "value": "-v_s\\,B^2\\,f"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "B^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "B^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "B^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4v_s^2\\,B^4\\,f\\,\\partial_x^2 f + 4v_s^2\\,B^4\\left(\\partial_x f\\right)^2 + v_s^2\\,B^4\\left(\\partial_y f\\right)^2 + v_s^2\\,B^4\\left(\\partial_z f\\right)^2 + 12v_s^2\\,B^3\\,f^2\\,\\partial_x^2 B + 28v_s^2\\,B^3\\,f\\,\\partial_x B\\,\\partial_x f + 12v_s^2\\,B^2\\,f^2\\left(\\partial_x B\\right)^2 + 4v_s\\,B^4\\,\\partial_t\\partial_x f + 24v_s\\,B^3\\,f\\,\\partial_t\\partial_x B + 16v_s\\,B^3\\,\\partial_t B\\,\\partial_x f + 12v_s\\,B^3\\,\\partial_t f\\,\\partial_x B + 24v_s\\,B^2\\,f\\,\\partial_t B\\,\\partial_x B + 4B^4\\,\\partial_x f\\,v_s' + 12B^3\\,f\\,\\partial_x B\\,v_s' + 12B^3\\,\\partial_t^2 B + 12B^2\\left(\\partial_t B\\right)^2 - 8B\\,\\partial_x^2 B - 8B\\,\\partial_y^2 B - 8B\\,\\partial_z^2 B + 4\\left(\\partial_x B\\right)^2 + 4\\left(\\partial_y B\\right)^2 + 4\\left(\\partial_z B\\right)^2}{2B^4}",
+          "kretschmann": "K = \\dfrac{8v_s^4\\,B^8\\,f^2\\left(\\partial_x\\partial_y f\\right)^2 + 8v_s^4\\,B^8\\,f^2\\left(\\partial_x\\partial_z f\\right)^2 + 16v_s^4\\,B^8\\,f^2\\left(\\partial_x^2 f\\right)^2 + 32v_s^4\\,B^8\\,f\\,\\partial_x f\\,\\partial_x\\partial_y f\\,\\partial_y f + 32v_s^4\\,B^8\\,f\\,\\partial_x f\\,\\partial_x\\partial_z f\\,\\partial_z f - 8v_s^4\\,B^8\\,f\\,\\partial_x^2 f\\left(\\partial_y f\\right)^2 - 8v_s^4\\,B^8\\,f\\,\\partial_x^2 f\\left(\\partial_z f\\right)^2 + 32v_s^4\\,B^8\\,f\\left(\\partial_x f\\right)^2\\,\\partial_x^2 f + 24v_s^4\\,B^8\\left(\\partial_x f\\right)^2\\left(\\partial_y f\\right)^2 + 24v_s^4\\,B^8\\left(\\partial_x f\\right)^2\\left(\\partial_z f\\right)^2 + 22v_s^4\\,B^8\\left(\\partial_y f\\right)^2\\left(\\partial_z f\\right)^2 + 16v_s^4\\,B^8\\left(\\partial_x f\\right)^4 + 11v_s^4\\,B^8\\left(\\partial_y f\\right)^4 + 11v_s^4\\,B^8\\left(\\partial_z f\\right)^4 + 32v_s^4\\,B^7\\,f^3\\,\\partial_x^2 B\\,\\partial_x^2 f + 96v_s^4\\,B^7\\,f^2\\,\\partial_x B\\,\\partial_x f\\,\\partial_x^2 f + 32v_s^4\\,B^7\\,f^2\\,\\partial_x B\\,\\partial_x\\partial_y f\\,\\partial_y f + 32v_s^4\\,B^7\\,f^2\\,\\partial_x B\\,\\partial_x\\partial_z f\\,\\partial_z f + 16v_s^4\\,B^7\\,f^2\\,\\partial_x^2 B\\left(\\partial_y f\\right)^2 + 16v_s^4\\,B^7\\,f^2\\,\\partial_x^2 B\\left(\\partial_z f\\right)^2 + 32v_s^4\\,B^7\\,f^2\\left(\\partial_x f\\right)^2\\,\\partial_x^2 B + 56v_s^4\\,B^7\\,f\\,\\partial_x B\\,\\partial_x f\\left(\\partial_y f\\right)^2 + 56v_s^4\\,B^7\\,f\\,\\partial_x B\\,\\partial_x f\\left(\\partial_z f\\right)^2 + 96v_s^4\\,B^7\\,f\\,\\partial_x B\\left(\\partial_x f\\right)^3 + 48v_s^4\\,B^6\\,f^4\\left(\\partial_x^2 B\\right)^2 + 160v_s^4\\,B^6\\,f^3\\,\\partial_x B\\,\\partial_x f\\,\\partial_x^2 B + 208v_s^4\\,B^6\\,f^2\\left(\\partial_x B\\right)^2\\left(\\partial_x f\\right)^2 + 32v_s^4\\,B^6\\,f^2\\left(\\partial_x B\\right)^2\\left(\\partial_y f\\right)^2 + 32v_s^4\\,B^6\\,f^2\\left(\\partial_x B\\right)^2\\left(\\partial_z f\\right)^2 + 64v_s^4\\,B^5\\,f^3\\left(\\partial_x B\\right)^3\\,\\partial_x f + 48v_s^4\\,B^4\\,f^4\\left(\\partial_x B\\right)^4 + 32v_s^3\\,B^8\\,f\\,\\partial_t\\partial_x f\\,\\partial_x^2 f + 16v_s^3\\,B^8\\,f\\,\\partial_t\\partial_y f\\,\\partial_x\\partial_y f + 16v_s^3\\,B^8\\,f\\,\\partial_t\\partial_z f\\,\\partial_x\\partial_z f + 32v_s^3\\,B^8\\,\\partial_t\\partial_y f\\,\\partial_x f\\,\\partial_y f + 32v_s^3\\,B^8\\,\\partial_t\\partial_z f\\,\\partial_x f\\,\\partial_z f + 32v_s^3\\,B^8\\,\\partial_t\\partial_x f\\left(\\partial_x f\\right)^2 - 8v_s^3\\,B^8\\,\\partial_t\\partial_x f\\left(\\partial_y f\\right)^2 - 8v_s^3\\,B^8\\,\\partial_t\\partial_x f\\left(\\partial_z f\\right)^2 + 64v_s^3\\,B^7\\,f^2\\,\\partial_t\\partial_x B\\,\\partial_x^2 f + 32v_s^3\\,B^7\\,f^2\\,\\partial_t\\partial_x f\\,\\partial_x^2 B + 64v_s^3\\,B^7\\,f\\,\\partial_t B\\,\\partial_x f\\,\\partial_x^2 f + 32v_s^3\\,B^7\\,f\\,\\partial_t B\\,\\partial_x\\partial_y f\\,\\partial_y f + 32v_s^3\\,B^7\\,f\\,\\partial_t B\\,\\partial_x\\partial_z f\\,\\partial_z f + 32v_s^3\\,B^7\\,f\\,\\partial_t f\\,\\partial_x B\\,\\partial_x^2 f + 96v_s^3\\,B^7\\,f\\,\\partial_t\\partial_x f\\,\\partial_x B\\,\\partial_x f + 32v_s^3\\,B^7\\,f\\,\\partial_t\\partial_y f\\,\\partial_x B\\,\\partial_y f + 32v_s^3\\,B^7\\,f\\,\\partial_t\\partial_z f\\,\\partial_x B\\,\\partial_z f + 64v_s^3\\,B^7\\,f\\,\\partial_t\\partial_x B\\left(\\partial_x f\\right)^2 + 32v_s^3\\,B^7\\,f\\,\\partial_t\\partial_x B\\left(\\partial_y f\\right)^2 + 32v_s^3\\,B^7\\,f\\,\\partial_t\\partial_x B\\left(\\partial_z f\\right)^2 + 40v_s^3\\,B^7\\,\\partial_t B\\,\\partial_x f\\left(\\partial_y f\\right)^2 + 40v_s^3\\,B^7\\,\\partial_t B\\,\\partial_x f\\left(\\partial_z f\\right)^2 + 32v_s^3\\,B^7\\,\\partial_t f\\,\\partial_x B\\left(\\partial_x f\\right)^2 + 16v_s^3\\,B^7\\,\\partial_t f\\,\\partial_x B\\left(\\partial_y f\\right)^2 + 16v_s^3\\,B^7\\,\\partial_t f\\,\\partial_x B\\left(\\partial_z f\\right)^2 + 64v_s^3\\,B^7\\,\\partial_t B\\left(\\partial_x f\\right)^3 + 192v_s^3\\,B^6\\,f^3\\,\\partial_t\\partial_x B\\,\\partial_x^2 B + 64v_s^3\\,B^6\\,f^2\\,\\partial_t B\\,\\partial_x f\\,\\partial_x^2 B + 96v_s^3\\,B^6\\,f^2\\,\\partial_t f\\,\\partial_x B\\,\\partial_x^2 B + 320v_s^3\\,B^6\\,f^2\\,\\partial_t\\partial_x B\\,\\partial_x B\\,\\partial_x f + 256v_s^3\\,B^6\\,f\\,\\partial_t B\\,\\partial_x B\\left(\\partial_x f\\right)^2 + 64v_s^3\\,B^6\\,f\\,\\partial_t B\\,\\partial_x B\\left(\\partial_y f\\right)^2 + 64v_s^3\\,B^6\\,f\\,\\partial_t B\\,\\partial_x B\\left(\\partial_z f\\right)^2 + 160v_s^3\\,B^6\\,f\\,\\partial_t f\\left(\\partial_x B\\right)^2\\,\\partial_x f + 192v_s^3\\,B^5\\,f^2\\,\\partial_t B\\left(\\partial_x B\\right)^2\\,\\partial_x f + 192v_s^3\\,B^4\\,f^3\\,\\partial_t B\\left(\\partial_x B\\right)^3 + 32v_s^2\\,B^8\\,f\\,\\partial_x f\\,\\partial_x^2 f\\,v_s' + 16v_s^2\\,B^8\\,f\\,\\partial_x\\partial_y f\\,\\partial_y f\\,v_s' + 16v_s^2\\,B^8\\,f\\,\\partial_x\\partial_z f\\,\\partial_z f\\,v_s' + 24v_s^2\\,B^8\\,\\partial_x f\\left(\\partial_y f\\right)^2\\,v_s' + 24v_s^2\\,B^8\\,\\partial_x f\\left(\\partial_z f\\right)^2\\,v_s' + 32v_s^2\\,B^8\\left(\\partial_x f\\right)^3\\,v_s' + 16v_s^2\\,B^8\\left(\\partial_t\\partial_x f\\right)^2 + 8v_s^2\\,B^8\\left(\\partial_t\\partial_y f\\right)^2 + 8v_s^2\\,B^8\\left(\\partial_t\\partial_z f\\right)^2 + 32v_s^2\\,B^7\\,f^2\\,\\partial_x B\\,\\partial_x^2 f\\,v_s' + 32v_s^2\\,B^7\\,f^2\\,\\partial_x f\\,\\partial_x^2 B\\,v_s' + 128v_s^2\\,B^7\\,f\\,\\partial_x B\\left(\\partial_x f\\right)^2\\,v_s' + 48v_s^2\\,B^7\\,f\\,\\partial_x B\\left(\\partial_y f\\right)^2\\,v_s' + 48v_s^2\\,B^7\\,f\\,\\partial_x B\\left(\\partial_z f\\right)^2\\,v_s' + 64v_s^2\\,B^7\\,f\\,\\partial_t\\partial_x B\\,\\partial_t\\partial_x f + 32v_s^2\\,B^7\\,f\\,\\partial_t^2 B\\,\\partial_x^2 f + 64v_s^2\\,B^7\\,\\partial_t B\\,\\partial_t\\partial_x f\\,\\partial_x f + 32v_s^2\\,B^7\\,\\partial_t B\\,\\partial_t\\partial_y f\\,\\partial_y f + 32v_s^2\\,B^7\\,\\partial_t B\\,\\partial_t\\partial_z f\\,\\partial_z f + 32v_s^2\\,B^7\\,\\partial_t f\\,\\partial_t\\partial_x f\\,\\partial_x B + 32v_s^2\\,B^7\\,\\partial_t^2 B\\left(\\partial_x f\\right)^2 + 16v_s^2\\,B^7\\,\\partial_t^2 B\\left(\\partial_y f\\right)^2 + 16v_s^2\\,B^7\\,\\partial_t^2 B\\left(\\partial_z f\\right)^2 + 96v_s^2\\,B^6\\,f^3\\,\\partial_x B\\,\\partial_x^2 B\\,v_s' + 160v_s^2\\,B^6\\,f^2\\left(\\partial_x B\\right)^2\\,\\partial_x f\\,v_s' + 96v_s^2\\,B^6\\,f^2\\,\\partial_t^2 B\\,\\partial_x^2 B + 192v_s^2\\,B^6\\,f^2\\left(\\partial_t\\partial_x B\\right)^2 + 128v_s^2\\,B^6\\,f\\,\\partial_t B\\,\\partial_t\\partial_x B\\,\\partial_x f + 192v_s^2\\,B^6\\,f\\,\\partial_t f\\,\\partial_t\\partial_x B\\,\\partial_x B + 160v_s^2\\,B^6\\,f\\,\\partial_t^2 B\\,\\partial_x B\\,\\partial_x f + 64v_s^2\\,B^6\\,\\partial_t B\\,\\partial_t f\\,\\partial_x B\\,\\partial_x f + 96v_s^2\\,B^6\\left(\\partial_t B\\right)^2\\left(\\partial_x f\\right)^2 + 32v_s^2\\,B^6\\left(\\partial_t B\\right)^2\\left(\\partial_y f\\right)^2 + 32v_s^2\\,B^6\\left(\\partial_t B\\right)^2\\left(\\partial_z f\\right)^2 + 48v_s^2\\,B^6\\left(\\partial_t f\\right)^2\\left(\\partial_x B\\right)^2 - 8v_s^2\\,B^6\\left(\\partial_x\\partial_y f\\right)^2 - 8v_s^2\\,B^6\\left(\\partial_x\\partial_z f\\right)^2 - 16v_s^2\\,B^6\\left(\\partial_y\\partial_z f\\right)^2 - 8v_s^2\\,B^6\\left(\\partial_y^2 f\\right)^2 - 8v_s^2\\,B^6\\left(\\partial_z^2 f\\right)^2 + 192v_s^2\\,B^5\\,f\\left(\\partial_t B\\right)^2\\,\\partial_x B\\,\\partial_x f - 32v_s^2\\,B^5\\,f\\,\\partial_x\\partial_y B\\,\\partial_x\\partial_y f - 32v_s^2\\,B^5\\,f\\,\\partial_x\\partial_z B\\,\\partial_x\\partial_z f + 32v_s^2\\,B^5\\,f\\,\\partial_x^2 B\\,\\partial_y^2 f + 32v_s^2\\,B^5\\,f\\,\\partial_x^2 B\\,\\partial_z^2 f - 32v_s^2\\,B^5\\,\\partial_x f\\,\\partial_x\\partial_y f\\,\\partial_y B - 32v_s^2\\,B^5\\,\\partial_x f\\,\\partial_x\\partial_z f\\,\\partial_z B - 32v_s^2\\,B^5\\,\\partial_y B\\,\\partial_y f\\,\\partial_y^2 f - 16v_s^2\\,B^5\\,\\partial_y B\\,\\partial_y f\\,\\partial_z^2 f - 16v_s^2\\,B^5\\,\\partial_y B\\,\\partial_y\\partial_z f\\,\\partial_z f + 16v_s^2\\,B^5\\,\\partial_y f\\,\\partial_y\\partial_z B\\,\\partial_z f - 16v_s^2\\,B^5\\,\\partial_y f\\,\\partial_y\\partial_z f\\,\\partial_z B - 16v_s^2\\,B^5\\,\\partial_y^2 f\\,\\partial_z B\\,\\partial_z f - 32v_s^2\\,B^5\\,\\partial_z B\\,\\partial_z f\\,\\partial_z^2 f + 8v_s^2\\,B^5\\,\\partial_x^2 B\\left(\\partial_y f\\right)^2 + 8v_s^2\\,B^5\\,\\partial_x^2 B\\left(\\partial_z f\\right)^2 + 8v_s^2\\,B^5\\left(\\partial_y f\\right)^2\\,\\partial_y^2 B + 8v_s^2\\,B^5\\left(\\partial_z f\\right)^2\\,\\partial_z^2 B + 288v_s^2\\,B^4\\,f^2\\left(\\partial_t B\\right)^2\\left(\\partial_x B\\right)^2 - 64v_s^2\\,B^4\\,f^2\\left(\\partial_x\\partial_y B\\right)^2 - 64v_s^2\\,B^4\\,f^2\\left(\\partial_x\\partial_z B\\right)^2 - 64v_s^2\\,B^4\\,f^2\\left(\\partial_x^2 B\\right)^2 - 64v_s^2\\,B^4\\,f\\,\\partial_x B\\,\\partial_x f\\,\\partial_x^2 B - 32v_s^2\\,B^4\\,f\\,\\partial_x B\\,\\partial_x f\\,\\partial_y^2 B - 32v_s^2\\,B^4\\,f\\,\\partial_x B\\,\\partial_x f\\,\\partial_z^2 B - 64v_s^2\\,B^4\\,f\\,\\partial_x B\\,\\partial_x\\partial_y B\\,\\partial_y f + 32v_s^2\\,B^4\\,f\\,\\partial_x B\\,\\partial_x\\partial_y f\\,\\partial_y B - 64v_s^2\\,B^4\\,f\\,\\partial_x B\\,\\partial_x\\partial_z B\\,\\partial_z f + 32v_s^2\\,B^4\\,f\\,\\partial_x B\\,\\partial_x\\partial_z f\\,\\partial_z B - 64v_s^2\\,B^4\\,f\\,\\partial_x f\\,\\partial_x\\partial_y B\\,\\partial_y B - 64v_s^2\\,B^4\\,f\\,\\partial_x f\\,\\partial_x\\partial_z B\\,\\partial_z B + 96v_s^2\\,B^4\\,f\\,\\partial_x^2 B\\,\\partial_y B\\,\\partial_y f + 96v_s^2\\,B^4\\,f\\,\\partial_x^2 B\\,\\partial_z B\\,\\partial_z f - 32v_s^2\\,B^4\\,f\\left(\\partial_x B\\right)^2\\,\\partial_y^2 f - 32v_s^2\\,B^4\\,f\\left(\\partial_x B\\right)^2\\,\\partial_z^2 f - 80v_s^2\\,B^4\\,\\partial_y B\\,\\partial_y f\\,\\partial_z B\\,\\partial_z f - 16v_s^2\\,B^4\\left(\\partial_x B\\right)^2\\left(\\partial_y f\\right)^2 - 16v_s^2\\,B^4\\left(\\partial_x B\\right)^2\\left(\\partial_z f\\right)^2 - 32v_s^2\\,B^4\\left(\\partial_x f\\right)^2\\left(\\partial_y B\\right)^2 - 32v_s^2\\,B^4\\left(\\partial_x f\\right)^2\\left(\\partial_z B\\right)^2 - 48v_s^2\\,B^4\\left(\\partial_y B\\right)^2\\left(\\partial_y f\\right)^2 - 8v_s^2\\,B^4\\left(\\partial_y B\\right)^2\\left(\\partial_z f\\right)^2 - 8v_s^2\\,B^4\\left(\\partial_y f\\right)^2\\left(\\partial_z B\\right)^2 - 48v_s^2\\,B^4\\left(\\partial_z B\\right)^2\\left(\\partial_z f\\right)^2 + 128v_s^2\\,B^3\\,f^2\\,\\partial_x B\\,\\partial_x\\partial_y B\\,\\partial_y B + 128v_s^2\\,B^3\\,f^2\\,\\partial_x B\\,\\partial_x\\partial_z B\\,\\partial_z B + 64v_s^2\\,B^3\\,f^2\\left(\\partial_x B\\right)^2\\,\\partial_x^2 B - 64v_s^2\\,B^3\\,f^2\\left(\\partial_x B\\right)^2\\,\\partial_y^2 B - 64v_s^2\\,B^3\\,f^2\\left(\\partial_x B\\right)^2\\,\\partial_z^2 B + 64v_s^2\\,B^3\\,f\\,\\partial_x B\\,\\partial_x f\\left(\\partial_y B\\right)^2 + 64v_s^2\\,B^3\\,f\\,\\partial_x B\\,\\partial_x f\\left(\\partial_z B\\right)^2 + 64v_s^2\\,B^3\\,f\\left(\\partial_x B\\right)^3\\,\\partial_x f - 32v_s^2\\,B^2\\,f^2\\left(\\partial_x B\\right)^2\\left(\\partial_y B\\right)^2 - 32v_s^2\\,B^2\\,f^2\\left(\\partial_x B\\right)^2\\left(\\partial_z B\\right)^2 - 32v_s^2\\,B^2\\,f^2\\left(\\partial_x B\\right)^4 + 32v_s\\,B^8\\,\\partial_t\\partial_x f\\,\\partial_x f\\,v_s' + 16v_s\\,B^8\\,\\partial_t\\partial_y f\\,\\partial_y f\\,v_s' + 16v_s\\,B^8\\,\\partial_t\\partial_z f\\,\\partial_z f\\,v_s' + 64v_s\\,B^7\\,f\\,\\partial_t\\partial_x B\\,\\partial_x f\\,v_s' + 32v_s\\,B^7\\,f\\,\\partial_t\\partial_x f\\,\\partial_x B\\,v_s' + 32v_s\\,B^7\\,\\partial_t f\\,\\partial_x B\\,\\partial_x f\\,v_s' + 64v_s\\,B^7\\,\\partial_t B\\left(\\partial_x f\\right)^2\\,v_s' + 32v_s\\,B^7\\,\\partial_t B\\left(\\partial_y f\\right)^2\\,v_s' + 32v_s\\,B^7\\,\\partial_t B\\left(\\partial_z f\\right)^2\\,v_s' + 32v_s\\,B^7\\,\\partial_t\\partial_x f\\,\\partial_t^2 B + 192v_s\\,B^6\\,f^2\\,\\partial_t\\partial_x B\\,\\partial_x B\\,v_s' + 64v_s\\,B^6\\,f\\,\\partial_t B\\,\\partial_x B\\,\\partial_x f\\,v_s' + 96v_s\\,B^6\\,f\\,\\partial_t f\\left(\\partial_x B\\right)^2\\,v_s' + 192v_s\\,B^6\\,f\\,\\partial_t\\partial_x B\\,\\partial_t^2 B + 64v_s\\,B^6\\,\\partial_t B\\,\\partial_t^2 B\\,\\partial_x f + 96v_s\\,B^6\\,\\partial_t f\\,\\partial_t^2 B\\,\\partial_x B + 64v_s\\,B^5\\left(\\partial_t B\\right)^3\\,\\partial_x f + 32v_s\\,B^5\\,\\partial_t\\partial_x B\\,\\partial_y^2 f + 32v_s\\,B^5\\,\\partial_t\\partial_x B\\,\\partial_z^2 f - 32v_s\\,B^5\\,\\partial_t\\partial_y B\\,\\partial_x\\partial_y f - 32v_s\\,B^5\\,\\partial_t\\partial_z B\\,\\partial_x\\partial_z f + 192v_s\\,B^4\\,f\\left(\\partial_t B\\right)^3\\,\\partial_x B - 128v_s\\,B^4\\,f\\,\\partial_t\\partial_x B\\,\\partial_x^2 B - 128v_s\\,B^4\\,f\\,\\partial_t\\partial_y B\\,\\partial_x\\partial_y B - 128v_s\\,B^4\\,f\\,\\partial_t\\partial_z B\\,\\partial_x\\partial_z B - 32v_s\\,B^4\\,\\partial_t B\\,\\partial_x B\\,\\partial_y^2 f - 32v_s\\,B^4\\,\\partial_t B\\,\\partial_x B\\,\\partial_z^2 f - 64v_s\\,B^4\\,\\partial_t B\\,\\partial_x f\\,\\partial_x^2 B - 32v_s\\,B^4\\,\\partial_t B\\,\\partial_x f\\,\\partial_y^2 B - 32v_s\\,B^4\\,\\partial_t B\\,\\partial_x f\\,\\partial_z^2 B - 32v_s\\,B^4\\,\\partial_t B\\,\\partial_x\\partial_y B\\,\\partial_y f + 32v_s\\,B^4\\,\\partial_t B\\,\\partial_x\\partial_y f\\,\\partial_y B - 32v_s\\,B^4\\,\\partial_t B\\,\\partial_x\\partial_z B\\,\\partial_z f + 32v_s\\,B^4\\,\\partial_t B\\,\\partial_x\\partial_z f\\,\\partial_z B + 96v_s\\,B^4\\,\\partial_t\\partial_x B\\,\\partial_y B\\,\\partial_y f + 96v_s\\,B^4\\,\\partial_t\\partial_x B\\,\\partial_z B\\,\\partial_z f - 32v_s\\,B^4\\,\\partial_t\\partial_y B\\,\\partial_x B\\,\\partial_y f - 64v_s\\,B^4\\,\\partial_t\\partial_y B\\,\\partial_x f\\,\\partial_y B - 32v_s\\,B^4\\,\\partial_t\\partial_z B\\,\\partial_x B\\,\\partial_z f - 64v_s\\,B^4\\,\\partial_t\\partial_z B\\,\\partial_x f\\,\\partial_z B - 128v_s\\,B^3\\,f\\,\\partial_t B\\,\\partial_x B\\,\\partial_y^2 B - 128v_s\\,B^3\\,f\\,\\partial_t B\\,\\partial_x B\\,\\partial_z^2 B + 128v_s\\,B^3\\,f\\,\\partial_t B\\,\\partial_x\\partial_y B\\,\\partial_y B + 128v_s\\,B^3\\,f\\,\\partial_t B\\,\\partial_x\\partial_z B\\,\\partial_z B + 128v_s\\,B^3\\,f\\,\\partial_t\\partial_y B\\,\\partial_x B\\,\\partial_y B + 128v_s\\,B^3\\,f\\,\\partial_t\\partial_z B\\,\\partial_x B\\,\\partial_z B + 128v_s\\,B^3\\,f\\,\\partial_t\\partial_x B\\left(\\partial_x B\\right)^2 + 64v_s\\,B^3\\,\\partial_t B\\,\\partial_x f\\left(\\partial_y B\\right)^2 + 64v_s\\,B^3\\,\\partial_t B\\,\\partial_x f\\left(\\partial_z B\\right)^2 + 64v_s\\,B^3\\,\\partial_t B\\left(\\partial_x B\\right)^2\\,\\partial_x f - 64v_s\\,B^2\\,f\\,\\partial_t B\\,\\partial_x B\\left(\\partial_y B\\right)^2 - 64v_s\\,B^2\\,f\\,\\partial_t B\\,\\partial_x B\\left(\\partial_z B\\right)^2 - 64v_s\\,B^2\\,f\\,\\partial_t B\\left(\\partial_x B\\right)^3 + 16B^8\\left(\\partial_x f\\right)^2\\left(v_s'\\right)^2 + 8B^8\\left(\\partial_y f\\right)^2\\left(v_s'\\right)^2 + 8B^8\\left(\\partial_z f\\right)^2\\left(v_s'\\right)^2 + 32B^7\\,f\\,\\partial_x B\\,\\partial_x f\\left(v_s'\\right)^2 + 32B^7\\,\\partial_t^2 B\\,\\partial_x f\\,v_s' + 48B^6\\,f^2\\left(\\partial_x B\\right)^2\\left(v_s'\\right)^2 + 96B^6\\,f\\,\\partial_t^2 B\\,\\partial_x B\\,v_s' + 48B^6\\left(\\partial_t^2 B\\right)^2 + 48B^4\\left(\\partial_t B\\right)^4 - 64B^4\\left(\\partial_t\\partial_x B\\right)^2 - 64B^4\\left(\\partial_t\\partial_y B\\right)^2 - 64B^4\\left(\\partial_t\\partial_z B\\right)^2 + 128B^3\\,\\partial_t B\\,\\partial_t\\partial_x B\\,\\partial_x B + 128B^3\\,\\partial_t B\\,\\partial_t\\partial_y B\\,\\partial_y B + 128B^3\\,\\partial_t B\\,\\partial_t\\partial_z B\\,\\partial_z B - 64B^3\\left(\\partial_t B\\right)^2\\,\\partial_x^2 B - 64B^3\\left(\\partial_t B\\right)^2\\,\\partial_y^2 B - 64B^3\\left(\\partial_t B\\right)^2\\,\\partial_z^2 B - 32B^2\\left(\\partial_t B\\right)^2\\left(\\partial_x B\\right)^2 - 32B^2\\left(\\partial_t B\\right)^2\\left(\\partial_y B\\right)^2 - 32B^2\\left(\\partial_t B\\right)^2\\left(\\partial_z B\\right)^2 + 32B^2\\,\\partial_x^2 B\\,\\partial_y^2 B + 32B^2\\,\\partial_x^2 B\\,\\partial_z^2 B + 32B^2\\,\\partial_y^2 B\\,\\partial_z^2 B + 32B^2\\left(\\partial_x\\partial_y B\\right)^2 + 32B^2\\left(\\partial_x\\partial_z B\\right)^2 + 32B^2\\left(\\partial_x^2 B\\right)^2 + 32B^2\\left(\\partial_y\\partial_z B\\right)^2 + 32B^2\\left(\\partial_y^2 B\\right)^2 + 32B^2\\left(\\partial_z^2 B\\right)^2 - 128B\\,\\partial_x B\\,\\partial_x\\partial_y B\\,\\partial_y B - 128B\\,\\partial_x B\\,\\partial_x\\partial_z B\\,\\partial_z B - 128B\\,\\partial_y B\\,\\partial_y\\partial_z B\\,\\partial_z B - 64B\\left(\\partial_x B\\right)^2\\,\\partial_x^2 B - 64B\\left(\\partial_y B\\right)^2\\,\\partial_y^2 B - 64B\\left(\\partial_z B\\right)^2\\,\\partial_z^2 B + 96\\left(\\partial_x B\\right)^2\\left(\\partial_y B\\right)^2 + 96\\left(\\partial_x B\\right)^2\\left(\\partial_z B\\right)^2 + 96\\left(\\partial_y B\\right)^2\\left(\\partial_z B\\right)^2 + 48\\left(\\partial_x B\\right)^4 + 48\\left(\\partial_y B\\right)^4 + 48\\left(\\partial_z B\\right)^4}{4B^8}"
+        },
+        {
+          "id": "pocket",
+          "name": "Comoving Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, R)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "B = B(r)",
+              "description": "Expansion factor of space, dimensionless, a function of $r$ alone. It is $1 + \\alpha$ in the pocket $r < \\tilde{R}$, falls across the neck $\\tilde{R} \\le r < \\tilde{R} + \\tilde{\\Delta}$, and is $1$ from there out to the wall of the bubble at $r = R$. Van Den Broeck's choice across the neck is $B = 1 + \\alpha\\left(n\\,w^{n-1} - (n - 1)\\,w^n\\right)$ with $w = (\\tilde{R} + \\tilde{\\Delta} - r)/\\tilde{\\Delta}$ and $n = 80$. A sphere of coordinate radius $r$ has area $4\\pi B^2r^2$."
+            },
+            {
+              "symbol": "R",
+              "description": "Coordinate radius at which the wall of the bubble begins, a length. Inside it $f = 1$, and Van Den Broeck's example has $R = 3\\times10^{-15}$ m."
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ centred on the ship, with $x - x_s(t) = r\\cos\\theta$, $t$ carrying dimensions of time, and $r$ a length. The chart covers the inside of the bubble, where $f = 1$, and the expansion factor $B$ is a dimensionless function of $r$ alone. We take components in the chart $x^0 = ct$, a prime is a derivative with respect to $r$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + B^2\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "B^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "B^2\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "B^2\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2r\\left(B'\\right)^2 - 8B\\,B' - 4B\\,r\\,B''}{B^4\\,r}",
+          "kretschmann": "K = \\dfrac{8B^2\\,r^2\\left(B''\\right)^2 + 16B^2\\,r\\,B'\\,B'' + 24B^2\\left(B'\\right)^2 - 16B\\,r^2\\left(B'\\right)^2\\,B'' + 12r^2\\left(B'\\right)^4}{B^8\\,r^2}"
+        },
+        {
+          "id": "proper_radial",
+          "name": "Proper Radial Distance",
+          "coordinates": [
+            "t",
+            "l",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "l \\in [-l_0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "l = -l_0 \\;\\text{(the centre of the pocket, where } r = 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r = r(l)",
+              "description": "Areal radius of the sphere at proper distance $l$, a length, so that the sphere has area $4\\pi r^2$. It vanishes at the centre of the pocket, grows to the pocket's full radius, shrinks through the neck to a minimum, and grows again as $r = l$ plus a constant outside. In the comoving spherical chart, whose radius we call $\\rho$ here, $dl = B\\,d\\rho$ and $r = B\\rho$. A prime is a derivative with respect to $l$."
+            },
+            {
+              "symbol": "l_0",
+              "description": "Proper distance from the centre of the pocket to the sphere $l = 0$ in the neck, a length. Krasnikov puts $l = 0$ at the middle of the layer where $r'' > 0$."
+            }
+          ],
+          "convention": "We use coordinates $(t, l, \\theta, \\phi)$ centred on the ship, with $t$ carrying dimensions of time and $l$ the proper distance along a radius, a length. The areal radius $r$ is a function of $l$ alone, and the chart covers the inside of the bubble, where $f = 1$. We take components in the chart $x^0 = ct$, a prime is a derivative with respect to $l$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + dl^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "l",
+                "l"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2 - 2\\left(r'\\right)^2 - 4r\\,r''}{r^2}",
+          "kretschmann": "K = \\dfrac{8\\left(r''\\right)^2}{r^2} + \\dfrac{4\\left(1 - \\left(r'\\right)^2\\right)^2}{r^4}"
         }
       ]
     },

@@ -43,7 +43,7 @@
       "four-dimensional",
       "causality violation"
     ],
-    "version": "ec8a73dba699e084",
+    "version": "344568564edd9958",
     "diagrams": "a0c6ac73f99ce279",
     "embedding": "4df721cabada780a"
   },
@@ -843,7 +843,7 @@
       "four-dimensional",
       "causality violation"
     ],
-    "version": "5c9bdaac7619c3fa",
+    "version": "5d40bc09040cd4fe",
     "diagrams": "8465ef9c4b047da5",
     "embedding": "166bc957997dd4b5"
   },
@@ -1162,7 +1162,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "edcd3a4b49c15257",
+    "version": "aef88f1c7a5bc038",
     "diagrams": "6a553e7d399d3c52",
     "conformal": "956949c7f4a96538",
     "embedding": "2fb2f35ad8d95922"
@@ -1801,6 +1801,29 @@
     "diagrams": "87052dae566b6395",
     "conformal": "99424b00c9e94c1b",
     "embedding": "1e162e2bfa0db4eb"
+  },
+  {
+    "id": "van_den_broeck",
+    "name": "Van Den Broeck",
+    "tags": [
+      "warp drive",
+      "faster-than-light",
+      "exotic matter",
+      "negative energy",
+      "energy condition violation",
+      "quantum inequality",
+      "time-dependent",
+      "non-vacuum",
+      "dynamical",
+      "idealized model",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "causality violation"
+    ],
+    "version": "35d7bd089a1d788b",
+    "diagrams": "54c4ab721c360189",
+    "embedding": "d0eb9c1c758df3f4"
   },
   {
     "id": "cosmic_string",

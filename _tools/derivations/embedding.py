@@ -3653,6 +3653,74 @@ def ellis_bronnikov(ck, src):
                  settings="$\\ell = 1$, the unit of every length.")]
 
 
+# Where the rim and the neck leave a flat part the height starts as the 3/2 power of the distance,
+# so the profile's chords there are a few times 1e-4 of R long, and are rounded to below 1e-9.
+VDB_DIGITS = 1e-9
+
+
+def van_den_broeck(ck, src):
+    """The pocket, on the equator of a slice of constant t in Krasnikov's chart, whose l is the
+    proper distance along a radius: g_ll = 1 and g_phiphi = r(l)^2, so rho = r and dz/dl =
+    sqrt(1 - r'^2), a surface in flat space wherever |r'| <= 1, which Krasnikov's conditions on
+    r(l) ask for. Drawn with the r(l) the spacetime diagrams declare, in units of R: the floor
+    r = l + 4 and the lid r = -l are flat, the rim 7/4 - (l + 2)^2 and the neck l^2 + 1/4 each
+    climb by the quarter circle's worth pi/4, z = (w sqrt(1 - w^2) + arcsin w)/4 + pi/8 with w
+    twice the distance from the middle of each, and outside the neck the slice is flat again,
+    pi/2 above the floor. The comoving spherical chart, with the B the same r(l) gives, is
+    checked to draw the same surface. van_den_broeck.md is the derivation."""
+    held = {"t": 0, **EQUATOR}
+    sl = Slice(src, "van_den_broeck", "proper_radial", "l", "\\phi", held, {"l_0": 4}, {"r": nr._VDB_R})
+    size = 3.5
+    marks = [(-3.25, "r", None), (-2.5, "r", "$l = -5R/2$"), (-2.0, "r", "$r = 7R/4$"), (-1.5, "r", None),
+             (-1.0, "r", None), (-0.5, "r", None), (0.0, "throat", "$r = R/4$"), (0.5, "r", "$l = R/2$"),
+             (1.0, "wall", "$r = R$")]
+    whole = Piece("pocket", "sheet", sl, -4.0, 1.0, 0.0, 1,
+                  (("axis", "the centre of the pocket, $l = -4R$, where the ship rides"),
+                   ("edge", "the slice runs on flat through the wall of the bubble and beyond it")),
+                  marks, size, digits=VDB_DIGITS)
+    ck.isometry("Van Den Broeck, the pocket in the proper distance", whole)
+
+    def arc(w):
+        w = np.clip(w, -1.0, 1.0)
+        return (w * np.sqrt(1 - w * w) + np.arcsin(w)) / 4 + math.pi / 8
+
+    def height(l):
+        l = np.asarray(l, dtype=float)
+        return np.select([l < -2.5, l < -1.5, l < -0.5, l < 0.5],
+                         [0.0 * l, arc(2 * (l + 2)), math.pi / 4 + 0.0 * l, math.pi / 4 + arc(2 * l)], math.pi / 2)
+    ck.form("Van Den Broeck, the floor, the rim, the lid and the neck", whole, height, size)
+    ck.radius("Van Den Broeck, rho = r(l)", whole, lambda l: np.select(
+        [l < -2.5, l < -1.5, l < -0.5, l < 0.5], [l + 4, 1.75 - (l + 2) ** 2, -l, l * l + 0.25], l), size)
+    # The comoving chart draws the same surface: at the comoving radius of each of its points,
+    # the circle and the height the proper distance chart has at l(rho).
+    comoving = Slice(src, "van_den_broeck", "pocket", "r", "\\phi", held, {"R": 1}, {"B": nr._vdb_factor("r")})
+    radii = np.concatenate([np.linspace(0.0005, 0.0216, 60), np.linspace(0.022, 1.0, 60)])
+    l_of = nr._vdb_distance(radii)
+    ck.add("Van Den Broeck, the comoving chart's circles are the same circles",
+           float(np.max(np.abs(comoving.rho_at(radii) - sl.rho_at(l_of)))) / size, FORM)
+    rises = np.array([comoving.rise(a, b) for a, b in zip(radii, radii[1:])])
+    ck.add("Van Den Broeck, the comoving chart climbs as the proper distance chart does",
+           float(np.max(np.abs(np.cumsum(rises) - (height(l_of[1:]) - height(l_of[0]))))) / size, FORM)
+    ck.add("Van Den Broeck, the comoving chart's distances are l",
+           float(np.max(np.abs(np.array([comoving.proper(a, b) for a, b in zip(radii, radii[1:])])
+                               - np.diff(l_of)))) / size, FORM)
+    surface = Surface([whole])
+
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *whole.at(-2.0), "$r = 7R/4$")
+    ring_label(fig, [0, 0, 0], *whole.at(0.0), "$r = R/4$", dx=14)
+    ring_label(fig, [0, 0, 0], *whole.at(1.0), "$r = R$")
+    fig.legend("fill", "cover", "the inside of the bubble, which $t$ and $l$ cover from the centre of the pocket out")
+    fig.legend("line", "r", "$l$ constant, every $R/2$ from $-5R/2$ to $R/2$, the widest at $l = -2R$, "
+                            "and at $-13R/4$ on the floor")
+    fig.legend("line", "throat", "the narrowest circle of the neck, $r = R/4$ at $l = 0$")
+    fig.legend("line", "wall", "where the wall of the bubble begins, $r = R$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("pocket", "The pocket", "$R$", [surface], fig.done(),
+                 settings="$R = 1$, the radius at which the wall of the bubble begins, the unit of every length.",
+                 input=nr.VDB_POCKET + ".")]
+
+
 def cosmic_string(ck, src):
     """The conical exterior: g_rr = 1 and g_phiphi = (1 - 4G mu/c^2)^2 r^2, so rho =
     (1 - 4G mu/c^2) r and dz/dr = sqrt(1 - (1 - 4G mu/c^2)^2): a cone of half angle
@@ -6441,6 +6509,7 @@ DRAWN = {
     "tov": tov,
     "morris_thorne": morris_thorne,
     "ellis_bronnikov": ellis_bronnikov,
+    "van_den_broeck": van_den_broeck,
     "rn_metric": rn_metric,
     "de_sitter": de_sitter,
     "einstein_static": einstein_static,
@@ -6984,6 +7053,19 @@ CAPTIONS = {
         "\\ell^2/R$ of the areal radius $R = \\sqrt{r^2 + \\ell^2}$, unaware that Homer Ellis and Kirill "
         "Bronnikov had each found it in 1973. The areal radius turns back at the throat, so it covers one side "
         "at a time, while the proper $r$ runs straight through.",
+    ],
+    ("van_den_broeck", "pocket"): [
+        "The equatorial plane ($\\theta = \\pi/2$) inside Van Den Broeck's bubble at one moment of $t$, drawn "
+        "as a surface in flat space with every distance along it the metric distance. Its $l$ is the proper "
+        "distance along a radius, so the circles of constant $l$ stand at equal steps along the surface, and "
+        "the circle at $l$ has circumference $2\\pi r(l)$. The surface climbs at $dz/dl = \\sqrt{1 - r'^2}$: "
+        "it lies level on the floor and the lid of the pocket and outside the neck, where $r' = \\pm 1$, and "
+        "it climbs $\\pi R/4$ round the rim and again through the neck.",
+        "The ship rides on the floor, a flat disc $3R$ across, under a bubble whose wall begins at the "
+        "circle $r = R$ on the plane above. The neck that joins them is $R/2$ across at its narrowest. "
+        "From the lid to the outer end of the neck the circles shrink and then grow while $r'' > 0$, "
+        "and there the slice's Einstein tensor has $G_{tt} + G_{ll} = -2r''/r < 0$, the negative energy "
+        "the pocket needs.",
     ],
     ("cosmic_string", "unroll"): [
         "The cone of an ideal cosmic string ($4G\\mu/c^2 = 0.1$) cut along $\\phi = 0$ and unrolled onto the plane "
