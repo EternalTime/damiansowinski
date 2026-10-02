@@ -252,7 +252,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "31a00847ba960d9d",
+    "version": "f78dc6f44c55bca0",
     "diagrams": "60cc56f450326363",
     "conformal": "4380d718be4b9349",
     "embedding": "8cf5301ea3792cef"
@@ -1197,6 +1197,49 @@
     "embedding": "89ff4322639feb6a"
   },
   {
+    "id": "photon_rocket",
+    "name": "Photon Rocket",
+    "tags": [
+      "null dust",
+      "pure radiation",
+      "radiating",
+      "accelerating",
+      "acceleration",
+      "rocket",
+      "recoil",
+      "point mass",
+      "time-dependent",
+      "dynamical",
+      "Kerr-Schild",
+      "Robinson-Trautman",
+      "algebraically special",
+      "Petrov type D",
+      "null congruence",
+      "shear-free",
+      "twist-free",
+      "expanding",
+      "retarded time",
+      "Newman-Unti coordinates",
+      "gravitational radiation",
+      "news function",
+      "asymptotically flat",
+      "axisymmetric",
+      "white hole",
+      "singularity",
+      "curvature singularity",
+      "non-vacuum",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "576ca2f8c11199e4",
+    "diagrams": "28bfeca27919032b",
+    "conformal": "1712fbc95e0d1f96",
+    "embedding": "8106f022ecfc3b33"
+  },
+  {
     "id": "pp_wave",
     "name": "pp-wave",
     "tags": [
@@ -1282,7 +1325,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cd4e8e04a3fe3ddb",
+    "version": "5d0a0cbdc9426b82",
     "diagrams": "53ff4d90bff08988",
     "conformal": "0326c9d2101aa7a6",
     "embedding": "7b7a1d9f63195b3e"
@@ -1314,7 +1357,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e1ff2caf0aa47ae9",
+    "version": "8d899e14ec442a62",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -1640,7 +1683,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cee8d512c5972244",
+    "version": "140f3c8935a61444",
     "diagrams": "87052dae566b6395",
     "conformal": "99424b00c9e94c1b",
     "embedding": "1e162e2bfa0db4eb"

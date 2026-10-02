@@ -424,6 +424,20 @@ POLYTROPE_INPUT = ("A polytrope, $p = K\\rho_0^2$ with rest mass density $\\rho_
                    "units where $G = c = M_\\odot = 1$, solved from this spacetime's own $G^t{}_t$ and "
                    "$G^r{}_r$: a star of $M = 1.40\\,M_\\odot$ and $R = 14.2$ km.")
 # Robinson and Trautman's fronts at u = 0: Macedo and Saa's prolate data, drawn at epsilon = 4/5.
+# Kinnersley's photon rocket: a burn from u = 0 to cu = 10 m_0, in units of the mass m_0 it
+# starts with, whose acceleration rises and falls as 2 sin^2(pi cu/10 m_0)/(25 m_0), losing mass
+# at the least rate that keeps the density of its radiation positive in every direction,
+# d_u m = -3 alpha m. Its rapidity w is the integral of alpha, 2/5 at the end, and the
+# Robinson-Trautman chart's four-velocity is (cosh w, sinh w, 0, 0). alpha m stays below 1/16,
+# 0.050 at most, so behind the rocket the two zeros of g^rr never meet.
+_ROCKET_U = "Min(Max(u, 0), 10)"
+_ROCKET_W = f"({_ROCKET_U} - 5*sin(pi*{_ROCKET_U}/5)/pi)/25"
+ROCKET_BURN = {"alpha": f"2*sin(pi*{_ROCKET_U}/10)**2/25", "m": f"exp(-3*{_ROCKET_W})"}
+ROCKET_FLIGHT = {"U_1": f"sinh({_ROCKET_W})", "U_2": "0*u", "U_3": "0*u", "m": f"exp(-3*{_ROCKET_W})"}
+ROCKET_INPUT = ("A burn from $u = 0$ to $cu = 10\\,m_0$ along the first axis, with the acceleration "
+                "$\\alpha = 2\\sin^2(\\pi cu/10m_0)/(25\\,m_0)$ and the rapidity $w = \\int\\alpha\\,c\\,du$, which ends at "
+                "$2/5$, a speed of $0.38\\,c$. The mass is $m = m_0e^{-3w}$, the least loss that keeps the density "
+                "of the radiation positive in every direction, and ends at $0.30\\,m_0$.")
 RT_FRONTS = {"epsilon": "4/5"}
 RT_INPUT = ("The first front $f(0, \\theta)^2 = f_0^2\\left(1 - \\epsilon^2\\cos^2\\theta\\right)$ at "
             "$\\epsilon = 4/5$, with $f_0^2 = \\ln\\left((1 + \\epsilon)/(1 - \\epsilon)\\right)/(2\\epsilon)$ so that "
@@ -1146,6 +1160,22 @@ DIAGRAMS = [
             "$r/m$", "$(cu + r)/m$", {}, EQUATOR, to_display=FINKELSTEIN_OUT, orient="outgoing",
             fronts=RT_FRONTS, input=RT_INPUT, singular_runs=True,
             lines=(("shell", "x0", "0", "the first front, $u = 0$"),)),
+    # Kinnersley's photon rocket on the two halves of the axis it flies along, where sin(theta) = 0
+    # kills g_u theta and every Gamma^theta of the plane, so the null curves are null geodesics.
+    # The rectilinear chart measures theta in the rocket's rest frame from the direction opposite
+    # to the acceleration, the Robinson-Trautman chart in the background frame from the direction
+    # of motion, so the half behind the rocket is theta = 0 in the first and theta = pi in the second.
+    *[Diagram("photon_rocket", system, view, label, ("u", "r"), (0, 12, -4, 22),
+              "$r/m_0$", "$(cu + r)/m_0$", {}, {"theta": theta, "phi": "0"}, to_display=FINKELSTEIN_OUT,
+              orient="outgoing", functions=functions, input=ROCKET_INPUT, singular_runs=True,
+              lines=(("shell", "x0", "0", "the burn starts, $u = 0$"),
+                     ("shell", "x0", "10", "the burn ends, $cu = 10\\,m_0$")))
+      for system, functions, views in (
+          ("rectilinear", ROCKET_BURN,
+           (("behind", "behind the rocket, $\\theta = 0$", "0"), ("ahead", "ahead of the rocket, $\\theta = \\pi$", "pi"))),
+          ("robinson_trautman", ROCKET_FLIGHT,
+           (("ahead", "ahead of the rocket, $\\theta = 0$", "0"), ("behind", "behind the rocket, $\\theta = \\pi$", "pi"))))
+      for view, label, theta in views],
     # The C-metric on the two halves of its axis, where sin(theta) = 0 kills Gamma^theta_tt and
     # Gamma^theta_rr and the null curves of the plane are null geodesics. Inside 2m and beyond
     # 1/alpha the time function is r, taken the way Griffiths, Krtous and Podolsky's extensions
@@ -2696,6 +2726,22 @@ CAPTIONS = {
         "white hole with $r = 0$ in its past. By $cu = 3m$ the fronts are round to within $0.2\\%$, and "
         "this plane and the axis's are both Schwarzschild's in outgoing coordinates.",
     ],
+    ("photon_rocket", "rectilinear", "behind"): [
+        "The plane of $u$ and $r$ on the axis behind the rocket ($\\theta = 0$), drawn with $cu + r$ as the vertical axis so that the outgoing rays, $u$ constant, run at 45°. Each outgoing ray left the rocket at the retarded time $u$, and $r$ is the affine distance along it. On the axis $\\sin\\theta = 0$ removes $g_{u\\theta}$ and every $\\Gamma^\\theta$ of the plane, so the null curves drawn are null geodesics.",
+        "The ingoing rays obey $dr/d(cu) = -g^{rr}/2$, with $g^{rr} = 1 - 2m/r - 2\\alpha r$. Before the burn the plane is Schwarzschild's in outgoing coordinates, with $g^{rr} = 0$ on $r = 2m_0$: inside it every future cone points to larger $r$, a white hole, and $r = 0$, where the Kretschmann scalar $48m^2/r^6$ diverges, lies in its past. During the burn a second zero of $g^{rr}$ comes in from large $r$, reaches $r = 4.73\\,m_0$ at $cu = 4.59\\,m_0$, and goes out again. Beyond it a ray sent after the rocket gains $r$, since the rocket accelerates away from it. The inner zero swells to $2.17\\,m_0$ and then shrinks with the mass to $0.60\\,m_0$, where it stays once the burn is over and the plane is Schwarzschild's again.",
+    ],
+    ("photon_rocket", "rectilinear", "ahead"): [
+        "The plane of $u$ and $r$ on the axis ahead of the rocket ($\\theta = \\pi$), drawn with $cu + r$ as the vertical axis so that the outgoing rays, $u$ constant, run at 45°. Each outgoing ray left the rocket at the retarded time $u$, and $r$ is the affine distance along it. On the axis $\\sin\\theta = 0$ removes $g_{u\\theta}$ and every $\\Gamma^\\theta$ of the plane, so the null curves drawn are null geodesics.",
+        "The ingoing rays obey $dr/d(cu) = -g^{rr}/2$, with $g^{rr} = 1 - 2m/r + 2\\alpha r$, which has one zero. Before the burn it is $r = 2m_0$, the horizon of a white hole in Schwarzschild's outgoing coordinates, with $r = 0$, where the Kretschmann scalar $48m^2/r^6$ diverges, in its past. Through the burn it lies inside $2m$, at $0.85$ of it where $\\alpha m$ is greatest, and it ends on $r = 0.60\\,m_0$, the horizon of the lighter mass. The rocket accelerates toward the light coming at it, so an ingoing ray loses $r$ faster during the burn than before or after it.",
+    ],
+    ("photon_rocket", "robinson_trautman", "ahead"): [
+        "The plane of $u$ and $r$ on the axis ahead of the rocket ($\\theta = 0$), drawn with $cu + r$ as the vertical axis so that the outgoing rays, $u$ constant, run at 45°. Each outgoing ray left the rocket at the retarded time $u$, and $r$ is the affine distance along it. On the axis $\\partial_\\theta p = 0$ removes every $\\Gamma^\\theta$ of the plane, so the null curves drawn are null geodesics, and there $\\partial_u p/p = -\\alpha$, the rocket's acceleration.",
+        "The ingoing rays obey $dr/d(cu) = -g^{rr}/2$, with $g^{rr} = 1 - 2m/r - 2r\\,\\partial_u p/p$, which has one zero. Before the burn it is $r = 2m_0$, the horizon of a white hole in Schwarzschild's outgoing coordinates, with $r = 0$, where the Kretschmann scalar $48m^2/r^6$ diverges, in its past. Through the burn it lies inside $2m$, at $0.85$ of it where $\\alpha m$ is greatest, and it ends on $r = 0.60\\,m_0$, the horizon of the lighter mass. The rocket accelerates toward the light coming at it, so an ingoing ray loses $r$ faster during the burn than before or after it.",
+    ],
+    ("photon_rocket", "robinson_trautman", "behind"): [
+        "The plane of $u$ and $r$ on the axis behind the rocket ($\\theta = \\pi$), drawn with $cu + r$ as the vertical axis so that the outgoing rays, $u$ constant, run at 45°. Each outgoing ray left the rocket at the retarded time $u$, and $r$ is the affine distance along it. On the axis $\\partial_\\theta p = 0$ removes every $\\Gamma^\\theta$ of the plane, so the null curves drawn are null geodesics, and there $\\partial_u p/p = \\alpha$, the rocket's acceleration.",
+        "The ingoing rays obey $dr/d(cu) = -g^{rr}/2$, with $g^{rr} = 1 - 2m/r - 2r\\,\\partial_u p/p$. Before the burn the plane is Schwarzschild's in outgoing coordinates, with $g^{rr} = 0$ on $r = 2m_0$: inside it every future cone points to larger $r$, a white hole, and $r = 0$, where the Kretschmann scalar $48m^2/r^6$ diverges, lies in its past. During the burn a second zero of $g^{rr}$ comes in from large $r$, reaches $r = 4.73\\,m_0$ at $cu = 4.59\\,m_0$, and goes out again. Beyond it a ray sent after the rocket gains $r$, since the rocket accelerates away from it. The inner zero swells to $2.17\\,m_0$ and then shrinks with the mass to $0.60\\,m_0$, where it stays once the burn is over and the plane is Schwarzschild's again.",
+    ],
     ("c_metric", "spherical", "inner"): [
         "The plane of $t$ and $r$ on the half axis between the black holes ($\\theta = 0$, $\\phi = 0$), "
         "drawn for $\\alpha m = 1/6$. The curves drawn are null, and on the axis they are also null "
@@ -3238,6 +3284,9 @@ class Chart:
 
         def prep(expr):
             expr = sp.sympify(expr)
+            if reader.held:
+                # A name the reader holds as a function, as the photon rocket's p, is written out.
+                expr = expr.subs(reader.held).doit()
             for name, rep in (spec.functions or {}).items():
                 expr = expr.replace(reader.parameters[name].func, _as_lambda(reader, name, rep)).doit()
             if spec.delta:

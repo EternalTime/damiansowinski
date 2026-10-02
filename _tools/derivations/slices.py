@@ -814,6 +814,10 @@ HIDDEN = {
        for system in ("spherical", "prolate_spheroidal") for shape in ("oblate", "prolate")},
     **{("szekeres", "axisymmetric", half): "the axis of symmetry, which the embedded surface through the equators of the shells meets only at the centre r = 0"
        for half in ("north", "south")},
+    **{("photon_rocket", system, half): "the axis of flight, which the embedded surface of the rays that leave the rocket sideways meets only at r = 0"
+       for system in ("rectilinear", "robinson_trautman") for half in ("behind", "ahead")},
+    **{("photon_rocket", half): "the axis of flight, which the embedded surface of the rays that leave the rocket sideways meets only at r = 0"
+       for half in ("behind", "ahead")},
     ("frw", "flat"): "the flat universe's conformal diagram; the moments embedded are the closed universe's",
     ("misner", "rindler", "plane"): "the region T > 0 beyond the chronology horizon, which no moment of the contracting region meets",
     ("misner", "rindler"): "the region T > 0 beyond the chronology horizon, which no moment of the contracting region meets",

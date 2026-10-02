@@ -4,7 +4,7 @@ charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metri
 schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
-kaluza_klein_monopole, bell_szekeres and spinning_string, and Godel's cylindrical chart.
+kaluza_klein_monopole, bell_szekeres, spinning_string and photon_rocket, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -22,7 +22,7 @@ reads better than an expanded one, and each of those is checked against sympy he
 
 The derivations these charts rest on, and the reason each was chosen, are in tov.md,
 malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_sitter.md,
-majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md and szekeres.md beside this file.
+majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md and photon_rocket.md beside this file.
 """
 import argparse
 import itertools
@@ -3851,6 +3851,210 @@ def bell_szekeres_check(chart, system, points=12):
 
 
 CHARTS["bell_szekeres"] = [lambda s=s: bell_szekeres(s) for s in BS_CHARTS]
+# -- Kinnersley's photon rocket ----------------------------------------------------------
+
+ROCKET_P = ("\\sqrt{1 + U_1^2 + U_2^2 + U_3^2} - U_1\\cos\\theta - U_2\\sin\\theta\\cos\\phi"
+            " - U_3\\sin\\theta\\sin\\phi")
+ROCKET_ORDERS = 4
+
+
+class RocketForms:
+    """The function p = U_0 - U_1 cos(theta) - U_2 sin(theta) cos(phi) - U_3 sin(theta) sin(phi)
+    of the rocket's Robinson-Trautman chart, with U_0 = sqrt(1 + U_1^2 + U_2^2 + U_3^2), held
+    as a function of u, theta and phi while the tensors are built, and the way a value in it
+    is written.
+
+    p and each of its derivatives along u is a constant on the sphere less a function linear in
+    the direction of the ray, q = A - B.n, and every such q obeys d_theta^2 q = A - q,
+    d_theta d_phi q = cot(theta) d_phi q and d_phi^2 q = (A - q) sin^2(theta)
+    - sin(theta) cos(theta) d_theta q. The constant of p is U_0, and since the four-velocity is
+    a unit vector, 2 U_0 p = p^2 + 1 + (d_theta p)^2 + (d_phi p)^2/sin^2(theta), so the constant
+    of the k-th derivative of p along u is the k-th derivative of that. `reduce` writes those
+    in, which leaves p, d_theta p, d_phi p and their derivatives along u, with no relation
+    among them, so a value that vanishes for the rocket's p is exactly zero."""
+
+    def __init__(self, reader):
+        self.u, self.theta, self.phi = (reader.symbol[name] for name in ("u", "\\theta", "\\phi"))
+        self.p = reader.parameters["p"]
+        a, b, c = (sp.Function(name)(self.u) for name in ("_a", "_b", "_c"))
+        which = {a: None, b: self.theta, c: self.phi}
+        constant = (a ** 2 + 1 + b ** 2 + c ** 2 / sp.sin(self.theta) ** 2) / (2 * a)
+        self.constant = {}     # the constant of the k-th derivative of p along u, in the generators
+        for k in range(ROCKET_ORDERS):
+            value = sp.diff(constant, self.u, k)
+            value = value.xreplace({d: self.generator(which[d.expr], d.variable_count[0][1])
+                                    for d in value.atoms(sp.Derivative)})
+            self.constant[k] = value.xreplace({f: self.generator(x, 0) for f, x in which.items()})
+
+    def generator(self, x, k):
+        """d_u^k of p, or of d_x p where x is theta or phi."""
+        variables = ([x] if x is not None else []) + ([(self.u, k)] if k else [])
+        return sp.Derivative(self.p, *variables) if variables else self.p
+
+    def angular(self, i, j, k):
+        """d_theta^i d_phi^j d_u^k p with i + j >= 2, in the generators."""
+        theta, phi = self.theta, self.phi
+        q, A = sp.Function("_q")(theta, phi), sp.Symbol("_A")
+        second = {(2, 0): A - q, (1, 1): sp.cos(theta) / sp.sin(theta) * sp.Derivative(q, phi),
+                  (0, 2): (A - q) * sp.sin(theta) ** 2 - sp.sin(theta) * sp.cos(theta) * sp.Derivative(q, theta)}
+
+        def lowered(value):
+            written = {}
+            for d in value.atoms(sp.Derivative):
+                count = dict(d.variable_count)
+                m, n = count.get(theta, 0), count.get(phi, 0)
+                if m + n < 2:
+                    continue
+                first = (2, 0) if m >= 2 else (1, 1) if m == 1 else (0, 2)
+                rest = [theta] * (m - first[0]) + [phi] * (n - first[1])
+                written[d] = lowered(sp.diff(second[first], *rest) if rest else second[first])
+            return value.xreplace(written)
+        value = lowered(sp.Derivative(q, *([theta] * i + [phi] * j)))
+        return value.xreplace({sp.Derivative(q, theta): self.generator(theta, k),
+                               sp.Derivative(q, phi): self.generator(phi, k)}
+                              ).xreplace({q: self.generator(None, k), A: self.constant[k]})
+
+    def reduce(self, value):
+        value = sp.sympify(value)
+        if not value.has(self.p):
+            return vm.norm(value)
+        written = {}
+        for d in value.atoms(sp.Derivative):
+            if d.expr != self.p:
+                continue
+            count = {x: 0 for x in (self.u, self.theta, self.phi)}
+            for x, n in d.variable_count:
+                count[x] += n
+            if count[self.u] >= ROCKET_ORDERS:
+                raise AssertionError(f"photon_rocket: {d} is of a higher order along u than ROCKET_ORDERS allows")
+            if count[self.theta] + count[self.phi] >= 2:
+                written[d] = self.angular(count[self.theta], count[self.phi], count[self.u])
+        # A generator is held as a symbol while the others are written in, so that none is
+        # replaced inside another.
+        held = {}
+        for expression in (value, *written.values()):
+            for d in expression.atoms(sp.Derivative):
+                if d not in written:
+                    held.setdefault(d, sp.Dummy())
+        value = value.xreplace({d: image.xreplace(held) for d, image in written.items()}).xreplace(held)
+        return vm.norm(value.xreplace({dummy: d for d, dummy in held.items()}))
+
+
+def photon_rocket(system_id):
+    """Kinnersley's photon rocket in the two charts its literature uses: the chart of a rocket
+    that moves along a line, whose angle theta is measured in the rocket's rest frame from the
+    direction opposite to its acceleration alpha (von der Gonna and Kramer's (58), Podolsky's
+    (12) of 2008 without the cosmological constant), and the Robinson-Trautman chart of a
+    rocket in arbitrary motion, whose angles are those of the background inertial frame
+    (Podolsky's (52) and (53) of 2011 in four dimensions). m, alpha and the four-velocity are
+    left free in every tensor; photon_rocket_check confirms before anything is written that
+    the matter is null dust along d_r, and photon_rocket.md is the derivation."""
+    coords = ["u", "r", "\\theta", "\\phi"]
+    extra = {}
+    if system_id == "rectilinear":
+        name, parameters = "Rectilinear", ["m = m(u)", "\\alpha = \\alpha(u)"]
+        line = ("ds^2 = -\\left(1 - \\dfrac{2m}{r} - 2\\alpha r\\cos\\theta\\right){c2}du^2 - 2{c}du\\,dr"
+                " + r^2\\left(d\\theta + \\alpha\\sin\\theta\\,{c}du\\right)^2 + r^2\\sin^2\\theta\\,d\\phi^2")
+        probe = vm.Reader(coords, parameters, ())
+        lead = [probe.parameters["alpha"], probe.parameters["m"]]
+    else:
+        name = "Robinson-Trautman"
+        parameters = ["m = m(u)", "U_1 = U_1(u)", "U_2 = U_2(u)", "U_3 = U_3(u)", "p = " + ROCKET_P]
+        line = ("ds^2 = -\\left(1 - \\dfrac{2m}{r} - \\dfrac{2r\\,\\partial_u p}{p}\\right){c2}du^2 - 2{c}du\\,dr"
+                " + \\dfrac{r^2}{p^2}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)")
+        probe = vm.Reader(coords, parameters, ())
+        lead = [probe.parameters["p"], probe.parameters["m"]]
+        extra = {"reduce": RocketForms(probe).reduce}
+    return {
+        "metric_id": "photon_rocket",
+        "system": {"id": system_id, "name": name, "coords": coords,
+                   "domains": ["u \\in (-\\infty, \\infty)", "r \\in (0, \\infty)", "\\theta \\in [0, \\pi]",
+                               "\\phi \\in [0, 2\\pi)"],
+                   "parameters": parameters,
+                   "line_element": line.replace("{c2}", "c^2").replace("{c}", "c\\,")},
+        "chart_line_element": line.replace("{c2}", "").replace("{c}", ""),
+        "printer": {"lead": lead},
+        "check": photon_rocket_check,
+        **extra,
+    }
+
+
+def photon_rocket_check(chart):
+    """The Ricci tensor has the one component R_uu = 2(3m d_u ln p - d_u m)/r^2, with
+    d_u ln p = alpha cos(theta) in the rectilinear chart, which is null dust streaming along
+    d_r; the Kretschmann scalar is 48m^2/r^6; and with m = 0 the Riemann tensor vanishes, so the
+    chart is one of Minkowski space."""
+    u, r, theta, _ = chart.symbols
+    m = chart.reader.parameters["m"]
+    if "p" in chart.reader.parameters:
+        p = chart.reader.parameters["p"]
+        rate = sp.Derivative(p, u) / p
+    else:
+        rate = chart.reader.parameters["alpha"] * sp.cos(theta)
+    reduce = chart.reduce or vm.norm
+    dust = 2 * (3 * m * rate - sp.Derivative(m, u)) / r ** 2
+    ricci = chart.geo.ricci_ll()
+    for i in range(4):
+        for j in range(i, 4):
+            if reduce(sp.sympify(ricci[i][j]) - (dust if i == j == 0 else 0)) != 0:
+                raise AssertionError(f"photon_rocket: R_{chart.coords_tex[i]}{chart.coords_tex[j]} is not that of "
+                                     "null dust along d_r")
+    if reduce(sp.sympify(chart.geo.kretschmann()) - 48 * m ** 2 / r ** 6) != 0:
+        raise AssertionError("photon_rocket: the Kretschmann scalar is not 48m^2/r^6")
+    riemann = chart.geo.riemann_llll()
+    for index in itertools.product(range(4), repeat=4):
+        if reduce(sp.sympify(vm._at(riemann, index)).subs(m, 0).doit()) != 0:
+            raise AssertionError("photon_rocket: the chart with m = 0 is not flat")
+
+
+def photon_rocket_pullback():
+    """The rectilinear chart is the Robinson-Trautman one for a rocket of rapidity w(u) along the
+    first axis, U = (sinh w, 0, 0), with alpha = d_u w, pulled back through the aberration of
+    the rays, tan(theta'/2) = e^{-w} cot(theta/2), where theta' is the angle in the background
+    frame from the direction of motion and theta the angle in the rest frame from the direction
+    opposite to the acceleration. Both metrics are compared in the coordinates u, r,
+    tau = tan(theta/2) and phi, with E = e^w, in which each is rational."""
+    general, straight = (cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+                         for spec in (photon_rocket("robinson_trautman"), photon_rocket("rectilinear")))
+    u, r, theta, phi = straight.symbols
+    U, R, Theta, Phi = general.symbols
+    tau = sp.Symbol("tau", positive=True)
+    E = sp.Function("E", positive=True)(u)
+    m = straight.reader.parameters["m"]
+    T = 1 / (E * tau)                                   # tan(theta'/2)
+    velocity = {general.reader.parameters[f"U_{i}"]: value
+                for i, value in ((1, (E - 1 / E) / 2), (2, sp.Integer(0)), (3, sp.Integer(0)))}
+    source = general.reader.surface(general.geo.g).subs(general.reader.parameters["m"], m)
+    source = source.subs(velocity).doit()
+    energy = (E + 1 / E) / 2                            # U_0 = cosh w, the root of 1 + sinh^2 w
+
+    def rooted(power):
+        if sp.simplify(power.base - energy ** 2) != 0:
+            raise AssertionError("photon_rocket: a square root in the pullback is not U_0")
+        return energy ** (2 * power.exp)
+    source = source.replace(lambda e: e.is_Pow and abs(e.exp) == sp.Rational(1, 2), rooted)
+    source = source.subs({sp.cos(Theta): (1 - T ** 2) / (1 + T ** 2), sp.sin(Theta): 2 * T / (1 + T ** 2)})
+    source = source.subs({U: u, R: r, Phi: phi})
+    images = [u, r, 2 * sp.atan(T), phi]
+    jacobian = sp.Matrix(4, 4, lambda a, b: sp.diff(images[a], (u, r, tau, phi)[b]))
+    pulled = jacobian.T * source * jacobian
+    angle = {sp.cos(theta): (1 - tau ** 2) / (1 + tau ** 2), sp.sin(theta): 2 * tau / (1 + tau ** 2)}
+    change = sp.diag(1, 1, 2 / (1 + tau ** 2), 1)
+    target = straight.geo.g.subs(straight.reader.parameters["alpha"], sp.diff(E, u) / E).doit().subs(angle)
+    target = change.T * target * change
+    for a in range(4):
+        for b in range(a, 4):
+            if sp.simplify(pulled[a, b] - target[a, b]) != 0:
+                raise AssertionError("photon_rocket: the pullback of the Robinson-Trautman chart misses the "
+                                     f"rectilinear chart in slot {straight.coords_tex[a]}{straight.coords_tex[b]}")
+
+
+def photon_rocket_charts():
+    photon_rocket_pullback()
+    return [photon_rocket("rectilinear"), photon_rocket("robinson_trautman")]
+
+
+CHARTS["photon_rocket"] = photon_rocket_charts
 
 
 # -- The spinning cosmic string --------------------------------------------------------
@@ -3876,27 +4080,27 @@ def spinning_string(system):
     without torsion. spinning_string.md is the derivation."""
     reals = "(-\\infty, \\infty)"
     flat = "\\text{flat: every curvature tensor vanishes}"
-    string = "= 0 \;\\text{(the string)}"
+    string = "= 0 \\;\\text{(the string)}"
     twist = "-\\left(c\\,dt + a\\,d\\phi\\right)^2"
     charts = {
         "proper_radius": {
             "name": "Proper Radius", "coords": ["t", "r", "\\phi", "z"], "parameters": ["a", "b"],
             "domains": ["t \\in " + reals, "r \\in (0, \\infty)", "\\phi \\in [0, 2\\pi)", "z \\in " + reals,
                         "r " + string,
-                        "r < a/b \;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}",
+                        "r < a/b \\;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}",
                         flat],
             "line_element": "ds^2 = " + twist + " + dr^2 + b^2r^2d\\phi^2 + dz^2"},
         "rescaled_radius": {
             "name": "Rescaled Radius", "coords": ["t", "\\rho", "\\phi", "z"], "parameters": ["a", "b"],
             "domains": ["t \\in " + reals, "\\rho \\in (0, \\infty)", "\\phi \\in [0, 2\\pi)", "z \\in " + reals,
                         "\\rho " + string,
-                        "\\rho < a \;\\text{(the circles of constant } t, \\rho, z \\text{ are closed timelike curves)}",
+                        "\\rho < a \\;\\text{(the circles of constant } t, \\rho, z \\text{ are closed timelike curves)}",
                         flat],
             "line_element": "ds^2 = " + twist + " + \\dfrac{d\\rho^2}{b^2} + \\rho^2d\\phi^2 + dz^2"},
         "circumference_radius": {
             "name": "Circumference Radius", "coords": ["t", "R", "\\phi", "z"], "parameters": ["a", "b"],
             "domains": ["t \\in " + reals, "R \\in (0, \\infty)", "\\phi \\in [0, 2\\pi)", "z \\in " + reals,
-                        "R = 0 \;\\text{(the circle of constant } t, R, z \\text{ is null)}", flat],
+                        "R = 0 \\;\\text{(the circle of constant } t, R, z \\text{ is null)}", flat],
             "line_element": ("ds^2 = -c^2dt^2 - 2ac\\,dt\\,d\\phi + \\dfrac{R^2dR^2}{b^2\\left(R^2 + a^2\\right)}"
                              " + R^2d\\phi^2 + dz^2")},
         "helical": {
@@ -3908,8 +4112,8 @@ def spinning_string(system):
             "name": "Extended Source", "coords": ["t", "r", "\\phi", "z"],
             "parameters": ["M = M(r)", "\\rho = \\rho(r)", "r_0"],
             "domains": ["t \\in " + reals, "r \\in [0, r_0]", "\\phi \\in [0, 2\\pi)", "z \\in " + reals,
-                        "M(0) = 0,\; M(r_0) = a",
-                        "M^2 > \\rho^2 \;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}"],
+                        "M(0) = 0,\\; M(r_0) = a",
+                        "M^2 > \\rho^2 \\;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}"],
             "line_element": "ds^2 = -\\left(c\\,dt + M\\,d\\phi\\right)^2 + dr^2 + \\rho^2d\\phi^2 + dz^2"},
     }
     chart = charts[system]

@@ -34,6 +34,11 @@
       "id": "oppenheimer_snyder",
       "kind": "family",
       "text": "Collapse with no radiation. Vaidya carried Oppenheimer and Snyder's collapsing star over in 1966 to matter that radiates as it falls [vaidya1966]."
+    },
+    {
+      "id": "photon_rocket",
+      "kind": "generalisation",
+      "text": "Vaidya's star shining more to one side than the other. The recoil of the light accelerates it, at a rate William Kinnersley left free in 1969 [kinnersley1969, podolsky2008]."
     }
   ],
   "references": [
@@ -49,7 +54,8 @@
     "hiscock1981",
     "kuroda1984",
     "papapetrou1985",
-    "dwivedi1989"
+    "dwivedi1989",
+    "podolsky2008"
   ],
   "coordinates": [
     {

@@ -560,6 +560,14 @@ DIMENSIONS = {
     ("majumdar_papapetrou", "isotropic"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L",
     },
+    # The rocket's mass function is the length GM/c^2 and its acceleration alpha an inverse
+    # length; in the Robinson-Trautman chart the four-velocity over c and p are pure numbers.
+    ("photon_rocket", "rectilinear"): {
+        "u": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "\\alpha": "1/L",
+    },
+    ("photon_rocket", "robinson_trautman"): {
+        "u": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "U_1": "1", "U_2": "1", "U_3": "1", "p": "1",
+    },
     # Robinson and Trautman's r is an affine length along the rays and the fronts' coordinates
     # are angles, so P, f and H are pure numbers.
     ("robinson_trautman", "stereographic"): {

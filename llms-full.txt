@@ -684,6 +684,17 @@ The first dynamical model of gravitational collapse, matching a collapsing homog
 - chart Comoving Dust Interior: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = -c^2 d\tau^2 + a^2\left(d\chi^2 + \sin^2\chi\, d\theta^2 + \sin^2\chi\sin^2\theta\, d\phi^2\right)$$
 - chart Schwarzschild Exterior: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1-\dfrac{r_s}{r}\right)c^2 dt^2 + \dfrac{dr^2}{1-\dfrac{r_s}{r}} + r^2 d\theta^2 + r^2\sin^2\theta\, d\phi^2$$
 
+### Kinnersley Photon Rocket
+
+The field of a point mass that accelerates by shining light unevenly, found by William Kinnersley in 1969. Its mass and its acceleration are arbitrary functions of retarded time, the light is null dust that streams out brightest behind it, and no gravitational waves reach infinity.
+
+- id: `photon_rocket`
+- tags: null dust, pure radiation, radiating, accelerating, acceleration, rocket, recoil, point mass, time-dependent, dynamical, Kerr-Schild, Robinson-Trautman, algebraically special, Petrov type D, null congruence, shear-free, twist-free, expanding, retarded time, Newman-Unti coordinates, gravitational radiation, news function, asymptotically flat, axisymmetric, white hole, singularity, curvature singularity, non-vacuum, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/photon_rocket.json
+- chart Rectilinear: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} - 2\alpha r\cos\theta\right)c^2du^2 - 2c\,du\,dr + r^2\left(d\theta + \alpha\sin\theta\,c\,du\right)^2 + r^2\sin^2\theta\,d\phi^2$$
+- chart Robinson-Trautman: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} - \dfrac{2r\,\partial_u p}{p}\right)c^2du^2 - 2c\,du\,dr + \dfrac{r^2}{p^2}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### pp-wave Plane Gravitational Waves
 
 A class of exact solutions describing gravitational waves with plane fronts and parallel rays. They model the radiation field of rapidly moving sources and exact gravitational wave geometries.

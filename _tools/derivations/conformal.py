@@ -55,7 +55,7 @@ fails; --verify prints them all.
 Which spacetimes
 ----------------
 
-DRAWN lists the forty-two spacetimes that have a diagram and NOT_DRAWN the others, which
+DRAWN lists the spacetimes that have a diagram and NOT_DRAWN the others, which
 have no file: a full redraw removes one left behind. The script stops if a metric file is
 in neither, so a new spacetime needs a decision.
 
@@ -424,6 +424,9 @@ class Plane:
 
     def prep(self, expr, limit=True):
         e = sp.sympify(expr)
+        if self.reader.held:
+            # A name the reader holds as a function, as the photon rocket's p, is written out.
+            e = e.subs(self.reader.held).doit()
         for name, rep in self.functions.items():
             e = e.subs(self.reader.parameters[name], rep).doit()
         for fn, var, (F0, F1, F2) in self.numeric.values():
@@ -7335,6 +7338,194 @@ def robinson_trautman(ck, src):
     return [v]
 
 
+# ---------------------------------------------------------------- Kinnersley's photon rocket
+
+class RocketPlane:
+    """The plane of u and r on one half of the axis the photon rocket flies along, for the burn
+    its spacetime diagram declares, G = c = m_0 = 1, in null coordinates. The outgoing rays are u
+    constant, p = -arctan e^{-(u - 5)/5}. An ingoing ray obeys dr/du = g_uu/2 with the published
+    g_uu, and it is named by where it ends: carried to the end of the burn, u = 10, after which
+    the plane is Schwarzschild's of the mass m the burn leaves and the ray keeps Kruskal's
+    V = (r/2m - 1) e^{(u + 2r)/4m}. A ray before the burn is carried to u = 0 by the advanced
+    time it keeps in Schwarzschild's plane of the mass m_0, v = u + 2r + 4 ln|r/2 - 1|, and
+    through the burn by integrating r^2, which is regular at r = 0, every ray at once, each over
+    its own stretch of u.
+
+    q is a monotone function of that name, which changes no null line. A ray that left the
+    singularity at the retarded time u_0 takes q = -pi/2 - p(u_0), which puts r = 0 on the
+    straight line p + q = -pi/2, and a ray that came in from past null infinity with the advanced
+    time v takes q = arctan e^{(v - 15)/10}; the two meet at q = 0, the ray r = 2 m_0 before the
+    burn, the past horizon. The function is tabulated on rays of both kinds and joined by a
+    monotone cubic."""
+
+    BURN, STEPS = 10.0, 800
+
+    def __init__(self, plane):
+        from scipy.interpolate import PchipInterpolator
+        self.plane = plane
+        self.guu = plane.lambdify([plane.g[0, 0]])
+        self.last = float(sp.lambdify(plane.x0, plane.functions["m"], "numpy")(self.BURN))
+        born = np.concatenate([-np.geomspace(140.0, 1e-3, 500), np.linspace(0.0, self.BURN, 600)[:-1],
+                               self.BURN + np.geomspace(1e-6, 400.0, 500)])
+        came = np.linspace(-140.0, 300.0, 2200)
+        names = np.concatenate([self.name(born, np.full_like(born, 1e-9)),
+                                self.name(np.zeros_like(came), self.before(came / 2, outside=True))])
+        wants = np.concatenate([-HALF - self.p(born), atan_exp((came - 15) / 10)])
+        order = np.argsort(names, kind="stable")
+        names, wants = names[order], wants[order]
+        # Beside the past horizon the rays of either kind run together within rounding, where
+        # both kinds of q are zero to thirteen digits; one of each such run is kept.
+        keep = np.concatenate([[True], np.diff(names) > 0])
+        names, wants = names[keep], wants[keep]
+        if np.any(np.diff(wants) < -1e-12):
+            raise SystemExit("photon_rocket: the ingoing rays of the axis are not in order")
+        self.q_of = PchipInterpolator(names, np.maximum.accumulate(wants), extrapolate=False)
+        self.ends = names[[0, -1]], wants[[0, -1]]
+
+    @staticmethod
+    def p(u):
+        return -atan_exp(-(np.asarray(u, dtype=float) - 5) / 5)
+
+    @staticmethod
+    def before(w, outside):
+        """The r with r + 2 ln|r/2 - 1| = w, outside r = 2 or inside it, by bisection on
+        x = ln|r/2 - 1|, in which the equation is monotone."""
+        w = np.asarray(w, dtype=float)
+        lo = np.full_like(w, -800.0)
+        hi = np.log(np.maximum(np.abs(w), 4.0)) + 1 if outside else np.zeros_like(w)
+        sign = 1.0 if outside else -1.0
+        for _ in range(200):
+            mid = 0.5 * (lo + hi)
+            low = 2 * (1 + sign * np.exp(mid)) + 2 * mid < w
+            lo, hi = np.where(low, mid, lo), np.where(low, hi, mid)
+        return 2 * (1 + sign * np.exp(0.5 * (lo + hi)))
+
+    def carried(self, u, r):
+        """r of the ingoing ray through (u, r) at the end of the burn, for u before it."""
+        u, r = np.array(u, dtype=float), np.array(r, dtype=float)
+        early = u < 0
+        if early.any():
+            with np.errstate(divide="ignore"):
+                w = u[early] / 2 + r[early] + 2 * np.log(np.abs(r[early] / 2 - 1))
+            out = r[early] > 2
+            start = np.empty_like(w)
+            start[out] = self.before(w[out], True)
+            start[~out] = self.before(w[~out], False)
+            u[early], r[early] = 0.0, start
+        y, h = r * r, (self.BURN - u) / self.STEPS
+
+        def rate(at, y):
+            radius = np.sqrt(np.maximum(y, 1e-300))
+            return radius * np.asarray(self.guu(at, radius)[0], dtype=float)
+        for _ in range(self.STEPS):
+            k1 = rate(u, y)
+            k2 = rate(u + h / 2, y + h * k1 / 2)
+            k3 = rate(u + h / 2, y + h * k2 / 2)
+            k4 = rate(u + h, y + h * k3)
+            y, u = y + h * (k1 + 2 * k2 + 2 * k3 + k4) / 6, u + h
+        return np.sqrt(y)
+
+    def name(self, u, r):
+        """sgn(V) ln(1 + |V|) of the ray through (u, r), from the logarithm of Kruskal's V, so
+        that the rays far out and the rays born late keep their digits."""
+        u, r = np.broadcast_arrays(np.asarray(u, dtype=float), np.asarray(r, dtype=float))
+        u, r = u.copy(), r.copy()
+        during = u < self.BURN
+        if during.any():
+            r[during] = self.carried(u[during], r[during])
+            u[during] = self.BURN
+        m = self.last
+        with np.errstate(divide="ignore"):
+            L = np.log(np.abs(r / (2 * m) - 1)) + (u + 2 * r) / (4 * m)
+        return np.sign(r - 2 * m) * (np.maximum(L, 0) + np.log1p(np.exp(-np.abs(L))))
+
+    def pq(self, u, r):
+        name = self.name(u, r)
+        q = self.q_of(np.clip(name, *self.ends[0]))
+        return self.p(u) * np.ones_like(q), q
+
+
+def photon_rocket(ck, src):
+    """The plane of u and r on the two halves of the axis of the rocket's flight, for the burn
+    the spacetime diagram declares, in m_0 = 1: RocketPlane's null coordinates on everything u and
+    r cover, the white hole and the exterior of an outgoing chart. Before the burn the plane is
+    Schwarzschild's of the mass m_0 and after it Schwarzschild's of the mass the burn leaves,
+    both read from schwarzschild.json and checked against the same map; the upper left edge,
+    u = infinity, is the horizon r = 2m of the second. Each view names no chart, so both charts
+    show it, and the Robinson-Trautman chart's own plane is checked against the same map."""
+    views = []
+    halves = (("behind", "Behind the rocket", "0", "pi"), ("ahead", "Ahead of the rocket", "pi", "0"))
+    for vid, label, theta, theta_rt in halves:
+        plane = Plane(src, "photon_rocket", "rectilinear", ("u", "r"), {"theta": theta, "phi": "0"},
+                      functions=nr.ROCKET_BURN)
+        general = Plane(src, "photon_rocket", "robinson_trautman", ("u", "r"), {"theta": theta_rt, "phi": "0"},
+                        functions=nr.ROCKET_FLIGHT)
+        F = RocketPlane(plane)
+        m = F.last
+        for stage, lo, hi in (("before the burn", -20.0, -0.1), ("during the burn", 0.1, 9.9), ("after the burn", 10.1, 30.0)):
+            for chart, surface in (("rectilinear", plane), ("Robinson-Trautman", general)):
+                ck.chart(f"photon rocket, {vid}, {stage}, {chart} chart", surface, F.pq, ck.uniform(lo, hi, 1200),
+                         ck.uniform(0.05, 30, 1200), lambda u, r: (1, 60))
+        for name, r_s, lo, hi in (("before", 2.0, -20.0, -0.1), ("after", 2 * m, 10.1, 30.0)):
+            out = Plane(src, "schwarzschild", "eddington_finkelstein_outgoing", ("u", "r"), EQUATOR, {"r_s": r_s})
+            ck.chart(f"photon rocket, {vid}: {name} the burn the plane is Schwarzschild's outgoing chart", out, F.pq,
+                     ck.uniform(lo, hi, 1200), ck.uniform(0.05, 30, 1200), lambda u, r: (1, 60))
+        u = np.array([-30.0, -5.0, -0.5, 0.0, 2.0, 5.0, 8.0, 10.0, 14.0, 40.0])
+        p, q = F.pq(u, np.full_like(u, 1e-9))
+        ck.limit(f"photon rocket, {vid}: r -> 0 lands on the straight line T = -pi/2", p + q, np.full_like(u, -HALF), 1e-6)
+        p, q = F.pq(u, np.full_like(u, 1e9))
+        ck.limit(f"photon rocket, {vid}: r -> infinity along a ray lands on future null infinity, q = pi/2", q,
+                 np.full_like(u, HALF), 1e-6)
+        p, q = F.pq(np.array([-40.0, -10.0, -1.0]), np.full(3, 2.0))
+        ck.limit(f"photon rocket, {vid}: before the burn r = 2 m_0 is the ray q = 0", q, [0.0] * 3, 1e-6)
+        times = np.array([-3.0, 2.0, 5.0, 8.0, 14.0])
+        ck.diverges(f"photon rocket, {vid}: the Kretschmann scalar diverges at r = 0",
+                    plane.kretschmann(times, np.full(5, 1e-2)), plane.kretschmann(times, np.full(5, 1e-3)))
+        ck.finite(f"photon rocket, {vid}: the Kretschmann scalar is finite on r = 2 m_0",
+                  plane.kretschmann(times, np.full(5, 2.0)))
+
+        v = View(vid, label, [-HALF - 0.3, PI + 0.3, -HALF - 0.3, HALF + 0.3])
+        region = [point(-HALF, 0), point(-HALF, HALF), point(0, HALF), point(0, -HALF)]
+        v.fill("region", region)
+        v.fill("cover", region)
+        uu = np.concatenate([-np.geomspace(400.0, 1e-3, 260), np.linspace(0.0, 10.0, 240), 10 + np.geomspace(1e-3, 400.0, 260)])
+        for r in (0.3, 0.6, 1, 1.5, 2.5, 4, 6, 10, 20):
+            v.curve("r", *F.pq(uu, np.full_like(uu, r)))
+        for u0 in (0.0, 10.0):
+            v.segment("surface", (float(F.p(u0)), -HALF - float(F.p(u0))), (float(F.p(u0)), HALF))
+        v.segment("horizon", (-HALF, 0), (0, 0))
+        v.segment("event", (0, -HALF), (0, HALF))
+        v.segment("singular", (-HALF, 0), (0, -HALF), zig=True)
+        v.segment("scri", (-HALF, 0), (-HALF, HALF))
+        v.segment("scri", (-HALF, HALF), (0, HALF))
+        for pq, text, anchor, dx, dy in (((0, HALF), "$i^+$", "b", 0, -6), ((-HALF, HALF), "$i^0$", "l", 6, 0),
+                                         ((-HALF, 0), "$i^-$", "t", 0, 6)):
+            v.point("infinity", pq)
+            v.label(pq, text, anchor, dx=dx, dy=dy)
+        v.label((-Q4, HALF), "$\\mathscr{I}^+$", "bl", dx=4, dy=-4)
+        v.label((-HALF, Q4), "$\\mathscr{I}^-$", "tl", dx=4, dy=4)
+        v.label((-Q4, -Q4), "$r = 0$", "t", dy=8)
+        v.label((0, -Q4), "$u = \\infty$", "br", "small", dx=-6, dy=-2)
+        v.label((-0.45, -0.6), "white hole", cls="region")
+        v.label((-0.75, 0.75), "exterior", cls="region")
+        v.legend("cover", "the half of the axis " + ("behind" if vid == "behind" else "ahead of")
+                 + " the rocket, which $u$ and $r$ cover")
+        v.legend("r", "$r$ constant on the axis: $0.3$, $0.6$, $1$, $1.5$, $2.5$, $4$, $6$, $10$ and $20\\,m_0$")
+        v.legend("surface", "the first and the last light of the burn, $u = 0$ and $cu = 10\\,m_0$")
+        v.legend("horizon", "the past horizon, $r = 2m_0$ before the burn")
+        v.legend("event", "$u = \\infty$, the horizon $r = 2m$ of Schwarzschild's spacetime of the mass the burn leaves")
+        v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        where = ("behind the rocket, $\\theta = 0$ in its rest frame" if vid == "behind"
+                 else "ahead of the rocket, $\\theta = \\pi$ in its rest frame")
+        v.set(input=nr.ROCKET_INPUT, settings="$m_0$, the mass before the burn, is the unit of every length and of $cu$.",
+              restriction=f"The half of the axis of flight {where}, a totally geodesic surface, each point in the "
+                          "diagram a single event; off the axis the light rays of fixed $\\theta$ and $\\phi$ are "
+                          "turned out of their plane during the burn.")
+        views.append(v)
+    return views
+
+
 DRAWN = {
     "aichelburg_sexl": aichelburg_sexl,
     "kantowski_sachs": kantowski_sachs,
@@ -7362,6 +7553,7 @@ DRAWN = {
     "zipoy_voorhees": zipoy_voorhees,
     "string_black_hole": string_black_hole,
     "mcvittie": mcvittie,
+    "photon_rocket": photon_rocket,
 }
 
 # ---------------------------------------------------------------- the captions
@@ -8531,6 +8723,14 @@ CAPTIONS = {
         "infinite while every light ray runs as it does in Minkowski space. The computer then "
         "runs for an infinite proper time before the removed event, and its signals reach $p$ "
         "blueshifted by $\\Omega$, without bound.",
+    ],
+    ("photon_rocket", "behind"): [
+        "The half of the axis behind the rocket through the declared burn, each point in the diagram a single event. The outgoing rays, one for each retarded time, are $p = -\\arctan e^{-(cu - 5m_0)/5m_0}$, and an ingoing ray keeps one $q$. A ray that comes in from $\\mathscr{I}^-$ with the advanced time $v$ of Schwarzschild's exterior before the burn has $q = \\arctan e^{(cv - 15m_0)/10m_0}$, and a ray that leaves the singularity at the retarded time $u_0$ has $q = -\\pi/2 - p(u_0)$, which puts $r = 0$ on the straight line $T = -\\pi/2$.",
+        "The singularity lies in the past, a white hole, and the past horizon $q = 0$ divides the light that left it from the light that came in from $\\mathscr{I}^-$. Before the burn that horizon is $r = 2m_0$. As the rocket loses mass the lines of constant $r$ between $0.60\\,m_0$ and $2m_0$, spacelike inside the white hole, turn timelike, and after the burn the plane is Schwarzschild's of the mass $0.30\\,m_0$, whose horizon $r = 2m$ is the edge $u = \\infty$. During the burn the lines of constant $r$ beyond the second zero of $g^{rr}$, which comes in to $4.73\\,m_0$, are spacelike: a ray sent after the rocket from there gains $r$.",
+    ],
+    ("photon_rocket", "ahead"): [
+        "The half of the axis ahead of the rocket through the declared burn, each point in the diagram a single event. The outgoing rays, one for each retarded time, are $p = -\\arctan e^{-(cu - 5m_0)/5m_0}$, and an ingoing ray keeps one $q$. A ray that comes in from $\\mathscr{I}^-$ with the advanced time $v$ of Schwarzschild's exterior before the burn has $q = \\arctan e^{(cv - 15m_0)/10m_0}$, and a ray that leaves the singularity at the retarded time $u_0$ has $q = -\\pi/2 - p(u_0)$, which puts $r = 0$ on the straight line $T = -\\pi/2$.",
+        "The singularity lies in the past, a white hole, and the past horizon $q = 0$ divides the light that left it from the light that came in from $\\mathscr{I}^-$. Before the burn that horizon is $r = 2m_0$. As the rocket loses mass the lines of constant $r$ between $0.60\\,m_0$ and $2m_0$, spacelike inside the white hole, turn timelike, and after the burn the plane is Schwarzschild's of the mass $0.30\\,m_0$, whose horizon $r = 2m$ is the edge $u = \\infty$. Ahead of the rocket $g^{rr}$ has one zero, inside $2m$, and every line of constant $r$ outside it stays timelike through the burn.",
     ],
     ("robinson_trautman", "axis"): [
         "The axis of symmetry of a Robinson-Trautman spacetime whose first wave front is prolate "

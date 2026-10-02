@@ -2975,6 +2975,68 @@ def vaidya(ck, src):
                        "the conformal diagram.")]
 
 
+def photon_rocket(ck, src):
+    """Kinnersley's rocket through the burn its spacetime diagrams declare, in units of the mass
+    m_0 it starts with: the surface theta = pi/2 of the rectilinear chart, the rays that leave
+    the rocket at right angles to its flight in its rest frame. A slice of constant u is null, so
+    the moments are slices of constant u + r = T, on which the published metric pulls back, with
+    u = T - r, to (1 + 2m/r + alpha^2 r^2) dr^2 + r^2 dphi^2, m and alpha taken at u = T - r:
+    spacelike everywhere, and a surface of revolution about the axis of flight that climbs at
+    dz/dr = sqrt(2m/r + alpha^2 r^2). The light of the burn, 0 < u < 10, fills the ring
+    T - 10 < r < T, which moves outward at the speed of light; outside it the surface is
+    z^2 = 8 m_0 r, Flamm's paraboloid for the mass m_0 moved in by 2 m_0, and inside it the same
+    for the mass the burn leaves, m_0 e^{-6/5}."""
+    top, burn = 12.0, 10.0
+    size = 2 * top
+    last = math.exp(-1.2)
+
+    def mass(u):
+        u = min(max(u, 0.0), burn)
+        return math.exp(-3 * (u - 5 * math.sin(math.pi * u / 5) / math.pi) / 25)
+    rim = ("edge", "the surface runs on to $r \\to \\infty$")
+
+    def moment(T):
+        where = f"the photon rocket, u + r = {T:g}"
+        sl = Slice(src, "photon_rocket", "rectilinear", "r", "\\phi", {"theta": "pi/2"}, {},
+                   dict(nr.ROCKET_BURN), along={"u": f"{T} - r"})
+        marks = [(r, "r", None) for r in (4.0, 8.0, top)]
+        marks += [(r, "surface", None) for r in (T - burn, T) if 0 < r < top]
+        # The circle r = 2m(T - r), where the published g^rr vanishes on this surface.
+        lo, hi = 0.0, top
+        for _ in range(80):
+            mid = 0.5 * (lo + hi)
+            lo, hi = (mid, hi) if mid < 2 * mass(T - mid) else (lo, mid)
+        marks.append((0.5 * (lo + hi), "horizon", None))
+        whole = Piece("whole", "sheet", sl, 0.0, top, 0.0, 1,
+                      (("apex", "the singularity $r = 0$, where the surface closes in a spike"), rim), marks, size)
+        # The rim of the drawing, r = 12 m_0, stands at z = 0 at every moment.
+        shift = -whole.z[-1]
+        whole.z = whole.z + shift
+        if T <= 0:
+            ck.form(f"{where}, z = 2 sqrt(2 m_0 r)", whole,
+                    lambda r, shift=shift: 2 * np.sqrt(2 * r) + shift, size)
+        elif T >= top + burn:
+            ck.form(f"{where}, z = 2 sqrt(2 m r) with m = m_0 e^(-6/5)", whole,
+                    lambda r, shift=shift: 2 * np.sqrt(2 * last * r) + shift, size)
+        ck.isometry(f"{where}, whole", whole)
+        return Surface([whole], label=f"$cu + r = {T:g}\\,m_0$", time=T)
+
+    # A frame every m_0/2 of cu + r, which holds each moment of the flat views.
+    frames = [moment(-2.0 + k / 2) for k in range(53)]
+    surfaces = [frames[k] for k in (0, 16, 28, 40, 52)]
+    fig = movie_figure(frames, {"sheet": "cover"}, size)
+    fig.legend("fill", "cover", "the slice of constant $cu + r$ at $\\theta = \\pi/2$, which $u$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $4$, $8$ and $12\\,m_0$")
+    fig.legend("line", "surface", "the first and the last light of the burn, $u = 0$ and $cu = 10\\,m_0$")
+    fig.legend("line", "horizon", "$r = 2m$, where $g^{rr}$ vanishes on this surface")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("burn", "The burn", "$m_0$", surfaces, fig.done(),
+                 movie=movie(frames, "$cu + r$", [f.time for f in frames]),
+                 settings="$m_0 = 1$, the mass before the burn and the unit of every length; each moment is a slice "
+                          "of constant $cu + r$.",
+                 input=nr.ROCKET_INPUT)]
+
+
 def einstein(src, metric_id, system_id, index):
     """A published G^i_i with c = 1, every declared function and derivative a plain symbol named
     as R, R_t, R_tt, R_tr or E_r, as a numpy function of those symbols by keyword."""
@@ -6157,6 +6219,7 @@ DRAWN = {
     "mcvittie": mcvittie,
     "szekeres": szekeres,
     "spinning_string": spinning_string,
+    "photon_rocket": photon_rocket,
 }
 
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
@@ -6487,6 +6550,20 @@ CAPTIONS = {
         "tube lengthens as $t^{(v^2 - 1)/4}$, with $v = \\tfrac{1}{2}\\cos\\theta$: each $\\theta$ approaches a Kasner "
         "universe of its own, with exponents $(v^2 - 1)/(v^2 + 3)$ along $\\theta$, $2(1 - v)/(v^2 + 3)$ along "
         "$\\sigma$, and $2(1 + v)/(v^2 + 3)$ along $\\delta$.",
+    ],
+    ("photon_rocket", "burn"): [
+        "The surface of the rays that leave the rocket at right angles to its flight ($\\theta = \\pi/2$ in its rest "
+        "frame), from $cu + r = -2\\,m_0$ to $24\\,m_0$, each moment drawn as a surface in flat space with every "
+        "distance along it the metric distance. A slice of constant $u$ is a light cone, so the moments are slices of "
+        "constant $cu + r$, which are spacelike everywhere and carry the metric "
+        "$(1 + 2m/r + \\alpha^2r^2)\\,dr^2 + r^2d\\phi^2$, with $m$ and $\\alpha$ taken at the retarded time of each "
+        "circle. Before the burn the surface is $z^2 = 8m_0r$, Flamm's paraboloid moved in by $2m_0$, and it closes "
+        "in a spike at the singularity $r = 0$.",
+        "The light of the burn fills the ring between its first and its last rays, which moves outward at the speed "
+        "of light. In the ring the surface climbs at $dz/dr = \\sqrt{2m/r + \\alpha^2r^2}$, steeper than the paraboloid "
+        "wherever $\\alpha r$ is large, and inside it the surface is the paraboloid of the lighter mass, "
+        "$z^2 = 8mr$ with $m = 0.30\\,m_0$. The circle $r = 2m$ shrinks from $2\\,m_0$ to $0.60\\,m_0$ while the "
+        "light of the burn passes it.",
     ],
     ("vaidya", "shell"): [
         "The equatorial plane ($\\theta = \\pi/2$) of space around a shell of radiation falling inward, from "
