@@ -5882,17 +5882,19 @@ class Slices(unittest.TestCase):
 
     def check_polar_moment(self, key, view, surface, mark):
         """Tippett and Tsang's moment ct = A/2 in the polar chart, xi sin(lambda) = A/2: one line, which
-        crosses each xi twice, from the box's edge to the box's edge, since the height's plane, out to
-        |x| = 1.6 A, reaches beyond the strip's xi = 1.6 A."""
+        crosses each xi twice and stops at both ends where the height's plane does, at |x| = 1.6 A,
+        inside the strip, which runs to xi = 3.5 A so that its plotted region is no taller than 1:2."""
         X0, X1, Y0, Y1 = view["box"]
         (line,) = mark["lines"]
         for u in line:
             xi, lam = X0 + u[0] * (X1 - X0), Y0 + u[1] * (Y1 - Y0)
             self.assertAlmostEqual(xi * math.sin(lam), 0.5, delta=1e-3, msg=f"{key} {mark['label']} at {u}")
-        for u in (line[0], line[-1]):
-            self.assertLess(1 - u[0], 1.5e-4, f"{key} {mark['label']} stops at {u}")
         grid = next(p for p in surface["pieces"] if "grid" in p)["grid"]
-        self.assertGreater(math.hypot(grid["u"][-1], 0.5), X1)
+        reach = math.hypot(grid["u"][-1], 0.5)
+        self.assertLess(reach, X1)
+        for u in (line[0], line[-1]):
+            self.assertAlmostEqual(X0 + u[0] * (X1 - X0), reach, delta=1.5e-4 * (X1 - X0),
+                                   msg=f"{key} {mark['label']} stops at {u}")
         return len(line)
 
     def check_bounce_moment(self, key, view, surface, mark):
@@ -6764,6 +6766,71 @@ class Dollars(unittest.TestCase):
                 contextlib.redirect_stderr(io.StringIO()) as said:
             self.assertEqual(build.main([]), 2)
         self.assertIn("has an unbalanced $", said.getvalue())
+        for path, text in before.items():
+            self.assertEqual(path.read_text(encoding="utf-8"), text)
+
+
+class Aspect(unittest.TestCase):
+    """The captain asked on 2 October 2026: "many of the spacetime diagrams have terrible aspect
+    ratios. We should try to stick to 1:1 aspect ratios, allowing for up to 1:2 and 2:1 but no
+    more than that." The region a view or a figure plots is its box, which the page and the
+    application draw at one scale on both axes."""
+
+    @staticmethod
+    def file(box, mirror=False, part="systems"):
+        return {"metric": "x", part: {"chart": [{"id": "view", "box": box, "mirror": mirror}]}}
+
+    def test_every_diagram_on_disk_is_between_one_to_two_and_two_to_one(self):
+        diagrams = diagram_files()
+        self.assertTrue(diagrams, "no diagram file was found, so nothing was checked")
+        problems = [problem for name, data in sorted(diagrams.items()) for problem in build.aspect_problems(name, data)]
+        self.assertEqual(problems, [])
+        self.assertIsNone(build.check_aspects(diagrams))
+        self.assertTrue(any(data.get("projections") for data in diagrams.values()), "no figure was checked")
+
+    def test_the_aspect_is_the_width_of_the_box_over_its_height(self):
+        self.assertEqual(build.view_aspect({"box": [0, 6, -3, 3], "mirror": False}), 1)
+        self.assertEqual(build.view_aspect({"box": [1, 4, -3, 3], "mirror": False}), 0.5)
+        self.assertEqual(build.view_aspect({"box": [-2, 2, 0, 1]}), 4)
+
+    def test_a_view_through_a_centre_is_twice_as_wide_as_the_half_its_file_holds(self):
+        self.assertEqual(build.view_aspect({"box": [0, 3, -3, 3], "mirror": True}), 1)
+        self.assertEqual(build.aspect_problems("x", self.file([0, 1, 0, 4], mirror=True)), [])
+        self.assertEqual(len(build.aspect_problems("x", self.file([0, 1, 0, 4]))), 1)
+
+    def test_the_two_limits_are_allowed_and_a_box_just_past_either_is_not(self):
+        for box in ([0, 1, 0, 2], [0, 2, 0, 1], [0, 1, 0, 1], [0, 1.3776, -1.3776, 1.3776],
+                    [0, 2 * math.pi, 0, math.pi], [-0.3, 0.7, -0.5, 0.5]):
+            with self.subTest(box=box):
+                self.assertEqual(build.aspect_problems("x", self.file(box)), [])
+        for box in ([0, 1, 0, 2.001], [0, 2.001, 0, 1], [0, 2, -6, 6], [-2, 2, 0, 1], [0, 1.3776, -25, 25]):
+            with self.subTest(box=box):
+                self.assertEqual(len(build.aspect_problems("x", self.file(box))), 1)
+
+    def test_a_figure_in_three_dimensions_is_held_to_it_too(self):
+        self.assertEqual(build.aspect_problems("x", self.file([-4, 4, -3, 1], part="projections")), [])
+        problems = build.aspect_problems("x", self.file([-4.24, 4.24, -3.24, 0.24], part="projections"))
+        self.assertEqual(len(problems), 1)
+
+    def test_a_problem_names_the_spacetime_the_chart_the_view_and_the_shape(self):
+        tall, = build.aspect_problems("kerr", self.file([0, 2, -6, 6]))
+        self.assertIn("diagrams/kerr.json chart/view", tall)
+        self.assertIn("1:6.00", tall)
+        wide, = build.aspect_problems("kerr", self.file([-2, 2, 0, 1]))
+        self.assertIn("4.00:1", wide)
+
+    def test_a_diagram_outside_the_limits_stops_the_build_and_leaves_the_files_alone(self):
+        diagrams = copy.deepcopy(diagram_files())
+        name = sorted(diagrams)[0]
+        view = next(iter(diagrams[name]["systems"].values()))[0]
+        view["box"], view["mirror"] = [0, 1, 0, 3], False
+        before = {path: path.read_text(encoding="utf-8") for path in (build.INDEX_FILE, build.REFERENCES_FILE)}
+        for argv in (["--check"], []):
+            with mock.patch.object(build, "load_diagrams", return_value=diagrams), \
+                    contextlib.redirect_stderr(io.StringIO()) as said:
+                self.assertEqual(build.main(argv), 2)
+            self.assertIn(f"diagrams/{name}.json", said.getvalue())
+            self.assertIn("outside 1:2 to 2:1", said.getvalue())
         for path, text in before.items():
             self.assertEqual(path.read_text(encoding="utf-8"), text)
 

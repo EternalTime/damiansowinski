@@ -10,6 +10,7 @@ The search list is ordered by `short_name` alone, case and accents ignored, so G
 There is no per entry sort field, and the build refuses a file that carries `sort_name`; a new spacetime takes its place from its name.
 Cite references by their key in `assets/data/references.bib`.
 Every symbol its mathematics and its drawings use is defined on its page, which the build refuses to go without; "Every symbol is defined" below gives the rule.
+Every spacetime diagram it draws plots a region near 1:1 and never outside 1:2 to 2:1, which the build refuses too; "The shape of a view" under "Spacetime diagrams" gives the rule.
 
 Every entry cites each of its references in its `history`, as `[key]` or `[key1, key2]` at the point the prose leans on it, and lists them in `references` in the order they are first cited.
 The page turns those brackets into numbered links by looking the key up in `references`, so a square bracket in a history is always read as a citation and never printed.
@@ -446,6 +447,19 @@ The second command stamps each diagram file's version into the index, as it does
 `DIAGRAMS` in `null_rays.py` is the table of every view, one row each: the plane, the parameter values, the coordinates held fixed, the plot range, the orientation rule and any declared input.
 `CAPTIONS` beside it carries each view's caption, which is prose, and the tests hold the captions, the labels and the declared inputs to the rules for prose as they hold the metrics.
 A new view is a row in each, and the script refuses to run while one lacks the other.
+
+### The shape of a view
+
+The region a view plots is as near square as its physics allows, and never wider than 2:1 or taller than 1:2, as the captain asked on 2 October 2026: "many of the spacetime diagrams have terrible aspect ratios. We should try to stick to 1:1 aspect ratios, allowing for up to 1:2 and 2:1 but no more than that."
+The shape is the row's `box`, its width over its height in the units of the drawn axes, with a view drawn through a centre twice as wide as the half its row holds; the page and the application both draw the plot at that proportion, one scale on both axes.
+A figure in three dimensions is held to the same limits by the box of its projected drawing.
+Aim for 1:1, as Schwarzschild's $(0, 6, -3, 3)$ is, and go toward a limit only for a reason the caption could state: a coordinate that ends on a horizon, a tip or a collision, a period drawn whole, or a model whose times are its declared input.
+Reach the shape by choosing the window, the coordinate ranges or the stretch of time, so that it still holds the horizons and the feature the view exists for; never squash or stretch one axis to fit.
+The one exception is a plane whose two axes have no common unit, an angle against a length, where equal scaling means nothing: scale the angle by a length of the spacetime through `to_display`, name the axis as that length, and say so in the caption, as the Einstein cluster's $t$ and $\chi$ is drawn against $a\chi/r_s$.
+A window also has to hold a stretch of every moment the embedding diagram marks on the view, end a slice on its edge or at the embedding's reach, and stay where the row's time function is a time, each of which the generator or the tests refuse otherwise.
+Where the coordinate that ends leaves less width than the feature needs height, show the half that carries the feature and say in the caption that the other half is its mirror image, as the white hole's core in conformal time and the lattice's shells do, or draw the view through its centre with `mirror=True`, as the semiclosed world's dust is.
+`aspect_problems` in `build_mfs_data.py` holds the rule: the build refuses a diagram file with a view or a figure outside the limits, naming the spacetime, the chart, the view and its shape, `null_rays.py` refuses such a row before it draws anything, and `Aspect` in `_tools/test_build_mfs_data.py` holds every file on disk to it.
+The audit of 2 October 2026 measured 577 views and figures and found 53 outside the limits, the worst at 1:36; each was given a new window.
 
 A caption opens with a noun phrase naming its plane: the two coordinates drawn, with the value of every coordinate held fixed in parentheses, as "The plane of $t$ and $r$ ($\theta = \pi/2$, $\phi = 0$)".
 It never opens "This is", and nothing in it "stands for" anything; `CAPTION_VOICE` in `_tools/test_build_mfs_data.py` holds every caption, note and restriction band on the site to that.
