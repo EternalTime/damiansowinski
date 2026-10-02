@@ -18,7 +18,7 @@ moving_mirror, gravitational_instantons, small_universes, misner_zapolsky, disto
 cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_bodies,
 tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
 string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, brill_charged_taub_nut,
-bach_weyl_ring and kerr_bertotti_robinson, and Godel's cylindrical chart.
+bach_weyl_ring, kerr_bertotti_robinson and einstein_dirac_maxwell_wormhole, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -40,8 +40,8 @@ majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photo
 witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, mass_inflation.md,
 kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_star.md,
 misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, petrov_homogeneous.md,
-brill_waves.md, gravitational_instantons.md, brans_dicke_sphere.md, tilted_universes.md, bowers_liang.md
-and kerr_melvin.md beside this file.
+brill_waves.md, gravitational_instantons.md, brans_dicke_sphere.md, tilted_universes.md, bowers_liang.md,
+kerr_melvin.md and einstein_dirac_maxwell_wormhole.md beside this file.
 btz_multi_holes_wormholes.md beside this file records the charts of the many black holes of three dimensions.
 """
 import argparse
@@ -28623,6 +28623,191 @@ def kerr_bertotti_robinson_check(chart, system):
 
 
 CHARTS["kerr_bertotti_robinson"] = [lambda s=s: kerr_bertotti_robinson(s) for s in KBR_CHARTS]
+
+
+# -- The wormhole of Einstein-Dirac-Maxwell theory ----------------------------------------
+
+EDM_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+EDM_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+EDM_REALS = "(-\\infty, \\infty)"
+EDM_CHARTS = ["areal", "bronnikov_kim", "compact"]
+EDM_PARAMETERS = ["r_0", "Q_e", "M = \\dfrac{2Q_e^2r_0}{Q_e^2 + r_0^2}"]
+
+
+def einstein_dirac_maxwell_wormhole(system):
+    """Blazquez-Salcedo, Knoll and Radu's exact wormhole of Einstein-Dirac-Maxwell theory, the one
+    with massless fermions and no gauge coupling, their (5): g_tt is the extreme Reissner-Nordstrom
+    black hole's -(1 - M/r)^2 with M = 2 Q_e^2 r_0/(Q_e^2 + r_0^2), and g^rr = (1 - r_0/r)(1 -
+    Q_e^2/r_0 r) vanishes at the throat r_0. Three charts, each the published metric of the first
+    pulled back: their areal r on one side of the throat; Bronnikov and Kim's x, written u here,
+    r = r_0 + u^2, the coordinate of their (24) in which the same metric is their example 3; and the
+    compact x, r = r_0/(1 - x^2), x^2 = 1 - r_0/r, which Blazquez-Salcedo and Knoll used for the
+    uncharged wormhole, their rho = sqrt(N), and Konoplya and Zhidenko for this theory. In both
+    charts through the throat every component is a polynomial or a rational function of the square
+    of the coordinate, so the two sides join smoothly. einstein_dirac_maxwell_wormhole.md derives
+    each."""
+    parameters = EDM_PARAMETERS
+    time = "t \\in " + EDM_REALS
+    if system == "areal":
+        coords, name = ["t", "r", "\\theta", "\\phi"], "Areal Radius"
+        domains = [time, "r \\in [r_0, \\infty)"] + EDM_ANGLES + ["r = r_0 \\;\\text{(throat)}"]
+        lapse = "\\left(1 - \\dfrac{M}{r}\\right)"
+        bare = "\\left(1 - \\dfrac{r_0}{r}\\right)\\left(1 - \\dfrac{Q_e^2}{r_0\\,r}\\right)"
+        space = "\\dfrac{dr^2}{" + bare + "} + r^2" + EDM_SPHERE
+        components = {"metric_components": {("t", "t"): "-" + lapse + "^2", ("r", "r"): "\\dfrac{1}{" + bare + "}"},
+                      "inverse_metric_components": {("t", "t"): "-" + lapse + "^{-2}", ("r", "r"): bare}}
+    elif system == "bronnikov_kim":
+        coords, name = ["t", "u", "\\theta", "\\phi"], "Bronnikov-Kim"
+        domains = [time, "u \\in " + EDM_REALS] + EDM_ANGLES + ["u = 0 \\;\\text{(throat)}"]
+        lapse = "\\left(1 - \\dfrac{M}{r_0 + u^2}\\right)"
+        radial = "\\dfrac{4r_0\\left(r_0 + u^2\\right)^2}{r_0^2 - Q_e^2 + r_0\\,u^2}"
+        space = radial + "du^2 + \\left(r_0 + u^2\\right)^2" + EDM_SPHERE
+        components = {"metric_components": {("t", "t"): "-" + lapse + "^2", ("u", "u"): radial},
+                      "inverse_metric_components": {("t", "t"): "-" + lapse + "^{-2}"}}
+    else:
+        coords, name = ["t", "x", "\\theta", "\\phi"], "Compact"
+        domains = ([time, "x \\in (-1, 1)"] + EDM_ANGLES
+                   + ["x = 0 \\;\\text{(throat)}", "x \\to \\pm 1 \\;\\text{(the two far ends)}"])
+        lapse = "\\left(1 - \\dfrac{M\\left(1 - x^2\\right)}{r_0}\\right)"
+        radial = "\\dfrac{4r_0^4}{\\left(1 - x^2\\right)^4\\left(r_0^2 - Q_e^2\\left(1 - x^2\\right)\\right)}"
+        space = radial + "dx^2 + \\dfrac{r_0^2}{\\left(1 - x^2\\right)^2}" + EDM_SPHERE
+        components = {"metric_components": {("t", "t"): "-" + lapse + "^2", ("x", "x"): radial},
+                      "inverse_metric_components": {("t", "t"): "-" + lapse + "^{-2}"}}
+    probe = vm.Reader(coords, parameters, ())
+    X, r0, Q = probe.symbol[coords[1]], probe.parameters["r_0"], probe.parameters["Q_e"]
+    # The sums the values keep meeting, each written whole: (r_0^2 + Q_e^2)(r - M) with r the areal
+    # radius, and in the compact chart 1 - x^2 and r_0^2 - Q_e^2(1 - x^2), the root of g^xx.
+    W, V, Y = sp.symbols("EDMw EDMv EDMy")
+    if system == "areal":
+        wholes = [(W, (r0 ** 2 + Q ** 2) * X - 2 * r0 * Q ** 2)]
+        named = {W: "\\left(r_0^2 + Q_e^2\\right)r - 2r_0\\,Q_e^2"}
+    elif system == "bronnikov_kim":
+        wholes = [(W, (r0 ** 2 + Q ** 2) * (r0 + X ** 2) - 2 * r0 * Q ** 2), (V, r0 + X ** 2)]
+        named = {W: "\\left(r_0^2 + Q_e^2\\right)\\left(r_0 + u^2\\right) - 2r_0\\,Q_e^2", V: "r_0 + u^2"}
+    else:
+        wholes = [(W, r0 ** 2 + Q ** 2 - 2 * Q ** 2 * (1 - X ** 2)), (V, 1 - X ** 2),
+                  (Y, r0 ** 2 - Q ** 2 * (1 - X ** 2))]
+        named = {W: "r_0^2 + Q_e^2 - 2Q_e^2\\left(1 - x^2\\right)", V: "1 - x^2",
+                 Y: "r_0^2 - Q_e^2\\left(1 - x^2\\right)"}
+
+    def pretty(value):
+        value = sp.factor(value)
+        powers = {}
+        for factor in sp.Mul.make_args(value):
+            base, k = (factor.base, factor.exp) if factor.is_Pow else (factor, sp.Integer(1))
+            powers[base] = powers.get(base, 0) + k
+        if system == "compact":
+            # (x + 1)^k (x - 1)^k = (-1)^k (1 - x^2)^k.
+            k = min(powers.get(X + 1, 0), powers.get(X - 1, 0), key=abs) if X + 1 in powers and X - 1 in powers else 0
+            if k and powers[X + 1] == powers[X - 1]:
+                del powers[X + 1], powers[X - 1]
+                powers[V] = powers.get(V, 0) + k
+                powers[sp.Integer(-1)] = powers.get(sp.Integer(-1), 0) + k
+        out = sp.Integer(1)
+        for base, k in powers.items():
+            if base.is_Add:
+                for placeholder, poly in wholes:
+                    if sp.expand(base - poly) == 0:
+                        base = placeholder
+                    elif sp.expand(base + poly) == 0 and sp.Integer(k).is_Integer:
+                        base, out = placeholder, out * (-1) ** k
+            out *= base ** k
+        return out
+
+    spec = {
+        "metric_id": "einstein_dirac_maxwell_wormhole",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": "ds^2 = -" + lapse + "^2c^2dt^2 + " + space},
+        "chart_line_element": "ds^2 = -" + lapse + "^2dt^2 + " + space,
+        "printer": {"lead": [X, r0, Q], "flip": False, "named": named},
+        "pretty": pretty,
+        "components": components,
+        "check": lambda chart: einstein_dirac_maxwell_wormhole_check(chart, system),
+    }
+    if system == "areal":
+        # Four times the squares of the four frame components of a static observer's Riemann tensor,
+        # R^tr_tr, R^t theta_t theta, R^r theta_r theta and R^theta phi_theta phi, with weights 4, 8, 8, 4.
+        w = "\\left(\\left(r_0^2 + Q_e^2\\right)r - 2r_0\\,Q_e^2\\right)"
+        spec["kretschmann"] = (
+            "\\dfrac{4Q_e^4\\left(\\left(4r_0\\,r^2 - 5\\left(r_0^2 + Q_e^2\\right)r + 6r_0\\,Q_e^2\\right)^2"
+            " + 8\\left(r - r_0\\right)^2\\left(r_0\\,r - Q_e^2\\right)^2\\right)}{r^8" + w + "^2}"
+            " + \\dfrac{2" + w + "^2 + 4\\left(\\left(r_0^2 + Q_e^2\\right)r - r_0\\,Q_e^2\\right)^2}{r_0^2\\,r^8}")
+    return spec
+
+
+def einstein_dirac_maxwell_wormhole_check(chart, system):
+    """The field equations as Blazquez-Salcedo, Knoll and Radu write them, G_ab = 2 T_ab with
+    T = T^(D) + T^(M): their potential V = (M/Q_e) sqrt((1 - r_0/r)(1 - Q_e^2/r_0 r)), which is
+    Q_e/r + const far away, solves Maxwell's equations with no source, the Ricci scalar vanishes,
+    and G^a_b - 2 T^(M)a_b, twice the Dirac stress, has no energy density and no trace, with the
+    radial tension -(r_0^2 - Q_e^2)^2/(r_0 (Q_e^2 + r_0^2) r^2 (r - M)) that violates the null
+    energy condition. At the throat K = 2(3 Q_e^4 - 2 Q_e^2 r_0^2 + 3 r_0^4)/r_0^8. Each chart after
+    the first is the areal chart pulled back along r = r_0 + u^2 or r = r_0/(1 - x^2); the areal
+    chart at Q_e = r_0 is the published extreme Reissner-Nordstrom metric, r_s = 2 r_0 and r_q = r_0,
+    and at Q_e = 0 it is Blazquez-Salcedo and Knoll's wormhole of uncharged fermions, g_tt = -1."""
+    P = chart.reader.parameters
+    r0, Q = P["r_0"], P["Q_e"]
+    t, X = chart.symbols[:2]
+    M = 2 * Q ** 2 * r0 / (Q ** 2 + r0 ** 2)
+    r = {"areal": X, "bronnikov_kim": r0 + X ** 2, "compact": r0 / (1 - X ** 2)}[system]
+    throat = {X: r0} if system == "areal" else {X: 0}
+    g, ginv = chart.geo.g, chart.geo.ginv
+
+    def zero(value, what):
+        if sp.simplify(sp.together(value)) != 0:
+            raise AssertionError(f"einstein_dirac_maxwell_wormhole: {what} in the {system} chart")
+
+    zero(chart.geo.ricci_scalar(), "the Ricci scalar does not vanish")
+    # Their potential in the chart's own coordinate. Through the throat the root of (1 - r_0/r)(1 -
+    # Q_e^2/r_0 r) is continued with the sign of the coordinate, u sqrt(r_0 - Q_e^2/r_0 + u^2)/(r_0 + u^2)
+    # and x sqrt(1 - Q_e^2 (1 - x^2)/r_0^2), so the field runs through the throat from one side to the other.
+    root = {"areal": sp.sqrt((1 - r0 / X) * (1 - Q ** 2 / (r0 * X))),
+            "bronnikov_kim": X * sp.sqrt(r0 - Q ** 2 / r0 + X ** 2) / (r0 + X ** 2),
+            "compact": X * sp.sqrt(1 - Q ** 2 * (1 - X ** 2) / r0 ** 2)}[system]
+    Vp = sp.diff(M / Q * root, X)
+    F = sp.zeros(4, 4)
+    F[0, 1], F[1, 0] = -Vp, Vp
+    Fup = ginv * F * ginv
+    F2 = sum(F[a, b] * Fup[a, b] for a in range(4) for b in range(4))
+    TM = sp.Matrix(4, 4, lambda m, n: sum(F[m, a] * F[n, c] * ginv[a, c] for a in range(4) for c in range(4))
+                   - F2 * g[m, n] / 4)
+    root_g = sp.sqrt(sp.factor(-g.det() / sp.sin(chart.symbols[2]) ** 2))
+    zero(sp.diff(sp.simplify(root_g * Fup[1, 0]), X), "Maxwell's equations have a source")
+    G = chart.geo.raise_indices(chart.geo.einstein_ll(), 2, (0,))
+    D = sp.Matrix(4, 4, lambda a, b: vm._at(G, (a, b)) - 2 * (ginv * TM)[a, b])
+    zero(vm._at(G, (0, 0)) + Q ** 2 / r ** 4, "G^t_t is not the electric field's -Q_e^2/r^4")
+    zero(D[0, 0], "the Dirac stress has an energy density")
+    zero(D.trace(), "the Dirac stress has a trace")
+    tension = -(r0 ** 2 - Q ** 2) ** 2 / (r0 * (Q ** 2 + r0 ** 2) * r ** 2 * (r - M))
+    zero(D[1, 1] - tension, "the Dirac radial tension is not -(r_0^2 - Q_e^2)^2/(r_0 (Q_e^2 + r_0^2) r^2 (r - M))")
+    K = chart.geo.kretschmann()
+    zero(sp.simplify(K).subs(throat) - 2 * (3 * Q ** 4 - 2 * Q ** 2 * r0 ** 2 + 3 * r0 ** 4) / r0 ** 8,
+         "the Kretschmann scalar at the throat is not 2(3Q_e^4 - 2Q_e^2r_0^2 + 3r_0^4)/r_0^8")
+    if system == "areal":
+        zero(g[0, 0].subs(Q, 0) + 1, "g_tt at Q_e = 0 is not -1")
+        rn = next(c for c in json.loads((METRICS / "rn_metric.json").read_text(encoding="utf-8"))["coordinates"]
+                  if c["id"] == "spherical")
+        reader = vm.Reader(rn["coords"], [p["symbol"] for p in rn["parameters"]], ())
+        values = {tuple(e["indices"]): e["value"] for e in rn["metric_components"]}
+        swap = {reader.symbol["r"]: X, reader.symbol["\\theta"]: chart.symbols[2],
+                reader.parameters["r_s"]: 2 * r0, reader.parameters["r_q"]: r0}
+        for i, c in enumerate(rn["coords"]):
+            zero(reader(values[(c, c)]).subs(swap) - g[i, i].subs(Q, r0),
+                 f"the metric at Q_e = r_0 is not the extreme Reissner-Nordstrom black hole in slot {c}{c}")
+        return
+    source = einstein_dirac_maxwell_wormhole("areal")
+    areal = cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+    names = dict(zip(areal.symbols[2:], chart.symbols[2:]))
+    names.update({areal.reader.parameters[n]: P[n] for n in ("r_0", "Q_e")})
+    J = sp.diag(1, sp.diff(r, X), 1, 1)
+    at = {areal.symbols[0]: t, areal.symbols[1]: r}
+    pulled = J.T * areal.geo.g.subs(names).subs(at, simultaneous=True) * J
+    for i in range(4):
+        for j in range(4):
+            zero(pulled[i, j] - g[i, j], f"the areal chart pulled back differs in slot {i}{j}")
+
+
+CHARTS["einstein_dirac_maxwell_wormhole"] = [lambda s=s: einstein_dirac_maxwell_wormhole(s) for s in EDM_CHARTS]
 
 
 def write(spec):

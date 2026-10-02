@@ -1396,6 +1396,10 @@ def born_infeld_mass(r, rs, rq, r0=1.0):
 
 # Damour and Solodukhin's wormhole at lambda = 1/5, where the throat's clocks run five times slow.
 DS = {"r_s": 1, "lambda": "1/5"}
+
+# Blazquez-Salcedo, Knoll and Radu's exact wormhole at Q_e = r_0/2, where M = 2r_0/5 and the
+# other root of g^rr, Q_e^2/r_0, is r_0/4.
+EDM = {"r_0": 1, "Q_e": "1/2"}
 # Einstein and Rosen's charged bridge with a mass, at r_q = sqrt(3) r_s/2, where r^2 - r_s r - r_q^2 =
 # (r - 3r_s/2)(r + r_s/2) and the bridge is the sphere r_+ = 3r_s/2.
 ERB_CHARGED = {"r_s": 1, "r_q": "sqrt(3)/2"}
@@ -3160,6 +3164,16 @@ DIAGRAMS = [
     Diagram("einstein_rosen_bridge", "charged_bridge", "radial", "$t$ and $u$", ("t", "u"), (-3, 3, -3, 3),
             "$u/r_q$", "$ct/r_q$", {"r_q": 1}, EQUATOR, families=SIDEWAYS, cones=(8, 7), areal=True,
             areal_contours=(1.5, 2.0, 3.0)),
+    # The Einstein-Dirac-Maxwell wormhole from the throat r = r_0 out in the areal radius, and through
+    # the throat in Bronnikov and Kim's u, r = r_0 + u^2, in units of sqrt(r_0), and in the compact x,
+    # r = r_0/(1 - x^2), whose two far ends are x = +-1.
+    Diagram("einstein_dirac_maxwell_wormhole", "areal", "radial", "$t$ and $r$", ("t", "r"), (1, 6, -2.5, 2.5),
+            "$r/r_0$", "$ct/r_0$", EDM, EQUATOR, areal=True),
+    Diagram("einstein_dirac_maxwell_wormhole", "bronnikov_kim", "radial", "$t$ and $u$", ("t", "u"), (-2, 2, -2, 2),
+            "$u/\\sqrt{r_0}$", "$ct/r_0$", EDM, EQUATOR, families=SIDEWAYS, areal=True,
+            areal_contours=(1.5, 2.0, 3.0)),
+    Diagram("einstein_dirac_maxwell_wormhole", "compact", "radial", "$t$ and $x$", ("t", "x"), (-1, 1, -1, 1),
+            "$x$", "$ct/r_0$", EDM, EQUATOR, families=SIDEWAYS, areal=True, areal_contours=(1.5, 2.0, 3.0)),
     Diagram("morris_thorne", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/b_0$", "$ct/b_0$", {"b_0": 1}, EQUATOR, areal=True,
             functions={"Phi": "0", "b": "b_0**2/r"},
@@ -7471,6 +7485,33 @@ CAPTIONS = {
         "$t \\to \\infty$: the bridge is a horizon, as the neutral one is. The faint vertical lines are the spheres "
         "of areal radius $1.5\\,r_q$, $2\\,r_q$, and $3\\,r_q$, one of each on either sheet, and the Kretschmann "
         "scalar $56r_q^4/(u^2 + r_q^2)^4$ is $56/r_q^4$ on the bridge.",
+    ],
+    ("einstein_dirac_maxwell_wormhole", "areal", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) on one side of the throat, drawn for "
+        "$Q_e = r_0/2$, the same on the other side. The edges of the cones are "
+        "$dr/d(ct) = \\pm(1 - M/r)\\sqrt{(1 - r_0/r)(1 - Q_e^2/r_0r)}$, so $ct \\mp r_*$ is constant along a ray, "
+        "with the tortoise coordinate $r_*$ zero at the throat and $dr_*/dr = \\sqrt{-g_{rr}/g_{tt}}$.",
+        "The cones close toward the throat $r = r_0$ because $g_{rr}$ diverges there, while "
+        "$g_{tt} = -(1 - M/r_0)^2$ does not vanish, so the throat is the edge of this chart with no horizon on it. "
+        "A ray moving in from $r = 2\\,r_0$ reaches the throat after $3.7\\,r_0/c$ and goes on into the other side.",
+    ],
+    ("einstein_dirac_maxwell_wormhole", "bronnikov_kim", "radial"): [
+        "The plane of $t$ and $u$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $Q_e = r_0/2$, with $r = r_0 + u^2$, "
+        "$u < 0$ on one side of the throat and $u > 0$ on the other. Every component of the metric is finite at the "
+        "throat $u = 0$, where the cones are narrowest, $du/d(ct) = \\pm(1 - M/r_0)\\sqrt{1 - Q_e^2/r_0^2}/2\\sqrt{r_0}$, "
+        "and every ray crosses it.",
+        "With the tortoise coordinate $r_*$ zero at the throat, a ray takes the time $2r_*/c$ to pass from a sphere on one side to the sphere of the same radius on the "
+        "other, $7.5\\,r_0/c$ between the two spheres of radius $2\\,r_0$. The faint vertical lines are the spheres "
+        "of areal radius $1.5\\,r_0$, $2\\,r_0$, and $3\\,r_0$, one of each on either side.",
+    ],
+    ("einstein_dirac_maxwell_wormhole", "compact", "radial"): [
+        "The plane of $t$ and $x$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $Q_e = r_0/2$, with "
+        "$r = r_0/(1 - x^2)$, $x < 0$ on one side of the throat and $x > 0$ on the other. Every component of the "
+        "metric is finite at the throat $x = 0$, where $dx/d(ct) = \\pm(1 - M/r_0)\\sqrt{1 - Q_e^2/r_0^2}/2r_0$, "
+        "and every ray crosses it.",
+        "The two far ends are $x = \\pm 1$, and toward them a ray slows as $dx/d(ct) \\to \\pm(1 - x^2)^2/2r_0$, so "
+        "it reaches them only as $t \\to \\pm\\infty$. The faint vertical lines are the spheres of areal radius "
+        "$1.5\\,r_0$, $2\\,r_0$, and $3\\,r_0$, at $|x| = 0.58$, $0.71$, and $0.82$.",
     ],
     ("morris_thorne", "spherical", "radial"): [
         "The plane of $t$ and the areal radius $r$ ($\\theta = \\pi/2$, $\\phi = 0$). The metric leaves $\\Phi(r)$ "
@@ -14525,6 +14566,20 @@ def cdl_conformal_distance(xi, bubble):
                         np.log(xi - math.log(3) + 4 / 3) + math.log(3 / 8))
 
 
+def _edm_rstar(r):
+    """The tortoise coordinate of the Einstein-Dirac-Maxwell wormhole at r_0 = 1 and Q_e = 1/2, zero at
+    the throat: dr_*/dr = r^2/((r - M) sqrt((r - r_0)(r - b))) with b = Q_e^2/r_0 = 1/4 and M = 2/5,
+    whose integral is sqrt((r - r_0)(r - b)) + (r_0 + b + 2M)/2 ln((2r - r_0 - b + 2 sqrt((r - r_0)(r -
+    b)))/(r_0 - b)) + 2M^2/sqrt((r_0 - M)(M - b)) arctan sqrt((M - b)(r - r_0)/((r_0 - M)(r - b)))."""
+    r = np.asarray(r, float)
+    r0, b, M = 1.0, 0.25, 0.4
+    root = np.sqrt(np.maximum((r - r0) * (r - b), 0))
+    log = np.log((2 * r - r0 - b + 2 * root) / (r0 - b))
+    k = math.sqrt((r0 - M) * (M - b))
+    angle = np.arctan(np.sqrt((M - b) * np.maximum(r - r0, 0) / ((r0 - M) * (r - b))))
+    return root + (r0 + b + 2 * M) / 2 * log + 2 * M * M / k * angle
+
+
 def _tsw_lstar(l):
     """The tortoise coordinate of the thin shell wormhole's chart through the throat, r_s = 1 and
     a = 5/4, zero at the throat: dl_*/dl = (a + |l|)/(a + |l| - r_s)."""
@@ -15079,6 +15134,16 @@ CLOSED_FORMS = {
     ("einstein_rosen_bridge", "charged_bridge", "radial"):
         (lambda t, u: t + np.sign(u) * _rstar(np.sqrt(1 + u ** 2), [1, -1]),
          lambda t, u: t - np.sign(u) * _rstar(np.sqrt(1 + u ** 2), [1, -1]), lambda t, u: np.abs(u) > 0.2),
+    # With r_0 = 1 and Q_e = 1/2, and through the throat r = 1 + u^2 and r = 1/(1 - x^2), where r_* changes
+    # sign with the coordinate.
+    ("einstein_dirac_maxwell_wormhole", "areal", "radial"):
+        (lambda t, r: t + _edm_rstar(r), lambda t, r: t - _edm_rstar(r), lambda t, r: r > 1.0005),
+    ("einstein_dirac_maxwell_wormhole", "bronnikov_kim", "radial"):
+        (lambda t, u: t + np.sign(u) * _edm_rstar(1 + u ** 2), lambda t, u: t - np.sign(u) * _edm_rstar(1 + u ** 2),
+         None),
+    ("einstein_dirac_maxwell_wormhole", "compact", "radial"):
+        (lambda t, x: t + np.sign(x) * _edm_rstar(1 / (1 - x ** 2)),
+         lambda t, x: t - np.sign(x) * _edm_rstar(1 / (1 - x ** 2)), lambda t, x: np.abs(x) < 0.995),
     ("einstein_rosen_waves", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("einstein_rosen_waves", "null", "radial"): (lambda u, v: v, lambda u, v: u, None),
     # With m = 1, z_* = z e^(2/z) - 2 Ei(2/z) on the axis and rho_* the integral of e^(2/s - 1/(2 s^2)) in the plane.

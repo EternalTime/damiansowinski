@@ -97,6 +97,11 @@
       "id": "btz_multi_holes_wormholes",
       "kind": "family",
       "text": "Bridges of three dimensions with a negative cosmological constant, where one junction can join any number of exteriors, each the outside of a BTZ black hole [brill1996, steif1996]."
+    },
+    {
+      "id": "einstein_dirac_maxwell_wormhole",
+      "kind": "family",
+      "text": "A static wormhole whose two sheets, written in $u$ with $r = r_0 + u^2$, join at a throat that is no horizon. Its $g_{tt}$ is the extreme Reissner-Nordström black hole's [bronnikovkim2003, blazquez2021]."
     }
   ],
   "references": [
@@ -125,7 +130,9 @@
     "tahvildarzadeh2011",
     "hruska2019",
     "brill1996",
-    "steif1996"
+    "steif1996",
+    "bronnikovkim2003",
+    "blazquez2021"
   ],
   "coordinates": [
     {

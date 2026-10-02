@@ -1748,6 +1748,18 @@ DIMENSIONS = {
     ("damour_solodukhin", "einstein_rosen"): {
         "t": "T", "u": "L**(1/2)", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\lambda": "1",
     },
+    # Blazquez-Salcedo, Knoll and Radu's charge and mass are lengths beside the throat's radius r_0.
+    # Bronnikov and Kim's u has u^2 = r - r_0, so it carries the square root of a length, and the
+    # compact x, r = r_0/(1 - x^2), is a pure number.
+    ("einstein_dirac_maxwell_wormhole", "areal"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_0": "L", "Q_e": "L", "M": "L",
+    },
+    ("einstein_dirac_maxwell_wormhole", "bronnikov_kim"): {
+        "t": "T", "u": "L**(1/2)", "\\theta": "1", "\\phi": "1", "r_0": "L", "Q_e": "L", "M": "L",
+    },
+    ("einstein_dirac_maxwell_wormhole", "compact"): {
+        "t": "T", "x": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "Q_e": "L", "M": "L",
+    },
     # Einstein and Rosen's u has u^2 = r - r_s on the neutral bridge, the square root of a length, and
     # u^2 = r^2 - r_q^2 on the charged one, a length; r_q is the charge radius, their epsilon/sqrt(2).
     ("einstein_rosen_bridge", "bridge"): {

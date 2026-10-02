@@ -9946,6 +9946,99 @@ def einstein_rosen_bridge(ck, src):
     return sorted(views, key=lambda v: order.index(v.d["id"]))
 
 
+def einstein_dirac_maxwell_wormhole(ck, src):
+    """Blazquez-Salcedo, Knoll and Radu's exact wormhole at r_0 = 1 and Q_e = 1/2, one view for each
+    chart. On its plane of t and r the metric is (1 - M/r)^2 (-c^2dt^2 + dr_*^2), with the tortoise
+    coordinate of null_rays's _edm_rstar, dr_*/dr = r^2/((r - M) sqrt((r - r_0)(r - b))) and b =
+    Q_e^2/r_0, finite at the throat, where it is taken to vanish. Through the throat x = r_* times the
+    sign of Bronnikov and Kim's u, or of the compact x, runs over the whole line, so p, q = arctan((ct
+    -+ x)/l) with l = 4 r_0 give the full diamond, the throat on its axis. The conformal factor is at
+    least (1 - M/r_0)^2 = 9/25, so there is no horizon, and the Kretschmann scalar at the throat is
+    2(3 Q_e^4 - 2 Q_e^2 r_0^2 + 3 r_0^4)/r_0^8 = 43/8 r_0^4. The areal chart covers the right half."""
+    params = {"r_0": 1, "Q_e": "1/2"}
+    ell = 4.0
+    planes = {cid: Plane(src, "einstein_dirac_maxwell_wormhole", cid, ("t", x), EQUATOR, params)
+              for cid, x in (("areal", "r"), ("bronnikov_kim", "u"), ("compact", "x"))}
+
+    def bridge(t, u):
+        u = np.asarray(u, dtype=float)
+        return mink_pq(t, np.sign(u) * nr._edm_rstar(1 + u ** 2), ell)
+
+    def compact(t, x):
+        x = np.asarray(x, dtype=float)
+        return mink_pq(t, np.sign(x) * nr._edm_rstar(1 / (1 - x ** 2)), ell)
+
+    maps = {"areal": lambda t, r: mink_pq(t, nr._edm_rstar(r), ell), "bronnikov_kim": bridge, "compact": compact}
+    spans = {"areal": ck.uniform(1.0001, 40), "bronnikov_kim": ck.uniform(-6, 6), "compact": ck.uniform(-0.99, 0.99)}
+    for cid, plane in planes.items():
+        ck.chart(f"Einstein-Dirac-Maxwell wormhole, {cid}", plane, maps[cid], ck.uniform(-40, 40), spans[cid],
+                 lambda t, x: (1, 0))
+    for cid in ("bronnikov_kim", "compact"):
+        K = planes[cid].kretschmann
+        ck.finite(f"Einstein-Dirac-Maxwell wormhole, {cid}: the curvature is finite beside the throat",
+                  K(ck.uniform(-5, 5, 50), ck.uniform(-0.01, 0.01, 50)))
+        ck.limit(f"Einstein-Dirac-Maxwell wormhole, {cid}: the Kretschmann scalar at the throat is "
+                 "2(3Q_e^4 - 2Q_e^2r_0^2 + 3r_0^4)/r_0^8",
+                 K(np.zeros(1), np.zeros(1)), [2 * (3 / 16 - 2 / 4 + 3)], 1e-7)
+    r = ck.uniform(1.001, 40)
+    g = planes["areal"].metric(0 * r, r)
+    h = 1e-6 * r
+    ck.limit("Einstein-Dirac-Maxwell wormhole: the tortoise coordinate has dr_*/dr = sqrt(-g_rr/g_tt)",
+             (nr._edm_rstar(r + h) - nr._edm_rstar(r - h)) / (2 * h) / np.sqrt(-g[2] / g[0]), np.ones_like(r), 1e-6)
+    ck.limit("Einstein-Dirac-Maxwell wormhole: the tortoise coordinate vanishes at the throat", nr._edm_rstar(1.0),
+             [0.0], 1e-12)
+    # One event, one point: r = r_0 + u^2 = r_0/(1 - x^2) on the side u, x > 0.
+    t, u = ck.uniform(-20, 20), ck.uniform(0.05, 4)
+    want = np.array(bridge(t, u))
+    for cid, got in (("areal", maps["areal"](t, 1 + u ** 2)), ("compact", compact(t, np.sqrt(1 - 1 / (1 + u ** 2))))):
+        ck.limit(f"Einstein-Dirac-Maxwell wormhole: the {cid} chart lands on the points of Bronnikov and Kim's",
+                 np.array(got), want, 1e-9)
+
+    box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    wormhole = slices.moments("einstein_dirac_maxwell_wormhole")[0]
+    top = math.sqrt(wormhole.reach("areal", "r")[1] - 1)
+    us = np.linspace(-top, top, 401)
+    TS = (-16, -8, -4, 0, 4, 8, 16)
+    views = []
+    for vid, label in (("areal", "Areal radius"), ("bronnikov_kim", "Bronnikov-Kim"), ("compact", "Compact")):
+        v = View(vid, label, box, vid)
+        fmap = maps[vid]
+        v.fill("region", DIAMOND)
+        if vid == "bronnikov_kim":
+            v.fill("cover", DIAMOND)
+            grid(v, "r", lambda u, t: fmap(t, u), (-2, -1.5, -1, -0.5, 0.5, 1, 1.5, 2), S_ALL)
+            label_on(v, fmap(0, 1), "$u = \\sqrt{r_0}$")
+            v.legend("cover", "the whole spacetime, which $t$ and $u$ cover")
+            v.legend("r", "$u$ constant, every $\\sqrt{r_0}/2$ to $\\pm 2\\sqrt{r_0}$, a sphere of radius $r_0 + u^2$")
+        elif vid == "compact":
+            v.fill("cover", DIAMOND)
+            grid(v, "r", lambda x, t: fmap(t, x), (-0.9, -0.75, -0.5, -0.25, 0.25, 0.5, 0.75, 0.9), S_ALL)
+            label_on(v, fmap(0, 0.5), "$x = 1/2$")
+            v.legend("cover", "the whole spacetime, which $t$ and $x$ cover")
+            v.legend("r", "$x$ constant, at $\\pm 1/4$, $\\pm 1/2$, $\\pm 3/4$ and $\\pm 9/10$, spheres of radius "
+                          "$1.07$, $1.33$, $2.29$ and $5.26\\,r_0$")
+        else:
+            v.fill("cover", TRIANGLE)
+            for radius in (1.5, 2.0, 3.0, 5.0):
+                v.curve("r", *fmap(S_ALL, np.full_like(S_ALL, radius)))
+                v.curve("r2", *bridge(S_ALL, np.full_like(S_ALL, -math.sqrt(radius - 1))))
+            label_on(v, fmap(0, 2.0), "$r = 2\\,r_0$")
+            v.legend("cover", "the side $u > 0$, which $t$ and $r$ cover")
+            v.legend("r", "$r$ constant, at $1.5$, $2$, $3$ and $5\\,r_0$")
+            v.legend("r2", "the same radii on the other side")
+        grid(v, "t", lambda t, x: mink_pq(t, x, ell), TS, S_ALL)
+        v.line("throat", [[[0, -PI], [0, PI]]])
+        diamond_edges(v)
+        v.label_xt([0, 0.3], "throat", "l", "small", dx=6)
+        v.legend("t", "$ct$ constant, every $4\\,r_0$ to $\\pm 8\\,r_0$, and at $\\pm 16\\,r_0$")
+        v.legend("throat", "the throat $r = r_0$")
+        v.slice(wormhole, [bridge(0 * us, us)])
+        v.set(settings="$r_0 = 1$, $Q_e = 1/2$, and $\\ell = 4\\,r_0$; $p = \\arctan((ct - x)/\\ell)$ and "
+                       "$q = \\arctan((ct + x)/\\ell)$, with $x$ the tortoise coordinate, zero at the throat.")
+        views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- the cosmic string
 
 def cosmic_string(ck, src):
@@ -22941,6 +23034,7 @@ DRAWN = {
     "teo_wormhole": teo_wormhole,
     "israel_wilson_perjes": israel_wilson_perjes,
     "damour_solodukhin": damour_solodukhin,
+    "einstein_dirac_maxwell_wormhole": einstein_dirac_maxwell_wormhole,
     "einstein_rosen_bridge": einstein_rosen_bridge,
     "simpson_visser": simpson_visser,
     "levi_civita": levi_civita,
@@ -25298,6 +25392,32 @@ CAPTIONS = {
         "crosses the throat and there is no horizon. At $\\lambda = 0$ the factor vanishes at $r_s$, $r_*$ "
         "runs to $-\\infty$ there, and each half of the diamond becomes one exterior of the Schwarzschild "
         "spacetime with the throat its horizon.",
+    ],
+    ("einstein_dirac_maxwell_wormhole", "areal"): [
+        "The Einstein-Dirac-Maxwell wormhole ($Q_e = r_0/2$) in the areal radius on one side of the throat, each "
+        "point in the diagram a 2-sphere of radius $r$. The metric on the plane of $t$ and $r$ is "
+        "$(1 - M/r)^2\\left(-c^2dt^2 + dr_*^2\\right)$, with the tortoise coordinate $r_*$ zero at the throat, and "
+        "$p, q = \\arctan((ct \\mp r_*)/\\ell)$ bring it into the right half of the diamond.",
+        "The coordinates end at the throat $r = r_0$, and the same coordinates on the other side cover the left "
+        "half. The factor $(1 - M/r)^2$ is at least $(1 - M/r_0)^2$, so light crosses the throat and there is no "
+        "horizon.",
+    ],
+    ("einstein_dirac_maxwell_wormhole", "bronnikov_kim"): [
+        "The Einstein-Dirac-Maxwell wormhole ($Q_e = r_0/2$), each point in the diagram a 2-sphere of radius "
+        "$r_0 + u^2$. The metric on the plane of $t$ and $u$ is $(1 - M/r)^2\\left(-c^2dt^2 + dx^2\\right)$, with "
+        "the tortoise coordinate $r_*$ zero at the throat and $x = r_*\\,\\mathrm{sgn}(u)$ running over the whole line, and $p, q = \\arctan((ct \\mp x)/\\ell)$ bring it "
+        "into the full diamond.",
+        "The two ends are two asymptotically flat regions, each with its own $i^0$ and $\\mathscr{I}^\\pm$, joined "
+        "at the throat $u = 0$. At $Q_e = r_0$ the factor vanishes at the throat, $r_*$ runs to $-\\infty$ there, "
+        "and each half of the diamond becomes the exterior of the extreme Reissner-Nordström black hole.",
+    ],
+    ("einstein_dirac_maxwell_wormhole", "compact"): [
+        "The Einstein-Dirac-Maxwell wormhole ($Q_e = r_0/2$), each point in the diagram a 2-sphere of radius "
+        "$r_0/(1 - x^2)$. The metric on the plane of $t$ and $x$ is $(1 - M/r)^2\\left(-c^2dt^2 + dX^2\\right)$, "
+        "with the tortoise coordinate $r_*$ zero at the throat and $X = r_*\\,\\mathrm{sgn}(x)$ running over the whole line, and $p, q = \\arctan((ct \\mp X)/\\ell)$ "
+        "bring it into the full diamond.",
+        "The far ends $x = \\pm 1$ are the two spatial infinities $i^0$ at the diamond's left and right corners, "
+        "and the throat $x = 0$ stands on its axis.",
     ],
     ("morris_thorne", "spherical"): [
         "The Morris-Thorne wormhole ($\\Phi = 0$, $b = b_0^2/r$), each point in the diagram a "

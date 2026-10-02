@@ -6394,6 +6394,11 @@ class Slices(unittest.TestCase):
         if key == "three_brane_throat/throat/radial":
             # The throat's cylinder is read in the proper distance sigma, and r = L e^(sigma/L).
             return (lambda X: 0.0), [math.exp(x) for x in self.reach(surface, "throat_proper")]
+        if key == "einstein_dirac_maxwell_wormhole/compact/radial":
+            # The compact x of the circles the embedding reaches in the areal radius r, at r_0 = 1:
+            # x = +-sqrt(1 - 1/r), one on each side of the throat.
+            x = math.sqrt(1 - 1 / self.reach(surface)[1])
+            return (lambda X: 0.0), [-x, x]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))
