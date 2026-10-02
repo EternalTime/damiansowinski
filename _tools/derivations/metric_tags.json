@@ -5605,6 +5605,104 @@
   ],
   "sphere": null
  },
+ "jackiw_teitelboim_black_hole/global": {
+  "stamp": "eeecb460175589ca",
+  "relations": {},
+  "orders": null,
+  "dimension": 2,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-1/L**2",
+   "sign": -1
+  },
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\tau",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "jackiw_teitelboim_black_hole/kruskal": {
+  "stamp": "e21456abcee8ae0b",
+  "relations": {},
+  "orders": null,
+  "dimension": 2,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-1/L**2",
+   "sign": -1
+  },
+  "conformally_flat": true,
+  "killing": [],
+  "sphere": null
+ },
+ "jackiw_teitelboim_black_hole/poincare": {
+  "stamp": "877bb6d3d3297077",
+  "relations": {},
+  "orders": null,
+  "dimension": 2,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-1/L**2",
+   "sign": -1
+  },
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "T",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "jackiw_teitelboim_black_hole/proper_distance": {
+  "stamp": "99912e673fc0167f",
+  "relations": {},
+  "orders": null,
+  "dimension": 2,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-1/L**2",
+   "sign": -1
+  },
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "jackiw_teitelboim_black_hole/static": {
+  "stamp": "26717d438a8f1f1f",
+  "relations": {},
+  "orders": null,
+  "dimension": 2,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-1/L**2",
+   "sign": -1
+  },
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
  "kaluza_klein_black_hole/dyonic": {
   "stamp": "2345fdae740650b3",
   "relations": {},

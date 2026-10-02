@@ -6192,6 +6192,18 @@ class Slices(unittest.TestCase):
             of_r = {"spherical": lambda r: r, "jnw": lambda r: r - 0.75,
                     "isotropic": lambda r: (r - 0.5 + math.sqrt(r * (r - 1))) / 2}[key.split("/")[1]]
             return (lambda X: 0.0), [of_r(1 / (1 - math.exp(-u))) for u in (hi, lo)]
+        if key.startswith("jackiw_teitelboim_black_hole/"):
+            # The Euclidean disc is read in the proper distance rho at L = r_h = 1, and its meridians are the
+            # moment t = 0: level in every chart, from the horizon r = cosh(rho) = 1 out in the static chart,
+            # across the bifurcation point to V - U = +-2 tanh(rho/2) on the Kruskal plane, drawn against
+            # (V - U)/2, to sigma = pi/2 +- arctan(sinh(rho)) in the global chart, and to z = 2 e^(-+rho) on
+            # the Poincare plane.
+            lo, hi = self.reach(surface)
+            return (lambda X: 0.0), {
+                "static": [math.cosh(lo), math.cosh(hi)], "proper_distance": [lo, hi],
+                "kruskal": [-math.tanh(hi / 2), math.tanh(hi / 2)],
+                "global": [math.pi / 2 - math.atan(math.sinh(hi)), math.pi / 2 + math.atan(math.sinh(hi))],
+                "poincare": [2 * math.exp(-hi), 2 * math.exp(hi)]}[key.split("/")[1]]
         if key.startswith("witten_black_hole/"):
             # The cigar is read in Witten's proper distance r at lambda = m = 1, and its meridian theta = 0 is
             # the moment t = 0 from the horizon out, where e^(2x) = w = cosh^2 r and e^sigma = sinh r: level in

@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 160,
+  "count": 161,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1512,6 +1512,11 @@
           "id": "plebanski_hacyan",
           "kind": "family",
           "text": "Products that keep anti-de Sitter space of two dimensions as one factor, times a flat plane with a uniform electromagnetic field or times a hyperbolic plane with none [ortaggio2002direct]."
+        },
+        {
+          "id": "jackiw_teitelboim_black_hole",
+          "kind": "family",
+          "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions. Its metric is everywhere anti-de Sitter space of two dimensions, and a dilaton marks its horizon [mertens2023]."
         }
       ],
       "references": [
@@ -1557,7 +1562,8 @@
         "son2008",
         "bicak1999",
         "griffiths2004",
-        "ortaggio2002direct"
+        "ortaggio2002direct",
+        "mertens2023"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -2512,6 +2518,11 @@
           "id": "draining_bathtub",
           "kind": "family",
           "text": "A rotating black hole of three dimensions for sound, with an ergoregion around its horizon and no field equation behind it. Its Ricci scalar is $2(A^2 + B^2)/(c^2r^4)$, growing toward the drain, where the BTZ hole's is constant [visser1998]."
+        },
+        {
+          "id": "jackiw_teitelboim_black_hole",
+          "kind": "family",
+          "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions. Without rotation, this hole is that one times a circle whose radius is its dilaton [achucarro1993]."
         }
       ],
       "references": [
@@ -2540,7 +2551,8 @@
         "poisson1989",
         "chan1996",
         "horowitz1998",
-        "visser1998"
+        "visser1998",
+        "achucarro1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz.json",
@@ -4014,6 +4026,11 @@
           "id": "string_bh_three_four_charges",
           "kind": "limit_source",
           "text": "The extreme black holes of string theory end in this throat, in the limit toward the horizon. Strominger and Vafa's hole of five dimensions has the same throat with a 3-sphere [strominger1996]."
+        },
+        {
+          "id": "jackiw_teitelboim_black_hole",
+          "kind": "family",
+          "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions, whose metric is anti-de Sitter space of two dimensions with a dilaton that marks a horizon. With no horizon and its curvature radius set to $b$, its static chart is the plane of $t$ and $r$ of Bertotti and Robinson's static chart."
         }
       ],
       "references": [
@@ -22318,6 +22335,315 @@
       ]
     },
     {
+      "id": "jackiw_teitelboim_black_hole",
+      "name": "Jackiw-Teitelboim Black Hole",
+      "short_name": "Jackiw-Teitelboim",
+      "description": "A black hole in two spacetime dimensions, in the gravity of Teitelboim and Jackiw, where a scalar field, the dilaton, holds the curvature at $R = -2/L^2$. Every solution is a piece of anti-de Sitter space of two dimensions, and the dilaton tells the black hole from empty space: its value on the horizon is the entropy. The same gravity governs the throat of a nearly extreme charged black hole, and in it the quantum mechanics of a black hole can be solved exactly.",
+      "tags": [
+        "black hole",
+        "two-dimensional",
+        "dilaton",
+        "dilaton gravity",
+        "Jackiw-Teitelboim gravity",
+        "lower-dimensional gravity",
+        "anti-de Sitter",
+        "constant curvature",
+        "Hawking radiation",
+        "Hawking temperature",
+        "black hole thermodynamics",
+        "black hole entropy",
+        "holography",
+        "AdS/CFT",
+        "information paradox",
+        "Page curve",
+        "horizon",
+        "event horizon",
+        "Kruskal extension",
+        "Euclidean black hole",
+        "exact solution",
+        "Lorentzian",
+        "idealized model",
+        "Einstein space",
+        "cosmological constant",
+        "negative cosmological constant",
+        "conformally flat",
+        "static",
+        "stationary"
+      ],
+      "signature": "(-,+)",
+      "convention": "We keep factors of $c$ explicit. The metric and the dilaton $\\phi$ solve $R = -2/L^2$ and $\\nabla_\\mu\\nabla_\\nu\\phi - g_{\\mu\\nu}\\nabla^2\\phi + g_{\\mu\\nu}\\phi/L^2 = 0$, with $\\phi_r$ a length that sets the strength of the dilaton. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "rn_metric",
+          "kind": "limit_source",
+          "text": "The charged black hole of Reissner and Nordström. Hold its charge fixed, bring its mass down toward the charge, and zoom in on the horizon: in that limit its plane of $t$ and $r$ is this black hole, with the area of the sphere as the dilaton [mertens2023]."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "family",
+          "text": "Anti-de Sitter space of two dimensions times a sphere, the throat of an extreme charged black hole. Its plane of $t$ and $r$ is the static chart of this black hole at $r_h = 0$ and $L = b$."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "The black hole of three dimensions. Without rotation it is this black hole times a circle whose radius is the dilaton, the reduction of Achúcarro and Ortiz [achucarro1993]."
+        },
+        {
+          "id": "witten_black_hole",
+          "kind": "family",
+          "text": "The black hole of string theory in two dimensions, another solution of gravity with a dilaton. Its curvature grows without bound at a singularity behind its horizon."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "family",
+          "text": "Anti-de Sitter space in four dimensions. Every piece of this black hole is a piece of its version in two dimensions, with the same constant negative curvature [mertens2023]."
+        },
+        {
+          "id": "near_horizon_extreme_kerr",
+          "kind": "family",
+          "text": "The throat of the extreme Kerr black hole, anti-de Sitter space of two dimensions with a deformed sphere twisted over it. Its near-NHEK chart carries $r(r - 2k)$ where the static chart of this black hole has $r^2 - r_h^2$, the same factor after a shift of $r$ by $k$."
+        }
+      ],
+      "references": [
+        "mertens2023",
+        "teitelboim1983",
+        "jackiw1985",
+        "maldacena2016",
+        "brown1986black",
+        "lemos1994",
+        "achucarro1993",
+        "almheiri2015",
+        "almheiri2020"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/jackiw_teitelboim_black_hole.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Static",
+          "coordinates": [
+            "t",
+            "r"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "r = r_h \\;\\text{(the horizon)}",
+            "r = 0 \\;\\text{(where the dilaton vanishes)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "The radius of curvature, a length; the Ricci scalar is $-2/L^2$ everywhere"
+            },
+            {
+              "symbol": "r_h",
+              "description": "The radius of the horizon, a length; the Hawking temperature is $\\hbar c\\,r_h/2\\pi k_BL^2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r)$, with $t$ carrying dimensions of time and $r$ a length, and the dilaton is $\\phi = \\phi_rr/L^2$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the derivative of $ct$.",
+          "line_element": "ds^2 = -\\dfrac{r^2 - r_h^2}{L^2}\\,c^2dt^2 + \\dfrac{L^2}{r^2 - r_h^2}\\,dr^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r^2 - r_h^2}{L^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{L^2}{r^2 - r_h^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2}{L^2}",
+          "kretschmann": "K = \\dfrac{4}{L^4}"
+        },
+        {
+          "id": "proper_distance",
+          "name": "Proper Distance",
+          "coordinates": [
+            "t",
+            "\\rho"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\infty)",
+            "\\rho = 0 \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "The radius of curvature, a length; the Ricci scalar is $-2/L^2$ everywhere"
+            },
+            {
+              "symbol": "r_h",
+              "description": "The radius of the horizon, a length; the Hawking temperature is $\\hbar c\\,r_h/2\\pi k_BL^2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho)$, with $t$ carrying dimensions of time and $\\rho$ the proper distance from the horizon, and the dilaton is $\\phi = \\phi_rr_h\\cosh(\\rho/L)/L^2$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the derivative of $ct$.",
+          "line_element": "ds^2 = -\\dfrac{r_h^2}{L^2}\\sinh^2(\\rho/L)\\,c^2dt^2 + d\\rho^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r_h^2}{L^2}\\sinh^2(\\rho/L)"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2}{L^2}",
+          "kretschmann": "K = \\dfrac{4}{L^4}"
+        },
+        {
+          "id": "kruskal",
+          "name": "Kruskal",
+          "coordinates": [
+            "U",
+            "V"
+          ],
+          "domains": [
+            "U \\in (-\\infty, \\infty)",
+            "V \\in (-\\infty, \\infty)",
+            "-1 < UV < 1",
+            "UV = 0 \\;\\text{(the horizons)}",
+            "UV = -1 \\;\\text{(the two boundaries)}",
+            "UV = 1 \\;\\text{(where the dilaton vanishes)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "The radius of curvature, a length; the Ricci scalar is $-2/L^2$ everywhere"
+            },
+            {
+              "symbol": "r_h",
+              "description": "The radius of the horizon, a length; the Hawking temperature is $\\hbar c\\,r_h/2\\pi k_BL^2$"
+            }
+          ],
+          "convention": "We use null coordinates $(U, V)$, both dimensionless, and the dilaton is $\\phi = \\phi_rr_h(1 - UV)/L^2(1 + UV)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\dfrac{4L^2\\,dU\\,dV}{\\left(1 + UV\\right)^2}",
+          "metric_components": [
+            {
+              "indices": [
+                "U",
+                "V"
+              ],
+              "value": "-\\dfrac{2L^2}{\\left(1 + U\\,V\\right)^2}"
+            },
+            {
+              "indices": [
+                "V",
+                "U"
+              ],
+              "value": "-\\dfrac{2L^2}{\\left(1 + U\\,V\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2}{L^2}",
+          "kretschmann": "K = \\dfrac{4}{L^4}"
+        },
+        {
+          "id": "global",
+          "name": "Global",
+          "coordinates": [
+            "\\tau",
+            "\\sigma"
+          ],
+          "domains": [
+            "\\tau \\in (-\\pi/2, \\pi/2)",
+            "\\sigma \\in (0, \\pi)",
+            "|\\tau| = |\\sigma - \\pi/2| \\;\\text{(the horizons)}",
+            "\\sigma = 0, \\pi \\;\\text{(the two boundaries)}",
+            "\\tau = \\pm\\pi/2 \\;\\text{(where the dilaton vanishes)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "The radius of curvature, a length; the Ricci scalar is $-2/L^2$ everywhere"
+            },
+            {
+              "symbol": "r_h",
+              "description": "The radius of the horizon, a length; the Hawking temperature is $\\hbar c\\,r_h/2\\pi k_BL^2$"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, \\sigma)$, both dimensionless, and the dilaton is $\\phi = \\phi_rr_h\\cos\\tau/L^2\\sin\\sigma$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{L^2}{\\sin^2\\sigma}\\left(-d\\tau^2 + d\\sigma^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-L^2\\csc^2\\sigma"
+            },
+            {
+              "indices": [
+                "\\sigma",
+                "\\sigma"
+              ],
+              "value": "L^2\\csc^2\\sigma"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2}{L^2}",
+          "kretschmann": "K = \\dfrac{4}{L^4}"
+        },
+        {
+          "id": "poincare",
+          "name": "Poincaré",
+          "coordinates": [
+            "T",
+            "z"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "z \\in (0, \\infty)",
+            "c^2T^2 - z^2 < 4L^4/r_h^2",
+            "cT + z = 2L^2/r_h \\;\\text{and}\\; cT - z = -2L^2/r_h \\;\\text{(the horizons)}",
+            "z = 0 \\;\\text{(the boundary)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "The radius of curvature, a length; the Ricci scalar is $-2/L^2$ everywhere"
+            },
+            {
+              "symbol": "r_h",
+              "description": "The radius of the horizon, a length; the Hawking temperature is $\\hbar c\\,r_h/2\\pi k_BL^2$"
+            }
+          ],
+          "convention": "We use coordinates $(T, z)$, with $T$ carrying dimensions of time and $z$ a length, and the dilaton is $\\phi = \\phi_r\\left(1 - r_h^2(c^2T^2 - z^2)/4L^4\\right)/z$. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ is the derivative of $cT$.",
+          "line_element": "ds^2 = \\dfrac{L^2}{z^2}\\left(-c^2dT^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\dfrac{L^2}{z^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{L^2}{z^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2}{L^2}",
+          "kretschmann": "K = \\dfrac{4}{L^4}"
+        }
+      ]
+    },
+    {
       "id": "kaluza_klein_black_hole",
       "name": "Kaluza-Klein Black Holes",
       "short_name": "Kaluza-Klein Black Holes",
@@ -36145,6 +36471,11 @@
           "id": "neugebauer_meinel",
           "kind": "family",
           "text": "A spinning disc of dust at the end of its family, $\\mu = \\mu_0$. The space around the disc becomes this throat far from it, as Bardeen and Wagoner found numerically in 1971 and Meinel showed from the exact solution [bardeen1971, meinel2002]."
+        },
+        {
+          "id": "jackiw_teitelboim_black_hole",
+          "kind": "family",
+          "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions. Its static chart carries the factor of the near-NHEK chart, $r(r - 2k)$, after a shift of $r$ by $k$."
         }
       ],
       "references": [
@@ -40947,6 +41278,11 @@
           "id": "string_bh_three_four_charges",
           "kind": "generalisation",
           "text": "Reissner and Nordström's charge split into four kinds, each with a harmonic function of its own. With the four charges equal it is this black hole again [horowitz1996four]."
+        },
+        {
+          "id": "jackiw_teitelboim_black_hole",
+          "kind": "limit",
+          "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions. Bring the mass down toward the charge and zoom in on the horizon: in that limit the plane of $t$ and $r$ becomes that black hole, with the area of the sphere as its dilaton [mertens2023]."
         }
       ],
       "references": [
@@ -40992,7 +41328,8 @@
         "arnowitt1960",
         "krasinski2012",
         "bonnor1975",
-        "horowitz1996four"
+        "horowitz1996four",
+        "mertens2023"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -53514,6 +53851,11 @@
           "id": "moving_mirror",
           "kind": "family",
           "text": "Hawking's radiation in two dimensions with the gravity taken out: flat spacetime ending at a mirror whose world line closes on a light ray. Its radiation, like this hole's, has a temperature set by one constant of the model [davies1977, good2016]."
+        },
+        {
+          "id": "jackiw_teitelboim_black_hole",
+          "kind": "family",
+          "text": "The black hole of Jackiw and Teitelboim's gravity, another gravity with a dilaton in two dimensions. Its curvature is the same negative constant everywhere, and its temperature grows with the size of its horizon."
         }
       ],
       "references": [

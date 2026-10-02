@@ -16,8 +16,8 @@ born_infeld_charge, penrose_impulsive_wave, exponential_metric, bondi_sachs, pet
 rp3_geon, kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kasner_scalar,
 moving_mirror, gravitational_instantons, small_universes, misner_zapolsky, distorted_schwarzschild,
 cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_bodies,
-tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin and
-string_bh_three_four_charges, and Godel's cylindrical chart.
+tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
+string_bh_three_four_charges and jackiw_teitelboim_black_hole, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -39,8 +39,8 @@ majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photo
 witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, mass_inflation.md,
 kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_star.md,
 misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, petrov_homogeneous.md,
-brill_waves.md, gravitational_instantons.md, brans_dicke_sphere.md, tilted_universes.md, bowers_liang.md
-and kerr_melvin.md beside this file.
+brill_waves.md, gravitational_instantons.md, brans_dicke_sphere.md, tilted_universes.md, bowers_liang.md,
+kerr_melvin.md and jackiw_teitelboim_black_hole.md beside this file.
 """
 import argparse
 import fcntl
@@ -11633,6 +11633,205 @@ def witten_black_hole_check(chart, system):
 
 
 CHARTS["witten_black_hole"] = [lambda s=s: witten_black_hole(s) for s in WITTEN_CHARTS]
+
+# -- The black hole of Jackiw and Teitelboim's gravity in two dimensions -------------------
+
+JT_CHARTS = ["static", "proper_distance", "kruskal", "global", "poincare"]
+JT_REALS = "(-\\infty, \\infty)"
+
+
+def jackiw_teitelboim_black_hole(system):
+    """The black hole of Jackiw and Teitelboim's gravity, R = -2/L^2 with the dilaton phi, in five
+    charts. The static chart is Lemos and Sa's (8), ds^2 = -(a^2 r^2 - 1) dt^2 + dr^2/(a^2 r^2 - 1),
+    and Almheiri and Polchinski's Schwarzschild coordinates, here with the curvature radius L and
+    the horizon r_h written out, -(r^2 - r_h^2)/L^2 and phi = phi_r r/L^2\\; the proper distance chart
+    is Lemos and Sa's unitary gauge, their (6), and Maldacena, Stanford and Yang's (tau, rho), with
+    r = r_h cosh(rho/L)\\; the Kruskal chart is Lemos and Sa's U = -e^(-a t) sqrt((ar - 1)/(ar + 1)),
+    V = e^(a t) sqrt((ar - 1)/(ar + 1)), with a = r_h/L^2, whose metric is -4L^2 dU dV/(1 + UV)^2\\;
+    the global chart is the strip (-dnu^2 + dsigma^2)/sin^2(sigma) of Maldacena, Stanford and Yang,
+    with Almheiri and Polchinski's black hole carried into it by their own map w = tan x,
+    phi proportional to cos(tau)/sin(sigma)\\; and the Poincare chart is (-dt^2 + dz^2)/z^2 with
+    the same black hole, phi = phi_r (1 - r_h^2 (c^2T^2 - z^2)/4L^4)/z. Each is printed factored,
+    the proper distance chart in sinh and cosh of rho/L. jackiw_teitelboim_check holds every chart
+    to R = -2/L^2, its dilaton to the dilaton equation and to the mass phi^2 - L^2 (D phi)^2 =
+    phi_r^2 r_h^2/L^4, and each after the first to being the static chart pulled back, and
+    jackiw_teitelboim_black_hole.md beside this file is the derivation."""
+    parameters = ["L", "r_h"]
+    if system == "static":
+        name, coords = "Static", ["t", "r"]
+        domains = ["t \\in " + JT_REALS, "r \\in (0, \\infty)", "r = r_h \\;\\text{(the horizon)}",
+                   "r = 0 \\;\\text{(where the dilaton vanishes)}"]
+
+        def line(c2):
+            return (f"ds^2 = -\\dfrac{{r^2 - r_h^2}}{{L^2}}\\,{c2}dt^2"
+                    " + \\dfrac{L^2}{r^2 - r_h^2}\\,dr^2")
+        probe = vm.Reader(coords, parameters, ())
+        L, rh, r = probe.parameters["L"], probe.parameters["r_h"], probe.symbol["r"]
+        printer = {"lead": [r, rh, L], "factors": [L, rh, r], "flip": False}
+        pretty = sp.factor
+        components = {"metric_components": {("t", "t"): "-\\dfrac{r^2 - r_h^2}{L^2}",
+                                            ("r", "r"): "\\dfrac{L^2}{r^2 - r_h^2}"},
+                      "inverse_metric_components": {("t", "t"): "-\\dfrac{L^2}{r^2 - r_h^2}",
+                                                    ("r", "r"): "\\dfrac{r^2 - r_h^2}{L^2}"}}
+    elif system == "proper_distance":
+        name, coords = "Proper Distance", ["t", "\\rho"]
+        domains = ["t \\in " + JT_REALS, "\\rho \\in (0, \\infty)", "\\rho = 0 \\;\\text{(the horizon)}"]
+
+        def line(c2):
+            return f"ds^2 = -\\dfrac{{r_h^2}}{{L^2}}\\sinh^2(\\rho/L)\\,{c2}dt^2 + d\\rho^2"
+        probe = vm.Reader(coords, parameters, ())
+        L, rh, rho = probe.parameters["L"], probe.parameters["r_h"], probe.symbol["\\rho"]
+        printer = {"lead": [rh, L], "factors": [L, rh], "flip": False}
+        pretty = cp.hyperbolic(rho / L)
+        components = {"metric_components": {("t", "t"): "-\\dfrac{r_h^2}{L^2}\\sinh^2(\\rho/L)"},
+                      "inverse_metric_components": {("t", "t"): "-\\dfrac{L^2}{r_h^2\\sinh^2(\\rho/L)}"}}
+    elif system == "kruskal":
+        name, coords = "Kruskal", ["U", "V"]
+        domains = ["U \\in " + JT_REALS, "V \\in " + JT_REALS, "-1 < UV < 1",
+                   "UV = 0 \\;\\text{(the horizons)}", "UV = -1 \\;\\text{(the two boundaries)}",
+                   "UV = 1 \\;\\text{(where the dilaton vanishes)}"]
+
+        def line(c2):
+            return "ds^2 = -\\dfrac{4L^2\\,dU\\,dV}{\\left(1 + UV\\right)^2}"
+        probe = vm.Reader(coords, parameters, ())
+        L, U, V = probe.parameters["L"], probe.symbol["U"], probe.symbol["V"]
+        printer = {"lead": [U, V, L], "factors": [L, U, V], "rising": [U], "flip": False}
+        pretty = sp.factor
+        components = {}
+    elif system == "global":
+        name, coords = "Global", ["\\tau", "\\sigma"]
+        domains = ["\\tau \\in (-\\pi/2, \\pi/2)", "\\sigma \\in (0, \\pi)",
+                   "|\\tau| = |\\sigma - \\pi/2| \\;\\text{(the horizons)}",
+                   "\\sigma = 0, \\pi \\;\\text{(the two boundaries)}",
+                   "\\tau = \\pm\\pi/2 \\;\\text{(where the dilaton vanishes)}"]
+
+        def line(c2):
+            return "ds^2 = \\dfrac{L^2}{\\sin^2\\sigma}\\left(-d\\tau^2 + d\\sigma^2\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        L = probe.parameters["L"]
+        printer = {"lead": [L], "factors": [L], "flip": False}
+        pretty = sp.factor
+        components = {}
+    else:
+        name, coords = "Poincaré", ["T", "z"]
+        domains = ["T \\in " + JT_REALS, "z \\in (0, \\infty)", "c^2T^2 - z^2 < 4L^4/r_h^2",
+                   "cT + z = 2L^2/r_h \\;\\text{and}\\; cT - z = -2L^2/r_h \\;\\text{(the horizons)}",
+                   "z = 0 \\;\\text{(the boundary)}"]
+
+        def line(c2):
+            return f"ds^2 = \\dfrac{{L^2}}{{z^2}}\\left(-{c2}dT^2 + dz^2\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        L, z = probe.parameters["L"], probe.symbol["z"]
+        printer = {"lead": [z, L], "factors": [L, z], "flip": False}
+        pretty = sp.factor
+        components = {}
+    return {
+        "metric_id": "jackiw_teitelboim_black_hole",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "pretty": pretty,
+        "components": components,
+        "ricci_scalar": "-\\dfrac{2}{L^2}",
+        "kretschmann": "\\dfrac{4}{L^4}",
+        "check": lambda chart: jackiw_teitelboim_check(chart, system),
+        # The printer factors r^2 - r_h^2 into its two linear factors; the static chart keeps it whole.
+        "rewrite": [("{\\left(r + r_h\\right)\\left(r - r_h\\right)}", "{r^2 - r_h^2}"),
+                    ("\\left(r + r_h\\right)\\left(r - r_h\\right)", "\\left(r^2 - r_h^2\\right)")],
+    }
+
+
+def jackiw_teitelboim_dilaton(system, a, b, L, rh, phi_r):
+    """The dilaton of each chart, in the chart's own symbols a and b, with x^0 = ct or cT."""
+    return {
+        "static": lambda: phi_r * b / L ** 2,
+        "proper_distance": lambda: phi_r * rh * sp.cosh(b / L) / L ** 2,
+        "kruskal": lambda: phi_r * rh * (1 - a * b) / (L ** 2 * (1 + a * b)),
+        "global": lambda: phi_r * rh * sp.cos(a) / (L ** 2 * sp.sin(b)),
+        "poincare": lambda: phi_r * (1 - rh ** 2 * (a ** 2 - b ** 2) / (4 * L ** 4)) / b,
+    }[system]()
+
+
+def jackiw_teitelboim_check(chart, system):
+    """Every chart has R = -2/L^2, the field equation Teitelboim and Jackiw's dilaton imposes, and
+    its dilaton solves the equation the metric imposes on it, D_a D_b phi - g_ab D^2 phi + g_ab
+    phi/L^2 = 0, as Maldacena, Stanford and Yang write it with L written out; the dilaton's mass
+    phi^2 - L^2 (D phi)^2 is phi_r^2 r_h^2/L^4 in every chart, so that each is the one black hole\\;
+    its Einstein tensor vanishes, as every Einstein tensor in two dimensions does\\; K = R^2\\; and the
+    static chart, carried along the map into each other chart, is that chart's metric, with the
+    dilaton carried along with it. The maps go through the embedding of the hyperboloid
+    -X_0^2 - X_1^2 + X_2^2 = -L^2, where phi = phi_r r_h X_0/L^3: the static chart's
+    X_0 = L r/r_h, X_1 = L sqrt(r^2 - r_h^2) sinh(r_h x^0/L^2)/r_h and
+    X_2 = L sqrt(r^2 - r_h^2) cosh(r_h x^0/L^2)/r_h for r > r_h."""
+    a, b = chart.symbols
+    P = chart.reader.parameters
+    L, rh = P["L"], P["r_h"]
+    phi_r = sp.Symbol("JTphir", positive=True)
+    g, ginv = chart.geo.g, chart.geo.ginv
+    if vm.norm(chart.geo.ricci_scalar() + 2 / L ** 2) != 0:
+        raise AssertionError(f"jackiw_teitelboim_black_hole: R is not -2/L^2 in the {system} chart")
+    if vm.norm(chart.geo.kretschmann() - chart.geo.ricci_scalar() ** 2) != 0:
+        raise AssertionError(f"jackiw_teitelboim_black_hole: K is not R^2 in the {system} chart")
+    for i in range(2):
+        for j in range(2):
+            if chart.geo.einstein_ll()[i][j] != 0:
+                raise AssertionError(f"jackiw_teitelboim_black_hole: the Einstein tensor of the {system} "
+                                     "chart does not vanish")
+    phi = jackiw_teitelboim_dilaton(system, a, b, L, rh, phi_r)
+    gamma = chart.geo.christoffel_ull()
+    d = [sp.diff(phi, s) for s in chart.symbols]
+    hessian = [[sp.diff(phi, chart.symbols[i], chart.symbols[j])
+                - sum(gamma[k][i][j] * d[k] for k in range(2)) for j in range(2)] for i in range(2)]
+    box = sum(ginv[i, j] * hessian[i][j] for i in range(2) for j in range(2))
+    for i in range(2):
+        for j in range(2):
+            if sp.simplify((hessian[i][j] - g[i, j] * box + g[i, j] * phi / L ** 2).rewrite(sp.exp)) != 0:
+                raise AssertionError(f"jackiw_teitelboim_black_hole: the dilaton equation fails in slot "
+                                     f"{(i, j)} of the {system} chart")
+    square = sum(ginv[i, j] * d[i] * d[j] for i in range(2) for j in range(2))
+    if sp.simplify((phi ** 2 - L ** 2 * square - phi_r ** 2 * rh ** 2 / L ** 4).rewrite(sp.exp)) != 0:
+        raise AssertionError(f"jackiw_teitelboim_black_hole: the dilaton of the {system} chart is not the "
+                             "black hole of horizon r_h")
+    if system == "static":
+        return
+    # The map from the static chart, x^0 = T and r = R > r_h, into this one, through the embedding.
+    T, R = sp.symbols("JTT JTR", positive=True)
+    Lp, Rh = sp.symbols("JTL JTRh", positive=True)
+    k = Rh / Lp ** 2
+    root = sp.sqrt((R - Rh) / (R + Rh))
+    X0 = Lp * R / Rh
+    X1 = Lp * sp.sqrt(R ** 2 - Rh ** 2) * sp.sinh(k * T) / Rh
+    X2 = Lp * sp.sqrt(R ** 2 - Rh ** 2) * sp.cosh(k * T) / Rh
+    image = {
+        "proper_distance": (T, Lp * sp.acosh(R / Rh)),
+        "kruskal": (-sp.exp(-k * T) * root, sp.exp(k * T) * root),
+        # The global chart's X_0 = L cos(tau)/sin(sigma), X_1 = L sin(tau)/sin(sigma) and
+        # X_2 = -L cot(sigma), so the exterior r > r_h lies in sigma > pi/2.
+        "global": (sp.atan2(X1, X0), sp.pi - sp.acot(X2 / Lp)),
+        # The Poincare chart's X_0 = L^3/(r_h z) - r_h (c^2T^2 - z^2)/(4 L z), X_1 = L cT/z and
+        # X_2 = L^3/(r_h z) + r_h (c^2T^2 - z^2)/(4 L z), so z = 2L^3/r_h(X_0 + X_2) and cT = z X_1/L.
+        "poincare": (2 * Lp ** 2 * X1 / (Rh * (X0 + X2)), 2 * Lp ** 3 / (Rh * (X0 + X2))),
+    }[system]
+    J = sp.Matrix([[sp.diff(f, s) for s in (T, R)] for f in image])
+    at = g.subs({L: Lp, rh: Rh}).subs(dict(zip((a, b), image)), simultaneous=True)
+    pulled = J.T * at * J
+    f = (R ** 2 - Rh ** 2) / Lp ** 2
+    own = sp.diag(-f, 1 / f)
+    point = {T: sp.Rational(3, 7), R: sp.Rational(5, 2), Lp: sp.Rational(4, 3), Rh: sp.Rational(6, 5), phi_r: 1}
+    for i in range(2):
+        for j in range(2):
+            gap = sp.simplify((pulled[i, j] - own[i, j]).rewrite(sp.exp))
+            if gap != 0 and abs(sp.N(gap.subs(point), 40)) > 1e-30:
+                raise AssertionError(f"jackiw_teitelboim_black_hole: the static chart carried into the {system} "
+                                     f"chart misses its metric in slot {(i, j)}")
+    carried = jackiw_teitelboim_dilaton(system, *image, Lp, Rh, phi_r)
+    if abs(sp.N((carried - phi_r * R / Lp ** 2).subs(point), 40)) > 1e-30:
+        raise AssertionError(f"jackiw_teitelboim_black_hole: the static chart's dilaton carried into the "
+                             f"{system} chart misses its own")
+
+
+CHARTS["jackiw_teitelboim_black_hole"] = [lambda s=s: jackiw_teitelboim_black_hole(s) for s in JT_CHARTS]
 
 # -- Som and Raychaudhuri's rotating universe ---------------------------------------------
 

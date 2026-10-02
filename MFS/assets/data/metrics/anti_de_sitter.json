@@ -132,6 +132,11 @@
       "id": "plebanski_hacyan",
       "kind": "family",
       "text": "Products that keep anti-de Sitter space of two dimensions as one factor, times a flat plane with a uniform electromagnetic field or times a hyperbolic plane with none [ortaggio2002direct]."
+    },
+    {
+      "id": "jackiw_teitelboim_black_hole",
+      "kind": "family",
+      "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions. Its metric is everywhere anti-de Sitter space of two dimensions, and a dilaton marks its horizon [mertens2023]."
     }
   ],
   "references": [
@@ -177,7 +182,8 @@
     "son2008",
     "bicak1999",
     "griffiths2004",
-    "ortaggio2002direct"
+    "ortaggio2002direct",
+    "mertens2023"
   ],
   "coordinates": [
     {

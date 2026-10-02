@@ -6386,6 +6386,59 @@ def witten_black_hole(ck, src):
                           "the angle $\\theta = i\\lambda ct$.")]
 
 
+def jackiw_teitelboim_black_hole(ck, src):
+    """The Euclidean section of the black hole of Jackiw and Teitelboim's gravity, at L = r_h = 1,
+    read in the proper distance chart. With t = -i theta L^2/(r_h c) the metric
+    -(r_h/L)^2 sinh^2(rho/L) c^2 dt^2 + d rho^2 is d rho^2 + L^2 sinh^2(rho/L) d theta^2, the
+    hyperbolic plane of curvature -1/L^2, which the slice reaches by sweeping t = -i phi: g_phiphi
+    is then -g_tt, positive, and the surface of rho and theta is a surface of revolution with circles
+    of radius L sinh(rho/L). Its circles grow as cosh(rho/L), faster than the distance out to them at
+    every rho > 0, which is checked, so no surface of revolution in flat space carries it, and in
+    Minkowski space it is the sheet Z = L cosh(rho/L) - L of a hyperboloid, as the hyperbolic horizon
+    of the topological black holes is. It closes smoothly at the horizon rho = 0, where
+    d(radius)/ds = 1, which is what fixes the period 2 pi of theta, and so the temperature. The
+    meridians theta = 0 and theta = pi are the moment t = 0 on the two sides of the horizon, where
+    the Euclidean and the Lorentzian sections meet, so that moment is the one marked on the other
+    diagrams. Drawn to rho = 2L with the light cone the sheet nears."""
+    sl = Slice(src, "jackiw_teitelboim_black_hole", "proper_distance", "\\rho", "t", {}, {"L": 1, "r_h": 1},
+               swept={"t": "-I*t"}, space="minkowski")
+    flat = Slice(src, "jackiw_teitelboim_black_hole", "proper_distance", "\\rho", "t", {}, {"L": 1, "r_h": 1},
+                 swept={"t": "-I*t"})
+    ck.stops("Jackiw-Teitelboim black hole, the Euclidean disc in flat space", flat, np.linspace(1e-3, 6, 400))
+    top = 2.0
+    size = 2 * math.sinh(top)
+    disc = Piece("disc", "sheet", sl, 0.0, top, 0.0, 1,
+                 (("axis", "the horizon $\\rho = 0$, where the circle of $\\theta$ closes to a point"),
+                  ("edge", "the sheet runs on toward the light cone, to the boundary $\\rho \\to \\infty$")),
+                 [(r, "r", None) for r in (0.5, 1.0, 1.5, top)], size)
+    cone = FormPiece("cone", sl, np.linspace(0.0, top, 81), np.sinh, lambda r: np.sinh(r) - 1.0,
+                     (("apex", "the apex of the light cone, a distance $L$ below the horizon $\\rho = 0$"),
+                      ("edge", "the cone runs on")), size)
+    ck.isometry("Jackiw-Teitelboim black hole, the Euclidean disc", disc)
+    ck.form("Jackiw-Teitelboim black hole, the Euclidean disc: the hyperboloid Z = L cosh(rho/L) - L", disc,
+            lambda r: np.cosh(r) - 1, size)
+    ck.radius("Jackiw-Teitelboim black hole, the Euclidean disc: radius L sinh(rho/L)", disc, np.sinh, size)
+    tip = sl.slope(0.0, "+")
+    ck.add("Jackiw-Teitelboim black hole: the disc closes smoothly at the horizon, d(radius)/ds = 1",
+           float(abs(tip[0] - 1)), 1e-9)
+    ck.add("Jackiw-Teitelboim black hole: from rho = 0 to rho = 2 L is 2 L", abs(sl.proper(0.0, top) - top), 1e-9)
+    surface = Surface([disc, cone])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *disc.at(1.0), "$\\rho = L$")
+    ring_label(fig, [0, 0, 0], *disc.at(top), "$2L$")
+    fig.legend("fill", "cover", "the Euclidean section, which $\\rho$ and $\\theta$ cover")
+    fig.legend("line", "r", "$\\rho$ constant, at $L/2$, $L$, $3L/2$ and $2L$: the circle of Euclidean time")
+    fig.legend("line", "reference", "the light cone of the Minkowski space it is drawn in, which the sheet nears as "
+                                    "$\\rho \\to \\infty$")
+    fig.legend("line", "meridian", "$\\theta$ constant, every $15°$")
+    return [view("disc", "The Euclidean disc", "$L$", [surface], fig.done(),
+                 settings="$L = 1$, the unit of every length, and $r_h = L$, on the surface of $\\rho$ and the angle "
+                          "$\\theta = ir_hct/L^2$. Every length along the sheet is measured with $dX^2 + dY^2 - dZ^2$.",
+                 stops=["At every $\\rho > 0$ the circles grow faster than the distance out to them, as "
+                        "$\\cosh(\\rho/L)$, and no surface of revolution in flat space carries the disc; Minkowski "
+                        "space carries it."])]
+
+
 def vaidya(ck, src):
     """The imploding shell of radiation the conformal diagram draws: the ingoing chart with m = 0
     for v < 0 and M for v > 0, r_s = 2GM/c^2 = 1. A slice of constant v is null, so the moments
@@ -15332,6 +15385,7 @@ DRAWN = {
     "gravitational_instantons": gravitational_instantons,
     "kaluza_klein_black_hole": kaluza_klein_black_hole,
     "witten_black_hole": witten_black_hole,
+    "jackiw_teitelboim_black_hole": jackiw_teitelboim_black_hole,
     "myers_perry": myers_perry,
     "black_saturn": black_saturn,
     "dilaton_black_hole": dilaton_black_hole,
@@ -17160,6 +17214,19 @@ CAPTIONS = {
         "so the tip is as smooth as the pole of a sphere. The period $2\\pi$ of $\\theta$ is the one that "
         "makes it so, a period $2\\pi/\\lambda c$ of the Euclidean time, and its inverse is the Hawking "
         "temperature $\\hbar c\\lambda/2\\pi k_B$, the same for every mass.",
+        "The meridians $\\theta = 0$ and $\\theta = \\pi$ are the moment $t = 0$ on the two sides of the "
+        "horizon, the line along which the Euclidean section meets the black hole.",
+    ],
+    ("jackiw_teitelboim_black_hole", "disc"): [
+        "The Euclidean section of the black hole, drawn as a surface in three dimensional Minkowski space with "
+        "every distance along it the metric distance. With the time turned to the angle "
+        "$\\theta = ir_hct/L^2$ the metric is $d\\rho^2 + L^2\\sinh^2(\\rho/L)\\,d\\theta^2$, the hyperbolic "
+        "plane of curvature $-1/L^2$, so the circle at $\\rho$ has circumference $2\\pi L\\sinh(\\rho/L)$.",
+        "The circles grow faster than the distance out to them, so the disc stands in Minkowski space, on the "
+        "sheet $Z = L\\cosh(\\rho/L) - L$ of a hyperboloid that nears the light cone far out. At the horizon "
+        "$\\rho = 0$ the circle closes to a point as smoothly as the pole of a sphere, which fixes the period "
+        "$2\\pi$ of $\\theta$, a period $2\\pi L^2/r_hc$ of the Euclidean time, and its inverse is the Hawking "
+        "temperature $\\hbar c\\,r_h/2\\pi k_BL^2$.",
         "The meridians $\\theta = 0$ and $\\theta = \\pi$ are the moment $t = 0$ on the two sides of the "
         "horizon, the line along which the Euclidean section meets the black hole.",
     ],

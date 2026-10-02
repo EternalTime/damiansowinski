@@ -1499,6 +1499,9 @@ ROBERTS_CASES = {"disperses": ("$p = 9/10$", "9/10"), "threshold": ("$p = 1$", "
 # Witten's black hole in two dimensions in units of 1/lambda, at m = 1, where the horizon is x = 0
 # in the charts of x and w = 1 in the dilaton chart.
 WITTEN = {"lambda": 1, "m": 1}
+# The black hole of Jackiw and Teitelboim's gravity, drawn in units of its curvature radius with the
+# horizon at r_h = L.
+JT = {"L": 1, "r_h": 1}
 
 # Simpson and Visser's three geometries at r_s = 1: the black bounce, a = r_s/2, whose horizons are
 # r = +-sqrt(3)/2, the one way wormhole, a = r_s, and the traversable wormhole, a = 2 r_s.
@@ -3072,6 +3075,25 @@ DIAGRAMS = [
     Diagram("witten_black_hole", "eddington_finkelstein_outgoing", "finkelstein", "against $u + x$",
             ("u", "x"), (-1.5, 2.5, -2, 2), "$\\lambda x$", "$\\lambda(u + x)$", WITTEN,
             to_display=FINKELSTEIN_OUT, tau="u + x"),
+    # The black hole of Jackiw and Teitelboim's gravity at L = r_h = 1, in each of its five charts:
+    # the static chart through the horizon to r = 0, where the dilaton vanishes; the outside in the
+    # proper distance; the Kruskal plane between the boundaries UV = -1 and the lines UV = 1 where the
+    # dilaton vanishes; the global square between the two boundaries and tau = +-pi/2; and the
+    # Poincare patch, hatched beyond the hyperbola where the dilaton vanishes.
+    Diagram("jackiw_teitelboim_black_hole", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
+            "$r/L$", "$ct/L$", JT, orient="ingoing"),
+    Diagram("jackiw_teitelboim_black_hole", "proper_distance", "radial", "$t$ and $\\rho$", ("t", "\\rho"),
+            (0, 3, -1.5, 1.5), "$\\rho/L$", "$ct/L$", JT),
+    Diagram("jackiw_teitelboim_black_hole", "kruskal", "plane", "$U$ and $V$", ("U", "V"), (-2, 2, -2, 2),
+            "$(V - U)/2$", "$(U + V)/2$", JT, to_display=NULL_TO_TR, tau="U + V", families=SIDEWAYS,
+            where="(1 - U*V)*(1 + U*V)",
+            marked=(("shell", {"x0": "0", "r": "0"}, "both", "the horizons, $UV = 0$"),)),
+    Diagram("jackiw_teitelboim_black_hole", "global", "strip", "$\\tau$ and $\\sigma$", ("\\tau", "\\sigma"),
+            (0, math.pi, -math.pi / 2, math.pi / 2), "$\\sigma$", "$\\tau$", JT, tau="tau", where_is_infinity=True,
+            marked=(("shell", {"x0": "0", "r": "pi/2"}, "both", "the horizons, $|\\tau| = |\\sigma - \\pi/2|$"),)),
+    Diagram("jackiw_teitelboim_black_hole", "poincare", "tz", "$T$ and $z$", ("T", "z"), (0, 6, -3, 3),
+            "$z/L$", "$cT/L$", JT, tau="T", where="4 - T**2 + z**2",
+            marked=(("shell", {"x0": "0", "r": "2"}, "both", "the horizons"),)),
     # The moving mirror of Fulling and Davies at kappa = 1: see _mirror_rows.
     *_mirror_rows(),
     # Roberts's collapsing scalar field, one view for each of its three outcomes in each chart. The
@@ -7253,6 +7275,51 @@ CAPTIONS = {
         "hole, which nothing from outside can enter.",
         "The chart is the time reverse of the ingoing one: its $g_{ux}$ is $-1$ where the ingoing chart's "
         "$g_{vx}$ is $+1$.",
+    ],
+    ("jackiw_teitelboim_black_hole", "static", "radial"): [
+        "The plane of $t$ and $r$, drawn for $r_h = L$, each point in the diagram a single event. The edges of "
+        "the cones are $dr/d(ct) = \\pm(r^2 - r_h^2)/L^2$, so $ct \\mp r_*$ is constant along a ray, with "
+        "$r_* = (L^2/2r_h)\\ln|(r - r_h)/(r + r_h)|$.",
+        "Outside the horizon $r = r_h$ the cones close on it as $t \\to \\pm\\infty$ and open without limit "
+        "toward large $r$, where a ray reaches the boundary at a finite $t$. Inside the horizon $r$ is the time, "
+        "and we take the future from the cones that point to smaller $r$, the black hole, down to $r = 0$, where "
+        "the dilaton $\\phi = \\phi_rr/L^2$ vanishes. The Ricci scalar is $-2/L^2$ everywhere.",
+    ],
+    ("jackiw_teitelboim_black_hole", "proper_distance", "radial"): [
+        "The plane of $t$ and $\\rho$, drawn for $r_h = L$, each point in the diagram a single event. The edges "
+        "of the cones are $d\\rho/d(ct) = \\pm(r_h/L^2)\\sinh(\\rho/L)$, so "
+        "$ct \\mp (L^2/r_h)\\ln\\tanh(\\rho/2L)$ is constant along a ray.",
+        "The chart covers the outside of the horizon, the line $\\rho = 0$, a finite proper distance from every "
+        "event. Near it the metric is $-(r_h\\rho/L^2)^2c^2dt^2 + d\\rho^2$, Rindler's, and far from it the "
+        "cones open without limit as $\\rho$ grows.",
+    ],
+    ("jackiw_teitelboim_black_hole", "kruskal", "plane"): [
+        "The plane of $U$ and $V$, drawn with $(U + V)/2$ up and $(V - U)/2$ across, each point in the "
+        "diagram a single event. Only $g_{UV}$ is nonzero, so the light rays are the lines $U = $ const and "
+        "$V = $ const at 45°.",
+        "The horizons are the lines $UV = 0$. The hyperbolas $UV = -1$ on the left and right are the two "
+        "boundaries, each at an infinite proper distance, and the hyperbolas $UV = 1$ above and below are where "
+        "the dilaton $\\phi = \\phi_rr_h(1 - UV)/L^2(1 + UV)$ vanishes, with the metric regular across them. The "
+        "quadrant $U < 0 < V$ is the outside of the black hole, with $UV = -(r - r_h)/(r + r_h)$ in the static "
+        "chart, and the opposite quadrant is a second copy of it.",
+    ],
+    ("jackiw_teitelboim_black_hole", "global", "strip"): [
+        "The plane of $\\tau$ and $\\sigma$, each point in the diagram a single event. The metric is "
+        "$L^2/\\sin^2\\sigma$ times Minkowski's, so the light rays are the lines of constant "
+        "$\\tau \\pm \\sigma$, at 45°.",
+        "The edges $\\sigma = 0$ and $\\pi$ are the two boundaries of anti-de Sitter space, and the horizons of "
+        "the black hole are the diagonals $|\\tau| = |\\sigma - \\pi/2|$. The dilaton "
+        "$\\phi = \\phi_rr_h\\cos\\tau/L^2\\sin\\sigma$ vanishes on the top and bottom edges, "
+        "$\\tau = \\pm\\pi/2$, so the square holds both outsides, the black hole above and the white hole below.",
+    ],
+    ("jackiw_teitelboim_black_hole", "poincare", "tz"): [
+        "The plane of $T$ and $z$, drawn for $r_h = L$, each point in the diagram a single event. The metric is "
+        "$L^2/z^2$ times Minkowski's, so the light rays are the lines of constant $cT \\pm z$, at 45°.",
+        "The boundary is $z = 0$, and the horizons of the black hole are the rays $cT + z = 2L^2/r_h$ and "
+        "$cT - z = -2L^2/r_h$, which cross at $T = 0$, $z = 2L^2/r_h$. The dilaton "
+        "$\\phi = \\phi_r\\left(1 - r_h^2(c^2T^2 - z^2)/4L^4\\right)/z$ vanishes on the hyperbola "
+        "$c^2T^2 - z^2 = 4L^4/r_h^2$, and the chart reaches past the horizons into both interiors and a part of "
+        "the second outside.",
     ],
     **ROBERTS_CAPTIONS,
     ("einstein_rosen_bridge", "bridge", "radial"): [
@@ -14518,6 +14585,17 @@ CLOSED_FORMS = {
         (lambda v, x: v, lambda v, x: v - 2 * _witten_xstar(x), lambda v, x: np.abs(x) > 0.02),
     ("witten_black_hole", "eddington_finkelstein_outgoing", "finkelstein"):
         (lambda u, x: u + 2 * _witten_xstar(x), lambda u, x: u, lambda u, x: np.abs(x) > 0.02),
+    # The black hole of Jackiw and Teitelboim at L = r_h = 1: the tortoise coordinate is
+    # ln|(r - 1)/(r + 1)|/2 in the static chart and ln tanh(rho/2) in the proper distance, and the
+    # Kruskal, global and Poincare charts are conformally flat in their own coordinates.
+    ("jackiw_teitelboim_black_hole", "static", "radial"):
+        (lambda t, r: t + np.log(np.abs((r - 1) / (r + 1))) / 2, lambda t, r: t - np.log(np.abs((r - 1) / (r + 1))) / 2,
+         lambda t, r: np.abs(r - 1) > 0.02),
+    ("jackiw_teitelboim_black_hole", "proper_distance", "radial"):
+        (lambda t, p: t + np.log(np.tanh(p / 2)), lambda t, p: t - np.log(np.tanh(p / 2)), lambda t, p: p > 0.02),
+    ("jackiw_teitelboim_black_hole", "kruskal", "plane"): (lambda U, V: V, lambda U, V: U, None),
+    ("jackiw_teitelboim_black_hole", "global", "strip"): (lambda t, s: t + s, lambda t, s: t - s, None),
+    ("jackiw_teitelboim_black_hole", "poincare", "tz"): (lambda T, z: T + z, lambda T, z: T - z, None),
     # Roberts's collapse: the advanced and the retarded null coordinate v and u, in each chart's own coordinates.
     **{("roberts", "double_null", case): (lambda u, v: v, lambda u, v: u, None) for case in ROBERTS_CASES},
     # Hiscock's evaporating hole: an ingoing ray keeps v and an outgoing one u, whatever the mass
