@@ -84,7 +84,7 @@
       "parameters": [
         {
           "symbol": "R",
-          "description": "Radius of the three sphere, a length; for dust of density $\\rho$ the field equations with a cosmological constant $\\Lambda$ fix $\\Lambda = 1/R^2$ and $\\rho = c^2/(4\\pi GR^2)$"
+          "description": "Radius of the three sphere, a length, which makes the time dimensionless as $\\eta = ct/R$; for dust of density $\\rho$ the field equations with a cosmological constant $\\Lambda$ fix $\\Lambda = 1/R^2$ and $\\rho = c^2/(4\\pi GR^2)$"
         }
       ],
       "convention": "We use coordinates $(t, \\chi, \\theta, \\phi)$, with $t$ carrying dimensions of time and $\\chi$, $\\theta$, and $\\phi$ angles on the three sphere. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
@@ -767,7 +767,7 @@
       "parameters": [
         {
           "symbol": "R",
-          "description": "Radius of the three sphere, a length; for dust of density $\\rho$ the field equations with a cosmological constant $\\Lambda$ fix $\\Lambda = 1/R^2$ and $\\rho = c^2/(4\\pi GR^2)$"
+          "description": "Radius of the three sphere, a length, which makes the time dimensionless as $\\eta = ct/R$; for dust of density $\\rho$ the field equations with a cosmological constant $\\Lambda$ fix $\\Lambda = 1/R^2$ and $\\rho = c^2/(4\\pi GR^2)$"
         }
       ],
       "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r = R\\sin\\chi$ the areal radius, which covers the hemisphere $\\chi < \\pi/2$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
@@ -1466,7 +1466,7 @@
       "parameters": [
         {
           "symbol": "R",
-          "description": "Radius of the three sphere, a length; for dust of density $\\rho$ the field equations with a cosmological constant $\\Lambda$ fix $\\Lambda = 1/R^2$ and $\\rho = c^2/(4\\pi GR^2)$"
+          "description": "Radius of the three sphere, a length, which makes the time dimensionless as $\\eta = ct/R$; for dust of density $\\rho$ the field equations with a cosmological constant $\\Lambda$ fix $\\Lambda = 1/R^2$ and $\\rho = c^2/(4\\pi GR^2)$"
         }
       ],
       "convention": "We use Albert Einstein's coordinates of 1917, $(t, x, y, z)$, with $t$ carrying dimensions of time and $x$, $y$, and $z$ the lengths of the projection of the hemisphere $\\chi < \\pi/2$ onto its equatorial plane. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",

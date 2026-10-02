@@ -98,7 +98,7 @@
       "parameters": [
         {
           "symbol": "r_s",
-          "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+          "description": "Schwarzschild radius, $r_s = 2GM/c^2$ for a hole of mass $M$"
         },
         {
           "symbol": "r_d",
@@ -1521,7 +1521,7 @@
       "parameters": [
         {
           "symbol": "r_s",
-          "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+          "description": "Schwarzschild radius, $r_s = 2GM/c^2$ for a hole of mass $M$"
         },
         {
           "symbol": "r_d",
@@ -3432,7 +3432,7 @@
       "parameters": [
         {
           "symbol": "r_s",
-          "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+          "description": "Schwarzschild radius, $r_s = 2GM/c^2$ for a hole of mass $M$"
         },
         {
           "symbol": "r_d",
@@ -5343,7 +5343,7 @@
       "parameters": [
         {
           "symbol": "r_s",
-          "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+          "description": "Schwarzschild radius, $r_s = 2GM/c^2$ for a hole of mass $M$"
         },
         {
           "symbol": "r_d",
@@ -6766,7 +6766,7 @@
       "parameters": [
         {
           "symbol": "r_s",
-          "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+          "description": "Schwarzschild radius, $r_s = 2GM/c^2$ for a hole of mass $M$"
         },
         {
           "symbol": "r_d",

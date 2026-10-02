@@ -9,6 +9,7 @@ It needs `name` (the long title on the page), `short_name` (the label in the sea
 The search list is ordered by `short_name` alone, case and accents ignored, so Gödel sorts as Godel and de Sitter falls under D.
 There is no per entry sort field, and the build refuses a file that carries `sort_name`; a new spacetime takes its place from its name.
 Cite references by their key in `assets/data/references.bib`.
+Every symbol its mathematics and its drawings use is defined on its page, which the build refuses to go without; "Every symbol is defined" below gives the rule.
 
 Every entry cites each of its references in its `history`, as `[key]` or `[key1, key2]` at the point the prose leans on it, and lists them in `references` in the order they are first cited.
 The page turns those brackets into numbered links by looking the key up in `references`, so a square bracket in a history is always read as a citation and never printed.
@@ -310,6 +311,46 @@ Mathematics between dollar signs counts as one word, and ends a sentence only wh
 The command refuses to write anything, and `--check` fails, while any history is out of shape, naming each with the sentences in each of its paragraphs and the paragraph that breaks the rule.
 It refuses in the same way a chart with no convention of its own, a spacetime with no shared `convention` field, and a chart whose convention, shared text included, runs past five sentences, runs to a second paragraph, or says "cost", "slots", "nowhere does the geometry break", "standing objection" or "the Riemann tensor with the traces removed", naming the chart at fault.
 
+## Every symbol is defined
+
+A reader who meets a symbol in a chart's mathematics, on a drawing or in a caption can find what it means on the same page.
+The captain found Ori's time machine drawn in units of a length $\ell$ that nothing defined, beside the $L$ its metric uses for the period of $z$, on 1 October 2026, and asked for the rule to hold over the whole collection.
+
+    python3 _tools/symbols.py [spacetime ...]
+
+prints every symbol that nothing defines, with the chart or the drawing that uses it and the fields it stands in, and exits non-zero if there is one.
+`build_mfs_data.py` holds the same rule, so the command refuses to write and `--check` fails while a symbol is undefined, and `_tools/test_symbols.py` holds it to the files on disk.
+`_tools/symbols.py` is the rule itself, and its opening lines are the full statement of it.
+
+A chart defines its coordinates, the symbols of its parameters, every symbol in the mathematics of its convention and of the spacetime's shared convention, what a parameter's description defines, and what a domain names in its words, as in "(the closed null geodesic $N$)".
+A chart's own mathematics, its domains, line element, components, curvature and geodesics, is held to that chart alone, since the page shows one chart at a time.
+Every text of a drawing, its labels, axes, legends, settings, input, restriction and captions, is held to all the spacetime's charts together, since a caption may set one chart beside another.
+
+A drawing may also define a symbol that belongs to the picture and not to the metric, and a parameter's description may define one the same way.
+There are three ways, and `defined_in` in `symbols.py` gives each in full.
+An equation with the symbol alone on its left defines it: "$r_* = r + r_s\ln(r/r_s - 1)$", "$p, q = \arctan((ct \mp r)/\ell)$", "$dz/dr = \sqrt{r_s/(r - r_s)}$".
+A noun from the list `NAMING` right before the symbol defines it: "the height $z$", "for integer $k$", "the Kruskal coordinates $U$ and $V$".
+Saying what it is defines it: "with $\ell$ any length", "$\bar\rho$ is the mean density".
+A value alone, "$\ell = 1$", says how much and not what, so it defines a symbol only in a drawing's `settings` and `input`, the two lines that say what was drawn.
+
+A few symbols need no definition, and `symbols.py` lists every one with what it means.
+`UNIVERSAL` holds those that mean one thing on every page: $c$, $G$, $\hbar$, $k_B$, $M_\odot$, $\pi$, $e$, $i$, the differential $d$ and the interval $s$ of $ds^2$, $\partial$, $\nabla$, $\infty$, the metric $g$, the Christoffel symbols $\Gamma$, null infinity $\mathscr{I}$, the reals and the integers, and the spheres $S^1$, $S^2$ and $S^3$.
+The solid angle is universal as $d\Omega^2$ and a change as $\Delta v$; alone, $\Omega$ and $\Delta$ are ordinary symbols.
+`TENSORS` holds the letters that are universal only while they carry indices, $R$, $G$, $C$, $T$, $K$, $\delta$, $\eta$ and $\epsilon$, so a bare $R$ or $T$ still needs a definition.
+`DRAWN` holds the coordinates of a drawing's own chart: $T$ up and $X$ across a conformal diagram with its null coordinates $p$ and $q$, and the height $z$ and the Cartesian $X$, $Y$ and $Z$ of the flat space an embedding diagram stands in.
+A symbol goes on one of those lists only if it means the same thing on every page of the collection.
+
+A finding is mended in one of two ways, and never by adding to those lists what one spacetime needs.
+Where the symbol belongs to the metric, a chart defines it: in its convention, within the five sentences a convention has, or in a parameter's description, which no drawing's stamp covers.
+Where it belongs to one drawing, that drawing's own text defines it, and the same words go into the script that draws it, `null_rays.py`, `conformal.py`, `embedding.py` or `projections.py`, so that the next redraw writes them again.
+An embedding diagram's `settings` are part of the stamp its moments carry onto the other diagrams, so a definition there means redrawing their slices; its caption and its `input` are free.
+Where a spacetime uses one letter for two things, as Ori's page seemed to, the fix is to say so where the second is defined: its shared convention says the drawings take any length $\ell$ as their unit, while $L$ is always the period of $z$, as in Ori's paper.
+
+The check reads letters and not meanings, and three things pass it that a reader should still look for.
+Any symbol that appears in a convention counts as defined there, whatever the sentence says of it.
+One letter with two meanings in one spacetime passes as long as either is defined.
+A prime is passed over, so $r'$ is read as $r$.
+
 ## What the command writes
 
 `MFS/assets/data/metrics_index.json` is one entry per metric file, in the order the search list shows them, carrying `id`, `name`, `tags` and `version`.
@@ -336,6 +377,7 @@ reports whether the published files are still what the folder says they should b
     python3 -m unittest discover -s _tools
 
 runs the tests, which include that check.
+The check covers the symbols as well: "Every symbol is defined" above says what it refuses.
 
 ## Spacetime diagrams
 

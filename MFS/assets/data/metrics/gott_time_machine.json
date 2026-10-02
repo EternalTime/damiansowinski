@@ -117,7 +117,7 @@
         },
         {
           "symbol": "d",
-          "description": "Distance of each string from the plane $y = 0$ midway between them; the impact parameter is $2d$"
+          "description": "Distance of each string from the plane $y = 0$ midway between them; the impact parameter is $2d$, and the drawings take $d = \\ell/2$ with $\\ell$ their unit of length"
         },
         {
           "symbol": "\\alpha",
@@ -301,7 +301,7 @@
         },
         {
           "symbol": "d",
-          "description": "Distance of each string from the plane $y = 0$ midway between them; the impact parameter is $2d$"
+          "description": "Distance of each string from the plane $y = 0$ midway between them; the impact parameter is $2d$, and the drawings take $d = \\ell/2$ with $\\ell$ their unit of length"
         }
       ],
       "convention": "We use the coordinates $(t, r, \\phi, z)$ of the rest frame of the string on $y = d$, with $t$ the time of that frame, $r$ the proper distance from the string, $z$ the proper length along it, and $\\phi$ periodic in $2\\pi$, with the deficit carried by $g_{\\phi\\phi} = (1 - 4G\\mu/c^2)^2r^2$ and the other string in the direction $\\phi = \\pi$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
@@ -520,7 +520,7 @@
       "parameters": [
         {
           "symbol": "a",
-          "description": "Rapidity of the boost round both strings, $\\cosh(a/4) = \\gamma\\sin\\alpha$"
+          "description": "Rapidity of the boost round both strings, $\\cosh(a/4) = \\gamma\\sin\\alpha$; the integer $n$ counts circuits, and $n$ of them boost by $na$"
         },
         {
           "symbol": "b",
@@ -742,7 +742,7 @@
       "parameters": [
         {
           "symbol": "a",
-          "description": "Rapidity of the boost round both strings, $\\cosh(a/4) = \\gamma\\sin\\alpha$"
+          "description": "Rapidity of the boost round both strings, $\\cosh(a/4) = \\gamma\\sin\\alpha$; the integer $n$ counts circuits, and $n$ of them boost by $na$"
         },
         {
           "symbol": "b",

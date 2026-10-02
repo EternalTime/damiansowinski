@@ -454,7 +454,7 @@ def _er_pulse(t, rho):
             "gamma": f"(1 - 2*({rho})**2*{dm2}/{dp}**4 + (({rho})**2 - 1 - ({t})**2)/{dp})/2"}
 
 
-ER_INPUT = ("The pulse of Weber, Wheeler, and Bonnor, $\\psi = \\sqrt{2}\\,C\\sqrt{D_+ + a^2 + \\rho^2 - c^2t^2}/D_+$ "
+ER_INPUT = ("The pulse of Weber, Wheeler, and Bonnor, of width $a$: $\\psi = \\sqrt{2}\\,C\\sqrt{D_+ + a^2 + \\rho^2 - c^2t^2}/D_+$ "
             "and $\\gamma = \\tfrac{C^2}{2a^2}\\left(1 - 2a^2\\rho^2D_-^2/D_+^4 + (\\rho^2 - a^2 - c^2t^2)/D_+\\right)$, "
             "with $D_\\pm^2 = (a^2 + \\rho^2 - c^2t^2)^2 \\pm 4a^2c^2t^2$, at $C = a$, checked to solve this "
             "spacetime's own field equations.")
@@ -498,7 +498,7 @@ OS_DUST = {"funcs": ["a"], "eqs": [["\\chi", "\\chi"]], "rates": [0.0], "start":
 # The polytrope the conformal diagram declares, and what it makes of the star.
 POLYTROPE = {"K": 100, "rho_c": "1.28e-3"}
 POLYTROPE_INPUT = ("A polytrope, $p = K\\rho_0^2$ with rest mass density $\\rho_0$ and energy density "
-                   "$\\rho c^2 = \\rho_0c^2 + p$, at $K = 100$ and a central $\\rho_0 = 1.28\\times10^{-3}$ in "
+                   "$\\rho c^2$, where $\\rho = \\rho_0 + p/c^2$, at $K = 100$ and a central $\\rho_0 = 1.28\\times10^{-3}$ in "
                    "units where $G = c = M_\\odot = 1$, solved from this spacetime's own $G^t{}_t$ and "
                    "$G^r{}_r$: a star of $M = 1.40\\,M_\\odot$ and $R = 14.2$ km.")
 # Robinson and Trautman's fronts at u = 0: Macedo and Saa's prolate data, drawn at epsilon = 4/5.
@@ -514,7 +514,7 @@ ROCKET_BURN = {"alpha": f"2*sin(pi*{_ROCKET_U}/10)**2/25", "m": f"exp(-3*{_ROCKE
 ROCKET_FLIGHT = {"U_1": f"sinh({_ROCKET_W})", "U_2": "0*u", "U_3": "0*u", "m": f"exp(-3*{_ROCKET_W})"}
 ROCKET_INPUT = ("A burn from $u = 0$ to $cu = 10\\,m_0$ along the first axis, with the acceleration "
                 "$\\alpha = 2\\sin^2(\\pi cu/10m_0)/(25\\,m_0)$ and the rapidity $w = \\int\\alpha\\,c\\,du$, which ends at "
-                "$2/5$, a speed of $0.38\\,c$. The mass is $m = m_0e^{-3w}$, the least loss that keeps the density "
+                "$2/5$, a speed of $0.38\\,c$. The mass is $m = m_0e^{-3w}$ from the mass $m_0$ at the start, the least loss that keeps the density "
                 "of the radiation positive in every direction, and ends at $0.30\\,m_0$.")
 RT_FRONTS = {"epsilon": "4/5"}
 RT_INPUT = ("The first front $f(0, \\theta)^2 = f_0^2\\left(1 - \\epsilon^2\\cos^2\\theta\\right)$ at "
@@ -575,7 +575,7 @@ MCV_H = "coth(3*t/(2*sqrt(15)))/sqrt(15)"
 MCV_A = "sinh(3*t/(2*sqrt(15)))**Rational(2, 3)"
 MCV_INPUT = ("A universe of dust and a cosmological constant, $a = \\sinh^{2/3}(3H_0t/2)$ and "
              "$H = H_0\\coth(3H_0t/2)$, the expansion Kayll Lake and Majd Abdelqader chose, with "
-             "$H_0 = c/(\\sqrt{15}\\,r_s)$, which is $\\Lambda r_s^2 = 1/5$.")
+             "$H_0 = c/(\\sqrt{15}\\,r_s)$, which is $\\Lambda r_s^2 = 1/5$ for the cosmological constant $\\Lambda$.")
 
 # Gott's two strings at half deficit angle alpha = pi/3, 4 G mu/c^2 = 1/3, moving at v = 4c/5
 # with d = l/2, where gamma sin(alpha) = 5/(2 sqrt 3) > 1: the boost round both strings has
@@ -1309,9 +1309,9 @@ DIAGRAMS = [
     Diagram("natario", "cartesian_flow", "tx", "$t$ and $x$ on the axis", ("t", "x"), (-3, 3, -2, 2),
             "$x/R$", "$ct/R$", {}, {"y": "0", "z": "0"}, families=SIDEWAYS, cones=(8, 7),
             functions=_natario_field(),
-            input="$v_s = 2$, $n = f/2$ with Alcubierre's profile, and the zero expansion field "
+            input="$v_s = 2$, $n = f/2$ with Alcubierre's shape function $f$ for a bubble of radius $R$, and the zero expansion field "
                   "$X = v_s[(2n + \\rho n')\\,e_x - n'\\,x_r\\,(x_r, y, z)/\\rho]$, "
-                  "$x_r = x - v_s t$, whose divergence vanishes."),
+                  "$x_r = x - v_s t$, $\\rho^2 = x_r^2 + y^2 + z^2$, whose divergence vanishes."),
     Diagram("krasnikov", "cylindrical", "tx", "$t$ and $x$ on the axis", ("t", "x"), (-1, 5, -1, 5),
             "$x$", "$ct$", {}, {"r": "0", "phi": "0"}, orient="outgoing", families=SIDEWAYS,
             functions={"k": _KRASNIKOV_TUBE}, kretschmann=False, mark_g00=True,
@@ -1473,7 +1473,7 @@ DIAGRAMS = [
             lines=(("surface", "r", "1", "the surface of the cloud, $r = r_b$"),),
             marked=(("event", {"r": "11/10", "areal": "1/2"}, 1, "the event horizon"),),
             input="Marginally bound dust, $E = 0$, its density at $t = 0$ falling as $1 - r^2/r_b^2$ to "
-                  "zero at $r_b$, with $R(r, 0) = r$ and $2GM/c^2 = r_b/2$: each shell falls as "
+                  "zero at $r_b$, with $R(r, 0) = r$ and $2GM/c^2 = r_b/2$ for the mass $M$ of the cloud: each shell falls as "
                   "$R^{3/2} = r^{3/2} - \\tfrac{3}{2}\\sqrt{2GM(r)/c^2}\\,ct$, checked to solve this "
                   "spacetime's own $G^r{}_r = 0$."),
     # Szekeres's quasispherical dust with an axis of symmetry, drawn on the two halves of that axis,
@@ -1880,7 +1880,7 @@ CAPTIONS = {
         "The plane of $t$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$) in five dimensions, the same at every fixed angle by hyperspherical "
         "symmetry. Outside $r_h$ the cones narrow toward the vertical as $r \\to r_h$, because "
         "$dt/dr = \\pm(1 - r_h^2/r^2)^{-1}$ diverges there. Away from the horizon they open faster than "
-        "Schwarzschild's, since $r_h^2/r^2$ falls faster than $r_s/r$.",
+        "Schwarzschild's, since $r_h^2/r^2$ falls faster than Schwarzschild's $r_s/r$ with $r_s$ its own horizon radius.",
         "Inside $r_h$ the same components make $r$ the time. We take the future from the ingoing "
         "Eddington-Finkelstein chart, which runs smoothly across $r_h$, and this makes that region the black "
         "hole, where every cone points to $r = 0$. The Kretschmann scalar $72r_h^4/r^8$ is finite at $r_h$ and "
@@ -1915,7 +1915,7 @@ CAPTIONS = {
         "The plane of $t$ and $r$ ($\\chi = \\psi = \\theta = \\pi/2$, $\\phi = 0$) in six dimensions, the same "
         "at every fixed angle by hyperspherical symmetry. Outside $r_h$ the cones narrow toward the vertical as "
         "$r \\to r_h$, because $dt/dr = \\pm(1 - r_h^3/r^3)^{-1}$ diverges there. At $r = 2r_h$ it is $\\pm 8/7$, "
-        "where Schwarzschild's at $2r_s$ is $\\pm 2$.",
+        "where Schwarzschild's at twice its own horizon radius is $\\pm 2$.",
         "Inside $r_h$ the same components make $r$ the time, and we take the future as the ingoing rays carry it "
         "across the horizon, which makes that region the black hole, where every cone points to $r = 0$. The "
         "Kretschmann scalar $240r_h^6/r^{10}$ is finite at $r_h$ and diverges only at $r = 0$.",
@@ -2550,11 +2550,10 @@ CAPTIONS = {
         "the spheres of areal radius $4k$, $2k$, $k$, and $k/2$, at $ku = 0.28$, $0.64$, $1.5$, and $2.8$.",
     ],
     ("morris_thorne", "spherical", "radial"): [
-        "The plane of $t$ and the areal radius $r$ ($\\theta = \\pi/2$, $\\phi = 0$). "
-        "The metric leaves $\\Phi(r)$ and $b(r)$ free. With $\\Phi = 0$ and $b = b_0^2/r$ it is the "
-        "Ellis-Bronnikov wormhole, with $r^2 = r_{\\rm EB}^2 + \\ell^2$ and $b_0 = \\ell$, and "
-        "these rays conserve $t \\mp \\sqrt{r^2 - b_0^2} = t \\mp r_{\\rm EB}$: they are the same "
-        "rays as in the Ellis-Bronnikov chart.",
+        "The plane of $t$ and the areal radius $r$ ($\\theta = \\pi/2$, $\\phi = 0$). The metric leaves $\\Phi(r)$ "
+        "and $b(r)$ free. With $\\Phi = 0$ and $b = b_0^2/r$ it is the Ellis-Bronnikov wormhole of throat radius "
+        "$\\ell = b_0$, with $r^2 = r_{\\rm EB}^2 + \\ell^2$, and these rays conserve $t \\mp \\sqrt{r^2 - b_0^2} "
+        "= t \\mp r_{\\rm EB}$: they are the same rays as in the Ellis-Bronnikov chart.",
         "In this areal chart the cones close toward the throat at $r = b_0$, as they would at a "
         "horizon, because $g_{rr} = (1 - b_0^2/r^2)^{-1}$ diverges there. But $g_{tt} = -1$ stays "
         "finite, so $\\partial_t$ is timelike right up to the throat, and $r = b_0$ is only the "
@@ -2582,7 +2581,7 @@ CAPTIONS = {
         "The plane of $\\eta$ and $\\xi$ ($y = z = 0$) in the region $T > 0$, its edges $\\eta = 0$ and "
         "$\\eta = \\psi_0/2$ one line, with $g_{\\eta\\eta} = -\\xi^2$. Every vertical line is a closed "
         "timelike curve, of proper length $\\xi\\psi_0/2$.",
-        "The light rays run as $\\xi = \\xi_0e^{\\pm\\eta}$, and the cones close toward $\\xi = 0$, the "
+        "The light rays run as $\\xi = \\xi_0e^{\\pm\\eta}$ for any number $\\xi_0$, and the cones close toward $\\xi = 0$, the "
         "chronology horizon, where the closed curves turn into closed null geodesics.",
     ],
     **{("string_wave", "null_conical", view): [
@@ -2665,7 +2664,7 @@ CAPTIONS = {
     ("gott_time_machine", "grant_rindler", "plane"): [
         "The plane of $\\eta$ and $\\xi$ ($Y = z = 0$) in the region of closed timelike curves, with "
         "$g_{\\eta\\eta} = -\\xi^2$. The edge $\\eta = a$ is the edge $\\eta = 0$ moved by $b$ along $Y$. "
-        "The light rays run as $\\xi = \\xi_0e^{\\pm\\eta}$, and the cones close toward $\\xi = 0$, the "
+        "The light rays run as $\\xi = \\xi_0e^{\\pm\\eta}$ for any number $\\xi_0$, and the cones close toward $\\xi = 0$, the "
         "chronology horizon.",
         "An event at $\\xi$ and its $n$th image lie $n^2b^2 - 4\\xi^2\\sinh^2(na/2)$ apart in squared "
         "interval, so a timelike line joins them beyond the $n$th polarised hypersurface, "
@@ -2801,10 +2800,10 @@ CAPTIONS = {
         "the Kretschmann scalar $12/R^4$ is the same on both sides.",
     ],
     ("milne", "comoving_hyperbolic", "through"): [
-        "The Milne universe along a line through the comoving particle at $\\chi = 0$, in the plane "
-        "$\\theta = \\pi/2$: $x = \\chi$ on the right is $\\phi = 0$ and $x = -\\chi$ on the left is "
-        "$\\phi = \\pi$. The edges of the cones are $d\\chi/d(ct) = \\pm 1/ct$, so a ray that crosses "
-        "$\\chi = 0$ at $t_1$ runs along $\\chi = \\pm\\ln(t/t_1)$, and the cones open out toward $t = 0$.",
+        "The Milne universe along a line through the comoving particle at $\\chi = 0$, in the plane $\\theta = "
+        "\\pi/2$: $x = \\chi$ on the right is $\\phi = 0$ and $x = -\\chi$ on the left is $\\phi = \\pi$. The "
+        "edges of the cones are $d\\chi/d(ct) = \\pm 1/ct$, so a ray that crosses $\\chi = 0$ at the time $t_1$ "
+        "runs along $\\chi = \\pm\\ln(t/t_1)$, and the cones open out toward $t = 0$.",
         "The whole line $t = 0$ is one event, $T = R = 0$ in the inertial chart, where every comoving "
         "particle starts, since $g_{\\chi\\chi} = c^2t^2$ vanishes there. The Kretschmann scalar is zero "
         "everywhere, and the past light cone of every event reaches every $\\chi$, so the Milne universe "
@@ -3087,12 +3086,12 @@ CAPTIONS = {
         "centre smoothly, and the cones are narrowest there.",
     ],
     ("kerr", "boyer_lindquist", "radial"): [
-        "The plane of $t$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $a = "
-        "0.9\\,GM/c^2$. The curves drawn are null, and on the axis they are also null geodesics, the "
-        "paths light takes. Off the axis a light ray launched along a curve of fixed $\\theta$ and "
-        "$\\phi$ is turned out of the plane by $\\Gamma^\\theta{}_{tt}$, $\\Gamma^\\theta{}_{rr}$, "
-        "and $\\Gamma^\\phi{}_{tr}$. On the axis $g^{rr} = \\Delta/\\Sigma$ vanishes at both roots of "
-        "$\\Delta$, $r_\\pm = GM/c^2 \\pm \\sqrt{(GM/c^2)^2 - a^2}$, and the cones close at both; "
+        "The plane of $t$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $a = 0.9\\,GM/c^2$. The curves "
+        "drawn are null, and on the axis they are also null geodesics, the paths light takes. Off the axis a light "
+        "ray launched along a curve of fixed $\\theta$ and $\\phi$ is turned out of the plane by "
+        "$\\Gamma^\\theta{}_{tt}$, $\\Gamma^\\theta{}_{rr}$, and $\\Gamma^\\phi{}_{tr}$. On the axis $g^{rr} = "
+        "\\Delta/\\Sigma$, with $\\Delta = r^2 - 2GMr/c^2 + a^2$ and $\\Sigma = r^2 + a^2\\cos^2\\theta$, vanishes "
+        "at both roots of $\\Delta$, $r_\\pm = GM/c^2 \\pm \\sqrt{(GM/c^2)^2 - a^2}$, and the cones close at both; "
         "between them they point to smaller $r$, following the ingoing family.",
         "The domain of the chart begins at $r_+$, the outer zero of $g^{rr}$. On the axis the "
         "ergosurface touches the horizon, so the metric on the plane stays Lorentzian. The "
@@ -3382,10 +3381,10 @@ CAPTIONS = {
         "of the horizon lies at $t = \\infty$.",
     ],
     ("pp_wave", "exact_plane_wave", "tz"): [
-        "The plane the wave travels in, on its axis ($x = y = 0$), drawn with $u = t - z$ and $v = "
-        "(t + z)/2$ so that the axes are $t$ and $z$; the chart's own $u$ and $v$ are "
-        "both null. On the axis the profile $A(x^2 - y^2) + 2Bxy$ vanishes whatever $A$ and $B$ "
-        "are, so the metric on this plane is flat and the rays are at 45°.",
+        "The plane the wave travels in, on its axis ($x = y = 0$), drawn with $u = t - z$ and $v = (t + z)/2$ for "
+        "a time $t$ and a distance $z$ along the wave, so that the axes are $t$ and $z$; the chart's own $u$ and "
+        "$v$ are both null. On the axis the profile $A(x^2 - y^2) + 2Bxy$ vanishes whatever $A$ and $B$ are, so "
+        "the metric on this plane is flat and the rays are at 45°.",
         "Off the axis a light ray is pushed out of the plane, since $\\ddot x = (Ax + By)\\dot "
         "u^2$ and $\\ddot y = -(Ay - Bx)\\dot u^2$: the wave squeezes a beam toward the axis in "
         "one transverse direction and stretches it in the other, across this plane in $x$ and "

@@ -7403,7 +7403,7 @@
       "parameters": [
         {
           "symbol": "B = B(r)",
-          "description": "Expansion factor of space, dimensionless, a function of $r$ alone. It is $1 + \\alpha$ in the pocket $r < \\tilde{R}$, falls across the neck $\\tilde{R} \\le r < \\tilde{R} + \\tilde{\\Delta}$, and is $1$ from there out to the wall of the bubble at $r = R$. Van Den Broeck's choice across the neck is $B = 1 + \\alpha\\left(n\\,w^{n-1} - (n - 1)\\,w^n\\right)$ with $w = (\\tilde{R} + \\tilde{\\Delta} - r)/\\tilde{\\Delta}$ and $n = 80$. A sphere of coordinate radius $r$ has area $4\\pi B^2r^2$."
+          "description": "Expansion factor of space, dimensionless, a function of $r$ alone. It is $1 + \\alpha$, for a large number $\\alpha$, in the pocket $r < \\tilde{R}$, falls across the neck $\\tilde{R} \\le r < \\tilde{R} + \\tilde{\\Delta}$, and is $1$ from there out to the wall of the bubble at $r = R$. Van Den Broeck's choice across the neck is $B = 1 + \\alpha\\left(n\\,w^{n-1} - (n - 1)\\,w^n\\right)$ with $w = (\\tilde{R} + \\tilde{\\Delta} - r)/\\tilde{\\Delta}$ and $n = 80$. A sphere of coordinate radius $r$ has area $4\\pi B^2r^2$."
         },
         {
           "symbol": "R",

@@ -92,7 +92,7 @@
         },
         {
           "symbol": "r_s",
-          "description": "Schwarzschild radius of the mass at the centre, $r_s = 2GM/c^2$: positive for a black hole in a cloud of strings, negative and small outside a global monopole's core"
+          "description": "Schwarzschild radius of the mass at the centre, $r_s = 2GM/c^2$, with its horizon at $r_h = r_s/(1 - \\Delta)$: positive for a black hole in a cloud of strings, negative and small outside a global monopole's core"
         }
       ],
       "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
@@ -2339,7 +2339,7 @@
         },
         {
           "symbol": "r_s",
-          "description": "Schwarzschild radius of the mass at the centre, $r_s = 2GM/c^2$: positive for a black hole in a cloud of strings, negative and small outside a global monopole's core"
+          "description": "Schwarzschild radius of the mass at the centre, $r_s = 2GM/c^2$, with its horizon at $r_h = r_s/(1 - \\Delta)$: positive for a black hole in a cloud of strings, negative and small outside a global monopole's core"
         }
       ],
       "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded time $u = ct - r_*$ a length, where $r_* = r/(1 - \\Delta) + r_s\\ln\\left|(1 - \\Delta)r/r_s - 1\\right|/(1 - \\Delta)^2$.",
@@ -3965,7 +3965,7 @@
         },
         {
           "symbol": "r_s",
-          "description": "Schwarzschild radius of the mass at the centre, $r_s = 2GM/c^2$: positive for a black hole in a cloud of strings, negative and small outside a global monopole's core"
+          "description": "Schwarzschild radius of the mass at the centre, $r_s = 2GM/c^2$, with its horizon at $r_h = r_s/(1 - \\Delta)$: positive for a black hole in a cloud of strings, negative and small outside a global monopole's core"
         }
       ],
       "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v = ct + r_*$ a length, where $r_* = r/(1 - \\Delta) + r_s\\ln\\left|(1 - \\Delta)r/r_s - 1\\right|/(1 - \\Delta)^2$.",

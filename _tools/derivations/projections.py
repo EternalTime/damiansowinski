@@ -704,11 +704,11 @@ CAPTIONS = {
         "string, and its two faces are identified at equal times of that string's rest frame: the dashed lines "
         "are the two faces at one such time, one rising in $t$ and the other falling, and events at equal "
         "distances along them are one event.",
-        "A rocket leaves the event $A$ at $t = 0$ and $x = 3\\ell/2$, crosses the upper string's wedge from $C$ to "
-        "the same event on the other face, at an earlier $t$, and reaches $B$ at $x = -3\\ell/2$ at $t = 0$. It "
-        "returns below the lower string in the same way and arrives at $A$ as it leaves. Each of the four "
-        "stretches lies inside the future light cone at its start, so the whole "
-        "is a closed timelike curve.",
+        "A rocket leaves the event $A$ at $t = 0$ and $x = 3\\ell/2$, crosses the upper string's wedge from the "
+        "event $C$ to the same event on the other face, at an earlier $t$, and reaches the event $B$ at $x = "
+        "-3\\ell/2$ at $t = 0$. It returns below the lower string in the same way, through the event $E$, and "
+        "arrives at $A$ as it leaves. Each of the four stretches lies inside the future light cone at its start, "
+        "so the whole is a closed timelike curve.",
     ],
     ("light_beam", "cartesian", "lens"): [
         "The plane $y = 0$ through the axis of a uniform beam of light seen from the side, $t$ left out, with $z$ "

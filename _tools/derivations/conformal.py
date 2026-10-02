@@ -2440,9 +2440,9 @@ def reissner_nordstrom(ck, src):
     for m, line in moments:
         v.slice(m, [line])
     views.append(v)
-    settings = ("$r_q = 0.48\\,r_s$, so that $r_+ = 0.64\\,r_s$, $r_- = 0.36\\,r_s$, and "
-                "$\\kappa_-/\\kappa_+ = 3.2$; at $r_q = 0.4\\,r_s$ the ratio is 16, and every line "
-                "inside $r_-$ would lie within $10^{-6}$ of the singularity.")
+    settings = ("$r_q = 0.48\\,r_s$, so that $r_+ = 0.64\\,r_s$, $r_- = 0.36\\,r_s$, and, with $\\kappa_\\pm$ the "
+                "surface gravities of the two horizons, $\\kappa_-/\\kappa_+ = 3.2$; at $r_q = 0.4\\,r_s$ the "
+                "ratio is 16, and every line inside $r_-$ would lie within $10^{-6}$ of the singularity.")
     for view in views:
         view.set(settings=settings)
     return views
@@ -3417,7 +3417,8 @@ def schwarzschild_de_sitter(ck, src):
         v.slice(moment, moment_line)
         views.append(v)
     for view in views:
-        view.set(settings=f"$\\Lambda = 0.2/r_s^2$, so that $r_h = {rh:.4g}\\,r_s$, $r_c = {rc:.4g}\\,r_s$, and "
+        view.set(settings=f"$\\Lambda = 0.2/r_s^2$, so that $r_h = {rh:.4g}\\,r_s$, $r_c = {rc:.4g}\\,r_s$, and, "
+                          f"with $\\kappa_h$ and $\\kappa_c$ the surface gravities of the two horizons, "
                           f"$\\kappa_c/\\kappa_h = {K.kc / K.kh:.3g}$.")
     return views
 
@@ -5827,7 +5828,7 @@ def frw(ck, src):
     v.label(now, "here, now", "r", "small", dx=-6)
     label_on(v, mink_pq(1, 1.6), "$t_0$")
     label_on(v, mink_pq(2, 2.4), "$8t_0$")
-    v.legend("t", "cosmic time $t$ constant: $t_0/64$, $t_0/8$, $t_0$, $8t_0$ and $64t_0$, with $t \\propto \\eta^3$")
+    v.legend("t", "cosmic time $t$ constant, in units of any time $t_0$: $t_0/64$, $t_0/8$, $t_0$, $8t_0$ and $64t_0$, with $t \\propto \\eta^3$")
     v.legend("r", "comoving $r$ constant, in units of $\\eta_0$")
     v.legend("null", "our past light cone, which meets the bang at the particle horizon $r = \\eta_0$")
     v.legend("singular", "the big bang, where the Kretschmann scalar diverges")
@@ -6401,7 +6402,7 @@ def mcvittie(ck, src):
     v.legend("scri", "future infinity $\\mathscr{I}^+$, spacelike")
     v.set(settings="$r_s = 1$, the unit of every length and of $ct$.",
           input="A universe of dust and a cosmological constant, $H = H_0\\coth(3H_0t/2)$, the expansion Kayll Lake "
-                "and Majd Abdelqader chose, with $H_0 = c/(\\sqrt{15}\\,r_s)$, which is $\\Lambda r_s^2 = 1/5$.")
+                "and Majd Abdelqader chose, with $H_0 = c/(\\sqrt{15}\\,r_s)$, which is $\\Lambda r_s^2 = 1/5$ for the cosmological constant $\\Lambda$.")
     for m in slices.moments("mcvittie"):
         lo, hi = m.reach("isotropic", "r")
         Rs = np.array([slices.mcvittie_areal(m.time, r) for r in (lo, hi)])
@@ -6495,7 +6496,7 @@ def tov(ck, src):
     rr = np.concatenate([np.linspace(lo, R, 40), R + np.geomspace(1e-6, hi - R, 200)])
     v.slice(star_moment, [star(0 * rr, rr)])
     v.set(input="A polytrope, $p = K\\rho_0^2$ with rest mass density $\\rho_0$ and energy density "
-                "$\\rho c^2 = \\rho_0c^2 + p$, at $K = 100$ and a central $\\rho_0 = 1.28\\times10^{-3}$ in "
+                "$\\rho c^2$, where $\\rho = \\rho_0 + p/c^2$, at $K = 100$ and a central $\\rho_0 = 1.28\\times10^{-3}$ in "
                 "units where $G = c = M_\\odot = 1$, solved from this spacetime's own $G^t{}_t$ and "
                 f"$G^r{{}}_r$: a star of $M = {M:.2f}\\,M_\\odot$ and $R = {R * km:.1f}$ km, "
                 "the star on which numerical relativists test their codes.")
@@ -9598,11 +9599,11 @@ CAPTIONS = {
         "beyond the acceleration horizon, out to null infinity at $y = -1$.",
     ],
     ("c_metric", "outer_spherical"): [
-        "The half axis $\\theta = \\pi$ beyond the black hole of the maximally extended C-metric ($\\alpha m = 1/6$), "
-        "totally geodesic, each point in the diagram a single event. There the metric is "
-        "$(-Q\\,c^2dt^2 + dr^2/Q)/(1 - \\alpha r)^2$, whose conformal factor diverges at $r = 1/\\alpha$, so on "
-        "this half of the axis the acceleration horizon lies at null infinity and bounds the static region on the "
-        "left, as null infinity bounds the exterior of Schwarzschild's black hole.",
+        "The half axis $\\theta = \\pi$ beyond the black hole of the maximally extended C-metric ($\\alpha m = "
+        "1/6$), totally geodesic, each point in the diagram a single event. There the metric is $(-Q\\,c^2dt^2 + "
+        "dr^2/Q)/(1 - \\alpha r)^2$ with $Q = (1 - \\alpha^2r^2)(1 - 2m/r)$, whose conformal factor diverges at $r "
+        "= 1/\\alpha$, so on this half of the axis the acceleration horizon lies at null infinity and bounds the "
+        "static region on the left, as null infinity bounds the exterior of Schwarzschild's black hole.",
         "Beyond the black hole horizon $r = 2m$ lie the black hole and the white hole, which end on the singularity "
         "$r = 0$, and the exterior across the Einstein-Rosen bridge, whose own outer axis runs to null infinity on "
         "the right. With $C = 1/(1 + 2\\alpha m)$ this half of the axis carries the cosmic string, whose deficit "
@@ -9610,11 +9611,11 @@ CAPTIONS = {
         "The coordinates $t$ and $r$ cover the static region and its black hole.",
     ],
     ("c_metric", "outer_hong_teo"): [
-        "The half axis $\\theta = \\pi$ beyond the black hole of the maximally extended C-metric ($\\alpha m = 1/6$), "
-        "totally geodesic, each point in the diagram a single event. There the metric is "
-        "$(-Q\\,c^2dt^2 + dr^2/Q)/(1 - \\alpha r)^2$, whose conformal factor diverges at $r = 1/\\alpha$, so on "
-        "this half of the axis the acceleration horizon lies at null infinity and bounds the static region on the "
-        "left, as null infinity bounds the exterior of Schwarzschild's black hole.",
+        "The half axis $\\theta = \\pi$ beyond the black hole of the maximally extended C-metric ($\\alpha m = "
+        "1/6$), totally geodesic, each point in the diagram a single event. There the metric is $(-Q\\,c^2dt^2 + "
+        "dr^2/Q)/(1 - \\alpha r)^2$ with $Q = (1 - \\alpha^2r^2)(1 - 2m/r)$, whose conformal factor diverges at $r "
+        "= 1/\\alpha$, so on this half of the axis the acceleration horizon lies at null infinity and bounds the "
+        "static region on the left, as null infinity bounds the exterior of Schwarzschild's black hole.",
         "Beyond the black hole horizon $r = 2m$ lie the black hole and the white hole, which end on the singularity "
         "$r = 0$, and the exterior across the Einstein-Rosen bridge, whose own outer axis runs to null infinity on "
         "the right. With $C = 1/(1 + 2\\alpha m)$ this half of the axis carries the cosmic string, whose deficit "
@@ -9659,23 +9660,22 @@ CAPTIONS = {
         "and ends on $\\mathscr{I}^+$.",
     ],
     ("minkowski", "spherical_null"): [
-        "Minkowski spacetime in its spherical null coordinates ($u = t - r/c$, $v = t + r/c$), "
-        "each point in the diagram a 2-sphere of radius $c(v - u)/2$. The lines of constant $u$ and of constant $v$ are light rays, the "
-        "45° lines of the triangle, with $p = \\arctan(cu/\\ell)$ and $q = \\arctan(cv/\\ell)$, and "
-        "the centre is the line $u = v$.",
+        "Minkowski spacetime in its spherical null coordinates ($u = t - r/c$, $v = t + r/c$), each point in the "
+        "diagram a 2-sphere of radius $c(v - u)/2$. The lines of constant $u$ and of constant $v$ are light rays, "
+        "the 45° lines of the triangle, with $p = \\arctan(cu/\\ell)$ and $q = \\arctan(cv/\\ell)$ for any length "
+        "$\\ell$, and the centre is the line $u = v$.",
     ],
     ("minkowski", "cartesian"): [
-        "The plane $y = z = 0$, flat and totally geodesic, brought by "
-        "$p, q = \\arctan((ct \\mp x)/\\ell)$ into the whole diamond. It has two ends, "
-        "$x \\to +\\infty$ and $x \\to -\\infty$, each with its own null infinity.",
+        "The plane $y = z = 0$, flat and totally geodesic, brought by $p, q = \\arctan((ct \\mp x)/\\ell)$, with "
+        "$\\ell$ any length, into the whole diamond. It has two ends, $x \\to +\\infty$ and $x \\to -\\infty$, "
+        "each with its own null infinity.",
         "Turned about the line $x = 0$, each half of the diamond sweeps out the spherical "
         "triangle, which is the whole spacetime.",
     ],
     ("minkowski", "double_null"): [
-        "The plane $y = z = 0$ in the coordinates $u = t - x/c$ and $v = t + x/c$, the metric "
-        "on it $-c^2\\,du\\,dv$. The lines of constant $u$ and of "
-        "constant $v$ are light rays, the 45° lines of the diamond, with $p = \\arctan(cu/\\ell)$ "
-        "and $q = \\arctan(cv/\\ell)$.",
+        "The plane $y = z = 0$ in the coordinates $u = t - x/c$ and $v = t + x/c$, the metric on it "
+        "$-c^2\\,du\\,dv$. The lines of constant $u$ and of constant $v$ are light rays, the 45° lines of the "
+        "diamond, with $p = \\arctan(cu/\\ell)$ and $q = \\arctan(cv/\\ell)$ for any length $\\ell$.",
     ],
     ("minkowski", "rindler"): [
         "The plane $Y = Z = 0$ in Rindler's coordinates ($ct = X\\sinh(aT/c)$, "
@@ -9684,7 +9684,7 @@ CAPTIONS = {
         "through the origin.",
         "An observer at constant $X$ accelerates uniformly, at $c^2/X$, and the null line "
         "$ct = x$ is that observer's horizon: no event beyond it can send a signal into the "
-        "wedge, as nothing inside $r_s$ can reach a static observer outside a black hole.",
+        "wedge, as nothing inside the horizon can reach a static observer outside a black hole.",
     ],
     ("misner", "misner"): [
         "The plane $y = z = 0$ of the Minkowski space that covers Misner space, in Misner's coordinates, with "
@@ -9878,7 +9878,7 @@ CAPTIONS = {
         "The magnetically charged dilaton black hole in its string metric ($r_d = r_s/2$), each point in the "
         "diagram a 2-sphere of area $4\\pi r^2$. The string metric is $e^{2\\varphi} = (1 - r_d/r)^{-1}$ times the "
         "Einstein metric, and a conformal factor leaves every light ray where it is, so the diagram is the "
-        "Einstein metric's, drawn by the same $U$ and $V$.",
+        "Einstein metric's, drawn by the same Kruskal coordinates $U$ and $V$.",
         "The singularity $r = r_d$ is a sphere of area $4\\pi r_d^2$ here. At the extremal charge $r_d = r_s$ the "
         "string metric is $-c^2dt^2 + dr^2/(1 - r_s/r)^2 + r^2d\\Omega^2$ on $r > r_s$, geodesically complete, with "
         "no horizon and no singularity.",
@@ -9887,7 +9887,7 @@ CAPTIONS = {
         "The electrically charged dilaton black hole in its string metric ($r_d = r_s/2$), each point in the "
         "diagram a 2-sphere of area $4\\pi(r - r_d)^2$. The string metric is $e^{2\\varphi} = 1 - r_d/r$ times the "
         "Einstein metric, and a conformal factor leaves every light ray where it is, so the diagram is the "
-        "Einstein metric's, drawn by the same $U$ and $V$.",
+        "Einstein metric's, drawn by the same Kruskal coordinates $U$ and $V$.",
         "The spheres shrink to zero area at the singularity $r = r_d$, where $g_{tt}$ vanishes too. At the extremal "
         "charge $r_d = r_s$ the string metric is $-(1 - r_s/r)^2c^2dt^2 + dr^2 + (r - r_s)^2d\\Omega^2$, whose "
         "moments of constant $t$ are flat.",
@@ -9954,7 +9954,7 @@ CAPTIONS = {
     ("global_monopole", "conical"): [
         "The global monopole with no mass at its centre ($\\Delta = 0.19$), each point in the diagram a 2-sphere "
         "of area $4\\pi(1 - \\Delta)r^2$. On the plane of $t$ and $r$ the metric is $-c^2dt^2 + dr^2$, "
-        "Minkowski's, and $p = \\arctan((ct - r)/\\ell)$ and $q = \\arctan((ct + r)/\\ell)$ bring it into "
+        "Minkowski's, and $p = \\arctan((ct - r)/\\ell)$ and $q = \\arctan((ct + r)/\\ell)$, with $\\ell$ any length, bring it into "
         "Minkowski's triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
         "The deficit enters only $g_{\\theta\\theta}$ and $g_{\\phi\\phi}$, so the plane and its triangle are "
         "Minkowski's. The edge $X = 0$ is the monopole, $r = 0$, where the Kretschmann scalar "
@@ -9977,13 +9977,13 @@ CAPTIONS = {
     ],
     ("btz", "ingoing"): [
         "The black hole without rotation ($M = 1$, $J = 0$) with the ingoing Eddington-Finkelstein "
-        "coordinates $v$ and $r$ on it. From $V = e^{\\kappa v}$ and $U = (r_+ - r)/((r_+ + r)V)$, one "
+        "coordinates $v$ and $r$ on it. From $V = e^{\\kappa v}$, with $\\kappa = r_+/\\ell^2$ the surface gravity, and $U = (r_+ - r)/((r_+ + r)V)$, one "
         "formula for every $r > 0$, they cover the exterior and the black hole together, and their lines of "
         "constant $v$ are ingoing light rays, which cross the horizon at 45° and end at $r = 0$.",
     ],
     ("btz", "outgoing"): [
         "The black hole without rotation ($M = 1$, $J = 0$) with the outgoing Eddington-Finkelstein "
-        "coordinates $u$ and $r$ on it, the time reverse of the ingoing ones. From $U = -e^{-\\kappa u}$ and "
+        "coordinates $u$ and $r$ on it, the time reverse of the ingoing ones. From $U = -e^{-\\kappa u}$, with $\\kappa = r_+/\\ell^2$ the surface gravity, and "
         "$V = (r - r_+)/((r + r_+)(-U))$ they cover the exterior and the white hole, and their lines of "
         "constant $u$ are outgoing light rays, which leave $r = 0$ and cross the horizon outward.",
     ],
@@ -10102,14 +10102,14 @@ CAPTIONS = {
         "future and past infinity are spacelike curves, and neither is straight, since $\\kappa_h \\neq \\kappa_c$.",
     ],
     ("schwarzschild_de_sitter", "ingoing"): [
-        "Kottler's spacetime with the ingoing Eddington-Finkelstein coordinates $v$ and $r$ on it. With "
-        "$q = \\arctan W(-v)$ and $u = v - 2r_*$, one chart covers the contracting region, the static region and "
-        "the black hole together, and its lines of constant $v$ are ingoing light rays, which start on "
-        "$\\mathscr{I}^-$, cross both horizons at 45° and end at $r = 0$.",
+        "Kottler's spacetime with the ingoing Eddington-Finkelstein coordinates $v$ and $r$ on it. With $q = "
+        "\\arctan W(-v)$ for the function $W$ of the static chart's diagram and $u = v - 2r_*$, one chart covers "
+        "the contracting region, the static region and the black hole together, and its lines of constant $v$ are "
+        "ingoing light rays, which start on $\\mathscr{I}^-$, cross both horizons at 45° and end at $r = 0$.",
     ],
     ("schwarzschild_de_sitter", "outgoing"): [
         "Kottler's spacetime with the outgoing Eddington-Finkelstein coordinates $u$ and $r$ on it, the time "
-        "reverse of the ingoing ones. With $p = -\\arctan W(u)$ and $v = u + 2r_*$ they cover the white hole, the "
+        "reverse of the ingoing ones. With $p = -\\arctan W(u)$ for the function $W$ of the static chart's diagram and $v = u + 2r_*$ they cover the white hole, the "
         "static region and the expanding region, and their lines of constant $u$ are outgoing light rays, which "
         "leave $r = 0$, cross both horizons outward and end on $\\mathscr{I}^+$.",
     ],
@@ -10223,7 +10223,7 @@ CAPTIONS = {
     ],
     ("rn_metric", "malament_hogarth"): [
         "The same tower with one event beyond the Cauchy horizon $r_-$ marked on it. "
-        "Every point of the exterior below it has $p \\le p_e$ and $q \\le q_e$, so the whole "
+        "With $p_e$ and $q_e$ the event's own $p$ and $q$, every point of the exterior below it has $p \\le p_e$ and $q \\le q_e$, so the whole "
         "exterior lies in the event's causal past. A static observer at $r = 1.2\\,r_s$ lives "
         "from $i^-$ to $i^+$ for an infinite proper time, and every moment of that life can send "
         "a signal that reaches the event, arriving at the Cauchy horizon infinitely "
@@ -10256,7 +10256,7 @@ CAPTIONS = {
         "coordinates $t$ and $r > r_+$ cover the exterior.",
     ],
     ("nariai", "static"): [
-        "The Nariai universe, the product of the hyperboloid $-Z_0^2 + Z_1^2 + Z_2^2 = 1/\\Lambda$ with a sphere of "
+        "The Nariai universe, the product of the hyperboloid $-Z_0^2 + Z_1^2 + Z_2^2 = 1/\\Lambda$, in flat space of coordinates $Z_0$, $Z_1$, and $Z_2$, with a sphere of "
         "radius $1/\\sqrt{\\Lambda}$, each point in the diagram a 2-sphere of that radius. With "
         "$\\tan\\eta = \\sqrt{\\Lambda}\\,Z_0$ the metric of the first factor is "
         "$(-d\\eta^2 + d\\chi^2)/(\\Lambda\\cos^2\\eta)$ on the strip $|\\eta| < \\pi/2$, with $X = \\chi$ across "
@@ -10280,10 +10280,11 @@ CAPTIONS = {
         "$1/\\cos^2\\eta$ diverges.",
     ],
     ("de_sitter", "static"): [
-        "De Sitter spacetime, the hyperboloid $-X_0^2 + X_1^2 + \\dots + X_4^2 = L^2$ "
-        "($L = \\sqrt{3/\\Lambda}$), each point in the diagram a 2-sphere. In its global coordinates the metric is $\\frac{L^2}{\\cos^2 T}(-dT^2 + d\\chi^2 "
-        "+ \\sin^2\\chi\\,d\\Omega^2)$ on the square $|T| < \\pi/2$, $0 \\le \\chi \\le \\pi$, "
-        "with $X = \\chi$ across.",
+        "De Sitter spacetime, the hyperboloid $-X_0^2 + X_1^2 + \\dots + X_4^2 = L^2$ in flat space of five "
+        "dimensions with coordinates $X_0, X_1, \\dots, X_4$ ($L = \\sqrt{3/\\Lambda}$), each point in the diagram "
+        "a 2-sphere. In its global coordinates, the time $T$ and the polar angle $\\chi$ of the 3-sphere, the "
+        "metric is $\\frac{L^2}{\\cos^2 T}(-dT^2 + d\\chi^2 + \\sin^2\\chi\\,d\\Omega^2)$ on the square $|T| < "
+        "\\pi/2$, $0 \\le \\chi \\le \\pi$, with $X = \\chi$ across.",
         "The static coordinates enter the square as $\\tan p = \\tanh(u/2L)$ and "
         "$\\tan q = \\tanh(v/2L)$, with $u, v = ct \\mp L\\,\\mathrm{artanh}(r/L)$, and cover the "
         "triangle about the observer at $\\chi = 0$; their horizon $r = L$ is the pair of null "
@@ -10306,9 +10307,9 @@ CAPTIONS = {
         "of $t$ and $r$ is $\\frac{1}{\\cos^2\\sigma}(-c^2dt^2 + L^2d\\sigma^2)$, already conformal "
         "to the strip $0 \\le \\sigma < \\pi/2$, which is unbounded in $t$. Its edge "
         "$\\sigma = \\pi/2$ is a timelike boundary.",
-        "A radial light ray from the centre reaches the boundary at $ct = \\pi L/2$ and is back "
-        "at $ct = \\pi L$. The radial timelike geodesics, $\\sin\\sigma = k\\sin(ct/L)$ with "
-        "$k < 1$, all return to the centre at the same $ct = \\pi L$, whatever their energy.",
+        "A radial light ray from the centre reaches the boundary at $ct = \\pi L/2$ and is back at $ct = \\pi L$. "
+        "The radial timelike geodesics, $\\sin\\sigma = k\\sin(ct/L)$ with $k$ a number below $1$, all return to "
+        "the centre at the same $ct = \\pi L$, whatever their energy.",
     ],
     ("einstein_static", "hyperspherical"): [
         "The Einstein static universe, each point in the diagram a 2-sphere of radius $R\\sin\\chi$. The "
@@ -10358,10 +10359,9 @@ CAPTIONS = {
         "which light from the pole reaches after $\\pi R/2c$.",
     ],
     ("anti_de_sitter", "poincare"): [
-        "The plane $x = y = 0$ of the Poincaré patch, through the centre and conformal to the "
-        "strip $-\\pi/2 < \\sigma < \\pi/2$. The coordinates $t$ and $z$ "
-        "enter the strip as "
-        "$p = -\\pi/4 + \\arctan((ct + z)/L)$ and $q = \\pi/4 + \\arctan((ct - z)/L)$.",
+        "The plane $x = y = 0$ of the Poincaré patch, through the centre and conformal to the strip $-\\pi/2 < "
+        "\\sigma < \\pi/2$ of the global chart's $\\sigma = \\arctan(r/L)$. The coordinates $t$ and $z$ enter the "
+        "strip as $p = -\\pi/4 + \\arctan((ct + z)/L)$ and $q = \\pi/4 + \\arctan((ct - z)/L)$.",
         "The Poincaré coordinates cover a wedge of the strip. Their $z \\to 0$ is the conformal "
         "boundary, and $z \\to \\infty$ is the Poincaré horizon, the pair of null lines from "
         "$(\\sigma, ct/L) = (-\\pi/2, 0)$. The curvature there is the same as everywhere else, and "
@@ -10520,7 +10520,7 @@ CAPTIONS = {
     ],
     ("damour_solodukhin", "rescaled"): [
         "The same wormhole with $t$ the proper time of a clock at rest far away, $\\sqrt{1 + \\lambda^2}$ times "
-        "Damour and Solodukhin's. The tortoise coordinate of this time is $\\sqrt{1 + \\lambda^2}\\,r_*$, and "
+        "Damour and Solodukhin's. The tortoise coordinate of this time is $\\sqrt{1 + \\lambda^2}$ times that chart's tortoise coordinate $r_*$, and "
         "with $\\ell$ scaled by the same factor every event stands where it stood. The coordinates cover the "
         "right half of the diamond and end at the throat $r = r_s$.",
     ],
@@ -10539,7 +10539,7 @@ CAPTIONS = {
     ("damour_solodukhin", "isotropic"): [
         "The Damour-Solodukhin wormhole ($\\lambda = 0.2$) in the isotropic radius $r$, each point in the diagram a "
         "2-sphere of radius $R = r(1 + r_s/4r)^2$. The metric on the plane of $t$ and $r$ is "
-        "$(1 - r_s/R + \\lambda^2)\\left(-c^2dt^2 + dx^2\\right)$ with $x = r_*(R)\\,\\mathrm{sgn}(4r - r_s)$, and "
+        "$(1 - r_s/R + \\lambda^2)\\left(-c^2dt^2 + dx^2\\right)$ with $x = r_*(R)\\,\\mathrm{sgn}(4r - r_s)$ for the tortoise coordinate $r_*$ of the areal radius, and "
         "$p, q = \\arctan((ct \\mp x)/\\ell)$ bring it into the full diamond.",
         "The throat is $r = r_s/4$, and $r \\to r_s^2/16r$ carries each sphere onto the sphere of the same size "
         "on the other side, so the left half of the diamond is the range $0 < r < r_s/4$ and its $i^0$ is $r = 0$.",
@@ -10574,7 +10574,7 @@ CAPTIONS = {
     ],
     ("cosmic_string", "conical"): [
         "The half plane of $t$ and $r$ at fixed $\\phi$ and $z$, totally geodesic. The metric on it is $-c^2dt^2 + dr^2$, so "
-        "$p, q = \\arctan((ct \\mp r)/\\ell)$ bring it into Minkowski's half diamond, with the "
+        "$p, q = \\arctan((ct \\mp r)/\\ell)$, with $\\ell$ any length, bring it into Minkowski's half diamond, with the "
         "string at $r = 0$ in place of a regular centre.",
         "The string's gravity is its deficit angle $\\delta = 8\\pi G\\mu/c^2$, which shows in "
         "the circles of constant $r$ around it: each has circumference $2\\pi(1 - 4G\\mu/c^2)\\,r$, "
@@ -10626,7 +10626,7 @@ CAPTIONS = {
     ],
     ("frw", "closed"): [
         "A closed universe of dust, each point in the diagram a 2-sphere. With $k = +1$, dust gives $a \\propto 1 - \\cos\\eta$, with $\\eta$ from "
-        "$0$ to $2\\pi$, and with $r = \\sin\\chi$ the metric is already conformal to the Einstein "
+        "$0$ to $2\\pi$, and with $r = \\sin\\chi$ for the polar angle $\\chi$ of the 3-sphere the metric is already conformal to the Einstein "
         "static universe, the rectangle $0 \\le \\chi \\le \\pi$ with the bang along its bottom "
         "and the crunch along its top.",
         "A light ray that leaves $\\chi = 0$ at the bang reaches the antipode $\\chi = \\pi$ at "
@@ -10635,18 +10635,18 @@ CAPTIONS = {
         "vanishes.",
     ],
     ("frw", "open"): [
-        "An open universe of dust, each point in the diagram a 2-sphere. With $k = -1$, dust gives $a \\propto \\cosh\\eta - 1$, and with "
-        "$r = \\sinh\\chi$ the map $\\tan((T \\pm X)/2) = \\tanh((\\eta \\pm \\chi)/2)$ sends it into "
-        "the Einstein static universe. It has the causal structure of the flat universe, a "
-        "triangle with the bang along its base and null infinity above, and differs from it only "
-        "in where its surfaces of constant $\\eta$ and $\\chi$ lie.",
+        "An open universe of dust, each point in the diagram a 2-sphere. With $k = -1$, dust gives $a \\propto "
+        "\\cosh\\eta - 1$, and with $r = \\sinh\\chi$ for the radial coordinate $\\chi$ the map $\\tan((T \\pm "
+        "X)/2) = \\tanh((\\eta \\pm \\chi)/2)$ sends it into the Einstein static universe. It has the causal "
+        "structure of the flat universe, a triangle with the bang along its base and null infinity above, and "
+        "differs from it only in where its surfaces of constant $\\eta$ and $\\chi$ lie.",
     ],
     ("oppenheimer_snyder", "collapse"): [
         "A spherically symmetric distribution of dust collapsing from rest ($R_0 = 2\\,r_s$), "
         "each point in the diagram a 2-sphere. Inside, the dust is a closed universe, "
         "$a^2(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\,d\\Omega^2)$ with $a = \\frac{a_m}{2}(1 + \\cos\\eta)$, "
         "already conformal to the Einstein static universe in $\\eta$ and $\\chi$. Outside, "
-        "$p = P(U)$ and $q = Q(V)$ are functions of the Kruskal coordinates, and three conditions "
+        "$p = P(U)$ and $q = Q(V)$ are functions $P$ and $Q$ of the Kruskal coordinates $U$ and $V$, and three conditions "
         "fix them completely: the two sides agree on the surface $\\chi = \\chi_0$, a radial "
         "geodesic of the exterior with energy $\\cos\\chi_0$; the moment of rest is the line "
         "$T = 0$, the exterior's symmetry $U \\leftrightarrow -V$; and $r = 0$ is the line "
@@ -10937,7 +10937,7 @@ CAPTIONS = {
         "direction, so for every $\\Omega$ the causal structure is Minkowski's less that event. "
         "It is symmetric about the $t$ axis through the event, so each point in the triangle is "
         "a 2-sphere of events at one $t$ and one distance $r = \\sqrt{x^2 + y^2 + z^2}$ from the "
-        "axis, and $p, q = \\arctan((ct \\mp r)/\\ell)$ bring it into Minkowski's triangle with one "
+        "axis, and $p, q = \\arctan((ct \\mp r)/\\ell)$, with $\\ell$ any length, bring it into Minkowski's triangle with one "
         "point of its axis removed.",
         "The computer's world line runs up the axis into the removed event, and every event above "
         "it, such as $p$ at $(ct, r) = (\\ell, 0)$, has the whole of that world line in its causal "
@@ -10970,14 +10970,12 @@ CAPTIONS = {
         "since $g^{rr} < 0$ at every $r$ there, and from $cu = 4m$ on the lines are Schwarzschild's.",
     ],
     ("vaidya", "shell"): [
-        "A spacetime into which a spherical shell of null dust of mass $M$ falls along $v = 0$, "
-        "each point in the diagram a 2-sphere. With $m = 0$ for "
-        "$v < 0$ the metric inside the shell is flat, and with $m = M$ for $v > 0$ it is "
-        "Schwarzschild's in ingoing coordinates, placed outside the shell by $p = \\arctan U$ and "
-        "$q = \\arctan V$. Inside, each outgoing light ray keeps the $p$ it has where it crosses "
-        "the shell, $p = \\arctan((1 + cu/2r_s)e^{-cu/2r_s})$ with $u = v - 2r/c$ the flat "
-        "retarded time, and $q$ is the same function of $v$, which puts the centre on the "
-        "straight line $X = 0$.",
+        "A spacetime into which a spherical shell of null dust of mass $M$ falls along $v = 0$, each point in the "
+        "diagram a 2-sphere. With $m = 0$ for $v < 0$ the metric inside the shell is flat, and with $m = M$ for $v "
+        "> 0$ it is Schwarzschild's in ingoing coordinates, placed outside the shell by $p = \\arctan U$ and $q = "
+        "\\arctan V$ of its Kruskal coordinates $U$ and $V$. Inside, each outgoing light ray keeps the $p$ it has "
+        "where it crosses the shell, $p = \\arctan((1 + cu/2r_s)e^{-cu/2r_s})$ with $u = v - 2r/c$ the flat "
+        "retarded time, and $q$ is the same function of $v$, which puts the centre on the straight line $X = 0$.",
         "The event horizon forms at the centre at $cv = -2r_s$, before the shell arrives, and "
         "grows through flat space to meet the shell at $r = r_s$. The lines inside crowd toward "
         "the shell because $q$, chosen to make the centre straight, has zero slope there.",

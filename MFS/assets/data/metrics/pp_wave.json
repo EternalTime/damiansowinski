@@ -1033,7 +1033,7 @@
       "parameters": [
         {
           "symbol": "A = A(u)",
-          "description": "Amplitude of the plus polarisation, a curvature carrying $1/L^2$; the profile is $H = A(x^2 - y^2) + 2Bxy$, the general quadratic solution of $\\partial_x^2 H + \\partial_y^2 H = 0$"
+          "description": "Amplitude of the plus polarisation, a curvature carrying $1/L^2$ for a length $L$, the unit the drawings use; the profile is $H = A(x^2 - y^2) + 2Bxy$, the general quadratic solution of $\\partial_x^2 H + \\partial_y^2 H = 0$"
         },
         {
           "symbol": "B = B(u)",
