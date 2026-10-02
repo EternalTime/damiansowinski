@@ -220,6 +220,12 @@ REGIONS = {
         "regions": [["comoving", "conformal"], ["schwarzschild", "isotropic"]],
         "why": "the dust behind the throat and the vacuum outside it are two regions of one spacetime",
     },
+    "ab_metrics": {
+        "regions": [["a2_static", "a2_cone", "a2_kruskal", "a2_cartesian"],
+                    ["b1_static", "b1_cone", "b1_neck", "b1_cartesian"], ["a3"], ["b2_static", "b2_neck"], ["b3"]],
+        "why": "AII, BI, AIII, BII and BIII are five spacetimes, each a static vacuum field of type D "
+               "with symmetries of its own",
+    },
     "white_hole": {
         "regions": [["interior_comoving", "interior_conformal"],
                     ["exterior_schwarzschild", "exterior_eddington_finkelstein", "exterior_kruskal"]],

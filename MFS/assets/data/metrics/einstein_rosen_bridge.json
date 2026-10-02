@@ -87,6 +87,11 @@
       "id": "rp3_geon",
       "kind": "locally_same",
       "text": "The bridge folded in half. Misner and Wheeler made each point of one sheet the same as the opposite point of the other, which leaves one sheet and a bridge that leads back into it [misner1957]."
+    },
+    {
+      "id": "ab_metrics",
+      "kind": "family",
+      "text": "B I continued through $r = b$ is a bridge of the same kind, two asymptotically flat regions joined at a neck [hruska2019]."
     }
   ],
   "references": [
@@ -112,7 +117,8 @@
     "marolf2009",
     "clifton2012",
     "hoffmann1935",
-    "tahvildarzadeh2011"
+    "tahvildarzadeh2011",
+    "hruska2019"
   ],
   "coordinates": [
     {

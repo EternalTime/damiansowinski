@@ -12309,6 +12309,236 @@ def boson_star(ck, src):
 
 # ---------------------------------------------------------------- the Malament-Hogarth toy
 
+def ab_metrics(ck, src):
+    """Ehlers and Kundt's AII and BI at b = 1.
+
+    AII, each point a hyperbolic plane. Its block of t and r is Schwarzschild's with the sign
+    changed, so Kruskal's U and V, with UV = (r/b - 1) exp(r/b), are null and analytic through
+    r = b, and p = arctan U, q = arctan V compactify it. Since tan(q - p) = (V - U)/(1 + UV), the
+    singularity UV = -1 is exactly the pair of straight lines X = +-pi/2: Kruskal and Szekeres's
+    hexagon turned on its side, the two static regions r < b at the sides, each ending on a
+    timelike singularity, and the regions sigma > b above and below, each ending on null infinity
+    (Gott, Nuovo Cimento B 22, 49 (1974); Hruska and Podolsky, Phys. Rev. D 99, 084037 (2019),
+    Fig. 3). In the static regions U = -+A exp(-ct/2b) and V = +-A exp(ct/2b) with
+    A = sqrt(1 - r/b) exp(r/2b), and beyond the horizon U = +-B exp(-z/2b), V = +-B exp(z/2b) with
+    B = sqrt(sigma/b - 1) exp(sigma/2b). The inertial chart's plane X = Y = 0 is the plane of
+    sigma = T and z = Z.
+
+    BI on its plane phi = 0, z = 0, which the reflections of phi and z make totally geodesic. There
+    the metric is r^2 (-dtau^2 + dx^2) with x = 2 arcosh(sqrt(r/b)) on one sheet and minus that on
+    the other, x = 2 artanh(rho) through the neck, so x runs over the whole line and
+    p, q = arctan(tau -+ x) give the full diamond, the neck on its axis and an asymptotically flat
+    region at each side. The static chart's plane theta = pi/2 is the same plane with the same time,
+    and the inertial chart's half plane X > 0 of Y = Z = 0 is its right half, T = r sinh(tau),
+    X = r cosh(tau). The Kretschmann scalar is checked finite on the neck, and the moments of the
+    embedding diagram are lines of constant tau."""
+    one = {"b": 1}
+    hyp = {"chi": "1", "phi": "0"}
+    static = Plane(src, "ab_metrics", "a2_static", ("t", "r"), hyp, one)
+    cone = Plane(src, "ab_metrics", "a2_cone", ("\\sigma", "z"), hyp, one)
+    kruskal = Plane(src, "ab_metrics", "a2_kruskal", ("U", "V"), hyp, one)
+    inertial = Plane(src, "ab_metrics", "a2_cartesian", ("T", "Z"), {"X": "0", "Y": "0"}, one)
+
+    def side(t, r, sign=1):
+        t, r = np.asarray(t, dtype=float), np.asarray(r, dtype=float)
+        with np.errstate(divide="ignore"):
+            ln_a = 0.5 * np.log(1 - r) + r / 2
+        return -sign * atan_exp(ln_a - t / 2), sign * atan_exp(ln_a + t / 2)
+
+    def beyond(sigma, z, sign=1):
+        sigma, z = np.asarray(sigma, dtype=float), np.asarray(z, dtype=float)
+        with np.errstate(divide="ignore"):
+            ln_b = 0.5 * np.log(sigma - 1) + sigma / 2
+        return sign * atan_exp(ln_b - z / 2), sign * atan_exp(ln_b + z / 2)
+
+    def null(U, V):
+        return np.arctan(np.asarray(U, dtype=float)), np.arctan(np.asarray(V, dtype=float))
+
+    ck.chart("AII static, the right hand region", static, side, ck.uniform(-12, 12), ck.uniform(0.01, 0.999),
+             lambda t, r: (1, 0))
+    ck.chart("AII static, the left hand region", static, lambda t, r: side(t, r, -1), ck.uniform(-12, 12),
+             ck.uniform(0.01, 0.999), lambda t, r: (-1, 0))
+    ck.chart("AII beyond the horizon, the future region", cone, beyond, ck.uniform(1.001, 20), ck.uniform(-12, 12),
+             lambda s, z: (1, 0))
+    ck.chart("AII beyond the horizon, the past region", cone, lambda s, z: beyond(s, z, -1), ck.uniform(1.001, 20),
+             ck.uniform(-12, 12), lambda s, z: (-1, 0))
+    ck.chart("AII Kruskal, about the horizons", kruskal, null, ck.uniform(-0.95, 0.95), ck.uniform(-0.95, 0.95),
+             lambda U, V: (1, 1))
+    ck.chart("AII Kruskal, the future region", kruskal, null, ck.uniform(0.05, 6), ck.uniform(0.05, 6),
+             lambda U, V: (1, 1))
+    ck.chart("AII inertial, the plane X = Y = 0", inertial, beyond, ck.uniform(1.001, 20), ck.uniform(-12, 12),
+             lambda T, Z: (1, 0))
+    p, q = side(np.array([-5.0, 0, 5]), np.full(3, 1e-10))
+    ck.limit("AII: r -> 0 in the right hand static region lands on X = pi/2", q - p, [HALF] * 3)
+    p, q = beyond(np.array([1e8]), np.array([0.0]))
+    ck.limit("AII: sigma -> infinity at z = 0 lands on i+, (X, T) = (0, pi)", point(p[0], q[0]), [0, PI], 1e-3)
+    p, q = side(np.array([3.0]), np.array([1 - 1e-12]))
+    ck.limit("AII: r -> b at fixed t lands on the bifurcation surface", point(p[0], q[0]), [0, 0], 1e-4)
+    rr = np.linspace(0.05, 0.95, 30)
+    pp, qq = side(0.3 + 0 * rr, rr)
+    ck.limit("AII static: tan p tan q is Kruskal's UV = (r/b - 1) e^(r/b)", np.tan(pp) * np.tan(qq),
+             (rr - 1) * np.exp(rr), 1e-8)
+    ss = np.linspace(1.05, 5, 30)
+    pp, qq = beyond(ss, 0.3 + 0 * ss)
+    ck.limit("AII beyond the horizon: tan p tan q is Kruskal's UV = (sigma/b - 1) e^(sigma/b)", np.tan(pp) * np.tan(qq),
+             (ss - 1) * np.exp(ss), 1e-8)
+    K = static.kretschmann
+    ck.diverges("AII: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+    ck.finite("AII: the Kretschmann scalar is finite on the horizons",
+              kruskal.kretschmann(np.array([-0.3, 0.0, 0.0, 0.4]), np.array([0.0, 0.0, 0.5, 0.0])))
+
+    box = [-HALF - 0.75, HALF + 0.75, -PI - 0.25, PI + 0.25]
+    hexagon = [[0, PI], [HALF, HALF], [HALF, -HALF], [0, -PI], [-HALF, -HALF], [-HALF, HALF]]
+    right, left = [[0, 0], [HALF, HALF], [HALF, -HALF]], [[0, 0], [-HALF, HALF], [-HALF, -HALF]]
+    future, past = [[0, 0], [HALF, HALF], [0, PI], [-HALF, HALF]], [[0, 0], [HALF, -HALF], [0, -PI], [-HALF, -HALF]]
+    R_IN, S_OUT, TS = (0.25, 0.5, 0.75, 0.9), (1.1, 1.5, 2, 3), (-4, -2, -1, 0, 1, 2, 4)
+    t = spread(-np.inf, np.inf, 500, 9)
+
+    def edges(v):
+        v.line("scri", [[[HALF, HALF], [0, PI]], [[-HALF, HALF], [0, PI]],
+                        [[HALF, -HALF], [0, -PI]], [[-HALF, -HALF], [0, -PI]]])
+        v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+        v.line("singular", [[[HALF, -HALF], [HALF, HALF]], [[-HALF, -HALF], [-HALF, HALF]]], zig=True)
+        for at in hexagon:
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt([0, PI], "$i^+$", "b", dy=-6)
+        v.label_xt([0, -PI], "$i^-$", "t", dy=6)
+        for sx in (1, -1):
+            v.label_xt([sx * Q4, 3 * Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-4)
+            v.label_xt([sx * Q4, -3 * Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=4)
+            v.label_xt([sx * HALF, 0], "$r = 0$", "l" if sx > 0 else "r", dx=8 * sx)
+        v.label_xt([-Q4, Q4], "$r = b$", "tr", "small", dx=-6, dy=2)
+        v.label_xt([0.95, 0], "static", cls="region")
+        v.label_xt([-0.95, 0], "static", cls="region")
+        v.label_xt([0, 2.2], "future", cls="region")
+        v.label_xt([0, -2.2], "past", cls="region")
+        v.legend("horizon", "the horizon $r = b$")
+        v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+
+    def radii(v, sides=(1, -1), ends=(1, -1)):
+        for sign in sides:
+            for r in R_IN:
+                v.curve("r", *side(t, np.full_like(t, r), sign))
+        for sign in ends:
+            for sg in S_OUT:
+                v.curve("r", *beyond(np.full_like(t, sg), t, sign))
+
+    views = []
+    v = View("a2_static", "A II, static", box, "a2_static")
+    v.fill("region", hexagon)
+    v.fill("cover", right)
+    radii(v, sides=(1,), ends=())
+    rr = 1 - np.exp(np.linspace(-14, -1e-3, 400))
+    rr = np.concatenate([np.exp(np.linspace(-14, -3, 60)), rr[::-1]])
+    rr = np.sort(rr)
+    for tt in TS:
+        v.curve("t", *side(np.full_like(rr, tt), rr))
+    edges(v)
+    v.legend("cover", "the region that $t$ and $r < b$ cover")
+    v.legend("r", "$r$ constant")
+    v.legend("t", "$ct$ constant, in units of $b$")
+    views.append(v)
+
+    ss = spread(1, np.inf, 500, 14)
+    for vid, label, system, time, length in (("a2_cone", "A II, inside the cone", "a2_cone", "\\sigma", "z"),
+                                             ("a2_inertial", "A II, inertial", "a2_cartesian", "T", "Z")):
+        v = View(vid, label, box, system)
+        v.fill("region", hexagon)
+        v.fill("cover", future)
+        radii(v, sides=(), ends=(1,))
+        for zz in TS:
+            v.curve("t", *beyond(ss, np.full_like(ss, zz)))
+        edges(v)
+        label_on(v, beyond(2.0, 0.0), f"${time} = 2b$")
+        if vid == "a2_cone":
+            v.legend("cover", "the region that $\\sigma > b$ and $z$ cover")
+        else:
+            v.legend("cover", "the part $T > b$ of the line $X = Y = 0$, where $T = \\sigma$ and $Z = z$")
+        v.legend("r", f"${time}$ constant")
+        v.legend("t", f"${length}$ constant, in units of $b$")
+        views.append(v)
+
+    v = View("a2_kruskal", "A II, Kruskal", box, "a2_kruskal")
+    v.fill("region", hexagon)
+    v.fill("cover", hexagon)
+    radii(v)
+    edges(v)
+    label_on(v, beyond(2.0, 0.0), "$r = 2b$")
+    v.legend("cover", "the whole spacetime, which $U$ and $V$ cover")
+    v.legend("r", "$r$ constant")
+    views.append(v)
+
+    # BI on its plane phi = 0, z = 0.
+    plane = {"phi": "0", "z": "0"}
+    slicing = Plane(src, "ab_metrics", "b1_cone", ("\\tau", "r"), plane, one)
+    neck = Plane(src, "ab_metrics", "b1_neck", ("\\tau", "\\rho"), plane, one)
+    fixed = Plane(src, "ab_metrics", "b1_static", ("\\tau", "r"), {"theta": "pi/2", "z": "0"}, one)
+    flat = Plane(src, "ab_metrics", "b1_cartesian", ("T", "X"), {"Y": "0", "Z": "0"}, one)
+
+    def out(tau, r, sheet=1):
+        return mink_pq(tau, sheet * 2 * np.arccosh(np.sqrt(np.maximum(np.asarray(r, dtype=float), 1.0))))
+
+    def through(tau, rho):
+        return mink_pq(tau, 2 * np.arctanh(np.asarray(rho, dtype=float)))
+
+    def wedge(T, X):
+        T, X = np.asarray(T, dtype=float), np.asarray(X, dtype=float)
+        return out(np.arctanh(T / X), np.sqrt(X * X - T * T))
+
+    for name, chart in (("BI, the de Sitter slicing", slicing), ("BI static, the plane theta = pi/2", fixed)):
+        ck.chart(name, chart, out, ck.uniform(-5, 5), ck.uniform(1.001, 30), lambda tau, r: (1, 0))
+    ck.chart("BI through the neck", neck, through, ck.uniform(-5, 5), ck.uniform(-0.99, 0.99), lambda tau, rho: (1, 0))
+    # The time of the de Sitter slicing runs along X d_T + T d_X, which is timelike down to the neck.
+    ck.chart("BI inertial, the half plane X > 0", flat, wedge, ck.uniform(-3, 3), ck.uniform(3.3, 20),
+             lambda T, X: (X, T))
+    ck.finite("BI: the Kretschmann scalar is finite on the neck",
+              neck.kretschmann(ck.uniform(-3, 3, 50), ck.uniform(-0.01, 0.01, 50)))
+    ck.limit("BI: one event of the two sheets' charts lands on one point", through(0.7, math.sqrt(1 - 1 / 3.0)),
+             out(0.7, 3.0), 1e-12)
+    ck.limit("BI: the inertial and de Sitter coordinates put one event at one point",
+             wedge(3.0 * math.sinh(0.7), 3.0 * math.cosh(0.7)), out(0.7, 3.0), 1e-12)
+
+    box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    restriction = ("The plane $\\phi = 0$, $z = 0$ only, totally geodesic, each point in the diagram a single event.")
+    R_OUT, TAUS = (1.25, 2.0, 4.0, 10.0), (-4, -2, -1, 0, 1, 2, 4)
+    moments = slices.moments("ab_metrics", "neck")
+    for vid, label, system in (("b1_cone", "B I, outside the cone", "b1_cone"), ("b1_neck", "B I, through the neck", "b1_neck"),
+                               ("b1_static", "B I, static", "b1_static"), ("b1_inertial", "B I, inertial", "b1_cartesian")):
+        v = View(vid, label, box, system)
+        v.fill("region", DIAMOND)
+        v.fill("cover", DIAMOND if vid == "b1_neck" else TRIANGLE)
+        if vid == "b1_neck":
+            grid(v, "r", lambda rho, tau: through(tau, rho), (-0.9, -0.6, -0.3, 0.3, 0.6, 0.9), S_ALL)
+            label_on(v, through(0.0, 0.6), "$\\rho = 0.6$")
+            v.legend("cover", "the whole plane, which $\\tau$ and $\\rho$ cover")
+            v.legend("r", "$\\rho$ constant, with $r = b/(1 - \\rho^2)$")
+        else:
+            for r in R_OUT:
+                v.curve("r", *out(S_ALL, np.full_like(S_ALL, r)))
+                v.curve("r2", *out(S_ALL, np.full_like(S_ALL, r), -1))
+            label_on(v, out(0.0, 2.0), "$r = 2b$")
+            if vid == "b1_inertial":
+                v.legend("cover", "the half plane $X > 0$ outside the neck, where $T = r\\sinh\\tau$ and $X = r\\cosh\\tau$")
+            else:
+                v.legend("cover", "the sheet $\\rho > 0$, which $\\tau$ and $r$ cover")
+            v.legend("r", "$r$ constant")
+            v.legend("r2", "the same radii on the other sheet, $\\rho < 0$")
+        grid(v, "t", mink_pq, TAUS, S_ALL)
+        v.line("throat", [[[0, -PI], [0, PI]]])
+        diamond_edges(v)
+        v.label_xt([0, 0.3], "neck", "l", "small", dx=6)
+        v.legend("t", "$\\tau$ constant")
+        v.legend("throat", "the neck $r = b$, $\\rho = 0$")
+        v.set(restriction=restriction)
+        for m in moments:
+            reach = 2 * math.acosh(math.sqrt(m.reach("b1_cone", "r")[1]))
+            xs = np.array([-reach, 0.0, reach])
+            v.slice(m, [mink_pq(np.full_like(xs, m.time), xs)])
+        views.append(v)
+    return views
+
+
 def nordstrom_scalar(ck, src):
     """Nordstrom's theory, one view for each chart. Every one of its spacetimes is Phi^2 times
     Minkowski's in Einstein and Fokker's preferred chart, and a conformal factor changes no null
@@ -19478,6 +19708,7 @@ DRAWN = {
     "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii,
     "bartnik_mckinnon": bartnik_mckinnon,
     "nordstrom_scalar": nordstrom_scalar,
+    "ab_metrics": ab_metrics,
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "reissner_nordstrom_ads": reissner_nordstrom_ads, "c_metric": c_metric,
     "misner": misner, "milne": milne,
     "gott_time_machine": gott_time_machine,
@@ -21418,6 +21649,55 @@ CAPTIONS = {
         "coordinates $t$ and $l$, each point in the diagram a circle about the axis. The metric orthogonal "
         "to the circles is $-c^2dt^2 + dl^2$, exactly flat, and $p, q = \\arctan((ct \\mp l)/b_0)$ bring it "
         "into the diamond, with the ergoregion the strip between the two lines $r = \\sqrt{2}\\,b_0$.",
+    ],
+    ("ab_metrics", "a2_static"): [
+        "Ehlers and Kundt's A II, each point in the diagram a hyperbolic plane of radius $r$. Its metric of $t$ "
+        "and $r$ is Schwarzschild's with the sign changed, so Kruskal's $U$ and $V$, with "
+        "$UV = (r/b - 1)e^{r/b}$, carry it into Kruskal and Szekeres's hexagon turned on its side. The static "
+        "coordinates $t$ and $r < b$ cover the region at the right, between the horizon and the singularity "
+        "$r = 0$, a timelike line.",
+        "The singularity is the tachyon's line, and from the static region light reaches it and leaves it "
+        "again [gott1974, hruska2019].",
+    ],
+    ("ab_metrics", "a2_cone"): [
+        "The same spacetime in the coordinates $\\sigma$ and $z$, which cover the region above the horizons, "
+        "where the radius is the time $\\sigma$. Every curve of constant $z$ leaves the bifurcation surface and "
+        "ends at $i^+$, and the region ends on null infinity, where the field has died away.",
+        "The region is the inside of the future cone of the tachyon's line in the flat spacetime at $b = 0$, "
+        "beyond the horizon $\\sigma = b$ [hruska2019].",
+    ],
+    ("ab_metrics", "a2_inertial"): [
+        "The same spacetime on the line $X = Y = 0$ of the inertial coordinates, where $T$ is $\\sigma$ and $Z$ "
+        "is $z$. The coordinates cover the region above the horizons, $T > b$ on this line.",
+    ],
+    ("ab_metrics", "a2_kruskal"): [
+        "The whole of A II in Kruskal's coordinates. The static regions at the sides each end on a timelike "
+        "singularity, and the regions above and below, where the radius is a time, each end on null infinity.",
+        "It is Schwarzschild's diagram with space and time exchanged: a horizon that light from the static "
+        "regions crosses into the future region, and a singularity that an observer can stay away from "
+        "[kruskal1960, gott1974].",
+    ],
+    ("ab_metrics", "b1_cone"): [
+        "The plane $\\phi = 0$, $z = 0$ of Ehlers and Kundt's B I. On it the metric is "
+        "$r^2\\left(-d\\tau^2 + dx^2\\right)$ with $x = \\pm 2\\,\\mathrm{arcosh}\\sqrt{r/b}$, one sign on each "
+        "sheet, and $p, q = \\arctan(\\tau \\mp x)$ bring it into the full diamond. The coordinates $\\tau$ and "
+        "$r$ cover the right half, one sheet.",
+        "The two ends are two asymptotically flat regions, each with its own $i^0$ and $\\mathscr{I}^\\pm$, "
+        "joined at the neck $r = b$. Light crosses the neck, and the plane has no horizon and no singularity "
+        "[hruska2019].",
+    ],
+    ("ab_metrics", "b1_neck"): [
+        "The same plane in the coordinates $\\tau$ and $\\rho$, with $r = b/(1 - \\rho^2)$ and "
+        "$x = 2\\,\\mathrm{artanh}\\,\\rho$, which cover both sheets and the neck $\\rho = 0$ between them.",
+    ],
+    ("ab_metrics", "b1_static"): [
+        "The same plane as the plane $\\theta = \\pi/2$, $z = 0$ of the static coordinates, on which the static "
+        "time is the $\\tau$ of the de Sitter slicing. The coordinates cover the right half, one sheet.",
+    ],
+    ("ab_metrics", "b1_inertial"): [
+        "The same plane as the half plane $X > 0$ of $Y = Z = 0$ in the inertial coordinates, with "
+        "$T = r\\sinh\\tau$ and $X = r\\cosh\\tau$. The half plane outside the neck, $X^2 - T^2 > b^2$, is the "
+        "right half of the diamond, and its edges $\\mathscr{I}^\\pm$ are where $X \\pm T \\to \\infty$.",
     ],
     ("thin_shell_wormhole", "throat"): [
         "Visser's thin shell wormhole ($a = 1.25\\,r_s$), each point in the diagram a 2-sphere of radius "

@@ -3615,6 +3615,7 @@ class StacksAndMovies(unittest.TestCase):
               ("bonnor_vaidya", "shell"): "$v - r$", ("israel_shell", "shell"): "$v - r$",
               ("charged_shell", "bounce"): "$v - r$",
               ("penrose_impulsive_wave", "snap"): "$ct$",
+              ("ab_metrics", "neck"): "$\\tau$",
               ("cosmic_string", "unroll"): "$\\Delta\\phi$", ("point_particle_2plus1", "unroll"): "$\\Delta\\phi$",
               ("milne", "hyperboloids"): "$ct$",
               ("coleman_de_luccia", "hyperboloids"): "$c\\tau$",
@@ -4852,6 +4853,13 @@ class Slices(unittest.TestCase):
               "plebanski_hacyan/plane/uw", "plebanski_hacyan/plane_null/uv", "plebanski_hacyan/plane_static/wedge",
               "conformal plebanski_hacyan/plane", "conformal plebanski_hacyan/plane_null",
               "conformal plebanski_hacyan/plane_static",
+              # Ehlers and Kundt's A II, A III, B II and B III, other spacetimes of their page than the B I
+              # whose neck is embedded.
+              "ab_metrics/a2_static/radial", "ab_metrics/a2_cone/beyond", "ab_metrics/a2_kruskal/kruskal",
+              "ab_metrics/a2_cartesian/TX", "ab_metrics/a3/radial", "ab_metrics/b2_static/radial",
+              "ab_metrics/b2_static/wedge", "ab_metrics/b2_neck/through", "ab_metrics/b2_neck/ads",
+              "ab_metrics/b3/radial", "conformal ab_metrics/a2_static", "conformal ab_metrics/a2_cone",
+              "conformal ab_metrics/a2_inertial", "conformal ab_metrics/a2_kruskal",
               "frw/comoving_spherical/radial", "frw/comoving_spherical/through", "frw/conformal_spherical/radial",
               "tolman_bondi/comoving_synchronous/collapse", "vaidya/eddington_finkelstein_outgoing/shell",
               # Novikov's vacuole holds the marginally bound core, whose moments are planes, and Kruskal's
@@ -5865,6 +5873,28 @@ class Slices(unittest.TestCase):
                 return (lambda X: 0.0), [3.0 if hong_teo else 2.0]
             lo, hi = self.reach(surface, "spherical")
             return (lambda X: 0.0), ([6 / hi, 6 / lo] if hong_teo else [lo, hi])
+        if key.startswith("ab_metrics/"):
+            # A moment tau of BI's de Sitter slicing, from the neck r = b out to the embedding's reach: a
+            # line of constant time along r, through the neck at rho = +-sqrt(1 - b/r) and round the
+            # circle of phi; on the static surface cos(theta) = cosh(tau) sin(phi) with
+            # tanh(tau_s) = tanh(tau)/cos(phi); and on the inertial plane T = |X| tanh(tau).
+            lo, hi = self.reach(surface)
+            view_key = key.partition("/")[2]
+            if view_key in ("b1_cone/radial", "b1_static/radial"):
+                return (lambda X: t), [lo, hi]
+            if view_key == "b1_neck/through":
+                return (lambda X: t), [-math.sqrt(1 - 1 / hi), math.sqrt(1 - 1 / hi)]
+            if view_key == "b1_cone/de_sitter":
+                return (lambda X: t), None
+            if view_key == "b1_static/surface":
+                def static_time(X):
+                    cos_phi = math.sqrt(max(1 - (math.cos(X) / math.cosh(t)) ** 2, 1e-300))
+                    return math.atanh(max(-1 + 1e-15, min(1 - 1e-15, math.tanh(t) / cos_phi)))
+                return static_time, None
+            if view_key == "b1_cartesian/TX":
+                ends = [sign * r * math.cosh(t) for sign in (-1, 1) for r in (lo, hi)]
+                return (lambda X: abs(X) * math.tanh(t)), ends
+            raise KeyError(key)
         if key.startswith("nariai"):
             # A global moment runs round the whole circle of chi, and on the static patch it is
             # sinh(ct) = sinh(ct_k)/sqrt(1 - r^2), Lambda = 1, from horizon to horizon; the sphere is
@@ -6550,6 +6580,11 @@ class Slices(unittest.TestCase):
                         for X, T in points:
                             tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
                             self.assertLess(abs(tp * tq - t * t), 2e-3 * (1 + tp * tp) * (1 + tq * tq), f"{where} at {(X, T)}")
+                    elif metric_id == "ab_metrics":
+                        # p, q = arctan(tau -+ x), so tan p + tan q = 2 tau on a moment of the de Sitter slicing.
+                        for X, T in points:
+                            self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2) - 2 * t), 2e-3,
+                                            f"{where} at {(X, T)}")
                     elif metric_id == "nariai":
                         # A global moment is the line tan(eta) = sinh(ct), Lambda = 1; the sphere
                         # is the event at eta = 0.

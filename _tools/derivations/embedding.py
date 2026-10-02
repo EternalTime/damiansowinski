@@ -13444,6 +13444,65 @@ def flat_slices(ck, src, metric_id, system_id, time="t"):
 
 # The spacetimes with no surface to draw that say why, each function checking what it states
 # from the published metric and returning the sentences.
+AB_MOMENTS = (-0.8, -0.4, 0.0, 0.4, 0.8)   # tau of the de Sitter slicing of BI
+
+
+def ab_metrics(ck, src):
+    """The neck of Ehlers and Kundt's BI at b = 1, the surface of r and phi at one tau and one z of
+    the de Sitter slicing: g_rr = 1/(1 - b/r) and g_phiphi = r^2 cosh^2(tau), circles of radius
+    r cosh(tau) with dz/dr = sqrt(r/(r - b) - cosh^2(tau)). At tau = 0 it is Flamm's paraboloid,
+    z^2 = 4b(r - b), on both sheets, the two asymptotically flat regions the neck joins. At any
+    other tau the neck is the circle of radius b cosh(tau) and the surface lies level at
+    r = b cosh^2(tau)/sinh^2(tau), beyond which the circles grow faster than the distance out to
+    them, which is checked (Hruska and Podolsky, Phys. Rev. D 99, 084037 (2019), (39) and (41) of
+    arXiv:1808.03508 and its Fig. 3). Drawn out to the circle of radius 6b, as a movie from
+    tau = -0.8 to 0.8 with a frame every 0.05, the neck closing to b at tau = 0 and opening again."""
+    top = 6.0
+    size = 2 * top
+    radii = (1.5, 2.0, 3.0, 4.0, 5.0)
+
+    def moment(t):
+        t = 0.0 if abs(t) < 1e-12 else round(t, 10)
+        C = math.cosh(t)
+        sl = Slice(src, "ab_metrics", "b1_cone", "r", "\\phi", {"tau": repr(t), "z": 0}, {"b": 1})
+        level = C * C / (C * C - 1) if t else math.inf
+        hi = min(top / C, level)
+        if hi == level:
+            far_end = ("stops", "the surface lies level here, and farther out the circles grow faster than the "
+                                "distance out to them")
+            ck.stops(f"BI, tau = {t:+.2f}: beyond r = b cosh^2/sinh^2", sl, np.linspace(1.02 * level, 4 * level, 9))
+        else:
+            far_end = ("edge", "the surface runs on")
+        marks = [(r, "r", None) for r in radii if r < hi * (1 - 1e-9)]
+        near = Piece("sheet", "sheet", sl, 1.0, hi, 0.0, 1,
+                     (("throat", "the neck $r = b$, the smallest circle, where the other sheet begins"), far_end),
+                     [(1.0, "throat", "$r = b$")] + marks, size)
+        far = Piece("other_sheet", "sheet2", sl, 1.0, hi, 0.0, -1, (("throat", "the neck $r = b$"), far_end),
+                    [(r, "r2", None) for r, _, _ in marks], size)
+        where = f"BI, tau = {t:+.2f}"
+        for p in (near, far):
+            ck.isometry(f"{where}, {p.id}", p)
+            ck.radius(f"{where}, {p.id}: the circles rho = r cosh(tau)", p, lambda r, k=C: k * r, size)
+            if not t:
+                ck.form(f"{where}, {p.id}: Flamm's z = 2 sqrt(b (r - b))", p,
+                        lambda r, k=p.sense: k * 2 * np.sqrt(np.maximum(r - 1, 0)), size)
+        ck.join(f"{where}, the two sheets at the neck", near, 1.0, far, 1.0)
+        return Surface([near, far], label=f"$\\tau = {t:.2f}$", time=t)
+
+    values, keys = movie_values(list(AB_MOMENTS), 0.05)
+    frames = [moment(t) for t in values]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the sheet $\\rho > 0$, which $\\tau$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1.5$, $2$, $3$, $4$ and $5\\,b$ where the surface reaches them")
+    fig.legend("line", "r2", "the same radii on the other sheet, $\\rho < 0$")
+    fig.legend("line", "throat", "the neck $r = b$, the smallest circle")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("neck", "The neck of B I", "$b$", surfaces, fig.done(),
+                 movie=movie(frames, "$\\tau$", [f.time for f in frames]),
+                 settings="$b = 1$, the unit of every length, and $z = 0$.")]
+
+
 STATED = {}
 
 
@@ -13531,6 +13590,7 @@ DRAWN = {
     "tippett_tsang": tippett_tsang,
     "nordstrom_scalar": nordstrom_scalar,
     "kopczynski_trautman": kopczynski_trautman,
+    "ab_metrics": ab_metrics,
     "alcubierre": alcubierre,
     "natario": natario,
     "btz": btz,
@@ -13595,6 +13655,17 @@ DRAWN = {
 NOT_DRAWN = {"lentz"}
 
 CAPTIONS = {
+    ("ab_metrics", "neck"): [
+        "The surface of $r$ and $\\phi$ of B I ($z = 0$) at moments of the de Sitter slicing from $\\tau = -0.8$ "
+        "to $0.8$, each drawn as a surface in flat space with every distance along it the metric distance. On "
+        "it the metric is $dr^2/(1 - b/r) + r^2\\cosh^2\\tau\\,d\\phi^2$. At $\\tau = 0$ it is Flamm's paraboloid, "
+        "$z^2 = 4b(r - b)$, the surface Schwarzschild's field has, and its two sheets are the two asymptotically "
+        "flat regions that the neck $r = b$ joins [hruska2019].",
+        "The neck is a circle of radius $b\\cosh\\tau$, which closes to $b$ at $\\tau = 0$ and opens again. Away "
+        "from $\\tau = 0$ the surface lies level at $r = b\\cosh^2\\tau/\\sinh^2\\tau$, and farther out the circles "
+        "grow faster than the distance out to them, so no surface of revolution in flat space carries the rest "
+        "of the moment [hruska2019].",
+    ],
     ("near_horizon_extreme_kerr", "throat"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the throat at one moment of the global time ($\\tau = 0$), "
         "drawn as a surface in flat space with every distance along it the metric distance. On it the metric is "
