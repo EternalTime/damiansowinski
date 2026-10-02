@@ -461,6 +461,9 @@ class Diagram:
     other_trapped: bool = False     # with null_radius: mark as well the marginally trapped spheres of the other
                                     # null family, where |grad R|^2 divided by the derivative of R along the
                                     # drawn radius vanishes, as Sultana and Dyer's inner trapping horizon
+    rounded: dict = None            # a parameter whose exact value has no short form -> the decimals the
+                                    # page states it by, with \\approx, as the mass of Hoffmann's particle,
+                                    # Gamma(1/4)^2/(12 sqrt(pi)) r_0, is stated as 0.618
     quotient: str = None            # a coordinate the metric does not depend on, divided out: the
                                     # plane's metric is g_ab - g_ak g_bk/g_kk; see "Rays of no angular
                                     # momentum"
@@ -1190,6 +1193,26 @@ SOLITON_AT = {"tau": "0", "x": "0"}
 # Bardeen's regular black hole at g = r_s/3, below the extremal 2 r_s/(3 sqrt 3) = 0.385 r_s: two
 # horizons, r_- = 0.301 r_s and r_+ = 0.775 r_s, about a regular centre.
 BARDEEN = {"r_s": 1, "g": "1/3"}
+# Born and Infeld's point charge as every one of its diagrams draws it, in units of their radius
+# r_0, at the charge r_q = r_0/2. Hoffmann's particle is the one whose whole mass is the energy of
+# its field, r_s = 2 * 1.2360 r_q^2/r_0 = 0.6180 r_0, with Born and Infeld's number
+# Gamma(1/4)^2/(6 sqrt(pi)): the mass function vanishes at the centre, g^rr tends to
+# 1 - 2 r_q^2/r_0^2 = 1/2 there, and there is no horizon. With more mass than its field holds,
+# r_s = 2 r_0, the mass function is positive at the centre and the charge is a black hole with one
+# horizon, at 1.8666 r_0, about a spacelike singularity.
+BI_PARTICLE = {"r_s": "0.61802489243379063947795011573", "r_q": "1/2", "r_0": 1}
+BI_ROUNDED = {"r_s": "0.618"}
+BI_HOLE = {"r_s": 2, "r_q": "1/2", "r_0": 1}
+BI_HORIZON = 1.8666065519401185            # the zero of g^rr at BI_HOLE, in r_0
+
+
+def born_infeld_mass(r, rs, rq, r0=1.0):
+    """The mass function of Born and Infeld's point charge, as the charts define it:
+    m = r_s/2 + r_q^2 r/(3 (r^2 + W)) - (r_q^2/(3 r_0)) F(2 arctan(r_0/r) | 1/2), W = sqrt(r^4 + r_0^4)."""
+    from scipy.special import ellipkinc
+    r = np.asarray(r, dtype=float)
+    W = np.sqrt(r ** 4 + r0 ** 4)
+    return rs / 2 + rq ** 2 * r / (3 * (r * r + W)) - rq ** 2 / (3 * r0) * ellipkinc(2 * np.arctan2(r0, r), 0.5)
 
 # Damour and Solodukhin's wormhole at lambda = 1/5, where the throat's clocks run five times slow.
 DS = {"r_s": 1, "lambda": "1/5"}
@@ -2104,6 +2127,29 @@ DIAGRAMS = [
             to_display=FINKELSTEIN_OUT, orient="outgoing", areal=True),
     Diagram("bardeen", "eddington_finkelstein_outgoing", "chart", "against $u$",
             ("u", "r"), (0, 2, -1.5, 0.5), "$r/r_s$", "$u/r_s$", BARDEEN, EQUATOR, orient="outgoing", areal=True),
+    # Born and Infeld's point charge on its plane of the time and r, in each chart, in units of r_0:
+    # Hoffmann's particle, whose cones stay open down to the conical singularity at the centre, and
+    # the black hole, whose cones close at its one horizon, as Schwarzschild's do.
+    Diagram("born_infeld_charge", "static", "particle", "Hoffmann's particle", ("t", "r"), (0, 4, -2, 2),
+            "$r/r_0$", "$ct/r_0$", BI_PARTICLE, EQUATOR, areal=True, rounded=BI_ROUNDED),
+    Diagram("born_infeld_charge", "static", "hole", "The black hole", ("t", "r"), (0, 4, -2, 2),
+            "$r/r_0$", "$ct/r_0$", BI_HOLE, EQUATOR, orient="ingoing", areal=True),
+    Diagram("born_infeld_charge", "eddington_finkelstein_ingoing", "particle", "Hoffmann's particle",
+            ("v", "r"), (0, 4, -2, 2), "$r/r_0$", "$(v - r)/r_0$", BI_PARTICLE, EQUATOR,
+            to_display=FINKELSTEIN_IN, orient="ingoing", areal=True, rounded=BI_ROUNDED),
+    Diagram("born_infeld_charge", "eddington_finkelstein_ingoing", "finkelstein", "The black hole, against $v - r$",
+            ("v", "r"), (0, 4, -2, 2), "$r/r_0$", "$(v - r)/r_0$", BI_HOLE, EQUATOR,
+            to_display=FINKELSTEIN_IN, orient="ingoing", areal=True),
+    Diagram("born_infeld_charge", "eddington_finkelstein_ingoing", "chart", "The black hole, against $v$",
+            ("v", "r"), (0, 4, -1, 3), "$r/r_0$", "$v/r_0$", BI_HOLE, EQUATOR, orient="ingoing", areal=True),
+    Diagram("born_infeld_charge", "eddington_finkelstein_outgoing", "particle", "Hoffmann's particle",
+            ("u", "r"), (0, 4, -2, 2), "$r/r_0$", "$(u + r)/r_0$", BI_PARTICLE, EQUATOR,
+            to_display=FINKELSTEIN_OUT, orient="outgoing", areal=True, rounded=BI_ROUNDED),
+    Diagram("born_infeld_charge", "eddington_finkelstein_outgoing", "finkelstein", "The black hole, against $u + r$",
+            ("u", "r"), (0, 4, -2, 2), "$r/r_0$", "$(u + r)/r_0$", BI_HOLE, EQUATOR,
+            to_display=FINKELSTEIN_OUT, orient="outgoing", areal=True),
+    Diagram("born_infeld_charge", "eddington_finkelstein_outgoing", "chart", "The black hole, against $u$",
+            ("u", "r"), (0, 4, -3, 1), "$r/r_0$", "$u/r_0$", BI_HOLE, EQUATOR, orient="outgoing", areal=True),
     # The Kaluza-Klein monopole at m = 1 on its plane of t and the radius, in each chart, and through the
     # nut in Gross and Perry's: no horizon, and rays that slow toward the nut as sqrt(r/(r + 4m)).
     Diagram("kaluza_klein_monopole", "gross_perry", "radial", "$t$ and $r$", ("t", "r"), (0, 16, -8, 8),
@@ -4810,6 +4856,67 @@ CAPTIONS = {
         "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a "
         "null coordinate. The ingoing family turns vertical at $r_-$ and at $r_+$, and leans toward larger $r$ "
         "between them.",
+    ],
+    ("born_infeld_charge", "static", "particle"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of Hoffmann's particle, drawn for "
+        "$r_q = r_0/2$ and $r_s = 0.618\\,r_0$, the same at every other angle by spherical symmetry. Here "
+        "$g^{rr} = 1 - 2m/r$ is positive at every radius, so there is no horizon and $t$ is a time everywhere. "
+        "The cones narrow toward the centre, where $g^{rr} \\to 1 - 2r_q^2/r_0^2 = 1/2$ and a light ray moves "
+        "at $dr/d(ct) = \\pm 1/2$.",
+        "The left edge, $r = 0$, is the conical singularity. The cones stay open there, a light ray reaches it at "
+        "a finite $t$, and the Kretschmann scalar grows as $16r_q^4/(r_0^4r^4)$ toward it.",
+    ],
+    ("born_infeld_charge", "static", "hole"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the black hole, drawn for "
+        "$r_q = r_0/2$ and $r_s = 2\\,r_0$. With more mass than the field holds, $m$ is positive at the centre, "
+        "$g^{rr} = 1 - 2m/r$ vanishes once, at $r_h = 1.867\\,r_0$, and the cones close there. Inside the "
+        "horizon $r$ is the time, and the cones point to smaller $r$, toward the singularity $r = 0$, as in "
+        "Schwarzschild's black hole.",
+        "The chart alone does not fix which way is future inside the horizon. We take it from the ingoing "
+        "Eddington-Finkelstein chart, which makes that region the black hole. In Maxwell's theory the energy of "
+        "the field outside $r$ grows without bound as $r \\to 0$, the mass inside turns negative, and a second "
+        "horizon forms, at $r_- = 0.134\\,r_0$ for this mass and charge. Born and Infeld's field holds "
+        "$0.309\\,r_0$ in all, less than $r_s/2 = r_0$, so $m$ stays positive and the horizon is the only one.",
+    ],
+    ("born_infeld_charge", "eddington_finkelstein_ingoing", "particle"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of Hoffmann's particle ($r_q = r_0/2$, "
+        "$r_s = 0.618\\,r_0$), drawn with $v - r$ as the vertical axis, so that the ingoing rays, $v = $ const, "
+        "run at 45°. The outgoing family has $dv/dr = 2(1 - 2m/r)^{-1}$, which falls from $4$ at the centre "
+        "toward $2$ far away and never stands vertical: there is no horizon. An ingoing ray reaches the conical "
+        "singularity $r = 0$ at a finite $v$.",
+    ],
+    ("born_infeld_charge", "eddington_finkelstein_ingoing", "finkelstein"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the black hole ($r_q = r_0/2$, "
+        "$r_s = 2\\,r_0$), drawn with $v - r$ as the vertical axis, so that the ingoing rays, $v = $ const, run "
+        "at 45°. The outgoing family has $dv/dr = 2(1 - 2m/r)^{-1}$, so it stands vertical at the horizon "
+        "$r_h = 1.867\\,r_0$, an outgoing ray that stays where it is.",
+        "The cones cross the horizon smoothly. Inside it both edges of every future cone point to smaller $r$, "
+        "and every ray ends on the singularity $r = 0$.",
+    ],
+    ("born_infeld_charge", "eddington_finkelstein_ingoing", "chart"): [
+        "The same plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The ingoing family is $v = $ const and runs horizontally here, since $v$ is itself a null "
+        "coordinate. The outgoing family turns vertical at $r_h$ and leans back toward smaller $r$ inside it.",
+    ],
+    ("born_infeld_charge", "eddington_finkelstein_outgoing", "particle"): [
+        "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of Hoffmann's particle ($r_q = r_0/2$, "
+        "$r_s = 0.618\\,r_0$), drawn with $u + r$ as the vertical axis, so that the outgoing rays, $u = $ const, "
+        "run at 45°. The ingoing family has $du/dr = -2(1 - 2m/r)^{-1}$ and never stands vertical. An outgoing "
+        "ray leaves the conical singularity $r = 0$ at a finite $u$ and runs on to infinity.",
+    ],
+    ("born_infeld_charge", "eddington_finkelstein_outgoing", "finkelstein"): [
+        "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the black hole ($r_q = r_0/2$, "
+        "$r_s = 2\\,r_0$), drawn with $u + r$ as the vertical axis, so that the outgoing rays, $u = $ const, run "
+        "at 45°. The ingoing family stands vertical at the horizon $r_h = 1.867\\,r_0$. Inside it both edges of "
+        "every future cone point to larger $r$: this is the white hole, which nothing from outside can enter.",
+        "The chart is the time reverse of the ingoing one: its $g_{ur}$ is $-1$ where the ingoing chart's "
+        "$g_{vr}$ is $+1$. An outgoing ray leaves the singularity $r = 0$ and crosses the horizon on its way to "
+        "infinity.",
+    ],
+    ("born_infeld_charge", "eddington_finkelstein_outgoing", "chart"): [
+        "The same plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a null "
+        "coordinate. The ingoing family turns vertical at $r_h$ and leans toward larger $r$ inside it.",
     ],
     ("kaluza_klein_monopole", "gross_perry", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = 0$, $x_5 = 0$) of the Kaluza-Klein monopole, each point in the "
@@ -10546,6 +10653,9 @@ def settings(spec, entry):
     names.update({vm.Reader._plain(c): c for c in entry["coords"]})
     parts = []
     for plain, value in list(spec.params.items()) + list(spec.fixed.items()):
+        if plain in (spec.rounded or {}):
+            parts.append(f"${names[plain]} \\approx {spec.rounded[plain]}$")
+            continue
         value = number(value)
         # A value that is the root of an equation, as the angle of a lattice's cell is, is shown to four figures.
         shown = (f"{float(value):.4g}" if value.is_Float and len(repr(float(value)).replace(".", "").strip("0")) > 6
@@ -11700,6 +11810,18 @@ CLOSED_FORMS = {
         (lambda v, r: v, lambda v, r: v - 2 * _bardeen_rstar(r), _bardeen_away),
     ("bardeen", "eddington_finkelstein_outgoing", "finkelstein"):
         (lambda u, r: u + 2 * _bardeen_rstar(r), lambda u, r: u, _bardeen_away),
+    **{("born_infeld_charge", "static", case):
+       (lambda t, r, case=case: t + slices.born_infeld_rstar(r, case),
+        lambda t, r, case=case: t - slices.born_infeld_rstar(r, case), away)
+       for case, away in (("particle", lambda t, r: r > 0.05), ("hole", _away(slices.BORN_INFELD_HORIZON)))},
+    **{("born_infeld_charge", "eddington_finkelstein_ingoing", view):
+       (lambda v, r: v, lambda v, r, case=case: v - 2 * slices.born_infeld_rstar(r, case), away)
+       for view, case, away in (("particle", "particle", lambda v, r: r > 0.05),
+                                ("finkelstein", "hole", _away(slices.BORN_INFELD_HORIZON)))},
+    **{("born_infeld_charge", "eddington_finkelstein_outgoing", view):
+       (lambda u, r, case=case: u + 2 * slices.born_infeld_rstar(r, case), lambda u, r: u, away)
+       for view, case, away in (("particle", "particle", lambda u, r: r > 0.05),
+                                ("finkelstein", "hole", _away(slices.BORN_INFELD_HORIZON)))},
     ("hayward", "static", "radial"):
         (lambda t, r: t + _hayward_rstar(r), lambda t, r: t - _hayward_rstar(r), _hayward_away),
     ("hayward", "eddington_finkelstein_ingoing", "finkelstein"):

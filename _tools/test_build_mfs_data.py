@@ -361,6 +361,74 @@ def bardeen_rstar(r):
     return total + sum(a * math.log(abs(1 - r / ri)) for ri, a in poles if r != ri)
 
 
+# Born and Infeld's point charge as every diagram draws it, in units of r_0 at r_q = r_0/2: (r_s, r_q)
+# of Hoffmann's particle, whose whole mass is the energy of its field, and of the black hole.
+BORN_INFELD = {"particle": (math.gamma(0.25) ** 2 / (12 * math.sqrt(math.pi)), 0.5), "hole": (2.0, 0.5)}
+
+
+def carlson_rf(x, y, z):
+    """Carlson's symmetric elliptic integral R_F, by his duplication theorem."""
+    for _ in range(60):
+        lam = math.sqrt(x * y) + math.sqrt(y * z) + math.sqrt(z * x)
+        x, y, z = (x + lam) / 4, (y + lam) / 4, (z + lam) / 4
+        mean = (x + y + z) / 3
+        if max(abs(x - mean), abs(y - mean), abs(z - mean)) < 1e-9 * mean:
+            break
+    X, Y, Z = 1 - x / mean, 1 - y / mean, 1 - z / mean
+    e2, e3 = X * Y - Z * Z, X * Y * Z
+    return (1 - e2 / 10 + e3 / 14 + e2 * e2 / 24 - 3 * e2 * e3 / 44) / math.sqrt(mean)
+
+
+def elliptic_f(phi, m):
+    """The incomplete elliptic integral of the first kind, F(phi | m), for an amplitude up to pi."""
+    if phi > math.pi / 2:
+        return 2 * carlson_rf(0.0, 1 - m, 1.0) - elliptic_f(math.pi - phi, m)
+    s = math.sin(phi)
+    return s * carlson_rf(1 - s * s, 1 - m * s * s, 1.0)
+
+
+def born_infeld_f(r, case):
+    """g^rr = 1 - 2m/r of Born and Infeld's point charge, with the mass function as the charts define it,
+    m = r_s/2 + r_q^2 r/(3 (r^2 + W)) - (r_q^2/(3 r_0)) F(2 arctan(r_0/r) | 1/2), W = sqrt(r^4 + r_0^4)."""
+    rs, rq = BORN_INFELD[case]
+    W = math.sqrt(r ** 4 + 1)
+    m = rs / 2 + rq ** 2 * r / (3 * (r * r + W)) - rq ** 2 / 3 * elliptic_f(2 * math.atan2(1.0, r), 0.5)
+    return 1 - 2 * m / r
+
+
+def born_infeld_horizon():
+    """The black hole's one horizon, the zero of g^rr, by bisection."""
+    lo, hi = 1.5, 2.2
+    for _ in range(200):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if born_infeld_f(lo, "hole") * born_infeld_f(mid, "hole") > 0 else (lo, mid)
+    return 0.5 * (lo + hi)
+
+
+def born_infeld_rstar(r, case):
+    """The tortoise coordinate of Born and Infeld's point charge, dr_*/dr = 1/f and r_* = 0 at the
+    centre, without numpy, as Bardeen's is summed above: the particle's 1/f is smooth, and the black
+    hole's has one pole, at the horizon, of residue 1/f'(r_h) = r_h/(1 - 2 r_q^2/(r_h^2 + W))."""
+    poles = []
+    if case == "hole":
+        rh, rq = born_infeld_horizon(), BORN_INFELD[case][1]
+        poles = [(rh, rh / (1 - 2 * rq ** 2 / (rh * rh + math.sqrt(rh ** 4 + 1))))]
+    nodes = (0.0, 0.5384693101056831, -0.5384693101056831, 0.906179845938664, -0.906179845938664)
+    weights = (0.5688888888888889, 0.47862867049936647, 0.47862867049936647, 0.23692688505618908, 0.23692688505618908)
+
+    def smooth(x):
+        return 1 / born_infeld_f(x, case) - sum(a / (x - ri) for ri, a in poles)
+    cuts = sorted({0.0, r} | {ri for ri, _ in poles if ri < r})
+    total = 0.0
+    for lo, hi in zip(cuts, cuts[1:]):
+        panels = max(1, math.ceil((hi - lo) / 0.05))
+        width = (hi - lo) / panels
+        for k in range(panels):
+            mid = lo + (k + 0.5) * width
+            total += 0.5 * width * sum(w * smooth(mid + 0.5 * width * n) for n, w in zip(nodes, weights))
+    return total + sum(a * math.log(abs(1 - r / ri)) for ri, a in poles if r != ri)
+
+
 class PublishedFilesAreCurrent(unittest.TestCase):
     def test_check_mode_passes(self):
         self.assertEqual(build.main(["--check"]), 0)
@@ -4915,6 +4983,15 @@ class Slices(unittest.TestCase):
                         "static/radial", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
                         "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
                     **{f"conformal hayward/{v}": {"history"} for v in ("static", "ingoing", "outgoing")},
+                    # Hoffmann's particle and the black hole of the same charge are two spacetimes of one
+                    # line element: each drawing marks the moment of its own.
+                    **{f"born_infeld_charge/{s}": {"hole"} for s in (
+                        "static/particle", "eddington_finkelstein_ingoing/particle", "eddington_finkelstein_outgoing/particle")},
+                    **{f"conformal born_infeld_charge/{v}": {"hole"} for v in ("particle", "particle_ingoing", "particle_outgoing")},
+                    **{f"born_infeld_charge/{s}": {"particle"} for s in (
+                        "static/hole", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
+                        "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
+                    **{f"conformal born_infeld_charge/{v}": {"particle"} for v in ("hole", "hole_ingoing", "hole_outgoing")},
                     "hayward/evaporating/history": {"outside", "inside"},
                     "conformal hayward/history": {"outside", "inside"},
                     # Kerr-de Sitter and Kerr-anti-de Sitter are two spacetimes of one line element, each
@@ -5320,6 +5397,14 @@ class Slices(unittest.TestCase):
             sign = 1 if "ingoing" in key else -1
             finkelstein = key.endswith("finkelstein")
             return (lambda X: sign * (bardeen_rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
+        if key.startswith("born_infeld_charge/eddington_finkelstein"):
+            # In units of r_0 at r_q = r_0/2 the static t = 0 is v = r_* and u = -r_*, with dr_*/dr = 1/f and
+            # r_* = 0 at the centre, drawn against v - r and u + r or against v and u: the whole of it for
+            # Hoffmann's particle, and for the black hole a curve that runs off toward the horizon.
+            sign = 1 if "ingoing" in key else -1
+            case = "particle" if key.endswith("/particle") else "hole"
+            lean = 0 if key.endswith("/chart") else 1
+            return (lambda X: sign * (born_infeld_rstar(X, case) - lean * X)), list(self.reach(surface))
         if key in ("ads_soliton/horowitz_myers/radial", "ads_soliton/poincare/tz"):
             # The soliton's t = 0, embedded in the proper distance rho from the tip, at r_0 = L = 1:
             # r = cosh^(2/3)(3 rho/2) on Horowitz and Myers's plane and z = 1/r on the Poincare plane.

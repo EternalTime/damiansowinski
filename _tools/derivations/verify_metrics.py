@@ -1149,6 +1149,19 @@ DIMENSIONS = {
     ("bardeen", "eddington_finkelstein_ingoing"): {
         "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "g": "L",
     },
+    # Born and Infeld's point charge keeps Schwarzschild's r_s and Reissner and Nordstrom's r_q; r_0,
+    # the radius at which the charge's Coulomb field would be Born and Infeld's greatest field, is a
+    # length, the radical W an area and the mass function m = G M(r)/c^2 a length. The
+    # Eddington-Finkelstein times u = ct - r_* and v = ct + r_* are lengths.
+    ("born_infeld_charge", "static"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L", "r_0": "L", "W": "L^2", "m": "L",
+    },
+    ("born_infeld_charge", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L", "r_0": "L", "W": "L^2", "m": "L",
+    },
+    ("born_infeld_charge", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L", "r_0": "L", "W": "L^2", "m": "L",
+    },
     # The black string is Schwarzschild's black hole with the length z along the string added, and
     # in six dimensions Tangherlini's of five with it; the advanced time v = ct + r_* is a length and
     # the Kerr-Schild time T = (v - r)/c a time.
@@ -1718,6 +1731,11 @@ HELD = {
     # The areal radius of Kruskal's chart, Lambert's function of UV: held, a value is
     # written in r and e^(-r/r_s), as the line element is.
     ("white_hole", "exterior_kruskal"): ("r",),
+    # The mass function of Born and Infeld's point charge, an incomplete elliptic integral of the
+    # first kind whose derivative along r is algebraic, the energy of the field in a shell.
+    ("born_infeld_charge", "static"): ("m",),
+    ("born_infeld_charge", "eddington_finkelstein_outgoing"): ("m",),
+    ("born_infeld_charge", "eddington_finkelstein_ingoing"): ("m",),
 }
 
 # The first derivatives of held names along the coordinates they vary with, written in the names
@@ -1738,6 +1756,9 @@ RATES = {
               "X": "-\\dfrac{v\\left(1 + 2uv\\right)}{x}",
               "Z": "\\dfrac{1 - 2v\\left(v - u\\left(1 + uv\\right)\\right)}{2x}"},
     },
+    # dm/dr is the energy of the field in a shell, r_q^2/(r^2 + W), which is 4 pi G r^2 rho/c^4.
+    **{("born_infeld_charge", chart): {"m": {"r": "\\dfrac{r_q^2}{r^2 + W}"}}
+       for chart in ("static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing")},
 }
 
 # The systems whose delta stands on a curved background, where what multiplies it varies across
@@ -1844,6 +1865,39 @@ DIRAC_ORDERS = 3
 
 TRIG = ["sinh", "cosh", "tanh", "coth", "sin", "cos", "tan", "cot", "sec", "csc"]
 
+
+class EllipticF(sp.Function):
+    """The incomplete elliptic integral of the first kind, F(phi | m), the integral of
+    1/sqrt(1 - m sin^2 t) from t = 0 to phi, with the parameter m a number: what the reader
+    reads \\mathrm{F}\\left(\\varphi \\mid m\\right) as. It is sympy's elliptic_f under a name of its
+    own, so that it carries its own numbers, which lambdify takes whatever module it is given, and
+    differentiates along its amplitude alone, by the integrand."""
+    nargs = 2
+    is_real = True
+
+    @staticmethod
+    def _imp_(phi, m):
+        # lambdify hands over mpmath's numbers where a drawing asks for more digits than a float has.
+        import mpmath
+        if isinstance(phi, mpmath.mpf):
+            return mpmath.ellipf(phi, m)
+        from scipy.special import ellipkinc
+        return ellipkinc(phi, m)
+
+    def fdiff(self, argindex=1):
+        if argindex != 1:
+            raise sp.function.ArgumentIndexError(self, argindex)
+        phi, m = self.args
+        return 1 / sp.sqrt(1 - m * sp.sin(phi) ** 2)
+
+    def _eval_evalf(self, prec):
+        import mpmath
+        phi, m = (argument._to_mpmath(prec + 20) for argument in self.args)
+        with mpmath.workprec(prec + 20):
+            value = mpmath.ellipf(phi, m)
+        return sp.Expr._from_mpmath(value, prec)
+
+
 FUNCTIONS = {
     "sin": sp.sin, "cos": sp.cos, "tan": sp.tan, "cot": sp.cot,
     "sec": sp.sec, "csc": sp.csc, "sinh": sp.sinh, "cosh": sp.cosh,
@@ -1857,6 +1911,9 @@ FUNCTIONS = {
     # Lambert's function, the principal branch, written \\mathrm{W}: Kruskal's chart of the white
     # hole defines the areal radius by it, (1 - r/r_s) e^(r/r_s) = UV.
     "LAMBERTW": sp.LambertW,
+    # The incomplete elliptic integral of the first kind, \\mathrm{F}(\\varphi \\mid m), for the mass
+    # function of Born and Infeld's point charge.
+    "ELLIPF": EllipticF,
 }
 
 
@@ -2904,6 +2961,7 @@ class Reader:
         text = text.replace("\\arctan", " ATAN ")
         text = text.replace("\\mathrm{arsinh}", " ASINH ").replace("\\arcsin", " ASIN ")
         text = text.replace("\\mathrm{W}", " LAMBERTW ")
+        text = text.replace("\\mathrm{F}", " ELLIPF ").replace("\\mid", ",")
         text = expand_superscript_braces(text)
         text = text.replace("^", "**")
         # A trig call written bare, as \sin^2\theta or \cot\theta rather than sin(theta).

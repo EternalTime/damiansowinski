@@ -214,7 +214,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8374b9aefc52b72a",
+    "version": "0be0402ad12207eb",
     "diagrams": "af782319d0ede812",
     "conformal": "7ea8e08d66397efe",
     "embedding": "1585df5452ac5572"
@@ -526,6 +526,47 @@
     "embedding": "c306446463337712"
   },
   {
+    "id": "born_infeld_charge",
+    "name": "Born-Infeld Point Charge",
+    "tags": [
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "charged",
+      "electric charge",
+      "mass",
+      "point charge",
+      "electromagnetic mass",
+      "nonlinear electrodynamics",
+      "Born-Infeld electrodynamics",
+      "electromagnetic field",
+      "particle-like solution",
+      "geon",
+      "conical singularity",
+      "curvature singularity",
+      "naked singularity",
+      "timelike singularity",
+      "no horizon",
+      "black hole",
+      "charged black hole",
+      "horizon",
+      "event horizon",
+      "string theory",
+      "causal structure",
+      "maximal extension",
+      "asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "512e6b2398910632",
+    "diagrams": "57ee5c7562cefd4b",
+    "conformal": "e2bbbb9cac6bd337",
+    "embedding": "5e7af1a4e6b9a9b6"
+  },
+  {
     "id": "boson_star",
     "name": "Boson Star",
     "tags": [
@@ -598,7 +639,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "a58527b9ef2adb1b",
+    "version": "9cca44dfa3993498",
     "diagrams": "aad81dc2048a0547",
     "conformal": "6c5c22a5247f56a8",
     "embedding": "d857ba18e7d9066a"
@@ -985,7 +1026,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d455e1875060328b",
+    "version": "64cffdb30921227f",
     "diagrams": "76bab86a529ed941",
     "conformal": "c45f19da93e85da3",
     "embedding": "626bd0932cbe6704"
@@ -2941,7 +2982,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "2c8b13c34a11cc93",
+    "version": "377707cc49c3c381",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -3163,7 +3204,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5dba0bebd7479504",
+    "version": "89ec1c73b561841c",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
