@@ -952,6 +952,20 @@ A charged black hole in a universe with a positive cosmological constant, the st
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r} + \dfrac{r_q^2}{r^2} - \dfrac{\Lambda r^2}{3}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Cosmological: coordinates $(\tau, \rho, \theta, \phi)$, $$ds^2 = -\left(H\tau + \dfrac{r_s}{2\rho}\right)^{-2}c^2d\tau^2 + \left(H\tau + \dfrac{r_s}{2\rho}\right)^2\left(d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### Roberts Solution and Critical Collapse
+
+A massless scalar field falling in from infinity onto empty space, an exact solution of Einstein's equations that Mark Roberts found as a counterexample to cosmic censorship. It looks the same at every scale, and one number $p$ decides how it ends: for $p < 1$ the field passes through the centre and leaves flat space behind, for $p > 1$ it makes a black hole, and at $p = 1$ it leaves a null singularity.
+
+- id: `roberts`
+- tags: non-vacuum, scalar field, massless scalar field, minimally coupled scalar field, Einstein-scalar, spherically symmetric, time-dependent, dynamical, self-similar, homothetic, gravitational collapse, critical collapse, critical phenomena, black hole, apparent horizon, naked singularity, null singularity, singularity, curvature singularity, cosmic censorship, Choptuik, double null coordinates, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/roberts.json
+- chart Double Null: coordinates $(u, v, \theta, \phi)$, $$ds^2 = -du\,dv + \dfrac{(1-p^2)v^2 - 2uv + u^2}{4}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Roberts: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -(1+p)\,dv^2 + 2\,dv\,dr + r(r - pv)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Areal Radius: coordinates $(v, R, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{p^2v}{2\lambda}\right)dv^2 + \dfrac{2R}{\lambda}\,dv\,dR + R^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Time and Radius: coordinates $(t, \rho, \theta, \phi)$, $$ds^2 = -c^2dt^2 + d\rho^2 + \rho(\rho - pct)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Scaling: coordinates $(\tau, x, \theta, \phi)$, $$ds^2 = 2\ell^2e^{2(x-\tau)}\left(\left(1 - e^{-2x}\right)d\tau^2 - 2\,d\tau\,dx\right) + \ell^2e^{2(x-\tau)}\left(\cosh^2x - p^2\sinh^2x\right)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Robinson-Trautman Radiating Spacetimes
 
 The vacuum field of an isolated body sending out gravitational waves on expanding wave fronts, found by Ivor Robinson and Andrzej Trautman in 1960. From smooth initial data the fronts grow round as the waves leave, and the spacetime settles down to the Schwarzschild black hole.

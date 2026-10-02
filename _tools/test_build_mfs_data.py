@@ -3499,6 +3499,7 @@ class StacksAndMovies(unittest.TestCase):
               ("bell_szekeres", "ring"): "$\\xi$",
               ("gowdy", "torus"): "$t$", ("light_beam", "ring"): "$u$",
               ("string_wave", "ring"): "$u$", ("simpson_visser", "inside"): "$c\\tau$",
+              **{("roberts", case): "$ct$" for case in ("disperses", "threshold", "collapses")},
               ("black_string", "ripple"): "$v$"}
 
     def setUp(self):
@@ -4261,6 +4262,107 @@ def novikov_t(R, tau):
     return r, math.log(abs((k + tan) / (k - tan))) + k * (eta + 0.5 * R * (eta + math.sin(eta)))
 
 
+class RobertsCollapse(unittest.TestCase):
+    """The published drawings of Roberts's collapse against its closed forms: where the apparent
+    horizon and the singularity stand in each chart, and the shape of each embedded moment."""
+
+    @classmethod
+    def setUpClass(cls):
+        root = build.METRICS_DIR.parent
+        cls.diagrams = json.loads((root / "diagrams" / "roberts.json").read_text(encoding="utf-8"))
+        cls.conformal = json.loads((root / "conformal" / "roberts.json").read_text(encoding="utf-8"))
+        cls.embedding = json.loads((root / "embedding" / "roberts.json").read_text(encoding="utf-8"))
+
+    @staticmethod
+    def null(chart, p, a, b):
+        """u and v, at l = 1, of the point (a, b) of a chart's plane."""
+        if chart == "double_null":
+            return a, b
+        if chart == "advanced":
+            return (1 + p) * a - 2 * b, a
+        if chart == "areal":
+            return a - 2 * math.sqrt(b * b + p * p * a * a / 4), a
+        if chart == "diagonal":
+            s = math.sqrt(1 + p)
+            return s * (a - b), (a + b) / s
+        return -2 * math.exp(-a), math.exp(-a) * math.expm1(2 * b)
+
+    def marked(self, kind):
+        """Every point of every marker of one kind, as (chart, case, u, v)."""
+        for chart, views in self.diagrams["systems"].items():
+            for view in views:
+                X0, X1, Y0, Y1 = view["box"]
+                (m00, m01), (m10, m11) = view["to_display"]
+                det = m00 * m11 - m01 * m10
+                for marker in view["markers"]:
+                    if marker["kind"] != kind:
+                        continue
+                    for line in marker.get("lines", []):
+                        for ux, uy in line:
+                            X, Y = X0 + ux * (X1 - X0), Y0 + uy * (Y1 - Y0)
+                            a, b = (m11 * X - m01 * Y) / det, (m00 * Y - m10 * X) / det
+                            yield chart, view["id"], *self.null(chart, ROBERTS_P[view["id"]], a, b)
+
+    def test_the_apparent_horizon_is_u_equal_to_one_minus_p_squared_times_v(self):
+        found = set()
+        for kind in ("apparent", "grr"):
+            for chart, case, u, v in self.marked(kind):
+                p = ROBERTS_P[case]
+                self.assertGreater(p, 1, f"{chart}/{case}")
+                self.assertAlmostEqual(u, (1 - p * p) * v, delta=5e-3 * (1 + abs(u) + abs(v)), msg=f"{chart}/{case}")
+                found.add(chart)
+        self.assertEqual(found, {"double_null", "advanced", "areal", "diagonal", "scaling"})
+
+    def test_the_singularity_is_u_equal_to_one_minus_p_times_v_and_only_from_the_threshold_up(self):
+        found = set()
+        for chart, case, u, v in self.marked("singular"):
+            p = ROBERTS_P[case]
+            self.assertGreaterEqual(p, 1, f"{chart}/{case}")
+            self.assertGreaterEqual(v, -1e-3, f"{chart}/{case}")
+            self.assertAlmostEqual(u, (1 - p) * v, delta=5e-3 * (1 + abs(u) + abs(v)), msg=f"{chart}/{case}")
+            found.add((chart, case))
+        # At p = 1 the scaling chart's singularity is tau and x to infinity together, off every box.
+        self.assertEqual(found, {(c, k) for c in self.diagrams["systems"] for k in ("threshold", "collapses")}
+                         - {("scaling", "threshold")})
+
+    def test_each_embedded_moment_has_the_areal_radius_and_the_height_of_its_closed_form(self):
+        """R = sqrt(rho (rho - p t)) and Z = p t ln(sqrt(rho) + sqrt(rho - p t)) with the rim at Z = 0, in
+        Minkowski space, from the first ray before t = 0 and from the last ray or the singularity after."""
+        frames = 0
+        for view in self.embedding["views"]:
+            p = ROBERTS_P[view["id"]]
+            for frame in view["movie"]["frames"]:
+                t = float(frame["value"])
+                (piece,) = frame["pieces"]
+                self.assertEqual((piece["system"], piece["coordinate"]), ("diagonal", "\\rho"))
+                points = [[float(x) for x in point] for point in piece["points"]]
+                top = points[-1][0]
+                first = -t if t <= 0 else t if p < 1 else p * t
+                self.assertAlmostEqual(points[0][0], first, delta=3e-4 * max(abs(first), 1e-9) + 1e-12, msg=view["id"])
+                for rho, R, Z in points:
+                    self.assertAlmostEqual(R, math.sqrt(max(rho * (rho - p * t), 0.0)), delta=1e-9, msg=view["id"])
+                    want = 0.0 if t == 0 else p * t * (math.log(math.sqrt(rho) + math.sqrt(max(rho - p * t, 0.0)))
+                                                         - math.log(math.sqrt(top) + math.sqrt(top - p * t)))
+                    self.assertAlmostEqual(Z, want, delta=1e-9, msg=f"{view['id']} at ct = {t}")
+                frames += 1
+        self.assertEqual(frames, 99)
+
+    def test_the_conformal_singularity_is_null_on_the_threshold_and_level_at_p_equal_to_two(self):
+        for view in self.conformal["views"]:
+            case = view["id"].rsplit("_", 1)[1]
+            lines = [layer["points"] for layer in view["layers"] if layer["class"] == "singular"]
+            if case == "disperses":
+                self.assertEqual(lines, [], view["id"])
+                continue
+            (line,) = lines
+            for X, T in line:
+                self.assertAlmostEqual(T, X if case == "threshold" else 0.0, delta=2e-4, msg=view["id"])
+
+
+# p of each outcome of Roberts's collapse, as its drawings name them.
+ROBERTS_P = {"disperses": 0.9, "threshold": 1.0, "collapses": 2.0}
+
+
 class Slices(unittest.TestCase):
     """Every moment an embedding diagram is cut from is drawn on its spacetime's other diagrams
     where it lies, from the numbers in the files alone, and on nothing else."""
@@ -4510,7 +4612,12 @@ class Slices(unittest.TestCase):
                        for s in ("spherical", "areal", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing")
                        for case, own in SV_MOMENTS_OF.items()},
                     **{f"conformal simpson_visser/{s}_{case}": set(SV_MOMENTS) - set(own)
-                       for s in ("spherical", "areal", "ingoing", "outgoing") for case, own in SV_MOMENTS_OF.items()}}
+                       for s in ("spherical", "areal", "ingoing", "outgoing") for case, own in SV_MOMENTS_OF.items()},
+                    # Roberts's collapse at p = 9/10, 1 and 2 is three spacetimes of one line element, each
+                    # drawing marking the moments of its own.
+                    **{f"{place}roberts/{s}{sep}{case}": set(ROBERTS_P) - {case}
+                       for place, sep in (("", "/"), ("conformal ", "_"))
+                       for s in ("double_null", "advanced", "areal", "diagonal", "scaling") for case in ROBERTS_P}}
     # The surfaces of a view that a drawing does not mark though it marks the view's others: the areal
     # chart of the black bounce is drawn on the side r > 0, where the moments of r < 0 do not lie.
     HIDDEN_SURFACES = {"simpson_visser/areal/bounce": {("inside", 3), ("inside", 4)}}
@@ -4918,6 +5025,34 @@ class Slices(unittest.TestCase):
                 "witten": [lo, hi], "schwarzschild_gauge": [math.log(math.cosh(lo)), math.log(math.cosh(hi))],
                 "dilaton": [math.cosh(lo) ** 2, math.cosh(hi) ** 2], "conformal": [math.log(math.sinh(hi))],
                 "kruskal": [-math.sinh(hi), math.sinh(hi)]}[chart]
+        if key.startswith("roberts/"):
+            # A moment t of Roberts's diagonal chart, over the rho the embedding reaches, in each chart's
+            # drawn axes, with u = s (t - rho), v = (t + rho)/s and s = sqrt(1 + p): level at t against
+            # rho, level at s t against r = s rho, the straight line of u and v against (v - u)/2 and
+            # (u + v)/2, the curve (1 + p/2) v - R against R = sqrt(rho (rho - p t)), and tau + x against
+            # x in the scaling chart, where e^(2x) - 1 = 2 (t + rho)/((1 + p)(rho - t)).
+            chart, case = key.split("/")[1:]
+            p = ROBERTS_P[case]
+            s = math.sqrt(1 + p)
+            lo, hi = self.reach(surface)
+            if chart == "diagonal":
+                return (lambda X: t), [lo, hi]
+            if chart == "advanced":
+                return (lambda X: s * t), [s * lo, s * hi]
+            if chart == "double_null":
+                X_of = lambda rho: (t * (1 / s - s) + rho * (1 / s + s)) / 2
+                rho_of = lambda X: (2 * X - t * (1 / s - s)) / (1 / s + s)
+                return (lambda X: (t * (1 / s + s) + rho_of(X) * (1 / s - s)) / 2), [X_of(lo), X_of(hi)]
+            if chart == "areal":
+                rho_of = lambda X: (p * t + math.sqrt(p * p * t * t + 4 * X * X)) / 2
+                R_of = lambda rho: math.sqrt(max(rho * (rho - p * t), 0.0))
+                return (lambda X: (1 + p / 2) * (t + rho_of(X)) / s - X), [R_of(lo), R_of(hi)]
+
+            def rho_of(X):
+                E = math.expm1(2 * X) * (1 + p)
+                return t * (E + 2) / (E - 2)
+            x_of = lambda rho: math.log1p(2 * (t + rho) / ((1 + p) * (rho - t))) / 2 if rho > t else math.inf
+            return (lambda X: X - math.log(s * (rho_of(X) - t) / 2)), [x_of(lo), x_of(hi)]
         if key == "damour_solodukhin/isotropic/radial":
             # The isotropic radius of the circles the embedding reaches in the areal radius R, at r_s = 1:
             # r = (R - 1/2 + sqrt(R(R - 1)))/2 on one side and 1/(16 r) on the other.
@@ -5115,6 +5250,17 @@ class Slices(unittest.TestCase):
                         for X, T in points:
                             tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
                             self.assertLess(abs(tp * tq + 4 * t), 2e-4 * (1 + tp * tp + tq * tq), where)
+                    elif metric_id == "roberts":
+                        # arctan(u) and arctan(v), with ct = (u/s + s v)/2 and rho = (s v - u/s)/2 for
+                        # s = sqrt(1 + p), over the rho the embedding reaches.
+                        s = math.sqrt(1 + ROBERTS_P[view["id"].rsplit("_", 1)[1]])
+                        lo, hi = self.reach(surface)
+                        for X, T in points:
+                            u, v = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            scale = 1 + u * u + v * v
+                            self.assertLess(abs((u / s + s * v) / 2 - t), 2e-4 * scale, f"{where} at {(X, T)}")
+                            self.assertLessEqual(lo - 2e-4 * scale, (s * v - u / s) / 2, where)
+                            self.assertLessEqual((s * v - u / s) / 2, hi + 2e-4 * scale, where)
                     elif metric_id == "vaidya":
                         for X, T in points:
                             p, q = (T - X) / 2, (T + X) / 2

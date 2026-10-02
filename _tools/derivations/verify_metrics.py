@@ -274,6 +274,14 @@ DIMENSIONS = {
     ("fisher_jnw", "harmonic"): {
         "t": "T", "u": "L**(-1)", "\\theta": "1", "\\phi": "1", "m": "L", "k": "L",
     },
+    # Roberts's collapsing scalar field: the null coordinates u and v are lengths and p a pure number.
+    # Roberts's lambda, which the areal chart names, is a length, and Frolov's scaling coordinates are
+    # pure numbers, counted in a length ell.
+    ("roberts", "double_null"): {"u": "L", "v": "L", "\\theta": "1", "\\phi": "1", "p": "1"},
+    ("roberts", "advanced"): {"v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "p": "1"},
+    ("roberts", "areal"): {"v": "L", "R": "L", "\\theta": "1", "\\phi": "1", "p": "1", "\\lambda": "L"},
+    ("roberts", "diagonal"): {"t": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "p": "1"},
+    ("roberts", "scaling"): {"\\tau": "1", "x": "1", "\\theta": "1", "\\phi": "1", "p": "1", "\\ell": "L"},
     ("bianchi", "type_i_cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "a_1": "1", "a_2": "1", "a_3": "1",
     },

@@ -101,6 +101,7 @@ another camera, as the page does with MFS/assets/turn.js when a reader turns it.
 import argparse
 import json
 import math
+from fractions import Fraction
 import sys
 import time
 import warnings
@@ -6898,6 +6899,99 @@ def near_horizon_extreme_kerr(ck, src):
     return views
 
 
+ROBERTS_MOMENTS = (-1.6, -0.8, 0.8, 1.6)    # ct of the moments marked, in any length l
+ROBERTS_TOP = 5.0                           # rho where each moment's drawing stops, in l
+ROBERTS_TIP = 2e-4                          # how far short of the singularity rho = p ct a profile starts, as a part of p ct
+
+
+def roberts_inner(p, t):
+    """rho where a moment t of Roberts's collapse begins, in the diagonal chart at l = c = 1: the
+    field's first ray rho = -t before t = 0, and after it the last ray rho = t for p < 1 and the
+    singularity rho = p t for p >= 1, which the drawing stops ROBERTS_TIP short of."""
+    if t <= 0:
+        return -t
+    return t if p < 1 else p * t * (1 + ROBERTS_TIP)
+
+
+def roberts(ck, src):
+    """The equator of a moment of Roberts's time t, played as a movie, for each of the three
+    outcomes, p = 9/10, 1 and 2, read in his diagonal chart, where the metric on the moment is
+    d rho^2 + rho (rho - p c t) d phi^2.
+
+    The circle of the sphere rho has the radius R = sqrt(rho (rho - p c t)), and
+    (dR/d rho)^2 - 1 = p^2 c^2 t^2/4R^2, so at every moment but t = 0 the circles grow faster than
+    the distance out to them and the surface stands in three dimensional Minkowski space,
+    dX^2 + dY^2 - dZ^2, with dZ/d rho = p c |t|/2R: Z = p c t ln(sqrt(rho) + sqrt(rho - p c t)) up
+    to a constant, which is checked. At t = 0 the moment is a flat plane. Each moment is drawn
+    with its rim rho = 5 l at Z = 0, from the sphere where the field's region begins: the first
+    ray rho = -c t before t = 0, the last ray rho = c t after it for p < 1, and for p >= 1 the
+    singularity rho = p c t, where R = 0 and the surface closes on a point along the light cone,
+    dZ/dR = p c t/(2 rho - p c t) -> 1. Before t = 0 the surface rises toward the first ray and
+    after it falls. The collapse is the same at every scale, so the moments before t = 0 are one
+    surface at different sizes, and so are the moments after it."""
+    views = []
+    top = ROBERTS_TOP
+    size = 2 * math.sqrt(top * (top + 2 * 1.6))
+    radii = (1.0, 2.0, 3.0, 4.0)
+    for case, (label, value) in nr.ROBERTS_CASES.items():
+        p = float(Fraction(value))
+        name = f"Roberts, p = {value}"
+
+        def moment(t, p=p, value=value, name=name):
+            lo = roberts_inner(p, t)
+            sl = Slice(src, "roberts", "diagonal", "\\rho", "\\phi", {"t": repr(t), "theta": "pi/2"}, {"p": value},
+                       space="minkowski")
+            if t < 0:
+                start = ("edge", "the field's first ray, $\\rho = -ct$, with flat space inside it")
+            elif t == 0:
+                start = ("axis", None)
+            elif p < 1:
+                start = ("edge", "the field's last ray, $\\rho = ct$, with flat space inside it")
+            else:
+                start = ("edge", "the surface runs on into the axis along a light cone, to the singularity $\\rho = pct$")
+            marks = [(lo, "space", None)] + [(r, "r", None) for r in radii if r > lo * (1 + 1e-9)] + [(top, "r", None)]
+            sense = 1 if t >= 0 else -1
+            # Toward the singular point the surface closes on the light cone, 1 - (dZ/dR)^2 = 4R^2/(p c t)^2,
+            # so a chord is far shorter than its extent in R: the profile steps toward it by a fiftieth
+            # of R at a time and is written to fourteen decimals.
+            knots = ([p * t * (1 + ROBERTS_TIP * 1.02 ** (2 * k)) for k in range(1, 233)] if t > 0 and p >= 1 else
+                     # Just below the threshold the surface leaves the last ray near the light cone too,
+                     # dZ/dR = p/(2 - p) there, so its chords are kept short as well.
+                     [lo * (1 + 1e-3 * 1.05 ** k) for k in range(1, 260)] if t > 0 else [])
+            piece = Piece("field", "sheet", sl, lo, top, -sense * sl.rise(lo, top), sense,
+                          (start, ("edge", "the surface runs on, to $\\rho \\to \\infty$")), marks, size,
+                          digits=1e-14, knots=knots)
+            where = f"{name}, ct = {t:+.2f}"
+            ck.isometry(where, piece)
+            ck.radius(f"{where}, R = sqrt(rho (rho - p c t))", piece, lambda r: np.sqrt(r * (r - p * t)), size)
+            height = lambda r: (0 * r if t == 0 else
+                                p * t * (np.log(np.sqrt(r) + np.sqrt(np.maximum(r - p * t, 0)))
+                                         - math.log(math.sqrt(top) + math.sqrt(top - p * t))))
+            ck.form(f"{where}, Z = p c t ln(sqrt(rho) + sqrt(rho - p c t))", piece, height, size)
+            text = f"$ct = {t:g}\\,\\ell$"
+            return Surface([piece], label=text, time=t)
+
+        times, keys = movie_values(list(ROBERTS_MOMENTS), 0.1)
+        frames = [moment(round(t, 9) + 0.0) for t in times]
+        marked = [frames[i] for i in keys]
+        if p >= 1:
+            tip = frames[-1].pieces[0]
+            ck.add(f"{name}: the surface enters the singular point along the light cone",
+                   abs(float((tip.z[1] - tip.z[0]) / (tip.rho[1] - tip.rho[0])) - 1), 1e-3)
+        fig = movie_figure(frames, {"sheet": "cover"}, size)
+        fig.legend("fill", "cover", "the equator of a moment of $t$, where the field is")
+        fig.legend("line", "r", "$\\rho$ constant, every $\\ell$ to $5\\,\\ell$")
+        fig.legend("line", "space", {"disperses": "the field's first ray before $t = 0$ and its last ray after",
+                                     "threshold": "the field's first ray before $t = 0$ and the singularity after",
+                                     "collapses": "the field's first ray before $t = 0$ and the singularity after"}[case])
+        fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+        views.append(view(case, label, "$\\ell$", marked, fig.done(),
+                          movie=movie(frames, "$ct$", [f.time for f in frames]),
+                          settings=f"$p = {value}$, with $\\ell$ any length, the unit of every length drawn. Every "
+                                   "length along the surface is measured with $dX^2 + dY^2 - dZ^2$."))
+    return views
+
+
 MILNE = (0.5, 1.0, 2.0, 3.0)    # the moments of ct drawn, in any unit of length l
 
 
@@ -8681,6 +8775,7 @@ DRAWN = {
     "near_horizon_extreme_kerr": near_horizon_extreme_kerr,
     "photon_rocket": photon_rocket,
     "fisher_jnw": fisher_jnw,
+    "roberts": roberts,
     "hartle_thorne": hartle_thorne,
 }
 
@@ -8743,6 +8838,22 @@ CAPTIONS = {
         "flat space as Flamm's paraboloid does, and at $\\gamma = 1$ the circle is $r = b$ and the surface is "
         "Flamm's. Both parts lie level at the circle, so they meet there with one tangent plane.",
     ],
+    **{("roberts", case): [
+        f"The equator ($\\theta = \\pi/2$) of a moment of Roberts's time $t$ ($p = {value}$), where the field is, out to "
+        "$\\rho = 5\\,\\ell$, in three dimensional Minkowski space ($dX^2 + dY^2 - dZ^2$), every distance along the "
+        "surface the metric distance.",
+        "On the moment the metric is $d\\rho^2 + \\rho(\\rho - pct)\\,d\\phi^2$, so the circle of the sphere $\\rho$ has "
+        "radius $R = \\sqrt{\\rho(\\rho - pct)}$, and $(dR/d\\rho)^2 - 1 = p^2c^2t^2/4R^2$. The circles grow faster than "
+        "the distance out to them, so the surface climbs in Minkowski space, at $dZ/d\\rho = pc|t|/2R$, and at "
+        "$t = 0$ it is a flat plane.",
+        "Before $t = 0$ the surface begins on the field's first ray, the circle $\\rho = -ct$, with flat space inside "
+        "it. " + ("After $t = 0$ it begins on the last ray, $\\rho = ct$, with flat space inside that too. "
+                  if case == "disperses" else
+                  "After $t = 0$ it closes on the singularity $\\rho = pct$, a point it enters along a light cone, "
+                  "$dZ/dR \\to 1$. ")
+        + "Every moment before $t = 0$ is one surface at a different size, and so is every moment after it, since "
+          "the collapse is the same at every scale."]
+       for case, (_, value) in nr.ROBERTS_CASES.items()},
     ("spinning_string", "moment"): [
         "The moment $t = 0$ of the plane $z = 0$ outside the closed timelike curves ($b = 0.9$, $r > r_c = a/b$), "
         "in three dimensional Minkowski space ($dX^2 + dY^2 - dZ^2$) out to the circle $r = r_c/\\sqrt{1 - b^2}$ and "

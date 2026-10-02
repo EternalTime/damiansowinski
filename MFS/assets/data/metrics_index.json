@@ -619,7 +619,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8947d850a64ded8d",
+    "version": "e651b57bee2aadbe",
     "diagrams": "3ae6a5324e2f9841",
     "conformal": "0ad248166c7cdb8f",
     "embedding": "3cdd1185c95f1f46"
@@ -1363,7 +1363,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "0e1c960062a36b1c",
+    "version": "40cd062a5208db37",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -1835,6 +1835,43 @@
     "diagrams": "f6c6ac1947d0b4e9",
     "conformal": "639eea78631ca3e1",
     "embedding": "342b4919bb1495ae"
+  },
+  {
+    "id": "roberts",
+    "name": "Roberts",
+    "tags": [
+      "non-vacuum",
+      "scalar field",
+      "massless scalar field",
+      "minimally coupled scalar field",
+      "Einstein-scalar",
+      "spherically symmetric",
+      "time-dependent",
+      "dynamical",
+      "self-similar",
+      "homothetic",
+      "gravitational collapse",
+      "critical collapse",
+      "critical phenomena",
+      "black hole",
+      "apparent horizon",
+      "naked singularity",
+      "null singularity",
+      "singularity",
+      "curvature singularity",
+      "cosmic censorship",
+      "Choptuik",
+      "double null coordinates",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "282d8d28feccdc53",
+    "diagrams": "a0d99b1047fc15a8",
+    "conformal": "be314e331ea79c30",
+    "embedding": "7d4fbd4e5c072163"
   },
   {
     "id": "robinson_trautman",
@@ -2333,7 +2370,7 @@
       "naked singularity",
       "cosmic censorship"
     ],
-    "version": "f6589d1574de0403",
+    "version": "ae4152129bc9341d",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404"
