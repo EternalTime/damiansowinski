@@ -59,6 +59,11 @@
       "id": "c_metric",
       "kind": "family",
       "text": "A pair of accelerating black holes. Óscar Dias and José Lemos took the limit toward a degenerate horizon of the C-metric with $\\Lambda < 0$ and found the anti-Nariai C-metric, which is anti-Nariai when the acceleration vanishes [dias2003]."
+    },
+    {
+      "id": "cremmer_scherk",
+      "kind": "family",
+      "text": "Cremmer and Scherk's solution of 1976: Minkowski space of four dimensions times a sphere of radius $a$ in six dimensions, the sphere held by a monopole's field and the flat dimensions by $\\Lambda = 1/2a^2$ [horvath1977]. The flat plane times a sphere is the same balance with two flat dimensions."
     }
   ],
   "references": [
@@ -73,7 +78,8 @@
     "cardoso2004",
     "caldarelli2001extremal",
     "dias2003",
-    "podolsky2003kundt"
+    "podolsky2003kundt",
+    "horvath1977"
   ],
   "coordinates": [
     {

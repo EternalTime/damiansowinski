@@ -92,6 +92,16 @@
       "id": "lindquist_wheeler_lattice",
       "kind": "family",
       "text": "The collapsing star turned inside out: Schwarzschild's vacuum fills each cell of a closed universe, and the boundary of a cell falls along the radial geodesic that the star's surface follows here [lindquist1957]."
+    },
+    {
+      "id": "datt_ruban_t_models",
+      "kind": "family",
+      "text": "Dust joined to Schwarzschild's vacuum on a shell that stays inside the horizon: a tube of spheres of one radius, whose mass is the same however much dust it holds [ruban1968]."
+    },
+    {
+      "id": "misner_zapolsky",
+      "kind": "programme",
+      "text": "The static star of infinite central density that Oppenheimer and Volkoff found earlier in 1939. They called it unstable, and wrote that the nonstatic solutions for heavier stars were \"now being investigated\" [oppenheimer1939]."
     }
   ],
   "references": [
@@ -114,7 +124,8 @@
     "hsu2008unitarity",
     "novikov1965",
     "neeman1965",
-    "lindquist1957"
+    "lindquist1957",
+    "ruban1968"
   ],
   "coordinates": [
     {

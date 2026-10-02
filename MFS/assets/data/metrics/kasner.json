@@ -65,6 +65,21 @@
       "id": "belinski_zakharov",
       "kind": "generalisation",
       "text": "Kasner's universe with solitons added. Belinski and Zakharov took it for the seed of their first soliton solutions, among them two pulses of gravitational wave that run apart along a light cone [belinskii1978]."
+    },
+    {
+      "id": "kasner_scalar",
+      "kind": "generalisation",
+      "text": "Kasner's universe with a massless scalar field in it. The squares of the exponents then sum to $1 - q^2$, and for $q^2 > 1/2$ all three axes shrink toward the singularity [belinskii1973]."
+    },
+    {
+      "id": "petrov_homogeneous",
+      "kind": "family",
+      "text": "A vacuum that is the same at every time as well as at every place. Joan Josep Ferrando and Juan Antonio Sáez found it in one family with Kasner's, the vacuums of Petrov's type I with a symmetry aligned to the curvature [ferrando2006]."
+    },
+    {
+      "id": "ab_metrics",
+      "kind": "dual",
+      "text": "Kasner's universe with exponents $(-\\tfrac{1}{3}, \\tfrac{2}{3}, \\tfrac{2}{3})$ and a radius in the place of its time is A III of Ehlers and Kundt's table, which is Abraham Taub's plane symmetric vacuum [martins1996]."
     }
   ],
   "references": [
@@ -83,7 +98,10 @@
     "berger1974",
     "geroch1969",
     "kasner1925",
-    "belinskii1978"
+    "belinskii1978",
+    "belinskii1973",
+    "ferrando2006",
+    "martins1996"
   ],
   "coordinates": [
     {

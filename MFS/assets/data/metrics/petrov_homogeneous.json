@@ -1,0 +1,3940 @@
+{
+  "id": "petrov_homogeneous",
+  "name": "Petrov Homogeneous Vacuum",
+  "short_name": "Petrov",
+  "description": "An empty spacetime that is curved and still the same at every event: four symmetries carry any event to any other in exactly one way, and no other vacuum without a cosmological constant has such a group. Its light cones turn steadily as one walks along one direction, and it is the field outside a cylinder of dust that spins with the circle round its surface a path of light.",
+  "tags": [
+    "vacuum",
+    "stationary",
+    "homogeneous",
+    "simply transitive group",
+    "group manifold",
+    "rotating",
+    "closed timelike curves",
+    "cylindrical symmetry",
+    "Lewis class",
+    "Petrov type I",
+    "Bianchi classification",
+    "geodesically complete",
+    "hyperbolic space",
+    "causal structure",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "Aleksei Petrov is remembered for sorting gravitational fields by the algebra of their curvature, and at Kazan State University he went on to sort them a second way, by their symmetries [petrov1954, petrov1962]. A motion, in his language, is a shift of a spacetime that leaves every distance in it alone, and the motions of a spacetime form a group [petrov1962]. He listed seven line elements in 1962, each with its group [petrov1962]. For the first six the group is intransitive: it slides each event along a surface of three dimensions and cannot move it off [petrov1962]. The seventh has a group that carries any event to any other, in exactly one way, which is called simply transitive [petrov1962, gibbons2008petrov].¶So the seventh spacetime is empty and curved, and it is the same at every event [gibbons2008petrov]. How can curved emptiness have no special place? Gary Gibbons and Steffen Gielen describe it as a hyperbolic plane with a flat plane of one time and one space direction standing over each of its points [gibbons2008petrov]. Walk across the hyperbolic plane in the direction $r$ and the flat plane over your head turns, light cones and all, through the same angle for every step [gibbons2008petrov]. After $2\\pi\\ell/\\sqrt{3}$, about 3.6 times the one length $\\ell$ of the solution, the cones stand upside down, and a clock there runs backward in the coordinate $t$ it started with [gibbons2008petrov].¶Without a cosmological constant it is the only empty spacetime of its kind, which Hans Stephani and his coauthors give as a theorem: the only vacuum solution whose whole group of motions is a simply transitive group of four is Petrov's [stephani2003, gibbons2008petrov]. A negative cosmological constant allows one counterpart, found in the same year by Vladimir Kaigorodov, also of Kazan, and a positive one allows none [kaigorodov1962, gibbons2008petrov]. Since every event is reached exactly once, the spacetime is a copy of its own group: choose an origin, and each event is the motion that carries the origin there [gibbons2008petrov]. Joan Josep Ferrando and Juan Antonio Sáez found a test for it that needs no coordinates, which is that a vacuum whose curvature has three different eigenvalues, each the same at every event, is Petrov's [ferrando2006].¶What could make such a field? An infinitely long cylinder of dust in rigid rotation can, the one Kornel Lanczos and Willem Jacob van Stockum had each solved by 1937 [lanczos1924, vanstockum1937]. William Bonnor recognised Petrov's spacetime in the vacuum outside it, for the one cylinder whose dust turns so fast that the circle round its surface is a path of light [bonnor1979petrov, gibbons2008petrov]. The field of every such cylinder has three symmetries, and it gains the fourth at that spin alone, where the invariants of its curvature are the same at every radius [bonnor1980, gibbons2008petrov]. Rolled up round the cylinder, the turning cones are Frank Tipler's time machine, in which circles about the axis are closed timelike curves [tipler1974, gibbons2008petrov].¶Could anyone build it? Gibbons and Gielen tried, on paper, to spin a slower cylinder up by throwing particles onto it [gibbons2008petrov]. Closed timelike curves first appear at half of Petrov's spin, and they found that a particle carrying enough angular momentum to push the cylinder past that mark is turned back before it reaches the dust [gibbons2008petrov]. They set the result beside Stephen Hawking's chronology protection conjecture, the proposal that the laws of physics forbid closed timelike curves from appearing [hawking1992, gibbons2008petrov]. Left unrolled, with every coordinate running over the whole real line, the spacetime is geodesically complete: every freely falling particle and every ray of light runs on forever [gibbons2008petrov].¶The four motions hold two smaller groups of three, of Bianchi's types I and VII, the types that sort the homogeneous cosmologies, and here each acts on surfaces that hold a time direction [gibbons2008petrov, terzis2009]. The metric came back in 2009, when Petros Terzis and T. Christodoulakis wrote down the general vacuum solution of type VII and found Petrov's inside it [terzis2009]. Among Thomas Lewis's rotating cylinders it is the one whose Kretschmann scalar, the usual gauge of how curved a vacuum is, vanishes at every event [lewis1932, costa2021]. Gibbons and Gielen deformed its group and found Kaigorodov's among the neighbours, with anti-de Sitter space's beside it [gibbons2008petrov].",
+  "related": [
+    {
+      "id": "lewis",
+      "kind": "generalisation",
+      "text": "Petrov's vacuum is one of Lewis's rotating cylinders, the member of the Lewis class at $m = \\sqrt{3}$. At that value the field gains a fourth symmetry and becomes the same at every event [bonnor1979petrov, bonnor1980]."
+    },
+    {
+      "id": "stockum_dust",
+      "kind": "composite",
+      "text": "The cylinder of dust that Petrov's vacuum surrounds. William Bonnor showed in 1979 that the field outside it is Petrov's when the dust turns at the angular velocity $c/R$, with $R$ the radius of the cylinder [bonnor1979petrov]."
+    },
+    {
+      "id": "siklos",
+      "kind": "family",
+      "text": "Kaigorodov's spacetime, the simplest of Siklos's waves, is the counterpart with a negative cosmological constant: the other vacuum whose four symmetries reach every event exactly once. Gary Gibbons and Steffen Gielen found its group among the deformations of Petrov's [kaigorodov1962, gibbons2008petrov]."
+    },
+    {
+      "id": "godel",
+      "kind": "family",
+      "text": "Another spacetime that is the same at every event and holds closed timelike curves. Gödel's is filled with rotating dust and Petrov's is empty [godel1949, gibbons2008petrov]."
+    },
+    {
+      "id": "kasner",
+      "kind": "family",
+      "text": "Kasner's universe is the same at every place, and Petrov's at every time as well. Joan Josep Ferrando and Juan Antonio Sáez found both in one family, the vacuums of Petrov's type I with a symmetry aligned to the curvature [ferrando2006]."
+    },
+    {
+      "id": "bianchi",
+      "kind": "family",
+      "text": "Petrov's group holds groups of Bianchi's types I and VII. They act on surfaces with a time direction in them, and a Bianchi cosmology's group acts on space [gibbons2008petrov, terzis2009]."
+    }
+  ],
+  "references": [
+    "petrov1954",
+    "petrov1962",
+    "gibbons2008petrov",
+    "stephani2003",
+    "kaigorodov1962",
+    "ferrando2006",
+    "lanczos1924",
+    "vanstockum1937",
+    "bonnor1979petrov",
+    "bonnor1980",
+    "tipler1974",
+    "hawking1992",
+    "terzis2009",
+    "lewis1932",
+    "costa2021",
+    "godel1949"
+  ],
+  "coordinates": [
+    {
+      "id": "petrov",
+      "name": "Petrov",
+      "coords": [
+        "t",
+        "r",
+        "\\phi",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (-\\infty, \\infty)",
+        "\\phi \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "\\cos\\psi < 0 \\;\\text{(} \\partial_t \\text{ is spacelike and } \\partial_\\phi \\text{ timelike)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "The one length of the solution, Petrov's $1/k$; the plane of $r$ and $z$ is a hyperbolic plane of curvature $-1/\\ell^2$"
+        },
+        {
+          "symbol": "\\psi = \\dfrac{\\sqrt{3}\\,r}{\\ell}",
+          "description": "Phase of the plane of $t$ and $\\phi$, whose light cones turn through $\\psi/2$; the coordinates $t$ and $\\phi$ exchange the parts of time and space each time $\\psi$ grows by $\\pi$"
+        }
+      ],
+      "convention": "We use Petrov's coordinates $(t, r, \\phi, z)$ in the letters of Gibbons and Gielen, with $t$ carrying dimensions of time and $r$, $\\phi$, and $z$ lengths, each running over the whole real line. The future is the side of $\\cos(\\psi/2)\\,\\partial_t + \\sin(\\psi/2)\\,\\partial_\\phi$, which is timelike at every $r$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = dr^2 + e^{-2r/\\ell}dz^2 + e^{r/\\ell}\\left(\\cos\\psi\\left(d\\phi^2 - c^2dt^2\\right) - 2\\sin\\psi\\,c\\,dt\\,d\\phi\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-e^{r/\\ell}\\cos\\psi"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "e^{r/\\ell}\\cos\\psi"
+        },
+        {
+          "indices": [
+            "t",
+            "\\phi"
+          ],
+          "value": "-e^{r/\\ell}\\sin\\psi"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "t"
+          ],
+          "value": "-e^{r/\\ell}\\sin\\psi"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "e^{-2r/\\ell}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-e^{-r/\\ell}\\cos\\psi"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "e^{-r/\\ell}\\cos\\psi"
+        },
+        {
+          "indices": [
+            "t",
+            "\\phi"
+          ],
+          "value": "-e^{-r/\\ell}\\sin\\psi"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "t"
+          ],
+          "value": "-e^{-r/\\ell}\\sin\\psi"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "e^{2r/\\ell}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\sqrt{3}}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\sqrt{3}}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\sqrt{3}}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\sqrt{3}}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{r/\\ell}}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{r/\\ell}}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{e^{-2r/\\ell}}{\\ell}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{\\ell}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{\\ell}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{r/\\ell}}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{r/\\ell}}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{r/\\ell}}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{r/\\ell}}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{r/\\ell}}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{r/\\ell}}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{r/\\ell}}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{r/\\ell}}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{r/\\ell}}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{r/\\ell}}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{r/\\ell}}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{r/\\ell}}{2\\ell}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{e^{-2r/\\ell}}{\\ell}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{e^{-2r/\\ell}}{\\ell}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{e^{-2r/\\ell}}{\\ell}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{e^{r/\\ell}\\sin\\psi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{r/\\ell}\\sin\\psi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{e^{r/\\ell}\\sin\\psi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{r/\\ell}\\sin\\psi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{1}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\sqrt{3}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\sqrt{3}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\sqrt{3}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\sqrt{3}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{e^{r/\\ell}\\cos\\psi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{r/\\ell}\\cos\\psi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{e^{r/\\ell}\\cos\\psi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{r/\\ell}\\cos\\psi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{e^{-2r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{-2r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{e^{-2r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{e^{-2r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\sqrt{3}e^{-2r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\sqrt{3}e^{-2r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\sqrt{3}e^{-2r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{\\sqrt{3}e^{-2r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\cos\\psi - \\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\cos\\psi - \\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\cos\\psi - \\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\cos\\psi - \\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{e^{-2r/\\ell}}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{e^{-2r/\\ell}}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{\\ell^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\sin\\psi - \\sqrt{3}\\cos\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(\\sin\\psi - \\sqrt{3}\\cos\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(\\sin\\psi - \\sqrt{3}\\cos\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(\\sin\\psi - \\sqrt{3}\\cos\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(\\sin\\psi - \\sqrt{3}\\cos\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\sin\\psi - \\sqrt{3}\\cos\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(\\sin\\psi - \\sqrt{3}\\cos\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\sin\\psi - \\sqrt{3}\\cos\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{e^{2r/\\ell}}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{2r/\\ell}}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{e^{2r/\\ell}}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{2r/\\ell}}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{e^{-2r/\\ell}}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{e^{-2r/\\ell}}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{e^{-2r/\\ell}}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{e^{-2r/\\ell}}{\\ell^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{e^{r/\\ell}\\sin\\psi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{r/\\ell}\\sin\\psi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{e^{r/\\ell}\\sin\\psi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{r/\\ell}\\sin\\psi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{1}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\sqrt{3}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\sqrt{3}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\sqrt{3}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\sqrt{3}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{e^{r/\\ell}\\cos\\psi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{r/\\ell}\\cos\\psi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{e^{r/\\ell}\\cos\\psi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{r/\\ell}\\cos\\psi}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{e^{-2r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{-2r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{e^{-2r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{e^{-2r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\sqrt{3}e^{-2r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\sqrt{3}e^{-2r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\sqrt{3}e^{-2r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{\\sqrt{3}e^{-2r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\cos\\psi - \\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\cos\\psi - \\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\cos\\psi - \\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\cos\\psi - \\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{e^{-2r/\\ell}}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{e^{-2r/\\ell}}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{\\ell^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\sin\\psi - \\sqrt{3}\\cos\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(\\sin\\psi - \\sqrt{3}\\cos\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(\\sin\\psi - \\sqrt{3}\\cos\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(\\sin\\psi - \\sqrt{3}\\cos\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(\\sin\\psi - \\sqrt{3}\\cos\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\sin\\psi - \\sqrt{3}\\cos\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(\\sin\\psi - \\sqrt{3}\\cos\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\sin\\psi - \\sqrt{3}\\cos\\psi\\right)e^{r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{e^{2r/\\ell}}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{2r/\\ell}}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{e^{2r/\\ell}}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{2r/\\ell}}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{-r/\\ell}}{2\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{e^{-2r/\\ell}}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{e^{-2r/\\ell}}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{e^{-2r/\\ell}}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{e^{-2r/\\ell}}{\\ell^2}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{1}{\\ell}\\dot{t}\\dot{r} + \\dfrac{\\sqrt{3}}{\\ell}\\dot{r}\\dot{\\phi} = 0",
+        "\\ddot{r} + \\dfrac{\\left(\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)e^{r/\\ell}}{2\\ell}\\dot{t}^2 + \\dfrac{\\left(\\sqrt{3}\\cos\\psi + \\sin\\psi\\right)e^{r/\\ell}}{\\ell}\\dot{t}\\dot{\\phi} + \\dfrac{\\left(\\sqrt{3}\\sin\\psi - \\cos\\psi\\right)e^{r/\\ell}}{2\\ell}\\dot{\\phi}^2 + \\dfrac{e^{-2r/\\ell}}{\\ell}\\dot{z}^2 = 0",
+        "\\ddot{\\phi} - \\dfrac{\\sqrt{3}}{\\ell}\\dot{t}\\dot{r} + \\dfrac{1}{\\ell}\\dot{r}\\dot{\\phi} = 0",
+        "\\ddot{z} - \\dfrac{2}{\\ell}\\dot{r}\\dot{z} = 0"
+      ]
+    },
+    {
+      "id": "cylinder",
+      "name": "Dust Cylinder",
+      "coords": [
+        "t",
+        "r",
+        "\\phi",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in [R, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "z \\in (-\\infty, \\infty)",
+        "r = R \\;\\text{(the surface of the dust, where the circle of constant } t, r, z \\text{ is null)}",
+        "F < 0 \\;\\text{(} \\partial_t \\text{ is spacelike)}",
+        "L < 0 \\;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "R",
+          "description": "Radius of the dust cylinder, a length; the vacuum is $r \\ge R$, and the dust turns at the angular velocity $c/R$"
+        },
+        {
+          "symbol": "\\ell",
+          "description": "Petrov's length, the scale of $r$ and $z$; the vacuum joins the dust on the surface where $\\ell = R/\\sqrt{e}$"
+        },
+        {
+          "symbol": "\\psi = \\sqrt{3}\\ln\\left(\\dfrac{r}{R}\\right)",
+          "description": "Phase of van Stockum's functions, zero on the surface, and the phase of Petrov's chart"
+        },
+        {
+          "symbol": "F = \\dfrac{r}{R}\\left(\\cos\\psi - \\dfrac{\\sin\\psi}{\\sqrt{3}}\\right)",
+          "description": "Minus the norm of $\\partial_t$, equal to 1 on the surface and negative from $\\psi = \\pi/3$ to $\\psi = 4\\pi/3$"
+        },
+        {
+          "symbol": "M = r\\left(\\cos\\psi + \\dfrac{\\sin\\psi}{\\sqrt{3}}\\right)",
+          "description": "van Stockum's cross term, a length, equal to $R$ on the surface"
+        },
+        {
+          "symbol": "L = -\\dfrac{2R\\,r\\sin\\psi}{\\sqrt{3}}",
+          "description": "The norm of $\\partial_\\phi$, so that $FL + M^2 = r^2$; it vanishes on the surface, and the circles of constant $t$, $r$, and $z$ are closed timelike curves where it is negative, out to $r = e^{\\pi/\\sqrt{3}}R$"
+        }
+      ],
+      "convention": "We use van Stockum's coordinates $(t, r, \\phi, z)$ outside his dust cylinder of radius $R$, which rotate with the dust at the angular velocity $c/R$, with $t$ carrying dimensions of time, $r$ and $z$ lengths, and $\\phi$ periodic in $2\\pi$. Petrov's radius is $\\ell\\ln(r/R)$, and his $t$ and $\\phi$ are linear in these. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -F\\,c^2dt^2 - 2M\\,c\\,dt\\,d\\phi + \\dfrac{\\ell^2}{r^2}\\left(dr^2 + dz^2\\right) + L\\,d\\phi^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-F"
+        },
+        {
+          "indices": [
+            "t",
+            "\\phi"
+          ],
+          "value": "-M"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "t"
+          ],
+          "value": "-M"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{\\ell^2}{r^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{\\ell^2}{r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "L"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{L}{r^2}"
+        },
+        {
+          "indices": [
+            "t",
+            "\\phi"
+          ],
+          "value": "-\\dfrac{M}{r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "t"
+          ],
+          "value": "-\\dfrac{M}{r^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{r^2}{\\ell^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{r^2}{\\ell^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{F}{r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{R}{r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{R}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\,r^2\\sin\\psi}{3R\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{r^2\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\,R\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{r\\,R}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{r\\,R}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\sin\\psi}{3R}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\sin\\psi}{3R}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\sin\\psi}{3R}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\left(\\cos\\psi - \\dfrac{\\sqrt{3}\\sin\\psi}{3}\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\left(\\cos\\psi - \\dfrac{\\sqrt{3}\\sin\\psi}{3}\\right)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\left(\\cos\\psi - \\dfrac{\\sqrt{3}\\sin\\psi}{3}\\right)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\left(\\cos\\psi - \\dfrac{\\sqrt{3}\\sin\\psi}{3}\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\left(\\cos\\psi - \\dfrac{\\sqrt{3}\\sin\\psi}{3}\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\left(\\cos\\psi - \\dfrac{\\sqrt{3}\\sin\\psi}{3}\\right)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\ell^2}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2}{r^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2}{r^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\ell^2}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{R\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{R\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{R\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{r\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{r\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{R}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{R}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{R}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{R}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\,r\\,R\\sin\\psi}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\,r\\,R\\sin\\psi}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3R\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3R\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\,r\\sin\\psi}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\,r\\sin\\psi}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\,r\\sin\\psi}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\,r\\sin\\psi}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\,R\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r\\,R\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\left(\\sqrt{3}\\sin\\psi - 3\\cos\\psi\\right)}{3R\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{r\\left(\\sqrt{3}\\sin\\psi - 3\\cos\\psi\\right)}{3R\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r^2\\,R}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{r^2\\,R}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{r^2\\,R}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{r^2\\,R}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\,r\\sin\\psi}{3R\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\,r\\sin\\psi}{3R\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{r\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{r\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{r\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{r\\,R\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\,R\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{3\\cos\\psi + \\sqrt{3}\\sin\\psi}{3r\\,R}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\cos\\psi + \\sqrt{3}\\sin\\psi}{3r\\,R}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{3\\cos\\psi + \\sqrt{3}\\sin\\psi}{3r\\,R}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{3\\cos\\psi + \\sqrt{3}\\sin\\psi}{3r\\,R}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\sin\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\sin\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\sin\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\sin\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\sin\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\sin\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\sin\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\sin\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{r^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{r^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\sin\\psi}{3r\\,R}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\sin\\psi}{3r\\,R}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\sin\\psi}{3r\\,R}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\sin\\psi}{3r\\,R}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\sqrt{3}\\sin\\psi - 3\\cos\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\sqrt{3}\\sin\\psi - 3\\cos\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\sqrt{3}\\sin\\psi - 3\\cos\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\sqrt{3}\\sin\\psi - 3\\cos\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\sqrt{3}\\sin\\psi - 3\\cos\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\sqrt{3}\\sin\\psi - 3\\cos\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\sqrt{3}\\sin\\psi - 3\\cos\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{\\sqrt{3}\\sin\\psi - 3\\cos\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{R\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{R\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{R\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{R\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{\\ell^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\ell^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{R\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{R\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{R\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{R\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3r}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{r\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{r\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{R}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{R}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{R}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{R}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\,r\\,R\\sin\\psi}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\,r\\,R\\sin\\psi}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3R\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3R\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\,r\\sin\\psi}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\,r\\sin\\psi}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\,r\\sin\\psi}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\,r\\sin\\psi}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\,R\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r\\,R\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\left(\\sqrt{3}\\sin\\psi - 3\\cos\\psi\\right)}{3R\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{r\\left(\\sqrt{3}\\sin\\psi - 3\\cos\\psi\\right)}{3R\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r^2\\,R}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{r^2\\,R}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{r^2\\,R}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{r^2\\,R}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\,r\\sin\\psi}{3R\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\,r\\sin\\psi}{3R\\,\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{r\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{r\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{r\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{r\\,R\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\,R\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{3\\cos\\psi + \\sqrt{3}\\sin\\psi}{3r\\,R}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\cos\\psi + \\sqrt{3}\\sin\\psi}{3r\\,R}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{3\\cos\\psi + \\sqrt{3}\\sin\\psi}{3r\\,R}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{3\\cos\\psi + \\sqrt{3}\\sin\\psi}{3r\\,R}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\sin\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\sin\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\sin\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\sin\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\sin\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\sin\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\sin\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\sin\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{r^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{r^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\sin\\psi}{3r\\,R}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\sin\\psi}{3r\\,R}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\sqrt{3}\\sin\\psi}{3r\\,R}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\sqrt{3}\\sin\\psi}{3r\\,R}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\sqrt{3}\\sin\\psi - 3\\cos\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\sqrt{3}\\sin\\psi - 3\\cos\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\sqrt{3}\\sin\\psi - 3\\cos\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\sqrt{3}\\sin\\psi - 3\\cos\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\sqrt{3}\\sin\\psi - 3\\cos\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\sqrt{3}\\sin\\psi - 3\\cos\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\sqrt{3}\\sin\\psi - 3\\cos\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{\\sqrt{3}\\sin\\psi - 3\\cos\\psi}{3r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{R\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{R\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{R\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{R\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{\\ell^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\ell^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{R\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{R\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{R\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{R\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3r}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2}{r}\\dot{t}\\dot{r} + \\dfrac{2R}{r}\\dot{r}\\dot{\\phi} = 0",
+        "\\ddot{r} - \\dfrac{2\\sqrt{3}\\,r^2\\sin\\psi}{3R\\,\\ell^2}\\dot{t}^2 + \\dfrac{2r^2\\left(3\\cos\\psi - \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}\\dot{t}\\dot{\\phi} - \\dfrac{1}{r}\\dot{r}^2 + \\dfrac{r^2\\,R\\left(3\\cos\\psi + \\sqrt{3}\\sin\\psi\\right)}{3\\ell^2}\\dot{\\phi}^2 + \\dfrac{1}{r}\\dot{z}^2 = 0",
+        "\\ddot{\\phi} - \\dfrac{2}{r\\,R}\\dot{t}\\dot{r} = 0",
+        "\\ddot{z} - \\dfrac{2}{r}\\dot{r}\\dot{z} = 0"
+      ]
+    }
+  ]
+}

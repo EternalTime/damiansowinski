@@ -98,6 +98,11 @@
       "id": "wahlquist",
       "kind": "generalisation",
       "text": "Carter's hole with its cosmological constant traded for a rotating fluid whose $\\mu + 3p$ is constant. Where the fluid's density and pressure cancel, Wahlquist's family is Kerr-de Sitter [mars2001]."
+    },
+    {
+      "id": "gravitational_instantons",
+      "kind": "limit",
+      "text": "Continue Kerr-de Sitter to imaginary time and bring the black hole's horizon up to the cosmological one. In that limit the space between them closes, at one value of the spin, into Page's compact instanton, a bundle of 2-spheres over the 2-sphere [page1978compact, gibbonshawking1979]."
     }
   ],
   "references": [
@@ -124,7 +129,9 @@
     "kamran2009",
     "plebanski1976",
     "bini2003",
-    "mars2001"
+    "mars2001",
+    "page1978compact",
+    "gibbonshawking1979"
   ],
   "coordinates": [
     {
