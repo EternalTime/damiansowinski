@@ -55,6 +55,11 @@
       "id": "light_beam",
       "kind": "special_case",
       "text": "The pp-wave of a steady beam of light. Its profile does not depend on $u$ and is harmonic only outside the beam, where the light's energy is its source [bonnor1969light]."
+    },
+    {
+      "id": "ori_time_machine",
+      "kind": "locally_same",
+      "text": "A vacuum pp-wave with one coordinate made periodic. Its circles turn from spacelike to timelike, which makes it the core of Amos Ori's time machine of 2005 [ori2005]."
     }
   ],
   "references": [
@@ -78,7 +83,8 @@
     "robinson1960",
     "griffiths2009",
     "griffiths1991",
-    "bonnor1969light"
+    "bonnor1969light",
+    "ori2005"
   ],
   "coordinates": [
     {

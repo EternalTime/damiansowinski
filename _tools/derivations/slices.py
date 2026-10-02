@@ -553,6 +553,13 @@ def _nariai(chart):
     return out + [Mark(sphere, points=[(0.0, 0.0)])]
 
 
+def _ori_hyperbola(m):
+    """Ori's moment t = t_k < 0 on the Brinkmann plane through the central circle, uv = -2 t_k with
+    u and v both negative, as (u, v), out to where either is 50 in size."""
+    u = -np.geomspace(-2 * m.time / 50, 50, N)
+    return [np.column_stack([u, -2 * m.time / u])]
+
+
 def _mp_axis():
     """The midplane z = 0 between Majumdar and Papapetrou's two holes, at t = 0, meets the axis
     through them at one event, t = 0 and z = 0."""
@@ -755,6 +762,16 @@ FLAT = {
     ("misner", "milne", "plane"): lambda: one("misner", lambda m: across(m.time, 0.0, BIG)),
     # Gott's moments are Grant's Milne time tau = tau_k, every chi.
     ("gott_time_machine", "grant_milne", "plane"): lambda: one("gott_time_machine", lambda m: across(m.time, 0.0, BIG)),
+    # Ori's moments are his t = t_k on the slice y = 0, every z. The central circle has T = t, and
+    # the circle at x = 4 l has T = t + (a/2 - e) x^2 = t - 3/2 at a = 1/16 and e = 1/8; on the
+    # Brinkmann plane through the central circle T = -uv/2, so the moment is the hyperbola
+    # uv = -2 t_k with both negative. checks() carries each chart onto the vacuum core's.
+    ("ori_time_machine", "foliation", "centre"): lambda: one("ori_time_machine", lambda m: across(m.time, 0.0, BIG)),
+    ("ori_time_machine", "foliation", "off_centre"): lambda: one("ori_time_machine", lambda m: across(m.time, 0.0, BIG)),
+    ("ori_time_machine", "vacuum_core", "centre"): lambda: one("ori_time_machine", lambda m: across(m.time, 0.0, BIG)),
+    ("ori_time_machine", "vacuum_core", "off_centre"): lambda: one(
+        "ori_time_machine", lambda m: across(m.time - 1.5, 0.0, BIG)),
+    ("ori_time_machine", "brinkmann", "plane"): lambda: one("ori_time_machine", _ori_hyperbola),
     # The wave front u = u_k, every v.
     ("pp_wave", "exact_plane_wave", "tz"): lambda: one("pp_wave", lambda m: [[(m.time, -BIG), (m.time, BIG)]]),
     **{("aichelburg_sexl", "null_cartesian", view): lambda: one("aichelburg_sexl", lambda m: [[(m.time, -BIG), (m.time, BIG)]])
@@ -1161,6 +1178,32 @@ def checks():
     miss = max(abs(float((pulled - g_n[:2, :2]).subs({tn: a, cn: b})[i, j]))
                for a, b in zip(rng.uniform(-3, -0.1, 20), rng.uniform(-3, 3, 20)) for i in range(2) for j in range(2))
     report("Misner: T = -t^2/4, psi = 2 chi - ln(t^2/4) pulls Misner's plane back onto the Milne plane", miss, 1e-12)
+
+    # Ori: T = t + a(x^2 - y^2)/2 - e(x^2 + y^2) carries the foliation onto the vacuum core at
+    # f = a(x^2 - y^2)/2, so the moment t = t_k is T = t_k on the central circle and T = t_k - 3/2 at
+    # x = 4, y = 0; and T = -uv/2, z = -2 ln(-u/2) carries the Brinkmann chart onto it, so the same
+    # moment is uv = -2 t_k there.
+    ori = dict(nr.ORI)
+    g_c, (Tc, xc, yc, zc) = metric("ori_time_machine", "vacuum_core", {"L": ori["L"]})
+    _, _, reader = nr.load("ori_time_machine", "vacuum_core")
+    a_, e_ = sp.Rational(ori["a"]), sp.Rational(ori["e"])
+    g_c = g_c.subs(reader.parameters["f"], a_ * (xc ** 2 - yc ** 2) / 2)
+    g_f, (tf, xf, yf, zf) = metric("ori_time_machine", "foliation", ori)
+    new = [tf + a_ * (xf ** 2 - yf ** 2) / 2 - e_ * (xf ** 2 + yf ** 2), xf, yf, zf]
+    J = sp.Matrix([[sp.diff(f, v) for v in (tf, xf, yf, zf)] for f in new])
+    pulled = J.T * g_c.subs(dict(zip((Tc, xc, yc, zc), new)), simultaneous=True) * J
+    miss = max(abs(float((pulled - g_f).subs({tf: p[0], xf: p[1], yf: p[2], zf: p[3]})[i, j]))
+               for p in rng.uniform(-3, 3, (20, 4)) for i in range(4) for j in range(4))
+    report("Ori: T = t + a(x^2 - y^2)/2 - e(x^2 + y^2) pulls the vacuum core back onto the foliation", miss, 1e-12)
+    report("Ori: at x = 4, y = 0 the moment t is T = t - 3/2",
+           abs(float(new[0].subs({tf: 0, xf: 4, yf: 0})) + 1.5), 1e-12)
+    g_b, (ub, vb, xb, yb) = metric("ori_time_machine", "brinkmann", {"a": ori["a"], "L": ori["L"]})
+    new = [-ub * vb / 2, xb, yb, -2 * sp.log(-ub / 2)]
+    J = sp.Matrix([[sp.diff(f, v) for v in (ub, vb, xb, yb)] for f in new])
+    pulled = J.T * g_c.subs(dict(zip((Tc, xc, yc, zc), new)), simultaneous=True) * J
+    miss = max(abs(float((pulled - g_b).subs({ub: -abs(p[0]) - 0.1, vb: p[1], xb: p[2], yb: p[3]})[i, j]))
+               for p in rng.uniform(-3, 3, (20, 4)) for i in range(4) for j in range(4))
+    report("Ori: T = -uv/2, z = -2 ln(-u/2) pulls the vacuum core back onto the Brinkmann chart", miss, 1e-11)
 
     # Novikov: each shell at its proper time is a radial geodesic from rest of the exterior,
     # which keeps its energy E = sqrt(1 - r_s/R) = (1 - r_s/r) dt/dtau, and the same shell in

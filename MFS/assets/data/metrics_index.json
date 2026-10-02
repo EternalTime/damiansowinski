@@ -601,7 +601,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "7d441a56c21491c4",
+    "version": "835327ba76ac71a8",
     "diagrams": "fc0a639f4f3a4d4d",
     "conformal": "14c873edf7fb75dc",
     "embedding": "c0db8a34cdba1339"
@@ -1110,7 +1110,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "7323fa7e3411d1fa",
+    "version": "fcef640aa8a5ea3e",
     "diagrams": "23589bf4a0fdba65",
     "conformal": "62cc3d3fab22417e",
     "embedding": "74f663204d97446f"
@@ -1191,7 +1191,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0201ac36cee5b57d",
+    "version": "594e7bb9a896d86b",
     "diagrams": "e780b20f08791793",
     "conformal": "325a9c57971cf007",
     "embedding": "5d574463e63f1df8"
@@ -1284,6 +1284,33 @@
     "embedding": "89ff4322639feb6a"
   },
   {
+    "id": "ori_time_machine",
+    "name": "Ori",
+    "tags": [
+      "time machine",
+      "closed timelike curves",
+      "causality violation",
+      "chronology horizon",
+      "closed null geodesic",
+      "vacuum",
+      "vacuum solution",
+      "pp-wave",
+      "plane wave",
+      "gravitational wave",
+      "Misner space",
+      "energy conditions",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "8689081a257acb45",
+    "diagrams": "f02d33ce21e424e5",
+    "conformal": "caada1e1189ae9f1",
+    "embedding": "7b305003632e43d9"
+  },
+  {
     "id": "photon_rocket",
     "name": "Photon Rocket",
     "tags": [
@@ -1343,7 +1370,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4fe71ac6be25b02f",
+    "version": "7a0a1416e1e64b3c",
     "diagrams": "21757421f8076200",
     "embedding": "a484d91e42495a51"
   },
@@ -1444,7 +1471,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1d0962d7347c6998",
+    "version": "a9598b481475c35a",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"

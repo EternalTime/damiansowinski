@@ -3245,6 +3245,11 @@
       "id": "minkowski",
       "kind": "locally_same",
       "text": "Outside the mouths the short throat model is Minkowski space, with two balls removed and their surfaces identified at equal proper times [friedman1990]."
+    },
+    {
+      "id": "ori_time_machine",
+      "kind": "family",
+      "text": "A time machine with no wormhole in it. Amos Ori's vacuum core of 2005 sits inside matter that obeys the weak, dominant, and strong energy conditions [ori2005]."
     }
   ],
   "references": [
@@ -3261,6 +3266,7 @@
     "visser1993",
     "kay1997",
     "visser1989prd",
-    "gott1991"
+    "gott1991",
+    "ori2005"
   ]
 }

@@ -493,6 +493,12 @@ DIMENSIONS = {
     # The spinning string's two parameters are the length a = 4GJ/c^3 and the pure number
     # b = 1 - 4G mu/c^2; the helical chart's angle b phi is as dimensionless as phi, and the
     # extended source's M(r) and rho(r) are lengths, as is the proper radius r_0 of its surface.
+    # Ori's z is a pure number, periodic with period L, so dz dT makes T an area, as Misner's T is,
+    # and f - T makes f one too; the numbers a and e of his example are then pure, which
+    # e > (2e + a)^2 needs. In the Brinkmann chart u = -2 exp(-z/2) is pure and v = T exp(z/2) an area.
+    ("ori_time_machine", "vacuum_core"): {"T": "L**2", "x": "L", "y": "L", "z": "1", "f": "L**2", "L": "1"},
+    ("ori_time_machine", "foliation"): {"t": "L**2", "x": "L", "y": "L", "z": "1", "a": "1", "e": "1", "L": "1"},
+    ("ori_time_machine", "brinkmann"): {"u": "1", "v": "L**2", "x": "L", "y": "L", "a": "1", "L": "1"},
     ("spinning_string", "proper_radius"): {"t": "T", "r": "L", "\\phi": "1", "z": "L", "a": "L", "b": "1"},
     ("spinning_string", "rescaled_radius"): {"t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "a": "L", "b": "1"},
     ("spinning_string", "circumference_radius"): {"t": "T", "R": "L", "\\phi": "1", "z": "L", "a": "L", "b": "1"},
@@ -1600,7 +1606,10 @@ class Reader:
         # The same with a bracketed argument, as \cosh^2\left(\sqrt{\Lambda}\,t\right).
         text = powered_trig_calls(text, names)
         text = re.sub(r"\b(" + names + r")\s+([A-Za-z]\w*)", r"\1(\2)", text)
-        text = re.sub(r"(?<![A-Za-z_])e\s*\*\*", " E**", text)
+        # A power of e is the exponential, unless the system declares e as a name of its own, as
+        # Ori's time machine does its parameter e, whose square is then that parameter's.
+        if "e" not in self.local:
+            text = re.sub(r"(?<![A-Za-z_])e\s*\*\*", " E**", text)
         # 3R\sqrt{..} leaves 3Rsqrt(..), whose one name token would be split letter by letter.
         for name in FUNCTIONS:
             text = re.sub(r"(?<=[A-Za-z0-9_])(" + name + r")\s*\(", r" \1(", text)

@@ -3978,6 +3978,65 @@ def gott_time_machine(ck, src):
                           "with $4G\\mu/c^2 = 1/3$, $v = 4c/5$, and $d = \\ell/2$.")]
 
 
+ORI_MOMENTS = (-2.0, -1.0, -0.5, -0.1)         # t in l^2, with l any length
+
+
+def ori_time_machine(ck, src):
+    """Ori's vacuum core with f = a(x^2 - y^2)/2 on his surfaces of constant t < 0, at a = 1/16,
+    e = 1/8 and L = 2 pi, as its other diagrams declare. The slice y = 0 of one moment t has the
+    metric
+
+        dx^2 + 2(2e - a) x dx dz + (e x^2 - t) dz^2,
+
+    and with z = phi - (2e - a)/(2e) ln(e x^2 - t), which moves each circle of constant x round
+    itself, it is
+
+        [1 - (2e - a)^2 x^2/(e x^2 - t)] dx^2 + (e x^2 - t) dphi^2
+
+    with no cross term, which Slice checks: a surface of revolution whose circle at x has the
+    radius sqrt(e x^2 - t), a throat of radius sqrt(-t) on the central circle x = 0. Its circles
+    grow more slowly than the distance out to them because e > (2e - a)^2 + e^2, so it lies in
+    flat space. Drawn at four moments as the throat narrows toward t = 0, where the central circle
+    is the closed null geodesic N, each over -5 <= x <= 5 in any length l, and played as a movie
+    with a frame every 0.05 l^2 of t."""
+    a, e = (sp.Rational(nr.ORI[k]) for k in ("a", "e"))
+    size = 10.0
+    reach = 5.0
+    if not (0 < a < e and e > (2 * e + a) ** 2 and e > (2 * e - a) ** 2 + e ** 2):
+        raise AssertionError("Ori: a and e do not make the surfaces of constant t < 0 spacelike and embeddable")
+
+    def moment(t):
+        # The moment as a fraction, so that the cross term of the pulled back metric cancels exactly.
+        T = sp.nsimplify(t, rational=True)
+        sl = Slice(src, "ori_time_machine", "foliation", "x", "z", {"t": str(T), "y": 0}, dict(nr.ORI),
+                   swept={"z": f"z - ({(2 * e - a) / (2 * e)})*log(({e})*x**2 - ({T}))"})
+        throat = Piece("throat", "sheet", sl, -reach, reach, -sl.rise(-reach, 0.0), 1,
+                       (("edge", "the surface runs on toward $x \\to -\\infty$, where the matter of Ori's model begins"),
+                        ("edge", "the surface runs on toward $x \\to \\infty$, where the matter of Ori's model begins")),
+                       [(-4.0, "r", None), (0.0, "r", None), (4.0, "r", None)], size)
+        where = f"Ori, the throat at t = {t:g}"
+        ck.isometry(where, throat)
+        ck.radius(f"{where}, rho = sqrt(e x^2 - t)", throat,
+                  lambda x, t=t: np.sqrt(float(e) * x ** 2 - t), size)
+        ck.add(f"{where}, the central circle has circumference 2 pi sqrt(-t)",
+               abs(throat.at(0.0)[0] - math.sqrt(-t)), 1e-9)
+        return Surface([throat], label=f"$t = {t:g}$", time=t)
+
+    # The movie runs through the moments at a steady t, a frame every 0.05 l^2.
+    times, keys = movie_values(list(ORI_MOMENTS), 0.05)
+    frames = [moment(round(t, 9)) for t in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the slice $y = 0$ of a surface of constant $t$, which $x$ and $z$ cover")
+    fig.legend("line", "r", "$x$ constant, at $-4\\,\\ell$, $0$ and $4\\,\\ell$, the central circle $x = 0$ of "
+                            "circumference $2\\pi\\sqrt{-t}$")
+    fig.legend("line", "meridian", "$z + \\tfrac{3}{4}\\ln(x^2/8\\ell^2 - t/\\ell^2)$ constant, every $30°$")
+    return [view("throat", "The throat closing", "$\\ell$", surfaces, fig.done(),
+                 movie=movie(frames, "$t$", [f.time for f in frames]),
+                 settings="$a = 1/16$, $e = 1/8$, and $L = 2\\pi$, with $\\ell$, any length, the unit of $x$ "
+                          "and $\\ell^2$ the unit of $t$.")]
+
+
 # ---------------------------------------------------------------- the eleven drawn last
 
 FLAT_CAMERA = Camera(-90, 55)   # a flat plane seen from well above it, so that what is marked on it shows
@@ -6377,6 +6436,7 @@ DRAWN = {
     "misner": misner,
     "gott_time_machine": gott_time_machine,
     "wormhole_time_machine": wormhole_time_machine,
+    "ori_time_machine": ori_time_machine,
     "interior_schwarzschild": interior_schwarzschild,
     "tov": tov,
     "morris_thorne": morris_thorne,
@@ -7073,6 +7133,15 @@ CAPTIONS = {
         "circumference $\\psi_0c|t|/2$, here $2\\pi c|t|$.",
         "The cylinders narrow as $t$ climbs toward $0$, where the circles become the closed null geodesics of "
         "the chronology horizon. Beyond it, where $T > 0$, the same circles are closed timelike curves.",
+    ],
+    ("ori_time_machine", "throat"): [
+        "The slice $y = 0$ of Ori's vacuum core as $t$ runs from $-2\\,\\ell^2$ to $-0.1\\,\\ell^2$, each moment "
+        "drawn as a surface in flat space with every distance along it the metric distance. On it the metric is "
+        "$dx^2 + 2(2e - a)x\\,dx\\,dz + (ex^2 - t)\\,dz^2$ with $z$ periodic in $L$, so the circle of constant $x$ "
+        "has circumference $L\\sqrt{ex^2 - t}$, least on the central circle $x = 0$.",
+        "The throat narrows as $t$ climbs toward $0$, where the central circle has no length left: it is the "
+        "closed null geodesic $N$. At that moment every other circle of the surface is still spacelike, and "
+        "the circle at $x$ turns timelike only once $t$ passes $ex^2$.",
     ],
     ("gott_time_machine", "cylinders"): [
         "The slice $z = 0$ of Gott's spacetime away from the strings as Grant's Milne time runs from "

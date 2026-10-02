@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 65,
+  "count": 66,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -5256,6 +5256,11 @@
           "id": "wormhole_time_machine",
           "kind": "family",
           "text": "A time machine made by moving one mouth of a traversable wormhole, three years before Gott's strings. Hawking's chronology protection conjecture is aimed at both [morris1988prl, hawking1992]."
+        },
+        {
+          "id": "ori_time_machine",
+          "kind": "family",
+          "text": "A time machine whose vacuum core fits in a finite region. Amos Ori built it in 2005 so that causality first fails on one closed null geodesic, fixed by data on a compact surface [ori2005]."
         }
       ],
       "references": [
@@ -5279,7 +5284,8 @@
         "holst1999",
         "birmingham2000",
         "dedeo2002",
-        "morris1988prl"
+        "morris1988prl",
+        "ori2005"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gott_time_machine.json",
@@ -9261,6 +9267,11 @@
           "id": "wormhole_time_machine",
           "kind": "family",
           "text": "A wormhole whose mouths move toward each other has a Cauchy horizon like Misner's with closed timelike curves behind it, and Kim and Thorne found the vacuum stress energy diverging there too [morris1988prl, kim1991]."
+        },
+        {
+          "id": "ori_time_machine",
+          "kind": "generalisation",
+          "text": "Misner space with a gravitational wave added. Amos Ori's vacuum core of 2005 is curved, and its closed null geodesics are isolated circles, where Misner's fill the whole horizon [ori2005]."
         }
       ],
       "references": [
@@ -9279,7 +9290,8 @@
         "thorne1993misner",
         "berkooz2004",
         "banados1993",
-        "morris1988prl"
+        "morris1988prl",
+        "ori2005"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner.json",
@@ -9892,6 +9904,11 @@
           "id": "minkowski",
           "kind": "locally_same",
           "text": "Outside the mouths the short throat model is Minkowski space, with two balls removed and their surfaces identified at equal proper times [friedman1990]."
+        },
+        {
+          "id": "ori_time_machine",
+          "kind": "family",
+          "text": "A time machine with no wormhole in it. Amos Ori's vacuum core of 2005 sits inside matter that obeys the weak, dominant, and strong energy conditions [ori2005]."
         }
       ],
       "references": [
@@ -9908,7 +9925,8 @@
         "visser1993",
         "kay1997",
         "visser1989prd",
-        "gott1991"
+        "gott1991",
+        "ori2005"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/wormhole_time_machine.json",
@@ -10776,6 +10794,323 @@
       ]
     },
     {
+      "id": "ori_time_machine",
+      "name": "Ori Time Machine",
+      "short_name": "Ori",
+      "description": "Amos Ori's vacuum time machine core of 2005: a plane fronted gravitational wave closed up along one direction, whose circles turn from spacelike to timelike. With $f = a(x^2 - y^2)/2$ causality first fails on a single closed null geodesic, and closed timelike curves fill the region beyond it.",
+      "tags": [
+        "time machine",
+        "closed timelike curves",
+        "causality violation",
+        "chronology horizon",
+        "closed null geodesic",
+        "vacuum",
+        "vacuum solution",
+        "pp-wave",
+        "plane wave",
+        "gravitational wave",
+        "Misner space",
+        "energy conditions",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "No coordinate carries dimensions of time, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "related": [
+        {
+          "id": "misner",
+          "kind": "special_case",
+          "text": "Ori's core with the wave switched off. At $f = 0$ the metric is flat, Misner space with two flat directions beside it [ori2005]."
+        },
+        {
+          "id": "pp_wave",
+          "kind": "locally_same",
+          "text": "Locally the core is a vacuum pp-wave, and Ori's example is a linearly polarized plane wave. The periodic $z$ is Ori's addition [ori2005]."
+        },
+        {
+          "id": "gott_time_machine",
+          "kind": "family",
+          "text": "Two cosmic strings passing at high speed. Ori counted its closed timelike curves as coming from infinity, and built his own to start in a finite region [ori2005, ori1991]."
+        },
+        {
+          "id": "wormhole_time_machine",
+          "kind": "family",
+          "text": "The time machine Morris, Thorne, and Yurtsever made from a wormhole, whose throat needs matter of negative energy density. Ori's model obeys the weak energy condition [ori2005, morris1988prl]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "The outside of Ori's full model. Beyond the matter that surrounds the vacuum core, the geometry is Schwarzschild's [ori2005]."
+        }
+      ],
+      "references": [
+        "ori2005",
+        "stephani2003",
+        "misner1967",
+        "godel1949",
+        "gott1991",
+        "ori1991",
+        "morris1988prl",
+        "ori1993",
+        "ori1994",
+        "soen1996",
+        "olum2000",
+        "tipler1976",
+        "tipler1977",
+        "hawking1992",
+        "ori2007",
+        "dietz2012ori",
+        "kim1991",
+        "kay1997"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ori_time_machine.json",
+      "charts": [
+        {
+          "id": "vacuum_core",
+          "name": "Vacuum Core",
+          "coordinates": [
+            "T",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in [0, L)",
+            "T = f \\;\\text{(the circle of constant } T, x, y \\text{ is null)}",
+            "T > f \\;\\text{(the circles of constant } T, x, y \\text{ are closed timelike curves)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "f = f(x,y,z)",
+              "description": "Any function periodic in $z$ with period $L$, carrying dimensions of area; the core is a vacuum exactly where it is harmonic in $x$ and $y$, $\\partial_x^2 f + \\partial_y^2 f = 0$, and flat where it depends on $z$ alone"
+            },
+            {
+              "symbol": "L",
+              "description": "Period of $z$"
+            }
+          ],
+          "convention": "We use Ori's coordinates $(T, x, y, z)$, with $x$ and $y$ lengths, $z$ dimensionless and periodic with period $L$, and $T$ carrying dimensions of area. The function $f$ of $x$, $y$, and $z$ is free, and the core is a vacuum where $\\partial_x^2 f + \\partial_y^2 f = 0$.",
+          "line_element": "ds^2 = dx^2 + dy^2 - 2\\,dz\\,dT + \\left(f - T\\right)dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "z"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "f - T"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "foliation",
+          "name": "Spacelike Foliation",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in [0, L)",
+            "x = y = t = 0 \\;\\text{(the closed null geodesic } N\\text{)}",
+            "t > e\\left(x^2 + y^2\\right) \\;\\text{(the circles of constant } t, x, y \\text{ are closed timelike curves)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Amplitude of the wave in Ori's example $f = a(x^2 - y^2)/2$, a small positive number"
+            },
+            {
+              "symbol": "e",
+              "description": "Positive number that fixes the surfaces of constant $t$, with $e > a$ and $e > (2e + a)^2$"
+            },
+            {
+              "symbol": "L",
+              "description": "Period of $z$"
+            }
+          ],
+          "convention": "We use Ori's coordinates $(t, x, y, z)$ for the core with $f = a(x^2 - y^2)/2$, where $t = T - a(x^2 - y^2)/2 + e(x^2 + y^2)$ carries dimensions of area, $x$ and $y$ are lengths, and $z$ is dimensionless and periodic with period $L$. The numbers $a$ and $e$ satisfy $0 < a < e$ and $e > (2e + a)^2$, so that every surface of constant $t < 0$ is spacelike.",
+          "line_element": "ds^2 = dx^2 + dy^2 - 2\\,dz\\,dt + \\left(e\\left(x^2 + y^2\\right) - t\\right)dz^2 + 2\\left(\\left(2e - a\\right)x\\,dx + \\left(2e + a\\right)y\\,dy\\right)dz",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "z"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "z"
+              ],
+              "value": "\\left(2e - a\\right)x"
+            },
+            {
+              "indices": [
+                "z",
+                "x"
+              ],
+              "value": "\\left(2e - a\\right)x"
+            },
+            {
+              "indices": [
+                "y",
+                "z"
+              ],
+              "value": "\\left(2e + a\\right)y"
+            },
+            {
+              "indices": [
+                "z",
+                "y"
+              ],
+              "value": "\\left(2e + a\\right)y"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e\\left(x^2 + y^2\\right) - t"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "brinkmann",
+          "name": "Brinkmann",
+          "coordinates": [
+            "u",
+            "v",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in (-\\infty, 0)",
+            "v \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "(u, v) \\sim \\left(u\\exp(-L/2),\\, v\\exp(L/2)\\right)",
+            "uv < -a\\left(x^2 - y^2\\right) \\;\\text{(the closed curves of constant } uv, x, y \\text{ are timelike)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Amplitude of the wave in Ori's example $f = a(x^2 - y^2)/2$, a small positive number"
+            },
+            {
+              "symbol": "L",
+              "description": "Period of $z = -2\\ln(-u/2)$; a circuit of the closed direction is a boost of rapidity $L/2$"
+            }
+          ],
+          "convention": "We use Brinkmann coordinates $(u, v, x, y)$ for the core with $f = a(x^2 - y^2)/2$, where $u = -2\\exp(-z/2)$ is dimensionless and negative, $v = T\\exp(z/2)$ carries dimensions of area, and $x$ and $y$ are lengths. A circuit of $z$ is the boost that takes $(u, v)$ to $(u\\exp(-L/2), v\\exp(L/2))$.",
+          "line_element": "ds^2 = \\dfrac{2a\\left(x^2 - y^2\\right)}{u^2}du^2 - 2\\,du\\,dv + dx^2 + dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{2a\\left(x^2 - y^2\\right)}{u^2}"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
       "id": "photon_rocket",
       "name": "Kinnersley Photon Rocket",
       "short_name": "Photon Rocket",
@@ -11084,6 +11419,11 @@
           "id": "light_beam",
           "kind": "special_case",
           "text": "The pp-wave of a steady beam of light. Its profile does not depend on $u$ and is harmonic only outside the beam, where the light's energy is its source [bonnor1969light]."
+        },
+        {
+          "id": "ori_time_machine",
+          "kind": "locally_same",
+          "text": "A vacuum pp-wave with one coordinate made periodic. Its circles turn from spacelike to timelike, which makes it the core of Amos Ori's time machine of 2005 [ori2005]."
         }
       ],
       "references": [
@@ -11107,7 +11447,8 @@
         "robinson1960",
         "griffiths2009",
         "griffiths1991",
-        "bonnor1969light"
+        "bonnor1969light",
+        "ori2005"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/pp_wave.json",
@@ -11799,6 +12140,11 @@
           "id": "damour_solodukhin",
           "kind": "generalisation",
           "text": "Schwarzschild's metric with a small constant $\\lambda^2$ added to $-g_{tt}$, which turns the horizon into the throat of a wormhole that passes for a black hole. At $\\lambda = 0$ it is Schwarzschild's [damour2007]."
+        },
+        {
+          "id": "ori_time_machine",
+          "kind": "composite",
+          "text": "A time machine with a vacuum core inside a region of ordinary matter. Schwarzschild's geometry is everything outside that matter [ori2005]."
         }
       ],
       "references": [
@@ -11847,7 +12193,8 @@
         "obregon1998",
         "kinnersley1969",
         "podolsky2008",
-        "damour2007"
+        "damour2007",
+        "ori2005"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",

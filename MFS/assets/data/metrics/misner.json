@@ -47,6 +47,11 @@
       "id": "wormhole_time_machine",
       "kind": "family",
       "text": "A wormhole whose mouths move toward each other has a Cauchy horizon like Misner's with closed timelike curves behind it, and Kim and Thorne found the vacuum stress energy diverging there too [morris1988prl, kim1991]."
+    },
+    {
+      "id": "ori_time_machine",
+      "kind": "generalisation",
+      "text": "Misner space with a gravitational wave added. Amos Ori's vacuum core of 2005 is curved, and its closed null geodesics are isolated circles, where Misner's fill the whole horizon [ori2005]."
     }
   ],
   "references": [
@@ -65,7 +70,8 @@
     "thorne1993misner",
     "berkooz2004",
     "banados1993",
-    "morris1988prl"
+    "morris1988prl",
+    "ori2005"
   ],
   "coordinates": [
     {
