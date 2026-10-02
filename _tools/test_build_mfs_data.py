@@ -315,6 +315,49 @@ def diagram_prose(name, diagram):
                 yield f"{where}.slices[{position}].label", mark["label"]
 
 
+
+BARDEEN_G2 = 1 / 9                # g^2 in r_s^2, as every diagram of Bardeen's black hole takes it
+
+
+def bardeen_f(r):
+    """Bardeen's f = 1 - r_s r^2/(r^2 + g^2)^(3/2) at r_s = 1 and g = 1/3."""
+    return 1 - r * r / (r * r + BARDEEN_G2) ** 1.5
+
+
+def bardeen_horizons():
+    """The two positive zeros of f, by bisection on each side of its minimum at r = sqrt(2) g."""
+    turn = math.sqrt(2 * BARDEEN_G2)
+    roots = []
+    for lo, hi in ((1e-6, turn), (turn, 2.0)):
+        for _ in range(200):
+            mid = 0.5 * (lo + hi)
+            lo, hi = (mid, hi) if bardeen_f(lo) * bardeen_f(mid) > 0 else (lo, mid)
+        roots.append(0.5 * (lo + hi))
+    return roots
+
+
+def bardeen_rstar(r):
+    """Bardeen's tortoise coordinate, dr_*/dr = 1/f and r_* = 0 at the centre, without numpy: the
+    logarithm of each horizon, ln|1 - r/r_i|/f'(r_i), and the integral from 0 of what is left of
+    1/f, which is smooth, by Gauss and Legendre's rule of five points on panels that end on the
+    horizons, so that no point of the rule comes near a pole."""
+    poles = [(ri, (ri * ri + BARDEEN_G2) ** 2.5 / (ri * (ri * ri - 2 * BARDEEN_G2))) for ri in bardeen_horizons()]
+    nodes = (0.0, 0.5384693101056831, -0.5384693101056831, 0.906179845938664, -0.906179845938664)
+    weights = (0.5688888888888889, 0.47862867049936647, 0.47862867049936647, 0.23692688505618908, 0.23692688505618908)
+
+    def smooth(x):
+        return 1 / bardeen_f(x) - sum(a / (x - ri) for ri, a in poles)
+    cuts = sorted({0.0, r} | {ri for ri, _ in poles if ri < r})
+    total = 0.0
+    for lo, hi in zip(cuts, cuts[1:]):
+        panels = max(1, math.ceil((hi - lo) / 0.05))
+        width = (hi - lo) / panels
+        for k in range(panels):
+            mid = lo + (k + 0.5) * width
+            total += 0.5 * width * sum(w * smooth(mid + 0.5 * width * n) for n, w in zip(nodes, weights))
+    return total + sum(a * math.log(abs(1 - r / ri)) for ri, a in poles if r != ri)
+
+
 class PublishedFilesAreCurrent(unittest.TestCase):
     def test_check_mode_passes(self):
         self.assertEqual(build.main(["--check"]), 0)
@@ -2304,6 +2347,28 @@ class EmbeddingDiagrams(unittest.TestCase):
                     near(rho, r, f"Reissner-Nordstrom rho at {r}")
                 if view:
                     self.assertEqual((points[0][0], points[-1][0]), (0.2304, 0.36), pid)
+        # Bardeen's circles have their areal radius on both views, at g = r_s/3. Outside, the throat is
+        # the outer zero of f, and inside, each side runs from the centre to the inner zero. Each chord
+        # climbs as dz/dr = sqrt(1/f - 1), and at the centre the cap has the curvature of the sphere
+        # of radius sqrt(g^3/r_s), de Sitter's.
+        for view, pids in ((0, ("exterior", "other_exterior")), (1, ("inside", "other_inside"))):
+            for pid in pids:
+                points = piece("bardeen", pid, view=view)
+                for r, rho, z in points:
+                    near(rho, r, f"Bardeen rho at {r}")
+                horizon = points[-1][0] if view else points[0][0]
+                self.assertLess(abs(bardeen_f(horizon)), 1e-12, f"Bardeen {pid} ends on a horizon")
+                self.assertEqual(points[0][0], 0.0 if view else horizon, pid)
+                for (r0, _, z0), (r1, _, z1) in zip(points, points[1:]):
+                    middle = 0.5 * (r0 + r1)
+                    if abs(middle - horizon) > 0.02 and r1 - r0 > 1e-9:
+                        slope = math.sqrt(1 / bardeen_f(middle) - 1)
+                        self.assertLess(abs(abs(z1 - z0) / (r1 - r0) - slope), 2e-3 * (1 + slope), f"Bardeen {pid} at {middle}")
+        cap = piece("bardeen", "inside", view=1)
+        a = (1 / 3) ** 1.5
+        for r, _, z in cap[1:]:
+            if r < 0.02:
+                self.assertLess(abs(2 * a * (z - cap[0][2]) / r ** 2 - 1), 2e-2, f"Bardeen's cap at {r}")
         # On Kerr's equator the throat's circumference radius is 2GM/c^2 whatever the spin, and
         # Kerr-Newman's charge pulls it in to 2GM/c^2 - r_Q^2/r+, at a = 0.6 and r_Q = 0.5.
         self.assertAlmostEqual(piece("kerr", "exterior")[0][1], 2.0, places=6)
@@ -4036,6 +4101,13 @@ class Slices(unittest.TestCase):
             finkelstein = key.endswith("finkelstein")
             return (lambda X: sign * (0.5 * math.log(abs((X - 1) / (X + 1))) + (0 if finkelstein else X))), \
                 list(self.reach(surface))
+        if key.startswith("bardeen/eddington_finkelstein"):
+            # At r_s = 1 and g = 1/3 the static t = 0 is v = r_* and u = -r_*, with dr_*/dr = 1/f and
+            # r_* = 0 at the centre, drawn against v - r and u + r or against v and u. It runs off
+            # toward the horizon its view ends on, so a line ends at the box or at the embedding's reach.
+            sign = 1 if "ingoing" in key else -1
+            finkelstein = key.endswith("finkelstein")
+            return (lambda X: sign * (bardeen_rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
         if key.startswith("schwarzschild_ads/eddington_finkelstein"):
             # At r_s = 2 and L = 1, 1/f = r/((r - 1)(r^2 + r + 2)), and r_* = (1/4) ln|1 - r| - (1/8) ln((r^2 + r +
             # 2)/2) + (5/(4 sqrt 7))(arctan((2r + 1)/sqrt 7) - arctan(1/sqrt 7)), which vanishes at r = 0.
@@ -4538,6 +4610,12 @@ class Slices(unittest.TestCase):
                         for X, T in points:
                             tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
                             self.assertLess(abs(tp * tq - want), 2e-3 * (1 + tp * tp) * (1 + tq * tq), f"{where} at {(X, T)}")
+                    elif metric_id == "bardeen":
+                        # Inside r- the moment runs through the inner bifurcation sphere, at T = pi, and
+                        # outside r+ through the outer one, at T = 0, or a period up, at T = 2 pi, on the
+                        # outgoing chart's view, whose exterior is the one above the white hole.
+                        height = math.pi if mark["view"] == "inside" else 2 * math.pi if view["id"] == "outgoing" else 0.0
+                        self.assertTrue(all(abs(T - height) < 2e-4 for _, T in points), where)
                     else:
                         self.assertTrue(all(abs(T) < 2e-4 for _, T in points), where)
 
