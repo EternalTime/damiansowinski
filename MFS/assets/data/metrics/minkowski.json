@@ -168,6 +168,11 @@
       "id": "roberts",
       "kind": "generalisation",
       "text": "Flat spacetime with a massless scalar field sent in from infinity, at every scale alike. At $p = 0$ there is no field and Roberts's solution is Minkowski's, and for $p < 1$ the field passes through the centre and leaves flat space behind it [oshiro1994, brady1994]."
+    },
+    {
+      "id": "kiselev",
+      "kind": "conformal",
+      "text": "Kiselev's matter at $w = -2/3$ with no black hole is the part $\\tau + \\rho > 0$ of Minkowski space rescaled by $4r_q^2/(\\tau + \\rho)^2$ [kiselev2003]."
     }
   ],
   "references": [
@@ -226,7 +231,8 @@
     "deser1984",
     "coleman1980",
     "oshiro1994",
-    "brady1994"
+    "brady1994",
+    "kiselev2003"
   ],
   "coordinates": [
     {

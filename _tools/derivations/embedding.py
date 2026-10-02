@@ -3224,6 +3224,93 @@ def schwarzschild_de_sitter(ck, src):
                           "$r_h = 1.085\\,r_s$ and $r_c = 3.215\\,r_s$.")]
 
 
+def kiselev(ck, src):
+    """Kiselev's static slice t = 0 in his example w = -2/3, read from the chart of the linear
+    term. With the black hole, at r_s = 1 and r_q = 8, g_rr = 1/f with f = 1 - 1/r - r/8 < 1, so
+    dz/dr = sqrt(1/f - 1) is real between the horizons r = 4 -+ 2 sqrt 2, the roots of the
+    published g^rr, and diverges at both: the surface stands vertical at the throat r_-, its
+    smallest circle, and at r_+, its widest, and the slice of the maximal extension runs on
+    through each bifurcation sphere into another static region, as Kottler's does, one period
+    of which is drawn by quadrature. With the matter alone, r_s = 0 and r_q = 1, f = 1 - r and
+    dz/dr = sqrt(r/(1 - r)), which integrates to z = asin(sqrt r) - sqrt(r(1 - r)): with
+    r = (1 - cos psi)/2 that is z = (psi - sin psi)/2, the cycloid of a circle of diameter r_q,
+    from the centre, a curvature singularity, to the horizon r = r_q, where the slice runs on
+    into a second static region, the same surface turned over."""
+    hole = Slice(src, "kiselev", "linear", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 1, "r_q": 8})
+    outer, inner = hole.horizons()
+    ck.add("Kiselev: the horizons are r = 4 -+ 2 sqrt 2", abs(inner - (4 - 2 * math.sqrt(2)))
+           + abs(outer - (4 + 2 * math.sqrt(2))), 1e-12)
+    size = 2 * outer
+    radii = (2.0, 3.0, 4.0, 5.0, 6.0)
+    near = Piece("static", "sheet", hole, inner, outer, 0.0, 1,
+                 (("throat", "the throat $r = r_-$, the bifurcation sphere of the black hole horizon, where the "
+                             "slice runs on into another static region"),
+                  ("join", "the widest circle $r = r_+$, the bifurcation sphere of the outer horizon, "
+                           "where the slice runs on into the next static region")),
+                 [(inner, "horizon", "$r = r_-$")] + [(r, "r", None) for r in radii] + [(outer, "horizon", "$r = r_+$")],
+                 size)
+    top = 2 * near.z[-1]
+    far = Piece("next", "sheet2", hole, inner, outer, top, -1,
+                (("throat", "the throat $r = r_-$ of the next black hole horizon"),
+                 ("join", "the widest circle $r = r_+$")),
+                [(inner, "horizon", None)] + [(r, "r2", None) for r in radii], size)
+    for piece in (near, far):
+        ck.isometry(f"Kiselev, the {piece.id} region", piece)
+        ck.radius(f"Kiselev, the {piece.id} region, rho = r", piece, lambda r: r, size)
+    ck.join("Kiselev, the two static regions at r_+", near, outer, far, outer)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(inner), "$r = r_-$", dx=10)
+    ring_label(fig, [0, 0, 0], *near.at(outer), "$r = r_+$", dx=10)
+    fig.legend("fill", "cover", "the static region $r_- < r < r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $2$, $3$, $4$, $5$ and $6\\,r_s$")
+    fig.legend("line", "r2", "the same radii in the next static region")
+    fig.legend("line", "horizon", "the throats $r = r_-$ and the widest circle $r = r_+$, where the slice crosses the horizons")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views = [view("black_hole", "Between the horizons", "$r_s$", [surface], fig.done(),
+                  settings="$r_s = 1$, the unit of every length, $w = -2/3$, and $r_q = 8\\,r_s$, so that "
+                           "$r_- = 1.172\\,r_s$ and $r_+ = 6.828\\,r_s$.")]
+
+    free = Slice(src, "kiselev", "linear", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 0, "r_q": 1})
+    horizon = free.horizons()[0]
+    ck.add("Kiselev, the matter alone: the horizon is r = r_q", abs(horizon - 1.0), 1e-12)
+    size = math.pi
+
+    def cycloid(r):
+        r = np.clip(r, 0.0, 1.0)
+        return np.arcsin(np.sqrt(r)) - np.sqrt(r * (1 - r))
+    marks = (0.25, 0.5, 0.75)
+    near = Piece("static", "sheet", free, 0.0, horizon, -math.pi / 2, 1,
+                 (("apex", "the centre $r = 0$, a curvature singularity"),
+                  ("join", "the widest circle $r = r_q$, the bifurcation sphere of the horizon, where the slice "
+                           "runs on into the second static region")),
+                 [(r, "r", None) for r in marks] + [(horizon, "horizon", "$r = r_q$")], size)
+    far = Piece("next", "sheet2", free, 0.0, horizon, math.pi / 2, -1,
+                (("apex", "the centre of the second static region"), ("join", "the widest circle $r = r_q$")),
+                [(r, "r2", None) for r in marks], size)
+    for piece in (near, far):
+        ck.isometry(f"Kiselev, the matter alone, the {piece.id} region", piece)
+        ck.radius(f"Kiselev, the matter alone, the {piece.id} region, rho = r", piece, lambda r: r, size)
+        ck.form(f"Kiselev, the matter alone, the {piece.id} region, the cycloid", piece,
+                lambda r, sense=piece.sense: sense * (cycloid(r) - math.pi / 2), size)
+    # The cycloid a circle of diameter r_q rolls out: r = (1 - cos psi)/2 and z = (psi - sin psi)/2.
+    psi = np.linspace(0.0, math.pi, 181)
+    ck.add("Kiselev, the matter alone: asin(sqrt r) - sqrt(r(1 - r)) is the cycloid of a circle of diameter r_q",
+           float(np.max(np.abs(cycloid((1 - np.cos(psi)) / 2) - (psi - np.sin(psi)) / 2))), 1e-12)
+    ck.join("Kiselev, the matter alone, the two static regions at r_q", near, horizon, far, horizon)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(horizon), "$r = r_q$", dx=10)
+    fig.legend("fill", "cover", "the static region $r < r_q$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $r_q/4$, $r_q/2$ and $3r_q/4$")
+    fig.legend("line", "r2", "the same radii in the second static region")
+    fig.legend("line", "horizon", "the widest circle $r = r_q$, where the slice crosses the horizon")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("free", "The matter alone", "$r_q$", [surface], fig.done(),
+                      settings="$r_s = 0$, $w = -2/3$, and $r_q = 1$, the unit of every length."))
+    return views
+
+
 RNDS = {"r_s": 1, "r_q": "1/2", "Lambda": "27/64"}
 RNDS_SETTINGS = ("$r_s = 1$, the unit of every length, $r_q = r_s/2$ and $\\Lambda = 27/(64\\,r_s^2)$, the lukewarm "
                  "hole with $H = 3c/(8\\,r_s)$, so that $r_- = 0.431\\,r_s$, $r_+ = 2\\,r_s/3$, and $r_c = 2\\,r_s$.")
@@ -9368,6 +9455,7 @@ DRAWN = {
     "de_sitter": de_sitter,
     "einstein_static": einstein_static,
     "schwarzschild_de_sitter": schwarzschild_de_sitter,
+    "kiselev": kiselev,
     "schwarzschild_ads": schwarzschild_ads,
     "reissner_nordstrom_ads": reissner_nordstrom_ads,
     "topological_black_hole": topological_black_hole,
@@ -10042,6 +10130,26 @@ CAPTIONS = {
         "turned over, and through its throat at $r_h$ into another, a chain of throats and widest circles "
         "without end, one period of which is drawn. Identifying the two throats closes the slice into a space "
         "of topology $S^1 \\times S^2$.",
+    ],
+    ("kiselev", "black_hole"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Kiselev's black hole at the moment $t = 0$ of its static chart "
+        "($w = -2/3$, $r_q = 8\\,r_s$), drawn as a surface in flat space with every distance along it the metric "
+        "distance. On it $g_{rr} = (1 - r_s/r - r/r_q)^{-1}$, larger than 1 everywhere between the horizons, so the "
+        "surface climbs at $dz/dr = \\sqrt{g_{rr} - 1}$ from the throat $r_-$, its smallest circle, to $r_+$, its "
+        "widest, and stands vertical at both.",
+        "The slice runs through the bifurcation sphere at $r_+$ into the next static region, the same surface "
+        "turned over, and through its throat at $r_-$ into another, a chain of throats and widest circles "
+        "without end, one period of which is drawn.",
+    ],
+    ("kiselev", "free"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the matter alone ($r_s = 0$, $w = -2/3$) at the moment $t = 0$ "
+        "of its static chart, drawn as a surface in flat space with every distance along it the metric distance. "
+        "On it $g_{rr} = (1 - r/r_q)^{-1}$ and $dz/dr = \\sqrt{r/(r_q - r)}$, so the profile is a cycloid, "
+        "$r = \\tfrac{1}{2}r_q(1 - \\cos\\psi)$ and $z = \\tfrac{1}{2}r_q(\\psi - \\sin\\psi)$, the curve a point on "
+        "a circle of diameter $r_q$ traces as the circle rolls through the angle $\\psi$.",
+        "The surface leaves the centre $r = 0$, where the Kretschmann scalar diverges, widens to the horizon "
+        "$r = r_q$, where it stands vertical, and runs on through the bifurcation sphere into a second static "
+        "region, the same surface turned over, which closes at a centre of its own.",
     ],
     ("kerr_de_sitter", "de_sitter"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Kerr-de Sitter black hole at one moment of Boyer-Lindquist $t$ "

@@ -505,7 +505,7 @@
       "static",
       "spherically symmetric"
     ],
-    "version": "282e13dc262e4ee9",
+    "version": "d30647b3dce47a44",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -810,7 +810,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c8db6f801a92b6b4",
+    "version": "8ed4aea068f065cb",
     "diagrams": "fa2f1e08173abce4",
     "conformal": "f6e3d96167454df0",
     "embedding": "364e0217d4805443"
@@ -1256,6 +1256,40 @@
     "embedding": "0633d69609fb99f8"
   },
   {
+    "id": "kiselev",
+    "name": "Kiselev",
+    "tags": [
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "black hole",
+      "mass",
+      "quintessence",
+      "dark energy",
+      "equation of state",
+      "anisotropic pressure",
+      "energy conditions",
+      "horizon",
+      "event horizon",
+      "cosmological horizon",
+      "white hole",
+      "curvature singularity",
+      "coordinate singularity",
+      "maximal extension",
+      "causal structure",
+      "Hawking temperature",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "9e69f342db153691",
+    "diagrams": "b8b3958f55b02f60",
+    "conformal": "6ef2fd6aee9f0ecf",
+    "embedding": "f88f2136771d0f0a"
+  },
+  {
     "id": "krasnikov",
     "name": "Krasnikov",
     "tags": [
@@ -1505,7 +1539,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "40cd062a5208db37",
+    "version": "f250c6f2336c91f4",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -1931,7 +1965,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0d27daada2c265df",
+    "version": "bbc4a79e06dc8ad4",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -2118,7 +2152,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "076ca1ed0f6c1470",
+    "version": "90ddaac8ec9bf89f",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -2209,7 +2243,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "f19cd692c6ff229b",
+    "version": "6d797e2fb3ede6a7",
     "diagrams": "01986085179076c1",
     "conformal": "da2331625dd4e7df",
     "embedding": "2693e5d4af5edd89"

@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 94,
+  "count": 95,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -4892,6 +4892,11 @@
           "id": "gravastar",
           "kind": "composite",
           "text": "A ball of de Sitter space inside a thin shell, with Schwarzschild's vacuum outside. The vacuum within pushes outward on the shell, and no horizon forms [mazur2004]."
+        },
+        {
+          "id": "kiselev",
+          "kind": "generalisation",
+          "text": "De Sitter's static metric with a black hole added and $\\Lambda r^2/3$ replaced by a power of the radius, $(r_q/r)^{3w+1}$. At $w = -1$ and $r_s = 0$ it is de Sitter's, with $\\Lambda = 3/r_q^2$ [kiselev2003]."
         }
       ],
       "references": [
@@ -4927,7 +4932,8 @@
         "coleman1980",
         "senovilla1998",
         "chinea1992",
-        "mazur2004"
+        "mazur2004",
+        "kiselev2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -7891,6 +7897,11 @@
           "id": "domain_wall",
           "kind": "family",
           "text": "The defect spread over a surface. A wall repels matter, as a global monopole does [kibble1976, harari1990]."
+        },
+        {
+          "id": "kiselev",
+          "kind": "family",
+          "text": "A black hole with a power of $r$ added to Schwarzschild's metric function for matter around it. At $w = -1/3$ the power is zero and the term is the monopole's constant deficit [kiselev2003, visser2020]."
         }
       ],
       "references": [
@@ -7907,7 +7918,9 @@
         "liebling2000",
         "bennett1990",
         "pen1994",
-        "pen1997"
+        "pen1997",
+        "kiselev2003",
+        "visser2020"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/global_monopole.json",
@@ -12527,6 +12540,492 @@
       ]
     },
     {
+      "id": "kiselev",
+      "name": "Kiselev Black Hole",
+      "short_name": "Kiselev",
+      "description": "Schwarzschild's black hole with one more term in its metric, a power of the radius that stands for matter around the hole whose pressure, averaged over directions, is a fixed multiple of its energy density. Valery Kiselev wrote it down in 2003 as a black hole surrounded by quintessence, and Matt Visser showed in 2020 that the matter is neither a perfect fluid nor quintessence.",
+      "tags": [
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "black hole",
+        "mass",
+        "quintessence",
+        "dark energy",
+        "equation of state",
+        "anisotropic pressure",
+        "energy conditions",
+        "horizon",
+        "event horizon",
+        "cosmological horizon",
+        "white hole",
+        "curvature singularity",
+        "coordinate singularity",
+        "maximal extension",
+        "causal structure",
+        "Hawking temperature",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and $r_q$ is a length. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "Kiselev's black hole at $w = 0$, where the added term is $r_q/r$ and the metric is Schwarzschild's with radius $r_s + r_q$. Dust at rest adds mass and nothing else [kiselev2003]."
+        },
+        {
+          "id": "schwarzschild_de_sitter",
+          "kind": "special_case",
+          "text": "Kiselev's black hole at $w = -1$, where the added term is $r^2/r_q^2$: Kottler's metric with $\\Lambda = 3/r_q^2$, the matter a cosmological constant [kiselev2003]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "family",
+          "text": "At $w = 1/3$ the added term goes as $1/r^2$, and with its sign reversed the metric is Reissner-Nordström's. Visser pointed to this case: the matter is then an electric field, which is no perfect fluid [kiselev2003, visser2020]."
+        },
+        {
+          "id": "global_monopole",
+          "kind": "family",
+          "text": "At $w = -1/3$ the added term, which Visser writes $K/r^{3w+1}$, is a constant, and $f = 1 - K - r_s/r$ is the metric outside a global monopole with solid angle deficit $K$. Kiselev noted the \"angle defect\" of the spheres himself [kiselev2003, visser2020, barriola1989]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "special_case",
+          "text": "Kiselev's metric at $w = -1$ with no black hole, $r_s = 0$ and $\\Lambda = 3/r_q^2$. Kiselev set his matter at $w = -2/3$ beside it: near the horizon the two metrics agree up to a constant conformal factor [kiselev2003]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "conformal",
+          "text": "Kiselev's matter alone at $w = -2/3$ is conformal to the part $\\tau + \\rho > 0$ of Minkowski space, with the factor $4r_q^2/(\\tau + \\rho)^2$ [kiselev2003]."
+        }
+      ],
+      "references": [
+        "riess1998",
+        "perlmutter1999",
+        "kiselev2003",
+        "caldwell1998",
+        "kottler1918",
+        "visser2020",
+        "jacobson2007",
+        "gibbons1977",
+        "cvetic2016",
+        "chen2005",
+        "ghosh2016",
+        "toshmatov2017",
+        "newman1965janis",
+        "boonserm2020",
+        "barriola1989"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kiselev.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Static Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "1 - \\dfrac{r_s}{r} - h = 0 \\;\\text{(the horizons)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Normalisation length of the surrounding matter"
+            },
+            {
+              "symbol": "w",
+              "description": "State parameter, the ratio of the pressure averaged over directions to the energy density"
+            },
+            {
+              "symbol": "h = \\left(\\dfrac{r_q}{r}\\right)^{3w + 1}",
+              "description": "Kiselev's term in the metric function"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$. We write Kiselev's term as $h = (r_q/r)^{3w + 1}$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r} - \\left(\\dfrac{r_q}{r}\\right)^{3w + 1}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r} - \\left(\\dfrac{r_q}{r}\\right)^{3w + 1}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r} - h\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r} - h\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{3w\\,h\\left(3w - 1\\right)}{r^2}",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6} + \\dfrac{12\\left(w + 1\\right)\\left(3w + 2\\right)r_s\\,h}{r^5} + \\dfrac{3\\left(27w^4 + 54w^3 + 51w^2 + 20w + 4\\right)h^2}{r^4}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "1 - \\dfrac{r_s}{r} - h = 0 \\;\\text{(the horizons)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Normalisation length of the surrounding matter"
+            },
+            {
+              "symbol": "w",
+              "description": "State parameter, the ratio of the pressure averaged over directions to the energy density"
+            },
+            {
+              "symbol": "h = \\left(\\dfrac{r_q}{r}\\right)^{3w + 1}",
+              "description": "Kiselev's term in the metric function"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v = ct + r_*$ a length, where $dr_*/dr = \\left(1 - r_s/r - h\\right)^{-1}$, $r_* = 0$ at $r = 0$, and $h = (r_q/r)^{3w + 1}$ is Kiselev's term.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r} - \\left(\\dfrac{r_q}{r}\\right)^{3w + 1}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r} - h\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{3w\\,h\\left(3w - 1\\right)}{r^2}",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6} + \\dfrac{12\\left(w + 1\\right)\\left(3w + 2\\right)r_s\\,h}{r^5} + \\dfrac{3\\left(27w^4 + 54w^3 + 51w^2 + 20w + 4\\right)h^2}{r^4}"
+        },
+        {
+          "id": "eddington_finkelstein_outgoing",
+          "name": "Outgoing Eddington-Finkelstein",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "1 - \\dfrac{r_s}{r} - h = 0 \\;\\text{(the horizons)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Normalisation length of the surrounding matter"
+            },
+            {
+              "symbol": "w",
+              "description": "State parameter, the ratio of the pressure averaged over directions to the energy density"
+            },
+            {
+              "symbol": "h = \\left(\\dfrac{r_q}{r}\\right)^{3w + 1}",
+              "description": "Kiselev's term in the metric function"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded time $u = ct - r_*$ a length, where $dr_*/dr = \\left(1 - r_s/r - h\\right)^{-1}$, $r_* = 0$ at $r = 0$, and $h = (r_q/r)^{3w + 1}$ is Kiselev's term.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r} - \\left(\\dfrac{r_q}{r}\\right)^{3w + 1}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r} - h\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{3w\\,h\\left(3w - 1\\right)}{r^2}",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6} + \\dfrac{12\\left(w + 1\\right)\\left(3w + 2\\right)r_s\\,h}{r^5} + \\dfrac{3\\left(27w^4 + 54w^3 + 51w^2 + 20w + 4\\right)h^2}{r^4}"
+        },
+        {
+          "id": "linear",
+          "name": "Static, Linear Term",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_- \\;\\text{(the black hole horizon)}",
+            "r = r_+ \\;\\text{(the outer horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Normalisation length of the surrounding matter"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$. The state parameter is $w = -2/3$, and for $r_q > 4r_s$ the horizons are $r_\\pm = \\tfrac{1}{2}\\left(r_q \\pm \\sqrt{r_q^2 - 4r_qr_s}\\right)$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r} - \\dfrac{r}{r_q}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r} - \\dfrac{r}{r_q}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r} - \\dfrac{r}{r_q}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r} - \\dfrac{r}{r_q}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6}{r\\,r_q}",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6} + \\dfrac{8}{r^2r_q^2}"
+        },
+        {
+          "id": "hyperbolic",
+          "name": "Free Matter, Hyperbolic",
+          "coordinates": [
+            "\\eta",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (-\\infty, \\infty)",
+            "\\chi \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\chi = 0 \\;\\text{(the centre, a curvature singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_q",
+              "description": "Normalisation length of the surrounding matter"
+            }
+          ],
+          "convention": "We use dimensionless coordinates $(\\eta, \\chi, \\theta, \\phi)$, with $\\eta = ct/2r_q$ and $\\chi = -\\tfrac{1}{2}\\ln(1 - r/r_q)$ in the static coordinates at $w = -2/3$ and $r_s = 0$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = 4r_q^2e^{-2\\chi}\\left(-d\\eta^2 + d\\chi^2 + \\sinh^2\\chi\\,\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-4r_q^2e^{-2\\chi}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "4r_q^2e^{-2\\chi}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "4r_q^2e^{-2\\chi}\\sinh^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "4r_q^2e^{-2\\chi}\\sinh^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{3}{r_q^2}\\left(1 + \\coth\\chi\\right)",
+          "kretschmann": "K = \\dfrac{2e^{2\\chi}}{r_q^4\\sinh^2\\chi}"
+        },
+        {
+          "id": "conformally_flat",
+          "name": "Free Matter, Conformally Flat",
+          "coordinates": [
+            "\\tau",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\tau + \\rho > 0",
+            "\\rho = 0 \\;\\text{(the centre, a curvature singularity)}",
+            "\\tau = \\rho \\;\\text{(the horizon } r = r_q\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_q",
+              "description": "Normalisation length of the surrounding matter"
+            }
+          ],
+          "convention": "We use dimensionless coordinates $(\\tau, \\rho, \\theta, \\phi)$, with $\\tau = e^{\\eta}\\cosh\\chi$ and $\\rho = e^{\\eta}\\sinh\\chi$ in the hyperbolic coordinates $\\eta$ and $\\chi$, so the areal radius is $r = 2r_q\\rho/(\\tau + \\rho)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{4r_q^2}{\\left(\\tau + \\rho\\right)^2}\\left(-d\\tau^2 + d\\rho^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{4r_q^2}{\\left(\\tau + \\rho\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{4r_q^2}{\\left(\\tau + \\rho\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{4r_q^2\\,\\rho^2}{\\left(\\tau + \\rho\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{4r_q^2\\,\\rho^2\\sin^2\\theta}{\\left(\\tau + \\rho\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{3\\left(\\tau + \\rho\\right)}{r_q^2\\,\\rho}",
+          "kretschmann": "K = \\dfrac{2\\left(\\tau + \\rho\\right)^2}{r_q^4\\,\\rho^2}"
+        }
+      ]
+    },
+    {
       "id": "krasnikov",
       "name": "Krasnikov Tube",
       "short_name": "Krasnikov",
@@ -14433,6 +14932,11 @@
           "id": "roberts",
           "kind": "generalisation",
           "text": "Flat spacetime with a massless scalar field sent in from infinity, at every scale alike. At $p = 0$ there is no field and Roberts's solution is Minkowski's, and for $p < 1$ the field passes through the centre and leaves flat space behind it [oshiro1994, brady1994]."
+        },
+        {
+          "id": "kiselev",
+          "kind": "conformal",
+          "text": "Kiselev's matter at $w = -2/3$ with no black hole is the part $\\tau + \\rho > 0$ of Minkowski space rescaled by $4r_q^2/(\\tau + \\rho)^2$ [kiselev2003]."
         }
       ],
       "references": [
@@ -14491,7 +14995,8 @@
         "deser1984",
         "coleman1980",
         "oshiro1994",
-        "brady1994"
+        "brady1994",
+        "kiselev2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -19070,6 +19575,11 @@
           "id": "bonnor_vaidya",
           "kind": "generalisation",
           "text": "Reissner-Nordström with its mass and its charge carried in or out by charged light. William Bonnor and Prahlad Vaidya made both functions of a null time in 1970, and with both held constant their metric is Reissner-Nordström's [bonnor1970]."
+        },
+        {
+          "id": "kiselev",
+          "kind": "family",
+          "text": "A black hole whose metric function takes any power of $r$ where Reissner-Nordström's has the charge's $1/r^2$. The charge term is its case $w = 1/3$ with the sign reversed [kiselev2003, visser2020]."
         }
       ],
       "references": [
@@ -19100,7 +19610,9 @@
         "kinnersley1970",
         "bonnor1970",
         "einstein1935",
-        "chamblin1999"
+        "chamblin1999",
+        "kiselev2003",
+        "visser2020"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -20762,6 +21274,11 @@
           "id": "tolman_vii",
           "kind": "composite",
           "text": "A star whose density falls as $1 - r^2/R^2$ to an empty surface, with Schwarzschild's vacuum outside it. Richard Tolman found the inside in 1939 [tolman1939]."
+        },
+        {
+          "id": "kiselev",
+          "kind": "generalisation",
+          "text": "Schwarzschild's metric with one more term, $-(r_q/r)^{3w+1}$, for matter around the hole whose pressure averages to $w$ times its energy density. At $w = 0$ the term is one more mass [kiselev2003]."
         }
       ],
       "references": [
@@ -20837,7 +21354,8 @@
         "witten1991",
         "mazur2004",
         "visser2004",
-        "tolman1939"
+        "tolman1939",
+        "kiselev2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -21540,6 +22058,11 @@
           "id": "kerr_de_sitter",
           "kind": "generalisation",
           "text": "Kottler's black hole set spinning. An inner horizon appears, as in Kerr, and with $a = 0$ the metric is Kottler's [akcay2011]."
+        },
+        {
+          "id": "kiselev",
+          "kind": "generalisation",
+          "text": "Kottler's $\\Lambda r^2/3$ replaced by a power of the radius, $(r_q/r)^{3w+1}$, for matter around the hole whose pressure averages to $w$ times its energy density. At $w = -1$ it is Kottler's term with $\\Lambda = 3/r_q^2$ [kiselev2003]."
         }
       ],
       "references": [
@@ -21562,7 +22085,8 @@
         "kaloper2010",
         "carrera2010",
         "romans1992",
-        "akcay2011"
+        "akcay2011",
+        "kiselev2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_de_sitter.json",

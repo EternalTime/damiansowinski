@@ -4774,6 +4774,16 @@ class Slices(unittest.TestCase):
                        for case, own in SV_MOMENTS_OF.items()},
                     **{f"conformal simpson_visser/{s}_{case}": set(SV_MOMENTS) - set(own)
                        for s in ("spherical", "areal", "ingoing", "outgoing") for case, own in SV_MOMENTS_OF.items()},
+                    # Kiselev's matter alone is another spacetime than his black hole, each marked on the
+                    # drawings of the charts that hold it.
+                    **{f"kiselev/{v}": {"free"} for v in (
+                        "static/radial", "linear/radial", "eddington_finkelstein_ingoing/finkelstein",
+                        "eddington_finkelstein_ingoing/chart", "eddington_finkelstein_outgoing/finkelstein",
+                        "eddington_finkelstein_outgoing/chart")},
+                    **{f"conformal kiselev/{v}": {"free"} for v in ("static", "linear", "ingoing", "outgoing")},
+                    **{f"{place}kiselev/{v}": {"black_hole"} for place, views in (
+                        ("", ("hyperbolic/radial", "conformally_flat/radial")),
+                        ("conformal ", ("hyperbolic", "conformally_flat"))) for v in views},
                     # Roberts's collapse at p = 9/10, 1 and 2 is three spacetimes of one line element, each
                     # drawing marking the moments of its own.
                     **{f"{place}roberts/{s}{sep}{case}": set(ROBERTS_P) - {case}
@@ -4881,6 +4891,23 @@ class Slices(unittest.TestCase):
                 return shift, list(self.reach(surface))
             sign = 1 if "ingoing" in key else -1
             return (lambda X: sign * (rstar(X) - X)), list(self.reach(surface))
+        if key.startswith("kiselev/eddington_finkelstein"):
+            # At w = -2/3, r_s = 1 and r_q = 8 the roots of f are 4 -+ 2 sqrt 2 and
+            # r_* = (4 sqrt 2 - 4) ln|1 - r/r_-| - (4 sqrt 2 + 4) ln|1 - r/r_+|, which vanishes at r = 0.
+            # Static t = 0 is v = r_* and u = -r_*, drawn against v - r and u + r or against v and u.
+            sign = 1 if "ingoing" in key else -1
+            finkelstein = key.endswith("finkelstein")
+            inner, outer, root = 4 - 2 * math.sqrt(2), 4 + 2 * math.sqrt(2), 4 * math.sqrt(2)
+
+            def rstar(r):
+                return (root - 4) * math.log(abs(1 - r / inner)) - (root + 4) * math.log(abs(1 - r / outer))
+            return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
+        if key == "kiselev/hyperbolic/radial":
+            # The static t = 0 of the matter alone is eta = 0, from the centre chi = 0 out of the drawing.
+            return (lambda X: 0.0), [0.0]
+        if key == "kiselev/conformally_flat/radial":
+            # There tau = cosh(chi) and rho = sinh(chi), the hyperbola tau = sqrt(1 + rho^2) from the centre.
+            return (lambda X: math.sqrt(1 + X * X)), [0.0]
         if key.startswith("schwarzschild_de_sitter/eddington_finkelstein"):
             # At r_s = 1 and Lambda = 1/5 the roots of f are those of r^3 - 15r + 15, by Viete's
             # trigonometric solution, and r_* = sum_i ln|1 - r/r_i|/f'(r_i), which vanishes at r = 0.

@@ -108,6 +108,11 @@
       "id": "gravastar",
       "kind": "composite",
       "text": "A ball of de Sitter space inside a thin shell, with Schwarzschild's vacuum outside. The vacuum within pushes outward on the shell, and no horizon forms [mazur2004]."
+    },
+    {
+      "id": "kiselev",
+      "kind": "generalisation",
+      "text": "De Sitter's static metric with a black hole added and $\\Lambda r^2/3$ replaced by a power of the radius, $(r_q/r)^{3w+1}$. At $w = -1$ and $r_s = 0$ it is de Sitter's, with $\\Lambda = 3/r_q^2$ [kiselev2003]."
     }
   ],
   "references": [
@@ -143,7 +148,8 @@
     "coleman1980",
     "senovilla1998",
     "chinea1992",
-    "mazur2004"
+    "mazur2004",
+    "kiselev2003"
   ],
   "coordinates": [
     {

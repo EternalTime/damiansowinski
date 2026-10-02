@@ -184,6 +184,39 @@ def kottler_t(sign):
     return [Mark(m, [np.column_stack([sign * kottler_rstar(r), r])])]
 
 
+KISELEV_ROOTS = (4 - 2 * math.sqrt(2), 4 + 2 * math.sqrt(2))
+
+
+def kiselev_rstar(r):
+    """Kiselev's tortoise coordinate at w = -2/3, r_s = 1 and r_q = 8, as the Eddington-Finkelstein
+    charts fix it: 1/f = -8r/((r - a)(r - b)) with a, b = 4 -+ 2 sqrt 2, so
+    r_* = (4 sqrt 2 - 4) ln|1 - r/a| - (4 sqrt 2 + 4) ln|1 - r/b|, which vanishes at r = 0."""
+    a, b = KISELEV_ROOTS
+    return ((4 * math.sqrt(2) - 4) * np.log(np.abs(1 - r / a))
+            - (4 * math.sqrt(2) + 4) * np.log(np.abs(1 - r / b)))
+
+
+def kiselev_t(sign):
+    """Kiselev's static t = 0 in an Eddington-Finkelstein chart: v = r_* in the ingoing chart and
+    u = -r_* in the outgoing one, between the horizons, as far as the embedding reaches."""
+    m = moments("kiselev", "black_hole")[0]
+    lo, hi = m.reach("linear", "r")
+    r = np.concatenate([near(lo, 0.5 * (lo + hi)), near(hi, 0.5 * (lo + hi))[::-1]])
+    return [Mark(m, [np.column_stack([sign * kiselev_rstar(r), r])])]
+
+
+def kiselev_free(flat):
+    """The static t = 0 of Kiselev's matter alone in his two charts of it. It is eta = 0, the
+    whole half line of chi, since r = r_q(1 - e^(-2 chi)) reaches the horizon only as chi grows
+    without bound, and in the conformally flat chart, tau = e^eta cosh(chi) and
+    rho = e^eta sinh(chi), the hyperbola tau = sqrt(1 + rho^2)."""
+    m = moments("kiselev", "free")[0]
+    if not flat:
+        return [Mark(m, along(0.0, 0.0, BIG), label="$\\eta = 0$")]
+    rho = np.linspace(0.0, BIG ** 0.25, 4 * N + 1)
+    return [Mark(m, [np.column_stack([np.sqrt(1 + rho * rho), rho])], label="static $t = 0$")]
+
+
 def monopole_rstar(r):
     """The tortoise coordinate of Letelier's black hole at Delta = 0.19 and r_s = 1, as the
     Eddington-Finkelstein charts fix it, r_* = r/(1 - Delta) + ln|(1 - Delta)r - 1|/(1 - Delta)^2,
@@ -1392,6 +1425,18 @@ FLAT = {
     ("minkowski", "cartesian", "tx"): lambda: one("minkowski", lambda m: across(0.0, 0.0, m.reach("spherical", "r")[1])),
     # ct = X sinh(aT/c) vanishes in the wedge only at T = 0, where x = X.
     ("minkowski", "rindler", "tx"): lambda: one("minkowski", lambda m: along(0.0, 0.0, m.reach("spherical", "r")[1])),
+    # Kiselev's black hole at w = -2/3 on the charts that hold it, and his matter alone, another
+    # spacetime, on his two charts of it.
+    ("kiselev", "static", "radial"): lambda: one(
+        "kiselev", lambda m: along(0.0, *m.reach("linear", "r")), view_id="black_hole"),
+    ("kiselev", "linear", "radial"): lambda: one(
+        "kiselev", lambda m: along(0.0, *m.reach("linear", "r")), view_id="black_hole"),
+    ("kiselev", "eddington_finkelstein_ingoing", "finkelstein"): lambda: kiselev_t(1),
+    ("kiselev", "eddington_finkelstein_ingoing", "chart"): lambda: kiselev_t(1),
+    ("kiselev", "eddington_finkelstein_outgoing", "finkelstein"): lambda: kiselev_t(-1),
+    ("kiselev", "eddington_finkelstein_outgoing", "chart"): lambda: kiselev_t(-1),
+    ("kiselev", "hyperbolic", "radial"): lambda: kiselev_free(False),
+    ("kiselev", "conformally_flat", "radial"): lambda: kiselev_free(True),
     ("schwarzschild_de_sitter", "static", "radial"): lambda: one("schwarzschild_de_sitter", lambda m: along(0.0, *m.reach("static", "r"))),
     ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "finkelstein"): lambda: kottler_t(1),
     ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "chart"): lambda: kottler_t(1),
@@ -2033,6 +2078,37 @@ def checks():
     miss = max(abs(float((pulled - g_s[:2, :2]).subs(r, rv)[i, j])) for rv in rng.uniform(0.3, 3, 20)
                for i in range(2) for j in range(2))
     report("Bertotti-Robinson: x = b^2/r pulls the Poincare plane back onto the static one", miss, 1e-12)
+
+    # Kiselev: the tortoise coordinate's slope is the published g_rr of the chart of the linear
+    # term, it vanishes at the centre, and the chart that keeps w is that chart at w = -2/3.
+    g_k, (tk, rk, *_) = metric("kiselev", "linear", {"r_s": 1, "r_q": 8})
+    g_w, (tw, rw, *_) = metric("kiselev", "static", {"r_s": 1, "r_q": 8, "w": "-2/3"})
+    grr = sp.lambdify(rk, g_k[1, 1], "numpy")
+    radii = np.concatenate([rng.uniform(0.05, 1.1, 20), rng.uniform(1.25, 6.7, 20), rng.uniform(6.95, 9, 20)])
+    step = 1e-6
+    miss = max(float(np.max(np.abs((kiselev_rstar(radii + step) - kiselev_rstar(radii - step)) / (2 * step)
+                                   / grr(radii) - 1))), abs(float(kiselev_rstar(0.0))),
+               max(abs(float(sp.simplify(g_w[i, i].subs({tw: tk, rw: rk}) - g_k[i, i]).subs(rk, 3))) for i in range(2)))
+    report("Kiselev: dr_*/dr is the published g_rr, r_* = 0 at the centre, and w = -2/3 is the linear term", miss, 1e-6)
+    # Kiselev's matter alone: ct = 2 r_q eta and r = r_q(1 - e^(-2 chi)) carry the static plane onto the
+    # hyperbolic one, and eta = ln(tau^2 - rho^2)/2, chi = artanh(rho/tau) the hyperbolic plane onto the
+    # conformally flat one, where eta = 0 is tau^2 - rho^2 = 1.
+    g_f, (tf, rf, *_) = metric("kiselev", "linear", {"r_s": 0, "r_q": 1})
+    g_h, (eta, chi, *_) = metric("kiselev", "hyperbolic", {"r_q": 1})
+    g_c, (tau, rho, *_) = metric("kiselev", "conformally_flat", {"r_q": 1})
+    image = [2 * eta, 1 - sp.exp(-2 * chi)]
+    J = sp.Matrix(2, 2, lambda i, j: sp.diff(image[i], [eta, chi][j]))
+    pulled = J.T * g_f[:2, :2].subs({tf: image[0], rf: image[1]}, simultaneous=True) * J
+    miss = max(abs(float((pulled - g_h[:2, :2]).subs(chi, v)[i, j])) for v in rng.uniform(0.1, 3, 20)
+               for i in range(2) for j in range(2))
+    image = [sp.log(tau ** 2 - rho ** 2) / 2, sp.atanh(rho / tau)]
+    J = sp.Matrix(2, 2, lambda i, j: sp.diff(image[i], [tau, rho][j]))
+    pulled = J.T * g_h[:2, :2].subs({eta: image[0], chi: image[1]}, simultaneous=True) * J
+    miss = max(miss, max(abs(float((pulled - g_c[:2, :2]).subs({tau: a + b, rho: b})[i, j]))
+                         for a, b in zip(rng.uniform(0.1, 3, 20), rng.uniform(0.1, 3, 20))
+                         for i in range(2) for j in range(2)))
+    report("Kiselev: his map to the hyperbolic chart and Fock's transformation pull the static plane of the matter alone back onto "
+           "the hyperbolic and the conformally flat ones", miss, 1e-10)
 
     # Bardeen: the tortoise coordinate's slope is the published g_rr of the static chart, it
     # vanishes at the centre, and the horizons named here are the zeros of the published g^rr.

@@ -109,6 +109,11 @@
       "id": "bonnor_vaidya",
       "kind": "generalisation",
       "text": "Reissner-Nordström with its mass and its charge carried in or out by charged light. William Bonnor and Prahlad Vaidya made both functions of a null time in 1970, and with both held constant their metric is Reissner-Nordström's [bonnor1970]."
+    },
+    {
+      "id": "kiselev",
+      "kind": "family",
+      "text": "A black hole whose metric function takes any power of $r$ where Reissner-Nordström's has the charge's $1/r^2$. The charge term is its case $w = 1/3$ with the sign reversed [kiselev2003, visser2020]."
     }
   ],
   "references": [
@@ -139,7 +144,9 @@
     "kinnersley1970",
     "bonnor1970",
     "einstein1935",
-    "chamblin1999"
+    "chamblin1999",
+    "kiselev2003",
+    "visser2020"
   ],
   "coordinates": [
     {

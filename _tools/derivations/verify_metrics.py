@@ -719,6 +719,28 @@ DIMENSIONS = {
     ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing"): {
         "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\Lambda": "1/L**2",
     },
+    # Kiselev's black hole keeps Schwarzschild's length r_s beside the length r_q of the matter
+    # around it and the state parameter w, a pure number, so h = (r_q/r)^{3w + 1}, the name the
+    # charts that keep w define, is one too. The Eddington-Finkelstein times are lengths, and
+    # Kiselev's hyperbolic and conformally flat coordinates are all pure numbers.
+    ("kiselev", "static"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L", "w": "1", "h": "1",
+    },
+    ("kiselev", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L", "w": "1", "h": "1",
+    },
+    ("kiselev", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L", "w": "1", "h": "1",
+    },
+    ("kiselev", "linear"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L",
+    },
+    ("kiselev", "hyperbolic"): {
+        "\\eta": "1", "\\chi": "1", "\\theta": "1", "\\phi": "1", "r_q": "L",
+    },
+    ("kiselev", "conformally_flat"): {
+        "\\tau": "1", "\\rho": "1", "\\theta": "1", "\\phi": "1", "r_q": "L",
+    },
     # Carter's rotating black hole with a cosmological constant of either sign. The mass enters as
     # the length r_s = 2GM/c^2, the rotation parameter a is a length as Kerr's is, and Lambda is a
     # curvature. Every chart defines four names: Xi and Delta_theta are pure numbers, rho is a
