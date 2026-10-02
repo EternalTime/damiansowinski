@@ -364,6 +364,17 @@ Schwarzschild's black hole extended along one more direction of space, a static 
 - chart Kerr-Schild: coordinates $(T, r, \theta, \phi, z)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dT^2 + \dfrac{2r_s}{r}c\,dT\,dr + \left(1 + \dfrac{r_s}{r}\right)dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + dz^2$$
 - chart Schwarzschild, Six Dimensions: coordinates $(t, r, \psi, \theta, \phi, z)$, $$ds^2 = -\left(1 - \dfrac{r_h^2}{r^2}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_h^2}{r^2}} + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right) + dz^2$$
 
+### Bondi-Sachs Radiating Metric
+
+The form the metric of an isolated body that sends out gravitational waves takes in coordinates built on its outgoing light cones, given by Hermann Bondi, M. G. J. van der Burg, A. W. K. Metzner, and Rainer Sachs in 1962. In it the mass of the body falls for as long as news of a change in the body reaches infinity, and cannot rise.
+
+- id: `bondi_sachs`
+- tags: vacuum, gravitational wave, radiating, time-dependent, null congruence, retarded time, Bondi mass, news function, mass, asymptotically flat, axisymmetric, reflection symmetry, numerical relativity, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/bondi_sachs.json
+- chart Bondi (axisymmetric): coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\dfrac{V}{r}e^{2\beta}c^2du^2 - 2e^{2\beta}c\,du\,dr + r^2e^{2\gamma}\left(d\theta - U\,c\,du\right)^2 + r^2e^{-2\gamma}\sin^2\theta\,d\phi^2$$
+- chart Inverse luminosity distance: coordinates $(u, \ell, \theta, \phi)$, $$ds^2 = -\ell\,e^{2\beta}V\,c^2du^2 + \dfrac{2e^{2\beta}}{\ell^2}c\,du\,d\ell + \dfrac{e^{2\gamma}}{\ell^2}\left(d\theta - U\,c\,du\right)^2 + \dfrac{e^{-2\gamma}\sin^2\theta}{\ell^2}d\phi^2$$
+
 ### Bonnor Beam of Light
 
 The exact gravitational field of a steady beam of light, which William Bonnor found in 1969, a plane-fronted gravitational wave that keeps pace with the light. A ray moving with the beam feels nothing, a ray moving against it is drawn in, and two beams shining the same way do not attract each other.

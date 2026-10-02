@@ -398,6 +398,33 @@
     "embedding": "6f1faae1e35e650b"
   },
   {
+    "id": "bondi_sachs",
+    "name": "Bondi-Sachs",
+    "tags": [
+      "vacuum",
+      "gravitational wave",
+      "radiating",
+      "time-dependent",
+      "null congruence",
+      "retarded time",
+      "Bondi mass",
+      "news function",
+      "mass",
+      "asymptotically flat",
+      "axisymmetric",
+      "reflection symmetry",
+      "numerical relativity",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "f66f3c1541b9a8c5",
+    "diagrams": "254f7746e52372ea",
+    "conformal": "ff606c016a700422",
+    "embedding": "3aa6e616aa7f5d53"
+  },
+  {
     "id": "light_beam",
     "name": "Bonnor",
     "tags": [
@@ -1842,7 +1869,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5343bcdd0e18fcf1",
+    "version": "f82e018e1a7e162c",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -2432,7 +2459,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "55f26acaff050937",
+    "version": "d357518d335bc8de",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -2942,7 +2969,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5f4904537d07fd04",
+    "version": "698ec9816344876b",
     "diagrams": "06b990c8be409307",
     "conformal": "b71dae1432ee5efb",
     "embedding": "df75b117652b95bd"
@@ -3022,7 +3049,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "59fb4b4c35f9e593",
+    "version": "f174753a07eb83b3",
     "diagrams": "6e432dbfef4f0d7d",
     "embedding": "a484d91e42495a51"
   },
@@ -3245,7 +3272,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "49e427fab722fef0",
+    "version": "81039743a0780c3f",
     "diagrams": "53ff4d90bff08988",
     "conformal": "0326c9d2101aa7a6",
     "embedding": "7b7a1d9f63195b3e"
@@ -3310,7 +3337,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "536769c55600cc4f",
+    "version": "b0646418b0d91fb5",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -3900,7 +3927,7 @@
       "naked singularity",
       "cosmic censorship"
     ],
-    "version": "35e69aea66e2d7c1",
+    "version": "86f76137c3952a19",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404"

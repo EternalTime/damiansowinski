@@ -336,6 +336,9 @@ OVERRULED = {
     ("belinski_zakharov", "vacuum"): (
         True, "f, P and Q are left free in the canonical chart; Belinski and Zakharov's solitons are the "
               "solutions of the vacuum equations its parameters state, as the pole chart's wave is"),
+    ("bondi_sachs", "vacuum"): (
+        True, "V, beta, U and gamma are left free in both charts; Bondi and Sachs's radiating metrics "
+              "are the solutions of the vacuum equations, which fix them from the shear"),
     ("gowdy", "vacuum"): (
         True, "P, Q and lambda are left free in every chart; Gowdy's universes are the "
               "solutions of the vacuum equations, two wave equations and a quadrature"),

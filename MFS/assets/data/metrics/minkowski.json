@@ -223,6 +223,11 @@
       "id": "penrose_impulsive_wave",
       "kind": "composite",
       "text": "The inside and the outside of a light cone, glued back together with a warp. The cone carries a spherical gravitational wave one instant thick [penrose1972impulsive, podolsky2000snapping]."
+    },
+    {
+      "id": "bondi_sachs",
+      "kind": "generalisation",
+      "text": "Flat spacetime on its outgoing light cones with four functions added, the form of the metric far from an isolated body that radiates. Its symmetries far away are Poincaré's and the supertranslations besides [bondi1962, sachs1962bms]."
     }
   ],
   "references": [
@@ -292,7 +297,9 @@
     "will2014",
     "einstein1914fokker",
     "delacruz1967",
-    "podolsky2000snapping"
+    "podolsky2000snapping",
+    "bondi1962",
+    "sachs1962bms"
   ],
   "coordinates": [
     {

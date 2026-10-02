@@ -185,6 +185,11 @@
       "id": "belinski_zakharov",
       "kind": "family",
       "text": "Kerr's black hole is two solitons on flat space. Belinski and Zakharov's inverse scattering method returns the Kerr-NUT solution from two poles, real ones for the hole with horizons [belinskii1979]."
+    },
+    {
+      "id": "bondi_sachs",
+      "kind": "generalisation",
+      "text": "The form the metric of an isolated body takes on its outgoing light cones. Kerr's black hole is a member with no news, written in such coordinates by S. J. Fletcher and A. W. C. Lun in 2003 [sachs1962, fletcher2003]."
     }
   ],
   "references": [
@@ -243,7 +248,9 @@
     "meinel2002",
     "chandrasekhar1986",
     "griffiths1991",
-    "belinskii1979"
+    "belinskii1979",
+    "sachs1962",
+    "fletcher2003"
   ],
   "coordinates": [
     {

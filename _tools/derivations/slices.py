@@ -1926,6 +1926,18 @@ def _rt_fronts():
     return [Mark(m, [[(m.time, 0.0), (m.time, 100.0)]]) for m in moments("robinson_trautman", "fronts")]
 
 
+BONDI_SPHERE = "the sphere $cu = 10\\,m_0$, $r = 10\\,m_0$"
+
+
+def _bondi_sphere(inverse=False):
+    """Bondi and Sachs's sphere of the world tube at the middle of the burst, cu = 10 m_0 and
+    r = 10 m_0: one event of each plane of u and r, or of u and l = 1/r."""
+    def marks():
+        (m,) = moments("bondi_sachs", "sphere", label=BONDI_SPHERE)
+        return [Mark(m, points=[(10.0, 0.1 if inverse else 10.0)])]
+    return marks
+
+
 def string_wave_V(u, X):
     """V of the moving string chart on the surface v = 0 of the isotropic chart, at the line X, for
     the pulse A = exp(-4u^2)/2: 2(X - A)A' + int_0^u A'^2, where A'^2 = 16u^2 exp(-8u^2) and its
@@ -2015,6 +2027,9 @@ FLAT = {
     ("kerr_taub_nut", "boyer_lindquist", "principal"): lambda: one("kerr_taub_nut", lambda m: along(0.0, *m.reach("boyer_lindquist", "r"))),
     ("kerr_taub_nut", "boyer_lindquist", "above"): lambda: kerr_above("kerr_taub_nut"),
     ("robinson_trautman", "axisymmetric", "axis"): _rt_fronts,
+    ("bondi_sachs", "bondi", "equator"): _bondi_sphere(),
+    ("bondi_sachs", "bondi", "axis"): _bondi_sphere(),
+    ("bondi_sachs", "compactified", "equator"): _bondi_sphere(inverse=True),
     ("robinson_trautman", "axisymmetric", "equator"): _rt_fronts,
     ("btz", "stationary", "static"): lambda: _btz(),
     ("btz", "eddington_finkelstein_ingoing", "static"): lambda: _btz(1),

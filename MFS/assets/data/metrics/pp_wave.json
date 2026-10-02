@@ -98,6 +98,11 @@
       "id": "penrose_impulsive_wave",
       "kind": "family",
       "text": "An impulsive wave with a spherical front, the other kind Penrose's cut and paste makes beside the impulsive waves with plane fronts [podolsky1999expanding]."
+    },
+    {
+      "id": "bondi_sachs",
+      "kind": "programme",
+      "text": "Papers VII and VIII of the series whose paper III gave the exact plane waves. They turn from the wave to its source and show that an isolated body loses mass as it radiates [bondi1962, sachs1962]."
     }
   ],
   "references": [
@@ -138,7 +143,9 @@
     "duval2009",
     "bicak1999",
     "chandrasekhar1986",
-    "podolsky1999expanding"
+    "podolsky1999expanding",
+    "bondi1962",
+    "sachs1962"
   ],
   "coordinates": [
     {

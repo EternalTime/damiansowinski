@@ -348,6 +348,14 @@ DIMENSIONS = {
     ("exponential_metric", "harmonic"): {
         "t": "T", "u": "L**(-1)", "\\theta": "1", "\\phi": "1", "m": "L",
     },
+    # Bondi and Sachs's radiating metric: r is the luminosity distance and l = 1/r; V stands beside r
+    # and is a length, U beside d(theta)/d(cu) and is an inverse length, beta and gamma are exponents.
+    ("bondi_sachs", "bondi"): {
+        "u": "T", "r": "L", "\\theta": "1", "\\phi": "1", "V": "L", "\\beta": "1", "U": "1/L", "\\gamma": "1",
+    },
+    ("bondi_sachs", "compactified"): {
+        "u": "T", "\\ell": "1/L", "\\theta": "1", "\\phi": "1", "V": "L", "\\beta": "1", "U": "1/L", "\\gamma": "1",
+    },
     # Roberts's collapsing scalar field: the null coordinates u and v are lengths and p a pure number.
     # Roberts's lambda, which the areal chart names, is a length, and Frolov's scaling coordinates are
     # pure numbers, counted in a length ell.

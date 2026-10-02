@@ -18318,6 +18318,128 @@ def robinson_trautman(ck, src):
     return [v]
 
 
+# ---------------------------------------------------------------- Bondi and Sachs's radiating metric
+
+class BurstPlane:
+    """The plane of u and r on the axis of Bondi's chart for the burst the spacetime diagram
+    declares, G = c = m_0 = 1, in null coordinates. The outgoing rays are u constant,
+    p = arctan(u/L). An ingoing ray obeys dr/du = g_uu/2 with the published g_uu, and it is named
+    by the advanced time it has before the burst, where the plane is Schwarzschild's of the mass
+    m_0: v = u + 2r + 4 ln(r/2 - 1), and q = arctan(v/L). A ray met during the burst is carried
+    back to u = 0 by integrating, every ray at once and each over its own stretch of u; a ray met
+    after the burst, where the axis is Schwarzschild's of the mass m_0 again, is first carried back
+    to the end of the burst by the advanced time it keeps there."""
+
+    L, STEPS = 40.0, 400
+
+    def __init__(self, plane):
+        self.guu = plane.lambdify([plane.g[0, 0]])
+        self.T = float(nr.BURST["T"])
+
+    @staticmethod
+    def tortoise(r):
+        return r + 2 * np.log(r / 2 - 1)
+
+    def name(self, u, r):
+        u, r = np.broadcast_arrays(np.asarray(u, dtype=float), np.asarray(r, dtype=float))
+        u, r = u.copy(), r.copy()
+        late = u > self.T
+        if late.any():
+            r[late] = RocketPlane.before((u[late] - self.T) / 2 + self.tortoise(r[late]), outside=True)
+            u[late] = self.T
+        during = u > 0
+        if during.any():
+            at, y = u[during], r[during]
+            h = -at / self.STEPS
+
+            def rate(at, y):
+                return np.asarray(self.guu(at, y)[0], dtype=float) / 2
+            for _ in range(self.STEPS):
+                k1 = rate(at, y)
+                k2 = rate(at + h / 2, y + h * k1 / 2)
+                k3 = rate(at + h / 2, y + h * k2 / 2)
+                k4 = rate(at + h, y + h * k3)
+                y, at = y + h * (k1 + 2 * k2 + 2 * k3 + k4) / 6, at + h
+            r[during], u[during] = y, 0.0
+        return u + 2 * self.tortoise(r)
+
+    def pq(self, u, r):
+        return np.arctan(np.asarray(u, dtype=float) / self.L) * np.ones_like(np.asarray(r, dtype=float)), \
+            np.arctan(self.name(u, r) / self.L)
+
+
+def bondi_sachs(ck, src):
+    """The plane of u and r on the axis of symmetry, theta = 0, for the burst the spacetime
+    diagram declares, in m_0 = 1, outside the world tube r = 10 m_0: BurstPlane's null coordinates,
+    in which the region is the part of Schwarzschild's exterior triangle outside the tube, with
+    past null infinity on p = -pi/2 and future null infinity on q = pi/2. Before the burst and
+    after it the plane is checked against schwarzschild.json at r_s = 2 m_0, and the chart of
+    l = 1/r against the same map, so the view names no chart and both show it."""
+    axis = {"theta": "0", "phi": "0"}
+    plane = Plane(src, "bondi_sachs", "bondi", ("u", "r"), axis, functions=nr.BONDI_BURST)
+    inverse = Plane(src, "bondi_sachs", "compactified", ("u", "\\ell"), axis, functions=nr.BONDI_BURST_INVERSE)
+    F = BurstPlane(plane)
+    T, R = F.T, float(nr.BURST["R"])
+    for stage, lo, hi in (("before the burst", -60.0, -0.1), ("during the burst", 0.1, T - 0.1),
+                          ("after the burst", T + 0.1, 80.0)):
+        ck.chart(f"Bondi-Sachs, the axis {stage}", plane, F.pq, ck.uniform(lo, hi, 1200),
+                 ck.uniform(R, 80, 1200), lambda u, r: (1, 60))
+        ck.chart(f"Bondi-Sachs, the axis {stage}, the chart of 1/r", inverse, lambda u, ell: F.pq(u, 1 / ell),
+                 ck.uniform(lo, hi, 1200), ck.uniform(1 / 80, 1 / R, 1200), lambda u, ell: (1, -60 * ell ** 2))
+    out = Plane(src, "schwarzschild", "eddington_finkelstein_outgoing", ("u", "r"), EQUATOR, {"r_s": 2})
+    for stage, lo, hi in (("before", -60.0, -0.1), ("after", T + 0.1, 80.0)):
+        ck.chart(f"Bondi-Sachs: {stage} the burst the axis is Schwarzschild's outgoing chart", out, F.pq,
+                 ck.uniform(lo, hi, 1200), ck.uniform(R, 80, 1200), lambda u, r: (1, 60))
+    u = np.array([-200.0, -30.0, -1.0, 0.0, 5.0, 10.0, 19.0, 20.0, 50.0, 400.0])
+    p, q = F.pq(u, np.full_like(u, 1e9))
+    ck.limit("Bondi-Sachs: r -> infinity along a cone lands on future null infinity, q = pi/2", q, np.full_like(u, HALF), 1e-6)
+    p, q = F.pq(np.full(3, -1e9), np.array([R, 20.0, 80.0]))
+    ck.limit("Bondi-Sachs: u -> -infinity at a fixed r lands on past timelike infinity", np.concatenate([p, q]),
+             np.full(6, -HALF), 1e-6)
+    p, q = F.pq(np.full(3, 1e9), np.array([R, 20.0, 80.0]))
+    ck.limit("Bondi-Sachs: u -> infinity at a fixed r lands on future timelike infinity", np.concatenate([p, q]),
+             np.full(6, HALF), 1e-6)
+
+    v = View("axis", "The axis", [-0.3, PI + 0.3, -PI - 0.3, PI + 0.3])
+    uu = spread(-np.inf, np.inf, 900, 14.0)
+    tube = [point(a, b) for a, b in zip(*F.pq(uu, np.full_like(uu, R)))]
+    region = [point(-HALF, -HALF)] + tube + [point(HALF, HALF), point(-HALF, HALF)]
+    v.fill("region", region)
+    v.fill("cover", region)
+    for r in (20, 40, 80, 160):
+        v.curve("r", *F.pq(uu, np.full_like(uu, float(r))))
+    rr = R + np.concatenate([[0.0], np.geomspace(1e-3, 1e9, 500)])
+    for u0 in (-80, -40, -20, 40, 80):
+        v.curve("null", *F.pq(np.full_like(rr, float(u0)), rr))
+    for u0 in (0.0, T):
+        v.curve("surface", *F.pq(np.full_like(rr, u0), rr))
+    v.curve("boundary", *F.pq(uu, np.full_like(uu, R)))
+    v.segment("scri", (-HALF, HALF), (HALF, HALF))
+    v.segment("scri", (-HALF, -HALF), (-HALF, HALF))
+    for pq, text, anchor, dx, dy in (((HALF, HALF), "$i^+$", "b", 0, -6), ((-HALF, HALF), "$i^0$", "l", 6, 0),
+                                     ((-HALF, -HALF), "$i^-$", "t", 0, 6)):
+        v.point("infinity", pq)
+        v.label(pq, text, anchor, dx=dx, dy=dy)
+    v.label((-0.7, HALF), "$\\mathscr{I}^+$", "bl", dx=4, dy=-4)
+    v.label((-HALF, 0), "$\\mathscr{I}^-$", "tl", dx=4, dy=4)
+    burst = F.pq(np.array([T / 2]), np.array([45.0]))
+    v.label((float(burst[0][0]), float(burst[1][0])), "the burst", "c", "small")
+    v.legend("cover", "the region outside the world tube, which $u$ and $r$ cover")
+    v.legend("r", "$r$ constant on the axis: $20$, $40$, $80$, and $160\\,m_0$")
+    v.legend("null", "$u$ constant, an outgoing light cone: $cu = -80$, $-40$, $-20$, $40$, and $80\\,m_0$")
+    v.legend("surface", "the first and the last cone of the burst, $u = 0$ and $cu = 20\\,m_0$")
+    v.legend("boundary", "the world tube $r = 10\\,m_0$")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    v.set(input=nr.BURST_INPUT, settings="$m_0$ is the unit of every length and of $cu$.",
+          restriction="The axis of symmetry $\\theta = 0$ outside the world tube $r = 10\\,m_0$, a totally geodesic "
+                      "surface, each point in the diagram a single event; off the axis the cones carry the shear "
+                      "and the lines of constant $r$ run otherwise.")
+    for m in slices.moments("bondi_sachs", "sphere", label=slices.BONDI_SPHERE):
+        p, q = F.pq(np.array([10.0]), np.array([10.0]))
+        v.slice(m, points=[(float(p[0]), float(q[0]))])
+    return [v]
+
+
 # ---------------------------------------------------------------- Kinnersley's photon rocket
 
 class RocketPlane:
@@ -19035,6 +19157,7 @@ DRAWN = {
     "mcvittie": mcvittie,
     "sultana_dyer": sultana_dyer,
     "photon_rocket": photon_rocket,
+    "bondi_sachs": bondi_sachs,
     "hartle_thorne": hartle_thorne,
     "ppn_metric": ppn_metric,
 }
@@ -21972,6 +22095,19 @@ CAPTIONS = {
     ("photon_rocket", "behind"): [
         "The half of the axis behind the rocket through the declared burn, each point in the diagram a single event. The outgoing rays, one for each retarded time, are $p = -\\arctan e^{-(cu - 5m_0)/5m_0}$, and an ingoing ray keeps one $q$. A ray that comes in from $\\mathscr{I}^-$ with the advanced time $v$ of Schwarzschild's exterior before the burn has $q = \\arctan e^{(cv - 15m_0)/10m_0}$, and a ray that leaves the singularity at the retarded time $u_0$ has $q = -\\pi/2 - p(u_0)$, which puts $r = 0$ on the straight line $T = -\\pi/2$.",
         "The singularity lies in the past, a white hole, and the past horizon $q = 0$ divides the light that left it from the light that came in from $\\mathscr{I}^-$. Before the burn that horizon is $r = 2m_0$. As the rocket loses mass the lines of constant $r$ between $0.60\\,m_0$ and $2m_0$, spacelike inside the white hole, turn timelike, and after the burn the plane is Schwarzschild's of the mass $0.30\\,m_0$, whose horizon $r = 2m$ is the edge $u = \\infty$. During the burn the lines of constant $r$ beyond the second zero of $g^{rr}$, which comes in to $4.73\\,m_0$, are spacelike: a ray sent after the rocket from there gains $r$.",
+    ],
+    ("bondi_sachs", "axis"): [
+        "The axis of symmetry of a source that sends out one weak burst of gravitational waves, outside the world "
+        "tube $r = 10\\,m_0$, each point in the diagram a single event. The outgoing rays, one for each retarded "
+        "time, are $p = \\arctan(cu/40m_0)$, and an ingoing ray keeps $q = \\arctan(cv/40m_0)$, with $v$ the "
+        "advanced time $cv = cu + 2r + 4m_0\\ln(r/2m_0 - 1)$ it has before the burst, where the plane is "
+        "Schwarzschild's of the mass $m_0$.",
+        "Bondi's coordinates cover the region between the world tube and future null infinity, and each cone of "
+        "constant $u$ ends on $\\mathscr{I}^+$ at one point, a sphere of directions about the source. The news of "
+        "the burst reaches $\\mathscr{I}^+$ between the two marked cones, and the Bondi mass, read on "
+        "$\\mathscr{I}^+$ one cone at a time, falls there from $m_0$ to $0.9990\\,m_0$. On the axis itself the "
+        "shear vanishes and the mass aspect ends where it began, so the plane is Schwarzschild's of the mass $m_0$ "
+        "before the burst and after it.",
     ],
     ("photon_rocket", "ahead"): [
         "The half of the axis ahead of the rocket through the declared burn, each point in the diagram a single event. The outgoing rays, one for each retarded time, are $p = -\\arctan e^{-(cu - 5m_0)/5m_0}$, and an ingoing ray keeps one $q$. A ray that comes in from $\\mathscr{I}^-$ with the advanced time $v$ of Schwarzschild's exterior before the burn has $q = \\arctan e^{(cv - 15m_0)/10m_0}$, and a ray that leaves the singularity at the retarded time $u_0$ has $q = -\\pi/2 - p(u_0)$, which puts $r = 0$ on the straight line $T = -\\pi/2$.",

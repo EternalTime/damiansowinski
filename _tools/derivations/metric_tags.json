@@ -960,6 +960,42 @@
    "\\phi"
   ]
  },
+ "bondi_sachs/bondi": {
+  "stamp": "47079b75c8807a46",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "bondi_sachs/compactified": {
+  "stamp": "10df59ad8ce3d0f4",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
  "bonnor_magnetic_dipole/spheroidal": {
   "stamp": "e3daceb4539042a2",
   "relations": {},
