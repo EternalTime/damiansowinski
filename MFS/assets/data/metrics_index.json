@@ -1068,7 +1068,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "64cffdb30921227f",
+    "version": "b96c4bc9a2a79074",
     "diagrams": "76bab86a529ed941",
     "conformal": "c45f19da93e85da3",
     "embedding": "626bd0932cbe6704"
@@ -1126,7 +1126,7 @@
       "static",
       "spherically symmetric"
     ],
-    "version": "4542e5de64bc3cb8",
+    "version": "53017a6451f06168",
     "diagrams": "e73839d0a0529179",
     "conformal": "2fed97c5ab6ddc3d",
     "embedding": "954af1b6ad40d276"
@@ -2501,7 +2501,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "5e2e4f2d97b33136",
+    "version": "2a15ea91f78aa504",
     "embedding": "0c96027fa617beeb"
   },
   {
@@ -3279,6 +3279,54 @@
     "embedding": "7b7a1d9f63195b3e"
   },
   {
+    "id": "rp3_geon",
+    "name": "RP³ Geon",
+    "tags": [
+      "black hole",
+      "white hole",
+      "geon",
+      "topological geon",
+      "topology",
+      "real projective space",
+      "antipodal identification",
+      "topological censorship",
+      "single exterior",
+      "Kruskal extension",
+      "maximal extension",
+      "wormhole",
+      "throat",
+      "Einstein-Rosen bridge",
+      "time symmetric",
+      "initial data",
+      "geometrodynamics",
+      "globally hyperbolic",
+      "Hawking radiation",
+      "Hawking temperature",
+      "black hole entropy",
+      "black hole thermodynamics",
+      "horizon",
+      "event horizon",
+      "curvature singularity",
+      "causal structure",
+      "mass",
+      "asymptotically flat",
+      "isotropic coordinates",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model",
+      "vacuum",
+      "static",
+      "stationary",
+      "spherically symmetric"
+    ],
+    "version": "b93e5b054ad84530",
+    "diagrams": "6a3ce40ab242fc55",
+    "conformal": "fcc119dbec4fbaa1",
+    "embedding": "fabbc86e0024f31d"
+  },
+  {
     "id": "schrodinger_spacetime",
     "name": "Schrödinger Spacetime",
     "tags": [
@@ -3338,7 +3386,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "536769c55600cc4f",
+    "version": "6f06f5e622b45aca",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"

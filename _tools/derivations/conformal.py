@@ -6149,6 +6149,180 @@ def elliptic_de_sitter(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- the RP3 geon
+
+def rp3_geon(ck, src):
+    """The right half of Kruskal's diagram, Kruskal's manifold with (T, X) and (T, -X) one event at
+    opposite points of the sphere, drawn at r_s = 1.
+
+    Kruskal's T and X enter as p = arctan(T - X), q = arctan(T + X), so that the drawing's
+    X = q - p vanishes with Kruskal's X: the half X >= 0 is the right half of Schwarzschild's
+    hexagon, one exterior, half of the black hole and half of the white hole, and its left edge
+    X = 0 is glued to itself by the antipodal map of the sphere, each of its points a projective
+    plane. Schwarzschild's chart enters as cell I of the tower of the one root r_s, and the
+    isotropic chart through its areal radius rho (1 + r_s/4 rho)^2. Each is checked against the
+    published metric.
+
+    Two light rays through the edge are drawn, Friedman, Schleich and Witt's point. One comes in
+    from past null infinity along q = Q, crosses the future horizon, meets the edge inside the
+    black hole at T = 2Q and runs on to the singularity. The other is its time reverse: it leaves
+    the past singularity, meets the edge inside the white hole and runs out to future null
+    infinity. No ray from past null infinity reaches future null infinity through the edge, which
+    is checked for every q.
+    """
+    planes = {
+        "kruskal": Plane(src, "rp3_geon", "kruskal", ("T", "X"), EQUATOR, {"r_s": 1}),
+        "schwarzschild": Plane(src, "rp3_geon", "schwarzschild", ("t", "r"), EQUATOR, {"r_s": 1}),
+        "isotropic": Plane(src, "rp3_geon", "isotropic", ("t", "\\rho"), EQUATOR, {"r_s": 1}),
+    }
+    sph = planes["schwarzschild"]
+    assert sph.g[0, 1] == 0 and sp.simplify(sph.g[0, 0] * sph.g[1, 1] + 1) == 0
+    tower = Tower(-sph.g[0, 0], sph.x1, [1])
+
+    def kruskal(T, X):
+        T, X = np.asarray(T, dtype=float), np.asarray(X, dtype=float)
+        return np.arctan(T - X), np.arctan(T + X)
+
+    def areal(rho):
+        rho = np.asarray(rho, dtype=float)
+        return rho * (1 + 1 / (4 * rho)) ** 2
+
+    def isotropic(t, rho):
+        return tower.pq("I", t, areal(rho))
+
+    name = "RP3 geon"
+    ck.chart(f"{name} Kruskal", planes["kruskal"], kruskal, ck.uniform(-0.99, 0.99), ck.uniform(0.01, 3),
+             lambda T, X: (1, 0))
+    ck.chart(f"{name} Schwarzschild", sph, lambda t, r: tower.pq("I", t, r), ck.uniform(-15, 15),
+             ck.uniform(1.001, 30), lambda t, r: (1, 0))
+    ck.chart(f"{name} isotropic", planes["isotropic"], isotropic, ck.uniform(-15, 15), ck.uniform(0.26, 30),
+             lambda t, r: (1, 0))
+    # Louko and Marolf's (4.8): Schwarzschild's t and r are Kruskal's T and X of the exterior.
+    t, r = ck.uniform(-6, 6, 2000), ck.uniform(1.001, 8, 2000)
+    root = np.sqrt(r - 1) * np.exp(r / 2)
+    got, want = kruskal(root * np.sinh(t / 2), root * np.cosh(t / 2)), tower.pq("I", t, r)
+    ck.limit(f"{name}: Schwarzschild's chart and Kruskal's put one event at one point",
+             np.concatenate([got[0] - want[0], got[1] - want[1]]), 0, 1e-9)
+    # The involution (T, X) -> (T, -X) is p <-> q, the mirror X -> -X of the drawing, and the half
+    # X >= 0 holds one point of every pair.
+    T_, X_ = ck.uniform(-0.99, 0.99, 2000), ck.uniform(0.01, 3, 2000)
+    here, there = kruskal(T_, X_), kruskal(T_, -X_)
+    ck.limit(f"{name}: (T, X) -> (T, -X) exchanges p and q", np.concatenate([here[0] - there[1], here[1] - there[0]]),
+             0, 1e-12)
+    ck.limit(f"{name}: the singularities T^2 - X^2 = 1 are the lines T = +-pi/2",
+             np.abs(np.sum(kruskal(np.sqrt(1 + X_ ** 2), X_), axis=0)), HALF, 1e-9)
+    K = sph.kretschmann
+    ck.finite(f"{name}: the Kretschmann scalar is finite on the glued edge",
+              planes["kruskal"].kretschmann(ck.uniform(-0.99, 0.99, 50), np.full(50, 1e-9)))
+    ck.diverges(f"{name}: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+
+    box = [-0.75, PI + 0.25, -HALF - 0.3, HALF + 0.3]
+    whole = [[0, -HALF], [HALF, -HALF], [PI, 0], [HALF, HALF], [0, HALF]]
+    exterior = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    # The two rays: in from scri- along q = Q to the edge at T = 2Q and on along p = Q to the
+    # singularity, and the time reverse.
+    Q = 0.45
+    ray_in = [[[HALF + Q, Q - HALF], [0, 2 * Q]], [[0, 2 * Q], [HALF - 2 * Q, HALF]]]
+    ray_out = [[[HALF - 2 * Q, -HALF], [0, -2 * Q]], [[0, -2 * Q], [HALF + Q, HALF - Q]]]
+    for (Xa, Ta), (Xb, Tb) in (ray_in[0], ray_out[0]):
+        ck.limit(f"{name}: a ray moving left keeps its q", [(Ta + Xa) / 2], [(Tb + Xb) / 2], 1e-12)
+    for (Xa, Ta), (Xb, Tb) in (ray_in[1], ray_out[1]):
+        ck.limit(f"{name}: a ray moving right keeps its p", [(Ta - Xa) / 2], [(Tb - Xb) / 2], 1e-12)
+    # Topological censorship: a ray from scri- has 0 < q < pi/2, meets the edge at p = q, inside the
+    # black hole, and then keeps p = q > 0, while scri+ of this exterior is p < 0.
+    q_in = ck.uniform(1e-6, HALF - 1e-6, 2000)
+    ck.limit(f"{name}: every ray from scri- that meets the edge meets it inside the black hole and ends on r = 0",
+             (q_in > 0).astype(float), 1, 1e-12)
+    moment, = slices.moments("rp3_geon")
+    lo, hi = moment.reach("schwarzschild", "r")
+    rr_moment = np.linspace(lo, hi, 2)
+    moment_pq = [tower.pq("I", 0 * rr_moment, rr_moment)]
+
+    def frame(v):
+        v.fill("region", whole)
+        v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]]])
+        v.line("horizon", [[[0, 0], [HALF, HALF]], [[0, 0], [HALF, -HALF]]])
+        v.line("singular", [[[0, HALF], [HALF, HALF]], [[0, -HALF], [HALF, -HALF]]], zig=True)
+        v.line("surface", [[[0, -HALF], [0, HALF]]])
+        v.line("null", ray_in + ray_out)
+        for at in (ray_in[0][1], ray_out[0][1]):
+            v.layers.append({"kind": "point", "class": "mark", "at": rounded(at)})
+        for at in ((PI, 0), (HALF, HALF), (HALF, -HALF)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+        v.label_xt([HALF, HALF], "$i^+$", "b", dy=-6)
+        v.label_xt([HALF, -HALF], "$i^-$", "t", dy=6)
+        v.label_xt([3 * Q4, Q4], "$\\mathscr{I}^+$", "bl", dx=4, dy=-4)
+        v.label_xt([3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl", dx=4, dy=4)
+        v.label_xt([Q4, HALF], "$r = 0$", "b", dy=-8)
+        v.label_xt([Q4, -HALF], "$r = 0$", "t", dy=8)
+        v.label_xt([1.1, 1.1], "$r = r_s$", "tl", "small", dx=6, dy=2)
+        v.label_xt([HALF, -0.95], "exterior", cls="region")
+        v.label_xt([0.42, 0.85], "black hole", cls="region")
+        v.label_xt([0.42, -0.85], "white hole", cls="region")
+        v.legend("horizon", "the horizons $r = r_s$")
+        v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        v.legend("surface", "the edge $X = 0$, glued to itself by the antipodal map of the sphere")
+        v.legend("null", "two light rays through the edge, one from $\\mathscr{I}^-$ and one to $\\mathscr{I}^+$")
+        v.legend("mark", "where each ray meets the edge")
+        v.slice(moment, moment_pq)
+
+    def inside(p, q):
+        """A curve given by p and q with every point off the half hexagon left out."""
+        X, T = xt(p, q)
+        off = (X < -1e-9) | (np.abs(T) > HALF - 1e-9)
+        return np.where(off, np.nan, p), np.where(off, np.nan, q)
+
+    views = []
+    v = View("kruskal", "Kruskal", box, "kruskal")
+    frame(v)
+    v.fill("cover", whole)
+    run = np.tan(np.linspace(-HALF + 1e-6, HALF - 1e-6, 1200))
+    far = np.tan(np.linspace(0, HALF - 1e-6, 1200))
+    for c in (-2, -1, -0.5, 0, 0.5, 1, 2):
+        v.curve("t", *inside(*kruskal(np.full_like(far, c), far)))
+    for c in (0.5, 1, 2, 4):
+        v.curve("r", *inside(*kruskal(run, np.full_like(run, c))))
+    label_on(v, kruskal(0.5, 1.6), "$T = 1/2$")
+    v.legend("cover", "the whole spacetime, the half $X \\ge 0$ of Kruskal's chart")
+    v.legend("t", "$T$ constant, at $0$, $\\pm1/2$, $\\pm1$ and $\\pm2$")
+    v.legend("r", "$X$ constant, at $1/2$, $1$, $2$ and $4$")
+    views.append(v)
+
+    t = spread(-np.inf, np.inf, 500, 9)
+    rr = spread(1, np.inf, 500, 14)
+    v = View("schwarzschild", "Schwarzschild", box, "schwarzschild")
+    frame(v)
+    v.fill("cover", exterior)
+    for r in (1.05, 1.25, 1.5, 2, 3):
+        v.curve("r", *tower.pq("I", t, np.full_like(t, r)))
+    for tt in (-4, -2, -1, 0, 1, 2, 4):
+        v.curve("t", *tower.pq("I", np.full_like(rr, tt), rr))
+    for r, text in ((1.25, "$1.25\\,r_s$"), (2, "$2\\,r_s$")):
+        label_on(v, tower.pq("I", 0.0, r), text)
+    v.legend("cover", "the exterior, which $t$ and $r > r_s$ cover")
+    v.legend("r", "$r$ constant")
+    v.legend("t", "$ct$ constant, in units of $r_s$")
+    views.append(v)
+
+    rho = 0.25 + np.exp(np.linspace(-14, 14, 500))
+    v = View("isotropic", "Isotropic", box, "isotropic")
+    frame(v)
+    v.fill("cover", exterior)
+    for c in (0.3, 0.5, 1, 2, 4):
+        v.curve("r", *isotropic(t, np.full_like(t, c)))
+    for tt in (-4, -2, -1, 0, 1, 2, 4):
+        v.curve("t", *isotropic(np.full_like(rho, tt), rho))
+    for c, text in ((0.5, "$\\rho = r_s/2$"), (2, "$2\\,r_s$")):
+        label_on(v, isotropic(0.0, c), text)
+    v.legend("cover", "the exterior, which $t$ and $\\rho > r_s/4$ cover")
+    v.legend("r", "$\\rho$ constant, at $0.3$, $0.5$, $1$, $2$ and $4\\,r_s$")
+    v.legend("t", "$ct$ constant, in units of $r_s$")
+    views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- anti-de Sitter and Bertotti-Robinson
 
 def poincare_pq(t, z):
@@ -18985,6 +19159,7 @@ DRAWN = {
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "hiscock": hiscock, "bardeen": bardeen, "mass_inflation": mass_inflation,
     "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "kerr_taub_nut": kerr_taub_nut, "de_sitter": de_sitter,
     "elliptic_de_sitter": elliptic_de_sitter,
+    "rp3_geon": rp3_geon,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "boulware_deser": boulware_deser, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
     "bertotti_robinson": bertotti_robinson, "plebanski_hacyan": plebanski_hacyan, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
@@ -20630,6 +20805,29 @@ CAPTIONS = {
         "The part of that half beyond the equator is carried by the identification into the triangle below the "
         "past horizon, so the planar chart covers the whole space but the horizon itself, the null surface "
         "$t \\to -\\infty$.",
+    ],
+    ("rp3_geon", "kruskal"): [
+        "The RP³ geon, Kruskal's manifold with $(T, X)$ and $(T, -X)$ one event at opposite points of the sphere, "
+        "each point in the diagram a 2-sphere and each point of the left edge a projective plane. Kruskal's "
+        "coordinates enter as $p = \\arctan(T - X)$ and $q = \\arctan(T + X)$, so the half $X \\ge 0$ is the "
+        "right half of Kruskal's diagram: one exterior, with half of the black hole and half of the white hole.",
+        "The left edge $X = 0$ is glued to itself by the antipodal map of the sphere, and a light ray that meets "
+        "it moving left leaves it moving right. A ray sent in from $\\mathscr{I}^-$ meets the edge inside the "
+        "black hole and ends on $r = 0$. The ray that leaves the edge for $\\mathscr{I}^+$ began on the "
+        "singularity of the white hole, so no light crosses the edge on its way from $\\mathscr{I}^-$ to "
+        "$\\mathscr{I}^+$.",
+    ],
+    ("rp3_geon", "schwarzschild"): [
+        "Schwarzschild's coordinates enter as $\\tan p = -e^{-u/2r_s}$ and $\\tan q = e^{v/2r_s}$, with "
+        "$u, v = ct \\mp r_*$ and $r_* = r + r_s\\ln(r/r_s - 1)$, and cover the exterior. Every line of constant "
+        "$t$ runs from $i^0$ to the middle of the edge, the projective plane of area $2\\pi r_s^2$ where the "
+        "horizons meet, and of them only $t = 0$ arrives level, as a smooth slice of the whole spacetime.",
+    ],
+    ("rp3_geon", "isotropic"): [
+        "The isotropic radius enters through the areal radius $r = \\rho(1 + r_s/4\\rho)^2$ and covers the same "
+        "exterior, with $\\rho = r_s/4$ on the horizons. The inversion $\\rho \\to r_s^2/16\\rho$ at $t = 0$ "
+        "is the reflection of the line $T = 0$ in the edge, so the slice from $i^0$ to the edge is the whole "
+        "moment.",
     ],
     ("anti_de_sitter", "global"): [
         "Anti-de Sitter spacetime, its universal cover, each point in the diagram a 2-sphere. "

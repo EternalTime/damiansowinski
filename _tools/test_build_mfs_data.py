@@ -6062,6 +6062,16 @@ class Slices(unittest.TestCase):
                 "static": ((lambda X: 0.0), [math.sin(lo), math.sin(hi)]),
                 "planar": ((lambda X: -0.5 * math.log1p(X * X)), None),
             }[key.split("/")[1]]
+        if key.startswith("rp3_geon/"):
+            # The RP3 geon's moment t = 0 at r_s = 1, over the embedding's reach in the areal radius r: the
+            # line T = 0 of Kruskal's chart, with X = sqrt(r - 1) e^(r/2), and the line t = 0 of the other
+            # two, the isotropic radius being (r - 1/2 + sqrt(r(r - 1)))/2.
+            lo, hi = self.reach(surface)
+            return (lambda X: 0.0), {
+                "kruskal": [math.sqrt(lo - 1) * math.exp(lo / 2), math.sqrt(hi - 1) * math.exp(hi / 2)],
+                "schwarzschild": [lo, hi],
+                "isotropic": [(r - 0.5 + math.sqrt(r * (r - 1))) / 2 for r in (lo, hi)],
+            }[key.split("/")[1]]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))

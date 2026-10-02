@@ -850,6 +850,17 @@ DIMENSIONS = {
     ("white_hole", "exterior_kruskal"): {
         "U": "1", "V": "1", "\\theta": "1", "\\phi": "1", "r_s": "L", "r": "L",
     },
+    # The RP3 geon: Kruskal's T and X are numbers, and the factor 4 r_s^3 e^(-r/r_s)/r carries the
+    # area; Schwarzschild's chart of the one exterior; and the isotropic radius rho, a length.
+    ("rp3_geon", "kruskal"): {
+        "T": "1", "X": "1", "\\theta": "1", "\\phi": "1", "r_s": "L", "r": "L",
+    },
+    ("rp3_geon", "schwarzschild"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
+    },
+    ("rp3_geon", "isotropic"): {
+        "t": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
+    },
     # Novikov's chart is Tolman's with no energy function: the shell label r is a length beside the
     # areal radius, F = 2GM(r)/c^2 is the Schwarzschild radius of the mass inside the shell, and b is
     # c times the moment the shell leaves the singularity, so q = ct - b is a length as well.
@@ -1790,6 +1801,8 @@ HELD = {
     # The areal radius of Kruskal's chart, Lambert's function of UV: held, a value is
     # written in r and e^(-r/r_s), as the line element is.
     ("white_hole", "exterior_kruskal"): ("r",),
+    # The same radius in Kruskal's T and X, Lambert's function of X^2 - T^2.
+    ("rp3_geon", "kruskal"): ("r",),
     # The mass function of Born and Infeld's point charge, an incomplete elliptic integral of the
     # first kind whose derivative along r is algebraic, the energy of the field in a shell.
     ("born_infeld_charge", "static"): ("m",),
