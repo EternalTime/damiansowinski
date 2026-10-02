@@ -263,6 +263,11 @@
       "id": "tilted_universes",
       "kind": "locally_same",
       "text": "The flat model of the whimper is a part of Minkowski space. George Ellis and A. R. King painted world lines on it that a boost carries into one another, and found a Cauchy horizon with nothing curved anywhere [ellis1974]."
+    },
+    {
+      "id": "draining_bathtub",
+      "kind": "generalisation",
+      "text": "Flat spacetime with the speed of sound for $c$ and water flowing through it. A drain that swirls gives sound a horizon and an ergoregion, in a laboratory that stays flat [visser1998]."
     }
   ],
   "references": [
@@ -342,7 +347,8 @@
     "sachs1962bms",
     "maitra1966",
     "chan2024",
-    "ellis1974"
+    "ellis1974",
+    "visser1998"
   ],
   "coordinates": [
     {

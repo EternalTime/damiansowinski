@@ -261,6 +261,20 @@ DIMENSIONS = {
     ("melvin", "ernst"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "B": "1/L",
     },
+    # Ernst and Wild's Kerr hole in Melvin's universe: m = GM/c^2 and a are lengths and B an
+    # inverse length; k, the value of H on the axis, H and the squared lapse N are pure numbers,
+    # Sigma, Delta, F and P areas, A the square of an area, and the dragging rate omega an inverse
+    # length, as the rate Omega at which the second chart's azimuth turns is.
+    ("kerr_melvin", "boyer_lindquist"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "a": "L", "B": "1/L", "k": "1",
+        "\\Sigma": "L**2", "\\Delta": "L**2", "A": "L**4", "H": "1", "\\omega": "1/L",
+        "N": "1", "F": "L**2", "P": "L**2",
+    },
+    ("kerr_melvin", "rotating"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\tilde\\phi": "1", "m": "L", "a": "L", "B": "1/L", "k": "1",
+        "\\Sigma": "L**2", "\\Delta": "L**2", "A": "L**4", "H": "1", "\\omega": "1/L",
+        "N": "1", "F": "L**2", "P": "L**2", "\\Omega": "1/L",
+    },
     # sigma = G lambda/c^2, the mass per unit length lambda as a pure number, and the conicity C
     # are dimensionless. A power of the radius whose exponent holds sigma, or one of Kasner's
     # exponents, is read with the radius in a fixed unit, so rho^{2 - 4 sigma} is an area and
@@ -1020,6 +1034,13 @@ DIMENSIONS = {
     ("majumdar_papapetrou", "isotropic"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L",
     },
+    # The draining bathtub. Here c is the speed of sound, and the chart is x^0 = ct with that c. The
+    # strengths A and B of the radial flow and of the swirl are a speed times a length.
+    ("draining_bathtub", "laboratory"): {"t": "T", "r": "L", "\\theta": "1", "A": "L**2/T", "B": "L**2/T"},
+    ("draining_bathtub", "kerr_like"): {"T": "T", "r": "L", "\\phi": "1", "A": "L**2/T", "B": "L**2/T"},
+    ("draining_bathtub", "vortex_filament"): {
+        "t": "T", "r": "L", "\\theta": "1", "z": "L", "A": "L**2/T", "B": "L**2/T",
+    },
     # Bonnor's stars of charged dust. The potential U is a pure number, as Majumdar and Papapetrou's
     # is; the mass parameter m = GM/c^2, the radius r_0, the focal radius a and Lemos and Weinberg's
     # core length b are lengths, and the spheroidal u and its surface u_0 are pure numbers.
@@ -1046,6 +1067,28 @@ DIMENSIONS = {
     },
     ("bonnor_charged_dust", "quasi_black_hole"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "b": "L", "U": "1",
+    },
+    # The black holes of string theory with three and four charges. The radius r_0 of the horizon
+    # and the charge radii r_i are lengths, r_0^2 sinh^2 alpha_i = r_i^2 in five dimensions and
+    # r_0 sinh^2 alpha_i = r_i in four, and f and the harmonic functions H_i are pure numbers.
+    ("string_bh_three_four_charges", "five_charges"): {
+        "t": "T", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "r_1": "L", "r_2": "L",
+        "r_3": "L", "f": "1", "H_1": "1", "H_2": "1", "H_3": "1",
+    },
+    ("string_bh_three_four_charges", "five_extreme"): {
+        "t": "T", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_1": "L", "r_2": "L", "r_3": "L",
+        "H_1": "1", "H_2": "1", "H_3": "1",
+    },
+    ("string_bh_three_four_charges", "five_areal"): {
+        "t": "T", "\\rho": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "r_q": "L",
+    },
+    ("string_bh_three_four_charges", "four_charges"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_0": "L", "r_1": "L", "r_2": "L", "r_3": "L",
+        "r_4": "L", "f": "1", "H_1": "1", "H_2": "1", "H_3": "1", "H_4": "1",
+    },
+    ("string_bh_three_four_charges", "four_extreme"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_1": "L", "r_2": "L", "r_3": "L", "r_4": "L",
+        "H_1": "1", "H_2": "1", "H_3": "1", "H_4": "1",
     },
     # Israel, Wilson and Perjes's W = |U| is a pure number, as Majumdar and Papapetrou's U is, and
     # omega stands beside c dt, so it is a length; the spin a and the NUT parameter l are lengths too.
@@ -2119,6 +2162,18 @@ HELD = {
     # Maitra's two functions, each a logarithm of 1 + s beside powers of the root s: held, a value
     # is a rational function of r, a, s, k and e^gamma.
     ("maitra_dust", "cylindrical"): ("k", "gamma"),
+    # Ernst and Wild's hole in the four functions of a stationary field with an axis, the squared
+    # lapse N, F, P and the dragging rate omega, and Kerr's Delta: held, every value is written in
+    # the five and their derivatives, as the line element is. Written out, the Riemann tensor did
+    # not print in five minutes; held, the whole chart takes seconds.
+    ("kerr_melvin", "boyer_lindquist"): ("Delta", "omega", "N", "F", "P"),
+    ("kerr_melvin", "rotating"): ("Delta", "omega", "N", "F", "P"),
+    # The harmonic functions H_i of the black holes of string theory, and f of the charts off
+    # extremality: held, a value is a rational function of them and r, as the line element is.
+    ("string_bh_three_four_charges", "five_charges"): ("f", "H_1", "H_2", "H_3"),
+    ("string_bh_three_four_charges", "five_extreme"): ("H_1", "H_2", "H_3"),
+    ("string_bh_three_four_charges", "four_charges"): ("f", "H_1", "H_2", "H_3", "H_4"),
+    ("string_bh_three_four_charges", "four_extreme"): ("H_1", "H_2", "H_3", "H_4"),
 }
 
 # The first derivatives of held names along the coordinates they vary with, written in the names
@@ -2195,6 +2250,18 @@ RATES = {
         "k": {"r": "\\dfrac{2r}{a\\left(1 + s\\right)}"},
         "gamma": {"r": "-\\dfrac{2r}{a^2\\left(1 + s\\right)^2}"},
     },
+    # The harmonic functions of the black holes of string theory fall as r^-2 in five dimensions
+    # and as r^-1 in four, and f rises the same way, so each slope is the name less one over r.
+    ("string_bh_three_four_charges", "five_charges"): {
+        "f": {"r": "\\dfrac{2\\left(1 - f\\right)}{r}"},
+        **{f"H_{i}": {"r": f"-\\dfrac{{2\\left(H_{i} - 1\\right)}}{{r}}"} for i in (1, 2, 3)}},
+    ("string_bh_three_four_charges", "five_extreme"): {
+        f"H_{i}": {"r": f"-\\dfrac{{2\\left(H_{i} - 1\\right)}}{{r}}"} for i in (1, 2, 3)},
+    ("string_bh_three_four_charges", "four_charges"): {
+        "f": {"r": "\\dfrac{1 - f}{r}"},
+        **{f"H_{i}": {"r": f"-\\dfrac{{H_{i} - 1}}{{r}}"} for i in (1, 2, 3, 4)}},
+    ("string_bh_three_four_charges", "four_extreme"): {
+        f"H_{i}": {"r": f"-\\dfrac{{H_{i} - 1}}{{r}}"} for i in (1, 2, 3, 4)},
 }
 
 # The systems whose delta stands on a curved background, where what multiplies it varies across
@@ -3140,6 +3207,16 @@ class Reader:
                 value = function
             self.parameters[plain] = self.local[plain] = value
             self.known.add(plain)
+        # A definition may hold a name defined before it, as the squared lapse of Ernst and Wild's
+        # hole holds H, which holds Kerr's A, which holds Delta: each is written out here, so that
+        # one substitution of the held names leaves none, in the checker and in every drawing.
+        for function in list(self.held):
+            value = self.held[function]
+            for _ in self.held:
+                if not value.atoms(sp.core.function.AppliedUndef) & set(self.held):
+                    break
+                value = value.subs(self.held).doit()
+            self.held[function] = value
         # A held name whose first derivatives the system declares in RATES is never written out:
         # each declared derivative is checked here against the name's own definition, and
         # surface() then writes every derivative of the name by them.
@@ -3203,6 +3280,19 @@ class Reader:
         expression = expression.subs(self.held).doit() if self.held else expression
         expression = on_the_shock(expression) if self.pulse else expression
         return self.truncated(expression) if self.order else expression
+
+    def written(self, expression):
+        """The expression with its held names written out one at a time: each held name and each
+        derivative of one in it is written out on its own and put in canonical form before it is
+        set back. It is what surface() gives, reached another way, for a chart whose names run to
+        pages: differentiated inside the whole expression, the squared lapse of Ernst and Wild's
+        hole spread its quotients through every term, and a value that took two minutes this way
+        did not finish that way."""
+        held = set(self.held)
+        out = {}
+        for atom in expression.atoms(sp.Derivative) | (expression.atoms(sp.core.function.AppliedUndef) & held):
+            out[atom] = norm(atom.subs(self.held).doit())
+        return expression.xreplace(out)
 
     def by_rates(self, expression):
         """The expression with every derivative of a held name written by the declared first
@@ -4032,6 +4122,20 @@ def beyond_order(reader, value):
     return reader.order is not None and norm(value - reader.truncated(value)) != 0
 
 
+def agree_held(reader, value, expected):
+    """Whether two values of a system that holds names agree as functions of those names, in
+    which case they agree written out as well and need not be. It is asked only of a system
+    with no declared rates, order, pulse or relation among its parameters, where surface() does
+    nothing but write the names out, held_alone: Ernst and Wild's chart holds five names whose
+    second derivatives run to pages, and its Riemann tensor compared written out did not finish."""
+    return held_alone(reader) and norm(value - expected) == 0
+
+
+def held_alone(reader):
+    """Whether surface() does nothing to a value of this system but write its held names out."""
+    return bool(reader.held) and not (reader.rates or reader.order or reader.pulse or reader.relations)
+
+
 def compare_block(report, reader, where, published, computed, variance, coords, time_coords, c, cut=True):
     """Every published component against sympy, and every omitted one against zero. In a
     system kept to an order a value has to be cut at it as well, unless `cut` is off, as it
@@ -4056,9 +4160,11 @@ def compare_block(report, reader, where, published, computed, variance, coords, 
             continue
         if cut and beyond_order(reader, value):
             report.disagree(where, f"{names} published as {entry['value']} carries a term beyond the order kept")
+        expected = _at(computed, index) * c ** variance_weight(variance, coords, index, time_coords)
+        if agree_held(reader, value, expected):
+            continue
         value = reader.surface(value)
-        expected = reader.surface(
-            _at(computed, index) * c ** variance_weight(variance, coords, index, time_coords))
+        expected = reader.surface(expected)
         if norm(value - expected) != 0:
             report.disagree(where, f"{names} published as {entry['value']} "
                                    f"({norm(value)}), sympy says {norm(expected)}")
@@ -4103,6 +4209,8 @@ def compare_scalar(report, reader, where, published, computed):
         return
     if beyond_order(reader, value):
         report.disagree(where, f"published as {published.strip()} carries a term beyond the order kept")
+    if away is None and agree_held(reader, value, computed):
+        return
     value = reader.surface(value)
     computed = reader.surface(computed)
     if away is not None:
@@ -4131,19 +4239,24 @@ def compare_geodesics(report, reader, where, published, gamma, coords, time_coor
             continue
         if beyond_order(reader, residual):
             report.disagree(where, f"{equation!r} carries a term beyond the order kept")
-        residual = reader.surface(residual)
+        held = residual
+        residual = residual if held_alone(reader) else reader.surface(residual)
         carried = [name for name in coords if residual.has(reader.ddot[name])]
         if len(carried) != 1:
             report.disagree(where, f"{equation!r} carries second derivatives of {carried}, expected one")
             continue
         name = carried[0]
         mu = coords.index(name)
-        expected = reader.surface(reader.ddot[name] + sum(
+        expected = reader.ddot[name] + sum(
             gamma[mu][nu][rho]
             * c ** variance_weight("ull", coords, [mu, nu, rho], time_coords)
             * reader.dot[coords[nu]] * reader.dot[coords[rho]]
             for nu in range(len(coords)) for rho in range(len(coords))
-        ))
+        )
+        if agree_held(reader, held, expected) or agree_held(reader, held, -expected):
+            continue
+        residual = reader.surface(held)
+        expected = reader.surface(expected)
         if norm(residual - expected) != 0 and norm(residual + expected) != 0:
             report.disagree(where, f"{name} equation {equation!r} is not the geodesic equation, "
                                    f"sympy makes the residual {norm(expected)}")

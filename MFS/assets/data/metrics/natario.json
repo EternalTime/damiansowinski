@@ -30,6 +30,11 @@
       "id": "lentz",
       "kind": "special_case",
       "text": "Natário's shift vector taken to be a gradient, $(u, v, w) = c\\,\\nabla\\phi$ [lentz2021]."
+    },
+    {
+      "id": "draining_bathtub",
+      "kind": "family",
+      "text": "Natário's line element with water for the flow and the speed of sound for $c$. The shift is a vortex that drains, with speed $A/r$ inward and $B/r$ around, and sound in the water meets a horizon and an ergoregion [visser1998]."
     }
   ],
   "references": [
@@ -40,7 +45,8 @@
     "alcubierre2017",
     "dickinson2024exordia",
     "mattingly2021",
-    "lentz2021"
+    "lentz2021",
+    "visser1998"
   ],
   "coordinates": [
     {

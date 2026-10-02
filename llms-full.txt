@@ -677,6 +677,18 @@ Two Kerr black holes on one axis of symmetry, the stationary vacuum solution Die
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/double_kerr.json
 - chart Weyl-Lewis-Papapetrou: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -f\left(c\,dt - \omega\,d\phi\right)^2 + \dfrac{1}{f}\left(e^{2\gamma}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2\right)$$
 
+### The Draining Bathtub
+
+The spacetime that sound travels through in a fluid that swirls as it runs down a drain. Sound cannot stand still against the current inside $r = \sqrt{A^2 + B^2}/c$, an ergoregion, and cannot move outward inside $r = |A|/c$, a horizon, so the vortex is a rotating black hole for sound. It solves no field equation of gravity, and it has been built in a water tank.
+
+- id: `draining_bathtub`
+- tags: analogue gravity, acoustic black hole, acoustic metric, dumb hole, sound, fluid flow, vortex, black hole, white hole, rotating, rotating black hole, ergoregion, ergosphere, horizon, event horizon, superradiance, Hawking radiation, Painlevé-Gullstrand, laboratory experiment, no field equations, curvature singularity, circularly symmetric, axisymmetric, stationary, three-dimensional, four-dimensional, Lorentzian, idealized model
+- signature: (-,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/draining_bathtub.json
+- chart Laboratory: coordinates $(t, r, \theta)$, $$ds^2 = -c^2dt^2 + \left(dr - \dfrac{A}{r}dt\right)^2 + \left(r\,d\theta - \dfrac{B}{r}dt\right)^2$$
+- chart Kerr-like: coordinates $(T, r, \phi)$, $$ds^2 = -\left(1 - \dfrac{A^2 + B^2}{c^2r^2}\right)c^2dT^2 + \dfrac{dr^2}{1 - \dfrac{A^2}{c^2r^2}} - 2B\,dT\,d\phi + r^2d\phi^2$$
+- chart Vortex Filament: coordinates $(t, r, \theta, z)$, $$ds^2 = -c^2dt^2 + \left(dr - \dfrac{A}{r}dt\right)^2 + \left(r\,d\theta - \dfrac{B}{r}dt\right)^2 + dz^2$$
+
 ### Eguchi-Hanson Space
 
 A space of four dimensions with no time in it, the gravitational instanton Tohru Eguchi and Andrew Hanson found in 1978: a solution of Einstein's vacuum equations with Riemannian signature and self dual curvature. Space closes on a 2-sphere of radius $a/2$, the bolt, and far away it is flat space with every point identified with its opposite.
@@ -1133,6 +1145,17 @@ The rotating black hole in a universe with a cosmological constant of either sig
 - chart Ingoing Kerr: coordinates $(v, r, \theta, \tilde\phi)$, $$ds^2 = -\dfrac{\Delta_r}{\rho^2}\left(dv - \dfrac{a\sin^2\theta}{\Xi}d\tilde\phi\right)^2 + 2\,dr\left(dv - \dfrac{a\sin^2\theta}{\Xi}d\tilde\phi\right) + \dfrac{\rho^2}{\Delta_\theta}d\theta^2 + \dfrac{\Delta_\theta\sin^2\theta}{\rho^2}\left(a\,dv - \dfrac{r^2 + a^2}{\Xi}d\tilde\phi\right)^2$$
 - chart Outgoing Kerr: coordinates $(u, r, \theta, \tilde\phi)$, $$ds^2 = -\dfrac{\Delta_r}{\rho^2}\left(du - \dfrac{a\sin^2\theta}{\Xi}d\tilde\phi\right)^2 - 2\,dr\left(du - \dfrac{a\sin^2\theta}{\Xi}d\tilde\phi\right) + \dfrac{\rho^2}{\Delta_\theta}d\theta^2 + \dfrac{\Delta_\theta\sin^2\theta}{\rho^2}\left(a\,du - \dfrac{r^2 + a^2}{\Xi}d\tilde\phi\right)^2$$
 - chart Kerr-Schild: coordinates $(\tau, r, \theta, \psi)$, $$ds^2 = -\dfrac{\Delta_\theta}{\Xi}\left(1 - \dfrac{\Lambda r^2}{3}\right)c^2\,d\tau^2 + \dfrac{\rho^2}{\left(1 - \dfrac{\Lambda r^2}{3}\right)\left(r^2 + a^2\right)}dr^2 + \dfrac{\rho^2}{\Delta_\theta}d\theta^2 + \dfrac{r^2 + a^2}{\Xi}\sin^2\theta\,d\psi^2 + \dfrac{r_s r}{\rho^2}\left(\dfrac{\Delta_\theta}{\Xi}c\,d\tau + \dfrac{\rho^2}{\left(1 - \dfrac{\Lambda r^2}{3}\right)\left(r^2 + a^2\right)}dr - \dfrac{a\sin^2\theta}{\Xi}d\psi\right)^2$$
+
+### Kerr Black Hole in a Magnetic Universe
+
+Kerr's rotating black hole inside Melvin's magnetic universe, the exact solution of the Einstein-Maxwell equations that Frederick Ernst and Walter Wild built in 1976 by a Harrison transformation of Kerr's metric. The hole carries the charge $Q = 2amB$ that Robert Wald found for a test field in 1974, and its ergoregion runs out to infinity in a tube beside the axis.
+
+- id: `kerr_melvin`
+- tags: electrovacuum, Einstein-Maxwell, electromagnetic field, magnetic field, rotating, rotating black hole, black hole, charged black hole, electric charge, stationary, axisymmetric, angular momentum, mass, ergoregion, frame dragging, curvature singularity, horizon, event horizon, Cauchy horizon, not asymptotically flat, Petrov type I, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kerr_melvin.json
+- chart Ernst-Wild (Boyer-Lindquist): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -N\,c^2dt^2 + F\left(\dfrac{dr^2}{\Delta} + d\theta^2\right) + P\left(k\,d\phi - \omega\,c\,dt\right)^2$$
+- chart Rotating Azimuth: coordinates $(t, r, \theta, \tilde\phi)$, $$ds^2 = -N\,c^2dt^2 + F\left(\dfrac{dr^2}{\Delta} + d\theta^2\right) + P\left(k\,d\tilde\phi - \left(\omega - k\Omega\right)\,c\,dt\right)^2$$
 
 ### Kerr-Newman Charged Rotating Black Hole
 
@@ -1970,6 +1993,20 @@ Edward Teo's rotating traversable wormhole of 1998, the stationary, axially symm
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/teo_wormhole.json
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{16a^2b_0\cos^2\theta}{r}\right)^2c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{b_0}{r}} + \left(r + 16a^2b_0\cos^2\theta\right)^2\left(d\theta^2 + \sin^2\theta\left(d\phi - \dfrac{2ab_0^2}{r^3}c\,dt\right)^2\right)$$
 - chart Proper Radial Distance: coordinates $(t, l, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{16a^2b_0\cos^2\theta}{r}\right)^2c^2dt^2 + dl^2 + \left(r + 16a^2b_0\cos^2\theta\right)^2\left(d\theta^2 + \sin^2\theta\left(d\phi - \dfrac{2ab_0^2}{r^3}c\,dt\right)^2\right)$$
+
+### Black Holes of String Theory with Three and Four Charges
+
+The black holes of string theory whose entropy was first counted from their microscopic states: in five dimensions with three charges, Strominger and Vafa's hole and the family of Horowitz, Maldacena, and Strominger around it, and in four dimensions with four charges, the hole of Cvetič and Youm. Each charge enters the metric through a harmonic function of its own, and the horizon of the extreme hole has an area only when every charge is present.
+
+- id: `string_bh_three_four_charges`
+- tags: static, stationary, spherically symmetric, hyperspherical symmetry, black hole, charged black hole, charged, string theory, black hole entropy, Bekenstein-Hawking entropy, black hole thermodynamics, brane, Strominger-Vafa, harmonic function, extremal, supersymmetric, dilaton, scalar field, electric charge, mass, horizon, event horizon, inner horizon, degenerate horizon, throat, curvature singularity, coordinate singularity, maximal extension, causal structure, asymptotically flat, higher dimensions, five-dimensional, four-dimensional, exact solution, Lorentzian, Einstein equations, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/string_bh_three_four_charges.json
+- chart Three Charges, Five Dimensions: coordinates $(t, r, \psi, \theta, \phi)$, $$ds^2 = -\left(H_1\,H_2\,H_3\right)^{-2/3}f\,c^2dt^2 + \left(H_1\,H_2\,H_3\right)^{1/3}\left(\dfrac{dr^2}{f} + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)\right)$$
+- chart Extreme, Three Charges, Five Dimensions: coordinates $(t, r, \psi, \theta, \phi)$, $$ds^2 = -\left(H_1\,H_2\,H_3\right)^{-2/3}c^2dt^2 + \left(H_1\,H_2\,H_3\right)^{1/3}\left(dr^2 + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)\right)$$
+- chart Equal Charges, Areal Radius, Five Dimensions: coordinates $(t, \rho, \psi, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_0^2 + r_q^2}{\rho^2}\right)\left(1 - \dfrac{r_q^2}{\rho^2}\right)c^2dt^2 + \dfrac{d\rho^2}{\left(1 - \dfrac{r_0^2 + r_q^2}{\rho^2}\right)\left(1 - \dfrac{r_q^2}{\rho^2}\right)} + \rho^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
+- chart Four Charges, Four Dimensions: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{f\,c^2dt^2}{\sqrt{H_1\,H_2\,H_3\,H_4}} + \sqrt{H_1\,H_2\,H_3\,H_4}\left(\dfrac{dr^2}{f} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Extreme, Four Charges, Four Dimensions: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{c^2dt^2}{\sqrt{H_1\,H_2\,H_3\,H_4}} + \sqrt{H_1\,H_2\,H_3\,H_4}\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
 ### Tilted Universes and the Whimper
 

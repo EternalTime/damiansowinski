@@ -3274,7 +3274,11 @@ class EmbeddingDiagrams(unittest.TestCase):
                         *(("kopczynski_trautman", "universe", k) for k in range(5)),
                         # Space is flat in Einstein's static field of 1912, so the equator outside a body is a
                         # plane, drawn under Flamm's paraboloid of the same mass.
-                        ("einstein_1912_static", "equator", 0)}
+                        ("einstein_1912_static", "equator", 0),
+                        # The laboratory's moment of the draining bathtub is the plane the water moves in; the
+                        # curvature sound feels is in how the moments are stacked, and the catenoid beside it is
+                        # the Kerr-like chart's moment.
+                        ("draining_bathtub", "plane", 0)}
         self.assertNotIn("lentz", self.embedding)
         self.assertNotIn("embedding", next(m for m in read(build.INDEX_FILE) if m["id"] == "lentz"))
         for name, data in self.embedding.items():
@@ -4207,11 +4211,11 @@ class TurningLightConeFigures(unittest.TestCase):
         checked = {f"{v['metric']}/{v['view']}" for v in turn_check(self)["figures"]}
         self.assertEqual(checked, set(self.figures))
         self.assertEqual(checked, {"alcubierre/bubble", "godel/tipping", "gott_time_machine/loop", "kerr/dragging", "kerr_de_sitter/dragging",
-                                   "kerr_newman/dragging", "kerr_taub_nut/dragging", "kundt_waves/fronts",
+                                   "kerr_newman/dragging", "kerr_taub_nut/dragging", "kerr_melvin/dragging", "kundt_waves/fronts",
                                    "near_horizon_extreme_kerr/dragging", "point_particle_2plus1/wedge",
                                    "som_raychaudhuri/tipping", "spinning_string/tipping", "stockum_dust/tipping",
                                    "bonnor_rotating_dust/tipping", "maitra_dust/tipping", "tippett_tsang/ring",
-                                   "wormhole_time_machine/trip", "petrov_homogeneous/turning"})
+                                   "wormhole_time_machine/trip", "petrov_homogeneous/turning", "draining_bathtub/swirl"})
 
     def test_at_its_own_camera_the_page_draws_the_published_figure(self):
         # Every point the generator does not thin is the published point to the published
@@ -4282,8 +4286,9 @@ class TurningLightConeFigures(unittest.TestCase):
         # in its surface X = 0 seen from the side, V left out.
         still = {f"{name}/{figure['id']}" for name, data in diagram_files().items()
                  for figures in data.get("projections", {}).values() for figure in figures if "turn" not in figure}
+        # Ernst and Wild's ergoregion is its meridional plane seen from the side, t and phi left out.
         self.assertEqual(still, {"cosmic_string/beam", "light_beam/lens", "lifshitz_spacetime/rays",
-                                 "point_particle_2plus1/beam", "schrodinger_spacetime/trap"})
+                                 "point_particle_2plus1/beam", "schrodinger_spacetime/trap", "kerr_melvin/tube"})
 
 
 class TurningUnderTheHand(unittest.TestCase):
@@ -4893,6 +4898,10 @@ class Slices(unittest.TestCase):
               # Up to the shock the spheres through Hotta and Tanaka's ring meet the equatorial plane of the
               # conformally flat chart only as eta goes to minus infinity, and lie on the edge of the Kundt chart.
               "hotta_tanaka/conformally_flat/equator", "hotta_tanaka/kundt/equator", "hotta_tanaka/kundt/near",
+              # The spring and the vortex filament of four dimensions, other spacetimes than the drain in the
+              # plane whose moments are embedded.
+              "draining_bathtub/laboratory/spring", "draining_bathtub/vortex_filament/drain",
+              "conformal draining_bathtub/spring",
               "btz/stationary/rotating", "btz/eddington_finkelstein_ingoing/rotating",
               "btz/eddington_finkelstein_outgoing/rotating", "conformal btz/rotating",
               # Myers and Perry's plane of rotation in six dimensions, which the embedded transverse plane
@@ -4991,6 +5000,9 @@ class Slices(unittest.TestCase):
               *[f"kerr_taub_nut/{s}/axis" for s in ("one_string", "kerr_ingoing", "kerr_outgoing")],
               *[f"conformal kerr_taub_nut/{v}" for v in ("axis", "ingoing", "outgoing")],
               "kerr_taub_nut/plebanski/principal",
+              # Ernst and Wild's hole in the stronger field of the figure of its ergoregion, another member
+              # of the family than the hole whose equator is embedded.
+              "kerr_melvin/boyer_lindquist/tube",
               *[f"zipoy_voorhees/{s}/axis_{k}" for s in ("spherical", "prolate_spheroidal") for k in ("oblate", "prolate")],
               *[f"conformal zipoy_voorhees/{s}_axis_{k}" for s in ("spherical", "prolate_spheroidal")
                 for k in ("oblate", "prolate")],
@@ -5082,6 +5094,9 @@ class Slices(unittest.TestCase):
     # one line element: the static and Eddington-Finkelstein drawings are the black hole's, and the
     # Barriola-Vilenkin drawings the monopole's.
     HIDDEN_VIEWS = {"conformal cosmic_string/gott": {"unroll"},
+                    # The bathtub's figure carries the laboratory's moment as its floor; the Kerr-like chart's
+                    # T = 0 is a curved surface of the figure, t = ln(r^2 - 1)/2, which would stand among the cones.
+                    "draining_bathtub/laboratory/swirl": {"funnel"},
                     # Nordstrom's point mass and his universe of dust are two spacetimes of one theory,
                     # each drawing marking the moments of its own.
                     "nordstrom_scalar/spherical/radial": {"dust"}, "conformal nordstrom_scalar/spherical": {"dust"},
@@ -5301,6 +5316,13 @@ class Slices(unittest.TestCase):
                        for chart in charts
                        for place, s in [("conformal ", chart)] + [("", f"{chart}/{v}") for v in (
                            "radial", "through", "tx", "axis")]},
+                    # The five charts of the black holes of string theory are drawn at parameters of their
+                    # own, three and four charges, extreme and not, and the three charges equal: five
+                    # spacetimes of one family, each chart's drawings marking its own moment.
+                    **{f"{place}string_bh_three_four_charges/{chart}{view}":
+                       {"five_charges", "five_extreme", "five_areal", "four_charges", "four_extreme"} - {chart}
+                       for chart in ("five_charges", "five_extreme", "five_areal", "four_charges", "four_extreme")
+                       for place, view in (("conformal ", ""), ("", "/radial"))},
                     "majumdar_papapetrou/cartesian/tz": {"one_hole"},
                     "majumdar_papapetrou/cartesian/tx": {"one_hole"},
                     "majumdar_papapetrou/cylindrical/radial": {"one_hole"},
@@ -5417,6 +5439,12 @@ class Slices(unittest.TestCase):
         """The moment on a flat view as its drawn axes put it: Y as a function of X, and the
         ends a line of it may have short of the box."""
         t = surface.get("time")
+        if key.startswith("draining_bathtub/"):
+            # The laboratory's t = 0 and the Kerr-like chart's T = 0, with T = t - ln(r^2 - 1)/2 for the
+            # drain at |A| = c = 1: each a level line in its own chart and a curve in the other's.
+            own = (mark["view"] == "plane") == (key.split("/")[1] == "laboratory")
+            sign = 1 if mark["view"] == "funnel" else -1
+            return (lambda X: 0.0 if own else sign * 0.5 * math.log(X * X - 1)), list(self.reach(surface))
         if key == "morgan_morgan/oblate_spheroidal/plane":
             # The plane z = 0 outside the rim, embedded out to Weyl's rho: xi = sqrt(rho^2/a^2 - 1).
             return (lambda X: 0.0), [math.sqrt(self.reach(surface)[1] ** 2 - 1)]
@@ -6478,6 +6506,21 @@ class Slices(unittest.TestCase):
                         eta = bisect(lambda e: e - math.sin(e) - t, 0, 2 * math.pi)
                         self.assertTrue(all(abs(T - eta) < 2e-4 for _, T in points), where)
                         self.assertEqual(sorted(X for X, _ in points), [0, round(math.pi, 4)], where)
+                    elif metric_id == "draining_bathtub":
+                        # Kruskal's U = tan p and V = tan q with UV = (1 - r) e^(2r)/(1 + r) and V = e^v,
+                        # v = t + r - ln(1 + r): the Kerr-like chart's T = 0 is the level line, and the
+                        # laboratory's t = 0 is carried back through r.
+                        for X, T in points:
+                            if mark["view"] == "funnel":
+                                self.assertLess(abs(T), 2e-4, where)
+                                continue
+                            tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            # Beside the drain UV = 1 - 2r^3/3, so four decimals of a point no longer fix r.
+                            if not (1e-3 < tq < 1e3 and abs(tp) < 1e3 and tp * tq < 0.9):
+                                continue
+                            f = lambda r: (1 - r) * math.exp(2 * r) / (1 + r) - tp * tq
+                            r = bisect(f, 0, 20)
+                            self.assertLess(abs(math.log(tq) - r + math.log(1 + r)), 5e-3, f"{where} at {(X, T)}")
                     elif metric_id in ("malament_hogarth", "einstein_rosen_waves", "gowdy", "senovilla"):
                         lo, hi = self.reach(surface)
                         for X, T in points:
