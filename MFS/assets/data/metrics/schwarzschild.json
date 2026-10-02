@@ -368,6 +368,31 @@
       "id": "exponential_metric",
       "kind": "family",
       "text": "Papapetrou's and Yilmaz's metric with no horizon, $g_{tt} = -e^{-2m/r}$ with $m = GM/c^2$ in isotropic coordinates. It agrees with Schwarzschild's at first order in $m/r$ and has a wormhole's throat where the horizon would be [boonserm2018]."
+    },
+    {
+      "id": "rp3_geon",
+      "kind": "locally_same",
+      "text": "Schwarzschild's black hole with its second exterior folded onto the first, opposite points of each sphere made one. Outside the horizon nothing changes, and no light sent in from far away comes back out through the fold [friedman1993]."
+    },
+    {
+      "id": "erez_rosen",
+      "kind": "generalisation",
+      "text": "Schwarzschild's mass with a quadrupole moment added, in a number $q$. Any $q \\neq 0$ turns the horizon into a naked singularity, which Doroshkevich, Zel'dovich, and Novikov used to argue that a collapsing star sheds its quadrupole [doroshkevich1965]."
+    },
+    {
+      "id": "brill_waves",
+      "kind": "family",
+      "text": "One moment of a spacetime with gravitational waves in it and no matter. Far away its slice is Schwarzschild's with a positive mass, and a strong enough wave collapses to a black hole [brill1959, alcubierre2000collapse]."
+    },
+    {
+      "id": "ab_metrics",
+      "kind": "family",
+      "text": "Schwarzschild's field is A I in Ehlers and Kundt's table of the static vacuum fields of type D. The others have a hyperbolic or a flat plane where the sphere is, or have the time and the angle exchanged [hruska2019, martins1996]."
+    },
+    {
+      "id": "datt_ruban_t_models",
+      "kind": "generalisation",
+      "text": "The inside of the horizon filled with dust that adds nothing to the mass: a tube of spheres, all of one radius, holding any amount of matter at the same $r_s$ [ruban1968]."
     }
   ],
   "references": [
@@ -470,7 +495,14 @@
     "deruelle2011",
     "hoffmann1935",
     "gibbonsrasheed1995",
-    "boonserm2018"
+    "boonserm2018",
+    "friedman1993",
+    "doroshkevich1965",
+    "brill1959",
+    "alcubierre2000collapse",
+    "hruska2019",
+    "martins1996",
+    "ruban1968"
   ],
   "coordinates": [
     {

@@ -129,17 +129,20 @@ class Drawings(unittest.TestCase):
         self.assertAlmostEqual(Y0 + line[-1][1] * (Y1 - Y0), math.pi / 2 * RM ** 1.5, places=2)
         self.assertIn("left", next(m for m in cosmo["markers"] if m["kind"] == "singular")["edges"])
 
-    def test_the_comoving_view_closes_on_a_bang_and_a_crunch(self):
+    def test_the_comoving_view_closes_on_its_crunch(self):
+        """The view holds the half from the moment of time symmetry on, whose mirror image the
+        past is, so that its plotted region is no taller than 1:2."""
         view = published("diagrams")["systems"]["lindquist_wheeler"][0]
         (X0, X1, Y0, Y1) = view["box"]
+        self.assertEqual(Y0, 0)
         curves = next(m for m in view["markers"] if m["kind"] == "singular")["lines"]
-        self.assertEqual(len(curves), 2)
+        self.assertEqual(len(curves), 1)
         for curve in curves:
             for u, v in curve:
                 rho, tau = X0 + u * (X1 - X0), Y0 + v * (Y1 - Y0)
                 if abs(tau) < Y1 - 0.05:
                     self.assertAlmostEqual(abs(tau), math.pi / 2 * rho ** 1.5, places=2)
-        self.assertEqual(sorted(1 if c[0][1] > 0.5 else -1 for c in curves), [-1, 1])
+        self.assertTrue(all(v > 0.4 for curve in curves for _, v in curve))
 
     def test_the_conformal_cell_lies_between_the_throat_and_the_boundary(self):
         views = {v["id"]: v for v in published("conformal")["views"]}

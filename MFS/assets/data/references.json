@@ -1,5 +1,5 @@
 {
-  "version": "001395f214cd7607",
+  "version": "1bc706c6a8ec0179",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -24222,6 +24222,218 @@
         "url": "https://doi.org/10.1017/CBO9780511535253"
       }
     },
+    "erez1959": {
+      "type": "article",
+      "fields": {
+        "title": "The gravitational field of a particle possessing a multipole moment",
+        "author": "Erez, G. and Rosen, N.",
+        "journal": "Bulletin of the Research Council of Israel",
+        "volume": "8F",
+        "pages": "47--50",
+        "year": "1959",
+        "url": "https://www.osti.gov/biblio/4201189"
+      }
+    },
+    "doroshkevich1965": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational collapse of nonsymmetric and rotating masses",
+        "author": "Doroshkevich, A. G. and Zel'dovich, Ya. B. and Novikov, I. D.",
+        "journal": "Soviet Physics JETP",
+        "volume": "22",
+        "number": "1",
+        "pages": "122--130",
+        "year": "1966",
+        "url": "http://jetp.ras.ru/cgi-bin/e/index/e/22/1/p122?a=list"
+      }
+    },
+    "young1969": {
+      "type": "article",
+      "fields": {
+        "title": "Exact Metric for a Nonrotating Mass with a Quadrupole Moment",
+        "author": "Young, John H. and Coulter, C. Alton",
+        "journal": "Physical Review",
+        "volume": "184",
+        "number": "5",
+        "pages": "1313--1315",
+        "year": "1969",
+        "doi": "10.1103/PhysRev.184.1313",
+        "url": "https://doi.org/10.1103/PhysRev.184.1313"
+      }
+    },
+    "quevedo1989": {
+      "type": "article",
+      "fields": {
+        "title": "General static axisymmetric solution of {Einstein}'s vacuum field equations in prolate spheroidal coordinates",
+        "author": "Quevedo, Hernando",
+        "journal": "Physical Review D",
+        "volume": "39",
+        "number": "10",
+        "pages": "2904--2911",
+        "year": "1989",
+        "doi": "10.1103/PhysRevD.39.2904",
+        "url": "https://doi.org/10.1103/PhysRevD.39.2904"
+      }
+    },
+    "winicour1968": {
+      "type": "article",
+      "fields": {
+        "title": "Static, Axially Symmetric Point Horizons",
+        "author": "Winicour, Jeffrey and Janis, Allen I. and Newman, Ezra T.",
+        "journal": "Physical Review",
+        "volume": "176",
+        "number": "5",
+        "pages": "1507--1513",
+        "year": "1968",
+        "doi": "10.1103/PhysRev.176.1507",
+        "url": "https://doi.org/10.1103/PhysRev.176.1507"
+      }
+    },
+    "quevedoparkes1989": {
+      "type": "article",
+      "fields": {
+        "title": "Geodesics in the {Erez-Rosen} space-time",
+        "author": "Quevedo, Hernando and Parkes, Linda",
+        "journal": "General Relativity and Gravitation",
+        "volume": "21",
+        "number": "10",
+        "pages": "1047--1072",
+        "year": "1989",
+        "doi": "10.1007/BF00774088",
+        "url": "https://doi.org/10.1007/BF00774088"
+      }
+    },
+    "quevedomashhoon1985": {
+      "type": "article",
+      "fields": {
+        "title": "Exterior gravitational field of a rotating deformed mass",
+        "author": "Quevedo, Hernando and Mashhoon, Bahram",
+        "journal": "Physics Letters A",
+        "volume": "109",
+        "number": "1--2",
+        "pages": "13--18",
+        "year": "1985",
+        "doi": "10.1016/0375-9601(85)90381-0",
+        "url": "https://doi.org/10.1016/0375-9601(85)90381-0"
+      }
+    },
+    "quevedo2012": {
+      "type": "misc",
+      "fields": {
+        "title": "Multipolar Solutions",
+        "author": "Quevedo, Hernando",
+        "year": "2012",
+        "eprint": "1201.1608",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1201.1608"
+      }
+    },
+    "geroch1970": {
+      "type": "article",
+      "fields": {
+        "title": "Multipole Moments. {II}. Curved Space",
+        "author": "Geroch, Robert",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "11",
+        "number": "8",
+        "pages": "2580--2588",
+        "year": "1970",
+        "doi": "10.1063/1.1665427",
+        "url": "https://doi.org/10.1063/1.1665427"
+      }
+    },
+    "hansen1974": {
+      "type": "article",
+      "fields": {
+        "title": "Multipole moments of stationary space-times",
+        "author": "Hansen, R. O.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "15",
+        "number": "1",
+        "pages": "46--52",
+        "year": "1974",
+        "doi": "10.1063/1.1666501",
+        "url": "https://doi.org/10.1063/1.1666501"
+      }
+    },
+    "boshkayev2019": {
+      "type": "article",
+      "fields": {
+        "title": "The {Erez-Rosen} Solution Versus the {Hartle-Thorne} Solution",
+        "author": "Boshkayev, Kuantay and Quevedo, Hernando and Nurbakyt, Gulmira and Malybayev, Algis and Urazalina, Ainur",
+        "journal": "Symmetry",
+        "volume": "11",
+        "number": "10",
+        "pages": "1324",
+        "year": "2019",
+        "doi": "10.3390/sym11101324",
+        "eprint": "1909.10949",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.3390/sym11101324"
+      }
+    },
+    "bini2013": {
+      "type": "article",
+      "fields": {
+        "title": "The {Erez-Rosen} metric and the role of the quadrupole on light propagation",
+        "author": "Bini, Donato and Crosta, Mariateresa and de Felice, Fernando and Geralico, Andrea and Vecchiato, Alberto",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "30",
+        "number": "4",
+        "pages": "045009",
+        "year": "2013",
+        "doi": "10.1088/0264-9381/30/4/045009",
+        "eprint": "1408.5264",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/30/4/045009"
+      }
+    },
+    "memmen2021": {
+      "type": "article",
+      "fields": {
+        "title": "Geometrically thick tori around compact objects with a quadrupole moment",
+        "author": "Memmen, Jan-Menno and Perlick, Volker",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "38",
+        "number": "13",
+        "pages": "135002",
+        "year": "2021",
+        "doi": "10.1088/1361-6382/abfebf",
+        "eprint": "2103.04702",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/abfebf"
+      }
+    },
+    "bini2009": {
+      "type": "article",
+      "fields": {
+        "title": "Generalized {Kerr} spacetime with an arbitrary mass quadrupole moment: geometric properties versus particle motion",
+        "author": "Bini, Donato and Geralico, Andrea and Luongo, Orlando and Quevedo, Hernando",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "26",
+        "number": "22",
+        "pages": "225006",
+        "year": "2009",
+        "doi": "10.1088/0264-9381/26/22/225006",
+        "eprint": "0909.4150",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/26/22/225006"
+      }
+    },
+    "castejon1990": {
+      "type": "article",
+      "fields": {
+        "title": "Superposition of the {Kerr} metric with the generalized {Erez-Rosen} solution",
+        "author": "Castejon-Amenedo, J. and Manko, V. S.",
+        "journal": "Physical Review D",
+        "volume": "41",
+        "number": "6",
+        "pages": "2018--2020",
+        "year": "1990",
+        "doi": "10.1103/PhysRevD.41.2018",
+        "url": "https://doi.org/10.1103/PhysRevD.41.2018"
+      }
+    },
     "arnowitt1960prl": {
       "type": "article",
       "fields": {
@@ -24594,6 +24806,687 @@
         "eprint": "2004.01192",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1007/JHEP08(2020)003"
+      }
+    },
+    "petrov1962": {
+      "type": "incollection",
+      "fields": {
+        "title": "Gravitational field geometry as the geometry of automorphisms",
+        "author": "Petrov, A. Z.",
+        "booktitle": "Recent Developments in General Relativity",
+        "publisher": "Pergamon Press and PWN",
+        "address": "Oxford and Warsaw",
+        "pages": "379--386",
+        "year": "1962"
+      }
+    },
+    "bonnor1979petrov": {
+      "type": "article",
+      "fields": {
+        "title": "A source for {Petrov}'s homogeneous vacuum space-time",
+        "author": "Bonnor, W. B.",
+        "journal": "Physics Letters A",
+        "volume": "75",
+        "number": "1-2",
+        "pages": "25--26",
+        "year": "1979",
+        "doi": "10.1016/0375-9601(79)90264-0",
+        "url": "https://doi.org/10.1016/0375-9601(79)90264-0"
+      }
+    },
+    "gibbons2008petrov": {
+      "type": "article",
+      "fields": {
+        "title": "The {Petrov} and {Kaigorodov-Ozsv\\'ath} solutions: spacetime as a group manifold",
+        "author": "Gibbons, Gary W. and Gielen, Steffen",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "25",
+        "number": "16",
+        "pages": "165009",
+        "year": "2008",
+        "doi": "10.1088/0264-9381/25/16/165009",
+        "eprint": "0802.4082",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/25/16/165009"
+      }
+    },
+    "ferrando2006": {
+      "type": "article",
+      "fields": {
+        "title": "Type {I} vacuum solutions with aligned {Papapetrou} fields: An intrinsic characterization",
+        "author": "Ferrando, Joan Josep and S\\'aez, Juan Antonio",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "47",
+        "number": "11",
+        "pages": "112501",
+        "year": "2006",
+        "doi": "10.1063/1.2363258",
+        "eprint": "gr-qc/0310070",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1063/1.2363258"
+      }
+    },
+    "terzis2009": {
+      "type": "article",
+      "fields": {
+        "title": "The general solution of {Bianchi} type {VII}$_h$ vacuum cosmology",
+        "author": "Terzis, Petros A. and Christodoulakis, T.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "41",
+        "number": "3",
+        "pages": "469--495",
+        "year": "2009",
+        "doi": "10.1007/s10714-008-0678-5",
+        "eprint": "0803.3710",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10714-008-0678-5"
+      }
+    },
+    "louko1998": {
+      "type": "article",
+      "fields": {
+        "title": "Inextendible {Schwarzschild} black hole with a single exterior: How thermal is the {Hawking} radiation?",
+        "author": "Louko, Jorma and Marolf, Donald",
+        "journal": "Physical Review D",
+        "volume": "58",
+        "number": "2",
+        "pages": "024007",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.58.024007",
+        "eprint": "gr-qc/9802068",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9802068"
+      }
+    },
+    "louko2005": {
+      "type": "article",
+      "fields": {
+        "title": "Geons with spin and charge",
+        "author": "Louko, Jorma and Mann, Robert B. and Marolf, Donald",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "22",
+        "number": "7",
+        "pages": "1451--1467",
+        "year": "2005",
+        "doi": "10.1088/0264-9381/22/7/016",
+        "eprint": "gr-qc/0412012",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0412012"
+      }
+    },
+    "louko2010": {
+      "type": "article",
+      "fields": {
+        "title": "Geon black holes and quantum field theory",
+        "author": "Louko, Jorma",
+        "journal": "Journal of Physics: Conference Series",
+        "volume": "222",
+        "pages": "012038",
+        "year": "2010",
+        "doi": "10.1088/1742-6596/222/1/012038",
+        "eprint": "1001.0124",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1001.0124"
+      }
+    },
+    "gannon1975": {
+      "type": "article",
+      "fields": {
+        "title": "Singularities in nonsimply connected space-times",
+        "author": "Gannon, Dennis",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "16",
+        "number": "12",
+        "pages": "2364--2367",
+        "year": "1975",
+        "doi": "10.1063/1.522498",
+        "url": "https://doi.org/10.1063/1.522498"
+      }
+    },
+    "sorkin1986": {
+      "type": "incollection",
+      "fields": {
+        "title": "Introduction to Topological Geons",
+        "author": "Sorkin, Rafael D.",
+        "booktitle": "Topological Properties and Global Structure of Space-Time",
+        "editor": "Bergmann, P. G. and De Sabbata, V.",
+        "publisher": "Plenum",
+        "address": "New York",
+        "pages": "249--270",
+        "year": "1986",
+        "doi": "10.1007/978-1-4899-3626-4_19",
+        "url": "https://doi.org/10.1007/978-1-4899-3626-4_19"
+      }
+    },
+    "cartan1923": {
+      "type": "article",
+      "fields": {
+        "title": "Sur les variétés à connexion affine et la théorie de la relativité généralisée (première partie)",
+        "author": "Cartan, Élie",
+        "journal": "Annales scientifiques de l'École normale supérieure",
+        "volume": "40",
+        "pages": "325--412",
+        "year": "1923",
+        "doi": "10.24033/asens.751",
+        "url": "https://doi.org/10.24033/asens.751"
+      }
+    },
+    "kibble1961": {
+      "type": "article",
+      "fields": {
+        "title": "Lorentz Invariance and the Gravitational Field",
+        "author": "Kibble, T. W. B.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "2",
+        "number": "2",
+        "pages": "212--221",
+        "year": "1961",
+        "doi": "10.1063/1.1703702",
+        "url": "https://doi.org/10.1063/1.1703702"
+      }
+    },
+    "kopczynski1972": {
+      "type": "article",
+      "fields": {
+        "title": "A non-singular universe with torsion",
+        "author": "Kopczyński, W.",
+        "journal": "Physics Letters A",
+        "volume": "39",
+        "number": "3",
+        "pages": "219--220",
+        "year": "1972",
+        "doi": "10.1016/0375-9601(72)90714-1",
+        "url": "https://doi.org/10.1016/0375-9601(72)90714-1"
+      }
+    },
+    "kopczynski1973": {
+      "type": "article",
+      "fields": {
+        "title": "An anisotropic universe with torsion",
+        "author": "Kopczyński, W.",
+        "journal": "Physics Letters A",
+        "volume": "43",
+        "number": "1",
+        "pages": "63--64",
+        "year": "1973",
+        "doi": "10.1016/0375-9601(73)90546-X",
+        "url": "https://doi.org/10.1016/0375-9601(73)90546-X"
+      }
+    },
+    "trautman1973": {
+      "type": "article",
+      "fields": {
+        "title": "Spin and Torsion May Avert Gravitational Singularities",
+        "author": "Trautman, Andrzej",
+        "journal": "Nature Physical Science",
+        "volume": "242",
+        "number": "114",
+        "pages": "7--8",
+        "year": "1973",
+        "doi": "10.1038/physci242007a0",
+        "url": "https://doi.org/10.1038/physci242007a0"
+      }
+    },
+    "trautman2006": {
+      "type": "incollection",
+      "fields": {
+        "title": "Einstein-Cartan Theory",
+        "author": "Trautman, Andrzej",
+        "booktitle": "Encyclopedia of Mathematical Physics",
+        "editor": "Françoise, J.-P. and Naber, G. L. and Tsou, S. T.",
+        "publisher": "Elsevier",
+        "address": "Oxford",
+        "volume": "2",
+        "pages": "189--195",
+        "year": "2006",
+        "doi": "10.1016/B0-12-512666-2/00014-6",
+        "eprint": "gr-qc/0606062",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0606062"
+      }
+    },
+    "stewart1973": {
+      "type": "article",
+      "fields": {
+        "title": "Can Spin Avert Singularities?",
+        "author": "Stewart, John and Hájíček, Peter",
+        "journal": "Nature Physical Science",
+        "volume": "244",
+        "number": "136",
+        "pages": "96",
+        "year": "1973",
+        "doi": "10.1038/physci244096a0",
+        "url": "https://doi.org/10.1038/physci244096a0"
+      }
+    },
+    "tafel1973": {
+      "type": "article",
+      "fields": {
+        "title": "A non-singular homogeneous universe with torsion",
+        "author": "Tafel, J.",
+        "journal": "Physics Letters A",
+        "volume": "45",
+        "number": "4",
+        "pages": "341--342",
+        "year": "1973",
+        "doi": "10.1016/0375-9601(73)90108-4",
+        "url": "https://doi.org/10.1016/0375-9601(73)90108-4"
+      }
+    },
+    "hehl1974": {
+      "type": "article",
+      "fields": {
+        "title": "General relativity with spin and torsion and its deviations from {Einstein}'s theory",
+        "author": "Hehl, Friedrich W. and von der Heyde, Paul and Kerlick, G. David",
+        "journal": "Physical Review D",
+        "volume": "10",
+        "number": "4",
+        "pages": "1066--1069",
+        "year": "1974",
+        "doi": "10.1103/PhysRevD.10.1066",
+        "url": "https://doi.org/10.1103/PhysRevD.10.1066"
+      }
+    },
+    "kerlick1975": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmology and particle pair production via gravitational spin-spin interaction in the {Einstein-Cartan-Sciama-Kibble} theory of gravity",
+        "author": "Kerlick, G. David",
+        "journal": "Physical Review D",
+        "volume": "12",
+        "number": "10",
+        "pages": "3004--3006",
+        "year": "1975",
+        "doi": "10.1103/PhysRevD.12.3004",
+        "url": "https://doi.org/10.1103/PhysRevD.12.3004"
+      }
+    },
+    "hehl1976": {
+      "type": "article",
+      "fields": {
+        "title": "General relativity with spin and torsion: Foundations and prospects",
+        "author": "Hehl, Friedrich W. and von der Heyde, Paul and Kerlick, G. David and Nester, James M.",
+        "journal": "Reviews of Modern Physics",
+        "volume": "48",
+        "number": "3",
+        "pages": "393--416",
+        "year": "1976",
+        "doi": "10.1103/RevModPhys.48.393",
+        "url": "https://doi.org/10.1103/RevModPhys.48.393"
+      }
+    },
+    "kuchowicz1978": {
+      "type": "article",
+      "fields": {
+        "title": "Friedmann-like cosmological models without singularity",
+        "author": "Kuchowicz, Bronisław",
+        "journal": "General Relativity and Gravitation",
+        "volume": "9",
+        "number": "6",
+        "pages": "511--517",
+        "year": "1978",
+        "doi": "10.1007/BF00759545",
+        "url": "https://doi.org/10.1007/BF00759545"
+      }
+    },
+    "hehl2007": {
+      "type": "article",
+      "fields": {
+        "title": "Élie {Cartan}'s torsion in geometry and in field theory, an essay",
+        "author": "Hehl, Friedrich W. and Obukhov, Yuri N.",
+        "journal": "Annales de la Fondation Louis de Broglie",
+        "volume": "32",
+        "pages": "157--194",
+        "year": "2007",
+        "eprint": "0711.1535",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0711.1535"
+      }
+    },
+    "poplawski2010": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmology with torsion: An alternative to cosmic inflation",
+        "author": "Popławski, Nikodem J.",
+        "journal": "Physics Letters B",
+        "volume": "694",
+        "number": "3",
+        "pages": "181--185",
+        "year": "2010",
+        "doi": "10.1016/j.physletb.2010.09.056",
+        "eprint": "1007.0587",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1007.0587"
+      }
+    },
+    "brill1959": {
+      "type": "article",
+      "fields": {
+        "title": "On the positive definite mass of the {Bondi-Weber-Wheeler} time-symmetric gravitational waves",
+        "author": "Brill, Dieter R.",
+        "journal": "Annals of Physics",
+        "volume": "7",
+        "number": "4",
+        "pages": "466--483",
+        "year": "1959",
+        "doi": "10.1016/0003-4916(59)90055-7",
+        "url": "https://doi.org/10.1016/0003-4916(59)90055-7"
+      }
+    },
+    "eppley1977": {
+      "type": "article",
+      "fields": {
+        "title": "Evolution of time-symmetric gravitational waves: Initial data and apparent horizons",
+        "author": "Eppley, Kenneth",
+        "journal": "Physical Review D",
+        "volume": "16",
+        "number": "6",
+        "pages": "1609--1614",
+        "year": "1977",
+        "doi": "10.1103/PhysRevD.16.1609",
+        "url": "https://doi.org/10.1103/PhysRevD.16.1609"
+      }
+    },
+    "omurchadha1993": {
+      "type": "incollection",
+      "fields": {
+        "title": "Brill Waves",
+        "author": "Ó Murchadha, Niall",
+        "booktitle": "Directions in General Relativity: Proceedings of the 1993 International Symposium, Maryland. Volume 2: Papers in Honor of Dieter Brill",
+        "editor": "Hu, B. L. and Jacobson, T. A.",
+        "publisher": "Cambridge University Press",
+        "address": "Cambridge",
+        "pages": "210--223",
+        "year": "1993",
+        "doi": "10.1017/CBO9780511524653.021",
+        "eprint": "gr-qc/9302023",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9302023"
+      }
+    },
+    "holz1993": {
+      "type": "incollection",
+      "fields": {
+        "title": "Coalescence of Primal Gravity Waves to Make Cosmological Mass Without Matter",
+        "author": "Holz, D. E. and Miller, W. A. and Wakano, M. and Wheeler, J. A.",
+        "booktitle": "Directions in General Relativity: Proceedings of the 1993 International Symposium, Maryland. Volume 2: Papers in Honor of Dieter Brill",
+        "editor": "Hu, B. L. and Jacobson, T. A.",
+        "publisher": "Cambridge University Press",
+        "address": "Cambridge",
+        "pages": "339--358",
+        "year": "1993",
+        "doi": "10.1017/CBO9780511524653.028",
+        "url": "https://doi.org/10.1017/CBO9780511524653.028"
+      }
+    },
+    "beig1991": {
+      "type": "article",
+      "fields": {
+        "title": "Trapped surfaces due to concentration of gravitational radiation",
+        "author": "Beig, R. and Ó Murchadha, N.",
+        "journal": "Physical Review Letters",
+        "volume": "66",
+        "number": "19",
+        "pages": "2421--2424",
+        "year": "1991",
+        "doi": "10.1103/PhysRevLett.66.2421",
+        "url": "https://doi.org/10.1103/PhysRevLett.66.2421"
+      }
+    },
+    "alcubierre2000collapse": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational collapse of gravitational waves in {3D} numerical relativity",
+        "author": "Alcubierre, Miguel and Allen, Gabrielle and Brügmann, Bernd and Lanfermann, Gerd and Seidel, Edward and Suen, Wai-Mo and Tobias, Malcolm",
+        "journal": "Physical Review D",
+        "volume": "61",
+        "number": "4",
+        "pages": "041501",
+        "year": "2000",
+        "doi": "10.1103/PhysRevD.61.041501",
+        "eprint": "gr-qc/9904013",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9904013"
+      }
+    },
+    "hilditch2013": {
+      "type": "article",
+      "fields": {
+        "title": "Collapse of nonlinear gravitational waves in moving-puncture coordinates",
+        "author": "Hilditch, David and Baumgarte, Thomas W. and Weyhausen, Andreas and Dietrich, Tim and Brügmann, Bernd and Montero, Pedro J. and Müller, Ewald",
+        "journal": "Physical Review D",
+        "volume": "88",
+        "number": "10",
+        "pages": "103009",
+        "year": "2013",
+        "doi": "10.1103/PhysRevD.88.103009",
+        "eprint": "1309.5008",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1309.5008"
+      }
+    },
+    "hilditch2017": {
+      "type": "article",
+      "fields": {
+        "title": "Evolutions of centered {Brill} waves with a pseudospectral method",
+        "author": "Hilditch, David and Weyhausen, Andreas and Brügmann, Bernd",
+        "journal": "Physical Review D",
+        "volume": "96",
+        "number": "10",
+        "pages": "104051",
+        "year": "2017",
+        "doi": "10.1103/PhysRevD.96.104051",
+        "eprint": "1706.01829",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1706.01829"
+      }
+    },
+    "abrahams1993": {
+      "type": "article",
+      "fields": {
+        "title": "Critical behavior and scaling in vacuum axisymmetric gravitational collapse",
+        "author": "Abrahams, Andrew M. and Evans, Charles R.",
+        "journal": "Physical Review Letters",
+        "volume": "70",
+        "number": "20",
+        "pages": "2980--2983",
+        "year": "1993",
+        "doi": "10.1103/PhysRevLett.70.2980",
+        "url": "https://doi.org/10.1103/PhysRevLett.70.2980"
+      }
+    },
+    "schoen1979": {
+      "type": "article",
+      "fields": {
+        "title": "On the proof of the positive mass conjecture in general relativity",
+        "author": "Schoen, Richard and Yau, Shing-Tung",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "65",
+        "number": "1",
+        "pages": "45--76",
+        "year": "1979",
+        "doi": "10.1007/BF01940959",
+        "url": "https://doi.org/10.1007/BF01940959"
+      }
+    },
+    "witten1981": {
+      "type": "article",
+      "fields": {
+        "title": "A new proof of the positive energy theorem",
+        "author": "Witten, Edward",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "80",
+        "number": "3",
+        "pages": "381--402",
+        "year": "1981",
+        "doi": "10.1007/BF01208277",
+        "url": "https://doi.org/10.1007/BF01208277"
+      }
+    },
+    "peres1970": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational field of a tachyon",
+        "author": "Peres, Asher",
+        "journal": "Physics Letters A",
+        "volume": "31",
+        "number": "7",
+        "pages": "361--362",
+        "year": "1970",
+        "doi": "10.1016/0375-9601(70)90983-7",
+        "url": "https://doi.org/10.1016/0375-9601(70)90983-7"
+      }
+    },
+    "schulman1971": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational shock waves from tachyons",
+        "author": "Schulman, L. S.",
+        "journal": "Il Nuovo Cimento B",
+        "volume": "2",
+        "number": "1",
+        "pages": "38--44",
+        "year": "1971",
+        "doi": "10.1007/BF02722230",
+        "url": "https://doi.org/10.1007/BF02722230"
+      }
+    },
+    "gott1974": {
+      "type": "article",
+      "fields": {
+        "title": "Tachyon singularity: A spacelike counterpart of the {Schwarzschild} black hole",
+        "author": "Gott, J. Richard",
+        "journal": "Il Nuovo Cimento B",
+        "volume": "22",
+        "number": "1",
+        "pages": "49--69",
+        "year": "1974",
+        "doi": "10.1007/BF02737459",
+        "url": "https://doi.org/10.1007/BF02737459"
+      }
+    },
+    "martins1996": {
+      "type": "article",
+      "fields": {
+        "title": "The sources of the {A} and {B} degenerate static vacuum fields",
+        "author": "Martins, M. A. P.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "28",
+        "number": "11",
+        "pages": "1309--1320",
+        "year": "1996",
+        "doi": "10.1007/BF02109523",
+        "eprint": "gr-qc/9404055",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/BF02109523"
+      }
+    },
+    "bicak2009": {
+      "type": "article",
+      "fields": {
+        "title": "Accelerating electromagnetic magic field from the {C}-metric",
+        "author": "Bičák, Jiří and Kofroň, David",
+        "journal": "General Relativity and Gravitation",
+        "volume": "41",
+        "number": "9",
+        "pages": "1981--2001",
+        "year": "2009",
+        "doi": "10.1007/s10714-009-0816-8",
+        "eprint": "0906.1098",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10714-009-0816-8"
+      }
+    },
+    "podolsky2018": {
+      "type": "article",
+      "fields": {
+        "title": "Non-expanding {Plebański-Demiański} space-times",
+        "author": "Podolský, Jiří and Hruška, Ondrej and Griffiths, Jerry B.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "35",
+        "number": "16",
+        "pages": "165011",
+        "year": "2018",
+        "doi": "10.1088/1361-6382/aacdd5",
+        "eprint": "1804.01519",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/aacdd5"
+      }
+    },
+    "hruska2019": {
+      "type": "article",
+      "fields": {
+        "title": "Interpreting {A} and {B} metrics with $\\Lambda$ as gravitational field of a tachyon in an (anti-)de {Sitter} universe",
+        "author": "Hruška, Ondrej and Podolský, Jiří",
+        "journal": "Physical Review D",
+        "volume": "99",
+        "number": "8",
+        "pages": "084037",
+        "year": "2019",
+        "doi": "10.1103/PhysRevD.99.084037",
+        "eprint": "1808.03508",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.99.084037"
+      }
+    },
+    "ruban1968": {
+      "type": "article",
+      "fields": {
+        "title": "T-Models of \"Sphere\" in General Relativity Theory",
+        "author": "Ruban, V. A.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "33",
+        "number": "2",
+        "pages": "369--373",
+        "year": "2001",
+        "note": "Reprint of Soviet Physics JETP Letters 8, 414-417 (1968)",
+        "doi": "10.1023/A:1002761519995",
+        "url": "https://doi.org/10.1023/A:1002761519995"
+      }
+    },
+    "ruban1969": {
+      "type": "article",
+      "fields": {
+        "title": "Spherically Symmetric T-Models in the General Theory of Relativity",
+        "author": "Ruban, V. A.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "33",
+        "number": "2",
+        "pages": "375--394",
+        "year": "2001",
+        "note": "Reprint of Soviet Physics JETP 29, 1027-1034 (1969)",
+        "doi": "10.1023/A:1002779702615",
+        "url": "https://doi.org/10.1023/A:1002779702615"
+      }
+    },
+    "krasinski2001ruban": {
+      "type": "article",
+      "fields": {
+        "title": "Editor's Note: T-Models of \"Sphere\" in General Relativity Theory by V. A. Ruban and Spherically Symmetric T-Models in the General Theory of Relativity by V. A. Ruban",
+        "author": "Krasiński, Andrzej",
+        "journal": "General Relativity and Gravitation",
+        "volume": "33",
+        "number": "2",
+        "pages": "363--367",
+        "year": "2001",
+        "doi": "10.1023/A:1002713618545",
+        "url": "https://doi.org/10.1023/A:1002713618545"
+      }
+    },
+    "krasinski2012": {
+      "type": "article",
+      "fields": {
+        "title": "The charged dust solution of {Ruban}: matching to {Reissner-Nordstr\\\"om} and shell crossings",
+        "author": "Krasiński, Andrzej and Giono, Gabriel",
+        "journal": "General Relativity and Gravitation",
+        "volume": "44",
+        "number": "1",
+        "pages": "239--251",
+        "year": "2012",
+        "doi": "10.1007/s10714-011-1274-7",
+        "eprint": "1107.4897",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10714-011-1274-7"
       }
     }
   }

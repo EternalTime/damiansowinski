@@ -206,6 +206,27 @@ URL: https://damiansowinski.com/MFS/
 
 Machine-readable catalogue: https://damiansowinski.com/data/spacetimes.json
 
+### The A- and B-Metrics of Ehlers and Kundt
+
+The static vacuum fields of algebraic type D beside Schwarzschild's, which Tullio Levi-Civita constructed and Jürgen Ehlers and Wolfgang Kundt named in 1962: the A-metrics have a hyperbolic or a flat plane where Schwarzschild's field has a sphere, and the B-metrics exchange the time with an angle. Two of them, A II and B I, are the field of a tachyon, Schwarzschild's mass boosted past the speed of light, with a cone of unbounded curvature between them.
+
+- id: `ab_metrics`
+- tags: vacuum, static, stationary, Petrov type D, tachyon, Cherenkov cone, shock wave, hyperbolic symmetry, plane symmetric, Killing horizon, horizon, curvature singularity, Kruskal extension, maximal extension, wormhole, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/ab_metrics.json
+- chart A II, Static: coordinates $(t, r, \chi, \phi)$, $$ds^2 = -\left(\dfrac{b}{r} - 1\right)c^2dt^2 + \dfrac{dr^2}{\dfrac{b}{r} - 1} + r^2\left(d\chi^2 + \sinh^2\chi\,d\phi^2\right)$$
+- chart A II, Inside the Cone: coordinates $(\sigma, z, \chi, \phi)$, $$ds^2 = -\dfrac{d\sigma^2}{1 - \dfrac{b}{\sigma}} + \left(1 - \dfrac{b}{\sigma}\right)dz^2 + \sigma^2\left(d\chi^2 + \sinh^2\chi\,d\phi^2\right)$$
+- chart A II, Kruskal: coordinates $(U, V, \chi, \phi)$, $$ds^2 = -\dfrac{4b^3}{r}e^{-r/b}\,dU\,dV + r^2\left(d\chi^2 + \sinh^2\chi\,d\phi^2\right)$$
+- chart A II, Inertial: coordinates $(T, X, Y, Z)$, $$ds^2 = -dT^2 + dX^2 + dY^2 + dZ^2 - \dfrac{b}{\sigma}\left(dZ^2 + \dfrac{\left(T\,dT - X\,dX - Y\,dY\right)^2}{\sigma\left(\sigma - b\right)}\right)$$
+- chart B I, Static: coordinates $(\tau, r, \theta, z)$, $$ds^2 = r^2\left(-\sin^2\theta\,d\tau^2 + d\theta^2\right) + \dfrac{dr^2}{1 - \dfrac{b}{r}} + \left(1 - \dfrac{b}{r}\right)dz^2$$
+- chart B I, Outside the Cone: coordinates $(\tau, r, \phi, z)$, $$ds^2 = r^2\left(-d\tau^2 + \cosh^2\tau\,d\phi^2\right) + \dfrac{dr^2}{1 - \dfrac{b}{r}} + \left(1 - \dfrac{b}{r}\right)dz^2$$
+- chart B I, Through the Neck: coordinates $(\tau, \rho, \phi, z)$, $$ds^2 = \dfrac{b^2}{\left(1 - \rho^2\right)^2}\left(-d\tau^2 + \cosh^2\tau\,d\phi^2\right) + \dfrac{4b^2\,d\rho^2}{\left(1 - \rho^2\right)^4} + \rho^2dz^2$$
+- chart B I, Inertial: coordinates $(T, X, Y, Z)$, $$ds^2 = -dT^2 + dX^2 + dY^2 + dZ^2 - \dfrac{b}{r}\left(dZ^2 - \dfrac{\left(T\,dT - X\,dX - Y\,dY\right)^2}{r\left(r - b\right)}\right)$$
+- chart A III: coordinates $(t, r, \chi, \phi)$, $$ds^2 = -\dfrac{b}{r}c^2dt^2 + \dfrac{r}{b}dr^2 + r^2\left(d\chi^2 + \chi^2d\phi^2\right)$$
+- chart B II, Static: coordinates $(\tau, r, \chi, z)$, $$ds^2 = r^2\left(-\sinh^2\chi\,d\tau^2 + d\chi^2\right) + \dfrac{dr^2}{\dfrac{b}{r} - 1} + \left(\dfrac{b}{r} - 1\right)dz^2$$
+- chart B II, Through the Axis: coordinates $(\tau, \rho, \chi, z)$, $$ds^2 = \dfrac{b^2}{\left(1 + \rho^2\right)^2}\left(-\cosh^2\chi\,d\tau^2 + d\chi^2\right) + \dfrac{4b^2\,d\rho^2}{\left(1 + \rho^2\right)^4} + \rho^2dz^2$$
+- chart B III: coordinates $(\tau, r, x, z)$, $$ds^2 = r^2\left(-d\tau^2 + dx^2\right) + \dfrac{r}{b}dr^2 + \dfrac{b}{r}dz^2$$
+
 ### Aichelburg-Sexl Ultraboost
 
 The gravitational field of a massless particle, the Schwarzschild field boosted to the speed of light with its energy held fixed. Spacetime is flat on either side of a single null plane, which carries an impulsive gravitational shock wave with the particle at its centre.
@@ -446,6 +467,18 @@ The spherical black hole of Einstein-Gauss-Bonnet gravity in five dimensions, wh
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{2\ell^2}\left(1 - \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)\right)dv^2 + 2\,dv\,dr + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
 - chart Hyperspherical, Anti-de Sitter Branch: coordinates $(t, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{2\ell^2}\left(1 + \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)\right)c^2dt^2 + \dfrac{dr^2}{1 + \dfrac{r^2}{2\ell^2}\left(1 + \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)} + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
 
+### Brill's Time-Symmetric Gravitational Waves
+
+One moment of a spacetime that holds gravitational waves and nothing else, which Dieter Brill constructed in 1959. It is a single slice of space, three dimensions with no time, at the moment the wave is at rest, and it satisfies Einstein's constraint equations with no matter anywhere. Brill proved its mass positive, a strong enough wave already lies inside its own apparent horizon, and what the wave does afterwards is known from computer simulations.
+
+- id: `brill_waves`
+- tags: three-dimensional, Riemannian, no time, initial data, spatial slice, time symmetric, constraint equations, Hamiltonian constraint, gravitational wave, Brill wave, axisymmetric, conformal transformation, positive energy, positive mass theorem, mass, apparent horizon, minimal surface, trapped surface, critical collapse, gravitational collapse, geometrodynamics, geon, numerical relativity, numerical solution, asymptotically flat, Einstein equations, idealized model
+- signature: (+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/brill_waves.json
+- chart Brill: coordinates $(\rho, z, \phi)$, $$ds^2 = \psi^4\left(e^{2q}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2\right)$$
+- chart Spherical: coordinates $(r, \theta, \phi)$, $$ds^2 = \psi^4\left(e^{2q}\left(dr^2 + r^2d\theta^2\right) + r^2\sin^2\theta\,d\phi^2\right)$$
+- chart Without Axial Symmetry: coordinates $(\rho, z, \phi)$, $$ds^2 = \psi^4\left(e^{2q}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2\right)$$
+
 ### C-Metric Accelerating Black Holes
 
 An exact vacuum solution describing two black holes that accelerate away from each other, driven by a cosmic string or a strut along their axis of symmetry. With the acceleration set to zero it is the Schwarzschild black hole.
@@ -522,6 +555,20 @@ Schwarzschild's metric with a small constant $\lambda^2$ added to $-g_{tt}$, whi
 - chart Through the Throat: coordinates $(t, \rho, \theta, \phi)$, $$ds^2 = -\dfrac{\lambda^2\left(1 + \cosh\rho\right)}{2 + \lambda^2\left(1 + \cosh\rho\right)}c^2dt^2 + \dfrac{r_s^2}{4\left(1 + \lambda^2\right)^2}\left(\lambda^2\left(1 + \cosh\rho\right)\left(2 + \lambda^2\left(1 + \cosh\rho\right)\right)d\rho^2 + \left(2 + \lambda^2\left(1 + \cosh\rho\right)\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Isotropic: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(\left(\dfrac{4r - r_s}{4r + r_s}\right)^2 + \lambda^2\right)c^2dt^2 + \left(1 + \dfrac{r_s}{4r}\right)^4\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Einstein-Rosen: coordinates $(t, u, \theta, \phi)$, $$ds^2 = -\left(\dfrac{u^2}{u^2 + r_s} + \lambda^2\right)c^2dt^2 + 4\left(u^2 + r_s\right)du^2 + \left(u^2 + r_s\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
+### Datt-Ruban T-Models
+
+The spherical dust solution that Tolman and Bondi's family leaves out. Every sphere of dust has the same radius $b(t)$, each moment of time is a tube $\mathbb{R} \times S^2$, and the dust is free to differ from shell to shell along it. Cut at a shell and joined to Schwarzschild's vacuum, the tube has the same mass however much dust it holds.
+
+- id: `datt_ruban_t_models`
+- tags: dust, inhomogeneous, T-model, T-region, T-sphere, mass defect, Kantowski-Sachs, black hole interior, matched solution, curvature singularity, shell crossing, big bang, cosmology, comoving, time-dependent, spherically symmetric, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/datt_ruban_t_models.json
+- chart Comoving: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + a^2dr^2 + b^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Ruban's Parametric Time: coordinates $(\eta, r, \theta, \phi)$, $$ds^2 = r_s^2\sin^4(\eta/2)\left(-d\eta^2 + d\theta^2 + \sin^2\theta\,d\phi^2\right) + a^2dr^2$$
+- chart Areal Time: coordinates $(T, r, \theta, \phi)$, $$ds^2 = -\dfrac{dT^2}{\dfrac{r_s}{T} - 1} + a^2dr^2 + T^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Ruban's de Sitter T-Model: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + a^2dr^2 + \ell^2\cosh^2(ct/\ell)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Kruskal Exterior of a T-Sphere: coordinates $(U, V, \theta, \phi)$, $$ds^2 = -\dfrac{4r_s^3}{r}e^{-r/r_s}\,dU\,dV + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
 ### de Sitter
 
@@ -644,6 +691,17 @@ A static, spherically symmetric traversable wormhole with zero redshift function
 - signature: (-,+,+,+)
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/ellis_bronnikov.json
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2 dt^2 + dr^2 + (r^2 + \ell^2)\left(d\theta^2 + \sin^2\theta\, d\phi^2\right)$$
+
+### Erez-Rosen Quadrupole
+
+Schwarzschild's metric with a mass quadrupole added, a static vacuum field of Weyl's class found by G. Erez and Nathan Rosen in 1959. For every quadrupole parameter $q \neq 0$ a naked curvature singularity stands where the horizon was, which Doroshkevich, Zel'dovich, and Novikov used in 1965 to argue that a collapsing star sheds its quadrupole.
+
+- id: `erez_rosen`
+- tags: vacuum, static, stationary, axisymmetric, Weyl class, harmonic function, mass, quadrupole, prolate spheroidal coordinates, curvature singularity, naked singularity, directional singularity, no-hair theorem, gravitational collapse, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/erez_rosen.json
+- chart Prolate Spheroidal: coordinates $(t, x, y, \phi)$, $$ds^2 = -e^{2\psi}c^2dt^2 + m^2e^{-2\psi}\left(e^{2\gamma}\left(x^2 - y^2\right)\left(\dfrac{dx^2}{x^2 - 1} + \dfrac{dy^2}{1 - y^2}\right) + \left(x^2 - 1\right)\left(1 - y^2\right)d\phi^2\right)$$
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -e^{2\psi}c^2dt^2 + e^{-2\psi}\left(e^{2\gamma}\left(r^2 - 2mr + m^2\sin^2\theta\right)\left(\dfrac{dr^2}{r^2 - 2mr} + d\theta^2\right) + \left(r^2 - 2mr\right)\sin^2\theta\,d\phi^2\right)$$
 
 ### Exponential Metric of Papapetrou and Yilmaz
 
@@ -988,6 +1046,18 @@ Schwarzschild's black hole with one more term in its metric, a power of the radi
 - chart Static, Linear Term: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r} - \dfrac{r}{r_q}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r} - \dfrac{r}{r_q}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Free Matter, Hyperbolic: coordinates $(\eta, \chi, \theta, \phi)$, $$ds^2 = 4r_q^2e^{-2\chi}\left(-d\eta^2 + d\chi^2 + \sinh^2\chi\,\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Free Matter, Conformally Flat: coordinates $(\tau, \rho, \theta, \phi)$, $$ds^2 = \dfrac{4r_q^2}{\left(\tau + \rho\right)^2}\left(-d\tau^2 + d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
+### Kopczyński-Trautman Universe With Torsion
+
+A flat universe of dust whose particles all spin about one axis, in the Einstein-Cartan theory, where the spin of matter gives spacetime torsion as its energy gives it curvature. The spins repel at high density, so the universe contracts to a least size, turns round, and expands, with no singularity. W. Kopczyński found the first such universes in 1972 and 1973, and Andrzej Trautman argued from them in 1973 that spin and torsion may avert gravitational singularities.
+
+- id: `kopczynski_trautman`
+- tags: cosmology, Einstein-Cartan theory, torsion, spin, dust, bounce, no singularity, singularity theorems, homogeneous, isotropic, comoving, time-dependent, exact solution, Lorentzian, idealized model, conformally flat, spherically symmetric, four-dimensional
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kopczynski_trautman.json
+- chart Comoving Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + a^2\left(dx^2 + dy^2 + dz^2\right)$$
+- chart Comoving Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + a^2\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Conformal Time: coordinates $(\eta, r, \theta, \phi)$, $$ds^2 = a^2\left(-d\eta^2 + dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
 ### Krasnikov Tube
 
@@ -1366,6 +1436,17 @@ Flat spacetime cut along the future light cone of one event and joined again wit
 - chart Behind the Wave: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Ahead of the Wave: coordinates $(T, R, \phi, z)$, $$ds^2 = -c^2dT^2 + dR^2 + \beta^2R^2d\phi^2 + dz^2$$
 
+### Petrov Homogeneous Vacuum
+
+An empty spacetime that is curved and still the same at every event: four symmetries carry any event to any other in exactly one way, and no other vacuum without a cosmological constant has such a group. Its light cones turn steadily as one walks along one direction, and it is the field outside a cylinder of dust that spins with the circle round its surface a path of light.
+
+- id: `petrov_homogeneous`
+- tags: vacuum, stationary, homogeneous, simply transitive group, group manifold, rotating, closed timelike curves, cylindrical symmetry, Lewis class, Petrov type I, Bianchi classification, geodesically complete, hyperbolic space, causal structure, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/petrov_homogeneous.json
+- chart Petrov: coordinates $(t, r, \phi, z)$, $$ds^2 = dr^2 + e^{-2r/\ell}dz^2 + e^{r/\ell}\left(\cos\psi\left(d\phi^2 - c^2dt^2\right) - 2\sin\psi\,c\,dt\,d\phi\right)$$
+- chart Dust Cylinder: coordinates $(t, r, \phi, z)$, $$ds^2 = -F\,c^2dt^2 - 2M\,c\,dt\,d\phi + \dfrac{\ell^2}{r^2}\left(dr^2 + dz^2\right) + L\,d\phi^2$$
+
 ### Kinnersley Photon Rocket
 
 The field of a point mass that accelerates by shining light unevenly, found by William Kinnersley in 1969. Its mass and its acceleration are arbitrary functions of retarded time, the light is null dust that streams out brightest behind it, and no gravitational waves reach infinity.
@@ -1493,6 +1574,18 @@ The vacuum field of an isolated body sending out gravitational waves on expandin
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/robinson_trautman.json
 - chart Robinson-Trautman: coordinates $(u, r, x, y)$, $$ds^2 = -2H\,c^2du^2 - 2c\,du\,dr + \dfrac{r^2}{P^2}\left(dx^2 + dy^2\right)$$
 - chart Axisymmetric: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -2H\,c^2du^2 - 2c\,du\,dr + \dfrac{r^2}{f^2}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
+### RP³ Geon
+
+Schwarzschild's black hole with its second exterior folded onto the first: the Kruskal events $(T, X, \theta, \phi)$ and $(T, -X, \pi - \theta, \phi + \pi)$ are one event. Outside the horizon it is Schwarzschild's spacetime, and behind it the black hole and the white hole are each half of Kruskal's. Space at the moment of time symmetry is real projective space with a point removed, and the spacetime is orientable in time and in space.
+
+- id: `rp3_geon`
+- tags: black hole, white hole, geon, topological geon, topology, real projective space, antipodal identification, topological censorship, single exterior, Kruskal extension, maximal extension, wormhole, throat, Einstein-Rosen bridge, time symmetric, initial data, geometrodynamics, globally hyperbolic, Hawking radiation, Hawking temperature, black hole entropy, black hole thermodynamics, horizon, event horizon, curvature singularity, causal structure, mass, asymptotically flat, isotropic coordinates, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model, vacuum, static, stationary, spherically symmetric
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/rp3_geon.json
+- chart Kruskal: coordinates $(T, X, \theta, \phi)$, $$ds^2 = \dfrac{4r_s^3}{r}e^{-r/r_s}\left(-dT^2 + dX^2\right) + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Schwarzschild Exterior: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Isotropic: coordinates $(t, \rho, \theta, \phi)$, $$ds^2 = -\left(\dfrac{4\rho - r_s}{4\rho + r_s}\right)^2c^2dt^2 + \left(1 + \dfrac{r_s}{4\rho}\right)^4\left(d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
 ### Schrödinger Spacetime
 
