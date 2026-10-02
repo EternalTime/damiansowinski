@@ -16980,6 +16980,280 @@ def erez_rosen(ck, src):
     return views
 
 
+class DistortedTower(Tower):
+    """The tower of one plane of Schwarzschild's black hole in a tidal field at m = 1, in the prolate
+    spheroidal x. On the axis and on the equatorial plane the metric is conformal to -dt^2 + dx_*^2
+    with dx_*/dx = e^{V - 2U}(x + 1)/(x - 1), which has one simple pole, at the horizon x = 1, of
+    residue 2 e^{-2q} on both planes: the surface gravity is k = e^{2q}/4m on the whole horizon.
+    The tortoise coordinate is null_rays.py's, by quadrature, vanishing at the singularity
+    x = -1, and the cells are a Tower's, written in G(u) = arctan exp(-k u), so that x = -1 lies on
+    the straight lines T = +-pi/2 as Schwarzschild's r = 0 does. Where x_* tends to a finite R
+    as x -> infinity, on the axis for q > 0, the edge x -> infinity lies on tan p tan q = -B with
+    B = exp(2kR), as Schwarzschild-anti-de Sitter's boundary does."""
+
+    def __init__(self, plane, q):
+        self.kp = math.exp(2 * q) / 4
+        self.rf = [1.0]
+        self._star = nr._distorted_star(plane, q)
+        self.far = float(self._star(60.0)) if plane == "axis" and q > 0 else None
+        self.B = math.exp(2 * self.kp * self.far) if self.far is not None else None
+
+    def rstar(self, x):
+        return self._star(x)
+
+    def boundary(self, n=400):
+        """x -> infinity in cell I: tan p tan q = -B, from the corner (X, T) = (pi/2, -pi/2) to (pi/2, pi/2)."""
+        p = -HALF / (1 + np.exp(np.linspace(-14, 14, n)))
+        return p, np.arctan(-self.B / np.tan(p))
+
+
+DS_CONFORMAL = (("oblate", "1/12", 1 / 12), ("prolate", "-1/12", -1 / 12))
+DS_CONFORMAL_CHARTS = ("prolate_spheroidal", "spherical", "weyl")
+
+
+def distorted_schwarzschild(ck, src):
+    """Schwarzschild's black hole in a quadrupole tidal field on its two totally geodesic planes of t
+    and one radial coordinate, m = 1, for the oblate q = 1/12 and the prolate q = -1/12, in each chart.
+
+    On either plane the metric is e^{2U}(x - 1)/(x + 1) times (-c^2 dt^2 + dx_*^2), with
+    dx_*/dx = m e^{V - 2U}(x + 1)/(x - 1): on the axis V = 0 and U = (q/2)(3x^2 - 1), and on the
+    equatorial plane V - 2U = (9/16) q^2 (x^2 - 1)^2 + (q/2)(3x^2 - 6x - 1). Both have the one pole
+    x = 1, of residue 2m e^{-2q}, so Kruskal's U = -exp(-k u), V = exp(k v), with u, v = ct -+ x_*
+    and k = e^{2q}/4m, run through the horizon, and p = arctan U, q = arctan V draw each plane as
+    Kruskal and Szekeres's extension is drawn: the cells I, II, IV and I' of a tower of one root.
+    Inside the horizon x runs from 1 down to -1, r = 0, where U and V are finite, the Kretschmann
+    scalar diverges and x_* = 0, so the singularity is the pair of lines T = +-pi/2. Outside,
+    x_* runs to infinity on the equatorial plane for either sign of q and on the axis for q < 0,
+    and the far edges are null, the plane's null infinity, which light reaches after an infinite
+    affine distance and where the Kretschmann scalar falls to zero. On the axis for q > 0 the
+    integrand falls as e^{-3qx^2}, x_* tends to a finite R, and the edge x -> infinity is the
+    timelike curve tan p tan q = -exp(2kR), which light reaches in a finite time t and after an
+    infinite affine distance, since r is an affine parameter on the axis, and where the
+    Kretschmann scalar grows without bound: the potential of the distant matter grows with
+    distance, and the vacuum solution holds only as far as that matter. The spherical chart
+    draws the same planes with r = m(x + 1), and Weyl's chart with z = m x on the axis and
+    rho = m sqrt(x^2 - 1) in the equatorial plane; no chart published covers x < 1, and the
+    cells II and IV are checked against the prolate spheroidal and spherical charts' components
+    read there."""
+    name = "black hole in a tidal field"
+    views = []
+    TS = (-8, -4, -2, 0, 2, 4, 8)
+    XS = (1.05, 1.25, 1.5, 2, 3)        # the prolate spheroidal x of the circles drawn in the exterior
+    charts = {
+        "prolate_spheroidal": ("x", lambda x: x, {"y": "1", "phi": "0"}, {"y": "0", "phi": "0"}, "x",
+                               "$y = 1$", "$y = 0$", lambda x: f"{x:g}", "x = 1", "x = -1"),
+        "spherical": ("r", lambda x: x + 1, {"theta": "0", "phi": "0"}, {**EQUATOR, "phi": "0"}, "r",
+                      "$\\theta = 0$", "$\\theta = \\pi/2$", lambda x: f"{x + 1:g}\\,m", "r = 2m", "r = 0"),
+        "weyl": (None, None, {"rho": "0", "phi": "0"}, {"phi": "0", "z": "0"}, None,
+                 "$\\rho = 0$", "$z = 0$", None, None, None),
+    }
+    hexagon = [[PI, 0], [HALF, HALF], [-HALF, HALF], [-PI, 0], [-HALF, -HALF], [HALF, -HALF]]
+    exterior = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    for shape, qtex, q in DS_CONFORMAL:
+        params = {"m": 1, "q": qtex}
+        equator_moment = slices.moments("distorted_schwarzschild", shape)[0]
+        horizon_moment = slices.moments("distorted_schwarzschild", f"horizon_{shape}",
+                                        label="the horizon at $t = 0$, the bifurcation surface")[0]
+        for plane in ("axis", "equator"):
+            T = DistortedTower(plane, q)
+            where = f"{name}, {shape}, {'the axis' if plane == 'axis' else 'the equatorial plane'}"
+            # The tower against the published components, the cells inside the horizon read from the
+            # charts whose components are analytic through it.
+            for system in ("prolate_spheroidal", "spherical"):
+                ra, of_x, axis_fixed, eq_fixed = charts[system][:4]
+                pl = Plane(src, "distorted_schwarzschild", system, ("t", ra), axis_fixed if plane == "axis" else eq_fixed,
+                           params, kretschmann_fixed={"theta": "1e-30"} if (system, plane) == ("spherical", "axis") else None)
+                shift = 1.0 if system == "spherical" else 0.0
+
+                def pq(cell, shift=shift):
+                    return lambda t, r: T.pq(cell, t, np.asarray(r, dtype=float) - shift)
+                ck.chart(f"{where}, {system}, exterior", pl, pq("I"), ck.uniform(-15, 15, 400),
+                         ck.uniform(1.001 + shift, 4 + shift, 400), lambda t, r: (1, 0))
+                ck.chart(f"{where}, {system}, black hole", pl, pq("II"), ck.uniform(-15, 15, 400),
+                         ck.uniform(-0.99 + shift, 0.999 + shift, 400), lambda t, r: (0, -1))
+                ck.chart(f"{where}, {system}, white hole", pl, pq("IV"), ck.uniform(-15, 15, 400),
+                         ck.uniform(-0.99 + shift, 0.999 + shift, 400), lambda t, r: (0, 1))
+                ck.chart(f"{where}, {system}, other exterior", pl, pq("I'"), ck.uniform(-15, 15, 400),
+                         ck.uniform(1.001 + shift, 4 + shift, 400), lambda t, r: (-1, 0))
+                K = pl.kretschmann
+                ck.diverges(f"{where}, {system}: the Kretschmann scalar diverges at r = 0",
+                            K(0, -1 + 1e-2 + shift), K(0, -1 + 1e-3 + shift))
+                at_horizon = (0.75 * (1 - 12 * q) ** 2 * math.exp(4 * q) if plane == "axis"
+                              else 0.75 * (1 + 3 * q) ** 2 * math.exp(10 * q))
+                ck.limit(f"{where}, {system}: the Kretschmann scalar at the horizon is "
+                         + ("(3/4)(1 - 12q)^2 e^(4q)/m^4" if plane == "axis" else "(3/4)(1 + 3q)^2 e^(10q)/m^4"),
+                         K(np.zeros(2), np.array([1 - 1e-6, 1 + 1e-6]) + shift), [at_horizon] * 2, 1e-4)
+                if plane == "axis":
+                    rr = np.array([1.5, 2.0, 3.0]) + shift
+                    g00, _, g11, *_ = pl.metric(np.zeros(3), rr)
+                    ck.limit(f"{where}, {system}: g_tt g_rr = -1 on the axis, so the radius is affine along its rays",
+                             g00 * g11, [-1.0] * 3, 1e-12)
+            if "weyl" in DS_CONFORMAL_CHARTS:
+                ra = "z" if plane == "axis" else "\\rho"
+                pl = Plane(src, "distorted_schwarzschild", "weyl", ("t", ra),
+                           charts["weyl"][2] if plane == "axis" else charts["weyl"][3], params,
+                           kretschmann_fixed={"rho": "1e-12"} if plane == "axis" else None)
+                to_x = (lambda r: np.asarray(r, dtype=float)) if plane == "axis" else (
+                    lambda r: np.sqrt(1 + np.asarray(r, dtype=float) ** 2))
+                lo = 1.001 if plane == "axis" else 0.05
+                ck.chart(f"{where}, weyl, exterior", pl, lambda t, r: T.pq("I", t, to_x(r)), ck.uniform(-15, 15, 400),
+                         ck.uniform(lo, 4, 400), lambda t, r: (1, 0))
+                ck.chart(f"{where}, weyl, other exterior", pl, lambda t, r: T.pq("I'", t, to_x(r)),
+                         ck.uniform(-15, 15, 400), ck.uniform(lo, 4, 400), lambda t, r: (-1, 0))
+            ck.limit(f"{where}: x_* vanishes at the singularity x = -1", T.rstar(np.array([-1.0])), [0.0], 1e-9)
+            xs = np.array([-0.5, 0.3, 1.7, 2.6])
+            slope = np.exp(nr._distorted_exponent(plane, q)(xs)) * (xs + 1) / (xs - 1)
+            ck.limit(f"{where}: dx_*/dx = e^(V - 2U)(x + 1)/(x - 1)",
+                     (T.rstar(xs + 1e-6) - T.rstar(xs - 1e-6)) / 2e-6 / slope, np.ones(4), 1e-6)
+            p, qq = T.pq("II", np.array([-5.0, 0, 5]), np.full(3, -1 + 1e-9))
+            ck.limit(f"{where}: x -> -1 in the black hole lands on T = pi/2", p + qq, [HALF] * 3)
+            p, qq = T.pq("I", np.array([3.0]), np.array([1 + 1e-12]))
+            ck.limit(f"{where}: x -> 1 at fixed t lands on the bifurcation surface", point(p[0], qq[0]), [0, 0], 1e-4)
+            timelike = T.B is not None
+            if timelike:
+                ck.limit(f"{where}: x_* tends to R = {T.far:.4f} m as x -> infinity", T.rstar(np.array([200.0])), [T.far], 1e-9)
+                p, qq = T.pq("I", np.array([-0.5, 0, 0.5]), np.full(3, 200.0))
+                ck.limit(f"{where}: x -> infinity lands on tan p tan q = -B", np.tan(p) * np.tan(qq), [-T.B] * 3, 1e-6)
+                bp, bq = T.boundary()
+                right = [point(a, b) for a, b in zip(bp, bq)]
+                left = [[-xx, tt] for xx, tt in right[::-1]]
+                whole, cover = right + left, [[0, 0]] + right
+                reach = 2 * np.arctan(np.sqrt(T.B))
+                box = [-max(reach, HALF) - 0.3, max(reach, HALF) + 0.3, -HALF - 0.25, HALF + 0.25]
+            else:
+                p, qq = T.pq("I", np.array([0.0]), np.array([60.0 if plane == "axis" else 8.0]))
+                ck.limit(f"{where}: x -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)", point(p[0], qq[0]), [PI, 0], 1e-3)
+                whole, cover = hexagon, exterior
+                box = [-PI - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25]
+
+            def edges(v, edge, centre):
+                if timelike:
+                    v.curve("boundary", bp, bq)
+                    v.curve("boundary", -bq, -bp)
+                    at = min(right, key=lambda pt: abs(pt[1] - 1.2))
+                    v.label_xt(at, "$r \\to \\infty$", "l", "small", dx=6)
+                    v.label_xt([-at[0], at[1]], "$r \\to \\infty$", "r", "small", dx=-6)
+                    v.legend("boundary", "the edge $r \\to \\infty$, timelike, where the Kretschmann scalar grows "
+                                         "without bound")
+                    mid = 0.5 * reach
+                    v.label_xt([mid, -0.45], "exterior", cls="region")
+                    v.label_xt([-mid, -0.45], "exterior", cls="region")
+                else:
+                    v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]],
+                                    [[-PI, 0], [-HALF, HALF]], [[-PI, 0], [-HALF, -HALF]]])
+                    for at in ((PI, 0), (-PI, 0), (HALF, HALF), (HALF, -HALF), (-HALF, HALF), (-HALF, -HALF)):
+                        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+                    v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+                    v.label_xt([-PI, 0], "$i^0$", "r", dx=-6)
+                    for sx in (1, -1):
+                        v.label_xt([sx * HALF, HALF], "$i^+$", "b", dy=-6)
+                        v.label_xt([sx * HALF, -HALF], "$i^-$", "t", dy=6)
+                        v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-4)
+                        v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=4)
+                    v.legend("scri", "null infinity of the plane, $\\mathscr{I}^\\pm$")
+                    v.label_xt([HALF, -0.95], "exterior", cls="region")
+                    v.label_xt([-HALF, 0], "exterior", cls="region")
+                v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+                v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+                v.label_xt([0, HALF], f"${centre}$", "b", dy=-8)
+                v.label_xt([0, -HALF], f"${centre}$", "t", dy=8)
+                v.label_xt([-Q4, Q4], f"${edge}$", "tr", "small", dx=-6, dy=2)
+                v.label_xt([0, 1.15], "black hole", cls="region")
+                v.label_xt([0, -1.15], "white hole", cls="region")
+                v.legend("horizon", f"the horizon ${edge}$")
+                v.legend("singular", f"${centre}$, where the Kretschmann scalar diverges")
+
+            t = spread(-np.inf, np.inf, 500, 9)
+            for system in DS_CONFORMAL_CHARTS:
+                if system == "weyl":
+                    ra = "z" if plane == "axis" else "\\rho"
+                    edge = "z = m" if plane == "axis" else "\\rho = 0"
+                    centre = "r = 0"
+                    named = (lambda x: f"{x:g}\\,m") if plane == "axis" else (lambda x: f"{math.sqrt(x * x - 1):.3g}\\,m")
+                    on_plane = charts["weyl"][5] if plane == "axis" else charts["weyl"][6]
+                else:
+                    ra, _, _, _, _, on_axis, on_equator, named, edge, centre = charts[system]
+                    on_plane = on_axis if plane == "axis" else on_equator
+                label = f"{'The axis' if plane == 'axis' else 'The equatorial plane'}, $q = {qtex}$"
+                v = View(f"{system}_{plane}_{shape}", label, box, system)
+                v.fill("region", whole)
+                v.fill("cover", cover)
+                for x in XS:
+                    v.curve("r", *T.pq("I", t, np.full_like(t, x)))
+                xx = spread(1, np.inf, 500, 14) if not timelike else 1 + np.geomspace(1e-12, 60, 600)
+                for tt in TS:
+                    v.curve("t", *T.pq("I", np.full_like(xx, tt), xx))
+                edges(v, edge, centre)
+                label_on(v, T.pq("I", 0.0, 1.5), f"${ra} = {named(1.5)}$")
+                which = f"${ra}$ beyond the horizon" if system != "weyl" or plane == "axis" else f"${ra} > 0$"
+                v.legend("cover", f"the region that $t$ and {which} cover")
+                v.legend("r", f"${ra}$ constant, at " + ", ".join(f"${named(x)}$" for x in XS[:-1]) + f" and ${named(XS[-1])}$")
+                v.legend("t", "$ct$ constant, in units of $m$")
+                if plane == "equator":
+                    lo, hi = equator_moment.reach("spherical", "r")
+                    v.slice(equator_moment, [through_bifurcation(T, ("I'", "I"), hi - 1, lo - 1)])
+                v.slice(horizon_moment, points=[(0.0, 0.0)])
+                what = "half axis" if plane == "axis" else "half plane"
+                v.set(restriction=f"The plane of $t$ and ${ra}$ at {on_plane} and fixed $\\phi$ only, totally geodesic, "
+                                  + ("each point in the diagram a single event." if plane == "axis" else
+                                     "each point in the diagram a single event."),
+                      settings=f"$q = {qtex}$ and $m = 1$, the unit of every length; the surface gravity is "
+                               f"$\\kappa = e^{{2q}}/4m = {T.kp:.4f}/m$ in units of $c^2$.")
+                views.append(v)
+    return views
+
+
+def _distorted_schwarzschild_captions():
+    """The captions of Schwarzschild's black hole in a tidal field: the axis and the equatorial
+    plane, oblate and prolate, in each chart's own radial coordinate."""
+    out = {}
+    hole = "the black hole in a tidal field"
+    kruskal = ("With $r_*$ the tortoise coordinate of the plane and $\\kappa = e^{2q}/4m$, the maps "
+               "$u = -\\arctan e^{-\\kappa(ct - r_*)}$ and $v = \\arctan e^{\\kappa(ct + r_*)}$, the arctangents of "
+               "Kruskal's coordinates, run through the horizon and bring the plane into ")
+    drawn = ", drawn with $T = u + v$ up and $X = v - u$ across."
+    for system in DS_CONFORMAL_CHARTS:
+        for shape, qtex, _ in DS_CONFORMAL:
+            source = ("a ring of matter around the equator" if shape == "oblate" else "masses far off on the axis")
+            if system == "prolate_spheroidal":
+                ra_axis = ra_plane = "x"
+                fixed_axis, fixed_plane, edge, centre = "$y = 1$", "$y = 0$", "x = 1", "x = -1"
+            elif system == "spherical":
+                ra_axis = ra_plane = "r"
+                fixed_axis, fixed_plane, edge, centre = "$\\theta = 0$", "$\\theta = \\pi/2$", "r = 2m", "r = 0"
+            else:
+                ra_axis, ra_plane = "z", "\\rho"
+                fixed_axis, fixed_plane, edge, centre = "$\\rho = 0$", "$z = 0$", None, "r = 0"
+            setting = f"($q = {qtex}$, $m = 1$)"
+            horizon_axis = edge or "z = m"
+            horizon_plane = edge or "\\rho = 0"
+            if shape == "oblate":
+                far = (f"Out along the axis the potential of the ring grows as $e^{{3qx^2}}$, with $x$ the prolate "
+                       "spheroidal radial coordinate, and $r_*$ tends to a finite value, so the edge "
+                       "$r \\to \\infty$ is timelike: light reaches it in a finite time $t$, after an infinite affine "
+                       "distance, and the Kretschmann scalar grows without bound toward it.")
+                shape_text = "Kruskal and Szekeres's diagram with its null infinity replaced by a timelike edge"
+            else:
+                far = ("Out along the axis the cones narrow, $r_*$ runs to infinity, and the far edges are the null "
+                       "infinity of the plane, toward which the Kretschmann scalar falls to zero.")
+                shape_text = "Kruskal and Szekeres's hexagon"
+            out[f"{system}_axis_{shape}"] = [
+                f"The plane of $t$ and ${ra_axis}$ ({fixed_axis}, $\\phi$ fixed) of {hole} {setting}, with the field "
+                f"of {source}. {kruskal}{shape_text}{drawn}",
+                f"The horizon ${horizon_axis}$ is regular, the pair of null lines through the centre, and the "
+                f"singularity ${centre}$ is spacelike, as in Schwarzschild's spacetime. {far}",
+            ]
+            out[f"{system}_equator_{shape}"] = [
+                f"The plane of $t$ and ${ra_plane}$ ({fixed_plane}, $\\phi$ fixed) of {hole} {setting}, with the field "
+                f"of {source}. {kruskal}Kruskal and Szekeres's hexagon{drawn}",
+                f"The horizon ${horizon_plane}$ is regular and the singularity ${centre}$ spacelike, as in "
+                "Schwarzschild's spacetime, and $\\kappa$ is the same on this plane as on the axis. In the plane "
+                "$r_*$ runs to infinity for either sign of $q$, so the far edges are null, the null infinity of the "
+                "plane, toward which the Kretschmann scalar falls to zero.",
+            ]
+    return out
+
+
 def _erez_rosen_captions():
     """The eight captions of Erez and Rosen's quadrupole: the axis and the equatorial plane, prolate
     and oblate, in each chart's own radius."""
@@ -20714,6 +20988,7 @@ DRAWN = {
     "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
     "zipoy_voorhees": zipoy_voorhees,
     "erez_rosen": erez_rosen,
+    "distorted_schwarzschild": distorted_schwarzschild,
     "string_black_hole": string_black_hole,
     "mcvittie": mcvittie,
     "sultana_dyer": sultana_dyer,
@@ -20885,6 +21160,8 @@ CAPTIONS = {
     **{("bonnor_magnetic_dipole", view): text for view, text in _bonnor_dipole_captions().items()},
     **{("zipoy_voorhees", view): text for view, text in _zipoy_voorhees_captions().items()},
     **{("erez_rosen", view): text for view, text in _erez_rosen_captions().items()},
+    **{("distorted_schwarzschild", view): text
+       for view, text in _distorted_schwarzschild_captions().items()},
     ("neugebauer_meinel", "weyl_axis"): [
         "The axis $\\rho = 0$ of the disc of $\\mu = 3$, from far below it to far above, each point in the diagram a "
         "single event. The metric on it is $-e^{2U}c^2dt^2 + e^{-2U}dz^2$, and with $z_* = \\int_0^z e^{-2U}dz$ the maps "

@@ -595,6 +595,18 @@ The static, spherically symmetric charged black hole of low energy string theory
 - chart String Metric, Magnetic Charge: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{1 - \dfrac{r_s}{r}}{1 - \dfrac{r_d}{r}}c^2dt^2 + \dfrac{dr^2}{\left(1 - \dfrac{r_s}{r}\right)\left(1 - \dfrac{r_d}{r}\right)} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart String Metric, Electric Charge: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \left(1 - \dfrac{r_d}{r}\right)\left(-\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}}\right) + \left(r - r_d\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Schwarzschild Black Hole in a Tidal Field
+
+Schwarzschild's black hole in the quadrupole field of distant matter, a static vacuum solution of Weyl's class that A. G. Doroshkevich, Yakov Zel'dovich, and Igor Novikov gave in 1965, and the simplest of the distorted black holes of Robert Geroch and James Hartle. The tidal field flattens or stretches the horizon and leaves it regular; it grows with distance, so the solution holds between the horizon and the matter that distorts it.
+
+- id: `distorted_schwarzschild`
+- tags: vacuum, static, stationary, axisymmetric, Weyl class, harmonic function, black hole, mass, quadrupole, tidal field, distorted black hole, horizon, Killing horizon, curvature singularity, not asymptotically flat, prolate spheroidal coordinates, no-hair theorem, black hole uniqueness, black hole thermodynamics, Hawking temperature, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/distorted_schwarzschild.json
+- chart Prolate Spheroidal: coordinates $(t, x, y, \phi)$, $$ds^2 = -\dfrac{x - 1}{x + 1}e^{2U}c^2dt^2 + m^2\left(x + 1\right)^2e^{-2U}\left(e^{2V}\left(\dfrac{dx^2}{x^2 - 1} + \dfrac{dy^2}{1 - y^2}\right) + \left(1 - y^2\right)d\phi^2\right)$$
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r}\right)e^{2U}c^2dt^2 + e^{-2U}\left(e^{2V}\left(\dfrac{dr^2}{1 - \dfrac{2m}{r}} + r^2d\theta^2\right) + r^2\sin^2\theta\,d\phi^2\right)$$
+- chart Weyl: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -e^{2\psi}c^2dt^2 + e^{-2\psi}\left(e^{2\gamma}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2\right)$$
+
 ### Double Kerr Solution
 
 Two Kerr black holes on one axis of symmetry, the stationary vacuum solution Dietrich Kramer and Gernot Neugebauer built in 1980 by two Bäcklund transformations of flat space. The repulsion between the spins does not balance the attraction of the masses, so a strut on the axis between the horizons holds the holes apart.

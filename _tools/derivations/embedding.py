@@ -12613,6 +12613,168 @@ def erez_rosen(ck, src):
     return views
 
 
+DS_OBLATE, DS_PROLATE = {"m": 1, "q": "1/12"}, {"m": 1, "q": "-1/12"}
+
+
+def distorted_schwarzschild(ck, src):
+    """Schwarzschild's black hole in a quadrupole tidal field at m = 1, for the oblate q = 1/12 and
+    the prolate q = -1/12, in the spherical chart: the equatorial plane at t = 0 and the horizon
+    itself.
+
+    On the equator, with x = r/m - 1, U = -(q/4)(3x^2 - 1) and V = -3qx + (9/16) q^2 (x^2 - 1)^2,
+    so the circle of radius r has the radius rho = r e^(-U) = r e^(q (3x^2 - 1)/4) on the surface,
+    2m e^(q/2) at the throat r = 2m, the equator of the horizon, and g_rr = e^(2V - 2U)/(1 - 2m/r).
+    The slice runs through the throat, the bifurcation surface, into a second exterior, as
+    Flamm's paraboloid does. At q = -1/12 the circles grow more slowly than Schwarzschild's and the
+    surface stands in flat space as far as it is drawn, r = 4m. At q = 1/12 they grow faster: the
+    surface lies level at r = 2.5388 m, found here, on a circle of radius 2.883 m, and beyond it
+    the circles grow faster than the distance out to them, which is checked, so the slice is drawn
+    on in three dimensional Minkowski space, climbing at dZ/dr = sqrt((d rho/dr)^2 - g_rr), as
+    Schwarzschild-anti-de Sitter's is; inside the level circle no surface of Minkowski space
+    carries it, which is checked as well.
+
+    The horizon r = 2m at one moment has the metric 4m^2 e^(-2U)(e^(2V) dtheta^2 + sin^2(theta)
+    dphi^2) with U = (q/2)(3 cos^2(theta) - 1) and V = 2U - 2q = -3q sin^2(theta), a closed surface
+    of area 16 pi m^2 e^(-2q) whose equator has the radius 2m e^(q/2). Its Gaussian curvature is
+    e^(2q + 3q sin^2(theta))(1 + 3q - 15q cos^2(theta) - 18 q^2 sin^2(theta) cos^2(theta))/(4m^2),
+    (1 - 12q) e^(2q)/(4m^2) at the poles, so it stands in flat space for q <= 1/12 and at
+    q = 1/12 is flat at its poles, which is checked as g_thetatheta - (d rho/d theta)^2 falling to
+    zero there as the fourth power of theta. At q = 1/12 it is oblate, 2.085 m across the equator
+    and 1.225 m from its centre to a pole; at q = -1/12 prolate, 1.918 m and 2.652 m."""
+    name = "black hole in a tidal field"
+    top = 4.0
+    views = []
+    unit = "$m = 1$, the unit of every length"
+    for vid, label, q, qtex, params in (("oblate", "The equatorial plane, $q = 1/12$", 1 / 12, "1/12", DS_OBLATE),
+                                        ("prolate", "The equatorial plane, $q = -1/12$", -1 / 12, "-1/12", DS_PROLATE)):
+        fixed_at = {"t": 0, **EQUATOR}
+        sl = Slice(src, "distorted_schwarzschild", "spherical", "r", "\\phi", fixed_at, params)
+        rh = sl.horizons()[0]
+        ck.add(f"{name}, {vid}: the horizon on the equator is at r = 2m", abs(rh - 2.0), 1e-12)
+
+        def radius(r, q=q):
+            return r * np.exp(q * (3 * (r - 1) ** 2 - 1) / 4)
+        throat_radius = 2 * math.exp(q / 2)
+        size = 2 * float(sl.rho_at(top))
+        throat_text = "the throat $r = 2m$, the equator of the horizon, where the other exterior begins"
+        if vid == "oblate":
+            msl = Slice(src, "distorted_schwarzschild", "spherical", "r", "\\phi", fixed_at, params, space="minkowski")
+            lo, hi = 2.3, 2.8
+            for _ in range(80):
+                mid = 0.5 * (lo + hi)
+                lo, hi = (mid, hi) if float(sl.defect_at(np.array([mid]))[0]) > 0 else (lo, mid)
+            level = 0.5 * (lo + hi)
+            ck.add(f"{name}, oblate: the surface lies level at r = 2.5388 m", abs(level - 2.5388), 1e-4)
+            ck.stops(f"{name}, oblate, beyond the level circle in flat space", sl, np.linspace(level, top, 402)[1:])
+            inward = np.linspace(rh, level, 402)[1:-1]
+            ck.add(f"{name}, oblate: between the throat and the level circle no surface in Minkowski space carries "
+                   "the slice, (drho/dr)^2 - g_rr < 0", float(max(0.0, np.max(-msl.defect_at(inward)))), 0.0)
+            if not np.all(msl.defect_at(inward) > 0):
+                ck.items[-1]["ok"] = False
+            join = (f"at $r = {level:.2f}\\,m$ the surface lies level, in flat space nearer the horizon and in "
+                    "Minkowski space beyond")
+            edge = "the sheet runs on to where the distant matter lies"
+            near = Piece("exterior", "sheet", sl, rh, level, 0.0, 1, (("throat", throat_text), ("join", join)),
+                         [(rh, "horizon", "$r = 2m$"), (level, "space", None)], size)
+            out = Piece("exterior_minkowski", "sheet", msl, level, top, near.at(level)[1], 1,
+                        (("join", join), ("edge", edge)), [(3.0, "r", None), (top, "r", None)], size)
+            far = Piece("other_exterior", "sheet2", sl, rh, level, 0.0, -1,
+                        (("throat", "the throat $r = 2m$"), ("join", join)), [(level, "space", None)], size)
+            far_out = Piece("other_exterior_minkowski", "sheet2", msl, level, top, far.at(level)[1], -1,
+                            (("join", join), ("edge", edge)), [(3.0, "r2", None), (top, "r2", None)], size)
+            pieces = [near, out, far, far_out]
+            for a, b in ((near, out), (far, far_out)):
+                # The level circle is a root found in floats, where a tangent taken as a limit has no
+                # sign to its square root, so the join is held by the slope of each profile's last chord.
+                ends = [abs(piece.z[i] - piece.z[j]) / abs(piece.rho[i] - piece.rho[j])
+                        for piece, (i, j) in ((a, (-1, -2)), (b, (0, 1)))]
+                ck.add(f"{name}, oblate, {a.id} in flat space and {b.id} in Minkowski space lie level where they meet",
+                       max(ends), 0.05)
+                pa, pb = a.data()["points"][-1], b.data()["points"][0]
+                ck.add(f"{name}, oblate, {a.id} and {b.id} as written: one point at the level circle",
+                       max(abs(pa[0] - pb[0]), abs(pa[1] - pb[1]), abs(pa[2] - pb[2])),
+                       10.0 ** -min(a.decimals, b.decimals))
+            ck.add(f"{name}, oblate: the level circle has radius 2.883 m", abs(near.at(level)[0] - 2.883), 1e-3)
+        else:
+            edge = "the surface runs on to where the distant matter lies"
+            near = Piece("exterior", "sheet", sl, rh, top, 0.0, 1, (("throat", throat_text), ("edge", edge)),
+                         [(rh, "horizon", "$r = 2m$"), (2.5, "r", None), (3.0, "r", None), (3.5, "r", None),
+                          (top, "r", None)], size)
+            far = Piece("other_exterior", "sheet2", sl, rh, top, 0.0, -1,
+                        (("throat", "the throat $r = 2m$"), ("edge", edge)),
+                        [(2.5, "r2", None), (3.0, "r2", None), (3.5, "r2", None), (top, "r2", None)], size)
+            pieces = [near, far]
+        for piece in pieces:
+            space = "in Minkowski space" if piece.sl.lorentz else "in flat space"
+            ck.isometry(f"{name}, {vid}, {piece.id} {space}", piece)
+            ck.radius(f"{name}, {vid}, {piece.id}, rho = r e^(q (3x^2 - 1)/4)", piece, radius, size)
+        ck.join(f"{name}, {vid}, the two sheets at the throat", near, rh, far, rh)
+        ck.add(f"{name}, {vid}: the throat has radius 2m e^(q/2)", abs(near.at(rh)[0] - throat_radius), 1e-6)
+        surface = Surface(pieces)
+        fig = figure_of([surface], {"sheet": "cover"}, size)
+        ring_label(fig, [0, 0, 0], *near.at(rh), "$r = 2m$", dx=14)
+        last = pieces[1] if vid == "oblate" else near
+        ring_label(fig, [0, 0, 0], *last.at(top), "$4\\,m$")
+        fig.legend("fill", "cover", "the exterior $r > 2m$ that $t$ and $r$ cover")
+        if vid == "oblate":
+            ring_label(fig, [0, 0, 0], *near.at(level), f"${level:.2f}\\,m$")
+            fig.legend("line", "r", "$r$ constant, at $3$ and $4\\,m$")
+            fig.legend("line", "space", f"$r = {level:.2f}\\,m$, where the surface lies level: flat space inside, "
+                                        "Minkowski space beyond")
+            settings = (f"$q = {qtex}$ and {unit}. Every length along the surface beyond $r = {level:.2f}\\,m$ is "
+                        "measured with $dX^2 + dY^2 - dZ^2$.")
+        else:
+            fig.legend("line", "r", "$r$ constant, at $2.5$, $3$, $3.5$ and $4\\,m$")
+            settings = f"$q = {qtex}$ and {unit}."
+        fig.legend("line", "r2", "the same radii on the other exterior")
+        fig.legend("line", "horizon", f"the throat $r = 2m$, of radius ${throat_radius:.3f}\\,m$, where the slice "
+                                      "crosses the horizon")
+        fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+        views.append(view(vid, label, "$m$", [surface], fig.done(), settings=settings))
+
+    for vid, label, q, qtex, params, equator, half_height in (
+            ("horizon_oblate", "The horizon, $q = 1/12$", 1 / 12, "1/12", DS_OBLATE, 2.085, 1.225),
+            ("horizon_prolate", "The horizon, $q = -1/12$", -1 / 12, "-1/12", DS_PROLATE, 1.918, 2.652)):
+        hz = Slice(src, "distorted_schwarzschild", "spherical", "\\theta", "\\phi", {"t": 0, "r": 2}, params)
+        half = hz.rise(0.0, math.pi / 2)
+        hsize = 2 * max(half, 2 * math.exp(q / 2))
+        horizon = Piece("horizon", "sheet", hz, 0.0, math.pi, -half, 1,
+                        (("axis", "the pole $\\theta = 0$"), ("axis", "the pole $\\theta = \\pi$")),
+                        [(math.pi / 4, "r", None), (math.pi / 2, "horizon", "$\\theta = \\pi/2$"),
+                         (3 * math.pi / 4, "r", None)], hsize)
+        which = vid.removeprefix("horizon_")
+        ck.isometry(f"{name}, the {which} horizon", horizon)
+
+        def around(th, q=q):
+            return 2 * np.exp(-q * (3 * np.cos(th) ** 2 - 1) / 2) * np.sin(th)
+        ck.radius(f"{name}, the {which} horizon, rho = 2m e^(-U) sin(theta)", horizon, around, hsize)
+        ck.add(f"{name}, the {which} horizon is the same on either side of its equator",
+               abs(horizon.at(math.pi)[1] - half) / hsize, FORM)
+        ck.add(f"{name}, the {which} horizon: the equator has radius {equator} m",
+               abs(horizon.at(math.pi / 2)[0] - equator), 1e-3)
+        ck.add(f"{name}, the {which} horizon: a pole stands {half_height} m from the centre", abs(half - half_height), 1e-3)
+        pts = np.array(horizon.data()["points"])
+        ds = np.hypot(np.diff(pts[:, 1]), np.diff(pts[:, 2]))
+        area = float(np.sum(2 * math.pi * 0.5 * (pts[1:, 1] + pts[:-1, 1]) * ds))
+        exact = 16 * math.pi * math.exp(-2 * q)
+        ck.add(f"{name}, the {which} horizon: the area is 16 pi m^2 e^(-2q)", abs(area - exact) / exact, 1e-4)
+        if which == "oblate":
+            # At q = 1/12 the poles are flat: g_thetatheta - (d rho/d theta)^2 falls as theta^4.
+            small = np.array([0.02, 0.01])
+            defect = hz.defect_at(small)
+            ck.add(f"{name}, the oblate horizon is flat at its poles: the defect falls as theta^4",
+                   abs(float(defect[0] / defect[1]) - 16.0) / 16.0, 0.02)
+        body = Surface([horizon])
+        fig = figure_of([body], {"sheet": "cover"}, hsize)
+        ring_label(fig, [0, 0, 0], *horizon.at(math.pi / 2), "$\\theta = \\pi/2$", dx=10)
+        fig.legend("fill", "cover", "the horizon $r = 2m$ at one moment, a closed surface")
+        fig.legend("line", "horizon", f"the equator $\\theta = \\pi/2$, of radius ${equator}\\,m$")
+        fig.legend("line", "r", "$\\theta$ constant, at $\\pi/4$ and $3\\pi/4$")
+        fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+        views.append(view(vid, label, "$m$", [body], fig.done(), settings=f"$q = {qtex}$ and {unit}."))
+    return views
+
+
 TAUB = (1, sp.Rational(1, 2))   # m and l of Taub's universe, as Taub-NUT's spacetime diagram declares
 
 
@@ -14393,6 +14555,7 @@ DRAWN = {
     "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
     "zipoy_voorhees": zipoy_voorhees,
     "erez_rosen": erez_rosen,
+    "distorted_schwarzschild": distorted_schwarzschild,
     "robinson_trautman": robinson_trautman,
     "string_black_hole": string_black_hole,
     "mcvittie": mcvittie,
@@ -15308,6 +15471,38 @@ CAPTIONS = {
         "$\\tfrac{81}{64}\\cdot 2\\pi\\ell$, Emparan's excess of angle $(1 + m^2/b^2)^2$, so the tip is a cone in "
         "Minkowski space, $dX^2 + dY^2 - dZ^2$. Farther out the surface stands in flat space and widens as Flamm's "
         "paraboloid does; the same plane at every moment is the same surface.",
+    ],
+    ("distorted_schwarzschild", "oblate"): [
+        "The equatorial plane of the black hole in a tidal field at one moment ($q = 1/12$, $m = 1$), drawn as a "
+        "surface with every distance along it the metric distance. With $x = r/m - 1$ the circle of radius $r$ has "
+        "circumference $2\\pi r\\,e^{q(3x^2 - 1)/4}$, wider than Schwarzschild's $2\\pi r$ at every radius in the field of "
+        "a ring of matter around the equator.",
+        "The throat $r = 2m$ is the equator of the horizon, a circle of radius $2m\\,e^{q/2} = 2.085\\,m$, and the "
+        "surface runs through it into the other exterior. It lies level at $r = 2.54\\,m$, and beyond that circle "
+        "the circles grow faster than the distance out to them, so the surface is drawn on in Minkowski space, "
+        "$dX^2 + dY^2 - dZ^2$; the same plane at every moment is the same surface.",
+    ],
+    ("distorted_schwarzschild", "prolate"): [
+        "The equatorial plane of the black hole in a tidal field at one moment ($q = -1/12$, $m = 1$), drawn as a "
+        "surface in flat space with every distance along it the metric distance. With $x = r/m - 1$ the circle of "
+        "radius $r$ has circumference $2\\pi r\\,e^{q(3x^2 - 1)/4}$, narrower than Schwarzschild's $2\\pi r$ at every "
+        "radius in the field of masses far off on the axis.",
+        "The throat $r = 2m$ is the equator of the horizon, a circle of radius $2m\\,e^{q/2} = 1.918\\,m$, and the "
+        "surface runs through it into the other exterior; the same plane at every moment is the same surface.",
+    ],
+    ("distorted_schwarzschild", "horizon_oblate"): [
+        "The horizon of the black hole in a tidal field at one moment ($q = 1/12$, $m = 1$), drawn as a surface in "
+        "flat space with every distance along it the metric distance. A ring of matter around the equator flattens "
+        "it: the equator has radius $2m\\,e^{q/2} = 2.085\\,m$ and each pole stands $1.225\\,m$ from the centre.",
+        "The Gaussian curvature at a pole is $(1 - 12q)e^{2q}/4m^2$, zero at this $q$, the largest for which the "
+        "horizon stands in flat space. The area is $16\\pi m^2e^{-2q}$.",
+    ],
+    ("distorted_schwarzschild", "horizon_prolate"): [
+        "The horizon of the black hole in a tidal field at one moment ($q = -1/12$, $m = 1$), drawn as a surface in "
+        "flat space with every distance along it the metric distance. Masses far off on the axis stretch it toward "
+        "them: the equator has radius $2m\\,e^{q/2} = 1.918\\,m$ and each pole stands $2.652\\,m$ from the centre.",
+        "The Gaussian curvature is $(1 - 12q)e^{2q}/4m^2$ at a pole and $(1 + 3q)e^{5q}/4m^2$ on the equator, and "
+        "the area is $16\\pi m^2e^{-2q}$.",
     ],
     ("erez_rosen", "prolate"): [
         "The equatorial plane of the Erez-Rosen metric at one moment ($q = 1$, $m = 1$), drawn as a surface in flat "

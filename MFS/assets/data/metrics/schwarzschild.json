@@ -413,6 +413,11 @@
       "id": "einstein_1912_static",
       "kind": "programme",
       "text": "Einstein's own first field outside a body, three years before Schwarzschild's. Its space is flat and only its clocks feel the mass, so it bends light by half as much [einstein1911]."
+    },
+    {
+      "id": "distorted_schwarzschild",
+      "kind": "generalisation",
+      "text": "Schwarzschild's black hole with distant matter pulling on it. The quadrupole tidal field bends the horizon out of round and leaves it regular, and at $q = 0$ the metric is Schwarzschild's [doroshkevich1965, geroch1982]."
     }
   ],
   "references": [
@@ -525,7 +530,8 @@
     "ruban1968",
     "davies1977",
     "good2016",
-    "gibbons1977action"
+    "gibbons1977action",
+    "geroch1982"
   ],
   "coordinates": [
     {

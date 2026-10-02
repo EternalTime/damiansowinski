@@ -254,6 +254,24 @@ def string_hole(sign=0):
     return [Mark(equator, [np.column_stack([sign * (r + np.log(r - 1)), r])])]
 
 
+def distorted_hole(system, plane, shape):
+    """The two moments of Schwarzschild's black hole in a tidal field, m = 1, for one shape. The
+    horizon at t = 0, the bifurcation surface, is one point of every plane: x = 1, r = 2m, the end
+    z = m of the rod on Weyl's axis and rho = 0 in his equatorial plane. The equatorial plane's
+    t = 0 lies on the equatorial planes, over the r it reaches, with x = r/m - 1 and
+    rho = m sqrt(x^2 - 1); it does not meet the axis."""
+    horizon = moments("distorted_schwarzschild", f"horizon_{shape}", label="$t = 0$, the horizon")[0]
+    at = {"prolate_spheroidal": 1.0, "spherical": 2.0, "weyl": 1.0 if plane == "axis" else 0.0}[system]
+    marks = [Mark(horizon, points=[(0.0, at)])]
+    if plane == "equator":
+        equator = moments("distorted_schwarzschild", shape)[0]
+        lo, hi = equator.reach("spherical", "r")
+        to = {"prolate_spheroidal": lambda r: r - 1, "spherical": lambda r: r,
+              "weyl": lambda r: math.sqrt(max((r - 1) ** 2 - 1, 0.0))}[system]
+        marks.insert(0, Mark(equator, along(0.0, to(lo), to(hi))))
+    return marks
+
+
 def teo_proper(r):
     """Teo's proper radial distance from the throat at b_0 = 1, his eq. (28)."""
     return math.sqrt(r * (r - 1)) + math.log(math.sqrt(r) + math.sqrt(r - 1))
@@ -2721,6 +2739,10 @@ FLAT = {
        for shape in ("oblate", "prolate")},
     **{("zipoy_voorhees", "prolate_spheroidal", f"equator_{shape}"): lambda shape=shape: one(
         "zipoy_voorhees", lambda m: along(0.0, *(r - 1 for r in m.reach("spherical", "r"))), view_id=shape)
+       for shape in ("oblate", "prolate")},
+    **{("distorted_schwarzschild", system, f"{plane}_{shape}"):
+       lambda system=system, plane=plane, shape=shape: distorted_hole(system, plane, shape)
+       for system in ("prolate_spheroidal", "spherical", "weyl") for plane in ("axis", "equator")
        for shape in ("oblate", "prolate")},
     # Erez and Rosen's equatorial plane at t = 0 for each deformation, the same way.
     **{("erez_rosen", "spherical", f"equator_{shape}"): lambda shape=shape: one(
