@@ -68,7 +68,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "ba2c59eecd90e4a3",
+    "version": "59451049c12dfab5",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -358,6 +358,47 @@
     "diagrams": "2122349c176f47ed",
     "conformal": "f82fe13ee8206113",
     "embedding": "c306446463337712"
+  },
+  {
+    "id": "boulware_deser",
+    "name": "Boulware-Deser",
+    "tags": [
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "hyperspherical symmetry",
+      "black hole",
+      "mass",
+      "Einstein-Gauss-Bonnet gravity",
+      "Gauss-Bonnet term",
+      "Lovelock gravity",
+      "higher curvature gravity",
+      "string theory",
+      "low energy string theory",
+      "higher dimensions",
+      "five-dimensional",
+      "curvature singularity",
+      "naked singularity",
+      "coordinate singularity",
+      "horizon",
+      "event horizon",
+      "white hole",
+      "maximal extension",
+      "causal structure",
+      "asymptotically flat",
+      "anti-de Sitter",
+      "ghost",
+      "instability",
+      "black hole thermodynamics",
+      "Hawking temperature",
+      "exact solution",
+      "Lorentzian",
+      "idealized model"
+    ],
+    "version": "a58527b9ef2adb1b",
+    "diagrams": "aad81dc2048a0547",
+    "conformal": "6c5c22a5247f56a8",
+    "embedding": "d857ba18e7d9066a"
   },
   {
     "id": "c_metric",
@@ -2315,7 +2356,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "89b3f6d3852a7d66",
+    "version": "8c7145a653c0cae5",
     "diagrams": "d1e087098b20d92d",
     "conformal": "94cab2e957646c35",
     "embedding": "68458b3281a24534"
@@ -2656,7 +2697,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "b0facb94196207ed",
+    "version": "c10f7fe3bf8da568",
     "diagrams": "70598c77af726b80",
     "conformal": "243a2de40edb7f43",
     "embedding": "930f06c7003fad35"
@@ -2682,7 +2723,7 @@
       "naked singularity",
       "cosmic censorship"
     ],
-    "version": "1bd7f68c0a79b305",
+    "version": "3953a2031d1999e5",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404"

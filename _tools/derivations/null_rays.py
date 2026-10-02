@@ -245,6 +245,10 @@ EQUATOR = {"theta": "pi/2", "phi": "0"}
 # Tangherlini's planes of the time and r hold every angle fixed, three in five dimensions and four in six.
 TANGHERLINI_FIVE = {"psi": "pi/2", "theta": "pi/2", "phi": "0"}
 TANGHERLINI_SIX = {"chi": "pi/2", **TANGHERLINI_FIVE}
+# Boulware and Deser's black hole in units of its horizon radius, r_h^2 = r_0^2 - l^2 = 1, and the
+# other branch in units of l at r_0 = l.
+BD = {"r_0": "13/12", "ell": "5/12"}
+BD_PLUS = {"r_0": 1, "ell": 1}
 # The black string's planes of the time and r hold the angles and the length z along the string fixed.
 STRING_FIVE = {"theta": "pi/2", "phi": "0", "z": "0"}
 STRING_SIX = {"psi": "pi/2", **STRING_FIVE}
@@ -1174,6 +1178,22 @@ DIAGRAMS = [
             tau="u + r", areal=True),
     Diagram("tangherlini", "spherical_six", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_h$", "$ct/r_h$", {"r_h": 1}, TANGHERLINI_SIX, orient="ingoing", areal=True),
+    Diagram("boulware_deser", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
+            "$r/r_h$", "$ct/r_h$", BD, TANGHERLINI_FIVE, orient="ingoing", areal=True),
+    Diagram("boulware_deser", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
+            ("v", "r"), (0, 6, -3, 3), "$r/r_h$", "$(v - r)/r_h$", BD, TANGHERLINI_FIVE,
+            to_display=FINKELSTEIN_IN, tau="v - r", areal=True),
+    Diagram("boulware_deser", "eddington_finkelstein_ingoing", "chart", "against $v$",
+            ("v", "r"), (0, 6, 0, 6), "$r/r_h$", "$v/r_h$", BD, TANGHERLINI_FIVE,
+            tau="v - r", areal=True),
+    Diagram("boulware_deser", "eddington_finkelstein_outgoing", "finkelstein", "against $u + r$",
+            ("u", "r"), (0, 6, -3, 3), "$r/r_h$", "$(u + r)/r_h$", BD, TANGHERLINI_FIVE,
+            to_display=FINKELSTEIN_OUT, tau="u + r", areal=True),
+    Diagram("boulware_deser", "eddington_finkelstein_outgoing", "chart", "against $u$",
+            ("u", "r"), (0, 6, -6, 0), "$r/r_h$", "$u/r_h$", BD, TANGHERLINI_FIVE,
+            tau="u + r", areal=True),
+    Diagram("boulware_deser", "spherical_plus", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
+            "$r/\\ell$", "$ct/\\ell$", BD_PLUS, TANGHERLINI_FIVE, areal=True),
     Diagram("black_string", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_s$", "$ct/r_s$", {"r_s": 1}, STRING_FIVE, orient="ingoing", areal=True),
     Diagram("black_string", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
@@ -2870,6 +2890,54 @@ CAPTIONS = {
         "The same plane of $u$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own coordinates. The outgoing family is "
         "$u = $ const and runs horizontally here, since $u$ is itself a null coordinate. The ingoing family "
         "turns vertical at $r_h$ and leans toward larger $r$ inside it.",
+    ],
+    ("boulware_deser", "spherical", "radial"): [
+        "The plane of $t$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$), drawn for $r_0 = 13r_h/12$ and "
+        "$\\ell = 5r_h/12$, the same at every fixed angle by hyperspherical symmetry. Outside $r_h$ the cones narrow "
+        "toward the vertical as $r \\to r_h$, because $dt/dr = \\pm 1/f$ with $f = 1 - 2r_0^2/(r^2 + W)$ diverges "
+        "there. At $r = 2r_h$ it is $\\pm 1.41$, where Tangherlini's at twice its own horizon radius is $\\pm 4/3$.",
+        "Inside $r_h$ the same components make $r$ the time, and we take the future as the ingoing rays carry it "
+        "across the horizon, which makes that region the black hole, where every cone points to $r = 0$. There "
+        "$f$ ends at the finite value $1 - r_0/\\ell = -8/5$, so the cones reach the singularity with their edges "
+        "at $c\\,dt/dr = \\pm 5/8$, while the Kretschmann scalar grows as $12r_0^2/(\\ell^2r^4)$.",
+    ],
+    ("boulware_deser", "eddington_finkelstein_ingoing", "finkelstein"): [
+        "The plane of $v$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$), drawn for $r_0 = 13r_h/12$ and "
+        "$\\ell = 5r_h/12$ with $v - r$ as the vertical axis, so that the ingoing rays, $v = $ const, run at 45°. The "
+        "outgoing family has $dv/dr = 2/f$ with $f = 1 - 2r_0^2/(r^2 + W)$, so it stands exactly vertical at $r_h$: "
+        "the horizon is an outgoing ray that stays where it is.",
+        "The cones cross $r_h$ smoothly and keep tipping. Inside, both edges of every future cone point to "
+        "smaller $r$, so every future directed ray on this plane ends at $r = 0$. The outgoing edge arrives there "
+        "at $dv/dr = 2/(1 - r_0/\\ell) = -5/4$, with the cone still open, where Tangherlini's cone has closed onto "
+        "its ingoing edge.",
+    ],
+    ("boulware_deser", "eddington_finkelstein_ingoing", "chart"): [
+        "The same plane of $v$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The ingoing family is $v = $ const and runs horizontally here, since $v$ is itself a null "
+        "coordinate. The outgoing family turns vertical at $r_h$ and leans back toward smaller $r$ inside it.",
+    ],
+    ("boulware_deser", "eddington_finkelstein_outgoing", "finkelstein"): [
+        "The plane of $u$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$), drawn for $r_0 = 13r_h/12$ and "
+        "$\\ell = 5r_h/12$ with $u + r$ as the vertical axis, so that the outgoing rays, $u = $ const, run at 45°. "
+        "The ingoing family stands vertical at $r_h$. Inside $r_h$ both edges of every future cone point to larger "
+        "$r$: this is the white hole, which nothing from outside can enter.",
+        "The chart is the time reverse of the ingoing one: its $g_{ur}$ is $-1$ where the ingoing chart's "
+        "$g_{vr}$ is $+1$.",
+    ],
+    ("boulware_deser", "eddington_finkelstein_outgoing", "chart"): [
+        "The same plane of $u$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a null "
+        "coordinate. The ingoing family turns vertical at $r_h$ and leans toward larger $r$ inside it.",
+    ],
+    ("boulware_deser", "spherical_plus", "radial"): [
+        "The plane of $t$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$) of the anti-de Sitter branch, drawn "
+        "for $r_0 = \\ell$. The rays run at $dr/d(ct) = \\pm f_+$ with $f_+ = 1 + 2r_0^2/(W - r^2)$, which is "
+        "$1 + r_0/\\ell = 2$ at the centre and grows as $r^2/\\ell^2$ far away, so the cones open toward the "
+        "horizontal and a light ray runs from any radius to $r \\to \\infty$ in a finite time $t$, as in anti-de "
+        "Sitter space.",
+        "No horizon stands anywhere on the plane: $f_+ > 1$ at every $r$, and $t$ is a time throughout. The "
+        "singularity $r = 0$, where the Kretschmann scalar grows as $12r_0^2/(\\ell^2r^4)$, is timelike, and a light "
+        "ray from far away reaches it and one from it reaches every radius.",
     ],
     ("black_string", "static", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$, $z = 0$), the same at every angle and at every "
@@ -8320,6 +8388,15 @@ CLOSED_FORMS = {
         (lambda u, r: u + 2 * _tangherlini_rstar(r), lambda u, r: u, _away(1.0)),
     ("tangherlini", "spherical_six", "radial"):
         (lambda t, r: t + _tangherlini_rstar(r, 6), lambda t, r: t - _tangherlini_rstar(r, 6), _away(1.0)),
+    ("boulware_deser", "spherical", "radial"):
+        (lambda t, r: t + slices.boulware_deser_rstar(r), lambda t, r: t - slices.boulware_deser_rstar(r), _away(1.0)),
+    ("boulware_deser", "eddington_finkelstein_ingoing", "finkelstein"):
+        (lambda v, r: v, lambda v, r: v - 2 * slices.boulware_deser_rstar(r), _away(1.0)),
+    ("boulware_deser", "eddington_finkelstein_outgoing", "finkelstein"):
+        (lambda u, r: u + 2 * slices.boulware_deser_rstar(r), lambda u, r: u, _away(1.0)),
+    ("boulware_deser", "spherical_plus", "radial"):
+        (lambda t, r: t + slices.boulware_deser_plus_rstar(r), lambda t, r: t - slices.boulware_deser_plus_rstar(r),
+         lambda t, r: r > 0.02),
     ("black_string", "static", "radial"):
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), _away(1.0)),
     ("black_string", "eddington_finkelstein_ingoing", "finkelstein"):

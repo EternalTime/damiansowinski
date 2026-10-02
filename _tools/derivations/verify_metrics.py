@@ -800,6 +800,21 @@ DIMENSIONS = {
     ("tangherlini", "spherical_six"): {
         "t": "T", "r": "L", "\\chi": "1", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_h": "L",
     },
+    # Boulware and Deser's black hole quotes its mass as Tangherlini's radius r_0 and the coupling
+    # of the Gauss-Bonnet term as the length l, l^2 = 2 alpha; the radical W = sqrt(r^4 + 4 l^2 r_0^2)
+    # is an area, and the Eddington-Finkelstein times u = ct - r_* and v = ct + r_* are lengths.
+    ("boulware_deser", "spherical"): {
+        "t": "T", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\ell": "L", "W": "L^2",
+    },
+    ("boulware_deser", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\ell": "L", "W": "L^2",
+    },
+    ("boulware_deser", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\ell": "L", "W": "L^2",
+    },
+    ("boulware_deser", "spherical_plus"): {
+        "t": "T", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\ell": "L", "W": "L^2",
+    },
     # Randall and Sundrum's wall has one inverse length, k, the curvature of the anti-de Sitter space
     # on each side; x_1, x_2 and x_3 run along the wall, and the fifth coordinate is a length in every
     # chart but the one between two walls, where it is the angle phi and r_c carries the length.

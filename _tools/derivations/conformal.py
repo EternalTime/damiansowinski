@@ -2004,6 +2004,246 @@ def tangherlini(ck, src):
     return views
 
 
+BD = {"r_0": "13/12", "ell": "5/12"}
+BD_PLUS = {"r_0": 1, "ell": 1}
+
+
+class BoulwareDeserTower(Tower):
+    """The tower of f = 1 - 2 r_0^2/(r^2 + W), W = sqrt(r^4 + 4 l^2 r_0^2), at r_0 = 13/12 and
+    l = 5/12, whose one positive root is r_h = 1. Its tortoise coordinate is no sum of
+    logarithms: r* = r + (W_h/2 r_h) ln|(r - r_h)/(r + r_h)| - J(r)/2 with W_h = r_h^2 + 2 l^2
+    and J the integral of a smooth function, slices.boulware_deser_rstar, with r*(0) = 0. The
+    surface gravity, f'(r_h)/2 = r_h/W_h = 72/97, is checked in sympy from the published f."""
+
+    def __init__(self, f, r):
+        self.f_sym = f
+        x = sp.Symbol("x", positive=True)
+        slope = sp.diff(f.subs(r, x), x).subs(x, 1)
+        assert sp.simplify(f.subs(r, x).subs(x, 1)) == 0, "f does not vanish at r = 1"
+        assert sp.simplify(slope / 2 - sp.Rational(72, 97)) == 0, "the surface gravity is not 72/97"
+        self.kp = 72 / 97
+        self.rf = [1.0]
+
+    def rstar(self, r):
+        return slices.boulware_deser_rstar(r)
+
+
+def boulware_deser(ck, src):
+    """Boulware and Deser's black hole at r_0 = 13/12 and l = 5/12, in units of its horizon radius
+    r_h = 1, and the other branch at r_0 = l = 1.
+
+    The black hole is Kruskal and Szekeres's square by p = arctan U, q = arctan V with
+    U = -exp(-k u), V = exp(k v), u, v = ct -+ r* and k = r_h/(r_h^2 + 2 l^2) = 72/97 the surface
+    gravity, so that UV = sign(r_h - r) exp(2 k r*). f tends to the finite value
+    1 - r_0/l = -8/5 at r = 0, so r* is finite there, and with r*(0) = 0, UV = 1 and the
+    singularity is the pair of straight lines T = +-pi/2: spacelike, as Torii and Maeda find for
+    M~ > alpha~ (Phys. Rev. D 71, 124002, section IV). The ingoing coordinates are V = exp(k v),
+    U = (UV)(r)/V, one formula for every r > 0 covering I and II, and the outgoing ones their
+    time reverse.
+
+    The other branch has f_+ > 1 at every r, no horizon, and a tortoise coordinate that runs
+    from 0 at the singularity to a finite R = 1.1981 l at infinity, so with
+    p, q = pi (ct -+ r*)/(4 R) the plane of t and r is the strip 0 <= X <= pi/2: the singularity
+    r = 0 on X = 0 and the conformal boundary on X = pi/2, both timelike, their table III for
+    k = 1 in the plus branch."""
+    fixed = {"psi": "pi/2", **EQUATOR}
+    name = "Boulware-Deser"
+    sph = Plane(src, "boulware_deser", "spherical", ("t", "r"), fixed, BD)
+    assert sph.g[0, 1] == 0 and sp.simplify(sph.g[0, 0] * sph.g[1, 1] + 1) == 0
+    T = BoulwareDeserTower(-sph.g[0, 0], sph.x1)
+    k = T.kp
+    for cell, region, lo, hi, future in (("I", "exterior", 1.001, 8, (1, 0)), ("II", "black hole", 0.01, 0.999, (0, -1)),
+                                         ("IV", "white hole", 0.01, 0.999, (0, 1)),
+                                         ("I'", "other exterior", 1.001, 8, (-1, 0))):
+        ck.chart(f"{name}, {region}", sph, lambda t, r, cell=cell: T.pq(cell, t, r),
+                 ck.uniform(-6, 6, 400), ck.uniform(lo, hi, 400), lambda t, r, future=future: future)
+    rr = np.array([0.1, 0.3, 0.6, 0.9, 1.5, 3.0, 30.0])
+    f_at = sp.lambdify(sph.x1, -sph.g[0, 0], "numpy")
+    ck.limit(f"{name}: dr*/dr = 1/f", (T.rstar(rr + 1e-6) - T.rstar(rr - 1e-6)) / 2e-6 * f_at(rr), np.ones(7), 1e-6)
+    ck.limit(f"{name}: r* vanishes at r = 0", [float(T.rstar(0.0))], [0], 1e-12)
+    ck.limit(f"{name}: f tends to 1 - r_0/l = -8/5 at r = 0", [float(f_at(1e-9))], [-8 / 5], 1e-9)
+
+    def uv(r):
+        r = np.asarray(r, dtype=float)
+        with np.errstate(over="ignore"):
+            return np.sign(1 - r) * np.exp(2 * k * T.rstar(r))
+
+    def ingoing(w, r):
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        with np.errstate(over="ignore"):
+            return np.arctan(uv(r) * np.exp(-k * w)), atan_exp(k * w)
+
+    def outgoing(u, r):
+        u, r = np.asarray(u, dtype=float), np.asarray(r, dtype=float)
+        with np.errstate(over="ignore"):
+            return -atan_exp(-k * u), np.arctan(-uv(r) * np.exp(k * u))
+    ein = Plane(src, "boulware_deser", "eddington_finkelstein_ingoing", ("v", "r"), fixed, BD)
+    ck.chart(f"{name} ingoing Eddington-Finkelstein", ein, ingoing,
+             ck.uniform(-6, 6, 400), ck.uniform(0.05, 8, 400), lambda w, r: (1, -300))
+    eout = Plane(src, "boulware_deser", "eddington_finkelstein_outgoing", ("u", "r"), fixed, BD)
+    ck.chart(f"{name} outgoing Eddington-Finkelstein", eout, outgoing,
+             ck.uniform(-6, 6, 400), ck.uniform(0.05, 8, 400), lambda u, r: (1, 300))
+    p, q = T.pq("II", np.array([-5.0, 0, 5]), np.full(3, 1e-9))
+    ck.limit(f"{name}: r -> 0 in the black hole lands on T = pi/2", p + q, [HALF] * 3)
+    p, q = T.pq("I", np.array([0.0]), np.array([1e8]))
+    ck.limit(f"{name}: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)", point(p[0], q[0]), [PI, 0], 1e-3)
+    p, q = T.pq("I", np.array([1.5 / k]), np.array([1 + 1e-12]))
+    ck.limit(f"{name}: r -> r_h at fixed t lands on the bifurcation sphere", point(p[0], q[0]), [0, 0], 1e-4)
+    K = sph.kretschmann
+    ck.diverges(f"{name}: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+    ck.limit(f"{name}: r^4 K tends to 12 r_0^2/l^2 at r = 0", [float(K(0, 1e-4)) * 1e-16], [12 * 169 / 25], 1e-4)
+    ck.finite(f"{name}: the Kretschmann scalar is finite at r = r_h", K(np.zeros(3), np.array([0.999, 1, 1.001])))
+    rs3 = float(T.rstar(3.0))
+    ck.limit(f"{name}: the ingoing and spherical coordinates put one event at one point",
+             ingoing(2.0 + rs3, 3.0), T.pq("I", 2.0, 3.0), 1e-12)
+    ck.limit(f"{name}: the outgoing and spherical coordinates put one event at one point",
+             outgoing(2.0 - rs3, 3.0), T.pq("I", 2.0, 3.0), 1e-12)
+
+    box = [-PI - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25]
+    hexagon = [[PI, 0], [HALF, HALF], [-HALF, HALF], [-PI, 0], [-HALF, -HALF], [HALF, -HALF]]
+    exterior = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    R_OUT, R_IN, TS = (1.1, 1.5, 2, 3, 5), (0.5, 0.75, 0.9), (-8, -4, -2, 0, 2, 4, 8)
+
+    def edges(v):
+        v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]],
+                        [[-PI, 0], [-HALF, HALF]], [[-PI, 0], [-HALF, -HALF]]])
+        v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+        v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+        for at in ((PI, 0), (-PI, 0), (HALF, HALF), (HALF, -HALF), (-HALF, HALF), (-HALF, -HALF)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+        v.label_xt([-PI, 0], "$i^0$", "r", dx=-6)
+        for sx in (1, -1):
+            v.label_xt([sx * HALF, HALF], "$i^+$", "b", dy=-6)
+            v.label_xt([sx * HALF, -HALF], "$i^-$", "t", dy=6)
+            v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-4)
+            v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=4)
+        v.label_xt([0, HALF], "$r = 0$", "b", dy=-8)
+        v.label_xt([0, -HALF], "$r = 0$", "t", dy=8)
+        v.label_xt([-Q4, Q4], "$r = r_h$", "tr", "small", dx=-6, dy=2)
+        v.label_xt([HALF, -0.95], "exterior", cls="region")
+        v.label_xt([-HALF, 0], "exterior", cls="region")
+        v.label_xt([0, 1.15], "black hole", cls="region")
+        v.label_xt([0, -1.15], "white hole", cls="region")
+        v.set(settings="$r_0 = 13r_h/12$ and $\\ell = 5r_h/12$, so that $\\kappa = 72/(97\\,r_h)$.")
+        v.legend("horizon", "the horizon $r = r_h$")
+        v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+
+    hole = slices.moments("boulware_deser", "hole")[0]
+    lo, hi = hole.reach("spherical", "r")
+    ends = np.linspace(lo, hi, 2)
+    left, right = T.pq("I'", 0 * ends, ends[::-1]), T.pq("I", 0 * ends, ends)
+    moment = (hole, [(np.concatenate([left[0], right[0]]), np.concatenate([left[1], right[1]]))])
+
+    t = spread(-np.inf, np.inf, 500, 9 / k)
+    v = View("spherical", "Hyperspherical", box, "spherical")
+    v.fill("region", hexagon)
+    v.fill("cover", exterior)
+    for r in R_OUT:
+        v.curve("r", *T.pq("I", t, np.full_like(t, r)))
+    out = spread(1, np.inf, 500, 14)
+    for tt in TS:
+        v.curve("t", *T.pq("I", np.full_like(out, tt), out))
+    edges(v)
+    for r, text in ((1.5, "$1.5\\,r_h$"), (3, "$3\\,r_h$")):
+        label_on(v, T.pq("I", 0.0, r), text)
+    v.legend("cover", "the region that $t$ and $r > r_h$ cover")
+    v.legend("r", "$r$ constant")
+    v.legend("t", "$ct$ constant, in units of $r_h$")
+    v.slice(*moment)
+    views = [v]
+
+    v = View("ingoing", "Ingoing Eddington-Finkelstein", box, "eddington_finkelstein_ingoing")
+    v.fill("region", hexagon)
+    v.fill("cover", [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF], [-HALF, HALF]])
+    for r in R_OUT + R_IN:
+        v.curve("r", *ingoing(t, np.full_like(t, r)))
+    rr = spread(0, np.inf, 600, 14)
+    for w in (-12, -8, -4, 0, 4, 8, 12):
+        v.curve("null", *ingoing(np.full_like(rr, w), rr))
+    edges(v)
+    v.legend("cover", "the region that $v$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant")
+    v.legend("null", "$v$ constant, an ingoing light ray")
+    v.slice(*moment)
+    views.append(v)
+
+    v = View("outgoing", "Outgoing Eddington-Finkelstein", box, "eddington_finkelstein_outgoing")
+    v.fill("region", hexagon)
+    v.fill("cover", [[0, 0], [-HALF, -HALF], [HALF, -HALF], [PI, 0], [HALF, HALF]])
+    for r in R_OUT + R_IN:
+        v.curve("r", *outgoing(t, np.full_like(t, r)))
+    for u in (-12, -8, -4, 0, 4, 8, 12):
+        v.curve("null", *outgoing(np.full_like(rr, u), rr))
+    edges(v)
+    v.legend("cover", "the region that $u$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant")
+    v.legend("null", "$u$ constant, an outgoing light ray")
+    v.slice(*moment)
+    views.append(v)
+
+    # The other branch: a strip between a timelike singularity and a timelike boundary.
+    plus = Plane(src, "boulware_deser", "spherical_plus", ("t", "r"), fixed, BD_PLUS)
+    assert plus.g[0, 1] == 0 and sp.simplify(plus.g[0, 0] * plus.g[1, 1] + 1) == 0
+    far = float(slices.boulware_deser_plus_rstar(np.inf))
+    fp_at = sp.lambdify(plus.x1, -plus.g[0, 0], "numpy")
+
+    def strip_pq(t, r):
+        t = np.asarray(t, dtype=float)
+        rs = slices.boulware_deser_plus_rstar(r)
+        return PI * (t - rs) / (4 * far), PI * (t + rs) / (4 * far)
+    ck.chart(f"{name}, the other branch", plus, strip_pq, ck.uniform(-4, 4, 400), ck.uniform(0.01, 30, 400), lambda t, r: (1, 0))
+    rr2 = np.array([0.05, 0.3, 1.0, 3.0, 20.0])
+    ck.limit(f"{name}, the other branch: dr*/dr = 1/f_+",
+             (slices.boulware_deser_plus_rstar(rr2 + 1e-6) - slices.boulware_deser_plus_rstar(rr2 - 1e-6)) / 2e-6 * fp_at(rr2),
+             np.ones(5), 1e-6)
+    ck.limit(f"{name}, the other branch: f_+ > 1 from 1 + r_0/l = 2 at r = 0",
+             [float(fp_at(1e-9)), float(min(fp_at(np.linspace(0.01, 50, 500))) > 1)], [2, 1], 1e-8)
+    ck.limit(f"{name}, the other branch: r* tends to R = 1.1981 l as r -> infinity", [far], [1.1981], 1e-4)
+    p, q = strip_pq(np.array([-1.0, 0, 2]), np.full(3, 1e-12))
+    ck.limit(f"{name}, the other branch: r -> 0 lands on X = 0", q - p, [0] * 3, 1e-9)
+    p, q = strip_pq(np.array([-1.0, 0, 2]), np.full(3, 1e12))
+    ck.limit(f"{name}, the other branch: r -> infinity lands on the boundary X = pi/2", q - p, [HALF] * 3, 1e-9)
+    Kp = plus.kretschmann
+    ck.diverges(f"{name}, the other branch: the Kretschmann scalar diverges at r = 0", Kp(0, 1e-2), Kp(0, 1e-3))
+    ck.limit(f"{name}, the other branch: the Kretschmann scalar tends to anti-de Sitter's 40/l^4 far away",
+             [float(Kp(0, 1e3))], [40], 1e-3)
+
+    T0, T1 = -0.6 * PI, 1.6 * PI
+    v = View("branch", "Hyperspherical", [-0.95, HALF + 0.75, T0, T1], "spherical_plus")
+    v.fill("region", [[0, T0], [HALF, T0], [HALF, T1], [0, T1]])
+    v.fill("cover", [[0, T0], [HALF, T0], [HALF, T1], [0, T1]])
+    v.line("boundary", [[[HALF, T0], [HALF, T1]]])
+    v.line("singular", [[[0, T0], [0, T1]]], zig=True)
+    radii = (0.25, 0.5, 1, 2, 4)
+    for r in radii:
+        X = float(HALF * slices.boulware_deser_plus_rstar(r) / far)
+        v.line("r", [[[X, T0], [X, T1]]])
+    for n in range(-2, 7):
+        v.line("t", [[[0, n * Q4], [HALF, n * Q4]]])
+    v.segment("null", (0, 0), (0, HALF))
+    v.segment("null", (0, HALF), (HALF, HALF))
+    v.label_xt([0, 0], "$t = 0$", "r", "coord", dx=-6)
+    v.label_xt([0, PI], "$2R/c$", "r", "coord", dx=-6)
+    v.label_xt([0, 1.3 * PI], "$r = 0$", "r", dx=-8)
+    v.label_xt([HALF, 1.3 * PI], "$r \\to \\infty$", "l", dx=6)
+    v.label_xt([float(HALF * slices.boulware_deser_plus_rstar(1.0) / far), T0 + 0.25], "$r = \\ell$", "b", "coord", dy=-2)
+    v.set(fade={"top": 0.7, "bottom": 0.7}, settings="$r_0 = \\ell$, so that $R = 1.20\\,\\ell$.")
+    v.legend("cover", "the whole of the branch, which $t$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant, at $\\ell/4$, $\\ell/2$, $\\ell$, $2\\ell$ and $4\\ell$")
+    v.legend("t", "$ct$ constant, every $R/2$")
+    v.legend("boundary", "the conformal boundary $r \\to \\infty$, timelike")
+    v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges, timelike")
+    v.legend("null", "a light ray from the singularity to the boundary and back")
+    sheet = slices.moments("boulware_deser", "branch")[0]
+    lo, hi = sheet.reach("spherical_plus", "r")
+    ends = np.linspace(lo, hi, 2)
+    v.slice(sheet, [strip_pq(0 * ends, ends)])
+    views.append(v)
+    return views
+
+
 def black_string(ck, src):
     """The black string at r_s = 1 in five dimensions and at r_h = 1 in six.
 
@@ -17613,7 +17853,7 @@ DRAWN = {
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "bardeen": bardeen, "mass_inflation": mass_inflation,
     "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "de_sitter": de_sitter,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
-    "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
+    "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "boulware_deser": boulware_deser, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
     "bertotti_robinson": bertotti_robinson, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string, "spinning_string": spinning_string,
     "point_particle_2plus1": point_particle_2plus1,
@@ -18248,6 +18488,42 @@ CAPTIONS = {
         "The spheres shrink to zero area at the singularity $r = r_d$, where $g_{tt}$ vanishes too. At the extremal "
         "charge $r_d = r_s$ the string metric is $-(1 - r_s/r)^2c^2dt^2 + dr^2 + (r - r_s)^2d\\Omega^2$, whose "
         "moments of constant $t$ are flat.",
+    ],
+    ("boulware_deser", "spherical"): [
+        "Boulware and Deser's black hole ($r_0 = 13r_h/12$, $\\ell = 5r_h/12$), maximally extended, each point in the "
+        "diagram a 3-sphere of radius $r$. The Kruskal coordinates $U = -e^{-\\kappa u}$ and $V = e^{\\kappa v}$, "
+        "with $u, v = ct \\mp r_*$, $dr_*/dr = \\left(1 - 2r_0^2/(r^2 + W)\\right)^{-1}$ and the surface gravity "
+        "$\\kappa = r_h/(r_h^2 + 2\\ell^2)$, make the metric regular through $r = r_h$. We take $r_* = 0$ at "
+        "$r = 0$, so with $p = \\arctan U$ and $q = \\arctan V$ the singularity $UV = 1$ lies on the straight lines "
+        "$T = \\pm\\pi/2$.",
+        "The coordinates $t$ and $r > r_h$ cover the right exterior alone. The horizon is the pair of null lines "
+        "$U = 0$ and $V = 0$, crossing at the bifurcation sphere. The black hole above it ends at $r = 0$ on "
+        "$T = \\pi/2$ and the white hole below it begins at $r = 0$ on $T = -\\pi/2$. The metric function is "
+        "finite there, $1 - r_0/\\ell$, and negative for $r_0 > \\ell$, so both singularities are spacelike, as "
+        "Tangherlini's are.",
+    ],
+    ("boulware_deser", "ingoing"): [
+        "The whole of Boulware and Deser's black hole ($r_0 = 13r_h/12$, $\\ell = 5r_h/12$) with the ingoing "
+        "Eddington-Finkelstein coordinates $v$ and $r$ on it, each point in the diagram a 3-sphere of radius $r$. "
+        "From $V = e^{\\kappa v}$ and $U = UV(r)/V$, one formula for every $r > 0$, they cover the exterior and the "
+        "black hole together, and their lines of constant $v$ are ingoing light rays, which cross the horizon at "
+        "45° and end at $r = 0$.",
+    ],
+    ("boulware_deser", "outgoing"): [
+        "The whole of Boulware and Deser's black hole ($r_0 = 13r_h/12$, $\\ell = 5r_h/12$) with the outgoing "
+        "Eddington-Finkelstein coordinates $u$ and $r$ on it, the time reverse of the ingoing ones, each point in "
+        "the diagram a 3-sphere of radius $r$. From $U = -e^{-\\kappa u}$ and $V = UV(r)/U$ they cover the "
+        "exterior and the white hole, and their lines of constant $u$ are outgoing light rays, which leave "
+        "$r = 0$ and cross the horizon outward.",
+    ],
+    ("boulware_deser", "branch"): [
+        "The anti-de Sitter branch ($r_0 = \\ell$), whole, each point in the diagram a 3-sphere of radius $r$. "
+        "Its tortoise coordinate $r_*$, with $dr_*/dr = \\left(1 + 2r_0^2/(W - r^2)\\right)^{-1}$ and $r_* = 0$ at "
+        "$r = 0$, tends to a finite value $R = 1.20\\,\\ell$ as $r \\to \\infty$, so $X = \\pi r_*/2R$ and "
+        "$T = \\pi ct/2R$ draw the plane of $t$ and $r$ as a strip.",
+        "The singularity $r = 0$ on $X = 0$ and the conformal boundary on $X = \\pi/2$ are both timelike, and no "
+        "horizon lies between them: a light ray crosses from one to the other in the time $R/c$, and every "
+        "observer sees the singularity.",
     ],
     ("tangherlini", "spherical"): [
         "The Schwarzschild-Tangherlini spacetime in five dimensions, maximally extended, each point in the diagram "

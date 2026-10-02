@@ -3,7 +3,7 @@
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
 schwarzschild_de_sitter, schwarzschild_ads, topological_black_hole, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
-robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
+robinson_trautman, string_black_hole, mcvittie, tangherlini, boulware_deser, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, reissner_nordstrom_ads, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
 black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
@@ -3103,6 +3103,211 @@ def tangherlini(system_id):
 
 
 CHARTS["tangherlini"] = [lambda s=s: tangherlini(s) for s in TANGHERLINI_CHARTS]
+
+
+# -- Boulware-Deser ----------------------------------------------------------------------
+
+BOULWARE_DESER_CHARTS = ["spherical", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing", "spherical_plus"]
+BOULWARE_DESER_W = "W = \\sqrt{r^4 + 4\\ell^2 r_0^2}"
+
+
+def boulware_deser(system_id):
+    """Boulware and Deser's black hole of Einstein-Gauss-Bonnet gravity in five dimensions,
+    f = 1 + (r^2/2 l^2)(1 - sqrt(1 + 4 l^2 r_0^2/r^4)), in the static chart and in the two
+    Eddington-Finkelstein charts built on its tortoise coordinate, dr_*/dr = 1/f, and the other
+    root of the same quadratic, f_+ = 1 + (r^2/2 l^2)(1 + sqrt(1 + 4 l^2 r_0^2/r^4)), in its static
+    chart. The parameters are two lengths: Tangherlini's r_0, with r_0^2 = 8GM/(3 pi c^2), and
+    l, with l^2 = 2 alpha for the coupling alpha of the Gauss-Bonnet term. The charts name
+    W = sqrt(r^4 + 4 l^2 r_0^2), in which f = 1 - 2 r_0^2/(r^2 + W) and f_+ = 1 + 2 r_0^2/(W - r^2),
+    and every value is printed in r, r_0 and W by boulware_deser_pretty, so that it is
+    Tangherlini's at W = r^2, which is l = 0, and the second branch's is the first's with W -> -W.
+    boulware_deser.md records each chart's source."""
+    plus = system_id == "spherical_plus"
+    sign = "+" if plus else "-"
+    f = ("\\left(1 + \\dfrac{r^2}{2\\ell^2}\\left(1 " + sign
+         + " \\sqrt{1 + \\dfrac{4\\ell^2 r_0^2}{r^4}}\\right)\\right)")
+    bare = f[6:-7]
+    named = "\\left(1 + \\dfrac{2r_0^2}{W - r^2}\\right)" if plus else "\\left(1 - \\dfrac{2r_0^2}{r^2 + W}\\right)"
+    sphere = (" + r^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2"
+              " + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)")
+    angles = ["\\psi", "\\theta", "\\phi"]
+    domains = ["\\psi \\in [0, \\pi]", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    if system_id.startswith("spherical"):
+        coords = ["t", "r"] + angles
+        name = "Hyperspherical, Anti-de Sitter Branch" if plus else "Hyperspherical"
+        radial = "r \\in (0, \\infty)" if plus else "r \\in (\\sqrt{r_0^2 - \\ell^2}, \\infty)"
+        line = "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        chart_line = "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        metric = {("t", "t"): "-" + named, ("r", "r"): named + "^{-1}"}
+        inverse = {("t", "t"): "-" + named + "^{-1}", ("r", "r"): named[6:-7]}
+    else:
+        null, way = ("u", "-") if system_id == "eddington_finkelstein_outgoing" else ("v", "+")
+        coords = [null, "r"] + angles
+        name = ("Outgoing" if null == "u" else "Ingoing") + " Eddington-Finkelstein"
+        radial = "r \\in (0, \\infty)"
+        line = "ds^2 = -" + f + "d" + null + "^2 " + way + " 2\\,d" + null + "\\,dr" + sphere
+        chart_line = line
+        one = "-1" if null == "u" else "1"
+        metric = {(null, null): "-" + named, (null, "r"): one, ("r", null): one}
+        inverse = {(null, "r"): one, ("r", null): one, ("r", "r"): named[6:-7]}
+    if not plus:
+        domains.append("r = r_h = \\sqrt{r_0^2 - \\ell^2} \\;\\text{(the horizon, for}\\; r_0 > \\ell\\text{)}")
+    parameters = ["r_0", "\\ell", BOULWARE_DESER_W]
+    probe = vm.Reader(coords, parameters, ())
+    r, r0, ell = probe.symbol["r"], probe.parameters["r_0"], probe.parameters["ell"]
+    W, gap, lapse = sp.Symbol("W", positive=True), sp.Symbol("BDgap"), sp.Symbol("BDlapse")
+    return {
+        "metric_id": "boulware_deser",
+        "system": {"id": system_id, "name": name, "coords": coords,
+                   "domains": [coords[0] + " \\in (-\\infty, \\infty)", radial] + domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        "printer": {"lead": [r, W, r0], "factors": [r0, r, W], "flip": False,
+                    "named": {gap: "W - r^2", lapse: "W - r^2 + 2r_0^2"}},
+        "pretty": boulware_deser_pretty(r, r0, ell, W, gap, lapse),
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "check": lambda chart: boulware_deser_check(chart, system_id),
+    }
+
+
+def boulware_deser_pretty(r, r0, ell, W, gap, lapse):
+    """A pretty printer for Boulware and Deser's charts, whose every value is a rational function
+    of r, l^2, r_0^2 and one radical, W = sqrt(r^4 + 4 l^2 r_0^2). Written in r, r_0 and W, with
+    l^2 = (W^2 - r^4)/(4 r_0^2), no relation is left among the generators, so the value factors
+    there. W - r^2, which is positive and vanishes at l = 0, is written whole and in that order,
+    as the placeholder `gap`, and so is the second branch's W - r^2 + 2 r_0^2, as `lapse`."""
+    square = r ** 4 + 4 * ell ** 2 * r0 ** 2
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        value = value.replace(lambda p: p.is_Pow and sp.expand(p.base - square) == 0, lambda p: W ** (2 * p.exp))
+        value = sp.together(value.subs(ell, sp.sqrt(W ** 2 - r ** 4) / (2 * r0)))
+        if value.has(ell) or any(not p.exp.is_Integer for p in value.atoms(sp.Pow)):
+            raise AssertionError(f"boulware_deser: an odd power of l is left in {value}")
+        out, powers = _factor_powers(value)
+        flipped = powers.pop(r ** 2 - W, 0)
+        out *= (-1) ** flipped * gap ** (flipped + powers.pop(W - r ** 2, 0))
+        flipped = powers.pop(r ** 2 - W - 2 * r0 ** 2, 0)
+        out *= (-1) ** flipped * lapse ** (flipped + powers.pop(W - r ** 2 + 2 * r0 ** 2, 0))
+        for base, k in powers.items():
+            out *= base ** k
+        return out
+
+    return pretty
+
+
+def boulware_deser_check(chart, system_id):
+    """Each chart solves the field equations of Einstein-Gauss-Bonnet gravity with no source,
+    G_ab + alpha H_ab = 0 at alpha = l^2/2, where H_ab = 2(R R_ab - 2 R_ac R^c_b
+    - 2 R^cd R_acbd + R_a^cde R_bcde) - g_ab (R^2 - 4 R_cd R^cd + R_cdef R^cdef)/2, which is
+    Torii and Maeda's (3) to (5), Phys. Rev. D 71, 124002: held at three random points to
+    forty digits, since the contraction is of the full Riemann tensor. The first branch has its
+    horizon at r_h^2 = r_0^2 - l^2 with the surface gravity r_h/(r_h^2 + 2 l^2) of Myers and
+    Simon's temperature, f(0) = 1 - r_0/l, and is Tangherlini's published chart in the limit
+    l -> 0; each Eddington-Finkelstein chart is the static one pulled back along
+    c t = v - r_* or u + r_*, dr_*/dr = 1/f; and the second branch is the first with the sign
+    of the radical reversed. In both, r^4 K -> 12 r_0^2/l^2 at r = 0, Torii and Maeda's (28)."""
+    geo, g = chart.geo, chart.geo.g
+    r = chart.reader.symbol["r"]
+    r0, ell = chart.reader.parameters["r_0"], chart.reader.parameters["ell"]
+    n = 5
+    riemann, ricci, scalar = geo.riemann_llll(), geo.ricci_ll(), geo.ricci_scalar()
+    rng = random.Random(5)
+    for _ in range(3):
+        at = {s: sp.Rational(rng.randint(1100, 1900), 1000) for s in chart.symbols}
+        # r is taken outside the horizon of the first branch, r_0 > l.
+        at.update({r: sp.Rational(rng.randint(2500, 4000), 1000), r0: sp.Rational(rng.randint(1500, 2000), 1000),
+                   ell: sp.Rational(rng.randint(500, 1400), 1000)})
+
+        def number(e):
+            return sp.sympify(e).xreplace(at).evalf(40)
+        up = [[number(geo.ginv[a, b]) for b in range(n)] for a in range(n)]
+        low = [[number(g[a, b]) for b in range(n)] for a in range(n)]
+        R4 = {tuple(i): number(vm._at(riemann, i)) for i in vm._indices(n, 4)}
+        R2 = [[number(ricci[a][b]) for b in range(n)] for a in range(n)]
+        R = number(scalar)
+        span = range(n)
+        # R^cd, R_a^c, and R_a^{cde} with its last three indices raised.
+        R2uu = [[sum(up[a][c] * up[b][d] * R2[c][d] for c in span for d in span) for b in span] for a in span]
+        R2mixed = [[sum(up[c][d] * R2[a][d] for d in span) for c in span] for a in span]
+        half = {(a, c, d, e): sum(up[c][p] * R4[a, p, d, e] for p in span)
+                for a in span for c in span for d in span for e in span}
+        half = {(a, c, d, e): sum(up[d][p] * half[a, c, p, e] for p in span)
+                for a in span for c in span for d in span for e in span}
+        raised = {(a, c, d, e): sum(up[e][p] * half[a, c, d, p] for p in span)
+                  for a in span for c in span for d in span for e in span}
+        full = {(a, c, d, e): sum(up[a][p] * raised[p, c, d, e] for p in span)
+                for a in span for c in span for d in span for e in span}
+        gauss_bonnet = (R ** 2 - 4 * sum(R2uu[a][b] * R2[a][b] for a in span for b in span)
+                        + sum(full[i] * R4[i] for i in R4))
+        for a in span:
+            for b in span:
+                H = 2 * (R * R2[a][b] - 2 * sum(R2mixed[a][c] * R2[c][b] for c in span)
+                         - 2 * sum(R2uu[c][d] * R4[a, c, b, d] for c in span for d in span)
+                         + sum(raised[a, c, d, e] * R4[b, c, d, e] for c in span for d in span for e in span)
+                         ) - low[a][b] * gauss_bonnet / 2
+                einstein = R2[a][b] - low[a][b] * R / 2
+                if abs(einstein + number(ell) ** 2 / 2 * H) > sp.Float(10) ** -30:
+                    raise AssertionError(f"boulware_deser: the {system_id} chart misses the field equations of "
+                                         f"Einstein-Gauss-Bonnet gravity in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
+    W = sp.sqrt(r ** 4 + 4 * ell ** 2 * r0 ** 2)
+    f = 1 + (r ** 2 + (W if system_id == "spherical_plus" else -W)) / (2 * ell ** 2)
+    K = geo.kretschmann()
+    small = sp.Rational(1, 10 ** 12)
+    for values in ({r0: 2, ell: 1}, {r0: sp.Rational(5, 4), ell: sp.Rational(3, 4)}):
+        wanted = (12 * r0 ** 2 / ell ** 2).subs(values)
+        if abs(sp.sympify(K).subs(values).subs(r, small).evalf(40) * small ** 4 / wanted - 1) > sp.Float(10) ** -10:
+            raise AssertionError(f"boulware_deser: r^4 K does not tend to 12 r_0^2/l^2 at r = 0 in the {system_id} chart")
+    if system_id.startswith("spherical"):
+        if vm.norm(g[0, 0] + f) != 0 or vm.norm(g[1, 1] - 1 / f) != 0:
+            raise AssertionError(f"boulware_deser: the {system_id} chart is not -f c^2dt^2 + dr^2/f")
+    if system_id == "spherical_plus":
+        return
+    # The reader's symbols carry no sign, so the horizon is taken in positive ones: with
+    # r_0^2 = r_h^2 + l^2 the radical at r_h is r_h^2 + 2 l^2.
+    rh, l, x = sp.symbols("r_h l x", positive=True)
+
+    def at_radius(e, radius):
+        e = e.subs({ell: l, r: x}).subs(r0, sp.sqrt(rh ** 2 + l ** 2)).subs(x, radius)
+        return sp.simplify(e.replace(lambda p: p.is_Pow and p.exp.is_Rational and p.exp.q == 2,
+                                     lambda p: sp.factor(p.base) ** p.exp))
+    if at_radius(f, rh) != 0:
+        raise AssertionError("boulware_deser: f does not vanish at r_h^2 = r_0^2 - l^2")
+    if sp.simplify(at_radius(sp.diff(f, r), rh) / 2 - rh / (rh ** 2 + 2 * l ** 2)) != 0:
+        raise AssertionError("boulware_deser: the surface gravity is not r_h/(r_h^2 + 2 l^2)")
+    if sp.simplify(at_radius(f, 0) - (1 - sp.sqrt(rh ** 2 + l ** 2) / l)) != 0:
+        raise AssertionError("boulware_deser: f(0) is not 1 - r_0/l")
+    if system_id == "spherical":
+        published = next(c for c in json.loads((METRICS / "tangherlini.json").read_text(encoding="utf-8"))
+                         ["coordinates"] if c["id"] == "spherical")
+        reader = vm.Reader(published["coords"], [p["symbol"] for p in published["parameters"]], ())
+        there = {tuple(e["indices"]): e["value"] for e in published["metric_components"]}
+        same = dict(zip((reader.symbol[c] for c in published["coords"]), chart.symbols))
+        same[reader.parameters["r_h"]] = r0
+        for i in range(n):
+            text = there.get((chart.coords_tex[i], chart.coords_tex[i]), "0")
+            if sp.simplify(sp.limit(g[i, i], ell, 0, "+") - reader(text).subs(same, simultaneous=True)) != 0:
+                raise AssertionError("boulware_deser: the static chart at l -> 0 is not Tangherlini's published "
+                                     f"metric in slot {chart.coords_tex[i]}{chart.coords_tex[i]}")
+        return
+    spec = boulware_deser("spherical")
+    static = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    at = dict(zip(static.symbols[1:], chart.symbols[1:]))
+    at.update({static.reader.parameters[k]: chart.reader.parameters[k] for k in ("r_0", "ell")})
+    old = static.geo.g.subs(at, simultaneous=True)
+    J = sp.eye(n)
+    J[0, 1] = (1 if chart.coords_tex[0] == "u" else -1) / (-old[0, 0])
+    pulled = J.T * old * J
+    for i in range(n):
+        for j in range(i, n):
+            if vm.norm(pulled[i, j] - g[i, j]) != 0:
+                raise AssertionError(f"boulware_deser: the static chart pulled back misses the {chart.coords_tex[0]} "
+                                     f"chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["boulware_deser"] = [lambda s=s: boulware_deser(s) for s in BOULWARE_DESER_CHARTS]
 
 
 # -- Gott's time machine ---------------------------------------------------------------

@@ -4374,6 +4374,116 @@ def tangherlini(ck, src):
     return views
 
 
+BD = {"r_0": "13/12", "ell": "5/12"}
+BD_PLUS = {"r_0": 1, "ell": 1}
+
+
+def boulware_deser(ck, src):
+    """Boulware and Deser's black hole at r_0 = 13/12 and l = 5/12, in units of its horizon radius
+    r_h = sqrt(r_0^2 - l^2) = 1. The slice of constant t on the plane of r and phi, the other
+    angles at pi/2, has g_rr = 1/f and g_phiphi = r^2 with f = 1 - 2 r_0^2/(r^2 + W) and
+    W = sqrt(r^4 + 4 l^2 r_0^2), so dz/dr = sqrt(1/f - 1) = sqrt(2 r_0^2/(r^2 + W - 2 r_0^2)),
+    Tangherlini's r_h/sqrt(r^2 - r_h^2) at l = 0. It stands vertical at the throat r_h, the
+    bifurcation sphere, runs on into the other exterior, and far out climbs as
+    r_0 ln r, the catenoid of the same mass. Its height is checked against scipy's quadrature
+    of that slope. Drawn to r = 6 r_h on both sheets, as Tangherlini's is.
+
+    The other branch, at r_0 = l = 1: f_+ = 1 + 2 r_0^2/(W - r^2) is greater than 1 at
+    every r, so the circles grow faster than the distance out to them and no surface of
+    revolution in flat space carries the slice, which is checked. In three dimensional Minkowski
+    space it climbs at dZ/dr = sqrt(1 - 1/f_+), from sqrt(r_0/(r_0 + l)) = sqrt(1/2) at the
+    centre, where f_+ = 1 + r_0/l is finite and the sheet is a cone with the singularity at its
+    apex, toward a light cone far out, as anti-de Sitter space's does."""
+    from scipy.integrate import quad
+    held = {"t": 0, "psi": "pi/2", **EQUATOR}
+    name = "Boulware-Deser"
+    sl = Slice(src, "boulware_deser", "spherical", "r", "\\phi", held, BD)
+    rh = sl.horizons()[0]
+    ck.add(f"{name}: the horizon is r_h = sqrt(r_0^2 - l^2) = 1", abs(rh - 1), 1e-12)
+    r0, ell = 13 / 12, 5 / 12
+
+    def in_q(q):
+        # 1/f - 1 = (2 r_0^2 - r^2 + W)/(2 (r^2 - r_h^2)) diverges as an inverse square root at the
+        # throat, so the height is taken in q, r = 1 + q^2, where r^2 - 1 = q^2 (2 + q^2).
+        r = 1 + q * q
+        return 2 * math.sqrt((2 * r0 ** 2 - r * r + math.sqrt(r ** 4 + 4 * ell ** 2 * r0 ** 2)) / (2 * (2 + q * q)))
+
+    def height(r):
+        return np.array([quad(in_q, 0.0, math.sqrt(max(x - 1, 0.0)), epsabs=1e-12, epsrel=1e-12, limit=200)[0]
+                         for x in np.atleast_1d(r)])
+    top, radii = 6.0, (1.5, 2, 3, 4, 5)
+    size = 2 * top
+    end = "the surface runs on to $r \\to \\infty$"
+    near = Piece("exterior", "sheet", sl, rh, top, 0.0, 1,
+                 (("throat", "the throat $r = r_h$, the bifurcation sphere, where the other exterior begins"),
+                  ("edge", end)),
+                 [(rh, "horizon", "$r = r_h$")] + [(r, "r", None) for r in radii] + [(top, "r", "$r = 6\\,r_h$")],
+                 size)
+    far = Piece("other_exterior", "sheet2", sl, rh, top, 0.0, -1,
+                (("throat", "the throat $r = r_h$"), ("edge", end)),
+                [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+    for p in (near, far):
+        ck.isometry(f"{name}, {p.id}", p)
+        ck.form(f"{name}, {p.id}, the quadrature of sqrt(2 r_0^2/(r^2 + W - 2 r_0^2))", p,
+                lambda r, s=p.sense: s * height(r), size)
+        ck.radius(f"{name}, {p.id}, rho = r", p, lambda r: r, size)
+    ck.join(f"{name}, the two sheets at the throat", near, rh, far, rh)
+    ck.stops(f"{name}, inside the horizon", sl, np.linspace(0, rh, 402)[1:-1])
+    catenoid = math.acosh(top)
+    ck.add(f"{name}: at 6 r_h the surface stands at 2.77 r_h, where Tangherlini's catenoid stands at 2.48",
+           abs(round(near.at(top)[1], 2) - 2.77) + abs(round(catenoid, 2) - 2.48), 0.0)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], rh, 0.0, "$r = r_h$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(3.0), "$3\\,r_h$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$6\\,r_h$")
+    fig.legend("fill", "cover", "the exterior $r > r_h$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1.5$, $2$, $3$, $4$, $5$ and $6\\,r_h$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_h$, where the slice crosses the horizon")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    not_space = "Inside the horizon, $r < r_h$, $g_{rr} < 0$: $r$ is a time there, and a slice of constant $t$ is not a moment of space."
+    views = [view("hole", "The black hole", "$r_h$", [surface], fig.done(), stops=[not_space],
+                  settings="$r_0 = 13r_h/12$ and $\\ell = 5r_h/12$, with the horizon radius "
+                           "$r_h = \\sqrt{r_0^2 - \\ell^2}$ the unit of every length, on the plane of $r$ and $\\phi$ "
+                           "($\\psi = \\theta = \\pi/2$).")]
+
+    msl = Slice(src, "boulware_deser", "spherical_plus", "r", "\\phi", held, BD_PLUS, space="minkowski")
+    flat = Slice(src, "boulware_deser", "spherical_plus", "r", "\\phi", held, BD_PLUS)
+    ck.stops(f"{name}, the other branch in flat space", flat, np.linspace(1e-3, 40, 400))
+    top = 3.0
+    size = 2 * top
+    tip = math.sqrt(1 / 2)
+    sheet = Piece("sheet", "sheet", msl, 0.0, top, 0.0, 1,
+                  (("apex", "the centre $r = 0$, where the Kretschmann scalar diverges"),
+                   ("edge", "the sheet runs on toward a light cone, to $r \\to \\infty$")),
+                  [(r, "r", None) for r in (0.5, 1.0, 2.0, top)], size)
+    ck.isometry(f"{name}, the other branch in Minkowski space", sheet)
+    ck.radius(f"{name}, the other branch, rho = r", sheet, lambda r: r, size)
+    ck.add(f"{name}, the other branch: the slope at the centre is sqrt(r_0/(r_0 + l)) = sqrt(1/2)",
+           abs(float(np.sqrt(-msl.defect_at(np.array([1e-9]))[0])) - tip), 1e-8)
+    ck.add(f"{name}, the other branch: at r = 40 l the slope dZ/dr is within 1e-3 of a light cone's",
+           abs(float(np.sqrt(-msl.defect_at(np.array([40.0]))[0])) - 1.0), 1e-3)
+    cone = FormPiece("cone", msl, np.linspace(0.0, top, 81), lambda r: r, lambda r: tip * r,
+                     (("apex", "the apex of the cone the sheet leaves the centre along"), ("edge", "the cone runs on")),
+                     size)
+    branch = Surface([sheet, cone])
+    fig = figure_of([branch], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *sheet.at(1.0), "$r = \\ell$")
+    ring_label(fig, [0, 0, 0], *sheet.at(top), "$3\\ell$")
+    fig.legend("fill", "cover", "the slice $t = 0$, which $t$ and $r$ cover whole")
+    fig.legend("line", "r", "$r$ constant, at $\\ell/2$, $\\ell$, $2\\ell$ and $3\\ell$")
+    fig.legend("line", "reference", "the cone of slope $\\sqrt{r_0/(r_0 + \\ell)}$, tangent to the sheet at the centre")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("branch", "The anti-de Sitter branch", "$\\ell$", [branch], fig.done(), system="spherical_plus",
+                      settings="$\\ell = 1$, the unit of every length, and $r_0 = \\ell$, on the plane of $r$ and "
+                               "$\\phi$ ($\\psi = \\theta = \\pi/2$), every length along the sheet measured with "
+                               "$dX^2 + dY^2 - dZ^2$.",
+                      stops=["At every $r$ the circles grow faster than the distance out to them, $g_{rr} < 1$, and no "
+                             "surface of revolution in flat space carries the slice; Minkowski space carries it."]))
+    return views
+
+
 # The Gregory-Laflamme ripple drawn on the black string: Lehner and Pretorius's circle, 10 r_s long,
 # with a ripple of 0.02 r_s in the horizon's radius at v = 0, and the advanced times v/r_s of its moments.
 STRING_LENGTH, STRING_RIPPLE = 10.0, 0.02
@@ -9582,6 +9692,7 @@ DRAWN = {
     "nariai": nariai,
     "global_monopole": global_monopole,
     "tangherlini": tangherlini,
+    "boulware_deser": boulware_deser,
     "black_string": black_string,
     "kaluza_klein_monopole": kaluza_klein_monopole,
     "witten_black_hole": witten_black_hole,
@@ -10637,6 +10748,26 @@ CAPTIONS = {
         "grows as $r_h\\ln(2r/r_h)$, where Flamm's paraboloid of four dimensions grows as $2\\sqrt{r_sr}$ with $r_s$ its own horizon radius.",
         "Every slice of constant $t$ passes through the bifurcation sphere $r = r_h$, where the circles are "
         "smallest, and runs on through it into a second exterior, the same catenoid turned over.",
+    ],
+    ("boulware_deser", "hole"): [
+        "The plane of $r$ and $\\phi$ ($\\psi = \\theta = \\pi/2$) of Boulware and Deser's black hole "
+        "($r_0 = 13r_h/12$, $\\ell = 5r_h/12$) at one moment of $t$, drawn as a surface in flat space with every distance "
+        "along it the metric distance. On it the metric is $dr^2/f + r^2d\\phi^2$ with $f = 1 - 2r_0^2/(r^2 + W)$, so "
+        "$dz/dr = \\sqrt{2r_0^2/(r^2 + W - 2r_0^2)}$, which at $\\ell = 0$ is the slope $r_0/\\sqrt{r^2 - r_0^2}$ of "
+        "Tangherlini's catenoid. Far out the height grows as $r_0\\ln r$, and at $6\\,r_h$ the surface stands "
+        "$2.77\\,r_h$ above its throat, where the catenoid of the same horizon radius stands $2.48\\,r_h$ above its own.",
+        "Every slice of constant $t$ passes through the bifurcation sphere $r = r_h$, where the circles are "
+        "smallest, and runs on through it into a second exterior, the same surface turned over.",
+    ],
+    ("boulware_deser", "branch"): [
+        "The plane of $r$ and $\\phi$ ($\\psi = \\theta = \\pi/2$) of the anti-de Sitter branch ($r_0 = \\ell$) "
+        "at one moment of $t$, a surface in three dimensional Minkowski space ($dX^2 + dY^2 - dZ^2$) with every "
+        "distance along it the metric distance. On it the metric is $dr^2/f_+ + r^2d\\phi^2$ with "
+        "$f_+ = 1 + 2r_0^2/(W - r^2) > 1$, and the sheet climbs at $dZ/dr = \\sqrt{1 - 1/f_+}$.",
+        "At the centre $f_+ = 1 + r_0/\\ell$ is finite, so the sheet leaves $r = 0$ along a cone of slope "
+        "$\\sqrt{r_0/(r_0 + \\ell)}$, dashed: a circle of radius $r$ about the centre lies a proper distance "
+        "$r/\\sqrt{1 + r_0/\\ell}$ from it, and the Kretschmann scalar grows as $12r_0^2/(\\ell^2r^4)$. Far out "
+        "$f_+$ grows as $r^2/\\ell^2$ and the sheet nears a light cone, as the static slice of anti-de Sitter space does.",
     ],
     ("tangherlini", "six"): [
         "The plane of $r$ and $\\phi$ ($\\chi = \\psi = \\theta = \\pi/2$) of the Schwarzschild-Tangherlini "
