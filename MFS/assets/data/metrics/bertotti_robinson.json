@@ -89,6 +89,11 @@
       "id": "kundt_waves",
       "kind": "family",
       "text": "Bertotti and Robinson's universe has rays that neither expand nor twist, so it sits in Kundt's class beside his waves [podolskybelan2004]."
+    },
+    {
+      "id": "plebanski_hacyan",
+      "kind": "family",
+      "text": "The same uniform field with a cosmological constant, in the products where one factor is flat: a flat plane of time and space times a sphere, and anti-de Sitter space of two dimensions times a flat plane. In both the energy density of the field matches the cosmological constant [ortaggio2002direct]."
     }
   ],
   "references": [
@@ -115,7 +120,8 @@
     "romans1992",
     "breitenlohner1994",
     "emparan2000",
-    "podolskybelan2004"
+    "podolskybelan2004",
+    "ortaggio2002direct"
   ],
   "coordinates": [
     {

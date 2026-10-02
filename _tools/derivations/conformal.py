@@ -123,7 +123,7 @@ EQUATOR = {"theta": "pi/2", "phi": "0"}
 NOT_DRAWN = {"godel", "stockum_dust", "som_raychaudhuri", "taub_nut", "kasner", "bianchi", "tolman_bondi", "alcubierre",
              "natario", "krasnikov", "pp_wave", "mixmaster", "lentz", "szekeres", "van_den_broeck",
              "string_wave", "black_saturn", "schrodinger_spacetime", "eguchi_hanson", "misner_brill_lindquist",
-             "kundt_waves"}
+             "kundt_waves", "wahlquist"}
 
 
 # ---------------------------------------------------------------- the drawing
@@ -7107,6 +7107,239 @@ def near_horizon_extreme_kerr(ck, src):
     v.legend("boundary", "the two boundaries of the throat, timelike")
     v.set(fade={"top": 0.7, "bottom": 0.7}, restriction=restriction, settings="$r_0 = 1$ and $k = r_0/2$.")
     views.append(v)
+    return views
+
+
+# ---------------------------------------------------------------- Plebanski-Hacyan and anti-Nariai
+
+def ph_wedge_pq(tau, star):
+    """The static wedge of AdS2 at unit radius, -sinh^2(chi) dtau^2 + dchi^2, in the strip: with the
+    tortoise coordinate chi_* = ln tanh(chi/2), the embedding X_1 = sinh(chi) cosh(tau),
+    X_0 = sinh(chi) sinh(tau), X_-1 = cosh(chi) gives tan q = exp(tau + chi_*) and
+    tan p = -exp(-(tau - chi_*)), `star` being chi_*."""
+    tau, star = np.asarray(tau, dtype=float), np.asarray(star, dtype=float)
+    return -atan_exp(star - tau), atan_exp(tau + star)
+
+
+def ph_static_pq(tau, chi):
+    with np.errstate(divide="ignore"):
+        return ph_wedge_pq(tau, np.log(np.tanh(np.asarray(chi, dtype=float) / 2)))
+
+
+def ph_areal_pq(t, r):
+    """Anti-Nariai's static chart at a = 1: r = cosh(chi), so chi_* = ln((r - 1)/(r + 1))/2."""
+    r = np.asarray(r, dtype=float)
+    with np.errstate(divide="ignore"):
+        return ph_wedge_pq(t, 0.5 * np.log((r - 1) / (r + 1)))
+
+
+def ph_own_pq(u, w):
+    """Plebanski and Hacyan's chart of AdS2 at a = 1, -2 du dw - w^2 du^2: on w > 0 it is the Poincare
+    patch with t = u - 1/w and z = 1/w, so p = -pi/4 + arctan(u) and q = pi/4 + arctan(u - 2/w), and
+    on w < 0 it is the patch before it, q lowered by pi, which makes q continuous through the horizon
+    w = 0, where q = -pi/4."""
+    u, w = np.asarray(u, dtype=float), np.asarray(w, dtype=float)
+    with np.errstate(divide="ignore"):
+        q = Q4 + np.arctan(u - 2 / w) - np.where(w < 0, PI, 0.0)
+    return -Q4 + np.arctan(u) + 0 * w, q
+
+
+def ph_null_pq(u, v):
+    """Ortaggio and Podolsky's null chart at a = 1, -2 du dv/(1 + uv/2)^2, through w = v/(1 + uv/2):
+    u - 2/w = -2/v, so p = -pi/4 + arctan(u) and q = -pi/4 + arctan(v/2), continuous through v = 0."""
+    u, v = np.asarray(u, dtype=float), np.asarray(v, dtype=float)
+    return -Q4 + np.arctan(u) + 0 * v, -Q4 + np.arctan(v / 2) + 0 * u
+
+
+def plebanski_hacyan(ck, src):
+    """Three products, each drawn by its Lorentzian factor at unit radius.
+
+    The flat plane times a sphere: the factor is Minkowski space of two dimensions with z over the
+    whole line, the full diamond, p, q = arctan(ct -+ z), and the Rindler chart is its wedge
+    p < 0 < q, as Minkowski's own is.
+
+    Anti-de Sitter space of two dimensions times a flat plane, and times a hyperbolic plane in the
+    anti-Nariai universe: the factor is the strip. Plebanski and Hacyan's chart covers the band
+    between the null lines p = -3 pi/4 and p = pi/4, two Poincare patches joined on the horizon
+    w = 0, ph_own_pq. The null chart covers the part of that band with -3 pi/4 < q < pi/4,
+    ph_null_pq. The static charts cover the wedge between the event (X, T) = (0, 0), where their
+    horizons cross, and the stretch of the boundary X = pi/2 from T = -pi/2 to pi/2, ph_wedge_pq.
+    One event is checked to land on one point through the null chart and Plebanski and Hacyan's,
+    and the wedge to land where the embedding in flat space of signature (-, -, +) puts it."""
+    name = "plebanski_hacyan"
+    plane, hyper = {"x": "0", "y": "0"}, {"theta": "1", "phi": "0"}
+    sp = Plane(src, name, "sphere", ("t", "z"), EQUATOR, {"b": 1})
+    ri = Plane(src, name, "sphere_rindler", ("\\tau", "\\chi"), EQUATOR, {"b": 1})
+    own = Plane(src, name, "plane", ("u", "w"), plane, {"a": 1})
+    nul = Plane(src, name, "plane_null", ("u", "v"), plane, {"a": 1})
+    sta = Plane(src, name, "plane_static", ("\\tau", "\\chi"), plane, {"a": 1})
+    an = Plane(src, name, "anti_nariai", ("\\tau", "\\chi"), hyper, {"a": 1})
+    ans = Plane(src, name, "anti_nariai_static", ("t", "r"), hyper, {"a": 1})
+
+    def rindler(T, X):
+        T, X = np.asarray(T, dtype=float), np.asarray(X, dtype=float)
+        return np.arctan(-X * np.exp(-T)), np.arctan(X * np.exp(T))
+
+    ck.chart("Plebanski-Hacyan, the flat factor", sp, mink_pq, ck.uniform(-20, 20), ck.uniform(-20, 20),
+             lambda t, z: (1, 0))
+    ck.chart("Plebanski-Hacyan, the flat factor's Rindler chart", ri, rindler, ck.uniform(-5, 5),
+             ck.uniform(0.01, 10), lambda T, X: (1, 0))
+    for side, w in (("w > 0", ck.uniform(0.05, 10)), ("w < 0", -ck.uniform(0.05, 10))):
+        ck.chart(f"Plebanski-Hacyan, their own chart, {side}", own, ph_own_pq, ck.uniform(-10, 10), w,
+                 lambda u, w: (1, 1 - w ** 2 / 2))
+    u = ck.uniform(-6, 6)
+    v = ck.uniform(-6, 6)
+    inside = 2 + u * v > 0.05
+    ck.chart("Plebanski-Hacyan, the null chart", nul, ph_null_pq, u[inside], v[inside], lambda u, v: (1, 1))
+    ck.chart("Plebanski-Hacyan, the static chart", sta, ph_static_pq, ck.uniform(-5, 5), ck.uniform(0.05, 5),
+             lambda t, c: (1, 0))
+    ck.chart("anti-Nariai", an, ph_static_pq, ck.uniform(-5, 5), ck.uniform(0.05, 5), lambda t, c: (1, 0))
+    ck.chart("anti-Nariai static", ans, ph_areal_pq, ck.uniform(-5, 5), ck.uniform(1.01, 20), lambda t, r: (1, 0))
+
+    u, v = ck.uniform(-4, 4, 2000), ck.uniform(-4, 4, 2000)
+    keep = 2 + u * v > 0.05
+    u, v = u[keep], v[keep]
+    a = ph_null_pq(u, v)
+    b = ph_own_pq(u, v / (1 + u * v / 2))
+    ck.limit("Plebanski-Hacyan: one event lands on one point through the null chart and their own",
+             np.concatenate([a[0] - b[0], a[1] - b[1]]), 0, 1e-9)
+    tau, chi = ck.uniform(-4, 4, 2000), ck.uniform(0.05, 4, 2000)
+    p, q = ph_static_pq(tau, chi)
+    T, X = p + q, q - p
+    scale = 1 + np.cosh(tau) * np.cosh(chi)
+    ck.limit("Plebanski-Hacyan: the static wedge lands where the embedding puts it",
+             np.concatenate([(np.tan(X) - np.sinh(chi) * np.cosh(tau)) / scale,
+                             (np.sin(T) / np.cos(X) - np.sinh(chi) * np.sinh(tau)) / scale,
+                             (np.cos(T) / np.cos(X) - np.cosh(chi)) / scale]), 0, 1e-9)
+    p, q = ph_static_pq(np.array([-3.0, 0.0, 3.0]), np.full(3, 1e-13))
+    ck.limit("Plebanski-Hacyan: chi -> 0 at fixed tau lands on the event (0, 0)", np.concatenate([p, q]), 0, 1e-9)
+    p, q = ph_static_pq(np.array([40.0, -40.0]), np.array([1.0, 1.0]))
+    ck.limit("Plebanski-Hacyan: tau -> +-infinity lands on the corners (pi/2, +-pi/2)",
+             np.concatenate([q - p, p + q]), [HALF, HALF, HALF, -HALF], 1e-9)
+    p, q = ph_own_pq(np.array([0.0, 0.0]), np.array([1e12, -1e12]))
+    ck.limit("Plebanski-Hacyan: w -> +-infinity lands on the two boundaries X = +-pi/2", q - p, [HALF, -HALF], 1e-9)
+    p, q = ph_own_pq(np.array([1.0, 1.0]), np.array([1e-9, -1e-9]))
+    ck.limit("Plebanski-Hacyan: q is continuous through the horizon w = 0", q, [-Q4, -Q4], 1e-6)
+    p, q = ph_null_pq(np.array([1.0, -2.0]), np.array([-2.0, 1.0]))
+    ck.limit("Plebanski-Hacyan: uv = -2a^2 lands on the boundaries X = -+pi/2", q - p, [-HALF, HALF], 1e-9)
+    for label, pl, x1 in (("the flat factor", sp, ck.uniform(-5, 5, 50)), ("anti-de Sitter times a plane", own, ck.uniform(-5, 5, 50)),
+                          ("anti-Nariai", an, ck.uniform(0.1, 5, 50))):
+        ck.finite(f"Plebanski-Hacyan, {label}: the curvature is the same everywhere",
+                  pl.kretschmann(ck.uniform(-5, 5, 50), x1))
+
+    views = []
+    equator = slices.moments(name, "equator")[0]
+    ball = slices.moments(name, "sphere")[0]
+    lo, hi = equator.reach("sphere", "z")
+    along_z = np.linspace(lo, hi, 3)
+    dia_box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    v = View("sphere", "Sphere", dia_box, "sphere")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    grid(v, "r", lambda z, t: mink_pq(t, z), (-4, -2, -1, 0, 1, 2, 4), S_ALL)
+    grid(v, "t", mink_pq, (-4, -2, -1, 0, 1, 2, 4), S_ALL)
+    diamond_edges(v)
+    v.legend("cover", "the whole spacetime, which $t$ and $z$ cover")
+    v.legend("r", "$z$ constant, at $0$, $\\pm b$, $\\pm 2b$, and $\\pm 4b$")
+    v.legend("t", "$ct$ constant, at the same values")
+    v.slice(equator, [mink_pq(0 * along_z, along_z)])
+    v.slice(ball, points=[mink_pq(0.0, 1.0)], label="$t = 0$, $z = b$")
+    views.append(v)
+
+    v = View("sphere_rindler", "Sphere, Rindler", dia_box, "sphere_rindler")
+    v.fill("region", DIAMOND)
+    v.fill("cover", [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]])
+    grid(v, "r", lambda X, T: rindler(T, X), (0.25, 0.5, 1, 2, 4), S_ALL)
+    grid(v, "t", rindler, (-2, -1, -0.5, 0, 0.5, 1, 2), S_POS)
+    v.line("horizon", [[[0, 0], [HALF, HALF]], [[0, 0], [HALF, -HALF]],
+                       [[0, 0], [-HALF, HALF]], [[0, 0], [-HALF, -HALF]]])
+    diamond_edges(v)
+    v.label_xt([Q4 - 0.05, Q4 + 0.05], "$\\chi = 0$", "br", "small", dx=-3, dy=-2)
+    v.legend("cover", "the wedge $z > c|t|$, which $\\tau$ and $\\chi$ cover")
+    v.legend("r", "$\\chi$ constant, a uniformly accelerated observer, from $b/4$ to $4b$")
+    v.legend("t", "$\\tau$ constant")
+    v.legend("horizon", "the horizon $\\chi = 0$ and the null lines that continue it")
+    v.slice(equator, [mink_pq(0 * along_z, along_z)], label="$\\tau = 0$")
+    v.slice(ball, points=[rindler(0.0, 1.0)], label="$\\tau = 0$, $\\chi = b$")
+    views.append(v)
+
+    T0, T1 = -2 * PI - 0.35, PI + 0.35
+    box = [-HALF - 0.55, HALF + 0.55, T0, T1]
+    v = View("plane", "Plane", box, "plane")
+    strip(v, True, T0, T1)
+    v.fill("cover", [[-HALF, -2 * PI], [HALF, -PI], [HALF, PI], [-HALF, 0]])
+    for c in (0.5, 1, 2, 4):
+        v.curve("r", *ph_own_pq(S_ALL, np.full_like(S_ALL, c)))
+        v.curve("r", *ph_own_pq(S_ALL, np.full_like(S_ALL, -c)))
+    ws = np.concatenate([-1 / np.maximum(S_POS, 1e-12)[::-1], 1 / np.maximum(S_POS, 1e-12)])
+    for c in (-4, -2, -1, 0, 1, 2, 4):
+        v.curve("null", *ph_own_pq(np.full_like(ws, c), ws))
+    v.line("horizon", [[[-HALF, 0], [HALF, -PI]]])
+    v.line("chartedge", [[[-HALF, -2 * PI], [HALF, -PI]], [[-HALF, 0], [HALF, PI]]])
+    label_on(v, ph_own_pq(0, 1.0), "$w = a$")
+    label_on(v, ph_own_pq(0, -1.0), "$w = -a$")
+    v.legend("cover", "the band that $u$ and $w$ cover, two Poincaré patches")
+    v.legend("r", "$w$ constant, at $\\pm a/2$, $\\pm a$, $\\pm 2a$, and $\\pm 4a$")
+    v.legend("null", "$u$ constant, every one a light ray")
+    v.legend("horizon", "$w = 0$, a degenerate Killing horizon")
+    v.legend("chartedge", "$u \\to \\pm\\infty$, where $u$ and $w$ end")
+    v.legend("boundary", "the conformal boundary, timelike")
+    v.set(fade={"top": 0.7, "bottom": 0.7})
+    views.append(v)
+
+    T0, T1 = -1.5 * PI - 0.35, HALF + 0.35
+    v = View("plane_null", "Plane, Null", [-HALF - 0.55, HALF + 0.55, T0, T1], "plane_null")
+    strip(v, True, T0, T1)
+    v.fill("cover", [[0, HALF], [HALF, 0], [HALF, -PI], [0, -1.5 * PI], [-HALF, -PI], [-HALF, 0]])
+    s = np.tan(np.linspace(-HALF + 1e-6, HALF - 1e-6, 801))
+    for c in (-4, -2, -1, 0, 1, 2, 4):
+        ok = 2 + c * 2 * s > 0
+        v.curve("null", *ph_null_pq(np.full_like(s[ok], c), 2 * s[ok]))
+        ok = 2 + s * c > 0
+        v.curve("null", *ph_null_pq(s[ok], np.full_like(s[ok], c)))
+    v.line("chartedge", [[[-HALF, 0], [0, HALF]], [[0, HALF], [HALF, 0]],
+                         [[HALF, -PI], [0, -1.5 * PI]], [[0, -1.5 * PI], [-HALF, -PI]]])
+    v.legend("cover", "the region that $u$ and $v$ cover")
+    v.legend("null", "$u$ constant and $v$ constant, every one a light ray")
+    v.legend("chartedge", "$u \\to \\pm\\infty$ and $v \\to \\pm\\infty$, where $u$ and $v$ end")
+    v.legend("boundary", "the conformal boundary, timelike, where $uv = -2a^2$")
+    v.set(fade={"top": 0.7, "bottom": 0.7})
+    views.append(v)
+
+    T0, T1 = -1.1 * PI, 1.1 * PI
+    box = [-HALF - 0.55, HALF + 0.55, T0, T1]
+    sheet = slices.moments(name, "hyperbolic_plane")[0]
+    for vid, label, fmap, x, lines, at, text in (
+            ("plane_static", "Plane, Static", ph_static_pq, "\\chi", (0.25, 0.5, 1, 2), 1.0, "$\\chi = 1$"),
+            ("anti_nariai", "Anti-Nariai", ph_static_pq, "\\chi", (0.25, 0.5, 1, 2), 1.0, "$\\chi = 1$"),
+            ("anti_nariai_static", "Anti-Nariai, Static", ph_areal_pq, "r", (1.05, 1.25, 2, 4), 2.0, "$r = 2a$")):
+        v = View(vid, label, box, vid)
+        strip(v, True, T0, T1)
+        v.fill("cover", [[0, 0], [HALF, -HALF], [HALF, HALF]])
+        for c in lines:
+            v.curve("r", *fmap(4 * S_ALL, np.full_like(S_ALL, c)))
+        far = 1 / np.maximum(S_POS, 1e-12) if x == "\\chi" else 1 + 1 / np.maximum(S_POS, 1e-12)
+        for c in (-2, -1, 0, 1, 2):
+            v.curve("t", *fmap(np.full_like(far, c), far))
+        v.line("chartedge", [[[0, 0], [HALF, HALF]], [[0, 0], [HALF, -HALF]]])
+        label_on(v, fmap(0, at), text)
+        time = "ct" if x == "r" else "\\tau"
+        v.legend("cover", f"the wedge that ${time[-1] if x == 'r' else time}$ and ${x}$ cover")
+        if x == "r":
+            v.legend("r", "$r$ constant, at $1.05$, $1.25$, $2$, and $4\\,a$")
+            v.legend("t", "$ct$ constant, every $a$ from $-2a$ to $2a$")
+            v.legend("chartedge", "$r = a$, the Killing horizon, where $t$ and $r$ end")
+        else:
+            v.legend("r", "$\\chi$ constant, at $1/4$, $1/2$, $1$, and $2$")
+            v.legend("t", "$\\tau$ constant, every unit from $-2$ to $2$")
+            v.legend("chartedge", "$\\chi = 0$, the Killing horizon, where $\\tau$ and $\\chi$ end")
+        v.legend("boundary", "the conformal boundary, timelike")
+        v.set(fade={"top": 0.7, "bottom": 0.7})
+        if vid == "anti_nariai":
+            v.slice(sheet, points=[ph_static_pq(0.0, 1.0)], label="$\\tau = 0$, $\\chi = 1$")
+        elif vid == "anti_nariai_static":
+            v.slice(sheet, points=[ph_areal_pq(0.0, math.cosh(1.0))], label="$t = 0$, $r = a\\cosh 1$")
+        views.append(v)
     return views
 
 
@@ -16392,7 +16625,7 @@ DRAWN = {
     "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "kerr_taub_nut": kerr_taub_nut, "de_sitter": de_sitter,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "boulware_deser": boulware_deser, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
-    "bertotti_robinson": bertotti_robinson, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
+    "bertotti_robinson": bertotti_robinson, "plebanski_hacyan": plebanski_hacyan, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string, "spinning_string": spinning_string,
     "point_particle_2plus1": point_particle_2plus1,
     "interior_schwarzschild": interior_schwarzschild, "gravastar": gravastar, "frw": frw,
@@ -18060,6 +18293,52 @@ CAPTIONS = {
         "The whole Bertotti-Robinson spacetime with the Poincaré coordinates $t$ "
         "and $x$ on it. They cover the same wedge as the throat coordinates, with "
         "$x = b^2/r$.",
+    ],
+    ("plebanski_hacyan", "sphere"): [
+        "Plebański and Hacyan's product of a flat plane with a sphere ($\\Lambda = 1/2b^2$), each point in "
+        "the diagram a 2-sphere of radius $b$. The metric on the plane of $t$ and $z$ is $-c^2dt^2 + dz^2$ with "
+        "$z$ over the whole line, Minkowski space of two dimensions, and $p, q = \\arctan((ct \\mp z)/b)$ bring "
+        "it into the full diamond.",
+        "Light reaches $\\mathscr{I}^+$ along either direction of $z$, and no observer has a horizon unless "
+        "accelerated: the same diamond as flat space of two dimensions, where Nariai's universe has de Sitter's "
+        "strip.",
+    ],
+    ("plebanski_hacyan", "sphere_rindler"): [
+        "The same diamond with the Rindler coordinates $\\tau$ and $\\chi$ on it, $ct = \\chi\\sinh\\tau$ and "
+        "$z = \\chi\\cosh\\tau$. They cover the wedge $z > c|t|$, bounded by the horizon $\\chi = 0$ of the "
+        "observers of constant $\\chi$.",
+        "The charged black hole of de Sitter space has this wedge between its horizons in the limit where all "
+        "three meet.",
+    ],
+    ("plebanski_hacyan", "plane"): [
+        "Plebański and Hacyan's product of an anti-de Sitter space of two dimensions with a flat plane "
+        "($\\Lambda = -1/2a^2$). Its conformal diagram is the strip of the first factor, each point in the "
+        "strip a flat plane of $x$ and $y$.",
+        "Their coordinates $u$ and $w$ cover the band between two null lines, $u \\to -\\infty$ and "
+        "$u \\to \\infty$. The horizon $w = 0$ crosses the band from one boundary to the other, with a Poincaré "
+        "patch on each side, $w > 0$ reaching the right boundary and $w < 0$ the left.",
+    ],
+    ("plebanski_hacyan", "plane_null"): [
+        "The same strip with the null coordinates $u$ and $v$ on it, $w = v/(1 + uv/2a^2)$. They cover the "
+        "part of the band of $u$ and $w$ between $v \\to -\\infty$ and $v \\to \\infty$, and reach both "
+        "boundaries, where $uv = -2a^2$.",
+    ],
+    ("plebanski_hacyan", "plane_static"): [
+        "The same strip with the static coordinates $\\tau$ and $\\chi$ on it. They cover the wedge between "
+        "the event where the two branches of the horizon $\\chi = 0$ cross and a stretch of one boundary, the "
+        "region an observer of constant $\\chi$ can both signal and see.",
+    ],
+    ("plebanski_hacyan", "anti_nariai"): [
+        "The anti-Nariai universe, the product of an anti-de Sitter space of two dimensions with a hyperbolic "
+        "plane, both of radius $a$ ($\\Lambda = -1/a^2$). Its conformal diagram is the strip of the first "
+        "factor, each point in the strip a hyperbolic plane.",
+        "The coordinates $\\tau$ and $\\chi$ cover the wedge between the event where the two branches of the "
+        "horizon $\\chi = 0$ cross and a stretch of one boundary. Nariai's universe has de Sitter's strip, "
+        "with spacelike infinities; here infinity is timelike.",
+    ],
+    ("plebanski_hacyan", "anti_nariai_static"): [
+        "The anti-Nariai universe with the static coordinates $t$ and $r = a\\cosh\\chi$ on it. They cover the "
+        "same wedge, with the horizon at $r = a$ and the boundary at $r \\to \\infty$.",
     ],
     ("ellis_bronnikov", "spherical"): [
         "The Ellis-Bronnikov wormhole, each point in the diagram a 2-sphere of area "

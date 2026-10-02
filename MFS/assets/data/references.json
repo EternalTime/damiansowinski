@@ -1,5 +1,5 @@
 {
-  "version": "e9ac8f532366cf73",
+  "version": "6fdfd439c682e3eb",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -22570,6 +22570,69 @@
         "year": "1977",
         "doi": "10.1007/BF00759240",
         "url": "https://doi.org/10.1007/BF00759240"
+      }
+    },
+    "plebanski1979exceptional": {
+      "type": "article",
+      "fields": {
+        "title": "Some exceptional electrovac type D metrics with cosmological constant",
+        "author": "Plebański, Jerzy F. and Hacyan, Shahen",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "20",
+        "number": "6",
+        "pages": "1004--1010",
+        "year": "1979",
+        "doi": "10.1063/1.524174",
+        "url": "https://doi.org/10.1063/1.524174"
+      }
+    },
+    "ortaggio2002direct": {
+      "type": "article",
+      "fields": {
+        "title": "Impulsive waves in electrovac direct product spacetimes with Λ",
+        "author": "Ortaggio, Marcello and Podolsk\\'y, Jiř\\'i",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "19",
+        "number": "20",
+        "pages": "5221--5227",
+        "year": "2002",
+        "doi": "10.1088/0264-9381/19/20/313",
+        "eprint": "gr-qc/0209068",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0209068"
+      }
+    },
+    "podolsky2003kundt": {
+      "type": "article",
+      "fields": {
+        "title": "Explicit Kundt type II and N solutions as gravitational waves in various type D and O universes",
+        "author": "Podolsk\\'y, Jiř\\'i and Ortaggio, Marcello",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "20",
+        "number": "9",
+        "pages": "1685--1701",
+        "year": "2003",
+        "doi": "10.1088/0264-9381/20/9/307",
+        "eprint": "gr-qc/0212073",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0212073"
+      }
+    },
+    "caldarelli2001extremal": {
+      "type": "incollection",
+      "fields": {
+        "title": "The extremal limit of D-dimensional black holes",
+        "author": "Caldarelli, Marco M. and Vanzo, Luciano and Zerbini, Sergio",
+        "booktitle": "Geometrical Aspects of Quantum Fields",
+        "editor": "Bytsenko, A. A. and Gonçalves, A. E. and Pimentel, B. M.",
+        "publisher": "World Scientific",
+        "address": "Singapore",
+        "pages": "56--63",
+        "year": "2001",
+        "doi": "10.1142/9789812810366_0005",
+        "eprint": "hep-th/0008136",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/0008136"
       }
     }
   }

@@ -1224,6 +1224,23 @@ The field of a point mass that accelerates by shining light unevenly, found by W
 - chart Rectilinear: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} - 2\alpha r\cos\theta\right)c^2du^2 - 2c\,du\,dr + r^2\left(d\theta + \alpha\sin\theta\,c\,du\right)^2 + r^2\sin^2\theta\,d\phi^2$$
 - chart Robinson-Trautman: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} - \dfrac{2r\,\partial_u p}{p}\right)c^2du^2 - 2c\,du\,dr + \dfrac{r^2}{p^2}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Plebański-Hacyan Spacetimes and Anti-Nariai
+
+The products of two surfaces of constant curvature that solve the Einstein-Maxwell equations with a cosmological constant beside Nariai's and Bertotti and Robinson's: a flat plane of time and space times a sphere, anti-de Sitter space of two dimensions times a flat plane, and the anti-Nariai universe, anti-de Sitter space of two dimensions times a hyperbolic plane. The first two hold a uniform electromagnetic field whose energy density matches the cosmological constant, and anti-Nariai is a vacuum.
+
+- id: `plebanski_hacyan`
+- tags: electrovacuum, electromagnetic field, Einstein-Maxwell, cosmological constant, product spacetime, homogeneous, static, stationary, horizon, Killing horizon, anti-de Sitter, hyperbolic space, near-horizon limit, extremal, Petrov type D, Kundt class, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/plebanski_hacyan.json
+- chart Sphere: coordinates $(t, z, \theta, \phi)$, $$ds^2 = -c^2dt^2 + dz^2 + b^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Sphere, Rindler: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = -\chi^2d\tau^2 + d\chi^2 + b^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Plane: coordinates $(u, w, x, y)$, $$ds^2 = -2\,du\,dw - \dfrac{w^2}{a^2}du^2 + dx^2 + dy^2$$
+- chart Plane, Null: coordinates $(u, v, x, y)$, $$ds^2 = -\dfrac{2\,du\,dv}{\left(1 + \dfrac{uv}{2a^2}\right)^2} + dx^2 + dy^2$$
+- chart Plane, Static: coordinates $(\tau, \chi, x, y)$, $$ds^2 = a^2\left(-\sinh^2\chi\,d\tau^2 + d\chi^2\right) + dx^2 + dy^2$$
+- chart Anti-Nariai: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = a^2\left(-\sinh^2\chi\,d\tau^2 + d\chi^2 + d\theta^2 + \sinh^2\theta\,d\phi^2\right)$$
+- chart Anti-Nariai, Static: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(\dfrac{r^2}{a^2} - 1\right)c^2dt^2 + \dfrac{dr^2}{\dfrac{r^2}{a^2} - 1} + a^2\left(d\theta^2 + \sinh^2\theta\,d\phi^2\right)$$
+- chart Exceptional: coordinates $(u, w, x, y)$, $$ds^2 = -2\,du\,dw - \left(\dfrac{w^2}{a^2} + f\,x + g\,y\right)du^2 + dx^2 + dy^2$$
+
 ### Point Particles in Three Dimensions
 
 Gravity with one dimension of space removed, where a mass makes no field around itself. Spacetime is flat everywhere off a particle's world line, and space around the particle is a cone, missing a wedge whose angle is set by the mass.
