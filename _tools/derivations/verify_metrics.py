@@ -673,6 +673,17 @@ DIMENSIONS = {
     ("tangherlini", "spherical_six"): {
         "t": "T", "r": "L", "\\chi": "1", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_h": "L",
     },
+    # Bardeen's regular black hole keeps Schwarzschild's r_s; g, the monopole's charge, is a length.
+    # The Eddington-Finkelstein times u = ct - r_* and v = ct + r_* are lengths.
+    ("bardeen", "static"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "g": "L",
+    },
+    ("bardeen", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "g": "L",
+    },
+    ("bardeen", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "g": "L",
+    },
     # Schwarzschild-anti-de Sitter keeps Schwarzschild's r_s and anti-de Sitter's radius, which the
     # entry calls L and the dimensional pass calls L as well, as for anti-de Sitter space itself.
     # The Eddington-Finkelstein times u = ct - r_* and v = ct + r_* are lengths.
