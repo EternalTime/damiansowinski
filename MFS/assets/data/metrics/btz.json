@@ -96,6 +96,11 @@
       "id": "point_particle_2plus1",
       "kind": "family",
       "text": "With no cosmological constant a mass in three dimensions makes a cone and no black hole. Hans-Jürgen Matschull collided two such particles in anti-de Sitter space in 1999 and got this black hole [deser1984, matschull1999]."
+    },
+    {
+      "id": "siklos",
+      "kind": "family",
+      "text": "Kaigorodov's wave in anti-de Sitter space of four dimensions has a version in three, and it is the extreme BTZ black hole [cvetic1999]."
     }
   ],
   "references": [
@@ -119,7 +124,8 @@
     "solodukhin2005",
     "damour2007",
     "aminneborg1996",
-    "matschull1999"
+    "matschull1999",
+    "cvetic1999"
   ],
   "coordinates": [
     {

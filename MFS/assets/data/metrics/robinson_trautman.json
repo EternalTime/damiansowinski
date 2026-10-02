@@ -57,6 +57,11 @@
       "id": "vaidya",
       "kind": "special_case",
       "text": "The member with round wave fronts and pure radiation in place of the vacuum, a star that shines evenly. Jiří Podolský and Otakar Svítek showed in 2005 that the other members with pure radiation approach it [podolsky2005]."
+    },
+    {
+      "id": "siklos",
+      "kind": "family",
+      "text": "Waves of the same algebraic type with a negative cosmological constant, on fronts that do not expand: hyperbolic planes crossing anti-de Sitter space [podolsky1998, bicak1999]."
     }
   ],
   "references": [
@@ -84,7 +89,9 @@
     "brinkmann1925",
     "dain1996",
     "cornish2000",
-    "podolsky2005"
+    "podolsky2005",
+    "podolsky1998",
+    "bicak1999"
   ],
   "coordinates": [
     {

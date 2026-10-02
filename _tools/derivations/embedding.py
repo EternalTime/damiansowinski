@@ -3268,6 +3268,104 @@ def topological_black_hole(ck, src):
     return views
 
 
+def siklos(ck, src):
+    """A wave front, the surface u = 0, v = 0 of the chart on the disc, in units of L. Its metric
+    is (d xi^2 + d eta^2)/p^2 with p = 1 - (xi^2 + eta^2)/4 whatever the profile h is, the
+    hyperbolic plane of curvature -1/L^2 as Poincare's disc, which turning about the centre of the
+    disc carries into itself. At the coordinate distance r from the centre the circle has the
+    radius rho = r/(1 - r^2/4) = sinh(s), s = 2 artanh(r/2) the proper distance out to it, so the
+    circles grow as cosh(s), faster than the distance, which is checked: no surface of revolution
+    in flat space carries the front, and in Minkowski space it is the sheet Z = cosh(s) - 1 of a
+    hyperboloid, drawn to s = 2 with the light cone it nears.
+
+    The curves marked are lines of constant x of Siklos's chart, x = L/2, L and 2L, carried onto
+    the disc by xi + i eta = 2(1 - x - iy)/(1 + x + iy): horocycles through the one point of the
+    rim, xi = -2, where x is infinite. Each is checked to keep p/q = x, to lie on the sheet, and
+    to have between neighbouring points a chord, measured with dX^2 + dY^2 - dZ^2, equal to the
+    length of the same step of y in the published metric of Siklos's chart, as a horocycle's is."""
+    name = "Siklos wave front"
+    sl = Slice(src, "siklos", "ozsvath_robinson_rozga", "\\xi", None, {"u": 0, "v": 0}, {"L": 1},
+               functions=dict(nr.SIKLOS_DISC_PULSE), turn="\\eta", space="minkowski")
+    reach = 2.0
+    top = 2 * math.tanh(reach / 2)
+    size = 2 * math.sinh(reach)
+
+    def proper(r):
+        return 2 * np.arctanh(np.asarray(r, dtype=float) / 2)
+
+    ck.stops(f"{name} in flat space", sl, np.linspace(1e-3, 1.99, 400))
+    sheet = Piece("sheet", "sheet", sl, 0.0, top, 0.0, 1,
+                  (("axis", "the centre of the disc, $\\xi = \\eta = 0$"),
+                   ("edge", "the sheet runs on toward the light cone, to the rim $\\xi^2 + \\eta^2 = 4L^2$")),
+                  [(2 * math.tanh(d / 2), "r", None) for d in (0.5, 1.0, 1.5, reach)], size,
+                  # The lines of constant x cross the sheet between its circles, so the profile is written
+                  # finely enough for a chord of it to follow the hyperboloid under them.
+                  knots=np.linspace(0.0, top, 97)[1:-1])
+    cone = FormPiece("cone", sl, np.linspace(0.0, top, 81), lambda r: np.sinh(proper(r)),
+                     lambda r: np.sinh(proper(r)) - 1.0,
+                     (("apex", "the apex of the light cone, a distance $L$ below the centre of the disc"),
+                      ("edge", "the cone runs on")), size)
+    ck.isometry(name, sheet)
+    ck.form(f"{name}: the hyperboloid Z = L cosh(s) - L", sheet, lambda r: np.cosh(proper(r)) - 1, size)
+    ck.radius(f"{name}: rho = L sinh(s)", sheet, lambda r: np.sinh(proper(r)), size)
+    ck.add(f"{name}: from the centre to the last circle is 2 L", abs(sl.proper(0.0, top) - reach), 1e-9)
+
+    # Siklos's chart, whose g_yy at x = c measures a step of y along the line x = c.
+    _, entry, R = nr.load("siklos", "siklos")
+    src.note("siklos", "siklos", FIELDS)
+    g = nr.published_matrix(R, entry, "metric_components")
+    names = {R._plain(n): sym for n, sym in R.symbol.items()}
+    gyy = sp.lambdify(names["x"], g[3, 3].subs(R.parameters["L"], 1), "numpy")
+    curves = []
+    for c in (0.5, 1.0, 2.0):
+        # Where the line x = c leaves the last circle, |xi + i eta| = top, by bisection.
+        def radius(y):
+            w = complex(c, y)
+            return abs(2 * (1 - w) / (1 + w))
+        lo, hi = 0.0, 1.0
+        while radius(hi) < top * (1 - 1e-9):
+            hi *= 2
+        if radius(0.0) < top:
+            for _ in range(200):
+                mid = 0.5 * (lo + hi)
+                lo, hi = (mid, hi) if radius(mid) < top * (1 - 1e-9) else (lo, mid)
+        y = np.linspace(-lo, lo, 241)
+        zeta = 2 * (1 - (c + 1j * y)) / (1 + (c + 1j * y))
+        xi, eta = zeta.real, zeta.imag
+        r = np.abs(zeta)
+        p, q = 1 - r ** 2 / 4, (1 + xi / 2) ** 2 + eta ** 2 / 4
+        ck.add(f"{name}, the line x = {c:g} L: p/q = x/L at every point", float(np.max(np.abs(p / q - c))), 1e-12)
+        d = proper(r)
+        rho, Z = np.sinh(d), np.cosh(d) - 1
+        P = np.column_stack([rho * xi / np.where(r > 0, r, 1.0), rho * eta / np.where(r > 0, r, 1.0), Z])
+        ck.on_piece(f"{name}, the line x = {c:g} L", sheet, P)
+        step = np.diff(P, axis=0)
+        chord = np.sqrt(step[:, 0] ** 2 + step[:, 1] ** 2 - step[:, 2] ** 2)
+        # Two points of a horocycle an arc a apart are a geodesic distance d apart with 2 sinh(d/2) = a,
+        # which is the chord of the hyperboloid between them, so each chord is the arc sqrt(g_yy) dy.
+        arc = math.sqrt(float(gyy(c))) * np.diff(y)
+        ck.add(f"{name}, the line x = {c:g} L: each step against Siklos's metric",
+               float(np.max(np.abs(chord - arc))), 1e-9)
+        curves.append(Curve(sheet, "flow", P))
+    surface = Surface([sheet, cone], curves=curves)
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *sheet.at(2 * math.tanh(0.5)), "$L$")
+    ring_label(fig, [0, 0, 0], *sheet.at(top), "$2L$")
+    fig.legend("fill", "cover", "the wave front, one surface of constant $u$ and $v$")
+    fig.legend("line", "r", "circles about the centre of the disc, a proper distance $L/2$, $L$, $3L/2$ and $2L$ from it")
+    fig.legend("line", "flow", "$x$ of Siklos's chart constant, at $L/2$, $L$ and $2L$; the line $x = L$ "
+                               "passes through the centre, and $x = 2L$ lies on the side of negative $\\xi$")
+    fig.legend("line", "reference", "the light cone of the Minkowski space it is drawn in, which the sheet nears "
+                                    "toward the rim of the disc")
+    fig.legend("line", "meridian", "straight lines from the centre of the disc, every $15°$")
+    return [view("front", "A wave front", "$L$", [surface], fig.done(),
+                 settings="$L = 1$, the unit of every length. Every length along the sheet is measured with "
+                          "$dX^2 + dY^2 - dZ^2$.",
+                 stops=["At every point but the centre the circles about it grow faster than the distance out to "
+                        "them, and no surface of revolution in flat space carries the front; Minkowski space "
+                        "carries it."])]
+
+
 def hayward(ck, src):
     """Hayward's regular black hole at ell = 12m/(7 sqrt 7), where the horizons, the two positive
     roots of the published g^rr, are r_- = 6m/7 and r_+ = 12m/7. g_rr = 1/F with F = 1 - 2mr^2/
@@ -8768,6 +8866,7 @@ DRAWN = {
     "schwarzschild_de_sitter": schwarzschild_de_sitter,
     "schwarzschild_ads": schwarzschild_ads,
     "topological_black_hole": topological_black_hole,
+    "siklos": siklos,
     "hayward": hayward,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "vaidya": vaidya,
@@ -9251,6 +9350,17 @@ CAPTIONS = {
         "out to them, as on the static slice of anti-de Sitter space, and the surface climbs at "
         "$dZ/dr = \\sqrt{1 - 1/f}$ from level toward a light cone of Minkowski space. Both parts lie level at "
         "the circle, so they meet there with one tangent plane.",
+    ],
+    ("siklos", "front"): [
+        "A wave front, a surface of constant $u$ and $v$, drawn as a surface in three dimensional Minkowski "
+        "space with every distance along it, measured with $dX^2 + dY^2 - dZ^2$, the metric distance. On it the "
+        "metric is $(d\\xi^2 + d\\eta^2)/p^2$ for every profile, the hyperbolic plane of curvature $-1/L^2$: a "
+        "circle about the centre of the disc grows faster than the distance out to it, as no surface of "
+        "revolution in flat space allows.",
+        "In Minkowski space the front is one sheet of the hyperboloid $(Z + L)^2 - X^2 - Y^2 = L^2$, and it nears "
+        "the light cone, dashed, without reaching it. The curves are lines of constant $x$ of Siklos's chart, "
+        "horocycles that all end at one point of the rim. There $x \\to \\infty$, where Kaigorodov's profile "
+        "$x^3/L^3$ grows without limit, and every other point of the rim is the conformal boundary $x = 0$.",
     ],
     ("topological_black_hole", "horizon"): [
         "The horizon $r = r_h$ of the hyperbolic hole at one moment of $t$ ($\\mu = 0$, $r_h = L$), drawn as a "

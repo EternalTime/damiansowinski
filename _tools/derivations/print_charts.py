@@ -7,8 +7,8 @@ robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, 
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
 black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
-som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts and gravastar, and Godel's
-cylindrical chart.
+som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar and siklos, and
+Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -38,6 +38,7 @@ import time
 from pathlib import Path
 
 import sympy as sp
+from sympy.core.function import AppliedUndef
 from sympy.core.mul import _keep_coeff
 
 HERE = Path(__file__).resolve().parent
@@ -9294,6 +9295,235 @@ def gravastar_check(chart, system):
 
 
 CHARTS["gravastar"] = [lambda s=s: gravastar(s) for s in GRAVASTAR_CHARTS]
+
+
+# -- Siklos waves and the Kaigorodov spacetime ---------------------------------------------
+
+SIKLOS_CHARTS = ("siklos", "ozsvath_robinson_rozga", "kaigorodov", "kaigorodov_poincare", "kaigorodov_horospheric",
+                 "kaigorodov_stationary", "kaigorodov_homogeneous", "kaigorodov_kundt")
+
+
+def siklos(system):
+    """Siklos's waves in anti-de Sitter space and the simplest of them, Kaigorodov's spacetime, in
+    eight charts, with v the opposite of Podolsky's so that the bracket is this collection's pp-wave:
+
+    siklos                  Podolsky's (1), L^2/x^2 (dx^2 + dy^2 - 2 du dv + H du^2), H(u, x, y) free;
+    ozsvath_robinson_rozga  the same class on the disc, his (4) and Bicak and Podolsky's (14), with
+                            xi + i eta = 2L(L - x - iy)/(L + x + iy) and h = LH/x;
+    kaigorodov              Podolsky's (26), H = x^3/L^3;
+    kaigorodov_poincare     Brecher, Chamblin and Reall's (5.1), sqrt(2) u = ct - x, sqrt(2) v = ct + x
+                            and z for Siklos's x;
+    kaigorodov_horospheric  Kaigorodov's own form with the upper sign, Podolsky's (27), which is Cvetic,
+                            Lu and Pope's (A.8), rho = -L ln(x/L);
+    kaigorodov_stationary   the same with the lower sign, the region x < 0 of Siklos's chart;
+    kaigorodov_homogeneous  Podolsky's (30), from Kramer, Stephani, MacCallum and Herlt;
+    kaigorodov_kundt        Podolsky's (32), from the same book.
+
+    siklos_check holds each chart to R_mu_nu = -(3/L^2) g_mu_nu, the two free charts where their
+    profile solves its equation, and each chart after the first to being the first pulled back.
+    siklos.md is the derivation."""
+    reals = "(-\\infty, \\infty)"
+    front = "\\dfrac{L^2}{x^2}"
+    p_text = "p = 1 - \\dfrac{\\xi^2 + \\eta^2}{4L^2}"
+    q_text = "q = \\left(1 + \\dfrac{\\xi}{2L}\\right)^2 + \\dfrac{\\eta^2}{4L^2}"
+    charts = {
+        "siklos": {
+            "name": "Siklos", "coords": ["u", "v", "x", "y"], "parameters": ["L", "H = H(u,x,y)"],
+            "domains": ["u \\in " + reals, "v \\in " + reals, "x \\in (0, \\infty)", "y \\in " + reals,
+                        "x = 0 \\;\\text{(the conformal boundary)}"],
+            "line_element": "ds^2 = " + front + "\\left(dx^2 + dy^2 - 2\\,du\\,dv + H\\,du^2\\right)"},
+        "ozsvath_robinson_rozga": {
+            "name": "Ozsváth-Robinson-Rózga", "coords": ["u", "v", "\\xi", "\\eta"],
+            "parameters": ["L", "h = h(u,\\xi,\\eta)", p_text, q_text],
+            "domains": ["u \\in " + reals, "v \\in " + reals, "\\xi \\in (-2L, 2L)", "\\eta \\in (-2L, 2L)",
+                        "\\xi^2 + \\eta^2 < 4L^2 \\;\\text{(the disc; its rim is the conformal boundary)}"],
+            "line_element": ("ds^2 = \\dfrac{d\\xi^2 + d\\eta^2}{p^2} - \\dfrac{2q^2}{p^2}du\\,dv"
+                             " + \\dfrac{q}{p}h\\,du^2")},
+        "kaigorodov": {
+            "name": "Kaigorodov, Siklos Coordinates", "coords": ["u", "v", "x", "y"], "parameters": ["L"],
+            "domains": ["u \\in " + reals, "v \\in " + reals, "x \\in (0, \\infty)", "y \\in " + reals,
+                        "x = 0 \\;\\text{(the conformal boundary)}"],
+            "line_element": ("ds^2 = " + front + "\\left(dx^2 + dy^2 - 2\\,du\\,dv + \\dfrac{x^3}{L^3}du^2\\right)")},
+        "kaigorodov_poincare": {
+            "name": "Kaigorodov, Poincaré", "coords": ["t", "x", "y", "z"], "parameters": ["L"],
+            "domains": ["t \\in " + reals, "x \\in " + reals, "y \\in " + reals, "z \\in (0, \\infty)",
+                        "z = 0 \\;\\text{(the conformal boundary)}"],
+            "line_element": ("ds^2 = \\dfrac{L^2}{z^2}\\left(-c^2dt^2 + dx^2 + dy^2 + dz^2"
+                             " + \\dfrac{z^3}{2L^3}\\left(c\\,dt - dx\\right)^2\\right)"),
+            "chart": ("ds^2 = \\dfrac{L^2}{z^2}\\left(-dt^2 + dx^2 + dy^2 + dz^2"
+                      " + \\dfrac{z^3}{2L^3}\\left(dt - dx\\right)^2\\right)")},
+        "kaigorodov_horospheric": {
+            "name": "Kaigorodov, Horospheric", "coords": ["u", "v", "y", "\\rho"], "parameters": ["L"],
+            "domains": ["u \\in " + reals, "v \\in " + reals, "y \\in " + reals, "\\rho \\in " + reals],
+            "line_element": "ds^2 = d\\rho^2 + e^{2\\rho/L}\\left(dy^2 - 2\\,du\\,dv\\right) + e^{-\\rho/L}du^2"},
+        "kaigorodov_stationary": {
+            "name": "Kaigorodov, Stationary Region", "coords": ["u", "v", "y", "\\rho"], "parameters": ["L"],
+            "domains": ["u \\in " + reals, "v \\in " + reals, "y \\in " + reals, "\\rho \\in " + reals],
+            "line_element": "ds^2 = d\\rho^2 + e^{2\\rho/L}\\left(dy^2 - 2\\,du\\,dv\\right) - e^{-\\rho/L}du^2"},
+        "kaigorodov_homogeneous": {
+            "name": "Kaigorodov, Homogeneous Form", "coords": ["U", "X", "y", "Z"], "parameters": ["L", "k"],
+            "domains": ["U \\in " + reals, "X \\in " + reals, "y \\in " + reals, "Z \\in " + reals],
+            "line_element": ("ds^2 = 4L^2dZ^2 + 10k\\,e^{2Z}dX^2 + e^{-4Z}dy^2 - 10U\\,e^{Z}dZ\\,dX"
+                             " - 2e^{Z}dU\\,dX")},
+        "kaigorodov_kundt": {
+            "name": "Kaigorodov, Kundt Form", "coords": ["U", "V", "x", "y"], "parameters": ["L"],
+            "domains": ["U \\in " + reals, "V \\in " + reals, "x \\in (0, \\infty)", "y \\in " + reals,
+                        "x = 0 \\;\\text{(the conformal boundary)}"],
+            "line_element": ("ds^2 = " + front + "\\left(dx^2 + dy^2\\right)"
+                             " - 2\\,dU\\left(dV + \\dfrac{2V}{x}dx - x\\,dU\\right)")},
+    }
+    chart = charts[system]
+    probe = vm.Reader(chart["coords"], chart["parameters"], ())
+    L = probe.parameters["L"]
+    spec = {
+        "metric_id": "siklos",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": chart["parameters"], "line_element": chart["line_element"]},
+        "chart_line_element": chart.get("chart", chart["line_element"]),
+        "printer": {"lead": [*probe.symbol.values(), L], "flip": False},
+        "check": lambda chart: siklos_check(chart, system),
+        "ricci_scalar": "-\\dfrac{12}{L^2}",
+        "kretschmann": "\\dfrac{24}{L^4}",
+    }
+    if system == "ozsvath_robinson_rozga":
+        spec["pretty"] = siklos_disc_pretty(probe)
+        spec["printer"] = {"lead": [*probe.symbol.values(), L], "flip": False,
+                           "factors": [L, *probe.symbol.values(), sp.Symbol("p", positive=True),
+                                       sp.Symbol("q", positive=True)]}
+    elif system == "kaigorodov_poincare":
+        # Anti-de Sitter's Poincare patch plus the wave, each term of which carries (c dt - dx)^2 or its dual.
+        spec["components"] = {
+            "metric_components": {("t", "t"): "-\\dfrac{L^2}{z^2} + \\dfrac{z}{2L}",
+                                  ("x", "x"): "\\dfrac{L^2}{z^2} + \\dfrac{z}{2L}"},
+            "inverse_metric_components": {("t", "t"): "-\\dfrac{z^2}{L^2} - \\dfrac{z^5}{2L^5}",
+                                          ("x", "x"): "\\dfrac{z^2}{L^2} - \\dfrac{z^5}{2L^5}"}}
+    return spec
+
+
+def siklos_disc_pretty(reader):
+    """How a value of the chart on the disc is written: factored, with each factor that is a
+    multiple of 4L^2 p = 4L^2 - xi^2 - eta^2 or of 4L^2 q = (2L + xi)^2 + eta^2 written by its
+    name, and a numerator that holds the profile collected by h and its derivatives, each
+    coefficient written the same way."""
+    xi, eta = reader.symbol["\\xi"], reader.symbol["\\eta"]
+    L, h = reader.parameters["L"], reader.parameters["h"]
+    P, Q = sp.Symbol("p", positive=True), sp.Symbol("q", positive=True)
+    named = [(P, 1 - (xi ** 2 + eta ** 2) / (4 * L ** 2)), (Q, (1 + xi / (2 * L)) ** 2 + eta ** 2 / (4 * L ** 2))]
+
+    def product(value):
+        out = sp.Integer(1)
+        for base, k in sp.factor(value).as_powers_dict().items():
+            if base.is_Add:
+                for name, polynomial in named:
+                    ratio = sp.cancel(base / polynomial)
+                    if not ratio.has(xi, eta):
+                        base = ratio * name
+                        break
+            out *= base ** k
+        return out
+
+    def pretty(value):
+        numerator, denominator = sp.fraction(sp.factor(value))
+        numerator = sp.expand(numerator)
+        atoms = sorted((a for a in numerator.atoms(sp.Derivative, AppliedUndef) if a.has(h) or a == h), key=str)
+        if atoms:
+            parts = sp.collect(numerator, atoms, evaluate=False)
+            numerator = sp.Add(*[product(c) * a for a, c in parts.items()])
+        else:
+            numerator = product(numerator)
+        return sp.factor(numerator / product(denominator))
+    return pretty
+
+
+def siklos_source(profile=None):
+    """Siklos's chart as a Chart, with its profile left free or set."""
+    spec = siklos("siklos")
+    source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    g = source.geo.g
+    if profile is not None:
+        g = g.subs(source.reader.parameters["H"], profile(*source.symbols))
+    return source, g
+
+
+def siklos_check(chart, system):
+    """Every chart is an Einstein space, R_mu_nu = -(3/L^2) g_mu_nu: Siklos's where
+    H_xx + H_yy - (2/x) H_x = 0, Podolsky's (2), which is checked to be the whole of
+    R_uu + (3/L^2) g_uu, and the chart on the disc where p^2 (h_xi_xi + h_eta_eta) = 2h/L^2. Each
+    chart after Siklos's is his pulled back, J^T g J with J the Jacobian of the map onto his
+    coordinates, slot by slot, with H = x^3/L^3 for Kaigorodov's and H = xh/L on the disc. The
+    stationary chart is Siklos's with H = -x^3/L^3, the region x < 0 of Kaigorodov's metric turned
+    over by x -> -x. The null Killing vector d/dv is checked to be a repeated principal null
+    direction of the Weyl tensor, C_abcd k^d = 0, which makes every chart of type N."""
+    L = chart.reader.parameters["L"]
+    x = chart.symbols
+    names = chart.coords_tex
+    g = chart.geo.g
+    ricci = chart.geo.ricci_ll()
+    miss = {(a, b): vm.norm(vm._at(ricci, (a, b)) + 3 * g[a, b] / L ** 2) for a in range(4) for b in range(4)}
+    if system == "siklos":
+        H = chart.reader.parameters["H"]
+        want = -(sp.diff(H, x[2], 2) + sp.diff(H, x[3], 2) - 2 * sp.diff(H, x[2]) / x[2]) / 2
+        miss[(0, 0)] = vm.norm(miss[(0, 0)] - want)
+    elif system == "ozsvath_robinson_rozga":
+        h = chart.reader.parameters["h"]
+        p = 1 - (x[2] ** 2 + x[3] ** 2) / (4 * L ** 2)
+        q = (1 + x[2] / (2 * L)) ** 2 + x[3] ** 2 / (4 * L ** 2)
+        want = -(q / p) * (sp.diff(h, x[2], 2) + sp.diff(h, x[3], 2) - 2 * h / (L ** 2 * p ** 2)) * p ** 2 / 2
+        miss[(0, 0)] = vm.norm(miss[(0, 0)] - want)
+    for (a, b), value in miss.items():
+        if value != 0:
+            raise AssertionError(f"siklos: R + (3/L^2) g does not vanish in slot {names[a]}{names[b]} of {system}")
+    # k = d/dv in the charts that keep Siklos's v, d/dU or d/dV where the null coordinate is renamed.
+    ray = {"kaigorodov_poincare": None, "kaigorodov_homogeneous": 0, "kaigorodov_kundt": 1}.get(system, 1)
+    weyl = chart.geo.weyl_llll()
+    if ray is None:
+        k = [1, 1, 0, 0]
+    else:
+        k = [1 if i == ray else 0 for i in range(4)]
+    for a, b, c in itertools.product(range(4), repeat=3):
+        if vm.norm(sum(vm._at(weyl, (a, b, c, d)) * k[d] for d in range(4))) != 0:
+            raise AssertionError(f"siklos: the rays of {system} are not a repeated principal null direction")
+    if system == "siklos":
+        return
+    if system == "ozsvath_robinson_rozga":
+        u, v, xi, eta = x
+        h = chart.reader.parameters["h"]
+        # x + iy = L(2L - xi - i eta)/(2L + xi + i eta), the inverse of the map onto the disc.
+        den = (2 * L + xi) ** 2 + eta ** 2
+        image = [u, v, L * (4 * L ** 2 - xi ** 2 - eta ** 2) / den, -4 * L ** 2 * eta / den]
+        source, old = siklos_source()
+        H = source.reader.parameters["H"]
+        old = old.subs(H, source.symbols[2] * sp.Symbol("h_here") / L)
+        at = dict(zip(source.symbols, image))
+        old = old.subs(at, simultaneous=True).subs(sp.Symbol("h_here"), h)
+    else:
+        sign = -1 if system == "kaigorodov_stationary" else 1
+        source, old = siklos_source(lambda u, v, x_, y: sign * x_ ** 3 / L ** 3)
+        if system == "kaigorodov":
+            image = list(x)
+        elif system == "kaigorodov_poincare":
+            t, a, b, z = x
+            image = [(t - a) / sp.sqrt(2), (t + a) / sp.sqrt(2), z, b]
+        elif system in ("kaigorodov_horospheric", "kaigorodov_stationary"):
+            u, v, y, rho = x
+            image = [u, v, L * sp.exp(-rho / L), y]
+        elif system == "kaigorodov_homogeneous":
+            U, X, y, Z = x
+            k_ = chart.reader.parameters["k"]
+            image = [-sp.sqrt(10 * k_) * X, -U * sp.exp(5 * Z) / sp.sqrt(10 * k_), L * sp.exp(2 * Z), y]
+        else:
+            U, V, a, b = x
+            image = [sp.sqrt(2) * U, V * a ** 2 / sp.sqrt(2), L * a, L * b]
+        old = old.subs(dict(zip(source.symbols, image)), simultaneous=True)
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], x[j]))
+    pulled = J.T * old * J
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify(pulled[i, j] - g[i, j]) != 0:
+                raise AssertionError(f"siklos: Siklos's chart pulled back misses {system} in slot {names[i]}{names[j]}")
+
+
+CHARTS["siklos"] = [lambda s=s: siklos(s) for s in SIKLOS_CHARTS]
 
 
 def write(spec):

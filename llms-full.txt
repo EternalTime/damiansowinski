@@ -1058,6 +1058,23 @@ A universe filled with radiation and arranged around an axis, which contracts, i
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/senovilla.json
 - chart Cylindrical: coordinates $(t, \rho, \phi, z)$, $$ds^2 = \cosh^4(act)\cosh^2(3a\rho)\left(-c^2dt^2 + d\rho^2\right) + \dfrac{\cosh^4(act)\sinh^2(3a\rho)}{9a^2\cosh^{2/3}(3a\rho)}d\phi^2 + \dfrac{dz^2}{\cosh^2(act)\cosh^{2/3}(3a\rho)}$$
 
+### Siklos Waves and the Kaigorodov Spacetime
+
+Exact gravitational waves crossing anti-de Sitter space: a pp-wave multiplied by anti-de Sitter's conformal factor, with fronts that are hyperbolic planes. The simplest, Kaigorodov's spacetime, is homogeneous, and its singularity shows in no curvature scalar.
+
+- id: `siklos`
+- tags: negative cosmological constant, cosmological constant, anti-de Sitter, gravitational wave, pp-wave, Kundt class, Petrov type N, null Killing vector, homogeneous, stationary, AdS/CFT, holography, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/siklos.json
+- chart Siklos: coordinates $(u, v, x, y)$, $$ds^2 = \dfrac{L^2}{x^2}\left(dx^2 + dy^2 - 2\,du\,dv + H\,du^2\right)$$
+- chart Ozsváth-Robinson-Rózga: coordinates $(u, v, \xi, \eta)$, $$ds^2 = \dfrac{d\xi^2 + d\eta^2}{p^2} - \dfrac{2q^2}{p^2}du\,dv + \dfrac{q}{p}h\,du^2$$
+- chart Kaigorodov, Siklos Coordinates: coordinates $(u, v, x, y)$, $$ds^2 = \dfrac{L^2}{x^2}\left(dx^2 + dy^2 - 2\,du\,dv + \dfrac{x^3}{L^3}du^2\right)$$
+- chart Kaigorodov, Poincaré: coordinates $(t, x, y, z)$, $$ds^2 = \dfrac{L^2}{z^2}\left(-c^2dt^2 + dx^2 + dy^2 + dz^2 + \dfrac{z^3}{2L^3}\left(c\,dt - dx\right)^2\right)$$
+- chart Kaigorodov, Horospheric: coordinates $(u, v, y, \rho)$, $$ds^2 = d\rho^2 + e^{2\rho/L}\left(dy^2 - 2\,du\,dv\right) + e^{-\rho/L}du^2$$
+- chart Kaigorodov, Stationary Region: coordinates $(u, v, y, \rho)$, $$ds^2 = d\rho^2 + e^{2\rho/L}\left(dy^2 - 2\,du\,dv\right) - e^{-\rho/L}du^2$$
+- chart Kaigorodov, Homogeneous Form: coordinates $(U, X, y, Z)$, $$ds^2 = 4L^2dZ^2 + 10k\,e^{2Z}dX^2 + e^{-4Z}dy^2 - 10U\,e^{Z}dZ\,dX - 2e^{Z}dU\,dX$$
+- chart Kaigorodov, Kundt Form: coordinates $(U, V, x, y)$, $$ds^2 = \dfrac{L^2}{x^2}\left(dx^2 + dy^2\right) - 2\,dU\left(dV + \dfrac{2V}{x}dx - x\,dU\right)$$
+
 ### Simpson-Visser Black Bounce
 
 Schwarzschild's metric with $\sqrt{r^2 + a^2}$ written for the areal radius, which Alex Simpson and Matt Visser proposed in 2019. One length $a$ carries it from Schwarzschild's black hole through a regular black hole, whose inside bounces into another universe, and a one way wormhole to a traversable wormhole.

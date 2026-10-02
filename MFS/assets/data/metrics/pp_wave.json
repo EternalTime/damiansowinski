@@ -63,6 +63,11 @@
       "id": "string_wave",
       "kind": "generalisation",
       "text": "A pp-wave riding a cosmic string, its transverse plane the string's cone. A profile linear in $x$ and $y$, which a change of coordinates removes here, is there the wave of a wiggling string [garfinkle1990, anderson1999]."
+    },
+    {
+      "id": "siklos",
+      "kind": "generalisation",
+      "text": "The pp-waves given a negative cosmological constant. They cross anti-de Sitter space on fronts that are hyperbolic planes [siklos1985, podolsky1998]."
     }
   ],
   "references": [
@@ -93,7 +98,9 @@
     "bonnor1969light",
     "ori2005",
     "garfinkle1990",
-    "anderson1999"
+    "anderson1999",
+    "siklos1985",
+    "podolsky1998"
   ],
   "coordinates": [
     {

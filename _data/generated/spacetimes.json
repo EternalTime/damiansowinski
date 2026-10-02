@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 88,
+  "count": 89,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -66,6 +66,11 @@
           "id": "khan_penrose",
           "kind": "family",
           "text": "Two impulsive waves colliding, each with a plane front of the same strength everywhere, which focus each other onto a singularity [khan1971]. Two Aichelburg-Sexl shocks meeting head on close a trapped surface around the collision, as Penrose found in 1974 [eardley2002]."
+        },
+        {
+          "id": "siklos",
+          "kind": "family",
+          "text": "The counterparts of the pp-waves in anti-de Sitter space. Squeezed onto one front, a Siklos wave is the field of a null particle there [podolsky1998impulsive]."
         }
       ],
       "references": [
@@ -92,7 +97,8 @@
         "sperhake2008",
         "east2013",
         "garfinkle1990",
-        "khan1971"
+        "khan1971",
+        "podolsky1998impulsive"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/aichelburg_sexl.json",
@@ -565,6 +571,11 @@
           "id": "coleman_de_luccia",
           "kind": "composite",
           "text": "A bubble of anti-de Sitter space growing in a vacuum of higher energy. Seen from inside it is an open universe that falls back on itself after a time $\\pi L/c$ [coleman1980]."
+        },
+        {
+          "id": "siklos",
+          "kind": "generalisation",
+          "text": "Anti-de Sitter space with a gravitational wave crossing it. The profile $H$ of a pp-wave goes inside the bracket of the Poincaré patch, and at $H = 0$ the wave is gone [siklos1985, podolsky1998]."
         }
       ],
       "references": [
@@ -598,7 +609,9 @@
         "aminneborg1996",
         "mann1997",
         "randall1999b",
-        "coleman1980"
+        "coleman1980",
+        "siklos1985",
+        "podolsky1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -1151,6 +1164,11 @@
           "id": "point_particle_2plus1",
           "kind": "family",
           "text": "With no cosmological constant a mass in three dimensions makes a cone and no black hole. Hans-Jürgen Matschull collided two such particles in anti-de Sitter space in 1999 and got this black hole [deser1984, matschull1999]."
+        },
+        {
+          "id": "siklos",
+          "kind": "family",
+          "text": "Kaigorodov's wave in anti-de Sitter space of four dimensions has a version in three, and it is the extreme BTZ black hole [cvetic1999]."
         }
       ],
       "references": [
@@ -1174,7 +1192,8 @@
         "solodukhin2005",
         "damour2007",
         "aminneborg1996",
-        "matschull1999"
+        "matschull1999",
+        "cvetic1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz.json",
@@ -17298,6 +17317,11 @@
           "id": "string_wave",
           "kind": "generalisation",
           "text": "A pp-wave riding a cosmic string, its transverse plane the string's cone. A profile linear in $x$ and $y$, which a change of coordinates removes here, is there the wave of a wiggling string [garfinkle1990, anderson1999]."
+        },
+        {
+          "id": "siklos",
+          "kind": "generalisation",
+          "text": "The pp-waves given a negative cosmological constant. They cross anti-de Sitter space on fronts that are hyperbolic planes [siklos1985, podolsky1998]."
         }
       ],
       "references": [
@@ -17328,7 +17352,9 @@
         "bonnor1969light",
         "ori2005",
         "garfinkle1990",
-        "anderson1999"
+        "anderson1999",
+        "siklos1985",
+        "podolsky1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/pp_wave.json",
@@ -18861,6 +18887,11 @@
           "id": "vaidya",
           "kind": "special_case",
           "text": "The member with round wave fronts and pure radiation in place of the vacuum, a star that shines evenly. Jiří Podolský and Otakar Svítek showed in 2005 that the other members with pure radiation approach it [podolsky2005]."
+        },
+        {
+          "id": "siklos",
+          "kind": "family",
+          "text": "Waves of the same algebraic type with a negative cosmological constant, on fronts that do not expand: hyperbolic planes crossing anti-de Sitter space [podolsky1998, bicak1999]."
         }
       ],
       "references": [
@@ -18888,7 +18919,9 @@
         "brinkmann1925",
         "dain1996",
         "cornish2000",
-        "podolsky2005"
+        "podolsky2005",
+        "podolsky1998",
+        "bicak1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/robinson_trautman.json",
@@ -20753,6 +20786,644 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{24a^4\\left(24\\cosh^4(act)\\cosh^2(3a\\rho) + 33\\cosh^4(act) - 32\\cosh^2(act)\\cosh^2(3a\\rho) + 8\\cosh^4(3a\\rho)\\right)}{\\cosh^{12}(act)\\cosh^8(3a\\rho)}"
+        }
+      ]
+    },
+    {
+      "id": "siklos",
+      "name": "Siklos Waves and the Kaigorodov Spacetime",
+      "short_name": "Siklos Waves",
+      "description": "Exact gravitational waves crossing anti-de Sitter space: a pp-wave multiplied by anti-de Sitter's conformal factor, with fronts that are hyperbolic planes. The simplest, Kaigorodov's spacetime, is homogeneous, and its singularity shows in no curvature scalar.",
+      "tags": [
+        "negative cosmological constant",
+        "cosmological constant",
+        "anti-de Sitter",
+        "gravitational wave",
+        "pp-wave",
+        "Kundt class",
+        "Petrov type N",
+        "null Killing vector",
+        "homogeneous",
+        "stationary",
+        "AdS/CFT",
+        "holography",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The anti-de Sitter radius $L$ is a length, with $\\Lambda = -3/L^2$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "anti_de_sitter",
+          "kind": "special_case",
+          "text": "The wave switched off. At $H = 0$ the metric is anti-de Sitter space in the coordinates of its Poincaré patch [podolsky1998]."
+        },
+        {
+          "id": "pp_wave",
+          "kind": "special_case",
+          "text": "The cosmological constant switched off. In the coordinates of Ozsváth, Robinson, and Rózga, $1/L = 0$ leaves a pp-wave in Brinkmann's form [ozsvath1985, podolsky1998]."
+        },
+        {
+          "id": "aichelburg_sexl",
+          "kind": "family",
+          "text": "The field of a massless particle in flat space, a pp-wave squeezed onto one front. Squeeze a Siklos wave the same way and it is the field of a null particle in anti-de Sitter space [podolsky1998impulsive]."
+        },
+        {
+          "id": "robinson_trautman",
+          "kind": "family",
+          "text": "Gravitational waves of the same algebraic type on fronts that expand. With a cosmological constant, a wave of type N without twist is either one of Kundt's, as Siklos's are, or one of Robinson and Trautman's [bicak1999]."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "In three dimensions Kaigorodov's metric is the extreme BTZ black hole, the one spinning as fast as its mass allows [cvetic1999]."
+        }
+      ],
+      "references": [
+        "brinkmann1925",
+        "ehlerskundt1962",
+        "hawking1973",
+        "siklos1985",
+        "podolsky1998",
+        "bicak1999",
+        "ozsvath1985",
+        "chrusciel2006rigid",
+        "kaigorodov1962",
+        "cvetic1999",
+        "petrov1954",
+        "chamblin2000supergravity",
+        "brecher2001",
+        "podolsky1998impulsive"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/siklos.json",
+      "charts": [
+        {
+          "id": "siklos",
+          "name": "Siklos",
+          "coordinates": [
+            "u",
+            "v",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "x \\in (0, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "x = 0 \\;\\text{(the conformal boundary)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = -3/L^2$"
+            },
+            {
+              "symbol": "H = H(u,x,y)",
+              "description": "Wave profile, a dimensionless function of $u$ and of the two coordinates along the wave front. The metric solves Einstein's equations with $\\Lambda = -3/L^2$ and no matter exactly where $\\partial_x^2 H + \\partial_y^2 H - (2/x)\\,\\partial_x H = 0$; $H = 0$ is anti-de Sitter space, and so is $H = c_0 + c_1y + c_2(x^2 + y^2)$ for any functions $c_0$, $c_1$, and $c_2$ of $u$"
+            }
+          ],
+          "convention": "We use Siklos's coordinates $(u, v, x, y)$, all lengths, with $u$ labelling the wave fronts and $v$ an affine parameter along the rays. We leave the profile $H$ free, so no component assumes a field equation. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{L^2}{x^2}\\left(dx^2 + dy^2 - 2\\,du\\,dv + H\\,du^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{L^2\\,H}{x^2}"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-\\dfrac{L^2}{x^2}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-\\dfrac{L^2}{x^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{L^2}{x^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{L^2}{x^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{24}{L^4}"
+        },
+        {
+          "id": "ozsvath_robinson_rozga",
+          "name": "Ozsváth-Robinson-Rózga",
+          "coordinates": [
+            "u",
+            "v",
+            "\\xi",
+            "\\eta"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "\\xi \\in (-2L, 2L)",
+            "\\eta \\in (-2L, 2L)",
+            "\\xi^2 + \\eta^2 < 4L^2 \\;\\text{(the disc; its rim is the conformal boundary)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = -3/L^2$; at $1/L = 0$ the metric is a pp-wave in Brinkmann's form"
+            },
+            {
+              "symbol": "h = h(u,\\xi,\\eta)",
+              "description": "Wave profile of this chart, a dimensionless function of $u$, $\\xi$, and $\\eta$, equal to $LH/x$ for the $H$ and $x$ of Siklos's chart. The metric solves Einstein's equations with $\\Lambda = -3/L^2$ and no matter exactly where $p^2(\\partial_\\xi^2 h + \\partial_\\eta^2 h) = 2h/L^2$, and Kaigorodov's spacetime is $h = p^2/q^2$"
+            },
+            {
+              "symbol": "p = 1 - \\dfrac{\\xi^2 + \\eta^2}{4L^2}",
+              "description": "Conformal factor of the wave front, the hyperbolic plane drawn as Poincaré's disc of radius $2L$"
+            },
+            {
+              "symbol": "q = \\left(1 + \\dfrac{\\xi}{2L}\\right)^2 + \\dfrac{\\eta^2}{4L^2}",
+              "description": "The second function of Ozsváth, Robinson, and Rózga, with $q/p = L/x$ for the $x$ of Siklos's chart"
+            }
+          ],
+          "convention": "We use the coordinates of Ozsváth, Robinson, and Rózga, all lengths: $u$ and $v$ are Siklos's, and $\\xi + i\\eta = 2L(L - x - iy)/(L + x + iy)$ maps his half plane onto the disc $\\xi^2 + \\eta^2 < 4L^2$. We leave the profile $h$ free, so no component assumes a field equation. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{d\\xi^2 + d\\eta^2}{p^2} - \\dfrac{2q^2}{p^2}du\\,dv + \\dfrac{q}{p}h\\,du^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{q\\,h}{p}"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-\\dfrac{q^2}{p^2}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-\\dfrac{q^2}{p^2}"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "\\dfrac{1}{p^2}"
+            },
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "\\dfrac{1}{p^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{24}{L^4}"
+        },
+        {
+          "id": "kaigorodov",
+          "name": "Kaigorodov, Siklos Coordinates",
+          "coordinates": [
+            "u",
+            "v",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "x \\in (0, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "x = 0 \\;\\text{(the conformal boundary)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = -3/L^2$; the curvature singularity is $x \\to \\infty$ and the conformal boundary is $x \\to 0$"
+            }
+          ],
+          "convention": "We use Siklos's coordinates $(u, v, x, y)$, all lengths, with the profile $H = x^3/L^3$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{L^2}{x^2}\\left(dx^2 + dy^2 - 2\\,du\\,dv + \\dfrac{x^3}{L^3}du^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{x}{L}"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-\\dfrac{L^2}{x^2}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-\\dfrac{L^2}{x^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{L^2}{x^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{L^2}{x^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{24}{L^4}"
+        },
+        {
+          "id": "kaigorodov_poincare",
+          "name": "Kaigorodov, Poincaré",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (0, \\infty)",
+            "z = 0 \\;\\text{(the conformal boundary)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = -3/L^2$; the conformal boundary is $z \\to 0$, as in the Poincaré patch of anti-de Sitter space"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z)$, with $t$ carrying dimensions of time and $x$, $y$, and $z$ lengths; the wave travels along $x$, and $z$ is the $x$ of Siklos's chart, whose null coordinates are $u = (ct - x)/\\sqrt{2}$ and $v = (ct + x)/\\sqrt{2}$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{L^2}{z^2}\\left(-c^2dt^2 + dx^2 + dy^2 + dz^2 + \\dfrac{z^3}{2L^3}\\left(c\\,dt - dx\\right)^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{L^2}{z^2} + \\dfrac{z}{2L}"
+            },
+            {
+              "indices": [
+                "t",
+                "x"
+              ],
+              "value": "-\\dfrac{z}{2L}"
+            },
+            {
+              "indices": [
+                "x",
+                "t"
+              ],
+              "value": "-\\dfrac{z}{2L}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{L^2}{z^2} + \\dfrac{z}{2L}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{L^2}{z^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{L^2}{z^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{24}{L^4}"
+        },
+        {
+          "id": "kaigorodov_horospheric",
+          "name": "Kaigorodov, Horospheric",
+          "coordinates": [
+            "u",
+            "v",
+            "y",
+            "\\rho"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "\\rho \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = -3/L^2$; the conformal boundary is $\\rho \\to \\infty$ and the curvature singularity $\\rho \\to -\\infty$"
+            }
+          ],
+          "convention": "We use Kaigorodov's coordinates $(u, v, y, \\rho)$, all lengths, with $\\rho = -L\\ln(x/L)$ the proper distance across the surfaces of constant $x$ of Siklos's chart. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = d\\rho^2 + e^{2\\rho/L}\\left(dy^2 - 2\\,du\\,dv\\right) + e^{-\\rho/L}du^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "e^{-\\rho/L}"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-e^{2\\rho/L}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-e^{2\\rho/L}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "e^{2\\rho/L}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{24}{L^4}"
+        },
+        {
+          "id": "kaigorodov_stationary",
+          "name": "Kaigorodov, Stationary Region",
+          "coordinates": [
+            "u",
+            "v",
+            "y",
+            "\\rho"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "\\rho \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = -3/L^2$; the conformal boundary is $\\rho \\to \\infty$"
+            }
+          ],
+          "convention": "We use Kaigorodov's coordinates $(u, v, y, \\rho)$, all lengths, on the region $x < 0$ of Siklos's chart, with $\\rho = -L\\ln(-x/L)$; there $\\partial_u$ is timelike. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = d\\rho^2 + e^{2\\rho/L}\\left(dy^2 - 2\\,du\\,dv\\right) - e^{-\\rho/L}du^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-e^{-\\rho/L}"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-e^{2\\rho/L}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-e^{2\\rho/L}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "e^{2\\rho/L}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{24}{L^4}"
+        },
+        {
+          "id": "kaigorodov_homogeneous",
+          "name": "Kaigorodov, Homogeneous Form",
+          "coordinates": [
+            "U",
+            "X",
+            "y",
+            "Z"
+          ],
+          "domains": [
+            "U \\in (-\\infty, \\infty)",
+            "X \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "Z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = -3/L^2$"
+            },
+            {
+              "symbol": "k",
+              "description": "A positive number of no physical meaning; rescaling $X$ and $U$ changes it"
+            }
+          ],
+          "convention": "We use coordinates $(U, X, y, Z)$, with $U$, $X$, and $y$ lengths and $Z$ a pure number: $x = Le^{2Z}$, $u = -\\sqrt{10k}\\,X$, and $v = -Ue^{5Z}/\\sqrt{10k}$ in Siklos's coordinates. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = 4L^2dZ^2 + 10k\\,e^{2Z}dX^2 + e^{-4Z}dy^2 - 10U\\,e^{Z}dZ\\,dX - 2e^{Z}dU\\,dX",
+          "metric_components": [
+            {
+              "indices": [
+                "U",
+                "X"
+              ],
+              "value": "-e^{Z}"
+            },
+            {
+              "indices": [
+                "X",
+                "U"
+              ],
+              "value": "-e^{Z}"
+            },
+            {
+              "indices": [
+                "X",
+                "X"
+              ],
+              "value": "10k\\,e^{2Z}"
+            },
+            {
+              "indices": [
+                "X",
+                "Z"
+              ],
+              "value": "-5U\\,e^{Z}"
+            },
+            {
+              "indices": [
+                "Z",
+                "X"
+              ],
+              "value": "-5U\\,e^{Z}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "e^{-4Z}"
+            },
+            {
+              "indices": [
+                "Z",
+                "Z"
+              ],
+              "value": "4L^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{24}{L^4}"
+        },
+        {
+          "id": "kaigorodov_kundt",
+          "name": "Kaigorodov, Kundt Form",
+          "coordinates": [
+            "U",
+            "V",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "U \\in (-\\infty, \\infty)",
+            "V \\in (-\\infty, \\infty)",
+            "x \\in (0, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "x = 0 \\;\\text{(the conformal boundary)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = -3/L^2$"
+            }
+          ],
+          "convention": "We use coordinates $(U, V, x, y)$, with $U$ and $V$ lengths and $x$ and $y$ pure numbers, $L$ times which are Siklos's $x$ and $y$; his null coordinates are $u = \\sqrt{2}\\,U$ and $v = Vx^2/\\sqrt{2}$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{L^2}{x^2}\\left(dx^2 + dy^2\\right) - 2\\,dU\\left(dV + \\dfrac{2V}{x}dx - x\\,dU\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "U",
+                "U"
+              ],
+              "value": "2x"
+            },
+            {
+              "indices": [
+                "U",
+                "V"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "V",
+                "U"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "U",
+                "x"
+              ],
+              "value": "-\\dfrac{2V}{x}"
+            },
+            {
+              "indices": [
+                "x",
+                "U"
+              ],
+              "value": "-\\dfrac{2V}{x}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{L^2}{x^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{L^2}{x^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{24}{L^4}"
         }
       ]
     },

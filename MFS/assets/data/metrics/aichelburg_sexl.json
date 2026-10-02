@@ -59,6 +59,11 @@
       "id": "khan_penrose",
       "kind": "family",
       "text": "Two impulsive waves colliding, each with a plane front of the same strength everywhere, which focus each other onto a singularity [khan1971]. Two Aichelburg-Sexl shocks meeting head on close a trapped surface around the collision, as Penrose found in 1974 [eardley2002]."
+    },
+    {
+      "id": "siklos",
+      "kind": "family",
+      "text": "The counterparts of the pp-waves in anti-de Sitter space. Squeezed onto one front, a Siklos wave is the field of a null particle there [podolsky1998impulsive]."
     }
   ],
   "references": [
@@ -85,7 +90,8 @@
     "sperhake2008",
     "east2013",
     "garfinkle1990",
-    "khan1971"
+    "khan1971",
+    "podolsky1998impulsive"
   ],
   "coordinates": [
     {
