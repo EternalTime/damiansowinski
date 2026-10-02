@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 134,
+  "count": 135,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -8724,6 +8724,11 @@
           "id": "elliptic_de_sitter",
           "kind": "locally_same",
           "text": "Erwin Schrödinger's remedy of 1956 for observers whose horizons part them: every event of de Sitter space made one with the event opposite it on the hyperboloid. An observer then sees one event of every pair, and the space has no global direction of time [schrodinger1956, parikh2003]."
+        },
+        {
+          "id": "gravitational_instantons",
+          "kind": "family",
+          "text": "De Sitter space in imaginary time is a 4-sphere, the simplest compact gravitational instanton. The complex projective plane and Page's space are two more with a positive cosmological constant [gibbonshawking1979, page2009]."
         }
       ],
       "references": [
@@ -8765,7 +8770,9 @@
         "griffiths2004",
         "hotta1993",
         "schrodinger1956",
-        "parikh2003"
+        "parikh2003",
+        "gibbonshawking1979",
+        "page2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -9561,6 +9568,11 @@
           "id": "mixmaster",
           "kind": "family",
           "text": "A universe whose three axes on the 3-sphere all differ, as the axes of Belinskii, Gibbons, Page, and Pope's self dual metrics do. Of those, the only one with no singularity has two axes equal and is the Eguchi-Hanson space [belinskii1978bianchi, eguchihanson1979]."
+        },
+        {
+          "id": "gravitational_instantons",
+          "kind": "generalisation",
+          "text": "Gibbons and Hawking's metrics of many centres, which stand among the gravitational instantons of 1977 and 1978. The Eguchi-Hanson space is their case of two centres with no constant in the potential [gibbonshawking1979, eguchigilkeyhanson1980]."
         }
       ],
       "references": [
@@ -14558,6 +14570,668 @@
       ]
     },
     {
+      "id": "gravitational_instantons",
+      "name": "Gravitational Instantons",
+      "short_name": "Gravitational Instantons",
+      "description": "Spaces of four dimensions with no time in them, the solutions of Einstein's equations with Riemannian signature that Stephen Hawking, Gary Gibbons, Don Page, and Christopher Pope found in 1977 and 1978. The first is Schwarzschild's black hole in imaginary time, which closes smoothly on its horizon only if that time is a circle of length $4\\pi r_s$, the inverse of Hawking's temperature. The others are the two Taub-NUT instantons, the spaces with many centres, the complex projective plane, and Page's space.",
+      "tags": [
+        "four-dimensional",
+        "gravitational instanton",
+        "Riemannian",
+        "Euclidean signature",
+        "no time",
+        "Euclidean Schwarzschild",
+        "imaginary time",
+        "Hawking temperature",
+        "black hole thermodynamics",
+        "Euclidean quantum gravity",
+        "path integral",
+        "cigar",
+        "nut",
+        "bolt",
+        "nuts and bolts",
+        "self-dual",
+        "Taub-NUT",
+        "Taub-bolt",
+        "Gibbons-Hawking",
+        "multi-centre",
+        "complex projective plane",
+        "Fubini-Study",
+        "Kähler",
+        "Page metric",
+        "cosmological constant",
+        "positive cosmological constant",
+        "compact",
+        "Euler characteristic",
+        "regular",
+        "exact solution",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(+,+,+,+)",
+      "convention": "All four coordinates are spatial, so no component carries a factor of $c$, and a dot in the geodesic equations is a derivative with respect to arc length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "dual",
+          "text": "Schwarzschild's black hole with its time made imaginary is the first of these instantons. The horizon becomes the bolt, and the period $4\\pi r_s$ that makes the bolt smooth is the inverse of Hawking's temperature [gibbons1977action, gibbonshawking1979]."
+        },
+        {
+          "id": "taub_nut",
+          "kind": "dual",
+          "text": "Taub-NUT with $t = -i\\tau/c$ and $l = in$ is real again, and it is regular at two masses: $m = n$, Hawking's self dual instanton, and $m = 5n/4$, Page's instanton with a bolt [hawking1977, page1978bolt, gibbonshawking1979]."
+        },
+        {
+          "id": "eguchi_hanson",
+          "kind": "special_case",
+          "text": "Gibbons and Hawking's metric of many centres, taken with two of them and no constant in its potential, $\\epsilon = 0$, is the Eguchi-Hanson space [gibbonshawking1979, eguchigilkeyhanson1980]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "composite",
+          "text": "Give the self dual Taub-NUT instanton a time of its own, $-c^2dt^2$, and it is a static vacuum of five dimensions that four dimensions see as a magnetic monopole. The nut parameter is $n = 2m$ in the monopole's units [sorkin1983, grossperry1983]."
+        },
+        {
+          "id": "kerr_de_sitter",
+          "kind": "limit_source",
+          "text": "Page's space is a limit of the Kerr-de Sitter metric in imaginary time: the black hole's horizon and the cosmological one are brought together, and the space between them closes smoothly at one value of the spin [page1978compact, gibbonshawking1979]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "family",
+          "text": "De Sitter space in imaginary time is the 4-sphere of radius $\\sqrt{3/\\Lambda}$, the first compact gravitational instanton. Its cosmological horizon is a bolt, and a quarter of the bolt's area is the horizon's entropy [gibbonshawking1979, page2009]."
+        }
+      ],
+      "references": [
+        "hawking1974",
+        "hawking1975",
+        "gibbons1977action",
+        "gibbonshawking1979",
+        "bpst1975",
+        "hawking1977",
+        "gibbonshawking1978",
+        "eguchigilkeyhanson1980",
+        "page1978bolt",
+        "gibbonspope1978",
+        "page1978compact",
+        "page2009",
+        "chenlebrunweber2008",
+        "chenteo2011",
+        "sorkin1983",
+        "grossperry1983"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gravitational_instantons.json",
+      "charts": [
+        {
+          "id": "schwarzschild",
+          "name": "Euclidean Schwarzschild",
+          "coordinates": [
+            "\\tau",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in [0, 4\\pi r_s)",
+            "r \\in [r_s, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s \\;\\text{(the bolt, a 2-sphere of radius}\\; r_s\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "The Schwarzschild radius, $r_s = 2GM/c^2$: the bolt $r = r_s$ is a 2-sphere of radius $r_s$"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, r, \\theta, \\phi)$, with $\\tau$ the imaginary time, $t = -i\\tau/c$ in Schwarzschild's chart, a length of period $4\\pi r_s$. The Schwarzschild radius is $r_s = 2GM/c^2$.",
+          "line_element": "ds^2 = \\left(1 - \\dfrac{r_s}{r}\\right)d\\tau^2 + \\left(1 - \\dfrac{r_s}{r}\\right)^{-1}dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "\\dfrac{r - r_s}{r}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r}{r - r_s}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "regular",
+          "name": "Regular at the Bolt",
+          "coordinates": [
+            "x",
+            "\\tau",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "x \\in [0, 2r_s)",
+            "\\tau \\in [0, 4\\pi r_s)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "x = 0 \\;\\text{(the bolt, a 2-sphere of radius}\\; r_s\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "The Schwarzschild radius, $r_s = 2GM/c^2$: the bolt $x = 0$ is a 2-sphere of radius $r_s$"
+            },
+            {
+              "symbol": "r = \\dfrac{4r_s^3}{4r_s^2 - x^2}",
+              "description": "The areal radius, Schwarzschild's $r$"
+            }
+          ],
+          "convention": "We use coordinates $(x, \\tau, \\theta, \\phi)$, with $x = 2r_s\\sqrt{1 - r_s/r}$ a length that vanishes on the bolt and tends to $2r_s$ far away, and $\\tau$ a length of period $4\\pi r_s$. The Schwarzschild radius is $r_s = 2GM/c^2$.",
+          "line_element": "ds^2 = \\dfrac{r^4}{r_s^4}dx^2 + \\dfrac{x^2}{4r_s^2}d\\tau^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{r^4}{r_s^4}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "\\dfrac{x^2}{4r_s^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "taub_nut",
+          "name": "Self-Dual Taub-NUT",
+          "coordinates": [
+            "r",
+            "\\theta",
+            "\\phi",
+            "\\tau"
+          ],
+          "domains": [
+            "r \\in [n, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\tau \\in [0, 8\\pi n)",
+            "r = n \\;\\text{(the nut, a regular point)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "n",
+              "description": "The nut parameter, a length: the mass is $n$ too, and the nut is the point $r = n$"
+            }
+          ],
+          "convention": "We use coordinates $(r, \\theta, \\phi, \\tau)$, with $r$ a length and $\\tau$ a length of period $8\\pi n$, so that $\\tau/2n$, $\\theta$, and $\\phi$ are Euler angles on the 3-spheres of constant $r$. The nut parameter $n$ is a length.",
+          "line_element": "ds^2 = \\dfrac{r + n}{r - n}dr^2 + \\left(r^2 - n^2\\right)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\dfrac{r - n}{r + n}\\left(d\\tau + 2n\\cos\\theta\\,d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r + n}{r - n}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2 - n^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(r - n\\right)\\left(r^2\\sin^2\\theta + 2r\\,n\\sin^2\\theta - 3n^2\\sin^2\\theta + 4n^2\\right)}{r + n}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\tau"
+              ],
+              "value": "\\dfrac{2n\\left(r - n\\right)\\cos\\theta}{r + n}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\phi"
+              ],
+              "value": "\\dfrac{2n\\left(r - n\\right)\\cos\\theta}{r + n}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "\\dfrac{r - n}{r + n}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{96n^2}{\\left(r + n\\right)^6}"
+        },
+        {
+          "id": "taub_bolt",
+          "name": "Taub-Bolt",
+          "coordinates": [
+            "r",
+            "\\theta",
+            "\\phi",
+            "\\tau"
+          ],
+          "domains": [
+            "r \\in [2n, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\tau \\in [0, 8\\pi n)",
+            "r = 2n \\;\\text{(the bolt, a 2-sphere of radius}\\; \\sqrt{3}\\,n\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "n",
+              "description": "The nut parameter, a length: the mass is $5n/4$, and the bolt $r = 2n$ is a 2-sphere of radius $\\sqrt{3}\\,n$"
+            }
+          ],
+          "convention": "We use coordinates $(r, \\theta, \\phi, \\tau)$, with $r$ a length and $\\tau$ a length of period $8\\pi n$, so that $\\tau/2n$, $\\theta$, and $\\phi$ are Euler angles on the 3-spheres of constant $r$. The nut parameter $n$ is a length.",
+          "line_element": "ds^2 = \\dfrac{2\\left(r^2 - n^2\\right)}{\\left(r - 2n\\right)\\left(2r - n\\right)}dr^2 + \\left(r^2 - n^2\\right)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\dfrac{\\left(r - 2n\\right)\\left(2r - n\\right)}{2\\left(r^2 - n^2\\right)}\\left(d\\tau + 2n\\cos\\theta\\,d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{2\\left(r^2 - n^2\\right)}{\\left(r - 2n\\right)\\left(2r - n\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2 - n^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^4\\sin^2\\theta - 6r^2\\,n^2\\sin^2\\theta + 4r^2\\,n^2 + 10r\\,n^3\\sin^2\\theta - 10r\\,n^3 - 3n^4\\sin^2\\theta + 4n^4}{r^2 - n^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\tau"
+              ],
+              "value": "\\dfrac{n\\left(r - 2n\\right)\\left(2r - n\\right)\\cos\\theta}{r^2 - n^2}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\phi"
+              ],
+              "value": "\\dfrac{n\\left(r - 2n\\right)\\left(2r - n\\right)\\cos\\theta}{r^2 - n^2}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "\\dfrac{\\left(r - 2n\\right)\\left(2r - n\\right)}{2\\left(r^2 - n^2\\right)}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{3n^2\\left(41r^6 - 240r^5\\,n + 615r^4\\,n^2 - 800r^3\\,n^3 + 615r^2\\,n^4 - 240r\\,n^5 + 41n^6\\right)}{\\left(r^2 - n^2\\right)^6}"
+        },
+        {
+          "id": "multi_centre",
+          "name": "Multi-Centre",
+          "coordinates": [
+            "\\rho",
+            "z",
+            "\\phi",
+            "\\tau"
+          ],
+          "domains": [
+            "\\rho \\in [0, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "\\tau \\in [0, 8\\pi n)",
+            "(\\rho, z) = (0, z_i) \\;\\text{(the centres, regular points)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "V = V(\\rho,z)",
+              "description": "The potential, a pure number; no component assumes Laplace's equation for it"
+            },
+            {
+              "symbol": "\\omega = \\omega(\\rho,z)",
+              "description": "The component $\\omega_\\phi$ of the twist, a length, fixed by $V$ up to a constant; no component assumes its equation"
+            }
+          ],
+          "convention": "We use coordinates $(\\rho, z, \\phi, \\tau)$, with $\\rho$, $z$, and $\\phi$ cylindrical coordinates on a flat space of three dimensions, every centre on its axis at a height $z_i$, and $\\tau$ a length of period $8\\pi n$. The potential is $V = \\epsilon + \\sum_i 2n/R_i$, with $R_i = \\sqrt{\\rho^2 + (z - z_i)^2}$, the length $n$ the nut parameter of every centre, and $\\epsilon$ either $1$ or $0$. The twist $\\omega$ solves $\\partial_\\rho\\omega = \\rho\\,\\partial_z V$ and $\\partial_z\\omega = -\\rho\\,\\partial_\\rho V$.",
+          "line_element": "ds^2 = V\\left(d\\rho^2 + dz^2 + \\rho^2d\\phi^2\\right) + V^{-1}\\left(d\\tau + \\omega\\,d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "V"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "V"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{V^2\\,\\rho^2 + \\omega^2}{V}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\tau"
+              ],
+              "value": "\\dfrac{\\omega}{V}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\omega}{V}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "\\dfrac{1}{V}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2V\\,\\rho^2\\,\\partial_\\rho^2 V + 2V\\,\\rho^2\\,\\partial_z^2 V + 2V\\,\\rho\\,\\partial_\\rho V - \\rho^2\\left(\\partial_\\rho V\\right)^2 - \\rho^2\\left(\\partial_z V\\right)^2 + \\left(\\partial_\\rho\\omega\\right)^2 + \\left(\\partial_z\\omega\\right)^2}{2V^3\\,\\rho^2}",
+          "kretschmann": "K = \\dfrac{8V^2\\,\\rho^4\\,\\partial_\\rho^2 V\\,\\partial_z^2 V + 16V^2\\,\\rho^4\\left(\\partial_\\rho\\partial_z V\\right)^2 + 12V^2\\,\\rho^4\\left(\\partial_\\rho^2 V\\right)^2 + 12V^2\\,\\rho^4\\left(\\partial_z^2 V\\right)^2 + 8V^2\\,\\rho^3\\,\\partial_\\rho V\\,\\partial_\\rho^2 V + 8V^2\\,\\rho^3\\,\\partial_\\rho V\\,\\partial_z^2 V + 12V^2\\,\\rho^2\\left(\\partial_\\rho V\\right)^2 + 16V^2\\,\\rho^2\\left(\\partial_\\rho\\partial_z\\omega\\right)^2 + 8V^2\\,\\rho^2\\left(\\partial_\\rho^2\\omega\\right)^2 + 8V^2\\,\\rho^2\\left(\\partial_z^2\\omega\\right)^2 - 16V^2\\,\\rho\\,\\partial_\\rho\\omega\\,\\partial_\\rho^2\\omega - 16V^2\\,\\rho\\,\\partial_\\rho\\partial_z\\omega\\,\\partial_z\\omega + 8V^2\\left(\\partial_\\rho\\omega\\right)^2 + 16V^2\\left(\\partial_z\\omega\\right)^2 - 64V\\,\\rho^4\\,\\partial_\\rho V\\,\\partial_\\rho\\partial_z V\\,\\partial_z V - 32V\\,\\rho^4\\left(\\partial_\\rho V\\right)^2\\,\\partial_\\rho^2 V - 32V\\,\\rho^4\\left(\\partial_z V\\right)^2\\,\\partial_z^2 V - 40V\\,\\rho^2\\,\\partial_\\rho V\\,\\partial_\\rho\\omega\\,\\partial_\\rho^2\\omega + 8V\\,\\rho^2\\,\\partial_\\rho V\\,\\partial_\\rho\\omega\\,\\partial_z^2\\omega - 48V\\,\\rho^2\\,\\partial_\\rho V\\,\\partial_\\rho\\partial_z\\omega\\,\\partial_z\\omega + 32V\\,\\rho^2\\,\\partial_\\rho\\omega\\,\\partial_\\rho\\partial_z V\\,\\partial_z\\omega - 48V\\,\\rho^2\\,\\partial_\\rho\\omega\\,\\partial_\\rho\\partial_z\\omega\\,\\partial_z V + 8V\\,\\rho^2\\,\\partial_\\rho^2\\omega\\,\\partial_z V\\,\\partial_z\\omega - 40V\\,\\rho^2\\,\\partial_z V\\,\\partial_z\\omega\\,\\partial_z^2\\omega + 16V\\,\\rho^2\\left(\\partial_\\rho\\omega\\right)^2\\,\\partial_\\rho^2 V + 16V\\,\\rho^2\\left(\\partial_z\\omega\\right)^2\\,\\partial_z^2 V - 8V\\,\\rho\\,\\partial_\\rho\\omega\\,\\partial_z V\\,\\partial_z\\omega + 56V\\,\\rho\\,\\partial_\\rho V\\left(\\partial_\\rho\\omega\\right)^2 + 64V\\,\\rho\\,\\partial_\\rho V\\left(\\partial_z\\omega\\right)^2 + 54\\rho^4\\left(\\partial_\\rho V\\right)^2\\left(\\partial_z V\\right)^2 + 27\\rho^4\\left(\\partial_\\rho V\\right)^4 + 27\\rho^4\\left(\\partial_z V\\right)^4 - 48\\rho^2\\,\\partial_\\rho V\\,\\partial_\\rho\\omega\\,\\partial_z V\\,\\partial_z\\omega + 34\\rho^2\\left(\\partial_\\rho V\\right)^2\\left(\\partial_\\rho\\omega\\right)^2 + 58\\rho^2\\left(\\partial_\\rho V\\right)^2\\left(\\partial_z\\omega\\right)^2 + 58\\rho^2\\left(\\partial_\\rho\\omega\\right)^2\\left(\\partial_z V\\right)^2 + 34\\rho^2\\left(\\partial_z V\\right)^2\\left(\\partial_z\\omega\\right)^2 + 22\\left(\\partial_\\rho\\omega\\right)^2\\left(\\partial_z\\omega\\right)^2 + 11\\left(\\partial_\\rho\\omega\\right)^4 + 11\\left(\\partial_z\\omega\\right)^4}{4V^6\\,\\rho^4}"
+        },
+        {
+          "id": "cp2",
+          "name": "Complex Projective Plane",
+          "coordinates": [
+            "r",
+            "\\theta",
+            "\\phi",
+            "\\psi"
+          ],
+          "domains": [
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\psi \\in [0, 4\\pi)",
+            "r = 0 \\;\\text{(the nut, a regular point)}",
+            "r \\to \\infty \\;\\text{(the bolt, a 2-sphere of area}\\; 6\\pi/\\Lambda\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Lambda",
+              "description": "The cosmological constant, an inverse area, positive: the space has volume $18\\pi^2/\\Lambda^2$"
+            }
+          ],
+          "convention": "We use coordinates $(r, \\theta, \\phi, \\psi)$, with $r$ a length and $\\theta$, $\\phi$, and $\\psi$ Euler angles on the 3-spheres of constant $r$, $\\psi$ with period $4\\pi$. The cosmological constant $\\Lambda$ is positive, and $R_{\\mu\\nu} = \\Lambda g_{\\mu\\nu}$.",
+          "line_element": "ds^2 = \\left(1 + \\dfrac{\\Lambda r^2}{6}\\right)^{-2}dr^2 + \\dfrac{r^2}{4}\\left(1 + \\dfrac{\\Lambda r^2}{6}\\right)^{-1}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\dfrac{r^2}{4}\\left(1 + \\dfrac{\\Lambda r^2}{6}\\right)^{-2}\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{36}{\\left(r^2\\,\\Lambda + 6\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{3r^2}{2\\left(r^2\\,\\Lambda + 6\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{3r^2\\left(r^2\\,\\Lambda\\sin^2\\theta + 6\\right)}{2\\left(r^2\\,\\Lambda + 6\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{9r^2\\cos\\theta}{\\left(r^2\\,\\Lambda + 6\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{9r^2\\cos\\theta}{\\left(r^2\\,\\Lambda + 6\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{9r^2}{\\left(r^2\\,\\Lambda + 6\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{16\\Lambda^2}{3}"
+        },
+        {
+          "id": "cp2_distance",
+          "name": "Complex Projective Plane, Distance",
+          "coordinates": [
+            "\\chi",
+            "\\theta",
+            "\\phi",
+            "\\psi"
+          ],
+          "domains": [
+            "\\chi \\in [0, \\pi L/2]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\psi \\in [0, 4\\pi)",
+            "\\chi = 0 \\;\\text{(the nut, a regular point)}",
+            "\\chi = \\pi L/2 \\;\\text{(the bolt, a 2-sphere of radius}\\; L/2\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "The length $L = \\sqrt{6/\\Lambda}$: the bolt is a 2-sphere of radius $L/2$, and every geodesic closes after a length $\\pi L$"
+            }
+          ],
+          "convention": "We use coordinates $(\\chi, \\theta, \\phi, \\psi)$, with $\\chi$ the distance from the nut, $r = L\\tan(\\chi/L)$ in Gibbons and Pope's radius, and $\\theta$, $\\phi$, and $\\psi$ Euler angles on the 3-spheres of constant $\\chi$, $\\psi$ with period $4\\pi$. The length $L$ sets the cosmological constant, $\\Lambda = 6/L^2$.",
+          "line_element": "ds^2 = d\\chi^2 + \\dfrac{L^2}{4}\\sin^2(\\chi/L)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\dfrac{L^2}{4}\\sin^2(\\chi/L)\\cos^2(\\chi/L)\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{L^2\\sin^2(\\chi/L)}{4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{L^2\\left(\\sin^2(\\chi/L)\\cos^2\\theta - 1\\right)\\sin^2(\\chi/L)}{4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{L^2\\sin^2(\\chi/L)\\cos^2(\\chi/L)\\cos\\theta}{4}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{L^2\\sin^2(\\chi/L)\\cos^2(\\chi/L)\\cos\\theta}{4}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{L^2\\sin^2(\\chi/L)\\cos^2(\\chi/L)}{4}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{24}{L^2}",
+          "kretschmann": "K = \\dfrac{192}{L^4}"
+        },
+        {
+          "id": "page",
+          "name": "Page",
+          "coordinates": [
+            "\\chi",
+            "\\theta",
+            "\\phi",
+            "\\psi"
+          ],
+          "domains": [
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\psi \\in [0, 4\\pi)",
+            "\\chi = 0,\\; \\pi \\;\\text{(the two bolts, 2-spheres)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Lambda",
+              "description": "The cosmological constant, an inverse area, positive"
+            },
+            {
+              "symbol": "\\nu",
+              "description": "A pure number, $0.2817$ on Page's space: the limit of Kerr-de Sitter's spin that leaves both bolts smooth"
+            },
+            {
+              "symbol": "P = 3 - \\nu^2 - \\nu^2\\left(1 + \\nu^2\\right)\\cos^2\\chi",
+              "description": "A pure number that never vanishes: $3 - 2\\nu^2 - \\nu^4$ on the bolts"
+            },
+            {
+              "symbol": "Q = 1 - \\nu^2\\cos^2\\chi",
+              "description": "A pure number that never vanishes: $1 - \\nu^2$ on the bolts"
+            },
+            {
+              "symbol": "N = 3 + 6\\nu^2 - \\nu^4",
+              "description": "A constant, equal to $4\\nu\\left(3 + \\nu^2\\right)$ on Page's space"
+            }
+          ],
+          "convention": "We use coordinates $(\\chi, \\theta, \\phi, \\psi)$, all angles, with $\\theta$, $\\phi$, and $\\psi$ Euler angles on the 3-spheres of constant $\\chi$ and $\\psi$ of period $4\\pi$. The cosmological constant $\\Lambda$ is positive, and $R_{\\mu\\nu} = \\Lambda g_{\\mu\\nu}$ for every $\\nu$. The bolts are smooth at the positive root of $\\nu^4 + 4\\nu^3 - 6\\nu^2 + 12\\nu - 3 = 0$, $\\nu = 0.2817$.",
+          "line_element": "ds^2 = \\dfrac{3\\left(1 + \\nu^2\\right)}{\\Lambda}\\left(\\dfrac{Q}{P}d\\chi^2 + \\dfrac{Q}{N}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\dfrac{4\\nu^2P\\sin^2\\chi}{N^2Q}\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{3\\left(1 + \\nu^2\\right)Q}{\\Lambda P}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{3\\left(1 + \\nu^2\\right)Q}{\\Lambda N}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{3\\left(\\nu^2 + 1\\right)\\left(\\nu^8\\cos^4\\chi\\sin^2\\theta - 6\\nu^6\\cos^2\\chi\\sin^2\\theta - 2\\nu^6\\cos^4\\chi\\sin^2\\theta + 4\\nu^6\\cos^2\\chi - 4\\nu^6\\cos^4\\chi + 12\\nu^4\\cos^2\\chi\\sin^2\\theta + \\nu^4\\cos^4\\chi\\sin^2\\theta - 4\\nu^4\\cos^4\\chi - 3\\nu^4\\sin^2\\theta + 4\\nu^4 - 6\\nu^2\\cos^2\\chi\\sin^2\\theta + 12\\nu^2\\cos^2\\chi + 6\\nu^2\\sin^2\\theta - 12\\nu^2 - 3\\sin^2\\theta\\right)}{\\Lambda\\,Q\\,N^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{12\\nu^2\\,P\\left(\\nu^2 + 1\\right)\\sin^2\\chi\\cos\\theta}{\\Lambda\\,Q\\,N^2}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{12\\nu^2\\,P\\left(\\nu^2 + 1\\right)\\sin^2\\chi\\cos\\theta}{\\Lambda\\,Q\\,N^2}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{12\\nu^2\\left(1 + \\nu^2\\right)P\\sin^2\\chi}{\\Lambda N^2Q}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{8\\Lambda^2\\left(\\nu^{16}\\cos^{12}\\chi + 2\\nu^{14}\\cos^6\\chi - 6\\nu^{14}\\cos^{10}\\chi + 2\\nu^{14}\\cos^{12}\\chi + 30\\nu^{12}\\cos^4\\chi - 8\\nu^{12}\\cos^6\\chi + 15\\nu^{12}\\cos^8\\chi - 12\\nu^{12}\\cos^{10}\\chi + \\nu^{12}\\cos^{12}\\chi + 30\\nu^{10}\\cos^2\\chi - 120\\nu^{10}\\cos^4\\chi - 8\\nu^{10}\\cos^6\\chi + 30\\nu^{10}\\cos^8\\chi - 6\\nu^{10}\\cos^{10}\\chi - 120\\nu^8\\cos^2\\chi + 195\\nu^8\\cos^4\\chi - 48\\nu^8\\cos^6\\chi + 15\\nu^8\\cos^8\\chi + 2\\nu^8 + 174\\nu^6\\cos^2\\chi - 90\\nu^6\\cos^4\\chi - 18\\nu^6\\cos^6\\chi - 8\\nu^6 - 132\\nu^4\\cos^2\\chi + 45\\nu^4\\cos^4\\chi + 13\\nu^4 + 24\\nu^2\\cos^2\\chi - 6\\nu^2 + 3\\right)}{3Q^6\\left(\\nu^2 + 1\\right)^2}"
+        }
+      ]
+    },
+    {
       "id": "belinski_zakharov",
       "name": "Belinski-Zakharov Gravitational Solitons",
       "short_name": "Gravitational Solitons",
@@ -17599,6 +18273,11 @@
           "id": "bonnor_magnetic_dipole",
           "kind": "family",
           "text": "The static pair of opposite magnetic charges in Einstein-Maxwell theory. Gross and Perry's monopole and antimonopole pair is its counterpart in Kaluza-Klein theory [grossperry1983, emparan2000]."
+        },
+        {
+          "id": "gravitational_instantons",
+          "kind": "piece",
+          "text": "The monopole's four dimensions of space are Hawking's self dual Taub-NUT instanton with nut parameter $n = 2m$, and the monopole's centre is its nut [hawking1977, sorkin1983]."
         }
       ],
       "references": [
@@ -19083,6 +19762,11 @@
           "id": "wahlquist",
           "kind": "generalisation",
           "text": "Carter's hole with its cosmological constant traded for a rotating fluid whose $\\mu + 3p$ is constant. Where the fluid's density and pressure cancel, Wahlquist's family is Kerr-de Sitter [mars2001]."
+        },
+        {
+          "id": "gravitational_instantons",
+          "kind": "limit",
+          "text": "Continue Kerr-de Sitter to imaginary time and bring the black hole's horizon up to the cosmological one. In that limit the space between them closes, at one value of the spin, into Page's compact instanton, a bundle of 2-spheres over the 2-sphere [page1978compact, gibbonshawking1979]."
         }
       ],
       "references": [
@@ -19109,7 +19793,9 @@
         "kamran2009",
         "plebanski1976",
         "bini2003",
-        "mars2001"
+        "mars2001",
+        "page1978compact",
+        "gibbonshawking1979"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr_de_sitter.json",
@@ -35420,6 +36106,11 @@
           "id": "exponential_metric",
           "kind": "family",
           "text": "Papapetrou's and Yilmaz's metric with no horizon, $g_{tt} = -e^{-2m/r}$ with $m = GM/c^2$ in isotropic coordinates. It agrees with Schwarzschild's at first order in $m/r$ and has a wormhole's throat where the horizon would be [boonserm2018]."
+        },
+        {
+          "id": "gravitational_instantons",
+          "kind": "dual",
+          "text": "Schwarzschild's metric with $t = -i\\tau/c$ is a space of four dimensions with no time, Hawking's first gravitational instanton. It is smooth on the horizon only if $\\tau$ is a circle of length $4\\pi r_s$, and that length is the inverse of Hawking's temperature [gibbons1977action, gibbonshawking1979]."
         }
       ],
       "references": [
@@ -35522,7 +36213,8 @@
         "deruelle2011",
         "hoffmann1935",
         "gibbonsrasheed1995",
-        "boonserm2018"
+        "boonserm2018",
+        "gibbons1977action"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -39713,6 +40405,11 @@
           "id": "eguchi_hanson",
           "kind": "limit",
           "text": "Continue Taub-NUT to Euclidean signature, where its NUT parameter is a length $L$, set $m = L(1 + a^4/8L^4)$, and let $L \\to \\infty$ with $r^2 - L^2$ held fixed. The limit is Eguchi and Hanson's gravitational instanton, a space of four dimensions with no time and with Taub-NUT's isometry group $U(2)$ [eguchihanson1979, gibbonshawking1979]."
+        },
+        {
+          "id": "gravitational_instantons",
+          "kind": "dual",
+          "text": "With an imaginary time and an imaginary twist, $l = in$, Taub-NUT is a space with no time in it. It is regular at two masses, Stephen Hawking's self dual instanton at $m = n$ and Don Page's, which has a horizon, at $m = 5n/4$ [hawking1977, page1978bolt, gibbonshawking1979]."
         }
       ],
       "references": [
@@ -39738,7 +40435,8 @@
         "brill1964",
         "bini2003",
         "eguchihanson1979",
-        "gibbonshawking1979"
+        "gibbonshawking1979",
+        "page1978bolt"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/taub_nut.json",
