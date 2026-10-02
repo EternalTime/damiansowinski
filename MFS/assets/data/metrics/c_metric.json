@@ -67,6 +67,11 @@
       "id": "photon_rocket",
       "kind": "family",
       "text": "An accelerating spacetime of type D with a regular axis. It needs no string, since the recoil of the light it shines does the pushing [podolsky2008]."
+    },
+    {
+      "id": "kerr_de_sitter",
+      "kind": "family",
+      "text": "A black hole with a spin and a cosmological constant where this one has an acceleration. Plebański and Demiański put all three into one family of solutions [kamran2009, plebanski1976]."
     }
   ],
   "references": [
@@ -92,7 +97,8 @@
     "aryal1986",
     "achucarro1995",
     "levicivita1919",
-    "podolsky2008"
+    "podolsky2008",
+    "kamran2009"
   ],
   "coordinates": [
     {

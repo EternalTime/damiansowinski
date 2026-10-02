@@ -63,6 +63,11 @@
       "id": "reissner_nordstrom_de_sitter",
       "kind": "generalisation",
       "text": "Kottler's black hole with an electric charge. The charge adds an inner horizon, and at $r_q = r_s/2$ the black hole and the universe around it have the same temperature [romans1992]."
+    },
+    {
+      "id": "kerr_de_sitter",
+      "kind": "generalisation",
+      "text": "Kottler's black hole set spinning. An inner horizon appears, as in Kerr, and with $a = 0$ the metric is Kottler's [akcay2011]."
     }
   ],
   "references": [
@@ -84,7 +89,8 @@
     "rindler2007",
     "kaloper2010",
     "carrera2010",
-    "romans1992"
+    "romans1992",
+    "akcay2011"
   ],
   "coordinates": [
     {

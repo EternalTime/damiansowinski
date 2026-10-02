@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 73,
+  "count": 74,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -509,6 +509,11 @@
           "id": "malament_hogarth",
           "kind": "generalisation",
           "text": "Anti-de Sitter space is a Malament-Hogarth spacetime, where one observer can see the whole endless future of another in a finite time of their own [hogarth1992]."
+        },
+        {
+          "id": "kerr_de_sitter",
+          "kind": "generalisation",
+          "text": "Anti-de Sitter space with a rotating black hole put in. Henneaux and Teitelboim took it as the prototype for every isolated system in anti-de Sitter space [henneaux1985]."
         }
       ],
       "references": [
@@ -534,7 +539,8 @@
         "banados1993",
         "bertotti1959",
         "robinson1959",
-        "hogarth1992"
+        "hogarth1992",
+        "henneaux1985"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -1054,6 +1060,11 @@
           "id": "spinning_string",
           "kind": "family",
           "text": "The spinning point particle of gravity in three dimensions with no cosmological constant, drawn out along a line into a string. It has no horizon, and its closed timelike curves lie close to the source [deser1984, deser1992time]."
+        },
+        {
+          "id": "kerr_de_sitter",
+          "kind": "family",
+          "text": "The rotating black hole of anti-de Sitter space in four dimensions. Its boundary is a rotating Einstein universe too, one dimension up [hawking1999rotation]."
         }
       ],
       "references": [
@@ -1072,7 +1083,8 @@
         "maloney2010",
         "misner1967",
         "holst1999",
-        "deser1992time"
+        "deser1992time",
+        "hawking1999rotation"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz.json",
@@ -2820,6 +2832,11 @@
           "id": "photon_rocket",
           "kind": "family",
           "text": "An accelerating spacetime of type D with a regular axis. It needs no string, since the recoil of the light it shines does the pushing [podolsky2008]."
+        },
+        {
+          "id": "kerr_de_sitter",
+          "kind": "family",
+          "text": "A black hole with a spin and a cosmological constant where this one has an acceleration. Plebański and Demiański put all three into one family of solutions [kamran2009, plebanski1976]."
         }
       ],
       "references": [
@@ -2845,7 +2862,8 @@
         "aryal1986",
         "achucarro1995",
         "levicivita1919",
-        "podolsky2008"
+        "podolsky2008",
+        "kamran2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/c_metric.json",
@@ -3623,6 +3641,11 @@
           "id": "hayward",
           "kind": "generalisation",
           "text": "A black hole whose core is a ball of de Sitter space, with $\\Lambda = 3/\\ell^2$ whatever the mass [hayward2006, frolov2016]."
+        },
+        {
+          "id": "kerr_de_sitter",
+          "kind": "generalisation",
+          "text": "De Sitter space with a rotating black hole put in. With the mass taken out again, Carter's metric is de Sitter space in spheroidal coordinates [akcay2011]."
         }
       ],
       "references": [
@@ -3646,7 +3669,8 @@
         "ortaggio2002",
         "ansoldi2008",
         "hayward2006",
-        "frolov2016"
+        "frolov2016",
+        "akcay2011"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -8062,6 +8086,11 @@
           "id": "simpson_visser",
           "kind": "family",
           "text": "Kerr's metric with $\\sqrt{r^2 + \\ell^2}$ written for the Boyer-Lindquist radius and $dr$ left alone is the rotating black bounce of Mazza, Franzin, and Liberati, a regular black hole or a wormhole depending on $\\ell$ [mazza2021]."
+        },
+        {
+          "id": "kerr_de_sitter",
+          "kind": "generalisation",
+          "text": "Kerr's black hole in a universe with a cosmological constant of either sign. At $\\Lambda = 0$ Carter's metric is Kerr's [carter1968separable]."
         }
       ],
       "references": [
@@ -8089,7 +8118,8 @@
         "teo1998",
         "obregon1998",
         "garfinkle1999",
-        "mazza2021"
+        "mazza2021",
+        "carter1968separable"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -8175,6 +8205,679 @@
       ]
     },
     {
+      "id": "kerr_de_sitter",
+      "name": "Kerr-de Sitter and Kerr-anti-de Sitter Black Holes",
+      "short_name": "Kerr-de Sitter",
+      "description": "The rotating black hole in a universe with a cosmological constant of either sign, which Brandon Carter found in 1968 among the spacetimes whose geodesic equations separate. With $\\Lambda > 0$ an inner horizon, an event horizon, and a cosmological horizon surround the ring singularity, and with $\\Lambda < 0$ its boundary is a rotating Einstein universe.",
+      "tags": [
+        "vacuum",
+        "vacuum solution",
+        "rotating",
+        "rotating black hole",
+        "black hole",
+        "stationary",
+        "axisymmetric",
+        "angular momentum",
+        "mass",
+        "cosmological constant",
+        "positive cosmological constant",
+        "negative cosmological constant",
+        "de Sitter",
+        "anti-de Sitter",
+        "AdS/CFT",
+        "black hole thermodynamics",
+        "ergosphere",
+        "frame dragging",
+        "superradiance",
+        "ring singularity",
+        "singularity",
+        "curvature singularity",
+        "horizon",
+        "event horizon",
+        "Cauchy horizon",
+        "cosmological horizon",
+        "maximal extension",
+        "causal structure",
+        "Petrov type D",
+        "Kerr-Schild",
+        "separable",
+        "extremal",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The mass enters as the length $r_s = 2GM/c^2$, the rotation parameter $a$ is a length, and the cosmological constant $\\Lambda$ takes either sign, with $\\Lambda = -3/\\ell^2$ for Kerr-anti-de Sitter. The horizons are the real roots of $\\Delta_r$, $r_- < r_+$ and, for $\\Lambda > 0$, $r_c$ beyond them and $r_n$ at negative values, with surface gravities $\\kappa_-$, $\\kappa_+$, $\\kappa_c$, and $\\kappa_n$. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "kerr",
+          "kind": "special_case",
+          "text": "Carter's black hole with the cosmological constant switched off. At $\\Lambda = 0$ the cosmological horizon is gone and $\\Xi = \\Delta_\\theta = 1$."
+        },
+        {
+          "id": "schwarzschild_de_sitter",
+          "kind": "special_case",
+          "text": "Kerr-de Sitter with the spin switched off, $a = 0$ and $\\Lambda > 0$. Kottler's two horizons are what is left of $r_+$ and $r_c$."
+        },
+        {
+          "id": "schwarzschild_ads",
+          "kind": "special_case",
+          "text": "Kerr-anti-de Sitter with the spin switched off, $a = 0$ and $\\Lambda = -3/\\ell^2$. Its boundary is an Einstein universe at rest."
+        },
+        {
+          "id": "kerr_newman",
+          "kind": "family",
+          "text": "Kerr's black hole with a charge where this one has a cosmological constant. Both sit in the family Carter found by asking the Hamilton-Jacobi equation to separate [carter1968separable]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "special_case",
+          "text": "Kerr-de Sitter with the mass taken out, $r_s = 0$ and $\\Lambda > 0$. The rotation parameter $a$ is left over as a choice of spheroidal coordinates, which Akcay and Matzner untwist [akcay2011]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "special_case",
+          "text": "Kerr-anti-de Sitter with the mass taken out, $r_s = 0$ and $\\Lambda < 0$, which is anti-de Sitter space in unusual coordinates [henneaux1985]."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "The rotating black hole of anti-de Sitter space in three dimensions. Hawking, Hunter, and Taylor-Robinson set its boundary, a rotating Einstein universe as well, beside this one's [hawking1999rotation]."
+        },
+        {
+          "id": "reissner_nordstrom_de_sitter",
+          "kind": "family",
+          "text": "The black hole of de Sitter space with a charge where this one has a spin. Its horizons are arranged the same way, an inner one, an outer one, and a cosmological one [lake2015]."
+        },
+        {
+          "id": "c_metric",
+          "kind": "family",
+          "text": "A black hole with an acceleration where this one has a spin. Plebański and Demiański put both, and the cosmological constant, into one family of solutions [kamran2009, plebanski1976]."
+        }
+      ],
+      "references": [
+        "akcay2011",
+        "carter1968",
+        "carter1968separable",
+        "henneaux1985",
+        "hawking1999rotation",
+        "demianski1973",
+        "lake2015",
+        "stuchlik2004",
+        "borthwick2018",
+        "hawking2000",
+        "cardoso2004kads",
+        "gibbons2005firstlaw",
+        "caldarelli2000",
+        "gibbons2004prl",
+        "gibbons2005kds",
+        "hintz2018kds",
+        "holzegel2013decay",
+        "holzegel2014",
+        "dias2018",
+        "booth1999",
+        "kamran2009",
+        "plebanski1976"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr_de_sitter.json",
+      "charts": [
+        {
+          "id": "boyer_lindquist",
+          "name": "Boyer-Lindquist",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_+, r_c) \\;\\text{for}\\; \\Lambda > 0",
+            "r \\in (r_+, \\infty) \\;\\text{for}\\; \\Lambda \\le 0",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\Delta_r = 0 \\;\\text{(the event horizon } r_+ \\text{ and, for } \\Lambda > 0 \\text{, the cosmological horizon } r_c\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Mass parameter as a length, $r_s = 2GM/c^2$; the mass measured against the de Sitter or anti-de Sitter background is $M/\\Xi^2$"
+            },
+            {
+              "symbol": "a",
+              "description": "Rotation parameter, a length; the angular momentum is $J = aMc/\\Xi^2$, and $a = 0$ is Kottler's metric"
+            },
+            {
+              "symbol": "\\Lambda",
+              "description": "Cosmological constant, an inverse length squared, of either sign: Kerr-de Sitter for $\\Lambda > 0$, Kerr for $\\Lambda = 0$, and Kerr-anti-de Sitter for $\\Lambda = -3/\\ell^2 < 0$, where $|a| < \\ell$"
+            },
+            {
+              "symbol": "\\Xi = 1 + \\dfrac{\\Lambda a^2}{3}",
+              "description": "Keeps the axis free of a conical singularity with the azimuthal angle periodic in $2\\pi$"
+            },
+            {
+              "symbol": "\\rho = \\sqrt{r^2 + a^2\\cos^2\\theta}",
+              "description": "Vanishes on the ring singularity, $r = 0$ on the equator"
+            },
+            {
+              "symbol": "\\Delta_r = \\left(r^2 + a^2\\right)\\left(1 - \\dfrac{\\Lambda r^2}{3}\\right) - r_s r",
+              "description": "A quartic in $r$ whose real roots are the horizons: $r_- < r_+$ for $\\Lambda \\le 0$, and $r_- < r_+ < r_c$ with a fourth root at negative $r$ for $\\Lambda > 0$"
+            },
+            {
+              "symbol": "\\Delta_\\theta = 1 + \\dfrac{\\Lambda a^2}{3}\\cos^2\\theta",
+              "description": "Equal to $\\Xi$ on the axis and to $1$ on the equator"
+            }
+          ],
+          "convention": "We use Carter's metric in the coordinates $(t, r, \\theta, \\phi)$ of Hawking, Hunter, and Taylor-Robinson, which are Boyer and Lindquist's at $\\Lambda = 0$, with $t$ carrying dimensions of time and $\\phi$ periodic in $2\\pi$, and write $\\Xi$, $\\rho$, $\\Delta_r$, and $\\Delta_\\theta$ as the parameters define them. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{\\Delta_r}{\\rho^2}\\left(c\\,dt - \\dfrac{a\\sin^2\\theta}{\\Xi}d\\phi\\right)^2 + \\dfrac{\\rho^2}{\\Delta_r}dr^2 + \\dfrac{\\rho^2}{\\Delta_\\theta}d\\theta^2 + \\dfrac{\\Delta_\\theta\\sin^2\\theta}{\\rho^2}\\left(a\\,c\\,dt - \\dfrac{r^2 + a^2}{\\Xi}d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\Delta_r - a^2\\Delta_\\theta\\sin^2\\theta}{\\rho^2}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{a\\left(\\left(r^2 + a^2\\right)\\Delta_\\theta - \\Delta_r\\right)\\sin^2\\theta}{\\Xi\\rho^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-\\dfrac{a\\left(\\left(r^2 + a^2\\right)\\Delta_\\theta - \\Delta_r\\right)\\sin^2\\theta}{\\Xi\\rho^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\rho^2}{\\Delta_r}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\rho^2}{\\Delta_\\theta}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(\\left(r^2 + a^2\\right)^2\\Delta_\\theta - a^2\\Delta_r\\sin^2\\theta\\right)\\sin^2\\theta}{\\Xi^2\\rho^2}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{12r_s^2\\left(r^2 - a^2\\cos^2\\theta\\right)\\left(\\rho^4 - 16a^2r^2\\cos^2\\theta\\right)}{\\rho^{12}} + \\dfrac{8\\Lambda^2}{3}"
+        },
+        {
+          "id": "nonrotating",
+          "name": "Nonrotating at Infinity",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\Phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_+, r_c) \\;\\text{for}\\; \\Lambda > 0",
+            "r \\in (r_+, \\infty) \\;\\text{for}\\; \\Lambda \\le 0",
+            "\\theta \\in [0, \\pi]",
+            "\\Phi \\in [0, 2\\pi)",
+            "\\Delta_r = 0 \\;\\text{(the event horizon } r_+ \\text{ and, for } \\Lambda > 0 \\text{, the cosmological horizon } r_c\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Mass parameter as a length, $r_s = 2GM/c^2$; the mass measured against the de Sitter or anti-de Sitter background is $M/\\Xi^2$"
+            },
+            {
+              "symbol": "a",
+              "description": "Rotation parameter, a length; the angular momentum is $J = aMc/\\Xi^2$, and $a = 0$ is Kottler's metric"
+            },
+            {
+              "symbol": "\\Lambda",
+              "description": "Cosmological constant, an inverse length squared, of either sign: Kerr-de Sitter for $\\Lambda > 0$, Kerr for $\\Lambda = 0$, and Kerr-anti-de Sitter for $\\Lambda = -3/\\ell^2 < 0$, where $|a| < \\ell$"
+            },
+            {
+              "symbol": "\\Xi = 1 + \\dfrac{\\Lambda a^2}{3}",
+              "description": "Keeps the axis free of a conical singularity with the azimuthal angle periodic in $2\\pi$"
+            },
+            {
+              "symbol": "\\rho = \\sqrt{r^2 + a^2\\cos^2\\theta}",
+              "description": "Vanishes on the ring singularity, $r = 0$ on the equator"
+            },
+            {
+              "symbol": "\\Delta_r = \\left(r^2 + a^2\\right)\\left(1 - \\dfrac{\\Lambda r^2}{3}\\right) - r_s r",
+              "description": "A quartic in $r$ whose real roots are the horizons: $r_- < r_+$ for $\\Lambda \\le 0$, and $r_- < r_+ < r_c$ with a fourth root at negative $r$ for $\\Lambda > 0$"
+            },
+            {
+              "symbol": "\\Delta_\\theta = 1 + \\dfrac{\\Lambda a^2}{3}\\cos^2\\theta",
+              "description": "Equal to $\\Xi$ on the axis and to $1$ on the equator"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\Phi)$ with $\\Phi = \\phi - a\\Lambda ct/3$, the angle of Henneaux and Teitelboim's frame that does not rotate as $r \\to \\infty$, with $t$ carrying dimensions of time, and write $\\Xi$, $\\rho$, $\\Delta_r$, and $\\Delta_\\theta$ as the parameters define them. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{\\Delta_r}{\\Xi^2\\rho^2}\\left(\\Delta_\\theta\\,c\\,dt - a\\sin^2\\theta\\,d\\Phi\\right)^2 + \\dfrac{\\rho^2}{\\Delta_r}dr^2 + \\dfrac{\\rho^2}{\\Delta_\\theta}d\\theta^2 + \\dfrac{\\Delta_\\theta\\sin^2\\theta}{\\Xi^2\\rho^2}\\left(a\\left(1 - \\dfrac{\\Lambda r^2}{3}\\right)c\\,dt - \\left(r^2 + a^2\\right)d\\Phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\Delta_\\theta\\left(\\Xi\\,\\rho^2\\left(3 - \\Lambda\\,r^2\\right) - 3r\\,r_s\\,\\Delta_\\theta\\right)}{3\\Xi^2\\,\\rho^2}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\Phi"
+              ],
+              "value": "-\\dfrac{a\\,r\\,r_s\\,\\Delta_\\theta\\sin^2\\theta}{\\Xi^2\\,\\rho^2}"
+            },
+            {
+              "indices": [
+                "\\Phi",
+                "t"
+              ],
+              "value": "-\\dfrac{a\\,r\\,r_s\\,\\Delta_\\theta\\sin^2\\theta}{\\Xi^2\\,\\rho^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\rho^2}{\\Delta_r}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\rho^2}{\\Delta_\\theta}"
+            },
+            {
+              "indices": [
+                "\\Phi",
+                "\\Phi"
+              ],
+              "value": "\\dfrac{\\left(\\Xi\\,\\rho^2\\left(r^2 + a^2\\right) + a^2\\,r\\,r_s\\sin^2\\theta\\right)\\sin^2\\theta}{\\Xi^2\\,\\rho^2}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{12r_s^2\\left(r^2 - a^2\\cos^2\\theta\\right)\\left(\\rho^4 - 16a^2r^2\\cos^2\\theta\\right)}{\\rho^{12}} + \\dfrac{8\\Lambda^2}{3}"
+        },
+        {
+          "id": "kerr_ingoing",
+          "name": "Ingoing Kerr",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\tilde\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\tilde\\phi \\in [0, 2\\pi)",
+            "\\Delta_r = 0 \\;\\text{(the horizons)}",
+            "\\rho = 0 \\;\\text{(the ring singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Mass parameter as a length, $r_s = 2GM/c^2$; the mass measured against the de Sitter or anti-de Sitter background is $M/\\Xi^2$"
+            },
+            {
+              "symbol": "a",
+              "description": "Rotation parameter, a length; the angular momentum is $J = aMc/\\Xi^2$, and $a = 0$ is Kottler's metric"
+            },
+            {
+              "symbol": "\\Lambda",
+              "description": "Cosmological constant, an inverse length squared, of either sign: Kerr-de Sitter for $\\Lambda > 0$, Kerr for $\\Lambda = 0$, and Kerr-anti-de Sitter for $\\Lambda = -3/\\ell^2 < 0$, where $|a| < \\ell$"
+            },
+            {
+              "symbol": "\\Xi = 1 + \\dfrac{\\Lambda a^2}{3}",
+              "description": "Keeps the axis free of a conical singularity with the azimuthal angle periodic in $2\\pi$"
+            },
+            {
+              "symbol": "\\rho = \\sqrt{r^2 + a^2\\cos^2\\theta}",
+              "description": "Vanishes on the ring singularity, $r = 0$ on the equator"
+            },
+            {
+              "symbol": "\\Delta_r = \\left(r^2 + a^2\\right)\\left(1 - \\dfrac{\\Lambda r^2}{3}\\right) - r_s r",
+              "description": "A quartic in $r$ whose real roots are the horizons: $r_- < r_+$ for $\\Lambda \\le 0$, and $r_- < r_+ < r_c$ with a fourth root at negative $r$ for $\\Lambda > 0$"
+            },
+            {
+              "symbol": "\\Delta_\\theta = 1 + \\dfrac{\\Lambda a^2}{3}\\cos^2\\theta",
+              "description": "Equal to $\\Xi$ on the axis and to $1$ on the equator"
+            }
+          ],
+          "convention": "We use ingoing Kerr coordinates $(v, r, \\theta, \\tilde\\phi)$, with the advanced time $v = ct + r_*$ a length, $dr_*/dr = (r^2 + a^2)/\\Delta_r$ and $r_* = 0$ at $r = 0$, and $d\\tilde\\phi = d\\phi + a\\Xi\\,dr/\\Delta_r$, and write $\\Xi$, $\\rho$, $\\Delta_r$, and $\\Delta_\\theta$ as the parameters define them.",
+          "line_element": "ds^2 = -\\dfrac{\\Delta_r}{\\rho^2}\\left(dv - \\dfrac{a\\sin^2\\theta}{\\Xi}d\\tilde\\phi\\right)^2 + 2\\,dr\\left(dv - \\dfrac{a\\sin^2\\theta}{\\Xi}d\\tilde\\phi\\right) + \\dfrac{\\rho^2}{\\Delta_\\theta}d\\theta^2 + \\dfrac{\\Delta_\\theta\\sin^2\\theta}{\\rho^2}\\left(a\\,dv - \\dfrac{r^2 + a^2}{\\Xi}d\\tilde\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "\\dfrac{a^2\\,\\Delta_\\theta\\sin^2\\theta - \\Delta_r}{\\rho^2}"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "v",
+                "\\tilde\\phi"
+              ],
+              "value": "-\\dfrac{a\\left(\\Delta_\\theta\\left(r^2 + a^2\\right) - \\Delta_r\\right)\\sin^2\\theta}{\\Xi\\,\\rho^2}"
+            },
+            {
+              "indices": [
+                "\\tilde\\phi",
+                "v"
+              ],
+              "value": "-\\dfrac{a\\left(\\Delta_\\theta\\left(r^2 + a^2\\right) - \\Delta_r\\right)\\sin^2\\theta}{\\Xi\\,\\rho^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "\\tilde\\phi"
+              ],
+              "value": "-\\dfrac{a\\sin^2\\theta}{\\Xi}"
+            },
+            {
+              "indices": [
+                "\\tilde\\phi",
+                "r"
+              ],
+              "value": "-\\dfrac{a\\sin^2\\theta}{\\Xi}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\rho^2}{\\Delta_\\theta}"
+            },
+            {
+              "indices": [
+                "\\tilde\\phi",
+                "\\tilde\\phi"
+              ],
+              "value": "\\dfrac{\\left(\\Xi\\,\\rho^2\\left(r^2 + a^2\\right) + a^2\\,r\\,r_s\\sin^2\\theta\\right)\\sin^2\\theta}{\\Xi^2\\,\\rho^2}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{12r_s^2\\left(r^2 - a^2\\cos^2\\theta\\right)\\left(\\rho^4 - 16a^2r^2\\cos^2\\theta\\right)}{\\rho^{12}} + \\dfrac{8\\Lambda^2}{3}"
+        },
+        {
+          "id": "kerr_outgoing",
+          "name": "Outgoing Kerr",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\tilde\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\tilde\\phi \\in [0, 2\\pi)",
+            "\\Delta_r = 0 \\;\\text{(the horizons)}",
+            "\\rho = 0 \\;\\text{(the ring singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Mass parameter as a length, $r_s = 2GM/c^2$; the mass measured against the de Sitter or anti-de Sitter background is $M/\\Xi^2$"
+            },
+            {
+              "symbol": "a",
+              "description": "Rotation parameter, a length; the angular momentum is $J = aMc/\\Xi^2$, and $a = 0$ is Kottler's metric"
+            },
+            {
+              "symbol": "\\Lambda",
+              "description": "Cosmological constant, an inverse length squared, of either sign: Kerr-de Sitter for $\\Lambda > 0$, Kerr for $\\Lambda = 0$, and Kerr-anti-de Sitter for $\\Lambda = -3/\\ell^2 < 0$, where $|a| < \\ell$"
+            },
+            {
+              "symbol": "\\Xi = 1 + \\dfrac{\\Lambda a^2}{3}",
+              "description": "Keeps the axis free of a conical singularity with the azimuthal angle periodic in $2\\pi$"
+            },
+            {
+              "symbol": "\\rho = \\sqrt{r^2 + a^2\\cos^2\\theta}",
+              "description": "Vanishes on the ring singularity, $r = 0$ on the equator"
+            },
+            {
+              "symbol": "\\Delta_r = \\left(r^2 + a^2\\right)\\left(1 - \\dfrac{\\Lambda r^2}{3}\\right) - r_s r",
+              "description": "A quartic in $r$ whose real roots are the horizons: $r_- < r_+$ for $\\Lambda \\le 0$, and $r_- < r_+ < r_c$ with a fourth root at negative $r$ for $\\Lambda > 0$"
+            },
+            {
+              "symbol": "\\Delta_\\theta = 1 + \\dfrac{\\Lambda a^2}{3}\\cos^2\\theta",
+              "description": "Equal to $\\Xi$ on the axis and to $1$ on the equator"
+            }
+          ],
+          "convention": "We use outgoing Kerr coordinates $(u, r, \\theta, \\tilde\\phi)$, with the retarded time $u = ct - r_*$ a length, $dr_*/dr = (r^2 + a^2)/\\Delta_r$ and $r_* = 0$ at $r = 0$, and $d\\tilde\\phi = d\\phi - a\\Xi\\,dr/\\Delta_r$, and write $\\Xi$, $\\rho$, $\\Delta_r$, and $\\Delta_\\theta$ as the parameters define them.",
+          "line_element": "ds^2 = -\\dfrac{\\Delta_r}{\\rho^2}\\left(du - \\dfrac{a\\sin^2\\theta}{\\Xi}d\\tilde\\phi\\right)^2 - 2\\,dr\\left(du - \\dfrac{a\\sin^2\\theta}{\\Xi}d\\tilde\\phi\\right) + \\dfrac{\\rho^2}{\\Delta_\\theta}d\\theta^2 + \\dfrac{\\Delta_\\theta\\sin^2\\theta}{\\rho^2}\\left(a\\,du - \\dfrac{r^2 + a^2}{\\Xi}d\\tilde\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{a^2\\,\\Delta_\\theta\\sin^2\\theta - \\Delta_r}{\\rho^2}"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "u",
+                "\\tilde\\phi"
+              ],
+              "value": "-\\dfrac{a\\left(\\Delta_\\theta\\left(r^2 + a^2\\right) - \\Delta_r\\right)\\sin^2\\theta}{\\Xi\\,\\rho^2}"
+            },
+            {
+              "indices": [
+                "\\tilde\\phi",
+                "u"
+              ],
+              "value": "-\\dfrac{a\\left(\\Delta_\\theta\\left(r^2 + a^2\\right) - \\Delta_r\\right)\\sin^2\\theta}{\\Xi\\,\\rho^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "\\tilde\\phi"
+              ],
+              "value": "\\dfrac{a\\sin^2\\theta}{\\Xi}"
+            },
+            {
+              "indices": [
+                "\\tilde\\phi",
+                "r"
+              ],
+              "value": "\\dfrac{a\\sin^2\\theta}{\\Xi}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\rho^2}{\\Delta_\\theta}"
+            },
+            {
+              "indices": [
+                "\\tilde\\phi",
+                "\\tilde\\phi"
+              ],
+              "value": "\\dfrac{\\left(\\Xi\\,\\rho^2\\left(r^2 + a^2\\right) + a^2\\,r\\,r_s\\sin^2\\theta\\right)\\sin^2\\theta}{\\Xi^2\\,\\rho^2}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{12r_s^2\\left(r^2 - a^2\\cos^2\\theta\\right)\\left(\\rho^4 - 16a^2r^2\\cos^2\\theta\\right)}{\\rho^{12}} + \\dfrac{8\\Lambda^2}{3}"
+        },
+        {
+          "id": "kerr_schild",
+          "name": "Kerr-Schild",
+          "coordinates": [
+            "\\tau",
+            "r",
+            "\\theta",
+            "\\psi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "r \\in \\left(-\\sqrt{3/\\Lambda}, \\sqrt{3/\\Lambda}\\right) \\;\\text{for}\\; \\Lambda > 0",
+            "r \\in (-\\infty, \\infty) \\;\\text{for}\\; \\Lambda \\le 0",
+            "\\theta \\in [0, \\pi]",
+            "\\psi \\in [0, 2\\pi)",
+            "\\Delta_r = 0 \\;\\text{(the horizons)}",
+            "\\rho = 0 \\;\\text{(the ring singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Mass parameter as a length, $r_s = 2GM/c^2$; the mass measured against the de Sitter or anti-de Sitter background is $M/\\Xi^2$"
+            },
+            {
+              "symbol": "a",
+              "description": "Rotation parameter, a length; the angular momentum is $J = aMc/\\Xi^2$, and $a = 0$ is Kottler's metric"
+            },
+            {
+              "symbol": "\\Lambda",
+              "description": "Cosmological constant, an inverse length squared, of either sign: Kerr-de Sitter for $\\Lambda > 0$, Kerr for $\\Lambda = 0$, and Kerr-anti-de Sitter for $\\Lambda = -3/\\ell^2 < 0$, where $|a| < \\ell$"
+            },
+            {
+              "symbol": "\\Xi = 1 + \\dfrac{\\Lambda a^2}{3}",
+              "description": "Keeps the axis free of a conical singularity with the azimuthal angle periodic in $2\\pi$"
+            },
+            {
+              "symbol": "\\rho = \\sqrt{r^2 + a^2\\cos^2\\theta}",
+              "description": "Vanishes on the ring singularity, $r = 0$ on the equator"
+            },
+            {
+              "symbol": "\\Delta_r = \\left(r^2 + a^2\\right)\\left(1 - \\dfrac{\\Lambda r^2}{3}\\right) - r_s r",
+              "description": "A quartic in $r$ whose real roots are the horizons: $r_- < r_+$ for $\\Lambda \\le 0$, and $r_- < r_+ < r_c$ with a fourth root at negative $r$ for $\\Lambda > 0$"
+            },
+            {
+              "symbol": "\\Delta_\\theta = 1 + \\dfrac{\\Lambda a^2}{3}\\cos^2\\theta",
+              "description": "Equal to $\\Xi$ on the axis and to $1$ on the equator"
+            }
+          ],
+          "convention": "We use the Kerr-Schild coordinates $(\\tau, r, \\theta, \\psi)$ of Gibbons, Lü, Page, and Pope, with $c\\,d\\tau = c\\,dt + r_s r\\,dr/((1 - \\Lambda r^2/3)\\Delta_r)$ and $d\\psi = d\\phi - (a\\Lambda/3)\\,c\\,dt + a r_s r\\,dr/((r^2 + a^2)\\Delta_r)$, and write $\\Xi$, $\\rho$, $\\Delta_r$, and $\\Delta_\\theta$ as the parameters define them. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{\\Delta_\\theta}{\\Xi}\\left(1 - \\dfrac{\\Lambda r^2}{3}\\right)c^2\\,d\\tau^2 + \\dfrac{\\rho^2}{\\left(1 - \\dfrac{\\Lambda r^2}{3}\\right)\\left(r^2 + a^2\\right)}dr^2 + \\dfrac{\\rho^2}{\\Delta_\\theta}d\\theta^2 + \\dfrac{r^2 + a^2}{\\Xi}\\sin^2\\theta\\,d\\psi^2 + \\dfrac{r_s r}{\\rho^2}\\left(\\dfrac{\\Delta_\\theta}{\\Xi}c\\,d\\tau + \\dfrac{\\rho^2}{\\left(1 - \\dfrac{\\Lambda r^2}{3}\\right)\\left(r^2 + a^2\\right)}dr - \\dfrac{a\\sin^2\\theta}{\\Xi}d\\psi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{\\Delta_\\theta\\left(\\Xi\\,\\rho^2\\left(3 - \\Lambda\\,r^2\\right) - 3r\\,r_s\\,\\Delta_\\theta\\right)}{3\\Xi^2\\,\\rho^2}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "r"
+              ],
+              "value": "\\dfrac{3r\\,r_s\\,\\Delta_\\theta}{\\Xi\\left(3 - \\Lambda\\,r^2\\right)\\left(r^2 + a^2\\right)}"
+            },
+            {
+              "indices": [
+                "r",
+                "\\tau"
+              ],
+              "value": "\\dfrac{3r\\,r_s\\,\\Delta_\\theta}{\\Xi\\left(3 - \\Lambda\\,r^2\\right)\\left(r^2 + a^2\\right)}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\psi"
+              ],
+              "value": "-\\dfrac{a\\,r\\,r_s\\,\\Delta_\\theta\\sin^2\\theta}{\\Xi^2\\,\\rho^2}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{a\\,r\\,r_s\\,\\Delta_\\theta\\sin^2\\theta}{\\Xi^2\\,\\rho^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{3\\rho^2\\left(\\left(3 - \\Lambda\\,r^2\\right)\\left(r^2 + a^2\\right) + 3r\\,r_s\\right)}{\\left(3 - \\Lambda\\,r^2\\right)^2\\left(r^2 + a^2\\right)^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "\\psi"
+              ],
+              "value": "-\\dfrac{3a\\,r\\,r_s\\sin^2\\theta}{\\Xi\\left(3 - \\Lambda\\,r^2\\right)\\left(r^2 + a^2\\right)}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "r"
+              ],
+              "value": "-\\dfrac{3a\\,r\\,r_s\\sin^2\\theta}{\\Xi\\left(3 - \\Lambda\\,r^2\\right)\\left(r^2 + a^2\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\rho^2}{\\Delta_\\theta}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{\\left(\\Xi\\,\\rho^2\\left(r^2 + a^2\\right) + a^2\\,r\\,r_s\\sin^2\\theta\\right)\\sin^2\\theta}{\\Xi^2\\,\\rho^2}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{12r_s^2\\left(r^2 - a^2\\cos^2\\theta\\right)\\left(\\rho^4 - 16a^2r^2\\cos^2\\theta\\right)}{\\rho^{12}} + \\dfrac{8\\Lambda^2}{3}"
+        }
+      ]
+    },
+    {
       "id": "kerr_newman",
       "name": "Kerr-Newman Charged Rotating Black Hole",
       "short_name": "Kerr-Newman",
@@ -8225,6 +8928,11 @@
           "id": "rn_metric",
           "kind": "special_case",
           "text": "Kerr-Newman with the spin switched off, $a = 0$, a charged black hole that does not turn."
+        },
+        {
+          "id": "kerr_de_sitter",
+          "kind": "family",
+          "text": "Kerr's black hole with a cosmological constant where this one has a charge. Carter found both in one family by asking the Hamilton-Jacobi equation to separate [carter1968separable]."
         }
       ],
       "references": [
@@ -8245,7 +8953,8 @@
         "robinson1975",
         "mazur1982",
         "ruffini1971",
-        "gibbons1975"
+        "gibbons1975",
+        "carter1968separable"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr_newman.json",
@@ -13248,6 +13957,11 @@
           "id": "bertotti_robinson",
           "kind": "special_case",
           "text": "The throat of the cold black hole at $\\Lambda = 0$. Near a degenerate horizon the geometry is a product of a two dimensional spacetime of constant curvature and a sphere, and without a cosmological constant it is Bertotti and Robinson's [romans1992]."
+        },
+        {
+          "id": "kerr_de_sitter",
+          "kind": "family",
+          "text": "The black hole of de Sitter space with a spin where this one has a charge. Kayll Lake and Thomas Zannias found its horizons arranged as these are [lake2015]."
         }
       ],
       "references": [
@@ -13271,7 +13985,8 @@
         "cardoso2018",
         "hintz2018",
         "hintz2017",
-        "dias2018rough"
+        "dias2018rough",
+        "lake2015"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/reissner_nordstrom_de_sitter.json",
@@ -14400,6 +15115,11 @@
           "id": "btz",
           "kind": "family",
           "text": "The black hole of anti-de Sitter space in three dimensions, where the curvature is the same constant everywhere [banados1992]."
+        },
+        {
+          "id": "kerr_de_sitter",
+          "kind": "generalisation",
+          "text": "The same black hole set spinning. Its boundary turns into a rotating Einstein universe [hawking1999rotation]."
         }
       ],
       "references": [
@@ -14425,7 +15145,8 @@
         "mann1997",
         "vanzo1997",
         "kastor2009",
-        "banados1992"
+        "banados1992",
+        "hawking1999rotation"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_ads.json",
@@ -14693,6 +15414,11 @@
           "id": "reissner_nordstrom_de_sitter",
           "kind": "generalisation",
           "text": "Kottler's black hole with an electric charge. The charge adds an inner horizon, and at $r_q = r_s/2$ the black hole and the universe around it have the same temperature [romans1992]."
+        },
+        {
+          "id": "kerr_de_sitter",
+          "kind": "generalisation",
+          "text": "Kottler's black hole set spinning. An inner horizon appears, as in Kerr, and with $a = 0$ the metric is Kottler's [akcay2011]."
         }
       ],
       "references": [
@@ -14714,7 +15440,8 @@
         "rindler2007",
         "kaloper2010",
         "carrera2010",
-        "romans1992"
+        "romans1992",
+        "akcay2011"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_de_sitter.json",

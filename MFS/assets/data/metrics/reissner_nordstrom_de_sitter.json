@@ -61,6 +61,11 @@
       "id": "bertotti_robinson",
       "kind": "special_case",
       "text": "The throat of the cold black hole at $\\Lambda = 0$. Near a degenerate horizon the geometry is a product of a two dimensional spacetime of constant curvature and a sphere, and without a cosmological constant it is Bertotti and Robinson's [romans1992]."
+    },
+    {
+      "id": "kerr_de_sitter",
+      "kind": "family",
+      "text": "The black hole of de Sitter space with a spin where this one has a charge. Kayll Lake and Thomas Zannias found its horizons arranged as these are [lake2015]."
     }
   ],
   "references": [
@@ -84,7 +89,8 @@
     "cardoso2018",
     "hintz2018",
     "hintz2017",
-    "dias2018rough"
+    "dias2018rough",
+    "lake2015"
   ],
   "coordinates": [
     {

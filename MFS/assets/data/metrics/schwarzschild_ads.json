@@ -55,6 +55,11 @@
       "id": "btz",
       "kind": "family",
       "text": "The black hole of anti-de Sitter space in three dimensions, where the curvature is the same constant everywhere [banados1992]."
+    },
+    {
+      "id": "kerr_de_sitter",
+      "kind": "generalisation",
+      "text": "The same black hole set spinning. Its boundary turns into a rotating Einstein universe [hawking1999rotation]."
     }
   ],
   "references": [
@@ -80,7 +85,8 @@
     "mann1997",
     "vanzo1997",
     "kastor2009",
-    "banados1992"
+    "banados1992",
+    "hawking1999rotation"
   ],
   "coordinates": [
     {

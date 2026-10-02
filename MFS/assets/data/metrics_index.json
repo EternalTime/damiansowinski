@@ -69,7 +69,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "94f306ae784e7486",
+    "version": "176192cb745764d9",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -142,7 +142,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "0d71cf08a455620d",
+    "version": "3ff7bf529658ec95",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -320,7 +320,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f78dc6f44c55bca0",
+    "version": "af4750f1cb26dc4a",
     "diagrams": "60cc56f450326363",
     "conformal": "d6c09caa82c5caf6",
     "embedding": "8cf5301ea3792cef"
@@ -410,7 +410,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3d628de300a5dba2",
+    "version": "4c46178ab5485dd9",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -907,10 +907,57 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c4fc026d498fa019",
+    "version": "230a0d98e012d835",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
+  },
+  {
+    "id": "kerr_de_sitter",
+    "name": "Kerr-de Sitter",
+    "tags": [
+      "vacuum",
+      "vacuum solution",
+      "rotating",
+      "rotating black hole",
+      "black hole",
+      "stationary",
+      "axisymmetric",
+      "angular momentum",
+      "mass",
+      "cosmological constant",
+      "positive cosmological constant",
+      "negative cosmological constant",
+      "de Sitter",
+      "anti-de Sitter",
+      "AdS/CFT",
+      "black hole thermodynamics",
+      "ergosphere",
+      "frame dragging",
+      "superradiance",
+      "ring singularity",
+      "singularity",
+      "curvature singularity",
+      "horizon",
+      "event horizon",
+      "Cauchy horizon",
+      "cosmological horizon",
+      "maximal extension",
+      "causal structure",
+      "Petrov type D",
+      "Kerr-Schild",
+      "separable",
+      "extremal",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "29730ee74e2e4836",
+    "diagrams": "7dc03a9eedf6e5a2",
+    "conformal": "4f803c414fba5da6",
+    "embedding": "f1315ee1ffa48ebb"
   },
   {
     "id": "kerr_newman",
@@ -944,7 +991,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "794ba24eeab0cb1d",
+    "version": "98314c2e41ddec0d",
     "diagrams": "1e74e2bd30acc12c",
     "conformal": "76f39633ed5e928c",
     "embedding": "21f2586270043652"
@@ -1597,7 +1644,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f93f0c5ded263e3d",
+    "version": "480684d1a1ed2850",
     "diagrams": "f6c6ac1947d0b4e9",
     "conformal": "639eea78631ca3e1",
     "embedding": "342b4919bb1495ae"
@@ -1727,7 +1774,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "63639d7bfa4a130d",
+    "version": "75f3f58ab15f8d33",
     "diagrams": "1fc6612302f13cf4",
     "conformal": "01527c3f93dbe1c9",
     "embedding": "d3f0fd120a6d665b"
@@ -1762,7 +1809,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f5450cd3f7aed6f7",
+    "version": "6754ee80603036ce",
     "diagrams": "01986085179076c1",
     "conformal": "da2331625dd4e7df",
     "embedding": "2693e5d4af5edd89"

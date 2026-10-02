@@ -3956,6 +3956,473 @@ def kerr_newman(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- Kerr-de Sitter and Kerr-anti-de Sitter
+
+KDS = {"r_s": 1, "a": "9/20", "Lambda": "1/5"}
+KADS = {"r_s": 2, "a": "1/2", "Lambda": -3}
+KDS_AXIS = dict(axis=("theta", "0"))
+
+
+class CarterAxis:
+    """The symmetry axis of Kerr-de Sitter, where the published metric is -f dt^2 + dr^2/f with
+    f = Delta_r/(r^2 + a^2), which has four real roots for Lambda > 0, r_n < 0 < r_- < r_+ < r_c.
+
+    1/f has no polynomial part, so r* = sum_i A_i ln|1 - r/r_i| with A_i = 1/f'(r_i), which
+    vanishes at r = 0 and tends to one R = -sum_i A_i ln|r_i| as r -> +infinity and as
+    r -> -infinity, since sum_i A_i = 0. Every region is drawn through Kottler's one function,
+
+        g(x) = arctan exp(-a x - b sqrt(x^2 + 1)),   a, b = (k_+ +- k_c)/2,
+
+    with u, v = t -+ r* in each region's own coordinates, so p and q are the Kruskal coordinates
+    of the event horizon r_+ and of the cosmological horizon r_c where a line crosses them, and
+    the drawing has a continuous tangent there. Along one null line of the drawing the horizons
+    alternate, r_+ with r_n and r_c with r_-, so across r_- and r_n, whose surface gravities are
+    others, the drawing is continuous and its lines turn a corner, as a Tower's do at r_-. The
+    regions, as cells of side pi/2 in (p, q):
+
+        S    r_+ < r < r_c                p = -g(u),       q = g(-v)
+        S'   the same beyond r_+          p = g(u),        q = -g(-v)
+        S''  the same beyond r_c          p = g(u) - pi,   q = pi - g(-v)
+        B    black hole, r_- < r < r_+    p = g(u),        q = g(-v)
+        W    white hole, r_- < r < r_+    p = -g(u),       q = -g(-v)
+        C+   expanding, r > r_c           p = -g(u),       q = pi - g(-v)
+        C-   contracting, r > r_c         p = g(u) - pi,   q = g(-v)
+        N    r_n < r < r_-, right         p = g(u),        q = pi - g(-v)
+        N'   r_n < r < r_-, left          p = pi - g(u),   q = g(-v)
+        N''  the same beyond r_n          p = -g(u),       q = pi + g(-v)
+        F-   r < r_n, above C+            p = -g(u),       q = pi - g(-v)
+        F+   r < r_n, below C-            p = g(u) - pi,   q = g(-v)
+
+    F- and C+ are one formula on the two half lines of r*, below and above R, and so are F+ and
+    C-: the infinity r -> -infinity of the one and r -> +infinity of the other are the same
+    curve of the drawing, (-g(t - R), pi - g(-t - R)), reached from its two sides, and two
+    different boundaries of the spacetime."""
+
+    def __init__(self, plane):
+        r = plane.x1
+        numerator = sp.Poly(sp.numer(sp.together(plane.gi[1, 1])), r)
+        roots = sorted(float(z) for z in numerator.real_roots())
+        assert len(roots) == 4, f"the published g^rr has the real roots {roots} on the axis"
+        self.rn, self.rm, self.rp, self.rc = self.roots = roots
+        self.f = sp.lambdify(r, plane.gi[1, 1], "numpy")
+        fp = sp.lambdify(r, sp.diff(plane.gi[1, 1], r), "numpy")
+        self.A = [1 / float(fp(ri)) for ri in roots]
+        self.kappa = [abs(float(fp(ri))) / 2 for ri in roots]
+        self.kp, self.kc = self.kappa[2], self.kappa[3]
+        self.a, self.b = (self.kp + self.kc) / 2, (self.kp - self.kc) / 2
+        self.R = -sum(A * math.log(abs(ri)) for A, ri in zip(self.A, roots))
+
+    def rstar(self, r):
+        r = np.asarray(r, dtype=float)
+        with np.errstate(divide="ignore"):
+            return sum(A * np.log(np.abs(1 - r / ri)) for A, ri in zip(self.A, self.roots))
+
+    def g(self, x):
+        x = np.asarray(x, dtype=float)
+        return atan_exp(-self.a * x - self.b * np.sqrt(x * x + 1))
+
+    def null(self, cell, u, v):
+        g = self.g
+        return {"S": lambda: (-g(u), g(-v)), "S'": lambda: (g(u), -g(-v)), "S''": lambda: (g(u) - PI, PI - g(-v)),
+                "B": lambda: (g(u), g(-v)), "W": lambda: (-g(u), -g(-v)),
+                "C+": lambda: (-g(u), PI - g(-v)), "C-": lambda: (g(u) - PI, g(-v)),
+                "N": lambda: (g(u), PI - g(-v)), "N'": lambda: (PI - g(u), g(-v)), "N''": lambda: (-g(u), PI + g(-v)),
+                "F-": lambda: (-g(u), PI - g(-v)), "F+": lambda: (g(u) - PI, g(-v))}[cell]()
+
+    def pq(self, cell, t, r):
+        t = np.asarray(t, dtype=float)
+        rs = self.rstar(r)
+        return self.null(cell, t - rs, t + rs)
+
+    def infinity(self, sign=1, n=700):
+        """r -> +-infinity between C+ and F-, or with sign -1 between C- and F+."""
+        t = spread(-np.inf, np.inf, n, 40)
+        return (-self.g(t - self.R), PI - self.g(-t - self.R)) if sign > 0 else (self.g(t - self.R) - PI, self.g(-t - self.R))
+
+    def ranges(self):
+        rn, rm, rp, rc = self.roots
+        return {"S": (rp, rc), "S'": (rp, rc), "S''": (rp, rc), "B": (rm, rp), "W": (rm, rp), "C+": (rc, np.inf),
+                "C-": (rc, np.inf), "N": (rn, rm), "N'": (rn, rm), "N''": (rn, rm), "F-": (-np.inf, rn), "F+": (-np.inf, rn)}
+
+
+# A future directed timelike vector (dt, dr) of each region's own coordinates.
+CARTER_FUTURE = {"S": (1, 0), "S'": (-1, 0), "S''": (-1, 0), "B": (0, -1), "W": (0, 1), "C+": (0, 1), "C-": (0, -1),
+                 "N": (-1, 0), "N'": (1, 0), "N''": (1, 0), "F-": (0, 1), "F+": (0, -1)}
+# The corner of least p and q of each square cell.
+CARTER_CORNER = {"S": (-HALF, 0), "S'": (0, -HALF), "S''": (-PI, HALF), "B": (0, 0), "W": (-HALF, -HALF),
+                 "N": (0, HALF), "N'": (HALF, 0), "N''": (-HALF, PI)}
+
+
+def kerr_de_sitter_axis(ck, src):
+    """The axis of Kerr-de Sitter at r_s = 1, a = 9/20 and Lambda = 1/5, through the map of
+    CarterAxis: the diagram Akcay and Matzner draw, which runs on without end up, down, left and
+    right. Carter's coordinates cover S; the ingoing Kerr chart C-, S, B and N' through
+    q = g(-v) and p from u = v - 2r* in each; the outgoing Kerr chart W, S and C+ through
+    p = -g(u) and q from v = u + 2r*."""
+    name = "Kerr-de Sitter axis"
+    st = Plane(src, "kerr_de_sitter", "boyer_lindquist", ("t", "r"), {"phi": "0"}, KDS, **KDS_AXIS)
+    assert st.g[0, 1] == 0 and sp.simplify(st.g[0, 0] * st.g[1, 1] + 1) == 0
+    K = CarterAxis(st)
+    rn, rm, rp, rc = K.roots
+    ck.limit(f"{name}: the horizons are the roots of the published g^rr", K.roots,
+             [-4.2957983551936, 0.2787501957398, 0.7847845522526, 3.2322636072011], 1e-11)
+    probe = np.array([-6.0, -2.0, 0.1, 0.5, 2.0, 5.0])
+    ck.limit(f"{name}: dr*/dr = 1/f", (K.rstar(probe + 1e-6) - K.rstar(probe - 1e-6)) / 2e-6 * K.f(probe), np.ones(6), 1e-6)
+    ck.limit(f"{name}: r* vanishes at r = 0 and tends to one R at both infinities",
+             [float(K.rstar(0.0)), float(K.rstar(1e9)) - K.R, float(K.rstar(-1e9)) - K.R], [0, 0, 0], 1e-7)
+    ranges = K.ranges()
+    span = 12
+    for cell, (lo, hi) in ranges.items():
+        lo, hi = (max(lo, -60) + 1e-3, min(hi, 60) - 1e-3)
+        ck.chart(f"{name}, {cell}", st, lambda t, r, c=cell: K.pq(c, t, r),
+                 ck.uniform(-span, span), ck.uniform(lo, hi), lambda t, r, f=CARTER_FUTURE[cell]: f)
+
+    def ingoing(w, r):
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        gu = K.g(w - 2 * K.rstar(r))
+        p = np.where(r > rc, gu - PI, np.where(r > rp, -gu, np.where(r > rm, gu, PI - gu)))
+        return p, K.g(-w) + 0 * r
+
+    def outgoing(u, r):
+        u, r = np.asarray(u, dtype=float), np.asarray(r, dtype=float)
+        gv = K.g(-(u + 2 * K.rstar(r)))
+        q = np.where(r > rc, PI - gv, np.where(r > rp, gv, -gv))
+        return -K.g(u) + 0 * r, q
+    kin = Plane(src, "kerr_de_sitter", "kerr_ingoing", ("v", "r"), {"tildephi": "0"}, KDS, **KDS_AXIS)
+    kout = Plane(src, "kerr_de_sitter", "kerr_outgoing", ("u", "r"), {"tildephi": "0"}, KDS, **KDS_AXIS)
+    for label, plane, fmap, sign, pieces in (("ingoing", kin, ingoing, 1, ((rn, rm), (rm, rp), (rp, rc), (rc, 60))),
+                                             ("outgoing", kout, outgoing, -1, ((rm, rp), (rp, rc), (rc, 60)))):
+        for lo, hi in pieces:
+            # d_v - (1 + |f|) d_r and d_u + (1 + |f|) d_r are timelike everywhere and raise T.
+            ck.chart(f"{name}, {label} Kerr chart, {lo:.2f} < r < {hi:.2f}", plane, fmap,
+                     ck.uniform(-span, span), ck.uniform(lo + 1e-3, hi - 1e-3),
+                     lambda w, r, s=sign: (1, -s * (1 + np.abs(K.f(r)))))
+    ck.limit(f"{name}: the ingoing and static coordinates put one event at one point",
+             np.concatenate([ingoing(2.0 + K.rstar(r), r) for r in (0.1, 0.5, 2.0, 5.0)]),
+             np.concatenate([K.pq(c, 2.0, r) for c, r in (("N'", 0.1), ("B", 0.5), ("S", 2.0), ("C-", 5.0))]), 1e-12)
+    ck.limit(f"{name}: the outgoing and static coordinates put one event at one point",
+             np.concatenate([outgoing(2.0 - K.rstar(r), r) for r in (0.5, 2.0, 5.0)]),
+             np.concatenate([K.pq(c, 2.0, r) for c, r in (("W", 0.5), ("S", 2.0), ("C+", 5.0))]), 1e-12)
+    for t in (-3.0, 0.0, 3.0):
+        ck.limit(f"{name}: r -> r_+ at t = {t:g} lands on the bifurcation point of the event horizon",
+                 point(*K.pq("S", t, rp * (1 + 1e-13))), [0, 0], 1e-4)
+        ck.limit(f"{name}: r -> r_c at t = {t:g} lands on the bifurcation point of the cosmological horizon",
+                 point(*K.pq("S", t, rc * (1 - 1e-13))), [PI, 0], 1e-4)
+        # r* grows only as ln|r - r_-|/2k_- toward r_-, and g closes on pi/2 at the rate k_c, so the
+        # limit is taken in r* itself, which is checked to run to +infinity there.
+        ck.limit(f"{name}: r* -> +infinity at t = {t:g} in N lands on the bifurcation point of the inner horizon",
+                 point(*K.null("N", t - 400.0, t + 400.0)), [0, PI], 1e-4)
+        ck.limit(f"{name}: r -> r_n at t = {t:g} in N lands on the bifurcation point of the horizon at negative r",
+                 point(*K.pq("N", t, rn * (1 - 1e-13))), [PI, PI], 1e-4)
+    ck.limit(f"{name}: r* runs to +infinity at r_- and at r_c, and to -infinity at r_+ and at r_n",
+             np.sign(K.rstar(np.array([rm, rc, rp, rn]) * (1 - 1e-13))), [1, 1, -1, -1], 0.5)
+    t = np.array([-5.0, 0, 5])
+    for cell, far in (("C+", 1e9), ("F-", -1e9)):
+        ck.limit(f"{name}: r -> {'+' if far > 0 else '-'}infinity in {cell} lands on (-g(t - R), pi - g(-t - R))",
+                 np.concatenate(K.pq(cell, t, np.full(3, far))), np.concatenate([-K.g(t - K.R), PI - K.g(-t - K.R)]), 1e-6)
+    ck.finite(f"{name}: the Kretschmann scalar is finite at r = 0 on the axis and at every horizon",
+              st.kretschmann(np.zeros(7), np.array([-1e-3, 0.0, 1e-3, rn, rm, rp, rc])))
+
+    H = HALF
+    scri, past_scri = K.infinity(1), K.infinity(-1)
+
+    def region(cell):
+        if cell in CARTER_CORNER:
+            p0, q0 = CARTER_CORNER[cell]
+            return [(p0, q0), (p0 + H, q0), (p0 + H, q0 + H), (p0, q0 + H)]
+        curve = list(zip(*(scri if cell in ("C+", "F-") else past_scri)))
+        corner = {"C+": (-H, H), "F-": (0, PI), "C-": (-H, H), "F+": (-PI, 0)}[cell]
+        return [corner] + (curve if cell in ("C+", "F+") else curve[::-1])
+    CELLS = ["W", "S'", "S", "S''", "C-", "F+", "B", "C+", "F-", "N'", "N", "N''"]
+    t_all = spread(-np.inf, np.inf, 500, 9)
+    RADII = {"S": (1.0, 1.5, 2.0, 2.5, 3.0), "B": (0.4, 0.55, 0.7), "N": (-3.5, -2.0, -0.8, 0.15),
+             "C": (3.6, 4.5, 8.0), "F": (-4.8, -6.0, -10.0)}
+    TS = (-8, -4, -2, 0, 2, 4, 8)
+
+    def frame(v, cover):
+        for cell in CELLS:
+            v.fill("region", [point(*pq) for pq in region(cell)])
+        for cell in cover:
+            v.fill("cover", [point(*pq) for pq in region(cell)])
+
+    def edges(v):
+        for p0, q0 in list(CARTER_CORNER.values()) + [(-H, H), (-PI, 0)]:
+            v.line("horizon", [[point(p0, q0), point(p0 + H, q0)], [point(p0 + H, q0), point(p0 + H, q0 + H)],
+                               [point(p0 + H, q0 + H), point(p0, q0 + H)], [point(p0, q0 + H), point(p0, q0)]])
+        v.curve("scri", *scri, tol=0.004)
+        v.curve("scri", *past_scri, tol=0.004)
+        for cell in ("N", "N'", "N''"):
+            v.curve("centre", *K.pq(cell, t_all, np.zeros_like(t_all)))
+        v.label_xt([0, H], "black hole", cls="region")
+        v.label_xt([0, -H], "white hole", cls="region")
+        for cx in (-H, H, 3 * H):
+            v.label_xt([cx, -0.45], "static", cls="region")
+        v.label_xt([PI, 1.2], "expanding", cls="region")
+        v.label_xt([PI, -1.2], "contracting", cls="region")
+        v.label_xt([PI, PI - 1.2], "$r < r_n$", cls="region")
+        v.label_xt([PI, -PI + 1.2], "$r < r_n$", cls="region")
+        for cx in (-H, H, 3 * H):
+            v.label_xt([cx, PI + 0.45], "$r_n < r < r_-$", cls="region")
+        v.label_xt([Q4, Q4], "$r_+$", "tl", "small", dx=5, dy=1)
+        v.label_xt([PI - Q4, Q4], "$r_c$", "tr", "small", dx=-5, dy=1)
+        v.label_xt([Q4, 3 * Q4], "$r_-$", "bl", "small", dx=5, dy=-1)
+        v.label_xt([PI - Q4, 3 * Q4 + H], "$r_n$", "br", "small", dx=-5, dy=-1)
+        v.legend("horizon", f"the horizons $r_n = {rn:.3f}$, $r_- = {rm:.3f}$, $r_+ = {rp:.3f}$, and $r_c = {rc:.3f}\\,r_s$")
+        v.legend("centre", "$r = 0$ on the axis, the centre of the ring's disc, where the curvature is finite")
+        v.legend("scri", "infinity, spacelike: $r \\to +\\infty$ from the expanding and contracting regions and "
+                         "$r \\to -\\infty$ from the regions $r < r_n$")
+        v.set(fade={"top": 0.9, "bottom": 0.9},
+              restriction="The symmetry axis $\\theta = 0$ only, a totally geodesic surface. The ring singularity is at "
+                          "$r = 0$ in the equatorial plane $\\theta = \\pi/2$, off this surface; on the axis $r$ runs "
+                          "through the centre of the ring's disc to $r < 0$.")
+
+    moment = slices.moments("kerr_de_sitter", "de_sitter")[0]
+    lo, hi = moment.reach("boyer_lindquist", "r")
+    rr = np.linspace(lo, hi, 9)[1:-1]
+    a, b = K.pq("S", 0 * rr, rr), K.pq("S''", 0 * rr, rr[::-1])
+    moment_line = [(np.concatenate([[0], a[0], [-H], b[0], [-PI]]), np.concatenate([[0], a[1], [H], b[1], [PI]]))]
+    box = [-PI - 0.3, 2 * PI + 0.3, -PI - 0.1, 3 * H + 0.1]
+    views = []
+
+    def cell_radii(cell):
+        return RADII[{"S": "S", "B": "B", "W": "B", "N": "N", "C": "C", "F": "F"}[cell[0]]]
+
+    v = View("axis", "$\\Lambda > 0$, Boyer-Lindquist", box, "boyer_lindquist")
+    frame(v, ["S"])
+    for cell in CELLS:
+        for r in cell_radii(cell):
+            v.curve("r", *K.pq(cell, t_all, np.full_like(t_all, r)))
+    rr = spread(rp, rc, 600, 16)
+    for tt in TS:
+        v.curve("t", *K.pq("S", np.full_like(rr, tt), rr))
+    edges(v)
+    v.legend("cover", "the region $r_+ < r < r_c$, which $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, in units of $r_s$: " + listed(RADII["F"][::-1] + RADII["N"]) + " at negative $r$ and "
+                  "inside $r_-$, " + listed(RADII["B"]) + " between $r_-$ and $r_+$, " + listed(RADII["S"])
+                  + " between $r_+$ and $r_c$, and " + listed(RADII["C"]) + " beyond $r_c$")
+    v.legend("t", "$ct$ constant, in units of $r_s$")
+    v.slice(moment, moment_line)
+    views.append(v)
+
+    for vid, label, system, fmap, cells, pieces, null_text, cover_text in (
+            ("ingoing", "$\\Lambda > 0$, ingoing Kerr", "kerr_ingoing", ingoing, ["C-", "S", "B", "N'"],
+             ((rn, rm), (rm, rp), (rp, rc), (rc, np.inf)), "$v$ constant, an ingoing light ray",
+             "the contracting region, the static region, the black hole, and a region inside $r_-$, which $v$ and "
+             "$r > r_n$ cover"),
+            ("outgoing", "$\\Lambda > 0$, outgoing Kerr", "kerr_outgoing", outgoing, ["W", "S", "C+"],
+             ((rm, rp), (rp, rc), (rc, np.inf)), "$u$ constant, an outgoing light ray",
+             "the white hole, the static region, and the expanding region, which $u$ and $r > r_-$ cover")):
+        v = View(vid, label, box, system)
+        frame(v, cells)
+        for cell in cells:
+            for r in cell_radii(cell):
+                v.curve("r", *fmap(t_all, np.full_like(t_all, r)))
+        for lo_, hi_ in pieces:
+            rr = spread(lo_, hi_, 600, 16)
+            for w in (-8, -4, 0, 4, 8):
+                v.curve("null", *fmap(np.full_like(rr, w), rr))
+        edges(v)
+        v.legend("cover", cover_text)
+        v.legend("r", "$r$ constant, in units of $r_s$")
+        v.legend("null", null_text)
+        v.slice(moment, moment_line)
+        views.append(v)
+    for view in views:
+        view.set(settings=f"$a = 0.45\\,r_s$ and $\\Lambda = 0.2/r_s^2$, so that $r_- = {rm:.3f}\\,r_s$, "
+                          f"$r_+ = {rp:.3f}\\,r_s$, $r_c = {rc:.3f}\\,r_s$, and $\\kappa_c/\\kappa_+ = {K.kc / K.kp:.3g}$.")
+    return views
+
+
+class CarterAdSTower(Tower):
+    """A Tower for the axis of Kerr-anti-de Sitter, f = Delta_r/(r^2 + a^2) with Lambda < 0, which
+    has the two real roots r_- < r_+ and a complex pair. 1/f is a sum of simple poles alone, so
+
+        r* = Re sum_i A_i ln(1 - r/r_i),      A_i = 1/f'(r_i),
+
+    with the principal logarithm, which vanishes at r = 0 and is finite at both ends of the axis,
+    R_+ as r -> +infinity and R_- as r -> -infinity. The cells are a Tower's, written in
+    G(u) = arctan exp(-k_+ u), so each end of the axis is a timelike curve: r -> +infinity is
+    (-G(t - R_+), G(-t - R_+)) in cell I, and r -> -infinity is (G(t - R_-), pi - G(-t - R_-)) in
+    cell III."""
+
+    def __init__(self, plane):
+        r = plane.x1
+        f = plane.gi[1, 1]
+        self.f_sym = f
+        numerator = sp.Poly(sp.numer(sp.together(f)), r)
+        poles = [complex(z) for z in numerator.nroots(n=30)]
+        real = sorted((z.real for z in poles if abs(z.imag) < 1e-12), reverse=True)
+        assert len(real) == 2 and len(poles) == 4, f"the published g^rr has the roots {poles} on the axis"
+        fp = sp.lambdify(r, sp.diff(f, r), "numpy")
+        self.poles, self.Ap = poles, [1 / complex(fp(z)) for z in poles]
+        assert abs(sum(self.Ap)) < 1e-12, "the residues of 1/f do not sum to zero"
+        self.rf = real
+        self.kappa = [abs(float(fp(x))) / 2 for x in real]
+        self.kp = self.kappa[0]
+        self.f = sp.lambdify(r, f, "numpy")
+        self.far = {1: float(self.rstar(1e12)), -1: float(self.rstar(-1e12))}
+
+    def rstar(self, r):
+        r = np.asarray(r, dtype=float)
+        with np.errstate(divide="ignore"):
+            return sum(A * np.log((1 - r / z).astype(complex)) for A, z in zip(self.Ap, self.poles)).real
+
+
+class AdSAxisDrawing(TowerDrawing):
+    """The cells of a CarterAdSTower: a Tower's, with the two ends of the axis timelike curves."""
+
+    def __init__(self, T):
+        super().__init__(T, False, -np.inf)
+
+    def end(self, cell, n=500):
+        s = spread(-np.inf, np.inf, n, 9)
+        G, R = self.T.G, self.T.far
+        if cell == "I":
+            return -G(s - R[1]), G(-s - R[1])
+        if cell == "I'":
+            return G(s - R[1]), -G(-s - R[1])
+        p, q = G(s - R[-1]), np.pi - G(-s - R[-1])
+        return (p, q) if cell == "III" else (q, p)
+
+    def polygon(self, cell, up=False):
+        if cell in ("II", "IV"):
+            return super().polygon(cell, up)
+        corner = {"I": (0, 0), "I'": (0, 0), "III": (HALF, HALF), "III'": (HALF, HALF)}[cell]
+        return [point(*reflect(p, q, up)) for p, q in [corner] + list(zip(*self.end(cell)))]
+
+    def edges(self, v, cell, up=False):
+        if cell in ("II", "IV"):
+            return super().edges(v, cell, up)
+        v.curve("boundary", *reflect(*self.end(cell), up), tol=0.004)
+        if cell in ("I", "I'"):
+            sx = 1 if cell == "I" else -1
+            v.segment("horizon", reflect(0, 0, up), reflect(*((0, HALF) if sx > 0 else (HALF, 0)), up))
+            v.segment("horizon", reflect(0, 0, up), reflect(*((-HALF, 0) if sx > 0 else (0, -HALF)), up))
+
+
+def kerr_ads_axis(ck, src):
+    """The axis of Kerr-anti-de Sitter at r_s = 2, a = 1/2 and Lambda = -3: Carter's tower of the
+    axis of Kerr with both ends of the axis, r -> +infinity and r -> -infinity, timelike. The
+    ingoing Kerr chart covers I, II and the III on the left through q = G(-v), and the outgoing
+    one IV and I through p = -G(u)."""
+    name = "Kerr-anti-de Sitter axis"
+    st = Plane(src, "kerr_de_sitter", "boyer_lindquist", ("t", "r"), {"phi": "0"}, KADS, **KDS_AXIS)
+    assert st.g[0, 1] == 0 and sp.simplify(st.g[0, 0] * st.g[1, 1] + 1) == 0
+    T = CarterAdSTower(st)
+    rp, rm = T.rf
+    ck.limit(f"{name}: the horizons are the real roots of the published g^rr", [rm, rp], [0.1368868045598, 0.8594395618858], 1e-11)
+    probe = np.array([-4.0, -0.5, 0.05, 0.5, 2.0, 6.0])
+    ck.limit(f"{name}: dr*/dr = 1/f", (T.rstar(probe + 1e-6) - T.rstar(probe - 1e-6)) / 2e-6 * T.f(probe), np.ones(6), 1e-6)
+    ck.limit(f"{name}: r* vanishes at r = 0", [float(T.rstar(0.0))], [0], 1e-12)
+    span = 3
+    ck.chart(f"{name}, exterior", st, lambda t, r: T.pq("I", t, r), ck.uniform(-span, span), ck.uniform(rp + 1e-3, 30),
+             lambda t, r: (1, 0))
+    ck.chart(f"{name}, black hole", st, lambda t, r: T.pq("II", t, r), ck.uniform(-span, span),
+             ck.uniform(rm + 1e-3, rp - 1e-3), lambda t, r: (0, -1))
+    ck.chart(f"{name}, inside r-", st, lambda t, r: T.pq("III", t, r), ck.uniform(-span, span), ck.uniform(-30, rm - 1e-3),
+             lambda t, r: (-1, 0))
+
+    def ingoing(w, r):
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        gu = T.G(w - 2 * T.rstar(r))
+        return np.where(r > rp, -gu, np.where(r > rm, gu, PI - gu)), T.G(-w) + 0 * r
+
+    def outgoing(u, r):
+        u, r = np.asarray(u, dtype=float), np.asarray(r, dtype=float)
+        gv = T.G(-(u + 2 * T.rstar(r)))
+        return -T.G(u) + 0 * r, np.where(r > rp, gv, -gv)
+    kin = Plane(src, "kerr_de_sitter", "kerr_ingoing", ("v", "r"), {"tildephi": "0"}, KADS, **KDS_AXIS)
+    kout = Plane(src, "kerr_de_sitter", "kerr_outgoing", ("u", "r"), {"tildephi": "0"}, KADS, **KDS_AXIS)
+    for label, plane, fmap, sign, pieces in (("ingoing", kin, ingoing, 1, ((-30, rm), (rm, rp), (rp, 30))),
+                                             ("outgoing", kout, outgoing, -1, ((rm, rp), (rp, 30)))):
+        for lo, hi in pieces:
+            ck.chart(f"{name}, {label} Kerr chart, {lo:.2f} < r < {hi:.2f}", plane, fmap,
+                     ck.uniform(-span, span), ck.uniform(lo + 1e-3, hi - 1e-3),
+                     lambda w, r, s=sign: (1, -s * (1 + np.abs(T.f(r)))))
+    ck.limit(f"{name}: the ingoing and static coordinates put one event at one point",
+             np.concatenate([ingoing(0.4 + T.rstar(r), r) for r in (0.5, 2.0)]),
+             np.concatenate([T.pq(c, 0.4, r) for c, r in (("II", 0.5), ("I", 2.0))]), 1e-12)
+    ck.limit(f"{name}: the outgoing and static coordinates put one event at one point",
+             np.concatenate([outgoing(0.4 - T.rstar(r), r) for r in (0.5, 2.0)]),
+             np.concatenate([T.pq(c, 0.4, r) for c, r in (("IV", 0.5), ("I", 2.0))]), 1e-12)
+    t = np.array([-1.0, 0, 1])
+    ck.limit(f"{name}: r -> +infinity lands on (-G(t - R+), G(-t - R+))",
+             np.concatenate(T.pq("I", t, np.full(3, 1e12))), np.concatenate([-T.G(t - T.far[1]), T.G(-t - T.far[1])]), 1e-6)
+    ck.limit(f"{name}: r -> -infinity lands on (G(t - R-), pi - G(-t - R-))",
+             np.concatenate(T.pq("III", t, np.full(3, -1e12))),
+             np.concatenate([T.G(t - T.far[-1]), PI - T.G(-t - T.far[-1])]), 1e-6)
+    ck.finite(f"{name}: the Kretschmann scalar is finite at r = 0 on the axis and at both horizons",
+              st.kretschmann(np.zeros(5), np.array([-1e-3, 0.0, 1e-3, rm, rp])))
+
+    D = AdSAxisDrawing(T)
+    reach = max(float(np.max(np.abs(np.subtract(*D.end("I")[::-1])))), float(np.max(np.abs(np.subtract(*D.end("III")[::-1])))))
+    box = [-reach - 0.45, reach + 0.45, -PI - 0.1, 3 * PI + 0.1]
+    times = [c / T.kp for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+    rI, rII, rIII = (1.0, 1.3, 2.0, 5.0), (0.3, 0.5, 0.7), (-3.0, -1.0, -0.3, 0.08)
+    grids = {"I": (rI, times), "II": (rII, times), "IV": (rII, times), "III": (rIII, times)}
+    moment = slices.moments("kerr_de_sitter", "anti_de_sitter")[0]
+    lo, hi = moment.reach("boyer_lindquist", "r")
+    line = through_bifurcation(T, ("I'", "I"), hi, lo)
+    tt = spread(-np.inf, np.inf, 500, 10)
+
+    def dressed(v, cover):
+        D.draw(v, grids, cover=cover)
+        for cell in ("III", "III'"):
+            D.curve(v, "centre", cell, tt, np.zeros_like(tt))
+        v.label_xt([0, HALF + 0.1], "black hole", cls="region")
+        v.label_xt([0, 1.5 * PI - 0.1], "white hole", cls="region")
+        v.label_xt([0, -HALF], "white hole", cls="region")
+        v.label_xt([0, 2.5 * PI], "black hole", cls="region")
+        for sx in (1, -1):
+            for base in (0, 2 * PI):
+                v.label_xt([sx * 0.95, base + 0.3], "exterior", cls="region")
+            v.label_xt([sx * 0.95, PI + 0.3], "$r < r_-$", cls="region")
+        v.label_xt([Q4, Q4], "$r_+$", "tl", "small", dx=5, dy=1)
+        v.label_xt([Q4, 3 * Q4], "$r_-$", "bl", "small", dx=5, dy=-1)
+        v.set(fade={"top": 0.9, "bottom": 0.9},
+              restriction="The symmetry axis $\\theta = 0$ only, a totally geodesic surface. The ring singularity is at "
+                          "$r = 0$ in the equatorial plane $\\theta = \\pi/2$, off this surface; on the axis $r$ runs "
+                          "through the centre of the ring's disc to $r < 0$.",
+              settings=f"$r_s = 2\\ell$ and $a = \\ell/2$, with $\\ell = \\sqrt{{-3/\\Lambda}}$, so that "
+                       f"$r_+ = {rp:.3f}\\,\\ell$ and $r_- = {rm:.3f}\\,\\ell$.")
+        v.legend("horizon", f"the horizons on the axis, $r_+ = {rp:.3f}\\,\\ell$ and $r_- = {rm:.3f}\\,\\ell$")
+        v.legend("centre", "$r = 0$ on the axis, the centre of the ring's disc, where the curvature is finite")
+        v.legend("boundary", "the conformal boundary, timelike: $r \\to +\\infty$ beside each exterior and "
+                             "$r \\to -\\infty$ beside each region inside $r_-$")
+        v.slice(moment, [line])
+
+    views = []
+    v = View("axis_ads", "$\\Lambda < 0$, Boyer-Lindquist", box, "boyer_lindquist")
+    dressed(v, [("I", False)])
+    v.legend("cover", "the exterior $r > r_+$, which $t$ and $r$ cover")
+    v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, in units of $\\ell$")
+    v.legend("t", "$ct$ constant")
+    views.append(v)
+    for vid, label, system, fmap, cover, pieces, null_text, cover_text in (
+            ("ingoing_ads", "$\\Lambda < 0$, ingoing Kerr", "kerr_ingoing", ingoing, [("I", False), ("II", False), ("III'", False)],
+             ((-np.inf, rm), (rm, rp), (rp, np.inf)), "$v$ constant, an ingoing light ray",
+             "an exterior, the black hole, and a region inside $r_-$, which $v$ and $r$ cover"),
+            ("outgoing_ads", "$\\Lambda < 0$, outgoing Kerr", "kerr_outgoing", outgoing, [("IV", False), ("I", False)],
+             ((rm, rp), (rp, np.inf)), "$u$ constant, an outgoing light ray",
+             "the white hole and an exterior, which $u$ and $r > r_-$ cover")):
+        v = View(vid, label, box, system)
+        dressed(v, cover)
+        for lo_, hi_ in pieces:
+            rr = spread(lo_, hi_, 600, 16)
+            for w in (-1.2, -0.4, 0.4, 1.2):
+                v.curve("null", *fmap(np.full_like(rr, w), rr))
+        v.legend("cover", cover_text)
+        v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, in units of $\\ell$")
+        v.legend("t", "$ct$ constant")
+        v.legend("null", null_text)
+        views.append(v)
+    return views
+
+
+def kerr_de_sitter(ck, src):
+    return kerr_de_sitter_axis(ck, src) + kerr_ads_axis(ck, src)
+
+
 # ---------------------------------------------------------------- de Sitter
 
 def de_sitter(ck, src):
@@ -9421,7 +9888,7 @@ DRAWN = {
     "kantowski_sachs": kantowski_sachs,
     "domain_wall": domain_wall,
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "bardeen": bardeen,
-    "kerr": kerr, "kerr_newman": kerr_newman, "de_sitter": de_sitter,
+    "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "de_sitter": de_sitter,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
     "bertotti_robinson": bertotti_robinson, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
@@ -10086,6 +10553,26 @@ CAPTIONS = {
         "the expanding region together, from the singularity on $H\\tau\\rho = -r_s/2$ to $\\mathscr{I}^+$. The "
         "surface $\\tau = 0$ is $r = r_s/2$, inside the white hole, and every surface of constant $\\tau$ is "
         "spacelike.",
+    ],
+    ("kerr_de_sitter", "axis"): [
+        "The symmetry axis $\\theta = 0$ of the maximally extended Kerr-de Sitter spacetime, each point in the diagram a single event of the axis. On it the metric is $-f\\,c^2dt^2 + dr^2/f$ with $f = \\Delta_r/(r^2 + a^2)$, whose four roots are the horizons $r_n < 0 < r_- < r_+ < r_c$. The tortoise coordinate is $r_* = \\sum_i \\ln|1 - r/r_i|/f'(r_i)$, which vanishes at $r = 0$, and $u, v = ct \\mp r_*$ in each region. We place every region by $p = \\pm\\arctan W(u)$ and $q = \\pm\\arctan W(-v)$, shifted by $\\pi$ where the region lies beyond $r_c$ or $r_-$, with $W(x) = \\exp(-ax - b\\sqrt{x^2 + r_s^2})$ and $a, b = (\\kappa_+ \\pm \\kappa_c)/2$. Every line then crosses $r_+$ and $r_c$ with a continuous tangent and turns a corner at $r_-$ and $r_n$.",
+        "The coordinates $t$ and $r_+ < r < r_c$ cover one static region. Above it lie the black hole, across $r_+$, and the expanding region, across $r_c$, which ends at the spacelike infinity $r \\to +\\infty$. Through the inner horizon $r_-$ the black hole opens onto regions where $r$ runs through $0$, the centre of the ring's disc, to the horizon $r_n$ at negative $r$, and beyond $r_n$ a region ends at the spacelike infinity $r \\to -\\infty$. The two infinities are one curve of the drawing, met from its two sides, and two different edges of the spacetime. The pattern repeats without end upward, downward, and to both sides, as Sarp Akcay and Richard Matzner drew it.",
+    ],
+    ("kerr_de_sitter", "ingoing"): [
+        "The axis of Kerr-de Sitter with the ingoing Kerr coordinates $v$ and $r$ on it. With $q$ a function of $v$ alone and $u = v - 2r_*$, one chart covers the contracting region, the static region, the black hole, and a region inside $r_-$, and runs on through $r_n$ past the edge of the drawing. Its lines of constant $v$ are ingoing light rays, which start on the infinity $r \\to +\\infty$, cross $r_c$, $r_+$, and $r_-$ at 45°, and pass through $r = 0$.",
+    ],
+    ("kerr_de_sitter", "outgoing"): [
+        "The axis of Kerr-de Sitter with the outgoing Kerr coordinates $u$ and $r$ on it, the time reverse of the ingoing ones. With $p$ a function of $u$ alone and $v = u + 2r_*$ they cover the white hole, the static region, and the expanding region, and their lines of constant $u$ are outgoing light rays, which cross $r_+$ and $r_c$ at 45° and end on the infinity $r \\to +\\infty$.",
+    ],
+    ("kerr_de_sitter", "axis_ads"): [
+        "The symmetry axis $\\theta = 0$ of the maximally extended Kerr-anti-de Sitter spacetime, each point in the diagram a single event of the axis. On it the metric is $-f\\,c^2dt^2 + dr^2/f$ with $f = \\Delta_r/(r^2 + a^2)$, which has the two real roots $r_- < r_+$, and $r_* = \\mathrm{Re}\\sum_i \\ln(1 - r/r_i)/f'(r_i)$ over all four roots is finite at both ends of the axis. Every region is placed by $\\arctan e^{-\\kappa_+u}$ and $\\arctan e^{\\kappa_+v}$, the Kruskal coordinates of $r_+$ brought in from infinity, where $u, v = ct \\mp r_*$, as the tower of Kerr's axis is.",
+        "The tower is Kerr's: an exterior, the black hole across $r_+$, and across the inner horizon $r_-$ a region where $r$ runs through the centre of the ring's disc to negative values, then a white hole and the next exterior, without end. With $\\Lambda < 0$ both ends of the axis, $r \\to +\\infty$ and $r \\to -\\infty$, are timelike curves, the conformal boundary, and a light ray reaches each in a finite $t$.",
+    ],
+    ("kerr_de_sitter", "ingoing_ads"): [
+        "The axis of Kerr-anti-de Sitter with the ingoing Kerr coordinates $v$ and $r$ on it. One chart covers an exterior, the black hole, and a region inside $r_-$, and its lines of constant $v$ are ingoing light rays, which leave the boundary $r \\to +\\infty$, cross $r_+$ and $r_-$ at 45°, pass through $r = 0$, and end on the boundary $r \\to -\\infty$.",
+    ],
+    ("kerr_de_sitter", "outgoing_ads"): [
+        "The axis of Kerr-anti-de Sitter with the outgoing Kerr coordinates $u$ and $r$ on it, the time reverse of the ingoing ones. They cover the white hole and an exterior, and their lines of constant $u$ are outgoing light rays, which cross $r_+$ at 45° and end on the boundary $r \\to +\\infty$.",
     ],
     ("schwarzschild_de_sitter", "static"): [
         "Kottler's spacetime, maximally extended, each point in the diagram a 2-sphere of radius $r$. "

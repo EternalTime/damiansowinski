@@ -442,6 +442,70 @@ def one(metric_id, lines_of, label=None, view_id=None):
     return [Mark(m, lines_of(m), label=label) for m in moments(metric_id, view_id)]
 
 
+# Kerr-de Sitter as its diagrams draw it, (r_s, a, Lambda): Lambda > 0 in units of r_s and
+# Lambda < 0 in units of l = sqrt(-3/Lambda).
+KDS = {"de_sitter": (1.0, 0.45, 0.2), "anti_de_sitter": (2.0, 0.5, -3.0)}
+
+
+def primitive(numerator, denominator):
+    """The primitive of the rational function N/D that vanishes at r = 0, for a D with simple
+    roots r_i, none of them zero, and a N of lower degree: Re sum_i A_i ln(1 - r/r_i) with
+    A_i = N(r_i)/D'(r_i), the principal logarithm, whose real part is ln|1 - r/r_i| at a real
+    root. Both polynomials are numpy's, highest power first."""
+    roots = np.roots(denominator)
+    slope = np.polyder(denominator)
+    residues = [np.polyval(numerator, z) / np.polyval(slope, z) for z in roots]
+
+    def value(r):
+        r = np.asarray(r, dtype=float)
+        with np.errstate(divide="ignore"):
+            return sum(A * np.log((1 - r / z).astype(complex)) for A, z in zip(residues, roots)).real
+    return value
+
+
+def kds_delta(sign):
+    """Delta_r = (r^2 + a^2)(1 - Lambda r^2/3) - r_s r as a polynomial in r."""
+    rs, a, L = KDS[sign]
+    return [-L / 3, 0.0, 1 - L * a * a / 3, -rs, a * a]
+
+
+def kds_rstar(sign):
+    """Kerr-de Sitter's r_*, dr_*/dr = (r^2 + a^2)/Delta_r with r_* = 0 at r = 0, as the Kerr
+    charts fix it: v = ct + r_* and u = ct - r_*."""
+    return primitive([1.0, 0.0, KDS[sign][1] ** 2], kds_delta(sign))
+
+
+def kds_schild(sign):
+    """c(tau - t) of Kerr-de Sitter's Kerr-Schild chart, d/dr of it r_s r/((1 - Lambda r^2/3) Delta_r),
+    zero at r = 0."""
+    rs, a, L = KDS[sign]
+    return primitive([rs, 0.0], np.polymul([-L / 3, 0.0, 1.0], kds_delta(sign)))
+
+
+def _kds(sign, shift=None, scale=1):
+    """The moment t = 0 of Kerr-de Sitter on a plane of a time and r: the line t = 0 as far as
+    the embedding reaches in Carter's chart, or in a chart whose time is ct + scale shift(r) the
+    curve scale shift(r), crowding toward each horizon it runs off at."""
+    m, = moments("kerr_de_sitter", sign)
+    lo, hi = m.reach("boyer_lindquist", "r")
+    if shift is None:
+        return [Mark(m, along(0.0, lo, hi))]
+    s = np.linspace(-30, 30, N)
+    r = lo + (hi - lo) / (1 + np.exp(-s)) if sign == "de_sitter" else near(lo, hi)
+    return [Mark(m, [np.column_stack([scale * shift(sign)(r), r])])]
+
+
+def _kds_above(sign):
+    """The equator of the moment from above, the time left out: the whole plane between the
+    radii the embedding reaches, every angle, since each chart's angle differs from Carter's by
+    a function of r or of t alone."""
+    m, = moments("kerr_de_sitter", sign)
+    lo, hi = m.reach("boyer_lindquist", "r")
+    phi = np.linspace(0, 2 * np.pi, 721)
+    return [Mark(m, fills=[[np.column_stack([phi, np.full_like(phi, hi)]),
+                            np.column_stack([phi, np.full_like(phi, lo)])]])]
+
+
 def flat(spec):
     """The moments the flat view `spec` of null_rays.py shows, in its chart's (x^0, r)."""
     key = (spec.metric, spec.system, spec.view)
@@ -876,6 +940,17 @@ def string_wave_V(u, X):
 
 
 FLAT = {
+    **{("kerr_de_sitter", system, view + suffix): (lambda sign=sign: _kds(sign))
+       for sign, suffix in (("de_sitter", ""), ("anti_de_sitter", "_ads"))
+       for system, view in (("boyer_lindquist", "axis"), ("boyer_lindquist", "principal"))},
+    **{("kerr_de_sitter", system, "above" + suffix): (lambda sign=sign: _kds_above(sign))
+       for sign, suffix in (("de_sitter", ""), ("anti_de_sitter", "_ads"))
+       for system in ("boyer_lindquist", "nonrotating") if (system, suffix) != ("boyer_lindquist", "_ads")},
+    **{("kerr_de_sitter", system, "axis" + suffix): (lambda sign=sign, scale=scale: _kds(sign, kds_rstar, scale))
+       for sign, suffix in (("de_sitter", ""), ("anti_de_sitter", "_ads"))
+       for system, scale in (("kerr_ingoing", 1), ("kerr_outgoing", -1))},
+    **{("kerr_de_sitter", "kerr_schild", "axis" + suffix): (lambda sign=sign: _kds(sign, kds_schild))
+       for sign, suffix in (("de_sitter", ""), ("anti_de_sitter", "_ads"))},
     ("robinson_trautman", "axisymmetric", "axis"): _rt_fronts,
     ("robinson_trautman", "axisymmetric", "equator"): _rt_fronts,
     ("btz", "stationary", "static"): lambda: _btz(),

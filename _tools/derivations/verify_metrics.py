@@ -652,6 +652,30 @@ DIMENSIONS = {
     ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing"): {
         "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\Lambda": "1/L**2",
     },
+    # Carter's rotating black hole with a cosmological constant of either sign. The mass enters as
+    # the length r_s = 2GM/c^2, the rotation parameter a is a length as Kerr's is, and Lambda is a
+    # curvature. Every chart defines four names: Xi and Delta_theta are pure numbers, rho is a
+    # length and Delta_r an area. The Kerr times v and u are lengths.
+    ("kerr_de_sitter", "boyer_lindquist"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "a": "L", "\\Lambda": "1/L**2",
+        "\\Xi": "1", "\\rho": "L", "\\Delta_r": "L**2", "\\Delta_\\theta": "1",
+    },
+    ("kerr_de_sitter", "nonrotating"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\Phi": "1", "r_s": "L", "a": "L", "\\Lambda": "1/L**2",
+        "\\Xi": "1", "\\rho": "L", "\\Delta_r": "L**2", "\\Delta_\\theta": "1",
+    },
+    ("kerr_de_sitter", "kerr_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\tilde\\phi": "1", "r_s": "L", "a": "L", "\\Lambda": "1/L**2",
+        "\\Xi": "1", "\\rho": "L", "\\Delta_r": "L**2", "\\Delta_\\theta": "1",
+    },
+    ("kerr_de_sitter", "kerr_outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\tilde\\phi": "1", "r_s": "L", "a": "L", "\\Lambda": "1/L**2",
+        "\\Xi": "1", "\\rho": "L", "\\Delta_r": "L**2", "\\Delta_\\theta": "1",
+    },
+    ("kerr_de_sitter", "kerr_schild"): {
+        "\\tau": "T", "r": "L", "\\theta": "1", "\\psi": "1", "r_s": "L", "a": "L", "\\Lambda": "1/L**2",
+        "\\Xi": "1", "\\rho": "L", "\\Delta_r": "L**2", "\\Delta_\\theta": "1",
+    },
     # The Kaluza-Klein monopole has one length, m, with G nowhere in the line element. Gross
     # and Perry's fifth coordinate x_5 is a length of period 16 pi m, and the Hopf angle psi is a pure
     # number.
@@ -869,7 +893,7 @@ PARAMETER_RELATIONS = {
 GREEK = [
     "theta", "phi", "eta", "omega", "Omega", "ell", "pi", "lambda", "mu", "nu",
     "rho", "sigma", "tau", "chi", "psi", "alpha", "beta", "gamma", "delta",
-    "epsilon", "kappa", "xi", "zeta", "Lambda", "Phi", "Theta", "Psi", "Sigma", "Delta",
+    "epsilon", "kappa", "xi", "zeta", "Lambda", "Phi", "Theta", "Psi", "Sigma", "Delta", "Xi",
 ]
 
 # The Dirac delta and its derivatives the reader reads, as \delta, \delta' and \delta''.
@@ -1513,12 +1537,12 @@ class Reader:
         self.primed = set()
         # A parameter spelled with a command and a subscript, as \chi_0 is, is read whole: the
         # Greek letters are turned into words below, and \chi_0 would otherwise be read as chi
-        # times a stray _0, which is zero.
+        # times a stray _0, which is zero. The subscript may be a command too, as in \Delta_\theta.
         self.spelled = {}
         for declaration in parameters:
             self._declare_parameter(declaration)
             spelling = declaration.split("=")[0].strip()
-            if re.fullmatch(r"\\[A-Za-z]+_\w+", spelling):
+            if re.fullmatch(r"\\[A-Za-z]+_\\?\w+", spelling):
                 self.spelled[spelling] = self._plain(spelling)
         self.allowed = (
             set(self.symbol.values())
@@ -1958,6 +1982,35 @@ def metric_from_line_element(reader, line_element, coords):
     return norm(g)
 
 
+def _adjugate(matrix):
+    """The adjugate and the determinant of a square matrix, by cofactors, every minor put
+    through norm as it is formed and kept, so that no step holds an unreduced product.
+
+    sympy's own adjugate() and det() reduce each product through cancel, which on a metric with
+    three cross terms, as Kerr-de Sitter's Kerr-Schild chart has, did not finish in ten minutes;
+    on a diagonal metric the two agree at once."""
+    n = matrix.shape[0]
+    minors = {}
+
+    def minor(rows, columns):
+        """The determinant of the submatrix of the given rows and columns."""
+        if not rows:
+            return sp.Integer(1)
+        key = (rows, columns)
+        if key not in minors:
+            total = sp.Integer(0)
+            for k, column in enumerate(columns):
+                entry = matrix[rows[0], column]
+                if entry != 0:
+                    total += (-1) ** k * entry * minor(rows[1:], columns[:k] + columns[k + 1:])
+            minors[key] = norm(total)
+        return minors[key]
+
+    every = tuple(range(n))
+    cofactors = sp.Matrix(n, n, lambda i, j: (-1) ** (i + j) * minor(every[:j] + every[j + 1:], every[:i] + every[i + 1:]))
+    return cofactors, minor(every, every)
+
+
 class Geometry:
     """Every tensor the files publish, computed from g in the chart the coords name."""
 
@@ -1967,7 +2020,8 @@ class Geometry:
         self.seconds = seconds
         self.g = norm(g)
         # The adjugate over the determinant, which sympy's own inv() takes far longer to reach.
-        self.ginv = norm(self.g.adjugate() / self.g.det())
+        adjugate, determinant = _adjugate(self.g)
+        self.ginv = norm(adjugate / determinant)
         self._cache = {}
         self.unavailable = {}
 
@@ -2344,7 +2398,7 @@ def check_system(report, metric_id, entry, seconds, dimensions_only=False):
     except LatexError as error:
         report.skip(where, f"line element unreadable: {error}")
         return
-    if norm(g.det()) == 0:
+    if _adjugate(g)[1] == 0:
         report.skip(where, "the line element gives a degenerate metric")
         return
 
