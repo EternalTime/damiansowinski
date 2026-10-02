@@ -417,6 +417,10 @@ class Diagram:
                                     # drawn where the expression is positive
     surface: str = None             # r at which a star's surface is released from rest; see Surface
     surface_legend: str = None      # what that surface is, where it is no star's
+    surface_whole: tuple = None     # (x^0 of the moment of rest, legend[, (dx^0, dr)]): the surface before that
+                                    # moment as well as after it, coming out of the singularity, with the
+                                    # direction of the static Killing vector there where it is not d/dx^0;
+                                    # see Surface
     singular_runs: bool = False     # mark a singular stretch of an edge, not only a whole edge
     singular_where_claimed: bool = False  # judge a singular edge only inside the published domains
     singular_near: float = 1e-5     # how near an edge singular_runs takes the Kretschmann scalar, in the unit
@@ -795,6 +799,20 @@ SCW_DUST = {"funcs": ["a"], "eqs": [["\\chi", "\\chi"]], "rates": [0.0], "start"
 # The isotropic radius, in r_s, of the surface of the semiclosed world's dust at its greatest, R_0 = 2 r_s
 # behind the throat: (R_0 - r_s/2 - sqrt(R_0 (R_0 - r_s)))/2.
 SCW_SURFACE = "(3/2 - sqrt(2))/2"
+
+# The white hole's dust, at rest with a = a_m, which is the unit, and followed back to its
+# singularity, where tau = 0, and on to the one it falls back to.
+WH_DUST = {"funcs": ["a"], "eqs": [["\\chi", "\\chi"]], "rates": [0.0], "start": [1.0]}
+# Its surface, seen from outside. The retarded time u counts from the ray the surface sends as it
+# crosses r_s on its way out, so for chi_0 = pi/4 the moment of rest, t = 0 at r = 2 r_s, is
+# u = (pi + ln 2) r_s, and in Kruskal's coordinates, U = -e^(-u/2r_s) and V = e^(v/2r_s) with
+# v = u + 2r + 2 r_s ln(r/r_s - 1), it is U = -e^(-pi/2)/sqrt(2), V = sqrt(2) e^(2 + pi/2). There the
+# static Killing vector is along (-U, V).
+WH_U_REST = "pi + log(2)"
+WH_KRUSKAL_REST = ("-exp(-pi/2)/sqrt(2)", "sqrt(2)*exp(2 + pi/2)")
+WH_F = "Piecewise((r**3, r < 1), (1, r < 4), ((r/4)**3, True))"
+WH_B = "Piecewise((3, r < 1), (4 - r, r < 4), (0, True))"
+WH_SURFACE = "the surface of the core, a radial geodesic that comes out of $r = 0$, stops at $2r_s$, and falls back"
 
 # The boson star every drawing of it declares: the heaviest ground state, Kaup's limit.
 BOSON = {"sigma_c": repr(bs.SIGMA_C)}
@@ -3315,6 +3333,55 @@ DIAGRAMS = [
             surface_legend="the surface of the dust, a radial geodesic at rest at $t = 0$",
             input="The surface of the dust at rest at $t = 0$ at the areal radius $2r_s$ behind the throat, the "
                   "isotropic radius $0.043\\,r_s$, the dust of the comoving coordinates with $\\chi_0 = 3\\pi/4$."),
+    # The white hole the conformal diagram draws: the core that comes to rest at R_0 = 2 r_s, chi_0 = pi/4,
+    # from its singularity to the one it falls back to, in its two charts, and the vacuum outside it in
+    # Schwarzschild's chart, the outgoing Eddington-Finkelstein chart and Kruskal's. In conformal time the
+    # surface crosses r_s at eta = pi/2 and 3 pi/2, which is c tau = (pi/2 - 1)/2 and (3 pi/2 + 1)/2 in
+    # units of a_m, and the horizons are the rays through those two events.
+    Diagram("white_hole", "interior_comoving", "through", "through the centre", ("\\tau", "\\chi"),
+            (0, math.pi / 4, 0, math.pi), "$\\chi$", "$c\\tau/a_m$", {"chi_0": "pi/4", "a_m": 1}, EQUATOR,
+            mirror=True, families=SIDEWAYS, cones=(4, 10), tau="tau", areal=True, dust=WH_DUST,
+            lines=(("surface", "r", "pi/4", "the surface of the core, $\\chi = \\chi_0$"),),
+            marked=(("event", {"x0": "(pi/2 - 1)/2", "r": "pi/4"}, 0, "the past horizon"),
+                    ("event", {"x0": "(3*pi/2 + 1)/2", "r": "pi/4"}, 1, "the event horizon")),
+            input="Dust at rest at $c\\tau = \\pi a_m/2$ with $a = a_m$, $a(\\tau)$ solved from this "
+                  "spacetime's own $G^\\chi{}_\\chi = 0$ back to its singularity and on to the next, and "
+                  "$\\chi_0 = \\pi/4$, so that the core stops at twice its Schwarzschild radius."),
+    Diagram("white_hole", "interior_conformal", "through", "through the centre", ("\\eta", "\\chi"),
+            (0, math.pi / 4, 0, 2 * math.pi), "$\\chi$", "$\\eta$", {"chi_0": "pi/4", "a_m": 1}, EQUATOR,
+            mirror=True, families=SIDEWAYS, cones=(4, 10), tau="eta", areal=True,
+            lines=(("surface", "r", "pi/4", "the surface of the core, $\\chi = \\chi_0$"),),
+            marked=(("event", {"x0": "pi/2", "r": "pi/4"}, 0, "the past horizon"),
+                    ("event", {"x0": "3*pi/2", "r": "pi/4"}, 1, "the event horizon")),
+            input="$\\chi_0 = \\pi/4$, so that the core stops at twice its Schwarzschild radius."),
+    Diagram("white_hole", "exterior_schwarzschild", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -6, 6),
+            "$r/r_s$", "$ct/r_s$", {"r_s": 1}, EQUATOR, orient="ingoing", areal=True, surface="2",
+            surface_whole=("0", WH_SURFACE),
+            input="The surface at rest at $r = 2r_s$ at $t = 0$, the core of the interior "
+                  "coordinates with $\\chi_0 = \\pi/4$."),
+    Diagram("white_hole", "exterior_eddington_finkelstein", "finkelstein", "against $u + r$", ("u", "r"),
+            (0, 4, -2, 12), "$r/r_s$", "$(u + r)/r_s$", {"r_s": 1}, EQUATOR, to_display=FINKELSTEIN_OUT,
+            tau="u + r", areal=True, surface="2", surface_whole=(WH_U_REST, WH_SURFACE),
+            input="The surface at rest at $r = 2r_s$ at $u = (\\pi + \\ln 2)\\,r_s$, the core of the interior "
+                  "coordinates with $\\chi_0 = \\pi/4$."),
+    Diagram("white_hole", "exterior_kruskal", "kruskal", "$U$ and $V$", ("U", "V"), (0, 4, -2, 2),
+            "$(V - U)/2$", "$(U + V)/2$", {"r_s": 1}, EQUATOR, to_display=NULL_TO_TR, families=SIDEWAYS, tau="U + V",
+            where="1 - U*V", singular_zero="1 - U*V", surface=WH_KRUSKAL_REST[1],
+            surface_whole=(WH_KRUSKAL_REST[0], WH_SURFACE, ("-(" + WH_KRUSKAL_REST[0] + ")", WH_KRUSKAL_REST[1])),
+            marked=(("event", {"x0": "-2", "r": "0"}, 0, "the past horizon, $V = 0$"),),
+            input="The surface at rest at $r = 2r_s$ at $u = (\\pi + \\ln 2)\\,r_s$, the core of the interior "
+                  "coordinates with $\\chi_0 = \\pi/4$."),
+    # Novikov's vacuole with a delayed core, in units of the core's Schwarzschild radius: uniform dust inside
+    # the shell r_1 = 1, which leaves its singularity late, at ct = r_2 - r_1 = 3; a vacuum out to the shell
+    # r_2 = 4, whose shells leave theirs at ct = r_2 - r, as Novikov takes them; and beyond it the
+    # Einstein-de Sitter universe the vacuole was cut from, which left its own at t = 0.
+    Diagram("white_hole", "novikov_comoving", "vacuole", "a delayed core", ("t", "r"), (0, 6, 0, 8),
+            "$r/r_s$", "$ct/r_s$", {}, EQUATOR, areal=True, functions={"F": WH_F, "b": WH_B}, crunch=True,
+            lines=(("surface", "r", "1", "the surface of the core, $r = r_1$"),
+                   ("shell", "r", "4", "the edge of the vacuole, $r = r_2$")),
+            input="Uniform dust inside the shell $r_1 = r_s$, a vacuum out to the shell $r_2 = 4r_s$, and uniform "
+                  "dust beyond it: $F = r_s(r/r_1)^3$, $r_s$, and $r_s(r/r_2)^3$, with the delay $b = r_2 - r_1$, "
+                  "$r_2 - r$, and $0$, as Novikov takes it."),
     # A shell of null dust falls in along v = 0: flat inside, Schwarzschild outside, as the
     # conformal diagram declares it. The outgoing chart draws its time reverse.
     Diagram("vaidya", "eddington_finkelstein_ingoing", "shell", "an imploding shell", ("v", "r"),
@@ -7656,6 +7723,73 @@ CAPTIONS = {
         "$R = a\\sin\\chi$, bounds the trapped spheres: it starts at the surface at the same moment "
         "and runs inward, reaching the centre only at the crunch.",
     ],
+    ("white_hole", "interior_comoving", "through"): [
+        "The line through the centre of the core in the plane $\\theta = \\pi/2$, in its own comoving "
+        "coordinates: $\\chi$ on the right is $\\phi = 0$ and on the left $\\phi = \\pi$, and the surface is "
+        "$\\chi_0 = \\pi/4$ on either side. The core is a closed Friedmann universe of dust, "
+        "$-c^2d\\tau^2 + a^2(d\\chi^2 + \\sin^2\\chi\\,d\\Omega^2)$, which leaves its singularity at "
+        "$\\tau = 0$, comes to rest at $c\\tau = \\pi a_m/2$, and falls back to another at $c\\tau = \\pi a_m$, "
+        "and its light rays obey $c\\,d\\tau = \\pm a\\,d\\chi$. The cones lie flat beside either singularity, "
+        "where the Kretschmann scalar diverges, and stand narrowest at the moment of rest.",
+        "The past horizon is the ingoing ray that leaves the surface as it crosses $r_s = a_m\\sin^3\\chi_0$ on "
+        "the way out, at $c\\tau = 0.29\\,a_m$, and reaches the centre at $c\\tau = 0.82\\,a_m$; light from far "
+        "away reaches the dust only above it. The event horizon is its mirror image in the moment of rest. The "
+        "dotted curves, $|\\nabla R|^2 = 0$ for the areal radius $R = a\\sin\\chi$, bound the spheres on which "
+        "even the ingoing light moves to larger $R$, beside the first singularity, and those on which even the "
+        "outgoing light moves to smaller $R$, beside the last.",
+    ],
+    ("white_hole", "interior_conformal", "through"): [
+        "The plane of $\\eta$ and $\\chi$ through the centre of the core ($\\theta = \\pi/2$): $\\chi$ on the "
+        "right is $\\phi = 0$ and on the left $\\phi = \\pi$, and the surface is $\\chi_0 = \\pi/4$ on either "
+        "side. In the conformal time the dust is $a^2(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\,d\\Omega^2)$ with "
+        "$a = a_m\\sin^2(\\eta/2)$, so every light ray is a straight line, $\\eta \\mp \\chi$ constant, and "
+        "the cones keep one shape from the first singularity at $\\eta = 0$ to the last at $\\eta = 2\\pi$, where "
+        "the Kretschmann scalar diverges.",
+        "The past horizon leaves the surface at $\\eta = 2\\chi_0$, as it crosses $r_s$ on the way out, and reaches "
+        "the centre at $\\eta = 3\\chi_0$. The event horizon leaves the centre at $\\eta = 2\\pi - 3\\chi_0$ and "
+        "meets the surface at $2\\pi - 2\\chi_0$. The dotted lines $\\eta = 2\\chi$ and $\\eta = 2\\pi - 2\\chi$ "
+        "are where $|\\nabla R|^2 = 0$ for the areal radius $R = a\\sin\\chi$.",
+    ],
+    ("white_hole", "exterior_schwarzschild", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the core, where the metric is "
+        "Schwarzschild's. The surface is a radial geodesic of it: it leaves $r_s$ as $t \\to -\\infty$, comes to "
+        "rest at $r = 2r_s$ at $t = 0$, and falls back toward $r_s$ as $t \\to \\infty$. Inside it, $r < R(t)$, "
+        "lies the dust, which these coordinates do not cover.",
+        "By Schwarzschild's time the core has been outside $r_s$ for ever, though its own clock reads "
+        "$c\\tau = 0.81\\,r_s$ at the crossing. The past horizon and the white hole behind it lie beyond these "
+        "coordinates, at $t = -\\infty$, as the event horizon lies at $t = +\\infty$.",
+    ],
+    ("white_hole", "exterior_eddington_finkelstein", "finkelstein"): [
+        "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the core, drawn with $u + r$ as the "
+        "vertical axis so that the outgoing rays, $u = $ const, run at 45°. The retarded time is regular on the past "
+        "horizon $r = r_s$, so the surface is followed all the way out: it leaves $r = 0$ at "
+        "$u = (2 + \\ln 2 - \\pi)\\,r_s = -0.45\\,r_s$, crosses $r_s$ at $u = 0$, and comes to rest at $2r_s$ at "
+        "$u = (\\pi + \\ln 2)\\,r_s$. Inside $r_s$ both edges of every cone point to larger $r$.",
+        "An ingoing ray closes on $r_s$ from outside as $u \\to \\infty$, and the earlier it set out, the closer to "
+        "$r_s$ it already stands. Everything that has ever fallen toward the white hole is therefore still outside "
+        "$r_s$ when the surface comes out, crowded against the past horizon in its path.",
+    ],
+    ("white_hole", "exterior_kruskal", "kruskal"): [
+        "The plane of $U$ and $V$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the core, drawn with $(V - U)/2$ "
+        "across and $(U + V)/2$ up, so that every light ray runs at 45°. The surface leaves the singularity "
+        "$UV = 1$ at $U = -1.25$, crosses the past horizon $V = 0$ at $U = -1$, and runs on toward its moment of "
+        "rest, far up the drawing at $V = \\sqrt{2}\\,e^{2 + \\pi/2} = 50.3$. The dust lies to its left, where "
+        "these coordinates do not reach.",
+        "Between the singularity, the past horizon, and the surface lies what is left of the white hole, and to the "
+        "right of the past horizon the world outside $r_s$. The ingoing rays that set out earliest, $V$ just above "
+        "zero, run beside the past horizon, and the surface crosses every one of them on its way out.",
+    ],
+    ("white_hole", "novikov_comoving", "vacuole"): [
+        "The plane of $t$ and the comoving $r$ ($\\theta = \\pi/2$, $\\phi = 0$) through Novikov's vacuole, "
+        "where every shell keeps its $r$. The Friedmann universe beyond $r_2$ leaves its singularity at $t = 0$, "
+        "the shells of the vacuum between $r_1$ and $r_2$ leave theirs at $ct = r_2 - r$, and the core inside $r_1$ "
+        "leaves its own last, at $ct = r_2 - r_1 = 3\\,r_s$. The singularity, where the Kretschmann scalar "
+        "diverges, is that broken line, and the rays obey $c\\,dt = \\pm\\,\\partial_r R\\,dr$.",
+        "The dotted curve is $R = F$, where $|\\nabla R|^2 = 0$, and in the vacuum it is the Schwarzschild sphere "
+        "$R = r_s$, the past horizon. Below it every sphere grows, whichever way its light is sent, the region "
+        "Novikov called T. The surface of the core comes out of it at $ct = 3.67\\,r_s$, two thirds of $r_s$ after "
+        "the core's own bang, and the edge of the vacuole at $ct = 0.67\\,r_s$.",
+    ],
     ("oppenheimer_snyder", "exterior_schwarzschild", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the collapsing "
         "star, where the metric is Schwarzschild's. The surface falls freely from rest at $r = 2r_s$ at "
@@ -8559,7 +8693,17 @@ def smoothed(expr, pulse):
 def numeric_modules(expr):
     """What lambdify evaluates an expression with: numpy, and scipy as well where a declared
     function holds a Bessel function, as Gowdy's wave does, which numpy does not have."""
-    held = any(sp.sympify(e).has(sp.besselj, sp.bessely) for e in (expr if isinstance(expr, (list, tuple)) else [expr]))
+    exprs = [sp.sympify(e) for e in (expr if isinstance(expr, (list, tuple)) else [expr])]
+    if any(e.has(sp.LambertW) for e in exprs):
+        # Lambert's function on its principal branch, real where its argument is at least -1/e, which is
+        # where Kruskal's chart of the white hole has an areal radius at all.
+        from scipy.special import lambertw
+
+        def principal(x):
+            x = np.asarray(x, dtype=float)
+            return np.where(x >= -np.exp(-1.0), lambertw(np.maximum(x, -np.exp(-1.0))).real, np.nan)
+        return [{"LambertW": principal}, "numpy"]
+    held = any(e.has(sp.besselj, sp.bessely) for e in exprs)
     return ["scipy", "numpy"] if held else "numpy"
 
 
@@ -8631,7 +8775,7 @@ class Chart:
         self.fn["dtaur"] = self.lambdify(sp.diff(tau, self.xr))
 
         self.prep = prep
-        self.surface = Surface(self, number(spec.surface)) if spec.surface else None
+        self.surface = Surface(self, number(spec.surface), spec.surface_whole) if spec.surface else None
         self.same_as_grr = True
         if spec.areal:
             # R^2 = g_theta theta. Derivatives are taken of R^2 and divided by 2R, so that a
@@ -8772,13 +8916,19 @@ class Chart:
 class Surface:
     """The surface of a star of dust released from rest, as an exterior chart draws it: the
     radial timelike geodesic from rest at r0, integrated with the published Christoffel
-    symbols in proper time and checked to keep unit speed and its energy -g_00 dx^0/dtau
-    against the published metric. It starts at x^0 = 0, and R(x^0) is its radius; the chart's
-    domain is what lies outside it, r >= R, and nothing is drawn inside."""
+    symbols in proper time and checked to keep unit speed and, where the plane's metric does not
+    depend on x^0, its energy -(g_00 dx^0/dtau + g_0r dr/dtau) against the published metric. It
+    starts at x^0 = 0, and R(x^0) is its radius; the chart's domain is what lies outside it,
+    r >= R, and nothing is drawn inside.
+
+    A row with `surface_whole` draws the surface before its moment of rest as well, which is the
+    white hole: the same geodesic followed back in proper time, out of the singularity. The moment
+    of rest is then the x^0 the row names, and the geodesic ends where the Kretschmann scalar
+    passes K_END, beside r = 0, or where it leaves the drawing."""
 
     legend = "the surface of the star, falling freely from rest"
 
-    def __init__(self, chart, r0):
+    def __init__(self, chart, r0, whole=None):
         entry, reader = chart.entry, chart.reader
         name_t, name_r = chart.spec.plane
         gamma = {tuple(c["indices"]): c["value"] for c in entry["christoffel"]["variants"]["ull"]["nonzero"]}
@@ -8786,45 +8936,70 @@ class Surface:
         def published(a, b, c):
             text = gamma.get((a, b, c))
             return chart.lambdify(chart.prep(reader(text))) if text else (lambda x0, r: 0.0)
-        Gt_tr, Gr_tt, Gr_rr = published(name_t, name_t, name_r), published(name_r, name_t, name_t), \
-            published(name_r, name_r, name_r)
-        g00, grr = chart.fn["g00"], chart.fn["grr"]
+        names = (name_t, name_r)
+        G = [[[published(a, b, c) for c in names] for b in names] for a in names]
+        g00, g0r, grr = chart.fn["g00"], chart.fn["g0r"], chart.fn["grr"]
 
         def one(f, t, r):
-            return float(f(np.array([t]), np.array([r]))[0])
+            return float(np.asarray(f(np.array([t]), np.array([r]))).reshape(-1)[0])
 
         def rhs(_, y):
             t, r, td, rd = y
-            return [td, rd, -2 * one(Gt_tr, t, r) * td * rd,
-                    -one(Gr_tt, t, r) * td * td - one(Gr_rr, t, r) * rd * rd]
+            v = (td, rd)
+            return [td, rd] + [-sum(one(G[a][b][c], t, r) * v[b] * v[c] for b in range(2) for c in range(2))
+                               for a in range(2)]
 
-        t_end = 2 * max(abs(v) for v in chart.spec.box)
+        x0_rest = float(number(whole[0])) if whole else 0.0
+        # Far enough to cross the drawing from a moment of rest that may lie outside it.
+        t_end = 2 * max(abs(v) for v in chart.spec.box) + abs(x0_rest)
+        r0 = float(r0)
+        diagonal = all(abs(one(g0r, x0_rest + dt, r0 * k)) < 1e-14 for dt in (0.0, 0.3) for k in (1.0, 1.7))
 
         def far(_, y):
-            return y[0] - t_end
+            return abs(y[0] - x0_rest) - t_end
         far.terminal = True
 
         def close(_, y):
-            return -one(g00, y[0], y[1]) - 1e-10
+            # A chart whose time stops at the horizon, as Schwarzschild's does, ends the surface there.
+            return -one(g00, y[0], y[1]) - 1e-10 if diagonal else 1.0
         close.terminal = True
-        r0 = float(r0)
-        y0 = [0.0, r0, 1 / np.sqrt(-one(g00, 0.0, r0)), 0.0]
-        sol = solve_ivp(rhs, (0, 1e4), y0, events=(far, close), rtol=1e-12, atol=1e-14, method="DOP853",
-                        max_step=0.01)
-        t, r, td, rd = sol.y
-        speed = np.array([one(g00, a, b) for a, b in zip(t, r)]) * td ** 2 + \
-            np.array([one(grr, a, b) for a, b in zip(t, r)]) * rd ** 2
-        energy = -np.array([one(g00, a, b) for a, b in zip(t, r)]) * td
+
+        def crushed(_, y):
+            return K_END - abs(one(chart.fn["K"], y[0], y[1]))
+        crushed.terminal = True
+        # At rest the surface moves along the static Killing vector: along x^0 alone, or, where the row
+        # names it, as Kruskal's chart must away from T = 0, along the direction (dx^0, dr) it gives.
+        d0, dr = (float(number(v)) for v in whole[2]) if whole and len(whole) > 2 else (1.0, 0.0)
+        size = np.sqrt(-(one(g00, x0_rest, r0) * d0 ** 2 + 2 * one(g0r, x0_rest, r0) * d0 * dr
+                         + one(grr, x0_rest, r0) * dr ** 2))
+        y0 = [x0_rest, r0, d0 / size, dr / size]
+
+        def run(way):
+            sol = solve_ivp(rhs, (0, way * 1e4), y0, events=(far, close, crushed), rtol=1e-12, atol=1e-14,
+                            method="DOP853", max_step=0.01)
+            return sol.y
+        t, r, td, rd = run(1)
+        if whole:
+            before = run(-1)
+            t, r, td, rd = (np.concatenate([b[:0:-1], f]) for b, f in zip(before, (t, r, td, rd)))
+        G00, G0r, Grr = (np.array([one(f, a, b) for a, b in zip(t, r)]) for f in (g00, g0r, grr))
+        speed = G00 * td ** 2 + 2 * G0r * td * rd + Grr * rd ** 2
+        energy = -(G00 * td + G0r * rd)
         # Against the size of the terms, which grow without bound as the surface nears r_s.
-        speed = np.abs(speed + 1) / (1 + energy * td)
-        if not (speed.max() < 1e-9 and np.ptp(energy) < 1e-9 and np.all(np.diff(t) > 0)):
+        speed = np.abs(speed + 1) / (1 + np.abs(G00) * td ** 2 + np.abs(Grr) * rd ** 2)
+        # The energy is conserved where the plane's metric does not depend on x^0.
+        static = all(abs(one(f, x0_rest + 0.37, r0) - one(f, x0_rest, r0)) < 1e-13 for f in (g00, g0r, grr))
+        drift = np.ptp(energy) if static else 0.0
+        if not (speed.max() < 1e-9 and drift < 1e-9 and np.all(np.diff(t) > 0)):
             raise SystemExit(f"{key(chart.spec)}: the surface misses unit speed by {speed.max():.1e} "
-                             f"or its energy drifts by {np.ptp(energy):.1e}")
-        self.t, self.r, self.energy = t, r, float(energy[0])
+                             f"or its energy drifts by {drift:.1e}")
+        self.t, self.r, self.energy = t, r, float(energy[len(energy) // 2])
+        if whole:
+            self.legend = whole[1]
 
     def __call__(self, x0):
         x0 = np.asarray(x0, dtype=float)
-        return np.where((x0 >= 0) & (x0 <= self.t[-1]), np.interp(x0, self.t, self.r), np.nan)
+        return np.where((x0 >= self.t[0]) & (x0 <= self.t[-1]), np.interp(x0, self.t, self.r), np.nan)
 
 
 def _as_lambda(reader, name, rep):
@@ -9357,7 +9532,12 @@ class Plot:
             Z = np.where(keep(x0, r), Z, np.nan)
         # A declared singular curve may be the edge of the row's `where` itself, as UV = 1 is of Witten's
         # Kruskal chart, so it is found on the whole grid.
-        if self.c.surface is not None or (self.c.spec.where and name != "szero"):
+        if self.c.spec.where and name == "szero":
+            # Inside a star's surface the chart covers nothing, and its singular curve is not drawn there.
+            if self.c.surface is not None:
+                with np.errstate(invalid="ignore"):
+                    Z = np.where(r < self.c.surface(x0), np.nan, Z)
+        elif self.c.surface is not None or self.c.spec.where:
             Z = np.where(self.c.outside(x0, r), np.nan, Z)
         Z = np.where(np.isfinite(Z), Z, np.nan)
         lines = contourpy.contour_generator(UU, VV, Z, line_type="Separate").lines(0.0)
@@ -9424,16 +9604,21 @@ class Plot:
         points, runs = [], []
         for u in np.linspace(0.002, 0.998, n):
             ends = [self.finite(*self.to_chart(self.from_unit(np.array([u, v])))) for v in (0.0, 1.0)]
-            if not (ends[0] and not ends[1]):
+            if ends[0] == ends[1]:
                 if points:
                     runs.append(points)
                 points = []
                 continue
-            lo, hi = 0.0, 1.0
+            # The metric is finite at the foot of the line and not at its head, a crunch, or the other
+            # way about, a bang, as the delayed singularity of the white hole's shells is; `side` is
+            # the way from the curve into the spacetime.
+            side = -1 if ends[0] else 1
+            lo, hi = (0.0, 1.0) if ends[0] else (1.0, 0.0)
             for _ in range(60):
                 mid = 0.5 * (lo + hi)
                 lo, hi = (mid, hi) if self.finite(*self.to_chart(self.from_unit(np.array([u, mid])))) else (lo, mid)
-            near, far = (abs(float(self.c.fn["K"](*self.to_chart(self.from_unit(np.array([u, lo - d])))))) for d in (1e-5, 1e-4))
+            near, far = (abs(float(self.c.fn["K"](*self.to_chart(self.from_unit(np.array([u, lo + side * d]))))))
+                         for d in (1e-5, 1e-4))
             if not (near > 1e8 and near / far > 50):
                 raise SystemExit(f"{key(self.c.spec)}: the metric stops being finite at {u, lo} where the "
                                  f"Kretschmann scalar does not diverge: {far:.1e}, {near:.1e}")

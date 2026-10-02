@@ -109,6 +109,11 @@
       "id": "israel_shell",
       "kind": "limit_source",
       "text": "A falling shell of dust with rest mass. In the limit of no rest mass it is Vaidya's shell of light [israel1966, adler2005]."
+    },
+    {
+      "id": "white_hole",
+      "kind": "family",
+      "text": "A white hole made of dust, Oppenheimer and Snyder's collapse with the time reversed. Zel'dovich, Novikov, and Starobinsky used Vaidya's metric for the radiation one sends out [zeldovichnovikovstarobinskii1974]."
     }
   ],
   "references": [
@@ -141,7 +146,8 @@
     "kobayashi2005",
     "hiscock1981outgoing",
     "israel1966",
-    "adler2005"
+    "adler2005",
+    "zeldovichnovikovstarobinskii1974"
   ],
   "coordinates": [
     {

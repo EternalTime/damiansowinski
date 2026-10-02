@@ -1094,7 +1094,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "ba9d838d2906ae3a",
+    "version": "6f94699640ae48cd",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -1567,7 +1567,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cc81a84724410d3c",
+    "version": "33393b57b2ce54ed",
     "diagrams": "a8296e17dab2de95",
     "conformal": "5aa345afee4654d8",
     "embedding": "46d9d6d9484b8e00"
@@ -2574,7 +2574,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ff157a9fca8b399d",
+    "version": "b6ca39b5640c2658",
     "diagrams": "d31b7b7b6c3dd2ef",
     "conformal": "7400ddcb9dd6a817",
     "embedding": "1ecd155079c29ab6"
@@ -3042,7 +3042,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "10dec69cb69b94aa",
+    "version": "946231a49afb6ecb",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -3538,7 +3538,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ba30b0014a5e02fa",
+    "version": "a44f2564b7f5027f",
     "diagrams": "b997809f786afa14",
     "embedding": "aefa04627c7f6154"
   },
@@ -3632,7 +3632,7 @@
       "naked singularity",
       "cosmic censorship"
     ],
-    "version": "d6c20744537be24f",
+    "version": "35e69aea66e2d7c1",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404"
@@ -3762,6 +3762,39 @@
     "version": "73eed975a2bc4992",
     "diagrams": "6dd4dac8529f8334",
     "embedding": "0bbd48dbcc626017"
+  },
+  {
+    "id": "white_hole",
+    "name": "White Hole",
+    "tags": [
+      "white hole",
+      "lagging core",
+      "delayed core",
+      "dust",
+      "matched solution",
+      "big bang",
+      "past horizon",
+      "horizon",
+      "event horizon",
+      "apparent horizon",
+      "curvature singularity",
+      "instability",
+      "quasar",
+      "Swiss cheese",
+      "Kruskal extension",
+      "comoving",
+      "time-dependent",
+      "spherically symmetric",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "e1e2cd0c3ada375d",
+    "diagrams": "f2bb8f28f57f12b8",
+    "conformal": "05af67c07226ebb3",
+    "embedding": "f02661da1ce5940b"
   },
   {
     "id": "witten_black_hole",

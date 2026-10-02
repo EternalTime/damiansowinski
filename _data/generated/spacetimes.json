@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 125,
+  "count": 126,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -10902,6 +10902,11 @@
           "id": "semiclosed_world",
           "kind": "composite",
           "text": "More than half of a closed Friedmann universe of dust with Schwarzschild's vacuum beyond its edge. From outside it is a black hole, and at a fixed mass the universe behind it can be as large as one likes [marolf2009]."
+        },
+        {
+          "id": "white_hole",
+          "kind": "composite",
+          "text": "A piece of a Friedmann universe of dust that leaves the big bang late and comes out of its own Schwarzschild sphere, with vacuum around it [novikov1965]."
         }
       ],
       "references": [
@@ -10955,7 +10960,8 @@
         "bucher1995",
         "senovilla1996",
         "sultana2005",
-        "marolf2009"
+        "marolf2009",
+        "novikov1965"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -16096,6 +16102,11 @@
           "id": "simpson_visser",
           "kind": "special_case",
           "text": "A regular black hole whose inside, where $r$ is a time, is a Kantowski-Sachs cosmology that bounces: its spheres shrink to a least radius $a$ and grow again [bronnikov2022]."
+        },
+        {
+          "id": "white_hole",
+          "kind": "composite",
+          "text": "A white hole holds the vacuum member with its spheres growing: it is the space between the singularity and the dust that comes out of it [novikov1965]."
         }
       ],
       "references": [
@@ -16115,7 +16126,8 @@
         "szekeres1975",
         "bonnor1977",
         "obregon1998",
-        "bronnikov2022"
+        "bronnikov2022",
+        "novikov1965"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kantowski_sachs.json",
@@ -27182,6 +27194,11 @@
           "id": "semiclosed_world",
           "kind": "family",
           "text": "The same construction with the cut taken past the equator of the closed universe, $\\chi_0 > \\pi/2$. The dust then lies behind the throat of Schwarzschild's geometry, and the mass seen from outside falls as more of the universe is kept [hsu2008unitarity]."
+        },
+        {
+          "id": "white_hole",
+          "kind": "dual",
+          "text": "The collapse with the time reversed, a ball of dust that comes out of a singularity. Igor Novikov and Yuval Ne'eman proposed it in 1964 and 1965 as what a quasar is [novikov1965, neeman1965]."
         }
       ],
       "references": [
@@ -27201,7 +27218,9 @@
         "einstein1939",
         "meinel2002",
         "israel1966",
-        "hsu2008unitarity"
+        "hsu2008unitarity",
+        "novikov1965",
+        "neeman1965"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/oppenheimer_snyder.json",
@@ -32419,6 +32438,11 @@
           "id": "semiclosed_world",
           "kind": "composite",
           "text": "A closed universe of dust sewn onto the second sheet of the extended solution, behind the throat. Yakov Zel'dovich and Igor Novikov studied it in 1962, and it goes by the name of Wheeler's bag of gold [zelmanov1965, marolf2009]."
+        },
+        {
+          "id": "white_hole",
+          "kind": "composite",
+          "text": "A ball of dust coming out through Schwarzschild's past horizon, with his vacuum outside it [novikov1965]."
         }
       ],
       "references": [
@@ -32514,7 +32538,8 @@
         "ferrari1988",
         "thornewill1971",
         "zelmanov1965",
-        "marolf2009"
+        "marolf2009",
+        "novikov1965"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -37651,6 +37676,11 @@
           "id": "semiclosed_world",
           "kind": "special_case",
           "text": "Uniform dust out past the equator of a closed universe and vacuum beyond, joined at a throat. Igor Novikov discussed that throat in 1964, a few years before other authors named it the neck of the general model [krasinski2001novikov]."
+        },
+        {
+          "id": "white_hole",
+          "kind": "special_case",
+          "text": "Tolman-Bondi with $E = 0$, a uniform core, and a bang that comes late for it, Igor Novikov's delayed core of 1964 [novikov1965]."
         }
       ],
       "references": [
@@ -37680,7 +37710,8 @@
         "lemos1992",
         "hellaby1994",
         "lattimer2001",
-        "krasinski2001novikov"
+        "krasinski2001novikov",
+        "novikov1965"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tolman_bondi.json",
@@ -38543,6 +38574,11 @@
           "id": "israel_shell",
           "kind": "limit_source",
           "text": "A falling shell of dust with rest mass. In the limit of no rest mass it is Vaidya's shell of light [israel1966, adler2005]."
+        },
+        {
+          "id": "white_hole",
+          "kind": "family",
+          "text": "A white hole made of dust, Oppenheimer and Snyder's collapse with the time reversed. Zel'dovich, Novikov, and Starobinsky used Vaidya's metric for the radiation one sends out [zeldovichnovikovstarobinskii1974]."
         }
       ],
       "references": [
@@ -38575,7 +38611,8 @@
         "kobayashi2005",
         "hiscock1981outgoing",
         "israel1966",
-        "adler2005"
+        "adler2005",
+        "zeldovichnovikovstarobinskii1974"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/vaidya.json",
@@ -40265,6 +40302,475 @@
           ],
           "ricci_scalar": "R = \\dfrac{6b^2\\,F - 4}{R_0^2\\,b^2}",
           "kretschmann": "K = \\dfrac{4\\left(3b^4\\,F^2\\sin^4 X + 3b^4\\,F^2 - 6b^4\\,F - 2b^2\\,F\\sin^2 X - 2b^2\\,F\\sin^4 X + 3b^4 + 2b^2\\sin^2 X + \\sin^4 X\\right)\\csc^4 X}{R_0^4\\,b^4}"
+        }
+      ]
+    },
+    {
+      "id": "white_hole",
+      "name": "White Hole, the Lagging Core of Novikov and Ne'eman",
+      "short_name": "White Hole",
+      "description": "A ball of dust that comes out of a singularity through the past horizon of Schwarzschild's exterior, Oppenheimer and Snyder's collapse with the time reversed. Igor Novikov and Yuval Ne'eman proposed it in 1964 and 1965 as a piece of the big bang that started late, and as what a quasar is.",
+      "tags": [
+        "white hole",
+        "lagging core",
+        "delayed core",
+        "dust",
+        "matched solution",
+        "big bang",
+        "past horizon",
+        "horizon",
+        "event horizon",
+        "apparent horizon",
+        "curvature singularity",
+        "instability",
+        "quasar",
+        "Swiss cheese",
+        "Kruskal extension",
+        "comoving",
+        "time-dependent",
+        "spherically symmetric",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and $r_s = 2GM/c^2$ is the Schwarzschild radius of the core. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "dual",
+          "text": "The same ball of dust with the time reversed. After its moment of rest the white hole's core is Oppenheimer and Snyder's star, falling back [oppenheimersnyder1939]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "The outside of the core. Its surface is a radial geodesic of Schwarzschild's metric that crosses $r = r_s$ outward, through the past horizon."
+        },
+        {
+          "id": "frw",
+          "kind": "piece",
+          "text": "The inside of the core, a ball of a Friedmann universe of dust that leaves the big bang late. Novikov's own core is cut from the flat universe, and the one that falls back from the closed one [novikov1965]."
+        },
+        {
+          "id": "tolman_bondi",
+          "kind": "generalisation",
+          "text": "Novikov's solution is Tolman's dust with no energy function, $E = 0$, and a bang that comes later for the core than for the shells around it [tolman1934, novikov1965]."
+        },
+        {
+          "id": "kantowski_sachs",
+          "kind": "piece",
+          "text": "The vacuum inside the past horizon, between the singularity and the dust, is Kantowski and Sachs's vacuum universe with its spheres growing, the region Novikov called a T region [novikov1965]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "family",
+          "text": "A white hole that sends out light. Zel'dovich, Novikov, and Starobinsky used Vaidya's metric for the radiation leaving one [zeldovichnovikovstarobinskii1974, vaidya1953]."
+        }
+      ],
+      "references": [
+        "novikov1965",
+        "novikov1964explosion",
+        "einstein1945",
+        "tolman1934",
+        "oppenheimersnyder1939",
+        "neeman1965",
+        "zeldovichnovikov1967",
+        "neemantauber1967",
+        "kruskal1960",
+        "neeman1974",
+        "eardley1974",
+        "lake1978",
+        "zeldovichnovikovstarobinskii1974",
+        "hawking1976thermo",
+        "waldramaswamy1980",
+        "barrabes1993",
+        "lakeroeder1976",
+        "blau1989",
+        "oripoisson1994",
+        "vaidya1953"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/white_hole.json",
+      "charts": [
+        {
+          "id": "interior_comoving",
+          "name": "Comoving Dust Interior",
+          "coordinates": [
+            "\\tau",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in \\left(0, \\dfrac{\\pi a_m}{c}\\right)",
+            "\\chi \\in [0, \\chi_0]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(\\tau)",
+              "description": "Scale factor of the dust, a length ($a > 0$), obeying $2a\\ddot{a}+\\dot{a}^2+1 = 0$, which the cycloid $a = a_m\\sin^2(\\eta/2)$, $c\\tau = \\frac{a_m}{2}(\\eta - \\sin\\eta)$ solves"
+            },
+            {
+              "symbol": "\\chi_0",
+              "description": "Comoving polar angle of the core's surface ($0 < \\chi_0 < \\pi/2$), fixed by its compactness at the moment of rest through $\\sin^2\\chi_0 = r_s/R_0$, where $R_0 = a_m\\sin\\chi_0$ is the largest areal radius the surface reaches"
+            },
+            {
+              "symbol": "a_m",
+              "description": "Scale factor at the moment of rest, the maximum of the cycloid, tied to the exterior mass by $r_s = a_m\\sin^3\\chi_0$"
+            }
+          ],
+          "convention": "We use comoving coordinates $(\\tau, \\chi, \\theta, \\phi)$, where $\\tau$ is the proper time of the dust since it left its singularity, $\\chi$ is a dimensionless comoving polar angle, and the scale factor $a(\\tau)$ carries the length, and the core is the ball $\\chi \\le \\chi_0$. The scale factor leaves $a = 0$ at $\\tau = 0$, comes to rest at $a_m$ at $\\tau = \\dfrac{\\pi a_m}{2c}$, and returns to $a = 0$ at $\\tau = \\dfrac{\\pi a_m}{c}$. We take components in the chart $x^0 = c\\tau$, a dot on the scale factor is $\\dot{a} = \\dfrac{da}{d(c\\tau)} = \\dfrac{1}{c}\\dfrac{da}{d\\tau}$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2d\\tau^2 + a^2\\left(d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6\\left(a\\ddot{a} + \\dot{a}^2 + 1\\right)}{a^2}",
+          "kretschmann": "K = \\dfrac{12\\left(a^2\\ddot{a}^2 + \\left(\\dot{a}^2 + 1\\right)^2\\right)}{a^4}"
+        },
+        {
+          "id": "interior_conformal",
+          "name": "Conformal Time Interior",
+          "coordinates": [
+            "\\eta",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (0, 2\\pi)",
+            "\\chi \\in [0, \\chi_0]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\chi_0",
+              "description": "Comoving polar angle of the core's surface ($0 < \\chi_0 < \\pi/2$), fixed by its compactness at the moment of rest through $\\sin^2\\chi_0 = r_s/R_0$, where $R_0 = a_m\\sin\\chi_0$ is the largest areal radius the surface reaches"
+            },
+            {
+              "symbol": "a_m",
+              "description": "Scale factor at the moment of rest, the maximum of the cycloid, tied to the exterior mass by $r_s = a_m\\sin^3\\chi_0$"
+            }
+          ],
+          "convention": "We use the conformal time $\\eta$ of the dust, a dimensionless parameter along the cycloid with $a = a_m\\sin^2(\\eta/2)$ and $c\\tau = \\frac{a_m}{2}(\\eta - \\sin\\eta)$ for its proper time $\\tau$, and the comoving polar angle $\\chi$, and the core is the ball $\\chi \\le \\chi_0$. The dust leaves its singularity at $\\eta = 0$, is at rest at $\\eta = \\pi$, and falls back to $\\eta = 2\\pi$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = a_m^2\\sin^4(\\eta/2)\\left(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-a_m^2\\sin^4(\\eta/2)"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a_m^2\\sin^4(\\eta/2)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a_m^2\\sin^4(\\eta/2)\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a_m^2\\sin^4(\\eta/2)\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{3\\csc^6(\\eta/2)}{a_m^2}",
+          "kretschmann": "K = \\dfrac{15\\csc^{12}(\\eta/2)}{a_m^4}"
+        },
+        {
+          "id": "exterior_schwarzschild",
+          "name": "Schwarzschild Exterior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [R(t), \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the core, $r_s = 2GM/c^2 = a_m\\sin^3\\chi_0$"
+            }
+          ],
+          "convention": "We use Schwarzschild coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $t = 0$ at the moment of rest, and $R(t)$ is the areal radius of the surface of the core. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "exterior_eddington_finkelstein",
+          "name": "Outgoing Eddington-Finkelstein Exterior",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in [R(u), \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s \\;\\text{(the past horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the core, $r_s = 2GM/c^2 = a_m\\sin^3\\chi_0$"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$, where the retarded time $u$ is a length, constant along each outgoing ray and counted from the ray the surface sends as it crosses $r_s$ on its way out, so $u$ differs from $ct - r - r_s\\ln\\left|r/r_s - 1\\right|$ by a constant. The areal radius of the surface of the core is $R(u)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "exterior_kruskal",
+          "name": "Kruskal Exterior",
+          "coordinates": [
+            "U",
+            "V",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "U \\in (-\\infty, \\infty)",
+            "V \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r \\ge R \\;\\text{(outside the core)}",
+            "UV < 1 \\;\\text{(where } r > 0\\text{)}",
+            "V = 0 \\;\\text{(the past horizon)}",
+            "U = 0 \\;\\text{(the future horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the core, $r_s = 2GM/c^2 = a_m\\sin^3\\chi_0$"
+            },
+            {
+              "symbol": "r = r_s\\left(1 + \\mathrm{W}\\left(-e^{-1}UV\\right)\\right)",
+              "description": "Areal radius, a length, the solution of $\\left(1 - r/r_s\\right)e^{r/r_s} = UV$, with $\\mathrm{W}$ the principal branch of Lambert's function, $\\mathrm{W}(x)\\,e^{\\mathrm{W}(x)} = x$; its derivatives are $\\partial_U r = -r_s^2\\,V e^{-r/r_s}/r$ and $\\partial_V r = -r_s^2\\,U e^{-r/r_s}/r$"
+            }
+          ],
+          "convention": "We use Kruskal's null coordinates $(U, V, \\theta, \\phi)$, with $U$ and $V$ numbers, and outside $r_s$ they are $U = -e^{-u/2r_s}$ and $V = e^{v/2r_s}$ for the retarded time $u$ counted from the surface's crossing of $r_s$ on its way out and the advanced time $v = u + 2r + 2r_s\\ln(r/r_s - 1)$. The areal radius $r$ is a function of $UV$, with $\\mathrm{W}$ Lambert's function, and $R$ is the areal radius of the surface of the core. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\dfrac{4r_s^3}{r}e^{-r/r_s}\\,dU\\,dV + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "U",
+                "V"
+              ],
+              "value": "-\\dfrac{2r_s^3}{r}e^{-r/r_s}"
+            },
+            {
+              "indices": [
+                "V",
+                "U"
+              ],
+              "value": "-\\dfrac{2r_s^3}{r}e^{-r/r_s}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "novikov_comoving",
+          "name": "Novikov's Comoving",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "ct > b \\;\\text{(after the shell leaves its singularity)}",
+            "R = F \\;\\text{(the Schwarzschild sphere)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "F = F(r)",
+              "description": "Schwarzschild radius of the mass inside the shell $r$, a length: $F = 2GM(r)/c^2$, an arbitrary function of $r$ alone that never decreases, constant across a vacuum. The prime is $F' = dF/dr$."
+            },
+            {
+              "symbol": "b = b(r)",
+              "description": "Delay of the shell $r$, a length: the shell leaves its singularity at $ct = b(r)$, later where $b$ is larger. A uniform Friedmann universe has $b$ constant, and the shells do not cross where $q\\,F' - 2F\\,b' > 0$. The prime is $b' = db/dr$."
+            },
+            {
+              "symbol": "q = ct - b",
+              "description": "Proper time of the shell $r$ since it left its singularity, times $c$, a length"
+            },
+            {
+              "symbol": "R = \\left(\\dfrac{9F}{4}\\right)^{1/3}q^{2/3}",
+              "description": "Areal radius, a length: the shell $r$ has area $4\\pi R^2$ at time $t$. Its derivatives are $\\partial_t R = 2R/3q$ along $x^0 = ct$ and $\\partial_r R = R\\left(q\\,F' - 2F\\,b'\\right)/3Fq$."
+            }
+          ],
+          "convention": "We use Novikov's comoving coordinates $(t, r, \\theta, \\phi)$, with $t$ the proper time of the dust and of the freely moving shells of the vacuum, and $r$ a label, a length, that each shell keeps. The shell $r$ leaves its singularity at $ct = b(r)$ and has the areal radius $R$, and the Schwarzschild radius of the mass inside it is $F(r)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\left(\\partial_r R\\right)^2dr^2 + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(\\partial_r R\\right)^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "R^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "R^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4F'}{3q\\left(q\\,F' - 2F\\,b'\\right)}",
+          "kretschmann": "K = \\dfrac{16\\left(16F^2\\left(b'\\right)^2 + 5q^2\\left(F'\\right)^2\\right)}{27q^4\\left(q\\,F' - 2F\\,b'\\right)^2}"
         }
       ]
     },

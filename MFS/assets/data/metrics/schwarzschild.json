@@ -338,6 +338,11 @@
       "id": "semiclosed_world",
       "kind": "composite",
       "text": "A closed universe of dust sewn onto the second sheet of the extended solution, behind the throat. Yakov Zel'dovich and Igor Novikov studied it in 1962, and it goes by the name of Wheeler's bag of gold [zelmanov1965, marolf2009]."
+    },
+    {
+      "id": "white_hole",
+      "kind": "composite",
+      "text": "A ball of dust coming out through Schwarzschild's past horizon, with his vacuum outside it [novikov1965]."
     }
   ],
   "references": [
@@ -433,7 +438,8 @@
     "ferrari1988",
     "thornewill1971",
     "zelmanov1965",
-    "marolf2009"
+    "marolf2009",
+    "novikov1965"
   ],
   "coordinates": [
     {

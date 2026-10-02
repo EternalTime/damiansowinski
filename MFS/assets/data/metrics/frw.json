@@ -86,6 +86,11 @@
       "id": "semiclosed_world",
       "kind": "composite",
       "text": "More than half of a closed Friedmann universe of dust with Schwarzschild's vacuum beyond its edge. From outside it is a black hole, and at a fixed mass the universe behind it can be as large as one likes [marolf2009]."
+    },
+    {
+      "id": "white_hole",
+      "kind": "composite",
+      "text": "A piece of a Friedmann universe of dust that leaves the big bang late and comes out of its own Schwarzschild sphere, with vacuum around it [novikov1965]."
     }
   ],
   "references": [
@@ -139,7 +144,8 @@
     "bucher1995",
     "senovilla1996",
     "sultana2005",
-    "marolf2009"
+    "marolf2009",
+    "novikov1965"
   ],
   "coordinates": [
     {
