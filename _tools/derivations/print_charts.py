@@ -13,7 +13,7 @@ einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluz
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis, erez_rosen,
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
 born_infeld_charge, penrose_impulsive_wave, exponential_metric, petrov_homogeneous, rp3_geon,
-kopczynski_trautman, brill_waves and ab_metrics, and Godel's cylindrical chart.
+kopczynski_trautman, brill_waves, ab_metrics and brans_dicke_sphere, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -34,14 +34,15 @@ malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_
 majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md,
 witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, mass_inflation.md,
 kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_star.md,
-misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, petrov_homogeneous.md and
-brill_waves.md beside this file.
+misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, petrov_homogeneous.md,
+brill_waves.md and brans_dicke_sphere.md beside this file.
 """
 import argparse
 import fcntl
 import itertools
 import json
 import random
+import re
 import sys
 import tempfile
 import time
@@ -21837,6 +21838,283 @@ def ab_metrics_check(chart, system):
 
 
 CHARTS["ab_metrics"] = [lambda s=s: ab_metrics(s) for s in AB_CHARTS]
+
+
+# -- The static sphere of Brans and Dicke's theory ----------------------------------------
+
+BD_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+BD_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+BD_CHARTS = ["isotropic", "spherical", "harmonic"]
+
+
+def brans_hyperbolic(u, k, b, s):
+    """A `pretty` for the harmonic chart, as fjnw_hyperbolic is for Fisher's: each value is
+    rewritten in S = sinh(ku), C = cosh(ku), e^{bu} and e^{su}, reduced by C^2 = 1 + S^2, its
+    denominator cleared of C by its conjugate, and factored."""
+    S, C, Eb, Es = sp.symbols("BDs BDc BDeb BDes", positive=True)
+
+    def reduce(p):
+        return sp.expand(sp.reduced(sp.expand(p), [C ** 2 - 1 - S ** 2], C, S)[1])
+
+    def powers(e):
+        a = sp.Poly(sp.expand(e.args[0]), u)
+        if a.degree() != 1 or a.coeff_monomial(1) != 0:
+            raise AssertionError(f"{e} is no exponential of a multiple of u")
+        rate = sp.Poly(a.coeff_monomial(u), k, b, s)
+        n, j, i = rate.coeff_monomial(k), rate.coeff_monomial(b), rate.coeff_monomial(s)
+        if not (n.is_Integer and j.is_Integer and i.is_Integer) or sp.expand(rate.as_expr() - n * k - j * b - i * s) != 0:
+            raise AssertionError(f"{e} is no power of e^(ku), e^(bu) and e^(su)")
+        return (S + C) ** n * Eb ** j * Es ** i
+
+    def pretty(value):
+        x = sp.sympify(value).replace(sp.sinh, lambda a: (sp.exp(a) - sp.exp(-a)) / 2)
+        x = x.replace(sp.cosh, lambda a: (sp.exp(a) + sp.exp(-a)) / 2).replace(lambda e: isinstance(e, sp.exp), powers)
+        num, den = (reduce(part) for part in sp.fraction(sp.together(x)))
+        d0, d1 = sp.Poly(den, C).coeff_monomial(1), sp.Poly(den, C).coeff_monomial(C)
+        if d1 != 0:
+            num, den = reduce(num * (d0 - d1 * C)), sp.expand(d0 ** 2 - d1 ** 2 * (1 + S ** 2))
+        out = sp.factor(sp.cancel(sp.factor(num) / sp.factor(den)))
+        # The two exponentials are written as one, e^{(jb + is)u}, beside the factored rest.
+        top, bottom = sp.fraction(out)
+        j, i = sp.degree(top, Eb) - sp.degree(bottom, Eb), sp.degree(top, Es) - sp.degree(bottom, Es)
+        rest = sp.factor(sp.cancel(out / (Eb ** j * Es ** i)))
+        if rest.has(Eb) or rest.has(Es):
+            raise AssertionError(f"{value} is no single power of e^(bu) and e^(su)")
+        return rest.subs({S: sp.sinh(k * u), C: sp.cosh(k * u)}) * sp.exp(sp.factor(j * b + i * s) * u)
+
+    return pretty
+
+
+def brans_dicke_omega(chart, system):
+    """The coupling constant the chart's parameters stand for: Brans and Dicke's (33),
+    lambda^2 = (C + 1)^2 - C (1 - omega C/2), in each chart's own letters."""
+    P = chart.reader.parameters
+    if system == "isotropic":
+        C, lam = P["C"], P["lambda"]
+        return 2 * (lam ** 2 - C ** 2 - C - 1) / C ** 2
+    if system == "spherical":
+        m, n = P["m"], P["n"]
+        return -2 * (m ** 2 + n ** 2 + m * n + m - n) / (m + n) ** 2
+    k, b, s = P["k"], P["b"], P["s"]
+    return 2 * (k ** 2 - b ** 2) / s ** 2 - sp.Rational(3, 2)
+
+
+def brans_dicke_sphere(system):
+    """The static, spherically symmetric vacuum of Brans and Dicke's theory, Brans's class I, in
+    three charts.
+
+    isotropic  Brans and Dicke's (31) and (32) with alpha_0 = beta_0 = 0, in their B, C and lambda,
+               with rho for their isotropic radius r and h = (rho - B)/(rho + B);
+    spherical  Campanelli and Lousto's (1993) form, ds^2 = -A^{m+1} dt^2 + A^{n-1} dr^2
+               + r^2 A^n dOmega^2 with A = 1 - 2 r_0/r, which Agnese and La Camera (1995) and Vanzo,
+               Zerbini and Faraoni (2012) use: r = rho (1 + B/rho)^2, r_0 = 2B, m + 1 = 1/lambda and
+               n = 1 - (C + 1)/lambda;
+    harmonic   Bronnikov's (1973) coordinate u, e^{-2ku} = A with k = r_0, in which the metric is
+               Fisher's in its harmonic chart divided by the field phi/phi_0 = e^{-su}: (9) of
+               Bronnikov, Constantinidis, Evangelista and Fabris (1997).
+
+    The first two name the ratio h or A and are printed around its powers by named_powers; the
+    third is printed in sinh(ku), cosh(ku) and one exponential by brans_hyperbolic.
+    brans_dicke_check holds each to the vacuum field equations of the theory and each after the
+    spherical one to being it pulled back; brans_dicke_sphere.md beside this file is the derivation."""
+    state = {}
+    kretschmann = None
+    if system == "harmonic":
+        coords, name = ["t", "u", "\\theta", "\\phi"], "Harmonic"
+        parameters = ["k", "b", "s"]
+        domains = (["t \\in (-\\infty, \\infty)", "u \\in (0, \\infty)"] + BD_ANGLES
+                   + ["u \\to 0 \\;\\text{(spatial infinity)}", "u \\to \\infty \\;\\text{(the singularity)}"])
+
+        def line(c2):
+            return (f"ds^2 = e^{{su}}\\left(-e^{{-2bu}}{c2}dt^2 + \\dfrac{{k^2e^{{2bu}}}}{{\\sinh^2(ku)}}"
+                    "\\left(\\dfrac{k^2du^2}{\\sinh^2(ku)} + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)")
+        probe = vm.Reader(coords, parameters, ())
+        x, k, b, s = probe.symbol["u"], probe.parameters["k"], probe.parameters["b"], probe.parameters["s"]
+        printer = {"lead": [k, b, s], "factors": [k, b, s], "flip": False}
+        pretty = brans_hyperbolic(x, k, b, s)
+        conformal = "\\dfrac{k^2e^{(2b+s)u}}{\\sinh^2(ku)}"
+        components = {"metric_components": {("t", "t"): "-e^{-(2b-s)u}", ("u", "u"): "\\dfrac{k^4e^{(2b+s)u}}{\\sinh^4(ku)}",
+                                            ("\\theta", "\\theta"): conformal,
+                                            ("\\phi", "\\phi"): "\\dfrac{k^2e^{(2b+s)u}\\sin^2\\theta}{\\sinh^2(ku)}"},
+                      "inverse_metric_components": {("t", "t"): "-e^{(2b-s)u}"}}
+    else:
+        if system == "spherical":
+            coords, name = ["t", "r", "\\theta", "\\phi"], "Spherical"
+            parameters = ["r_0", "m", "n", "A = 1 - \\dfrac{2r_0}{r}"]
+            domains = (["t \\in (-\\infty, \\infty)", "r \\in (2r_0, \\infty)"] + BD_ANGLES
+                       + ["r = 2r_0 \\;\\text{(the singularity)}"])
+
+            def line(c2):
+                return f"ds^2 = -A^{{m+1}}{c2}dt^2 + A^{{n-1}}dr^2 + A^{{n}}r^2" + BD_SPHERE
+            probe = vm.Reader(coords, parameters, ())
+            x, r0, m, n = probe.symbol["r"], probe.parameters["r_0"], probe.parameters["m"], probe.parameters["n"]
+            names = {"A": {x - 2 * r0: 1, x: -1}}
+            printer = {"lead": [x, r0, m, n], "factors": [r0, m, n, x], "flip": False,
+                       "collect": lambda poly, pr: cp.collect_by(poly, [x], pr)}
+            components = {
+                "metric_components": {("t", "t"): "-A^{m+1}", ("r", "r"): "A^{n-1}",
+                                      ("\\theta", "\\theta"): "r^2A^{n}", ("\\phi", "\\phi"): "r^2A^{n}\\sin^2\\theta"},
+                "inverse_metric_components": {("t", "t"): "-\\dfrac{1}{A^{m+1}}", ("r", "r"): "A^{1-n}",
+                                              ("\\theta", "\\theta"): "\\dfrac{1}{r^2A^{n}}",
+                                              ("\\phi", "\\phi"): "\\dfrac{\\csc^2\\theta}{r^2A^{n}}"}}
+        else:
+            coords, name = ["t", "\\rho", "\\theta", "\\phi"], "Isotropic"
+            parameters = ["B", "C", "\\lambda", "h = \\dfrac{\\rho - B}{\\rho + B}"]
+            domains = (["t \\in (-\\infty, \\infty)", "\\rho \\in (B, \\infty)"] + BD_ANGLES
+                       + ["\\rho = B \\;\\text{(the singularity)}"])
+
+            def line(c2):
+                return (f"ds^2 = -h^{{2/\\lambda}}{c2}dt^2 + \\left(1 + \\dfrac{{B}}{{\\rho}}\\right)^4h^{{2(\\lambda - C - 1)/\\lambda}}"
+                        "\\left(d\\rho^2 + \\rho^2" + BD_SPHERE + "\\right)")
+            probe = vm.Reader(coords, parameters, ())
+            x, B, C, lam = probe.symbol["\\rho"], probe.parameters["B"], probe.parameters["C"], probe.parameters["lambda"]
+            # The reader holds h^(2/lambda) as a power of B - rho, so that is the base the powers are counted on.
+            names = {"h": {B - x: 1, x + B: -1}}
+            printer = {"lead": [x, B, C, lam], "factors": [B, C, lam, x], "flip": False,
+                       "collect": lambda poly, pr: cp.collect_by(poly, [x], pr)}
+            conformal = "\\left(1 + \\dfrac{B}{\\rho}\\right)^4h^{2(\\lambda - C - 1)/\\lambda}"
+            components = {"metric_components": {("t", "t"): "-h^{2/\\lambda}", ("\\rho", "\\rho"): conformal,
+                                                ("\\theta", "\\theta"): "\\rho^2" + conformal,
+                                                ("\\phi", "\\phi"): "\\rho^2" + conformal + "\\sin^2\\theta"},
+                          "inverse_metric_components": {("t", "t"): "-\\dfrac{1}{h^{2/\\lambda}}"}}
+        powers = named_powers(names, state)
+
+        def pretty(value):
+            # A base written with the other sign under a power that holds a parameter is the same
+            # positive ratio.
+            value = sp.factor(sp.sympify(value)).replace(
+                lambda e: e.is_Pow and e.base == -1 and not e.exp.is_Number, lambda e: sp.Integer(1))
+            out = powers(value)
+            # An exponent over lambda is written on one line, h^{(2C + 2)/lambda}.
+            overrides = state["printer"].overrides
+            for placeholder, text in list(overrides.items()):
+                if isinstance(text, str) and "^{\\dfrac{" in text:
+                    overrides[placeholder] = re.sub(
+                        r"\^\{\\dfrac\{([^{}]*)\}\{\\lambda\}\}",
+                        lambda found: "^{" + (f"({found.group(1)})" if " " in found.group(1) else found.group(1)) + "/\\lambda}",
+                        text)
+            return out
+
+    def check(chart):
+        state["printer"] = chart.printer
+        brans_dicke_check(chart, system)
+
+    spec = {
+        "metric_id": "brans_dicke_sphere",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "pretty": pretty,
+        "components": components,
+        "check": check,
+    }
+    if kretschmann:
+        spec["kretschmann"] = kretschmann
+    return spec
+
+
+def brans_dicke_field(chart, system):
+    """The scalar field over its value far away, phi/phi_0, in the chart's own letters:
+    h^{C/lambda}, the sign of Brans's (1962) class I, A^{-(m + n)/2} and e^{-su}."""
+    P = chart.reader.parameters
+    x = chart.symbols[1]
+    if system == "isotropic":
+        return ((x - P["B"]) / (x + P["B"])) ** (P["C"] / P["lambda"])
+    if system == "spherical":
+        return (1 - 2 * P["r_0"] / x) ** (-(P["m"] + P["n"]) / 2)
+    return sp.exp(-P["s"] * x)
+
+
+def brans_dicke_check(chart, system):
+    """In every chart the vacuum equations of Brans and Dicke's theory, their (11) and (13) with no
+    matter: R_ab = omega d_a phi d_b phi/phi^2 + nabla_a nabla_b phi/phi and Box phi = 0, with
+    omega the constant brans_dicke_omega reads off the chart's parameters; the metric times
+    phi/phi_0 has R_ab = (omega + 3/2) d_a phi d_b phi/phi^2, Einstein's equations with a
+    massless scalar field, Dicke's (1962) change of units; without the field, the Ricci tensor
+    vanishes; and the isotropic and harmonic charts are the spherical one pulled back, with
+    r = rho (1 + B/rho)^2, r_0 = 2B, m = 1/lambda - 1, n = 1 - (C + 1)/lambda, and
+    r = 2k/(1 - e^{-2ku}), r_0 = k, m = (2b - s)/2k - 1, n = 1 - (2b + s)/2k."""
+    t, x, th, ph = chart.symbols
+    P = chart.reader.parameters
+    omega = brans_dicke_omega(chart, system)
+    field = brans_dicke_field(chart, system)
+    g, ginv = chart.geo.g, chart.geo.ginv
+    gamma = chart.geo.christoffel_ull()
+    ricci = chart.geo.ricci_ll()
+    log = sp.simplify(sp.diff(field, x) / field)          # d_x ln(phi)
+    second = sp.simplify(sp.diff(field, x, 2) / field)    # d_x^2 phi / phi
+    for a, c in vm._indices(4, 2):
+        hessian = (second if a == c == 1 else 0) - vm._at(gamma, (1, a, c)) * log
+        source = (omega * log ** 2 if a == c == 1 else 0) + hessian
+        if sp.simplify(vm.norm(vm._at(ricci, (a, c)) - source)) != 0:
+            raise AssertionError(f"brans_dicke_sphere: the field equations fail in slot {(a, c)} of the {system} chart")
+    # Box phi = 0: d_x(sqrt(-g) g^xx d_x phi) = 0, through logarithmic derivatives so that no root is taken.
+    density = sp.diff(g.det(), x) / (2 * g.det()) + sp.diff(ginv[1, 1], x) / ginv[1, 1]
+    if sp.simplify(vm.norm(density + sp.diff(field, x, 2) / sp.diff(field, x))) != 0:
+        raise AssertionError(f"brans_dicke_sphere: the field does not solve the wave equation in the {system} chart")
+    vacuum = {"isotropic": lambda: {P["C"]: 0, P["lambda"]: 1}, "spherical": lambda: {P["m"]: 0, P["n"]: 0},
+              "harmonic": lambda: {P["s"]: 0, P["b"]: P["k"]}}[system]()
+    for a, c in vm._indices(4, 2):
+        if sp.simplify(vm.norm(vm._at(ricci, (a, c))).subs(vacuum)) != 0:
+            raise AssertionError(f"brans_dicke_sphere: the {system} chart is not Schwarzschild's without the field")
+    if system == "spherical":
+        # Dicke's units: phi/phi_0 times the metric is Fisher's, gamma = 1 + (m - n)/2 and b = 2 r_0,
+        # which solves Einstein's equations with a massless scalar field.
+        fisher = fisher_jnw("spherical")
+        other = cp.Chart(fisher["system"]["coords"], fisher["system"]["parameters"], fisher["chart_line_element"])
+        m, n, r0 = P["m"], P["n"], P["r_0"]
+        same = dict(zip(other.symbols, chart.symbols))
+        same.update({other.reader.parameters["b"]: 2 * r0, other.reader.parameters["gamma"]: 1 + (m - n) / 2})
+        rng = random.Random(1962)
+        for _ in range(6):
+            at = {r0: sp.Rational(rng.randint(1, 9), 7), m: sp.Rational(rng.randint(-5, 9), 11),
+                  n: sp.Rational(rng.randint(-5, 9), 13), th: sp.Rational(7, 5)}
+            at[x] = 2 * at[r0] + sp.Rational(rng.randint(1, 30), 13)
+            for a in range(4):
+                ratio = (field * g[a, a] / other.geo.g[a, a].subs(same, simultaneous=True)).subs(at)
+                if abs(sp.N(ratio, 40) - 1) > sp.Float("1e-30"):
+                    raise AssertionError(f"brans_dicke_sphere: phi g is not Fisher's metric in slot {(a, a)}")
+        return
+    source = brans_dicke_sphere("spherical")
+    own = cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+    if system == "isotropic":
+        B, C, lam = P["B"], P["C"], P["lambda"]
+        radius, r0, m, n = x * (1 + B / x) ** 2, 2 * B, 1 / lam - 1, 1 - (C + 1) / lam
+    else:
+        k, b, s = P["k"], P["b"], P["s"]
+        radius, r0, m, n = 2 * k / (1 - sp.exp(-2 * k * x)), k, (2 * b - s) / (2 * k) - 1, 1 - (2 * b + s) / (2 * k)
+    names = dict(zip(own.symbols[2:], chart.symbols[2:]))
+    names.update({own.symbols[0]: t, own.reader.parameters["r_0"]: r0, own.reader.parameters["m"]: m,
+                  own.reader.parameters["n"]: n})
+    J = sp.diag(1, sp.diff(radius, x), 1, 1)
+    pulled = J.T * own.geo.g.subs(names, simultaneous=True).subs(own.symbols[1], radius) * J
+    # Compared at exact rational points: the ratio of the two sides is 1 to thirty digits wherever
+    # it is sampled.
+    rng = random.Random(1961)
+    for _ in range(6):
+        if system == "isotropic":
+            at = {B: sp.Rational(rng.randint(1, 9), 7), C: -sp.Rational(rng.randint(1, 9), 11),
+                  lam: sp.Rational(rng.randint(5, 13), 9)}
+            at[x] = at[B] + sp.Rational(rng.randint(1, 30), 13)
+        else:
+            at = {k: sp.Rational(rng.randint(1, 9), 7), b: sp.Rational(rng.randint(1, 9), 11),
+                  s: -sp.Rational(rng.randint(1, 9), 13), x: sp.Rational(rng.randint(1, 20), 17)}
+        for a, c in vm._indices(4, 2):
+            if g[a, c] == 0:
+                if pulled[a, c] != 0:
+                    raise AssertionError(f"brans_dicke_sphere: the {system} chart misses the spherical one in slot {(a, c)}")
+                continue
+            angles = {th: sp.Rational(7, 5), ph: sp.Rational(1, 3)}
+            ratio = (pulled[a, c] / g[a, c]).subs(angles).subs(at)
+            # The reader holds h^(2/lambda) as a power of B - rho with (-1)^(2/lambda) beside it: a
+            # phase of its generator, and no sign of the component, so the moduli are compared.
+            if abs(abs(sp.N(ratio, 40)) - 1) > sp.Float("1e-30"):
+                raise AssertionError(f"brans_dicke_sphere: the {system} chart is not the spherical chart pulled back in slot {(a, c)}")
+
+
+CHARTS["brans_dicke_sphere"] = [lambda s=s: brans_dicke_sphere(s) for s in BD_CHARTS]
+
 
 
 def write(spec):

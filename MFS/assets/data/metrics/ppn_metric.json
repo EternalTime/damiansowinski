@@ -61,6 +61,11 @@
       "id": "exponential_metric",
       "kind": "family",
       "text": "A metric with no horizon that sits at general relativity's point: $e^{-2m/r} = 1 - 2m/r + 2m^2/r^2 - \\dots$, so $\\beta = \\gamma = 1$ and the post-Newtonian tests do not separate the two [boonserm2018]."
+    },
+    {
+      "id": "brans_dicke_sphere",
+      "kind": "special_case",
+      "text": "Brans and Dicke's theory as a point of the plane. Far from the body their static sphere has $\\beta = 1$ and $\\gamma = (1 + \\omega)/(2 + \\omega)$ [thornewill1971, bransdicke1961]."
     }
   ],
   "references": [

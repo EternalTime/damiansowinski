@@ -69,6 +69,11 @@
       "id": "exponential_metric",
       "kind": "limit",
       "text": "The limit $\\gamma \\to \\infty$ with $\\gamma b = 2m$ held fixed, where $f^\\gamma \\to e^{-2m/r}$. It takes the scalar field's energy negative, and the naked singularity opens into the throat of a wormhole [makukov2018]."
+    },
+    {
+      "id": "brans_dicke_sphere",
+      "kind": "conformal",
+      "text": "Fisher's metric divided by a scalar field. In Brans's constants $C$ and $\\lambda$, with $\\phi/\\phi_0 = f^{C/2\\lambda}$ and $\\gamma = (C + 2)/2\\lambda$, the metric $g_{\\mu\\nu}\\phi_0/\\phi$ solves the vacuum equations of Brans and Dicke's theory, where freely falling bodies follow its geodesics [dicke1962, faraoni2018]."
     }
   ],
   "references": [
@@ -96,7 +101,9 @@
     "chowdhury2012",
     "roberts1996",
     "liebling2023",
-    "makukov2018"
+    "makukov2018",
+    "dicke1962",
+    "faraoni2018"
   ],
   "coordinates": [
     {
