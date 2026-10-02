@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 106,
+  "count": 107,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -602,6 +602,11 @@
           "id": "lifshitz_spacetime",
           "kind": "generalisation",
           "text": "The Poincaré chart with time rescaled by a power of its own, $t \\to \\lambda^z t$ while $x \\to \\lambda x$. For $z > 1$ the Poincaré horizon turns into a null singularity [kachru2008, copsey2011]."
+        },
+        {
+          "id": "schrodinger_spacetime",
+          "kind": "generalisation",
+          "text": "Anti-de Sitter space with one term in $dt^2$ added along a null direction, which leaves of its symmetries those of the free Schrödinger equation. Dam Thanh Son proposed it in 2008 as the dual of cold atoms [son2008]."
         }
       ],
       "references": [
@@ -643,7 +648,8 @@
         "charmousis2008",
         "horowitz1998",
         "kachru2008",
-        "copsey2011"
+        "copsey2011",
+        "son2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -17195,6 +17201,11 @@
           "id": "randall_sundrum",
           "kind": "family",
           "text": "Randall and Sundrum's wall warps time and space by one factor. Koroteev and Libanov gave the two different factors by filling the space beside it with an anisotropic fluid, and met Lifshitz's scaling in five dimensions [koroteev2008]."
+        },
+        {
+          "id": "schrodinger_spacetime",
+          "kind": "family",
+          "text": "The same scaling of time against space with Galilean boosts and a conserved mass besides, which takes one more dimension, a null one [son2008, balasubramanian2008]."
         }
       ],
       "references": [
@@ -17212,7 +17223,9 @@
         "harrison2014",
         "keeler2014",
         "horava2011",
-        "taylor2016"
+        "taylor2016",
+        "son2008",
+        "balasubramanian2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/lifshitz_spacetime.json",
@@ -23214,6 +23227,11 @@
           "id": "lifshitz_spacetime",
           "kind": "family",
           "text": "A spacetime whose null singularity is that of a singular plane wave, so strings falling into it behave as they do in one [horowitz2012lifshitz]."
+        },
+        {
+          "id": "schrodinger_spacetime",
+          "kind": "conformal",
+          "text": "A pp-wave whose profile falls as the inverse square of one transverse coordinate, multiplied by anti-de Sitter's conformal factor. It has the symmetries of the free Schrödinger equation [balasubramanian2008, duval2009]."
         }
       ],
       "references": [
@@ -23249,7 +23267,9 @@
         "podolsky1998",
         "tod1983",
         "chrusciel2006",
-        "horowitz2012lifshitz"
+        "horowitz2012lifshitz",
+        "balasubramanian2008",
+        "duval2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/pp_wave.json",
@@ -25318,6 +25338,533 @@
       ]
     },
     {
+      "id": "schrodinger_spacetime",
+      "name": "Schrödinger Spacetime",
+      "short_name": "Schrödinger Spacetime",
+      "description": "Anti-de Sitter space with one term added to its metric, which cuts its symmetries down to those of the free Schrödinger equation: Galilean boosts, a scaling under which time goes as the square of length, and a conserved mass. Dam Thanh Son, and Koushik Balasubramanian and John McGreevy, proposed it in 2008 as the gravitational dual of cold atoms at unitarity. Every event on a surface of constant time has the same future.",
+      "tags": [
+        "anti-de Sitter",
+        "negative cosmological constant",
+        "cosmological constant",
+        "AdS/CFT",
+        "holography",
+        "Schrödinger symmetry",
+        "Galilean symmetry",
+        "cold atoms",
+        "pp-wave",
+        "Kundt class",
+        "Petrov type N",
+        "null Killing vector",
+        "null dust",
+        "homogeneous",
+        "causal structure",
+        "geodesically complete",
+        "string theory",
+        "higher dimensions",
+        "stationary",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "five-dimensional",
+        "six-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The anti-de Sitter radius $L$ and the deformation $\\beta$ are lengths. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "anti_de_sitter",
+          "kind": "special_case",
+          "text": "The deformation switched off. At $\\beta = 0$ the metric is anti-de Sitter space in its Poincaré patch, written in the null coordinates $ct$ and $\\xi$ [herzog2008, blau2010]."
+        },
+        {
+          "id": "siklos",
+          "kind": "generalisation",
+          "text": "The same line element with any profile $H$ where Schrödinger spacetime has $-\\beta^2/r^2$. Siklos's waves are the profiles that need no matter, and this one needs some [duval2009]."
+        },
+        {
+          "id": "pp_wave",
+          "kind": "conformal",
+          "text": "Schrödinger spacetime is $L^2/r^2$ times a pp-wave of profile $-\\beta^2/r^2$, and it has the pp-wave to thank for its light cones [balasubramanian2008, herzog2008]."
+        },
+        {
+          "id": "lifshitz_spacetime",
+          "kind": "family",
+          "text": "The other spacetime of 2008 in which time scales as a power of space. It keeps time reversal and has no null direction, and so no Galilean boosts and no conserved mass [kachru2008, blau2009]."
+        }
+      ],
+      "references": [
+        "ohara2002",
+        "son2008",
+        "hagen1972",
+        "niederer1972",
+        "maldacena1998",
+        "balasubramanian2008",
+        "herzog2008",
+        "maldacena2008",
+        "adams2008",
+        "duval2009",
+        "siklos1985",
+        "blau2010",
+        "blau2009",
+        "hubeny2005",
+        "nishida2007",
+        "kachru2008"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schrodinger_spacetime.json",
+      "charts": [
+        {
+          "id": "poincare",
+          "name": "Poincaré",
+          "coordinates": [
+            "t",
+            "\\xi",
+            "x",
+            "r"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\xi \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "r = 0 \\;\\text{(the boundary)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length; in four dimensions the cosmological constant is $\\Lambda = -3/L^2$"
+            },
+            {
+              "symbol": "\\beta",
+              "description": "Deformation length. At $\\beta = 0$ the metric is anti-de Sitter space, and the boost $t \\to \\lambda t$, $\\xi \\to \\xi/\\lambda$ turns $\\beta$ into $\\lambda\\beta$, so every $\\beta > 0$ is one spacetime"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\xi, x, r)$, with $t$ carrying dimensions of time and $\\xi$, $x$, and $r$ lengths; $\\xi$ is null, and Son's metric is $\\beta^2 = 2$ at $L = 1$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{L^2}{r^2}\\left(-\\dfrac{\\beta^2}{r^2}c^2dt^2 - 2c\\,dt\\,d\\xi + dx^2 + dr^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{L^2\\,\\beta^2}{r^4}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\xi"
+              ],
+              "value": "-\\dfrac{L^2}{r^2}"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "t"
+              ],
+              "value": "-\\dfrac{L^2}{r^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{L^2}{r^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{L^2}{r^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{24}{L^4}"
+        },
+        {
+          "id": "inverse_radius",
+          "name": "Inverse Radius",
+          "coordinates": [
+            "t",
+            "\\xi",
+            "x",
+            "\\rho"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\xi \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\infty)",
+            "\\rho \\to \\infty \\;\\text{(the boundary)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length; in four dimensions the cosmological constant is $\\Lambda = -3/L^2$"
+            },
+            {
+              "symbol": "\\beta",
+              "description": "Deformation length. At $\\beta = 0$ the metric is anti-de Sitter space, and the boost $t \\to \\lambda t$, $\\xi \\to \\xi/\\lambda$ turns $\\beta$ into $\\lambda\\beta$, so every $\\beta > 0$ is one spacetime"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\xi, x, \\rho)$, the Poincaré chart's with $\\rho = L^2/r$ for the depth, so that the boundary is at $\\rho \\to \\infty$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{\\rho^2}{L^2}\\left(-\\dfrac{\\beta^2\\rho^2}{L^4}c^2dt^2 - 2c\\,dt\\,d\\xi + dx^2\\right) + \\dfrac{L^2}{\\rho^2}d\\rho^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\beta^2\\,\\rho^4}{L^6}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\xi"
+              ],
+              "value": "-\\dfrac{\\rho^2}{L^2}"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "t"
+              ],
+              "value": "-\\dfrac{\\rho^2}{L^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{\\rho^2}{L^2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{L^2}{\\rho^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{24}{L^4}"
+        },
+        {
+          "id": "global",
+          "name": "Global",
+          "coordinates": [
+            "T",
+            "V",
+            "X",
+            "R"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "V \\in (-\\infty, \\infty)",
+            "X \\in (-\\infty, \\infty)",
+            "R \\in (0, \\infty)",
+            "R = 0 \\;\\text{(the boundary)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length; in four dimensions the cosmological constant is $\\Lambda = -3/L^2$"
+            },
+            {
+              "symbol": "\\beta",
+              "description": "Deformation length. At $\\beta = 0$ the metric is anti-de Sitter space, and the boost $t \\to \\lambda t$, $\\xi \\to \\xi/\\lambda$ turns $\\beta$ into $\\lambda\\beta$, so every $\\beta > 0$ is one spacetime"
+            },
+            {
+              "symbol": "\\omega",
+              "description": "Frequency of the harmonic trap, positive. At $\\omega = 0$ the chart is the Poincaré chart, and every $\\omega > 0$ covers the whole spacetime"
+            }
+          ],
+          "convention": "We use coordinates $(T, V, X, R)$, with $T$ carrying dimensions of time and $V$, $X$, and $R$ lengths: in the Poincaré chart $\\omega t = \\tan\\omega T$, $r = R/\\cos\\omega T$, $x = X/\\cos\\omega T$, and $\\xi = V + (\\omega/2c)(R^2 + X^2)\\tan\\omega T$. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{L^2}{R^2}\\left(-\\dfrac{\\beta^2}{R^2}c^2dT^2 - \\omega^2\\left(R^2 + X^2\\right)dT^2 - 2c\\,dT\\,dV + dX^2 + dR^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\dfrac{L^2\\left(\\beta^2c^2 + \\omega^2R^2\\left(R^2 + X^2\\right)\\right)}{c^2R^4}"
+            },
+            {
+              "indices": [
+                "T",
+                "V"
+              ],
+              "value": "-\\dfrac{L^2}{R^2}"
+            },
+            {
+              "indices": [
+                "V",
+                "T"
+              ],
+              "value": "-\\dfrac{L^2}{R^2}"
+            },
+            {
+              "indices": [
+                "X",
+                "X"
+              ],
+              "value": "\\dfrac{L^2}{R^2}"
+            },
+            {
+              "indices": [
+                "R",
+                "R"
+              ],
+              "value": "\\dfrac{L^2}{R^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{24}{L^4}"
+        },
+        {
+          "id": "dynamical_exponent",
+          "name": "General Dynamical Exponent",
+          "coordinates": [
+            "t",
+            "\\xi",
+            "x",
+            "r"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\xi \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "r = 0 \\;\\text{(the boundary)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length; in four dimensions the cosmological constant is $\\Lambda = -3/L^2$"
+            },
+            {
+              "symbol": "\\beta",
+              "description": "Deformation length, which the boost $t \\to \\lambda t$, $\\xi \\to \\xi/\\lambda$ rescales for every $z \\neq 1$"
+            },
+            {
+              "symbol": "z",
+              "description": "Dynamical exponent, a pure number with $z \\geq 1$: under a dilatation time scales as the power $z$ of length. $z = 2$ is Schrödinger spacetime and $z = 1$ anti-de Sitter space"
+            },
+            {
+              "symbol": "h = \\left(\\dfrac{\\beta}{r}\\right)^{2z - 2}",
+              "description": "The coefficient of $-c^2dt^2$ in the bracket, a pure number"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\xi, x, r)$, with $t$ carrying dimensions of time and $\\xi$, $x$, and $r$ lengths, and write $h = (\\beta/r)^{2z - 2}$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{L^2}{r^2}\\left(-\\left(\\dfrac{\\beta}{r}\\right)^{2z - 2}c^2dt^2 - 2c\\,dt\\,d\\xi + dx^2 + dr^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{L^2\\,h}{r^2}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\xi"
+              ],
+              "value": "-\\dfrac{L^2}{r^2}"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "t"
+              ],
+              "value": "-\\dfrac{L^2}{r^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{L^2}{r^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{L^2}{r^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{24}{L^4}"
+        },
+        {
+          "id": "poincare_5d",
+          "name": "Poincaré, Five Dimensions",
+          "coordinates": [
+            "t",
+            "\\xi",
+            "x_1",
+            "x_2",
+            "r"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\xi \\in (-\\infty, \\infty)",
+            "x_1 \\in (-\\infty, \\infty)",
+            "x_2 \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "r = 0 \\;\\text{(the boundary)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length; in five dimensions the cosmological constant is $\\Lambda = -6/L^2$"
+            },
+            {
+              "symbol": "\\beta",
+              "description": "Deformation length. At $\\beta = 0$ the metric is anti-de Sitter space, and the boost $t \\to \\lambda t$, $\\xi \\to \\xi/\\lambda$ turns $\\beta$ into $\\lambda\\beta$, so every $\\beta > 0$ is one spacetime"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\xi, x_1, x_2, r)$, with $t$ carrying dimensions of time and the others lengths, for atoms moving in the plane of $x_1$ and $x_2$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{L^2}{r^2}\\left(-\\dfrac{\\beta^2}{r^2}c^2dt^2 - 2c\\,dt\\,d\\xi + dx_1^2 + dx_2^2 + dr^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{L^2\\,\\beta^2}{r^4}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\xi"
+              ],
+              "value": "-\\dfrac{L^2}{r^2}"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "t"
+              ],
+              "value": "-\\dfrac{L^2}{r^2}"
+            },
+            {
+              "indices": [
+                "x_1",
+                "x_1"
+              ],
+              "value": "\\dfrac{L^2}{r^2}"
+            },
+            {
+              "indices": [
+                "x_2",
+                "x_2"
+              ],
+              "value": "\\dfrac{L^2}{r^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{L^2}{r^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{20}{L^2}",
+          "kretschmann": "K = \\dfrac{40}{L^4}"
+        },
+        {
+          "id": "poincare_6d",
+          "name": "Poincaré, Six Dimensions",
+          "coordinates": [
+            "t",
+            "\\xi",
+            "x_1",
+            "x_2",
+            "x_3",
+            "r"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\xi \\in (-\\infty, \\infty)",
+            "x_1 \\in (-\\infty, \\infty)",
+            "x_2 \\in (-\\infty, \\infty)",
+            "x_3 \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "r = 0 \\;\\text{(the boundary)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length; in six dimensions the cosmological constant is $\\Lambda = -10/L^2$"
+            },
+            {
+              "symbol": "\\beta",
+              "description": "Deformation length. At $\\beta = 0$ the metric is anti-de Sitter space, and the boost $t \\to \\lambda t$, $\\xi \\to \\xi/\\lambda$ turns $\\beta$ into $\\lambda\\beta$, so every $\\beta > 0$ is one spacetime"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\xi, x_1, x_2, x_3, r)$, with $t$ carrying dimensions of time and the others lengths, for atoms moving in the three dimensions of space. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{L^2}{r^2}\\left(-\\dfrac{\\beta^2}{r^2}c^2dt^2 - 2c\\,dt\\,d\\xi + dx_1^2 + dx_2^2 + dx_3^2 + dr^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{L^2\\,\\beta^2}{r^4}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\xi"
+              ],
+              "value": "-\\dfrac{L^2}{r^2}"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "t"
+              ],
+              "value": "-\\dfrac{L^2}{r^2}"
+            },
+            {
+              "indices": [
+                "x_1",
+                "x_1"
+              ],
+              "value": "\\dfrac{L^2}{r^2}"
+            },
+            {
+              "indices": [
+                "x_2",
+                "x_2"
+              ],
+              "value": "\\dfrac{L^2}{r^2}"
+            },
+            {
+              "indices": [
+                "x_3",
+                "x_3"
+              ],
+              "value": "\\dfrac{L^2}{r^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{L^2}{r^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{30}{L^2}",
+          "kretschmann": "K = \\dfrac{60}{L^4}"
+        }
+      ]
+    },
+    {
       "id": "schwarzschild",
       "name": "Schwarzschild Black Hole",
       "short_name": "Schwarzschild Exterior",
@@ -27194,6 +27741,11 @@
           "id": "lifshitz_spacetime",
           "kind": "family",
           "text": "A wave of this form in five dimensions, rolled up along its null direction, is Lifshitz spacetime at $z = 2$, where time scales as the square of space [balasubramanian2010, donos2010]."
+        },
+        {
+          "id": "schrodinger_spacetime",
+          "kind": "special_case",
+          "text": "Siklos's line element at the profile $H = -\\beta^2/x^2$, which fails his vacuum equation and so needs matter. Its symmetries are those of the free Schrödinger equation [son2008, duval2009]."
         }
       ],
       "references": [
@@ -27212,7 +27764,9 @@
         "brecher2001",
         "podolsky1998impulsive",
         "balasubramanian2010",
-        "donos2010"
+        "donos2010",
+        "son2008",
+        "duval2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/siklos.json",

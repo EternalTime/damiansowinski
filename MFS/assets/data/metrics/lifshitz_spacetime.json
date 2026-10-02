@@ -48,6 +48,11 @@
       "id": "randall_sundrum",
       "kind": "family",
       "text": "Randall and Sundrum's wall warps time and space by one factor. Koroteev and Libanov gave the two different factors by filling the space beside it with an anisotropic fluid, and met Lifshitz's scaling in five dimensions [koroteev2008]."
+    },
+    {
+      "id": "schrodinger_spacetime",
+      "kind": "family",
+      "text": "The same scaling of time against space with Galilean boosts and a conserved mass besides, which takes one more dimension, a null one [son2008, balasubramanian2008]."
     }
   ],
   "references": [
@@ -65,7 +70,9 @@
     "harrison2014",
     "keeler2014",
     "horava2011",
-    "taylor2016"
+    "taylor2016",
+    "son2008",
+    "balasubramanian2008"
   ],
   "coordinates": [
     {

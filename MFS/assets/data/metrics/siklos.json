@@ -55,6 +55,11 @@
       "id": "lifshitz_spacetime",
       "kind": "family",
       "text": "A wave of this form in five dimensions, rolled up along its null direction, is Lifshitz spacetime at $z = 2$, where time scales as the square of space [balasubramanian2010, donos2010]."
+    },
+    {
+      "id": "schrodinger_spacetime",
+      "kind": "special_case",
+      "text": "Siklos's line element at the profile $H = -\\beta^2/x^2$, which fails his vacuum equation and so needs matter. Its symmetries are those of the free Schrödinger equation [son2008, duval2009]."
     }
   ],
   "references": [
@@ -73,7 +78,9 @@
     "brecher2001",
     "podolsky1998impulsive",
     "balasubramanian2010",
-    "donos2010"
+    "donos2010",
+    "son2008",
+    "duval2009"
   ],
   "coordinates": [
     {

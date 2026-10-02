@@ -896,6 +896,12 @@ SIKLOS_DISC_INPUT = ("Kaigorodov's profile switched on and off, $h = e^{-4u^2/L^
                      "$p^2(\\partial_\\xi^2h + \\partial_\\eta^2h) = 2h/L^2$.")
 SIKLOS_CREST = (("shell", "x0", "0", "the crest of the pulse, $u = 0$"),)
 SIKLOS_CONE = "future cone of no momentum along ${}$"
+# Schrodinger spacetime, in units of the deformation length beta, with L = beta: every plane is the
+# plane of the time and the null coordinate at a fixed depth, where the metric is
+# -(L^2/r^2)(2 dt dxi + h dt^2) and the cone's second edge is dxi = -(h/2) dt. The global chart is
+# drawn at omega = c/beta, where h = beta^2/R^2 + R^2/beta^2 on the axis X = 0, least at R = beta.
+SCHRODINGER = {"L": 1, "beta": 1}
+SCHRODINGER_BOX = (-2, 2, -2, 2)
 GOTT_STRINGS = {"mu": "1/12", "G": 1, "v": "4/5", "d": "1/2", "alpha": "pi/3", "gamma": "5/3"}
 
 # Morris, Thorne and Yurtsever's round trip, in the throat radius r_0 and with c = 1: the right
@@ -2838,6 +2844,32 @@ DIAGRAMS = [
     Diagram("siklos", "kaigorodov_kundt", "depth", "$V$ and $x$", ("V", "x"), (0.25, 2, -1.5, 1.5),
             "$x$", "$V/L$", SIKLOS, {"y": "0"}, tau="V*x**2", families=SIDEWAYS, quotient="U",
             cone=SIKLOS_CONE.format("U")),
+    # Schrodinger spacetime: the plane of the time and the null coordinate at three depths in the
+    # Poincare, inverse radius and global charts, for three dynamical exponents at r = beta/sqrt(2), and at
+    # one depth in five and in six dimensions. No chart has a time function, so the cones take
+    # their future from the timelike Killing direction of the chart's time.
+    *[Diagram("schrodinger_spacetime", "poincare", view, label, ("t", "\\xi"), SCHRODINGER_BOX, "$\\xi/\\beta$",
+              "$ct/\\beta$", SCHRODINGER, {"x": "0", "r": r}, orient="vector", families=SIDEWAYS)
+      for view, label, r in (("near", "$r = \\beta/2$", "1/2"), ("middle", "$r = \\beta$", "1"),
+                             ("far", "$r = 2\\beta$", "2"))],
+    *[Diagram("schrodinger_spacetime", "inverse_radius", view, label, ("t", "\\xi"), SCHRODINGER_BOX,
+              "$\\xi/\\beta$", "$ct/\\beta$", SCHRODINGER, {"x": "0", "rho": rho}, orient="vector", families=SIDEWAYS)
+      for view, label, rho in (("near", "$\\rho = 2L$", "2"), ("middle", "$\\rho = L$", "1"),
+                               ("far", "$\\rho = L/2$", "1/2"))],
+    *[Diagram("schrodinger_spacetime", "global", view, label, ("T", "V"), SCHRODINGER_BOX, "$V/\\beta$",
+              "$cT/\\beta$", {**SCHRODINGER, "omega": 1}, {"X": "0", "R": R}, orient="vector", families=SIDEWAYS)
+      for view, label, R in (("near", "$R = \\beta/2$", "1/2"), ("middle", "$R = \\beta$", "1"),
+                             ("far", "$R = 2\\beta$", "2"))],
+    *[Diagram("schrodinger_spacetime", "dynamical_exponent", view, label, ("t", "\\xi"), SCHRODINGER_BOX,
+              "$\\xi/\\beta$", "$ct/\\beta$", {**SCHRODINGER, "z": z}, {"x": "0", "r": "1/sqrt(2)"}, orient="vector",
+              families=SIDEWAYS)
+      for view, label, z in (("one", "$z = 1$", "1"), ("three_halves", "$z = 3/2$", "3/2"), ("three", "$z = 3$", "3"))],
+    Diagram("schrodinger_spacetime", "poincare_5d", "middle", "$r = \\beta$", ("t", "\\xi"), SCHRODINGER_BOX,
+            "$\\xi/\\beta$", "$ct/\\beta$", SCHRODINGER, {"x_1": "0", "x_2": "0", "r": "1"}, orient="vector",
+            families=SIDEWAYS),
+    Diagram("schrodinger_spacetime", "poincare_6d", "middle", "$r = \\beta$", ("t", "\\xi"), SCHRODINGER_BOX,
+            "$\\xi/\\beta$", "$ct/\\beta$", SCHRODINGER, {"x_1": "0", "x_2": "0", "x_3": "0", "r": "1"},
+            orient="vector", families=SIDEWAYS),
 ]
 
 
@@ -6608,6 +6640,79 @@ CAPTIONS = {
         "The rays keep $Vx^2/\\sqrt{2} \\pm \\tfrac{2}{5}Lx^{5/2}$, and the future is the direction of "
         "increasing $Vx^2$. The conformal boundary is $x = 0$ and the singularity $x \\to \\infty$.",
     ],
+    **{("schrodinger_spacetime", "poincare", view): [
+        f"The plane of $t$ and $\\xi$ (${r}$, $x = 0$) at $L = \\beta$, drawn with $\\xi$ across and $ct$ up. On it "
+        "the metric is $-(L^2/r^2)\\left(2c\\,dt\\,d\\xi + (\\beta^2/r^2)\\,c^2dt^2\\right)$, so one edge of every "
+        "cone runs along $\\xi$ at one $t$, and the other leans back with "
+        f"$d\\xi = -(\\beta^2/2r^2)\\,c\\,dt = {slope}\\,c\\,dt$. The nearer the boundary $r = 0$, the wider the "
+        "cone, which opens there to the whole half plane after its $t$.",
+        "The rays along $\\xi$ are null geodesics on which $t$ stands still. The curves moving left are null "
+        "curves of the plane: light launched along one is turned toward larger $r$, away from the boundary, "
+        "$\\ddot{r} = (\\beta^2/r^3)\\,\\dot{t}^2$.",
+    ] for view, r, slope in (("near", "r = \\beta/2", "-2"), ("middle", "r = \\beta", "-\\tfrac{1}{2}"),
+                             ("far", "r = 2\\beta", "-\\tfrac{1}{8}"))},
+    **{("schrodinger_spacetime", "inverse_radius", view): [
+        f"The plane of $t$ and $\\xi$ (${rho}$, $x = 0$) at $L = \\beta$, drawn with $\\xi$ across and $ct$ up, "
+        f"the plane ${r}$ of the Poincaré chart. On it the metric is "
+        "$-(\\rho^2/L^2)\\left(2c\\,dt\\,d\\xi + (\\beta^2\\rho^2/L^4)\\,c^2dt^2\\right)$, so one edge of every "
+        "cone runs along $\\xi$ at one $t$, and the other leans back with "
+        f"$d\\xi = -(\\beta^2\\rho^2/2L^4)\\,c\\,dt = {slope}\\,c\\,dt$. The cone widens toward the boundary "
+        "$\\rho \\to \\infty$.",
+        "The rays along $\\xi$ are null geodesics on which $t$ stands still. The curves moving left are null "
+        "curves of the plane: light launched along one is turned toward smaller $\\rho$, away from the boundary.",
+    ] for view, rho, r, slope in (("near", "\\rho = 2L", "r = \\beta/2", "-2"),
+                                  ("middle", "\\rho = L", "r = \\beta", "-\\tfrac{1}{2}"),
+                                  ("far", "\\rho = L/2", "r = 2\\beta", "-\\tfrac{1}{8}"))},
+    **{("schrodinger_spacetime", "global", view): [
+        f"The plane of $T$ and $V$ (${R}$, $X = 0$) at $L = \\beta$ and $\\omega = c/\\beta$, drawn with $V$ "
+        "across and $cT$ up. On it the metric is "
+        "$-(L^2/R^2)\\left(2c\\,dT\\,dV + (\\beta^2/R^2 + \\omega^2R^2/c^2)\\,c^2dT^2\\right)$, so one edge of "
+        "every cone runs along $V$ at one $T$, and the other leans back with "
+        f"$dV = -\\tfrac{{1}}{{2}}(\\beta^2/R^2 + \\omega^2R^2/c^2)\\,c\\,dT = {slope}\\,c\\,dT$. The trap widens "
+        "the cone again far from the boundary, and the cone is narrowest at $R^2 = \\beta c/\\omega$, which is "
+        "$R = \\beta$ here.",
+        "The rays along $V$ are null geodesics on which $T$ stands still. " + turned,
+    ] for view, R, slope, turned in (
+        ("near", "R = \\beta/2", "-\\tfrac{17}{8}",
+         "The curves moving left are null curves of the plane: light launched along one is turned toward larger "
+         "$R$, $\\ddot{R} = (\\beta^2/R^3 - \\omega^2R/c^2)\\,\\dot{T}^2$, which is positive here."),
+        ("middle", "R = \\beta", "-1",
+         "At this depth the curves moving left are null geodesics too, since "
+         "$\\ddot{R} = (\\beta^2/R^3 - \\omega^2R/c^2)\\,\\dot{T}^2$ vanishes at $R^2 = \\beta c/\\omega$: light "
+         "launched along one keeps its depth at the bottom of the trap."),
+        ("far", "R = 2\\beta", "-\\tfrac{17}{8}",
+         "The curves moving left are null curves of the plane: light launched along one is turned toward smaller "
+         "$R$, $\\ddot{R} = (\\beta^2/R^3 - \\omega^2R/c^2)\\,\\dot{T}^2$, which is negative here, back toward "
+         "the bottom of the trap at $R = \\beta$."))},
+    **{("schrodinger_spacetime", "dynamical_exponent", view): [
+        f"The plane of $t$ and $\\xi$ ($r = \\beta/\\sqrt{{2}}$, $x = 0$) for the dynamical exponent ${z}$ at $L = \\beta$, "
+        "drawn with $\\xi$ across and $ct$ up. On it the metric is "
+        "$-(L^2/r^2)\\left(2c\\,dt\\,d\\xi + h\\,c^2dt^2\\right)$, so one edge of every cone runs along $\\xi$ "
+        f"at one $t$, and the other leans back with $d\\xi = -\\tfrac{{1}}{{2}}h\\,c\\,dt = {slope}\\,c\\,dt$, "
+        f"where $h = (\\beta/r)^{{2z - 2}} = {h}$. " + more,
+        "The rays along $\\xi$ are null geodesics on which $t$ stands still. " + turned,
+    ] for view, z, h, slope, more, turned in (
+        ("one", "z = 1", "1", "-\\tfrac{1}{2}",
+         "This is anti-de Sitter space, where the cone is the same at every depth.",
+         "The curves moving left are null geodesics as well."),
+        ("three_halves", "z = 3/2", "\\sqrt{2}", "-\\tfrac{1}{\\sqrt{2}}",
+         "The cone is wider than anti-de Sitter's and narrower than Schrödinger spacetime's at the same depth.",
+         "The curves moving left are null curves of the plane: light launched along one is turned toward larger "
+         "$r$, $\\ddot{r} = (z - 1)(h/r)\\,\\dot{t}^2$."),
+        ("three", "z = 3", "4", "-2",
+         "The cone is wider than Schrödinger spacetime's at the same depth, where $h = 2$.",
+         "The curves moving left are null curves of the plane: light launched along one is turned toward larger "
+         "$r$, $\\ddot{r} = (z - 1)(h/r)\\,\\dot{t}^2$."))},
+    **{("schrodinger_spacetime", system, "middle"): [
+        f"The plane of $t$ and $\\xi$ ($r = \\beta$, {origin}) at $L = \\beta$, drawn with $\\xi$ across and $ct$ "
+        "up. On it the metric is "
+        "$-(L^2/r^2)\\left(2c\\,dt\\,d\\xi + (\\beta^2/r^2)\\,c^2dt^2\\right)$, the same in every dimension, so "
+        "one edge of every cone runs along $\\xi$ at one $t$, and the other leans back with "
+        "$d\\xi = -(\\beta^2/2r^2)\\,c\\,dt = -\\tfrac{1}{2}\\,c\\,dt$.",
+        "The rays along $\\xi$ are null geodesics on which $t$ stands still. The curves moving left are null "
+        "curves of the plane: light launched along one is turned toward larger $r$, away from the boundary, "
+        "$\\ddot{r} = (\\beta^2/r^3)\\,\\dot{t}^2$.",
+    ] for system, origin in (("poincare_5d", "$x_1 = x_2 = 0$"), ("poincare_6d", "$x_1 = x_2 = x_3 = 0$"))},
 }
 
 
@@ -9871,6 +9976,17 @@ CLOSED_FORMS.update({
     ("siklos", "kaigorodov_kundt", "depth"): (lambda V, x: V * x ** 2 / math.sqrt(2) + 0.4 * x ** 2.5,
                                               lambda V, x: V * x ** 2 / math.sqrt(2) - 0.4 * x ** 2.5, None),
 })
+# Schrodinger spacetime at L = beta = 1. On the plane of the time and the null coordinate a curve
+# moving left keeps xi + (h/2) t, with h the coefficient of -dt^2 in the bracket at the plane's
+# depth, and a ray moving right keeps t.
+CLOSED_FORMS.update({
+    ("schrodinger_spacetime", system, view): (lambda t, xi, k=h / 2: xi + k * t, lambda t, xi: t, None)
+    for system, view, h in (
+        ("poincare", "near", 4.0), ("poincare", "middle", 1.0), ("poincare", "far", 0.25),
+        ("inverse_radius", "near", 4.0), ("inverse_radius", "middle", 1.0), ("inverse_radius", "far", 0.25),
+        ("global", "near", 4.25), ("global", "middle", 2.0), ("global", "far", 4.25),
+        ("dynamical_exponent", "one", 1.0), ("dynamical_exponent", "three_halves", math.sqrt(2)),
+        ("dynamical_exponent", "three", 4.0), ("poincare_5d", "middle", 1.0), ("poincare_6d", "middle", 1.0))})
 CLOSED_FORMS.update({where: (lambda t, phi, k=left: t - k * phi, lambda t, phi, k=right: t - k * phi, None)
                      for where, (left, right) in CYLINDERS.items()})
 # Misner space: in Misner's plane one family keeps psi and the other T e^(psi/2), read through
