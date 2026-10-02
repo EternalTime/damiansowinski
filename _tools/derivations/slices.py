@@ -2439,6 +2439,11 @@ FLAT = {
     ("einstein_cluster", "uniform", "through"): lambda: one("einstein_cluster", lambda m: along(0.0, *m.reach("uniform", "r")), view_id="uniform"),
     ("einstein_cluster", "hyperspherical", "radial"): lambda: one("einstein_cluster", lambda m: along(0.0, 0.0, math.asin(1 / math.sqrt(3))), view_id="uniform"),
     ("malament_hogarth", "cartesian", "tx"): lambda: one("malament_hogarth", lambda m: across(m.time, *m.reach("cartesian", "x"))),
+    # Nordstrom's point mass at t = 0 and his dust universe at each moment of its movie, each on its own chart.
+    ("nordstrom_scalar", "spherical", "radial"): lambda: one(
+        "nordstrom_scalar", lambda m: along(0.0, *m.reach("spherical", "r")), view_id="point_mass"),
+    ("nordstrom_scalar", "dust", "radial"): lambda: one(
+        "nordstrom_scalar", lambda m: along(m.time, *m.reach("dust", "r")), view_id="dust"),
     ("oppenheimer_snyder", "interior_comoving", "through"): _os_interior,
     ("semiclosed_world", "comoving", "dust"): lambda: _scw_dust(False),
     ("semiclosed_world", "conformal", "dust"): lambda: _scw_dust(True),
@@ -2510,6 +2515,10 @@ HIDDEN = {
     ("plebanski_hacyan", "plane"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
     ("plebanski_hacyan", "plane_null"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
     ("plebanski_hacyan", "plane_static"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
+    ("nordstrom_scalar", "conformal", "tx"): "a plane wave of the theory, another spacetime than the point mass and the dust universe whose moments are embedded",
+    ("nordstrom_scalar", "conformal"): "a plane wave of the theory, another spacetime than the point mass and the dust universe whose moments are embedded",
+    ("nordstrom_scalar", "uniform", "tz"): "the uniform field, another spacetime than the point mass and the dust universe whose moments are embedded",
+    ("nordstrom_scalar", "uniform"): "the uniform field, another spacetime than the point mass and the dust universe whose moments are embedded",
     ("tippett_tsang", "interior", "tx"): "the flat spacetime inside the bubble continued over the whole plane, another spacetime than the bubble whose moment is embedded",
     ("tippett_tsang", "rindler", "plane"): "the flat spacetime inside the bubble continued over the whole plane, another spacetime than the bubble whose moment is embedded",
     ("siklos", "kaigorodov_stationary", "plane"): "the region x < 0 of Siklos's chart, another region than the one whose wave front is embedded",

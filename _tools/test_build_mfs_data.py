@@ -3197,8 +3197,10 @@ class EmbeddingDiagrams(unittest.TestCase):
         # moments of its movie, before the radiation reaches the rim and after the last of it has left.
         # Hiscock's hole leaves flat space behind as well: at the last moment of its movie the flat disc
         # inside the last ray has reached r = 3m_0/2 and the mass still inside the rim is under m_0/20.
+        # Nordstrom's universe of dust is conformally flat with a factor that depends on the time alone,
+        # so each of its moments is a flat plane, on which its rings of galaxies grow and shrink.
         flat_moments = {("domain_wall", "moments", 2), ("hayward", "history", 0), ("hayward", "history", 5),
-                        ("hiscock", "history", 5)}
+                        ("hiscock", "history", 5), *(("nordstrom_scalar", "dust", k) for k in range(5))}
         self.assertNotIn("lentz", self.embedding)
         self.assertNotIn("embedding", next(m for m in read(build.INDEX_FILE) if m["id"] == "lentz"))
         for name, data in self.embedding.items():
@@ -3532,7 +3534,8 @@ class StacksAndMovies(unittest.TestCase):
     # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
-    MOVIES = {("frw", "closed"): "$ct$", ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
+    MOVIES = {("frw", "closed"): "$ct$", ("nordstrom_scalar", "dust"): "$ct$",
+              ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("white_hole", "explosion"): "$c\\tau$",
               ("vaidya", "shell"): "$v - r$",
               ("semiclosed_world", "bag"): "$c\\tau$",
@@ -4669,6 +4672,10 @@ class Slices(unittest.TestCase):
     HIDDEN = {# The flat interior of Tippett and Tsang's bubble continued over the whole plane, another
               # spacetime than the bubble whose moment is embedded.
               "tippett_tsang/interior/tx", "tippett_tsang/rindler/plane",
+              # A plane wave and the uniform field of Nordstrom's theory, other spacetimes than the point
+              # mass and the dust universe whose moments are embedded.
+              "nordstrom_scalar/conformal/tx", "nordstrom_scalar/uniform/tz",
+              "conformal nordstrom_scalar/conformal", "conformal nordstrom_scalar/uniform",
               # The region x < 0 of Siklos's chart, another region than the one whose wave front is embedded.
               "siklos/kaigorodov_stationary/plane",
               # Kundt's waves with no cosmological constant, other spacetimes than the waves in de Sitter
@@ -4851,6 +4858,10 @@ class Slices(unittest.TestCase):
     # one line element: the static and Eddington-Finkelstein drawings are the black hole's, and the
     # Barriola-Vilenkin drawings the monopole's.
     HIDDEN_VIEWS = {"conformal cosmic_string/gott": {"unroll"},
+                    # Nordstrom's point mass and his universe of dust are two spacetimes of one theory,
+                    # each drawing marking the moments of its own.
+                    "nordstrom_scalar/spherical/radial": {"dust"}, "conformal nordstrom_scalar/spherical": {"dust"},
+                    "nordstrom_scalar/dust/radial": {"point_mass"}, "conformal nordstrom_scalar/dust": {"point_mass"},
                     # The flat plane times a sphere and the anti-Nariai universe are two spacetimes, and
                     # each chart's drawings mark the surfaces of its own.
                     **{where: {"hyperbolic_plane"} for where in (
@@ -5137,6 +5148,9 @@ class Slices(unittest.TestCase):
             of_x = {"kaigorodov_horospheric": lambda x: -math.log(x),
                     "kaigorodov_homogeneous": lambda x: math.log(x) / 2}.get(key.split("/")[1], lambda x: x)
             return (lambda X: 0.0), sorted(of_x(x) for x in ((2 - top) / (2 + top), (2 + top) / (2 - top)))
+        if key == "nordstrom_scalar/dust/radial":
+            # A moment of the inertial time, from the centre to the galaxy at r = L.
+            return (lambda X: t), list(self.reach(surface))
         if key == "ppn_metric/cartesian/axis":
             # The line through the body's centre: the equator at t = 0 on both sides of the body.
             lo, hi = self.reach(surface)
@@ -6203,6 +6217,11 @@ class Slices(unittest.TestCase):
                             self.assertLess(abs(out - back), 5e-3 * (1 + out), f"{where} at {(X, T)}")
                             met += 1
                         self.assertGreater(met, 5, where)
+                    elif metric_id == "nordstrom_scalar" and mark["view"] == "dust":
+                        # p, q = arctan((ct -+ r)/L), so tan p + tan q = 2ct/L on a moment of the inertial time.
+                        for X, T in points:
+                            self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2) - 2 * t), 2e-3,
+                                            f"{where} at {(X, T)}")
                     elif metric_id == "coleman_de_luccia":
                         # p, q = arctan(e^(eta -+ chi)) with eta = ln tan(c tau/2), so tan p tan q = tan^2(c tau/2).
                         for X, T in points:

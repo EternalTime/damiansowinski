@@ -11384,6 +11384,157 @@ def boson_star(ck, src):
 
 # ---------------------------------------------------------------- the Malament-Hogarth toy
 
+def nordstrom_scalar(ck, src):
+    """Nordstrom's theory, one view for each chart. Every one of its spacetimes is Phi^2 times
+    Minkowski's in Einstein and Fokker's preferred chart, and a conformal factor changes no null
+    direction, so each is the part of Minkowski's diagram where its Phi is positive, brought in
+    by p, q = arctan((ct -+ x)/l) with x the chart's own radius or height.
+
+    The free chart is drawn on the plane y = z = 0 with a plane wave, whose Phi is positive
+    everywhere, so the plane is Minkowski's whole diamond and the crests of the wave are light
+    rays. Outside a body Phi = 1 - m/r vanishes on r = m, where the spheres have zero area, so
+    x = r - m brings the spacetime onto Minkowski's triangle with the singularity on X = 0, a
+    timelike line no horizon hides. The uniform field has Phi = az/c^2, and x = z does the same
+    for the plane of t and z. The dust universe has Phi = 1 - c^2t^2/L^2, so it is the slab
+    -L < ct < L of the triangle, between two spacelike singularities that meet at i^0, and no
+    ray reaches null infinity."""
+    views = []
+    tri_box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    dia_box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+
+    def corners(v, ends=((PI, 0), (0, PI), (0, -PI))):
+        for at in ends:
+            text = {(PI, 0): "$i^0$", (0, PI): "$i^+$", (0, -PI): "$i^-$"}[at]
+            anchor = {(PI, 0): "l", (0, PI): "b", (0, -PI): "t"}[at]
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+            v.label_xt(at, text, anchor, dx=6 if at == (PI, 0) else 0, dy={(0, PI): -6, (0, -PI): 6}.get(at, 0))
+
+    def scri(v):
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        corners(v)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+
+    # The free chart, with a plane wave moving right, in units of 1/k.
+    wave = Plane(src, "nordstrom_scalar", "conformal", ("t", "x"), {"y": "0", "z": "0"},
+                 functions={"Phi": "1 + cos(x - t)/2"})
+    ck.chart("Nordstrom, a plane wave", wave, mink_pq, ck.uniform(-20, 20), ck.uniform(-20, 20), lambda t, x: (1, 0))
+    v = View("conformal", "Einstein-Fokker", dia_box, "conformal")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    grid(v, "r", lambda x, t: mink_pq(t, x), (-4, -2, -1, 0, 1, 2, 4), S_ALL)
+    grid(v, "t", mink_pq, (-4, -2, -1, 0, 1, 2, 4), S_ALL)
+    s = np.linspace(-80, 80, 600)
+    for crest in (-2 * PI, 0.0, 2 * PI):
+        # A crest is x - ct = 2 pi n, a line of constant p.
+        v.curve("null", np.full_like(s, np.arctan(-crest)), np.arctan(s))
+    diamond_edges(v)
+    v.legend("cover", "the whole plane, where $\\Phi > 0$")
+    v.legend("r", "$x$ constant, in units of $1/k$")
+    v.legend("t", "$ct$ constant")
+    v.legend("null", "three crests of the wave, $\\Phi = 3/2$, each a light ray")
+    v.set(restriction="The plane $y = z = 0$ only, totally geodesic, each point in the diagram a single event.",
+          settings="$\\Phi = 1 + \\tfrac{1}{2}\\cos(k(x - ct))$, where $k$ is the wave number, and $1/k$ the unit of "
+                   "every length; $p = \\arctan(k(ct - x))$ and $q = \\arctan(k(ct + x))$.")
+    views.append(v)
+
+    # The point mass, in units of m, with l = 2m.
+    ell = 2.0
+    mass = Plane(src, "nordstrom_scalar", "spherical", ("t", "r"), EQUATOR, {"m": 1})
+
+    def outside(t, r):
+        return mink_pq(t, np.asarray(r, dtype=float) - 1, ell)
+    ck.chart("Nordstrom, the point mass", mass, outside, ck.uniform(-40, 40), 1 + np.exp(ck.uniform(-6, 3.5)),
+             lambda t, r: (1, 0))
+    ck.diverges("Nordstrom, the point mass: the Kretschmann scalar diverges on r = m",
+                mass.kretschmann(0, 1 + 1e-2), mass.kretschmann(0, 1 + 1e-3))
+    r = 1 + np.exp(ck.uniform(-6, 3.5, 50))
+    ck.limit("Nordstrom, the point mass: the Kretschmann scalar is 8m^2(6r^2 - 4mr + m^2)/(r - m)^8",
+             mass.kretschmann(np.zeros(50), r) * (r - 1) ** 8 / (8 * (6 * r * r - 4 * r + 1)), np.ones(50), 1e-9)
+    ck.limit("Nordstrom, the point mass: r = m lands on X = 0", point(*outside(3.0, 1.0))[0], [0.0], 1e-12)
+    v = View("spherical", "Point mass", tri_box, "spherical")
+    v.fill("region", TRIANGLE)
+    v.fill("cover", TRIANGLE)
+    grid(v, "r", lambda c, t: outside(t, c), (1.5, 2, 3, 5, 9), S_ALL)
+    grid(v, "t", lambda t, x: mink_pq(t, x, ell), (-8, -4, -2, 0, 2, 4, 8), S_POS)
+    v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+    scri(v)
+    v.label_xt([0, 0.25], "$r = m$", "r", dx=-6)
+    label_on(v, outside(0, 3), "$r = 3m$")
+    v.legend("cover", "the whole spacetime outside the body, which $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, at $1.5\\,m$, $2m$, $3m$, $5m$, and $9m$")
+    v.legend("t", "$ct$ constant, every $2m$ to $\\pm 4m$, and at $\\pm 8m$")
+    v.legend("singular", "the singularity $r = m$, where the spheres have zero area and the Kretschmann scalar "
+                         "diverges")
+    moment = slices.moments("nordstrom_scalar", "point_mass")[0]
+    along_r = np.array(moment.reach("spherical", "r"))
+    v.slice(moment, [outside(0 * along_r, along_r)])
+    v.set(settings="$m = 1$, the unit of every length, and $\\ell = 2m$; $p = \\arctan((ct - r + m)/\\ell)$ and "
+                   "$q = \\arctan((ct + r - m)/\\ell)$.")
+    views.append(v)
+
+    # The uniform field on the plane of t and z, in units of c^2/a.
+    field = Plane(src, "nordstrom_scalar", "uniform", ("t", "z"), {"x": "0", "y": "0"}, {"a": 1})
+    ck.chart("Nordstrom, the uniform field", field, mink_pq, ck.uniform(-20, 20), np.exp(ck.uniform(-6, 3)),
+             lambda t, z: (1, 0))
+    ck.diverges("Nordstrom, the uniform field: the Kretschmann scalar diverges on z = 0",
+                field.kretschmann(0, 1e-2), field.kretschmann(0, 1e-3))
+    v = View("uniform", "Uniform field", tri_box, "uniform")
+    v.fill("region", TRIANGLE)
+    v.fill("cover", TRIANGLE)
+    grid(v, "r", lambda z, t: mink_pq(t, z), (0.5, 1, 2, 4), S_ALL)
+    grid(v, "t", mink_pq, (-4, -2, -1, 0, 1, 2, 4), S_POS)
+    v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+    scri(v)
+    v.label_xt([0, 0.25], "$z = 0$", "r", dx=-6)
+    label_on(v, mink_pq(0, 1), "$z = c^2/a$")
+    v.legend("cover", "the whole plane above $z = 0$, which $t$ and $z$ cover")
+    v.legend("r", "$z$ constant, at $1/2$, $1$, $2$, and $4$ in units of $c^2/a$, each a body at rest")
+    v.legend("t", "$ct$ constant")
+    v.legend("singular", "the singularity $z = 0$, where the Kretschmann scalar diverges")
+    v.set(restriction="The plane $x = y = 0$ only, totally geodesic, each point in the diagram a single event.",
+          settings="$a = 1$, with $c^2/a$ the unit of every length; $p = \\arctan(a(ct - z)/c^2)$ and "
+                   "$q = \\arctan(a(ct + z)/c^2)$.")
+    views.append(v)
+
+    # The dust universe, in units of L: the slab |ct| < L of Minkowski's triangle.
+    dust = Plane(src, "nordstrom_scalar", "dust", ("t", "r"), EQUATOR, {"L": 1})
+    ck.chart("Nordstrom, the dust universe", dust, mink_pq, ck.uniform(-0.999, 0.999), np.exp(ck.uniform(-6, 3)),
+             lambda t, r: (1, 0))
+    for sign, name in ((1, "crunch"), (-1, "bang")):
+        ck.diverges(f"Nordstrom, the dust universe: the Kretschmann scalar diverges at the {name}",
+                    dust.kretschmann(sign * (1 - 1e-2), 1.0), dust.kretschmann(sign * (1 - 1e-3), 1.0))
+    ck.limit("Nordstrom, the dust universe: the crunch meets the centre at T = pi/2", point(*mink_pq(1.0, 0.0)), [0, HALF], 1e-12)
+    ck.limit("Nordstrom, the dust universe: the crunch runs out to i^0", point(*mink_pq(1.0, 1e12)), [PI, 0], 1e-9)
+    out = np.concatenate([[0.0], S_POS])
+    crunch, bang = mink_pq(np.ones_like(out), out), mink_pq(-np.ones_like(out), out)
+    edge = [point(a, b) for a, b in zip(*crunch)] + [[PI, 0]] + [point(a, b) for a, b in zip(*bang)][::-1]
+    v = View("dust", "Dust universe", tri_box, "dust")
+    v.fill("region", edge)
+    v.fill("cover", edge)
+    grid(v, "r", lambda c, t: mink_pq(t, c), (0.5, 1, 2, 4), np.linspace(-1, 1, 201))
+    grid(v, "t", mink_pq, (-0.6, 0.0, 0.6), S_POS)
+    v.line("centre", [[[0, -HALF], [0, HALF]]])
+    v.curve("singular", *crunch, zig=True)
+    v.curve("singular", *bang, zig=True)
+    corners(v, ((PI, 0),))
+    v.label_xt([0, 0.25], "$r = 0$", "r", dx=-6)
+    label_on(v, mink_pq(1.0, 1.0), "$ct = L$", "b", "lab", dy=-6)
+    label_on(v, mink_pq(-1.0, 1.0), "$ct = -L$", "t", "lab", dy=6)
+    v.legend("cover", "the whole spacetime, which $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, at $L/2$, $L$, $2L$, and $4L$, each a galaxy at rest")
+    v.legend("t", "$ct$ constant, at $-0.6\\,L$, $0$, and $0.6\\,L$")
+    v.legend("centre", "$r = 0$, a regular centre")
+    v.legend("singular", "the bang $ct = -L$ and the crunch $ct = L$, where the Kretschmann scalar diverges")
+    for m in slices.moments("nordstrom_scalar", "dust"):
+        along_r = np.array(m.reach("dust", "r"))
+        v.slice(m, [mink_pq(np.full_like(along_r, m.time), along_r)])
+    v.set(settings="$L = 1$, the unit of every length; $p = \\arctan((ct - r)/L)$ and $q = \\arctan((ct + r)/L)$.")
+    views.append(v)
+    return views
+
+
 def malament_hogarth(ck, src):
     """Minkowski space less its origin, times Omega^2. A conformal factor changes no null
     direction, so for every Omega the causal structure is Minkowski's less that event, which
@@ -17787,6 +17938,7 @@ DRAWN = {
     "semiclosed_world": semiclosed_world,
     "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii,
     "bartnik_mckinnon": bartnik_mckinnon,
+    "nordstrom_scalar": nordstrom_scalar,
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "reissner_nordstrom_ads": reissner_nordstrom_ads, "c_metric": c_metric,
     "misner": misner, "milne": milne,
     "gott_time_machine": gott_time_machine,
@@ -19938,6 +20090,43 @@ CAPTIONS = {
         "The tortoise coordinate $r_* = \\int\\sqrt{g_{rr}/(-g_{tt})}\\,dr$ runs from the centre through the "
         "surface, and $p, q = \\arctan((ct \\mp r_*)/r_b)$ bring the spacetime into Minkowski's triangle, with "
         "the star a timelike tube from $i^-$ to $i^+$.",
+    ],
+    ("nordstrom_scalar", "conformal"): [
+        "A plane wave of Nordström's theory on the plane $y = z = 0$, each point in the diagram a single event. "
+        "The metric on the plane is $\\Phi^2(-c^2dt^2 + dx^2)$, and a conformal factor changes no null direction, so "
+        "$p = \\arctan(k(ct - x))$ and $q = \\arctan(k(ct + x))$ bring it into Minkowski's diamond, drawn with "
+        "$T = p + q$ up and $X = q - p$ across.",
+        "The wave's $\\Phi$ is positive everywhere, so the plane fills the diamond and its infinity is "
+        "Minkowski's. The crests are lines of constant $p$, light rays moving right, and on a crest a clock at "
+        "rest in the chart ticks $3/2$ as fast as the inertial time $t$.",
+    ],
+    ("nordstrom_scalar", "spherical"): [
+        "The field outside a static body in Nordström's theory, each point in the diagram a 2-sphere of radius "
+        "$r - m$. On the plane of $t$ and $r$ the metric is $(1 - m/r)^2(-c^2dt^2 + dr^2)$, so "
+        "$p = \\arctan((ct - r + m)/\\ell)$ and $q = \\arctan((ct + r - m)/\\ell)$ bring the spacetime into "
+        "Minkowski's triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "The edge $X = 0$ is $r = m$, where the spheres have zero area and the Kretschmann scalar diverges: a "
+        "timelike singularity with no horizon, so light leaving it reaches $\\mathscr{I}^+$. It is the diagram of "
+        "Schwarzschild's metric of negative mass, here for a positive one. A body whose surface lies outside "
+        "$r = m$ covers the singularity, and the diagram outside it is the same.",
+    ],
+    ("nordstrom_scalar", "uniform"): [
+        "A uniform field in Nordström's theory on the plane $x = y = 0$, each point in the diagram a single event. "
+        "The metric on the plane is $(az/c^2)^2(-c^2dt^2 + dz^2)$, so $p = \\arctan(a(ct - z)/c^2)$ and "
+        "$q = \\arctan(a(ct + z)/c^2)$ bring the half plane $z > 0$ into Minkowski's triangle, drawn with "
+        "$T = p + q$ up and $X = q - p$ across.",
+        "The edge $X = 0$ is the plane $z = 0$, where the Kretschmann scalar diverges, a timelike singularity "
+        "that every falling body reaches in a finite proper time. Rindler's wedge has a horizon on that edge, "
+        "which a falling body crosses.",
+    ],
+    ("nordstrom_scalar", "dust"): [
+        "Nordström's universe of dust, each point in the diagram a 2-sphere of radius $\\Phi r$ with "
+        "$\\Phi = 1 - c^2t^2/L^2$. The metric is $\\Phi^2$ times Minkowski's, so $p = \\arctan((ct - r)/L)$ and "
+        "$q = \\arctan((ct + r)/L)$ bring it into the slab $-L < ct < L$ of Minkowski's triangle, drawn with "
+        "$T = p + q$ up and $X = q - p$ across.",
+        "The bang and the crunch are spacelike and meet at $i^0$, so the universe has no null infinity: every "
+        "light ray begins on the bang and ends on the crunch. A ray crosses a comoving distance of $2L$ on the "
+        "way, the size of the particle horizon at the crunch.",
     ],
     ("frw", "flat"): [
         "A flat universe of dust, each point in the diagram a 2-sphere. With $k = 0$, $G^r{}_r = 0$ gives $a \\propto \\eta^2$, and the metric "
