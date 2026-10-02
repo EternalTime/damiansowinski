@@ -206,7 +206,7 @@ class Slice:
         def prep(e):
             # A name the chart defines and holds as a function, as Kastor and Traschen's U, is written out first.
             if R.held:
-                e = e.subs(R.held).doit()
+                e = e.subs({name: value for name, value in R.held.items() if name not in funcs}).doit()
             for fn, rep in funcs.items():
                 e = e.subs(fn, rep).doit()
             return sp.simplify(e.subs(subs).subs(held_at))
