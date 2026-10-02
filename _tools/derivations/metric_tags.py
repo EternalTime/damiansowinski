@@ -142,6 +142,11 @@ REGIONS = {
         "why": "black_hole_limit is the limit mu -> mu_0 outside the disc, the extreme Kerr metric, "
                "and no disc of the family",
     },
+    "chandrasekhar_xanthopoulos": {
+        "regions": [["prolate", "angular", "boyer_lindquist"]],
+        "why": "kerr_ingoing runs on through the horizon into one of the extensions, where Kerr's "
+               "metric is stationary; where the waves have passed both Killing vectors are spacelike",
+    },
     "black_saturn": {
         "regions": [["weyl", "polar"]],
         "why": "ring is the black ring alone, the Saturn with its hole taken away",
@@ -242,6 +247,10 @@ REGIONS = {
 
 # Where the charts cannot decide a tag and the entry's history and sources do.
 OVERRULED = {
+    ("chandrasekhar_xanthopoulos", "stationary"): (
+        False, "where both waves have passed r lies between Kerr's horizons and inside the ergosphere, "
+               "|cos theta| <= (m - r)/sqrt(m^2 - a^2), an end of theta that is not read, and there "
+               "Kerr's d/dt is spacelike, as both Killing vectors of colliding plane waves are"),
     ("coleman_de_luccia", "stationary"): (
         False, "each vacuum is static in its own chart, and the wall between them, at r = r_w, "
                "accelerates outward through both, so the bubble as a whole has no time translation"),

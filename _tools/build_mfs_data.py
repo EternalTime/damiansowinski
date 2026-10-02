@@ -271,7 +271,10 @@ def check_ellipses(at, piece):
     """A stack of ellipses, as _tools/README.md defines it: its rows u and its angles v each
     strictly increasing, the angles within one turn, or up to a whole turn where it is `open`,
     each row's semi-axes a and b, never negative, and height z, and the lines it names by the
-    index of a row or an angle, with an edge that says what lies beyond it."""
+    index of a row or an angle, with an edge that says what lies beyond it. A stack whose ellipses
+    are sheared gives every row its sx and sy as well, the row being the ellipse
+    (a cos v + sx sin v, sy cos v + b sin v), and then a and b are entries of a matrix of positive
+    determinant and may take either sign."""
     grid = piece["grid"]
     u, v = grid.get("u") or [], grid.get("v") or []
     for name, values in (("u", u), ("v", v)):
@@ -279,13 +282,18 @@ def check_ellipses(at, piece):
             raise DataError(f"{at} does not run one way along its {name}")
     if v[0] < 0 or (v[-1] > 2 * math.pi if grid.get("open") else v[-1] >= 2 * math.pi) or len(v) < 3:
         raise DataError(f"{at} runs round beyond one turn")
-    rows = [grid.get(k) or [] for k in ("a", "b", "z")]
+    if ("sx" in grid) != ("sy" in grid):
+        raise DataError(f"{at} gives one half of its shear without the other")
+    sheared = "sx" in grid
+    rows = [grid.get(k) or [] for k in ("a", "b", "z") + (("sx", "sy") if sheared else ())]
     if any(len(row) != len(u) for row in rows):
         raise DataError(f"{at} does not give each row its ellipse and height")
     if not all(isinstance(h, (int, float)) and math.isfinite(h) for row in rows for h in row):
         raise DataError(f"{at} gives a semi-axis or a height that is not a number")
-    if any(h < 0 for row in rows[:2] for h in row):
+    if not sheared and any(h < 0 for row in rows[:2] for h in row):
         raise DataError(f"{at} has a semi-axis below zero")
+    if sheared and any(a * b - sx * sy < 0 for a, b, _, sx, sy in zip(*rows)):
+        raise DataError(f"{at} has a row that turns its ring inside out")
     for line in grid.get("lines", []):
         if not (all(0 <= i < len(u) for i in line["u"]) and all(0 <= j < len(v) for j in line["v"])):
             raise DataError(f"{at} names a line its grid does not hold")

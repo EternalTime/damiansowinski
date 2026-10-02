@@ -190,9 +190,11 @@ def grid_nodes(piece):
     being u cos v and u sin v, as _tools/README.md defines them."""
     grid = piece["grid"]
     if grid["frame"] == "ellipses":
-        # Row i the ellipse (a_i cos v, b_i sin v) at the height z_i.
-        return [[(a * math.cos(v), b * math.sin(v), z) for v in grid["v"]]
-                for a, b, z in zip(grid["a"], grid["b"], grid["z"])]
+        # Row i the ellipse (a_i cos v, b_i sin v) at the height z_i, sheared where the grid gives
+        # sx and sy: (a_i cos v + sx_i sin v, sy_i cos v + b_i sin v).
+        zero = [0.0] * len(grid["u"])
+        return [[(a * math.cos(v) + sx * math.sin(v), sy * math.cos(v) + b * math.sin(v), z) for v in grid["v"]]
+                for a, b, z, sx, sy in zip(grid["a"], grid["b"], grid["z"], grid.get("sx", zero), grid.get("sy", zero))]
     polar = grid["frame"] == "polar"
     return [[(u * math.cos(v), u * math.sin(v), z) if polar else (u, v, z)
              for v, z in zip(grid["v"], row)] for u, row in zip(grid["u"], grid["z"])]
@@ -3169,7 +3171,8 @@ class EmbeddingDiagrams(unittest.TestCase):
         particles. Lentz's class has flat slices for every potential and no soliton that can be
         computed, so it has no embedding diagram."""
         RELIEF = 0.05
-        flat = {"minkowski", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres", "light_beam"}
+        flat = {"minkowski", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres", "light_beam",
+                "chandrasekhar_xanthopoulos"}
         # The domain wall's moment ct = 0, when the wall stops, is the flat disc of radius 1/k taken
         # twice and joined at its rim; the moments either side of it are the cones it opens into.
         # Hayward's hole forms from flat space and leaves flat space behind: the first and the last
@@ -3289,7 +3292,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         self.assertEqual({name for name, data in self.embedding.items()
                           if any("height" in view for view in data["views"])},
                          {"alcubierre", "krasnikov", "natario", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose",
-                          "bell_szekeres", "light_beam", "tippett_tsang"})
+                          "bell_szekeres", "light_beam", "tippett_tsang", "chandrasekhar_xanthopoulos"})
 
     def test_a_grid_that_is_not_one_is_refused(self):
         def spoil(change, words):
@@ -3506,7 +3509,7 @@ class StacksAndMovies(unittest.TestCase):
     September 2026, from the numbers written and nothing else."""
 
     STACKS = {"kasner": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
-              "bell_szekeres": 3.0, "light_beam": 0.4}   # the height of a unit of time
+              "bell_szekeres": 3.0, "light_beam": 0.4, "chandrasekhar_xanthopoulos": 3.0}   # the height of a unit of time
     # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
@@ -3530,7 +3533,7 @@ class StacksAndMovies(unittest.TestCase):
               ("ori_time_machine", "throat"): "$t$", ("senovilla", "universe"): "$act$",
               ("kasner", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
               ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$",
-              ("bell_szekeres", "ring"): "$\\xi$",
+              ("bell_szekeres", "ring"): "$\\xi$", ("chandrasekhar_xanthopoulos", "ring"): "$\\psi$",
               ("gowdy", "torus"): "$t$", ("light_beam", "ring"): "$u$",
               ("string_wave", "ring"): "$u$", ("simpson_visser", "inside"): "$c\\tau$",
               ("hotta_tanaka", "ring"): "$\\tau$",
@@ -5365,6 +5368,18 @@ class Slices(unittest.TestCase):
             height = {"double_null": t, "time_space": t, "global": t - math.pi / 2,
                       "kruskal_szekeres": -math.sqrt(2) * math.cos(t) / (1 + math.sin(t))}[chart]
             return (lambda X: height), [0.0]
+        if key.startswith("chandrasekhar_xanthopoulos/"):
+            # The event on lambda = 0 at psi = t, at m = 1 and a = 4/5: eta = sin t against mu; psi against
+            # lambda; -r = 0.6 sin t - 1 against theta/pi = 1/2; and v - r = r_*(r) - r against r on the
+            # equator of the ingoing chart, with r_* = 0 at r = m.
+            chart = key.split("/")[1]
+            r = 1 - 0.6 * math.sin(t)
+            if chart == "kerr_ingoing":
+                star = (r - 1) - (2 / 3) * math.log((r - 0.4) / 0.6) + (8 / 3) * math.log((1.6 - r) / 0.6)
+                return (lambda X: star - r), [r]
+            if chart == "boyer_lindquist":
+                return (lambda X: -r), [0.5]
+            return (lambda X: math.sin(t) if chart == "prolate" else t), [0.0]
         if key in ("misner/milne/plane", "gott_time_machine/grant_milne/plane"):
             return (lambda X: t), None
         if key.startswith("ori_time_machine/"):
@@ -5960,6 +5975,10 @@ class Slices(unittest.TestCase):
                         height = t if view["id"] in ("double_null", "time_space") else t - math.pi / 2
                         for X, T in points:
                             self.assertLess(abs(X) + abs(T - height), 2e-4, where)
+                    elif metric_id == "chandrasekhar_xanthopoulos":
+                        # The event on lambda = 0 at psi = t: p = q = t/2 in the null coordinates u and v.
+                        for X, T in points:
+                            self.assertLess(abs(X) + abs(T - t), 2e-4, where)
                     elif metric_id == "reissner_nordstrom_de_sitter":
                         # Every region is placed by g(x) = arctan e^(-kappa x) of u and v, kappa = 3/16. The
                         # static moment between r_+ and r_c is the line T = 0; the one inside r_- is T = pi

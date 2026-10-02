@@ -889,6 +889,11 @@ KADS = {"r_s": 2, "a": "1/2", "Lambda": -3}
 KDS_SPLIT = 2.0
 KDS_AXIS = {"theta": "0", "phi": "0"}
 KDS_KERR_AXIS = {"theta": "0", "tildephi": "0"}
+# Chandrasekhar and Xanthopoulos's waves as their diagrams draw them: p = 3/5 and q = 4/5, so that
+# Kerr's spin is a = 4m/5 and its inner horizon, where the waves end, is at r = 2m/5.
+CX_WAVES = {"m": 1, "alpha": "atan(4/3)"}
+CX_KERR = {"m": 1, "a": "4/5"}
+
 # Kerr-Taub-NUT as its diagrams draw it: Kerr's limiting spin a = m with a twist l = 5m/4 above it,
 # in units of m, so that r_+ = 9/4 and r_- = -1/4 and no ring singularity is left.
 KTN = {"m": 1, "a": 1, "l": "5/4"}
@@ -2811,6 +2816,24 @@ DIAGRAMS = [
             marked=(("shell", {"x0": "0", "r": "0"}, "both", "the Killing-Cauchy horizon, $UV = 0$", "past"),)),
     Diagram("bell_szekeres", "bertotti_robinson", "plane", "$t$ and $r$", ("t", "r"), (0, 3, 0, 3),
             "$r$", "$t$", {"a": 1, "b": 1}, {"theta": "pi/2", "phi": "0"}, families=SIDEWAYS, kretschmann=False),
+    # Chandrasekhar and Xanthopoulos's colliding waves at q = 4/5, where both have passed, on the plane
+    # x = y = 0, which the reflection of x and y together keeps fixed: each chart's domain ends on the
+    # two wave fronts and on the Killing-Cauchy horizon, Kerr's inner horizon at r = 2m/5. Between
+    # Kerr's horizons r is the time and falls toward the future, so the Boyer-Lindquist chart is
+    # drawn with -r up, and the ingoing chart draws the principal null rays on the equator through
+    # the horizon to the ring singularity.
+    Diagram("chandrasekhar_xanthopoulos", "prolate", "plane", "$\\eta$ and $\\mu$", ("\\eta", "\\mu"),
+            (-1, 1, 0, 1), "$\\mu$", "$\\eta$", CX_WAVES, {"x": "0", "y": "0"}, tau="eta", families=SIDEWAYS,
+            kretschmann=False),
+    Diagram("chandrasekhar_xanthopoulos", "angular", "plane", "$\\psi$ and $\\lambda$", ("\\psi", "\\lambda"),
+            (-math.pi / 2, math.pi / 2, 0, math.pi / 2), "$\\lambda$", "$\\psi$", CX_WAVES, {"x": "0", "y": "0"},
+            tau="psi", families=SIDEWAYS, kretschmann=False),
+    Diagram("chandrasekhar_xanthopoulos", "boyer_lindquist", "plane", "$r$ and $\\theta$", ("r", "\\theta"),
+            (0, 1, -1, -0.4), "$\\theta/\\pi$", "$-r/m$", CX_KERR, {"t": "0", "phi": "0"},
+            to_display=((0, 1 / math.pi), (-1, 0)), tau="-r", families=SIDEWAYS, kretschmann=False),
+    Diagram("chandrasekhar_xanthopoulos", "kerr_ingoing", "principal", "principal null rays, $v$ and $r$",
+            ("v", "r"), (0, 1.2, -1.2, 2.8), "$r/m$", "$(v - r)/m$", CX_KERR, {"theta": "pi/2"},
+            to_display=FINKELSTEIN_IN, orient="ingoing", principal=True, leaves=("tildephi",), cone=PRINCIPAL_CONE),
     Diagram("pp_wave", "exact_plane_wave", "tz", "$t$ and $z$ on the axis", ("u", "v"), (-2, 2, -2, 2),
             "$z$", "$ct$", {}, {"x": "0", "y": "0"}, to_display=UV_TO_TZ, tau="u + 2*v",
             families=SIDEWAYS, functions={"A": "exp(-u**2)", "B": "0"},
@@ -6745,6 +6768,53 @@ CAPTIONS = {
         "the Killing-Cauchy horizon is the ray $t = r$, reached in this chart only as $y \\to -\\infty$; the rest "
         "of the horizon lies at $t = \\infty$.",
     ],
+    ("chandrasekhar_xanthopoulos", "prolate", "plane"): [
+        "The plane of $\\eta$ and $\\mu$ ($x = y = 0$) where both waves have passed, at $q = 4/5$, each point "
+        "in the diagram a single event. The metric on it is $m^2X(-d\\eta^2/(1 - \\eta^2) + d\\mu^2/(1 - "
+        "\\mu^2))$, so the light rays are the curves of constant $\\arcsin\\eta \\pm \\arcsin\\mu$, each a "
+        "null geodesic.",
+        "The fronts of the two waves are the lines $\\mu = \\pm\\eta$, which leave the collision at "
+        "$\\eta = \\mu = 0$, and the Killing-Cauchy horizon is the line $\\eta = 1$. The rays arrive tangent "
+        "to it, since $g_{\\eta\\eta}$ grows as $1/(1 - \\eta^2)$ there while the curvature stays finite. An "
+        "observer at rest on $\\mu = 0$ reaches the horizon after the proper time $m(\\pi/2 - p)$.",
+    ],
+    ("chandrasekhar_xanthopoulos", "angular", "plane"): [
+        "The plane of $\\psi$ and $\\lambda$ ($x = y = 0$) where both waves have passed, at $q = 4/5$, each "
+        "point in the diagram a single event. The metric on it is $m^2X(-d\\psi^2 + d\\lambda^2)$, a multiple "
+        "of Minkowski's, so the light rays are the lines of constant $\\psi + \\lambda = 2u$ and constant "
+        "$\\psi - \\lambda = 2v$, at 45°, and each is a null geodesic.",
+        "The fronts of the two waves are the lines $\\lambda = \\pm\\psi$, which leave the collision at "
+        "$\\psi = \\lambda = 0$, and the Killing-Cauchy horizon is the line $\\psi = \\pi/2$, where the "
+        "determinant of the metric on the plane of $x$ and $y$, $\\cos^2\\psi\\cos^2\\lambda$, vanishes. Each "
+        "surface of constant $\\psi$ is spacelike, and every observer in the region reaches the horizon.",
+    ],
+    ("chandrasekhar_xanthopoulos", "boyer_lindquist", "plane"): [
+        "The plane of $r$ and $\\theta$ ($t = 0$, $\\phi = 0$) between Kerr's horizons at $a = 4m/5$, drawn "
+        "with $-r$ up and $\\theta/\\pi$ across, each point in the diagram a single event. Between the horizons $r$ is the time and falls "
+        "toward the future. The metric on the plane is $\\Sigma(dr^2/\\Delta + d\\theta^2)$ with "
+        "$\\Delta < 0$, so the light rays are the curves of constant "
+        "$\\arcsin((m - r)/\\sqrt{m^2 - a^2}) \\pm \\theta$, each a null geodesic.",
+        "The collision is the point $r = m$, $\\theta = \\pi/2$, and the fronts of the two waves are the two "
+        "rays that leave it. Where both waves have passed is the wedge between them, which widens to the whole "
+        "range of $\\theta$ on the Killing-Cauchy horizon, Kerr's inner horizon "
+        "$r = m - \\sqrt{m^2 - a^2}$, at $r = 2m/5$ here.",
+    ],
+    ("chandrasekhar_xanthopoulos", "kerr_ingoing", "principal"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Kerr's metric drawn in $v$ and $r$, with $\\tilde\\phi$ "
+        "left out and $v - r$ up, at $a = 4m/5$. The middle of the collision, $\\mu = 0$, lies on it. Its rays are "
+        "Kerr's principal null congruence, at each point the two null directions of the plane spanned by the "
+        "vector along $r$ and the vector with components $r^2 + a^2$ along $v$ and $a$ along $\\tilde\\phi$, "
+        "which are the repeated principal null directions of the Weyl tensor. The ingoing rays are the lines of "
+        "constant $v$, and along the "
+        "outgoing ones $dv/dr = 2(r^2 + a^2)/\\Delta$; both turn in $\\tilde\\phi$ as they go, and the curves "
+        "drawn are their projections.",
+        "The rays are null geodesics, and each cone is the future cone of the principal plane. The waves collide at "
+        "$r = m$, and from there to the Killing-Cauchy horizon $r = m - \\sqrt{m^2 - a^2}$, at $2m/5$ here, $r$ is "
+        "the time and both families fall inward. The ingoing rays cross the horizon, where the metric is regular in "
+        "this chart, and the outgoing rays approach it from both sides without reaching it at any finite $v$. "
+        "Beyond the horizon $r$ is a distance again, and the ingoing rays run on to the ring singularity at "
+        "$r = 0$, which lies on this plane.",
+    ],
     ("pp_wave", "exact_plane_wave", "tz"): [
         "The plane the wave travels in, on its axis ($x = y = 0$), drawn with $u = t - z$ and $v = (t + z)/2$ for "
         "a time $t$ and a distance $z$ along the wave, so that the axes are $t$ and $z$; the chart's own $u$ and "
@@ -9653,6 +9723,10 @@ def principal_checks(chart, n=241):
         acc = dk + Gkk
         across = acc - (np.sum(acc * k, 1) / np.sum(k * k, 1))[:, None] * k
         size = np.linalg.norm(dk, axis=1) + np.linalg.norm(Gkk, axis=1)
+        # A family whose tangent is a coordinate vector along an affine coordinate, as the ingoing rays
+        # of Kerr's ingoing chart are -d/dr, has both terms zero, and the miss is measured against the
+        # connection's own size, so that the rounding of two zeros is not read as a miss of order one.
+        size = np.maximum(size, 1e-6 * np.abs(G).max((1, 2, 3)) * np.sum(k * k, 1))
         geodesic.append(np.linalg.norm(across, axis=1) / size)
         lower = np.einsum("nab,nb->na", g, k)
         Q = np.einsum("nabcd,nb,nc->nad", C, k, k)
@@ -11111,6 +11185,14 @@ CLOSED_FORMS = {
     ("khan_penrose", "double_null", "plane"): (lambda u, v: v, lambda u, v: u, None),
     ("khan_penrose", "cosmological", "plane"): (lambda tau, s: tau + s, lambda tau, s: tau - s, None),
     ("krasnikov", "cylindrical", "tx"): (None, lambda t, x: t - x, None),
+    ("chandrasekhar_xanthopoulos", "prolate", "plane"):
+        (lambda eta, mu: np.arcsin(eta) + np.arcsin(mu), lambda eta, mu: np.arcsin(eta) - np.arcsin(mu),
+         lambda eta, mu: (eta < 0.995) & (np.abs(mu) < 0.995)),
+    ("chandrasekhar_xanthopoulos", "angular", "plane"): (lambda psi, lam: psi + lam, lambda psi, lam: psi - lam, None),
+    # dr^2/|Delta| = dtheta^2 with m = 1 and a = 4/5, where |Delta| = 9/25 - (1 - r)^2.
+    ("chandrasekhar_xanthopoulos", "boyer_lindquist", "plane"):
+        (lambda r, th: np.arcsin((1 - r) / 0.6) - th, lambda r, th: np.arcsin((1 - r) / 0.6) + th,
+         lambda r, th: r > 0.403),
     ("bell_szekeres", "double_null", "plane"): (lambda u, v: v, lambda u, v: u, None),
     ("bell_szekeres", "time_space", "plane"): (lambda xi, eta: xi + eta, lambda xi, eta: xi - eta, None),
     # cos(xi) e^(-+ky) = -T -+ Z, so (-T -+ Z)/(1 + sin(xi)) with sin(xi) = sqrt(1 - T^2 + Z^2) are null.
