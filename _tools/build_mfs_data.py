@@ -17,6 +17,9 @@ files by _tools/derivations/conformal.py and the embedding diagram files by
 _tools/derivations/embedding.py, which need sympy and numpy; this script only reads them.
 It refuses any of them drawn from components its metric no longer publishes, and stamps
 each file's version into the index beside the metric's own.
+
+It also refuses a symbol that a chart's mathematics or a drawing uses and nothing defines;
+symbols.py, beside this file, holds that rule.
 """
 
 import argparse
@@ -27,6 +30,8 @@ import re
 import sys
 import unicodedata
 from pathlib import Path
+
+from symbols import symbol_problems
 
 ROOT = Path(__file__).resolve().parent.parent
 METRICS_DIR = ROOT / "MFS" / "assets" / "data" / "metrics"
@@ -799,6 +804,16 @@ def check_conventions(metrics):
         raise DataError("\n".join(problems))
 
 
+def check_symbols(metrics, diagrams, conformal, embedding):
+    """Refuse a symbol that a chart's mathematics or a drawing uses and nothing defines, naming
+    every one at once. `symbols.py` holds the rule and the list of symbols that need no definition."""
+    problems = [problem for metric in metrics
+                for problem in symbol_problems(metric, diagrams.get(metric["id"]), conformal.get(metric["id"]),
+                                               embedding.get(metric["id"]))]
+    if problems:
+        raise DataError("\n".join(problems))
+
+
 def serialise(value):
     return json.dumps(value, indent=2, ensure_ascii=False) + "\n"
 
@@ -820,6 +835,7 @@ def main(argv=None):
         embedding = load_embedding(metrics)
         check_slices(diagrams, conformal, embedding)
         check_shades(conformal, embedding)
+        check_symbols(metrics, diagrams, conformal, embedding)
         outputs = {
             INDEX_FILE: serialise(build_index(metrics, diagrams, conformal, embedding)),
             REFERENCES_FILE: serialise(references),

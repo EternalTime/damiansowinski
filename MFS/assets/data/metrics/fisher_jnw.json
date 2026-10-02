@@ -105,7 +105,7 @@
         },
         {
           "symbol": "\\gamma",
-          "description": "Share of the mass in $b$, a pure number with $0 < \\gamma \\le 1$: $\\gamma = 2GM/(c^2b)$; $\\gamma = 1$ is Schwarzschild's metric with $r_s = b$"
+          "description": "Share of the mass in $b$, a pure number with $0 < \\gamma \\le 1$: $\\gamma = 2GM/(c^2b)$; $\\gamma = 1$ is Schwarzschild's metric with $r_s = b$. A radial light ray keeps $ct \\mp r_*$ for the tortoise coordinate $r_*$, with $dr_*/dr = (1 - b/r)^{-\\gamma}$"
         },
         {
           "symbol": "f = 1 - \\dfrac{b}{r}",
@@ -1468,7 +1468,7 @@
         },
         {
           "symbol": "\\gamma",
-          "description": "Share of the mass in $b$, a pure number with $0 < \\gamma \\le 1$: $\\gamma = 2GM/(c^2b)$; $\\gamma = 1$ is Schwarzschild's metric with $r_s = b$"
+          "description": "Share of the mass in $b$, a pure number with $0 < \\gamma \\le 1$: $\\gamma = 2GM/(c^2b)$; $\\gamma = 1$ is Schwarzschild's metric with $r_s = b$. A radial light ray keeps $ct \\mp r_*$ for the tortoise coordinate $r_*$, with $dr_*/dr = (1 - b/r)^{-\\gamma}$"
         },
         {
           "symbol": "f = \\dfrac{2R - b(1-\\gamma)}{2R + b(1+\\gamma)}",
@@ -2831,7 +2831,7 @@
         },
         {
           "symbol": "\\gamma",
-          "description": "Share of the mass in $b$, a pure number with $0 < \\gamma \\le 1$: $\\gamma = 2GM/(c^2b)$; $\\gamma = 1$ is Schwarzschild's metric with $r_s = b$"
+          "description": "Share of the mass in $b$, a pure number with $0 < \\gamma \\le 1$: $\\gamma = 2GM/(c^2b)$; $\\gamma = 1$ is Schwarzschild's metric with $r_s = b$. A radial light ray keeps $ct \\mp r_*$ for the tortoise coordinate $r_*$, with $dr_*/dr = (1 - b/r)^{-\\gamma}$"
         },
         {
           "symbol": "h = \\dfrac{4\\rho - b}{4\\rho + b}",

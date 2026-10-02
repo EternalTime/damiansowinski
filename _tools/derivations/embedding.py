@@ -2093,7 +2093,7 @@ def tov(ck, src):
     return [view("star", "The star and its exterior", "$GM_\\odot/c^2$", [surface], fig.done(),
                  settings=f"$G = c = M_\\odot = 1$, so that the unit of every length is $GM_\\odot/c^2 = {km:.2f}$ km.",
                  input="A polytrope, $p = K\\rho_0^2$ with rest mass density $\\rho_0$ and energy density "
-                       "$\\rho c^2 = \\rho_0c^2 + p$, at $K = 100$ and a central $\\rho_0 = 1.28\\times10^{-3}$, "
+                       "$\\rho c^2$, where $\\rho = \\rho_0 + p/c^2$, at $K = 100$ and a central $\\rho_0 = 1.28\\times10^{-3}$, "
                        f"solved from this spacetime's own $G^t{{}}_t$ and $G^r{{}}_r$: a star of $M = {M:.2f}\\,M_\\odot$ "
                        f"and $R = {R * km:.1f}$ km, the star on which numerical relativists test their codes.")]
 
@@ -3458,8 +3458,8 @@ def vaidya(ck, src):
     return [view("shell", "The falling shell", "$r_s$", surfaces, fig.done(),
                  movie=movie(frames, "$v - r$", [f.time for f in frames]),
                  settings="$r_s = 2GM/c^2 = 1$, the unit of every length; each moment is a slice of constant $v - r$.",
-                 input="An imploding shell of radiation, $m = 0$ for $v < 0$ and $m = M$ for $v > 0$, as in "
-                       "the conformal diagram.")]
+                 input="An imploding shell of radiation, $m = 0$ for $v < 0$ and $m = M$ for $v > 0$ with $M$ the "
+                       "mass of the shell, as in the conformal diagram.")]
 
 
 def photon_rocket(ck, src):
@@ -3702,8 +3702,9 @@ def oppenheimer_snyder(ck, src):
                  movie=movie(frames, "$c\\tau$", [f.time for f in frames]),
                  settings="$R_0 = 2\\,r_s$, so that $\\chi_0 = \\pi/4$ and $a_m = 2\\sqrt{2}\\,r_s$, with $r_s = 1$ the "
                           "unit of every length; the moments are the dust's proper time $\\tau$ since the release.",
-                 input="Outside the dust, the slices of Tolman-Bondi's comoving chart with no dust in it, $1 + 2E = "
-                       "1 - r_s/r$, each shell of clocks released from rest at $R = r$ when the dust is.")]
+                 input="Outside the dust, the slices of Tolman-Bondi's comoving chart with no dust in it and the "
+                       "energy function $E = -r_s/2r$, each shell of clocks released from rest at $R = r$ when the "
+                       "dust is.")]
 
 
 VERTICAL = 2   # the Tolman-Bondi cloud is drawn this many times taller than its embedding
@@ -3772,7 +3773,7 @@ def tolman_bondi(ck, src):
                  movie=movie(frames, "$ct$", [f.time for f in frames]),
                  settings="$r_b = 1$, the unit of every length, and $2GM/c^2 = r_b/2$.",
                  input="The cloud of the spacetime diagram, its density falling as $1 - r^2/r_b^2$ to zero at $r_b$ "
-                       "with $R(r, 0) = r$, but released from rest, $E = -GM(r)/c^2r$, each shell falling on its own "
+                       "with $R(r, 0) = r$, but released from rest, $E = -GM(r)/c^2r$ with $M(r)$ the mass inside the shell $r$, each shell falling on its own "
                        "cycloid, checked to solve this spacetime's own $G^r{}_r = 0$ and to give its density.",
                  stops=["The spacetime diagram's cloud is marginally bound, $E = 0$, and then every slice of constant "
                         "$t$ is flat: $g_{rr} = (\\partial_rR)^2$ makes the distance between two shells the difference "
@@ -4886,8 +4887,8 @@ def natario(ck, src):
     fig.legend("line", "flow", "lines of the flow, forward through the bubble and back round it through the wall")
     return [view("plane", "The plane of the path", "$R$", [surface], fig.done(),
                  settings="$t = 0$, when the bubble is centred on $x = 0$, with $R = 1$, the unit of every length.",
-                 input="$v_s = 2$, $n = f/2$ with Alcubierre's profile, and the zero expansion field $X = v_s[(2n + "
-                       "\\rho n')\\,e_x - n'\\,x_r\\,(x_r, y, z)/\\rho]$, $x_r = x - v_s t$, as in the spacetime "
+                 input="$v_s = 2$, $n = f/2$ with Alcubierre's shape function $f$ for a bubble of radius $R$, and the zero expansion field $X = v_s[(2n + "
+                       "\\rho n')\\,e_x - n'\\,x_r\\,(x_r, y, z)/\\rho]$, $x_r = x - v_s t$, $\\rho^2 = x_r^2 + y^2 + z^2$, as in the spacetime "
                        "diagram.",
                  height=f"$\\varepsilon = -c^4K_{{ij}}K^{{ij}}/16\\pi G$, a height of $-R$ for $\\varepsilon = "
                         f"-2c^4/\\pi GR^2$, and ${least / 16:.4f}R$ where it is most negative, "
@@ -6526,7 +6527,7 @@ def mixmaster(ck, src):
                  movie=movie(frames, "$c\\tau$", [f.time for f in frames]),
                  settings="$m = 1$, the unit of every length, and $l = m/2$; each moment is labelled by the proper time "
                           "$c\\tau$ from Taub's first horizon.",
-                 input="Taub's universe, $a_1 = a_2 = \\sqrt{T^2 + l^2}$ and $a_3 = 2l\\sqrt{U}$ with $U = (-T^2 + 2mT + "
+                 input="Taub's universe, in his time $T$: $a_1 = a_2 = \\sqrt{T^2 + l^2}$ and $a_3 = 2l\\sqrt{U}$ with $U = (-T^2 + 2mT + "
                        "l^2)/(T^2 + l^2)$ and $c\\,d\\tau = dT/\\sqrt{U}$, checked to make every Einstein component of "
                        "this spacetime vanish.",
                  stops=["When the three scale factors differ, as in every other Mixmaster universe, the great sphere's "
@@ -7079,9 +7080,9 @@ def kantowski_sachs(ck, src):
     fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
     views.append(view("vacuum", "Vacuum", "$r_s$", vacuum, fig.done(), system="schwarzschild_interior",
                       movie=movie(frames, "$c\\tau$", [f.time for f in frames]),
-                      settings="$r_s = 1$, the unit of every length, with the moments in the order of the proper time "
-                               "$c\\tau = r_s\\left(\\eta + \\sin\\eta\\cos\\eta\\right)$ of an observer at fixed $r$ since "
-                               "the horizon, where $T = r_s\\cos^2\\eta$."))
+                      settings="$r_s = 1$, the unit of every length, with the moments in the order of the proper "
+                               "time $c\\tau = r_s\\left(\\eta + \\sin\\eta\\cos\\eta\\right)$ of an observer at "
+                               "fixed $r$ since the horizon, where $T = r_s\\cos^2\\eta$."))
     return views
 MCV_MOMENTS = (1.0, 3.0, 5.0, 7.0)      # ct in r_s
 MCV_H0 = 1 / math.sqrt(15)              # H_0 r_s/c, which is Lambda r_s^2 = 1/5
@@ -7434,10 +7435,10 @@ CAPTIONS = {
         "metric distance.",
         "On the slice the metric is $dr^2/N^2 + r^2d\\phi^2$ with $N^2 = r^2/\\ell^2 - M$. Inside the circle the "
         "surface climbs at $dz/dr = \\sqrt{1/N^2 - 1}$, from vertical at the throat, as Schwarzschild's does at "
-        "$r_s$, to level where $N^2 = 1$. Beyond it the circles grow faster than the distance out to them, as on "
-        "the static slice of anti-de Sitter space, and the surface climbs at $dZ/dr = \\sqrt{1 - 1/N^2}$ from level "
-        "toward a light cone of Minkowski space, as the hyperboloid of anti-de Sitter space does. Both parts lie "
-        "level at the circle, so they meet there with one tangent plane.",
+        "its horizon, to level where $N^2 = 1$. Beyond it the circles grow faster than the distance out to them, "
+        "as on the static slice of anti-de Sitter space, and the surface climbs at $dZ/dr = \\sqrt{1 - 1/N^2}$ "
+        "from level toward a light cone of Minkowski space, as the hyperboloid of anti-de Sitter space does. Both "
+        "parts lie level at the circle, so they meet there with one tangent plane.",
     ],
     ("c_metric", "equator"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the C-metric at one moment of $t$ ($\\alpha m = 1/6$, "
@@ -7764,7 +7765,7 @@ CAPTIONS = {
         "horizon ($\\ell = 0.648\\,m$), drawn as a surface in flat space with every distance along it the metric "
         "distance. On it $g_{rr} = (r^3 + 2m\\ell^2)/(r^3 - 2mr^2 + 2m\\ell^2)$, so "
         "$dz/dr = \\sqrt{2mr^2/(r^3 - 2mr^2 + 2m\\ell^2)}$, and the slice passes through the outer horizon's "
-        "bifurcation sphere $r = r_+$, its throat, into a second exterior, as Schwarzschild's does through $r_s$.",
+        "bifurcation sphere $r = r_+$, its throat, into a second exterior, as Schwarzschild's does through its own horizon.",
         "The length $\\ell$ pulls the throat in from $2m$ to $r_+ = 12m/7$, and far out the surface rises as "
         "Flamm's paraboloid of the same mass does, $dz/dr \\to \\sqrt{2m/r}$. Between the horizons $r$ is a time, "
         "and no slice of constant $t$ enters there.",
@@ -7979,11 +7980,11 @@ CAPTIONS = {
     ],
     ("taub_nut", "equator"): [
         "The equatorial plane ($\\theta = \\pi/2$) of Taub-NUT space at one moment of $t$, drawn as a surface in "
-        "flat space with every distance along it the metric distance. The NUT "
-        "parameter enters $g_{t\\phi}$ through $\\cos\\theta$, which vanishes on the equator, so the slice there "
-        "is a surface of revolution: $g_{rr} = (r^2 + l^2)/(r^2 - 2mr - l^2)$, with circles of circumference "
-        "$2\\pi\\sqrt{r^2 + l^2}$, standing vertical at the horizon $r_+ = m + \\sqrt{m^2 + l^2}$ as Flamm's "
-        "paraboloid does at $r_s$.",
+        "flat space with every distance along it the metric distance. The NUT parameter enters $g_{t\\phi}$ "
+        "through $\\cos\\theta$, which vanishes on the equator, so the slice there is a surface of revolution: "
+        "$g_{rr} = (r^2 + l^2)/(r^2 - 2mr - l^2)$, with circles of circumference $2\\pi\\sqrt{r^2 + l^2}$, "
+        "standing vertical at the horizon $r_+ = m + \\sqrt{m^2 + l^2}$ as Flamm's paraboloid does at its own "
+        "horizon.",
         "The horizon's circumference radius is $\\sqrt{2(mr_+ + l^2)}$, larger than Schwarzschild's $2m$ for "
         "the same mass. Across the horizon lies Taub's cosmology, where $r$ is a time, so the slice ends there. The "
         "equator stays clear of the Misner string, the singular axis $\\theta = 0$ and $\\pi$, which a periodic "
@@ -8049,7 +8050,7 @@ CAPTIONS = {
         "five dimensions at one moment of $t$, drawn as a surface in flat space with every distance along it the "
         "metric distance. On it the metric is $dr^2/(1 - r_h^2/r^2) + r^2d\\phi^2$, so $dz/dr = "
         "r_h/\\sqrt{r^2 - r_h^2}$ and the surface is the catenoid $r = r_h\\cosh(z/r_h)$. Far out its height "
-        "grows as $r_h\\ln(2r/r_h)$, where Flamm's paraboloid of four dimensions grows as $2\\sqrt{r_sr}$.",
+        "grows as $r_h\\ln(2r/r_h)$, where Flamm's paraboloid of four dimensions grows as $2\\sqrt{r_sr}$ with $r_s$ its own horizon radius.",
         "Every slice of constant $t$ passes through the bifurcation sphere $r = r_h$, where the circles are "
         "smallest, and runs on through it into a second exterior, the same catenoid turned over.",
     ],
@@ -8057,9 +8058,9 @@ CAPTIONS = {
         "The plane of $r$ and $\\phi$ ($\\chi = \\psi = \\theta = \\pi/2$) of the Schwarzschild-Tangherlini "
         "spacetime in six dimensions at one moment of $t$, drawn as a surface in flat space with every distance "
         "along it the metric distance. On it the metric is $dr^2/(1 - r_h^3/r^3) + r^2d\\phi^2$, so $dz/dr = "
-        "\\sqrt{r_h^3/(r^3 - r_h^3)}$, which falls as $r^{-3/2}$ far out. The surface climbs from vertical at "
-        "the throat toward the finite height $\\tfrac{1}{3}B(\\tfrac{1}{6}, \\tfrac{1}{2})\\,r_h = 2.429\\,r_h$, "
-        "which it approaches as $r \\to \\infty$, as the slice does for every $D \\ge 6$.",
+        "\\sqrt{r_h^3/(r^3 - r_h^3)}$, which falls as $r^{-3/2}$ far out. The surface climbs from vertical at the "
+        "throat toward the finite height $\\tfrac{1}{3}B(\\tfrac{1}{6}, \\tfrac{1}{2})\\,r_h = 2.429\\,r_h$, with "
+        "$B$ the beta function, which it approaches as $r \\to \\infty$, as the slice does for every $D \\ge 6$.",
         "Every slice of constant $t$ passes through the bifurcation sphere $r = r_h$, where the circles are "
         "smallest, and runs on through it into a second exterior, the same surface turned over.",
     ],
@@ -8224,7 +8225,7 @@ CAPTIONS = {
         "The plane $z = 0$ about the removed event of a Malament-Hogarth spacetime as $t$ runs from $ct = -0.7$ up to "
         "the removed event, each moment drawn as a surface in flat space with every distance along it the metric "
         "distance. "
-        "The metric is $\\Omega^2$ times Minkowski's, so the circle of radius $s$ has circumference $2\\pi s\\Omega$ "
+        "The metric is $\\Omega^2$ times Minkowski's, so the circle of radius $s$, with $\\phi$ the angle round it, has circumference $2\\pi s\\Omega$ "
         "and every distance is $\\Omega$ times its flat value: where $\\Omega$ grows toward the removed event the "
         "plane sinks into a well, flat again beyond the unit ball where $\\Omega = 1$.",
         "As $t$ runs up to the moment of the removed event the well deepens without limit, and at $ct = 0$ it has no "
@@ -8471,15 +8472,16 @@ CAPTIONS = {
         "moment is the hyperbolic plane of curvature $-1/c^2t^2$. It lies whole on one sheet of the hyperboloid "
         "$Z^2 - X^2 - Y^2 = c^2t^2$.",
         "That Minkowski space is the plane $\\theta = \\pi/2$ of the inertial chart, with $Z = cT$, so each sheet "
-        "stands where its moment lies in spacetime. The sheets nest inside the light cone of the event $T = R = 0$, "
-        "dashed, and each nears it as $\\chi$ grows. The circle of comoving particles at each $\\chi$ moves out along "
-        "the straight line $Z = \\rho\\coth\\chi$ through the apex of the cone, at the speed $c\\tanh\\chi$.",
+        "stands where its moment lies in spacetime. The sheets nest inside the light cone of the event $T = R = "
+        "0$, dashed, and each nears it as $\\chi$ grows. The circle of comoving particles at each $\\chi$ moves "
+        "out along the straight line $Z = \\rho\\coth\\chi$, with $\\rho$ the distance from the axis, through the "
+        "apex of the cone, at the speed $c\\tanh\\chi$.",
     ],
     ("frw", "closed"): [
         "The equator ($\\theta = \\pi/2$) of space in a closed universe of dust as cosmic time runs from $ct = 0.18$ "
         "to $6.10$, each moment drawn as a surface in flat space with every distance along it the "
         "metric distance. Each slice of constant $t$ is a three sphere, and its equator is a "
-        "sphere of radius $a(t)/\\sqrt{k}$. The comoving circles of constant $\\chi$ keep their places on "
+        "sphere of radius $a(t)/\\sqrt{k}$. The comoving circles of constant polar angle $\\chi$, with $r = \\sin\\chi$, keep their places on "
         "it while every distance between them grows and shrinks with $a$, from zero at the bang to the "
         "largest at $ct = \\pi/\\sqrt{k}$ and back to zero at the crunch at $ct = 2\\pi/\\sqrt{k}$.",
         "The radius $r = \\sin\\chi$ covers one hemisphere and ends at the equator $r = 1$, where "

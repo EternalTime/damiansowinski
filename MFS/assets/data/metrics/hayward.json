@@ -109,7 +109,7 @@
         },
         {
           "symbol": "\\ell",
-          "description": "Length of the de Sitter core, with $F \\approx 1 - r^2/\\ell^2$ near the centre"
+          "description": "Length of the de Sitter core, with $F \\approx 1 - r^2/\\ell^2$ near the centre; $\\kappa_\\pm$ are the surface gravities of the horizons $r_\\pm$"
         }
       ],
       "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$. For $\\ell < 4m/3\\sqrt{3}$ the horizons $r_- < r_+$ are the two positive roots of $r^3 - 2mr^2 + 2m\\ell^2$.",
@@ -1532,7 +1532,7 @@
         },
         {
           "symbol": "\\ell",
-          "description": "Length of the de Sitter core, with $F \\approx 1 - r^2/\\ell^2$ near the centre"
+          "description": "Length of the de Sitter core, with $F \\approx 1 - r^2/\\ell^2$ near the centre; $\\kappa_\\pm$ are the surface gravities of the horizons $r_\\pm$"
         }
       ],
       "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v = ct + r_*$ a length, where $dr_*/dr = \\left(1 - 2mr^2/(r^3 + 2m\\ell^2)\\right)^{-1}$ and $r_* = 0$ at $r = 0$. For $\\ell < 4m/3\\sqrt{3}$ the horizons $r_- < r_+$ are the two positive roots of $r^3 - 2mr^2 + 2m\\ell^2$.",
@@ -3257,7 +3257,7 @@
         },
         {
           "symbol": "\\ell",
-          "description": "Length of the de Sitter core, with $F \\approx 1 - r^2/\\ell^2$ near the centre"
+          "description": "Length of the de Sitter core, with $F \\approx 1 - r^2/\\ell^2$ near the centre; $\\kappa_\\pm$ are the surface gravities of the horizons $r_\\pm$"
         }
       ],
       "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded time $u = ct - r_*$ a length, where $dr_*/dr = \\left(1 - 2mr^2/(r^3 + 2m\\ell^2)\\right)^{-1}$ and $r_* = 0$ at $r = 0$. For $\\ell < 4m/3\\sqrt{3}$ the horizons $r_- < r_+$ are the two positive roots of $r^3 - 2mr^2 + 2m\\ell^2$.",
@@ -4977,11 +4977,11 @@
       "parameters": [
         {
           "symbol": "m = m(v)",
-          "description": "Mass function of advanced time, a length, $m = GM/c^2$"
+          "description": "Mass function of advanced time, a length, $m = GM/c^2$; $m_0$ is its greatest value in the drawings"
         },
         {
           "symbol": "\\ell",
-          "description": "Length of the de Sitter core, with $F \\approx 1 - r^2/\\ell^2$ near the centre"
+          "description": "Length of the de Sitter core, with $F \\approx 1 - r^2/\\ell^2$ near the centre; $\\kappa_\\pm$ are the surface gravities of the horizons $r_\\pm$"
         }
       ],
       "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v$ a length and the mass a function $m(v)$ of it. A dot in the geodesic equations is a derivative with respect to an affine parameter.",

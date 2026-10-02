@@ -116,7 +116,7 @@
       "parameters": [
         {
           "symbol": "a",
-          "description": "Spin length, $a = 4GJ/c^3$, with $J$ the string's angular momentum per unit length; a circuit of the string shifts the flat time $t + a\\phi/c$ by $2\\pi a/c$"
+          "description": "Spin length, $a = 4GJ/c^3$, which sets the radius $r_c = a/b$, with $J$ the string's angular momentum per unit length; a circuit of the string shifts the flat time $t + a\\phi/c$ by $2\\pi a/c$"
         },
         {
           "symbol": "b",
@@ -382,7 +382,7 @@
       "parameters": [
         {
           "symbol": "a",
-          "description": "Spin length, $a = 4GJ/c^3$, with $J$ the string's angular momentum per unit length; a circuit of the string shifts the flat time $t + a\\phi/c$ by $2\\pi a/c$"
+          "description": "Spin length, $a = 4GJ/c^3$, which sets the radius $r_c = a/b$, with $J$ the string's angular momentum per unit length; a circuit of the string shifts the flat time $t + a\\phi/c$ by $2\\pi a/c$"
         },
         {
           "symbol": "b",
@@ -647,7 +647,7 @@
       "parameters": [
         {
           "symbol": "a",
-          "description": "Spin length, $a = 4GJ/c^3$, with $J$ the string's angular momentum per unit length; a circuit of the string shifts the flat time $t + a\\phi/c$ by $2\\pi a/c$"
+          "description": "Spin length, $a = 4GJ/c^3$, which sets the radius $r_c = a/b$, with $J$ the string's angular momentum per unit length; a circuit of the string shifts the flat time $t + a\\phi/c$ by $2\\pi a/c$"
         },
         {
           "symbol": "b",
@@ -929,7 +929,7 @@
       "parameters": [
         {
           "symbol": "a",
-          "description": "Spin length, $a = 4GJ/c^3$, with $J$ the string's angular momentum per unit length; a circuit of the string shifts the flat time $t + a\\phi/c$ by $2\\pi a/c$"
+          "description": "Spin length, $a = 4GJ/c^3$, which sets the radius $r_c = a/b$, with $J$ the string's angular momentum per unit length; a circuit of the string shifts the flat time $t + a\\phi/c$ by $2\\pi a/c$"
         },
         {
           "symbol": "b",

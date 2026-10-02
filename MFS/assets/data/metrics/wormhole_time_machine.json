@@ -48,7 +48,7 @@
       "parameters": [
         {
           "symbol": "b",
-          "description": "Radius of each mouth, the ball removed about its world line"
+          "description": "Radius of each mouth: with $\\mathbf{X}$ the position in space, $\\mathbf{X}_A(\\tau)$ the world line of mouth number $A$, 1 or 2, and $\\mathcal{B}_1$ and $\\mathcal{B}_2$ the spheres of radius $b$ about the two, the ball inside each sphere is removed"
         }
       ],
       "convention": "We use the Lorentz coordinates $(T, X, Y, Z)$ of the flat space outside the mouths, with $T$ carrying dimensions of time, and $\\tau$ is the proper time along a mouth's world line. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
@@ -215,7 +215,7 @@
       "parameters": [
         {
           "symbol": "g = g(t)",
-          "description": "Acceleration of the right mouth in its own asymptotic rest frame, $g = \\gamma^2\\,dv/dt$ for a mouth moving at speed $v$ with $\\gamma = (1 - v^2/c^2)^{-1/2}$"
+          "description": "Acceleration of the right mouth in its own asymptotic rest frame, where $g_{\\max}$ is its greatest size, $g = \\gamma^2\\,dv/dt$ for a mouth moving at speed $v$ with $\\gamma = (1 - v^2/c^2)^{-1/2}$"
         },
         {
           "symbol": "F = F(l)",
@@ -227,7 +227,7 @@
         },
         {
           "symbol": "r = r(l)",
-          "description": "Areal radius of the static wormhole, a length, with its minimum $r_0$ at the throat"
+          "description": "Areal radius of the static wormhole, a length, with its least value, the radius $r_0$, at the throat"
         },
         {
           "symbol": "N = 1 + \\dfrac{glF\\cos\\theta}{c^2}",

@@ -71,7 +71,7 @@
     ],
     "version": "94f306ae784e7486",
     "diagrams": "3126b713e8a7ceb2",
-    "conformal": "92b6eb7611a849b5",
+    "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
   },
   {
@@ -144,8 +144,8 @@
     ],
     "version": "0d71cf08a455620d",
     "diagrams": "6ea71ecfd6a99f72",
-    "conformal": "aa1949dc769108ad",
-    "embedding": "bf931d9df3013c58"
+    "conformal": "1839877814357d2c",
+    "embedding": "2c639ca6fbd71045"
   },
   {
     "id": "bardeen",
@@ -183,7 +183,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "13b728bbc98aa12e",
+    "version": "9c16d051401aeefa",
     "diagrams": "af782319d0ede812",
     "conformal": "7ea8e08d66397efe",
     "embedding": "1585df5452ac5572"
@@ -322,7 +322,7 @@
     ],
     "version": "f78dc6f44c55bca0",
     "diagrams": "60cc56f450326363",
-    "conformal": "4380d718be4b9349",
+    "conformal": "d6c09caa82c5caf6",
     "embedding": "8cf5301ea3792cef"
   },
   {
@@ -384,7 +384,7 @@
     ],
     "version": "894c4c0d4d414aa3",
     "diagrams": "99a9f8a21a100275",
-    "conformal": "6c2254de11290b3b",
+    "conformal": "7f7b3ad43c1f628e",
     "embedding": "759b3c0dec35465e"
   },
   {
@@ -412,7 +412,7 @@
     ],
     "version": "3d628de300a5dba2",
     "diagrams": "b1166493c0272984",
-    "conformal": "f0585b2da42de10b",
+    "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
   },
   {
@@ -453,9 +453,9 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c3dd9386824e9754",
+    "version": "975e56975c90e515",
     "diagrams": "4ab31bd70f52c64d",
-    "conformal": "60ff81e81f622c29",
+    "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc"
   },
   {
@@ -481,7 +481,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5bb4dacb633455fb",
+    "version": "0b9e475c7bb552fe",
     "diagrams": "9afed8951c5aec50",
     "conformal": "c7734072db0d7622",
     "embedding": "07b92b646e316b86"
@@ -504,9 +504,9 @@
       "idealized model"
     ],
     "version": "5874abdb9f734637",
-    "diagrams": "885cf2913e61ef20",
-    "conformal": "673b1830ad956a8d",
-    "embedding": "3de7a934fb717388"
+    "diagrams": "dc0f3031798ca092",
+    "conformal": "2876dfbbabbb4b26",
+    "embedding": "f736444606912902"
   },
   {
     "id": "ellis_bronnikov",
@@ -572,7 +572,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1cd6db953a7edaf3",
+    "version": "5548dac2ba1b64ad",
     "diagrams": "3ae6a5324e2f9841",
     "conformal": "0ad248166c7cdb8f",
     "embedding": "3cdd1185c95f1f46"
@@ -596,10 +596,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "fd6cce07e0285df9",
+    "version": "4ddb40b3fd2ae0d0",
     "diagrams": "8ba167a0fd9be7b3",
-    "conformal": "690299be36af8c35",
-    "embedding": "288fc546b8f93c07"
+    "conformal": "8eae1f29962efe8c",
+    "embedding": "36a4b8cf07813dbb"
   },
   {
     "id": "string_wave",
@@ -661,9 +661,9 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "82efd29fa1782f8d",
+    "version": "6e80ce0a483a8533",
     "diagrams": "fa2f1e08173abce4",
-    "conformal": "5f360e629f92fb00",
+    "conformal": "f6e3d96167454df0",
     "embedding": "364e0217d4805443"
   },
   {
@@ -713,8 +713,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "835327ba76ac71a8",
-    "diagrams": "fc0a639f4f3a4d4d",
+    "version": "daf69c7e618cd2a5",
+    "diagrams": "b4937a90691eba2b",
     "conformal": "14c873edf7fb75dc",
     "embedding": "c0db8a34cdba1339"
   },
@@ -780,10 +780,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ca40daaf144debdf",
+    "version": "a57800c8be2a57fe",
     "diagrams": "bd41935318270b6a",
     "conformal": "17d38d5b746db304",
-    "embedding": "a8a85de8ed835f8a"
+    "embedding": "5ff5b48da9e6b5f3"
   },
   {
     "id": "kaluza_klein_monopole",
@@ -908,7 +908,7 @@
       "idealized model"
     ],
     "version": "c4fc026d498fa019",
-    "diagrams": "2bebc0757ae1bb04",
+    "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
   },
@@ -1124,8 +1124,8 @@
     ],
     "version": "41cf1ffe9d2ec81d",
     "diagrams": "ed541b2735366dcf",
-    "conformal": "8c4a75c25875ff84",
-    "embedding": "a96058187788999b"
+    "conformal": "69af72b1ccf43777",
+    "embedding": "04c50f64f4cf864e"
   },
   {
     "id": "mcvittie",
@@ -1160,9 +1160,9 @@
       "idealized model"
     ],
     "version": "c272527fda92554c",
-    "diagrams": "0940a6a1cfa8b5b6",
-    "conformal": "e70af2de3d00d908",
-    "embedding": "3782e936aebbd15d"
+    "diagrams": "00b799e11e5cfc26",
+    "conformal": "5bfaa0670ab1bb25",
+    "embedding": "2c9b70767c1e34be"
   },
   {
     "id": "melvin",
@@ -1217,9 +1217,9 @@
       "idealized model"
     ],
     "version": "ca8b068098e17457",
-    "diagrams": "297351cf5099a220",
+    "diagrams": "434dbc69f632abef",
     "conformal": "608160b20d1a5d0b",
-    "embedding": "2b94de6ac368dbc8"
+    "embedding": "6358a5e6f5a871e8"
   },
   {
     "id": "minkowski",
@@ -1240,7 +1240,7 @@
     ],
     "version": "d5475efae9737443",
     "diagrams": "8682a860d329f091",
-    "conformal": "a9e34cf1c120e37d",
+    "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
   },
   {
@@ -1263,7 +1263,7 @@
       "idealized model"
     ],
     "version": "fcef640aa8a5ea3e",
-    "diagrams": "23589bf4a0fdba65",
+    "diagrams": "62b5c96261ee76e9",
     "conformal": "62cc3d3fab22417e",
     "embedding": "74f663204d97446f"
   },
@@ -1292,7 +1292,7 @@
       "idealized model"
     ],
     "version": "2a3e44e2d8c2bf39",
-    "embedding": "9634c59d5e2ae389"
+    "embedding": "1762ae2364403f3b"
   },
   {
     "id": "morris_thorne",
@@ -1315,7 +1315,7 @@
       "idealized model"
     ],
     "version": "a56b06d7c18071f1",
-    "diagrams": "6a553e7d399d3c52",
+    "diagrams": "1de01953e7c22d84",
     "conformal": "956949c7f4a96538",
     "embedding": "2fb2f35ad8d95922"
   },
@@ -1343,7 +1343,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "594e7bb9a896d86b",
+    "version": "782685818cdac8bc",
     "diagrams": "e780b20f08791793",
     "conformal": "325a9c57971cf007",
     "embedding": "5d574463e63f1df8"
@@ -1380,7 +1380,7 @@
     ],
     "version": "9e897e2413d4831c",
     "diagrams": "37b04b7cf3bacecd",
-    "conformal": "7f52e4d2155dcb5e",
+    "conformal": "4fac9b552eb536ea",
     "embedding": "1199648bcf6666d8"
   },
   {
@@ -1404,8 +1404,8 @@
       "four-dimensional"
     ],
     "version": "0ec70428948b876e",
-    "diagrams": "de53e29b699604e4",
-    "embedding": "4c0e51ef2c48920b"
+    "diagrams": "187982910fdaa5ce",
+    "embedding": "90f8432b18d96a76"
   },
   {
     "id": "oppenheimer_snyder",
@@ -1432,8 +1432,8 @@
     ],
     "version": "e6a11a1909dcce52",
     "diagrams": "d31b7b7b6c3dd2ef",
-    "conformal": "f8472a2750b72302",
-    "embedding": "89ff4322639feb6a"
+    "conformal": "7400ddcb9dd6a817",
+    "embedding": "1ecd155079c29ab6"
   },
   {
     "id": "ori_time_machine",
@@ -1457,7 +1457,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8689081a257acb45",
+    "version": "510deb62c947ea0c",
     "diagrams": "f02d33ce21e424e5",
     "conformal": "caada1e1189ae9f1",
     "embedding": "7b305003632e43d9"
@@ -1501,9 +1501,9 @@
       "idealized model"
     ],
     "version": "cd3dbb41ac76a912",
-    "diagrams": "28bfeca27919032b",
-    "conformal": "1712fbc95e0d1f96",
-    "embedding": "8106f022ecfc3b33"
+    "diagrams": "06b990c8be409307",
+    "conformal": "b71dae1432ee5efb",
+    "embedding": "df75b117652b95bd"
   },
   {
     "id": "pp_wave",
@@ -1522,8 +1522,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "80bcb0121b1e292c",
-    "diagrams": "21757421f8076200",
+    "version": "388bc22591a2d477",
+    "diagrams": "6e432dbfef4f0d7d",
     "embedding": "a484d91e42495a51"
   },
   {
@@ -1556,7 +1556,7 @@
     ],
     "version": "05ed5d9454047267",
     "diagrams": "4565bff8ba921a42",
-    "conformal": "fb9ce65c8d285c0e",
+    "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
   },
   {
@@ -1764,7 +1764,7 @@
     ],
     "version": "f5450cd3f7aed6f7",
     "diagrams": "01986085179076c1",
-    "conformal": "d07bed603ec275fe",
+    "conformal": "da2331625dd4e7df",
     "embedding": "2693e5d4af5edd89"
   },
   {
@@ -1799,9 +1799,9 @@
       "idealized model"
     ],
     "version": "31b930d6ff5edf9e",
-    "diagrams": "9987ad5f20cc062e",
+    "diagrams": "d1e087098b20d92d",
     "conformal": "94cab2e957646c35",
-    "embedding": "ad4896f7b32bbeec"
+    "embedding": "68458b3281a24534"
   },
   {
     "id": "simpson_visser",
@@ -1867,7 +1867,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "93a806394bca689c",
+    "version": "8650845911ed2d4a",
     "diagrams": "9b126a24baab54f6",
     "conformal": "af0aad8daedb8e34",
     "embedding": "d2f10fa2373b33b4"
@@ -1927,7 +1927,7 @@
     ],
     "version": "d0ba61c2f967248f",
     "diagrams": "86d43f7abeacc5f4",
-    "embedding": "be8e68489d42c0b8"
+    "embedding": "30d5a7483e08a078"
   },
   {
     "id": "teo_wormhole",
@@ -1977,8 +1977,8 @@
       "idealized model"
     ],
     "version": "fdede2b3737ccf24",
-    "diagrams": "a6afc8c8528a23f2",
-    "embedding": "a4e44fc72dc33b60"
+    "diagrams": "b997809f786afa14",
+    "embedding": "aefa04627c7f6154"
   },
   {
     "id": "tov",
@@ -2003,9 +2003,9 @@
       "idealized model"
     ],
     "version": "8a706a772fa93f54",
-    "diagrams": "bf41df64d4244e61",
-    "conformal": "b6739b1e4af429fe",
-    "embedding": "b02956f2e0aac5ce"
+    "diagrams": "b8a9287744afbad1",
+    "conformal": "f4c269030698315c",
+    "embedding": "c64f1f900fa70a89"
   },
   {
     "id": "vaidya",
@@ -2030,8 +2030,8 @@
     ],
     "version": "66598482fc02a192",
     "diagrams": "87052dae566b6395",
-    "conformal": "99424b00c9e94c1b",
-    "embedding": "1e162e2bfa0db4eb"
+    "conformal": "d81c68a5362e7d21",
+    "embedding": "dc1a255a7631d404"
   },
   {
     "id": "van_den_broeck",
@@ -2052,7 +2052,7 @@
       "four-dimensional",
       "causality violation"
     ],
-    "version": "35d7bd089a1d788b",
+    "version": "d04ad656a4a6bed6",
     "diagrams": "54c4ab721c360189",
     "embedding": "d0eb9c1c758df3f4"
   },
@@ -2078,7 +2078,7 @@
     ],
     "version": "605212977dae5271",
     "diagrams": "a5eedeb1a3fee9e3",
-    "conformal": "aec3d8d98916b294",
+    "conformal": "23c762685b735685",
     "embedding": "aa10dc85dcfab188"
   },
   {
