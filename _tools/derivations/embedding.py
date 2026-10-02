@@ -9703,6 +9703,82 @@ def double_kerr(ck, src):
                           "with $dX^2 + dY^2 - dZ^2$.")]
 
 
+def bonnor_magnetic_dipole(ck, src):
+    """The equatorial plane of Bonnor's magnetic dipole at t = 0, at m = 1 and b = 2 sqrt 2, so that
+    k = sqrt(m^2 + b^2) = 3 and the axis between the two black holes meets the plane at r = 4m.
+
+    On the plane P = r(r - 2m), Q = (r - m)^2 and Y = r^2, so g_rr = r^6 (r - 2m)^2/((r - m)^6 Z)
+    with Z = r^2 - 2mr - b^2, and the circle of radius r has radius r sqrt(Z)/(r - 2m) on the surface.
+    At the strut, Z = 0, a circle the distance l from the axis has circumference (1 + m^2/b^2)^2 2 pi l,
+    Emparan's excess of angle, 81/64 of a turn here, so no surface of revolution in flat space carries
+    the slice there: the circles grow faster than the distance out to them as far as the circle where
+    g_rr = (d(r sqrt(Z)/(r - 2m))/dr)^2, found here, and that part is drawn in three dimensional
+    Minkowski space, a cone at its tip. From that circle outward the slice is a surface in flat
+    space, started at the height where the first piece ends; both lie level at the join."""
+    fixed = {"t": 0, **EQUATOR}
+    sl = Slice(src, "bonnor_magnetic_dipole", "spheroidal", "r", "\\phi", fixed, BONNOR_DIPOLE)
+    msl = Slice(src, "bonnor_magnetic_dipole", "spheroidal", "r", "\\phi", fixed, BONNOR_DIPOLE, space="minkowski")
+    name = "Bonnor's magnetic dipole"
+    edge = 4.0
+    level = float(brentq(lambda x: float(sl.defect_at(np.array([x]))[0]), 4.05, 8.0, xtol=1e-14))
+    # The level circle is a root found in floating point, where g_rr - (drho/dr)^2 is left at the
+    # size of the rounding, which is checked, so drho/sqrt(g_rr) is one there and the unit tangent
+    # of both pieces is level at the join; the circles grow outward, which is checked too.
+    ck.add(f"{name}: the surface lies level at the circle found",
+           abs(float(sl.defect_at(np.array([level]))[0])) / float(sl.gxx_at(level)), 1e-13)
+    ck.add(f"{name}: the circles grow outward at the level circle",
+           abs(float(sl.rho_at(level + 1e-6) - sl.rho_at(level - 1e-6)) / (2e-6 * math.sqrt(float(sl.gxx_at(level)))) - 1), 1e-6)
+    for one in (sl, msl):
+        one.slope = (lambda x, side, own=one.slope: np.array([1.0, 0.0]) if x == level else own(x, side))
+    top = 10.0
+    size = 2 * float(sl.rho_at(top))
+    ck.stops(f"{name}, inside the level circle in flat space", sl, np.linspace(edge, level, 202)[1:-1])
+    outward = np.linspace(level, 60, 402)[1:]
+    ck.add(f"{name}: beyond the level circle no surface in Minkowski space carries the slice",
+           float(max(0.0, np.max(-msl.defect_at(outward)))), 0.0)
+    if not np.all(msl.defect_at(outward) > 0):
+        ck.items[-1]["ok"] = False
+
+    def radius(r):
+        return r * np.sqrt((r - 4) * (r + 2)) / (r - 2)
+    join = "the circle where the surface lies level, in Minkowski space nearer the strut and in flat space beyond"
+    tip = Piece("strut", "sheet", msl, edge, level, 0.0, 1,
+                (("apex", "the strut, $r = 4\\,m$, a cone of angle $\\tfrac{81}{64}\\cdot 2\\pi$"), ("join", join)),
+                [(4.2, "r", None), (level, "space", None)], size,
+                # r is no proper distance at the strut, where g_rr diverges as 1/Z, so the profile
+                # passes through values of r that crowd toward it.
+                knots=tuple(edge + (level - edge) * q for q in (0.001, 0.004, 0.01, 0.03, 0.06, 0.1, 0.2, 0.35, 0.5, 0.7, 0.85)))
+    plane = Piece("plane", "sheet", sl, level, top, tip.at(level)[1], 1,
+                  (("join", join), ("edge", "the surface runs on to $r \\to \\infty$")),
+                  [(6.0, "r", None), (8.0, "r", None), (top, "r", None)], size)
+    for piece in (tip, plane):
+        space = "in Minkowski space" if piece.sl.lorentz else "in flat space"
+        ck.isometry(f"{name}, {piece.id} {space}", piece)
+        ck.radius(f"{name}, {piece.id}, r sqrt(Z)/(r - 2m) {space}", piece, radius, size)
+    ck.join(f"{name}, the two pieces at the level circle", tip, level, plane, level)
+    # The cone at the tip: the radius of a small circle over its distance from the axis, the
+    # integral of sqrt(g_rr) from r = 4, which is (256/(27 sqrt 6)) sqrt(r - 4) to lowest order.
+    near = 1e-8
+    ck.add(f"{name}: a small circle about the strut has 81/64 of the circumference of a flat one",
+           abs(float(radius(edge + near)) / (256 / (27 * math.sqrt(6)) * math.sqrt(near)) - 81 / 64), 1e-6)
+    surface = Surface([tip, plane])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *tip.at(level), f"${level:.2f}\\,m$", side=-1)
+    ring_label(fig, [0, 0, 0], *plane.at(top), "$10\\,m$")
+    fig.legend("fill", "cover", "the equatorial plane at $t = 0$, which $r$ and $\\phi$ cover")
+    fig.legend("line", "r", "$r$ constant, at $4.2$, $6$, $8$ and $10\\,m$")
+    fig.legend("line", "space", f"$r = {level:.2f}\\,m$, where the surface lies level: Minkowski space inside, "
+                                "flat space beyond")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("equator", "The equatorial plane", "$m$", [surface], fig.done(),
+                 settings="$m = 1$, the unit of every length, and $b = 2\\sqrt{2}\\,m$, so that the axis between the two "
+                          f"black holes is $r = 4\\,m$. Every length along the surface inside $r = {level:.2f}\\,m$ is "
+                          "measured with $dX^2 + dY^2 - dZ^2$.")]
+
+
+BONNOR_DIPOLE = {"m": 1, "b": "2*sqrt(2)"}
+
+
 ZV_OBLATE, ZV_PROLATE = {"m": 1, "q": 1}, {"m": 1, "q": "-1/2"}
 
 
@@ -11107,6 +11183,7 @@ DRAWN = {
     "double_kerr": double_kerr,
     "morgan_morgan": morgan_morgan,
     "bonnor_rotating_dust": bonnor_rotating_dust,
+    "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
     "zipoy_voorhees": zipoy_voorhees,
     "robinson_trautman": robinson_trautman,
     "string_black_hole": string_black_hole,
@@ -11872,6 +11949,16 @@ CAPTIONS = {
         "The surface narrows from far out to a neck at $\\rho = m$ and widens again toward the singularity, the ring "
         "of infinite circumference, until it lies level at $\\rho = 0.72\\,m$, where the drawing stops; the same "
         "plane at every moment is the same surface.",
+    ],
+    ("bonnor_magnetic_dipole", "equator"): [
+        "The equatorial plane of Bonnor's magnetic dipole at one moment ($m = 1$, $b = 2\\sqrt{2}\\,m$), midway between "
+        "the two black holes, drawn as a surface with every distance along it the metric distance. On it "
+        "$g_{rr} = r^6(r - 2m)^2/((r - m)^6Z)$ and the circle of radius $r$ has circumference "
+        "$2\\pi r\\sqrt{Z}/(r - 2m)$.",
+        "At the strut, $r = 4\\,m$, a circle the distance $\\ell$ from the axis has circumference "
+        "$\\tfrac{81}{64}\\cdot 2\\pi\\ell$, Emparan's excess of angle $(1 + m^2/b^2)^2$, so the tip is a cone in "
+        "Minkowski space, $dX^2 + dY^2 - dZ^2$. Farther out the surface stands in flat space and widens as Flamm's "
+        "paraboloid does; the same plane at every moment is the same surface.",
     ],
     ("zipoy_voorhees", "oblate"): [
         "The equatorial plane of the Zipoy-Voorhees metric at one moment ($q = 1$, $m = 1$), drawn as a surface in flat "

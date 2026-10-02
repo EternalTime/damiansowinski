@@ -82,6 +82,11 @@
       "id": "misner_brill_lindquist",
       "kind": "family",
       "text": "One moment of two black holes at rest with any masses and charges, which Dieter Brill and Richard Lindquist found in 1963. Where every charge equals its mass, their slice is a moment of Majumdar and Papapetrou's holes [brill1963]."
+    },
+    {
+      "id": "bonnor_magnetic_dipole",
+      "kind": "family",
+      "text": "Two extremal black holes of opposite charge. Gravity and the charges both pull, so a strut on the axis holds the pair apart [emparan2000]."
     }
   ],
   "references": [
@@ -113,7 +118,8 @@
     "neugebauer2009",
     "gibbonshawking1978",
     "ishihara2006",
-    "brill1963"
+    "brill1963",
+    "emparan2000"
   ],
   "coordinates": [
     {

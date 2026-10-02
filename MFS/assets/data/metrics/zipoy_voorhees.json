@@ -59,6 +59,11 @@
       "id": "morgan_morgan",
       "kind": "family",
       "text": "Static discs of counterrotating dust in Weyl's class. Zipoy and Voorhees's metric also arises as the metric of a counterrotating disc [bicak1993]."
+    },
+    {
+      "id": "bonnor_magnetic_dipole",
+      "kind": "generalisation",
+      "text": "Bonnor's mass with a magnetic dipole moment. With the dipole switched off, $b = 0$, it is the deformed mass at $q = 1$ [emparan2000]."
     }
   ],
   "references": [
@@ -81,7 +86,8 @@
     "maciejewski2013",
     "chowdhury2012",
     "abdikamalov2019",
-    "bicak1993"
+    "bicak1993",
+    "emparan2000"
   ],
   "coordinates": [
     {

@@ -4607,6 +4607,8 @@ class Slices(unittest.TestCase):
               "bonnor_rotating_dust/cylindrical/inside",
               "conformal bonnor_rotating_dust/cylindrical_axis", "conformal bonnor_rotating_dust/spherical_axis",
               "conformal curzon_chazy/weyl_axis", "conformal curzon_chazy/spherical_axis",
+              # The axis beyond a hole of Bonnor's dipole, which the embedded equatorial plane does not meet.
+              "bonnor_magnetic_dipole/spheroidal/axis", "conformal bonnor_magnetic_dipole/spheroidal_axis",
               # The axis above the two Kerr black holes, which the embedded plane z = 0 between them does not meet.
               "conformal double_kerr/weyl_axis_outside",
               # The axis of Zipoy and Voorhees's metric, which the embedded equatorial plane does not meet.
@@ -5374,6 +5376,9 @@ class Slices(unittest.TestCase):
             if "/eddington_finkelstein_ingoing/" in key:
                 return (lambda X: t + X), [lo, hi]
             return (lambda X: t), [lo, hi]
+        if key == "bonnor_magnetic_dipole/spheroidal/strut":
+            # The equatorial plane meets the axis between the holes at the one event theta = pi/2.
+            return (lambda X: 0.0), [math.pi / 2]
         if key.startswith("zipoy_voorhees/prolate_spheroidal/"):
             # The prolate spheroidal x is r/m - 1 of the circles the embedding reaches in r, at m = 1.
             return (lambda X: 0.0), [r - 1 for r in self.reach(surface)]

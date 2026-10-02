@@ -51,6 +51,11 @@
       "id": "morgan_morgan",
       "kind": "limit_source",
       "text": "Static discs of counterrotating dust, Weyl fields built on the Newtonian potential of a disc. In the limit of the disc shrunk to a point at fixed mass the field is the Curzon-Chazy particle's, which itself arises as the metric of a counterrotating disc [bicak1993]."
+    },
+    {
+      "id": "bonnor_magnetic_dipole",
+      "kind": "family",
+      "text": "Bonnor's pair of extremal black holes. In Weyl's coordinates each of the two is a single point of the axis, as the Curzon-Chazy particle is [emparanteo2001]."
     }
   ],
   "references": [
@@ -76,7 +81,8 @@
     "neugebauer2009",
     "bonnor1977cloud",
     "astesiano2024",
-    "bicak1993"
+    "bicak1993",
+    "emparanteo2001"
   ],
   "coordinates": [
     {

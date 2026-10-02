@@ -912,6 +912,30 @@
    "\\phi"
   ]
  },
+ "bonnor_magnetic_dipole/spheroidal": {
+  "stamp": "e3daceb4539042a2",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
  "bonnor_rotating_dust/cylindrical": {
   "stamp": "884e3ee61ce613ef",
   "relations": {},

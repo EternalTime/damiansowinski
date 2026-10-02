@@ -758,6 +758,9 @@ def _morgan_morgan_plane():
 MM_INPUT = ("The first disc of Morgan and Morgan's family at $m = a/5$, with $m = GM/c^2$ for a disc of mass $M$ and "
             "radius $a$: $\\psi$ and $\\gamma$ are the two functions the oblate spheroidal chart defines, written in "
             "$\\rho$ and $z$.")
+# Bonnor's magnetic dipole as every one of its diagrams draws it: m = 1 and b = 2 sqrt 2, so that
+# sqrt(m^2 + b^2) = 3m and the axis between the two black holes is r = 4m.
+BONNOR_DIPOLE = {"m": 1, "b": "2*sqrt(2)"}
 
 
 FRW_DUST = {"funcs": ["a"], "eqs": [["r", "r"]], "rates": [1.0], "params": {"k": 0}}
@@ -2822,6 +2825,19 @@ DIAGRAMS = [
       for shape, d in (("oblate", "2"), ("prolate", "1/2"))
       for plane, name, fixed in (("axis", "The axis", {"y": "1", "phi": "0"}),
                                  ("equator", "The equatorial plane", {"y": "0", "phi": "0"}))],
+    # Bonnor's magnetic dipole at m = 1 and b = 2 sqrt 2, so that k = sqrt(m^2 + b^2) = 3 and the two
+    # black holes stand at r = 4m on the axis, on its three totally geodesic planes:
+    # the axis beyond a hole, the equatorial plane, and the stretch of axis between the holes,
+    # r = 4m, along which theta runs from one hole to the other. The Kretschmann scalar
+    # is finite on that stretch, where its printed form is a ratio of two polynomials that both
+    # vanish at each hole, so the strut's rows do not take it in floating point.
+    Diagram("bonnor_magnetic_dipole", "spheroidal", "axis", "The axis beyond a hole", ("t", "r"), (4, 8, -2, 2),
+            "$r/m$", "$ct/m$", BONNOR_DIPOLE, {"theta": "0", "phi": "0"}),
+    Diagram("bonnor_magnetic_dipole", "spheroidal", "equator", "The equatorial plane", ("t", "r"), (4, 8, -2, 2),
+            "$r/m$", "$ct/m$", BONNOR_DIPOLE, {**EQUATOR}),
+    Diagram("bonnor_magnetic_dipole", "spheroidal", "strut", "The axis between the holes", ("t", "\\theta"),
+            (0, math.pi, -8, 8), "$\\theta$", "$ct/m$", BONNOR_DIPOLE, {"r": "4", "phi": "0"}, families=SIDEWAYS,
+            kretschmann=False),
     Diagram("malament_hogarth", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2), "$x$", "$ct$", {},
             {"y": "0", "z": "0"}, families=SIDEWAYS, functions={"Omega": _MH_FACTOR}, any_factor="Omega",
             lines=(("world", "r", "0", "the computer's world line, up the axis into the removed event",
@@ -3053,6 +3069,44 @@ def _as_caption(n):
         "The jump grows by $(8GE/c^4)\\ln 4$ each time $\\rho$ is divided by $4$, and a change of "
         "$\\rho_0$ moves every ray behind the shock by the same amount.",
     ]
+
+
+def _bonnor_dipole_captions():
+    """The three captions of Bonnor's magnetic dipole: the axis beyond a hole, the equatorial plane
+    and the axis between the holes."""
+    values = "$m = 1$, $b = 2\\sqrt{2}\\,m$"
+    axis = ("$t$ and $r$ ($\\theta = 0$, $\\phi = 0$)", "$-(Z/Y)^2c^2dt^2 + (Y/Z)^2dr^2$ with $Y = r^2 - b^2$",
+            "$c\\,dt/dr = \\pm(Y/Z)^2$", "$r = 4m$", "$r$")
+    equator = ("$t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$)", "$P = r(r - 2m)$, $Q = (r - m)^2$, and $Y = r^2$",
+               "$c\\,dt/dr = \\pm r^4/((r - m)^3\\sqrt{Z})$", "$r = 4m$", "where $Z = 0$ and the strut stands")
+    strut = ("$t$ and $\\theta$ ($r = 4m$, $\\phi = 0$)", "$Z = 0$",
+             "$c\\,dt/d\\theta = \\pm Y^2/((m^2 + b^2)^{3/2}\\sin^3\\theta)$", "$\\theta = 0$ and $\\theta = \\pi$",
+             "$\\theta = \\pi/2$")
+    return {
+        "axis": [
+            f"The plane of {axis[0]} of Bonnor's magnetic dipole ({values}), the axis beyond one of the two black holes. "
+            f"The metric on it is {axis[1]}, so a ray has {axis[2]}, and every rotation about the axis fixes the plane, "
+            "so the rays are null geodesics.",
+            f"The cones close toward {axis[3]}, the horizon of the hole, as the square of the distance to it, which is "
+            f"the mark of an extremal horizon. A ray reaches it only as $t \\to \\pm\\infty$, after a finite affine "
+            f"distance, since {axis[4]} is an affine parameter along it.",
+        ],
+        "equator": [
+            f"The plane of {equator[0]} of Bonnor's magnetic dipole ({values}), "
+            f"midway between the two black holes. On it {equator[1]}, so a ray has {equator[2]}, and the reflection "
+            "that exchanges the two holes fixes the plane, so the rays are null geodesics.",
+            f"The left edge, {equator[3]}, is the axis between the holes, {equator[4]}. "
+            "Every ingoing ray reaches it in a finite time $t$ and crosses to the other side of the axis.",
+        ],
+        "strut": [
+            f"The plane of {strut[0]} of Bonnor's magnetic dipole ({values}), the axis from one black hole to the other, "
+            f"where {strut[1]} and the strut stands. A ray along it has {strut[2]}, and every rotation about the axis "
+            "fixes the plane, so the rays are null geodesics.",
+            f"The two black holes are the edges {strut[3]}, where the cones close. Light sent along the strut from "
+            f"{strut[4]} takes an infinite time $t$ to reach either hole, and the distance to each is infinite as "
+            "well, the length of the throat of an extremal black hole.",
+        ],
+    }
 
 
 def _zipoy_voorhees_captions(system):
@@ -6570,6 +6624,7 @@ CAPTIONS = {
     ],
     **{("zipoy_voorhees", system, view): text for system in ("spherical", "prolate_spheroidal")
        for view, text in _zipoy_voorhees_captions(system).items()},
+    **{("bonnor_magnetic_dipole", "spheroidal", view): text for view, text in _bonnor_dipole_captions().items()},
     ("senovilla", "cylindrical", "radial"): [
         "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of Senovilla's universe ($a = 1$). The metric on it is "
         "$\\cosh^4(act)\\cosh^2(3a\\rho)(-c^2dt^2 + d\\rho^2)$, and the factor drops out of the null condition, so the "
@@ -9377,6 +9432,37 @@ def _zv_equator(r, oblate):
     return np.vectorize(one, otypes=[float])(np.asarray(r, float))
 
 
+def _bonnor_dipole_star(plane):
+    """The tortoise coordinate of Bonnor's dipole at m = 1, b = 2 sqrt 2 on each of its three planes,
+    in Bonnor's r and theta. On the axis beyond a hole dr_*/dr = (r^2 - 8)^2/((r - 4)^2 (r + 2)^2),
+    whose integral is r - 16/(9(r - 4)) - 4/(9(r + 2)) + (80/27) ln(r - 4) + (28/27) ln(r + 2). In
+    the equatorial plane dr_*/dr = r^4/((r - 1)^3 sqrt((r - 4)(r + 2))), integrated from r = 4. On
+    the axis between the holes dtheta_*/dtheta = 64 (1 + sin^2 theta)^2/(27 sin^3 theta), whose
+    integral is (64/27)(-cot(theta) csc(theta)/2 + (5/2) ln tan(theta/2) - cos(theta))."""
+    if plane == "axis":
+        return lambda r: (r - 16 / (9 * (r - 4)) - 4 / (9 * (r + 2)) + 80 / 27 * np.log(r - 4)
+                          + 28 / 27 * np.log(r + 2))
+    if plane == "strut":
+        return lambda th: 64 / 27 * (-np.cos(th) / (2 * np.sin(th) ** 2) + 5 / 2 * np.log(np.tan(th / 2)) - np.cos(th))
+
+    def one(r):
+        if r <= 4:
+            return 0.0
+        return quad(lambda s: s ** 4 / ((s - 1) ** 3 * math.sqrt(s + 2)), 4, r, weight="alg", wvar=(-0.5, 0),
+                    epsabs=1e-13, epsrel=1e-13, limit=200)[0]
+    return lambda r: np.vectorize(one, otypes=[float])(np.asarray(r, float))
+
+
+def _bonnor_dipole_forms(plane):
+    """t + x_* and t - x_* of one view of Bonnor's dipole."""
+    star = _bonnor_dipole_star(plane)
+    # The equatorial rays meet the edge r = 4 with a slope that grows as 1/sqrt(r - 4), so they are
+    # compared from a fiftieth of m outside it, as Zipoy and Voorhees's are.
+    off = {"axis": lambda t, r: r > 4.05, "equator": lambda t, r: r > 4.02,
+           "strut": lambda t, th: (th > 0.15) & (th < math.pi - 0.15)}[plane]
+    return (lambda t, r: t + star(r), lambda t, r: t - star(r), off)
+
+
 def _zv_forms(star, oblate, shift, edge):
     """t + r_* and t - r_* of one view, the prolate spheroidal chart's x = r/m - 1 moved by `shift`."""
     return (lambda t, r: t + star(r + shift, oblate), lambda t, r: t - star(r + shift, oblate),
@@ -10219,6 +10305,7 @@ CLOSED_FORMS = {
        for system in ("cylindrical", "spherical")},
     **{("bonnor_rotating_dust", system, "equator"): (lambda t, r: t + _bonnor_plane(r), lambda t, r: t - _bonnor_plane(r),
                                                      lambda t, r: r > 1.02) for system in ("cylindrical", "spherical")},
+    **{("bonnor_magnetic_dipole", "spheroidal", plane): _bonnor_dipole_forms(plane) for plane in ("axis", "equator", "strut")},
     **{("zipoy_voorhees", system, f"{plane}_{shape}"): _zv_forms(star, shape == "oblate", shift, edge)
        for system, shift in (("spherical", 0), ("prolate_spheroidal", 1))
        for shape in ("oblate", "prolate")

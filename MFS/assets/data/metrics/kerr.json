@@ -160,6 +160,11 @@
       "id": "bonnor_rotating_dust",
       "kind": "family",
       "text": "A cloud of rotating dust whose field far away is Kerr's frame dragging term alone: angular momentum with no mass [bonnor1977cloud, bratek2007]."
+    },
+    {
+      "id": "bonnor_magnetic_dipole",
+      "kind": "family",
+      "text": "A static magnet made from Kerr's metric. Bonnor's rule trades the twist of the spinning hole for a magnetic potential and turns $a^2$ into $-b^2$ [bonnor2002, davidson1994]."
     }
   ],
   "references": [
@@ -211,7 +216,9 @@
     "kramer1980",
     "neugebauer2009",
     "bonnor1977cloud",
-    "bratek2007"
+    "bratek2007",
+    "bonnor2002",
+    "davidson1994"
   ],
   "coordinates": [
     {

@@ -12794,6 +12794,188 @@ def double_kerr(ck, src):
     return views
 
 
+BONNOR_DIPOLE_SCALE = 4.0   # the length l of p, q = arctan((ct -+ x_*)/l), in units of m
+
+
+def bonnor_magnetic_dipole(ck, src):
+    """Bonnor's magnetic dipole at m = 1 and b = 2 sqrt 2, so that k = sqrt(m^2 + b^2) = 3 and the two
+    black holes stand at r = 4m on the axis, on its three totally geodesic planes of t and one
+    coordinate.
+
+    On the axis beyond a hole the metric is -(Z/Y)^2 c^2dt^2 + (Y/Z)^2 dr^2 with Z = (r - 4)(r + 2)
+    and Y = r^2 - 8, so g_tt g_rr = -1 and r_* = r - 16/(9(r - 4)) - 4/(9(r + 2)) + (80/27) ln(r - 4)
+    + (28/27) ln(r + 2) falls to minus infinity at r = 4 as -16/(9(r - 4)), the double pole of a
+    degenerate horizon. So p, q = arctan((ct -+ r_*)/l) bring the half axis into a whole diamond,
+    the horizon on its left and null infinity on its right. On the axis between the holes, r = 4,
+    the metric is that of t and theta with c dt/dtheta = 64 (1 + sin^2 theta)^2/(27 sin^3 theta),
+    and theta_* runs off as the inverse square of the angle from either hole, so the stretch is a
+    whole diamond with a horizon on every side. On the equatorial plane
+    c dt/dr = r^4/((r - 1)^3 sqrt(Z)), whose integral from r = 4 is finite, so the half plane is
+    Minkowski's triangle with the strut on X = 0."""
+    ell = BONNOR_DIPOLE_SCALE
+    star_axis, star_plane, star_strut = (nr._bonnor_dipole_star(k) for k in ("axis", "equator", "strut"))
+    TS = (-8, -4, -2, 0, 2, 4, 8)
+    corners = (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6), ((0, -PI), "$i^-$", "t", 0, 6))
+    moment = slices.moments("bonnor_magnetic_dipole", "equator")[0]
+    charts = (("spheroidal", "r", "\\theta", lambda r: r, lambda th: th, {"theta": "0", "phi": "0"}, {**EQUATOR},
+               {"r": "4", "phi": "0"}, {"m": 1, "b": "2*sqrt(2)"}, "$b = 2\\sqrt{2}\\,m$", "$\\theta = 0$",
+               "$\\theta = \\pi/2$", "r = 4m", lambda r: f"{r:g}\\,m",
+               ("$\\theta = 0$", "$\\theta = \\pi$", "$\\theta = \\pi/2$",
+                "$\\theta$ constant, at $\\pi/6$, $\\pi/3$, $2\\pi/3$ and $5\\pi/6$")),)
+    views = []
+    for system, ra, an, to_x, to_y, axis_fixed, eq_fixed, strut_fixed, values, shown, on_axis, on_plane, edge, named, st in charts:
+        settings = f"$m = 1$, the unit of every length, {shown}, and $\\ell = {ell:g}\\,m$."
+
+        def axis_pq(t, r):
+            rs = star_axis(np.asarray(r, dtype=float))
+            t = np.asarray(t, dtype=float)
+            return np.arctan((t - rs) / ell), np.arctan((t + rs) / ell)
+
+        def plane_pq(t, r):
+            return mink_pq(t, star_plane(r), ell)
+
+        def strut_pq(t, th):
+            ts = star_strut(np.asarray(th, dtype=float))
+            t = np.asarray(t, dtype=float)
+            return np.arctan((t - ts) / ell), np.arctan((t + ts) / ell)
+
+        from_x, from_y = (lambda x: x), (lambda y: y)
+        axis = Plane(src, "bonnor_magnetic_dipole", system, ("t", ra), axis_fixed, values)
+        eq = Plane(src, "bonnor_magnetic_dipole", system, ("t", ra), eq_fixed, values)
+        strut = Plane(src, "bonnor_magnetic_dipole", system, ("t", an), strut_fixed, values)
+        name = f"Bonnor's dipole {system}"
+        ck.chart(f"{name}, the axis beyond a hole", axis, lambda t, x: axis_pq(t, from_x(x)), ck.uniform(-20, 20, 400),
+                 ck.uniform(float(to_x(4.3)), float(to_x(20)), 400), lambda t, x: (1, 0))
+        ck.chart(f"{name}, the equatorial plane", eq, lambda t, x: plane_pq(t, from_x(x)), ck.uniform(-20, 20, 400),
+                 ck.uniform(float(to_x(4.05)), float(to_x(20)), 400), lambda t, x: (1, 0))
+        lo, hi = sorted((float(to_y(0.4)), float(to_y(PI - 0.4))))
+        ck.chart(f"{name}, the axis between the holes", strut, lambda t, y: strut_pq(t, from_y(y)),
+                 ck.uniform(-20, 20, 400), ck.uniform(lo, hi, 400), lambda t, y: (1, 0))
+        rr = np.array([4.5, 5.0, 7.0, 12.0])
+        g00, _, g11, *_ = axis.metric(np.zeros(4), to_x(rr))
+        ck.limit(f"{name}: g_tt g_rr is constant on the axis, so the radius is affine along its rays",
+                 g00 * g11, [-1.0] * 4, 1e-12)
+        near, nearer = 4 + 1e-6, 4 + 1e-8
+        ck.limit(f"{name}: r_* runs off as -16/(9 (r - 4)) at the horizon, a double pole",
+                 [float(star_axis(near)) * (near - 4), float(star_axis(nearer)) * (nearer - 4)], [-16 / 9] * 2, 1e-4)
+        ck.limit(f"{name}: theta_* runs off as -(32/27)/theta^2 at a hole",
+                 [float(star_strut(1e-3)) * 1e-6], [-32 / 27], 1e-4)
+        ck.limit(f"{name}: r_* vanishes at the strut in the equatorial plane", star_plane(np.array([4.0])), [0.0], 1e-12)
+
+        v = View(f"{system}_axis", "The axis beyond a hole", [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25], system)
+        v.fill("region", DIAMOND)
+        v.fill("cover", DIAMOND)
+        RS = (4.5, 5, 6, 8, 12)
+        grid(v, "r", lambda r, t: axis_pq(t, r), RS, S_ALL)
+        grid(v, "t", lambda t, s: axis_pq(t, 4 + s), TS, spread(0, np.inf, 500, 9))
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        v.line("horizon", [[[0, PI], [-PI, 0]], [[-PI, 0], [0, -PI]]])
+        for at, text, anchor, dx, dy in corners:
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label_xt([-HALF, HALF], f"${edge}$", "br", dx=-5, dy=-3)
+        v.label_xt([-HALF, -HALF], f"${edge}$", "tr", dx=-5, dy=3)
+        label_on(v, axis_pq(0, 6), f"${ra} = {named(6)}$")
+        v.legend("cover", f"the axis beyond a hole, which $t$ and ${ra}$ cover")
+        v.legend("r", f"${ra}$ constant, at " + ", ".join(f"${named(r)}$" for r in RS[:-1]) + f" and ${named(RS[-1])}$")
+        v.legend("t", "$ct$ constant, in units of $m$")
+        v.legend("horizon", f"${edge}$, the degenerate horizon of the hole")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        v.set(restriction=f"The half axis {on_axis} beyond one hole only, totally geodesic, each point in the diagram a "
+                          "single event.", settings=settings)
+        views.append(v)
+
+        v = View(f"{system}_strut", "The axis between the holes", [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25], system)
+        v.fill("region", DIAMOND)
+        v.fill("cover", DIAMOND)
+        grid(v, "r", lambda th, t: strut_pq(t, th), (PI / 6, PI / 3, 2 * PI / 3, 5 * PI / 6), S_ALL)
+        grid(v, "surface", lambda th, t: strut_pq(t, th), (HALF,), S_ALL)
+        grid(v, "t", strut_pq, TS, spread(0, PI, 500, 9))
+        v.line("horizon", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]], [[0, PI], [-PI, 0]], [[-PI, 0], [0, -PI]]])
+        v.label_xt([HALF, HALF], st[1], "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], st[1], "tl", dx=5, dy=3)
+        v.label_xt([-HALF, HALF], st[0], "br", dx=-5, dy=-3)
+        v.label_xt([-HALF, -HALF], st[0], "tr", dx=-5, dy=3)
+        v.legend("cover", f"the axis between the holes, ${edge}$, which $t$ and ${an}$ cover")
+        v.legend("r", st[3])
+        v.legend("surface", f"{st[2]}, midway between the holes")
+        v.legend("t", "$ct$ constant, in units of $m$")
+        v.legend("horizon", f"{st[0]} and {st[1]}, the degenerate horizons of the two holes")
+        v.slice(moment, points=[strut_pq(0.0, HALF)], label="$t = 0$, the equatorial plane")
+        v.set(restriction=f"The axis between the two holes, ${edge}$, only, totally geodesic, each point in the diagram a "
+                          "single event.", settings=settings)
+        views.append(v)
+
+        v = View(f"{system}_equator", "The equatorial plane", [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], system)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        RS = (4.5, 5, 6, 8, 12)
+        grid(v, "r", lambda r, t: plane_pq(t, r), RS, S_ALL)
+        grid(v, "t", lambda t, s: plane_pq(t, 4 + s), TS, spread(0, np.inf, 300, 9))
+        v.line("centre", [[[0, -PI], [0, PI]]])
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        for at, text, anchor, dx, dy in corners:
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label_xt([0, 0.25], f"${edge}$", "r", dx=-6)
+        label_on(v, plane_pq(0, 6), f"${ra} = {named(6)}$")
+        v.legend("cover", f"the half plane, which $t$ and ${ra}$ cover")
+        v.legend("r", f"${ra}$ constant, at " + ", ".join(f"${named(r)}$" for r in RS[:-1]) + f" and ${named(RS[-1])}$")
+        v.legend("t", "$ct$ constant, in units of $m$")
+        v.legend("centre", f"${edge}$, the axis between the holes, with the strut")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        r = np.linspace(*moment.reach("spheroidal", "r"), 60)
+        v.slice(moment, [plane_pq(0 * r, r)])
+        v.set(restriction=f"The half plane of $t$ and ${ra}$ at {on_plane} and fixed $\\phi$ only, totally geodesic, "
+                          "each point in the diagram a single event.", settings=settings)
+        views.append(v)
+    return views
+
+
+def _bonnor_dipole_captions():
+    """The three captions of Bonnor's magnetic dipole: the axis beyond a hole, the axis between the
+    holes and the equatorial plane."""
+    out = {}
+    maps = ("the maps $p = \\arctan((ct - {s})/\\ell)$ and $q = \\arctan((ct + {s})/\\ell)$ bring it into ")
+    drawn = ", drawn with $T = p + q$ up and $X = q - p$ across."
+    event = "each point in the diagram a single event. "
+    for system in ("spheroidal",):
+        values, edge, axis, plane = "$m = 1$, $b = 2\\sqrt{2}\\,m$", "$r = 4m$", "$\\theta = 0$", "$\\theta = \\pi/2$"
+        on_axis = "$-(Z/Y)^2c^2dt^2 + (Y/Z)^2dr^2$, and with $r_* = \\int (Y/Z)^2dr$"
+        on_strut = ("$c\\,dt/d\\theta = \\pm 64(1 + \\sin^2\\theta)^2m/(27\\sin^3\\theta)$, and with "
+                    "$\\theta_* = \\int_{\\pi/2}^{\\theta} 64(1 + \\sin^2 s)^2m\\,ds/(27\\sin^3 s)$")
+        ends = "$\\theta = 0$ and $\\theta = \\pi$"
+        on_plane = "$r_* = \\int_{4m}^{r} s^4ds/((s - m)^3\\sqrt{s^2 - 2ms - b^2})$"
+        ra, st = "r", "\\theta_*"
+        out[f"{system}_axis"] = [
+            f"The half axis {axis} of Bonnor's magnetic dipole beyond one of its two black holes ({values}), " + event +
+            f"The metric on it is {on_axis}, which runs from $-\\infty$ at {edge} to $\\infty$, " + maps.format(s="r_*") +
+            "the whole diamond" + drawn,
+            f"The two null edges on the left are {edge}, the horizon of the hole, where $r_*$ runs off as the inverse "
+            f"of the distance to it, the mark of a degenerate horizon. Light reaches it as $t \\to \\pm\\infty$, after a "
+            f"finite affine distance, since ${ra}$ is an affine parameter along every ray.",
+        ]
+        out[f"{system}_strut"] = [
+            f"The axis of Bonnor's magnetic dipole from one black hole to the other, {edge} ({values}), where the strut "
+            "stands, " + event + f"A ray along it has {on_strut}, " + maps.format(s=st) + "the whole diamond" + drawn,
+            f"A horizon stands on every side: ${st} \\to \\pm\\infty$ at {ends}, the two black holes, so light sent along "
+            "the strut from midway takes an infinite time $t$ to reach either hole. The distance to each hole is "
+            "infinite too, the length of the throat of an extremal black hole.",
+        ]
+        out[f"{system}_equator"] = [
+            f"The half plane {plane} of $t$ and ${ra}$ at fixed $\\phi$ of Bonnor's magnetic dipole ({values}), midway "
+            "between its two black holes, " + event + f"With {on_plane}, which vanishes at {edge}, " +
+            maps.format(s="r_*") + "the triangle of Minkowski space" + drawn,
+            f"The axis between the holes, with the strut, is the timelike line {edge} on the left, and no horizon "
+            "crosses the plane.",
+        ]
+    return out
+
+
 def zv_axis_star(r, oblate):
     """r_* on the axis of Zipoy and Voorhees's metric at m = 1, dr_*/dr = f^(-1 - q): at q = 1,
     r + 4 ln(r - 2) - 4/(r - 2), which falls to minus infinity as r -> 2, and at q = -1/2,
@@ -15937,6 +16119,7 @@ DRAWN = {
     "bonnor_rotating_dust": bonnor_rotating_dust,
     "double_kerr": double_kerr,
     "morgan_morgan": morgan_morgan,
+    "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
     "zipoy_voorhees": zipoy_voorhees,
     "string_black_hole": string_black_hole,
     "mcvittie": mcvittie,
@@ -16093,6 +16276,7 @@ CAPTIONS = {
         "Every ray moving left keeps its $q$ across the shock, and every line of constant $v$ breaks there, its part "
         "behind the shock moved along it by $\\Delta v$. The rays moving right never meet the shock.",
     ],
+    **{("bonnor_magnetic_dipole", view): text for view, text in _bonnor_dipole_captions().items()},
     **{("zipoy_voorhees", view): text for view, text in _zipoy_voorhees_captions().items()},
     ("double_kerr", "weyl_axis_outside"): [
         "The axis $\\rho = 0$ above the upper hole of Herdeiro and Rebelo's pair ($J = GM^2/c$, $\\zeta = 4m$), each "
