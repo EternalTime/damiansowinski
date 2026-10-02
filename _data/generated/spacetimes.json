@@ -2935,6 +2935,7 @@
       ],
       "references": [
         "tolman1931",
+        "einstein1916waves",
         "tolman1934book",
         "wheeler1955",
         "faraoni1999",
@@ -4787,6 +4788,7 @@
       "references": [
         "einstein1917",
         "oraifeartaigh2017",
+        "einstein1915field",
         "harvey2000",
         "desitter1917",
         "lemaitre1927",
@@ -12561,6 +12563,7 @@
         }
       ],
       "references": [
+        "einstein1905sr",
         "minkowski1908",
         "minkowski1909",
         "egan2010plusminus",
@@ -12571,7 +12574,11 @@
         "damour2008",
         "noreika2021minkowski",
         "sommerfeld1910",
+        "einstein1913",
         "einstein1916",
+        "einstein1907",
+        "einstein1911",
+        "einstein1912",
         "rindler1966",
         "rindler1956",
         "davies1975",
@@ -16096,6 +16103,7 @@
         "kundt1961",
         "ehlerskundt1962",
         "eddington1922",
+        "einstein1916waves",
         "einstein1937",
         "kennefick2005",
         "pirani1956",
@@ -17296,8 +17304,12 @@
         }
       ],
       "references": [
+        "einstein1915field",
+        "einstein1915perihelion",
+        "einstein1911",
         "schulmann1998",
         "schwarzschild1916",
+        "einstein1916",
         "einstein1916memorial",
         "flamm1916",
         "droste1917",
