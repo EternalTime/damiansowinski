@@ -121,7 +121,7 @@ EQUATOR = {"theta": "pi/2", "phi": "0"}
 # The spacetimes with no conformal diagram, for which nothing is written.
 NOT_DRAWN = {"godel", "stockum_dust", "som_raychaudhuri", "taub_nut", "kasner", "bianchi", "tolman_bondi", "alcubierre",
              "natario", "krasnikov", "pp_wave", "mixmaster", "lentz", "szekeres", "van_den_broeck",
-             "string_wave", "black_saturn", "schrodinger_spacetime", "eguchi_hanson"}
+             "string_wave", "black_saturn", "schrodinger_spacetime", "eguchi_hanson", "misner_brill_lindquist"}
 
 
 # ---------------------------------------------------------------- the drawing

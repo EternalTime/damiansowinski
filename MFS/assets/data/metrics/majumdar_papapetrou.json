@@ -77,6 +77,11 @@
       "id": "eguchi_hanson",
       "kind": "family",
       "text": "A space of four dimensions with no time, built on the same sum of potentials $1/|\\mathbf{x} - \\mathbf{x}_i|$ over flat space, with two terms and no constant. Its two centres are regular points, the poles of a 2-sphere [gibbonshawking1978, ishihara2006]."
+    },
+    {
+      "id": "misner_brill_lindquist",
+      "kind": "family",
+      "text": "One moment of two black holes at rest with any masses and charges, which Dieter Brill and Richard Lindquist found in 1963. Where every charge equals its mass, their slice is a moment of Majumdar and Papapetrou's holes [brill1963]."
     }
   ],
   "references": [
@@ -107,7 +112,8 @@
     "kramer1980",
     "neugebauer2009",
     "gibbonshawking1978",
-    "ishihara2006"
+    "ishihara2006",
+    "brill1963"
   ],
   "coordinates": [
     {

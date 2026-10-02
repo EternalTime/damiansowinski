@@ -129,6 +129,11 @@
       "id": "bartnik_mckinnon",
       "kind": "limit_source",
       "text": "Balls of Yang-Mills field with a regular centre and no horizon, one for each number $n$ of zeros of the field. In the limit $n \\to \\infty$ their outside is the extreme hole, $r_q = r_s/2$, with a magnetic charge [breitenlohner1994, volkov1999]."
+    },
+    {
+      "id": "misner_brill_lindquist",
+      "kind": "family",
+      "text": "One moment of two charged black holes at rest, each with a throat like the one on the slice $t = 0$ of Reissner and Nordström's hole [brill1963]."
     }
   ],
   "references": [
@@ -164,7 +169,8 @@
     "visser2020",
     "larsen2000",
     "breitenlohner1994",
-    "volkov1999"
+    "volkov1999",
+    "brill1963"
   ],
   "coordinates": [
     {

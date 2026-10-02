@@ -308,6 +308,11 @@
       "id": "morgan_morgan",
       "kind": "family",
       "text": "Static discs of counterrotating dust, Weyl fields as Schwarzschild's is. Lemos and Letelier set such a disc round Schwarzschild's black hole in an exact solution of the two together [lemos1993]."
+    },
+    {
+      "id": "misner_brill_lindquist",
+      "kind": "family",
+      "text": "One moment of a space with two Schwarzschild black holes at rest in it, made by adding their two conformal factors. With one hole it is the slice $t = 0$ of Schwarzschild's spacetime in isotropic coordinates [brill1963, cook2000]."
     }
   ],
   "references": [
@@ -394,7 +399,9 @@
     "liebling2023",
     "bartnik1988",
     "zhou1991",
-    "lemos1993"
+    "lemos1993",
+    "brill1963",
+    "cook2000"
   ],
   "coordinates": [
     {

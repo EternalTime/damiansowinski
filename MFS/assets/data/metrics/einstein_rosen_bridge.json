@@ -62,6 +62,11 @@
       "id": "einstein_rosen_waves",
       "kind": "programme",
       "text": "The other spacetime that carries the two names. Einstein and Rosen found the cylindrical gravitational waves again in 1937, two years after the bridge [einstein1937]."
+    },
+    {
+      "id": "misner_brill_lindquist",
+      "kind": "family",
+      "text": "A slice of space with two bridges in it, each leading to a sheet of its own, which Dieter Brill and Richard Lindquist wrote down in 1963 [brill1963]. Charles Misner's slice of 1960 joins the two mouths to each other and makes a wormhole within one sheet [misner1960]."
     }
   ],
   "references": [
@@ -81,7 +86,9 @@
     "damour2007",
     "ellis1973",
     "bronnikov1973",
-    "einstein1937"
+    "einstein1937",
+    "brill1963",
+    "misner1960"
   ],
   "coordinates": [
     {

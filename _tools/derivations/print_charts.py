@@ -10,7 +10,8 @@ black_string, myers_perry, black_saturn, near_horizon_extreme_kerr, hartle_thorn
 som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos,
 schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
-israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson and boson_star, and Godel's cylindrical chart.
+israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star and misner_brill_lindquist, and Godel's
+cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -30,7 +31,8 @@ The derivations these charts rest on, and the reason each was chosen, are in tov
 malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_sitter.md,
 majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md,
 witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, mass_inflation.md,
-kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md and boson_star.md beside this file.
+kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_star.md and
+misner_brill_lindquist.md beside this file.
 """
 import argparse
 import itertools
@@ -14753,6 +14755,197 @@ def bonnor_rotating_dust_pullback(chart):
 
 
 CHARTS["bonnor_rotating_dust"] = [lambda s=s: bonnor_rotating_dust(s) for s in ("cylindrical", "spherical")]
+
+# -- Initial data for two black holes ----------------------------------------------------
+
+TWO_HOLE_CHARTS = ["cartesian", "cylindrical", "bispherical", "isotropic", "charged"]
+TWO_HOLE_FLAT = {"cartesian": "dx^2 + dy^2 + dz^2", "cylindrical": "d\\rho^2 + \\rho^2d\\phi^2 + dz^2",
+                 "charged": "dx^2 + dy^2 + dz^2"}
+
+
+def misner_brill_lindquist(system_id):
+    """Misner's and Brill and Lindquist's time-symmetric initial data for two black holes: one
+    moment of a spacetime, a Riemannian space of three dimensions with no time, so no coordinate
+    is scaled by c. The slice is conformally flat, psi^4 times flat space, and the one constraint
+    left at a moment of time symmetry, R = 0, is Laplace's equation for psi. The Cartesian chart
+    is Brill and Lindquist's with psi left free, the cylindrical chart the same with both holes on
+    the axis, the bispherical chart Misner's, a^2 Psi^4 times the cylinder of mu and the 2-sphere,
+    the isotropic chart one hole, psi = 1 + r_s/4r, and the charged chart Brill and Lindquist's
+    (chi psi)^2 times flat space. A free function is left free in every tensor, so no component
+    assumes the constraint; misner_brill_lindquist_check holds each chart to it and to the
+    Cartesian chart, and misner_brill_lindquist.md records each chart's source."""
+    spec = {"metric_id": "misner_brill_lindquist", "check": misner_brill_lindquist_check}
+    if system_id in ("cartesian", "charged"):
+        coords = ["x", "y", "z"]
+        domains = ["x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)", "z \\in (-\\infty, \\infty)",
+                   "(x, y, z) \\neq \\mathbf{x}_1, \\mathbf{x}_2 \;\\text{(the far ends of the two throats)}"]
+        if system_id == "cartesian":
+            name, parameters = "Brill-Lindquist", ["\\psi = \\psi(x,y,z)"]
+            line = "ds^2 = \\psi^4\\left(" + TWO_HOLE_FLAT[system_id] + "\\right)"
+            spec["ricci_scalar"] = "-\\dfrac{8\\left(\\partial_x^2\\psi + \\partial_y^2\\psi + \\partial_z^2\\psi\\right)}{\\psi^5}"
+        else:
+            name, parameters = "Charged", ["\\chi = \\chi(x,y,z)", "\\psi = \\psi(x,y,z)"]
+            line = "ds^2 = \\chi^2\\psi^2\\left(" + TWO_HOLE_FLAT[system_id] + "\\right)"
+    elif system_id == "cylindrical":
+        coords, name, parameters = ["\\rho", "\\phi", "z"], "Cylindrical", ["\\psi = \\psi(\\rho,z)"]
+        domains = ["\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)", "z \\in (-\\infty, \\infty)",
+                   "(\\rho, z) \\neq (0, \\pm a) \;\\text{(the far ends of the two throats)}"]
+        line = "ds^2 = \\psi^4\\left(" + TWO_HOLE_FLAT[system_id] + "\\right)"
+        spec["ricci_scalar"] = ("-\\dfrac{8\\left(\\rho\\,\\partial_\\rho^2\\psi + \\rho\\,\\partial_z^2\\psi"
+                                " + \\partial_\\rho\\psi\\right)}{\\psi^5\\,\\rho}")
+    elif system_id == "bispherical":
+        coords, name = ["\\mu", "\\eta", "\\phi"], "Misner Bispherical"
+        parameters = ["a", "\\Psi = \\Psi(\\mu,\\eta)"]
+        domains = ["\\mu \\in (-\\infty, \\infty)", "\\eta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                   "(\\mu, \\eta) \\neq (0, 0) \;\\text{(spatial infinity)}"]
+        line = "ds^2 = a^2\\Psi^4\\left(d\\mu^2 + d\\eta^2 + \\sin^2\\eta\\,d\\phi^2\\right)"
+        spec["ricci_scalar"] = ("-\\dfrac{2\\left(4\\partial_\\mu^2\\Psi + 4\\partial_\\eta^2\\Psi"
+                                " + 4\\cot\\eta\\,\\partial_\\eta\\Psi - \\Psi\\right)}{a^2\\,\\Psi^5}")
+    else:
+        coords, name, parameters = ["r", "\\theta", "\\phi"], "One Hole", ["r_s"]
+        domains = ["r \\in (0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                   "r = r_s/4 \;\\text{(the throat)}"]
+        line = ("ds^2 = \\left(1 + \\dfrac{r_s}{4r}\\right)^4\\left(dr^2 + r^2\\left(d\\theta^2"
+                " + \\sin^2\\theta\\,d\\phi^2\\right)\\right)")
+    probe = vm.Reader(coords, parameters, ())
+    spec["system"] = {"id": system_id, "name": name, "coords": coords, "domains": domains,
+                      "parameters": parameters, "line_element": line}
+    spec["chart_line_element"] = line
+    if system_id == "isotropic":
+        r, rs = probe.symbol["r"], probe.parameters["r_s"]
+        spec["printer"] = {"lead": [r, rs], "factors": [rs, r], "flip": False}
+    else:
+        free = [probe.parameters[k] for k in ("chi", "psi", "Psi") if k in probe.parameters]
+        spec["printer"] = {"lead": free, "flip": False,
+                           "collect": lambda poly, printer: cp.collect_by(poly, free, printer)}
+    return spec
+
+
+def misner_brill_lindquist_cartesian():
+    """Brill and Lindquist's chart as a reader, its coordinates, its free psi and its metric."""
+    cart = ["x", "y", "z"]
+    reader = vm.Reader(cart, ["\\psi = \\psi(x,y,z)"], ())
+    g = vm.metric_from_line_element(reader, "ds^2 = \\psi^4\\left(dx^2 + dy^2 + dz^2\\right)", cart)
+    return [reader.symbol[c] for c in cart], reader.parameters["psi"], g
+
+
+def misner_brill_lindquist_check(chart):
+    """Each chart against the constraint and against Brill and Lindquist's Cartesian chart.
+
+    At a moment of time symmetry the momentum constraint holds identically and the Hamiltonian
+    constraint is R = 16 pi rho, G = c = 1. In a vacuum that is R = 0: the Cartesian and cylindrical
+    charts have R = -8 psi^-5 Laplacian(psi), so psi is harmonic, and the two-hole psi is; Misner's
+    chart has R = -(2/a^2) Psi^-5 (4 Laplacian(Psi) - Psi) over the cylinder of mu and the 2-sphere,
+    and each term of Misner's sum and Brill and Lindquist's Psi solve it. The cylindrical,
+    bispherical and isotropic charts are the Cartesian one pulled back, the isotropic chart is the
+    space part of the published isotropic chart of einstein_rosen_bridge, and the charged chart has
+    R = 2 g^ij E_i E_j for harmonic chi and psi with E = grad ln(chi/psi), is the Cartesian chart at
+    chi = psi, and is the space part of the published Cartesian chart of majumdar_papapetrou at
+    psi = 1."""
+    system = {("x", 1): "cartesian", ("\\rho", 1): "cylindrical", ("\\mu", 2): "bispherical",
+              ("r", 1): "isotropic", ("x", 2): "charged"}[(chart.coords_tex[0], len(chart.reader.parameters))]
+    X, P, geo = chart.symbols, chart.reader.parameters, chart.geo
+    R = geo.ricci_scalar()
+
+    def fail(what):
+        raise AssertionError(f"misner_brill_lindquist/{system}: {what}")
+
+    def lap(f):
+        return sum(sp.diff(f, x, 2) for x in X)
+
+    if system == "cartesian":
+        psi = P["psi"]
+        if vm.norm(R + 8 * lap(psi) / psi ** 5) != 0:
+            fail("R is not -8 psi^-5 times the Laplacian of psi")
+        a1, a2, d = sp.symbols("MBLa1 MBLa2 MBLd", positive=True)
+        two = 1 + a1 / sp.sqrt(X[0] ** 2 + X[1] ** 2 + (X[2] - d) ** 2) + a2 / sp.sqrt(X[0] ** 2 + X[1] ** 2 + (X[2] + d) ** 2)
+        if sp.simplify(lap(two)) != 0:
+            fail("the two-hole psi is not harmonic")
+        return
+    if system == "charged":
+        chi, psi = P["chi"], P["psi"]
+        harmonic = {sp.Derivative(f, (X[2], 2)): -sp.Derivative(f, (X[0], 2)) - sp.Derivative(f, (X[1], 2))
+                    for f in (chi, psi)}
+        E = [sp.diff(sp.log(chi / psi), x) for x in X]
+        field = 2 * sum(geo.ginv[i, i] * E[i] ** 2 for i in range(3))
+        if vm.norm((R - field).subs(harmonic)) != 0:
+            fail("R is not 2 E^2 for harmonic chi and psi")
+        _, own, g = misner_brill_lindquist_cartesian()
+        mp = majumdar_papapetrou("cartesian")
+        there = cp.Chart(mp["system"]["coords"], mp["system"]["parameters"], mp["chart_line_element"])
+        U = there.reader.parameters["U"]
+        for i in range(3):
+            if vm.norm(geo.g[i, i].subs(chi, psi) - psi ** 4) != 0:
+                fail("the chart at chi = psi is not Brill and Lindquist's")
+            carried = there.geo.g[i + 1, i + 1].subs(U, sp.Function("MBLV")(*there.symbols[1:]))
+            carried = carried.subs(dict(zip(there.symbols[1:], X))).subs(sp.Function("MBLV")(*X), chi)
+            if vm.norm(geo.g[i, i].subs(psi, 1) - carried) != 0:
+                fail("the chart at psi = 1 is not the space of Majumdar and Papapetrou's")
+        return
+    Xc, psic, g = misner_brill_lindquist_cartesian()
+    V = sp.Function("MBLV")(*Xc)
+    g = g.subs(psic, V)
+    a, b, c = X
+    positive = sp.Symbol("positive_radius", positive=True)
+    if system == "cylindrical":
+        image = [a * sp.cos(b), a * sp.sin(b), c]
+        at = {sp.Function("MBLV")(*image): P["psi"]}
+        if vm.norm(R + 8 * (sp.diff(P["psi"], a, 2) + sp.diff(P["psi"], a) / a + sp.diff(P["psi"], c, 2)) / P["psi"] ** 5) != 0:
+            fail("R is not -8 psi^-5 times the Laplacian of psi")
+    elif system == "isotropic":
+        rs = P["r_s"]
+        image = [a * sp.sin(b) * sp.cos(c), a * sp.sin(b) * sp.sin(c), a * sp.cos(b)]
+        at = {sp.Function("MBLV")(*image): 1 + rs / (4 * a)}
+        if vm.norm(R) != 0:
+            fail("R does not vanish")
+        entry = next(e for e in json.loads((METRICS / "einstein_rosen_bridge.json").read_text(encoding="utf-8"))["coordinates"]
+                     if e["id"] == "isotropic")
+        reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+        there = {tuple(e["indices"]): reader(e["value"]) for e in entry["metric_components"]}
+        names = dict(zip([reader.symbol[x] for x in entry["coords"][1:]], X))
+        names[reader.parameters["r_s"]] = rs
+        for i, x in enumerate(entry["coords"][1:]):
+            if sp.simplify(there[(x, x)].subs(names) - geo.g[i, i]) != 0:
+                fail(f"slot {x}{x} is not the published Einstein-Rosen bridge's")
+    else:
+        half, Psi = P["a"], P["Psi"]
+        D = sp.cosh(a) - sp.cos(b)
+        image = [half * sp.sin(b) * sp.cos(c) / D, half * sp.sin(b) * sp.sin(c) / D, half * sp.sinh(a) / D]
+        at = {sp.Function("MBLV")(*image): Psi * sp.sqrt(D)}
+
+        def yamabe(f):
+            return sp.diff(f, a, 2) + sp.diff(f, b, 2) + sp.cot(b) * sp.diff(f, b) - f / 4
+
+        if vm.norm(R + 8 * yamabe(Psi) / (half ** 2 * Psi ** 5)) != 0:
+            fail("R is not -8 (Laplacian(Psi) - Psi/4)/(a^2 Psi^5)")
+        n, mu0, a1, a2 = sp.symbols("MBLn MBLmu0 MBLa1 MBLa2", positive=True)
+        for label, f in (("a term of Misner's sum", (sp.cosh(a + 2 * n * mu0) - sp.cos(b)) ** sp.Rational(-1, 2)),
+                         ("Brill and Lindquist's Psi", D ** sp.Rational(-1, 2)
+                          + (a1 * sp.exp(a / 2) + a2 * sp.exp(-a / 2)) / (sp.sqrt(2) * half))):
+            if sp.simplify(yamabe(f).rewrite(sp.exp)) != 0:
+                fail(f"{label} does not solve the constraint")
+        # Brill and Lindquist's Psi is their psi over sqrt(cosh mu - cos eta), at six points in forty digits.
+        rng = random.Random(0)
+        for _ in range(6):
+            point = {a: sp.Rational(rng.randint(-300, 300), 100), b: sp.Rational(rng.randint(10, 300), 100),
+                     half: sp.Rational(rng.randint(50, 200), 100), a1: sp.Rational(rng.randint(10, 200), 100),
+                     a2: sp.Rational(rng.randint(10, 200), 100)}
+            rho, z = image[0].subs(c, 0), image[2]
+            two = 1 + a1 / sp.sqrt(rho ** 2 + (z - half) ** 2) + a2 / sp.sqrt(rho ** 2 + (z + half) ** 2)
+            there = D ** sp.Rational(-1, 2) + (a1 * sp.exp(a / 2) + a2 * sp.exp(-a / 2)) / (sp.sqrt(2) * half)
+            if abs((two / sp.sqrt(D) - there).subs(point).evalf(40)) > sp.Float(10) ** -30:
+                fail("Brill and Lindquist's Psi is not their psi over sqrt(cosh mu - cos eta)")
+    J = sp.Matrix(3, 3, lambda i, j: sp.diff(image[i], X[j]))
+    pulled = (J.T * g.subs(dict(zip(Xc, image)), simultaneous=True) * J).subs(at)
+    for i in range(3):
+        for j in range(i, 3):
+            miss = sp.simplify((pulled[i, j] - geo.g[i, j]).subs(a, positive)).subs(positive, a) if system != "bispherical" \
+                else sp.simplify((pulled[i, j] - geo.g[i, j]).rewrite(sp.exp))
+            if sp.simplify(miss) != 0:
+                fail(f"the Cartesian chart pulled back misses slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["misner_brill_lindquist"] = [lambda s=s: misner_brill_lindquist(s) for s in TWO_HOLE_CHARTS]
 
 
 def write(spec):

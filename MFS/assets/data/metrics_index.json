@@ -522,7 +522,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3cbd37304b78a423",
+    "version": "1630b6c90e788077",
     "diagrams": "d8f5e35c3b0e6fe2",
     "conformal": "7b86209f53558e97",
     "embedding": "c3dc5db3068ad454"
@@ -790,7 +790,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4198a5aaa5b5f724",
+    "version": "877d15ebedce4af3",
     "diagrams": "e80c22fa8faff2b6",
     "conformal": "9dae987db0ca1df8",
     "embedding": "7ebe08e359710241"
@@ -918,7 +918,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8765746f78ca2bc3",
+    "version": "0ca6656165726f2a",
     "diagrams": "76bab86a529ed941",
     "conformal": "c45f19da93e85da3",
     "embedding": "626bd0932cbe6704"
@@ -1507,7 +1507,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f848c20350948ed1",
+    "version": "bcc20efa71452b3b",
     "diagrams": "aa8f329620c5927d",
     "conformal": "52493b5ac50704d6",
     "embedding": "c4aa8198bba8d575"
@@ -1866,7 +1866,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cbdb23e61b4103cf",
+    "version": "5e24c87ae16ff69a",
     "diagrams": "c6edded6cce52897",
     "conformal": "334186f800f59252",
     "embedding": "b9bf3c95064c40a7"
@@ -2065,6 +2065,49 @@
     "diagrams": "62b5c96261ee76e9",
     "conformal": "62cc3d3fab22417e",
     "embedding": "74f663204d97446f"
+  },
+  {
+    "id": "misner_brill_lindquist",
+    "name": "Misner and Brill-Lindquist Data",
+    "tags": [
+      "three-dimensional",
+      "conformally flat",
+      "Riemannian",
+      "no time",
+      "initial data",
+      "spatial slice",
+      "time symmetric",
+      "constraint equations",
+      "Hamiltonian constraint",
+      "Brill-Lindquist",
+      "Misner data",
+      "black hole",
+      "multiple black holes",
+      "binary black hole",
+      "black hole collision",
+      "wormhole",
+      "Einstein-Rosen bridge",
+      "throat",
+      "minimal surface",
+      "apparent horizon",
+      "puncture",
+      "harmonic function",
+      "superposition",
+      "method of images",
+      "bispherical coordinates",
+      "interaction energy",
+      "geometrodynamics",
+      "numerical relativity",
+      "mass",
+      "charged",
+      "electric charge",
+      "asymptotically flat",
+      "exact solution",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "f3e28a3cf84accf4",
+    "embedding": "0c96027fa617beeb"
   },
   {
     "id": "mixmaster",
@@ -2497,7 +2540,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b4a0baadc347bad6",
+    "version": "482ff0aee31d5793",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -2719,7 +2762,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "267ce341803766d6",
+    "version": "2d83ee77f213ef79",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"

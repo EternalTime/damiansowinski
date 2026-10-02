@@ -173,6 +173,11 @@ REGIONS = {
         "why": "isotropic is the single hole, which alone is spherically symmetric, and "
                "cylindrical the holes on one axis",
     },
+    "misner_brill_lindquist": {
+        "regions": [["cartesian"]],
+        "why": "isotropic is the single hole, which alone is spherically symmetric, cylindrical and "
+               "bispherical the holes on one axis, and charged the slice with an electric field on it",
+    },
     "oppenheimer_snyder": {
         "regions": [["interior_comoving"], ["exterior_schwarzschild"]],
         "why": "the dust ball and the vacuum outside it are two regions of one spacetime",

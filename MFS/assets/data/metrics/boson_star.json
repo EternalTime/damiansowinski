@@ -70,6 +70,11 @@
       "id": "bartnik_mckinnon",
       "kind": "family",
       "text": "A ball of Yang-Mills field held together by its own gravity, also known only numerically. It comes as a ladder of solitons counted by the zeros of the field, and every one of them is unstable [bartnik1988, volkov1999]."
+    },
+    {
+      "id": "misner_brill_lindquist",
+      "kind": "programme",
+      "text": "Wheeler's geometrodynamics had a second way to get mass with no matter, the wormhole. Charles Misner's slice of 1960 has two masses at rest that are the two mouths of one wormhole in empty space [misner1957, misner1960]."
     }
   ],
   "references": [
@@ -97,7 +102,9 @@
     "einstein1939",
     "mazur2004",
     "bartnik1988",
-    "volkov1999"
+    "volkov1999",
+    "misner1957",
+    "misner1960"
   ],
   "coordinates": [
     {
