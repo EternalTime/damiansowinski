@@ -1,5 +1,5 @@
 {
-  "version": "e4b93aa4d6ad109d",
+  "version": "5b31230de398a53e",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -27673,6 +27673,118 @@
         "eprint": "1507.05534",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/1507.05534"
+      }
+    },
+    "kelly2020": {
+      "type": "article",
+      "fields": {
+        "title": "Effective loop quantum gravity framework for vacuum spherically symmetric spacetimes",
+        "author": "Kelly, Jarod George and Santacruz, Robert and Wilson-Ewing, Edward",
+        "journal": "Physical Review D",
+        "volume": "102",
+        "number": "10",
+        "pages": "106024",
+        "year": "2020",
+        "doi": "10.1103/PhysRevD.102.106024",
+        "eprint": "2006.09302",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2006.09302"
+      }
+    },
+    "kelly2021": {
+      "type": "article",
+      "fields": {
+        "title": "Black hole collapse and bounce in effective loop quantum gravity",
+        "author": "Kelly, Jarod George and Santacruz, Robert and Wilson-Ewing, Edward",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "38",
+        "number": "4",
+        "pages": "04LT01",
+        "year": "2021",
+        "doi": "10.1088/1361-6382/abd3e2",
+        "eprint": "2006.09325",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2006.09325"
+      }
+    },
+    "lewandowski2023": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum Oppenheimer-Snyder and Swiss Cheese Models",
+        "author": "Lewandowski, Jerzy and Ma, Yongge and Yang, Jinsong and Zhang, Cong",
+        "journal": "Physical Review Letters",
+        "volume": "130",
+        "number": "10",
+        "pages": "101501",
+        "year": "2023",
+        "doi": "10.1103/PhysRevLett.130.101501",
+        "eprint": "2210.02253",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2210.02253"
+      }
+    },
+    "husain2022": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum Gravity of Dust Collapse: Shock Waves from Black Holes",
+        "author": "Husain, Viqar and Kelly, Jarod George and Santacruz, Robert and Wilson-Ewing, Edward",
+        "journal": "Physical Review Letters",
+        "volume": "128",
+        "number": "12",
+        "pages": "121301",
+        "year": "2022",
+        "doi": "10.1103/PhysRevLett.128.121301",
+        "eprint": "2109.08667",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2109.08667"
+      }
+    },
+    "bonanno2024": {
+      "type": "article",
+      "fields": {
+        "title": "Dust Collapse in Asymptotic Safety: A Path to Regular Black Holes",
+        "author": "Bonanno, Alfio and Malafarina, Daniele and Panassiti, Antonio",
+        "journal": "Physical Review Letters",
+        "volume": "132",
+        "number": "3",
+        "pages": "031401",
+        "year": "2024",
+        "doi": "10.1103/PhysRevLett.132.031401",
+        "eprint": "2308.10890",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2308.10890"
+      }
+    },
+    "ashtekar2006bounce": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum Nature of the Big Bang",
+        "author": "Ashtekar, Abhay and Pawlowski, Tomasz and Singh, Parampreet",
+        "journal": "Physical Review Letters",
+        "volume": "96",
+        "number": "14",
+        "pages": "141301",
+        "year": "2006",
+        "doi": "10.1103/PhysRevLett.96.141301",
+        "eprint": "gr-qc/0602086",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0602086"
+      }
+    },
+    "gambini2020": {
+      "type": "article",
+      "fields": {
+        "title": "Spherically symmetric loop quantum gravity: analysis of improved dynamics",
+        "author": "Gambini, Rodolfo and Olmedo, Javier and Pullin, Jorge",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "37",
+        "number": "20",
+        "pages": "205012",
+        "year": "2020",
+        "doi": "10.1088/1361-6382/aba842",
+        "eprint": "2006.01513",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2006.01513"
       }
     }
   }

@@ -79,6 +79,11 @@
       "id": "hiscock",
       "kind": "family",
       "text": "The evaporating hole Hayward took the surface of pair creation from, with negative energy falling in and positive energy going out. Hiscock's keeps its singularity, and the last point of it is naked [hayward2006, hiscock1981]."
+    },
+    {
+      "id": "quantum_oppenheimer_snyder",
+      "kind": "family",
+      "text": "Another black hole with two horizons above a least mass and none below it, this one fixed by a ball of dust that bounces in loop quantum cosmology [lewandowski2023]."
     }
   ],
   "references": [
@@ -101,7 +106,8 @@
     "vagnozzi2023",
     "simpson2019",
     "mazur2004",
-    "carballorubio2021"
+    "carballorubio2021",
+    "lewandowski2023"
   ],
   "coordinates": [
     {
