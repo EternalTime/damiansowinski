@@ -1935,9 +1935,114 @@ class dr_eta(sp.Function):
         return 1 / sp.sin(dr_eta(self.args[0]) / 2) ** 2
 
 
+# Farnsworth's tilted dust as every one of its diagrams draws it, in units of W with the tilt C = W:
+# the dust leaves the singularity X = 0 at eta = 1.9684, where u = 0.7707 W, and crosses the Cauchy
+# horizon X = C at eta = 2.3730, where u = 1.4725 W.
+TILTED_DUST = {"W": 1, "C": 1}
+TILTED_X = "sinh(eta/2)**2 - cosh(eta/2)/sinh(eta/2)"
+TILTED_ETA_S, TILTED_ETA_H = "1.96839702026073", "2.37295716191676"
+TILTED_U_S, TILTED_U_H = "0.770679156116326", "1.47248850095861"
+_TILTED_ETAS = np.linspace(0.0, 12.0, 600001)
+_TILTED_US = (np.sinh(_TILTED_ETAS) - _TILTED_ETAS) / 2
+
+
+def _tilted_eta(u):
+    """Farnsworth's parameter at the time u of the surfaces of homogeneity, in W: (sinh eta - eta)/2 = u."""
+    return np.interp(u, _TILTED_US, _TILTED_ETAS)
+
+
+class tilted_eta(sp.Function):
+    """The parameter eta of Farnsworth's dust at the chart time u, in W, a declared function a row
+    may name: its derivative is 1/Y = 1/sinh^2(eta/2), written in itself."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(_tilted_eta)
+
+    def fdiff(self, argindex=1):
+        return 1 / sp.sinh(tilted_eta(self.args[0]) / 2) ** 2
+
+
+def tilted_null_tables():
+    """The integrals behind the null coordinates of Farnsworth's dust at W = C = 1, on a grid of eta from
+    the singularity X = 0 on: F_+, the integral of Y/(C + X); G, the integral of Y/(C - X) + a/(eta - eta_H),
+    whose integrand is regular on the horizon, with a = Y/(dX/d eta) there; and the affine parameter
+    of a ray, the integral of X Y. A ray keeps r - F_+ or r - F_-, with
+    F_- = G - a ln|eta - eta_H| + a ln(eta_H - eta_s)."""
+    eta_s, eta_H = float(TILTED_ETA_S), float(TILTED_ETA_H)
+    h = eta_H / 2
+    a = math.sinh(h) ** 2 / (math.sinh(h) * math.cosh(h) + 1 / (2 * math.sinh(h) ** 2))
+    etas = np.concatenate([np.linspace(eta_s, 8.0, 200001), np.linspace(8.0, 60.0, 100001)[1:]])
+    Y = np.sinh(etas / 2) ** 2
+    X = Y - np.cosh(etas / 2) / np.sinh(etas / 2)
+    with np.errstate(all="ignore"):
+        regular = Y / (1 - X) + a / (etas - eta_H)
+    # On the horizon itself the regular part is its own limit, read from its neighbours.
+    bad = ~np.isfinite(regular) | (np.abs(etas - eta_H) < 1e-7)
+    regular[bad] = np.interp(etas[bad], etas[~bad], regular[~bad])
+
+    def integral(f):
+        steps = (f[1:] + f[:-1]) / 2 * np.diff(etas)
+        return np.concatenate([[0.0], np.cumsum(steps)])
+    return {"eta_s": eta_s, "eta_H": eta_H, "a": a, "etas": etas, "F_plus": integral(Y / (1 + X)),
+            "G": integral(regular), "affine": integral(X * Y)}
+
+
+def _tilted_forms():
+    """The null coordinates of the four planes of the tilted universes. Farnsworth's dust keeps
+    V = (eta - eta_H)/(eta_H - eta_s) e^((r - G)/a), which is regular on the horizon, and r - F_+, in the
+    parameter eta and at eta(u) in the homogeneous time; the flat model keeps (u - C) e^r and
+    (u + C) e^(-r), which are cT - x and cT + x of the inertial plane."""
+    made = {}
+
+    def tables():
+        if not made:
+            made.update(tilted_null_tables())
+        return made
+
+    def left(eta, r):
+        t = tables()
+        return (eta - t["eta_H"]) / (t["eta_H"] - t["eta_s"]) * np.exp((r - np.interp(eta, t["etas"], t["G"])) / t["a"])
+
+    def right(eta, r):
+        t = tables()
+        return r - np.interp(eta, t["etas"], t["F_plus"])
+    return {
+        ("tilted_universes", "farnsworth", "dust"): (left, right, lambda eta, r: eta > float(TILTED_ETA_S) + 0.02),
+        ("tilted_universes", "homogeneous", "dust"):
+            (lambda u, r: left(_tilted_eta(u), r), lambda u, r: right(_tilted_eta(u), r), None),
+        ("tilted_universes", "flat_model", "model"):
+            (lambda u, r: (u - 1) * np.exp(r), lambda u, r: (u + 1) * np.exp(-r), lambda u, r: u > 0.02),
+        ("tilted_universes", "inertial", "model"): (lambda T, x: T + x, lambda T, x: T - x, None),
+    }
+
+
+TILTED_X_OF_U = TILTED_X.replace("eta", "tilted_eta(u)")
+TILTED_PLANE = {"y": "0", "z": "0"}
+TILTED_INPUT = ("Farnsworth's dust with $W$ the unit of length and the tilt $C = W$: the dust leaves the "
+                "singularity $X = 0$ at $\\eta = 1.97$, where $u = 0.77\\,W$, and crosses the Cauchy horizon $X = C$ at "
+                "$\\eta = 2.37$, where $u = 1.47\\,W$.")
+TILTED_MODEL_INPUT = "The tilt $C$ is the unit of length."
+TILTED_MATTER = "the matter, straight lines that each pass the origin at the distance $C$"
+TILTED_SHEETS = "surfaces of homogeneity, at a constant interval from the origin"
+
+
+def _tilted_flow():
+    """The lines of the flat model's matter on the plane of T and x, r = -3/2, ..., 3/2 in the model's
+    chart: x = C sech(r) - cT tanh(r), from the event at which each touches the hyperbola
+    x^2 - c^2T^2 = C^2, and the hyperbolas of constant u, timelike for u < C and spacelike for u > C."""
+    lines = tuple(("world", f"Piecewise((1/cosh({r}) - T*tanh({r}), T >= -sinh({r})), (nan, True))", TILTED_MATTER, "signed")
+                  for r in ("-3/2", "-1", "-1/2", "0", "1/2", "1", "3/2"))
+    inside = tuple(("surface", f"sqrt(T**2 + {m})", TILTED_SHEETS, "signed") for m in ("3/4", "7/16"))
+    above = tuple(("surface", f"Piecewise(({sign}sqrt(T**2 - {k}), T >= sqrt({k})), (nan, True))", TILTED_SHEETS, "signed")
+                  for k in ("1", "4", "9") for sign in ("", "-"))
+    return (("shell", "sqrt(T**2 + 1)",
+             "the hyperbola $x^2 - c^2T^2 = C^2$, which every line of the matter touches and where its density diverges",
+             "signed"), *lines, *inside, *above)
+
+
 # Functions a row's `functions` may name beside the elementary ones, each a sympy function
 # that carries its own derivative and its own numbers.
-DECLARED_FUNCTIONS = {"dr_eta": dr_eta, **{f.__name__: f for f in (bm_m, bm_dm, bm_d2m, bm_delta, bm_ddelta, bm_d2delta, bm_N, bm_dN,
+DECLARED_FUNCTIONS = {"dr_eta": dr_eta, "tilted_eta": tilted_eta, **{f.__name__: f for f in (bm_m, bm_dm, bm_d2m, bm_delta, bm_ddelta, bm_d2delta, bm_N, bm_dN,
                                                  bm_d2N, bm_k, bm_dk, bm_d2k, bm_r)},
                       "teo_rho": teo_rho, "teo_sigma": teo_sigma, "ori_mass_behind": ori_mass_behind,
                       "ori_influx_behind": ori_influx_behind, "ori_shell_behind": ori_shell_behind,
@@ -3670,6 +3775,30 @@ DIAGRAMS = [
                     "the circle of $y$"),),
             marked=(("past", {"x0": SMALL_NOW, "r": "3/2"}, "both", "the past light cone of the event marked", "past"),),
             points=(("mark", (SMALL_NOW, "3/2"), "an event at $x = 3/2$ on the dashed line"),)),
+    # Tilted universes: Farnsworth's dust on the plane of its time and r, in the parameter eta and in the
+    # time u of the surfaces of homogeneity, and the flat model in its own chart and in inertial coordinates,
+    # where it is Ellis and King's picture of the whimper.
+    Diagram("tilted_universes", "homogeneous", "dust", "$u$ and $r$", ("u", "r"), (-2, 2, 1, 5),
+            "$r$", "$u/W$", {"C": 1}, TILTED_PLANE, tau="u", orient="vector", families=SIDEWAYS,
+            functions={"Y": "sinh(tilted_eta(u)/2)**2", "X": TILTED_X_OF_U},
+            solves=(("r", "r"), ("y", "y")),
+            lines=(("event", "x0", TILTED_U_H, "the Cauchy horizon, $X = C$"),),
+            input=TILTED_INPUT + " The scale factors are $Y = W\\sinh^2(\\eta/2)$ and $X = Y - C\\coth(\\eta/2)$ at "
+                  "$u = \\tfrac{1}{2}W\\left(\\sinh\\eta - \\eta\\right)$, checked to solve this spacetime's own "
+                  "$G^r{}_r = 0$ and $G^y{}_y = 0$."),
+    Diagram("tilted_universes", "farnsworth", "dust", "$\\eta$ and $r$", ("\\eta", "r"), (-2, 2, 1.5, 5.5),
+            "$r$", "$\\eta$", TILTED_DUST, TILTED_PLANE, tau="eta", orient="vector", families=SIDEWAYS,
+            where=TILTED_X, singular_zero=TILTED_X,
+            lines=(("event", "x0", TILTED_ETA_H, "the Cauchy horizon, $X = C$"),), input=TILTED_INPUT),
+    Diagram("tilted_universes", "flat_model", "model", "$u$ and $r$", ("u", "r"), (-2, 2, 0, 4),
+            "$r$", "$u/C$", {"C": 1}, TILTED_PLANE, tau="u", orient="vector", families=SIDEWAYS,
+            lines=(("event", "x0", "1", "the Cauchy horizon, $u = C$"),), input=TILTED_MODEL_INPUT),
+    Diagram("tilted_universes", "inertial", "model", "$T$ and $x$", ("T", "x"), (-2.5, 3.5, -2, 4),
+            "$x/C$", "$cT/C$", {"C": 1}, {"xi": "0", "zeta": "0"}, tau="T", families=SIDEWAYS,
+            where="Min(T + x, 1 + T**2 - x**2)", curves=_tilted_flow(),
+            marked=(("event", {"x0": "1", "r": "1"}, 1, "the Cauchy horizon, $x = cT$"),),
+            points=(("removed", ("0", "0"), "the origin, which every surface of homogeneity closes on and no line of the matter reaches"),),
+            input=TILTED_MODEL_INPUT),
     Diagram("melvin", "ernst", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_s$", "$ct/r_s$", {"r_s": 1, "B": "1/2"}, EQUATOR, orient="ingoing",
             lines=(("surface", "r", "4", "$r = 2/B$, the widest circle of the equator"),)),
@@ -8825,6 +8954,43 @@ CAPTIONS = {
         "period of $y$ apart stand the distance $2a\\,\\mathrm{arsinh}(b_2e^{-x}/2)$ from each other, and light has "
         "crossed $a\\ln 11$ by the dashed line, so an observer there has seen once round the circle of $y$ only "
         "beyond $x = \\ln(\\pi\\sqrt{11}/5) \\approx 0.73$.",
+    ],
+    ("tilted_universes", "homogeneous", "dust"): [
+        "The plane of $u$ and $r$ ($y = z = 0$) of Farnsworth's dust, each point a plane of $y$ and $z$. The dust "
+        "moves up the vertical lines, with $u/c$ its proper time along each, and the horizontal lines are the "
+        "surfaces of homogeneity.",
+        "The edges of the cones are $dr/du = 1/(C \\pm X)$. Under the Cauchy horizon, $X = C$ at $u = 1.47\\,W$, the "
+        "surfaces of homogeneity are timelike and the rays moving left run down the page. Above it the surfaces "
+        "are spacelike, and the dust crosses them at the speed $cC/X$, which falls from $c$ on the horizon to "
+        "$0.20\\,c$ at the top edge.",
+    ],
+    ("tilted_universes", "farnsworth", "dust"): [
+        "The plane of $\\eta$ and $r$ ($y = z = 0$) of Farnsworth's dust, each point a plane of $y$ and $z$. The dust "
+        "moves up the vertical lines from the singularity $X = 0$ at $\\eta = 1.97$, where its density and the "
+        "Kretschmann scalar diverge, and the horizontal lines are the surfaces of homogeneity.",
+        "The edges of the cones are $dr/d\\eta = W\\sinh^2(\\eta/2)/(C \\pm X)$. On the Cauchy horizon, $X = C$ at "
+        "$\\eta = 2.37$, the rays moving left run along the surface of homogeneity, which is null there, and the "
+        "density and the curvature in the frame of the dust are finite on it [ellis1974]. Followed into the past, "
+        "toward $r \\to \\infty$, those rays end at a finite affine distance: the whimper.",
+    ],
+    ("tilted_universes", "flat_model", "model"): [
+        "The plane of $u$ and $r$ ($y = z = 0$) of the flat model. The vertical lines are straight lines of "
+        "Minkowski space, and the horizontal lines are the surfaces at the interval $C^2 - u^2$ from the origin "
+        "of the inertial coordinates, timelike under the Cauchy horizon $u = C$ and spacelike above it.",
+        "The edges of the cones are $dr/du = 1/(C \\pm u)$, those of Farnsworth's dust with $X = u$. On the bottom "
+        "edge, $u = 0$, each line of the matter touches the hyperboloid at the distance $C$ from the origin and "
+        "runs into its neighbours.",
+    ],
+    ("tilted_universes", "inertial", "model"): [
+        "The same plane in inertial coordinates ($\\xi = \\zeta = 0$), Ellis and King's picture of the whimper "
+        "[ellis1974]. The matter moves up straight lines that each pass the origin at the distance $C$, the "
+        "surfaces of homogeneity are hyperbolas at a constant interval from the origin, and a boost about the "
+        "origin carries each line of the matter into the next.",
+        "The lines leave the hyperbola $x^2 - c^2T^2 = C^2$, cross the timelike surfaces of homogeneity, and pass "
+        "through the Cauchy horizon $x = cT$ into the region of spacelike surfaces above the origin, the "
+        "homogeneous universe. Toward the upper left they crowd against the null line $x = -cT$ and never reach "
+        "it. A ray along the horizon, followed into the past, meets every one of them and ends at the origin, "
+        "at a finite affine distance, with no curvature anywhere.",
     ],
     ("melvin", "cylindrical", "radial"): [
         "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of Melvin's universe ($B = 1$). The metric on it is "
@@ -14029,6 +14195,7 @@ def _ab_forms():
 
 
 CLOSED_FORMS.update(_ab_forms())
+CLOSED_FORMS.update(_tilted_forms())
 
 
 def verify(metrics=()):

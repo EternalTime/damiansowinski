@@ -80,6 +80,11 @@
       "id": "ab_metrics",
       "kind": "dual",
       "text": "Kasner's universe with exponents $(-\\tfrac{1}{3}, \\tfrac{2}{3}, \\tfrac{2}{3})$ and a radius in the place of its time is A III of Ehlers and Kundt's table, which is Abraham Taub's plane symmetric vacuum [martins1996]."
+    },
+    {
+      "id": "tilted_universes",
+      "kind": "family",
+      "text": "Homogeneous universes whose matter drifts through the surfaces of homogeneity. Bianchi's type I, Kasner's, has none of them [king1973]."
     }
   ],
   "references": [
@@ -101,7 +106,8 @@
     "belinskii1978",
     "belinskii1973",
     "ferrando2006",
-    "martins1996"
+    "martins1996",
+    "king1973"
   ],
   "coordinates": [
     {

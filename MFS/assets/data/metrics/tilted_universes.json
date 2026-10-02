@@ -1,0 +1,4960 @@
+{
+  "id": "tilted_universes",
+  "name": "Tilted Universes and the Whimper",
+  "short_name": "Tilted Universes",
+  "description": "Homogeneous universes whose matter drifts through the surfaces of homogeneity, so that an observer riding with it sees a lopsided sky. In the simplest of them, Farnsworth's dust of 1967, those surfaces turn from spacelike to timelike across a Cauchy horizon, and the light rays along the horizon end where the density and the curvature are finite: a whimper, as George Ellis and A. R. King named it in 1974.",
+  "tags": [
+    "cosmology",
+    "spatially homogeneous",
+    "homogeneous",
+    "anisotropic",
+    "tilted",
+    "Bianchi V",
+    "Bianchi classification",
+    "locally rotationally symmetric",
+    "dust",
+    "whimper",
+    "Cauchy horizon",
+    "intermediate singularity",
+    "curvature singularity",
+    "big bang",
+    "expanding universe",
+    "hyperbolic space",
+    "cosmic dipole",
+    "comoving",
+    "time-dependent",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ and $G$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "The world ends, in the last line of T. S. Eliot's poem \"The Hollow Men\", \"Not with a bang but a whimper\" [eliot1925]. George Ellis and A. R. King asked the same of its beginning, in a paper of December 1973 titled \"Was the big bang a whimper?\" [ellis1974]. A homogeneous universe has a family of surfaces on which every point is like every other, and in the best studied of them the matter sits still in those surfaces, as the galaxies do in Friedmann's universes [king1973]. King and Ellis had laid out in November 1972 the universes whose matter drifts through the surfaces, which they called tilted, and the question in the title grew out of them [king1973, ellis1974].¶What does an observer riding with tilted matter see? Such a universe \"may appear to be inhomogeneous to a fundamental observer\", King and Ellis wrote, whose counts of radio sources or galaxies \"will look inhomogeneous\", \"even though the space-time and its contents are spatially homogeneous in a strict mathematical sense\" [king1973]. The tilt is a boost: the velocity of the matter makes a hyperbolic angle $\\beta$ with the normal to the surfaces, and the matter crosses them at the speed $c\\tanh\\beta$ [king1973, ellis1974]. The simplest tilted universes are of Bianchi's type V, the open Friedmann universe with one direction picked out, and David L. Farnsworth had found the one filled with dust in 1967 [king1973, collins1974, farnsworth1967]. In his coordinates the surfaces of homogeneity are those of constant $u = ct + Cr$, the dust moves along the lines of constant $r$, and $\\tanh\\beta = C/X$ for a scale factor $X(u)$ [anton2023].¶Followed back in time, the tilt of Farnsworth's universe grows until the dust crosses the surfaces of homogeneity at the speed of light, at $X = C$, and there the surfaces themselves turn null [ellis1974]. By 1969 L. C. Shepley had seen that the universe is singular there although the density of the dust stays finite [shepley1969, ellis1974]. Earlier still the surfaces are timelike, so the symmetry that made the universe the same at every place now makes it the same at every time, and the null surface between the two regions is a Cauchy horizon [ellis1974, collins1974]. Ellis and King proved that tilted universes of every Bianchi type of class B, type V among them, can have such a horizon, showed that a light ray along it comes to an end after a finite affine distance, with the density finite and the curvature finite in the frame of the matter, and named that end a \"whimper\" [ellis1974].¶Their picture of a whimper is painted on the flat plane of special relativity [ellis1974]. Paint one world line that misses a point $p$, then boost it about $p$ by every rapidity, so that the plane fills with matter that is the same along each hyperbola at a fixed interval from $p$ [ellis1974]. Those hyperbolas are the surfaces of homogeneity, spacelike above $p$ and timelike beside it, and the two null lines through $p$ divide them [ellis1974]. The world lines cross one null line, the horizon, and crowd toward the other, so that a light ray running down the horizon toward $p$ \"crosses an infinite number of matter world lines in a finite affine distance\" [ellis1974]. With the painted line taken straight and the two missing dimensions put back, the picture is Farnsworth's solution with no dust in it, $X = u$ and $Y = u + C$, which is flat [farnsworth1967, anton2023].¶So was the big bang a whimper? Ellis and King counted the freedom in the starting data and found \"an open set of models\" with one in each of those Bianchi types, a proportion they called \"not negligible\" [ellis1974]. C. B. Collins, at Oxford, worked through the type V universes with pressure in January 1974 under the title \"Tilting at cosmological singularities\", and charged the cosmologists who had dismissed Shepley's example with \"wishful thinking and dangerous extrapolation\" [collins1974]. Ellis and King had also seen the weak point: a photon sent down the horizon arrives with infinite blueshift, so a small disturbance should turn the whimper into a \"little bang\" that most of the matter misses [ellis1974]. S. T. C. Siklos redid the count with the horizon itself as the starting surface and settled it in 1978: the universes with a horizon \"depend on two fewer parameters than the most general solution\", so that whimpers are \"not stable features\" of homogeneous universes [siklos1978].¶The 1.36 million quasars that Nathan Secrest and five colleagues took from the catalogue of the WISE satellite in 2021 are lopsided across the sky in the direction of the dipole of the microwave background, with an amplitude \"over twice as large as expected\" from our own motion [secrest2021]. Chethan Krishnan, Ranjini Mondol, and M. M. Sheikh-Jabbari answered with \"dipole cosmology\", a universe with a cosmic flow built into it, \"an axially isotropic, tilted Bianchi V/VII$_h$ cosmology\" in the setting of King and Ellis [krishnan2023, allahyari2025]. Run backward, such a universe reaches either a big bang of diverging curvature or, in the words of A. Allahyari and three colleagues, \"a much milder singularity, the whimper singularity\", depending on the sign of its shear [allahyari2025].",
+  "related": [
+    {
+      "id": "bianchi",
+      "kind": "generalisation",
+      "text": "The homogeneous universes these belong to. Bianchi's types sort the surfaces of homogeneity, and the tilt is the freedom of the matter to drift through them, which type I forbids [king1973]."
+    },
+    {
+      "id": "frw",
+      "kind": "special_case",
+      "text": "Farnsworth's dust with no tilt. At $C = 0$ it is Friedmann's open universe of dust, with $\\eta$ its conformal time [anton2023]."
+    },
+    {
+      "id": "milne",
+      "kind": "special_case",
+      "text": "The flat model with no tilt. At $C = 0$ its lines of matter all pass through one event, and it is Milne's universe."
+    },
+    {
+      "id": "minkowski",
+      "kind": "locally_same",
+      "text": "The flat model is a part of Minkowski space, filled with straight world lines that all pass one event at the same distance [ellis1974]."
+    },
+    {
+      "id": "taub_nut",
+      "kind": "family",
+      "text": "A vacuum with the same anatomy. Taub's homogeneous universe lies between two stationary regions, across null surfaces of homogeneity [collins1974, siklos1978]."
+    },
+    {
+      "id": "kasner",
+      "kind": "family",
+      "text": "Kasner's universe is of Bianchi's type I, which has no tilted universes [king1973]."
+    },
+    {
+      "id": "small_universes",
+      "kind": "family",
+      "text": "The horn is the same slicing of hyperbolic space by horospheres, with $y$ and $z$ made periodic and no tilt."
+    }
+  ],
+  "references": [
+    "eliot1925",
+    "ellis1974",
+    "king1973",
+    "collins1974",
+    "farnsworth1967",
+    "anton2023",
+    "shepley1969",
+    "siklos1978",
+    "secrest2021",
+    "krishnan2023",
+    "allahyari2025"
+  ],
+  "coordinates": [
+    {
+      "id": "homogeneous",
+      "name": "Homogeneous Time",
+      "coords": [
+        "u",
+        "r",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "r \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "X = C \\;\\text{(a Cauchy horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "C",
+          "description": "Tilt, a length: the matter crosses the surfaces of homogeneity with the speed $cC/X$ along $r$, and with $C = 0$ it is at rest in them"
+        },
+        {
+          "symbol": "X = X(u)",
+          "description": "Scale factor along $r$, a length; the surfaces of homogeneity are spacelike where $X^2 > C^2$, null where $X^2 = C^2$, and timelike where $X^2 < C^2$"
+        },
+        {
+          "symbol": "Y = Y(u)",
+          "description": "Scale factor of the planes of $y$ and $z$, a length ($Y > 0$)"
+        }
+      ],
+      "convention": "We use Farnsworth's comoving coordinates $(r, y, z)$, each a number, with the time $u = ct + Cr$, a length, where $t$ is the proper time of the matter, which moves along the lines of constant $r$, $y$, and $z$. The surfaces of constant $u$ are the surfaces of homogeneity, and the scale factors $X(u)$ and $Y(u)$ are left free. A prime is a derivative along $u$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -\\left(du - C\\,dr\\right)^2 + X^2dr^2 + e^{-2r}Y^2\\left(dy^2 + dz^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "u",
+            "r"
+          ],
+          "value": "C"
+        },
+        {
+          "indices": [
+            "r",
+            "u"
+          ],
+          "value": "C"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "X^2 - C^2"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "Y^2e^{-2r}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "Y^2e^{-2r}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "-\\dfrac{\\left(X - C\\right)\\left(X + C\\right)}{X^2}"
+        },
+        {
+          "indices": [
+            "u",
+            "r"
+          ],
+          "value": "\\dfrac{C}{X^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "u"
+          ],
+          "value": "\\dfrac{C}{X^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{1}{X^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{e^{2r}}{Y^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{e^{2r}}{Y^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{C\\,X'}{X}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{C\\,X'}{X}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{C\\,X'}{X}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(X - C\\right)\\left(X + C\\right)X'}{X}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{Y\\left(X^2\\,Y' + Y\\,C - C^2\\,Y'\\right)e^{-2r}}{X^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{Y\\left(X^2\\,Y' + Y\\,C - C^2\\,Y'\\right)e^{-2r}}{X^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{X'}{X}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{X'}{X}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{Y\\left(Y - C\\,Y'\\right)e^{-2r}}{X^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{Y\\left(Y - C\\,Y'\\right)e^{-2r}}{X^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{Y'}{Y}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{Y'}{Y}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "z"
+                ],
+                "value": "\\dfrac{Y'}{Y}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "u"
+                ],
+                "value": "\\dfrac{Y'}{Y}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-1"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "r"
+                ],
+                "value": "-X\\,X'"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "X\\,X'"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "X\\,X'"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y"
+                ],
+                "value": "-Y\\,e^{-2r}Y'"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "z"
+                ],
+                "value": "-Y\\,e^{-2r}Y'"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "Y\\,e^{-2r}Y'"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "Y\\,e^{-2r}Y'"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "z"
+                ],
+                "value": "Y\\,e^{-2r}Y'"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "u"
+                ],
+                "value": "Y\\,e^{-2r}Y'"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y"
+                ],
+                "value": "Y^2e^{-2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z"
+                ],
+                "value": "Y^2e^{-2r}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "-Y^2e^{-2r}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-Y^2e^{-2r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-Y^2e^{-2r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-Y^2e^{-2r}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{C\\,X''}{X}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{C\\,X''}{X}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{C\\,X''}{X}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{C\\,X''}{X}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(X - C\\right)\\left(X + C\\right)X''}{X}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(X - C\\right)\\left(X + C\\right)X''}{X}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{Y\\left(X^3\\,Y'' - X\\,C^2\\,Y'' + X\\,C\\,Y' - Y\\,C\\,X' + C^2\\,X'\\,Y'\\right)e^{-2r}}{X^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{Y\\left(X^3\\,Y'' - X\\,C^2\\,Y'' + X\\,C\\,Y' - Y\\,C\\,X' + C^2\\,X'\\,Y'\\right)e^{-2r}}{X^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "u",
+                  "z"
+                ],
+                "value": "\\dfrac{Y\\left(X^3\\,Y'' - X\\,C^2\\,Y'' + X\\,C\\,Y' - Y\\,C\\,X' + C^2\\,X'\\,Y'\\right)e^{-2r}}{X^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "z",
+                  "u"
+                ],
+                "value": "-\\dfrac{Y\\left(X^3\\,Y'' - X\\,C^2\\,Y'' + X\\,C\\,Y' - Y\\,C\\,X' + C^2\\,X'\\,Y'\\right)e^{-2r}}{X^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{Y\\left(C^2\\,Y' - Y\\,C + X\\,Y\\,X' - X^2\\,Y'\\right)e^{-2r}}{X^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{Y\\left(C^2\\,Y' - Y\\,C + X\\,Y\\,X' - X^2\\,Y'\\right)e^{-2r}}{X^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{Y\\left(C^2\\,Y' - Y\\,C + X\\,Y\\,X' - X^2\\,Y'\\right)e^{-2r}}{X^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{Y\\left(C^2\\,Y' - Y\\,C + X\\,Y\\,X' - X^2\\,Y'\\right)e^{-2r}}{X^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{X''}{X}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{X''}{X}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{Y\\left(C\\,X'\\,Y' - Y\\,X' + X\\,Y' - X\\,C\\,Y''\\right)e^{-2r}}{X^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{Y\\left(C\\,X'\\,Y' - Y\\,X' + X\\,Y' - X\\,C\\,Y''\\right)e^{-2r}}{X^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "u",
+                  "z"
+                ],
+                "value": "\\dfrac{Y\\left(C\\,X'\\,Y' - Y\\,X' + X\\,Y' - X\\,C\\,Y''\\right)e^{-2r}}{X^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "u"
+                ],
+                "value": "-\\dfrac{Y\\left(C\\,X'\\,Y' - Y\\,X' + X\\,Y' - X\\,C\\,Y''\\right)e^{-2r}}{X^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{Y\\left(X\\,X'\\,Y' - Y + C\\,Y'\\right)e^{-2r}}{X^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{Y\\left(X\\,X'\\,Y' - Y + C\\,Y'\\right)e^{-2r}}{X^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{Y\\left(X\\,X'\\,Y' - Y + C\\,Y'\\right)e^{-2r}}{X^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{Y\\left(X\\,X'\\,Y' - Y + C\\,Y'\\right)e^{-2r}}{X^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{Y''}{Y}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{Y''}{Y}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "u",
+                  "z"
+                ],
+                "value": "\\dfrac{Y''}{Y}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "z",
+                  "u"
+                ],
+                "value": "-\\dfrac{Y''}{Y}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "r",
+                  "y"
+                ],
+                "value": "-\\dfrac{X\\,Y' - Y\\,X' + C\\,X'\\,Y'}{X\\,Y}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "r"
+                ],
+                "value": "\\dfrac{X\\,Y' - Y\\,X' + C\\,X'\\,Y'}{X\\,Y}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{X\\,Y' - Y\\,X' + C\\,X'\\,Y'}{X\\,Y}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{X\\,Y' - Y\\,X' + C\\,X'\\,Y'}{X\\,Y}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{X\\,Y' - Y\\,X' + C\\,X'\\,Y'}{X\\,Y}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{X\\,Y' - Y\\,X' + C\\,X'\\,Y'}{X\\,Y}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "u",
+                  "z"
+                ],
+                "value": "-\\dfrac{X\\,Y' - Y\\,X' + C\\,X'\\,Y'}{X\\,Y}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "u"
+                ],
+                "value": "\\dfrac{X\\,Y' - Y\\,X' + C\\,X'\\,Y'}{X\\,Y}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{C^2\\,X'\\,Y' - Y\\,C\\,X' + X\\,Y - X^2\\,X'\\,Y'}{X\\,Y}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{C^2\\,X'\\,Y' - Y\\,C\\,X' + X\\,Y - X^2\\,X'\\,Y'}{X\\,Y}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{C^2\\,X'\\,Y' - Y\\,C\\,X' + X\\,Y - X^2\\,X'\\,Y'}{X\\,Y}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{C^2\\,X'\\,Y' - Y\\,C\\,X' + X\\,Y - X^2\\,X'\\,Y'}{X\\,Y}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(X\\,Y' - Y + C\\,Y'\\right)\\left(X\\,Y' + Y - C\\,Y'\\right)e^{-2r}}{X^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(X\\,Y' - Y + C\\,Y'\\right)\\left(X\\,Y' + Y - C\\,Y'\\right)e^{-2r}}{X^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(X\\,Y' - Y + C\\,Y'\\right)\\left(X\\,Y' + Y - C\\,Y'\\right)e^{-2r}}{X^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(X\\,Y' - Y + C\\,Y'\\right)\\left(X\\,Y' + Y - C\\,Y'\\right)e^{-2r}}{X^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "-X\\,X''"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "X\\,X''"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "X\\,X''"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "-X\\,X''"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-Y\\,e^{-2r}Y''"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "Y\\,e^{-2r}Y''"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "u",
+                  "z"
+                ],
+                "value": "-Y\\,e^{-2r}Y''"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "z",
+                  "u"
+                ],
+                "value": "Y\\,e^{-2r}Y''"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "Y\\,e^{-2r}Y''"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-Y\\,e^{-2r}Y''"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "u",
+                  "z"
+                ],
+                "value": "Y\\,e^{-2r}Y''"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "z",
+                  "u"
+                ],
+                "value": "-Y\\,e^{-2r}Y''"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{Y\\left(X\\,Y' - Y\\,X' + C\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{Y\\left(X\\,Y' - Y\\,X' + C\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{Y\\left(X\\,Y' - Y\\,X' + C\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{Y\\left(X\\,Y' - Y\\,X' + C\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{Y\\left(X\\,Y' - Y\\,X' + C\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{Y\\left(X\\,Y' - Y\\,X' + C\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "u",
+                  "z"
+                ],
+                "value": "\\dfrac{Y\\left(X\\,Y' - Y\\,X' + C\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "u"
+                ],
+                "value": "-\\dfrac{Y\\left(X\\,Y' - Y\\,X' + C\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "r",
+                  "y"
+                ],
+                "value": "-\\dfrac{Y\\left(X\\,Y' - Y\\,X' + C\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "r"
+                ],
+                "value": "\\dfrac{Y\\left(X\\,Y' - Y\\,X' + C\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{Y\\left(X\\,Y' - Y\\,X' + C\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{Y\\left(X\\,Y' - Y\\,X' + C\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{Y\\left(X\\,Y' - Y\\,X' + C\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{Y\\left(X\\,Y' - Y\\,X' + C\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "u",
+                  "z"
+                ],
+                "value": "-\\dfrac{Y\\left(X\\,Y' - Y\\,X' + C\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "u"
+                ],
+                "value": "\\dfrac{Y\\left(X\\,Y' - Y\\,X' + C\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{Y\\left(X^2\\,X'\\,Y' - X\\,Y + Y\\,C\\,X' - C^2\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{Y\\left(X^2\\,X'\\,Y' - X\\,Y + Y\\,C\\,X' - C^2\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{Y\\left(X^2\\,X'\\,Y' - X\\,Y + Y\\,C\\,X' - C^2\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{Y\\left(X^2\\,X'\\,Y' - X\\,Y + Y\\,C\\,X' - C^2\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "r",
+                  "y"
+                ],
+                "value": "-\\dfrac{Y\\left(X^2\\,X'\\,Y' - X\\,Y + Y\\,C\\,X' - C^2\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y",
+                  "r"
+                ],
+                "value": "\\dfrac{Y\\left(X^2\\,X'\\,Y' - X\\,Y + Y\\,C\\,X' - C^2\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{Y\\left(X^2\\,X'\\,Y' - X\\,Y + Y\\,C\\,X' - C^2\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{Y\\left(X^2\\,X'\\,Y' - X\\,Y + Y\\,C\\,X' - C^2\\,X'\\,Y'\\right)e^{-2r}}{X}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{Y^2\\left(X\\,Y' - Y + C\\,Y'\\right)\\left(X\\,Y' + Y - C\\,Y'\\right)e^{-4r}}{X^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{Y^2\\left(X\\,Y' - Y + C\\,Y'\\right)\\left(X\\,Y' + Y - C\\,Y'\\right)e^{-4r}}{X^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{Y^2\\left(X\\,Y' - Y + C\\,Y'\\right)\\left(X\\,Y' + Y - C\\,Y'\\right)e^{-4r}}{X^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{Y^2\\left(X\\,Y' - Y + C\\,Y'\\right)\\left(X\\,Y' + Y - C\\,Y'\\right)e^{-4r}}{X^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{2X\\,Y'' + Y\\,X''}{X\\,Y}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{2X\\,Y' + Y\\,C\\,X'' - 2Y\\,X' + 2C\\,X'\\,Y'}{X\\,Y}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{2X\\,Y' + Y\\,C\\,X'' - 2Y\\,X' + 2C\\,X'\\,Y'}{X\\,Y}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{X^2\\,Y\\,X'' + 2X^2\\,X'\\,Y' - 2X\\,Y - Y\\,C^2\\,X'' + 2Y\\,C\\,X' - 2C^2\\,X'\\,Y'}{X\\,Y}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(X^3\\,Y\\,Y'' + X^3\\left(Y'\\right)^2 + X^2\\,Y\\,X'\\,Y' - 2X\\,Y^2 - X\\,Y\\,C^2\\,Y'' + 4X\\,Y\\,C\\,Y' - X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{X^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(X^3\\,Y\\,Y'' + X^3\\left(Y'\\right)^2 + X^2\\,Y\\,X'\\,Y' - 2X\\,Y^2 - X\\,Y\\,C^2\\,Y'' + 4X\\,Y\\,C\\,Y' - X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{X^3}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{2X^3\\,Y'' + X^2\\,Y\\,X'' - 2X\\,C^2\\,Y'' + 2X\\,C\\,Y' - 2Y\\,C\\,X' + 2C^2\\,X'\\,Y'}{X^3\\,Y}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{2C^2\\,Y' - 2Y\\,C + 2X\\,Y\\,X' - 2X^2\\,Y'}{X^2\\,Y}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{2C\\,X'\\,Y' - 2Y\\,X' + 2X\\,Y' - 2X\\,C\\,Y''}{X^3\\,Y}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{X\\,Y\\,X'' + 2X\\,X'\\,Y' - 2Y + 2C\\,Y'}{X^2\\,Y}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{X^3\\,Y\\,Y'' + X^3\\left(Y'\\right)^2 + X^2\\,Y\\,X'\\,Y' - 2X\\,Y^2 - X\\,Y\\,C^2\\,Y'' + 4X\\,Y\\,C\\,Y' - X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'}{X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{X^3\\,Y\\,Y'' + X^3\\left(Y'\\right)^2 + X^2\\,Y\\,X'\\,Y' - 2X\\,Y^2 - X\\,Y\\,C^2\\,Y'' + 4X\\,Y\\,C\\,Y' - X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'}{X^3\\,Y^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{2C^4\\,X'\\,Y' - 2Y\\,C^3\\,X' + 4X\\,C^3\\,Y' - 2X\\,C^4\\,Y'' - 2X\\,Y\\,C^2 - 2X^2\\,C^2\\,X'\\,Y' + 4X^2\\,Y\\,C\\,X' + X^2\\,Y\\,C^2\\,X'' - 4X^3\\,C\\,Y' + 4X^3\\,C^2\\,Y'' - X^4\\,Y\\,X'' - 2X^5\\,Y''}{X^5\\,Y}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{2X^3\\,C\\,Y'' - 2X^3\\,Y' + X^2\\,Y\\,C\\,X'' + 2X^2\\,Y\\,X' - 2X\\,Y\\,C - 2X\\,C^3\\,Y'' + 4X\\,C^2\\,Y' - 2Y\\,C^2\\,X' + 2C^3\\,X'\\,Y'}{X^5\\,Y}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{2X^3\\,C\\,Y'' - 2X^3\\,Y' + X^2\\,Y\\,C\\,X'' + 2X^2\\,Y\\,X' - 2X\\,Y\\,C - 2X\\,C^3\\,Y'' + 4X\\,C^2\\,Y' - 2Y\\,C^2\\,X' + 2C^3\\,X'\\,Y'}{X^5\\,Y}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{X^2\\,Y\\,X'' + 2X^2\\,X'\\,Y' - 2X\\,Y - 2X\\,C^2\\,Y'' + 4X\\,C\\,Y' - 2Y\\,C\\,X' + 2C^2\\,X'\\,Y'}{X^5\\,Y}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(X^3\\,Y\\,Y'' + X^3\\left(Y'\\right)^2 + X^2\\,Y\\,X'\\,Y' - 2X\\,Y^2 - X\\,Y\\,C^2\\,Y'' + 4X\\,Y\\,C\\,Y' - X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{2r}}{X^3\\,Y^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(X^3\\,Y\\,Y'' + X^3\\left(Y'\\right)^2 + X^2\\,Y\\,X'\\,Y' - 2X\\,Y^2 - X\\,Y\\,C^2\\,Y'' + 4X\\,Y\\,C\\,Y' - X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{2r}}{X^3\\,Y^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{4X^3\\,Y\\,Y'' + 2X^3\\left(Y'\\right)^2 + 2X^2\\,Y^2\\,X'' + 4X^2\\,Y\\,X'\\,Y' - 6X\\,Y^2 - 4X\\,Y\\,C^2\\,Y'' + 12X\\,Y\\,C\\,Y' - 2X\\,C^2\\left(Y'\\right)^2 - 4Y^2\\,C\\,X' + 4Y\\,C^2\\,X'\\,Y'}{X^3\\,Y^2}",
+      "kretschmann": "K = \\dfrac{8X^6\\,Y^2\\left(Y''\\right)^2 + 4X^6\\left(Y'\\right)^4 + 4X^4\\,Y^4\\left(X''\\right)^2 - 16X^4\\,Y^2\\,C^2\\left(Y''\\right)^2 + 32X^4\\,Y^2\\,C\\,Y'\\,Y'' + 8X^4\\,Y^2\\left(X'\\right)^2\\left(Y'\\right)^2 - 24X^4\\,Y^2\\left(Y'\\right)^2 + 16X^4\\,Y\\,C\\left(Y'\\right)^3 - 8X^4\\,C^2\\left(Y'\\right)^4 - 32X^3\\,Y^3\\,C\\,X'\\,Y'' + 16X^3\\,Y^3\\,X'\\,Y' + 16X^3\\,Y^2\\,C^2\\,X'\\,Y'\\,Y'' - 16X^2\\,Y^4\\left(X'\\right)^2 + 12X^2\\,Y^4 + 16X^2\\,Y^3\\,C^2\\,Y'' + 16X^2\\,Y^3\\,C\\left(X'\\right)^2\\,Y' - 48X^2\\,Y^3\\,C\\,Y' + 8X^2\\,Y^2\\,C^4\\left(Y''\\right)^2 - 32X^2\\,Y^2\\,C^3\\,Y'\\,Y'' + 56X^2\\,Y^2\\,C^2\\left(Y'\\right)^2 - 16X^2\\,Y\\,C^3\\left(Y'\\right)^3 + 4X^2\\,C^4\\left(Y'\\right)^4 + 16X\\,Y^4\\,C\\,X' + 16X\\,Y^3\\,C^3\\,X'\\,Y'' - 48X\\,Y^3\\,C^2\\,X'\\,Y' - 16X\\,Y^2\\,C^4\\,X'\\,Y'\\,Y'' + 32X\\,Y^2\\,C^3\\,X'\\left(Y'\\right)^2 + 8Y^4\\,C^2\\left(X'\\right)^2 - 16Y^3\\,C^3\\left(X'\\right)^2\\,Y' + 8Y^2\\,C^4\\left(X'\\right)^2\\left(Y'\\right)^2}{X^6\\,Y^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{X^3\\left(Y'\\right)^2 + 2X^2\\,Y\\,X'\\,Y' - 3X\\,Y^2 - 2X\\,Y\\,C^2\\,Y'' + 6X\\,Y\\,C\\,Y' - X\\,C^2\\left(Y'\\right)^2 - 2Y^2\\,C\\,X' + 2Y\\,C^2\\,X'\\,Y'}{X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{2X^3\\,Y\\,C\\,Y'' - 2X^3\\,Y\\,Y' + X^3\\,C\\left(Y'\\right)^2 + 2X^2\\,Y^2\\,X' - 3X\\,Y^2\\,C - 2X\\,Y\\,C^3\\,Y'' + 6X\\,Y\\,C^2\\,Y' - X\\,C^3\\left(Y'\\right)^2 - 2Y^2\\,C^2\\,X' + 2Y\\,C^3\\,X'\\,Y'}{X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{2X^3\\,Y\\,C\\,Y'' - 2X^3\\,Y\\,Y' + X^3\\,C\\left(Y'\\right)^2 + 2X^2\\,Y^2\\,X' - 3X\\,Y^2\\,C - 2X\\,Y\\,C^3\\,Y'' + 6X\\,Y\\,C^2\\,Y' - X\\,C^3\\left(Y'\\right)^2 - 2Y^2\\,C^2\\,X' + 2Y\\,C^3\\,X'\\,Y'}{X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2Y\\,C^4\\,X'\\,Y' - 2Y^2\\,C^3\\,X' - X\\,C^4\\left(Y'\\right)^2 + 6X\\,Y\\,C^3\\,Y' - 2X\\,Y\\,C^4\\,Y'' - 3X\\,Y^2\\,C^2 - 2X^2\\,Y\\,C^2\\,X'\\,Y' + 4X^2\\,Y^2\\,C\\,X' + 2X^3\\,C^2\\left(Y'\\right)^2 - 6X^3\\,Y\\,C\\,Y' + 4X^3\\,Y\\,C^2\\,Y'' + X^3\\,Y^2 - X^5\\left(Y'\\right)^2 - 2X^5\\,Y\\,Y''}{X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{Y\\left(X^3\\,Y'' + X^2\\,Y\\,X'' + X^2\\,X'\\,Y' - X\\,Y - X\\,C^2\\,Y'' + 2X\\,C\\,Y' - Y\\,C\\,X' + C^2\\,X'\\,Y'\\right)e^{-2r}}{X^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{Y\\left(X^3\\,Y'' + X^2\\,Y\\,X'' + X^2\\,X'\\,Y' - X\\,Y - X\\,C^2\\,Y'' + 2X\\,C\\,Y' - Y\\,C\\,X' + C^2\\,X'\\,Y'\\right)e^{-2r}}{X^3}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{C^2\\left(Y'\\right)^2 - 4Y\\,C\\,Y' + 3Y^2 - 2X\\,Y\\,X'\\,Y' - X^2\\left(Y'\\right)^2}{X^2\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{2C^2\\,Y' - 2Y\\,C + 2X\\,Y\\,X' - 2X^2\\,Y'}{X^2\\,Y}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{2C\\,X'\\,Y' - 2Y\\,X' + 2X\\,Y' - 2X\\,C\\,Y''}{X^3\\,Y}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{2X^3\\,Y\\,Y'' + X^3\\left(Y'\\right)^2 - X\\,Y^2 - 2X\\,Y\\,C^2\\,Y'' + 4X\\,Y\\,C\\,Y' - X\\,C^2\\left(Y'\\right)^2 - 2Y^2\\,C\\,X' + 2Y\\,C^2\\,X'\\,Y'}{X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{X^3\\,Y'' + X^2\\,Y\\,X'' + X^2\\,X'\\,Y' - X\\,Y - X\\,C^2\\,Y'' + 2X\\,C\\,Y' - Y\\,C\\,X' + C^2\\,X'\\,Y'}{X^3\\,Y}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{X^3\\,Y'' + X^2\\,Y\\,X'' + X^2\\,X'\\,Y' - X\\,Y - X\\,C^2\\,Y'' + 2X\\,C\\,Y' - Y\\,C\\,X' + C^2\\,X'\\,Y'}{X^3\\,Y}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{X^4\\left(Y'\\right)^2 + 2X^3\\,Y\\,X'\\,Y' - 3X^2\\,Y^2 + 2X^2\\,Y\\,C\\,Y' - 2X^2\\,C^2\\left(Y'\\right)^2 + 2X\\,Y^2\\,C\\,X' - 2X\\,Y\\,C^2\\,X'\\,Y' + Y^2\\,C^2 - 2Y\\,C^3\\,Y' + C^4\\left(Y'\\right)^2}{X^4\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{C^3\\left(Y'\\right)^2 - 2Y\\,C^2\\,Y' + Y^2\\,C - 2X\\,Y\\,C\\,X'\\,Y' + 2X\\,Y^2\\,X' - X^2\\,C\\left(Y'\\right)^2 - 2X^2\\,Y\\,Y'}{X^4\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{C^3\\left(Y'\\right)^2 - 2Y\\,C^2\\,Y' + Y^2\\,C - 2X\\,Y\\,C\\,X'\\,Y' + 2X\\,Y^2\\,X' - X^2\\,C\\left(Y'\\right)^2 - 2X^2\\,Y\\,Y'}{X^4\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{C^2\\left(Y'\\right)^2 - 2Y\\,C\\,Y' + Y^2 - X^2\\left(Y'\\right)^2 - 2X^2\\,Y\\,Y''}{X^4\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(X^3\\,Y'' + X^2\\,Y\\,X'' + X^2\\,X'\\,Y' - X\\,Y - X\\,C^2\\,Y'' + 2X\\,C\\,Y' - Y\\,C\\,X' + C^2\\,X'\\,Y'\\right)e^{2r}}{X^3\\,Y^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(X^3\\,Y'' + X^2\\,Y\\,X'' + X^2\\,X'\\,Y' - X\\,Y - X\\,C^2\\,Y'' + 2X\\,C\\,Y' - Y\\,C\\,X' + C^2\\,X'\\,Y'\\right)e^{2r}}{X^3\\,Y^3}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)}{3X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)}{3X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)}{3X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)}{3X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(X - C\\right)\\left(X + C\\right)\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)}{3X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(X - C\\right)\\left(X + C\\right)\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)}{3X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "u",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "z",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'}{3X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'}{3X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'}{6X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'}{6X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "u",
+                  "z"
+                ],
+                "value": "\\dfrac{X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'}{6X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "z",
+                  "u"
+                ],
+                "value": "-\\dfrac{X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'}{6X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "r",
+                  "y"
+                ],
+                "value": "-\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)}{6X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "r"
+                ],
+                "value": "\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)}{6X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)}{6X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)}{6X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)}{6X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)}{6X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "u",
+                  "z"
+                ],
+                "value": "-\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)}{6X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "u"
+                ],
+                "value": "\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)}{6X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "r",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(X - C\\right)\\left(X + C\\right)\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)}{6X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(X - C\\right)\\left(X + C\\right)\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)}{6X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(X - C\\right)\\left(X + C\\right)\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)}{6X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(X - C\\right)\\left(X + C\\right)\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)}{6X^3\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{3X^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{3X^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{3X^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{3X^3}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'}{3X\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "-\\dfrac{X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'}{3X\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "-\\dfrac{X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'}{3X\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'}{3X\\,Y^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "u",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "z",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "u",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "z",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "u",
+                  "z"
+                ],
+                "value": "\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "u"
+                ],
+                "value": "-\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "r",
+                  "y"
+                ],
+                "value": "-\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "r"
+                ],
+                "value": "\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "u",
+                  "z"
+                ],
+                "value": "-\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "u"
+                ],
+                "value": "\\dfrac{C\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(X - C\\right)\\left(X + C\\right)\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(X - C\\right)\\left(X + C\\right)\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(X - C\\right)\\left(X + C\\right)\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(X - C\\right)\\left(X + C\\right)\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "r",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(X - C\\right)\\left(X + C\\right)\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(X - C\\right)\\left(X + C\\right)\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(X - C\\right)\\left(X + C\\right)\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(X - C\\right)\\left(X + C\\right)\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-2r}}{6X^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{Y^2\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-4r}}{3X^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{Y^2\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-4r}}{3X^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{Y^2\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-4r}}{3X^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{Y^2\\left(X^3\\,Y\\,Y'' - X^3\\left(Y'\\right)^2 - X^2\\,Y^2\\,X'' + X^2\\,Y\\,X'\\,Y' - X\\,Y\\,C^2\\,Y'' + X\\,C^2\\left(Y'\\right)^2 - Y^2\\,C\\,X' + Y\\,C^2\\,X'\\,Y'\\right)e^{-4r}}{3X^3}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} + \\dfrac{2C\\,X'}{X}\\dot{u}\\dot{r} + \\dfrac{\\left(X - C\\right)\\left(X + C\\right)X'}{X}\\dot{r}^2 + \\dfrac{Y\\left(X^2\\,Y' + Y\\,C - C^2\\,Y'\\right)e^{-2r}}{X^2}\\dot{y}^2 + \\dfrac{Y\\left(X^2\\,Y' + Y\\,C - C^2\\,Y'\\right)e^{-2r}}{X^2}\\dot{z}^2 = 0",
+        "\\ddot{r} + \\dfrac{2X'}{X}\\dot{u}\\dot{r} - \\dfrac{C\\,X'}{X}\\dot{r}^2 + \\dfrac{Y\\left(Y - C\\,Y'\\right)e^{-2r}}{X^2}\\dot{y}^2 + \\dfrac{Y\\left(Y - C\\,Y'\\right)e^{-2r}}{X^2}\\dot{z}^2 = 0",
+        "\\ddot{y} + \\dfrac{2Y'}{Y}\\dot{u}\\dot{y} - 2\\dot{r}\\dot{y} = 0",
+        "\\ddot{z} + \\dfrac{2Y'}{Y}\\dot{u}\\dot{z} - 2\\dot{r}\\dot{z} = 0"
+      ]
+    },
+    {
+      "id": "farnsworth",
+      "name": "Farnsworth's Dust",
+      "coords": [
+        "\\eta",
+        "r",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "\\eta \\in (0, \\infty)",
+        "r \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "X > 0 \\;\\text{(where the density is positive)}",
+        "X = C \\;\\text{(the Cauchy horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "C",
+          "description": "Tilt, a length ($C > 0$): the dust crosses the surfaces of homogeneity with the speed $cC/X$ along $r$, and with $C = 0$ the universe is Friedmann's open universe of dust"
+        },
+        {
+          "symbol": "W",
+          "description": "A length that sets the amount of dust ($W > 0$): the mass density $\\rho$ has $8\\pi G\\rho/c^2 = 3/\\left(W\\,X\\sinh^4(\\eta/2)\\right)$"
+        },
+        {
+          "symbol": "X = W\\sinh^2(\\eta/2) - C\\coth(\\eta/2)",
+          "description": "Scale factor along $r$, a length, $X = Y - C\\,dY/du$ for $Y = W\\sinh^2(\\eta/2)$; the surfaces of homogeneity are timelike where $X < C$ and spacelike where $X > C$"
+        }
+      ],
+      "convention": "We use coordinates $(\\eta, r, y, z)$, each a number, with $\\eta$ the parameter of Friedmann's open universe: the planes of $y$ and $z$ have the scale factor $Y = W\\sinh^2(\\eta/2)$, and $u = ct + Cr = \\tfrac{1}{2}W\\left(\\sinh\\eta - \\eta\\right)$ for the proper time $t$ of the dust, so that $du = Y\\,d\\eta$. The surfaces of constant $\\eta$ are the surfaces of homogeneity, and the dust moves along the lines of constant $r$, $y$, and $z$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -\\left(W\\sinh^2(\\eta/2)\\,d\\eta - C\\,dr\\right)^2 + X^2dr^2 + W^2e^{-2r}\\sinh^4(\\eta/2)\\left(dy^2 + dz^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "-W^2\\sinh^4(\\eta/2)"
+        },
+        {
+          "indices": [
+            "\\eta",
+            "r"
+          ],
+          "value": "W\\,C\\sinh^2(\\eta/2)"
+        },
+        {
+          "indices": [
+            "r",
+            "\\eta"
+          ],
+          "value": "W\\,C\\sinh^2(\\eta/2)"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "X^2 - C^2"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "W^2e^{-2r}\\sinh^4(\\eta/2)"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "W^2e^{-2r}\\sinh^4(\\eta/2)"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "-\\dfrac{\\left(X - C\\right)\\left(X + C\\right)}{X^2\\,W^2\\sinh^4(\\eta/2)}"
+        },
+        {
+          "indices": [
+            "\\eta",
+            "r"
+          ],
+          "value": "\\dfrac{C}{X^2\\,W\\sinh^2(\\eta/2)}"
+        },
+        {
+          "indices": [
+            "r",
+            "\\eta"
+          ],
+          "value": "\\dfrac{C}{X^2\\,W\\sinh^2(\\eta/2)}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{1}{X^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{e^{2r}}{W^2\\sinh^4(\\eta/2)}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{e^{2r}}{W^2\\sinh^4(\\eta/2)}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\cosh(\\eta/2)}{\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "\\dfrac{\\cosh(\\eta/2)}{\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\cosh(\\eta/2)}{\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "\\dfrac{\\cosh(\\eta/2)}{\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\cosh(\\eta/2)}{\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "\\dfrac{C\\left(2W\\sinh^3(\\eta/2)\\cosh(\\eta/2) + C\\right)}{2X\\,W\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{C\\left(2W\\sinh^3(\\eta/2)\\cosh(\\eta/2) + C\\right)}{2X\\,W\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{C\\left(2W\\sinh^3(\\eta/2)\\cosh(\\eta/2) + C\\right)}{2X\\,W\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(X - C\\right)\\left(2W\\sinh^3(\\eta/2)\\cosh(\\eta/2) + C\\right)\\left(X + C\\right)}{2X\\,W^2\\sinh^6(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(W\\sinh^3(\\eta/2)\\cosh(\\eta/2) - C\\right)e^{-2r}}{X\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(W\\sinh^3(\\eta/2)\\cosh(\\eta/2) - C\\right)e^{-2r}}{X\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "\\dfrac{2W\\sinh^3(\\eta/2)\\cosh(\\eta/2) + C}{2X\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2W\\sinh^3(\\eta/2)\\cosh(\\eta/2) + C}{2X\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{W\\,e^{-2r}\\sinh^2(\\eta/2)}{X}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{W\\,e^{-2r}\\sinh^2(\\eta/2)}{X}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-1"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "-W^2\\sinh^3(\\eta/2)\\cosh(\\eta/2)"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{X\\left(2W\\sinh^3(\\eta/2)\\cosh(\\eta/2) + C\\right)}{2\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "\\dfrac{X\\left(2W\\sinh^3(\\eta/2)\\cosh(\\eta/2) + C\\right)}{2\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{X\\left(2W\\sinh^3(\\eta/2)\\cosh(\\eta/2) + C\\right)}{2\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "y"
+                ],
+                "value": "-W^2e^{-2r}\\sinh^3(\\eta/2)\\cosh(\\eta/2)"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "z"
+                ],
+                "value": "-W^2e^{-2r}\\sinh^3(\\eta/2)\\cosh(\\eta/2)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "W^2e^{-2r}\\sinh^3(\\eta/2)\\cosh(\\eta/2)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "W^2e^{-2r}\\sinh^3(\\eta/2)\\cosh(\\eta/2)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "W^2e^{-2r}\\sinh^3(\\eta/2)\\cosh(\\eta/2)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "W^2e^{-2r}\\sinh^3(\\eta/2)\\cosh(\\eta/2)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "W\\,C\\sinh(\\eta/2)\\cosh(\\eta/2)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y"
+                ],
+                "value": "W^2e^{-2r}\\sinh^4(\\eta/2)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z"
+                ],
+                "value": "W^2e^{-2r}\\sinh^4(\\eta/2)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "-W^2e^{-2r}\\sinh^4(\\eta/2)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-W^2e^{-2r}\\sinh^4(\\eta/2)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-W^2e^{-2r}\\sinh^4(\\eta/2)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-W^2e^{-2r}\\sinh^4(\\eta/2)"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "-\\dfrac{C\\left(W\\sinh^3(\\eta/2) + 2C\\cosh(\\eta/2)\\right)}{2X\\,W\\sinh^5(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{C\\left(W\\sinh^3(\\eta/2) + 2C\\cosh(\\eta/2)\\right)}{2X\\,W\\sinh^5(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "\\dfrac{C\\left(W\\sinh^3(\\eta/2) + 2C\\cosh(\\eta/2)\\right)}{2X\\,W\\sinh^5(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{C\\left(W\\sinh^3(\\eta/2) + 2C\\cosh(\\eta/2)\\right)}{2X\\,W\\sinh^5(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "r",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(X - C\\right)\\left(X + C\\right)\\left(W\\sinh^3(\\eta/2) + 2C\\cosh(\\eta/2)\\right)}{2X\\,W^2\\sinh^7(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "r",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\left(X - C\\right)\\left(X + C\\right)\\left(W\\sinh^3(\\eta/2) + 2C\\cosh(\\eta/2)\\right)}{2X\\,W^2\\sinh^7(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "-\\dfrac{e^{-2r}}{2\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{e^{-2r}}{2\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "-\\dfrac{e^{-2r}}{2\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{e^{-2r}}{2\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{3C\\,e^{-2r}}{2X\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{3C\\,e^{-2r}}{2X\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{3C\\,e^{-2r}}{2X\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{3C\\,e^{-2r}}{2X\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\eta",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "-\\dfrac{W\\sinh^3(\\eta/2) + 2C\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\eta",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{W\\sinh^3(\\eta/2) + 2C\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(2W\\sinh^3(\\eta/2) + C\\cosh(\\eta/2)\\right)e^{-2r}}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2W\\sinh^3(\\eta/2) + C\\cosh(\\eta/2)\\right)e^{-2r}}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(2W\\sinh^3(\\eta/2) + C\\cosh(\\eta/2)\\right)e^{-2r}}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2W\\sinh^3(\\eta/2) + C\\cosh(\\eta/2)\\right)e^{-2r}}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{2\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{1}{2\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{2\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{1}{2\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{C}{2W\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{C}{2W\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "\\dfrac{C}{2W\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{C}{2W\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{C}{2W\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{C}{2W\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "\\dfrac{C}{2W\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{C}{2W\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{C^2 + W\\,C\\sinh^3(\\eta/2)\\cosh(\\eta/2) - 2W^2\\sinh^6(\\eta/2)}{2W^2\\sinh^8(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{C^2 + W\\,C\\sinh^3(\\eta/2)\\cosh(\\eta/2) - 2W^2\\sinh^6(\\eta/2)}{2W^2\\sinh^8(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{C^2 + W\\,C\\sinh^3(\\eta/2)\\cosh(\\eta/2) - 2W^2\\sinh^6(\\eta/2)}{2W^2\\sinh^8(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{C^2 + W\\,C\\sinh^3(\\eta/2)\\cosh(\\eta/2) - 2W^2\\sinh^6(\\eta/2)}{2W^2\\sinh^8(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{e^{-2r}}{\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{e^{-2r}}{\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{e^{-2r}}{\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{e^{-2r}}{\\sinh^2(\\eta/2)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "r",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "\\dfrac{X\\left(W\\sinh^3(\\eta/2) + 2C\\cosh(\\eta/2)\\right)}{2\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "r",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{X\\left(W\\sinh^3(\\eta/2) + 2C\\cosh(\\eta/2)\\right)}{2\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\eta",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "-\\dfrac{X\\left(W\\sinh^3(\\eta/2) + 2C\\cosh(\\eta/2)\\right)}{2\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\eta",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{X\\left(W\\sinh^3(\\eta/2) + 2C\\cosh(\\eta/2)\\right)}{2\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "\\dfrac{W^2e^{-2r}\\sinh^2(\\eta/2)}{2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{W^2e^{-2r}\\sinh^2(\\eta/2)}{2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "\\dfrac{W^2e^{-2r}\\sinh^2(\\eta/2)}{2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{W^2e^{-2r}\\sinh^2(\\eta/2)}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "-\\dfrac{W^2e^{-2r}\\sinh^2(\\eta/2)}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{W^2e^{-2r}\\sinh^2(\\eta/2)}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "-\\dfrac{W^2e^{-2r}\\sinh^2(\\eta/2)}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{W^2e^{-2r}\\sinh^2(\\eta/2)}{2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "-\\dfrac{W\\,C\\,e^{-2r}}{2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "\\dfrac{W\\,C\\,e^{-2r}}{2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{W\\,C\\,e^{-2r}}{2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{W\\,C\\,e^{-2r}}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "-\\dfrac{W\\,C\\,e^{-2r}}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{W\\,C\\,e^{-2r}}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "-\\dfrac{W\\,C\\,e^{-2r}}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{W\\,C\\,e^{-2r}}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{W\\,C\\,e^{-2r}}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{W\\,C\\,e^{-2r}}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "\\dfrac{W\\,C\\,e^{-2r}}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{W\\,C\\,e^{-2r}}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{W\\,C\\,e^{-2r}}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{W\\,C\\,e^{-2r}}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "\\dfrac{W\\,C\\,e^{-2r}}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{W\\,C\\,e^{-2r}}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(2W^2\\sinh^6(\\eta/2) - W\\,C\\sinh^3(\\eta/2)\\cosh(\\eta/2) - C^2\\right)e^{-2r}}{2\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2W^2\\sinh^6(\\eta/2) - W\\,C\\sinh^3(\\eta/2)\\cosh(\\eta/2) - C^2\\right)e^{-2r}}{2\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(2W^2\\sinh^6(\\eta/2) - W\\,C\\sinh^3(\\eta/2)\\cosh(\\eta/2) - C^2\\right)e^{-2r}}{2\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2W^2\\sinh^6(\\eta/2) - W\\,C\\sinh^3(\\eta/2)\\cosh(\\eta/2) - C^2\\right)e^{-2r}}{2\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "r",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(2W^2\\sinh^6(\\eta/2) - W\\,C\\sinh^3(\\eta/2)\\cosh(\\eta/2) - C^2\\right)e^{-2r}}{2\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2W^2\\sinh^6(\\eta/2) - W\\,C\\sinh^3(\\eta/2)\\cosh(\\eta/2) - C^2\\right)e^{-2r}}{2\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(2W^2\\sinh^6(\\eta/2) - W\\,C\\sinh^3(\\eta/2)\\cosh(\\eta/2) - C^2\\right)e^{-2r}}{2\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2W^2\\sinh^6(\\eta/2) - W\\,C\\sinh^3(\\eta/2)\\cosh(\\eta/2) - C^2\\right)e^{-2r}}{2\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "W^2e^{-4r}\\sinh^2(\\eta/2)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-W^2e^{-4r}\\sinh^2(\\eta/2)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-W^2e^{-4r}\\sinh^2(\\eta/2)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "W^2e^{-4r}\\sinh^2(\\eta/2)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{3W}{2X}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "r"
+                ],
+                "value": "-\\dfrac{3C}{2X\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{3C}{2X\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{3X^2 + 3C^2}{2X\\,W\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{3W\\,e^{-2r}}{2X}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{3W\\,e^{-2r}}{2X}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{3}{2X\\,W\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{3}{2X\\,W\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{3}{2X\\,W\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{3}{2X\\,W\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "r"
+                ],
+                "value": "\\dfrac{3C}{X\\,W^2\\sinh^6(\\eta/2)}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{3X^2 + 3C^2}{2X^3\\,W^3\\sinh^8(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "r"
+                ],
+                "value": "\\dfrac{3C}{2X^3\\,W^2\\sinh^6(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{3C}{2X^3\\,W^2\\sinh^6(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{3}{2X^3\\,W\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{3e^{2r}}{2X\\,W^3\\sinh^8(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{3e^{2r}}{2X\\,W^3\\sinh^8(\\eta/2)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{3}{W\\,X\\sinh^4(\\eta/2)}",
+      "kretschmann": "K = \\dfrac{3\\left(5W^2\\sinh^6(\\eta/2) + 4C^2\\cosh^2(\\eta/2)\\right)}{W^4\\,X^2\\sinh^{14}(\\eta/2)}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{3W}{X}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "r"
+                ],
+                "value": "-\\dfrac{3C}{X\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{3C}{X\\sinh^2(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{3C^2}{X\\,W\\sinh^4(\\eta/2)}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{3}{X\\,W\\sinh^4(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "r"
+                ],
+                "value": "\\dfrac{3C}{X\\,W^2\\sinh^6(\\eta/2)}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{3}{X\\,W^3\\sinh^8(\\eta/2)}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "-\\dfrac{C^2\\cosh(\\eta/2)}{X\\,W\\sinh^5(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{C^2\\cosh(\\eta/2)}{X\\,W\\sinh^5(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "\\dfrac{C^2\\cosh(\\eta/2)}{X\\,W\\sinh^5(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{C^2\\cosh(\\eta/2)}{X\\,W\\sinh^5(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "r",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "-\\dfrac{C\\left(X - C\\right)\\left(X + C\\right)\\cosh(\\eta/2)}{X\\,W^2\\sinh^7(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "r",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{C\\left(X - C\\right)\\left(X + C\\right)\\cosh(\\eta/2)}{X\\,W^2\\sinh^7(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "\\dfrac{C\\,e^{-2r}\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{C\\,e^{-2r}\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "\\dfrac{C\\,e^{-2r}\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{C\\,e^{-2r}\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{C\\,e^{-2r}\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{C\\,e^{-2r}\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{C\\,e^{-2r}\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{C\\,e^{-2r}\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\eta",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "-\\dfrac{C\\cosh(\\eta/2)}{X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\eta",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{C\\cosh(\\eta/2)}{X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "\\dfrac{C\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{C\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "\\dfrac{C\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{C\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "r",
+                  "y"
+                ],
+                "value": "-\\dfrac{C^2\\cosh(\\eta/2)}{2X\\,W\\sinh^5(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "y",
+                  "r"
+                ],
+                "value": "\\dfrac{C^2\\cosh(\\eta/2)}{2X\\,W\\sinh^5(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "-\\dfrac{C^2\\cosh(\\eta/2)}{2X\\,W\\sinh^5(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{C^2\\cosh(\\eta/2)}{2X\\,W\\sinh^5(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{C^2\\cosh(\\eta/2)}{2X\\,W\\sinh^5(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{C^2\\cosh(\\eta/2)}{2X\\,W\\sinh^5(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "-\\dfrac{C^2\\cosh(\\eta/2)}{2X\\,W\\sinh^5(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{C^2\\cosh(\\eta/2)}{2X\\,W\\sinh^5(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "r",
+                  "y"
+                ],
+                "value": "-\\dfrac{C\\left(X - C\\right)\\left(X + C\\right)\\cosh(\\eta/2)}{2X\\,W^2\\sinh^7(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y",
+                  "r"
+                ],
+                "value": "\\dfrac{C\\left(X - C\\right)\\left(X + C\\right)\\cosh(\\eta/2)}{2X\\,W^2\\sinh^7(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{C\\left(X - C\\right)\\left(X + C\\right)\\cosh(\\eta/2)}{2X\\,W^2\\sinh^7(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{C\\left(X - C\\right)\\left(X + C\\right)\\cosh(\\eta/2)}{2X\\,W^2\\sinh^7(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{C\\,e^{-2r}\\cosh(\\eta/2)}{X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{C\\,e^{-2r}\\cosh(\\eta/2)}{X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{C\\,e^{-2r}\\cosh(\\eta/2)}{X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{C\\,e^{-2r}\\cosh(\\eta/2)}{X\\sinh^3(\\eta/2)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "r",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "\\dfrac{X\\,C\\cosh(\\eta/2)}{\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "r",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{X\\,C\\cosh(\\eta/2)}{\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\eta",
+                  "\\eta",
+                  "r"
+                ],
+                "value": "-\\dfrac{X\\,C\\cosh(\\eta/2)}{\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\eta",
+                  "r",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{X\\,C\\cosh(\\eta/2)}{\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "-\\dfrac{W^2\\,C\\,e^{-2r}\\sinh(\\eta/2)\\cosh(\\eta/2)}{2X}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{W^2\\,C\\,e^{-2r}\\sinh(\\eta/2)\\cosh(\\eta/2)}{2X}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "-\\dfrac{W^2\\,C\\,e^{-2r}\\sinh(\\eta/2)\\cosh(\\eta/2)}{2X}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{W^2\\,C\\,e^{-2r}\\sinh(\\eta/2)\\cosh(\\eta/2)}{2X}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "\\dfrac{W^2\\,C\\,e^{-2r}\\sinh(\\eta/2)\\cosh(\\eta/2)}{2X}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{W^2\\,C\\,e^{-2r}\\sinh(\\eta/2)\\cosh(\\eta/2)}{2X}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "\\dfrac{W^2\\,C\\,e^{-2r}\\sinh(\\eta/2)\\cosh(\\eta/2)}{2X}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{W^2\\,C\\,e^{-2r}\\sinh(\\eta/2)\\cosh(\\eta/2)}{2X}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{W\\,C^2e^{-2r}\\cosh(\\eta/2)}{2X\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{W\\,C^2e^{-2r}\\cosh(\\eta/2)}{2X\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{W\\,C^2e^{-2r}\\cosh(\\eta/2)}{2X\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{W\\,C^2e^{-2r}\\cosh(\\eta/2)}{2X\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "\\dfrac{W\\,C^2e^{-2r}\\cosh(\\eta/2)}{2X\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{W\\,C^2e^{-2r}\\cosh(\\eta/2)}{2X\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "\\dfrac{W\\,C^2e^{-2r}\\cosh(\\eta/2)}{2X\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{W\\,C^2e^{-2r}\\cosh(\\eta/2)}{2X\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "r",
+                  "y"
+                ],
+                "value": "-\\dfrac{W\\,C^2e^{-2r}\\cosh(\\eta/2)}{2X\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "y",
+                  "r"
+                ],
+                "value": "\\dfrac{W\\,C^2e^{-2r}\\cosh(\\eta/2)}{2X\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "-\\dfrac{W\\,C^2e^{-2r}\\cosh(\\eta/2)}{2X\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{W\\,C^2e^{-2r}\\cosh(\\eta/2)}{2X\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{W\\,C^2e^{-2r}\\cosh(\\eta/2)}{2X\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{W\\,C^2e^{-2r}\\cosh(\\eta/2)}{2X\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "-\\dfrac{W\\,C^2e^{-2r}\\cosh(\\eta/2)}{2X\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{W\\,C^2e^{-2r}\\cosh(\\eta/2)}{2X\\sinh(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{C\\left(X - C\\right)\\left(X + C\\right)e^{-2r}\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{C\\left(X - C\\right)\\left(X + C\\right)e^{-2r}\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{C\\left(X - C\\right)\\left(X + C\\right)e^{-2r}\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{C\\left(X - C\\right)\\left(X + C\\right)e^{-2r}\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "r",
+                  "y"
+                ],
+                "value": "-\\dfrac{C\\left(X - C\\right)\\left(X + C\\right)e^{-2r}\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y",
+                  "r"
+                ],
+                "value": "\\dfrac{C\\left(X - C\\right)\\left(X + C\\right)e^{-2r}\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{C\\left(X - C\\right)\\left(X + C\\right)e^{-2r}\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{C\\left(X - C\\right)\\left(X + C\\right)e^{-2r}\\cosh(\\eta/2)}{2X\\sinh^3(\\eta/2)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{W^2\\,C\\,e^{-4r}\\sinh(\\eta/2)\\cosh(\\eta/2)}{X}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{W^2\\,C\\,e^{-4r}\\sinh(\\eta/2)\\cosh(\\eta/2)}{X}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{W^2\\,C\\,e^{-4r}\\sinh(\\eta/2)\\cosh(\\eta/2)}{X}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{W^2\\,C\\,e^{-4r}\\sinh(\\eta/2)\\cosh(\\eta/2)}{X}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\eta} + \\dfrac{\\cosh(\\eta/2)}{\\sinh(\\eta/2)}\\dot{\\eta}^2 + \\dfrac{C\\left(2W\\sinh^3(\\eta/2)\\cosh(\\eta/2) + C\\right)}{X\\,W\\sinh^4(\\eta/2)}\\dot{\\eta}\\dot{r} + \\dfrac{\\left(X - C\\right)\\left(2W\\sinh^3(\\eta/2)\\cosh(\\eta/2) + C\\right)\\left(X + C\\right)}{2X\\,W^2\\sinh^6(\\eta/2)}\\dot{r}^2 + \\dfrac{\\left(W\\sinh^3(\\eta/2)\\cosh(\\eta/2) - C\\right)e^{-2r}}{X\\sinh^2(\\eta/2)}\\dot{y}^2 + \\dfrac{\\left(W\\sinh^3(\\eta/2)\\cosh(\\eta/2) - C\\right)e^{-2r}}{X\\sinh^2(\\eta/2)}\\dot{z}^2 = 0",
+        "\\ddot{r} + \\dfrac{2W\\sinh^3(\\eta/2)\\cosh(\\eta/2) + C}{X\\sinh^2(\\eta/2)}\\dot{\\eta}\\dot{r} - \\dfrac{C\\left(2W\\sinh^3(\\eta/2)\\cosh(\\eta/2) + C\\right)}{2X\\,W\\sinh^4(\\eta/2)}\\dot{r}^2 + \\dfrac{W\\,e^{-2r}\\sinh^2(\\eta/2)}{X}\\dot{y}^2 + \\dfrac{W\\,e^{-2r}\\sinh^2(\\eta/2)}{X}\\dot{z}^2 = 0",
+        "\\ddot{y} + \\dfrac{2\\cosh(\\eta/2)}{\\sinh(\\eta/2)}\\dot{\\eta}\\dot{y} - 2\\dot{r}\\dot{y} = 0",
+        "\\ddot{z} + \\dfrac{2\\cosh(\\eta/2)}{\\sinh(\\eta/2)}\\dot{\\eta}\\dot{z} - 2\\dot{r}\\dot{z} = 0"
+      ]
+    },
+    {
+      "id": "flat_model",
+      "name": "Flat Model",
+      "coords": [
+        "u",
+        "r",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "u \\in (0, \\infty)",
+        "r \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "u = C \\;\\text{(the Cauchy horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "C",
+          "description": "Tilt, a length ($C > 0$): every line of the matter is a straight line of Minkowski space that passes one event, the origin of the inertial coordinates, at the distance $C$"
+        }
+      ],
+      "convention": "We use the coordinates $(u, r, y, z)$ of the homogeneous chart with $X = u$ and $Y = u + C$, Farnsworth's solution with no dust, $W = 0$. The lines of constant $r$, $y$, and $z$ are straight lines of Minkowski space, with $u/c$ the proper time along each. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -\\left(du - C\\,dr\\right)^2 + u^2dr^2 + e^{-2r}\\left(u + C\\right)^2\\left(dy^2 + dz^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "u",
+            "r"
+          ],
+          "value": "C"
+        },
+        {
+          "indices": [
+            "r",
+            "u"
+          ],
+          "value": "C"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "u^2 - C^2"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\left(u + C\\right)^2e^{-2r}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\left(u + C\\right)^2e^{-2r}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "-\\dfrac{\\left(u + C\\right)\\left(u - C\\right)}{u^2}"
+        },
+        {
+          "indices": [
+            "u",
+            "r"
+          ],
+          "value": "\\dfrac{C}{u^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "u"
+          ],
+          "value": "\\dfrac{C}{u^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{1}{u^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{e^{2r}}{\\left(u + C\\right)^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{e^{2r}}{\\left(u + C\\right)^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{C}{u}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{C}{u}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{C}{u}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(u + C\\right)\\left(u - C\\right)}{u}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(u + C\\right)^2e^{-2r}}{u}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(u + C\\right)^2e^{-2r}}{u}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{u}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{u}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(u + C\\right)e^{-2r}}{u}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(u + C\\right)e^{-2r}}{u}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{u + C}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{u + C}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{u + C}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{u + C}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-1"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "r",
+                  "r"
+                ],
+                "value": "-u"
+              },
+              {
+                "indices": [
+                  "r",
+                  "u",
+                  "r"
+                ],
+                "value": "u"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "u"
+                ],
+                "value": "u"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\left(u + C\\right)e^{-2r}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\left(u + C\\right)e^{-2r}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\left(u + C\\right)e^{-2r}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "\\left(u + C\\right)e^{-2r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "z"
+                ],
+                "value": "\\left(u + C\\right)e^{-2r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "u"
+                ],
+                "value": "\\left(u + C\\right)e^{-2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\left(-u^2e^{-2r} - 2u\\,C\\,e^{-2r} - C^2e^{-2r}\\right)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\left(-u^2e^{-2r} - 2u\\,C\\,e^{-2r} - C^2e^{-2r}\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "\\left(-u^2e^{-2r} - 2u\\,C\\,e^{-2r} - C^2e^{-2r}\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "\\left(-u^2e^{-2r} - 2u\\,C\\,e^{-2r} - C^2e^{-2r}\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\left(-u^2e^{-2r} - 2u\\,C\\,e^{-2r} - C^2e^{-2r}\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\left(-u^2e^{-2r} - 2u\\,C\\,e^{-2r} - C^2e^{-2r}\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} + \\dfrac{2C}{u}\\dot{u}\\dot{r} + \\dfrac{\\left(u + C\\right)\\left(u - C\\right)}{u}\\dot{r}^2 + \\dfrac{\\left(u + C\\right)^2e^{-2r}}{u}\\dot{y}^2 + \\dfrac{\\left(u + C\\right)^2e^{-2r}}{u}\\dot{z}^2 = 0",
+        "\\ddot{r} + \\dfrac{2}{u}\\dot{u}\\dot{r} - \\dfrac{C}{u}\\dot{r}^2 + \\dfrac{\\left(u + C\\right)e^{-2r}}{u}\\dot{y}^2 + \\dfrac{\\left(u + C\\right)e^{-2r}}{u}\\dot{z}^2 = 0",
+        "\\ddot{y} + \\dfrac{2}{u + C}\\dot{u}\\dot{y} - 2\\dot{r}\\dot{y} = 0",
+        "\\ddot{z} + \\dfrac{2}{u + C}\\dot{u}\\dot{z} - 2\\dot{r}\\dot{z} = 0"
+      ]
+    },
+    {
+      "id": "inertial",
+      "name": "Inertial",
+      "coords": [
+        "T",
+        "x",
+        "\\xi",
+        "\\zeta"
+      ],
+      "domains": [
+        "T \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "\\xi \\in (-\\infty, \\infty)",
+        "\\zeta \\in (-\\infty, \\infty)",
+        "cT + x > 0",
+        "x^2 + \\xi^2 + \\zeta^2 - c^2T^2 < C^2",
+        "x^2 + \\xi^2 + \\zeta^2 = c^2T^2 \\;\\text{(the Cauchy horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "C",
+          "description": "Tilt, a length ($C > 0$): every line of the matter is a straight line that passes the origin at the distance $C$, and they are all tangent to the hyperboloid $x^2 + \\xi^2 + \\zeta^2 - c^2T^2 = C^2$"
+        }
+      ],
+      "convention": "We use inertial coordinates $(T, x, \\xi, \\zeta)$ of the flat model, with $T$ a time and the others lengths: $cT + x = (u + C)e^{-r}$, $cT - x = (u - C)e^{r} + (u + C)e^{-r}\\left(y^2 + z^2\\right)$, $\\xi = (u + C)e^{-r}y$, and $\\zeta = (u + C)e^{-r}z$ for the coordinates $(u, r, y, z)$ of the flat model. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dT^2 + dx^2 + d\\xi^2 + d\\zeta^2",
+      "metric_components": [
+        {
+          "indices": [
+            "T",
+            "T"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\xi",
+            "\\xi"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\zeta",
+            "\\zeta"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "T",
+            "T"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\xi",
+            "\\xi"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\zeta",
+            "\\zeta"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": []
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": []
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{T} = 0",
+        "\\ddot{x} = 0",
+        "\\ddot{\\xi} = 0",
+        "\\ddot{\\zeta} = 0"
+      ]
+    }
+  ]
+}

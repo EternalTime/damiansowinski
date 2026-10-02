@@ -352,7 +352,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "48cd7fe08ed5eecc",
+    "version": "62818665238292e7",
     "diagrams": "d6268bdae97d9fd7",
     "embedding": "7fea7a854b8ceca4"
   },
@@ -1373,7 +1373,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "547c300992149988",
+    "version": "bf7c0d1c07098006",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -1932,7 +1932,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "64d0a74f220acca6",
+    "version": "338fe208093937f7",
     "diagrams": "a84952c23e2fa052",
     "embedding": "e2698f474fe29ce2"
   },
@@ -2634,7 +2634,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "e2ea815665cd15d3",
+    "version": "d3a68abee9a8faa9",
     "diagrams": "434dbc69f632abef",
     "conformal": "608160b20d1a5d0b",
     "embedding": "6358a5e6f5a871e8"
@@ -2659,7 +2659,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "ce105f7bdbef53f8",
+    "version": "1ab48a389968b871",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -3923,7 +3923,7 @@
       "four-dimensional",
       "conformally flat"
     ],
-    "version": "752e06e7c98a40e1",
+    "version": "258a4979d70f3be4",
     "diagrams": "0e11382338963c29",
     "conformal": "60e261619c0672af",
     "embedding": "31ff007c1a714047"
@@ -4075,7 +4075,7 @@
       "idealized model",
       "not asymptotically flat"
     ],
-    "version": "a74b7b1e69399814",
+    "version": "ed5b5fbe2fa476f8",
     "diagrams": "86d43f7abeacc5f4",
     "embedding": "30d5a7483e08a078"
   },
@@ -4103,6 +4103,40 @@
     "diagrams": "f99505d95b083db0",
     "conformal": "577727a22f10c827",
     "embedding": "b79fedbd55cef742"
+  },
+  {
+    "id": "tilted_universes",
+    "name": "Tilted Universes",
+    "tags": [
+      "cosmology",
+      "spatially homogeneous",
+      "homogeneous",
+      "anisotropic",
+      "tilted",
+      "Bianchi V",
+      "Bianchi classification",
+      "locally rotationally symmetric",
+      "dust",
+      "whimper",
+      "Cauchy horizon",
+      "intermediate singularity",
+      "curvature singularity",
+      "big bang",
+      "expanding universe",
+      "hyperbolic space",
+      "cosmic dipole",
+      "comoving",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "8dc2a192fd49a1d7",
+    "diagrams": "79b6f6d84c2d4018",
+    "conformal": "044a1f5e11dda30f",
+    "embedding": "22f4e2ee1ae4426f"
   },
   {
     "id": "tippett_tsang",

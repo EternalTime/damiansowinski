@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 145,
+  "count": 146,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -4209,6 +4209,11 @@
           "id": "small_universes",
           "kind": "family",
           "text": "Friedmann universes whose space is a torus, which keeps the homogeneity of space and gives up its isotropy. Ya. B. Zel'dovich and A. A. Starobinskii put a universe that expands at three different rates on such a torus in 1984 [zeldovich1984]."
+        },
+        {
+          "id": "tilted_universes",
+          "kind": "special_case",
+          "text": "Bianchi universes whose matter drifts through the surfaces of homogeneity. A. R. King and George Ellis worked out in 1973 how the expansion, the rotation, and the shear of such matter go with the group type [king1973]."
         }
       ],
       "references": [
@@ -4227,7 +4232,8 @@
         "terzis2009",
         "tafel1973",
         "kopczynski1973",
-        "zeldovich1984"
+        "zeldovich1984",
+        "king1973"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bianchi.json",
@@ -14357,6 +14363,11 @@
           "id": "small_universes",
           "kind": "locally_same",
           "text": "Friedmann's universe with points of space a fixed step apart declared one point, so that space is a torus or another closed form. Every local measurement agrees with Friedmann's, and an observer sees each galaxy many times over [ellis1971, lachiezerey1995]."
+        },
+        {
+          "id": "tilted_universes",
+          "kind": "generalisation",
+          "text": "The open universe of dust with its matter set drifting along one direction. With the tilt $C = 0$ Farnsworth's solution is Friedmann's [anton2023]."
         }
       ],
       "references": [
@@ -14419,7 +14430,8 @@
         "kopczynski1973",
         "trautman2006",
         "ellis1971",
-        "lachiezerey1995"
+        "lachiezerey1995",
+        "anton2023"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -20812,6 +20824,11 @@
           "id": "ab_metrics",
           "kind": "dual",
           "text": "Kasner's universe with exponents $(-\\tfrac{1}{3}, \\tfrac{2}{3}, \\tfrac{2}{3})$ and a radius in the place of its time is A III of Ehlers and Kundt's table, which is Abraham Taub's plane symmetric vacuum [martins1996]."
+        },
+        {
+          "id": "tilted_universes",
+          "kind": "family",
+          "text": "Homogeneous universes whose matter drifts through the surfaces of homogeneity. Bianchi's type I, Kasner's, has none of them [king1973]."
         }
       ],
       "references": [
@@ -20833,7 +20850,8 @@
         "belinskii1978",
         "belinskii1973",
         "ferrando2006",
-        "martins1996"
+        "martins1996",
+        "king1973"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner.json",
@@ -28276,6 +28294,11 @@
           "id": "small_universes",
           "kind": "generalisation",
           "text": "Milne's universe with matter let in and its hyperbolic space rolled up into a closed form. With $a = ct$ and nothing in it, the hyperbolic small universe is Milne's at each point."
+        },
+        {
+          "id": "tilted_universes",
+          "kind": "generalisation",
+          "text": "Milne's universe with its particles aimed to miss the origin. Straight world lines that each pass one event at the distance $C$ fill a part of flat spacetime with a Cauchy horizon in it, Ellis and King's picture of the whimper [ellis1974]."
         }
       ],
       "references": [
@@ -28305,7 +28328,8 @@
         "turok2004",
         "benoitlevy2012",
         "coleman1980",
-        "bucher1995"
+        "bucher1995",
+        "ellis1974"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/milne.json",
@@ -28760,6 +28784,11 @@
           "id": "moving_mirror",
           "kind": "locally_same",
           "text": "Two dimensions of Minkowski space with a mirror for a left edge. Let the mirror accelerate and the empty space to its right fills with radiation, thermal if the mirror's world line closes on a light ray [fulling1976, davies1977]."
+        },
+        {
+          "id": "tilted_universes",
+          "kind": "locally_same",
+          "text": "The flat model of the whimper is a part of Minkowski space. George Ellis and A. R. King painted world lines on it that a boost carries into one another, and found a Cauchy horizon with nothing curved anywhere [ellis1974]."
         }
       ],
       "references": [
@@ -28833,7 +28862,8 @@
         "brill1959",
         "hruska2019",
         "fulling1976",
-        "davies1977"
+        "davies1977",
+        "ellis1974"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -42604,6 +42634,11 @@
           "id": "misner",
           "kind": "family",
           "text": "Flat spacetime with events identified under a boost, as space is identified here under translations. Misner's identification makes closed timelike curves, and the torus makes none [misner1967]."
+        },
+        {
+          "id": "tilted_universes",
+          "kind": "family",
+          "text": "The horn's coordinates with $y$ and $z$ left open and the matter drifting along $x$. Farnsworth's dust is the open universe of dust given such a tilt [anton2023]."
         }
       ],
       "references": [
@@ -42632,7 +42667,8 @@
         "petersen2023",
         "martinbenito2011",
         "desitter1917",
-        "misner1967"
+        "misner1967",
+        "anton2023"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/small_universes.json",
@@ -44267,6 +44303,11 @@
           "id": "gravitational_instantons",
           "kind": "dual",
           "text": "With an imaginary time and an imaginary twist, $l = in$, Taub-NUT is a space with no time in it. It is regular at two masses, Stephen Hawking's self dual instanton at $m = n$ and Don Page's, which has a horizon, at $m = 5n/4$ [hawking1977, page1978bolt, gibbonshawking1979]."
+        },
+        {
+          "id": "tilted_universes",
+          "kind": "family",
+          "text": "Universes of matter with the anatomy of Taub-NUT: a homogeneous region and a stationary one, joined across a null surface of homogeneity on which light rays come to an end [ellis1974, collins1974]."
         }
       ],
       "references": [
@@ -44294,7 +44335,9 @@
         "eguchihanson1979",
         "gibbonshawking1979",
         "podolsky2018",
-        "page1978bolt"
+        "page1978bolt",
+        "ellis1974",
+        "collins1974"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/taub_nut.json",
@@ -44591,6 +44634,383 @@
           ],
           "ricci_scalar": "R = \\dfrac{2r^8 - 2r^8\\left(\\partial_l r\\right)^2 - 4r^9\\,\\partial_l^2 r + 18a^2\\,r^4\\,b_0^4\\left(\\partial_l r\\right)^2 - 18a^2\\,r^4\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 128a^2\\,r^7\\,b_0 + 448a^2\\,r^7\\,b_0\\cos^2\\theta - 64a^2\\,r^7\\,b_0\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 160a^2\\,r^8\\,b_0\\,\\partial_l^2 r\\,\\cos^2\\theta + 1152a^4\\,r^3\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 1152a^4\\,r^3\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 4608a^4\\,r^6\\,b_0^2\\cos^4\\theta - 1536a^4\\,r^6\\,b_0^2\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta - 1536a^4\\,r^7\\,b_0^2\\,\\partial_l^2 r\\,\\cos^4\\theta + 27648a^6\\,r^2\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta - 27648a^6\\,r^2\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta - 32768a^6\\,r^5\\,b_0^3\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta + 8192a^6\\,r^6\\,b_0^3\\,\\partial_l^2 r\\,\\cos^6\\theta + 294912a^8\\,r\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta - 294912a^8\\,r\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta - 262144a^8\\,r^4\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 131072a^8\\,r^5\\,b_0^4\\,\\partial_l^2 r\\,\\cos^8\\theta + 1179648a^{10}\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta - 1179648a^{10}\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta}{r^6\\left(r + 16a^2b_0\\cos^2\\theta\\right)^4}",
           "kretschmann": "K = \\dfrac{15307263442944a^{20}\\,b_0^{16}\\left(\\partial_l r\\right)^4\\,\\cos^{20}\\theta - 30614526885888a^{20}\\,b_0^{16}\\left(\\partial_l r\\right)^4\\,\\cos^{18}\\theta + 15307263442944a^{20}\\,b_0^{16}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta + 309237645312a^{18}\\,r^6\\,b_0^{12}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{18}\\theta - 309237645312a^{18}\\,r^6\\,b_0^{12}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{16}\\theta - 2783138807808a^{18}\\,r^5\\,b_0^{12}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{18}\\theta + 2783138807808a^{18}\\,r^5\\,b_0^{12}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{16}\\theta + 4638564679680a^{18}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^{18}\\theta - 4638564679680a^{18}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta + 7653631721472a^{18}\\,r\\,b_0^{15}\\left(\\partial_l r\\right)^4\\,\\cos^{18}\\theta - 15307263442944a^{18}\\,r\\,b_0^{15}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta + 7653631721472a^{18}\\,r\\,b_0^{15}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 17179869184a^{16}\\,r^{10}\\,b_0^8\\left(\\partial_l^2 r\\right)^2\\,\\cos^{16}\\theta - 68719476736a^{16}\\,r^9\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{16}\\theta + 68719476736a^{16}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta + 154618822656a^{16}\\,r^7\\,b_0^{11}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{16}\\theta - 154618822656a^{16}\\,r^7\\,b_0^{11}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{14}\\theta - 1275605286912a^{16}\\,r^6\\,b_0^{11}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{16}\\theta + 1275605286912a^{16}\\,r^6\\,b_0^{11}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{14}\\theta + 1990717341696a^{16}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta - 1990717341696a^{16}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 1674231939072a^{16}\\,r^2\\,b_0^{14}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta - 3348463878144a^{16}\\,r^2\\,b_0^{14}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 1674231939072a^{16}\\,r^2\\,b_0^{14}\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta + 6442450944a^{14}\\,r^{11}\\,b_0^7\\left(\\partial_l^2 r\\right)^2\\,\\cos^{14}\\theta - 25769803776a^{14}\\,r^{10}\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{14}\\theta + 25769803776a^{14}\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 33822867456a^{14}\\,r^8\\,b_0^{10}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{14}\\theta - 33822867456a^{14}\\,r^8\\,b_0^{10}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{12}\\theta - 253671505920a^{14}\\,r^7\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{14}\\theta + 253671505920a^{14}\\,r^7\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{12}\\theta - 24159191040a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\cos^{14}\\theta + 368427663360a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 21743271936a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\cos^{12}\\theta - 368427663360a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta - 4831838208a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta + 209278992384a^{14}\\,r^3\\,b_0^{13}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta - 418557984768a^{14}\\,r^3\\,b_0^{13}\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta + 209278992384a^{14}\\,r^3\\,b_0^{13}\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta + 1140850688a^{12}\\,r^{12}\\,b_0^6\\left(\\partial_l^2 r\\right)^2\\,\\cos^{12}\\theta - 4026531840a^{12}\\,r^{11}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{12}\\theta - 536870912a^{12}\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^{12}\\theta + 4160749568a^{12}\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta + 536870912a^{12}\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta + 4227858432a^{12}\\,r^9\\,b_0^9\\left(\\partial_l^2 r\\right)^2\\,\\cos^{12}\\theta - 4227858432a^{12}\\,r^9\\,b_0^9\\left(\\partial_l^2 r\\right)^2\\,\\cos^{10}\\theta - 28538044416a^{12}\\,r^8\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{12}\\theta + 28538044416a^{12}\\,r^8\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{10}\\theta - 7700742144a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\cos^{12}\\theta + 38277218304a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta + 6190792704a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta - 38277218304a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta - 1207959552a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 16349921280a^{12}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta - 32699842560a^{12}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta + 16349921280a^{12}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta + 134217728a^{10}\\,r^{13}\\,b_0^5\\left(\\partial_l^2 r\\right)^2\\,\\cos^{10}\\theta - 335544320a^{10}\\,r^{12}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{10}\\theta - 150994944a^{10}\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta + 369098752a^{10}\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta + 184549376a^{10}\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 330301440a^{10}\\,r^{10}\\,b_0^8\\left(\\partial_l^2 r\\right)^2\\,\\cos^{10}\\theta - 330301440a^{10}\\,r^{10}\\,b_0^8\\left(\\partial_l^2 r\\right)^2\\,\\cos^8\\theta - 1981808640a^{10}\\,r^9\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{10}\\theta + 1981808640a^{10}\\,r^9\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^8\\theta - 1009778688a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta + 2430074880a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta + 698351616a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta - 2430074880a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta - 113246208a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta + 817496064a^{10}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta - 1634992128a^{10}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta + 817496064a^{10}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta + 11796480a^8\\,r^{14}\\,b_0^4\\left(\\partial_l^2 r\\right)^2\\,\\cos^8\\theta - 15728640a^8\\,r^{13}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^8\\theta - 21495808a^8\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 19136512a^8\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta + 11796480a^8\\,r^{12}\\,b_0^4\\cos^8\\theta + 25165824a^8\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta - 9437184a^8\\,r^{12}\\,b_0^4\\cos^6\\theta + 6291456a^8\\,r^{12}\\,b_0^4\\cos^4\\theta + 16515072a^8\\,r^{11}\\,b_0^7\\left(\\partial_l^2 r\\right)^2\\,\\cos^8\\theta - 16515072a^8\\,r^{11}\\,b_0^7\\left(\\partial_l^2 r\\right)^2\\,\\cos^6\\theta - 86704128a^8\\,r^{10}\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^8\\theta + 86704128a^8\\,r^{10}\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^6\\theta - 69599232a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 95846400a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta + 38928384a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta - 95846400a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta - 4718592a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 25546752a^8\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta - 51093504a^8\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta + 25546752a^8\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta + 753664a^6\\,r^{15}\\,b_0^3\\left(\\partial_l^2 r\\right)^2\\,\\cos^6\\theta - 393216a^6\\,r^{14}\\,b_0^3\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^6\\theta - 1703936a^6\\,r^{13}\\,b_0^3\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta + 589824a^6\\,r^{13}\\,b_0^3\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta + 1179648a^6\\,r^{13}\\,b_0^3\\cos^6\\theta + 1572864a^6\\,r^{13}\\,b_0^3\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 327680a^6\\,r^{13}\\,b_0^3\\cos^4\\theta - 262144a^6\\,r^{13}\\,b_0^3\\cos^2\\theta + 516096a^6\\,r^{12}\\,b_0^6\\left(\\partial_l^2 r\\right)^2\\,\\cos^6\\theta - 516096a^6\\,r^{12}\\,b_0^6\\left(\\partial_l^2 r\\right)^2\\,\\cos^4\\theta - 2322432a^6\\,r^{11}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^6\\theta + 2322432a^6\\,r^{11}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^4\\theta - 2654208a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta + 2267136a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta + 1069056a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta - 2267136a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta - 73728a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta + 456192a^6\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta - 912384a^6\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta + 456192a^6\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta + 31744a^4\\,r^{16}\\,b_0^2\\left(\\partial_l^2 r\\right)^2\\,\\cos^4\\theta - 4096a^4\\,r^{15}\\,b_0^2\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^4\\theta - 69632a^4\\,r^{14}\\,b_0^2\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 12288a^4\\,r^{14}\\,b_0^2\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta + 92160a^4\\,r^{14}\\,b_0^2\\cos^4\\theta + 40960a^4\\,r^{14}\\,b_0^2\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 45056a^4\\,r^{14}\\,b_0^2\\cos^2\\theta + 8192a^4\\,r^{14}\\,b_0^2 + 9216a^4\\,r^{13}\\,b_0^5\\left(\\partial_l^2 r\\right)^2\\,\\cos^4\\theta - 9216a^4\\,r^{13}\\,b_0^5\\left(\\partial_l^2 r\\right)^2\\,\\cos^2\\theta - 34560a^4\\,r^{12}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^4\\theta + 34560a^4\\,r^{12}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^2\\theta - 52992a^4\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 28800a^4\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta + 11520a^4\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 28800a^4\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta + 3564a^4\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta - 7128a^4\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta + 3564a^4\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4 + 768a^2\\,r^{17}\\,b_0\\left(\\partial_l^2 r\\right)^2\\,\\cos^2\\theta - 1280a^2\\,r^{15}\\,b_0\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta + 256a^2\\,r^{15}\\,b_0\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta + 1024a^2\\,r^{15}\\,b_0\\cos^2\\theta + 256a^2\\,r^{15}\\,b_0\\left(\\partial_l r\\right)^2 - 256a^2\\,r^{15}\\,b_0 + 72a^2\\,r^{14}\\,b_0^4\\left(\\partial_l^2 r\\right)^2\\,\\cos^2\\theta - 72a^2\\,r^{14}\\,b_0^4\\left(\\partial_l^2 r\\right)^2 - 216a^2\\,r^{13}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^2\\theta + 216a^2\\,r^{13}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r - 432a^2\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta + 144a^2\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta - 144a^2\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^4 + 8r^{18}\\left(\\partial_l^2 r\\right)^2 - 8r^{16}\\left(\\partial_l r\\right)^2 + 4r^{16}\\left(\\partial_l r\\right)^4 + 4r^{16}}{r^{12}\\left(r + 16a^2b_0\\cos^2\\theta\\right)^8}"
+        }
+      ]
+    },
+    {
+      "id": "tilted_universes",
+      "name": "Tilted Universes and the Whimper",
+      "short_name": "Tilted Universes",
+      "description": "Homogeneous universes whose matter drifts through the surfaces of homogeneity, so that an observer riding with it sees a lopsided sky. In the simplest of them, Farnsworth's dust of 1967, those surfaces turn from spacelike to timelike across a Cauchy horizon, and the light rays along the horizon end where the density and the curvature are finite: a whimper, as George Ellis and A. R. King named it in 1974.",
+      "tags": [
+        "cosmology",
+        "spatially homogeneous",
+        "homogeneous",
+        "anisotropic",
+        "tilted",
+        "Bianchi V",
+        "Bianchi classification",
+        "locally rotationally symmetric",
+        "dust",
+        "whimper",
+        "Cauchy horizon",
+        "intermediate singularity",
+        "curvature singularity",
+        "big bang",
+        "expanding universe",
+        "hyperbolic space",
+        "cosmic dipole",
+        "comoving",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "bianchi",
+          "kind": "generalisation",
+          "text": "The homogeneous universes these belong to. Bianchi's types sort the surfaces of homogeneity, and the tilt is the freedom of the matter to drift through them, which type I forbids [king1973]."
+        },
+        {
+          "id": "frw",
+          "kind": "special_case",
+          "text": "Farnsworth's dust with no tilt. At $C = 0$ it is Friedmann's open universe of dust, with $\\eta$ its conformal time [anton2023]."
+        },
+        {
+          "id": "milne",
+          "kind": "special_case",
+          "text": "The flat model with no tilt. At $C = 0$ its lines of matter all pass through one event, and it is Milne's universe."
+        },
+        {
+          "id": "minkowski",
+          "kind": "locally_same",
+          "text": "The flat model is a part of Minkowski space, filled with straight world lines that all pass one event at the same distance [ellis1974]."
+        },
+        {
+          "id": "taub_nut",
+          "kind": "family",
+          "text": "A vacuum with the same anatomy. Taub's homogeneous universe lies between two stationary regions, across null surfaces of homogeneity [collins1974, siklos1978]."
+        },
+        {
+          "id": "kasner",
+          "kind": "family",
+          "text": "Kasner's universe is of Bianchi's type I, which has no tilted universes [king1973]."
+        },
+        {
+          "id": "small_universes",
+          "kind": "family",
+          "text": "The horn is the same slicing of hyperbolic space by horospheres, with $y$ and $z$ made periodic and no tilt."
+        }
+      ],
+      "references": [
+        "eliot1925",
+        "ellis1974",
+        "king1973",
+        "collins1974",
+        "farnsworth1967",
+        "anton2023",
+        "shepley1969",
+        "siklos1978",
+        "secrest2021",
+        "krishnan2023",
+        "allahyari2025"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tilted_universes.json",
+      "charts": [
+        {
+          "id": "homogeneous",
+          "name": "Homogeneous Time",
+          "coordinates": [
+            "u",
+            "r",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "X = C \\;\\text{(a Cauchy horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "C",
+              "description": "Tilt, a length: the matter crosses the surfaces of homogeneity with the speed $cC/X$ along $r$, and with $C = 0$ it is at rest in them"
+            },
+            {
+              "symbol": "X = X(u)",
+              "description": "Scale factor along $r$, a length; the surfaces of homogeneity are spacelike where $X^2 > C^2$, null where $X^2 = C^2$, and timelike where $X^2 < C^2$"
+            },
+            {
+              "symbol": "Y = Y(u)",
+              "description": "Scale factor of the planes of $y$ and $z$, a length ($Y > 0$)"
+            }
+          ],
+          "convention": "We use Farnsworth's comoving coordinates $(r, y, z)$, each a number, with the time $u = ct + Cr$, a length, where $t$ is the proper time of the matter, which moves along the lines of constant $r$, $y$, and $z$. The surfaces of constant $u$ are the surfaces of homogeneity, and the scale factors $X(u)$ and $Y(u)$ are left free. A prime is a derivative along $u$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(du - C\\,dr\\right)^2 + X^2dr^2 + e^{-2r}Y^2\\left(dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "C"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "C"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "X^2 - C^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "Y^2e^{-2r}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "Y^2e^{-2r}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4X^3\\,Y\\,Y'' + 2X^3\\left(Y'\\right)^2 + 2X^2\\,Y^2\\,X'' + 4X^2\\,Y\\,X'\\,Y' - 6X\\,Y^2 - 4X\\,Y\\,C^2\\,Y'' + 12X\\,Y\\,C\\,Y' - 2X\\,C^2\\left(Y'\\right)^2 - 4Y^2\\,C\\,X' + 4Y\\,C^2\\,X'\\,Y'}{X^3\\,Y^2}",
+          "kretschmann": "K = \\dfrac{8X^6\\,Y^2\\left(Y''\\right)^2 + 4X^6\\left(Y'\\right)^4 + 4X^4\\,Y^4\\left(X''\\right)^2 - 16X^4\\,Y^2\\,C^2\\left(Y''\\right)^2 + 32X^4\\,Y^2\\,C\\,Y'\\,Y'' + 8X^4\\,Y^2\\left(X'\\right)^2\\left(Y'\\right)^2 - 24X^4\\,Y^2\\left(Y'\\right)^2 + 16X^4\\,Y\\,C\\left(Y'\\right)^3 - 8X^4\\,C^2\\left(Y'\\right)^4 - 32X^3\\,Y^3\\,C\\,X'\\,Y'' + 16X^3\\,Y^3\\,X'\\,Y' + 16X^3\\,Y^2\\,C^2\\,X'\\,Y'\\,Y'' - 16X^2\\,Y^4\\left(X'\\right)^2 + 12X^2\\,Y^4 + 16X^2\\,Y^3\\,C^2\\,Y'' + 16X^2\\,Y^3\\,C\\left(X'\\right)^2\\,Y' - 48X^2\\,Y^3\\,C\\,Y' + 8X^2\\,Y^2\\,C^4\\left(Y''\\right)^2 - 32X^2\\,Y^2\\,C^3\\,Y'\\,Y'' + 56X^2\\,Y^2\\,C^2\\left(Y'\\right)^2 - 16X^2\\,Y\\,C^3\\left(Y'\\right)^3 + 4X^2\\,C^4\\left(Y'\\right)^4 + 16X\\,Y^4\\,C\\,X' + 16X\\,Y^3\\,C^3\\,X'\\,Y'' - 48X\\,Y^3\\,C^2\\,X'\\,Y' - 16X\\,Y^2\\,C^4\\,X'\\,Y'\\,Y'' + 32X\\,Y^2\\,C^3\\,X'\\left(Y'\\right)^2 + 8Y^4\\,C^2\\left(X'\\right)^2 - 16Y^3\\,C^3\\left(X'\\right)^2\\,Y' + 8Y^2\\,C^4\\left(X'\\right)^2\\left(Y'\\right)^2}{X^6\\,Y^4}"
+        },
+        {
+          "id": "farnsworth",
+          "name": "Farnsworth's Dust",
+          "coordinates": [
+            "\\eta",
+            "r",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "\\eta \\in (0, \\infty)",
+            "r \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "X > 0 \\;\\text{(where the density is positive)}",
+            "X = C \\;\\text{(the Cauchy horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "C",
+              "description": "Tilt, a length ($C > 0$): the dust crosses the surfaces of homogeneity with the speed $cC/X$ along $r$, and with $C = 0$ the universe is Friedmann's open universe of dust"
+            },
+            {
+              "symbol": "W",
+              "description": "A length that sets the amount of dust ($W > 0$): the mass density $\\rho$ has $8\\pi G\\rho/c^2 = 3/\\left(W\\,X\\sinh^4(\\eta/2)\\right)$"
+            },
+            {
+              "symbol": "X = W\\sinh^2(\\eta/2) - C\\coth(\\eta/2)",
+              "description": "Scale factor along $r$, a length, $X = Y - C\\,dY/du$ for $Y = W\\sinh^2(\\eta/2)$; the surfaces of homogeneity are timelike where $X < C$ and spacelike where $X > C$"
+            }
+          ],
+          "convention": "We use coordinates $(\\eta, r, y, z)$, each a number, with $\\eta$ the parameter of Friedmann's open universe: the planes of $y$ and $z$ have the scale factor $Y = W\\sinh^2(\\eta/2)$, and $u = ct + Cr = \\tfrac{1}{2}W\\left(\\sinh\\eta - \\eta\\right)$ for the proper time $t$ of the dust, so that $du = Y\\,d\\eta$. The surfaces of constant $\\eta$ are the surfaces of homogeneity, and the dust moves along the lines of constant $r$, $y$, and $z$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(W\\sinh^2(\\eta/2)\\,d\\eta - C\\,dr\\right)^2 + X^2dr^2 + W^2e^{-2r}\\sinh^4(\\eta/2)\\left(dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-W^2\\sinh^4(\\eta/2)"
+            },
+            {
+              "indices": [
+                "\\eta",
+                "r"
+              ],
+              "value": "W\\,C\\sinh^2(\\eta/2)"
+            },
+            {
+              "indices": [
+                "r",
+                "\\eta"
+              ],
+              "value": "W\\,C\\sinh^2(\\eta/2)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "X^2 - C^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "W^2e^{-2r}\\sinh^4(\\eta/2)"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "W^2e^{-2r}\\sinh^4(\\eta/2)"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{3}{W\\,X\\sinh^4(\\eta/2)}",
+          "kretschmann": "K = \\dfrac{3\\left(5W^2\\sinh^6(\\eta/2) + 4C^2\\cosh^2(\\eta/2)\\right)}{W^4\\,X^2\\sinh^{14}(\\eta/2)}"
+        },
+        {
+          "id": "flat_model",
+          "name": "Flat Model",
+          "coordinates": [
+            "u",
+            "r",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "u \\in (0, \\infty)",
+            "r \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "u = C \\;\\text{(the Cauchy horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "C",
+              "description": "Tilt, a length ($C > 0$): every line of the matter is a straight line of Minkowski space that passes one event, the origin of the inertial coordinates, at the distance $C$"
+            }
+          ],
+          "convention": "We use the coordinates $(u, r, y, z)$ of the homogeneous chart with $X = u$ and $Y = u + C$, Farnsworth's solution with no dust, $W = 0$. The lines of constant $r$, $y$, and $z$ are straight lines of Minkowski space, with $u/c$ the proper time along each. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(du - C\\,dr\\right)^2 + u^2dr^2 + e^{-2r}\\left(u + C\\right)^2\\left(dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "C"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "C"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "u^2 - C^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\left(u + C\\right)^2e^{-2r}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\left(u + C\\right)^2e^{-2r}"
+            }
+          ],
+          "ricci_scalar": "0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "inertial",
+          "name": "Inertial",
+          "coordinates": [
+            "T",
+            "x",
+            "\\xi",
+            "\\zeta"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "\\xi \\in (-\\infty, \\infty)",
+            "\\zeta \\in (-\\infty, \\infty)",
+            "cT + x > 0",
+            "x^2 + \\xi^2 + \\zeta^2 - c^2T^2 < C^2",
+            "x^2 + \\xi^2 + \\zeta^2 = c^2T^2 \\;\\text{(the Cauchy horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "C",
+              "description": "Tilt, a length ($C > 0$): every line of the matter is a straight line that passes the origin at the distance $C$, and they are all tangent to the hyperboloid $x^2 + \\xi^2 + \\zeta^2 - c^2T^2 = C^2$"
+            }
+          ],
+          "convention": "We use inertial coordinates $(T, x, \\xi, \\zeta)$ of the flat model, with $T$ a time and the others lengths: $cT + x = (u + C)e^{-r}$, $cT - x = (u - C)e^{r} + (u + C)e^{-r}\\left(y^2 + z^2\\right)$, $\\xi = (u + C)e^{-r}y$, and $\\zeta = (u + C)e^{-r}z$ for the coordinates $(u, r, y, z)$ of the flat model. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dT^2 + dx^2 + d\\xi^2 + d\\zeta^2",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\zeta",
+                "\\zeta"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "0",
+          "kretschmann": "K = 0"
         }
       ]
     },
