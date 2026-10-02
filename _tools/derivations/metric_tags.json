@@ -5406,6 +5406,70 @@
   ],
   "sphere": null
  },
+ "kasner_magnetic/kasner_time": {
+  "stamp": "a224da1e7ab1fd2b",
+  "relations": {
+   "p_1": "-u/(1 + u + u**2)",
+   "p_2": "(1 + u)/(1 + u + u**2)",
+   "p_3": "u*(1 + u)/(1 + u + u**2)"
+  },
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "x",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "z",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "kasner_magnetic/rosen": {
+  "stamp": "2597deabeb11fb87",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "x",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "z",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
  "kasner_scalar/kaluza_klein": {
   "stamp": "df27c6d65b9b9b36",
   "relations": {

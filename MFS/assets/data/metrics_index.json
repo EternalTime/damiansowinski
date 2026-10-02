@@ -352,7 +352,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "48cd7fe08ed5eecc",
+    "version": "99a22918687de7ee",
     "diagrams": "d6268bdae97d9fd7",
     "embedding": "7fea7a854b8ceca4"
   },
@@ -1955,9 +1955,36 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "64d0a74f220acca6",
+    "version": "ebb633c53e460edc",
     "diagrams": "a84952c23e2fa052",
     "embedding": "e2698f474fe29ce2"
+  },
+  {
+    "id": "kasner_magnetic",
+    "name": "Kasner with a Magnetic Field",
+    "tags": [
+      "electrovacuum",
+      "electromagnetic field",
+      "magnetic field",
+      "anisotropic",
+      "cosmology",
+      "Kasner",
+      "Bianchi classification",
+      "spatially homogeneous",
+      "homogeneous",
+      "curvature singularity",
+      "spacelike singularity",
+      "big bang",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "dceca5764d73643f",
+    "diagrams": "487e58f217c89feb",
+    "embedding": "779744327513578c"
   },
   {
     "id": "kasner_scalar",
@@ -1988,7 +2015,7 @@
       "five-dimensional",
       "idealized model"
     ],
-    "version": "275cde3e65f2f1b4",
+    "version": "a159211d1d01c441",
     "diagrams": "8b8ed11a7a64599d",
     "embedding": "592f4ab4aaa693fe"
   },
@@ -2628,7 +2655,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1c48156ae2caa6fb",
+    "version": "7ec952f0a18b3a0c",
     "diagrams": "5ac02048c1fc2550",
     "conformal": "edd5386c486f11df",
     "embedding": "86969fc37532f407"

@@ -13,7 +13,7 @@ einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluz
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis, erez_rosen,
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
 born_infeld_charge, penrose_impulsive_wave, exponential_metric, petrov_homogeneous, rp3_geon,
-kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kasner_scalar, moving_mirror,
+kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kasner_scalar, kasner_magnetic, moving_mirror,
 gravitational_instantons, small_universes and misner_zapolsky, and Godel's
 cylindrical chart.
 
@@ -23606,6 +23606,341 @@ def kasner_scalar_check(chart, system):
 
 
 CHARTS["kasner_scalar"] = [lambda s=s: kasner_scalar(s) for s in KASNER_SCALAR_CHARTS]
+
+
+# -- Kasner's universe with a magnetic field -------------------------------------------
+
+KASNER_MAGNETIC_CHARTS = ("kasner_time", "rosen")
+
+
+def magnetic_powers(time, time_tex, c, b, exponents, state):
+    """A pretty printer for the chart in Kasner's time of the universe with a magnetic field, whose
+    every value is one power of the time, with an exponent that holds the exponents, times a
+    rational function of b^2 t^{2p_3}. The powers of the time are read as monomials in t,
+    t^{p_1}, t^{p_2} and t^{p_3}, the value is factored, the monomial is handed to the printer as
+    one placeholder with its whole exponent, as time_powers does, and each factor that is a sum
+    is written in rising powers of b^2 t^{2p_3}, as 1 + b^2 t^{2p_3} is in the line element."""
+    table = {}
+    A = [sp.Symbol(f"TIMEAXIS{i}", positive=True) for i in (1, 2, 3)]
+    # t^{2p_3} is a generator of its own, so that 1 - b^2 t^{2p_3} is not split into two factors.
+    W = sp.Symbol("TIMEFIELD", positive=True)
+
+    def split(power, a):
+        e = sp.expand(power)
+        out, rest = sp.Integer(1), e
+        for p, axis in zip(exponents, A):
+            k = e.coeff(p)
+            if axis == A[2]:
+                if not k.is_Integer:
+                    raise AssertionError(f"the exponent {power} holds a fraction of p_3")
+                out *= W ** (k // 2) * axis ** (k % 2)
+            else:
+                out *= axis ** k
+            rest -= k * p
+        rest = sp.expand(rest)
+        if not rest.is_Number:
+            raise AssertionError(f"the exponent {power} is not linear in the exponents")
+        return out * a ** rest
+
+    def coefficient(printer, value):
+        """The text of one coefficient of a sum in b^2 t^{2p_3}, and whether it carries a minus."""
+        value = sp.factor(value)
+        negative = value.could_extract_minus_sign()
+        body = -value if negative else value
+        if body == 1:
+            return "", negative
+        if body.is_Add:
+            return "\\left(" + printer.positive_first(body) + "\\right)", negative
+        text = printer.expr(body)
+        return text if cp.is_single_term(text) else "\\left(" + text + "\\right)", negative
+
+    def named_sum(printer, factor):
+        poly = sp.Poly(factor, W)
+        terms = sorted(((k[0], sp.cancel(value / b ** (2 * k[0]))) for k, value in zip(poly.monoms(), poly.coeffs())),
+                       key=lambda term: term[0])
+        if any(value.has(b) for _, value in terms):
+            raise AssertionError(f"{factor} is not a polynomial in b^2 t^{{2p_3}}")
+        text = ""
+        for i, (k, value) in enumerate(terms):
+            if k == 0 and sp.factor(value).is_Add:
+                # The part with no field in it leads the sum as it stands, with no bracket.
+                text += printer.positive_first(sp.factor(value))
+                continue
+            head, negative = coefficient(printer, value)
+            tail = "" if k == 0 else ("b^2" if k == 1 else f"b^{2 * k}") + f"{time_tex}^{{{2 * k if k > 1 else 2}p_3}}"
+            piece = (head + ("\\," if head and tail and not head.endswith("\\right)") else "") + tail) or "1"
+            text += ("-" if negative else "") + piece if not text else (" - " if negative else " + ") + piece
+        return text
+
+    def pretty(value):
+        printer = state["printer"]
+        a, cc = sp.Dummy(positive=True), sp.Dummy(positive=True)
+        value = sp.together(sp.sympify(value)).subs({time: a, c: cc})
+        value = sp.powsimp(sp.expand_power_base(sp.powdenest(value, force=True), force=True), combine="exp")
+        # The line element writes each power as (x^0/c)^{2p}, so the powers of c whose exponents
+        # hold a parameter cancel against those of the time once x^0 is written ct; they are
+        # dropped here, and reading the printed value back catches one that did not cancel.
+        value = value.replace(lambda e: e.is_Pow and e.base == cc,
+                              lambda e: cc ** sp.expand(e.exp).subs({p: 0 for p in exponents}))
+        value = value.replace(lambda e: e.is_Pow and e.base == a, lambda e: split(e.exp, a))
+
+        def paired(side):
+            # Every pair of t^{p_3} left standing in a product of factors is one t^{2p_3}.
+            poly = sp.Poly(sp.expand(side), A[2])
+            return sum(coeff * W ** (k // 2) * A[2] ** (k % 2) for (k,), coeff in zip(poly.monoms(), poly.coeffs()))
+        numerator, denominator = sp.fraction(sp.cancel(value))
+        value = sp.factor(sp.cancel(paired(numerator) / paired(denominator)))
+        exponent, rest = sp.Integer(0), sp.Integer(1)
+        axes = dict(zip(A, exponents))
+        for f in sp.Mul.make_args(value):
+            base, k = f.as_base_exp()
+            if base == a:
+                exponent += k
+            elif base in axes:
+                exponent += k * axes[base]
+            elif base == W:
+                exponent += 2 * k * exponents[2]
+            elif base.is_Add and base.has(W):
+                if base.has(a, *A):
+                    raise AssertionError(f"{base} is not a sum in t^{{2p_3}} alone")
+                text = named_sum(printer, base)
+                sign = 1
+                if text.startswith("-"):
+                    text, sign = named_sum(printer, -base), -1
+                placeholder = table.setdefault(text, sp.Symbol(f"MAGNETICSUM{len(table)}", positive=True))
+                printer.named[placeholder] = text
+                rest *= sign ** k * placeholder ** k
+            else:
+                if base.has(a, W, *A):
+                    raise AssertionError(f"{base} holds the time outside a power")
+                rest *= f
+        rest = rest.subs(cc, c)
+        exponent = sp.expand(exponent)
+        if exponent == 0:
+            return rest
+        if exponent.is_Number:
+            return rest * time ** exponent
+        negative = all(term.as_coeff_Mul()[0].is_negative for term in sp.Add.make_args(exponent))
+        shown, side = (-exponent, -1) if negative else (exponent, 1)
+        text = time_tex + "^{" + printer.positive_first(shown) + "}"
+        placeholder = table.setdefault(text, sp.Symbol(f"TIMEPOWER{len(table)}", positive=True))
+        printer.overrides[placeholder] = text
+        return rest * placeholder ** side
+
+    return pretty
+
+
+def kasner_magnetic(system):
+    """Kasner's universe with a uniform magnetic field along z and no matter, the solution of the
+    Einstein-Maxwell equations Rosen found (1962, 1964), in two charts.
+
+    kasner_time  ds^2 = f^2(-c^2dt^2 + t^{2p_1}dx^2 + t^{2p_2}dy^2) + t^{2p_3}dz^2/f^2 with
+                 f = 1 + b^2 t^{2p_3} and the exponents on Kasner's circle, (33) of Kastor and
+                 Traschen (2015) with their E = 2b: Harrison's transformation of Kasner's vacuum
+                 along z;
+    rosen        ds^2 = -l^2 d eta^2/(1 + cos eta)^4 + (dx^2 + dy^2)/(1 + cos eta)^2 + sin^2(eta) dz^2,
+                 Rosen's solutions as Kastor and Traschen's appendix writes them, at
+                 c_1 = c_2 = 1, the axisymmetric case, which is the first chart at the exponents
+                 (0, 0, 1) with tan(eta/2) = b t.
+
+    Every value of the first chart assumes Kasner's two conditions. kasner_magnetic_check holds
+    both charts to the Einstein-Maxwell equations with the field F_xy constant, the stated
+    curvature of the first to the tensors of free exponents on Kasner's circle, and the second to
+    being the first pulled back; kasner_magnetic.md beside this file is the derivation."""
+    state = {}
+    flat = ["x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)", "z \\in (-\\infty, \\infty)"]
+
+    def check(chart):
+        state["printer"] = chart.printer
+        kasner_magnetic_check(chart, system)
+
+    spec = {"metric_id": "kasner_magnetic", "check": check}
+    if system == "kasner_time":
+        coords, parameters = ["t", "x", "y", "z"], ["p_1", "p_2", "p_3", "b"]
+
+        def line(c2, t):
+            f = f"\\left(1 + b^2{t}^{{2p_3}}\\right)"
+            return (f"ds^2 = {f}^2\\left(-{c2}dt^2 + {t}^{{2p_1}}dx^2 + {t}^{{2p_2}}dy^2\\right)"
+                    f" + \\dfrac{{{t}^{{2p_3}}}}{{{f}^2}}dz^2")
+        probe = vm.Reader(coords, parameters, ())
+        time = probe.symbol["t"]
+        b = probe.parameters["b"]
+        exponents = [probe.parameters[n] for n in ("p_1", "p_2", "p_3")]
+        f = "\\left(1 + b^2t^{2p_3}\\right)"
+        spec.update({
+            "system": {"id": system, "name": "Kasner's time", "coords": coords,
+                       "domains": ["t \\in (0, \\infty)"] + flat
+                                  + ["t \\to 0 \\;\\text{(the singularity, where } p_3 < 1\\text{)}"],
+                       "parameters": parameters, "line_element": line("c^2", "t")},
+            "chart_line_element": line("", "\\left(\\dfrac{t}{c}\\right)"),
+            "time": "t",
+            "printer": {"lead": [b] + exponents + [time], "factors": exponents + [b, probe.c, time]},
+            "pretty": magnetic_powers(time, "t", probe.c, b, exponents, state),
+            "components": {
+                "metric_components": {("t", "t"): "-" + f + "^2", ("x", "x"): f + "^2t^{2p_1}",
+                                      ("y", "y"): f + "^2t^{2p_2}", ("z", "z"): "\\dfrac{t^{2p_3}}{" + f + "^2}"},
+                "inverse_metric_components": {("t", "t"): "-\\dfrac{1}{" + f + "^2}",
+                                              ("x", "x"): "\\dfrac{t^{-2p_1}}{" + f + "^2}",
+                                              ("y", "y"): "\\dfrac{t^{-2p_2}}{" + f + "^2}",
+                                              ("z", "z"): f + "^2t^{-2p_3}"}},
+            "kretschmann": "\\dfrac{16p_3^2\\left(1 - p_3 + 6p_3\\left(1 - p_3\\right)b^2t^{2p_3}"
+                           " + 2\\left(13p_3^2 - 2p_3 - 1\\right)b^4t^{4p_3} - 6p_3\\left(3p_3 + 1\\right)b^6t^{6p_3}"
+                           " + \\left(2p_3 + 1\\right)\\left(3p_3 + 1\\right)b^8t^{8p_3}\\right)}"
+                           "{c^4\\,t^4\\left(1 + b^2t^{2p_3}\\right)^8}",
+        })
+    else:
+        coords, parameters = ["\\eta", "x", "y", "z"], ["\\ell"]
+        line = ("ds^2 = -\\dfrac{\\ell^2}{\\left(1 + \\cos\\eta\\right)^4}d\\eta^2"
+                " + \\dfrac{dx^2 + dy^2}{\\left(1 + \\cos\\eta\\right)^2} + \\sin^2\\eta\\,dz^2")
+        probe = vm.Reader(coords, parameters, ())
+        eta, ell = probe.symbol["\\eta"], probe.parameters["ell"]
+        spec.update({
+            "system": {"id": system, "name": "Rosen (axisymmetric)", "coords": coords,
+                       "domains": ["\\eta \\in (0, \\pi)"] + flat
+                                  + ["\\eta = 0 \\;\\text{(a coordinate singularity)}",
+                                     "\\eta \\to \\pi \\;\\text{(the infinite future)}"],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [ell, sp.cos(eta), sp.sin(eta)], "named": {ROSEN_SUM: "1 + \\cos\\eta"}},
+            "pretty": rosen_trigonometric(eta),
+            "components": {
+                "metric_components": {("\\eta", "\\eta"): "-\\dfrac{\\ell^2}{\\left(1 + \\cos\\eta\\right)^4}",
+                                      ("x", "x"): "\\dfrac{1}{\\left(1 + \\cos\\eta\\right)^2}",
+                                      ("y", "y"): "\\dfrac{1}{\\left(1 + \\cos\\eta\\right)^2}",
+                                      ("z", "z"): "\\sin^2\\eta"},
+                "inverse_metric_components": {("\\eta", "\\eta"): "-\\dfrac{\\left(1 + \\cos\\eta\\right)^4}{\\ell^2}",
+                                              ("x", "x"): "\\left(1 + \\cos\\eta\\right)^2",
+                                              ("y", "y"): "\\left(1 + \\cos\\eta\\right)^2",
+                                              ("z", "z"): "\\dfrac{1}{\\sin^2\\eta}"}},
+        })
+    return spec
+
+
+# The sum 1 + cos(eta) of Rosen's chart, printed in the order the line element writes it.
+ROSEN_SUM = sp.Symbol("ROSENSUM", positive=True)
+
+
+def rosen_trigonometric(eta):
+    """A pretty printer for Rosen's chart: every value is a power of sin(eta) times a rational
+    function of cos(eta), so the even powers of the sine are written in the cosine, the fraction
+    is cancelled and both sides are factored. A factor 1 - cos(eta) is then written
+    sin^2(eta)/(1 + cos(eta)), which leaves the sine and the sum 1 + cos(eta) of the line element
+    as the only factors that vanish on the chart's edges."""
+    def pretty(value):
+        s, k = sp.Dummy(), sp.Dummy()
+        value = sp.together(sp.sympify(value)).subs({sp.sin(eta): s, sp.cos(eta): k})
+        numerator, denominator = sp.fraction(sp.together(value))
+
+        def reduced(e):
+            poly = sp.Poly(sp.expand(e), s)
+            out = sp.Integer(0)
+            for (power,), coeff in zip(poly.monoms(), poly.coeffs()):
+                out += coeff * (1 - k ** 2) ** (power // 2) * s ** (power % 2)
+            return sp.expand(out)
+        value = sp.factor(sp.cancel(reduced(numerator) / reduced(denominator)))
+        out = sp.Integer(1)
+        for f in sp.Mul.make_args(value):
+            base, power = f.as_base_exp()
+            if sp.expand(base - (k - 1)) == 0:
+                out *= (-1) ** power * s ** (2 * power) / ROSEN_SUM ** power
+            elif sp.expand(base + (k - 1)) == 0:
+                out *= s ** (2 * power) / ROSEN_SUM ** power
+            elif sp.expand(base - (k + 1)) == 0:
+                out *= ROSEN_SUM ** power
+            else:
+                out *= f
+        return out.subs({s: sp.sin(eta), k: sp.cos(eta)})
+    return pretty
+
+
+def kasner_magnetic_check(chart, system):
+    """Each chart against the Einstein-Maxwell equations, G_ab = 2(F_ac F_b^c - g_ab F^2/4) in
+    units where the field is an inverse length, and Maxwell's equations, with the field F_xy
+    constant: 2 b p_3/c in Kasner's time, where the powers are read with the time in a fixed
+    unit, and 1/l in Rosen's chart. In Kasner's time the equations hold on Kasner's circle, on
+    the checker's own parametrisation of it, and the curvature stated there, the Ricci tensor of
+    the field, no Ricci scalar and the Kretschmann scalar in p_3 and b^2 t^{2p_3} alone, is held
+    to the tensors of free exponents and then stands in for the chart's, so that it is what is
+    printed. Rosen's chart is the first at (0, 0, 1) pulled back along tan(eta/2) = b t."""
+    reader, geo = chart.reader, chart.geo
+    P = reader.parameters
+    x = chart.symbols
+    g, ginv = geo.g, geo.ginv
+    if system == "kasner_time":
+        relations = vm.PARAMETER_RELATIONS[("kasner_magnetic", system)]
+        surface = {P[name]: sp.sympify(value) for name, value in relations.items()}
+        b, p3 = P["b"], P["p_3"]
+        w = b ** 2 * (x[0] / reader.c) ** (2 * p3)
+        field = 2 * b * p3 / reader.c
+    else:
+        surface = {}
+        field = 1 / P["ell"]
+
+    def on(value):
+        return vm.norm(sp.sympify(value).subs(surface))
+
+    F = sp.zeros(4, 4)
+    F[1, 2], F[2, 1] = field, -field
+    Fup = ginv * F * ginv
+    F2 = sum(F[i, j] * Fup[i, j] for i in range(4) for j in range(4))
+    stress = [[2 * (sum(F[i, k] * F[j, m] * ginv[k, m] for k in range(4) for m in range(4)) - g[i, j] * F2 / 4)
+               for j in range(4)] for i in range(4)]
+    if system == "kasner_time":
+        # The stress holds t^(-2 p_1 - 2 p_2) where the curvature holds t^(2 p_3 - 2), one power of
+        # the time once the exponents sum to 1, so it is compared with the stated Ricci tensor
+        # below, which is the Einstein tensor where the Ricci scalar vanishes.
+        pass
+    else:
+        G = geo.einstein_ll()
+        for i in range(4):
+            for j in range(i, 4):
+                if on(vm._at(G, (i, j)) - stress[i][j]) != 0:
+                    raise AssertionError(f"kasner_magnetic: the Einstein tensor misses Maxwell's stress in slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]} of the {system} chart")
+    # F_xy is constant and sqrt(-g) F^xy depends on the time alone, so both of Maxwell's equations hold.
+    if any(Fup[1, 2].has(s) for s in x[1:]) or any(g.has(s) for s in x[1:]):
+        raise AssertionError(f"kasner_magnetic: Maxwell's equations fail in the {system} chart")
+    if system == "kasner_time":
+        rho = 4 * p3 ** 2 * w / (x[0] ** 2 * (1 + w) ** 4)
+        ricci = [[sp.Integer(0)] * 4 for _ in range(4)]
+        for i, sign in enumerate((-1, 1, 1, -1)):
+            ricci[i][i] = sign * rho * g[i, i]
+        kretschmann = 16 * p3 ** 2 * ((1 - p3) + 6 * p3 * (1 - p3) * w + 2 * (13 * p3 ** 2 - 2 * p3 - 1) * w ** 2
+                                      - 6 * p3 * (3 * p3 + 1) * w ** 3 + (2 * p3 + 1) * (3 * p3 + 1) * w ** 4
+                                      ) / (x[0] ** 4 * (1 + w) ** 8)
+        linear = {P["p_1"]: 1 - P["p_2"] - p3}
+        for i in range(4):
+            for j in range(i, 4):
+                # The time is positive on the chart, which is what gathers its powers into one.
+                gap = (stress[i][j] - ricci[i][j]).subs(linear).subs(x[0], sp.Dummy(positive=True))
+                if sp.simplify(sp.expand_power_base(sp.powdenest(gap, force=True), force=True)) != 0:
+                    raise AssertionError(f"kasner_magnetic: the stated Ricci tensor misses Maxwell's stress in slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+        stated = OnSurface(geo, ricci, sp.Integer(0), kretschmann)
+        for name, rank in (("ricci_ll", 2), ("einstein_ll", 2), ("weyl_llll", 4)):
+            free, there = getattr(geo, name)(), getattr(stated, name)()
+            for index in vm._indices(4, rank):
+                if on(vm._at(free, index) - vm._at(there, index)) != 0:
+                    raise AssertionError(f"kasner_magnetic: {name} is misstated in slot {index}")
+        if on(geo.ricci_scalar()) != 0 or on(geo.kretschmann() - kretschmann) != 0:
+            raise AssertionError("kasner_magnetic: a scalar is misstated")
+        chart.geo = stated
+    else:
+        # tan(eta/2) = b t at (p_1, p_2, p_3) = (0, 0, 1), with x and y halved and z doubled and
+        # scaled by b: ell = 2 c t_0/b in the unit of time t_0 the powers are read in.
+        eta, ell = x[0], P["ell"]
+        tb = sp.tan(eta / 2)                       # b t / t_0
+        f = 1 + tb ** 2
+        dt = ell / 2 * sp.diff(tb, eta)            # c dt = (c t_0/b) d(tan(eta/2)) = (ell/2) d(tan(eta/2))
+        pulled = sp.diag(-f ** 2 * dt ** 2, f ** 2 / 4, f ** 2 / 4, tb ** 2 / f ** 2 * 4)
+        if (pulled - g).applyfunc(sp.simplify) != sp.zeros(4):
+            raise AssertionError("kasner_magnetic: Rosen's chart is not Kasner's time pulled back")
+        kretschmann = 8 * (1 + sp.cos(eta)) ** 6 * (7 * sp.cos(eta) ** 2 + 2 * sp.cos(eta) + 1) / ell ** 4
+        if vm.norm(geo.kretschmann() - kretschmann) != 0 or vm.norm(geo.ricci_scalar()) != 0:
+            raise AssertionError("kasner_magnetic: a scalar is misstated in Rosen's chart")
+
+
+CHARTS["kasner_magnetic"] = [lambda s=s: kasner_magnetic(s) for s in KASNER_MAGNETIC_CHARTS]
 
 
 # -- Ellis's small universes --------------------------------------------------------------------

@@ -66,6 +66,11 @@
       "id": "bonnor_magnetic_dipole",
       "kind": "programme",
       "text": "Bonnor's magnetic dipole of 1966, a pair of black holes with opposite magnetic charges. Melvin's field along the axis of the pair pulls the two apart and takes the place of the strut between them [emparan2000]."
+    },
+    {
+      "id": "kasner_magnetic",
+      "kind": "dual",
+      "text": "Melvin's universe with its radius continued to imaginary values, which turns the radius into a time. The static bundle of field lines becomes an expanding universe with a uniform field along one axis, the solution Gerald Rosen found in 1962 [kastor2015, rosen1962]."
     }
   ],
   "references": [
@@ -94,7 +99,9 @@
     "robinson1959",
     "bonnor1969light",
     "kaup1968",
-    "emparan2000"
+    "emparan2000",
+    "kastor2015",
+    "rosen1962"
   ],
   "coordinates": [
     {
