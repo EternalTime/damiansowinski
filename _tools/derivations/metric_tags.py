@@ -205,6 +205,12 @@ REGIONS = {
         "regions": [["comoving", "conformal"], ["schwarzschild", "isotropic"]],
         "why": "the dust behind the throat and the vacuum outside it are two regions of one spacetime",
     },
+    "white_hole": {
+        "regions": [["interior_comoving", "interior_conformal"],
+                    ["exterior_schwarzschild", "exterior_eddington_finkelstein", "exterior_kruskal"]],
+        "why": "the dust ball and the vacuum outside it are two regions of one spacetime; novikov_comoving "
+               "leaves the mass and the delay of each shell free, and draws Novikov's marginally bound core",
+    },
     "ori_time_machine": {
         "regions": [["foliation", "brinkmann"]],
         "why": "vacuum_core leaves f free; the core is a vacuum where f is harmonic in x "

@@ -18257,9 +18257,396 @@ def cx_check(chart, system, points=8):
 CHARTS["chandrasekhar_xanthopoulos"] = [lambda s=s: chandrasekhar_xanthopoulos(s) for s in CX_CHARTS]
 
 
+# -- The white hole of Novikov and Ne'eman ------------------------------------------------
+
+WHITE_HOLE_CHARTS = ("interior_comoving", "interior_conformal", "exterior_schwarzschild",
+                     "exterior_eddington_finkelstein", "exterior_kruskal", "novikov_comoving")
+WHITE_HOLE_SHELLS = sp.Symbol("WHN", positive=True)
+WHITE_HOLE_SINCE = "q = ct - b"
+WHITE_HOLE_AREAL = "R = \\left(\\dfrac{9F}{4}\\right)^{1/3}q^{2/3}"
+WHITE_HOLE_RADIUS = "r = r_s\\left(1 + \\mathrm{W}\\left(-e^{-1}UV\\right)\\right)"
+
+
+def white_hole(system):
+    """Oppenheimer and Snyder's ball of dust with the time reversed, the lagging core of Novikov,
+    Astron. Zh. 41, 1075 (1964), and Ne'eman, Astrophys. J. 141, 1303 (1965): a piece of a closed
+    Friedmann universe of dust that leaves its singularity late, comes out through the past horizon
+    of Schwarzschild's exterior, stops at a_m and falls back. Inside, the comoving chart with the
+    scale factor free and the same chart in the conformal time of the cycloid, a = a_m sin^2(eta/2),
+    c tau = (a_m/2)(eta - sin eta). Outside, Schwarzschild's chart and the outgoing
+    Eddington-Finkelstein chart, which crosses the past horizon. white_hole_check holds the
+    conformal chart to dust of density 3 a_m c^2/(8 pi G a^3) and to being the comoving chart along
+    the cycloid, and each exterior chart to the published metric of schwarzschild;
+    white_hole.md records each chart's source and the junction."""
+    sphere = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    inside = "d\\chi^2 + \\sin^2\\chi" + sphere
+
+    def check(chart):
+        return white_hole_check(chart, system)
+    if system == "interior_comoving":
+        coords, parameters = ["\\tau", "\\chi", "\\theta", "\\phi"], ["a = a(\\tau)", "\\chi_0", "a_m"]
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "white_hole",
+            "system": {"id": system, "name": "Comoving Dust Interior", "coords": coords,
+                       "domains": ["\\tau \\in \\left(0, \\dfrac{\\pi a_m}{c}\\right)", "\\chi \\in [0, \\chi_0]"] + angles,
+                       "parameters": parameters,
+                       "line_element": "ds^2 = -c^2d\\tau^2 + a^2\\left(" + inside + "\\right)"},
+            "chart_line_element": "ds^2 = -d\\tau^2 + a^2\\left(" + inside + "\\right)",
+            "printer": {"dotted": ["a"], "lead": [probe.parameters["a"]]},
+            # The sphere's own curvature and the density, which the printer leaves expanded.
+            "rewrite": [("-\\left(-\\dot{a}^2\\,\\sin^2\\chi\\sin^2\\theta - \\sin^2\\chi\\sin^2\\theta\\right)",
+                         "\\left(\\dot{a}^2 + 1\\right)\\sin^2\\chi\\sin^2\\theta"),
+                        ("\\left(-\\dot{a}^2\\,\\sin^2\\chi\\sin^2\\theta - \\sin^2\\chi\\sin^2\\theta\\right)",
+                         "-\\left(\\dot{a}^2 + 1\\right)\\sin^2\\chi\\sin^2\\theta"),
+                        ("-\\left(-\\dot{a}^2\\,\\sin^2\\chi - \\sin^2\\chi\\right)",
+                         "\\left(\\dot{a}^2 + 1\\right)\\sin^2\\chi"),
+                        ("\\left(-\\dot{a}^2\\,\\sin^2\\chi - \\sin^2\\chi\\right)",
+                         "-\\left(\\dot{a}^2 + 1\\right)\\sin^2\\chi"),
+                        ("\\dfrac{3\\dot{a}^2 + 3}{a^2}", "\\dfrac{3\\left(\\dot{a}^2 + 1\\right)}{a^2}"),
+                        ("\\dfrac{3\\dot{a}^2 + 3}{a^4}", "\\dfrac{3\\left(\\dot{a}^2 + 1\\right)}{a^4}")],
+            "ricci_scalar": "\\dfrac{6\\left(a\\ddot{a} + \\dot{a}^2 + 1\\right)}{a^2}",
+            "kretschmann": "\\dfrac{12\\left(a^2\\ddot{a}^2 + \\left(\\dot{a}^2 + 1\\right)^2\\right)}{a^4}",
+            "check": check,
+        }
+    if system == "interior_conformal":
+        coords, parameters = ["\\eta", "\\chi", "\\theta", "\\phi"], ["\\chi_0", "a_m"]
+        half = "(\\eta/2)"
+        line = "ds^2 = a_m^2\\sin^4" + half + "\\left(-d\\eta^2 + " + inside + "\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        eta = probe.symbol["\\eta"]
+        return {
+            "metric_id": "white_hole",
+            "system": {"id": system, "name": "Conformal Time Interior", "coords": coords,
+                       "domains": ["\\eta \\in (0, 2\\pi)", "\\chi \\in [0, \\chi_0]"] + angles,
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            # The half angle is set tight, as the line element writes it, and stands before chi and theta.
+            "printer": {"arguments": {eta / 2: "\\eta/2"}},
+            "check": check,
+        }
+    parameters = ["r_s"]
+    f, bare = "\\left(1 - \\dfrac{r_s}{r}\\right)", "1 - \\dfrac{r_s}{r}"
+    if system == "exterior_schwarzschild":
+        coords = ["t", "r", "\\theta", "\\phi"]
+
+        def line(c2):
+            return "ds^2 = -" + f + c2 + "dt^2 + \\dfrac{dr^2}{" + bare + "} + r^2" + sphere
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "white_hole",
+            "system": {"id": system, "name": "Schwarzschild Exterior", "coords": coords,
+                       "domains": ["t \\in (-\\infty, \\infty)", "r \\in [R(t), \\infty)"] + angles,
+                       "parameters": parameters, "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"rising": [probe.parameters["r_s"]], "lead": [probe.symbol["r"], probe.parameters["r_s"]],
+                        "flip": False},
+            "components": {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                           "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}},
+            "kretschmann": "\\dfrac{12r_s^2}{r^6}",
+            "check": check,
+        }
+    if system == "novikov_comoving":
+        coords, parameters = ["t", "r", "\\theta", "\\phi"], ["F = F(r)", "b = b(r)", WHITE_HOLE_SINCE, WHITE_HOLE_AREAL]
+
+        def line(c2):
+            return "ds^2 = -" + c2 + "dt^2 + \\left(\\partial_r R\\right)^2dr^2 + R^2" + sphere
+        # The components are printed in the chart x^0 = ct, where q = x^0 - b, and no value holds the
+        # time outside q, so the file's own definition, with ct, stands beside them.
+        chart_parameters = [p.replace("ct", "t") for p in parameters]
+        probe = vm.Reader(coords, chart_parameters, ())
+        F, q, R = (probe.parameters[n] for n in ("F", "q", "R"))
+        return {
+            "metric_id": "white_hole",
+            "system": {"id": system, "name": "Novikov's Comoving", "coords": coords,
+                       "domains": ["t \\in (-\\infty, \\infty)", "r \\in [0, \\infty)"] + angles
+                       + ["ct > b \\;\\text{(after the shell leaves its singularity)}",
+                          "R = F \\;\\text{(the Schwarzschild sphere)}"],
+                       "parameters": parameters, "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "chart_parameters": chart_parameters,
+            "printer": {"primed": ["F", "b"], "lead": [R, F, q], "factors": [R, F, q],
+                        "named": {WHITE_HOLE_SHELLS: "q\\,F' - 2F\\,b'"}},
+            "reduce": white_hole_novikov(probe)[0],
+            "pretty": white_hole_novikov(probe)[1],
+            "components": {"metric_components": {("r", "r"): "\\left(\\partial_r R\\right)^2"},
+                           "inverse_metric_components": {("r", "r"): "\\dfrac{1}{\\left(\\partial_r R\\right)^2}",
+                                                         ("\\theta", "\\theta"): "\\dfrac{1}{R^2}",
+                                                         ("\\phi", "\\phi"): "\\dfrac{1}{R^2\\sin^2\\theta}"}},
+            "kretschmann": ("\\dfrac{16\\left(16F^2\\left(b'\\right)^2 + 5q^2\\left(F'\\right)^2\\right)}"
+                            "{27q^4\\left(q\\,F' - 2F\\,b'\\right)^2}"),
+            "check": check,
+        }
+    if system == "exterior_kruskal":
+        coords, parameters = ["U", "V", "\\theta", "\\phi"], ["r_s", WHITE_HOLE_RADIUS]
+        factor = "\\dfrac{4r_s^3}{r}e^{-r/r_s}"
+        line = "ds^2 = -" + factor + "\\,dU\\,dV + r^2" + sphere
+        probe = vm.Reader(coords, parameters, (), held=("r",))
+        half = "-\\dfrac{2r_s^3}{r}e^{-r/r_s}"
+        up = "-\\dfrac{r}{2r_s^3}e^{r/r_s}"
+        return {
+            "metric_id": "white_hole",
+            "system": {"id": system, "name": "Kruskal Exterior", "coords": coords,
+                       "domains": ["U \\in (-\\infty, \\infty)", "V \\in (-\\infty, \\infty)"] + angles
+                       + ["r \\ge R \\;\\text{(outside the core)}", "UV < 1 \\;\\text{(where } r > 0\\text{)}",
+                          "V = 0 \\;\\text{(the past horizon)}", "U = 0 \\;\\text{(the future horizon)}"],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [probe.parameters["r"], probe.parameters["r_s"]], "flip": False},
+            "reduce": white_hole_kruskal(probe),
+            "pretty": lambda value: value,
+            "components": {"metric_components": {("U", "V"): half, ("V", "U"): half},
+                           "inverse_metric_components": {("U", "V"): up, ("V", "U"): up}},
+            "kretschmann": "\\dfrac{12r_s^2}{r^6}",
+            "check": check,
+        }
+    coords = ["u", "r", "\\theta", "\\phi"]
+    line = "ds^2 = -" + f + "du^2 - 2\\,du\\,dr + r^2" + sphere
+    probe = vm.Reader(coords, parameters, ())
+    return {
+        "metric_id": "white_hole",
+        "system": {"id": system, "name": "Outgoing Eddington-Finkelstein Exterior", "coords": coords,
+                   "domains": ["u \\in (-\\infty, \\infty)", "r \\in [R(u), \\infty)"] + angles
+                   + ["r = r_s \\;\\text{(the past horizon)}"],
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": line,
+        "printer": {"rising": [probe.parameters["r_s"]], "lead": [probe.symbol["r"], probe.parameters["r_s"]],
+                    "flip": False},
+        "components": {"metric_components": {("u", "u"): "-" + f, ("u", "r"): "-1", ("r", "u"): "-1"},
+                       "inverse_metric_components": {("u", "r"): "-1", ("r", "u"): "-1", ("r", "r"): bare}},
+        "kretschmann": "\\dfrac{12r_s^2}{r^6}",
+        "check": check,
+    }
+
+
+def white_hole_novikov(reader):
+    """A `reduce` for Novikov's chart, whose areal radius R = (9F/4)^(1/3) q^(2/3) and time since the
+    singularity q = x^0 - b are held as functions of t and r. In the chart x^0 = ct,
+
+        d_0 q = 1,    d_r q = -b',    d_0 R = 2R/(3q),    d_r R = R (F' q - 2F b')/(3F q),
+
+    by which every derivative of the two is written, so that a value holds R, q, F, b and their
+    derivatives, with no root and no time outside q. The rates fix R up to a constant factor, and no value needs the
+    factor: each is a single power of R times a function of the rest."""
+    t, r = reader.symbol["t"], reader.symbol["r"]
+    F, b, q, R = (reader.parameters[n] for n in ("F", "b", "q", "R"))
+    rates = {R: {t: 2 * R / (3 * q), r: R * (sp.Derivative(F, r) * q - 2 * F * sp.Derivative(b, r)) / (3 * F * q)},
+             q: {t: sp.Integer(1), r: -sp.Derivative(b, r)}}
+
+    def reduce(value):
+        value = sp.sympify(value)
+        if isinstance(value, sp.MatrixBase):
+            return value.applyfunc(reduce)
+        for _ in range(8):
+            derivatives = [d for d in value.atoms(sp.Derivative) if d.expr in rates]
+            if not derivatives:
+                break
+            written = {}
+            for d in derivatives:
+                (variable, order), *rest = d.variable_count
+                written[d] = sp.Derivative(rates[d.expr][variable], (variable, order - 1), *rest).doit()
+            value = value.xreplace(written)
+        else:
+            raise AssertionError("white_hole: the derivatives of Novikov's areal radius do not settle")
+        return sp.factor(sp.cancel(sp.together(value)))
+
+    def pretty(value):
+        # The sum in d_r R is written as the placeholder the printer names, q F' - 2F b', which is
+        # positive wherever the shells do not cross.
+        out = sp.Integer(1)
+        for factor in sp.Mul.make_args(sp.factor(value)):
+            base, power = factor.as_base_exp()
+            sign = next((s for s in (1, -1) if base.is_Add and sp.expand(base - s * shells) == 0), None)
+            out *= factor if sign is None else (sign * WHITE_HOLE_SHELLS) ** power
+        return out
+
+    shells = sp.Derivative(F, r) * q - 2 * F * sp.Derivative(b, r)
+    return reduce, pretty
+
+
+def white_hole_kruskal(reader):
+    """A `reduce` for Kruskal's chart, whose areal radius is held as a function r(U, V). Its
+    definition, (1 - r/r_s) e^(r/r_s) = UV, makes
+
+        d_U r = -r_s^2 V e^(-r/r_s)/r,    d_V r = -r_s^2 U e^(-r/r_s)/r,
+
+    by which every derivative of r is written. What is left holds r, e^(-r/r_s), U and V, with the
+    definition a relation among them, so the exponential is written (r_s - r)/(r_s UV), after which
+    r, U and V are free and a value that vanishes is exactly zero. The value is then written back
+    with the exponential, each product UV as (r_s - r) e^(r/r_s)/r_s, where that leaves no U or V
+    below the line or is shorter: no value is then 0/0 on a horizon, and every curvature component
+    holds r and e^(-r/r_s) alone."""
+    U, V = reader.symbol["U"], reader.symbol["V"]
+    r, rs = reader.parameters["r"], reader.parameters["r_s"]
+    rates = {U: -rs ** 2 * V * sp.exp(-r / rs) / r, V: -rs ** 2 * U * sp.exp(-r / rs) / r}
+    rho, e = sp.Symbol("_rho", positive=True), sp.Symbol("_e", positive=True)
+
+    def paired(poly):
+        """A polynomial with every product UV written by the exponential, U or V left over."""
+        out = sp.Integer(0)
+        for (a, b), coefficient in sp.Poly(poly, U, V).terms():
+            k = min(a, b)
+            out += coefficient * ((rs - rho) / (rs * e)) ** k * U ** (a - k) * V ** (b - k)
+        return out
+
+    def reduce(value):
+        value = sp.sympify(value)
+        if isinstance(value, sp.MatrixBase):
+            return value.applyfunc(reduce)
+        for _ in range(8):
+            derivatives = value.atoms(sp.Derivative)
+            if not derivatives:
+                break
+            written = {}
+            for d in derivatives:
+                (variable, order), *rest = d.variable_count
+                written[d] = sp.Derivative(rates[variable], (variable, order - 1), *rest).doit()
+            value = value.xreplace(written)
+        else:
+            raise AssertionError("white_hole: the derivatives of the areal radius do not settle")
+        # Powers of the exponential, of either sign, as powers of one symbol.
+        value = value.subs(r, rho)
+        value = value.replace(lambda x: isinstance(x, sp.exp), lambda x: e ** sp.cancel(-x.args[0] * rs / rho))
+        if any(not p.exp.is_Integer for p in value.atoms(sp.Pow) if p.base == e) or value.has(sp.exp):
+            raise AssertionError(f"white_hole: an exponential other than a power of e^(-r/r_s) in {value}")
+        free = sp.cancel(sp.together(value.subs(e, (rs - rho) / (rs * U * V))))
+        if free == 0:
+            return sp.Integer(0)
+        num, den = sp.fraction(free)
+        # A lone U or V below the line is made a product UV by its partner above it, 1/U = V/(UV).
+        a, b = sp.degree(den, U), sp.degree(den, V)
+        num, den = (sp.expand(x * U ** (max(a, b) - a) * V ** (max(a, b) - b)) for x in (num, den))
+        forms = [sp.factor(free), sp.factor(sp.cancel(paired(num) / paired(den)))]
+        # A form that divides by U or V is 0/0 on a horizon, so one that does not is taken first.
+        best = min(forms, key=lambda form: (sp.fraction(form)[1].has(U, V), sp.count_ops(form)))
+        return best.subs(e, sp.exp(-r / rs)).subs(rho, r)
+
+    return reduce
+
+
+def white_hole_check(chart, system):
+    """Inside, the conformal chart is dust at rest in it, G^eta_eta = -3/(a_m^2 sin^6(eta/2)), which
+    is 8 pi G rho/c^2 = 3 a_m/a^3, with no other Einstein component, and it is the comoving chart
+    along a = a_m sin^2(eta/2), c dtau = a d eta, on which the comoving chart's own G^chi_chi
+    vanishes. Outside, each chart is the published chart of schwarzschild slot by slot, and a
+    vacuum."""
+    geo, g = chart.geo, chart.geo.g
+    if system == "interior_comoving":
+        # The cycloid, written in eta: a, da/d(c tau) and d^2a/d(c tau)^2.
+        tau, a = chart.symbols[0], chart.reader.parameters["a"]
+        eta, am = sp.Symbol("eta", positive=True), chart.reader.parameters["a_m"]
+        cycloid = {sp.Derivative(a, (tau, 2)): -1 / (2 * am * sp.sin(eta / 2) ** 4),
+                   sp.Derivative(a, tau): sp.cos(eta / 2) / sp.sin(eta / 2), a: am * sp.sin(eta / 2) ** 2}
+        einstein = geo.einstein_ll()
+        for i in range(1, 4):
+            value = vm._at(einstein, (i, i)).subs(cycloid)
+            if sp.simplify(value) != 0:
+                raise AssertionError(f"white_hole: the cycloid leaves a pressure in slot {chart.coords_tex[i]}")
+        return
+    if system == "interior_conformal":
+        eta, am = chart.symbols[0], chart.reader.parameters["a_m"]
+        einstein = geo.einstein_ll()
+        want = sp.zeros(4, 4)
+        want[0, 0] = 3 / sp.sin(eta / 2) ** 2          # -g_eta_eta times 3/(a_m^2 sin^6)
+        for i in range(4):
+            for j in range(4):
+                if sp.simplify(vm._at(einstein, (i, j)) - want[i, j]) != 0:
+                    raise AssertionError(f"white_hole: the conformal chart is not dust in slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+        if any(vm.norm(x) != 0 for x in sp.flatten(geo.weyl_llll())):
+            raise AssertionError("white_hole: the dust is not conformally flat")
+        # The comoving chart along the cycloid: c dtau = a d eta, so g_eta_eta = -a^2.
+        scale = am * sp.sin(eta / 2) ** 2
+        chi, theta = chart.symbols[1], chart.symbols[2]
+        pulled = sp.diag(-scale ** 2, scale ** 2, scale ** 2 * sp.sin(chi) ** 2,
+                         scale ** 2 * sp.sin(chi) ** 2 * sp.sin(theta) ** 2)
+        if any(sp.simplify(x) != 0 for x in sp.flatten(pulled - g)):
+            raise AssertionError("white_hole: the conformal chart is not the comoving chart along the cycloid")
+        return
+    if system == "novikov_comoving":
+        # The declared rates are the derivatives of R = (9F/4)^(1/3) q^(2/3) with q = x^0 - b; the
+        # Einstein tensor is dust at rest in the chart, G_tt = 4F'/(3q(q F' - 2F b')), which is
+        # F'/(R^2 d_r R) by R^3 = 9F q^2/4, Tolman's density; where F is constant it is a vacuum with
+        # Schwarzschild's Kretschmann scalar 12F^2/R^6; and where b is constant and F = k r^3 it is the
+        # Einstein-de Sitter universe, a^2 (dr^2 + r^2 dOmega^2) with a = (9k/4)^(1/3) (x^0 - b)^(2/3).
+        reader = chart.reader
+        t, r, theta = chart.symbols[:3]
+        F, b, q, R = (reader.parameters[n] for n in ("F", "b", "q", "R"))
+        dF, db = sp.Derivative(F, r), sp.Derivative(b, r)
+        x = sp.Symbol("x", positive=True)
+        explicit = (sp.Rational(9, 4) * F) ** sp.Rational(1, 3) * x ** sp.Rational(2, 3)
+        for variable, rate in ((t, 2 * R / (3 * q)), (r, R * (dF * q - 2 * F * db) / (3 * F * q))):
+            # With x = x^0 - b, d/dx^0 = d/dx and d/dr = d/dr - b' d/dx.
+            derivative = sp.diff(explicit, x) if variable == t else sp.diff(explicit, r) - db * sp.diff(explicit, x)
+            if sp.simplify(derivative / explicit - (rate / R).subs(q, x)) != 0:
+                raise AssertionError(f"white_hole: Novikov's areal radius does not change along {variable} as declared")
+        einstein = geo.einstein_ll()
+        want = sp.zeros(4, 4)
+        want[0, 0] = 4 * dF / (3 * q * (q * dF - 2 * F * db))
+        for i in range(4):
+            for j in range(4):
+                if sp.cancel(sp.together(vm._at(einstein, (i, j)) - want[i, j])) != 0:
+                    raise AssertionError(f"white_hole: Novikov's chart is not dust at rest in slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+        tolman = dF / (R ** 2 * R * (dF * q - 2 * F * db) / (3 * F * q))
+        if sp.cancel((tolman - want[0, 0]).subs(R ** 3, sp.Rational(9, 4) * F * q ** 2)) != 0:
+            raise AssertionError("white_hole: the density of Novikov's chart is not Tolman's F'/(R^2 d_r R)")
+        vacuum = sp.cancel(geo.kretschmann().subs(dF, 0))
+        if sp.cancel(vacuum - 12 * F ** 2 / (sp.Rational(9, 4) * F * q ** 2) ** 2) != 0:
+            raise AssertionError("white_hole: Novikov's chart with F constant has not Schwarzschild's Kretschmann scalar")
+        k = sp.Symbol("k", positive=True)
+        uniform = {db: 0, sp.Derivative(b, (r, 2)): 0, sp.Derivative(F, (r, 2)): 6 * k * r, dF: 3 * k * r ** 2,
+                   F: k * r ** 3}
+        scale = R / r
+        expected = sp.diag(-1, scale ** 2, R ** 2, R ** 2 * sp.sin(theta) ** 2)
+        reduced = chart.reduce(g)
+        if any(sp.cancel(sp.sympify(reduced[i, j]).subs(uniform) - expected[i, j]) != 0
+               for i in range(4) for j in range(4)):
+            raise AssertionError("white_hole: Novikov's chart with no delay and uniform dust is not the "
+                                 "Einstein-de Sitter universe")
+        return
+    if system == "exterior_kruskal":
+        # A vacuum, and Schwarzschild's chart pulled back outside r_s along U = -e^(-(t - r_*)/2r_s),
+        # V = e^((t + r_*)/2r_s) with r_* = r + r_s ln(r/r_s - 1), so that UV = (1 - r/r_s) e^(r/r_s).
+        ricci = geo.ricci_ll()
+        if any(vm.norm(chart.reader.surface(ricci[a][b])) != 0 for a in range(4) for b in range(4)):
+            raise AssertionError("white_hole: Kruskal's chart is not a vacuum")
+        t, r, rs = sp.Symbol("t", real=True), sp.Symbol("r", positive=True), chart.reader.parameters["r_s"]
+        star = r + rs * sp.log(r / rs - 1)
+        U, V = -sp.exp(-(t - star) / (2 * rs)), sp.exp((t + star) / (2 * rs))
+        J = sp.Matrix([[sp.diff(U, t), sp.diff(U, r)], [sp.diff(V, t), sp.diff(V, r)]])
+        half = -2 * rs ** 3 * sp.exp(-r / rs) / r
+        pulled = (J.T * sp.Matrix([[0, half], [half, 0]]) * J).applyfunc(sp.simplify)
+        if any(sp.simplify(x) != 0 for x in sp.flatten(pulled - sp.diag(-(1 - rs / r), 1 / (1 - rs / r)))):
+            raise AssertionError("white_hole: Kruskal's chart is not Schwarzschild's pulled back")
+        return
+    name = {"exterior_schwarzschild": "spherical",
+            "exterior_eddington_finkelstein": "eddington_finkelstein_outgoing"}[system]
+    published = next(c for c in json.loads((METRICS / "schwarzschild.json").read_text(encoding="utf-8"))
+                     ["coordinates"] if c["id"] == name)
+    there = vm.Reader(published["coords"], [p["symbol"] for p in published["parameters"]], ())
+    swap = {there.symbol[n]: chart.reader.symbol[n] for n in published["coords"]}
+    swap[there.parameters["r_s"]] = chart.reader.parameters["r_s"]
+    values = {tuple(e["indices"]): e["value"] for e in published["metric_components"]}
+    for i in range(4):
+        for j in range(4):
+            text = values.get((chart.coords_tex[i], chart.coords_tex[j]), "0")
+            if vm.norm(there(text).subs(swap) - g[i, j]) != 0:
+                raise AssertionError(f"white_hole: the {system} chart misses Schwarzschild's published metric in "
+                                     f"slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    ricci = geo.ricci_ll()
+    if any(vm.norm(ricci[a][b]) != 0 for a in range(4) for b in range(4)):
+        raise AssertionError(f"white_hole: the {system} chart is not a vacuum")
+
+
+CHARTS["white_hole"] = [lambda s=s: white_hole(s) for s in WHITE_HOLE_CHARTS]
+
+
 def write(spec):
     start = time.time()
-    chart = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
+    chart = cp.Chart(spec["system"]["coords"], spec.get("chart_parameters", spec["system"]["parameters"]),
+                     spec["chart_line_element"],
                      spec["printer"], spec.get("pretty"), spec.get("time"), spec.get("bracketed"), spec.get("reduce"),
                      vm.ORDERS.get((spec["metric_id"], spec["system"]["id"])),
                      vm.HELD.get((spec["metric_id"], spec["system"]["id"]), ()),

@@ -6367,6 +6367,94 @@ def semiclosed_world(ck, src):
                        "of clocks released from rest when the dust is, on both sides of the throat.")]
 
 
+def white_hole(ck, src):
+    """The white hole the conformal diagram draws, a core that comes to rest at R0 = 2 r_s, chi0 = pi/4
+    and a_m = 2 sqrt(2) r_s, at four moments of its proper time tau since it left its singularity: the
+    collapse of Oppenheimer and Snyder with the time reversed. Inside, the published interior chart at
+    a = (a_m/2)(1 - cos eta), tau = (a_m/2)(eta - sin eta), which is checked to make the published
+    G^chi_chi vanish: a cap of a sphere of radius a out to chi0, growing. Outside, the moment of
+    constant tau carries on as Novikov's slice, the moment of clocks that come to rest with the dust
+    at every radius, read from Tolman-Bondi's comoving chart with no dust, k = r_s/r^3: by the
+    symmetry of each shell's cycloid it is the slice of the collapse at the same time before the
+    moment of rest as after it, so the cloud released from rest is read at tau_m - tau. The two meet
+    with one tangent, 1 + 2E = 1 - r_s/R0 = cos^2 chi0 on both sides, which is checked; at the moment
+    of rest the outside is Flamm's paraboloid."""
+    R0, chi0 = 2.0, math.pi / 4
+    am = R0 / math.sin(chi0)
+    rest = am * math.pi / 2
+    cloud = RestCloud(lambda r: np.where(r < R0, 1 / R0 ** 3, 1 / np.maximum(r, R0) ** 3),
+                      lambda r: np.where(r < R0, 0.0, -3 / np.maximum(r, R0) ** 4))
+    # The interior's own field equation, 2 a a'' + a'^2 + 1 = 0 in tau, along the cycloid.
+    Gcc = einstein(src, "white_hole", "interior_comoving", "\\chi")
+    etas = np.linspace(0.05 * math.pi, 1.95 * math.pi, 50)
+    half = np.sin(etas / 2)
+    ck.add("White hole: a = (a_m/2)(1 - cos eta) makes the published G^chi_chi vanish",
+           float(np.max(np.abs(Gcc(a=am * half ** 2, a_tau=1 / np.tan(etas / 2), a_tautau=-1 / (2 * am * half ** 4)))
+                        * (am * half ** 2) ** 2)), 1e-9)
+    cloud.check(ck, src, "White hole outside", np.linspace(R0, 8, 60), [0.0, 1.0, 2.0, 3.0, 4.0])
+    top = 4.0
+    size = 2 * top
+    from scipy.optimize import brentq
+
+    def moment(eta):
+        a = am * (1 - math.cos(eta)) / 2
+        tau = am * (eta - math.sin(eta)) / 2
+        where = f"White hole, eta = {eta / math.pi:.4f} pi"
+        inner = Slice(src, "white_hole", "interior_comoving", "\\chi", "\\phi", {"tau": "0", **EQUATOR},
+                      {"chi_0": "pi/4", "a_m": repr(am)}, {"a": repr(a)})
+        outer = cloud.slice(src, max(rest - tau, 0.0), "-1/(2*r)")
+        edge = cloud.horizon(max(rest - tau, 0.0), 0.0, top)
+        dust_marks = [(chi0 / 3, "r", None), (2 * chi0 / 3, "r", None), (chi0, "surface", None)]
+        out_marks = [(r, "r", None) for r in (3.0, top)]
+        if edge is not None and edge > R0:
+            out_marks.append((edge, "horizon", None))
+        elif edge is not None:
+            dust_marks.append((math.asin(edge / am), "horizon", None))
+        ext = Piece("exterior", "sheet", outer, R0, top, 0.0, 1,
+                    (("join", "the surface of the dust"), ("edge", "the slice runs on to $r \\to \\infty$")), out_marks, size)
+        dust = Piece("dust", "star", inner, 0.0, chi0, 0.0, 1,
+                     (("axis", "the centre $\\chi = 0$, where the cap is smooth"), ("join", "the surface $\\chi = \\chi_0$")),
+                     dust_marks, size)
+        dust.z = dust.z + (ext.z[0] - dust.z[-1])
+        # The rim of the drawing, the clocks that come to rest at r = 4 r_s, stands at z = 0 at every
+        # moment, and the dust rises toward it.
+        shift = -ext.z[-1]
+        ext.z, dust.z = ext.z + shift, dust.z + shift
+        ck.isometry(f"{where}, the dust", dust)
+        ck.isometry(f"{where}, outside", ext)
+        ck.join(f"{where}, the dust meets the outside", dust, chi0, ext, R0)
+        ck.form(f"{where}, the dust is a cap of a sphere of radius a", dust,
+                lambda c, a=a, z0=dust.z[0]: z0 + a * (1 - np.cos(c)), size)
+        if eta == math.pi:
+            ck.form(f"{where}, outside it is Flamm's paraboloid", ext, lambda r: 2 * np.sqrt(r - 1) - 2 + shift, size)
+        return Surface([dust, ext], label=f"$c\\tau = {tau:.2f}\\,r_s$", time=tau)
+
+    # The movie runs through the moments at a steady proper time of the dust, a frame about every
+    # 0.07 r_s of c tau.
+    etas = [f * math.pi for f in (0.2, 0.4, 0.7, 1.0)]
+    taus, keys = movie_values([am * (e - math.sin(e)) / 2 for e in etas], 0.07)
+    frames = [moment(etas[keys.index(i)] if i in keys else
+                     brentq(lambda e, t=t: am * (e - math.sin(e)) / 2 - t, 0.0, math.pi, xtol=1e-15))
+              for i, t in enumerate(taus)]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"star": "star", "sheet": "cover"}, size)
+    fig.legend("fill", "star", "the dust, a cap of a sphere of radius $a(\\tau)$, which $\\tau$ and $\\chi$ cover")
+    fig.legend("fill", "cover", "outside it, the moment of clocks that come to rest when the dust does")
+    fig.legend("line", "r", "$\\chi$ constant in the dust, at $\\chi_0/3$ and $2\\chi_0/3$, and outside the clocks "
+                            "that come to rest at $3$ and $4\\,r_s$")
+    fig.legend("line", "surface", "the surface of the dust, $\\chi = \\chi_0$")
+    fig.legend("line", "horizon", "the apparent horizon, $R = 2GM/c^2$ for the mass inside it")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("explosion", "The explosion", "$r_s$", surfaces, fig.done(),
+                 movie=movie(frames, "$c\\tau$", [f.time for f in frames]),
+                 settings="$R_0 = 2\\,r_s$, so that $\\chi_0 = \\pi/4$ and $a_m = 2\\sqrt{2}\\,r_s$, with $r_s = 1$ the "
+                          "unit of every length; the moments are the dust's proper time $\\tau$ since it left its "
+                          "singularity.",
+                 input="Outside the dust, the slices of Tolman-Bondi's comoving chart with no dust in it and the "
+                       "energy function $E = -r_s/2r$, each shell of clocks coming to rest at $R = r$ when the "
+                       "dust does.")]
+
+
 VERTICAL = 2   # the Tolman-Bondi cloud is drawn this many times taller than its embedding
 
 
@@ -12205,6 +12293,7 @@ DRAWN = {
     "bonnor_vaidya": bonnor_vaidya,
     "oppenheimer_snyder": oppenheimer_snyder,
     "semiclosed_world": semiclosed_world,
+    "white_hole": white_hole,
     "tolman_bondi": tolman_bondi,
     "bertotti_robinson": bertotti_robinson,
     "plebanski_hacyan": plebanski_hacyan,
@@ -13254,6 +13343,19 @@ CAPTIONS = {
         "every moment. Once the surface is inside $r_s$ the slice runs through the horizon, drawn where "
         "$R = 2GM/c^2$, down to the dust, which no slice of constant Schwarzschild $t$ reaches. J. Robert "
         "Oppenheimer and Hartland Snyder worked out this collapse in 1939.",
+    ],
+    ("white_hole", "explosion"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of a core of dust coming out of its singularity, as the dust's own "
+        "time $\\tau$ runs from $c\\tau = 0.06\\,r_s$ to the moment of rest at $4.44\\,r_s$, each moment drawn as "
+        "a surface in flat space with every distance along it the metric distance. The dust is a piece of a closed "
+        "universe, and its slice is a cap of a sphere of radius $a(\\tau)$ out to $\\chi = \\chi_0$, which grows as "
+        "the dust rises while keeping its angle $\\chi_0$. Outside, the moment carries on as the moment of clocks "
+        "that come to rest at every radius when the dust does, Igor Novikov's slicing of Schwarzschild's exterior, "
+        "and the two meet with one tangent, since $1 + 2E = \\cos^2\\chi_0$ on both sides of the surface.",
+        "At first the cap is a small cup at the foot of a deep well, and the slice runs down to it through the past "
+        "horizon, drawn where $R = 2GM/c^2$, which no slice of constant Schwarzschild $t$ crosses. As the dust rises "
+        "the well fills from below, the surface passes the horizon at $c\\tau = 0.81\\,r_s$, and at the moment of "
+        "rest the outside is Flamm's paraboloid, with the dust sitting in it as Schwarzschild's star does.",
     ],
     ("tolman_bondi", "cloud"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a cloud of dust collapsing from rest, densest at its "

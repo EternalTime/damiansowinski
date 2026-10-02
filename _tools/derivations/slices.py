@@ -546,6 +546,55 @@ def _scw_far(isotropic):
     return out
 
 
+# The white hole is that collapse with the time reversed, drawn to the same scale: its moments
+# count the dust's proper time from its singularity, so the moment tau is the collapse's moment
+# WH_REST - tau before the rest, mirrored in time.
+WH_REST = OS_AM * math.pi / 2                # c tau of the moment of rest, pi a_m/2
+WH_BOOST = math.sqrt(2) * math.exp(1 + math.pi / 2)      # e^(v_h/2r_s), v_h = (pi + 2 + ln 2) r_s
+
+
+def wh_eta(tau):
+    """The conformal time of the white hole's dust at its proper time tau, tau = (a_m/2)(eta - sin eta)."""
+    lo, hi = 0.0, 2 * math.pi
+    for _ in range(200):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if 0.5 * OS_AM * (mid - math.sin(mid)) < tau else (lo, mid)
+    return 0.5 * (lo + hi)
+
+
+def wh_shells(m):
+    """The shells of Novikov's slice outside the white hole's dust at the moment m, as far as the
+    embedding reaches: (areal radius, Kruskal's U and V of the white hole's own chart). Each shell
+    comes to rest when the dust does, so it is the shell of the collapse at WH_REST - tau after the
+    rest, with the time reversed, (U, V) -> (-V, -U), and Kruskal's coordinates carried to the
+    origin the white hole's charts take, the surface's crossing of r_s: U -> U/WH_BOOST,
+    V -> V WH_BOOST."""
+    lo, hi = m.reach("comoving_synchronous", "r")
+    U, V, r = novikov_kruskal(near(lo, hi, 2001, 1e-6), max(WH_REST - m.time, 0.0))
+    return r, -V / WH_BOOST, -U * WH_BOOST
+
+
+def wh_exterior():
+    """Novikov's slice outside the white hole's dust in Schwarzschild's t and r, drawn where
+    r > r_s: the collapse's, with the time reversed."""
+    out = []
+    for m in moments("white_hole"):
+        lo, hi = m.reach("comoving_synchronous", "r")
+        r, t, _ = novikov(near(lo, hi, 2001, 1e-6), max(WH_REST - m.time, 0.0))
+        keep = (r > 1) & np.isfinite(t)
+        out.append(Mark(m, [np.column_stack([-t[keep], r[keep]])]))
+    return out
+
+
+def wh_finkelstein():
+    """The same slice in the retarded time u and r, U = -e^(-u/2r_s), which crosses r_s."""
+    out = []
+    for m in moments("white_hole"):
+        r, U, _ = wh_shells(m)
+        out.append(Mark(m, [np.column_stack([-2 * np.log(-U), r])]))
+    return out
+
+
 def kerr_above(metric_id):
     """The equator of the moment seen from above with t left out: the whole plane outside
     the horizon, as far as the embedding reaches, as a region of (phi, r)."""
@@ -2355,6 +2404,12 @@ FLAT = {
     ("semiclosed_world", "schwarzschild", "radial"): lambda: _scw_far(False),
     ("semiclosed_world", "isotropic", "radial"): lambda: _scw_far(True),
     ("oppenheimer_snyder", "exterior_schwarzschild", "radial"): os_exterior,
+    ("white_hole", "interior_comoving", "through"): lambda: one(
+        "white_hole", lambda m: [[(m.time / OS_AM, lo) for lo in m.reach("interior_comoving", "\\chi")]]),
+    ("white_hole", "interior_conformal", "through"): lambda: one(
+        "white_hole", lambda m: [[(wh_eta(m.time), lo) for lo in m.reach("interior_comoving", "\\chi")]]),
+    ("white_hole", "exterior_schwarzschild", "radial"): wh_exterior,
+    ("white_hole", "exterior_eddington_finkelstein", "finkelstein"): wh_finkelstein,
     # v - r = w, every r the embedding reaches.
     ("c_metric", "spherical", "inner"): lambda: _c_metric(False),
     ("c_metric", "spherical", "outer"): lambda: _c_metric(False),
@@ -2448,6 +2503,8 @@ HIDDEN = {
     ("point_particle_2plus1", "two_bodies"): "two particles at rest, another spacetime than the one particle whose cone is embedded",
     ("point_particle_2plus1", "moving", "wedge"): "the particle in motion, whose moment of the frame's t is not the moment of its rest frame that is embedded",
     ("tolman_bondi", "comoving_synchronous", "collapse"): "the marginally bound cloud, E = 0, whose moments are planes; the cloud embedded is released from rest",
+    ("white_hole", "novikov_comoving", "vacuole"): "Novikov's marginally bound core in its vacuole, whose moments are planes; the core embedded is the bound one, which comes to rest",
+    ("white_hole", "exterior_kruskal", "kruskal"): "the surface's way out through the past horizon, drawn about U = -1, V = 0; the moments embedded run on to the rest at V = sqrt(2) e^(2 + pi/2), a dozen widths of the drawing away, where Kruskal's coordinates crowd the white hole out of sight",
     ("vaidya", "eddington_finkelstein_outgoing", "shell"): "the exploding shell, the time reverse of the imploding shell embedded",
     ("bonnor_vaidya", "eddington_finkelstein_outgoing", "shell"): "the leaving shell, the time reverse of the falling shell embedded",
     ("bonnor_vaidya", "leaving"): "the leaving shell, the time reverse of the falling shell embedded",
@@ -2921,6 +2978,42 @@ def checks():
                float(np.max(np.abs(np.log(V[out]) - v / 2))), 1e-10)
         report(f"Novikov: U V = (1 - r) e^r along the shell from R = {R:g} r_s",
                float(np.max(np.abs(U * V - (1 - r) * np.exp(r)))), 1e-12)
+
+    # The white hole: its outgoing chart and Kruskal's are Schwarzschild's chart of the same page
+    # carried along u = t - r - ln|r - 1| + (pi + 2 + ln 2) and U = -e^(-u/2), V = e^(v/2) with
+    # v = u + 2r + 2 ln(r - 1), in units of r_s; and the dust's two charts are one along the cycloid.
+    g_s, (ts, rs, *_) = metric("white_hole", "exterior_schwarzschild", {"r_s": 1})
+    g_u, (uu, ru, *_) = metric("white_hole", "exterior_eddington_finkelstein", {"r_s": 1})
+    shift = math.pi + 2 + math.log(2)
+    image = [ts - rs - sp.log(rs - 1) + shift, rs]
+    J = sp.Matrix(2, 2, lambda i, j: sp.diff(image[i], [ts, rs][j]))
+    pulled = J.T * g_u[:2, :2].subs({ru: rs}) * J
+    miss = max(abs(float((pulled - g_s[:2, :2]).subs(rs, v)[i, j])) for v in rng.uniform(1.1, 6, 20)
+               for i in range(2) for j in range(2))
+    report("White hole: u = ct - r - r_s ln(r/r_s - 1) + const pulls the outgoing chart back onto Schwarzschild's",
+           miss, 1e-12)
+    _, entry_k, reader_k = nr.load("white_hole", "exterior_kruskal")
+    g_k = nr.published_matrix(reader_k, entry_k, "metric_components").subs(reader_k.held).doit()
+    g_k = g_k.subs({reader_k.c: 1, reader_k.parameters["r_s"]: 1})
+    Uk, Vk = reader_k.symbol["U"], reader_k.symbol["V"]
+    u_of = ts - rs - sp.log(rs - 1) + shift
+    v_of = u_of + 2 * rs + 2 * sp.log(rs - 1)
+    image = [-sp.exp(-u_of / 2), sp.exp(v_of / 2)]
+    J = sp.Matrix(2, 2, lambda i, j: sp.diff(image[i], [ts, rs][j]))
+    pulled = J.T * g_k[:2, :2].subs({Uk: image[0], Vk: image[1]}, simultaneous=True) * J
+    miss = max(abs(complex(sp.N((pulled - g_s[:2, :2]).subs({ts: a, rs: b})[i, j])))
+               for a, b in zip(rng.uniform(-6, 0, 20), rng.uniform(1.1, 4, 20)) for i in range(2) for j in range(2))
+    report("White hole: U = -e^(-u/2r_s), V = e^(v/2r_s) pulls Kruskal's chart back onto Schwarzschild's",
+           miss, 1e-9)
+    g_c, (ec, cc, *_) = metric("white_hole", "interior_conformal", {"a_m": 1, "chi_0": "pi/4"})
+    miss = max(abs(float(g_c[1, 1].subs(ec, wh_eta(tau * OS_AM))) - math.sin(wh_eta(tau * OS_AM) / 2) ** 4)
+               + abs(0.5 * (wh_eta(tau * OS_AM) - math.sin(wh_eta(tau * OS_AM))) - tau) for tau in rng.uniform(0.05, 3, 20))
+    report("White hole: wh_eta is the conformal time of the dust's proper time, a = a_m sin^2(eta/2)", miss, 1e-12)
+    # The moment of rest of the surface, t = 0 at r = 2 r_s, is u = (pi + ln 2) r_s, and the surface
+    # crosses r_s on the ray u = 0: the collapse's surface reaches r_s at V = WH_BOOST.
+    U, V, r = novikov_kruskal(np.array([OS_R0]), 0.5 * OS_AM * (math.pi / 2 + 1))
+    report("White hole: the surface crosses r_s at e^(v/2r_s) = sqrt(2) e^(1 + pi/2), which is u = 0",
+           abs(float(V[0]) / WH_BOOST - 1) + abs(float(r[0]) - 1), 1e-9)
 
     # Nariai: r = -cosh(tau) cos(chi) and sinh(t) = sinh(tau)/sqrt(1 - r^2) carry the global plane
     # into the static patch 0 < chi < pi, sin(chi) > |tanh(tau)|, pulling the static metric back onto

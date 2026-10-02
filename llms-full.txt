@@ -1705,6 +1705,21 @@ A rigidly rotating body of perfect fluid in closed form, its energy density and 
 - chart Mars's Ingoing: coordinates $(v, y, z, \phi)$, $$ds^2 = -\dfrac{V - U}{v_1 + v_2}\left(dv + v_1 d\phi\right)^2 + 2\left(dy - U d\phi\right)\left(dv + v_1 d\phi\right) + \left(v_1 + v_2\right)\left(\dfrac{dz^2}{U} + U d\phi^2\right)$$
 - chart Whittaker's Static Limit: coordinates $(t, X, \theta, \phi)$, $$ds^2 = -F\,c^2dt^2 + R_0^2\left(\dfrac{dX^2}{F} + \sin^2 X\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### White Hole, the Lagging Core of Novikov and Ne'eman
+
+A ball of dust that comes out of a singularity through the past horizon of Schwarzschild's exterior, Oppenheimer and Snyder's collapse with the time reversed. Igor Novikov and Yuval Ne'eman proposed it in 1964 and 1965 as a piece of the big bang that started late, and as what a quasar is.
+
+- id: `white_hole`
+- tags: white hole, lagging core, delayed core, dust, matched solution, big bang, past horizon, horizon, event horizon, apparent horizon, curvature singularity, instability, quasar, Swiss cheese, Kruskal extension, comoving, time-dependent, spherically symmetric, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/white_hole.json
+- chart Comoving Dust Interior: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = -c^2d\tau^2 + a^2\left(d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Conformal Time Interior: coordinates $(\eta, \chi, \theta, \phi)$, $$ds^2 = a_m^2\sin^4(\eta/2)\left(-d\eta^2 + d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Schwarzschild Exterior: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Outgoing Eddington-Finkelstein Exterior: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Kruskal Exterior: coordinates $(U, V, \theta, \phi)$, $$ds^2 = -\dfrac{4r_s^3}{r}e^{-r/r_s}\,dU\,dV + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Novikov's Comoving: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + \left(\partial_r R\right)^2dr^2 + R^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Witten's Black Hole in Two Dimensions
 
 A black hole in two spacetime dimensions, a solution of the low energy equations of string theory for a metric and a dilaton, and an exact string background. It has a horizon, a spacelike singularity, and Kruskal's diagram, and its Hawking temperature is the same for every mass. With matter added it is the model of Callan, Giddings, Harvey, and Strominger for a black hole that forms and evaporates.
