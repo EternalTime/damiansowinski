@@ -474,6 +474,18 @@ Two Kerr black holes on one axis of symmetry, the stationary vacuum solution Die
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/double_kerr.json
 - chart Weyl-Lewis-Papapetrou: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -f\left(c\,dt - \omega\,d\phi\right)^2 + \dfrac{1}{f}\left(e^{2\gamma}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2\right)$$
 
+### Eguchi-Hanson Space
+
+A space of four dimensions with no time in it, the gravitational instanton Tohru Eguchi and Andrew Hanson found in 1978: a solution of Einstein's vacuum equations with Riemannian signature and self dual curvature. Space closes on a 2-sphere of radius $a/2$, the bolt, and far away it is flat space with every point identified with its opposite.
+
+- id: `eguchi_hanson`
+- tags: vacuum, four-dimensional, gravitational instanton, Riemannian, Euclidean signature, no time, self-dual, hyperkähler, Kähler, asymptotically locally Euclidean, ALE space, bolt, nuts and bolts, lens space, orbifold, cotangent bundle, Gibbons-Hawking, multi-centre, Calabi, K3 surface, Hopf fibration, regular, exact solution, Einstein equations, idealized model
+- signature: (+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/eguchi_hanson.json
+- chart Eguchi-Hanson: coordinates $(r, \theta, \phi, \psi)$, $$ds^2 = \left(1 - \dfrac{a^4}{r^4}\right)^{-1}dr^2 + \dfrac{r^2}{4}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + \dfrac{r^2}{4}\left(1 - \dfrac{a^4}{r^4}\right)\left(d\psi + \cos\theta\,d\phi\right)^2$$
+- chart Kähler Radius: coordinates $(\rho, \theta, \phi, \psi)$, $$ds^2 = \dfrac{\rho^2}{W}\left(d\rho^2 + \dfrac{\rho^2}{4}\left(d\psi + \cos\theta\,d\phi\right)^2\right) + \dfrac{W}{4}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Gibbons-Hawking Two-Centre: coordinates $(\rho, z, \psi, \tau)$, $$ds^2 = V\left(d\rho^2 + dz^2 + \rho^2d\psi^2\right) + V^{-1}\left(d\tau + \omega\,d\psi\right)^2$$
+
 ### Einstein's Cluster
 
 A static ball of particles on circular orbits in every direction, each held on its circle by the gravity of all the others, with no pressure along the radius. Einstein built it in 1939 to argue that no body can be squeezed inside its Schwarzschild radius, and it now serves as a model for halos of dark matter.

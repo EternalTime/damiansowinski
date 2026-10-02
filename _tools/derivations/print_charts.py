@@ -10,7 +10,7 @@ black_string, myers_perry, black_saturn, near_horizon_extreme_kerr, hartle_thorn
 som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos,
 schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
-israel_wilson_perjes, sultana_dyer and kerr_taub_nut, and Godel's cylindrical chart.
+israel_wilson_perjes, sultana_dyer, kerr_taub_nut and eguchi_hanson, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -30,7 +30,7 @@ The derivations these charts rest on, and the reason each was chosen, are in tov
 malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_sitter.md,
 majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md,
 witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, mass_inflation.md,
-kaluza_klein_black_hole.md and israel_wilson_perjes.md beside this file.
+kaluza_klein_black_hole.md, israel_wilson_perjes.md and eguchi_hanson.md beside this file.
 """
 import argparse
 import itertools
@@ -13683,6 +13683,229 @@ def ads_soliton_check(chart):
 
 
 CHARTS["ads_soliton"] = [lambda s=s: ads_soliton(s) for s in SOLITON_CHARTS]
+# -- Eguchi-Hanson ---------------------------------------------------------------------
+
+EGUCHI_HANSON_CHARTS = ["eguchi_hanson", "kahler", "two_centre"]
+
+
+def eguchi_hanson(system_id):
+    """Eguchi and Hanson's self-dual gravitational instanton, a Riemannian space of four
+    dimensions with no time, so no coordinate is scaled by c. Eguchi and Hanson's chart keeps
+    their radius r, which ends on the bolt r = a, and the Euler angles of the 3-sphere, with
+    psi of period 2 pi; the Kahler chart moves the radius to rho, rho^4 = r^4 - a^4, and the
+    two-centre chart is Gibbons and Hawking's form on flat three dimensional space. The
+    Kretschmann scalar is 384 a^8/r^12, 384/a^4 on the bolt. eguchi_hanson.md records each
+    chart's source."""
+    if system_id == "two_centre":
+        return eguchi_hanson_two_centre()
+    if system_id == "kahler":
+        return eguchi_hanson_kahler()
+    f = "\\left(1 - \\dfrac{a^4}{r^4}\\right)"
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)", "\\psi \\in [0, 2\\pi)"]
+    coords, name = ["r", "\\theta", "\\phi", "\\psi"], "Eguchi-Hanson"
+    domains = ["r \\in [a, \\infty)"] + angles + ["r = a \\;\\text{(the bolt, a 2-sphere of radius}\\; a/2\\text{)}"]
+    line = ("ds^2 = " + f + "^{-1}dr^2 + \\dfrac{r^2}{4}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + "
+            "\\dfrac{r^2}{4}" + f + "\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2")
+    parameters = ["a"]
+    probe = vm.Reader(coords, parameters, ())
+    r, a = probe.symbol["r"], probe.parameters["a"]
+    return {
+        "metric_id": "eguchi_hanson",
+        "system": {"id": system_id, "name": name, "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [r, a], "flip": False},
+        "pretty": eguchi_hanson_pretty(r, a, probe.symbol["\\theta"]),
+        "kretschmann": "\\dfrac{384a^8}{r^{12}}",
+    }
+
+
+def eguchi_hanson_kahler():
+    """Eguchi and Hanson's chart in the radius rho of the flat C^2 the space is asymptotic to,
+    rho^4 = r^4 - a^4, their (2.31) and (2.32) of 1979: rho^2 = |z_1|^2 + |z_2|^2 in the complex
+    coordinates the metric is Kahler in, and the bolt is rho = 0. The chart names
+    W = sqrt(rho^4 + a^4), which is r^2, and every value is printed in rho, a and W. It is checked
+    to be Eguchi and Hanson's chart carried along r = (rho^4 + a^4)^(1/4)."""
+    coords = ["\\rho", "\\theta", "\\phi", "\\psi"]
+    parameters = ["a", "W = \\sqrt{\\rho^4 + a^4}"]
+    domains = ["\\rho \\in [0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)", "\\psi \\in [0, 2\\pi)",
+               "\\rho = 0 \\;\\text{(the bolt, a 2-sphere of radius}\\; a/2\\text{)}"]
+    line = ("ds^2 = \\dfrac{\\rho^2}{W}\\left(d\\rho^2 + \\dfrac{\\rho^2}{4}\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2\\right)"
+            " + \\dfrac{W}{4}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)")
+    probe = vm.Reader(coords, parameters, ())
+    rho, theta, a = probe.symbol["\\rho"], probe.symbol["\\theta"], probe.parameters["a"]
+    W = sp.Symbol("W", positive=True)
+    square = rho ** 4 + a ** 4
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        value = value.replace(lambda p: p.is_Pow and p.exp.is_Rational and p.exp.q == 2
+                              and sp.expand(p.base - square) == 0, lambda p: W ** (2 * p.exp))
+        out = sp.Integer(1)
+        for f in sp.Mul.make_args(sp.factor(value)):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            if sp.expand(base - square) == 0:
+                base, k = W, 2 * k
+            elif base.is_Add:
+                other = sp.expand(base.subs(sp.sin(theta) ** 2, 1 - sp.cos(theta) ** 2))
+                if len(sp.Add.make_args(other)) < len(sp.Add.make_args(base)):
+                    base = other
+            out *= base ** k
+        return out
+
+    def check(chart):
+        spec = eguchi_hanson("eguchi_hanson")
+        source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+        b = chart.reader.parameters["a"]
+        image = [(chart.symbols[0] ** 4 + b ** 4) ** sp.Rational(1, 4)] + list(chart.symbols[1:])
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+        at = dict(zip(source.symbols, image))
+        at[source.reader.parameters["a"]] = b
+        pulled = J.T * source.geo.g.subs(at, simultaneous=True) * J
+        for i in range(4):
+            for j in range(i, 4):
+                if sp.simplify(pulled[i, j] - chart.geo.g[i, j]) != 0:
+                    raise AssertionError(f"eguchi_hanson: Eguchi and Hanson's chart carried along rho^4 = r^4 - a^4 "
+                                         f"misses the Kahler chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+    return {
+        "metric_id": "eguchi_hanson",
+        "system": {"id": "kahler", "name": "Kähler Radius", "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [rho, W, a], "factors": [a, rho, W], "flip": False},
+        "pretty": pretty,
+        "kretschmann": "\\dfrac{384a^8}{W^6}",
+        "check": check,
+    }
+
+
+def eguchi_hanson_two_centre():
+    """Gibbons and Hawking's two-centre form of the Eguchi-Hanson space, which Prasad showed to be
+    Eguchi and Hanson's metric: V (d rho^2 + dz^2 + rho^2 d psi^2) + (d tau + omega d psi)^2/V on
+    flat three dimensional space in cylindrical coordinates, with V = (a/8)(1/R_1 + 1/R_2) the
+    potential of two equal centres at z = +a and z = -a, R_1 and R_2 the distances from them, and
+    omega = (a/8)((z - a)/R_1 + (z + a)/R_2), whose curl is the gradient of V. The constants are
+    Ishihara, Kimura, Matsuno and Tomizawa's. The chart names R_1 and R_2, and every value is
+    printed in them, rho and a by eguchi_hanson_distances. The map from Eguchi and Hanson's chart
+    is z = r^2 cos(theta)/a, rho = sqrt(r^4 - a^4) sin(theta)/a, tau = a phi/4, with psi the
+    azimuth, on which R_1 = (r^2 - a^2 cos theta)/a and R_2 = (r^2 + a^2 cos theta)/a."""
+    coords = ["\\rho", "z", "\\psi", "\\tau"]
+    parameters = ["a", "R_1 = \\sqrt{\\rho^2 + \\left(z - a\\right)^2}", "R_2 = \\sqrt{\\rho^2 + \\left(z + a\\right)^2}",
+                  "V = \\dfrac{a}{8}\\left(\\dfrac{1}{R_1} + \\dfrac{1}{R_2}\\right)",
+                  "\\omega = \\dfrac{a}{8}\\left(\\dfrac{z - a}{R_1} + \\dfrac{z + a}{R_2}\\right)"]
+    domains = ["\\rho \\in [0, \\infty)", "z \\in (-\\infty, \\infty)", "\\psi \\in [0, 2\\pi)",
+               "\\tau \\in [0, \\pi a/2)",
+               "(\\rho, z) = (0, \\pm a) \\;\\text{(the two centres, regular points)}",
+               "\\rho = 0,\\; |z| < a \\;\\text{(the bolt)}"]
+    line = ("ds^2 = V\\left(d\\rho^2 + dz^2 + \\rho^2d\\psi^2\\right) + V^{-1}\\left(d\\tau + \\omega\\,d\\psi\\right)^2")
+    probe = vm.Reader(coords, parameters, ())
+    rho, z, a = probe.symbol["\\rho"], probe.symbol["z"], probe.parameters["a"]
+    R1, R2 = sp.Symbol("R_1", positive=True), sp.Symbol("R_2", positive=True)
+    return {
+        "metric_id": "eguchi_hanson",
+        "system": {"id": "two_centre", "name": "Gibbons-Hawking Two-Centre", "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [R1, R2, rho, a], "factors": [a, rho, R1, R2], "flip": False},
+        "pretty": eguchi_hanson_distances(rho, z, a, R1, R2),
+        "components": {"metric_components": {("\\rho", "\\rho"): "V", ("z", "z"): "V", ("\\tau", "\\tau"): "V^{-1}"}},
+        "kretschmann": "\\dfrac{24576a^2}{\\left(R_1 + R_2\\right)^6}",
+        "check": eguchi_hanson_pullback,
+    }
+
+
+def eguchi_hanson_distances(rho, z, a, R1, R2):
+    """A pretty printer for the two-centre chart, which names the distances R_1 and R_2 from the
+    centres at z = +a and z = -a: each radical is written as its distance, z as
+    (R_2^2 - R_1^2)/(4a), and every even power of rho as a power of
+    rho^2 = ((R_1 + R_2)^2 - 4a^2)(4a^2 - (R_1 - R_2)^2)/(16a^2), so a value is a rational function
+    of R_1, R_2 and a with at most one rho in front, and no relation is left among them."""
+    squares = ((sp.expand(rho ** 2 + (z - a) ** 2), R1), (sp.expand(rho ** 2 + (z + a) ** 2), R2))
+    height = (R2 ** 2 - R1 ** 2) / (4 * a)
+    rho2 = R1 ** 2 - (height - a) ** 2
+
+    def distance(p):
+        base = sp.expand(p.base)
+        for square, R in squares:
+            ratio = sp.cancel(base / square)
+            if ratio.is_Number:
+                return ratio ** p.exp * R ** (2 * p.exp)
+        raise AssertionError(f"eguchi_hanson: the radical {p} is neither distance")
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        value = value.replace(lambda p: p.is_Pow and p.exp.is_Rational and p.exp.q == 2, distance)
+        sides = []
+        for side in sp.fraction(sp.together(value.subs(z, height))):
+            poly = sp.Poly(sp.expand(side), rho)
+            low = min(k for (k,), _ in poly.terms()) % 2
+            sides.append(rho ** low * sp.factor(sp.expand(sum(c * rho2 ** ((k - low) // 2)
+                                                              for (k,), c in poly.terms()))))
+        return sp.factor(sides[0] / sides[1])
+
+    return pretty
+
+
+def eguchi_hanson_pullback(chart):
+    """The two-centre chart carried onto Eguchi and Hanson's: J^T g J, with g the two-centre metric
+    at the image of a point and J the Jacobian of the map z = r^2 cos(theta)/a,
+    rho = sqrt(r^4 - a^4) sin(theta)/a, psi = psi, tau = a phi/4, against Eguchi and Hanson's
+    metric, in every slot, at six random points in forty digits."""
+    spec = eguchi_hanson("eguchi_hanson")
+    source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    a, own = source.reader.parameters["a"], chart.reader.parameters["a"]
+    r, theta, phi, psi = source.symbols
+    image = [sp.sqrt(r ** 4 - a ** 4) * sp.sin(theta) / a, r ** 2 * sp.cos(theta) / a, psi, a * phi / 4]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], source.symbols[j]))
+    at = dict(zip(chart.symbols, image))
+    at[own] = a
+    pulled = J.T * chart.geo.g.subs(at, simultaneous=True) * J
+    rng = random.Random(0)
+    for _ in range(6):
+        scale = sp.Rational(rng.randint(50, 200), 100)
+        point = {a: scale, r: scale * sp.Rational(rng.randint(110, 400), 100),
+                 theta: sp.Rational(rng.randint(10, 300), 100), phi: sp.Rational(rng.randint(0, 600), 100),
+                 psi: sp.Rational(rng.randint(0, 600), 100)}
+        for i in range(4):
+            for j in range(i, 4):
+                miss = (pulled[i, j] - source.geo.g[i, j]).subs(point).evalf(40)
+                if abs(miss) > sp.Float(10) ** -30:
+                    raise AssertionError(f"eguchi_hanson: the two-centre chart carried onto Eguchi and Hanson's "
+                                         f"misses it in slot {source.coords_tex[i]}{source.coords_tex[j]}")
+
+
+def eguchi_hanson_pretty(r, a, theta):
+    """A pretty printer for Eguchi and Hanson's chart: each value factored, every sum written in
+    whichever of sin^2 theta and cos^2 theta leaves it fewer terms, so that
+    r^4 - a^4 cos^2 theta stands as the line element has it, and (r + a)(r - a)(r^2 + a^2)
+    written whole, as r^4 - a^4."""
+    merge = named_factors((), [(r + a, r - a, r ** 2 - a ** 2), (r ** 2 - a ** 2, r ** 2 + a ** 2, r ** 4 - a ** 4)])
+
+    def shorter(base):
+        if not base.is_Add:
+            return base
+        other = sp.expand(base.subs(sp.sin(theta) ** 2, 1 - sp.cos(theta) ** 2))
+        return other if len(sp.Add.make_args(other)) < len(sp.Add.make_args(base)) else base
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        out = sp.Integer(1)
+        for f in sp.Mul.make_args(merge(value)):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            out *= shorter(base) ** k
+        return out
+
+    return pretty
+
+
+CHARTS["eguchi_hanson"] = [lambda s=s: eguchi_hanson(s) for s in EGUCHI_HANSON_CHARTS]
 
 
 # -- The double Kerr solution ------------------------------------------------------------

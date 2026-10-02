@@ -72,6 +72,11 @@
       "id": "kaluza_klein_black_hole",
       "kind": "generalisation",
       "text": "The monopole with a horizon around it, together with its electric and dyonic relatives. At $r_s = 0$ the magnetic hole is the monopole, with $p = 4m$ [horowitz2012]."
+    },
+    {
+      "id": "eguchi_hanson",
+      "kind": "family",
+      "text": "Gibbons and Hawking's space with two centres and no constant in its potential; the monopole's four dimensions of space have one centre and the constant $1$. It has no circle of fixed size far away, and its boundary there is a 3-sphere with opposite points identified [gibbonshawking1979, eguchihanson1979]."
     }
   ],
   "references": [
@@ -93,7 +98,9 @@
     "gregory2012",
     "emparan2008",
     "randall1999b",
-    "horowitz2012"
+    "horowitz2012",
+    "gibbonshawking1979",
+    "eguchihanson1979"
   ],
   "coordinates": [
     {

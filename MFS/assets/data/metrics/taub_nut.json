@@ -71,6 +71,11 @@
       "id": "kerr_taub_nut",
       "kind": "generalisation",
       "text": "Taub-NUT set spinning. Marek Demiański and Ezra Newman's solution of 1966 carries a spin $a$ beside the twist $l$, and at $a = 0$ it is this metric [bini2003]."
+    },
+    {
+      "id": "eguchi_hanson",
+      "kind": "limit",
+      "text": "Continue Taub-NUT to Euclidean signature, where its NUT parameter is a length $L$, set $m = L(1 + a^4/8L^4)$, and let $L \\to \\infty$ with $r^2 - L^2$ held fixed. The limit is Eguchi and Hanson's gravitational instanton, a space of four dimensions with no time and with Taub-NUT's isometry group $U(2)$ [eguchihanson1979, gibbonshawking1979]."
     }
   ],
   "references": [
@@ -94,7 +99,9 @@
     "griffiths2005",
     "hartle1972",
     "brill1964",
-    "bini2003"
+    "bini2003",
+    "eguchihanson1979",
+    "gibbonshawking1979"
   ],
   "coordinates": [
     {
