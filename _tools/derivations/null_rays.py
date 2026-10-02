@@ -208,6 +208,7 @@ carries it into the square with the view's own map and box.
 
 import argparse
 import json
+import keyword
 import math
 import sys
 from dataclasses import dataclass, field, replace
@@ -936,6 +937,22 @@ GOTT_A = 4 * math.acosh(5 / (2 * math.sqrt(3)))
 ORI = {"a": "1/16", "e": "1/8", "L": "2*pi"}
 ORI_F = "(x**2 - y**2)/32"
 ORI_INPUT = "Ori's example, $f = a(x^2 - y^2)/2$ at $a = 1/16$, a vacuum, with $L = 2\\pi$."
+# Tippett and Tsang's bubble as every one of its diagrams draws it, in units of A, the radius of the
+# circle its centre runs round: their own h with their own numbers, A = 100, R = 70 and
+# alpha = 1/6000000, so R = 7A/10 and alpha = 50/(3 A^4). On the plane y = z = 0 the bubble is the
+# ring (xi^2 - A^2)^2 < R^4, and the future is taken toward larger lambda inside it, the angle of the
+# plane of ct and x, and toward larger t outside, Tippett and Tsang's choice: each is a time
+# function on its side of h = 1/2, and on the half x < 0 the two are opposite, since the spacetime
+# is not time orientable. The singularities are the four events x = 0, h = 1/2 of the plane.
+_TT_BOX = "Rational(2401, 10000) - y**4 - z**4 - ({ring} - 1)**2"
+TT_H = "(1 + tanh(Rational(50, 3)*(" + _TT_BOX.format(ring="x**2 + t**2") + ")))/2"
+TT_H_POLAR = "(1 + tanh(Rational(50, 3)*(" + _TT_BOX.format(ring="xi**2") + ")))/2"
+TT_TAU = "Piecewise((atan2(t, x), (x**2 + t**2 - 1)**2 < Rational(2401, 10000)), (t, True))"
+TT_TAU_POLAR = "Piecewise((lambda_, (xi**2 - 1)**2 < Rational(2401, 10000)), (xi*sin(lambda_), True))"
+TT_EDGES = ("sqrt(51)/10", "sqrt(149)/10")      # xi/A where the walls cross y = z = 0 at h = 1/2
+TT_INPUT = ("Tippett and Tsang's own bubble, $h = \\tfrac{1}{2} + \\tfrac{1}{2}\\tanh\\alpha[R^4 - y^4 - z^4 - "
+            "(x^2 + c^2t^2 - A^2)^2]$, with their $R = 7A/10$ and $\\alpha = 50/3A^4$.")
+TT_SINGULARITY = "a naked singularity, where $h = 1/2$ on $x = 0$"
 # The spinning string: b = 0.9, the cosmic string's deficit, and a = 0.9 in units of r_c = a/b.
 SPINNING = {"a": "9/10", "b": "9/10"}
 # The travelling wave on a string: b = 1/2, a string whose cone lacks half a turn, heavy enough for
@@ -2315,6 +2332,23 @@ DIAGRAMS = [
             lines=(("surface", "r", "0", "the closed null geodesic $N$, $v = 0$"),
                    ("shell", "x0", "-2", "$u = -2$ and $u = -2e^{-L/2}$, one line of the core"),
                    ("shell", "x0", "-2*exp(-pi)", "$u = -2$ and $u = -2e^{-L/2}$, one line of the core"))),
+    # Tippett and Tsang's bubble on the plane y = z = 0, which holds its rays: the whole plane of t
+    # and x, the same plane unrolled in the polar chart, and the flat interior alone in its two charts.
+    Diagram("tippett_tsang", "cartesian", "tx", "$t$ and $x$ through the bubble", ("t", "x"),
+            (-1.6, 1.6, -1.6, 1.6), "$x/A$", "$ct/A$", {}, {"y": "0", "z": "0"}, tau=TT_TAU, families=SIDEWAYS,
+            cones=(8, 8), functions={"h": TT_H}, input=TT_INPUT, step=0.001,
+            points=tuple(("removed", (f"{sign}{edge}", "0"), TT_SINGULARITY) for sign in ("", "-")
+                         for edge in TT_EDGES)),
+    Diagram("tippett_tsang", "polar", "strip", "$\\lambda$ and $\\xi$ through the bubble", ("\\lambda", "\\xi"),
+            (0, 1.6, 0, 2 * math.pi), "$\\xi/A$", "$\\lambda$", {}, {"y": "0", "z": "0"}, tau=TT_TAU_POLAR,
+            cones=(8, 8), functions={"h": TT_H_POLAR}, input=TT_INPUT, step=0.001, periodic=("\\lambda",),
+            points=tuple(("removed", (angle, edge), TT_SINGULARITY) for angle in ("pi/2", "3*pi/2")
+                         for edge in TT_EDGES)),
+    Diagram("tippett_tsang", "interior", "tx", "$t$ and $x$", ("t", "x"), (-1.6, 1.6, -1.6, 1.6),
+            "$x/A$", "$ct/A$", {}, {"y": "0", "z": "0"}, tau="atan2(t, x)", cones=(8, 8)),
+    Diagram("tippett_tsang", "rindler", "plane", "$\\lambda$ and $\\xi$", ("\\lambda", "\\xi"),
+            (0, 2, 0, 2 * math.pi), "$\\xi/A$", "$\\lambda$", {}, {"y": "0", "z": "0"}, tau="lambda_",
+            periodic=("\\lambda",)),
     # The spinning string's cylinders of one time and one angle at one radius, unrolled, at b = 0.9,
     # the deficit the cosmic string is drawn at, and a = 0.9, so that the null circle r_c = a/b is
     # the unit of length: inside it and outside it in the proper radius, rescaled radius and helical
@@ -5468,6 +5502,49 @@ CAPTIONS = {
         "shorter in $u$, an affine parameter, by the factor $e^{-L/2}$, so $N$ runs round without end in a "
         "finite affine length and is incomplete to the future.",
     ],
+    ("tippett_tsang", "cartesian", "tx"): [
+        "The plane of $t$ and $x$ ($y = z = 0$) through Tippett and Tsang's bubble, which on this plane is the ring "
+        "between $x^2 + c^2t^2 = A^2 - R^2$ and $x^2 + c^2t^2 = A^2 + R^2$. There $\\partial_y h = \\partial_z h = 0$, "
+        "so the null curves drawn are null geodesics, the paths light takes. Outside the ring and in the disc it "
+        "encloses the cones are Minkowski's. Inside the ring they turn with the angle $\\lambda$ of the plane, "
+        "upright at $t = 0$ and on their sides at $x = 0$, so the circle $x^2 + c^2t^2 = A^2$ is a closed timelike "
+        "curve.",
+        "We take the future upward outside the bubble and counterclockwise inside it, as Tippett and Tsang did. "
+        "Across the walls on the right the two agree, and across the walls on the left they are opposite, since the "
+        "spacetime is not time orientable. The dashed lines are $g^{xx} = 0$, where one null direction runs along "
+        "the radius of the plane and the other round it, and they meet $x = 0$ at the four naked singularities.",
+    ],
+    ("tippett_tsang", "polar", "strip"): [
+        "The plane of $\\lambda$ and $\\xi$ ($y = z = 0$), drawn unrolled, its edges $\\lambda = 0$ and "
+        "$\\lambda = 2\\pi$ one line. The bubble is the band between $\\xi^2 = A^2 - R^2$ and $\\xi^2 = A^2 + R^2$, "
+        "since Tippett and Tsang's $h$ does not depend on $\\lambda$. Inside the band the metric is "
+        "$-\\xi^2d\\lambda^2 + d\\xi^2$, so every vertical line there is a closed timelike curve, of proper length "
+        "$2\\pi\\xi$.",
+        "On either side of the band the chart is the polar chart of Minkowski's plane, whose time is "
+        "$ct = \\xi\\sin\\lambda$, so the cones there turn once round as $\\lambda$ runs from $0$ to $2\\pi$. We take "
+        "the future toward larger $\\lambda$ inside the band and toward larger $t$ outside it. The dashed lines are "
+        "$g^{\\xi\\xi} = 0$, where $h + (1 - h)\\cos 2\\lambda = 0$, and they meet $\\cos\\lambda = 0$ at the four "
+        "naked singularities.",
+    ],
+    ("tippett_tsang", "interior", "tx"): [
+        "The plane of $t$ and $x$ ($y = z = 0$) with $h = 1$ everywhere, the flat spacetime inside the bubble "
+        "continued over the whole plane. In the polar coordinates $ct = \\xi\\sin\\lambda$ and "
+        "$x = \\xi\\cos\\lambda$ the metric on it is $-\\xi^2d\\lambda^2 + d\\xi^2$, so every circle about the "
+        "origin is a closed timelike curve, and we take the future counterclockwise.",
+        "The light rays are the spirals $\\xi = \\xi_0e^{\\pm\\lambda}$ for any number $\\xi_0$, which wind in "
+        "toward the origin, where the chart ends. On the dashed lines $x = \\pm ct$, where $g^{xx} = 0$, one null "
+        "direction runs along $x$ and the other along $t$. The bubble holds only a ring of this plane about "
+        "$\\xi = A$.",
+    ],
+    ("tippett_tsang", "rindler", "plane"): [
+        "The plane of $\\lambda$ and $\\xi$ ($y = z = 0$) inside the bubble, its edges $\\lambda = 0$ and "
+        "$\\lambda = 2\\pi$ one line, with $g_{\\lambda\\lambda} = -\\xi^2$. Every vertical line is a closed "
+        "timelike curve, of proper length $2\\pi\\xi$, and a rider who follows it feels the acceleration "
+        "$c^2/\\xi$.",
+        "The light rays run as $\\xi = \\xi_0e^{\\pm\\lambda}$ for any number $\\xi_0$, so a ray sent outward "
+        "is back at the same $\\lambda$ at a radius $e^{2\\pi}$ times larger. The cones close toward $\\xi = 0$, "
+        "the horizon of Rindler's chart.",
+    ],
     ("minkowski", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) in flat spacetime. "
         "The metric on it is $-c^2dt^2 + dr^2$, and every ray is at 45°. Each ingoing ray meets "
@@ -8227,7 +8304,10 @@ class Chart:
         if spec.where:
             self.fn["where"] = self.lambdify(prep(sp.sympify(spec.where, locals={**reader.local, **DECLARED_FUNCTIONS,
                                                                                 **by_plain})))
-        tau = sp.sympify(spec.tau, locals={str(self.x0): self.x0, str(self.xr): self.xr})
+        # A coordinate whose plain name Python keeps for itself, as lambda, is written with an
+        # underscore after it in a row's `tau`, lambda_, since sympy cannot parse the bare word.
+        drawn_pair = {str(symbol) + "_" * keyword.iskeyword(str(symbol)): symbol for symbol in (self.x0, self.xr)}
+        tau = sp.sympify(spec.tau, locals=drawn_pair)
         self.fn["dtau0"] = self.lambdify(sp.diff(tau, self.x0))
         self.fn["dtaur"] = self.lambdify(sp.diff(tau, self.xr))
 

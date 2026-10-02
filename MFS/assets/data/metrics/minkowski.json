@@ -188,6 +188,11 @@
       "id": "kundt_waves",
       "kind": "generalisation",
       "text": "Flat space is what a Kundt wave leaves when its profile is switched off, in coordinates that cover the outside of a cylinder growing at the speed of light [podolskybelan2004]."
+    },
+    {
+      "id": "tippett_tsang",
+      "kind": "generalisation",
+      "text": "Minkowski space with a bubble in it that carries its riders round a closed timelike curve. Tippett and Tsang's metric is Minkowski's wherever their top hat function $h$ vanishes [tippett2017]."
     }
   ],
   "references": [
@@ -251,7 +256,8 @@
     "martindussaud2019",
     "bonnor1977cloud",
     "astesiano2024",
-    "podolskybelan2004"
+    "podolskybelan2004",
+    "tippett2017"
   ],
   "coordinates": [
     {

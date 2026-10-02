@@ -1,5 +1,5 @@
 {
-  "version": "6fdfd439c682e3eb",
+  "version": "4f605701a91aaf4a",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -22633,6 +22633,65 @@
         "eprint": "hep-th/0008136",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/hep-th/0008136"
+      }
+    },
+    "tippett2017": {
+      "type": "article",
+      "fields": {
+        "title": "Traversable acausal retrograde domains in spacetime",
+        "author": "Tippett, Benjamin K. and Tsang, David",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "34",
+        "number": "9",
+        "pages": "095006",
+        "year": "2017",
+        "doi": "10.1088/1361-6382/aa6549",
+        "eprint": "1310.7985",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/aa6549"
+      }
+    },
+    "tippett2013bluebox": {
+      "type": "misc",
+      "fields": {
+        "title": "The Blue Box White Paper",
+        "author": "Tippett, Benjamin K. and Tsang, David",
+        "year": "2013",
+        "eprint": "1310.7983",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1310.7983"
+      }
+    },
+    "fermi2018": {
+      "type": "article",
+      "fields": {
+        "title": "A time machine for free fall into the past",
+        "author": "Fermi, Davide and Pizzocchero, Livio",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "35",
+        "number": "16",
+        "pages": "165003",
+        "year": "2018",
+        "doi": "10.1088/1361-6382/aace6e",
+        "eprint": "1803.08214",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/aace6e"
+      }
+    },
+    "maeda1998": {
+      "type": "article",
+      "fields": {
+        "title": "Chronology protection and non-naked singularity",
+        "author": "Maeda, Kengo and Ishibashi, Akihiro and Narita, Makoto",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "15",
+        "number": "6",
+        "pages": "1637--1651",
+        "year": "1998",
+        "doi": "10.1088/0264-9381/15/6/018",
+        "eprint": "gr-qc/9803020",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/15/6/018"
       }
     }
   }

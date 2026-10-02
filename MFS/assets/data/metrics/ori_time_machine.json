@@ -53,6 +53,11 @@
       "id": "godel",
       "kind": "family",
       "text": "Rotating dust with closed timelike curves through every event, there from the start. Ori built his model so that they first appear at a definite moment, inside a finite region [ori2005, godel1949]."
+    },
+    {
+      "id": "tippett_tsang",
+      "kind": "family",
+      "text": "A time machine of the same class by Tippett and Tsang's sorting, a bubble that runs round a circle in the plane of $t$ and $x$. Its wall violates the null energy condition and carries naked singularities [tippett2017]."
     }
   ],
   "references": [
@@ -73,7 +78,8 @@
     "ori2007",
     "dietz2012ori",
     "kim1991",
-    "kay1997"
+    "kay1997",
+    "tippett2017"
   ],
   "coordinates": [
     {

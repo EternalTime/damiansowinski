@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 120,
+  "count": 121,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -393,6 +393,11 @@
           "id": "minkowski",
           "kind": "special_case",
           "text": "The drive switched off. With $v_s = 0$ the metric is Minkowski's, and with the bubble moving spacetime is still flat inside it and far from it [alcubierre1994]."
+        },
+        {
+          "id": "tippett_tsang",
+          "kind": "family",
+          "text": "A bubble built on Alcubierre's recipe whose path closes on itself in spacetime. Benjamin Tippett and David Tsang sent it round a circle in the plane of $t$ and $x$ in 2017, and a rider who keeps accelerating inside it meets her own past [tippett2017]."
         }
       ],
       "references": [
@@ -409,7 +414,8 @@
         "santiago2022",
         "krasnikov1998",
         "everett1997",
-        "everett1996"
+        "everett1996",
+        "tippett2017"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/alcubierre.json",
@@ -11550,6 +11556,11 @@
           "id": "point_particle_2plus1",
           "kind": "piece",
           "text": "Each string, seen end on, is a point particle in three dimensions, and Gott's pair is two of them passing. The proofs that the pair cannot be built were all done there, with particles [deser1992, carroll1994]."
+        },
+        {
+          "id": "tippett_tsang",
+          "kind": "family",
+          "text": "A time machine that fits in a box. Tippett and Tsang counted Gott's strings among the models that need matter spread out to infinity, and built a compact bubble in 2017, whose wall needs exotic matter [tippett2017]."
         }
       ],
       "references": [
@@ -11574,7 +11585,8 @@
         "birmingham2000",
         "dedeo2002",
         "morris1988prl",
-        "ori2005"
+        "ori2005",
+        "tippett2017"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gott_time_machine.json",
@@ -18529,6 +18541,11 @@
           "id": "minkowski",
           "kind": "piece",
           "text": "Spacetime is flat outside the tube and flat again inside it, where the light cones are opened out. All of the curvature is in the tube's thin wall [everett1997]."
+        },
+        {
+          "id": "tippett_tsang",
+          "kind": "family",
+          "text": "One bubble with a closed timelike curve inside it. Tippett and Tsang observed in 2017 that a traveller needs a succession of tubes or warp bubbles to close a world line, and built a bubble that needs no second [tippett2017, everett1997]."
         }
       ],
       "references": [
@@ -18540,7 +18557,8 @@
         "krasnikov2003",
         "flynn2008january",
         "flynn2010jim",
-        "flynn2012lion"
+        "flynn2012lion",
+        "tippett2017"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/krasnikov.json",
@@ -22448,6 +22466,11 @@
           "id": "kundt_waves",
           "kind": "generalisation",
           "text": "Flat space is what a Kundt wave leaves when its profile is switched off, in coordinates that cover the outside of a cylinder growing at the speed of light [podolskybelan2004]."
+        },
+        {
+          "id": "tippett_tsang",
+          "kind": "generalisation",
+          "text": "Minkowski space with a bubble in it that carries its riders round a closed timelike curve. Tippett and Tsang's metric is Minkowski's wherever their top hat function $h$ vanishes [tippett2017]."
         }
       ],
       "references": [
@@ -22511,7 +22534,8 @@
         "martindussaud2019",
         "bonnor1977cloud",
         "astesiano2024",
-        "podolskybelan2004"
+        "podolskybelan2004",
+        "tippett2017"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -22831,6 +22855,11 @@
           "id": "ori_time_machine",
           "kind": "generalisation",
           "text": "Misner space with a gravitational wave added. Amos Ori's vacuum core of 2005 is curved, and its closed null geodesics are isolated circles, where Misner's fill the whole horizon [ori2005]."
+        },
+        {
+          "id": "tippett_tsang",
+          "kind": "composite",
+          "text": "A bubble whose inside is Misner space's Rindler region, the time $\\eta$ running once round $2\\pi$, set in Minkowski space by a wall of exotic matter [tippett2017]."
         }
       ],
       "references": [
@@ -22850,7 +22879,8 @@
         "berkooz2004",
         "banados1993",
         "morris1988prl",
-        "ori2005"
+        "ori2005",
+        "tippett2017"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner.json",
@@ -24084,6 +24114,11 @@
           "id": "krasnikov",
           "kind": "family",
           "text": "A tube laid down by a ship moving slower than light, which shortens the trip home. One tube has no closed timelike curves, and Allen Everett and Thomas Roman showed in 1997 that two tubes that do not overlap make a time machine [everett1997]."
+        },
+        {
+          "id": "tippett_tsang",
+          "kind": "family",
+          "text": "A time machine in the shape of a box. Tippett and Tsang's bubble of 2017 carries its riders round a closed timelike curve, and like the wormhole it needs matter that violates the energy conditions [tippett2017]."
         }
       ],
       "references": [
@@ -24103,7 +24138,8 @@
         "gott1991",
         "ori2005",
         "everett1996",
-        "everett1997"
+        "everett1997",
+        "tippett2017"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/wormhole_time_machine.json",
@@ -26505,6 +26541,11 @@
           "id": "godel",
           "kind": "family",
           "text": "Rotating dust with closed timelike curves through every event, there from the start. Ori built his model so that they first appear at a definite moment, inside a finite region [ori2005, godel1949]."
+        },
+        {
+          "id": "tippett_tsang",
+          "kind": "family",
+          "text": "A time machine of the same class by Tippett and Tsang's sorting, a bubble that runs round a circle in the plane of $t$ and $x$. Its wall violates the null energy condition and carries naked singularities [tippett2017]."
         }
       ],
       "references": [
@@ -26525,7 +26566,8 @@
         "ori2007",
         "dietz2012ori",
         "kim1991",
-        "kay1997"
+        "kay1997",
+        "tippett2017"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ori_time_machine.json",
@@ -35391,6 +35433,349 @@
           ],
           "ricci_scalar": "R = \\dfrac{2r^8 - 2r^8\\left(\\partial_l r\\right)^2 - 4r^9\\,\\partial_l^2 r + 18a^2\\,r^4\\,b_0^4\\left(\\partial_l r\\right)^2 - 18a^2\\,r^4\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 128a^2\\,r^7\\,b_0 + 448a^2\\,r^7\\,b_0\\cos^2\\theta - 64a^2\\,r^7\\,b_0\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 160a^2\\,r^8\\,b_0\\,\\partial_l^2 r\\,\\cos^2\\theta + 1152a^4\\,r^3\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 1152a^4\\,r^3\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 4608a^4\\,r^6\\,b_0^2\\cos^4\\theta - 1536a^4\\,r^6\\,b_0^2\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta - 1536a^4\\,r^7\\,b_0^2\\,\\partial_l^2 r\\,\\cos^4\\theta + 27648a^6\\,r^2\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta - 27648a^6\\,r^2\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta - 32768a^6\\,r^5\\,b_0^3\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta + 8192a^6\\,r^6\\,b_0^3\\,\\partial_l^2 r\\,\\cos^6\\theta + 294912a^8\\,r\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta - 294912a^8\\,r\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta - 262144a^8\\,r^4\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 131072a^8\\,r^5\\,b_0^4\\,\\partial_l^2 r\\,\\cos^8\\theta + 1179648a^{10}\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta - 1179648a^{10}\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta}{r^6\\left(r + 16a^2b_0\\cos^2\\theta\\right)^4}",
           "kretschmann": "K = \\dfrac{15307263442944a^{20}\\,b_0^{16}\\left(\\partial_l r\\right)^4\\,\\cos^{20}\\theta - 30614526885888a^{20}\\,b_0^{16}\\left(\\partial_l r\\right)^4\\,\\cos^{18}\\theta + 15307263442944a^{20}\\,b_0^{16}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta + 309237645312a^{18}\\,r^6\\,b_0^{12}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{18}\\theta - 309237645312a^{18}\\,r^6\\,b_0^{12}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{16}\\theta - 2783138807808a^{18}\\,r^5\\,b_0^{12}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{18}\\theta + 2783138807808a^{18}\\,r^5\\,b_0^{12}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{16}\\theta + 4638564679680a^{18}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^{18}\\theta - 4638564679680a^{18}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta + 7653631721472a^{18}\\,r\\,b_0^{15}\\left(\\partial_l r\\right)^4\\,\\cos^{18}\\theta - 15307263442944a^{18}\\,r\\,b_0^{15}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta + 7653631721472a^{18}\\,r\\,b_0^{15}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 17179869184a^{16}\\,r^{10}\\,b_0^8\\left(\\partial_l^2 r\\right)^2\\,\\cos^{16}\\theta - 68719476736a^{16}\\,r^9\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{16}\\theta + 68719476736a^{16}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta + 154618822656a^{16}\\,r^7\\,b_0^{11}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{16}\\theta - 154618822656a^{16}\\,r^7\\,b_0^{11}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{14}\\theta - 1275605286912a^{16}\\,r^6\\,b_0^{11}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{16}\\theta + 1275605286912a^{16}\\,r^6\\,b_0^{11}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{14}\\theta + 1990717341696a^{16}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta - 1990717341696a^{16}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 1674231939072a^{16}\\,r^2\\,b_0^{14}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta - 3348463878144a^{16}\\,r^2\\,b_0^{14}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 1674231939072a^{16}\\,r^2\\,b_0^{14}\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta + 6442450944a^{14}\\,r^{11}\\,b_0^7\\left(\\partial_l^2 r\\right)^2\\,\\cos^{14}\\theta - 25769803776a^{14}\\,r^{10}\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{14}\\theta + 25769803776a^{14}\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 33822867456a^{14}\\,r^8\\,b_0^{10}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{14}\\theta - 33822867456a^{14}\\,r^8\\,b_0^{10}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{12}\\theta - 253671505920a^{14}\\,r^7\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{14}\\theta + 253671505920a^{14}\\,r^7\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{12}\\theta - 24159191040a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\cos^{14}\\theta + 368427663360a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 21743271936a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\cos^{12}\\theta - 368427663360a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta - 4831838208a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta + 209278992384a^{14}\\,r^3\\,b_0^{13}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta - 418557984768a^{14}\\,r^3\\,b_0^{13}\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta + 209278992384a^{14}\\,r^3\\,b_0^{13}\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta + 1140850688a^{12}\\,r^{12}\\,b_0^6\\left(\\partial_l^2 r\\right)^2\\,\\cos^{12}\\theta - 4026531840a^{12}\\,r^{11}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{12}\\theta - 536870912a^{12}\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^{12}\\theta + 4160749568a^{12}\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta + 536870912a^{12}\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta + 4227858432a^{12}\\,r^9\\,b_0^9\\left(\\partial_l^2 r\\right)^2\\,\\cos^{12}\\theta - 4227858432a^{12}\\,r^9\\,b_0^9\\left(\\partial_l^2 r\\right)^2\\,\\cos^{10}\\theta - 28538044416a^{12}\\,r^8\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{12}\\theta + 28538044416a^{12}\\,r^8\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{10}\\theta - 7700742144a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\cos^{12}\\theta + 38277218304a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta + 6190792704a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta - 38277218304a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta - 1207959552a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 16349921280a^{12}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta - 32699842560a^{12}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta + 16349921280a^{12}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta + 134217728a^{10}\\,r^{13}\\,b_0^5\\left(\\partial_l^2 r\\right)^2\\,\\cos^{10}\\theta - 335544320a^{10}\\,r^{12}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{10}\\theta - 150994944a^{10}\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta + 369098752a^{10}\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta + 184549376a^{10}\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 330301440a^{10}\\,r^{10}\\,b_0^8\\left(\\partial_l^2 r\\right)^2\\,\\cos^{10}\\theta - 330301440a^{10}\\,r^{10}\\,b_0^8\\left(\\partial_l^2 r\\right)^2\\,\\cos^8\\theta - 1981808640a^{10}\\,r^9\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{10}\\theta + 1981808640a^{10}\\,r^9\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^8\\theta - 1009778688a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta + 2430074880a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta + 698351616a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta - 2430074880a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta - 113246208a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta + 817496064a^{10}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta - 1634992128a^{10}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta + 817496064a^{10}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta + 11796480a^8\\,r^{14}\\,b_0^4\\left(\\partial_l^2 r\\right)^2\\,\\cos^8\\theta - 15728640a^8\\,r^{13}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^8\\theta - 21495808a^8\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 19136512a^8\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta + 11796480a^8\\,r^{12}\\,b_0^4\\cos^8\\theta + 25165824a^8\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta - 9437184a^8\\,r^{12}\\,b_0^4\\cos^6\\theta + 6291456a^8\\,r^{12}\\,b_0^4\\cos^4\\theta + 16515072a^8\\,r^{11}\\,b_0^7\\left(\\partial_l^2 r\\right)^2\\,\\cos^8\\theta - 16515072a^8\\,r^{11}\\,b_0^7\\left(\\partial_l^2 r\\right)^2\\,\\cos^6\\theta - 86704128a^8\\,r^{10}\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^8\\theta + 86704128a^8\\,r^{10}\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^6\\theta - 69599232a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 95846400a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta + 38928384a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta - 95846400a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta - 4718592a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 25546752a^8\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta - 51093504a^8\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta + 25546752a^8\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta + 753664a^6\\,r^{15}\\,b_0^3\\left(\\partial_l^2 r\\right)^2\\,\\cos^6\\theta - 393216a^6\\,r^{14}\\,b_0^3\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^6\\theta - 1703936a^6\\,r^{13}\\,b_0^3\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta + 589824a^6\\,r^{13}\\,b_0^3\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta + 1179648a^6\\,r^{13}\\,b_0^3\\cos^6\\theta + 1572864a^6\\,r^{13}\\,b_0^3\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 327680a^6\\,r^{13}\\,b_0^3\\cos^4\\theta - 262144a^6\\,r^{13}\\,b_0^3\\cos^2\\theta + 516096a^6\\,r^{12}\\,b_0^6\\left(\\partial_l^2 r\\right)^2\\,\\cos^6\\theta - 516096a^6\\,r^{12}\\,b_0^6\\left(\\partial_l^2 r\\right)^2\\,\\cos^4\\theta - 2322432a^6\\,r^{11}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^6\\theta + 2322432a^6\\,r^{11}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^4\\theta - 2654208a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta + 2267136a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta + 1069056a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta - 2267136a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta - 73728a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta + 456192a^6\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta - 912384a^6\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta + 456192a^6\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta + 31744a^4\\,r^{16}\\,b_0^2\\left(\\partial_l^2 r\\right)^2\\,\\cos^4\\theta - 4096a^4\\,r^{15}\\,b_0^2\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^4\\theta - 69632a^4\\,r^{14}\\,b_0^2\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 12288a^4\\,r^{14}\\,b_0^2\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta + 92160a^4\\,r^{14}\\,b_0^2\\cos^4\\theta + 40960a^4\\,r^{14}\\,b_0^2\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 45056a^4\\,r^{14}\\,b_0^2\\cos^2\\theta + 8192a^4\\,r^{14}\\,b_0^2 + 9216a^4\\,r^{13}\\,b_0^5\\left(\\partial_l^2 r\\right)^2\\,\\cos^4\\theta - 9216a^4\\,r^{13}\\,b_0^5\\left(\\partial_l^2 r\\right)^2\\,\\cos^2\\theta - 34560a^4\\,r^{12}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^4\\theta + 34560a^4\\,r^{12}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^2\\theta - 52992a^4\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 28800a^4\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta + 11520a^4\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 28800a^4\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta + 3564a^4\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta - 7128a^4\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta + 3564a^4\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4 + 768a^2\\,r^{17}\\,b_0\\left(\\partial_l^2 r\\right)^2\\,\\cos^2\\theta - 1280a^2\\,r^{15}\\,b_0\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta + 256a^2\\,r^{15}\\,b_0\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta + 1024a^2\\,r^{15}\\,b_0\\cos^2\\theta + 256a^2\\,r^{15}\\,b_0\\left(\\partial_l r\\right)^2 - 256a^2\\,r^{15}\\,b_0 + 72a^2\\,r^{14}\\,b_0^4\\left(\\partial_l^2 r\\right)^2\\,\\cos^2\\theta - 72a^2\\,r^{14}\\,b_0^4\\left(\\partial_l^2 r\\right)^2 - 216a^2\\,r^{13}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^2\\theta + 216a^2\\,r^{13}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r - 432a^2\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta + 144a^2\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta - 144a^2\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^4 + 8r^{18}\\left(\\partial_l^2 r\\right)^2 - 8r^{16}\\left(\\partial_l r\\right)^2 + 4r^{16}\\left(\\partial_l r\\right)^4 + 4r^{16}}{r^{12}\\left(r + 16a^2b_0\\cos^2\\theta\\right)^8}"
+        }
+      ]
+    },
+    {
+      "id": "tippett_tsang",
+      "name": "Tippett-Tsang Time Machine",
+      "short_name": "Tippett-Tsang",
+      "description": "A bubble of curved spacetime whose centre runs round a circle in the plane of $t$ and $x$, proposed by Benjamin Tippett and David Tsang in a preprint of 2013 and a paper of 2017. Inside the bubble spacetime is flat in Rindler's form with an angle for its time, so the world line of a rider who keeps accelerating closes on itself. Outside is Minkowski space, and the wall between the two violates the null energy condition, carries naked singularities, and leaves the spacetime with no consistent arrow of time.",
+      "tags": [
+        "time machine",
+        "closed timelike curves",
+        "bubble",
+        "exotic matter",
+        "energy condition violation",
+        "naked singularity",
+        "not time orientable",
+        "Rindler",
+        "asymptotically flat",
+        "time-dependent",
+        "idealized model",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "alcubierre",
+          "kind": "family",
+          "text": "The warp bubble whose recipe this one follows: flat inside, flat outside, and exotic matter in the wall. Alcubierre's bubble runs along a line in space, and Tippett and Tsang's runs round a circle in the plane of $t$ and $x$ [tippett2017, alcubierre1994]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "The bubble switched off. With $h = 0$ the metric is Minkowski's, which is also the spacetime outside the wall [tippett2017]."
+        },
+        {
+          "id": "misner",
+          "kind": "piece",
+          "text": "The inside of the bubble. Rindler's wedge with its time $\\lambda$ made periodic is the region of Misner space that holds the closed timelike curves, here for a boost of rapidity $2\\pi$ [tippett2017, misner1967]."
+        },
+        {
+          "id": "wormhole_time_machine",
+          "kind": "family",
+          "text": "The time machine Morris, Thorne, and Yurtsever made by taking one mouth of a wormhole on a round trip. Tippett and Tsang put it in the same class as their own, spacetimes designed to hold closed timelike curves, and both need matter that violates the energy conditions [tippett2017, morris1988prl]."
+        },
+        {
+          "id": "ori_time_machine",
+          "kind": "family",
+          "text": "A time machine with a vacuum core inside ordinary matter, which Tippett and Tsang put in the same class as their own. Ori's matter obeys the energy conditions, and theirs violates them [tippett2017, ori2005]."
+        },
+        {
+          "id": "gott_time_machine",
+          "kind": "family",
+          "text": "Two cosmic strings passing at high speed, a time machine of the spinning kind in Tippett and Tsang's sorting. Gott's strings are infinitely long, and their bubble is a compact box in an asymptotically flat spacetime [tippett2017, gott1991]."
+        },
+        {
+          "id": "krasnikov",
+          "kind": "family",
+          "text": "The tube that shortens the trip home, another way to outrun light with negative energy. Tippett and Tsang point out that no single tube or warp bubble holds a closed timelike curve, and their one bubble does [tippett2017, everett1997]."
+        }
+      ],
+      "references": [
+        "tippett2017",
+        "godel1949",
+        "gott1991",
+        "friedman1990",
+        "ori2005",
+        "alcubierre1994",
+        "krasnikov1998",
+        "tippett2013bluebox",
+        "hawking1992",
+        "maeda1998",
+        "fermi2018",
+        "misner1967",
+        "morris1988prl",
+        "everett1997"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tippett_tsang.json",
+      "charts": [
+        {
+          "id": "cartesian",
+          "name": "Cartesian",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "x = 0,\\; h = \\tfrac{1}{2} \\;\\text{(curvature singularities)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "h = h(t,x,y,z)",
+              "description": "Top hat function, dimensionless, an arbitrary function of the four coordinates: 1 inside the bubble and 0 outside it, with the wall wherever it falls between. Every derivative of $h$ vanishes outside the wall, so spacetime is flat everywhere else. Tippett and Tsang's own bubble is $h = \\tfrac{1}{2} + \\tfrac{1}{2}\\tanh\\alpha\\left[R^4 - y^4 - z^4 - (x^2 + c^2t^2 - A^2)^2\\right]$, a rounded box of size $R$ whose centre runs round the circle $x^2 + c^2t^2 = A^2$, with $A$ the radius of that circle and $\\alpha$ the sharpness of the wall, but no component needs it."
+            }
+          ],
+          "convention": "We use Tippett and Tsang's coordinates $(t, x, y, z)$, with $t$ carrying dimensions of time and $x$, $y$, and $z$ lengths, and the top hat function $h$ is dimensionless. We take components in the chart $x^0 = ct$, where $\\partial_t = c^{-1}\\partial/\\partial t$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\sigma$ for an affine parameter $\\sigma$.",
+          "line_element": "ds^2 = \\left(1 - \\dfrac{2hc^2t^2}{x^2 + c^2t^2}\\right)\\left(-c^2dt^2 + dx^2\\right) + \\dfrac{4h\\,x\\,ct}{x^2 + c^2t^2}\\,c\\,dt\\,dx + dy^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{x^2 + c^2t^2 - 2h\\,c^2t^2}{x^2 + c^2t^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{x^2 + c^2t^2 - 2h\\,c^2t^2}{x^2 + c^2t^2}"
+            },
+            {
+              "indices": [
+                "t",
+                "x"
+              ],
+              "value": "\\dfrac{2h\\,x\\,ct}{x^2 + c^2t^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "t"
+              ],
+              "value": "\\dfrac{2h\\,x\\,ct}{x^2 + c^2t^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{32h^3\\,c^4\\,t^4\\,\\partial_y^2 h + 32h^3\\,c^4\\,t^4\\,\\partial_z^2 h - 8h^2\\,c^4\\,t^4\\left(\\partial_y h\\right)^2 - 8h^2\\,c^4\\,t^4\\left(\\partial_z h\\right)^2 + 8h^2\\,c^4\\,t^4\\,\\partial_t^2 h - 8h^2\\,c^4\\,t^4\\,\\partial_x^2 h - 48h^2\\,c^4\\,t^4\\,\\partial_y^2 h - 48h^2\\,c^4\\,t^4\\,\\partial_z^2 h + 16h^2\\,c^3\\,t^3\\,x\\,\\partial_t\\partial_x h + 8h^2\\,c^3\\,t^3\\,\\partial_t h - 8h\\,c^4\\,t^4\\left(\\partial_t h\\right)^2 + 8h\\,c^4\\,t^4\\left(\\partial_x h\\right)^2 + 8h\\,c^4\\,t^4\\left(\\partial_y h\\right)^2 + 8h\\,c^4\\,t^4\\left(\\partial_z h\\right)^2 - 8h\\,c^4\\,t^4\\,\\partial_t^2 h + 8h\\,c^4\\,t^4\\,\\partial_x^2 h + 24h\\,c^4\\,t^4\\,\\partial_y^2 h + 24h\\,c^4\\,t^4\\,\\partial_z^2 h - 16h\\,c^3\\,t^3\\,x\\,\\partial_t h\\,\\partial_x h - 16h\\,c^3\\,t^3\\,x\\,\\partial_t\\partial_x h - 12h\\,c^3\\,t^3\\,\\partial_t h + 8h\\,c^2\\,t^2\\,x^2\\,\\partial_y^2 h + 8h\\,c^2\\,t^2\\,x^2\\,\\partial_z^2 h - 4h\\,c^2\\,t^2\\,x\\,\\partial_x h + 4c^4\\,t^4\\left(\\partial_t h\\right)^2 - 4c^4\\,t^4\\left(\\partial_x h\\right)^2 - 2c^4\\,t^4\\left(\\partial_y h\\right)^2 - 2c^4\\,t^4\\left(\\partial_z h\\right)^2 + 2c^4\\,t^4\\,\\partial_t^2 h - 2c^4\\,t^4\\,\\partial_x^2 h - 4c^4\\,t^4\\,\\partial_y^2 h - 4c^4\\,t^4\\,\\partial_z^2 h + 8c^3\\,t^3\\,x\\,\\partial_t h\\,\\partial_x h + 4c^3\\,t^3\\,x\\,\\partial_t\\partial_x h + 4c^3\\,t^3\\,\\partial_t h + 6c^2\\,t^2\\,x^2\\left(\\partial_y h\\right)^2 + 6c^2\\,t^2\\,x^2\\left(\\partial_z h\\right)^2 + 2c^2\\,t^2\\,x^2\\,\\partial_t^2 h - 2c^2\\,t^2\\,x^2\\,\\partial_x^2 h - 4c^2\\,t^2\\,x^2\\,\\partial_y^2 h - 4c^2\\,t^2\\,x^2\\,\\partial_z^2 h + 4c^2\\,t^2\\,x\\,\\partial_x h + 4c\\,t\\,x^3\\,\\partial_t\\partial_x h + 4c\\,t\\,x^2\\,\\partial_t h + 4x^3\\,\\partial_x h}{\\left(4h^2\\,c^2\\,t^2 - 4h\\,c^2\\,t^2 + c^2\\,t^2 + x^2\\right)^2}",
+          "kretschmann": "K = \\dfrac{1024h^6\\,c^8\\,t^8\\left(\\partial_y\\partial_z h\\right)^2 + 512h^6\\,c^8\\,t^8\\left(\\partial_y^2 h\\right)^2 + 512h^6\\,c^8\\,t^8\\left(\\partial_z^2 h\\right)^2 - 1024h^5\\,c^8\\,t^8\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h - 512h^5\\,c^8\\,t^8\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h - 512h^5\\,c^8\\,t^8\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h + 256h^5\\,c^8\\,t^8\\left(\\partial_t\\partial_y h\\right)^2 + 256h^5\\,c^8\\,t^8\\left(\\partial_t\\partial_z h\\right)^2 - 256h^5\\,c^8\\,t^8\\left(\\partial_x\\partial_y h\\right)^2 - 256h^5\\,c^8\\,t^8\\left(\\partial_x\\partial_z h\\right)^2 - 3072h^5\\,c^8\\,t^8\\left(\\partial_y\\partial_z h\\right)^2 - 1536h^5\\,c^8\\,t^8\\left(\\partial_y^2 h\\right)^2 - 1536h^5\\,c^8\\,t^8\\left(\\partial_z^2 h\\right)^2 + 512h^5\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_y h\\,\\partial_x\\partial_y h + 512h^5\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_z h\\,\\partial_x\\partial_z h - 512h^4\\,c^8\\,t^8\\,\\partial_t h\\,\\partial_t\\partial_y h\\,\\partial_y h - 512h^4\\,c^8\\,t^8\\,\\partial_t h\\,\\partial_t\\partial_z h\\,\\partial_z h + 512h^4\\,c^8\\,t^8\\,\\partial_x h\\,\\partial_x\\partial_y h\\,\\partial_y h + 512h^4\\,c^8\\,t^8\\,\\partial_x h\\,\\partial_x\\partial_z h\\,\\partial_z h + 2560h^4\\,c^8\\,t^8\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h + 384h^4\\,c^8\\,t^8\\left(\\partial_y h\\right)^2\\left(\\partial_z h\\right)^2 + 128h^4\\,c^8\\,t^8\\,\\partial_t^2 h\\left(\\partial_y h\\right)^2 + 128h^4\\,c^8\\,t^8\\,\\partial_t^2 h\\left(\\partial_z h\\right)^2 - 128h^4\\,c^8\\,t^8\\,\\partial_x^2 h\\left(\\partial_y h\\right)^2 - 128h^4\\,c^8\\,t^8\\,\\partial_x^2 h\\left(\\partial_z h\\right)^2 + 1280h^4\\,c^8\\,t^8\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h + 1280h^4\\,c^8\\,t^8\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h - 128h^4\\,c^8\\,t^8\\,\\partial_t^2 h\\,\\partial_x^2 h - 640h^4\\,c^8\\,t^8\\left(\\partial_t\\partial_y h\\right)^2 - 640h^4\\,c^8\\,t^8\\left(\\partial_t\\partial_z h\\right)^2 + 64h^4\\,c^8\\,t^8\\left(\\partial_t^2 h\\right)^2 + 640h^4\\,c^8\\,t^8\\left(\\partial_x\\partial_y h\\right)^2 + 640h^4\\,c^8\\,t^8\\left(\\partial_x\\partial_z h\\right)^2 + 64h^4\\,c^8\\,t^8\\left(\\partial_x^2 h\\right)^2 + 192h^4\\,c^8\\,t^8\\left(\\partial_y h\\right)^4 + 3840h^4\\,c^8\\,t^8\\left(\\partial_y\\partial_z h\\right)^2 + 1920h^4\\,c^8\\,t^8\\left(\\partial_y^2 h\\right)^2 + 192h^4\\,c^8\\,t^8\\left(\\partial_z h\\right)^4 + 1920h^4\\,c^8\\,t^8\\left(\\partial_z^2 h\\right)^2 - 512h^4\\,c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x\\partial_y h\\,\\partial_y h - 512h^4\\,c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x\\partial_z h\\,\\partial_z h - 512h^4\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_y h\\,\\partial_x h\\,\\partial_y h - 512h^4\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_z h\\,\\partial_x h\\,\\partial_z h + 256h^4\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\left(\\partial_y h\\right)^2 + 256h^4\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\left(\\partial_z h\\right)^2 + 256h^4\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\,\\partial_t^2 h - 256h^4\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\,\\partial_x^2 h - 1536h^4\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_y h\\,\\partial_x\\partial_y h - 1536h^4\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_z h\\,\\partial_x\\partial_z h + 128h^4\\,c^7\\,t^7\\,\\partial_t h\\left(\\partial_y h\\right)^2 + 128h^4\\,c^7\\,t^7\\,\\partial_t h\\left(\\partial_z h\\right)^2 + 128h^4\\,c^7\\,t^7\\,\\partial_t h\\,\\partial_t^2 h - 128h^4\\,c^7\\,t^7\\,\\partial_t h\\,\\partial_x^2 h - 256h^4\\,c^7\\,t^7\\,\\partial_t\\partial_y h\\,\\partial_y h - 256h^4\\,c^7\\,t^7\\,\\partial_t\\partial_z h\\,\\partial_z h + 256h^4\\,c^6\\,t^6\\,x^2\\left(\\partial_t\\partial_x h\\right)^2 + 128h^4\\,c^6\\,t^6\\,x^2\\left(\\partial_t\\partial_y h\\right)^2 + 128h^4\\,c^6\\,t^6\\,x^2\\left(\\partial_t\\partial_z h\\right)^2 - 128h^4\\,c^6\\,t^6\\,x^2\\left(\\partial_x\\partial_y h\\right)^2 - 128h^4\\,c^6\\,t^6\\,x^2\\left(\\partial_x\\partial_z h\\right)^2 + 256h^4\\,c^6\\,t^6\\,x^2\\left(\\partial_y\\partial_z h\\right)^2 + 128h^4\\,c^6\\,t^6\\,x^2\\left(\\partial_y^2 h\\right)^2 + 128h^4\\,c^6\\,t^6\\,x^2\\left(\\partial_z^2 h\\right)^2 + 256h^4\\,c^6\\,t^6\\,x\\,\\partial_t h\\,\\partial_t\\partial_x h - 256h^4\\,c^6\\,t^6\\,x\\,\\partial_x\\partial_y h\\,\\partial_y h - 256h^4\\,c^6\\,t^6\\,x\\,\\partial_x\\partial_z h\\,\\partial_z h + 64h^4\\,c^6\\,t^6\\left(\\partial_t h\\right)^2 + 1024h^3\\,c^8\\,t^8\\,\\partial_t h\\,\\partial_t\\partial_y h\\,\\partial_y h + 1024h^3\\,c^8\\,t^8\\,\\partial_t h\\,\\partial_t\\partial_z h\\,\\partial_z h - 1024h^3\\,c^8\\,t^8\\,\\partial_x h\\,\\partial_x\\partial_y h\\,\\partial_y h - 1024h^3\\,c^8\\,t^8\\,\\partial_x h\\,\\partial_x\\partial_z h\\,\\partial_z h - 2560h^3\\,c^8\\,t^8\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h + 128h^3\\,c^8\\,t^8\\left(\\partial_t h\\right)^2\\left(\\partial_y h\\right)^2 + 128h^3\\,c^8\\,t^8\\left(\\partial_t h\\right)^2\\left(\\partial_z h\\right)^2 - 128h^3\\,c^8\\,t^8\\left(\\partial_x h\\right)^2\\left(\\partial_y h\\right)^2 - 128h^3\\,c^8\\,t^8\\left(\\partial_x h\\right)^2\\left(\\partial_z h\\right)^2 - 768h^3\\,c^8\\,t^8\\left(\\partial_y h\\right)^2\\left(\\partial_z h\\right)^2 + 128h^3\\,c^8\\,t^8\\,\\partial_t^2 h\\left(\\partial_x h\\right)^2 - 256h^3\\,c^8\\,t^8\\,\\partial_t^2 h\\left(\\partial_y h\\right)^2 - 256h^3\\,c^8\\,t^8\\,\\partial_t^2 h\\left(\\partial_z h\\right)^2 + 256h^3\\,c^8\\,t^8\\,\\partial_x^2 h\\left(\\partial_y h\\right)^2 + 256h^3\\,c^8\\,t^8\\,\\partial_x^2 h\\left(\\partial_z h\\right)^2 - 128h^3\\,c^8\\,t^8\\left(\\partial_t h\\right)^2\\,\\partial_t^2 h + 128h^3\\,c^8\\,t^8\\left(\\partial_t h\\right)^2\\,\\partial_x^2 h - 128h^3\\,c^8\\,t^8\\left(\\partial_x h\\right)^2\\,\\partial_x^2 h - 1280h^3\\,c^8\\,t^8\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h - 1280h^3\\,c^8\\,t^8\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h + 256h^3\\,c^8\\,t^8\\,\\partial_t^2 h\\,\\partial_x^2 h + 640h^3\\,c^8\\,t^8\\left(\\partial_t\\partial_y h\\right)^2 + 640h^3\\,c^8\\,t^8\\left(\\partial_t\\partial_z h\\right)^2 - 128h^3\\,c^8\\,t^8\\left(\\partial_t^2 h\\right)^2 - 640h^3\\,c^8\\,t^8\\left(\\partial_x\\partial_y h\\right)^2 - 640h^3\\,c^8\\,t^8\\left(\\partial_x\\partial_z h\\right)^2 - 128h^3\\,c^8\\,t^8\\left(\\partial_x^2 h\\right)^2 - 384h^3\\,c^8\\,t^8\\left(\\partial_y h\\right)^4 - 2560h^3\\,c^8\\,t^8\\left(\\partial_y\\partial_z h\\right)^2 - 1280h^3\\,c^8\\,t^8\\left(\\partial_y^2 h\\right)^2 - 384h^3\\,c^8\\,t^8\\left(\\partial_z h\\right)^4 - 1280h^3\\,c^8\\,t^8\\left(\\partial_z^2 h\\right)^2 + 256h^3\\,c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x h\\left(\\partial_y h\\right)^2 + 256h^3\\,c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x h\\left(\\partial_z h\\right)^2 - 256h^3\\,c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_t^2 h\\,\\partial_x h + 256h^3\\,c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x h\\,\\partial_x^2 h + 1280h^3\\,c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x\\partial_y h\\,\\partial_y h + 1280h^3\\,c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x\\partial_z h\\,\\partial_z h + 1280h^3\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_y h\\,\\partial_x h\\,\\partial_y h + 1280h^3\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_z h\\,\\partial_x h\\,\\partial_z h + 256h^3\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\left(\\partial_x h\\right)^2 - 512h^3\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\left(\\partial_y h\\right)^2 - 512h^3\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\left(\\partial_z h\\right)^2 - 256h^3\\,c^7\\,t^7\\,x\\left(\\partial_t h\\right)^2\\,\\partial_t\\partial_x h - 512h^3\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\,\\partial_t^2 h + 512h^3\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\,\\partial_x^2 h + 1792h^3\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_y h\\,\\partial_x\\partial_y h + 1792h^3\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_z h\\,\\partial_x\\partial_z h + 128h^3\\,c^7\\,t^7\\,\\partial_t h\\left(\\partial_x h\\right)^2 - 64h^3\\,c^7\\,t^7\\,\\partial_t h\\left(\\partial_y h\\right)^2 - 64h^3\\,c^7\\,t^7\\,\\partial_t h\\left(\\partial_z h\\right)^2 - 320h^3\\,c^7\\,t^7\\,\\partial_t h\\,\\partial_t^2 h + 320h^3\\,c^7\\,t^7\\,\\partial_t h\\,\\partial_x^2 h + 512h^3\\,c^7\\,t^7\\,\\partial_t\\partial_y h\\,\\partial_y h + 512h^3\\,c^7\\,t^7\\,\\partial_t\\partial_z h\\,\\partial_z h - 128h^3\\,c^7\\,t^7\\left(\\partial_t h\\right)^3 - 512h^3\\,c^6\\,t^6\\,x^2\\,\\partial_t h\\,\\partial_t\\partial_x h\\,\\partial_x h - 256h^3\\,c^6\\,t^6\\,x^2\\,\\partial_t h\\,\\partial_t\\partial_y h\\,\\partial_y h - 256h^3\\,c^6\\,t^6\\,x^2\\,\\partial_t h\\,\\partial_t\\partial_z h\\,\\partial_z h + 256h^3\\,c^6\\,t^6\\,x^2\\,\\partial_x h\\,\\partial_x\\partial_y h\\,\\partial_y h + 256h^3\\,c^6\\,t^6\\,x^2\\,\\partial_x h\\,\\partial_x\\partial_z h\\,\\partial_z h + 512h^3\\,c^6\\,t^6\\,x^2\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h + 256h^3\\,c^6\\,t^6\\,x^2\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h + 256h^3\\,c^6\\,t^6\\,x^2\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h - 512h^3\\,c^6\\,t^6\\,x^2\\left(\\partial_t\\partial_x h\\right)^2 - 128h^3\\,c^6\\,t^6\\,x^2\\left(\\partial_t\\partial_y h\\right)^2 - 128h^3\\,c^6\\,t^6\\,x^2\\left(\\partial_t\\partial_z h\\right)^2 + 128h^3\\,c^6\\,t^6\\,x^2\\left(\\partial_x\\partial_y h\\right)^2 + 128h^3\\,c^6\\,t^6\\,x^2\\left(\\partial_x\\partial_z h\\right)^2 - 512h^3\\,c^6\\,t^6\\,x^2\\left(\\partial_y\\partial_z h\\right)^2 - 256h^3\\,c^6\\,t^6\\,x^2\\left(\\partial_y^2 h\\right)^2 - 256h^3\\,c^6\\,t^6\\,x^2\\left(\\partial_z^2 h\\right)^2 + 192h^3\\,c^6\\,t^6\\,x\\,\\partial_x h\\left(\\partial_y h\\right)^2 + 192h^3\\,c^6\\,t^6\\,x\\,\\partial_x h\\left(\\partial_z h\\right)^2 - 256h^3\\,c^6\\,t^6\\,x\\left(\\partial_t h\\right)^2\\,\\partial_x h - 640h^3\\,c^6\\,t^6\\,x\\,\\partial_t h\\,\\partial_t\\partial_x h - 64h^3\\,c^6\\,t^6\\,x\\,\\partial_t^2 h\\,\\partial_x h + 64h^3\\,c^6\\,t^6\\,x\\,\\partial_x h\\,\\partial_x^2 h + 640h^3\\,c^6\\,t^6\\,x\\,\\partial_x\\partial_y h\\,\\partial_y h + 640h^3\\,c^6\\,t^6\\,x\\,\\partial_x\\partial_z h\\,\\partial_z h - 192h^3\\,c^6\\,t^6\\left(\\partial_t h\\right)^2 + 64h^3\\,c^6\\,t^6\\left(\\partial_y h\\right)^2 + 64h^3\\,c^6\\,t^6\\left(\\partial_z h\\right)^2 + 256h^3\\,c^5\\,t^5\\,x^3\\,\\partial_t\\partial_y h\\,\\partial_x\\partial_y h + 256h^3\\,c^5\\,t^5\\,x^3\\,\\partial_t\\partial_z h\\,\\partial_x\\partial_z h - 128h^3\\,c^5\\,t^5\\,x^2\\,\\partial_t\\partial_x h\\,\\partial_x h - 64h^3\\,c^5\\,t^5\\,x\\,\\partial_t h\\,\\partial_x h + 128h^3\\,c^4\\,t^4\\,x^3\\,\\partial_x\\partial_y h\\,\\partial_y h + 128h^3\\,c^4\\,t^4\\,x^3\\,\\partial_x\\partial_z h\\,\\partial_z h - 768h^2\\,c^8\\,t^8\\,\\partial_t h\\,\\partial_t\\partial_y h\\,\\partial_y h - 768h^2\\,c^8\\,t^8\\,\\partial_t h\\,\\partial_t\\partial_z h\\,\\partial_z h + 768h^2\\,c^8\\,t^8\\,\\partial_x h\\,\\partial_x\\partial_y h\\,\\partial_y h + 768h^2\\,c^8\\,t^8\\,\\partial_x h\\,\\partial_x\\partial_z h\\,\\partial_z h + 1280h^2\\,c^8\\,t^8\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h - 128h^2\\,c^8\\,t^8\\left(\\partial_t h\\right)^2\\left(\\partial_x h\\right)^2 - 192h^2\\,c^8\\,t^8\\left(\\partial_t h\\right)^2\\left(\\partial_y h\\right)^2 - 192h^2\\,c^8\\,t^8\\left(\\partial_t h\\right)^2\\left(\\partial_z h\\right)^2 + 192h^2\\,c^8\\,t^8\\left(\\partial_x h\\right)^2\\left(\\partial_y h\\right)^2 + 192h^2\\,c^8\\,t^8\\left(\\partial_x h\\right)^2\\left(\\partial_z h\\right)^2 + 576h^2\\,c^8\\,t^8\\left(\\partial_y h\\right)^2\\left(\\partial_z h\\right)^2 - 192h^2\\,c^8\\,t^8\\,\\partial_t^2 h\\left(\\partial_x h\\right)^2 + 192h^2\\,c^8\\,t^8\\,\\partial_t^2 h\\left(\\partial_y h\\right)^2 + 192h^2\\,c^8\\,t^8\\,\\partial_t^2 h\\left(\\partial_z h\\right)^2 - 192h^2\\,c^8\\,t^8\\,\\partial_x^2 h\\left(\\partial_y h\\right)^2 - 192h^2\\,c^8\\,t^8\\,\\partial_x^2 h\\left(\\partial_z h\\right)^2 + 192h^2\\,c^8\\,t^8\\left(\\partial_t h\\right)^2\\,\\partial_t^2 h - 192h^2\\,c^8\\,t^8\\left(\\partial_t h\\right)^2\\,\\partial_x^2 h + 192h^2\\,c^8\\,t^8\\left(\\partial_x h\\right)^2\\,\\partial_x^2 h + 640h^2\\,c^8\\,t^8\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h + 640h^2\\,c^8\\,t^8\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h - 192h^2\\,c^8\\,t^8\\,\\partial_t^2 h\\,\\partial_x^2 h + 64h^2\\,c^8\\,t^8\\left(\\partial_t h\\right)^4 - 320h^2\\,c^8\\,t^8\\left(\\partial_t\\partial_y h\\right)^2 - 320h^2\\,c^8\\,t^8\\left(\\partial_t\\partial_z h\\right)^2 + 96h^2\\,c^8\\,t^8\\left(\\partial_t^2 h\\right)^2 + 64h^2\\,c^8\\,t^8\\left(\\partial_x h\\right)^4 + 320h^2\\,c^8\\,t^8\\left(\\partial_x\\partial_y h\\right)^2 + 320h^2\\,c^8\\,t^8\\left(\\partial_x\\partial_z h\\right)^2 + 96h^2\\,c^8\\,t^8\\left(\\partial_x^2 h\\right)^2 + 288h^2\\,c^8\\,t^8\\left(\\partial_y h\\right)^4 + 960h^2\\,c^8\\,t^8\\left(\\partial_y\\partial_z h\\right)^2 + 480h^2\\,c^8\\,t^8\\left(\\partial_y^2 h\\right)^2 + 288h^2\\,c^8\\,t^8\\left(\\partial_z h\\right)^4 + 480h^2\\,c^8\\,t^8\\left(\\partial_z^2 h\\right)^2 - 640h^2\\,c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x h\\left(\\partial_y h\\right)^2 - 640h^2\\,c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x h\\left(\\partial_z h\\right)^2 + 384h^2\\,c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_t^2 h\\,\\partial_x h - 384h^2\\,c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x h\\,\\partial_x^2 h - 1152h^2\\,c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x\\partial_y h\\,\\partial_y h - 1152h^2\\,c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x\\partial_z h\\,\\partial_z h - 1152h^2\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_y h\\,\\partial_x h\\,\\partial_y h - 1152h^2\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_z h\\,\\partial_x h\\,\\partial_z h - 256h^2\\,c^7\\,t^7\\,x\\,\\partial_t h\\left(\\partial_x h\\right)^3 - 384h^2\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\left(\\partial_x h\\right)^2 + 384h^2\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\left(\\partial_y h\\right)^2 + 384h^2\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\left(\\partial_z h\\right)^2 + 384h^2\\,c^7\\,t^7\\,x\\left(\\partial_t h\\right)^2\\,\\partial_t\\partial_x h + 256h^2\\,c^7\\,t^7\\,x\\left(\\partial_t h\\right)^3\\,\\partial_x h + 384h^2\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\,\\partial_t^2 h - 384h^2\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\,\\partial_x^2 h - 1024h^2\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_y h\\,\\partial_x\\partial_y h - 1024h^2\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_z h\\,\\partial_x\\partial_z h - 256h^2\\,c^7\\,t^7\\,\\partial_t h\\left(\\partial_x h\\right)^2 - 96h^2\\,c^7\\,t^7\\,\\partial_t h\\left(\\partial_y h\\right)^2 - 96h^2\\,c^7\\,t^7\\,\\partial_t h\\left(\\partial_z h\\right)^2 + 288h^2\\,c^7\\,t^7\\,\\partial_t h\\,\\partial_t^2 h - 288h^2\\,c^7\\,t^7\\,\\partial_t h\\,\\partial_x^2 h - 384h^2\\,c^7\\,t^7\\,\\partial_t\\partial_y h\\,\\partial_y h - 384h^2\\,c^7\\,t^7\\,\\partial_t\\partial_z h\\,\\partial_z h + 256h^2\\,c^7\\,t^7\\left(\\partial_t h\\right)^3 + 768h^2\\,c^6\\,t^6\\,x^2\\,\\partial_t h\\,\\partial_t\\partial_x h\\,\\partial_x h + 256h^2\\,c^6\\,t^6\\,x^2\\,\\partial_t h\\,\\partial_t\\partial_y h\\,\\partial_y h + 256h^2\\,c^6\\,t^6\\,x^2\\,\\partial_t h\\,\\partial_t\\partial_z h\\,\\partial_z h - 256h^2\\,c^6\\,t^6\\,x^2\\,\\partial_x h\\,\\partial_x\\partial_y h\\,\\partial_y h - 256h^2\\,c^6\\,t^6\\,x^2\\,\\partial_x h\\,\\partial_x\\partial_z h\\,\\partial_z h - 768h^2\\,c^6\\,t^6\\,x^2\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h + 256h^2\\,c^6\\,t^6\\,x^2\\left(\\partial_t h\\right)^2\\left(\\partial_x h\\right)^2 + 128h^2\\,c^6\\,t^6\\,x^2\\left(\\partial_t h\\right)^2\\left(\\partial_y h\\right)^2 + 128h^2\\,c^6\\,t^6\\,x^2\\left(\\partial_t h\\right)^2\\left(\\partial_z h\\right)^2 - 128h^2\\,c^6\\,t^6\\,x^2\\left(\\partial_x h\\right)^2\\left(\\partial_y h\\right)^2 - 128h^2\\,c^6\\,t^6\\,x^2\\left(\\partial_x h\\right)^2\\left(\\partial_z h\\right)^2 - 320h^2\\,c^6\\,t^6\\,x^2\\left(\\partial_y h\\right)^2\\left(\\partial_z h\\right)^2 + 64h^2\\,c^6\\,t^6\\,x^2\\,\\partial_t^2 h\\left(\\partial_y h\\right)^2 + 64h^2\\,c^6\\,t^6\\,x^2\\,\\partial_t^2 h\\left(\\partial_z h\\right)^2 - 64h^2\\,c^6\\,t^6\\,x^2\\,\\partial_x^2 h\\left(\\partial_y h\\right)^2 - 64h^2\\,c^6\\,t^6\\,x^2\\,\\partial_x^2 h\\left(\\partial_z h\\right)^2 - 384h^2\\,c^6\\,t^6\\,x^2\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h - 384h^2\\,c^6\\,t^6\\,x^2\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h - 64h^2\\,c^6\\,t^6\\,x^2\\,\\partial_t^2 h\\,\\partial_x^2 h + 384h^2\\,c^6\\,t^6\\,x^2\\left(\\partial_t\\partial_x h\\right)^2 + 32h^2\\,c^6\\,t^6\\,x^2\\left(\\partial_t^2 h\\right)^2 + 32h^2\\,c^6\\,t^6\\,x^2\\left(\\partial_x^2 h\\right)^2 - 160h^2\\,c^6\\,t^6\\,x^2\\left(\\partial_y h\\right)^4 + 384h^2\\,c^6\\,t^6\\,x^2\\left(\\partial_y\\partial_z h\\right)^2 + 192h^2\\,c^6\\,t^6\\,x^2\\left(\\partial_y^2 h\\right)^2 - 160h^2\\,c^6\\,t^6\\,x^2\\left(\\partial_z h\\right)^4 + 192h^2\\,c^6\\,t^6\\,x^2\\left(\\partial_z^2 h\\right)^2 - 384h^2\\,c^6\\,t^6\\,x\\,\\partial_x h\\left(\\partial_y h\\right)^2 - 384h^2\\,c^6\\,t^6\\,x\\,\\partial_x h\\left(\\partial_z h\\right)^2 + 576h^2\\,c^6\\,t^6\\,x\\left(\\partial_t h\\right)^2\\,\\partial_x h + 576h^2\\,c^6\\,t^6\\,x\\,\\partial_t h\\,\\partial_t\\partial_x h + 128h^2\\,c^6\\,t^6\\,x\\,\\partial_t^2 h\\,\\partial_x h - 128h^2\\,c^6\\,t^6\\,x\\,\\partial_x h\\,\\partial_x^2 h - 576h^2\\,c^6\\,t^6\\,x\\,\\partial_x\\partial_y h\\,\\partial_y h - 576h^2\\,c^6\\,t^6\\,x\\,\\partial_x\\partial_z h\\,\\partial_z h - 64h^2\\,c^6\\,t^6\\,x\\left(\\partial_x h\\right)^3 + 208h^2\\,c^6\\,t^6\\left(\\partial_t h\\right)^2 - 96h^2\\,c^6\\,t^6\\left(\\partial_y h\\right)^2 - 96h^2\\,c^6\\,t^6\\left(\\partial_z h\\right)^2 - 128h^2\\,c^5\\,t^5\\,x^3\\,\\partial_t h\\,\\partial_x\\partial_y h\\,\\partial_y h - 128h^2\\,c^5\\,t^5\\,x^3\\,\\partial_t h\\,\\partial_x\\partial_z h\\,\\partial_z h - 128h^2\\,c^5\\,t^5\\,x^3\\,\\partial_t\\partial_y h\\,\\partial_x h\\,\\partial_y h - 128h^2\\,c^5\\,t^5\\,x^3\\,\\partial_t\\partial_z h\\,\\partial_x h\\,\\partial_z h + 128h^2\\,c^5\\,t^5\\,x^3\\,\\partial_t\\partial_x h\\left(\\partial_y h\\right)^2 + 128h^2\\,c^5\\,t^5\\,x^3\\,\\partial_t\\partial_x h\\left(\\partial_z h\\right)^2 + 128h^2\\,c^5\\,t^5\\,x^3\\,\\partial_t\\partial_x h\\,\\partial_t^2 h - 128h^2\\,c^5\\,t^5\\,x^3\\,\\partial_t\\partial_x h\\,\\partial_x^2 h - 512h^2\\,c^5\\,t^5\\,x^3\\,\\partial_t\\partial_y h\\,\\partial_x\\partial_y h - 512h^2\\,c^5\\,t^5\\,x^3\\,\\partial_t\\partial_z h\\,\\partial_x\\partial_z h + 128h^2\\,c^5\\,t^5\\,x^2\\,\\partial_t h\\left(\\partial_x h\\right)^2 + 96h^2\\,c^5\\,t^5\\,x^2\\,\\partial_t h\\left(\\partial_y h\\right)^2 + 96h^2\\,c^5\\,t^5\\,x^2\\,\\partial_t h\\left(\\partial_z h\\right)^2 + 96h^2\\,c^5\\,t^5\\,x^2\\,\\partial_t h\\,\\partial_t^2 h - 96h^2\\,c^5\\,t^5\\,x^2\\,\\partial_t h\\,\\partial_x^2 h + 256h^2\\,c^5\\,t^5\\,x^2\\,\\partial_t\\partial_x h\\,\\partial_x h - 64h^2\\,c^5\\,t^5\\,x^2\\,\\partial_t\\partial_y h\\,\\partial_y h - 64h^2\\,c^5\\,t^5\\,x^2\\,\\partial_t\\partial_z h\\,\\partial_z h + 160h^2\\,c^5\\,t^5\\,x\\,\\partial_t h\\,\\partial_x h + 128h^2\\,c^4\\,t^4\\,x^4\\left(\\partial_t\\partial_x h\\right)^2 + 64h^2\\,c^4\\,t^4\\,x^4\\left(\\partial_t\\partial_y h\\right)^2 + 64h^2\\,c^4\\,t^4\\,x^4\\left(\\partial_t\\partial_z h\\right)^2 - 64h^2\\,c^4\\,t^4\\,x^4\\left(\\partial_x\\partial_y h\\right)^2 - 64h^2\\,c^4\\,t^4\\,x^4\\left(\\partial_x\\partial_z h\\right)^2 - 64h^2\\,c^4\\,t^4\\,x^4\\left(\\partial_y\\partial_z h\\right)^2 - 32h^2\\,c^4\\,t^4\\,x^4\\left(\\partial_y^2 h\\right)^2 - 32h^2\\,c^4\\,t^4\\,x^4\\left(\\partial_z^2 h\\right)^2 - 64h^2\\,c^4\\,t^4\\,x^3\\,\\partial_x h\\left(\\partial_y h\\right)^2 - 64h^2\\,c^4\\,t^4\\,x^3\\,\\partial_x h\\left(\\partial_z h\\right)^2 + 192h^2\\,c^4\\,t^4\\,x^3\\,\\partial_t h\\,\\partial_t\\partial_x h + 64h^2\\,c^4\\,t^4\\,x^3\\,\\partial_t^2 h\\,\\partial_x h - 64h^2\\,c^4\\,t^4\\,x^3\\,\\partial_x h\\,\\partial_x^2 h - 320h^2\\,c^4\\,t^4\\,x^3\\,\\partial_x\\partial_y h\\,\\partial_y h - 320h^2\\,c^4\\,t^4\\,x^3\\,\\partial_x\\partial_z h\\,\\partial_z h + 64h^2\\,c^4\\,t^4\\,x^2\\left(\\partial_t h\\right)^2 + 16h^2\\,c^4\\,t^4\\,x^2\\left(\\partial_x h\\right)^2 - 32h^2\\,c^4\\,t^4\\,x^2\\left(\\partial_y h\\right)^2 - 32h^2\\,c^4\\,t^4\\,x^2\\left(\\partial_z h\\right)^2 + 128h^2\\,c^3\\,t^3\\,x^4\\,\\partial_t\\partial_x h\\,\\partial_x h + 64h^2\\,c^3\\,t^3\\,x^4\\,\\partial_t\\partial_y h\\,\\partial_y h + 64h^2\\,c^3\\,t^3\\,x^4\\,\\partial_t\\partial_z h\\,\\partial_z h + 64h^2\\,c^3\\,t^3\\,x^3\\,\\partial_t h\\,\\partial_x h + 256h\\,c^8\\,t^8\\,\\partial_t h\\,\\partial_t\\partial_y h\\,\\partial_y h + 256h\\,c^8\\,t^8\\,\\partial_t h\\,\\partial_t\\partial_z h\\,\\partial_z h - 256h\\,c^8\\,t^8\\,\\partial_x h\\,\\partial_x\\partial_y h\\,\\partial_y h - 256h\\,c^8\\,t^8\\,\\partial_x h\\,\\partial_x\\partial_z h\\,\\partial_z h - 320h\\,c^8\\,t^8\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h + 128h\\,c^8\\,t^8\\left(\\partial_t h\\right)^2\\left(\\partial_x h\\right)^2 + 96h\\,c^8\\,t^8\\left(\\partial_t h\\right)^2\\left(\\partial_y h\\right)^2 + 96h\\,c^8\\,t^8\\left(\\partial_t h\\right)^2\\left(\\partial_z h\\right)^2 - 96h\\,c^8\\,t^8\\left(\\partial_x h\\right)^2\\left(\\partial_y h\\right)^2 - 96h\\,c^8\\,t^8\\left(\\partial_x h\\right)^2\\left(\\partial_z h\\right)^2 - 192h\\,c^8\\,t^8\\left(\\partial_y h\\right)^2\\left(\\partial_z h\\right)^2 + 96h\\,c^8\\,t^8\\,\\partial_t^2 h\\left(\\partial_x h\\right)^2 - 64h\\,c^8\\,t^8\\,\\partial_t^2 h\\left(\\partial_y h\\right)^2 - 64h\\,c^8\\,t^8\\,\\partial_t^2 h\\left(\\partial_z h\\right)^2 + 64h\\,c^8\\,t^8\\,\\partial_x^2 h\\left(\\partial_y h\\right)^2 + 64h\\,c^8\\,t^8\\,\\partial_x^2 h\\left(\\partial_z h\\right)^2 - 96h\\,c^8\\,t^8\\left(\\partial_t h\\right)^2\\,\\partial_t^2 h + 96h\\,c^8\\,t^8\\left(\\partial_t h\\right)^2\\,\\partial_x^2 h - 96h\\,c^8\\,t^8\\left(\\partial_x h\\right)^2\\,\\partial_x^2 h - 160h\\,c^8\\,t^8\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h - 160h\\,c^8\\,t^8\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h + 64h\\,c^8\\,t^8\\,\\partial_t^2 h\\,\\partial_x^2 h - 64h\\,c^8\\,t^8\\left(\\partial_t h\\right)^4 + 80h\\,c^8\\,t^8\\left(\\partial_t\\partial_y h\\right)^2 + 80h\\,c^8\\,t^8\\left(\\partial_t\\partial_z h\\right)^2 - 32h\\,c^8\\,t^8\\left(\\partial_t^2 h\\right)^2 - 64h\\,c^8\\,t^8\\left(\\partial_x h\\right)^4 - 80h\\,c^8\\,t^8\\left(\\partial_x\\partial_y h\\right)^2 - 80h\\,c^8\\,t^8\\left(\\partial_x\\partial_z h\\right)^2 - 32h\\,c^8\\,t^8\\left(\\partial_x^2 h\\right)^2 - 96h\\,c^8\\,t^8\\left(\\partial_y h\\right)^4 - 192h\\,c^8\\,t^8\\left(\\partial_y\\partial_z h\\right)^2 - 96h\\,c^8\\,t^8\\left(\\partial_y^2 h\\right)^2 - 96h\\,c^8\\,t^8\\left(\\partial_z h\\right)^4 - 96h\\,c^8\\,t^8\\left(\\partial_z^2 h\\right)^2 + 448h\\,c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x h\\left(\\partial_y h\\right)^2 + 448h\\,c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x h\\left(\\partial_z h\\right)^2 - 192h\\,c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_t^2 h\\,\\partial_x h + 192h\\,c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x h\\,\\partial_x^2 h + 448h\\,c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x\\partial_y h\\,\\partial_y h + 448h\\,c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x\\partial_z h\\,\\partial_z h + 448h\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_y h\\,\\partial_x h\\,\\partial_y h + 448h\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_z h\\,\\partial_x h\\,\\partial_z h + 256h\\,c^7\\,t^7\\,x\\,\\partial_t h\\left(\\partial_x h\\right)^3 + 192h\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\left(\\partial_x h\\right)^2 - 128h\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\left(\\partial_y h\\right)^2 - 128h\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\left(\\partial_z h\\right)^2 - 192h\\,c^7\\,t^7\\,x\\left(\\partial_t h\\right)^2\\,\\partial_t\\partial_x h - 256h\\,c^7\\,t^7\\,x\\left(\\partial_t h\\right)^3\\,\\partial_x h - 128h\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\,\\partial_t^2 h + 128h\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\,\\partial_x^2 h + 288h\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_y h\\,\\partial_x\\partial_y h + 288h\\,c^7\\,t^7\\,x\\,\\partial_t\\partial_z h\\,\\partial_x\\partial_z h + 160h\\,c^7\\,t^7\\,\\partial_t h\\left(\\partial_x h\\right)^2 + 80h\\,c^7\\,t^7\\,\\partial_t h\\left(\\partial_y h\\right)^2 + 80h\\,c^7\\,t^7\\,\\partial_t h\\left(\\partial_z h\\right)^2 - 112h\\,c^7\\,t^7\\,\\partial_t h\\,\\partial_t^2 h + 112h\\,c^7\\,t^7\\,\\partial_t h\\,\\partial_x^2 h + 128h\\,c^7\\,t^7\\,\\partial_t\\partial_y h\\,\\partial_y h + 128h\\,c^7\\,t^7\\,\\partial_t\\partial_z h\\,\\partial_z h - 160h\\,c^7\\,t^7\\left(\\partial_t h\\right)^3 - 384h\\,c^6\\,t^6\\,x^2\\,\\partial_t h\\,\\partial_t\\partial_x h\\,\\partial_x h - 64h\\,c^6\\,t^6\\,x^2\\,\\partial_t h\\,\\partial_t\\partial_y h\\,\\partial_y h - 64h\\,c^6\\,t^6\\,x^2\\,\\partial_t h\\,\\partial_t\\partial_z h\\,\\partial_z h + 64h\\,c^6\\,t^6\\,x^2\\,\\partial_x h\\,\\partial_x\\partial_y h\\,\\partial_y h + 64h\\,c^6\\,t^6\\,x^2\\,\\partial_x h\\,\\partial_x\\partial_z h\\,\\partial_z h + 384h\\,c^6\\,t^6\\,x^2\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h - 256h\\,c^6\\,t^6\\,x^2\\left(\\partial_t h\\right)^2\\left(\\partial_x h\\right)^2 - 160h\\,c^6\\,t^6\\,x^2\\left(\\partial_t h\\right)^2\\left(\\partial_y h\\right)^2 - 160h\\,c^6\\,t^6\\,x^2\\left(\\partial_t h\\right)^2\\left(\\partial_z h\\right)^2 + 160h\\,c^6\\,t^6\\,x^2\\left(\\partial_x h\\right)^2\\left(\\partial_y h\\right)^2 + 160h\\,c^6\\,t^6\\,x^2\\left(\\partial_x h\\right)^2\\left(\\partial_z h\\right)^2 + 320h\\,c^6\\,t^6\\,x^2\\left(\\partial_y h\\right)^2\\left(\\partial_z h\\right)^2 + 32h\\,c^6\\,t^6\\,x^2\\,\\partial_t^2 h\\left(\\partial_x h\\right)^2 - 64h\\,c^6\\,t^6\\,x^2\\,\\partial_t^2 h\\left(\\partial_y h\\right)^2 - 64h\\,c^6\\,t^6\\,x^2\\,\\partial_t^2 h\\left(\\partial_z h\\right)^2 + 64h\\,c^6\\,t^6\\,x^2\\,\\partial_x^2 h\\left(\\partial_y h\\right)^2 + 64h\\,c^6\\,t^6\\,x^2\\,\\partial_x^2 h\\left(\\partial_z h\\right)^2 - 32h\\,c^6\\,t^6\\,x^2\\left(\\partial_t h\\right)^2\\,\\partial_t^2 h + 32h\\,c^6\\,t^6\\,x^2\\left(\\partial_t h\\right)^2\\,\\partial_x^2 h - 32h\\,c^6\\,t^6\\,x^2\\left(\\partial_x h\\right)^2\\,\\partial_x^2 h + 192h\\,c^6\\,t^6\\,x^2\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h + 192h\\,c^6\\,t^6\\,x^2\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h + 64h\\,c^6\\,t^6\\,x^2\\,\\partial_t^2 h\\,\\partial_x^2 h - 128h\\,c^6\\,t^6\\,x^2\\left(\\partial_t\\partial_x h\\right)^2 + 32h\\,c^6\\,t^6\\,x^2\\left(\\partial_t\\partial_y h\\right)^2 + 32h\\,c^6\\,t^6\\,x^2\\left(\\partial_t\\partial_z h\\right)^2 - 32h\\,c^6\\,t^6\\,x^2\\left(\\partial_t^2 h\\right)^2 - 32h\\,c^6\\,t^6\\,x^2\\left(\\partial_x\\partial_y h\\right)^2 - 32h\\,c^6\\,t^6\\,x^2\\left(\\partial_x\\partial_z h\\right)^2 - 32h\\,c^6\\,t^6\\,x^2\\left(\\partial_x^2 h\\right)^2 + 160h\\,c^6\\,t^6\\,x^2\\left(\\partial_y h\\right)^4 - 128h\\,c^6\\,t^6\\,x^2\\left(\\partial_y\\partial_z h\\right)^2 - 64h\\,c^6\\,t^6\\,x^2\\left(\\partial_y^2 h\\right)^2 + 160h\\,c^6\\,t^6\\,x^2\\left(\\partial_z h\\right)^4 - 64h\\,c^6\\,t^6\\,x^2\\left(\\partial_z^2 h\\right)^2 + 240h\\,c^6\\,t^6\\,x\\,\\partial_x h\\left(\\partial_y h\\right)^2 + 240h\\,c^6\\,t^6\\,x\\,\\partial_x h\\left(\\partial_z h\\right)^2 - 416h\\,c^6\\,t^6\\,x\\left(\\partial_t h\\right)^2\\,\\partial_x h - 224h\\,c^6\\,t^6\\,x\\,\\partial_t h\\,\\partial_t\\partial_x h - 80h\\,c^6\\,t^6\\,x\\,\\partial_t^2 h\\,\\partial_x h + 80h\\,c^6\\,t^6\\,x\\,\\partial_x h\\,\\partial_x^2 h + 224h\\,c^6\\,t^6\\,x\\,\\partial_x\\partial_y h\\,\\partial_y h + 224h\\,c^6\\,t^6\\,x\\,\\partial_x\\partial_z h\\,\\partial_z h + 96h\\,c^6\\,t^6\\,x\\left(\\partial_x h\\right)^3 - 96h\\,c^6\\,t^6\\left(\\partial_t h\\right)^2 + 48h\\,c^6\\,t^6\\left(\\partial_y h\\right)^2 + 48h\\,c^6\\,t^6\\left(\\partial_z h\\right)^2 - 64h\\,c^5\\,t^5\\,x^3\\,\\partial_t h\\,\\partial_x h\\left(\\partial_y h\\right)^2 - 64h\\,c^5\\,t^5\\,x^3\\,\\partial_t h\\,\\partial_x h\\left(\\partial_z h\\right)^2 - 64h\\,c^5\\,t^5\\,x^3\\,\\partial_t h\\,\\partial_t^2 h\\,\\partial_x h + 64h\\,c^5\\,t^5\\,x^3\\,\\partial_t h\\,\\partial_x h\\,\\partial_x^2 h + 192h\\,c^5\\,t^5\\,x^3\\,\\partial_t h\\,\\partial_x\\partial_y h\\,\\partial_y h + 192h\\,c^5\\,t^5\\,x^3\\,\\partial_t h\\,\\partial_x\\partial_z h\\,\\partial_z h + 192h\\,c^5\\,t^5\\,x^3\\,\\partial_t\\partial_y h\\,\\partial_x h\\,\\partial_y h + 192h\\,c^5\\,t^5\\,x^3\\,\\partial_t\\partial_z h\\,\\partial_x h\\,\\partial_z h + 64h\\,c^5\\,t^5\\,x^3\\,\\partial_t\\partial_x h\\left(\\partial_x h\\right)^2 - 128h\\,c^5\\,t^5\\,x^3\\,\\partial_t\\partial_x h\\left(\\partial_y h\\right)^2 - 128h\\,c^5\\,t^5\\,x^3\\,\\partial_t\\partial_x h\\left(\\partial_z h\\right)^2 - 64h\\,c^5\\,t^5\\,x^3\\left(\\partial_t h\\right)^2\\,\\partial_t\\partial_x h - 128h\\,c^5\\,t^5\\,x^3\\,\\partial_t\\partial_x h\\,\\partial_t^2 h + 128h\\,c^5\\,t^5\\,x^3\\,\\partial_t\\partial_x h\\,\\partial_x^2 h + 320h\\,c^5\\,t^5\\,x^3\\,\\partial_t\\partial_y h\\,\\partial_x\\partial_y h + 320h\\,c^5\\,t^5\\,x^3\\,\\partial_t\\partial_z h\\,\\partial_x\\partial_z h - 128h\\,c^5\\,t^5\\,x^2\\,\\partial_t h\\left(\\partial_x h\\right)^2 - 112h\\,c^5\\,t^5\\,x^2\\,\\partial_t h\\left(\\partial_y h\\right)^2 - 112h\\,c^5\\,t^5\\,x^2\\,\\partial_t h\\left(\\partial_z h\\right)^2 - 112h\\,c^5\\,t^5\\,x^2\\,\\partial_t h\\,\\partial_t^2 h + 112h\\,c^5\\,t^5\\,x^2\\,\\partial_t h\\,\\partial_x^2 h - 160h\\,c^5\\,t^5\\,x^2\\,\\partial_t\\partial_x h\\,\\partial_x h + 64h\\,c^5\\,t^5\\,x^2\\,\\partial_t\\partial_y h\\,\\partial_y h + 64h\\,c^5\\,t^5\\,x^2\\,\\partial_t\\partial_z h\\,\\partial_z h - 64h\\,c^5\\,t^5\\,x^2\\left(\\partial_t h\\right)^3 - 128h\\,c^5\\,t^5\\,x\\,\\partial_t h\\,\\partial_x h - 128h\\,c^4\\,t^4\\,x^4\\,\\partial_t h\\,\\partial_t\\partial_x h\\,\\partial_x h - 64h\\,c^4\\,t^4\\,x^4\\,\\partial_t h\\,\\partial_t\\partial_y h\\,\\partial_y h - 64h\\,c^4\\,t^4\\,x^4\\,\\partial_t h\\,\\partial_t\\partial_z h\\,\\partial_z h + 64h\\,c^4\\,t^4\\,x^4\\,\\partial_x h\\,\\partial_x\\partial_y h\\,\\partial_y h + 64h\\,c^4\\,t^4\\,x^4\\,\\partial_x h\\,\\partial_x\\partial_z h\\,\\partial_z h + 192h\\,c^4\\,t^4\\,x^4\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h + 96h\\,c^4\\,t^4\\,x^4\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h + 96h\\,c^4\\,t^4\\,x^4\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h - 128h\\,c^4\\,t^4\\,x^4\\left(\\partial_t\\partial_x h\\right)^2 - 48h\\,c^4\\,t^4\\,x^4\\left(\\partial_t\\partial_y h\\right)^2 - 48h\\,c^4\\,t^4\\,x^4\\left(\\partial_t\\partial_z h\\right)^2 + 48h\\,c^4\\,t^4\\,x^4\\left(\\partial_x\\partial_y h\\right)^2 + 48h\\,c^4\\,t^4\\,x^4\\left(\\partial_x\\partial_z h\\right)^2 + 64h\\,c^4\\,t^4\\,x^4\\left(\\partial_y\\partial_z h\\right)^2 + 32h\\,c^4\\,t^4\\,x^4\\left(\\partial_y^2 h\\right)^2 + 32h\\,c^4\\,t^4\\,x^4\\left(\\partial_z^2 h\\right)^2 + 112h\\,c^4\\,t^4\\,x^3\\,\\partial_x h\\left(\\partial_y h\\right)^2 + 112h\\,c^4\\,t^4\\,x^3\\,\\partial_x h\\left(\\partial_z h\\right)^2 - 192h\\,c^4\\,t^4\\,x^3\\left(\\partial_t h\\right)^2\\,\\partial_x h - 224h\\,c^4\\,t^4\\,x^3\\,\\partial_t h\\,\\partial_t\\partial_x h - 80h\\,c^4\\,t^4\\,x^3\\,\\partial_t^2 h\\,\\partial_x h + 80h\\,c^4\\,t^4\\,x^3\\,\\partial_x h\\,\\partial_x^2 h + 256h\\,c^4\\,t^4\\,x^3\\,\\partial_x\\partial_y h\\,\\partial_y h + 256h\\,c^4\\,t^4\\,x^3\\,\\partial_x\\partial_z h\\,\\partial_z h + 64h\\,c^4\\,t^4\\,x^3\\left(\\partial_x h\\right)^3 - 96h\\,c^4\\,t^4\\,x^2\\left(\\partial_t h\\right)^2 - 32h\\,c^4\\,t^4\\,x^2\\left(\\partial_x h\\right)^2 + 32h\\,c^4\\,t^4\\,x^2\\left(\\partial_y h\\right)^2 + 32h\\,c^4\\,t^4\\,x^2\\left(\\partial_z h\\right)^2 + 32h\\,c^3\\,t^3\\,x^5\\,\\partial_t\\partial_y h\\,\\partial_x\\partial_y h + 32h\\,c^3\\,t^3\\,x^5\\,\\partial_t\\partial_z h\\,\\partial_x\\partial_z h - 128h\\,c^3\\,t^3\\,x^4\\,\\partial_t h\\left(\\partial_x h\\right)^2 - 64h\\,c^3\\,t^3\\,x^4\\,\\partial_t h\\left(\\partial_y h\\right)^2 - 64h\\,c^3\\,t^3\\,x^4\\,\\partial_t h\\left(\\partial_z h\\right)^2 - 160h\\,c^3\\,t^3\\,x^4\\,\\partial_t\\partial_x h\\,\\partial_x h - 64h\\,c^3\\,t^3\\,x^4\\,\\partial_t\\partial_y h\\,\\partial_y h - 64h\\,c^3\\,t^3\\,x^4\\,\\partial_t\\partial_z h\\,\\partial_z h - 128h\\,c^3\\,t^3\\,x^3\\,\\partial_t h\\,\\partial_x h + 32h\\,c^2\\,t^2\\,x^5\\,\\partial_x\\partial_y h\\,\\partial_y h + 32h\\,c^2\\,t^2\\,x^5\\,\\partial_x\\partial_z h\\,\\partial_z h - 32h\\,c^2\\,t^2\\,x^4\\left(\\partial_x h\\right)^2 - 16h\\,c^2\\,t^2\\,x^4\\left(\\partial_y h\\right)^2 - 16h\\,c^2\\,t^2\\,x^4\\left(\\partial_z h\\right)^2 - 32c^8\\,t^8\\,\\partial_t h\\,\\partial_t\\partial_y h\\,\\partial_y h - 32c^8\\,t^8\\,\\partial_t h\\,\\partial_t\\partial_z h\\,\\partial_z h + 32c^8\\,t^8\\,\\partial_x h\\,\\partial_x\\partial_y h\\,\\partial_y h + 32c^8\\,t^8\\,\\partial_x h\\,\\partial_x\\partial_z h\\,\\partial_z h + 32c^8\\,t^8\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h - 32c^8\\,t^8\\left(\\partial_t h\\right)^2\\left(\\partial_x h\\right)^2 - 16c^8\\,t^8\\left(\\partial_t h\\right)^2\\left(\\partial_y h\\right)^2 - 16c^8\\,t^8\\left(\\partial_t h\\right)^2\\left(\\partial_z h\\right)^2 + 16c^8\\,t^8\\left(\\partial_x h\\right)^2\\left(\\partial_y h\\right)^2 + 16c^8\\,t^8\\left(\\partial_x h\\right)^2\\left(\\partial_z h\\right)^2 + 24c^8\\,t^8\\left(\\partial_y h\\right)^2\\left(\\partial_z h\\right)^2 - 16c^8\\,t^8\\,\\partial_t^2 h\\left(\\partial_x h\\right)^2 + 8c^8\\,t^8\\,\\partial_t^2 h\\left(\\partial_y h\\right)^2 + 8c^8\\,t^8\\,\\partial_t^2 h\\left(\\partial_z h\\right)^2 - 8c^8\\,t^8\\,\\partial_x^2 h\\left(\\partial_y h\\right)^2 - 8c^8\\,t^8\\,\\partial_x^2 h\\left(\\partial_z h\\right)^2 + 16c^8\\,t^8\\left(\\partial_t h\\right)^2\\,\\partial_t^2 h - 16c^8\\,t^8\\left(\\partial_t h\\right)^2\\,\\partial_x^2 h + 16c^8\\,t^8\\left(\\partial_x h\\right)^2\\,\\partial_x^2 h + 16c^8\\,t^8\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h + 16c^8\\,t^8\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h - 8c^8\\,t^8\\,\\partial_t^2 h\\,\\partial_x^2 h + 16c^8\\,t^8\\left(\\partial_t h\\right)^4 - 8c^8\\,t^8\\left(\\partial_t\\partial_y h\\right)^2 - 8c^8\\,t^8\\left(\\partial_t\\partial_z h\\right)^2 + 4c^8\\,t^8\\left(\\partial_t^2 h\\right)^2 + 16c^8\\,t^8\\left(\\partial_x h\\right)^4 + 8c^8\\,t^8\\left(\\partial_x\\partial_y h\\right)^2 + 8c^8\\,t^8\\left(\\partial_x\\partial_z h\\right)^2 + 4c^8\\,t^8\\left(\\partial_x^2 h\\right)^2 + 12c^8\\,t^8\\left(\\partial_y h\\right)^4 + 16c^8\\,t^8\\left(\\partial_y\\partial_z h\\right)^2 + 8c^8\\,t^8\\left(\\partial_y^2 h\\right)^2 + 12c^8\\,t^8\\left(\\partial_z h\\right)^4 + 8c^8\\,t^8\\left(\\partial_z^2 h\\right)^2 - 96c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x h\\left(\\partial_y h\\right)^2 - 96c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x h\\left(\\partial_z h\\right)^2 + 32c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_t^2 h\\,\\partial_x h - 32c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x h\\,\\partial_x^2 h - 64c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x\\partial_y h\\,\\partial_y h - 64c^7\\,t^7\\,x\\,\\partial_t h\\,\\partial_x\\partial_z h\\,\\partial_z h - 64c^7\\,t^7\\,x\\,\\partial_t\\partial_y h\\,\\partial_x h\\,\\partial_y h - 64c^7\\,t^7\\,x\\,\\partial_t\\partial_z h\\,\\partial_x h\\,\\partial_z h - 64c^7\\,t^7\\,x\\,\\partial_t h\\left(\\partial_x h\\right)^3 - 32c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\left(\\partial_x h\\right)^2 + 16c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\left(\\partial_y h\\right)^2 + 16c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\left(\\partial_z h\\right)^2 + 32c^7\\,t^7\\,x\\left(\\partial_t h\\right)^2\\,\\partial_t\\partial_x h + 64c^7\\,t^7\\,x\\left(\\partial_t h\\right)^3\\,\\partial_x h + 16c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\,\\partial_t^2 h - 16c^7\\,t^7\\,x\\,\\partial_t\\partial_x h\\,\\partial_x^2 h - 32c^7\\,t^7\\,x\\,\\partial_t\\partial_y h\\,\\partial_x\\partial_y h - 32c^7\\,t^7\\,x\\,\\partial_t\\partial_z h\\,\\partial_x\\partial_z h - 32c^7\\,t^7\\,\\partial_t h\\left(\\partial_x h\\right)^2 - 16c^7\\,t^7\\,\\partial_t h\\left(\\partial_y h\\right)^2 - 16c^7\\,t^7\\,\\partial_t h\\left(\\partial_z h\\right)^2 + 16c^7\\,t^7\\,\\partial_t h\\,\\partial_t^2 h - 16c^7\\,t^7\\,\\partial_t h\\,\\partial_x^2 h - 16c^7\\,t^7\\,\\partial_t\\partial_y h\\,\\partial_y h - 16c^7\\,t^7\\,\\partial_t\\partial_z h\\,\\partial_z h + 32c^7\\,t^7\\left(\\partial_t h\\right)^3 + 64c^6\\,t^6\\,x^2\\,\\partial_t h\\,\\partial_t\\partial_x h\\,\\partial_x h - 64c^6\\,t^6\\,x^2\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h + 64c^6\\,t^6\\,x^2\\left(\\partial_t h\\right)^2\\left(\\partial_x h\\right)^2 + 48c^6\\,t^6\\,x^2\\left(\\partial_t h\\right)^2\\left(\\partial_y h\\right)^2 + 48c^6\\,t^6\\,x^2\\left(\\partial_t h\\right)^2\\left(\\partial_z h\\right)^2 - 48c^6\\,t^6\\,x^2\\left(\\partial_x h\\right)^2\\left(\\partial_y h\\right)^2 - 48c^6\\,t^6\\,x^2\\left(\\partial_x h\\right)^2\\left(\\partial_z h\\right)^2 - 80c^6\\,t^6\\,x^2\\left(\\partial_y h\\right)^2\\left(\\partial_z h\\right)^2 - 16c^6\\,t^6\\,x^2\\,\\partial_t^2 h\\left(\\partial_x h\\right)^2 + 16c^6\\,t^6\\,x^2\\,\\partial_t^2 h\\left(\\partial_y h\\right)^2 + 16c^6\\,t^6\\,x^2\\,\\partial_t^2 h\\left(\\partial_z h\\right)^2 - 16c^6\\,t^6\\,x^2\\,\\partial_x^2 h\\left(\\partial_y h\\right)^2 - 16c^6\\,t^6\\,x^2\\,\\partial_x^2 h\\left(\\partial_z h\\right)^2 + 16c^6\\,t^6\\,x^2\\left(\\partial_t h\\right)^2\\,\\partial_t^2 h - 16c^6\\,t^6\\,x^2\\left(\\partial_t h\\right)^2\\,\\partial_x^2 h + 16c^6\\,t^6\\,x^2\\left(\\partial_x h\\right)^2\\,\\partial_x^2 h - 32c^6\\,t^6\\,x^2\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h - 32c^6\\,t^6\\,x^2\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h - 16c^6\\,t^6\\,x^2\\,\\partial_t^2 h\\,\\partial_x^2 h + 16c^6\\,t^6\\,x^2\\left(\\partial_t\\partial_x h\\right)^2 - 8c^6\\,t^6\\,x^2\\left(\\partial_t\\partial_y h\\right)^2 - 8c^6\\,t^6\\,x^2\\left(\\partial_t\\partial_z h\\right)^2 + 8c^6\\,t^6\\,x^2\\left(\\partial_t^2 h\\right)^2 + 8c^6\\,t^6\\,x^2\\left(\\partial_x\\partial_y h\\right)^2 + 8c^6\\,t^6\\,x^2\\left(\\partial_x\\partial_z h\\right)^2 + 8c^6\\,t^6\\,x^2\\left(\\partial_x^2 h\\right)^2 - 40c^6\\,t^6\\,x^2\\left(\\partial_y h\\right)^4 + 16c^6\\,t^6\\,x^2\\left(\\partial_y\\partial_z h\\right)^2 + 8c^6\\,t^6\\,x^2\\left(\\partial_y^2 h\\right)^2 - 40c^6\\,t^6\\,x^2\\left(\\partial_z h\\right)^4 + 8c^6\\,t^6\\,x^2\\left(\\partial_z^2 h\\right)^2 - 48c^6\\,t^6\\,x\\,\\partial_x h\\left(\\partial_y h\\right)^2 - 48c^6\\,t^6\\,x\\,\\partial_x h\\left(\\partial_z h\\right)^2 + 96c^6\\,t^6\\,x\\left(\\partial_t h\\right)^2\\,\\partial_x h + 32c^6\\,t^6\\,x\\,\\partial_t h\\,\\partial_t\\partial_x h + 16c^6\\,t^6\\,x\\,\\partial_t^2 h\\,\\partial_x h - 16c^6\\,t^6\\,x\\,\\partial_x h\\,\\partial_x^2 h - 32c^6\\,t^6\\,x\\,\\partial_x\\partial_y h\\,\\partial_y h - 32c^6\\,t^6\\,x\\,\\partial_x\\partial_z h\\,\\partial_z h - 32c^6\\,t^6\\,x\\left(\\partial_x h\\right)^3 + 16c^6\\,t^6\\left(\\partial_t h\\right)^2 - 8c^6\\,t^6\\left(\\partial_y h\\right)^2 - 8c^6\\,t^6\\left(\\partial_z h\\right)^2 + 32c^5\\,t^5\\,x^3\\,\\partial_t h\\,\\partial_x h\\left(\\partial_y h\\right)^2 + 32c^5\\,t^5\\,x^3\\,\\partial_t h\\,\\partial_x h\\left(\\partial_z h\\right)^2 + 32c^5\\,t^5\\,x^3\\,\\partial_t h\\,\\partial_t^2 h\\,\\partial_x h - 32c^5\\,t^5\\,x^3\\,\\partial_t h\\,\\partial_x h\\,\\partial_x^2 h - 64c^5\\,t^5\\,x^3\\,\\partial_t h\\,\\partial_x\\partial_y h\\,\\partial_y h - 64c^5\\,t^5\\,x^3\\,\\partial_t h\\,\\partial_x\\partial_z h\\,\\partial_z h - 64c^5\\,t^5\\,x^3\\,\\partial_t\\partial_y h\\,\\partial_x h\\,\\partial_y h - 64c^5\\,t^5\\,x^3\\,\\partial_t\\partial_z h\\,\\partial_x h\\,\\partial_z h - 32c^5\\,t^5\\,x^3\\,\\partial_t\\partial_x h\\left(\\partial_x h\\right)^2 + 32c^5\\,t^5\\,x^3\\,\\partial_t\\partial_x h\\left(\\partial_y h\\right)^2 + 32c^5\\,t^5\\,x^3\\,\\partial_t\\partial_x h\\left(\\partial_z h\\right)^2 + 32c^5\\,t^5\\,x^3\\left(\\partial_t h\\right)^2\\,\\partial_t\\partial_x h + 32c^5\\,t^5\\,x^3\\,\\partial_t\\partial_x h\\,\\partial_t^2 h - 32c^5\\,t^5\\,x^3\\,\\partial_t\\partial_x h\\,\\partial_x^2 h - 64c^5\\,t^5\\,x^3\\,\\partial_t\\partial_y h\\,\\partial_x\\partial_y h - 64c^5\\,t^5\\,x^3\\,\\partial_t\\partial_z h\\,\\partial_x\\partial_z h + 32c^5\\,t^5\\,x^2\\,\\partial_t h\\left(\\partial_x h\\right)^2 + 32c^5\\,t^5\\,x^2\\,\\partial_t h\\left(\\partial_y h\\right)^2 + 32c^5\\,t^5\\,x^2\\,\\partial_t h\\left(\\partial_z h\\right)^2 + 32c^5\\,t^5\\,x^2\\,\\partial_t h\\,\\partial_t^2 h - 32c^5\\,t^5\\,x^2\\,\\partial_t h\\,\\partial_x^2 h + 32c^5\\,t^5\\,x^2\\,\\partial_t\\partial_x h\\,\\partial_x h - 16c^5\\,t^5\\,x^2\\,\\partial_t\\partial_y h\\,\\partial_y h - 16c^5\\,t^5\\,x^2\\,\\partial_t\\partial_z h\\,\\partial_z h + 32c^5\\,t^5\\,x^2\\left(\\partial_t h\\right)^3 + 32c^5\\,t^5\\,x\\,\\partial_t h\\,\\partial_x h + 64c^4\\,t^4\\,x^4\\,\\partial_t h\\,\\partial_t\\partial_x h\\,\\partial_x h + 32c^4\\,t^4\\,x^4\\,\\partial_t h\\,\\partial_t\\partial_y h\\,\\partial_y h + 32c^4\\,t^4\\,x^4\\,\\partial_t h\\,\\partial_t\\partial_z h\\,\\partial_z h - 32c^4\\,t^4\\,x^4\\,\\partial_x h\\,\\partial_x\\partial_y h\\,\\partial_y h - 32c^4\\,t^4\\,x^4\\,\\partial_x h\\,\\partial_x\\partial_z h\\,\\partial_z h - 96c^4\\,t^4\\,x^4\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h + 24c^4\\,t^4\\,x^4\\left(\\partial_y h\\right)^2\\left(\\partial_z h\\right)^2 + 8c^4\\,t^4\\,x^4\\,\\partial_t^2 h\\left(\\partial_y h\\right)^2 + 8c^4\\,t^4\\,x^4\\,\\partial_t^2 h\\left(\\partial_z h\\right)^2 - 8c^4\\,t^4\\,x^4\\,\\partial_x^2 h\\left(\\partial_y h\\right)^2 - 8c^4\\,t^4\\,x^4\\,\\partial_x^2 h\\left(\\partial_z h\\right)^2 - 48c^4\\,t^4\\,x^4\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h - 48c^4\\,t^4\\,x^4\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h - 8c^4\\,t^4\\,x^4\\,\\partial_t^2 h\\,\\partial_x^2 h + 32c^4\\,t^4\\,x^4\\left(\\partial_t\\partial_x h\\right)^2 + 8c^4\\,t^4\\,x^4\\left(\\partial_t\\partial_y h\\right)^2 + 8c^4\\,t^4\\,x^4\\left(\\partial_t\\partial_z h\\right)^2 + 4c^4\\,t^4\\,x^4\\left(\\partial_t^2 h\\right)^2 - 8c^4\\,t^4\\,x^4\\left(\\partial_x\\partial_y h\\right)^2 - 8c^4\\,t^4\\,x^4\\left(\\partial_x\\partial_z h\\right)^2 + 4c^4\\,t^4\\,x^4\\left(\\partial_x^2 h\\right)^2 + 12c^4\\,t^4\\,x^4\\left(\\partial_y h\\right)^4 - 16c^4\\,t^4\\,x^4\\left(\\partial_y\\partial_z h\\right)^2 - 8c^4\\,t^4\\,x^4\\left(\\partial_y^2 h\\right)^2 + 12c^4\\,t^4\\,x^4\\left(\\partial_z h\\right)^4 - 8c^4\\,t^4\\,x^4\\left(\\partial_z^2 h\\right)^2 - 32c^4\\,t^4\\,x^3\\,\\partial_x h\\left(\\partial_y h\\right)^2 - 32c^4\\,t^4\\,x^3\\,\\partial_x h\\left(\\partial_z h\\right)^2 + 96c^4\\,t^4\\,x^3\\left(\\partial_t h\\right)^2\\,\\partial_x h + 64c^4\\,t^4\\,x^3\\,\\partial_t h\\,\\partial_t\\partial_x h + 32c^4\\,t^4\\,x^3\\,\\partial_t^2 h\\,\\partial_x h - 32c^4\\,t^4\\,x^3\\,\\partial_x h\\,\\partial_x^2 h - 64c^4\\,t^4\\,x^3\\,\\partial_x\\partial_y h\\,\\partial_y h - 64c^4\\,t^4\\,x^3\\,\\partial_x\\partial_z h\\,\\partial_z h - 32c^4\\,t^4\\,x^3\\left(\\partial_x h\\right)^3 + 32c^4\\,t^4\\,x^2\\left(\\partial_t h\\right)^2 + 16c^4\\,t^4\\,x^2\\left(\\partial_x h\\right)^2 - 8c^4\\,t^4\\,x^2\\left(\\partial_y h\\right)^2 - 8c^4\\,t^4\\,x^2\\left(\\partial_z h\\right)^2 + 16c^3\\,t^3\\,x^5\\,\\partial_t\\partial_x h\\left(\\partial_y h\\right)^2 + 16c^3\\,t^3\\,x^5\\,\\partial_t\\partial_x h\\left(\\partial_z h\\right)^2 + 16c^3\\,t^3\\,x^5\\,\\partial_t\\partial_x h\\,\\partial_t^2 h - 16c^3\\,t^3\\,x^5\\,\\partial_t\\partial_x h\\,\\partial_x^2 h - 32c^3\\,t^3\\,x^5\\,\\partial_t\\partial_y h\\,\\partial_x\\partial_y h - 32c^3\\,t^3\\,x^5\\,\\partial_t\\partial_z h\\,\\partial_x\\partial_z h + 64c^3\\,t^3\\,x^4\\,\\partial_t h\\left(\\partial_x h\\right)^2 + 48c^3\\,t^3\\,x^4\\,\\partial_t h\\left(\\partial_y h\\right)^2 + 48c^3\\,t^3\\,x^4\\,\\partial_t h\\left(\\partial_z h\\right)^2 + 16c^3\\,t^3\\,x^4\\,\\partial_t h\\,\\partial_t^2 h - 16c^3\\,t^3\\,x^4\\,\\partial_t h\\,\\partial_x^2 h + 64c^3\\,t^3\\,x^4\\,\\partial_t\\partial_x h\\,\\partial_x h + 16c^3\\,t^3\\,x^4\\,\\partial_t\\partial_y h\\,\\partial_y h + 16c^3\\,t^3\\,x^4\\,\\partial_t\\partial_z h\\,\\partial_z h + 64c^3\\,t^3\\,x^3\\,\\partial_t h\\,\\partial_x h + 16c^2\\,t^2\\,x^6\\left(\\partial_t\\partial_x h\\right)^2 + 8c^2\\,t^2\\,x^6\\left(\\partial_t\\partial_y h\\right)^2 + 8c^2\\,t^2\\,x^6\\left(\\partial_t\\partial_z h\\right)^2 - 8c^2\\,t^2\\,x^6\\left(\\partial_x\\partial_y h\\right)^2 - 8c^2\\,t^2\\,x^6\\left(\\partial_x\\partial_z h\\right)^2 - 16c^2\\,t^2\\,x^6\\left(\\partial_y\\partial_z h\\right)^2 - 8c^2\\,t^2\\,x^6\\left(\\partial_y^2 h\\right)^2 - 8c^2\\,t^2\\,x^6\\left(\\partial_z^2 h\\right)^2 + 16c^2\\,t^2\\,x^5\\,\\partial_x h\\left(\\partial_y h\\right)^2 + 16c^2\\,t^2\\,x^5\\,\\partial_x h\\left(\\partial_z h\\right)^2 + 32c^2\\,t^2\\,x^5\\,\\partial_t h\\,\\partial_t\\partial_x h + 16c^2\\,t^2\\,x^5\\,\\partial_t^2 h\\,\\partial_x h - 16c^2\\,t^2\\,x^5\\,\\partial_x h\\,\\partial_x^2 h - 32c^2\\,t^2\\,x^5\\,\\partial_x\\partial_y h\\,\\partial_y h - 32c^2\\,t^2\\,x^5\\,\\partial_x\\partial_z h\\,\\partial_z h + 16c^2\\,t^2\\,x^4\\left(\\partial_t h\\right)^2 + 32c^2\\,t^2\\,x^4\\left(\\partial_x h\\right)^2 + 8c^2\\,t^2\\,x^4\\left(\\partial_y h\\right)^2 + 8c^2\\,t^2\\,x^4\\left(\\partial_z h\\right)^2 + 32c\\,t\\,x^6\\,\\partial_t\\partial_x h\\,\\partial_x h + 16c\\,t\\,x^6\\,\\partial_t\\partial_y h\\,\\partial_y h + 16c\\,t\\,x^6\\,\\partial_t\\partial_z h\\,\\partial_z h + 32c\\,t\\,x^5\\,\\partial_t h\\,\\partial_x h + 16x^6\\left(\\partial_x h\\right)^2 + 8x^6\\left(\\partial_y h\\right)^2 + 8x^6\\left(\\partial_z h\\right)^2}{\\left(4h^2\\,c^2\\,t^2 - 4h\\,c^2\\,t^2 + c^2\\,t^2 + x^2\\right)^4}"
+        },
+        {
+          "id": "polar",
+          "name": "Polar",
+          "coordinates": [
+            "\\lambda",
+            "\\xi",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "\\lambda \\in [0, 2\\pi)",
+            "\\xi \\in (0, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\cos\\lambda = 0,\\; h = \\tfrac{1}{2} \\;\\text{(curvature singularities)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "h = h(\\xi,y,z)",
+              "description": "Top hat function, dimensionless, an arbitrary function of $\\xi$, $y$, and $z$: 1 inside the bubble and 0 outside it, with the wall wherever it falls between. A bubble whose $h$ does not depend on $\\lambda$ runs round a circle of the plane of $t$ and $x$, as Tippett and Tsang's own does: $h = \\tfrac{1}{2} + \\tfrac{1}{2}\\tanh\\alpha\\left[R^4 - y^4 - z^4 - (\\xi^2 - A^2)^2\\right]$, a rounded box of size $R$ whose centre stays on $\\xi = A$, with $A$ the radius of that circle and $\\alpha$ the sharpness of the wall."
+            }
+          ],
+          "convention": "We use the coordinates $(\\lambda, \\xi, y, z)$ of Tippett and Tsang's interior over the whole spacetime, with $ct = \\xi\\sin\\lambda$ and $x = \\xi\\cos\\lambda$, so $\\lambda$ is an angle and $\\xi$, $y$, and $z$ are lengths, and the top hat function $h$ is dimensionless. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\left(h + (1 - h)\\cos(2\\lambda)\\right)\\left(-\\xi^2d\\lambda^2 + d\\xi^2\\right) - 2(1 - h)\\xi\\sin(2\\lambda)\\,d\\lambda\\,d\\xi + dy^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\lambda",
+                "\\lambda"
+              ],
+              "value": "-\\xi^2\\left(1 - 2(1 - h)\\sin^2\\lambda\\right)"
+            },
+            {
+              "indices": [
+                "\\lambda",
+                "\\xi"
+              ],
+              "value": "-2(1 - h)\\xi\\sin\\lambda\\cos\\lambda"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\lambda"
+              ],
+              "value": "-2(1 - h)\\xi\\sin\\lambda\\cos\\lambda"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "\\left(1 - 2(1 - h)\\sin^2\\lambda\\right)"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{32h^3\\,\\xi\\,\\partial_y^2 h\\,\\sin^4\\lambda + 32h^3\\,\\xi\\,\\partial_z^2 h\\,\\sin^4\\lambda - 8h^2\\,\\xi\\left(\\partial_y h\\right)^2\\,\\sin^4\\lambda - 8h^2\\,\\xi\\left(\\partial_z h\\right)^2\\,\\sin^4\\lambda + 8h^2\\,\\xi\\,\\partial_\\xi^2 h\\,\\sin^4\\lambda - 48h^2\\,\\xi\\,\\partial_y^2 h\\,\\sin^4\\lambda - 48h^2\\,\\xi\\,\\partial_z^2 h\\,\\sin^4\\lambda - 8h\\,\\xi\\left(\\partial_\\xi h\\right)^2\\,\\sin^4\\lambda + 8h\\,\\xi\\left(\\partial_y h\\right)^2\\,\\sin^4\\lambda + 8h\\,\\xi\\left(\\partial_z h\\right)^2\\,\\sin^4\\lambda - 8h\\,\\xi\\,\\partial_\\xi^2 h\\,\\sin^4\\lambda + 8h\\,\\xi\\,\\partial_y^2 h\\,\\sin^2\\lambda + 16h\\,\\xi\\,\\partial_y^2 h\\,\\sin^4\\lambda + 8h\\,\\xi\\,\\partial_z^2 h\\,\\sin^2\\lambda + 16h\\,\\xi\\,\\partial_z^2 h\\,\\sin^4\\lambda - 4h\\,\\partial_\\xi h\\,\\sin^2\\lambda + 4\\xi\\left(\\partial_\\xi h\\right)^2\\,\\sin^4\\lambda + 6\\xi\\left(\\partial_y h\\right)^2\\,\\sin^2\\lambda - 8\\xi\\left(\\partial_y h\\right)^2\\,\\sin^4\\lambda + 6\\xi\\left(\\partial_z h\\right)^2\\,\\sin^2\\lambda - 8\\xi\\left(\\partial_z h\\right)^2\\,\\sin^4\\lambda + 2\\xi\\,\\partial_\\xi^2 h\\,\\sin^2\\lambda - 4\\xi\\,\\partial_y^2 h\\,\\sin^2\\lambda - 4\\xi\\,\\partial_z^2 h\\,\\sin^2\\lambda - 2\\partial_\\xi h\\,\\sin^2\\lambda + 4\\partial_\\xi h}{\\xi\\left(4h^2\\sin^2\\lambda - 4h\\sin^2\\lambda + 1\\right)^2}",
+          "kretschmann": "K = \\dfrac{1024h^6\\,\\xi^2\\left(\\partial_y\\partial_z h\\right)^2\\,\\sin^8\\lambda + 512h^6\\,\\xi^2\\left(\\partial_y^2 h\\right)^2\\,\\sin^8\\lambda + 512h^6\\,\\xi^2\\left(\\partial_z^2 h\\right)^2\\,\\sin^8\\lambda - 1024h^5\\,\\xi^2\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h\\,\\sin^8\\lambda - 512h^5\\,\\xi^2\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h\\,\\sin^8\\lambda - 512h^5\\,\\xi^2\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h\\,\\sin^8\\lambda + 256h^5\\,\\xi^2\\left(\\partial_\\xi\\partial_y h\\right)^2\\,\\sin^8\\lambda + 256h^5\\,\\xi^2\\left(\\partial_\\xi\\partial_z h\\right)^2\\,\\sin^8\\lambda - 3072h^5\\,\\xi^2\\left(\\partial_y\\partial_z h\\right)^2\\,\\sin^8\\lambda - 1536h^5\\,\\xi^2\\left(\\partial_y^2 h\\right)^2\\,\\sin^8\\lambda - 1536h^5\\,\\xi^2\\left(\\partial_z^2 h\\right)^2\\,\\sin^8\\lambda - 512h^4\\,\\xi^2\\,\\partial_\\xi h\\,\\partial_\\xi\\partial_y h\\,\\partial_y h\\,\\sin^8\\lambda - 512h^4\\,\\xi^2\\,\\partial_\\xi h\\,\\partial_\\xi\\partial_z h\\,\\partial_z h\\,\\sin^8\\lambda + 2560h^4\\,\\xi^2\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h\\,\\sin^8\\lambda + 384h^4\\,\\xi^2\\left(\\partial_y h\\right)^2\\left(\\partial_z h\\right)^2\\,\\sin^8\\lambda + 128h^4\\,\\xi^2\\,\\partial_\\xi^2 h\\left(\\partial_y h\\right)^2\\,\\sin^8\\lambda + 128h^4\\,\\xi^2\\,\\partial_\\xi^2 h\\left(\\partial_z h\\right)^2\\,\\sin^8\\lambda + 1280h^4\\,\\xi^2\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h\\,\\sin^8\\lambda + 1280h^4\\,\\xi^2\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h\\,\\sin^8\\lambda - 128h^4\\,\\xi^2\\left(\\partial_\\xi\\partial_y h\\right)^2\\,\\sin^6\\lambda - 512h^4\\,\\xi^2\\left(\\partial_\\xi\\partial_y h\\right)^2\\,\\sin^8\\lambda - 128h^4\\,\\xi^2\\left(\\partial_\\xi\\partial_z h\\right)^2\\,\\sin^6\\lambda - 512h^4\\,\\xi^2\\left(\\partial_\\xi\\partial_z h\\right)^2\\,\\sin^8\\lambda + 64h^4\\,\\xi^2\\left(\\partial_\\xi^2 h\\right)^2\\,\\sin^8\\lambda + 192h^4\\,\\xi^2\\left(\\partial_y h\\right)^4\\,\\sin^8\\lambda + 256h^4\\,\\xi^2\\left(\\partial_y\\partial_z h\\right)^2\\,\\sin^6\\lambda + 3584h^4\\,\\xi^2\\left(\\partial_y\\partial_z h\\right)^2\\,\\sin^8\\lambda + 128h^4\\,\\xi^2\\left(\\partial_y^2 h\\right)^2\\,\\sin^6\\lambda + 1792h^4\\,\\xi^2\\left(\\partial_y^2 h\\right)^2\\,\\sin^8\\lambda + 192h^4\\,\\xi^2\\left(\\partial_z h\\right)^4\\,\\sin^8\\lambda + 128h^4\\,\\xi^2\\left(\\partial_z^2 h\\right)^2\\,\\sin^6\\lambda + 1792h^4\\,\\xi^2\\left(\\partial_z^2 h\\right)^2\\,\\sin^8\\lambda - 256h^4\\,\\xi\\,\\partial_\\xi\\partial_y h\\,\\partial_y h\\,\\sin^6\\lambda - 256h^4\\,\\xi\\,\\partial_\\xi\\partial_z h\\,\\partial_z h\\,\\sin^6\\lambda + 256h^3\\,\\xi^2\\,\\partial_\\xi h\\,\\partial_\\xi\\partial_y h\\,\\partial_y h\\,\\sin^6\\lambda + 768h^3\\,\\xi^2\\,\\partial_\\xi h\\,\\partial_\\xi\\partial_y h\\,\\partial_y h\\,\\sin^8\\lambda + 256h^3\\,\\xi^2\\,\\partial_\\xi h\\,\\partial_\\xi\\partial_z h\\,\\partial_z h\\,\\sin^6\\lambda + 768h^3\\,\\xi^2\\,\\partial_\\xi h\\,\\partial_\\xi\\partial_z h\\,\\partial_z h\\,\\sin^8\\lambda + 512h^3\\,\\xi^2\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h\\,\\sin^6\\lambda - 3072h^3\\,\\xi^2\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h\\,\\sin^8\\lambda + 128h^3\\,\\xi^2\\left(\\partial_\\xi h\\right)^2\\left(\\partial_y h\\right)^2\\,\\sin^8\\lambda + 128h^3\\,\\xi^2\\left(\\partial_\\xi h\\right)^2\\left(\\partial_z h\\right)^2\\,\\sin^8\\lambda - 768h^3\\,\\xi^2\\left(\\partial_y h\\right)^2\\left(\\partial_z h\\right)^2\\,\\sin^8\\lambda - 256h^3\\,\\xi^2\\,\\partial_\\xi^2 h\\left(\\partial_y h\\right)^2\\,\\sin^8\\lambda - 256h^3\\,\\xi^2\\,\\partial_\\xi^2 h\\left(\\partial_z h\\right)^2\\,\\sin^8\\lambda - 128h^3\\,\\xi^2\\left(\\partial_\\xi h\\right)^2\\,\\partial_\\xi^2 h\\,\\sin^8\\lambda + 256h^3\\,\\xi^2\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h\\,\\sin^6\\lambda - 1536h^3\\,\\xi^2\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h\\,\\sin^8\\lambda + 256h^3\\,\\xi^2\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h\\,\\sin^6\\lambda - 1536h^3\\,\\xi^2\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h\\,\\sin^8\\lambda + 384h^3\\,\\xi^2\\left(\\partial_\\xi\\partial_y h\\right)^2\\,\\sin^6\\lambda + 256h^3\\,\\xi^2\\left(\\partial_\\xi\\partial_y h\\right)^2\\,\\sin^8\\lambda + 384h^3\\,\\xi^2\\left(\\partial_\\xi\\partial_z h\\right)^2\\,\\sin^6\\lambda + 256h^3\\,\\xi^2\\left(\\partial_\\xi\\partial_z h\\right)^2\\,\\sin^8\\lambda - 128h^3\\,\\xi^2\\left(\\partial_\\xi^2 h\\right)^2\\,\\sin^8\\lambda - 384h^3\\,\\xi^2\\left(\\partial_y h\\right)^4\\,\\sin^8\\lambda - 512h^3\\,\\xi^2\\left(\\partial_y\\partial_z h\\right)^2\\,\\sin^6\\lambda - 2048h^3\\,\\xi^2\\left(\\partial_y\\partial_z h\\right)^2\\,\\sin^8\\lambda - 256h^3\\,\\xi^2\\left(\\partial_y^2 h\\right)^2\\,\\sin^6\\lambda - 1024h^3\\,\\xi^2\\left(\\partial_y^2 h\\right)^2\\,\\sin^8\\lambda - 384h^3\\,\\xi^2\\left(\\partial_z h\\right)^4\\,\\sin^8\\lambda - 256h^3\\,\\xi^2\\left(\\partial_z^2 h\\right)^2\\,\\sin^6\\lambda - 1024h^3\\,\\xi^2\\left(\\partial_z^2 h\\right)^2\\,\\sin^8\\lambda + 192h^3\\,\\xi\\,\\partial_\\xi h\\left(\\partial_y h\\right)^2\\,\\sin^6\\lambda + 192h^3\\,\\xi\\,\\partial_\\xi h\\left(\\partial_z h\\right)^2\\,\\sin^6\\lambda - 64h^3\\,\\xi\\,\\partial_\\xi h\\,\\partial_\\xi^2 h\\,\\sin^6\\lambda + 128h^3\\,\\xi\\,\\partial_\\xi\\partial_y h\\,\\partial_y h\\,\\sin^4\\lambda + 384h^3\\,\\xi\\,\\partial_\\xi\\partial_y h\\,\\partial_y h\\,\\sin^6\\lambda + 128h^3\\,\\xi\\,\\partial_\\xi\\partial_z h\\,\\partial_z h\\,\\sin^4\\lambda + 384h^3\\,\\xi\\,\\partial_\\xi\\partial_z h\\,\\partial_z h\\,\\sin^6\\lambda + 64h^3\\left(\\partial_y h\\right)^2\\,\\sin^6\\lambda + 64h^3\\left(\\partial_z h\\right)^2\\,\\sin^6\\lambda - 512h^2\\,\\xi^2\\,\\partial_\\xi h\\,\\partial_\\xi\\partial_y h\\,\\partial_y h\\,\\sin^6\\lambda - 256h^2\\,\\xi^2\\,\\partial_\\xi h\\,\\partial_\\xi\\partial_y h\\,\\partial_y h\\,\\sin^8\\lambda - 512h^2\\,\\xi^2\\,\\partial_\\xi h\\,\\partial_\\xi\\partial_z h\\,\\partial_z h\\,\\sin^6\\lambda - 256h^2\\,\\xi^2\\,\\partial_\\xi h\\,\\partial_\\xi\\partial_z h\\,\\partial_z h\\,\\sin^8\\lambda - 768h^2\\,\\xi^2\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h\\,\\sin^6\\lambda + 2048h^2\\,\\xi^2\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h\\,\\sin^8\\lambda - 128h^2\\,\\xi^2\\left(\\partial_\\xi h\\right)^2\\left(\\partial_y h\\right)^2\\,\\sin^6\\lambda - 64h^2\\,\\xi^2\\left(\\partial_\\xi h\\right)^2\\left(\\partial_y h\\right)^2\\,\\sin^8\\lambda - 128h^2\\,\\xi^2\\left(\\partial_\\xi h\\right)^2\\left(\\partial_z h\\right)^2\\,\\sin^6\\lambda - 64h^2\\,\\xi^2\\left(\\partial_\\xi h\\right)^2\\left(\\partial_z h\\right)^2\\,\\sin^8\\lambda - 320h^2\\,\\xi^2\\left(\\partial_y h\\right)^2\\left(\\partial_z h\\right)^2\\,\\sin^6\\lambda + 896h^2\\,\\xi^2\\left(\\partial_y h\\right)^2\\left(\\partial_z h\\right)^2\\,\\sin^8\\lambda + 64h^2\\,\\xi^2\\,\\partial_\\xi^2 h\\left(\\partial_y h\\right)^2\\,\\sin^6\\lambda + 128h^2\\,\\xi^2\\,\\partial_\\xi^2 h\\left(\\partial_y h\\right)^2\\,\\sin^8\\lambda + 64h^2\\,\\xi^2\\,\\partial_\\xi^2 h\\left(\\partial_z h\\right)^2\\,\\sin^6\\lambda + 128h^2\\,\\xi^2\\,\\partial_\\xi^2 h\\left(\\partial_z h\\right)^2\\,\\sin^8\\lambda + 192h^2\\,\\xi^2\\left(\\partial_\\xi h\\right)^2\\,\\partial_\\xi^2 h\\,\\sin^8\\lambda - 384h^2\\,\\xi^2\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h\\,\\sin^6\\lambda + 1024h^2\\,\\xi^2\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h\\,\\sin^8\\lambda - 384h^2\\,\\xi^2\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h\\,\\sin^6\\lambda + 1024h^2\\,\\xi^2\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h\\,\\sin^8\\lambda + 64h^2\\,\\xi^2\\left(\\partial_\\xi h\\right)^4\\,\\sin^8\\lambda - 64h^2\\,\\xi^2\\left(\\partial_\\xi\\partial_y h\\right)^2\\,\\sin^4\\lambda - 256h^2\\,\\xi^2\\left(\\partial_\\xi\\partial_y h\\right)^2\\,\\sin^6\\lambda - 64h^2\\,\\xi^2\\left(\\partial_\\xi\\partial_z h\\right)^2\\,\\sin^4\\lambda - 256h^2\\,\\xi^2\\left(\\partial_\\xi\\partial_z h\\right)^2\\,\\sin^6\\lambda + 32h^2\\,\\xi^2\\left(\\partial_\\xi^2 h\\right)^2\\,\\sin^6\\lambda + 64h^2\\,\\xi^2\\left(\\partial_\\xi^2 h\\right)^2\\,\\sin^8\\lambda - 160h^2\\,\\xi^2\\left(\\partial_y h\\right)^4\\,\\sin^6\\lambda + 448h^2\\,\\xi^2\\left(\\partial_y h\\right)^4\\,\\sin^8\\lambda - 64h^2\\,\\xi^2\\left(\\partial_y\\partial_z h\\right)^2\\,\\sin^4\\lambda + 512h^2\\,\\xi^2\\left(\\partial_y\\partial_z h\\right)^2\\,\\sin^6\\lambda + 512h^2\\,\\xi^2\\left(\\partial_y\\partial_z h\\right)^2\\,\\sin^8\\lambda - 32h^2\\,\\xi^2\\left(\\partial_y^2 h\\right)^2\\,\\sin^4\\lambda + 256h^2\\,\\xi^2\\left(\\partial_y^2 h\\right)^2\\,\\sin^6\\lambda + 256h^2\\,\\xi^2\\left(\\partial_y^2 h\\right)^2\\,\\sin^8\\lambda - 160h^2\\,\\xi^2\\left(\\partial_z h\\right)^4\\,\\sin^6\\lambda + 448h^2\\,\\xi^2\\left(\\partial_z h\\right)^4\\,\\sin^8\\lambda - 32h^2\\,\\xi^2\\left(\\partial_z^2 h\\right)^2\\,\\sin^4\\lambda + 256h^2\\,\\xi^2\\left(\\partial_z^2 h\\right)^2\\,\\sin^6\\lambda + 256h^2\\,\\xi^2\\left(\\partial_z^2 h\\right)^2\\,\\sin^8\\lambda - 64h^2\\,\\xi\\,\\partial_\\xi h\\left(\\partial_y h\\right)^2\\,\\sin^4\\lambda - 224h^2\\,\\xi\\,\\partial_\\xi h\\left(\\partial_y h\\right)^2\\,\\sin^6\\lambda - 64h^2\\,\\xi\\,\\partial_\\xi h\\left(\\partial_z h\\right)^2\\,\\sin^4\\lambda - 224h^2\\,\\xi\\,\\partial_\\xi h\\left(\\partial_z h\\right)^2\\,\\sin^6\\lambda + 64h^2\\,\\xi\\,\\partial_\\xi h\\,\\partial_\\xi^2 h\\,\\sin^4\\lambda + 32h^2\\,\\xi\\,\\partial_\\xi h\\,\\partial_\\xi^2 h\\,\\sin^6\\lambda - 256h^2\\,\\xi\\,\\partial_\\xi\\partial_y h\\,\\partial_y h\\,\\sin^4\\lambda - 128h^2\\,\\xi\\,\\partial_\\xi\\partial_y h\\,\\partial_y h\\,\\sin^6\\lambda - 256h^2\\,\\xi\\,\\partial_\\xi\\partial_z h\\,\\partial_z h\\,\\sin^4\\lambda - 128h^2\\,\\xi\\,\\partial_\\xi\\partial_z h\\,\\partial_z h\\,\\sin^6\\lambda + 64h^2\\,\\xi\\left(\\partial_\\xi h\\right)^3\\,\\sin^6\\lambda + 16h^2\\left(\\partial_\\xi h\\right)^2\\,\\sin^4\\lambda - 32h^2\\left(\\partial_y h\\right)^2\\,\\sin^4\\lambda - 64h^2\\left(\\partial_y h\\right)^2\\,\\sin^6\\lambda - 32h^2\\left(\\partial_z h\\right)^2\\,\\sin^4\\lambda - 64h^2\\left(\\partial_z h\\right)^2\\,\\sin^6\\lambda + 64h\\,\\xi^2\\,\\partial_\\xi h\\,\\partial_\\xi\\partial_y h\\,\\partial_y h\\,\\sin^4\\lambda + 192h\\,\\xi^2\\,\\partial_\\xi h\\,\\partial_\\xi\\partial_y h\\,\\partial_y h\\,\\sin^6\\lambda + 64h\\,\\xi^2\\,\\partial_\\xi h\\,\\partial_\\xi\\partial_z h\\,\\partial_z h\\,\\sin^4\\lambda + 192h\\,\\xi^2\\,\\partial_\\xi h\\,\\partial_\\xi\\partial_z h\\,\\partial_z h\\,\\sin^6\\lambda + 192h\\,\\xi^2\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h\\,\\sin^4\\lambda - 512h\\,\\xi^2\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h\\,\\sin^8\\lambda + 96h\\,\\xi^2\\left(\\partial_\\xi h\\right)^2\\left(\\partial_y h\\right)^2\\,\\sin^6\\lambda + 96h\\,\\xi^2\\left(\\partial_\\xi h\\right)^2\\left(\\partial_z h\\right)^2\\,\\sin^6\\lambda + 320h\\,\\xi^2\\left(\\partial_y h\\right)^2\\left(\\partial_z h\\right)^2\\,\\sin^6\\lambda - 512h\\,\\xi^2\\left(\\partial_y h\\right)^2\\left(\\partial_z h\\right)^2\\,\\sin^8\\lambda - 64h\\,\\xi^2\\,\\partial_\\xi^2 h\\left(\\partial_y h\\right)^2\\,\\sin^6\\lambda - 64h\\,\\xi^2\\,\\partial_\\xi^2 h\\left(\\partial_z h\\right)^2\\,\\sin^6\\lambda - 32h\\,\\xi^2\\left(\\partial_\\xi h\\right)^2\\,\\partial_\\xi^2 h\\,\\sin^6\\lambda - 64h\\,\\xi^2\\left(\\partial_\\xi h\\right)^2\\,\\partial_\\xi^2 h\\,\\sin^8\\lambda + 96h\\,\\xi^2\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h\\,\\sin^4\\lambda - 256h\\,\\xi^2\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h\\,\\sin^8\\lambda + 96h\\,\\xi^2\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h\\,\\sin^4\\lambda - 256h\\,\\xi^2\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h\\,\\sin^8\\lambda - 64h\\,\\xi^2\\left(\\partial_\\xi h\\right)^4\\,\\sin^8\\lambda + 80h\\,\\xi^2\\left(\\partial_\\xi\\partial_y h\\right)^2\\,\\sin^4\\lambda + 80h\\,\\xi^2\\left(\\partial_\\xi\\partial_z h\\right)^2\\,\\sin^4\\lambda - 32h\\,\\xi^2\\left(\\partial_\\xi^2 h\\right)^2\\,\\sin^6\\lambda + 160h\\,\\xi^2\\left(\\partial_y h\\right)^4\\,\\sin^6\\lambda - 256h\\,\\xi^2\\left(\\partial_y h\\right)^4\\,\\sin^8\\lambda + 64h\\,\\xi^2\\left(\\partial_y\\partial_z h\\right)^2\\,\\sin^4\\lambda - 256h\\,\\xi^2\\left(\\partial_y\\partial_z h\\right)^2\\,\\sin^6\\lambda + 32h\\,\\xi^2\\left(\\partial_y^2 h\\right)^2\\,\\sin^4\\lambda - 128h\\,\\xi^2\\left(\\partial_y^2 h\\right)^2\\,\\sin^6\\lambda + 160h\\,\\xi^2\\left(\\partial_z h\\right)^4\\,\\sin^6\\lambda - 256h\\,\\xi^2\\left(\\partial_z h\\right)^4\\,\\sin^8\\lambda + 32h\\,\\xi^2\\left(\\partial_z^2 h\\right)^2\\,\\sin^4\\lambda - 128h\\,\\xi^2\\left(\\partial_z^2 h\\right)^2\\,\\sin^6\\lambda + 48h\\,\\xi\\,\\partial_\\xi h\\left(\\partial_y h\\right)^2\\,\\sin^4\\lambda + 96h\\,\\xi\\,\\partial_\\xi h\\left(\\partial_y h\\right)^2\\,\\sin^6\\lambda + 48h\\,\\xi\\,\\partial_\\xi h\\left(\\partial_z h\\right)^2\\,\\sin^4\\lambda + 96h\\,\\xi\\,\\partial_\\xi h\\left(\\partial_z h\\right)^2\\,\\sin^6\\lambda - 80h\\,\\xi\\,\\partial_\\xi h\\,\\partial_\\xi^2 h\\,\\sin^4\\lambda + 32h\\,\\xi\\,\\partial_\\xi h\\,\\partial_\\xi^2 h\\,\\sin^6\\lambda + 32h\\,\\xi\\,\\partial_\\xi\\partial_y h\\,\\partial_y h\\,\\sin^2\\lambda + 96h\\,\\xi\\,\\partial_\\xi\\partial_y h\\,\\partial_y h\\,\\sin^4\\lambda + 32h\\,\\xi\\,\\partial_\\xi\\partial_z h\\,\\partial_z h\\,\\sin^2\\lambda + 96h\\,\\xi\\,\\partial_\\xi\\partial_z h\\,\\partial_z h\\,\\sin^4\\lambda - 64h\\,\\xi\\left(\\partial_\\xi h\\right)^3\\,\\sin^4\\lambda - 32h\\left(\\partial_\\xi h\\right)^2\\,\\sin^2\\lambda + 16h\\left(\\partial_\\xi h\\right)^2\\,\\sin^4\\lambda - 16h\\left(\\partial_y h\\right)^2\\,\\sin^2\\lambda + 64h\\left(\\partial_y h\\right)^2\\,\\sin^4\\lambda - 16h\\left(\\partial_z h\\right)^2\\,\\sin^2\\lambda + 64h\\left(\\partial_z h\\right)^2\\,\\sin^4\\lambda - 32\\xi^2\\,\\partial_\\xi h\\,\\partial_\\xi\\partial_y h\\,\\partial_y h\\,\\sin^4\\lambda - 32\\xi^2\\,\\partial_\\xi h\\,\\partial_\\xi\\partial_z h\\,\\partial_z h\\,\\sin^4\\lambda - 96\\xi^2\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h\\,\\sin^4\\lambda + 128\\xi^2\\,\\partial_y h\\,\\partial_y\\partial_z h\\,\\partial_z h\\,\\sin^6\\lambda - 16\\xi^2\\left(\\partial_\\xi h\\right)^2\\left(\\partial_y h\\right)^2\\,\\sin^6\\lambda - 16\\xi^2\\left(\\partial_\\xi h\\right)^2\\left(\\partial_z h\\right)^2\\,\\sin^6\\lambda + 24\\xi^2\\left(\\partial_y h\\right)^2\\left(\\partial_z h\\right)^2\\,\\sin^4\\lambda - 128\\xi^2\\left(\\partial_y h\\right)^2\\left(\\partial_z h\\right)^2\\,\\sin^6\\lambda + 128\\xi^2\\left(\\partial_y h\\right)^2\\left(\\partial_z h\\right)^2\\,\\sin^8\\lambda + 8\\xi^2\\,\\partial_\\xi^2 h\\left(\\partial_y h\\right)^2\\,\\sin^4\\lambda + 8\\xi^2\\,\\partial_\\xi^2 h\\left(\\partial_z h\\right)^2\\,\\sin^4\\lambda + 16\\xi^2\\left(\\partial_\\xi h\\right)^2\\,\\partial_\\xi^2 h\\,\\sin^6\\lambda - 48\\xi^2\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h\\,\\sin^4\\lambda + 64\\xi^2\\left(\\partial_y h\\right)^2\\,\\partial_y^2 h\\,\\sin^6\\lambda - 48\\xi^2\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h\\,\\sin^4\\lambda + 64\\xi^2\\left(\\partial_z h\\right)^2\\,\\partial_z^2 h\\,\\sin^6\\lambda + 16\\xi^2\\left(\\partial_\\xi h\\right)^4\\,\\sin^8\\lambda - 8\\xi^2\\left(\\partial_\\xi\\partial_y h\\right)^2\\,\\sin^2\\lambda - 8\\xi^2\\left(\\partial_\\xi\\partial_z h\\right)^2\\,\\sin^2\\lambda + 4\\xi^2\\left(\\partial_\\xi^2 h\\right)^2\\,\\sin^4\\lambda + 12\\xi^2\\left(\\partial_y h\\right)^4\\,\\sin^4\\lambda - 64\\xi^2\\left(\\partial_y h\\right)^4\\,\\sin^6\\lambda + 64\\xi^2\\left(\\partial_y h\\right)^4\\,\\sin^8\\lambda - 16\\xi^2\\left(\\partial_y\\partial_z h\\right)^2\\,\\sin^2\\lambda + 32\\xi^2\\left(\\partial_y\\partial_z h\\right)^2\\,\\sin^4\\lambda - 8\\xi^2\\left(\\partial_y^2 h\\right)^2\\,\\sin^2\\lambda + 16\\xi^2\\left(\\partial_y^2 h\\right)^2\\,\\sin^4\\lambda + 12\\xi^2\\left(\\partial_z h\\right)^4\\,\\sin^4\\lambda - 64\\xi^2\\left(\\partial_z h\\right)^4\\,\\sin^6\\lambda + 64\\xi^2\\left(\\partial_z h\\right)^4\\,\\sin^8\\lambda - 8\\xi^2\\left(\\partial_z^2 h\\right)^2\\,\\sin^2\\lambda + 16\\xi^2\\left(\\partial_z^2 h\\right)^2\\,\\sin^4\\lambda + 16\\xi\\,\\partial_\\xi h\\left(\\partial_y h\\right)^2\\,\\sin^2\\lambda - 40\\xi\\,\\partial_\\xi h\\left(\\partial_y h\\right)^2\\,\\sin^4\\lambda + 16\\xi\\,\\partial_\\xi h\\left(\\partial_z h\\right)^2\\,\\sin^2\\lambda - 40\\xi\\,\\partial_\\xi h\\left(\\partial_z h\\right)^2\\,\\sin^4\\lambda + 16\\xi\\,\\partial_\\xi h\\,\\partial_\\xi^2 h\\,\\sin^2\\lambda - 8\\xi\\,\\partial_\\xi h\\,\\partial_\\xi^2 h\\,\\sin^4\\lambda - 16\\xi\\,\\partial_\\xi\\partial_y h\\,\\partial_y h\\,\\sin^2\\lambda - 16\\xi\\,\\partial_\\xi\\partial_z h\\,\\partial_z h\\,\\sin^2\\lambda + 32\\xi\\left(\\partial_\\xi h\\right)^3\\,\\sin^4\\lambda - 16\\xi\\left(\\partial_\\xi h\\right)^3\\,\\sin^6\\lambda - 16\\left(\\partial_\\xi h\\right)^2\\,\\sin^2\\lambda + 4\\left(\\partial_\\xi h\\right)^2\\,\\sin^4\\lambda - 16\\left(\\partial_y h\\right)^2\\,\\sin^2\\lambda - 16\\left(\\partial_z h\\right)^2\\,\\sin^2\\lambda + 16\\left(\\partial_\\xi h\\right)^2 + 8\\left(\\partial_y h\\right)^2 + 8\\left(\\partial_z h\\right)^2}{\\xi^2\\left(4h^2\\sin^2\\lambda - 4h\\sin^2\\lambda + 1\\right)^4}"
+        },
+        {
+          "id": "interior",
+          "name": "Bubble Interior",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "(t, x) \\neq (0, 0)",
+            "\\text{flat: every curvature tensor vanishes}"
+          ],
+          "parameters": [],
+          "convention": "We use Tippett and Tsang's coordinates $(t, x, y, z)$ inside the bubble, where $h = 1$, with $t$ carrying dimensions of time and $x$, $y$, and $z$ lengths. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\sigma$ for an affine parameter $\\sigma$.",
+          "line_element": "ds^2 = \\dfrac{x^2 - c^2t^2}{x^2 + c^2t^2}\\left(-c^2dt^2 + dx^2\\right) + \\dfrac{4x\\,ct}{x^2 + c^2t^2}\\,c\\,dt\\,dx + dy^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{x^2 - c^2t^2}{x^2 + c^2t^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{x^2 - c^2t^2}{x^2 + c^2t^2}"
+            },
+            {
+              "indices": [
+                "t",
+                "x"
+              ],
+              "value": "\\dfrac{2x\\,ct}{x^2 + c^2t^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "t"
+              ],
+              "value": "\\dfrac{2x\\,ct}{x^2 + c^2t^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "rindler",
+          "name": "Rindler",
+          "coordinates": [
+            "\\lambda",
+            "\\xi",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "\\lambda \\in [0, 2\\pi)",
+            "\\xi \\in (0, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\lambda \\sim \\lambda + 2\\pi \\;\\text{(closed timelike curves)}",
+            "\\text{flat: every curvature tensor vanishes}"
+          ],
+          "parameters": [],
+          "convention": "We use coordinates $(\\lambda, \\xi, y, z)$ inside the bubble, with $ct = \\xi\\sin\\lambda$ and $x = \\xi\\cos\\lambda$, so $\\lambda$ is an angle and $\\xi$, $y$, and $z$ are lengths. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\xi^2d\\lambda^2 + d\\xi^2 + dy^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\lambda",
+                "\\lambda"
+              ],
+              "value": "-\\xi^2"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
         }
       ]
     },
