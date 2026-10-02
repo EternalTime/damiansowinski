@@ -3506,6 +3506,121 @@ def tangherlini(ck, src):
     return views
 
 
+# The Gregory-Laflamme ripple drawn on the black string: Lehner and Pretorius's circle, 10 r_s long,
+# with a ripple of 0.02 r_s in the horizon's radius at v = 0, and the advanced times v/r_s of its moments.
+STRING_LENGTH, STRING_RIPPLE = 10.0, 0.02
+STRING_MOMENTS = (0.0, 14.0, 28.0, 42.0)
+
+
+def black_string(ck, src):
+    """The black string at r_s = 1, and in six dimensions at r_h = 1.
+
+    Across the string, the plane of r and phi at one t and one z is Schwarzschild's equator,
+    Flamm's paraboloid z^2 = 4 r_s (r - r_s), and in six dimensions Tangherlini's of five, the
+    catenoid r = r_h cosh(z/r_h), each through the bifurcation sphere into the other exterior.
+
+    Along the string, the horizon at one advanced time v is the surface of z and phi at r = r_s
+    in the ingoing Eddington-Finkelstein chart, a cylinder of radius r_s. Gregory and Laflamme's
+    unstable mode ripples it: to first order the horizon's areal radius is
+    r_s (1 + a cos kz) with a growing as exp(Omega v/c), and since the mode has no component
+    along z, the distance along the string stays dz. That is the metric dz^2 + r(z)^2 dphi^2 of
+    the surface r = r_s (1 + a cos kz) of constant v in the chart, where g_rr = 0, so the slice
+    is read from the published metric along that surface and climbs at sqrt(1 - (dr/dz)^2).
+    Drawn for the string of Lehner and Pretorius, wrapped on a circle of length 10 r_s, where
+    one mode fits, k = 2 pi/10 r_s; its growth rate comes from gregory_laflamme.py, which also
+    checks the mode against the linearised vacuum equations. The ripple starts at 0.02 r_s and
+    is followed to 0.29 r_s, a frame every r_s of v. Linear theory holds only while the ripple
+    is small; the string's later course is Lehner and Pretorius's cascade, which no linear
+    mode describes."""
+    import gregory_laflamme as gl
+    views = []
+    top, radii = 6.0, (1.5, 2, 3, 4, 5)
+    size = 2 * top
+    forms = {"across": lambda r: 2 * np.sqrt(np.maximum(r - 1, 0)), "six": lambda r: np.arccosh(np.maximum(r, 1.0))}
+    for vid, label, system, held, h, word in (
+            ("across", "Across the string", "static", {**EQUATOR, "z": 0}, "r_s", "five"),
+            ("six", "Across the string, six dimensions", "static_six", {"psi": "pi/2", **EQUATOR, "z": 0}, "r_h", "six")):
+        sl = Slice(src, "black_string", system, "r", "\\phi", {"t": 0, **held}, {h: 1})
+        rh = sl.horizons()[0]
+        ck.add(f"black string, {word} dimensions: the horizon is {h}", abs(rh - 1), 1e-12)
+        end = "the surface runs on to $r \\to \\infty$"
+        near = Piece("exterior", "sheet", sl, rh, top, 0.0, 1,
+                     (("throat", f"the throat $r = {h}$, the bifurcation sphere, where the other exterior begins"),
+                      ("edge", end)),
+                     [(rh, "horizon", f"$r = {h}$")] + [(r, "r", None) for r in radii] + [(top, "r", f"$r = 6\\,{h}$")],
+                     size)
+        far = Piece("other_exterior", "sheet2", sl, rh, top, 0.0, -1,
+                    (("throat", f"the throat $r = {h}$"), ("edge", end)),
+                    [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+        for p in (near, far):
+            ck.isometry(f"black string, {word} dimensions, {p.id}", p)
+            ck.form(f"black string, {word} dimensions, {p.id}, the closed form of z", p,
+                    lambda r, s=p.sense, f=forms[vid]: s * f(r), size)
+            ck.radius(f"black string, {word} dimensions, {p.id}, rho = r", p, lambda r: r, size)
+        ck.join(f"black string, {word} dimensions, the two sheets at the throat", near, rh, far, rh)
+        surface = Surface([near, far])
+        fig = figure_of([surface], {"sheet": "cover"}, size)
+        ring_label(fig, [0, 0, 0], rh, 0.0, f"$r = {h}$", dx=14)
+        ring_label(fig, [0, 0, 0], *near.at(3.0), f"$3\\,{h}$")
+        ring_label(fig, [0, 0, 0], *near.at(top), f"$6\\,{h}$")
+        fig.legend("fill", "cover", f"the exterior $r > {h}$ that $t$ and $r$ cover")
+        fig.legend("line", "r", f"$r$ constant, at $1.5$, $2$, $3$, $4$, $5$ and $6\\,{h}$")
+        fig.legend("line", "r2", "the same radii on the other exterior")
+        fig.legend("line", "horizon", f"the throat $r = {h}$, where the slice crosses the horizon")
+        fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+        angles = "$\\theta = \\pi/2$" if vid == "across" else "$\\psi = \\theta = \\pi/2$"
+        views.append(view(vid, label, f"${h}$", [surface], fig.done(),
+                          settings=f"${h} = 1$, the unit of every length, on the plane of $r$ and $\\phi$ "
+                                   f"({angles}, $z = 0$)."))
+
+    # The rippling horizon.
+    L, a0 = STRING_LENGTH, STRING_RIPPLE
+    k = 2 * math.pi / L
+    rate = gl.growth_rate(k)
+    ck.add("black string: Gregory and Laflamme's threshold is k r_s = 0.876", abs(round(gl.threshold(), 3) - gl.THRESHOLD), 0.0)
+    ck.add("black string: no mode grows on a circle of length 7 r_s, shorter than the critical 7.17 r_s",
+           0.0 if gl.growth_rate(2 * math.pi / 7.0) is None else 1.0, 0.0)
+    ck.add("black string: on a circle of length 10 r_s the mode grows at Omega = 0.0633 c/r_s", abs(round(rate, 4) - 0.0633), 0.0)
+    half = L / 2
+    marks = [(-half / 2, "r", None), (0.0, "r", None), (half / 2, "r", None)]
+    span = L
+
+    def moment(v):
+        a = a0 * math.exp(rate * v)
+        sl = Slice(src, "black_string", "eddington_finkelstein_ingoing", "z", "\\phi", {"v": repr(v), **EQUATOR},
+                   {"r_s": 1}, along={"r": f"1 + {a!r}*cos({k!r}*z)"})
+        lift = sl.rise(-half, 0.0)
+        tube = Piece("horizon", "sheet", sl, -half, half, -lift, 1,
+                     (("edge", "the neck at $z = -5\\,r_s$, one circle with the top edge on a string of length $10\\,r_s$"),
+                      ("edge", "the neck at $z = 5\\,r_s$, one circle with the bottom edge")),
+                     marks, span)
+        where = f"black string, the horizon at v = {v:g} r_s"
+        ck.isometry(where, tube)
+        ck.radius(f"{where}, rho = r_s (1 + a cos kz)", tube, lambda zz, a=a: 1 + a * np.cos(k * zz), span)
+        ck.add(f"{where}: the bulge stands at z = 0", abs(tube.at(0.0)[1]) / span, FORM)
+        ck.add(f"{where}: the length along the string is 10 r_s", abs(sl.proper(-half, half) - L) / L, ALONG)
+        return Surface([tube], label=f"$v = {v:g}\\,r_s$", time=v)
+
+    values, keys = movie_values(list(STRING_MOMENTS), 1.0)
+    frames = [moment(round(v, 9)) for v in values]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, span, meridians=12)
+    fig.legend("fill", "cover", "the horizon at one advanced time $v$, which $z$ and $\\phi$ cover")
+    fig.legend("line", "r", "$z$ constant, at $-2.5$, $0$ and $2.5\\,r_s$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    last = a0 * math.exp(rate * STRING_MOMENTS[-1])
+    ck.add("black string: the ripple is followed to 0.29 r_s", abs(round(last, 2) - 0.29), 0.0)
+    views.insert(1, view("ripple", "Along the string", "$r_s$", surfaces, fig.done(),
+                         movie=movie(frames, "$v$", [f.time for f in frames]),
+                         settings="$r_s = 1$, the unit of every length and of $v$, on the surface of $z$ and $\\phi$ "
+                                  "($\\theta = \\pi/2$) at one advanced time $v$, over one turn of a string wrapped on "
+                                  "a circle of length $10\\,r_s$.",
+                         input="the Gregory-Laflamme mode of wavelength $10\\,r_s$ in linear theory, the horizon's "
+                               "radius $r_s(1 + a\\cos kz)$ with $k = 2\\pi/10\\,r_s$ and $a = 0.02\\,e^{\\Omega v/c}$, "
+                               "$\\Omega = 0.0633\\,c/r_s$."))
+    return views
+
+
 def kaluza_klein_monopole(ck, src):
     """The Kaluza-Klein monopole's surface of r and x_5 on the half axis theta = 0 at t = 0, m = 1,
     in Gross and Perry's chart, where the potential 4m(1 - cos theta) d phi vanishes. On it the
@@ -7522,6 +7637,7 @@ DRAWN = {
     "nariai": nariai,
     "global_monopole": global_monopole,
     "tangherlini": tangherlini,
+    "black_string": black_string,
     "kaluza_klein_monopole": kaluza_klein_monopole,
     "dilaton_black_hole": dilaton_black_hole,
     "majumdar_papapetrou": majumdar_papapetrou,
@@ -8247,6 +8363,35 @@ CAPTIONS = {
         "$B$ the beta function, which it approaches as $r \\to \\infty$, as the slice does for every $D \\ge 6$.",
         "Every slice of constant $t$ passes through the bifurcation sphere $r = r_h$, where the circles are "
         "smallest, and runs on through it into a second exterior, the same surface turned over.",
+    ],
+    ("black_string", "across"): [
+        "The plane of $r$ and $\\phi$ ($\\theta = \\pi/2$, $z = 0$) of the black string at one moment of $t$, drawn as "
+        "a surface in flat space with every distance along it the metric distance. On it the metric is "
+        "Schwarzschild's, $dr^2/(1 - r_s/r) + r^2d\\phi^2$, so the surface is Flamm's paraboloid "
+        "$z^2 = 4r_s(r - r_s)$, the same at every $z$ along the string.",
+        "Every slice of constant $t$ passes through the bifurcation sphere $r = r_s$, where the circles are "
+        "smallest, and runs on through it into a second exterior, the same paraboloid turned over.",
+    ],
+    ("black_string", "ripple"): [
+        "The horizon of the black string along its length, the surface of $z$ and $\\phi$ ($\\theta = \\pi/2$) at one "
+        "advanced time $v$, drawn as a surface in flat space with every distance along it the metric distance. "
+        "The undisturbed horizon is a cylinder of radius $r_s$. A ripple of wavenumber $k$ grows on it when "
+        "$kr_s < 0.876$, a wavelength of more than $7.17\\,r_s$, and the horizon swells where $\\cos kz > 0$ and "
+        "thins where $\\cos kz < 0$.",
+        "The string is that of Lehner and Pretorius, wrapped on a circle of length $10\\,r_s$, so the top and "
+        "bottom edges are one circle and one unstable wavelength fits. In linear theory the ripple grows by a "
+        "factor $e$ every $15.8\\,r_s/c$ of advanced time. Once it is no longer small the bulge rounds into a "
+        "black hole of five dimensions and the neck thins into a string that ripples in its turn, the cascade "
+        "Lehner and Pretorius followed in their evolution.",
+    ],
+    ("black_string", "six"): [
+        "The plane of $r$ and $\\phi$ ($\\psi = \\theta = \\pi/2$, $z = 0$) of the black string in six dimensions "
+        "at one moment of $t$, drawn as a surface in flat space with every distance along it the metric "
+        "distance. On it the metric is $dr^2/(1 - r_h^2/r^2) + r^2d\\phi^2$, that of the Schwarzschild-Tangherlini "
+        "black hole of five dimensions, so the surface is the catenoid $r = r_h\\cosh(z/r_h)$, the same at every "
+        "$z$ along the string.",
+        "Every slice of constant $t$ passes through the bifurcation sphere $r = r_h$, where the circles are "
+        "smallest, and runs on through it into a second exterior, the same catenoid turned over.",
     ],
     ("global_monopole", "monopole"): [
         "The equatorial plane ($\\theta = \\pi/2$) around a global monopole with no mass at its centre, at one "

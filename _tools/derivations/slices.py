@@ -250,6 +250,17 @@ def tangherlini_t(sign):
     return [Mark(m, [np.column_stack([sign * (r + 0.5 * np.log((r - 1) / (r + 1))), r])])]
 
 
+def black_string_t(kerr_schild=False):
+    """The black string's static t = 0 across the string, r_s = 1, where the plane of the time and r
+    is Schwarzschild's: v = r + ln(r - 1) in the ingoing Eddington-Finkelstein chart, and
+    cT = v - r = ln(r - 1) in the Kerr-Schild chart, outside r_s, as far as the embedding reaches.
+    The rippled horizon is the perturbed string, another spacetime, and is marked on no drawing."""
+    m = moments("black_string", "across")[0]
+    lo, hi = m.reach("static", "r")
+    r = near(lo, hi)
+    return [Mark(m, [np.column_stack([np.log(r - 1) + (0 if kerr_schild else r), r])])]
+
+
 def novikov(R, tau):
     """A shell of dust released from rest at areal radius R at t = 0, r_s = 1, at its proper
     time tau: its areal radius r and its Schwarzschild t, from the cycloid
@@ -1046,6 +1057,15 @@ FLAT = {
     ("tangherlini", "eddington_finkelstein_outgoing", "chart"): lambda: tangherlini_t(-1),
     ("tangherlini", "spherical_six", "radial"): lambda: one(
         "tangherlini", lambda m: along(0.0, *m.reach("spherical_six", "r")), view_id="six"),
+    # The black string across the string, in five dimensions on its three charts and in six on its
+    # static chart; five and six are two spacetimes, each marked on its own charts alone.
+    ("black_string", "static", "radial"): lambda: one(
+        "black_string", lambda m: along(0.0, *m.reach("static", "r")), view_id="across"),
+    ("black_string", "eddington_finkelstein_ingoing", "finkelstein"): lambda: black_string_t(),
+    ("black_string", "eddington_finkelstein_ingoing", "chart"): lambda: black_string_t(),
+    ("black_string", "kerr_schild", "radial"): lambda: black_string_t(kerr_schild=True),
+    ("black_string", "static_six", "radial"): lambda: one(
+        "black_string", lambda m: along(0.0, *m.reach("static_six", "r")), view_id="six"),
     # The Kaluza-Klein monopole's cigar, the half axis theta = 0 at t = 0, on its plane of t and the radius
     # in each chart; the Taub-NUT radius is rho = r + 2m.
     ("kaluza_klein_monopole", "gross_perry", "radial"): lambda: one(

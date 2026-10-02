@@ -265,6 +265,46 @@
     "embedding": "7fea7a854b8ceca4"
   },
   {
+    "id": "black_string",
+    "name": "Black String",
+    "tags": [
+      "vacuum",
+      "vacuum solution",
+      "static",
+      "stationary",
+      "black string",
+      "black brane",
+      "p-brane",
+      "Gregory-Laflamme",
+      "Gregory-Laflamme instability",
+      "instability",
+      "Rayleigh-Plateau",
+      "black hole",
+      "horizon",
+      "event horizon",
+      "cylindrical horizon",
+      "singularity",
+      "curvature singularity",
+      "naked singularity",
+      "cosmic censorship",
+      "higher dimensions",
+      "extra dimensions",
+      "five-dimensional",
+      "six-dimensional",
+      "Kaluza-Klein",
+      "compact dimension",
+      "string theory",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "c511580861e3ff22",
+    "diagrams": "54fe7a1cf641db39",
+    "conformal": "ef75cb2ee29e15d6",
+    "embedding": "6f1faae1e35e650b"
+  },
+  {
     "id": "light_beam",
     "name": "Bonnor",
     "tags": [
@@ -817,7 +857,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "738811111ac2f276",
+    "version": "339a0bb98eacf507",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -1713,7 +1753,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "02368fc4baaf1836",
+    "version": "cd18cccf60ca957c",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -1845,7 +1885,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "31b930d6ff5edf9e",
+    "version": "48f4bd230e2386a6",
     "diagrams": "d1e087098b20d92d",
     "conformal": "94cab2e957646c35",
     "embedding": "68458b3281a24534"

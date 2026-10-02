@@ -55,6 +55,11 @@
       "id": "tangherlini",
       "kind": "family",
       "text": "A second static vacuum solution of gravity in five dimensions. Its 3-spheres are round and surround a horizon, and the monopole's are squashed and close smoothly at the nut."
+    },
+    {
+      "id": "black_string",
+      "kind": "family",
+      "text": "Another vacuum solution of five dimensions with one direction rolled into a circle. Seen from four dimensions it is Schwarzschild's black hole, where the monopole is a magnetic charge [gregory2012]."
     }
   ],
   "references": [
@@ -72,7 +77,8 @@
     "gibbonsperry1984",
     "ruback1986",
     "bombelli1987",
-    "townsend1995"
+    "townsend1995",
+    "gregory2012"
   ],
   "coordinates": [
     {
