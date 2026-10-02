@@ -119,6 +119,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent))
 import build_mfs_data as build  # noqa: E402
+import nm_disc  # noqa: E402
 import boson_star as bs  # noqa: E402
 import two_holes  # noqa: E402
 import null_rays as nr  # noqa: E402
@@ -9783,6 +9784,99 @@ def double_kerr(ck, src):
                           "with $dX^2 + dY^2 - dZ^2$.")]
 
 
+def neugebauer_meinel(ck, src):
+    """The plane of Neugebauer and Meinel's disc at one moment of t, for the disc of mu = 3 that the
+    spacetime diagrams draw, in units of its coordinate radius rho_0.
+
+    In Bardeen and Wagoner's form the slice has g_rhorho = e^(2 alpha) and circles of radius
+    rho e^(-nu), read here from the chart with the functions nm_disc.py evaluates from the theta
+    functions, null_rays.NM_PLANE. The circles do not grow steadily outward: the radius reaches
+    4.41 rho_0 at rho = 0.92 rho_0, falls to 4.07 rho_0 at rho = 1.20 rho_0, and grows again, the
+    beginning of the throat that the limit mu -> mu_0 draws out without bound. Where the circles
+    change faster than the distance across them, g_rhorho < (d(rho e^(-nu))/drho)^2, no surface of
+    revolution in flat space carries the slice, and that part is drawn in three dimensional Minkowski
+    space: from the centre out to the first level circle, and in a narrow band about the rim, where
+    the circles shrink fastest. The three level circles are found here, and the four pieces are
+    joined on them, each lying level there. The radius is checked against nm_disc's own table."""
+    fixed = {"t": 0, "z": 0}
+    sl = Slice(src, "neugebauer_meinel", "bardeen_wagoner", "\\rho", "\\phi", fixed, {}, functions=nr.NM_PLANE)
+    msl = Slice(src, "neugebauer_meinel", "bardeen_wagoner", "\\rho", "\\phi", fixed, {}, functions=nr.NM_PLANE,
+                space="minkowski")
+    name = "the Neugebauer-Meinel disc"
+    mu = nr.NM_MU
+    # The declared functions are tables, which sympy takes no limit of: slopes are read as numbers.
+    sl.numeric = msl.numeric = True
+
+    def defect(x):
+        return float(sl.defect_at(np.array([x]))[0])
+    levels = [float(brentq(defect, lo, hi, xtol=1e-14)) for lo, hi in ((0.5, 0.8), (0.9, 0.995), (1.001, 1.05))]
+    for level in levels:
+        ck.add(f"{name}: the surface lies level at the circle rho = {level:.3f}", abs(defect(level)) / float(sl.gxx_at(level)), 1e-10)
+    for one in (sl, msl):
+        one.slope = (lambda x, side, own=one.slope: own(x, side) * [1.0, 0.0] if x in levels else own(x, side))
+    top = 6.0
+    size = 2 * float(sl.rho_at(top))
+    ck.stops(f"{name}, inside the first level circle in flat space", sl, np.linspace(0.0, levels[0], 202)[1:-1])
+    ck.stops(f"{name}, the band about the rim in flat space", sl, np.linspace(levels[1], levels[2], 52)[1:-1])
+    for lo, hi, where in ((levels[0], levels[1], "between the level circles on the disc"), (levels[2], 60.0, "beyond the rim")):
+        inside = msl.defect_at(np.linspace(lo, hi, 402)[1:-1])
+        ck.add(f"{name}: {where} no surface in Minkowski space carries the slice", float(max(0.0, np.max(-inside))), 0.0)
+        if not np.all(inside > 0):
+            ck.items[-1]["ok"] = False
+
+    def radius(x):
+        x = np.asarray(x, dtype=float)
+        return x * np.sqrt(nm_disc.profile(mu, "G", x))
+    join = "a circle where the surface lies level, in Minkowski space on one side and in flat space on the other"
+    centre = Piece("centre", "sheet", msl, 0.0, levels[0], 0.0, 1,
+                   (("axis", "the centre of the disc, $\\rho = 0$, where the surface is smooth"), ("join", join)),
+                   [(0.15007976, "ergo", None), (levels[0], "space", None)], size)
+    disc = Piece("disc", "sheet", sl, levels[0], levels[1], centre.at(levels[0])[1], 1, (("join", join), ("join", join)),
+                 [(levels[1], "space", None)], size)
+    rim = Piece("rim", "sheet", msl, levels[1], levels[2], disc.at(levels[1])[1], 1, (("join", join), ("join", join)),
+                [(1.0, "surface", None), (levels[2], "space", None)], size,
+                # Just outside the rim the slope of the profile changes as the square root of the distance
+                # from it, so the knots crowd toward the rim from that side.
+                knots=tuple(np.linspace(levels[1], 1.0, 25)[1:-1]) + tuple(1 + np.geomspace(2e-5, levels[2] - 1, 24)[:-1]),
+                digits=1e-11)
+    plane = Piece("plane", "sheet", sl, levels[2], top, rim.at(levels[2])[1], 1,
+                  (("join", join), ("edge", "the surface runs on to $\\rho \\to \\infty$")),
+                  [(1.83091417, "ergo", None), (2.0, "r", None), (4.0, "r", None), (top, "r", None)], size,
+                  knots=tuple(levels[2] + np.geomspace(1e-4, 0.8, 40)), digits=LORENTZ_DIGITS)
+    pieces = (centre, disc, rim, plane)
+    for piece in pieces:
+        space = "in Minkowski space" if piece.sl.lorentz else "in flat space"
+        ck.isometry(f"{name}, {piece.id} {space}", piece)
+        ck.radius(f"{name}, {piece.id}, rho e^(-nu) {space}", piece, radius, size)
+    for a, b, level in zip(pieces, pieces[1:], levels):
+        ck.join(f"{name}, {a.id} and {b.id} at the level circle", a, level, b, level)
+    ergo = nm_disc.ergosurface(mu)
+    ck.add(f"{name}: the ergosurface crosses the plane at 0.150 and 1.831 rho_0",
+           abs(ergo[0] - 0.15007976) + abs(ergo[1] - 1.83091417), 1e-7)
+    ck.add(f"{name}: the rim's circle has the radius 4.241 rho_0", abs(float(radius(1.0)) - 4.2409), 1e-4)
+    ck.add(f"{name}: the circles reach 4.413 rho_0 at 0.921 rho_0 and narrow to 4.066 rho_0 at 1.204 rho_0",
+           abs(float(radius(0.9213)) - 4.4132) + abs(float(radius(1.2041)) - 4.0659), 2e-4)
+    # The centre is smooth: a small circle the proper distance l from it has the radius l.
+    near = 1e-3
+    ck.add(f"{name}: the centre is no cone", abs(float(radius(near)) / (near * math.sqrt(float(sl.gxx_at(near)))) - 1), 1e-5)
+    surface = Surface(list(pieces))
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *rim.at(1.0), "the rim", side=-1)
+    ring_label(fig, [0, 0, 0], *plane.at(top), "$6\\,\\rho_0$")
+    fig.legend("fill", "cover", "the plane of the disc at one moment, which $\\rho$ and $\\phi$ cover")
+    fig.legend("line", "surface", "the rim of the disc, $\\rho = \\rho_0$")
+    fig.legend("line", "ergo", "the ergosurface, at $\\rho = 0.150$ and $1.831\\,\\rho_0$")
+    fig.legend("line", "r", "$\\rho$ constant, at $2$, $4$, and $6\\,\\rho_0$")
+    fig.legend("line", "space", f"$\\rho = {levels[0]:.3f}$, ${levels[1]:.3f}$, and ${levels[2]:.3f}\\,\\rho_0$, where the "
+                                "surface lies level and passes between Minkowski space and flat space")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("plane", "The plane of the disc", "$\\rho_0$", [surface], fig.done(),
+                 settings="Neugebauer and Meinel's disc at $\\mu = 3$, with its coordinate radius $\\rho_0 = 1$ the unit "
+                          f"of every length. Every length along the surface inside $\\rho = {levels[0]:.3f}\\,\\rho_0$ and "
+                          f"between ${levels[1]:.3f}$ and ${levels[2]:.3f}\\,\\rho_0$ is measured with $dX^2 + dY^2 - dZ^2$.",
+                 input=nr.NM_INPUT)]
+
+
 def bonnor_magnetic_dipole(ck, src):
     """The equatorial plane of Bonnor's magnetic dipole at t = 0, at m = 1 and b = 2 sqrt 2, so that
     k = sqrt(m^2 + b^2) = 3 and the axis between the two black holes meets the plane at r = 4m.
@@ -11380,6 +11474,7 @@ DRAWN = {
     "kantowski_sachs": kantowski_sachs,
     "curzon_chazy": curzon_chazy,
     "double_kerr": double_kerr,
+    "neugebauer_meinel": neugebauer_meinel,
     "morgan_morgan": morgan_morgan,
     "bonnor_rotating_dust": bonnor_rotating_dust,
     "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
@@ -12112,6 +12207,17 @@ CAPTIONS = {
         "climbs in flat space, from vertical to level. Beyond the level circle the circles grow faster than the "
         "distance out to them, as on the static slice of anti-de Sitter space, and the surface climbs toward a light "
         "cone of Minkowski space. The dotted circle is the edge of the ergoregion, where $g_{tt} = 0$.",
+    ],
+    ("neugebauer_meinel", "plane"): [
+        "The plane of the disc ($z = 0$) at one moment of $t$, drawn as a surface with every distance along it the "
+        "metric distance, for the disc of $\\mu = 3$. The circle of Weyl's radius $\\rho$ has the circumference "
+        "$2\\pi\\rho\\,e^{-\\nu}$, and the dust fills the surface out to the rim, whose circle has the radius "
+        "$4.24\\,\\rho_0$ and lies a proper distance $4.85\\,\\rho_0$ from the centre.",
+        "The circles reach $4.41\\,\\rho_0$ at $\\rho = 0.92\\,\\rho_0$, narrow to $4.07\\,\\rho_0$ at $\\rho = 1.20\\,\\rho_0$, and widen "
+        "again: the beginning of the throat, which grows without bound in length as $\\mu \\to \\mu_0$ while the disc "
+        "at its foot keeps a finite size. Near the centre and in a narrow band about the rim the circles change "
+        "faster than the distance across them, and those parts stand in Minkowski space, $dX^2 + dY^2 - dZ^2$. The "
+        "dotted circles are the ergosurface.",
     ],
     ("double_kerr", "midplane"): [
         "The plane $z = 0$ midway between the two black holes of Herdeiro and Rebelo's pair at one moment "

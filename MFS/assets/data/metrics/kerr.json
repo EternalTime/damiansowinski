@@ -170,6 +170,11 @@
       "id": "wahlquist",
       "kind": "generalisation",
       "text": "Kerr's hole with a rigidly rotating perfect fluid laid over it. Wahlquist's family in Mars's chart is Kerr's metric at $\\beta = 0$, $\\mu_0 = 0$, and $a_1 = 0$ [mars2001]."
+    },
+    {
+      "id": "neugebauer_meinel",
+      "kind": "limit_source",
+      "text": "A spinning disc of dust whose outside field becomes Kerr's at $J = GM^2/c$ in the limit $\\mu \\to \\mu_0$ of its one parameter, the disc itself shrinking to a point of Weyl's coordinates [meinel2002]."
     }
   ],
   "references": [
@@ -224,7 +229,8 @@
     "bratek2007",
     "bonnor2002",
     "davidson1994",
-    "mars2001"
+    "mars2001",
+    "meinel2002"
   ],
   "coordinates": [
     {

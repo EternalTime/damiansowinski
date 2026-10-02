@@ -1148,6 +1148,20 @@ The vacuum geometry left when one looks only at the region just outside the hori
 - chart Global: coordinates $(\tau, y, \theta, \phi)$, $$ds^2 = \dfrac{1 + \cos^2\theta}{2}r_0^2\left(-\left(1 + y^2\right)d\tau^2 + \dfrac{dy^2}{1 + y^2} + d\theta^2\right) + \dfrac{2r_0^2\sin^2\theta}{1 + \cos^2\theta}\left(d\phi + y\,d\tau\right)^2$$
 - chart Near-NHEK: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \dfrac{1 + \cos^2\theta}{2}\left(-\dfrac{r\left(r - 2k\right)}{r_0^2}c^2dt^2 + \dfrac{r_0^2}{r\left(r - 2k\right)}dr^2 + r_0^2d\theta^2\right) + \dfrac{2r_0^2\sin^2\theta}{1 + \cos^2\theta}\left(d\phi + \dfrac{r - k}{r_0^2}c\,dt\right)^2$$
 
+### Neugebauer-Meinel Disc of Dust
+
+A disc of dust turning rigidly about its axis and held up by rotation alone, the exact solution of Einstein's equations, inside and out, that Gernot Neugebauer and Reinhard Meinel found between 1993 and 1995. Its one parameter runs from the Maclaurin disc of Newton's theory to a limit where the field outside the disc is the extreme Kerr black hole's.
+
+- id: `neugebauer_meinel`
+- tags: dust, stationary, axisymmetric, rotating, angular momentum, mass, frame dragging, gravitomagnetic, ergoregion, no horizon, asymptotically flat, reflection symmetry, inverse scattering, throat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/neugebauer_meinel.json
+- chart Weyl-Lewis-Papapetrou: coordinates $(t, \rho, z, \phi)$, $$ds^2 = e^{-2U}\left(e^{2k}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2\right) - e^{2U}\left(c\,dt + a\,d\phi\right)^2$$
+- chart Corotating: coordinates $(t, \rho, z, \varphi)$, $$ds^2 = e^{-2U}\left(e^{2k}\left(d\rho^2 + dz^2\right) + \rho^2d\varphi^2\right) - e^{2U}\left(c\,dt + a\,d\varphi\right)^2$$
+- chart Bardeen-Wagoner: coordinates $(t, \rho, z, \phi)$, $$ds^2 = -e^{2\nu}c^2dt^2 + \rho^2e^{-2\nu}\left(d\phi - \omega\,c\,dt\right)^2 + e^{2\alpha}\left(d\rho^2 + dz^2\right)$$
+- chart Oblate Spheroidal: coordinates $(t, \xi, \eta, \phi)$, $$ds^2 = -e^{2\nu}c^2dt^2 + \rho_0^2\left(1 + \xi^2\right)\left(1 - \eta^2\right)e^{-2\nu}\left(d\phi - \omega\,c\,dt\right)^2 + \rho_0^2\left(\xi^2 + \eta^2\right)e^{2\alpha}\left(\dfrac{d\xi^2}{1 + \xi^2} + \dfrac{d\eta^2}{1 - \eta^2}\right)$$
+- chart The Black Hole Limit: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{r^2\left(\left(r + m\right)^2 + m^2\cos^2\theta\right)}{\left(\left(r + m\right)^2 + m^2\right)^2 - m^2r^2\sin^2\theta}c^2dt^2 + \dfrac{\left(\left(\left(r + m\right)^2 + m^2\right)^2 - m^2r^2\sin^2\theta\right)\sin^2\theta}{\left(r + m\right)^2 + m^2\cos^2\theta}\left(d\phi - \dfrac{2m^2\left(r + m\right)}{\left(\left(r + m\right)^2 + m^2\right)^2 - m^2r^2\sin^2\theta}c\,dt\right)^2 + \dfrac{\left(r + m\right)^2 + m^2\cos^2\theta}{r^2}\left(dr^2 + r^2d\theta^2\right)$$
+
 ### Oppenheimer-Snyder Gravitational Collapse
 
 The first dynamical model of gravitational collapse, matching a collapsing homogeneous dust sphere to an exterior Schwarzschild vacuum. It showed how a star can form a black hole in finite proper time.

@@ -229,6 +229,7 @@ sys.path.insert(0, str(HERE.parent))
 import boson_star as bs  # noqa: E402
 import bartnik_mckinnon as bm_soliton  # noqa: E402
 import build_mfs_data as build  # noqa: E402
+import nm_disc  # noqa: E402
 import ori_shell  # noqa: E402
 import slices  # noqa: E402
 import verify_metrics as vm  # noqa: E402
@@ -1442,6 +1443,56 @@ DECLARED_FUNCTIONS = {**{f.__name__: f for f in (bm_m, bm_dm, bm_d2m, bm_delta, 
                       "ori_influx_behind": ori_influx_behind, "ori_shell_behind": ori_shell_behind,
                       "hiscock_m_out": hiscock_m_out, "hiscock_dm_out": hiscock_dm_out,
                       "hiscock_d2m_out": hiscock_d2m_out, "hiscock_r_out": hiscock_r_out}
+
+
+# Neugebauer and Meinel's disc as every one of its diagrams draws it: mu = 3, the disc whose Ernst
+# potential Neugebauer, Kleinwaechter and Meinel plot, in units of its coordinate radius rho_0.
+# There e^(2 V_0) = 0.0303, Omega rho_0 = 0.2133 c and GM/c^2 = 1.716 rho_0, the ergosurface crosses
+# the plane of the disc at 0.150 and 1.831 rho_0, and a point at rest in the turning frame moves at
+# the speed of light at 1.378 rho_0. nm_disc.py evaluates their theta functions; the functions
+# below are its tables on the plane of the disc and on the axis, each with two derivatives:
+# nm_g = g_phiphi/rho^2, nm_w the dragging omega, nm_r = g_rhorho, nm_e = e^(2U') of the turning
+# frame and nm_s = e^(2U) (1 + Omega a) on the plane, nm_x = e^(2U) and nm_y = omega on the axis.
+NM_MU = 3.0
+
+
+def _nm_declare(table):
+    made = {}
+    for name, value in table.items():
+        for order in (2, 1, 0):
+            label = name if order == 0 else f"{name}{order}"
+            body = {"nargs": 1, "is_real": True, "_imp_": staticmethod(lambda x, value=value, order=order: value(x, order))}
+            if order < 2:
+                body["fdiff"] = lambda self, argindex=1, up=f"{name}{order + 1}": made[up](self.args[0])
+            made[label] = type(label, (sp.Function,), body)
+    return made
+
+
+def _nm_plane(name):
+    return lambda rho, order: nm_disc.profile(NM_MU, name, np.asarray(rho, dtype=float), order)
+
+
+DECLARED_FUNCTIONS.update(_nm_declare({
+    "nm_g": _nm_plane("G"), "nm_w": _nm_plane("omega"), "nm_r": _nm_plane("grr"), "nm_e": _nm_plane("E"),
+    "nm_s": _nm_plane("S"),
+    "nm_x": lambda z, order: nm_disc.axis(NM_MU, np.asarray(z, dtype=float), order),
+    "nm_y": lambda z, order: (nm_disc.axis_dragging(NM_MU, np.asarray(z, dtype=float), order) if order < 2
+                              else np.zeros_like(np.asarray(z, dtype=float))),
+}))
+NM_OMEGA = repr(nm_disc.omega_disc(NM_MU))
+NM_AXIS = {"U": "log(nm_x(z))/2", "a": "0", "k": "0"}
+NM_PLANE = {"nu": "-log(nm_g(rho))/2", "omega": "nm_w(rho)", "alpha": "log(nm_r(rho))/2"}
+NM_TURNING = {"U": "log(nm_e(rho))/2", "a": f"(nm_e(rho) - nm_s(rho))/({NM_OMEGA}*nm_e(rho))",
+              "k": "log(nm_r(rho)*nm_e(rho))/2"}
+NM_XI_AXIS = {"nu": "log(nm_x(xi))/2", "omega": "nm_y(xi)", "alpha": "-log(nm_x(xi))/2"}
+NM_XI_PLANE = {name: text.replace("rho", "sqrt(1 + xi**2)") for name, text in NM_PLANE.items()}
+NM_CONE = "future cone of no angular momentum"
+NM_INPUT = ("Neugebauer and Meinel's disc at $\\mu = 3$, with its coordinate radius $\\rho_0$ the unit of every length: "
+            "$e^{2V_0} = 0.0303$, the disc turns at $\\Omega = 0.2133\\,c/\\rho_0$, and its mass $M$ has "
+            "$GM/c^2 = 1.716\\,\\rho_0$. The functions of the metric on the plane of the disc and on the axis are "
+            "those of their solution, evaluated from its ultraelliptic theta functions.")
+NM_LIMIT_INPUT = "The field outside the disc in the limit $\\mu \\to \\mu_0$, with the mass parameter $m$ the unit of every length."
+NM_LIGHT = nm_disc.light_cylinder(NM_MU)
 TEO_RADIUS = "b_0*teo_rho(l/b_0)"
 TEO_RADIUS_INPUT = ("$r(l)$ from Teo's $l = \\pm\\left(\\sqrt{r(r - b_0)} + b_0\\ln\\left(\\sqrt{r/b_0} + "
                     "\\sqrt{r/b_0 - 1}\\right)\\right)$, inverted by Newton's method.")
@@ -2859,6 +2910,35 @@ DIAGRAMS = [
     Diagram("double_kerr", "weyl", "midplane", "$t$ and $\\rho$ in the plane $z = 0$", ("t", "\\rho"), (0, 6, -3, 3),
             "$\\rho/m$", "$ct/m$", {}, {"phi": "0", "z": "0"}, kretschmann=False,
             functions=_double_kerr_pair(), solves=DK_SOLVES, input=DK_INPUT),
+    # Neugebauer and Meinel's disc at mu = 3 on its two totally geodesic surfaces, the axis and the
+    # plane of the disc: the axis in their own form of the metric, where e^(2U) is positive; the
+    # plane in Bardeen and Wagoner's form, with phi divided out, across the ergoregion; the plane at
+    # rest in the turning frame, out to the radius where the frame moves at the speed of light; and
+    # both in the spheroidal coordinates. The rows declare the functions of one plane, so none reads
+    # the Kretschmann scalar, whose derivatives across the plane they do not hold. The limit
+    # mu -> mu_0 is the extreme Kerr metric, drawn on its axis and its equator.
+    Diagram("neugebauer_meinel", "weyl", "axis", "$t$ and $z$ on the axis", ("t", "z"), (-3, 3, -25, 25),
+            "$z/\\rho_0$", "$ct/\\rho_0$", {}, {"rho": "0", "phi": "0"}, families=SIDEWAYS, kretschmann=False,
+            functions=NM_AXIS, input=NM_INPUT, lines=(("surface", "r", "0", "the centre of the disc, $z = 0$"),)),
+    Diagram("neugebauer_meinel", "corotating", "plane", "$t$ and $\\rho$ in the plane of the disc", ("t", "\\rho"),
+            (0, round(NM_LIGHT - 5e-5, 4), -25, 25), "$\\rho/\\rho_0$", "$ct/\\rho_0$", {}, {"z": "0", "varphi": "0"},
+            kretschmann=False, functions=NM_TURNING, input=NM_INPUT,
+            lines=(("surface", "r", "1", "the rim of the disc, $\\rho = \\rho_0$"),)),
+    Diagram("neugebauer_meinel", "bardeen_wagoner", "plane", "$t$ and $\\rho$ in the plane of the disc", ("t", "\\rho"),
+            (0, 4.2, -40, 40), "$\\rho/\\rho_0$", "$ct/\\rho_0$", {}, {"z": "0"}, kretschmann=False,
+            quotient="phi", mark_gtt="the ergosurface", cone=NM_CONE, functions=NM_PLANE, input=NM_INPUT,
+            lines=(("surface", "r", "1", "the rim of the disc, $\\rho = \\rho_0$"),)),
+    Diagram("neugebauer_meinel", "spheroidal", "axis", "$t$ and $\\xi$ on the axis", ("t", "\\xi"), (0, 3, -25, 25),
+            "$\\xi$", "$ct/\\rho_0$", {"rho_0": 1}, {"eta": "1", "phi": "0"}, kretschmann=False,
+            functions=NM_XI_AXIS, input=NM_INPUT),
+    Diagram("neugebauer_meinel", "spheroidal", "plane", "$t$ and $\\xi$ in the plane beyond the rim", ("t", "\\xi"),
+            (0, 4, -15, 15), "$\\xi$", "$ct/\\rho_0$", {"rho_0": 1}, {"eta": "0"}, kretschmann=False,
+            quotient="phi", mark_gtt="the ergosurface", cone=NM_CONE, functions=NM_XI_PLANE, input=NM_INPUT),
+    Diagram("neugebauer_meinel", "black_hole_limit", "axis", "$t$ and $r$ on the axis", ("t", "r"), (0, 4, -6, 6),
+            "$r/m$", "$ct/m$", {"m": 1}, {"theta": "0", "phi": "0"}, input=NM_LIMIT_INPUT),
+    Diagram("neugebauer_meinel", "black_hole_limit", "equator", "$t$ and $r$ on the equator", ("t", "r"), (0, 4, -6, 6),
+            "$r/m$", "$ct/m$", {"m": 1}, {"theta": "pi/2"}, quotient="phi", mark_gtt="the ergosurface", cone=NM_CONE,
+            input=NM_LIMIT_INPUT),
     # The first Morgan-Morgan disc on its two totally geodesic planes. Weyl's chart draws the
     # axis through the centre of the disc and the plane z = 0, disc and vacuum together; the oblate
     # spheroidal chart draws the axis above the disc, the plane outside the rim, and the disc itself.
@@ -6718,6 +6798,65 @@ CAPTIONS = {
         "The cones are narrowest on the axis, where $f = 5/41$ and $e^{\\gamma} = 3/4$, and open toward the cones of flat "
         "space far from the holes.",
     ],
+    ("neugebauer_meinel", "weyl", "axis"): [
+        "The plane of $t$ and $z$ ($\\rho = 0$, $\\phi = 0$), the axis of the disc of $\\mu = 3$, which crosses the disc "
+        "at its centre, $z = 0$. On the axis $a = 0$ and $k = 0$, the metric is $-e^{2U}c^2dt^2 + e^{-2U}dz^2$, and a "
+        "ray has $dz/d(ct) = \\pm e^{2U}$; every rotation about the axis fixes it, so the rays are null geodesics.",
+        "The cones are narrowest at the centre of the disc, where $e^{2U} = e^{2V_0} = 0.0303$ and light leaves for "
+        "infinity with the redshift $e^{-V_0} - 1 = 4.74$. A ray takes $16.3\\,\\rho_0/c$ of the time $t$ to climb "
+        "from the centre to $z = \\rho_0$. The slope of $U$ along the axis changes sign across the disc, a jump set by "
+        "the surface density of the dust.",
+    ],
+    ("neugebauer_meinel", "corotating", "plane"): [
+        "The plane of the disc ($z = 0$, $\\varphi = 0$) in the frame that turns with it, drawn in $t$ and $\\rho$ out "
+        "to the radius where a point at rest in the frame moves at the speed of light, $\\rho = 1.378\\,\\rho_0$ for "
+        "the disc of $\\mu = 3$. The curves are the null curves of this plane, $d\\rho/d(ct) = \\pm e^{2U - k}$; a "
+        "null geodesic launched along one leaves the plane, turned by the rotation of the frame.",
+        "A grain of dust is a vertical line, at rest at its own $\\rho$. On the disc $e^{2U} = e^{2V_0} = 0.0303$ at "
+        "every radius, so the clocks of all the grains run at one rate, $e^{V_0} = 0.174$ of the time $t$. The cones "
+        "close at the right edge, where $e^{2U} = 0$.",
+    ],
+    ("neugebauer_meinel", "bardeen_wagoner", "plane"): [
+        "The plane of the disc ($z = 0$) drawn in $t$ and $\\rho$ with $\\phi$ divided out, each point in the "
+        "diagram a circle about the axis, for the disc of $\\mu = 3$. Its null curves are the shadows on $t$ and "
+        "$\\rho$ of the null geodesics with no angular momentum, which run at $d\\rho/d(ct) = \\pm e^{\\nu - \\alpha}$ "
+        "and turn about the axis at $d\\phi/d(ct) = \\omega$.",
+        "The rays cross the disc freely, since the dust acts on light by its gravity alone. The dotted lines are "
+        "the ergosurface, $g_{tt} = 0$ at $\\rho = 0.150\\,\\rho_0$ and $1.831\\,\\rho_0$: between them no observer "
+        "keeps $\\phi$ fixed, and that stretch holds all of the disc but its middle. At the centre the frames are "
+        "dragged at $0.951$ of the angular velocity $\\Omega$ of the disc itself.",
+    ],
+    ("neugebauer_meinel", "spheroidal", "axis"): [
+        "The plane of $t$ and $\\xi$ on the upper half of the axis ($\\eta = 1$, $\\phi = 0$), where $z = \\rho_0\\,\\xi$, "
+        "for the disc of $\\mu = 3$. The left edge, $\\xi = 0$, is the centre of the disc, and the rays are null "
+        "geodesics, $d\\xi/d(ct) = \\pm e^{2\\nu}/\\rho_0$.",
+        "The cones open from $e^{2\\nu} = 0.0303$ at the disc toward the cones of flat space far up the axis, where "
+        "$e^{2\\nu}$ tends to $1 - 2GM/(c^2z)$ with $GM/c^2 = 1.716\\,\\rho_0$.",
+    ],
+    ("neugebauer_meinel", "spheroidal", "plane"): [
+        "The plane of the disc beyond its rim ($\\eta = 0$) drawn in $t$ and $\\xi$ with $\\phi$ divided out, where "
+        "$\\rho = \\rho_0\\sqrt{1 + \\xi^2}$, for the disc of $\\mu = 3$. The left edge, $\\xi = 0$, is the rim, and the "
+        "null curves are the shadows of the null geodesics with no angular momentum.",
+        "The dotted line is the ergosurface, $g_{tt} = 0$ at $\\xi = 1.534$, where $\\rho = 1.831\\,\\rho_0$. The "
+        "surface $\\xi = 0$ is the whole disc, its upper face reached along $\\eta > 0$ and its lower face along "
+        "$\\eta < 0$.",
+    ],
+    ("neugebauer_meinel", "black_hole_limit", "axis"): [
+        "The plane of $t$ and $r$ on the axis ($\\theta = 0$, $\\phi = 0$) of the field outside the disc in the limit "
+        "$\\mu \\to \\mu_0$, the extreme Kerr metric. The rays are null geodesics, the curves of constant $ct \\pm r_*$ "
+        "with $r_* = r + 2m\\ln(r/m) - 2m^2/r$.",
+        "The left edge, $r = 0$, is the horizon, which a ray reaches only as $t \\to \\pm\\infty$: there $r_*$ falls "
+        "to $-\\infty$ as $-2m^2/r$, as it does at a horizon with no surface gravity. The disc lies beyond that "
+        "edge, an infinite proper distance down the throat.",
+    ],
+    ("neugebauer_meinel", "black_hole_limit", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the same limit drawn in $t$ and $r$ with $\\phi$ divided out, "
+        "each point in the diagram a circle about the axis. The null curves are the shadows of the null geodesics "
+        "with no angular momentum, which turn about the axis at $d\\phi/d(ct) = \\omega$.",
+        "The dotted line is the ergosurface, $r = m$, which is $2m$ in the radius of Boyer and Lindquist. At the "
+        "left edge the circles have the circumference $4\\pi m$ of the throat, and $\\omega$ has risen to $1/2m$, "
+        "the angular velocity of the horizon and of the disc.",
+    ],
     ("morgan_morgan", "weyl", "axis"): [
         "The plane of $t$ and $z$ ($\\rho = 0$, $\\phi = 0$) of the first Morgan-Morgan disc ($m = a/5$), crossed by "
         "the disc at its centre, $z = 0$. The metric on it is $-e^{2\\psi}c^2dt^2 + e^{-2\\psi}dz^2$, so a ray has "
@@ -9545,6 +9684,29 @@ def _double_kerr_star(plane):
     return lambda x: np.vectorize(one, otypes=[float])(np.asarray(x, float))
 
 
+@lru_cache(maxsize=None)
+def _nm_star(which):
+    """The tortoise coordinate of Neugebauer and Meinel's disc at mu = 3 along its axis, from z = 0, in
+    its plane with phi divided out, from rho = 0, and in the plane at rest in the turning frame; and of
+    the extreme Kerr limit's equator with phi divided out, from r = 1, at m = 1. Each is the integral
+    of a spline through its slope at four thousand points, which the tracing never uses."""
+    from scipy.interpolate import CubicSpline
+    if which == "axis":
+        x = np.linspace(0.0, 3.2, 4001)
+        slope = 1 / nm_disc.axis(NM_MU, x)
+    elif which == "limit":
+        x = np.geomspace(0.04, 4.4, 4001)
+        slope = np.sqrt(((x + 1) ** 2 + 1) ** 2 - x * x) / (x * x)
+    else:
+        x = np.linspace(0.0, 4.6 if which == "plane" else NM_LIGHT - 0.01, 4001)
+        grr = nm_disc.profile(NM_MU, "grr", x)
+        slope = np.sqrt(grr * nm_disc.profile(NM_MU, "G", x)) if which == "plane" else np.sqrt(grr / nm_disc.profile(NM_MU, "E", x))
+    star = CubicSpline(x, slope).antiderivative()
+    if which == "limit":
+        return lambda r: star(np.asarray(r, float)) - star(1.0)
+    return lambda r: np.sign(r) * star(np.abs(np.asarray(r, float)))
+
+
 def _morgan_morgan_numbers(xi, eta):
     """psi and gamma of the first Morgan-Morgan disc at a = 1 and m = 1/5 as floats, from the
     closed forms in xi and eta, which no drawing of Weyl's chart uses."""
@@ -10486,6 +10648,22 @@ CLOSED_FORMS = {
                                       lambda t, z: t - _double_kerr_star("axis")(z), _double_kerr_off_poles),
     ("double_kerr", "weyl", "midplane"): (lambda t, r: t + _double_kerr_star("midplane")(r),
                                           lambda t, r: t - _double_kerr_star("midplane")(r), None),
+    # Neugebauer and Meinel's disc: z_* is the integral of e^(-2U) along the axis and rho_* that of
+    # sqrt(g_rhorho g_phiphi)/rho in the plane, each a quadrature of nm_disc's tables that the tracing
+    # never uses; in the turning frame the plane's own rays have d rho_* = sqrt(g_rhorho/e^(2U')) d rho.
+    # The limit's axis has r_* = r + 2 ln r - 2/r at m = 1, and its equator the quadrature of sqrt(A)/r^2.
+    ("neugebauer_meinel", "weyl", "axis"): (lambda t, z: t + _nm_star("axis")(z), lambda t, z: t - _nm_star("axis")(z), None),
+    ("neugebauer_meinel", "bardeen_wagoner", "plane"): (lambda t, r: t + _nm_star("plane")(r),
+                                                        lambda t, r: t - _nm_star("plane")(r), None),
+    ("neugebauer_meinel", "corotating", "plane"): (lambda t, r: t + _nm_star("turning")(r),
+                                                   lambda t, r: t - _nm_star("turning")(r), lambda t, r: r < NM_LIGHT - 0.02),
+    ("neugebauer_meinel", "spheroidal", "axis"): (lambda t, x: t + _nm_star("axis")(x), lambda t, x: t - _nm_star("axis")(x), None),
+    ("neugebauer_meinel", "spheroidal", "plane"): (lambda t, x: t + _nm_star("plane")(np.sqrt(1 + x ** 2)),
+                                                   lambda t, x: t - _nm_star("plane")(np.sqrt(1 + x ** 2)), None),
+    ("neugebauer_meinel", "black_hole_limit", "axis"): (lambda t, r: t + r + 2 * np.log(r) - 2 / r,
+                                                        lambda t, r: t - r - 2 * np.log(r) + 2 / r, lambda t, r: r > 0.05),
+    ("neugebauer_meinel", "black_hole_limit", "equator"): (lambda t, r: t + _nm_star("limit")(r),
+                                                           lambda t, r: t - _nm_star("limit")(r), lambda t, r: r > 0.05),
     ("morgan_morgan", "weyl", "axis"): (lambda t, z: t + _morgan_morgan_star("weyl_axis")(z),
                                         lambda t, z: t - _morgan_morgan_star("weyl_axis")(z), None),
     ("morgan_morgan", "weyl", "plane"): (lambda t, r: t + _morgan_morgan_star("weyl_plane")(r),

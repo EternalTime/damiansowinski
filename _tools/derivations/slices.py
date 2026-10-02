@@ -1466,6 +1466,13 @@ def _mp_axis():
     return [Mark(m, points=[(0.0, 0.0)])]
 
 
+def _nm_centre(label):
+    """The plane of Neugebauer and Meinel's disc at t = 0 meets the axis at one event, the centre of
+    the disc, the centre of the embedded surface."""
+    m = moments("neugebauer_meinel", "plane", label=label)[0]
+    return [Mark(m, points=[(0.0, 0.0)])]
+
+
 def _double_kerr_axis():
     """The plane z = 0 midway between Kramer and Neugebauer's two holes, at t = 0, meets the axis
     through them at one event, t = 0 and z = 0, the tip of the embedded cone."""
@@ -2026,6 +2033,17 @@ FLAT = {
     # The plane z = 0 midway between the two holes at t = 0, and the one event where it meets the axis.
     ("double_kerr", "weyl", "midplane"): lambda: one("double_kerr", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
     ("double_kerr", "weyl", "axis"): _double_kerr_axis,
+    # The plane of Neugebauer and Meinel's disc at t = 0: the line t = 0 as far as the embedding reaches,
+    # in the turning frame as far as its chart does, the plane beyond the rim in the spheroidal xi, where
+    # rho = sqrt(1 + xi^2), and the one event where the plane meets the axis, the centre of the disc.
+    ("neugebauer_meinel", "bardeen_wagoner", "plane"): lambda: one(
+        "neugebauer_meinel", lambda m: along(0.0, *m.reach("bardeen_wagoner", "\\rho"))),
+    ("neugebauer_meinel", "corotating", "plane"): lambda: one(
+        "neugebauer_meinel", lambda m: along(0.0, *m.reach("bardeen_wagoner", "\\rho"))),
+    ("neugebauer_meinel", "spheroidal", "plane"): lambda: one(
+        "neugebauer_meinel", lambda m: along(0.0, 0.0, math.sqrt(m.reach("bardeen_wagoner", "\\rho")[1] ** 2 - 1))),
+    ("neugebauer_meinel", "weyl", "axis"): lambda: _nm_centre("$t = 0$, $z = 0$"),
+    ("neugebauer_meinel", "spheroidal", "axis"): lambda: _nm_centre("$t = 0$, $\\xi = 0$"),
     # The plane z = 0 of the first Morgan-Morgan disc at t = 0: Weyl's rho from the axis out, the
     # oblate spheroidal chart's eta across the disc and its xi = sqrt(rho^2/a^2 - 1) outside the rim.
     ("morgan_morgan", "weyl", "plane"): lambda: one("morgan_morgan", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
@@ -2186,6 +2204,9 @@ HIDDEN = {
     ("bonnor_magnetic_dipole", "spheroidal", "axis"): "the axis beyond a hole, which the embedded equatorial plane does not meet",
     ("bonnor_magnetic_dipole", "spheroidal_axis"): "the axis beyond a hole, which the embedded equatorial plane does not meet",
     ("double_kerr", "weyl_axis_outside"): "the axis above the upper hole, which the embedded plane z = 0 does not meet",
+    **{("neugebauer_meinel", "black_hole_limit", view): "the limit mu -> mu_0, the extreme Kerr metric; the moment embedded is the disc's at mu = 3"
+       for view in ("axis", "equator")},
+    ("neugebauer_meinel", "limit_axis"): "the limit mu -> mu_0, the extreme Kerr metric; the moment embedded is the disc's at mu = 3",
     **{("zipoy_voorhees", system, f"axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"
        for system in ("spherical", "prolate_spheroidal") for shape in ("oblate", "prolate")},
     **{("zipoy_voorhees", f"{system}_axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"

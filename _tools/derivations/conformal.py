@@ -107,6 +107,7 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent))
 import boson_star as bs  # noqa: E402
 import build_mfs_data as build  # noqa: E402
+import nm_disc  # noqa: E402
 import null_rays as nr  # noqa: E402
 import verify_metrics as vm  # noqa: E402
 
@@ -12856,6 +12857,119 @@ def double_kerr(ck, src):
     return views
 
 
+NM_SCALE = 12.0   # the length l of p, q = arctan((ct -+ x_*)/l), in units of rho_0
+
+
+def neugebauer_meinel(ck, src):
+    """Neugebauer and Meinel's disc on its axis, for the disc of mu = 3 the other diagrams draw, in
+    units of its coordinate radius rho_0, and the axis of its limit mu -> mu_0, the extreme Kerr metric.
+
+    On the axis a = 0 and k = 0 and the metric is -e^(2U) c^2dt^2 + e^(-2U) dz^2. The tortoise
+    coordinate z_*, the integral of e^(-2U) from the centre of the disc, is finite at every z and
+    grows as z far away, so p, q = arctan((ct -+ z_*)/l) bring the whole axis, through the disc, into
+    the diamond of a flat plane of two dimensions, null infinity on all four sides: no horizon. In
+    the limit the axis has r_* = r + 2m ln(r/m) - 2m^2/r, which falls to minus infinity at r = 0, so
+    the same maps bring it into a diamond with the horizon on its left. e^(2U) on the axis enters as
+    numbers, from nm_disc's table of the theta functions."""
+    ell = NM_SCALE
+    star = nr._nm_star("axis")
+
+    def axis_pq(t, z):
+        zs = star(z)
+        t = np.asarray(t, dtype=float)
+        return np.arctan((t - zs) / ell), np.arctan((t + zs) / ell)
+
+    def on(x0, x1):
+        F = nm_disc.axis(nr.NM_MU, x1)
+        none = np.zeros_like(F)
+        return {"U": (np.log(F) / 2, none, none)}
+    axis = Plane(src, "neugebauer_meinel", "weyl", ("t", "z"), {"rho": "0", "phi": "0"}, {}, functions={"a": "0", "k": "0"},
+                 numeric=["U"])
+    ck.chart("Neugebauer-Meinel disc, the axis", axis, axis_pq, ck.uniform(-40, 40, 400), ck.uniform(-3, 3, 400),
+             lambda t, z: (1, 0), on)
+    g00, _, g11, *_ = axis.metric(np.zeros(3), np.array([0.0, 1.0, 2.5]), on)
+    ck.limit("Neugebauer-Meinel disc: g_tt g_zz = -1 on the axis", -g00 * g11, [1.0] * 3, 1e-12)
+    ck.limit("Neugebauer-Meinel disc: e^(2U) = e^(2 V_0) at the centre", -g00[0], nm_disc.e2V0(nr.NM_MU), 1e-7)
+    ck.limit("Neugebauer-Meinel disc: light takes 16.28 rho_0/c from the centre to z = rho_0", float(star(1.0)), 16.28, 1e-2)
+
+    views = []
+    moment = slices.moments("neugebauer_meinel", "plane")[0]
+    TS = (-40, -20, -10, 0, 10, 20, 40)
+    settings = ("Neugebauer and Meinel's disc at $\\mu = 3$, with its coordinate radius $\\rho_0 = 1$ the unit of every "
+                f"length, and $\\ell = {ell:g}\\,\\rho_0$.")
+    v = View("weyl_axis", "The axis through the disc", [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "weyl")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    ZS = (-2, -1, -0.5, 0.5, 1, 2)
+
+    def along(t, s):
+        """The line of constant t, out to infinity: z_* itself is the parameter."""
+        t = np.asarray(t, dtype=float)
+        return np.arctan((t - s) / ell), np.arctan((t + s) / ell)
+    grid(v, "r", lambda z, t: axis_pq(t, z), ZS, S_ALL)
+    grid(v, "surface", lambda z, t: axis_pq(t, z), (0,), S_ALL)
+    grid(v, "t", along, TS, S_ALL)
+    v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]], [[0, PI], [-PI, 0]], [[-PI, 0], [0, -PI]]])
+    for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((-PI, 0), "$i^0$", "r", -6, 0),
+                                     ((0, PI), "$i^+$", "b", 0, -6), ((0, -PI), "$i^-$", "t", 0, 6)):
+        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt(at, text, anchor, dx=dx, dy=dy)
+    v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+    v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+    v.label_xt([-HALF, HALF], "$\\mathscr{I}^+$", "br", dx=-5, dy=-3)
+    v.label_xt([-HALF, -HALF], "$\\mathscr{I}^-$", "tr", dx=-5, dy=3)
+    label_on(v, axis_pq(0, 1), "$z = \\rho_0$")
+    v.legend("cover", "the axis, which $t$ and $z$ cover")
+    v.legend("r", "$z$ constant, at $\\pm\\rho_0/2$, $\\pm\\rho_0$, and $\\pm 2\\,\\rho_0$")
+    v.legend("surface", "$z = 0$, the centre of the disc")
+    v.legend("t", "$ct$ constant, at $0$, $\\pm 10$, $\\pm 20$, and $\\pm 40\\,\\rho_0$")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    v.slice(moment, points=[axis_pq(0.0, 0.0)], label="$t = 0$, $z = 0$")
+    v.set(restriction="The axis $\\rho = 0$ only, totally geodesic, each point in the diagram a single event.", settings=settings)
+    views.append(v)
+
+    # The limit: the axis of the extreme Kerr metric in Bardeen and Wagoner's radius, m = 1.
+    scale = 4.0
+
+    def limit_star(r):
+        r = np.asarray(r, dtype=float)
+        with np.errstate(all="ignore"):
+            return r + 2 * np.log(r) - 2 / r
+
+    def limit_pq(t, r):
+        rs = limit_star(r)
+        t = np.asarray(t, dtype=float)
+        return np.arctan((t - rs) / scale), np.arctan((t + rs) / scale)
+    limit = Plane(src, "neugebauer_meinel", "black_hole_limit", ("t", "r"), {"theta": "0", "phi": "0"}, {"m": 1})
+    ck.chart("Neugebauer-Meinel disc, the axis of the limit", limit, limit_pq, ck.uniform(-20, 20, 400),
+             ck.uniform(0.05, 20, 400), lambda t, r: (1, 0))
+    v = View("limit_axis", "The axis of the limit", [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "black_hole_limit")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    grid(v, "r", lambda r, t: limit_pq(t, r), (0.5, 1, 2, 4), S_ALL)
+    grid(v, "t", limit_pq, (-8, -4, -2, 0, 2, 4, 8), spread(0, np.inf, 500, 9))
+    v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+    v.line("horizon", [[[0, PI], [-PI, 0]], [[-PI, 0], [0, -PI]]])
+    for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6), ((0, -PI), "$i^-$", "t", 0, 6)):
+        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt(at, text, anchor, dx=dx, dy=dy)
+    v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+    v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+    v.label_xt([-HALF, HALF], "$r = 0$", "br", dx=-5, dy=-3)
+    v.label_xt([-HALF, -HALF], "$r = 0$", "tr", dx=-5, dy=3)
+    label_on(v, limit_pq(0, 2), "$r = 2m$")
+    v.legend("cover", "the axis outside the horizon, which $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, at $m/2$, $m$, $2m$, and $4m$")
+    v.legend("t", "$ct$ constant, in units of $m$")
+    v.legend("horizon", "$r = 0$, the horizon of the extreme Kerr black hole")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    v.set(restriction="The half axis $\\theta = 0$ outside the horizon only, totally geodesic, each point in the diagram a "
+                      "single event.",
+          settings=f"The limit $\\mu \\to \\mu_0$, with the mass parameter $m = 1$ the unit of every length and $\\ell = {scale:g}\\,m$.")
+    views.append(v)
+    return views
+
+
 BONNOR_DIPOLE_SCALE = 4.0   # the length l of p, q = arctan((ct -+ x_*)/l), in units of m
 
 
@@ -16181,6 +16295,7 @@ DRAWN = {
     "curzon_chazy": curzon_chazy,
     "bonnor_rotating_dust": bonnor_rotating_dust,
     "double_kerr": double_kerr,
+    "neugebauer_meinel": neugebauer_meinel,
     "morgan_morgan": morgan_morgan,
     "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
     "zipoy_voorhees": zipoy_voorhees,
@@ -16341,6 +16456,23 @@ CAPTIONS = {
     ],
     **{("bonnor_magnetic_dipole", view): text for view, text in _bonnor_dipole_captions().items()},
     **{("zipoy_voorhees", view): text for view, text in _zipoy_voorhees_captions().items()},
+    ("neugebauer_meinel", "weyl_axis"): [
+        "The axis $\\rho = 0$ of the disc of $\\mu = 3$, from far below it to far above, each point in the diagram a "
+        "single event. The metric on it is $-e^{2U}c^2dt^2 + e^{-2U}dz^2$, and with $z_* = \\int_0^z e^{-2U}dz$ the maps "
+        "$p = \\arctan((ct - z_*)/\\ell)$ and $q = \\arctan((ct + z_*)/\\ell)$ bring it into the whole diamond, drawn "
+        "with $T = p + q$ up and $X = q - p$ across.",
+        "Null infinity stands on all four sides and no horizon crosses the axis: light sent up from the centre of "
+        "the disc reaches $\\mathscr{I}^+$, slowly, since $e^{2U} = 0.0303$ there and the lines of constant $z$ near "
+        "the disc lie $16.3\\,\\rho_0/c$ of the time $t$ apart for light.",
+    ],
+    ("neugebauer_meinel", "limit_axis"): [
+        "The half axis $\\theta = 0$ of the field outside the disc in the limit $\\mu \\to \\mu_0$, the extreme Kerr "
+        "metric, each point in the diagram a single event. With $r_* = r + 2m\\ln(r/m) - 2m^2/r$ the maps "
+        "$p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring it into the whole diamond, drawn "
+        "with $T = p + q$ up and $X = q - p$ across.",
+        "At $r = 0$ the tortoise coordinate falls to $-\\infty$, so that edge of the disc's diamond, where the "
+        "centre line stood, is now the two null edges on the left, a horizon. The disc lies beyond them.",
+    ],
     ("double_kerr", "weyl_axis_outside"): [
         "The axis $\\rho = 0$ above the upper hole of Herdeiro and Rebelo's pair ($J = GM^2/c$, $\\zeta = 4m$), each "
         "point in the diagram a single event. The metric on it is $-f\\,c^2dt^2 + (e^{2\\gamma}/f)\\,dz^2$ with "

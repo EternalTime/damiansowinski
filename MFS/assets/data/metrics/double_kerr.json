@@ -63,6 +63,11 @@
       "id": "misner_brill_lindquist",
       "kind": "family",
       "text": "Two black holes at rest with no strut between them, for one moment only: the slice of space from which Susan Hahn and Richard Lindquist first computed two holes colliding head on [brill1963, hahn1964, holst2016]."
+    },
+    {
+      "id": "neugebauer_meinel",
+      "kind": "programme",
+      "text": "Another solution from Gernot Neugebauer's inverse methods in Jena: a rigidly rotating disc of dust, solved with Reinhard Meinel as a boundary value problem for Ernst's equation fifteen years after the two holes [neugebauer1995, neugebauer2003]."
     }
   ],
   "references": [
@@ -90,7 +95,9 @@
     "einstein1936twobody",
     "brill1963",
     "hahn1964",
-    "holst2016"
+    "holst2016",
+    "neugebauer1995",
+    "neugebauer2003"
   ],
   "coordinates": [
     {

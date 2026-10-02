@@ -251,6 +251,26 @@ DIMENSIONS = {
     ("double_kerr", "weyl"): {
         "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "f": "1", "\\omega": "L", "\\gamma": "1",
     },
+    # Neugebauer and Meinel's disc: U and k are pure numbers and a is a length, so that c dt + a dphi
+    # is a length term by term, in the frame at rest far away and in the one that turns with the
+    # disc. In Bardeen and Wagoner's form nu and alpha are pure numbers and omega is an inverse
+    # length, the dragging per unit of ct. The spheroidal xi and eta are pure numbers and rho_0
+    # carries the length; the limit's m = GM/c^2 is a length.
+    ("neugebauer_meinel", "weyl"): {
+        "t": "T", "\\rho": "L", "z": "L", "\\phi": "1", "U": "1", "a": "L", "k": "1",
+    },
+    ("neugebauer_meinel", "corotating"): {
+        "t": "T", "\\rho": "L", "z": "L", "\\varphi": "1", "U": "1", "a": "L", "k": "1",
+    },
+    ("neugebauer_meinel", "bardeen_wagoner"): {
+        "t": "T", "\\rho": "L", "z": "L", "\\phi": "1", "\\nu": "1", "\\omega": "1/L", "\\alpha": "1",
+    },
+    ("neugebauer_meinel", "spheroidal"): {
+        "t": "T", "\\xi": "1", "\\eta": "1", "\\phi": "1", "\\rho_0": "L", "\\nu": "1", "\\omega": "1/L", "\\alpha": "1",
+    },
+    ("neugebauer_meinel", "black_hole_limit"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L",
+    },
     # Weyl's two functions are pure numbers. In the oblate spheroidal chart xi and eta are pure
     # numbers too, the disc's radius a carries the length, and alpha = arccot(xi) is an angle.
     ("morgan_morgan", "weyl"): {
