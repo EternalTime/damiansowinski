@@ -710,6 +710,17 @@ CAPTIONS = {
         "stretches lies inside the future light cone at its start, so the whole "
         "is a closed timelike curve.",
     ],
+    ("light_beam", "cartesian", "lens"): [
+        "The plane $y = 0$ through the axis of a uniform beam of light seen from the side, $t$ left out, with $z$ "
+        "across and $x$ up, in units of the beam's radius $R$ ($\\pi G\\epsilon R^2/c^4 = 1/32$). Light sent with "
+        "the beam, from the left, runs straight: its $ct - z$ is constant, and every Christoffel symbol multiplies "
+        "the rate of $ct - z$.",
+        "Light sent against the beam, from the right, falls toward the axis. Inside the beam the pull grows in "
+        "proportion to $x$, so every ray that starts there parallel to the axis reaches it when its $ct - z$ has "
+        "grown by $\\sqrt{2}\\,\\pi R$, and the beam is a lens for light going the other way. "
+        "A ray that starts outside the beam falls through the logarithm of the vacuum field, crosses the beam, "
+        "and climbs as far out on the other side.",
+    ],
     ("cosmic_string", "conical", "beam"): [
         "The plane $z = 0$ around the string seen from above, $t$ left out, drawn with $r$ as "
         "the radius and the angle $(1 - 4G\\mu/c^2)\\phi$, in which the plane is flat and every light "
@@ -819,6 +830,10 @@ FIGURES = [
     # The deficit the conformal diagram draws with, 4 G mu/c^2 = 0.1, so delta = 36 degrees.
     Projection("cosmic_string", "conical", "beam", "light passing the string", lambda spec: string_rays(spec),
                {"mu": "1/40", "G": 1, "delta": "pi/5"}, {"z": "0"}, fields=("christoffel",)),
+    # Bonnor's uniform beam at the profile its flat views declare.
+    Projection("light_beam", "cartesian", "lens", "light sent with the beam and against it",
+               lambda spec: beam_rays(spec), {}, {"y": "0"}, input=nr.LB_ONE_INPUT, fields=("christoffel",),
+               functions={"A": nr.LB_ONE}),
     # Gott's closed timelike curve round both strings, at the values the flat views of Grant's
     # charts are drawn at: half deficit angle pi/3, v = 4c/5 and d = l/2.
     Projection("gott_time_machine", "centre_of_momentum", "loop", "a closed timelike curve round both strings",
@@ -1059,3 +1074,95 @@ def clip_box(P, left, right, height):
 
 def clip_segment(E, left, right, height):
     return clip_box(np.vstack([E, E[::-1]]), left, right, height)[:2]
+
+
+# ---------------------------------------------------------------- light sent against a beam of light
+
+def beam_rays(spec, left=-7.0, right=7.0, height=3.0):
+    """Light sent along Bonnor's uniform beam and against it, on the plane y = 0 through the beam's
+    axis, seen from the side with t left out: z across the page and x up it.
+
+    The beam's reflection in y keeps every geodesic launched in the plane in it. Each ray is a null
+    geodesic of the Cartesian chart, integrated in t, x and z with the published Christoffel symbols
+    and the declared profile. The rays sent with the beam leave x = b at z = `left` with
+    dz = c dt, and each is checked to keep its x. The rays sent against it leave x = b at
+    z = `right` with dx = 0, along the other null direction of the plane of t and z,
+    c dt = -(1 - A) dz/(1 + A), and each is checked null against the published metric all the way,
+    to keep ct - z's rate, which is Bonnor's (8.14), and to keep x'^2 + A (ct' - z')^2, his (8.16);
+    one that starts inside the beam and has not left it is checked against b cos(u/2R), with
+    sqrt(2) u = ct - z measured from its start, the pendulum his interior solution is."""
+    sl = Slice(spec.metric, spec.system, ("t", "x", "z"), "cartesian", spec.params, spec.fixed, spec.functions)
+    _, entry, reader = nr.load(spec.metric, spec.system)
+    names = entry["coords"]
+    keep = [names.index(c) for c in ("t", "x", "z")]
+    x_ = reader.symbol["x"]
+    gamma = {}
+    for c in entry["christoffel"]["variants"]["ull"]["nonzero"]:
+        ix = tuple(names.index(n) for n in c["indices"])
+        value = sl.prep(reader(c["value"]))
+        if value == 0:
+            continue
+        if not all(i in keep for i in ix):
+            raise SystemExit(f"{key(spec)}: Gamma^{c['indices'][0]}_{c['indices'][1]}{c['indices'][2]} "
+                             "does not vanish on the plane, so a ray launched in it leaves it")
+        if value.free_symbols - {x_}:
+            raise SystemExit(f"{key(spec)}: a Christoffel symbol depends on more than x on the plane")
+        gamma[tuple(keep.index(i) for i in ix)] = sp.lambdify(x_, value, "numpy")
+    profile = sp.lambdify(x_, sl.prep(reader.parameters["A"]), "numpy")
+
+    def rhs(_, w):
+        k = w[3:]
+        acc = np.zeros(3)
+        for (a, b, c), f in gamma.items():
+            acc[a] -= float(f(w[1])) * k[b] * k[c]
+        return np.concatenate([k, acc])
+
+    def trace(b, against):
+        A = float(profile(b))
+        if against:
+            start = [0.0, b, right, (1 - A) / (1 + A), 0.0, -1.0]
+        else:
+            start = [0.0, b, left, 1.0, 0.0, 1.0]
+
+        def leave(_, w):
+            return min(w[2] - left + 1e-9, right - w[2] + 1e-9, height - abs(w[1]) + 1e-9)
+        leave.terminal = True
+        sol = solve_ivp(rhs, (0, 60), start, events=leave, rtol=1e-12, atol=1e-12, method="DOP853", max_step=0.01)
+        t, x, z, kt, kx, kz = sol.y
+        null = max(abs(float(k @ sl.metric((0.0, xi, 0.0)) @ k)) for xi, k in zip(x[::20], sol.y[3:].T[::20]))
+        if not null < 1e-9:
+            raise SystemExit(f"{key(spec)}: a ray misses null by {null:.1e}")
+        if not against:
+            if not np.abs(x - b).max() < 1e-12:
+                raise SystemExit(f"{key(spec)}: a ray sent with the beam is deflected")
+            return np.column_stack([z, x])
+        rate = kt - kz
+        energy = kx ** 2 + profile(x) * rate ** 2
+        if not (np.ptp(rate) < 1e-9 and np.ptp(energy) < 1e-9):
+            raise SystemExit(f"{key(spec)}: a ray sent against the beam loses Bonnor's first integrals, "
+                             f"by {np.ptp(rate):.1e} and {np.ptp(energy):.1e}")
+        if np.abs(x).max() <= 1:
+            u = ((t - z) - (t[0] - z[0])) / np.sqrt(2)
+            miss = np.abs(x - b * np.cos(u / 2)).max()
+            if not miss < 1e-8:
+                raise SystemExit(f"{key(spec)}: a ray inside the beam misses b cos(u/2R) by {miss:.1e}")
+        return np.column_stack([z, x])
+
+    fig = Figure(spec.view, spec.label, Camera(-90, 90))
+    flat = lambda P: np.column_stack([P, np.zeros(len(P))])
+    fig.fill("double", np.array([[left, -1.0], [right, -1.0], [right, 1.0], [left, 1.0]]))
+    for edge in (-1.0, 1.0):
+        fig.line("edge", flat(np.array([[left, edge], [right, edge]])))
+    fig.line("axis", flat(np.array([[left, 0.0], [right, 0.0]])))
+    for b in (-2.5, -1.5, -0.5, 0.5, 1.5, 2.5):
+        fig.line("below", flat(trace(b, False)))
+    for b in np.linspace(-2.75, 2.75, 12):
+        fig.line("above", flat(trace(float(b), True)))
+    fig.label(np.array([left + 0.1, 1.0, 0.0]), "$x = R$", "bl", cls="small", dy=-4)
+    fig.label(np.array([left + 0.1, -1.0, 0.0]), "$x = -R$", "tl", cls="small", dy=4)
+    fig.legend("line", "above", "light sent against the beam, from the right, each ray starting parallel to the axis")
+    fig.legend("line", "below", "light sent with the beam, from the left")
+    fig.legend("fill", "double", "the beam, shining toward $+z$, to the right")
+    fig.legend("line", "edge", "the edge of the beam")
+    fig.legend("line", "axis", "the axis of the beam")
+    return fig.done(pad=0.0), sl

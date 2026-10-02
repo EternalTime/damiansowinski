@@ -50,6 +50,11 @@
       "id": "bell_szekeres",
       "kind": "composite",
       "text": "Two plane electromagnetic waves sent at each other head on. Before they meet, each is the plane wave with $H = -a^2\\Theta(u)(x^2 + y^2)$, a step in $u$ [griffiths1991]."
+    },
+    {
+      "id": "light_beam",
+      "kind": "special_case",
+      "text": "The pp-wave of a steady beam of light. Its profile does not depend on $u$ and is harmonic only outside the beam, where the light's energy is its source [bonnor1969light]."
     }
   ],
   "references": [
@@ -72,7 +77,8 @@
     "khan1971",
     "robinson1960",
     "griffiths2009",
-    "griffiths1991"
+    "griffiths1991",
+    "bonnor1969light"
   ],
   "coordinates": [
     {

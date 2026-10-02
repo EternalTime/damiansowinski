@@ -67,6 +67,11 @@
       "id": "stockum_dust",
       "kind": "family",
       "text": "Dust rotating rigidly inside a cylinder. William Bonnor showed in 1980 that the vacuum outside the lightest such cylinders is static [bonnor1980]."
+    },
+    {
+      "id": "light_beam",
+      "kind": "family",
+      "text": "A beam of light in the place of the line of matter. Its field travels with the light and is twice that of a rod with the same energy per unit length [bonnor1969light]."
     }
   ],
   "references": [
@@ -96,7 +101,8 @@
     "bini2004",
     "levicivita1917",
     "bertotti1959",
-    "bonnor1980"
+    "bonnor1980",
+    "bonnor1969light"
   ],
   "coordinates": [
     {

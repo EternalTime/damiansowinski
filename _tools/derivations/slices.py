@@ -737,6 +737,13 @@ FLAT = {
     ("pp_wave", "exact_plane_wave", "tz"): lambda: one("pp_wave", lambda m: [[(m.time, -BIG), (m.time, BIG)]]),
     **{("aichelburg_sexl", "null_cartesian", view): lambda: one("aichelburg_sexl", lambda m: [[(m.time, -BIG), (m.time, BIG)]])
        for view in ("half", "eighth", "thirtysecond")},
+    # Bonnor's wave front u = u_k, every v, with sqrt(2) u = ct - z in the Cartesian chart.
+    **{("light_beam", "cartesian", view): lambda: one(
+        "light_beam", lambda m: [[(-BIG, -BIG - math.sqrt(2) * m.time), (BIG, BIG - math.sqrt(2) * m.time)]])
+       for view in ("axis", "beside")},
+    **{("light_beam", system, view): lambda: one("light_beam", lambda m: [[(m.time, -BIG), (m.time, BIG)]])
+       for system, view in (("null_cylindrical_interior", "edge"), ("null_cylindrical_exterior", "twice"),
+                            ("null_cylindrical_exterior", "four"))},
     # Each moment is the plane of x and y at one event, on sigma = 0 at tau = t: u = v = sin(t/2).
     ("khan_penrose", "double_null", "plane"): lambda: [
         Mark(m, points=[(math.sin(m.time / 2), math.sin(m.time / 2))]) for m in moments("khan_penrose")],
@@ -828,6 +835,10 @@ HIDDEN = {
     ("bell_szekeres", "regular"): "a plane of constant X and Y with X^2 + Y^2 < 1, off eta = 0, where the embedded ring's centre lies on the rim X^2 + Y^2 = 1 of the regular chart",
     ("gowdy", "sphere"): "the inside of Schwarzschild's horizon, a universe on S^2 x S^1; the moments embedded are the torus universe's",
     ("gowdy", "sphere", "plane"): "the inside of Schwarzschild's horizon, a universe on S^2 x S^1; the moments embedded are the torus universe's",
+    **{("light_beam", "null_cartesian", view): "two beams side by side, another spacetime than the single beam whose wave fronts are embedded"
+       for view in ("midway", "one")},
+    ("light_beam", "midway"): "two beams side by side, another spacetime than the single beam whose wave fronts are embedded",
+    ("light_beam", "cartesian", "lens"): "the plane y = 0 with t left out, which every wave front covers whole",
     ("frw", "open"): "the open universe's conformal diagram; the moments embedded are the closed universe's",
 }
 

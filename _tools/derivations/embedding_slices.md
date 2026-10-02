@@ -30,6 +30,16 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `null_cartesian/half`, `/eighth` and `/thirtysecond`, the planes $x = \rho_0/2$, $\rho_0/8$ and $\rho_0/32$ at $y = 0$ drawn in $z$ and $ct$ with $u = ct - z$ and $v = ct + z$: four null lines $ct = z + u_k$ at 45°, parallel to the shock $u = 0$; the first, $u = -1$, runs before the shock and the other three behind it.
 - `shock`, the conformal diagram of the plane $x = \rho_0/8$, $y = 0$: the four lines of constant $p = \arctan u_k$, from $\mathscr{I}^-$ to $\mathscr{I}^+$, parallel to the shock.
 
+### Bonnor's beam of light
+
+- The embedding is the wave front $x$, $y$ of six values of Bonnor's $u = (ct - z)/\sqrt{2}$, $u = 0$, $2$, $4$, $6$, $8$ and $10$ in units of the beam's radius $R$, for the single uniform beam.
+  The moment is the null hypersurface $u = u_k$, every $v$ on it carrying the same flat front.
+- `cartesian/axis` and `/beside`, the planes $x = 0$ and $x = 3R$ at $y = 0$ drawn in $z$ and $ct$: six null lines $ct = z + \sqrt{2}\,u_k$ at 45°, each a ray moving with the beam.
+- `null_cylindrical_interior/edge`, `null_cylindrical_exterior/twice` and `/four`, the planes $\rho = R$, $2R$ and $4R$ drawn in $z$ and $ct$: the same six lines, $u = u_k$.
+- `null_cartesian/midway` and `/one` draw two beams side by side, another spacetime than the single beam embedded, and carry no slice.
+- The figure `lens`, the plane $y = 0$ with $t$ left out: every wave front covers the whole of it, so no slice is drawn.
+- `cartesian_axis` and `interior_axis`, the conformal diagrams of the beam's axis: the six lines of constant $p = \arctan(\sqrt{2}\,u_k/\ell)$, $\ell = 4R$, from $\mathscr{I}^-$ to $\mathscr{I}^+$; `midway` is the two beams' and carries none.
+
 ### Alcubierre
 
 - The embedding is the plane $z = 0$ of the Cartesian coordinates at $t = 0$, when the bubble is centred on $x = 0$, a disc of radius $3R$.
@@ -407,6 +417,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | spacetime | flat views | figure | conformal diagram |
 | --- | --- | --- | --- |
 | Aichelburg-Sexl | four null lines, three times | none | four null lines |
+| Bonnor's beam of light | six null lines, five times | none, every front covers it | six null lines, twice |
 | Alcubierre | line | floor | none drawn |
 | anti-de Sitter | line, line, line | none | line, line |
 | Bell-Szekeres | four events, five times; not visible on the regular view, which lies off $\eta = 0$ | none | four events, five times |

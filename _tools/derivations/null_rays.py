@@ -251,6 +251,30 @@ BTZ_CONE = "future cone of no angular momentum"
 LC_WEYL = {"sigma": "1/4", "C": 1}
 LC_KASNER = {"p_0": "2/3", "p_2": "2/3", "p_3": "-1/3", "ell": "(3/4)**(2/3)"}
 
+# Bonnor's uniform beam of light as every one of its diagrams draws it: radius R, the unit, and
+# pi G epsilon R^2/c^4 = 1/32, his m, so that A = rho^2/8 inside the beam and (1 + 2 ln rho)/8
+# outside it, A = 1/8 at its edge. The free profile of the Cartesian chart is that beam, and the
+# null Cartesian chart's is two of them side by side, their axes at x = +-2R, his section 6.
+LB = {"G": 1, "epsilon": "1/(32*pi)", "R": 1}
+
+
+def _lb_beam(x="x"):
+    s = f"(({x})**2 + y**2)"
+    return f"Piecewise(({s}/8, {s} <= 1), ((1 + log({s}))/8, True))"
+
+
+LB_ONE = _lb_beam()
+LB_TWO = _lb_beam("x - 2") + " + " + _lb_beam("x + 2")
+LB_ONE_INPUT = ("A uniform beam of radius $R$ with $\\pi G\\epsilon R^2/c^4 = 1/32$, $\\epsilon$ its energy density: "
+                "$A = \\rho^2/8R^2$ inside it and $A = (1 + 2\\ln(\\rho/R))/8$ outside, with $\\rho^2 = x^2 + y^2$.")
+LB_TWO_INPUT = ("Two uniform beams of radius $R$ shining the same way, their axes at $x = \\pm 2R$, $y = 0$, each "
+                "with $\\pi G\\epsilon R^2/c^4 = 1/32$: $A$ is the sum of the two profiles, each $\\rho^2/8R^2$ inside "
+                "its beam and $(1 + 2\\ln(\\rho/R))/8$ outside, $\\rho$ the distance from that beam's axis.")
+LB_FAMILIES = ("against the beam", "with the beam")
+# The box holds the six wave fronts of the embedding diagram, u = 0 to 10 R, with sqrt(2) u = ct - z.
+LB_BOX = (-8, 8, -2, 14)
+LB_NULL_TO_TZ = ((-1 / math.sqrt(2), 1 / math.sqrt(2)), (1 / math.sqrt(2), 1 / math.sqrt(2)))  # z and ct of Bonnor's u and v
+
 @dataclass
 class Diagram:
     """One view of one coordinate system, and every choice its drawing makes."""
@@ -1193,6 +1217,27 @@ DIAGRAMS = [
             tau="Piecewise((-y, y < 1), (tau, y < 3), (y, True))",
             # y = 1/(alpha r) falls outward, so P, the family moving to smaller y, is the outgoing one.
             families=("outgoing", "ingoing")),
+    # Bonnor's beam of light, in units of its radius. On the plane of the time and z at a fixed
+    # place across the beam the rays moving with the beam keep ct - z and the null curves moving
+    # against it keep ct + z + A (ct - z), A constant on the plane.
+    Diagram("light_beam", "cartesian", "axis", "on the axis", ("t", "z"), LB_BOX, "$z/R$", "$ct/R$",
+            {}, {"x": "0", "y": "0"}, families=LB_FAMILIES, functions={"A": LB_ONE}, input=LB_ONE_INPUT),
+    Diagram("light_beam", "cartesian", "beside", "beside the beam, $x = 3R$", ("t", "z"), LB_BOX,
+            "$z/R$", "$ct/R$", {}, {"x": "3", "y": "0"}, families=LB_FAMILIES, functions={"A": LB_ONE},
+            input=LB_ONE_INPUT),
+    Diagram("light_beam", "null_cartesian", "midway", "midway between two beams", ("u", "v"), LB_BOX,
+            "$z/R$", "$ct/R$", {}, {"x": "0", "y": "0"}, to_display=LB_NULL_TO_TZ, tau="u + v",
+            families=LB_FAMILIES, functions={"A": LB_TWO}, input=LB_TWO_INPUT),
+    Diagram("light_beam", "null_cartesian", "one", "on the axis of one of two beams", ("u", "v"), LB_BOX,
+            "$z/R$", "$ct/R$", {}, {"x": "2", "y": "0"}, to_display=LB_NULL_TO_TZ, tau="u + v",
+            families=LB_FAMILIES, functions={"A": LB_TWO}, input=LB_TWO_INPUT),
+    Diagram("light_beam", "null_cylindrical_interior", "edge", "at the edge of the beam, $\\rho = R$", ("u", "v"),
+            LB_BOX, "$z/R$", "$ct/R$", LB, {"rho": "1", "phi": "0"}, to_display=LB_NULL_TO_TZ,
+            tau="u + v", families=LB_FAMILIES),
+    *[Diagram("light_beam", "null_cylindrical_exterior", view, f"$\\rho = {n}R$", ("u", "v"),
+              LB_BOX, "$z/R$", "$ct/R$", LB, {"rho": str(n), "phi": "0"}, to_display=LB_NULL_TO_TZ,
+              tau="u + v", families=LB_FAMILIES)
+      for view, n in (("twice", 2), ("four", 4))],
 ]
 
 
@@ -1272,7 +1317,78 @@ def _zipoy_voorhees_captions(system):
     }
 
 
+def _lb_drawn():
+    return "drawn with $z = (v - u)/\\sqrt{2}$ and $ct = (u + v)/\\sqrt{2}$"
+
+
+def _lb_outside_caption(n, last):
+    """The caption of the view outside Bonnor's beam at rho = n R."""
+    return [
+        f"The plane of $u$ and $v$ outside the beam ($\\rho = {n}R$, $\\phi = 0$), {_lb_drawn()}, where "
+        f"$g_{{uu}} = -(1 + 2\\ln {n})/4 = {-(1 + 2 * math.log(n)) / 4:.2f}$. The rays moving with the beam keep "
+        "their $u$, run at 45°, and are null geodesics. A null curve moving against the beam keeps "
+        "$v - g_{uu}u/2$.",
+        last,
+    ]
+
+
+LB_CAPTIONS = {
+    ("light_beam", "cartesian", "axis"): [
+        "The plane of $t$ and $z$ on the axis of a uniform beam ($x = y = 0$), in units of its radius $R$. The "
+        "profile $A$ and its gradient both vanish on the axis, so the metric on this plane is "
+        "$-c^2dt^2 + dz^2$, flat, and light runs at 45° with the beam and against it.",
+        "No Christoffel symbol is left on the axis, so every ray drawn is a null geodesic. A ray sent against the "
+        "beam anywhere else is pulled toward the axis, since "
+        "$\\ddot{x} = -\\tfrac{1}{2}\\partial_xA\\,(\\dot{t} - \\dot{z})^2$, and swings back and forth across it.",
+    ],
+    ("light_beam", "cartesian", "beside"): [
+        "The plane of $t$ and $z$ beside a uniform beam ($x = 3R$, $y = 0$), where $A = (1 + 2\\ln 3)/8 = 0.40$. "
+        "A ray moving with the beam keeps its $ct - z$, runs at 45°, and is a null geodesic whatever the profile. "
+        "A null curve moving against the beam keeps $ct + z + A(ct - z)$, so it covers $(1 + A)/(1 - A) = 2.3$ "
+        "units of $z$ for each unit of $ct$.",
+        "That rate belongs to the coordinates: a constant added to $A$ amounts to the change of coordinates "
+        "$ct + z \\to ct + z + \\text{const}\\,(ct - z)$, and only the difference in $A$ between two distances from "
+        "the axis is free of that choice. A light ray launched against the beam along one of these curves is "
+        "turned toward the axis by $\\Gamma^x{}_{tt}$, $\\Gamma^x{}_{tz}$, and $\\Gamma^x{}_{zz}$ and leaves the "
+        "plane.",
+    ],
+    ("light_beam", "null_cartesian", "midway"): [
+        "The plane of $u$ and $v$ midway between two parallel uniform beams ($x = y = 0$), each of radius $R$ with "
+        f"its axis at $x = \\pm 2R$, {_lb_drawn()}. The two profiles add, $A = (1 + 2\\ln 2)/4 = 0.60$ here, and "
+        "their gradients cancel, so no Christoffel symbol is left on this plane and every ray drawn is a null "
+        "geodesic.",
+        "The rays moving with the beams keep their $u$. The rays moving against them keep $v + Au$ and stay "
+        "midway between the beams, pulled equally toward each.",
+    ],
+    ("light_beam", "null_cartesian", "one"): [
+        "The plane of $u$ and $v$ on the axis of one of two parallel uniform beams ($x = 2R$, $y = 0$), the other "
+        f"beam's axis at $x = -2R$, {_lb_drawn()}. A beam's own profile vanishes on its axis, so "
+        "$A = (1 + 2\\ln 4)/8 = 0.47$ is the other beam's alone.",
+        "The rays moving with the beams keep their $u$ and are null geodesics: light shining the same way as the "
+        "two beams feels neither, and the beams themselves stay parallel. A light ray launched against them "
+        "along a curve of constant $v + Au$ is turned toward the other beam by $\\Gamma^x{}_{uu} = \\partial_xA$ "
+        "and leaves the plane.",
+    ],
+    ("light_beam", "null_cylindrical_interior", "edge"): [
+        f"The plane of $u$ and $v$ at the edge of the beam ($\\rho = R$, $\\phi = 0$), {_lb_drawn()}, where "
+        "$g_{uu} = -8\\pi G\\epsilon R^2/c^4 = -1/4$. The rays moving with the beam keep their $u$, run at 45°, "
+        "and are null geodesics, the rays of the beam itself.",
+        "A null curve moving against the beam keeps $v + u/8$. A light ray launched along one is turned toward "
+        "the axis by $\\Gamma^\\rho{}_{uu} = 8\\pi G\\epsilon\\rho/c^4$, a pull in proportion to $\\rho$, so inside "
+        "the beam every such ray swings about the axis as a pendulum does, with the period $4\\pi R$ in $u$.",
+    ],
+    ("light_beam", "null_cylindrical_exterior", "twice"): _lb_outside_caption(
+        2, "Outside the beam spacetime is empty and $\\Gamma^\\rho{}_{uu} = 8\\pi G\\epsilon R^2/(c^4\\rho)$ falls "
+           "off as $1/\\rho$, as the pull of a line of matter does in Newton's theory, so a light ray launched "
+           "against the beam along one of these curves is turned toward the axis and leaves the plane."),
+    ("light_beam", "null_cylindrical_exterior", "four"): _lb_outside_caption(
+        4, "The profile grows as $\\ln\\rho$ without bound, so no ray sent against the beam escapes to "
+           "infinity. One launched straight outward from here, with no angular momentum about the axis, turns back "
+           "at a finite distance and falls into the beam."),
+}
+
 CAPTIONS = {
+    **LB_CAPTIONS,
     **{("aichelburg_sexl", "null_cartesian", view): _as_caption(rho[2:]) for view, rho in AS_RHO.items()},
     ("schwarzschild", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), the same at every fixed angle "
@@ -5041,6 +5157,17 @@ def _tsw_lstar(l):
 
 
 CLOSED_FORMS = {
+    # Bonnor's beam: a ray with the beam keeps ct - z, or u, and a null curve against it keeps
+    # ct + z + A (ct - z), or v + A u, with A the declared profile's value on the plane.
+    ("light_beam", "cartesian", "axis"): (lambda t, z: t + z, lambda t, z: t - z, None),
+    ("light_beam", "cartesian", "beside"):
+        (lambda t, z: t + z + (1 + 2 * math.log(3)) / 8 * (t - z), lambda t, z: t - z, None),
+    ("light_beam", "null_cartesian", "midway"): (lambda u, v: v + (1 + 2 * math.log(2)) / 4 * u, lambda u, v: u, None),
+    ("light_beam", "null_cartesian", "one"): (lambda u, v: v + (1 + 2 * math.log(4)) / 8 * u, lambda u, v: u, None),
+    ("light_beam", "null_cylindrical_interior", "edge"): (lambda u, v: v + u / 8, lambda u, v: u, None),
+    **{("light_beam", "null_cylindrical_exterior", view):
+       (lambda u, v, n=n: v + (1 + 2 * math.log(n)) / 8 * u, lambda u, v: u, None)
+       for view, n in (("twice", 2), ("four", 4))},
     ("btz", "stationary", "static"):
         (lambda t, r: t + _btz_rstar(r, BTZ_STATIC), lambda t, r: t - _btz_rstar(r, BTZ_STATIC), _away(1.0)),
     ("btz", "stationary", "rotating"):

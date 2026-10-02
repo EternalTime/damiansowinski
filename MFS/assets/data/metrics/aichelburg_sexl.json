@@ -39,6 +39,11 @@
       "id": "minkowski",
       "kind": "locally_same",
       "text": "Flat spacetime on either side of the shock. Roger Penrose built such waves in 1972 by cutting Minkowski space along a null plane and joining the halves again with a warp [penrose1972impulsive]."
+    },
+    {
+      "id": "light_beam",
+      "kind": "family",
+      "text": "A steady beam of light of finite width, whose exact field William Bonnor found in 1969. Outside the beam its profile is the shock's logarithm with no delta in front [bonnor1969light]."
     }
   ],
   "references": [
