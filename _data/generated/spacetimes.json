@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 78,
+  "count": 79,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -4030,6 +4030,11 @@
           "id": "kerr_de_sitter",
           "kind": "generalisation",
           "text": "De Sitter space with a rotating black hole put in. With the mass taken out again, Carter's metric is de Sitter space in spheroidal coordinates [akcay2011]."
+        },
+        {
+          "id": "kastor_traschen",
+          "kind": "generalisation",
+          "text": "De Sitter space with charged black holes in it, each with a charge equal to its mass, carried along by the expansion or the contraction [kastor1993]."
         }
       ],
       "references": [
@@ -4054,7 +4059,8 @@
         "ansoldi2008",
         "hayward2006",
         "frolov2016",
-        "akcay2011"
+        "akcay2011",
+        "kastor1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -8775,6 +8781,366 @@
       ]
     },
     {
+      "id": "kastor_traschen",
+      "name": "Kastor-Traschen Colliding Black Holes",
+      "short_name": "Kastor-Traschen",
+      "description": "Any number of charged black holes in a universe with a positive cosmological constant, the exact solution of the Einstein-Maxwell equations David Kastor and Jennie Traschen found in 1993. Each hole has a charge equal to its mass, and the holes ride the expansion or the contraction of the universe, so holes that fall together merge.",
+      "tags": [
+        "electrovacuum",
+        "non-vacuum",
+        "dynamical",
+        "time-dependent",
+        "charged",
+        "charged black hole",
+        "black hole",
+        "multiple black holes",
+        "colliding black holes",
+        "black hole merger",
+        "white hole",
+        "electric charge",
+        "mass",
+        "electromagnetic field",
+        "cosmological constant",
+        "positive cosmological constant",
+        "de Sitter",
+        "lukewarm",
+        "expanding universe",
+        "cosmological",
+        "horizon",
+        "event horizon",
+        "cosmological horizon",
+        "Cauchy horizon",
+        "inner horizon",
+        "singularity",
+        "curvature singularity",
+        "naked singularity",
+        "cosmic censorship",
+        "harmonic function",
+        "superposition",
+        "causal structure",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "Einstein-Maxwell",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. Each hole carries the mass parameter $m_i = GM_i/c^2$, a length, and a charge $Q_i$ of one common sign with $GQ_i^2/(4\\pi\\epsilon_0c^4) = m_i^2$. The cosmological constant is $\\Lambda = 3H^2/c^2$.",
+      "related": [
+        {
+          "id": "majumdar_papapetrou",
+          "kind": "special_case",
+          "text": "These holes with the cosmological constant switched off. At $H = 0$ the time drops out of the metric and the holes stand still [kastor1993]."
+        },
+        {
+          "id": "reissner_nordstrom_de_sitter",
+          "kind": "special_case",
+          "text": "One hole alone is the lukewarm charged black hole in de Sitter space, the one as hot as its cosmological horizon, in coordinates that ride the expansion [kastor1993, brill1994]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "special_case",
+          "text": "The universe the holes ride in. With every mass set to zero the metric is de Sitter space in its flat slicing [kastor1993]."
+        },
+        {
+          "id": "mcvittie",
+          "kind": "family",
+          "text": "A mass in an expanding universe filled with fluid, where the pressure piles up around the mass to keep the density even [kastor1993]."
+        }
+      ],
+      "references": [
+        "kastor1993",
+        "majumdar1947",
+        "papapetrou1947",
+        "hartle1972",
+        "mellor1989",
+        "romans1992",
+        "brill1994",
+        "shiromizu1993",
+        "zilhao2012",
+        "nakao1995",
+        "ida1998",
+        "kastor1996",
+        "gibbons2010"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kastor_traschen.json",
+      "charts": [
+        {
+          "id": "cartesian",
+          "name": "Cartesian",
+          "coordinates": [
+            "\\tau",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "\\tau \\in (-V/H, \\infty) \\;\\text{for}\\; H > 0",
+            "\\tau \\in (-\\infty, -V/H) \\;\\text{for}\\; H < 0",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "(x, y, z) \\neq \\mathbf{x}_i \\;\\text{(the horizons)}",
+            "U = 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "H",
+              "description": "Hubble rate of the de Sitter background, a frequency with $3H^2/c^2 = \\Lambda$, positive for holes moving apart and negative for holes falling together"
+            },
+            {
+              "symbol": "V = V(x,y,z)",
+              "description": "Dimensionless potential of the holes, $V = \\sum_i m_i/|\\mathbf{x} - \\mathbf{x}_i|$ for holes at the points $\\mathbf{x}_i$, harmonic away from them; no component assumes it harmonic"
+            },
+            {
+              "symbol": "U = H\\tau + V",
+              "description": "Dimensionless, the potential of the holes with the cosmological time added, so that $\\partial_\\tau U = H$"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, x, y, z)$, with $\\tau$ carrying dimensions of time and $x$, $y$, and $z$ lengths, and take components in the chart $x^0 = c\\tau$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{c^2d\\tau^2}{U^2} + U^2\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{1}{U^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "U^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "U^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "U^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12H^2\\,U^3 - 2c^2\\left(\\partial_x^2 V + \\partial_y^2 V + \\partial_z^2 V\\right)}{c^2\\,U^3}",
+          "kretschmann": "K = \\dfrac{24H^4\\,U^8 - 8c^2\\,H^2\\,U^5\\left(\\partial_x^2 V + \\partial_y^2 V + \\partial_z^2 V\\right) + 4c^4\\,U^2\\left(2\\partial_x^2 V\\,\\partial_y^2 V + 2\\partial_x^2 V\\,\\partial_z^2 V + 2\\partial_y^2 V\\,\\partial_z^2 V + 4\\left(\\partial_x\\partial_y V\\right)^2 + 4\\left(\\partial_x\\partial_z V\\right)^2 + 3\\left(\\partial_x^2 V\\right)^2 + 4\\left(\\partial_y\\partial_z V\\right)^2 + 3\\left(\\partial_y^2 V\\right)^2 + 3\\left(\\partial_z^2 V\\right)^2\\right) - 8c^4\\,U\\left(12\\partial_x V\\,\\partial_x\\partial_y V\\,\\partial_y V + 12\\partial_x V\\,\\partial_x\\partial_z V\\,\\partial_z V + 12\\partial_y V\\,\\partial_y\\partial_z V\\,\\partial_z V + 5\\left(\\partial_x V\\right)^2\\,\\partial_x^2 V - \\left(\\partial_x V\\right)^2\\,\\partial_y^2 V - \\left(\\partial_x V\\right)^2\\,\\partial_z^2 V + 5\\left(\\partial_y V\\right)^2\\,\\partial_y^2 V - \\left(\\partial_y V\\right)^2\\,\\partial_z^2 V + 5\\left(\\partial_z V\\right)^2\\,\\partial_z^2 V - \\partial_x^2 V\\left(\\partial_y V\\right)^2 - \\partial_x^2 V\\left(\\partial_z V\\right)^2 - \\partial_y^2 V\\left(\\partial_z V\\right)^2\\right) + 56c^4\\left(\\left(\\partial_x V\\right)^2 + \\left(\\partial_y V\\right)^2 + \\left(\\partial_z V\\right)^2\\right)^2}{c^4\\,U^8}"
+        },
+        {
+          "id": "cylindrical",
+          "name": "Cylindrical",
+          "coordinates": [
+            "\\tau",
+            "\\rho",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "\\tau \\in (-V/H, \\infty) \\;\\text{for}\\; H > 0",
+            "\\tau \\in (-\\infty, -V/H) \\;\\text{for}\\; H < 0",
+            "\\rho \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "(\\rho, z) \\neq (0, z_i) \\;\\text{(the horizons)}",
+            "U = 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "H",
+              "description": "Hubble rate of the de Sitter background, a frequency with $3H^2/c^2 = \\Lambda$, positive for holes moving apart and negative for holes falling together"
+            },
+            {
+              "symbol": "V = V(\\rho,z)",
+              "description": "Dimensionless potential of the holes, $V = \\sum_i m_i/\\sqrt{\\rho^2 + (z - z_i)^2}$ for holes at the points $z = z_i$ of the axis$, harmonic away from them; no component assumes it harmonic"
+            },
+            {
+              "symbol": "U = H\\tau + V",
+              "description": "Dimensionless, the potential of the holes with the cosmological time added, so that $\\partial_\\tau U = H$"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, \\rho, \\phi, z)$, with $\\tau$ carrying dimensions of time, $\\rho$ and $z$ lengths, and every hole on the axis $\\rho = 0$, and take components in the chart $x^0 = c\\tau$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{c^2d\\tau^2}{U^2} + U^2\\left(d\\rho^2 + \\rho^2d\\phi^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{1}{U^2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "U^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "U^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "U^2\\,\\rho^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12H^2\\,U^3\\,\\rho - 2c^2\\left(\\rho\\,\\partial_\\rho^2 V + \\rho\\,\\partial_z^2 V + \\partial_\\rho V\\right)}{c^2\\,U^3\\,\\rho}",
+          "kretschmann": "K = \\dfrac{24H^4\\,U^8\\,\\rho^2 - 8c^2\\,H^2\\,U^5\\,\\rho\\left(\\rho\\,\\partial_\\rho^2 V + \\rho\\,\\partial_z^2 V + \\partial_\\rho V\\right) + 4c^4\\,U^2\\left(2\\rho^2\\,\\partial_\\rho^2 V\\,\\partial_z^2 V + 2\\rho\\,\\partial_\\rho V\\,\\partial_\\rho^2 V + 2\\rho\\,\\partial_\\rho V\\,\\partial_z^2 V + 4\\rho^2\\left(\\partial_\\rho\\partial_z V\\right)^2 + 3\\rho^2\\left(\\partial_\\rho^2 V\\right)^2 + 3\\rho^2\\left(\\partial_z^2 V\\right)^2 + 3\\left(\\partial_\\rho V\\right)^2\\right) - 8c^4\\,U\\,\\rho\\left(12\\rho\\,\\partial_\\rho V\\,\\partial_\\rho\\partial_z V\\,\\partial_z V - \\rho\\,\\partial_\\rho^2 V\\left(\\partial_z V\\right)^2 + 5\\rho\\left(\\partial_\\rho V\\right)^2\\,\\partial_\\rho^2 V - \\rho\\left(\\partial_\\rho V\\right)^2\\,\\partial_z^2 V + 5\\rho\\left(\\partial_z V\\right)^2\\,\\partial_z^2 V - \\partial_\\rho V\\left(\\partial_z V\\right)^2 - \\left(\\partial_\\rho V\\right)^3\\right) + 56c^4\\,\\rho^2\\left(\\left(\\partial_\\rho V\\right)^2 + \\left(\\partial_z V\\right)^2\\right)^2}{c^4\\,U^8\\,\\rho^2}"
+        },
+        {
+          "id": "isotropic",
+          "name": "Isotropic",
+          "coordinates": [
+            "\\tau",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-m/(Hr), \\infty) \\;\\text{for}\\; H > 0",
+            "\\tau \\in (-\\infty, -m/(Hr)) \\;\\text{for}\\; H < 0",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = 0 \\;\\text{(the horizons)}",
+            "U = 0 \\;\\text{(the singularity)}",
+            "rU = H\\tau r + m \\;\\text{(areal radius)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "H",
+              "description": "Hubble rate of the de Sitter background, a frequency with $3H^2/c^2 = \\Lambda$, positive for holes moving apart and negative for holes falling together"
+            },
+            {
+              "symbol": "m",
+              "description": "Mass parameter of the single hole, $m = GM/c^2$, equal to its charge radius"
+            },
+            {
+              "symbol": "U = H\\tau + \\dfrac{m}{r}",
+              "description": "Dimensionless, the potential of the hole with the cosmological time added; the areal radius is $rU$"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, r, \\theta, \\phi)$ centred on a single hole, with $\\tau$ carrying dimensions of time and $r$ a length, and take components in the chart $x^0 = c\\tau$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{c^2d\\tau^2}{U^2} + U^2\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{1}{U^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "U^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\,U^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\,U^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12H^2}{c^2}",
+          "kretschmann": "K = \\dfrac{8m^2\\left(6r^2\\,U^2 - 12m\\,r\\,U + 7m^2\\right)}{r^8\\,U^8} + \\dfrac{24H^4}{c^4}"
+        },
+        {
+          "id": "comoving",
+          "name": "Comoving",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "(x, y, z) \\neq \\mathbf{x}_i \\;\\text{(the horizons)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "H",
+              "description": "Hubble rate of the de Sitter background, a frequency with $3H^2/c^2 = \\Lambda$, positive for holes moving apart and negative for holes falling together"
+            },
+            {
+              "symbol": "a = e^{Ht}",
+              "description": "Scale factor of the de Sitter background, dimensionless"
+            },
+            {
+              "symbol": "V = V(x,y,z)",
+              "description": "Dimensionless potential of the holes, $V = \\sum_i m_i/|\\mathbf{x} - \\mathbf{x}_i|$ for holes at the points $\\mathbf{x}_i$, harmonic away from them; no component assumes it harmonic"
+            },
+            {
+              "symbol": "\\Omega = 1 + \\dfrac{V}{a}",
+              "description": "Dimensionless, the potential of the holes diluted by the scale factor and added to one; $a\\Omega$ is the $U$ of the Cartesian chart"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z)$, with $t$ carrying dimensions of time and $x$, $y$, and $z$ comoving lengths, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{c^2dt^2}{\\Omega^2} + a^2\\Omega^2\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{\\Omega^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "a^2\\,\\Omega^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "a^2\\,\\Omega^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "a^2\\,\\Omega^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12H^2\\,a^3\\,\\Omega^3 - 2c^2\\left(\\partial_x^2 V + \\partial_y^2 V + \\partial_z^2 V\\right)}{c^2\\,a^3\\,\\Omega^3}",
+          "kretschmann": "K = \\dfrac{24H^4\\,a^8\\,\\Omega^8 - 8c^2\\,H^2\\,a^5\\,\\Omega^5\\left(\\partial_x^2 V + \\partial_y^2 V + \\partial_z^2 V\\right) + 4c^4\\,a^2\\,\\Omega^2\\left(2\\partial_x^2 V\\,\\partial_y^2 V + 2\\partial_x^2 V\\,\\partial_z^2 V + 2\\partial_y^2 V\\,\\partial_z^2 V + 4\\left(\\partial_x\\partial_y V\\right)^2 + 4\\left(\\partial_x\\partial_z V\\right)^2 + 3\\left(\\partial_x^2 V\\right)^2 + 4\\left(\\partial_y\\partial_z V\\right)^2 + 3\\left(\\partial_y^2 V\\right)^2 + 3\\left(\\partial_z^2 V\\right)^2\\right) - 8c^4\\,a\\,\\Omega\\left(12\\partial_x V\\,\\partial_x\\partial_y V\\,\\partial_y V + 12\\partial_x V\\,\\partial_x\\partial_z V\\,\\partial_z V + 12\\partial_y V\\,\\partial_y\\partial_z V\\,\\partial_z V + 5\\left(\\partial_x V\\right)^2\\,\\partial_x^2 V - \\left(\\partial_x V\\right)^2\\,\\partial_y^2 V - \\left(\\partial_x V\\right)^2\\,\\partial_z^2 V + 5\\left(\\partial_y V\\right)^2\\,\\partial_y^2 V - \\left(\\partial_y V\\right)^2\\,\\partial_z^2 V + 5\\left(\\partial_z V\\right)^2\\,\\partial_z^2 V - \\partial_x^2 V\\left(\\partial_y V\\right)^2 - \\partial_x^2 V\\left(\\partial_z V\\right)^2 - \\partial_y^2 V\\left(\\partial_z V\\right)^2\\right) + 56c^4\\left(\\left(\\partial_x V\\right)^2 + \\left(\\partial_y V\\right)^2 + \\left(\\partial_z V\\right)^2\\right)^2}{c^4\\,a^8\\,\\Omega^8}"
+        }
+      ]
+    },
+    {
       "id": "kerr",
       "name": "Kerr Rotating Black Hole",
       "short_name": "Kerr",
@@ -10689,6 +11055,11 @@
           "id": "kaluza_klein_monopole",
           "kind": "family",
           "text": "Another solution built on $1 + \\sum_i m_i/|\\mathbf{x} - \\mathbf{x}_i|$: any number of Kaluza-Klein monopoles stay at rest wherever they are put, as these black holes do [hawking1977, ruback1986]."
+        },
+        {
+          "id": "kastor_traschen",
+          "kind": "generalisation",
+          "text": "The same holes in a universe with a positive cosmological constant, where they ride the expansion and no longer stand still. Holes that fall together merge [kastor1993, brill1994]."
         }
       ],
       "references": [
@@ -11048,6 +11419,11 @@
           "id": "schwarzschild_de_sitter",
           "kind": "special_case",
           "text": "McVittie's universe expanding at a steady rate, with $H$ constant [kaloper2010, carrera2010]."
+        },
+        {
+          "id": "kastor_traschen",
+          "kind": "family",
+          "text": "Charged black holes in a universe that holds only a cosmological constant, which cannot pile up around them, so any number of them fit into one exact solution [kastor1993]."
         }
       ],
       "references": [
@@ -11062,7 +11438,8 @@
         "nolan1998",
         "lake2011",
         "faraoni2012",
-        "dasilva2013"
+        "dasilva2013",
+        "kastor1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mcvittie.json",
@@ -15691,6 +16068,11 @@
           "id": "kerr_de_sitter",
           "kind": "family",
           "text": "The black hole of de Sitter space with a spin where this one has a charge. Kayll Lake and Thomas Zannias found its horizons arranged as these are [lake2015]."
+        },
+        {
+          "id": "kastor_traschen",
+          "kind": "generalisation",
+          "text": "Any number of lukewarm holes at once. In the cosmological chart their potentials add, and holes that fall together merge [kastor1993, brill1994]."
         }
       ],
       "references": [
@@ -15715,7 +16097,8 @@
         "hintz2018",
         "hintz2017",
         "dias2018rough",
-        "lake2015"
+        "lake2015",
+        "brill1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/reissner_nordstrom_de_sitter.json",

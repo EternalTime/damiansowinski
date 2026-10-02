@@ -1,5 +1,5 @@
 {
-  "version": "724e8a6566e00542",
+  "version": "2b53d63fe0b5e247",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -14917,6 +14917,96 @@
         "eprint": "1710.11112",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/1710.11112"
+      }
+    },
+    "shiromizu1993": {
+      "type": "article",
+      "fields": {
+        "title": "Can large black holes collide in de Sitter space-time? An inflationary scenario of an inhomogeneous universe",
+        "author": "Shiromizu, Tetsuya and Nakao, Ken-ichi and Kodama, Hideo and Maeda, Kei-ichi",
+        "journal": "Physical Review D",
+        "volume": "47",
+        "number": "8",
+        "pages": "R3099--R3102",
+        "year": "1993",
+        "doi": "10.1103/PhysRevD.47.R3099",
+        "url": "https://doi.org/10.1103/PhysRevD.47.R3099"
+      }
+    },
+    "nakao1995": {
+      "type": "article",
+      "fields": {
+        "title": "Horizons of the Kastor-Traschen multi-black-hole cosmos",
+        "author": "Nakao, Ken-ichi and Shiromizu, Tetsuya and Hayward, Sean A.",
+        "journal": "Physical Review D",
+        "volume": "52",
+        "number": "2",
+        "pages": "796--808",
+        "year": "1995",
+        "doi": "10.1103/PhysRevD.52.796",
+        "url": "https://doi.org/10.1103/PhysRevD.52.796"
+      }
+    },
+    "ida1998": {
+      "type": "article",
+      "fields": {
+        "title": "Hoop conjecture for colliding black holes",
+        "author": "Ida, Daisuke and Nakao, Ken-ichi and Siino, Masaru and Hayward, Sean A.",
+        "journal": "Physical Review D",
+        "volume": "58",
+        "number": "12",
+        "pages": "121501",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.58.121501",
+        "url": "https://doi.org/10.1103/PhysRevD.58.121501"
+      }
+    },
+    "kastor1996": {
+      "type": "article",
+      "fields": {
+        "title": "Particle production and positive energy theorems for charged black holes in {DeSitter}",
+        "author": "Kastor, David and Traschen, Jennie",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "13",
+        "number": "10",
+        "pages": "2753--2761",
+        "year": "1996",
+        "doi": "10.1088/0264-9381/13/10/013",
+        "eprint": "gr-qc/9311025",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9311025"
+      }
+    },
+    "gibbons2010": {
+      "type": "article",
+      "fields": {
+        "title": "Black Holes in an Expanding Universe",
+        "author": "Gibbons, Gary W. and Maeda, Kei-ichi",
+        "journal": "Physical Review Letters",
+        "volume": "104",
+        "number": "13",
+        "pages": "131101",
+        "year": "2010",
+        "doi": "10.1103/PhysRevLett.104.131101",
+        "eprint": "0912.2809",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0912.2809"
+      }
+    },
+    "zilhao2012": {
+      "type": "article",
+      "fields": {
+        "title": "Dynamics of black holes in de Sitter spacetimes",
+        "author": "Zilh\\~ao, Miguel and Cardoso, Vitor and Gualtieri, Leonardo and Herdeiro, Carlos and Sperhake, Ulrich and Witek, Helvi",
+        "journal": "Physical Review D",
+        "volume": "85",
+        "number": "10",
+        "pages": "104039",
+        "year": "2012",
+        "doi": "10.1103/PhysRevD.85.104039",
+        "eprint": "1204.2019",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1204.2019"
       }
     }
   }
