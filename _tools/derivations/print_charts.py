@@ -14,8 +14,8 @@ israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, mi
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
 born_infeld_charge, penrose_impulsive_wave, exponential_metric, bondi_sachs, petrov_homogeneous, rp3_geon,
 kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kasner_scalar, moving_mirror,
-gravitational_instantons, small_universes, misner_zapolsky, cremmer_scherk, brans_dicke_sphere and
-bonnor_charged_dust, and Godel's cylindrical chart.
+gravitational_instantons, small_universes, misner_zapolsky, cremmer_scherk, brans_dicke_sphere,
+bonnor_charged_dust and bowers_liang, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -37,7 +37,7 @@ majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photo
 witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, mass_inflation.md,
 kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_star.md,
 misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, petrov_homogeneous.md,
-brill_waves.md, gravitational_instantons.md and brans_dicke_sphere.md beside this file.
+brill_waves.md, gravitational_instantons.md, brans_dicke_sphere.md and bowers_liang.md beside this file.
 """
 import argparse
 import fcntl
@@ -14382,6 +14382,195 @@ def misner_zapolsky_check(chart, system):
 
 
 CHARTS["misner_zapolsky"] = [lambda s=s: misner_zapolsky(s) for s in MISNER_ZAPOLSKY_CHARTS]
+
+
+# -- The anisotropic sphere of Bowers and Liang -------------------------------------------
+
+BOWERS_LIANG_Z = "Z = 1 - \\dfrac{r_s r^2}{R^3}"
+BOWERS_LIANG_N = "N = \\dfrac{1}{2}\\left(3\\left(1 - \\dfrac{r_s}{R}\\right)^{Q} - Z^{Q}\\right)"
+BOWERS_LIANG_P = "P = \\dfrac{2Z^{Q}}{3\\left(1 - \\dfrac{r_s}{R}\\right)^{Q} - Z^{Q}}"
+BOWERS_LIANG_RATES = {"N": "\\dfrac{Q r_s r N P}{R^3 Z}", "P": "-\\dfrac{Q r_s r P\\left(P + 2\\right)}{R^3 Z}"}
+
+
+def bowers_liang():
+    """Bowers and Liang's sphere of uniform density with unequal stresses, in the areal radius,
+    the only coordinate its literature uses. Their (2.10) with m = 4 pi rho_0 r^3/3 is g^rr = Z =
+    1 - r_s r^2/R^3, and their (2.8), nu'/2 = (m + 4 pi r^3 p_r)/(r(r - 2m)), with the pressure of
+    their (3.4) integrates to e^nu = N^(1/Q), N = (3(1 - r_s/R)^Q - Z^Q)/2, which is 1 - r_s/R at
+    the surface. Q = 1/2 - 3C/(4 pi) is their exponent, and P = Z^Q/N is 1 + 3p_r/(rho_0 c^2).
+
+    N and P hold a power Q of Z, and their slopes are algebraic in themselves: N' =
+    Q r_s r N P/(R^3 Z) and P' = -Q r_s r P(P + 2)/(R^3 Z). So both are held as functions of r
+    with those slopes, vm.HELD and vm.RATES, and every value is a rational function of r, R, r_s,
+    Q and P, with one factor N^(1/Q) for each lowered time index. bowers_liang_check holds the
+    chart to its source before anything is written, and bowers_liang.md is the derivation."""
+    coords = ["t", "r", "\\theta", "\\phi"]
+    parameters = ["R", "r_s", "Q", BOWERS_LIANG_Z, BOWERS_LIANG_N, BOWERS_LIANG_P]
+    line = ("ds^2 = -N^{1/Q}{c}dt^2 + \\dfrac{dr^2}{Z}"
+            " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)")
+    held = vm.HELD[("bowers_liang", "areal")]
+    probe = vm.Reader(coords, parameters, (), held=held)
+    r, Q = probe.symbol["r"], probe.parameters["Q"]
+    R, rs = probe.parameters["R"], probe.parameters["r_s"]
+    N, P = probe.parameters["N"], probe.parameters["P"]
+    rates = {name: probe(text) for name, text in ((N, BOWERS_LIANG_RATES["N"]), (P, BOWERS_LIANG_RATES["P"]))}
+    lapse, Z = sp.Symbol("_lapse", positive=True), sp.Symbol("Z", positive=True)
+    gap = sp.Symbol("_gap", positive=True)
+
+    def reduce(value):
+        # The slopes of N and P are written in N, P and r, so no derivative of either is left.
+        value = sp.sympify(value)
+        while value.has(sp.Derivative):
+            for d in sorted(value.atoms(sp.Derivative), key=lambda d: -d.derivative_count):
+                if d.expr not in rates:
+                    raise AssertionError(f"bowers_liang: {d} is no derivative of N or P")
+                value = value.xreplace({d: sp.diff(rates[d.expr], r, d.derivative_count - 1)})
+            value = value.doit()
+        return vm.norm(value)
+
+    def pretty(value):
+        """A value with N^(k/Q) written as that power of the one factor N^(1/Q), and the
+        rest written in Z by r_s r^2 = R^3 (1 - Z): a factor 1 - Z is written back as r_s r^2/R^3,
+        and a sum is left in Z, P and Q."""
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+
+        def power(e):
+            k = sp.cancel(e.exp * Q)
+            if not k.is_Integer:
+                raise AssertionError(f"bowers_liang: {e} is no whole power of N^(1/Q)")
+            return lapse ** k
+        value = value.replace(lambda e: e.is_Pow and e.base == N, power)
+        if value.has(N):
+            raise AssertionError(f"bowers_liang: N stands outside its power 1/Q in {value}")
+        # r_s r^2 = R^3 (1 - Z), so every sum is one in Z, P and Q, with r_s/R^3 in front.
+        number, powers = _factor_powers(sp.cancel(value.subs(rs, R ** 3 * (1 - Z) / r ** 2)))
+        out = number
+        for base, k in powers.items():
+            if sp.expand(base - (Z - 1)) == 0:
+                base, out = rs * r ** 2 / R ** 3, out * (-1) ** k
+            elif sp.expand(base + (Z - 1)) == 0:
+                base = rs * r ** 2 / R ** 3
+            out *= base ** k
+        return out
+
+    def collect(polynomial, printer):
+        """A sum that holds Z written by powers of Z and of 1 - Z, a Z^k (1 - Z)^(d - k) with each
+        coefficient factored, so that the terms the anisotropy adds stand apart: they carry
+        1 - Z, which is r_s r^2/R^3, and vanish at the centre."""
+        polynomial = sp.expand(polynomial)
+        if not polynomial.has(Z) or not polynomial.is_polynomial(Z):
+            return printer.sum_of(polynomial)
+        degree = sp.degree(polynomial, Z)
+        s, u = sp.Symbol("_s"), sp.Symbol("_u")
+        whole = sp.Poly(sp.expand(sp.cancel((s + u) ** degree * polynomial.subs(Z, s / (s + u)))), s, u)
+        out = []
+        for (k, rest), coefficient in sorted(whole.terms(), key=lambda term: -term[0][0]):
+            number, powers = _factor_powers(coefficient)
+            body = sp.Integer(1)
+            for base, n in powers.items():
+                # A sum leads with a positive term, its sign carried by the number in front.
+                if base.is_Add and printer.leads_negative(printer.sum_of(base).terms[0]):
+                    base, number = sp.expand(-base), number * (-1) ** n
+                body *= base ** n
+            out.append((number, body * Z ** k * gap ** rest))
+        return cp.Sum(out)
+
+    return {
+        "metric_id": "bowers_liang",
+        "system": {"id": "areal", "name": "Areal Radius", "coords": coords,
+                   "domains": ["t \\in (-\\infty, \\infty)", "r \\in [0, R]", "\\theta \\in [0, \\pi]",
+                               "\\phi \\in [0, 2\\pi)"],
+                   "parameters": parameters, "line_element": line.replace("{c}", "c^2")},
+        "chart_line_element": line.replace("{c}", ""),
+        "printer": {"lead": [Q, R, rs, r, P, Z, lapse], "factors": [Q, rs, r, R, Z, gap, P, lapse],
+                    "overrides": {lapse: "N^{1/Q}", gap: "\\left(1 - Z\\right)"}, "collect": collect},
+        "components": {"metric_components": {("t", "t"): "-N^{1/Q}", ("r", "r"): "\\dfrac{1}{Z}"},
+                       "inverse_metric_components": {("t", "t"): "-\\dfrac{1}{N^{1/Q}}", ("r", "r"): "Z"}},
+        "reduce": reduce,
+        "pretty": pretty,
+        "check": lambda chart: bowers_liang_check(chart, rates),
+    }
+
+
+def bowers_liang_check(chart, rates):
+    """The chart against its source, before anything is written. The slopes `reduce` writes for
+    N and P are those of their definitions. The stresses are diagonal with G^theta_theta =
+    G^phi_phi. The density is uniform, 8 pi G rho/c^2 = 3 r_s/R^3. The radial pressure is Bowers
+    and Liang's (3.4), rho_0 (Z^Q - Z_R^Q)/(3 Z_R^Q - Z^Q) with Z_R = 1 - r_s/R, which is
+    rho_0 (P - 1)/3, and the tangential pressure exceeds it by their (3.1) and (3.2) with n = 2,
+    C r^2 (rho_0 + p)(rho_0 + 3p)/Z, where C = (2 pi/3)(1 - 2Q) since Q = 1/2 - 3C/(4 pi). At the
+    surface P = 1, so the radial pressure vanishes, and g_tt and g_rr are those of Schwarzschild's
+    published exterior. At Q = 1/2 the chart is Schwarzschild's published interior, and as
+    Q -> 0 it tends to Florides's uniform cluster, the published chart of einstein_cluster. The
+    central pressure is infinite where N vanishes at the centre, r_s/R = 1 - 3^(-1/Q), their
+    (3.6)."""
+    r = chart.symbols[1]
+    p = chart.reader.parameters
+    R, rs, Q, N, P, Z = p["R"], p["r_s"], p["Q"], p["N"], p["P"], p["Z"]
+    held = chart.reader.held
+    out = lambda e: sp.sympify(e).subs(held).subs(held).doit()  # noqa: E731
+    for name in (N, P):
+        if vm.norm(sp.diff(out(held[name]), r) - out(rates[name])) != 0:
+            raise AssertionError(f"bowers_liang: the slope of {name} is not its definition's")
+    reduce = chart.reduce
+    geo, g = chart.geo, chart.geo.g
+    G = geo.raise_indices(geo.einstein_ll(), 2, (0,))
+    for a in range(4):
+        for b in range(4):
+            if a != b and reduce(G[a][b]) != 0:
+                raise AssertionError("bowers_liang: the chart has a stress off the diagonal")
+    if reduce(G[2][2] - G[3][3]) != 0:
+        raise AssertionError("bowers_liang: the two stresses across the radius differ")
+    density, radial, across = -G[0][0], G[1][1], G[2][2]
+    if vm.norm(density - 3 * rs / R ** 3) != 0:
+        raise AssertionError("bowers_liang: the density is not uniform, 8 pi G rho/c^2 = 3 r_s/R^3")
+    if vm.norm(radial - density * (P - 1) / 3) != 0:
+        raise AssertionError("bowers_liang: the radial pressure is not rho (P - 1)/3")
+    surface = (1 - rs / R) ** Q
+    theirs = density * (Z ** Q - surface) / (3 * surface - Z ** Q)
+    if vm.norm(out(density * (P - 1) / 3) - theirs) != 0:
+        raise AssertionError("bowers_liang: the radial pressure is not Bowers and Liang's (3.4)")
+    # Their (3.1) and (3.2) in 8 pi G/c^4 times the stresses: C/(8 pi) = (1 - 2Q)/12.
+    wanted = (1 - 2 * Q) * r ** 2 * (density + radial) * (density + 3 * radial) / (12 * Z)
+    if reduce(across - radial - wanted) != 0:
+        raise AssertionError("bowers_liang: the anisotropy is not Bowers and Liang's (3.1) with (3.2)")
+
+    def gone(e):
+        positive = {s: sp.Symbol(s.name + "_positive", positive=True) for s in sp.sympify(e).free_symbols}
+        return sp.simplify(sp.powsimp(sp.powdenest(sp.sympify(e).subs(positive), force=True), force=True)) == 0
+
+    lapse = out(-g[0, 0])
+    if not gone(out(P).subs(r, R) - 1):
+        raise AssertionError("bowers_liang: the radial pressure does not vanish at the surface")
+    reader, symbols, there = kaluza_klein_published("schwarzschild", "spherical")
+    same = {symbols[1]: R, reader.parameters["r_s"]: rs}
+    if not gone(-lapse.subs(r, R) - there[0, 0].subs(same)) or not gone((1 / Z).subs(r, R) - there[1, 1].subs(same)):
+        raise AssertionError("bowers_liang: the star does not meet Schwarzschild's published metric at its surface")
+    # Q = 1/2 is Schwarzschild's interior, at exact rational points inside the star.
+    reader, symbols, there = kaluza_klein_published("interior_schwarzschild", "spherical")
+    points = [(sp.Rational(3, 2), sp.Rational(1, 3)), (sp.Rational(5, 4), sp.Rational(9, 10)), (3, 2)]
+    for radius, x in points:
+        mine = {R: radius, rs: 1, r: x, Q: sp.Rational(1, 2)}
+        his = {reader.parameters["R"]: radius, reader.parameters["r_s"]: 1, symbols[1]: x}
+        if abs(sp.N(-lapse.subs(mine) - there[0, 0].subs(his), 40)) > sp.Float(10) ** -30:
+            raise AssertionError("bowers_liang: the chart at Q = 1/2 is not Schwarzschild's published interior")
+    # Q -> 0 is Florides's cluster of uniform density, whose lapse is (1 - r_s/R)^(3/2) Z^(-1/2).
+    reader, symbols, there = kaluza_klein_published("einstein_cluster", "uniform")
+    for radius, x in points:
+        his = {reader.parameters["R"]: radius, reader.parameters["r_s"]: 1, symbols[1]: x}
+        limit = sp.limit(lapse.subs({R: radius, rs: 1, r: x}), Q, 0, "+")
+        if abs(sp.N(-limit - there[0, 0].subs(his), 40)) > sp.Float(10) ** -30:
+            raise AssertionError("bowers_liang: the chart does not tend to Florides's cluster as Q -> 0")
+    # Their (3.6): N vanishes at the centre, and the central pressure is infinite, at r_s/R = 1 - 3^(-1/Q).
+    for exponent in (sp.Rational(1, 2), sp.Rational(1, 4), sp.Rational(1, 3)):
+        critical = {R: 1, rs: 1 - sp.Integer(3) ** (-1 / exponent), r: 0, Q: exponent}
+        if sp.simplify(out(N).subs(critical)) != 0:
+            raise AssertionError("bowers_liang: the central pressure is not infinite at Bowers and Liang's (3.6)")
+
+
+CHARTS["bowers_liang"] = bowers_liang
 # -- The Kiselev black hole ---------------------------------------------------------------
 
 KISELEV_CHARTS = ("static", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing", "linear",

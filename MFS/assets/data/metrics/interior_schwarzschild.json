@@ -76,6 +76,11 @@
       "id": "bonnor_charged_dust",
       "kind": "family",
       "text": "A star of dust held up by electric repulsion, with no pressure. The redshift of its centre has no bound [bonnor1975]."
+    },
+    {
+      "id": "bowers_liang",
+      "kind": "generalisation",
+      "text": "Schwarzschild's star with a pressure across the radius that differs from the pressure along it. With the sideways pressure the greater it stays in equilibrium inside $R = \\frac{9}{8}r_s$, and at Bowers and Liang's exponent $Q = 1/2$ it is Schwarzschild's [bowers1974]."
     }
   ],
   "references": [
@@ -97,7 +102,8 @@
     "raghoonundun2015",
     "whittaker1968",
     "wahlquist1968",
-    "bonnor1975"
+    "bonnor1975",
+    "bowers1974"
   ],
   "coordinates": [
     {

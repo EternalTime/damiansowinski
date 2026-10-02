@@ -1639,6 +1639,12 @@ DIMENSIONS = {
     },
     ("misner_zapolsky", "tolman_vi"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_b": "L"},
     ("misner_zapolsky", "power_law"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "n": "1", "a": "L"},
+    # Bowers and Liang's anisotropic sphere of uniform density. Their exponent Q is a pure number,
+    # and so are Z = g^rr, N, whose power 1/Q is -g_tt, and P = 1 + 3p_r/(rho c^2).
+    ("bowers_liang", "areal"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "R": "L", "r_s": "L", "Q": "1", "Z": "1", "N": "1",
+        "P": "1",
+    },
     # Tolman's solution VII. Lattimer and Prakash's compactness beta = GM/(Rc^2) is a pure number,
     # and so are Z = g^rr and the phase psi; Tolman's R and A are lengths and his B and C numbers.
     ("tolman_vii", "spherical"): {
@@ -1992,6 +1998,9 @@ HELD = {
     ("tolman_vii", "tolman"): ("psi",),
     # Z = g^rr of Tolman's solution V at n = 1/2 holds r^(7/3), and its slope is (7Z - 4)/(3r).
     ("misner_zapolsky", "tolman_v"): ("Z",),
+    # Bowers and Liang's N and P hold a power Q of Z and of 1 - r_s/R, and each has an algebraic
+    # slope written in N, P and Z, so every value is a rational function of them and of r.
+    ("bowers_liang", "areal"): ("N", "P"),
     # Weyl's two functions for the first Morgan-Morgan disc, polynomials in xi, eta and arccot(xi):
     # held, every value is written in them and their derivatives, as Weyl's chart writes it.
     ("morgan_morgan", "oblate_spheroidal"): ("psi", "gamma"),
@@ -2077,6 +2086,9 @@ RATES = {
                            " - 2\\left(r - m\\right)\\sin\\theta\\,\\partial_r\\psi\\,\\partial_\\theta\\psi\\right)"},
     },
     ("misner_zapolsky", "tolman_v"): {"Z": {"r": "\\dfrac{7Z - 4}{3r}"}},
+    # N' = Q r_s r Z^(Q - 1)/R^3 with Z^Q = N P, and P = Z^Q/N.
+    ("bowers_liang", "areal"): {"N": {"r": "\\dfrac{Q r_s r N P}{R^3 Z}"},
+                                "P": {"r": "-\\dfrac{Q r_s r P\\left(P + 2\\right)}{R^3 Z}"}},
     # dm/dr is the energy of the field in a shell, r_q^2/(r^2 + W), which is 4 pi G r^2 rho/c^4.
     **{("born_infeld_charge", chart): {"m": {"r": "\\dfrac{r_q^2}{r^2 + W}"}}
        for chart in ("static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing")},

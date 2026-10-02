@@ -381,6 +381,12 @@ TOLMAN_VII_CONSTANTS = {"R": "4/sqrt(5)", "A": "4/3**(1/4)", "B": "sqrt(7/12)",
                         "C": "sqrt(3)/2*(1/6 + sqrt(6)/3)*exp(2*atan(1/sqrt(6)) - pi)"}
 
 
+# Bowers and Liang's anisotropic star at Schwarzschild's limit, R = 9 r_s/8, in units of r_s, with
+# their exponent Q = 1/4: the star of equal pressures has an infinite central pressure at this
+# radius, and this one a central pressure of rho c^2/sqrt(3).
+BOWERS_LIANG_STAR = {"r_s": 1, "R": "9/8", "Q": "1/4"}
+
+
 @dataclass
 class Diagram:
     """One view of one coordinate system, and every choice its drawing makes."""
@@ -3427,6 +3433,14 @@ DIAGRAMS = [
             (0, 2, -1, 1), "$r/r_s$", "$ct/r_s$", TOLMAN_VII_STAR, EQUATOR, areal=True),
     Diagram("tolman_vii", "spherical", "through", "through the centre", ("t", "r"),
             (0, 2, -2, 2), "$x/r_s$", "$ct/r_s$", TOLMAN_VII_STAR, EQUATOR,
+            mirror=True, families=SIDEWAYS, cones=(4, 8), areal=True),
+    # Bowers and Liang's star with Q = 1/4 at R = 9 r_s/8, where -g_tt runs from 0.018 at the centre
+    # to 1/9 at the surface and light moves at about dr/d(ct) = 0.13 throughout, so each view is
+    # twice as tall as it is wide, the limit, to show the lean of its cones.
+    Diagram("bowers_liang", "areal", "radial", "$t$ and $r$", ("t", "r"),
+            (0, 1.125, -1.125, 1.125), "$r/r_s$", "$ct/r_s$", BOWERS_LIANG_STAR, EQUATOR, areal=True),
+    Diagram("bowers_liang", "areal", "through", "through the centre", ("t", "r"),
+            (0, 1.125, -2.25, 2.25), "$x/r_s$", "$ct/r_s$", BOWERS_LIANG_STAR, EQUATOR,
             mirror=True, families=SIDEWAYS, cones=(4, 8), areal=True),
     Diagram("tolman_vii", "tolman", "radial", "$t$ and $r$", ("t", "r"),
             (0, 2, -1, 1), "$r/r_s$", "$ct/r_s$", TOLMAN_VII_CONSTANTS, EQUATOR, areal=True),
@@ -8169,6 +8183,20 @@ CAPTIONS = {
         "The line through the centre of the star in the plane $\\theta = \\pi/2$ ($R = 2\\,r_s$): $x = r$ "
         "on the right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$. Rays cross the "
         "centre smoothly, and the cones are narrowest there.",
+    ],
+    ("bowers_liang", "areal", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole domain of the chart "
+        "($r \\in [0, R]$), for a star with $Q = 1/4$ at Schwarzschild's limit ($R = 9r_s/8$). With equal "
+        "pressures the central pressure is infinite at this radius and the cones close at the centre. With "
+        "$Q = 1/4$ the central pressure is $\\rho c^2/\\sqrt{3}$ and the cones stay open: $|g_{tt}| = 0.018$ at "
+        "the centre and $1/9$ at the surface, and light takes $8.3\\,r_s/c$ of $t$ to climb from one to the "
+        "other. Beyond $R$ the spacetime is Schwarzschild's exterior, and the rays go on into it as they do in "
+        "Schwarzschild's own chart.",
+    ],
+    ("bowers_liang", "areal", "through"): [
+        "The line through the centre of the star in the plane $\\theta = \\pi/2$ ($Q = 1/4$, $R = 9r_s/8$): "
+        "$x = r$ on the right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$. Rays cross the "
+        "centre smoothly, at $dr/d(ct) = 0.13$, and they are slowest at the surface, at $1/9$.",
     ],
     ("tolman_vii", "tolman", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) for the same star in Tolman's constants "
