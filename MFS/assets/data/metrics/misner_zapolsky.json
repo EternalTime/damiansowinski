@@ -56,6 +56,11 @@
       "id": "oppenheimer_snyder",
       "kind": "programme",
       "text": "The collapse this star points to. Oppenheimer and Volkoff ended their paper on stars too heavy for any equilibrium, whose nonstatic solutions were \"now being investigated\", and Oppenheimer and Hartland Snyder followed one through later that year [oppenheimer1939, oppenheimersnyder1939]."
+    },
+    {
+      "id": "bowers_liang",
+      "kind": "family",
+      "text": "A star of uniform density with unequal pressures, from 1974. Krsna Dev and Marcelo Gleiser took it up in 2002 before they gave the $1/r^2$ sphere unequal pressures of its own [bowers1974, dev2002]."
     }
   ],
   "references": [
@@ -70,7 +75,8 @@
     "sorkin1981",
     "schwarzschild1916b",
     "buchdahl1959",
-    "oppenheimersnyder1939"
+    "oppenheimersnyder1939",
+    "bowers1974"
   ],
   "coordinates": [
     {

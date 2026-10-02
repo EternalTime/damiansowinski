@@ -158,6 +158,9 @@ class Slice:
             expr = sp.sympify(expr)
             for name, rep in (functions or {}).items():
                 expr = expr.replace(reader.parameters[name].func, nr._as_lambda(reader, name, rep)).doit()
+            if reader.held:
+                # A name the checker holds as a function is written out by its definition, as nr.Chart does.
+                expr = expr.subs(reader.held).doit()
             return expr.subs(subs)
 
         g = nr.published_matrix(reader, entry, "metric_components")
@@ -615,6 +618,57 @@ def som_raychaudhuri(spec):
     45 degrees."""
     sl = Slice(spec.metric, spec.system, ("t", "r", "\\phi"), "polar", spec.params, spec.fixed)
     return about_axis(spec, sl, (0.5, 1.5), ("r = r_c", "r = 3r_c/2"))
+
+
+MAITRA_CIRCLES = (2.0, 5.0)      # the circles Maitra's cones stand around, in a
+
+
+def maitra_dust(spec):
+    """Maitra's light cones about the axis of the dust, on the slice z = 0 at a = 1, drawn polar
+    with the proper distance from the axis as its radius, so that the null directions along r run
+    at 45 degrees. Cones stand on the axis and at four places around each of the circles r = 2a
+    and r = 5a, those on the outer circle turned by 45 degrees from the others. No circle of
+    constant t and r turns null: the published g_phiphi is checked positive on every circle drawn
+    and out to 1000 a, and g^tt negative there, so t is a time function. The dust circles toward
+    -phi, the way the cones tip, and the arrows on the outer circle point that way. The moment
+    t = 0 the embedding diagram draws is the whole floor, out to r = 6a."""
+    sl = Slice(spec.metric, spec.system, ("t", "r", "\\phi"), "polar", spec.params, spec.fixed)
+    m = slices.moments(spec.metric)[0]
+    reach = m.reach(spec.system, "r")[1]
+    sl.proper_radius(reach * 1.05)
+    for r in np.geomspace(1e-2, 1e3, 301):
+        g = sl.metric((0.0, r, 0.0))
+        if not (g[2, 2] > 0 and np.linalg.inv(g)[0, 0] < 0):
+            raise SystemExit(f"{key(spec)}: the circle at r = {r} is not spacelike, or t is no time function there")
+    if not max(MAITRA_CIRCLES) < reach:
+        raise SystemExit(f"{key(spec)}: a circle of cones lies beyond the embedding")
+    camera = Camera(-90, 30)
+    unit = float(sl.radius(MAITRA_CIRCLES[0]))
+    fig = Figure(spec.view, spec.label, camera)
+    for k in range(12):
+        ph = k * np.pi / 6
+        fig.line("floor", sl.to_drawing((np.zeros(2), np.array([0.0, reach]), np.full(2, ph))))
+    for r in (*MAITRA_CIRCLES, reach):
+        fig.line("floor", circle(sl, 0.0, r), closed=True)
+    outer = MAITRA_CIRCLES[-1]
+    for k in range(4):
+        fig.line("floor", arrow(sl, 0.0, outer, (k + 0.25) * np.pi / 2, 0.058 * unit * outer / float(sl.radius(outer)),
+                                sense=-1))
+    fig.line("axis", np.array([[0, 0, -0.4], [0, 0, 0.875]]) * unit)
+    cones = [(0.0, 1e-6, 0.0)]
+    for r, shift in zip(MAITRA_CIRCLES, (0.0, 0.5)):
+        cones += [(0.0, r, (k + shift) * np.pi / 2) for k in range(4)]
+    drawn = [future_cone(sl, x, 0.3 * unit) for x in cones]
+    for apex, rim in sorted(drawn, key=lambda c: camera.depth(c[0])):
+        fig.cone(apex, rim)
+    fig.slice(m, fills=[[circle(sl, 0.0, reach)]], lines=[circle(sl, 0.0, reach)])
+    fig.label(np.array([0, 0, 0.875 * unit]), "$t$", "b", dy=-4)
+    for r, name, phi in ((MAITRA_CIRCLES[0], "r = 2a", -7 * np.pi / 18), (outer, "r = 5a", -4 * np.pi / 18)):
+        fig.circle_label(float(sl.radius(r)), 0.0, phi, f"${name}$", "tl", dx=6, dy=4)
+    fig.legend("cone", "cone", "future light cone")
+    fig.legend("line", "floor", "circles of constant $t$ and $r$, at $2a$, $5a$ and $6a$, all spacelike; "
+                                "the arrows point the way the dust circles")
+    return fig.done(), sl
 
 
 def ergoregion(spec, camera=Camera(-90, 30), horizon_between=(1.0, 1.9), ergo_below=3.0):
@@ -1156,6 +1210,16 @@ CAPTIONS = {
         "every one of them: a closed timelike curve through each of its events. Every world line of the "
         "dust is equivalent to every other, so the cones tip over in the same way about each one.",
     ],
+    ("maitra_dust", "cylindrical", "tipping"): [
+        "The slice $z = 0$ of $t$, $r$, and $\\phi$ about the axis of rotation ($a = 1$), with $ct$ up and the "
+        "proper distance from the axis as the radius, which puts the null directions along $r$ at 45°. The cones "
+        "stand at $t = 0$ on the axis and around the circles $r = 2a$ and $r = 5a$. On the axis they are upright, "
+        "and farther out the cross term $g_{t\\phi} = k$ tips them toward $-\\phi$, clockwise seen from above, "
+        "the way the dust circles.",
+        "No cone tips as far as its circle: $k/r$ is $0.55$ at $2a$ and $0.73$ at $5a$, and it climbs toward $1$ "
+        "without reaching it. Every circle of constant $t$ and $r$ stays outside the cones, and $t$ rises along "
+        "every timelike curve.",
+    ],
     ("alcubierre", "cartesian", "bubble"): [
         "The slice $z = 0$ of $t$, $x$, and $y$ through a bubble moving at twice the speed of "
         "light along $x$, with $t$ up, $ct$ and $x$ drawn at one scale, at the moment $t = 0$ when the "
@@ -1268,6 +1332,8 @@ FIGURES = [
                {"omega": 1}, {"z": "0"}),
     Projection("som_raychaudhuri", "cylindrical", "tipping", "light cones about the axis", som_raychaudhuri,
                {"Omega": 1}, {"z": "0"}),
+    Projection("maitra_dust", "cylindrical", "tipping", "light cones about the axis", maitra_dust,
+               {"a": 1}, {"z": "0"}),
     Projection("bonnor_rotating_dust", "cylindrical", "tipping", "light cones about the axis", bonnor_rotating_dust,
                {"a": 1}, {"z": "0"}),
     # The spinning string at the values its cylinders are drawn at, r_c = a/b = 1.

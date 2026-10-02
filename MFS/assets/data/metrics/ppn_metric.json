@@ -71,6 +71,11 @@
       "id": "brans_dicke_sphere",
       "kind": "special_case",
       "text": "Brans and Dicke's theory as a point of the plane. Far from the body their static sphere has $\\beta = 1$ and $\\gamma = (1 + \\omega)/(2 + \\omega)$ [thornewill1971, bransdicke1961]."
+    },
+    {
+      "id": "eih_many_bodies",
+      "kind": "family",
+      "text": "General relativity's field of many moving bodies, to the same order. One body at rest there is this metric at $\\beta = \\gamma = 1$ [will2014]."
     }
   ],
   "references": [
