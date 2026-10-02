@@ -103,9 +103,19 @@
       "text": "The flat universe in Nordström's scalar theory of gravity. His field equation gives dust the scale factor $1 - \\eta^2/\\eta_0^2$ in conformal time, with $\\eta_0$ a constant, a universe that expands from a bang and falls back into a crunch [sundrum2003]."
     },
     {
+      "id": "kasner_scalar",
+      "kind": "generalisation",
+      "text": "The flat Friedmann universe of a stiff fluid, with scale factor $t^{1/3}$, given a different exponent along each axis [jacobs1968]."
+    },
+    {
       "id": "kopczynski_trautman",
       "kind": "special_case",
       "text": "The flat universe of dust in the Einstein-Cartan theory, every particle spinning about one axis. The spins repel at high density, so its scale factor is $(1 + c^2t^2/\\ell^2)^{1/3}$, with $\\ell$ a length, and it turns round at $t = 0$ with no big bang [kopczynski1973, trautman2006]."
+    },
+    {
+      "id": "small_universes",
+      "kind": "locally_same",
+      "text": "Friedmann's universe with points of space a fixed step apart declared one point, so that space is a torus or another closed form. Every local measurement agrees with Friedmann's, and an observer sees each galaxy many times over [ellis1971, lachiezerey1995]."
     }
   ],
   "references": [
@@ -164,8 +174,11 @@
     "lindquist1957",
     "clifton2009",
     "sundrum2003",
+    "jacobs1968",
     "kopczynski1973",
-    "trautman2006"
+    "trautman2006",
+    "ellis1971",
+    "lachiezerey1995"
   ],
   "coordinates": [
     {

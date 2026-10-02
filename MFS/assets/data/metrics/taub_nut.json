@@ -81,6 +81,11 @@
       "id": "ab_metrics",
       "kind": "family",
       "text": "Taub-NUT is A I, Schwarzschild's metric, with the NUT parameter added. The B-metrics take a parameter of the same kind, and Jerzy Plebański called that family the anti-NUT solution [podolsky2018]."
+    },
+    {
+      "id": "gravitational_instantons",
+      "kind": "dual",
+      "text": "With an imaginary time and an imaginary twist, $l = in$, Taub-NUT is a space with no time in it. It is regular at two masses, Stephen Hawking's self dual instanton at $m = n$ and Don Page's, which has a horizon, at $m = 5n/4$ [hawking1977, page1978bolt, gibbonshawking1979]."
     }
   ],
   "references": [
@@ -107,7 +112,8 @@
     "bini2003",
     "eguchihanson1979",
     "gibbonshawking1979",
-    "podolsky2018"
+    "podolsky2018",
+    "page1978bolt"
   ],
   "coordinates": [
     {

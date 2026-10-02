@@ -13,7 +13,9 @@ einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluz
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis, erez_rosen,
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
 born_infeld_charge, penrose_impulsive_wave, exponential_metric, petrov_homogeneous, rp3_geon,
-kopczynski_trautman, brill_waves, ab_metrics and misner_zapolsky, and Godel's cylindrical chart.
+kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kasner_scalar, moving_mirror,
+gravitational_instantons, small_universes and misner_zapolsky, and Godel's
+cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -34,8 +36,8 @@ malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_
 majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md,
 witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, mass_inflation.md,
 kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_star.md,
-misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, petrov_homogeneous.md and
-brill_waves.md beside this file.
+misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, petrov_homogeneous.md,
+brill_waves.md and gravitational_instantons.md beside this file.
 """
 import argparse
 import fcntl
@@ -16347,6 +16349,501 @@ def eguchi_hanson_pretty(r, a, theta):
 CHARTS["eguchi_hanson"] = [lambda s=s: eguchi_hanson(s) for s in EGUCHI_HANSON_CHARTS]
 
 
+# -- The gravitational instantons of 1977 and 1978 ---------------------------------------
+
+INSTANTON_CHARTS = ["schwarzschild", "regular", "taub_nut", "taub_bolt", "multi_centre", "cp2", "cp2_distance", "page"]
+INSTANTON_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+INSTANTON_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+
+
+def gravitational_instantons(system_id):
+    """The gravitational instantons Hawking, Gibbons, Page and Pope found in 1977 and 1978, each a
+    chart: Riemannian spaces of four dimensions with no time, so no coordinate is scaled by c.
+    The Euclidean Schwarzschild solution in the imaginary time tau and in Gibbons and Hawking's
+    chart regular on the bolt, Hawking's self-dual Taub-NUT solution, Page's Taub-NUT solution with
+    a bolt, Gibbons and Hawking's multi-centre metrics with V and omega free, the Fubini-Study
+    metric on CP^2, and Page's metric on the nontrivial bundle of 2-spheres over the 2-sphere.
+    gravitational_instantons.md records each chart's source."""
+    return {"schwarzschild": instanton_schwarzschild, "regular": instanton_regular,
+            "taub_nut": lambda: instanton_taub("taub_nut"), "taub_bolt": lambda: instanton_taub("taub_bolt"),
+            "multi_centre": instanton_multi_centre, "cp2": instanton_cp2,
+            "cp2_distance": instanton_cp2_distance, "page": instanton_page}[system_id]()
+
+
+def instanton_pretty(swaps=(), merges=(), named=()):
+    """A pretty printer for these charts: a value factored, each sum written in whichever of the
+    forms `swaps` offer leaves it fewest terms, as sin^2 against cos^2, each pair of `merges`,
+    (a, b, product), multiplied back into its product, as (r + n)(r - n) into r^2 - n^2, and each
+    polynomial of `named`, (placeholder, polynomial), written as its placeholder. Factors are
+    matched up to their sign, and the number in front is kept out of the sums."""
+
+    def sign_of(base, poly):
+        if sp.expand(base - poly) == 0:
+            return 1
+        if sp.expand(base + poly) == 0:
+            return -1
+        return 0
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        number, powers = sp.Integer(1), {}
+
+        def put(base, k):
+            nonlocal number
+            if base.is_Add:
+                best = base
+                for swap in swaps:
+                    other = sp.expand(base.subs(swap, simultaneous=True))
+                    if len(sp.Add.make_args(other)) < len(sp.Add.make_args(best)):
+                        best = other
+                base = best
+                for placeholder, poly in named:
+                    s = sign_of(base, poly)
+                    if s:
+                        base, number = placeholder, number * s ** k
+                        break
+            if not base.is_Add and not base.is_Symbol and base.could_extract_minus_sign():
+                base, number = -base, number * (-1) ** k
+            powers[base] = powers.get(base, 0) + k
+
+        for factor in sp.Mul.make_args(sp.factor(value)):
+            base, k = (factor.base, factor.exp) if factor.is_Pow else (factor, sp.Integer(1))
+            if base.is_Number:
+                number *= base ** k
+            else:
+                put(base, k)
+        for a, b, product in merges:
+            found = {}
+            for base in list(powers):
+                for key, poly in (("a", a), ("b", b)):
+                    s = sign_of(base, poly) if base.is_Add else 0
+                    if s and key not in found:
+                        found[key] = (base, s)
+            if len(found) < 2 or powers[found["a"][0]] != powers[found["b"][0]]:
+                continue
+            k = powers.pop(found["a"][0])
+            powers.pop(found["b"][0])
+            number *= (found["a"][1] * found["b"][1]) ** k
+            put(sp.expand(product), k)
+        return _keep_coeff(number, sp.Mul(*[base ** k for base, k in powers.items()]))
+
+    return pretty
+
+
+def instanton_same(chart, pulled, what):
+    """Every slot of a metric carried onto the chart's against the chart's own."""
+    n = len(chart.symbols)
+    for i in range(n):
+        for j in range(i, n):
+            if vm.norm(pulled[i, j] - chart.geo.g[i, j]) != 0:
+                raise AssertionError(f"gravitational_instantons: {what} misses the chart in slot "
+                                     f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+def instanton_ricci(chart, constant, what):
+    """The chart's Ricci tensor against a constant times its metric, in every slot."""
+    ricci = chart.geo.ricci_ll()
+    n = len(chart.symbols)
+    for i in range(n):
+        for j in range(i, n):
+            if vm.norm(ricci[i][j] - constant * chart.geo.g[i, j]) != 0:
+                raise AssertionError(f"gravitational_instantons: {what} in slot "
+                                     f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+def instanton_continued(metric_id, system_id, time, replace):
+    """A published Lorentzian chart continued to imaginary time: with x^0 = i tau the component
+    g_00 changes sign and each g_0j takes a factor i, after `replace` has continued the parameters
+    that have to turn with the time, as Taub-NUT's l = i n. Returns the reader, the symbols with
+    tau in the time's place, and the continued metric."""
+    reader, symbols, g = kaluza_klein_published(metric_id, system_id)
+    k = [str(s) for s in symbols].index(time)
+    g = g.subs(replace(reader), simultaneous=True)
+    out = sp.zeros(len(symbols), len(symbols))
+    for i in range(len(symbols)):
+        for j in range(len(symbols)):
+            out[i, j] = g[i, j] * (sp.I if i == k else 1) * (sp.I if j == k else 1)
+    return reader, symbols, out
+
+
+def instanton_schwarzschild():
+    """The Euclidean Schwarzschild solution, Gibbons and Hawking's (3.1) of 1979 with r_s = 2M:
+    Schwarzschild's metric with t = -i tau. It is smooth on r = r_s where tau has the period
+    4 pi r_s, 8 pi M, and r = r_s is then a 2-sphere of area 4 pi r_s^2, the bolt. Checked to be
+    the published metric of schwarzschild continued."""
+    coords = ["\\tau", "r", "\\theta", "\\phi"]
+    line = ("ds^2 = \\left(1 - \\dfrac{r_s}{r}\\right)d\\tau^2 + \\left(1 - \\dfrac{r_s}{r}\\right)^{-1}dr^2 + r^2"
+            + INSTANTON_SPHERE)
+    domains = (["\\tau \\in [0, 4\\pi r_s)", "r \\in [r_s, \\infty)"] + INSTANTON_ANGLES
+               + ["r = r_s \\;\\text{(the bolt, a 2-sphere of radius}\\; r_s\\text{)}"])
+    probe = vm.Reader(coords, ["r_s"], ())
+
+    def check(chart):
+        reader, symbols, g = instanton_continued("schwarzschild", "spherical", "t", lambda reader: {})
+        at = dict(zip(symbols, chart.symbols))
+        at[reader.parameters["r_s"]] = chart.reader.parameters["r_s"]
+        instanton_same(chart, g.subs(at, simultaneous=True), "Schwarzschild's published metric continued to t = -i tau")
+        instanton_ricci(chart, 0, "the Euclidean Schwarzschild solution is not Ricci flat")
+
+    return {
+        "metric_id": "gravitational_instantons",
+        "system": {"id": "schwarzschild", "name": "Euclidean Schwarzschild", "coords": coords, "domains": domains,
+                   "parameters": ["r_s"], "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [probe.symbol["r"], probe.parameters["r_s"]], "flip": False},
+        "kretschmann": "\\dfrac{12r_s^2}{r^6}",
+        "check": check,
+    }
+
+
+def instanton_regular():
+    """Gibbons and Hawking's chart of 1977, regular on the bolt: x = 2 r_s sqrt(1 - r_s/r), their
+    x = 4M (1 - 2M/r)^(1/2), in which the metric is (x/2r_s)^2 d tau^2 + (r/r_s)^4 dx^2 + r^2 d Omega^2.
+    With tau/2r_s an angle of period 2 pi the first two terms are a plane in polar coordinates about
+    x = 0, and x runs to 2 r_s at infinity. The chart names the areal radius r = r_s/(1 - x^2/4r_s^2).
+    Checked to be the Euclidean Schwarzschild chart carried along that map."""
+    coords = ["x", "\\tau", "\\theta", "\\phi"]
+    parameters = ["r_s", "r = \\dfrac{4r_s^3}{4r_s^2 - x^2}"]
+    line = ("ds^2 = \\dfrac{r^4}{r_s^4}dx^2 + \\dfrac{x^2}{4r_s^2}d\\tau^2 + r^2" + INSTANTON_SPHERE)
+    domains = (["x \\in [0, 2r_s)", "\\tau \\in [0, 4\\pi r_s)"] + INSTANTON_ANGLES
+               + ["x = 0 \\;\\text{(the bolt, a 2-sphere of radius}\\; r_s\\text{)}"])
+    probe = vm.Reader(coords, parameters, ())
+    x, rs = probe.symbol["x"], probe.parameters["r_s"]
+    r = sp.Symbol("r", positive=True)
+
+    held = sp.Symbol("INSTANTON_GAP")
+    factored = instanton_pretty(named=[(held, 4 * rs ** 2 - x ** 2)], merges=[(2 * rs - x, 2 * rs + x, 4 * rs ** 2 - x ** 2)])
+
+    def pretty(value):
+        # Every value in x, r_s and the areal radius the chart names: 4 r_s^2 - x^2 = 4 r_s^3/r.
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        number, rest = factored(value).as_coeff_Mul()
+        return _keep_coeff(number, rest.subs(held, 4 * rs ** 3 / r))
+
+    def check(chart):
+        spec = instanton_schwarzschild()
+        source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+        own = chart.reader.parameters["r_s"]
+        cx = chart.symbols[0]
+        image = [chart.symbols[1], 4 * own ** 3 / (4 * own ** 2 - cx ** 2), chart.symbols[2], chart.symbols[3]]
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+        at = dict(zip(source.symbols, image))
+        at[source.reader.parameters["r_s"]] = own
+        instanton_same(chart, J.T * source.geo.g.subs(at, simultaneous=True) * J,
+                       "the Euclidean Schwarzschild chart carried along x = 2 r_s sqrt(1 - r_s/r)")
+
+    return {
+        "metric_id": "gravitational_instantons",
+        "system": {"id": "regular", "name": "Regular at the Bolt", "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [r, x, rs], "factors": [rs, x, r], "flip": False},
+        "pretty": pretty,
+        "kretschmann": "\\dfrac{12r_s^2}{r^6}",
+        "check": check,
+    }
+
+
+def instanton_taub(system_id):
+    """The two Riemannian Taub-NUT solutions that are regular, Gibbons and Hawking's (3.9) and (3.16)
+    of 1979. Both are Taub-NUT's published metric with t = -i tau and l = i n, so that
+    f = (r^2 - 2mr + n^2)/(r^2 - n^2): Hawking's self-dual solution of 1977 has m = n, f = (r - n)/(r + n),
+    and closes on a point, the nut r = n; Page's of 1978 has m = 5n/4, f = (r - 2n)(2r - n)/(2(r^2 - n^2)),
+    and closes on a 2-sphere of radius sqrt(3) n, the bolt r = 2n. tau has the period 8 pi n in both."""
+    bolt = system_id == "taub_bolt"
+    coords = ["r", "\\theta", "\\phi", "\\tau"]
+    if bolt:
+        f = "\\dfrac{\\left(r - 2n\\right)\\left(2r - n\\right)}{2\\left(r^2 - n^2\\right)}"
+        finv = "\\dfrac{2\\left(r^2 - n^2\\right)}{\\left(r - 2n\\right)\\left(2r - n\\right)}"
+        domains = (["r \\in [2n, \\infty)"] + INSTANTON_ANGLES + ["\\tau \\in [0, 8\\pi n)",
+                   "r = 2n \\;\\text{(the bolt, a 2-sphere of radius}\\; \\sqrt{3}\\,n\\text{)}"])
+    else:
+        f, finv = "\\dfrac{r - n}{r + n}", "\\dfrac{r + n}{r - n}"
+        domains = (["r \\in [n, \\infty)"] + INSTANTON_ANGLES + ["\\tau \\in [0, 8\\pi n)",
+                   "r = n \\;\\text{(the nut, a regular point)}"])
+    line = ("ds^2 = " + finv + "dr^2 + \\left(r^2 - n^2\\right)" + INSTANTON_SPHERE + " + " + f
+            + "\\left(d\\tau + 2n\\cos\\theta\\,d\\phi\\right)^2")
+    probe = vm.Reader(coords, ["n"], ())
+    r, n, theta = probe.symbol["r"], probe.parameters["n"], probe.symbol["\\theta"]
+    pretty = instanton_pretty(swaps=[{sp.sin(theta) ** 2: 1 - sp.cos(theta) ** 2}],
+                              merges=[(r + n, r - n, r ** 2 - n ** 2)])
+
+    def check(chart):
+        own = chart.reader.parameters["n"]
+        mass = sp.Rational(5, 4) * own if bolt else own
+        reader, symbols, g = instanton_continued(
+            "taub_nut", "spherical", "t",
+            lambda reader: {reader.parameters["l"]: sp.I * own, reader.parameters["m"]: mass})
+        # Taub-NUT's chart is (t, r, theta, phi) and this one (r, theta, phi, tau).
+        order = [3, 0, 1, 2]
+        at = {symbols[k]: chart.symbols[order[k]] for k in range(4)}
+        moved = sp.zeros(4, 4)
+        for i in range(4):
+            for j in range(4):
+                moved[order[i], order[j]] = g[i, j].subs(at, simultaneous=True)
+        instanton_same(chart, moved, "Taub-NUT's published metric continued to t = -i tau and l = i n")
+        instanton_ricci(chart, 0, "the chart is not Ricci flat")
+
+    return {
+        "metric_id": "gravitational_instantons",
+        "system": {"id": system_id, "name": "Taub-Bolt" if bolt else "Self-Dual Taub-NUT", "coords": coords,
+                   "domains": domains, "parameters": ["n"], "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [r, n], "flip": False},
+        "pretty": pretty,
+        "components": {"metric_components": {("r", "r"): finv, ("\\tau", "\\tau"): f},
+                       "inverse_metric_components": {("r", "r"): f}},
+        "check": check,
+    }
+
+
+def instanton_cp2():
+    """The Fubini-Study metric on the complex projective plane in Gibbons and Pope's coordinates,
+    their (25) of 1978 and Gibbons and Hawking's (3.24): an Einstein space, R_ab = Lambda g_ab, with
+    a nut at r = 0 and a bolt, a 2-sphere of area 6 pi/Lambda, at r = infinity. psi has the period
+    4 pi. The Kretschmann scalar is the constant 16 Lambda^2/3."""
+    coords = ["r", "\\theta", "\\phi", "\\psi"]
+    w = "\\left(1 + \\dfrac{\\Lambda r^2}{6}\\right)"
+    line = ("ds^2 = " + w + "^{-2}dr^2 + \\dfrac{r^2}{4}" + w + "^{-1}" + INSTANTON_SPHERE
+            + " + \\dfrac{r^2}{4}" + w + "^{-2}\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2")
+    domains = (["r \\in [0, \\infty)"] + INSTANTON_ANGLES + ["\\psi \\in [0, 4\\pi)",
+               "r = 0 \\;\\text{(the nut, a regular point)}",
+               "r \\to \\infty \\;\\text{(the bolt, a 2-sphere of area}\\; 6\\pi/\\Lambda\\text{)}"])
+    probe = vm.Reader(coords, ["\\Lambda"], ())
+    r, lam, theta = probe.symbol["r"], probe.parameters["Lambda"], probe.symbol["\\theta"]
+    pretty = instanton_pretty(swaps=[{sp.sin(theta) ** 2: 1 - sp.cos(theta) ** 2}])
+
+    def check(chart):
+        instanton_ricci(chart, chart.reader.parameters["Lambda"], "the Fubini-Study metric is not Einstein")
+
+    return {
+        "metric_id": "gravitational_instantons",
+        "system": {"id": "cp2", "name": "Complex Projective Plane", "coords": coords, "domains": domains,
+                   "parameters": ["\\Lambda"], "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [r, lam], "flip": False},
+        "pretty": pretty,
+        "ricci_scalar": "4\\Lambda",
+        "kretschmann": "\\dfrac{16\\Lambda^2}{3}",
+        "check": check,
+    }
+
+
+def instanton_cp2_distance():
+    """The Fubini-Study metric in the distance chi from the nut, the form of Gibbons and Pope's
+    Table 1 of 1978: d chi^2 + A (d psi + cos theta d phi)^2 + B (d theta^2 + sin^2 theta d phi^2)
+    with A = (L^2/4) sin^2(chi/L) cos^2(chi/L) and B = (L^2/4) sin^2(chi/L), where L = sqrt(6/Lambda).
+    chi runs from the nut, 0, to the bolt, pi L/2, which the chart in r reaches only at infinity.
+    Checked to be the chart in r carried along r = L tan(chi/L) at Lambda = 6/L^2."""
+    coords = ["\\chi", "\\theta", "\\phi", "\\psi"]
+    line = ("ds^2 = d\\chi^2 + \\dfrac{L^2}{4}\\sin^2(\\chi/L)" + INSTANTON_SPHERE
+            + " + \\dfrac{L^2}{4}\\sin^2(\\chi/L)\\cos^2(\\chi/L)\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2")
+    domains = (["\\chi \\in [0, \\pi L/2]"] + INSTANTON_ANGLES + ["\\psi \\in [0, 4\\pi)",
+               "\\chi = 0 \\;\\text{(the nut, a regular point)}",
+               "\\chi = \\pi L/2 \\;\\text{(the bolt, a 2-sphere of radius}\\; L/2\\text{)}"])
+    probe = vm.Reader(coords, ["L"], ())
+    chi, L, theta = probe.symbol["\\chi"], probe.parameters["L"], probe.symbol["\\theta"]
+    sine = sp.sin(chi / L)
+    cosine = sp.cos(chi / L)
+    # Each sum in whichever of the sines and cosines leaves it fewest terms, so that
+    # (sin + 1)(sin - 1) stands as -cos^2, as the line element has it.
+    pretty = instanton_pretty(swaps=[{sine ** 2: 1 - cosine ** 2}, {sp.sin(theta) ** 2: 1 - sp.cos(theta) ** 2},
+                                     {sine ** 2: 1 - cosine ** 2, sp.sin(theta) ** 2: 1 - sp.cos(theta) ** 2}],
+                              merges=[(sine + 1, sine - 1, sine ** 2 - 1)])
+
+    def check(chart):
+        spec = instanton_cp2()
+        source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+        own, c = chart.reader.parameters["L"], chart.symbols[0]
+        image = [own * sp.tan(c / own)] + list(chart.symbols[1:])
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+        at = dict(zip(source.symbols, image))
+        at[source.reader.parameters["Lambda"]] = 6 / own ** 2
+        pulled = J.T * source.geo.g.subs(at, simultaneous=True) * J
+        for i in range(4):
+            for j in range(i, 4):
+                if sp.simplify(pulled[i, j] - chart.geo.g[i, j]) != 0:
+                    raise AssertionError("gravitational_instantons: the chart in r carried along r = L tan(chi/L) "
+                                         f"misses the distance chart in slot {coords[i]}{coords[j]}")
+        instanton_ricci(chart, 6 / own ** 2, "the distance chart is not Einstein with Lambda = 6/L^2")
+
+    return {
+        "metric_id": "gravitational_instantons",
+        "system": {"id": "cp2_distance", "name": "Complex Projective Plane, Distance", "coords": coords,
+                   "domains": domains, "parameters": ["L"], "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [L], "flip": False, "arguments": {chi / L: "\\chi/L"}},
+        "pretty": pretty,
+        "ricci_scalar": "\\dfrac{24}{L^2}",
+        "kretschmann": "\\dfrac{192}{L^4}",
+        "check": check,
+    }
+
+
+def instanton_on_shell(chart):
+    """Gibbons and Hawking's field equation curl omega = grad V for centres on one axis, where
+    omega has the one component omega_phi: d_rho omega = rho d_z V and d_z omega = -rho d_rho V,
+    whose integrability is Laplace's equation, d_z^2 V = -d_rho^2 V - d_rho V/rho. Returns a
+    function that writes every derivative of omega, and every second derivative of V along z, by
+    them, so that a value which vanishes on a solution is exactly zero."""
+    rho, z = chart.symbols[0], chart.symbols[1]
+    V, omega = chart.reader.parameters["V"], chart.reader.parameters["omega"]
+
+    def on_shell(value):
+        value = sp.sympify(value)
+        for _ in range(8):
+            rules = {}
+            for d in value.atoms(sp.Derivative):
+                counts = dict(d.variable_count)
+                kr, kz = counts.get(rho, 0), counts.get(z, 0)
+                if d.expr == omega and kr:
+                    rules[d] = sp.diff(rho * sp.diff(V, z), rho, kr - 1, z, kz)
+                elif d.expr == omega:
+                    rules[d] = sp.diff(-rho * sp.diff(V, rho), z, kz - 1)
+                elif d.expr == V and kz >= 2:
+                    rules[d] = sp.diff(-sp.diff(V, rho, 2) - sp.diff(V, rho) / rho, rho, kr, z, kz - 2)
+            if not rules:
+                break
+            value = value.xreplace(rules).doit()
+        return vm.norm(value)
+
+    return on_shell
+
+
+def instanton_multi_centre():
+    """Gibbons and Hawking's multi-centre metrics of 1978, V dx.dx + (d tau + omega.dx)^2/V on flat
+    three dimensional space with curl omega = grad V, for centres on one axis: cylindrical
+    coordinates (rho, z, phi), V and omega = omega_phi free functions of rho and z, and no component
+    assuming the field equation. With centres off one axis omega has three components, and the chart
+    with all four functions free prints nearly two megabytes; gravitational_instantons.md records
+    that. Checked: the Ricci tensor vanishes on every solution of the field equation; one centre
+    with V = 1 + 2n/R is the self-dual Taub-NUT chart carried along r = R + n; and two centres
+    without the constant are the published two-centre chart of eguchi_hanson."""
+    coords = ["\\rho", "z", "\\phi", "\\tau"]
+    parameters = ["V = V(\\rho,z)", "\\omega = \\omega(\\rho,z)"]
+    line = ("ds^2 = V\\left(d\\rho^2 + dz^2 + \\rho^2d\\phi^2\\right) + V^{-1}\\left(d\\tau + \\omega\\,d\\phi\\right)^2")
+    domains = ["\\rho \\in [0, \\infty)", "z \\in (-\\infty, \\infty)", "\\phi \\in [0, 2\\pi)", "\\tau \\in [0, 8\\pi n)",
+               "(\\rho, z) = (0, z_i) \\;\\text{(the centres, regular points)}"]
+    probe = vm.Reader(coords, parameters, ())
+    rho = probe.symbol["\\rho"]
+    V, omega = probe.parameters["V"], probe.parameters["omega"]
+
+    def check(chart):
+        on_shell = instanton_on_shell(chart)
+        ricci = chart.geo.ricci_ll()
+        for i in range(4):
+            for j in range(i, 4):
+                if on_shell(ricci[i][j]) != 0:
+                    raise AssertionError("gravitational_instantons: the multi-centre chart is not Ricci flat on a "
+                                         f"solution of curl omega = grad V in slot {coords[i]}{coords[j]}")
+        own_rho, own_z = chart.symbols[0], chart.symbols[1]
+        own_V, own_omega = chart.reader.parameters["V"], chart.reader.parameters["omega"]
+
+        def at(potential, twist):
+            def put(e):
+                return e.subs({own_V: potential, own_omega: twist}, simultaneous=True).doit()
+            if sp.simplify(sp.diff(twist, own_rho) - own_rho * sp.diff(potential, own_z)) != 0 or \
+                    sp.simplify(sp.diff(twist, own_z) + own_rho * sp.diff(potential, own_rho)) != 0:
+                raise AssertionError("gravitational_instantons: the twist is not the potential's")
+            return chart.geo.g.applyfunc(put)
+
+        # One centre with the constant kept: Hawking's self-dual Taub-NUT solution.
+        spec = instanton_taub("taub_nut")
+        nut = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+        r, theta, phi, tau = nut.symbols
+        n = nut.reader.parameters["n"]
+        R = sp.sqrt(own_rho ** 2 + own_z ** 2)
+        here = at(1 + 2 * n / R, 2 * n * own_z / R)
+        # u = r - n is the distance from the centre, positive, so that sqrt(rho^2 + z^2) is u itself.
+        u = sp.Symbol("u", positive=True)
+        image = [u * sp.sin(theta), u * sp.cos(theta), phi, tau]
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], (u, theta, phi, tau)[j]))
+        pulled = J.T * here.subs(dict(zip(chart.symbols, image)), simultaneous=True).applyfunc(sp.simplify) * J
+        for i in range(4):
+            for j in range(i, 4):
+                if sp.simplify(pulled[i, j] - nut.geo.g[i, j].subs(r, u + n)) != 0:
+                    raise AssertionError("gravitational_instantons: one centre is not the self-dual Taub-NUT chart "
+                                         f"in slot {nut.coords_tex[i]}{nut.coords_tex[j]}")
+        # Two centres without the constant: the published two-centre chart of the Eguchi-Hanson space.
+        reader, symbols, g = kaluza_klein_published("eguchi_hanson", "two_centre")
+        a = reader.parameters["a"]
+        R1, R2 = sp.sqrt(own_rho ** 2 + (own_z - a) ** 2), sp.sqrt(own_rho ** 2 + (own_z + a) ** 2)
+        here = at(a / 8 * (1 / R1 + 1 / R2), a / 8 * ((own_z - a) / R1 + (own_z + a) / R2))
+        theirs = g.subs(dict(zip(symbols, chart.symbols)), simultaneous=True)
+        for i in range(4):
+            for j in range(i, 4):
+                if sp.simplify(here[i, j] - theirs[i, j]) != 0:
+                    raise AssertionError("gravitational_instantons: two centres are not the published two-centre "
+                                         f"chart of eguchi_hanson in slot {coords[i]}{coords[j]}")
+
+    return {
+        "metric_id": "gravitational_instantons",
+        "system": {"id": "multi_centre", "name": "Multi-Centre", "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [V, omega, rho], "flip": False},
+        "check": check,
+    }
+
+
+def instanton_page():
+    """Page's metric of 1978 on the nontrivial bundle of 2-spheres over the 2-sphere, as Gibbons and
+    Hawking write it, their (3.25) of 1979, with one constant written another way. The local
+    metric is a limit of Kerr-de Sitter's and solves R_ab = Lambda g_ab for every nu when the
+    coefficient of (d psi + cos theta d phi)^2 carries 16 nu^2/(3 + 6 nu^2 - nu^4)^2; Gibbons and
+    Hawking's 1/(3 + nu^2)^2 is the same number exactly where nu^4 + 4 nu^3 - 6 nu^2 + 12 nu - 3 = 0,
+    nu = 0.2817, the value at which the circle of psi, of period 4 pi, closes smoothly on both
+    bolts chi = 0 and chi = pi. Written their way the metric is Einstein at that one value and
+    the checker would have to reduce every comparison by the quartic; written this way every
+    component is an identity in nu, and _tools/test_gravitational_instantons.py holds the
+    regularity of the bolts to the quartic."""
+    coords = ["\\chi", "\\theta", "\\phi", "\\psi"]
+    parameters = ["\\Lambda", "\\nu", "P = 3 - \\nu^2 - \\nu^2\\left(1 + \\nu^2\\right)\\cos^2\\chi",
+                  "Q = 1 - \\nu^2\\cos^2\\chi", "N = 3 + 6\\nu^2 - \\nu^4"]
+    line = ("ds^2 = \\dfrac{3\\left(1 + \\nu^2\\right)}{\\Lambda}\\left(\\dfrac{Q}{P}d\\chi^2 + \\dfrac{Q}{N}"
+            + INSTANTON_SPHERE + " + \\dfrac{4\\nu^2P\\sin^2\\chi}{N^2Q}\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2\\right)")
+    domains = (["\\chi \\in [0, \\pi]"] + INSTANTON_ANGLES + ["\\psi \\in [0, 4\\pi)",
+               "\\chi = 0,\\; \\pi \\;\\text{(the two bolts, 2-spheres)}"])
+    probe = vm.Reader(coords, parameters, ())
+    chi, theta = probe.symbol["\\chi"], probe.symbol["\\theta"]
+    lam, nu = probe.parameters["Lambda"], probe.parameters["nu"]
+    c = sp.cos(chi)
+    named = [(sp.Symbol("PAGE_P"), 3 - nu ** 2 - nu ** 2 * (1 + nu ** 2) * c ** 2, "P"),
+             (sp.Symbol("PAGE_Q"), 1 - nu ** 2 * c ** 2, "Q"),
+             (sp.Symbol("PAGE_N"), 3 + 6 * nu ** 2 - nu ** 4, "N")]
+    turn = {sp.sin(chi) ** 2: 1 - c ** 2}
+    polar = {sp.sin(theta) ** 2: 1 - sp.cos(theta) ** 2}
+    pretty = instanton_pretty(swaps=[turn, polar, {**turn, **polar}],
+                              merges=[(1 + nu * c, 1 - nu * c, 1 - nu ** 2 * c ** 2), (nu + 1, nu - 1, nu ** 2 - 1)],
+                              named=[(placeholder, poly) for placeholder, poly, _ in named])
+
+    def check(chart):
+        instanton_ricci(chart, chart.reader.parameters["Lambda"], "Page's metric is not Einstein for every nu")
+
+    return {
+        "metric_id": "gravitational_instantons",
+        "system": {"id": "page", "name": "Page", "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [nu, lam], "flip": False, "overrides": {placeholder: text for placeholder, _, text in named},
+                    "factors": [lam, nu] + [placeholder for placeholder, _, _ in named]},
+        "pretty": pretty,
+        "components": {"metric_components": {
+            ("\\chi", "\\chi"): "\\dfrac{3\\left(1 + \\nu^2\\right)Q}{\\Lambda P}",
+            ("\\theta", "\\theta"): "\\dfrac{3\\left(1 + \\nu^2\\right)Q}{\\Lambda N}",
+            ("\\psi", "\\psi"): "\\dfrac{12\\nu^2\\left(1 + \\nu^2\\right)P\\sin^2\\chi}{\\Lambda N^2Q}"}},
+        "ricci_scalar": "4\\Lambda",
+        "check": check,
+    }
+
+
+CHARTS["gravitational_instantons"] = [lambda s=s: gravitational_instantons(s) for s in INSTANTON_CHARTS]
+
+
 # -- The double Kerr solution ------------------------------------------------------------
 
 DOUBLE_KERR_PARAMETERS = ["f = f(\\rho,z)", "\\omega = \\omega(\\rho,z)", "\\gamma = \\gamma(\\rho,z)"]
@@ -20654,6 +21151,460 @@ def rp3_geon_check(chart, system):
 CHARTS["rp3_geon"] = [lambda s=s: rp3_geon(s) for s in RP3_GEON_CHARTS]
 
 
+# -- The T-models of Datt and Ruban -------------------------------------------------------
+
+DR_CHARTS = ("comoving", "ruban", "areal", "de_sitter", "exterior_kruskal")
+DR_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+DR_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+DR_PARAMETRIC = "a = \\epsilon\\cot(\\eta/2) + 2\\mu\\left(1 - \\dfrac{\\eta}{2}\\cot(\\eta/2)\\right)"
+DR_AREAL = ("a = \\epsilon\\sqrt{\\dfrac{r_s}{T} - 1} + 2\\mu\\left(1 - \\sqrt{\\dfrac{r_s}{T} - 1}"
+            "\\,\\arcsin\\left(\\sqrt{\\dfrac{T}{r_s}}\\right)\\right)")
+DR_DE_SITTER = ("a = \\epsilon\\sinh(ct/\\ell) + \\mu\\left(\\left(\\dfrac{\\pi}{2} - \\arctan\\left(\\sinh(ct/\\ell)\\right)"
+                "\\right)\\sinh(ct/\\ell) - 1\\right)")
+
+
+def datt_ruban_t_models(system):
+    """The T-models of Datt, Z. Phys. 108, 314 (1938), and Ruban, JETP Lett. 8, 414 (1968) and Sov.
+    Phys. JETP 29, 1027 (1969): dust whose spheres have a radius that depends on the time alone,
+    -c^2dt^2 + a(t, r)^2 dr^2 + b(t)^2 dOmega^2, the spherical dust solution that Lemaitre, Tolman
+    and Bondi's family leaves out, and the Kantowski-Sachs dust universe with its scale factor
+    along the axis free to differ from shell to shell.
+
+    Five charts. The comoving chart leaves a and b free, so no component assumes a field equation.
+    Ruban's chart writes his solution without a cosmological constant in the cycloid's parameter,
+    his (2) of 1968 and (18) of 1969: b = r_s sin^2(eta/2), c dt = b d eta, and
+    a = epsilon cot(eta/2) + 2 mu (1 - (eta/2) cot(eta/2)), with mu(r) = (G/c^2) dM/dr the rest
+    mass per unit of r. The factor 2 is Krasinski's, Gen. Rel. Grav. 31, 1615 (1999), his (3) and
+    (4); Ruban's (18) prints M' where the field equations need 2M', and datt_ruban_check holds the
+    chart to the density 8 pi G rho/c^2 = 2 mu/(a b^2), which is the mass dM = (c^2/G) mu dr in a
+    shell. The areal chart takes the radius of the spheres for its time, Datt's own form as
+    Krasinski writes it and Plebanski and Krasinski's (19.101), where every derivative of a along
+    the time is rational in a. The de Sitter chart is Ruban's (19) of 1969, the T-model on de
+    Sitter space, b = l cosh(ct/l). Kruskal's chart is the vacuum outside a T-sphere, the white
+    hole's chart of the same name, on the side V >= U of the surface of the dust.
+    datt_ruban_t_models.md records each chart's source."""
+    def check(chart):
+        return datt_ruban_check(chart, system)
+    if system == "comoving":
+        coords, parameters = ["t", "r", "\\theta", "\\phi"], ["a = a(t,r)", "b = b(t)"]
+        probe = vm.Reader(coords, parameters, ())
+        a, b = probe.parameters["a"], probe.parameters["b"]
+        return {
+            "metric_id": "datt_ruban_t_models",
+            "system": {"id": system, "name": "Comoving", "coords": coords,
+                       "domains": ["t \\in (-\\infty, \\infty)", "r \\in (-\\infty, \\infty)"] + DR_ANGLES,
+                       "parameters": parameters,
+                       "line_element": "ds^2 = -c^2dt^2 + a^2dr^2 + b^2" + DR_SPHERE},
+            "chart_line_element": "ds^2 = -dt^2 + a^2dr^2 + b^2" + DR_SPHERE,
+            "printer": {"primed": ["b"], "lead": [a, b]},
+            # The sphere's own curvature, which the printer leaves as a bracketed difference.
+            "rewrite": [("-\\left(-\\left(b'\\right)^2\\,\\sin^2\\theta - \\sin^2\\theta\\right)",
+                         "\\left(\\left(b'\\right)^2 + 1\\right)\\sin^2\\theta"),
+                        ("\\left(-\\left(b'\\right)^2\\,\\sin^2\\theta - \\sin^2\\theta\\right)",
+                         "-\\left(\\left(b'\\right)^2 + 1\\right)\\sin^2\\theta")],
+            # The scalars over the four frame curvatures, as the Kantowski-Sachs page writes them.
+            "ricci_scalar": ("2\\left(\\dfrac{\\partial_t^2 a}{a} + \\dfrac{2b''}{b} + \\dfrac{2b'\\,\\partial_t a}{a\\,b}"
+                             " + \\dfrac{\\left(b'\\right)^2 + 1}{b^2}\\right)"),
+            "kretschmann": ("4\\left(\\dfrac{\\partial_t^2 a}{a}\\right)^2 + 8\\left(\\dfrac{b''}{b}\\right)^2"
+                            " + 8\\left(\\dfrac{b'\\,\\partial_t a}{a\\,b}\\right)^2"
+                            " + 4\\left(\\dfrac{\\left(b'\\right)^2 + 1}{b^2}\\right)^2"),
+            "check": check,
+        }
+    if system == "ruban":
+        coords, parameters = ["\\eta", "r", "\\theta", "\\phi"], ["r_s", "\\epsilon", "\\mu = \\mu(r)", DR_PARAMETRIC]
+        line = ("ds^2 = r_s^2\\sin^4(\\eta/2)\\left(-d\\eta^2 + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+                " + a^2dr^2")
+        probe = vm.Reader(coords, parameters, ())
+        eta, r = probe.symbol["\\eta"], probe.symbol["r"]
+        forms = DattRubanCycloid(probe)
+        return {
+            "metric_id": "datt_ruban_t_models",
+            "system": {"id": system, "name": "Ruban's Parametric Time", "coords": coords,
+                       "domains": ["\\eta \\in (0, 2\\pi)", "r \\in (-\\infty, \\infty)"] + DR_ANGLES
+                       + ["a > 0 \\;\\text{(where the density is positive)}"],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [probe.parameters["a"], probe.parameters["r_s"], probe.parameters["epsilon"], eta,
+                                 probe.parameters["mu"]],
+                        "arguments": {eta / 2: "\\eta/2"}},
+            "reduce": forms.reduce, "pretty": forms.pretty,
+            "components": {"metric_components": {("r", "r"): "a^2"},
+                           "inverse_metric_components": {("r", "r"): "\\dfrac{1}{a^2}"}},
+            "check": check,
+        }
+    if system == "areal":
+        coords, parameters = ["T", "r", "\\theta", "\\phi"], ["r_s", "\\epsilon", "\\mu = \\mu(r)", DR_AREAL]
+        f = "\\left(\\dfrac{r_s}{T} - 1\\right)"
+        line = "ds^2 = -\\dfrac{dT^2}{\\dfrac{r_s}{T} - 1} + a^2dr^2 + T^2" + DR_SPHERE
+        probe = vm.Reader(coords, parameters, ())
+        T, rs = probe.symbol["T"], probe.parameters["r_s"]
+        a, mu = probe.parameters["a"], probe.parameters["mu"]
+        return {
+            "metric_id": "datt_ruban_t_models",
+            "system": {"id": system, "name": "Areal Time", "coords": coords,
+                       "domains": ["T \\in (0, r_s)", "r \\in (-\\infty, \\infty)"] + DR_ANGLES
+                       + ["a > 0 \\;\\text{(where the density is positive)}"],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [a, rs, T, mu]},
+            "reduce": datt_ruban_rates(a, T, (2 * mu * T - rs * a) / (2 * T * (rs - T))),
+            "kretschmann": "\\dfrac{4\\left(3a^2\\,r_s^2 - 4a\\,r_s\\,T\\,\\mu + 3T^2\\,\\mu^2\\right)}{a^2\\,T^6}",
+            "components": {"metric_components": {("T", "T"): "-" + f + "^{-1}"},
+                           "inverse_metric_components": {("T", "T"): "-" + f}},
+            "check": check,
+        }
+    if system == "de_sitter":
+        coords, parameters = ["t", "r", "\\theta", "\\phi"], ["\\ell", "\\epsilon", "\\mu = \\mu(r)", DR_DE_SITTER]
+        # The components are printed in the chart x^0 = ct, so the definition is read with t for ct.
+        chart_parameters = [p.replace("(ct/", "(t/") for p in parameters]
+
+        def line(c, c2):
+            return "ds^2 = -" + c2 + "dt^2 + a^2dr^2 + \\ell^2\\cosh^2(" + c + "t/\\ell)" + DR_SPHERE
+        probe = vm.Reader(coords, chart_parameters, ())
+        t, ell = probe.symbol["t"], probe.parameters["ell"]
+        a, mu = probe.parameters["a"], probe.parameters["mu"]
+        x = t / ell
+        return {
+            "metric_id": "datt_ruban_t_models",
+            "system": {"id": system, "name": "Ruban's de Sitter T-Model", "coords": coords,
+                       "domains": ["t \\in (-\\infty, \\infty)", "r \\in (-\\infty, \\infty)"] + DR_ANGLES
+                       + ["a > 0 \\;\\text{(where the density is positive)}"],
+                       "parameters": parameters, "line_element": line("c", "c^2")},
+            "chart_line_element": line("", ""),
+            "chart_parameters": chart_parameters,
+            "time": "t",
+            "printer": {"lead": [a, ell, mu], "arguments": {probe.c * t / ell: "ct/\\ell"}},
+            "reduce": datt_ruban_rates(a, t, (a * sp.cosh(x) ** 2 + mu) / (ell * sp.sinh(x) * sp.cosh(x)),
+                                       exponential=(x, probe.c * x)),
+            "pretty": datt_ruban_hyperbolic(probe.c * t / ell),
+            "ricci_scalar": "\\dfrac{2\\left(6a\\cosh^2(ct/\\ell) + \\mu\\right)}{a\\,\\ell^2\\cosh^2(ct/\\ell)}",
+            "kretschmann": ("\\dfrac{4\\left(6a^2\\cosh^4(ct/\\ell) + 2a\\,\\mu\\cosh^2(ct/\\ell) + 3\\mu^2\\right)}"
+                            "{a^2\\,\\ell^4\\cosh^4(ct/\\ell)}"),
+            "check": check,
+        }
+    spec = dict(white_hole("exterior_kruskal"), metric_id="datt_ruban_t_models", check=check)
+    spec["system"] = dict(spec["system"], name="Kruskal Exterior of a T-Sphere",
+                          domains=["U \\in (-\\infty, \\infty)", "V \\in [U, \\infty)"] + DR_ANGLES
+                          + ["V = U \\;\\text{(the surface of the dust)}", "UV < 1 \\;\\text{(where } r > 0\\text{)}",
+                             "V = 0 \\;\\text{(the past horizon)}", "U = 0 \\;\\text{(the future horizon)}"])
+    return spec
+
+
+class DattRubanCycloid:
+    """The `reduce` and the `pretty` of Ruban's chart, whose scale factor a is held as a function
+    of eta and r.
+
+    `reduce` writes a out, a = q t + 2 mu with t = cot(eta/2) and q = epsilon - mu eta, and every
+    value as a rational function of t, since sin^2(eta/2) = 1/(1 + t^2) and no odd power of the
+    sine stands alone. Nothing relates t, q and mu, so a value that vanishes for Ruban's a is
+    exactly zero. The derivative of a along r stays as it is printed, as in the other charts.
+
+    `pretty` writes a value in the scale factor wherever that leaves no cos(eta/2) below the
+    line, by q = (a - 2 mu)/t, which is every curvature component, and otherwise in q with the
+    factor q t + 2 mu written a, which is the connection. Each factor left is then written in the
+    sine of eta/2, with one cosine where an odd power of t leaves one, as q(1 + t^2) + 2 mu t is
+    (q + 2 mu sin(eta/2) cos(eta/2))/sin^2(eta/2)."""
+
+    def __init__(self, reader):
+        self.eta, self.r = reader.symbol["\\eta"], reader.symbol["r"]
+        self.a = reader.parameters["a"]
+        self.eps, self.mu = reader.parameters["epsilon"], reader.parameters["mu"]
+        self.t, self.Q = sp.Symbol("_t", real=True), sp.Symbol("_Q", real=True)
+        self.S, self.C = sp.Symbol("_S", positive=True), sp.Symbol("_C", real=True)
+        self.A, self.D = sp.Symbol("_A", positive=True), sp.Symbol("_D", real=True)
+        half = self.eta / 2
+        self.explicit = (self.eps - self.mu * self.eta) * sp.cot(half) + 2 * self.mu
+        self.trig = {sp.cot(half): self.t, sp.tan(half): 1 / self.t, sp.csc(half): 1 / self.S,
+                     sp.sec(half): 1 / (self.t * self.S), sp.sin(half): self.S, sp.cos(half): self.t * self.S,
+                     sp.sin(self.eta): 2 * self.t * self.S ** 2, sp.cos(self.eta): 1 - 2 * self.S ** 2}
+
+    def rational(self, value):
+        """The value as a cancelled fraction in t, q, mu and the derivative of a along r."""
+        value = sp.sympify(value).xreplace({sp.Derivative(self.a, self.r): self.D})
+        value = value.subs(self.a, self.explicit).doit().subs(self.trig)
+        if any(f.has(self.eta) for f in value.atoms(sp.Function) if f.func != self.mu.func):
+            raise AssertionError(f"datt_ruban_t_models: a function of eta other than those of eta/2 in {value}")
+
+        def even(side):
+            # The sine of eta/2 stands only in even powers, and sin^2(eta/2) = 1/(1 + t^2).
+            poly = sp.Poly(sp.expand(side), self.S)
+            if any(k % 2 for (k,) in poly.monoms()):
+                raise AssertionError(f"datt_ruban_t_models: an odd power of sin(eta/2) in {value}")
+            top = max((k for (k,) in poly.monoms()), default=0)
+            return sum(c * (1 + self.t ** 2) ** ((top - k) // 2) for (k,), c in poly.terms()), top // 2
+
+        num, den = sp.fraction(sp.together(value))
+        (num, m), (den, n) = even(num), even(den)
+        out = num * (1 + self.t ** 2) ** (n - m) / den
+        return sp.cancel(sp.together(out.subs(self.eps, self.Q + self.mu * self.eta)))
+
+    def back(self, value):
+        return value.subs({self.Q: self.eps - self.mu * self.eta, self.t: sp.cot(self.eta / 2),
+                           self.S: sp.sin(self.eta / 2), self.C: sp.cos(self.eta / 2), self.A: self.a}).xreplace({self.D: sp.Derivative(self.a, self.r)})
+
+    def reduce(self, value):
+        value = sp.sympify(value)
+        if isinstance(value, sp.MatrixBase):
+            return value.applyfunc(self.reduce)
+        return self.back(self.rational(value))
+
+    def in_sines(self, base):
+        """An irreducible factor in t as (its power of sin(eta/2) below the line, what stands above
+        it): the factor times S^n is homogeneous of even degree n in S and C = t S, and an even
+        power of C is written by C^2 = 1 - S^2, so that one cosine at most is left in a term. The
+        checker reads the functions of eta/2 alone, so no sin(eta) is written."""
+        if not base.has(self.t):
+            return 0, base
+        poly = sp.Poly(base, self.t)
+        n = poly.degree() + poly.degree() % 2
+        out = sp.Integer(0)
+        for (i,), coefficient in poly.terms():
+            j = n - i
+            if i % 2:
+                out += coefficient * self.C * self.S ** j * (1 - self.S ** 2) ** ((i - 1) // 2)
+            else:
+                out += coefficient * self.S ** j * (1 - self.S ** 2) ** (i // 2)
+        return n, sp.expand(out)
+
+    def pretty(self, value):
+        x = self.rational(value)
+        if x == 0:
+            return sp.Integer(0)
+        scale = self.Q * self.t + 2 * self.mu
+        # In the scale factor, wherever that leaves no t, which is cos(eta/2), below the line.
+        named = sp.cancel(sp.together(x.subs(self.Q, (self.A - 2 * self.mu) / self.t)))
+        below = sp.fraction(named)[1]
+        if x.has(self.Q) and (sp.Poly(below, self.t).eval(0) == 0 or sp.fraction(sp.cancel(below / self.t))[1] == 1
+                              and below.has(self.t) and sp.rem(below, self.t, self.t) == 0):
+            named = None
+        # The number in front is kept apart, so that it is not multiplied into a sum.
+        number, out, sines = sp.Integer(1), sp.Integer(1), 0
+        num, den = sp.fraction(named if named is not None else x)
+        for side, sign in ((num, 1), (den, -1)):
+            for factor in sp.Mul.make_args(sp.factor(side)):
+                base, power = factor.as_base_exp()
+                if base.is_Number:
+                    number *= base ** (sign * power)
+                    continue
+                if base == self.t:
+                    out *= self.t ** (sign * power)
+                    continue
+                own = next((s for s in (1, -1) if base.is_Add and sp.expand(base - s * scale) == 0), None)
+                if own is not None:
+                    number *= own ** (sign * power)
+                    out *= self.A ** (sign * power)
+                    continue
+                n, above = self.in_sines(base)
+                sines -= sign * power * n
+                content, above = sp.factor(above).as_coeff_Mul()
+                number *= content ** (sign * power)
+                out *= self.back(above) ** (sign * power)
+        return _keep_coeff(number, self.back(out * self.S ** sines))
+
+
+def datt_ruban_rates(a, time, rate, exponential=None):
+    """A `reduce` for a chart whose scale factor a is held as a function of the time and r and whose
+    derivative along the time is rational in a itself: every derivative of a along the time, to
+    any order, is written by `rate`, and its derivative along r stays as it is printed. With
+    `exponential`, the argument as the chart and as a printed value hold it, the hyperbolic
+    functions of that argument are written in its exponential, one generator with no relation,
+    so that a value which vanishes is exactly zero, and handed back in exponentials as the
+    checker's Geometry hands back a value."""
+    E = sp.Symbol("_E", positive=True)
+
+    def reduce(value):
+        value = sp.sympify(value)
+        if isinstance(value, sp.MatrixBase):
+            return value.applyfunc(reduce)
+        for _ in range(8):
+            derivatives = [d for d in value.atoms(sp.Derivative)
+                           if d.expr == a and any(v == time for v, _ in d.variable_count)]
+            if not derivatives:
+                break
+            written = {}
+            for d in derivatives:
+                counts = dict(d.variable_count)
+                rest = [(v, k) for v, k in d.variable_count if v != time]
+                written[d] = sp.Derivative(rate, (time, counts[time] - 1), *rest).doit()
+            value = value.xreplace(written)
+        else:
+            raise AssertionError("datt_ruban_t_models: the derivatives of the scale factor do not settle")
+        if exponential is None:
+            return sp.factor(sp.cancel(sp.together(value)))
+        # The argument as the chart holds it, x^0/l, or as a printed value holds it, ct/l.
+        arguments = {f.args[0] for f in value.atoms(sp.cosh, sp.sinh, sp.tanh, sp.coth, sp.exp)}
+        found = next((x for x in exponential if any(sp.expand(y / x).is_Integer for y in arguments)), exponential[0])
+        half = (E + 1 / E) / 2, (E - 1 / E) / 2
+        value = value.subs({sp.cosh(found): half[0], sp.sinh(found): half[1],
+                            sp.tanh(found): half[1] / half[0], sp.coth(found): half[0] / half[1]})
+        value = value.replace(lambda e: isinstance(e, sp.exp) and sp.expand(e.args[0] / found).is_Integer,
+                              lambda e: E ** sp.expand(e.args[0] / found))
+        if value.has(sp.exp, sp.cosh, sp.sinh):
+            raise AssertionError(f"datt_ruban_t_models: a function of another argument in {value}")
+        return sp.factor(sp.cancel(sp.together(value))).subs(E, sp.exp(found))
+
+    return reduce
+
+
+def datt_ruban_hyperbolic(argument):
+    """nariai_hyperbolic for a chart that holds functions: each function and each derivative of
+    one is held as a symbol while the value is written in the hyperbolic sine and cosine."""
+    pretty = nariai_hyperbolic(argument)
+
+    def held(value):
+        value = sp.sympify(value)
+        names = {}
+        for kind in (sp.Derivative, AppliedUndef):
+            for atom in sorted(value.atoms(kind), key=sp.default_sort_key):
+                names[atom] = sp.Dummy(positive=True)
+            value = value.xreplace(names)
+        back = {dummy: atom for atom, dummy in names.items()}
+        value = pretty(value)
+        # A sum is written in the cosine where that is shorter, as a sinh^2 + a + mu is a cosh^2 + mu.
+        sinh, cosh = sp.sinh(argument), sp.cosh(argument)
+        number, out = sp.Integer(1), sp.Integer(1)
+        for factor in sp.Mul.make_args(value):
+            base, power = factor.as_base_exp()
+            if base.is_Number:
+                number *= factor
+                continue
+            if base.is_Add and base.has(sinh):
+                content, other = sp.factor(sp.expand(base.subs(sinh ** 2, cosh ** 2 - 1))).as_coeff_Mul()
+                if sp.count_ops(other) < sp.count_ops(base):
+                    number, base = number * content ** power, other
+            out *= base ** power
+        for _ in range(2):
+            out = out.xreplace(back)
+        return _keep_coeff(number, out)
+    return held
+
+
+def datt_ruban_check(chart, system):
+    """What each chart is held to before it is written.
+
+    The comoving chart is the published comoving chart of kantowski_sachs slot for slot, with its
+    a free to depend on r as well. Ruban's chart is dust at rest in it, G^eta_eta = -2 mu/(a b^2)
+    with b = r_s sin^2(eta/2) and every other component of G^mu_nu zero, which is the rest mass
+    dM = (c^2/G) mu dr between two shells, and at mu = 1/2 it is the published dust chart of
+    kantowski_sachs along eta = 2 eta_K + pi with epsilon = pi/2 - kappa. The areal chart's
+    declared rate is the derivative of its a, the chart is dust of the same density, it is Ruban's
+    chart carried along T = r_s sin^2(eta/2) at random points in forty digits, at mu = 0 and
+    epsilon = 1 it is the published inside of Schwarzschild's horizon, and a surface of constant r
+    in it has the induced metric of that vacuum and no extrinsic curvature, whatever mu is: so
+    a T-sphere of any rest mass joins Schwarzschild's vacuum of the same r_s with no shell on the
+    surface. The de Sitter chart's rate is the derivative of its a, and G^mu_nu + (3/l^2) is dust
+    of density 2 mu/(a b^2) with b = l cosh(ct/l). Kruskal's chart is the white hole's, a vacuum
+    and Schwarzschild's chart pulled back, and its surface V = U has the induced metric
+    -dr^2/(r_s/r - 1) + r^2 dOmega^2, the same as the surface of the dust."""
+    geo, g, P = chart.geo, chart.geo.g, chart.reader.parameters
+    reduce = chart.reduce or vm.norm
+
+    def published(metric_id, system_id):
+        entry = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == system_id)
+        reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+        there = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+        n = len(entry["coords"])
+        matrix = sp.Matrix(n, n, lambda i, j: reader(there.get((entry["coords"][i], entry["coords"][j]), "0")))
+        return reader, matrix, entry["coords"]
+
+    def dust(density, cosmological=0):
+        mixed = geo.raise_indices(geo.einstein_ll(), 2, (0,))
+        for i in range(4):
+            for j in range(4):
+                want = (-density if i == j == 0 else 0) - (cosmological if i == j else 0)
+                if reduce(vm._at(mixed, (i, j)) - want) != 0:
+                    raise AssertionError(f"datt_ruban_t_models: G^a_b of the {system} chart is not dust's in slot {(i, j)}")
+
+    def rate_of(time, declared, window):
+        # The declared rate against the derivative of the chart's own a, at random points in forty
+        # digits, since the definition holds an arcsine or an arctangent of the time.
+        written = chart.reader.held[P["a"]]
+        residual = sp.diff(written, time) - declared.subs(P["a"], written)
+        rng = random.Random(1968)
+        for _ in range(6):
+            at = {symbol: sp.Float(rng.uniform(0.5, 2.0), 40) for symbol in residual.free_symbols}
+            at.update({function: sp.Float(rng.uniform(0.1, 2.0), 40) for function in residual.atoms(AppliedUndef)})
+            at[time] = sp.Float(rng.uniform(*window), 40)
+            if abs(sp.N(residual.subs(at), 40)) > sp.Float("1e-30"):
+                raise AssertionError(f"datt_ruban_t_models: the {system} chart's rate is not the derivative of its a")
+
+    if system == "comoving":
+        reader, matrix, coords = published("kantowski_sachs", "comoving")
+        names = {reader.symbol[c]: x for c, x in zip(coords, chart.symbols)}
+        there = matrix.subs({reader.parameters["a"]: P["a"], reader.parameters["b"]: P["b"]}).subs(names)
+        if there != g:
+            raise AssertionError("datt_ruban_t_models: the comoving chart is not Kantowski and Sachs's with a free in r")
+        return
+    if system == "ruban":
+        eta, r, theta = chart.symbols[:3]
+        rs, mu, a = P["r_s"], P["mu"], P["a"]
+        dust(2 * mu / (a * rs ** 2 * sp.sin(eta / 2) ** 4))
+        reader, matrix, coords = published("kantowski_sachs", "dust")
+        etaK, kappa, b0 = reader.symbol["\\eta"], reader.parameters["kappa"], reader.parameters["b_0"]
+        mine = g.subs(a, chart.reader.held[a]).subs({mu: sp.Rational(1, 2), P["epsilon"]: sp.pi / 2 - kappa, rs: b0})
+        mine = mine.subs(eta, 2 * etaK + sp.pi)
+        J = sp.diag(2, 1, 1, 1)
+        names = {reader.symbol[c]: x for c, x in zip(coords[1:], chart.symbols[1:])}
+        if any(sp.simplify(x) != 0 for x in sp.flatten(J.T * mine * J - matrix.subs(names))):
+            raise AssertionError("datt_ruban_t_models: Ruban's chart at mu = 1/2 is not the published Kantowski-Sachs dust")
+        return
+    if system == "areal":
+        T, r, theta = chart.symbols[:3]
+        rs, mu, eps, a = P["r_s"], P["mu"], P["epsilon"], P["a"]
+        rate_of(T, (2 * mu * T - rs * a) / (2 * T * (rs - T)), (0.05, 0.45))
+        dust(2 * mu / (a * T ** 2))
+        # Ruban's chart along T = r_s sin^2(eta/2), 0 < eta < pi, at random points.
+        ruban = datt_ruban_t_models("ruban")
+        there = cp.Chart(ruban["system"]["coords"], ruban["system"]["parameters"], ruban["chart_line_element"])
+        eta = there.symbols[0]
+        scale_there, scale_here = there.reader.held[there.reader.parameters["a"]], chart.reader.held[a]
+        rng = random.Random(1938)
+        for _ in range(6):
+            at = {"eta": sp.Float(rng.uniform(0.2, 3.0), 50), "rs": sp.Float(rng.uniform(0.5, 2.0), 50),
+                  "mu": sp.Float(rng.uniform(0.1, 2.0), 50), "eps": rng.choice([-1, 0, 1])}
+            radius = at["rs"] * sp.sin(at["eta"] / 2) ** 2
+            here = {T: radius, rs: at["rs"], mu: at["mu"], eps: at["eps"]}
+            other = {eta: at["eta"], there.reader.parameters["r_s"]: at["rs"], there.reader.parameters["mu"]: at["mu"],
+                     there.reader.parameters["epsilon"]: at["eps"]}
+            jacobian = at["rs"] * sp.sin(at["eta"] / 2) * sp.cos(at["eta"] / 2)      # dT/d eta
+            pairs = [(scale_here.subs(here), scale_there.subs(other)),
+                     (g[0, 0].subs(here) * jacobian ** 2, there.geo.g[0, 0].subs(other)),
+                     (g[2, 2].subs(here), there.geo.g[2, 2].subs(other))]
+            for mine, theirs in pairs:
+                if abs(sp.N(mine - theirs, 40)) > sp.Float("1e-30"):
+                    raise AssertionError("datt_ruban_t_models: the areal chart is not Ruban's along T = r_s sin^2(eta/2)")
+        reader, matrix, coords = published("kantowski_sachs", "schwarzschild_interior")
+        names = {reader.symbol[c]: x for c, x in zip(coords, chart.symbols)}
+        names[reader.parameters["r_s"]] = rs
+        vacuum = g.subs(a, chart.reader.held[a]).subs({mu: 0, eps: 1})
+        if any(sp.simplify(x) != 0 for x in sp.flatten(vacuum - matrix.subs(names))):
+            raise AssertionError("datt_ruban_t_models: the areal chart without dust is not the inside of Schwarzschild's horizon")
+        # A surface of constant r: its induced metric is the block of T, theta and phi, which holds
+        # no mu and no epsilon, and its extrinsic curvature is (1/2a) d_r of that block, which vanishes.
+        for i in (0, 2, 3):
+            if g[i, i].has(a, mu, eps) or sp.diff(g[i, i], r) != 0 or g[i, 1] != 0:
+                raise AssertionError("datt_ruban_t_models: a surface of constant r is not the vacuum's own")
+        return
+    if system == "de_sitter":
+        t = chart.symbols[0]
+        ell, mu, a = P["ell"], P["mu"], P["a"]
+        x = t / ell
+        rate_of(t, (a * sp.cosh(x) ** 2 + mu) / (ell * sp.sinh(x) * sp.cosh(x)), (0.3, 2.0))
+        dust(2 * mu / (a * ell ** 2 * sp.cosh(x) ** 2), 3 / ell ** 2)
+        return
+    white_hole_check(chart, system)
+    # On V = U, where (1 - r/r_s) e^(r/r_s) = U^2, the line element is -(4 r_s^3/r) e^(-r/r_s) dU^2 plus
+    # the sphere's, and 2U dU = -(r/r_s^2) e^(r/r_s) dr.
+    r, rs = sp.Symbol("r", positive=True), sp.Symbol("r_s", positive=True)
+    dU2 = (r * sp.exp(r / rs) / rs ** 2) ** 2 / (4 * (1 - r / rs) * sp.exp(r / rs))
+    if sp.simplify(-4 * rs ** 3 * sp.exp(-r / rs) / r * dU2 + 1 / (rs / r - 1)) != 0:
+        raise AssertionError("datt_ruban_t_models: the surface V = U of Kruskal's chart is not the dust's surface")
+
+
+CHARTS["datt_ruban_t_models"] = [lambda s=s: datt_ruban_t_models(s) for s in DR_CHARTS]
+
+
 # -- The lattice universe of Lindquist and Wheeler ------------------------------------------
 
 LW_CHARTS = ("schwarzschild_cell", "cosmological_time", "lindquist_wheeler", "comparison_hypersphere")
@@ -21506,6 +22457,205 @@ def exponential_metric_check(chart, system):
 
 CHARTS["exponential_metric"] = [lambda s=s: exponential_metric(s) for s in EXPONENTIAL_CHARTS]
 
+# -- The moving mirror of Fulling and Davies -----------------------------------------------
+
+MIRROR_CHARTS = ("inertial", "null", "mirror_rest", "thermal", "collapse", "rindler")
+MIRROR_REALS = "(-\\infty, \\infty)"
+
+
+def moving_mirror(system):
+    """Fulling and Davies's (1976) flat spacetime of two dimensions to the right of a perfectly
+    reflecting mirror, in six charts.
+
+    inertial     ds^2 = -c^2dt^2 + dx^2 with the mirror on x = z(t): (2.1) of Good, Anderson and
+                 Evans (2016), the setting of Fulling and Davies (1976);
+    null         ds^2 = -du dv with u = ct - x, v = ct + x and the mirror on v = p(u), p the
+                 ray tracing function: (2.2) and (2.9) of Good, Anderson and Evans (2016);
+    mirror_rest  U = p(u) and v, the conformal map of Davies and Fulling that Akal, Kusuki, Shiba,
+                 Takayanagi and Wei (2021) write as their (1), which brings the mirror to rest on
+                 U = v: ds^2 = -f'(U) dU dv with u = f(U) the inverse of p;
+    thermal      that chart for Carlitz and Willey's (1987) mirror, p = -e^(-kappa u)/kappa, Table I
+                 of Good, Anderson and Evans (2013), in cT = (v + U)/2 and X = (v - U)/2;
+    collapse     the same for the mirror of Good, Anderson and Evans (2016), their (2.18) at
+                 v_H = 0, u = U - ln(-kappa U)/kappa;
+    rindler      Rindler's coordinates in their conformal form, in which a mirror of proper
+                 acceleration c^2 kappa stands at xi = 0: the fixed surface of Davies (1975) and the
+                 'static universe' of Fulling and Davies (1976).
+
+    moving_mirror_check holds every chart flat, each after the first to being the inertial chart
+    pulled back, and the flux of energy each mirror radiates, from the conformal factor of its
+    chart by the formula of Davies, Fulling and Unruh (1976), to the Schwarzian form of Fulling and
+    Davies, (4.1) to (4.3) of Good, Anderson and Evans (2016). moving_mirror.md is the derivation."""
+    time = None
+    components = {}
+    if system == "inertial":
+        name, coords, parameters = "Inertial", ["t", "x"], ["z = z(t)"]
+        domains = ["t \\in " + MIRROR_REALS, "x \\in " + MIRROR_REALS,
+                   "x > z(t) \\;\\text{(to the right of the mirror)}"]
+
+        def line(c2):
+            return f"ds^2 = -{c2}dt^2 + dx^2"
+    elif system == "null":
+        name, coords, parameters = "Null", ["u", "v"], ["p = p(u)"]
+        domains = ["u \\in " + MIRROR_REALS, "v \\in " + MIRROR_REALS,
+                   "v > p(u) \\;\\text{(to the right of the mirror)}"]
+
+        def line(c2):
+            return "ds^2 = -du\\,dv"
+    elif system == "mirror_rest":
+        name, coords, parameters = "Mirror at Rest", ["U", "v"], ["f = f(U)"]
+        domains = ["p(-\\infty) < U < p(\\infty) \\;\\text{(the values the ray tracing function takes)}",
+                   "v \\in " + MIRROR_REALS, "v > U \\;\\text{(to the right of the mirror)}",
+                   "U = v \\;\\text{(the mirror)}"]
+
+        def line(c2):
+            return "ds^2 = -f'\\,dU\\,dv"
+    elif system in ("thermal", "collapse"):
+        name = "Thermal Mirror" if system == "thermal" else "Collapse Mirror"
+        coords, parameters, time = ["T", "X"], ["\\kappa"], "T"
+        domains = ["T \\in " + MIRROR_REALS, "X \\in (0, \\infty)",
+                   "X > cT \\;\\text{(the chart ends on } X = cT\\text{, where the inertial } u \\to \\infty\\text{)}",
+                   "X = 0 \\;\\text{(the mirror)}"]
+        if system == "thermal":
+            def line(c2):
+                c = "c" if c2 else ""
+                return f"ds^2 = \\dfrac{{-{c2}dT^2 + dX^2}}{{\\kappa\\left(X - {c}T\\right)}}"
+            components = {"metric_components": {("T", "T"): "-\\dfrac{1}{\\kappa\\left(X - cT\\right)}",
+                                                ("X", "X"): "\\dfrac{1}{\\kappa\\left(X - cT\\right)}"},
+                          "inverse_metric_components": {("T", "T"): "-\\kappa\\left(X - cT\\right)",
+                                                        ("X", "X"): "\\kappa\\left(X - cT\\right)"}}
+        else:
+            def line(c2):
+                c = "c" if c2 else ""
+                return (f"ds^2 = \\left(1 + \\dfrac{{1}}{{\\kappa\\left(X - {c}T\\right)}}\\right)"
+                        f"\\left(-{c2}dT^2 + dX^2\\right)")
+            factor = "1 + \\dfrac{1}{\\kappa\\left(X - cT\\right)}"
+            components = {"metric_components": {("T", "T"): "-\\left(" + factor + "\\right)", ("X", "X"): factor}}
+    else:
+        name, coords, parameters = "Rindler", ["\\eta", "\\xi"], ["\\kappa"]
+        domains = ["\\eta \\in " + MIRROR_REALS, "\\xi \\in (0, \\infty)", "\\xi = 0 \\;\\text{(the mirror)}"]
+
+        def line(c2):
+            return f"ds^2 = e^{{2\\kappa\\xi}}\\left(-{c2}d\\eta^2 + d\\xi^2\\right)"
+        components = {"metric_components": {("\\eta", "\\eta"): "-e^{2\\kappa\\xi}", ("\\xi", "\\xi"): "e^{2\\kappa\\xi}"},
+                      "inverse_metric_components": {("\\eta", "\\eta"): "-e^{-2\\kappa\\xi}",
+                                                    ("\\xi", "\\xi"): "e^{-2\\kappa\\xi}"}}
+    probe = vm.Reader(coords, parameters, ())
+    lead = [probe.symbol[c] for c in reversed(coords)] + [v for k, v in probe.parameters.items() if k == "kappa"]
+    printer = {"lead": lead, "flip": False}
+    pretty = None
+    if system == "mirror_rest":
+        printer["primed"] = ["f"]
+    if time:
+        # Every value depends on T and X through X - cT alone, and is written in it.
+        D = sp.Symbol("MirrorD", positive=True)
+        T, X, kappa = probe.symbol["T"], probe.symbol["X"], probe.parameters["kappa"]
+        printer = {"lead": [D, kappa], "factors": [kappa, D], "named": {D: "X - cT"}, "flip": False}
+
+        def pretty(value):
+            # The time arrives written cT, as the file prints it.
+            return sp.factor(sp.sympify(value).subs(X, D + probe.c * T))
+    spec = {
+        "metric_id": "moving_mirror",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "components": components,
+        "ricci_scalar": "0",
+        "kretschmann": "0",
+        "check": lambda chart: moving_mirror_check(chart, system),
+    }
+    if time:
+        spec["time"] = time
+        spec["pretty"] = pretty
+    return spec
+
+
+def mirror_flux(factor, U, f):
+    """24 pi times the flux of energy to the right of a mirror at rest on U = v in the metric
+    -C dU dv, T_uu = -(1/12 pi) C^(1/2) d_U^2 C^(-1/2) (dU/du)^2, Davies, Fulling and Unruh's
+    (1976) formula for the vacuum of the modes of U and v where the curvature vanishes, carried to
+    the inertial u = f(U)."""
+    return sp.simplify(-2 * sp.sqrt(factor) * sp.diff(1 / sp.sqrt(factor), U, 2) / sp.diff(f, U) ** 2)
+
+
+def moving_mirror_check(chart, system):
+    """Every chart is flat; each after the inertial one is the inertial chart pulled back along the
+    map its convention states; and the flux each mirror radiates, from its chart's conformal factor
+    by mirror_flux, is Fulling and Davies's Schwarzian form, (3/2)(p2/p1)^2 - p3/p1 over 24 pi with
+    pn the nth derivative of p: kappa^2/48 pi at every time for Carlitz and Willey's mirror,
+    kappa^2 (4W + 1)/(48 pi (W + 1)^4) with W = W(e^(-kappa u)) for the mirror of Good, Anderson
+    and Evans, their (4.2), which is the mirror z = -t - W(2 e^(-2 kappa t))/(2 kappa) of their
+    (2.14), and zero for a mirror of uniform acceleration."""
+    a, b = chart.symbols
+    g = chart.geo.g
+    riemann = chart.geo.riemann_llll()
+    for slot in vm._indices(2, 4):
+        if sp.simplify(vm._at(riemann, slot)) != 0:
+            raise AssertionError(f"moving_mirror: the {system} chart is not flat")
+    if system == "inertial":
+        return
+    kappa = chart.reader.parameters.get("kappa")
+    flat = sp.diag(-1, 1)
+
+    def pulled(image):
+        """The inertial metric at the image (x^0, x) of the chart's coordinates, pulled back."""
+        J = sp.Matrix(2, 2, lambda i, j: sp.diff(image[i], (a, b)[j]))
+        return (J.T * flat * J).applyfunc(sp.simplify)
+
+    if system == "null":
+        # u = x^0 - x and v = x^0 + x.
+        target = pulled(((a + b) / 2, (b - a) / 2))
+    elif system == "mirror_rest":
+        f = chart.reader.parameters["f"]
+        target = pulled(((f + b) / 2, (b - f) / 2))
+        # With p the inverse of f, p2/p1 = -f2/f1^2 and p3/p1 = 3 f2^2/f1^4 - f3/f1^3.
+        f1, f2, f3 = (sp.diff(f, a, n) for n in (1, 2, 3))
+        schwarzian = sp.Rational(3, 2) * (f2 / f1 ** 2) ** 2 - (3 * f2 ** 2 / f1 ** 4 - f3 / f1 ** 3)
+        if sp.simplify(mirror_flux(f1, a, f) - schwarzian) != 0:
+            raise AssertionError("moving_mirror: the flux of the conformal factor is not the Schwarzian of p")
+    elif system in ("thermal", "collapse"):
+        U, v = a - b, a + b
+        u = -sp.log(-kappa * U) / kappa + (U if system == "collapse" else 0)
+        target = pulled(((u + v) / 2, (v - u) / 2))
+        # The flux, in the null coordinate W = U of the chart, whose factor is du/dU.
+        W = sp.Symbol("MirrorU", negative=True)
+        f = -sp.log(-kappa * W) / kappa + (W if system == "collapse" else 0)
+        flux = mirror_flux(sp.diff(f, W), W, f)
+        t = sp.Symbol("Mirrort", real=True)
+        if system == "thermal":
+            want = kappa ** 2 / 2
+            # The mirror's world line U = v is z = -t - W(e^(-2 kappa t))/kappa.
+            z = -t - sp.LambertW(sp.exp(-2 * kappa * t)) / kappa
+            on = (t + z) + sp.exp(-kappa * (t - z)) / kappa
+        else:
+            lam = -kappa * W            # W(e^(-kappa u)) on the ray u = f(U): lam e^lam = e^(-kappa u)
+            want = kappa ** 2 * (4 * lam + 1) / (2 * (lam + 1) ** 4)
+            z = -t - sp.LambertW(2 * sp.exp(-2 * kappa * t)) / (2 * kappa)
+            on = (t - z) - ((t + z) - sp.log(-kappa * (t + z)) / kappa)
+        if sp.simplify(flux - want) != 0:
+            raise AssertionError(f"moving_mirror: the flux of the {system} mirror is not its closed form")
+        for value in (sp.Rational(-3, 2), 0, sp.Rational(1, 3), 2):
+            if abs(sp.N(on.subs({t: value, kappa: sp.Rational(7, 5)}), 30)) > 1e-25:
+                raise AssertionError(f"moving_mirror: the {system} mirror's world line is not on U = v")
+    else:
+        target = pulled((sp.exp(kappa * b) * sp.sinh(kappa * a) / kappa, sp.exp(kappa * b) * sp.cosh(kappa * a) / kappa))
+        # The mirror xi = 0 is the hyperbola x^2 - (ct)^2 = 1/kappa^2, of proper acceleration kappa,
+        # and its ray tracing function p = -1/(kappa^2 u) is a Moebius map, whose flux vanishes.
+        W = sp.Symbol("MirrorU", positive=True)
+        f = -1 / (kappa ** 2 * W)
+        if mirror_flux(sp.diff(f, W), W, f) != 0:
+            raise AssertionError("moving_mirror: a uniformly accelerating mirror radiates")
+    for i in range(2):
+        for j in range(2):
+            if sp.simplify((target[i, j] - g[i, j]).rewrite(sp.exp)) != 0:
+                raise AssertionError(f"moving_mirror: the {system} chart is not the inertial chart pulled back "
+                                     f"in slot {(i, j)}")
+
+
+CHARTS["moving_mirror"] = [lambda s=s: moving_mirror(s) for s in MIRROR_CHARTS]
+
 
 # -- Kopczynski and Trautman's universe with torsion ----------------------------------------
 
@@ -22027,6 +23177,504 @@ def ab_metrics_check(chart, system):
 
 
 CHARTS["ab_metrics"] = [lambda s=s: ab_metrics(s) for s in AB_CHARTS]
+
+
+# -- Kasner's universe with a scalar field ---------------------------------------------
+
+KASNER_SCALAR_CHARTS = ("synchronous", "logarithmic", "kaluza_klein")
+
+
+def time_powers(time, time_tex, c, state):
+    """A pretty printer for a chart whose every value is one monomial in the time raised to an
+    exponent that holds a parameter, as t^{2p_1 - 1}. The chart's line element writes the power as
+    (x^0/c)^{2p_1}, which is t^{2p_1} once x^0 is written ct, so the powers of c and of the time are
+    gathered first, with both positive. The printer writes rational exponents only, so the power is
+    handed to it as a placeholder whose text is the time with its whole exponent, above the line,
+    or below it with the signs turned where every term of the exponent is negative. A value with
+    no parameter in its exponent is factored and printed as it stands."""
+    table = {}
+
+    def pretty(value):
+        a, b = sp.Dummy(positive=True), sp.Dummy(positive=True)
+        value = sp.together(sp.sympify(value)).subs({time: a, c: b})
+        value = sp.powsimp(sp.expand_power_base(sp.powdenest(value, force=True), force=True), combine="exp")
+        value = value.subs({a: time, b: c})
+        exponent, rest = sp.Integer(0), sp.Integer(1)
+        for f in sp.Mul.make_args(value):
+            base, k = f.as_base_exp()
+            if base == time:
+                exponent += k
+            else:
+                rest *= f
+        if rest.has(time):
+            raise AssertionError(f"{value} is not one monomial in {time}")
+        exponent = sp.expand(exponent)
+        out = sp.factor(rest)
+        if exponent.is_Number:
+            return out * time ** exponent
+        printer = state["printer"]
+        negative = all(term.as_coeff_Mul()[0].is_negative for term in sp.Add.make_args(exponent))
+        shown, side = (-exponent, -1) if negative else (exponent, 1)
+        text = time_tex + "^{" + printer.positive_first(shown) + "}"
+        placeholder = table.setdefault(text, sp.Symbol(f"TIMEPOWER{len(table)}", positive=True))
+        printer.overrides[placeholder] = text
+        return out * placeholder ** side
+
+    return pretty
+
+
+class OnSurface:
+    """A chart's Geometry with the curvature it has where the chart's exponents obey their two
+    conditions. The Christoffel symbols and the Riemann tensor are those of free exponents, which
+    hold there too. The Ricci tensor and the two scalars are handed in, written in the exponents
+    and the strength of the field, and the Einstein and Weyl tensors are built from them and the
+    Riemann tensor; kasner_scalar_check holds each to the tensor of free exponents on the
+    checker's own parametrisation of the surface before anything is printed."""
+
+    def __init__(self, geo, ricci, scalar, kretschmann):
+        self._geo, self._ricci, self._scalar, self._kretschmann = geo, ricci, scalar, kretschmann
+
+    def __getattr__(self, name):
+        return getattr(self._geo, name)
+
+    def ricci_ll(self):
+        return self._ricci
+
+    def ricci_scalar(self):
+        return self._scalar
+
+    def kretschmann(self):
+        return self._kretschmann
+
+    def einstein_ll(self):
+        n, g = self._geo.n, self._geo.g
+        return [[sp.factor(self._ricci[a][b] - g[a, b] * self._scalar / 2) for b in range(n)] for a in range(n)]
+
+    def weyl_llll(self):
+        n, g, R, S = self._geo.n, self._geo.g, self._ricci, self._scalar
+        riemann = self._geo.riemann_llll()
+        out = [[[[sp.Integer(0)] * n for _ in range(n)] for _ in range(n)] for _ in range(n)]
+        for a, b, c, d in vm._indices(n, 4):
+            out[a][b][c][d] = sp.factor(
+                riemann[a][b][c][d]
+                - (g[a, c] * R[b][d] - g[a, d] * R[b][c] - g[b, c] * R[a][d] + g[b, d] * R[a][c]) / (n - 2)
+                + S * (g[a, c] * g[b, d] - g[a, d] * g[b, c]) / ((n - 1) * (n - 2)))
+        return out
+
+
+def kasner_scalar(system):
+    """Kasner's universe with a massless scalar field, the exact solution (2.6) to (2.8) of
+    Belinskii and Khalatnikov (1972), in three charts.
+
+    synchronous   ds^2 = -c^2dt^2 + t^{2p_1}dx^2 + t^{2p_2}dy^2 + t^{2p_3}dz^2, their (2.6), with
+                  sum p_i = 1 and sum p_i^2 = 1 - q^2, their (2.8), and the field q ln t, their
+                  (2.7); the metric is Jacobs's (1968) Zel'dovich universe, his (49);
+    logarithmic   the time tau = -ln(t/t_0), in which the scale factors and the field are linear
+                  in the time, (3.21) to (3.25) of Damour, Henneaux and Nicolai (2003);
+    kaluza_klein  Kasner's vacuum of five dimensions, their (4.5) and (4.6), whose reduction along
+                  w is the synchronous chart by their fourth footnote.
+
+    Every value assumes the two conditions on its chart's exponents. kasner_scalar_check holds the
+    stated curvature to the tensors of free exponents on the surface, and kasner_scalar.md beside
+    this file is the derivation."""
+    state = {}
+    flat = ["x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)", "z \\in (-\\infty, \\infty)"]
+
+    def check(chart):
+        state["printer"] = chart.printer
+        kasner_scalar_check(chart, system)
+
+    spec = {"metric_id": "kasner_scalar", "check": check}
+    if system == "synchronous":
+        coords, parameters = ["t", "x", "y", "z"], ["p_1", "p_2", "p_3", "q"]
+
+        def line(c2, t):
+            return f"ds^2 = -{c2}dt^2 + {t}^{{2p_1}}dx^2 + {t}^{{2p_2}}dy^2 + {t}^{{2p_3}}dz^2"
+        probe = vm.Reader(coords, parameters, ())
+        time = probe.symbol["t"]
+        names = [probe.parameters[n] for n in ("q", "p_1", "p_2", "p_3")]
+        spec.update({
+            "system": {"id": system, "name": "Synchronous", "coords": coords,
+                       "domains": ["t \\in (0, \\infty)"] + flat + ["t \\to 0 \\;\\text{(the singularity)}"],
+                       "parameters": parameters, "line_element": line("c^2", "t")},
+            "chart_line_element": line("", "\\left(\\dfrac{t}{c}\\right)"),
+            "time": "t",
+            "printer": {"lead": names + [time], "factors": names + [probe.c, time]},
+            "pretty": time_powers(time, "t", probe.c, state),
+            "components": {
+                "metric_components": {(k, k): f"t^{{2p_{i}}}" for i, k in enumerate("xyz", 1)},
+                "inverse_metric_components": {(k, k): f"t^{{-2p_{i}}}" for i, k in enumerate("xyz", 1)}},
+        })
+    elif system == "logarithmic":
+        coords, parameters = ["\\tau", "x", "y", "z"], ["p_1", "p_2", "p_3", "q", "\\ell"]
+        line = ("ds^2 = -\\ell^2e^{-2\\tau}d\\tau^2 + e^{-2p_1\\tau}dx^2 + e^{-2p_2\\tau}dy^2 + e^{-2p_3\\tau}dz^2")
+        probe = vm.Reader(coords, parameters, ())
+        tau = probe.symbol["\\tau"]
+        names = [probe.parameters[n] for n in ("q", "p_1", "p_2", "p_3", "ell")]
+        spec.update({
+            "system": {"id": system, "name": "Logarithmic time", "coords": coords,
+                       "domains": ["\\tau \\in (-\\infty, \\infty)"] + flat
+                                  + ["\\tau \\to \\infty \\;\\text{(the singularity)}"],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": names + [tau], "factors": names + [tau]},
+            "pretty": kasner_scalar_exponentials(tau, state),
+            "components": {
+                "metric_components": {("\\tau", "\\tau"): "-\\ell^2e^{-2\\tau}",
+                                      **{(k, k): f"e^{{-2p_{i}\\tau}}" for i, k in enumerate("xyz", 1)}},
+                "inverse_metric_components": {("\\tau", "\\tau"): "-\\dfrac{e^{2\\tau}}{\\ell^2}",
+                                              **{(k, k): f"e^{{2p_{i}\\tau}}" for i, k in enumerate("xyz", 1)}}},
+        })
+    else:
+        coords, parameters = ["T", "x", "y", "z", "w"], ["s_1", "s_2", "s_3", "s_5"]
+
+        def line(c2, t):
+            return (f"ds^2 = -{c2}dT^2 + {t}^{{2s_1}}dx^2 + {t}^{{2s_2}}dy^2 + {t}^{{2s_3}}dz^2"
+                    f" + {t}^{{2s_5}}dw^2")
+        probe = vm.Reader(coords, parameters, ())
+        time = probe.symbol["T"]
+        names = [probe.parameters[n] for n in parameters]
+        axes = list(zip("xyzw", (1, 2, 3, 5)))
+        spec.update({
+            "system": {"id": system, "name": "Five dimensions (Kaluza-Klein)", "coords": coords,
+                       "domains": ["T \\in (0, \\infty)"] + flat + ["w \\in (-\\infty, \\infty)",
+                                                                    "T \\to 0 \\;\\text{(the singularity)}"],
+                       "parameters": parameters, "line_element": line("c^2", "T")},
+            "chart_line_element": line("", "\\left(\\dfrac{T}{c}\\right)"),
+            "time": "T",
+            "printer": {"lead": names + [time], "factors": names + [probe.c, time]},
+            "pretty": time_powers(time, "T", probe.c, state),
+            "components": {
+                "metric_components": {(k, k): f"T^{{2s_{i}}}" for k, i in axes},
+                "inverse_metric_components": {(k, k): f"T^{{-2s_{i}}}" for k, i in axes}},
+            "kretschmann": "-\\dfrac{8\\left(s_1\\,s_2\\,s_3\\,s_5 + 2\\left(s_1\\,s_2\\,s_3 + s_1\\,s_2\\,s_5"
+                           " + s_1\\,s_3\\,s_5 + s_2\\,s_3\\,s_5\\right)\\right)}{c^4\\,T^4}",
+        })
+    return spec
+
+
+def kasner_scalar_exponentials(tau, state):
+    """A pretty printer for the logarithmic chart, whose every value is a rational function of the
+    exponents times one exponential of the time: the exponentials are gathered into one, handed
+    to the printer as a placeholder with the time written last, e^{2(1 - p_1)\tau}, and the rest
+    is factored."""
+    table = {}
+
+    def pretty(value):
+        value = sp.powsimp(sp.expand_power_base(sp.powdenest(sp.together(sp.sympify(value)), force=True), force=True),
+                           combine="exp", force=True)
+        argument, rest = sp.Integer(0), sp.Integer(1)
+        for f in sp.Mul.make_args(value):
+            base, k = f.as_base_exp()
+            if isinstance(base, sp.exp):
+                argument += base.args[0] * k
+            elif base == sp.E:
+                argument += k
+            else:
+                rest *= f
+        if rest.has(tau):
+            raise AssertionError(f"{value} is not one exponential of {tau}")
+        out = sp.factor(rest)
+        rate = sp.factor(sp.cancel(argument / tau))
+        if rate == 0:
+            return out
+        if rate.has(tau):
+            raise AssertionError(f"the exponent of {value} is not linear in {tau}")
+        printer = state["printer"]
+        number, body = rate.as_coeff_Mul()
+        if body.is_Add:
+            # The bracket leads with its positive terms, 2(1 - p_1) for -2(p_1 - 1).
+            if number.is_negative and body.as_coeff_Add()[0].is_negative:
+                number, body = -number, -body
+            head = "" if number == 1 else "-" if number == -1 else printer.expr(number)
+            text = head + "\\left(" + printer.positive_first(body) + "\\right)"
+        else:
+            text = printer.expr(rate)
+            if body != 1:
+                text += "\\,"
+        if text in ("1", "-1"):
+            text = text[:-1]
+        text = "e^{" + text + "\\tau}"
+        placeholder = table.setdefault(text, sp.Symbol(f"TIMEEXP{len(table)}", positive=True))
+        printer.overrides[placeholder] = text
+        return out * placeholder
+
+    return pretty
+
+
+def kasner_scalar_check(chart, system):
+    """Each chart against Belinskii and Khalatnikov (1972), on the checker's own parametrisation of
+    the surface its exponents live on. In four dimensions the Ricci tensor is the stress of the
+    field q ln t, their (2.5) and (2.7), R_ab = d_a phi d_b phi in their units, which is that of
+    a fluid at rest with its pressure equal to its energy density; the field solves the wave
+    equation, their (2.4); and the Kretschmann scalar is (3q^4 - 16 p_1 p_2 p_3)/(c^4 t^4). The
+    logarithmic chart is the synchronous one pulled back along t = t_0 e^{-tau}. The chart of five
+    dimensions is a vacuum, their (4.5) and (4.6), and its reduction along w, their (3.28) and
+    fourth footnote, has exponents on the surface of four dimensions. The stated curvature then
+    stands in for the chart's, so that it is what is printed."""
+    reader, geo = chart.reader, chart.geo
+    P = reader.parameters
+    n = geo.n
+    x0 = chart.symbols[0]
+    relations = vm.PARAMETER_RELATIONS[("kasner_scalar", system)]
+    surface = {P[name]: sp.sympify(value) for name, value in relations.items()}
+
+    def on(value):
+        return vm.norm(sp.sympify(value).subs(surface))
+
+    ricci = [[sp.Integer(0)] * n for _ in range(n)]
+    if system == "kaluza_klein":
+        s = [P[name] for name in ("s_1", "s_2", "s_3", "s_5")]
+        triples = s[0] * s[1] * s[2] + s[0] * s[1] * s[3] + s[0] * s[2] * s[3] + s[1] * s[2] * s[3]
+        scalar = sp.Integer(0)
+        kretschmann = -8 * (2 * triples + s[0] * s[1] * s[2] * s[3]) / x0 ** 4
+        # The reduction: the metric of four dimensions is sqrt(g_ww) times the first four terms, in
+        # the proper time t = T^(1 + s_5/2)/(1 + s_5/2), so its exponents are (2 s_i + s_5)/(2 + s_5),
+        # and the field sqrt(3/2) s_5 ln T is q ln t with q = sqrt(6) s_5/(2 + s_5).
+        p = [(2 * k + s[3]) / (2 + s[3]) for k in s[:3]]
+        q2 = 6 * s[3] ** 2 / (2 + s[3]) ** 2
+        if on(sum(p) - 1) != 0 or on(sum(k ** 2 for k in p) - 1 + q2) != 0:
+            raise AssertionError("kasner_scalar: the reduction of the vacuum of five dimensions is off the surface")
+    else:
+        p, q = [P[name] for name in ("p_1", "p_2", "p_3")], P["q"]
+        # In the chart's own time the field is q ln x^0 or -q tau, up to a constant.
+        field = q * sp.log(x0) if system == "synchronous" else -q * x0
+        ricci[0][0] = sp.diff(field, x0) ** 2
+        scalar = geo.ginv[0, 0] * ricci[0][0]
+        kretschmann = (3 * q ** 4 - 16 * p[0] * p[1] * p[2]) * geo.ginv[0, 0] ** 2 * sp.diff(field, x0) ** 4 / q ** 4
+        det = geo.g.det()
+        box = sp.diff(geo.ginv[0, 0] * sp.diff(field, x0), x0) + sp.diff(det, x0) / (2 * det) * geo.ginv[0, 0] * sp.diff(field, x0)
+        if on(box) != 0:
+            raise AssertionError(f"kasner_scalar: the field does not solve the wave equation in the {system} chart")
+        # A fluid at rest with p = rho: G^t_t = -G^x_x = -G^y_y = -G^z_z on the surface.
+        einstein = geo.raise_indices(geo.einstein_ll(), 2, (0,))
+        if any(on(einstein[0][0] + einstein[k][k]) != 0 for k in (1, 2, 3)):
+            raise AssertionError(f"kasner_scalar: the stress is not that of a stiff fluid in the {system} chart")
+    stated = OnSurface(geo, ricci, scalar, kretschmann)
+    for name, rank in (("ricci_ll", 2), ("einstein_ll", 2), ("weyl_llll", 4)):
+        free, there = getattr(geo, name)(), getattr(stated, name)()
+        for index in vm._indices(n, rank):
+            if on(vm._at(free, index) - vm._at(there, index)) != 0:
+                raise AssertionError(f"kasner_scalar: {name} is misstated in slot {index} of the {system} chart")
+    if on(geo.ricci_scalar() - scalar) != 0 or on(geo.kretschmann() - kretschmann) != 0:
+        raise AssertionError(f"kasner_scalar: a scalar is misstated in the {system} chart")
+    if system == "logarithmic":
+        # t = t_0 e^(-tau): x^0 = ell e^(-tau), and the powers are read with t in the unit t_0 = ell/c.
+        source = cp.Chart(["t", "x", "y", "z"], ["p_1", "p_2", "p_3", "q"],
+                          kasner_scalar("synchronous")["chart_line_element"])
+        ell = P["ell"]
+        same = {source.reader.parameters[name]: P[name] for name in ("p_1", "p_2", "p_3", "q")}
+        old = source.geo.g.subs(same).subs(source.reader.c, ell).subs(source.symbols[0], ell * sp.exp(-x0))
+        jacobian = sp.diag(-ell * sp.exp(-x0), 1, 1, 1)
+        if (jacobian.T * old * jacobian - geo.g).applyfunc(lambda e: sp.simplify(sp.powdenest(e, force=True))) != sp.zeros(4):
+            raise AssertionError("kasner_scalar: the logarithmic chart is not the synchronous one pulled back")
+    chart.geo = stated
+
+
+CHARTS["kasner_scalar"] = [lambda s=s: kasner_scalar(s) for s in KASNER_SCALAR_CHARTS]
+
+
+# -- Ellis's small universes --------------------------------------------------------------------
+
+SMALL_CHARTS = ("torus", "torus_conformal", "hyperbolic", "horn")
+SMALL_REALS = "(-\\infty, \\infty)"
+SMALL_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+SMALL_PERIODS = ["L_1", "L_2", "L_3"]
+SMALL_CELL = [f"{x} \\in [0, {L})" for x, L in zip("xyz", SMALL_PERIODS)]
+SMALL_GROUP = ("(t, p) \\sim (t, \\gamma p) \\;\\text{(every } \\gamma \\text{ of a discrete group of isometries of "
+               "hyperbolic space that moves every point } p\\text{)}")
+SMALL_Q = sp.Symbol("SMALLQ")
+SMALL_RATE = "\\left(\\left(a'\\right)^2 - 1\\right)"
+SMALL_HYPERBOLIC = "d\\chi^2 + \\sinh^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+
+
+def small_universes(system):
+    """Ellis's small universes: a Friedmann universe whose space is a quotient of flat or of
+    hyperbolic space by a discrete group of isometries with no fixed point. The local geometry is
+    Friedmann's, so each chart is his line element with the scale factor left free, and what the
+    quotient adds is in the domains: the periods L_1, L_2 and L_3 of the torus, and the group of the
+    hyperbolic forms. The torus is written in the comoving time and in the conformal time, and the
+    hyperbolic forms in the comoving chart about one observer, whose scale factor is the radius of
+    curvature of space, a length. The horn is Sokolov and Starobinsky's chart of hyperbolic space
+    by horospheres, their (2), whose flat coordinates y and z are periodic, their (11).
+    small_universes_check holds each to the published charts of `frw`; small_universes.md records
+    each chart's source."""
+    check = lambda chart: small_universes_check(chart, system)  # noqa: E731
+    if system == "torus":
+        coords, parameters = ["t", "x", "y", "z"], ["a = a(t)"] + SMALL_PERIODS
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "small_universes",
+            "system": {"id": system, "name": "Comoving Torus", "coords": coords,
+                       "domains": ["t \\in " + SMALL_REALS] + SMALL_CELL, "parameters": parameters,
+                       "line_element": "ds^2 = -c^2dt^2 + a^2\\left(dx^2 + dy^2 + dz^2\\right)"},
+            "chart_line_element": "ds^2 = -dt^2 + a^2\\left(dx^2 + dy^2 + dz^2\\right)",
+            "printer": {"primed": ["a"], "lead": [probe.parameters["a"]]},
+            "ricci_scalar": "6\\left(\\dfrac{a''}{a} + \\dfrac{\\left(a'\\right)^2}{a^2}\\right)",
+            "kretschmann": "12\\left(\\left(\\dfrac{a''}{a}\\right)^2 + \\dfrac{\\left(a'\\right)^4}{a^4}\\right)",
+            "check": check,
+        }
+    if system == "torus_conformal":
+        coords, parameters = ["\\eta", "x", "y", "z"], ["a = a(\\eta)"] + SMALL_PERIODS
+        line = "ds^2 = a^2\\left(-d\\eta^2 + dx^2 + dy^2 + dz^2\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        a, eta = probe.parameters["a"], probe.symbol["\\eta"]
+        return {
+            "metric_id": "small_universes",
+            "system": {"id": system, "name": "Conformal Time on the Torus", "coords": coords,
+                       "domains": ["\\eta \\in " + SMALL_REALS] + SMALL_CELL, "parameters": parameters,
+                       "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [sp.Derivative(a, (eta, 2)), sp.Derivative(a, eta), a]},
+            "check": check,
+        }
+    if system == "horn":
+        coords, parameters = ["t", "x", "y", "z"], ["a = a(t)", "b_2", "b_3"]
+        space = "dx^2 + e^{-2x}\\left(dy^2 + dz^2\\right)"
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "small_universes",
+            "system": {"id": system, "name": "Horn", "coords": coords,
+                       "domains": ["t \\in " + SMALL_REALS, "x \\in " + SMALL_REALS, "y \\in [0, b_2)",
+                                   "z \\in [0, b_3)"],
+                       "parameters": parameters,
+                       "line_element": "ds^2 = -c^2dt^2 + a^2\\left(" + space + "\\right)"},
+            "chart_line_element": "ds^2 = -dt^2 + a^2\\left(" + space + "\\right)",
+            "printer": {"primed": ["a"], "lead": [probe.parameters["a"]], "overrides": {SMALL_Q: SMALL_RATE}},
+            "pretty": small_universes_pretty(probe, None),
+            "bracketed": lambda value: sp.expand(small_universes_pretty(probe, None)(value)),
+            "rewrite": [("\\left(" + SMALL_RATE + "e^{-2x}\\right)", "e^{-2x}" + SMALL_RATE),
+                        ("a\\,e^{-2x}a''", "a\\,a''\\,e^{-2x}"), ("a\\,e^{-2x}a'", "a\\,a'\\,e^{-2x}")],
+            "ricci_scalar": "6\\left(\\dfrac{a''}{a} + \\dfrac{\\left(a'\\right)^2 - 1}{a^2}\\right)",
+            "kretschmann": "12\\left(\\left(\\dfrac{a''}{a}\\right)^2 + \\left(\\dfrac{\\left(a'\\right)^2 - 1}{a^2}\\right)^2\\right)",
+            "check": check,
+        }
+    coords, parameters = ["t", "\\chi", "\\theta", "\\phi"], ["a = a(t)"]
+    probe = vm.Reader(coords, parameters, ())
+    return {
+        "metric_id": "small_universes",
+        "system": {"id": system, "name": "Comoving Hyperbolic", "coords": coords,
+                   "domains": ["t \\in " + SMALL_REALS, "\\chi \\in [0, \\infty)"] + SMALL_ANGLES + [SMALL_GROUP],
+                   "parameters": parameters,
+                   "line_element": "ds^2 = -c^2dt^2 + a^2\\left(" + SMALL_HYPERBOLIC + "\\right)"},
+        "chart_line_element": "ds^2 = -dt^2 + a^2\\left(" + SMALL_HYPERBOLIC + "\\right)",
+        "printer": {"primed": ["a"], "lead": [probe.parameters["a"]],
+                    "overrides": {SMALL_Q: SMALL_RATE}},
+        "pretty": small_universes_pretty(probe),
+        "bracketed": lambda value: sp.expand(small_universes_pretty(probe)(value)),
+        # A product that leads with the bracket a'^2 - 1 is written with the bracket last.
+        "rewrite": [("\\left(" + SMALL_RATE + tail + "\\right)", tail + SMALL_RATE)
+                    for tail in ("\\sinh^2\\chi\\sin^2\\theta", "\\sinh^2\\chi")],
+        "ricci_scalar": "6\\left(\\dfrac{a''}{a} + \\dfrac{\\left(a'\\right)^2 - 1}{a^2}\\right)",
+        "kretschmann": "12\\left(\\left(\\dfrac{a''}{a}\\right)^2 + \\left(\\dfrac{\\left(a'\\right)^2 - 1}{a^2}\\right)^2\\right)",
+        "check": check,
+    }
+
+
+
+
+def small_universes_pretty(probe, chi="\\chi"):
+    """A `pretty` for the hyperbolic charts: sinh(chi) and cosh(chi) by the printer's `hyperbolic`
+    where the chart has a chi, and the curvature of space with its expansion, a'^2 - 1, kept as the
+    one factor it is, which factoring would split into a' + 1 and a' - 1."""
+    hyperbolic = cp.hyperbolic(probe.symbol[chi]) if chi else sp.factor
+    rate = sp.Derivative(probe.parameters["a"], probe.symbol["t"])
+    D = sp.Symbol("SMALLD")
+
+    def pretty(value):
+        value = sp.sympify(value)
+        power = 0
+        while value != 0:
+            numerator = sp.fraction(sp.together(value))[0].xreplace({rate: D})
+            if sp.rem(sp.expand(numerator), D ** 2 - 1, D) != 0:
+                break
+            value, power = sp.cancel(sp.together(value / (rate ** 2 - 1))), power + 1
+        return hyperbolic(value) * SMALL_Q ** power
+    return pretty
+
+
+def small_universes_horn_map(chi, theta, phi):
+    """Sokolov and Starobinsky's (5): the horn's x, y and z at the point (chi, theta, phi) of the
+    spherical form of hyperbolic space, x = -ln(cosh(chi) - sinh(chi) cos(theta)) and
+    y, z = sin(theta) (cos(phi), sin(phi))/(coth(chi) - cos(theta))."""
+    below = sp.cosh(chi) / sp.sinh(chi) - sp.cos(theta)
+    return [-sp.log(sp.cosh(chi) - sp.sinh(chi) * sp.cos(theta)),
+            sp.sin(theta) * sp.cos(phi) / below, sp.sin(theta) * sp.sin(phi) / below]
+
+
+def small_universes_published(system):
+    """A published chart of `frw` as (its reader, its metric as a matrix)."""
+    published = next(c for c in json.loads((METRICS / "frw.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == system)
+    there = vm.Reader(published["coords"], [p["symbol"] for p in published["parameters"]], ())
+    values = {tuple(e["indices"]): e["value"] for e in published["metric_components"]}
+    names = published["coords"]
+    return there, sp.Matrix(4, 4, lambda i, j: there(values.get((names[i], names[j]), "0")))
+
+
+def small_universes_check(chart, system):
+    """Each chart is conformally flat and is a published chart of `frw` carried along a map: the
+    torus charts are the flat universe, k = 0, in the comoving and the conformal time, with
+    x = r sin(theta) cos(phi), y = r sin(theta) sin(phi) and z = r cos(theta); the hyperbolic chart
+    is the open universe, k = -1/l^2, with r = l sinh(chi) and its scale factor l times Friedmann's,
+    for every length l. The identifications of the torus are translations of x, y and z, which the
+    metric does not depend on, so each is an isometry, and it moves every point."""
+    geo, g = chart.geo, chart.geo.g
+    weyl = geo.weyl_llll()
+    if any(vm.norm(vm._at(weyl, index)) != 0 for index in vm._indices(4, 4)):
+        raise AssertionError(f"small_universes: the {system} chart is not conformally flat")
+    mine = chart.reader.parameters["a"]
+    time = chart.symbols[0]
+    if system == "horn":
+        # Conformally flat with the Einstein tensor of the open universe, so every component of the
+        # Riemann tensor is the hyperbolic chart's in a frame; and y and z are translated freely.
+        rate = sp.Derivative(mine, time)
+        lowered = geo.einstein_ll()
+        mixed = [[geo.ginv[i, i] * vm._at(lowered, (i, j)) for j in range(4)] for i in range(4)]
+        density = 3 * (rate ** 2 - 1) / mine ** 2
+        pressure = -(2 * mine * sp.Derivative(mine, (time, 2)) + rate ** 2 - 1) / mine ** 2
+        for i in range(4):
+            for j in range(4):
+                wanted = 0 if i != j else (-density if i == 0 else pressure)
+                if sp.simplify(vm._at(mixed, (i, j)) - wanted) != 0:
+                    raise AssertionError("small_universes: the horn's Einstein tensor is not the open universe's")
+        if any(g.has(x) for x in chart.symbols[2:]):
+            raise AssertionError("small_universes: a translation of y or z is no isometry of the horn")
+        # Sokolov and Starobinsky's (5) carries the spherical form of hyperbolic space onto the horn.
+        chi, theta, phi = sp.symbols("small_chi small_theta small_phi", positive=True)
+        image = small_universes_horn_map(chi, theta, phi)
+        J = sp.Matrix(3, 3, lambda i, j: sp.diff(image[i], [chi, theta, phi][j]))
+        space = (g[1:, 1:] / mine ** 2).subs(dict(zip(chart.symbols[1:], image)), simultaneous=True)
+        sphere = sp.diag(1, sp.sinh(chi) ** 2, sp.sinh(chi) ** 2 * sp.sin(theta) ** 2)
+        if any(sp.simplify(v.rewrite(sp.exp)) != 0 for v in sp.flatten(J.T * space * J - sphere)):
+            raise AssertionError("small_universes: the horn is not hyperbolic space carried along Sokolov and Starobinsky's (5)")
+        return
+    there, published = small_universes_published(
+        "conformal_spherical" if system == "torus_conformal" else "comoving_spherical")
+    theirs, k = there.parameters["a"], there.parameters["k"]
+    r, theta, phi = (there.symbol[n] for n in ("r", "\\theta", "\\phi"))
+    published = published.subs(there.symbol[there.coords[0]], time)
+    theirs = theirs.subs(there.symbol[there.coords[0]], time)
+    if system == "hyperbolic":
+        ell = sp.Symbol("small_ell", positive=True)
+        chi = chart.symbols[1]
+        carried = published.subs({k: -1 / ell ** 2, theirs: mine / ell}).subs(
+            {r: ell * sp.sinh(chi), theta: chart.symbols[2], phi: chart.symbols[3]})
+        J = sp.diag(1, ell * sp.cosh(chi), 1, 1)
+        if any(sp.simplify(x.rewrite(sp.exp)) != 0 for x in sp.flatten(J.T * carried * J - g)):
+            raise AssertionError("small_universes: the hyperbolic chart is not Friedmann's open universe carried along r = l sinh(chi)")
+        return
+    if any(g.has(x) for x in chart.symbols[1:]):
+        raise AssertionError(f"small_universes: a translation of the {system} chart is no isometry")
+    # The torus chart pulled back onto Friedmann's sphere of coordinates, at k = 0.
+    image = [time, r * sp.sin(theta) * sp.cos(phi), r * sp.sin(theta) * sp.sin(phi), r * sp.cos(theta)]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], [time, r, theta, phi][j]))
+    flat = published.subs({k: 0, theirs: mine})
+    if any(sp.simplify(x) != 0 for x in sp.flatten(J.T * g * J - flat)):
+        raise AssertionError(f"small_universes: the {system} chart is not Friedmann's flat universe pulled back")
+
+
+CHARTS["small_universes"] = [lambda s=s: small_universes(s) for s in SMALL_CHARTS]
 
 
 def write(spec):

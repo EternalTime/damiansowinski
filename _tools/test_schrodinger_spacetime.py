@@ -86,7 +86,7 @@ class Drawings(unittest.TestCase):
         self.assertEqual(figure["id"], "trap")
         self.assertNotIn("turn", figure)
         rays = [layer for layer in figure["layers"] if layer["class"] in ("above", "below")]
-        self.assertEqual(len(rays), 5)
+        self.assertEqual(len(rays), 6)
         launched = []
         for ray in rays:
             points = ray["points"]
@@ -104,7 +104,7 @@ class Drawings(unittest.TestCase):
                 self.assertGreaterEqual(R, min(R0, 1 / R0) - 1e-3)
             if ray["class"] == "below":
                 self.assertTrue(all(abs(R - 1.0) < 1e-4 for _, R in points))
-        self.assertEqual(sorted(launched), [0.35, 0.45, 0.6, 0.8, 1.0])
+        self.assertEqual(sorted(launched), [0.3, 0.35, 0.45, 0.6, 0.8, 1.0])
         edges = sorted(layer["points"][0][0] for layer in figure["layers"] if layer["class"] == "edge")
         self.assertAlmostEqual(edges[0], -math.pi / 2, places=3)
         self.assertAlmostEqual(edges[1], math.pi / 2, places=3)
