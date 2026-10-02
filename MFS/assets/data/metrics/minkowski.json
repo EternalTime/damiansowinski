@@ -223,6 +223,11 @@
       "id": "penrose_impulsive_wave",
       "kind": "composite",
       "text": "The inside and the outside of a light cone, glued back together with a warp. The cone carries a spherical gravitational wave one instant thick [penrose1972impulsive, podolsky2000snapping]."
+    },
+    {
+      "id": "brill_waves",
+      "kind": "family",
+      "text": "One moment of a spacetime that is flat space with a gravitational wave on it and nothing else. Brill proved in 1959 that the wave's mass is positive and vanishes only when the slice is a moment of Minkowski's spacetime [brill1959]."
     }
   ],
   "references": [
@@ -292,7 +297,8 @@
     "will2014",
     "einstein1914fokker",
     "delacruz1967",
-    "podolsky2000snapping"
+    "podolsky2000snapping",
+    "brill1959"
   ],
   "coordinates": [
     {

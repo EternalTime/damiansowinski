@@ -1047,6 +1047,11 @@ DIMENSIONS = {
     ("misner_brill_lindquist", "bispherical"): {"\\mu": "1", "\\eta": "1", "\\phi": "1", "a": "L", "\\Psi": "1"},
     ("misner_brill_lindquist", "isotropic"): {"r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L"},
     ("misner_brill_lindquist", "charged"): {"x": "L", "y": "L", "z": "L", "\\chi": "1", "\\psi": "1"},
+    # Brill's waves, one moment of a spacetime too: the conformal factor psi and the free function q
+    # of the base metric, which stands in an exponential, are pure numbers.
+    ("brill_waves", "cylindrical"): {"\\rho": "L", "z": "L", "\\phi": "1", "\\psi": "1", "q": "1"},
+    ("brill_waves", "spherical"): {"r": "L", "\\theta": "1", "\\phi": "1", "\\psi": "1", "q": "1"},
+    ("brill_waves", "three_dimensional"): {"\\rho": "L", "z": "L", "\\phi": "1", "\\psi": "1", "q": "1"},
     # Lewis's stationary cylinders. His coordinates are pure numbers, so each chart measures r in a
     # length, ell or van Stockum's radius R, and every power whose exponent holds a parameter is a
     # power of that ratio: the names u, h and H are pure numbers, and so are Lewis's constants n, a

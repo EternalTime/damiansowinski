@@ -122,6 +122,7 @@ import build_mfs_data as build  # noqa: E402
 import nm_disc  # noqa: E402
 import boson_star as bs  # noqa: E402
 import two_holes  # noqa: E402
+import brill_wave  # noqa: E402
 import null_rays as nr  # noqa: E402
 import conformal  # noqa: E402
 from conformal import Sources  # noqa: E402
@@ -7619,6 +7620,131 @@ def misner_brill_lindquist(ck, src):
     return views
 
 
+BRILL_KEYS = (11.0, 12.0, 13.0)
+BRILL_STEP = 0.05
+BRILL_TOP = 6.0             # the plane is drawn out to this many widths of the wave
+BRILL_RINGS = (1.0, 2.0, 3.0, 4.0, 5.0)
+BRILL_WEAK = 4.0            # the amplitude of the weaker wave, which Alcubierre and others saw disperse
+
+
+def brill_waves(ck, src):
+    """The plane z = 0 of Holz, Miller, Wakano and Wheeler's wave, q = a (rho/lambda)^2
+    exp(-r^2/lambda^2), which the reflection z -> -z fixes, in units of lambda. The slice is itself
+    one moment, so no time is held fixed. On the plane q = a rho^2 exp(-rho^2) and the metric is
+    psi^4 (e^(2q) drho^2 + rho^2 dphi^2), with psi from brill_wave.Wave, which solves Brill's
+    equation: the circle at rho has the radius rho psi^2, and dz/drho = psi sqrt(psi^2 e^(2q) -
+    (psi + 2 rho psi')^2).
+
+    For a from 11 to 13 that is real everywhere, and the plane is one piece, flat on the axis.
+    Where q is largest, a/e at rho = 1, the distance between neighbouring circles is e^q times what
+    psi alone would make it, a factor of 57 at a = 11 and 119 at a = 13, so the plane is a long
+    narrow stalk there, 38 to 89 widths of the wave from the centre to rho = 6, and each frame is
+    given knots every twentieth of a width and rounded to a part in 1e9 of its extent, since its
+    first chords at the centre are a ten thousandth of its height. From a = 11.82 a minimal surface surrounds the centre,
+    the apparent horizon, which brill_wave finds, and the circle where it cuts the plane is marked.
+    From a = 12.19 the circles of the plane themselves have a widest and then a narrowest, a neck.
+
+    At a = 4 the circles grow faster than the distance out to them between rho = 1.59 and
+    2.43, so two pieces are drawn, the disc inside and the plane outside, each lying level where
+    it stops, set with those two circles at one height."""
+    name = "Brill's wave"
+    critical = brill_wave.critical()
+    ck.add(f"{name}: a minimal surface first appears at the amplitude 11.82", abs(critical - 11.82), 5e-3)
+    values, keys = movie_values(list(BRILL_KEYS), BRILL_STEP)
+    values = [round(v, 9) for v in values]
+    top = BRILL_TOP
+
+    def plane_of(a):
+        w = brill_wave.wave(a)
+        A = Fraction(a).limit_denominator(1000)
+        sl = Slice(src, "brill_waves", "cylindrical", "\\rho", "\\phi", {"z": 0},
+                   functions={"q": f"({A})*rho**2*exp(-rho**2 - z**2)"},
+                   numeric={"psi": (lambda x: w.equator(x)[0], lambda x: w.equator(x)[1])})
+        return w, sl
+
+    def radius(w):
+        return lambda r: r * w.equator(r)[0] ** 2
+
+    # The tallest frame sets the scale: the last, whose stalk is the longest.
+    size = float(plane_of(values[-1])[1].rise(0.0, top))
+    knots = tuple(np.linspace(0.0, top, 121)[1:-1])
+    necks = []
+
+    def strong(a):
+        w, sl = plane_of(a)
+        where = f"{name}, the plane z = 0, a = {a:g}"
+        ck.add(f"{where}: psi solves Brill's equation", max(abs(w.residual(0.7, 0.4)), abs(w.residual(1.5, 1.0))), 1e-4)
+        ck.add(f"{where}: the mass is Brill's integral", abs(w.brill_mass(120, 16) / w.mass - 1), 1e-5)
+        marks = [(r, "r", None) for r in BRILL_RINGS] + [(top, "r", None)]
+        found = w.horizons()
+        ck.exact(f"{where}: a minimal surface surrounds the centre exactly while a > 11.82", (found is not None) == (a > critical))
+        if found is not None:
+            ck.add(f"{where}: the horizon meets the plane at right angles", abs(w.miss(found[1])), 1e-8)
+            marks.append((w.waist(found[1]), "horizon", None))
+        rho = np.linspace(1.5, top, 2000)
+        p, dp = w.equator(rho)
+        turn = p + 2 * rho * dp
+        necks.append((a, bool(np.any(turn < 0))))
+        sheet = Piece("plane", "sheet", sl, 0.0, top, 0.0, 1,
+                      (("axis", "the axis $\\rho = 0$, at the centre of the wave"),
+                       ("edge", "the surface runs on to $\\rho \\to \\infty$")), sorted(marks), size, knots=knots,
+                      digits=LORENTZ_DIGITS)
+        ck.isometry(where, sheet)
+        ck.radius(f"{where}, rho = rho psi^2", sheet, radius(w), size)
+        ck.add(f"{where}: the circles nowhere outgrow the distance",
+               float(max(0.0, -np.min(sl.defect_at(np.linspace(1e-3, top, 1500))))), 0.0)
+        return Surface([sheet], label=f"$a = {a:.2f}$", time=a)
+
+    frames = [strong(a) for a in values]
+    first = min(a for a, neck in necks if neck)
+    ck.exact(f"{name}: the plane's circles have a neck from a = 12.2 on, among the frames drawn",
+             first == 12.2 and all(neck == (a >= first) for a, neck in necks))
+    ck.add(f"{name}: the tallest frame rises 89 widths of the wave from its centre to its rim", abs(size - 89.1), 0.1)
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the plane $z = 0$, which $\\rho$ and $\\phi$ cover")
+    fig.legend("line", "r", "$\\rho$ constant, at $1$, $2$, $3$, $4$, $5$, and $6$ times $\\lambda$")
+    fig.legend("line", "horizon", "the circle in which the apparent horizon cuts the plane, for $a > 11.82$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    settings = ("$\\lambda = 1$, the unit of every length, with $q = a(\\rho/\\lambda)^2e^{-r^2/\\lambda^2}$ and "
+                "$r^2 = \\rho^2 + z^2$, so that $q = a(\\rho/\\lambda)^2e^{-\\rho^2/\\lambda^2}$ on the plane $z = 0$.")
+    views = [view("strong", "Strong waves", "$\\lambda$", [frames[i] for i in keys], fig.done(),
+                  movie=movie(frames, "$a$", values), settings=settings, input=brill_wave.INPUT)]
+
+    a = BRILL_WEAK
+    w, sl = plane_of(a)
+    where = f"{name}, the plane z = 0, a = {a:g}"
+
+    def spare(r):
+        return float(sl.defect_at(r))
+    stop_in, stop_out = brentq(spare, 1.0, 2.0, xtol=1e-13), brentq(spare, 2.0, 3.0, xtol=1e-13)
+    ck.add(f"{where}: the disc stops at rho = 1.59", abs(stop_in - 1.59), 5e-3)
+    ck.add(f"{where}: the plane begins again at rho = 2.43", abs(stop_out - 2.43), 5e-3)
+    ck.stops(f"{where}, between the two", sl, np.linspace(stop_in, stop_out, 202)[1:-1])
+    ck.exact(f"{where}: no minimal surface surrounds the centre", w.horizons() is None)
+    ck.add(f"{where}: the mass is Brill's integral", abs(w.brill_mass(120, 16) / w.mass - 1), 1e-5)
+    size_weak = 2 * top * float(w.equator(top)[0]) ** 2
+    why = "where the circles grow faster than the distance out to them, and the surface stops"
+    disc = Piece("disc", "sheet", sl, 0.0, stop_in, 0.0, 1,
+                 (("axis", "the axis $\\rho = 0$, at the centre of the wave"), ("stops", "$\\rho = 1.59\\,\\lambda$, " + why)),
+                 [(1.0, "r", None), (stop_in, "space", None)], size_weak)
+    outer = Piece("outside", "sheet", sl, stop_out, top, float(disc.z[-1]), 1,
+                  (("stops", "$\\rho = 2.43\\,\\lambda$, " + why), ("edge", "the surface runs on to $\\rho \\to \\infty$")),
+                  [(stop_out, "space", None)] + [(r, "r", None) for r in (3.0, 4.0, 5.0, top)], size_weak)
+    for piece in (disc, outer):
+        ck.isometry(f"{where}, {piece.id}", piece)
+        ck.radius(f"{where}, {piece.id}, rho = rho psi^2", piece, radius(w), size_weak)
+    weak = Surface([disc, outer])
+    fig = figure_of([weak], {"sheet": "cover"}, size_weak)
+    fig.legend("fill", "cover", "the plane $z = 0$, where flat space carries it")
+    fig.legend("line", "r", "$\\rho$ constant, at $1$, $3$, $4$, $5$, and $6$ times $\\lambda$")
+    fig.legend("line", "space", "the two circles where the surface stops, at $\\rho = 1.59$ and $2.43\\,\\lambda$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("weak", "A weaker wave", "$\\lambda$", [weak], fig.done(),
+                      settings="$\\lambda = 1$, the unit of every length, with $q = a(\\rho/\\lambda)^2e^{-r^2/\\lambda^2}$, "
+                               "$r^2 = \\rho^2 + z^2$, and $a = 4$, on the plane $z = 0$.", input=brill_wave.INPUT))
+    return views
+
+
 def stockum_dust(ck, src):
     """The plane z = 0 at one moment, R = 1: g_rr = e^(-r^2), g_phiphi = r^2 (1 - r^2). The
     circles grow out to r = R/sqrt(2) and shrink after, so the surface curls back toward the
@@ -13425,6 +13551,7 @@ DRAWN = {
     "dilaton_black_hole": dilaton_black_hole,
     "majumdar_papapetrou": majumdar_papapetrou,
     "misner_brill_lindquist": misner_brill_lindquist,
+    "brill_waves": brill_waves,
     "kastor_traschen": kastor_traschen,
     "melvin": melvin,
     "senovilla": senovilla,
@@ -14643,6 +14770,25 @@ CAPTIONS = {
         "radius $R = r\\psi^2$. The isotropic radius covers both sheets. The throat is the circle $r = r_s/4$, of "
         "circumference radius $r_s$, and the inversion $r \\to r_s^2/16r$ carries each sheet onto the other, so "
         "$r \\to 0$ is the infinity of the second sheet.",
+    ],
+    ("brill_waves", "strong"): [
+        "The plane $z = 0$ of Holz, Miller, Wakano, and Wheeler's wave as the amplitude $a$ runs from $11$ to $13$, "
+        "each frame a surface in flat space with every distance along it the metric distance. The circle at $\\rho$ "
+        "has the circumference radius $\\rho\\psi^2$, and "
+        "$dz/d\\rho = \\psi\\sqrt{\\psi^2e^{2q} - (\\psi + 2\\rho\\,\\partial_\\rho\\psi)^2}$.",
+        "Near $\\rho = \\lambda$, where $q$ reaches $a/e$, the distance between neighbouring circles is stretched by "
+        "$e^q$, a factor of $57$ at $a = 11$ and $119$ at $a = 13$, so the plane there is a long narrow stalk, and the "
+        "surface rises $38\\,\\lambda$ to $89\\,\\lambda$ from its centre to the rim at $\\rho = 6\\,\\lambda$.",
+        "The mass $GM/c^2$ grows from $3.69\\,\\lambda$ to $5.94\\,\\lambda$ along the way. From $a = 11.82$ a "
+        "minimal surface surrounds the centre, the apparent horizon, and the marked circle is where it cuts the plane. "
+        "From $a = 12.19$ the plane has a neck above the stalk: its circles reach a widest, shrink to a narrowest, and "
+        "then grow without end.",
+    ],
+    ("brill_waves", "weak"): [
+        "The plane $z = 0$ of the same wave at $a = 4$, of mass $GM/c^2 = 0.460\\,\\lambda$, with no apparent horizon. "
+        "The circles grow faster than the distance out to them between $\\rho = 1.59\\,\\lambda$ and "
+        "$2.43\\,\\lambda$, where the surface stops; the disc inside and the plane outside are set with those two "
+        "circles at one height.",
     ],
     ("majumdar_papapetrou", "one_hole"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a single hole ($U = 1 + m/r$) at one moment of $t$, drawn as a "

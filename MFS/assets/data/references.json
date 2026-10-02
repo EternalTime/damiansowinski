@@ -1,5 +1,5 @@
 {
-  "version": "cf14bf2e22a33c0d",
+  "version": "6286528af6ff0b17",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -25070,6 +25070,170 @@
         "eprint": "1007.0587",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/1007.0587"
+      }
+    },
+    "brill1959": {
+      "type": "article",
+      "fields": {
+        "title": "On the positive definite mass of the {Bondi-Weber-Wheeler} time-symmetric gravitational waves",
+        "author": "Brill, Dieter R.",
+        "journal": "Annals of Physics",
+        "volume": "7",
+        "number": "4",
+        "pages": "466--483",
+        "year": "1959",
+        "doi": "10.1016/0003-4916(59)90055-7",
+        "url": "https://doi.org/10.1016/0003-4916(59)90055-7"
+      }
+    },
+    "eppley1977": {
+      "type": "article",
+      "fields": {
+        "title": "Evolution of time-symmetric gravitational waves: Initial data and apparent horizons",
+        "author": "Eppley, Kenneth",
+        "journal": "Physical Review D",
+        "volume": "16",
+        "number": "6",
+        "pages": "1609--1614",
+        "year": "1977",
+        "doi": "10.1103/PhysRevD.16.1609",
+        "url": "https://doi.org/10.1103/PhysRevD.16.1609"
+      }
+    },
+    "omurchadha1993": {
+      "type": "incollection",
+      "fields": {
+        "title": "Brill Waves",
+        "author": "Ó Murchadha, Niall",
+        "booktitle": "Directions in General Relativity: Proceedings of the 1993 International Symposium, Maryland. Volume 2: Papers in Honor of Dieter Brill",
+        "editor": "Hu, B. L. and Jacobson, T. A.",
+        "publisher": "Cambridge University Press",
+        "address": "Cambridge",
+        "pages": "210--223",
+        "year": "1993",
+        "doi": "10.1017/CBO9780511524653.021",
+        "eprint": "gr-qc/9302023",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9302023"
+      }
+    },
+    "holz1993": {
+      "type": "incollection",
+      "fields": {
+        "title": "Coalescence of Primal Gravity Waves to Make Cosmological Mass Without Matter",
+        "author": "Holz, D. E. and Miller, W. A. and Wakano, M. and Wheeler, J. A.",
+        "booktitle": "Directions in General Relativity: Proceedings of the 1993 International Symposium, Maryland. Volume 2: Papers in Honor of Dieter Brill",
+        "editor": "Hu, B. L. and Jacobson, T. A.",
+        "publisher": "Cambridge University Press",
+        "address": "Cambridge",
+        "pages": "339--358",
+        "year": "1993",
+        "doi": "10.1017/CBO9780511524653.028",
+        "url": "https://doi.org/10.1017/CBO9780511524653.028"
+      }
+    },
+    "beig1991": {
+      "type": "article",
+      "fields": {
+        "title": "Trapped surfaces due to concentration of gravitational radiation",
+        "author": "Beig, R. and Ó Murchadha, N.",
+        "journal": "Physical Review Letters",
+        "volume": "66",
+        "number": "19",
+        "pages": "2421--2424",
+        "year": "1991",
+        "doi": "10.1103/PhysRevLett.66.2421",
+        "url": "https://doi.org/10.1103/PhysRevLett.66.2421"
+      }
+    },
+    "alcubierre2000collapse": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational collapse of gravitational waves in {3D} numerical relativity",
+        "author": "Alcubierre, Miguel and Allen, Gabrielle and Brügmann, Bernd and Lanfermann, Gerd and Seidel, Edward and Suen, Wai-Mo and Tobias, Malcolm",
+        "journal": "Physical Review D",
+        "volume": "61",
+        "number": "4",
+        "pages": "041501",
+        "year": "2000",
+        "doi": "10.1103/PhysRevD.61.041501",
+        "eprint": "gr-qc/9904013",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9904013"
+      }
+    },
+    "hilditch2013": {
+      "type": "article",
+      "fields": {
+        "title": "Collapse of nonlinear gravitational waves in moving-puncture coordinates",
+        "author": "Hilditch, David and Baumgarte, Thomas W. and Weyhausen, Andreas and Dietrich, Tim and Brügmann, Bernd and Montero, Pedro J. and Müller, Ewald",
+        "journal": "Physical Review D",
+        "volume": "88",
+        "number": "10",
+        "pages": "103009",
+        "year": "2013",
+        "doi": "10.1103/PhysRevD.88.103009",
+        "eprint": "1309.5008",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1309.5008"
+      }
+    },
+    "hilditch2017": {
+      "type": "article",
+      "fields": {
+        "title": "Evolutions of centered {Brill} waves with a pseudospectral method",
+        "author": "Hilditch, David and Weyhausen, Andreas and Brügmann, Bernd",
+        "journal": "Physical Review D",
+        "volume": "96",
+        "number": "10",
+        "pages": "104051",
+        "year": "2017",
+        "doi": "10.1103/PhysRevD.96.104051",
+        "eprint": "1706.01829",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1706.01829"
+      }
+    },
+    "abrahams1993": {
+      "type": "article",
+      "fields": {
+        "title": "Critical behavior and scaling in vacuum axisymmetric gravitational collapse",
+        "author": "Abrahams, Andrew M. and Evans, Charles R.",
+        "journal": "Physical Review Letters",
+        "volume": "70",
+        "number": "20",
+        "pages": "2980--2983",
+        "year": "1993",
+        "doi": "10.1103/PhysRevLett.70.2980",
+        "url": "https://doi.org/10.1103/PhysRevLett.70.2980"
+      }
+    },
+    "schoen1979": {
+      "type": "article",
+      "fields": {
+        "title": "On the proof of the positive mass conjecture in general relativity",
+        "author": "Schoen, Richard and Yau, Shing-Tung",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "65",
+        "number": "1",
+        "pages": "45--76",
+        "year": "1979",
+        "doi": "10.1007/BF01940959",
+        "url": "https://doi.org/10.1007/BF01940959"
+      }
+    },
+    "witten1981": {
+      "type": "article",
+      "fields": {
+        "title": "A new proof of the positive energy theorem",
+        "author": "Witten, Edward",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "80",
+        "number": "3",
+        "pages": "381--402",
+        "year": "1981",
+        "doi": "10.1007/BF01208277",
+        "url": "https://doi.org/10.1007/BF01208277"
       }
     }
   }

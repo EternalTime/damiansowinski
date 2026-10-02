@@ -12,8 +12,8 @@ schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis, erez_rosen,
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
-born_infeld_charge, penrose_impulsive_wave, exponential_metric, petrov_homogeneous, rp3_geon and
-kopczynski_trautman, and Godel's cylindrical chart.
+born_infeld_charge, penrose_impulsive_wave, exponential_metric, petrov_homogeneous, rp3_geon,
+kopczynski_trautman and brill_waves, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -34,8 +34,8 @@ malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_
 majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md,
 witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, mass_inflation.md,
 kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_star.md,
-misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md and
-petrov_homogeneous.md beside this file.
+misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, petrov_homogeneous.md and
+brill_waves.md beside this file.
 """
 import argparse
 import fcntl
@@ -17463,6 +17463,150 @@ def misner_brill_lindquist_check(chart):
 
 
 CHARTS["misner_brill_lindquist"] = [lambda s=s: misner_brill_lindquist(s) for s in TWO_HOLE_CHARTS]
+
+
+# -- Brill's waves -----------------------------------------------------------------------
+
+BRILL_CHARTS = ["cylindrical", "spherical", "three_dimensional"]
+
+
+def brill_waves(system_id):
+    """Brill's time-symmetric gravitational waves: one moment of a spacetime with waves and
+    nothing else in it, a Riemannian space of three dimensions with no time, so no coordinate is
+    scaled by c. The slice is psi^4 times the base metric e^(2q)(drho^2 + dz^2) + rho^2 dphi^2,
+    with q chosen freely and psi fixed by the one constraint left at a moment of time symmetry,
+    R = 0. The cylindrical chart is Brill's, the spherical chart Eppley's, and the third lets q and
+    psi depend on phi as well, as Alcubierre and others' waves without axial symmetry do. psi and q
+    are left free in every tensor, so no component assumes the constraint; brill_waves_check holds
+    each chart's Ricci scalar to it and each chart after the first to the first, and
+    brill_waves.md records each chart's source."""
+    if system_id == "spherical":
+        coords, name = ["r", "\\theta", "\\phi"], "Spherical"
+        parameters = ["\\psi = \\psi(r,\\theta)", "q = q(r,\\theta)"]
+        domains = ["r \\in [0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                   "q = 0 \;\\text{at}\; \\theta = 0, \\pi \;\\text{(a regular axis)}"]
+        line = ("ds^2 = \\psi^4\\left(e^{2q}\\left(dr^2 + r^2d\\theta^2\\right)"
+                " + r^2\\sin^2\\theta\\,d\\phi^2\\right)")
+        ricci = ("-\\dfrac{2\\left(4\\left(r^2\\,\\partial_r^2\\psi + 2r\\,\\partial_r\\psi + \\partial_\\theta^2\\psi"
+                 " + \\cot\\theta\\,\\partial_\\theta\\psi\\right) + \\psi\\left(r^2\\,\\partial_r^2 q + r\\,\\partial_r q"
+                 " + \\partial_\\theta^2 q\\right)\\right)}{r^2\\,\\psi^5\\,e^{2q}}")
+    else:
+        coords = ["\\rho", "z", "\\phi"]
+        domains = ["\\rho \\in [0, \\infty)", "z \\in (-\\infty, \\infty)", "\\phi \\in [0, 2\\pi)",
+                   "q = 0 \;\\text{at}\; \\rho = 0 \;\\text{(a regular axis)}"]
+        line = "ds^2 = \\psi^4\\left(e^{2q}\\left(d\\rho^2 + dz^2\\right) + \\rho^2d\\phi^2\\right)"
+        if system_id == "cylindrical":
+            name, parameters = "Brill", ["\\psi = \\psi(\\rho,z)", "q = q(\\rho,z)"]
+            ricci = ("-\\dfrac{2\\left(4\\left(\\rho\\,\\partial_\\rho^2\\psi + \\partial_\\rho\\psi"
+                     " + \\rho\\,\\partial_z^2\\psi\\right) + \\rho\\,\\psi\\left(\\partial_\\rho^2 q"
+                     " + \\partial_z^2 q\\right)\\right)}{\\rho\\,\\psi^5\\,e^{2q}}")
+        else:
+            name, parameters = "Without Axial Symmetry", ["\\psi = \\psi(\\rho,z,\\phi)", "q = q(\\rho,z,\\phi)"]
+            ricci = None
+    probe = vm.Reader(coords, parameters, ())
+    psi, q = probe.parameters["psi"], probe.parameters["q"]
+    spec = {"metric_id": "brill_waves", "check": brill_waves_check,
+            "system": {"id": system_id, "name": name, "coords": coords, "domains": domains,
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [psi, q], "flip": False,
+                        "collect": lambda poly, printer: cp.collect_by(poly, [psi], printer)},
+            "pretty": lambda value: sp.powsimp(sp.factor(sp.sympify(value)), combine="exp")}
+    if ricci:
+        spec["ricci_scalar"] = ricci
+    return spec
+
+
+def brill_waves_cylindrical():
+    """Brill's chart as a reader, its coordinates, its free psi and q and its metric."""
+    coords = ["\\rho", "z", "\\phi"]
+    reader = vm.Reader(coords, ["\\psi = \\psi(\\rho,z)", "q = q(\\rho,z)"], ())
+    g = vm.metric_from_line_element(
+        reader, "ds^2 = \\psi^4\\left(e^{2q}\\left(d\\rho^2 + dz^2\\right) + \\rho^2d\\phi^2\\right)", coords)
+    return [reader.symbol[c] for c in coords], reader.parameters["psi"], reader.parameters["q"], g
+
+
+def brill_waves_check(chart):
+    """Each chart against the constraint and against Brill's cylindrical chart.
+
+    At a moment of time symmetry the momentum constraint holds identically and the Hamiltonian
+    constraint in a vacuum is R = 0. The base metric e^(2q)(drho^2 + dz^2) + rho^2 dphi^2 has the
+    scalar curvature -2 e^(-2q)(d_rho^2 q + d_z^2 q), which integrates to zero over the base space
+    for a q that vanishes on the axis with its first derivative and falls off faster than 1/r, and
+    psi^4 times it has R = -psi^-5 e^(-2q) (8 Laplacian(psi) + 2 psi (d_rho^2 q + d_z^2 q)) with
+    the flat Laplacian, so the constraint is Brill's equation, Laplacian(psi) + psi (d_rho^2 q +
+    d_z^2 q)/4 = 0. Holz, Miller, Wakano and Wheeler's q = a (rho/lambda)^2 exp(-r^2/lambda^2) has
+    d_rho^2 q + d_z^2 q = q (2/rho^2 - 12/lambda^2 + 4 r^2/lambda^4), which brill_wave.py solves
+    with, and it and Eppley's q = a (rho/lambda)^2/(1 + (r/lambda)^n) vanish on the axis as rho^2.
+    With q = 0 the constraint is Laplace's equation, whose one regular solution that goes to 1 is
+    psi = 1: flat space. The spherical chart is the cylindrical one pulled back, and the chart
+    without axial symmetry is it where neither function depends on phi."""
+    system = {("\\rho", 2): "cylindrical", ("r", 2): "spherical", ("\\rho", 3): "three_dimensional"}[
+        (chart.coords_tex[0], len(chart.reader.parameters["psi"].args))]
+    X, P, geo = chart.symbols, chart.reader.parameters, chart.geo
+    psi, q = P["psi"], P["q"]
+    R = geo.ricci_scalar()
+
+    def fail(what):
+        raise AssertionError(f"brill_waves/{system}: {what}")
+
+    Xc, psic, qc, g = brill_waves_cylindrical()
+    if system == "cylindrical":
+        rho, z, _ = X
+        flat = sp.diff(psi, rho, 2) + sp.diff(psi, rho) / rho + sp.diff(psi, z, 2)
+        source = sp.diff(q, rho, 2) + sp.diff(q, z, 2)
+        if vm.norm(R + (8 * flat + 2 * psi * source) * sp.exp(-2 * q) / psi ** 5) != 0:
+            fail("R is not -psi^-5 e^(-2q) (8 Laplacian(psi) + 2 psi (d_rho^2 q + d_z^2 q))")
+        base = geo.g.applyfunc(lambda e: e.subs(psi, 1).doit())
+        if vm.norm(vm.Geometry(base, X, 10 ** 6).ricci_scalar() + 2 * sp.exp(-2 * q) * source) != 0:
+            fail("the base metric's scalar curvature is not -2 e^(-2q) (d_rho^2 q + d_z^2 q)")
+        if any(vm.norm(geo.g[i, i].subs({psi: 1, q: 0}).doit() - (1, 1, rho ** 2)[i]) != 0 for i in range(3)):
+            fail("the chart at psi = 1, q = 0 is not flat space")
+        a, lam, n = sp.symbols("BWa BWlambda", positive=True) + (sp.Symbol("BWn", positive=True),)
+        r2 = rho ** 2 + z ** 2
+        holz = a * rho ** 2 * sp.exp(-r2 / lam ** 2) / lam ** 2
+        if sp.simplify(sp.diff(holz, rho, 2) + sp.diff(holz, z, 2)
+                       - holz * (2 / rho ** 2 - 12 / lam ** 2 + 4 * r2 / lam ** 4)) != 0:
+            fail("Holz and others' source is not q (2/rho^2 - 12/lambda^2 + 4 r^2/lambda^4)")
+        eppley = a * rho ** 2 / lam ** 2 / (1 + (sp.sqrt(r2) / lam) ** n)
+        for name, f in (("Holz and others'", holz), ("Eppley's", eppley)):
+            if sp.limit(f / rho, rho, 0) != 0 or sp.limit(sp.diff(f, rho), rho, 0) != 0:
+                fail(f"{name} q does not vanish on the axis with its first derivative")
+        return
+    V, W = sp.Function("BWpsi")(*Xc[:2]), sp.Function("BWq")(*Xc[:2])
+    g = g.subs({psic: V, qc: W})
+    if system == "spherical":
+        r, th, ph = X
+        image = [r * sp.sin(th), r * sp.cos(th), ph]
+        flat = sp.diff(psi, r, 2) + 2 * sp.diff(psi, r) / r + (sp.diff(psi, th, 2) + sp.cot(th) * sp.diff(psi, th)) / r ** 2
+        source = sp.diff(q, r, 2) + sp.diff(q, r) / r + sp.diff(q, th, 2) / r ** 2
+        if vm.norm(R + (8 * flat + 2 * psi * source) * sp.exp(-2 * q) / psi ** 5) != 0:
+            fail("R is not -psi^-5 e^(-2q) (8 Laplacian(psi) + 2 psi (d_r^2 q + d_r q/r + d_theta^2 q/r^2))")
+        at = {sp.Function("BWpsi")(*image[:2]): psi, sp.Function("BWq")(*image[:2]): q}
+        J = sp.Matrix(3, 3, lambda i, j: sp.diff(image[i], X[j]))
+        pulled = (J.T * g.subs(dict(zip(Xc, image)), simultaneous=True) * J).subs(at)
+        for i in range(3):
+            for j in range(i, 3):
+                if sp.simplify(pulled[i, j] - geo.g[i, j]) != 0:
+                    fail(f"the cylindrical chart pulled back misses slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+        return
+    # Without axial symmetry: the same metric where psi and q do not depend on phi, and R = 0 is
+    # then Brill's equation with the terms the dependence on phi adds.
+    rho, z, ph = X
+    own = {psi: sp.Function("BWpsi")(rho, z), q: sp.Function("BWq")(rho, z)}
+    for i in range(3):
+        for j in range(i, 3):
+            if vm.norm(geo.g[i, j].subs(own) - g[i, j].subs(dict(zip(Xc, X)))) != 0:
+                fail(f"the chart with no dependence on phi misses the cylindrical chart in slot "
+                     f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+    flat = sp.diff(psi, rho, 2) + sp.diff(psi, rho) / rho + sp.diff(psi, z, 2)
+    source = sp.diff(q, rho, 2) + sp.diff(q, z, 2)
+    axial = -(8 * flat + 2 * psi * source) * sp.exp(-2 * q) / psi ** 5
+    if vm.norm((R - axial).subs(own).doit()) != 0:
+        fail("R with no dependence on phi is not the cylindrical chart's")
+
+
+CHARTS["brill_waves"] = [lambda s=s: brill_waves(s) for s in BRILL_CHARTS]
 
 
 # -- Belinski and Zakharov's gravitational solitons --------------------------------------

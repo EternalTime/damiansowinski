@@ -93,6 +93,11 @@
       "id": "rp3_geon",
       "kind": "programme",
       "text": "The one hole of this data with its two sheets made one through the opposite points of the throat, which Misner and Wheeler wrote down in 1957. It grows into a black hole with a single exterior [misner1957, friedman1993]."
+    },
+    {
+      "id": "brill_waves",
+      "kind": "family",
+      "text": "The same kind of moment with gravitational waves where the holes are. Brill's slice of 1959 has no poles in $\\psi$ and no throats, only a wave of freely chosen shape, and a positive mass all the same [brill1959]."
     }
   ],
   "references": [
@@ -124,7 +129,8 @@
     "marolf2009",
     "wheeler1983",
     "clifton2012",
-    "friedman1993"
+    "friedman1993",
+    "brill1959"
   ],
   "coordinates": [
     {

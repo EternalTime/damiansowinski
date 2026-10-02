@@ -68,6 +68,11 @@
       "id": "misner_brill_lindquist",
       "kind": "family",
       "text": "Other moments of time symmetry, with several throats and no dust. Wheeler's own bag of gold was a piece of such a moment, pinched off where the conformal factor passes through zero [marolf2009]."
+    },
+    {
+      "id": "brill_waves",
+      "kind": "family",
+      "text": "A moment of time symmetry with no dust and no throat to begin with, only gravitational waves. Turned up to its critical amplitude the wave closes its slice into a compact universe of its own [omurchadha1993]."
     }
   ],
   "references": [
@@ -84,7 +89,8 @@
     "bekenstein1973",
     "hawking1975",
     "hsu2008monsters",
-    "chakravarty2021"
+    "chakravarty2021",
+    "omurchadha1993"
   ],
   "coordinates": [
     {
