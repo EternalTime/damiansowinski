@@ -1029,6 +1029,17 @@ DIMENSIONS = {
         "t": "T", "r": "L", "\\phi": "1", "z": "L", "m": "1", "R": "L", "\\ell": "L", "w": "1/L",
         "\\psi": "1", "H": "1", "F": "1", "M": "L", "L": "L**2",
     },
+    # Petrov's homogeneous vacuum. In his own chart every coordinate but the time is a length, phi
+    # among them, which is no angle there, and ell is the one length of the solution. Outside the
+    # dust cylinder phi is an angle, and F, M and L are a number, a length and an area, as in the
+    # heavy cylinder of the Lewis family.
+    ("petrov_homogeneous", "petrov"): {
+        "t": "T", "r": "L", "\\phi": "L", "z": "L", "\\ell": "L", "\\psi": "1",
+    },
+    ("petrov_homogeneous", "cylinder"): {
+        "t": "T", "r": "L", "\\phi": "1", "z": "L", "R": "L", "\\ell": "L", "\\psi": "1", "F": "1", "M": "L",
+        "L": "L**2",
+    },
     # The Kaluza-Klein black holes keep three lengths: the horizon radius r_s and the charge
     # lengths q and p. The fifth coordinate y is a length, and so are the advanced time v = ct + ...
     # and its companion w along the circle.

@@ -4127,7 +4127,7 @@ class TurningLightConeFigures(unittest.TestCase):
                                    "near_horizon_extreme_kerr/dragging", "point_particle_2plus1/wedge",
                                    "som_raychaudhuri/tipping", "spinning_string/tipping", "stockum_dust/tipping",
                                    "bonnor_rotating_dust/tipping", "tippett_tsang/ring",
-                                   "wormhole_time_machine/trip"})
+                                   "wormhole_time_machine/trip", "petrov_homogeneous/turning"})
 
     def test_at_its_own_camera_the_page_draws_the_published_figure(self):
         # Every point the generator does not thin is the published point to the published
@@ -4735,6 +4735,10 @@ class Slices(unittest.TestCase):
               *[f"lewis/stockum_{s}/{v}" for s, views in (("light", ("surface", "beyond")),
                                                          ("critical", ("surface", "beyond")),
                                                          ("heavy", ("surface", "band"))) for v in views],
+              # Petrov's embedded plane of r and z meets each plane of t and phi, each cylinder outside the
+              # dust and the figure's slice in one event or along the figure's axis, where no moment is drawn.
+              *[f"petrov_homogeneous/petrov/{v}" for v in ("upright", "diagonal", "sideways", "inverted", "turning")],
+              *[f"petrov_homogeneous/cylinder/{v}" for v in ("surface", "band", "beyond")],
               # Gowdy's sphere chart draws the inside of Schwarzschild's horizon; the moments
               # embedded are the torus universe's.
               "gowdy/sphere/plane", "conformal gowdy/sphere",

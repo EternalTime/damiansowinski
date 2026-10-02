@@ -11652,6 +11652,82 @@ def lifshitz_spacetime(ck, src):
                           "measured with $dX^2 + dY^2 - dZ^2$.")]
 
 
+PETROV_TOP = 3.0                 # how far the pseudosphere is drawn above r = 0, in ell
+PETROV_DEPTH = math.log(3.0)     # and how far the sheet in Minkowski space below it: to circles of radius 3 ell
+
+
+def petrov_homogeneous(ck, src):
+    """The surface of r and z of Petrov's homogeneous vacuum at one t and one phi, in Petrov's
+    chart at ell = 1: g_rr = 1 and g_zz = e^{-2r/ell}, the hyperbolic plane of curvature -1/ell^2
+    with the lines of constant r its horocycles. It is the plane Gibbons and Gielen describe the
+    spacetime as standing over, a flat plane of t and phi at each of its points, and it is totally
+    geodesic, since no Christoffel symbol with an upper t or phi has both lower indices among r
+    and z. A strip of it of width 2 pi ell along z, rolled up so that z runs once round, is a
+    surface of revolution with the radius ell e^{-r/ell}. Above r = 0 the circles shrink more
+    slowly than the distance along the surface, |d(radius)/dr| = e^{-r/ell} <= 1, and the strip is
+    half of Beltrami's pseudosphere, Z climbing at sqrt(1 - e^{-2r/ell}) along the tractrix. Below
+    r = 0 they grow faster, which is checked, and the strip is drawn on in three dimensional
+    Minkowski space, falling at sqrt(e^{-2r/ell} - 1) from level at r = 0 toward a light cone, to
+    the circle of radius 3 ell. Both pieces lie level at r = 0, so they meet in one circle with one
+    tangent."""
+    size = 6.0
+    params = {"ell": 1}
+    fixed_at = {"t": 0, "phi": 0}
+    sl = Slice(src, "petrov_homogeneous", "petrov", "r", "z", fixed_at, params)
+    msl = Slice(src, "petrov_homogeneous", "petrov", "r", "z", fixed_at, params, space="minkowski")
+    ck.add("Petrov: the surface lies level at r = 0, where the circle shrinks as fast as the distance along it grows",
+           abs(float(sl.defect_at(np.array([0.0]))[0])), 1e-12)
+    ck.stops("Petrov, below r = 0 in flat space", sl, np.linspace(-6.0, 0.0, 402)[:-1])
+    above = np.linspace(0.0, 8.0, 402)[1:]
+    ck.add("Petrov: above r = 0 no surface in Minkowski space carries the slice, (drho/dr)^2 - g_rr < 0",
+           float(max(0.0, np.max(-msl.defect_at(above)))), 0.0)
+    if not np.all(msl.defect_at(above) > 0):
+        ck.items[-1]["ok"] = False
+    # The same surface at every t and phi: g_rr and g_zz hold neither.
+    other = Slice(src, "petrov_homogeneous", "petrov", "r", "z", {"t": 0.7, "phi": -1.3}, params)
+    sample = np.linspace(0.0, PETROV_TOP, 61)
+    ck.add("Petrov: the surface is the same at another t and phi",
+           float(np.max(np.abs(other.rho_at(sample) - sl.rho_at(sample))) + np.max(np.abs(other.defect_at(sample) - sl.defect_at(sample)))),
+           1e-12)
+
+    join = "at $r = 0$ the surface lies level, in Minkowski space below and in flat space above"
+    edge = "the sheet runs on toward a light cone as $r \\to -\\infty$, its circles growing as $e^{-r/\\ell}$"
+    high = "the horn runs on, narrowing as $e^{-r/\\ell}$, to $r \\to \\infty$"
+    lower = Piece("minkowski", "sheet", msl, -PETROV_DEPTH, 0.0, 0.0, 1, (("edge", edge), ("join", join)),
+                  [(-PETROV_DEPTH, "r", None), (-math.log(2.0), "r", None)], size)
+    lower.z = lower.z - float(lower.z[-1])
+    upper = Piece("pseudosphere", "sheet", sl, 0.0, PETROV_TOP, 0.0, 1, (("join", join), ("edge", high)),
+                  [(0.0, "space", None), (1.0, "r", None), (2.0, "r", None)], size)
+    for piece in (lower, upper):
+        space = "in Minkowski space" if piece.sl.lorentz else "in flat space"
+        ck.isometry(f"Petrov, {piece.id} {space}", piece)
+        ck.radius(f"Petrov, {piece.id}: rho = ell e^(-r/ell) {space}", piece, lambda r: np.exp(-np.asarray(r, dtype=float)), size)
+    ck.form("Petrov, pseudosphere: the tractrix Z = arcosh(e^r) - sqrt(1 - e^(-2r))", upper, tractrix, size)
+
+    def cone_side(r):
+        root = np.sqrt(np.expm1(-2 * np.asarray(r, dtype=float)))
+        return np.arctan(root) - root
+    ck.form("Petrov, minkowski: Z = arctan(sqrt(e^(-2r) - 1)) - sqrt(e^(-2r) - 1)", lower, cone_side, size)
+    ck.join("Petrov, the sheet in Minkowski space and the pseudosphere in flat space at r = 0", lower, 0.0, upper, 0.0)
+    pa, pb = lower.data()["points"][-1], upper.data()["points"][0]
+    ck.add("Petrov, the two pieces as written: one point at r = 0",
+           max(abs(pa[0] - pb[0]), abs(pa[1] - pb[1]), abs(pa[2] - pb[2])), 10.0 ** -min(lower.decimals, upper.decimals))
+
+    surface = Surface([lower, upper])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *upper.at(0.0), "$r = 0$")
+    ring_label(fig, [0, 0, 0], *upper.at(1.0), "$\\ell$")
+    ring_label(fig, [0, 0, 0], *lower.at(-PETROV_DEPTH), "$-\\ell\\ln 3$")
+    fig.legend("fill", "cover", "the strip $0 \\le z < 2\\pi\\ell$ at one $t$ and $\\phi$, which $r$ and $z$ cover")
+    fig.legend("line", "r", "$r$ constant, at $-\\ell\\ln 3$, $-\\ell\\ln 2$, $\\ell$, and $2\\ell$")
+    fig.legend("line", "space", "$r = 0$: Minkowski space below, flat space above")
+    fig.legend("line", "meridian", "$z$ constant, every $\\pi\\ell/12$")
+    return [view("plane", "The plane of $r$ and $z$", "$\\ell$", [surface], fig.done(),
+                 settings="$\\ell = 1$, the unit of every length, and the strip $0 \\le z < 2\\pi\\ell$ rolled up so that "
+                          "$z$ runs once round the axis. Every length along the surface below $r = 0$ is "
+                          "measured with $dX^2 + dY^2 - dZ^2$.")]
+
+
 SV_BOUNCE_MOMENTS = (0.75, 0.4, 0.0, -0.4, -0.75)    # r in units of r_s, between the horizons +-sqrt(3)/2 of a = r_s/2
 
 
@@ -12492,6 +12568,7 @@ DRAWN = {
     "domain_wall": domain_wall,
     "randall_sundrum": randall_sundrum,
     "lifshitz_spacetime": lifshitz_spacetime,
+    "petrov_homogeneous": petrov_homogeneous,
     "minkowski": minkowski,
     "anti_de_sitter": anti_de_sitter,
     "malament_hogarth": malament_hogarth,
@@ -14478,6 +14555,17 @@ CAPTIONS = {
         "A circle of the second wall is $e^{-kr_c\\pi}$ times as long as one of the first, $0.21$ at $kr_c = 1/2$. "
         "With $e^{kr_c\\pi}$ of order $10^{15}$, the ratio of the Planck scale to the weak scale, the second circle "
         "is $10^{-15}$ of the first.",
+    ],
+    ("petrov_homogeneous", "plane"): [
+        "The surface of $r$ and $z$ at one $t$ and one $\\phi$, a hyperbolic plane of curvature $-1/\\ell^2$, with the "
+        "strip $0 \\le z < 2\\pi\\ell$ rolled up so that $z$ runs once round the axis: in flat space from $r = 0$ up and "
+        "in three dimensional Minkowski space ($dX^2 + dY^2 - dZ^2$) below it, every distance along the surface the "
+        "metric distance.",
+        "On it the metric is $dr^2 + e^{-2r/\\ell}dz^2$, so the lines of constant $r$ are horocycles, drawn as circles "
+        "of radius $\\ell e^{-r/\\ell}$. Above $r = 0$ the strip is half of Eugenio Beltrami's pseudosphere, a horn that "
+        "narrows without end. Below $r = 0$ the circles grow faster than the distance along the surface, and the "
+        "strip opens toward a light cone of Minkowski space. Over every point of this plane stands a flat plane of "
+        "$t$ and $\\phi$, its light cones turned through $\\sqrt{3}\\,r/2\\ell$.",
     ],
     ("lifshitz_spacetime", "moment"): [
         "The surface of $\\rho$ and $x$ at one moment ($y = 0$), a strip of width $2\\pi L$ along $x$ rolled up, with "

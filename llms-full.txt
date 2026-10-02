@@ -1275,6 +1275,17 @@ The weak gravitational field of a slowly moving body with a number in front of e
 - chart Eddington (areal radius): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{2\left(\beta - \gamma\right)m^2}{r^2}\right)c^2dt^2 + \left(1 + \dfrac{2\gamma m}{r}\right)dr^2 + r^2d\theta^2 + r^2\sin^2\theta\,d\phi^2$$
 - chart Rotating body (isotropic): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{2\beta m^2}{r^2}\right)c^2dt^2 + \left(1 + \dfrac{2\gamma m}{r}\right)\left(dr^2 + r^2d\theta^2 + r^2\sin^2\theta\,d\phi^2\right) - \dfrac{4\Delta am\sin^2\theta}{r}c\,dt\,d\phi$$
 
+### Petrov Homogeneous Vacuum
+
+An empty spacetime that is curved and still the same at every event: four symmetries carry any event to any other in exactly one way, and no other vacuum without a cosmological constant has such a group. Its light cones turn steadily as one walks along one direction, and it is the field outside a cylinder of dust that spins with the circle round its surface a path of light.
+
+- id: `petrov_homogeneous`
+- tags: vacuum, stationary, homogeneous, simply transitive group, group manifold, rotating, closed timelike curves, cylindrical symmetry, Lewis class, Petrov type I, Bianchi classification, geodesically complete, hyperbolic space, causal structure, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/petrov_homogeneous.json
+- chart Petrov: coordinates $(t, r, \phi, z)$, $$ds^2 = dr^2 + e^{-2r/\ell}dz^2 + e^{r/\ell}\left(\cos\psi\left(d\phi^2 - c^2dt^2\right) - 2\sin\psi\,c\,dt\,d\phi\right)$$
+- chart Dust Cylinder: coordinates $(t, r, \phi, z)$, $$ds^2 = -F\,c^2dt^2 - 2M\,c\,dt\,d\phi + \dfrac{\ell^2}{r^2}\left(dr^2 + dz^2\right) + L\,d\phi^2$$
+
 ### Kinnersley Photon Rocket
 
 The field of a point mass that accelerates by shining light unevenly, found by William Kinnersley in 1969. Its mass and its acceleration are arbitrary functions of retarded time, the light is null dust that streams out brightest behind it, and no gravitational waves reach infinity.

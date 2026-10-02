@@ -2542,6 +2542,13 @@ HIDDEN = {
     ("godel", "cylindrical", "beyond"): "beyond r_c the circles are closed timelike curves and no surface of constant t is a moment of space; the embedding stops at sinh^2 r = 1/sqrt 2",
     ("stockum_dust", "cylindrical", "beyond"): "beyond r = R the circles are closed timelike curves; the embedding stops at r = 0.83 R",
     ("som_raychaudhuri", "cylindrical", "beyond"): "beyond r_c the circles are closed timelike curves; the embedding stops at r = sqrt(3) r_c/2",
+    # Petrov's plane of r and z, t = 0 and phi = 0, meets each plane of t and phi, each cylinder
+    # outside the dust and the slice z = 0 of the figure where no line or region of the moment lies.
+    **{("petrov_homogeneous", "petrov", view): "the embedded plane of r and z meets this plane of t and phi in the one event t = 0, phi = 0"
+       for view in ("upright", "diagonal", "sideways", "inverted")},
+    **{("petrov_homogeneous", "cylinder", view): "the embedded plane of r and z meets this cylinder in the one event t = 0, phi = 0"
+       for view in ("surface", "band", "beyond")},
+    ("petrov_homogeneous", "petrov", "turning"): "the embedded plane of r and z meets the slice z = 0 in the line t = 0, phi = 0, which the figure draws as its axis",
     **{("lewis", system, "inside"): "inside r = ell the circles are closed timelike curves; the embedding begins at ell"
        for system in ("lewis", "canonical")},
     **{("lewis", system, view): "another member of Lewis's family than the cylinder of the Weyl class whose moment is embedded"
