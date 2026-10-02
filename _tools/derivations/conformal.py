@@ -5399,6 +5399,136 @@ def bertotti_robinson(ck, src):
     return views
 
 
+def nhek_near_pq(t, r):
+    """The near-NHEK patch at r_0 = 1 and k = 1/2 in the strip of AdS2: with the tortoise
+    coordinate r_* = ln(1 - 1/r), the exponentials V = exp((t - r_*)/2) and U = exp((t + r_*)/2)
+    are the Poincare chart's ct + r_0^2/r and ct - r_0^2/r, so p = -pi/4 + arctan V and
+    q = pi/4 + arctan U, as poincare_pq has them."""
+    t, r = np.asarray(t, dtype=float), np.asarray(r, dtype=float)
+    star = np.log1p(-1 / r)
+    return -Q4 + atan_exp((t - star) / 2), Q4 + atan_exp((t + star) / 2)
+
+
+def near_horizon_extreme_kerr(ck, src):
+    """The throat of the extreme Kerr black hole on its equator with the circles of phi divided
+    out, at r_0 = 1: the metric orthogonal to the circles is half that of a two dimensional
+    anti-de Sitter space of unit radius in each chart, so the strip of AdS2 is the whole diagram,
+    as it is for Bertotti and Robinson's throat, and its 45 degree lines are the rays of no
+    angular momentum, the throat's principal null rays. Bardeen and Horowitz's global chart is
+    the strip as it stands, p, q = (tau -+ arctan y)/2; their Poincare-type chart and the inverse
+    radius x = r_0^2/r are the Poincare wedge, poincare_pq(t, x); and the near-NHEK chart at
+    k = r_0/2 is the triangle between the event (X, T) = (0, pi/2), where its two horizons
+    cross, and the stretch of the boundary X = pi/2 from T = 0 to pi, nhek_near_pq. One event is
+    checked to land on one point through Bardeen and Horowitz's map between the global and the
+    Poincare charts and through the near-NHEK map."""
+    name = "near_horizon_extreme_kerr"
+    fixed = {"theta": "pi/2"}
+    po = Plane(src, name, "poincare", ("t", "r"), fixed, {"r_0": 1}, quotient="phi")
+    ir = Plane(src, name, "inverse_radius", ("t", "x"), fixed, {"r_0": 1}, quotient="phi")
+    gl = Plane(src, name, "global", ("\\tau", "y"), fixed, {"r_0": 1}, quotient="phi")
+    nn = Plane(src, name, "near_nhek", ("t", "r"), fixed, {"r_0": 1, "k": "1/2"}, quotient="phi")
+    from_r = lambda t, r: poincare_pq(t, 1 / np.asarray(r, dtype=float))
+    ck.chart("NHEK Poincare", po, from_r, ck.uniform(-10, 10), ck.uniform(0.01, 20), lambda t, r: (1, 0))
+    ck.chart("NHEK inverse radius", ir, poincare_pq, ck.uniform(-10, 10), ck.uniform(0.01, 20), lambda t, x: (1, 0))
+    ck.chart("NHEK global", gl, ads_global_pq, ck.uniform(-10, 10), ck.uniform(-20, 20), lambda t, y: (1, 0))
+    ck.chart("NHEK near-NHEK", nn, nhek_near_pq, ck.uniform(-8, 8), ck.uniform(1.001, 20), lambda t, r: (1, 0))
+    ck.finite("NHEK: the curvature on the equator is the same everywhere, 192/r_0^4",
+              gl.kretschmann(ck.uniform(-5, 5, 50), ck.uniform(-50, 50, 50)))
+    ck.limit("NHEK: the Kretschmann scalar on the equator is 192/r_0^4 in every chart",
+             [float(pl.kretschmann(np.array([0.3]), np.array([1.7]))[0]) for pl in (po, ir, gl, nn)], [192] * 4, 1e-9)
+    # One event through every map: (tau, y) of the global chart is Bardeen and Horowitz's
+    # r = sqrt(1 + y^2) cos tau + y, t = sqrt(1 + y^2) sin tau/r, and (t, r) of the near-NHEK chart
+    # is the Poincare event with ct -+ 1/r = exp((t +- r_*)/2).
+    tau, y = ck.uniform(-0.6, 0.6, 50), ck.uniform(0.2, 3, 50)
+    root = np.sqrt(1 + y * y)
+    r = root * np.cos(tau) + y
+    ck.limit("NHEK: the global and the Poincare maps put one event on one point",
+             np.concatenate(xt(*ads_global_pq(tau, y))), np.concatenate(xt(*from_r(root * np.sin(tau) / r, r))), 1e-9)
+    tn, rn = ck.uniform(-3, 3, 50), ck.uniform(1.05, 6, 50)
+    star = np.log1p(-1 / rn)
+    U, V = np.exp((tn + star) / 2), np.exp((tn - star) / 2)
+    ck.limit("NHEK: the near-NHEK and the Poincare maps put one event on one point",
+             np.concatenate(xt(*nhek_near_pq(tn, rn))), np.concatenate(xt(*poincare_pq((U + V) / 2, (V - U) / 2))), 1e-9)
+    ck.limit("NHEK: the near-NHEK horizons cross at (X, T) = (0, pi/2) and the patch ends at (pi/2, 0) and (pi/2, pi)",
+             np.concatenate([point(*nhek_near_pq(0.0, 1 + 1e-300)), point(*nhek_near_pq(-1e3, 5.0)),
+                             point(*nhek_near_pq(1e3, 5.0))]), [0, HALF, HALF, 0, HALF, PI], 1e-6)
+
+    restriction = ("The equatorial plane $\\theta = \\pi/2$ only, a totally geodesic surface, each point in the "
+                   "diagram a circle about the axis of circumference $2\\sqrt{2}\\,\\pi r_0$. Light rays of zero "
+                   "angular momentum run at 45 degrees.")
+    views = []
+    T0, T1 = -1.1 * PI, 1.1 * PI
+    box = [-HALF - 0.55, HALF + 0.55, T0, T1]
+    throat = slices.moments(name, "throat", label="$\\tau = 0$")[0]
+    lo, hi = throat.reach("global", "y")
+    ends = np.array([lo, hi])
+    for vid, label, system, z_of in (("poincare", "Poincaré", "poincare", lambda r: 1.0 / r),
+                                     ("inverse_radius", "Poincaré, inverse radius", "inverse_radius", lambda x: x)):
+        v = View(vid, label, box, system)
+        strip(v, True, T0, T1)
+        v.fill("cover", [[-HALF, 0], [HALF, -PI], [HALF, PI]])
+        for c in (0.25, 0.5, 1, 2, 4):
+            v.curve("r", *poincare_pq(S_ALL, np.full_like(S_ALL, z_of(c))))
+        grid(v, "t", poincare_pq, (-4, -2, -1, 0, 1, 2, 4), S_POS)
+        v.line("chartedge", [[[-HALF, 0], [HALF, PI]], [[-HALF, 0], [HALF, -PI]]])
+        if vid == "poincare":
+            label_on(v, poincare_pq(0, 1.0), "$r = r_0$")
+            v.legend("cover", "the wedge that $t$ and $r$ cover")
+            v.legend("r", "$r$ constant, from $r_0/4$ to $4r_0$")
+            v.legend("chartedge", "$r = 0$, the Poincaré horizon, where $t$ and $r$ end")
+        else:
+            label_on(v, poincare_pq(0, 1.0), "$x = r_0$")
+            v.legend("cover", "the wedge that $t$ and $x$ cover, the same as the Poincaré chart's")
+            v.legend("r", "$x$ constant, from $r_0/4$ to $4r_0$")
+            v.legend("chartedge", "$x \\to \\infty$, the Poincaré horizon, where $t$ and $x$ end")
+        v.legend("t", "$ct$ constant")
+        v.legend("boundary", "the boundary of the throat, timelike")
+        v.set(fade={"top": 0.7, "bottom": 0.7}, restriction=restriction, settings="$r_0 = 1$.")
+        # The moment tau = 0 is t = 0, over the stretch of the cylinder the embedding reaches, and
+        # the horizon's sphere stands at the event y = 0, which is r = r_0 and x = r_0.
+        v.slice(throat, [ads_global_pq(0 * ends, ends)], label="$t = 0$")
+        sphere = slices.moments(name, "horizon")[0]
+        v.slice(sphere, points=[ads_global_pq(0.0, 0.0)],
+                label="$t = 0$, $r = r_0$" if vid == "poincare" else "$t = 0$, $x = r_0$")
+        views.append(v)
+
+    v = View("global", "Global", box, "global")
+    strip(v, True, T0, T1)
+    v.fill("cover", [[-HALF, T0], [HALF, T0], [HALF, T1], [-HALF, T1]])
+    for c in (-4, -2, -1, -0.5, 0, 0.5, 1, 2, 4):
+        X = float(np.arctan(c))
+        v.line("r", [[[X, T0], [X, T1]]])
+    for c in (-3, -2, -1, 0, 1, 2, 3):
+        v.line("t", [[[-HALF, c], [HALF, c]]])
+    label_on(v, ads_global_pq(0.5, 1.0), "$y = 1$")
+    v.legend("cover", "the whole throat, which $\\tau$ and $y$ cover")
+    v.legend("r", "$y$ constant, from $-4$ to $4$")
+    v.legend("t", "$\\tau$ constant, every unit")
+    v.legend("boundary", "the two boundaries of the throat, $y \\to \\pm\\infty$, timelike")
+    v.set(fade={"top": 0.7, "bottom": 0.7}, restriction=restriction, settings="$r_0 = 1$.")
+    v.slice(throat, [ads_global_pq(0 * ends, ends)])
+    v.slice(slices.moments(name, "horizon", label="$\\tau = 0$, $y = 0$")[0], points=[ads_global_pq(0.0, 0.0)])
+    views.append(v)
+
+    v = View("near_nhek", "Near-NHEK", box, "near_nhek")
+    strip(v, True, T0, T1)
+    v.fill("cover", [[0, HALF], [HALF, 0], [HALF, PI]])
+    for c in (1.05, 1.25, 2, 4):
+        v.curve("r", *nhek_near_pq(8 * S_ALL, np.full_like(S_ALL, c)))
+    for c in (-4, -2, 0, 2, 4):
+        v.curve("t", *nhek_near_pq(np.full_like(S_POS, c), 1 + 1 / np.maximum(S_POS, 1e-12)))
+    v.line("chartedge", [[[0, HALF], [HALF, PI]], [[0, HALF], [HALF, 0]]])
+    label_on(v, nhek_near_pq(0, 2.0), "$r = 2r_0$")
+    v.legend("cover", "the patch that $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, at $1.05$, $1.25$, $2$, and $4\\,r_0$")
+    v.legend("t", "$ct$ constant, every $2r_0$")
+    v.legend("chartedge", "$r = 2k$, the horizon of the patch, where $t$ and $r$ end")
+    v.legend("boundary", "the two boundaries of the throat, timelike")
+    v.set(fade={"top": 0.7, "bottom": 0.7}, restriction=restriction, settings="$r_0 = 1$ and $k = r_0/2$.")
+    views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- wormholes
 
 def ellis_bronnikov(ck, src):
@@ -10360,6 +10490,7 @@ def photon_rocket(ck, src):
 
 DRAWN = {
     "aichelburg_sexl": aichelburg_sexl,
+    "near_horizon_extreme_kerr": near_horizon_extreme_kerr,
     "light_beam": light_beam,
     "kantowski_sachs": kantowski_sachs,
     "domain_wall": domain_wall,
@@ -11363,6 +11494,39 @@ CAPTIONS = {
         "boundary, and $z \\to \\infty$ is the Poincaré horizon, the pair of null lines from "
         "$(\\sigma, ct/L) = (-\\pi/2, 0)$. The curvature there is the same as everywhere else, and "
         "the global coordinates run smoothly across it.",
+    ],
+    ("near_horizon_extreme_kerr", "poincare"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the throat of the extreme Kerr black hole with the "
+        "circles of $\\phi$ divided out, each point in the diagram a circle about the axis. The metric "
+        "orthogonal to the circles is half that of an anti-de Sitter space of two dimensions and radius $r_0$, "
+        "so the diagram is the strip of that space, with a timelike boundary on either side.",
+        "Bardeen and Horowitz's coordinates $t$ and $r$ cover a Poincaré wedge of the strip. Its edge $r = 0$ "
+        "is a horizon of the coordinates alone, across which the throat continues, and its boundary "
+        "$r \\to \\infty$ is where the throat joined the rest of the extreme Kerr black hole before the limit "
+        "was taken.",
+    ],
+    ("near_horizon_extreme_kerr", "inverse_radius"): [
+        "The equatorial plane ($\\theta = \\pi/2$) with the circles of $\\phi$ divided out, in the coordinates "
+        "$t$ and $x = r_0^2/r$. They cover the same wedge as $t$ and $r$, with the boundary at $x \\to 0$ and "
+        "the Poincaré horizon at $x \\to \\infty$, and on it the metric orthogonal to the circles is "
+        "$(r_0^2/2x^2)(-c^2dt^2 + dx^2)$, conformal to flat as it stands.",
+    ],
+    ("near_horizon_extreme_kerr", "global"): [
+        "The equatorial plane ($\\theta = \\pi/2$) with the circles of $\\phi$ divided out, in Bardeen and "
+        "Horowitz's global coordinates $\\tau$ and $y$, which cover the whole strip with $X = \\arctan y$ and "
+        "$T = \\tau$. The throat has two timelike boundaries, $y \\to -\\infty$ and $y \\to \\infty$, and a "
+        "light ray of zero angular momentum crosses from one to the other in $\\Delta\\tau = \\pi$.",
+        "The strip runs on without end toward the past and the future. Bardeen and Horowitz showed that every "
+        "geodesic runs to infinite affine parameter in these coordinates, so the throat has no singularity and "
+        "no edge short of its two boundaries.",
+    ],
+    ("near_horizon_extreme_kerr", "near_nhek"): [
+        "The equatorial plane ($\\theta = \\pi/2$) with the circles of $\\phi$ divided out, in the near-NHEK "
+        "coordinates $t$ and $r$ ($k = r_0/2$). They cover a triangle of the strip, between the event at the "
+        "middle of the strip where the two horizons $r = 2k$ cross and a stretch of one boundary.",
+        "The triangle lies inside the Poincaré wedge, to the future of the ray $ct = r_0^2/r$ that leaves the "
+        "boundary at $t = 0$, and its future horizon is a stretch of the Poincaré horizon. Both are horizons "
+        "for the observers at fixed $r$, who accelerate, and the throat continues across them.",
     ],
     ("bertotti_robinson", "static"): [
         "The Bertotti-Robinson spacetime, the product of an anti-de Sitter space of two "

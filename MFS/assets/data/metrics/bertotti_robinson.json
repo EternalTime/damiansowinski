@@ -62,6 +62,11 @@
       "id": "reissner_nordstrom_de_sitter",
       "kind": "generalisation",
       "text": "The charged black hole in de Sitter space. The throat of its cold member is a product of a two dimensional spacetime and a sphere, and at $\\Lambda = 0$ that product is Bertotti and Robinson's [romans1992]."
+    },
+    {
+      "id": "near_horizon_extreme_kerr",
+      "kind": "family",
+      "text": "The throat of an extreme black hole that spins, a vacuum with a circle twisted over the anti-de Sitter factor at every polar angle [bardeen1999]."
     }
   ],
   "references": [

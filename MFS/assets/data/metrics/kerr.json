@@ -72,6 +72,11 @@
       "id": "myers_perry",
       "kind": "generalisation",
       "text": "Kerr's black hole in more than four dimensions, with a spin for every independent plane of rotation. From six dimensions up a hole turning in one plane keeps its horizon at every spin [myers1986]."
+    },
+    {
+      "id": "near_horizon_extreme_kerr",
+      "kind": "special_case",
+      "text": "Kerr spinning as fast as it can, seen from just outside the horizon. The region there is a throat without end, with four symmetries where Kerr has two [bardeen1999]."
     }
   ],
   "references": [
@@ -101,7 +106,8 @@
     "garfinkle1999",
     "mazza2021",
     "carter1968separable",
-    "myers1986"
+    "myers1986",
+    "bardeen1999"
   ],
   "coordinates": [
     {

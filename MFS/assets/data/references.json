@@ -1,5 +1,5 @@
 {
-  "version": "e93049db2a9748e9",
+  "version": "e4435f8249a1a9b3",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -4541,8 +4541,12 @@
         "author": "Bardeen, James and Horowitz, Gary T.",
         "journal": "Physical Review D",
         "volume": "60",
+        "number": "10",
         "pages": "104030",
         "year": "1999",
+        "doi": "10.1103/PhysRevD.60.104030",
+        "eprint": "hep-th/9905099",
+        "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.60.104030"
       }
     },
@@ -14611,6 +14615,145 @@
         "eprint": "0803.1371",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1143/PTP.120.561"
+      }
+    },
+    "bardeen1971": {
+      "type": "article",
+      "fields": {
+        "title": "Relativistic Disks. I. Uniform Rotation",
+        "author": "Bardeen, James M. and Wagoner, Robert V.",
+        "journal": "The Astrophysical Journal",
+        "volume": "167",
+        "pages": "359",
+        "year": "1971",
+        "doi": "10.1086/151039",
+        "url": "https://doi.org/10.1086/151039"
+      }
+    },
+    "smarr1973": {
+      "type": "article",
+      "fields": {
+        "title": "Surface Geometry of Charged Rotating Black Holes",
+        "author": "Smarr, Larry",
+        "journal": "Physical Review D",
+        "volume": "7",
+        "number": "2",
+        "pages": "289--295",
+        "year": "1973",
+        "doi": "10.1103/PhysRevD.7.289",
+        "url": "https://doi.org/10.1103/PhysRevD.7.289"
+      }
+    },
+    "mcclintock2006": {
+      "type": "article",
+      "fields": {
+        "title": "The Spin of the Near-Extreme Kerr Black Hole GRS 1915+105",
+        "author": "McClintock, Jeffrey E. and Shafee, Rebecca and Narayan, Ramesh and Remillard, Ronald A. and Davis, Shane W. and Li, Li-Xin",
+        "journal": "The Astrophysical Journal",
+        "volume": "652",
+        "number": "1",
+        "pages": "518--539",
+        "year": "2006",
+        "doi": "10.1086/508457",
+        "eprint": "astro-ph/0606076",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/astro-ph/0606076"
+      }
+    },
+    "guica2009": {
+      "type": "article",
+      "fields": {
+        "title": "The Kerr/CFT correspondence",
+        "author": "Guica, Monica and Hartman, Thomas and Song, Wei and Strominger, Andrew",
+        "journal": "Physical Review D",
+        "volume": "80",
+        "number": "12",
+        "pages": "124008",
+        "year": "2009",
+        "doi": "10.1103/PhysRevD.80.124008",
+        "eprint": "0809.4266",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0809.4266"
+      }
+    },
+    "amsel2009": {
+      "type": "article",
+      "fields": {
+        "title": "No dynamics in the extremal Kerr throat",
+        "author": "Amsel, Aaron J. and Horowitz, Gary T. and Marolf, Donald and Roberts, Matthew M.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2009",
+        "number": "09",
+        "pages": "044",
+        "year": "2009",
+        "doi": "10.1088/1126-6708/2009/09/044",
+        "eprint": "0906.2376",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0906.2376"
+      }
+    },
+    "dias2009kerr": {
+      "type": "article",
+      "fields": {
+        "title": "Kerr-CFT and gravitational perturbations",
+        "author": "Dias, \\'Oscar J. C. and Reall, Harvey S. and Santos, Jorge E.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2009",
+        "number": "08",
+        "pages": "101",
+        "year": "2009",
+        "doi": "10.1088/1126-6708/2009/08/101",
+        "eprint": "0906.2380",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0906.2380"
+      }
+    },
+    "bredberg2010": {
+      "type": "article",
+      "fields": {
+        "title": "Black hole superradiance from Kerr/CFT",
+        "author": "Bredberg, Irene and Hartman, Thomas and Song, Wei and Strominger, Andrew",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2010",
+        "number": "4",
+        "pages": "19",
+        "year": "2010",
+        "doi": "10.1007/JHEP04(2010)019",
+        "eprint": "0907.3477",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0907.3477"
+      }
+    },
+    "compere2017": {
+      "type": "article",
+      "fields": {
+        "title": "The Kerr/CFT correspondence and its extensions",
+        "author": "Comp\\`ere, Geoffrey",
+        "journal": "Living Reviews in Relativity",
+        "volume": "20",
+        "number": "1",
+        "pages": "1",
+        "year": "2017",
+        "doi": "10.1007/s41114-017-0003-2",
+        "eprint": "1203.3561",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1203.3561"
+      }
+    },
+    "gralla2018": {
+      "type": "article",
+      "fields": {
+        "title": "Observational signature of high spin at the Event Horizon Telescope",
+        "author": "Gralla, Samuel E. and Lupsasca, Alexandru and Strominger, Andrew",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "475",
+        "number": "3",
+        "pages": "3829--3853",
+        "year": "2018",
+        "doi": "10.1093/mnras/sty039",
+        "eprint": "1710.11112",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1710.11112"
       }
     }
   }

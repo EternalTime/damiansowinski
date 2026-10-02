@@ -803,6 +803,19 @@ A warp bubble metric in which space flows around a stationary ship with no expan
 - chart Cartesian flow: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + \left(dx - u\,dt\right)^2 + \left(dy - v\,dt\right)^2 + \left(dz - w\,dt\right)^2$$
 - chart Plane symmetric flow: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + \left(dx - u\,dt\right)^2 + dy^2 + dz^2$$
 
+### Near-Horizon Extreme Kerr Geometry
+
+The vacuum geometry left when one looks only at the region just outside the horizon of a Kerr black hole spinning as fast as it can, known as NHEK. At every polar angle it is a circle fibred over anti-de Sitter space of two dimensions, it has no singularity and no asymptotically flat region, and the Kerr/CFT correspondence is built on it.
+
+- id: `near_horizon_extreme_kerr`
+- tags: vacuum, vacuum solution, rotating, extremal, near-horizon limit, NHEK, extreme Kerr throat, black hole, stationary, axisymmetric, angular momentum, frame dragging, anti-de Sitter, warped anti-de Sitter, Kerr/CFT, holography, geodesically complete, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/near_horizon_extreme_kerr.json
+- chart Poincaré: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \dfrac{1 + \cos^2\theta}{2}\left(-\dfrac{r^2}{r_0^2}c^2dt^2 + \dfrac{r_0^2}{r^2}dr^2 + r_0^2d\theta^2\right) + \dfrac{2r_0^2\sin^2\theta}{1 + \cos^2\theta}\left(d\phi + \dfrac{r}{r_0^2}c\,dt\right)^2$$
+- chart Poincaré, Inverse Radius: coordinates $(t, x, \theta, \phi)$, $$ds^2 = \dfrac{1 + \cos^2\theta}{2}\left(\dfrac{r_0^2}{x^2}\left(-c^2dt^2 + dx^2\right) + r_0^2d\theta^2\right) + \dfrac{2r_0^2\sin^2\theta}{1 + \cos^2\theta}\left(d\phi + \dfrac{c\,dt}{x}\right)^2$$
+- chart Global: coordinates $(\tau, y, \theta, \phi)$, $$ds^2 = \dfrac{1 + \cos^2\theta}{2}r_0^2\left(-\left(1 + y^2\right)d\tau^2 + \dfrac{dy^2}{1 + y^2} + d\theta^2\right) + \dfrac{2r_0^2\sin^2\theta}{1 + \cos^2\theta}\left(d\phi + y\,d\tau\right)^2$$
+- chart Near-NHEK: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \dfrac{1 + \cos^2\theta}{2}\left(-\dfrac{r\left(r - 2k\right)}{r_0^2}c^2dt^2 + \dfrac{r_0^2}{r\left(r - 2k\right)}dr^2 + r_0^2d\theta^2\right) + \dfrac{2r_0^2\sin^2\theta}{1 + \cos^2\theta}\left(d\phi + \dfrac{r - k}{r_0^2}c\,dt\right)^2$$
+
 ### Oppenheimer-Snyder Gravitational Collapse
 
 The first dynamical model of gravitational collapse, matching a collapsing homogeneous dust sphere to an exterior Schwarzschild vacuum. It showed how a star can form a black hole in finite proper time.

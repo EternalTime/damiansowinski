@@ -6,7 +6,7 @@ khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_sh
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
-black_string and myers_perry, and Godel's cylindrical chart.
+black_string, myers_perry and near_horizon_extreme_kerr, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -6716,6 +6716,234 @@ def myers_perry_check(chart, system_id):
 
 
 CHARTS["myers_perry"] = [lambda s=s: myers_perry(s) for s in MP_CHARTS]
+
+
+# -- Near-horizon extreme Kerr -----------------------------------------------------------
+
+NHEK_CHARTS = ("poincare", "inverse_radius", "global", "near_nhek")
+
+
+def near_horizon_extreme_kerr(system_id):
+    """The throat of the extreme Kerr black hole in four charts, each with the one length
+    r_0, r_0^2 = 2GJ/c^3. The first is J. Bardeen and G. T. Horowitz, Phys. Rev. D 60, 104030
+    (1999), their Poincare-type chart, with t a time and r a length. The second is
+    the same patch in x = r_0^2/r, the conformally flat form of the plane of t and x that M. Guica,
+    T. Hartman, W. Song and A. Strominger, Phys. Rev. D 80, 124008 (2009), write with
+    y = x/r_0 and Bardeen and Horowitz use to bring the boundary to a finite distance. The third is
+    Bardeen and Horowitz's global chart, with r_0 restored as the overall scale and
+    tau and y pure numbers. The fourth is the chart of a horizon of finite temperature,
+    A. J. Amsel, G. T. Horowitz, D. Marolf and M. M. Roberts, JHEP 09 (2009) 044, with
+    surface gravity k/r_0^2, which I. Bredberg, T. Hartman, W. Song and A. Strominger, JHEP 04 (2010)
+    019, call near-NHEK. Each chart after the first is checked to be the first pulled
+    back through its map, and every one is a vacuum. near_horizon_extreme_kerr.md has the maps."""
+    conformal = "\\dfrac{1 + \\cos^2\\theta}{2}"
+    twist = "\\dfrac{2r_0^2\\sin^2\\theta}{1 + \\cos^2\\theta}"
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    reals = "(-\\infty, \\infty)"
+    parameters = ["r_0"] + (["k"] if system_id == "near_nhek" else [])
+
+    def line(cdt):
+        c2 = "c^2" if cdt else ""
+        if system_id == "poincare":
+            return ("ds^2 = " + conformal + "\\left(-\\dfrac{r^2}{r_0^2}" + c2 + "dt^2 + \\dfrac{r_0^2}{r^2}dr^2"
+                    " + r_0^2d\\theta^2\\right) + " + twist + "\\left(d\\phi + \\dfrac{r}{r_0^2}" + cdt
+                    + "dt\\right)^2")
+        if system_id == "inverse_radius":
+            return ("ds^2 = " + conformal + "\\left(\\dfrac{r_0^2}{x^2}\\left(-" + c2 + "dt^2 + dx^2\\right)"
+                    " + r_0^2d\\theta^2\\right) + " + twist + "\\left(d\\phi + \\dfrac{" + (cdt or "") + "dt}{x}"
+                    "\\right)^2")
+        if system_id == "global":
+            return ("ds^2 = " + conformal + "r_0^2\\left(-\\left(1 + y^2\\right)d\\tau^2 + \\dfrac{dy^2}{1 + y^2}"
+                    " + d\\theta^2\\right) + " + twist + "\\left(d\\phi + y\\,d\\tau\\right)^2")
+        return ("ds^2 = " + conformal + "\\left(-\\dfrac{r\\left(r - 2k\\right)}{r_0^2}" + c2 + "dt^2"
+                " + \\dfrac{r_0^2}{r\\left(r - 2k\\right)}dr^2 + r_0^2d\\theta^2\\right) + " + twist
+                + "\\left(d\\phi + \\dfrac{r - k}{r_0^2}" + cdt + "dt\\right)^2")
+
+    name, coords, domains = {
+        "poincare": ("Poincaré", ["t", "r", "\\theta", "\\phi"],
+                     ["t \\in " + reals, "r \\in (0, \\infty)"] + angles
+                     + ["r = 0 \\;\\text{(the horizon of the patch)}"]),
+        "inverse_radius": ("Poincaré, Inverse Radius", ["t", "x", "\\theta", "\\phi"],
+                           ["t \\in " + reals, "x \\in (0, \\infty)"] + angles
+                           + ["x = 0 \\;\\text{(the timelike boundary)}"]),
+        "global": ("Global", ["\\tau", "y", "\\theta", "\\phi"],
+                   ["\\tau \\in " + reals, "y \\in " + reals] + angles),
+        "near_nhek": ("Near-NHEK", ["t", "r", "\\theta", "\\phi"],
+                      ["t \\in " + reals, "r \\in (2k, \\infty)"] + angles
+                      + ["r = 2k \\;\\text{(the horizon of the patch)}"]),
+    }[system_id]
+    probe = vm.Reader(coords, parameters, ())
+    th = probe.symbol["\\theta"]
+    radius = probe.symbol[coords[1]]
+    s, c = sp.sin(th), sp.cos(th)
+    W, W_text = sp.Symbol("NHEK_W", positive=True), "1 + \\cos^2\\theta"
+    named = {W: W_text}
+    k = probe.parameters.get("k")
+    if k is not None:
+        # The near-NHEK chart's values are polynomials in r - k and k, the radius measured from
+        # the middle of its two horizons, so each is factored and collected in those.
+        P = sp.Symbol("NHEK_P", positive=True)
+        named[P] = "r - k"
+    if system_id == "global":
+        # 1 + y^2 is kept as the line element writes it, and any other sum is grouped by powers of y.
+        Y = sp.Symbol("NHEK_Y", positive=True)
+        named[Y] = "1 + y^2"
+    lead = ([P] if k is not None else []) + [radius] + [probe.parameters[p] for p in reversed(parameters)] + [c, s]
+
+    def pretty(value):
+        # Factored with every even power of sin theta written in cos theta, the angle the line
+        # element is written in, so that 1 + cos^2 theta comes out as a factor and is kept as
+        # written, (cos + 1)(cos - 1) goes back to -sin^2, and a factor times its mirror image
+        # in cos theta is multiplied out into one polynomial in cos^2 theta.
+        value = sp.sympify(value).replace(
+            lambda p: p.is_Pow and p.base == s and p.exp.is_Integer and p.exp > 1,
+            lambda p: s ** (int(p.exp) % 2) * (1 - c ** 2) ** (int(p.exp) // 2))
+        if k is not None:
+            value = value.subs(radius, P + k)
+        powers = {}
+        for f in sp.Mul.make_args(sp.factor(value)):
+            base, e = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            powers[base] = powers.get(base, 0) + e
+        e = min(powers.get(c + 1, 0), powers.get(c - 1, 0))
+        if e > 0:
+            powers[c + 1] -= e
+            powers[c - 1] -= e
+            powers[s] = powers.get(s, 0) + 2 * e
+        out = sp.Integer(-1) ** max(e, 0)
+        for base in list(powers):
+            mirror = sp.expand(base.subs(c, -c)) if base.is_Add else base
+            if base in powers and mirror != base and powers.get(mirror, 0) == powers[base] != 0:
+                powers[sp.expand(base * mirror)] = powers.pop(base)
+                del powers[mirror]
+        known = ([(1 + c ** 2, W)] + ([(P + k, radius), (P - k, radius - 2 * k)] if k is not None else [])
+                 + ([(1 + radius ** 2, Y)] if system_id == "global" else []))
+        for base, e in powers.items():
+            for written, name in known if base.is_Add else ():
+                if sp.expand(base - written) == 0:
+                    base = name
+                elif sp.expand(base + written) == 0:
+                    base, out = name, out * sp.Integer(-1) ** e
+            out *= base ** e
+        return out
+
+    def collect(poly, printer):
+        # A sum that holds r - k is grouped by its powers of r - k and k, and the global chart's by
+        # its powers of y, each coefficient written as every other value is.
+        by = [P, k] if k is not None else [radius]
+        if not poly.has(by[0]):
+            return printer.sum_of(poly)
+        terms = []
+        for monomial, coefficient in sorted(sp.Poly(sp.expand(poly), *by).terms(),
+                                            key=lambda mc: tuple(-n for n in mc[0])):
+            number, rest = pretty(coefficient.as_expr()).as_coeff_Mul()
+            terms.append((number, rest * sp.Mul(*[g ** n for g, n in zip(by, monomial)])))
+        return cp.Sum(terms)
+
+    spec = {
+        "metric_id": "near_horizon_extreme_kerr",
+        "system": {"id": system_id, "name": name, "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line("" if system_id == "global" else "c\\,")},
+        "chart_line_element": line(""),
+        "printer": {"lead": lead, "named": named, **({"collect": collect} if k is not None or system_id == "global" else {})},
+        # 48 M^2 (r^2 - a^2 cos^2)((r^2 + a^2 cos^2)^2 - 16 a^2 r^2 cos^2)/(r^2 + a^2 cos^2)^6, Kerr's, at r = a = M.
+        "kretschmann": "\\dfrac{192\\left(\\cos^4\\theta - 14\\cos^2\\theta + 1\\right)\\sin^2\\theta}"
+                       "{r_0^4\\left(1 + \\cos^2\\theta\\right)^6}",
+        "pretty": pretty,
+        "bracketed": pretty,
+    }
+    spec["check"] = lambda chart, s=system_id: near_horizon_extreme_kerr_checks(chart, s)
+    return spec
+
+
+def near_horizon_extreme_kerr_checks(chart, system_id):
+    """Every chart after the first is the first pulled back, and in every chart the two null
+    directions of no angular momentum on a cone of constant theta, k = (1, +-v, 0, w) with
+    w = -g_0phi/g_phiphi and v from the null condition, are geodesic, k^b nabla_b k^a along k^a,
+    and are repeated principal null directions of the Weyl tensor, C_abc[d k_e] k^b k^c = 0, at
+    six random points off the equator and off the axis: the rays the spacetime diagrams draw on
+    the equator with phi divided out are the throat's principal null rays, the same at every
+    theta."""
+    if system_id != "poincare":
+        near_horizon_extreme_kerr_pullback(chart, system_id)
+    g, x = chart.geo.g, chart.symbols
+    gamma, weyl = chart.geo.christoffel_ull(), chart.geo.weyl_llll()
+    w = -g[0, 3] / g[3, 3]
+    speed = sp.sqrt(-(g[0, 0] - g[0, 3] ** 2 / g[3, 3]) / g[1, 1])
+    rng = random.Random(1)
+    for sign in (1, -1):
+        k = [sp.Integer(1), sign * speed, sp.Integer(0), w]
+        low = [sum(g[a, b] * k[b] for b in range(4)) for a in range(4)]
+        acceleration = [sum(k[b] * sp.diff(k[a], x[b]) for b in range(4))
+                        + sum(vm._at(gamma, (a, b, c)) * k[b] * k[c] for b in range(4) for c in range(4))
+                        for a in range(4)]
+        contracted = [[sum(vm._at(weyl, (a, b, c, d)) * k[b] * k[c] for b in range(4) for c in range(4))
+                       for d in range(4)] for a in range(4)]
+        for _ in range(6):
+            point = {s: sp.Rational(rng.randint(10 ** 3, 2 * 10 ** 3), 10 ** 3)
+                     for s in sorted(g.free_symbols | set(x), key=str)}
+            point[x[2]] = point[x[2]] / 2
+            if system_id == "near_nhek":
+                point[x[1]] = point[x[1]] + 2 * point[chart.reader.parameters["k"]]
+            # Forty digits throughout: the products below cancel, and in double precision they
+            # would miss by a rounding.
+            at = lambda e: sp.sympify(e).xreplace(point).evalf(40)
+            kv, lv, av = [at(e) for e in k], [at(e) for e in low], [at(e) for e in acceleration]
+            cv = [[at(e) for e in row] for row in contracted]
+            scale = max(abs(v) for v in kv)
+            miss = max([abs(sum(kv[a] * lv[a] for a in range(4)))]
+                       + [abs(av[a] * kv[b] - av[b] * kv[a]) for a in range(4) for b in range(4)]
+                       + [abs(cv[a][d] * lv[e] - cv[a][e] * lv[d]) for a in range(4) for d in range(4) for e in range(4)])
+            if not miss < sp.Float("1e-25") * max(1, scale ** 4):
+                raise AssertionError(f"near_horizon_extreme_kerr: the rays of no angular momentum in the {system_id} "
+                                     f"chart are not null principal geodesics, by {miss:.1e}")
+
+
+def near_horizon_extreme_kerr_pullback(chart, system_id):
+    """J^T g J, with g Bardeen and Horowitz's Poincare-type chart and J the Jacobian of the map
+    from `chart` into it, against the metric of `chart`, in every slot at six random points.
+    The inverse radius is r = r_0^2/x. The global chart enters by Bardeen and Horowitz's map
+    with r_0 restored. The near-NHEK chart enters by the exponentials of its two null
+    coordinates, U, V = exp(k(ct -+ r_*)/r_0^2) with r_* = (r_0^2/2k) ln(1 - 2k/r), which are
+    the Poincare chart's ct/r_0 -+ r_0/r, and phi moves by ln sqrt(1 - 2k/r)."""
+    spec = near_horizon_extreme_kerr("poincare")
+    source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    r0 = chart.reader.parameters["r_0"]
+    t, a, th, ph = chart.symbols
+    if system_id == "inverse_radius":
+        image = [t, r0 ** 2 / a, th, ph]
+    elif system_id == "global":
+        root = sp.sqrt(1 + a ** 2)
+        r = root * sp.cos(t) + a
+        image = [r0 * root * sp.sin(t) / r, r0 * r, th,
+                 ph + sp.log((sp.cos(t) + a * sp.sin(t)) / (1 + root * sp.sin(t)))]
+    else:
+        k = chart.reader.parameters["k"]
+        tortoise = r0 ** 2 * sp.log(1 - 2 * k / a) / (2 * k)
+        U, V = sp.exp(k * (t + tortoise) / r0 ** 2), sp.exp(k * (t - tortoise) / r0 ** 2)
+        image = [r0 * (U + V) / 2, 2 * r0 / (V - U), th, ph + sp.log(1 - 2 * k / a) / 2]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+    at = dict(zip(source.symbols, image))
+    at[source.reader.parameters["r_0"]] = r0
+    difference = J.T * source.geo.g.subs(at, simultaneous=True) * J - chart.geo.g
+    rng = random.Random(0)
+    for _ in range(6):
+        # tau below 1/2 and y, r/2k above 1 keep the point inside the Poincare patch.
+        point = {s: sp.Rational(rng.randint(10 ** 3, 2 * 10 ** 3), 10 ** 3)
+                 for s in sorted(difference.free_symbols | {t}, key=str)}
+        point[t] = point[t] / 4
+        if system_id == "near_nhek":
+            point[a] = point[a] + 2 * point[chart.reader.parameters["k"]]
+        for i in range(4):
+            for j in range(4):
+                if abs(complex(difference[i, j].xreplace(point).evalf(40))) > 1e-25:
+                    raise AssertionError(f"near_horizon_extreme_kerr: the Poincare chart pulled back misses the "
+                                         f"{system_id} chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    ricci = chart.geo.ricci_ll()
+    if any(vm.norm(vm._at(ricci, index)) != 0 for index in vm._indices(4, 2)):
+        raise AssertionError(f"near_horizon_extreme_kerr: the {system_id} chart is not a vacuum")
+
+
+CHARTS["near_horizon_extreme_kerr"] = [lambda s=s: near_horizon_extreme_kerr(s) for s in NHEK_CHARTS]
 
 
 def write(spec):

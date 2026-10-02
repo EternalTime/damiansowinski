@@ -69,7 +69,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "176192cb745764d9",
+    "version": "ca430b45103569b7",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -237,7 +237,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "47480b12ab1e1da6",
+    "version": "35acf1d295f453b0",
     "diagrams": "7b995662594f7524",
     "conformal": "d58ee6f7393843e4",
     "embedding": "4b36293b1a64925a"
@@ -947,7 +947,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b0d4cb4c0f1bdb7a",
+    "version": "d5c97ade4a4fb13c",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -1031,7 +1031,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "98314c2e41ddec0d",
+    "version": "19aca31ec14322ae",
     "diagrams": "1e74e2bd30acc12c",
     "conformal": "76f39633ed5e928c",
     "embedding": "21f2586270043652"
@@ -1536,6 +1536,38 @@
     "version": "0ec70428948b876e",
     "diagrams": "187982910fdaa5ce",
     "embedding": "90f8432b18d96a76"
+  },
+  {
+    "id": "near_horizon_extreme_kerr",
+    "name": "Near-Horizon Extreme Kerr",
+    "tags": [
+      "vacuum",
+      "vacuum solution",
+      "rotating",
+      "extremal",
+      "near-horizon limit",
+      "NHEK",
+      "extreme Kerr throat",
+      "black hole",
+      "stationary",
+      "axisymmetric",
+      "angular momentum",
+      "frame dragging",
+      "anti-de Sitter",
+      "warped anti-de Sitter",
+      "Kerr/CFT",
+      "holography",
+      "geodesically complete",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "d401dc848f4882af",
+    "diagrams": "762c153757fcd27b",
+    "conformal": "ad18bb59a6c85dec",
+    "embedding": "d2cedaf6a4fa93cb"
   },
   {
     "id": "oppenheimer_snyder",
