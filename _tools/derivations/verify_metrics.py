@@ -730,6 +730,13 @@ DIMENSIONS = {
     ("tippett_tsang", "polar"): {"\\lambda": "1", "\\xi": "L", "y": "L", "z": "L", "h": "1"},
     ("tippett_tsang", "interior"): {"t": "T", "x": "L", "y": "L", "z": "L"},
     ("tippett_tsang", "rindler"): {"\\lambda": "1", "\\xi": "L", "y": "L", "z": "L"},
+    # Nordstrom's conformal factor is a pure number, 1 far from every mass. The point mass is the
+    # length m = GM/c^2, the uniform field an acceleration, and the dust universe the length L,
+    # the light travel distance of half its span of the inertial time.
+    ("nordstrom_scalar", "conformal"): {"t": "T", "x": "L", "y": "L", "z": "L", "\\Phi": "1"},
+    ("nordstrom_scalar", "spherical"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L"},
+    ("nordstrom_scalar", "uniform"): {"t": "T", "x": "L", "y": "L", "z": "L", "a": "L/T**2"},
+    ("nordstrom_scalar", "dust"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "L": "L"},
     # The slices are flat space and the whole of the geometry is the flow field carried on them,
     # so its components are velocities and the chart components of the metric are powers of V/c.
     ("natario", "cartesian_flow"): {

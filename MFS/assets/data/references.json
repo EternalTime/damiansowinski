@@ -1,5 +1,5 @@
 {
-  "version": "f303c74201ea9124",
+  "version": "e261f79d9205693c",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -187,6 +187,159 @@
         "pages": "1201--1208",
         "year": "1918",
         "url": "https://dwc.knaw.nl/DL/publications/PU00012316.pdf#page=2.00"
+      }
+    },
+    "nordstrom1913": {
+      "type": "article",
+      "fields": {
+        "title": "Zur Theorie der Gravitation vom Standpunkt des Relativit\\\"atsprinzips",
+        "author": "Nordstr\\\"om, Gunnar",
+        "journal": "Annalen der Physik",
+        "volume": "347",
+        "number": "13",
+        "pages": "533--554",
+        "year": "1913",
+        "doi": "10.1002/andp.19133471303",
+        "url": "https://doi.org/10.1002/andp.19133471303"
+      }
+    },
+    "nordstrom1914": {
+      "type": "article",
+      "fields": {
+        "title": "Die Fallgesetze und Planetenbewegungen in der Relativit\\\"atstheorie",
+        "author": "Nordstr\\\"om, Gunnar",
+        "journal": "Annalen der Physik",
+        "volume": "348",
+        "number": "7",
+        "pages": "1101--1110",
+        "year": "1914",
+        "doi": "10.1002/andp.19143480708",
+        "url": "https://doi.org/10.1002/andp.19143480708"
+      }
+    },
+    "nordstrom1914unify": {
+      "type": "article",
+      "fields": {
+        "title": "\\\"Uber die M\\\"oglichkeit, das elektromagnetische Feld und das Gravitationsfeld zu vereinigen",
+        "author": "Nordstr\\\"om, Gunnar",
+        "journal": "Physikalische Zeitschrift",
+        "volume": "15",
+        "pages": "504--506",
+        "year": "1914",
+        "url": "https://inspirehep.net/literature/267466"
+      }
+    },
+    "einstein1914fokker": {
+      "type": "article",
+      "fields": {
+        "title": "Die Nordstr\\\"omsche Gravitationstheorie vom Standpunkt des absoluten Differentialkalk\\\"uls",
+        "author": "Einstein, A. and Fokker, A. D.",
+        "journal": "Annalen der Physik",
+        "volume": "349",
+        "number": "10",
+        "pages": "321--328",
+        "year": "1914",
+        "doi": "10.1002/andp.19143491009",
+        "url": "https://doi.org/10.1002/andp.19143491009"
+      }
+    },
+    "norton1992": {
+      "type": "article",
+      "fields": {
+        "title": "Einstein, Nordstr\\\"om and the early demise of scalar, {Lorentz}-covariant theories of gravitation",
+        "author": "Norton, John D.",
+        "journal": "Archive for History of Exact Sciences",
+        "volume": "45",
+        "number": "1",
+        "pages": "17--94",
+        "year": "1992",
+        "doi": "10.1007/BF00375886",
+        "url": "https://doi.org/10.1007/BF00375886"
+      }
+    },
+    "norton2007": {
+      "type": "incollection",
+      "fields": {
+        "title": "Einstein, Nordstr\\\"om, and the Early Demise of Scalar, {Lorentz} Covariant Theories of Gravitation",
+        "author": "Norton, John D.",
+        "booktitle": "The Genesis of General Relativity",
+        "publisher": "Springer",
+        "pages": "1337--1411",
+        "year": "2007",
+        "doi": "10.1007/978-1-4020-4000-9_27",
+        "url": "https://doi.org/10.1007/978-1-4020-4000-9_27"
+      }
+    },
+    "deruelle2011": {
+      "type": "article",
+      "fields": {
+        "title": "Nordstr\\\"om's scalar theory of gravity and the equivalence principle",
+        "author": "Deruelle, Nathalie",
+        "journal": "General Relativity and Gravitation",
+        "volume": "43",
+        "number": "12",
+        "pages": "3337--3354",
+        "year": "2011",
+        "doi": "10.1007/s10714-011-1247-x",
+        "eprint": "1104.4608",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1104.4608"
+      }
+    },
+    "deruellesasaki2011": {
+      "type": "article",
+      "fields": {
+        "title": "Conformal Transformations and {Nordstr\\\"om}'s Scalar Theory of Gravity",
+        "author": "Deruelle, Nathalie and Sasaki, Misao",
+        "journal": "Progress of Theoretical Physics Supplement",
+        "volume": "190",
+        "pages": "143--154",
+        "year": "2011",
+        "doi": "10.1143/PTPS.190.143",
+        "eprint": "1012.5386",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1012.5386"
+      }
+    },
+    "giulini2008": {
+      "type": "article",
+      "fields": {
+        "title": "What is (not) wrong with scalar gravity?",
+        "author": "Giulini, Domenico",
+        "journal": "Studies in History and Philosophy of Modern Physics",
+        "volume": "39",
+        "number": "1",
+        "pages": "154--180",
+        "year": "2008",
+        "doi": "10.1016/j.shpsb.2007.09.001",
+        "eprint": "gr-qc/0611100",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0611100"
+      }
+    },
+    "ravndal2004": {
+      "type": "article",
+      "fields": {
+        "title": "Scalar gravitation and extra dimensions",
+        "author": "Ravndal, Finn",
+        "journal": "Commentationes Physico-Mathematicae",
+        "volume": "166",
+        "pages": "151--163",
+        "year": "2004",
+        "eprint": "gr-qc/0405030",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0405030"
+      }
+    },
+    "sundrum2003": {
+      "type": "misc",
+      "fields": {
+        "title": "Gravity's scalar cousin",
+        "author": "Sundrum, Raman",
+        "year": "2003",
+        "eprint": "hep-th/0312212",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/0312212"
       }
     },
     "friedmann1922": {

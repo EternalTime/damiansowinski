@@ -9477,6 +9477,98 @@ def anti_de_sitter(ck, src):
                         "slice; Minkowski space carries it."])]
 
 
+def nordstrom_scalar(ck, src):
+    """Two of Nordstrom's spacetimes. Outside a static body the equator of the moment t = 0 has
+    g_rr = (1 - m/r)^2 and g_phiphi = (r - m)^2, so the circle through r has the radius
+    rho = r - m and grows by d rho = dr while the distance out to it grows by (1 - m/r) dr, less:
+    no surface of revolution in flat space carries it, which is checked. In three dimensional
+    Minkowski space it climbs at dZ/dr = sqrt(1 - (1 - m/r)^2) = sqrt(2mr - m^2)/r, so with
+    s = sqrt(2mr - m^2), Z = 2s - 2m arctan(s/m) - (2 - pi/2) m, counted from the singular point
+    r = m, which the surface leaves along the light cone, dZ/d rho = 1. Far out Z -> 2 sqrt(2mr),
+    the height of Flamm's paraboloid for the Schwarzschild radius 2m, here a timelike height.
+    A chord's proper length near the point is (rho/m) of its extent in rho, so the profile is
+    written to fourteen decimals, steps toward the point by a fortieth of rho at a time, and
+    stops at rho = m/80.
+
+    The dust universe's moment of the inertial time t has g_rr = Phi^2 and g_phiphi = Phi^2 r^2
+    with Phi = 1 - c^2t^2/L^2: a flat plane on which the galaxy at the comoving radius r stands
+    the distance Phi r from the centre. It is drawn out to r = L at five moments from the bang
+    to the crunch and played as a movie with a frame every 0.05 L of ct."""
+    sl = Slice(src, "nordstrom_scalar", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"m": 1}, space="minkowski")
+    flat = Slice(src, "nordstrom_scalar", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"m": 1})
+    ck.stops("Nordstrom, the point mass's equator in flat space", flat, np.linspace(1.0005, 40, 400))
+    top, tip = 6.0, 1.0 + 1.0 / 80
+    size = 2 * (top - 1)
+    steps = int(math.ceil(math.log((2.0 - 1) / (tip - 1)) / math.log(1.025)))
+    knots = [1 + (tip - 1) * 1.025 ** k for k in range(1, steps)]
+    sheet = Piece("sheet", "sheet", sl, tip, top, 0.0, 1,
+                  (("edge", "the surface runs on into the axis along a light cone, to the singularity $r = m$"),
+                   ("edge", "the surface runs on, to $r \\to \\infty$")),
+                  [(r, "r", None) for r in (1.5, 2.0, 3.0, 4.0, 5.0, top)], size, digits=1e-14, knots=knots)
+
+    def height(r):
+        root = np.sqrt(2 * np.asarray(r, dtype=float) - 1)
+        return 2 * root - 2 * np.arctan(root) - (2 - math.pi / 2)
+    ck.isometry("Nordstrom, the point mass in Minkowski space", sheet)
+    ck.radius("Nordstrom, the point mass, rho = r - m", sheet, lambda r: r - 1, size)
+    ck.form("Nordstrom, the point mass, Z = 2s - 2m arctan(s/m) - (2 - pi/2)m with s = sqrt(2mr - m^2)", sheet,
+            lambda r: height(r) - height(tip), size)
+    ck.add("Nordstrom, the point mass: the surface leaves the singular point along the light cone, Z = rho to m/80",
+           abs(float(height(tip)) - (tip - 1)) / (tip - 1), 0.02)
+    ck.add("Nordstrom, the point mass: far out the height is Flamm's for the radius 2m, 2 sqrt(2mr), to a constant",
+           abs(float(height(4e8) - height(1e8)) / (2 * math.sqrt(8e8) - 2 * math.sqrt(2e8)) - 1), 1e-4)
+    cone = FormPiece("cone", sl, np.linspace(1.0, top, 81), lambda r: r - 1.0, lambda r: r - 1.0 - float(height(tip)),
+                     (("apex", "the apex of the light cone, the singular point $r = m$"), ("edge", "the cone runs on")),
+                     size)
+    surface = Surface([sheet, cone])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *sheet.at(2.0), "$r = 2m$")
+    ring_label(fig, [0, 0, 0], *sheet.at(top), "$6m$")
+    fig.legend("fill", "cover", "the equator of the moment $t = 0$ outside the body, which $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1.5$, $2$, $3$, $4$, $5$ and $6\\,m$, circles of radius $r - m$")
+    fig.legend("line", "reference", "the light cone of the Minkowski space it is drawn in, which the surface leaves "
+                                    "at the singular point $r = m$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views = [view("point_mass", "A point mass, in Minkowski space", "$m$", [surface], fig.done(),
+                  settings="$m = 1$, the unit of every length, and every length along the surface measured with "
+                           "$dX^2 + dY^2 - dZ^2$.",
+                  stops=["At every $r > m$ the circles grow faster than the distance out to them, $g_{rr} < "
+                         "(\\partial_r\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution in flat space carries the "
+                         "slice; Minkowski space carries it."])]
+
+    named = (-0.9, -0.6, 0.0, 0.6, 0.9)
+    disc_size = 2.0
+
+    def name(t):
+        return f"$ct/L = {t + 0.0:g}$"
+
+    def moment(t):
+        factor = 1 - t * t
+        dl = Slice(src, "nordstrom_scalar", "dust", "r", "\\phi", {"t": repr(float(t)), **EQUATOR}, {"L": 1})
+        disc = Piece("disc", "sheet", dl, 0.0, 1.0, 0.0, 1,
+                     (("axis", "the galaxy at $r = 0$"), ("edge", "the plane runs on, to $r \\to \\infty$")),
+                     [(0.25, "r", None), (0.5, "r", None), (0.75, "r", None), (1.0, "r", None)], disc_size)
+        where = f"Nordstrom, the dust universe at ct = {t:g} L"
+        ck.plane(where, dl, np.linspace(1e-3, 20, 200))
+        ck.isometry(where, disc)
+        ck.radius(f"{where}, rho = Phi r", disc, lambda r, f=factor: f * r, disc_size)
+        ck.form(f"{where}, a plane", disc, lambda r: 0 * r, disc_size)
+        return Surface([disc], label=name(t), time=t)
+
+    times, keys = movie_values(list(named), 0.05)
+    times = [round(t, 10) for t in times]
+    frames = [moment(t) for t in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, disc_size, meridians=12)
+    fig.legend("fill", "cover", "the equator of the moment, a flat plane, out to the galaxy at $r = L$")
+    fig.legend("line", "r", "galaxies at rest at $r = L/4$, $L/2$, $3L/4$ and $L$, circles of radius $\\Phi r$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    views.append(view("dust", "The dust universe", "$L$", surfaces, fig.done(),
+                      movie=movie(frames, "$ct$", times),
+                      settings="$L = 1$, the unit of every length."))
+    return views
+
+
 def btz(ck, src):
     """The moment t = 0 of the hole without rotation, M = 1 and J = 0 at l = 1, as its conformal
     diagram's square draws it, through both exteriors as one surface. g_rr = 1/N^2 with N^2 =
@@ -12504,6 +12596,7 @@ DRAWN = {
     "light_beam": light_beam,
     "krasnikov": krasnikov,
     "tippett_tsang": tippett_tsang,
+    "nordstrom_scalar": nordstrom_scalar,
     "alcubierre": alcubierre,
     "natario": natario,
     "btz": btz,
@@ -14167,6 +14260,27 @@ CAPTIONS = {
         "as in anti-de Sitter space, no surface of revolution in flat space carries the plane. Hermann Minkowski set "
         "out in 1908 the geometry in which space at one moment of any inertial observer is this flat space of "
         "Euclid.",
+    ],
+    ("nordstrom_scalar", "point_mass"): [
+        "The equatorial plane ($\\theta = \\pi/2$) outside a static body in Nordström's theory at the moment $t = 0$, "
+        "drawn as a surface in three dimensional Minkowski space with every distance along it, measured with $dX^2 + "
+        "dY^2 - dZ^2$, the metric distance. The circle through $r$ has the radius $r - m$, so it grows by $dr$ "
+        "while the distance out to it grows by $(1 - m/r)\\,dr$, and every circle grows faster than the distance "
+        "out to it, which no surface of revolution in flat space allows.",
+        "The surface climbs at $dZ/dr = \\sqrt{2mr - m^2}/r$. Far from the body its height is $2\\sqrt{2mr}$, the "
+        "height of Flamm's paraboloid for a Schwarzschild radius of $2m$, but a timelike height where "
+        "Schwarzschild's is spacelike: space is curved the opposite way, and by the same amount. Toward $r = m$ "
+        "the circles shrink to a point, the singularity, which the surface enters along the light cone, dashed.",
+    ],
+    ("nordstrom_scalar", "dust"): [
+        "The equator ($\\theta = \\pi/2$) of space in Nordström's universe of dust as the inertial time runs from "
+        "$ct = -0.9\\,L$ to $0.9\\,L$, each moment drawn as a surface in flat space with every distance along it the "
+        "metric distance. Each moment is a flat plane, on which the galaxy at the comoving radius $r$ stands a "
+        "distance $\\Phi r$ from the centre, with $\\Phi = 1 - c^2t^2/L^2$.",
+        "The galaxies keep their places in the chart while every distance between them grows from zero at the "
+        "bang, $ct = -L$, to its largest at $t = 0$ and falls back to zero at the crunch, $ct = L$. Gravity "
+        "decelerates the expansion at the steady rate $d^2\\Phi/d(ct)^2 = -2/L^2$, so the dust turns round and "
+        "falls back however fast it starts.",
     ],
     ("anti_de_sitter", "hyperboloid"): [
         "The equatorial plane ($\\theta = \\pi/2$) of anti-de Sitter space at the moment $t = 0$ of its static chart, "

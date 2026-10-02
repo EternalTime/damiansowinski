@@ -1094,7 +1094,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "d9ce38b4b1648715",
+    "version": "cd94e9fcc7ef895f",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -2125,7 +2125,7 @@
       "four-dimensional",
       "conformally flat"
     ],
-    "version": "6ea7a118694a6055",
+    "version": "97d081119d48af50",
     "diagrams": "ed541b2735366dcf",
     "conformal": "69af72b1ccf43777",
     "embedding": "04c50f64f4cf864e"
@@ -2279,7 +2279,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "2f4eff4ae6883843",
+    "version": "6336ff62dd3a2a91",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -2616,6 +2616,29 @@
     "embedding": "1bebbd3e461aed13"
   },
   {
+    "id": "nordstrom_scalar",
+    "name": "Nordström Scalar Gravity",
+    "tags": [
+      "scalar gravity",
+      "alternative theory of gravity",
+      "scalar field",
+      "conformally flat",
+      "four-dimensional",
+      "Lorentzian",
+      "idealized model",
+      "curvature singularity",
+      "naked singularity",
+      "no horizon",
+      "point mass",
+      "cosmology",
+      "dust"
+    ],
+    "version": "939f5c5da3cda8ec",
+    "diagrams": "7ca84c063f7c2ca0",
+    "conformal": "20e04688ba6cf230",
+    "embedding": "3a2c6a2557fbf67a"
+  },
+  {
     "id": "oppenheimer_snyder",
     "name": "Oppenheimer-Snyder",
     "tags": [
@@ -2697,7 +2720,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f17949989678d037",
+    "version": "25c7afc162baaf3b",
     "diagrams": "197eec2d67db791c",
     "conformal": "6588b3545cfd1a4f",
     "embedding": "7438e54f373b2e03"
@@ -2880,7 +2903,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "007372565d412511",
+    "version": "2c8b13c34a11cc93",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -3102,7 +3125,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c737cacc1a87a58d",
+    "version": "5dba0bebd7479504",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"

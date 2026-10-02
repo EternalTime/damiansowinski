@@ -1239,6 +1239,19 @@ A disc of dust turning rigidly about its axis and held up by rotation alone, the
 - chart Oblate Spheroidal: coordinates $(t, \xi, \eta, \phi)$, $$ds^2 = -e^{2\nu}c^2dt^2 + \rho_0^2\left(1 + \xi^2\right)\left(1 - \eta^2\right)e^{-2\nu}\left(d\phi - \omega\,c\,dt\right)^2 + \rho_0^2\left(\xi^2 + \eta^2\right)e^{2\alpha}\left(\dfrac{d\xi^2}{1 + \xi^2} + \dfrac{d\eta^2}{1 - \eta^2}\right)$$
 - chart The Black Hole Limit: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{r^2\left(\left(r + m\right)^2 + m^2\cos^2\theta\right)}{\left(\left(r + m\right)^2 + m^2\right)^2 - m^2r^2\sin^2\theta}c^2dt^2 + \dfrac{\left(\left(\left(r + m\right)^2 + m^2\right)^2 - m^2r^2\sin^2\theta\right)\sin^2\theta}{\left(r + m\right)^2 + m^2\cos^2\theta}\left(d\phi - \dfrac{2m^2\left(r + m\right)}{\left(\left(r + m\right)^2 + m^2\right)^2 - m^2r^2\sin^2\theta}c\,dt\right)^2 + \dfrac{\left(r + m\right)^2 + m^2\cos^2\theta}{r^2}\left(dr^2 + r^2d\theta^2\right)$$
 
+### Nordström's Scalar Theory of Gravity
+
+Gravity as one scalar field on flat spacetime, which Einstein and Fokker rewrote as a conformally flat spacetime whose curvature scalar is fixed by the trace of the stress-energy tensor of matter. Light keeps the cones of Minkowski space while clocks and rods change from place to place.
+
+- id: `nordstrom_scalar`
+- tags: scalar gravity, alternative theory of gravity, scalar field, conformally flat, four-dimensional, Lorentzian, idealized model, curvature singularity, naked singularity, no horizon, point mass, cosmology, dust
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/nordstrom_scalar.json
+- chart Einstein-Fokker: coordinates $(t, x, y, z)$, $$ds^2 = \Phi^2\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right)$$
+- chart Point Mass: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \left(1 - \dfrac{m}{r}\right)^2\left(-c^2dt^2 + dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Uniform Field: coordinates $(t, x, y, z)$, $$ds^2 = \dfrac{a^2z^2}{c^4}\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right)$$
+- chart Dust Universe: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \left(1 - \dfrac{c^2t^2}{L^2}\right)^2\left(-c^2dt^2 + dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Oppenheimer-Snyder Gravitational Collapse
 
 The first dynamical model of gravitational collapse, matching a collapsing homogeneous dust sphere to an exterior Schwarzschild vacuum. It showed how a star can form a black hole in finite proper time.

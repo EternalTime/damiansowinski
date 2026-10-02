@@ -208,6 +208,11 @@
       "id": "ppn_metric",
       "kind": "generalisation",
       "text": "Flat spacetime with a slowly moving body in it and gravity weak, written so that every metric theory of gravity fits. Take the mass away, $m = 0$, and it is flat again [will2014]."
+    },
+    {
+      "id": "nordstrom_scalar",
+      "kind": "conformal",
+      "text": "Gravity as one factor on Minkowski's metric. Nordström's field multiplies it by $\\Phi^2$, which changes what clocks and rods measure and leaves every light cone where it was [einstein1914fokker]."
     }
   ],
   "references": [
@@ -274,7 +279,8 @@
     "podolskybelan2004",
     "israel1966",
     "tippett2017",
-    "will2014"
+    "will2014",
+    "einstein1914fokker"
   ],
   "coordinates": [
     {

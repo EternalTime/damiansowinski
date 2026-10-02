@@ -144,6 +144,11 @@
       "id": "semiclosed_world",
       "kind": "family",
       "text": "A closed universe of charged dust behind a throat. Moissei Markov and Valeri Frolov found in 1970 that any charge keeps such a universe from closing, and its outside is this metric [markov1970]."
+    },
+    {
+      "id": "nordstrom_scalar",
+      "kind": "programme",
+      "text": "Nordström's own theory of gravity, a scalar field on flat spacetime, which he set out in 1913 before he took up Einstein's [nordstrom1913]."
     }
   ],
   "references": [
@@ -182,7 +187,8 @@
     "volkov1999",
     "brill1963",
     "emparan2000",
-    "markov1970"
+    "markov1970",
+    "nordstrom1913"
   ],
   "coordinates": [
     {
