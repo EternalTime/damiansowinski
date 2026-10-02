@@ -1199,6 +1199,18 @@ class ReadableDrawings(unittest.TestCase):
             with self.subTest(name):
                 self.assertEqual({int(v) for v in re.findall(r":\s*(\d+)", sizes)}, {page})
 
+    def test_a_wide_letter_takes_its_width_in_a_label_s_box(self):
+        # The margin of 1.5 em is kept from the box cdLabelSize() gives a label, and slices.py
+        # places labels by the same box, so both give an m, an M and a W, which MathJax sets
+        # about an em wide, 0.5 em over the 0.7 em of a letter: "$4m$" stood 1.4 em from the
+        # edge of Majumdar-Papapetrou's embedding diagram while they did not.
+        slices = (build.ROOT / "_tools" / "derivations" / "slices.py").read_text(encoding="utf-8")
+        self.assertEqual(re.search(r'^WIDE = "(\w+)"$', slices, re.M).group(1),
+                         re.search(r"var CD_WIDE = /\[(\w+)\]/g;", self.page).group(1))
+        self.assertEqual(re.search(r'^WIDE = "(\w+)"$', slices, re.M).group(1), "mMW")
+        self.assertIn("0.7 * len(math.replace(\" \", \"\")) + 0.5 * sum(math.count(c) for c in WIDE)", slices)
+        self.assertIn("0.7 * math.replace(/ /g, '').length + 0.5 * (math.match(CD_WIDE) || []).length", self.page)
+
 
 class NoGlow(unittest.TestCase):
     """Nothing on the spacetimes page glows, and a button chosen or pressed turns pink, as the

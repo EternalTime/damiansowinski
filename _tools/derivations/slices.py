@@ -910,17 +910,22 @@ EDGE, DOT = 1.3, 5.1
 # the room it leaves on either side, and a function's name, set upright letter by letter.
 RELATION = r"=|<|>|\\to(?![a-zA-Z])|\\leq?(?![a-zA-Z])|\\geq?(?![a-zA-Z])|\\approx|\\neq?(?![a-zA-Z])|\\sim(?![a-zA-Z])|\\equiv|\\in(?![a-zA-Z])|\\rightarrow|\\mapsto"
 FUNCTION = r"\\(sinh|cosh|tanh|sin|cos|tan|ln|log|exp|arctan|min|max)(?![a-zA-Z])"
+# The letters MathJax sets about an em wide, where every other is near half of one.
+WIDE = "mMW"
 
 
 def label_size(text):
     """A label's box as the page sets it, in ems of its own size, no smaller than MathJax sets
-    it: in mathematics 0.7 em a letter, 1.1 a relation with its room, 1.0 any other command,
-    0.5 a letter of a function's name and 0.3 a space in the source; prose at the 0.6 em of
+    it: in mathematics 0.7 em a letter, 1.2 an m, M or W, 1.1 a relation with its room, 1.0 any
+    other command, 0.5 a letter of a function's name and 0.3 a space in the source; prose at the 0.6 em of
     Source Code Pro; the padding of its ground, 0.3 em either side; and 1.5 em tall, or 1.75
     with a root or a superscript. Measured in Chrome on 30 September 2026 against every label
     of every drawing, 632 of them set at the page's caption size, it is never smaller, and on
     average 1.5 em wider: "$r \\to \\infty$" 3.9 em wide, estimated 4.0, and "$R/\\sqrt{2}$"
-    1.66 em tall, estimated 1.75. _layouts/mfs.html carries the same function as cdLabelSize()."""
+    1.66 em tall, estimated 1.75. An m is 0.96 em wide there, an M 1.07 and a W 1.04, where a
+    digit is 0.55 and an r 0.5, so a label that is little but an m was wider than 0.7 em a letter
+    made it until 1 October 2026: "$4m$" 2.11 em wide, estimated 2.0, and now 2.5.
+    _layouts/mfs.html carries the same function as cdLabelSize()."""
     width, tall = 0.6, False
     for part in re.split(r"(\$[^$]*\$)", text):
         if part.startswith("$"):
@@ -934,7 +939,7 @@ def label_size(text):
                           "", math)
             width += 1.0 * len(re.findall(r"\\[a-zA-Z]+", math))
             math = re.sub(r"[{}^_]", "", re.sub(r"\\[a-zA-Z]+", "", math))
-            width += 0.7 * len(math.replace(" ", "")) + 0.3 * math.count(" ")
+            width += 0.7 * len(math.replace(" ", "")) + 0.5 * sum(math.count(c) for c in WIDE) + 0.3 * math.count(" ")
         else:
             width += 0.6 * len(part)
     return width, 1.75 if tall else 1.5

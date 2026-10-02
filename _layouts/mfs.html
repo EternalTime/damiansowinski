@@ -2276,6 +2276,8 @@
       var CD_LAB = 21;
       var CD_RELATION = /=|<|>|\\to(?![a-zA-Z])|\\leq?(?![a-zA-Z])|\\geq?(?![a-zA-Z])|\\approx|\\neq?(?![a-zA-Z])|\\sim(?![a-zA-Z])|\\equiv|\\in(?![a-zA-Z])|\\rightarrow|\\mapsto/g;
       var CD_FUNCTION = /\\(sinh|cosh|tanh|sin|cos|tan|ln|log|exp|arctan|min|max)(?![a-zA-Z])/g;
+      // The letters MathJax sets about an em wide, where every other is near half of one.
+      var CD_WIDE = /[mMW]/g;
       function cdLabelSize(text) {
         var width = 0.6, tall = false;
         text.split(/(\$[^$]*\$)/).forEach(function(part) {
@@ -2289,7 +2291,7 @@
             .replace(/\\(bar|hat|tilde|vec|dot|mathrm|text|left|right|mathscr|mathcal|mathfrak|operatorname)(?![a-zA-Z])/g, '');
           width += 1.0 * (math.match(/\\[a-zA-Z]+/g) || []).length;
           math = math.replace(/\\[a-zA-Z]+/g, '').replace(/[{}^_]/g, '');
-          width += 0.7 * math.replace(/ /g, '').length + 0.3 * (math.split(' ').length - 1);
+          width += 0.7 * math.replace(/ /g, '').length + 0.5 * (math.match(CD_WIDE) || []).length + 0.3 * (math.split(' ').length - 1);
         });
         return [width, tall ? 1.75 : 1.5];
       }
