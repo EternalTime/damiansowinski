@@ -59,6 +59,11 @@
       "id": "kaluza_klein_black_hole",
       "kind": "generalisation",
       "text": "The black string with its extra direction a circle, set moving around it. Seen from four dimensions the moving string is an electrically charged black hole [horowitz2012]."
+    },
+    {
+      "id": "black_saturn",
+      "kind": "family",
+      "text": "A black ring in orbit around a black hole. Where the ring is thin it is a black string bent into a circle, and it is expected to ripple as the string does [elvang2006, elvang2007]."
     }
   ],
   "references": [
@@ -81,7 +86,9 @@
     "figueras2023",
     "grossperry1983",
     "chamblin2000",
-    "horowitz2012"
+    "horowitz2012",
+    "elvang2006",
+    "elvang2007"
   ],
   "coordinates": [
     {

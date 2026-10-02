@@ -312,6 +312,18 @@ A family of spatially homogeneous but generally anisotropic cosmologies classifi
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/bianchi.json
 - chart Type I, Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2 dt^2 + a_1^2 dx^2 + a_2^2 dy^2 + a_3^2 dz^2$$
 
+### Black Saturn
+
+A black ring turning in balance around a spherical black hole in five dimensions, the exact vacuum solution Henriette Elvang and Pau Figueras built in 2007 by the inverse scattering method. Rotation alone holds the two apart, each drags the other around, and one mass and angular momentum can be shared between them in a continuum of ways.
+
+- id: `black_saturn`
+- tags: vacuum, stationary, rotating, black hole, black ring, multiple black holes, axisymmetric, angular momentum, mass, frame dragging, ergoregion, horizon, event horizon, horizon topology, black hole uniqueness, conical singularity, asymptotically flat, higher dimensions, five-dimensional, soliton, inverse scattering, rod structure, exact solution, Lorentzian, Einstein equations, idealized model
+- signature: (-,+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/black_saturn.json
+- chart Weyl: coordinates $(t, \rho, z, \psi, \phi)$, $$ds^2 = -e^{2W - 2V}c^2dt^2 + L^2\left(e^{2V}\left(d\psi - \dfrac{\Omega}{L}c\,dt\right)^2 + \rho^2e^{-2W}d\phi^2 + e^{2\nu}\left(d\rho^2 + dz^2\right)\right)$$
+- chart Polar: coordinates $(t, r, \theta, \psi, \phi)$, $$ds^2 = -e^{2W - 2V}c^2dt^2 + L^2e^{2V}\left(d\psi - \dfrac{\Omega}{L}c\,dt\right)^2 + \dfrac{r^4\sin^2\theta\cos^2\theta}{L^2}e^{-2W}d\phi^2 + \dfrac{r^2e^{2\nu}}{L^2}\left(dr^2 + r^2d\theta^2\right)$$
+- chart Ring Coordinates, the Ring Alone: coordinates $(t, x, y, \psi, \phi)$, $$ds^2 = -\dfrac{1 + \lambda y}{1 + \lambda x}\left(c\,dt - C\,R\,\dfrac{1 + y}{1 + \lambda y}d\psi\right)^2 + \dfrac{R^2\left(1 + \lambda x\right)}{\left(x - y\right)^2}\left(-\dfrac{\left(1 - y^2\right)\left(1 + \nu y\right)}{1 + \lambda y}d\psi^2 - \dfrac{dy^2}{\left(1 - y^2\right)\left(1 + \nu y\right)} + \dfrac{dx^2}{\left(1 - x^2\right)\left(1 + \nu x\right)} + \dfrac{\left(1 - x^2\right)\left(1 + \nu x\right)}{1 + \lambda x}d\phi^2\right)$$
+
 ### Black String
 
 Schwarzschild's black hole extended along one more direction of space, a static vacuum solution of gravity in five or more dimensions whose horizon is a cylinder. Ruth Gregory and Raymond Laflamme showed in 1993 that ripples along it longer than about seven horizon radii grow, and numerical evolutions of that instability end in a naked singularity.

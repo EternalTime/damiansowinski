@@ -897,6 +897,28 @@ DIMENSIONS = {
     ("myers_perry", "boyer_lindquist_six"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\chi": "1", "\\psi": "1", "\\mu": "L**3", "a": "L",
     },
+    # Black Saturn's Weyl coordinates are in units of L^2, Elvang and Figueras's rho/L^2 and z-bar, so
+    # rho and z are pure numbers and the one length L carries the dimensions: every soliton mu_i, each
+    # of their polynomials and functions, their constants in units of L and the four free functions of
+    # the chart are pure numbers. The polar chart's r is a length, and rho and z are names it defines.
+    # The ring chart keeps its radius R, and nu, lambda and C are pure numbers.
+    ("black_saturn", "weyl"): {
+        "t": "T", "\\rho": "1", "z": "1", "\\psi": "1", "\\phi": "1", "L": "L", "\\kappa_1": "1", "\\kappa_2": "1",
+        "\\kappa_3": "1", "\\beta": "1", "c_1": "1", "c_2": "1", "q": "1", "k": "1", "\\mu_1": "1", "\\mu_2": "1",
+        "\\mu_3": "1", "\\mu_4": "1", "\\mu_5": "1", "R_1": "1", "R_2": "1", "M_0": "1", "M_1": "1", "M_2": "1",
+        "M_3": "1", "M_4": "1", "F": "1", "H_x": "1", "H_y": "1", "G_y": "1", "P": "1", "\\omega_\\psi": "1",
+        "V": "1", "\\Omega": "1", "W": "1", "\\nu": "1",
+    },
+    ("black_saturn", "polar"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\psi": "1", "\\phi": "1", "L": "L", "\\rho": "1", "z": "1",
+        "\\kappa_1": "1", "\\kappa_2": "1", "\\kappa_3": "1", "\\beta": "1", "c_1": "1", "c_2": "1", "q": "1",
+        "k": "1", "\\mu_1": "1", "\\mu_2": "1", "\\mu_3": "1", "\\mu_4": "1", "\\mu_5": "1", "R_1": "1", "R_2": "1",
+        "M_0": "1", "M_1": "1", "M_2": "1", "M_3": "1", "M_4": "1", "F": "1", "H_x": "1", "H_y": "1", "G_y": "1",
+        "P": "1", "\\omega_\\psi": "1", "V": "1", "\\Omega": "1", "W": "1", "\\nu": "1",
+    },
+    ("black_saturn", "ring"): {
+        "t": "T", "x": "1", "y": "1", "\\psi": "1", "\\phi": "1", "R": "L", "\\nu": "1", "\\lambda": "1", "C": "1",
+    },
     # Kastor and Traschen's holes: the potential V of the holes is a pure number, as Majumdar and
     # Papapetrou's U is, and so are U = H tau + V, the scale factor a = e^{Ht} and Omega = 1 + V/a,
     # each a name its chart defines; H is a frequency with 3H^2/c^2 = Lambda, as de Sitter's is.

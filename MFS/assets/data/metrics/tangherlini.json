@@ -61,6 +61,11 @@
       "id": "boulware_deser",
       "kind": "generalisation",
       "text": "Tangherlini's black hole of five dimensions with the curvature squared term of string theory added to the action. The term brings a length $\\ell$ with it, and at $\\ell = 0$ the metric is Tangherlini's [boulware1985]."
+    },
+    {
+      "id": "black_saturn",
+      "kind": "family",
+      "text": "A black ring in balance around a spinning hole. With the two turning against each other it can match Tangherlini's hole in mass and in having no angular momentum, so in five dimensions those two numbers do not fix the black hole [elvang2007]."
     }
   ],
   "references": [
@@ -83,7 +88,8 @@
     "cms2011",
     "emparan2013",
     "grossperry1983",
-    "boulware1985"
+    "boulware1985",
+    "elvang2007"
   ],
   "coordinates": [
     {

@@ -6,7 +6,7 @@ khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_sh
 robinson_trautman, string_black_hole, mcvittie, tangherlini, boulware_deser, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, reissner_nordstrom_ads, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
-black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
+black_string, myers_perry, black_saturn, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
 som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes and sultana_dyer, and Godel's cylindrical chart.
@@ -8229,6 +8229,384 @@ def myers_perry_check(chart, system_id):
 
 
 CHARTS["myers_perry"] = [lambda s=s: myers_perry(s) for s in MP_CHARTS]
+
+
+# -- Black Saturn ------------------------------------------------------------------------
+
+BS_CHARTS = ["weyl", "polar", "ring"]
+
+
+def _bs_sq(a, b):
+    return "\\left(\\rho^2 + \\mu_%d\\mu_%d\\right)" % (a, b)
+
+
+def _bs_df(a, b):
+    return "\\left(\\mu_%d - \\mu_%d\\right)" % (a, b)
+
+
+def _bs_mu(i, end):
+    if end == "0":
+        return "\\mu_%d = \\sqrt{\\rho^2 + z^2} - z" % i
+    return "\\mu_%d = \\sqrt{\\rho^2 + \\left(z - %s\\right)^2} - \\left(z - %s\\right)" % (i, end, end)
+
+
+# Elvang and Figueras's solution, their section 2.3, in units of L: the constants of their
+# section 3, the solitons mu_i of the rod ends 0, kappa_3, kappa_2, kappa_1 and 1, which they label
+# 1, 5, 4, 3 and 2, their polynomials M_0 to M_4 and F, and their H_x, H_y, G_y, P and omega_psi.
+# beta is their c-bar_2. Each is a name the charts define and no component writes.
+BS_CONSTANTS = [
+    "L", "\\kappa_1", "\\kappa_2", "\\kappa_3", "\\beta",
+    "c_1 = \\sqrt{\\dfrac{2\\kappa_1\\kappa_2}{\\kappa_3}}",
+    "c_2 = \\beta\\,c_1\\left(1 - \\kappa_2\\right)",
+    "q = \\dfrac{\\beta\\,c_1}{1 + \\kappa_2\\beta}",
+    "k = \\dfrac{1}{1 + \\kappa_2\\beta}",
+]
+BS_NAMES = [
+    _bs_mu(1, "0"), _bs_mu(2, "1"), _bs_mu(3, "\\kappa_1"), _bs_mu(4, "\\kappa_2"), _bs_mu(5, "\\kappa_3"),
+    "R_1 = \\sqrt{\\rho^2 + z^2}", "R_2 = \\sqrt{\\rho^2 + \\left(z - 1\\right)^2}",
+    ("M_0 = \\mu_2\\mu_5^2" + _bs_df(1, 3) + "^2" + _bs_df(2, 4) + "^2" + _bs_sq(1, 2) + "^2" + _bs_sq(1, 4) + "^2"
+     + _bs_sq(2, 3) + "^2"),
+    ("M_1 = \\mu_1^2\\mu_2\\mu_3\\mu_4\\mu_5\\,\\rho^2" + _bs_df(1, 2) + "^2" + _bs_df(2, 4) + "^2" + _bs_df(1, 5) + "^2"
+     + _bs_sq(2, 3) + "^2"),
+    ("M_2 = \\mu_2\\mu_3\\mu_4\\mu_5\\,\\rho^2" + _bs_df(1, 2) + "^2" + _bs_df(1, 3) + "^2" + _bs_sq(1, 4) + "^2"
+     + _bs_sq(2, 5) + "^2"),
+    ("M_3 = 2\\mu_1\\mu_2\\mu_3\\mu_4\\mu_5" + _bs_df(1, 3) + _bs_df(1, 5) + _bs_df(2, 4)
+     + "\\left(\\rho^2 + \\mu_1^2\\right)\\left(\\rho^2 + \\mu_2^2\\right)" + _bs_sq(1, 4) + _bs_sq(2, 3) + _bs_sq(2, 5)),
+    "M_4 = \\mu_1^2\\mu_2\\mu_3^2\\mu_4^2" + _bs_df(1, 5) + "^2" + _bs_sq(1, 2) + "^2" + _bs_sq(2, 5) + "^2",
+    ("F = \\mu_1\\mu_5" + _bs_df(1, 3) + "^2" + _bs_df(2, 4) + "^2" + _bs_sq(1, 3) + _bs_sq(2, 3) + _bs_sq(1, 4)
+     + _bs_sq(2, 4) + _bs_sq(2, 5) + _bs_sq(3, 5) + "".join("\\left(\\rho^2 + \\mu_%d^2\\right)" % i for i in range(1, 6))),
+    "H_x = \\dfrac{M_0 + c_1^2\\,M_1 + c_2^2\\,M_2 + c_1\\,c_2\\,M_3 + c_1^2\\,c_2^2\\,M_4}{F}",
+    ("H_y = \\dfrac{\\mu_3}{\\mu_4F}\\left(\\dfrac{\\mu_1}{\\mu_2}M_0 - \\dfrac{\\rho^2}{\\mu_1\\mu_2}c_1^2\\,M_1"
+     " - \\dfrac{\\mu_1\\mu_2}{\\rho^2}c_2^2\\,M_2 + c_1\\,c_2\\,M_3 + \\dfrac{\\mu_2}{\\mu_1}c_1^2\\,c_2^2\\,M_4\\right)"),
+    "G_y = \\dfrac{\\mu_3\\mu_5}{\\mu_4}",
+    "P = \\left(\\rho^2 + \\mu_3\\mu_4\\right)^2\\left(\\rho^2 + \\mu_1\\mu_5\\right)\\left(\\rho^2 + \\mu_4\\mu_5\\right)",
+    ("\\omega_\\psi = \\dfrac{2}{F}\\sqrt{\\dfrac{G_y}{\\rho^2}}\\left(c_1\\,R_1\\sqrt{M_0\\,M_1} - c_2\\,R_2\\sqrt{M_0\\,M_2}"
+     " + c_1^2\\,c_2\\,R_2\\sqrt{M_1\\,M_4} - c_1\\,c_2^2\\,R_1\\sqrt{M_2\\,M_4}\\right)"),
+]
+# Weyl's rho and z as names of the polar chart, whose own coordinates are r and theta.
+BS_POLAR = ["\\rho = \\dfrac{r^2\\sin\\theta\\cos\\theta}{L^2}",
+            "z = \\dfrac{r^2\\left(\\cos^2\\theta - \\sin^2\\theta\\right)}{2L^2}"]
+BS_RING_C = "C = \\sqrt{\\lambda\\left(\\lambda - \\nu\\right)\\dfrac{1 + \\lambda}{1 - \\lambda}}"
+
+
+def black_saturn(system):
+    """Elvang and Figueras's black Saturn, JHEP 05 (2007) 050, in three charts.
+
+    weyl: Weyl's canonical coordinates in units of L^2, their rho/L^2 and z-bar, with the metric
+    in the form of a lapse and a shift,
+        ds^2 = -e^(2W - 2V) c^2 dt^2 + L^2 (e^(2V) (dpsi - Omega c dt/L)^2 + rho^2 e^(-2W) dphi^2
+               + e^(2nu) (drho^2 + dz^2)),
+    which is the general form of their section 2.1 with det G = -rho^2: V, Omega, W and nu are free functions of rho and z,
+    real wherever the circles of psi are spacelike, the ergoregions among them, and no component
+    assumes a field equation. Their own form writes the same metric around H_y/H_x, which
+    changes sign on the ergosurfaces.
+    polar: their asymptotic coordinates of section 3.3, rho = r^2 sin(2 theta)/2 and
+    z = r^2 cos(2 theta)/2 in units of L^2, with the same four functions.
+    ring: the black ring alone, kappa_1 = 1 and beta = 0, in the ring coordinates of their
+    appendix A.2 with psi -> -psi, the sense of rotation they give the Saturn itself,
+    exact.
+
+    black_saturn_check holds the functions each chart defines to the vacuum equations, the polar
+    chart to being Weyl's pulled back, and the ring chart to being a vacuum and Weyl's chart at
+    kappa_1 = 1 pulled back\\; black_saturn.md beside this file is the derivation."""
+    reals, turn = " \\in (-\\infty, \\infty)", " \\in [0, 2\\pi)"
+    spec = {"metric_id": "black_saturn"}
+    if system == "ring":
+        coords, parameters = ["t", "x", "y", "\\psi", "\\phi"], ["R", "\\nu", "\\lambda", BS_RING_C]
+        Gx = "\\left(1 - x^2\\right)\\left(1 + \\nu x\\right)"
+        Gy = "\\left(1 - y^2\\right)\\left(1 + \\nu y\\right)"
+        period = " \\in \\left[0, \\dfrac{2\\pi\\sqrt{1 - \\lambda}}{1 - \\nu}\\right)"
+
+        def line(c):
+            return ("ds^2 = -\\dfrac{1 + \\lambda y}{1 + \\lambda x}\\left(" + c + "dt - C\\,R\\,\\dfrac{1 + y}{1 + \\lambda y}"
+                    "d\\psi\\right)^2 + \\dfrac{R^2\\left(1 + \\lambda x\\right)}{\\left(x - y\\right)^2}\\left(-\\dfrac{" + Gy
+                    + "}{1 + \\lambda y}d\\psi^2 - \\dfrac{dy^2}{" + Gy + "} + \\dfrac{dx^2}{" + Gx + "} + \\dfrac{" + Gx
+                    + "}{1 + \\lambda x}d\\phi^2\\right)")
+
+        probe = vm.Reader(coords, parameters, ())
+        x, y = probe.symbol["x"], probe.symbol["y"]
+        R, nu, lam = (probe.parameters[n] for n in ("R", "nu", "lambda"))
+        C = sp.Symbol("C", positive=True)
+        spec.update({
+            "system": {"id": system, "name": "Ring Coordinates, the Ring Alone", "coords": coords,
+                       "domains": ["t" + reals, "x \\in [-1, 1]", "y \\in (-1/\\nu, -1]", "\\psi" + period, "\\phi" + period,
+                                   "y = -1/\\nu \\;\\text{(the horizon)}", "y = -1/\\lambda \\;\\text{(the ergosurface)}",
+                                   "x = y = -1 \\;\\text{(infinity)}"],
+                       "parameters": parameters, "line_element": line("c\\,")},
+            "chart_line_element": line(""),
+            "printer": {"lead": [y, x, lam, nu, C, R], "factors": [C, R, lam, nu, x, y], "flip": False},
+            "check": lambda chart: black_saturn_check(chart, system),
+        })
+        spec["pretty"] = spec["bracketed"] = black_saturn_ring_pretty(probe.parameters["C"], C, lam, nu)
+        return spec
+    polar = system == "polar"
+    coords = ["t", "r", "\\theta", "\\psi", "\\phi"] if polar else ["t", "\\rho", "z", "\\psi", "\\phi"]
+    args = "(r,\\theta)" if polar else "(\\rho,z)"
+    functions = [f"{n} = {n}{args}" for n in ("V", "\\Omega", "W", "\\nu")]
+    parameters = BS_CONSTANTS + (BS_POLAR if polar else []) + BS_NAMES + functions
+    rods = ["\\kappa_3 \\le z \\le \\kappa_2 \\;\\text{(the horizon of the ring)}",
+            "\\kappa_1 \\le z \\le 1 \\;\\text{(the horizon of the hole)}",
+            "z < \\kappa_3 \\;\\text{or}\\; \\kappa_2 < z < \\kappa_1 \\;\\text{(the plane of the ring)}",
+            "z > 1 \\;\\text{(the plane across it, through the hole)}"]
+    if polar:
+        name = "Polar"
+        domains = ["t" + reals, "r \\in (0, \\infty)", "\\theta \\in [0, \\pi/2]", "\\psi" + turn, "\\phi" + turn]
+        domains += ["\\theta = 0,\\; z = \\dfrac{r^2}{2L^2},\\; " + rod for rod in rods[:2]]
+        domains += ["\\theta = \\pi/2 \\;\\text{and}\\; \\theta = 0,\\; z = \\dfrac{r^2}{2L^2} < \\kappa_3 \\;\\text{or}\\; "
+                    "\\kappa_2 < z < \\kappa_1 \\;\\text{(the plane of the ring)}",
+                    "\\theta = 0,\\; z = \\dfrac{r^2}{2L^2} > 1 \\;\\text{(the plane across it, through the hole)}"]
+
+        def line(c2, c):
+            return ("ds^2 = -e^{2W - 2V}" + c2 + "dt^2 + L^2e^{2V}\\left(d\\psi - \\dfrac{\\Omega}{L}" + c + "dt\\right)^2"
+                    " + \\dfrac{r^4\\sin^2\\theta\\cos^2\\theta}{L^2}e^{-2W}d\\phi^2"
+                    " + \\dfrac{r^2e^{2\\nu}}{L^2}\\left(dr^2 + r^2d\\theta^2\\right)")
+    else:
+        name = "Weyl"
+        domains = ["t" + reals, "\\rho \\in [0, \\infty)", "z" + reals, "\\psi" + turn, "\\phi" + turn]
+        domains += ["\\rho = 0,\\; " + rod for rod in rods]
+
+        def line(c2, c):
+            return ("ds^2 = -e^{2W - 2V}" + c2 + "dt^2 + L^2\\left(e^{2V}\\left(d\\psi - \\dfrac{\\Omega}{L}" + c + "dt\\right)^2"
+                    " + \\rho^2e^{-2W}d\\phi^2 + e^{2\\nu}\\left(d\\rho^2 + dz^2\\right)\\right)")
+
+    probe = vm.Reader(coords, parameters, ())
+    a, b = probe.symbol[coords[1]], probe.symbol[coords[2]]
+    V, Om, W, nu = (probe.parameters[n] for n in ("V", "Omega", "W", "nu"))
+    D = sp.Derivative
+    lead = [probe.parameters["L"], nu, V, W, Om]
+    for f in (nu, V, W, Om):
+        lead += [D(f, a), D(f, b)]
+    for f in (V, W, Om, nu):
+        lead += [D(f, (a, 2)), D(f, a, b), D(f, (b, 2))]
+    lead.append(a)
+    spec.update({
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2", "c\\,")},
+        "chart_line_element": line("", ""),
+        "printer": {"lead": lead, "factors": lead},
+        "pretty": lambda value: sp.powsimp(sp.factor(sp.sympify(value)), combine="exp"),
+        "components": {
+            "metric_components": {("t", "t"): "-e^{2W - 2V} + \\Omega^2e^{2V}"},
+            "inverse_metric_components": {("\\psi", "\\psi"): "\\dfrac{e^{-2V} - \\Omega^2e^{2V - 2W}}{L^2}"}},
+        "check": lambda chart: black_saturn_check(chart, system),
+    })
+    if polar:
+        spec["kretschmann_text"] = black_saturn_polar_scalar
+    return spec
+
+
+def black_saturn_polar_scalar(chart):
+    """The polar chart's Kretschmann scalar as one sum over one denominator: sympy does not factor
+    its numerator, 481 terms in the four functions and the angle, in a quarter of an hour, so the
+    numerator is printed expanded and the denominator's 1 - sin^2 theta written cos^2 theta."""
+    theta = chart.symbols[2]
+    numerator, denominator = sp.fraction(sp.together(chart.geo.kretschmann()))
+    denominator = sp.factor(denominator).subs(sp.sin(theta) - 1, -sp.cos(theta) ** 2 / (sp.sin(theta) + 1))
+    return chart.printer(sp.powsimp(sp.expand(-numerator), combine="exp") / sp.cancel(-denominator))
+
+
+def black_saturn_ring_pretty(radical, C, lam, nu):
+    """A value of the ring chart written around its constant C: the chart defines C as a radical
+    of lambda and nu, every value is a rational function plus C times one, and each is factored."""
+    root = sp.sqrt(lam - nu)
+    # The radical as the checker's canonical form writes it, the square root of each factor apart.
+    radical = vm.norm(radical)
+
+    def pretty(value):
+        value = sp.sympify(value)
+        flipped = value.subs(root, -root)
+        even = sp.factor(sp.cancel((value + flipped) / 2))
+        odd = sp.factor(sp.cancel((value - flipped) / (2 * radical)))
+        if odd == 0:
+            return even
+        if even == 0:
+            return C * odd
+        return even + C * odd
+    return pretty
+
+
+def black_saturn_vacuum(chart):
+    """The vacuum equations in Weyl's chart, as replacements: the second derivative along rho of
+    W, Omega and V, by the Laplace equation of W, the equation of the twist and the equation of V,
+    and both first derivatives of nu, the quadrature. They are the equations the chart's
+    parameters state."""
+    rho, z = chart.symbols[1], chart.symbols[2]
+    V, Om, W, nu = (chart.reader.parameters[n] for n in ("V", "Omega", "W", "nu"))
+    D = sp.Derivative
+    e = sp.exp(4 * V - 2 * W)
+    second = {
+        W: -D(W, (z, 2)) - D(W, rho) / rho,
+        Om: (-D(Om, (z, 2)) - D(Om, rho) / rho - (4 * D(V, rho) - 2 * D(W, rho)) * D(Om, rho)
+             - (4 * D(V, z) - 2 * D(W, z)) * D(Om, z)),
+        V: -D(V, (z, 2)) - D(V, rho) / rho - e * (D(Om, rho) ** 2 + D(Om, z) ** 2) / 2,
+    }
+    first = {
+        rho: (-D(W, rho) + rho * (D(V, rho) ** 2 - D(V, z) ** 2 + D(W, rho) ** 2 - D(W, z) ** 2
+                                  - D(V, rho) * D(W, rho) + D(V, z) * D(W, z))
+              - rho * e * (D(Om, rho) ** 2 - D(Om, z) ** 2) / 4),
+        z: (-D(W, z) + rho * (2 * D(V, rho) * D(V, z) + 2 * D(W, rho) * D(W, z) - D(V, rho) * D(W, z)
+                              - D(V, z) * D(W, rho))
+            - rho * e * D(Om, rho) * D(Om, z) / 2),
+    }
+    return second, nu, first
+
+
+def black_saturn_on_shell(chart, value):
+    """`value` where the stated vacuum equations hold: nu's derivatives replaced by its
+    quadrature and that quadrature's derivatives, then every second and higher derivative
+    along rho of W, Omega and V by the three equations, until none is left."""
+    rho, z = chart.symbols[1], chart.symbols[2]
+    second, nu, first = black_saturn_vacuum(chart)
+    D = sp.Derivative
+    value = sp.sympify(value).subs({D(nu, (rho, 2)): sp.diff(first[rho], rho), D(nu, (z, 2)): sp.diff(first[z], z),
+                                    D(nu, rho, z): sp.diff(first[rho], z)}).doit()
+    value = value.subs({D(nu, rho): first[rho], D(nu, z): first[z]}).doit()
+    for _ in range(4):
+        higher = {}
+        for d in value.atoms(D):
+            counts = dict(d.variable_count)
+            if d.expr in second and counts.get(rho, 0) >= 2:
+                rest = [(v, n - (2 if v == rho else 0)) for v, n in d.variable_count]
+                rest = [(v, n) for v, n in rest if n]
+                higher[d] = sp.diff(second[d.expr], *rest) if rest else second[d.expr]
+        if not higher:
+            break
+        value = value.subs(higher).doit()
+    return value
+
+
+def black_saturn_functions(reader, values, precision=40):
+    """Elvang and Figueras's solution as numbers: the four functions of Weyl's chart from the
+    names the chart defines, e^(2V) = (G_y H_x^2 - (omega_psi + q H_y)^2)/(H_x H_y), Omega =
+    (omega_psi + q H_y) e^(-2V)/H_x, e^(2W) = G_y and e^(2nu) = k^2 H_x P, at the given values of
+    kappa_1, kappa_2, kappa_3 and beta, as mpmath functions of rho and z."""
+    import mpmath as mp
+    mp.mp.dps = precision
+    rho, z = sp.Symbol("rho", real=True), sp.Symbol("z", real=True)
+    d = reader.parameters
+    at = {d[n]: v for n, v in values.items()}
+    Hx, Hy, Gy, P, om, q, k = (sp.sympify(d[n]).subs(at) for n in ("H_x", "H_y", "G_y", "P", "omega_psi", "q", "k"))
+    s = om + q * Hy
+    e2V = (Gy * Hx ** 2 - s ** 2) / (Hx * Hy)
+    exprs = {"V": sp.log(e2V) / 2, "Omega": s / (Hx * e2V), "W": sp.log(Gy) / 2, "nu": sp.log(k ** 2 * Hx * P) / 2}
+    return {n: sp.lambdify((rho, z), e, "mpmath") for n, e in exprs.items()}, mp
+
+
+def black_saturn_check(chart, system):
+    """Weyl's chart: the equations its parameters state make every Ricci component vanish, and
+    Elvang and Figueras's functions, read from the names the chart defines, make every Ricci
+    component vanish at three points off the axis, in forty digits, for a Saturn out of balance
+    and with a spinning hole, kappa = (7/10, 9/20, 1/5) and beta = 3/10, and are flat space at
+    infinity. Polar chart: it is Weyl's pulled back through rho = r^2 sin(theta) cos(theta)/L^2
+    and z = r^2 (cos^2 theta - sin^2 theta)/(2 L^2). Ring chart: its Ricci tensor vanishes, and it is
+    Weyl's chart at kappa_1 = 1 and beta = 0 pulled back through the map of Elvang and Figueras's
+    appendix A.2, at three points for a ring out of balance."""
+    def source(name):
+        other = black_saturn(name)
+        return cp.Chart(other["system"]["coords"], other["system"]["parameters"], other["chart_line_element"])
+
+    D = sp.Derivative
+    if system == "weyl":
+        ricci = chart.geo.ricci_ll()
+        for i in range(5):
+            for j in range(i, 5):
+                if sp.simplify(black_saturn_on_shell(chart, ricci[i][j])) != 0:
+                    raise AssertionError(f"black_saturn: the stated vacuum equations leave R_{chart.coords_tex[i]}"
+                                         f"{chart.coords_tex[j]} standing")
+        values = {"kappa_1": sp.Rational(7, 10), "kappa_2": sp.Rational(9, 20), "kappa_3": sp.Rational(1, 5),
+                  "beta": sp.Rational(3, 10)}
+        fn, mp = black_saturn_functions(chart.reader, values)
+        rho, z = chart.symbols[1], chart.symbols[2]
+        held = {chart.reader.parameters[n]: n for n in ("V", "Omega", "W", "nu")}
+        atoms = set()
+        for i in range(5):
+            for j in range(i, 5):
+                atoms |= ricci[i][j].atoms(D) | {f for f in held if ricci[i][j].has(f)}
+        for point in ((mp.mpf("0.37"), mp.mpf("0.61")), (mp.mpf("1.3"), mp.mpf("-0.4")), (mp.mpf("0.21"), mp.mpf("0.33"))):
+            numbers = {rho: point[0], z: point[1], chart.reader.parameters["L"]: 1}
+            for atom in atoms:
+                if atom in held:
+                    numbers[atom] = fn[held[atom]](*point)
+                else:
+                    counts = dict(atom.variable_count)
+                    numbers[atom] = mp.diff(fn[held[atom.expr]], point, (counts.get(rho, 0), counts.get(z, 0)))
+            for i in range(5):
+                for j in range(i, 5):
+                    value = sp.lambdify(list(numbers), ricci[i][j], "mpmath")(*numbers.values())
+                    if abs(value) > mp.mpf(10) ** -25:
+                        raise AssertionError(f"black_saturn: Elvang and Figueras's functions leave R_{chart.coords_tex[i]}"
+                                             f"{chart.coords_tex[j]} = {mp.nstr(value, 5)} at {point}")
+        # Flat space at infinity: at r = 1000 L, in the polar coordinates, e^V -> r sin(theta)/L,
+        # e^W -> r sin(theta)/L, e^nu -> L/r and Omega -> 0.
+        r, theta = mp.mpf(1000), mp.mpf("0.7")
+        far = (r ** 2 * mp.sin(2 * theta) / 2, r ** 2 * mp.cos(2 * theta) / 2)
+        flat = {"V": mp.log(r * mp.sin(theta)), "W": mp.log(r * mp.sin(theta)), "nu": -mp.log(r), "Omega": 0}
+        for n, wanted in flat.items():
+            if abs(fn[n](*far) - wanted) > mp.mpf(10) ** -4:
+                raise AssertionError(f"black_saturn: {n} is not flat space's at infinity")
+    elif system == "polar":
+        weyl = source("weyl")
+        t, r, th, ps, ph = chart.symbols
+        L = chart.reader.parameters["L"]
+        image = [t, r ** 2 * sp.sin(th) * sp.cos(th) / L ** 2, r ** 2 * (sp.cos(th) ** 2 - sp.sin(th) ** 2) / (2 * L ** 2), ps, ph]
+        J = sp.Matrix(5, 5, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+        at = dict(zip(weyl.symbols, image))
+        at[weyl.reader.parameters["L"]] = L
+        stand = sp.symbols("BSV BSO BSW BSN")
+        there = {weyl.reader.parameters[n]: s for n, s in zip(("V", "Omega", "W", "nu"), stand)}
+        here = {chart.reader.parameters[n]: s for n, s in zip(("V", "Omega", "W", "nu"), stand)}
+        pulled = J.T * weyl.geo.g.subs(there).subs(at, simultaneous=True) * J
+        missed = pulled - chart.geo.g.subs(here)
+        if any(vm.norm(missed[i, j]) != 0 for i in range(5) for j in range(i, 5)):
+            raise AssertionError("black_saturn: the polar chart is not Weyl's pulled back")
+    else:
+        if any(x != 0 for x in sp.flatten(chart.geo.ricci_ll())):
+            raise AssertionError("black_saturn: the ring chart is not Ricci flat")
+        weyl = source("weyl")
+        import mpmath
+        rng = random.Random(0)
+        for _ in range(3):
+            nu_, lam_ = sp.Rational(rng.randint(150, 400), 1000), sp.Rational(rng.randint(500, 800), 1000)
+            x_, y_ = sp.Rational(rng.randint(-800, 800), 1000), -1 - sp.Rational(rng.randint(200, 1000), 1000)
+            # Their rod ends in units of R^2: a_1 = alpha, a_5 = -nu/2, a_4 = nu/2, a_3 = a_2 = 1/2,
+            # so L_E^2 = 1/2 - alpha, and their k^2 = (1 - lambda)/(1 - nu)^2 rescales the angles.
+            alpha = (nu_ * (1 + lam_) - 2 * lam_) / (2 * (1 - lam_))
+            LE2 = sp.Rational(1, 2) - alpha
+            kring = sp.sqrt((1 - lam_) / (1 - nu_) ** 2)
+            values = {"kappa_1": sp.Integer(1) - sp.Rational(1, 10 ** 30), "kappa_2": (nu_ / 2 - alpha) / LE2,
+                      "kappa_3": (-nu_ / 2 - alpha) / LE2, "beta": sp.Integer(0)}
+            fn, mp = black_saturn_functions(weyl.reader, values, precision=60)
+            X, Y = sp.symbols("BSx BSy", real=True)
+            G = lambda s: (1 - s ** 2) * (1 + nu_ * s)
+            rho_map = sp.sqrt(-G(X) * G(Y)) / (X - Y) ** 2 / LE2
+            z_map = ((1 - X * Y) * (2 + nu_ * (X + Y)) / (2 * (X - Y) ** 2) - alpha) / LE2
+            at = {X: x_, Y: y_}
+            point = (mp.mpmathify(sp.N(rho_map.subs(at), 60)), mp.mpmathify(sp.N(z_map.subs(at), 60)))
+            J = [[mp.mpmathify(sp.N(sp.diff(f, s).subs(at), 60)) for s in (X, Y)] for f in (rho_map, z_map)]
+            Ls = mp.mpmathify(sp.N(kring * sp.sqrt(LE2), 60))          # L in units of R
+            kr = mp.mpmathify(sp.N(kring, 60))
+            V, Om, W, nu = (fn[n](*point) for n in ("V", "Omega", "W", "nu"))
+            e2V, e2W, e2nu = mp.exp(2 * V), mp.exp(2 * W), mp.exp(2 * nu)
+            # Weyl's metric with psi = psi_ring/k and phi = phi_ring/k, in units of R.
+            wanted = {
+                (0, 0): -e2W / e2V + Om ** 2 * e2V,
+                (0, 3): -Ls * Om * e2V / kr,
+                (3, 3): Ls ** 2 * e2V / kr ** 2,
+                (4, 4): Ls ** 2 * point[0] ** 2 / e2W / kr ** 2,
+                (1, 1): Ls ** 2 * e2nu * (J[0][0] ** 2 + J[1][0] ** 2),
+                (2, 2): Ls ** 2 * e2nu * (J[0][1] ** 2 + J[1][1] ** 2),
+                (1, 2): Ls ** 2 * e2nu * (J[0][0] * J[0][1] + J[1][0] * J[1][1]),
+            }
+            numbers = {chart.symbols[1]: x_, chart.symbols[2]: y_, chart.reader.parameters["R"]: 1,
+                       chart.reader.parameters["nu"]: nu_, chart.reader.parameters["lambda"]: lam_}
+            for (i, j), value in wanted.items():
+                own = mp.mpmathify(sp.N(chart.geo.g[i, j].subs(numbers), 60))
+                if abs(own - value) > mp.mpf(10) ** -20 * (1 + abs(own)):
+                    raise AssertionError(f"black_saturn: the ring chart misses Weyl's at kappa_1 = 1 in slot {(i, j)}: "
+                                         f"{mp.nstr(own, 12)} against {mp.nstr(value, 12)}")
+
+
+CHARTS["black_saturn"] = [lambda s=s: black_saturn(s) for s in BS_CHARTS]
 
 
 # -- Near-horizon extreme Kerr -----------------------------------------------------------
