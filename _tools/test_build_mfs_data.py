@@ -4210,7 +4210,7 @@ class TurningLightConeFigures(unittest.TestCase):
         checked = {f"{v['metric']}/{v['view']}" for v in turn_check(self)["figures"]}
         self.assertEqual(checked, set(self.figures))
         self.assertEqual(checked, {"alcubierre/bubble", "godel/tipping", "gott_time_machine/loop", "kerr/dragging", "kerr_de_sitter/dragging",
-                                   "kerr_newman/dragging", "kerr_taub_nut/dragging", "kundt_waves/fronts",
+                                   "kerr_newman/dragging", "kerr_taub_nut/dragging", "kerr_melvin/dragging", "kundt_waves/fronts",
                                    "near_horizon_extreme_kerr/dragging", "point_particle_2plus1/wedge",
                                    "som_raychaudhuri/tipping", "spinning_string/tipping", "stockum_dust/tipping",
                                    "bonnor_rotating_dust/tipping", "maitra_dust/tipping", "tippett_tsang/ring",
@@ -4285,8 +4285,9 @@ class TurningLightConeFigures(unittest.TestCase):
         # in its surface X = 0 seen from the side, V left out.
         still = {f"{name}/{figure['id']}" for name, data in diagram_files().items()
                  for figures in data.get("projections", {}).values() for figure in figures if "turn" not in figure}
+        # Ernst and Wild's ergoregion is its meridional plane seen from the side, t and phi left out.
         self.assertEqual(still, {"cosmic_string/beam", "light_beam/lens", "lifshitz_spacetime/rays",
-                                 "point_particle_2plus1/beam", "schrodinger_spacetime/trap"})
+                                 "point_particle_2plus1/beam", "schrodinger_spacetime/trap", "kerr_melvin/tube"})
 
 
 class TurningUnderTheHand(unittest.TestCase):
@@ -4996,6 +4997,9 @@ class Slices(unittest.TestCase):
               *[f"kerr_taub_nut/{s}/axis" for s in ("one_string", "kerr_ingoing", "kerr_outgoing")],
               *[f"conformal kerr_taub_nut/{v}" for v in ("axis", "ingoing", "outgoing")],
               "kerr_taub_nut/plebanski/principal",
+              # Ernst and Wild's hole in the stronger field of the figure of its ergoregion, another member
+              # of the family than the hole whose equator is embedded.
+              "kerr_melvin/boyer_lindquist/tube",
               *[f"zipoy_voorhees/{s}/axis_{k}" for s in ("spherical", "prolate_spheroidal") for k in ("oblate", "prolate")],
               *[f"conformal zipoy_voorhees/{s}_axis_{k}" for s in ("spherical", "prolate_spheroidal")
                 for k in ("oblate", "prolate")],

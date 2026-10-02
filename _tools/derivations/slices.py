@@ -2176,6 +2176,10 @@ FLAT = {
        for sign, suffix in (("de_sitter", ""), ("anti_de_sitter", "_ads"))},
     ("kerr_taub_nut", "boyer_lindquist", "principal"): lambda: one("kerr_taub_nut", lambda m: along(0.0, *m.reach("boyer_lindquist", "r"))),
     ("kerr_taub_nut", "boyer_lindquist", "above"): lambda: kerr_above("kerr_taub_nut"),
+    # Ernst and Wild's hole: the moment t = 0 is one surface in both charts, whose azimuths differ
+    # by a function of t alone, and it meets each plane of t and r along t = 0 outside r_+.
+    **{("kerr_melvin", system, view): lambda: one("kerr_melvin", lambda m: along(0.0, *m.reach("boyer_lindquist", "r")))
+       for system in ("boyer_lindquist", "rotating") for view in ("radial", "equator")},
     ("robinson_trautman", "axisymmetric", "axis"): _rt_fronts,
     ("bondi_sachs", "bondi", "equator"): _bondi_sphere(),
     ("bondi_sachs", "bondi", "axis"): _bondi_sphere(),
@@ -3089,6 +3093,7 @@ HIDDEN = {
     **{("kerr_taub_nut", view): "the regular half of the axis, which the embedded equatorial plane does not meet"
        for view in ("axis", "ingoing", "outgoing")},
     ("kerr_taub_nut", "plebanski", "principal"): "the moment of constant t is a surface on which tau changes with sigma, the coordinate the drawing leaves out",
+    ("kerr_melvin", "boyer_lindquist", "tube"): "the hole in a stronger field, B = 3/(4m), than the one whose equator is embedded",
     ("frw", "comoving_spherical", "radial"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",
     ("frw", "comoving_spherical", "through"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",
     ("frw", "conformal_spherical", "radial"): "the flat universe, k = 0, whose moments are planes; the moments embedded are the closed universe's",
