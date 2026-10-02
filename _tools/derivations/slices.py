@@ -317,6 +317,25 @@ def levi_civita_r(rho, sigma=0.25):
     r = rho^Sigma/Sigma with Sigma = 4 sigma^2 - 2 sigma + 1."""
     Sigma = 4 * sigma * sigma - 2 * sigma + 1
     return rho ** Sigma / Sigma
+
+
+def vdb_radius(l):
+    """The comoving radius, in units of R, of the sphere at proper distance l from the middle of
+    the neck of Van Den Broeck's declared pocket: d ln(rho) = dl/r(l), with rho = l outside the
+    neck, the inverse of null_rays._vdb_distance."""
+    neck = math.exp(-math.pi) / 2
+    a = math.atanh(1 / math.sqrt(7))
+    if l < -2.5:
+        return (l + 4) / 1.5 * neck / 3 * math.exp(-4 * a / math.sqrt(7))
+    if l < -1.5:
+        return neck / 3 * math.exp(2 / math.sqrt(7) * (math.atanh(2 * (l + 2) / math.sqrt(7)) - a))
+    if l < -0.5:
+        return -math.exp(-math.pi) / (4 * l)
+    if l < 0.5:
+        return math.exp(2 * math.atan(2 * l) - math.pi / 2) / 2
+    return l
+
+
 MCV_H0 = 1 / math.sqrt(15)      # McVittie's H_0 r_s/c, as its diagrams and its embedding declare it
 
 
@@ -756,6 +775,14 @@ FLAT = {
     ("alcubierre", "cartesian", "tx"): lambda: one("alcubierre", lambda m: across(0.0, 0.0, m.grid()["u"][-1])),
     ("natario", "cartesian_flow", "tx"): lambda: one("natario", lambda m: across(0.0, 0.0, m.grid()["u"][-1])),
     ("krasnikov", "cylindrical", "tx"): _krasnikov,
+    # Van Den Broeck's pocket at t = 0, read in the proper distance l: the comoving radius of the
+    # circle at l is vdb_radius(l), which is also |x| on the axis of the Cartesian chart at t = 0.
+    ("van_den_broeck", "proper_radial", "radial"): lambda: one(
+        "van_den_broeck", lambda m: along(0.0, *m.reach("proper_radial", "l"))),
+    ("van_den_broeck", "pocket", "radial"): lambda: one(
+        "van_den_broeck", lambda m: along(0.0, *(vdb_radius(l) for l in m.reach("proper_radial", "l")))),
+    ("van_den_broeck", "cartesian", "tx"): lambda: one(
+        "van_den_broeck", lambda m: across(0.0, 0.0, vdb_radius(m.reach("proper_radial", "l")[1]))),
     # Misner space's moments are the Milne chart's t = t_k, every chi, and in Misner's
     # coordinates T = -c^2t_k^2/4, every psi; checks() carries the one chart onto the other.
     ("misner", "misner", "plane"): lambda: one("misner", lambda m: across(-m.time * m.time / 4, 0.0, BIG)),
@@ -1100,6 +1127,25 @@ def checks():
         subs = {reader.c: 1}
         subs.update({reader.parameters[k]: nr.number(v) for k, v in params.items()})
         return g.subs(subs), [reader.symbol[c] for c in entry["coords"]]
+
+    # Van Den Broeck: with rho = vdb_radius(l), the comoving chart's B^2(d rho^2 + rho^2 d phi^2)
+    # is the proper distance chart's dl^2 + r(l)^2 d phi^2 for the declared pocket.
+    g_c, (_, rho, *_) = metric("van_den_broeck", "pocket", {"R": 1})
+    g_l, (_, lv, *_) = metric("van_den_broeck", "proper_radial", {"l_0": 4})
+    _, _, reader_c = nr.load("van_den_broeck", "pocket")
+    _, _, reader_l = nr.load("van_den_broeck", "proper_radial")
+    B = sp.lambdify(rho, nr._as_lambda(reader_c, "B", nr._vdb_factor("r"))(rho), "numpy")
+    areal = sp.lambdify(lv, nr._as_lambda(reader_l, "r", nr._VDB_R)(lv), "numpy")
+    ls = rng.uniform(-3.99, 0.99, 400)
+    radii = np.array([vdb_radius(v) for v in ls])
+    step = 1e-6
+    slope = np.array([(vdb_radius(v + step) - vdb_radius(v - step)) / (2 * step) for v in ls])
+    with np.errstate(all="ignore"):
+        factor = B(radii)
+    miss = max(float(np.max(np.abs(factor * radii - areal(ls)))), float(np.max(np.abs(factor * slope - 1))),
+               float(np.max(np.abs(nr._vdb_distance(radii) - ls))))
+    report("Van Den Broeck: rho(l) pulls the comoving chart of the pocket back onto the proper distance one",
+           miss, 1e-6)
 
     # Bertotti-Robinson: x = b^2/r and the same t carry the static plane onto the Poincare one.
     g_s, (t, r, *_) = metric("bertotti_robinson", "static", {"b": 1})

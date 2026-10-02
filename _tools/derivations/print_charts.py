@@ -4788,6 +4788,164 @@ def ori_pullback(chart, system):
 CHARTS["ori_time_machine"] = [lambda s=s: ori_time_machine(s) for s in ORI_CHARTS]
 
 
+# -- Van Den Broeck's warp drive -----------------------------------------------------
+
+VDB_CHARTS = ["cartesian", "pocket", "proper_radial"]
+
+
+def van_den_broeck(system_id):
+    """Van Den Broeck's warp drive of 1999, Alcubierre's metric with the flat space of each
+    slice multiplied by B^2, in the two charts his paper uses. The Cartesian chart is his
+    equation (1), with the shape function f and the expansion factor B left as arbitrary
+    functions of the four coordinates, as Alcubierre's f is, so that B = 1 gives Alcubierre's
+    chart slot for slot. The comoving spherical chart is the one he computes in: inside the
+    wall of the bubble f = 1, x' = x - x_s(t) turns dx - v_s c dt into dx' whatever v_s(t) is,
+    and the metric is diag(-1, B^2, B^2, B^2), static and spherically symmetric about the ship.
+    That chart is checked to be the Cartesian one pulled back at f = 1, and its G_tt and its
+    frame component of Riemann on a sphere against his equations for the energy density and
+    for the largest curvature. van_den_broeck.md is the derivation."""
+    reals = "(-\\infty, \\infty)"
+    if system_id == "cartesian":
+        coords = ["t", "x", "y", "z"]
+        parameters = ["v_s = v_s(t)", "f = f(t,x,y,z)", "B = B(t,x,y,z)"]
+        probe = vm.Reader(coords, parameters, ())
+        lead = [probe.parameters["v_s"], probe.parameters["B"], probe.parameters["f"]]
+        space = "B^2\\left(\\left(dx - v_s f\\,{0}dt\\right)^2 + dy^2 + dz^2\\right)"
+        return {
+            "metric_id": "van_den_broeck",
+            "system": {"id": "cartesian", "name": "Cartesian", "coords": coords,
+                       "domains": [f"{c} \\in {reals}" for c in coords], "parameters": parameters,
+                       "line_element": "ds^2 = -c^2dt^2 + " + space.format("c\\,")},
+            "chart_line_element": "ds^2 = -dt^2 + " + space.format(""),
+            "printer": {"lead": lead, "primed": ["v_s"]},
+            # Compared once the tensors are printed: reading Alcubierre's chart first leaves the
+            # lowered Riemann tensor of this one printing for tens of minutes where it takes seconds.
+            "after": van_den_broeck_alcubierre,
+            # sympy does not finish factoring the numerator, so it is written out over 4B^8.
+            "kretschmann_text": van_den_broeck_kretschmann,
+        }
+    if system_id == "proper_radial":
+        coords = ["t", "l", "\\theta", "\\phi"]
+        parameters = ["r = r(l)", "l_0"]
+        probe = vm.Reader(coords, parameters, ())
+        space = "dl^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+        return {
+            "metric_id": "van_den_broeck",
+            "system": {"id": "proper_radial", "name": "Proper Radial Distance", "coords": coords,
+                       "domains": ["t \\in " + reals, "l \\in [-l_0, \\infty)", "\\theta \\in [0, \\pi]",
+                                   "\\phi \\in [0, 2\\pi)",
+                                   "l = -l_0 \\;\\text{(the centre of the pocket, where } r = 0\\text{)}"],
+                       "parameters": parameters, "line_element": "ds^2 = -c^2dt^2 + " + space},
+            "chart_line_element": "ds^2 = -dt^2 + " + space,
+            "printer": {"lead": [probe.parameters["r"]], "primed": ["r"]},
+            "check": van_den_broeck_proper,
+            # Two squares: the frame components l theta l theta and theta phi theta phi.
+            "kretschmann": ("\\dfrac{8\\left(r''\\right)^2}{r^2} + "
+                            "\\dfrac{4\\left(1 - \\left(r'\\right)^2\\right)^2}{r^4}"),
+        }
+    coords = ["t", "r", "\\theta", "\\phi"]
+    parameters = ["B = B(r)", "R"]
+    probe = vm.Reader(coords, parameters, ())
+    space = "B^2\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)"
+    return {
+        "metric_id": "van_den_broeck",
+        "system": {"id": "pocket", "name": "Comoving Spherical", "coords": coords,
+                   "domains": ["t \\in " + reals, "r \\in [0, R)", "\\theta \\in [0, \\pi]",
+                               "\\phi \\in [0, 2\\pi)"],
+                   "parameters": parameters, "line_element": "ds^2 = -c^2dt^2 + " + space},
+        "chart_line_element": "ds^2 = -dt^2 + " + space,
+        "printer": {"lead": [probe.parameters["B"], probe.symbol["r"]], "primed": ["B"]},
+        "check": van_den_broeck_pocket,
+    }
+
+
+def van_den_broeck_kretschmann(chart):
+    numerator, denominator = sp.fraction(sp.together(chart.geo.kretschmann()))
+    return chart.printer(sp.expand(numerator) / sp.factor(denominator))
+
+
+def van_den_broeck_alcubierre(math, chart):
+    """At B = 1 the Cartesian chart is the published Alcubierre metric, slot by slot."""
+    B = chart.reader.parameters["B"]
+    entry = json.loads((METRICS / "alcubierre.json").read_text(encoding="utf-8"))["coordinates"][0]
+    reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+    published = vm.metric_from_line_element(reader, entry["line_element"].replace("c^2dt^2", "dt^2")
+                                            .replace("c\\,dt", "dt"), entry["coords"])
+    same = {reader.parameters[k]: chart.reader.parameters[k] for k in ("v_s", "f")}
+    same.update(zip((reader.symbol[c] for c in entry["coords"]), chart.symbols))
+    own = chart.geo.g.subs(B, 1).doit()
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify(published[i, j].subs(same, simultaneous=True) - own[i, j]) != 0:
+                raise AssertionError(f"van_den_broeck: at B = 1 the slot {entry['coords'][i]}{entry['coords'][j]} "
+                                     "is not Alcubierre's")
+    return math
+
+
+def van_den_broeck_pocket(chart):
+    """The comoving spherical chart against the Cartesian one and against Van Den Broeck's
+    equations. With f = 1, x - x_s = r cos(theta), y = r sin(theta) cos(phi) and
+    z = r sin(theta) sin(phi), J^T g J is the chart's metric in every slot, for any v_s(t).
+    His energy density of the Eulerian observers is G_tt/8 pi = (B'^2/B^4 - 2B''/B^3 - 4B'/(B^3 r))/8 pi,
+    and his largest frame component of Riemann is R_{theta phi theta phi}/(B^4 r^4 sin^2(theta))
+    = B'^2/B^4 - B''/B^3 - B'/(B^3 r) for B a function of r alone... see van_den_broeck.md."""
+    spec = van_den_broeck("cartesian")
+    source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    t, r, th, ph = chart.symbols
+    B = chart.reader.parameters["B"]
+    xs = sp.Function("x_s")(t)
+    image = [t, xs + r * sp.cos(th), r * sp.sin(th) * sp.cos(ph), r * sp.sin(th) * sp.sin(ph)]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+    g = source.geo.g
+    at = {source.reader.parameters["f"]: 1, source.reader.parameters["B"]: B,
+          source.reader.parameters["v_s"]: sp.diff(xs, t)}
+    pulled = J.T * g.subs(at, simultaneous=True) * J
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify(pulled[i, j] - chart.geo.g[i, j]) != 0:
+                raise AssertionError(f"van_den_broeck: the Cartesian chart pulled back at f = 1 misses the "
+                                     f"comoving chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    B1, B2 = sp.diff(B, r), sp.diff(B, r, 2)
+    density = B1 ** 2 / B ** 4 - 2 * B2 / B ** 3 - 4 * B1 / (B ** 3 * r)
+    if vm.norm(chart.geo.einstein_ll()[0][0] - density) != 0:
+        raise AssertionError("van_den_broeck: G_tt is not Van Den Broeck's energy density times 8 pi")
+    riemann = chart.geo.riemann_llll()
+    # His frame at a point of the line y = z = 0 has e_1 along x, the radial direction there,
+    # and e_2 across it, so his R_1212 is the radial-tangential frame component.
+    radial = riemann[1][2][1][2] / (B ** 4 * r ** 2)
+    if vm.norm(radial - (B1 ** 2 / B ** 4 - B2 / B ** 3 - B1 / (B ** 3 * r))) != 0:
+        raise AssertionError("van_den_broeck: the frame component r theta r theta of Riemann is not his R_1212")
+
+
+def van_den_broeck_proper(chart):
+    """Krasnikov's chart of the pocket against the comoving spherical one and against his
+    Einstein tensor. With dl = B d rho and r(l) = B rho, rho the comoving chart's radius, the
+    chart pulls back to diag(-1, B^2, B^2 rho^2, B^2 rho^2 sin^2(theta)), and in the static
+    frame G_tt = (1 - r'^2 - 2 r r'')/r^2, G_tt + G_ll = -2 r''/r and
+    G_tt + G_thetatheta/r^2 = (1 - r'^2 - r r'')/r^2."""
+    spec = van_den_broeck("pocket")
+    pocket = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    rho, B = pocket.symbols[1], pocket.reader.parameters["B"]
+    l, r = chart.symbols[1], chart.reader.parameters["r"]
+    pulled = chart.geo.g.subs(r, B * rho)
+    pulled[1, 1] = pulled[1, 1] * B ** 2
+    at = dict(zip(chart.symbols[2:], pocket.symbols[2:]))
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify(pulled[i, j].subs(at) - pocket.geo.g[i, j]) != 0:
+                raise AssertionError(f"van_den_broeck: Krasnikov's chart pulled back misses the comoving chart "
+                                     f"in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    G = chart.geo.einstein_ll()
+    r1, r2 = sp.diff(r, l), sp.diff(r, l, 2)
+    for value, his in ((G[0][0], (1 - r1 ** 2 - 2 * r * r2) / r ** 2), (G[0][0] + G[1][1], -2 * r2 / r),
+                       (G[0][0] + G[2][2] / r ** 2, (1 - r1 ** 2 - r * r2) / r ** 2)):
+        if vm.norm(value - his) != 0:
+            raise AssertionError("van_den_broeck: the Einstein tensor of the proper distance chart is not Krasnikov's")
+
+
+CHARTS["van_den_broeck"] = [lambda s=s: van_den_broeck(s) for s in VDB_CHARTS]
+
+
 def write(spec):
     start = time.time()
     chart = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],

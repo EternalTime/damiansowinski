@@ -639,6 +639,14 @@ DIMENSIONS = {
     ("kaluza_klein_monopole", "taub_nut"): {
         "t": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "\\psi": "1", "m": "L",
     },
+    # Van Den Broeck's drive adds one more pure number to Alcubierre's two: B, the factor every
+    # length of a slice is multiplied by. The comoving chart is the inside of the bubble, f = 1.
+    ("van_den_broeck", "cartesian"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "v_s": "1", "f": "1", "B": "1",
+    },
+    ("van_den_broeck", "pocket"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "B": "1", "R": "L"},
+    # Krasnikov's chart of the pocket: l is the proper distance along a radius and r(l) the areal radius.
+    ("van_den_broeck", "proper_radial"): {"t": "T", "l": "L", "\\theta": "1", "\\phi": "1", "r": "L", "l_0": "L"},
     # Tangherlini's black hole quotes its mass as the horizon radius r_h, a length in every
     # dimension, which leaves 1 - (r_h/r)^(D-3) a pure number; the charts are D = 5 and D = 6,
     # and the Eddington-Finkelstein times u = ct - r_* and v = ct + r_* are lengths.

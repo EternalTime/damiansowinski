@@ -914,6 +914,18 @@ A dynamical solution describing the spacetime of a radiating or accreting spheri
 - chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1-\dfrac{2Gm}{c^2 r}\right)c^2 du^2 - 2c\,du\,dr + r^2 d\theta^2 + r^2\sin^2\theta\,d\phi^2$$
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1-\dfrac{2Gm}{c^2 r}\right)c^2 dv^2 + 2c\,dv\,dr + r^2 d\theta^2 + r^2\sin^2\theta\,d\phi^2$$
 
+### Van Den Broeck Warp Drive
+
+Alcubierre's warp bubble with the space inside it expanded by a large factor, so that a bubble microscopic from outside opens through a narrow neck onto a pocket large enough for a ship. Shrinking the bubble's surface brings the negative energy it needs from far beyond the mass of the visible universe down to a few solar masses.
+
+- id: `van_den_broeck`
+- tags: warp drive, faster-than-light, exotic matter, negative energy, energy condition violation, quantum inequality, time-dependent, non-vacuum, dynamical, idealized model, Lorentzian, Einstein equations, four-dimensional, causality violation
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/van_den_broeck.json
+- chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + B^2\left(\left(dx - v_s f\,c\,dt\right)^2 + dy^2 + dz^2\right)$$
+- chart Comoving Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + B^2\left(dr^2 + r^2d\theta^2 + r^2\sin^2\theta\,d\phi^2\right)$$
+- chart Proper Radial Distance: coordinates $(t, l, \theta, \phi)$, $$ds^2 = -c^2dt^2 + dl^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Vilenkin-Gott Cosmic String
 
 The conical spacetime around an infinitely thin, straight topological defect, locally flat but with an angular deficit set by the string's tension. It produces no local gravity yet causes global lensing and double images.

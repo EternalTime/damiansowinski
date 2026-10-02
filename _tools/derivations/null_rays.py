@@ -344,6 +344,57 @@ def _alcubierre_profile():
             " - tanh(4*(sqrt((x - 2*t)**2 + y**2 + z**2) - 1)))/(2*tanh(4))")
 
 
+# Van Den Broeck's pocket as Krasnikov shapes it, a surface every circle of which grows no faster
+# than the distance out to it, so that it stands in flat space, in units of R, the radius where
+# the wall of the bubble begins. In the proper distance l from the middle of the neck the areal
+# radius is r = l + 4 on the flat floor, 7/4 - (l + 2)^2 round the rim, -l on the flat lid,
+# l^2 + 1/4 through the neck, Krasnikov's quadratic, and l outside. van_den_broeck.md derives the
+# factor B of the comoving radius rho from it, through d ln(rho) = dl/r and B = r/rho.
+_VDB_R = ("Piecewise((l + 4, l < -Rational(5, 2)), (Rational(7, 4) - (l + 2)**2, l < -Rational(3, 2)),"
+          " (-l, l < -Rational(1, 2)), (l**2 + Rational(1, 4), l < Rational(1, 2)), (l, True))")
+_VDB_RHO = {"neck": "exp(-pi)/2", "lid": "exp(-pi)/6",
+            "floor": "exp(-pi - 4*atanh(1/sqrt(7))/sqrt(7))/6"}
+
+
+def _vdb_factor(rho):
+    """B of the declared pocket as a function of the comoving radius, written in `rho`."""
+    return ("Piecewise((Rational(3, 2)/({floor}), {rho} < {floor}),"
+            " (Rational(7, 4)/(({rho})*cosh(sqrt(7)/2*log(({rho})/({lid})) + atanh(1/sqrt(7)))**2), {rho} < {lid}),"
+            " (exp(-pi)/(4*({rho})**2), {rho} < {neck}),"
+            " (1/(2*({rho})*(1 - sin(log(2*({rho}))))), {rho} < Rational(1, 2)), (1, True))"
+            ).format(rho=rho, **_VDB_RHO)
+
+
+def _vdb_shape(rho):
+    """The wall of the declared bubble, f falling from 1 at R to 0 at 3R/2 with two continuous
+    derivatives, as a function of the comoving radius, written in `rho`."""
+    s = f"(2*(({rho}) - 1))"
+    return (f"Piecewise((1, {rho} < 1), (1 - 10*{s}**3 + 15*{s}**4 - 6*{s}**5, {rho} < Rational(3, 2)), (0, True))")
+
+
+_VDB_RS = "sqrt((x - 2*t)**2 + y**2 + z**2)"
+VDB_POCKET = ("Krasnikov's shape for the pocket, the areal radius $r(l)$ of the sphere at proper distance $l$ from "
+              "the middle of the neck: $l + 4R$ on a flat floor, $7R/4 - (l + 2R)^2/R$ round the rim, $-l$ on a "
+              "flat lid, $l^2/R + R/4$ through the neck, and $l$ outside it, which makes $1 + \\alpha = 380$")
+VDB_WALL = "$f$ falls from $1$ at $r_s = R$ to $0$ at $3R/2$ as $1 - 10s^3 + 15s^4 - 6s^5$, $s = 2(r_s - R)/R$"
+
+
+def _vdb_distance(rho):
+    """The proper distance l from the middle of the neck at the comoving radius rho, the closed
+    form the rays of the comoving chart are checked against."""
+    rho = np.asarray(rho, dtype=float)
+    neck, lid = math.exp(-math.pi) / 2, math.exp(-math.pi) / 6
+    a = math.atanh(1 / math.sqrt(7))
+    floor = lid * math.exp(-4 * a / math.sqrt(7))
+    with np.errstate(all="ignore"):
+        return np.select(
+            [rho < floor, rho < lid, rho < neck, rho < 0.5],
+            [-4 + 1.5 * rho / floor,
+             -2 + math.sqrt(7) / 2 * np.tanh(math.sqrt(7) / 2 * np.log(rho / lid) + a),
+             -math.exp(-math.pi) / (4 * rho),
+             np.tan(np.log(2 * rho) / 2 + math.pi / 4) / 2], rho)
+
+
 def _natario_field():
     """Natario's zero expansion field for the same profile, n = f/2, as three strings.
 
@@ -1092,6 +1143,19 @@ DIAGRAMS = [
             input="$v_s = 2$, and Alcubierre's own profile, "
                   "$f = [\\tanh\\sigma(r_s + R) - \\tanh\\sigma(r_s - R)]/(2\\tanh\\sigma R)$ "
                   "with $R = 1$ and $\\sigma = 4$."),
+    Diagram("van_den_broeck", "cartesian", "tx", "$t$ and $x$ on the axis", ("t", "x"), (-3, 3, -2, 2),
+            "$x/R$", "$ct/R$", {}, {"y": "0", "z": "0"}, families=SIDEWAYS, cones=(8, 7), kretschmann=False,
+            functions={"v_s": "2", "f": _vdb_shape(_VDB_RS), "B": _vdb_factor(_VDB_RS)},
+            input="$v_s = 2$, a wall in which " + VDB_WALL + ", and " + VDB_POCKET + "."),
+    Diagram("van_den_broeck", "pocket", "radial", "$t$ and $r$", ("t", "r"), (0, 1.25, -1.25, 1.25),
+            "$r/R$", "$ct/R$", {"R": 1}, EQUATOR, functions={"B": _vdb_factor("r")},
+            lines=(("shell", "r", "1/2", "the outer end of the neck, where $B$ returns to $1$"),),
+            input=VDB_POCKET + "."),
+    Diagram("van_den_broeck", "proper_radial", "radial", "$t$ and $l$", ("t", "l"), (-4, 1, -2.5, 2.5),
+            "$l/R$", "$ct/R$", {"l_0": 4}, EQUATOR, families=SIDEWAYS, functions={"r": _VDB_R},
+            lines=(("surface", "r", "-2", "the widest sphere of the pocket, $r = 7R/4$"),
+                   ("shell", "r", "0", "the narrowest sphere of the neck, $r = R/4$")),
+            input=VDB_POCKET + "."),
     Diagram("natario", "cartesian_flow", "tx", "$t$ and $x$ on the axis", ("t", "x"), (-3, 3, -2, 2),
             "$x/R$", "$ct/R$", {}, {"y": "0", "z": "0"}, families=SIDEWAYS, cones=(8, 7),
             functions=_natario_field(),
@@ -2695,6 +2759,37 @@ CAPTIONS = {
         "also where a forward ray keeps pace with the bubble, $f = 1 - 1/v_s$, so here they are "
         "the two horizons: forward rays from inside stall at the front wall, and forward rays from "
         "behind stall at the back wall. At other speeds the two places differ.",
+    ],
+    ("van_den_broeck", "cartesian", "tx"): [
+        "The plane of $t$ and $x$ on the bubble's axis of motion ($y = z = 0$), for a bubble moving at twice "
+        "the speed of light along $x = 2ct$. On the axis $\\partial_y$ and $\\partial_z$ of $f$ and $B$ "
+        "vanish, so the null curves drawn are null geodesics, the paths light takes. Their slopes are "
+        "$dx/d(ct) = v_s f \\pm 1/B$: in the wall the cones tilt with the shift $v_s f$, as Alcubierre's do, "
+        "and through the neck they narrow about the world line of the ship, since a unit of $x$ there is "
+        "$B$ units of distance.",
+        "The dashed lines are $g^{xx} = (1 - v_s^2 f^2B^2)/B^2 = 0$. Outside the neck $B = 1$, so they "
+        "stand where $v_s f = 1$, and for $v_s = 2$ a forward ray keeps pace with the bubble there. "
+        "The pocket itself is the sliver $|x - 2ct| < 0.004\\,R$ about the centre, $3R$ across for "
+        "whoever is inside it.",
+    ],
+    ("van_den_broeck", "pocket", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) inside the bubble, in the chart that "
+        "rides with the ship, which ends where the wall of the bubble begins, at $r = R$. The radial null "
+        "geodesics are $c\\,dt = \\pm B\\,dr$. From the wall in to "
+        "$r = R/2$ they run at 45°, and through the neck the cones close about the vertical as $B$ climbs "
+        "to $380$.",
+        "A ray takes $4R/c$ from the middle of the neck to the centre, a proper distance of $4R$, and "
+        "nearly all of it is spent inside $r = 0.02\\,R$, where the lid, the rim, and the floor of the "
+        "pocket lie.",
+    ],
+    ("van_den_broeck", "proper_radial", "radial"): [
+        "The plane of $t$ and the proper distance $l$ ($\\theta = \\pi/2$, $\\phi = 0$), from the centre "
+        "of the pocket at $l = -4R$ out to the wall of the bubble. Here $g_{tt} = -1$ and $g_{ll} = 1$, "
+        "so every radial null geodesic runs at 45° whatever $r(l)$ is, and the pocket shows in "
+        "$g_{\\theta\\theta} = r^2$ alone.",
+        "The two lines marked are the spheres where $dr/dl = 0$: the widest, $r = 7R/4$ at $l = -2R$ on "
+        "the rim of the pocket, and the narrowest, $r = R/4$ at $l = 0$ in the neck. Between them the "
+        "spheres shrink as $l$ grows.",
     ],
     ("natario", "cartesian_flow", "tx"): [
         "The plane of $t$ and $x$ on the axis of motion ($y = z = 0$). There the field "
@@ -5662,6 +5757,9 @@ CLOSED_FORMS = {
         (lambda chi, rho: chi + np.arctan(np.sinh(rho)), lambda chi, rho: chi - np.arctan(np.sinh(rho)), None),
     ("bell_szekeres", "kruskal_szekeres", "plane"): (lambda U, V: V, lambda U, V: U, None),
     ("bell_szekeres", "bertotti_robinson", "plane"): (lambda t, r: t + r, lambda t, r: t - r, None),
+    ("van_den_broeck", "pocket", "radial"):
+        (lambda t, r: t + _vdb_distance(r), lambda t, r: t - _vdb_distance(r), None),
+    ("van_den_broeck", "proper_radial", "radial"): (lambda t, l: t + l, lambda t, l: t - l, None),
 }
 
 

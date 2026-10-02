@@ -29,6 +29,11 @@
       "id": "alcubierre",
       "kind": "family",
       "text": "The warp bubble, whose pilot is cut off from the bubble wall and can neither raise it nor steer it [alcubierre1994, everett1997]."
+    },
+    {
+      "id": "van_den_broeck",
+      "kind": "family",
+      "text": "A warp bubble with a roomy pocket folded inside it. Krasnikov called the fold Van Den Broeck's trick, and with a pocket of his own brought the exotic matter of a shortcut down to about a milligram [krasnikov2003]."
     }
   ],
   "references": [

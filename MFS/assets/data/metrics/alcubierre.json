@@ -28,6 +28,11 @@
       "text": "Warp drives with any shift vector $(u, v, w)$. José Natário found one in 2002 that neither expands nor contracts space anywhere [natario2002]."
     },
     {
+      "id": "van_den_broeck",
+      "kind": "generalisation",
+      "text": "Alcubierre's bubble with a factor $B^2$ on its space, which hides a pocket 200 m across inside a bubble a few femtometres wide. That brings the negative energy down to a few solar masses [vandenbroeck1999]."
+    },
+    {
       "id": "lentz",
       "kind": "family",
       "text": "A warp drive whose shift is the gradient of a potential, which Erik Lentz built in 2021 to have positive energy density for the observers riding with it [lentz2021]. Other observers still measure negative energy [santiago2022]."

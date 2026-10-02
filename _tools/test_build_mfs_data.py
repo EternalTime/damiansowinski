@@ -2207,6 +2207,21 @@ class EmbeddingDiagrams(unittest.TestCase):
         for r, rho, z in piece("ellis_bronnikov", "whole"):
             near(rho, math.sqrt(r * r + 1), f"Ellis-Bronnikov rho at {r}")
             near(z, math.asinh(r), f"Ellis-Bronnikov z at {r}")
+        # Van Den Broeck's pocket in the proper distance l, in units of R: a floor of radius 3/2, a rim
+        # that widens to 7/4, a lid in to 1/2, a neck that narrows to 1/4, and the plane outside, pi/2
+        # above the floor; the rim and the neck each climb pi/4 as (w sqrt(1 - w^2) + arcsin w)/4 + pi/8.
+        def arc(w):
+            return (w * math.sqrt(1 - w * w) + math.asin(w)) / 4 + math.pi / 8
+        pocket = piece("van_den_broeck", "pocket")
+        self.assertEqual([pocket[0][0], pocket[-1][0]], [-4.0, 1.0])
+        for l, rho, z in pocket:
+            want = ((l + 4, 0.0) if l < -2.5 else (1.75 - (l + 2) ** 2, arc(2 * (l + 2))) if l < -1.5
+                    else (-l, math.pi / 4) if l < -0.5 else (l * l + 0.25, math.pi / 4 + arc(2 * l)) if l < 0.5
+                    else (l, math.pi / 2))
+            near(rho, want[0], f"the pocket's rho at {l}")
+            near(z, want[1], f"the pocket's z at {l}")
+        self.assertAlmostEqual(min(rho for l, rho, z in pocket if l > -1), 0.25, places=6)
+        self.assertAlmostEqual(max(rho for l, rho, z in pocket), 1.75, places=6)
         # Reissner-Nordstrom's circles have their areal radius on both views, and inside r- each
         # side starts level at r_q^2/r_s, 0.2304 r_s, and ends at r- = 0.36 r_s.
         for view, pids in ((0, ("exterior", "other_exterior")), (1, ("inside", "other_inside"))):

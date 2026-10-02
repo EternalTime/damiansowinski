@@ -53,6 +53,11 @@
       "id": "damour_solodukhin",
       "kind": "special_case",
       "text": "The member with the constant shape function $b = r_s$ and $e^{2\\Phi} = 1 - r_s/r + \\lambda^2$, which Thibault Damour and Sergey Solodukhin made in 2007 to pass for a Schwarzschild black hole [damour2007, nandi2022]."
+    },
+    {
+      "id": "van_den_broeck",
+      "kind": "family",
+      "text": "Van Den Broeck's pocket in the proper distance $l$ is this line element with $\\Phi = 0$ and the far side closed off at a centre, a throat that opens onto a room [krasnikov2003]."
     }
   ],
   "references": [
@@ -71,7 +76,8 @@
     "visser1989nuclphysb",
     "teo1998",
     "damour2007",
-    "nandi2022"
+    "nandi2022",
+    "krasnikov2003"
   ],
   "coordinates": [
     {
