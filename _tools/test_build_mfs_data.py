@@ -3631,6 +3631,7 @@ class StacksAndMovies(unittest.TestCase):
               ("misner_brill_lindquist", "through"): "$a$", ("misner_brill_lindquist", "between"): "$a$",
               ("brill_waves", "strong"): "$a$",
               ("tolman_bondi", "cloud"): "$ct$", ("szekeres", "equators"): "$ct$", ("misner", "cylinders"): "$ct$",
+              ("self_creating_universe", "cylinders"): "$c\\tau$",
               ("photon_rocket", "burn"): "$cu + r$", ("hayward", "history"): "$v - r$",
               ("mass_inflation", "tail"): "$v - r$",
               ("hiscock", "history"): "$v - r$",
@@ -4930,6 +4931,8 @@ class Slices(unittest.TestCase):
               "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "som_raychaudhuri/cylindrical/beyond",
               "conformal frw/flat", "conformal frw/open",
               "misner/rindler/plane", "conformal misner/rindler",
+              # Gott and Li's region of closed timelike curves, which no moment of the inflating region meets.
+              "self_creating_universe/static/through", "conformal self_creating_universe/static",
               # Gott's region of closed timelike curves, which no moment of Grant's Milne time meets,
               # and the centre of momentum chart about the strings.
               "gott_time_machine/grant_rindler/plane", "conformal gott_time_machine/grant_rindler",
@@ -5984,6 +5987,15 @@ class Slices(unittest.TestCase):
             return (lambda X: math.sin(t) if chart == "prolate" else t), [0.0]
         if key in ("misner/milne/plane", "gott_time_machine/grant_milne/plane"):
             return (lambda X: t), None
+        if key.startswith("self_creating_universe/"):
+            # Gott and Li's moment c tau = t of the Kantowski-Sachs chart at r_0 = 1: level on its own plane,
+            # x = cosh(t) exp(-tau) on the steady state plane, and rho = -eta cosh(t) on the conformal one.
+            chart = key.split("/")[1]
+            if chart == "steady_state":
+                return (lambda X: math.log(math.cosh(t) / X)), None
+            if chart == "conformal":
+                return (lambda X: -X / math.cosh(t)), None
+            return (lambda X: t), None
         if key.startswith("ori_time_machine/"):
             # Ori's moment t is level on every cylinder of the time and z: at T = t on the central circle
             # in both charts, where the charts agree, at the foliation's own t at x = 4, and there at
@@ -6502,6 +6514,14 @@ class Slices(unittest.TestCase):
                         for X, T in points:
                             tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
                             self.assertLess(abs(tp * tq - t * t), 2e-4 * (1 + tp * tp + tq * tq), where)
+                    elif metric_id == "self_creating_universe":
+                        # On de Sitter's square V = tan T and W = cos(X)/cos T at r_0 = 1, and the moment
+                        # c tau = t of the Kantowski-Sachs chart is V^2 - W^2 = sinh^2(t), every copy.
+                        for X, T in points:
+                            if abs(math.cos(T)) < 1e-3:
+                                continue
+                            V, W = math.tan(T), math.cos(X) / math.cos(T)
+                            self.assertLess(abs(V * V - W * W - math.sinh(t) ** 2), 2e-3 * (1 + V * V + W * W), where)
                     elif metric_id == "ori_time_machine":
                         # The hyperbola of the covering plane on which T = t, every copy: its null
                         # coordinates -2 e^(-z/2) and 2T e^(z/2) multiply to -4t.

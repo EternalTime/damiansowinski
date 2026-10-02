@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 157,
+  "count": 158,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -10207,6 +10207,11 @@
           "id": "domain_wall",
           "kind": "family",
           "text": "A thin wall with the same flat vacuum on both sides. Its world volume is a hyperboloid as well, de Sitter space of three dimensions [caldwell1996]."
+        },
+        {
+          "id": "self_creating_universe",
+          "kind": "family",
+          "text": "A de Sitter space whose earliest region is a loop in time. Gott and Li have bubbles like these forming in its inflating region, and in their fuller scenario a baby universe born in one of them is the de Sitter space the bubbles formed in [gott1998]."
         }
       ],
       "references": [
@@ -10228,7 +10233,8 @@
         "farhi1987",
         "feeney2011",
         "degrassi2012",
-        "caldwell1996"
+        "caldwell1996",
+        "gott1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/coleman_de_luccia.json",
@@ -11870,6 +11876,11 @@
           "id": "gravitational_instantons",
           "kind": "family",
           "text": "De Sitter space in imaginary time is a 4-sphere, the simplest compact gravitational instanton. The complex projective plane and Page's space are two more with a positive cosmological constant [gibbonshawking1979, page2009]."
+        },
+        {
+          "id": "self_creating_universe",
+          "kind": "locally_same",
+          "text": "De Sitter space with each event identified with its images under a boost. J. Richard Gott and Li-Xin Li proposed it in 1998 as a universe whose earliest stretch of time is a loop [gott1998]."
         }
       ],
       "references": [
@@ -11914,7 +11925,8 @@
         "parikh2003",
         "ruban1969",
         "gibbonshawking1979",
-        "page2009"
+        "page2009",
+        "gott1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -15326,6 +15338,11 @@
           "id": "small_universes",
           "kind": "family",
           "text": "Friedmann universes with points of space identified under translations, as events of de Sitter space are identified here under the antipodal map. Space becomes a torus, and each galaxy is seen many times over [lachiezerey1995]."
+        },
+        {
+          "id": "self_creating_universe",
+          "kind": "family",
+          "text": "De Sitter space with events identified under a boost. The boost keeps the direction of time and makes closed timelike curves, in a region of finite spacetime volume behind a Cauchy horizon [gott1998]."
         }
       ],
       "references": [
@@ -15340,7 +15357,8 @@
         "aguirre2003",
         "misner1967",
         "louko1998",
-        "lachiezerey1995"
+        "lachiezerey1995",
+        "gott1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/elliptic_de_sitter.json",
@@ -17993,6 +18011,11 @@
           "id": "tippett_tsang",
           "kind": "family",
           "text": "A time machine that fits in a box. Tippett and Tsang counted Gott's strings among the models that need matter spread out to infinity, and built a compact bubble in 2017, whose wall needs exotic matter [tippett2017]."
+        },
+        {
+          "id": "self_creating_universe",
+          "kind": "programme",
+          "text": "Seven years after the strings, Gott and Li-Xin Li put closed timelike curves at the beginning of the universe: de Sitter space identified under a boost [gott1998]."
         }
       ],
       "references": [
@@ -18018,7 +18041,8 @@
         "dedeo2002",
         "morris1988prl",
         "ori2005",
-        "tippett2017"
+        "tippett2017",
+        "gott1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gott_time_machine.json",
@@ -18296,6 +18320,346 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
+      "id": "self_creating_universe",
+      "name": "Gott and Li's Self-Creating Universe",
+      "short_name": "Gott-Li",
+      "description": "De Sitter space with each event identified with its images under a boost, proposed by J. Richard Gott and Li-Xin Li in 1998. It begins in a region of closed timelike curves of finite spacetime volume, with no earliest event, and a Cauchy horizon separates that region from an inflating universe in which nothing returns to its own past.",
+      "tags": [
+        "de Sitter",
+        "positive cosmological constant",
+        "cosmological constant",
+        "constant curvature",
+        "closed timelike curves",
+        "chronology horizon",
+        "Cauchy horizon",
+        "chronology protection",
+        "self consistency",
+        "time machine",
+        "topology",
+        "multiply connected",
+        "boost",
+        "Misner space",
+        "inflation",
+        "expanding universe",
+        "cosmology",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model",
+        "Einstein space",
+        "conformally flat",
+        "spherically symmetric"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "de_sitter",
+          "kind": "locally_same",
+          "text": "The same hyperboloid with nothing identified. Gott and Li's universe is de Sitter space with each event and its images under a boost counted as one event [gott1998]."
+        },
+        {
+          "id": "misner",
+          "kind": "conformal",
+          "text": "Flat spacetime identified under the same boost. A conformal map relates Misner space to Gott and Li's universe, and they used it to carry Li and Gott's vacuum across [gott1998, li1998]."
+        },
+        {
+          "id": "elliptic_de_sitter",
+          "kind": "family",
+          "text": "De Sitter space with events identified under the antipodal map of its hyperboloid, where Gott and Li identify them under a boost. The antipodal map makes no closed timelike curve, and it removes the global direction of time [parikh2003]."
+        },
+        {
+          "id": "gott_time_machine",
+          "kind": "programme",
+          "text": "Gott's earlier spacetime with closed timelike curves, two cosmic strings passing at high speed [gott1991]. Away from the strings it is flat spacetime identified under a boost and a shift [grant1993]."
+        },
+        {
+          "id": "kantowski_sachs",
+          "kind": "generalisation",
+          "text": "Beyond the Cauchy horizon each moment of constant $\\tau$ is a circle times a sphere, and Gott and Li call the region a type of Kantowski-Sachs universe [gott1998]."
+        },
+        {
+          "id": "coleman_de_luccia",
+          "kind": "family",
+          "text": "The bubbles that end inflation. Gott and Li have them forming in the inflating region beyond the Cauchy horizon, each an open universe inside [gott1998, gott1982]."
+        },
+        {
+          "id": "malament_hogarth",
+          "kind": "generalisation",
+          "text": "Any spacetime with closed timelike curves has the Malament-Hogarth property, as John Byron Manchak observed in 2010 [manchak2010]."
+        }
+      ],
+      "references": [
+        "gott1998",
+        "vilenkin1982",
+        "hartle1983",
+        "bordevilenkin1994",
+        "gott1982",
+        "farhi1990",
+        "misner1967",
+        "hiscock1982",
+        "hawking1992",
+        "li1998",
+        "cassidy1998",
+        "hiscock2000",
+        "parikh2003",
+        "gott1991",
+        "grant1993",
+        "manchak2010"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/self_creating_universe.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Static",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in [0, \\beta/c)",
+            "r \\in [0, r_0)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_0 \\;\\text{(Cauchy horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "De Sitter radius, a length, fixed by the cosmological constant $\\Lambda$ through $r_0 = \\sqrt{3/\\Lambda}$; the Cauchy horizon sits at $r = r_0$"
+            },
+            {
+              "symbol": "\\beta",
+              "description": "Period of $ct$, a length; each event is identified with its images under a boost of rapidity $\\beta/r_0$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and periodic with period $\\beta/c$, and $r$ the areal radius. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r^2}{r_0^2}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r^2}{r_0^2}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r^2}{r_0^2}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r^2}{r_0^2}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{r_0^2}",
+          "kretschmann": "K = \\dfrac{24}{r_0^4}"
+        },
+        {
+          "id": "kantowski_sachs",
+          "name": "Kantowski-Sachs",
+          "coordinates": [
+            "\\tau",
+            "l",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (0, \\infty)",
+            "l \\in [0, \\beta)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\tau = 0 \\;\\text{(Cauchy horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "De Sitter radius, a length, fixed by the cosmological constant $\\Lambda$ through $r_0 = \\sqrt{3/\\Lambda}$; the spheres of constant $\\tau$ and $l$ have radius $r_0\\cosh(c\\tau/r_0)$"
+            },
+            {
+              "symbol": "\\beta",
+              "description": "Period of $l$, a length; each event is identified with its images under a boost of rapidity $\\beta/r_0$"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, l, \\theta, \\phi)$, with $\\tau$ the proper time since the Cauchy horizon of the observers at rest, and $l$ a length, periodic with period $\\beta$. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2d\\tau^2 + \\sinh^2(c\\tau/r_0)\\,dl^2 + r_0^2\\cosh^2(c\\tau/r_0)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "l",
+                "l"
+              ],
+              "value": "\\sinh^2(c\\tau/r_0)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r_0^2\\cosh^2(c\\tau/r_0)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r_0^2\\cosh^2(c\\tau/r_0)\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{r_0^2}",
+          "kretschmann": "K = \\dfrac{24}{r_0^4}"
+        },
+        {
+          "id": "steady_state",
+          "name": "Steady state",
+          "coordinates": [
+            "\\tau",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "\\tau \\in [0, \\beta/c)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "(\\tau, x, y, z) \\sim (\\tau + \\beta/c, e^{-\\beta/r_0}x, e^{-\\beta/r_0}y, e^{-\\beta/r_0}z)\\;\\text{(the boost)}",
+            "x^2 + y^2 + z^2 = r_0^2e^{-2c\\tau/r_0} \\;\\text{(Cauchy horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "De Sitter radius, a length, fixed by the cosmological constant $\\Lambda$ through $r_0 = \\sqrt{3/\\Lambda}$; the expansion rate of the flat slices is $c/r_0$"
+            },
+            {
+              "symbol": "\\beta",
+              "description": "A length; each event is identified with its images under a boost of rapidity $\\beta/r_0$, which shifts $c\\tau$ by $\\beta$ and shrinks $x$, $y$, and $z$ by $e^{-\\beta/r_0}$"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, x, y, z)$, with $\\tau$ carrying dimensions of time and $x$, $y$, and $z$ comoving lengths. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2d\\tau^2 + e^{2c\\tau/r_0}\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "e^{2c\\,\\tau/r_0}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "e^{2c\\,\\tau/r_0}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{2c\\,\\tau/r_0}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{r_0^2}",
+          "kretschmann": "K = \\dfrac{24}{r_0^4}"
+        },
+        {
+          "id": "conformal",
+          "name": "Conformal",
+          "coordinates": [
+            "\\eta",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in [-r_0, -r_0e^{-\\beta/r_0})",
+            "\\rho \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "(\\eta, \\rho, \\theta, \\phi) \\sim (e^{-\\beta/r_0}\\eta, e^{-\\beta/r_0}\\rho, \\theta, \\phi)\\;\\text{(the boost)}",
+            "\\rho = -\\eta \\;\\text{(Cauchy horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "De Sitter radius, a length, fixed by the cosmological constant $\\Lambda$ through $r_0 = \\sqrt{3/\\Lambda}$; future infinity lies at $\\eta = 0$"
+            },
+            {
+              "symbol": "\\beta",
+              "description": "A length; each event is identified with its images under a boost of rapidity $\\beta/r_0$, which shrinks $\\eta$ and $\\rho$ by $e^{-\\beta/r_0}$"
+            }
+          ],
+          "convention": "We use coordinates $(\\eta, \\rho, \\theta, \\phi)$, with the conformal time $\\eta = -r_0e^{-c\\tau/r_0}$ of the steady state chart a negative length and $\\rho = \\sqrt{x^2 + y^2 + z^2}$ its comoving radius. No coordinate carries dimensions of time, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{r_0^2}{\\eta^2}\\left(-d\\eta^2 + d\\rho^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-\\dfrac{r_0^2}{\\eta^2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{r_0^2}{\\eta^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r_0^2\\,\\rho^2}{\\eta^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r_0^2\\,\\rho^2\\sin^2\\theta}{\\eta^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{r_0^2}",
+          "kretschmann": "K = \\dfrac{24}{r_0^4}"
         }
       ]
     },
@@ -23012,6 +23376,11 @@
           "id": "datt_ruban_t_models",
           "kind": "generalisation",
           "text": "Kantowski and Sachs's dust universe with the stretch along its axis free to differ from shell to shell, found by B. Datt in 1938 and again by Vladimir Ruban in 1968 [datt1938, ruban1968]."
+        },
+        {
+          "id": "self_creating_universe",
+          "kind": "special_case",
+          "text": "The inflating region of Gott and Li's universe, de Sitter space identified under a boost, with $a = \\sinh(ct/r_0)$ and $b = r_0\\cosh(ct/r_0)$ for the de Sitter radius $r_0$ [gott1998]."
         }
       ],
       "references": [
@@ -23033,7 +23402,8 @@
         "obregon1998",
         "bronnikov2022",
         "novikov1965",
-        "ruban1968"
+        "ruban1968",
+        "gott1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kantowski_sachs.json",
@@ -30294,6 +30664,11 @@
           "id": "nordstrom_scalar",
           "kind": "family",
           "text": "The same line element with a field equation for the factor. In Nordström's theory of gravity $\\Omega$ is the gravitational potential, fixed by the matter [einstein1914fokker]."
+        },
+        {
+          "id": "self_creating_universe",
+          "kind": "special_case",
+          "text": "De Sitter space identified under a boost has closed timelike curves in its earliest region, and so the property, by Manchak's observation [gott1998, manchak2010]."
         }
       ],
       "references": [
@@ -30304,7 +30679,8 @@
         "shagrir2003",
         "welch2008",
         "manchak2010",
-        "einstein1914fokker"
+        "einstein1914fokker",
+        "gott1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/malament_hogarth.json",
@@ -32112,6 +32488,11 @@
           "id": "small_universes",
           "kind": "family",
           "text": "Friedmann universes with points of space identified under translations, as events are identified here under a boost. The translations make space a torus and no closed timelike curve [lachiezerey1995]."
+        },
+        {
+          "id": "self_creating_universe",
+          "kind": "conformal",
+          "text": "De Sitter space identified under a boost, which a conformal map relates to Misner space. Gott and Li carried the Rindler vacuum across in 1998 and found its stress energy finite on the horizon when the boost has rapidity $2\\pi$ [gott1998]."
         }
       ],
       "references": [
@@ -32134,7 +32515,8 @@
         "ori2005",
         "tippett2017",
         "parikh2003",
-        "lachiezerey1995"
+        "lachiezerey1995",
+        "gott1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner.json",

@@ -2443,6 +2443,11 @@ PIW = {"k": "3/16"}
 RP3_EDGE = "the edge $X = 0$, glued to itself by the antipodal map of the sphere"
 
 
+
+# Gott and Li's self-creating universe is drawn at the de Sitter radius 1 and their beta = 2 pi r_0.
+SCU = {"r_0": 1, "beta": "2*pi"}
+SCU_HORIZON_X = "the Cauchy horizon, $x = \\pm r_0e^{-c\\tau/r_0}$"
+
 DIAGRAMS = [
     *[Diagram("hotta_tanaka", "conformally_flat", view, f"$\\theta = {tex}$", ("\\eta", "\\rho"), (0, 4, -4.3, -0.3),
               "$\\rho/a$", "$\\eta/a$", HT, {"theta": theta, "phi": "0"}, tau="eta", delta=AS_PULSE, step=0.0005,
@@ -3311,6 +3316,26 @@ DIAGRAMS = [
             "$r/\\ell$", "$ct/\\ell$", {"ell": 1}, EQUATOR, orient="outgoing", cones=(8, 7), areal=True),
     Diagram("elliptic_de_sitter", "planar", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -1, 3),
             "$x/\\ell$", "$ct/\\ell$", {"ell": 1}, {"y": "0", "z": "0"}, families=SIDEWAYS),
+    # Gott and Li's de Sitter space identified under a boost, at r_0 = 1 and their beta = 2 pi r_0, the one
+    # value at which the Rindler vacuum's stress energy stays finite on the Cauchy horizon. The static and
+    # Kantowski-Sachs planes are drawn unrolled over one period, their periodic edges one line; the steady
+    # state plane over one period of tau, whose top edge is its bottom edge shrunk by exp(-2 pi); and the
+    # conformal plane on the whole triangle below future infinity, with the horizon marked in the last two.
+    Diagram("self_creating_universe", "static", "through", "through the observer", ("t", "r"),
+            (0, 2, 0, 2 * math.pi), "$x/r_0$", "$ct/r_0$", SCU, EQUATOR, mirror=True, orient="outgoing",
+            families=SIDEWAYS, cones=(4, 8), areal=True, periodic=("t",)),
+    Diagram("self_creating_universe", "kantowski_sachs", "plane", "$\\tau$ and $l$", ("\\tau", "l"),
+            (0, 2 * math.pi, 0, 4), "$l/r_0$", "$c\\tau/r_0$", SCU, EQUATOR, tau="tau", families=SIDEWAYS,
+            periodic=("l",)),
+    Diagram("self_creating_universe", "steady_state", "tx", "$\\tau$ and $x$", ("\\tau", "x"),
+            (-math.pi, math.pi, 0, 2 * math.pi), "$x/r_0$", "$c\\tau/r_0$", SCU, {"y": "0", "z": "0"}, tau="tau",
+            families=SIDEWAYS,
+            marked=(("event", {"x0": "0", "r": "1"}, 0, SCU_HORIZON_X, "future"),
+                    ("event", {"x0": "0", "r": "-1"}, 1, SCU_HORIZON_X, "future"))),
+    Diagram("self_creating_universe", "conformal", "through", "through the observer", ("\\eta", "\\rho"),
+            (0, 1, -1, 0), "$x/r_0$", "$\\eta/r_0$", SCU, EQUATOR, mirror=True, tau="eta", families=SIDEWAYS,
+            cones=(4, 6), where_is_infinity=True,
+            marked=(("event", {"x0": "-1/2", "r": "1/2"}, 0, "the Cauchy horizon, $\\rho = -\\eta$"),)),
     # The RP3 geon at r_s = 1: Kruskal's plane on the half X >= 0, whose edge X = 0 is glued to itself by the
     # antipodal map of the sphere, hatched beyond the singularities T^2 - X^2 = 1, with both horizons marked;
     # Schwarzschild's chart of the one exterior; and the isotropic chart on its one sheet rho > r_s/4.
@@ -7596,6 +7621,43 @@ CAPTIONS = {
         "A ray covers only a finite comoving distance however long it runs, $x = \\pm\\ell e^{-ct/\\ell} + $ const, "
         "so an observer at $x = 0$ has an event horizon. The chart holds one point of every antipodal pair off the "
         "null surface $t \\to -\\infty$, so it covers the whole space but that surface.",
+    ],
+    ("self_creating_universe", "static", "through"): [
+        "The static chart along a line through the observer in the plane $\\theta = \\pi/2$, over one period of "
+        "$t$: $x = r$ on the right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$, and the edges "
+        "$ct = 0$ and $ct = \\beta$ are one line. Between the horizons $x = \\pm r_0$ every vertical line is a "
+        "closed timelike curve, of proper length $\\beta\\sqrt{1 - r^2/r_0^2}$.",
+        "The cones close at $r = r_0$, the Cauchy horizon, where $g^{rr} = 1 - r^2/r_0^2$ vanishes and the "
+        "closed curves turn into closed null geodesics. Beyond it $t$ is a direction of space, still periodic, "
+        "and the cones point along the outgoing rays to larger $r$, which is there a time.",
+    ],
+    ("self_creating_universe", "kantowski_sachs", "plane"): [
+        "The plane of $\\tau$ and $l$ ($\\theta = \\pi/2$, $\\phi = 0$) beyond the Cauchy horizon, a cylinder "
+        "drawn unrolled, its edges $l = 0$ and $l = \\beta$ one line, with $g_{ll} = \\sinh^2(c\\tau/r_0)$. The "
+        "circle of $l$ has circumference $\\beta\\sinh(c\\tau/r_0)$, zero on the horizon $\\tau = 0$, and the "
+        "cones close up as it grows.",
+        "The light rays run as $l = l_0 \\pm r_0\\ln\\tanh(c\\tau/2r_0)$ for any length $l_0$, so a ray covers "
+        "only a finite stretch of $l$ after any $\\tau > 0$. At $\\beta = 2\\pi r_0$ two rays sent opposite "
+        "ways round the circle later than $c\\tau = 0.086\\,r_0$ never meet again.",
+    ],
+    ("self_creating_universe", "steady_state", "tx"): [
+        "The plane of $\\tau$ and $x$ ($y = z = 0$) over one period of $\\tau$, with $g_{xx} = e^{2c\\tau/r_0}$. "
+        "The boost carries the event at $\\tau$ and $x$ to the one at $\\tau + \\beta/c$ and "
+        "$e^{-\\beta/r_0}x$, so the top edge is the bottom edge shrunk by $e^{-2\\pi}$, and each curve "
+        "$xe^{c\\tau/r_0} = $ const closes on itself.",
+        "Between the two marked rays those curves are timelike, the closed timelike curves of the static "
+        "chart, and outside them spacelike, the circles of $l$. The rays themselves, $x = \\pm "
+        "r_0e^{-c\\tau/r_0}$, are the Cauchy horizon, which this chart crosses.",
+    ],
+    ("self_creating_universe", "conformal", "through"): [
+        "The conformal chart along a line through the observer in the plane $\\theta = \\pi/2$: $x = \\rho$ on "
+        "the right is $\\phi = 0$ and $x = -\\rho$ on the left is $\\phi = \\pi$. On it "
+        "$ds^2 = (r_0^2/\\eta^2)(-d\\eta^2 + dx^2)$, so light runs at 45°, and future infinity is the top "
+        "edge $\\eta = 0$.",
+        "The boost is a dilation about the middle of the top edge, so every straight line through that point "
+        "closes on itself after $\\eta$ shrinks by $e^{-\\beta/r_0}$. Inside the marked rays "
+        "$\\rho = -\\eta$, the Cauchy horizon, those lines are closed timelike curves, and outside they are "
+        "the spacelike circles of $l$.",
     ],
     ("rp3_geon", "kruskal", "plane"): [
         "The plane of $T$ and $X$ ($\\theta = \\pi/2$, $\\phi = 0$) on the half $X \\ge 0$. On it "
@@ -14116,6 +14178,18 @@ CLOSED_FORMS = {
         (lambda t, r: t + 0.5 * np.log(np.abs((1 + r) / (1 - r))),
          lambda t, r: t - 0.5 * np.log(np.abs((1 + r) / (1 - r))), lambda t, r: np.abs(r - 1) > 0.05),
     ("elliptic_de_sitter", "planar", "tx"): (lambda t, x: x - np.exp(-t), lambda t, x: x + np.exp(-t), None),
+    # Gott and Li's universe at r_0 = 1: the static chart's tortoise coordinate is artanh(r), a ray of the
+    # Kantowski-Sachs plane keeps l +- ln tanh(tau/2), the steady state chart's conformal time is -exp(-tau),
+    # and the conformal chart's rays keep eta +- rho.
+    ("self_creating_universe", "static", "through"):
+        (lambda t, r: t + 0.5 * np.log(np.abs((1 + r) / (1 - r))),
+         lambda t, r: t - 0.5 * np.log(np.abs((1 + r) / (1 - r))), lambda t, r: np.abs(r - 1) > 0.05),
+    ("self_creating_universe", "kantowski_sachs", "plane"):
+        (lambda tau, l: l + np.log(np.tanh(tau / 2)), lambda tau, l: l - np.log(np.tanh(tau / 2)),
+         lambda tau, l: tau > 0.05),
+    ("self_creating_universe", "steady_state", "tx"):
+        (lambda tau, x: x - np.exp(-tau), lambda tau, x: x + np.exp(-tau), None),
+    ("self_creating_universe", "conformal", "through"): (lambda e, r: e + r, lambda e, r: e - r, lambda e, r: e < -0.02),
     # The RP3 geon at r_s = 1: T -+ X in Kruskal's plane, Schwarzschild's r_* in the exterior, and the same
     # r_* of the areal radius rho (1 + 1/4 rho)^2 in the isotropic chart.
     ("rp3_geon", "kruskal", "plane"): (lambda T, X: T + X, lambda T, X: T - X, None),

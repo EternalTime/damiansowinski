@@ -5964,6 +5964,194 @@ def de_sitter(ck, src):
     return views
 
 
+SCU_BETA = 1.0          # a boost of rapidity 1, so that several copies fit the drawing
+
+
+def self_creating_universe(ck, src):
+    """Gott and Li's de Sitter space identified under a boost, on the global square of the de Sitter
+    space that covers it, one view per chart, each tinting one copy between two lines the boost
+    carries onto one another, drawn at r_0 = 1.
+
+    The square is de Sitter's, X = chi across and T up, with Gott and Li's V = tan T,
+    W = cos(chi)/cos T and sqrt(X^2 + Y^2 + Z^2) = sin(chi)/cos T. The boost in the plane of V and
+    W keeps the last, and each of the four triangles the diagonals cut the square into: the left
+    one, W > |V|, is their region R, which the static chart covers by ds_static_pq; the top one,
+    V > |W|, their region F, which the Kantowski-Sachs chart covers with V = sinh(tau) cosh(l) and
+    W = sinh(tau) sinh(l); and the steady state chart and its conformal time eta = -exp(-tau) cover
+    the half W + V > 0 as p, q = pi/4 + arctan(eta -+ rho). The boost is t -> t + beta,
+    l -> l + beta, tau -> tau + beta with x shrunk by exp(-beta), and eta and rho shrunk by
+    exp(-beta). At beta = 2 pi, the value the other diagrams are drawn at, one copy fills the
+    drawing to within a pixel, so these views are drawn at beta = 1. Each chart is checked against
+    the published metric and against the hyperboloid."""
+    beta = SCU_BETA
+    params = {"r_0": 1, "beta": repr(beta)}
+    settings = f"$\\beta = {beta:g}\\,r_0$, a boost of rapidity $1$, and $r_0 = 1$."
+    ks = range(-5, 6)
+
+    def from_hyperboloid(V, W, R):
+        T, chi = np.arctan(V), np.arctan2(R, W)
+        return (T - chi) / 2, (T + chi) / 2
+
+    def ks_pq(tau, l):
+        tau, l = np.asarray(tau, dtype=float), np.asarray(l, dtype=float)
+        return from_hyperboloid(np.sinh(tau) * np.cosh(l), np.sinh(tau) * np.sinh(l), np.cosh(tau))
+
+    def conformal_pq(eta, rho):
+        eta, rho = np.asarray(eta, dtype=float), np.asarray(rho, dtype=float)
+        return Q4 + np.arctan(eta - rho), Q4 + np.arctan(eta + rho)
+
+    def steady_pq(tau, x):
+        return conformal_pq(-np.exp(-np.asarray(tau, dtype=float)), x)
+
+    planes = {
+        "static": Plane(src, "self_creating_universe", "static", ("t", "r"), EQUATOR, params),
+        "kantowski_sachs": Plane(src, "self_creating_universe", "kantowski_sachs", ("\\tau", "l"), EQUATOR, params),
+        "steady_state": Plane(src, "self_creating_universe", "steady_state", ("\\tau", "x"), {"y": "0", "z": "0"}, params),
+        "conformal": Plane(src, "self_creating_universe", "conformal", ("\\eta", "\\rho"), EQUATOR, params),
+    }
+    ck.chart("Gott-Li static", planes["static"], ds_static_pq, ck.uniform(-10, 10), ck.uniform(0.001, 0.999),
+             lambda t, r: (1, 0))
+    ck.chart("Gott-Li Kantowski-Sachs", planes["kantowski_sachs"], ks_pq, ck.uniform(0.01, 5), ck.uniform(-4, 4),
+             lambda tau, l: (1, 0))
+    ck.chart("Gott-Li steady state", planes["steady_state"], steady_pq, ck.uniform(-4, 4), ck.uniform(0.001, 20),
+             lambda tau, x: (1, 0))
+    ck.chart("Gott-Li conformal", planes["conformal"], conformal_pq, ck.uniform(-20, -0.01), ck.uniform(0.001, 20),
+             lambda eta, rho: (1, 0))
+
+    def lands(name, pq, V, W, R):
+        X0, X4, R3 = ds_hyperboloid(*pq)
+        scale = 1 + np.abs(V) + np.abs(W) + np.abs(R)
+        ck.limit(f"Gott-Li: the {name} chart lands where the hyperboloid puts it",
+                 np.concatenate([(X0 - V) / scale, (X4 - W) / scale, (R3 - R) / scale]), 0, 1e-9)
+
+    t, r = ck.uniform(-6, 6, 2000), ck.uniform(0, 0.999, 2000)
+    lands("static", ds_static_pq(t, r), np.sqrt(1 - r ** 2) * np.sinh(t), np.sqrt(1 - r ** 2) * np.cosh(t), r)
+    tau, l = ck.uniform(0.01, 4, 2000), ck.uniform(-3, 3, 2000)
+    lands("Kantowski-Sachs", ks_pq(tau, l), np.sinh(tau) * np.cosh(l), np.sinh(tau) * np.sinh(l), np.cosh(tau))
+    tau, x = ck.uniform(-3, 3, 2000), ck.uniform(0, 8, 2000)
+    a = np.exp(tau)
+    lands("steady state", steady_pq(tau, x), np.sinh(tau) + x ** 2 * a / 2, np.cosh(tau) - x ** 2 * a / 2, a * x)
+    eta, rho = ck.uniform(-8, -0.05, 2000), ck.uniform(0, 8, 2000)
+    lands("conformal", conformal_pq(eta, rho), (eta ** 2 - rho ** 2 - 1) / (2 * eta),
+          (rho ** 2 - eta ** 2 - 1) / (2 * eta), -rho / eta)
+    # The boost of rapidity beta in the plane of V and W is each chart's stated identification.
+    ch, sh = math.cosh(beta), math.sinh(beta)
+
+    def boosted(name, before, after):
+        V, W, R = ds_hyperboloid(*before)
+        V2, W2, R2 = ds_hyperboloid(*after)
+        scale = 1 + np.abs(V) + np.abs(W)
+        ck.limit(f"Gott-Li: the {name} chart's identification is the boost",
+                 np.concatenate([(V2 - V * ch - W * sh) / scale, (W2 - W * ch - V * sh) / scale, (R2 - R) / scale]),
+                 0, 1e-9)
+
+    t, r = ck.uniform(-3, 3, 500), ck.uniform(0, 0.99, 500)
+    boosted("static", ds_static_pq(t, r), ds_static_pq(t + beta, r))
+    tau, l = ck.uniform(0.05, 3, 500), ck.uniform(-2, 2, 500)
+    boosted("Kantowski-Sachs", ks_pq(tau, l), ks_pq(tau, l + beta))
+    tau, x = ck.uniform(-2, 2, 500), ck.uniform(0, 4, 500)
+    boosted("steady state", steady_pq(tau, x), steady_pq(tau + beta, math.exp(-beta) * x))
+    eta, rho = ck.uniform(-4, -0.1, 500), ck.uniform(0, 4, 500)
+    boosted("conformal", conformal_pq(eta, rho), conformal_pq(math.exp(-beta) * eta, math.exp(-beta) * rho))
+    p, q = ds_static_pq(np.array([0.0, 3, -3]), np.full(3, 1 - 1e-14))
+    ck.limit("Gott-Li: r -> r_0 lands on the Cauchy horizons q = pi/4 (t > 0) and p = -pi/4 (t < 0)",
+             [q[0], q[1], p[2]], [Q4, Q4, -Q4], 1e-6)
+    p, q = ks_pq(np.full(5, 1e-9), np.linspace(-2, 2, 5))
+    ck.limit("Gott-Li: tau -> 0 of the Kantowski-Sachs chart lands on the centre of the square",
+             np.concatenate([p + q, q - p]), np.concatenate([np.zeros(5), np.full(5, HALF)]), 1e-6)
+    ck.finite("Gott-Li: the Cauchy horizon is regular",
+              planes["steady_state"].kretschmann(ck.uniform(-2, 2, 50), np.exp(-ck.uniform(-2, 2, 50))))
+
+    box = [-0.35, PI + 0.35, -HALF - 0.3, HALF + 0.3]
+    square = [[0, -HALF], [PI, -HALF], [PI, HALF], [0, HALF]]
+
+    def frame(v):
+        v.fill("region", square)
+        v.line("scri", [[[0, HALF], [PI, HALF]], [[0, -HALF], [PI, -HALF]]])
+        v.line("centre", [[[0, -HALF], [0, HALF]], [[PI, -HALF], [PI, HALF]]])
+        v.line("horizon", [[[0, -HALF], [PI, HALF]], [[0, HALF], [PI, -HALF]]])
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "b", dy=-5)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "t", dy=5)
+        v.label_xt([0, -1.25], "observer", "r", "coord", dx=-6)
+        v.label_xt([PI, -1.25], "antipode", "l", "coord", dx=6)
+        v.legend("scri", "future and past infinity $\\mathscr{I}^\\pm$, spacelike")
+        v.legend("centre", "$r = 0$ of the observer and of its antipode")
+        v.legend("horizon", "the Cauchy horizons $r = r_0$, made of closed null geodesics")
+
+    def band(lower, upper):
+        """The region between two curves given as (p, q) arrays that run the same way."""
+        a, b = xt(*lower)
+        c, d = xt(*upper)
+        return [[float(x), float(y)] for x, y in zip(np.concatenate([a, c[::-1]]), np.concatenate([b, d[::-1]]))]
+
+    # Each moment of the inflating region, c tau = tau_k of the Kantowski-Sachs chart over every l, is one
+    # curve of the square, which the steady state and conformal views draw as well.
+    moments = slices.moments("self_creating_universe")
+    s_l = np.linspace(-30, 30, 1201)
+    views = []
+    s_r = spread(0, 1, 500, 14)
+    v = View("static", "Static", box, "static")
+    frame(v)
+    v.fill("cover", band(ds_static_pq(0 * s_r, s_r), ds_static_pq(0 * s_r + beta, s_r)))
+    grid(v, "r", lambda r, t: ds_static_pq(t, r), (0.3, 0.6, 0.85, 0.97), S_ALL)
+    grid(v, "t", ds_static_pq, [k * beta for k in ks], s_r)
+    v.label_xt([PI * 0.82, 0.0], "the antipode's closed timelike curves", cls="region")
+    v.label_xt([HALF, 1.05], "inflating", cls="region")
+    v.label_xt([HALF, -1.05], "contracting", cls="region")
+    v.legend("cover", "one copy of the region of closed timelike curves, $0 \\le ct < \\beta$")
+    v.legend("r", "$r$ constant, each a closed timelike curve, at $0.3$, $0.6$, $0.85$ and $0.97$ times $r_0$")
+    v.legend("t", "$ct = k\\beta$ for integer $k$, each the same line of the universe")
+    v.set(settings=settings)
+    views.append(v)
+
+    s_tau = np.geomspace(1e-6, 30, 500)
+    v = View("kantowski_sachs", "Kantowski-Sachs", box, "kantowski_sachs")
+    frame(v)
+    v.fill("cover", band(ks_pq(s_tau, 0 * s_tau), ks_pq(s_tau, 0 * s_tau + beta)))
+    grid(v, "t", ks_pq, (0.25, 0.5, 1, 2), np.linspace(-30, 30, 1201))
+    grid(v, "r", lambda l, tau: ks_pq(tau, l), [k * beta for k in ks], s_tau)
+    v.label_xt([PI * 0.18, 0.0], "closed timelike curves", cls="region")
+    v.legend("cover", "one copy of the inflating region, $0 \\le l < \\beta$")
+    v.legend("t", "$c\\tau$ constant, at $1/4$, $1/2$, $1$ and $2$ times $r_0$")
+    v.legend("r", "$l = k\\beta$ for integer $k$, each the same line of the universe")
+    v.set(settings=settings)
+    for m in moments:
+        v.slice(m, [ks_pq(np.full_like(s_l, m.time), s_l)])
+    views.append(v)
+
+    s_x = spread(0, np.inf, 500, 12)
+    v = View("steady_state", "Steady state", box, "steady_state")
+    frame(v)
+    v.fill("cover", band(steady_pq(0 * s_x, s_x), steady_pq(0 * s_x + beta, s_x)))
+    grid(v, "t", steady_pq, [k * beta for k in range(-3, 6)], s_x)
+    grid(v, "r", lambda x, tau: steady_pq(tau, x), (0.25, 0.5, 1, 2, 4), S_ALL)
+    v.line("chartedge", [[[0, -HALF], [PI, HALF]]])
+    v.legend("cover", "one copy of Gott and Li's universe, $0 \\le c\\tau < \\beta$")
+    v.legend("t", "$c\\tau = k\\beta$ for integer $k$, each the same moment of the universe")
+    v.legend("r", "$\\rho = \\sqrt{x^2 + y^2 + z^2}$ constant, at $1/4$, $1/2$, $1$, $2$ and $4$ times $r_0$")
+    v.legend("chartedge", "$\\tau \\to -\\infty$, where the coordinates end")
+    v.set(settings=settings)
+    for m in moments:
+        v.slice(m, [ks_pq(np.full_like(s_l, m.time), s_l)])
+    views.append(v)
+
+    v = View("conformal", "Conformal", box, "conformal")
+    frame(v)
+    v.fill("cover", band(conformal_pq(0 * s_x - 1, s_x), conformal_pq(0 * s_x - math.exp(-beta), s_x)))
+    grid(v, "t", conformal_pq, [-math.exp(-k * beta) for k in range(-3, 6)], s_x)
+    grid(v, "r", lambda rho, eta: conformal_pq(eta, rho), (0.25, 0.5, 1, 2, 4), -np.geomspace(1e-6, 1e6, 500))
+    v.line("chartedge", [[[0, -HALF], [PI, HALF]]])
+    v.legend("cover", "one copy of Gott and Li's universe, $-r_0 \\le \\eta < -r_0e^{-\\beta/r_0}$")
+    v.legend("t", "$\\eta = -r_0e^{-k\\beta/r_0}$ for integer $k$, each the same moment of the universe")
+    v.legend("r", "$\\rho$ constant, at $1/4$, $1/2$, $1$, $2$ and $4$ times $r_0$")
+    v.legend("chartedge", "$\\eta \\to -\\infty$, where the coordinates end")
+    v.set(settings=settings)
+    for m in moments:
+        v.slice(m, [ks_pq(np.full_like(s_l, m.time), s_l)])
+    views.append(v)
+    return views
+
+
 def elliptic_de_sitter(ck, src):
     """Half of de Sitter's global square, the hyperboloid -X0^2 + X1^2 + ... + X4^2 = l^2 with X and
     -X one event, drawn at l = 1.
@@ -21658,6 +21846,7 @@ DRAWN = {
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "hiscock": hiscock, "bardeen": bardeen, "mass_inflation": mass_inflation,
     "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "kerr_taub_nut": kerr_taub_nut, "de_sitter": de_sitter,
     "elliptic_de_sitter": elliptic_de_sitter,
+    "self_creating_universe": self_creating_universe,
     "rp3_geon": rp3_geon,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "boulware_deser": boulware_deser, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
@@ -23282,6 +23471,44 @@ CAPTIONS = {
         "$q = \\pi/4 + \\arctan(H\\eta + H\\rho/c)$, with $\\rho^2 = x^2 + y^2 + z^2$.",
         "The slicing covers the half above the observer's past horizon, so its $t \\to -\\infty$ "
         "is a null line where the coordinates end, and the spacetime goes on below it.",
+    ],
+    ("self_creating_universe", "static"): [
+        "De Sitter space, the hyperboloid $W^2 + X^2 + Y^2 + Z^2 - V^2 = r_0^2$ in flat space of five dimensions "
+        "with coordinates $V, W, X, Y, Z$, each event identified with its images under a boost in the plane of "
+        "$V$ and $W$, drawn on the square of the de Sitter space that covers it, each point in the diagram a "
+        "2-sphere. The static chart enters as $\\tan p = \\tanh(u/2r_0)$ and $\\tan q = \\tanh(v/2r_0)$, with "
+        "$u, v = ct \\mp r_0\\,\\mathrm{artanh}(r/r_0)$, and covers the triangle about the observer on the left edge.",
+        "The boost carries each line $ct = k\\beta$ onto the next, and one copy of the region lies between two "
+        "neighbouring lines, which are one line of it. In the quotient each curve of constant $r$ is a closed "
+        "timelike curve, and the two null lines through the centre of the square are the Cauchy horizons. The boost "
+        "leaves every point of the sphere at the centre where it is, and there the quotient is no manifold.",
+    ],
+    ("self_creating_universe", "kantowski_sachs"): [
+        "The region to the future of both Cauchy horizons in the Kantowski-Sachs chart, "
+        "$V = r_0\\sinh(c\\tau/r_0)\\cosh(l/r_0)$ and $W = r_0\\sinh(c\\tau/r_0)\\sinh(l/r_0)$ on the hyperboloid, "
+        "each point in the diagram a 2-sphere of radius $r_0\\cosh(c\\tau/r_0)$. Lines of constant $l$ leave the "
+        "centre of the square and end on future infinity, and the boost carries each line $l = k\\beta$ onto the next.",
+        "Each curve of constant $\\tau$ is, in the quotient, a circle of circumference "
+        "$\\beta\\sinh(c\\tau/r_0)$, which grows from zero on the horizons. The region holds no closed causal curve.",
+    ],
+    ("self_creating_universe", "steady_state"): [
+        "The half of the square above the observer's past horizon in the steady state chart, which enters as "
+        "$p = \\pi/4 + \\arctan((\\eta - \\rho)/r_0)$ and $q = \\pi/4 + \\arctan((\\eta + \\rho)/r_0)$ with "
+        "$\\eta = -r_0e^{-c\\tau/r_0}$ and $\\rho^2 = x^2 + y^2 + z^2$, each point in the diagram a 2-sphere. The "
+        "chart covers the triangle of closed timelike curves about the observer, the inflating triangle at the top, "
+        "and the Cauchy horizon between them.",
+        "The boost carries each flat slice $c\\tau = k\\beta$ onto the next, shrunk by $e^{-\\beta/r_0}$, and one "
+        "copy lies between two neighbouring slices. One copy holds the whole of Gott and Li's universe, closed "
+        "timelike curves below the horizon and inflation above it.",
+    ],
+    ("self_creating_universe", "conformal"): [
+        "The half of the square above the observer's past horizon in the conformal chart, "
+        "$p = \\pi/4 + \\arctan((\\eta - \\rho)/r_0)$ and $q = \\pi/4 + \\arctan((\\eta + \\rho)/r_0)$, each point "
+        "in the diagram a 2-sphere. Future infinity is $\\eta = 0$, the top edge, and the Cauchy horizon is the null "
+        "line $\\rho = -\\eta$ from the centre of the square to the top of the left edge.",
+        "The boost shrinks $\\eta$ and $\\rho$ by $e^{-\\beta/r_0}$, which carries each slice "
+        "$\\eta = -r_0e^{-k\\beta/r_0}$ onto the next. One copy lies between two neighbouring slices, and the copies "
+        "crowd toward future infinity.",
     ],
     ("elliptic_de_sitter", "global"): [
         "Elliptic de Sitter space, the hyperboloid $-X_0^2 + X_1^2 + \\dots + X_4^2 = \\ell^2$ with $X$ and $-X$ one "

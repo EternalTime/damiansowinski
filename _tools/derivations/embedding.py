@@ -9152,6 +9152,48 @@ def misner(ck, src):
 
 
 
+SCU_MOMENTS = (0.25, 0.5, 1.0, 1.5)            # c tau in the de Sitter radius r_0
+
+
+def self_creating_universe(ck, src):
+    """The inflating region of Gott and Li's universe in the Kantowski-Sachs chart, at r_0 = 1 and
+    their beta = 2 pi r_0, where l runs once round 2 pi. The slice phi = 0 of one moment tau has the
+    metric cosh^2(tau) dtheta^2 + sinh^2(tau) dl^2: a flat cylinder of radius sinh(tau) about the
+    axis theta, z = cosh(tau)(theta - pi/2), from one pole of the sphere to the other. Drawn at four
+    moments as the closed direction opens from the Cauchy horizon tau = 0, and played as a movie
+    with a frame every 0.025 r_0 of c tau."""
+    size = 2 * math.pi * math.cosh(max(SCU_MOMENTS)) / 2 + 1.0
+
+    def moment(ct):
+        sl = Slice(src, "self_creating_universe", "kantowski_sachs", "\\theta", "l", {"tau": repr(ct), "phi": 0},
+                   {"r_0": 1, "beta": "2*pi"})
+        z0 = -math.cosh(ct) * math.pi / 2
+        tube = Piece("tube", "sheet", sl, 0.0, math.pi, z0, 1,
+                     (("edge", "the pole $\\theta = 0$, where the slice runs on into $\\phi = \\pi$"),
+                      ("edge", "the pole $\\theta = \\pi$, where the slice runs on into $\\phi = \\pi$")),
+                     [(math.pi / 4, "r", None), (math.pi / 2, "r", None), (3 * math.pi / 4, "r", None)], size)
+        where = f"Gott-Li, the cylinder at c tau = {ct:g}"
+        ck.isometry(where, tube)
+        ck.radius(f"{where}, rho = sinh(c tau)", tube, lambda th, ct=ct: np.full_like(th, math.sinh(ct)), size)
+        ck.form(f"{where}, z = cosh(c tau)(theta - pi/2)", tube,
+                lambda th, ct=ct: math.cosh(ct) * (th - math.pi / 2), size)
+        return Surface([tube], label=f"$c\\tau = {ct:g}$", time=ct)
+
+    # The movie runs through the moments at a steady tau, a frame every 0.025 r_0 of c tau.
+    times, keys = movie_values(list(SCU_MOMENTS), 0.025)
+    frames = [moment(round(ct, 9)) for ct in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the slice $\\phi = 0$ of a moment of constant $\\tau$, which $l$ and $\\theta$ cover")
+    fig.legend("line", "r", "$\\theta$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$, each a circle of "
+                            "circumference $\\beta\\sinh(c\\tau/r_0)$")
+    fig.legend("line", "meridian", "$l$ constant, every $\\beta/12$")
+    return [view("cylinders", "The inflating region", "$r_0$", surfaces, fig.done(),
+                 movie=movie(frames, "$c\\tau$", [f.time for f in frames]),
+                 settings="$\\beta = 2\\pi r_0$, and $r_0 = 1$, the unit of every length.")]
+
+
+
 GOTT_MOMENTS = (-2.0, -1.0, -0.5, -0.25)       # c tau in the length l
 
 
@@ -15004,6 +15046,7 @@ DRAWN = {
     "hotta_tanaka": hotta_tanaka,
     "schwarzschild": schwarzschild,
     "misner": misner,
+    "self_creating_universe": self_creating_universe,
     "gott_time_machine": gott_time_machine,
     "wormhole_time_machine": wormhole_time_machine,
     "ori_time_machine": ori_time_machine,
@@ -17103,6 +17146,17 @@ CAPTIONS = {
         "circumference $\\psi_0c|t|/2$, here $2\\pi c|t|$.",
         "The cylinders narrow as $t$ climbs toward $0$, where the circles become the closed null geodesics of "
         "the chronology horizon. Beyond it, where $T > 0$, the same circles are closed timelike curves.",
+    ],
+    ("self_creating_universe", "cylinders"): [
+        "The slice $\\phi = 0$ of Gott and Li's universe as the time $c\\tau$ since the Cauchy horizon runs from "
+        "$0.25\\,r_0$ to $1.5\\,r_0$, each moment drawn as a surface in flat space with every distance along it "
+        "the metric distance. On it the metric is $r_0^2\\cosh^2(c\\tau/r_0)\\,d\\theta^2 + "
+        "\\sinh^2(c\\tau/r_0)\\,dl^2$ with $l$ periodic in $\\beta$, so each moment is a flat cylinder of "
+        "circumference $\\beta\\sinh(c\\tau/r_0)$ and length $\\pi r_0\\cosh(c\\tau/r_0)$, from one pole "
+        "of the sphere to the other.",
+        "The cylinders open from a line on the Cauchy horizon $\\tau = 0$, where the circles are closed null "
+        "geodesics, and widen and lengthen as the universe inflates. Before the horizon the same circles are "
+        "closed timelike curves.",
     ],
     ("ori_time_machine", "throat"): [
         "The slice $y = 0$ of Ori's vacuum core as $t$ runs from $-2\\,\\ell^2$ to $-0.1\\,\\ell^2$, each moment "

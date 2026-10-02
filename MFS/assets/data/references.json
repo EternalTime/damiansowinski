@@ -1,5 +1,5 @@
 {
-  "version": "e4b93aa4d6ad109d",
+  "version": "8d74f88157b239ab",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -27673,6 +27673,107 @@
         "eprint": "1507.05534",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/1507.05534"
+      }
+    },
+    "gott1998": {
+      "type": "article",
+      "fields": {
+        "title": "Can the Universe create itself?",
+        "author": "Gott, III, J. Richard and Li, Li-Xin",
+        "journal": "Physical Review D",
+        "volume": "58",
+        "number": "2",
+        "pages": "023501",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.58.023501",
+        "eprint": "astro-ph/9712344",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/astro-ph/9712344"
+      }
+    },
+    "cassidy1998": {
+      "type": "article",
+      "fields": {
+        "title": "Models for chronology selection",
+        "author": "Cassidy, M. J. and Hawking, S. W.",
+        "journal": "Physical Review D",
+        "volume": "57",
+        "number": "4",
+        "pages": "2372--2380",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.57.2372",
+        "eprint": "hep-th/9709066",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9709066"
+      }
+    },
+    "hiscock2000": {
+      "type": "misc",
+      "fields": {
+        "title": "Quantized fields and chronology protection",
+        "author": "Hiscock, William A.",
+        "year": "2000",
+        "eprint": "gr-qc/0009061",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0009061"
+      }
+    },
+    "vilenkin1982": {
+      "type": "article",
+      "fields": {
+        "title": "Creation of universes from nothing",
+        "author": "Vilenkin, Alexander",
+        "journal": "Physics Letters B",
+        "volume": "117",
+        "number": "1--2",
+        "pages": "25--28",
+        "year": "1982",
+        "doi": "10.1016/0370-2693(82)90866-8",
+        "url": "https://doi.org/10.1016/0370-2693(82)90866-8"
+      }
+    },
+    "hartle1983": {
+      "type": "article",
+      "fields": {
+        "title": "Wave function of the Universe",
+        "author": "Hartle, J. B. and Hawking, S. W.",
+        "journal": "Physical Review D",
+        "volume": "28",
+        "number": "12",
+        "pages": "2960--2975",
+        "year": "1983",
+        "doi": "10.1103/PhysRevD.28.2960",
+        "url": "https://doi.org/10.1103/PhysRevD.28.2960"
+      }
+    },
+    "bordevilenkin1994": {
+      "type": "article",
+      "fields": {
+        "title": "Eternal inflation and the initial singularity",
+        "author": "Borde, Arvind and Vilenkin, Alexander",
+        "journal": "Physical Review Letters",
+        "volume": "72",
+        "number": "21",
+        "pages": "3305--3308",
+        "year": "1994",
+        "doi": "10.1103/PhysRevLett.72.3305",
+        "eprint": "gr-qc/9312022",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9312022"
+      }
+    },
+    "farhi1990": {
+      "type": "article",
+      "fields": {
+        "title": "Is it possible to create a universe in the laboratory by quantum tunneling?",
+        "author": "Farhi, Edward and Guth, Alan H. and Guven, Jemal",
+        "journal": "Nuclear Physics B",
+        "volume": "339",
+        "number": "2",
+        "pages": "417--490",
+        "year": "1990",
+        "doi": "10.1016/0550-3213(90)90357-J",
+        "url": "https://doi.org/10.1016/0550-3213(90)90357-J"
       }
     }
   }

@@ -67,6 +67,11 @@
       "id": "tippett_tsang",
       "kind": "family",
       "text": "A time machine that fits in a box. Tippett and Tsang counted Gott's strings among the models that need matter spread out to infinity, and built a compact bubble in 2017, whose wall needs exotic matter [tippett2017]."
+    },
+    {
+      "id": "self_creating_universe",
+      "kind": "programme",
+      "text": "Seven years after the strings, Gott and Li-Xin Li put closed timelike curves at the beginning of the universe: de Sitter space identified under a boost [gott1998]."
     }
   ],
   "references": [
@@ -92,7 +97,8 @@
     "dedeo2002",
     "morris1988prl",
     "ori2005",
-    "tippett2017"
+    "tippett2017",
+    "gott1998"
   ],
   "coordinates": [
     {
