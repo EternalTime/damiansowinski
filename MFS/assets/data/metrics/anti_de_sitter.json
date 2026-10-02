@@ -112,6 +112,11 @@
       "id": "ads_soliton",
       "kind": "generalisation",
       "text": "Anti-de Sitter space with one flat direction wound into a circle that shrinks to a point at a smooth tip, $r_0$ from the Poincaré horizon. It weighs less than anti-de Sitter space with the same circle [horowitz1998]."
+    },
+    {
+      "id": "lifshitz_spacetime",
+      "kind": "generalisation",
+      "text": "The Poincaré chart with time rescaled by a power of its own, $t \\to \\lambda^z t$ while $x \\to \\lambda x$. For $z > 1$ the Poincaré horizon turns into a null singularity [kachru2008, copsey2011]."
     }
   ],
   "references": [
@@ -151,7 +156,9 @@
     "chamblin1999",
     "boulware1985",
     "charmousis2008",
-    "horowitz1998"
+    "horowitz1998",
+    "kachru2008",
+    "copsey2011"
   ],
   "coordinates": [
     {

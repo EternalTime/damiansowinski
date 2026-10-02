@@ -73,6 +73,11 @@
       "id": "israel_wilson_perjes",
       "kind": "family",
       "text": "Tod's other class. A spacetime with a supercovariantly constant spinor is a pp-wave where the spinor's Killing vector is null everywhere, and one of Israel, Wilson, and Perjés's fields where it is timelike [tod1983, chrusciel2006]."
+    },
+    {
+      "id": "lifshitz_spacetime",
+      "kind": "family",
+      "text": "A spacetime whose null singularity is that of a singular plane wave, so strings falling into it behave as they do in one [horowitz2012lifshitz]."
     }
   ],
   "references": [
@@ -107,7 +112,8 @@
     "siklos1985",
     "podolsky1998",
     "tod1983",
-    "chrusciel2006"
+    "chrusciel2006",
+    "horowitz2012lifshitz"
   ],
   "coordinates": [
     {

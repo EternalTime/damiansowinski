@@ -4163,10 +4163,12 @@ class TurningLightConeFigures(unittest.TestCase):
     def test_only_the_flat_figures_of_light_rays_do_not_turn(self):
         # The cosmic string's beam lies in the plane t = 0 seen from straight above, drawn in the plane's
         # own flat coordinates, and the rays along Bonnor's beam of light in the plane y = 0 seen from the
-        # side, t left out, so neither has another side.
+        # side, t left out, so neither has another side; Lifshitz spacetime's rays lie in its plane y = 0
+        # seen the same way.
         still = {f"{name}/{figure['id']}" for name, data in diagram_files().items()
                  for figures in data.get("projections", {}).values() for figure in figures if "turn" not in figure}
-        self.assertEqual(still, {"cosmic_string/beam", "light_beam/lens", "point_particle_2plus1/beam"})
+        self.assertEqual(still, {"cosmic_string/beam", "light_beam/lens", "lifshitz_spacetime/rays",
+                                 "point_particle_2plus1/beam"})
 
 
 class TurningUnderTheHand(unittest.TestCase):
@@ -4610,6 +4612,9 @@ class Slices(unittest.TestCase):
               # are embedded, and the plane y = 0 with t left out, which every wave front covers whole.
               "light_beam/null_cartesian/midway", "light_beam/null_cartesian/one", "conformal light_beam/midway",
               "light_beam/cartesian/lens",
+              # Lifshitz spacetime's plane y = 0 with t left out, which every moment of the static spacetime
+              # covers whole.
+              "lifshitz_spacetime/poincare/rays",
               # The near-NHEK patch of the extreme Kerr throat, ct > r_0^2/r of the Poincare chart, which
               # the moment tau = 0 embedded does not enter.
               "near_horizon_extreme_kerr/near_nhek/equator", "conformal near_horizon_extreme_kerr/near_nhek",
@@ -5441,6 +5446,23 @@ class Slices(unittest.TestCase):
         if key == "randall_sundrum/poincare/tz":
             # One side, from the wall at z = 1/k to z = e^{ky}/k of the farthest circle.
             return (lambda X: 0.0), [1.0, math.exp(self.reach(surface)[1])]
+        if key.startswith("lifshitz_spacetime/"):
+            # Lifshitz spacetime's moment t = 0 at z = 2 and L = 1, over the embedding's reach in the proper
+            # distance rho: r = e^rho, u = e^-rho, w = e^(-2 rho)/2 and s = e^(2 rho); in the two null charts
+            # it is the curve v = -w, drawn against v - r and v - s/2; and on a plane of t and x the line
+            # t = 0 over the strip 0 <= x < 2 pi L.
+            lo, hi = self.reach(surface)
+            view_id = key.rsplit("/", 1)[1]
+            if view_id.startswith("tx_"):
+                return (lambda X: 0.0), [0.0, 2 * math.pi]
+            return {
+                "tr": ((lambda X: 0.0), [math.exp(lo), math.exp(hi)]),
+                "tu": ((lambda X: 0.0), [math.exp(-hi), math.exp(-lo)]),
+                "trho": ((lambda X: 0.0), [lo, hi]),
+                "tw": ((lambda X: 0.0), [0.5 * math.exp(-2 * hi), 0.5 * math.exp(-2 * lo)]),
+                "vr": ((lambda X: -0.5 / max(X, 1e-9) ** 2 - X), [math.exp(lo), math.exp(hi)]),
+                "vs": ((lambda X: -0.5 / max(X, 1e-9) - X / 2), [math.exp(2 * lo), math.exp(2 * hi)]),
+            }[view_id]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))

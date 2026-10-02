@@ -590,6 +590,15 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `flat/after`: the moment $11\,m_0$ is the level line $(u + v)/2 = 11\,m_0$ from the centre to the last ray $u_0$, at $r = 3m_0/2$.
 - `history`, the conformal diagram: each moment is one curve from the centre or the singularity out to $r = 6\,m_0$, through the ingoing chart's map inside the surface of pair creation and the outgoing chart's outside it.
 
+### Lifshitz spacetime
+
+- The embedding has one view in units of $L$: the moment $t = 0$, $y = 0$ of the proper distance chart, the strip $0 \le x < 2\pi L$ rolled up, from $\rho = -3L$ to $L\ln 3$, the same surface for every $z$.
+- `kachru_liu_mulligan/tr`, `poincare/tu`, `proper_distance/trho` and `tortoise/tw`, at $z = 2$: the line $t = 0$ over the embedding's reach, $r = Le^{\rho/L}$ from $0.050\,L$ to $3L$, $u = L^2/r$ from $L/3$ to the box's edge, $\rho$ across the whole box, and $w = L^3/2r^2$ from $L/18$ to the box's edge.
+- `eddington_finkelstein/vr` and `affine/vs`: with $v = ct - w$ the moment is the curve $v = -w$, which is $v = -L^3/2r^2$ and $v = -L^2/2s$, running off the foot of the box toward the singularity.
+- `poincare/tx_half`, `tx_one` and `tx_two`: each plane of constant depth meets the moment along the line $t = 0$ over the strip, from $x = 0$ to the box's edge at $3L$.
+- `poincare/rays`, the figure, marks nothing: its plane is $y = 0$ with $t$ left out, which every moment of the static spacetime covers whole.
+- The conformal diagram, one view for each chart: the curve $T = 0$ from $w = L/18$ to $w = e^6L/2$, the same curve on all six.
+
 ### Siklos waves
 
 - The embedding has one view in units of $L$: the wave front $u = v = 0$, read on the disc of the chart of Ozsváth, Robinson and Rózga out to the circle a proper distance $2L$ from its centre, $\xi^2 + \eta^2 = 4L^2\tanh^2 1$.
@@ -704,6 +713,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Tolman-Bondi | not visible | none | none drawn |
 | TOV | line, line | none | line |
 | Hiscock | level lines in each chart that holds the moment; not visible on the two shells | none | six curves |
+| Lifshitz | line in each static chart and on each plane of $t$ and $x$, curve in each null chart | not visible: $t$ left out | six curves |
 | Vaidya | three lines, four with the box taken to $-3\,r_s$; not visible on the outgoing view | none | four curves |
 
 As drawn in 4de26cc, the Krasnikov tube's slice is a line, Reissner-Nordström's are two lines, and Vaidya's ingoing view carries all four lines.

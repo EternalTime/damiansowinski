@@ -12428,6 +12428,227 @@ def israel_wilson_perjes_maxwell(chart):
 CHARTS["israel_wilson_perjes"] = [lambda s=s: israel_wilson_perjes(s) for s in IWP_CHARTS]
 
 
+# -- Lifshitz spacetime ----------------------------------------------------------------
+
+LIFSHITZ_CHARTS = ["kachru_liu_mulligan", "poincare", "proper_distance", "tortoise", "eddington_finkelstein",
+                   "affine"]
+LIFSHITZ_KLM = "\\left(\\dfrac{r}{L}\\right)"
+LIFSHITZ_DEPTH = "\\left(\\dfrac{L}{u}\\right)"
+LIFSHITZ_TORTOISE = "\\left(\\dfrac{L}{zw}\\right)"
+LIFSHITZ_AFFINE = "\\left(\\dfrac{zs}{2L}\\right)"
+LIFSHITZ_PLANE = "\\left(dx^2 + dy^2\\right)"
+
+
+def lifshitz_spacetime(system):
+    """Kachru, Liu and Mulligan's spacetime, -(r/L)^{2z} c^2 dt^2 + (r/L)^2 (dx^2 + dy^2) +
+    L^2 dr^2/r^2, in the six charts its literature uses, each with the coordinates carrying their
+    dimensions: their own (2.1), with r growing toward the boundary; the inverse radius
+    u = L^2/r of their (3.1), of Horava and Melby-Thompson's (2.6) and of Keeler, Knodel and
+    Liu's (1.1), which at z = 1 is anti-de Sitter's Poincare chart; the proper distance
+    rho = L ln(r/L), the domain wall coordinates of Taylor's (2.1) and the warp factors of
+    Koroteev and Libanov; the tortoise coordinate w = L^{z+1}/(z r^z) of Keeler, Knodel and Liu's
+    (3.4), in which the plane of t and w is conformally flat; the ingoing Eddington-Finkelstein
+    chart of Keranen, Keski-Vakkuri and Thorlacius's (9), v = c t - w; and Copsey and Mann's
+    (2.16), the same chart with the affine parameter s = (2L/z)(r/L)^z of the ingoing rays for its
+    radius. Every value is a rational function of z times powers of the one ratio its chart names,
+    printed by named_powers, the proper distance chart's in the exponential as it stands.
+    lifshitz_check holds the first chart to the massive vector field that supports it and each
+    other chart to being the first pulled back; lifshitz_spacetime.md records each chart's source."""
+    reals = " \\in (-\\infty, \\infty)"
+    plane = ["x" + reals, "y" + reals]
+    edge = "\\;\\text{(a null singularity of the tidal forces for } z > 1\\text{)}"
+    charts = {
+        "kachru_liu_mulligan": {
+            "name": "Kachru-Liu-Mulligan", "coords": ["t", "x", "y", "r"],
+            "line": "ds^2 = -" + LIFSHITZ_KLM + "^{2z}{c2}dt^2 + \\dfrac{r^2}{L^2}" + LIFSHITZ_PLANE
+                    + " + \\dfrac{L^2}{r^2}dr^2",
+            "domains": ["t" + reals] + plane + ["r \\in (0, \\infty)", "r \\to \\infty \\;\\text{(the boundary)}",
+                                               "r \\to 0 " + edge],
+            "names": lambda P, X: {LIFSHITZ_KLM: {X["r"]: 1, P["L"]: -1}},
+            "metric": {("t", "t"): "-" + LIFSHITZ_KLM + "^{2z}", ("x", "x"): "\\dfrac{r^2}{L^2}",
+                       ("y", "y"): "\\dfrac{r^2}{L^2}", ("r", "r"): "\\dfrac{L^2}{r^2}"},
+            "inverse": {("t", "t"): "-" + LIFSHITZ_KLM + "^{-2z}", ("x", "x"): "\\dfrac{L^2}{r^2}",
+                        ("y", "y"): "\\dfrac{L^2}{r^2}", ("r", "r"): "\\dfrac{r^2}{L^2}"}},
+        "poincare": {
+            "name": "Inverse Radius", "coords": ["t", "x", "y", "u"],
+            "line": "ds^2 = -" + LIFSHITZ_DEPTH + "^{2z}{c2}dt^2 + \\dfrac{L^2}{u^2}\\left(dx^2 + dy^2 + du^2\\right)",
+            "domains": ["t" + reals] + plane + ["u \\in (0, \\infty)", "u \\to 0 \\;\\text{(the boundary)}",
+                                               "u \\to \\infty " + edge],
+            "names": lambda P, X: {LIFSHITZ_DEPTH: {P["L"]: 1, X["u"]: -1}},
+            "metric": {("t", "t"): "-" + LIFSHITZ_DEPTH + "^{2z}", ("x", "x"): "\\dfrac{L^2}{u^2}",
+                       ("y", "y"): "\\dfrac{L^2}{u^2}", ("u", "u"): "\\dfrac{L^2}{u^2}"},
+            "inverse": {("t", "t"): "-" + LIFSHITZ_DEPTH + "^{-2z}", ("x", "x"): "\\dfrac{u^2}{L^2}",
+                        ("y", "y"): "\\dfrac{u^2}{L^2}", ("u", "u"): "\\dfrac{u^2}{L^2}"}},
+        "proper_distance": {
+            "name": "Proper Distance", "coords": ["t", "x", "y", "\\rho"],
+            "line": "ds^2 = -e^{2z\\rho/L}{c2}dt^2 + e^{2\\rho/L}" + LIFSHITZ_PLANE + " + d\\rho^2",
+            "domains": ["t" + reals] + plane + ["\\rho" + reals, "\\rho \\to \\infty \\;\\text{(the boundary)}",
+                                               "\\rho \\to -\\infty " + edge],
+            "metric": {("t", "t"): "-e^{2z\\rho/L}", ("x", "x"): "e^{2\\rho/L}", ("y", "y"): "e^{2\\rho/L}"},
+            "inverse": {("t", "t"): "-e^{-2z\\rho/L}", ("x", "x"): "e^{-2\\rho/L}", ("y", "y"): "e^{-2\\rho/L}"}},
+        "tortoise": {
+            "name": "Tortoise", "coords": ["t", "x", "y", "w"],
+            "line": "ds^2 = \\dfrac{L^2}{z^2w^2}\\left(-{c2}dt^2 + dw^2\\right) + " + LIFSHITZ_TORTOISE + "^{2/z}"
+                    + LIFSHITZ_PLANE,
+            "domains": ["t" + reals] + plane + ["w \\in (0, \\infty)", "w \\to 0 \\;\\text{(the boundary)}",
+                                               "w \\to \\infty " + edge],
+            "names": lambda P, X: {LIFSHITZ_TORTOISE: {P["L"]: 1, P["z"]: -1, X["w"]: -1}},
+            "metric": {("t", "t"): "-\\dfrac{L^2}{z^2w^2}", ("x", "x"): LIFSHITZ_TORTOISE + "^{2/z}",
+                       ("y", "y"): LIFSHITZ_TORTOISE + "^{2/z}", ("w", "w"): "\\dfrac{L^2}{z^2w^2}"},
+            "inverse": {("t", "t"): "-\\dfrac{z^2w^2}{L^2}", ("x", "x"): LIFSHITZ_TORTOISE + "^{-2/z}",
+                        ("y", "y"): LIFSHITZ_TORTOISE + "^{-2/z}", ("w", "w"): "\\dfrac{z^2w^2}{L^2}"}},
+        "eddington_finkelstein": {
+            "name": "Ingoing Eddington-Finkelstein", "coords": ["v", "x", "y", "r"],
+            "line": "ds^2 = -" + LIFSHITZ_KLM + "^{2z}dv^2 + 2" + LIFSHITZ_KLM + "^{z - 1}dv\\,dr"
+                    " + \\dfrac{r^2}{L^2}" + LIFSHITZ_PLANE,
+            "domains": ["v" + reals] + plane + ["r \\in (0, \\infty)", "r \\to \\infty \\;\\text{(the boundary)}",
+                                               "r \\to 0 " + edge],
+            "names": lambda P, X: {LIFSHITZ_KLM: {X["r"]: 1, P["L"]: -1}},
+            "metric": {("v", "v"): "-" + LIFSHITZ_KLM + "^{2z}", ("v", "r"): LIFSHITZ_KLM + "^{z - 1}",
+                       ("r", "v"): LIFSHITZ_KLM + "^{z - 1}", ("x", "x"): "\\dfrac{r^2}{L^2}",
+                       ("y", "y"): "\\dfrac{r^2}{L^2}"},
+            "inverse": {("v", "r"): LIFSHITZ_KLM + "^{1 - z}", ("r", "v"): LIFSHITZ_KLM + "^{1 - z}",
+                        ("x", "x"): "\\dfrac{L^2}{r^2}", ("y", "y"): "\\dfrac{L^2}{r^2}",
+                        ("r", "r"): "\\dfrac{r^2}{L^2}"}},
+        "affine": {
+            "name": "Affine Null (Copsey-Mann)", "coords": ["v", "x", "y", "s"],
+            "line": "ds^2 = -\\dfrac{z^2s^2}{4L^2}dv^2 + dv\\,ds + " + LIFSHITZ_AFFINE + "^{2/z}"
+                    + LIFSHITZ_PLANE,
+            "domains": ["v" + reals] + plane + ["s \\in (0, \\infty)", "s \\to \\infty \\;\\text{(the boundary)}",
+                                               "s \\to 0 " + edge],
+            "names": lambda P, X: {LIFSHITZ_AFFINE: {P["z"]: 1, X["s"]: 1, P["L"]: -1, sp.Integer(2): -1}},
+            "metric": {("v", "v"): "-\\dfrac{z^2s^2}{4L^2}", ("v", "s"): "\\dfrac{1}{2}", ("s", "v"): "\\dfrac{1}{2}",
+                       ("x", "x"): LIFSHITZ_AFFINE + "^{2/z}", ("y", "y"): LIFSHITZ_AFFINE + "^{2/z}"},
+            "inverse": {("v", "s"): "2", ("s", "v"): "2", ("x", "x"): LIFSHITZ_AFFINE + "^{-2/z}",
+                        ("y", "y"): LIFSHITZ_AFFINE + "^{-2/z}", ("s", "s"): "\\dfrac{z^2s^2}{L^2}"}},
+    }
+    chart = charts[system]
+    coords, parameters = chart["coords"], ["z", "L"]
+    probe = vm.Reader(coords, parameters, ())
+    P, X = probe.parameters, probe.symbol
+    state = {}
+
+    def check(c):
+        state["printer"] = c.printer
+        lifshitz_check(c, system)
+
+    spec = {
+        "metric_id": "lifshitz_spacetime",
+        "system": {"id": system, "name": chart["name"], "coords": coords, "domains": chart["domains"],
+                   "parameters": parameters,
+                   "line_element": chart["line"].replace("{c2}", "c^2")},
+        "chart_line_element": chart["line"].replace("{c2}", ""),
+        "printer": {"lead": [P["z"], P["L"], X[coords[-1]]]},
+        "components": {"metric_components": chart["metric"], "inverse_metric_components": chart["inverse"]},
+        # A power of 2/z is set on one line, as the line element sets it.
+        "rewrite": [("^{\\dfrac{2}{z}}", "^{2/z}")],
+        "ricci_scalar": "-\\dfrac{2\\left(z^2 + 2z + 3\\right)}{L^2}",
+        "kretschmann": "\\dfrac{4\\left(z^4 + 2z^2 + 3\\right)}{L^4}",
+        "check": check,
+    }
+    if "names" in chart:
+        spec["pretty"] = named_powers(chart["names"](P, X), state)
+    return spec
+
+
+def lifshitz_pullback(system, P, X):
+    """Kachru, Liu and Mulligan's t and r as functions of the chart's own coordinates, each with
+    the Jacobian of the two coordinates it changes: (c t, r) by (x^0, radius)."""
+    z, L = P["z"], P["L"]
+    if system == "poincare":
+        u = X["u"]
+        return L ** 2 / u, sp.Matrix([[1, 0], [0, -L ** 2 / u ** 2]])
+    if system == "proper_distance":
+        rho = X["\\rho"]
+        return L * sp.exp(rho / L), sp.Matrix([[1, 0], [0, sp.exp(rho / L)]])
+    if system == "tortoise":
+        w = X["w"]
+        r = L * (L / (z * w)) ** (1 / z)
+        return r, sp.Matrix([[1, 0], [0, -r / (z * w)]])
+    if system == "eddington_finkelstein":
+        r = X["r"]
+        # c t = v + w(r), with dw/dr = -(L/r)^{z+1}.
+        return r, sp.Matrix([[1, -(L / r) ** (z + 1)], [0, 1]])
+    s = X["s"]
+    r = L * (z * s / (2 * L)) ** (1 / z)
+    # c t = v + w, with w = L^{z+1}/(z r^z) = 2L^2/(z^2 s).
+    return r, sp.Matrix([[1, -2 * L ** 2 / (z ** 2 * s ** 2)], [0, r / (z * s)]])
+
+
+def lifshitz_check(chart, system):
+    """Kachru, Liu and Mulligan's chart solves Einstein's equations with Lambda = -(z^2 + z + 4)/2L^2
+    and a massive vector field, Taylor's model in the normalisation of Copsey and Mann's (1.3) to
+    (1.6): A = q (r/L)^z c dt with q^2 = 2(z - 1)/z and mass^2 = 2z/L^2, checked through
+    G_ab + Lambda g_ab = (F_ac F_b^c - g_ab F^2/4)/2 + m^2 (A_a A_b - g_ab A^2/2)/2 and
+    nabla_a F^ab = m^2 A^b. Its mixed Einstein tensor is diag(3, z^2 + z + 1, z^2 + z + 1, 2z + 1)/L^2.
+    Each other chart is that one pulled back, J^T g J, and the inverse radius chart at z = 1 is the
+    published Poincare chart of anti_de_sitter."""
+    P, X = chart.reader.parameters, chart.reader.symbol
+    z, L = P["z"], P["L"]
+    g = chart.geo.g
+    n = 4
+
+    def gone(e):
+        positive = {s: sp.Symbol(s.name + "_positive", positive=True) for s in e.free_symbols}
+        return sp.simplify(sp.powsimp(sp.powdenest(sp.sympify(e).subs(positive), force=True), force=True)) == 0
+
+    if system == "kachru_liu_mulligan":
+        x = chart.symbols
+        r = X["r"]
+        gi = chart.geo.ginv
+        mixed = chart.geo.raise_indices(chart.geo.einstein_ll(), 2, (0,))
+        wanted = [3, z ** 2 + z + 1, z ** 2 + z + 1, 2 * z + 1]
+        for a in range(n):
+            for b in range(n):
+                if not gone(mixed[a][b] - (wanted[a] / L ** 2 if a == b else 0)):
+                    raise AssertionError(f"lifshitz_spacetime: the Einstein tensor misses in slot {a}{b}")
+        q2, m2, Lam = 2 * (z - 1) / z, 2 * z / L ** 2, -(z ** 2 + z + 4) / (2 * L ** 2)
+        A = [sp.sqrt(q2) * (r / L) ** z, 0, 0, 0]
+        F = sp.Matrix(n, n, lambda a, b: sp.diff(A[b], x[a]) - sp.diff(A[a], x[b]))
+        Fup = gi * F * gi
+        F2 = sum(F[a, b] * Fup[a, b] for a in range(n) for b in range(n))
+        A2 = sum(gi[a, b] * A[a] * A[b] for a in range(n) for b in range(n))
+        ein = sp.Matrix(chart.geo.einstein_ll())
+        for a in range(n):
+            for b in range(n):
+                stress = ((sum(F[a, c] * F[b, d] * gi[c, d] for c in range(n) for d in range(n)) - g[a, b] * F2 / 4) / 2
+                          + m2 * (A[a] * A[b] - g[a, b] * A2 / 2) / 2)
+                if not gone(ein[a, b] + Lam * g[a, b] - stress):
+                    raise AssertionError(f"lifshitz_spacetime: the massive vector field misses Einstein's equations "
+                                         f"in slot {a}{b}")
+        root = sp.sqrt(-g.det())
+        for b in range(n):
+            proca = (sum(sp.diff(root * Fup[a, b], x[a]) for a in range(n)) / root
+                     - m2 * sum(gi[b, c] * A[c] for c in range(n)))
+            if not gone(proca):
+                raise AssertionError(f"lifshitz_spacetime: the vector field misses its own equation in slot {b}")
+        return
+    first = lifshitz_spacetime("kachru_liu_mulligan")
+    source = cp.Chart(first["system"]["coords"], first["system"]["parameters"], first["chart_line_element"])
+    r, J2 = lifshitz_pullback(system, P, X)
+    at = {source.reader.symbol["r"]: r, source.reader.parameters["z"]: z, source.reader.parameters["L"]: L}
+    old = source.geo.g.subs(at, simultaneous=True)
+    J = sp.eye(n)
+    J[0, 0], J[0, 3], J[3, 0], J[3, 3] = J2[0, 0], J2[0, 1], J2[1, 0], J2[1, 1]
+    pulled = J.T * old * J
+    for i in range(n):
+        for j in range(i, n):
+            if not gone(pulled[i, j] - g[i, j]):
+                raise AssertionError(f"lifshitz_spacetime: Kachru, Liu and Mulligan's chart pulled back misses the "
+                                     f"{system} chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    if system == "poincare":
+        reader, symbols, ads = kaluza_klein_published("anti_de_sitter", "poincare")
+        there = ads.subs(dict(zip(symbols, chart.symbols))).subs(reader.parameters["L"], L)
+        for i in range(n):
+            for j in range(i, n):
+                if not gone((there[i, j] - g[i, j]).subs(z, 1)):
+                    raise AssertionError("lifshitz_spacetime: the inverse radius chart at z = 1 is not anti-de "
+                                         f"Sitter's published Poincare chart in slot {i}{j}")
+
+
+CHARTS["lifshitz_spacetime"] = [lambda s=s: lifshitz_spacetime(s) for s in LIFSHITZ_CHARTS]
+
+
 # -- Sultana and Dyer's black hole ------------------------------------------------------
 
 SULTANA_DYER_CHARTS = ["kerr_schild", "schwarzschild_time", "eddington_finkelstein_ingoing"]

@@ -801,6 +801,16 @@ CAPTIONS = {
         "arrives at $A$ as it leaves. Each of the four stretches lies inside the future light cone at its start, "
         "so the whole is a closed timelike curve.",
     ],
+    ("lifshitz_spacetime", "poincare", "rays"): [
+        "The plane $y = 0$ seen from the side, $t$ left out, with $x$ across and the depth $u$ down from the "
+        "boundary along the top edge, at $z = 2$ in units of $L$. Nine light rays leave one event at $u = 2L$, "
+        "$15°$ apart, each a null geodesic integrated with the Christoffel symbols of this chart.",
+        "Only the ray sent straight up reaches the boundary. A ray that leaves at the angle $\\alpha$ from "
+        "that one turns back at the depth $u_0 = 2L\\sin\\alpha$ and follows the catenary "
+        "$u = u_0\\cosh((x - x_0)/u_0)$ through the point $x_0$ where it turns, so the boundary sees no light "
+        "that left the event at an angle. At $z = 1$ the same rays are the straight lines of anti-de Sitter space, "
+        "and every one of them arrives.",
+    ],
     ("light_beam", "cartesian", "lens"): [
         "The plane $y = 0$ through the axis of a uniform beam of light seen from the side, $t$ left out, with $z$ "
         "across and $x$ up, in units of the beam's radius $R$ ($\\pi G\\epsilon R^2/c^4 = 1/32$). Light sent with "
@@ -1010,6 +1020,9 @@ FIGURES = [
     Projection("light_beam", "cartesian", "lens", "light sent with the beam and against it",
                lambda spec: beam_rays(spec), {}, {"y": "0"}, input=nr.LB_ONE_INPUT, fields=("christoffel",),
                functions={"A": nr.LB_ONE}),
+    # Lifshitz spacetime at z = 2, as its flat views are drawn: light from one event at u = 2L.
+    Projection("lifshitz_spacetime", "poincare", "rays", "light sent toward the boundary",
+               lambda spec: lifshitz_rays(spec), nr.LIFSHITZ, {"y": "0"}, fields=("christoffel",)),
     # Gott's closed timelike curve round both strings, at the values the flat views of Grant's
     # charts are drawn at: half deficit angle pi/3, v = 4c/5 and d = l/2.
     Projection("gott_time_machine", "centre_of_momentum", "loop", "a closed timelike curve round both strings",
@@ -1520,3 +1533,121 @@ def beam_rays(spec, left=-7.0, right=7.0, height=3.0):
     fig.legend("line", "edge", "the edge of the beam")
     fig.legend("line", "axis", "the axis of the beam")
     return fig.done(pad=0.0), sl
+
+
+# ---------------------------------------------------------------- light sent toward Lifshitz spacetime's boundary
+
+LIFSHITZ_SOURCE = 2.0           # the depth u of the event the rays leave, in L
+LIFSHITZ_ANGLES = (15, 30, 45, 60)      # degrees from the straight way to the boundary, on either side
+
+
+def lifshitz_rays(spec, half_width=4.0, depth=3.0):
+    """Light rays from one event of Lifshitz spacetime at z = 2, on the plane y = 0 of the inverse
+    radius chart seen from the side with t left out: x across the page and the depth u down it,
+    the boundary u = 0 along the top.
+
+    The reflection of y keeps every geodesic launched in the plane in it, which is checked on the
+    published Christoffel symbols. Each ray is a null geodesic of the chart, integrated in t, x
+    and u with those symbols from the event x = 0, u = 2L, leaving at an angle alpha from the
+    straight way up, measured in the orthonormal frame of an observer at rest there. The affine
+    parameter lambda is exchanged for sigma with d(lambda) = d(sigma)/u^2, since the boundary lies
+    at an infinite affine distance. Each ray is checked null against the published metric all the way,
+    to keep its energy -g_tt k^t and its momentum g_xx k^x, and against its closed form, which the
+    drawing never uses: the catenary u = u_0 cosh((x - x_0)/u_0) with u_0 = 2L sin(alpha), Keeler,
+    Knodel and Liu's turning point, where E^2 (u/L)^{2z - 2} = p^2. The same rays at z = 1, from the
+    same published metric, are the straight lines x = (2L - u) tan(alpha) of anti-de Sitter space,
+    which is conformally flat, checked too, and every one of them arrives."""
+    sl = Slice(spec.metric, spec.system, ("t", "x", "u"), "cartesian", spec.params, spec.fixed)
+    ads = Slice(spec.metric, spec.system, ("t", "x", "u"), "cartesian", {**spec.params, "z": 1}, spec.fixed)
+    _, entry, reader = nr.load(spec.metric, spec.system)
+    names = entry["coords"]
+    keep = [names.index(c) for c in ("t", "x", "u")]
+    u_ = reader.symbol["u"]
+
+    def symbols_of(slice_):
+        gamma = {}
+        for c in entry["christoffel"]["variants"]["ull"]["nonzero"]:
+            ix = tuple(names.index(n) for n in c["indices"])
+            value = slice_.prep(reader(c["value"]))
+            if value == 0 or not all(i in keep for i in ix[1:]):
+                continue
+            if ix[0] not in keep:
+                raise SystemExit(f"{key(spec)}: Gamma^{c['indices'][0]}_{c['indices'][1]}{c['indices'][2]} "
+                                 "does not vanish on the plane, so a ray launched in it leaves it")
+            if value.free_symbols - {u_}:
+                raise SystemExit(f"{key(spec)}: a Christoffel symbol depends on more than u on the plane")
+            gamma[tuple(keep.index(i) for i in ix)] = sp.lambdify(u_, value, "numpy")
+        return gamma
+
+    def trace(slice_, gamma, alpha):
+        g = slice_.metric((0.0, 0.0, LIFSHITZ_SOURCE))
+        # A null vector at the source: unit energy in the static frame there, the spatial part at
+        # alpha from the direction of decreasing u.
+        start = [0.0, 0.0, LIFSHITZ_SOURCE, 1 / np.sqrt(-g[0, 0]), np.sin(alpha) / np.sqrt(g[1, 1]),
+                 -np.cos(alpha) / np.sqrt(g[2, 2])]
+
+        def rhs(_, w):
+            k = w[3:]
+            acc = np.zeros(3)
+            for (a, b, c), f in gamma.items():
+                acc[a] -= float(f(w[2])) * k[b] * k[c]
+            return np.concatenate([k, acc]) / w[2] ** 2
+
+        def leave(_, w):
+            return min(w[2] - 1e-3, depth - w[2] + 1e-9, half_width - abs(w[1]) + 1e-9)
+        leave.terminal = True
+        sol = solve_ivp(rhs, (0, 400), start, events=leave, rtol=1e-12, atol=1e-13, method="DOP853", max_step=0.01)
+        if sol.status != 1:
+            raise SystemExit(f"{key(spec)}: a ray neither arrives nor leaves the drawing")
+        t, x, u, kt, kx, ku = sol.y
+        metrics = np.array([slice_.metric((0.0, 0.0, ui)) for ui in u])
+        k = sol.y[3:].T
+        null = np.abs(np.einsum("ni,nij,nj->n", k, metrics, k)) / np.abs(metrics[:, 0, 0] * kt ** 2)
+        energy, momentum = -metrics[:, 0, 0] * kt, metrics[:, 1, 1] * kx
+        # Beside the boundary the two terms of the norm are each without bound, so it is judged from u = L/20 on.
+        null = null[u >= 0.05]
+        if not (np.abs(null).max() < 1e-8 and np.ptp(energy) < 1e-8 * energy[0] and np.ptp(momentum) < 1e-8):
+            raise SystemExit(f"{key(spec)}: a ray loses its null norm, its energy or its momentum, by "
+                             f"{np.abs(null).max():.1e}, {np.ptp(energy):.1e} and {np.ptp(momentum):.1e}")
+        return x, u
+
+    gamma, gamma_ads = symbols_of(sl), symbols_of(ads)
+    fig = Figure(spec.view, spec.label, Camera(-90, 90))
+    fig.flat()
+    page = lambda x, u: np.column_stack([x, -np.asarray(u), np.zeros(len(x))])
+    fig.line("edge", page(np.array([-half_width, half_width]), np.zeros(2)))
+    arrived = 0
+    for degrees in LIFSHITZ_ANGLES:
+        for side in (-1, 1):
+            alpha = side * np.radians(degrees)
+            x, u = trace(ads, gamma_ads, alpha)
+            miss = np.abs(x - (LIFSHITZ_SOURCE - u) * np.tan(alpha)).max()
+            if not (miss < 1e-7 and u[-1] < 2e-3):
+                raise SystemExit(f"{key(spec)}: a ray at z = 1 misses its straight line by {miss:.1e} or the boundary")
+            arrived += 1
+            fig.line("below", page(x, u))
+    for degrees in (0,) + LIFSHITZ_ANGLES:
+        for side in ((1,) if degrees == 0 else (-1, 1)):
+            alpha = side * np.radians(degrees)
+            x, u = trace(sl, gamma, alpha)
+            if degrees == 0:
+                if not (np.abs(x).max() < 1e-12 and u[-1] < 2e-3):
+                    raise SystemExit(f"{key(spec)}: the ray sent straight up does not reach the boundary")
+            else:
+                u0 = LIFSHITZ_SOURCE * abs(np.sin(alpha))
+                x0 = side * u0 * np.arccosh(LIFSHITZ_SOURCE / u0)
+                miss = np.abs(u - u0 * np.cosh((x - x0) / u0)).max()
+                if not (miss < 1e-7 and abs(u.min() - u0) < 1e-6 and u[-1] > LIFSHITZ_SOURCE):
+                    raise SystemExit(f"{key(spec)}: a ray misses its catenary by {miss:.1e} or does not turn back at "
+                                     f"u = {u0:.3f}")
+            fig.line("above", page(x, u))
+    if arrived != 2 * len(LIFSHITZ_ANGLES):
+        raise SystemExit(f"{key(spec)}: not every ray at z = 1 arrives")
+    fig.point("string", np.array([0.0, -LIFSHITZ_SOURCE, 0.0]))
+    fig.label(np.array([-half_width + 0.1, 0.0, 0.0]), "$u = 0$", "tl", cls="small", dy=4)
+    fig.label(np.array([0.0, -LIFSHITZ_SOURCE, 0.0]), "$u = 2L$", "t", cls="small", dy=8)
+    fig.legend("line", "above", "light at $z = 2$, leaving one event every $15°$")
+    fig.legend("line", "below", "the same rays at $z = 1$, anti-de Sitter space")
+    fig.legend("line", "edge", "the boundary, $u = 0$")
+    fig.legend("point", "string", "the event the rays leave, at $x = 0$ and $u = 2L$")
+    return fig.done(pad=0.03), sl

@@ -9550,6 +9550,81 @@ def randall_sundrum(ck, src):
     return [one, two]
 
 
+LIFSHITZ_DEPTH = 3.0     # how far the pseudosphere is drawn below rho = 0, in L
+LIFSHITZ_TOP = math.log(3.0)    # and how far the sheet in Minkowski space above it: to r = 3L
+
+
+def lifshitz_spacetime(ck, src):
+    """The surface of rho and x at one moment of the proper distance chart, y held fixed:
+    g_rhorho = 1 and g_xx = e^{2 rho/L}, at L = 1, whatever the dynamical exponent, which stands in
+    g_tt alone. It is the hyperbolic plane of curvature -1/L^2 with the lines of constant rho its
+    horocycles, as every moment of anti-de Sitter space's Poincare chart is. A strip of it of
+    width 2 pi L along x, rolled up so that x runs once round, is a surface of revolution with
+    the radius e^{rho/L}. Below rho = 0 the circles grow more slowly than the distance out to
+    them, d(radius)/d(rho) = e^{rho/L} <= 1, and the strip is half of Beltrami's pseudosphere,
+    Z falling at sqrt(1 - e^{2 rho/L}) along the tractrix toward rho = -infinity, the null
+    singularity r = 0, which lies a proper distance without end away. Above rho = 0 they grow
+    faster, which is checked, and the strip is drawn on in three dimensional Minkowski space,
+    climbing at dZ/d(rho) = sqrt(e^{2 rho/L} - 1) from level at rho = 0 toward a light cone, to
+    r = 3L. Both pieces lie level at rho = 0, so they meet in one circle with one tangent."""
+    size = 6.0
+    params = {"z": 2, "L": 1}
+    fixed_at = {"t": 0, "y": 0}
+    sl = Slice(src, "lifshitz_spacetime", "proper_distance", "\\rho", "x", fixed_at, params)
+    msl = Slice(src, "lifshitz_spacetime", "proper_distance", "\\rho", "x", fixed_at, params, space="minkowski")
+    ck.add("Lifshitz: the surface lies level at rho = 0, where the circle grows as fast as the distance out to it",
+           abs(float(sl.defect_at(np.array([0.0]))[0])), 1e-12)
+    ck.stops("Lifshitz, above rho = 0 in flat space", sl, np.linspace(0.0, 6.0, 402)[1:])
+    below = np.linspace(-8.0, 0.0, 402)[:-1]
+    ck.add("Lifshitz: below rho = 0 no surface in Minkowski space carries the slice, (drho/dx)^2 - g_xx < 0",
+           float(max(0.0, np.max(-msl.defect_at(below)))), 0.0)
+    if not np.all(msl.defect_at(below) > 0):
+        ck.items[-1]["ok"] = False
+    # The same surface for every dynamical exponent: g_xx and g_rhorho hold no z.
+    other = Slice(src, "lifshitz_spacetime", "proper_distance", "\\rho", "x", fixed_at, {"z": 3, "L": 1})
+    sample = np.linspace(-LIFSHITZ_DEPTH, 0.0, 61)
+    ck.add("Lifshitz: the moment is the same surface at z = 3 as at z = 2",
+           float(np.max(np.abs(other.rho_at(sample) - sl.rho_at(sample))) + np.max(np.abs(other.defect_at(sample) - sl.defect_at(sample)))),
+           1e-12)
+
+    join = ("at $\\rho = 0$, where $r = L$, the surface lies level, in flat space below and in Minkowski space above")
+    deep = ("the surface runs on toward $\\rho \\to -\\infty$, the null singularity $r = 0$, its circles shrinking as "
+            "$e^{\\rho/L}$")
+    edge = "the sheet runs on toward a light cone, to the boundary $\\rho \\to \\infty$"
+    rings = (-2.0, -1.0)
+    inner = Piece("pseudosphere", "sheet", sl, -LIFSHITZ_DEPTH, 0.0, 0.0, 1, (("edge", deep), ("join", join)),
+                  [(y, "r", None) for y in rings] + [(0.0, "space", None)], size)
+    inner.z = inner.z - float(inner.z[-1])
+    outer = Piece("minkowski", "sheet", msl, 0.0, LIFSHITZ_TOP, 0.0, 1, (("join", join), ("edge", edge)),
+                  [(math.log(2.0), "r", None), (LIFSHITZ_TOP, "r", None)], size)
+    for p in (inner, outer):
+        space = "in Minkowski space" if p.sl.lorentz else "in flat space"
+        ck.isometry(f"Lifshitz, {p.id} {space}", p)
+        ck.radius(f"Lifshitz, {p.id}: rho = L e^(rho/L) {space}", p, lambda rho: np.exp(rho), size)
+    ck.form("Lifshitz, pseudosphere: the tractrix Z = -(arcosh(e^|rho|) - sqrt(1 - e^(-2|rho|)))", inner, tractrix, size)
+    ck.form("Lifshitz, minkowski: Z = sqrt(e^(2 rho) - 1) - arctan(sqrt(e^(2 rho) - 1))", outer,
+            lambda rho: np.sqrt(np.expm1(2 * np.asarray(rho, dtype=float))) - np.arctan(np.sqrt(np.expm1(2 * np.asarray(rho, dtype=float)))),
+            size)
+    ck.join("Lifshitz, the pseudosphere in flat space and the sheet in Minkowski space at rho = 0", inner, 0.0, outer, 0.0)
+    pa, pb = inner.data()["points"][-1], outer.data()["points"][0]
+    ck.add("Lifshitz, the two pieces as written: one point at rho = 0",
+           max(abs(pa[0] - pb[0]), abs(pa[1] - pb[1]), abs(pa[2] - pb[2])), 10.0 ** -min(inner.decimals, outer.decimals))
+
+    surface = Surface([inner, outer])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *inner.at(0.0), "$r = L$")
+    ring_label(fig, [0, 0, 0], *outer.at(LIFSHITZ_TOP), "$3L$")
+    ring_label(fig, [0, 0, 0], *inner.at(-1.0), "$L/e$")
+    fig.legend("fill", "cover", "the strip $0 \\le x < 2\\pi L$ at one moment, which $\\rho$ and $x$ cover")
+    fig.legend("line", "r", "$\\rho$ constant, at $r = L/e^2$, $L/e$, $2L$ and $3L$, with $r = Le^{\\rho/L}$")
+    fig.legend("line", "space", "$\\rho = 0$, where $r = L$: flat space below, Minkowski space above")
+    fig.legend("line", "meridian", "$x$ constant, every $\\pi L/12$")
+    return [view("moment", "One moment", "$L$", [surface], fig.done(),
+                 settings="$L = 1$, the unit of every length, and the strip $0 \\le x < 2\\pi L$ rolled up so that "
+                          "$x$ runs once round the axis. Every length along the surface above $r = L$ is "
+                          "measured with $dX^2 + dY^2 - dZ^2$.")]
+
+
 SV_BOUNCE_MOMENTS = (0.75, 0.4, 0.0, -0.4, -0.75)    # r in units of r_s, between the horizons +-sqrt(3)/2 of a = r_s/2
 
 
@@ -10206,6 +10281,7 @@ DRAWN = {
     "coleman_de_luccia": coleman_de_luccia,
     "domain_wall": domain_wall,
     "randall_sundrum": randall_sundrum,
+    "lifshitz_spacetime": lifshitz_spacetime,
     "minkowski": minkowski,
     "anti_de_sitter": anti_de_sitter,
     "malament_hogarth": malament_hogarth,
@@ -11854,6 +11930,17 @@ CAPTIONS = {
         "A circle of the second wall is $e^{-kr_c\\pi}$ times as long as one of the first, $0.21$ at $kr_c = 1/2$. "
         "With $e^{kr_c\\pi}$ of order $10^{15}$, the ratio of the Planck scale to the weak scale, the second circle "
         "is $10^{-15}$ of the first.",
+    ],
+    ("lifshitz_spacetime", "moment"): [
+        "The surface of $\\rho$ and $x$ at one moment ($y = 0$), a strip of width $2\\pi L$ along $x$ rolled up, with "
+        "every distance along it the metric distance. Its metric is $d\\rho^2 + e^{2\\rho/L}dx^2$ for every dynamical "
+        "exponent $z$, the hyperbolic plane of curvature $-1/L^2$, as a moment of anti-de Sitter space is: $z$ "
+        "stands in $g_{tt}$ alone, so two Lifshitz spacetimes differ in how fast clocks run at each depth and in "
+        "nothing a ruler measures.",
+        "Below $r = L$ the strip is half of Eugenio Beltrami's pseudosphere, narrowing toward the null "
+        "singularity $r = 0$, which lies a proper distance without end down the horn. Above $r = L$ the circles "
+        "grow faster than the distance out to them, so the strip is drawn on in Minkowski space, where it climbs "
+        "from level toward a light cone on its way to the boundary.",
     ],
     ("szekeres", "equators"): [
         "The surface through the equators ($\\theta = \\pi/2$) of the shells of a collapsing cloud of dust as $t$ runs "
