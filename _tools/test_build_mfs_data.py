@@ -4981,6 +4981,14 @@ class Slices(unittest.TestCase):
               *[f"kerr_taub_nut/{s}/axis" for s in ("one_string", "kerr_ingoing", "kerr_outgoing")],
               *[f"conformal kerr_taub_nut/{v}" for v in ("axis", "ingoing", "outgoing")],
               "kerr_taub_nut/plebanski/principal",
+              # Brill's charged Taub-NUT: the regular half axis, which the embedded equatorial plane does not
+              # meet, and Brill's universe between the horizons, where constant t is no moment of space.
+              *[f"brill_charged_taub_nut/{s}/{v}" for s, v in (("one_string", "black_hole"), ("one_string", "wormhole"),
+                                                                ("eddington_finkelstein_ingoing", "black_hole"),
+                                                                ("eddington_finkelstein_ingoing", "wormhole"),
+                                                                ("eddington_finkelstein_outgoing", "black_hole"),
+                                                                ("taub", "universe"))],
+              *[f"conformal brill_charged_taub_nut/{v}" for v in ("axis", "ingoing", "outgoing", "universe", "wormhole")],
               *[f"zipoy_voorhees/{s}/axis_{k}" for s in ("spherical", "prolate_spheroidal") for k in ("oblate", "prolate")],
               *[f"conformal zipoy_voorhees/{s}_axis_{k}" for s in ("spherical", "prolate_spheroidal")
                 for k in ("oblate", "prolate")],
@@ -5082,6 +5090,10 @@ class Slices(unittest.TestCase):
                         "small_universes/torus_conformal/cell", "small_universes/torus_conformal/images",
                         "conformal small_universes/torus", "conformal small_universes/torus_conformal")},
                     "small_universes/horn/along": {"torus"}, "conformal small_universes/horn": {"torus"},
+                    # Brill's black hole and his wormhole are two spacetimes of one family, each drawing
+                    # marking the moment of its own.
+                    "brill_charged_taub_nut/spherical/black_hole": {"wormhole"},
+                    "brill_charged_taub_nut/spherical/wormhole": {"equator"},
                     # Cremmer and Scherk's sphere is embedded at the event x = a, off the plane x = 0 of the
                     # time and phi.
                     "cremmer_scherk/cartesian/circle": {"sphere"},

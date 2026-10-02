@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 151,
+  "count": 152,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -8575,6 +8575,11 @@
           "id": "boson_star",
           "kind": "programme",
           "text": "Wheeler's geon was a ball of waves held together by its own gravity, mass without matter [wheeler1955]. Brill and James Hartle built the geon of gravitational waves in 1964 [brillhartle1964]."
+        },
+        {
+          "id": "brill_charged_taub_nut",
+          "kind": "programme",
+          "text": "Dieter Brill's closed universe of 1964, a whole spacetime \"filled with gravitational and electromagnetic radiation\" and nothing else [brill1964]."
         }
       ],
       "references": [
@@ -8595,7 +8600,8 @@
         "brill1963",
         "weber1957",
         "wheeler1955",
-        "brillhartle1964"
+        "brillhartle1964",
+        "brill1964"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/brill_waves.json",
@@ -8755,6 +8761,577 @@
           ],
           "ricci_scalar": "R = -\\dfrac{2\\left(\\psi\\left(3e^{2q}\\left(\\partial_\\phi q\\right)^2 + 2e^{2q}\\partial_\\phi^2 q + \\rho^2\\,\\partial_\\rho^2 q + \\rho^2\\,\\partial_z^2 q\\right) + 4\\left(2e^{2q}\\partial_\\phi q\\,\\partial_\\phi\\psi + e^{2q}\\partial_\\phi^2\\psi + \\rho^2\\,\\partial_\\rho^2\\psi + \\rho^2\\,\\partial_z^2\\psi + \\rho\\,\\partial_\\rho\\psi\\right)\\right)e^{-2q}}{\\psi^5\\,\\rho^2}",
           "kretschmann": "K = \\dfrac{4\\left(\\psi^4\\left(2\\rho^2e^{2q}\\left(\\partial_\\phi q\\right)^2\\,\\partial_\\rho^2 q + 2\\rho^2e^{2q}\\left(\\partial_\\phi q\\right)^2\\,\\partial_z^2 q - 4\\rho\\,e^{2q}\\partial_\\phi q\\,\\partial_\\rho\\partial_\\phi q + 4e^{4q}\\left(\\partial_\\phi q\\right)^2\\,\\partial_\\phi^2 q + 2\\rho^2e^{2q}\\left(\\partial_\\rho\\partial_\\phi q\\right)^2 + 2\\rho^2e^{2q}\\left(\\partial_z\\partial_\\phi q\\right)^2 + 2\\rho^4\\,\\partial_\\rho^2 q\\,\\partial_z^2 q + 2e^{2q}\\left(\\partial_\\phi q\\right)^2 + 3e^{4q}\\left(\\partial_\\phi q\\right)^4 + 2e^{4q}\\left(\\partial_\\phi^2 q\\right)^2 + 2\\rho^2\\left(\\partial_\\rho q\\right)^2 + 2\\rho^2\\left(\\partial_z q\\right)^2 + \\rho^4\\left(\\partial_\\rho^2 q\\right)^2 + \\rho^4\\left(\\partial_z^2 q\\right)^2\\right) + 4\\psi^3\\left(2\\rho^2e^{2q}\\partial_\\phi q\\,\\partial_\\phi\\psi\\,\\partial_\\rho^2 q + 2\\rho^2e^{2q}\\partial_\\phi q\\,\\partial_\\phi\\psi\\,\\partial_z^2 q - 2\\rho^2e^{2q}\\partial_\\phi q\\,\\partial_\\rho\\partial_\\phi q\\,\\partial_\\rho\\psi - 2\\rho^2e^{2q}\\partial_\\phi q\\,\\partial_z\\partial_\\phi q\\,\\partial_z\\psi + 2\\rho^2e^{2q}\\left(\\partial_\\phi q\\right)^2\\,\\partial_\\rho^2\\psi + 2\\rho^2e^{2q}\\left(\\partial_\\phi q\\right)^2\\,\\partial_z^2\\psi + 2e^{4q}\\partial_\\phi q\\,\\partial_\\phi\\psi\\,\\partial_\\phi^2 q + 4\\rho\\,e^{2q}\\left(\\partial_\\phi q\\right)^2\\,\\partial_\\rho\\psi + \\rho^2e^{2q}\\partial_\\phi^2 q\\,\\partial_\\rho^2\\psi + \\rho^2e^{2q}\\partial_\\phi^2 q\\,\\partial_z^2\\psi + 2\\rho^2e^{2q}\\partial_\\rho\\partial_\\phi q\\,\\partial_\\rho\\partial_\\phi\\psi + 2\\rho^2e^{2q}\\partial_z\\partial_\\phi q\\,\\partial_z\\partial_\\phi\\psi - 2\\rho\\,e^{2q}\\partial_\\phi q\\,\\partial_\\rho\\partial_\\phi\\psi - 2\\rho\\,e^{2q}\\partial_\\phi\\psi\\,\\partial_\\rho\\partial_\\phi q + 2\\rho\\,e^{2q}\\partial_\\phi^2 q\\,\\partial_\\rho\\psi + 2e^{4q}\\left(\\partial_\\phi q\\right)^2\\,\\partial_\\phi^2\\psi + 4e^{4q}\\left(\\partial_\\phi q\\right)^3\\,\\partial_\\phi\\psi + 2e^{2q}\\partial_\\phi q\\,\\partial_\\phi\\psi + 2e^{4q}\\partial_\\phi^2 q\\,\\partial_\\phi^2\\psi + 2\\rho^3\\,\\partial_\\rho\\psi\\left(\\partial_z q\\right)^2 + 2\\rho^3\\left(\\partial_\\rho q\\right)^2\\,\\partial_\\rho\\psi - \\rho^3\\,\\partial_\\rho q\\,\\partial_\\rho^2\\psi + \\rho^3\\,\\partial_\\rho q\\,\\partial_z^2\\psi - 2\\rho^3\\,\\partial_\\rho\\partial_z\\psi\\,\\partial_z q + \\rho^4\\,\\partial_\\rho^2 q\\,\\partial_\\rho^2\\psi + \\rho^4\\,\\partial_\\rho^2 q\\,\\partial_z^2\\psi + \\rho^4\\,\\partial_\\rho^2\\psi\\,\\partial_z^2 q + \\rho^4\\,\\partial_z^2 q\\,\\partial_z^2\\psi\\right) + 4\\psi^2\\left(6\\rho^2e^{2q}\\partial_\\phi q\\,\\partial_\\phi\\psi\\,\\partial_\\rho^2\\psi + 6\\rho^2e^{2q}\\partial_\\phi q\\,\\partial_\\phi\\psi\\,\\partial_z^2\\psi - 4\\rho^2e^{2q}\\partial_\\phi q\\,\\partial_\\rho\\partial_\\phi\\psi\\,\\partial_\\rho\\psi - 4\\rho^2e^{2q}\\partial_\\phi q\\,\\partial_z\\partial_\\phi\\psi\\,\\partial_z\\psi - 6\\rho^2e^{2q}\\partial_\\phi\\psi\\,\\partial_\\rho\\partial_\\phi q\\,\\partial_\\rho\\psi - 6\\rho^2e^{2q}\\partial_\\phi\\psi\\,\\partial_z\\partial_\\phi q\\,\\partial_z\\psi + 14\\rho\\,e^{2q}\\partial_\\phi q\\,\\partial_\\phi\\psi\\,\\partial_\\rho\\psi + 2\\rho^2e^{2q}\\left(\\partial_\\phi q\\right)^2\\left(\\partial_\\rho\\psi\\right)^2 + 2\\rho^2e^{2q}\\left(\\partial_\\phi q\\right)^2\\left(\\partial_z\\psi\\right)^2 + 2\\rho^2e^{2q}\\left(\\partial_\\phi\\psi\\right)^2\\,\\partial_\\rho^2 q + 2\\rho^2e^{2q}\\left(\\partial_\\phi\\psi\\right)^2\\,\\partial_z^2 q + \\rho^2e^{2q}\\partial_\\phi^2 q\\left(\\partial_\\rho\\psi\\right)^2 + \\rho^2e^{2q}\\partial_\\phi^2 q\\left(\\partial_z\\psi\\right)^2 + 4e^{4q}\\partial_\\phi q\\,\\partial_\\phi\\psi\\,\\partial_\\phi^2\\psi + 2\\rho^2e^{2q}\\partial_\\phi^2\\psi\\,\\partial_\\rho^2\\psi + 2\\rho^2e^{2q}\\partial_\\phi^2\\psi\\,\\partial_z^2\\psi + 6e^{4q}\\left(\\partial_\\phi q\\right)^2\\left(\\partial_\\phi\\psi\\right)^2 - 4\\rho\\,e^{2q}\\partial_\\phi\\psi\\,\\partial_\\rho\\partial_\\phi\\psi + 4\\rho\\,e^{2q}\\partial_\\phi^2\\psi\\,\\partial_\\rho\\psi + 6\\rho^3\\,\\partial_\\rho\\psi\\,\\partial_z q\\,\\partial_z\\psi - 4\\rho^4\\,\\partial_\\rho q\\,\\partial_\\rho\\partial_z\\psi\\,\\partial_z\\psi - 2\\rho^4\\,\\partial_\\rho q\\,\\partial_\\rho\\psi\\,\\partial_\\rho^2\\psi + 2\\rho^4\\,\\partial_\\rho q\\,\\partial_\\rho\\psi\\,\\partial_z^2\\psi - 4\\rho^4\\,\\partial_\\rho\\partial_z\\psi\\,\\partial_\\rho\\psi\\,\\partial_z q + 2\\rho^4\\,\\partial_\\rho^2\\psi\\,\\partial_z q\\,\\partial_z\\psi - 2\\rho^4\\,\\partial_z q\\,\\partial_z\\psi\\,\\partial_z^2\\psi - 2e^{4q}\\left(\\partial_\\phi\\psi\\right)^2\\,\\partial_\\phi^2 q + 2\\rho^2e^{2q}\\left(\\partial_\\rho\\partial_\\phi\\psi\\right)^2 + 2\\rho^2e^{2q}\\left(\\partial_z\\partial_\\phi\\psi\\right)^2 + 2\\rho^4\\left(\\partial_\\rho q\\right)^2\\left(\\partial_\\rho\\psi\\right)^2 + 2\\rho^4\\left(\\partial_\\rho q\\right)^2\\left(\\partial_z\\psi\\right)^2 + 2\\rho^4\\left(\\partial_\\rho\\psi\\right)^2\\left(\\partial_z q\\right)^2 + 2\\rho^4\\left(\\partial_z q\\right)^2\\left(\\partial_z\\psi\\right)^2 + 3\\rho^3\\,\\partial_\\rho q\\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho^3\\,\\partial_\\rho q\\left(\\partial_z\\psi\\right)^2 - \\rho^4\\,\\partial_\\rho^2 q\\left(\\partial_z\\psi\\right)^2 - \\rho^4\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_\\rho^2 q - \\rho^4\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z^2 q - \\rho^4\\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2 q + 2\\rho^3\\,\\partial_\\rho\\psi\\,\\partial_\\rho^2\\psi + 2\\rho^3\\,\\partial_\\rho\\psi\\,\\partial_z^2\\psi + 2\\rho^4\\,\\partial_\\rho^2\\psi\\,\\partial_z^2\\psi + 2e^{2q}\\left(\\partial_\\phi\\psi\\right)^2 + 2e^{4q}\\left(\\partial_\\phi^2\\psi\\right)^2 + 2\\rho^2\\left(\\partial_\\rho\\psi\\right)^2 + 2\\rho^4\\left(\\partial_\\rho\\partial_z\\psi\\right)^2 + 2\\rho^4\\left(\\partial_\\rho^2\\psi\\right)^2 + 2\\rho^4\\left(\\partial_z^2\\psi\\right)^2\\right) + 8\\psi\\left(5\\rho^2e^{2q}\\partial_\\phi q\\,\\partial_\\phi\\psi\\left(\\partial_\\rho\\psi\\right)^2 + 5\\rho^2e^{2q}\\partial_\\phi q\\,\\partial_\\phi\\psi\\left(\\partial_z\\psi\\right)^2 - 6\\rho^2e^{2q}\\partial_\\phi\\psi\\,\\partial_\\rho\\partial_\\phi\\psi\\,\\partial_\\rho\\psi - 6\\rho^2e^{2q}\\partial_\\phi\\psi\\,\\partial_z\\partial_\\phi\\psi\\,\\partial_z\\psi + \\rho^2e^{2q}\\left(\\partial_\\phi\\psi\\right)^2\\,\\partial_\\rho^2\\psi + \\rho^2e^{2q}\\left(\\partial_\\phi\\psi\\right)^2\\,\\partial_z^2\\psi + \\rho^2e^{2q}\\partial_\\phi^2\\psi\\left(\\partial_\\rho\\psi\\right)^2 + \\rho^2e^{2q}\\partial_\\phi^2\\psi\\left(\\partial_z\\psi\\right)^2 + 4\\rho\\,e^{2q}\\left(\\partial_\\phi\\psi\\right)^2\\,\\partial_\\rho\\psi + 3\\rho^4\\,\\partial_\\rho q\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 + 3\\rho^4\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z q\\,\\partial_z\\psi - 6\\rho^4\\,\\partial_\\rho\\partial_z\\psi\\,\\partial_\\rho\\psi\\,\\partial_z\\psi - 2e^{4q}\\left(\\partial_\\phi\\psi\\right)^2\\,\\partial_\\phi^2\\psi + 2e^{4q}\\partial_\\phi q\\left(\\partial_\\phi\\psi\\right)^3 + \\rho^3\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 + 3\\rho^4\\,\\partial_\\rho q\\left(\\partial_\\rho\\psi\\right)^3 + \\rho^4\\,\\partial_\\rho^2\\psi\\left(\\partial_z\\psi\\right)^2 + 3\\rho^4\\,\\partial_z q\\left(\\partial_z\\psi\\right)^3 - 2\\rho^4\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_\\rho^2\\psi + \\rho^4\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z^2\\psi - 2\\rho^4\\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2\\psi + \\rho^3\\left(\\partial_\\rho\\psi\\right)^3\\right) + 24\\left(e^{2q}\\left(\\partial_\\phi\\psi\\right)^2 + \\rho^2\\left(\\partial_\\rho\\psi\\right)^2 + \\rho^2\\left(\\partial_z\\psi\\right)^2\\right)^2\\right)e^{-4q}}{\\psi^{12}\\rho^4}"
+        }
+      ]
+    },
+    {
+      "id": "brill_charged_taub_nut",
+      "name": "Brill's Charged Taub-NUT Spacetime",
+      "short_name": "Brill's Charged Taub-NUT",
+      "description": "Taub-NUT with an electric charge, the solution of the Einstein-Maxwell equations Dieter Brill found in 1964 as a closed universe filled with gravitational and electromagnetic radiation. It is the Taub-NUT metric at $r_q = 0$ and Reissner and Nordström's at $l = 0$, it has no curvature singularity while $l \\neq 0$, and for $r_q^2 > m^2 + l^2$ it has no horizon either and is a wormhole.",
+      "tags": [
+        "electrovacuum",
+        "stationary",
+        "axisymmetric",
+        "charged",
+        "charged black hole",
+        "black hole",
+        "wormhole",
+        "traversable",
+        "electric charge",
+        "mass",
+        "NUT parameter",
+        "gravitomagnetic",
+        "electromagnetic field",
+        "Einstein-Maxwell",
+        "closed timelike curves",
+        "horizon",
+        "event horizon",
+        "Cauchy horizon",
+        "causal structure",
+        "Petrov type D",
+        "not asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit; the mass enters as the length $m = GM/c^2$, and the NUT parameter $l$ and the charge radius $r_q$ are lengths.",
+      "related": [
+        {
+          "id": "taub_nut",
+          "kind": "special_case",
+          "text": "Brill's spacetime with the charge taken away, $r_q = 0$. His universe is then Taub's and his black hole is NUT space [brill1964, clement2016]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "special_case",
+          "text": "Brill's spacetime with the twist taken out, $l = 0$ and $r_s = 2m$. The curvature at $r = 0$ is then infinite, and too much charge leaves a naked singularity where Brill's metric has a wormhole [clement2016]."
+        },
+        {
+          "id": "morris_thorne",
+          "kind": "family",
+          "text": "The wormhole held open by matter of negative energy. Brill's, at $r_q^2 > m^2 + l^2$, is held open by an electromagnetic field, with a Misner string along its axis [morris1988, clement2016]."
+        },
+        {
+          "id": "israel_wilson_perjes",
+          "kind": "family",
+          "text": "At $r_q^2 = m^2 + l^2$ the two horizons meet at $r = m$, and Brill's black hole is the single source of complex mass among Israel, Wilson, and Perjés's fields [clement2016, hartle1972]."
+        },
+        {
+          "id": "kerr_taub_nut",
+          "kind": "family",
+          "text": "Taub-NUT set spinning, where Brill's is Taub-NUT with a charge. Jerzy Plebański and Marek Demiański's family of 1976 holds both [plebanski1976, griffiths2005]."
+        },
+        {
+          "id": "brill_waves",
+          "kind": "programme",
+          "text": "Dieter Brill's other space with nothing in it but field: one moment of a universe of gravitational waves alone, from 1959, whose mass he proved positive [brill1959]."
+        }
+      ],
+      "references": [
+        "brill1964",
+        "taub1951",
+        "nut1963",
+        "misner1963",
+        "clement2016",
+        "reissner1916",
+        "nordstrom1918",
+        "halla2023",
+        "morris1988",
+        "clement2018",
+        "hartle1972",
+        "plebanski1976",
+        "griffiths2005",
+        "brill1959"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/brill_charged_taub_nut.json",
+      "charts": [
+        {
+          "id": "spherical",
+          "name": "Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in \\left(m + \\sqrt{m^2 + l^2 - r_q^2},\\, \\infty\\right) \\;\\text{for}\\; r_q^2 \\le m^2 + l^2",
+            "r \\in (-\\infty, \\infty) \\;\\text{for}\\; r_q^2 > m^2 + l^2",
+            "\\theta \\in (0, \\pi)",
+            "\\phi \\in [0, 2\\pi)",
+            "\\Delta = 0 \\;\\text{(the horizons } r_\\pm = m \\pm \\sqrt{m^2 + l^2 - r_q^2}\\text{, present for } r_q^2 \\le m^2 + l^2\\text{)}",
+            "\\theta = 0,\\, \\pi \\;\\text{(the Misner strings)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Geometric mass, $m = GM/c^2$, a length"
+            },
+            {
+              "symbol": "l",
+              "description": "NUT parameter, a length, the gravitomagnetic monopole moment; at $l = 0$ the metric is Reissner and Nordström's"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius, a length, with $r_q^2 = Q^2G/(4\\pi\\epsilon_0c^4)$ for a charge $Q$; an electric and a magnetic charge enter through the sum of their squares, and at $r_q = 0$ the metric is the Taub-NUT metric"
+            },
+            {
+              "symbol": "\\Sigma = r^2 + l^2",
+              "description": "The area of the sphere of constant $t$ and $r$ divided by $4\\pi$, which is never less than $l^2$"
+            },
+            {
+              "symbol": "\\Delta = r^2 - 2mr - l^2 + r_q^2",
+              "description": "Its roots are the horizons $r_\\pm = m \\pm \\sqrt{m^2 + l^2 - r_q^2}$, which exist for $r_q^2 \\le m^2 + l^2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and a Misner string on each half of the axis, and write $\\Sigma$ and $\\Delta$ as the parameters define them. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{\\Delta}{\\Sigma}\\left(c\\,dt + 2l\\cos\\theta\\,d\\phi\\right)^2 + \\dfrac{\\Sigma}{\\Delta}dr^2 + \\Sigma\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\Delta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{2l\\,\\Delta\\cos\\theta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-\\dfrac{2l\\,\\Delta\\cos\\theta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\Sigma}{\\Delta}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\Sigma"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\Sigma^2\\sin^2\\theta - 4l^2\\,\\Delta\\cos^2\\theta}{\\Sigma}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8r_q^4}{\\Sigma^4} + \\dfrac{48\\left(\\left(m^2 - l^2\\right)\\left(r^6 - 15l^2r^4 + 15l^4r^2 - l^6\\right) - 2mr\\left(\\left(r_q^2 - 6l^2\\right)r^4 - 10l^2\\left(r_q^2 - 2l^2\\right)r^2 + l^4\\left(5r_q^2 - 6l^2\\right)\\right) + r_q^2\\left(\\left(r_q^2 - 10l^2\\right)r^4 - 2l^2\\left(3r_q^2 - 10l^2\\right)r^2 + l^4\\left(r_q^2 - 2l^2\\right)\\right)\\right)}{\\Sigma^6}"
+        },
+        {
+          "id": "one_string",
+          "name": "One Misner String",
+          "coordinates": [
+            "t_N",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t_N \\in (-\\infty, \\infty)",
+            "r \\in \\left(m + \\sqrt{m^2 + l^2 - r_q^2},\\, \\infty\\right) \\;\\text{for}\\; r_q^2 \\le m^2 + l^2",
+            "r \\in (-\\infty, \\infty) \\;\\text{for}\\; r_q^2 > m^2 + l^2",
+            "\\theta \\in [0, \\pi)",
+            "\\phi \\in [0, 2\\pi)",
+            "\\Delta = 0 \\;\\text{(the horizons } r_\\pm = m \\pm \\sqrt{m^2 + l^2 - r_q^2}\\text{, present for } r_q^2 \\le m^2 + l^2\\text{)}",
+            "\\theta = \\pi \\;\\text{(the Misner string)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Geometric mass, $m = GM/c^2$, a length"
+            },
+            {
+              "symbol": "l",
+              "description": "NUT parameter, a length, the gravitomagnetic monopole moment; at $l = 0$ the metric is Reissner and Nordström's"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius, a length, with $r_q^2 = Q^2G/(4\\pi\\epsilon_0c^4)$ for a charge $Q$; an electric and a magnetic charge enter through the sum of their squares, and at $r_q = 0$ the metric is the Taub-NUT metric"
+            },
+            {
+              "symbol": "\\Sigma = r^2 + l^2",
+              "description": "The area of the sphere of constant $t$ and $r$ divided by $4\\pi$, which is never less than $l^2$"
+            },
+            {
+              "symbol": "\\Delta = r^2 - 2mr - l^2 + r_q^2",
+              "description": "Its roots are the horizons $r_\\pm = m \\pm \\sqrt{m^2 + l^2 - r_q^2}$, which exist for $r_q^2 \\le m^2 + l^2$"
+            }
+          ],
+          "convention": "We use coordinates $(t_N, r, \\theta, \\phi)$ with $t_N = t + 2l\\phi/c$, the time in which the northern half of the axis is regular and one Misner string lies along $\\theta = \\pi$, and write $\\Sigma$ and $\\Delta$ as the parameters define them. We take components in the chart $x^0 = ct_N$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t_N}$ means $d(ct_N)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{\\Delta}{\\Sigma}\\left(c\\,dt_N - 2l\\left(1 - \\cos\\theta\\right)d\\phi\\right)^2 + \\dfrac{\\Sigma}{\\Delta}dr^2 + \\Sigma\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t_N",
+                "t_N"
+              ],
+              "value": "-\\dfrac{\\Delta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "t_N",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{2l\\,\\Delta\\left(\\cos\\theta - 1\\right)}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t_N"
+              ],
+              "value": "-\\dfrac{2l\\,\\Delta\\left(\\cos\\theta - 1\\right)}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\Sigma}{\\Delta}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\Sigma"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{\\left(\\cos\\theta - 1\\right)\\left(\\Sigma^2\\cos\\theta + \\Sigma^2 + 4l^2\\,\\Delta\\cos\\theta - 4l^2\\,\\Delta\\right)}{\\Sigma}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8r_q^4}{\\Sigma^4} + \\dfrac{48\\left(\\left(m^2 - l^2\\right)\\left(r^6 - 15l^2r^4 + 15l^4r^2 - l^6\\right) - 2mr\\left(\\left(r_q^2 - 6l^2\\right)r^4 - 10l^2\\left(r_q^2 - 2l^2\\right)r^2 + l^4\\left(5r_q^2 - 6l^2\\right)\\right) + r_q^2\\left(\\left(r_q^2 - 10l^2\\right)r^4 - 2l^2\\left(3r_q^2 - 10l^2\\right)r^2 + l^4\\left(r_q^2 - 2l^2\\right)\\right)\\right)}{\\Sigma^6}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi)",
+            "\\phi \\in [0, 2\\pi)",
+            "\\Delta = 0 \\;\\text{(the horizons } r_\\pm = m \\pm \\sqrt{m^2 + l^2 - r_q^2}\\text{, present for } r_q^2 \\le m^2 + l^2\\text{)}",
+            "\\theta = \\pi \\;\\text{(the Misner string)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Geometric mass, $m = GM/c^2$, a length"
+            },
+            {
+              "symbol": "l",
+              "description": "NUT parameter, a length, the gravitomagnetic monopole moment; at $l = 0$ the metric is Reissner and Nordström's"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius, a length, with $r_q^2 = Q^2G/(4\\pi\\epsilon_0c^4)$ for a charge $Q$; an electric and a magnetic charge enter through the sum of their squares, and at $r_q = 0$ the metric is the Taub-NUT metric"
+            },
+            {
+              "symbol": "\\Sigma = r^2 + l^2",
+              "description": "The area of the sphere of constant $t$ and $r$ divided by $4\\pi$, which is never less than $l^2$"
+            },
+            {
+              "symbol": "\\Delta = r^2 - 2mr - l^2 + r_q^2",
+              "description": "Its roots are the horizons $r_\\pm = m \\pm \\sqrt{m^2 + l^2 - r_q^2}$, which exist for $r_q^2 \\le m^2 + l^2$"
+            }
+          ],
+          "convention": "We use ingoing coordinates $(v, r, \\theta, \\phi)$ built on the time $t_N = t + 2l\\phi/c$ in which the northern half of the axis is regular, with the advanced time $v = c\\,t_N + r_*$ a length, $dr_*/dr = \\Sigma/\\Delta$, and $r_* = 0$ at $r = 0$, and write $\\Sigma$ and $\\Delta$ as the parameters define them.",
+          "line_element": "ds^2 = -\\dfrac{\\Delta}{\\Sigma}\\left(dv - 2l\\left(1 - \\cos\\theta\\right)d\\phi\\right)^2 + 2\\,dr\\left(dv - 2l\\left(1 - \\cos\\theta\\right)d\\phi\\right) + \\Sigma\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\dfrac{\\Delta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "v",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{2l\\,\\Delta\\left(\\cos\\theta - 1\\right)}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "v"
+              ],
+              "value": "-\\dfrac{2l\\,\\Delta\\left(\\cos\\theta - 1\\right)}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "r",
+                "\\phi"
+              ],
+              "value": "2l\\left(\\cos\\theta - 1\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "r"
+              ],
+              "value": "2l\\left(\\cos\\theta - 1\\right)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\Sigma"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{\\left(\\cos\\theta - 1\\right)\\left(\\Sigma^2\\cos\\theta + \\Sigma^2 + 4l^2\\,\\Delta\\cos\\theta - 4l^2\\,\\Delta\\right)}{\\Sigma}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8r_q^4}{\\Sigma^4} + \\dfrac{48\\left(\\left(m^2 - l^2\\right)\\left(r^6 - 15l^2r^4 + 15l^4r^2 - l^6\\right) - 2mr\\left(\\left(r_q^2 - 6l^2\\right)r^4 - 10l^2\\left(r_q^2 - 2l^2\\right)r^2 + l^4\\left(5r_q^2 - 6l^2\\right)\\right) + r_q^2\\left(\\left(r_q^2 - 10l^2\\right)r^4 - 2l^2\\left(3r_q^2 - 10l^2\\right)r^2 + l^4\\left(r_q^2 - 2l^2\\right)\\right)\\right)}{\\Sigma^6}"
+        },
+        {
+          "id": "eddington_finkelstein_outgoing",
+          "name": "Outgoing Eddington-Finkelstein",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi)",
+            "\\phi \\in [0, 2\\pi)",
+            "\\Delta = 0 \\;\\text{(the horizons } r_\\pm = m \\pm \\sqrt{m^2 + l^2 - r_q^2}\\text{, present for } r_q^2 \\le m^2 + l^2\\text{)}",
+            "\\theta = \\pi \\;\\text{(the Misner string)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Geometric mass, $m = GM/c^2$, a length"
+            },
+            {
+              "symbol": "l",
+              "description": "NUT parameter, a length, the gravitomagnetic monopole moment; at $l = 0$ the metric is Reissner and Nordström's"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius, a length, with $r_q^2 = Q^2G/(4\\pi\\epsilon_0c^4)$ for a charge $Q$; an electric and a magnetic charge enter through the sum of their squares, and at $r_q = 0$ the metric is the Taub-NUT metric"
+            },
+            {
+              "symbol": "\\Sigma = r^2 + l^2",
+              "description": "The area of the sphere of constant $t$ and $r$ divided by $4\\pi$, which is never less than $l^2$"
+            },
+            {
+              "symbol": "\\Delta = r^2 - 2mr - l^2 + r_q^2",
+              "description": "Its roots are the horizons $r_\\pm = m \\pm \\sqrt{m^2 + l^2 - r_q^2}$, which exist for $r_q^2 \\le m^2 + l^2$"
+            }
+          ],
+          "convention": "We use outgoing coordinates $(u, r, \\theta, \\phi)$ built on the time $t_N = t + 2l\\phi/c$ in which the northern half of the axis is regular, with the retarded time $u = c\\,t_N - r_*$ a length, $dr_*/dr = \\Sigma/\\Delta$, and $r_* = 0$ at $r = 0$, and write $\\Sigma$ and $\\Delta$ as the parameters define them.",
+          "line_element": "ds^2 = -\\dfrac{\\Delta}{\\Sigma}\\left(du - 2l\\left(1 - \\cos\\theta\\right)d\\phi\\right)^2 - 2\\,dr\\left(du - 2l\\left(1 - \\cos\\theta\\right)d\\phi\\right) + \\Sigma\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\dfrac{\\Delta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "u",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{2l\\,\\Delta\\left(\\cos\\theta - 1\\right)}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "u"
+              ],
+              "value": "-\\dfrac{2l\\,\\Delta\\left(\\cos\\theta - 1\\right)}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "r",
+                "\\phi"
+              ],
+              "value": "-2l\\left(\\cos\\theta - 1\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "r"
+              ],
+              "value": "-2l\\left(\\cos\\theta - 1\\right)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\Sigma"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{\\left(\\cos\\theta - 1\\right)\\left(\\Sigma^2\\cos\\theta + \\Sigma^2 + 4l^2\\,\\Delta\\cos\\theta - 4l^2\\,\\Delta\\right)}{\\Sigma}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8r_q^4}{\\Sigma^4} + \\dfrac{48\\left(\\left(m^2 - l^2\\right)\\left(r^6 - 15l^2r^4 + 15l^4r^2 - l^6\\right) - 2mr\\left(\\left(r_q^2 - 6l^2\\right)r^4 - 10l^2\\left(r_q^2 - 2l^2\\right)r^2 + l^4\\left(5r_q^2 - 6l^2\\right)\\right) + r_q^2\\left(\\left(r_q^2 - 10l^2\\right)r^4 - 2l^2\\left(3r_q^2 - 10l^2\\right)r^2 + l^4\\left(r_q^2 - 2l^2\\right)\\right)\\right)}{\\Sigma^6}"
+        },
+        {
+          "id": "taub",
+          "name": "Brill's Universe",
+          "coordinates": [
+            "\\tau",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in \\left(m - \\sqrt{m^2 + l^2 - r_q^2},\\, m + \\sqrt{m^2 + l^2 - r_q^2}\\right)",
+            "\\psi \\in [0, 4\\pi)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "U = 0 \\;\\text{(the horizons } \\tau_\\pm = m \\pm \\sqrt{m^2 + l^2 - r_q^2}\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Geometric mass, $m = GM/c^2$, a length"
+            },
+            {
+              "symbol": "l",
+              "description": "NUT parameter, a length, the gravitomagnetic monopole moment; at $l = 0$ the metric is Reissner and Nordström's"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius, a length, with $r_q^2 = Q^2G/(4\\pi\\epsilon_0c^4)$ for a charge $Q$; an electric and a magnetic charge enter through the sum of their squares, and at $r_q = 0$ the metric is the Taub-NUT metric"
+            },
+            {
+              "symbol": "\\Sigma = \\tau^2 + l^2",
+              "description": "The area of the sphere of constant $\\tau$ and $\\psi$ divided by $4\\pi$"
+            },
+            {
+              "symbol": "U = l^2 - r_q^2 + 2m\\tau - \\tau^2",
+              "description": "Positive between its roots $\\tau_\\pm = m \\pm \\sqrt{m^2 + l^2 - r_q^2}$, where the universe begins and ends"
+            }
+          ],
+          "convention": "We use the time $\\tau$, a length, and the Euler angles $(\\psi, \\theta, \\phi)$ of the sphere $S^3$, for $r_q^2 < m^2 + l^2$, and write $\\Sigma$ and $U$ as the parameters define them. The region is the one between the horizons, with $\\tau = r$ and $2l\\psi = ct$. We take components in the chart $x^0 = \\tau$.",
+          "line_element": "ds^2 = -\\dfrac{\\Sigma}{U}d\\tau^2 + \\dfrac{4l^2U}{\\Sigma}\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2 + \\Sigma\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{\\Sigma}{U}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{4l^2\\,U}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{4l^2\\,U\\cos\\theta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{4l^2\\,U\\cos\\theta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\Sigma"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\Sigma^2\\sin^2\\theta + 4l^2\\,U\\cos^2\\theta}{\\Sigma}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8r_q^4}{\\Sigma^4} + \\dfrac{48\\left(\\left(m^2 - l^2\\right)\\left(\\tau^6 - 15l^2\\tau^4 + 15l^4\\tau^2 - l^6\\right) - 2m\\tau\\left(\\left(r_q^2 - 6l^2\\right)\\tau^4 - 10l^2\\left(r_q^2 - 2l^2\\right)\\tau^2 + l^4\\left(5r_q^2 - 6l^2\\right)\\right) + r_q^2\\left(\\left(r_q^2 - 10l^2\\right)\\tau^4 - 2l^2\\left(3r_q^2 - 10l^2\\right)\\tau^2 + l^4\\left(r_q^2 - 2l^2\\right)\\right)\\right)}{\\Sigma^6}"
         }
       ]
     },
@@ -20889,6 +21466,11 @@
           "id": "double_kerr",
           "kind": "family",
           "text": "Two spinning black holes with no charge, on one axis. Their spins do not balance their attraction, and a strut on the axis holds them apart [kramer1980, neugebauer2009]."
+        },
+        {
+          "id": "brill_charged_taub_nut",
+          "kind": "family",
+          "text": "The single source of complex mass is Brill's charged Taub-NUT at $r_q^2 = m^2 + l^2$, where its two horizons meet. With more charge than that Brill's metric has no horizon and is a wormhole [clement2016]."
         }
       ],
       "references": [
@@ -20907,7 +21489,8 @@
         "tod1983",
         "kallosh1994anomaly",
         "kramer1980",
-        "neugebauer2009"
+        "neugebauer2009",
+        "clement2016"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/israel_wilson_perjes.json",
@@ -24540,6 +25123,11 @@
           "id": "belinski_zakharov",
           "kind": "family",
           "text": "The whole Kerr-NUT solution is two solitons added to flat space by Belinski and Zakharov's inverse scattering method [belinskii1979]."
+        },
+        {
+          "id": "brill_charged_taub_nut",
+          "kind": "family",
+          "text": "Taub-NUT with a charge, where this one is Taub-NUT with a spin. Dieter Brill found it in 1964, and Plebański and Demiański's family holds both [brill1964, plebanski1976, griffiths2005]."
         }
       ],
       "references": [
@@ -24564,7 +25152,8 @@
         "emond2022",
         "wahlquist1968",
         "mars2001",
-        "belinskii1979"
+        "belinskii1979",
+        "brill1964"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr_taub_nut.json",
@@ -32256,6 +32845,11 @@
           "id": "brans_dicke_sphere",
           "kind": "family",
           "text": "A wormhole with no matter but the scalar field of Brans and Dicke's theory. Their static sphere has a throat when the post-Newtonian parameter $\\gamma$ exceeds $1$ [agnese1995]."
+        },
+        {
+          "id": "brill_charged_taub_nut",
+          "kind": "family",
+          "text": "A wormhole with no exotic matter. At $r_q^2 > m^2 + l^2$ Brill's charged Taub-NUT has no horizon, and an electromagnetic field holds its throat open, with a Misner string along the axis [clement2016]."
         }
       ],
       "references": [
@@ -32280,7 +32874,8 @@
         "alcubierre1994",
         "papapetrou1954",
         "boonserm2018",
-        "agnese1995"
+        "agnese1995",
+        "clement2016"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/morris_thorne.json",
@@ -38959,6 +39554,11 @@
           "id": "bonnor_charged_dust",
           "kind": "composite",
           "text": "A star of charged dust at rest, with the extremal field, $r_q = r_s/2$, outside it. Its surface can lie as near the horizon as one likes, and the redshift of its centre is then as large as one likes [bonnor1975]."
+        },
+        {
+          "id": "brill_charged_taub_nut",
+          "kind": "generalisation",
+          "text": "Reissner and Nordström's hole with a NUT parameter $l$. The twist takes the singularity out of $r = 0$, and where too much charge would bare it, $r_q^2 > r_s^2/4 + l^2$, Brill's metric is a wormhole [brill1964, clement2016]."
         }
       ],
       "references": [
@@ -39003,7 +39603,9 @@
         "gibbonsrasheed1995",
         "arnowitt1960",
         "krasinski2012",
-        "bonnor1975"
+        "bonnor1975",
+        "brill1964",
+        "clement2016"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -46385,6 +46987,11 @@
           "id": "gravitational_instantons",
           "kind": "dual",
           "text": "With an imaginary time and an imaginary twist, $l = in$, Taub-NUT is a space with no time in it. It is regular at two masses, Stephen Hawking's self dual instanton at $m = n$ and Don Page's, which has a horizon, at $m = 5n/4$ [hawking1977, page1978bolt, gibbonshawking1979]."
+        },
+        {
+          "id": "brill_charged_taub_nut",
+          "kind": "generalisation",
+          "text": "Taub-NUT with a charge. Dieter Brill filled Taub's universe with an electromagnetic wave in 1964, and with charge enough, $r_q^2 > m^2 + l^2$, the horizons go and the spacetime is a wormhole [brill1964, clement2016]."
         }
       ],
       "references": [
@@ -46412,7 +47019,8 @@
         "eguchihanson1979",
         "gibbonshawking1979",
         "podolsky2018",
-        "page1978bolt"
+        "page1978bolt",
+        "clement2016"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/taub_nut.json",
