@@ -120,9 +120,10 @@ Q4 = PI / 4
 EQUATOR = {"theta": "pi/2", "phi": "0"}
 
 # The spacetimes with no conformal diagram, for which nothing is written.
-NOT_DRAWN = {"godel", "stockum_dust", "som_raychaudhuri", "taub_nut", "kasner", "bianchi", "tolman_bondi", "alcubierre",
+NOT_DRAWN = {"godel", "stockum_dust", "som_raychaudhuri", "taub_nut", "kasner", "kasner_scalar", "bianchi", "tolman_bondi", "alcubierre",
              "natario", "krasnikov", "pp_wave", "mixmaster", "lentz", "szekeres", "van_den_broeck",
-             "string_wave", "black_saturn", "schrodinger_spacetime", "eguchi_hanson", "misner_brill_lindquist", "brill_waves",
+             "string_wave", "black_saturn", "schrodinger_spacetime", "eguchi_hanson", "gravitational_instantons",
+             "misner_brill_lindquist", "brill_waves",
              "kundt_waves", "wahlquist", "tippett_tsang", "petrov_homogeneous"}
 
 
@@ -9481,6 +9482,198 @@ def gravastar(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- the star of infinite central density
+
+def misner_zapolsky(ck, src):
+    """Four views, each on the plane of t and r with the tortoise coordinate
+    r* = int sqrt(g_rr/(-g_tt)) dr and p, q = arctan((ct -+ r*)/l).
+
+    The sphere of radiation at a = 1: r* = sqrt(7 a r), which is zero at the centre, so the plane
+    is the half r* > 0 of Minkowski's and the diagram his triangle, with the centre a timelike
+    line where the published Kretschmann scalar diverges.
+
+    Tolman's two stars in units of r_b, each joined to the Schwarzschild exterior of the
+    schwarzschild entry, at r_s = 1/2 for solution V and 3/7 for solution VI; g_tt and g_rr are
+    continuous at r_b, checked, so t is one coordinate and r* runs from the centre through the
+    surface. For solution VI r* = (14 r_b/3) ln((3 + sqrt(r/r_b))/(3 - sqrt(r/r_b))) inside,
+    checked against the quadrature that solution V is drawn by.
+
+    Tolman's exponent at n = 1 and a = 1: r* = sqrt(2) a ln(r/a) runs over the whole line, so
+    the plane is all of Minkowski's and the diagram his diamond. The centre is at r* -> -infinity,
+    on the two null edges on the left, which a ray reaches at a finite affine parameter, since
+    that goes as r^2, and where the Kretschmann scalar 12/r^4 diverges."""
+    tri_box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    views = []
+
+    def corners(v, which):
+        for at, text, anchor, dx, dy in which:
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+    three = (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6), ((0, -PI), "$i^-$", "t", 0, 6))
+
+    # The sphere of radiation.
+    core = Plane(src, "misner_zapolsky", "areal", ("t", "r"), EQUATOR, {"a": 1})
+
+    def radiation(t, r):
+        return mink_pq(t, np.sqrt(7 * np.asarray(r, dtype=float)))
+    ck.chart("Misner-Zapolsky, the sphere of radiation", core, radiation, ck.uniform(-20, 20),
+             ck.uniform(0.01, 30), lambda t, r: (1, 0))
+    K = core.kretschmann
+    ck.diverges("Misner-Zapolsky: the Kretschmann scalar of the sphere of radiation diverges at r = 0",
+                K(0, 1e-2), K(0, 1e-3))
+    p, q = radiation(np.array([-3.0, 0.0, 3.0]), np.full(3, 1e-14))
+    ck.limit("Misner-Zapolsky: r -> 0 lands on the line X = 0", q - p, [0, 0, 0], 1e-5)
+    v = View("areal", "Blackbody Radiation Solution", tri_box, "areal")
+    v.fill("region", TRIANGLE)
+    v.fill("cover", TRIANGLE)
+    for r in (0.25, 1.0, 2.0, 4.0):
+        v.curve("r", *radiation(S_ALL, np.full_like(S_ALL, r)))
+    rr = np.concatenate([[0.0], np.exp(np.linspace(-12, 14, 400))])
+    for t in (-8, -4, -2, 0, 2, 4, 8):
+        v.curve("t", *radiation(np.full_like(rr, t), rr))
+    v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+    v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+    corners(v, three)
+    v.label_xt([0, 0.25], "$r = 0$", "r", dx=-6)
+    label_on(v, radiation(0, 1.0), "$r = a$")
+    label_on(v, radiation(0, 4.0), "$4a$")
+    v.legend("cover", "the whole spacetime, which $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, at $0.25$, $1$, $2$ and $4\\,a$")
+    v.legend("t", "$t$ constant")
+    v.legend("singular", "$r = 0$, where the density and the Kretschmann scalar diverge, timelike")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    v.set(settings="$a = 1$.")
+    moment = slices.moments("misner_zapolsky", "core")[0]
+    lo, hi = moment.reach("areal", "r")
+    along_r = np.concatenate([[lo], np.geomspace(1e-9, hi, 200)])
+    v.slice(moment, [radiation(0 * along_r, along_r)])
+    views.append(v)
+
+    # Tolman's two stars, r_b = 1.
+    R = 1.0
+    for system, name, rs_text in (("tolman_v", "Tolman V Star", "1/2"), ("tolman_vi", "Tolman VI Star", "3/7")):
+        rs = float(sp.Rational(rs_text))
+        inner = Plane(src, "misner_zapolsky", system, ("t", "r"), EQUATOR, {"r_b": 1})
+        outer = Plane(src, "schwarzschild", "spherical", ("t", "r"), EQUATOR, {"r_s": rs_text})
+        for k, slot in ((0, "g_tt"), (1, "g_rr")):
+            ck.limit(f"Misner-Zapolsky, {system}: {slot} is continuous at r = r_b",
+                     [float(inner.g[k, k].subs(inner.x1, R))], [float(outer.g[k, k].subs(outer.x1, R))], 1e-12)
+        # With r = w^2 the integrand of r* is finite at the centre: dr*/dw = 2w sqrt(g_rr/(-g_tt)).
+        w = sp.Symbol("w", positive=True)
+        slope = sp.lambdify(w, sp.simplify((2 * w * sp.sqrt(inner.g[1, 1] / (-inner.g[0, 0]))).subs(inner.x1, w ** 2)),
+                            "numpy")
+        wq = np.linspace(0, 1, 300001)
+        wq[0] = 1e-12
+        rsq = cumulative_trapezoid(slope(wq) * np.ones_like(wq), wq, initial=0)
+        wq[0] = 0.0
+
+        def rstar(r, rs=rs, wq=wq, rsq=rsq):
+            r = np.asarray(r, dtype=float)
+            with np.errstate(invalid="ignore", divide="ignore"):
+                outside = rsq[-1] + (r + rs * np.log(np.abs(r / rs - 1))) - (R + rs * np.log(R / rs - 1))
+            return np.where(r <= R, np.interp(np.sqrt(np.abs(r)), wq, rsq), outside)
+
+        def star(t, r, rstar=rstar):
+            return mink_pq(t, rstar(r), R)
+        if system == "tolman_vi":
+            radii = np.array([0.1, 0.3, 0.5, 0.8, 1.0])
+            ck.limit("Misner-Zapolsky, tolman_vi: r* = (14/3) ln((3 + sqrt(r))/(3 - sqrt(r)))",
+                     rstar(radii), 14 / 3 * np.log((3 + np.sqrt(radii)) / (3 - np.sqrt(radii))), 1e-8)
+        ck.chart(f"Misner-Zapolsky, the {system} star", inner, star, ck.uniform(-10, 10), ck.uniform(0.005, 0.995),
+                 lambda t, r: (1, 0))
+        ck.chart(f"Misner-Zapolsky, the {system} exterior", outer, star, ck.uniform(-10, 10), ck.uniform(1.005, 15),
+                 lambda t, r: (1, 0))
+        K = inner.kretschmann
+        ck.diverges(f"Misner-Zapolsky: the Kretschmann scalar of the {system} star diverges at r = 0",
+                    K(0, 1e-2), K(0, 1e-3))
+
+        v = View(system, name, tri_box, system)
+        v.fill("region", TRIANGLE)
+        ps, qs = mink_pq(S_ALL, rstar(R), R)
+        v.fill("cover", [[0, -PI]] + [point(a, b) for a, b in zip(ps, qs)] + [[0, PI]])
+        for r in (0.25, 0.5, 0.75):
+            v.curve("r", *star(S_ALL, np.full_like(S_ALL, r)))
+        for r in (1.5, 2.0, 4.0):
+            v.curve("r2", *star(S_ALL, np.full_like(S_ALL, r)))
+        rr = np.concatenate([np.linspace(0, 1, 80)[:-1] ** 2, R + np.exp(np.linspace(-6, 8, 200)) - np.exp(-6)])
+        for t in (-12, -6, -3, 0, 3, 6, 12):
+            v.curve("t", *star(np.full_like(rr, t), rr))
+        v.curve("surface", ps, qs)
+        v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        corners(v, three)
+        v.label_xt([0, 0.25], "$r = 0$", "r", dx=-6)
+        label_on(v, mink_pq(0, rstar(R), R), "$r = r_b$")
+        v.label_xt([0.6, 0.0], "star", cls="region")
+        v.legend("cover", "the star, $r \\le r_b$, which $t$ and $r$ cover")
+        v.legend("r", "$r$ constant inside, at $0.25$, $0.5$ and $0.75\\,r_b$")
+        v.legend("r2", "$r$ constant outside, at $1.5$, $2$ and $4\\,r_b$")
+        v.legend("t", "$t$ constant, one $t$ on both sides")
+        v.legend("surface", "the surface of the star, $r = r_b$")
+        v.legend("singular", "$r = 0$, where the density and the Kretschmann scalar diverge, timelike")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        v.set(settings="$r_b = 1$.")
+        moment = slices.moments("misner_zapolsky", system)[0]
+        lo, hi = moment.reach(system, "r")[0], moment.reach("spherical", "r")[1]
+        along_r = np.concatenate([np.linspace(0, 1, 60)[:-1] ** 2 * (R - lo) + lo, R + np.geomspace(1e-6, hi - R, 200)])
+        v.slice(moment, [star(0 * along_r, along_r)])
+        views.append(v)
+
+    # Tolman's exponent at n = 1, the stiffest fluid.
+    stiff = Plane(src, "misner_zapolsky", "power_law", ("t", "r"), EQUATOR, {"n": 1, "a": 1})
+
+    def stiffest(t, r):
+        with np.errstate(divide="ignore"):
+            return mink_pq(t, math.sqrt(2) * np.log(np.asarray(r, dtype=float)))
+    ck.chart("Misner-Zapolsky, the stiffest fluid", stiff, stiffest, ck.uniform(-12, 12),
+             np.exp(ck.uniform(-8, 8)), lambda t, r: (1, 0))
+    K = stiff.kretschmann
+    ck.diverges("Misner-Zapolsky: the Kretschmann scalar of the stiffest fluid diverges at r = 0",
+                K(0, 1e-2), K(0, 1e-3))
+    p, q = stiffest(np.array([0.0]), np.array([1e-300]))
+    ck.limit("Misner-Zapolsky, n = 1: r -> 0 at t = 0 lands on the left corner, (X, T) = (-pi, 0)",
+             point(p[0], q[0]), [-PI, 0], 1e-2)
+    # An ingoing ray, ct + r* constant, keeps its q and runs to the upper left edge, p = pi/2, as r -> 0.
+    r_in = np.array([1e-3, 1e-30, 1e-200])
+    p, q = stiffest(-math.sqrt(2) * np.log(r_in) + 0.7, r_in)
+    ck.limit("Misner-Zapolsky, n = 1: an ingoing ray keeps its q and runs to p = pi/2 as r -> 0",
+             [q[0] - q[2], p[2]], [0, HALF], 1e-2)
+    # The affine parameter of a radial ray is int sqrt(-g_tt g_rr) dr = r^2/sqrt(2), finite at r = 0.
+    rq = np.linspace(1e-9, 1.0, 200001)
+    g00, g01, g11 = stiff.metric(0 * rq, rq)[:3]
+    ck.limit("Misner-Zapolsky, n = 1: the affine parameter from r = 0 to r = a is a/sqrt(2)",
+             [float(np.trapezoid(np.sqrt(-g00 * g11), rq))], [1 / math.sqrt(2)], 1e-6)
+    box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    v = View("power_law", "Tolman's Exponent", box, "power_law")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    for r in (0.1, 0.5, 1.0, 2.0, 10.0):
+        v.curve("r", *stiffest(S_ALL, np.full_like(S_ALL, r)))
+    rr = np.exp(np.linspace(-60, 60, 600))
+    for t in (-6, -3, -1.5, 0, 1.5, 3, 6):
+        v.curve("t", *stiffest(np.full_like(rr, t), rr))
+    v.line("singular", [[[0, PI], [-PI, 0]], [[-PI, 0], [0, -PI]]], zig=True)
+    v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+    corners(v, three)
+    v.label_xt([-HALF, HALF], "$r = 0$", "br", dx=-5, dy=-3)
+    v.label_xt([-HALF, -HALF], "$r = 0$", "tr", dx=-5, dy=3)
+    label_on(v, stiffest(0, 1.0), "$r = a$")
+    v.legend("cover", "the whole spacetime, which $t$ and $r$ cover")
+    v.legend("r", "$r$ constant, at $0.1$, $0.5$, $1$, $2$ and $10\\,a$")
+    v.legend("t", "$t$ constant")
+    v.legend("singular", "$r = 0$, where the density and the Kretschmann scalar diverge, null")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    v.set(settings="$n = 1$ and $a = 1$.")
+    moment = slices.moments("misner_zapolsky", "stiff")[0]
+    lo, hi = moment.reach("power_law", "r")
+    along_r = np.exp(np.linspace(-60, math.log(hi), 300))
+    v.slice(moment, [stiffest(0 * along_r, along_r)])
+    views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- Tolman's solution VII
 
 def tolman_vii(ck, src):
@@ -12965,6 +13158,145 @@ def nordstrom_scalar(ck, src):
     return views
 
 
+def einstein_1912_static(ck, src):
+    """Einstein's static field of 1912, one view for each chart. On a plane of t and one length x
+    the metric is -N^2 c^2 dt^2 + dx^2 = N^2 (-c^2 dt^2 + dx_*^2) with dx_* = dx/N, and a
+    conformal factor changes no null direction, so p, q = arctan((ct -+ x_*)/l) bring each plane
+    into Minkowski's diagram, as far as x_* runs.
+
+    Through the declared star N is positive everywhere, x_* runs over the whole line, and the
+    plane is the full diamond with the star a band from i^- to i^+. The uniform field is flat,
+    Rindler's wedge of Minkowski's diamond, with its horizon on z = 0. Outside a body N vanishes
+    on r = m by the equation of February and on r = m/2 by that of March, r_* runs to minus
+    infinity there, a simple logarithm in February and a pole in March, and the plane is a full
+    diamond again, each point a sphere, whose two left edges are that sphere at t = -+ infinity:
+    null lines, at a finite affine distance, on which the Kretschmann scalar diverges."""
+    views = []
+    dia_box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    mid = "einstein_1912_static"
+
+    # The star, in units of its radius R, with l = 2R.
+    ell = 2.0
+    star = Plane(src, mid, "static", ("t", "x"), {"y": "0", "z": "0"}, functions=nr.E12_STAR)
+
+    def through(t, x):
+        return mink_pq(t, nr.e12_tortoise(x), ell)
+    ck.chart("Einstein 1912, through the star", star, through, ck.uniform(-20, 20, 400), ck.uniform(-8, 8, 400),
+             lambda t, x: (1, 0))
+    ck.finite("Einstein 1912: the centre of the star is regular",
+              star.kretschmann(np.zeros(5), np.array([0.0, 1e-3, 1e-2, 0.5, 0.99])))
+    crossing = 2 * float(nr.e12_tortoise(1.0))
+    ck.limit("Einstein 1912: light crosses the star in 8.89 R/c", [crossing], [8.89], 5e-3)
+    v = View("static", "Static field", dia_box, "static")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    right = mink_pq(S_ALL, np.full_like(S_ALL, crossing / 2), ell)
+    left = mink_pq(S_ALL, np.full_like(S_ALL, -crossing / 2), ell)
+    v.fill("star", [[0, -PI]] + [point(a, b) for a, b in zip(*right)] + [[0, PI]]
+           + [point(a, b) for a, b in zip(*left)][::-1])
+    for x in (-4.0, -2.0, -0.5, 0.0, 0.5, 2.0, 4.0):
+        v.curve("r", *mink_pq(S_ALL, np.full_like(S_ALL, float(nr.e12_tortoise(x))), ell))
+    xs = np.concatenate([-S_POS[::-1], [0.0], S_POS])
+    xs = xs[np.abs(xs) < 1e9]
+    tort = nr.e12_tortoise(xs)
+    for t in (-4, -2, -1, 0, 1, 2, 4):
+        v.curve("t", *mink_pq(np.full_like(tort, t), tort, ell))
+    v.curve("surface", *right)
+    v.curve("surface", *left)
+    diamond_edges(v)
+    label_on(v, mink_pq(0, crossing / 2, ell), "$x = R$", "l", dx=5, dy=0)
+    v.label_xt([0.0, 1.3], "star", cls="region")
+    v.legend("cover", "the whole plane, which $t$ and $x$ cover")
+    v.legend("star", "the star, $|x| < R$")
+    v.legend("r", "$x$ constant, at $0$, $\\pm R/2$, $\\pm 2R$, and $\\pm 4R$")
+    v.legend("t", "$ct$ constant, at $0$, $\\pm R$, $\\pm 2R$, and $\\pm 4R$")
+    v.legend("surface", "the surface of the star, $x = \\pm R$")
+    v.set(restriction="The plane $y = z = 0$ only, totally geodesic, each point in the diagram a single event.",
+          settings="The star of uniform density with $\\omega = 3/(2R)$, where $R$ is its radius, the unit of every "
+                   "length, and $\\ell = 2R$; $p = \\arctan((ct - x_*)/\\ell)$ and $q = \\arctan((ct + x_*)/\\ell)$, with "
+                   "$x_* = \\int_0^x dx/N$.")
+    views.append(v)
+
+    # The uniform field on the plane of t and z, in units of c^2/a: Rindler's wedge.
+    field = Plane(src, mid, "uniform", ("t", "z"), {"x": "0", "y": "0"}, {"a": 1})
+
+    def wedge(t, z):
+        t, z = np.asarray(t, dtype=float), np.asarray(z, dtype=float)
+        return np.arctan(-z * np.exp(-t)), np.arctan(z * np.exp(t))
+    ck.chart("Einstein 1912, the uniform field", field, wedge, ck.uniform(-5, 5), ck.uniform(0.01, 10), lambda t, z: (1, 0))
+    p, q = wedge(np.array([-2.0, 2.0]), np.array([1e-12, 1e-12]))
+    ck.limit("Einstein 1912, the uniform field: z -> 0 is the pair of null lines p = 0 and q = 0", [q[0], p[1]], [0, 0], 1e-9)
+    ck.limit("Einstein 1912, the uniform field is flat", field.kretschmann(ck.uniform(-3, 3, 50), ck.uniform(0.1, 5, 50)),
+             np.zeros(50), 1e-12)
+    v = View("uniform", "Uniform field", dia_box, "uniform")
+    v.fill("region", DIAMOND)
+    v.fill("cover", [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]])
+    grid(v, "r", lambda z, t: wedge(t, z), (0.25, 0.5, 1, 2, 4), S_ALL)
+    grid(v, "t", wedge, (-2, -1, -0.5, 0, 0.5, 1, 2), S_POS)
+    v.line("horizon", [[[0, 0], [HALF, HALF]], [[0, 0], [HALF, -HALF]],
+                       [[0, 0], [-HALF, HALF]], [[0, 0], [-HALF, -HALF]]])
+    diamond_edges(v)
+    v.label_xt([Q4 - 0.05, Q4 + 0.05], "$z = 0$", "br", "small", dx=-3, dy=-2)
+    v.legend("cover", "the wedge above $z = 0$, which $t$ and $z$ cover")
+    v.legend("r", "$z$ constant, a body at rest in the field, in units of $c^2/a$")
+    v.legend("t", "$t$ constant, in units of $c/a$")
+    v.legend("horizon", "the horizon $z = 0$, where $N = 0$, and the null lines that continue it")
+    v.set(restriction="The plane $x = y = 0$ only, totally geodesic, each point in the diagram a single event.",
+          settings="$a = 1$, with $c^2/a$ the unit of every length; $p = \\arctan(-(az/c^2)e^{-at/c})$ and "
+                   "$q = \\arctan((az/c^2)e^{at/c})$.")
+    views.append(v)
+
+    # Outside a body by each equation, in units of m, with l = 2m.
+    bodies = (("february", "Outside a body, February", 1.0, lambda r: r + np.log(r - 1), "m",
+               "$r_* = r + m\\ln(r/m - 1)$", (1.1, 1.5, 2, 3, 5, 9), "$1.1\\,m$, $1.5\\,m$, $2m$, $3m$, $5m$, and $9m$"),
+              ("march", "Outside a body, March", 0.5, lambda r: r + np.log(r - 0.5) - 1 / (4 * r - 2), "m/2",
+               "$r_* = r + m\\ln(r/m - 1/2) - m^2/(4r - 2m)$", (0.75, 1, 1.5, 2, 3, 5, 9),
+               "$0.75\\,m$, $m$, $1.5\\,m$, $2m$, $3m$, $5m$, and $9m$"))
+    for system, name, edge, tortoise, edge_text, formula, radii, radii_text in bodies:
+        body = Plane(src, mid, system, ("t", "r"), EQUATOR, {"m": 1})
+
+        def outside(t, r, tortoise=tortoise):
+            with np.errstate(divide="ignore", invalid="ignore"):
+                rs = tortoise(np.asarray(r, dtype=float))
+            t = np.asarray(t, dtype=float)
+            return np.arctan((t - rs) / ell), np.arctan((t + rs) / ell)
+        where = f"Einstein 1912, the body of {system.capitalize()}"
+        ck.chart(where, body, outside, ck.uniform(-20, 20), edge + np.exp(ck.uniform(-3, 3)), lambda t, r: (1, 0))
+        ck.diverges(f"{where}: the Kretschmann scalar diverges on r = {edge_text}",
+                    body.kretschmann(0, edge + 1e-5), body.kretschmann(0, edge + 1e-6))
+        ck.limit(f"{where}: r = {edge_text} at t = 0 lands on the left corner", point(*outside(0.0, edge + 1e-300)),
+                 [-PI, 0], 1e-2)
+        v = View(system, name, dia_box, system)
+        v.fill("region", DIAMOND)
+        v.fill("cover", DIAMOND)
+        grid(v, "r", lambda r, t: outside(t, r), radii, S_ALL)
+        grid(v, "t", outside, (-8, -4, -2, 0, 2, 4, 8), edge + spread(0, np.inf, 600, 40))
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        v.line("singular", [[[0, PI], [-PI, 0]], [[-PI, 0], [0, -PI]]], zig=True)
+        for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6),
+                                         ((0, -PI), "$i^-$", "t", 0, 6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label_xt([-HALF, HALF], f"$r = {edge_text}$", "br", dx=-5, dy=-3)
+        v.label_xt([-HALF, -HALF], f"$r = {edge_text}$", "tr", dx=-5, dy=3)
+        label_on(v, outside(0, 3), "$r = 3m$")
+        v.legend("cover", "the whole spacetime outside the body, which $t$ and $r$ cover")
+        v.legend("r", f"$r$ constant, at {radii_text}")
+        v.legend("t", "$ct$ constant, at $0$, $\\pm 2m$, $\\pm 4m$, and $\\pm 8m$")
+        v.legend("singular", f"the singularity $r = {edge_text}$, where $N = 0$ and the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        if system == "march":
+            moment = slices.moments(mid, "equator")[0]
+            along_r = np.array(moment.reach("march", "r"))
+            v.slice(moment, [outside(0 * along_r, along_r)])
+        v.set(settings="$m = 1$, the unit of every length, and $\\ell = 2m$; $p = \\arctan((ct - r_*)/\\ell)$ and "
+                       f"$q = \\arctan((ct + r_*)/\\ell)$, with {formula}.")
+        views.append(v)
+    return views
+
+
 def malament_hogarth(ck, src):
     """Minkowski space less its origin, times Omega^2. A conformal factor changes no null
     direction, so for every Omega the causal structure is Minkowski's less that event, which
@@ -13549,6 +13881,164 @@ def kopczynski_trautman(ck, src):
                        "$q = \\arctan((\\eta + r)/\\ell)$.")
         views.append(v)
     return views
+
+
+def small_universes(ck, src):
+    """Ellis's torus of dust on its plane of the time and x, y and z held fixed, each point a 2-torus
+    of area a^2 L^2, at the cubic torus and the scale factor its other diagrams declare, in units of
+    the period L.
+
+    The metric on the plane is a^2(-d eta^2 + dx^2) with eta = 2 L sqrt(a) = 2 L (3ct/2L)^(1/3), and
+    a conformal factor changes no null direction, so p, q = arctan((eta -+ x)/L) bring it into
+    Minkowski's triangle, of which one cell of the universe is the part between the line x = 0,
+    X = 0, and the curve x = L, one surface of the torus drawn twice: it starts on the bang
+    eta = 0, the segment T = 0 from X = 0 to pi/2, and both meet at t = infinity, the one point i+
+    at (0, pi), since x is bounded. A ray from the bang at x = 0 reaches x = L at eta = L, which is
+    x = 0 again, and so laps the universe once in every L of eta. The published Kretschmann
+    scalar is checked to diverge on the bang."""
+    comoving_a, conformal_a = "(3*t/2)**Rational(2, 3)", "eta**2/4"
+
+    def eta_of(t):
+        return 2 * np.cbrt(1.5 * np.asarray(t, dtype=float))
+
+    def comoving(t, x):
+        return mink_pq(eta_of(t), x)
+    com = Plane(src, "small_universes", "torus", ("t", "x"), nr.SMALL_PLANE, nr.SMALL_TORUS, functions={"a": comoving_a})
+    con = Plane(src, "small_universes", "torus_conformal", ("\\eta", "x"), nr.SMALL_PLANE, nr.SMALL_TORUS,
+                functions={"a": conformal_a})
+    ck.chart("small universes, the torus in comoving time", com, comoving, ck.uniform(0.01, 30), ck.uniform(0, 1),
+             lambda t, x: (1, 0))
+    ck.chart("small universes, the torus in conformal time", con, mink_pq, ck.uniform(0.01, 30), ck.uniform(0, 1),
+             lambda e, x: (1, 0))
+    x = ck.uniform(0, 1, 50)
+    ck.diverges("small universes: t = 0 is a curvature singularity",
+                com.kretschmann(np.full(50, 1e-3), x), com.kretschmann(np.full(50, 1e-4), x))
+    ck.diverges("small universes: eta = 0 is a curvature singularity",
+                con.kretschmann(np.full(50, 1e-2), x), con.kretschmann(np.full(50, 1e-3), x))
+    p, q = mink_pq(np.full(50, 1e9), x)
+    ck.limit("small universes: eta -> infinity lands on the one point (0, pi)", np.concatenate([q - p, p + q]),
+             [0.0] * 50 + [PI] * 50, 1e-6)
+    p, q = mink_pq(np.zeros(50), x)
+    ck.limit("small universes: the bang lands on T = 0 at X = 2 arctan(x)", np.concatenate([p + q, q - p]),
+             np.concatenate([np.zeros(50), 2 * np.arctan(x)]), 1e-12)
+    # A lap: the ray from (eta, x) = (k, 0) reaches the far face at eta = k + 1, the event (k + 1, 0) again.
+    for k in range(3):
+        p0, _ = mink_pq(float(k), 0.0)
+        p1, _ = mink_pq(float(k + 1), 1.0)
+        ck.limit(f"small universes: lap {k + 1} of the ray from the bang is null", [float(p1)], [float(p0)], 1e-12)
+
+    edge = HALF
+    box = [-0.45, edge + 0.45, -0.3, PI + 0.3]
+    far = np.concatenate([[0.0], S_POS])
+    X, T = xt(*mink_pq(far, np.full_like(far, 1.0)))
+    region = [[0.0, 0.0]] + [[float(a), float(b)] for a, b in zip(X, T)] + [[0.0, PI]]
+    across = np.linspace(0, 1, 200)
+    moments = slices.moments("small_universes", "torus")
+    views = []
+    for vid, label, system, times, time_of, t_legend, singular, name in (
+            ("torus", "Comoving time", "torus", (1 / 12, 2 / 3, 9 / 4, 16 / 3, 125 / 12), eta_of,
+             "$ct$ constant, at $L/12$, $2L/3$, $9L/4$, $16L/3$, and $125L/12$, where $\\eta$ is $L$ to $5L$",
+             "the big bang, $t = 0$", "$t$"),
+            ("torus_conformal", "Conformal time", "torus_conformal", (0.5, 1, 2, 3, 4, 5), lambda c: c,
+             "$\\eta$ constant, at $L/2$ and every $L$ from $L$ to $5L$", "the big bang, $\\eta = 0$", "$\\eta$")):
+        v = View(vid, label, box, system)
+        v.fill("region", region)
+        v.fill("cover", region)
+        grid(v, "r", lambda xs, e: mink_pq(e, xs), (0.25, 0.5, 0.75), S_POS)
+        for c in times:
+            v.curve("t", *mink_pq(np.full_like(across, float(time_of(c))), across))
+        v.line("boundary", [[[0, 0], [0, PI]]])
+        v.curve("boundary", *mink_pq(far, np.full_like(far, 1.0)))
+        v.line("singular", [[[0, 0], [edge, 0]]], zig=True)
+        for k in range(3):
+            v.segment("null", mink_pq(float(k), 0.0), mink_pq(float(k + 1), 1.0))
+        v.layers.append({"kind": "point", "class": "infinity", "at": [0.0, round(PI, 4)]})
+        v.label_xt([0, PI], "$i^+$", "b", dy=-6)
+        v.label_xt([edge / 2, 0], singular, "t", dy=8)
+        v.label_xt([0, 1.5], "$x = 0$", "r", "coord", dx=-6)
+        v.label(mink_pq(1.6, 1.0), "$x = L$", "l", "coord", dx=6)
+        v.legend("cover", f"one cell of the torus universe, which {name} and $x$ cover")
+        v.legend("r", "$x$ constant, at $L/4$, $L/2$, and $3L/4$")
+        v.legend("t", t_legend)
+        v.legend("boundary", "$x = 0$ and $x = L$, one surface of the torus drawn twice")
+        v.legend("null", "a light ray from the bang on its first three laps of the universe, each begun where the last ended")
+        v.legend("singular", "the big bang, where the Kretschmann scalar diverges")
+        v.set(input=nr.SMALL_INPUT if vid == "torus" else nr.SMALL_INPUT_CONFORMAL)
+        for m in moments:
+            v.slice(m, [mink_pq(np.full_like(across, float(eta_of(m.time))), across)])
+        views.append(v)
+    views.append(small_universes_horn(ck, src))
+    return views
+
+
+def small_universes_horn(ck, src):
+    """Sokolov and Starobinsky's horn on its plane of the time and x, y and z held fixed, each point
+    a 2-torus of area a^2 b_2 b_3 e^(-2x), filled with the open dust its spacetime diagram declares,
+    in units of the radius of curvature a_0 at the moment a' = 6/5.
+
+    The metric on the plane is a^2(-d eta^2 + dx^2) with a = (11/50)(cosh(eta) - 1) and
+    ct = (11/50)(sinh(eta) - eta), and x runs over the whole line, so p, q = arctan(eta -+ x) bring
+    it onto the upper half of Minkowski's diamond: the bang eta = 0 is the segment T = 0 from
+    X = -pi to pi, and the two upper edges are reached by a light ray only at an infinite value of
+    its affine parameter, the integral of a^2 d eta. The published Kretschmann scalar is checked
+    to diverge on the bang."""
+    A = 11 / 50
+
+    def eta_of(t):
+        return nr._small_eta(t).reshape(np.shape(t))
+
+    def horn_pq(t, x):
+        return mink_pq(eta_of(t), x)
+
+    def dust(t, x):
+        a = A * (np.cosh(eta_of(t)) - 1)
+        return {"a": (a, np.sqrt(1 + 2 * A / a), -A / a ** 2)}
+    plane = Plane(src, "small_universes", "horn", ("t", "x"), {"y": "0", "z": "0"}, nr.SMALL_HORN, numeric=["a"])
+    ck.chart("small universes, the horn", plane, horn_pq, ck.uniform(0.01, 30), ck.uniform(-20, 20),
+             lambda t, x: (1, 0), dust)
+    x = ck.uniform(-3, 3, 50)
+    near, nearer = np.full(50, 1e-3), np.full(50, 1e-4)
+    ck.diverges("small universes: the horn's t = 0 is a curvature singularity",
+                plane.kretschmann(near, x, dust), plane.kretschmann(nearer, x, dust))
+    now = slices.SMALL_NOW
+    ck.limit("small universes: the horn's dust has a = a_0 and a' = 6/5 at eta = ln 11",
+             [float(eta_of(now)), float(dust(np.array([now]), 0)["a"][0][0]), float(dust(np.array([now]), 0)["a"][1][0])],
+             [math.log(11), 1.0, 1.2], 1e-9)
+    # The affine parameter along a ray, the integral of a^2 d eta, grows without bound.
+    far = np.array([20.0, 40.0])
+    ck.limit("small universes: the horn's upper edges are at infinite affine parameter",
+             [float(1 / (A * A * (np.sinh(2 * e) / 4 - 2 * np.sinh(e) + 1.5 * e))) for e in far], [0.0, 0.0], 1e-10)
+
+    v = View("horn", "The horn", [-PI - 0.45, PI + 0.45, -0.3, PI + 0.3], "horn")
+    tri = [[-PI, 0], [PI, 0], [0, PI]]
+    v.fill("region", tri)
+    v.fill("cover", tri)
+    grid(v, "r", lambda xs, e: mink_pq(e, xs), (-3, -1.5, 0, 1.5, 3), S_POS)
+    times = (0.05, 0.2, now, 2.0, 8.0)
+    for c in times:
+        if abs(c - now) > 1e-12:
+            v.curve("t", *mink_pq(np.full_like(S_ALL, float(eta_of(c))), S_ALL))
+    v.curve("surface", *mink_pq(np.full_like(S_ALL, math.log(11)), S_ALL))
+    v.line("singular", [[[-PI, 0], [PI, 0]]], zig=True)
+    v.line("scri", [[[-PI, 0], [0, PI]], [[0, PI], [PI, 0]]])
+    v.layers.append({"kind": "point", "class": "infinity", "at": [0.0, round(PI, 4)]})
+    for X in (-PI, PI):
+        v.layers.append({"kind": "point", "class": "infinity", "at": [round(X, 4), 0.0]})
+    v.label_xt([0, PI], "$i^+$", "b", dy=-6)
+    v.label_xt([-HALF, HALF], "$\\mathscr{I}^+$", "br", dx=-5, dy=-3)
+    v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+    v.label_xt([0, 0], "the big bang, $t = 0$", "t", dy=8)
+    v.legend("cover", "the whole horn, which $t$ and $x$ cover")
+    v.legend("r", "$x$ constant, at $0$, $\\pm 3/2$, and $\\pm 3$, the tori shrinking toward the right")
+    v.legend("t", "$ct$ constant, at $a_0/20$, $a_0/5$, $2a_0$, and $8a_0$")
+    v.legend("surface", "the moment $a = a_0$, where $\\eta = \\ln 11$")
+    v.legend("scri", "future null infinity, far along the horn in either direction")
+    v.legend("singular", "the big bang, where the Kretschmann scalar diverges")
+    v.set(input=nr.SMALL_OPEN_INPUT.format(G="$G^x{}_x = 0$"))
+    for m in slices.moments("small_universes", "horn"):
+        reach = np.linspace(*m.reach("horn", "x"), 200)
+        v.slice(m, [mink_pq(np.full_like(reach, math.log(11)), reach)])
+    return v
 
 
 def levi_civita(ck, src):
@@ -19952,7 +20442,243 @@ def lifshitz_spacetime(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- the moving mirror
+
+def moving_mirror(ck, src):
+    """Fulling and Davies's moving mirror: the part of the flat plane's diamond to the right of the
+    mirror's world line, at kappa = 1.
+
+    With u = ct - x and v = ct + x the metric is -du dv, and p = arctan u, q = arctan v bring the
+    plane into Minkowski's diamond. A mirror is the curve v = p(u) there:
+
+      Carlitz and Willey's    v = -e^(-u), from i- to the point (p, q) = (pi/2, 0) of the left
+                              future null infinity, where the ray v = 0 that no light catches up
+                              with the mirror after also ends;
+      Good, Anderson, Evans   v = -W(e^(-u)), between the same two points;
+      uniform acceleration    uv = -1 with u < 0, on which arctan v = pi/2 + arctan u, the vertical
+                              line X = q - p = pi/2 from the right past null infinity to the right
+                              future one.
+
+    The chart that brings a mirror to rest has U = p(u), so u = f(U) with f = U - ln(-U) for the
+    second mirror, and T, X = (v + U)/2, (v - U)/2; Rindler's coordinates have u = -e^(xi - eta) and
+    v = e^(xi + eta). Each map is checked null and future directed against its chart's published
+    metric, each mirror's ends against the points above, the mirror at rest in its own chart against
+    its world line in the inertial one, and one event in every chart of each mirror against itself.
+    """
+    lambertw = special.lambertw
+    box = [-HALF - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+
+    def W(x):
+        return lambertw(np.asarray(x, dtype=float)).real
+
+    # Each mirror as its position z(t), its ray tracing function p(u), and the inverse f of that.
+    z = {"thermal": lambda t: -t - W(np.exp(-2 * t)), "collapse": lambda t: -t - W(2 * np.exp(-2 * t)) / 2,
+         "uniform": lambda t: np.sqrt(1 + t ** 2)}
+    trace = {"thermal": lambda u: -np.exp(-u), "collapse": lambda u: -W(np.exp(-u)), "uniform": lambda u: -1 / u}
+    back = {"thermal": lambda U: -np.log(-U), "collapse": lambda U: U - np.log(-U)}
+
+    def null_map(u, v):
+        return np.arctan(np.asarray(u, dtype=float)), np.arctan(np.asarray(v, dtype=float))
+
+    def rest_map(case):
+        def fmap(U, v):
+            U = np.asarray(U, dtype=float)
+            with np.errstate(divide="ignore", invalid="ignore"):
+                return np.arctan(back[case](U)), np.arctan(np.asarray(v, dtype=float))
+        return fmap
+
+    def tx_map(case):
+        return lambda T, X: rest_map(case)(np.asarray(T, dtype=float) - X, np.asarray(T, dtype=float) + X)
+
+    def rindler(eta, xi):
+        eta, xi = np.asarray(eta, dtype=float), np.asarray(xi, dtype=float)
+        return np.arctan(-np.exp(xi - eta)), np.arctan(np.exp(xi + eta))
+
+    planes = {
+        "inertial": Plane(src, "moving_mirror", "inertial", ("t", "x")),
+        "null": Plane(src, "moving_mirror", "null", ("u", "v")),
+        "thermal": Plane(src, "moving_mirror", "thermal", ("T", "X"), None, {"kappa": 1}),
+        "collapse": Plane(src, "moving_mirror", "collapse", ("T", "X"), None, {"kappa": 1}),
+        "rindler": Plane(src, "moving_mirror", "rindler", ("\\eta", "\\xi"), None, {"kappa": 1}),
+        "rest": Plane(src, "moving_mirror", "mirror_rest", ("U", "v"), None, None, {"f": "U - log(-U)"}),
+    }
+    for case in ("thermal", "collapse", "uniform"):
+        t = ck.uniform(-5, 5)
+        ck.chart(f"Moving mirror, inertial chart, {case} mirror", planes["inertial"], mink_pq, t,
+                 z[case](t) + ck.uniform(0.01, 10), lambda t, x: (1, 0))
+    u = ck.uniform(-5, 5)
+    ck.chart("Moving mirror, null chart", planes["null"], null_map, u, trace["collapse"](u) + ck.uniform(0.01, 10),
+             lambda u, v: (1, 1))
+    U = -ck.uniform(0.01, 8)
+    ck.chart("Moving mirror, mirror at rest", planes["rest"], rest_map("collapse"), U, U + ck.uniform(0.01, 10),
+             lambda U, v: (1, 1))
+    for case in ("thermal", "collapse"):
+        X = ck.uniform(0.01, 6)
+        ck.chart(f"Moving mirror, {case} chart", planes[case], tx_map(case), X - ck.uniform(0.01, 8), X,
+                 lambda T, X: (1, 0))
+    ck.chart("Moving mirror, Rindler chart", planes["rindler"], rindler, ck.uniform(-3, 3), ck.uniform(0.01, 3),
+             lambda eta, xi: (1, 0))
+
+    for case in ("thermal", "collapse"):
+        pp, qq = null_map(np.array([-1e9, 1e9]), trace[case](np.array([-1e9, 1e9])))
+        ck.limit(f"Moving mirror: the {case} mirror leaves i-, (X, T) = (0, -pi)", point(pp[0], qq[0]), [0, -PI], 1e-6)
+        ck.limit(f"Moving mirror: the {case} mirror ends on the left future null infinity at v = 0, "
+                 "(X, T) = (-pi/2, pi/2)", point(pp[1], qq[1]), [-HALF, HALF], 1e-6)
+        # The mirror at rest in its own chart, X = 0, is its world line x = z(t) of the inertial chart.
+        TT = -np.exp(np.linspace(-3, 2, 30))
+        pp, qq = tx_map(case)(TT, 0 * TT)
+        uu, vv = np.tan(pp), np.tan(qq)
+        ck.limit(f"Moving mirror: X = 0 of the {case} chart is the world line x = z(t)",
+                 (vv - uu) / 2 - z[case]((uu + vv) / 2), 0 * TT, 1e-9)
+        # One event in the inertial, the null and the mirror's own charts.
+        T0, X0 = -1.3, 0.8
+        here = tx_map(case)(T0, X0)
+        u0, v0 = back[case](T0 - X0), T0 + X0
+        ck.limit(f"Moving mirror: the inertial chart puts an event of the {case} chart at one point",
+                 mink_pq((u0 + v0) / 2, (v0 - u0) / 2), here, 1e-12)
+        ck.limit(f"Moving mirror: the null chart puts an event of the {case} chart at one point", null_map(u0, v0), here, 1e-12)
+    uu = -np.exp(np.linspace(-6, 6, 40))
+    pp, qq = null_map(uu, trace["uniform"](uu))
+    ck.limit("Moving mirror: the uniformly accelerating mirror is the line X = pi/2", qq - pp, np.full_like(uu, HALF), 1e-12)
+    eta = np.linspace(-3, 3, 30)
+    pp, qq = rindler(eta, 0 * eta)
+    ck.limit("Moving mirror: xi = 0 of Rindler's chart is the hyperbola x^2 - t^2 = 1", np.tan(pp) * np.tan(qq),
+             -np.ones_like(eta), 1e-9)
+    ck.limit("Moving mirror: Rindler's chart and the inertial one put an event at one point",
+             rindler(0.4, 0.9), mink_pq(math.exp(0.9) * math.sinh(0.4), math.exp(0.9) * math.cosh(0.4)), 1e-12)
+
+    s_all = spread(-np.inf, np.inf, 900, 12)
+    END, PAST, FUTURE_R, PAST_R = [-HALF, HALF], [0, -PI], [HALF, HALF], [HALF, -HALF]
+
+    def mirror_line(case):
+        """The mirror's world line as (p, q), from its past end to its future end."""
+        if case == "uniform":
+            uu = -np.exp(np.linspace(30, -30, 600))
+            return null_map(uu, trace[case](uu))
+        return null_map(s_all, trace[case](s_all))
+
+    def region(case):
+        """The spacetime as a polygon: the mirror's world line, then the infinities it leaves on its
+        right, back to where the mirror began."""
+        line = nr.thin(np.column_stack(xt(*mirror_line(case))), 0.002)
+        if case == "uniform":
+            return [PAST_R] + line.tolist() + [FUTURE_R, [PI, 0]]
+        return [PAST] + line.tolist() + [END, [0, PI], [PI, 0]]
+
+    def edges(v, case, system):
+        v.fill("region", region(case))
+        v.fill("cover", region(case))
+        v.curve("world", *mirror_line(case))
+        if case == "uniform":
+            v.line("scri", [[FUTURE_R, [PI, 0]], [[PI, 0], PAST_R]])
+            ends = ((PI, 0, "$i^0$", "l", 6, 0),)
+            v.label_xt([3 * Q4, Q4], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+            v.label_xt([3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+            v.legend("world", "the mirror, the hyperbola $x^2 - c^2t^2 = 1/\\kappa^2$")
+        else:
+            v.line("scri", [[END, [0, PI]], [[0, PI], [PI, 0]], [[PI, 0], PAST]])
+            v.line("horizon", [[END, PAST_R]])
+            ends = ((PI, 0, "$i^0$", "l", 6, 0), (0, PI, "$i^+$", "b", 0, -6), (0, -PI, "$i^-$", "t", 0, 6))
+            v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+            v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+            v.label_xt([-Q4, 3 * Q4], "$\\mathscr{I}^+$", "br", dx=-5, dy=-3)
+            v.label_xt([0.3, -0.3], "$v = 0$", "bl", "small", dx=3, dy=-2)
+            v.legend("world", "the mirror" + {"inertial": ", $x = z(t)$", "null": ", $v = p(u)$", "mirror_rest": ", $U = v$"}
+                     .get(system, ", $X = 0$"))
+            v.legend("horizon", "the last ray to reach the mirror, $v = 0$, a horizon")
+        for X, T, text, anchor, dx, dy in ends:
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded([X, T])})
+            v.label_xt([X, T], text, anchor, dx=dx, dy=dy)
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+
+    views = []
+    inputs = {"thermal": "Carlitz and Willey's mirror, $z = -ct - \\mathrm{W}(e^{-2\\kappa ct})/\\kappa$ with "
+                         "$\\mathrm{W}$ Lambert's function.",
+              "collapse": "The mirror of Good, Anderson, and Evans, $z = -ct - \\mathrm{W}(2e^{-2\\kappa ct})/2\\kappa$ "
+                          "with $\\mathrm{W}$ Lambert's function.",
+              "uniform": "A mirror of uniform acceleration, $z = \\sqrt{1/\\kappa^2 + c^2t^2}$."}
+    for case, label in (("thermal", "Inertial, thermal"), ("collapse", "Inertial, collapse"), ("uniform", "Inertial, uniform")):
+        v = View("inertial_" + case, label, box, "inertial")
+        edges(v, case, "inertial")
+        for x in (-2, -1, 0, 1, 2, 4):
+            xs = np.full_like(s_all, float(x))
+            pp, qq = mink_pq(s_all, xs)
+            keep = xs > z[case](s_all)
+            v.curve("r", np.where(keep, pp, np.nan), np.where(keep, qq, np.nan))
+        for t in (-4, -2, -1, 0, 1, 2, 4):
+            xs = z[case](float(t)) + spread(0, np.inf, 500, 12)
+            v.curve("t", *mink_pq(np.full_like(xs, float(t)), xs))
+        v.legend("cover", "the spacetime, to the right of the mirror, which $t$ and $x$ cover")
+        v.legend("r", "$x$ constant, in units of $1/\\kappa$")
+        v.legend("t", "$ct$ constant")
+        v.set(settings="$\\kappa = 1$.", input=inputs[case])
+        views.append(v)
+
+    def rays(v, case, arrive):
+        """Rays that arrive along each v of `arrive` and leave the mirror along u = f(v)."""
+        for vk in arrive:
+            uk = float(back[case](vk))
+            v.line("null", [[point(-HALF, math.atan(vk)), point(math.atan(uk), math.atan(vk)),
+                             point(math.atan(uk), HALF)]])
+
+    arrive = (-4, -2, -1, -0.5, -0.25, -0.125, -0.0625)
+    v = View("null", "Null", box, "null")
+    edges(v, "collapse", "null")
+    rays(v, "collapse", arrive)
+    v.legend("cover", "the spacetime, to the right of the mirror, which $u$ and $v$ cover")
+    v.legend("null", "light rays that arrive at $\\kappa v = -4$, $-2$, $-1$, and on by halves to $-1/16$, and their "
+                     "reflections")
+    v.set(settings="$\\kappa = 1$.", input="The mirror of Good, Anderson, and Evans, $p = -\\mathrm{W}(e^{-\\kappa u})/\\kappa$ "
+                                           "with $\\mathrm{W}$ Lambert's function.")
+    views.append(v)
+
+    v = View("mirror_rest", "Mirror at Rest", box, "mirror_rest")
+    edges(v, "collapse", "mirror_rest")
+    fmap = rest_map("collapse")
+    for c in (-4, -3, -2, -1, -0.5):
+        # A line of constant U leaves the mirror at v = U and runs to v = infinity.
+        vs = c + spread(0, np.inf, 400, 12)
+        v.curve("null", *fmap(np.full_like(vs, c), vs))
+    for c in (-4, -3, -2, -1, -0.5, 0.5, 1, 2, 4):
+        # A line of constant v comes from U = -infinity to the mirror at U = v, or to U = 0 if v > 0.
+        Us = min(c, 0.0) - spread(0, np.inf, 400, 12)
+        v.curve("null", *fmap(Us, np.full_like(Us, c)))
+    v.legend("cover", "the spacetime, which $U < 0$ and $v > U$ cover")
+    v.legend("null", "$U$ constant, at $\\kappa U = -4$, $-3$, $-2$, $-1$, and $-1/2$, and $v$ constant, at the same "
+                     "values and at $\\kappa v = 1/2$, $1$, $2$, and $4$, every one a light ray")
+    v.set(settings="$\\kappa = 1$.", input="The mirror of Good, Anderson, and Evans, $f = U - \\ln(-\\kappa U)/\\kappa$.")
+    views.append(v)
+
+    for case, label in (("thermal", "Thermal Mirror"), ("collapse", "Collapse Mirror")):
+        v = View(case, label, box, case)
+        edges(v, case, case)
+        fmap = tx_map(case)
+        for X in (0.5, 1, 2, 4):
+            Ts = X - spread(0, np.inf, 600, 14)
+            v.curve("r", *fmap(Ts, np.full_like(Ts, float(X))))
+        for T in (-4, -2, -1, -0.5, 0.5, 1, 2):
+            Xs = max(T, 0.0) + spread(0, np.inf, 500, 12)
+            v.curve("t", *fmap(np.full_like(Xs, float(T)), Xs))
+        v.legend("cover", "the spacetime, which $X > 0$ and $X > cT$ cover")
+        v.legend("r", "$X$ constant, at rest with the mirror, at $\\kappa X = 1/2$, $1$, $2$, and $4$")
+        v.legend("t", "$cT$ constant, at $\\kappa cT = -4$, $-2$, $-1$, $-1/2$, $1/2$, $1$, and $2$")
+        v.set(settings="$\\kappa = 1$.")
+        views.append(v)
+
+    v = View("rindler", "Rindler", box, "rindler")
+    edges(v, "uniform", "rindler")
+    grid(v, "r", lambda xi, eta: rindler(eta, xi), (0.5, 1, 1.5, 2), S_ALL)
+    grid(v, "t", rindler, (-2, -1, -0.5, 0, 0.5, 1, 2), spread(0, np.inf, 500, 12))
+    v.legend("cover", "the spacetime, which $\\xi > 0$ covers")
+    v.legend("r", "$\\xi$ constant, a uniformly accelerating observer, at $\\kappa\\xi = 1/2$, $1$, $3/2$, and $2$")
+    v.legend("t", "$\\eta$ constant, at $\\kappa c\\eta = 0$, $\\pm 1/2$, $\\pm 1$, and $\\pm 2$")
+    v.set(settings="$\\kappa = 1$.")
+    views.append(v)
+    return views
+
+
 DRAWN = {
+    "moving_mirror": moving_mirror,
     "lifshitz_spacetime": lifshitz_spacetime,
     "born_infeld_charge": born_infeld_charge,
     "aichelburg_sexl": aichelburg_sexl,
@@ -19981,9 +20707,10 @@ DRAWN = {
     "lindquist_wheeler_lattice": lindquist_wheeler_lattice,
     "semiclosed_world": semiclosed_world,
     "datt_ruban_t_models": datt_ruban_t_models,
-    "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii,
+    "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii, "misner_zapolsky": misner_zapolsky,
     "bartnik_mckinnon": bartnik_mckinnon,
     "nordstrom_scalar": nordstrom_scalar,
+    "einstein_1912_static": einstein_1912_static,
     "ab_metrics": ab_metrics,
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "reissner_nordstrom_ads": reissner_nordstrom_ads, "c_metric": c_metric,
     "misner": misner, "milne": milne,
@@ -20014,6 +20741,7 @@ DRAWN = {
     "myers_perry": myers_perry,
     "curzon_chazy": curzon_chazy,
     "kopczynski_trautman": kopczynski_trautman,
+    "small_universes": small_universes,
     "bonnor_rotating_dust": bonnor_rotating_dust,
     "double_kerr": double_kerr,
     "neugebauer_meinel": neugebauer_meinel,
@@ -22346,6 +23074,38 @@ CAPTIONS = {
         "The soliton whose Yang-Mills amplitude $w$ has one zero, each point in the diagram a 2-sphere of radius $r$. Every sphere has $2m < r$, so there is no horizon, and the centre is regular.",
         "The tortoise coordinate $\\xi = \\int dr/(\\sigma(1 - 2m/r))$ runs from the centre to infinity, and $p, q = \\arctan((ct \\mp \\xi)/8\\ell)$ bring the spacetime into Minkowski's triangle, the causal structure of empty space. The curves of constant $r$ crowd toward the centre, since light takes $7.88\\,\\ell/c$ of $t$ to cross the first $\\ell$ of radius.",
     ],
+    ("misner_zapolsky", "areal"): [
+        "The sphere of radiation, each point in the diagram a 2-sphere of radius $r$. Its tortoise coordinate "
+        "$r_* = \\int\\sqrt{g_{rr}/(-g_{tt})}\\,dr = \\sqrt{7ar}$ is zero at the centre, so the plane of $t$ and "
+        "$r_*$ is half of Minkowski's, and $p, q = \\arctan((ct \\mp r_*)/a)$ bring it into his triangle.",
+        "The centre $r = 0$ is a timelike line where the density and the Kretschmann scalar diverge, and no "
+        "horizon stands between it and null infinity: a ray from the centre reaches radius $r$ at "
+        "$ct = \\sqrt{7ar}$ and goes on to $\\mathscr{I}^+$.",
+    ],
+    ("misner_zapolsky", "tolman_v"): [
+        "The Tolman V star joined at its surface $r_b$ to Schwarzschild's exterior of the Schwarzschild radius "
+        "$r_s = r_b/2$, each point in the diagram a 2-sphere of radius $r$. At the surface $g_{tt} = -1/2$ and "
+        "$g_{rr} = 2$ on both sides, so $t$ is one coordinate throughout.",
+        "The tortoise coordinate $r_* = \\int\\sqrt{g_{rr}/(-g_{tt})}\\,dr$ runs from zero at the centre through "
+        "the surface, and $p, q = \\arctan((ct \\mp r_*)/r_b)$ bring the spacetime into Minkowski's triangle, "
+        "with the star a timelike tube from $i^-$ to $i^+$ around a centre of infinite density.",
+    ],
+    ("misner_zapolsky", "tolman_vi"): [
+        "The Tolman VI star joined at its surface $r_b$ to Schwarzschild's exterior of the Schwarzschild radius "
+        "$r_s = 3r_b/7$, each point in the diagram a 2-sphere of radius $r$. At the surface $g_{tt} = -4/7$ and "
+        "$g_{rr} = 7/4$ on both sides, so $t$ is one coordinate throughout.",
+        "Inside, the tortoise coordinate is $r_* = \\tfrac{14}{3}r_b\\ln\\left((3 + \\sqrt{r/r_b})/(3 - \\sqrt{r/r_b})\\right)$, "
+        "zero at the centre, and $p, q = \\arctan((ct \\mp r_*)/r_b)$ bring the spacetime into Minkowski's "
+        "triangle, with the star a timelike tube from $i^-$ to $i^+$ around a centre of infinite density.",
+    ],
+    ("misner_zapolsky", "power_law"): [
+        "The stiffest fluid, $n = 1$, each point in the diagram a 2-sphere of radius $r$. Its tortoise coordinate "
+        "$r_* = \\sqrt{2}\\,a\\ln(r/a)$ runs over the whole line, so the plane of $t$ and $r_*$ is all of "
+        "Minkowski's, and $p, q = \\arctan((ct \\mp r_*)/a)$ bring it into his diamond.",
+        "The centre lies on the two null edges on the left: a ray reaches it only as $t \\to \\pm\\infty$, at a "
+        "finite affine parameter, which goes as $r^2$. For every $n < 1$ the tortoise coordinate is finite at "
+        "$r = 0$ and the centre is a timelike line, as it is for radiation at $n = 1/2$.",
+    ],
     ("tolman_vii", "spherical"): [
         "A static star whose density falls as $1 - r^2/R^2$ to an empty surface, joined at $R = 2\\,r_s$ "
         "($\\beta = 1/4$) to the Schwarzschild exterior, each point in the diagram a 2-sphere of radius $r$. "
@@ -22399,6 +23159,46 @@ CAPTIONS = {
         "The bang and the crunch are spacelike and meet at $i^0$, so the universe has no null infinity: every "
         "light ray begins on the bang and ends on the crunch. A ray crosses a comoving distance of $2L$ on the "
         "way, the size of the particle horizon at the crunch.",
+    ],
+    ("einstein_1912_static", "static"): [
+        "The line through the centre of a star of uniform density (radius $R$, $m = 0.793\\,R$) by Einstein's "
+        "equation of March 1912, on the plane $y = z = 0$, each point in the diagram a single event. The metric on "
+        "the plane is $N^2(-c^2dt^2 + dx_*^2)$ with $dx_* = dx/N$, so $p = \\arctan((ct - x_*)/\\ell)$ and "
+        "$q = \\arctan((ct + x_*)/\\ell)$ bring it into Minkowski's diamond, drawn with $T = p + q$ up and "
+        "$X = q - p$ across.",
+        "$N$ is positive at every point of the star, $0.181$ at its centre, so $x_*$ runs over the whole line and "
+        "the plane's infinity is Minkowski's. Light takes $8.89\\,R/c$ to cross the star, and $2R/c$ to cross the "
+        "same stretch of empty space.",
+    ],
+    ("einstein_1912_static", "uniform"): [
+        "The uniform field of Einstein's first paper of 1912 on the plane $x = y = 0$, each point in the diagram a "
+        "single event. With $ct' = z\\sinh(at/c)$ and $z' = z\\cosh(at/c)$ the metric is Minkowski's, "
+        "$-c^2dt'^2 + dz'^2$, so the field is the wedge $z' > c|t'|$ of Minkowski's diamond, drawn with $T = p + q$ "
+        "up and $X = q - p$ across.",
+        "The plane $z = 0$, where the speed of light vanishes, is the horizon of the bodies at rest in the field, "
+        "the pair of null lines through the centre of the diagram. Spacetime is flat there, and a body dropped "
+        "from rest crosses it into the rest of Minkowski space.",
+    ],
+    ("einstein_1912_static", "february"): [
+        "The field outside a static body by Einstein's equation of February 1912, each point in the diagram a "
+        "2-sphere of radius $r$. On the plane of $t$ and $r$ the metric is $(1 - m/r)^2(-c^2dt^2 + dr_*^2)$ with "
+        "$r_* = r + m\\ln(r/m - 1)$, which runs over the whole line, so $p = \\arctan((ct - r_*)/\\ell)$ and "
+        "$q = \\arctan((ct + r_*)/\\ell)$ bring the spacetime into a full diamond, drawn with $T = p + q$ up and "
+        "$X = q - p$ across.",
+        "The two edges on the left are the sphere $r = m$ in the infinite past and the infinite future of $t$, "
+        "null lines on which the Kretschmann scalar diverges. The diagram has the shape of Schwarzschild's "
+        "exterior, with a singularity where Schwarzschild's has its horizon: light and falling bodies reach it "
+        "at a finite affine distance, and the spacetime ends there.",
+    ],
+    ("einstein_1912_static", "march"): [
+        "The field outside a static body by Einstein's equation of March 1912, each point in the diagram a "
+        "2-sphere of radius $r$. On the plane of $t$ and $r$ the metric is $(1 - m/2r)^4(-c^2dt^2 + dr_*^2)$ with "
+        "$r_* = r + m\\ln(r/m - 1/2) - m^2/(4r - 2m)$, which runs over the whole line, so "
+        "$p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring the spacetime into a full "
+        "diamond, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "The two edges on the left are the sphere $r = m/2$ in the infinite past and the infinite future of $t$, "
+        "null lines on which the Kretschmann scalar diverges. Every star of the theory has its surface outside "
+        "that sphere, so the diagram of a star is Minkowski's triangle, with a regular centre on its edge.",
     ],
     ("frw", "flat"): [
         "A flat universe of dust, each point in the diagram a 2-sphere. With $k = 0$, $G^r{}_r = 0$ gives $a \\propto \\eta^2$, and the metric "
@@ -22780,6 +23580,29 @@ CAPTIONS = {
         "since the two metrics differ by the factor $a^2$ alone.",
         "A ray that leaves $\\mathscr{I}^-$ crosses the turn and reaches $\\mathscr{I}^+$. The past light cone of "
         "any event widens without limit toward the past, so it meets the world line of every grain of dust.",
+    ],
+    ("small_universes", "torus"): [
+        "The plane of $t$ and $x$ of a torus of dust, each point in the diagram a 2-torus of area $a^2L^2$. The "
+        "metric on it is $a^2(-d\\eta^2 + dx^2)$ with $\\eta = 2L\\sqrt{a}$, and a conformal factor changes no "
+        "null direction, so $p, q = \\arctan((\\eta \\mp x)/L)$ bring it into Minkowski's triangle, where the "
+        "lines $x = 0$ and $x = L$ are one surface of the torus.",
+        "The big bang is spacelike, the segment along the bottom, and since $x$ is bounded every world line and "
+        "every light ray ends at the one point $i^+$, $t \\to \\infty$. A ray that leaves the diagram through "
+        "$x = L$ comes back in through $x = 0$ at the same $t$, so the ray from the bang laps the universe "
+        "again and again, and no particle horizon stays between two galaxies for long.",
+    ],
+    ("small_universes", "torus_conformal"): [
+        "The same plane ruled by the conformal time $\\eta$, each point in the diagram a 2-torus of area "
+        "$a^2L^2$, with $p, q = \\arctan((\\eta \\mp x)/L)$. Each lap of the ray takes $\\eta = L$, and the "
+        "lines of constant $\\eta$ at $L$, $2L$, and $3L$ are the moments at which its first three laps end.",
+    ],
+    ("small_universes", "horn"): [
+        "The plane of $t$ and $x$ of the horn filled with dust, each point in the diagram a 2-torus of area "
+        "$a^2b_2b_3e^{-2x}$. The metric on it is $a^2(-d\\eta^2 + dx^2)$ with $a\\,d\\eta = c\\,dt$, and $x$ runs "
+        "over the whole line, so $p, q = \\arctan(\\eta \\mp x)$ bring it onto the upper half of Minkowski's diamond.",
+        "The big bang is the segment along the bottom, and the two upper edges are future null infinity, one far "
+        "down the horn, where the tori are large, and one far up it, where they are small. A ray reaches either "
+        "only at an infinite value of its affine parameter.",
     ],
     ("melvin", "cylindrical"): [
         "The half plane of $t$ and $\\rho$ of Melvin's universe at fixed $\\phi$ and $z$, totally geodesic. The metric "
@@ -23209,6 +24032,75 @@ CAPTIONS = {
         "The shell is outside $r = a$, so the spacetime has no horizon and every ray from the centre reaches "
         "$\\mathscr{I}^+$. As $\\epsilon \\to 0$ the lapse on the shell falls to zero and a ray takes ever longer "
         "to cross the throat, which is Arnowitt, Deser, and Misner's point charge.",
+    ],
+    ("moving_mirror", "inertial_thermal"): [
+        "Flat spacetime to the right of Carlitz and Willey's mirror ($\\kappa = 1$), each point in the diagram a "
+        "single event. With $u = ct - x$ and $v = ct + x$ the metric is $-du\\,dv$, and $p = \\arctan(\\kappa u)$ and $q = \\arctan(\\kappa v)$ bring the plane into a diamond, drawn with $T = p + q$ up and $X = q - p$ across, so light rays run at 45°. The spacetime is the part of the diamond to the right of the mirror's world line.",
+        "The mirror leaves $i^-$ and ends on the left future null infinity, at the point where the ray $v = 0$ ends. "
+        "Light from $\\mathscr{I}^-$ with $v < 0$ is reflected and reaches the right $\\mathscr{I}^+$. Light with "
+        "$v > 0$ passes behind the mirror's end and reaches the left $\\mathscr{I}^+$, so to an observer on the right "
+        "the ray $v = 0$ is a horizon, as the last ray through the centre of a collapsing star is.",
+    ],
+    ("moving_mirror", "inertial_collapse"): [
+        "Flat spacetime to the right of the mirror of Good, Anderson, and Evans ($\\kappa = 1$), each point in the "
+        "diagram a single event. With $u = ct - x$ and $v = ct + x$ the metric is $-du\\,dv$, and $p = \\arctan(\\kappa u)$ and $q = \\arctan(\\kappa v)$ bring the plane into a diamond, drawn with $T = p + q$ up and $X = q - p$ across, so light rays run at 45°. The spacetime is the part of the diamond to the right of the mirror's "
+        "world line.",
+        "The mirror leaves $i^-$ nearly at rest, along the lines of constant $x$, and ends on the left future null "
+        "infinity where the ray $v = 0$ ends. Every ray with $v < 0$ is reflected to the right $\\mathscr{I}^+$, and "
+        "every ray with $v > 0$ reaches the left $\\mathscr{I}^+$ without meeting the mirror. Fold the diagram of a "
+        "shell of light collapsing to a black hole along its centre and the centre lies where this mirror does.",
+    ],
+    ("moving_mirror", "inertial_uniform"): [
+        "Flat spacetime to the right of a uniformly accelerating mirror ($\\kappa = 1$), each point in the diagram a "
+        "single event. With $u = ct - x$ and $v = ct + x$ the metric is $-du\\,dv$, and $p = \\arctan(\\kappa u)$ and $q = \\arctan(\\kappa v)$ bring the plane into a diamond, drawn with $T = p + q$ up and $X = q - p$ across, so light rays run at 45°. On the hyperbola $uv = -1/\\kappa^2$ the two angles differ by $\\pi/2$, so the mirror "
+        "is the vertical line $X = \\pi/2$.",
+        "The mirror comes in from the right $\\mathscr{I}^-$ and goes out to the right $\\mathscr{I}^+$, and every "
+        "ray that enters the spacetime is reflected and leaves it. The spacetime has one null infinity in the past "
+        "and one in the future, and no horizon.",
+    ],
+    ("moving_mirror", "null"): [
+        "Flat spacetime to the right of the mirror of Good, Anderson, and Evans in its null coordinates "
+        "($\\kappa = 1$), each point in the diagram a single event. The lines of constant $u$ and of constant $v$ "
+        "are light rays, the 45° lines of the diamond, with $p = \\arctan(\\kappa u)$ and $q = \\arctan(\\kappa v)$.",
+        "Each ray drawn comes in along $v$, meets the mirror, and leaves along $u = v - \\ln(-\\kappa v)/\\kappa$. The "
+        "rays that arrive at $\\kappa v = -4$ and $-2$ leave about as far apart as they came. Those that arrive at "
+        "$-1/4$, $-1/8$, and $-1/16$, each half as far ahead of the last ray, leave nearly $\\ln 2/\\kappa$ apart.",
+    ],
+    ("moving_mirror", "mirror_rest"): [
+        "Flat spacetime to the right of the mirror of Good, Anderson, and Evans in the coordinates $U$ and $v$ that "
+        "bring it to rest ($\\kappa = 1$), each point in the diagram a single event. The inertial $u$ is "
+        "$U - \\ln(-\\kappa U)/\\kappa$, and the diagram is drawn with $p = \\arctan(\\kappa u)$ and "
+        "$q = \\arctan(\\kappa v)$.",
+        "The mirror is the line $U = v$, and a ray that arrives along $v$ leaves along the line of constant $U$ with "
+        "the same value. The whole of the left future null infinity is $U = 0$, the end of the chart. Rays with "
+        "$v > 0$ run to it without meeting the mirror.",
+    ],
+    ("moving_mirror", "thermal"): [
+        "Flat spacetime to the right of Carlitz and Willey's mirror in the coordinates $T$ and $X$ in which it "
+        "stands still ($\\kappa = 1$), each point in the diagram a single event. With $cT - X = -e^{-\\kappa u}/\\kappa$ "
+        "and $cT + X = v$ the diagram is drawn with $p = \\arctan(\\kappa u)$ and $q = \\arctan(\\kappa v)$.",
+        "The lines of constant $X$ leave $i^-$ beside the mirror and end on the left future null infinity, at "
+        "$v = 2X$, each one a copy of the mirror's world line moved along $v$. The lines of constant $T < 0$ start "
+        "on the mirror and run to $i^0$. Those of constant $T > 0$ start on the left $\\mathscr{I}^+$, which is "
+        "$X = cT$.",
+    ],
+    ("moving_mirror", "collapse"): [
+        "Flat spacetime to the right of the mirror of Good, Anderson, and Evans in the coordinates $T$ and $X$ in "
+        "which it stands still ($\\kappa = 1$), each point in the diagram a single event. With $U = cT - X$, "
+        "$u = U - \\ln(-\\kappa U)/\\kappa$, and $cT + X = v$ the diagram is drawn with $p = \\arctan(\\kappa u)$ and "
+        "$q = \\arctan(\\kappa v)$.",
+        "Near $i^-$ the lines of constant $T$ and $X$ are close to those of an inertial frame, since the mirror "
+        "starts nearly at rest. Later the lines of constant $X$ follow the mirror toward the left future null "
+        "infinity, which is $X = cT$, and each ends there at $v = 2X$.",
+    ],
+    ("moving_mirror", "rindler"): [
+        "Flat spacetime to the right of a uniformly accelerating mirror in Rindler's coordinates ($\\kappa = 1$), "
+        "each point in the diagram a single event. With $u = -e^{\\kappa(\\xi - c\\eta)}/\\kappa$ and "
+        "$v = e^{\\kappa(\\xi + c\\eta)}/\\kappa$ the diagram is drawn with $p = \\arctan(\\kappa u)$ and "
+        "$q = \\arctan(\\kappa v)$.",
+        "The mirror is the line $\\xi = 0$, and every line of constant $\\xi$ is a hyperbola, an observer with the "
+        "proper acceleration $c^2\\kappa e^{-\\kappa\\xi}$. The chart is static: a step in $\\eta$ carries each of "
+        "those lines into itself, and the mirror with them.",
     ],
     ("vaidya", "shell"): [
         "A spacetime into which a spherical shell of null dust of mass $M$ falls along $v = 0$, each point in the "

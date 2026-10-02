@@ -49,6 +49,11 @@
       "id": "eguchi_hanson",
       "kind": "family",
       "text": "A space of four dimensions with no time and the Mixmaster universe's symmetry, that of the 3-sphere. Belinskii, Gibbons, Page, and Pope solved its self dual case with all three axes unequal, and the one solution without a singularity has two axes equal: the Eguchi-Hanson space [belinskii1978bianchi, eguchihanson1979]."
+    },
+    {
+      "id": "kasner_scalar",
+      "kind": "family",
+      "text": "A massless scalar field stops the Mixmaster oscillations after a finite number, and the universe then runs to its singularity as this one does, shrinking along all three axes [belinskii1973]."
     }
   ],
   "references": [
@@ -72,7 +77,8 @@
     "misner1963",
     "gowdy2014",
     "belinskii1978bianchi",
-    "eguchihanson1979"
+    "eguchihanson1979",
+    "belinskii1973"
   ],
   "coordinates": [
     {

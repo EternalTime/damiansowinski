@@ -153,6 +153,13 @@ def near(lo, hi, n=N, crowd=1e-9):
     return lo + (hi - lo) * np.geomspace(crowd, 1.0, n)
 
 
+def kasner_scalar_five(t):
+    """The time T of Kasner's vacuum of five dimensions at the proper time t of the universe of
+    four it reduces to, t = T^(1 + s_5/2)/(1 + s_5/2), at the s_5 the diagrams draw."""
+    k = 1 + 10 / (13 * math.sqrt(6) - 10)
+    return (k * t) ** (1 / k)
+
+
 def gravastar_x(r):
     """The tortoise coordinate inside the gravastar the diagrams draw, L = 2 and C = 64/195."""
     return 2 / math.sqrt(64 / 195) * math.atanh(r / 2)
@@ -982,6 +989,9 @@ def _penrose_wave(view):
             rho = {"unit": 1.0, "near": 0.5}[view]
             out.append(Mark(m, points=[((rho * rho - 1) * ct / math.sqrt(2), ct / math.sqrt(2))]))
     return out
+
+
+SMALL_NOW = 1.2 - 0.22 * math.log(11)      # the moment the small universes' horn is embedded at, in a_0
 
 
 def _kt_eta(t):
@@ -2510,6 +2520,16 @@ FLAT = {
         "gowdy", lambda m: along(-math.log(m.time), *m.reach("areal", "\\theta"))),
     ("kasner", "cartesian", "tx"): lambda: one("kasner", lambda m: across(m.time, 0.0, BIG)),
     ("kasner", "cartesian", "tz"): lambda: one("kasner", lambda m: across(m.time, 0.0, BIG)),
+    # Kasner's universe with a scalar field: a moment of t is the line tau = -ln t of the logarithmic
+    # chart, and in the vacuum of five dimensions the moment T = ((1 + s_5/2) t)^(1/(1 + s_5/2)).
+    ("kasner_scalar", "synchronous", "tx"): lambda: one("kasner_scalar", lambda m: across(m.time, 0.0, BIG)),
+    ("kasner_scalar", "synchronous", "tz"): lambda: one("kasner_scalar", lambda m: across(m.time, 0.0, BIG)),
+    ("kasner_scalar", "logarithmic", "taux"): lambda: one(
+        "kasner_scalar", lambda m: across(-math.log(m.time), 0.0, BIG)),
+    ("kasner_scalar", "kaluza_klein", "Tx"): lambda: one(
+        "kasner_scalar", lambda m: across(kasner_scalar_five(m.time), 0.0, BIG)),
+    ("kasner_scalar", "kaluza_klein", "Tw"): lambda: one(
+        "kasner_scalar", lambda m: across(kasner_scalar_five(m.time), 0.0, BIG)),
     ("bianchi", "type_i_cartesian", "tx"): lambda: one("bianchi", lambda m: across(m.time, 0.0, BIG)),
     ("kantowski_sachs", "comoving", "tr"): lambda: _kantowski_sachs("comoving"),
     ("kantowski_sachs", "dust", "etar"): lambda: _kantowski_sachs("dust"),
@@ -2731,6 +2751,14 @@ FLAT = {
     ("boson_star", "areal", "radial"): lambda: one("boson_star", lambda m: along(0.0, *m.reach("areal", "r"))),
     ("boson_star", "areal", "through"): lambda: one("boson_star", lambda m: along(0.0, *m.reach("areal", "r"))),
     ("boson_star", "isotropic", "radial"): lambda: one("boson_star", _boson_star_isotropic),
+    ("misner_zapolsky", "areal", "radial"): lambda: one(
+        "misner_zapolsky", lambda m: along(0.0, *m.reach("areal", "r")), view_id="core"),
+    ("misner_zapolsky", "tolman_v", "radial"): lambda: one(
+        "misner_zapolsky", lambda m: along(0.0, *m.reach("tolman_v", "r")), view_id="tolman_v"),
+    ("misner_zapolsky", "tolman_vi", "radial"): lambda: one(
+        "misner_zapolsky", lambda m: along(0.0, *m.reach("tolman_vi", "r")), view_id="tolman_vi"),
+    ("misner_zapolsky", "power_law", "radial"): lambda: one(
+        "misner_zapolsky", lambda m: along(0.0, *m.reach("power_law", "r")), view_id="stiff"),
     ("tov", "spherical", "radial"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("tov", "spherical", "through"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     # Bartnik and McKinnon's soliton with one zero at t = 0, from its centre to the edge of its embedding
@@ -2757,6 +2785,9 @@ FLAT = {
         "nordstrom_scalar", lambda m: along(0.0, *m.reach("spherical", "r")), view_id="point_mass"),
     ("nordstrom_scalar", "dust", "radial"): lambda: one(
         "nordstrom_scalar", lambda m: along(m.time, *m.reach("dust", "r")), view_id="dust"),
+    # Einstein's static field of 1912: the equator outside a body by the equation of March at t = 0.
+    ("einstein_1912_static", "march", "radial"): lambda: one(
+        "einstein_1912_static", lambda m: along(0.0, *m.reach("march", "r"))),
     # Kopczynski and Trautman's universe at each moment of its movie, out to the dust at r = l on each chart.
     ("kopczynski_trautman", "comoving_spherical", "radial"): lambda: one(
         "kopczynski_trautman", lambda m: along(m.time, *m.reach("comoving_spherical", "r"))),
@@ -2764,6 +2795,16 @@ FLAT = {
         "kopczynski_trautman", lambda m: across(m.time, *m.reach("comoving_spherical", "r"))),
     ("kopczynski_trautman", "conformal", "radial"): lambda: one(
         "kopczynski_trautman", lambda m: along(_kt_eta(m.time), *m.reach("comoving_spherical", "r"))),
+    # The small universes' torus: a moment meets the plane y = z = 0 along its whole circle of x, the line
+    # of that time across every cell, at the conformal time 2 (3t/2)^(1/3) in the conformal chart.
+    **{("small_universes", "torus", view): lambda: one(
+        "small_universes", lambda m: across(m.time, 0.0, BIG), view_id="torus") for view in ("cell", "images")},
+    **{("small_universes", "torus_conformal", view): lambda: one(
+        "small_universes", lambda m: across(2 * (1.5 * m.time) ** (1 / 3), 0.0, BIG), view_id="torus")
+       for view in ("cell", "images")},
+    # The horn is embedded at the moment its spacetime diagram starts the dust from, ct = 6/5 - (11/50) ln 11.
+    ("small_universes", "horn", "along"): lambda: one(
+        "small_universes", lambda m: along(SMALL_NOW, *m.reach("horn", "x")), view_id="horn"),
     ("oppenheimer_snyder", "interior_comoving", "through"): _os_interior,
     ("semiclosed_world", "comoving", "dust"): lambda: _scw_dust(False),
     ("semiclosed_world", "conformal", "dust"): lambda: _scw_dust(True),
@@ -2835,11 +2876,21 @@ FLAT = {
 FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.
+# The moving mirror's embedding view is a height over a stretch of spacetime, t and x both.
+MIRROR_NO_MOMENT = "the radiation is drawn as a height over a region of the plane of t and x, which is no moment of the spacetime"
 HIDDEN = {
     ("datt_ruban_t_models", "comoving", "tube"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",
     ("datt_ruban_t_models", "ruban", "tube"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",
     ("datt_ruban_t_models", "areal", "expansion"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",
     ("datt_ruban_t_models", "de_sitter", "tube"): "Ruban's tube on de Sitter space, another spacetime than the T-sphere embedded",
+    **{("moving_mirror", system, view): MIRROR_NO_MOMENT
+       for system, views in (("inertial", ("thermal", "collapse", "uniform")), ("null", ("thermal", "collapse")),
+                             ("mirror_rest", ("thermal", "collapse")), ("thermal", ("tx",)), ("collapse", ("tx",)),
+                             ("rindler", ("tx",))) for view in views},
+    **{("moving_mirror", view): MIRROR_NO_MOMENT
+       for view in ("inertial_thermal", "inertial_collapse", "inertial_uniform", "null", "mirror_rest", "thermal",
+                    "collapse", "rindler")},
+    ("small_universes", "hyperbolic", "radial"): "a closed hyperbolic universe about one observer; the moments embedded are the torus's and the horn's",
     ("kundt_waves", "kundt", "front"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
     ("kundt_waves", "podolsky_belan", "near"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
     ("kundt_waves", "podolsky_belan", "far"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
@@ -2875,6 +2926,12 @@ HIDDEN = {
     ("nordstrom_scalar", "conformal"): "a plane wave of the theory, another spacetime than the point mass and the dust universe whose moments are embedded",
     ("nordstrom_scalar", "uniform", "tz"): "the uniform field, another spacetime than the point mass and the dust universe whose moments are embedded",
     ("nordstrom_scalar", "uniform"): "the uniform field, another spacetime than the point mass and the dust universe whose moments are embedded",
+    ("einstein_1912_static", "static", "tx"): "a star of the theory, another spacetime than the body of the equation of March whose equator is embedded",
+    ("einstein_1912_static", "static"): "a star of the theory, another spacetime than the body of the equation of March whose equator is embedded",
+    ("einstein_1912_static", "uniform", "tz"): "the uniform field, another spacetime than the body of the equation of March whose equator is embedded",
+    ("einstein_1912_static", "uniform"): "the uniform field, another spacetime than the body of the equation of March whose equator is embedded",
+    ("einstein_1912_static", "february", "radial"): "the field of the equation of February, another spacetime than the body of the equation of March whose equator is embedded",
+    ("einstein_1912_static", "february"): "the field of the equation of February, another spacetime than the body of the equation of March whose equator is embedded",
     ("tippett_tsang", "interior", "tx"): "the flat spacetime inside the bubble continued over the whole plane, another spacetime than the bubble whose moment is embedded",
     ("tippett_tsang", "rindler", "plane"): "the flat spacetime inside the bubble continued over the whole plane, another spacetime than the bubble whose moment is embedded",
     ("siklos", "kaigorodov_stationary", "plane"): "the region x < 0 of Siklos's chart, another region than the one whose wave front is embedded",

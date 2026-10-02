@@ -3257,7 +3257,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         particles. Lentz's class has flat slices for every potential and no soliton that can be
         computed, so it has no embedding diagram."""
         RELIEF = 0.05
-        flat = {"minkowski", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres", "light_beam",
+        flat = {"minkowski", "kasner", "kasner_scalar", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres", "light_beam",
                 "chandrasekhar_xanthopoulos", "belinski_zakharov"}
         # The domain wall's moment ct = 0, when the wall stops, is the flat disc of radius 1/k taken
         # twice and joined at its rim; the moments either side of it are the cones it opens into.
@@ -3271,7 +3271,10 @@ class EmbeddingDiagrams(unittest.TestCase):
         # flat plane too, on which its rings of dust shrink until the turn and grow again.
         flat_moments = {("domain_wall", "moments", 2), ("hayward", "history", 0), ("hayward", "history", 5),
                         ("hiscock", "history", 5), *(("nordstrom_scalar", "dust", k) for k in range(5)),
-                        *(("kopczynski_trautman", "universe", k) for k in range(5))}
+                        *(("kopczynski_trautman", "universe", k) for k in range(5)),
+                        # Space is flat in Einstein's static field of 1912, so the equator outside a body is a
+                        # plane, drawn under Flamm's paraboloid of the same mass.
+                        ("einstein_1912_static", "equator", 0)}
         self.assertNotIn("lentz", self.embedding)
         self.assertNotIn("embedding", next(m for m in read(build.INDEX_FILE) if m["id"] == "lentz"))
         for name, data in self.embedding.items():
@@ -3382,9 +3385,10 @@ class EmbeddingDiagrams(unittest.TestCase):
                 self.assertEqual("height" in view, grids, f"{name} {view['id']}")
         self.assertEqual({name for name, data in self.embedding.items()
                           if any("height" in view for view in data["views"])},
-                         {"alcubierre", "krasnikov", "natario", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose",
+                         {"alcubierre", "krasnikov", "natario", "kasner", "kasner_scalar", "bianchi", "pp_wave",
+                          "aichelburg_sexl", "khan_penrose",
                           "bell_szekeres", "light_beam", "tippett_tsang", "chandrasekhar_xanthopoulos",
-                          "belinski_zakharov"})
+                          "belinski_zakharov", "moving_mirror"})
 
     def test_a_grid_that_is_not_one_is_refused(self):
         def spoil(change, words):
@@ -3552,7 +3556,7 @@ class TurningEmbeddingDiagrams(unittest.TestCase):
         # and turned all the way round it keeps to its box, the Krasnikov tube's rectangle drawn
         # smaller where it would stand wider or taller than it was published.
         heights = {v["metric"]: v["height"] for v in self.check()["views"] if "height" in v}
-        self.assertEqual(set(heights), {"alcubierre", "krasnikov", "natario", "tippett_tsang"})
+        self.assertEqual(set(heights), {"alcubierre", "krasnikov", "natario", "tippett_tsang", "moving_mirror"})
         for metric_id, h in heights.items():
             for side in ("above", "below"):
                 seen = h[side]
@@ -3600,13 +3604,13 @@ class StacksAndMovies(unittest.TestCase):
     diagrams that change through a run of moments played as movies, as the captain asked on 30
     September 2026, from the numbers written and nothing else."""
 
-    STACKS = {"kasner": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
+    STACKS = {"kasner": 1.5, "kasner_scalar": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
               "bell_szekeres": 3.0, "light_beam": 0.4, "chandrasekhar_xanthopoulos": 3.0, "belinski_zakharov": 2.0}   # the height of a unit of time
     # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
     MOVIES = {("frw", "closed"): "$ct$", ("nordstrom_scalar", "dust"): "$ct$",
-              ("kopczynski_trautman", "universe"): "$ct$",
+              ("kopczynski_trautman", "universe"): "$ct$", ("small_universes", "torus"): "$ct$",
               ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("white_hole", "explosion"): "$c\\tau$",
               ("vaidya", "shell"): "$v - r$",
@@ -3632,7 +3636,7 @@ class StacksAndMovies(unittest.TestCase):
               ("hiscock", "history"): "$v - r$",
               ("gott_time_machine", "cylinders"): "$c\\tau$", ("kantowski_sachs", "vacuum"): "$c\\tau$",
               ("ori_time_machine", "throat"): "$t$", ("senovilla", "universe"): "$act$",
-              ("kasner", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
+              ("kasner", "ring"): "$t$", ("kasner_scalar", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
               ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$",
               ("bell_szekeres", "ring"): "$\\xi$", ("chandrasekhar_xanthopoulos", "ring"): "$\\psi$",
               ("belinski_zakharov", "ring"): "$\\tau$",
@@ -4850,16 +4854,32 @@ class Slices(unittest.TestCase):
               # The flat interior of Tippett and Tsang's bubble continued over the whole plane, another
               # spacetime than the bubble whose moment is embedded.
               "tippett_tsang/interior/tx", "tippett_tsang/rindler/plane",
+              # The moving mirror's radiation is drawn as a height over a region of the plane of t and x,
+              # which is no moment of the spacetime, so no drawing marks one.
+              *(f"moving_mirror/{system}/{view}" for system, views in (
+                  ("inertial", ("thermal", "collapse", "uniform")), ("null", ("thermal", "collapse")),
+                  ("mirror_rest", ("thermal", "collapse")), ("thermal", ("tx",)), ("collapse", ("tx",)),
+                  ("rindler", ("tx",))) for view in views),
+              *(f"conformal moving_mirror/{view}" for view in (
+                  "inertial_thermal", "inertial_collapse", "inertial_uniform", "null", "mirror_rest", "thermal",
+                  "collapse", "rindler")),
               # A plane wave and the uniform field of Nordstrom's theory, other spacetimes than the point
               # mass and the dust universe whose moments are embedded.
               "nordstrom_scalar/conformal/tx", "nordstrom_scalar/uniform/tz",
               "conformal nordstrom_scalar/conformal", "conformal nordstrom_scalar/uniform",
+              # A star, the uniform field and the body of the equation of February in Einstein's static
+              # field of 1912, other spacetimes than the body of the equation of March whose equator is embedded.
+              "einstein_1912_static/static/tx", "einstein_1912_static/uniform/tz", "einstein_1912_static/february/radial",
+              "conformal einstein_1912_static/static", "conformal einstein_1912_static/uniform",
+              "conformal einstein_1912_static/february",
               # The region x < 0 of Siklos's chart, another region than the one whose wave front is embedded.
               "siklos/kaigorodov_stationary/plane",
               # Kundt's waves with no cosmological constant, other spacetimes than the waves in de Sitter
               # and anti-de Sitter space whose fronts are embedded.
               "kundt_waves/kundt/front", "kundt_waves/podolsky_belan/near", "kundt_waves/podolsky_belan/far",
               "kundt_waves/simplest_wave/front", "kundt_waves/simplest_wave/depth", "kundt_waves/kerr_schild/fronts",
+              # A closed hyperbolic universe about one observer; the moments embedded are the torus's and the horn's.
+              "small_universes/hyperbolic/radial",
               # Hiscock's simplest model, a hole made and removed by two shells, another spacetime than the one embedded.
               "hiscock/ingoing/shells",
               # Up to the shock the spheres through Hotta and Tanaka's ring meet the equatorial plane of the
@@ -5056,6 +5076,12 @@ class Slices(unittest.TestCase):
                     # each drawing marking the moments of its own.
                     "nordstrom_scalar/spherical/radial": {"dust"}, "conformal nordstrom_scalar/spherical": {"dust"},
                     "nordstrom_scalar/dust/radial": {"point_mass"}, "conformal nordstrom_scalar/dust": {"point_mass"},
+                    # The torus and the horn are two small universes, each drawing marking the moments of its own.
+                    **{where: {"horn"} for where in (
+                        "small_universes/torus/cell", "small_universes/torus/images",
+                        "small_universes/torus_conformal/cell", "small_universes/torus_conformal/images",
+                        "conformal small_universes/torus", "conformal small_universes/torus_conformal")},
+                    "small_universes/horn/along": {"torus"}, "conformal small_universes/horn": {"torus"},
                     # Cremmer and Scherk's sphere is embedded at the event x = a, off the plane x = 0 of the
                     # time and phi.
                     "cremmer_scherk/cartesian/circle": {"sphere"},
@@ -5196,6 +5222,16 @@ class Slices(unittest.TestCase):
                     "black_string/static_six/radial": {"across", "ripple"},
                     "conformal black_string/six": {"across", "ripple"},
                     "global_monopole/conical/radial": {"black_hole"},
+                    # Each chart of the star of infinite central density is one spacetime of four: the
+                    # sphere of radiation, Tolman's two stars, and the stiffest fluid of his family.
+                    "misner_zapolsky/areal/radial": {"stiff", "tolman_v", "tolman_vi"},
+                    "conformal misner_zapolsky/areal": {"stiff", "tolman_v", "tolman_vi"},
+                    "misner_zapolsky/tolman_v/radial": {"core", "stiff", "tolman_vi"},
+                    "conformal misner_zapolsky/tolman_v": {"core", "stiff", "tolman_vi"},
+                    "misner_zapolsky/tolman_vi/radial": {"core", "stiff", "tolman_v"},
+                    "conformal misner_zapolsky/tolman_vi": {"core", "stiff", "tolman_v"},
+                    "misner_zapolsky/power_law/radial": {"core", "tolman_v", "tolman_vi"},
+                    "conformal misner_zapolsky/power_law": {"core", "tolman_v", "tolman_vi"},
                     "conformal global_monopole/conical": {"black_hole"},
                     # The threaded black hole's bifurcation sphere, its horizon view, lies at v -> -infinity and
                     # u -> +infinity, off both Eddington-Finkelstein charts.
@@ -5377,6 +5413,14 @@ class Slices(unittest.TestCase):
         if key == "nordstrom_scalar/dust/radial":
             # A moment of the inertial time, from the centre to the galaxy at r = L.
             return (lambda X: t), list(self.reach(surface))
+        if key.startswith("small_universes/torus"):
+            # A moment of the torus meets the plane y = z = 0 along its whole circle of x: the line of its
+            # time across every cell, at the conformal time 2 (3t/2)^(1/3) on the conformal chart.
+            height = 2 * (1.5 * t) ** (1 / 3) if key.split("/")[1] == "torus_conformal" else t
+            return (lambda X: height), None
+        if key == "small_universes/horn/along":
+            # The horn is embedded at the moment a = a_0, ct = (6/5 - (11/50) ln 11) a_0, from its rim up.
+            return (lambda X: 1.2 - 0.22 * math.log(11)), list(self.reach(surface))
         if key.startswith("kopczynski_trautman/"):
             # A moment of the dust's time, out to the dust at r = l: the line of that time on the comoving
             # charts, through the centre on the Cartesian one, and of eta(t) on the conformal chart.
@@ -5845,6 +5889,13 @@ class Slices(unittest.TestCase):
             path = next(c for c in surface["curves"] if c["class"] == "path")
             grid = next(p for p in surface["pieces"] if "grid" in p)["grid"]
             return (lambda X: 5.0), [grid["u"][0] - path["points"][0][0], grid["u"][-1] - path["points"][0][0]]
+        if key == "kasner_scalar/logarithmic/taux":
+            # A moment of t against x and -tau = ln t.
+            return (lambda X: math.log(t)), None
+        if key.startswith("kasner_scalar/kaluza_klein/"):
+            # The same moment in the time of five dimensions, t = T^k/k with k = 1 + s_5/2.
+            k = 1 + 10 / (13 * math.sqrt(6) - 10)
+            return (lambda X: (k * t) ** (1 / k)), None
         if key.startswith(("kasner", "bianchi", "malament_hogarth")):
             if key.startswith("malament_hogarth"):
                 lo, hi = self.reach(surface)
@@ -6625,6 +6676,13 @@ class Slices(unittest.TestCase):
                         # p, q = arctan((ct -+ r)/L), so tan p + tan q = 2ct/L on a moment of the inertial time.
                         for X, T in points:
                             self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2) - 2 * t), 2e-3,
+                                            f"{where} at {(X, T)}")
+                    elif metric_id == "small_universes":
+                        # p, q = arctan(eta -+ x), so tan p + tan q = 2 eta: 2 (3t/2)^(1/3) on a moment of the
+                        # torus, and ln 11 on the moment the horn is embedded at.
+                        eta = math.log(11) if mark["view"] == "horn" else 2 * (1.5 * t) ** (1 / 3)
+                        for X, T in points:
+                            self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2) - 2 * eta), 2e-3,
                                             f"{where} at {(X, T)}")
                     elif metric_id == "kopczynski_trautman":
                         # p, q = arctan((eta -+ r)/l), so tan p + tan q = 2 eta(t)/l on a moment of the dust's time.

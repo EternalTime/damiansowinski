@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 142,
+  "count": 148,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -4197,6 +4197,11 @@
           "text": "Where the expanding Bianchi universes end up when the cosmological constant is positive. Robert Wald proved in 1983 that every type but IX approaches de Sitter space exponentially, and that type IX does too when $\\Lambda$ is large enough [wald1983]."
         },
         {
+          "id": "kasner_scalar",
+          "kind": "special_case",
+          "text": "Type I filled with a stiff fluid or a massless scalar field, whose three scale factors are powers of the time [jacobs1968, belinskii1973]."
+        },
+        {
           "id": "petrov_homogeneous",
           "kind": "family",
           "text": "A vacuum whose group of four symmetries holds groups of Bianchi's types I and VII. They act on surfaces with a time direction in them, so the spacetime is the same at every time as well [gibbons2008petrov, terzis2009]."
@@ -4205,6 +4210,11 @@
           "id": "kopczynski_trautman",
           "kind": "family",
           "text": "A flat universe of spinning dust in the Einstein-Cartan theory, which turns round where a big bang would be. The Bianchi universes of types I to VIII filled with the same dust can avoid the singularity too, where the torsion outweighs the shear [tafel1973, kopczynski1973]."
+        },
+        {
+          "id": "small_universes",
+          "kind": "family",
+          "text": "Friedmann universes whose space is a torus, which keeps the homogeneity of space and gives up its isotropy. Ya. B. Zel'dovich and A. A. Starobinskii put a universe that expands at three different rates on such a torus in 1984 [zeldovich1984]."
         }
       ],
       "references": [
@@ -4217,10 +4227,13 @@
         "misner1963",
         "kantowski1966",
         "wald1983",
+        "jacobs1968",
+        "belinskii1973",
         "gibbons2008petrov",
         "terzis2009",
         "tafel1973",
-        "kopczynski1973"
+        "kopczynski1973",
+        "zeldovich1984"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bianchi.json",
@@ -10484,6 +10497,11 @@
           "id": "datt_ruban_t_models",
           "kind": "generalisation",
           "text": "De Sitter space sliced into tubes $\\mathbb{R} \\times S^2$ and filled with dust that differs from shell to shell, Ruban's T-model of 1969 [ruban1969]."
+        },
+        {
+          "id": "gravitational_instantons",
+          "kind": "family",
+          "text": "De Sitter space in imaginary time is a 4-sphere, the simplest compact gravitational instanton. The complex projective plane and Page's space are two more with a positive cosmological constant [gibbonshawking1979, page2009]."
         }
       ],
       "references": [
@@ -10526,7 +10544,9 @@
         "hotta1993",
         "schrodinger1956",
         "parikh2003",
-        "ruban1969"
+        "ruban1969",
+        "gibbonshawking1979",
+        "page2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -11322,6 +11342,11 @@
           "id": "mixmaster",
           "kind": "family",
           "text": "A universe whose three axes on the 3-sphere all differ, as the axes of Belinskii, Gibbons, Page, and Pope's self dual metrics do. Of those, the only one with no singularity has two axes equal and is the Eguchi-Hanson space [belinskii1978bianchi, eguchihanson1979]."
+        },
+        {
+          "id": "gravitational_instantons",
+          "kind": "generalisation",
+          "text": "Gibbons and Hawking's metrics of many centres, which stand among the gravitational instantons of 1977 and 1978. The Eguchi-Hanson space is their case of two centres with no constant in the potential [gibbonshawking1979, eguchigilkeyhanson1980]."
         }
       ],
       "references": [
@@ -12072,6 +12097,11 @@
           "id": "elliptic_de_sitter",
           "kind": "programme",
           "text": "De Sitter's universe with opposite points of its hyperboloid made one event. Willem de Sitter wrote in 1917 of elliptic space, in which opposite points of the sphere are one place, that \"it is preferable to adopt this for the physical world\", and reported that Einstein agreed [desitter1917]."
+        },
+        {
+          "id": "small_universes",
+          "kind": "family",
+          "text": "Universes that are finite by the way their space is connected, with no curvature needed to close it. Einstein's is finite because its space is a sphere [lachiezerey1995]."
         }
       ],
       "references": [
@@ -12097,7 +12127,8 @@
         "chinea1992",
         "einstein1939",
         "florides1974",
-        "bohmerlobo2008"
+        "bohmerlobo2008",
+        "lachiezerey1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_static.json",
@@ -12313,6 +12344,298 @@
           ],
           "ricci_scalar": "\\dfrac{6}{R^2}",
           "kretschmann": "K = \\dfrac{12}{R^4}"
+        }
+      ]
+    },
+    {
+      "id": "einstein_1912_static",
+      "name": "Einstein's Static Field of 1912",
+      "short_name": "Einstein's 1912 Static Field",
+      "description": "Einstein's theory of static gravity from his Prague year: space stays flat and the speed of light varies from place to place, serving as the gravitational potential. Clocks slow near a mass as they do in general relativity, and light bends by half as much.",
+      "tags": [
+        "scalar gravity",
+        "alternative theory of gravity",
+        "variable speed of light",
+        "equivalence principle",
+        "light deflection",
+        "uniform field",
+        "static",
+        "stationary",
+        "four-dimensional",
+        "Lorentzian",
+        "idealized model",
+        "curvature singularity",
+        "asymptotically flat"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, with $c$ the speed of light where $N = 1$, so that Einstein's variable speed of light is $cN$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "The static field with no mass anywhere: at $N = 1$ the metric is Minkowski's. Einstein's uniform field is Minkowski space too, in the coordinates of uniformly accelerated observers that now carry Wolfgang Rindler's name [rindler1966]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "programme",
+          "text": "What the field outside a body became in the finished theory. To first order in $GM/c^2r$ Schwarzschild's clocks slow as Einstein's of 1912 do, and his curved space doubles the bending of light [einstein1915perihelion]."
+        },
+        {
+          "id": "nordstrom_scalar",
+          "kind": "programme",
+          "text": "The rival answer of the same year. Nordström kept the speed of light constant and let one factor rescale clocks and rods alike, so his light goes straight, while Einstein's field of 1912 slows the clocks alone and bends light by half of general relativity's angle [norton2007, will2014]."
+        },
+        {
+          "id": "ppn_metric",
+          "kind": "generalisation",
+          "text": "The weak field of a body with a number in front of every term. Einstein's bodies of 1912 sit at $\\gamma = 0$, with $\\beta = 1/2$ by the equation of February and $\\beta = 3/4$ by that of March [will2014]."
+        }
+      ],
+      "references": [
+        "weinstein2012",
+        "einstein1911",
+        "giulini2014prague",
+        "einstein1912abraham",
+        "einstein1912",
+        "rindler1966",
+        "einstein1912static",
+        "straumann2011",
+        "buchdahl1959",
+        "einstein1915perihelion",
+        "will2014",
+        "einstein1913",
+        "norton2007"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_1912_static.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Static Field",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "N > 0"
+          ],
+          "parameters": [
+            {
+              "symbol": "N = N(x,y,z)",
+              "description": "Speed of light at the point $(x, y, z)$ divided by $c$, a positive pure number. Einstein's field equation of February 1912 is $\\nabla^2N = 4\\pi G\\rho N/c^2$ and that of March 1912 is $N\\nabla^2N - \\tfrac{1}{2}(\\nabla N)^2 = 4\\pi G\\rho N^2/c^2$, where $\\rho$ is the density of mass and $\\nabla$ the gradient of flat space"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z)$, with $t$ carrying dimensions of time and $x$, $y$, and $z$ lengths, Cartesian on the flat space of the field. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -N^2c^2dt^2 + dx^2 + dy^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-N^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\left(\\partial_x^2N + \\partial_y^2N + \\partial_z^2N\\right)}{N}",
+          "kretschmann": "K = \\dfrac{8\\left(\\partial_x\\partial_y N\\right)^2 + 8\\left(\\partial_x\\partial_z N\\right)^2 + 4\\left(\\partial_x^2 N\\right)^2 + 8\\left(\\partial_y\\partial_z N\\right)^2 + 4\\left(\\partial_y^2 N\\right)^2 + 4\\left(\\partial_z^2 N\\right)^2}{N^2}"
+        },
+        {
+          "id": "uniform",
+          "name": "Uniform Field",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (0, \\infty)",
+            "z = 0 \\;\\text{(horizon, where } N = 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Proper acceleration of a body at rest at the height $z = c^2/a$, where $N = 1$"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z)$, with $t$ carrying dimensions of time and $z$ the height above the plane where $N = az/c^2$ vanishes. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{a^2z^2}{c^4}c^2dt^2 + dx^2 + dy^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{a^2\\,z^2}{c^4}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "february",
+          "name": "Outside a Body, February",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (m, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = m \\;\\text{(curvature singularity, where } N = 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass of the body as a length, $m = GM/c^2$, where $M$ is its gravitational mass; half the Schwarzschild radius of the same mass"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ centred on a static spherical body, with $t$ carrying dimensions of time and $r$ the distance from its centre, so that $N = 1 - m/r$ outside the body. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{m}{r}\\right)^2c^2dt^2 + dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{m}{r}\\right)^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{24m^2}{r^4\\left(r - m\\right)^2}"
+        },
+        {
+          "id": "march",
+          "name": "Outside a Body, March",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (m/2, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = m/2 \\;\\text{(curvature singularity, where } N = 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass of the body as a length, $m = GM/c^2$, where $M$ is its gravitational mass; half the Schwarzschild radius of the same mass"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ centred on a static spherical body, with $t$ carrying dimensions of time and $r$ the distance from its centre, so that $N = (1 - m/2r)^2$ outside the body. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{m}{2r}\\right)^4c^2dt^2 + dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{m}{2r}\\right)^4"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{4m^2}{r^2\\left(2r - m\\right)^2}",
+          "kretschmann": "K = \\dfrac{16m^2\\left(24r^2 - 32r\\,m + 11m^2\\right)}{r^4\\left(2r - m\\right)^4}"
         }
       ]
     },
@@ -13007,6 +13330,11 @@
           "id": "rp3_geon",
           "kind": "family",
           "text": "A black hole folded by the antipodal map with the direction of time kept, so that it has one exterior and still tells future from past. Folding Kruskal's spacetime with time reversed, as de Sitter space is folded here, is the elliptic interpretation Gibbons examined [gibbons1986elliptic, louko1998]."
+        },
+        {
+          "id": "small_universes",
+          "kind": "family",
+          "text": "Friedmann universes with points of space identified under translations, as events of de Sitter space are identified here under the antipodal map. Space becomes a torus, and each galaxy is seen many times over [lachiezerey1995]."
         }
       ],
       "references": [
@@ -13020,7 +13348,8 @@
         "spradlin2003",
         "aguirre2003",
         "misner1967",
-        "louko1998"
+        "louko1998",
+        "lachiezerey1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/elliptic_de_sitter.json",
@@ -14071,6 +14400,11 @@
           "id": "exponential_metric",
           "kind": "limit",
           "text": "The limit $\\gamma \\to \\infty$ with $\\gamma b = 2m$ held fixed, where $f^\\gamma \\to e^{-2m/r}$. It takes the scalar field's energy negative, and the naked singularity opens into the throat of a wormhole [makukov2018]."
+        },
+        {
+          "id": "kasner_scalar",
+          "kind": "family",
+          "text": "The homogeneous solution of the same field equations, Einstein's with a massless scalar field, with a different rate of expansion along each axis [belinskii1973]."
         }
       ],
       "references": [
@@ -14098,7 +14432,8 @@
         "chowdhury2012",
         "roberts1996",
         "liebling2023",
-        "makukov2018"
+        "makukov2018",
+        "belinskii1973"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/fisher_jnw.json",
@@ -14466,9 +14801,19 @@
           "text": "The flat universe in Nordström's scalar theory of gravity. His field equation gives dust the scale factor $1 - \\eta^2/\\eta_0^2$ in conformal time, with $\\eta_0$ a constant, a universe that expands from a bang and falls back into a crunch [sundrum2003]."
         },
         {
+          "id": "kasner_scalar",
+          "kind": "generalisation",
+          "text": "The flat Friedmann universe of a stiff fluid, with scale factor $t^{1/3}$, given a different exponent along each axis [jacobs1968]."
+        },
+        {
           "id": "kopczynski_trautman",
           "kind": "special_case",
           "text": "The flat universe of dust in the Einstein-Cartan theory, every particle spinning about one axis. The spins repel at high density, so its scale factor is $(1 + c^2t^2/\\ell^2)^{1/3}$, with $\\ell$ a length, and it turns round at $t = 0$ with no big bang [kopczynski1973, trautman2006]."
+        },
+        {
+          "id": "small_universes",
+          "kind": "locally_same",
+          "text": "Friedmann's universe with points of space a fixed step apart declared one point, so that space is a torus or another closed form. Every local measurement agrees with Friedmann's, and an observer sees each galaxy many times over [ellis1971, lachiezerey1995]."
         }
       ],
       "references": [
@@ -14527,8 +14872,11 @@
         "lindquist1957",
         "clifton2009",
         "sundrum2003",
+        "jacobs1968",
         "kopczynski1973",
-        "trautman2006"
+        "trautman2006",
+        "ellis1971",
+        "lachiezerey1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -16003,6 +16351,11 @@
           "id": "belinski_zakharov",
           "kind": "family",
           "text": "The same field equations with $\\theta$ unrolled into a line. Belinski and Zakharov's inverse scattering method adds solitons to any known solution with these two symmetries, by algebra alone [belinskii1978]."
+        },
+        {
+          "id": "small_universes",
+          "kind": "family",
+          "text": "Friedmann's flat universe on the same 3-torus, with matter and no waves. With matter added, the Gowdy universes that are the same at every point include it [martinbenito2011]."
         }
       ],
       "references": [
@@ -16030,7 +16383,8 @@
         "ellismaccallum1969",
         "ruiz1992",
         "chinea1992",
-        "belinskii1978"
+        "belinskii1978",
+        "martinbenito2011"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gowdy.json",
@@ -16579,6 +16933,668 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        }
+      ]
+    },
+    {
+      "id": "gravitational_instantons",
+      "name": "Gravitational Instantons",
+      "short_name": "Gravitational Instantons",
+      "description": "Spaces of four dimensions with no time in them, the solutions of Einstein's equations with Riemannian signature that Stephen Hawking, Gary Gibbons, Don Page, and Christopher Pope found in 1977 and 1978. The first is Schwarzschild's black hole in imaginary time, which closes smoothly on its horizon only if that time is a circle of length $4\\pi r_s$, the inverse of Hawking's temperature. The others are the two Taub-NUT instantons, the spaces with many centres, the complex projective plane, and Page's space.",
+      "tags": [
+        "four-dimensional",
+        "gravitational instanton",
+        "Riemannian",
+        "Euclidean signature",
+        "no time",
+        "Euclidean Schwarzschild",
+        "imaginary time",
+        "Hawking temperature",
+        "black hole thermodynamics",
+        "Euclidean quantum gravity",
+        "path integral",
+        "cigar",
+        "nut",
+        "bolt",
+        "nuts and bolts",
+        "self-dual",
+        "Taub-NUT",
+        "Taub-bolt",
+        "Gibbons-Hawking",
+        "multi-centre",
+        "complex projective plane",
+        "Fubini-Study",
+        "Kähler",
+        "Page metric",
+        "cosmological constant",
+        "positive cosmological constant",
+        "compact",
+        "Euler characteristic",
+        "regular",
+        "exact solution",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(+,+,+,+)",
+      "convention": "All four coordinates are spatial, so no component carries a factor of $c$, and a dot in the geodesic equations is a derivative with respect to arc length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "dual",
+          "text": "Schwarzschild's black hole with its time made imaginary is the first of these instantons. The horizon becomes the bolt, and the period $4\\pi r_s$ that makes the bolt smooth is the inverse of Hawking's temperature [gibbons1977action, gibbonshawking1979]."
+        },
+        {
+          "id": "taub_nut",
+          "kind": "dual",
+          "text": "Taub-NUT with $t = -i\\tau/c$ and $l = in$ is real again, and it is regular at two masses: $m = n$, Hawking's self dual instanton, and $m = 5n/4$, Page's instanton with a bolt [hawking1977, page1978bolt, gibbonshawking1979]."
+        },
+        {
+          "id": "eguchi_hanson",
+          "kind": "special_case",
+          "text": "Gibbons and Hawking's metric of many centres, taken with two of them and no constant in its potential, $\\epsilon = 0$, is the Eguchi-Hanson space [gibbonshawking1979, eguchigilkeyhanson1980]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "composite",
+          "text": "Give the self dual Taub-NUT instanton a time of its own, $-c^2dt^2$, and it is a static vacuum of five dimensions that four dimensions see as a magnetic monopole. The nut parameter is $n = 2m$ in the monopole's units [sorkin1983, grossperry1983]."
+        },
+        {
+          "id": "kerr_de_sitter",
+          "kind": "limit_source",
+          "text": "Page's space is a limit of the Kerr-de Sitter metric in imaginary time: the black hole's horizon and the cosmological one are brought together, and the space between them closes smoothly at one value of the spin [page1978compact, gibbonshawking1979]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "family",
+          "text": "De Sitter space in imaginary time is the 4-sphere of radius $\\sqrt{3/\\Lambda}$, the first compact gravitational instanton. Its cosmological horizon is a bolt, and a quarter of the bolt's area is the horizon's entropy [gibbonshawking1979, page2009]."
+        }
+      ],
+      "references": [
+        "hawking1974",
+        "hawking1975",
+        "gibbons1977action",
+        "gibbonshawking1979",
+        "bpst1975",
+        "hawking1977",
+        "gibbonshawking1978",
+        "eguchigilkeyhanson1980",
+        "page1978bolt",
+        "gibbonspope1978",
+        "page1978compact",
+        "page2009",
+        "chenlebrunweber2008",
+        "chenteo2011",
+        "sorkin1983",
+        "grossperry1983"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gravitational_instantons.json",
+      "charts": [
+        {
+          "id": "schwarzschild",
+          "name": "Euclidean Schwarzschild",
+          "coordinates": [
+            "\\tau",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in [0, 4\\pi r_s)",
+            "r \\in [r_s, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s \\;\\text{(the bolt, a 2-sphere of radius}\\; r_s\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "The Schwarzschild radius, $r_s = 2GM/c^2$: the bolt $r = r_s$ is a 2-sphere of radius $r_s$"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, r, \\theta, \\phi)$, with $\\tau$ the imaginary time, $t = -i\\tau/c$ in Schwarzschild's chart, a length of period $4\\pi r_s$. The Schwarzschild radius is $r_s = 2GM/c^2$.",
+          "line_element": "ds^2 = \\left(1 - \\dfrac{r_s}{r}\\right)d\\tau^2 + \\left(1 - \\dfrac{r_s}{r}\\right)^{-1}dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "\\dfrac{r - r_s}{r}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r}{r - r_s}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "regular",
+          "name": "Regular at the Bolt",
+          "coordinates": [
+            "x",
+            "\\tau",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "x \\in [0, 2r_s)",
+            "\\tau \\in [0, 4\\pi r_s)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "x = 0 \\;\\text{(the bolt, a 2-sphere of radius}\\; r_s\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "The Schwarzschild radius, $r_s = 2GM/c^2$: the bolt $x = 0$ is a 2-sphere of radius $r_s$"
+            },
+            {
+              "symbol": "r = \\dfrac{4r_s^3}{4r_s^2 - x^2}",
+              "description": "The areal radius, Schwarzschild's $r$"
+            }
+          ],
+          "convention": "We use coordinates $(x, \\tau, \\theta, \\phi)$, with $x = 2r_s\\sqrt{1 - r_s/r}$ a length that vanishes on the bolt and tends to $2r_s$ far away, and $\\tau$ a length of period $4\\pi r_s$. The Schwarzschild radius is $r_s = 2GM/c^2$.",
+          "line_element": "ds^2 = \\dfrac{r^4}{r_s^4}dx^2 + \\dfrac{x^2}{4r_s^2}d\\tau^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{r^4}{r_s^4}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "\\dfrac{x^2}{4r_s^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "taub_nut",
+          "name": "Self-Dual Taub-NUT",
+          "coordinates": [
+            "r",
+            "\\theta",
+            "\\phi",
+            "\\tau"
+          ],
+          "domains": [
+            "r \\in [n, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\tau \\in [0, 8\\pi n)",
+            "r = n \\;\\text{(the nut, a regular point)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "n",
+              "description": "The nut parameter, a length: the mass is $n$ too, and the nut is the point $r = n$"
+            }
+          ],
+          "convention": "We use coordinates $(r, \\theta, \\phi, \\tau)$, with $r$ a length and $\\tau$ a length of period $8\\pi n$, so that $\\tau/2n$, $\\theta$, and $\\phi$ are Euler angles on the 3-spheres of constant $r$. The nut parameter $n$ is a length.",
+          "line_element": "ds^2 = \\dfrac{r + n}{r - n}dr^2 + \\left(r^2 - n^2\\right)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\dfrac{r - n}{r + n}\\left(d\\tau + 2n\\cos\\theta\\,d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r + n}{r - n}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2 - n^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(r - n\\right)\\left(r^2\\sin^2\\theta + 2r\\,n\\sin^2\\theta - 3n^2\\sin^2\\theta + 4n^2\\right)}{r + n}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\tau"
+              ],
+              "value": "\\dfrac{2n\\left(r - n\\right)\\cos\\theta}{r + n}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\phi"
+              ],
+              "value": "\\dfrac{2n\\left(r - n\\right)\\cos\\theta}{r + n}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "\\dfrac{r - n}{r + n}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{96n^2}{\\left(r + n\\right)^6}"
+        },
+        {
+          "id": "taub_bolt",
+          "name": "Taub-Bolt",
+          "coordinates": [
+            "r",
+            "\\theta",
+            "\\phi",
+            "\\tau"
+          ],
+          "domains": [
+            "r \\in [2n, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\tau \\in [0, 8\\pi n)",
+            "r = 2n \\;\\text{(the bolt, a 2-sphere of radius}\\; \\sqrt{3}\\,n\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "n",
+              "description": "The nut parameter, a length: the mass is $5n/4$, and the bolt $r = 2n$ is a 2-sphere of radius $\\sqrt{3}\\,n$"
+            }
+          ],
+          "convention": "We use coordinates $(r, \\theta, \\phi, \\tau)$, with $r$ a length and $\\tau$ a length of period $8\\pi n$, so that $\\tau/2n$, $\\theta$, and $\\phi$ are Euler angles on the 3-spheres of constant $r$. The nut parameter $n$ is a length.",
+          "line_element": "ds^2 = \\dfrac{2\\left(r^2 - n^2\\right)}{\\left(r - 2n\\right)\\left(2r - n\\right)}dr^2 + \\left(r^2 - n^2\\right)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\dfrac{\\left(r - 2n\\right)\\left(2r - n\\right)}{2\\left(r^2 - n^2\\right)}\\left(d\\tau + 2n\\cos\\theta\\,d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{2\\left(r^2 - n^2\\right)}{\\left(r - 2n\\right)\\left(2r - n\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2 - n^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^4\\sin^2\\theta - 6r^2\\,n^2\\sin^2\\theta + 4r^2\\,n^2 + 10r\\,n^3\\sin^2\\theta - 10r\\,n^3 - 3n^4\\sin^2\\theta + 4n^4}{r^2 - n^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\tau"
+              ],
+              "value": "\\dfrac{n\\left(r - 2n\\right)\\left(2r - n\\right)\\cos\\theta}{r^2 - n^2}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\phi"
+              ],
+              "value": "\\dfrac{n\\left(r - 2n\\right)\\left(2r - n\\right)\\cos\\theta}{r^2 - n^2}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "\\dfrac{\\left(r - 2n\\right)\\left(2r - n\\right)}{2\\left(r^2 - n^2\\right)}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{3n^2\\left(41r^6 - 240r^5\\,n + 615r^4\\,n^2 - 800r^3\\,n^3 + 615r^2\\,n^4 - 240r\\,n^5 + 41n^6\\right)}{\\left(r^2 - n^2\\right)^6}"
+        },
+        {
+          "id": "multi_centre",
+          "name": "Multi-Centre",
+          "coordinates": [
+            "\\rho",
+            "z",
+            "\\phi",
+            "\\tau"
+          ],
+          "domains": [
+            "\\rho \\in [0, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "\\tau \\in [0, 8\\pi n)",
+            "(\\rho, z) = (0, z_i) \\;\\text{(the centres, regular points)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "V = V(\\rho,z)",
+              "description": "The potential, a pure number; no component assumes Laplace's equation for it"
+            },
+            {
+              "symbol": "\\omega = \\omega(\\rho,z)",
+              "description": "The component $\\omega_\\phi$ of the twist, a length, fixed by $V$ up to a constant; no component assumes its equation"
+            }
+          ],
+          "convention": "We use coordinates $(\\rho, z, \\phi, \\tau)$, with $\\rho$, $z$, and $\\phi$ cylindrical coordinates on a flat space of three dimensions, every centre on its axis at a height $z_i$, and $\\tau$ a length of period $8\\pi n$. The potential is $V = \\epsilon + \\sum_i 2n/R_i$, with $R_i = \\sqrt{\\rho^2 + (z - z_i)^2}$, the length $n$ the nut parameter of every centre, and $\\epsilon$ either $1$ or $0$. The twist $\\omega$ solves $\\partial_\\rho\\omega = \\rho\\,\\partial_z V$ and $\\partial_z\\omega = -\\rho\\,\\partial_\\rho V$.",
+          "line_element": "ds^2 = V\\left(d\\rho^2 + dz^2 + \\rho^2d\\phi^2\\right) + V^{-1}\\left(d\\tau + \\omega\\,d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "V"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "V"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{V^2\\,\\rho^2 + \\omega^2}{V}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\tau"
+              ],
+              "value": "\\dfrac{\\omega}{V}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\omega}{V}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "\\dfrac{1}{V}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2V\\,\\rho^2\\,\\partial_\\rho^2 V + 2V\\,\\rho^2\\,\\partial_z^2 V + 2V\\,\\rho\\,\\partial_\\rho V - \\rho^2\\left(\\partial_\\rho V\\right)^2 - \\rho^2\\left(\\partial_z V\\right)^2 + \\left(\\partial_\\rho\\omega\\right)^2 + \\left(\\partial_z\\omega\\right)^2}{2V^3\\,\\rho^2}",
+          "kretschmann": "K = \\dfrac{8V^2\\,\\rho^4\\,\\partial_\\rho^2 V\\,\\partial_z^2 V + 16V^2\\,\\rho^4\\left(\\partial_\\rho\\partial_z V\\right)^2 + 12V^2\\,\\rho^4\\left(\\partial_\\rho^2 V\\right)^2 + 12V^2\\,\\rho^4\\left(\\partial_z^2 V\\right)^2 + 8V^2\\,\\rho^3\\,\\partial_\\rho V\\,\\partial_\\rho^2 V + 8V^2\\,\\rho^3\\,\\partial_\\rho V\\,\\partial_z^2 V + 12V^2\\,\\rho^2\\left(\\partial_\\rho V\\right)^2 + 16V^2\\,\\rho^2\\left(\\partial_\\rho\\partial_z\\omega\\right)^2 + 8V^2\\,\\rho^2\\left(\\partial_\\rho^2\\omega\\right)^2 + 8V^2\\,\\rho^2\\left(\\partial_z^2\\omega\\right)^2 - 16V^2\\,\\rho\\,\\partial_\\rho\\omega\\,\\partial_\\rho^2\\omega - 16V^2\\,\\rho\\,\\partial_\\rho\\partial_z\\omega\\,\\partial_z\\omega + 8V^2\\left(\\partial_\\rho\\omega\\right)^2 + 16V^2\\left(\\partial_z\\omega\\right)^2 - 64V\\,\\rho^4\\,\\partial_\\rho V\\,\\partial_\\rho\\partial_z V\\,\\partial_z V - 32V\\,\\rho^4\\left(\\partial_\\rho V\\right)^2\\,\\partial_\\rho^2 V - 32V\\,\\rho^4\\left(\\partial_z V\\right)^2\\,\\partial_z^2 V - 40V\\,\\rho^2\\,\\partial_\\rho V\\,\\partial_\\rho\\omega\\,\\partial_\\rho^2\\omega + 8V\\,\\rho^2\\,\\partial_\\rho V\\,\\partial_\\rho\\omega\\,\\partial_z^2\\omega - 48V\\,\\rho^2\\,\\partial_\\rho V\\,\\partial_\\rho\\partial_z\\omega\\,\\partial_z\\omega + 32V\\,\\rho^2\\,\\partial_\\rho\\omega\\,\\partial_\\rho\\partial_z V\\,\\partial_z\\omega - 48V\\,\\rho^2\\,\\partial_\\rho\\omega\\,\\partial_\\rho\\partial_z\\omega\\,\\partial_z V + 8V\\,\\rho^2\\,\\partial_\\rho^2\\omega\\,\\partial_z V\\,\\partial_z\\omega - 40V\\,\\rho^2\\,\\partial_z V\\,\\partial_z\\omega\\,\\partial_z^2\\omega + 16V\\,\\rho^2\\left(\\partial_\\rho\\omega\\right)^2\\,\\partial_\\rho^2 V + 16V\\,\\rho^2\\left(\\partial_z\\omega\\right)^2\\,\\partial_z^2 V - 8V\\,\\rho\\,\\partial_\\rho\\omega\\,\\partial_z V\\,\\partial_z\\omega + 56V\\,\\rho\\,\\partial_\\rho V\\left(\\partial_\\rho\\omega\\right)^2 + 64V\\,\\rho\\,\\partial_\\rho V\\left(\\partial_z\\omega\\right)^2 + 54\\rho^4\\left(\\partial_\\rho V\\right)^2\\left(\\partial_z V\\right)^2 + 27\\rho^4\\left(\\partial_\\rho V\\right)^4 + 27\\rho^4\\left(\\partial_z V\\right)^4 - 48\\rho^2\\,\\partial_\\rho V\\,\\partial_\\rho\\omega\\,\\partial_z V\\,\\partial_z\\omega + 34\\rho^2\\left(\\partial_\\rho V\\right)^2\\left(\\partial_\\rho\\omega\\right)^2 + 58\\rho^2\\left(\\partial_\\rho V\\right)^2\\left(\\partial_z\\omega\\right)^2 + 58\\rho^2\\left(\\partial_\\rho\\omega\\right)^2\\left(\\partial_z V\\right)^2 + 34\\rho^2\\left(\\partial_z V\\right)^2\\left(\\partial_z\\omega\\right)^2 + 22\\left(\\partial_\\rho\\omega\\right)^2\\left(\\partial_z\\omega\\right)^2 + 11\\left(\\partial_\\rho\\omega\\right)^4 + 11\\left(\\partial_z\\omega\\right)^4}{4V^6\\,\\rho^4}"
+        },
+        {
+          "id": "cp2",
+          "name": "Complex Projective Plane",
+          "coordinates": [
+            "r",
+            "\\theta",
+            "\\phi",
+            "\\psi"
+          ],
+          "domains": [
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\psi \\in [0, 4\\pi)",
+            "r = 0 \\;\\text{(the nut, a regular point)}",
+            "r \\to \\infty \\;\\text{(the bolt, a 2-sphere of area}\\; 6\\pi/\\Lambda\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Lambda",
+              "description": "The cosmological constant, an inverse area, positive: the space has volume $18\\pi^2/\\Lambda^2$"
+            }
+          ],
+          "convention": "We use coordinates $(r, \\theta, \\phi, \\psi)$, with $r$ a length and $\\theta$, $\\phi$, and $\\psi$ Euler angles on the 3-spheres of constant $r$, $\\psi$ with period $4\\pi$. The cosmological constant $\\Lambda$ is positive, and $R_{\\mu\\nu} = \\Lambda g_{\\mu\\nu}$.",
+          "line_element": "ds^2 = \\left(1 + \\dfrac{\\Lambda r^2}{6}\\right)^{-2}dr^2 + \\dfrac{r^2}{4}\\left(1 + \\dfrac{\\Lambda r^2}{6}\\right)^{-1}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\dfrac{r^2}{4}\\left(1 + \\dfrac{\\Lambda r^2}{6}\\right)^{-2}\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{36}{\\left(r^2\\,\\Lambda + 6\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{3r^2}{2\\left(r^2\\,\\Lambda + 6\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{3r^2\\left(r^2\\,\\Lambda\\sin^2\\theta + 6\\right)}{2\\left(r^2\\,\\Lambda + 6\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{9r^2\\cos\\theta}{\\left(r^2\\,\\Lambda + 6\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{9r^2\\cos\\theta}{\\left(r^2\\,\\Lambda + 6\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{9r^2}{\\left(r^2\\,\\Lambda + 6\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{16\\Lambda^2}{3}"
+        },
+        {
+          "id": "cp2_distance",
+          "name": "Complex Projective Plane, Distance",
+          "coordinates": [
+            "\\chi",
+            "\\theta",
+            "\\phi",
+            "\\psi"
+          ],
+          "domains": [
+            "\\chi \\in [0, \\pi L/2]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\psi \\in [0, 4\\pi)",
+            "\\chi = 0 \\;\\text{(the nut, a regular point)}",
+            "\\chi = \\pi L/2 \\;\\text{(the bolt, a 2-sphere of radius}\\; L/2\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "The length $L = \\sqrt{6/\\Lambda}$: the bolt is a 2-sphere of radius $L/2$, and every geodesic closes after a length $\\pi L$"
+            }
+          ],
+          "convention": "We use coordinates $(\\chi, \\theta, \\phi, \\psi)$, with $\\chi$ the distance from the nut, $r = L\\tan(\\chi/L)$ in Gibbons and Pope's radius, and $\\theta$, $\\phi$, and $\\psi$ Euler angles on the 3-spheres of constant $\\chi$, $\\psi$ with period $4\\pi$. The length $L$ sets the cosmological constant, $\\Lambda = 6/L^2$.",
+          "line_element": "ds^2 = d\\chi^2 + \\dfrac{L^2}{4}\\sin^2(\\chi/L)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\dfrac{L^2}{4}\\sin^2(\\chi/L)\\cos^2(\\chi/L)\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{L^2\\sin^2(\\chi/L)}{4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{L^2\\left(\\sin^2(\\chi/L)\\cos^2\\theta - 1\\right)\\sin^2(\\chi/L)}{4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{L^2\\sin^2(\\chi/L)\\cos^2(\\chi/L)\\cos\\theta}{4}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{L^2\\sin^2(\\chi/L)\\cos^2(\\chi/L)\\cos\\theta}{4}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{L^2\\sin^2(\\chi/L)\\cos^2(\\chi/L)}{4}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{24}{L^2}",
+          "kretschmann": "K = \\dfrac{192}{L^4}"
+        },
+        {
+          "id": "page",
+          "name": "Page",
+          "coordinates": [
+            "\\chi",
+            "\\theta",
+            "\\phi",
+            "\\psi"
+          ],
+          "domains": [
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\psi \\in [0, 4\\pi)",
+            "\\chi = 0,\\; \\pi \\;\\text{(the two bolts, 2-spheres)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Lambda",
+              "description": "The cosmological constant, an inverse area, positive"
+            },
+            {
+              "symbol": "\\nu",
+              "description": "A pure number, $0.2817$ on Page's space: the limit of Kerr-de Sitter's spin that leaves both bolts smooth"
+            },
+            {
+              "symbol": "P = 3 - \\nu^2 - \\nu^2\\left(1 + \\nu^2\\right)\\cos^2\\chi",
+              "description": "A pure number that never vanishes: $3 - 2\\nu^2 - \\nu^4$ on the bolts"
+            },
+            {
+              "symbol": "Q = 1 - \\nu^2\\cos^2\\chi",
+              "description": "A pure number that never vanishes: $1 - \\nu^2$ on the bolts"
+            },
+            {
+              "symbol": "N = 3 + 6\\nu^2 - \\nu^4",
+              "description": "A constant, equal to $4\\nu\\left(3 + \\nu^2\\right)$ on Page's space"
+            }
+          ],
+          "convention": "We use coordinates $(\\chi, \\theta, \\phi, \\psi)$, all angles, with $\\theta$, $\\phi$, and $\\psi$ Euler angles on the 3-spheres of constant $\\chi$ and $\\psi$ of period $4\\pi$. The cosmological constant $\\Lambda$ is positive, and $R_{\\mu\\nu} = \\Lambda g_{\\mu\\nu}$ for every $\\nu$. The bolts are smooth at the positive root of $\\nu^4 + 4\\nu^3 - 6\\nu^2 + 12\\nu - 3 = 0$, $\\nu = 0.2817$.",
+          "line_element": "ds^2 = \\dfrac{3\\left(1 + \\nu^2\\right)}{\\Lambda}\\left(\\dfrac{Q}{P}d\\chi^2 + \\dfrac{Q}{N}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right) + \\dfrac{4\\nu^2P\\sin^2\\chi}{N^2Q}\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{3\\left(1 + \\nu^2\\right)Q}{\\Lambda P}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{3\\left(1 + \\nu^2\\right)Q}{\\Lambda N}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{3\\left(\\nu^2 + 1\\right)\\left(\\nu^8\\cos^4\\chi\\sin^2\\theta - 6\\nu^6\\cos^2\\chi\\sin^2\\theta - 2\\nu^6\\cos^4\\chi\\sin^2\\theta + 4\\nu^6\\cos^2\\chi - 4\\nu^6\\cos^4\\chi + 12\\nu^4\\cos^2\\chi\\sin^2\\theta + \\nu^4\\cos^4\\chi\\sin^2\\theta - 4\\nu^4\\cos^4\\chi - 3\\nu^4\\sin^2\\theta + 4\\nu^4 - 6\\nu^2\\cos^2\\chi\\sin^2\\theta + 12\\nu^2\\cos^2\\chi + 6\\nu^2\\sin^2\\theta - 12\\nu^2 - 3\\sin^2\\theta\\right)}{\\Lambda\\,Q\\,N^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{12\\nu^2\\,P\\left(\\nu^2 + 1\\right)\\sin^2\\chi\\cos\\theta}{\\Lambda\\,Q\\,N^2}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{12\\nu^2\\,P\\left(\\nu^2 + 1\\right)\\sin^2\\chi\\cos\\theta}{\\Lambda\\,Q\\,N^2}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{12\\nu^2\\left(1 + \\nu^2\\right)P\\sin^2\\chi}{\\Lambda N^2Q}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{8\\Lambda^2\\left(\\nu^{16}\\cos^{12}\\chi + 2\\nu^{14}\\cos^6\\chi - 6\\nu^{14}\\cos^{10}\\chi + 2\\nu^{14}\\cos^{12}\\chi + 30\\nu^{12}\\cos^4\\chi - 8\\nu^{12}\\cos^6\\chi + 15\\nu^{12}\\cos^8\\chi - 12\\nu^{12}\\cos^{10}\\chi + \\nu^{12}\\cos^{12}\\chi + 30\\nu^{10}\\cos^2\\chi - 120\\nu^{10}\\cos^4\\chi - 8\\nu^{10}\\cos^6\\chi + 30\\nu^{10}\\cos^8\\chi - 6\\nu^{10}\\cos^{10}\\chi - 120\\nu^8\\cos^2\\chi + 195\\nu^8\\cos^4\\chi - 48\\nu^8\\cos^6\\chi + 15\\nu^8\\cos^8\\chi + 2\\nu^8 + 174\\nu^6\\cos^2\\chi - 90\\nu^6\\cos^4\\chi - 18\\nu^6\\cos^6\\chi - 8\\nu^6 - 132\\nu^4\\cos^2\\chi + 45\\nu^4\\cos^4\\chi + 13\\nu^4 + 24\\nu^2\\cos^2\\chi - 6\\nu^2 + 3\\right)}{3Q^6\\left(\\nu^2 + 1\\right)^2}"
         }
       ]
     },
@@ -19632,6 +20648,11 @@
           "text": "The static pair of opposite magnetic charges in Einstein-Maxwell theory. Gross and Perry's monopole and antimonopole pair is its counterpart in Kaluza-Klein theory [grossperry1983, emparan2000]."
         },
         {
+          "id": "gravitational_instantons",
+          "kind": "piece",
+          "text": "The monopole's four dimensions of space are Hawking's self dual Taub-NUT instanton with nut parameter $n = 2m$, and the monopole's centre is its nut [hawking1977, sorkin1983]."
+        },
+        {
           "id": "cremmer_scherk",
           "kind": "family",
           "text": "Two extra dimensions rolled into a sphere that a monopole's gauge field holds at one radius, where the Kaluza-Klein monopole has one extra dimension, a circle, and no matter [horvath1977]."
@@ -20241,6 +21262,11 @@
           "text": "Kasner's universe with solitons added. Belinski and Zakharov took it for the seed of their first soliton solutions, among them two pulses of gravitational wave that run apart along a light cone [belinskii1978]."
         },
         {
+          "id": "kasner_scalar",
+          "kind": "generalisation",
+          "text": "Kasner's universe with a massless scalar field in it. The squares of the exponents then sum to $1 - q^2$, and for $q^2 > 1/2$ all three axes shrink toward the singularity [belinskii1973]."
+        },
+        {
           "id": "petrov_homogeneous",
           "kind": "family",
           "text": "A vacuum that is the same at every time as well as at every place. Joan Josep Ferrando and Juan Antonio Sáez found it in one family with Kasner's, the vacuums of Petrov's type I with a symmetry aligned to the curvature [ferrando2006]."
@@ -20268,6 +21294,7 @@
         "geroch1969",
         "kasner1925",
         "belinskii1978",
+        "belinskii1973",
         "ferrando2006",
         "martins1996"
       ],
@@ -20337,6 +21364,305 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = -\\dfrac{16 p_1 p_2 p_3}{c^4 t^4}"
+        }
+      ]
+    },
+    {
+      "id": "kasner_scalar",
+      "name": "Kasner Universe with a Scalar Field",
+      "short_name": "Kasner with a Scalar Field",
+      "description": "Kasner's anisotropic universe filled with a massless scalar field, which is also a fluid whose pressure equals its energy density. The field loosens Kasner's second condition, so all three axes can shrink together toward the singularity, and the oscillations of the vacuum come to a stop.",
+      "tags": [
+        "scalar field",
+        "massless scalar field",
+        "minimally coupled scalar field",
+        "Einstein-scalar",
+        "stiff fluid",
+        "anisotropic",
+        "cosmology",
+        "Kasner",
+        "Bianchi classification",
+        "spatially homogeneous",
+        "homogeneous",
+        "curvature singularity",
+        "spacelike singularity",
+        "big bang",
+        "BKL",
+        "Kaluza-Klein",
+        "higher dimensions",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "five-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The massless scalar field $\\varphi$ enters through $R_{\\mu\\nu} = (8\\pi G/c^4)\\,\\partial_\\mu\\varphi\\,\\partial_\\nu\\varphi$ in four dimensions, and every component assumes the two conditions on the exponents of its chart.",
+      "related": [
+        {
+          "id": "kasner",
+          "kind": "special_case",
+          "text": "The universe with the field switched off. At $q = 0$ the squares of the exponents sum to one, and one axis has to stretch toward the singularity [kasner1921]."
+        },
+        {
+          "id": "frw",
+          "kind": "special_case",
+          "text": "At $q^2 = 2/3$ all three exponents are $1/3$, and the metric is the flat Friedmann universe of a stiff fluid, with scale factor $t^{1/3}$ [jacobs1968]."
+        },
+        {
+          "id": "bianchi",
+          "kind": "generalisation",
+          "text": "This universe is Bianchi type I, flat space with three scale factors, filled with a stiff fluid or a massless scalar field [jacobs1968]."
+        },
+        {
+          "id": "mixmaster",
+          "kind": "family",
+          "text": "In vacuum the Mixmaster universe bounces from one Kasner epoch to the next without end. A massless scalar field stops the bounces after a finite number, and the universe goes on as this one does, with all three exponents positive [belinskii1973]."
+        },
+        {
+          "id": "fisher_jnw",
+          "kind": "family",
+          "text": "The same field equations, Einstein's with a massless scalar field, solved for a static sphere [janis1968]."
+        }
+      ],
+      "references": [
+        "jacobs1968",
+        "zeldovich1962",
+        "kasner1921",
+        "belinskii1973",
+        "lifshitz1963",
+        "bkl1970",
+        "kaluza1921",
+        "damour2003",
+        "andersson2001",
+        "fournodavlos2023",
+        "frenkel2020",
+        "janis1968"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner_scalar.json",
+      "charts": [
+        {
+          "id": "synchronous",
+          "name": "Synchronous",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (0, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "t \\to 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "p_1",
+              "description": "Exponent along $x$, with $p_1 + p_2 + p_3 = 1$"
+            },
+            {
+              "symbol": "p_2",
+              "description": "Exponent along $y$, with $p_1^2 + p_2^2 + p_3^2 = 1 - q^2$"
+            },
+            {
+              "symbol": "p_3",
+              "description": "Exponent along $z$; the two conditions leave two of the four numbers free, and where $q^2 > 1/2$ all three exponents are positive"
+            },
+            {
+              "symbol": "q",
+              "description": "Strength of the scalar field, a pure number with $q^2 \\le 2/3$: $\\varphi = (qc^2/\\sqrt{8\\pi G})\\ln t$. At $q = 0$ the metric is Kasner's vacuum, and at $q^2 = 2/3$ it is isotropic, $p_1 = p_2 = p_3 = 1/3$"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z)$, with $t$ the proper time of an observer at rest, and evaluate the powers $t^{2p_i}$ with $t$ in a fixed unit of time, so they are dimensionless and the lengths sit in $x$, $y$, and $z$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + t^{2p_1}dx^2 + t^{2p_2}dy^2 + t^{2p_3}dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "t^{2p_1}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "t^{2p_2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "t^{2p_3}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{q^2}{c^2\\,t^2}",
+          "kretschmann": "K = \\dfrac{3q^4 - 16p_1\\,p_2\\,p_3}{c^4\\,t^4}"
+        },
+        {
+          "id": "logarithmic",
+          "name": "Logarithmic time",
+          "coordinates": [
+            "\\tau",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\tau \\to \\infty \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "p_1",
+              "description": "Exponent along $x$, with $p_1 + p_2 + p_3 = 1$"
+            },
+            {
+              "symbol": "p_2",
+              "description": "Exponent along $y$, with $p_1^2 + p_2^2 + p_3^2 = 1 - q^2$"
+            },
+            {
+              "symbol": "p_3",
+              "description": "Exponent along $z$; the two conditions leave two of the four numbers free, and where $q^2 > 1/2$ all three exponents are positive"
+            },
+            {
+              "symbol": "q",
+              "description": "Strength of the scalar field, a pure number with $q^2 \\le 2/3$: $\\varphi = -(qc^2/\\sqrt{8\\pi G})\\,\\tau$, linear in $\\tau$. At $q = 0$ the metric is Kasner's vacuum, and at $q^2 = 2/3$ it is isotropic, $p_1 = p_2 = p_3 = 1/3$"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "A length, $\\ell = ct_0$, with $t_0$ the unit of time of the synchronous chart"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, x, y, z)$, with $\\tau = -\\ln(t/t_0)$ a pure number that grows without bound toward the singularity, $t$ the proper time of the synchronous chart, and $\\ell = ct_0$ a length. We take components in the chart $x^0 = \\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\ell^2e^{-2\\tau}d\\tau^2 + e^{-2p_1\\tau}dx^2 + e^{-2p_2\\tau}dy^2 + e^{-2p_3\\tau}dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\ell^2e^{-2\\tau}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "e^{-2p_1\\tau}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "e^{-2p_2\\tau}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{-2p_3\\tau}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{q^2e^{2\\tau}}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{\\left(3q^4 - 16p_1\\,p_2\\,p_3\\right)e^{4\\tau}}{\\ell^4}"
+        },
+        {
+          "id": "kaluza_klein",
+          "name": "Five dimensions (Kaluza-Klein)",
+          "coordinates": [
+            "T",
+            "x",
+            "y",
+            "z",
+            "w"
+          ],
+          "domains": [
+            "T \\in (0, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "w \\in (-\\infty, \\infty)",
+            "T \\to 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "s_1",
+              "description": "Exponent along $x$ in five dimensions, with $s_1 + s_2 + s_3 + s_5 = 1$; the exponent of four dimensions along $x$ is $p_1 = (2s_1 + s_5)/(2 + s_5)$"
+            },
+            {
+              "symbol": "s_2",
+              "description": "Exponent along $y$, with $s_1^2 + s_2^2 + s_3^2 + s_5^2 = 1$; in four dimensions $p_2 = (2s_2 + s_5)/(2 + s_5)$"
+            },
+            {
+              "symbol": "s_3",
+              "description": "Exponent along $z$; in four dimensions $p_3 = (2s_3 + s_5)/(2 + s_5)$"
+            },
+            {
+              "symbol": "s_5",
+              "description": "Exponent along $w$, the extra dimension: the strength of the scalar field of four dimensions is $q = \\sqrt{6}\\,s_5/(2 + s_5)$, and at $s_5 = 0$ the metric is Kasner's vacuum with a flat line added"
+            }
+          ],
+          "convention": "We use coordinates $(T, x, y, z, w)$ of five dimensions, with $w$ along the extra dimension, and evaluate the powers of $T$ with $T$ in a fixed unit of time. The metric of four dimensions is $\\sqrt{g_{ww}}$ times the first four terms, with $t \\propto T^{1 + s_5/2}$ its proper time and $\\varphi = (c^2/\\sqrt{8\\pi G})\\sqrt{3/2}\\,s_5\\ln T$. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dT^2 + T^{2s_1}dx^2 + T^{2s_2}dy^2 + T^{2s_3}dz^2 + T^{2s_5}dw^2",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "T^{2s_1}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "T^{2s_2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "T^{2s_3}"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "T^{2s_5}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = -\\dfrac{8\\left(s_1\\,s_2\\,s_3\\,s_5 + 2\\left(s_1\\,s_2\\,s_3 + s_1\\,s_2\\,s_5 + s_1\\,s_3\\,s_5 + s_2\\,s_3\\,s_5\\right)\\right)}{c^4\\,T^4}"
         }
       ]
     },
@@ -21144,6 +22470,11 @@
           "id": "wahlquist",
           "kind": "generalisation",
           "text": "Carter's hole with its cosmological constant traded for a rotating fluid whose $\\mu + 3p$ is constant. Where the fluid's density and pressure cancel, Wahlquist's family is Kerr-de Sitter [mars2001]."
+        },
+        {
+          "id": "gravitational_instantons",
+          "kind": "limit",
+          "text": "Continue Kerr-de Sitter to imaginary time and bring the black hole's horizon up to the cosmological one. In that limit the space between them closes, at one value of the spin, into Page's compact instanton, a bundle of 2-spheres over the 2-sphere [page1978compact, gibbonshawking1979]."
         }
       ],
       "references": [
@@ -21170,7 +22501,9 @@
         "kamran2009",
         "plebanski1976",
         "bini2003",
-        "mars2001"
+        "mars2001",
+        "page1978compact",
+        "gibbonshawking1979"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr_de_sitter.json",
@@ -27401,6 +28734,11 @@
           "id": "coleman_de_luccia",
           "kind": "composite",
           "text": "A bubble of new vacuum growing in an old one. When the new vacuum has zero energy the inside of the bubble is a Milne universe, with the wall beyond its light cone [coleman1980, bucher1995]."
+        },
+        {
+          "id": "small_universes",
+          "kind": "generalisation",
+          "text": "Milne's universe with matter let in and its hyperbolic space rolled up into a closed form. With $a = ct$ and nothing in it, the hyperbolic small universe is Milne's at each point."
         }
       ],
       "references": [
@@ -27882,6 +29220,16 @@
           "text": "Flat spacetime with a tachyon in it. At $b = 0$ A II and B I are the inside and the outside of the cone $T^2 = X^2 + Y^2$ about a spacelike line of Minkowski space [hruska2019]."
         },
         {
+          "id": "moving_mirror",
+          "kind": "locally_same",
+          "text": "Two dimensions of Minkowski space with a mirror for a left edge. Let the mirror accelerate and the empty space to its right fills with radiation, thermal if the mirror's world line closes on a light ray [fulling1976, davies1977]."
+        },
+        {
+          "id": "einstein_1912_static",
+          "kind": "generalisation",
+          "text": "Flat spacetime with a speed of light that varies from place to place, Einstein's static gravity of 1912. Its uniform field is Minkowski space in Rindler's coordinates [einstein1912]."
+        },
+        {
           "id": "cremmer_scherk",
           "kind": "family",
           "text": "Minkowski space with a sphere of one radius at every point, a solution of gravity with gauge fields in six dimensions [horvath1977]."
@@ -27957,6 +29305,8 @@
         "podolsky2000snapping",
         "brill1959",
         "hruska2019",
+        "fulling1976",
+        "davies1977",
         "horvath1977"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
@@ -28287,6 +29637,11 @@
           "id": "elliptic_de_sitter",
           "kind": "family",
           "text": "De Sitter space with events identified under the antipodal map of its hyperboloid, where Misner space identifies them under a boost. The antipodal map makes no closed timelike curves, and it removes the global direction of time [parikh2003]."
+        },
+        {
+          "id": "small_universes",
+          "kind": "family",
+          "text": "Friedmann universes with points of space identified under translations, as events are identified here under a boost. The translations make space a torus and no closed timelike curve [lachiezerey1995]."
         }
       ],
       "references": [
@@ -28308,7 +29663,8 @@
         "morris1988prl",
         "ori2005",
         "tippett2017",
-        "parikh2003"
+        "parikh2003",
+        "lachiezerey1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner.json",
@@ -28880,6 +30236,316 @@
       ]
     },
     {
+      "id": "misner_zapolsky",
+      "name": "Misner-Zapolsky Star of Infinite Central Density",
+      "short_name": "Misner-Zapolsky",
+      "description": "A static sphere of fluid as stiff as light, $p = \\rho c^2/3$, whose density is infinite at the centre and falls as $1/r^2$. Tolman and Oppenheimer and Volkoff found it in 1939, and it is the core that models of neutron stars approach as their central density grows without limit.",
+      "tags": [
+        "perfect fluid",
+        "radiation",
+        "equation of state",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "stellar interior",
+        "neutron star",
+        "maximum mass",
+        "instability",
+        "self-similar",
+        "homothetic",
+        "curvature singularity",
+        "timelike singularity",
+        "naked singularity",
+        "no horizon",
+        "matched solution",
+        "mass",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "tov",
+          "kind": "generalisation",
+          "text": "The equations of equilibrium for a star with any equation of state. Fed $p = \\rho c^2/3$ and an infinite central density they have one solution, $m = 3c^2r/14G$, which Oppenheimer and Volkoff wrote down in the paper that introduced them [oppenheimer1939]."
+        },
+        {
+          "id": "tolman_vii",
+          "kind": "family",
+          "text": "The seventh of Richard Tolman's eight solutions, a star whose density falls as $1 - r^2/R^2$ from a finite value at the centre. The stars here are his fifth and sixth, which he built for an infinite one [tolman1939]."
+        },
+        {
+          "id": "interior_schwarzschild",
+          "kind": "family",
+          "text": "The star of uniform density, solution III on Tolman's list. Its central pressure is infinite only at $R = \\frac{9}{8}r_s$, while the density of this star is infinite at the centre whatever its size [tolman1939, schwarzschild1916b, buchdahl1959]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "The vacuum outside the star. Tolman's fifth and sixth solutions meet it where their pressure vanishes, at $r_b = 2r_s$ for the fifth and $r_b = \\frac{7}{3}r_s$ for the sixth [tolman1939]."
+        },
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "programme",
+          "text": "The collapse this star points to. Oppenheimer and Volkoff ended their paper on stars too heavy for any equilibrium, whose nonstatic solutions were \"now being investigated\", and Oppenheimer and Hartland Snyder followed one through later that year [oppenheimer1939, oppenheimersnyder1939]."
+        }
+      ],
+      "references": [
+        "tolman1939",
+        "oppenheimer1939",
+        "dev2002",
+        "chandrasekhar1964prl",
+        "misner1964",
+        "chavanis2002",
+        "chavanis2008",
+        "meltzer1966",
+        "sorkin1981",
+        "schwarzschild1916b",
+        "buchdahl1959",
+        "oppenheimersnyder1939"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner_zapolsky.json",
+      "charts": [
+        {
+          "id": "areal",
+          "name": "Blackbody Radiation Solution",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Any length; it fixes the rate of $t$, the proper time of a clock at rest at $r = a$. Whatever its value, the density is $\\rho = 3c^2/(56\\pi Gr^2)$, the pressure $p = \\rho c^2/3$, and the mass inside radius $r$ is $m = 3c^2r/(14G)$"
+            }
+          ],
+          "convention": "We use the limit that Tolman's solutions V and VI share with Oppenheimer and Volkoff's exact solution, in coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius. The length $a$ is free, and $t$ is the proper time of a clock at rest at $r = a$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{r}{a}\\,c^2dt^2 + \\dfrac{7}{4}\\,dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r}{a}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{7}{4}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{72}{49r^4}"
+        },
+        {
+          "id": "tolman_v",
+          "name": "Tolman V Star",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, r_b]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_b",
+              "description": "Radius of the star, where the pressure vanishes and Schwarzschild's vacuum begins, around the mass $M = c^2r_b/(4G)$; Tolman's constant of solution V is $R = 14^{3/7}r_b$"
+            },
+            {
+              "symbol": "Z = \\dfrac{4}{7} - \\dfrac{1}{14}\\left(\\dfrac{r}{r_b}\\right)^{7/3}",
+              "description": "The component $g^{rr} = 1 - 2Gm(r)/(c^2r)$, with $m(r)$ the mass inside radius $r$; it is $4/7$ at the centre and $1/2$ at the surface, and $\\partial_rZ = (7Z - 4)/(3r)$"
+            }
+          ],
+          "convention": "We use Tolman's solution V at his exponent $n = 1/2$, joined to Schwarzschild's vacuum, in coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius. The star has radius $r_b$, and $t$ is the proper time of a clock at rest far from it. We write $Z$ for $g^{rr}$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{r}{2r_b}\\,c^2dt^2 + \\dfrac{dr^2}{Z} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r}{2r_b}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{Z}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4\\left(4 - 7Z\\right)}{3r^2}",
+          "kretschmann": "K = \\dfrac{4\\left(13Z^2 - 16Z + 6\\right)}{3r^4}"
+        },
+        {
+          "id": "tolman_vi",
+          "name": "Tolman VI Star",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, r_b]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_b",
+              "description": "Radius of the star, where the pressure vanishes and Schwarzschild's vacuum begins, around the mass $M = 3c^2r_b/(14G)$; Tolman's constants of solution VI are $A = 9/\\sqrt{112\\,r_b}$ and $B = A/(9r_b)$"
+            }
+          ],
+          "convention": "We use Tolman's solution VI at his exponent $n = 1/2$, joined to Schwarzschild's vacuum, in coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius. The star has radius $r_b$, and $t$ is the proper time of a clock at rest far from it. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{r}{112r_b}\\left(9 - \\dfrac{r}{r_b}\\right)^2c^2dt^2 + \\dfrac{7}{4}\\,dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r\\left(9r_b - r\\right)^2}{112r_b^3}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{7}{4}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{24}{7r\\left(9r_b - r\\right)}",
+          "kretschmann": "K = \\dfrac{72\\left(81r_b^2 - 30r_b\\,r + 5r^2\\right)}{49r^4\\left(9r_b - r\\right)^2}"
+        },
+        {
+          "id": "power_law",
+          "name": "Tolman's Exponent",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "n",
+              "description": "Tolman's exponent in solution V, a pure number with $0 < n \\le 1$. The pressure is $p = n\\rho c^2/(2 - n)$ and the density $\\rho = n(2 - n)c^2/(8\\pi G(1 + 2n - n^2)r^2)$: $n = 1/2$ is radiation, and at $n = 1$ sound travels at the speed of light"
+            },
+            {
+              "symbol": "a",
+              "description": "Any length; it fixes the rate of $t$, the proper time of a clock at rest at $r = a$"
+            }
+          ],
+          "convention": "We use Tolman's solution V with his exponent $n$ free and his constant $R \\to \\infty$, in coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius. The length $a$ is free, and $t$ is the proper time of a clock at rest at $r = a$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(\\dfrac{r}{a}\\right)^{2n}c^2dt^2 + \\left(1 + 2n - n^2\\right)dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(\\dfrac{r}{a}\\right)^{2n}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1 + 2n - n^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2n\\left(1 - 2n\\right)}{r^2\\left(1 + 2n - n^2\\right)}",
+          "kretschmann": "K = \\dfrac{4n^2\\left(7 - 6n + 2n^2\\right)}{r^4\\left(1 + 2n - n^2\\right)^2}"
+        }
+      ]
+    },
+    {
       "id": "mixmaster",
       "name": "Mixmaster Chaotic Cosmology",
       "short_name": "Mixmaster",
@@ -28929,6 +30595,11 @@
           "id": "eguchi_hanson",
           "kind": "family",
           "text": "A space of four dimensions with no time and the Mixmaster universe's symmetry, that of the 3-sphere. Belinskii, Gibbons, Page, and Pope solved its self dual case with all three axes unequal, and the one solution without a singularity has two axes equal: the Eguchi-Hanson space [belinskii1978bianchi, eguchihanson1979]."
+        },
+        {
+          "id": "kasner_scalar",
+          "kind": "family",
+          "text": "A massless scalar field stops the Mixmaster oscillations after a finite number, and the universe then runs to its singularity as this one does, shrinking along all three axes [belinskii1973]."
         }
       ],
       "references": [
@@ -28952,7 +30623,8 @@
         "misner1963",
         "gowdy2014",
         "belinskii1978bianchi",
-        "eguchihanson1979"
+        "eguchihanson1979",
+        "belinskii1973"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mixmaster.json",
@@ -29793,6 +31465,317 @@
           ],
           "ricci_scalar": "R = -\\dfrac{8\\delta(l)}{b}",
           "kretschmann": "K = 0 \\;\\text{for}\\; l \\neq 0"
+        }
+      ]
+    },
+    {
+      "id": "moving_mirror",
+      "name": "The Moving Mirror of Fulling and Davies",
+      "short_name": "Moving mirror",
+      "description": "Flat spacetime in two dimensions that ends at a perfectly reflecting mirror on a chosen world line, with a massless quantum field to its right. A mirror that accelerates radiates, and one whose world line approaches a light ray sends out a steady thermal flux, Hawking's radiation with no curvature anywhere.",
+      "tags": [
+        "moving mirror",
+        "two-dimensional",
+        "flat",
+        "conformally flat",
+        "vacuum",
+        "Hawking radiation",
+        "Hawking temperature",
+        "dynamical Casimir effect",
+        "particle creation",
+        "quantum field theory in curved spacetime",
+        "boundary",
+        "horizon",
+        "black hole evaporation",
+        "information paradox",
+        "Page curve",
+        "Rindler",
+        "accelerating",
+        "Lambert W function",
+        "exact solution",
+        "Lorentzian",
+        "idealized model"
+      ],
+      "signature": "(-,+)",
+      "convention": "We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "minkowski",
+          "kind": "locally_same",
+          "text": "The plane of $t$ and $x$ of Minkowski space, kept only to the right of the mirror's world line. Rindler's coordinates bring a uniformly accelerating mirror to rest, and that mirror does not radiate [fulling1976, davies1975]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "The black hole whose radiation the mirror imitates. A mirror on the world line $z = -ct - \\mathrm{W}\\left(2e^{-2\\kappa ct}\\right)/2\\kappa$ creates particles exactly as a shell of light collapsing to Schwarzschild's black hole does, with $\\kappa = 1/2r_s$ [good2016]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "family",
+          "text": "Vaidya's metric with all its mass arriving on one ray is a collapsing shell of light, flat inside and Schwarzschild's outside. The mirror of Good, Anderson, and Evans stands in for the centre of that shell [good2016]."
+        },
+        {
+          "id": "witten_black_hole",
+          "kind": "family",
+          "text": "The other solvable model of Hawking's radiation in two dimensions, a black hole that forms from a pulse of matter and radiates at a temperature that is the same for every mass [callan1992]. The mirror of Carlitz and Willey radiates at one temperature at every time [carlitz1987, good2016]."
+        }
+      ],
+      "references": [
+        "good2013",
+        "moore1970",
+        "dewitt1975",
+        "hawking1975",
+        "good2016",
+        "wilczek1993",
+        "davies1975",
+        "fulling1976",
+        "akal2021",
+        "davies1977",
+        "carlitz1987",
+        "hawking1976",
+        "wilson2011",
+        "chen2017",
+        "callan1992"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/moving_mirror.json",
+      "charts": [
+        {
+          "id": "inertial",
+          "name": "Inertial",
+          "coordinates": [
+            "t",
+            "x"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "x > z(t) \\;\\text{(to the right of the mirror)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "z = z(t)",
+              "description": "Position of the mirror at the time $t$, a length; its world line is timelike, $|dz/dt| < c$"
+            }
+          ],
+          "convention": "We use the coordinates $(t, x)$ of an inertial frame, with $t$ carrying dimensions of time and $x$ a length, and the mirror is at $x = z(t)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + dx^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "null",
+          "name": "Null",
+          "coordinates": [
+            "u",
+            "v"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "v > p(u) \\;\\text{(to the right of the mirror)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "p = p(u)",
+              "description": "Ray tracing function, a length: the ray that arrives along $v = p(u)$ leaves the mirror along $u$; it increases with $u$ for a timelike mirror"
+            }
+          ],
+          "convention": "We use the null coordinates $u = ct - x$ and $v = ct + x$ of an inertial frame, both lengths, and the mirror is at $v = p(u)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -du\\,dv",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-\\dfrac{1}{2}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-\\dfrac{1}{2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "mirror_rest",
+          "name": "Mirror at Rest",
+          "coordinates": [
+            "U",
+            "v"
+          ],
+          "domains": [
+            "p(-\\infty) < U < p(\\infty) \\;\\text{(the values the ray tracing function takes)}",
+            "v \\in (-\\infty, \\infty)",
+            "v > U \\;\\text{(to the right of the mirror)}",
+            "U = v \\;\\text{(the mirror)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "f = f(U)",
+              "description": "Inverse of the ray tracing function $p$, a length: the ray that arrives along $v$ leaves the mirror along $u = f(v)$; a prime is a derivative with respect to its argument, and $f' > 0$ for a timelike mirror"
+            }
+          ],
+          "convention": "We use the null coordinates $U = p(u)$ and $v = ct + x$, both lengths, with $u = ct - x = f(U)$ and $p$ the ray tracing function, so that the mirror is at rest at $U = v$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -f'\\,dU\\,dv",
+          "metric_components": [
+            {
+              "indices": [
+                "U",
+                "v"
+              ],
+              "value": "-\\dfrac{f'}{2}"
+            },
+            {
+              "indices": [
+                "v",
+                "U"
+              ],
+              "value": "-\\dfrac{f'}{2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "thermal",
+          "name": "Thermal Mirror",
+          "coordinates": [
+            "T",
+            "X"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "X \\in (0, \\infty)",
+            "X > cT \\;\\text{(the chart ends on } X = cT\\text{, where the inertial } u \\to \\infty\\text{)}",
+            "X = 0 \\;\\text{(the mirror)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\kappa",
+              "description": "Inverse length that sets the mirror's acceleration; the radiation it sends to the right has the temperature $\\hbar c\\kappa/2\\pi k_B$ at every time"
+            }
+          ],
+          "convention": "We use coordinates $(T, X)$ in which the mirror of Carlitz and Willey stands at $X = 0$, with $T$ carrying dimensions of time and $X$ a length: $cT - X = -e^{-\\kappa u}/\\kappa$ and $cT + X = v$, with $u = ct - x$ and $v = ct + x$ the null coordinates of an inertial frame. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{-c^2dT^2 + dX^2}{\\kappa\\left(X - cT\\right)}",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\dfrac{1}{\\kappa\\left(X - cT\\right)}"
+            },
+            {
+              "indices": [
+                "X",
+                "X"
+              ],
+              "value": "\\dfrac{1}{\\kappa\\left(X - cT\\right)}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "collapse",
+          "name": "Collapse Mirror",
+          "coordinates": [
+            "T",
+            "X"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "X \\in (0, \\infty)",
+            "X > cT \\;\\text{(the chart ends on } X = cT\\text{, where the inertial } u \\to \\infty\\text{)}",
+            "X = 0 \\;\\text{(the mirror)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\kappa",
+              "description": "Inverse length that sets how fast the mirror's world line closes on the light ray $v = 0$; the radiation settles at late times to the temperature $\\hbar c\\kappa/2\\pi k_B$, that of a Schwarzschild black hole of radius $r_s = 1/2\\kappa$"
+            }
+          ],
+          "convention": "We use coordinates $(T, X)$ in which the mirror of Good, Anderson, and Evans stands at $X = 0$, with $T$ carrying dimensions of time and $X$ a length: $u = U - \\ln(-\\kappa U)/\\kappa$ for $U = cT - X$, and $cT + X = v$, with $u = ct - x$ and $v = ct + x$ the null coordinates of an inertial frame. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = \\left(1 + \\dfrac{1}{\\kappa\\left(X - cT\\right)}\\right)\\left(-c^2dT^2 + dX^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\left(1 + \\dfrac{1}{\\kappa\\left(X - cT\\right)}\\right)"
+            },
+            {
+              "indices": [
+                "X",
+                "X"
+              ],
+              "value": "1 + \\dfrac{1}{\\kappa\\left(X - cT\\right)}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "rindler",
+          "name": "Rindler",
+          "coordinates": [
+            "\\eta",
+            "\\xi"
+          ],
+          "domains": [
+            "\\eta \\in (-\\infty, \\infty)",
+            "\\xi \\in (0, \\infty)",
+            "\\xi = 0 \\;\\text{(the mirror)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\kappa",
+              "description": "Inverse length; the mirror's proper acceleration is $c^2\\kappa$"
+            }
+          ],
+          "convention": "We use Rindler's coordinates $(\\eta, \\xi)$ in their conformal form, with $\\eta$ carrying dimensions of time and $\\xi$ a length: $ct = e^{\\kappa\\xi}\\sinh(\\kappa c\\eta)/\\kappa$ and $x = e^{\\kappa\\xi}\\cosh(\\kappa c\\eta)/\\kappa$ for the inertial $t$ and $x$, so that a uniformly accelerating mirror stands at $\\xi = 0$. We take components in the chart $x^0 = c\\eta$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\eta}$ means $d(c\\eta)/d\\lambda$.",
+          "line_element": "ds^2 = e^{2\\kappa\\xi}\\left(-c^2d\\eta^2 + d\\xi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-e^{2\\kappa\\xi}"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "e^{2\\kappa\\xi}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
         }
       ]
     },
@@ -31795,6 +33778,11 @@
           "id": "malament_hogarth",
           "kind": "family",
           "text": "Minkowski's metric times a free conformal factor again. There the factor is chosen to stretch one world line without end, and here a field equation fixes it [einstein1914fokker]."
+        },
+        {
+          "id": "einstein_1912_static",
+          "kind": "programme",
+          "text": "Einstein's own theory of 1912, the one Nordström set out to do without: a speed of light that varies from place to place over a space that stays flat [norton2007, einstein1912]."
         }
       ],
       "references": [
@@ -32148,6 +34136,11 @@
           "id": "datt_ruban_t_models",
           "kind": "family",
           "text": "Dust joined to Schwarzschild's vacuum on a shell that stays inside the horizon: a tube of spheres of one radius, whose mass is the same however much dust it holds [ruban1968]."
+        },
+        {
+          "id": "misner_zapolsky",
+          "kind": "programme",
+          "text": "The static star of infinite central density that Oppenheimer and Volkoff found earlier in 1939. They called it unstable, and wrote that the nonstatic solutions for heavier stars were \"now being investigated\" [oppenheimer1939]."
         }
       ],
       "references": [
@@ -32686,6 +34679,11 @@
           "id": "exponential_metric",
           "kind": "family",
           "text": "A metric with no horizon that sits at general relativity's point: $e^{-2m/r} = 1 - 2m/r + 2m^2/r^2 - \\dots$, so $\\beta = \\gamma = 1$ and the post-Newtonian tests do not separate the two [boonserm2018]."
+        },
+        {
+          "id": "einstein_1912_static",
+          "kind": "special_case",
+          "text": "Einstein's static gravity of 1912 as a point of the plane. At $\\gamma = 0$ space is flat and light bends by half of general relativity's angle, with $\\beta = 1/2$ by his equation of February and $3/4$ by that of March [will2014]."
         }
       ],
       "references": [
@@ -38361,6 +40359,26 @@
           "id": "datt_ruban_t_models",
           "kind": "generalisation",
           "text": "The inside of the horizon filled with dust that adds nothing to the mass: a tube of spheres, all of one radius, holding any amount of matter at the same $r_s$ [ruban1968]."
+        },
+        {
+          "id": "moving_mirror",
+          "kind": "family",
+          "text": "Flat spacetime of two dimensions with a receding mirror in place of the centre of a collapsing star. The mirror radiates as a Schwarzschild black hole of radius $r_s = 1/2\\kappa$ does, with no curvature anywhere [davies1977, good2016]."
+        },
+        {
+          "id": "gravitational_instantons",
+          "kind": "dual",
+          "text": "Schwarzschild's metric with $t = -i\\tau/c$ is a space of four dimensions with no time, Hawking's first gravitational instanton. It is smooth on the horizon only if $\\tau$ is a circle of length $4\\pi r_s$, and that length is the inverse of Hawking's temperature [gibbons1977action, gibbonshawking1979]."
+        },
+        {
+          "id": "misner_zapolsky",
+          "kind": "composite",
+          "text": "A star of radiation with an infinite central density. Tolman's fifth and sixth solutions carry Schwarzschild's vacuum outside a surface at $r_b = 2r_s$ and at $r_b = \\frac{7}{3}r_s$ [tolman1939]."
+        },
+        {
+          "id": "einstein_1912_static",
+          "kind": "programme",
+          "text": "Einstein's own first field outside a body, three years before Schwarzschild's. Its space is flat and only its clocks feel the mass, so it bends light by half as much [einstein1911]."
         }
       ],
       "references": [
@@ -38470,7 +40488,10 @@
         "alcubierre2000collapse",
         "hruska2019",
         "martins1996",
-        "ruban1968"
+        "ruban1968",
+        "davies1977",
+        "good2016",
+        "gibbons1977action"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -38726,6 +40747,11 @@
           "id": "wahlquist",
           "kind": "family",
           "text": "A ball of fluid that rotates, in closed form. At rest it is Whittaker's sphere, whose $\\mu + 3p$ is uniform as the energy density of Schwarzschild's star is [whittaker1968, wahlquist1968]."
+        },
+        {
+          "id": "misner_zapolsky",
+          "kind": "family",
+          "text": "A star from the same list of Tolman's whose density is infinite at the centre and falls as $1/r^2$. Its pressure there is a third of its energy density, the ratio that holds for radiation [tolman1939]."
         }
       ],
       "references": [
@@ -41341,6 +43367,363 @@
       ]
     },
     {
+      "id": "small_universes",
+      "name": "Small Universes",
+      "short_name": "Small Universes",
+      "description": "A Friedmann universe whose space is a torus or another quotient of flat or hyperbolic space, made by declaring points a fixed step apart to be one point. At each point its geometry is Friedmann's, its volume can be finite with no curvature to close it, and an observer sees each galaxy many times over, at a different age each time. George Ellis reviewed such universes in 1971, and with G. Schreiber named them small universes in 1986.",
+      "tags": [
+        "cosmology",
+        "topology",
+        "multiply connected",
+        "torus",
+        "compact",
+        "closed universe",
+        "hyperbolic space",
+        "expanding universe",
+        "FLRW",
+        "locally isotropic",
+        "ghost images",
+        "cosmic microwave background",
+        "big bang",
+        "curvature singularity",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model",
+        "four-dimensional",
+        "conformally flat"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the drawings of the torus take its three periods equal to one length $L$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "frw",
+          "kind": "locally_same",
+          "text": "The same universe before any points are identified. Every local measurement agrees with Friedmann's, and the two differ in topology alone [lachiezerey1995]."
+        },
+        {
+          "id": "milne",
+          "kind": "special_case",
+          "text": "The hyperbolic small universe with nothing in it, $a = ct$. At each point it is Milne's universe, a piece of flat spacetime."
+        },
+        {
+          "id": "gowdy",
+          "kind": "family",
+          "text": "Universes on the same 3-torus, filled with gravitational waves in place of matter. With matter added, the Gowdy universes that are the same at every point include the flat Friedmann universe on a torus [martinbenito2011]."
+        },
+        {
+          "id": "bianchi",
+          "kind": "family",
+          "text": "Homogeneous universes that expand at different rates in different directions. A torus has no isotropy to lose, and Ya. B. Zel'dovich and A. A. Starobinskii put such a universe on one in 1984 [zeldovich1984]."
+        },
+        {
+          "id": "elliptic_de_sitter",
+          "kind": "family",
+          "text": "De Sitter space folded onto itself by its antipodal map, as flat space is folded here by translations. Willem de Sitter proposed the folded sphere for the space of the universe in 1917 [desitter1917, lachiezerey1995]."
+        },
+        {
+          "id": "einstein_static",
+          "kind": "family",
+          "text": "A universe that is finite because its space curves round into a sphere. A small universe is finite by the way its space is connected, with no curvature needed to close it [lachiezerey1995]."
+        },
+        {
+          "id": "misner",
+          "kind": "family",
+          "text": "Flat spacetime with events identified under a boost, as space is identified here under translations. Misner's identification makes closed timelike curves, and the torus makes none [misner1967]."
+        }
+      ],
+      "references": [
+        "levin2002",
+        "kragh2012",
+        "schwarzschild1900",
+        "schwarzschild1998",
+        "luminet1999",
+        "lachiezerey1995",
+        "friedmann1924",
+        "luminet2007",
+        "ellis1971",
+        "zeldovich1984",
+        "barrow2001",
+        "sokolov1974",
+        "gott1980",
+        "ellis1986",
+        "mostow1968",
+        "gabai2009",
+        "sokolov1975",
+        "stevens1993",
+        "cornish1998",
+        "luminet2003",
+        "cornish2004",
+        "planck2016topology",
+        "petersen2023",
+        "martinbenito2011",
+        "desitter1917",
+        "misner1967"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/small_universes.json",
+      "charts": [
+        {
+          "id": "torus",
+          "name": "Comoving Torus",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in [0, L_1)",
+            "y \\in [0, L_2)",
+            "z \\in [0, L_3)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(t)",
+              "description": "Scale factor ($a > 0$), dimensionless; the volume of space is $a^3L_1L_2L_3$"
+            },
+            {
+              "symbol": "L_1",
+              "description": "Period of $x$, a comoving length: the events $(t, x, y, z)$ and $(t, x + L_1, y, z)$ are one event, and the circle of $x$ has the length $aL_1$"
+            },
+            {
+              "symbol": "L_2",
+              "description": "Period of $y$, a comoving length; the circle of $y$ has the length $aL_2$"
+            },
+            {
+              "symbol": "L_3",
+              "description": "Period of $z$, a comoving length; the circle of $z$ has the length $aL_3$"
+            }
+          ],
+          "convention": "We use cosmic time $t$ and comoving Cartesian coordinates $(x, y, z)$, each a length and periodic, with periods $L_1$, $L_2$, and $L_3$. The scale factor $a(t) > 0$ is dimensionless. We take components in the chart $x^0 = ct$, a prime is the derivative along that chart time, $a' = da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "a^2"
+            }
+          ],
+          "ricci_scalar": "R = 6\\left(\\dfrac{a''}{a} + \\dfrac{\\left(a'\\right)^2}{a^2}\\right)",
+          "kretschmann": "K = 12\\left(\\left(\\dfrac{a''}{a}\\right)^2 + \\dfrac{\\left(a'\\right)^4}{a^4}\\right)"
+        },
+        {
+          "id": "torus_conformal",
+          "name": "Conformal Time on the Torus",
+          "coordinates": [
+            "\\eta",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "\\eta \\in (-\\infty, \\infty)",
+            "x \\in [0, L_1)",
+            "y \\in [0, L_2)",
+            "z \\in [0, L_3)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(\\eta)",
+              "description": "Scale factor ($a > 0$), dimensionless; the volume of space is $a^3L_1L_2L_3$"
+            },
+            {
+              "symbol": "L_1",
+              "description": "Period of $x$, a comoving length: the events $(t, x, y, z)$ and $(t, x + L_1, y, z)$ are one event, and the circle of $x$ has the length $aL_1$"
+            },
+            {
+              "symbol": "L_2",
+              "description": "Period of $y$, a comoving length; the circle of $y$ has the length $aL_2$"
+            },
+            {
+              "symbol": "L_3",
+              "description": "Period of $z$, a comoving length; the circle of $z$ has the length $aL_3$"
+            }
+          ],
+          "convention": "We use the conformal time $\\eta$, a length with $a\\,d\\eta = c\\,dt$, and the comoving Cartesian coordinates $(x, y, z)$ of the torus, periodic with periods $L_1$, $L_2$, and $L_3$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = a^2\\left(-d\\eta^2 + dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-a^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "a^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6\\partial_\\eta^2 a}{a^3}",
+          "kretschmann": "K = \\dfrac{12a^2\\left(\\partial_\\eta^2 a\\right)^2 - 24a\\,\\partial_\\eta^2 a\\left(\\partial_\\eta a\\right)^2 + 24\\left(\\partial_\\eta a\\right)^4}{a^8}"
+        },
+        {
+          "id": "hyperbolic",
+          "name": "Comoving Hyperbolic",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "(t, p) \\sim (t, \\gamma p) \\;\\text{(every } \\gamma \\text{ of a discrete group of isometries of hyperbolic space that moves every point } p\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(t)",
+              "description": "Scale factor ($a > 0$), a length, the radius of curvature of space at the time $t$; the volume of space is $a^3$ times a number its topology fixes"
+            }
+          ],
+          "convention": "We use cosmic time $t$ and polar coordinates $(\\chi, \\theta, \\phi)$ about one observer, with $a\\chi$ the distance from that observer. Two points $p$ and $\\gamma p$ of hyperbolic space are one point of the universe for every $\\gamma$ of a discrete group of its isometries that moves every point. We take components in the chart $x^0 = ct$, a prime is the derivative along that chart time, $a' = da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2\\left(d\\chi^2 + \\sinh^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\sinh^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\sinh^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 6\\left(\\dfrac{a''}{a} + \\dfrac{\\left(a'\\right)^2 - 1}{a^2}\\right)",
+          "kretschmann": "K = 12\\left(\\left(\\dfrac{a''}{a}\\right)^2 + \\left(\\dfrac{\\left(a'\\right)^2 - 1}{a^2}\\right)^2\\right)"
+        },
+        {
+          "id": "horn",
+          "name": "Horn",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in [0, b_2)",
+            "z \\in [0, b_3)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(t)",
+              "description": "Scale factor ($a > 0$), a length, the radius of curvature of space at the time $t$"
+            },
+            {
+              "symbol": "b_2",
+              "description": "Period of $y$, a number: the events $(t, x, y, z)$ and $(t, x, y + b_2, z)$ are one event, and the circle of $y$ at $x$ has the length $ab_2e^{-x}$"
+            },
+            {
+              "symbol": "b_3",
+              "description": "Period of $z$, a number; the circle of $z$ at $x$ has the length $ab_3e^{-x}$"
+            }
+          ],
+          "convention": "We use cosmic time $t$ and the coordinates $(x, y, z)$ of Sokolov and Starobinsky, each a number: $ax$ is the distance along the horn, and $y$ and $z$ are flat coordinates on the surfaces of constant $x$, periodic with periods $b_2$ and $b_3$. We take components in the chart $x^0 = ct$, a prime is the derivative along that chart time, $a' = da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2\\left(dx^2 + e^{-2x}\\left(dy^2 + dz^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "a^2e^{-2x}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "a^2e^{-2x}"
+            }
+          ],
+          "ricci_scalar": "R = 6\\left(\\dfrac{a''}{a} + \\dfrac{\\left(a'\\right)^2 - 1}{a^2}\\right)",
+          "kretschmann": "K = 12\\left(\\left(\\dfrac{a''}{a}\\right)^2 + \\left(\\dfrac{\\left(a'\\right)^2 - 1}{a^2}\\right)^2\\right)"
+        }
+      ]
+    },
+    {
       "id": "som_raychaudhuri",
       "name": "Som-Raychaudhuri Rotating Universe",
       "short_name": "Som-Raychaudhuri",
@@ -42706,6 +45089,11 @@
           "id": "ab_metrics",
           "kind": "family",
           "text": "Taub-NUT is A I, Schwarzschild's metric, with the NUT parameter added. The B-metrics take a parameter of the same kind, and Jerzy Plebański called that family the anti-NUT solution [podolsky2018]."
+        },
+        {
+          "id": "gravitational_instantons",
+          "kind": "dual",
+          "text": "With an imaginary time and an imaginary twist, $l = in$, Taub-NUT is a space with no time in it. It is regular at two masses, Stephen Hawking's self dual instanton at $m = n$ and Don Page's, which has a horizon, at $m = 5n/4$ [hawking1977, page1978bolt, gibbonshawking1979]."
         }
       ],
       "references": [
@@ -42732,7 +45120,8 @@
         "bini2003",
         "eguchihanson1979",
         "gibbonshawking1979",
-        "podolsky2018"
+        "podolsky2018",
+        "page1978bolt"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/taub_nut.json",
@@ -43425,6 +45814,11 @@
           "id": "tolman_bondi",
           "kind": "programme",
           "text": "Richard Tolman's other spacetime, dust expanding or collapsing in spherical symmetry with a density that varies with radius, from 1934 [tolman1934]."
+        },
+        {
+          "id": "misner_zapolsky",
+          "kind": "family",
+          "text": "Tolman's fifth and sixth solutions at $n = 1/2$, stars whose density and pressure are infinite at the centre in the ratio that holds for radiation. Grown without limit, both approach one metric, which he suggested \"might be called the blackbody radiation solution\" [tolman1939]."
         }
       ],
       "references": [
@@ -43842,6 +46236,11 @@
           "id": "bartnik_mckinnon",
           "kind": "special_case",
           "text": "The static sphere whose matter is a Yang-Mills field, $e^{2\\Phi} = \\sigma^2(1 - 2m/r)$. It has no surface, its stress along the radius differs from its stress across it, and its two functions are known only numerically [bartnik1988, volkov1999]."
+        },
+        {
+          "id": "misner_zapolsky",
+          "kind": "special_case",
+          "text": "The star at the end of the sequence, with $p = \\rho c^2/3$ and an infinite central density, where the equations have the exact solution $m = 3r/14$. Oppenheimer and Volkoff called it \"a unique unstable singular solution\" [oppenheimer1939]."
         }
       ],
       "references": [
@@ -44575,6 +46974,11 @@
           "id": "white_hole",
           "kind": "family",
           "text": "A white hole made of dust, Oppenheimer and Snyder's collapse with the time reversed. Zel'dovich, Novikov, and Starobinsky used Vaidya's metric for the radiation one sends out [zeldovichnovikovstarobinskii1974]."
+        },
+        {
+          "id": "moving_mirror",
+          "kind": "family",
+          "text": "A mirror in flat spacetime of two dimensions that creates particles exactly as Vaidya's shell of light does when it collapses to a black hole [good2016]."
         }
       ],
       "references": [
@@ -44608,7 +47012,8 @@
         "hiscock1981outgoing",
         "israel1966",
         "adler2005",
-        "zeldovichnovikovstarobinskii1974"
+        "zeldovichnovikovstarobinskii1974",
+        "good2016"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/vaidya.json",
@@ -46829,6 +49234,11 @@
           "id": "btz",
           "kind": "family",
           "text": "The black hole of three dimensions. Without rotation it is dual, as a string background, to Witten's hole times a circle [horowitz1993]."
+        },
+        {
+          "id": "moving_mirror",
+          "kind": "family",
+          "text": "Hawking's radiation in two dimensions with the gravity taken out: flat spacetime ending at a mirror whose world line closes on a light ray. Its radiation, like this hole's, has a temperature set by one constant of the model [davies1977, good2016]."
         }
       ],
       "references": [
@@ -46844,7 +49254,9 @@
         "strominger1995",
         "gautason2020",
         "russo1992",
-        "horowitz1993"
+        "horowitz1993",
+        "davies1977",
+        "good2016"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/witten_black_hole.json",

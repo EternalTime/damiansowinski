@@ -137,6 +137,12 @@ RETIRED = {
 # that does not speak for the spacetime. A statement about the curvature has to hold in
 # every chart counted, and a symmetry has to show in some chart of every region.
 REGIONS = {
+    "moving_mirror": {
+        "regions": [["inertial", "null", "mirror_rest"]],
+        "why": "thermal, collapse and rindler are three mirrors, Carlitz and Willey's, the one that imitates a "
+               "collapse, and the uniformly accelerating one, which alone is at rest in a static chart; a mirror "
+               "on a general world line leaves the spacetime to its right no symmetry",
+    },
     "neugebauer_meinel": {
         "regions": [["weyl", "corotating", "bardeen_wagoner", "spheroidal"]],
         "why": "black_hole_limit is the limit mu -> mu_0 outside the disc, the extreme Kerr metric, "
@@ -151,6 +157,12 @@ REGIONS = {
         "regions": [["conformal"]],
         "why": "spherical, uniform and dust are three solutions of the theory, a point mass, a uniform "
                "field and a universe of dust, each with symmetries its general spacetime lacks",
+    },
+    "einstein_1912_static": {
+        "regions": [["static"]],
+        "why": "uniform, february and march are three solutions of the theory, a uniform field and the "
+               "field outside a body by each of its two equations, each with symmetries its general "
+               "static field lacks; the uniform field is flat",
     },
     "black_saturn": {
         "regions": [["weyl", "polar"]],
@@ -186,6 +198,12 @@ REGIONS = {
                "holes reduce to, which carries a Maxwell field and a scalar field; the entry's "
                "spacetime is the vacuum of five dimensions",
     },
+    "kasner_scalar": {
+        "regions": [["synchronous", "logarithmic"]],
+        "why": "kaluza_klein prints Kasner's vacuum of five dimensions, whose reduction along its "
+               "fifth dimension is this universe; the entry's spacetime is the one of four "
+               "dimensions, with the scalar field in it",
+    },
     "kastor_traschen": {
         "regions": [["cartesian", "comoving"]],
         "why": "isotropic is the single hole, which alone is spherically symmetric, and "
@@ -201,6 +219,14 @@ REGIONS = {
         "why": "lindquist_wheeler leaves the areal radius of the shells free, a vacuum where each shell "
                "obeys its equation, as the other two charts take it, and comparison_hypersphere is the "
                "sphere the cells are tangent to, a closed universe of dust that is no part of the lattice",
+    },
+    "gravitational_instantons": {
+        "regions": [["schwarzschild", "regular"], ["taub_nut"], ["taub_bolt"], ["cp2", "cp2_distance"], ["page"]],
+        "why": "each chart or pair of charts is a space of its own: the Euclidean Schwarzschild solution, "
+               "the self-dual Taub-NUT solution, Taub-bolt, the complex projective plane and Page's space, "
+               "the first three Ricci flat and the last two Einstein spaces with a positive cosmological "
+               "constant; multi_centre leaves V and omega free, and with them it is a vacuum only where "
+               "curl omega = grad V",
     },
     "majumdar_papapetrou": {
         "regions": [["cartesian"]],
@@ -287,6 +313,10 @@ REGIONS = {
 
 # Where the charts cannot decide a tag and the entry's history and sources do.
 OVERRULED = {
+    ("small_universes", "spherically symmetric"): (
+        False, "the hyperbolic chart is spherical about one observer, and so is the local geometry, but the "
+               "identifications that close space leave only a discrete group of the rotations about any "
+               "point: the torus is globally anisotropic, and a closed hyperbolic space is not even homogeneous"),
     ("chandrasekhar_xanthopoulos", "stationary"): (
         False, "where both waves have passed r lies between Kerr's horizons and inside the ergosphere, "
                "|cos theta| <= (m - r)/sqrt(m^2 - a^2), an end of theta that is not read, and there "

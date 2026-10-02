@@ -357,6 +357,14 @@ DIMENSIONS = {
     ("exponential_metric", "harmonic"): {
         "t": "T", "u": "L**(-1)", "\\theta": "1", "\\phi": "1", "m": "L",
     },
+    # The moving mirror of Fulling and Davies: the null coordinates are lengths, the mirror's position
+    # z, its ray-tracing function p and the inverse f are lengths, and kappa is an inverse length.
+    ("moving_mirror", "inertial"): {"t": "T", "x": "L", "z": "L"},
+    ("moving_mirror", "null"): {"u": "L", "v": "L", "p": "L"},
+    ("moving_mirror", "mirror_rest"): {"U": "L", "v": "L", "f": "L"},
+    ("moving_mirror", "thermal"): {"T": "T", "X": "L", "\\kappa": "1/L"},
+    ("moving_mirror", "collapse"): {"T": "T", "X": "L", "\\kappa": "1/L"},
+    ("moving_mirror", "rindler"): {"\\eta": "T", "\\xi": "L", "\\kappa": "1/L"},
     # Roberts's collapsing scalar field: the null coordinates u and v are lengths and p a pure number.
     # Roberts's lambda, which the areal chart names, is a length, and Frolov's scaling coordinates are
     # pure numbers, counted in a length ell.
@@ -484,6 +492,19 @@ DIMENSIONS = {
     },
     ("kasner", "cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "p_1": "1", "p_2": "1", "p_3": "1",
+    },
+    # Kasner's universe with a scalar field: the exponents and the strength q of the field are pure
+    # numbers, and a power of the time whose exponent holds one is read with the time in a fixed
+    # unit, as Kasner's is. The logarithmic time tau = -ln(t/t_0) is a pure number and ell = c t_0
+    # a length, and the chart of five dimensions has the extra coordinate w for a length.
+    ("kasner_scalar", "synchronous"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "p_1": "1", "p_2": "1", "p_3": "1", "q": "1",
+    },
+    ("kasner_scalar", "logarithmic"): {
+        "\\tau": "1", "x": "L", "y": "L", "z": "L", "p_1": "1", "p_2": "1", "p_3": "1", "q": "1", "\\ell": "L",
+    },
+    ("kasner_scalar", "kaluza_klein"): {
+        "T": "T", "x": "L", "y": "L", "z": "L", "w": "L", "s_1": "1", "s_2": "1", "s_3": "1", "s_5": "1",
     },
     # The other entry that keeps G and a mass explicit rather than folding them into a
     # length. The spin per unit mass a = J/(Mc) is a length, which is what makes
@@ -761,6 +782,12 @@ DIMENSIONS = {
     ("nordstrom_scalar", "spherical"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L"},
     ("nordstrom_scalar", "uniform"): {"t": "T", "x": "L", "y": "L", "z": "L", "a": "L/T**2"},
     ("nordstrom_scalar", "dust"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "L": "L"},
+    # Einstein's speed of light of 1912 is c N, with N a pure number that is 1 far from every mass.
+    # The uniform field is an acceleration and a body the length m = GM/c^2.
+    ("einstein_1912_static", "static"): {"t": "T", "x": "L", "y": "L", "z": "L", "N": "1"},
+    ("einstein_1912_static", "uniform"): {"t": "T", "x": "L", "y": "L", "z": "L", "a": "L/T**2"},
+    ("einstein_1912_static", "february"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L"},
+    ("einstein_1912_static", "march"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L"},
     # The slices are flat space and the whole of the geometry is the flow field carried on them,
     # so its components are velocities and the chart components of the metric are powers of V/c.
     ("natario", "cartesian_flow"): {
@@ -1077,6 +1104,26 @@ DIMENSIONS = {
     # omega, the potential that stands beside d tau, a length.
     ("eguchi_hanson", "two_centre"): {
         "\\rho": "L", "z": "L", "\\psi": "1", "\\tau": "L", "a": "L", "R_1": "L", "R_2": "L", "V": "1", "\\omega": "L",
+    },
+    # The gravitational instantons of 1977 and 1978 are Riemannian, as the Eguchi-Hanson space is:
+    # every coordinate is spatial and none is a time. The imaginary time tau is a length, r_s and
+    # the nut parameter n are lengths, Lambda an inverse area, and Page's nu a pure number. The
+    # regular chart's x is a length and its r a name for the areal radius. The multi-centre chart's
+    # V is a pure number and omega, which multiplies d phi beside d tau, a length.
+    ("gravitational_instantons", "schwarzschild"): {"\\tau": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L"},
+    ("gravitational_instantons", "regular"): {
+        "x": "L", "\\tau": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r": "L",
+    },
+    ("gravitational_instantons", "taub_nut"): {"r": "L", "\\theta": "1", "\\phi": "1", "\\tau": "L", "n": "L"},
+    ("gravitational_instantons", "taub_bolt"): {"r": "L", "\\theta": "1", "\\phi": "1", "\\tau": "L", "n": "L"},
+    ("gravitational_instantons", "multi_centre"): {
+        "\\rho": "L", "z": "L", "\\phi": "1", "\\tau": "L", "V": "1", "\\omega": "L",
+    },
+    ("gravitational_instantons", "cp2"): {"r": "L", "\\theta": "1", "\\phi": "1", "\\psi": "1", "\\Lambda": "1/L**2"},
+    ("gravitational_instantons", "cp2_distance"): {"\\chi": "L", "\\theta": "1", "\\phi": "1", "\\psi": "1", "L": "L"},
+    ("gravitational_instantons", "page"): {
+        "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\psi": "1", "\\Lambda": "1/L**2", "\\nu": "1",
+        "P": "1", "Q": "1", "N": "1",
     },
     # Misner's and Brill and Lindquist's initial data are one moment, a Riemannian space of three
     # dimensions: every coordinate is spatial. The conformal factors psi, chi and Psi are pure numbers,
@@ -1536,6 +1583,14 @@ DIMENSIONS = {
     ("taub_nut", "spherical"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "l": "L",
     },
+    # The star of infinite central density. The length a sets the rate of t, r_b is the radius of
+    # a star, Z = g^rr and Tolman's exponent n are pure numbers.
+    ("misner_zapolsky", "areal"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "a": "L"},
+    ("misner_zapolsky", "tolman_v"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_b": "L", "Z": "1",
+    },
+    ("misner_zapolsky", "tolman_vi"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_b": "L"},
+    ("misner_zapolsky", "power_law"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "n": "1", "a": "L"},
     # Tolman's solution VII. Lattimer and Prakash's compactness beta = GM/(Rc^2) is a pure number,
     # and so are Z = g^rr and the phase psi; Tolman's R and A are lengths and his B and C numbers.
     ("tolman_vii", "spherical"): {
@@ -1687,6 +1742,19 @@ DIMENSIONS = {
     ("kopczynski_trautman", "conformal"): {
         "\\eta": "L", "r": "L", "\\theta": "1", "\\phi": "1", "a": "1",
     },
+    # Ellis's small universes: on the torus x, y and z and their periods are comoving lengths and the
+    # scale factor a pure number, as FRW's is, with the conformal time a length; in the hyperbolic
+    # chart chi is a pure number and the scale factor is the radius of curvature of space, a length.
+    ("small_universes", "torus"): {
+        "t": "T", "x": "L", "y": "L", "z": "L", "a": "1", "L_1": "L", "L_2": "L", "L_3": "L",
+    },
+    ("small_universes", "torus_conformal"): {
+        "\\eta": "L", "x": "L", "y": "L", "z": "L", "a": "1", "L_1": "L", "L_2": "L", "L_3": "L",
+    },
+    ("small_universes", "hyperbolic"): {"t": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1", "a": "L"},
+    # The horn's x, y and z are pure numbers, y and z flat coordinates on the horospheres of hyperbolic
+    # space with pure numbers for periods, and the scale factor is again the radius of curvature.
+    ("small_universes", "horn"): {"t": "T", "x": "1", "y": "1", "z": "1", "a": "L", "b_2": "1", "b_3": "1"},
     # Hartle and Thorne's exterior: the mass and the spin per unit mass are lengths and the
     # quadrupole moment per unit mass an area, so that Kerr's value is q = a^2. R, the star's
     # radius, enters the domain alone, and the rest are names for the functions of r and theta the
@@ -1824,6 +1892,30 @@ PARAMETER_RELATIONS = {
         "p_2": "(1 - 2*s)/(4*s**2 - 2*s + 1)",
         "p_3": "2*s*(2*s - 1)/(4*s**2 - 2*s + 1)",
     },
+    # Belinskii and Khalatnikov's surface, sum p_i = 1 and sum p_i^2 = 1 - q^2, a sphere of which
+    # Kasner's circle is the equator q = 0. A point of it is the point u of Kasner's circle drawn
+    # toward the isotropic point (1/3, 1/3, 1/3) by the factor (3v^2 - 2)/(3v^2 + 2), which leaves
+    # q = 4v/(3v^2 + 2): rational in u and v, and every point with q not zero is reached.
+    ("kasner_scalar", "synchronous"): {
+        "p_1": "1/3 + (3*v**2 - 2)/(3*v**2 + 2)*(-u/(1 + u + u**2) - 1/3)",
+        "p_2": "1/3 + (3*v**2 - 2)/(3*v**2 + 2)*((1 + u)/(1 + u + u**2) - 1/3)",
+        "p_3": "1/3 + (3*v**2 - 2)/(3*v**2 + 2)*(u*(1 + u)/(1 + u + u**2) - 1/3)",
+        "q": "4*v/(3*v**2 + 2)",
+    },
+    ("kasner_scalar", "logarithmic"): {
+        "p_1": "1/3 + (3*v**2 - 2)/(3*v**2 + 2)*(-u/(1 + u + u**2) - 1/3)",
+        "p_2": "1/3 + (3*v**2 - 2)/(3*v**2 + 2)*((1 + u)/(1 + u + u**2) - 1/3)",
+        "p_3": "1/3 + (3*v**2 - 2)/(3*v**2 + 2)*(u*(1 + u)/(1 + u + u**2) - 1/3)",
+        "q": "4*v/(3*v**2 + 2)",
+    },
+    # Kasner's vacuum of five dimensions, sum s_a = sum s_a^2 = 1: the second point where the line
+    # from (1, 0, 0, 0) along (-(a + b + 1), a, b, 1) meets the sphere.
+    ("kasner_scalar", "kaluza_klein"): {
+        "s_1": "1 - 2*(a + b + 1)**2/((a + b + 1)**2 + a**2 + b**2 + 1)",
+        "s_2": "2*a*(a + b + 1)/((a + b + 1)**2 + a**2 + b**2 + 1)",
+        "s_3": "2*b*(a + b + 1)/((a + b + 1)**2 + a**2 + b**2 + 1)",
+        "s_5": "2*(a + b + 1)/((a + b + 1)**2 + a**2 + b**2 + 1)",
+    },
 }
 
 # The order each small parameter of a system counts as, and the highest order the system keeps.
@@ -1850,6 +1942,8 @@ HELD = {
     # and whose derivative along r is algebraic.
     ("tolman_vii", "spherical"): ("psi",),
     ("tolman_vii", "tolman"): ("psi",),
+    # Z = g^rr of Tolman's solution V at n = 1/2 holds r^(7/3), and its slope is (7Z - 4)/(3r).
+    ("misner_zapolsky", "tolman_v"): ("Z",),
     # Weyl's two functions for the first Morgan-Morgan disc, polynomials in xi, eta and arccot(xi):
     # held, every value is written in them and their derivatives, as Weyl's chart writes it.
     ("morgan_morgan", "oblate_spheroidal"): ("psi", "gamma"),
@@ -1930,6 +2024,7 @@ RATES = {
                            " - \\left(\\partial_\\theta\\psi\\right)^2\\right)"
                            " - 2\\left(r - m\\right)\\sin\\theta\\,\\partial_r\\psi\\,\\partial_\\theta\\psi\\right)"},
     },
+    ("misner_zapolsky", "tolman_v"): {"Z": {"r": "\\dfrac{7Z - 4}{3r}"}},
     # dm/dr is the energy of the field in a shell, r_q^2/(r^2 + W), which is 4 pi G r^2 rho/c^4.
     **{("born_infeld_charge", chart): {"m": {"r": "\\dfrac{r_q^2}{r^2 + W}"}}
        for chart in ("static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing")},

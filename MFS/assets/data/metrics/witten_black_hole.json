@@ -51,6 +51,11 @@
       "id": "btz",
       "kind": "family",
       "text": "The black hole of three dimensions. Without rotation it is dual, as a string background, to Witten's hole times a circle [horowitz1993]."
+    },
+    {
+      "id": "moving_mirror",
+      "kind": "family",
+      "text": "Hawking's radiation in two dimensions with the gravity taken out: flat spacetime ending at a mirror whose world line closes on a light ray. Its radiation, like this hole's, has a temperature set by one constant of the model [davies1977, good2016]."
     }
   ],
   "references": [
@@ -66,7 +71,9 @@
     "strominger1995",
     "gautason2020",
     "russo1992",
-    "horowitz1993"
+    "horowitz1993",
+    "davies1977",
+    "good2016"
   ],
   "coordinates": [
     {

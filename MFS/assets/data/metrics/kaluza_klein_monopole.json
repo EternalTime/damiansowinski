@@ -84,6 +84,11 @@
       "text": "The static pair of opposite magnetic charges in Einstein-Maxwell theory. Gross and Perry's monopole and antimonopole pair is its counterpart in Kaluza-Klein theory [grossperry1983, emparan2000]."
     },
     {
+      "id": "gravitational_instantons",
+      "kind": "piece",
+      "text": "The monopole's four dimensions of space are Hawking's self dual Taub-NUT instanton with nut parameter $n = 2m$, and the monopole's centre is its nut [hawking1977, sorkin1983]."
+    },
+    {
       "id": "cremmer_scherk",
       "kind": "family",
       "text": "Two extra dimensions rolled into a sphere that a monopole's gauge field holds at one radius, where the Kaluza-Klein monopole has one extra dimension, a circle, and no matter [horvath1977]."

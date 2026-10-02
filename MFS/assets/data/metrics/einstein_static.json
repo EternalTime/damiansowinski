@@ -71,6 +71,11 @@
       "id": "elliptic_de_sitter",
       "kind": "programme",
       "text": "De Sitter's universe with opposite points of its hyperboloid made one event. Willem de Sitter wrote in 1917 of elliptic space, in which opposite points of the sphere are one place, that \"it is preferable to adopt this for the physical world\", and reported that Einstein agreed [desitter1917]."
+    },
+    {
+      "id": "small_universes",
+      "kind": "family",
+      "text": "Universes that are finite by the way their space is connected, with no curvature needed to close it. Einstein's is finite because its space is a sphere [lachiezerey1995]."
     }
   ],
   "references": [
@@ -96,7 +101,8 @@
     "chinea1992",
     "einstein1939",
     "florides1974",
-    "bohmerlobo2008"
+    "bohmerlobo2008",
+    "lachiezerey1995"
   ],
   "coordinates": [
     {

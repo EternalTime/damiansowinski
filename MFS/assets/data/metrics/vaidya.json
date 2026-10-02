@@ -114,6 +114,11 @@
       "id": "white_hole",
       "kind": "family",
       "text": "A white hole made of dust, Oppenheimer and Snyder's collapse with the time reversed. Zel'dovich, Novikov, and Starobinsky used Vaidya's metric for the radiation one sends out [zeldovichnovikovstarobinskii1974]."
+    },
+    {
+      "id": "moving_mirror",
+      "kind": "family",
+      "text": "A mirror in flat spacetime of two dimensions that creates particles exactly as Vaidya's shell of light does when it collapses to a black hole [good2016]."
     }
   ],
   "references": [
@@ -147,7 +152,8 @@
     "hiscock1981outgoing",
     "israel1966",
     "adler2005",
-    "zeldovichnovikovstarobinskii1974"
+    "zeldovichnovikovstarobinskii1974",
+    "good2016"
   ],
   "coordinates": [
     {
