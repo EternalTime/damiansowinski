@@ -167,6 +167,11 @@ ROOT = Path(__file__).resolve().parents[2]
 METRICS_DIR = ROOT / "MFS" / "assets" / "data" / "metrics"
 
 DEFAULT_BUDGET_SECONDS = 120
+# The systems whose slowest tensor needs more than the default, each with what it takes. The
+# toroidal chart of Bach and Weyl's ring writes psi with the radical sqrt(cosh(zeta) - cos(sigma))
+# and e^(zeta/2) beside both elliptic integrals, and its Kretschmann scalar took 100 to 130 seconds
+# on 2 October 2026, as the machine was loaded.
+SYSTEM_BUDGET_SECONDS = {("bach_weyl_ring", "toroidal"): 480}
 
 LENGTH = sp.Symbol("L", positive=True)
 TIME = sp.Symbol("T", positive=True)
@@ -4436,6 +4441,7 @@ RANK4_VARIANTS = {"llll": (None, "llll"), "ulll": ((0,), "ulll")}
 
 def check_system(report, metric_id, entry, seconds, dimensions_only=False):
     where = f"{metric_id}/{entry['id']}"
+    seconds = max(seconds, SYSTEM_BUDGET_SECONDS.get((metric_id, entry["id"]), 0))
     coords = entry["coords"]
     report.systems += 1
 
