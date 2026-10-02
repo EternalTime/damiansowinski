@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 102,
+  "count": 103,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -592,6 +592,11 @@
           "id": "boulware_deser",
           "kind": "family",
           "text": "Einstein-Gauss-Bonnet gravity in five dimensions has an anti-de Sitter space among its solutions with no cosmological constant in its action. David Boulware and Stanley Deser found it in 1985 beside their black hole, and its graviton is a ghost [boulware1985, charmousis2008]."
+        },
+        {
+          "id": "ads_soliton",
+          "kind": "generalisation",
+          "text": "Anti-de Sitter space with one flat direction wound into a circle that shrinks to a point at a smooth tip, $r_0$ from the Poincaré horizon. It weighs less than anti-de Sitter space with the same circle [horowitz1998]."
         }
       ],
       "references": [
@@ -630,7 +635,8 @@
         "podolsky1998",
         "chamblin1999",
         "boulware1985",
-        "charmousis2008"
+        "charmousis2008",
+        "horowitz1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -746,6 +752,388 @@
           ],
           "ricci_scalar": "R = -\\dfrac{12}{L^2}",
           "kretschmann": "K = \\dfrac{24}{L^4}"
+        }
+      ]
+    },
+    {
+      "id": "ads_soliton",
+      "name": "Anti-de Sitter Soliton",
+      "short_name": "Anti-de Sitter Soliton",
+      "description": "A smooth spacetime of negative energy with no horizon: the planar black hole of anti-de Sitter space with its time and one flat direction exchanged, so that the horizon becomes a tip where a circle shrinks to a point. Gary Horowitz and Robert Myers found it in 1998 and conjectured that it is the ground state of its boundary conditions.",
+      "tags": [
+        "static",
+        "stationary",
+        "soliton",
+        "no horizon",
+        "regular",
+        "negative energy",
+        "positive energy",
+        "ground state",
+        "Casimir energy",
+        "confinement",
+        "cosmological constant",
+        "negative cosmological constant",
+        "anti-de Sitter",
+        "AdS/CFT",
+        "holography",
+        "compact dimension",
+        "three-dimensional",
+        "four-dimensional",
+        "five-dimensional",
+        "higher dimensions",
+        "string theory",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model",
+        "Einstein space"
+      ],
+      "signature": "(-,+,\\ldots,+)",
+      "convention": "The anti-de Sitter radius $L$ is a length. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "topological_black_hole",
+          "kind": "dual",
+          "text": "The flat black hole of anti-de Sitter space, the black brane. Exchange its time with one flat direction and its horizon becomes the soliton's tip [horowitz1998]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "special_case",
+          "text": "At $r_0 = 0$ the line element is anti-de Sitter space's in its Poincaré patch, against which the soliton's negative energy is measured. In three dimensions the soliton is anti-de Sitter space itself [horowitz1998]."
+        },
+        {
+          "id": "btz",
+          "kind": "dual",
+          "text": "The black hole of three dimensions. Without rotation, and with its time and its angle exchanged, it is the soliton of three dimensions, which is anti-de Sitter space with no points identified [horowitz1998]."
+        },
+        {
+          "id": "schwarzschild_ads",
+          "kind": "family",
+          "text": "The round black hole of anti-de Sitter space, which trades places with anti-de Sitter space in Hawking and Page's phase transition. The flat black hole does the same with the soliton [hawking1983, surya2001]."
+        }
+      ],
+      "references": [
+        "abbott1982",
+        "gibbons1983",
+        "horowitz1998",
+        "witten1982kk",
+        "brill1991",
+        "witten1998thermal",
+        "gubser1996",
+        "myers1999",
+        "banados1992",
+        "constable1999",
+        "galloway2002",
+        "galloway2003",
+        "woolgar2017",
+        "barzegar2020",
+        "brendle2024",
+        "surya2001",
+        "nishioka2010",
+        "hawking1983"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ads_soliton.json",
+      "charts": [
+        {
+          "id": "horowitz_myers",
+          "name": "Horowitz-Myers",
+          "coordinates": [
+            "t",
+            "r",
+            "\\tau",
+            "x"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [r_0, \\infty)",
+            "\\tau \\in [0, 4\\pi L^2/(3r_0))",
+            "x \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Radius of the tip, a length, where the circle $\\tau$ shrinks to a point"
+            },
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+            }
+          ],
+          "convention": "We use Horowitz and Myers's coordinates $(t, r, \\tau, x)$, with $t$ carrying dimensions of time and $\\tau$ and $x$ lengths, and take components in the chart $x^0 = ct$. The circle $\\tau$ has period $\\beta = 4\\pi L^2/(3r_0)$, which makes the tip $r = r_0$ a regular point.",
+          "line_element": "ds^2 = \\dfrac{r^2}{L^2}\\left(-c^2dt^2 + \\left(1 - \\dfrac{r_0^3}{r^3}\\right)d\\tau^2 + dx^2\\right) + \\dfrac{L^2}{r^2}\\dfrac{dr^2}{1 - \\dfrac{r_0^3}{r^3}}",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{L^2}{r^2}\\left(1 - \\dfrac{r_0^3}{r^3}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "\\dfrac{r^2}{L^2}\\left(1 - \\dfrac{r_0^3}{r^3}\\right)"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{12}{L^4}\\left(2 + \\dfrac{r_0^6}{r^6}\\right)"
+        },
+        {
+          "id": "poincare",
+          "name": "Poincaré",
+          "coordinates": [
+            "t",
+            "z",
+            "\\tau",
+            "x"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "z \\in (0, z_0]",
+            "\\tau \\in [0, 4\\pi z_0/3)",
+            "x \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "z_0",
+              "description": "Tip, a length, $z_0 = L^2/r_0$, where the circle $\\tau$ shrinks to a point"
+            },
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, z, \\tau, x)$, with $t$ carrying dimensions of time and $\\tau$ and $x$ lengths, and take components in the chart $x^0 = ct$. The length $z = L^2/r$, with $r$ the radius of Horowitz and Myers's chart and $r_0$ its value at the tip, vanishes on the conformal boundary. The circle $\\tau$ has period $\\beta = 4\\pi z_0/3$.",
+          "line_element": "ds^2 = \\dfrac{L^2}{z^2}\\left(-c^2dt^2 + \\left(1 - \\dfrac{z^3}{z_0^3}\\right)d\\tau^2 + dx^2 + \\dfrac{dz^2}{1 - \\dfrac{z^3}{z_0^3}}\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{L^2}{z^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{L^2}{z^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{L^2}{z^2}\\left(1 - \\dfrac{z^3}{z_0^3}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "\\dfrac{L^2}{z^2}\\left(1 - \\dfrac{z^3}{z_0^3}\\right)"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{12}{L^4}\\left(2 + \\dfrac{z^6}{z_0^6}\\right)"
+        },
+        {
+          "id": "polar",
+          "name": "Polar",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\phi",
+            "x"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "x \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Radius of the tip in Horowitz and Myers's chart, a length, which sets the scale of $t$ and $x$"
+            },
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\phi, x)$, with $t$ carrying dimensions of time and $x$ a length, and take components in the chart $x^0 = ct$. The proper distance $\\rho$ from the tip is set by $r^3 = r_0^3\\cosh^2(3\\rho/2L)$, with $r$ the radius of Horowitz and Myers's chart, and $\\phi = 2\\pi\\tau/\\beta$ is the angle around the circle $\\tau$ of period $\\beta = 4\\pi L^2/(3r_0)$.",
+          "line_element": "ds^2 = \\dfrac{r_0^2}{L^2}\\cosh^{4/3}(\\tfrac{3\\rho}{2L})\\left(-c^2dt^2 + dx^2\\right) + d\\rho^2 + \\dfrac{4L^2\\sinh^2(\\tfrac{3\\rho}{2L})}{9\\cosh^{2/3}(\\tfrac{3\\rho}{2L})}d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r_0^2}{L^2}\\cosh^{4/3}(\\tfrac{3\\rho}{2L})"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{r_0^2}{L^2}\\cosh^{4/3}(\\tfrac{3\\rho}{2L})"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{4L^2\\sinh^2(\\tfrac{3\\rho}{2L})}{9\\cosh^{2/3}(\\tfrac{3\\rho}{2L})}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{12}{L^4}\\left(2 + \\dfrac{1}{\\cosh^4(\\tfrac{3\\rho}{2L})}\\right)"
+        },
+        {
+          "id": "five_dimensional",
+          "name": "Five Dimensions",
+          "coordinates": [
+            "t",
+            "r",
+            "\\tau",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [r_0, \\infty)",
+            "\\tau \\in [0, \\pi L^2/r_0)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Radius of the tip, a length, where the circle $\\tau$ shrinks to a point"
+            },
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -6/L^2$"
+            }
+          ],
+          "convention": "We use Horowitz and Myers's coordinates $(t, r, \\tau, x, y)$ in five dimensions, with $t$ carrying dimensions of time and $\\tau$, $x$, and $y$ lengths, and take components in the chart $x^0 = ct$. The circle $\\tau$ has period $\\beta = \\pi L^2/r_0$, which makes the tip $r = r_0$ a regular point.",
+          "line_element": "ds^2 = \\dfrac{r^2}{L^2}\\left(-c^2dt^2 + \\left(1 - \\dfrac{r_0^4}{r^4}\\right)d\\tau^2 + dx^2 + dy^2\\right) + \\dfrac{L^2}{r^2}\\dfrac{dr^2}{1 - \\dfrac{r_0^4}{r^4}}",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{L^2}{r^2}\\left(1 - \\dfrac{r_0^4}{r^4}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "\\dfrac{r^2}{L^2}\\left(1 - \\dfrac{r_0^4}{r^4}\\right)"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{20}{L^2}",
+          "kretschmann": "K = \\dfrac{8}{L^4}\\left(5 + \\dfrac{9r_0^8}{r^8}\\right)"
+        },
+        {
+          "id": "three_dimensional",
+          "name": "Three Dimensions",
+          "coordinates": [
+            "t",
+            "r",
+            "\\tau"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [r_0, \\infty)",
+            "\\tau \\in [0, 2\\pi L^2/r_0)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Radius of the tip, a length, where the circle $\\tau$ shrinks to a point"
+            },
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -1/L^2$"
+            }
+          ],
+          "convention": "We use Horowitz and Myers's coordinates $(t, r, \\tau)$ in three dimensions, with $t$ carrying dimensions of time and $\\tau$ a length, and take components in the chart $x^0 = ct$. The circle $\\tau$ has period $\\beta = 2\\pi L^2/r_0$, which makes the tip $r = r_0$ a regular point.",
+          "line_element": "ds^2 = \\dfrac{r^2}{L^2}\\left(-c^2dt^2 + \\left(1 - \\dfrac{r_0^2}{r^2}\\right)d\\tau^2\\right) + \\dfrac{L^2}{r^2}\\dfrac{dr^2}{1 - \\dfrac{r_0^2}{r^2}}",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{L^2}{r^2}\\left(1 - \\dfrac{r_0^2}{r^2}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "\\dfrac{r^2}{L^2}\\left(1 - \\dfrac{r_0^2}{r^2}\\right)"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6}{L^2}",
+          "kretschmann": "K = \\dfrac{12}{L^4}"
         }
       ]
     },
@@ -1193,6 +1581,11 @@
           "id": "mass_inflation",
           "kind": "family",
           "text": "A charged hole in four dimensions crossed by two streams of radiation, whose mass function grows without limit at its inner horizon [poisson1989]. The charged spinning hole in three dimensions does the same [chan1996]."
+        },
+        {
+          "id": "ads_soliton",
+          "kind": "dual",
+          "text": "The hole without rotation with its time and its angle exchanged. In three dimensions that is anti-de Sitter space itself, and in four or more a smooth spacetime of negative energy [horowitz1998]."
         }
       ],
       "references": [
@@ -1219,7 +1612,8 @@
         "matschull1999",
         "cvetic1999",
         "poisson1989",
-        "chan1996"
+        "chan1996",
+        "horowitz1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz.json",
@@ -24394,6 +24788,11 @@
           "id": "reissner_nordstrom_ads",
           "kind": "generalisation",
           "text": "The same black hole with an electric charge. It gains an inner horizon, and at fixed charge a small black hole that is stable [chamblin1999]."
+        },
+        {
+          "id": "ads_soliton",
+          "kind": "family",
+          "text": "The ground state of the flat black holes of anti-de Sitter space, as anti-de Sitter space is of this one. The flat hole and the soliton trade places in a phase transition like Hawking and Page's [surya2001]."
         }
       ],
       "references": [
@@ -24421,7 +24820,8 @@
         "kastor2009",
         "banados1992",
         "hawking1999rotation",
-        "chamblin1999"
+        "chamblin1999",
+        "surya2001"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_ads.json",
@@ -28712,6 +29112,11 @@
           "id": "boulware_deser",
           "kind": "family",
           "text": "The spherical black hole of Einstein-Gauss-Bonnet gravity in five dimensions. Rong-Gen Cai gave it flat and hyperbolic horizons in anti-de Sitter space in 2002 [cai2002]."
+        },
+        {
+          "id": "ads_soliton",
+          "kind": "dual",
+          "text": "The flat hole with its time and one flat direction exchanged. Its horizon becomes a smooth tip, and its energy comes out negative [horowitz1998]."
         }
       ],
       "references": [
@@ -28735,7 +29140,8 @@
         "kovtun2005",
         "hartnoll2008",
         "casini2011",
-        "cai2002"
+        "cai2002",
+        "horowitz1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/topological_black_hole.json",

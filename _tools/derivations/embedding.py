@@ -3732,6 +3732,67 @@ def siklos(ck, src):
                         "carries it."])]
 
 
+def ads_soliton(ck, src):
+    """The surface of rho and phi of the polar chart at one moment and one x, at r_0 = L = 1:
+    g_rhorho = 1 and g_phiphi = (4/9) sinh^2(3 rho/2) cosh^(-2/3)(3 rho/2), the circle tau about the
+    tip against the proper distance from it. Its circles have the radius R = (2/3) sinh(3 rho/2)
+    cosh^(-1/3)(3 rho/2), and dR/drho = (2 cosh^2 + 1)/(3 cosh^(4/3)) of 3 rho/2, which is 1 at the
+    tip and greater at every rho > 0, which is checked: no surface of revolution in flat space
+    carries it, and it is drawn in three dimensional Minkowski space, climbing at dZ/drho =
+    sqrt((dR/drho)^2 - 1) from level at the tip toward a light cone. Its curvature -R''/R is
+    -tanh^2(3 rho/2), which is checked against the closed form of R: flat at the tip, and far out
+    the hyperbolic plane's of anti-de Sitter space. The light cone it nears is drawn with its apex
+    the limit of R - Z below the tip, found by quadrature. The drawing stops at rho = 2."""
+    name = "anti-de Sitter soliton"
+    sl = Slice(src, "ads_soliton", "polar", "\\rho", "\\phi", {"t": 0, "x": 0}, {"r_0": 1, "L": 1}, space="minkowski")
+    ck.stops(f"{name}, the surface of rho and phi in flat space", sl, np.linspace(1e-3, 8, 400))
+
+    def radius(x):
+        return 2 * np.sinh(1.5 * x) / (3 * np.cosh(1.5 * x) ** (1 / 3))
+
+    def slope(x):
+        return (2 * np.cosh(1.5 * x) ** 2 + 1) / (3 * np.cosh(1.5 * x) ** (4 / 3))
+    top = 2.0
+    size = 2 * float(radius(top))
+    sheet = Piece("sheet", "sheet", sl, 0.0, top, 0.0, 1,
+                  (("axis", "the tip $\\rho = 0$, where the circle $\\tau$ shrinks to a point"),
+                   ("edge", "the sheet runs on toward the light cone, to $\\rho \\to \\infty$")),
+                  [(x, "r", None) for x in (0.5, 1.0, 1.5, top)], size)
+    ck.isometry(f"{name}, the sheet", sheet)
+    ck.radius(f"{name}: rho = (2L/3) sinh(3 rho/2L) cosh^(-1/3)(3 rho/2L)", sheet, radius, size)
+    ck.add(f"{name}: from the tip to rho = 2 is 2 L", abs(sl.proper(0.0, top) - top), 1e-9)
+    xs = np.linspace(0.05, 6, 300)
+    h = 1e-4
+    second = (radius(xs + h) - 2 * radius(xs) + radius(xs - h)) / h ** 2
+    ck.add(f"{name}: the curvature -R''/R is -tanh^2(3 rho/2L)/L^2, flat at the tip",
+           float(np.max(np.abs(-second / radius(xs) + np.tanh(1.5 * xs) ** 2))), 1e-6)
+    ck.add(f"{name}: dR/drho = (2 cosh^2 + 1)/(3 cosh^(4/3)), 1 at the tip",
+           float(np.max(np.abs((radius(xs + h) - radius(xs - h)) / (2 * h) - slope(xs)))) + abs(float(slope(0.0)) - 1), 1e-6)
+    # The cone the sheet nears: R - Z tends to the integral of dR/drho - sqrt((dR/drho)^2 - 1).
+    apex = quad(lambda x: slope(x) - math.sqrt(max(slope(x) ** 2 - 1, 0.0)), 0, 40, limit=400)[0]
+    far = np.linspace(0.0, top, 81)
+    cone = FormPiece("cone", sl, far, radius, lambda x: radius(x) - apex,
+                     (("apex", f"the apex of the light cone, ${apex:.2f}\\,L$ below the tip"),
+                      ("edge", "the cone runs on")), size)
+    gap = float(radius(8.0) - apex - sl.rise(0.0, 8.0))
+    ck.add(f"{name}: the sheet is above the cone at rho = 8 L and within 1e-3 L of it", abs(gap + 5e-4), 5e-4)
+    surface = Surface([sheet, cone])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *sheet.at(1.0), "$\\rho = L$")
+    ring_label(fig, [0, 0, 0], *sheet.at(top), "$2L$")
+    fig.legend("fill", "cover", "the surface of $\\rho$ and $\\phi$ at one moment and one $x$, which the polar chart covers whole")
+    fig.legend("line", "r", "$\\rho$ constant, at $L/2$, $L$, $3L/2$ and $2L$, each a proper distance $L/2$ from the last")
+    fig.legend("line", "reference", "the light cone of the Minkowski space it is drawn in, which the sheet nears as "
+                                    "$\\rho \\to \\infty$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("tip", "In Minkowski space", "$L$", [surface], fig.done(),
+                 settings="$L = 1$, the unit of every length, and $r_0 = L$. Every length along the sheet is "
+                          "measured with $dX^2 + dY^2 - dZ^2$.",
+                 stops=["At every $\\rho > 0$ the circles grow faster than the distance out to them, "
+                        "$g_{\\rho\\rho} < (\\partial_\\rho\\sqrt{g_{\\phi\\phi}})^2$, and no surface of "
+                        "revolution in flat space carries the surface; Minkowski space carries it."])]
+
+
 def hayward(ck, src):
     """Hayward's regular black hole at ell = 12m/(7 sqrt 7), where the horizons, the two positive
     roots of the published g^rr, are r_- = 6m/7 and r_+ = 12m/7. g_rr = 1/F with F = 1 - 2mr^2/
@@ -10119,6 +10180,7 @@ DRAWN = {
     "schwarzschild_ads": schwarzschild_ads,
     "reissner_nordstrom_ads": reissner_nordstrom_ads,
     "topological_black_hole": topological_black_hole,
+    "ads_soliton": ads_soliton,
     "siklos": siklos,
     "hayward": hayward,
     "mass_inflation": mass_inflation,
@@ -10666,6 +10728,19 @@ CAPTIONS = {
         "out to them, as on the static slice of anti-de Sitter space, and the surface climbs at "
         "$dZ/dr = \\sqrt{1 - 1/f}$ from level toward a light cone of Minkowski space, as the hyperboloid of "
         "anti-de Sitter space does. Both parts lie level at the circle, so they meet there with one tangent plane.",
+    ],
+    ("ads_soliton", "tip"): [
+        "The surface of $\\rho$ and $\\phi$ of the soliton at one moment of $t$ and one $x$ ($r_0 = L$), the circle "
+        "$\\tau$ against the proper distance $\\rho$ from the tip, drawn as a surface in three dimensional Minkowski "
+        "space with every distance along it, measured with $dX^2 + dY^2 - dZ^2$, the metric distance. The circle a "
+        "distance $\\rho$ from the tip has circumference "
+        "$\\tfrac{4\\pi L}{3}\\sinh(\\tfrac{3\\rho}{2L})\\cosh^{-1/3}(\\tfrac{3\\rho}{2L})$, which grows faster than "
+        "the distance out to it at every $\\rho > 0$, as no surface of revolution in flat space allows.",
+        "With Horowitz and Myers's period $\\beta = 4\\pi L^2/(3r_0)$ the tip is a smooth point of the surface, and "
+        "any other period leaves the apex of a cone there. The curvature of the surface is "
+        "$-\\tanh^2(\\tfrac{3\\rho}{2L})/L^2$: it vanishes at the tip and tends far out to $-1/L^2$, the curvature "
+        "of the hyperbolic plane on which anti-de Sitter space's own static slice lies. The sheet nears the light "
+        "cone of the space it is drawn in, dashed, without reaching it.",
     ],
     ("topological_black_hole", "string"): [
         "The plane $z = 0$ across the black string at the moment $t = 0$ ($\\mu = L$, $r_h = L$) through both of "

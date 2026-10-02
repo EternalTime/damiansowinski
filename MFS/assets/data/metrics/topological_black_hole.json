@@ -67,6 +67,11 @@
       "id": "boulware_deser",
       "kind": "family",
       "text": "The spherical black hole of Einstein-Gauss-Bonnet gravity in five dimensions. Rong-Gen Cai gave it flat and hyperbolic horizons in anti-de Sitter space in 2002 [cai2002]."
+    },
+    {
+      "id": "ads_soliton",
+      "kind": "dual",
+      "text": "The flat hole with its time and one flat direction exchanged. Its horizon becomes a smooth tip, and its energy comes out negative [horowitz1998]."
     }
   ],
   "references": [
@@ -90,7 +95,8 @@
     "kovtun2005",
     "hartnoll2008",
     "casini2011",
-    "cai2002"
+    "cai2002",
+    "horowitz1998"
   ],
   "coordinates": [
     {

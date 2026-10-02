@@ -12588,6 +12588,198 @@ def einstein_static(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- the anti-de Sitter soliton
+
+def soliton_rstar(n):
+    """The soliton's tortoise coordinate from the tip at r_0 = L = 1, f = 1 - r^(-n): with u = 1/r
+    the integral of du/sqrt(1 - u^n) from u to 1, B(1/n, 1/2)/n - u F(1/2, 1/n; 1 + 1/n; u^n), and
+    its value at the boundary, B(1/n, 1/2)/n."""
+    reach = float(special.beta(1 / n, 0.5) / n)
+
+    def rstar(r):
+        u = 1.0 / np.asarray(r, dtype=float)
+        return reach - u * special.hyp2f1(0.5, 1 / n, 1 + 1 / n, u ** n)
+    return rstar, reach
+
+
+def soliton_pq(n, radius=None):
+    """A chart of the soliton in its strip: sigma = (pi/2) r_*/R and eta = (pi/2) c t/R, with R the
+    value of r_* at the boundary, and p, q = (eta -+ sigma)/2. `radius` gives Horowitz and Myers's
+    r from the chart's own radial coordinate, with the sign of the side of the tip it lies on."""
+    rstar, reach = soliton_rstar(n)
+
+    def pq(t, x):
+        t, x = np.asarray(t, dtype=float), np.asarray(x, dtype=float)
+        r, side = radius(x) if radius else (x, 1.0)
+        sigma, eta = side * HALF * rstar(r) / reach, HALF * t / reach
+        return (eta - sigma) / 2, (eta + sigma) / 2
+    return pq
+
+
+def soliton_polar_radius(rho):
+    return np.cosh(1.5 * np.abs(rho)) ** (2 / 3), np.where(np.asarray(rho) < 0, -1.0, 1.0)
+
+
+def ads_soliton(ck, src):
+    """The strip. On the plane of t and r of Horowitz and Myers's chart, tau and the flat
+    directions held fixed, the metric is (r^2/L^2)(-c^2dt^2 + dr_*^2) with dr_*/dr = L^2/(r^2 sqrt f)
+    and f = 1 - r_0^n/r^n, n = 3 in four dimensions, 4 in five and 2 in three. r_* runs from 0 at
+    the tip to R = B(1/n, 1/2) L^2/(n r_0) at the boundary, so the plane is conformal to a strip
+    unbounded in t, as anti-de Sitter space's static chart is: sigma = (pi/2) r_*/R and
+    eta = (pi/2) c t/R, p, q = (eta -+ sigma)/2. The tip is a regular point, where the published
+    Kretschmann scalar is finite, and the plane continues through it to the opposite side of the
+    circle, which the polar chart's view draws as the left half of a whole strip. That view also
+    draws two free particles released from rest at rho = L/2 and L: with N = (r_0/L)
+    cosh^(2/3)(3 rho/2L) the lapse, a particle of energy E = N(rho_max) per unit mass obeys
+    d^2 rho/d tau^2 = -E^2 N'/N^3, and its energy -g_tt dt/dtau from the published metric is
+    checked to stay constant along the curve drawn. Everything is drawn at r_0 = L = 1.
+    """
+    at4 = {"tau": "0", "x": "0"}
+    hm = Plane(src, "ads_soliton", "horowitz_myers", ("t", "r"), at4, {"r_0": 1, "L": 1})
+    po = Plane(src, "ads_soliton", "poincare", ("t", "z"), at4, {"z_0": 1, "L": 1})
+    pl = Plane(src, "ads_soliton", "polar", ("t", "\\rho"), {"phi": "0", "x": "0"}, {"r_0": 1, "L": 1})
+    five = Plane(src, "ads_soliton", "five_dimensional", ("t", "r"), {**at4, "y": "0"}, {"r_0": 1, "L": 1})
+    three = Plane(src, "ads_soliton", "three_dimensional", ("t", "r"), {"tau": "0"}, {"r_0": 1, "L": 1})
+    hm_pq, five_pq, three_pq = soliton_pq(3), soliton_pq(4), soliton_pq(2)
+    po_pq = soliton_pq(3, lambda z: (1 / z, 1.0))
+    pl_pq = soliton_pq(3, soliton_polar_radius)
+    forward = lambda t, x: (1, 0)
+
+    ck.chart("the soliton, Horowitz and Myers's chart", hm, hm_pq, ck.uniform(-10, 10), 1 + ck.uniform(0.01, 30), forward)
+    ck.chart("the soliton, the Poincare chart", po, po_pq, ck.uniform(-10, 10), ck.uniform(0.02, 0.99), forward)
+    ck.chart("the soliton, the polar chart", pl, pl_pq, ck.uniform(-10, 10), ck.uniform(0.01, 4), forward)
+    ck.chart("the soliton of five dimensions", five, five_pq, ck.uniform(-10, 10), 1 + ck.uniform(0.01, 30), forward)
+    ck.chart("the soliton of three dimensions", three, three_pq, ck.uniform(-10, 10), 1 + ck.uniform(0.01, 30), forward)
+    reach = {n: soliton_rstar(n)[1] for n in (2, 3, 4)}
+    ck.limit("the soliton: light crosses from the tip to the boundary in ct = 1.4022 L^2/r_0", reach[3], 1.402182105325454, 1e-12)
+    ck.limit("the soliton of five dimensions: in ct = 1.3110 L^2/r_0", reach[4], 1.311028777146060, 1e-12)
+    ck.limit("the soliton of three dimensions: in ct = pi L^2/(2 r_0), as in anti-de Sitter space", reach[2], HALF, 1e-12)
+    for name, fmap, far in (("Horowitz and Myers's chart", hm_pq, 1e9), ("the chart of five dimensions", five_pq, 1e9),
+                            ("the chart of three dimensions", three_pq, 1e9)):
+        p, q = fmap(np.array([0.0, 3.0]), np.array([far, far]))
+        ck.limit(f"the soliton, {name}: r -> infinity lands on the boundary X = pi/2", q - p, [HALF, HALF], 1e-8)
+        p, q = fmap(np.array([0.0, 3.0]), np.array([1.0, 1.0]))
+        ck.limit(f"the soliton, {name}: the tip lands on X = 0", q - p, [0, 0], 1e-12)
+    p, q = po_pq(np.array([0.0, 3.0]), np.array([1e-9, 1e-9]))
+    ck.limit("the soliton, the Poincare chart: z -> 0 lands on the boundary X = pi/2", q - p, [HALF, HALF], 1e-8)
+    t, rho = ck.uniform(-6, 6, 500), ck.uniform(0.01, 4, 500)
+    for other, image, name in ((hm_pq, np.cosh(1.5 * rho) ** (2 / 3), "Horowitz and Myers's"),
+                               (po_pq, np.cosh(1.5 * rho) ** (-2 / 3), "the Poincare")):
+        ck.limit(f"the soliton: the polar chart and {name} chart draw one point at r = r_0 cosh^(2/3)(3 rho/2L)",
+                 np.concatenate([a - b for a, b in zip(pl_pq(t, rho), other(t, image))]), 0, 1e-12)
+    for name, plane, edge in (("Horowitz and Myers's chart", hm, 1 + 1e-9), ("the polar chart", pl, 1e-6),
+                              ("the chart of five dimensions", five, 1 + 1e-9),
+                              ("the chart of three dimensions", three, 1 + 1e-9)):
+        ck.finite(f"the soliton, {name}: the tip is a regular point", plane.kretschmann(ck.uniform(-5, 5, 50), np.full(50, edge)))
+    ck.finite("the soliton, the Poincare chart: the tip is a regular point",
+              po.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1 - 1e-9)))
+
+    # Free particles released from rest at rho_max, run in their proper time.
+    lapse = lambda x: np.cosh(1.5 * x) ** (2 / 3)
+    dlapse = lambda x: np.sinh(1.5 * x) / np.cosh(1.5 * x) ** (1 / 3)
+    T0, T1 = -0.3 * PI, 1.3 * PI
+    worlds = []
+    for start in (0.5, 1.0):
+        E = float(lapse(start))
+        run = solve_ivp(lambda _, y: [y[1], -E * E * dlapse(y[0]) / lapse(y[0]) ** 3, E / lapse(y[0]) ** 2],
+                        (0, 12), [start, 0.0, T0 * reach[3] / HALF], rtol=1e-11, atol=1e-12, dense_output=True)
+        tau = np.linspace(0, 12, 2401)
+        x, v, t = run.sol(tau)
+        keep = t <= T1 * reach[3] / HALF
+        x, v, t = x[keep], v[keep], t[keep]
+        g00, _, g11, _, _, _ = pl.metric(t, np.abs(x))
+        drdt = v * lapse(x) ** 2 / E
+        energy = -g00 / np.sqrt(-(g00 + g11 * drdt ** 2))
+        ck.limit(f"the soliton: the particle released at rho = {start} L keeps its energy, a timelike geodesic",
+                 float(np.ptp(energy) / np.mean(energy)), 0, 1e-8)
+        ck.limit(f"the soliton: the particle released at rho = {start} L has the energy of its release, N(rho_max)",
+                 float(np.mean(energy)), E, 1e-8)
+        worlds.append(pl_pq(t, x))
+
+    moment = slices.moments("ads_soliton")[0]
+    lo, hi = moment.reach("polar", "\\rho")
+    r_hi = float(np.cosh(1.5 * hi) ** (2 / 3))
+    views = []
+
+    def half_strip(vid, label, system, fmap, radial, values, name, n, tip, tick, moment_of=None):
+        v = View(vid, label, [-0.95, HALF + 0.55, T0, T1], system)
+        strip(v, False, T0, T1)
+        v.fill("cover", [[0, T0], [HALF, T0], [HALF, T1], [0, T1]])
+        for c in values:
+            X = float(np.subtract(*fmap(0.0, c)[::-1]))
+            v.line("r", [[[X, T0], [X, T1]]])
+        for k in range(-1, 6):
+            v.line("t", [[[0, k * Q4], [HALF, k * Q4]]])
+        v.segment("null", (0, 0), (0, HALF))
+        v.segment("null", (0, HALF), (HALF, HALF))
+        v.label_xt([0, 0], "$t = 0$", "r", "coord", dx=-6)
+        v.label_xt([0, HALF], tick[0], "r", "coord", dx=-6)
+        v.label_xt([0, PI], tick[1], "r", "coord", dx=-6)
+        X = float(np.subtract(*fmap(0.0, values[len(values) // 2])[::-1]))
+        v.label_xt([X, -0.55], name, "b", "coord", dy=-2)
+        v.set(fade={"top": 0.7, "bottom": 0.7})
+        v.legend("cover", f"the whole plane, which $t$ and ${radial}$ cover")
+        v.legend("r", f"${radial}$ constant, at " + tip)
+        v.legend("t", "$ct$ constant, every quarter of the time light takes from the tip to the boundary and back")
+        v.legend("boundary", "the conformal boundary, timelike")
+        v.legend("centre", "the tip, a regular point, where the circle $\\tau$ shrinks to a point")
+        v.legend("null", "a light ray from the tip to the boundary and back")
+        if moment_of is not None:
+            v.slice(moment, [fmap(np.zeros(2), np.asarray(moment_of, dtype=float))])
+        views.append(v)
+        return v
+
+    half_strip("horowitz_myers", "Horowitz-Myers", "horowitz_myers", hm_pq, "r", (1.05, 1.25, 1.5, 2, 4), "$r = 1.5\\,L$", 3,
+               "$1.05$, $1.25$, $1.5$, $2$, and $4\\,L$", ("$1.40\\,L/c$", "$2.80\\,L/c$"), (1.0, r_hi)).set(
+        restriction="The plane $\\tau = 0$, $x = 0$ only, a totally geodesic surface, each point in the diagram a "
+                    "single event.")
+    half_strip("poincare", "Poincaré", "poincare", po_pq, "z", (0.95, 0.8, 0.6, 0.4, 0.2), "$z = 0.6\\,L$", 3,
+               "$0.95$, $0.8$, $0.6$, $0.4$, and $0.2\\,L$", ("$1.40\\,L/c$", "$2.80\\,L/c$"), (1.0, 1 / r_hi)).set(
+        restriction="The plane $\\tau = 0$, $x = 0$ only, a totally geodesic surface, each point in the diagram a "
+                    "single event.")
+
+    v = View("polar", "Polar", [-HALF - 0.55, HALF + 0.55, T0, T1], "polar")
+    strip(v, True, T0, T1)
+    v.fill("cover", [[-HALF, T0], [HALF, T0], [HALF, T1], [-HALF, T1]])
+    v.line("centre", [[[0, T0], [0, T1]]])
+    for c in (0.5, 1, 2):
+        X = float(np.subtract(*pl_pq(0.0, c)[::-1]))
+        v.line("r", [[[X, T0], [X, T1]], [[-X, T0], [-X, T1]]])
+    for k in range(-1, 6):
+        v.line("t", [[[-HALF, k * Q4], [HALF, k * Q4]]])
+    v.line("null", [[[-HALF, 0], [HALF, PI]], [[HALF, 0], [-HALF, PI]]])
+    for p, q in worlds:
+        v.curve("world", p, q)
+    v.label_xt([float(np.subtract(*pl_pq(0.0, 1.0)[::-1])), -0.55], "$\\rho = L$", "b", "coord", dy=-2)
+    v.label_xt([0, -0.55], "the tip", "b", "small", dy=-2)
+    v.set(fade={"top": 0.7, "bottom": 0.7},
+          restriction="The plane $x = 0$ through the tip only, $\\phi = 0$ on the right and $\\phi = \\pi$ on the "
+                      "left, a totally geodesic surface, each point in the diagram a single event.")
+    v.legend("cover", "the whole plane through the tip, which $t$ and $\\rho$ cover at $\\phi = 0$ and $\\phi = \\pi$")
+    v.legend("r", "$\\rho$ constant, at $L/2$, $L$, and $2L$ on either side")
+    v.legend("t", "$ct$ constant, every quarter of the time light takes from the tip to the boundary and back")
+    v.legend("boundary", "the conformal boundary, timelike, the circle $\\tau$ at $\\tau = 0$ on the right and "
+                         "half a period round it on the left")
+    v.legend("centre", "the tip $\\rho = 0$, a regular point")
+    v.legend("null", "two light rays through the tip, from the boundary on one side to the boundary on the other")
+    v.legend("world", "free particles released from rest at $\\rho = L/2$ and $\\rho = L$")
+    x = np.array([-hi, hi])
+    v.slice(moment, [pl_pq(np.zeros(2), x)])
+    views.append(v)
+
+    half_strip("five_dimensional", "Five Dimensions", "five_dimensional", five_pq, "r", (1.05, 1.25, 1.5, 2, 4),
+               "$r = 1.5\\,L$", 4, "$1.05$, $1.25$, $1.5$, $2$, and $4\\,L$", ("$1.31\\,L/c$", "$2.62\\,L/c$")).set(
+        restriction="The plane $\\tau = 0$, $x = 0$, $y = 0$ only, a totally geodesic surface, each point in the "
+                    "diagram a single event.")
+    half_strip("three_dimensional", "Three Dimensions", "three_dimensional", three_pq, "r", (1.05, 1.25, 1.5, 2, 4),
+               "$r = 1.5\\,L$", 2, "$1.05$, $1.25$, $1.5$, $2$, and $4\\,L$", ("$\\pi L/2c$", "$\\pi L/c$")).set(
+        restriction="The plane $\\tau = 0$ only, a totally geodesic surface, each point in the diagram a single "
+                    "event.")
+    for v in views:
+        v.set(settings="$L = 1$, the unit of every length, and $r_0 = L$.")
+    return views
+
+
 # ---------------------------------------------------------------- the table
 
 # ---------------------------------------------------------------- the C-metric
@@ -14833,6 +15025,7 @@ DRAWN = {
     "kantowski_sachs": kantowski_sachs,
     "domain_wall": domain_wall,
     "randall_sundrum": randall_sundrum,
+    "ads_soliton": ads_soliton,
     "coleman_de_luccia": coleman_de_luccia,
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "hiscock": hiscock, "bardeen": bardeen, "mass_inflation": mass_inflation,
     "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "de_sitter": de_sitter,
@@ -15061,6 +15254,51 @@ CAPTIONS = {
         "The edge $X = 0$ is $r = 0$, the ring, a timelike singularity where the Kretschmann scalar diverges as "
         "$e^{2m^2/r^2}$ and which light from any event of the plane reaches in a finite time $t$. The axis meets the "
         "same coordinate point at the edge of its diamond, where the curvature goes to zero.",
+    ],
+    ("ads_soliton", "horowitz_myers"): [
+        "The plane of $t$ and $r$ of the soliton ($\\tau = 0$, $x = 0$, $r_0 = L$). With "
+        "$r_* = \\int_{r_0}^{r} L^2\\,dr'/(r'^2\\sqrt{1 - r_0^3/r'^3})$ the metric on the plane is "
+        "$(r^2/L^2)(-c^2dt^2 + dr_*^2)$, conformal to the strip $0 \\le r_* < 1.40\\,L^2/r_0$, which is "
+        "unbounded in $t$. Its left edge is the tip, a regular point, and its right edge the conformal "
+        "boundary, timelike.",
+        "A light ray from the tip reaches the boundary at $ct = 1.40\\,L^2/r_0$ and is back at the tip at "
+        "$ct = 2.80\\,L^2/r_0$. The strip is that of anti-de Sitter space's static chart, with the tip in "
+        "place of the centre, and a ray that returns to the tip leaves it on the opposite side of the circle "
+        "$\\tau$.",
+    ],
+    ("ads_soliton", "poincare"): [
+        "The plane of $t$ and $z$ of the soliton ($\\tau = 0$, $x = 0$, $z_0 = L$), on the same strip as "
+        "the plane of $t$ and $r$, since $z = L^2/r$. The lines of constant $z$ crowd toward the tip $z_0$, "
+        "the left edge, and the conformal boundary $z = 0$ is the right edge.",
+        "A light ray from the tip reaches the boundary at $ct = 1.40\\,z_0$ and is back at $ct = 2.80\\,z_0$. "
+        "Anti-de Sitter space's Poincaré patch is a wedge of its strip that ends on a horizon, and the "
+        "soliton's $t$ and $z$ cover their strip whole.",
+    ],
+    ("ads_soliton", "polar"): [
+        "The plane through the tip of the soliton ($x = 0$, $r_0 = L$), $\\phi = 0$ on the right and "
+        "$\\phi = \\pi$ on the left, conformal to a whole strip with the tip $\\rho = 0$ down its middle. The "
+        "two edges are the conformal boundary at opposite sides of the circle $\\tau$, each at an infinite "
+        "proper distance $\\rho$.",
+        "Light crosses from one edge to the other through the tip in $ct = 2.80\\,L^2/r_0$. A free particle "
+        "released from rest falls toward the tip, where clocks at rest run slowest, passes through it, and "
+        "swings back and forth across it; the two drawn are released at $\\rho = L/2$ and $\\rho = L$, and the "
+        "one released farther out takes longer over each swing.",
+    ],
+    ("ads_soliton", "five_dimensional"): [
+        "The plane of $t$ and $r$ of the soliton of five dimensions ($\\tau = 0$, $x = 0$, $y = 0$, "
+        "$r_0 = L$), conformal to the strip $0 \\le r_* < 1.31\\,L^2/r_0$ with "
+        "$r_* = \\int_{r_0}^{r} L^2\\,dr'/(r'^2\\sqrt{1 - r_0^4/r'^4})$. Its left edge is the tip, a regular "
+        "point, and its right edge the conformal boundary, timelike.",
+        "A light ray from the tip reaches the boundary at $ct = 1.31\\,L^2/r_0$ and is back at the tip at "
+        "$ct = 2.62\\,L^2/r_0$.",
+    ],
+    ("ads_soliton", "three_dimensional"): [
+        "The plane of $t$ and $r$ of the soliton of three dimensions ($\\tau = 0$, $r_0 = L$), conformal to "
+        "the strip $0 \\le r_* < \\pi L^2/(2r_0)$ with $r_* = (L^2/r_0)\\arccos(r_0/r)$. It is the strip of "
+        "anti-de Sitter space of three dimensions, of which this chart is the static one with the radius "
+        "$\\sqrt{r^2 - r_0^2}\\,L/r_0$.",
+        "A light ray from the tip reaches the boundary at $ct = \\pi L^2/(2r_0)$ and is back at "
+        "$ct = \\pi L^2/r_0$, as in anti-de Sitter space, whose centre the tip is.",
     ],
     ("randall_sundrum", "proper_distance"): [
         "The region Randall and Sundrum's coordinates cover (one wall), each point in the diagram a flat space of three dimensions, brought by $p = \\arctan(k(ct - w))$ and $q = \\arctan(k(ct + w))$ into the whole diamond, with $1 + k|w| = e^{k|y|}$. The wall is the vertical line in the middle, from $i^-$ to $i^+$, and a light ray crosses it as one straight line.",

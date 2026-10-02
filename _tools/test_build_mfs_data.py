@@ -4625,7 +4625,11 @@ class Slices(unittest.TestCase):
                   "static", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing", "hyperbolic")],
               *[f"conformal topological_black_hole/{s}_negative" for s in ("static", "ingoing", "outgoing", "hyperbolic")],
               "topological_black_hole/eddington_finkelstein_ingoing/massless",
-              "topological_black_hole/eddington_finkelstein_outgoing/massless"}
+              "topological_black_hole/eddington_finkelstein_outgoing/massless",
+              # The solitons of five and of three dimensions, other spacetimes than the soliton of four
+              # dimensions whose moment is embedded.
+              "ads_soliton/five_dimensional/radial", "ads_soliton/three_dimensional/radial",
+              "conformal ads_soliton/five_dimensional", "conformal ads_soliton/three_dimensional"}
 
     def setUp(self):
         self.diagrams, self.conformal, self.embedding = diagram_files(), conformal_files(), embedding_files()
@@ -5067,6 +5071,11 @@ class Slices(unittest.TestCase):
             sign = 1 if "ingoing" in key else -1
             finkelstein = key.endswith("finkelstein")
             return (lambda X: sign * (bardeen_rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
+        if key in ("ads_soliton/horowitz_myers/radial", "ads_soliton/poincare/tz"):
+            # The soliton's t = 0, embedded in the proper distance rho from the tip, at r_0 = L = 1:
+            # r = cosh^(2/3)(3 rho/2) on Horowitz and Myers's plane and z = 1/r on the Poincare plane.
+            lo, hi = (math.cosh(1.5 * rho) ** (2 / 3) for rho in self.reach(surface))
+            return (lambda X: 0.0), [lo, hi] if key.endswith("radial") else [1 / hi, 1 / lo]
         if key.startswith("topological_black_hole/") and not mark["lines"]:
             # The hyperbolic horizon's bifurcation surface, the point t = 0, r = r_h = L of the static planes.
             return (lambda X: 0.0), [1.0]

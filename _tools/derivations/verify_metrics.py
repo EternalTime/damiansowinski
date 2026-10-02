@@ -973,6 +973,17 @@ DIMENSIONS = {
     ("topological_black_hole", "hyperbolic"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\mu": "L", "L": "L",
     },
+    # The anti-de Sitter soliton keeps anti-de Sitter's radius L and the radius r_0 of its tip, both
+    # lengths. The circle tau and the flat directions are lengths, as in Horowitz and Myers's
+    # (3.14); the Poincare chart's z = L^2/r and its tip z_0 = L^2/r_0 are lengths too, and the
+    # polar chart's rho is the proper distance from the tip and its phi an angle.
+    ("ads_soliton", "horowitz_myers"): {"t": "T", "r": "L", "\\tau": "L", "x": "L", "r_0": "L", "L": "L"},
+    ("ads_soliton", "poincare"): {"t": "T", "z": "L", "\\tau": "L", "x": "L", "z_0": "L", "L": "L"},
+    ("ads_soliton", "polar"): {"t": "T", "\\rho": "L", "\\phi": "1", "x": "L", "r_0": "L", "L": "L"},
+    ("ads_soliton", "five_dimensional"): {
+        "t": "T", "r": "L", "\\tau": "L", "x": "L", "y": "L", "r_0": "L", "L": "L",
+    },
+    ("ads_soliton", "three_dimensional"): {"t": "T", "r": "L", "\\tau": "L", "r_0": "L", "L": "L"},
     # The charged black hole in de Sitter space keeps the three lengths of its parents: r_s, the
     # charge radius r_q and Lambda, a curvature. Its cosmological chart, which exists at
     # r_q = r_s/2, carries the Hubble rate H, a frequency with 3H^2/c^2 = Lambda, as de Sitter's
@@ -1446,6 +1457,8 @@ def _canonical(expression):
         and (x.base.is_Add or x.base.is_Mul or (x.base.is_Pow and x.base.exp.is_Integer)),
         _factored_root)
 
+    expression, halved = _whole_exponents(expression)
+
     generators = set()
     radicals = {}
     _collect_generators(expression, generators, radicals)
@@ -1485,7 +1498,45 @@ def _canonical(expression):
     value = value.cancelled()
     if not value.numerator:
         return sp.Integer(0)
-    return value.as_expr()
+    return value.as_expr().xreplace(halved) if halved else value.as_expr()
+
+
+def _whole_exponents(expression):
+    """The expression with every exponential that stands to a fractional power written on the
+    root all its powers are whole powers of, and the names it was given: (expression, {name: root}).
+
+    cosh(3 rho/2L), as the anti-de Sitter soliton's polar chart has it, is exp(rho/L) to the
+    powers 3/2 and -3/2, and its square holds exp(rho/L) to the powers 3 and -3. Every power of
+    one exponential in the expression is a whole power of exp(rho/2L), so that one is named and
+    taken as the generator. An expression whose exponentials all stand to whole powers, which is
+    every other in the collection, is handed back as it came.
+    """
+    scale = {}
+    for power in expression.atoms(sp.Pow, sp.exp):
+        if _is_transcendental_power(power):
+            for generator, coefficient in _exponent_terms(power):
+                if _is_transcendental_power(generator) and coefficient.is_Rational:
+                    scale[generator] = sp.ilcm(scale.get(generator, 1), coefficient.q)
+    scale = {generator: q for generator, q in scale.items() if q != 1}
+    if not scale:
+        return expression, {}
+    names = {}
+
+    def rebuilt(power):
+        out = sp.Integer(1)
+        for generator, coefficient in _exponent_terms(power):
+            if generator in scale:
+                q = scale[generator]
+                root = (sp.exp(generator.args[0] / q) if generator.func is sp.exp
+                        else sp.Pow(generator.base, generator.exp / q))
+                if root not in names:
+                    names[root] = sp.Symbol(f"_w{len(names)}", positive=True)
+                out *= names[root] ** (coefficient * q)
+            else:
+                out *= generator ** coefficient
+        return out
+    expression = expression.replace(_is_transcendental_power, rebuilt)
+    return expression, {name: root for root, name in names.items()}
 
 
 def _on_a_kink(expression):

@@ -1336,6 +1336,26 @@ def _siklos(depth=None):
     return [Mark(m, along(0.0, *ends))]
 
 
+def soliton_radius(rho):
+    """Horowitz and Myers's radius at the proper distance rho from the soliton's tip, at
+    r_0 = L = 1: r = cosh^(2/3)(3 rho/2)."""
+    return math.cosh(1.5 * rho) ** (2 / 3)
+
+
+def _soliton(chart):
+    """The soliton's moment t = 0, the surface of rho and phi the embedding reads in the polar
+    chart, from the tip out: along rho on the polar planes, along r = r_0 cosh^(2/3)(3 rho/2L) on
+    Horowitz and Myers's plane, and along z = L^2/r on the Poincare plane, where the tip is
+    z_0 = 1 and the boundary lies toward z = 0."""
+    m, = moments("ads_soliton")
+    lo, hi = m.reach("polar", "\\rho")
+    if chart == "polar":
+        return [Mark(m, along(0.0, lo, hi))]
+    if chart == "horowitz_myers":
+        return [Mark(m, along(0.0, soliton_radius(lo), soliton_radius(hi)))]
+    return [Mark(m, along(0.0, 1 / soliton_radius(hi), 1 / soliton_radius(lo)))]
+
+
 def _c_metric(y):
     """The C-metric's two moments on a plane of its axis: the equator's t = 0, which meets the
     axis along t = 0 over the same r as it reaches on the equator, and the black hole horizon,
@@ -1478,6 +1498,10 @@ FLAT = {
     ("schwarzschild_ads", "eddington_finkelstein_ingoing", "chart"): lambda: _sads(1),
     ("schwarzschild_ads", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _sads(-1),
     ("schwarzschild_ads", "eddington_finkelstein_outgoing", "chart"): lambda: _sads(-1),
+    ("ads_soliton", "horowitz_myers", "radial"): lambda: _soliton("horowitz_myers"),
+    ("ads_soliton", "poincare", "tz"): lambda: _soliton("poincare"),
+    ("ads_soliton", "polar", "radial"): lambda: _soliton("polar"),
+    ("ads_soliton", "polar", "through"): lambda: _soliton("polar"),
     ("topological_black_hole", "static", "flat"): lambda: _tbh(),
     ("topological_black_hole", "black_string", "radial"): lambda: _tbh(),
     ("topological_black_hole", "eddington_finkelstein_ingoing", "flat"): lambda: _tbh(1),
@@ -1947,6 +1971,8 @@ HIDDEN = {
     ("btz", "eddington_finkelstein_ingoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "eddington_finkelstein_outgoing", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
     ("btz", "rotating"): "the rotating hole, J = 4l/5, another spacetime than the hole without rotation whose moment is embedded",
+    ("ads_soliton", "five_dimensional", "radial"): "the soliton of five dimensions, another spacetime than the soliton of four whose moment is embedded",
+    ("ads_soliton", "three_dimensional", "radial"): "the soliton of three dimensions, which is anti-de Sitter space, another spacetime than the soliton of four whose moment is embedded",
     **{("topological_black_hole", system, "negative"): "the hyperbolic hole of negative mass, another spacetime than the flat hole and the hyperbolic hole without mass whose moments are embedded"
        for system in ("static", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing", "hyperbolic")},
     **{("topological_black_hole", f"{system}_negative"): "the hyperbolic hole of negative mass, another spacetime than the flat hole and the hyperbolic hole without mass whose moments are embedded"
