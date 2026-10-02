@@ -7,7 +7,7 @@ robinson_trautman, string_black_hole, mcvittie, tangherlini, boulware_deser, got
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, reissner_nordstrom_ads, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
 black_string, myers_perry, black_saturn, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
-som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos,
+som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos, kundt_waves,
 schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis and
@@ -11497,6 +11497,323 @@ def siklos_check(chart, system):
 
 
 CHARTS["siklos"] = [lambda s=s: siklos(s) for s in SIKLOS_CHARTS]
+
+
+# -- Kundt waves ---------------------------------------------------------------------------
+
+KUNDT_CHARTS = ("kundt", "podolsky_belan", "simplest_wave", "kerr_schild", "ozsvath_robinson_rozga")
+KUNDT_X = "x = \\sqrt{X^2 + Z^2 - c^2T^2}"
+KUNDT_U = "u = \\dfrac{X - x}{cT + Z}"
+KUNDT_V = "v = \\dfrac{cT + Z}{2x}"
+KUNDT_P = "p = 1 + \\dfrac{\\Lambda\\left(\\xi^2 + \\eta^2\\right)}{12}"
+KUNDT_Q = "q = \\alpha\\left(1 - \\dfrac{\\Lambda\\left(\\xi^2 + \\eta^2\\right)}{12}\\right) + \\beta\\xi"
+KUNDT_KAPPA = "\\kappa = \\dfrac{\\Lambda\\alpha^2}{3} + \\beta^2"
+
+
+def kundt_waves(system):
+    """Kundt's plane-fronted waves of type N whose rays are not parallel, in five charts:
+
+    kundt                   Kundt's canonical form, Podolsky and Belan's (2) in the real x and y of
+                            their (7): dx^2 + dy^2 - 2 du (dw - (2w/x) dx - (w^2/2x^2 + 2xG) du);
+    podolsky_belan          their (8), dx^2 + dy^2 - 4x^2 du dv + 4(x^2 v^2 + xG) du^2, w = 2x^2 v,
+                            which is Bicak and Podolsky's (15) with zeta = (x + iy)/sqrt(2);
+    simplest_wave           the same at G = (x^2 - y^2)/l, their (15) with n = 2;
+    kerr_schild             that wave on the flat space it crosses, their (11) from Griffiths and
+                            Podolsky: eta + (G/x) k k with k = (1 + u^2) dT - 2u dX - (1 - u^2) dZ;
+    ozsvath_robinson_rozga  the whole family of type N with a cosmological constant, Bicak and
+                            Podolsky's (2) with alpha and beta constant and sqrt(2) times their beta real, in the real
+                            xi and eta of this collection's chart of Siklos's waves and with its
+                            sign of h.
+
+    kundt_check holds each chart to its field equation, the first four to G harmonic and the last
+    to p^2 (h_xi_xi + h_eta_eta) + 2 Lambda h/3 = 0, the rays to being a repeated principal null
+    direction, the second and third charts to the first pulled back, the Kerr-Schild chart to the
+    third pulled back, and the last chart to the published charts of pp_wave and siklos and to
+    the second chart at their values of Lambda, alpha and beta. kundt_waves.md is the derivation."""
+    reals = "(-\\infty, \\infty)"
+    front = ["x \\in (0, \\infty)", "y \\in " + reals, "x = 0 \\;\\text{(the envelope of the wave fronts)}"]
+    wave = "\\dfrac{x^2 - Y^2}{\\ell x}"
+    null = "\\left(1 + u^2\\right)c\\,dT - 2u\\,dX - \\left(1 - u^2\\right)dZ"
+    edge = "\\sqrt{-12/\\Lambda}"
+    charts = {
+        "kundt": {
+            "name": "Kundt", "coords": ["u", "w", "x", "y"], "parameters": ["G = G(u,x,y)"],
+            "domains": ["u \\in " + reals, "w \\in " + reals, *front],
+            "line_element": ("ds^2 = dx^2 + dy^2 - 2\\,du\\left(dw - \\dfrac{2w}{x}dx"
+                             " - \\left(\\dfrac{w^2}{2x^2} + 2xG\\right)du\\right)")},
+        "podolsky_belan": {
+            "name": "Podolský-Beláň", "coords": ["u", "v", "x", "y"], "parameters": ["G = G(u,x,y)"],
+            "domains": ["u \\in " + reals, "v \\in " + reals, *front],
+            "line_element": "ds^2 = dx^2 + dy^2 - 4x^2du\\,dv + 4\\left(x^2v^2 + xG\\right)du^2"},
+        "simplest_wave": {
+            "name": "Simplest Wave", "coords": ["u", "v", "x", "y"], "parameters": ["\\ell"],
+            "domains": ["u \\in " + reals, "v \\in " + reals, *front],
+            "line_element": ("ds^2 = dx^2 + dy^2 - 4x^2du\\,dv"
+                             " + 4x^2\\left(v^2 + \\dfrac{x^2 - y^2}{\\ell x}\\right)du^2")},
+        "kerr_schild": {
+            "name": "Kerr-Schild", "coords": ["T", "X", "Y", "Z"],
+            "parameters": ["\\ell", KUNDT_X, KUNDT_U, KUNDT_V],
+            "domains": ["T \\in " + reals, "X \\in " + reals, "Y \\in " + reals, "Z \\in " + reals,
+                        "X^2 + Z^2 > c^2T^2 \\;\\text{(outside the envelope of the wave fronts)}",
+                        "cT + Z = 0,\\; X < 0 \\;\\text{(the wave front } u \\to \\pm\\infty\\text{)}"],
+            "line_element": ("ds^2 = -c^2dT^2 + dX^2 + dY^2 + dZ^2 + " + wave + "\\left(" + null + "\\right)^2"),
+            "chart": ("ds^2 = -dT^2 + dX^2 + dY^2 + dZ^2 + " + wave
+                      + "\\left(" + null.replace("c\\,dT", "dT") + "\\right)^2")},
+        "ozsvath_robinson_rozga": {
+            "name": "Ozsváth-Robinson-Rózga", "coords": ["u", "v", "\\xi", "\\eta"],
+            "parameters": ["\\Lambda", "\\alpha", "\\beta", "h = h(u,\\xi,\\eta)", KUNDT_P, KUNDT_Q, KUNDT_KAPPA],
+            "domains": ["u \\in " + reals, "v \\in " + reals,
+                        "\\xi \\in " + reals + " \\;\\text{for}\\; \\Lambda \\ge 0",
+                        "\\xi \\in (-" + edge + ", " + edge + ") \\;\\text{for}\\; \\Lambda < 0",
+                        "\\eta \\in " + reals + " \\;\\text{for}\\; \\Lambda \\ge 0",
+                        "\\eta \\in (-" + edge + ", " + edge + ") \\;\\text{for}\\; \\Lambda < 0",
+                        "p > 0 \\;\\text{(where } \\Lambda < 0 \\text{ the disc whose rim is the conformal boundary)}",
+                        "q = 0 \\;\\text{(the envelope of the wave fronts)}"],
+            "line_element": ("ds^2 = \\dfrac{d\\xi^2 + d\\eta^2}{p^2} - \\dfrac{2q^2}{p^2}du\\,dv"
+                             " + \\left(\\dfrac{\\kappa q^2}{p^2}v^2 + \\dfrac{q}{p}h\\right)du^2")},
+    }
+    chart = charts[system]
+    probe = vm.Reader(chart["coords"], chart["parameters"], ())
+    spec = {
+        "metric_id": "kundt_waves",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": chart["parameters"], "line_element": chart["line_element"]},
+        "chart_line_element": chart.get("chart", chart["line_element"]),
+        "printer": {"lead": [*probe.symbol.values()], "flip": False},
+        "check": lambda chart: kundt_check(chart, system),
+    }
+    if system == "kerr_schild":
+        forms = KundtFlatForms(vm.Reader(chart["coords"], chart["parameters"], (),
+                                         held=vm.HELD[("kundt_waves", "kerr_schild")]))
+        spec["pretty"], spec["reduce"] = forms.pretty, forms.reduce
+        spec["printer"] = {"lead": [*KUNDT_NAMES, probe.symbol["Y"], probe.parameters["ell"]], "flip": False}
+    elif system == "ozsvath_robinson_rozga":
+        spec["pretty"] = kundt_family_pretty(probe)
+        P, Q, K = KUNDT_FAMILY_NAMES
+        spec["printer"] = {"lead": [*probe.symbol.values()], "flip": False,
+                           "factors": [*(probe.parameters[n] for n in ("Lambda", "alpha", "beta")), K,
+                                       *probe.symbol.values(), P, Q]}
+    return spec
+
+
+KUNDT_NAMES = (sp.Symbol("u"), sp.Symbol("v"), sp.Symbol("x", positive=True))
+KUNDT_FAMILY_NAMES = (sp.Symbol("p", positive=True), sp.Symbol("q"), sp.Symbol("kappa"))
+
+
+class KundtFlatForms:
+    """The Kerr-Schild chart holds Podolsky and Belan's x, u and v as functions of cT, X and Z,
+    which verify_metrics.HELD lists. Their derivatives are rational in them: with s = cT,
+    dx = -(v + u(1 + uv)) ds + (1 + 2uv) dX + (v - u(1 + uv)) dZ, 2x du = (1 + u^2) ds - 2u dX
+    - (1 - u^2) dZ, the null covector of the Kerr-Schild form, and 2x dv = ds + dZ - 2v dx.
+    reduce writes every derivative so, to any order, which leaves the three with no relation among
+    them, and pretty writes them as the names the chart defines."""
+
+    def __init__(self, reader):
+        T, X, Z = (reader.symbol[n] for n in ("T", "X", "Z"))
+        x, u, v = (reader.parameters[n] for n in ("x", "u", "v"))
+        dx = {T: -(v + u * (1 + u * v)), X: 1 + 2 * u * v, Z: v - u * (1 + u * v)}
+        du = {T: (1 + u ** 2) / (2 * x), X: -u / x, Z: -(1 - u ** 2) / (2 * x)}
+        dv = {T: (1 - 2 * v * dx[T]) / (2 * x), X: -v * dx[X] / x, Z: (1 - 2 * v * dx[Z]) / (2 * x)}
+        self.rates = {x: dx, u: du, v: dv}
+        self.names = dict(zip((u, v, x), KUNDT_NAMES))
+        self.Y = reader.symbol["Y"]
+
+    def reduce(self, value):
+        value = sp.sympify(value)
+        for _ in range(8):
+            derivatives = value.atoms(sp.Derivative)
+            if not derivatives:
+                return vm.norm(value)
+            written = {}
+            for d in derivatives:
+                if d.expr not in self.rates:
+                    raise AssertionError(f"kundt_waves: {d} is not a derivative of x, u or v")
+                (variable, order), *rest = d.variable_count
+                first = self.rates[d.expr][variable]
+                written[d] = sp.Derivative(first, (variable, order - 1), *rest).doit()
+            value = value.xreplace(written)
+        raise AssertionError("kundt_waves: the derivatives of x, u and v do not settle")
+
+    def pretty(self, value):
+        value = sp.sympify(value).xreplace(self.names)
+        if value.atoms(AppliedUndef):
+            raise AssertionError(f"kundt_waves: a held name is left in {value}")
+        if value == 0:
+            return value
+        # (u + 1)(u - 1) is the line element's 1 - u^2, up to its sign, and (x + Y)(x - Y) the
+        # profile's x^2 - Y^2.
+        u, _, x = KUNDT_NAMES
+        Y = self.Y
+        out, powers = _factor_powers(value)
+        out *= (-1) ** _merge_pair(powers, u + 1, u - 1, 1 - u ** 2)
+        _merge_pair(powers, x + Y, x - Y, x ** 2 - Y ** 2)
+        for base, k in powers.items():
+            out *= base ** k
+        return out
+
+
+def kundt_family_pretty(reader):
+    """How a value of the chart with a cosmological constant is written: factored, with each factor
+    that is a multiple of p, of q or of kappa written by its name, and a numerator that holds
+    the profile collected by h and its derivatives, each coefficient written the same way."""
+    xi, eta = reader.symbol["\\xi"], reader.symbol["\\eta"]
+    lam, alpha, beta, h = (reader.parameters[n] for n in ("Lambda", "alpha", "beta", "h"))
+    P, Q, K = KUNDT_FAMILY_NAMES
+    named = [(P, 1 + lam * (xi ** 2 + eta ** 2) / 12),
+             (Q, alpha * (1 - lam * (xi ** 2 + eta ** 2) / 12) + beta * xi),
+             (K, lam * alpha ** 2 / 3 + beta ** 2)]
+
+    def product(value):
+        out = sp.Integer(1)
+        for base, k in sp.factor(value).as_powers_dict().items():
+            if base.is_Add:
+                for name, polynomial in named:
+                    ratio = sp.cancel(base / polynomial)
+                    if not ratio.has(xi, eta, lam, alpha, beta):
+                        base = ratio * name
+                        break
+            out *= base ** k
+        return out
+
+    def pretty(value):
+        numerator, denominator = sp.fraction(sp.factor(value))
+        numerator = sp.expand(numerator)
+        atoms = sorted((a for a in numerator.atoms(sp.Derivative, AppliedUndef) if a.has(h) or a == h), key=str)
+        if atoms:
+            parts = sp.collect(numerator, atoms, evaluate=False)
+            numerator = sp.Add(*[product(c) * a for a, c in parts.items()])
+        else:
+            numerator = product(numerator)
+        return sp.factor(numerator / product(denominator))
+    return pretty
+
+
+def kundt_source(system, profile=None):
+    """A chart of Kundt's waves as a Chart, with its profile left free or set."""
+    spec = kundt_waves(system)
+    source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    g = source.geo.g
+    if profile is not None:
+        g = g.subs(source.reader.parameters["G"], profile(*source.symbols))
+    return source, g
+
+
+def kundt_published(metric_id, system_id):
+    """A published chart's reader, metric and coordinates."""
+    entry = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                 if c["id"] == system_id)
+    reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+    there = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+    matrix = sp.Matrix(4, 4, lambda i, j: reader(there.get((entry["coords"][i], entry["coords"][j]), "0")))
+    return reader, matrix, [reader.symbol[c] for c in entry["coords"]]
+
+
+def kundt_check(chart, system):
+    """The charts without a cosmological constant are vacua exactly where G is harmonic on the
+    front: the Ricci tensor is R_uu = -2x (G_xx + G_yy) and nothing else, Podolsky and Belan's
+    Phi_22 up to its factor, and it vanishes for G = (x^2 - y^2)/l. The chart with a cosmological
+    constant has R_ab - Lambda g_ab = -(q/2p) (p^2 (h_xi_xi + h_eta_eta) + 2 Lambda h/3) in the
+    slot uu and nothing else. In every chart the rays are a repeated principal null direction of
+    the Weyl tensor, C_abcd k^d = 0, which makes it of type N, and affinely parametrised null
+    geodesics. Podolsky and Belan's chart is
+    Kundt's canonical form pulled back along w = 2x^2 v, the simplest wave is their chart at
+    G = (x^2 - y^2)/l, and the Kerr-Schild chart is the simplest wave pulled back along the three
+    names it defines. The chart with a cosmological constant is the published Brinkmann chart of
+    pp_wave at Lambda = 0, alpha = 1, beta = 0, the published chart on the disc of siklos at
+    Lambda = -3/L^2, alpha = 1, beta = 1/L, and Podolsky and Belan's chart at Lambda = 0,
+    alpha = 0, beta = 1/l along u -> sqrt(2) l u, v -> sqrt(2) l v with h = 2G/l."""
+    x = chart.symbols
+    names = chart.coords_tex
+    P = chart.reader.parameters
+    g = chart.geo.g
+    tidy = chart.reduce or vm.norm
+    ricci = chart.geo.ricci_ll()
+    if system == "ozsvath_robinson_rozga":
+        lam, alpha, beta, h = P["Lambda"], P["alpha"], P["beta"], P["h"]
+        r2 = x[2] ** 2 + x[3] ** 2
+        p, q = 1 + lam * r2 / 12, alpha * (1 - lam * r2 / 12) + beta * x[2]
+        miss = {(a, b): vm.norm(vm._at(ricci, (a, b)) - lam * g[a, b]) for a in range(4) for b in range(4)}
+        want = -(q / (2 * p)) * (p ** 2 * (sp.diff(h, x[2], 2) + sp.diff(h, x[3], 2)) + 2 * lam * h / 3)
+        miss[(0, 0)] = vm.norm(miss[(0, 0)] - want)
+    else:
+        miss = {(a, b): tidy(vm._at(ricci, (a, b))) for a in range(4) for b in range(4)}
+        if "G" in P:
+            G = P["G"]
+            miss[(0, 0)] = vm.norm(miss[(0, 0)] + 2 * x[2] * (sp.diff(G, x[2], 2) + sp.diff(G, x[3], 2)))
+    for (a, b), value in miss.items():
+        if value != 0:
+            raise AssertionError(f"kundt_waves: the field equation fails in slot {names[a]}{names[b]} of {system}")
+    # The rays: d/dw or d/dv, and on flat space the null vector of the Kerr-Schild form.
+    if system == "kerr_schild":
+        u = P["u"]
+        k = [1 + u ** 2, 2 * u, 0, 1 - u ** 2]
+    else:
+        k = [0, 1, 0, 0]
+    if tidy(sum(g[a, b] * k[a] * k[b] for a in range(4) for b in range(4))) != 0:
+        raise AssertionError(f"kundt_waves: the rays of {system} are not null")
+    # The rays are geodesics, affinely parametrised: k^a d_a k^b + Gamma^b_ac k^a k^c = 0.
+    gamma = chart.geo.christoffel_ull()
+    for b in range(4):
+        along = sum(k[a] * sp.diff(k[b], x[a]) for a in range(4))
+        if tidy(along + sum(gamma[b][a][c] * k[a] * k[c] for a in range(4) for c in range(4))) != 0:
+            raise AssertionError(f"kundt_waves: the rays of {system} are not geodesics")
+    weyl = chart.geo.weyl_llll()
+    for a, b, c in itertools.product(range(4), repeat=3):
+        if tidy(sum(vm._at(weyl, (a, b, c, d)) * k[d] for d in range(4))) != 0:
+            raise AssertionError(f"kundt_waves: the rays of {system} are not a repeated principal null direction")
+
+    def same(matrix, what, tidy=sp.simplify):
+        for i in range(4):
+            for j in range(i, 4):
+                if tidy(matrix[i, j] - g[i, j]) != 0:
+                    raise AssertionError(f"kundt_waves: the {system} chart is not {what} in slot "
+                                         f"{names[i]}{names[j]}")
+
+    if system == "kundt":
+        return
+    if system == "podolsky_belan":
+        source, old = kundt_source("kundt")
+        image = [x[0], 2 * x[2] ** 2 * x[1], x[2], x[3]]
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], x[j]))
+        old = old.subs(source.reader.parameters["G"], sp.Symbol("G_here"))
+        old = old.subs(dict(zip(source.symbols, image)), simultaneous=True).subs(sp.Symbol("G_here"), P["G"])
+        same(J.T * old * J, "Kundt's canonical form pulled back")
+    elif system == "simplest_wave":
+        source, old = kundt_source("podolsky_belan", lambda u, v, a, b: (a ** 2 - b ** 2) / P["ell"])
+        same(old.subs(dict(zip(source.symbols, x)), simultaneous=True), "Podolsky and Belan's chart at its profile")
+    elif system == "kerr_schild":
+        source, old = kundt_source("podolsky_belan", lambda u, v, a, b: (a ** 2 - b ** 2) / P["ell"])
+        image = [P["u"], P["v"], P["x"], x[2]]
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], x[j]))
+        old = old.subs(dict(zip(source.symbols, image)), simultaneous=True)
+        same(J.T * old * J, "the simplest wave pulled back", tidy)
+    else:
+        lam, alpha, beta, h = P["Lambda"], P["alpha"], P["beta"], P["h"]
+        u, v, xi, eta = x
+        # pp_wave's Brinkmann chart, whose u is a time: H c^2 du^2 - 2c du dv + dx^2 + dy^2.
+        reader, matrix, there = kundt_published("pp_wave", "brinkmann")
+        matrix = matrix.subs(reader.parameters["H"], sp.Symbol("h_here"))
+        matrix = matrix.subs(dict(zip(there, x)), simultaneous=True).subs(sp.Symbol("h_here"), h)
+        same(matrix, "pp_wave's published Brinkmann chart", lambda e: sp.simplify(e.subs({lam: 0, alpha: 1, beta: 0})))
+        # siklos's chart on the disc, with its own L.
+        reader, matrix, there = kundt_published("siklos", "ozsvath_robinson_rozga")
+        L = reader.parameters["L"]
+        matrix = matrix.subs(reader.parameters["h"], sp.Symbol("h_here"))
+        matrix = matrix.subs(dict(zip(there, x)), simultaneous=True).subs(sp.Symbol("h_here"), h)
+        same(matrix, "siklos's published chart on the disc",
+             lambda e: sp.simplify(e.subs({lam: -3 / L ** 2, alpha: 1, beta: 1 / L})))
+        # Podolsky and Belan's chart, with x and y for xi and eta.
+        ell = sp.Symbol("ell", positive=True)
+        source, old = kundt_source("podolsky_belan")
+        old = old.subs(source.reader.parameters["G"], ell * sp.Symbol("h_here") / 2)
+        image = [u / (sp.sqrt(2) * ell), v / (sp.sqrt(2) * ell), xi, eta]
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], x[j]))
+        old = old.subs(dict(zip(source.symbols, image)), simultaneous=True).subs(sp.Symbol("h_here"), h)
+        same(J.T * old * J, "Podolsky and Belan's chart",
+             lambda e: sp.simplify(e.subs({lam: 0, alpha: 0, beta: 1 / ell})))
+
+
+CHARTS["kundt_waves"] = [lambda s=s: kundt_waves(s) for s in KUNDT_CHARTS]
 
 
 # -- Schrodinger spacetime -----------------------------------------------------------------

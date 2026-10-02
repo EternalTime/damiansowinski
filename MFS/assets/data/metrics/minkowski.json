@@ -183,6 +183,11 @@
       "id": "bonnor_rotating_dust",
       "kind": "generalisation",
       "text": "Flat spacetime filled with a thin cloud of rigidly rotating dust that has angular momentum and no total mass. With the rotation set to zero, $a = 0$, the dust is gone and the spacetime is flat [bonnor1977cloud, astesiano2024]."
+    },
+    {
+      "id": "kundt_waves",
+      "kind": "generalisation",
+      "text": "Flat space is what a Kundt wave leaves when its profile is switched off, in coordinates that cover the outside of a cylinder growing at the speed of light [podolskybelan2004]."
     }
   ],
   "references": [
@@ -245,7 +250,8 @@
     "kiselev2003",
     "martindussaud2019",
     "bonnor1977cloud",
-    "astesiano2024"
+    "astesiano2024",
+    "podolskybelan2004"
   ],
   "coordinates": [
     {

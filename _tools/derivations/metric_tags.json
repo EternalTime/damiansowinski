@@ -4434,6 +4434,68 @@
   ],
   "sphere": null
  },
+ "kundt_waves/kerr_schild": {
+  "stamp": "4d307b0003dbee17",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [],
+  "sphere": null
+ },
+ "kundt_waves/kundt": {
+  "stamp": "a45ca5cff41c945e",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [],
+  "sphere": null
+ },
+ "kundt_waves/ozsvath_robinson_rozga": {
+  "stamp": "6eec50bd55eed5d7",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [],
+  "sphere": null
+ },
+ "kundt_waves/podolsky_belan": {
+  "stamp": "c4cc9468b1aa12a4",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [],
+  "sphere": null
+ },
+ "kundt_waves/simplest_wave": {
+  "stamp": "5f5a93a5512fd457",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "u",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
  "lentz/cartesian": {
   "stamp": "df46f42b8e67f8f7",
   "relations": {},

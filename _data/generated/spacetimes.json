@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 117,
+  "count": 118,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -607,6 +607,11 @@
           "id": "schrodinger_spacetime",
           "kind": "generalisation",
           "text": "Anti-de Sitter space with one term in $dt^2$ added along a null direction, which leaves of its symmetries those of the free Schrödinger equation. Dam Thanh Son proposed it in 2008 as the dual of cold atoms [son2008]."
+        },
+        {
+          "id": "kundt_waves",
+          "kind": "generalisation",
+          "text": "Gravitational waves of type N that cross anti-de Sitter space on fronts shaped as hyperbolic planes. With the profile switched off the metric is anti-de Sitter space [bicak1999, griffiths2004]."
         }
       ],
       "references": [
@@ -649,7 +654,9 @@
         "horowitz1998",
         "kachru2008",
         "copsey2011",
-        "son2008"
+        "son2008",
+        "bicak1999",
+        "griffiths2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -3062,6 +3069,11 @@
           "id": "bonnor_magnetic_dipole",
           "kind": "family",
           "text": "A pair of extremal black holes with opposite magnetic charges. Each of its poles opens into a throat, which is Bertotti and Robinson's universe once an outside field balances the pair [emparan2000]."
+        },
+        {
+          "id": "kundt_waves",
+          "kind": "family",
+          "text": "Bertotti and Robinson's universe has rays that neither expand nor twist, so it sits in Kundt's class beside his waves [podolskybelan2004]."
         }
       ],
       "references": [
@@ -3087,7 +3099,8 @@
         "griffiths1991",
         "romans1992",
         "breitenlohner1994",
-        "emparan2000"
+        "emparan2000",
+        "podolskybelan2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bertotti_robinson.json",
@@ -7373,6 +7386,11 @@
           "id": "kiselev",
           "kind": "generalisation",
           "text": "De Sitter's static metric with a black hole added and $\\Lambda r^2/3$ replaced by a power of the radius, $(r_q/r)^{3w+1}$. At $w = -1$ and $r_s = 0$ it is de Sitter's, with $\\Lambda = 3/r_q^2$ [kiselev2003]."
+        },
+        {
+          "id": "kundt_waves",
+          "kind": "generalisation",
+          "text": "Gravitational waves of type N that cross de Sitter space on fronts shaped as hemispheres. With the profile switched off the metric is de Sitter space [bicak1999, griffiths2004]."
         }
       ],
       "references": [
@@ -7409,7 +7427,9 @@
         "senovilla1998",
         "chinea1992",
         "mazur2004",
-        "kiselev2003"
+        "kiselev2003",
+        "bicak1999",
+        "griffiths2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -18116,6 +18136,500 @@
       ]
     },
     {
+      "id": "kundt_waves",
+      "name": "Kundt Waves",
+      "short_name": "Kundt Waves",
+      "description": "Exact gravitational waves on plane fronts whose rays turn from one front to the next. In flat space the fronts are half planes rolling round a cylinder that expands at the speed of light, and the cylinder is a singularity that no curvature scalar shows.",
+      "tags": [
+        "gravitational wave",
+        "Kundt class",
+        "Petrov type N",
+        "vanishing scalar invariants",
+        "curvature singularity",
+        "cosmological constant",
+        "time-dependent",
+        "radiating",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "pp_wave",
+          "kind": "special_case",
+          "text": "The waves whose rays all stay parallel. In the coordinates of Ozsváth, Robinson, and Rózga, $\\Lambda = 0$ and $\\beta = 0$ leave a pp-wave in Brinkmann's form [ozsvath1985, bicak1999]."
+        },
+        {
+          "id": "siklos",
+          "kind": "special_case",
+          "text": "The waves that cross anti-de Sitter space with $\\kappa = 0$. Set $\\Lambda = -3/L^2$, $\\alpha = 1$, and $\\beta = 1/L$, and the metric is a Siklos wave on the disc [bicak1999, griffiths2004]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "The wave switched off. With $G = 0$ the metric is flat space outside the cylinder $X^2 + Z^2 = c^2T^2$ [podolskybelan2004]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "special_case",
+          "text": "The space the waves with $\\Lambda > 0$ cross. At $h = 0$ the metric is de Sitter space, and the fronts are hemispheres touching a torus that expands at the speed of light [bicak1999, griffiths2004]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "special_case",
+          "text": "The space the waves with $\\Lambda < 0$ cross. At $h = 0$ the metric is anti-de Sitter space, and the fronts are hyperbolic planes [bicak1999, griffiths2004]."
+        },
+        {
+          "id": "robinson_trautman",
+          "kind": "family",
+          "text": "The waves whose rays spread apart. A wave of type N without twist is either one of Kundt's, whose rays do not expand, or one of Robinson and Trautman's [bicak1999]."
+        },
+        {
+          "id": "nariai",
+          "kind": "family",
+          "text": "A universe with rays that neither expand nor twist, which puts it in Kundt's class beside his waves [podolskybelan2004]."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "family",
+          "text": "Another member of Kundt's class that is no wave, a universe filled with a uniform electromagnetic field [podolskybelan2004]."
+        }
+      ],
+      "references": [
+        "brinkmann1925",
+        "ehlerskundt1962",
+        "kundt1961",
+        "bicak1999",
+        "griffiths2004",
+        "podolskybelan2004",
+        "griffithspodolsky1998",
+        "bicakpravda1998",
+        "ellisschmidt1977",
+        "garciadiaz1981",
+        "ozsvath1985",
+        "siklos1985",
+        "pravda2002",
+        "coley2002"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kundt_waves.json",
+      "charts": [
+        {
+          "id": "kundt",
+          "name": "Kundt",
+          "coordinates": [
+            "u",
+            "w",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "w \\in (-\\infty, \\infty)",
+            "x \\in (0, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "x = 0 \\;\\text{(the envelope of the wave fronts)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "G = G(u,x,y)",
+              "description": "Wave profile, a length, a function of $u$ and of the two coordinates along the wave front. The spacetime is a vacuum exactly where it is harmonic on the front, $\\partial_x^2 G + \\partial_y^2 G = 0$; $G = 0$ is flat space, and so is any $G$ linear in $x$ and $y$"
+            }
+          ],
+          "convention": "We use Kundt's canonical coordinates $(u, w, x, y)$: $u$ is a pure number labelling the wave fronts, $w$ an affine parameter along the rays carrying an area, and $x$ and $y$ lengths on the front. We leave the profile $G$ free, so no component assumes a field equation. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = dx^2 + dy^2 - 2\\,du\\left(dw - \\dfrac{2w}{x}dx - \\left(\\dfrac{w^2}{2x^2} + 2xG\\right)du\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{w^2 + 4x^3\\,G}{x^2}"
+            },
+            {
+              "indices": [
+                "u",
+                "w"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "w",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "u",
+                "x"
+              ],
+              "value": "\\dfrac{2w}{x}"
+            },
+            {
+              "indices": [
+                "x",
+                "u"
+              ],
+              "value": "\\dfrac{2w}{x}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "podolsky_belan",
+          "name": "Podolský-Beláň",
+          "coordinates": [
+            "u",
+            "v",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "x \\in (0, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "x = 0 \\;\\text{(the envelope of the wave fronts)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "G = G(u,x,y)",
+              "description": "Wave profile, a length, a function of $u$ and of the two coordinates along the wave front. The spacetime is a vacuum exactly where it is harmonic on the front, $\\partial_x^2 G + \\partial_y^2 G = 0$; $G = 0$ is flat space, and so is any $G$ linear in $x$ and $y$"
+            }
+          ],
+          "convention": "We use the coordinates $(u, v, x, y)$ of Podolský and Beláň, with $u$ and $v$ pure numbers and $x$ and $y$ lengths; $w = 2x^2v$ is the affine parameter of Kundt's canonical form. We leave the profile $G$ free, so no component assumes a field equation. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = dx^2 + dy^2 - 4x^2du\\,dv + 4\\left(x^2v^2 + xG\\right)du^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "4x\\left(v^2\\,x + G\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-2x^2"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-2x^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "simplest_wave",
+          "name": "Simplest Wave",
+          "coordinates": [
+            "u",
+            "v",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "x \\in (0, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "x = 0 \\;\\text{(the envelope of the wave fronts)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "A length setting the strength of the wave, $G = (x^2 - y^2)/\\ell$. It has no invariant meaning: the rescaling $u \\to \\lambda u$, $v \\to v/\\lambda$ turns $\\ell$ into $\\lambda^2\\ell$"
+            }
+          ],
+          "convention": "We use the coordinates $(u, v, x, y)$ of Podolský and Beláň, with $u$ and $v$ pure numbers and $x$ and $y$ lengths, and the profile $G = (x^2 - y^2)/\\ell$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = dx^2 + dy^2 - 4x^2du\\,dv + 4x^2\\left(v^2 + \\dfrac{x^2 - y^2}{\\ell x}\\right)du^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{4x\\left(v^2\\,x\\,\\ell + x^2 - y^2\\right)}{\\ell}"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-2x^2"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-2x^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "kerr_schild",
+          "name": "Kerr-Schild",
+          "coordinates": [
+            "T",
+            "X",
+            "Y",
+            "Z"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "X \\in (-\\infty, \\infty)",
+            "Y \\in (-\\infty, \\infty)",
+            "Z \\in (-\\infty, \\infty)",
+            "X^2 + Z^2 > c^2T^2 \\;\\text{(outside the envelope of the wave fronts)}",
+            "cT + Z = 0,\\; X < 0 \\;\\text{(the wave front } u \\to \\pm\\infty\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "A length setting the strength of the wave, $G = (x^2 - Y^2)/\\ell$"
+            },
+            {
+              "symbol": "x = \\sqrt{X^2 + Z^2 - c^2T^2}",
+              "description": "Distance along a wave front from the line where it touches the envelope, the cylinder $X^2 + Z^2 = c^2T^2$; it is the $x$ of Podolský and Beláň's coordinates"
+            },
+            {
+              "symbol": "u = \\dfrac{X - x}{cT + Z}",
+              "description": "Label of the wave front through the event, $u = \\tan(\\alpha/2)$ for the front $cT = X\\sin\\alpha + Z\\cos\\alpha$"
+            },
+            {
+              "symbol": "v = \\dfrac{cT + Z}{2x}",
+              "description": "The coordinate $v$ of Podolský and Beláň, which runs along the rays"
+            }
+          ],
+          "convention": "We use the inertial coordinates $(T, X, Y, Z)$ of the flat space the wave crosses, with $T$ carrying dimensions of time; the wave is $G = (x^2 - Y^2)/\\ell$, and $x$, $u$, and $v$ are Podolský and Beláň's coordinates as functions of these. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dT^2 + dX^2 + dY^2 + dZ^2 + \\dfrac{x^2 - Y^2}{\\ell x}\\left(\\left(1 + u^2\\right)c\\,dT - 2u\\,dX - \\left(1 - u^2\\right)dZ\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "\\dfrac{u^4\\,x^2 - u^4\\,Y^2 + 2u^2\\,x^2 - 2u^2\\,Y^2 + x^2 - x\\,\\ell - Y^2}{x\\,\\ell}"
+            },
+            {
+              "indices": [
+                "T",
+                "X"
+              ],
+              "value": "-\\dfrac{2u\\left(u^2 + 1\\right)\\left(x^2 - Y^2\\right)}{x\\,\\ell}"
+            },
+            {
+              "indices": [
+                "X",
+                "T"
+              ],
+              "value": "-\\dfrac{2u\\left(u^2 + 1\\right)\\left(x^2 - Y^2\\right)}{x\\,\\ell}"
+            },
+            {
+              "indices": [
+                "T",
+                "Z"
+              ],
+              "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)\\left(x^2 - Y^2\\right)}{x\\,\\ell}"
+            },
+            {
+              "indices": [
+                "Z",
+                "T"
+              ],
+              "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)\\left(x^2 - Y^2\\right)}{x\\,\\ell}"
+            },
+            {
+              "indices": [
+                "X",
+                "X"
+              ],
+              "value": "\\dfrac{4u^2\\,x^2 - 4u^2\\,Y^2 + x\\,\\ell}{x\\,\\ell}"
+            },
+            {
+              "indices": [
+                "X",
+                "Z"
+              ],
+              "value": "-\\dfrac{2u\\left(u^2 - 1\\right)\\left(x^2 - Y^2\\right)}{x\\,\\ell}"
+            },
+            {
+              "indices": [
+                "Z",
+                "X"
+              ],
+              "value": "-\\dfrac{2u\\left(u^2 - 1\\right)\\left(x^2 - Y^2\\right)}{x\\,\\ell}"
+            },
+            {
+              "indices": [
+                "Y",
+                "Y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "Z",
+                "Z"
+              ],
+              "value": "\\dfrac{u^4\\,x^2 - u^4\\,Y^2 - 2u^2\\,x^2 + 2u^2\\,Y^2 + x^2 + x\\,\\ell - Y^2}{x\\,\\ell}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "ozsvath_robinson_rozga",
+          "name": "Ozsváth-Robinson-Rózga",
+          "coordinates": [
+            "u",
+            "v",
+            "\\xi",
+            "\\eta"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "\\xi \\in (-\\infty, \\infty) \\;\\text{for}\\; \\Lambda \\ge 0",
+            "\\xi \\in (-\\sqrt{-12/\\Lambda}, \\sqrt{-12/\\Lambda}) \\;\\text{for}\\; \\Lambda < 0",
+            "\\eta \\in (-\\infty, \\infty) \\;\\text{for}\\; \\Lambda \\ge 0",
+            "\\eta \\in (-\\sqrt{-12/\\Lambda}, \\sqrt{-12/\\Lambda}) \\;\\text{for}\\; \\Lambda < 0",
+            "p > 0 \\;\\text{(where } \\Lambda < 0 \\text{ the disc whose rim is the conformal boundary)}",
+            "q = 0 \\;\\text{(the envelope of the wave fronts)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Lambda",
+              "description": "Cosmological constant, an inverse area of either sign or zero"
+            },
+            {
+              "symbol": "\\alpha",
+              "description": "A pure number. With $\\beta = 0$ and $\\Lambda = 0$ the metric is a pp-wave in Brinkmann's form"
+            },
+            {
+              "symbol": "\\beta",
+              "description": "An inverse length. With $\\alpha = 0$ and $\\Lambda = 0$ the metric is a Kundt wave, and with $\\Lambda = -3/L^2$, $\\alpha = 1$, and $\\beta = 1/L$ a Siklos wave"
+            },
+            {
+              "symbol": "h = h(u,\\xi,\\eta)",
+              "description": "Wave profile of this chart, a dimensionless function of $u$, $\\xi$, and $\\eta$. The metric solves Einstein's equations with the cosmological constant $\\Lambda$ and no matter exactly where $p^2(\\partial_\\xi^2 h + \\partial_\\eta^2 h) + 2\\Lambda h/3 = 0$"
+            },
+            {
+              "symbol": "p = 1 + \\dfrac{\\Lambda\\left(\\xi^2 + \\eta^2\\right)}{12}",
+              "description": "Conformal factor of the wave front, a surface of constant curvature $\\Lambda/3$"
+            },
+            {
+              "symbol": "q = \\alpha\\left(1 - \\dfrac{\\Lambda\\left(\\xi^2 + \\eta^2\\right)}{12}\\right) + \\beta\\xi",
+              "description": "The second function of Ozsváth, Robinson, and Rózga; the envelope of the wave fronts is $q = 0$"
+            },
+            {
+              "symbol": "\\kappa = \\dfrac{\\Lambda\\alpha^2}{3} + \\beta^2",
+              "description": "The invariant of Ozsváth, Robinson, and Rózga, whose sign no change of coordinates alters: with $\\Lambda = 0$ it vanishes for the pp-waves and is positive for Kundt's waves, and with $\\Lambda < 0$ it vanishes for Siklos's"
+            }
+          ],
+          "convention": "We use the coordinates of Ozsváth, Robinson, and Rózga, all lengths, with $\\alpha$ and $\\beta$ constants and $\\beta$ real. We leave the profile $h$ free, so no component assumes a field equation. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{d\\xi^2 + d\\eta^2}{p^2} - \\dfrac{2q^2}{p^2}du\\,dv + \\left(\\dfrac{\\kappa q^2}{p^2}v^2 + \\dfrac{q}{p}h\\right)du^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{q\\left(\\kappa\\,v^2\\,q + p\\,h\\right)}{p^2}"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-\\dfrac{q^2}{p^2}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-\\dfrac{q^2}{p^2}"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "\\dfrac{1}{p^2}"
+            },
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "\\dfrac{1}{p^2}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{8\\Lambda^2}{3}"
+        }
+      ]
+    },
+    {
       "id": "stockum_dust",
       "name": "Lanczos-van Stockum Rotating Dust Universe",
       "short_name": "Lanczos-van Stockum",
@@ -21445,6 +21959,11 @@
           "id": "bonnor_rotating_dust",
           "kind": "generalisation",
           "text": "Flat spacetime filled with a thin cloud of rigidly rotating dust that has angular momentum and no total mass. With the rotation set to zero, $a = 0$, the dust is gone and the spacetime is flat [bonnor1977cloud, astesiano2024]."
+        },
+        {
+          "id": "kundt_waves",
+          "kind": "generalisation",
+          "text": "Flat space is what a Kundt wave leaves when its profile is switched off, in coordinates that cover the outside of a cylinder growing at the speed of light [podolskybelan2004]."
         }
       ],
       "references": [
@@ -21507,7 +22026,8 @@
         "kiselev2003",
         "martindussaud2019",
         "bonnor1977cloud",
-        "astesiano2024"
+        "astesiano2024",
+        "podolskybelan2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -23952,6 +24472,11 @@
           "id": "kasner",
           "kind": "programme",
           "text": "Edward Kasner's vacuum of 1921, which expands along some axes and contracts along another. The same year he presented the product of two equal spheres as a solution with a cosmological constant, the positive signature form of Nariai's metric [kasner1921, kasner1925]."
+        },
+        {
+          "id": "kundt_waves",
+          "kind": "family",
+          "text": "Nariai's universe has rays that neither expand nor twist, so it sits in Kundt's class beside his waves [podolskybelan2004]."
         }
       ],
       "references": [
@@ -23969,7 +24494,8 @@
         "bousso1998proliferation",
         "cardoso2004",
         "romans1992",
-        "kasner1921"
+        "kasner1921",
+        "podolskybelan2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/nariai.json",
@@ -26552,6 +27078,11 @@
           "id": "schrodinger_spacetime",
           "kind": "conformal",
           "text": "A pp-wave whose profile falls as the inverse square of one transverse coordinate, multiplied by anti-de Sitter's conformal factor. It has the symmetries of the free Schrödinger equation [balasubramanian2008, duval2009]."
+        },
+        {
+          "id": "kundt_waves",
+          "kind": "generalisation",
+          "text": "Plane-fronted waves whose rays turn from one front to the next. Kundt found them beside the pp-waves in 1961, and one family with a cosmological constant holds both [kundt1961, bicak1999]."
         }
       ],
       "references": [
@@ -26589,7 +27120,8 @@
         "chrusciel2006",
         "horowitz2012lifshitz",
         "balasubramanian2008",
-        "duval2009"
+        "duval2009",
+        "bicak1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/pp_wave.json",
@@ -28512,6 +29044,11 @@
           "id": "siklos",
           "kind": "family",
           "text": "Waves of the same algebraic type with a negative cosmological constant, on fronts that do not expand: hyperbolic planes crossing anti-de Sitter space [podolsky1998, bicak1999]."
+        },
+        {
+          "id": "kundt_waves",
+          "kind": "family",
+          "text": "The waves of the same type whose rays do not expand. A wave of type N without twist belongs to one class or the other, with or without a cosmological constant [bicak1999]."
         }
       ],
       "references": [
@@ -31137,6 +31674,11 @@
           "id": "schrodinger_spacetime",
           "kind": "special_case",
           "text": "Siklos's line element at the profile $H = -\\beta^2/x^2$, which fails his vacuum equation and so needs matter. Its symmetries are those of the free Schrödinger equation [son2008, duval2009]."
+        },
+        {
+          "id": "kundt_waves",
+          "kind": "generalisation",
+          "text": "The wider family of Ozsváth, Robinson, and Rózga, sorted by the sign of one invariant. Siklos's waves are the case where it vanishes, and where it is positive the fronts roll round an envelope, as the fronts of Kundt's waves do [ozsvath1985, bicak1999, griffiths2004]."
         }
       ],
       "references": [
@@ -31157,7 +31699,8 @@
         "balasubramanian2010",
         "donos2010",
         "son2008",
-        "duval2009"
+        "duval2009",
+        "griffiths2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/siklos.json",
