@@ -936,6 +936,23 @@ DIMENSIONS = {
     ("damour_solodukhin", "einstein_rosen"): {
         "t": "T", "u": "L**(1/2)", "\\theta": "1", "\\phi": "1", "r_s": "L", "\\lambda": "1",
     },
+    # Einstein and Rosen's u has u^2 = r - r_s on the neutral bridge, the square root of a length, and
+    # u^2 = r^2 - r_q^2 on the charged one, a length; r_q is the charge radius, their epsilon/sqrt(2).
+    ("einstein_rosen_bridge", "bridge"): {
+        "t": "T", "u": "L**(1/2)", "\\theta": "1", "\\phi": "1", "r_s": "L",
+    },
+    ("einstein_rosen_bridge", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
+    },
+    ("einstein_rosen_bridge", "isotropic"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
+    },
+    ("einstein_rosen_bridge", "charged_spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L",
+    },
+    ("einstein_rosen_bridge", "charged_bridge"): {
+        "t": "T", "u": "L", "\\theta": "1", "\\phi": "1", "r_q": "L",
+    },
     # Simpson and Visser's a is a length beside Schwarzschild's r_s, and rho = sqrt(r^2 + a^2) is the
     # areal radius, a name in the charts that keep their r and the coordinate of Tsukamoto's.
     ("simpson_visser", "spherical"): {

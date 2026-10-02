@@ -6897,6 +6897,230 @@ def damour_solodukhin(ck, src):
     return views
 
 
+def einstein_rosen_bridge(ck, src):
+    """Einstein and Rosen's bridges, one view for each chart, each set in the extension through its
+    horizon. The neutral bridge's two sheets are the two exteriors I and I' of Kruskal and
+    Szekeres's extension of Schwarzschild's metric, the tower of one root: u > 0 is I and u < 0 is
+    I', r = r_s + u^2 on both, and the isotropic radius r has the areal radius r(1 + r_s/4r)^2, I
+    outside r_s/4 and I' inside it. Every event of the bridge u = 0 at a finite t lies on the
+    bifurcation sphere, the one point where the two exteriors touch, and Kruskal's time runs
+    against t in I'. The charged bridges have f = 1 - r_s/r - r_q^2/r^2 = (r - r_+)(r - r_-)/r^2
+    with r_- < 0 < r_+, and 1/f = 1 + two simple poles, so the same tower serves with the roots
+    r_+ and r_-: r_*(0) = 0 puts r = 0 on the straight lines T = +-pi/2, a spacelike singularity
+    as Schwarzschild's is, where the published Kretschmann scalar diverges. With no mass, at
+    r_q = 1, the roots are 1 and -1 and r = sqrt(u^2 + r_q^2); with a mass, at r_s = 1 and r_q =
+    sqrt(3)/2, they are 3/2 and -1/2."""
+    box = [-PI - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25]
+    hexagon = [[PI, 0], [HALF, HALF], [-HALF, HALF], [-PI, 0], [-HALF, -HALF], [HALF, -HALF]]
+    right = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    left = [[-x, t] for x, t in right]
+    TS = (-4, -2, -1, 0, 1, 2, 4)
+    t_all = spread(-np.inf, np.inf, 500, 9)
+
+    def edges(v, horizon, singular, sheets=("sheet", "sheet")):
+        v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]],
+                        [[-PI, 0], [-HALF, HALF]], [[-PI, 0], [-HALF, -HALF]]])
+        v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+        v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+        for at in ((PI, 0), (-PI, 0), (HALF, HALF), (HALF, -HALF), (-HALF, HALF), (-HALF, -HALF)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+        v.label_xt([-PI, 0], "$i^0$", "r", dx=-6)
+        for sx in (1, -1):
+            v.label_xt([sx * HALF, HALF], "$i^+$", "b", dy=-6)
+            v.label_xt([sx * HALF, -HALF], "$i^-$", "t", dy=6)
+            v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-4)
+            v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=4)
+        v.label_xt([0, HALF], "$r = 0$", "b", dy=-8)
+        v.label_xt([0, -HALF], "$r = 0$", "t", dy=8)
+        v.label_xt([-Q4, Q4], horizon, "tr", "small", dx=-6, dy=2)
+        v.label_xt([HALF, -0.95], sheets[0], cls="region")
+        v.label_xt([-HALF, -0.95], sheets[1], cls="region")
+        v.label_xt([0, 1.15], "black hole", cls="region")
+        v.label_xt([0, -1.15], "white hole", cls="region")
+        v.legend("horizon", "the horizon " + horizon + ", which meets itself on the bridge")
+        v.legend("singular", singular)
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+
+    def both(T, areal):
+        """(t, x) of a chart through the bridge at x = 0 onto the two exteriors."""
+        def fmap(t, x):
+            t, x = np.asarray(t, dtype=float), np.asarray(x, dtype=float)
+            t, x = np.broadcast_arrays(t, x)
+            a, b = T.pq("I", t, areal(x)), T.pq("I'", t, areal(x))
+            return np.where(x > 0, a[0], b[0]), np.where(x > 0, a[1], b[1])
+        return fmap
+
+    def moment(T, m, system, coordinate, areal=lambda x: x):
+        hi = areal(m.reach(system, coordinate)[1])
+        return [through_bifurcation(T, ("I'", "I"), hi, T.rf[0])]
+
+    views = []
+
+    # The neutral bridge at r_s = 1.
+    sph = Plane(src, "einstein_rosen_bridge", "spherical", ("t", "r"), EQUATOR, {"r_s": 1})
+    assert sph.g[0, 1] == 0 and sp.simplify(sph.g[0, 0] * sph.g[1, 1] + 1) == 0
+    T = Tower(-sph.g[0, 0], sph.x1, [1])
+    bridge = Plane(src, "einstein_rosen_bridge", "bridge", ("t", "u"), EQUATOR, {"r_s": 1})
+    iso = Plane(src, "einstein_rosen_bridge", "isotropic", ("t", "r"), EQUATOR, {"r_s": 1})
+    through = both(T, lambda u: 1 + u ** 2)
+
+    def isotropic(t, r):
+        t, r = np.broadcast_arrays(np.asarray(t, dtype=float), np.asarray(r, dtype=float))
+        R = r * (1 + 1 / (4 * r)) ** 2
+        a, b = T.pq("I", t, R), T.pq("I'", t, R)
+        return np.where(4 * r > 1, a[0], b[0]), np.where(4 * r > 1, a[1], b[1])
+
+    ck.chart("Einstein-Rosen spherical, one sheet", sph, lambda t, r: T.pq("I", t, r),
+             ck.uniform(-15, 15), ck.uniform(1.001, 30), lambda t, r: (1, 0))
+    ck.chart("Einstein-Rosen bridge, the sheet u > 0", bridge, through,
+             ck.uniform(-15, 15), ck.uniform(0.03, 5), lambda t, u: (1, 0))
+    ck.chart("Einstein-Rosen bridge, the sheet u < 0", bridge, through,
+             ck.uniform(-15, 15), ck.uniform(-5, -0.03), lambda t, u: (-1, 0))
+    ck.chart("Einstein-Rosen isotropic, outside r_s/4", iso, isotropic,
+             ck.uniform(-15, 15), ck.uniform(0.26, 30), lambda t, r: (1, 0))
+    ck.chart("Einstein-Rosen isotropic, inside r_s/4", iso, isotropic,
+             ck.uniform(-15, 15), np.exp(ck.uniform(-6, math.log(0.24))), lambda t, r: (-1, 0))
+    for name, pq in (("u -> 0+", through(3.0, 1e-6)), ("u -> 0-", through(3.0, -1e-6)),
+                     ("the isotropic r -> r_s/4", isotropic(3.0, 0.25 + 1e-7))):
+        ck.limit(f"Einstein-Rosen: {name} at fixed t lands on the bifurcation sphere", point(*pq), [0, 0], 1e-4)
+    ck.limit("Einstein-Rosen: the isotropic r -> 0 at t = 0 lands on the other i0, (X, T) = (-pi, 0)",
+             point(*isotropic(0.0, 1e-9)), [-PI, 0], 1e-3)
+    t, u = ck.uniform(-10, 10, 200), ck.uniform(0.05, 4, 200)
+    R = 1 + u ** 2
+    r_iso = (R - 0.5 + np.sqrt(R * (R - 1))) / 2
+    ck.limit("Einstein-Rosen: Schwarzschild's chart lands on the points of Einstein and Rosen's",
+             np.array(T.pq("I", t, R)), np.array(through(t, u)), 1e-12)
+    ck.limit("Einstein-Rosen: the isotropic chart lands on the points of Einstein and Rosen's, u > 0",
+             np.array(isotropic(t, r_iso)), np.array(through(t, u)), 1e-9)
+    ck.limit("Einstein-Rosen: the isotropic chart lands on the points of Einstein and Rosen's, u < 0",
+             np.array(isotropic(t, 1 / (16 * r_iso))), np.array(through(t, -u)), 1e-9)
+    ck.finite("Einstein-Rosen: the Kretschmann scalar is finite on the bridge u = 0",
+              bridge.kretschmann(ck.uniform(-5, 5, 50), ck.uniform(-0.01, 0.01, 50)))
+    ck.diverges("Einstein-Rosen: Schwarzschild's Kretschmann scalar diverges at r = 0", sph.kretschmann(0, 1e-2),
+                sph.kretschmann(0, 1e-3))
+    flamm = slices.moments("einstein_rosen_bridge", "neutral")[0]
+    singular = "$r = 0$ of the extension, where the Kretschmann scalar diverges"
+    for vid, label in (("bridge", "Einstein-Rosen"), ("spherical", "Schwarzschild"), ("isotropic", "Isotropic")):
+        v = View(vid, label, box, vid)
+        v.fill("region", hexagon)
+        v.fill("cover", right)
+        if vid == "bridge":
+            v.fill("cover", left)
+            grid(v, "r", lambda u, t: through(t, u), (-2, -1.5, -1, -0.5, 0.5, 1, 1.5, 2), t_all)
+            uu = spread(0, np.inf, 500, 14)
+            for sign in (1, -1):
+                grid(v, "t", lambda t, u: through(t, u), TS, sign * uu)
+            label_on(v, through(0.0, 1.0), "$u = \\sqrt{r_s}$")
+            v.legend("cover", "both sheets, which $t$ and $u$ cover")
+            v.legend("r", "$u$ constant, every $\\sqrt{r_s}/2$ to $\\pm 2\\sqrt{r_s}$, a sphere of radius $r_s + u^2$")
+        elif vid == "isotropic":
+            v.fill("cover", left)
+            grid(v, "r", lambda r, t: isotropic(t, r), (1 / 64, 1 / 32, 1 / 16, 1 / 8, 1 / 2, 1, 2, 4), t_all)
+            for rr in (0.25 + spread(0, np.inf, 500, 14), 0.25 / (1 + spread(0, np.inf, 500, 14))):
+                grid(v, "t", isotropic, TS, rr)
+            label_on(v, isotropic(0.0, 1.0), "$r = r_s$")
+            v.legend("cover", "both sheets, which $t$ and the isotropic $r$ cover")
+            v.legend("r", "$r$ constant, at $r_s/2$, $r_s$, $2\\,r_s$ and $4\\,r_s$ on one sheet and at "
+                          "$r_s/8$, $r_s/16$, $r_s/32$ and $r_s/64$ on the other")
+        else:
+            for r in (1.05, 1.25, 1.5, 2, 3):
+                v.curve("r", *T.pq("I", t_all, np.full_like(t_all, r)))
+            rr = spread(1, np.inf, 500, 14)
+            for tt in TS:
+                v.curve("t", *T.pq("I", np.full_like(rr, tt), rr))
+            for r, text in ((1.25, "$1.25\\,r_s$"), (2, "$2\\,r_s$")):
+                label_on(v, T.pq("I", 0.0, r), text)
+            v.legend("cover", "one sheet, which $t$ and $r > r_s$ cover")
+            v.legend("r", "$r$ constant, at $1.05$, $1.25$, $1.5$, $2$ and $3\\,r_s$")
+        edges(v, "$r = r_s$", singular, {"bridge": ("$u > 0$", "$u < 0$"), "isotropic": ("$4r > r_s$", "$4r < r_s$")}.get(
+            vid, ("sheet", "sheet")))
+        v.legend("t", "$ct$ constant, at $0$, $\\pm r_s$, $\\pm 2\\,r_s$ and $\\pm 4\\,r_s$")
+        v.slice(flamm, moment(T, flamm, "spherical", "r"))
+        v.set(settings="$r_s = 1$; $p = \\mp\\arctan e^{-(ct - r_*)/2r_s}$ and $q = \\pm\\arctan e^{(ct + r_*)/2r_s}$, "
+                       "with $r_* = r + r_s\\ln(r/r_s - 1)$ and the upper signs on the sheet drawn on the right.")
+        views.append(v)
+
+    # The charged bridge with a mass, at r_q = sqrt(3) r_s/2: f = (r - 3/2)(r + 1/2)/r^2.
+    params = {"r_s": 1, "r_q": "sqrt(3)/2"}
+    massive = Plane(src, "einstein_rosen_bridge", "charged_spherical", ("t", "r"), EQUATOR, params)
+    assert massive.g[0, 1] == 0 and sp.simplify(massive.g[0, 0] * massive.g[1, 1] + 1) == 0
+    TM = Tower(-massive.g[0, 0], massive.x1, [sp.Rational(3, 2), -sp.Rational(1, 2)])
+    ck.chart("Einstein-Rosen charged with a mass, one sheet", massive, lambda t, r: TM.pq("I", t, r),
+             ck.uniform(-15, 15), ck.uniform(1.501, 30), lambda t, r: (1, 0))
+    ck.chart("Einstein-Rosen charged with a mass, the black hole of the extension", massive,
+             lambda t, r: TM.pq("II", t, r), ck.uniform(-15, 15), ck.uniform(0.01, 1.499), lambda t, r: (0, -1))
+    p, q = TM.pq("II", np.array([-5.0, 0, 5]), np.full(3, 1e-9))
+    ck.limit("Einstein-Rosen charged with a mass: r -> 0 lands on T = pi/2", p + q, [HALF] * 3)
+    ck.diverges("Einstein-Rosen charged with a mass: the Kretschmann scalar diverges at r = 0",
+                massive.kretschmann(0, 1e-2), massive.kretschmann(0, 1e-3))
+    ck.finite("Einstein-Rosen charged with a mass: the Kretschmann scalar is finite at r_+",
+              massive.kretschmann(np.zeros(3), np.array([1.499, 1.5, 1.501])))
+    m = slices.moments("einstein_rosen_bridge", "charged_mass")[0]
+    v = View("charged_spherical", "Charged, areal radius", box, "charged_spherical")
+    v.fill("region", hexagon)
+    v.fill("cover", right)
+    for r in (1.6, 1.8, 2, 3, 4):
+        v.curve("r", *TM.pq("I", t_all, np.full_like(t_all, r)))
+    rr = spread(1.5, np.inf, 500, 14)
+    for tt in TS:
+        v.curve("t", *TM.pq("I", np.full_like(rr, tt), rr))
+    for r, text in ((1.8, "$1.8\\,r_s$"), (3, "$3\\,r_s$")):
+        label_on(v, TM.pq("I", 0.0, r), text)
+    edges(v, "$r = r_+$", "$r = 0$ of the extension, where the Kretschmann scalar diverges")
+    v.legend("cover", "one sheet, which $t$ and $r > r_+$ cover")
+    v.legend("r", "$r$ constant, at $1.6$, $1.8$, $2$, $3$ and $4\\,r_s$")
+    v.legend("t", "$ct$ constant, at $0$, $\\pm r_s$, $\\pm 2\\,r_s$ and $\\pm 4\\,r_s$")
+    v.slice(m, moment(TM, m, "charged_spherical", "r"))
+    v.set(settings="$r_s = 1$ and $r_q = \\sqrt{3}\\,r_s/2$, so that $r_+ = 3r_s/2$; "
+                   "$p = -\\arctan e^{-4(ct - r_*)/9r_s}$ and $q = \\arctan e^{4(ct + r_*)/9r_s}$ on the sheet drawn, "
+                   "with $r_* = r + \\tfrac{9}{8}r_s\\ln(r/r_+ - 1) - \\tfrac{1}{8}r_s\\ln(2r/r_s + 1)$.")
+    views.append(v)
+
+    # The charged bridge with no mass, at r_q = 1: f = (r - 1)(r + 1)/r^2 and r = sqrt(u^2 + 1).
+    massless = Plane(src, "einstein_rosen_bridge", "charged_bridge", ("t", "u"), EQUATOR, {"r_q": 1})
+    areal = Plane(src, "einstein_rosen_bridge", "charged_spherical", ("t", "r"), EQUATOR, {"r_s": 0, "r_q": 1})
+    T0 = Tower(-areal.g[0, 0], areal.x1, [1, -1])
+    charged = both(T0, lambda u: np.sqrt(1 + u ** 2))
+    ck.chart("Einstein-Rosen charged with no mass, the sheet u > 0", massless, charged,
+             ck.uniform(-15, 15), ck.uniform(0.03, 8), lambda t, u: (1, 0))
+    ck.chart("Einstein-Rosen charged with no mass, the sheet u < 0", massless, charged,
+             ck.uniform(-15, 15), ck.uniform(-8, -0.03), lambda t, u: (-1, 0))
+    ck.chart("Einstein-Rosen charged with no mass, the black hole of the extension", areal,
+             lambda t, r: T0.pq("II", t, r), ck.uniform(-15, 15), ck.uniform(0.01, 0.999), lambda t, r: (0, -1))
+    ck.limit("Einstein-Rosen charged with no mass: u -> 0 at fixed t lands on the bifurcation sphere",
+             point(*charged(3.0, 1e-6)), [0, 0], 1e-4)
+    p, q = T0.pq("II", np.array([-5.0, 0, 5]), np.full(3, 1e-9))
+    ck.limit("Einstein-Rosen charged with no mass: r -> 0 lands on T = pi/2", p + q, [HALF] * 3)
+    ck.diverges("Einstein-Rosen charged with no mass: the Kretschmann scalar diverges at r = 0",
+                areal.kretschmann(0, 1e-2), areal.kretschmann(0, 1e-3))
+    ck.limit("Einstein-Rosen charged with no mass: the Kretschmann scalar on the bridge is 56/r_q^4",
+             massless.kretschmann(np.zeros(1), np.zeros(1)), [56.0], 1e-9)
+    m = slices.moments("einstein_rosen_bridge", "charged")[0]
+    v = View("charged_bridge", "Charged Einstein-Rosen", box, "charged_bridge")
+    v.fill("region", hexagon)
+    v.fill("cover", right)
+    v.fill("cover", left)
+    grid(v, "r", lambda u, t: charged(t, u), (-3, -2, -1, -0.5, 0.5, 1, 2, 3), t_all)
+    uu = spread(0, np.inf, 500, 14)
+    for sign in (1, -1):
+        grid(v, "t", lambda t, u: charged(t, u), TS, sign * uu)
+    label_on(v, charged(0.0, 1.0), "$u = r_q$")
+    edges(v, "$r = r_q$", "$r = 0$ of the extension, where the Kretschmann scalar diverges",
+          ("$u > 0$", "$u < 0$"))
+    v.legend("cover", "both sheets, which $t$ and $u$ cover")
+    v.legend("r", "$u$ constant, at $\\pm r_q/2$, $\\pm r_q$, $\\pm 2\\,r_q$ and $\\pm 3\\,r_q$, a sphere of radius "
+                  "$\\sqrt{u^2 + r_q^2}$")
+    v.legend("t", "$ct$ constant, at $0$, $\\pm r_q$, $\\pm 2\\,r_q$ and $\\pm 4\\,r_q$")
+    v.slice(m, moment(T0, m, "charged_bridge", "u", lambda u: math.sqrt(1 + u * u)))
+    v.set(settings="$r_q = 1$ and $r_s = 0$; $p = \\mp\\arctan e^{-(ct - r_*)/r_q}$ and $q = \\pm\\arctan e^{(ct + r_*)/r_q}$, "
+                   "with $r = \\sqrt{u^2 + r_q^2}$, $r_* = r + \\tfrac{1}{2}r_q\\ln\\left((r - r_q)/(r + r_q)\\right)$ and "
+                   "the upper signs on the sheet $u > 0$.")
+    views.append(v)
+    order = ["bridge", "spherical", "isotropic", "charged_spherical", "charged_bridge"]
+    return sorted(views, key=lambda v: order.index(v.d["id"]))
+
+
 # ---------------------------------------------------------------- the cosmic string
 
 def cosmic_string(ck, src):
@@ -16257,6 +16481,7 @@ DRAWN = {
     "thin_shell_wormhole": thin_shell_wormhole,
     "teo_wormhole": teo_wormhole,
     "damour_solodukhin": damour_solodukhin,
+    "einstein_rosen_bridge": einstein_rosen_bridge,
     "simpson_visser": simpson_visser,
     "levi_civita": levi_civita,
     "kaluza_klein_monopole": kaluza_klein_monopole,
@@ -17677,6 +17902,49 @@ CAPTIONS = {
     ("simpson_visser", "outgoing_wormhole"): [
         "The same wormhole in the outgoing Eddington-Finkelstein chart, whose lines of constant $u$ are the "
         "light rays moving toward $r \\to \\infty$, straight lines at 45° here. The chart covers the whole diamond.",
+    ],
+    ("einstein_rosen_bridge", "bridge"): [
+        "The neutral bridge in Einstein and Rosen's $t$ and $u$, each point in the diagram a 2-sphere of radius "
+        "$r_s + u^2$, set in Kruskal and Szekeres's extension of Schwarzschild's metric. The sheet $u > 0$ is the "
+        "right exterior and the sheet $u < 0$ the left, each with its own $i^0$ and $\\mathscr{I}^\\pm$.",
+        "The sheets touch at one point of the diagram, the bifurcation sphere $r = r_s$, and the map from $t$ and "
+        "$u$ sends the whole bridge $u = 0$, at every finite $t$, to that one sphere. Light sent toward the bridge reaches the horizon as "
+        "$t \\to \\infty$ and goes on into the black hole, which belongs to neither sheet. The left exterior is "
+        "drawn with $t$ increasing downward, since the time of the extension runs against $t$ there.",
+    ],
+    ("einstein_rosen_bridge", "spherical"): [
+        "One sheet of the neutral bridge in Schwarzschild's $t$ and $r$, each point in the diagram a 2-sphere of "
+        "radius $r$, set in Kruskal and Szekeres's extension. The coordinates cover the right exterior and end at "
+        "$r = r_s$, which on the diagram is the pair of horizons and the bifurcation sphere where they cross.",
+        "Einstein and Rosen's second sheet is the left exterior, the same coordinates over again. The lines of "
+        "constant $t$ all pass through the bifurcation sphere, so each moment of $t$ is a bridge between the "
+        "two sheets.",
+    ],
+    ("einstein_rosen_bridge", "isotropic"): [
+        "The neutral bridge in $t$ and the isotropic radius $r$, each point in the diagram a 2-sphere of radius "
+        "$R = r(1 + r_s/4r)^2$, set in Kruskal and Szekeres's extension. The sheet $r > r_s/4$ is the right "
+        "exterior and the sheet $0 < r < r_s/4$ the left, whose spatial infinity $i^0$ is $r = 0$.",
+        "The inversion $r \\to r_s^2/16r$ carries each sphere onto the sphere of the same size on the other "
+        "sheet and leaves the bridge $r = r_s/4$ where it is. The bridge at every finite $t$ is sent to "
+        "the bifurcation sphere, the one point where the sheets touch.",
+    ],
+    ("einstein_rosen_bridge", "charged_spherical"): [
+        "One sheet of the charged bridge with a mass ($r_q = \\sqrt{3}\\,r_s/2$) in $t$ and the areal radius $r$, "
+        "each point in the diagram a 2-sphere of radius $r$. With the charge entering as $-r_q^2/r^2$, "
+        "$g_{tt}$ has the one positive root $r_+ = 3r_s/2$, a horizon, and the extension through it has the "
+        "diagram of Schwarzschild's.",
+        "The coordinates cover the right exterior, and Einstein and Rosen's second sheet is the left one. The "
+        "singularity $r = 0$ of the extension is spacelike, where the charge of Reissner and Nordström's black "
+        "hole, entering as $+r_q^2/r^2$, makes it timelike, and the Kretschmann scalar grows there as "
+        "$56r_q^4/r^8$.",
+    ],
+    ("einstein_rosen_bridge", "charged_bridge"): [
+        "The charged bridge with no mass in Einstein and Rosen's $t$ and $u$, each point in the diagram a 2-sphere "
+        "of radius $\\sqrt{u^2 + r_q^2}$, set in the extension through $r = r_q$. The sheet $u > 0$ is the right "
+        "exterior and the sheet $u < 0$ the left.",
+        "The bridge $u = 0$ is a horizon, as the neutral one is: $g_{tt} = -u^2/(u^2 + r_q^2)$ vanishes on it, "
+        "at every finite $t$ it is sent to the bifurcation sphere, and light sent toward it goes on into "
+        "the black hole of the extension, which ends at the spacelike singularity $r = 0$.",
     ],
     ("damour_solodukhin", "spherical"): [
         "The Damour-Solodukhin wormhole ($\\lambda = 0.2$) in its own coordinates on one side of the throat, each "

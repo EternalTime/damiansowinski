@@ -1,5 +1,5 @@
 {
-  "version": "ac97f09e83304492",
+  "version": "1f344c9006a38b10",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -17158,6 +17158,98 @@
         "eprint": "0711.4620",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.12942/lrr-2007-5"
+      }
+    },
+    "einstein1935epr": {
+      "type": "article",
+      "fields": {
+        "title": "Can Quantum-Mechanical Description of Physical Reality Be Considered Complete?",
+        "author": "Einstein, Albert and Podolsky, Boris and Rosen, Nathan",
+        "journal": "Physical Review",
+        "volume": "47",
+        "number": "10",
+        "pages": "777--780",
+        "year": "1935",
+        "doi": "10.1103/PhysRev.47.777",
+        "url": "https://doi.org/10.1103/PhysRev.47.777"
+      }
+    },
+    "misner1957": {
+      "type": "article",
+      "fields": {
+        "title": "Classical physics as geometry",
+        "author": "Misner, Charles W. and Wheeler, John A.",
+        "journal": "Annals of Physics",
+        "volume": "2",
+        "number": "6",
+        "pages": "525--603",
+        "year": "1957",
+        "doi": "10.1016/0003-4916(57)90049-0",
+        "url": "https://doi.org/10.1016/0003-4916(57)90049-0"
+      }
+    },
+    "guendelman2009": {
+      "type": "article",
+      "fields": {
+        "title": "{Einstein-Rosen} ``bridge'' needs lightlike brane source",
+        "author": "Guendelman, Eduardo and Kaganovich, Alexander and Nissimov, Emil and Pacheva, Svetlana",
+        "journal": "Physics Letters B",
+        "volume": "681",
+        "number": "5",
+        "pages": "457--462",
+        "year": "2009",
+        "doi": "10.1016/j.physletb.2009.10.062",
+        "eprint": "0904.3198",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0904.3198"
+      }
+    },
+    "maldacena2013": {
+      "type": "article",
+      "fields": {
+        "title": "Cool horizons for entangled black holes",
+        "author": "Maldacena, Juan and Susskind, Leonard",
+        "journal": "Fortschritte der Physik",
+        "volume": "61",
+        "number": "9",
+        "pages": "781--811",
+        "year": "2013",
+        "doi": "10.1002/prop.201300020",
+        "eprint": "1306.0533",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1306.0533"
+      }
+    },
+    "lobo2016": {
+      "type": "article",
+      "fields": {
+        "title": "From the {Flamm-Einstein-Rosen} bridge to the modern renaissance of traversable wormholes",
+        "author": "Lobo, Francisco S. N.",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "25",
+        "number": "7",
+        "pages": "1630017",
+        "year": "2016",
+        "doi": "10.1142/S0218271816300172",
+        "eprint": "1604.02082",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1604.02082"
+      }
+    },
+    "gao2017": {
+      "type": "article",
+      "fields": {
+        "title": "Traversable wormholes via a double trace deformation",
+        "author": "Gao, Ping and Jafferis, Daniel Louis and Wall, Aron C.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2017",
+        "number": "12",
+        "pages": "151",
+        "year": "2017",
+        "doi": "10.1007/JHEP12(2017)151",
+        "eprint": "1608.05687",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1608.05687"
       }
     },
     "mazur2001": {

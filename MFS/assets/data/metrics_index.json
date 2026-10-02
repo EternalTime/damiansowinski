@@ -434,7 +434,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1a12a683e2f30d0f",
+    "version": "958ced10f28587ec",
     "diagrams": "99a9f8a21a100275",
     "conformal": "7f7b3ad43c1f628e",
     "embedding": "759b3c0dec35465e"
@@ -539,8 +539,42 @@
     "embedding": "07b92b646e316b86"
   },
   {
+    "id": "einstein_rosen_bridge",
+    "name": "Einstein-Rosen Bridge",
+    "tags": [
+      "wormhole",
+      "Einstein-Rosen bridge",
+      "throat",
+      "horizon",
+      "event horizon",
+      "Flamm's paraboloid",
+      "maximal extension",
+      "coordinate singularity",
+      "causal structure",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "mass",
+      "charged",
+      "electric charge",
+      "electromagnetic field",
+      "negative energy",
+      "energy condition violation",
+      "asymptotically flat",
+      "exact solution",
+      "Einstein equations",
+      "Lorentzian",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "8765746f78ca2bc3",
+    "diagrams": "76bab86a529ed941",
+    "conformal": "c45f19da93e85da3",
+    "embedding": "626bd0932cbe6704"
+  },
+  {
     "id": "einstein_rosen_waves",
-    "name": "Einstein-Rosen",
+    "name": "Einstein-Rosen Waves",
     "tags": [
       "vacuum",
       "gravitational wave",
@@ -553,7 +587,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "bb052ac577840f51",
+    "version": "6f22f73a80e6a3ba",
     "diagrams": "dc0f3031798ca092",
     "conformal": "2876dfbbabbb4b26",
     "embedding": "f736444606912902"
@@ -578,7 +612,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3a5b5b35068117f6",
+    "version": "083084e18f92d8bb",
     "diagrams": "7b3fbccc74f5b578",
     "conformal": "13e145da297e8d51",
     "embedding": "8c16d5714cfa992a"
@@ -1469,7 +1503,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "da0b9393b02e86f1",
+    "version": "aa501cccf0152c92",
     "diagrams": "1de01953e7c22d84",
     "conformal": "956949c7f4a96538",
     "embedding": "2fb2f35ad8d95922"
@@ -1823,7 +1857,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f8da019a24b3995b",
+    "version": "9abad142d458570e",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -1963,7 +1997,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a6431d47f7b13fb6",
+    "version": "ced6c75b8e06d9b0",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"

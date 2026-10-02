@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 89,
+  "count": 90,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -4125,6 +4125,11 @@
           "text": "At $\\lambda = 0$ the throat is Schwarzschild's horizon and the wormhole is his black hole. For any other $\\lambda$ a moment of time is the same Flamm's paraboloid, with a throat that stays open [damour2007]."
         },
         {
+          "id": "einstein_rosen_bridge",
+          "kind": "special_case",
+          "text": "At $\\lambda = 0$ the wormhole written in Einstein and Rosen's $u$ is their neutral bridge of 1935, whose throat is a horizon [einstein1935]."
+        },
+        {
           "id": "morris_thorne",
           "kind": "generalisation",
           "text": "The general static wormhole a traveller could cross, with any redshift function $\\Phi$ and shape function $b$. Damour and Solodukhin's is the one with $b = r_s$ and $e^{2\\Phi} = 1 - r_s/r + \\lambda^2$ [morris1988, nandi2022]."
@@ -5470,9 +5475,388 @@
       ]
     },
     {
+      "id": "einstein_rosen_bridge",
+      "name": "Einstein-Rosen Bridge",
+      "short_name": "Einstein-Rosen Bridge",
+      "description": "The model of a particle that Albert Einstein and Nathan Rosen proposed in 1935: two identical sheets of space joined at a smallest sphere, the bridge. The neutral bridge is Schwarzschild's exterior taken twice and joined at $r = r_s$, and the charged bridge is Reissner and Nordström's metric with the sign of the electric term reversed, which needs no mass.",
+      "tags": [
+        "wormhole",
+        "Einstein-Rosen bridge",
+        "throat",
+        "horizon",
+        "event horizon",
+        "Flamm's paraboloid",
+        "maximal extension",
+        "coordinate singularity",
+        "causal structure",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "mass",
+        "charged",
+        "electric charge",
+        "electromagnetic field",
+        "negative energy",
+        "energy condition violation",
+        "asymptotically flat",
+        "exact solution",
+        "Einstein equations",
+        "Lorentzian",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and $r_q$ is the charge radius, which Einstein and Rosen write $\\epsilon/\\sqrt{2}$. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "locally_same",
+          "text": "Each sheet of the neutral bridge is Schwarzschild's exterior, and the bridge is his horizon. Martin Kruskal's extension holds both sheets, with a black hole and a white hole between them [kruskal1960]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "dual",
+          "text": "The charged black hole, whose electric field has positive energy. The charged bridge is its metric continued to $r_q^2 \\to -r_q^2$, the Maxwell stress tensor entering Einstein's equations with the opposite sign [einstein1935]."
+        },
+        {
+          "id": "damour_solodukhin",
+          "kind": "generalisation",
+          "text": "The bridge propped open by one number. Thibault Damour and Sergey Solodukhin added $\\lambda^2$ to $-g_{tt}$, so that clocks on the throat still tick and light crosses it, and at $\\lambda = 0$ their metric in $t$ and $u$ is the neutral bridge [damour2007]."
+        },
+        {
+          "id": "morris_thorne",
+          "kind": "family",
+          "text": "The wormhole made to be crossed. Michael Morris and Kip Thorne kept the two sheets and the throat, removed the horizon, and paid with matter whose tension exceeds its energy density [morris1988]."
+        },
+        {
+          "id": "ellis_bronnikov",
+          "kind": "family",
+          "text": "A moment of the charged bridge with no mass is a moment of Ellis and Bronnikov's wormhole, $du^2 + (u^2 + r_q^2)d\\Omega^2$ with $r_q$ for their $\\ell$. Their $g_{tt}$ is $-1$ everywhere, so their throat has no horizon [ellis1973, bronnikov1973]."
+        },
+        {
+          "id": "einstein_rosen_waves",
+          "kind": "programme",
+          "text": "The other spacetime that carries the two names. Einstein and Rosen found the cylindrical gravitational waves again in 1937, two years after the bridge [einstein1937]."
+        }
+      ],
+      "references": [
+        "einstein1935",
+        "weinstein2015twobody",
+        "einstein1935epr",
+        "flamm1916",
+        "lobo2016",
+        "wheeler1955",
+        "misner1957",
+        "kruskal1960",
+        "fuller1962",
+        "guendelman2009",
+        "morris1988",
+        "maldacena2013",
+        "gao2017",
+        "damour2007",
+        "ellis1973",
+        "bronnikov1973",
+        "einstein1937"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_bridge.json",
+      "charts": [
+        {
+          "id": "bridge",
+          "name": "Einstein-Rosen",
+          "coordinates": [
+            "t",
+            "u",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "u \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "u = 0 \\;\\text{(the bridge)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$, the areal radius of the neutral bridge"
+            }
+          ],
+          "convention": "We use coordinates $(t, u, \\theta, \\phi)$, with $t$ carrying dimensions of time and $u^2 = r - r_s$ for the areal radius $r$, so $u$ is the square root of a length, positive on one sheet and negative on the other. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter $s$, so $\\dot{t}$ means $d(ct)/ds$.",
+          "line_element": "ds^2 = -\\dfrac{u^2}{u^2 + r_s}c^2dt^2 + 4\\left(u^2 + r_s\\right)du^2 + \\left(u^2 + r_s\\right)^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{u^2}{u^2 + r_s}"
+            },
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "4\\left(u^2 + r_s\\right)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(u^2 + r_s\\right)^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(u^2 + r_s\\right)^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{\\left(u^2 + r_s\\right)^6}"
+        },
+        {
+          "id": "spherical",
+          "name": "Schwarzschild",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_s, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s \\;\\text{(the bridge)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$, the areal radius of the neutral bridge"
+            }
+          ],
+          "convention": "We use Schwarzschild's coordinates $(t, r, \\theta, \\phi)$ on one sheet, with $t$ carrying dimensions of time and $r$ the areal radius. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter $s$, so $\\dot{t}$ means $d(ct)/ds$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "isotropic",
+          "name": "Isotropic",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s/4 \\;\\text{(the bridge)}",
+            "r \\to 0 \\;\\text{(the far end of the other sheet)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$, the areal radius of the neutral bridge"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the isotropic radius, so the areal radius is $r(1 + r_s/4r)^2$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter $s$, so $\\dot{t}$ means $d(ct)/ds$.",
+          "line_element": "ds^2 = -\\left(\\dfrac{4r - r_s}{4r + r_s}\\right)^2c^2dt^2 + \\left(1 + \\dfrac{r_s}{4r}\\right)^4\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(\\dfrac{4r - r_s}{4r + r_s}\\right)^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 + \\dfrac{r_s}{4r}\\right)^4"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\left(4r + r_s\\right)^4}{256r^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(4r + r_s\\right)^4\\sin^2\\theta}{256r^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}\\left(1 + \\dfrac{r_s}{4r}\\right)^{-12}"
+        },
+        {
+          "id": "charged_spherical",
+          "name": "Charged, Areal Radius",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_+, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_+ \\;\\text{(the bridge)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius, $r_s = 2GM/c^2$, the areal radius of the neutral bridge"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius, $r_q^2 = GQ^2/(4\\pi\\epsilon_0c^4)$ for a charge $Q$, the areal radius of the massless charged bridge"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ on one sheet, with $t$ carrying dimensions of time and $r$ the areal radius, and the bridge is the sphere $r_+ = \\left(r_s + \\sqrt{r_s^2 + 4r_q^2}\\right)/2$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter $s$, so $\\dot{t}$ means $d(ct)/ds$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r} - \\dfrac{r_q^2}{r^2}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r} - \\dfrac{r_q^2}{r^2}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r} - \\dfrac{r_q^2}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r} - \\dfrac{r_q^2}{r^2}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r^2\\,r_s^2 + 48r\\,r_s\\,r_q^2 + 56r_q^4}{r^8}"
+        },
+        {
+          "id": "charged_bridge",
+          "name": "Charged Einstein-Rosen",
+          "coordinates": [
+            "t",
+            "u",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "u \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "u = 0 \\;\\text{(the bridge)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_q",
+              "description": "Charge radius, $r_q^2 = GQ^2/(4\\pi\\epsilon_0c^4)$ for a charge $Q$, the areal radius of the massless charged bridge"
+            }
+          ],
+          "convention": "We use coordinates $(t, u, \\theta, \\phi)$ for the bridge with no mass, $r_s = 0$, with $t$ carrying dimensions of time and $u^2 = r^2 - r_q^2$ for the areal radius $r$, so $u$ is a length, positive on one sheet and negative on the other. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter $s$, so $\\dot{t}$ means $d(ct)/ds$.",
+          "line_element": "ds^2 = -\\dfrac{u^2}{u^2 + r_q^2}c^2dt^2 + du^2 + \\left(u^2 + r_q^2\\right)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{u^2}{u^2 + r_q^2}"
+            },
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "u^2 + r_q^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(u^2 + r_q^2\\right)\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{56r_q^4}{\\left(u^2 + r_q^2\\right)^4}"
+        }
+      ]
+    },
+    {
       "id": "einstein_rosen_waves",
-      "name": "Einstein-Rosen Cylindrical Gravitational Waves",
-      "short_name": "Einstein-Rosen",
+      "name": "Einstein-Rosen Waves",
+      "short_name": "Einstein-Rosen Waves",
       "description": "Exact vacuum solutions describing gravitational waves with cylindrical wave fronts and a single polarisation, converging on an axis, passing through it and spreading out again. Einstein's equations for them reduce to the flat cylindrical wave equation for one function and a quadrature for a second.",
       "tags": [
         "vacuum",
@@ -5513,6 +5897,11 @@
           "id": "senovilla",
           "kind": "family",
           "text": "The same cylindrical symmetry filled with radiation. Senovilla's metric is diagonal with a conformally flat plane of $t$ and $\\rho$, as Einstein and Rosen's is, and it has no singularity anywhere [senovilla1990, fernandezjambrina2002]."
+        },
+        {
+          "id": "einstein_rosen_bridge",
+          "kind": "programme",
+          "text": "Einstein and Rosen's model of a particle, from 1935: two sheets of space joined at a horizon [einstein1935]."
         }
       ],
       "references": [
@@ -5540,7 +5929,8 @@
         "gowdy1971",
         "gowdy2014",
         "senovilla1990",
-        "fernandezjambrina2002"
+        "fernandezjambrina2002",
+        "einstein1935"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_waves.json",
@@ -5723,6 +6113,11 @@
           "id": "fisher_jnw",
           "kind": "dual",
           "text": "The same equations with an ordinary scalar field, one of positive energy. The throat closes to a point of infinite curvature, a naked singularity, and $\\sin(ku)$ in Bronnikov's harmonic coordinate becomes $\\sinh(ku)$ [bronnikov1973, bronnikov2011]."
+        },
+        {
+          "id": "einstein_rosen_bridge",
+          "kind": "family",
+          "text": "Einstein and Nathan Rosen's charged bridge with no mass has the same space, $dr^2 + (r^2 + \\ell^2)d\\Omega^2$ with the charge radius for $\\ell$, held open by a Maxwell field of negative energy. Its $g_{tt}$ vanishes at the throat, which is a horizon [einstein1935]."
         }
       ],
       "references": [
@@ -5742,7 +6137,8 @@
         "damour2007",
         "simpson2019",
         "tsukamoto2021",
-        "bronnikov2011"
+        "bronnikov2011",
+        "einstein1935"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ellis_bronnikov.json",
@@ -14124,6 +14520,11 @@
           "text": "Schwarzschild's metric has a bridge of its own, which Einstein and Nathan Rosen described in 1935, and it pinches off faster than light can cross it [einstein1935, fuller1962]."
         },
         {
+          "id": "einstein_rosen_bridge",
+          "kind": "family",
+          "text": "The first bridge between two sheets of space, Einstein and Nathan Rosen's of 1935. Its throat is a horizon, and it pinches off faster than light can cross it [einstein1935, fuller1962]."
+        },
+        {
           "id": "teo_wormhole",
           "kind": "generalisation",
           "text": "The Morris-Thorne wormhole set spinning. Edward Teo added an angular velocity $\\omega$ and a function $K$ for the circles about the axis in 1998, and with $\\omega = 0$ and $K = 1$ his metric is this one [teo1998]."
@@ -17948,6 +18349,11 @@
           "id": "vaidya",
           "kind": "family",
           "text": "A star that shines, Schwarzschild's metric with a mass that changes in retarded time. William Bonnor and Prahlad Vaidya gave it a charge in 1970, the radiating form of Reissner-Nordström's metric [bonnor1970]."
+        },
+        {
+          "id": "einstein_rosen_bridge",
+          "kind": "dual",
+          "text": "Einstein and Nathan Rosen's particle of 1935. Its charged bridge is this metric continued to $r_q^2 \\to -r_q^2$, which leaves one horizon at any mass, even none [einstein1935]."
         }
       ],
       "references": [
@@ -17976,7 +18382,8 @@
         "borde1994",
         "hayward2006",
         "kinnersley1970",
-        "bonnor1970"
+        "bonnor1970",
+        "einstein1935"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -19306,6 +19713,11 @@
           "id": "gravastar",
           "kind": "composite",
           "text": "A star with Schwarzschild's vacuum outside a thin shell at $R > r_s$ and a ball of de Sitter space inside, so that no horizon forms [mazur2004, visser2004]."
+        },
+        {
+          "id": "einstein_rosen_bridge",
+          "kind": "locally_same",
+          "text": "Schwarzschild's exterior taken twice and joined at $r = r_s$ by the coordinate $u^2 = r - r_s$, which Einstein and Nathan Rosen read in 1935 as a particle [einstein1935]."
         }
       ],
       "references": [

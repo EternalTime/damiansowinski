@@ -94,6 +94,11 @@
       "id": "vaidya",
       "kind": "family",
       "text": "A star that shines, Schwarzschild's metric with a mass that changes in retarded time. William Bonnor and Prahlad Vaidya gave it a charge in 1970, the radiating form of Reissner-Nordström's metric [bonnor1970]."
+    },
+    {
+      "id": "einstein_rosen_bridge",
+      "kind": "dual",
+      "text": "Einstein and Nathan Rosen's particle of 1935. Its charged bridge is this metric continued to $r_q^2 \\to -r_q^2$, which leaves one horizon at any mass, even none [einstein1935]."
     }
   ],
   "references": [
@@ -122,7 +127,8 @@
     "borde1994",
     "hayward2006",
     "kinnersley1970",
-    "bonnor1970"
+    "bonnor1970",
+    "einstein1935"
   ],
   "coordinates": [
     {

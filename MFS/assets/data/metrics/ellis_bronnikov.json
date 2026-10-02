@@ -53,6 +53,11 @@
       "id": "fisher_jnw",
       "kind": "dual",
       "text": "The same equations with an ordinary scalar field, one of positive energy. The throat closes to a point of infinite curvature, a naked singularity, and $\\sin(ku)$ in Bronnikov's harmonic coordinate becomes $\\sinh(ku)$ [bronnikov1973, bronnikov2011]."
+    },
+    {
+      "id": "einstein_rosen_bridge",
+      "kind": "family",
+      "text": "Einstein and Nathan Rosen's charged bridge with no mass has the same space, $dr^2 + (r^2 + \\ell^2)d\\Omega^2$ with the charge radius for $\\ell$, held open by a Maxwell field of negative energy. Its $g_{tt}$ vanishes at the throat, which is a horizon [einstein1935]."
     }
   ],
   "references": [
@@ -72,7 +77,8 @@
     "damour2007",
     "simpson2019",
     "tsukamoto2021",
-    "bronnikov2011"
+    "bronnikov2011",
+    "einstein1935"
   ],
   "coordinates": [
     {

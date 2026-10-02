@@ -1335,6 +1335,141 @@
   ],
   "sphere": null
  },
+ "einstein_rosen_bridge/bridge": {
+  "stamp": "f591a87edaf937d4",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "einstein_rosen_bridge/charged_bridge": {
+  "stamp": "fc8fa1410392ced5",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "einstein_rosen_bridge/charged_spherical": {
+  "stamp": "e99ca1e2b038fda1",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "einstein_rosen_bridge/isotropic": {
+  "stamp": "3c1935ba84ce459e",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "einstein_rosen_bridge/spherical": {
+  "stamp": "69525dfb2caa06c4",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "einstein_rosen_waves/cylindrical": {
   "stamp": "2a79013373b54470",
   "relations": {},

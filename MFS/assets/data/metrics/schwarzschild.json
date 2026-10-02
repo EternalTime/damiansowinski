@@ -243,6 +243,11 @@
       "id": "gravastar",
       "kind": "composite",
       "text": "A star with Schwarzschild's vacuum outside a thin shell at $R > r_s$ and a ball of de Sitter space inside, so that no horizon forms [mazur2004, visser2004]."
+    },
+    {
+      "id": "einstein_rosen_bridge",
+      "kind": "locally_same",
+      "text": "Schwarzschild's exterior taken twice and joined at $r = r_s$ by the coordinate $u^2 = r - r_s$, which Einstein and Nathan Rosen read in 1935 as a particle [einstein1935]."
     }
   ],
   "references": [

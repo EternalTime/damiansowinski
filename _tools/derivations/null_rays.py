@@ -778,6 +778,9 @@ BARDEEN = {"r_s": 1, "g": "1/3"}
 
 # Damour and Solodukhin's wormhole at lambda = 1/5, where the throat's clocks run five times slow.
 DS = {"r_s": 1, "lambda": "1/5"}
+# Einstein and Rosen's charged bridge with a mass, at r_q = sqrt(3) r_s/2, where r^2 - r_s r - r_q^2 =
+# (r - 3r_s/2)(r + r_s/2) and the bridge is the sphere r_+ = 3r_s/2.
+ERB_CHARGED = {"r_s": 1, "r_q": "sqrt(3)/2"}
 # Fisher, Janis, Newman and Winicour's scalar field at gamma = 1/2, the value of Abdolrahimi and Shoom's
 # figures, in units of b; the harmonic chart in units of k = b/2, where m = gamma k.
 FJNW = {"b": 1, "gamma": "1/2"}
@@ -1363,6 +1366,22 @@ DIAGRAMS = [
               families=("outgoing", "ingoing"), areal=True, null_radius=True, singular_where_claimed=True,
               singular_zero="x - atanh(1/2)" if case == "collapses" else None)
       for case, (label, p) in ROBERTS_CASES.items()],
+    # Einstein and Rosen's bridges: the neutral one through the bridge in their u, in units of
+    # sqrt(r_s), on one sheet in Schwarzschild's r, and through the bridge in the isotropic radius,
+    # where it is r_s/4; the charged one with a mass on one sheet from r_+ = 3r_s/2 out, and the
+    # charged one with no mass through the bridge in their u, in units of r_q.
+    Diagram("einstein_rosen_bridge", "bridge", "radial", "$t$ and $u$", ("t", "u"), (-2, 2, -5, 5),
+            "$u/\\sqrt{r_s}$", "$ct/r_s$", {"r_s": 1}, EQUATOR, families=SIDEWAYS, cones=(8, 7), areal=True,
+            areal_contours=(1.5, 2.0, 3.0)),
+    Diagram("einstein_rosen_bridge", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0.5, 6, -2.75, 2.75),
+            "$r/r_s$", "$ct/r_s$", {"r_s": 1}, EQUATOR, areal=True, where="r - 1"),
+    Diagram("einstein_rosen_bridge", "isotropic", "radial", "$t$ and $r$", ("t", "r"), (0, 2, -4, 4),
+            "$r/r_s$", "$ct/r_s$", {"r_s": 1}, EQUATOR, areal=True, areal_contours=(1.5, 2.0)),
+    Diagram("einstein_rosen_bridge", "charged_spherical", "radial", "$t$ and $r$", ("t", "r"), (1, 6.5, -2.75, 2.75),
+            "$r/r_s$", "$ct/r_s$", ERB_CHARGED, EQUATOR, areal=True, where="2*r - 3"),
+    Diagram("einstein_rosen_bridge", "charged_bridge", "radial", "$t$ and $u$", ("t", "u"), (-3, 3, -3, 3),
+            "$u/r_q$", "$ct/r_q$", {"r_q": 1}, EQUATOR, families=SIDEWAYS, cones=(8, 7), areal=True,
+            areal_contours=(1.5, 2.0, 3.0)),
     Diagram("morris_thorne", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/b_0$", "$ct/b_0$", {"b_0": 1}, EQUATOR, areal=True,
             functions={"Phi": "0", "b": "b_0**2/r"},
@@ -3495,6 +3514,57 @@ CAPTIONS = {
         "$g_{vx}$ is $+1$.",
     ],
     **ROBERTS_CAPTIONS,
+    ("einstein_rosen_bridge", "bridge", "radial"): [
+        "The plane of $t$ and $u$ ($\\theta = \\pi/2$, $\\phi = 0$), with $r = r_s + u^2$, $u < 0$ on one sheet and "
+        "$u > 0$ on the other. The edges of the cones are $du/d(ct) = \\pm|u|/2(u^2 + r_s)^{3/2}$, so "
+        "$ct \\mp r_*\\,\\mathrm{sgn}(u)$ is constant along a ray, with $r_* = r + r_s\\ln(r/r_s - 1)$ the tortoise "
+        "coordinate of the sphere of radius $r$.",
+        "Every component of the metric is finite on the bridge $u = 0$, and $g_{tt}$ and the determinant vanish "
+        "there, so the cones close: $r_* \\to -\\infty$ on the bridge, and a ray sent toward it from either sheet "
+        "arrives only as $t \\to \\infty$. The bridge is the horizon of the Schwarzschild spacetime. The faint "
+        "vertical lines are the spheres of areal radius $1.5\\,r_s$, $2\\,r_s$, and $3\\,r_s$, one of each on "
+        "either sheet, and the Kretschmann scalar $12r_s^2/(u^2 + r_s)^6$ is $12/r_s^4$ on the bridge.",
+    ],
+    ("einstein_rosen_bridge", "spherical", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) on one sheet, the same on the other and at "
+        "every other angle. The edges of the cones are $dr/d(ct) = \\pm(1 - r_s/r)$, so $ct \\mp r_*$ is constant "
+        "along a ray, with $r_* = r + r_s\\ln(r/r_s - 1)$.",
+        "The cones close toward the bridge $r = r_s$, where $g^{rr} = 0$, and a ray moving in reaches it only as "
+        "$t \\to \\infty$. Einstein and Rosen's space has no sphere smaller than the bridge: the second sheet "
+        "begins there, with $r$ growing again.",
+    ],
+    ("einstein_rosen_bridge", "isotropic", "radial"): [
+        "The plane of $t$ and the isotropic radius $r$ ($\\theta = \\pi/2$, $\\phi = 0$). The areal radius is "
+        "$R = r(1 + r_s/4r)^2$, least on the bridge $r = r_s/4$, and the whole of the other sheet lies between the "
+        "bridge and $r = 0$, which is its far end. The edges of the cones are "
+        "$dr/d(ct) = \\pm 16r^2|4r - r_s|/(4r + r_s)^3$, so $ct \\mp r_*\\,\\mathrm{sgn}(4r - r_s)$ is constant along "
+        "a ray, with $r_* = R + r_s\\ln(R/r_s - 1)$.",
+        "The cones close on the bridge, where $g_{tt} = 0$, and again toward $r = 0$, where a ray slows as $r^2$ "
+        "and arrives only as $t \\to \\infty$. The faint vertical lines are the spheres of areal radius "
+        "$1.5\\,r_s$ and $2\\,r_s$, at $r = 0.93\\,r_s$ and $1.46\\,r_s$ on one sheet and at "
+        "$r_s^2/16r = 0.067\\,r_s$ and $0.043\\,r_s$ on the other.",
+    ],
+    ("einstein_rosen_bridge", "charged_spherical", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) on one sheet of the charged bridge with a mass, "
+        "drawn for $r_q = \\sqrt{3}\\,r_s/2$. The edges of the cones are $dr/d(ct) = \\pm(1 - r_s/r - r_q^2/r^2)$, "
+        "so $ct \\mp r_*$ is constant along a ray, with "
+        "$r_* = r + \\tfrac{9}{8}r_s\\ln(r/r_+ - 1) - \\tfrac{1}{8}r_s\\ln(2r/r_s + 1)$.",
+        "The cones close toward the bridge $r_+ = 3r_s/2$, where $g^{rr} = 0$, and a ray moving in reaches it "
+        "only as $t \\to \\infty$. With the charge entering as Einstein and Rosen took it, $g^{rr}$ has this one "
+        "positive zero whatever the mass, and the Kretschmann scalar "
+        "$(12r_s^2r^2 + 48r_sr_q^2r + 56r_q^4)/r^8$ is finite on it.",
+    ],
+    ("einstein_rosen_bridge", "charged_bridge", "radial"): [
+        "The plane of $t$ and $u$ ($\\theta = \\pi/2$, $\\phi = 0$) of the charged bridge with no mass, with "
+        "$r = \\sqrt{u^2 + r_q^2}$, $u < 0$ on one sheet and $u > 0$ on the other. The edges of the cones are "
+        "$du/d(ct) = \\pm|u|/\\sqrt{u^2 + r_q^2}$, so $ct \\mp r_*\\,\\mathrm{sgn}(u)$ is constant along a ray, with "
+        "$r_* = r + \\tfrac{1}{2}r_q\\ln\\left((r - r_q)/(r + r_q)\\right)$.",
+        "The distance from the bridge along a radius is $|u|$, and far from the bridge the cones open to 45°. "
+        "They close on the bridge $u = 0$, where $g_{tt} = 0$, and a ray sent toward it arrives only as "
+        "$t \\to \\infty$: the bridge is a horizon, as the neutral one is. The faint vertical lines are the spheres "
+        "of areal radius $1.5\\,r_q$, $2\\,r_q$, and $3\\,r_q$, one of each on either sheet, and the Kretschmann "
+        "scalar $56r_q^4/(u^2 + r_q^2)^4$ is $56/r_q^4$ on the bridge.",
+    ],
     ("morris_thorne", "spherical", "radial"): [
         "The plane of $t$ and the areal radius $r$ ($\\theta = \\pi/2$, $\\phi = 0$). The metric leaves $\\Phi(r)$ "
         "and $b(r)$ free. With $\\Phi = 0$ and $b = b_0^2/r$ it is the Ellis-Bronnikov wormhole of throat radius "
@@ -7988,6 +8058,23 @@ CLOSED_FORMS = {
     **{("roberts", "diagonal", case): (lambda t, rho: t + rho, lambda t, rho: t - rho, None) for case in ROBERTS_CASES},
     **{("roberts", "scaling", case): (lambda tau, x: np.exp(-tau) * (np.exp(2 * x) - 1), lambda tau, x: tau,
                                       lambda tau, x: x > 0.01) for case in ROBERTS_CASES},
+    # The neutral bridge at r_s = 1, r_* = r + ln(r - 1), which changes sign with the sheet: r = 1 + u^2 in
+    # Einstein and Rosen's u and r(1 + 1/4r)^2 in the isotropic radius. The charged bridge with a mass has
+    # the roots 3/2 and -1/2, and with no mass, at r_q = 1, r = sqrt(u^2 + 1) and the roots 1 and -1.
+    ("einstein_rosen_bridge", "bridge", "radial"):
+        (lambda t, u: t + np.sign(u) * _rstar(1 + u ** 2, [1]), lambda t, u: t - np.sign(u) * _rstar(1 + u ** 2, [1]),
+         lambda t, u: np.abs(u) > 0.2),
+    ("einstein_rosen_bridge", "spherical", "radial"):
+        (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: r > 1.05),
+    ("einstein_rosen_bridge", "isotropic", "radial"):
+        (lambda t, r: t + np.sign(4 * r - 1) * _rstar(r * (1 + 1 / (4 * r)) ** 2, [1]),
+         lambda t, r: t - np.sign(4 * r - 1) * _rstar(r * (1 + 1 / (4 * r)) ** 2, [1]),
+         lambda t, r: (np.abs(4 * r - 1) > 0.2) & (r > 0.02)),
+    ("einstein_rosen_bridge", "charged_spherical", "radial"):
+        (lambda t, r: t + _rstar(r, [1.5, -0.5]), lambda t, r: t - _rstar(r, [1.5, -0.5]), lambda t, r: r > 1.55),
+    ("einstein_rosen_bridge", "charged_bridge", "radial"):
+        (lambda t, u: t + np.sign(u) * _rstar(np.sqrt(1 + u ** 2), [1, -1]),
+         lambda t, u: t - np.sign(u) * _rstar(np.sqrt(1 + u ** 2), [1, -1]), lambda t, u: np.abs(u) > 0.2),
     ("einstein_rosen_waves", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("einstein_rosen_waves", "null", "radial"): (lambda u, v: v, lambda u, v: u, None),
     # With m = 1, z_* = z e^(2/z) - 2 Ei(2/z) on the axis and rho_* the integral of e^(2/s - 1/(2 s^2)) in the plane.

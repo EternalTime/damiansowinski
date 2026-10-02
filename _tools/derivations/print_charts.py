@@ -7,8 +7,8 @@ robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, 
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
 black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
-som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar and siklos, and
-Godel's cylindrical chart.
+som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos and
+einstein_rosen_bridge, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -4925,6 +4925,161 @@ def damour_solodukhin_check(chart, system):
 
 
 CHARTS["damour_solodukhin"] = [lambda s=s: damour_solodukhin(s) for s in DS_CHARTS]
+
+
+# -- The Einstein-Rosen bridge -----------------------------------------------------------
+
+ERB_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+ERB_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+ERB_REALS = "(-\\infty, \\infty)"
+ERB_BRIDGE = " \\;\\text{(the bridge)}"
+ERB_CHARTS = ["bridge", "spherical", "isotropic", "charged_spherical", "charged_bridge"]
+
+
+def einstein_rosen_bridge(system):
+    """Einstein and Rosen's two bridges of 1935, in five charts. The neutral bridge is Schwarzschild's
+    exterior in their u, u^2 = r - r_s, their (5a): u runs over the whole line, the two sheets u > 0
+    and u < 0 are each the region r > r_s, and they meet on u = 0, where g_tt and the determinant
+    vanish. Schwarzschild's own r, their (5), covers one sheet, and the isotropic radius covers
+    both, the bridge at r_s/4 and the far end of the other sheet at r = 0. The charged bridge is
+    their (8), Reissner and Nordstrom's metric with the sign of the Maxwell stress tensor reversed,
+    so that the charge enters as -r_q^2/r^2, with r_q^2 their epsilon^2/2; f = 1 - r_s/r - r_q^2/r^2
+    then has one positive root r_+ for every mass, of either sign. With no mass, u^2 = r^2 - r_q^2
+    gives their (8a), in which u is the proper radial distance. Each chart is checked against the
+    published metric it comes from, pulled back, and the charged ones against the field equations
+    with the sign Einstein and Rosen took. einstein_rosen_bridge.md derives each."""
+    time = "t \\in " + ERB_REALS
+    f, components = None, {}
+    if system == "bridge":
+        coords, name, parameters = ["t", "u", "\\theta", "\\phi"], "Einstein-Rosen", ["r_s"]
+        domains = [time, "u \\in " + ERB_REALS] + ERB_ANGLES + ["u = 0" + ERB_BRIDGE]
+        f = "\\dfrac{u^2}{u^2 + r_s}"
+        space = "4\\left(u^2 + r_s\\right)du^2 + \\left(u^2 + r_s\\right)^2" + ERB_SPHERE
+        components = {"metric_components": {("u", "u"): "4\\left(u^2 + r_s\\right)"}}
+        kretschmann = "\\dfrac{12r_s^2}{\\left(u^2 + r_s\\right)^6}"
+    elif system == "spherical":
+        coords, name, parameters = ["t", "r", "\\theta", "\\phi"], "Schwarzschild", ["r_s"]
+        domains = [time, "r \\in (r_s, \\infty)"] + ERB_ANGLES + ["r = r_s" + ERB_BRIDGE]
+        bare = "1 - \\dfrac{r_s}{r}"
+        f = "\\left(" + bare + "\\right)"
+        space = "\\dfrac{dr^2}{" + bare + "} + r^2" + ERB_SPHERE
+        components = {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                      "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}}
+        kretschmann = "\\dfrac{12r_s^2}{r^6}"
+    elif system == "isotropic":
+        coords, name, parameters = ["t", "r", "\\theta", "\\phi"], "Isotropic", ["r_s"]
+        domains = ([time, "r \\in (0, \\infty)"] + ERB_ANGLES
+                   + ["r = r_s/4" + ERB_BRIDGE, "r \\to 0 \\;\\text{(the far end of the other sheet)}"])
+        f = "\\left(\\dfrac{4r - r_s}{4r + r_s}\\right)^2"
+        space = "\\left(1 + \\dfrac{r_s}{4r}\\right)^4\\left(dr^2 + r^2" + ERB_SPHERE + "\\right)"
+        components = {"metric_components": {("t", "t"): "-" + f, ("r", "r"): "\\left(1 + \\dfrac{r_s}{4r}\\right)^4"}}
+        kretschmann = "\\dfrac{12r_s^2}{r^6}\\left(1 + \\dfrac{r_s}{4r}\\right)^{-12}"
+    elif system == "charged_spherical":
+        coords, name, parameters = ["t", "r", "\\theta", "\\phi"], "Charged, Areal Radius", ["r_s", "r_q"]
+        domains = [time, "r \\in (r_+, \\infty)"] + ERB_ANGLES + ["r = r_+" + ERB_BRIDGE]
+        bare = "1 - \\dfrac{r_s}{r} - \\dfrac{r_q^2}{r^2}"
+        f = "\\left(" + bare + "\\right)"
+        space = "\\dfrac{dr^2}{" + bare + "} + r^2" + ERB_SPHERE
+        components = {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                      "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}}
+        kretschmann = None
+    else:
+        coords, name, parameters = ["t", "u", "\\theta", "\\phi"], "Charged Einstein-Rosen", ["r_q"]
+        domains = [time, "u \\in " + ERB_REALS] + ERB_ANGLES + ["u = 0" + ERB_BRIDGE]
+        f = "\\dfrac{u^2}{u^2 + r_q^2}"
+        space = "du^2 + \\left(u^2 + r_q^2\\right)" + ERB_SPHERE
+        kretschmann = None
+    probe = vm.Reader(coords, parameters, ())
+    lead = [probe.symbol[coords[1]]] + [probe.parameters[p] for p in parameters]
+    spec = {
+        "metric_id": "einstein_rosen_bridge",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": "ds^2 = -" + f + "c^2dt^2 + " + space},
+        "chart_line_element": "ds^2 = -" + f + "dt^2 + " + space,
+        "printer": {"lead": lead, "flip": False},
+        "components": components,
+        "check": lambda chart: einstein_rosen_bridge_check(chart, system),
+    }
+    if kretschmann:
+        spec["kretschmann"] = kretschmann
+    return spec
+
+
+def einstein_rosen_bridge_check(chart, system):
+    """The neutral charts are vacuum, and each is the published metric of Schwarzschild's spherical
+    chart carried along its map: r itself, r = r_s + u^2, and the areal radius (4r + r_s)^2/16r of
+    the isotropic radius. In Einstein and Rosen's u the determinant is -4u^2(u^2 + r_s)^4 sin^2
+    theta, which vanishes on the bridge and has one sign on both sheets, their footnote 2. The
+    charged chart in r is the published Reissner-Nordstrom metric with r_q^2 -> -r_q^2, its Ricci
+    scalar vanishes, and G^t_t = G^r_r = +r_q^2/r^4 = -G^theta_theta: the Maxwell stress tensor
+    with its sign reversed, a negative energy density. The charged bridge in u is that chart at
+    r_s = 0 pulled back along r^2 = u^2 + r_q^2."""
+    t, x = chart.symbols[:2]
+    g = chart.geo.g
+    P = chart.reader.parameters
+
+    def published(metric_id, system_id):
+        entry = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == system_id)
+        reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+        there = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+        n = len(entry["coords"])
+        matrix = sp.Matrix(n, n, lambda i, j: reader(there.get((entry["coords"][i], entry["coords"][j]), "0")))
+        return reader, matrix, entry["coords"]
+
+    def carried(reader, matrix, coords, image, swaps):
+        """`matrix`, a metric in t and a radius, pulled back along radius = image(x)."""
+        names = dict(zip([reader.symbol[c] for c in coords[2:]], chart.symbols[2:]))
+        names.update(swaps)
+        J = sp.diag(1, sp.diff(image, x), 1, 1)
+        there = matrix.subs(names).subs({reader.symbol[coords[0]]: t, reader.symbol[coords[1]]: image},
+                                        simultaneous=True)
+        return J.T * there * J
+
+    def same(pulled, what):
+        for i in range(4):
+            for j in range(i, 4):
+                if sp.simplify(pulled[i, j] - g[i, j]) != 0:
+                    raise AssertionError(f"einstein_rosen_bridge: the {system} chart is not {what} in slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+    ricci = chart.geo.ricci_ll()
+    if system in ("bridge", "spherical", "isotropic"):
+        rs = P["r_s"]
+        if any(vm.norm(vm._at(ricci, index)) != 0 for index in vm._indices(4, 2)):
+            raise AssertionError(f"einstein_rosen_bridge: the {system} chart is not a vacuum")
+        reader, matrix, coords = published("schwarzschild", "spherical")
+        image = {"bridge": rs + x ** 2, "spherical": x, "isotropic": (4 * x + rs) ** 2 / (16 * x)}[system]
+        same(carried(reader, matrix, coords, image, {reader.parameters["r_s"]: rs}), "Schwarzschild's published metric carried along its map")
+        if system == "bridge":
+            theta = chart.symbols[2]
+            if sp.simplify(g.det() + 4 * x ** 2 * (x ** 2 + rs) ** 4 * sp.sin(theta) ** 2) != 0:
+                raise AssertionError("einstein_rosen_bridge: the determinant is not -4u^2(u^2 + r_s)^4 sin^2 theta")
+        return
+    rq = P["r_q"]
+    if vm.norm(chart.geo.ricci_scalar()) != 0:
+        raise AssertionError(f"einstein_rosen_bridge: the Ricci scalar of the {system} chart does not vanish")
+    G = chart.geo.raise_indices(chart.geo.einstein_ll(), 2, (0,))
+    areal = x if system == "charged_spherical" else sp.sqrt(x ** 2 + rq ** 2)
+    for slot, sign in (((0, 0), 1), ((1, 1), 1), ((2, 2), -1), ((3, 3), -1)):
+        if sp.simplify(vm._at(G, slot) - sign * rq ** 2 / areal ** 4) != 0:
+            raise AssertionError(f"einstein_rosen_bridge: G^a_b of the {system} chart in slot {slot} is not the "
+                                 "Maxwell stress tensor's with its sign reversed")
+    if system == "charged_spherical":
+        reader, matrix, coords = published("rn_metric", "spherical")
+        flipped = sp.Symbol("ERBq", positive=True)
+        there = matrix.subs(reader.parameters["r_q"], flipped)
+        there = there.applyfunc(lambda e: sp.together(e).subs(flipped ** 2, -rq ** 2))
+        same(carried(reader, there, coords, x, {reader.parameters["r_s"]: P["r_s"]}),
+             "Reissner and Nordstrom's published metric with the sign of r_q^2 reversed")
+        return
+    source = einstein_rosen_bridge("charged_spherical")
+    there = cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"])
+    swaps = {there.reader.parameters["r_q"]: rq, there.reader.parameters["r_s"]: 0}
+    same(carried(there.reader, there.geo.g, there.coords_tex, sp.sqrt(x ** 2 + rq ** 2), swaps), "the charged chart at r_s = 0 pulled back")
+
+
+CHARTS["einstein_rosen_bridge"] = [lambda s=s: einstein_rosen_bridge(s) for s in ERB_CHARTS]
 
 # -- The Simpson-Visser black bounce -----------------------------------------------------
 

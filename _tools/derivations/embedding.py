@@ -2444,6 +2444,123 @@ def damour_solodukhin(ck, src):
                  settings="$r_s = 1$, the unit of every length, at every $\\lambda$.")]
 
 
+def einstein_rosen_bridge(ck, src):
+    """Einstein and Rosen's three bridges, each the equator of a moment of t. The neutral bridge is
+    Flamm's paraboloid on both sheets, z^2 = 4 r_s (r - r_s), on which their coordinate is the
+    height, z = 2 sqrt(r_s) u, checked in their chart, in Schwarzschild's and in the isotropic
+    one. The charged bridge with no mass has du^2 + (u^2 + r_q^2) dphi^2, so u is the distance
+    along the surface and z = r_q arsinh(u/r_q): the catenoid of radius r_q cosh(z/r_q), the
+    surface Ellis and Bronnikov's wormhole has, checked in their u and in the areal radius at
+    r_s = 0. The charged bridge with a mass is drawn at r_q = sqrt(3) r_s/2, where the bridge is
+    r_+ = 3 r_s/2 and dz/dr = sqrt((r_s r + r_q^2)/(r^2 - r_s r - r_q^2)), by quadrature."""
+    neutral = {"r_s": 1}
+    sl = Slice(src, "einstein_rosen_bridge", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, neutral)
+    top, radii = 6.0, (1.5, 2, 3, 4, 5)
+    size = 2 * top
+    near = Piece("sheet", "sheet", sl, 1.0, top, 0.0, 1,
+                 (("throat", "the bridge $r = r_s$, the smallest circle, where the other sheet begins"),
+                  ("edge", "the paraboloid runs on to $r \\to \\infty$")),
+                 [(1.0, "throat", "$r = r_s$")] + [(r, "r", None) for r in radii] + [(top, "r", "$r = 6\\,r_s$")],
+                 size)
+    far = Piece("other_sheet", "sheet2", sl, 1.0, top, 0.0, -1,
+                (("throat", "the bridge $r = r_s$"), ("edge", "the paraboloid runs on to $r \\to \\infty$")),
+                [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+    surface = Surface([near, far])
+    for p in (near, far):
+        ck.isometry(f"Einstein-Rosen, neutral, {p.id}", p)
+        ck.form(f"Einstein-Rosen, neutral, {p.id}, Flamm's z = 2 sqrt(r_s (r - r_s))", p,
+                lambda r, s=p.sense: s * 2 * np.sqrt(np.maximum(r - 1, 0)), size)
+    ck.join("Einstein-Rosen, neutral, the two sheets at the bridge", near, 1.0, far, 1.0)
+    through = Slice(src, "einstein_rosen_bridge", "bridge", "u", "\\phi", {"t": 0, **EQUATOR}, neutral)
+    whole = Piece("through", "sheet", through, -math.sqrt(top - 1), math.sqrt(top - 1), -2 * math.sqrt(top - 1), 1,
+                  size=size)
+    ck.isometry("Einstein-Rosen, neutral, their own chart", whole)
+    ck.form("Einstein-Rosen, neutral, their own chart, z = 2 sqrt(r_s) u", whole, lambda u: 2 * u, size)
+    ck.radius("Einstein-Rosen, neutral, their own chart, the radius r_s + u^2", whole, lambda u: 1 + u * u, size)
+    # The isotropic radius r has the areal radius r(1 + r_s/4r)^2, from the bridge r_s/4 out.
+    outer = (top - 0.5 + math.sqrt(top * (top - 1))) / 2
+    isotropic = Slice(src, "einstein_rosen_bridge", "isotropic", "r", "\\phi", {"t": 0, **EQUATOR}, neutral)
+    round_ = Piece("isotropic", "sheet", isotropic, 0.25, outer, 0.0, 1, size=size)
+    ck.isometry("Einstein-Rosen, neutral, the isotropic chart", round_)
+    ck.add("Einstein-Rosen, neutral, the isotropic chart gives the same surface",
+           float(np.max(np.abs(2 * np.sqrt(np.maximum(round_.rho - 1, 0)) - round_.z))) / size, FORM)
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], 1.0, 0.0, "$r = r_s$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(3.0), "$3\\,r_s$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$6\\,r_s$")
+    fig.legend("fill", "cover", "the sheet $u > 0$, which $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1.5$, $2$, $3$, $4$, $5$ and $6\\,r_s$")
+    fig.legend("line", "r2", "the same radii on the other sheet, $u < 0$")
+    fig.legend("line", "throat", "the bridge $r = r_s$, the smallest circle")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views = [view("neutral", "The neutral bridge", "$r_s$", [surface], fig.done(),
+                  settings="$r_s = 1$, the unit of every length.")]
+
+    # The charged bridge with no mass, in units of r_q: one piece through the bridge.
+    massless = Slice(src, "einstein_rosen_bridge", "charged_bridge", "u", "\\phi", {"t": 0, **EQUATOR}, {"r_q": 1})
+    top = 5.0
+    size = 2 * math.sqrt(top ** 2 + 1)
+    steps = (1.0, 2.0, 3.0, 4.0)
+    whole = Piece("whole", "sheet", massless, -top, top, -math.asinh(top), 1,
+                  (("edge", "the sheet $u < 0$ runs on, flattening, to $u \\to -\\infty$"),
+                   ("edge", "the sheet $u > 0$ runs on, flattening, to $u \\to \\infty$")),
+                  [(-top, "r", None)] + [(-u, "r", None) for u in reversed(steps)] + [(0.0, "throat", "$u = 0$")]
+                  + [(u, "r", None) for u in steps] + [(top, "r", None)], size)
+    ck.isometry("Einstein-Rosen, charged with no mass, through the bridge", whole)
+    ck.form("Einstein-Rosen, charged with no mass, the catenoid z = r_q arsinh(u/r_q)", whole, np.arcsinh, size)
+    ck.radius("Einstein-Rosen, charged with no mass, the radius sqrt(u^2 + r_q^2)", whole, lambda u: np.sqrt(u * u + 1), size)
+    areal = Slice(src, "einstein_rosen_bridge", "charged_spherical", "r", "\\phi", {"t": 0, **EQUATOR},
+                  {"r_s": 0, "r_q": 1})
+    half = Piece("areal", "sheet", areal, 1.0, math.sqrt(top ** 2 + 1), 0.0, 1, size=size)
+    ck.isometry("Einstein-Rosen, charged with no mass, the areal radius", half)
+    ck.form("Einstein-Rosen, charged with no mass, the areal radius, z = r_q arcosh(r/r_q)", half,
+            lambda r: np.arccosh(np.maximum(r, 1)), size)
+    catenoid = Surface([whole])
+    fig = figure_of([catenoid], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *whole.at(0.0), "$u = 0$", dx=14)
+    ring_label(fig, [0, 0, 0], *whole.at(2.0), "$2\\,r_q$")
+    ring_label(fig, [0, 0, 0], *whole.at(-2.0), "$-2\\,r_q$")
+    fig.legend("fill", "cover", "both sheets, which $t$ and $u$ cover")
+    fig.legend("line", "r", "$u$ constant, at $\\pm r_q$, $\\pm 2\\,r_q$, $\\pm 3\\,r_q$, $\\pm 4\\,r_q$ and $\\pm 5\\,r_q$")
+    fig.legend("line", "throat", "the bridge $u = 0$, the smallest circle, of radius $r_q$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("charged", "The charged bridge, no mass", "$r_q$", [catenoid], fig.done(),
+                      settings="$r_q = 1$, the unit of every length, and $r_s = 0$."))
+
+    # The charged bridge with a mass, at r_q = sqrt(3) r_s/2: the bridge is r_+ = 3 r_s/2.
+    massive = Slice(src, "einstein_rosen_bridge", "charged_spherical", "r", "\\phi", {"t": 0, **EQUATOR},
+                    {"r_s": 1, "r_q": "sqrt(3)/2"})
+    rp = 1.5
+    ck.add("Einstein-Rosen, charged with a mass: the bridge is the outermost zero of g^rr, 3 r_s/2",
+           abs(max(massive.horizons()) - rp), 1e-12)
+    top, radii = 6.0, (2, 3, 4, 5)
+    size = 2 * top
+    near = Piece("sheet", "sheet", massive, rp, top, 0.0, 1,
+                 (("throat", "the bridge $r = r_+$, the smallest circle, where the other sheet begins"),
+                  ("edge", "the surface runs on to $r \\to \\infty$")),
+                 [(rp, "throat", "$r = r_+$")] + [(r, "r", None) for r in radii] + [(top, "r", "$r = 6\\,r_s$")], size)
+    far = Piece("other_sheet", "sheet2", massive, rp, top, 0.0, -1,
+                (("throat", "the bridge $r = r_+$"), ("edge", "the surface runs on to $r \\to \\infty$")),
+                [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+    for p in (near, far):
+        ck.isometry(f"Einstein-Rosen, charged with a mass, {p.id}", p)
+    ck.join("Einstein-Rosen, charged with a mass, the two sheets at the bridge", near, rp, far, rp)
+    both = Surface([near, far])
+    fig = figure_of([both], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], rp, 0.0, "$r = r_+$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(3.0), "$3\\,r_s$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$6\\,r_s$")
+    fig.legend("fill", "cover", "one sheet, which $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $2$, $3$, $4$, $5$ and $6\\,r_s$")
+    fig.legend("line", "r2", "the same radii on the other sheet")
+    fig.legend("line", "throat", "the bridge $r = r_+ = 3r_s/2$, the smallest circle")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("charged_mass", "The charged bridge with a mass", "$r_s$", [both], fig.done(),
+                      settings="$r_s = 1$, the unit of every length, and $r_q = \\sqrt{3}\\,r_s/2$, so that "
+                               "$r_+ = 3r_s/2$."))
+    return views
+
+
 def two_sheets(ck, name, sl, throat, top, radii, size, near_marks=(), texts=("", "")):
     """A slice of constant t through a bifurcation sphere, as Schwarzschild's: the exterior from
     the throat out to `top`, tinted, and the same surface turned over on the other side."""
@@ -8917,6 +9034,7 @@ DRAWN = {
     "thin_shell_wormhole": thin_shell_wormhole,
     "teo_wormhole": teo_wormhole,
     "damour_solodukhin": damour_solodukhin,
+    "einstein_rosen_bridge": einstein_rosen_bridge,
     "simpson_visser": simpson_visser,
     "levi_civita": levi_civita,
     "kantowski_sachs": kantowski_sachs,
@@ -9232,6 +9350,33 @@ CAPTIONS = {
         "The surface climbs at $dz/dr = \\sqrt{\\rho/(\\rho - r_s) - r^2/\\rho^2}$, which is $\\sqrt{a/(a - r_s)} = "
         "\\sqrt{2}$ at the throat. With $r_s = 0$ the slope is $a/\\rho$, the catenoid of the Ellis-Bronnikov "
         "wormhole, and the mass makes the surface steeper at every radius.",
+    ],
+    ("einstein_rosen_bridge", "neutral"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the neutral bridge at one moment of $t$, drawn as a surface "
+        "in flat space with every distance along it the metric distance. On it the metric is "
+        "$dr^2/(1 - r_s/r) + r^2d\\phi^2$, so each sheet is Flamm's paraboloid $z^2 = 4r_s(r - r_s)$, and "
+        "Einstein and Rosen's coordinate is its height, $z = 2\\sqrt{r_s}\\,u$.",
+        "The sheets $u > 0$ and $u < 0$ meet at the smallest circle, the bridge $r = r_s$, which Einstein and "
+        "Rosen took for a neutral particle of mass $M$. The rate of a clock at rest, $\\sqrt{-g_{tt}}$, falls to "
+        "zero on the bridge, and light sent toward it from either sheet arrives only as $t \\to \\infty$.",
+    ],
+    ("einstein_rosen_bridge", "charged"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the charged bridge with no mass at one moment of $t$, drawn "
+        "as a surface in flat space with every distance along it the metric distance. On it the metric is "
+        "$du^2 + (u^2 + r_q^2)d\\phi^2$, so $u$ is the distance along the surface from its smallest circle, and "
+        "the surface is a catenoid: the circle at the height $z = r_q\\,\\mathrm{arsinh}(u/r_q)$ has the radius "
+        "$r_q\\cosh(z/r_q)$.",
+        "The bridge is the circle $u = 0$, whose radius $r_q$ the charge alone sets. A moment of the "
+        "Ellis-Bronnikov wormhole is the same surface, with $g_{tt} = -1$ all over it; here "
+        "$g_{tt} = -u^2/(u^2 + r_q^2)$ vanishes on the bridge.",
+    ],
+    ("einstein_rosen_bridge", "charged_mass"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the charged bridge with a mass ($r_q = \\sqrt{3}\\,r_s/2$) at "
+        "one moment of $t$, drawn as a surface in flat space with every distance along it the metric distance. "
+        "On it the metric is $dr^2/(1 - r_s/r - r_q^2/r^2) + r^2d\\phi^2$, and each sheet climbs as "
+        "$dz/dr = \\sqrt{(r_sr + r_q^2)/(r^2 - r_sr - r_q^2)}$.",
+        "The sheets meet at the smallest circle, the bridge $r_+ = 3r_s/2$. The charge widens the bridge beyond "
+        "$r_s$, and far from it $dz/dr \\to \\sqrt{r_s/r}$, the slope of Flamm's paraboloid.",
     ],
     ("damour_solodukhin", "wormhole"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Damour-Solodukhin wormhole at one moment of $t$, "
