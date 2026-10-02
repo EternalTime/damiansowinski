@@ -2837,11 +2837,20 @@ FLAT = {
 FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.
+# The moving mirror's embedding view is a height over a stretch of spacetime, t and x both.
+MIRROR_NO_MOMENT = "the radiation is drawn as a height over a region of the plane of t and x, which is no moment of the spacetime"
 HIDDEN = {
     ("datt_ruban_t_models", "comoving", "tube"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",
     ("datt_ruban_t_models", "ruban", "tube"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",
     ("datt_ruban_t_models", "areal", "expansion"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",
     ("datt_ruban_t_models", "de_sitter", "tube"): "Ruban's tube on de Sitter space, another spacetime than the T-sphere embedded",
+    **{("moving_mirror", system, view): MIRROR_NO_MOMENT
+       for system, views in (("inertial", ("thermal", "collapse", "uniform")), ("null", ("thermal", "collapse")),
+                             ("mirror_rest", ("thermal", "collapse")), ("thermal", ("tx",)), ("collapse", ("tx",)),
+                             ("rindler", ("tx",))) for view in views},
+    **{("moving_mirror", view): MIRROR_NO_MOMENT
+       for view in ("inertial_thermal", "inertial_collapse", "inertial_uniform", "null", "mirror_rest", "thermal",
+                    "collapse", "rindler")},
     ("kundt_waves", "kundt", "front"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
     ("kundt_waves", "podolsky_belan", "near"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
     ("kundt_waves", "podolsky_belan", "far"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",

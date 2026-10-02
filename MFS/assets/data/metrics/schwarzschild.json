@@ -393,6 +393,11 @@
       "id": "datt_ruban_t_models",
       "kind": "generalisation",
       "text": "The inside of the horizon filled with dust that adds nothing to the mass: a tube of spheres, all of one radius, holding any amount of matter at the same $r_s$ [ruban1968]."
+    },
+    {
+      "id": "moving_mirror",
+      "kind": "family",
+      "text": "Flat spacetime of two dimensions with a receding mirror in place of the centre of a collapsing star. The mirror radiates as a Schwarzschild black hole of radius $r_s = 1/2\\kappa$ does, with no curvature anywhere [davies1977, good2016]."
     }
   ],
   "references": [
@@ -502,7 +507,9 @@
     "alcubierre2000collapse",
     "hruska2019",
     "martins1996",
-    "ruban1968"
+    "ruban1968",
+    "davies1977",
+    "good2016"
   ],
   "coordinates": [
     {

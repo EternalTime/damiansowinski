@@ -357,6 +357,14 @@ DIMENSIONS = {
     ("exponential_metric", "harmonic"): {
         "t": "T", "u": "L**(-1)", "\\theta": "1", "\\phi": "1", "m": "L",
     },
+    # The moving mirror of Fulling and Davies: the null coordinates are lengths, the mirror's position
+    # z, its ray-tracing function p and the inverse f are lengths, and kappa is an inverse length.
+    ("moving_mirror", "inertial"): {"t": "T", "x": "L", "z": "L"},
+    ("moving_mirror", "null"): {"u": "L", "v": "L", "p": "L"},
+    ("moving_mirror", "mirror_rest"): {"U": "L", "v": "L", "f": "L"},
+    ("moving_mirror", "thermal"): {"T": "T", "X": "L", "\\kappa": "1/L"},
+    ("moving_mirror", "collapse"): {"T": "T", "X": "L", "\\kappa": "1/L"},
+    ("moving_mirror", "rindler"): {"\\eta": "T", "\\xi": "L", "\\kappa": "1/L"},
     # Roberts's collapsing scalar field: the null coordinates u and v are lengths and p a pure number.
     # Roberts's lambda, which the areal chart names, is a length, and Frolov's scaling coordinates are
     # pure numbers, counted in a length ell.
