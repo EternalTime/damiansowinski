@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 117,
+  "count": 118,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -5147,6 +5147,11 @@
           "id": "mass_inflation",
           "kind": "special_case",
           "text": "The same metric with the charge held constant, read inside a black hole. With a second stream of light running outward there, the mass function grows without limit at the inner horizon [poisson1989]."
+        },
+        {
+          "id": "charged_shell",
+          "kind": "limit_source",
+          "text": "The shell of charged dust, of which a shell of charged light is the limit of no rest mass. The dust turns round at $(q^2 - \\mu^2)/(2m - 2\\mu)$ for a rest mass $\\mu$, which tends to $q^2/2m$ [gao2008]."
         }
       ],
       "references": [
@@ -5164,7 +5169,8 @@
         "sullivan1980",
         "kehle2022",
         "poisson1990",
-        "poisson1989"
+        "poisson1989",
+        "gao2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bonnor_vaidya.json",
@@ -6270,6 +6276,467 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = 48\\alpha^6\\,m^2\\left(x + y\\right)^6"
+        }
+      ]
+    },
+    {
+      "id": "charged_shell",
+      "name": "Charged Shell of Dust",
+      "short_name": "Charged Shell",
+      "description": "A thin spherical shell of charged dust, with flat spacetime inside it and Reissner-Nordström's field outside. Shrunk to a point at rest it is the classical point charge of Richard Arnowitt, Stanley Deser, and Charles Misner, with a finite mass set by its charge alone. Dropped from infinity with more charge than rest mass it falls through both horizons, turns round inside the inner one, and comes out into another universe.",
+      "tags": [
+        "dust",
+        "thin shell",
+        "charged",
+        "electric charge",
+        "electromagnetic field",
+        "Einstein-Maxwell",
+        "gravitational collapse",
+        "bounce",
+        "matched solution",
+        "junction conditions",
+        "black hole",
+        "charged black hole",
+        "extremal",
+        "isotropic coordinates",
+        "point particle",
+        "mass",
+        "curvature singularity",
+        "timelike singularity",
+        "horizon",
+        "event horizon",
+        "Cauchy horizon",
+        "inner horizon",
+        "maximal extension",
+        "time-dependent",
+        "spherically symmetric",
+        "asymptotically flat",
+        "causal structure",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$ and the charge radius is $r_q$, and we keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "rn_metric",
+          "kind": "piece",
+          "text": "The outside of the shell, with the mass and the charge of the shell for its two lengths. A shell with more charge than rest mass crosses both of its horizons and turns round inside the inner one [delacruz1967]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "piece",
+          "text": "The inside of the shell, which encloses no charge and no mass. It stays flat from the fall through the turn to the way out."
+        },
+        {
+          "id": "israel_shell",
+          "kind": "special_case",
+          "text": "The shell with no charge. At $r_q = 0$ the field outside is Schwarzschild's, nothing pushes back, and the shell falls to the centre [israel1966]."
+        },
+        {
+          "id": "bonnor_vaidya",
+          "kind": "limit",
+          "text": "The shell of charged light, the limit $\\mu \\to 0$ of the charged dust at a fixed mass and charge outside. Its turning radius $r_q^2/r_s$ is the limit of the dust's [ori1991charged]."
+        },
+        {
+          "id": "majumdar_papapetrou",
+          "kind": "family",
+          "text": "Charges at rest because their electric repulsion cancels their gravity. The balanced shell, $\\mu = r_q = r_s/2$, has Majumdar and Papapetrou's single hole for its outside [arnowitt1962, papapetrou1947]."
+        },
+        {
+          "id": "mass_inflation",
+          "kind": "programme",
+          "text": "What becomes of the inner horizon the shell crosses on its way out. With radiation falling in behind the collapse, Eric Poisson and Werner Israel found the mass function growing without limit there [poisson1989]."
+        }
+      ],
+      "references": [
+        "arnowitt1962",
+        "arnowitt1960prl",
+        "arnowitt1960",
+        "papapetrou1947",
+        "delacruz1967",
+        "kuchar1968",
+        "gao2008",
+        "reissner1916",
+        "nordstrom1918",
+        "israel1966",
+        "graves1960",
+        "boulware1973",
+        "majumdar1947",
+        "hartle1972",
+        "penrose1968",
+        "brady1999",
+        "poisson1989",
+        "ori1991charged"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/charged_shell.json",
+      "charts": [
+        {
+          "id": "interior",
+          "name": "Flat Interior",
+          "coordinates": [
+            "T",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "r \\in [0, R]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the shell)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass $M$ measured outside the shell, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius of the charge $Q$ on the shell, $r_q^2 = GQ^2/(4\\pi\\epsilon_0c^4)$; for $r_q < r_s/2$ the field outside has the horizons $r_\\pm = r_s/2 \\pm \\sqrt{r_s^2/4 - r_q^2}$"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Rest mass $m$ of the dust as a length, $\\mu = Gm/c^2$; a shell with $\\mu < r_q$ and $\\mu < r_s/2$ falls in from infinity and turns back at $R = (r_q^2 - \\mu^2)/(r_s - 2\\mu)$"
+            },
+            {
+              "symbol": "R = R(T)",
+              "description": "Areal radius of the shell, a length. With $\\tau$ the proper time of the dust and $\\gamma = r_s/2\\mu - (r_q^2 - \\mu^2)/2\\mu R$, it moves as $(dR/d(c\\tau))^2 = \\gamma^2 - 1$ while $dT/d\\tau = \\gamma$"
+            }
+          ],
+          "convention": "We use coordinates $(T, r, \\theta, \\phi)$ inside the shell, with $T$ the time of an observer at rest at the centre, carrying dimensions of time, and $r$ the areal radius. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dT^2 + dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "exterior",
+          "name": "Reissner-Nordström Exterior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [R, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the shell)}",
+            "r = r_\\pm \\;\\text{(the horizons, for}\\; r_q < r_s/2\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass $M$ measured outside the shell, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius of the charge $Q$ on the shell, $r_q^2 = GQ^2/(4\\pi\\epsilon_0c^4)$; for $r_q < r_s/2$ the field outside has the horizons $r_\\pm = r_s/2 \\pm \\sqrt{r_s^2/4 - r_q^2}$"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Rest mass $m$ of the dust as a length, $\\mu = Gm/c^2$; a shell with $\\mu < r_q$ and $\\mu < r_s/2$ falls in from infinity and turns back at $R = (r_q^2 - \\mu^2)/(r_s - 2\\mu)$"
+            },
+            {
+              "symbol": "R = R(t)",
+              "description": "Areal radius of the shell, a length. With $\\tau$ the proper time of the dust, $\\beta = r_s/2\\mu - (r_q^2 + \\mu^2)/2\\mu R$, and $f = 1 - r_s/R + r_q^2/R^2$, it moves as $(dR/d(c\\tau))^2 = \\beta^2 - f$ while $f\\,dt/d\\tau = \\beta$, and it reaches a horizon only as $t \\to \\pm\\infty$"
+            }
+          ],
+          "convention": "We use Reissner-Nordström's coordinates $(t, r, \\theta, \\phi)$ outside the shell, with $t$ carrying dimensions of time and $r$ the areal radius, the same $r$ as inside. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{4\\left(3r_s^2\\,r^2 - 12r_s\\,r_q^2\\,r + 14r_q^4\\right)}{r^8}"
+        },
+        {
+          "id": "exterior_ingoing",
+          "name": "Ingoing Eddington-Finkelstein Exterior",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in [R, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the shell)}",
+            "r = r_\\pm \\;\\text{(the horizons, for}\\; r_q < r_s/2\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass $M$ measured outside the shell, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius of the charge $Q$ on the shell, $r_q^2 = GQ^2/(4\\pi\\epsilon_0c^4)$; for $r_q < r_s/2$ the field outside has the horizons $r_\\pm = r_s/2 \\pm \\sqrt{r_s^2/4 - r_q^2}$"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Rest mass $m$ of the dust as a length, $\\mu = Gm/c^2$; a shell with $\\mu < r_q$ and $\\mu < r_s/2$ falls in from infinity and turns back at $R = (r_q^2 - \\mu^2)/(r_s - 2\\mu)$"
+            },
+            {
+              "symbol": "R = R(v)",
+              "description": "Areal radius of the shell, a length. With $\\tau$ the proper time of the dust and $\\beta = r_s/2\\mu - (r_q^2 + \\mu^2)/2\\mu R$, it moves as $dv/d(c\\tau) = 1/\\left(\\beta - dR/d(c\\tau)\\right)$, in through $r_+$ and $r_-$ to its turn, and back to $r_-$ as $v \\to \\infty$"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$ outside the shell, with the advanced time $v = ct + r_*$ a length, constant along ingoing light rays, $r$ the areal radius, and $dr_*/dr = \\left(1 - r_s/r + r_q^2/r^2\\right)^{-1}$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{4\\left(3r_s^2\\,r^2 - 12r_s\\,r_q^2\\,r + 14r_q^4\\right)}{r^8}"
+        },
+        {
+          "id": "exterior_outgoing",
+          "name": "Outgoing Eddington-Finkelstein Exterior",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in [R, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the shell)}",
+            "r = r_\\pm \\;\\text{(the horizons, for}\\; r_q < r_s/2\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass $M$ measured outside the shell, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius of the charge $Q$ on the shell, $r_q^2 = GQ^2/(4\\pi\\epsilon_0c^4)$; for $r_q < r_s/2$ the field outside has the horizons $r_\\pm = r_s/2 \\pm \\sqrt{r_s^2/4 - r_q^2}$"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Rest mass $m$ of the dust as a length, $\\mu = Gm/c^2$; a shell with $\\mu < r_q$ and $\\mu < r_s/2$ falls in from infinity and turns back at $R = (r_q^2 - \\mu^2)/(r_s - 2\\mu)$"
+            },
+            {
+              "symbol": "R = R(u)",
+              "description": "Areal radius of the shell, a length. With $\\tau$ the proper time of the dust and $\\beta = r_s/2\\mu - (r_q^2 + \\mu^2)/2\\mu R$, it moves as $du/d(c\\tau) = 1/\\left(\\beta + dR/d(c\\tau)\\right)$, from $r_-$ at $u \\to -\\infty$ to its turn, and out through $r_-$ and $r_+$"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$ outside the shell, with the retarded time $u = ct - r_*$ a length, constant along outgoing light rays, $r$ the areal radius, and $dr_*/dr = \\left(1 - r_s/r + r_q^2/r^2\\right)^{-1}$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{4\\left(3r_s^2\\,r^2 - 12r_s\\,r_q^2\\,r + 14r_q^4\\right)}{r^8}"
+        },
+        {
+          "id": "exterior_isotropic",
+          "name": "Isotropic Exterior",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [\\epsilon, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = \\epsilon \\;\\text{(the shell)}",
+            "\\rho = \\sqrt{ab} \\;\\text{(the outer horizon, for}\\; b > 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Length $a = r_s/4 + r_q/2$, with $r_s = 2GM/c^2$ the Schwarzschild radius of the mass $M$ measured outside the shell and $r_q$ the charge radius of its charge $Q$, $r_q^2 = GQ^2/(4\\pi\\epsilon_0c^4)$"
+            },
+            {
+              "symbol": "b",
+              "description": "Length $b = r_s/4 - r_q/2$, zero for the extreme field $r_q = r_s/2$, where the metric is that of Majumdar and Papapetrou's single hole"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Rest mass $m$ of the dust as a length, $\\mu = Gm/c^2$; a shell with $\\mu < r_q$ and $\\mu < r_s/2$ falls in from infinity and turns back at $R = (r_q^2 - \\mu^2)/(r_s - 2\\mu)$"
+            },
+            {
+              "symbol": "\\epsilon = \\epsilon(t)",
+              "description": "Isotropic radius of the shell, a length, where its areal radius is $R = (\\epsilon + a)(\\epsilon + b)/\\epsilon$. A shell at rest there has the rest mass $\\mu = a + b + 2ab/\\epsilon$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\theta, \\phi)$ outside the shell, with $t$ carrying dimensions of time and $\\rho$ the isotropic radius, a length, at which the areal radius is $r = (\\rho + a)(\\rho + b)/\\rho$. The lengths $a = r_s/4 + r_q/2$ and $b = r_s/4 - r_q/2$ stand for the mass and the charge. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{\\left(\\rho^2 - ab\\right)^2}{\\left(\\rho + a\\right)^2\\left(\\rho + b\\right)^2}c^2dt^2 + \\left(1 + \\dfrac{a}{\\rho}\\right)^2\\left(1 + \\dfrac{b}{\\rho}\\right)^2\\left(d\\rho^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\left(\\rho^2 - a\\,b\\right)^2}{\\left(\\rho + a\\right)^2\\left(\\rho + b\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{\\left(\\rho + a\\right)^2\\left(\\rho + b\\right)^2}{\\rho^4}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\left(\\rho + a\\right)^2\\left(\\rho + b\\right)^2}{\\rho^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(\\rho + a\\right)^2\\left(\\rho + b\\right)^2\\sin^2\\theta}{\\rho^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8\\rho^6\\left(6a^2\\,\\rho^4 + 12a\\,b\\,\\rho^4 + 6b^2\\,\\rho^4 + 48a^2\\,b\\,\\rho^3 + 48a\\,b^2\\,\\rho^3 + a^4\\,\\rho^2 + 8a^3\\,b\\,\\rho^2 + 126a^2\\,b^2\\,\\rho^2 + 8a\\,b^3\\,\\rho^2 + b^4\\,\\rho^2 + 48a^3\\,b^2\\,\\rho + 48a^2\\,b^3\\,\\rho + 6a^4\\,b^2 + 12a^3\\,b^3 + 6a^2\\,b^4\\right)}{\\left(\\rho + a\\right)^8\\left(\\rho + b\\right)^8}"
         }
       ]
     },
@@ -13505,6 +13972,11 @@
           "id": "gravastar",
           "kind": "family",
           "text": "A shell that stays put, with de Sitter space inside it where the falling shell has flat space [visser2004]."
+        },
+        {
+          "id": "charged_shell",
+          "kind": "generalisation",
+          "text": "Israel's shell given a charge, with Reissner-Nordström's field outside. With more charge than rest mass it turns round inside the inner horizon and leaves into another exterior [delacruz1967]."
         }
       ],
       "references": [
@@ -20171,6 +20643,11 @@
           "id": "bonnor_magnetic_dipole",
           "kind": "family",
           "text": "Two extremal black holes of opposite charge. Gravity and the charges both pull, so a strut on the axis holds the pair apart [emparan2000]."
+        },
+        {
+          "id": "charged_shell",
+          "kind": "family",
+          "text": "One charge in the same balance, spread on a shell. Arnowitt, Deser, and Misner shrank it to a point in 1960 and found the mass fixed by the charge, with the single hole's field outside [arnowitt1960]."
         }
       ],
       "references": [
@@ -20203,7 +20680,8 @@
         "gibbonshawking1978",
         "ishihara2006",
         "brill1963",
-        "emparan2000"
+        "emparan2000",
+        "arnowitt1960"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/majumdar_papapetrou.json",
@@ -20578,6 +21056,11 @@
           "id": "btz",
           "kind": "family",
           "text": "The rotating black hole in three dimensions, which has an inner horizon too. J. S. F. Chan, K. C. K. Chan, and Robert Mann gave its charged form a Vaidya mass in 1996 and found the mass function diverging in the same way [chan1996]."
+        },
+        {
+          "id": "charged_shell",
+          "kind": "programme",
+          "text": "Israel's first trip through the inner horizon. With V. de la Cruz in 1967 he sent a shell of charged dust through it, round a turn inside, and out into another exterior [delacruz1967]."
         }
       ],
       "references": [
@@ -20600,7 +21083,8 @@
         "ori1992",
         "brady1992",
         "carballorubio2021",
-        "chan1996"
+        "chan1996",
+        "delacruz1967"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mass_inflation.json",
@@ -21719,6 +22203,11 @@
           "id": "israel_shell",
           "kind": "composite",
           "text": "The space inside a collapsing shell of dust, which stays flat until the shell reaches the centre [israel1966]."
+        },
+        {
+          "id": "charged_shell",
+          "kind": "composite",
+          "text": "A thin shell of charged dust with flat space inside it and Reissner-Nordström's field outside. With more charge than rest mass it falls through both horizons, turns, and leaves into another exterior [delacruz1967]."
         }
       ],
       "references": [
@@ -21782,7 +22271,8 @@
         "martindussaud2019",
         "bonnor1977cloud",
         "astesiano2024",
-        "israel1966"
+        "israel1966",
+        "delacruz1967"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -27013,6 +27503,11 @@
           "id": "bonnor_magnetic_dipole",
           "kind": "limit_source",
           "text": "Two extremal Reissner-Nordström black holes of opposite magnetic charge on one axis. In the limit $b \\to \\infty$ the two are infinitely far apart and each is the extremal hole alone [emparan2000]."
+        },
+        {
+          "id": "charged_shell",
+          "kind": "composite",
+          "text": "A thin shell of charged dust with flat space inside it and Reissner-Nordström's field outside. Shrunk to a point at rest it is Arnowitt, Deser, and Misner's point charge, with a finite mass set by its charge alone [arnowitt1960]."
         }
       ],
       "references": [
@@ -27050,7 +27545,8 @@
         "breitenlohner1994",
         "volkov1999",
         "brill1963",
-        "emparan2000"
+        "emparan2000",
+        "arnowitt1960"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",

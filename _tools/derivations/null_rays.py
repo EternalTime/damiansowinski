@@ -229,6 +229,7 @@ sys.path.insert(0, str(HERE.parent))
 import boson_star as bs  # noqa: E402
 import bartnik_mckinnon as bm_soliton  # noqa: E402
 import build_mfs_data as build  # noqa: E402
+import charged_shell as cshell  # noqa: E402
 import israel_shell as ishell  # noqa: E402
 import ori_shell  # noqa: E402
 import slices  # noqa: E402
@@ -1409,6 +1410,55 @@ class israel_r_adv(sp.Function):
     _imp_ = staticmethod(ishell.radius_at_advanced)
 
 
+# The charged shell of dust as its diagrams draw it, in units of r_s: the shell with r_q = 12/25 and
+# mu = 1/5, which falls in from infinity, crosses r_+ = 16/25 and r_- = 9/25, turns round at
+# R = 119/375 and leaves through the horizons of the next exterior; charged_shell.py holds its motion.
+# Each chart declares the shell's radius as a function of its own time. The isotropic chart draws
+# the balanced shell instead, b = 0 and mu = a, at rest at the isotropic radius a.
+CHARGED = {"r_s": 1, "r_q": "12/25", "mu": "1/5"}
+CHARGED_INPUT = ("The shell with $r_q = 0.48\\,r_s$ and $\\mu = 0.2\\,r_s$, which comes in from infinity at "
+                 "$0.92$ of the speed of light and turns round at $R = 0.317\\,r_s$, inside $r_- = 0.36\\,r_s$. "
+                 "Its proper time from $r_+ = 0.64\\,r_s$ to the turn is $0.39\\,r_s/c$.")
+CHARGED_POINT = {"a": 1, "b": 0, "mu": 1}
+CHARGED_POINT_INPUT = ("The balanced shell, $b = 0$ and $\\mu = a$, for which $r_q = r_s/2 = a$, at rest at the "
+                       "isotropic radius $\\epsilon = a$, where its areal radius is $2a$.")
+
+
+class charged_r_in(sp.Function):
+    """The radius of the charged shell at the flat time T inside it, charged_shell.radius_at_inner_time."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(cshell.radius_at_inner_time)
+
+
+class charged_r_out(sp.Function):
+    """The radius of the charged shell at the static time t outside r_+, on its way in."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(cshell.radius_at_outer_time)
+
+
+class charged_r_inside(sp.Function):
+    """The radius of the charged shell at the static time t inside r_-, where it turns at t = 0."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(cshell.radius_at_static_time_inside)
+
+
+class charged_r_adv(sp.Function):
+    """The radius of the charged shell at the advanced time v, charged_shell.radius_at_advanced."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(cshell.radius_at_advanced)
+
+
+class charged_r_ret(sp.Function):
+    """The radius of the charged shell at the retarded time u, charged_shell.radius_at_retarded."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(cshell.radius_at_retarded)
+
+
 # Bartnik and McKinnon's soliton as every one of its diagrams draws it, in units of the length ell:
 # the soliton whose Yang-Mills amplitude w has n zeros, solved by bartnik_mckinnon.py, n = 1 unless a
 # row says otherwise. Each declared function takes n for its second argument, and sympy
@@ -1471,7 +1521,10 @@ DECLARED_FUNCTIONS = {**{f.__name__: f for f in (bm_m, bm_dm, bm_d2m, bm_delta, 
                       "ori_influx_behind": ori_influx_behind, "ori_shell_behind": ori_shell_behind,
                       "hiscock_m_out": hiscock_m_out, "hiscock_dm_out": hiscock_dm_out,
                       "hiscock_d2m_out": hiscock_d2m_out, "hiscock_r_out": hiscock_r_out,
-                      "israel_r_out": israel_r_out, "israel_r_adv": israel_r_adv}
+                      "israel_r_out": israel_r_out, "israel_r_adv": israel_r_adv,
+                      "charged_r_in": charged_r_in, "charged_r_out": charged_r_out,
+                      "charged_r_inside": charged_r_inside, "charged_r_adv": charged_r_adv,
+                      "charged_r_ret": charged_r_ret}
 TEO_RADIUS = "b_0*teo_rho(l/b_0)"
 TEO_RADIUS_INPUT = ("$r(l)$ from Teo's $l = \\pm\\left(\\sqrt{r(r - b_0)} + b_0\\ln\\left(\\sqrt{r/b_0} + "
                     "\\sqrt{r/b_0 - 1}\\right)\\right)$, inverted by Newton's method.")
@@ -3007,6 +3060,44 @@ DIAGRAMS = [
             functions={"R": "israel_r_adv(v)"}, where="r - israel_r_adv(v)", input=ISRAEL_INPUT,
             singular_runs=True, singular_where_claimed=True,
             curves=(("shell", "israel_r_adv(v)", "the shell of dust, $r = R$"),)),
+    # The charged shell of dust: the flat space inside it, on the plane of T and r and on the line
+    # through the centre, with the event horizon, the outgoing ray T - r = -1.167 that meets the shell on
+    # r_+, and the Cauchy horizon, the ingoing ray T + r = 0.504 that leaves the shell on r_-; the static
+    # chart outside r_+, which the shell never leaves, and inside r_-, where it turns; the ingoing chart
+    # against v - r, in through both horizons to the turn and back up to r_-; and the outgoing chart
+    # against u + r, from the turn out through both. The isotropic chart draws the balanced shell at rest.
+    Diagram("charged_shell", "interior", "radial", "$T$ and $r$", ("T", "r"), (0, 2.5, -2.5, 2.5),
+            "$r/r_s$", "$cT/r_s$", CHARGED, EQUATOR, tau="T", areal=True, functions={"R": "charged_r_in(T)"},
+            where="charged_r_in(T) - r", input=CHARGED_INPUT,
+            curves=(("shell", "charged_r_in(T)", "the shell of charged dust, $r = R$"),),
+            marked=(("event", {"x0": "-0.8669736511375213", "r": "0.3"}, 1, "the event horizon"),
+                    ("past", {"x0": "0.3036900631358266", "r": "0.2"}, 0, "the Cauchy horizon"))),
+    Diagram("charged_shell", "interior", "through", "through the centre", ("T", "r"), (0, 2.5, -2.5, 2.5),
+            "$x/r_s$", "$cT/r_s$", CHARGED, EQUATOR, tau="T", mirror=True, families=SIDEWAYS, cones=(4, 8), areal=True,
+            functions={"R": "charged_r_in(T)"}, where="charged_r_in(T) - r", input=CHARGED_INPUT,
+            curves=(("shell", "charged_r_in(T)", "the shell of charged dust, $r = R$"),),
+            marked=(("event", {"x0": "-0.8669736511375213", "r": "0.3"}, 1, "the event horizon"),
+                    ("past", {"x0": "0.3036900631358266", "r": "0.2"}, 0, "the Cauchy horizon"))),
+    Diagram("charged_shell", "exterior", "radial", "outside $r_+$", ("t", "r"), (0, 3, -4.5, 3.5),
+            "$r/r_s$", "$ct/r_s$", CHARGED, EQUATOR, orient="ingoing", areal=True,
+            functions={"R": "charged_r_out(t)"}, where="r - charged_r_out(t)", input=CHARGED_INPUT,
+            curves=(("shell", "charged_r_out(t)", "the shell of charged dust, $r = R$"),)),
+    Diagram("charged_shell", "exterior", "inside", "inside $r_-$", ("t", "r"), (0.2, 0.36, -1.2, 1.2),
+            "$r/r_s$", "$ct/r_s$", CHARGED, EQUATOR, tau="t", areal=True,
+            functions={"R": "charged_r_inside(t)"}, where="r - charged_r_inside(t)", input=CHARGED_INPUT,
+            curves=(("shell", "charged_r_inside(t)", "the shell of charged dust, $r = R$"),)),
+    Diagram("charged_shell", "exterior_ingoing", "shell", "against $v - r$", ("v", "r"), (0, 2, -2.5, 1.5),
+            "$r/r_s$", "$(v - r)/r_s$", CHARGED, EQUATOR, to_display=FINKELSTEIN_IN, tau="v - r", areal=True,
+            functions={"R": "charged_r_adv(v)"}, where="r - charged_r_adv(v)", input=CHARGED_INPUT,
+            curves=(("shell", "charged_r_adv(v)", "the shell of charged dust, $r = R$"),)),
+    Diagram("charged_shell", "exterior_outgoing", "shell", "against $u + r$", ("u", "r"), (0, 2, -1.5, 2.5),
+            "$r/r_s$", "$(u + r)/r_s$", CHARGED, EQUATOR, to_display=FINKELSTEIN_OUT, tau="u + r", areal=True,
+            functions={"R": "charged_r_ret(u)"}, where="r - charged_r_ret(u)", input=CHARGED_INPUT,
+            curves=(("shell", "charged_r_ret(u)", "the shell of charged dust, $r = R$"),)),
+    Diagram("charged_shell", "exterior_isotropic", "point", "the point charge", ("t", "\\rho"), (0, 4, -2, 2),
+            "$\\rho/a$", "$ct/a$", CHARGED_POINT, EQUATOR, tau="t", areal=True,
+            functions={"epsilon": "1"}, where="rho - 1", input=CHARGED_POINT_INPUT,
+            lines=(("shell", "r", "1", "the shell at rest, $\\rho = \\epsilon$"),)),
     # A shell of null dust falls in along v = 0: flat inside, Schwarzschild outside, as the
     # conformal diagram declares it. The outgoing chart draws its time reverse.
     Diagram("vaidya", "eddington_finkelstein_ingoing", "shell", "an imploding shell", ("v", "r"),
@@ -7067,6 +7158,71 @@ CAPTIONS = {
         "smaller $r$. From the moment the shell reaches the centre, $r = 0$ is the singularity of "
         "Schwarzschild's vacuum, where the Kretschmann scalar $12r_s^2/r^6$ diverges.",
     ],
+    ("charged_shell", "interior", "radial"): [
+        "The plane of $T$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) inside the shell, drawn for a shell that comes "
+        "in from infinity with more charge than rest mass. The shell encloses no charge, so space is flat here: every "
+        "ray runs at 45° and every cone is the same. The shell is the curve $r = R(T)$, a hyperbola's cousin, the "
+        "path of a charge thrown at a fixed like charge in flat space. It turns round at $T = 0$ at "
+        "$R = 0.317\\,r_s$ and leaves at the speed it came in with.",
+        "The event horizon is the outgoing ray that reaches the shell as the shell crosses $r_+$, at "
+        "$cT = -0.53\\,r_s$; it leaves the centre at $cT = -1.17\\,r_s$ and crosses flat space, where no local "
+        "measurement marks it. The Cauchy horizon is the ingoing ray $cT + r = 0.50\\,r_s$, which leaves the "
+        "shell as it comes back up through $r_-$. An event above that ray can receive light from the "
+        "singularity of the charged field outside.",
+    ],
+    ("charged_shell", "interior", "through"): [
+        "The line through the centre of the shell in the plane $\\theta = \\pi/2$, from the shell to the shell: "
+        "$x = r$ on the right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$. The two sides of the "
+        "shell close to $0.317\\,r_s$ of the centre at $T = 0$ and open again. The event horizon is the pair of "
+        "rays that leave the centre at $cT = -1.17\\,r_s$, and the Cauchy horizon the pair that meet there at "
+        "$cT = 0.50\\,r_s$.",
+    ],
+    ("charged_shell", "exterior", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell and outside $r_+$, where "
+        "the metric is Reissner-Nordström's. The edges of the cones are $dr/d(ct) = \\pm(1 - r_s/r + r_q^2/r^2)$. "
+        "Inside the shell, $r < R(t)$, lies the flat interior, which keeps a time of its own.",
+        "The shell reaches $r_+ = 0.64\\,r_s$ only as $t \\to \\infty$, while its own clock passes $r_+$ at a "
+        "finite reading, $0.39\\,r_s/c$ before the turn. Its fall through both horizons lies beyond these "
+        "coordinates, and the advanced time $v$ follows it there.",
+    ],
+    ("charged_shell", "exterior", "inside"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell and inside "
+        "$r_- = 0.36\\,r_s$, where $1 - r_s/r + r_q^2/r^2$ is positive again and $t$ is once more a time. The shell "
+        "comes down from $r_-$ at $t \\to -\\infty$, turns round at $t = 0$ at $R = 0.317\\,r_s$, and climbs back "
+        "to $r_-$ as $t \\to \\infty$, all in a proper time of $0.27\\,r_s/c$.",
+        "The repulsion that turns it is the electric field's. The dust is at rest at the turn, where "
+        "$\\gamma = 1$, and the field energy outside the shell and the binding energy of the dust make up "
+        "the rest of the mass seen from outside. Below the shell, $r < R(t)$, space is flat, so the "
+        "singularity at $r = 0$ of the charged field is absent from this region.",
+    ],
+    ("charged_shell", "exterior_ingoing", "shell"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell, drawn with $v - r$ as the "
+        "vertical axis so that the ingoing rays, $v$ constant, run at 45°. The shell crosses $r_+$ at "
+        "$v = -0.02\\,r_s$ and $r_-$ at $v = 0.11\\,r_s$, and turns round at $v = 0.30\\,r_s$ and "
+        "$R = 0.317\\,r_s$. Inside the shell, $r < R(v)$, space is flat.",
+        "Between the horizons every future cone points to smaller $r$, and inside $r_-$ the cones open "
+        "upward again, which is where the shell turns. It climbs back toward $r_-$ and reaches it only as "
+        "$v \\to \\infty$, so these coordinates end there, on the inner horizon it leaves through.",
+    ],
+    ("charged_shell", "exterior_outgoing", "shell"): [
+        "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell, drawn with $u + r$ as the "
+        "vertical axis so that the outgoing rays, $u$ constant, run at 45°. These coordinates take up where "
+        "the ingoing ones end: the shell comes down from $r_-$ at $u \\to -\\infty$, turns round at "
+        "$u = -0.30\\,r_s$, and leaves through $r_-$ at $u = -0.11\\,r_s$ and $r_+$ at $u = 0.02\\,r_s$.",
+        "Between the horizons every future cone now points to larger $r$, a white hole, and the $r_+$ the "
+        "shell comes out of bounds another exterior, with its own infinity. The shell leaves for that "
+        "infinity at $0.92$ of the speed of light, the speed it came in with.",
+    ],
+    ("charged_shell", "exterior_isotropic", "point"): [
+        "The plane of $t$ and $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the balanced shell, whose charge "
+        "and rest mass are equal, $\\mu = r_q = a$. Such a shell stays at rest at any radius outside $r = a$, "
+        "here at $\\rho = \\epsilon = a$, and the mass seen from outside is its rest mass whatever "
+        "$\\epsilon$ is. The edges of the cones are $d\\rho/d(ct) = \\pm(1 + a/\\rho)^{-2}$.",
+        "Arnowitt, Deser, and Misner's point charge is the limit $\\epsilon \\to 0$. The areal radius of the "
+        "shell, $\\epsilon + a$, stays above $a$, while its distance from any sphere outside grows as "
+        "$a\\ln(1/\\epsilon)$ and the cones close toward $\\rho = 0$. In the limit the shell lies down a "
+        "throat of radius $a$ and unbounded length.",
+    ],
     ("vaidya", "eddington_finkelstein_ingoing", "shell"): [
         "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn with $cv - r$ as "
         "the vertical axis so that the ingoing rays, $v$ constant, run at 45°. A shell of null dust of mass $M$ falls in "
@@ -10513,6 +10669,21 @@ CLOSED_FORMS = {
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), None),
     ("israel_shell", "exterior_ingoing", "shell"):
         (lambda v, r: v, lambda v, r: v - 2 * _rstar(r, [1]), _away(1)),
+    # The charged shell at r_s = 1 and r_q = 12/25: cT +- r in the flat space inside it, and
+    # Reissner-Nordstrom's ct +- r_*, v and v - 2r_*, and u + 2r_* and u outside it; the balanced shell
+    # at a = 1 and b = 0, where d rho_*/d rho = (1 + 1/rho)^2.
+    ("charged_shell", "interior", "radial"): (lambda T, r: T + r, lambda T, r: T - r, None),
+    ("charged_shell", "interior", "through"): (lambda T, r: T + r, lambda T, r: T - r, None),
+    ("charged_shell", "exterior", "radial"):
+        (lambda t, r: t + _rstar(r, [0.64, 0.36]), lambda t, r: t - _rstar(r, [0.64, 0.36]), _away(0.64, 0.36)),
+    ("charged_shell", "exterior", "inside"):
+        (lambda t, r: t + _rstar(r, [0.64, 0.36]), lambda t, r: t - _rstar(r, [0.64, 0.36]), lambda t, r: r < 0.3597),
+    ("charged_shell", "exterior_ingoing", "shell"):
+        (lambda v, r: v, lambda v, r: v - 2 * _rstar(r, [0.64, 0.36]), _away(0.64, 0.36)),
+    ("charged_shell", "exterior_outgoing", "shell"):
+        (lambda u, r: u + 2 * _rstar(r, [0.64, 0.36]), lambda u, r: u, _away(0.64, 0.36)),
+    ("charged_shell", "exterior_isotropic", "point"):
+        (lambda t, rho: t + rho + 2 * np.log(rho) - 1 / rho, lambda t, rho: t - rho - 2 * np.log(rho) + 1 / rho, None),
     ("gowdy", "areal", "plane"): (lambda t, th: t + th, lambda t, th: t - th, lambda t, th: t > 0.02),
     ("gowdy", "sphere", "plane"): (lambda t, th: t + th, lambda t, th: t - th, None),
     ("gowdy", "logarithmic", "plane"): (lambda tau, th: np.exp(-tau) + th, lambda tau, th: np.exp(-tau) - th, None),

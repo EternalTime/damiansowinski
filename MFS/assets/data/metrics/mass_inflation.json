@@ -77,6 +77,11 @@
       "id": "btz",
       "kind": "family",
       "text": "The rotating black hole in three dimensions, which has an inner horizon too. J. S. F. Chan, K. C. K. Chan, and Robert Mann gave its charged form a Vaidya mass in 1996 and found the mass function diverging in the same way [chan1996]."
+    },
+    {
+      "id": "charged_shell",
+      "kind": "programme",
+      "text": "Israel's first trip through the inner horizon. With V. de la Cruz in 1967 he sent a shell of charged dust through it, round a turn inside, and out into another exterior [delacruz1967]."
     }
   ],
   "references": [
@@ -99,7 +104,8 @@
     "ori1992",
     "brady1992",
     "carballorubio2021",
-    "chan1996"
+    "chan1996",
+    "delacruz1967"
   ],
   "coordinates": [
     {

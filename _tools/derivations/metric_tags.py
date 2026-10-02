@@ -161,6 +161,10 @@ REGIONS = {
         "regions": [["interior"], ["exterior", "exterior_ingoing"]],
         "why": "the flat space inside the shell and the vacuum outside it are two regions of one spacetime",
     },
+    "charged_shell": {
+        "regions": [["interior"], ["exterior", "exterior_ingoing", "exterior_outgoing", "exterior_isotropic"]],
+        "why": "the flat space inside the shell and the charge's field outside it are two regions of one spacetime",
+    },
     "kaluza_klein_black_hole": {
         "regions": [["electric", "eddington_finkelstein_ingoing", "magnetic", "dyonic"]],
         "why": "einstein and einstein_eddington_finkelstein print the metric of four dimensions the "
@@ -244,6 +248,14 @@ OVERRULED = {
     ("israel_shell", "static"): (
         False, "each side is static in its own chart, and the shell between them, at r = R, "
                "falls through both, so the spacetime as a whole has no time translation"),
+    ("charged_shell", "stationary"): (
+        False, "each side is static in its own chart, and the shell between them, at r = R, "
+               "moves through both, so the spacetime as a whole has no time translation; the balanced "
+               "shell at rest, mu = r_q = r_s/2, is the one member that has"),
+    ("charged_shell", "static"): (
+        False, "each side is static in its own chart, and the shell between them, at r = R, "
+               "moves through both, so the spacetime as a whole has no time translation; the balanced "
+               "shell at rest, mu = r_q = r_s/2, is the one member that has"),
     ("black_saturn", "vacuum"): (
         True, "V, Omega, W and nu are left free in Weyl's chart and the polar chart; black Saturn "
               "is the solution of the vacuum equations their parameters define, which "
