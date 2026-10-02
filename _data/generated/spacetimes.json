@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 126,
+  "count": 133,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -1957,6 +1957,11 @@
           "id": "mass_inflation",
           "kind": "family",
           "text": "Ori's model of a charged hole with radiation crossing it, whose mass function grows without limit at the inner horizon. Carried over to Bardeen's metric it gives an exponentially growing mass at the inner horizon as well [carballorubio2021]."
+        },
+        {
+          "id": "born_infeld_charge",
+          "kind": "family",
+          "text": "A point charge of Born and Infeld's nonlinear electrodynamics, to which Hoffmann gave its gravity in 1935. Its charge is electric and its centre a conical point or a singularity, where Bardeen's monopole has a regular centre [hoffmann1935, gibbonsrasheed1995]."
         }
       ],
       "references": [
@@ -1981,7 +1986,9 @@
         "poisson1990",
         "simpson2019",
         "mazur2004",
-        "carballorubio2021"
+        "carballorubio2021",
+        "hoffmann1935",
+        "gibbonsrasheed1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bardeen.json",
@@ -3441,6 +3448,11 @@
           "id": "majumdar_papapetrou",
           "kind": "family",
           "text": "Black holes held apart by electric charge, in four dimensions. Saturn's ring and hole carry no charge, and rotation does the holding [elvang2007]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "family",
+          "text": "The method that made black Saturn. Belinski and Zakharov found it in 1978 in four dimensions, where two solitons on flat space are Kerr's black hole [belinskii1978, belinskii1979]."
         }
       ],
       "references": [
@@ -5195,6 +5207,11 @@
           "id": "mass_inflation",
           "kind": "special_case",
           "text": "The same metric with the charge held constant, read inside a black hole. With a second stream of light running outward there, the mass function grows without limit at the inner horizon [poisson1989]."
+        },
+        {
+          "id": "charged_shell",
+          "kind": "limit_source",
+          "text": "The shell of charged dust, of which a shell of charged light is the limit of no rest mass. The dust turns round at $(q^2 - \\mu^2)/(2m - 2\\mu)$ for a rest mass $\\mu$, which tends to $q^2/2m$ [gao2008]."
         }
       ],
       "references": [
@@ -5212,7 +5229,8 @@
         "sullivan1980",
         "kehle2022",
         "poisson1990",
-        "poisson1989"
+        "poisson1989",
+        "gao2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bonnor_vaidya.json",
@@ -5428,6 +5446,332 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{8\\left(6M^2\\,R^2 - 12M\\,Q^2\\,R + 7Q^4\\right)e^{-4\\mu\\,V/M}}{R^8}"
+        }
+      ]
+    },
+    {
+      "id": "born_infeld_charge",
+      "name": "Born-Infeld Point Charge",
+      "short_name": "Born-Infeld Point Charge",
+      "description": "The gravitational field of a point charge in Born and Infeld's electrodynamics, where the electric field stays finite at the charge, which Banesh Hoffmann found in 1935. With its whole mass in its field the charge is a particle with no horizon and a conical point at its centre, and with more mass it is a black hole with one horizon.",
+      "tags": [
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "charged",
+        "electric charge",
+        "mass",
+        "point charge",
+        "electromagnetic mass",
+        "nonlinear electrodynamics",
+        "Born-Infeld electrodynamics",
+        "electromagnetic field",
+        "particle-like solution",
+        "geon",
+        "conical singularity",
+        "curvature singularity",
+        "naked singularity",
+        "timelike singularity",
+        "no horizon",
+        "black hole",
+        "charged black hole",
+        "horizon",
+        "event horizon",
+        "string theory",
+        "causal structure",
+        "maximal extension",
+        "asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The mass, the charge, and Born and Infeld's greatest field enter as the lengths $r_s$, $r_q$, and $r_0$, and $\\mathrm{F}(\\varphi \\mid k^2) = \\int_0^\\varphi d\\vartheta/\\sqrt{1 - k^2\\sin^2\\vartheta}$ is the incomplete elliptic integral of the first kind. We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "rn_metric",
+          "kind": "special_case",
+          "text": "Born and Infeld's point charge with Maxwell's field. At $r_0 = 0$ the radical $W$ is $r^2$, the mass inside $r$ is $r_s/2 - r_q^2/2r$, and the metric is Reissner and Nordström's [rasheed1997]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The same spacetime with no charge. At $r_q = 0$ the mass inside every radius is $r_s/2$, and the metric is Schwarzschild's."
+        },
+        {
+          "id": "einstein_rosen_bridge",
+          "kind": "programme",
+          "text": "The other particle of 1935. Einstein and Rosen, who pointed out the conical point at the centre of Hoffmann's particle, made theirs a bridge between two sheets, with no centre in it [einstein1935, tahvildarzadeh2011]."
+        },
+        {
+          "id": "bardeen",
+          "kind": "family",
+          "text": "Another black hole of a nonlinear electrodynamics. Bardeen's charge is magnetic and its centre is regular, where the electric charge of Born and Infeld's theory leaves a conical point or a singularity [ayonbeato2000, bronnikov2001]."
+        },
+        {
+          "id": "boulware_deser",
+          "kind": "family",
+          "text": "String theory's correction to Einstein's gravity, beside its correction to Maxwell's field. The Gauss-Bonnet term gives the metric function a radical of the same kind, the square root of $r^4$ plus a constant, and David Wiltshire solved for both corrections together in 1988 [boulware1985, wiltshire1988]."
+        }
+      ],
+      "references": [
+        "borninfeld1934",
+        "born1933",
+        "rasheed1997",
+        "gibbonsrasheed1995",
+        "hoffmann1935",
+        "cirilolombardo2005",
+        "tahvildarzadeh2011",
+        "hoffmanninfeld1937",
+        "fradkintseytlin1985",
+        "fernandokrug2003",
+        "garcia1984",
+        "breton2003",
+        "demianski1986",
+        "cirilolombardo2004",
+        "ayonbeato2000",
+        "bronnikov2001",
+        "einstein1935",
+        "boulware1985",
+        "wiltshire1988"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/born_infeld_charge.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Static Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_h \\;\\text{(the horizons, where}\\; r = 2m\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the whole mass, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius, $r_q^2 = Q^2 G / (4\\pi\\epsilon_0 c^4)$, where $Q$ is the electric charge"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Born and Infeld's radius, $r_0^2 = Q/(4\\pi\\epsilon_0 b)$, where the Coulomb field of the charge would reach their greatest field strength $b$. Maxwell's theory is $r_0 = 0$"
+            },
+            {
+              "symbol": "W = \\sqrt{r^4 + r_0^4}",
+              "description": "The radical of Born and Infeld's field, $E = Q/(4\\pi\\epsilon_0 W)$, which is $r^2$ in Maxwell's theory"
+            },
+            {
+              "symbol": "m = \\dfrac{r_s}{2} + \\dfrac{r_q^2\\,r}{3\\left(r^2 + W\\right)} - \\dfrac{r_q^2}{3r_0}\\,\\mathrm{F}\\left(2\\arctan\\left(\\dfrac{r_0}{r}\\right) \\mid \\dfrac{1}{2}\\right)",
+              "description": "Mass inside the radius $r$, as a length: $dm/dr = r_q^2/(r^2 + W)$, the energy of the field in a shell, and $m \\to r_s/2$ far away. At the centre $m = r_s/2 - 1.2360\\,r_q^2/r_0$, which is positive, zero, or negative as the mass exceeds, equals, or falls short of the energy of the field. A horizon is a radius $r_h$ at which $r = 2m$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{2m}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{2m}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4r_q^2\\left(W - r^2\\right)}{r^2\\,W\\left(r^2 + W\\right)}",
+          "kretschmann": "K = \\dfrac{16}{r^6}\\left(\\left(m - \\dfrac{r_q^2\\,r}{W}\\right)^2 + \\left(m - \\dfrac{r_q^2\\,r}{r^2 + W}\\right)^2 + m^2\\right)"
+        },
+        {
+          "id": "eddington_finkelstein_outgoing",
+          "name": "Outgoing Eddington-Finkelstein",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_h \\;\\text{(the horizons, where}\\; r = 2m\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the whole mass, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius, $r_q^2 = Q^2 G / (4\\pi\\epsilon_0 c^4)$, where $Q$ is the electric charge"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Born and Infeld's radius, $r_0^2 = Q/(4\\pi\\epsilon_0 b)$, where the Coulomb field of the charge would reach their greatest field strength $b$. Maxwell's theory is $r_0 = 0$"
+            },
+            {
+              "symbol": "W = \\sqrt{r^4 + r_0^4}",
+              "description": "The radical of Born and Infeld's field, $E = Q/(4\\pi\\epsilon_0 W)$, which is $r^2$ in Maxwell's theory"
+            },
+            {
+              "symbol": "m = \\dfrac{r_s}{2} + \\dfrac{r_q^2\\,r}{3\\left(r^2 + W\\right)} - \\dfrac{r_q^2}{3r_0}\\,\\mathrm{F}\\left(2\\arctan\\left(\\dfrac{r_0}{r}\\right) \\mid \\dfrac{1}{2}\\right)",
+              "description": "Mass inside the radius $r$, as a length: $dm/dr = r_q^2/(r^2 + W)$, the energy of the field in a shell, and $m \\to r_s/2$ far away. At the centre $m = r_s/2 - 1.2360\\,r_q^2/r_0$, which is positive, zero, or negative as the mass exceeds, equals, or falls short of the energy of the field. A horizon is a radius $r_h$ at which $r = 2m$"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded time $u = ct - r_*$ a length, where $dr_*/dr = \\left(1 - 2m/r\\right)^{-1}$ and $r_* = 0$ at $r = 0$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4r_q^2\\left(W - r^2\\right)}{r^2\\,W\\left(r^2 + W\\right)}",
+          "kretschmann": "K = \\dfrac{16}{r^6}\\left(\\left(m - \\dfrac{r_q^2\\,r}{W}\\right)^2 + \\left(m - \\dfrac{r_q^2\\,r}{r^2 + W}\\right)^2 + m^2\\right)"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_h \\;\\text{(the horizons, where}\\; r = 2m\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the whole mass, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius, $r_q^2 = Q^2 G / (4\\pi\\epsilon_0 c^4)$, where $Q$ is the electric charge"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Born and Infeld's radius, $r_0^2 = Q/(4\\pi\\epsilon_0 b)$, where the Coulomb field of the charge would reach their greatest field strength $b$. Maxwell's theory is $r_0 = 0$"
+            },
+            {
+              "symbol": "W = \\sqrt{r^4 + r_0^4}",
+              "description": "The radical of Born and Infeld's field, $E = Q/(4\\pi\\epsilon_0 W)$, which is $r^2$ in Maxwell's theory"
+            },
+            {
+              "symbol": "m = \\dfrac{r_s}{2} + \\dfrac{r_q^2\\,r}{3\\left(r^2 + W\\right)} - \\dfrac{r_q^2}{3r_0}\\,\\mathrm{F}\\left(2\\arctan\\left(\\dfrac{r_0}{r}\\right) \\mid \\dfrac{1}{2}\\right)",
+              "description": "Mass inside the radius $r$, as a length: $dm/dr = r_q^2/(r^2 + W)$, the energy of the field in a shell, and $m \\to r_s/2$ far away. At the centre $m = r_s/2 - 1.2360\\,r_q^2/r_0$, which is positive, zero, or negative as the mass exceeds, equals, or falls short of the energy of the field. A horizon is a radius $r_h$ at which $r = 2m$"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v = ct + r_*$ a length, where $dr_*/dr = \\left(1 - 2m/r\\right)^{-1}$ and $r_* = 0$ at $r = 0$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4r_q^2\\left(W - r^2\\right)}{r^2\\,W\\left(r^2 + W\\right)}",
+          "kretschmann": "K = \\dfrac{16}{r^6}\\left(\\left(m - \\dfrac{r_q^2\\,r}{W}\\right)^2 + \\left(m - \\dfrac{r_q^2\\,r}{r^2 + W}\\right)^2 + m^2\\right)"
         }
       ]
     },
@@ -5723,6 +6067,11 @@
           "id": "vaidya",
           "kind": "family",
           "text": "A black hole fed by a stream of radiation, its mass a function of the advanced time $v$. Tsutomu Kobayashi let the mass of this hole depend on $v$ in the same way in 2005, in Eddington-Finkelstein coordinates, with a null fluid for the radiation [kobayashi2005]."
+        },
+        {
+          "id": "born_infeld_charge",
+          "kind": "family",
+          "text": "String theory's correction to Maxwell's field, beside its correction to Einstein's gravity. The metric of Born and Infeld's point charge has a radical of the same kind, the square root of $r^4$ plus a constant, and David Wiltshire solved for both corrections together in 1988 [gibbonsrasheed1995, wiltshire1988]."
         }
       ],
       "references": [
@@ -5744,7 +6093,9 @@
         "gurses2020",
         "fernandes2022",
         "cai2002",
-        "kobayashi2005"
+        "kobayashi2005",
+        "gibbonsrasheed1995",
+        "wiltshire1988"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/boulware_deser.json",
@@ -6794,6 +7145,467 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = -\\dfrac{48m^2\\left(a\\cos\\theta + r\\right)\\left(a\\cos\\theta - r\\right)\\left(a^2\\cos^2\\theta - 4a\\,r\\cos\\theta + r^2\\right)\\left(a^2\\cos^2\\theta + 4a\\,r\\cos\\theta + r^2\\right)}{\\Sigma^6}"
+        }
+      ]
+    },
+    {
+      "id": "charged_shell",
+      "name": "Charged Shell of Dust",
+      "short_name": "Charged Shell",
+      "description": "A thin spherical shell of charged dust, with flat spacetime inside it and Reissner-Nordström's field outside. Shrunk to a point at rest it is the classical point charge of Richard Arnowitt, Stanley Deser, and Charles Misner, with a finite mass set by its charge alone. Dropped from infinity with more charge than rest mass it falls through both horizons, turns round inside the inner one, and comes out into another universe.",
+      "tags": [
+        "dust",
+        "thin shell",
+        "charged",
+        "electric charge",
+        "electromagnetic field",
+        "Einstein-Maxwell",
+        "gravitational collapse",
+        "bounce",
+        "matched solution",
+        "junction conditions",
+        "black hole",
+        "charged black hole",
+        "extremal",
+        "isotropic coordinates",
+        "point particle",
+        "mass",
+        "curvature singularity",
+        "timelike singularity",
+        "horizon",
+        "event horizon",
+        "Cauchy horizon",
+        "inner horizon",
+        "maximal extension",
+        "time-dependent",
+        "spherically symmetric",
+        "asymptotically flat",
+        "causal structure",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$ and the charge radius is $r_q$, and we keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "rn_metric",
+          "kind": "piece",
+          "text": "The outside of the shell, with the mass and the charge of the shell for its two lengths. A shell with more charge than rest mass crosses both of its horizons and turns round inside the inner one [delacruz1967]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "piece",
+          "text": "The inside of the shell, which encloses no charge and no mass. It stays flat from the fall through the turn to the way out."
+        },
+        {
+          "id": "israel_shell",
+          "kind": "special_case",
+          "text": "The shell with no charge. At $r_q = 0$ the field outside is Schwarzschild's, nothing pushes back, and the shell falls to the centre [israel1966]."
+        },
+        {
+          "id": "bonnor_vaidya",
+          "kind": "limit",
+          "text": "The shell of charged light, the limit $\\mu \\to 0$ of the charged dust at a fixed mass and charge outside. Its turning radius $r_q^2/r_s$ is the limit of the dust's [ori1991charged]."
+        },
+        {
+          "id": "majumdar_papapetrou",
+          "kind": "family",
+          "text": "Charges at rest because their electric repulsion cancels their gravity. The balanced shell, $\\mu = r_q = r_s/2$, has Majumdar and Papapetrou's single hole for its outside [arnowitt1962, papapetrou1947]."
+        },
+        {
+          "id": "mass_inflation",
+          "kind": "programme",
+          "text": "What becomes of the inner horizon the shell crosses on its way out. With radiation falling in behind the collapse, Eric Poisson and Werner Israel found the mass function growing without limit there [poisson1989]."
+        }
+      ],
+      "references": [
+        "arnowitt1962",
+        "arnowitt1960prl",
+        "arnowitt1960",
+        "papapetrou1947",
+        "delacruz1967",
+        "kuchar1968",
+        "gao2008",
+        "reissner1916",
+        "nordstrom1918",
+        "israel1966",
+        "graves1960",
+        "boulware1973",
+        "majumdar1947",
+        "hartle1972",
+        "penrose1968",
+        "brady1999",
+        "poisson1989",
+        "ori1991charged"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/charged_shell.json",
+      "charts": [
+        {
+          "id": "interior",
+          "name": "Flat Interior",
+          "coordinates": [
+            "T",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "r \\in [0, R]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the shell)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass $M$ measured outside the shell, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius of the charge $Q$ on the shell, $r_q^2 = GQ^2/(4\\pi\\epsilon_0c^4)$; for $r_q < r_s/2$ the field outside has the horizons $r_\\pm = r_s/2 \\pm \\sqrt{r_s^2/4 - r_q^2}$"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Rest mass $m$ of the dust as a length, $\\mu = Gm/c^2$; a shell with $\\mu < r_q$ and $\\mu < r_s/2$ falls in from infinity and turns back at $R = (r_q^2 - \\mu^2)/(r_s - 2\\mu)$"
+            },
+            {
+              "symbol": "R = R(T)",
+              "description": "Areal radius of the shell, a length. With $\\tau$ the proper time of the dust and $\\gamma = r_s/2\\mu - (r_q^2 - \\mu^2)/2\\mu R$, it moves as $(dR/d(c\\tau))^2 = \\gamma^2 - 1$ while $dT/d\\tau = \\gamma$"
+            }
+          ],
+          "convention": "We use coordinates $(T, r, \\theta, \\phi)$ inside the shell, with $T$ the time of an observer at rest at the centre, carrying dimensions of time, and $r$ the areal radius. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dT^2 + dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "exterior",
+          "name": "Reissner-Nordström Exterior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [R, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the shell)}",
+            "r = r_\\pm \\;\\text{(the horizons, for}\\; r_q < r_s/2\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass $M$ measured outside the shell, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius of the charge $Q$ on the shell, $r_q^2 = GQ^2/(4\\pi\\epsilon_0c^4)$; for $r_q < r_s/2$ the field outside has the horizons $r_\\pm = r_s/2 \\pm \\sqrt{r_s^2/4 - r_q^2}$"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Rest mass $m$ of the dust as a length, $\\mu = Gm/c^2$; a shell with $\\mu < r_q$ and $\\mu < r_s/2$ falls in from infinity and turns back at $R = (r_q^2 - \\mu^2)/(r_s - 2\\mu)$"
+            },
+            {
+              "symbol": "R = R(t)",
+              "description": "Areal radius of the shell, a length. With $\\tau$ the proper time of the dust, $\\beta = r_s/2\\mu - (r_q^2 + \\mu^2)/2\\mu R$, and $f = 1 - r_s/R + r_q^2/R^2$, it moves as $(dR/d(c\\tau))^2 = \\beta^2 - f$ while $f\\,dt/d\\tau = \\beta$, and it reaches a horizon only as $t \\to \\pm\\infty$"
+            }
+          ],
+          "convention": "We use Reissner-Nordström's coordinates $(t, r, \\theta, \\phi)$ outside the shell, with $t$ carrying dimensions of time and $r$ the areal radius, the same $r$ as inside. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{4\\left(3r_s^2\\,r^2 - 12r_s\\,r_q^2\\,r + 14r_q^4\\right)}{r^8}"
+        },
+        {
+          "id": "exterior_ingoing",
+          "name": "Ingoing Eddington-Finkelstein Exterior",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in [R, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the shell)}",
+            "r = r_\\pm \\;\\text{(the horizons, for}\\; r_q < r_s/2\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass $M$ measured outside the shell, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius of the charge $Q$ on the shell, $r_q^2 = GQ^2/(4\\pi\\epsilon_0c^4)$; for $r_q < r_s/2$ the field outside has the horizons $r_\\pm = r_s/2 \\pm \\sqrt{r_s^2/4 - r_q^2}$"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Rest mass $m$ of the dust as a length, $\\mu = Gm/c^2$; a shell with $\\mu < r_q$ and $\\mu < r_s/2$ falls in from infinity and turns back at $R = (r_q^2 - \\mu^2)/(r_s - 2\\mu)$"
+            },
+            {
+              "symbol": "R = R(v)",
+              "description": "Areal radius of the shell, a length. With $\\tau$ the proper time of the dust and $\\beta = r_s/2\\mu - (r_q^2 + \\mu^2)/2\\mu R$, it moves as $dv/d(c\\tau) = 1/\\left(\\beta - dR/d(c\\tau)\\right)$, in through $r_+$ and $r_-$ to its turn, and back to $r_-$ as $v \\to \\infty$"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$ outside the shell, with the advanced time $v = ct + r_*$ a length, constant along ingoing light rays, $r$ the areal radius, and $dr_*/dr = \\left(1 - r_s/r + r_q^2/r^2\\right)^{-1}$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{4\\left(3r_s^2\\,r^2 - 12r_s\\,r_q^2\\,r + 14r_q^4\\right)}{r^8}"
+        },
+        {
+          "id": "exterior_outgoing",
+          "name": "Outgoing Eddington-Finkelstein Exterior",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in [R, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R \\;\\text{(the shell)}",
+            "r = r_\\pm \\;\\text{(the horizons, for}\\; r_q < r_s/2\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass $M$ measured outside the shell, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "r_q",
+              "description": "Charge radius of the charge $Q$ on the shell, $r_q^2 = GQ^2/(4\\pi\\epsilon_0c^4)$; for $r_q < r_s/2$ the field outside has the horizons $r_\\pm = r_s/2 \\pm \\sqrt{r_s^2/4 - r_q^2}$"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Rest mass $m$ of the dust as a length, $\\mu = Gm/c^2$; a shell with $\\mu < r_q$ and $\\mu < r_s/2$ falls in from infinity and turns back at $R = (r_q^2 - \\mu^2)/(r_s - 2\\mu)$"
+            },
+            {
+              "symbol": "R = R(u)",
+              "description": "Areal radius of the shell, a length. With $\\tau$ the proper time of the dust and $\\beta = r_s/2\\mu - (r_q^2 + \\mu^2)/2\\mu R$, it moves as $du/d(c\\tau) = 1/\\left(\\beta + dR/d(c\\tau)\\right)$, from $r_-$ at $u \\to -\\infty$ to its turn, and out through $r_-$ and $r_+$"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$ outside the shell, with the retarded time $u = ct - r_*$ a length, constant along outgoing light rays, $r$ the areal radius, and $dr_*/dr = \\left(1 - r_s/r + r_q^2/r^2\\right)^{-1}$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r} + \\dfrac{r_q^2}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{4\\left(3r_s^2\\,r^2 - 12r_s\\,r_q^2\\,r + 14r_q^4\\right)}{r^8}"
+        },
+        {
+          "id": "exterior_isotropic",
+          "name": "Isotropic Exterior",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [\\epsilon, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = \\epsilon \\;\\text{(the shell)}",
+            "\\rho = \\sqrt{ab} \\;\\text{(the outer horizon, for}\\; b > 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Length $a = r_s/4 + r_q/2$, with $r_s = 2GM/c^2$ the Schwarzschild radius of the mass $M$ measured outside the shell and $r_q$ the charge radius of its charge $Q$, $r_q^2 = GQ^2/(4\\pi\\epsilon_0c^4)$"
+            },
+            {
+              "symbol": "b",
+              "description": "Length $b = r_s/4 - r_q/2$, zero for the extreme field $r_q = r_s/2$, where the metric is that of Majumdar and Papapetrou's single hole"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Rest mass $m$ of the dust as a length, $\\mu = Gm/c^2$; a shell with $\\mu < r_q$ and $\\mu < r_s/2$ falls in from infinity and turns back at $R = (r_q^2 - \\mu^2)/(r_s - 2\\mu)$"
+            },
+            {
+              "symbol": "\\epsilon = \\epsilon(t)",
+              "description": "Isotropic radius of the shell, a length, where its areal radius is $R = (\\epsilon + a)(\\epsilon + b)/\\epsilon$. A shell at rest there has the rest mass $\\mu = a + b + 2ab/\\epsilon$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\theta, \\phi)$ outside the shell, with $t$ carrying dimensions of time and $\\rho$ the isotropic radius, a length, at which the areal radius is $r = (\\rho + a)(\\rho + b)/\\rho$. The lengths $a = r_s/4 + r_q/2$ and $b = r_s/4 - r_q/2$ stand for the mass and the charge. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{\\left(\\rho^2 - ab\\right)^2}{\\left(\\rho + a\\right)^2\\left(\\rho + b\\right)^2}c^2dt^2 + \\left(1 + \\dfrac{a}{\\rho}\\right)^2\\left(1 + \\dfrac{b}{\\rho}\\right)^2\\left(d\\rho^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\left(\\rho^2 - a\\,b\\right)^2}{\\left(\\rho + a\\right)^2\\left(\\rho + b\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{\\left(\\rho + a\\right)^2\\left(\\rho + b\\right)^2}{\\rho^4}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\left(\\rho + a\\right)^2\\left(\\rho + b\\right)^2}{\\rho^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(\\rho + a\\right)^2\\left(\\rho + b\\right)^2\\sin^2\\theta}{\\rho^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8\\rho^6\\left(6a^2\\,\\rho^4 + 12a\\,b\\,\\rho^4 + 6b^2\\,\\rho^4 + 48a^2\\,b\\,\\rho^3 + 48a\\,b^2\\,\\rho^3 + a^4\\,\\rho^2 + 8a^3\\,b\\,\\rho^2 + 126a^2\\,b^2\\,\\rho^2 + 8a\\,b^3\\,\\rho^2 + b^4\\,\\rho^2 + 48a^3\\,b^2\\,\\rho + 48a^2\\,b^3\\,\\rho + 6a^4\\,b^2 + 12a^3\\,b^3 + 6a^2\\,b^4\\right)}{\\left(\\rho + a\\right)^8\\left(\\rho + b\\right)^8}"
         }
       ]
     },
@@ -7907,6 +8719,11 @@
           "id": "hotta_tanaka",
           "kind": "locally_same",
           "text": "De Sitter space with an impulsive gravitational wave on one cosmological horizon, the field of two massless particles. Off that horizon it is de Sitter space [hotta1993]."
+        },
+        {
+          "id": "elliptic_de_sitter",
+          "kind": "locally_same",
+          "text": "Erwin Schrödinger's remedy of 1956 for observers whose horizons part them: every event of de Sitter space made one with the event opposite it on the hyperboloid. An observer then sees one event of every pair, and the space has no global direction of time [schrodinger1956, parikh2003]."
         }
       ],
       "references": [
@@ -7946,7 +8763,9 @@
         "kiselev2003",
         "bicak1999",
         "griffiths2004",
-        "hotta1993"
+        "hotta1993",
+        "schrodinger1956",
+        "parikh2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -8561,6 +9380,11 @@
           "id": "neugebauer_meinel",
           "kind": "programme",
           "text": "Another solution from Gernot Neugebauer's inverse methods in Jena: a rigidly rotating disc of dust, solved with Reinhard Meinel as a boundary value problem for Ernst's equation fifteen years after the two holes [neugebauer1995, neugebauer2003]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "family",
+          "text": "The Bäcklund transformations behind the double Kerr solution coincide with the soliton transformations of Belinski and Zakharov [alekseev2010]."
         }
       ],
       "references": [
@@ -8590,7 +9414,8 @@
         "hahn1964",
         "holst2016",
         "neugebauer1995",
-        "neugebauer2003"
+        "neugebauer2003",
+        "alekseev2010"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/double_kerr.json",
@@ -9481,6 +10306,11 @@
           "id": "einstein_cluster",
           "kind": "programme",
           "text": "Einstein's static ball of 1939, a cluster of particles on circular orbits. With uniform density its space is a cap of the same three sphere, held still by the motion of the particles with no cosmological constant [einstein1939, florides1974, bohmerlobo2008]."
+        },
+        {
+          "id": "elliptic_de_sitter",
+          "kind": "programme",
+          "text": "De Sitter's universe with opposite points of its hyperboloid made one event. Willem de Sitter wrote in 1917 of elliptic space, in which opposite points of the sphere are one place, that \"it is preferable to adopt this for the physical world\", and reported that Einstein agreed [desitter1917]."
         }
       ],
       "references": [
@@ -9798,6 +10628,16 @@
           "id": "semiclosed_world",
           "kind": "family",
           "text": "The bridge with one of its sheets closed off by a universe of dust. Wheeler's bag of gold is reached by passing through the bridge [marolf2009]."
+        },
+        {
+          "id": "lindquist_wheeler_lattice",
+          "kind": "family",
+          "text": "A closed universe of $N$ masses whose moment of greatest expansion has a bridge at every mass, each opening onto a sheet of its own [clifton2012]."
+        },
+        {
+          "id": "born_infeld_charge",
+          "kind": "programme",
+          "text": "Hoffmann's particle of the same year, a point charge of Born and Infeld's electrodynamics whose whole mass is the energy of its field. Einstein and Rosen pointed out to him the conical point left at its centre [hoffmann1935, tahvildarzadeh2011]."
         }
       ],
       "references": [
@@ -9820,7 +10660,10 @@
         "einstein1937",
         "brill1963",
         "misner1960",
-        "marolf2009"
+        "marolf2009",
+        "clifton2012",
+        "hoffmann1935",
+        "tahvildarzadeh2011"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_bridge.json",
@@ -10166,6 +11009,11 @@
           "id": "einstein_rosen_bridge",
           "kind": "programme",
           "text": "Einstein and Rosen's model of a particle, from 1935: two sheets of space joined at a horizon [einstein1935]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "family",
+          "text": "Belinski and Zakharov's solution of one soliton, with its time and its direction of travel exchanged, is a cylindrical solitary wave that runs in to the axis and is reflected from it [belinskii1978]."
         }
       ],
       "references": [
@@ -10194,7 +11042,8 @@
         "gowdy2014",
         "senovilla1990",
         "fernandezjambrina2002",
-        "einstein1935"
+        "einstein1935",
+        "belinskii1978"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_waves.json",
@@ -10320,6 +11169,363 @@
           ],
           "ricci_scalar": "R = \\dfrac{4\\left(2\\left(v - u\\right)\\partial_v\\psi\\,\\partial_u\\psi + \\partial_v\\psi - \\partial_u\\psi - 2\\left(v - u\\right)\\partial_u\\partial_v\\psi + 2\\left(v - u\\right)\\partial_u\\partial_v\\gamma\\right)e^{2\\psi - 2\\gamma}}{v - u}",
           "kretschmann": "K = 4e^{4\\psi - 4\\gamma}\\left(\\left(4\\partial_u\\partial_v\\psi - 4\\partial_u\\partial_v\\gamma\\right)^2 + \\left(\\dfrac{\\left(v - u\\right)\\partial_u^2\\psi + 2\\left(v - u\\right)\\partial_u\\partial_v\\psi + \\left(v - u\\right)\\partial_v^2\\psi + 2\\partial_u\\psi + \\left(v - u\\right)\\left(\\partial_u\\psi\\right)^2 - 2\\partial_v\\psi - 2\\left(v - u\\right)\\partial_v\\psi\\,\\partial_u\\psi + \\left(v - u\\right)\\left(\\partial_v\\psi\\right)^2 - 2\\partial_u\\gamma - 2\\left(v - u\\right)\\partial_u\\gamma\\,\\partial_u\\psi + 2\\partial_v\\gamma - 2\\left(v - u\\right)\\partial_v\\gamma\\,\\partial_v\\psi}{v - u}\\right)^2 + \\left(2\\partial_v\\gamma\\,\\partial_v\\psi + 2\\partial_u\\gamma\\,\\partial_u\\psi - 3\\left(\\partial_v\\psi\\right)^2 - 2\\partial_v\\psi\\,\\partial_u\\psi - 3\\left(\\partial_u\\psi\\right)^2 - \\partial_v^2\\psi - 2\\partial_u\\partial_v\\psi - \\partial_u^2\\psi\\right)^2 + \\left(\\dfrac{\\left(v - u\\right)\\partial_u^2\\psi - 2\\left(v - u\\right)\\partial_u\\partial_v\\psi + \\left(v - u\\right)\\partial_v^2\\psi - 2\\partial_u\\psi + \\left(v - u\\right)\\left(\\partial_u\\psi\\right)^2 + 2\\partial_v\\psi + 2\\left(v - u\\right)\\partial_v\\psi\\,\\partial_u\\psi + \\left(v - u\\right)\\left(\\partial_v\\psi\\right)^2 - 2\\partial_u\\gamma - 2\\left(v - u\\right)\\partial_u\\gamma\\,\\partial_u\\psi + 2\\partial_v\\gamma - 2\\left(v - u\\right)\\partial_v\\gamma\\,\\partial_v\\psi}{v - u}\\right)^2 + \\left(2\\partial_v\\gamma\\,\\partial_v\\psi + 2\\partial_u\\gamma\\,\\partial_u\\psi - 3\\left(\\partial_v\\psi\\right)^2 + 2\\partial_v\\psi\\,\\partial_u\\psi - 3\\left(\\partial_u\\psi\\right)^2 - \\partial_v^2\\psi + 2\\partial_u\\partial_v\\psi - \\partial_u^2\\psi\\right)^2 + \\left(\\dfrac{2\\partial_u\\psi - 2\\partial_v\\psi - 4\\left(v - u\\right)\\partial_v\\psi\\,\\partial_u\\psi}{v - u}\\right)^2 - 2\\left(\\dfrac{2\\left(v - u\\right)\\partial_v\\gamma\\,\\partial_v\\psi - 2\\partial_v\\gamma - 2\\left(v - u\\right)\\partial_u\\gamma\\,\\partial_u\\psi - 2\\partial_u\\gamma - \\left(v - u\\right)\\left(\\partial_v\\psi\\right)^2 + \\left(v - u\\right)\\left(\\partial_u\\psi\\right)^2 - \\left(v - u\\right)\\partial_v^2\\psi + \\left(v - u\\right)\\partial_u^2\\psi}{v - u}\\right)^2 - 2\\left(2\\partial_v\\gamma\\,\\partial_v\\psi - 2\\partial_u\\gamma\\,\\partial_u\\psi - 3\\left(\\partial_v\\psi\\right)^2 + 3\\left(\\partial_u\\psi\\right)^2 - \\partial_v^2\\psi + \\partial_u^2\\psi\\right)^2\\right)"
+        }
+      ]
+    },
+    {
+      "id": "elliptic_de_sitter",
+      "name": "Elliptic de Sitter Space",
+      "short_name": "Elliptic de Sitter",
+      "description": "De Sitter space with every event identified with the event opposite it on the hyperboloid, $X \\sim -X$. One observer's horizon then bounds the whole world and future and past infinity are a single sphere. The spacetime has no closed timelike curves and no global direction of time.",
+      "tags": [
+        "de Sitter",
+        "positive cosmological constant",
+        "cosmological constant",
+        "maximally symmetric",
+        "constant curvature",
+        "not time orientable",
+        "topology",
+        "cosmological horizon",
+        "horizon",
+        "causal structure",
+        "holography",
+        "inflation",
+        "expanding universe",
+        "cosmology",
+        "homogeneous",
+        "isotropic",
+        "geodesically complete",
+        "no singularity",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model",
+        "Einstein space",
+        "conformally flat",
+        "stationary",
+        "static",
+        "spherically symmetric"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The de Sitter radius $\\ell$ is a length, with $\\Lambda = 3/\\ell^2$, and we keep factors of $c$ explicit. An event is a pair of antipodal points $X$ and $-X$ of the hyperboloid $-X_0^2 + X_1^2 + X_2^2 + X_3^2 + X_4^2 = \\ell^2$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "de_sitter",
+          "kind": "locally_same",
+          "text": "The hyperboloid before any points are identified, the double cover of this space. Every local measurement agrees with de Sitter's, and the two differ in topology alone [parikh2003]."
+        },
+        {
+          "id": "einstein_static",
+          "kind": "programme",
+          "text": "Einstein's closed universe of 1917. Willem de Sitter proposed that year to take its space elliptic as well, opposite points of the sphere being one place, and reported that Einstein agreed [desitter1917]."
+        },
+        {
+          "id": "misner",
+          "kind": "family",
+          "text": "Flat space with events identified under a boost, as de Sitter space is here under the antipodal map. Misner's identification makes closed timelike curves, and the antipodal one makes none [misner1967, parikh2003]."
+        }
+      ],
+      "references": [
+        "desitter1917",
+        "schrodinger1956",
+        "hawking1973",
+        "calabi1962",
+        "gibbons1986elliptic",
+        "sanchez1987",
+        "parikh2003",
+        "spradlin2003",
+        "aguirre2003",
+        "misner1967"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/elliptic_de_sitter.json",
+      "charts": [
+        {
+          "id": "global",
+          "name": "Global",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, \\pi/2]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "(t, \\pi/2, \\theta, \\phi) \\sim (-t, \\pi/2, \\pi - \\theta, \\phi + \\pi)\\;\\text{(the antipodal identification)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "De Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = 3/\\ell^2$; the sphere of space has its least radius, $\\ell$, at $t = 0$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\chi, \\theta, \\phi)$, with $t$ carrying dimensions of time and $\\chi$ the polar angle on the sphere of space, measured from the observer at $\\chi = 0$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\ell^2\\cosh^2(ct/\\ell)\\left(d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\ell^2\\cosh^2(ct/\\ell)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\ell^2\\cosh^2(ct/\\ell)\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\ell^2\\cosh^2(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
+        },
+        {
+          "id": "conformal",
+          "name": "Conformal",
+          "coordinates": [
+            "\\eta",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (-\\pi/2, \\pi/2)",
+            "\\chi \\in [0, \\pi/2]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "(\\eta, \\pi/2, \\theta, \\phi) \\sim (-\\eta, \\pi/2, \\pi - \\theta, \\phi + \\pi)\\;\\text{(the antipodal identification)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "De Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = 3/\\ell^2$; the future and past infinities lie at $\\eta = \\pm\\pi/2$"
+            }
+          ],
+          "convention": "We use coordinates $(\\eta, \\chi, \\theta, \\phi)$, all angles, with the conformal time $\\eta$ related to the global chart by $\\tan\\eta = \\sinh(ct/\\ell)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{\\ell^2}{\\cos^2\\eta}\\left(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-\\dfrac{\\ell^2}{\\cos^2\\eta}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{\\ell^2}{\\cos^2\\eta}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\ell^2\\sin^2\\chi}{\\cos^2\\eta}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\ell^2\\sin^2\\chi\\sin^2\\theta}{\\cos^2\\eta}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
+        },
+        {
+          "id": "kruskal",
+          "name": "Kruskal",
+          "coordinates": [
+            "U",
+            "V",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "U \\in (-\\infty, \\infty)",
+            "V \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "-1 \\le UV < 1",
+            "V \\ge U",
+            "(U, U, \\theta, \\phi) \\sim (-U, -U, \\pi - \\theta, \\phi + \\pi)\\;\\text{(the antipodal identification)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "De Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = 3/\\ell^2$; the observer's horizons are $U = 0$ and $V = 0$, and a sphere of constant $U$ and $V$ has the areal radius $r = \\ell(1 + UV)/(1 - UV)$"
+            }
+          ],
+          "convention": "We use the null coordinates $U$ and $V$, both dimensionless and both increasing to the future in the static patch $U < 0 < V$ of the observer at $UV = -1$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{\\ell^2}{\\left(1 - UV\\right)^2}\\left(-4\\,dU\\,dV + \\left(1 + UV\\right)^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "U",
+                "V"
+              ],
+              "value": "-\\dfrac{2\\ell^2}{\\left(1 - U\\,V\\right)^2}"
+            },
+            {
+              "indices": [
+                "V",
+                "U"
+              ],
+              "value": "-\\dfrac{2\\ell^2}{\\left(1 - U\\,V\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\ell^2\\left(1 + U\\,V\\right)^2}{\\left(1 - U\\,V\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\ell^2\\left(1 + U\\,V\\right)^2\\sin^2\\theta}{\\left(1 - U\\,V\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
+        },
+        {
+          "id": "static",
+          "name": "Static",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\ell)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = \\ell \\;\\text{(cosmological horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "De Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = 3/\\ell^2$; the cosmological horizon of the observer at $r = 0$ sits at $r = \\ell$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r^2}{\\ell^2}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r^2}{\\ell^2}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r^2}{\\ell^2}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r^2}{\\ell^2}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
+        },
+        {
+          "id": "planar",
+          "name": "Planar",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "De Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = 3/\\ell^2$; the expansion rate of the flat slices is $H = c/\\ell$"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z)$, with $t$ carrying dimensions of time and $x$, $y$, and $z$ comoving lengths. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + e^{2ct/\\ell}\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "e^{2c\\,t/\\ell}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "e^{2c\\,t/\\ell}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{2c\\,t/\\ell}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
         }
       ]
     },
@@ -10907,6 +12113,21 @@
           "id": "semiclosed_world",
           "kind": "composite",
           "text": "More than half of a closed Friedmann universe of dust with Schwarzschild's vacuum beyond its edge. From outside it is a black hole, and at a fixed mass the universe behind it can be as large as one likes [marolf2009]."
+        },
+        {
+          "id": "white_hole",
+          "kind": "composite",
+          "text": "A piece of a Friedmann universe of dust that leaves the big bang late and comes out of its own Schwarzschild sphere, with vacuum around it [novikov1965]."
+        },
+        {
+          "id": "lindquist_wheeler_lattice",
+          "kind": "family",
+          "text": "A closed universe with its dust gathered into $N$ equal masses on a regular lattice. It expands and recollapses on Friedmann's cycloid, to a largest radius that approaches Friedmann's as $N$ grows [lindquist1957, clifton2009]."
+        },
+        {
+          "id": "nordstrom_scalar",
+          "kind": "family",
+          "text": "The flat universe in Nordström's scalar theory of gravity. His field equation gives dust the scale factor $1 - \\eta^2/\\eta_0^2$ in conformal time, with $\\eta_0$ a constant, a universe that expands from a bang and falls back into a crunch [sundrum2003]."
         }
       ],
       "references": [
@@ -10960,7 +12181,11 @@
         "bucher1995",
         "senovilla1996",
         "sultana2005",
-        "marolf2009"
+        "marolf2009",
+        "novikov1965",
+        "lindquist1957",
+        "clifton2009",
+        "sundrum2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -12423,6 +13648,11 @@
           "id": "senovilla",
           "kind": "family",
           "text": "An inhomogeneous cosmology with the same two commuting symmetries of space, filled with radiation and arranged around an axis. Every geodesic in it runs on for ever, with no singularity at either end of time [ruiz1992, chinea1992]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "family",
+          "text": "The same field equations with $\\theta$ unrolled into a line. Belinski and Zakharov's inverse scattering method adds solitons to any known solution with these two symmetries, by algebra alone [belinskii1978]."
         }
       ],
       "references": [
@@ -12449,7 +13679,8 @@
         "ringstrom2009",
         "ellismaccallum1969",
         "ruiz1992",
-        "chinea1992"
+        "chinea1992",
+        "belinskii1978"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gowdy.json",
@@ -12998,6 +14229,260 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        }
+      ]
+    },
+    {
+      "id": "belinski_zakharov",
+      "name": "Belinski-Zakharov Gravitational Solitons",
+      "short_name": "Gravitational Solitons",
+      "description": "Exact vacuum solutions made by the inverse scattering method of Vladimir Belinski and Vladimir Zakharov, which adds solitons to a known solution by algebra alone. Their wave of two solitons on a Kasner universe that expands alike in two directions is two pulses of gravitational wave, which leave the singularity as one and run apart along the light cone.",
+      "tags": [
+        "vacuum",
+        "cosmology",
+        "inhomogeneous",
+        "gravitational wave",
+        "soliton",
+        "inverse scattering",
+        "Kasner",
+        "exact solution",
+        "time-dependent",
+        "curvature singularity",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "kasner",
+          "kind": "special_case",
+          "text": "The seed. With no soliton added, $P = 0$, $Q = 0$, and $f = \\sqrt{w/ct}$, the metric is the Kasner universe that expands alike along $x$ and $y$ [belinskii1978]."
+        },
+        {
+          "id": "gowdy",
+          "kind": "family",
+          "text": "The same two Killing vectors and the same field equations, with the direction the waves travel along closed into a circle. Belinski and Zakharov counted Gowdy's closed universes among the solutions their form of the metric holds [belinskii1978, gowdy1971]."
+        },
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "Trade the time for a second direction of space and add two solitons to flat space, and the result is the Kerr-NUT solution. Kerr's black hole is the one with two real poles and no NUT parameter [belinskii1979]."
+        },
+        {
+          "id": "kerr_taub_nut",
+          "kind": "family",
+          "text": "Two stationary solitons on flat space, in full. Real poles give the solution with horizons and a complex conjugate pair the one with none [belinskii1979]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "Two stationary solitons on flat space with the rotation switched off [belinskii1979]."
+        },
+        {
+          "id": "double_kerr",
+          "kind": "family",
+          "text": "Two Kerr black holes on one axis, built by Neugebauer's Bäcklund transformations, which coincide with Belinski and Zakharov's soliton transformations [kramer1980, alekseev2010]."
+        },
+        {
+          "id": "einstein_rosen_waves",
+          "kind": "family",
+          "text": "Reverse the sign of $f$ and $t$ becomes a radius and $z$ the time. One soliton on a flat seed is then a cylindrical solitary wave that runs in to the axis and is reflected from it [belinskii1978]."
+        },
+        {
+          "id": "black_saturn",
+          "kind": "family",
+          "text": "The same method in five dimensions. Elvang and Figueras took solitons out of a static seed and put them back turned, and got a black ring in balance around a black hole [elvang2007]."
+        },
+        {
+          "id": "myers_perry",
+          "kind": "family",
+          "text": "Pomeransky derived the Myers-Perry black hole of five dimensions as two solitons, his test of the method in $D$ dimensions with $D - 2$ commuting Killing vectors [pomeransky2006]."
+        }
+      ],
+      "references": [
+        "gardner1967",
+        "geroch1972",
+        "alekseev2010",
+        "maison1978",
+        "belinskii1978",
+        "gowdy1971",
+        "belinskii1979",
+        "harrison1978",
+        "neugebauer1979",
+        "kramer1980",
+        "belinsky1980",
+        "carr1983",
+        "ibanez1983",
+        "boyd1991",
+        "belinski2001",
+        "pomeransky2006",
+        "elvang2007"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/belinski_zakharov.json",
+      "charts": [
+        {
+          "id": "pole",
+          "name": "Pole Coordinates",
+          "coordinates": [
+            "\\tau",
+            "\\xi",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "\\tau \\in (0, \\infty)",
+            "\\xi \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "w",
+              "description": "Length that sets the scale ($w > 0$), the imaginary part of the constant in Belinski and Zakharov's pole trajectory"
+            },
+            {
+              "symbol": "\\beta",
+              "description": "Dimensionless, with $\\cosh\\beta$ and $\\sinh\\beta$ the two constants of Belinski and Zakharov whose squares differ by one; at $\\beta = 0$ the metric is diagonal and the wave has one polarisation"
+            },
+            {
+              "symbol": "N = \\cosh^2\\beta\\sinh^2\\tau + \\sinh^2\\beta\\cosh^2\\xi",
+              "description": "Dimensionless function of $\\tau$ and $\\xi$, positive at every event"
+            }
+          ],
+          "convention": "We use the coordinates $(\\tau, \\xi, x, y)$ in which Belinski and Zakharov's pole trajectories are elementary, with $\\tau$ the time and $\\xi$ along the direction the waves travel, both pure numbers, and $x$ and $y$ lengths along the two Killing vectors. The length $w$ carries the scale, so no factor of $c$ appears. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{w^2N}{\\sqrt{\\sinh\\tau\\cosh\\xi}}\\left(-d\\tau^2 + d\\xi^2\\right) + \\dfrac{\\sinh\\tau\\cosh\\xi}{N}\\left(\\left(N + 2 + 2\\cosh\\beta\\cosh\\tau\\right)dx^2 - 4\\sinh\\beta\\sinh\\xi\\,dx\\,dy + \\left(N + 2 - 2\\cosh\\beta\\cosh\\tau\\right)dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{w^2N}{\\sqrt{\\sinh\\tau\\cosh\\xi}}"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "\\dfrac{w^2N}{\\sqrt{\\sinh\\tau\\cosh\\xi}}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{\\left(N + 2 + 2\\cosh\\beta\\cosh\\tau\\right)\\sinh\\tau\\cosh\\xi}{N}"
+            },
+            {
+              "indices": [
+                "x",
+                "y"
+              ],
+              "value": "-\\dfrac{2\\sinh\\beta\\sinh\\tau\\sinh\\xi\\cosh\\xi}{N}"
+            },
+            {
+              "indices": [
+                "y",
+                "x"
+              ],
+              "value": "-\\dfrac{2\\sinh\\beta\\sinh\\tau\\sinh\\xi\\cosh\\xi}{N}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{\\left(N + 2 - 2\\cosh\\beta\\cosh\\tau\\right)\\sinh\\tau\\cosh\\xi}{N}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{3\\cosh^8\\beta\\cosh^{12}\\tau + 18\\cosh^8\\beta\\cosh^{10}\\tau\\cosh^2\\xi - 18\\cosh^8\\beta\\cosh^{10}\\tau + 45\\cosh^8\\beta\\cosh^8\\tau\\cosh^4\\xi - 90\\cosh^8\\beta\\cosh^8\\tau\\cosh^2\\xi + 45\\cosh^8\\beta\\cosh^8\\tau + 60\\cosh^8\\beta\\cosh^6\\tau\\cosh^6\\xi - 180\\cosh^8\\beta\\cosh^6\\tau\\cosh^4\\xi + 180\\cosh^8\\beta\\cosh^6\\tau\\cosh^2\\xi - 60\\cosh^8\\beta\\cosh^6\\tau + 45\\cosh^8\\beta\\cosh^4\\tau\\cosh^8\\xi - 180\\cosh^8\\beta\\cosh^4\\tau\\cosh^6\\xi + 270\\cosh^8\\beta\\cosh^4\\tau\\cosh^4\\xi - 180\\cosh^8\\beta\\cosh^4\\tau\\cosh^2\\xi + 45\\cosh^8\\beta\\cosh^4\\tau + 18\\cosh^8\\beta\\cosh^2\\tau\\cosh^{10}\\xi - 90\\cosh^8\\beta\\cosh^2\\tau\\cosh^8\\xi + 180\\cosh^8\\beta\\cosh^2\\tau\\cosh^6\\xi - 180\\cosh^8\\beta\\cosh^2\\tau\\cosh^4\\xi + 90\\cosh^8\\beta\\cosh^2\\tau\\cosh^2\\xi - 18\\cosh^8\\beta\\cosh^2\\tau + 3\\cosh^8\\beta\\cosh^{12}\\xi - 18\\cosh^8\\beta\\cosh^{10}\\xi + 45\\cosh^8\\beta\\cosh^8\\xi - 60\\cosh^8\\beta\\cosh^6\\xi + 45\\cosh^8\\beta\\cosh^4\\xi - 18\\cosh^8\\beta\\cosh^2\\xi + 3\\cosh^8\\beta - 612\\cosh^6\\beta\\cosh^8\\tau\\cosh^4\\xi - 120\\cosh^6\\beta\\cosh^6\\tau\\cosh^6\\xi + 2448\\cosh^6\\beta\\cosh^6\\tau\\cosh^4\\xi + 432\\cosh^6\\beta\\cosh^4\\tau\\cosh^8\\xi + 360\\cosh^6\\beta\\cosh^4\\tau\\cosh^6\\xi - 3672\\cosh^6\\beta\\cosh^4\\tau\\cosh^4\\xi - 72\\cosh^6\\beta\\cosh^2\\tau\\cosh^{10}\\xi - 864\\cosh^6\\beta\\cosh^2\\tau\\cosh^8\\xi - 360\\cosh^6\\beta\\cosh^2\\tau\\cosh^6\\xi + 2448\\cosh^6\\beta\\cosh^2\\tau\\cosh^4\\xi - 12\\cosh^6\\beta\\cosh^{12}\\xi + 72\\cosh^6\\beta\\cosh^{10}\\xi + 432\\cosh^6\\beta\\cosh^8\\xi + 120\\cosh^6\\beta\\cosh^6\\xi - 612\\cosh^6\\beta\\cosh^4\\xi + 630\\cosh^4\\beta\\cosh^8\\tau\\cosh^4\\xi - 780\\cosh^4\\beta\\cosh^6\\tau\\cosh^6\\xi - 2520\\cosh^4\\beta\\cosh^6\\tau\\cosh^4\\xi - 936\\cosh^4\\beta\\cosh^4\\tau\\cosh^8\\xi + 2340\\cosh^4\\beta\\cosh^4\\tau\\cosh^6\\xi + 3780\\cosh^4\\beta\\cosh^4\\tau\\cosh^4\\xi + 108\\cosh^4\\beta\\cosh^2\\tau\\cosh^{10}\\xi + 1872\\cosh^4\\beta\\cosh^2\\tau\\cosh^8\\xi - 2340\\cosh^4\\beta\\cosh^2\\tau\\cosh^6\\xi - 2520\\cosh^4\\beta\\cosh^2\\tau\\cosh^4\\xi + 18\\cosh^4\\beta\\cosh^{12}\\xi - 108\\cosh^4\\beta\\cosh^{10}\\xi - 936\\cosh^4\\beta\\cosh^8\\xi + 780\\cosh^4\\beta\\cosh^6\\xi + 630\\cosh^4\\beta\\cosh^4\\xi + 840\\cosh^2\\beta\\cosh^6\\tau\\cosh^6\\xi + 396\\cosh^2\\beta\\cosh^4\\tau\\cosh^8\\xi - 2520\\cosh^2\\beta\\cosh^4\\tau\\cosh^6\\xi - 72\\cosh^2\\beta\\cosh^2\\tau\\cosh^{10}\\xi - 792\\cosh^2\\beta\\cosh^2\\tau\\cosh^8\\xi + 2520\\cosh^2\\beta\\cosh^2\\tau\\cosh^6\\xi - 12\\cosh^2\\beta\\cosh^{12}\\xi + 72\\cosh^2\\beta\\cosh^{10}\\xi + 396\\cosh^2\\beta\\cosh^8\\xi - 840\\cosh^2\\beta\\cosh^6\\xi + 63\\cosh^4\\tau\\cosh^8\\xi + 18\\cosh^2\\tau\\cosh^{10}\\xi - 126\\cosh^2\\tau\\cosh^8\\xi + 3\\cosh^{12}\\xi - 18\\cosh^{10}\\xi + 63\\cosh^8\\xi}{4w^4\\,N^6\\sinh^3\\tau\\cosh^3\\xi}"
+        },
+        {
+          "id": "canonical",
+          "name": "Belinski and Zakharov's Chart",
+          "coordinates": [
+            "t",
+            "z",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "t \\in (0, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "w",
+              "description": "Length that makes $x$ and $y$ lengths ($w > 0$)"
+            },
+            {
+              "symbol": "f = f(t,z)",
+              "description": "Dimensionless function of $t$ and $z$; in a vacuum $\\partial_t\\ln f = -\\dfrac{1}{2ct} + \\dfrac{ct}{2}\\left(\\left(\\partial_tP\\right)^2 + \\left(\\partial_zP\\right)^2 + e^{2P}\\left(\\left(\\partial_tQ\\right)^2 + \\left(\\partial_zQ\\right)^2\\right)\\right)$ and $\\partial_z\\ln f = ct\\left(\\partial_tP\\,\\partial_zP + e^{2P}\\partial_tQ\\,\\partial_zQ\\right)$, with $\\partial_t$ the derivative along $ct$"
+            },
+            {
+              "symbol": "P = P(t,z)",
+              "description": "Wave amplitude, a dimensionless function of $t$ and $z$; the spacetime is a vacuum exactly where $\\partial_t^2P + \\dfrac{1}{ct}\\partial_tP - \\partial_z^2P = e^{2P}\\left(\\left(\\partial_tQ\\right)^2 - \\left(\\partial_zQ\\right)^2\\right)$ together with the equations for $Q$ and $f$"
+            },
+            {
+              "symbol": "Q = Q(t,z)",
+              "description": "Twist of the two polarisations, a dimensionless function of $t$ and $z$, with $Q = 0$ the diagonal case; in a vacuum $\\partial_t^2Q + \\dfrac{1}{ct}\\partial_tQ - \\partial_z^2Q = -2\\left(\\partial_tP\\,\\partial_tQ - \\partial_zP\\,\\partial_zQ\\right)$"
+            }
+          ],
+          "convention": "We use coordinates $(t, z, x, y)$, with $t$ carrying dimensions of time, $z$ a length along the direction the waves travel, and $x$ and $y$ lengths along the two Killing vectors. The functions $f$, $P$, and $Q$ stand free in every component, and no component assumes a field equation. We take components in the chart $x^0 = ct$, so $\\partial_t$ of a function is its derivative along $ct$ and $\\dot{t}$ in the geodesic equations means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = f\\left(-c^2dt^2 + dz^2\\right) + \\dfrac{ct}{w}\\left(e^{P}\\left(dx + Q\\,dy\\right)^2 + e^{-P}dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-f"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "f"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{ct\\,e^{P}}{w}"
+            },
+            {
+              "indices": [
+                "x",
+                "y"
+              ],
+              "value": "\\dfrac{Q\\,ct\\,e^{P}}{w}"
+            },
+            {
+              "indices": [
+                "y",
+                "x"
+              ],
+              "value": "\\dfrac{Q\\,ct\\,e^{P}}{w}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{ct\\left(Q^2e^{2P} + 1\\right)e^{-P}}{w}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{f^2\\,c^2t^2\\left(\\partial_t P\\right)^2 - f^2\\,c^2t^2\\left(\\partial_z P\\right)^2 + f^2\\,c^2t^2e^{2P}\\left(\\partial_t Q\\right)^2 - f^2\\,c^2t^2e^{2P}\\left(\\partial_z Q\\right)^2 - f^2 + 2f\\,c^2t^2\\,\\partial_t^2 f - 2f\\,c^2t^2\\,\\partial_z^2 f - 2c^2t^2\\left(\\partial_t f\\right)^2 + 2c^2t^2\\left(\\partial_z f\\right)^2}{2f^3\\,c^2t^2}",
+          "kretschmann": "K = \\dfrac{3f^4\\,c^4t^4\\left(\\partial_t P\\right)^4 - 6f^4\\,c^4t^4\\left(\\partial_t P\\right)^2\\left(\\partial_z P\\right)^2 + 38f^4\\,c^4t^4e^{2P}\\left(\\partial_t P\\right)^2\\left(\\partial_t Q\\right)^2 - 30f^4\\,c^4t^4e^{2P}\\left(\\partial_t P\\right)^2\\left(\\partial_z Q\\right)^2 + 2f^4\\,c^2t^2\\left(\\partial_t P\\right)^2 - 16f^4\\,c^4t^4e^{2P}\\partial_t P\\,\\partial_z P\\,\\partial_t Q\\,\\partial_z Q + 16f^4\\,c^3t^3e^{2P}\\partial_t P\\left(\\partial_t Q\\right)^2 + 32f^4\\,c^4t^4e^{2P}\\partial_t P\\,\\partial_t Q\\,\\partial_t^2 Q - 16f^4\\,c^3t^3e^{2P}\\partial_t P\\left(\\partial_z Q\\right)^2 - 32f^4\\,c^4t^4e^{2P}\\partial_t P\\,\\partial_z Q\\,\\partial_t\\partial_z Q + 16f^4\\,c^3t^3\\,\\partial_t P\\,\\partial_t^2 P + 3f^4\\,c^4t^4\\left(\\partial_z P\\right)^4 - 30f^4\\,c^4t^4e^{2P}\\left(\\partial_z P\\right)^2\\left(\\partial_t Q\\right)^2 + 38f^4\\,c^4t^4e^{2P}\\left(\\partial_z P\\right)^2\\left(\\partial_z Q\\right)^2 - 2f^4\\,c^2t^2\\left(\\partial_z P\\right)^2 - 32f^4\\,c^4t^4e^{2P}\\partial_z P\\,\\partial_t Q\\,\\partial_t\\partial_z Q + 32f^4\\,c^4t^4e^{2P}\\partial_z P\\,\\partial_z Q\\,\\partial_z^2 Q - 16f^4\\,c^3t^3\\,\\partial_z P\\,\\partial_t\\partial_z P + 11f^4\\,c^4t^4e^{4P}\\left(\\partial_t Q\\right)^4 - 22f^4\\,c^4t^4e^{4P}\\left(\\partial_t Q\\right)^2\\left(\\partial_z Q\\right)^2 - 16f^4\\,c^4t^4e^{2P}\\left(\\partial_t Q\\right)^2\\,\\partial_t^2 P + 2f^4\\,c^2t^2e^{2P}\\left(\\partial_t Q\\right)^2 + 32f^4\\,c^4t^4e^{2P}\\partial_t Q\\,\\partial_z Q\\,\\partial_t\\partial_z P + 16f^4\\,c^3t^3e^{2P}\\partial_t Q\\,\\partial_t^2 Q + 11f^4\\,c^4t^4e^{4P}\\left(\\partial_z Q\\right)^4 - 16f^4\\,c^4t^4e^{2P}\\left(\\partial_z Q\\right)^2\\,\\partial_z^2 P - 2f^4\\,c^2t^2e^{2P}\\left(\\partial_z Q\\right)^2 - 16f^4\\,c^3t^3e^{2P}\\partial_z Q\\,\\partial_t\\partial_z Q + 8f^4\\,c^4t^4\\left(\\partial_t^2 P\\right)^2 - 16f^4\\,c^4t^4\\left(\\partial_t\\partial_z P\\right)^2 + 8f^4\\,c^4t^4\\left(\\partial_z^2 P\\right)^2 + 8f^4\\,c^4t^4e^{2P}\\left(\\partial_t^2 Q\\right)^2 - 16f^4\\,c^4t^4e^{2P}\\left(\\partial_t\\partial_z Q\\right)^2 + 8f^4\\,c^4t^4e^{2P}\\left(\\partial_z^2 Q\\right)^2 + 3f^4 - 12f^3\\,c^3t^3\\,\\partial_t f\\left(\\partial_t P\\right)^2 - 8f^3\\,c^4t^4e^{2P}\\partial_t f\\,\\partial_t P\\left(\\partial_t Q\\right)^2 + 24f^3\\,c^4t^4e^{2P}\\partial_t f\\,\\partial_t P\\left(\\partial_z Q\\right)^2 - 8f^3\\,c^4t^4\\,\\partial_t f\\,\\partial_t P\\,\\partial_t^2 P - 8f^3\\,c^4t^4\\,\\partial_t f\\,\\partial_t P\\,\\partial_z^2 P + 4f^3\\,c^3t^3\\,\\partial_t f\\left(\\partial_z P\\right)^2 - 16f^3\\,c^4t^4e^{2P}\\partial_t f\\,\\partial_z P\\,\\partial_t Q\\,\\partial_z Q + 16f^3\\,c^4t^4\\,\\partial_t f\\,\\partial_z P\\,\\partial_t\\partial_z P - 12f^3\\,c^3t^3e^{2P}\\partial_t f\\left(\\partial_t Q\\right)^2 - 8f^3\\,c^4t^4e^{2P}\\partial_t f\\,\\partial_t Q\\,\\partial_t^2 Q - 8f^3\\,c^4t^4e^{2P}\\partial_t f\\,\\partial_t Q\\,\\partial_z^2 Q + 4f^3\\,c^3t^3e^{2P}\\partial_t f\\left(\\partial_z Q\\right)^2 + 16f^3\\,c^4t^4e^{2P}\\partial_t f\\,\\partial_z Q\\,\\partial_t\\partial_z Q + 4f^3\\,ct\\,\\partial_t f + 8f^3\\,c^3t^3\\,\\partial_z f\\,\\partial_t P\\,\\partial_z P - 16f^3\\,c^4t^4e^{2P}\\partial_z f\\,\\partial_t P\\,\\partial_t Q\\,\\partial_z Q + 16f^3\\,c^4t^4\\,\\partial_z f\\,\\partial_t P\\,\\partial_t\\partial_z P + 24f^3\\,c^4t^4e^{2P}\\partial_z f\\,\\partial_z P\\left(\\partial_t Q\\right)^2 - 8f^3\\,c^4t^4e^{2P}\\partial_z f\\,\\partial_z P\\left(\\partial_z Q\\right)^2 - 8f^3\\,c^4t^4\\,\\partial_z f\\,\\partial_z P\\,\\partial_t^2 P - 8f^3\\,c^4t^4\\,\\partial_z f\\,\\partial_z P\\,\\partial_z^2 P + 8f^3\\,c^3t^3e^{2P}\\partial_z f\\,\\partial_t Q\\,\\partial_z Q + 16f^3\\,c^4t^4e^{2P}\\partial_z f\\,\\partial_t Q\\,\\partial_t\\partial_z Q - 8f^3\\,c^4t^4e^{2P}\\partial_z f\\,\\partial_z Q\\,\\partial_t^2 Q - 8f^3\\,c^4t^4e^{2P}\\partial_z f\\,\\partial_z Q\\,\\partial_z^2 Q + 4f^2\\,c^4t^4\\left(\\partial_t f\\right)^2\\left(\\partial_t P\\right)^2 - 4f^2\\,c^4t^4\\left(\\partial_t f\\right)^2\\left(\\partial_z P\\right)^2 + 4f^2\\,c^4t^4e^{2P}\\left(\\partial_t f\\right)^2\\left(\\partial_t Q\\right)^2 - 4f^2\\,c^4t^4e^{2P}\\left(\\partial_t f\\right)^2\\left(\\partial_z Q\\right)^2 + 4f^2\\,c^2t^2\\left(\\partial_t f\\right)^2 - 4f^2\\,c^4t^4\\left(\\partial_z f\\right)^2\\left(\\partial_t P\\right)^2 + 4f^2\\,c^4t^4\\left(\\partial_z f\\right)^2\\left(\\partial_z P\\right)^2 - 4f^2\\,c^4t^4e^{2P}\\left(\\partial_z f\\right)^2\\left(\\partial_t Q\\right)^2 + 4f^2\\,c^4t^4e^{2P}\\left(\\partial_z f\\right)^2\\left(\\partial_z Q\\right)^2 - 4f^2\\,c^2t^2\\left(\\partial_z f\\right)^2 + 4f^2\\,c^4t^4\\left(\\partial_t^2 f\\right)^2 - 8f^2\\,c^4t^4\\,\\partial_t^2 f\\,\\partial_z^2 f + 4f^2\\,c^4t^4\\left(\\partial_z^2 f\\right)^2 - 8f\\,c^4t^4\\left(\\partial_t f\\right)^2\\,\\partial_t^2 f + 8f\\,c^4t^4\\left(\\partial_t f\\right)^2\\,\\partial_z^2 f + 8f\\,c^4t^4\\left(\\partial_z f\\right)^2\\,\\partial_t^2 f - 8f\\,c^4t^4\\left(\\partial_z f\\right)^2\\,\\partial_z^2 f + 4c^4t^4\\left(\\partial_t f\\right)^4 - 8c^4t^4\\left(\\partial_t f\\right)^2\\left(\\partial_z f\\right)^2 + 4c^4t^4\\left(\\partial_z f\\right)^4}{4f^6\\,c^4t^4}"
         }
       ]
     },
@@ -14539,6 +16024,11 @@
           "id": "gravastar",
           "kind": "family",
           "text": "A shell that stays put, with de Sitter space inside it where the falling shell has flat space [visser2004]."
+        },
+        {
+          "id": "charged_shell",
+          "kind": "generalisation",
+          "text": "Israel's shell given a charge, with Reissner-Nordström's field outside. With more charge than rest mass it turns round inside the inner horizon and leaves into another exterior [delacruz1967]."
         }
       ],
       "references": [
@@ -16107,6 +17597,11 @@
           "id": "simpson_visser",
           "kind": "special_case",
           "text": "A regular black hole whose inside, where $r$ is a time, is a Kantowski-Sachs cosmology that bounces: its spheres shrink to a least radius $a$ and grow again [bronnikov2022]."
+        },
+        {
+          "id": "white_hole",
+          "kind": "composite",
+          "text": "A white hole holds the vacuum member with its spheres growing: it is the space between the singularity and the dust that comes out of it [novikov1965]."
         }
       ],
       "references": [
@@ -16126,7 +17621,8 @@
         "szekeres1975",
         "bonnor1977",
         "obregon1998",
-        "bronnikov2022"
+        "bronnikov2022",
+        "novikov1965"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kantowski_sachs.json",
@@ -16370,6 +17866,11 @@
           "id": "nariai",
           "kind": "programme",
           "text": "Edward Kasner found this solution too. In 1921, the year of his anisotropic vacuum, he presented the product of two equal spheres as a solution with a cosmological constant, the positive signature form of Nariai's metric [kasner1925, kasner1921]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "generalisation",
+          "text": "Kasner's universe with solitons added. Belinski and Zakharov took it for the seed of their first soliton solutions, among them two pulses of gravitational wave that run apart along a light cone [belinskii1978]."
         }
       ],
       "references": [
@@ -16387,7 +17888,8 @@
         "ringstrom2010",
         "berger1974",
         "geroch1969",
-        "kasner1925"
+        "kasner1925",
+        "belinskii1978"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner.json",
@@ -16527,6 +18029,11 @@
           "id": "misner_brill_lindquist",
           "kind": "family",
           "text": "Two uncharged black holes at rest in a universe with no cosmological constant. Only their first moment is in closed form, and the collision that follows is known from computer simulations [brill1963, sperhake2015]."
+        },
+        {
+          "id": "lindquist_wheeler_lattice",
+          "kind": "family",
+          "text": "A universe of uncharged black holes with no cosmological constant, known only approximately: each hole keeps Schwarzschild's geometry inside its cell, and the lattice of cells expands and recollapses [lindquist1957]."
         }
       ],
       "references": [
@@ -16544,7 +18051,8 @@
         "kastor1996",
         "gibbons2010",
         "brill1963",
-        "sperhake2015"
+        "sperhake2015",
+        "lindquist1957"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kastor_traschen.json",
@@ -17003,6 +18511,11 @@
           "id": "chandrasekhar_xanthopoulos",
           "kind": "locally_same",
           "text": "Two plane gravitational waves whose collision makes the inside of Kerr. Between their fronts the metric is Kerr's between its two horizons, with $t$ and $\\phi$ running along the fronts and $\\phi$ unrolled, and the waves end on the inner horizon [chandrasekhar1986, griffiths1991]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "family",
+          "text": "Kerr's black hole is two solitons on flat space. Belinski and Zakharov's inverse scattering method returns the Kerr-NUT solution from two poles, real ones for the hole with horizons [belinskii1979]."
         }
       ],
       "references": [
@@ -17060,7 +18573,8 @@
         "mars2001",
         "meinel2002",
         "chandrasekhar1986",
-        "griffiths1991"
+        "griffiths1991",
+        "belinskii1979"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -18093,6 +19607,11 @@
           "id": "wahlquist",
           "kind": "generalisation",
           "text": "The Kerr-NUT metric with a rigidly rotating perfect fluid laid over it in the same region, which is how Wahlquist described his solution. With the fluid taken away his family is the Kerr-NUT vacuum [wahlquist1968, mars2001]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "family",
+          "text": "The whole Kerr-NUT solution is two solitons added to flat space by Belinski and Zakharov's inverse scattering method [belinskii1979]."
         }
       ],
       "references": [
@@ -18116,7 +19635,8 @@
         "mathgenealogymiller",
         "emond2022",
         "wahlquist1968",
-        "mars2001"
+        "mars2001",
+        "belinskii1979"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr_taub_nut.json",
@@ -21648,6 +23168,358 @@
       ]
     },
     {
+      "id": "lindquist_wheeler_lattice",
+      "name": "Lindquist-Wheeler Lattice Universe",
+      "short_name": "Lindquist-Wheeler Lattice",
+      "description": "A closed universe that holds nothing but $N$ equal masses, one at the centre of each cell of a regular tiling of the three sphere, built by Richard Lindquist and John Wheeler in 1957 from pieces of Schwarzschild's geometry. Fitting the pieces together makes the lattice expand and fall back almost as Friedmann's closed universe of dust does. It is an approximate spacetime, and an early test of whether a universe whose matter comes in lumps expands like a smooth one.",
+      "tags": [
+        "cosmology",
+        "closed universe",
+        "expanding universe",
+        "big bang",
+        "lattice universe",
+        "black hole lattice",
+        "multiple black holes",
+        "approximate solution",
+        "Schwarzschild-cell method",
+        "Wigner-Seitz",
+        "inhomogeneous",
+        "backreaction",
+        "three sphere",
+        "regular polytope",
+        "time-dependent",
+        "comoving",
+        "mass",
+        "horizon",
+        "curvature singularity",
+        "Flamm's paraboloid",
+        "matched solution",
+        "vacuum",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and $r_s = 2GM/c^2$ is the Schwarzschild radius of the mass at the centre of each cell. The angle $\\psi$ is the angular radius of a cell on the comparison hypersphere, which the number of cells $N$ fixes through $N(2\\psi - \\sin 2\\psi) = 2\\pi$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "Every cell is a piece of Schwarzschild's geometry, cut off at a sphere in radial free fall. The lattice has no other ingredient [lindquist1957]."
+        },
+        {
+          "id": "frw",
+          "kind": "family",
+          "text": "The smooth universe the lattice is measured against. The comparison hypersphere obeys Friedmann's equation for closed dust, and its largest radius is $3\\pi/(2N\\sin^3\\psi)$ times Friedmann's for the same total mass, which tends to 1 as $N$ grows [clifton2009]."
+        },
+        {
+          "id": "misner_brill_lindquist",
+          "kind": "family",
+          "text": "The exact form of one moment. At the instant of greatest expansion the lattice's initial data are Brill and Lindquist's, written on a three sphere in place of flat space, with one term for each mass [brill1963, clifton2012]."
+        },
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "family",
+          "text": "The same fit turned inside out. There a ball of Friedmann's dust sits inside Schwarzschild's vacuum, here Schwarzschild's vacuum sits inside a cell of a closed universe, and in both the boundary falls along a radial geodesic whose energy is the cosine of the boundary's angle."
+        },
+        {
+          "id": "einstein_rosen_bridge",
+          "kind": "family",
+          "text": "In the exact moment of greatest expansion each mass is the mouth of an Einstein-Rosen bridge, with a sheet of its own on the far side [clifton2012]."
+        },
+        {
+          "id": "tolman_bondi",
+          "kind": "family",
+          "text": "Lindquist and Wheeler's comoving coordinates are Tolman and Bondi's with no dust in them: every shell carries the same mass, and the energy function is $E = -r_s/2\\rho$."
+        },
+        {
+          "id": "kastor_traschen",
+          "kind": "family",
+          "text": "Many black holes in an expanding universe as an exact solution, which takes a cosmological constant and a charge on every hole equal to its mass [kastor1993]."
+        }
+      ],
+      "references": [
+        "friedmann1922",
+        "lindquist2011",
+        "lindquist1957",
+        "liu2015",
+        "clifton2012",
+        "schwarzschild1916",
+        "clifton2009",
+        "wheeler1983",
+        "brill1963",
+        "bentivegna2012",
+        "kastor1993"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/lindquist_wheeler_lattice.json",
+      "charts": [
+        {
+          "id": "schwarzschild_cell",
+          "name": "Schwarzschild Cell",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_s, r_m]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_b(t) \\;\\text{(the boundary of the cell)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass at the centre of each cell, $r_s = 2GM/c^2$, a length"
+            },
+            {
+              "symbol": "\\psi",
+              "description": "Angular radius of a cell on the comparison hypersphere, a pure number with $0 < \\psi < \\pi/2$, which $N$ cells of equal volume fix through $N(2\\psi - \\sin 2\\psi) = 2\\pi$"
+            }
+          ],
+          "convention": "We use Schwarzschild's coordinates $(t, r, \\theta, \\phi)$ about the mass at the centre of one cell, with $t$ carrying dimensions of time. The cell is the ball inside the boundary $r = r_b(t)$, a sphere in radial free fall that turns around at $r_m = r_s/\\sin^2\\psi$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "cosmological_time",
+          "name": "Cosmological Time",
+          "coordinates": [
+            "\\tau",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "r \\in \\left(0, \\dfrac{r_s}{1 - E}\\right]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass at the centre of each cell, $r_s = 2GM/c^2$, a length"
+            },
+            {
+              "symbol": "E",
+              "description": "Square of a comoving shell's energy per unit rest energy, a pure number, $E = \\cos^2\\psi$ for the lattice of $N$ cells"
+            }
+          ],
+          "convention": "We use Clifton and Ferreira's coordinates $(\\tau, r, \\theta, \\phi)$ inside one cell, where $\\tau$ is the proper time of every shell in radial free fall with the boundary's energy, $E = \\cos^2\\psi$, and $r$ is the areal radius. The signs are those of a cell that expands, and the root changes sign for one that contracts. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{1}{E}\\left(1 - \\dfrac{r_s}{r}\\right)c^2d\\tau^2 - \\dfrac{2}{E}\\sqrt{E - 1 + \\dfrac{r_s}{r}}\\,c\\,d\\tau\\,dr + \\dfrac{dr^2}{E} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{1}{E}\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "r"
+              ],
+              "value": "-\\dfrac{1}{E}\\sqrt{E - 1 + \\dfrac{r_s}{r}}"
+            },
+            {
+              "indices": [
+                "r",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{1}{E}\\sqrt{E - 1 + \\dfrac{r_s}{r}}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{E}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "lindquist_wheeler",
+          "name": "Lindquist-Wheeler Comoving",
+          "coordinates": [
+            "\\tau",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in \\left(-\\dfrac{\\pi\\rho}{2c}\\sqrt{\\dfrac{\\rho}{r_s}}, \\dfrac{\\pi\\rho}{2c}\\sqrt{\\dfrac{\\rho}{r_s}}\\right)",
+            "\\rho \\in (r_s, r_m]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = r_m \\;\\text{(the boundary of the cell)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass at the centre of each cell, $r_s = 2GM/c^2$, a length"
+            },
+            {
+              "symbol": "r = r(\\tau,\\rho)",
+              "description": "Areal radius of the shell labelled $\\rho$ at the proper time $\\tau$, a length, the cycloid $r = \\tfrac{\\rho}{2}(1 + \\cos\\eta)$, $c\\tau = \\tfrac{\\rho}{2}\\sqrt{\\rho/r_s}\\,(\\eta + \\sin\\eta)$ in a parameter $\\eta \\in (-\\pi, \\pi)$; no component assumes it"
+            }
+          ],
+          "convention": "We use Lindquist and Wheeler's comoving coordinates $(\\tau, \\rho, \\theta, \\phi)$ inside one cell, where $\\rho$ labels a shell in radial free fall by the largest radius it reaches, $\\tau$ is its proper time counted from that moment, and $r(\\tau, \\rho)$ is its areal radius. Each shell obeys $(\\partial_\\tau r)^2 = r_s/r - r_s/\\rho$ with $\\partial_\\tau = c^{-1}\\partial/\\partial\\tau$, and the boundary of the cell is the shell $\\rho = r_m = r_s/\\sin^2\\psi$. We take components in the chart $x^0 = c\\tau$, so $\\dot{\\tau}$ in the geodesic equations means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2d\\tau^2 + \\dfrac{(\\partial_\\rho r)^2}{1 - \\dfrac{r_s}{\\rho}}d\\rho^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{\\rho\\left(\\partial_\\rho r\\right)^2}{\\rho - r_s}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r + 4r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r + 4r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - 2r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{r^2\\,\\rho^2\\,\\partial_\\rho r}",
+          "kretschmann": "K = \\dfrac{4r^4\\,\\rho^4\\left(\\partial_\\tau^2\\partial_\\rho r\\right)^2 + 8r^2\\,\\rho^4\\left(\\partial_\\rho r\\right)^2\\left(\\partial_\\tau^2 r\\right)^2 + 8r^2\\,\\rho^4\\left(\\partial_\\tau r\\right)^2\\left(\\partial_\\tau\\partial_\\rho r\\right)^2 - 8r^2\\,\\rho^2\\,r_s\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + 2r^2\\,r_s^2 + 4\\rho^4\\left(\\partial_\\rho r\\right)^2\\left(\\partial_\\tau r\\right)^4 + 8\\rho^3\\,r_s\\left(\\partial_\\rho r\\right)^2\\left(\\partial_\\tau r\\right)^2 + 4\\rho^2\\,r_s^2\\left(\\partial_\\rho r\\right)^2}{r^4\\,\\rho^4\\left(\\partial_\\rho r\\right)^2}"
+        },
+        {
+          "id": "comparison_hypersphere",
+          "name": "Comparison Hypersphere",
+          "coordinates": [
+            "\\tau",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in \\left(-\\dfrac{\\pi a_m}{2c}, \\dfrac{\\pi a_m}{2c}\\right)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\chi = \\psi \\;\\text{(the boundary of the cell about } \\chi = 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(\\tau)",
+              "description": "Radius of the comparison hypersphere, a length, the cycloid $a = \\tfrac{a_m}{2}(1 + \\cos\\eta)$, $c\\tau = \\tfrac{a_m}{2}(\\eta + \\sin\\eta)$ in a parameter $\\eta \\in (-\\pi, \\pi)$, with the largest radius $a_m = r_s/\\sin^3\\psi$; no component assumes it"
+            },
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the mass at the centre of each cell, $r_s = 2GM/c^2$, a length"
+            },
+            {
+              "symbol": "\\psi",
+              "description": "Angular radius of a cell on the comparison hypersphere, a pure number with $0 < \\psi < \\pi/2$, which $N$ cells of equal volume fix through $N(2\\psi - \\sin 2\\psi) = 2\\pi$"
+            }
+          ],
+          "convention": "We use hyperspherical coordinates $(\\tau, \\chi, \\theta, \\phi)$ on the comparison hypersphere of radius $a(\\tau)$, where $\\tau$ is the proper time of the cell boundaries and $\\chi$ is the angle from the centre of one cell, whose boundary $\\chi = \\psi$ has the areal radius $a\\sin\\psi$. A dot on the radius is $\\dot{a} = \\dfrac{1}{c}\\dfrac{da}{d\\tau}$, and the lattice obeys $\\dot{a}^2 = \\dfrac{r_s}{a\\sin^3\\psi} - 1$. We take components in the chart $x^0 = c\\tau$, so $\\dot{\\tau}$ in the geodesic equations means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2d\\tau^2 + a^2\\left(d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6a\\,\\ddot{a} + 6\\dot{a}^2 + 6}{a^2}",
+          "kretschmann": "K = \\dfrac{12a^2\\,\\ddot{a}^2 + 24\\dot{a}^2 + 12\\dot{a}^4 + 12}{a^4}"
+        }
+      ]
+    },
+    {
       "id": "majumdar_papapetrou",
       "name": "Majumdar-Papapetrou Extremal Black Holes",
       "short_name": "Majumdar-Papapetrou",
@@ -21735,6 +23607,11 @@
           "id": "bonnor_magnetic_dipole",
           "kind": "family",
           "text": "Two extremal black holes of opposite charge. Gravity and the charges both pull, so a strut on the axis holds the pair apart [emparan2000]."
+        },
+        {
+          "id": "charged_shell",
+          "kind": "family",
+          "text": "One charge in the same balance, spread on a shell. Arnowitt, Deser, and Misner shrank it to a point in 1960 and found the mass fixed by the charge, with the single hole's field outside [arnowitt1960]."
         }
       ],
       "references": [
@@ -21767,7 +23644,8 @@
         "gibbonshawking1978",
         "ishihara2006",
         "brill1963",
-        "emparan2000"
+        "emparan2000",
+        "arnowitt1960"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/majumdar_papapetrou.json",
@@ -21991,6 +23869,11 @@
           "id": "minkowski",
           "kind": "conformal",
           "text": "Earman and Norton's toy example of 1993 is Minkowski space with one event removed and the metric multiplied by a factor that grows without bound toward it [earman1993]. Its light cones are Minkowski's, and Minkowski space itself is globally hyperbolic, so it lacks the property."
+        },
+        {
+          "id": "nordstrom_scalar",
+          "kind": "family",
+          "text": "The same line element with a field equation for the factor. In Nordström's theory of gravity $\\Omega$ is the gravitational potential, fixed by the matter [einstein1914fokker]."
         }
       ],
       "references": [
@@ -22000,7 +23883,8 @@
         "etesi2002",
         "shagrir2003",
         "welch2008",
-        "manchak2010"
+        "manchak2010",
+        "einstein1914fokker"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/malament_hogarth.json",
@@ -22147,6 +24031,11 @@
           "id": "chandrasekhar_xanthopoulos",
           "kind": "family",
           "text": "Two colliding plane waves that end on the inner horizon of Kerr. Ulvi Yurtsever took such Cauchy horizons of plane symmetric spacetimes as a simpler model of the inner horizon of a black hole [yurtsever1993]."
+        },
+        {
+          "id": "charged_shell",
+          "kind": "programme",
+          "text": "Israel's first trip through the inner horizon. With V. de la Cruz in 1967 he sent a shell of charged dust through it, round a turn inside, and out into another exterior [delacruz1967]."
         }
       ],
       "references": [
@@ -22170,7 +24059,8 @@
         "brady1992",
         "carballorubio2021",
         "chan1996",
-        "yurtsever1993"
+        "yurtsever1993",
+        "delacruz1967"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mass_inflation.json",
@@ -23311,6 +25201,16 @@
           "text": "Flat spacetime with a slowly moving body in it and gravity weak, written so that every metric theory of gravity fits. Take the mass away, $m = 0$, and it is flat again [will2014]."
         },
         {
+          "id": "nordstrom_scalar",
+          "kind": "conformal",
+          "text": "Gravity as one factor on Minkowski's metric. Nordström's field multiplies it by $\\Phi^2$, which changes what clocks and rods measure and leaves every light cone where it was [einstein1914fokker]."
+        },
+        {
+          "id": "charged_shell",
+          "kind": "composite",
+          "text": "A thin shell of charged dust with flat space inside it and Reissner-Nordström's field outside. With more charge than rest mass it falls through both horizons, turns, and leaves into another exterior [delacruz1967]."
+        },
+        {
           "id": "penrose_impulsive_wave",
           "kind": "composite",
           "text": "The inside and the outside of a light cone, glued back together with a warp. The cone carries a spherical gravitational wave one instant thick [penrose1972impulsive, podolsky2000snapping]."
@@ -23381,6 +25281,8 @@
         "israel1966",
         "tippett2017",
         "will2014",
+        "einstein1914fokker",
+        "delacruz1967",
         "podolsky2000snapping"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
@@ -23706,6 +25608,11 @@
           "id": "tippett_tsang",
           "kind": "composite",
           "text": "A bubble whose inside is Misner space's Rindler region, the time $\\eta$ running once round $2\\pi$, set in Minkowski space by a wall of exotic matter [tippett2017]."
+        },
+        {
+          "id": "elliptic_de_sitter",
+          "kind": "family",
+          "text": "De Sitter space with events identified under the antipodal map of its hyperboloid, where Misner space identifies them under a boost. The antipodal map makes no closed timelike curves, and it removes the global direction of time [parikh2003]."
         }
       ],
       "references": [
@@ -23726,7 +25633,8 @@
         "banados1993",
         "morris1988prl",
         "ori2005",
-        "tippett2017"
+        "tippett2017",
+        "parikh2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner.json",
@@ -23995,6 +25903,11 @@
           "id": "semiclosed_world",
           "kind": "family",
           "text": "One more moment of time symmetry: a closed universe of dust behind a single throat. The name bag of gold began in Wheeler's lectures on data of this kind [marolf2009]."
+        },
+        {
+          "id": "lindquist_wheeler_lattice",
+          "kind": "family",
+          "text": "A whole universe of such holes. Put $N$ of them on a three sphere in place of flat space and the same construction gives one moment of Lindquist and Wheeler's lattice exactly [wheeler1983, clifton2012]."
         }
       ],
       "references": [
@@ -24023,7 +25936,9 @@
         "kastor1993",
         "brill1994",
         "wheeler1955",
-        "marolf2009"
+        "marolf2009",
+        "wheeler1983",
+        "clifton2012"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner_brill_lindquist.json",
@@ -25247,6 +27162,11 @@
           "id": "black_saturn",
           "kind": "limit_source",
           "text": "A Myers-Perry black hole with a black ring turning in balance around it. In the limit of a ring shrunk to nothing it is the hole with one spin again [elvang2007]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "family",
+          "text": "Pomeransky derived the hole of five dimensions as two solitons, by Belinski and Zakharov's inverse scattering method [pomeransky2006]."
         }
       ],
       "references": [
@@ -25267,7 +27187,8 @@
         "page2007",
         "murata2008",
         "grossperry1983",
-        "elvang2007"
+        "elvang2007",
+        "pomeransky2006"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/myers_perry.json",
@@ -27123,6 +29044,313 @@
       ]
     },
     {
+      "id": "nordstrom_scalar",
+      "name": "Nordström's Scalar Theory of Gravity",
+      "short_name": "Nordström Scalar Gravity",
+      "description": "Gravity as one scalar field on flat spacetime, which Einstein and Fokker rewrote as a conformally flat spacetime whose curvature scalar is fixed by the trace of the stress-energy tensor of matter. Light keeps the cones of Minkowski space while clocks and rods change from place to place.",
+      "tags": [
+        "scalar gravity",
+        "alternative theory of gravity",
+        "scalar field",
+        "conformally flat",
+        "four-dimensional",
+        "Lorentzian",
+        "idealized model",
+        "curvature singularity",
+        "naked singularity",
+        "no horizon",
+        "point mass",
+        "cosmology",
+        "dust"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The conformal factor $\\Phi$ is a pure number, Nordström's potential divided by its value far from every mass.",
+      "related": [
+        {
+          "id": "minkowski",
+          "kind": "conformal",
+          "text": "Every spacetime of Nordström's theory is $\\Phi^2$ times Minkowski's metric and keeps its light cones. With no matter anywhere $\\Phi = 1$, and it is Minkowski space [einstein1914fokker]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "programme",
+          "text": "Einstein's answer to the same question, the field outside a spherical mass. To first order in $GM/c^2r$ the two slow clocks alike. Schwarzschild's field bends light and advances a perihelion by six times what Nordström's takes away [deruelle2011]."
+        },
+        {
+          "id": "ppn_metric",
+          "kind": "generalisation",
+          "text": "The weak field of a body with a number in front of every term. Nordström's point mass sits at $\\gamma = -1$ and $\\beta = 1/2$ [deruelle2011]."
+        },
+        {
+          "id": "frw",
+          "kind": "family",
+          "text": "Nordström's universe of dust is a flat Friedmann-Lemaître-Robertson-Walker metric in conformal time, with the scale factor $1 - c^2t^2/L^2$ his field equation picks for dust [sundrum2003]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "programme",
+          "text": "Nordström's other spacetime. By 1918 he had taken up Einstein's theory and found in it the field of a charged mass [nordstrom1918]."
+        },
+        {
+          "id": "malament_hogarth",
+          "kind": "family",
+          "text": "Minkowski's metric times a free conformal factor again. There the factor is chosen to stretch one world line without end, and here a field equation fixes it [einstein1914fokker]."
+        }
+      ],
+      "references": [
+        "norton1992",
+        "norton2007",
+        "einstein1912",
+        "einstein1913",
+        "nordstrom1913",
+        "einstein1914fokker",
+        "deruelle2011",
+        "einstein1915field",
+        "nordstrom1914",
+        "deruellesasaki2011",
+        "giulini2008",
+        "sundrum2003",
+        "einstein1915perihelion",
+        "dyson1920",
+        "nordstrom1914unify",
+        "kaluza1921",
+        "ravndal2004",
+        "nordstrom1918"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/nordstrom_scalar.json",
+      "charts": [
+        {
+          "id": "conformal",
+          "name": "Einstein-Fokker",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\Phi > 0"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Phi = \\Phi(t,x,y,z)",
+              "description": "Conformal factor, dimensionless and positive. It obeys Einstein and Fokker's field equation $R = 24\\pi G\\,T/c^4$, where $T$ is the trace of the stress-energy tensor of matter, so in a vacuum it solves the wave equation $\\partial_x^2\\Phi + \\partial_y^2\\Phi + \\partial_z^2\\Phi - \\partial_t^2\\Phi = 0$"
+            }
+          ],
+          "convention": "We use Einstein and Fokker's preferred coordinates $(t, x, y, z)$, in which light travels at $c$ everywhere, with $t$ carrying dimensions of time and $x$, $y$, and $z$ lengths. We take components in the chart $x^0 = ct$, where $\\partial_t = c^{-1}\\partial/\\partial t$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\Phi^2\\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\Phi^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\Phi^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\Phi^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\Phi^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6\\left(\\partial_x^2\\Phi + \\partial_y^2\\Phi + \\partial_z^2\\Phi - \\partial_t^2\\Phi\\right)}{\\Phi^3}",
+          "kretschmann": "K = \\dfrac{2\\left(\\left(3\\left(\\partial_t\\Phi\\right)^2 + \\left(\\partial_x\\Phi\\right)^2 + \\left(\\partial_y\\Phi\\right)^2 + \\left(\\partial_z\\Phi\\right)^2 - 2\\Phi\\,\\partial_t^2\\Phi\\right)^2 + \\left(\\left(\\partial_t\\Phi\\right)^2 + 3\\left(\\partial_x\\Phi\\right)^2 - \\left(\\partial_y\\Phi\\right)^2 - \\left(\\partial_z\\Phi\\right)^2 - 2\\Phi\\,\\partial_x^2\\Phi\\right)^2 + \\left(\\left(\\partial_t\\Phi\\right)^2 - \\left(\\partial_x\\Phi\\right)^2 + 3\\left(\\partial_y\\Phi\\right)^2 - \\left(\\partial_z\\Phi\\right)^2 - 2\\Phi\\,\\partial_y^2\\Phi\\right)^2 + \\left(\\left(\\partial_t\\Phi\\right)^2 - \\left(\\partial_x\\Phi\\right)^2 - \\left(\\partial_y\\Phi\\right)^2 + 3\\left(\\partial_z\\Phi\\right)^2 - 2\\Phi\\,\\partial_z^2\\Phi\\right)^2\\right) + 16\\left(\\left(2\\partial_x\\Phi\\,\\partial_y\\Phi - \\Phi\\,\\partial_x\\partial_y\\Phi\\right)^2 + \\left(2\\partial_x\\Phi\\,\\partial_z\\Phi - \\Phi\\,\\partial_x\\partial_z\\Phi\\right)^2 + \\left(2\\partial_y\\Phi\\,\\partial_z\\Phi - \\Phi\\,\\partial_y\\partial_z\\Phi\\right)^2 - \\left(2\\partial_t\\Phi\\,\\partial_x\\Phi - \\Phi\\,\\partial_t\\partial_x\\Phi\\right)^2 - \\left(2\\partial_t\\Phi\\,\\partial_y\\Phi - \\Phi\\,\\partial_t\\partial_y\\Phi\\right)^2 - \\left(2\\partial_t\\Phi\\,\\partial_z\\Phi - \\Phi\\,\\partial_t\\partial_z\\Phi\\right)^2\\right) + 4\\Phi^2\\left(\\partial_x^2\\Phi + \\partial_y^2\\Phi + \\partial_z^2\\Phi - \\partial_t^2\\Phi\\right)^2}{\\Phi^8}"
+        },
+        {
+          "id": "spherical",
+          "name": "Point Mass",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (m, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = m \\;\\text{(curvature singularity, where } \\Phi = 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass of the body as a length, $m = GM/c^2$, where $M$ is its gravitational mass; half the Schwarzschild radius of the same mass"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ centred on a static spherical body, with $t$ carrying dimensions of time and $r$ the radius of the flat background, so that $\\Phi = 1 - m/r$ and the sphere at $r$ has the area $4\\pi(r - m)^2$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\left(1 - \\dfrac{m}{r}\\right)^2\\left(-c^2dt^2 + dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{m}{r}\\right)^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{m}{r}\\right)^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(r - m\\right)^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(r - m\\right)^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8m^2\\left(6r^2 - 4mr + m^2\\right)}{\\left(r - m\\right)^8}"
+        },
+        {
+          "id": "uniform",
+          "name": "Uniform Field",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (0, \\infty)",
+            "z = 0 \\;\\text{(curvature singularity, where } \\Phi = 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Proper acceleration of a body at rest at the height $z = c^2/a$, where $\\Phi = 1$"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z)$, with $t$ carrying dimensions of time and $z$ the height above the plane where the conformal factor $\\Phi = az/c^2$ vanishes. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{a^2z^2}{c^4}\\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{a^2z^2}{c^4}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{a^2z^2}{c^4}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{a^2z^2}{c^4}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{a^2z^2}{c^4}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{24c^8}{a^4z^8}"
+        },
+        {
+          "id": "dust",
+          "name": "Dust Universe",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-L/c, L/c)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "t = \\pm L/c \\;\\text{(curvature singularities, where } \\Phi = 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Light travel distance of half the span of the universe in the inertial time, $L = c/\\sqrt{2\\pi G\\rho_0}$, where $\\rho_0$ is the density of the dust at its greatest expansion, $t = 0$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ in which the dust is at rest, with $t$ the inertial time of the flat background, carrying dimensions of time, and $r$ a comoving radius. The conformal factor $\\Phi = 1 - c^2t^2/L^2$ is the scale factor. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\left(1 - \\dfrac{c^2t^2}{L^2}\\right)^2\\left(-c^2dt^2 + dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{c^2t^2}{L^2}\\right)^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{c^2t^2}{L^2}\\right)^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r^2\\left(L^2 - c^2t^2\\right)^2}{L^4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^2\\left(L^2 - c^2t^2\\right)^2\\sin^2\\theta}{L^4}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12L^4}{\\left(L^2 - c^2t^2\\right)^3}",
+          "kretschmann": "K = \\dfrac{48L^8\\left(L^4 + 2L^2c^2t^2 + 5c^4t^4\\right)}{\\left(L^2 - c^2t^2\\right)^8}"
+        }
+      ]
+    },
+    {
       "id": "oppenheimer_snyder",
       "name": "Oppenheimer-Snyder Gravitational Collapse",
       "short_name": "Oppenheimer-Snyder",
@@ -27205,6 +29433,16 @@
           "id": "semiclosed_world",
           "kind": "family",
           "text": "The same construction with the cut taken past the equator of the closed universe, $\\chi_0 > \\pi/2$. The dust then lies behind the throat of Schwarzschild's geometry, and the mass seen from outside falls as more of the universe is kept [hsu2008unitarity]."
+        },
+        {
+          "id": "white_hole",
+          "kind": "dual",
+          "text": "The collapse with the time reversed, a ball of dust that comes out of a singularity. Igor Novikov and Yuval Ne'eman proposed it in 1964 and 1965 as what a quasar is [novikov1965, neeman1965]."
+        },
+        {
+          "id": "lindquist_wheeler_lattice",
+          "kind": "family",
+          "text": "The collapsing star turned inside out: Schwarzschild's vacuum fills each cell of a closed universe, and the boundary of a cell falls along the radial geodesic that the star's surface follows here [lindquist1957]."
         }
       ],
       "references": [
@@ -27224,7 +29462,10 @@
         "einstein1939",
         "meinel2002",
         "israel1966",
-        "hsu2008unitarity"
+        "hsu2008unitarity",
+        "novikov1965",
+        "neeman1965",
+        "lindquist1957"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/oppenheimer_snyder.json",
@@ -27729,6 +29970,11 @@
           "id": "minkowski",
           "kind": "special_case",
           "text": "The body taken away. At $m = 0$ every number in front of every term has nothing left to multiply, and the metric is flat."
+        },
+        {
+          "id": "nordstrom_scalar",
+          "kind": "special_case",
+          "text": "Nordström's scalar theory as a point of the plane. At $\\gamma = -1$ and $\\beta = 1/2$ the metric is the weak field of his point mass, which bends no light [deruelle2011]."
         }
       ],
       "references": [
@@ -27749,7 +29995,8 @@
         "bertotti2003",
         "williams2004",
         "schiff1960",
-        "everitt2011"
+        "everitt2011",
+        "deruelle2011"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ppn_metric.json",
@@ -30454,6 +32701,21 @@
           "id": "semiclosed_world",
           "kind": "family",
           "text": "A closed universe of charged dust behind a throat. Moissei Markov and Valeri Frolov found in 1970 that any charge keeps such a universe from closing, and its outside is this metric [markov1970]."
+        },
+        {
+          "id": "nordstrom_scalar",
+          "kind": "programme",
+          "text": "Nordström's own theory of gravity, a scalar field on flat spacetime, which he set out in 1913 before he took up Einstein's [nordstrom1913]."
+        },
+        {
+          "id": "born_infeld_charge",
+          "kind": "generalisation",
+          "text": "This charge with a limit on its field. Born and Infeld's electrodynamics keeps the field of a point charge finite, so the energy of the field is finite too, and the charge is a black hole with one horizon or two, or a particle with no horizon and a conical point at its centre [hoffmann1935, gibbonsrasheed1995]."
+        },
+        {
+          "id": "charged_shell",
+          "kind": "composite",
+          "text": "A thin shell of charged dust with flat space inside it and Reissner-Nordström's field outside. Shrunk to a point at rest it is Arnowitt, Deser, and Misner's point charge, with a finite mass set by its charge alone [arnowitt1960]."
         }
       ],
       "references": [
@@ -30492,7 +32754,11 @@
         "volkov1999",
         "brill1963",
         "emparan2000",
-        "markov1970"
+        "markov1970",
+        "nordstrom1913",
+        "hoffmann1935",
+        "gibbonsrasheed1995",
+        "arnowitt1960"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -32786,6 +35052,31 @@
           "id": "semiclosed_world",
           "kind": "composite",
           "text": "A closed universe of dust sewn onto the second sheet of the extended solution, behind the throat. Yakov Zel'dovich and Igor Novikov studied it in 1962, and it goes by the name of Wheeler's bag of gold [zelmanov1965, marolf2009]."
+        },
+        {
+          "id": "white_hole",
+          "kind": "composite",
+          "text": "A ball of dust coming out through Schwarzschild's past horizon, with his vacuum outside it [novikov1965]."
+        },
+        {
+          "id": "lindquist_wheeler_lattice",
+          "kind": "composite",
+          "text": "A closed universe tiled with pieces of this geometry: $N$ equal masses on a three sphere, each keeping Schwarzschild's vacuum out to a sphere in free fall [lindquist1957]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "family",
+          "text": "Schwarzschild's black hole is two solitons on flat space with no rotation, in Belinski and Zakharov's inverse scattering method [belinskii1979]."
+        },
+        {
+          "id": "nordstrom_scalar",
+          "kind": "programme",
+          "text": "The field of a point mass in the scalar theory Einstein's displaced. Nordström's metric is $(1 - GM/c^2r)^2$ times Minkowski's: the same redshift to first order, light that goes straight, and a perihelion that turns backwards [deruelle2011]."
+        },
+        {
+          "id": "born_infeld_charge",
+          "kind": "generalisation",
+          "text": "Schwarzschild's mass with a charge whose field obeys Born and Infeld's electrodynamics. The mass inside a sphere then grows with its radius, by the energy of the field, and reaches $r_s/2$ far away [hoffmann1935, gibbonsrasheed1995]."
         }
       ],
       "references": [
@@ -32881,7 +35172,13 @@
         "ferrari1988",
         "thornewill1971",
         "zelmanov1965",
-        "marolf2009"
+        "marolf2009",
+        "novikov1965",
+        "lindquist1957",
+        "belinskii1979",
+        "deruelle2011",
+        "hoffmann1935",
+        "gibbonsrasheed1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -38018,6 +40315,16 @@
           "id": "semiclosed_world",
           "kind": "special_case",
           "text": "Uniform dust out past the equator of a closed universe and vacuum beyond, joined at a throat. Igor Novikov discussed that throat in 1964, a few years before other authors named it the neck of the general model [krasinski2001novikov]."
+        },
+        {
+          "id": "white_hole",
+          "kind": "special_case",
+          "text": "Tolman-Bondi with $E = 0$, a uniform core, and a bang that comes late for it, Igor Novikov's delayed core of 1964 [novikov1965]."
+        },
+        {
+          "id": "lindquist_wheeler_lattice",
+          "kind": "family",
+          "text": "Each cell of the lattice, in Lindquist and Wheeler's comoving coordinates, is this metric with no dust in it: every shell carries the same mass, and $E = -r_s/2r$ for the shell that turns around at $r$ [lindquist1957]."
         }
       ],
       "references": [
@@ -38047,7 +40354,9 @@
         "lemos1992",
         "hellaby1994",
         "lattimer2001",
-        "krasinski2001novikov"
+        "krasinski2001novikov",
+        "novikov1965",
+        "lindquist1957"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tolman_bondi.json",
@@ -38910,6 +41219,11 @@
           "id": "israel_shell",
           "kind": "limit_source",
           "text": "A falling shell of dust with rest mass. In the limit of no rest mass it is Vaidya's shell of light [israel1966, adler2005]."
+        },
+        {
+          "id": "white_hole",
+          "kind": "family",
+          "text": "A white hole made of dust, Oppenheimer and Snyder's collapse with the time reversed. Zel'dovich, Novikov, and Starobinsky used Vaidya's metric for the radiation one sends out [zeldovichnovikovstarobinskii1974]."
         }
       ],
       "references": [
@@ -38942,7 +41256,8 @@
         "kobayashi2005",
         "hiscock1981outgoing",
         "israel1966",
-        "adler2005"
+        "adler2005",
+        "zeldovichnovikovstarobinskii1974"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/vaidya.json",
@@ -40639,6 +42954,475 @@
           ],
           "ricci_scalar": "R = \\dfrac{6b^2\\,F - 4}{R_0^2\\,b^2}",
           "kretschmann": "K = \\dfrac{4\\left(3b^4\\,F^2\\sin^4 X + 3b^4\\,F^2 - 6b^4\\,F - 2b^2\\,F\\sin^2 X - 2b^2\\,F\\sin^4 X + 3b^4 + 2b^2\\sin^2 X + \\sin^4 X\\right)\\csc^4 X}{R_0^4\\,b^4}"
+        }
+      ]
+    },
+    {
+      "id": "white_hole",
+      "name": "White Hole, the Lagging Core of Novikov and Ne'eman",
+      "short_name": "White Hole",
+      "description": "A ball of dust that comes out of a singularity through the past horizon of Schwarzschild's exterior, Oppenheimer and Snyder's collapse with the time reversed. Igor Novikov and Yuval Ne'eman proposed it in 1964 and 1965 as a piece of the big bang that started late, and as what a quasar is.",
+      "tags": [
+        "white hole",
+        "lagging core",
+        "delayed core",
+        "dust",
+        "matched solution",
+        "big bang",
+        "past horizon",
+        "horizon",
+        "event horizon",
+        "apparent horizon",
+        "curvature singularity",
+        "instability",
+        "quasar",
+        "Swiss cheese",
+        "Kruskal extension",
+        "comoving",
+        "time-dependent",
+        "spherically symmetric",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and $r_s = 2GM/c^2$ is the Schwarzschild radius of the core. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "dual",
+          "text": "The same ball of dust with the time reversed. After its moment of rest the white hole's core is Oppenheimer and Snyder's star, falling back [oppenheimersnyder1939]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "The outside of the core. Its surface is a radial geodesic of Schwarzschild's metric that crosses $r = r_s$ outward, through the past horizon."
+        },
+        {
+          "id": "frw",
+          "kind": "piece",
+          "text": "The inside of the core, a ball of a Friedmann universe of dust that leaves the big bang late. Novikov's own core is cut from the flat universe, and the one that falls back from the closed one [novikov1965]."
+        },
+        {
+          "id": "tolman_bondi",
+          "kind": "generalisation",
+          "text": "Novikov's solution is Tolman's dust with no energy function, $E = 0$, and a bang that comes later for the core than for the shells around it [tolman1934, novikov1965]."
+        },
+        {
+          "id": "kantowski_sachs",
+          "kind": "piece",
+          "text": "The vacuum inside the past horizon, between the singularity and the dust, is Kantowski and Sachs's vacuum universe with its spheres growing, the region Novikov called a T region [novikov1965]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "family",
+          "text": "A white hole that sends out light. Zel'dovich, Novikov, and Starobinsky used Vaidya's metric for the radiation leaving one [zeldovichnovikovstarobinskii1974, vaidya1953]."
+        }
+      ],
+      "references": [
+        "novikov1965",
+        "novikov1964explosion",
+        "einstein1945",
+        "tolman1934",
+        "oppenheimersnyder1939",
+        "neeman1965",
+        "zeldovichnovikov1967",
+        "neemantauber1967",
+        "kruskal1960",
+        "neeman1974",
+        "eardley1974",
+        "lake1978",
+        "zeldovichnovikovstarobinskii1974",
+        "hawking1976thermo",
+        "waldramaswamy1980",
+        "barrabes1993",
+        "lakeroeder1976",
+        "blau1989",
+        "oripoisson1994",
+        "vaidya1953"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/white_hole.json",
+      "charts": [
+        {
+          "id": "interior_comoving",
+          "name": "Comoving Dust Interior",
+          "coordinates": [
+            "\\tau",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in \\left(0, \\dfrac{\\pi a_m}{c}\\right)",
+            "\\chi \\in [0, \\chi_0]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(\\tau)",
+              "description": "Scale factor of the dust, a length ($a > 0$), obeying $2a\\ddot{a}+\\dot{a}^2+1 = 0$, which the cycloid $a = a_m\\sin^2(\\eta/2)$, $c\\tau = \\frac{a_m}{2}(\\eta - \\sin\\eta)$ solves"
+            },
+            {
+              "symbol": "\\chi_0",
+              "description": "Comoving polar angle of the core's surface ($0 < \\chi_0 < \\pi/2$), fixed by its compactness at the moment of rest through $\\sin^2\\chi_0 = r_s/R_0$, where $R_0 = a_m\\sin\\chi_0$ is the largest areal radius the surface reaches"
+            },
+            {
+              "symbol": "a_m",
+              "description": "Scale factor at the moment of rest, the maximum of the cycloid, tied to the exterior mass by $r_s = a_m\\sin^3\\chi_0$"
+            }
+          ],
+          "convention": "We use comoving coordinates $(\\tau, \\chi, \\theta, \\phi)$, where $\\tau$ is the proper time of the dust since it left its singularity, $\\chi$ is a dimensionless comoving polar angle, and the scale factor $a(\\tau)$ carries the length, and the core is the ball $\\chi \\le \\chi_0$. The scale factor leaves $a = 0$ at $\\tau = 0$, comes to rest at $a_m$ at $\\tau = \\dfrac{\\pi a_m}{2c}$, and returns to $a = 0$ at $\\tau = \\dfrac{\\pi a_m}{c}$. We take components in the chart $x^0 = c\\tau$, a dot on the scale factor is $\\dot{a} = \\dfrac{da}{d(c\\tau)} = \\dfrac{1}{c}\\dfrac{da}{d\\tau}$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2d\\tau^2 + a^2\\left(d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6\\left(a\\ddot{a} + \\dot{a}^2 + 1\\right)}{a^2}",
+          "kretschmann": "K = \\dfrac{12\\left(a^2\\ddot{a}^2 + \\left(\\dot{a}^2 + 1\\right)^2\\right)}{a^4}"
+        },
+        {
+          "id": "interior_conformal",
+          "name": "Conformal Time Interior",
+          "coordinates": [
+            "\\eta",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (0, 2\\pi)",
+            "\\chi \\in [0, \\chi_0]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\chi_0",
+              "description": "Comoving polar angle of the core's surface ($0 < \\chi_0 < \\pi/2$), fixed by its compactness at the moment of rest through $\\sin^2\\chi_0 = r_s/R_0$, where $R_0 = a_m\\sin\\chi_0$ is the largest areal radius the surface reaches"
+            },
+            {
+              "symbol": "a_m",
+              "description": "Scale factor at the moment of rest, the maximum of the cycloid, tied to the exterior mass by $r_s = a_m\\sin^3\\chi_0$"
+            }
+          ],
+          "convention": "We use the conformal time $\\eta$ of the dust, a dimensionless parameter along the cycloid with $a = a_m\\sin^2(\\eta/2)$ and $c\\tau = \\frac{a_m}{2}(\\eta - \\sin\\eta)$ for its proper time $\\tau$, and the comoving polar angle $\\chi$, and the core is the ball $\\chi \\le \\chi_0$. The dust leaves its singularity at $\\eta = 0$, is at rest at $\\eta = \\pi$, and falls back to $\\eta = 2\\pi$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = a_m^2\\sin^4(\\eta/2)\\left(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-a_m^2\\sin^4(\\eta/2)"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a_m^2\\sin^4(\\eta/2)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a_m^2\\sin^4(\\eta/2)\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a_m^2\\sin^4(\\eta/2)\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{3\\csc^6(\\eta/2)}{a_m^2}",
+          "kretschmann": "K = \\dfrac{15\\csc^{12}(\\eta/2)}{a_m^4}"
+        },
+        {
+          "id": "exterior_schwarzschild",
+          "name": "Schwarzschild Exterior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [R(t), \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the core, $r_s = 2GM/c^2 = a_m\\sin^3\\chi_0$"
+            }
+          ],
+          "convention": "We use Schwarzschild coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $t = 0$ at the moment of rest, and $R(t)$ is the areal radius of the surface of the core. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "exterior_eddington_finkelstein",
+          "name": "Outgoing Eddington-Finkelstein Exterior",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in [R(u), \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_s \\;\\text{(the past horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the core, $r_s = 2GM/c^2 = a_m\\sin^3\\chi_0$"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$, where the retarded time $u$ is a length, constant along each outgoing ray and counted from the ray the surface sends as it crosses $r_s$ on its way out, so $u$ differs from $ct - r - r_s\\ln\\left|r/r_s - 1\\right|$ by a constant. The areal radius of the surface of the core is $R(u)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "exterior_kruskal",
+          "name": "Kruskal Exterior",
+          "coordinates": [
+            "U",
+            "V",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "U \\in (-\\infty, \\infty)",
+            "V \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r \\ge R \\;\\text{(outside the core)}",
+            "UV < 1 \\;\\text{(where } r > 0\\text{)}",
+            "V = 0 \\;\\text{(the past horizon)}",
+            "U = 0 \\;\\text{(the future horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the core, $r_s = 2GM/c^2 = a_m\\sin^3\\chi_0$"
+            },
+            {
+              "symbol": "r = r_s\\left(1 + \\mathrm{W}\\left(-e^{-1}UV\\right)\\right)",
+              "description": "Areal radius, a length, the solution of $\\left(1 - r/r_s\\right)e^{r/r_s} = UV$, with $\\mathrm{W}$ the principal branch of Lambert's function, $\\mathrm{W}(x)\\,e^{\\mathrm{W}(x)} = x$; its derivatives are $\\partial_U r = -r_s^2\\,V e^{-r/r_s}/r$ and $\\partial_V r = -r_s^2\\,U e^{-r/r_s}/r$"
+            }
+          ],
+          "convention": "We use Kruskal's null coordinates $(U, V, \\theta, \\phi)$, with $U$ and $V$ numbers, and outside $r_s$ they are $U = -e^{-u/2r_s}$ and $V = e^{v/2r_s}$ for the retarded time $u$ counted from the surface's crossing of $r_s$ on its way out and the advanced time $v = u + 2r + 2r_s\\ln(r/r_s - 1)$. The areal radius $r$ is a function of $UV$, with $\\mathrm{W}$ Lambert's function, and $R$ is the areal radius of the surface of the core. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\dfrac{4r_s^3}{r}e^{-r/r_s}\\,dU\\,dV + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "U",
+                "V"
+              ],
+              "value": "-\\dfrac{2r_s^3}{r}e^{-r/r_s}"
+            },
+            {
+              "indices": [
+                "V",
+                "U"
+              ],
+              "value": "-\\dfrac{2r_s^3}{r}e^{-r/r_s}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        },
+        {
+          "id": "novikov_comoving",
+          "name": "Novikov's Comoving",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "ct > b \\;\\text{(after the shell leaves its singularity)}",
+            "R = F \\;\\text{(the Schwarzschild sphere)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "F = F(r)",
+              "description": "Schwarzschild radius of the mass inside the shell $r$, a length: $F = 2GM(r)/c^2$, an arbitrary function of $r$ alone that never decreases, constant across a vacuum. The prime is $F' = dF/dr$."
+            },
+            {
+              "symbol": "b = b(r)",
+              "description": "Delay of the shell $r$, a length: the shell leaves its singularity at $ct = b(r)$, later where $b$ is larger. A uniform Friedmann universe has $b$ constant, and the shells do not cross where $q\\,F' - 2F\\,b' > 0$. The prime is $b' = db/dr$."
+            },
+            {
+              "symbol": "q = ct - b",
+              "description": "Proper time of the shell $r$ since it left its singularity, times $c$, a length"
+            },
+            {
+              "symbol": "R = \\left(\\dfrac{9F}{4}\\right)^{1/3}q^{2/3}",
+              "description": "Areal radius, a length: the shell $r$ has area $4\\pi R^2$ at time $t$. Its derivatives are $\\partial_t R = 2R/3q$ along $x^0 = ct$ and $\\partial_r R = R\\left(q\\,F' - 2F\\,b'\\right)/3Fq$."
+            }
+          ],
+          "convention": "We use Novikov's comoving coordinates $(t, r, \\theta, \\phi)$, with $t$ the proper time of the dust and of the freely moving shells of the vacuum, and $r$ a label, a length, that each shell keeps. The shell $r$ leaves its singularity at $ct = b(r)$ and has the areal radius $R$, and the Schwarzschild radius of the mass inside it is $F(r)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\left(\\partial_r R\\right)^2dr^2 + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(\\partial_r R\\right)^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "R^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "R^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4F'}{3q\\left(q\\,F' - 2F\\,b'\\right)}",
+          "kretschmann": "K = \\dfrac{16\\left(16F^2\\left(b'\\right)^2 + 5q^2\\left(F'\\right)^2\\right)}{27q^4\\left(q\\,F' - 2F\\,b'\\right)^2}"
         }
       ]
     },

@@ -62,6 +62,11 @@
       "id": "senovilla",
       "kind": "family",
       "text": "An inhomogeneous cosmology with the same two commuting symmetries of space, filled with radiation and arranged around an axis. Every geodesic in it runs on for ever, with no singularity at either end of time [ruiz1992, chinea1992]."
+    },
+    {
+      "id": "belinski_zakharov",
+      "kind": "family",
+      "text": "The same field equations with $\\theta$ unrolled into a line. Belinski and Zakharov's inverse scattering method adds solitons to any known solution with these two symmetries, by algebra alone [belinskii1978]."
     }
   ],
   "references": [
@@ -88,7 +93,8 @@
     "ringstrom2009",
     "ellismaccallum1969",
     "ruiz1992",
-    "chinea1992"
+    "chinea1992",
+    "belinskii1978"
   ],
   "coordinates": [
     {

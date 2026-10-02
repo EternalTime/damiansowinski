@@ -214,7 +214,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8374b9aefc52b72a",
+    "version": "0be0402ad12207eb",
     "diagrams": "af782319d0ede812",
     "conformal": "7ea8e08d66397efe",
     "embedding": "1585df5452ac5572"
@@ -357,7 +357,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "65af7b483ec302d6",
+    "version": "97f784a7bc3cd3f4",
     "diagrams": "034dc4a9fdeb21a8",
     "embedding": "726e24d2db3acd3e"
   },
@@ -520,10 +520,51 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b28cef5f6e2ffda1",
+    "version": "cad68d90c8607122",
     "diagrams": "2122349c176f47ed",
     "conformal": "f82fe13ee8206113",
     "embedding": "c306446463337712"
+  },
+  {
+    "id": "born_infeld_charge",
+    "name": "Born-Infeld Point Charge",
+    "tags": [
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "charged",
+      "electric charge",
+      "mass",
+      "point charge",
+      "electromagnetic mass",
+      "nonlinear electrodynamics",
+      "Born-Infeld electrodynamics",
+      "electromagnetic field",
+      "particle-like solution",
+      "geon",
+      "conical singularity",
+      "curvature singularity",
+      "naked singularity",
+      "timelike singularity",
+      "no horizon",
+      "black hole",
+      "charged black hole",
+      "horizon",
+      "event horizon",
+      "string theory",
+      "causal structure",
+      "maximal extension",
+      "asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "512e6b2398910632",
+    "diagrams": "57ee5c7562cefd4b",
+    "conformal": "e2bbbb9cac6bd337",
+    "embedding": "5e7af1a4e6b9a9b6"
   },
   {
     "id": "boson_star",
@@ -598,7 +639,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "a58527b9ef2adb1b",
+    "version": "9cca44dfa3993498",
     "diagrams": "aad81dc2048a0547",
     "conformal": "6c5c22a5247f56a8",
     "embedding": "d857ba18e7d9066a"
@@ -667,6 +708,48 @@
     "diagrams": "1684108756c10324",
     "conformal": "065779d03ab6d15d",
     "embedding": "3437f058dfb1c91b"
+  },
+  {
+    "id": "charged_shell",
+    "name": "Charged Shell",
+    "tags": [
+      "dust",
+      "thin shell",
+      "charged",
+      "electric charge",
+      "electromagnetic field",
+      "Einstein-Maxwell",
+      "gravitational collapse",
+      "bounce",
+      "matched solution",
+      "junction conditions",
+      "black hole",
+      "charged black hole",
+      "extremal",
+      "isotropic coordinates",
+      "point particle",
+      "mass",
+      "curvature singularity",
+      "timelike singularity",
+      "horizon",
+      "event horizon",
+      "Cauchy horizon",
+      "inner horizon",
+      "maximal extension",
+      "time-dependent",
+      "spherically symmetric",
+      "asymptotically flat",
+      "causal structure",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "25316b6866e3ee9d",
+    "diagrams": "58591b53cadf5579",
+    "conformal": "67014d080f0dd52b",
+    "embedding": "2c30edaa0cee4bdc"
   },
   {
     "id": "coleman_de_luccia",
@@ -781,7 +864,7 @@
       "static",
       "spherically symmetric"
     ],
-    "version": "a4b9076357c26e3a",
+    "version": "cedc7108abbcf557",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -857,7 +940,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "63b2edaab402c973",
+    "version": "79d2f52ce47c8c6f",
     "diagrams": "e80c22fa8faff2b6",
     "conformal": "9dae987db0ca1df8",
     "embedding": "7ebe08e359710241"
@@ -951,7 +1034,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "4f24319cb8b200d6",
+    "version": "474bf811b6476d5f",
     "diagrams": "9afed8951c5aec50",
     "conformal": "c7734072db0d7622",
     "embedding": "07b92b646e316b86"
@@ -985,7 +1068,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0c884ac18a645608",
+    "version": "64cffdb30921227f",
     "diagrams": "76bab86a529ed941",
     "conformal": "c45f19da93e85da3",
     "embedding": "626bd0932cbe6704"
@@ -1005,10 +1088,48 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "6f22f73a80e6a3ba",
+    "version": "8979e5d4015737d9",
     "diagrams": "dc0f3031798ca092",
     "conformal": "2876dfbbabbb4b26",
     "embedding": "f736444606912902"
+  },
+  {
+    "id": "elliptic_de_sitter",
+    "name": "Elliptic de Sitter",
+    "tags": [
+      "de Sitter",
+      "positive cosmological constant",
+      "cosmological constant",
+      "maximally symmetric",
+      "constant curvature",
+      "not time orientable",
+      "topology",
+      "cosmological horizon",
+      "horizon",
+      "causal structure",
+      "holography",
+      "inflation",
+      "expanding universe",
+      "cosmology",
+      "homogeneous",
+      "isotropic",
+      "geodesically complete",
+      "no singularity",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model",
+      "Einstein space",
+      "conformally flat",
+      "stationary",
+      "static",
+      "spherically symmetric"
+    ],
+    "version": "4542e5de64bc3cb8",
+    "diagrams": "e73839d0a0529179",
+    "conformal": "2fed97c5ab6ddc3d",
+    "embedding": "954af1b6ad40d276"
   },
   {
     "id": "ellis_bronnikov",
@@ -1094,7 +1215,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "ba9d838d2906ae3a",
+    "version": "cd94e9fcc7ef895f",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -1229,7 +1350,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4e58c8875d756ae6",
+    "version": "4065b5f6a0b40e65",
     "diagrams": "2af1bbf417683eb3",
     "conformal": "431800db7085dc77",
     "embedding": "f0d7a1bdcd0620df"
@@ -1267,6 +1388,30 @@
     "diagrams": "1e2a338fbaeb162f",
     "conformal": "c44e7367505c4a14",
     "embedding": "eb3c3b7b2d474485"
+  },
+  {
+    "id": "belinski_zakharov",
+    "name": "Gravitational Solitons",
+    "tags": [
+      "vacuum",
+      "cosmology",
+      "inhomogeneous",
+      "gravitational wave",
+      "soliton",
+      "inverse scattering",
+      "Kasner",
+      "exact solution",
+      "time-dependent",
+      "curvature singularity",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "8c2e2cabc3b8ef8b",
+    "diagrams": "9f49d55edfa17437",
+    "conformal": "06e065e27b7e360f",
+    "embedding": "ad3b787488c249a5"
   },
   {
     "id": "hartle_thorne",
@@ -1428,7 +1573,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "eceb39abf39a98d4",
+    "version": "7c3dfe8a0b6ec0d6",
     "diagrams": "c5dd1a29c82d4852",
     "conformal": "3af58a8247811924",
     "embedding": "2d27d1ba3b61e75b"
@@ -1567,7 +1712,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cc81a84724410d3c",
+    "version": "33393b57b2ce54ed",
     "diagrams": "a8296e17dab2de95",
     "conformal": "5aa345afee4654d8",
     "embedding": "46d9d6d9484b8e00"
@@ -1589,7 +1734,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1a79b98e311f77c9",
+    "version": "4146115ad2ce9079",
     "diagrams": "a84952c23e2fa052",
     "embedding": "e2698f474fe29ce2"
   },
@@ -1633,7 +1778,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "bcc20efa71452b3b",
+    "version": "db92df98446c360a",
     "diagrams": "aa8f329620c5927d",
     "conformal": "52493b5ac50704d6",
     "embedding": "c4aa8198bba8d575"
@@ -1665,7 +1810,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4d5d07c7b557cb65",
+    "version": "5343bcdd0e18fcf1",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -1781,7 +1926,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a9ea6ea234eeec6a",
+    "version": "ed3b5db55ede7851",
     "diagrams": "442206dfc206d069",
     "conformal": "8508e743b0676aa7",
     "embedding": "f046af1ffaff68d9"
@@ -2020,6 +2165,42 @@
     "embedding": "cd98817c46caeee2"
   },
   {
+    "id": "lindquist_wheeler_lattice",
+    "name": "Lindquist-Wheeler Lattice",
+    "tags": [
+      "cosmology",
+      "closed universe",
+      "expanding universe",
+      "big bang",
+      "lattice universe",
+      "black hole lattice",
+      "multiple black holes",
+      "approximate solution",
+      "Schwarzschild-cell method",
+      "Wigner-Seitz",
+      "inhomogeneous",
+      "backreaction",
+      "three sphere",
+      "regular polytope",
+      "time-dependent",
+      "comoving",
+      "mass",
+      "horizon",
+      "curvature singularity",
+      "Flamm's paraboloid",
+      "matched solution",
+      "vacuum",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "8db7e8c732dd714f",
+    "diagrams": "06a24c0c502bf8a1",
+    "conformal": "e174596b63171289",
+    "embedding": "bc12998ea149ca7e"
+  },
+  {
     "id": "majumdar_papapetrou",
     "name": "Majumdar-Papapetrou",
     "tags": [
@@ -2048,7 +2229,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f4177233ad9ca8ce",
+    "version": "b3958c32ca0826f7",
     "diagrams": "c6edded6cce52897",
     "conformal": "334186f800f59252",
     "embedding": "b9bf3c95064c40a7"
@@ -2065,7 +2246,7 @@
       "four-dimensional",
       "conformally flat"
     ],
-    "version": "6ea7a118694a6055",
+    "version": "97d081119d48af50",
     "diagrams": "ed541b2735366dcf",
     "conformal": "69af72b1ccf43777",
     "embedding": "04c50f64f4cf864e"
@@ -2104,7 +2285,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "797428e936f9a614",
+    "version": "80895799cc1f747a",
     "diagrams": "b920fffead7f2fe8",
     "conformal": "43d2fa3533d022a9",
     "embedding": "097ceae878d9ed12"
@@ -2219,7 +2400,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "254d58be464eccc6",
+    "version": "55f26acaff050937",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -2243,7 +2424,7 @@
       "conformally flat",
       "Einstein equations"
     ],
-    "version": "8163c025b0fa1bce",
+    "version": "04f2e2ed24febd65",
     "diagrams": "62b5c96261ee76e9",
     "conformal": "62cc3d3fab22417e",
     "embedding": "74f663204d97446f"
@@ -2288,7 +2469,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "1ecf1b9cc2984479",
+    "version": "5e2e4f2d97b33136",
     "embedding": "0c96027fa617beeb"
   },
   {
@@ -2435,7 +2616,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "565ca73e9e6b2c8b",
+    "version": "83ef4e35af659089",
     "diagrams": "fbe2465fce912260",
     "conformal": "1a4a12f584d5c79c",
     "embedding": "d6b5347d467d964c"
@@ -2556,6 +2737,29 @@
     "embedding": "1bebbd3e461aed13"
   },
   {
+    "id": "nordstrom_scalar",
+    "name": "Nordström Scalar Gravity",
+    "tags": [
+      "scalar gravity",
+      "alternative theory of gravity",
+      "scalar field",
+      "conformally flat",
+      "four-dimensional",
+      "Lorentzian",
+      "idealized model",
+      "curvature singularity",
+      "naked singularity",
+      "no horizon",
+      "point mass",
+      "cosmology",
+      "dust"
+    ],
+    "version": "939f5c5da3cda8ec",
+    "diagrams": "7ca84c063f7c2ca0",
+    "conformal": "20e04688ba6cf230",
+    "embedding": "3a2c6a2557fbf67a"
+  },
+  {
     "id": "oppenheimer_snyder",
     "name": "Oppenheimer-Snyder",
     "tags": [
@@ -2574,7 +2778,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ff157a9fca8b399d",
+    "version": "8006061f6afe05bf",
     "diagrams": "d31b7b7b6c3dd2ef",
     "conformal": "7400ddcb9dd6a817",
     "embedding": "1ecd155079c29ab6"
@@ -2637,7 +2841,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f17949989678d037",
+    "version": "25c7afc162baaf3b",
     "diagrams": "197eec2d67db791c",
     "conformal": "6588b3545cfd1a4f",
     "embedding": "7438e54f373b2e03"
@@ -2852,7 +3056,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "007372565d412511",
+    "version": "839a1137fc4c9ae4",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -3074,7 +3278,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "10dec69cb69b94aa",
+    "version": "89ec1c73b561841c",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -3570,7 +3774,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ba30b0014a5e02fa",
+    "version": "0db5b11f1a46b902",
     "diagrams": "b997809f786afa14",
     "embedding": "aefa04627c7f6154"
   },
@@ -3664,7 +3868,7 @@
       "naked singularity",
       "cosmic censorship"
     ],
-    "version": "d6c20744537be24f",
+    "version": "35e69aea66e2d7c1",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404"
@@ -3794,6 +3998,39 @@
     "version": "73eed975a2bc4992",
     "diagrams": "6dd4dac8529f8334",
     "embedding": "0bbd48dbcc626017"
+  },
+  {
+    "id": "white_hole",
+    "name": "White Hole",
+    "tags": [
+      "white hole",
+      "lagging core",
+      "delayed core",
+      "dust",
+      "matched solution",
+      "big bang",
+      "past horizon",
+      "horizon",
+      "event horizon",
+      "apparent horizon",
+      "curvature singularity",
+      "instability",
+      "quasar",
+      "Swiss cheese",
+      "Kruskal extension",
+      "comoving",
+      "time-dependent",
+      "spherically symmetric",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "e1e2cd0c3ada375d",
+    "diagrams": "f2bb8f28f57f12b8",
+    "conformal": "05af67c07226ebb3",
+    "embedding": "f02661da1ce5940b"
   },
   {
     "id": "witten_black_hole",

@@ -51,6 +51,11 @@
       "id": "minkowski",
       "kind": "special_case",
       "text": "The body taken away. At $m = 0$ every number in front of every term has nothing left to multiply, and the metric is flat."
+    },
+    {
+      "id": "nordstrom_scalar",
+      "kind": "special_case",
+      "text": "Nordström's scalar theory as a point of the plane. At $\\gamma = -1$ and $\\beta = 1/2$ the metric is the weak field of his point mass, which bends no light [deruelle2011]."
     }
   ],
   "references": [
@@ -71,7 +76,8 @@
     "bertotti2003",
     "williams2004",
     "schiff1960",
-    "everitt2011"
+    "everitt2011",
+    "deruelle2011"
   ],
   "coordinates": [
     {

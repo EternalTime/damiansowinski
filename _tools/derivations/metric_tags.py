@@ -147,6 +147,11 @@ REGIONS = {
         "why": "kerr_ingoing runs on through the horizon into one of the extensions, where Kerr's "
                "metric is stationary; where the waves have passed both Killing vectors are spacelike",
     },
+    "nordstrom_scalar": {
+        "regions": [["conformal"]],
+        "why": "spherical, uniform and dust are three solutions of the theory, a point mass, a uniform "
+               "field and a universe of dust, each with symmetries its general spacetime lacks",
+    },
     "black_saturn": {
         "regions": [["weyl", "polar"]],
         "why": "ring is the black ring alone, the Saturn with its hole taken away",
@@ -171,6 +176,10 @@ REGIONS = {
         "regions": [["interior"], ["exterior", "exterior_ingoing"]],
         "why": "the flat space inside the shell and the vacuum outside it are two regions of one spacetime",
     },
+    "charged_shell": {
+        "regions": [["interior"], ["exterior", "exterior_ingoing", "exterior_outgoing", "exterior_isotropic"]],
+        "why": "the flat space inside the shell and the charge's field outside it are two regions of one spacetime",
+    },
     "kaluza_klein_black_hole": {
         "regions": [["electric", "eddington_finkelstein_ingoing", "magnetic", "dyonic"]],
         "why": "einstein and einstein_eddington_finkelstein print the metric of four dimensions the "
@@ -186,6 +195,12 @@ REGIONS = {
         "regions": [["kundt", "podolsky_belan", "ozsvath_robinson_rozga"]],
         "why": "simplest_wave and kerr_schild are one wave of the family, whose profile alone "
                "does not depend on u",
+    },
+    "lindquist_wheeler_lattice": {
+        "regions": [["schwarzschild_cell", "cosmological_time"]],
+        "why": "lindquist_wheeler leaves the areal radius of the shells free, a vacuum where each shell "
+               "obeys its equation, as the other two charts take it, and comparison_hypersphere is the "
+               "sphere the cells are tangent to, a closed universe of dust that is no part of the lattice",
     },
     "majumdar_papapetrou": {
         "regions": [["cartesian"]],
@@ -204,6 +219,12 @@ REGIONS = {
     "semiclosed_world": {
         "regions": [["comoving", "conformal"], ["schwarzschild", "isotropic"]],
         "why": "the dust behind the throat and the vacuum outside it are two regions of one spacetime",
+    },
+    "white_hole": {
+        "regions": [["interior_comoving", "interior_conformal"],
+                    ["exterior_schwarzschild", "exterior_eddington_finkelstein", "exterior_kruskal"]],
+        "why": "the dust ball and the vacuum outside it are two regions of one spacetime; novikov_comoving "
+               "leaves the mass and the delay of each shell free, and draws Novikov's marginally bound core",
     },
     "ori_time_machine": {
         "regions": [["foliation", "brinkmann"]],
@@ -278,6 +299,26 @@ OVERRULED = {
     ("israel_shell", "static"): (
         False, "each side is static in its own chart, and the shell between them, at r = R, "
                "falls through both, so the spacetime as a whole has no time translation"),
+    ("lindquist_wheeler_lattice", "stationary"): (
+        False, "each cell is a piece of Schwarzschild's geometry, static and spherically symmetric in its own "
+               "chart, and its boundary moves through it, so the lattice of cells has no time translation and "
+               "only the discrete symmetry of its tiling"),
+    ("lindquist_wheeler_lattice", "static"): (
+        False, "each cell is a piece of Schwarzschild's geometry, static and spherically symmetric in its own "
+               "chart, and its boundary moves through it, so the lattice of cells has no time translation and "
+               "only the discrete symmetry of its tiling"),
+    ("lindquist_wheeler_lattice", "spherically symmetric"): (
+        False, "each cell is a piece of Schwarzschild's geometry, static and spherically symmetric in its own "
+               "chart, and its boundary moves through it, so the lattice of cells has no time translation and "
+               "only the discrete symmetry of its tiling"),
+    ("charged_shell", "stationary"): (
+        False, "each side is static in its own chart, and the shell between them, at r = R, "
+               "moves through both, so the spacetime as a whole has no time translation; the balanced "
+               "shell at rest, mu = r_q = r_s/2, is the one member that has"),
+    ("charged_shell", "static"): (
+        False, "each side is static in its own chart, and the shell between them, at r = R, "
+               "moves through both, so the spacetime as a whole has no time translation; the balanced "
+               "shell at rest, mu = r_q = r_s/2, is the one member that has"),
     ("black_saturn", "vacuum"): (
         True, "V, Omega, W and nu are left free in Weyl's chart and the polar chart; black Saturn "
               "is the solution of the vacuum equations their parameters define, which "
@@ -292,6 +333,9 @@ OVERRULED = {
     ("einstein_rosen_waves", "vacuum"): (
         True, "psi and gamma are left free in both charts; the waves are the solutions of "
               "the vacuum equations, a wave equation for psi and a quadrature for gamma"),
+    ("belinski_zakharov", "vacuum"): (
+        True, "f, P and Q are left free in the canonical chart; Belinski and Zakharov's solitons are the "
+              "solutions of the vacuum equations its parameters state, as the pole chart's wave is"),
     ("gowdy", "vacuum"): (
         True, "P, Q and lambda are left free in every chart; Gowdy's universes are the "
               "solutions of the vacuum equations, two wave equations and a quadrature"),

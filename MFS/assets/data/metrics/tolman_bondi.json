@@ -61,6 +61,16 @@
       "id": "semiclosed_world",
       "kind": "special_case",
       "text": "Uniform dust out past the equator of a closed universe and vacuum beyond, joined at a throat. Igor Novikov discussed that throat in 1964, a few years before other authors named it the neck of the general model [krasinski2001novikov]."
+    },
+    {
+      "id": "white_hole",
+      "kind": "special_case",
+      "text": "Tolman-Bondi with $E = 0$, a uniform core, and a bang that comes late for it, Igor Novikov's delayed core of 1964 [novikov1965]."
+    },
+    {
+      "id": "lindquist_wheeler_lattice",
+      "kind": "family",
+      "text": "Each cell of the lattice, in Lindquist and Wheeler's comoving coordinates, is this metric with no dust in it: every shell carries the same mass, and $E = -r_s/2r$ for the shell that turns around at $r$ [lindquist1957]."
     }
   ],
   "references": [
@@ -90,7 +100,9 @@
     "lemos1992",
     "hellaby1994",
     "lattimer2001",
-    "krasinski2001novikov"
+    "krasinski2001novikov",
+    "novikov1965",
+    "lindquist1957"
   ],
   "coordinates": [
     {

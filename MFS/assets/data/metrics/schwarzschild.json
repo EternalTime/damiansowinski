@@ -338,6 +338,31 @@
       "id": "semiclosed_world",
       "kind": "composite",
       "text": "A closed universe of dust sewn onto the second sheet of the extended solution, behind the throat. Yakov Zel'dovich and Igor Novikov studied it in 1962, and it goes by the name of Wheeler's bag of gold [zelmanov1965, marolf2009]."
+    },
+    {
+      "id": "white_hole",
+      "kind": "composite",
+      "text": "A ball of dust coming out through Schwarzschild's past horizon, with his vacuum outside it [novikov1965]."
+    },
+    {
+      "id": "lindquist_wheeler_lattice",
+      "kind": "composite",
+      "text": "A closed universe tiled with pieces of this geometry: $N$ equal masses on a three sphere, each keeping Schwarzschild's vacuum out to a sphere in free fall [lindquist1957]."
+    },
+    {
+      "id": "belinski_zakharov",
+      "kind": "family",
+      "text": "Schwarzschild's black hole is two solitons on flat space with no rotation, in Belinski and Zakharov's inverse scattering method [belinskii1979]."
+    },
+    {
+      "id": "nordstrom_scalar",
+      "kind": "programme",
+      "text": "The field of a point mass in the scalar theory Einstein's displaced. Nordström's metric is $(1 - GM/c^2r)^2$ times Minkowski's: the same redshift to first order, light that goes straight, and a perihelion that turns backwards [deruelle2011]."
+    },
+    {
+      "id": "born_infeld_charge",
+      "kind": "generalisation",
+      "text": "Schwarzschild's mass with a charge whose field obeys Born and Infeld's electrodynamics. The mass inside a sphere then grows with its radius, by the energy of the field, and reaches $r_s/2$ far away [hoffmann1935, gibbonsrasheed1995]."
     }
   ],
   "references": [
@@ -433,7 +458,13 @@
     "ferrari1988",
     "thornewill1971",
     "zelmanov1965",
-    "marolf2009"
+    "marolf2009",
+    "novikov1965",
+    "lindquist1957",
+    "belinskii1979",
+    "deruelle2011",
+    "hoffmann1935",
+    "gibbonsrasheed1995"
   ],
   "coordinates": [
     {

@@ -68,6 +68,11 @@
       "id": "wahlquist",
       "kind": "generalisation",
       "text": "The Kerr-NUT metric with a rigidly rotating perfect fluid laid over it in the same region, which is how Wahlquist described his solution. With the fluid taken away his family is the Kerr-NUT vacuum [wahlquist1968, mars2001]."
+    },
+    {
+      "id": "belinski_zakharov",
+      "kind": "family",
+      "text": "The whole Kerr-NUT solution is two solitons added to flat space by Belinski and Zakharov's inverse scattering method [belinskii1979]."
     }
   ],
   "references": [
@@ -91,7 +96,8 @@
     "mathgenealogymiller",
     "emond2022",
     "wahlquist1968",
-    "mars2001"
+    "mars2001",
+    "belinskii1979"
   ],
   "coordinates": [
     {
