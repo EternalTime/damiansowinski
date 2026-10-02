@@ -1,5 +1,5 @@
 {
-  "version": "266b37748d852d19",
+  "version": "d01273242f110437",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -24721,6 +24721,93 @@
         "url": "https://doi.org/10.1103/PhysRevD.98.064050"
       }
     },
+    "belinskii1973": {
+      "type": "article",
+      "fields": {
+        "title": "Effect of scalar and vector fields on the nature of the cosmological singularity",
+        "author": "Belinskii, Vladimir A. and Khalatnikov, Isaak M.",
+        "journal": "Soviet Physics JETP",
+        "volume": "36",
+        "number": "4",
+        "pages": "591--597",
+        "year": "1973",
+        "url": "http://jetp.ras.ru/cgi-bin/e/index/e/36/4/p591?a=list"
+      }
+    },
+    "jacobs1968": {
+      "type": "article",
+      "fields": {
+        "title": "Spatially homogeneous and {Euclidean} cosmological models with shear",
+        "author": "Jacobs, Kenneth C.",
+        "journal": "The Astrophysical Journal",
+        "volume": "153",
+        "pages": "661--678",
+        "year": "1968",
+        "doi": "10.1086/149694",
+        "url": "https://doi.org/10.1086/149694"
+      }
+    },
+    "zeldovich1962": {
+      "type": "article",
+      "fields": {
+        "title": "The equation of state at ultrahigh densities and its relativistic limitations",
+        "author": "Zel'dovich, Ya. B.",
+        "journal": "Soviet Physics JETP",
+        "volume": "14",
+        "number": "5",
+        "pages": "1143--1147",
+        "year": "1962",
+        "url": "http://jetp.ras.ru/cgi-bin/e/index/e/14/5/p1143?a=list"
+      }
+    },
+    "andersson2001": {
+      "type": "article",
+      "fields": {
+        "title": "Quiescent cosmological singularities",
+        "author": "Andersson, Lars and Rendall, Alan D.",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "218",
+        "number": "3",
+        "pages": "479--511",
+        "year": "2001",
+        "doi": "10.1007/s002200100406",
+        "eprint": "gr-qc/0001047",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s002200100406"
+      }
+    },
+    "fournodavlos2023": {
+      "type": "article",
+      "fields": {
+        "title": "Stable {Big Bang} formation for {Einstein}'s equations: The complete sub-critical regime",
+        "author": "Fournodavlos, Grigorios and Rodnianski, Igor and Speck, Jared",
+        "journal": "Journal of the American Mathematical Society",
+        "volume": "36",
+        "number": "3",
+        "pages": "827--916",
+        "year": "2023",
+        "doi": "10.1090/jams/1015",
+        "eprint": "2012.05888",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1090/jams/1015"
+      }
+    },
+    "frenkel2020": {
+      "type": "article",
+      "fields": {
+        "title": "Holographic flows from {CFT} to the {Kasner} universe",
+        "author": "Frenkel, Alexander and Hartnoll, Sean A. and Kruthoff, Jorrit and Shi, Zhengyan D.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2020",
+        "number": "8",
+        "pages": "003",
+        "year": "2020",
+        "doi": "10.1007/JHEP08(2020)003",
+        "eprint": "2004.01192",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP08(2020)003"
+      }
+    },
     "petrov1962": {
       "type": "incollection",
       "fields": {
@@ -25443,6 +25530,639 @@
         "eprint": "astro-ph/0012265",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1023/A:1020707906543"
+      }
+    },
+    "ruban1968": {
+      "type": "article",
+      "fields": {
+        "title": "T-Models of \"Sphere\" in General Relativity Theory",
+        "author": "Ruban, V. A.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "33",
+        "number": "2",
+        "pages": "369--373",
+        "year": "2001",
+        "note": "Reprint of Soviet Physics JETP Letters 8, 414-417 (1968)",
+        "doi": "10.1023/A:1002761519995",
+        "url": "https://doi.org/10.1023/A:1002761519995"
+      }
+    },
+    "ruban1969": {
+      "type": "article",
+      "fields": {
+        "title": "Spherically Symmetric T-Models in the General Theory of Relativity",
+        "author": "Ruban, V. A.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "33",
+        "number": "2",
+        "pages": "375--394",
+        "year": "2001",
+        "note": "Reprint of Soviet Physics JETP 29, 1027-1034 (1969)",
+        "doi": "10.1023/A:1002779702615",
+        "url": "https://doi.org/10.1023/A:1002779702615"
+      }
+    },
+    "krasinski2001ruban": {
+      "type": "article",
+      "fields": {
+        "title": "Editor's Note: T-Models of \"Sphere\" in General Relativity Theory by V. A. Ruban and Spherically Symmetric T-Models in the General Theory of Relativity by V. A. Ruban",
+        "author": "Krasiński, Andrzej",
+        "journal": "General Relativity and Gravitation",
+        "volume": "33",
+        "number": "2",
+        "pages": "363--367",
+        "year": "2001",
+        "doi": "10.1023/A:1002713618545",
+        "url": "https://doi.org/10.1023/A:1002713618545"
+      }
+    },
+    "krasinski2012": {
+      "type": "article",
+      "fields": {
+        "title": "The charged dust solution of {Ruban}: matching to {Reissner-Nordstr\\\"om} and shell crossings",
+        "author": "Krasiński, Andrzej and Giono, Gabriel",
+        "journal": "General Relativity and Gravitation",
+        "volume": "44",
+        "number": "1",
+        "pages": "239--251",
+        "year": "2012",
+        "doi": "10.1007/s10714-011-1274-7",
+        "eprint": "1107.4897",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10714-011-1274-7"
+      }
+    },
+    "moore1970": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum Theory of the Electromagnetic Field in a Variable-Length One-Dimensional Cavity",
+        "author": "Moore, Gerald T.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "11",
+        "number": "9",
+        "pages": "2679--2691",
+        "year": "1970",
+        "doi": "10.1063/1.1665432",
+        "url": "https://doi.org/10.1063/1.1665432"
+      }
+    },
+    "dewitt1975": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum field theory in curved spacetime",
+        "author": "DeWitt, Bryce S.",
+        "journal": "Physics Reports",
+        "volume": "19",
+        "number": "6",
+        "pages": "295--357",
+        "year": "1975",
+        "doi": "10.1016/0370-1573(75)90051-4",
+        "url": "https://doi.org/10.1016/0370-1573(75)90051-4"
+      }
+    },
+    "fulling1976": {
+      "type": "article",
+      "fields": {
+        "title": "Radiation from a moving mirror in two dimensional space-time: conformal anomaly",
+        "author": "Fulling, S. A. and Davies, P. C. W.",
+        "journal": "Proceedings of the Royal Society of London A",
+        "volume": "348",
+        "number": "1654",
+        "pages": "393--414",
+        "year": "1976",
+        "doi": "10.1098/rspa.1976.0045",
+        "url": "https://doi.org/10.1098/rspa.1976.0045"
+      }
+    },
+    "davies1977": {
+      "type": "article",
+      "fields": {
+        "title": "Radiation from moving mirrors and from black holes",
+        "author": "Davies, P. C. W. and Fulling, S. A.",
+        "journal": "Proceedings of the Royal Society of London A",
+        "volume": "356",
+        "number": "1685",
+        "pages": "237--257",
+        "year": "1977",
+        "doi": "10.1098/rspa.1977.0130",
+        "url": "https://doi.org/10.1098/rspa.1977.0130"
+      }
+    },
+    "carlitz1987": {
+      "type": "article",
+      "fields": {
+        "title": "Reflections on moving mirrors",
+        "author": "Carlitz, Robert D. and Willey, Raymond S.",
+        "journal": "Physical Review D",
+        "volume": "36",
+        "number": "8",
+        "pages": "2327--2335",
+        "year": "1987",
+        "doi": "10.1103/PhysRevD.36.2327",
+        "url": "https://doi.org/10.1103/PhysRevD.36.2327"
+      }
+    },
+    "wilczek1993": {
+      "type": "misc",
+      "fields": {
+        "title": "Quantum Purity at a Small Price: Easing a Black Hole Paradox",
+        "author": "Wilczek, Frank",
+        "year": "1993",
+        "eprint": "hep-th/9302096",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9302096"
+      }
+    },
+    "good2013": {
+      "type": "article",
+      "fields": {
+        "title": "Time dependence of particle creation from accelerating mirrors",
+        "author": "Good, Michael R. R. and Anderson, Paul R. and Evans, Charles R.",
+        "journal": "Physical Review D",
+        "volume": "88",
+        "number": "2",
+        "pages": "025023",
+        "year": "2013",
+        "doi": "10.1103/PhysRevD.88.025023",
+        "eprint": "1303.6756",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.88.025023"
+      }
+    },
+    "good2016": {
+      "type": "article",
+      "fields": {
+        "title": "Mirror reflections of a black hole",
+        "author": "Good, Michael R. R. and Anderson, Paul R. and Evans, Charles R.",
+        "journal": "Physical Review D",
+        "volume": "94",
+        "number": "6",
+        "pages": "065010",
+        "year": "2016",
+        "doi": "10.1103/PhysRevD.94.065010",
+        "eprint": "1605.06635",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.94.065010"
+      }
+    },
+    "akal2021": {
+      "type": "article",
+      "fields": {
+        "title": "Entanglement Entropy in a Holographic Moving Mirror and the Page Curve",
+        "author": "Akal, Ibrahim and Kusuki, Yuya and Shiba, Noburo and Takayanagi, Tadashi and Wei, Zixia",
+        "journal": "Physical Review Letters",
+        "volume": "126",
+        "number": "6",
+        "pages": "061604",
+        "year": "2021",
+        "doi": "10.1103/PhysRevLett.126.061604",
+        "eprint": "2011.12005",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.126.061604"
+      }
+    },
+    "wilson2011": {
+      "type": "article",
+      "fields": {
+        "title": "Observation of the dynamical Casimir effect in a superconducting circuit",
+        "author": "Wilson, C. M. and Johansson, G. and Pourkabirian, A. and Simoen, M. and Johansson, J. R. and Duty, T. and Nori, F. and Delsing, P.",
+        "journal": "Nature",
+        "volume": "479",
+        "number": "7373",
+        "pages": "376--379",
+        "year": "2011",
+        "doi": "10.1038/nature10561",
+        "eprint": "1105.4714",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1038/nature10561"
+      }
+    },
+    "chen2017": {
+      "type": "article",
+      "fields": {
+        "title": "Accelerating Plasma Mirrors to Investigate the Black Hole Information Loss Paradox",
+        "author": "Chen, Pisin and Mourou, Gerard",
+        "journal": "Physical Review Letters",
+        "volume": "118",
+        "number": "4",
+        "pages": "045001",
+        "year": "2017",
+        "doi": "10.1103/PhysRevLett.118.045001",
+        "eprint": "1512.04064",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.118.045001"
+      }
+    },
+    "page1978bolt": {
+      "type": "article",
+      "fields": {
+        "title": "{Taub-NUT} instanton with an horizon",
+        "author": "Page, Don N.",
+        "journal": "Physics Letters B",
+        "volume": "78",
+        "number": "2--3",
+        "pages": "249--251",
+        "year": "1978",
+        "doi": "10.1016/0370-2693(78)90016-3",
+        "url": "https://doi.org/10.1016/0370-2693(78)90016-3"
+      }
+    },
+    "page1978compact": {
+      "type": "article",
+      "fields": {
+        "title": "A compact rotating gravitational instanton",
+        "author": "Page, Don",
+        "journal": "Physics Letters B",
+        "volume": "79",
+        "number": "3",
+        "pages": "235--238",
+        "year": "1978",
+        "doi": "10.1016/0370-2693(78)90231-9",
+        "url": "https://doi.org/10.1016/0370-2693(78)90231-9"
+      }
+    },
+    "gibbonspope1978": {
+      "type": "article",
+      "fields": {
+        "title": "$\\mathbb{C}P^2$ as a gravitational instanton",
+        "author": "Gibbons, G. W. and Pope, C. N.",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "61",
+        "number": "3",
+        "pages": "239--248",
+        "year": "1978",
+        "doi": "10.1007/BF01940766",
+        "url": "https://doi.org/10.1007/BF01940766"
+      }
+    },
+    "chenlebrunweber2008": {
+      "type": "article",
+      "fields": {
+        "title": "On conformally {K\\\"ahler}, {Einstein} manifolds",
+        "author": "Chen, Xiuxiong and LeBrun, Claude and Weber, Brian",
+        "journal": "Journal of the American Mathematical Society",
+        "volume": "21",
+        "number": "4",
+        "pages": "1137--1168",
+        "year": "2008",
+        "doi": "10.1090/S0894-0347-08-00594-8",
+        "eprint": "0705.0710",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1090/S0894-0347-08-00594-8"
+      }
+    },
+    "chenteo2011": {
+      "type": "article",
+      "fields": {
+        "title": "A new {AF} gravitational instanton",
+        "author": "Chen, Yu and Teo, Edward",
+        "journal": "Physics Letters B",
+        "volume": "703",
+        "number": "3",
+        "pages": "359--362",
+        "year": "2011",
+        "doi": "10.1016/j.physletb.2011.07.076",
+        "eprint": "1107.0763",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.physletb.2011.07.076"
+      }
+    },
+    "page2009": {
+      "type": "misc",
+      "fields": {
+        "title": "Some Gravitational Instantons",
+        "author": "Page, Don N.",
+        "year": "2009",
+        "eprint": "0912.4922",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0912.4922"
+      }
+    },
+    "ellis1971": {
+      "type": "article",
+      "fields": {
+        "title": "Topology and cosmology",
+        "author": "Ellis, G. F. R.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "2",
+        "number": "1",
+        "pages": "7--21",
+        "year": "1971",
+        "doi": "10.1007/BF02450512",
+        "url": "https://doi.org/10.1007/BF02450512"
+      }
+    },
+    "ellis1986": {
+      "type": "article",
+      "fields": {
+        "title": "Observational and dynamical properties of small universes",
+        "author": "Ellis, G. F. R. and Schreiber, G.",
+        "journal": "Physics Letters A",
+        "volume": "115",
+        "number": "3",
+        "pages": "97--107",
+        "year": "1986",
+        "doi": "10.1016/0375-9601(86)90032-0",
+        "url": "https://doi.org/10.1016/0375-9601(86)90032-0"
+      }
+    },
+    "schwarzschild1900": {
+      "type": "article",
+      "fields": {
+        "title": "Ueber das zul\\\"assige Kr\\\"ummungsmaass des Raumes",
+        "author": "Schwarzschild, Karl",
+        "journal": "Vierteljahrsschrift der Astronomischen Gesellschaft",
+        "volume": "35",
+        "pages": "337--347",
+        "year": "1900"
+      }
+    },
+    "schwarzschild1998": {
+      "type": "article",
+      "fields": {
+        "title": "On the permissible curvature of space",
+        "author": "Schwarzschild, Karl",
+        "note": "Translated by John M. Stewart and Mary E. Stewart",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "15",
+        "number": "9",
+        "pages": "2539--2544",
+        "year": "1998",
+        "doi": "10.1088/0264-9381/15/9/003",
+        "url": "https://doi.org/10.1088/0264-9381/15/9/003"
+      }
+    },
+    "kragh2012": {
+      "type": "article",
+      "fields": {
+        "title": "Geometry and Astronomy: Pre-{Einstein} Speculations of Non-{Euclidean} Space",
+        "author": "Kragh, Helge",
+        "year": "2012",
+        "eprint": "1205.4909",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1205.4909"
+      }
+    },
+    "luminet1999": {
+      "type": "article",
+      "fields": {
+        "title": "Topology of the Universe: Theory and Observations",
+        "author": "Luminet, Jean-Pierre and Roukema, Boudewijn F.",
+        "year": "1999",
+        "eprint": "astro-ph/9901364",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/astro-ph/9901364"
+      }
+    },
+    "luminet2007": {
+      "type": "article",
+      "fields": {
+        "title": "The Rise of Big Bang Models, from Myth to Theory and Observations",
+        "author": "Luminet, Jean-Pierre",
+        "year": "2007",
+        "eprint": "0704.3579",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0704.3579"
+      }
+    },
+    "lachiezerey1995": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmic topology",
+        "author": "Lachièze-Rey, Marc and Luminet, Jean-Pierre",
+        "journal": "Physics Reports",
+        "volume": "254",
+        "number": "3",
+        "pages": "135--214",
+        "year": "1995",
+        "doi": "10.1016/0370-1573(94)00085-H",
+        "eprint": "gr-qc/9605010",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9605010"
+      }
+    },
+    "levin2002": {
+      "type": "article",
+      "fields": {
+        "title": "Topology and the cosmic microwave background",
+        "author": "Levin, Janna",
+        "journal": "Physics Reports",
+        "volume": "365",
+        "number": "4",
+        "pages": "251--333",
+        "year": "2002",
+        "doi": "10.1016/S0370-1573(02)00018-2",
+        "eprint": "gr-qc/0108043",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0108043"
+      }
+    },
+    "barrow2001": {
+      "type": "article",
+      "fields": {
+        "title": "Twin paradox in compact spaces",
+        "author": "Barrow, John D. and Levin, Janna",
+        "journal": "Physical Review A",
+        "volume": "63",
+        "number": "4",
+        "pages": "044104",
+        "year": "2001",
+        "doi": "10.1103/PhysRevA.63.044104",
+        "eprint": "gr-qc/0101014",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0101014"
+      }
+    },
+    "sokolov1974": {
+      "type": "article",
+      "fields": {
+        "title": "An estimate of the size of the universe from a topological point of view",
+        "author": "Sokolov, D. D. and Shvartsman, V. F.",
+        "journal": "Soviet Physics JETP",
+        "volume": "39",
+        "number": "2",
+        "pages": "196--200",
+        "year": "1974",
+        "url": "http://jetp.ras.ru/cgi-bin/e/index/e/39/2/p196?a=list"
+      }
+    },
+    "sokolov1975": {
+      "type": "article",
+      "fields": {
+        "title": "Globally inhomogeneous ``spliced'' universes",
+        "author": "Sokolov, D. D. and Starobinskii, A. A.",
+        "journal": "Soviet Astronomy",
+        "volume": "19",
+        "number": "5",
+        "pages": "629--633",
+        "year": "1976",
+        "note": "Russian original: Astronomicheskii Zhurnal 52, 1041--1048 (1975)",
+        "url": "https://ui.adsabs.harvard.edu/abs/1976SvA....19..629S"
+      }
+    },
+    "zeldovich1984": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum creation of a universe with nontrivial topology",
+        "author": "Zel'dovich, Ya. B. and Starobinskii, A. A.",
+        "journal": "Soviet Astronomy Letters",
+        "volume": "10",
+        "number": "3",
+        "pages": "135--137",
+        "year": "1984",
+        "url": "https://ui.adsabs.harvard.edu/abs/1984SvAL...10..135Z"
+      }
+    },
+    "gott1980": {
+      "type": "article",
+      "fields": {
+        "title": "Chaotic cosmologies and the topology of the Universe",
+        "author": "Gott, III, J. Richard",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "193",
+        "number": "1",
+        "pages": "153--169",
+        "year": "1980",
+        "doi": "10.1093/mnras/193.1.153",
+        "url": "https://doi.org/10.1093/mnras/193.1.153"
+      }
+    },
+    "mostow1968": {
+      "type": "article",
+      "fields": {
+        "title": "Quasi-conformal mappings in $n$-space and the rigidity of hyperbolic space forms",
+        "author": "Mostow, G. D.",
+        "journal": "Publications Math\\'ematiques de l'IH\\'ES",
+        "volume": "34",
+        "pages": "53--104",
+        "year": "1968",
+        "doi": "10.1007/BF02684590",
+        "url": "https://doi.org/10.1007/BF02684590"
+      }
+    },
+    "gabai2009": {
+      "type": "article",
+      "fields": {
+        "title": "Minimum volume cusped hyperbolic three-manifolds",
+        "author": "Gabai, David and Meyerhoff, Robert and Milley, Peter",
+        "journal": "Journal of the American Mathematical Society",
+        "volume": "22",
+        "number": "4",
+        "pages": "1157--1215",
+        "year": "2009",
+        "doi": "10.1090/S0894-0347-09-00639-0",
+        "eprint": "0705.4325",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0705.4325"
+      }
+    },
+    "stevens1993": {
+      "type": "article",
+      "fields": {
+        "title": "Microwave background anisotropy in a toroidal universe",
+        "author": "Stevens, Daniel and Scott, Douglas and Silk, Joseph",
+        "journal": "Physical Review Letters",
+        "volume": "71",
+        "number": "1",
+        "pages": "20--23",
+        "year": "1993",
+        "doi": "10.1103/PhysRevLett.71.20",
+        "url": "https://doi.org/10.1103/PhysRevLett.71.20"
+      }
+    },
+    "cornish1998": {
+      "type": "article",
+      "fields": {
+        "title": "Circles in the sky: finding topology with the microwave background radiation",
+        "author": "Cornish, Neil J. and Spergel, David N. and Starkman, Glenn D.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "15",
+        "number": "9",
+        "pages": "2657--2670",
+        "year": "1998",
+        "doi": "10.1088/0264-9381/15/9/013",
+        "eprint": "astro-ph/9801212",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/astro-ph/9801212"
+      }
+    },
+    "cornish2004": {
+      "type": "article",
+      "fields": {
+        "title": "Constraining the Topology of the Universe",
+        "author": "Cornish, Neil J. and Spergel, David N. and Starkman, Glenn D. and Komatsu, Eiichiro",
+        "journal": "Physical Review Letters",
+        "volume": "92",
+        "number": "20",
+        "pages": "201302",
+        "year": "2004",
+        "doi": "10.1103/PhysRevLett.92.201302",
+        "eprint": "astro-ph/0310233",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/astro-ph/0310233"
+      }
+    },
+    "planck2016topology": {
+      "type": "article",
+      "fields": {
+        "title": "{Planck} 2015 results. XVIII. Background geometry and topology of the Universe",
+        "author": "{Planck Collaboration} and Ade, P. A. R. and others",
+        "journal": "Astronomy \\& Astrophysics",
+        "volume": "594",
+        "pages": "A18",
+        "year": "2016",
+        "doi": "10.1051/0004-6361/201525829",
+        "eprint": "1502.01593",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1502.01593"
+      }
+    },
+    "luminet2003": {
+      "type": "article",
+      "fields": {
+        "title": "Dodecahedral space topology as an explanation for weak wide-angle temperature correlations in the cosmic microwave background",
+        "author": "Luminet, Jean-Pierre and Weeks, Jeffrey R. and Riazuelo, Alain and Lehoucq, Roland and Uzan, Jean-Philippe",
+        "journal": "Nature",
+        "volume": "425",
+        "number": "6958",
+        "pages": "593--595",
+        "year": "2003",
+        "doi": "10.1038/nature01944",
+        "eprint": "astro-ph/0310253",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/astro-ph/0310253"
+      }
+    },
+    "petersen2023": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmic topology. Part I. Limits on orientable {Euclidean} manifolds from circle searches",
+        "author": "Petersen, Pip and Akrami, Yashar and Copi, Craig J. and Jaffe, Andrew H. and Kosowsky, Arthur and Starkman, Glenn D. and Tamosiunas, Andrius and others",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2023",
+        "number": "01",
+        "pages": "030",
+        "year": "2023",
+        "doi": "10.1088/1475-7516/2023/01/030",
+        "eprint": "2211.02603",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2211.02603"
+      }
+    },
+    "martinbenito2011": {
+      "type": "article",
+      "fields": {
+        "title": "Matter in inhomogeneous loop quantum cosmology: The {Gowdy} $T^3$ model",
+        "author": "Martín-Benito, Mercedes and Martín-de Blas, Daniel and Mena Marugán, Guillermo A.",
+        "journal": "Physical Review D",
+        "volume": "83",
+        "number": "8",
+        "pages": "084050",
+        "year": "2011",
+        "doi": "10.1103/PhysRevD.83.084050",
+        "eprint": "1012.2324",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1012.2324"
       }
     }
   }

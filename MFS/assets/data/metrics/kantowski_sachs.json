@@ -55,6 +55,11 @@
       "id": "white_hole",
       "kind": "composite",
       "text": "A white hole holds the vacuum member with its spheres growing: it is the space between the singularity and the dust that comes out of it [novikov1965]."
+    },
+    {
+      "id": "datt_ruban_t_models",
+      "kind": "generalisation",
+      "text": "Kantowski and Sachs's dust universe with the stretch along its axis free to differ from shell to shell, found by B. Datt in 1938 and again by Vladimir Ruban in 1968 [datt1938, ruban1968]."
     }
   ],
   "references": [
@@ -75,7 +80,8 @@
     "bonnor1977",
     "obregon1998",
     "bronnikov2022",
-    "novikov1965"
+    "novikov1965",
+    "ruban1968"
   ],
   "coordinates": [
     {

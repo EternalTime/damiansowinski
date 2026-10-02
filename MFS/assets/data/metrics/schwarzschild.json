@@ -390,6 +390,21 @@
       "text": "Schwarzschild's field is A I in Ehlers and Kundt's table of the static vacuum fields of type D. The others have a hyperbolic or a flat plane where the sphere is, or have the time and the angle exchanged [hruska2019, martins1996]."
     },
     {
+      "id": "datt_ruban_t_models",
+      "kind": "generalisation",
+      "text": "The inside of the horizon filled with dust that adds nothing to the mass: a tube of spheres, all of one radius, holding any amount of matter at the same $r_s$ [ruban1968]."
+    },
+    {
+      "id": "moving_mirror",
+      "kind": "family",
+      "text": "Flat spacetime of two dimensions with a receding mirror in place of the centre of a collapsing star. The mirror radiates as a Schwarzschild black hole of radius $r_s = 1/2\\kappa$ does, with no curvature anywhere [davies1977, good2016]."
+    },
+    {
+      "id": "gravitational_instantons",
+      "kind": "dual",
+      "text": "Schwarzschild's metric with $t = -i\\tau/c$ is a space of four dimensions with no time, Hawking's first gravitational instanton. It is smooth on the horizon only if $\\tau$ is a circle of length $4\\pi r_s$, and that length is the inverse of Hawking's temperature [gibbons1977action, gibbonshawking1979]."
+    },
+    {
       "id": "misner_zapolsky",
       "kind": "composite",
       "text": "A star of radiation with an infinite central density. Tolman's fifth and sixth solutions carry Schwarzschild's vacuum outside a surface at $r_b = 2r_s$ and at $r_b = \\frac{7}{3}r_s$ [tolman1939]."
@@ -501,7 +516,11 @@
     "brill1959",
     "alcubierre2000collapse",
     "hruska2019",
-    "martins1996"
+    "martins1996",
+    "ruban1968",
+    "davies1977",
+    "good2016",
+    "gibbons1977action"
   ],
   "coordinates": [
     {

@@ -73,6 +73,11 @@
       "id": "brill_waves",
       "kind": "family",
       "text": "A moment of time symmetry with no dust and no throat to begin with, only gravitational waves. Turned up to its critical amplitude the wave closes its slice into a compact universe of its own [omurchadha1993]."
+    },
+    {
+      "id": "datt_ruban_t_models",
+      "kind": "family",
+      "text": "Ruban's T-sphere, a tube of dust behind the horizon in which every shell's binding energy cancels its rest mass, so the mass outside stays the same however much dust is added [ruban1968]."
     }
   ],
   "references": [
@@ -90,7 +95,8 @@
     "hawking1975",
     "hsu2008monsters",
     "chakravarty2021",
-    "omurchadha1993"
+    "omurchadha1993",
+    "ruban1968"
   ],
   "coordinates": [
     {

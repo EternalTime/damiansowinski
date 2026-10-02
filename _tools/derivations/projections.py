@@ -411,6 +411,9 @@ class Figure:
                 if not (P[:, 0].min() >= box[0] and P[:, 0].max() <= box[1]
                         and P[:, 1].min() >= box[2] and P[:, 1].max() <= box[3]):
                     raise AssertionError(f"figure {self.id}: the slice {mark['label']} leaves the box")
+        shape = build.aspect_problems("figure", {"projections": {"": [{"id": self.id, "box": box}]}})
+        if shape:
+            raise AssertionError(shape[0])
         out = {"id": self.id, "label": self.name, "box": box,
                "camera": {"azimuth": self.camera.azimuth, "elevation": self.camera.elevation},
                "layers": self.layers, "labels": self.labels, "legend": self.legend_items}
@@ -1819,7 +1822,7 @@ def clip_segment(E, left, right, height):
 
 # ---------------------------------------------------------------- light sent against a beam of light
 
-def beam_rays(spec, left=-7.0, right=7.0, height=3.0):
+def beam_rays(spec, left=-5.0, right=5.0, height=3.0):
     """Light sent along Bonnor's uniform beam and against it, on the plane y = 0 through the beam's
     axis, seen from the side with t left out: z across the page and x up it.
 
@@ -1915,7 +1918,7 @@ LIFSHITZ_SOURCE = 2.0           # the depth u of the event the rays leave, in L
 LIFSHITZ_ANGLES = (15, 30, 45, 60)      # degrees from the straight way to the boundary, on either side
 
 
-def lifshitz_rays(spec, half_width=4.0, depth=3.0):
+def lifshitz_rays(spec, half_width=4.0, depth=4.5):
     """Light rays from one event of Lifshitz spacetime at z = 2, on the plane y = 0 of the inverse
     radius chart seen from the side with t left out: x across the page and the depth u down it,
     the boundary u = 0 along the top.
@@ -2029,7 +2032,7 @@ def lifshitz_rays(spec, half_width=4.0, depth=3.0):
 
 # ---------------------------------------------------------------- light in Schrodinger spacetime's trap
 
-def trap_rays(spec, depths=(1.0, 0.8, 0.6, 0.45, 0.35), span=math.pi):
+def trap_rays(spec, depths=(1.0, 0.8, 0.6, 0.45, 0.35, 0.3), span=math.pi):
     """Null geodesics of Schrodinger spacetime's global chart on the surface X = 0, seen from the
     side with V left out: cT across the page and R up it, at L = beta = 1 and omega = c/beta.
 
@@ -2102,7 +2105,7 @@ def trap_rays(spec, depths=(1.0, 0.8, 0.6, 0.45, 0.35), span=math.pi):
     fig.label(np.array([-math.pi / 2, top, 0.0]), "$\\omega T = -\\pi/2$", "bc", cls="small", dy=-4)
     fig.label(np.array([math.pi / 2, top, 0.0]), "$\\omega T = \\pi/2$", "bc", cls="small", dy=-4)
     fig.label(np.array([span, 0.0, 0.0]), "$R = 0$", "br", cls="small", dy=-4)
-    fig.legend("line", "above", "light launched at $T = 0$ from $R_0 = 0.8$, $0.6$, $0.45$ and $0.35\\,\\beta$")
+    fig.legend("line", "above", "light launched at $T = 0$ from $R_0 = 0.8$, $0.6$, $0.45$, $0.35$ and $0.3\\,\\beta$")
     fig.legend("line", "below", "light launched from $R_0 = \\beta$, the bottom of the trap, which keeps its depth")
     fig.legend("line", "edge", "the edges of the Poincaré chart, $\\omega T = \\pm\\pi/2$")
     fig.legend("line", "axis", "the boundary $R = 0$")

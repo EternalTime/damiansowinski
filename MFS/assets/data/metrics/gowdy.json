@@ -67,6 +67,11 @@
       "id": "belinski_zakharov",
       "kind": "family",
       "text": "The same field equations with $\\theta$ unrolled into a line. Belinski and Zakharov's inverse scattering method adds solitons to any known solution with these two symmetries, by algebra alone [belinskii1978]."
+    },
+    {
+      "id": "small_universes",
+      "kind": "family",
+      "text": "Friedmann's flat universe on the same 3-torus, with matter and no waves. With matter added, the Gowdy universes that are the same at every point include it [martinbenito2011]."
     }
   ],
   "references": [
@@ -94,7 +99,8 @@
     "ellismaccallum1969",
     "ruiz1992",
     "chinea1992",
-    "belinskii1978"
+    "belinskii1978",
+    "martinbenito2011"
   ],
   "coordinates": [
     {

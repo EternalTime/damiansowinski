@@ -3257,7 +3257,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         particles. Lentz's class has flat slices for every potential and no soliton that can be
         computed, so it has no embedding diagram."""
         RELIEF = 0.05
-        flat = {"minkowski", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres", "light_beam",
+        flat = {"minkowski", "kasner", "kasner_scalar", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres", "light_beam",
                 "chandrasekhar_xanthopoulos", "belinski_zakharov"}
         # The domain wall's moment ct = 0, when the wall stops, is the flat disc of radius 1/k taken
         # twice and joined at its rim; the moments either side of it are the cones it opens into.
@@ -3382,9 +3382,10 @@ class EmbeddingDiagrams(unittest.TestCase):
                 self.assertEqual("height" in view, grids, f"{name} {view['id']}")
         self.assertEqual({name for name, data in self.embedding.items()
                           if any("height" in view for view in data["views"])},
-                         {"alcubierre", "krasnikov", "natario", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose",
+                         {"alcubierre", "krasnikov", "natario", "kasner", "kasner_scalar", "bianchi", "pp_wave",
+                          "aichelburg_sexl", "khan_penrose",
                           "bell_szekeres", "light_beam", "tippett_tsang", "chandrasekhar_xanthopoulos",
-                          "belinski_zakharov"})
+                          "belinski_zakharov", "moving_mirror"})
 
     def test_a_grid_that_is_not_one_is_refused(self):
         def spoil(change, words):
@@ -3552,7 +3553,7 @@ class TurningEmbeddingDiagrams(unittest.TestCase):
         # and turned all the way round it keeps to its box, the Krasnikov tube's rectangle drawn
         # smaller where it would stand wider or taller than it was published.
         heights = {v["metric"]: v["height"] for v in self.check()["views"] if "height" in v}
-        self.assertEqual(set(heights), {"alcubierre", "krasnikov", "natario", "tippett_tsang"})
+        self.assertEqual(set(heights), {"alcubierre", "krasnikov", "natario", "tippett_tsang", "moving_mirror"})
         for metric_id, h in heights.items():
             for side in ("above", "below"):
                 seen = h[side]
@@ -3600,17 +3601,17 @@ class StacksAndMovies(unittest.TestCase):
     diagrams that change through a run of moments played as movies, as the captain asked on 30
     September 2026, from the numbers written and nothing else."""
 
-    STACKS = {"kasner": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
+    STACKS = {"kasner": 1.5, "kasner_scalar": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
               "bell_szekeres": 3.0, "light_beam": 0.4, "chandrasekhar_xanthopoulos": 3.0, "belinski_zakharov": 2.0}   # the height of a unit of time
     # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
     MOVIES = {("frw", "closed"): "$ct$", ("nordstrom_scalar", "dust"): "$ct$",
-              ("kopczynski_trautman", "universe"): "$ct$",
+              ("kopczynski_trautman", "universe"): "$ct$", ("small_universes", "torus"): "$ct$",
               ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("white_hole", "explosion"): "$c\\tau$",
               ("vaidya", "shell"): "$v - r$",
-              ("semiclosed_world", "bag"): "$c\\tau$",
+              ("semiclosed_world", "bag"): "$c\\tau$", ("datt_ruban_t_models", "tsphere"): "$c\\tau$",
               ("lindquist_wheeler_lattice", "lattice"): "$c\\tau$",
               ("bonnor_vaidya", "shell"): "$v - r$", ("israel_shell", "shell"): "$v - r$",
               ("charged_shell", "bounce"): "$v - r$",
@@ -3632,7 +3633,7 @@ class StacksAndMovies(unittest.TestCase):
               ("hiscock", "history"): "$v - r$",
               ("gott_time_machine", "cylinders"): "$c\\tau$", ("kantowski_sachs", "vacuum"): "$c\\tau$",
               ("ori_time_machine", "throat"): "$t$", ("senovilla", "universe"): "$act$",
-              ("kasner", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
+              ("kasner", "ring"): "$t$", ("kasner_scalar", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
               ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$",
               ("bell_szekeres", "ring"): "$\\xi$", ("chandrasekhar_xanthopoulos", "ring"): "$\\psi$",
               ("belinski_zakharov", "ring"): "$\\tau$",
@@ -4527,6 +4528,26 @@ class Lukewarm:
 LW_PSI = bisect(lambda x: 8 * (2 * x - math.sin(2 * x)) - 2 * math.pi, 0.0, math.pi / 2)
 
 
+def novikov_uv(s, tau):
+    """Kruskal's U and V, r_s = 1, of Novikov's shell at rest at the areal radius s^2 + 1 on the far
+    sheet, at its proper time tau since the release: slices.novikov_sheets, by hand."""
+    R = s * s + 1
+    eta = bisect(lambda e: 0.5 * R * math.sqrt(R) * (e + math.sin(e)) - tau, 0.0, math.pi) if tau else 0.0
+    r = R * math.cos(eta / 2) ** 2
+    phase = s * (eta + 0.5 * R * (eta + math.sin(eta)))
+    return ((math.sin(eta / 2) - s * math.cos(eta / 2)) * math.exp((r - phase) / 2),
+            (s * math.cos(eta / 2) + math.sin(eta / 2)) * math.exp((r + phase) / 2))
+
+
+def ruban_sigma(eta, mu=1 / math.pi):
+    """The conformal time of Ruban's dust at epsilon = 1 and r_s = 1 from its greatest expansion to eta,
+    the integral of sin^2(e/2)/a with a = (1 - mu e) cot(e/2) + 2 mu, by Simpson's rule."""
+    n = 2000
+    f = [math.sin(e / 2) ** 2 / ((1 - mu * e) / math.tan(e / 2) + 2 * mu)
+         for e in (math.pi + (eta - math.pi) * k / n for k in range(n + 1))]
+    return (eta - math.pi) / n / 3 * (f[0] + f[-1] + 4 * sum(f[1:-1:2]) + 2 * sum(f[2:-1:2]))
+
+
 def novikov_t(R, tau):
     """A shell of dust released from rest at areal radius R, r_s = 1, at its proper time tau:
     its r and Schwarzschild t, from the cycloid and Misner, Thorne and Wheeler's (31.10)."""
@@ -4823,9 +4844,22 @@ class Slices(unittest.TestCase):
     # The drawings on which no moment of the spacetime's embedding lies: other universes,
     # another cloud, the time reversed shell, and cylinders where no surface of constant t is
     # a moment of space.
-    HIDDEN = {# The flat interior of Tippett and Tsang's bubble continued over the whole plane, another
+    HIDDEN = {# A tube of Datt and Ruban's dust that runs on in both directions, and Ruban's tube on de Sitter
+              # space, other spacetimes than the T-sphere whose moments are embedded.
+              "datt_ruban_t_models/comoving/tube", "datt_ruban_t_models/ruban/tube",
+              "datt_ruban_t_models/areal/expansion", "datt_ruban_t_models/de_sitter/tube",
+              # The flat interior of Tippett and Tsang's bubble continued over the whole plane, another
               # spacetime than the bubble whose moment is embedded.
               "tippett_tsang/interior/tx", "tippett_tsang/rindler/plane",
+              # The moving mirror's radiation is drawn as a height over a region of the plane of t and x,
+              # which is no moment of the spacetime, so no drawing marks one.
+              *(f"moving_mirror/{system}/{view}" for system, views in (
+                  ("inertial", ("thermal", "collapse", "uniform")), ("null", ("thermal", "collapse")),
+                  ("mirror_rest", ("thermal", "collapse")), ("thermal", ("tx",)), ("collapse", ("tx",)),
+                  ("rindler", ("tx",))) for view in views),
+              *(f"conformal moving_mirror/{view}" for view in (
+                  "inertial_thermal", "inertial_collapse", "inertial_uniform", "null", "mirror_rest", "thermal",
+                  "collapse", "rindler")),
               # A plane wave and the uniform field of Nordstrom's theory, other spacetimes than the point
               # mass and the dust universe whose moments are embedded.
               "nordstrom_scalar/conformal/tx", "nordstrom_scalar/uniform/tz",
@@ -4836,6 +4870,8 @@ class Slices(unittest.TestCase):
               # and anti-de Sitter space whose fronts are embedded.
               "kundt_waves/kundt/front", "kundt_waves/podolsky_belan/near", "kundt_waves/podolsky_belan/far",
               "kundt_waves/simplest_wave/front", "kundt_waves/simplest_wave/depth", "kundt_waves/kerr_schild/fronts",
+              # A closed hyperbolic universe about one observer; the moments embedded are the torus's and the horn's.
+              "small_universes/hyperbolic/radial",
               # Hiscock's simplest model, a hole made and removed by two shells, another spacetime than the one embedded.
               "hiscock/ingoing/shells",
               # Up to the shock the spheres through Hotta and Tanaka's ring meet the equatorial plane of the
@@ -5032,6 +5068,12 @@ class Slices(unittest.TestCase):
                     # each drawing marking the moments of its own.
                     "nordstrom_scalar/spherical/radial": {"dust"}, "conformal nordstrom_scalar/spherical": {"dust"},
                     "nordstrom_scalar/dust/radial": {"point_mass"}, "conformal nordstrom_scalar/dust": {"point_mass"},
+                    # The torus and the horn are two small universes, each drawing marking the moments of its own.
+                    **{where: {"horn"} for where in (
+                        "small_universes/torus/cell", "small_universes/torus/images",
+                        "small_universes/torus_conformal/cell", "small_universes/torus_conformal/images",
+                        "conformal small_universes/torus", "conformal small_universes/torus_conformal")},
+                    "small_universes/horn/along": {"torus"}, "conformal small_universes/horn": {"torus"},
                     # The flat plane times a sphere and the anti-Nariai universe are two spacetimes, and
                     # each chart's drawings mark the surfaces of its own.
                     **{where: {"hyperbolic_plane"} for where in (
@@ -5360,6 +5402,14 @@ class Slices(unittest.TestCase):
         if key == "nordstrom_scalar/dust/radial":
             # A moment of the inertial time, from the centre to the galaxy at r = L.
             return (lambda X: t), list(self.reach(surface))
+        if key.startswith("small_universes/torus"):
+            # A moment of the torus meets the plane y = z = 0 along its whole circle of x: the line of its
+            # time across every cell, at the conformal time 2 (3t/2)^(1/3) on the conformal chart.
+            height = 2 * (1.5 * t) ** (1 / 3) if key.split("/")[1] == "torus_conformal" else t
+            return (lambda X: height), None
+        if key == "small_universes/horn/along":
+            # The horn is embedded at the moment a = a_0, ct = (6/5 - (11/50) ln 11) a_0, from its rim up.
+            return (lambda X: 1.2 - 0.22 * math.log(11)), list(self.reach(surface))
         if key.startswith("kopczynski_trautman/"):
             # A moment of the dust's time, out to the dust at r = l: the line of that time on the comoving
             # charts, through the centre on the Cartesian one, and of eta(t) on the conformal chart.
@@ -5704,6 +5754,16 @@ class Slices(unittest.TestCase):
             # time, sqrt 2 (eta + sin eta) = c tau, across the dust to chi_0 = 3 pi/4.
             eta = bisect(lambda e: math.sqrt(2) * (e + math.sin(e)) - t, 0, math.pi) if t else 0.0
             return (lambda X: eta if "conformal" in key else t / (2 * math.sqrt(2))), [0, 3 * math.pi / 4]
+        if key == "datt_ruban_t_models/exterior_kruskal/kruskal":
+            # Novikov's shells outside a T-sphere, from its surface s = 0, on which V = U, to the shell
+            # the embedding's rim rests at, drawn with (V - U)/2 across and (U + V)/2 up.
+            s_top = self.reach(surface, "comoving_synchronous")[1]
+            across = lambda s: (novikov_uv(s, t)[1] - novikov_uv(s, t)[0]) / 2
+
+            def up(X):
+                s = bisect(lambda x: across(x) - X, 0.0, s_top) if 0 < X < across(s_top) else (0.0 if X <= 0 else s_top)
+                return sum(novikov_uv(s, t)) / 2
+            return up, [0.0, across(s_top)]
         if key in ("semiclosed_world/schwarzschild/radial", "semiclosed_world/isotropic/radial"):
             # Novikov's shells of the far sheet, from the throat, which rests at r_s, to the shell the
             # embedding's rim rests at, r_s (s^2 + 1); the isotropic radius of the areal radius r on
@@ -5818,6 +5878,13 @@ class Slices(unittest.TestCase):
             path = next(c for c in surface["curves"] if c["class"] == "path")
             grid = next(p for p in surface["pieces"] if "grid" in p)["grid"]
             return (lambda X: 5.0), [grid["u"][0] - path["points"][0][0], grid["u"][-1] - path["points"][0][0]]
+        if key == "kasner_scalar/logarithmic/taux":
+            # A moment of t against x and -tau = ln t.
+            return (lambda X: math.log(t)), None
+        if key.startswith("kasner_scalar/kaluza_klein/"):
+            # The same moment in the time of five dimensions, t = T^k/k with k = 1 + s_5/2.
+            k = 1 + 10 / (13 * math.sqrt(6) - 10)
+            return (lambda X: (k * t) ** (1 / k)), None
         if key.startswith(("kasner", "bianchi", "malament_hogarth")):
             if key.startswith("malament_hogarth"):
                 lo, hi = self.reach(surface)
@@ -6206,17 +6273,19 @@ class Slices(unittest.TestCase):
 
     def check_polar_moment(self, key, view, surface, mark):
         """Tippett and Tsang's moment ct = A/2 in the polar chart, xi sin(lambda) = A/2: one line, which
-        crosses each xi twice, from the box's edge to the box's edge, since the height's plane, out to
-        |x| = 1.6 A, reaches beyond the strip's xi = 1.6 A."""
+        crosses each xi twice and stops at both ends where the height's plane does, at |x| = 1.6 A,
+        inside the strip, which runs to xi = 3.5 A so that its plotted region is no taller than 1:2."""
         X0, X1, Y0, Y1 = view["box"]
         (line,) = mark["lines"]
         for u in line:
             xi, lam = X0 + u[0] * (X1 - X0), Y0 + u[1] * (Y1 - Y0)
             self.assertAlmostEqual(xi * math.sin(lam), 0.5, delta=1e-3, msg=f"{key} {mark['label']} at {u}")
-        for u in (line[0], line[-1]):
-            self.assertLess(1 - u[0], 1.5e-4, f"{key} {mark['label']} stops at {u}")
         grid = next(p for p in surface["pieces"] if "grid" in p)["grid"]
-        self.assertGreater(math.hypot(grid["u"][-1], 0.5), X1)
+        reach = math.hypot(grid["u"][-1], 0.5)
+        self.assertLess(reach, X1)
+        for u in (line[0], line[-1]):
+            self.assertAlmostEqual(X0 + u[0] * (X1 - X0), reach, delta=1.5e-4 * (X1 - X0),
+                                   msg=f"{key} {mark['label']} stops at {u}")
         return len(line)
 
     def check_bounce_moment(self, key, view, surface, mark):
@@ -6499,6 +6568,22 @@ class Slices(unittest.TestCase):
                         self.assertLess(math.dist(outside[0], [chi0, eta]), 2e-4, where)
                         self.assertTrue(all(b[0] > a[0] for a, b in zip(outside, outside[1:])), where)
                         self.assertTrue(all(-2e-4 <= T < math.pi for _, T in outside), where)
+                    elif metric_id == "datt_ruban_t_models":
+                        # Inside, p, q = arctan(sigma -+ r) at the moment's eta = pi + e, (e + sin e)/2 = c tau,
+                        # from r = -2 r_s to the surface, X = 0; outside, Novikov's curve from the surface out.
+                        eta = math.pi + (bisect(lambda e: (e + math.sin(e)) / 2 - t, 0, math.pi) if t else 0.0)
+                        sigma = ruban_sigma(eta)
+                        inside, outside = mark["lines"]
+                        for X, T in inside:
+                            tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            self.assertLess(abs((tp + tq) / 2 - sigma), 2e-3 * (1 + tp * tp + tq * tq), f"{where} at {(X, T)}")
+                            self.assertLessEqual((tq - tp) / 2, 1e-9)
+                        tp, tq = math.tan((inside[0][1] - inside[0][0]) / 2), math.tan((inside[0][1] + inside[0][0]) / 2)
+                        self.assertAlmostEqual((tq - tp) / 2, -2.0, delta=5e-3)
+                        self.assertLess(math.dist(inside[-1], [0, 2 * math.atan(sigma)]), 2e-4, where)
+                        self.assertLess(math.dist(outside[0], inside[-1]), 2e-4, where)
+                        self.assertTrue(all(b[0] > a[0] for a, b in zip(outside, outside[1:])), where)
+                        self.assertTrue(all(-2e-4 <= T < 2 * math.atan(ruban_sigma(2 * math.pi)) for _, T in outside), where)
                     elif metric_id == "white_hole":
                         chi0 = math.pi / 4
                         eta = bisect(lambda e: math.sqrt(2) * (e - math.sin(e)) - t, 0, 2 * math.pi) - math.pi
@@ -6573,6 +6658,13 @@ class Slices(unittest.TestCase):
                         # p, q = arctan((ct -+ r)/L), so tan p + tan q = 2ct/L on a moment of the inertial time.
                         for X, T in points:
                             self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2) - 2 * t), 2e-3,
+                                            f"{where} at {(X, T)}")
+                    elif metric_id == "small_universes":
+                        # p, q = arctan(eta -+ x), so tan p + tan q = 2 eta: 2 (3t/2)^(1/3) on a moment of the
+                        # torus, and ln 11 on the moment the horn is embedded at.
+                        eta = math.log(11) if mark["view"] == "horn" else 2 * (1.5 * t) ** (1 / 3)
+                        for X, T in points:
+                            self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2) - 2 * eta), 2e-3,
                                             f"{where} at {(X, T)}")
                     elif metric_id == "kopczynski_trautman":
                         # p, q = arctan((eta -+ r)/l), so tan p + tan q = 2 eta(t)/l on a moment of the dust's time.
@@ -7147,6 +7239,115 @@ class Dollars(unittest.TestCase):
         self.assertIn("has an unbalanced $", said.getvalue())
         for path, text in before.items():
             self.assertEqual(path.read_text(encoding="utf-8"), text)
+
+
+class Aspect(unittest.TestCase):
+    """The captain asked on 2 October 2026: "many of the spacetime diagrams have terrible aspect
+    ratios. We should try to stick to 1:1 aspect ratios, allowing for up to 1:2 and 2:1 but no
+    more than that." The region a view or a figure plots is its box, which the page and the
+    application draw at one scale on both axes."""
+
+    @staticmethod
+    def file(box, mirror=False, part="systems"):
+        return {"metric": "x", part: {"chart": [{"id": "view", "box": box, "mirror": mirror}]}}
+
+    def test_every_diagram_on_disk_is_between_one_to_two_and_two_to_one(self):
+        diagrams = diagram_files()
+        self.assertTrue(diagrams, "no diagram file was found, so nothing was checked")
+        problems = [problem for name, data in sorted(diagrams.items()) for problem in build.aspect_problems(name, data)]
+        self.assertEqual(problems, [])
+        self.assertIsNone(build.check_aspects(diagrams))
+        self.assertTrue(any(data.get("projections") for data in diagrams.values()), "no figure was checked")
+
+    def test_the_aspect_is_the_width_of_the_box_over_its_height(self):
+        self.assertEqual(build.view_aspect({"box": [0, 6, -3, 3], "mirror": False}), 1)
+        self.assertEqual(build.view_aspect({"box": [1, 4, -3, 3], "mirror": False}), 0.5)
+        self.assertEqual(build.view_aspect({"box": [-2, 2, 0, 1]}), 4)
+
+    def test_a_view_through_a_centre_is_twice_as_wide_as_the_half_its_file_holds(self):
+        self.assertEqual(build.view_aspect({"box": [0, 3, -3, 3], "mirror": True}), 1)
+        self.assertEqual(build.aspect_problems("x", self.file([0, 1, 0, 4], mirror=True)), [])
+        self.assertEqual(len(build.aspect_problems("x", self.file([0, 1, 0, 4]))), 1)
+
+    def test_the_two_limits_are_allowed_and_a_box_just_past_either_is_not(self):
+        for box in ([0, 1, 0, 2], [0, 2, 0, 1], [0, 1, 0, 1], [0, 1.3776, -1.3776, 1.3776],
+                    [0, 2 * math.pi, 0, math.pi], [-0.3, 0.7, -0.5, 0.5]):
+            with self.subTest(box=box):
+                self.assertEqual(build.aspect_problems("x", self.file(box)), [])
+        for box in ([0, 1, 0, 2.001], [0, 2.001, 0, 1], [0, 2, -6, 6], [-2, 2, 0, 1], [0, 1.3776, -25, 25]):
+            with self.subTest(box=box):
+                self.assertEqual(len(build.aspect_problems("x", self.file(box))), 1)
+
+    def test_a_figure_in_three_dimensions_is_held_to_it_too(self):
+        self.assertEqual(build.aspect_problems("x", self.file([-4, 4, -3, 1], part="projections")), [])
+        problems = build.aspect_problems("x", self.file([-4.24, 4.24, -3.24, 0.24], part="projections"))
+        self.assertEqual(len(problems), 1)
+
+    def test_a_problem_names_the_spacetime_the_chart_the_view_and_the_shape(self):
+        tall, = build.aspect_problems("kerr", self.file([0, 2, -6, 6]))
+        self.assertIn("diagrams/kerr.json chart/view", tall)
+        self.assertIn("1:6.00", tall)
+        wide, = build.aspect_problems("kerr", self.file([-2, 2, 0, 1]))
+        self.assertIn("4.00:1", wide)
+
+    def test_a_diagram_outside_the_limits_stops_the_build_and_leaves_the_files_alone(self):
+        diagrams = copy.deepcopy(diagram_files())
+        name = sorted(diagrams)[0]
+        view = next(iter(diagrams[name]["systems"].values()))[0]
+        view["box"], view["mirror"] = [0, 1, 0, 3], False
+        before = {path: path.read_text(encoding="utf-8") for path in (build.INDEX_FILE, build.REFERENCES_FILE)}
+        for argv in (["--check"], []):
+            with mock.patch.object(build, "load_diagrams", return_value=diagrams), \
+                    contextlib.redirect_stderr(io.StringIO()) as said:
+                self.assertEqual(build.main(argv), 2)
+            self.assertIn(f"diagrams/{name}.json", said.getvalue())
+            self.assertIn("outside 1:2 to 2:1", said.getvalue())
+        for path, text in before.items():
+            self.assertEqual(path.read_text(encoding="utf-8"), text)
+
+
+class EinsteinRosenHorizons(unittest.TestCase):
+    """Every view of the Einstein-Rosen bridge whose plotted region holds a horizon marks it. The
+    bridge is the horizon of Schwarzschild's metric, and of Reissner and Nordström's for the
+    charged bridge: r = r_s in the spherical chart and r_s/4 in the isotropic one, r_+ in the
+    charged chart, and u = 0 in both of Einstein and Rosen's own. In the two spherical charts it
+    is the edge of the chart, where g^rr vanishes, and the generator lost its marker there on
+    2 October 2026, when zero_set began to blank everything outside a row's `where`."""
+
+    # chart -> the kind of marker and the horizon's place on the horizontal axis, in the view's units.
+    HORIZONS = {"bridge": ("throat", 0.0), "spherical": ("grr", 1.0), "isotropic": ("throat", 0.25),
+                "charged_spherical": ("grr", (1 + math.sqrt(1 + 4 * 3 / 4)) / 2), "charged_bridge": ("throat", 0.0)}
+
+    def setUp(self):
+        self.views = [(system, view) for system, views in diagram_files()["einstein_rosen_bridge"]["systems"].items()
+                      for view in views]
+
+    def test_every_chart_is_known_to_the_test(self):
+        self.assertEqual({system for system, _ in self.views}, set(self.HORIZONS))
+
+    def test_every_view_that_holds_a_horizon_marks_it_from_bottom_to_top(self):
+        marked = 0
+        for system, view in self.views:
+            kind, at = self.HORIZONS[system]
+            X0, X1 = view["box"][:2]
+            if not X0 < at < X1:
+                continue
+            where = f"einstein_rosen_bridge/{system}/{view['id']}"
+            lines = [line for marker in view["markers"] if marker["kind"] == kind for line in marker["lines"]]
+            on_it = [line for line in lines
+                     if all(abs(X0 + u * (X1 - X0) - at) < 2e-3 * (X1 - X0) for u, _ in line)]
+            self.assertTrue(on_it, f"{where} holds the horizon at {at:.3f} and draws no {kind} marker on it")
+            heights = [v for line in on_it for _, v in line]
+            self.assertLess(min(heights), 1e-3, where)
+            self.assertGreater(max(heights), 1 - 1e-3, where)
+            marked += 1
+        self.assertEqual(marked, len(self.views), "a view of the bridge leaves its horizon out of the box")
+
+    def test_the_charged_horizon_is_the_one_the_view_declares(self):
+        view, = [view for system, view in self.views if system == "charged_spherical"]
+        self.assertIn("$r_s = 1$", view["settings"])
+        self.assertIn("$r_q = \\frac{\\sqrt{3}}{2}$", view["settings"])
+        self.assertAlmostEqual(self.HORIZONS["charged_spherical"][1], 1.5)
 
 
 class WormholeTrip(unittest.TestCase):

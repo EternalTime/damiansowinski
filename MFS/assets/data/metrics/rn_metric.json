@@ -159,6 +159,11 @@
       "id": "charged_shell",
       "kind": "composite",
       "text": "A thin shell of charged dust with flat space inside it and Reissner-Nordström's field outside. Shrunk to a point at rest it is Arnowitt, Deser, and Misner's point charge, with a finite mass set by its charge alone [arnowitt1960]."
+    },
+    {
+      "id": "datt_ruban_t_models",
+      "kind": "family",
+      "text": "Ruban's T-models of charged dust have this field outside them, on a surface that swings between the two horizons [krasinski2012]."
     }
   ],
   "references": [
@@ -201,7 +206,8 @@
     "nordstrom1913",
     "hoffmann1935",
     "gibbonsrasheed1995",
-    "arnowitt1960"
+    "arnowitt1960",
+    "krasinski2012"
   ],
   "coordinates": [
     {
