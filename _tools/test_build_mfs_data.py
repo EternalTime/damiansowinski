@@ -6319,6 +6319,11 @@ class Slices(unittest.TestCase):
         if key == "bonnor_charged_dust/exterior_areal/radial":
             # The areal radius is the isotropic radius the embedding reads plus m, at m = 1.
             return (lambda X: 0.0), [x + 1 for x in self.reach(surface, "exterior")]
+        if key == "einstein_dirac_maxwell_wormhole/compact/radial":
+            # The compact x of the circles the embedding reaches in the areal radius r, at r_0 = 1:
+            # x = +-sqrt(1 - 1/r), one on each side of the throat.
+            x = math.sqrt(1 - 1 / self.reach(surface)[1])
+            return (lambda X: 0.0), [-x, x]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))

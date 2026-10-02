@@ -174,6 +174,11 @@
       "id": "string_bh_three_four_charges",
       "kind": "generalisation",
       "text": "Reissner and Nordström's charge split into four kinds, each with a harmonic function of its own. With the four charges equal it is this black hole again [horowitz1996four]."
+    },
+    {
+      "id": "einstein_dirac_maxwell_wormhole",
+      "kind": "family",
+      "text": "A static wormhole of Einstein-Dirac-Maxwell theory whose $g_{tt}$ is the extreme black hole's. As its charge grows to the radius of its throat it becomes that black hole, $r_q = r_s/2$ [blazquez2021]."
     }
   ],
   "references": [
@@ -219,7 +224,8 @@
     "arnowitt1960",
     "krasinski2012",
     "bonnor1975",
-    "horowitz1996four"
+    "horowitz1996four",
+    "blazquez2021"
   ],
   "coordinates": [
     {

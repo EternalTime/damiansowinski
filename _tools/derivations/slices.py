@@ -2364,6 +2364,17 @@ FLAT = {
     # Damour and Solodukhin's wormhole at r_s = 1 and lambda = 1/5: one side in its own chart and in the
     # rescaled time, from the throat r = r_s out, and both sides through the throat, where
     # cosh rho = 52 r - 51, the isotropic radius runs from r_s^2/16r to r, and u = +-sqrt(r - r_s).
+    # The Einstein-Dirac-Maxwell wormhole at r_0 = 1 and Q_e = 1/2: one side in the areal radius from the
+    # throat r = r_0 out, and both sides through the throat, where u = +-sqrt(r - r_0) and
+    # x = +-sqrt(1 - r_0/r).
+    ("einstein_dirac_maxwell_wormhole", "areal", "radial"): lambda: one(
+        "einstein_dirac_maxwell_wormhole", lambda m: along(0.0, *m.reach("areal", "r"))),
+    ("einstein_dirac_maxwell_wormhole", "bronnikov_kim", "radial"): lambda: one(
+        "einstein_dirac_maxwell_wormhole", lambda m: along(0.0, -math.sqrt(m.reach("areal", "r")[1] - 1),
+                                                           math.sqrt(m.reach("areal", "r")[1] - 1))),
+    ("einstein_dirac_maxwell_wormhole", "compact", "radial"): lambda: one(
+        "einstein_dirac_maxwell_wormhole", lambda m: along(0.0, -math.sqrt(1 - 1 / m.reach("areal", "r")[1]),
+                                                           math.sqrt(1 - 1 / m.reach("areal", "r")[1]))),
     ("damour_solodukhin", "spherical", "radial"): lambda: one(
         "damour_solodukhin", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("damour_solodukhin", "rescaled", "radial"): lambda: one(

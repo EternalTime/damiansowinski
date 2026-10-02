@@ -385,6 +385,14 @@ The three embedding views are three spacetimes of one page, each the equator of 
 - `dyonic/radial` and the conformal view `equal` draw the hole of equal charges, another member of the family than the holes of one charge embedded: not visible.
 - `electric`, `magnetic` and `einstein`, the conformal views: the line $T = 0$ through the bifurcation surface over the same stretch of $r$ on both sides; `ingoing` carries the electric hole's and `einstein_ingoing` the Einstein metric's.
 
+### The wormhole of Einstein-Dirac-Maxwell theory
+
+- The embedding is the equator at one moment of $t$, drawn at $t = 0$ at $r_0 = 1$ and $Q_e = 1/2$, $r$ from the throat $r_0$ to $6\,r_0$ on both sides.
+- `areal/radial`, one side of the throat: the line $ct = 0$ from $r = r_0$ to the box's edge at $6\,r_0$, which the embedding also reaches.
+- `bronnikov_kim/radial`, both sides in $u = \pm\sqrt{r - r_0}$: the line $ct = 0$ from $u = -\sqrt{5}$ to $\sqrt{5}$, cut to the box at $|u| = 2$.
+- `compact/radial`, both sides in $x = \pm\sqrt{1 - r_0/r}$: the line $ct = 0$ from $x = -0.913$ to $0.913$.
+- All three conformal views, the diamond in the tortoise coordinate: the line $T = 0$ through the throat from $6\,r_0$ on one side to $6\,r_0$ on the other, the same on each.
+
 ### Kaluza-Klein monopole
 
 The cigar is the surface of $r$ and $x_5$ on the half axis $\theta = 0$ at $t = 0$ in Gross and Perry's chart, from the nut $r = 0$ out to $r = 16m$ at $m = 1$.

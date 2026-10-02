@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 160,
+  "count": 161,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -10989,6 +10989,11 @@
           "id": "btz",
           "kind": "family",
           "text": "The black hole of three dimensions, where the change was first made. Solodukhin added $\\lambda^2$ to its $g_{tt}$ in 2005, which removes the horizon and leaves a wormhole whose perturbations evolve quasiperiodically [solodukhin2005]."
+        },
+        {
+          "id": "einstein_dirac_maxwell_wormhole",
+          "kind": "family",
+          "text": "The wormhole of an electric field and two massless Dirac fields, where the electric field carries all of the energy density and the Dirac fields only a radial tension and a tangential pressure [blazquez2021]."
         }
       ],
       "references": [
@@ -11010,7 +11015,8 @@
         "vagnozzi2023",
         "ellis1973",
         "bronnikov1973",
-        "simpson2019"
+        "simpson2019",
+        "blazquez2021"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/damour_solodukhin.json",
@@ -14678,6 +14684,284 @@
       ]
     },
     {
+      "id": "einstein_dirac_maxwell_wormhole",
+      "name": "Einstein-Dirac-Maxwell Wormhole",
+      "short_name": "Einstein-Dirac-Maxwell",
+      "description": "A static wormhole held open by an electric field and a pair of massless Dirac fields, the exact solution of Einstein-Dirac-Maxwell theory that Jose Luis Blázquez-Salcedo, Christian Knoll and Eugen Radu found in 2021. Its $g_{tt}$ is the extreme Reissner-Nordström black hole's, its charge exceeds its mass, and the electric field runs through the throat from one side to the other.",
+      "tags": [
+        "wormhole",
+        "traversable",
+        "throat",
+        "no horizon",
+        "exotic matter",
+        "energy condition violation",
+        "Einstein-Dirac-Maxwell",
+        "Dirac field",
+        "electric charge",
+        "charged",
+        "electromagnetic field",
+        "braneworld",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and $r_0$, $Q_e$, and $M$ are lengths. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "morris_thorne",
+          "kind": "generalisation",
+          "text": "The general static wormhole a traveller could cross, with any redshift function $\\Phi$ and shape function $b$. This one has $e^{\\Phi} = 1 - M/r$ and $b = r_0 + Q_e^2/r_0 - Q_e^2/r$ [morris1988, blazquez2021]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "family",
+          "text": "Reissner and Nordström's charged black hole. At $Q_e = r_0$ this wormhole is its extreme member, $r_q = r_s/2 = r_0$, with the throat closed into the horizon [blazquez2021]."
+        },
+        {
+          "id": "ellis_bronnikov",
+          "kind": "family",
+          "text": "The wormhole of a scalar field whose kinetic term has the opposite of the usual sign, the kind of field Blázquez-Salcedo, Knoll and Radu set out to do without [ellis1973, bronnikov1973, blazquez2021]."
+        },
+        {
+          "id": "damour_solodukhin",
+          "kind": "family",
+          "text": "Another static wormhole whose matter has no energy density, only a radial tension and a tangential pressure, as the Dirac fields of this one have [tsukamoto2020]."
+        },
+        {
+          "id": "thin_shell_wormhole",
+          "kind": "family",
+          "text": "Visser's wormhole, with all of its matter in a thin shell at the throat. The numerical wormholes of massive, charged fermions turned out to carry a shell of charge at theirs [visser1989nuclphysb, danielson2021]."
+        },
+        {
+          "id": "einstein_rosen_bridge",
+          "kind": "family",
+          "text": "Einstein and Rosen's bridge of 1935, two sheets of space joined at a throat that is a horizon. Written in $u$ with $r = r_0 + u^2$, this wormhole joins its two sheets in the same way, with no horizon [einstein1935, bronnikovkim2003]."
+        }
+      ],
+      "references": [
+        "blazquez2021",
+        "morris1988",
+        "ellis1973",
+        "bronnikov1973",
+        "blazquez2020",
+        "misner1957",
+        "bronnikovkim2003",
+        "bolokhov2021",
+        "danielson2021",
+        "konoplya2022",
+        "kain2023",
+        "tsukamoto2020",
+        "visser1989nuclphysb",
+        "einstein1935"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_dirac_maxwell_wormhole.json",
+      "charts": [
+        {
+          "id": "areal",
+          "name": "Areal Radius",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [r_0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_0 \\;\\text{(throat)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Areal radius of the throat, a length"
+            },
+            {
+              "symbol": "Q_e",
+              "description": "Electric charge as a length, $Q_e^2 = Gq^2/(4\\pi\\epsilon_0c^4)$ for the charge $q$, with $0 \\le Q_e < r_0$"
+            },
+            {
+              "symbol": "M = \\dfrac{2Q_e^2r_0}{Q_e^2 + r_0^2}",
+              "description": "Mass as a length, $GM_{\\mathrm{ADM}}/c^2$ for the mass $M_{\\mathrm{ADM}}$ seen far away on either side, never above $Q_e$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$ on either side of the throat, with $t$ carrying dimensions of time and $r$ the areal radius. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter $s$, so $\\dot{t}$ means $d(ct)/ds$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{M}{r}\\right)^2c^2dt^2 + \\dfrac{dr^2}{\\left(1 - \\dfrac{r_0}{r}\\right)\\left(1 - \\dfrac{Q_e^2}{r_0\\,r}\\right)} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{M}{r}\\right)^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{\\left(1 - \\dfrac{r_0}{r}\\right)\\left(1 - \\dfrac{Q_e^2}{r_0\\,r}\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{4Q_e^4\\left(\\left(4r_0\\,r^2 - 5\\left(r_0^2 + Q_e^2\\right)r + 6r_0\\,Q_e^2\\right)^2 + 8\\left(r - r_0\\right)^2\\left(r_0\\,r - Q_e^2\\right)^2\\right)}{r^8\\left(\\left(r_0^2 + Q_e^2\\right)r - 2r_0\\,Q_e^2\\right)^2} + \\dfrac{2\\left(\\left(r_0^2 + Q_e^2\\right)r - 2r_0\\,Q_e^2\\right)^2 + 4\\left(\\left(r_0^2 + Q_e^2\\right)r - r_0\\,Q_e^2\\right)^2}{r_0^2\\,r^8}"
+        },
+        {
+          "id": "bronnikov_kim",
+          "name": "Bronnikov-Kim",
+          "coordinates": [
+            "t",
+            "u",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "u \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "u = 0 \\;\\text{(throat)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Areal radius of the throat, a length"
+            },
+            {
+              "symbol": "Q_e",
+              "description": "Electric charge as a length, $Q_e^2 = Gq^2/(4\\pi\\epsilon_0c^4)$ for the charge $q$, with $0 \\le Q_e < r_0$"
+            },
+            {
+              "symbol": "M = \\dfrac{2Q_e^2r_0}{Q_e^2 + r_0^2}",
+              "description": "Mass as a length, $GM_{\\mathrm{ADM}}/c^2$ for the mass $M_{\\mathrm{ADM}}$ seen far away on either side, never above $Q_e$"
+            }
+          ],
+          "convention": "We use coordinates $(t, u, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r = r_0 + u^2$ the areal radius, so $u$ carries the square root of a length and runs through the throat at $u = 0$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter $s$, so $\\dot{t}$ means $d(ct)/ds$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{M}{r_0 + u^2}\\right)^2c^2dt^2 + \\dfrac{4r_0\\left(r_0 + u^2\\right)^2}{r_0^2 - Q_e^2 + r_0\\,u^2}du^2 + \\left(r_0 + u^2\\right)^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{M}{r_0 + u^2}\\right)^2"
+            },
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{4r_0\\left(r_0 + u^2\\right)^2}{r_0^2 - Q_e^2 + r_0\\,u^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(r_0 + u^2\\right)^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(r_0 + u^2\\right)^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{6u^8\\,r_0^8 + 24u^8\\,r_0^6\\,Q_e^2 + 132u^8\\,r_0^4\\,Q_e^4 + 24u^8\\,r_0^2\\,Q_e^6 + 6u^8\\,Q_e^8 + 24u^6\\,r_0^9 + 56u^6\\,r_0^7\\,Q_e^2 + 184u^6\\,r_0^5\\,Q_e^4 - 248u^6\\,r_0^3\\,Q_e^6 - 16u^6\\,r_0\\,Q_e^8 + 36u^4\\,r_0^{10} + 24u^4\\,r_0^8\\,Q_e^2 - 8u^4\\,r_0^6\\,Q_e^4 - 168u^4\\,r_0^4\\,Q_e^6 + 148u^4\\,r_0^2\\,Q_e^8 + 24u^2\\,r_0^{11} - 24u^2\\,r_0^9\\,Q_e^2 - 40u^2\\,r_0^7\\,Q_e^4 + 88u^2\\,r_0^5\\,Q_e^6 - 48u^2\\,r_0^3\\,Q_e^8 + 6r_0^{12} - 16r_0^{10}\\,Q_e^2 + 20r_0^8\\,Q_e^4 - 16r_0^6\\,Q_e^6 + 6r_0^4\\,Q_e^8}{r_0^2\\left(\\left(r_0^2 + Q_e^2\\right)\\left(r_0 + u^2\\right) - 2r_0\\,Q_e^2\\right)^2\\left(r_0 + u^2\\right)^8}"
+        },
+        {
+          "id": "compact",
+          "name": "Compact",
+          "coordinates": [
+            "t",
+            "x",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-1, 1)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "x = 0 \\;\\text{(throat)}",
+            "x \\to \\pm 1 \\;\\text{(the two far ends)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Areal radius of the throat, a length"
+            },
+            {
+              "symbol": "Q_e",
+              "description": "Electric charge as a length, $Q_e^2 = Gq^2/(4\\pi\\epsilon_0c^4)$ for the charge $q$, with $0 \\le Q_e < r_0$"
+            },
+            {
+              "symbol": "M = \\dfrac{2Q_e^2r_0}{Q_e^2 + r_0^2}",
+              "description": "Mass as a length, $GM_{\\mathrm{ADM}}/c^2$ for the mass $M_{\\mathrm{ADM}}$ seen far away on either side, never above $Q_e$"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, \\theta, \\phi)$, with $t$ carrying dimensions of time and $x$ dimensionless, and $r = r_0/(1 - x^2)$ the areal radius, so the throat is $x = 0$ and the two far ends are $x = \\pm 1$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter $s$, so $\\dot{t}$ means $d(ct)/ds$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{M\\left(1 - x^2\\right)}{r_0}\\right)^2c^2dt^2 + \\dfrac{4r_0^4}{\\left(1 - x^2\\right)^4\\left(r_0^2 - Q_e^2\\left(1 - x^2\\right)\\right)}dx^2 + \\dfrac{r_0^2}{\\left(1 - x^2\\right)^2}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{M\\left(1 - x^2\\right)}{r_0}\\right)^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{4r_0^4}{\\left(1 - x^2\\right)^4\\left(r_0^2 - Q_e^2\\left(1 - x^2\\right)\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r_0^2}{\\left(1 - x^2\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r_0^2\\sin^2\\theta}{\\left(1 - x^2\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{2\\left(112x^8\\,Q_e^8 + 208x^6\\,r_0^2\\,Q_e^6 - 240x^6\\,Q_e^8 + 116x^4\\,r_0^4\\,Q_e^4 - 264x^4\\,r_0^2\\,Q_e^6 + 164x^4\\,Q_e^8 + 20x^2\\,r_0^6\\,Q_e^2 - 60x^2\\,r_0^4\\,Q_e^4 + 76x^2\\,r_0^2\\,Q_e^6 - 36x^2\\,Q_e^8 + 3r_0^8 - 8r_0^6\\,Q_e^2 + 10r_0^4\\,Q_e^4 - 8r_0^2\\,Q_e^6 + 3Q_e^8\\right)\\left(1 - x^2\\right)^6}{r_0^8\\left(r_0^2 + Q_e^2 - 2Q_e^2\\left(1 - x^2\\right)\\right)^2}"
+        }
+      ]
+    },
+    {
       "id": "eih_many_bodies",
       "name": "Einstein-Infeld-Hoffmann Field of Many Bodies",
       "short_name": "Einstein-Infeld-Hoffmann",
@@ -15073,6 +15357,11 @@
           "id": "ab_metrics",
           "kind": "family",
           "text": "B I continued through $r = b$ is a bridge of the same kind, two asymptotically flat regions joined at a neck [hruska2019]."
+        },
+        {
+          "id": "einstein_dirac_maxwell_wormhole",
+          "kind": "family",
+          "text": "A static wormhole whose two sheets, written in $u$ with $r = r_0 + u^2$, join at a throat that is no horizon. Its $g_{tt}$ is the extreme Reissner-Nordström black hole's [bronnikovkim2003, blazquez2021]."
         }
       ],
       "references": [
@@ -15099,7 +15388,9 @@
         "clifton2012",
         "hoffmann1935",
         "tahvildarzadeh2011",
-        "hruska2019"
+        "hruska2019",
+        "bronnikovkim2003",
+        "blazquez2021"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_bridge.json",
@@ -16047,6 +16338,11 @@
           "id": "exponential_metric",
           "kind": "family",
           "text": "Another wormhole of the same scalar field, this one with a mass. It is the branch $k = 0$ of the anti-Fisher family, in which Ellis's wormhole is the member with no mass, and its far side ends on a singular horizon [bronnikov2011]."
+        },
+        {
+          "id": "einstein_dirac_maxwell_wormhole",
+          "kind": "family",
+          "text": "A wormhole held open by an electric field and two massless Dirac fields, found by Blázquez-Salcedo, Knoll and Radu in 2021 while looking for one that needs no field of the wrong sign [blazquez2021]."
         }
       ],
       "references": [
@@ -16067,7 +16363,8 @@
         "simpson2019",
         "tsukamoto2021",
         "bronnikov2011",
-        "einstein1935"
+        "einstein1935",
+        "blazquez2021"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ellis_bronnikov.json",
@@ -34222,6 +34519,11 @@
           "id": "brans_dicke_sphere",
           "kind": "family",
           "text": "A wormhole with no matter but the scalar field of Brans and Dicke's theory. Their static sphere has a throat when the post-Newtonian parameter $\\gamma$ exceeds $1$ [agnese1995]."
+        },
+        {
+          "id": "einstein_dirac_maxwell_wormhole",
+          "kind": "special_case",
+          "text": "The wormhole held open by an electric field and two massless Dirac fields, with $e^{\\Phi} = 1 - M/r$ and $b = r_0 + Q_e^2/r_0 - Q_e^2/r$ [blazquez2021]."
         }
       ],
       "references": [
@@ -34246,7 +34548,8 @@
         "alcubierre1994",
         "papapetrou1954",
         "boonserm2018",
-        "agnese1995"
+        "agnese1995",
+        "blazquez2021"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/morris_thorne.json",
@@ -40947,6 +41250,11 @@
           "id": "string_bh_three_four_charges",
           "kind": "generalisation",
           "text": "Reissner and Nordström's charge split into four kinds, each with a harmonic function of its own. With the four charges equal it is this black hole again [horowitz1996four]."
+        },
+        {
+          "id": "einstein_dirac_maxwell_wormhole",
+          "kind": "family",
+          "text": "A static wormhole of Einstein-Dirac-Maxwell theory whose $g_{tt}$ is the extreme black hole's. As its charge grows to the radius of its throat it becomes that black hole, $r_q = r_s/2$ [blazquez2021]."
         }
       ],
       "references": [
@@ -40992,7 +41300,8 @@
         "arnowitt1960",
         "krasinski2012",
         "bonnor1975",
-        "horowitz1996four"
+        "horowitz1996four",
+        "blazquez2021"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -52322,6 +52631,11 @@
           "id": "israel_shell",
           "kind": "family",
           "text": "The shell of dust Werner Israel tried his junction conditions on in 1966, falling in on flat space [israel1966]."
+        },
+        {
+          "id": "einstein_dirac_maxwell_wormhole",
+          "kind": "family",
+          "text": "A wormhole of Einstein-Dirac-Maxwell theory. Its numerical cousins, with massive, charged fermions, turned out to carry a shell of charge at the throat [danielson2021]."
         }
       ],
       "references": [
@@ -52345,7 +52659,8 @@
         "teo1998",
         "friedman1990",
         "morris1988prl",
-        "damour2007"
+        "damour2007",
+        "danielson2021"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/thin_shell_wormhole.json",
