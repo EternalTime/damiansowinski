@@ -343,6 +343,11 @@
       "id": "white_hole",
       "kind": "composite",
       "text": "A ball of dust coming out through Schwarzschild's past horizon, with his vacuum outside it [novikov1965]."
+    },
+    {
+      "id": "lindquist_wheeler_lattice",
+      "kind": "composite",
+      "text": "A closed universe tiled with pieces of this geometry: $N$ equal masses on a three sphere, each keeping Schwarzschild's vacuum out to a sphere in free fall [lindquist1957]."
     }
   ],
   "references": [
@@ -439,7 +444,8 @@
     "thornewill1971",
     "zelmanov1965",
     "marolf2009",
-    "novikov1965"
+    "novikov1965",
+    "lindquist1957"
   ],
   "coordinates": [
     {

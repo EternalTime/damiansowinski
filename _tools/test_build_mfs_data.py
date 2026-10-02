@@ -3535,6 +3535,7 @@ class StacksAndMovies(unittest.TestCase):
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("white_hole", "explosion"): "$c\\tau$",
               ("vaidya", "shell"): "$v - r$",
               ("semiclosed_world", "bag"): "$c\\tau$",
+              ("lindquist_wheeler_lattice", "lattice"): "$c\\tau$",
               ("bonnor_vaidya", "shell"): "$v - r$", ("israel_shell", "shell"): "$v - r$",
               ("cosmic_string", "unroll"): "$\\Delta\\phi$", ("point_particle_2plus1", "unroll"): "$\\Delta\\phi$",
               ("milne", "hyperboloids"): "$ct$",
@@ -4371,6 +4372,10 @@ class Lukewarm:
         return bisect(miss, lo, hi) if miss(lo) < 0 else bisect(lambda r: -miss(r), lo, hi)
 
 
+# The angular radius of a cell of Lindquist and Wheeler's lattice of eight, 8 (2 psi - sin 2 psi) = 2 pi.
+LW_PSI = bisect(lambda x: 8 * (2 * x - math.sin(2 * x)) - 2 * math.pi, 0.0, math.pi / 2)
+
+
 def novikov_t(R, tau):
     """A shell of dust released from rest at areal radius R, r_s = 1, at its proper time tau:
     its r and Schwarzschild t, from the cycloid and Misner, Thorne and Wheeler's (31.10)."""
@@ -5061,9 +5066,16 @@ class Slices(unittest.TestCase):
     # Each chart of Hiscock's hole holds part of the spacetime: the ingoing chart ends at v_0 = 8, so the
     # last moment, v - r = 11, has no part in it; the outgoing chart begins on the surface of pair creation,
     # which the moments before v - r = -1 do not reach; and the flat space after the hole holds only the last.
+    # The last two moments of Lindquist and Wheeler's lattice find the cell's boundary inside its
+    # horizon, and the whole moment with it, beyond Schwarzschild's chart.
+    # Clifton and Ferreira's chart covers the cell while it expands, and every moment embedded is of
+    # the cell at rest or contracting.
     # The flat interior of Israel's shell ends where the shell reaches the centre, at v - r = 0.52 r_s, so
     # the last moment, v - r = r_s, has no part in it.
-    HIDDEN_SURFACES = {"simpson_visser/areal/bounce": {("inside", 3), ("inside", 4)},
+    HIDDEN_SURFACES = {"lindquist_wheeler_lattice/schwarzschild_cell/radial": {("lattice", 2), ("lattice", 3)},
+                       "lindquist_wheeler_lattice/cosmological_time/radial": {("lattice", k) for k in range(4)},
+                       "conformal lindquist_wheeler_lattice/expanding": {("lattice", k) for k in range(4)},
+                       "simpson_visser/areal/bounce": {("inside", 3), ("inside", 4)},
                        "israel_shell/interior/radial": {("shell", 3)},
                        "israel_shell/interior/through": {("shell", 3)},
                        "hiscock/ingoing/history": {("history", 5)},
@@ -5415,6 +5427,26 @@ class Slices(unittest.TestCase):
                 return novikov_t(R, t)[1] if t else 0.0
             # The curve runs from the star's surface, the shell released at lo, outward.
             return ct, [novikov_t(lo, t)[0] if t else lo, novikov_t(hi, t)[0] if t else hi]
+        if key == "lindquist_wheeler_lattice/schwarzschild_cell/radial":
+            lo, hi = self.reach(surface, "lindquist_wheeler")
+            lo += 1e-9
+
+            def ct(X):
+                # Novikov's slice of the cell: the shell whose radius is X at the proper time t, held to
+                # the shells the embedding reaches.
+                if not t:
+                    return 0.0
+                if X <= novikov_t(lo, t)[0]:
+                    return novikov_t(lo, t)[1]
+                if X >= novikov_t(hi, t)[0]:
+                    return novikov_t(hi, t)[1]
+                return novikov_t(bisect(lambda R: novikov_t(R, t)[0] - X, lo, hi), t)[1]
+            return ct, [novikov_t(hi, t)[0] if t else hi, 1.0]
+        if key == "lindquist_wheeler_lattice/lindquist_wheeler/shells":
+            return (lambda X: t), list(self.reach(surface, "lindquist_wheeler"))
+        if key == "lindquist_wheeler_lattice/comparison_hypersphere/radial":
+            # Drawn in units of a_m = r_s/sin^3(psi) at the eight cells' psi.
+            return (lambda X: t * math.sin(LW_PSI) ** 3), list(self.reach(surface, "comparison_hypersphere"))
         if key == "oppenheimer_snyder/interior_comoving/through":
             return (lambda X: t / (2 * math.sqrt(2))), [0, math.pi / 4]
         if key in ("semiclosed_world/comoving/dust", "semiclosed_world/conformal/dust"):
@@ -5820,6 +5852,7 @@ class Slices(unittest.TestCase):
                                 slope = (abs(Y_of(min(X + h, X1)) - Y_of(max(X - h, X0 + 1e-9 if key.startswith(
                                     ("schwarzschild/edd", "string_black_hole/edd", "oppenheimer_snyder/ext",
                                      "semiclosed_world/schwarzschild", "semiclosed_world/isotropic",
+                                     "lindquist_wheeler_lattice/schwarzschild_cell",
                                      "black_string/edd", "black_string/kerr", "kaluza_klein_black_hole/edd",
                                      "kaluza_klein_black_hole/einstein_edd")) else X0))) / (2 * h)
                                          if X0 < X < X1 else 0)
@@ -6046,6 +6079,34 @@ class Slices(unittest.TestCase):
                                 continue
                             if r is not None:
                                 self.assertLess(abs(v - r - t), 2e-3 * (1 + abs(v)), f"{where} at {(X, T)}")
+                    elif metric_id == "lindquist_wheeler_lattice" and view["id"] == "hypersphere":
+                        # The rectangle of the cycloid parameter: T = eta with eta + sin eta = 2 c tau/a_m.
+                        eta = bisect(lambda e: e + math.sin(e) - 2 * t * math.sin(LW_PSI) ** 3, 0, math.pi)
+                        self.assertTrue(all(abs(T - eta) < 2e-4 for _, T in points), where)
+                        self.assertEqual(sorted(round(X, 3) for X, _ in points),
+                                         [round(LW_PSI, 3), round(math.pi - LW_PSI, 3)], where)
+                    elif metric_id == "lindquist_wheeler_lattice":
+                        # Kruskal's U V = (1 - r) e^r gives the radius of each point, the cycloids the shell
+                        # that has that radius at the moment's proper time, and that shell its own V.
+                        lo, hi = self.reach(surface, "lindquist_wheeler")
+                        for X, T in points:
+                            U, V = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            if abs(T) > 1.5:
+                                # Beside r = 0, the line T = pi/2, the tangents of the rounded point no longer
+                                # fix the radius; a moment ends there once the throat has gone, c tau > pi/2.
+                                self.assertGreater(t, math.pi / 2, where)
+                                continue
+                            r = bisect(lambda x: (1 - x) * math.exp(x) - U * V, 0.0, 3.0)
+
+                            def radius(R):
+                                eta = bisect(lambda e: e + math.sin(e) - 2 * t / R ** 1.5, 0.0, math.pi)
+                                return R * math.cos(eta / 2) ** 2, eta
+                            R = bisect(lambda R: radius(R)[0] - r, lo + 1e-9, hi) if t else r
+                            eta = radius(R)[1] if t else 0.0
+                            k = math.sqrt(max(R - 1, 0.0))
+                            want = (k * math.cos(eta / 2) + math.sin(eta / 2)) * math.exp(
+                                (radius(R)[0] + k * (eta + R / 2 * (eta + math.sin(eta)))) / 2)
+                            self.assertLess(abs(math.atan(want) - math.atan(V)), 2e-3, f"{where} at {(X, T)}")
                     elif metric_id == "oppenheimer_snyder":
                         chi0 = math.pi / 4
                         eta = bisect(lambda e: math.sqrt(2) * (e + math.sin(e)) - t, 0, math.pi)

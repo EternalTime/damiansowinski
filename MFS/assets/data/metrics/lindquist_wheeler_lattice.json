@@ -1,0 +1,5755 @@
+{
+  "id": "lindquist_wheeler_lattice",
+  "name": "Lindquist-Wheeler Lattice Universe",
+  "short_name": "Lindquist-Wheeler Lattice",
+  "description": "A closed universe that holds nothing but $N$ equal masses, one at the centre of each cell of a regular tiling of the three sphere, built by Richard Lindquist and John Wheeler in 1957 from pieces of Schwarzschild's geometry. Fitting the pieces together makes the lattice expand and fall back almost as Friedmann's closed universe of dust does. It is an approximate spacetime, and an early test of whether a universe whose matter comes in lumps expands like a smooth one.",
+  "tags": [
+    "cosmology",
+    "closed universe",
+    "expanding universe",
+    "big bang",
+    "lattice universe",
+    "black hole lattice",
+    "multiple black holes",
+    "approximate solution",
+    "Schwarzschild-cell method",
+    "Wigner-Seitz",
+    "inhomogeneous",
+    "backreaction",
+    "three sphere",
+    "regular polytope",
+    "time-dependent",
+    "comoving",
+    "mass",
+    "horizon",
+    "curvature singularity",
+    "Flamm's paraboloid",
+    "matched solution",
+    "vacuum",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ and $G$ explicit, and $r_s = 2GM/c^2$ is the Schwarzschild radius of the mass at the centre of each cell. The angle $\\psi$ is the angular radius of a cell on the comparison hypersphere, which the number of cells $N$ fixes through $N(2\\psi - \\sin 2\\psi) = 2\\pi$.",
+  "history": "Suppose the universe held no smooth fluid, only a few identical masses, evenly spaced, with vacuum between them. Would it still swell and fall back the way Alexander Friedmann's closed universe of dust does [friedmann1922]? That question came to the Chapel Hill conference of January 1957 with Richard Lindquist, a predoctoral fellow at Princeton [lindquist2011, lindquist1957]. His tool came from the physics of metals: he called it \"what is essentially the Wigner-Seitz approximation carried over bodily from solid state physics\" [lindquist2011]. He and John Wheeler published the construction in full that July [lindquist1957].¶The approximation cuts a crystal into identical cells, one around each ion, and rounds each cell off to a ball of the same volume [liu2015]. Lindquist and Wheeler did the same to a closed universe [lindquist1957]. A three sphere can be tiled by identical regular cells in six ways, with 5, 8, 16, 24, 120, or 600 of them, so they put a mass at the centre of each cell and filled a ball around it with Karl Schwarzschild's geometry [lindquist1957, clifton2012, schwarzschild1916]. Balls do not tile a sphere, so the lattice is an approximation, and the work lies in fitting them together [clifton2009]. Picture each cell as a funnel pressed against the hypersphere. The lattice holds when, in Lindquist's words, \"the Schwarzschild funnels shall be tangent to the hypersphere\" [lindquist2011].¶By symmetry a particle midway between two neighbouring masses falls freely, and in Schwarzschild's geometry a shell of such particles climbs, stops, and falls back [clifton2012, clifton2009]. Tangency ties the radius $a$ of the hypersphere to that shell, and $a$ then obeys $\\dot{a}^2 = r_s/(a\\sin^3\\psi) - 1$, Friedmann's equation for dust with its one constant changed [clifton2009]. \"One gets from this model an expanding and contracting universe, with a cycloidal behavior,\" Lindquist reported [lindquist2011]. How far is it from the smooth universe of the same total mass? With five masses the lattice grows to 1.43 times Friedmann's largest radius, and with 600 the two differ by 1.2 percent [clifton2009]. Hermann Bondi asked from the floor how many granules of mass such a universe allows, and answered himself: \"Of course it is your number 600\" [lindquist2011].¶The lattice came back in 2009 with a question about light [clifton2009]. In a universe of islands a ray spends its whole journey in vacuum, where only tides bend it, so does it report the same distances as a ray through Friedmann's fluid [clifton2009]? Timothy Clifton and Pedro Ferreira sent rays through a flat version of the lattice, cell after cell, and found the redshift $z$ growing more slowly than Friedmann's $z_F$, as $1 + z \\simeq (1 + z_F)^{7/10}$ [clifton2009]. They judged the difference a poor candidate to stand in for dark energy [clifton2009].¶One moment of the lattice can be had exactly [clifton2012]. At the instant of greatest expansion nothing moves, Einstein's constraint becomes a linear equation on the three sphere, and its solution for any number of masses is a sum with one term per mass [wheeler1983, clifton2012]. Lindquist told Chapel Hill he had already checked the spacing of his masses against a rigorous solution of that kind, and in 1963 he and Dieter Brill published its flat space counterpart for black holes at rest [lindquist2011, brill1963]. Measured against Friedmann's universe of the same mass, the exact moment with five masses is about a third larger and the one with 600 agrees to better than one percent, in step with the 1957 estimate [clifton2012]. Eloisa Bentivegna and Mikołaj Korzyński then ran the moment with eight masses forward on a computer [bentivegna2012]. For the first third of the collapse, as far as the run could follow, the edge of a cell shrank as a closed Friedmann universe does, one a quarter heavier than its eight black holes together [bentivegna2012].",
+  "related": [
+    {
+      "id": "schwarzschild",
+      "kind": "piece",
+      "text": "Every cell is a piece of Schwarzschild's geometry, cut off at a sphere in radial free fall. The lattice has no other ingredient [lindquist1957]."
+    },
+    {
+      "id": "frw",
+      "kind": "family",
+      "text": "The smooth universe the lattice is measured against. The comparison hypersphere obeys Friedmann's equation for closed dust, and its largest radius is $3\\pi/(2N\\sin^3\\psi)$ times Friedmann's for the same total mass, which tends to 1 as $N$ grows [clifton2009]."
+    },
+    {
+      "id": "misner_brill_lindquist",
+      "kind": "family",
+      "text": "The exact form of one moment. At the instant of greatest expansion the lattice's initial data are Brill and Lindquist's, written on a three sphere in place of flat space, with one term for each mass [brill1963, clifton2012]."
+    },
+    {
+      "id": "oppenheimer_snyder",
+      "kind": "family",
+      "text": "The same fit turned inside out. There a ball of Friedmann's dust sits inside Schwarzschild's vacuum, here Schwarzschild's vacuum sits inside a cell of a closed universe, and in both the boundary falls along a radial geodesic whose energy is the cosine of the boundary's angle."
+    },
+    {
+      "id": "einstein_rosen_bridge",
+      "kind": "family",
+      "text": "In the exact moment of greatest expansion each mass is the mouth of an Einstein-Rosen bridge, with a sheet of its own on the far side [clifton2012]."
+    },
+    {
+      "id": "tolman_bondi",
+      "kind": "family",
+      "text": "Lindquist and Wheeler's comoving coordinates are Tolman and Bondi's with no dust in them: every shell carries the same mass, and the energy function is $E = -r_s/2\\rho$."
+    },
+    {
+      "id": "kastor_traschen",
+      "kind": "family",
+      "text": "Many black holes in an expanding universe as an exact solution, which takes a cosmological constant and a charge on every hole equal to its mass [kastor1993]."
+    }
+  ],
+  "references": [
+    "friedmann1922",
+    "lindquist2011",
+    "lindquist1957",
+    "liu2015",
+    "clifton2012",
+    "schwarzschild1916",
+    "clifton2009",
+    "wheeler1983",
+    "brill1963",
+    "bentivegna2012",
+    "kastor1993"
+  ],
+  "coordinates": [
+    {
+      "id": "schwarzschild_cell",
+      "name": "Schwarzschild Cell",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (r_s, r_m]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "r = r_b(t) \\;\\text{(the boundary of the cell)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "r_s",
+          "description": "Schwarzschild radius of the mass at the centre of each cell, $r_s = 2GM/c^2$, a length"
+        },
+        {
+          "symbol": "\\psi",
+          "description": "Angular radius of a cell on the comparison hypersphere, a pure number with $0 < \\psi < \\pi/2$, which $N$ cells of equal volume fix through $N(2\\psi - \\sin 2\\psi) = 2\\pi$"
+        }
+      ],
+      "convention": "We use Schwarzschild's coordinates $(t, r, \\theta, \\phi)$ about the mass at the centre of one cell, with $t$ carrying dimensions of time. The cell is the ball inside the boundary $r = r_b(t)$, a sphere in radial free fall that turns around at $r_m = r_s/\\sin^2\\psi$.",
+      "line_element": "ds^2 = -\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "r^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "r^2\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1 - \\dfrac{r_s}{r}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{2r\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s}{2r\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{2r\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{2r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\left(r - r_s\\right)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\left(r - r_s\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{2r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s}{2r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s}{2r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{2\\left(r - r_s\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "r^2\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{r^2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s}{r^2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s}{2r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{2r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\sin^2\\theta}{2r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\sin^2\\theta}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\sin^2\\theta}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\sin^2\\theta}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)}{2r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{2r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)}{2r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{2r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s}{2r^2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{2r^2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s}{2r^2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{2r^2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s}{r}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s}{r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{2r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)}{2r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)}{2r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{2r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)\\sin^2\\theta}{2r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)\\sin^2\\theta}{2r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)\\sin^2\\theta}{2r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)\\sin^2\\theta}{2r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s}{2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s}{2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\sin^2\\theta}{2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\sin^2\\theta}{2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\sin^2\\theta}{2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s\\sin^2\\theta}{2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "r_s\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-r_s\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-r_s\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "r_s\\,r\\sin^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = \\dfrac{12r_s^2}{r^6}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{r^2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s}{r^2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s}{2r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{2r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\sin^2\\theta}{2r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\sin^2\\theta}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\sin^2\\theta}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\sin^2\\theta}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)}{r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)}{2r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{2r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)}{2r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{2r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s}{2r^2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{2r^2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s}{2r^2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{2r^2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s}{r}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s}{r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{2r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)}{2r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)}{2r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{2r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)\\sin^2\\theta}{2r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)\\sin^2\\theta}{2r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)\\sin^2\\theta}{2r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)\\sin^2\\theta}{2r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s}{2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s}{2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\sin^2\\theta}{2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\sin^2\\theta}{2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\sin^2\\theta}{2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s\\sin^2\\theta}{2\\left(r - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "r_s\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-r_s\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-r_s\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "r_s\\,r\\sin^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{r_s}{r\\left(r - r_s\\right)}\\dot{t}\\dot{r} = 0",
+        "\\ddot{r} + \\dfrac{r_s\\left(r - r_s\\right)}{2r^3}\\dot{t}^2 - \\dfrac{r_s}{2r\\left(r - r_s\\right)}\\dot{r}^2 - \\left(r - r_s\\right)\\dot{\\theta}^2 - \\left(r - r_s\\right)\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2}{r}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "cosmological_time",
+      "name": "Cosmological Time",
+      "coords": [
+        "\\tau",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "\\tau \\in (-\\infty, \\infty)",
+        "r \\in \\left(0, \\dfrac{r_s}{1 - E}\\right]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "r = r_s \\;\\text{(the horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "r_s",
+          "description": "Schwarzschild radius of the mass at the centre of each cell, $r_s = 2GM/c^2$, a length"
+        },
+        {
+          "symbol": "E",
+          "description": "Square of a comoving shell's energy per unit rest energy, a pure number, $E = \\cos^2\\psi$ for the lattice of $N$ cells"
+        }
+      ],
+      "convention": "We use Clifton and Ferreira's coordinates $(\\tau, r, \\theta, \\phi)$ inside one cell, where $\\tau$ is the proper time of every shell in radial free fall with the boundary's energy, $E = \\cos^2\\psi$, and $r$ is the areal radius. The signs are those of a cell that expands, and the root changes sign for one that contracts. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+      "line_element": "ds^2 = -\\dfrac{1}{E}\\left(1 - \\dfrac{r_s}{r}\\right)c^2d\\tau^2 - \\dfrac{2}{E}\\sqrt{E - 1 + \\dfrac{r_s}{r}}\\,c\\,d\\tau\\,dr + \\dfrac{dr^2}{E} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "-\\dfrac{1}{E}\\left(1 - \\dfrac{r_s}{r}\\right)"
+        },
+        {
+          "indices": [
+            "\\tau",
+            "r"
+          ],
+          "value": "-\\dfrac{1}{E}\\sqrt{E - 1 + \\dfrac{r_s}{r}}"
+        },
+        {
+          "indices": [
+            "r",
+            "\\tau"
+          ],
+          "value": "-\\dfrac{1}{E}\\sqrt{E - 1 + \\dfrac{r_s}{r}}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{1}{E}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "r^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "r^2\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\tau",
+            "r"
+          ],
+          "value": "-\\sqrt{E - 1 + \\dfrac{r_s}{r}}"
+        },
+        {
+          "indices": [
+            "r",
+            "\\tau"
+          ],
+          "value": "-\\sqrt{E - 1 + \\dfrac{r_s}{r}}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1 - \\dfrac{r_s}{r}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{5/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\tau",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{5/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{5/2}}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "r",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{2E\\,r^{3/2}\\sqrt{E\\,r - r + r_s}}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\sqrt{r}\\sqrt{E\\,r - r + r_s}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\sqrt{r}\\sqrt{E\\,r - r + r_s}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{2E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\left(r - r_s\\right)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\left(r - r_s\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "r",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{r_s}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{2E\\,r^{3/2}\\sqrt{E\\,r - r + r_s}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "r^2\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "\\tau",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "r",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\tau",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "r",
+                  "\\tau",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "r",
+                  "r",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{r_s}{E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s}{2r}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{2r}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\sin^2\\theta}{2r}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\sin^2\\theta}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\sin^2\\theta}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\sin^2\\theta}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\tau",
+                  "\\tau",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{E\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\tau",
+                  "r",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)}{E\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)}{2E\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{2E\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)}{2E\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{2E\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s}{2E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{2E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s}{2E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{2E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s}{r}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "r",
+                  "\\tau",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "r",
+                  "r",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s}{E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\tau",
+                  "\\tau",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\tau",
+                  "r",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{r_s}{E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)\\sin^2\\theta}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)\\sin^2\\theta}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)\\sin^2\\theta}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)\\sin^2\\theta}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}\\sin^2\\theta}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}\\sin^2\\theta}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}\\sin^2\\theta}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}\\sin^2\\theta}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}\\sin^2\\theta}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}\\sin^2\\theta}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}\\sin^2\\theta}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}\\sin^2\\theta}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s}{2E\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{2E\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s}{2E\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{2E\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\sin^2\\theta}{2E\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\sin^2\\theta}{2E\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\sin^2\\theta}{2E\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s\\sin^2\\theta}{2E\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "r_s\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-r_s\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-r_s\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "r_s\\,r\\sin^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = \\dfrac{12r_s^2}{r^6}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "\\tau",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "r",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\tau",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "r",
+                  "\\tau",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "r",
+                  "r",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{r_s}{E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s}{2r}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{2r}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\sin^2\\theta}{2r}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\sin^2\\theta}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\sin^2\\theta}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\sin^2\\theta}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\tau",
+                  "\\tau",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{E\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\tau",
+                  "r",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)}{E\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)}{2E\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{2E\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)}{2E\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{2E\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s}{2E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{2E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s}{2E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{2E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\sin^2\\theta}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s}{r}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "r",
+                  "\\tau",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "r",
+                  "r",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s}{E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\tau",
+                  "\\tau",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\tau",
+                  "r",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{r_s}{E\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)\\sin^2\\theta}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)\\sin^2\\theta}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\left(r - r_s\\right)\\sin^2\\theta}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\left(r - r_s\\right)\\sin^2\\theta}{2E\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}\\sin^2\\theta}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}\\sin^2\\theta}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}\\sin^2\\theta}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}\\sin^2\\theta}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}\\sin^2\\theta}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}\\sin^2\\theta}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}\\sin^2\\theta}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}\\sin^2\\theta}{2E\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r_s}{2E\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s}{2E\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r_s}{2E\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s}{2E\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r_s\\sin^2\\theta}{2E\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r_s\\sin^2\\theta}{2E\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r_s\\sin^2\\theta}{2E\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r_s\\sin^2\\theta}{2E\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "r_s\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-r_s\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-r_s\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "r_s\\,r\\sin^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\tau} - \\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{2E\\,r^{5/2}}\\dot{\\tau}^2 + \\dfrac{r_s}{E\\,r^2}\\dot{\\tau}\\dot{r} - \\dfrac{r_s}{2E\\,r^{3/2}\\sqrt{E\\,r - r + r_s}}\\dot{r}^2 + \\sqrt{r}\\sqrt{E\\,r - r + r_s}\\dot{\\theta}^2 + \\sqrt{r}\\sqrt{E\\,r - r + r_s}\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{r} + \\dfrac{r_s\\left(r - r_s\\right)}{2E\\,r^3}\\dot{\\tau}^2 + \\dfrac{r_s\\,\\sqrt{E\\,r - r + r_s}}{E\\,r^{5/2}}\\dot{\\tau}\\dot{r} - \\dfrac{r_s}{2E\\,r^2}\\dot{r}^2 - \\left(r - r_s\\right)\\dot{\\theta}^2 - \\left(r - r_s\\right)\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2}{r}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "lindquist_wheeler",
+      "name": "Lindquist-Wheeler Comoving",
+      "coords": [
+        "\\tau",
+        "\\rho",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "\\tau \\in \\left(-\\dfrac{\\pi\\rho}{2c}\\sqrt{\\dfrac{\\rho}{r_s}}, \\dfrac{\\pi\\rho}{2c}\\sqrt{\\dfrac{\\rho}{r_s}}\\right)",
+        "\\rho \\in (r_s, r_m]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "\\rho = r_m \\;\\text{(the boundary of the cell)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "r_s",
+          "description": "Schwarzschild radius of the mass at the centre of each cell, $r_s = 2GM/c^2$, a length"
+        },
+        {
+          "symbol": "r = r(\\tau,\\rho)",
+          "description": "Areal radius of the shell labelled $\\rho$ at the proper time $\\tau$, a length, the cycloid $r = \\tfrac{\\rho}{2}(1 + \\cos\\eta)$, $c\\tau = \\tfrac{\\rho}{2}\\sqrt{\\rho/r_s}\\,(\\eta + \\sin\\eta)$ in a parameter $\\eta \\in (-\\pi, \\pi)$; no component assumes it"
+        }
+      ],
+      "convention": "We use Lindquist and Wheeler's comoving coordinates $(\\tau, \\rho, \\theta, \\phi)$ inside one cell, where $\\rho$ labels a shell in radial free fall by the largest radius it reaches, $\\tau$ is its proper time counted from that moment, and $r(\\tau, \\rho)$ is its areal radius. Each shell obeys $(\\partial_\\tau r)^2 = r_s/r - r_s/\\rho$ with $\\partial_\\tau = c^{-1}\\partial/\\partial\\tau$, and the boundary of the cell is the shell $\\rho = r_m = r_s/\\sin^2\\psi$. We take components in the chart $x^0 = c\\tau$, so $\\dot{\\tau}$ in the geodesic equations means $d(c\\tau)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2d\\tau^2 + \\dfrac{(\\partial_\\rho r)^2}{1 - \\dfrac{r_s}{\\rho}}d\\rho^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "\\dfrac{\\rho\\left(\\partial_\\rho r\\right)^2}{\\rho - r_s}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "r^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "r^2\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "\\dfrac{\\rho - r_s}{\\rho\\left(\\partial_\\rho r\\right)^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\rho\\,\\partial_\\rho r\\,\\partial_\\tau\\partial_\\rho r}{\\rho - r_s}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "r\\,\\partial_\\tau r"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "r\\,\\partial_\\tau r\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\tau",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\partial_\\tau\\partial_\\rho r}{\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\partial_\\tau\\partial_\\rho r}{\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2\\rho^2\\,\\partial_\\rho^2 r - 2\\rho\\,r_s\\,\\partial_\\rho^2 r - r_s\\,\\partial_\\rho r}{2\\rho\\left(\\rho - r_s\\right)\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r\\left(\\rho - r_s\\right)}{\\rho\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\left(\\rho - r_s\\right)\\sin^2\\theta}{\\rho\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\partial_\\tau r}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\partial_\\tau r}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\partial_\\tau r}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\partial_\\tau r}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\partial_\\rho r}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\partial_\\rho r}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\partial_\\rho r}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\partial_\\rho r}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\rho\\,\\partial_\\rho r\\,\\partial_\\tau\\partial_\\rho r}{\\rho - r_s}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\tau",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\rho\\,\\partial_\\rho r\\,\\partial_\\tau\\partial_\\rho r}{\\rho - r_s}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\rho\\,\\partial_\\rho r\\,\\partial_\\tau\\partial_\\rho r}{\\rho - r_s}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r\\,\\partial_\\tau r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "r\\,\\partial_\\tau r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "r\\,\\partial_\\tau r"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r\\,\\partial_\\tau r\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "r\\,\\partial_\\tau r\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "r\\,\\partial_\\tau r\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\left(2\\rho^2\\,\\partial_\\rho^2 r - 2\\rho\\,r_s\\,\\partial_\\rho^2 r - r_s\\,\\partial_\\rho r\\right)\\partial_\\rho r}{2\\left(\\rho - r_s\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r\\,\\partial_\\rho r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "r\\,\\partial_\\rho r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "r\\,\\partial_\\rho r"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r\\,\\partial_\\rho r\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "r\\,\\partial_\\rho r\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "r\\,\\partial_\\rho r\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "r^2\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\rho",
+                  "\\tau",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\rho\\,\\partial_\\rho r\\,\\partial_\\tau^2\\partial_\\rho r}{\\rho - r_s}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\rho",
+                  "\\rho",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\rho\\,\\partial_\\rho r\\,\\partial_\\tau^2\\partial_\\rho r}{\\rho - r_s}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "r\\,\\partial_\\tau^2 r"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-r\\,\\partial_\\tau^2 r"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "r\\,\\partial_\\tau^2 r\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-r\\,\\partial_\\tau^2 r\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\tau",
+                  "\\tau",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\partial_\\tau^2\\partial_\\rho r}{\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\tau",
+                  "\\rho",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\partial_\\tau^2\\partial_\\rho r}{\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r\\left(2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)}{2\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{r\\left(2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)}{2\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\left(2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)\\sin^2\\theta}{2\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{r\\left(2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)\\sin^2\\theta}{2\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\partial_\\tau^2 r}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\partial_\\tau^2 r}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\partial_\\tau^2 r}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\partial_\\tau^2 r}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)\\partial_\\rho r}{2r\\,\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\left(2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)\\partial_\\rho r}{2r\\,\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)\\partial_\\rho r}{2r\\,\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\left(2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)\\partial_\\rho r}{2r\\,\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\rho\\left(\\partial_\\tau r\\right)^2 + r_s\\right)\\sin^2\\theta}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(\\rho\\left(\\partial_\\tau r\\right)^2 + r_s\\right)\\sin^2\\theta}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\rho\\left(\\partial_\\tau r\\right)^2 + r_s}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\rho\\left(\\partial_\\tau r\\right)^2 + r_s}{\\rho}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\rho",
+                  "\\tau",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\rho\\,\\partial_\\rho r\\,\\partial_\\tau^2\\partial_\\rho r}{\\rho - r_s}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\rho",
+                  "\\rho",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\rho\\,\\partial_\\rho r\\,\\partial_\\tau^2\\partial_\\rho r}{\\rho - r_s}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\tau",
+                  "\\tau",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\rho\\,\\partial_\\rho r\\,\\partial_\\tau^2\\partial_\\rho r}{\\rho - r_s}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\tau",
+                  "\\rho",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\rho\\,\\partial_\\rho r\\,\\partial_\\tau^2\\partial_\\rho r}{\\rho - r_s}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-r\\,\\partial_\\tau^2 r"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "r\\,\\partial_\\tau^2 r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "r\\,\\partial_\\tau^2 r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-r\\,\\partial_\\tau^2 r"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-r\\,\\partial_\\tau^2 r\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "r\\,\\partial_\\tau^2 r\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "r\\,\\partial_\\tau^2 r\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-r\\,\\partial_\\tau^2 r\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r\\left(2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)\\partial_\\rho r}{2\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{r\\left(2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)\\partial_\\rho r}{2\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r\\left(2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)\\partial_\\rho r}{2\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{r\\left(2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)\\partial_\\rho r}{2\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\left(2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)\\partial_\\rho r\\,\\sin^2\\theta}{2\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{r\\left(2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)\\partial_\\rho r\\,\\sin^2\\theta}{2\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\left(2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)\\partial_\\rho r\\,\\sin^2\\theta}{2\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{r\\left(2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)\\partial_\\rho r\\,\\sin^2\\theta}{2\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\left(\\rho\\left(\\partial_\\tau r\\right)^2 + r_s\\right)\\sin^2\\theta}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\rho\\left(\\partial_\\tau r\\right)^2 + r_s\\right)\\sin^2\\theta}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\rho\\left(\\partial_\\tau r\\right)^2 + r_s\\right)\\sin^2\\theta}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r^2\\left(\\rho\\left(\\partial_\\tau r\\right)^2 + r_s\\right)\\sin^2\\theta}{\\rho}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{r\\,\\partial_\\tau^2\\partial_\\rho r + 2\\partial_\\rho r\\,\\partial_\\tau^2 r}{r\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\left(r\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r + 2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)\\partial_\\rho r}{r\\,\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r + 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{2\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r + 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\sin^2\\theta}{2\\rho^2\\,\\partial_\\rho r}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{r\\,\\partial_\\tau^2\\partial_\\rho r + 2\\partial_\\rho r\\,\\partial_\\tau^2 r}{r\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{r\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r + 2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s}{r\\,\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r + 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{2r^2\\,\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r + 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{2r^2\\,\\rho^2\\,\\partial_\\rho r}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{r\\,\\partial_\\tau^2\\partial_\\rho r + 2\\partial_\\rho r\\,\\partial_\\tau^2 r}{r\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\left(\\rho - r_s\\right)\\left(r\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r + 2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)}{r\\,\\rho^3\\left(\\partial_\\rho r\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r + 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{2r^4\\,\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r + 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\csc^2\\theta}{2r^4\\,\\rho^2\\,\\partial_\\rho r}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r + 4r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r + 4r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - 2r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{r^2\\,\\rho^2\\,\\partial_\\rho r}",
+      "kretschmann": "K = \\dfrac{4r^4\\,\\rho^4\\left(\\partial_\\tau^2\\partial_\\rho r\\right)^2 + 8r^2\\,\\rho^4\\left(\\partial_\\rho r\\right)^2\\left(\\partial_\\tau^2 r\\right)^2 + 8r^2\\,\\rho^4\\left(\\partial_\\tau r\\right)^2\\left(\\partial_\\tau\\partial_\\rho r\\right)^2 - 8r^2\\,\\rho^2\\,r_s\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + 2r^2\\,r_s^2 + 4\\rho^4\\left(\\partial_\\rho r\\right)^2\\left(\\partial_\\tau r\\right)^4 + 8\\rho^3\\,r_s\\left(\\partial_\\rho r\\right)^2\\left(\\partial_\\tau r\\right)^2 + 4\\rho^2\\,r_s^2\\left(\\partial_\\rho r\\right)^2}{r^4\\,\\rho^4\\left(\\partial_\\rho r\\right)^2}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r\\,r_s + \\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + \\rho\\,r_s\\,\\partial_\\rho r}{r^2\\,\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\left(2r\\,\\rho\\,\\partial_\\tau^2 r + \\rho\\left(\\partial_\\tau r\\right)^2 + r_s\\right)\\left(\\partial_\\rho r\\right)^2}{r^2\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r\\left(2r\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r + 2\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r + 2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)}{2\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\left(2r\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r + 2\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r + 2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)\\sin^2\\theta}{2\\rho^2\\,\\partial_\\rho r}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r\\,r_s + \\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + \\rho\\,r_s\\,\\partial_\\rho r}{r^2\\,\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{2r\\,\\rho\\,\\partial_\\tau^2 r + \\rho\\left(\\partial_\\tau r\\right)^2 + r_s}{r^2\\,\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2r\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r + 2\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r + 2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s}{2r\\,\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r + 2\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r + 2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s}{2r\\,\\rho^2\\,\\partial_\\rho r}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r\\,r_s + \\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + \\rho\\,r_s\\,\\partial_\\rho r}{r^2\\,\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\left(\\rho - r_s\\right)\\left(2r\\,\\rho\\,\\partial_\\tau^2 r + \\rho\\left(\\partial_\\tau r\\right)^2 + r_s\\right)}{r^2\\,\\rho^2\\left(\\partial_\\rho r\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2r\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r + 2\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r + 2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s}{2r^3\\,\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2r\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r + 2\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r + 2\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r - r_s\\right)\\csc^2\\theta}{2r^3\\,\\rho^2\\,\\partial_\\rho r}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\rho",
+                  "\\tau",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\partial_\\rho r}{6r^2\\,\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\rho",
+                  "\\rho",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\partial_\\rho r}{6r^2\\,\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{12\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{12\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{12\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{12\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\sin^2\\theta}{12\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\sin^2\\theta}{12\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\sin^2\\theta}{12\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\sin^2\\theta}{12\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\tau",
+                  "\\tau",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{6r^2\\,\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\tau",
+                  "\\rho",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{6r^2\\,\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{12r^2\\,\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{12r^2\\,\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{12r^2\\,\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{12r^2\\,\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\partial_\\rho r}{12r^2\\,\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\partial_\\rho r}{12r^2\\,\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\partial_\\rho r}{12r^2\\,\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\partial_\\rho r}{12r^2\\,\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\sin^2\\theta}{6\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\sin^2\\theta}{6\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{6\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{6\\rho^2\\,\\partial_\\rho r}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\rho",
+                  "\\tau",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\partial_\\rho r}{6r^2\\,\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\rho",
+                  "\\rho",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\partial_\\rho r}{6r^2\\,\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\tau",
+                  "\\tau",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\partial_\\rho r}{6r^2\\,\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\tau",
+                  "\\rho",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\partial_\\rho r}{6r^2\\,\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{12\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{12\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{12\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r}{12\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\sin^2\\theta}{12\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\sin^2\\theta}{12\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\sin^2\\theta}{12\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\sin^2\\theta}{12\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\partial_\\rho r}{12\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\partial_\\rho r}{12\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\partial_\\rho r}{12\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\partial_\\rho r}{12\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\partial_\\rho r\\,\\sin^2\\theta}{12\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\partial_\\rho r\\,\\sin^2\\theta}{12\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\partial_\\rho r\\,\\sin^2\\theta}{12\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\partial_\\rho r\\,\\sin^2\\theta}{12\\rho\\left(\\rho - r_s\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\sin^2\\theta}{6\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r^2\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\sin^2\\theta}{6\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^2\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\sin^2\\theta}{6\\rho^2\\,\\partial_\\rho r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r^2\\left(2r^2\\,\\rho^2\\,\\partial_\\tau^2\\partial_\\rho r - 2r\\,\\rho^2\\,\\partial_\\rho r\\,\\partial_\\tau^2 r - 2r\\,\\rho^2\\,\\partial_\\tau r\\,\\partial_\\tau\\partial_\\rho r + r\\,r_s + 2\\rho^2\\,\\partial_\\rho r\\left(\\partial_\\tau r\\right)^2 + 2\\rho\\,r_s\\,\\partial_\\rho r\\right)\\sin^2\\theta}{6\\rho^2\\,\\partial_\\rho r}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\tau} + \\dfrac{\\rho\\,\\partial_\\rho r\\,\\partial_\\tau\\partial_\\rho r}{\\rho - r_s}\\dot{\\rho}^2 + r\\,\\partial_\\tau r\\,\\dot{\\theta}^2 + r\\,\\partial_\\tau r\\,\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\rho} + \\dfrac{2\\partial_\\tau\\partial_\\rho r}{\\partial_\\rho r}\\dot{\\tau}\\dot{\\rho} + \\dfrac{2\\rho^2\\,\\partial_\\rho^2 r - 2\\rho\\,r_s\\,\\partial_\\rho^2 r - r_s\\,\\partial_\\rho r}{2\\rho\\left(\\rho - r_s\\right)\\partial_\\rho r}\\dot{\\rho}^2 - \\dfrac{r\\left(\\rho - r_s\\right)}{\\rho\\,\\partial_\\rho r}\\dot{\\theta}^2 - \\dfrac{r\\left(\\rho - r_s\\right)\\sin^2\\theta}{\\rho\\,\\partial_\\rho r}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2\\partial_\\tau r}{r}\\dot{\\tau}\\dot{\\theta} + \\dfrac{2\\partial_\\rho r}{r}\\dot{\\rho}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2\\partial_\\tau r}{r}\\dot{\\tau}\\dot{\\phi} + \\dfrac{2\\partial_\\rho r}{r}\\dot{\\rho}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "comparison_hypersphere",
+      "name": "Comparison Hypersphere",
+      "coords": [
+        "\\tau",
+        "\\chi",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "\\tau \\in \\left(-\\dfrac{\\pi a_m}{2c}, \\dfrac{\\pi a_m}{2c}\\right)",
+        "\\chi \\in [0, \\pi]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "\\chi = \\psi \\;\\text{(the boundary of the cell about } \\chi = 0\\text{)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "a = a(\\tau)",
+          "description": "Radius of the comparison hypersphere, a length, the cycloid $a = \\tfrac{a_m}{2}(1 + \\cos\\eta)$, $c\\tau = \\tfrac{a_m}{2}(\\eta + \\sin\\eta)$ in a parameter $\\eta \\in (-\\pi, \\pi)$, with the largest radius $a_m = r_s/\\sin^3\\psi$; no component assumes it"
+        },
+        {
+          "symbol": "r_s",
+          "description": "Schwarzschild radius of the mass at the centre of each cell, $r_s = 2GM/c^2$, a length"
+        },
+        {
+          "symbol": "\\psi",
+          "description": "Angular radius of a cell on the comparison hypersphere, a pure number with $0 < \\psi < \\pi/2$, which $N$ cells of equal volume fix through $N(2\\psi - \\sin 2\\psi) = 2\\pi$"
+        }
+      ],
+      "convention": "We use hyperspherical coordinates $(\\tau, \\chi, \\theta, \\phi)$ on the comparison hypersphere of radius $a(\\tau)$, where $\\tau$ is the proper time of the cell boundaries and $\\chi$ is the angle from the centre of one cell, whose boundary $\\chi = \\psi$ has the areal radius $a\\sin\\psi$. A dot on the radius is $\\dot{a} = \\dfrac{1}{c}\\dfrac{da}{d\\tau}$, and the lattice obeys $\\dot{a}^2 = \\dfrac{r_s}{a\\sin^3\\psi} - 1$. We take components in the chart $x^0 = c\\tau$, so $\\dot{\\tau}$ in the geodesic equations means $d(c\\tau)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2d\\tau^2 + a^2\\left(d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "a^2\\sin^2\\chi"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "a^2\\sin^2\\chi\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{\\csc^2\\chi}{a^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\chi\\csc^2\\theta}{a^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "a\\,\\dot{a}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "a\\,\\dot{a}\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "a\\,\\dot{a}\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\tau",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\dot{a}}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\dot{a}}{a}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\dot{a}}{a}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\dot{a}}{a}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\dot{a}}{a}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\dot{a}}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\cot\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-a\\,\\dot{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\tau",
+                  "\\chi"
+                ],
+                "value": "a\\,\\dot{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\tau"
+                ],
+                "value": "a\\,\\dot{a}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-a\\,\\dot{a}\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "a\\,\\dot{a}\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "a\\,\\dot{a}\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a\\,\\dot{a}\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "a\\,\\dot{a}\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "a\\,\\dot{a}\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-a^2\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "a^2\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "a^2\\sin\\chi\\cos\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "a^2\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "a^2\\sin\\chi\\cos\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "a^2\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "a^2\\sin^2\\chi\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\chi",
+                  "\\tau",
+                  "\\chi"
+                ],
+                "value": "a\\,\\ddot{a}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\chi",
+                  "\\chi",
+                  "\\tau"
+                ],
+                "value": "-a\\,\\ddot{a}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "a\\,\\ddot{a}\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-a\\,\\ddot{a}\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "a\\,\\ddot{a}\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-a\\,\\ddot{a}\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\tau",
+                  "\\tau",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\ddot{a}}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\tau",
+                  "\\chi",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\ddot{a}}{a}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\ddot{a}}{a}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\ddot{a}}{a}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\ddot{a}}{a}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\ddot{a}}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\left(-\\dot{a}^2\\,\\sin^2\\chi - \\sin^2\\chi\\right)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\left(-\\dot{a}^2\\,\\sin^2\\chi - \\sin^2\\chi\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\left(-\\dot{a}^2\\,\\sin^2\\chi - \\sin^2\\chi\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\left(-\\dot{a}^2\\,\\sin^2\\chi - \\sin^2\\chi\\right)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\left(-\\dot{a}^2\\,\\sin^2\\chi\\sin^2\\theta - \\sin^2\\chi\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\left(-\\dot{a}^2\\,\\sin^2\\chi\\sin^2\\theta - \\sin^2\\chi\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\left(-\\dot{a}^2\\,\\sin^2\\chi\\sin^2\\theta - \\sin^2\\chi\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\left(-\\dot{a}^2\\,\\sin^2\\chi\\sin^2\\theta - \\sin^2\\chi\\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\left(\\dot{a}^2 + 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\left(\\dot{a}^2 + 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\left(\\dot{a}^2 + 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\left(\\dot{a}^2 + 1\\right)"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\chi",
+                  "\\tau",
+                  "\\chi"
+                ],
+                "value": "-a\\,\\ddot{a}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\chi",
+                  "\\chi",
+                  "\\tau"
+                ],
+                "value": "a\\,\\ddot{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\tau",
+                  "\\tau",
+                  "\\chi"
+                ],
+                "value": "a\\,\\ddot{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\tau",
+                  "\\chi",
+                  "\\tau"
+                ],
+                "value": "-a\\,\\ddot{a}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-a\\,\\ddot{a}\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "a\\,\\ddot{a}\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "a\\,\\ddot{a}\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-a\\,\\ddot{a}\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-a\\,\\ddot{a}\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "a\\,\\ddot{a}\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "a\\,\\ddot{a}\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-a\\,\\ddot{a}\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "a^2\\left(\\dot{a}^2 + 1\\right)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-a^2\\left(\\dot{a}^2 + 1\\right)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-a^2\\left(\\dot{a}^2 + 1\\right)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "a^2\\left(\\dot{a}^2 + 1\\right)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "a^2\\left(\\dot{a}^2 + 1\\right)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-a^2\\left(\\dot{a}^2 + 1\\right)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\left(\\dot{a}^2 + 1\\right)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "a^2\\left(\\dot{a}^2 + 1\\right)\\sin^2\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "a^2\\left(\\dot{a}^2 + 1\\right)\\sin^4\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-a^2\\left(\\dot{a}^2 + 1\\right)\\sin^4\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-a^2\\left(\\dot{a}^2 + 1\\right)\\sin^4\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "a^2\\left(\\dot{a}^2 + 1\\right)\\sin^4\\chi\\sin^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{3\\ddot{a}}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "a\\,\\ddot{a} + 2\\dot{a}^2 + 2"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\left(a\\,\\ddot{a} + 2\\dot{a}^2 + 2\\right)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\left(a\\,\\ddot{a} + 2\\dot{a}^2 + 2\\right)\\sin^2\\chi\\sin^2\\theta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{3\\ddot{a}}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a\\,\\ddot{a} + 2\\dot{a}^2 + 2}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a\\,\\ddot{a} + 2\\dot{a}^2 + 2}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a\\,\\ddot{a} + 2\\dot{a}^2 + 2}{a^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{3\\ddot{a}}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a\\,\\ddot{a} + 2\\dot{a}^2 + 2}{a^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(a\\,\\ddot{a} + 2\\dot{a}^2 + 2\\right)\\csc^2\\chi}{a^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(a\\,\\ddot{a} + 2\\dot{a}^2 + 2\\right)\\csc^2\\chi\\csc^2\\theta}{a^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{6a\\,\\ddot{a} + 6\\dot{a}^2 + 6}{a^2}",
+      "kretschmann": "K = \\dfrac{12a^2\\,\\ddot{a}^2 + 24\\dot{a}^2 + 12\\dot{a}^4 + 12}{a^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{3\\dot{a}^2 + 3}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\left(2a\\,\\ddot{a} + \\dot{a}^2 + 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\left(2a\\,\\ddot{a} + \\dot{a}^2 + 1\\right)\\sin^2\\chi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\left(2a\\,\\ddot{a} + \\dot{a}^2 + 1\\right)\\sin^2\\chi\\sin^2\\theta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{3\\dot{a}^2 + 3}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{2a\\,\\ddot{a} + \\dot{a}^2 + 1}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2a\\,\\ddot{a} + \\dot{a}^2 + 1}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2a\\,\\ddot{a} + \\dot{a}^2 + 1}{a^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{3\\dot{a}^2 + 3}{a^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{2a\\,\\ddot{a} + \\dot{a}^2 + 1}{a^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(2a\\,\\ddot{a} + \\dot{a}^2 + 1\\right)\\csc^2\\chi}{a^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2a\\,\\ddot{a} + \\dot{a}^2 + 1\\right)\\csc^2\\chi\\csc^2\\theta}{a^4}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\tau} + a\\,\\dot{a}\\dot{\\chi}^2 + a\\,\\dot{a}\\sin^2\\chi\\,\\dot{\\theta}^2 + a\\,\\dot{a}\\sin^2\\chi\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\chi} + \\dfrac{2\\dot{a}}{a}\\dot{\\tau}\\dot{\\chi} - \\sin\\chi\\cos\\chi\\,\\dot{\\theta}^2 - \\sin\\chi\\cos\\chi\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2\\dot{a}}{a}\\dot{\\tau}\\dot{\\theta} + 2\\cot\\chi\\,\\dot{\\chi}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2\\dot{a}}{a}\\dot{\\tau}\\dot{\\phi} + 2\\cot\\chi\\,\\dot{\\chi}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    }
+  ]
+}

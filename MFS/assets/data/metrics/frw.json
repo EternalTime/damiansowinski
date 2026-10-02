@@ -91,6 +91,11 @@
       "id": "white_hole",
       "kind": "composite",
       "text": "A piece of a Friedmann universe of dust that leaves the big bang late and comes out of its own Schwarzschild sphere, with vacuum around it [novikov1965]."
+    },
+    {
+      "id": "lindquist_wheeler_lattice",
+      "kind": "family",
+      "text": "A closed universe with its dust gathered into $N$ equal masses on a regular lattice. It expands and recollapses on Friedmann's cycloid, to a largest radius that approaches Friedmann's as $N$ grows [lindquist1957, clifton2009]."
     }
   ],
   "references": [
@@ -145,7 +150,9 @@
     "senovilla1996",
     "sultana2005",
     "marolf2009",
-    "novikov1965"
+    "novikov1965",
+    "lindquist1957",
+    "clifton2009"
   ],
   "coordinates": [
     {

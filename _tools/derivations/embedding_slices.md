@@ -503,6 +503,16 @@ On the view through the nut it is the same line, which the page mirrors, and on 
   At $4.01$ and $4.39\,r_s$ the inner shells are inside the horizon, and each curve rises toward $t = \infty$ as its shells near $r_s$, leaving the box through its top edge, $ct = 6\,r_s$, near $r = 1.6$ and $1.9\,r_s$.
 - `collapse`, the dust and the exterior joined at the star's surface: four curves, each a line $T = \eta$ across the dust and Novikov's curve outside it through the Kruskal coordinates of each shell, met at the surface.
 
+### Lindquist-Wheeler lattice
+
+- The embedding is four moments of the proper time of the cell boundaries since they were at rest, $c\tau = 0$, $2.16$, $3.07$ and $3.36\,r_s$, which are $\eta = 0$, $0.35\pi$, $0.6\pi$ and $0.8\pi$ of $a = \tfrac{a_m}{2}(1 + \cos\eta)$ for the lattice of eight cells.
+  In each of two opposite cells it is the moment of constant $\tau$ of Lindquist and Wheeler's comoving chart, $\rho$ from the innermost shell still there to the boundary $r_m = 1.675\,r_s$; between them it is the comparison hypersphere, $\chi$ from $\psi$ to $\pi - \psi$.
+- `lindquist_wheeler/shells`: four lines of constant $c\tau$, the first from the throat $\rho = r_s$ and the others from the shell that has just reached $r = 0$, $\rho = (2c\tau/\pi)^{2/3}r_s^{1/3}$.
+- `comparison_hypersphere/radial`, drawn in units of $a_m$: four lines of constant $c\tau/a_m$ between the two cell boundaries.
+- `schwarzschild_cell/radial`: Novikov's curves, as outside Oppenheimer and Snyder's star, drawn where $r > r_s$. The first is the line $t = 0$ from $r_s$ to $r_m$ and the second runs from the boundary at $r = 1.22\,r_s$, $ct = 4.20\,r_s$ up through the top of the box; at $3.07$ and $3.36\,r_s$ the boundary is inside the horizon, so the whole moment is, and nothing of it is drawn.
+- `cosmological_time/radial` and the conformal view of that chart: not drawn, since the moments are of the cell while it contracts and the chart covers it while it expands.
+- The conformal views of the cell: four curves through the Kruskal coordinates of each shell, in the Schwarzschild cell's view and the comoving view; on the hypersphere's rectangle, four lines $T = \eta$ between the boundaries.
+
 ### pp-wave
 
 - The embedding is the wave front $x$, $y$ of four values of the retarded time, $cu = -3$, $-0.5$, $0$ and $0.661\,L$.
@@ -774,6 +784,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Mixmaster | none drawn | none | none drawn |
 | Morris-Thorne | line | none | line, line |
 | Natário | line | none | none drawn |
+| Lindquist-Wheeler lattice | eight lines, two curves; not visible on the cosmological time view | none | eight curves, four lines; not visible on the cosmological time view |
 | Oppenheimer-Snyder | four lines, four curves | none | four curves |
 | point particles in three dimensions | five lines; not visible on the two bodies' views | whole drawing; not visible on the moving wedge | five lines; not visible on the two bodies' view |
 | pp-wave | four null lines | none | none drawn |

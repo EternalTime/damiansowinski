@@ -11,7 +11,7 @@ som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, 
 schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis,
-wahlquist, plebanski_hacyan, tippett_tsang and ppn_metric, and Godel's cylindrical chart.
+wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric and lindquist_wheeler_lattice, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -18641,6 +18641,175 @@ def white_hole_check(chart, system):
 
 
 CHARTS["white_hole"] = [lambda s=s: white_hole(s) for s in WHITE_HOLE_CHARTS]
+
+
+# -- The lattice universe of Lindquist and Wheeler ------------------------------------------
+
+LW_CHARTS = ("schwarzschild_cell", "cosmological_time", "lindquist_wheeler", "comparison_hypersphere")
+LW_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+LW_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+
+
+def lindquist_wheeler_lattice(system_id):
+    """Lindquist and Wheeler's lattice universe, Rev. Mod. Phys. 29, 432 (1957): N equal masses
+    at the centres of the cells of a regular tiling of the 3-sphere, each cell replaced by a ball
+    with Schwarzschild's geometry inside it and a boundary in radial free fall. The cell in
+    Schwarzschild's own coordinates is Clifton and Ferreira's (3), Phys. Rev. D 80, 103503 (2009);
+    their cosmological time chart is their (8), with E = cos^2(psi) the square of the boundary's
+    energy per unit rest energy; Lindquist and Wheeler's comoving chart, as Liu writes it,
+    Phys. Rev. D 92, 063529 (2015), (17) to (19), labels each shell by its largest radius and
+    leaves the areal radius r(tau, rho) free, as Tolman and Bondi's chart does, so no component
+    assumes the shells' equation of motion; and the comparison hypersphere is the 3-sphere of
+    radius a(tau) the cells are tangent to, with a left free. lindquist_wheeler_check holds the
+    two cell charts to being a vacuum and to Schwarzschild's published metric, the comoving chart
+    to being a vacuum with Schwarzschild's Kretschmann scalar where each shell obeys its
+    equation, and the hypersphere to dust of the density Lindquist and Wheeler's equation for a
+    gives it. lindquist_wheeler_lattice.md records each chart's source."""
+    spec = {"metric_id": "lindquist_wheeler_lattice",
+            "check": lambda chart: lindquist_wheeler_check(chart, system_id)}
+    f, bare = "\\left(1 - \\dfrac{r_s}{r}\\right)", "1 - \\dfrac{r_s}{r}"
+    if system_id == "schwarzschild_cell":
+        coords, name, parameters = ["t", "r"], "Schwarzschild Cell", ["r_s", "\\psi"]
+        domains = ["t \\in (-\\infty, \\infty)", "r \\in (r_s, r_m]"] + LW_ANGLES + [
+            "r = r_b(t) \\;\\text{(the boundary of the cell)}"]
+        line = "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "} + r^2" + LW_SPHERE
+        chart_line = line.replace("c^2dt^2", "dt^2")
+        spec["components"] = {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                              "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}}
+        spec["kretschmann"] = "\\dfrac{12r_s^2}{r^6}"
+    elif system_id == "cosmological_time":
+        coords, name, parameters = ["\\tau", "r"], "Cosmological Time", ["r_s", "E"]
+        root = "\\sqrt{E - 1 + \\dfrac{r_s}{r}}"
+        domains = ["\\tau \\in (-\\infty, \\infty)", "r \\in \\left(0, \\dfrac{r_s}{1 - E}\\right]"] + LW_ANGLES + [
+            "r = r_s \\;\\text{(the horizon)}"]
+        line = ("ds^2 = -\\dfrac{1}{E}" + f + "c^2d\\tau^2 - \\dfrac{2}{E}" + root + "\\,c\\,d\\tau\\,dr"
+                " + \\dfrac{dr^2}{E} + r^2" + LW_SPHERE)
+        chart_line = line.replace("c^2d\\tau^2", "d\\tau^2").replace("\\,c\\,d\\tau\\,dr", "\\,d\\tau\\,dr")
+        spec["kretschmann"] = "\\dfrac{12r_s^2}{r^6}"
+        spec["components"] = {
+            "metric_components": {("\\tau", "\\tau"): "-\\dfrac{1}{E}" + f, ("\\tau", "r"): "-\\dfrac{1}{E}" + root,
+                                  ("r", "\\tau"): "-\\dfrac{1}{E}" + root},
+            "inverse_metric_components": {("\\tau", "r"): "-" + root, ("r", "\\tau"): "-" + root, ("r", "r"): bare}}
+    elif system_id == "lindquist_wheeler":
+        coords, name, parameters = ["\\tau", "\\rho"], "Lindquist-Wheeler Comoving", ["r_s", "r = r(\\tau,\\rho)"]
+        domains = ["\\tau \\in \\left(-\\dfrac{\\pi\\rho}{2c}\\sqrt{\\dfrac{\\rho}{r_s}}, "
+                   "\\dfrac{\\pi\\rho}{2c}\\sqrt{\\dfrac{\\rho}{r_s}}\\right)",
+                   "\\rho \\in (r_s, r_m]"] + LW_ANGLES + ["\\rho = r_m \\;\\text{(the boundary of the cell)}"]
+        line = ("ds^2 = -c^2d\\tau^2 + \\dfrac{(\\partial_\\rho r)^2}{1 - \\dfrac{r_s}{\\rho}}d\\rho^2 + r^2" + LW_SPHERE)
+        chart_line = line.replace("c^2d\\tau^2", "d\\tau^2")
+    else:
+        coords, name, parameters = ["\\tau", "\\chi"], "Comparison Hypersphere", ["a = a(\\tau)", "r_s", "\\psi"]
+        domains = ["\\tau \\in \\left(-\\dfrac{\\pi a_m}{2c}, \\dfrac{\\pi a_m}{2c}\\right)", "\\chi \\in [0, \\pi]"] + LW_ANGLES + [
+            "\\chi = \\psi \\;\\text{(the boundary of the cell about } \\chi = 0\\text{)}"]
+        line = ("ds^2 = -c^2d\\tau^2 + a^2\\left(d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2"
+                " + \\sin^2\\theta\\,d\\phi^2\\right)\\right)")
+        chart_line = line.replace("c^2d\\tau^2", "d\\tau^2")
+    coords = coords + ["\\theta", "\\phi"]
+    probe = vm.Reader(coords, parameters, ())
+    spec["system"] = {"id": system_id, "name": name, "coords": coords, "domains": domains,
+                      "parameters": parameters, "line_element": line}
+    spec["chart_line_element"] = chart_line
+    rs = probe.parameters["r_s"]
+    if system_id == "schwarzschild_cell":
+        r = probe.symbol["r"]
+        spec["printer"] = {"lead": [r, rs], "factors": [rs, r], "flip": False}
+    elif system_id == "cosmological_time":
+        r, E = probe.symbol["r"], probe.parameters["E"]
+        spec["printer"] = {"lead": [E, r, rs], "factors": [E, rs, r], "flip": False}
+    elif system_id == "lindquist_wheeler":
+        spec["printer"] = {"lead": [probe.parameters["r"], probe.symbol["\\rho"], rs], "flip": False}
+    else:
+        spec["printer"] = {"lead": [probe.parameters["a"]], "dotted": ["a"]}
+    return spec
+
+
+def lindquist_wheeler_check(chart, system):
+    """Each chart against what the lattice asks of it.
+
+    The cell in Schwarzschild's coordinates is the published metric of `schwarzschild` slot by
+    slot. The cosmological time chart is that metric carried along c tau = sqrt(E) c t - F(r)
+    with dF/dr = sqrt(E - 1 + r_s/r)/(1 - r_s/r), a vacuum with K = 12 r_s^2/r^6, and the shell
+    with dr/d(c tau) = sqrt(E - 1 + r_s/r) is a unit timelike vector orthogonal to the surfaces of
+    constant tau. The comoving chart is a vacuum with the same Kretschmann scalar wherever every
+    shell obeys (d_tau r)^2 = r_s/r - r_s/rho, and the boundary shell rho = r_s/sin^2(psi) then
+    gives a = r/sin(psi) the equation the hypersphere is held to: its Einstein tensor is that
+    of dust at rest, G_tautau = 3 r_s/(a^3 sin^3(psi)) and nothing else."""
+    geo, g, P = chart.geo, chart.geo.g, chart.reader.parameters
+    rs = P["r_s"]
+
+    def fail(what):
+        raise AssertionError(f"lindquist_wheeler_lattice/{system}: {what}")
+
+    def vacuum(reduce=lambda e: e):
+        ricci = geo.ricci_ll()
+        return all(vm.norm(reduce(ricci[a][b])) == 0 for a in range(4) for b in range(4))
+
+    published = next(c for c in json.loads((METRICS / "schwarzschild.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == "spherical")
+    there = vm.Reader(published["coords"], [p["symbol"] for p in published["parameters"]], ())
+    values = {tuple(e["indices"]): there(e["value"]) for e in published["metric_components"]}
+    schwarzschild = sp.Matrix(4, 4, lambda i, j: values.get((published["coords"][i], published["coords"][j]), 0))
+    names = {there.parameters["r_s"]: rs, **{there.symbol[n]: chart.reader.symbol[n]
+                                             for n in published["coords"][1:] if n in chart.reader.symbol}}
+    if system == "schwarzschild_cell":
+        if any(vm.norm(schwarzschild[i, j].subs(names) - g[i, j]) != 0 for i in range(4) for j in range(4)):
+            fail("the cell is not Schwarzschild's published metric")
+        if not vacuum():
+            fail("the cell is not a vacuum")
+    elif system == "cosmological_time":
+        r, E = chart.reader.symbol["r"], P["E"]
+        W = sp.sqrt(E - 1 + rs / r)
+        # t = (tau + F(r))/sqrt(E), so dt = (dtau + W dr/(1 - r_s/r))/sqrt(E).
+        J = sp.eye(4)
+        J[0, 0], J[0, 1] = 1 / sp.sqrt(E), W / ((1 - rs / r) * sp.sqrt(E))
+        pulled = J.T * schwarzschild.subs(names) * J
+        if any(vm.norm(pulled[i, j] - g[i, j]) != 0 for i in range(4) for j in range(4)):
+            fail("Schwarzschild's published metric pulled back misses the chart")
+        if not vacuum():
+            fail("the chart is not a vacuum")
+        if vm.norm(geo.kretschmann() - 12 * rs ** 2 / r ** 6) != 0:
+            fail("the Kretschmann scalar is not Schwarzschild's")
+        u = sp.Matrix([1, W, 0, 0])
+        low = g * u
+        if vm.norm((u.T * low)[0, 0] + 1) != 0 or any(vm.norm(low[i]) != 0 for i in (1, 2, 3)):
+            fail("the comoving shells are not unit normals of the surfaces of constant tau")
+    elif system == "lindquist_wheeler":
+        tau, rho = chart.symbols[:2]
+        r = P["r"]
+        v, p = sp.symbols("LWv LWp", real=True)
+        energy = rs / r - rs / rho
+        rates = {sp.Derivative(r, (tau, 2), rho): rs * p / r ** 3,
+                 sp.Derivative(r, tau, rho): (rs / rho ** 2 - rs * p / r ** 2) / (2 * v),
+                 sp.Derivative(r, (tau, 2)): -rs / (2 * r ** 2),
+                 sp.Derivative(r, tau): v}
+
+        def on_shell(e):
+            e = sp.together(sp.sympify(e).subs(rates).subs(sp.Derivative(r, rho), p))
+            num, den = sp.fraction(e)
+            num = sp.rem(sp.Poly(sp.expand(num * v ** 6), v), sp.Poly(v ** 2 - energy, v)).as_expr()
+            return sp.simplify(num)
+
+        if not vacuum(on_shell):
+            fail("the chart is not a vacuum where every shell obeys its equation")
+        if on_shell(geo.kretschmann() - 12 * rs ** 2 / r ** 6) != 0:
+            fail("the Kretschmann scalar is not Schwarzschild's where every shell obeys its equation")
+    else:
+        tau = chart.symbols[0]
+        a, psi = P["a"], P["psi"]
+        v = sp.Symbol("LWv", real=True)
+        am = rs / sp.sin(psi) ** 3
+        rates = {sp.Derivative(a, (tau, 2)): -am / (2 * a ** 2), sp.Derivative(a, tau): v}
+        lowered = geo.einstein_ll()
+        for i in range(4):
+            for j in range(4):
+                value = sp.together(sp.sympify(vm._at(lowered, (i, j))).subs(rates))
+                value = sp.simplify(value.subs(v ** 2, am / a - 1))
+                wanted = 3 * am / a ** 3 if i == j == 0 else 0
+                if sp.simplify(value - wanted) != 0:
+                    fail(f"the Einstein tensor is not dust's in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["lindquist_wheeler_lattice"] = [lambda s=s: lindquist_wheeler_lattice(s) for s in LW_CHARTS]
 
 
 def write(spec):

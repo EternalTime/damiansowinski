@@ -998,6 +998,19 @@ A spacetime whose symmetry rescales time and space by different powers, $t \to \
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, x, y, r)$, $$ds^2 = -\left(\dfrac{r}{L}\right)^{2z}dv^2 + 2\left(\dfrac{r}{L}\right)^{z - 1}dv\,dr + \dfrac{r^2}{L^2}\left(dx^2 + dy^2\right)$$
 - chart Affine Null (Copsey-Mann): coordinates $(v, x, y, s)$, $$ds^2 = -\dfrac{z^2s^2}{4L^2}dv^2 + dv\,ds + \left(\dfrac{zs}{2L}\right)^{2/z}\left(dx^2 + dy^2\right)$$
 
+### Lindquist-Wheeler Lattice Universe
+
+A closed universe that holds nothing but $N$ equal masses, one at the centre of each cell of a regular tiling of the three sphere, built by Richard Lindquist and John Wheeler in 1957 from pieces of Schwarzschild's geometry. Fitting the pieces together makes the lattice expand and fall back almost as Friedmann's closed universe of dust does. It is an approximate spacetime, and an early test of whether a universe whose matter comes in lumps expands like a smooth one.
+
+- id: `lindquist_wheeler_lattice`
+- tags: cosmology, closed universe, expanding universe, big bang, lattice universe, black hole lattice, multiple black holes, approximate solution, Schwarzschild-cell method, Wigner-Seitz, inhomogeneous, backreaction, three sphere, regular polytope, time-dependent, comoving, mass, horizon, curvature singularity, Flamm's paraboloid, matched solution, vacuum, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/lindquist_wheeler_lattice.json
+- chart Schwarzschild Cell: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Cosmological Time: coordinates $(\tau, r, \theta, \phi)$, $$ds^2 = -\dfrac{1}{E}\left(1 - \dfrac{r_s}{r}\right)c^2d\tau^2 - \dfrac{2}{E}\sqrt{E - 1 + \dfrac{r_s}{r}}\,c\,d\tau\,dr + \dfrac{dr^2}{E} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Lindquist-Wheeler Comoving: coordinates $(\tau, \rho, \theta, \phi)$, $$ds^2 = -c^2d\tau^2 + \dfrac{(\partial_\rho r)^2}{1 - \dfrac{r_s}{\rho}}d\rho^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Comparison Hypersphere: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = -c^2d\tau^2 + a^2\left(d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Majumdar-Papapetrou Extremal Black Holes
 
 Any number of extremal charged black holes at rest, the static electrovacuum solution Sudhansu Datta Majumdar and Achilles Papapetrou found independently in 1947. Between every pair of holes the electric repulsion balances the gravitational attraction exactly, so the holes stay at rest in any arrangement.
