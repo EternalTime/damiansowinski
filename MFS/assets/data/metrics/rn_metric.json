@@ -169,6 +169,11 @@
       "id": "bonnor_charged_dust",
       "kind": "composite",
       "text": "A star of charged dust at rest, with the extremal field, $r_q = r_s/2$, outside it. Its surface can lie as near the horizon as one likes, and the redshift of its centre is then as large as one likes [bonnor1975]."
+    },
+    {
+      "id": "quantum_oppenheimer_snyder",
+      "kind": "family",
+      "text": "A tower of regions like Reissner and Nordström's, from a correction to Schwarzschild's $f$ that falls off as $r^{-4}$ and a ball of dust that bounces inside it [lewandowski2023]."
     }
   ],
   "references": [
@@ -213,7 +218,8 @@
     "gibbonsrasheed1995",
     "arnowitt1960",
     "krasinski2012",
-    "bonnor1975"
+    "bonnor1975",
+    "lewandowski2023"
   ],
   "coordinates": [
     {

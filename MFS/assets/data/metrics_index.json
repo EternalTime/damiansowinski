@@ -244,7 +244,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0be0402ad12207eb",
+    "version": "48c554adac78e62e",
     "diagrams": "af782319d0ede812",
     "conformal": "7ea8e08d66397efe",
     "embedding": "1585df5452ac5572"
@@ -1630,7 +1630,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "bf7c0d1c07098006",
+    "version": "3fa59a3e5cf8649a",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -1930,7 +1930,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3f528a176f8af517",
+    "version": "6a2ee5464d44bc22",
     "diagrams": "a15527f5015cc33a",
     "conformal": "17d38d5b746db304",
     "embedding": "5ff5b48da9e6b5f3"
@@ -2854,7 +2854,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "80895799cc1f747a",
+    "version": "ea24bdb0aad11793",
     "diagrams": "b56d3fe3ca86d14a",
     "conformal": "43d2fa3533d022a9",
     "embedding": "097ceae878d9ed12"
@@ -3411,7 +3411,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0718a1669987499e",
+    "version": "876faa35c411c0e6",
     "diagrams": "d31b7b7b6c3dd2ef",
     "conformal": "7400ddcb9dd6a817",
     "embedding": "1ecd155079c29ab6"
@@ -3656,6 +3656,39 @@
     "embedding": "a484d91e42495a51"
   },
   {
+    "id": "quantum_oppenheimer_snyder",
+    "name": "Quantum Oppenheimer-Snyder",
+    "tags": [
+      "loop quantum gravity",
+      "loop quantum cosmology",
+      "quantum gravity",
+      "bounce",
+      "dust",
+      "gravitational collapse",
+      "matched solution",
+      "junction conditions",
+      "black hole",
+      "white hole",
+      "horizon",
+      "event horizon",
+      "inner horizon",
+      "Cauchy horizon",
+      "mass inflation",
+      "causal structure",
+      "maximal extension",
+      "asymptotically flat",
+      "time-dependent",
+      "spherically symmetric",
+      "Lorentzian",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "09f39eecb3faaad0",
+    "diagrams": "43178260a751b2b6",
+    "conformal": "b740810dfc5bf7e8",
+    "embedding": "aa0bb4ff5da3747e"
+  },
+  {
     "id": "randall_sundrum",
     "name": "Randall-Sundrum",
     "tags": [
@@ -3717,7 +3750,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "882103aad9655f69",
+    "version": "8791ec7537be03a2",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -3987,7 +4020,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "99bbebfc612328f9",
+    "version": "086a227eb1620117",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"

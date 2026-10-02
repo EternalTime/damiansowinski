@@ -102,6 +102,11 @@
       "id": "misner_zapolsky",
       "kind": "programme",
       "text": "The static star of infinite central density that Oppenheimer and Volkoff found earlier in 1939. They called it unstable, and wrote that the nonstatic solutions for heavier stars were \"now being investigated\" [oppenheimer1939]."
+    },
+    {
+      "id": "quantum_oppenheimer_snyder",
+      "kind": "family",
+      "text": "The same ball of dust with the bounce of loop quantum cosmology inside it. The dust stops at a critical density and comes back out through a white hole into another universe [lewandowski2023]."
     }
   ],
   "references": [
@@ -125,7 +130,8 @@
     "novikov1965",
     "neeman1965",
     "lindquist1957",
-    "ruban1968"
+    "ruban1968",
+    "lewandowski2023"
   ],
   "coordinates": [
     {

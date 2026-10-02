@@ -1664,6 +1664,20 @@ A class of exact solutions describing gravitational waves with plane fronts and 
 - chart Brinkmann: coordinates $(u, v, x, y)$, $$ds^2 = H\,c^2du^2 - 2c\,du\,dv + dx^2 + dy^2$$
 - chart Exact Plane Wave: coordinates $(u, v, x, y)$, $$ds^2 = \left(A\left(x^2 - y^2\right) + 2Bxy\right)c^2du^2 - 2c\,du\,dv + dx^2 + dy^2$$
 
+### Quantum Oppenheimer-Snyder Black Hole
+
+Oppenheimer and Snyder's ball of dust with the bounce of loop quantum cosmology inside it, which Jerzy Lewandowski, Yongge Ma, Jinsong Yang, and Cong Zhang built in 2023. The dust falls, stops at a finite density, and comes back out, and the junction conditions fix the vacuum outside: Schwarzschild's metric with one more term, with two horizons above a least mass and none below it.
+
+- id: `quantum_oppenheimer_snyder`
+- tags: loop quantum gravity, loop quantum cosmology, quantum gravity, bounce, dust, gravitational collapse, matched solution, junction conditions, black hole, white hole, horizon, event horizon, inner horizon, Cauchy horizon, mass inflation, causal structure, maximal extension, asymptotically flat, time-dependent, spherically symmetric, Lorentzian, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/quantum_oppenheimer_snyder.json
+- chart Static Exterior: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{\alpha m^2}{r^4}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{2m}{r} + \dfrac{\alpha m^2}{r^4}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Painlevé-Gullstrand Exterior: coordinates $(\tau, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{\alpha m^2}{r^4}\right)c^2d\tau^2 + 2\sqrt{\dfrac{2m}{r}\left(1 - \dfrac{\alpha m}{2r^3}\right)}\,c\,d\tau\,dr + dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Ingoing Eddington-Finkelstein Exterior: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{\alpha m^2}{r^4}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Outgoing Eddington-Finkelstein Exterior: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{\alpha m^2}{r^4}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Comoving Dust Interior: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = -c^2d\tau^2 + a^2\left(d\chi^2 + \chi^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Randall-Sundrum Braneworld
 
 A flat wall with three dimensions of space in anti-de Sitter space of five dimensions, found by Lisa Randall and Raman Sundrum in 1999. Every length along the wall's directions shrinks as $e^{-k|y|}$ with the distance $y$ from it, which between two walls turns the Planck scale into the weak scale, and with one wall keeps gravity four dimensional beside a fifth dimension of infinite size.

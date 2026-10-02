@@ -242,6 +242,11 @@ REGIONS = {
         "regions": [["interior_comoving"], ["exterior_schwarzschild"]],
         "why": "the dust ball and the vacuum outside it are two regions of one spacetime",
     },
+    "quantum_oppenheimer_snyder": {
+        "regions": [["interior_comoving"],
+                    ["static", "painleve_gullstrand", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing"]],
+        "why": "the bouncing dust ball and the vacuum outside it are two regions of one spacetime",
+    },
     "semiclosed_world": {
         "regions": [["comoving", "conformal"], ["schwarzschild", "isotropic"]],
         "why": "the dust behind the throat and the vacuum outside it are two regions of one spacetime",

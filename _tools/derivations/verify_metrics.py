@@ -1758,6 +1758,24 @@ DIMENSIONS = {
     # ell of the de Sitter core. The Eddington-Finkelstein times u = ct - r_* and v = ct + r_* are
     # lengths, and so is the advanced time of the chart whose mass is a function m(v), where a
     # dot on m is a derivative along v and carries no dimension.
+    # The quantum Oppenheimer-Snyder black hole: the mass is the length m = GM/c^2 and alpha, the
+    # quantum correction, is an area, so alpha m^2/r^4 is a pure number. Inside, the scale factor is a
+    # pure number, 1 at the bounce, and chi is the areal radius of a shell then, a length.
+    ("quantum_oppenheimer_snyder", "static"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "\\alpha": "L**2",
+    },
+    ("quantum_oppenheimer_snyder", "painleve_gullstrand"): {
+        "\\tau": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "\\alpha": "L**2",
+    },
+    ("quantum_oppenheimer_snyder", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "\\alpha": "L**2",
+    },
+    ("quantum_oppenheimer_snyder", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "\\alpha": "L**2",
+    },
+    ("quantum_oppenheimer_snyder", "interior_comoving"): {
+        "\\tau": "T", "\\chi": "L", "\\theta": "1", "\\phi": "1", "a": "1", "\\chi_0": "L",
+    },
     ("hayward", "static"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "\\ell": "L",
     },
