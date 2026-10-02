@@ -14679,6 +14679,150 @@ def hartle_thorne(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- Sultana and Dyer
+
+SD = {"r_s": 1, "eta_0": 3}     # the scale factor is one at eta = 3 r_s, as the other diagrams draw it
+
+
+def sultana_dyer(ck, src):
+    """Schwarzschild's metric times eta^4/eta_0^4, so Kruskal and Szekeres's maps place it: with
+    r_s = 1 the advanced time is v = eta + r in the Kerr-Schild chart, and
+
+        V = exp(v/2),    U = (1 - r) exp(r - v/2),    p = arctan U,  q = arctan V,
+
+    one formula for every r > 0, Schwarzschild's ingoing map. The spacetime is the part eta > 0
+    of the exterior and the black hole. The big bang eta = 0 is V = e^(r/2), U = (1 - r) e^(r/2),
+    a spacelike curve from (U, V) = (1, 1) on the singularity UV = 1, at r = 0, through the
+    horizon at V = e^(1/2) to i0, so the region is a triangle with curved base: the big bang
+    below, r = 0 on T = pi/2 from X = 0 to pi/2, and null infinity from i+ at (pi/2, pi/2) to i0
+    at (pi, 0). Schwarzschild's time is c t = eta - ln(r - 1) outside the horizon. The two
+    trapping horizons, where the gradient of the areal radius eta^2 r/eta_0^2 is null, are
+    r = eta/2 and r = (sqrt(eta^2 + 12 eta + 4) - eta - 2)/4, which print_charts.py checks, and
+    both run from the corner where the big bang meets r = 0 to i+."""
+    ks = Plane(src, "sultana_dyer", "kerr_schild", ("\\eta", "r"), EQUATOR, SD)
+    st = Plane(src, "sultana_dyer", "schwarzschild_time", ("t", "r"), EQUATOR, SD)
+    ef = Plane(src, "sultana_dyer", "eddington_finkelstein_ingoing", ("v", "r"), EQUATOR, SD)
+
+    def ingoing(w, r):
+        w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+        return np.arctan((1 - r) * np.exp(r - w / 2)), atan_exp(w / 2)
+
+    def conformal(eta, r):
+        return ingoing(np.asarray(eta, dtype=float) + np.asarray(r, dtype=float), r)
+
+    def static(t, r):
+        r = np.asarray(r, dtype=float)
+        return conformal(np.asarray(t, dtype=float) + np.log(r - 1), r)
+
+    def inner(eta):
+        eta = np.asarray(eta, dtype=float)
+        return (np.sqrt(eta ** 2 + 12 * eta + 4) - eta - 2) / 4
+
+    eta, r = ck.uniform(0.05, 15), ck.uniform(0.01, 30)
+    ck.chart("Sultana-Dyer Kerr-Schild", ks, conformal, eta, r, lambda eta, r: (1 + 1 / r, -1 / r))
+    r_out = ck.uniform(1.001, 30)
+    ck.chart("Sultana-Dyer Schwarzschild time", st, static, eta - np.log(r_out - 1), r_out, lambda t, r: (1, 0))
+    ck.chart("Sultana-Dyer ingoing Eddington-Finkelstein", ef, ingoing, eta + r, r, lambda v, r: (1, -1 / r))
+    ck.limit("Sultana-Dyer: the big bang meets r = 0 at (X, T) = (0, pi/2)", point(*conformal(0.0, 1e-12)), [0, HALF], 1e-9)
+    p, q = conformal(np.array([0.5, 3.0, 9.0]), np.full(3, 1e-12))
+    ck.limit("Sultana-Dyer: r -> 0 lands on T = pi/2", p + q, [HALF] * 3, 1e-9)
+    ck.limit("Sultana-Dyer: the big bang runs to i0, (X, T) = (pi, 0)", point(*conformal(0.0, 60.0)), [PI, 0], 1e-6)
+    ck.limit("Sultana-Dyer: eta -> infinity at fixed r > r_s lands on i+, (X, T) = (pi/2, pi/2)",
+             point(*conformal(80.0, 3.0)), [HALF, HALF], 1e-6)
+    ck.limit("Sultana-Dyer: r = r_s is the line p = 0", conformal(np.array([0.5, 3.0, 9.0]), np.ones(3))[0], [0] * 3, 1e-12)
+    ck.limit("Sultana-Dyer: the three charts put one event at one point",
+             np.concatenate([static(2.0 - np.log(2.0), 3.0), ingoing(5.0, 3.0)]), np.concatenate([conformal(2.0, 3.0)] * 2), 1e-12)
+    for label, radius in (("r = eta/2", lambda e: e / 2), ("the inner trapping horizon", inner)):
+        ends = [point(*conformal(e, radius(e))) for e in (1e-9, 400.0)]
+        ck.limit(f"Sultana-Dyer: {label} runs from the corner (0, pi/2) to i+", np.ravel(ends), [0, HALF, HALF, HALF], 1e-4)
+    K = ks.kretschmann
+    rr = np.array([0.3, 1.0, 4.0])
+    ck.diverges("Sultana-Dyer: the Kretschmann scalar diverges on the big bang", K(np.full(3, 1e-2), rr), K(np.full(3, 1e-3), rr))
+    ee = np.array([0.5, 3.0, 9.0])
+    ck.diverges("Sultana-Dyer: the Kretschmann scalar diverges at r = 0", K(ee, np.full(3, 1e-2)), K(ee, np.full(3, 1e-3)))
+    ck.finite("Sultana-Dyer: the Kretschmann scalar is finite on the horizon",
+              K(np.array([3.0, 6.0, 9.0]), np.ones(3)))
+
+    box = [-0.35, PI + 0.35, -0.3, HALF + 0.35]
+    r_bang = spread(0, np.inf, 600, 12)
+    bang = conformal(np.zeros_like(r_bang), r_bang)
+    bang_xt = np.column_stack(xt(*bang))
+    q0 = float(np.arctan(np.exp(0.5)))          # where the big bang crosses the horizon
+    whole = [[0, HALF], *bang_xt.tolist(), [PI, 0], [HALF, HALF]]
+    outside = [point(0, q0), *bang_xt[r_bang > 1].tolist(), [PI, 0], [HALF, HALF]]
+    R_OUT, R_IN = (1.5, 2, 3, 5, 10), (0.25, 0.5)
+    ETAS, TS, VS = (0.5, 1, 2, 4, 8), (-2, 0, 2, 4, 6), (1, 2, 4, 8)
+    e_all = spread(0, np.inf, 600, 12)
+    moments = slices.moments("sultana_dyer")
+
+    def edges(v):
+        v.fill("region", whole)
+        for radius in (lambda e: e / 2, inner):
+            v.curve("apparent", *conformal(e_all, radius(e_all)))
+        v.segment("horizon", (0, q0), (0, HALF))
+        v.curve("singular", *bang, zig=True)
+        v.segment("singular", (Q4, Q4), (0, HALF), zig=True)
+        v.segment("scri", (0, HALF), (-HALF, HALF))
+        for pq, text, anchor, dx, dy in (((0, HALF), "$i^+$", "b", 0, -6), ((-HALF, HALF), "$i^0$", "l", 6, 0)):
+            v.point("infinity", pq)
+            v.label(pq, text, anchor, dx=dx, dy=dy)
+        v.label_xt([3 * Q4, Q4], "$\\mathscr{I}^+$", "bl", dx=4, dy=-4)
+        v.label_xt([Q4, HALF], "$r = 0$", "b", dy=-8)
+        v.label(conformal(0.0, 1.5), "$\\eta = 0$", "t", dy=8)
+        v.label((0, (q0 + HALF) / 2), "$r = r_s$", "tl", "small", dx=4, dy=2)
+        v.legend("apparent", "$|\\nabla R|^2 = 0$ for the areal radius $R = \\eta^2r/\\eta_0^2$: the Hubble radius "
+                             "$r = \\eta/2$, and a curve inside $r_s$")
+        v.legend("horizon", "the event horizon $r = r_s$")
+        v.legend("singular", "the big bang $\\eta = 0$ and the centre $r = 0$, where the Kretschmann scalar diverges")
+        v.legend("scri", "future null infinity $\\mathscr{I}^+$")
+        v.set(settings="$r_s = 1$, the unit of every length, and $\\eta_0 = 3\\,r_s$, where the scale factor "
+                       "$a = \\eta^2/\\eta_0^2$ is one.")
+        for m in moments:
+            lo, hi = m.reach("kerr_schild", "r")
+            rr = lo + (hi - lo) * np.linspace(0, 1, 300) ** 2
+            v.slice(m, [conformal(np.full_like(rr, m.time), rr)])
+
+    views = []
+    v = View("kerr_schild", "Kerr-Schild Conformal Time", box, "kerr_schild")
+    edges(v)
+    v.fill("cover", whole)
+    for r in R_OUT + R_IN:
+        v.curve("r", *conformal(e_all, np.full_like(e_all, r)))
+    for e in ETAS:
+        v.curve("t", *conformal(np.full_like(r_bang, e), r_bang))
+    v.legend("cover", "the spacetime, which $\\eta > 0$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant, at " + listed(sorted(R_OUT + R_IN)) + " in units of $r_s$")
+    v.legend("t", "$\\eta$ constant, at " + listed(ETAS) + " in units of $r_s$")
+    views.append(v)
+
+    v = View("schwarzschild_time", "Schwarzschild Time", box, "schwarzschild_time")
+    edges(v)
+    v.fill("cover", outside)
+    for r in R_OUT:
+        v.curve("r", *conformal(e_all, np.full_like(e_all, r)))
+    for t in TS:
+        rr = 1 + np.exp(-t) + spread(0, np.inf, 600, 12)
+        v.curve("t", *static(np.full_like(rr, t), rr))
+    v.legend("cover", "the region outside the horizon, which $t$ and $r > r_s$ cover")
+    v.legend("r", "$r$ constant, at " + listed(R_OUT) + " in units of $r_s$")
+    v.legend("t", "$ct$ constant, at " + listed(TS) + " in units of $r_s$")
+    views.append(v)
+
+    v = View("ingoing", "Ingoing Eddington-Finkelstein", box, "eddington_finkelstein_ingoing")
+    edges(v)
+    v.fill("cover", whole)
+    for r in R_OUT + R_IN:
+        v.curve("r", *conformal(e_all, np.full_like(e_all, r)))
+    for w in VS:
+        rr = w * np.linspace(0, 1, 400)
+        v.curve("null", *ingoing(np.full_like(rr, w), rr))
+    v.legend("cover", "the spacetime, which $v > r$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant, at " + listed(sorted(R_OUT + R_IN)) + " in units of $r_s$")
+    v.legend("null", "$v$ constant, an ingoing light ray, at " + listed(VS) + " in units of $r_s$")
+    views.append(v)
+    return views
+
+
 
 DRAWN = {
     "aichelburg_sexl": aichelburg_sexl,
@@ -14728,6 +14872,7 @@ DRAWN = {
     "zipoy_voorhees": zipoy_voorhees,
     "string_black_hole": string_black_hole,
     "mcvittie": mcvittie,
+    "sultana_dyer": sultana_dyer,
     "photon_rocket": photon_rocket,
     "hartle_thorne": hartle_thorne,
 }
@@ -15513,6 +15658,31 @@ CAPTIONS = {
         "The coordinates $t$ and $r > 0$ cover one region of each kind: an exterior, the black hole between "
         "the horizons, and a region inside $r_-$. At $r = 0$ the circles shrink to zero length while the "
         "curvature stays $R = -6/\\ell^2$, and continued past it they would be closed timelike curves.",
+    ],
+    ("sultana_dyer", "kerr_schild"): [
+        "Sultana and Dyer's black hole in the Einstein-de Sitter universe ($\\eta_0 = 3\\,r_s$), each point in the "
+        "diagram a 2-sphere of areal radius $\\eta^2r/\\eta_0^2$. A conformal factor moves no light ray, so we place "
+        "each event as Martin Kruskal and George Szekeres place it in Schwarzschild's metric, $p = \\arctan U$ and "
+        "$q = \\arctan V$ with $V = e^{(\\eta + r)/2r_s}$ and $U = (1 - r/r_s)\\,e^{(r - \\eta)/2r_s}$, and the "
+        "spacetime is the part $\\eta > 0$ of the exterior and the black hole.",
+        "The big bang $\\eta = 0$ is a spacelike curve from $i^0$ to the corner where it meets the singularity "
+        "$r = 0$, so the singularity and the event horizon $r = r_s$ both begin on the big bang, and neither a white "
+        "hole nor a second exterior lies to their past. The two dotted curves, where $|\\nabla R|^2$ vanishes for "
+        "the areal radius $R$, leave that corner together and end at $i^+$: the Hubble radius $r = \\eta/2$ crosses "
+        "the event horizon at $\\eta = 2\\,r_s$, and the other stays inside it.",
+    ],
+    ("sultana_dyer", "schwarzschild_time"): [
+        "Sultana and Dyer's black hole in Schwarzschild's $t$ and $r$, which cover the region outside the event "
+        "horizon ($\\eta_0 = 3\\,r_s$), each point in the diagram a 2-sphere of areal radius $\\eta^2r/\\eta_0^2$. "
+        "A line of constant $t$ leaves the big bang at $r = r_s(1 + e^{-ct/r_s})$, where "
+        "$\\eta = ct + r_s\\ln(r/r_s - 1)$ vanishes, and runs to $i^0$. The later the line, the nearer the horizon "
+        "it begins, and the horizon itself is $t = \\infty$.",
+    ],
+    ("sultana_dyer", "ingoing"): [
+        "Sultana and Dyer's black hole in the advanced time $v$ and $r$, which cover all of it "
+        "($\\eta_0 = 3\\,r_s$), each point in the diagram a 2-sphere of areal radius $(v - r)^2r/\\eta_0^2$. A line of "
+        "constant $v$ is an ingoing light ray: it leaves the big bang at $r = v$, where $\\eta = v - r$ vanishes, "
+        "and runs at 45° through the event horizon to the singularity $r = 0$.",
     ],
     ("mcvittie", "dust_lambda"): [
         "McVittie's mass in a universe of dust and a cosmological constant ($\\Lambda r_s^2 = 1/5$), outside the "

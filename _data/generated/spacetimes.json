@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 100,
+  "count": 101,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -7774,6 +7774,11 @@
           "id": "senovilla",
           "kind": "family",
           "text": "A universe of radiation arranged around an axis, with a bounce where the big bang would be. One class of metrics, with a function of time for a scale factor and four parameters, holds it and every Friedmann-Lemaître-Robertson-Walker universe [senovilla1996]."
+        },
+        {
+          "id": "sultana_dyer",
+          "kind": "generalisation",
+          "text": "The flat universe of dust with a black hole in it from the big bang on: Schwarzschild's metric times $a^2$, with $a \\propto \\eta^2$ [sultana2005]."
         }
       ],
       "references": [
@@ -7825,7 +7830,8 @@
         "carrera2010",
         "coleman1980",
         "bucher1995",
-        "senovilla1996"
+        "senovilla1996",
+        "sultana2005"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -16078,6 +16084,11 @@
           "id": "kastor_traschen",
           "kind": "family",
           "text": "Charged black holes in a universe that holds only a cosmological constant, which cannot pile up around them, so any number of them fit into one exact solution [kastor1993]."
+        },
+        {
+          "id": "sultana_dyer",
+          "kind": "family",
+          "text": "A black hole in the universe of dust that swallows the matter around it, which McVittie's mass never does. It is conformal to Schwarzschild's metric and is no member of McVittie's family [carrera2010mcvittie]."
         }
       ],
       "references": [
@@ -16096,7 +16107,8 @@
         "lake2011",
         "faraoni2012",
         "dasilva2013",
-        "kastor1993"
+        "kastor1993",
+        "carrera2010mcvittie"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mcvittie.json",
@@ -23287,6 +23299,11 @@
           "id": "hiscock",
           "kind": "composite",
           "text": "A black hole that forms and evaporates. Schwarzschild's metric is the hole between the collapse and the start of the evaporation [lubbe2009]."
+        },
+        {
+          "id": "sultana_dyer",
+          "kind": "conformal",
+          "text": "Schwarzschild's metric multiplied by the square of the scale factor of a universe of dust, which leaves every light ray where it was and sets the horizon growing with the universe [sultana2005]."
         }
       ],
       "references": [
@@ -23364,7 +23381,8 @@
         "visser2004",
         "tolman1939",
         "kiselev2003",
-        "lubbe2009"
+        "lubbe2009",
+        "sultana2005"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -26549,6 +26567,291 @@
           ],
           "ricci_scalar": "R = \\dfrac{\\left(\\partial_r M\\right)^2 - 4\\rho\\,\\partial_r^2\\rho}{2\\rho^2}",
           "kretschmann": "K = \\dfrac{11\\left(\\partial_r M\\right)^4 - 24\\rho\\left(\\partial_r M\\right)^2\\,\\partial_r^2\\rho - 8\\left(\\partial_r M\\right)^2\\left(\\partial_r\\rho\\right)^2 + 16\\rho\\,\\partial_r M\\,\\partial_r^2 M\\,\\partial_r\\rho - 8\\rho^2\\left(\\partial_r^2 M\\right)^2 + 16\\rho^2\\left(\\partial_r^2\\rho\\right)^2}{4\\rho^4}"
+        }
+      ]
+    },
+    {
+      "id": "sultana_dyer",
+      "name": "Sultana-Dyer Black Hole in an Expanding Universe",
+      "short_name": "Sultana-Dyer",
+      "description": "A black hole in the Einstein-de Sitter universe, Schwarzschild's metric multiplied by the square of the scale factor of a flat universe of dust, which Joseph Sultana and Charles Dyer found in 2005. Its event horizon grows with the universe, and its matter is a dust and a null dust that fall into the hole.",
+      "tags": [
+        "black hole",
+        "cosmology",
+        "expanding universe",
+        "FLRW",
+        "Einstein-de Sitter",
+        "primordial black hole",
+        "mass",
+        "spherically symmetric",
+        "time-dependent",
+        "conformal transformation",
+        "conformal Killing horizon",
+        "dust",
+        "null dust",
+        "accreting",
+        "energy conditions",
+        "energy condition violation",
+        "negative energy",
+        "curvature singularity",
+        "big bang",
+        "horizon",
+        "event horizon",
+        "apparent horizon",
+        "trapping horizon",
+        "Hawking radiation",
+        "Hawking temperature",
+        "causal structure",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Schwarzschild radius of the seed black hole is $r_s = 2GM/c^2$, and the scale factor of the Einstein-de Sitter universe is $a = \\eta^2/\\eta_0^2$, with $\\eta$ its conformal time, a length. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "conformal",
+          "text": "The seed. Sultana and Dyer's metric is Schwarzschild's multiplied by $\\eta^4/\\eta_0^4$, so the two share every light ray [sultana2005]."
+        },
+        {
+          "id": "frw",
+          "kind": "special_case",
+          "text": "Sultana and Dyer's universe with the hole taken out, $r_s = 0$: the spatially flat Friedmann universe of dust, Einstein and de Sitter's, with $a = \\eta^2/\\eta_0^2$ [saida2007]."
+        },
+        {
+          "id": "mcvittie",
+          "kind": "family",
+          "text": "The older way to put a mass in an expanding universe. McVittie's fluid never falls onto the mass, Sultana and Dyer's black hole swallows its dust, and no choice of mass and scale factor turns one metric into the other [carrera2010mcvittie]."
+        }
+      ],
+      "references": [
+        "majhi2014",
+        "mcvittie1933",
+        "faraoni2009",
+        "sultana2005",
+        "saida2007",
+        "carrera2010mcvittie",
+        "mello2017",
+        "mcclure2006"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/sultana_dyer.json",
+      "charts": [
+        {
+          "id": "kerr_schild",
+          "name": "Kerr-Schild Conformal Time",
+          "coordinates": [
+            "\\eta",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (0, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\eta = 0 \\;\\text{(the big bang, a curvature singularity)}",
+            "r = 0 \\;\\text{(curvature singularity)}",
+            "r = r_s \\;\\text{(the event horizon, a conformal Killing horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the seed black hole, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "\\eta_0",
+              "description": "Conformal time at which the scale factor $a = \\eta^2/\\eta_0^2$ is one, a length"
+            }
+          ],
+          "convention": "We use Sultana and Dyer's coordinates $(\\eta, r, \\theta, \\phi)$, in which the metric is $a^2$ times Schwarzschild's in its Kerr-Schild form. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{\\eta^4}{\\eta_0^4}\\left(-\\left(1 - \\dfrac{r_s}{r}\\right)d\\eta^2 + \\dfrac{2r_s}{r}d\\eta\\,dr + \\left(1 + \\dfrac{r_s}{r}\\right)dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-\\dfrac{\\eta^4}{\\eta_0^4}\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "\\eta",
+                "r"
+              ],
+              "value": "\\dfrac{\\eta^4\\,r_s}{\\eta_0^4\\,r}"
+            },
+            {
+              "indices": [
+                "r",
+                "\\eta"
+              ],
+              "value": "\\dfrac{\\eta^4\\,r_s}{\\eta_0^4\\,r}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\eta^4}{\\eta_0^4}\\left(1 + \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\eta^4\\,r^2}{\\eta_0^4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\eta^4\\,r^2\\sin^2\\theta}{\\eta_0^4}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12\\eta_0^4}{\\eta^6}\\left(1 + \\dfrac{r_s}{r} - \\dfrac{r_s\\eta}{r^2}\\right)",
+          "kretschmann": "K = \\dfrac{12\\eta_0^8\\left(\\eta^4\\,r_s^2 + 8\\eta^2\\,r^2\\,r_s^2 - 8\\eta\\,r^4\\,r_s - 16\\eta\\,r^3\\,r_s^2 + 20r^6 + 40r^5\\,r_s + 20r^4\\,r_s^2\\right)}{\\eta^{12}\\,r^6}"
+        },
+        {
+          "id": "schwarzschild_time",
+          "name": "Schwarzschild Time",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-r_s\\ln(r/r_s - 1)/c, \\infty)",
+            "r \\in (r_s, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\eta = 0 \\;\\text{(the big bang, a curvature singularity)}",
+            "r = r_s \\;\\text{(the event horizon, at}\\; t = \\infty\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the seed black hole, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "\\eta_0",
+              "description": "Conformal time at which the scale factor $a = \\eta^2/\\eta_0^2$ is one, a length"
+            },
+            {
+              "symbol": "\\eta = ct + r_s\\ln\\left(\\dfrac{r}{r_s} - 1\\right)",
+              "description": "Conformal time of the Kerr-Schild chart, a length"
+            }
+          ],
+          "convention": "We use Schwarzschild's time $t$ and radius $r$, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{\\eta^4}{\\eta_0^4}\\left(-\\left(1 - \\dfrac{r_s}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\eta^4}{\\eta_0^4}\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\eta^4}{\\eta_0^4}\\left(1 - \\dfrac{r_s}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\eta^4\\,r^2}{\\eta_0^4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\eta^4\\,r^2\\sin^2\\theta}{\\eta_0^4}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12\\eta_0^4}{\\eta^6}\\left(1 + \\dfrac{r_s}{r} - \\dfrac{r_s\\eta}{r^2}\\right)",
+          "kretschmann": "K = \\dfrac{12\\eta_0^8\\left(\\eta^4\\,r_s^2 + 8\\eta^2\\,r^2\\,r_s^2 - 8\\eta\\,r^4\\,r_s - 16\\eta\\,r^3\\,r_s^2 + 20r^6 + 40r^5\\,r_s + 20r^4\\,r_s^2\\right)}{\\eta^{12}\\,r^6}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (r, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "v = r \\;\\text{(the big bang, a curvature singularity)}",
+            "r = 0 \\;\\text{(curvature singularity)}",
+            "r = r_s \\;\\text{(the event horizon, a conformal Killing horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the seed black hole, $r_s = 2GM/c^2$"
+            },
+            {
+              "symbol": "\\eta_0",
+              "description": "Conformal time at which the scale factor $a = \\eta^2/\\eta_0^2$ is one, a length"
+            }
+          ],
+          "convention": "We use the advanced time $v = ct + r + r_s\\ln\\left|r/r_s - 1\\right|$ of Schwarzschild's metric, a length, in which $\\eta = v - r$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{\\left(v - r\\right)^4}{\\eta_0^4}\\left(-\\left(1 - \\dfrac{r_s}{r}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\dfrac{\\left(v - r\\right)^4}{\\eta_0^4}\\left(1 - \\dfrac{r_s}{r}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "\\dfrac{\\left(v - r\\right)^4}{\\eta_0^4}"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "\\dfrac{\\left(v - r\\right)^4}{\\eta_0^4}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r^2\\left(v - r\\right)^4}{\\eta_0^4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^2\\left(v - r\\right)^4\\sin^2\\theta}{\\eta_0^4}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12\\eta_0^4}{\\left(v - r\\right)^6}\\left(1 + \\dfrac{2r_s}{r} - \\dfrac{v\\,r_s}{r^2}\\right)",
+          "kretschmann": "K = \\dfrac{12\\eta_0^8\\left(v^4\\,r_s^2 - 4v^3\\,r\\,r_s^2 + 14v^2\\,r^2\\,r_s^2 - 8v\\,r^4\\,r_s - 36v\\,r^3\\,r_s^2 + 20r^6 + 48r^5\\,r_s + 45r^4\\,r_s^2\\right)}{r^6\\left(v - r\\right)^{12}}"
         }
       ]
     },

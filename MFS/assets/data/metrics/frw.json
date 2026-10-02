@@ -76,6 +76,11 @@
       "id": "senovilla",
       "kind": "family",
       "text": "A universe of radiation arranged around an axis, with a bounce where the big bang would be. One class of metrics, with a function of time for a scale factor and four parameters, holds it and every Friedmann-Lemaître-Robertson-Walker universe [senovilla1996]."
+    },
+    {
+      "id": "sultana_dyer",
+      "kind": "generalisation",
+      "text": "The flat universe of dust with a black hole in it from the big bang on: Schwarzschild's metric times $a^2$, with $a \\propto \\eta^2$ [sultana2005]."
     }
   ],
   "references": [
@@ -127,7 +132,8 @@
     "carrera2010",
     "coleman1980",
     "bucher1995",
-    "senovilla1996"
+    "senovilla1996",
+    "sultana2005"
   ],
   "coordinates": [
     {

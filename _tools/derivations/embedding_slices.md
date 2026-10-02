@@ -403,6 +403,14 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `areal/radial`, the plane of $t$ and $R$: the same cosmic time, so the level line $ct$ from $R = r_s$ to the edge of the box at $5\,r_s$; `slices.py` checks that the areal chart pulls back onto the isotropic plane and that `mcvittie_areal` is the areal radius.
 - `dust_lambda`, the conformal diagram: each moment through the diagram's own labels, from the singular sphere on $T = 0$, where both rays left at that moment's time, out to $R = 6\,r_s$.
 
+### Sultana-Dyer
+
+- The embedding is a movie of the moments $\eta = 3$ to $6\,r_s$ of the Kerr-Schild chart, with the moments $\eta = 3$, $4$, $5$ and $6\,r_s$ as its surfaces, each from the singularity $r = 0$ out to $r = 4\,r_s$.
+- `kerr_schild/radial`, the plane of $\eta$ and $r$: the level line $\eta$ from $r = 0$ to $4\,r_s$.
+- `schwarzschild_time/radial`: the curve $ct = \eta - r_s\ln(r/r_s - 1)$ from $4\,r_s$ inward, which runs off the top of the drawing toward the horizon; the part of the moment inside $r_s$ lies outside this chart.
+- `eddington_finkelstein_ingoing/chart`: the line $v = \eta + r$ from $r = 0$ to $4\,r_s$.
+- `kerr_schild`, `schwarzschild_time` and `ingoing`, the triangle: each moment through Kruskal and Szekeres's map of $v = \eta + r$, from the singularity on $T = \pi/2$ across the event horizon out to $r = 4\,r_s$.
+
 ### Milne
 
 - The embedding is the equator of the comoving hyperbolic chart at $ct = 0.5$, $1$, $2$ and $3$, each out to $\chi = \operatorname{arcsinh}(4/ct)$, where it is $4$ from the axis, in any length $\ell$; the reference cone is no part of any moment.

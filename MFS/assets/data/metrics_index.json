@@ -791,7 +791,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "eddc2760934797d0",
+    "version": "7e55432b2a7c5459",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -1654,7 +1654,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "46efe47c239bff87",
+    "version": "ce0d3778ac75453c",
     "diagrams": "00b799e11e5cfc26",
     "conformal": "5bfaa0670ab1bb25",
     "embedding": "2c9b70767c1e34be"
@@ -2349,7 +2349,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a18a79531beec970",
+    "version": "11e13cc61a9a3694",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -2624,6 +2624,47 @@
     "diagrams": "9b126a24baab54f6",
     "conformal": "af0aad8daedb8e34",
     "embedding": "d2f10fa2373b33b4"
+  },
+  {
+    "id": "sultana_dyer",
+    "name": "Sultana-Dyer",
+    "tags": [
+      "black hole",
+      "cosmology",
+      "expanding universe",
+      "FLRW",
+      "Einstein-de Sitter",
+      "primordial black hole",
+      "mass",
+      "spherically symmetric",
+      "time-dependent",
+      "conformal transformation",
+      "conformal Killing horizon",
+      "dust",
+      "null dust",
+      "accreting",
+      "energy conditions",
+      "energy condition violation",
+      "negative energy",
+      "curvature singularity",
+      "big bang",
+      "horizon",
+      "event horizon",
+      "apparent horizon",
+      "trapping horizon",
+      "Hawking radiation",
+      "Hawking temperature",
+      "causal structure",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "e1a17ee67c971213",
+    "diagrams": "7276a636d705765d",
+    "conformal": "e0a22ba6cfc54754",
+    "embedding": "8003002e86c3bf6e"
   },
   {
     "id": "szekeres",

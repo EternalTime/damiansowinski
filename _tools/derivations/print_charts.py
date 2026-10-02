@@ -8,8 +8,8 @@ kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, reissner_nordstrom_ads, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
 black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
 som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos,
-einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole and
-israel_wilson_perjes, and Godel's cylindrical chart.
+einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
+israel_wilson_perjes and sultana_dyer, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -12042,6 +12042,234 @@ def israel_wilson_perjes_maxwell(chart):
 
 
 CHARTS["israel_wilson_perjes"] = [lambda s=s: israel_wilson_perjes(s) for s in IWP_CHARTS]
+
+
+# -- Sultana and Dyer's black hole ------------------------------------------------------
+
+SULTANA_DYER_CHARTS = ["kerr_schild", "schwarzschild_time", "eddington_finkelstein_ingoing"]
+SD_SPHERE = "r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+SD_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+SD_LOG = "r_s\\ln\\left(\\dfrac{r}{r_s} - 1\\right)"
+
+
+def sultana_dyer(system_id):
+    """Sultana and Dyer's black hole in the Einstein-de Sitter universe, Schwarzschild's metric
+    multiplied by the fourth power of eta/eta_0, the square of the scale factor a = eta^2/eta_0^2
+    of a flat universe of dust in its conformal time, in the three charts its literature uses.
+    Sultana and Dyer's own, as Saida, Harada and Maeda write it, takes Schwarzschild's metric in
+    its Kerr-Schild form, flat space plus (r_s/r)(d eta + dr)^2, so that eta is the conformal
+    time of the universe far away and every slice of constant eta crosses the horizon r = r_s.
+    The chart of Schwarzschild's own time, c t = eta - r_s ln(r/r_s - 1), is the one Saida, Harada
+    and Maeda, Carrera and Giulini, and Majhi write, where the metric is diagonal and the
+    conformal factor depends on the radius as well as the time; it names eta and every value
+    is printed in it. The ingoing Eddington-Finkelstein chart takes Majhi's advanced time
+    v = c t + r_*, in which eta = v - r. sultana_dyer_check holds the first to Schwarzschild's
+    published metric, to the two fluids and to the Einstein-de Sitter universe, and each other
+    chart to being the first pulled back; sultana_dyer.md records each chart's source."""
+    parameters = ["r_s", "\\eta_0"]
+    f = "\\left(1 - \\dfrac{r_s}{r}\\right)"
+    if system_id == "kerr_schild":
+        coords, name = ["\\eta", "r", "\\theta", "\\phi"], "Kerr-Schild Conformal Time"
+        inside = ("-" + f + "d\\eta^2 + \\dfrac{2r_s}{r}d\\eta\\,dr + \\left(1 + \\dfrac{r_s}{r}\\right)dr^2 + "
+                  + SD_SPHERE)
+        line = chart_line = "ds^2 = \\dfrac{\\eta^4}{\\eta_0^4}\\left(" + inside + "\\right)"
+        domains = (["\\eta \\in (0, \\infty)", "r \\in (0, \\infty)"] + SD_ANGLES
+                   + ["\\eta = 0 \\;\\text{(the big bang, a curvature singularity)}",
+                      "r = 0 \\;\\text{(curvature singularity)}",
+                      "r = r_s \\;\\text{(the event horizon, a conformal Killing horizon)}"])
+        probe = vm.Reader(coords, parameters, ())
+        eta, r = probe.symbol["\\eta"], probe.symbol["r"]
+        rs, e0 = probe.parameters["r_s"], probe.parameters["eta_0"]
+        scale = "\\dfrac{\\eta^4}{\\eta_0^4}"
+        spec = {"printer": {"lead": [eta, r, rs, e0], "factors": [e0, eta, r, rs]},
+                "components": {
+                    "metric_components": {("\\eta", "\\eta"): "-" + scale + f,
+                                          ("r", "r"): scale + "\\left(1 + \\dfrac{r_s}{r}\\right)"},
+                    "inverse_metric_components": {("\\eta", "\\eta"): "-\\dfrac{\\eta_0^4}{\\eta^4}\\left(1 + \\dfrac{r_s}{r}\\right)",
+                                                  ("r", "r"): "\\dfrac{\\eta_0^4}{\\eta^4}" + f}},
+                "ricci_scalar": "\\dfrac{12\\eta_0^4}{\\eta^6}\\left(1 + \\dfrac{r_s}{r} - \\dfrac{r_s\\eta}{r^2}\\right)"}
+    elif system_id == "schwarzschild_time":
+        coords, name = ["t", "r", "\\theta", "\\phi"], "Schwarzschild Time"
+        parameters = parameters + ["\\eta = ct + " + SD_LOG]
+        rest = " + \\dfrac{dr^2}{1 - \\dfrac{r_s}{r}} + " + SD_SPHERE
+        line = "ds^2 = \\dfrac{\\eta^4}{\\eta_0^4}\\left(-" + f + "c^2dt^2" + rest + "\\right)"
+        # The symbol t is x^0 = ct in the geometry, so eta is t plus the logarithm there.
+        chart_line = ("ds^2 = \\dfrac{\\left(t + " + SD_LOG + "\\right)^4}{\\eta_0^4}\\left(-" + f + "dt^2" + rest
+                      + "\\right)")
+        domains = (["t \\in (-" + SD_LOG.replace("\\dfrac{r}{r_s}", "r/r_s").replace("\\left(", "(").replace("\\right)", ")")
+                    + "/c, \\infty)", "r \\in (r_s, \\infty)"] + SD_ANGLES
+                   + ["\\eta = 0 \\;\\text{(the big bang, a curvature singularity)}",
+                      "r = r_s \\;\\text{(the event horizon, at}\\; t = \\infty\\text{)}"])
+        probe = vm.Reader(coords, parameters, ())
+        forms = SultanaDyerForms(probe)
+        scale = "\\dfrac{\\eta^4}{\\eta_0^4}"
+        spec = {"time": "t", "printer": forms.printer, "pretty": forms.pretty, "bracketed": forms.bracketed,
+                "components": {
+                    "metric_components": {("t", "t"): "-" + scale + f,
+                                          ("r", "r"): scale + f + "^{-1}"},
+                    "inverse_metric_components": {("t", "t"): "-\\dfrac{\\eta_0^4}{\\eta^4}" + f + "^{-1}",
+                                                  ("r", "r"): "\\dfrac{\\eta_0^4}{\\eta^4}" + f}},
+                "ricci_scalar": "\\dfrac{12\\eta_0^4}{\\eta^6}\\left(1 + \\dfrac{r_s}{r} - \\dfrac{r_s\\eta}{r^2}\\right)"}
+    else:
+        coords, name = ["v", "r", "\\theta", "\\phi"], "Ingoing Eddington-Finkelstein"
+        line = chart_line = ("ds^2 = \\dfrac{\\left(v - r\\right)^4}{\\eta_0^4}\\left(-" + f + "dv^2 + 2\\,dv\\,dr + "
+                             + SD_SPHERE + "\\right)")
+        domains = (["v \\in (r, \\infty)", "r \\in (0, \\infty)"] + SD_ANGLES
+                   + ["v = r \\;\\text{(the big bang, a curvature singularity)}",
+                      "r = 0 \\;\\text{(curvature singularity)}",
+                      "r = r_s \\;\\text{(the event horizon, a conformal Killing horizon)}"])
+        probe = vm.Reader(coords, parameters, ())
+        v, r = probe.symbol["v"], probe.symbol["r"]
+        rs, e0 = probe.parameters["r_s"], probe.parameters["eta_0"]
+        spec = {"printer": {"lead": [v, r, rs, e0], "factors": [e0, v, r, rs]},
+                "components": {
+                    "metric_components": {("v", "v"): "-\\dfrac{\\left(v - r\\right)^4}{\\eta_0^4}" + f},
+                    "inverse_metric_components": {("r", "r"): "\\dfrac{\\eta_0^4}{\\left(v - r\\right)^4}" + f}},
+                "ricci_scalar": ("\\dfrac{12\\eta_0^4}{\\left(v - r\\right)^6}"
+                                 "\\left(1 + \\dfrac{2r_s}{r} - \\dfrac{v\\,r_s}{r^2}\\right)")}
+    return {
+        "metric_id": "sultana_dyer",
+        "system": {"id": system_id, "name": name, "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        "check": lambda chart: sultana_dyer_check(chart, system_id),
+        **spec,
+    }
+
+
+class SultanaDyerForms:
+    """How a value of the chart of Schwarzschild's time is written. The time enters every value
+    through eta = ct + r_s ln(r/r_s - 1) alone, a name the chart defines, so `pretty` writes the
+    time out by it, after which no logarithm and no t stands in a value, and factors what is left."""
+
+    def __init__(self, reader):
+        self.reader, self.c = reader, reader.c
+        self.t, self.r = reader.symbol["t"], reader.symbol["r"]
+        self.rs, self.e0 = reader.parameters["r_s"], reader.parameters["eta_0"]
+        self.eta = sp.Symbol("SDeta", positive=True)
+        self.printer = {"lead": [self.eta, self.r, self.rs, self.e0], "factors": [self.e0, self.eta, self.r, self.rs],
+                        "overrides": {self.eta: "\\eta"}}
+
+    def named(self, value):
+        """The value, in the file's time, with the time written out of it by eta."""
+        log = sp.Dummy("log")
+        value = sp.sympify(value).replace(lambda e: isinstance(e, sp.log), lambda e: log)
+        value = sp.cancel(sp.together(value.subs(self.t, (self.eta - self.rs * log) / self.c)))
+        if value.has(log) or value.has(self.t):
+            raise AssertionError(f"sultana_dyer: the time does not leave {value} through eta alone")
+        return value
+
+    def pretty(self, value):
+        return sp.factor(self.named(value))
+
+    def bracketed(self, value):
+        # Chart.single_term hands this the value in the chart x^0, which pretty takes with the bare time.
+        return sp.expand(self.named(sp.sympify(value).subs(self.t, self.c * self.t)))
+
+
+def sultana_dyer_fluids(eta, r, rs, e0):
+    """Sultana and Dyer's two fluids in the Kerr-Schild chart, as Saida, Harada and Maeda's (36)
+    and (37) give them at M = r_s/2: the four-velocity u of the dust and the ingoing null vector
+    k with k.u = -1, and the densities mu and tau times 8 pi G/c^4, so that G_ab = mu u_a u_b +
+    tau k_a k_b. D = r^2 + r_s(r - eta) is positive where the dust is timelike with positive
+    density, eta < r(r + r_s)/r_s."""
+    D = r ** 2 + rs * (r - eta)
+    root = sp.sqrt(D)
+    u = sp.Matrix([e0 ** 2 * (2 * r ** 2 + rs * (2 * r - eta)) / (2 * r * eta ** 2 * root),
+                   -e0 ** 2 * rs * (2 * r - eta) / (2 * r * eta ** 2 * root), 0, 0])
+    k = sp.Matrix([e0 ** 2 * root / (r * eta ** 2), -e0 ** 2 * root / (r * eta ** 2), 0, 0])
+    mu = 12 * e0 ** 4 * D / (r ** 2 * eta ** 6)
+    tau = e0 ** 4 * rs * (8 * r ** 2 + 3 * rs * (2 * r - eta)) / (r ** 2 * eta ** 5 * D)
+    return u, k, mu, tau
+
+
+def sultana_dyer_check(chart, system_id):
+    """The Kerr-Schild chart is eta^4/eta_0^4 times the published metric of `schwarzschild` pulled
+    back along c t = eta - r_s ln(r/r_s - 1); its Einstein tensor is mu u u + tau k k for Saida,
+    Harada and Maeda's dust and null dust, with u a unit timelike vector, k null and k.u = -1; at
+    r_s = 0 it is the published conformal chart of `frw` at k = 0 and a = eta^2/eta_0^2; its
+    Ricci scalar is 12 eta_0^4 (r^2 + r_s r - r_s eta)/(eta^6 r^2), finite on r = r_s; and the
+    gradient of the areal radius eta^2 r/eta_0^2 is null on r = eta/2 and on
+    r = (sqrt(eta^2 + 12 r_s eta + 4 r_s^2) - eta - 2 r_s)/4, Saida, Harada and Maeda's two
+    trapping horizons. Each other chart is the Kerr-Schild chart pulled back, along
+    eta = c t + r_s ln(r/r_s - 1) and along eta = v - r."""
+    geo, g = chart.geo, chart.geo.g
+    r = chart.reader.symbol["r"]
+    rs, e0 = chart.reader.parameters["r_s"], chart.reader.parameters["eta_0"]
+    if system_id != "kerr_schild":
+        spec = sultana_dyer("kerr_schild")
+        own = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+        first = chart.symbols[0]
+        image = first + rs * sp.log(r / rs - 1) if system_id == "schwarzschild_time" else first - r
+        at = dict(zip(own.symbols[1:], chart.symbols[1:]))
+        at.update({own.reader.parameters[key]: chart.reader.parameters[key] for key in ("r_s", "eta_0")})
+        at[own.symbols[0]] = image
+        old = own.geo.g.subs(at, simultaneous=True)
+        J = sp.eye(4)
+        J[0, 1] = sp.diff(image, r)
+        pulled = J.T * old * J
+        for i in range(4):
+            for j in range(i, 4):
+                if sp.simplify(pulled[i, j] - g[i, j]) != 0:
+                    raise AssertionError(f"sultana_dyer: the Kerr-Schild chart pulled back misses the {system_id} "
+                                         f"chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+        return
+    eta = chart.symbols[0]
+    # Schwarzschild's published metric, pulled back along ct = eta - r_s ln(r/r_s - 1) and multiplied by a^2.
+    published = next(c for c in json.loads((METRICS / "schwarzschild.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == "spherical")
+    static = vm.Reader(published["coords"], [p["symbol"] for p in published["parameters"]], ())
+    there = {static.symbol["r"]: r, static.parameters["r_s"]: rs,
+             **dict(zip([static.symbol[c] for c in published["coords"][2:]], chart.symbols[2:]))}
+    gs = sp.zeros(4, 4)
+    for entry in published["metric_components"]:
+        i, j = (published["coords"].index(x) for x in entry["indices"])
+        gs[i, j] = static(entry["value"]).subs(there)
+    J = sp.eye(4)
+    J[0, 1] = -sp.diff(rs * sp.log(r / rs - 1), r)
+    pulled = (eta / e0) ** 4 * J.T * gs * J
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify(pulled[i, j] - g[i, j]) != 0:
+                raise AssertionError("sultana_dyer: the Kerr-Schild chart is not a^2 times Schwarzschild's published "
+                                     f"metric in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    # The two fluids.
+    u, k, mu, tau = sultana_dyer_fluids(eta, r, rs, e0)
+    for label, value in (("u.u + 1", (u.T * g * u)[0] + 1), ("k.k", (k.T * g * k)[0]), ("k.u + 1", (u.T * g * k)[0] + 1)):
+        if sp.simplify(value) != 0:
+            raise AssertionError(f"sultana_dyer: {label} does not vanish")
+    ul, kl = g * u, g * k
+    G = geo.einstein_ll()
+    for i in range(4):
+        for j in range(4):
+            if sp.simplify(vm._at(G, (i, j)) - mu * ul[i] * ul[j] - tau * kl[i] * kl[j]) != 0:
+                raise AssertionError("sultana_dyer: the Einstein tensor is not that of the dust and the null dust "
+                                     f"in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    # Without the mass: the Einstein-de Sitter universe, FRW's published conformal chart.
+    published = next(c for c in json.loads((METRICS / "frw.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == "conformal_spherical")
+    frw = vm.Reader(published["coords"], [p["symbol"] for p in published["parameters"]], ())
+    there = {frw.parameters["a"]: eta ** 2 / e0 ** 2, frw.parameters["k"]: 0,
+             **dict(zip([frw.symbol[c] for c in published["coords"]], chart.symbols))}
+    for entry in published["metric_components"]:
+        i, j = (published["coords"].index(x) for x in entry["indices"])
+        if sp.simplify(frw(entry["value"]).subs(there, simultaneous=True).doit() - g[i, j].subs(rs, 0)) != 0:
+            raise AssertionError("sultana_dyer: at r_s = 0 the Kerr-Schild chart is not the Einstein-de Sitter "
+                                 f"universe in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    if vm.norm(geo.ricci_scalar() - 12 * e0 ** 4 * (r ** 2 + rs * r - rs * eta) / (eta ** 6 * r ** 2)) != 0:
+        raise AssertionError("sultana_dyer: the Ricci scalar is not 12 eta_0^4 (r^2 + r_s r - r_s eta)/(eta^6 r^2)")
+    # The trapping horizons: the gradient of the areal radius is null.
+    areal = eta ** 2 * r / e0 ** 2
+    gradient = sum(geo.ginv[i, j] * sp.diff(areal, chart.symbols[i]) * sp.diff(areal, chart.symbols[j])
+                   for i in range(2) for j in range(2))
+    x, y = sp.symbols("x y", positive=True)
+    for label, radius in (("r = eta/2", eta / 2),
+                          ("the inner trapping horizon", (sp.sqrt(eta ** 2 + 12 * rs * eta + 4 * rs ** 2) - eta - 2 * rs) / 4)):
+        if sp.simplify(gradient.subs(r, radius).subs({eta: x, rs: y})) != 0:
+            raise AssertionError(f"sultana_dyer: the gradient of the areal radius is not null on {label}")
+
+
+CHARTS["sultana_dyer"] = [lambda s=s: sultana_dyer(s) for s in SULTANA_DYER_CHARTS]
 
 
 def write(spec):

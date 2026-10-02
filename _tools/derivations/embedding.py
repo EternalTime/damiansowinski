@@ -9760,6 +9760,62 @@ def mcvittie(ck, src):
                        "$\\Lambda r_s^2 = 1/5$.")]
 
 
+SD_ETA0 = 3.0                          # eta_0 in r_s: the scale factor is one at eta = 3 r_s
+SD_MOMENTS = (3.0, 4.0, 5.0, 6.0)      # eta in r_s
+SD_RINGS = (2.0, 3.0, 4.0)             # the r of the circles marked, in r_s
+SD_TOP = 4.0                           # the r every frame runs out to, in r_s
+
+
+def sultana_dyer_inner(eta):
+    """The inner trapping horizon at eta, r = (sqrt(eta^2 + 12 r_s eta + 4 r_s^2) - eta - 2 r_s)/4 at r_s = 1."""
+    return (math.sqrt(eta * eta + 12 * eta + 4) - eta - 2) / 4
+
+
+def sultana_dyer(ck, src):
+    """The equator of a moment of Sultana and Dyer's conformal time in the Kerr-Schild chart, at
+    r_s = 1 and eta_0 = 3: g_rr = a^2(1 + r_s/r) and g_phiphi = a^2r^2 with a = eta^2/eta_0^2, so
+    rho = ar and dz/dr = a sqrt(r_s/r), z = 2a sqrt(r_s r). That is the paraboloid
+    z^2 = 4(a r_s) rho, the slice of constant Kerr-Schild time of a Schwarzschild black hole whose
+    Schwarzschild radius is a r_s, through the horizon to a spike at the singularity r = 0, and
+    every moment is the moment eta_0 magnified by a. The movie runs eta from 3 to 6, a from 1 to
+    4, each frame out to r = 4: the circles of constant r grow with a, the event horizon r = r_s
+    among them, the circle r = eta/2 where the gradient of the areal radius is null slides outward
+    through them from r = 1.5 to 3, and the inner one moves from 0.5 to 0.646."""
+    size = 2 * SD_TOP * (SD_MOMENTS[-1] / SD_ETA0) ** 2
+
+    def moment(eta):
+        a = (eta / SD_ETA0) ** 2
+        sl = Slice(src, "sultana_dyer", "kerr_schild", "r", "\\phi", {"eta": repr(eta), **EQUATOR},
+                   {"r_s": 1, "eta_0": repr(SD_ETA0)})
+        trapped = [r for r in (sultana_dyer_inner(eta), eta / 2) if r < SD_TOP]
+        marks = [(1.0, "horizon", None)] + [(r, "r", None) for r in SD_RINGS] + [(r, "horizon", None) for r in trapped]
+        whole = Piece("whole", "sheet", sl, 0.0, SD_TOP, 0.0, 1,
+                      (("apex", "the singularity $r = 0$, where the surface closes in a spike"),
+                       ("edge", "the paraboloid runs on to $r \\to \\infty$")), sorted(marks), size)
+        where = f"Sultana-Dyer, eta = {eta:g}"
+        ck.isometry(f"{where}, the moment", whole)
+        ck.radius(f"{where}, rho = a r", whole, lambda r: a * r, size)
+        ck.form(f"{where}, z = 2 a sqrt(r_s r)", whole, lambda r: 2 * a * np.sqrt(r), size)
+        return Surface([whole], label=f"$\\eta = {eta:g}\\,r_s$", time=eta)
+
+    ck.add("Sultana-Dyer: the inner trapping horizon is at 0.5 r_s at eta = 3 r_s",
+           abs(sultana_dyer_inner(3.0) - 0.5), 1e-12)
+    ck.add("Sultana-Dyer: the inner trapping horizon tends to r_s", abs(sultana_dyer_inner(1e9) - 1.0), 1e-8)
+    times, keys = movie_values(list(SD_MOMENTS), 0.1)
+    frames = [moment(eta) for eta in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the moment of $\\eta$, which $\\eta$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $2$, $3$ and $4\\,r_s$")
+    fig.legend("line", "horizon", "the event horizon $r = r_s$, and the two circles where $|\\nabla R|^2 = 0$ for the "
+                                  "areal radius $R = \\eta^2r/\\eta_0^2$, one at $r = \\eta/2$ and one inside $r_s$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("paraboloid", "A moment of $\\eta$", "$r_s$", surfaces, fig.done(),
+                 movie=movie(frames, "$\\eta$", times),
+                 settings="$r_s = 1$, the unit of every length and of $\\eta$, and $\\eta_0 = 3\\,r_s$, where the "
+                          "scale factor $a = \\eta^2/\\eta_0^2$ is one.")]
+
+
 SZ_VERTICAL = 3     # the Szekeres cloud's dish is drawn this many times deeper than it is
 SZ_MOMENTS = (-0.4, 0.0, 0.3, 0.55)
 SZ_TOP = 1.25
@@ -10052,6 +10108,7 @@ DRAWN = {
     "robinson_trautman": robinson_trautman,
     "string_black_hole": string_black_hole,
     "mcvittie": mcvittie,
+    "sultana_dyer": sultana_dyer,
     "szekeres": szekeres,
     "string_wave": string_wave,
     "spinning_string": spinning_string,
@@ -11646,6 +11703,19 @@ CAPTIONS = {
         "Schwarzschild's exterior. Every shell falls on its own clock, the centre first, and the dish grows shallower "
         "as its circles shrink, since the step from one centre to the next is proportional to $R$. Peter Szekeres "
         "found these solutions in 1975.",
+    ],
+    ("sultana_dyer", "paraboloid"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Sultana and Dyer's spacetime as the conformal time runs from "
+        "$\\eta = 3$ to $6\\,r_s$, each moment drawn as a surface in flat space with every distance along it the "
+        "metric distance. On it the metric is $a^2((1 + r_s/r)\\,dr^2 + r^2d\\phi^2)$ with $a = \\eta^2/\\eta_0^2$, "
+        "which in the areal radius $R = ar$ is the paraboloid $z^2 = 4ar_sR$: the slice of a Schwarzschild black "
+        "hole of Schwarzschild radius $ar_s$ that runs through the horizon and closes in a spike at the "
+        "singularity $r = 0$.",
+        "Every moment is the first one magnified by $a$, which grows from $1$ to $4$, so the circles of constant "
+        "$r$ grow with the universe and the event horizon $r = r_s$ grows with them, its circumference "
+        "$2\\pi ar_s$. The circle $r = \\eta/2$, the Hubble radius of the Einstein-de Sitter universe, slides outward "
+        "through them from $1.5$ to $3\\,r_s$, and the inner circle where $|\\nabla R|^2$ vanishes moves from $0.5$ to "
+        "$0.646\\,r_s$, inside the event horizon.",
     ],
     ("mcvittie", "flamm"): [
         "The equatorial plane ($\\theta = \\pi/2$) of McVittie's spacetime as cosmic time runs from $ct = 1$ to "

@@ -51,6 +51,11 @@
       "id": "kastor_traschen",
       "kind": "family",
       "text": "Charged black holes in a universe that holds only a cosmological constant, which cannot pile up around them, so any number of them fit into one exact solution [kastor1993]."
+    },
+    {
+      "id": "sultana_dyer",
+      "kind": "family",
+      "text": "A black hole in the universe of dust that swallows the matter around it, which McVittie's mass never does. It is conformal to Schwarzschild's metric and is no member of McVittie's family [carrera2010mcvittie]."
     }
   ],
   "references": [
@@ -69,7 +74,8 @@
     "lake2011",
     "faraoni2012",
     "dasilva2013",
-    "kastor1993"
+    "kastor1993",
+    "carrera2010mcvittie"
   ],
   "coordinates": [
     {

@@ -1,5 +1,5 @@
 {
-  "version": "a4a7502dc1eabd43",
+  "version": "c1cc5dab10169b22",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -19058,6 +19058,114 @@
         "eprint": "hep-th/9404006",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/hep-th/9404006"
+      }
+    },
+    "sultana2005": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmological black holes: A black hole in the {Einstein-de Sitter} universe",
+        "author": "Sultana, Joseph and Dyer, Charles C.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "37",
+        "number": "8",
+        "pages": "1347--1370",
+        "year": "2005",
+        "doi": "10.1007/s10714-005-0119-7",
+        "url": "https://doi.org/10.1007/s10714-005-0119-7"
+      }
+    },
+    "saida2007": {
+      "type": "article",
+      "fields": {
+        "title": "Black hole evaporation in an expanding universe",
+        "author": "Saida, Hiromi and Harada, Tomohiro and Maeda, Hideki",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "24",
+        "number": "18",
+        "pages": "4711--4732",
+        "year": "2007",
+        "doi": "10.1088/0264-9381/24/18/011",
+        "eprint": "0705.4012",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0705.4012"
+      }
+    },
+    "faraoni2009": {
+      "type": "article",
+      "fields": {
+        "title": "Analysis of the {Sultana-Dyer} cosmological black hole solution of the {Einstein} equations",
+        "author": "Faraoni, Valerio",
+        "journal": "Physical Review D",
+        "volume": "80",
+        "number": "4",
+        "pages": "044013",
+        "year": "2009",
+        "doi": "10.1103/PhysRevD.80.044013",
+        "eprint": "0907.4473",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0907.4473"
+      }
+    },
+    "carrera2010mcvittie": {
+      "type": "article",
+      "fields": {
+        "title": "Generalization of {McVittie}'s model for an inhomogeneity in a cosmological spacetime",
+        "author": "Carrera, Matteo and Giulini, Domenico",
+        "journal": "Physical Review D",
+        "volume": "81",
+        "number": "4",
+        "pages": "043521",
+        "year": "2010",
+        "doi": "10.1103/PhysRevD.81.043521",
+        "eprint": "0908.3101",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0908.3101"
+      }
+    },
+    "mello2017": {
+      "type": "article",
+      "fields": {
+        "title": "Evolving black holes from conformal transformations of static solutions",
+        "author": "Mello, Marina M. C. and Maciel, Alan and Zanchin, Vilson T.",
+        "journal": "Physical Review D",
+        "volume": "95",
+        "number": "8",
+        "pages": "084031",
+        "year": "2017",
+        "doi": "10.1103/PhysRevD.95.084031",
+        "eprint": "1611.05077",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1611.05077"
+      }
+    },
+    "majhi2014": {
+      "type": "article",
+      "fields": {
+        "title": "Thermodynamics of {Sultana-Dyer} black hole",
+        "author": "Majhi, Bibhas Ranjan",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2014",
+        "number": "05",
+        "pages": "014",
+        "year": "2014",
+        "doi": "10.1088/1475-7516/2014/05/014",
+        "eprint": "1403.4058",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1403.4058"
+      }
+    },
+    "mcclure2006": {
+      "type": "article",
+      "fields": {
+        "title": "Asymptotically {Einstein-de Sitter} cosmological black holes and the problem of energy conditions",
+        "author": "McClure, M. L. and Dyer, C. C.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "23",
+        "number": "6",
+        "pages": "1971--1987",
+        "year": "2006",
+        "doi": "10.1088/0264-9381/23/6/008",
+        "url": "https://doi.org/10.1088/0264-9381/23/6/008"
       }
     }
   }
