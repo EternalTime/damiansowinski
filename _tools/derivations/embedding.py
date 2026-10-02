@@ -5509,6 +5509,119 @@ def spinning_string(ck, src):
 MILNE = (0.5, 1.0, 2.0, 3.0)    # the moments of ct drawn, in any unit of length l
 
 
+def string_wave_ring(src, system, functions, params, start, span):
+    """Free particles at rest before the pulse, run with the published Christoffel symbols of one
+    chart of the travelling wave on a string: u is affine on every geodesic, since no Gamma^u is
+    published, so with a prime for d/du the two coordinates across the string obey
+    x^i'' = -Gamma^i_jk x^j' x^k' over j, k in (u, x^1, x^2), u' = 1."""
+    gamma, R = published_christoffel(src, "string_wave", system)
+    _, entry, _ = nr.load("string_wave", system)
+    first, second = entry["coords"][2], entry["coords"][3]
+    names = {R._plain(n): s for n, s in R.symbol.items()}
+    va, vb = sp.symbols("va vb", real=True)
+    rate = {"u": 1, first: va, second: vb}
+    declared = {R.parameters[k]: sp.sympify(v) for k, v in params.items()}
+    acceleration = []
+    for i in (first, second):
+        total = sp.Integer(0)
+        for (m, j, k), value in gamma.items():
+            if m == i and j in rate and k in rate:
+                value = R.surface(value)
+                for name, rep in functions.items():
+                    value = value.replace(R.parameters[name].func, nr._as_lambda(R, name, rep)).doit()
+                total -= value.subs(declared) * rate[j] * rate[k]
+        acceleration.append(sp.lambdify((names["u"], names[R._plain(first)], names[R._plain(second)], va, vb),
+                                        total, "numpy"))
+    n = len(start[0])
+    from scipy.integrate import solve_ivp
+
+    def rhs(u, w):
+        p, q, vp, vq = w[:n], w[n:2 * n], w[2 * n:3 * n], w[3 * n:]
+        return np.concatenate([vp, vq, acceleration[0](u, p, q, vp, vq) * np.ones(n),
+                               acceleration[1](u, p, q, vp, vq) * np.ones(n)])
+    run = solve_ivp(rhs, span, np.concatenate([start[0], start[1], np.zeros(2 * n)]), rtol=1e-11, atol=1e-13,
+                    dense_output=True)
+    return gamma, run
+
+
+def string_wave(ck, src):
+    """The surface of constant u and v across the string, at b = 1/2: g_rr = 1 and
+    g_phiphi = b^2 r^2 in the null conical chart, so rho = b r and dz/dr = sqrt(1 - b^2), a cone of
+    half angle arcsin b = 30 degrees with the string at its apex, the same cone at every u, since
+    the wave stands in g_uu alone. What the wave does shows on a ring of 360 free particles, at
+    rest on the circle r = 2 ell before the pulse the spacetime diagrams declare,
+    A = (ell/2) exp(-4u^2/ell^2) and B = 0: each is run from u = -4 ell with the published
+    Christoffel symbols of the null conical chart, with the string's own profile
+    F = -2 ell (b r/ell)^(1/b) A'' cos(phi), and again with those of the isotropic chart, where the
+    circle is rho = ell, and the two runs are checked to give one ring through
+    r = (ell/b)(rho/ell)^b. The pulse carries the ring across the cone and back and leaves it
+    falling toward the string, Vachaspati's pull."""
+    b = 0.5
+    cone = Slice(src, "string_wave", "null_conical", "r", "\\phi", {"u": 0, "v": 0}, {"b": "1/2"},
+                 functions=nr.STRING_WAVE_PROFILE)
+    top = 3.0
+    size = 2 * b * top
+    piece = Piece("cone", "sheet", cone, 0.0, top, 0.0, 1,
+                  (("apex", "the string, a conical singularity at $r = 0$"), ("edge", "the cone runs on to $r \\to \\infty$")),
+                  [(1.0, "r", None), (2.0, "r", None), (top, "r", None)], size)
+    ck.isometry("string wave, the cone", piece)
+    slope = math.sqrt(1 - b * b)
+    ck.form("string wave, the cone z = sqrt(1 - b^2) r", piece, lambda r: slope * r, size)
+    ck.radius("string wave, the cone rho = b r", piece, lambda r: b * r, size)
+
+    alpha = np.linspace(0, 2 * math.pi, 361)[:-1]
+    n = len(alpha)
+    span = (-4.0, 2.5)
+    gamma, polar = string_wave_ring(src, "null_conical", nr.STRING_WAVE_PROFILE, {"b": "1/2"},
+                                    (2 * np.ones(n), alpha), span)
+    _, isotropic = string_wave_ring(src, "isotropic", nr.STRING_WAVE_PULSE, nr.STRING_WAVE,
+                                    (np.cos(alpha), np.sin(alpha)), span)
+    ck.exact("string wave: no published Gamma^u, so u is an affine parameter", not any(ix[0] == "u" for ix in gamma))
+
+    def ring(u):
+        w = polar.sol(u)
+        r, phi = np.append(w[:n], w[0]), np.append(w[n:2 * n], w[n])
+        return r, np.column_stack([b * r * np.cos(phi), b * r * np.sin(phi), slope * r])
+    # The movie runs through the pulse at a steady u, a frame every tenth of ell.
+    us, keys = movie_values([-1.5, 0.0, 1.0, 2.5], 0.1)
+    frames = []
+    for i, u in enumerate(us):
+        u = u if i in keys else round(u, 9)
+        where = f"string wave, u = {u:.4f}"
+        r, P = ring(u)
+        w = isotropic.sol(u)
+        rho = np.hypot(w[:n], w[n:2 * n])
+        through = 2 * np.sqrt(rho)[:, None] * np.column_stack([w[:n], w[n:2 * n]]) / rho[:, None]
+        ck.add(f"{where}: the ring run in the isotropic chart is the ring run in the null conical chart",
+               float(np.max(np.abs(through - P[:-1, :2] / b))), 1e-8)
+        ck.on_piece(f"{where}, the ring", piece, P)
+        label = "$u = 0$" if u == 0 else "$u = " + (f"{u:g}" if abs(10 * u - round(10 * u)) < 1e-6 else f"{u:.2f}") + "\\,\\ell$"
+        frames.append(Surface([piece], label=label, time=u, curves=[Curve(piece, "particles", P, closed=True)],
+                              dots=[(piece, "particles", Q) for Q in P[:-1:30]]))
+    surfaces = [frames[i] for i in keys]
+    before, crest, after = (ring(u)[0][:-1] for u in (-1.5, 0.0, 2.5))
+    ck.add("string wave: at u = -1.5 ell the ring is still the circle r = 2 ell, to a thousandth of ell",
+           float(np.max(np.abs(before - 2))), 1e-3)
+    ck.add("string wave: on the crest the ring reaches from r = 1.5 ell to 2.5 ell",
+           max(abs(float(crest.min()) - 1.5), abs(float(crest.max()) - 2.5)), 1e-3)
+    ck.exact("string wave: after the pulse every particle is nearer the string than it began", bool(np.all(after < 1.4)))
+    w = polar.sol(2.5)
+    ck.exact("string wave: after the pulse every particle is still falling toward the string", bool(np.all(w[2 * n:3 * n] < 0)))
+
+    # Seen from well above the 60 degree slope of the cone's wall, so that the ring shows all round.
+    fig = movie_figure(frames, {"sheet": "cover"}, size, Camera(-90, 75), meridians=12)
+    played = movie(frames, "$u$", [f.time for f in frames])
+    fig.legend("fill", "cover", "the surface of constant $u$ and $v$, the same cone at every $u$")
+    fig.legend("line", "particles", "a ring of free particles at rest on $r = 2\\ell$ before the pulse, with twelve of them "
+                                    "marked")
+    fig.legend("line", "r", "$r$ constant, at $\\ell$, $2\\ell$ and $3\\ell$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    settings = "$b = 1/2$, a cone of half angle $30°$, and $\\ell = 1$, the unit of every length and of $u$."
+    given = "The pulse $A = (\\ell/2)\\,e^{-4u^2/\\ell^2}$, $B = 0$, as in the spacetime diagrams."
+    return [view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(), movie=played, settings=settings,
+                 input=given)]
+
+
 def milne(ck, src):
     """The equator of a moment of the comoving hyperbolic chart, g_chichi = c^2t^2 and g_phiphi =
     c^2t^2 sinh^2 chi, at ct = 0.5, 1, 2 and 3 in any unit of length and as a movie with a frame
@@ -6694,6 +6807,7 @@ DRAWN = {
     "string_black_hole": string_black_hole,
     "mcvittie": mcvittie,
     "szekeres": szekeres,
+    "string_wave": string_wave,
     "spinning_string": spinning_string,
     "photon_rocket": photon_rocket,
 }
@@ -6705,6 +6819,16 @@ DRAWN = {
 NOT_DRAWN = {"lentz"}
 
 CAPTIONS = {
+    ("string_wave", "ring"): [
+        "The surface of constant $u$ and $v$ across a cosmic string carrying a travelling wave ($b = 1/2$), drawn "
+        "as a surface in flat space with every distance along it the metric distance. The wave stands in "
+        "$g_{uu}$ alone, so at every $u$ the surface is the cone of the string at rest, of half angle "
+        "$\\arcsin b = 30°$, with the string at its apex.",
+        "The ring is 360 free particles at rest on the circle $r = 2\\ell$ before the pulse arrives. As the "
+        "string swings out by $\\ell/2$ and back, the ring crosses the cone the other way, reaching from "
+        "$r = 1.5\\,\\ell$ to $2.5\\,\\ell$ on the crest, $u = 0$. A string at rest pulls on nothing. Once the "
+        "pulse has passed, the ring is left falling toward the string, the pull Vachaspati found.",
+    ],
     ("spinning_string", "moment"): [
         "The moment $t = 0$ of the plane $z = 0$ outside the closed timelike curves ($b = 0.9$, $r > r_c = a/b$), "
         "in three dimensional Minkowski space ($dX^2 + dY^2 - dZ^2$) out to the circle $r = r_c/\\sqrt{1 - b^2}$ and "

@@ -674,6 +674,15 @@ def _rt_fronts():
     return [Mark(m, [[(m.time, 0.0), (m.time, 100.0)]]) for m in moments("robinson_trautman", "fronts")]
 
 
+def string_wave_V(u, X):
+    """V of the moving string chart on the surface v = 0 of the isotropic chart, at the line X, for
+    the pulse A = exp(-4u^2)/2: 2(X - A)A' + int_0^u A'^2, where A'^2 = 16u^2 exp(-8u^2) and its
+    integral from 0 is sqrt(pi/8) erf(2 sqrt(2) u)/2 - u exp(-8u^2)."""
+    A, dA = math.exp(-4 * u * u) / 2, -4 * u * math.exp(-4 * u * u)
+    integral = math.sqrt(math.pi / 8) * math.erf(2 * math.sqrt(2) * u) / 2 - u * math.exp(-8 * u * u)
+    return 2 * (X - A) * dA + integral
+
+
 FLAT = {
     ("robinson_trautman", "axisymmetric", "axis"): _rt_fronts,
     ("robinson_trautman", "axisymmetric", "equator"): _rt_fronts,
@@ -886,6 +895,15 @@ FLAT = {
     ("ori_time_machine", "vacuum_core", "off_centre"): lambda: one(
         "ori_time_machine", lambda m: across(m.time - 1.5, 0.0, BIG)),
     ("ori_time_machine", "brinkmann", "plane"): lambda: one("ori_time_machine", _ori_hyperbola),
+    # The travelling wave on a string: each moment is the cone of constant u = u_k and v = 0, which
+    # a plane of fixed place across the string meets at one event, (u_k, 0) in the null conical and
+    # isotropic charts. In the moving string chart V = v + 2xA' + int_0^u A'^2 with x = X - A(u), so
+    # the event is (u_k, 2(X - A)A' + int_0^(u_k) A'^2) for the declared pulse A = exp(-4u^2)/2.
+    **{("string_wave", system, view): lambda: [Mark(m, points=[(m.time, 0.0)]) for m in moments("string_wave")]
+       for system, view in (("null_conical", "toward"), ("null_conical", "away"), ("isotropic", "beside"))},
+    **{("string_wave", "moving_string", view): lambda X=X: [
+        Mark(m, points=[(m.time, string_wave_V(m.time, X))]) for m in moments("string_wave")]
+       for view, X in (("behind", -0.25), ("ahead", 0.75))},
     # The wave front u = u_k, every v.
     ("pp_wave", "exact_plane_wave", "tz"): lambda: one("pp_wave", lambda m: [[(m.time, -BIG), (m.time, BIG)]]),
     **{("aichelburg_sexl", "null_cartesian", view): lambda: one("aichelburg_sexl", lambda m: [[(m.time, -BIG), (m.time, BIG)]])
@@ -1422,6 +1440,34 @@ def checks():
     slope = (rnds_rstar(rr + 1e-6) - rnds_rstar(rr - 1e-6)) / 2e-6
     report("Reissner-Nordstrom-de Sitter: rnds_rstar has dr_*/dr = 1/f and vanishes at r = 0",
            float(np.max(np.abs(slope * f_s(rr) - 1))) + abs(float(rnds_rstar(0.0))), 1e-6)
+
+    # The travelling wave on a string: x = X - A, y = Y - B and v = V - 2A'(X - A) - 2B'(Y - B) -
+    # int_0^u (A'^2 + B'^2) carry the moving string chart onto the isotropic one, for the declared
+    # pulse, and string_wave_V is the V of the surface v = 0 on a line of fixed X.
+    pulse = {"A": "exp(-4*u**2)/2", "B": "0"}
+    _, entry_i, R_i = nr.load("string_wave", "isotropic")
+    _, entry_m, R_m = nr.load("string_wave", "moving_string")
+
+    def declared(R, entry):
+        g = nr.published_matrix(R, entry, "metric_components").applyfunc(R.surface)
+        for name, rep in pulse.items():
+            g = g.replace(R.parameters[name].func, nr._as_lambda(R, name, rep)).doit()
+        return g.subs({R.parameters["b"]: sp.Rational(1, 2), R.parameters["ell"]: 1}), [R.symbol[c] for c in entry["coords"]]
+    g_i, (ui, vi, xi, yi) = declared(R_i, entry_i)
+    g_m, (um, Vm, Xm, Ym) = declared(R_m, entry_m)
+    A = sp.exp(-4 * um ** 2) / 2
+    s = sp.Symbol("s", real=True)
+    image = [um, Vm - 2 * sp.diff(A, um) * (Xm - A) - sp.integrate(sp.diff(A, um).subs(um, s) ** 2, (s, 0, um)), Xm - A, Ym]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], (um, Vm, Xm, Ym)[j]))
+    pulled = J.T * g_i.subs(dict(zip((ui, vi, xi, yi), image)), simultaneous=True) * J
+    miss = 0.0
+    for a, b, c, d in zip(rng.uniform(-2, 2, 30), rng.uniform(-2, 2, 30), rng.uniform(-2, 2, 30), rng.uniform(0.1, 2, 30)):
+        at = {um: a, Vm: b, Xm: c, Ym: d}
+        miss = max(miss, max(abs(complex((pulled - g_m).subs(at)[i, j])) for i in range(4) for j in range(4)))
+    report("string wave: the isotropic chart pulls back onto the moving string chart", miss, 1e-10)
+    miss = max(abs(float((Vm - image[1]).subs({um: a, Xm: X})) - string_wave_V(a, X))
+               for a in (-1.5, -0.3, 0.0, 1.0, 2.5) for X in (-0.25, 0.75))
+    report("string wave: string_wave_V is V on the surface v = 0", miss, 1e-12)
     return failures
 
 

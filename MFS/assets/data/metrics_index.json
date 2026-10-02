@@ -20,7 +20,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9bfd3641ff5e058a",
+    "version": "9dfc80f3738b7f23",
     "diagrams": "a6fabc19c0e551be",
     "conformal": "2771060b42b8605b",
     "embedding": "9b0e2bc9b72fa37e"
@@ -516,6 +516,34 @@
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "690299be36af8c35",
     "embedding": "288fc546b8f93c07"
+  },
+  {
+    "id": "string_wave",
+    "name": "Garfinkle-Vachaspati",
+    "tags": [
+      "topological defect",
+      "cosmic string",
+      "conical",
+      "angular deficit",
+      "travelling wave",
+      "pp-wave",
+      "gravitational wave",
+      "plane-fronted wave",
+      "null Killing vector",
+      "vacuum",
+      "vacuum solution",
+      "vanishing scalar invariants",
+      "time-dependent",
+      "dynamical",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "c915e33e95bfc9fc",
+    "diagrams": "d86ff0a92ec2a5b0",
+    "embedding": "eb113e431f8fa107"
   },
   {
     "id": "global_monopole",
@@ -1086,7 +1114,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a4831556c5b3883b",
+    "version": "d5475efae9737443",
     "diagrams": "8682a860d329f091",
     "conformal": "a9e34cf1c120e37d",
     "embedding": "32a5018b0ec61d91"
@@ -1370,7 +1398,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "7a0a1416e1e64b3c",
+    "version": "80bcb0121b1e292c",
     "diagrams": "21757421f8076200",
     "embedding": "a484d91e42495a51"
   },
@@ -1679,7 +1707,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5a398567975225a6",
+    "version": "93a806394bca689c",
     "diagrams": "9b126a24baab54f6",
     "conformal": "af0aad8daedb8e34",
     "embedding": "d2f10fa2373b33b4"
@@ -1888,7 +1916,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "bb2c6b6d86c3158f",
+    "version": "605212977dae5271",
     "diagrams": "a5eedeb1a3fee9e3",
     "conformal": "aec3d8d98916b294",
     "embedding": "61bc15046da68ece"

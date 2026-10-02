@@ -105,6 +105,11 @@
       "id": "wormhole_time_machine",
       "kind": "locally_same",
       "text": "Minkowski space with two balls cut out and their surfaces identified at equal proper times is a wormhole, and moving one ball makes it a time machine [friedman1990, morris1988prl]."
+    },
+    {
+      "id": "string_wave",
+      "kind": "generalisation",
+      "text": "Flat spacetime with a cosmic string through it and a wave running along the string. Take the string's mass to zero and a change of coordinates brings Minkowski back [anderson1999]."
     }
   ],
   "references": [
@@ -143,7 +148,8 @@
     "deser1992time",
     "bonnor1969light",
     "friedman1990",
-    "morris1988prl"
+    "morris1988prl",
+    "anderson1999"
   ],
   "coordinates": [
     {

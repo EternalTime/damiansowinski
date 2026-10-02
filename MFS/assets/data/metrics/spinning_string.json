@@ -61,6 +61,11 @@
       "id": "btz",
       "kind": "family",
       "text": "The black hole of gravity in three dimensions, which needs a negative cosmological constant [banados1992]. Without one a spinning source is this string seen end on, and Neil Cornish and Norman Frankel found in 1994 that rotating matter there generally brings closed timelike curves or infinite shear [deser1984, cornish1994]."
+    },
+    {
+      "id": "string_wave",
+      "kind": "family",
+      "text": "The straight string given a wave where this one is given spin. Its curvature scalars vanish as well, while the spacetime is curved wherever the wave passes [kaloper1997, anderson1999]."
     }
   ],
   "references": [
@@ -85,7 +90,9 @@
     "vanstockum1937",
     "misner1963",
     "banados1992",
-    "cornish1994"
+    "cornish1994",
+    "kaloper1997",
+    "anderson1999"
   ],
   "coordinates": [
     {

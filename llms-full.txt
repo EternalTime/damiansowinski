@@ -418,6 +418,18 @@ The Friedmann-Lemaître-Robertson-Walker metric describing a homogeneous, isotro
 - chart Comoving Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2 dt^2 + a^2\left(\dfrac{dr^2}{1-kr^2} + r^2 d\theta^2 + r^2\sin^2\theta\, d\phi^2\right)$$
 - chart Conformal Time Spherical: coordinates $(\eta, r, \theta, \phi)$, $$ds^2 = a^2\left(-d\eta^2 + \dfrac{dr^2}{1-kr^2} + r^2 d\theta^2 + r^2\sin^2\theta\, d\phi^2\right)$$
 
+### Garfinkle-Vachaspati Travelling Wave on a Cosmic String
+
+A straight cosmic string carrying a wave of arbitrary shape that runs along it at the speed of light, together with the exact gravitational field of the wave. The geometry is a pp-wave whose transverse plane is the string's cone, curved wherever the wave passes while every scalar built from its curvature vanishes.
+
+- id: `string_wave`
+- tags: topological defect, cosmic string, conical, angular deficit, travelling wave, pp-wave, gravitational wave, plane-fronted wave, null Killing vector, vacuum, vacuum solution, vanishing scalar invariants, time-dependent, dynamical, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/string_wave.json
+- chart Null Conical: coordinates $(u, v, r, \phi)$, $$ds^2 = -du\,dv + F\,du^2 + dr^2 + b^2r^2d\phi^2$$
+- chart Isotropic: coordinates $(u, v, x, y)$, $$ds^2 = -du\,dv - 2\left(x\,A'' + y\,B''\right)du^2 + \left(\dfrac{\rho}{\ell}\right)^{2b - 2}\left(dx^2 + dy^2\right)$$
+- chart Moving String: coordinates $(u, V, X, Y)$, $$ds^2 = -du\,dV + dX^2 + dY^2 + \left(\left(\dfrac{\rho}{\ell}\right)^{2b - 2} - 1\right)\left(\left(dX - A'\,du\right)^2 + \left(dY - B'\,du\right)^2\right)$$
+
 ### Global Monopole and Letelier's Cloud of Strings
 
 The static, spherically symmetric field of a global monopole, a hedgehog of three scalar fields that forms where a global O(3) symmetry breaks, and of Letelier's cloud of strings running out from a centre. Every sphere about the centre misses the same fraction of its solid angle, so light passing it is bent through one angle whatever its impact parameter, and with a mass at the centre it holds a black hole.

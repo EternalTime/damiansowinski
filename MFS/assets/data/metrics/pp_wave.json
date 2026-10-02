@@ -60,6 +60,11 @@
       "id": "ori_time_machine",
       "kind": "locally_same",
       "text": "A vacuum pp-wave with one coordinate made periodic. Its circles turn from spacelike to timelike, which makes it the core of Amos Ori's time machine of 2005 [ori2005]."
+    },
+    {
+      "id": "string_wave",
+      "kind": "generalisation",
+      "text": "A pp-wave riding a cosmic string, its transverse plane the string's cone. A profile linear in $x$ and $y$, which a change of coordinates removes here, is there the wave of a wiggling string [garfinkle1990, anderson1999]."
     }
   ],
   "references": [
@@ -84,7 +89,9 @@
     "griffiths2009",
     "griffiths1991",
     "bonnor1969light",
-    "ori2005"
+    "ori2005",
+    "garfinkle1990",
+    "anderson1999"
   ],
   "coordinates": [
     {

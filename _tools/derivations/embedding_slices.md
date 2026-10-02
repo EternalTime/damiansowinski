@@ -90,6 +90,13 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - The figure `tipping`: the floor from $r_c$ out to its edge at $2r_c$.
 - The four conformal views: the line $T = 0$ from $r = r_c$ to $5\,r_c$.
 
+### The travelling wave on a string
+
+- The embedding is the surface of constant $u$ and $v$ across the string, the cone out to $r = 3\ell$, at the four moments $u = -1.5\,\ell$, $0$, $\ell$ and $2.5\,\ell$ on $v = 0$, with the ring of free particles on it.
+- `null_conical/toward`, `null_conical/away` and `isotropic/beside`, planes of $u$ and $v$ at one place across the string, which each moment meets at one event: four points, $(u_k, 0)$.
+- `moving_string/behind` and `moving_string/ahead`: the same events, whose $V = 2(X - A)A' + \int_0^{u_k}A'^2\,du$ on the line $X$, which `slices.checks()` holds to the map between the two charts.
+- No conformal diagram.
+
 ### de Sitter
 
 - The embedding is the equator of the static chart at $t = 0$: the hemisphere the static chart covers, $r$ from $0$ to $\ell$, and the antipodal observer's hemisphere beyond the horizon.
