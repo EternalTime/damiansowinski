@@ -554,6 +554,13 @@ DIMENSIONS = {
     ("kasner_magnetic", "rosen"): {
         "\\eta": "1", "x": "L", "y": "L", "z": "L", "\\ell": "L",
     },
+    # Many black holes and wormholes in three dimensions: the one length is the anti-de Sitter
+    # radius. The disc's rho and the stereographic x and y are lengths, as Brill's lectures write
+    # them, and M is the pure number of the Banados-Teitelboim-Zanelli chart.
+    ("btz_multi_holes_wormholes", "sausage"): {"t": "T", "\\rho": "L", "\\phi": "1", "\\ell": "L"},
+    ("btz_multi_holes_wormholes", "stereographic"): {"\\tau": "T", "x": "L", "y": "L", "\\ell": "L"},
+    ("btz_multi_holes_wormholes", "free_fall"): {"T": "T", "\\rho": "L", "\\phi": "1", "\\ell": "L"},
+    ("btz_multi_holes_wormholes", "exterior"): {"t": "T", "r": "L", "\\phi": "1", "\\ell": "L", "M": "1"},
     # The other entry that keeps G and a mass explicit rather than folding them into a
     # length. The spin per unit mass a = J/(Mc) is a length, which is what makes
     # r^2 + a^2cos^2(theta) and r^2 - 2GMr/c^2 + a^2 areas.

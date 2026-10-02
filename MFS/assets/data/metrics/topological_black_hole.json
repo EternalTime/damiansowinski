@@ -82,6 +82,11 @@
       "id": "ab_metrics",
       "kind": "special_case",
       "text": "The hyperbolic and the flat hole without the cosmological constant, $L \\to \\infty$, are A II and A III of Ehlers and Kundt's table, with $\\mu = -b$ [hruska2019]."
+    },
+    {
+      "id": "btz_multi_holes_wormholes",
+      "kind": "family",
+      "text": "The cutting and gluing done in three dimensions, where the handles sit behind the horizon and the outsides are those of BTZ holes. Four of the five authors made the topological holes of four dimensions [aminneborg1996, aminneborg1998]."
     }
   ],
   "references": [
@@ -109,7 +114,8 @@
     "horowitz1998",
     "caldarelli2001extremal",
     "cardoso2004",
-    "hruska2019"
+    "hruska2019",
+    "aminneborg1998"
   ],
   "coordinates": [
     {

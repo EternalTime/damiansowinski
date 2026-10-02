@@ -6291,6 +6291,16 @@ class Slices(unittest.TestCase):
         if key == "bonnor_charged_dust/exterior_areal/radial":
             # The areal radius is the isotropic radius the embedding reads plus m, at m = 1.
             return (lambda X: 0.0), [x + 1 for x in self.reach(surface, "exterior")]
+        if key == "btz_multi_holes_wormholes/stereographic/fold":
+            # The moment of time symmetry is U = 0, the hyperbola c tau = -sqrt(4 + x^2) at l = 1, out to
+            # x = 4 rho/(1 - rho^2) at the embedding's reach in rho.
+            hi = self.reach(surface)[1]
+            return (lambda X: -math.sqrt(4 + X * X)), [4 * hi / (1 - hi * hi)]
+        if key == "btz_multi_holes_wormholes/exterior/radial":
+            # t = 0 from the wormhole's horizon r_+ = 2 arccosh(2)/pi to the edge of the sheet on phi = 0.
+            hi = self.reach(surface)[1]
+            horizon = 2 * math.acosh(2) / math.pi
+            return (lambda X: 0.0), [horizon, horizon * (1 + hi * hi) / (1 - hi * hi)]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))

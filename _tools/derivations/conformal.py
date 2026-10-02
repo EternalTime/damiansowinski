@@ -6557,6 +6557,101 @@ def clip_in_t(v, T0, T1):
     v.layers = layers
 
 
+def btz_multi_holes_wormholes(ck, src):
+    """The tent of Aminneborg, Bengtsson, Brill, Holst and Peldan at alpha = sqrt(2/3) and l = 1, on the
+    totally geodesic plane through its axis and two opposite folds, phi = pi/4 and 5 pi/4 of the
+    sausage chart. With rho = tan(sigma/2) the plane's metric is (-dt^2 + d sigma^2)/cos^2(sigma),
+    so p, q = (t -+ sigma)/2 are null and X = sigma, T = t: the strip of anti-de Sitter space of
+    two dimensions, |X| < pi/2, with the left half the plane's other side.
+
+    Over each opening two glued surfaces cross on a fold, sin(sigma) = sqrt(2) alpha cos(t) =
+    (2/sqrt 3) cos t, which leaves infinity at t_P = pi/6, where tan t_P = sqrt(2 alpha^2 - 1),
+    their (10), and reaches the axis at pi/2\\; the past folds are its mirror image in t. The event
+    horizon is the past light cone of the fold's end at infinity, t = t_P - pi/2 + sigma, born on
+    the axis at t = -pi/3. Both are checked against the embedding: the fold lies on X = alpha V and
+    Y = alpha V, and the horizon's rays are null and end where the fold does."""
+    alpha = math.sqrt(2.0 / 3.0)
+    tP = math.atan(math.sqrt(2 * alpha ** 2 - 1))
+    plane = Plane(src, "btz_multi_holes_wormholes", "sausage", ("t", "\\rho"), {"phi": "pi/4"}, {"ell": 1})
+    assert plane.g[0, 1] == 0
+
+    def pq(t, rho):
+        t, rho = np.asarray(t, dtype=float), np.asarray(rho, dtype=float)
+        sigma = 2 * np.arctan(rho)
+        return (t - sigma) / 2, (t + sigma) / 2
+
+    ck.chart("many black holes, the sausage chart on the plane through two folds", plane, pq,
+             ck.uniform(-1.5, 1.5), ck.uniform(0.001, 0.98), lambda t, rho: (1, 0))
+    ck.limit("many black holes: the fold leaves infinity at t_P = pi/6", tP, math.pi / 6, 1e-12)
+    ck.limit("many black holes: rho -> l lands on the boundary X = pi/2",
+             np.subtract(*pq(np.array([-1.0, 0, 1]), np.full(3, 1 - 1e-9))[::-1]), [HALF] * 3, 1e-8)
+    ck.finite("many black holes: the Kretschmann scalar is finite on the fold and at infinity",
+              plane.kretschmann(np.array([0.6, 1.0, 1.5]), np.array([0.9, 0.5, 0.05])))
+
+    def fold(t):
+        """sigma on the fold at the sausage time t, pi/6 <= |t| <= pi/2."""
+        return np.arcsin(np.clip(math.sqrt(2) * alpha * np.cos(t), -1, 1))
+
+    ts = np.linspace(tP, HALF, 201)
+    sig = fold(ts)
+    rho = np.tan(sig / 2)
+    # The embedding of the sausage chart at phi = pi/4, l = 1: V, X = Y on the fold.
+    V = (1 + rho ** 2) / (1 - rho ** 2 + 1e-300) * np.cos(ts)
+    X = 2 * rho / (1 - rho ** 2 + 1e-300) * math.cos(math.pi / 4)
+    ck.limit("many black holes: the fold lies on the glued surfaces X = alpha V and Y = alpha V",
+             (X - alpha * V)[1:] / (1 + V[1:]), np.zeros(200), 1e-9)
+    ck.limit("many black holes: the fold runs from infinity at t_P to the axis at pi/2",
+             [sig[0], sig[-1]], [HALF, 0.0], 1e-7)
+    ck.limit("many black holes: the horizon's ray from the axis at -pi/3 ends where the fold does",
+             -math.pi / 3 + HALF, tP, 1e-12)
+
+    box = [-HALF - 0.55, HALF + 0.55, -HALF - 0.25, HALF + 0.25]
+    upper = [[float(a), float(b)] for a, b in zip(sig, ts)]                 # (X, T) from P to the tip
+    region = ([[HALF, -tP]] + upper + [[-a, b] for a, b in reversed(upper)]
+              + [[-HALF, -tP]] + [[-a, -b] for a, b in upper] + [[a, -b] for a, b in reversed(upper)])
+    v = View("fold", "Through two folds", box, "sausage")
+    v.fill("region", region)
+    v.fill("cover", region)
+    hole = [[0.0, tP - HALF]] + [[HALF, tP]] + upper + [[-a, b] for a, b in reversed(upper)] + [[-HALF, tP]]
+    v.fill("cover2", hole)
+    tt = np.linspace(-HALF, HALF, 721)
+    for r in (0.2, 0.4, 0.6, 0.8):
+        sigma = 2 * math.atan(r)
+        inside = math.sqrt(2) * alpha * np.cos(tt) >= math.sin(sigma)
+        for sign in (1, -1):
+            v.line("r", [[[sign * sigma, float(t)] for t in tt[inside]]])
+    for t in (-1.0, -0.5, 0.5, 1.0):
+        reach = HALF if abs(t) <= tP else float(fold(abs(t)))
+        v.line("t", [[[-reach, t], [reach, t]]])
+    v.line("boundary", [[[HALF, -tP], [HALF, tP]], [[-HALF, -tP], [-HALF, tP]]])
+    v.line("horizon", [[[0.0, tP - HALF], [HALF, tP]], [[0.0, tP - HALF], [-HALF, tP]]])
+    for sx in (1, -1):
+        for st in (1, -1):
+            v.line("singular", [[[sx * a, st * b] for a, b in upper]], zig=True)
+    v.label_xt([0, 0.95], "black hole", cls="region")
+    v.label_xt([0, -0.2], "$\\rho = 0$", "b", "small", dy=-4)
+    v.label_xt([HALF, 0.2], "$\\rho \\to \\ell$", "l", "small", dx=6)
+    v.label_xt([-HALF, 0.2], "$\\rho \\to \\ell$", "r", "small", dx=-6)
+    v.label_xt([HALF, tP], "$P$", "l", "small", dx=6)
+    v.label_xt([-HALF, tP], "$P$", "r", "small", dx=-6)
+    v.legend("cover", "the region between the glued surfaces, which $t$ and $\\rho$ cover")
+    v.legend("cover2", "the black hole, the part that no light leaves for infinity")
+    v.legend("r", "$\\rho$ constant, at $0.2$, $0.4$, $0.6$ and $0.8\\,\\ell$")
+    v.legend("t", "$ct$ constant, at $\\pm\\ell/2$ and $\\pm\\ell$")
+    v.legend("horizon", "the event horizon, the past light cone of $P$")
+    v.legend("boundary", "the conformal boundary, timelike, one opening of the tent on each side")
+    v.legend("singular", "the folds, where two glued surfaces cross: singular, with the curvature finite")
+    v.set(settings="$\\ell = 1$, the unit of every length, and $\\alpha = \\sqrt{2/3}$, the hyperbolic tangent of "
+                   "each glued surface's distance from the axis at $t = 0$ in units of $\\ell$, so that the folds "
+                   "leave infinity at the points $P$, at $ct_P = \\pm\\pi\\ell/6$.",
+          restriction="The plane through the axis of the tent and two opposite folds only, totally geodesic.")
+    moment, = slices.moments("btz_multi_holes_wormholes")
+    lo, hi = moment.reach("sausage", "\\rho")
+    edge = 2 * math.atan(hi)
+    v.slice(moment, xt=[[[-edge, 0.0], [edge, 0.0]]])
+    return [v]
+
+
 def btz(ck, src):
     """The hole without rotation, J = 0, and the rotating hole, J = 4l/5, at M = 1 and l = 1.
 
@@ -21675,7 +21770,7 @@ DRAWN = {
     "nordstrom_scalar": nordstrom_scalar,
     "einstein_1912_static": einstein_1912_static,
     "ab_metrics": ab_metrics,
-    "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "reissner_nordstrom_ads": reissner_nordstrom_ads, "c_metric": c_metric,
+    "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "btz_multi_holes_wormholes": btz_multi_holes_wormholes, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "reissner_nordstrom_ads": reissner_nordstrom_ads, "c_metric": c_metric,
     "misner": misner, "milne": milne,
     "gott_time_machine": gott_time_machine,
     "wormhole_time_machine": wormhole_time_machine,
@@ -22667,6 +22762,18 @@ CAPTIONS = {
         "The deficit enters only $g_{\\theta\\theta}$ and $g_{\\phi\\phi}$, so the plane and its triangle are "
         "Minkowski's. The edge $X = 0$ is the monopole, $r = 0$, where the Kretschmann scalar "
         "$4\\Delta^2/\\left((1 - \\Delta)^2r^4\\right)$ diverges, a timelike singularity.",
+    ],
+    ("btz_multi_holes_wormholes", "fold"): [
+        "The plane of $t$ and $\\rho$ through the axis of the tent and two opposite folds ($\\phi = \\pi/4$ on the "
+        "right, $5\\pi/4$ on the left), each point in the diagram a single event. With $\\sigma = "
+        "2\\arctan(\\rho/\\ell)$ the metric on it is $(-c^2dt^2 + \\ell^2d\\sigma^2)/\\cos^2\\sigma$, so $p, q = "
+        "(ct/\\ell \\mp \\sigma)/2$ are null and the plane is the strip $|X| < \\pi/2$ of anti-de Sitter space, "
+        "cut off above and below by the folds, $\\sin\\sigma = \\sqrt{2}\\,\\alpha\\cos(ct/\\ell)$.",
+        "Each side of the strip is one opening of the tent, a stretch of infinity that lasts from $-t_P$ to "
+        "$t_P$. The event horizon is the past light cone of its last point $P$, and the two halves of it meet "
+        "on the axis at $ct = -\\pi\\ell/3$: the black hole is born there, a time $\\pi\\ell/6c$ after the spacetime "
+        "begins at the lower tip. With opposite surfaces glued the two openings belong to the one exterior of "
+        "the wormhole, and with adjacent surfaces glued they are the exteriors of two of the three black holes.",
     ],
     ("btz", "static"): [
         "The black hole without rotation ($M = 1$, $J = 0$), maximally extended, each point in the "

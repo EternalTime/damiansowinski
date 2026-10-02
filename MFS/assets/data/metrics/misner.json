@@ -67,6 +67,11 @@
       "id": "small_universes",
       "kind": "family",
       "text": "Friedmann universes with points of space identified under translations, as events are identified here under a boost. The translations make space a torus and no closed timelike curve [lachiezerey1995]."
+    },
+    {
+      "id": "btz_multi_holes_wormholes",
+      "kind": "family",
+      "text": "Anti-de Sitter space of three dimensions cut and glued under several boosts at once. Each black hole's singularity is of the kind Misner space has, with the curvature finite [brill1996]."
     }
   ],
   "references": [
@@ -89,7 +94,8 @@
     "ori2005",
     "tippett2017",
     "parikh2003",
-    "lachiezerey1995"
+    "lachiezerey1995",
+    "brill1996"
   ],
   "coordinates": [
     {
