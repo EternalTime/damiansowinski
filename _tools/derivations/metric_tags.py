@@ -198,6 +198,11 @@ REGIONS = {
                "holes reduce to, which carries a Maxwell field and a scalar field; the entry's "
                "spacetime is the vacuum of five dimensions",
     },
+    "topological_star": {
+        "regions": [["bah_heidmann", "bubble", "eddington_finkelstein_ingoing", "extremal"]],
+        "why": "einstein prints the metric of four dimensions the star reduces to, which carries a Maxwell "
+               "field and a scalar field; the entry's spacetime is the solution of five dimensions",
+    },
     "kasner_scalar": {
         "regions": [["synchronous", "logarithmic"]],
         "why": "kaluza_klein prints Kasner's vacuum of five dimensions, whose reduction along its "

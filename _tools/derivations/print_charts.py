@@ -16,7 +16,7 @@ born_infeld_charge, penrose_impulsive_wave, exponential_metric, bondi_sachs, pet
 rp3_geon, kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kasner_scalar,
 moving_mirror, gravitational_instantons, small_universes, misner_zapolsky, distorted_schwarzschild,
 cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_bodies,
-tilted_universes, bowers_liang and kasner_magnetic, and Godel's cylindrical chart.
+tilted_universes, bowers_liang, kasner_magnetic and topological_star, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -16686,6 +16686,311 @@ def ads_soliton_check(chart):
 
 
 CHARTS["ads_soliton"] = [lambda s=s: ads_soliton(s) for s in SOLITON_CHARTS]
+
+
+# -- The topological star --------------------------------------------------------------------
+
+TOPOLOGICAL_STAR_CHARTS = ["bah_heidmann", "bubble", "eddington_finkelstein_ingoing", "extremal", "einstein"]
+
+
+def topological_star(system_id):
+    """Bah and Heidmann's topological star, Phys. Rev. Lett. 126, 151101, arXiv:2011.08851: the
+    solution of Einstein's equations with Maxwell's field in five dimensions
+    ds^2 = -f_S dt^2 + f_B dy^2 + dr^2/(f_S f_B) + r^2 dOmega^2, f_S = 1 - r_S/r, f_B = 1 - r_B/r,
+    F = P sin(theta) dtheta ^ dphi with kappa_5^2 P^2 = 3 r_S r_B/2. Their chart, where the star is
+    r_B > r_S and space ends on the bubble r = r_B; the chart about the bubble in their
+    rho^2 = 4(r - r_B)/(r_B - r_S) and the angle psi = y/R_y, R_y^2 = 4 r_B^3/(r_B - r_S), in which
+    the bubble is the origin of a plane; the black string r_S > r_B in the advanced time
+    v = ct + r_*, dr_*/dr = 1/(f_S sqrt(f_B)), which crosses the horizon r = r_S and reaches the
+    bubble behind it; the extremal string r_S = r_B = m in the isotropic radius rho = r - m, the
+    companion paper's form, J. High Energy Phys. 2021(09), 147, arXiv:2012.13407; and the Einstein
+    metric of four dimensions the star reduces to along y, sqrt(f_B) times the rest.
+    topological_star_check holds each chart of five dimensions to the Einstein-Maxwell equations,
+    each after the first to being the first pulled back, the first to the published black string
+    at r_B = 0 and to Schwarzschild's published metric with its time made the circle at r_S = 0,
+    and the Einstein metric to the reduction and to the field equations of four dimensions.
+    topological_star.md records each chart's source."""
+    reals = " \\in (-\\infty, \\infty)"
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    sphere = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    fS, fB = "\\left(1 - \\dfrac{r_S}{r}\\right)", "\\left(1 - \\dfrac{r_B}{r}\\right)"
+    spec = {"metric_id": "topological_star", "check": lambda chart, s=system_id: topological_star_check(chart, s)}
+    components, scalars = {}, {}
+    if system_id == "bah_heidmann":
+        coords, parameters, name = ["t", "r", "\\theta", "\\phi", "y"], ["r_S", "r_B"], "Bah-Heidmann"
+        domains = ["t" + reals, "r \\in [r_B, \\infty)"] + angles + [
+            "y \\in \\left[0, 4\\pi\\sqrt{r_B^3/(r_B - r_S)}\\right)",
+            "r = r_B \\;\\text{(the bubble, where the circle } y \\text{ shrinks to a point)}"]
+
+        def line(c2):
+            return ("ds^2 = -" + fS + c2 + "dt^2 + \\dfrac{dr^2}{" + fS + fB + "} + r^2" + sphere + " + " + fB + "dy^2")
+        components = {
+            "metric_components": {("t", "t"): "-" + fS, ("r", "r"): fS + "^{-1}" + fB + "^{-1}",
+                                  ("y", "y"): "1 - \\dfrac{r_B}{r}"},
+            "inverse_metric_components": {("t", "t"): "-" + fS + "^{-1}", ("r", "r"): fS + fB,
+                                          ("y", "y"): fB + "^{-1}"}}
+        scalars = {"ricci_scalar": "\\dfrac{r_S\\,r_B}{2r^4}",
+                   "kretschmann": ("\\dfrac{48r^2\\left(r_S^2 + r_S\\,r_B + r_B^2\\right) - 120r\\,r_S\\,r_B"
+                                   "\\left(r_S + r_B\\right) + 115r_S^2\\,r_B^2}{4r^8}")}
+        probe = vm.Reader(coords, parameters, ())
+        r, rS, rB = probe.symbol["r"], probe.parameters["r_S"], probe.parameters["r_B"]
+        printer = {"lead": [r, rS, rB], "flip": False}
+    elif system_id == "bubble":
+        coords = ["t", "\\rho", "\\theta", "\\phi", "\\psi"]
+        parameters = ["r_S", "r_B", "r = r_B + \\tfrac{1}{4}\\left(r_B - r_S\\right)\\rho^2"]
+        name = "About the Bubble"
+        domains = ["t" + reals, "\\rho \\in [0, \\infty)"] + angles + [
+            "\\psi \\in [0, 2\\pi)", "\\rho = 0 \\;\\text{(the bubble, the origin of the plane of } \\rho \\text{ and } \\psi)"]
+
+        def line(c2):
+            return ("ds^2 = -\\dfrac{\\left(r_B - r_S\\right)\\left(4 + \\rho^2\\right)}{4r}" + c2 + "dt^2"
+                    " + \\dfrac{4r^2}{4 + \\rho^2}d\\rho^2 + r^2" + sphere + " + \\dfrac{r_B^3\\rho^2}{r}d\\psi^2")
+        probe = vm.Reader(coords, parameters, ())
+        rho, rS, rB = probe.symbol["\\rho"], probe.parameters["r_S"], probe.parameters["r_B"]
+        R = sp.Symbol("r", positive=True)
+        printer = {"lead": [rho, R, rB, rS], "factors": [rS, rB, R, rho], "flip": False}
+        spec["pretty"] = bubble_radius(rho, rS, rB, R)
+        lapse = "\\dfrac{\\left(r_B - r_S\\right)\\left(4 + \\rho^2\\right)}{4r}"
+        components = {
+            "metric_components": {("t", "t"): "-" + lapse, ("\\rho", "\\rho"): "\\dfrac{4r^2}{4 + \\rho^2}",
+                                  ("\\psi", "\\psi"): "\\dfrac{r_B^3\\rho^2}{r}"},
+            "inverse_metric_components": {
+                ("t", "t"): "-\\dfrac{4r}{\\left(r_B - r_S\\right)\\left(4 + \\rho^2\\right)}",
+                ("\\rho", "\\rho"): "\\dfrac{4 + \\rho^2}{4r^2}", ("\\psi", "\\psi"): "\\dfrac{r}{r_B^3\\rho^2}"}}
+        scalars = {"ricci_scalar": "\\dfrac{r_S\\,r_B}{2r^4}",
+                   "kretschmann": ("\\dfrac{48r^2\\left(r_S^2 + r_S\\,r_B + r_B^2\\right) - 120r\\,r_S\\,r_B"
+                                   "\\left(r_S + r_B\\right) + 115r_S^2\\,r_B^2}{4r^8}")}
+    elif system_id == "eddington_finkelstein_ingoing":
+        coords, parameters = ["v", "r", "\\theta", "\\phi", "y"], ["r_S", "r_B"]
+        name = "Black String, Ingoing Eddington-Finkelstein"
+        domains = ["v" + reals, "r \\in (r_B, \\infty)"] + angles + [
+            "y \\in [0, 2\\pi R_y)", "r = r_S \\;\\text{(the horizon)}",
+            "r = r_B \\;\\text{(the bubble, where the circle } y \\text{ shrinks to a point)}"]
+        up, down = "\\sqrt{\\dfrac{r}{r - r_B}}", "\\sqrt{\\dfrac{r - r_B}{r}}"
+
+        def line(c2):
+            return "ds^2 = -" + fS + "dv^2 + 2" + up + "\\,dv\\,dr + r^2" + sphere + " + " + fB + "dy^2"
+        components = {
+            "metric_components": {("v", "v"): "-" + fS, ("v", "r"): up, ("r", "v"): up,
+                                  ("y", "y"): "1 - \\dfrac{r_B}{r}"},
+            "inverse_metric_components": {("v", "r"): down, ("r", "v"): down, ("r", "r"): fS + fB,
+                                          ("y", "y"): fB + "^{-1}"}}
+        scalars = {"ricci_scalar": "\\dfrac{r_S\\,r_B}{2r^4}",
+                   "kretschmann": ("\\dfrac{48r^2\\left(r_S^2 + r_S\\,r_B + r_B^2\\right) - 120r\\,r_S\\,r_B"
+                                   "\\left(r_S + r_B\\right) + 115r_S^2\\,r_B^2}{4r^8}")}
+        probe = vm.Reader(coords, parameters, ())
+        r, rS, rB = probe.symbol["r"], probe.parameters["r_S"], probe.parameters["r_B"]
+        printer = {"lead": [r, rS, rB], "flip": False}
+    elif system_id == "extremal":
+        coords, parameters, name = ["t", "\\rho", "\\theta", "\\phi", "y"], ["m"], "Extremal, Isotropic"
+        domains = ["t" + reals, "\\rho \\in (0, \\infty)"] + angles + [
+            "y \\in [0, 2\\pi R_y)", "\\rho = 0 \\;\\text{(the degenerate horizon)}"]
+        H = "\\left(1 + \\dfrac{m}{\\rho}\\right)"
+
+        def line(c2):
+            return ("ds^2 = " + H + "^{-1}\\left(-" + c2 + "dt^2 + dy^2\\right) + " + H + "^2\\left(d\\rho^2 + \\rho^2"
+                    + sphere + "\\right)")
+        components = {
+            "metric_components": {("t", "t"): "-" + H + "^{-1}", ("y", "y"): H + "^{-1}", ("\\rho", "\\rho"): H + "^2"},
+            "inverse_metric_components": {("t", "t"): "-" + H, ("y", "y"): "1 + \\dfrac{m}{\\rho}",
+                                          ("\\rho", "\\rho"): H + "^{-2}"}}
+        scalars = {"ricci_scalar": "\\dfrac{m^2}{2\\left(\\rho + m\\right)^4}"}
+        probe = vm.Reader(coords, parameters, ())
+        rho, m = probe.symbol["\\rho"], probe.parameters["m"]
+        printer = {"lead": [rho, m], "flip": False}
+    elif system_id == "einstein":
+        coords, parameters, name = ["t", "r", "\\theta", "\\phi"], ["r_S", "r_B"], "Einstein Metric, Four Dimensions"
+        domains = ["t" + reals, "r \\in (r_B, \\infty)"] + angles + ["r = r_B \\;\\text{(the singularity)}"]
+
+        def line(c2):
+            return ("ds^2 = \\sqrt{1 - \\dfrac{r_B}{r}}\\left(-" + fS + c2 + "dt^2 + \\dfrac{dr^2}{" + fS + fB
+                    + "} + r^2" + sphere + "\\right)")
+        probe = vm.Reader(coords, parameters, ())
+        r, rS, rB = probe.symbol["r"], probe.parameters["r_S"], probe.parameters["r_B"]
+        printer = {"lead": [r, rS, rB], "flip": False}
+    else:
+        raise KeyError(system_id)
+    spec.update({"system": {"id": system_id, "name": name, "coords": coords, "domains": domains,
+                            "parameters": parameters, "line_element": line("c^2")},
+                 "chart_line_element": line(""), "printer": printer, "components": components, **scalars})
+    return spec
+
+
+def bubble_radius(rho, rS, rB, R):
+    """A `pretty` for the chart about the bubble, which names r = r_B + (r_B - r_S) rho^2/4: every
+    power of 4 r_B + (r_B - r_S) rho^2 among a value's factors is written as that power of 4r."""
+    whole = sp.expand(4 * rB + (rB - rS) * rho ** 2)
+
+    def pretty(value):
+        value = sp.factor(sp.sympify(value))
+        if value == 0:
+            return value
+        out = sp.Integer(1)
+        for factor in sp.Mul.make_args(value):
+            base, k = (factor.base, factor.exp) if factor.is_Pow else (factor, sp.Integer(1))
+            if sp.expand(base - whole) == 0:
+                out *= (4 * R) ** k
+            elif sp.expand(base + whole) == 0:
+                out *= (-4 * R) ** k
+            else:
+                out *= factor
+        return out
+    return pretty
+
+
+def topological_star_maxwell(g, x, strength):
+    """R_ab - strength (F_ac F_b^c - g_ab F^2/6) with F = sin(theta) dtheta ^ dphi, Bah and
+    Heidmann's field with kappa_5^2 P^2 = `strength`, and d_a(sqrt(-g) F^ab): Einstein's equations
+    with Maxwell's field in five dimensions, their (1), as a matrix and a list that vanish."""
+    n = len(x)
+    th = x[2]
+    ginv = g.inv()
+    F = sp.zeros(n, n)
+    F[2, 3], F[3, 2] = sp.sin(th), -sp.sin(th)
+    Fup = ginv * F * ginv
+    F2 = sum(F[a, b] * Fup[a, b] for a in range(n) for b in range(n))
+    stress = sp.Matrix(n, n, lambda a, b: strength * (
+        sum(F[a, c] * F[b, d] * ginv[c, d] for c in range(n) for d in range(n)) - g[a, b] * F2 / 6))
+    # sqrt(-g) with the sine of the sphere taken out of the root, positive on 0 < theta < pi.
+    root = sp.sqrt(sp.factor(sp.cancel(-g.det() / sp.sin(th) ** 2))) * sp.sin(th)
+    maxwell = [sum(sp.diff(root * Fup[a, b], x[a]) for a in range(n)) for b in range(n)]
+    return stress, maxwell
+
+
+def topological_star_check(chart, system_id):
+    """Every chart of five dimensions solves R_ab = kappa_5^2 (F_ac F_b^c - g_ab F^2/6) and
+    Maxwell's equations with F = P sin(theta) dtheta ^ dphi and kappa_5^2 P^2 = 3 r_S r_B/2.
+    Bah and Heidmann's chart is the published static black string at r_B = 0, y its length z, and
+    at r_S = 0 the static bubble of nothing, the published metric of Schwarzschild with its time
+    made the circle y, r_s the radius of the bubble, and a flat time added; and it keeps its form
+    under their double Wick rotation, g_tt <-> -g_yy with r_S <-> r_B. The chart about the bubble
+    is theirs pulled back by r = r_B + (r_B - r_S) rho^2/4 and y = R_y psi, with
+    g_psipsi/g_rhorho = rho^2 (1 + O(rho^2)) at the bubble, the origin of a plane; the ingoing
+    chart by ct = v - r_*; the extremal chart by r = rho + m at r_S = r_B = m. The Einstein
+    metric is sqrt(g_yy) times their chart on a surface of constant y, and with
+    e^{2 Phi} = (1 - r_B/r)^(-1/2) it solves the equations of their action of four dimensions,
+    G_ab = 6 (d_a Phi d_b Phi - g_ab (d Phi)^2/2) + (3 r_S r_B/2) e^{-2 Phi} (F_ac F_b^c - g_ab F^2/4),
+    d_a(sqrt(-g) e^{-2 Phi} F^ab) = 0 and box Phi = -(r_S r_B/8) e^{-2 Phi} F^2, compared at six
+    random points in forty digits since the metric carries a square root."""
+    x, g = chart.symbols, chart.geo.g
+    n = len(x)
+    own = topological_star("bah_heidmann")
+    first = cp.Chart(own["system"]["coords"], own["system"]["parameters"], own["chart_line_element"])
+    S, B = first.reader.parameters["r_S"], first.reader.parameters["r_B"]
+
+    def same(pulled, what):
+        for i in range(n):
+            for j in range(i, n):
+                if vm.norm(pulled[i, j] - g[i, j]) != 0:
+                    raise AssertionError(f"topological_star: {what} misses the {system_id} chart in slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+    def pulled_back(image, at):
+        at = {**dict(zip(first.symbols, image)), **at}
+        J = sp.Matrix(5, n, lambda i, j: sp.diff(image[i], x[j]))
+        return J.T * first.geo.g.subs(at, simultaneous=True) * J
+
+    if system_id == "einstein":
+        rS, rB = chart.reader.parameters["r_S"], chart.reader.parameters["r_B"]
+        g5 = first.geo.g.subs({**dict(zip(first.symbols[:4], x)), S: rS, B: rB}, simultaneous=True)
+        scalar = g5[4, 4]                                       # e^{-4 Phi}
+        same(sp.Matrix(4, 4, lambda a, b: sp.sqrt(scalar) * g5[a, b]), "Bah and Heidmann's chart reduced along y")
+        topological_star_reduced(chart, scalar, rS, rB)
+        return
+    if system_id == "extremal":
+        strength = sp.Rational(3, 2) * chart.reader.parameters["m"] ** 2
+    else:
+        strength = sp.Rational(3, 2) * chart.reader.parameters["r_S"] * chart.reader.parameters["r_B"]
+    stress, maxwell = topological_star_maxwell(g, x, strength)
+    ricci = chart.geo.ricci_ll()
+    for a in range(n):
+        for b in range(n):
+            if vm.norm(vm._at(ricci, (a, b)) - stress[a, b]) != 0:
+                raise AssertionError(f"topological_star: the {system_id} chart misses Einstein's equations with "
+                                     f"Maxwell's field in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
+    if any(vm.norm(value) != 0 for value in maxwell):
+        raise AssertionError(f"topological_star: Maxwell's equations fail in the {system_id} chart")
+    if system_id == "bah_heidmann":
+        rS, rB = chart.reader.parameters["r_S"], chart.reader.parameters["r_B"]
+        t, r, th, ph, y = x
+        # At r_B = 0 it is the published black string, whose z is the circle y.
+        reader, symbols, string = kaluza_klein_published("black_string", "static")
+        string = string.subs({**dict(zip(symbols, x)), reader.parameters["r_s"]: rS}, simultaneous=True)
+        same(string + (g - g.subs(rB, 0)), "the published black string at r_B = 0")
+        # At r_S = 0 it is the static bubble of nothing: Schwarzschild's published metric with
+        # -g_tt for g_yy and r_s the radius of the bubble, and a flat time.
+        reader, symbols, hole = kaluza_klein_published("schwarzschild", "spherical")
+        hole = hole.subs({**dict(zip(symbols, x[:4])), reader.parameters["r_s"]: rB}, simultaneous=True)
+        bubble = sp.diag(-1, hole[1, 1], hole[2, 2], hole[3, 3], -hole[0, 0])
+        same(bubble + (g - g.subs(rS, 0)), "Schwarzschild's published metric with its time made the circle, at r_S = 0")
+        # The double Wick rotation (t, y, r_S, r_B) -> (iy, it, r_B, r_S) is a symmetry.
+        swapped = g.subs({rS: rB, rB: rS}, simultaneous=True)
+        if vm.norm(swapped[0, 0] + g[4, 4]) != 0 or vm.norm(swapped[4, 4] + g[0, 0]) != 0 or any(
+                vm.norm(swapped[i, i] - g[i, i]) != 0 for i in (1, 2, 3)):
+            raise AssertionError("topological_star: the line element is not symmetric under the double Wick rotation")
+        return
+    if system_id == "bubble":
+        rS, rB = chart.reader.parameters["r_S"], chart.reader.parameters["r_B"]
+        rho = x[1]
+        period = 2 * sp.sqrt(rB ** 3 / (rB - rS))
+        image = [x[0], rB + (rB - rS) * rho ** 2 / 4, x[2], x[3], period * x[4]]
+        same(pulled_back(image, {S: rS, B: rB}), "Bah and Heidmann's chart pulled back")
+        tip = sp.series(sp.simplify(g[4, 4] / g[1, 1]), rho, 0, 4).removeO()
+        if sp.simplify(tip - rho ** 2) != 0:
+            raise AssertionError("topological_star: the circle about the bubble is not that of a plane, "
+                                 f"g_psipsi/g_rhorho = {tip} + O(rho^4)")
+    elif system_id == "eddington_finkelstein_ingoing":
+        rS, rB = chart.reader.parameters["r_S"], chart.reader.parameters["r_B"]
+        r = x[1]
+        J = sp.eye(5)
+        J[0, 1] = -sp.sqrt(r / (r - rB)) * r / (r - rS)
+        at = {**dict(zip(first.symbols, x)), S: rS, B: rB}
+        same(J.T * first.geo.g.subs(at, simultaneous=True) * J, "Bah and Heidmann's chart pulled back")
+    else:
+        m = chart.reader.parameters["m"]
+        image = [x[0], x[1] + m, x[2], x[3], x[4]]
+        same(pulled_back(image, {S: m, B: m}), "Bah and Heidmann's chart at r_S = r_B = m pulled back")
+
+
+def topological_star_reduced(chart, scalar, rS, rB):
+    """The equations of four dimensions for the Einstein metric, from the action in Bah and
+    Heidmann's footnote: with e^{-4 Phi} = `scalar` and F = sin(theta) dtheta ^ dphi times a charge
+    whose square is 3 r_S r_B/2 in units of kappa_4^2/e^2."""
+    x = chart.symbols
+    g, ginv = chart.geo.g, chart.geo.ginv
+    phi = -sp.log(scalar) / 4
+    e = sp.sqrt(scalar)                                          # e^{-2 Phi}
+    strength = sp.Rational(3, 2) * rS * rB
+    dphi = [sp.diff(phi, c) for c in x]
+    F = sp.zeros(4, 4)
+    F[2, 3], F[3, 2] = sp.sin(x[2]), -sp.sin(x[2])
+    Fup = ginv * F * ginv
+    F2 = sum(F[a, b] * Fup[a, b] for a in range(4) for b in range(4))
+    dphi2 = sum(ginv[a, b] * dphi[a] * dphi[b] for a in range(4) for b in range(4))
+    G = chart.geo.einstein_ll()
+    root = sp.sqrt(-g.det())
+    maxwell = [sum(sp.diff(root * e * Fup[a, b], x[a]) for a in range(4)) for b in range(4)]
+    box = sum(sp.diff(root * ginv[a, b] * dphi[b], x[a]) for a in range(4) for b in range(4)) / root
+    rng = random.Random(2020)
+    for _ in range(6):
+        size = sp.Rational(rng.randint(500, 1500), 1000)
+        point = {rB: size, rS: size * sp.Rational(rng.randint(100, 900), 1000),
+                 x[1]: size + sp.Rational(rng.randint(100, 3000), 1000), x[2]: sp.Rational(rng.randint(300, 2800), 1000)}
+        at = lambda value: complex(sp.sympify(value).xreplace(point).evalf(40))
+        for a in range(4):
+            for b in range(a, 4):
+                FF = sum(F[a, c] * F[b, d] * ginv[c, d] for c in range(4) for d in range(4))
+                T = 6 * (dphi[a] * dphi[b] - g[a, b] * dphi2 / 2) + strength * e * (FF - g[a, b] * F2 / 4)
+                if abs(at(vm._at(G, (a, b)) - T)) > 1e-25:
+                    raise AssertionError("topological_star: the Einstein tensor of four dimensions misses the "
+                                         f"stress of the Maxwell field and the scalar in slot {(a, b)}")
+        if any(abs(at(value)) > 1e-25 for value in maxwell):
+            raise AssertionError("topological_star: Maxwell's equations fail in four dimensions")
+        if abs(at(box + strength * e * F2 / 12)) > 1e-25:
+            raise AssertionError("topological_star: the scalar's equation fails in four dimensions")
+
+
+CHARTS["topological_star"] = [lambda s=s: topological_star(s) for s in TOPOLOGICAL_STAR_CHARTS]
 # -- Eguchi-Hanson ---------------------------------------------------------------------
 
 EGUCHI_HANSON_CHARTS = ["eguchi_hanson", "kahler", "two_centre"]

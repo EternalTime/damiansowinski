@@ -2030,6 +2030,20 @@ Black holes in anti-de Sitter space whose horizons are planes, cylinders, tori, 
 - chart Black Brane: coordinates $(t, x, y, z)$, $$ds^2 = \dfrac{L^2}{z^2}\left(-\left(1 - \dfrac{z^3}{z_h^3}\right)c^2dt^2 + dx^2 + dy^2 + \dfrac{dz^2}{1 - \dfrac{z^3}{z_h^3}}\right)$$
 - chart Hyperbolic: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(-1 - \dfrac{\mu}{r} + \dfrac{r^2}{L^2}\right)c^2dt^2 + \dfrac{dr^2}{-1 - \dfrac{\mu}{r} + \dfrac{r^2}{L^2}} + r^2\left(d\theta^2 + \sinh^2\theta\,d\phi^2\right)$$
 
+### Topological Star
+
+A smooth spacetime of five dimensions with no horizon and no singularity, which seen from four dimensions has the mass and the magnetic charge of a black hole. Where the horizon would be, the circle of the fifth dimension shrinks to a point and space ends on a bubble held open by magnetic flux. Ibrahima Bah and Pierre Heidmann proposed it in 2020 as the simplest topological star, on a line element that also describes a black string with the same bubble behind its horizon.
+
+- id: `topological_star`
+- tags: static, stationary, five-dimensional, four-dimensional, soliton, no horizon, regular, black hole mimicker, microstate geometry, fuzzball, bubble, bolt, cigar, topology, magnetic charge, electromagnetic field, Einstein-Maxwell, Kaluza-Klein, compact dimension, higher dimensions, black string, horizon, event horizon, extremal, orbifold, dilaton, Einstein-Maxwell-dilaton, naked singularity, photon sphere, quasinormal modes, echoes, Gregory-Laflamme instability, instability, string theory, mass, exact solution, Lorentzian, Einstein equations, idealized model
+- signature: (-,+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/topological_star.json
+- chart Bah-Heidmann: coordinates $(t, r, \theta, \phi, y)$, $$ds^2 = -\left(1 - \dfrac{r_S}{r}\right)c^2dt^2 + \dfrac{dr^2}{\left(1 - \dfrac{r_S}{r}\right)\left(1 - \dfrac{r_B}{r}\right)} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + \left(1 - \dfrac{r_B}{r}\right)dy^2$$
+- chart About the Bubble: coordinates $(t, \rho, \theta, \phi, \psi)$, $$ds^2 = -\dfrac{\left(r_B - r_S\right)\left(4 + \rho^2\right)}{4r}c^2dt^2 + \dfrac{4r^2}{4 + \rho^2}d\rho^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + \dfrac{r_B^3\rho^2}{r}d\psi^2$$
+- chart Black String, Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi, y)$, $$ds^2 = -\left(1 - \dfrac{r_S}{r}\right)dv^2 + 2\sqrt{\dfrac{r}{r - r_B}}\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + \left(1 - \dfrac{r_B}{r}\right)dy^2$$
+- chart Extremal, Isotropic: coordinates $(t, \rho, \theta, \phi, y)$, $$ds^2 = \left(1 + \dfrac{m}{\rho}\right)^{-1}\left(-c^2dt^2 + dy^2\right) + \left(1 + \dfrac{m}{\rho}\right)^2\left(d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Einstein Metric, Four Dimensions: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \sqrt{1 - \dfrac{r_B}{r}}\left(-\left(1 - \dfrac{r_S}{r}\right)c^2dt^2 + \dfrac{dr^2}{\left(1 - \dfrac{r_S}{r}\right)\left(1 - \dfrac{r_B}{r}\right)} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Vaidya Radiating Star
 
 A dynamical solution describing the spacetime of a radiating or accreting spherical mass with outgoing or ingoing null dust. It models radiating stars and the evaporation or growth of black holes.
