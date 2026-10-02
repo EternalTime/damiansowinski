@@ -49,7 +49,8 @@ class MarkersAtTheEdge(unittest.TestCase):
     def test_a_horizon_on_the_edge_of_where_is_marked_only_where_the_row_says_so(self):
         declared = {(spec.metric, spec.system, spec.view) for spec in self.rows if spec.edge_horizon}
         self.assertEqual(declared, {("einstein_rosen_bridge", "spherical", "radial"),
-                                    ("einstein_rosen_bridge", "charged_spherical", "radial")})
+                                    ("einstein_rosen_bridge", "charged_spherical", "radial"),
+                                    ("btz_multi_holes_wormholes", "exterior", "radial")})
         for spec in self.rows:
             kinds = [marker["kind"] for marker in published(spec)["markers"]]
             if spec.edge_horizon:

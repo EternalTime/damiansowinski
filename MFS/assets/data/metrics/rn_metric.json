@@ -169,6 +169,16 @@
       "id": "bonnor_charged_dust",
       "kind": "composite",
       "text": "A star of charged dust at rest, with the extremal field, $r_q = r_s/2$, outside it. Its surface can lie as near the horizon as one likes, and the redshift of its centre is then as large as one likes [bonnor1975]."
+    },
+    {
+      "id": "string_bh_three_four_charges",
+      "kind": "generalisation",
+      "text": "Reissner and Nordström's charge split into four kinds, each with a harmonic function of its own. With the four charges equal it is this black hole again [horowitz1996four]."
+    },
+    {
+      "id": "three_brane_throat",
+      "kind": "family",
+      "text": "The three-brane of string theory is its cousin in ten dimensions, a charged sheet whose extreme member joins flat space to an infinite throat [gibbons1993]."
     }
   ],
   "references": [
@@ -213,7 +223,8 @@
     "gibbonsrasheed1995",
     "arnowitt1960",
     "krasinski2012",
-    "bonnor1975"
+    "bonnor1975",
+    "horowitz1996four"
   ],
   "coordinates": [
     {

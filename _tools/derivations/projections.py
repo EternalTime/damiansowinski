@@ -71,7 +71,9 @@ A figure is written as
 
 from dataclasses import dataclass, field
 import math
+from types import SimpleNamespace
 
+import contourpy
 import numpy as np
 import sympy as sp
 from scipy.integrate import solve_ivp
@@ -123,6 +125,7 @@ class Projection:
     input: str = None
     fields: tuple = ()              # published fields read beyond FIELDS
     functions: dict = field(default_factory=dict)   # a declared function -> its expression
+    rounded: dict = None            # as a flat view's: a parameter -> the decimals its settings show
 
 
 FIELDS = ["coords", "parameters", "metric_components", "inverse_metric_components"]
@@ -157,6 +160,10 @@ class Slice:
             expr = sp.sympify(expr)
             for name, rep in (functions or {}).items():
                 expr = expr.replace(reader.parameters[name].func, nr._as_lambda(reader, name, rep)).doit()
+            for _ in reader.held:
+                # A name the checker holds, vm.HELD, is written out by its definition, which may
+                # hold another, as the squared lapse of Ernst and Wild's hole holds Kerr's Delta.
+                expr = expr.subs(reader.held).doit()
             return expr.subs(subs)
 
         g = nr.published_matrix(reader, entry, "metric_components")
@@ -616,6 +623,57 @@ def som_raychaudhuri(spec):
     return about_axis(spec, sl, (0.5, 1.5), ("r = r_c", "r = 3r_c/2"))
 
 
+MAITRA_CIRCLES = (2.0, 5.0)      # the circles Maitra's cones stand around, in a
+
+
+def maitra_dust(spec):
+    """Maitra's light cones about the axis of the dust, on the slice z = 0 at a = 1, drawn polar
+    with the proper distance from the axis as its radius, so that the null directions along r run
+    at 45 degrees. Cones stand on the axis and at four places around each of the circles r = 2a
+    and r = 5a, those on the outer circle turned by 45 degrees from the others. No circle of
+    constant t and r turns null: the published g_phiphi is checked positive on every circle drawn
+    and out to 1000 a, and g^tt negative there, so t is a time function. The dust circles toward
+    -phi, the way the cones tip, and the arrows on the outer circle point that way. The moment
+    t = 0 the embedding diagram draws is the whole floor, out to r = 6a."""
+    sl = Slice(spec.metric, spec.system, ("t", "r", "\\phi"), "polar", spec.params, spec.fixed)
+    m = slices.moments(spec.metric)[0]
+    reach = m.reach(spec.system, "r")[1]
+    sl.proper_radius(reach * 1.05)
+    for r in np.geomspace(1e-2, 1e3, 301):
+        g = sl.metric((0.0, r, 0.0))
+        if not (g[2, 2] > 0 and np.linalg.inv(g)[0, 0] < 0):
+            raise SystemExit(f"{key(spec)}: the circle at r = {r} is not spacelike, or t is no time function there")
+    if not max(MAITRA_CIRCLES) < reach:
+        raise SystemExit(f"{key(spec)}: a circle of cones lies beyond the embedding")
+    camera = Camera(-90, 30)
+    unit = float(sl.radius(MAITRA_CIRCLES[0]))
+    fig = Figure(spec.view, spec.label, camera)
+    for k in range(12):
+        ph = k * np.pi / 6
+        fig.line("floor", sl.to_drawing((np.zeros(2), np.array([0.0, reach]), np.full(2, ph))))
+    for r in (*MAITRA_CIRCLES, reach):
+        fig.line("floor", circle(sl, 0.0, r), closed=True)
+    outer = MAITRA_CIRCLES[-1]
+    for k in range(4):
+        fig.line("floor", arrow(sl, 0.0, outer, (k + 0.25) * np.pi / 2, 0.058 * unit * outer / float(sl.radius(outer)),
+                                sense=-1))
+    fig.line("axis", np.array([[0, 0, -0.4], [0, 0, 0.875]]) * unit)
+    cones = [(0.0, 1e-6, 0.0)]
+    for r, shift in zip(MAITRA_CIRCLES, (0.0, 0.5)):
+        cones += [(0.0, r, (k + shift) * np.pi / 2) for k in range(4)]
+    drawn = [future_cone(sl, x, 0.3 * unit) for x in cones]
+    for apex, rim in sorted(drawn, key=lambda c: camera.depth(c[0])):
+        fig.cone(apex, rim)
+    fig.slice(m, fills=[[circle(sl, 0.0, reach)]], lines=[circle(sl, 0.0, reach)])
+    fig.label(np.array([0, 0, 0.875 * unit]), "$t$", "b", dy=-4)
+    for r, name, phi in ((MAITRA_CIRCLES[0], "r = 2a", -7 * np.pi / 18), (outer, "r = 5a", -4 * np.pi / 18)):
+        fig.circle_label(float(sl.radius(r)), 0.0, phi, f"${name}$", "tl", dx=6, dy=4)
+    fig.legend("cone", "cone", "future light cone")
+    fig.legend("line", "floor", "circles of constant $t$ and $r$, at $2a$, $5a$ and $6a$, all spacelike; "
+                                "the arrows point the way the dust circles")
+    return fig.done(), sl
+
+
 def ergoregion(spec, camera=Camera(-90, 30), horizon_between=(1.0, 1.9), ergo_below=3.0):
     """The light cones of a rotating hole on its equator, the slice theta = pi/2 of t, r and
     phi, drawn polar with r itself as its radius, down to the horizon.
@@ -673,6 +731,165 @@ def ergoregion(spec, camera=Camera(-90, 30), horizon_between=(1.0, 1.9), ergo_be
     fig.legend("line", "horizon", "$r_+$, the horizon")
     fig.legend("line", "ergo", "$r_E$, the ergosurface, where $g_{tt} = 0$")
     return fig.done(), sl
+
+
+def bathtub(spec, camera=Camera(-90, 30)):
+    """The cones of sound about a drain, the slice of t, r and theta that is the whole of the
+    laboratory chart, drawn polar with r itself as its radius, down to the drain.
+
+    The horizon is the zero of the published g^rr and the ergosurface the zero of the published
+    g_tt outside it, both found by bisection. Cones stand at four places around each of the
+    horizon, the ergosurface and the circle at 8/5 of the ergosurface, those on the ergosurface
+    turned by 45 degrees from the others, oriented by the laboratory's t, which the published
+    g^tt = -1 makes a time everywhere. Before anything is drawn: on the horizon no future
+    generator moves outward and one stays on the circle's cylinder; on the ergosurface g_tt
+    vanishes, so one edge of each cone stands vertical; halfway between the two g_tt is positive,
+    so no future direction stays at one place; and on the outer circle g_tt is negative and
+    generators move both ways in r and in theta. The floor is the moment t = 0 the embedding
+    diagram draws, out to its edge, and on it six streamlines of the water, the spirals
+    r = r_0 exp(A theta/B), each checked against the published metric to be orthogonal to the
+    moment's normal displaced by the flow: along it dr/dtheta = A r/B."""
+    sl = Slice(spec.metric, spec.system, ("t", "r", "\\theta"), "polar", spec.params, spec.fixed)
+    g_tt = lambda r: sl.metric((0.0, r, 0.0))[0, 0]
+    g_rr_up = lambda r: sl.inverse((0.0, r, 0.0))[1, 1]
+    horizon = root(g_rr_up, 0.5, 1.5)
+    ergo = root(g_tt, horizon * (1 + 1e-9), 3.0)
+    between, outer = 0.5 * (horizon + ergo), 1.6 * ergo
+    if not (g_tt(between) > 0 and g_tt(outer) < 0 and sl.inverse((0.0, 0.1, 0.0))[0, 0] < 0):
+        raise SystemExit(f"{key(spec)}: the ergoregion is not where the published g_tt puts it")
+    moves = {}
+    for r in (horizon, between, outer):
+        _, k = generators(sl, (0.0, r, 0.0), "tau", 3600)
+        size = np.linalg.norm(k * [1, 1, r], axis=1)
+        moves[r] = (float((k[:, 1] / size).max()), float((k[:, 1] / size).min()),
+                    float((k[:, 2] * r / size).min()), float(np.hypot(k[:, 1], k[:, 2] * r).min() / size.max()))
+    if not (abs(moves[horizon][0]) < 1e-5 and moves[between][0] > 0 and moves[between][3] > 1e-3
+            and moves[outer][0] > 0 and moves[outer][1] < 0 and moves[outer][2] < 0):
+        raise SystemExit(f"{key(spec)}: the cones do not tip as the flow says: {moves}")
+    # The flow, read from the published metric: the shift is -g_ti/c in the flat plane, so the water's
+    # velocity is (A/r, B/r) and its streamlines have dr/dtheta = A r/B.
+    m = slices.moments(spec.metric, "plane")[0]
+    reach = m.reach(spec.system, "r")[1]
+    g = sl.metric((0.0, ergo, 0.0))
+    radial, swirl = -g[0, 1], -g[0, 2] / ergo
+    if not (radial < 0 < swirl and abs(g[1, 1] - 1) < 1e-12 and abs(g[2, 2] - ergo ** 2) < 1e-12):
+        raise SystemExit(f"{key(spec)}: the published metric is not a drain turning toward +theta")
+    pitch = radial / swirl
+    unit = ergo
+    fig = Figure(spec.view, spec.label, camera)
+    turns = np.linspace(0.0, np.log(reach / 0.05) / -pitch, 400)
+    for k in range(6):
+        r = reach * np.exp(pitch * turns)
+        fig.line("floor", sl.to_drawing((np.zeros_like(r), r, k * np.pi / 3 + turns)))
+    for r, cls in ((outer, "floor"), (reach, "floor"), (horizon, "horizon"), (ergo, "ergo")):
+        fig.line(cls, circle(sl, 0.0, r), closed=True)
+    fig.line("axis", np.array([[0, 0, -0.4], [0, 0, 1.1]]) * unit)
+    cones = []
+    for r, shift in ((horizon, 0.5), (ergo, 0.0), (outer, 0.5)):
+        cones += [(0.0, r, (k + shift) * np.pi / 2) for k in range(4)]
+    drawn = [future_cone(sl, x, 0.32 * unit, orient="tau") for x in cones]
+    for apex, rim in sorted(drawn, key=lambda c: camera.depth(c[0])):
+        fig.cone(apex, rim)
+    fig.slice(m, fills=[[circle(sl, 0.0, reach)]])
+    fig.label(np.array([0, 0, 1.1 * unit]), "$t$", "b", dy=-4)
+    fig.legend("cone", "cone", "future cone of sound")
+    fig.legend("line", "horizon", "the horizon $r = |A|/c$")
+    fig.legend("line", "ergo", "the ergosurface $r = \\sqrt{A^2 + B^2}/c$, where $g_{tt} = 0$")
+    fig.legend("line", "floor", "streamlines of the water, $dr/d\\theta = A\\,r/B$, and the circles $r = 3.2|A|/c$ and $4|A|/c$")
+    return fig.done(), sl
+
+
+# ---------------------------------------------------------------- the ergoregion of Kerr in Melvin's universe
+
+def ergo_tube(spec, half=12.0, n=1201):
+    """The meridional plane of Ernst and Wild's hole seen from the side, with t and phi left out:
+    r and theta drawn as polar coordinates about the centre, the axis of rotation up the page, the
+    half plane of one phi on the right and of phi + pi on the left.
+
+    The horizon is the outer zero of the published g^rr, a circle of the drawing. The published
+    g_tt is evaluated on a grid of the half plane outside it, and the region where it is positive,
+    where the Killing vector of the time translation is spacelike and nothing stays at fixed r,
+    theta and phi, is filled; its edge, the ergosurface, is the zero contour. Before anything is
+    drawn the figure checks what its caption says: g_tt is positive just outside the horizon on the
+    equator and negative on the axis all the way up; the region round the hole is closed, inside
+    the box; a second region reaches the top of the box beside the axis and the two do not touch;
+    far up beside the axis g_tt grows as z^2 at fixed distance from the axis; and no azimuth turning
+    at one constant rate removes it, g(K, K) for K = d_t + Omega d_phi being positive far enough up
+    the tube for each of four rates Omega, since the rate that would hold it off, omega/k, grows
+    with the height."""
+    _, entry, reader = nr.load(spec.metric, spec.system)
+    r_, th_ = reader.symbol["r"], reader.symbol["\\theta"]
+    subs = {reader.c: 1}
+    subs.update({reader.parameters[k]: nr.number(v) for k, v in spec.params.items()})
+
+    def numeric(e):
+        for _ in reader.held:
+            e = e.subs(reader.held).doit()
+        return sp.lambdify((r_, th_), e.subs(subs), "numpy")
+    g = nr.published_matrix(reader, entry, "metric_components")
+    gi = nr.published_matrix(reader, entry, "inverse_metric_components")
+    names = entry["coords"]
+    t, ph = names.index("t"), names.index("\\phi")
+    g_tt, g_tp, g_pp, grr_up = numeric(g[t, t]), numeric(g[t, ph]), numeric(g[ph, ph]), numeric(gi[1, 1])
+    horizon = root(lambda r: float(grr_up(r, 1.0)), 1.2, 1.9)
+    x = np.linspace(0.0, half, n)
+    z = np.linspace(-half, half, 2 * n - 1)
+    X, Z = np.meshgrid(x, z)
+    R, TH = np.hypot(X, Z), np.arctan2(X, Z)
+    outside = R > horizon
+    with np.errstate(all="ignore"):
+        G = np.where(outside, g_tt(np.where(outside, R, 2 * horizon), TH), 1.0)
+    # What the caption says, held before anything is drawn.
+    axis = np.linspace(horizon * (1 + 1e-6), 50 * half, 4001)
+    if not (g_tt(horizon * 1.001, np.pi / 2) > 0 and np.all(g_tt(axis, 0.0) < 0)):
+        raise SystemExit(f"{key(spec)}: g_tt is not positive beside the horizon and negative on the axis")
+    far = 1e3 * half
+    rho = 2.0
+    tube = lambda zz: float(g_tt(np.hypot(rho, zz), np.arctan2(rho, zz)))
+    if not (tube(far) > 0 and abs(tube(2 * far) / tube(far) - 4) < 1e-2):
+        raise SystemExit(f"{key(spec)}: g_tt does not grow as z^2 beside the axis")
+    for rate in (-1.0, 0.3, 1.0, 10.0):
+        # K = d_t + Omega d_phi at a constant rate Omega is spacelike far enough up the tube.
+        up = max(far, 1e3 * abs(rate) * far)
+        at = (np.hypot(rho, up), np.arctan2(rho, up))
+        if not float(g_tt(*at)) + 2 * rate * float(g_tp(*at)) + rate ** 2 * float(g_pp(*at)) > 0:
+            raise SystemExit(f"{key(spec)}: the azimuth turning at {rate} makes the time translation timelike in the tube")
+    lines = contourpy.contour_generator(X, Z, G, name="serial").lines(0.0)
+    closed = [L for L in lines if np.allclose(L[0], L[-1]) or (abs(L[0][0]) < 1e-9 and abs(L[-1][0]) < 1e-9)]
+    leaving = [L for L in lines if max(abs(L[0][1]), abs(L[-1][1])) > half - 1e-9]
+    if len(lines) != 3 or len(closed) != 1 or len(leaving) != 2:
+        raise SystemExit(f"{key(spec)}: the ergosurface is not one closed curve round the hole and one tube "
+                         f"each way along the axis, but {len(lines)} curves")
+    near, = closed
+    if not (np.hypot(*near.T).max() < 0.5 * half and min(np.abs(L[:, 1]).min() for L in leaving) > np.hypot(*near.T).max()):
+        raise SystemExit(f"{key(spec)}: the region round the hole meets the tubes")
+    fig = Figure(spec.view, spec.label, Camera(-90, 90))
+    fig.flat()
+    page = lambda P: fig.camera.screen(np.column_stack([P[:, 0], P[:, 1], np.zeros(len(P))]))
+    mirror = lambda P: P * np.array([-1.0, 1.0])
+    fills = contourpy.contour_generator(X, Z, G, name="serial", fill_type=contourpy.FillType.OuterOffset).filled(0.0, 1e300)
+    for points, offsets in zip(*fills):
+        outer = points[offsets[0]:offsets[1]]
+        for P in (outer, mirror(outer)):
+            fig.fill("double", page(nr.thin(P, 0.002)))
+    hole = np.linspace(0, 2 * np.pi, 361)
+    disc = np.column_stack([horizon * np.sin(hole), horizon * np.cos(hole)])
+    fig.fill("wedge", page(disc))
+    fig.line("axis", np.array([[0.0, -half, 0.0], [0.0, half, 0.0]]))
+    fig.line("floor", np.array([[-half, 0.0, 0.0], [half, 0.0, 0.0]]))
+    for L in lines:
+        for P in (L, mirror(L)):
+            fig.line("ergo", np.column_stack([P[:, 0], P[:, 1], np.zeros(len(P))]))
+    fig.line("horizon", np.column_stack([disc[:, 0], disc[:, 1], np.zeros(len(disc))]))
+    fig.label(np.array([0.0, half, 0.0]), "$\\theta = 0$", "b", cls="small", dy=-4)
+    fig.label(np.array([horizon * 0.0, 0.0, 0.0]), "$r < r_+$", "c", cls="small")
+    fig.label(np.array([half, 0.0, 0.0]), "$\\theta = \\pi/2$", "r", cls="small", dx=-4, dy=-8)
+    fig.legend("fill", "double", "$g_{tt} > 0$, where nothing stays at fixed $r$, $\\theta$, and $\\phi$")
+    fig.legend("line", "ergo", "the ergosurface, $g_{tt} = 0$")
+    fig.legend("line", "horizon", "$r_+$, the horizon")
+    fig.legend("line", "axis", "the axis of rotation, along which the magnetic field runs")
+    fig.legend("line", "floor", "the equatorial plane")
+    return fig.done(pad=0.03), SimpleNamespace(entry=entry)
 
 
 class ThroatSlice(Slice):
@@ -1089,6 +1306,16 @@ CAPTIONS = {
         "every one of them: a closed timelike curve through each of its events. Every world line of the "
         "dust is equivalent to every other, so the cones tip over in the same way about each one.",
     ],
+    ("maitra_dust", "cylindrical", "tipping"): [
+        "The slice $z = 0$ of $t$, $r$, and $\\phi$ about the axis of rotation ($a = 1$), with $ct$ up and the "
+        "proper distance from the axis as the radius, which puts the null directions along $r$ at 45°. The cones "
+        "stand at $t = 0$ on the axis and around the circles $r = 2a$ and $r = 5a$. On the axis they are upright, "
+        "and farther out the cross term $g_{t\\phi} = k$ tips them toward $-\\phi$, clockwise seen from above, "
+        "the way the dust circles.",
+        "No cone tips as far as its circle: $k/r$ is $0.55$ at $2a$ and $0.73$ at $5a$, and it climbs toward $1$ "
+        "without reaching it. Every circle of constant $t$ and $r$ stays outside the cones, and $t$ rises along "
+        "every timelike curve.",
+    ],
     ("alcubierre", "cartesian", "bubble"): [
         "The slice $z = 0$ of $t$, $x$, and $y$ through a bubble moving at twice the speed of "
         "light along $x$, with $t$ up, $ct$ and $x$ drawn at one scale, at the moment $t = 0$ when the "
@@ -1102,6 +1329,31 @@ CAPTIONS = {
         "upright cones far from the bubble and through the middle of the cone at the centre, where "
         "$f = 1$, $ds^2 = -c^2dt^2$: its world line is timelike, and its clock "
         "keeps $t$.",
+    ],
+    ("kerr_melvin", "boyer_lindquist", "dragging"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Ernst and Wild's black hole with $t$ up and $r$ and $\\phi$ "
+        "as polar coordinates about the axis, for $a = 4m/5$ and $B = 1/(4m)$, down to the horizon $r_+ = 8m/5$, "
+        "where the chart ends. Light moving in this plane stays in it, since the reflection "
+        "$\\theta \\to \\pi - \\theta$ leaves it fixed. The cones stand at $t = 0$ at four places around each of "
+        "three circles: $r = 3r_E/2$, the ergosurface $r_E = 1.942\\,m$, and halfway between $r_E$ and $r_+$. On the "
+        "outer circle they stand nearly upright, and closer in the cross term $g_{t\\phi} = -k\\omega P$ tips them "
+        "toward $+\\phi$, counterclockwise seen from above, the way the hole turns.",
+        "On the ergosurface $g_{tt} = -N + \\omega^2P$ vanishes, so $\\partial_t$ is null and one edge of every cone "
+        "stands vertical, along a curve of fixed $r$ and $\\phi$. Inside it every future direction, timelike or null, "
+        "moves toward $+\\phi$, and nothing can stay at fixed $\\phi$. On the equator $g_{tt}$ is negative from $r_E$ "
+        "all the way out; the ergoregion returns off this plane, beside the axis.",
+    ],
+    ("kerr_melvin", "boyer_lindquist", "tube"): [
+        "The meridional plane of Ernst and Wild's black hole seen from the side, $t$ and $\\phi$ left out, with $r$ "
+        "and $\\theta$ as polar coordinates about the centre and the axis of rotation up the page, for $a = 4m/5$ "
+        "in the strong field $B = 3/(4m)$. The shaded region is the ergoregion, $g_{tt} = -N + \\omega^2P > 0$, "
+        "where $\\partial_t$ is spacelike and nothing stays at fixed $r$, $\\theta$, and $\\phi$. It has two parts: "
+        "one wraps the horizon as Kerr's does, and one is a tube round the axis that begins about $4m$ above each "
+        "pole and widens all the way to infinity.",
+        "In the tube $g_{tt}$ grows as the square of the height above the hole at a fixed distance from the axis, "
+        "and for an azimuth turning at any one constant rate the time translation is spacelike far enough up. The "
+        "axis itself stays outside it, since $g_{tt} = -k\\Delta/(r^2 + a^2)$ on the axis. In the weaker field of the "
+        "other drawings, $B = 1/(4m)$, the tube begins more than $120\\,m$ from the hole.",
     ],
     ("near_horizon_extreme_kerr", "global", "dragging"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the global chart with $\\tau$ up and $\\phi$ the angle "
@@ -1118,6 +1370,19 @@ CAPTIONS = {
         "on the outer side and counterclockwise on the inner one, and nothing can stay at fixed $\\phi$. "
         "Bardeen and Horowitz likened this region to Kerr's ergosphere, and their vector "
         "$\\partial_\\tau - y\\,\\partial_\\phi$, which turns with the cones, is timelike at every point.",
+    ],
+    ("draining_bathtub", "laboratory", "swirl"): [
+        "The whole of a drain ($A < 0$, $B = \\sqrt{3}\\,|A|$) with the laboratory's $t$ up and $r$ and "
+        "$\\theta$ as polar coordinates about the drain. The floor is the moment $t = 0$, with six streamlines "
+        "of the water spiralling in. The cones stand at $t = 0$ at four places around each of three circles: "
+        "$r = 3.2|A|/c$, the ergosurface $r = 2|A|/c$, and the horizon $r = |A|/c$. Each cone is sound leaving "
+        "one event at $c$ in every direction through water that moves, so it is the upright cone of still "
+        "water tipped along the flow.",
+        "On the ergosurface the water moves at $c$, $g_{tt}$ vanishes, and one edge of every cone stands "
+        "vertical: sound sent straight upstream stays where it is. Inside it the cones have tipped past the "
+        "vertical, and no sound stays at one place in the laboratory. On the horizon the inward part of the "
+        "flow alone reaches $c$, and the outermost edge of each cone lies along the cylinder $r = |A|/c$, so "
+        "no future direction leads out.",
     ],
     ("kerr", "boyer_lindquist", "dragging"): [
         "The equatorial plane ($\\theta = \\pi/2$) with $t$ up and $r$ and $\\phi$ as polar "
@@ -1188,6 +1453,8 @@ FIGURES = [
                {"omega": 1}, {"z": "0"}),
     Projection("som_raychaudhuri", "cylindrical", "tipping", "light cones about the axis", som_raychaudhuri,
                {"Omega": 1}, {"z": "0"}),
+    Projection("maitra_dust", "cylindrical", "tipping", "light cones about the axis", maitra_dust,
+               {"a": 1}, {"z": "0"}),
     Projection("bonnor_rotating_dust", "cylindrical", "tipping", "light cones about the axis", bonnor_rotating_dust,
                {"a": 1}, {"z": "0"}),
     # The spinning string at the values its cylinders are drawn at, r_c = a/b = 1.
@@ -1251,6 +1518,16 @@ FIGURES = [
     # Kerr-Taub-NUT at the values of its flat views, in units of m: r_+ = 9/4 and r_E = 2.601.
     Projection("kerr_taub_nut", "boyer_lindquist", "dragging", "light cones on the equator",
                lambda spec: ergoregion(spec, horizon_between=(2.0, 2.39), ergo_below=4.0), nr.KTN, {"theta": "pi/2"}),
+    # The drain of the flat views, in units of the horizon radius |A|/c.
+    Projection("draining_bathtub", "laboratory", "swirl", "cones of sound about the drain", bathtub,
+               {"A": -1, "B": "sqrt(3)"}),
+    # Ernst and Wild's hole at the values of its flat views, in units of m: r_+ = 8/5 and r_E = 1.942
+    # on the equator; and its meridional plane in the stronger field B = 3/(4m), where the tube of the
+    # ergoregion beside the axis begins four m from the hole.
+    Projection("kerr_melvin", "boyer_lindquist", "dragging", "light cones on the equator",
+               lambda spec: ergoregion(spec, horizon_between=(1.3, 1.9), ergo_below=3.0), nr.KM, {"theta": "pi/2"}),
+    Projection("kerr_melvin", "boyer_lindquist", "tube", "the ergoregion, from the side", ergo_tube, nr.KM_STRONG,
+               {"t": "0", "phi": "0"}),
     # The throat of extreme Kerr on its equator, at r_0 = 1, as its flat views are drawn.
     Projection("near_horizon_extreme_kerr", "global", "dragging", "light cones on the equator", throat,
                {"r_0": 1}, {"theta": "pi/2"}),

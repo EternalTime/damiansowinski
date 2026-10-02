@@ -1,0 +1,2821 @@
+{
+  "id": "kasner_magnetic",
+  "name": "Kasner Universe with a Magnetic Field",
+  "short_name": "Kasner with a Magnetic Field",
+  "description": "Kasner's anisotropic universe threaded by a uniform magnetic field along one axis, with no matter in it. The tension of the field pulls that axis to nothing at both ends of time, and the universe passes from one Kasner vacuum at early times to another at late times.",
+  "tags": [
+    "electrovacuum",
+    "electromagnetic field",
+    "magnetic field",
+    "anisotropic",
+    "cosmology",
+    "Kasner",
+    "Bianchi classification",
+    "spatially homogeneous",
+    "homogeneous",
+    "curvature singularity",
+    "spacelike singularity",
+    "big bang",
+    "time-dependent",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The magnetic field points along $z$.",
+  "history": "Galaxies have magnetic fields, and in 1966 every attempt to explain how they arose after the big bang faced \"difficulties which seem to be insurmountable\", in Kip Thorne's words [thorne1967]. Fred Hoyle had raised one way out in 1958, a field that was there from the beginning, and by Yakov Zel'dovich's account he \"considered it unsatisfactory and unpalatable\" [zeldovich1965magnetic]. Zel'dovich took it up anyway in January 1965 and assumed \"that a primordial homogeneous magnetic field existed in the universe\" [zeldovich1965magnetic]. He put its strength \"at the present time\" at \"less than $3 \\times 10^{-9}$ G\" [zeldovich1965magnetic]. Such a universe can be the same at every place, but a field has to point somewhere, and \"isotropy is destroyed by the presence of a preferred direction along the field\" [zeldovich1965magnetic]. How does a universe expand when one of its directions is special?¶Gerald Rosen had the simplest answer in print three years earlier [rosen1962]. Going through the symmetries that the Einstein-Maxwell equations allow, he came out with a \"new solution\", a space alike at every point that holds a uniform magnetic field and no matter [rosen1962, rosen1964, jacobs1969]. It is Kasner's vacuum with a field laid along one axis: at early times the three axes go as powers of the time, $t^{p_1}$, $t^{p_2}$, and $t^{p_3}$, as they do in a universe with no field [kastor2015, kasner1921]. A magnetic field pulls along its lines like a stretched band and pushes out sideways, so \"the rising tension along the magnetic field lines accelerates the longitudinal collapse\" of space or slows its expansion in that direction [thorne1967]. The length along the field therefore rises to a greatest value and shrinks again, and the universe ends as a second Kasner vacuum whose exponent along the field is $-p_3/(1 + 2p_3)$ [jacobs1969, kastor2015].¶Thorne cared how such a universe begins, because a field above $4.4 \\times 10^{13}$ gauss puts most of its energy into pairs of electrons and positrons, and he doubted that an ordered field would come out of them [thorne1967]. A primordial field had to start finite, and that takes a universe that has expanded \"by a finite amount perpendicular to the magnetic field lines\" since its first instant and without limit along them [thorne1967]. He called such a beginning \"pancake-like\": space is squeezed flat along the field while the field lines keep their spacing, so \"the magnetic field strength at the singularity is finite\" [thorne1967]. His conclusion, sent off in September 1966, was that if the fields of galaxies are primordial \"then the universe was probably very anisotropic in its early stages\" [thorne1967]. A. G. Doroshkevich had found the same universes and drawn the same conclusions a year earlier, and Zel'dovich told Thorne so in time for a note added in proof [thorne1967, doroshkevich1966].¶Could a beginning like that still show in the sky? The microwave radiation was known in 1966 to be even to within 3 per cent around the celestial equator, and Thorne worked out that this limits the anisotropy of the universe \"many orders of magnitude\" more tightly than the redshifts of galaxies do [thorne1967]. Kenneth Jacobs, who had solved the same universes filled with a fluid alone, added the magnetic field at Caltech in 1968 and let all three axes differ [jacobs1968, jacobs1969]. Rosen's universe turned up among his solutions, and Thorne told him that Rosen had found it first [jacobs1969]. The pancake is the one beginning in which the field starts finite, and it needs the two axes across the field to be equal, \"a subset of measure zero\" of the possible beginnings [jacobs1969]. A primordial field of $10^{-9}$ to $10^{-7}$ gauss today, Jacobs concluded, \"has negligible effect upon the temperature anisotropy of the cosmic microwave radiation\" [jacobs1969].¶In 2015 David Kastor and Jennie Traschen took Melvin's magnetic universe, a static bundle of field lines, and continued its radius to imaginary values, which turns the radius into a time [kastor2015]. The result is Rosen's universe with the two axes across the field equal [kastor2015]. B. Kent Harrison's transformation, which makes Melvin's universe out of flat space, makes the whole of Rosen's family out of Kasner's vacuum [kastor2015, harrison1968]. The step from one set of Kasner exponents to the next is, in their words, \"reminiscent of the BKL approach to a spacelike singularity\", the endless run of Kasner epochs that Vladimir Belinskii, Isaak Khalatnikov, and Evgenii Lifshitz found in the vacuum [kastor2015, bkl1970]. A field along one axis makes one such step [kastor2015]. Eighteen years earlier Victor LeBlanc had found a set of Bianchi type I universes with a magnetic field and a fluid that \"generates oscillations on the Kasner circle\", and he conjectured that generic ones approach it toward the past [leblanc1997].¶With four years of data from the Cosmic Background Explorer, John Barrow, Pedro Ferreira, and Joseph Silk went back to the microwave sky in 1997 [barrow1997]. They worked out how a homogeneous magnetic field disturbs the radiation in the most general flat and open anisotropic universes [barrow1997]. Their upper limit on \"the present strength of any primordial homogeneous magnetic field\" is $3.4 \\times 10^{-9}$ gauss, times a factor set by the density of the universe and its rate of expansion [barrow1997].",
+  "related": [
+    {
+      "id": "kasner",
+      "kind": "special_case",
+      "text": "The universe with the field switched off. At $b = 0$ the metric is Kasner's vacuum, and with the field on it starts as one Kasner vacuum and ends as another [kastor2015]."
+    },
+    {
+      "id": "melvin",
+      "kind": "dual",
+      "text": "Melvin's static bundle of field lines with its radius continued to imaginary values, which turns the radius into a time. The continuation is this universe with the two axes across the field equal, exponents $(0, 0, 1)$ [kastor2015]."
+    },
+    {
+      "id": "kasner_scalar",
+      "kind": "family",
+      "text": "Kasner's universe with the other simple content, a massless scalar field or a stiff fluid. Kenneth Jacobs solved the two together in 1969, a stiff fluid and a magnetic field in one universe [jacobs1969]."
+    },
+    {
+      "id": "bianchi",
+      "kind": "generalisation",
+      "text": "This universe is Bianchi type I, flat space with three scale factors, holding a uniform magnetic field along one of its axes [jacobs1969]."
+    }
+  ],
+  "references": [
+    "thorne1967",
+    "zeldovich1965magnetic",
+    "rosen1962",
+    "rosen1964",
+    "jacobs1969",
+    "kastor2015",
+    "kasner1921",
+    "doroshkevich1966",
+    "jacobs1968",
+    "harrison1968",
+    "bkl1970",
+    "leblanc1997",
+    "barrow1997"
+  ],
+  "coordinates": [
+    {
+      "id": "kasner_time",
+      "name": "Kasner's time",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "t \\in (0, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "t \\to 0 \\;\\text{(the singularity, where } p_3 < 1\\text{)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "p_1",
+          "description": "Exponent along $x$ at early times, with $p_1 + p_2 + p_3 = 1$"
+        },
+        {
+          "symbol": "p_2",
+          "description": "Exponent along $y$ at early times, with $p_1^2 + p_2^2 + p_3^2 = 1$"
+        },
+        {
+          "symbol": "p_3",
+          "description": "Exponent along $z$, the direction of the field, at early times, with $0 < p_3 \\le 1$. At late times the three exponents are $(p_1 + 2p_3)/(1 + 2p_3)$, $(p_2 + 2p_3)/(1 + 2p_3)$, and $-p_3/(1 + 2p_3)$"
+        },
+        {
+          "symbol": "b",
+          "description": "Strength of the field, a pure number: observers at rest measure a magnetic field $B = (2bp_3c/\\sqrt{G})\\,t^{p_3 - 1}/(1 + b^2t^{2p_3})^2$ along $z$, in Gaussian units. At $b = 0$ the metric is Kasner's vacuum"
+        }
+      ],
+      "convention": "We use coordinates $(t, x, y, z)$, with $t$ the proper time of Kasner's vacuum at $b = 0$, and evaluate the powers of $t$ with $t$ in a fixed unit of time, so they are dimensionless and the lengths sit in $x$, $y$, and $z$. Every component assumes the two conditions on the exponents. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = \\left(1 + b^2t^{2p_3}\\right)^2\\left(-c^2dt^2 + t^{2p_1}dx^2 + t^{2p_2}dy^2\\right) + \\dfrac{t^{2p_3}}{\\left(1 + b^2t^{2p_3}\\right)^2}dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(1 + b^2t^{2p_3}\\right)^2"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\left(1 + b^2t^{2p_3}\\right)^2t^{2p_1}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\left(1 + b^2t^{2p_3}\\right)^2t^{2p_2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{t^{2p_3}}{\\left(1 + b^2t^{2p_3}\\right)^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1}{\\left(1 + b^2t^{2p_3}\\right)^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{t^{-2p_1}}{\\left(1 + b^2t^{2p_3}\\right)^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{t^{-2p_2}}{\\left(1 + b^2t^{2p_3}\\right)^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\left(1 + b^2t^{2p_3}\\right)^2t^{-2p_3}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2p_3\\,b^2\\,t^{2p_3 - 1}}{c\\left(1 + b^2t^{2p_3}\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)t^{2p_1 - 1}}{c\\left(1 + b^2t^{2p_3}\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)t^{2p_2 - 1}}{c\\left(1 + b^2t^{2p_3}\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(1 - b^2t^{2p_3}\\right)t^{2p_3 - 1}}{c\\left(1 + b^2t^{2p_3}\\right)^5}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}}{c\\,t\\left(1 + b^2t^{2p_3}\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}}{c\\,t\\left(1 + b^2t^{2p_3}\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}}{c\\,t\\left(1 + b^2t^{2p_3}\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}}{c\\,t\\left(1 + b^2t^{2p_3}\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(1 - b^2t^{2p_3}\\right)}{c\\,t\\left(1 + b^2t^{2p_3}\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{p_3\\left(1 - b^2t^{2p_3}\\right)}{c\\,t\\left(1 + b^2t^{2p_3}\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2p_3\\,b^2\\left(1 + b^2t^{2p_3}\\right)t^{2p_3 - 1}}{c}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(1 + b^2t^{2p_3}\\right)\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)t^{2p_1 - 1}}{c}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(1 + b^2t^{2p_3}\\right)\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)t^{2p_1 - 1}}{c}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(1 + b^2t^{2p_3}\\right)\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)t^{2p_1 - 1}}{c}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(1 + b^2t^{2p_3}\\right)\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)t^{2p_2 - 1}}{c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(1 + b^2t^{2p_3}\\right)\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)t^{2p_2 - 1}}{c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(1 + b^2t^{2p_3}\\right)\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)t^{2p_2 - 1}}{c}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_3\\left(1 - b^2t^{2p_3}\\right)t^{2p_3 - 1}}{c\\left(1 + b^2t^{2p_3}\\right)^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(1 - b^2t^{2p_3}\\right)t^{2p_3 - 1}}{c\\left(1 + b^2t^{2p_3}\\right)^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{p_3\\left(1 - b^2t^{2p_3}\\right)t^{2p_3 - 1}}{c\\left(1 + b^2t^{2p_3}\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(p_1\\left(p_1 - 1\\right) + \\left(2p_1^2 + 2p_1\\,p_3 - 2p_1 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_1 - 1\\right)\\left(p_1 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_1 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(p_1\\left(p_1 - 1\\right) + \\left(2p_1^2 + 2p_1\\,p_3 - 2p_1 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_1 - 1\\right)\\left(p_1 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_1 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(p_2\\left(p_2 - 1\\right) + \\left(2p_2^2 + 2p_2\\,p_3 - 2p_2 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_2 - 1\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_2 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(p_2\\left(p_2 - 1\\right) + \\left(2p_2^2 + 2p_2\\,p_3 - 2p_2 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_2 - 1\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_2 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(p_3 - 1 - 8p_3\\,b^2t^{2p_3} + \\left(3p_3 + 1\\right)b^4t^{4p_3}\\right)t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_3 - 1 - 8p_3\\,b^2t^{2p_3} + \\left(3p_3 + 1\\right)b^4t^{4p_3}\\right)t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{p_1\\left(p_1 - 1\\right) + \\left(2p_1^2 + 2p_1\\,p_3 - 2p_1 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_1 - 1\\right)\\left(p_1 + 2p_3\\right)b^4t^{4p_3}}{c^2\\,t^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_1\\left(p_1 - 1\\right) + \\left(2p_1^2 + 2p_1\\,p_3 - 2p_1 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_1 - 1\\right)\\left(p_1 + 2p_3\\right)b^4t^{4p_3}}{c^2\\,t^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)t^{2p_2 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)t^{2p_2 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{p_2\\left(p_2 - 1\\right) + \\left(2p_2^2 + 2p_2\\,p_3 - 2p_2 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_2 - 1\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}}{c^2\\,t^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_2\\left(p_2 - 1\\right) + \\left(2p_2^2 + 2p_2\\,p_3 - 2p_2 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_2 - 1\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}}{c^2\\,t^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)t^{2p_1 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)t^{2p_1 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(p_3 - 1 - 8p_3\\,b^2t^{2p_3} + \\left(3p_3 + 1\\right)b^4t^{4p_3}\\right)}{c^2\\,t^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_3 - 1 - 8p_3\\,b^2t^{2p_3} + \\left(3p_3 + 1\\right)b^4t^{4p_3}\\right)}{c^2\\,t^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_1 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{p_3\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_1 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_2 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{p_3\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_2 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(p_1\\left(p_1 - 1\\right) + \\left(2p_1^2 + 2p_1\\,p_3 - 2p_1 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_1 - 1\\right)\\left(p_1 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_1 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(p_1\\left(p_1 - 1\\right) + \\left(2p_1^2 + 2p_1\\,p_3 - 2p_1 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_1 - 1\\right)\\left(p_1 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_1 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(p_1\\left(p_1 - 1\\right) + \\left(2p_1^2 + 2p_1\\,p_3 - 2p_1 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_1 - 1\\right)\\left(p_1 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_1 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(p_1\\left(p_1 - 1\\right) + \\left(2p_1^2 + 2p_1\\,p_3 - 2p_1 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_1 - 1\\right)\\left(p_1 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_1 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(p_2\\left(p_2 - 1\\right) + \\left(2p_2^2 + 2p_2\\,p_3 - 2p_2 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_2 - 1\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_2 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(p_2\\left(p_2 - 1\\right) + \\left(2p_2^2 + 2p_2\\,p_3 - 2p_2 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_2 - 1\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_2 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(p_2\\left(p_2 - 1\\right) + \\left(2p_2^2 + 2p_2\\,p_3 - 2p_2 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_2 - 1\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_2 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(p_2\\left(p_2 - 1\\right) + \\left(2p_2^2 + 2p_2\\,p_3 - 2p_2 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_2 - 1\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_2 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_3 - 1 - 8p_3\\,b^2t^{2p_3} + \\left(3p_3 + 1\\right)b^4t^{4p_3}\\right)t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{p_3\\left(p_3 - 1 - 8p_3\\,b^2t^{2p_3} + \\left(3p_3 + 1\\right)b^4t^{4p_3}\\right)t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(p_3 - 1 - 8p_3\\,b^2t^{2p_3} + \\left(3p_3 + 1\\right)b^4t^{4p_3}\\right)t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_3 - 1 - 8p_3\\,b^2t^{2p_3} + \\left(3p_3 + 1\\right)b^4t^{4p_3}\\right)t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)t^{2p_1 + 2p_2 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)t^{2p_1 + 2p_2 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)t^{2p_1 + 2p_2 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)t^{2p_1 + 2p_2 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_1 + 2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_1 + 2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_1 + 2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{p_3\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_1 + 2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_2 + 2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_2 + 2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_2 + 2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{p_3\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_2 + 2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4p_3^2\\,b^2\\,t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4p_3^2\\,b^2\\,t^{2p_1 + 2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{4p_3^2\\,b^2\\,t^{2p_2 + 2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{4p_3^2\\,b^2\\,t^{4p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^6}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{4p_3^2\\,b^2\\,t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4p_3^2\\,b^2\\,t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{4p_3^2\\,b^2\\,t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{4p_3^2\\,b^2\\,t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4p_3^2\\,b^2\\,t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4p_3^2\\,b^2\\,t^{2p_3 - 2p_1 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{4p_3^2\\,b^2\\,t^{2p_3 - 2p_2 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{4p_3^2\\,b^2}{c^2\\,t^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = \\dfrac{16p_3^2\\left(1 - p_3 + 6p_3\\left(1 - p_3\\right)b^2t^{2p_3} + 2\\left(13p_3^2 - 2p_3 - 1\\right)b^4t^{4p_3} - 6p_3\\left(3p_3 + 1\\right)b^6t^{6p_3} + \\left(2p_3 + 1\\right)\\left(3p_3 + 1\\right)b^8t^{8p_3}\\right)}{c^4\\,t^4\\left(1 + b^2t^{2p_3}\\right)^8}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4p_3^2\\,b^2\\,t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4p_3^2\\,b^2\\,t^{2p_1 + 2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{4p_3^2\\,b^2\\,t^{2p_2 + 2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{4p_3^2\\,b^2\\,t^{4p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^6}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{4p_3^2\\,b^2\\,t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4p_3^2\\,b^2\\,t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{4p_3^2\\,b^2\\,t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{4p_3^2\\,b^2\\,t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4p_3^2\\,b^2\\,t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4p_3^2\\,b^2\\,t^{2p_3 - 2p_1 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{4p_3^2\\,b^2\\,t^{2p_3 - 2p_2 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{4p_3^2\\,b^2}{c^2\\,t^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(p_1\\left(p_1 - 1\\right) + \\left(2p_1^2 + 2p_1\\,p_3 - 2p_1 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_1 - 1\\right)\\left(p_1 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_1 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(p_1\\left(p_1 - 1\\right) + \\left(2p_1^2 + 2p_1\\,p_3 - 2p_1 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_1 - 1\\right)\\left(p_1 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_1 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(p_2\\left(p_2 - 1\\right) + \\left(2p_2^2 + 2p_2\\,p_3 - 2p_2 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_2 - 1\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_2 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(p_2\\left(p_2 - 1\\right) + \\left(2p_2^2 + 2p_2\\,p_3 - 2p_2 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_2 - 1\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_2 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_3\\left(1 - b^2t^{2p_3}\\right)\\left(1 - p_3 + \\left(3p_3 + 1\\right)b^2t^{2p_3}\\right)t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{p_3\\left(1 - b^2t^{2p_3}\\right)\\left(1 - p_3 + \\left(3p_3 + 1\\right)b^2t^{2p_3}\\right)t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{p_1\\left(p_1 - 1\\right) + \\left(2p_1^2 + 2p_1\\,p_3 - 2p_1 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_1 - 1\\right)\\left(p_1 + 2p_3\\right)b^4t^{4p_3}}{c^2\\,t^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_1\\left(p_1 - 1\\right) + \\left(2p_1^2 + 2p_1\\,p_3 - 2p_1 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_1 - 1\\right)\\left(p_1 + 2p_3\\right)b^4t^{4p_3}}{c^2\\,t^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(p_1\\,p_2 + \\left(2p_1\\,p_2 + 2p_1\\,p_3 + 2p_2\\,p_3 - 4p_3^2\\right)b^2t^{2p_3} + \\left(p_1 + 2p_3\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_2 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(p_1\\,p_2 + \\left(2p_1\\,p_2 + 2p_1\\,p_3 + 2p_2\\,p_3 - 4p_3^2\\right)b^2t^{2p_3} + \\left(p_1 + 2p_3\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_2 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{p_2\\left(p_2 - 1\\right) + \\left(2p_2^2 + 2p_2\\,p_3 - 2p_2 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_2 - 1\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}}{c^2\\,t^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_2\\left(p_2 - 1\\right) + \\left(2p_2^2 + 2p_2\\,p_3 - 2p_2 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_2 - 1\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}}{c^2\\,t^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(p_1\\,p_2 + \\left(2p_1\\,p_2 + 2p_1\\,p_3 + 2p_2\\,p_3 - 4p_3^2\\right)b^2t^{2p_3} + \\left(p_1 + 2p_3\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_1 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(p_1\\,p_2 + \\left(2p_1\\,p_2 + 2p_1\\,p_3 + 2p_2\\,p_3 - 4p_3^2\\right)b^2t^{2p_3} + \\left(p_1 + 2p_3\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_1 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_3\\left(1 - b^2t^{2p_3}\\right)\\left(1 - p_3 + \\left(3p_3 + 1\\right)b^2t^{2p_3}\\right)}{c^2\\,t^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{p_3\\left(1 - b^2t^{2p_3}\\right)\\left(1 - p_3 + \\left(3p_3 + 1\\right)b^2t^{2p_3}\\right)}{c^2\\,t^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_1 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{p_3\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_1 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_2 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{p_3\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_2 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(p_1\\left(p_1 - 1\\right) + \\left(2p_1^2 + 2p_1\\,p_3 - 2p_1 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_1 - 1\\right)\\left(p_1 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_1 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(p_1\\left(p_1 - 1\\right) + \\left(2p_1^2 + 2p_1\\,p_3 - 2p_1 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_1 - 1\\right)\\left(p_1 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_1 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(p_1\\left(p_1 - 1\\right) + \\left(2p_1^2 + 2p_1\\,p_3 - 2p_1 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_1 - 1\\right)\\left(p_1 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_1 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(p_1\\left(p_1 - 1\\right) + \\left(2p_1^2 + 2p_1\\,p_3 - 2p_1 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_1 - 1\\right)\\left(p_1 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_1 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(p_2\\left(p_2 - 1\\right) + \\left(2p_2^2 + 2p_2\\,p_3 - 2p_2 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_2 - 1\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_2 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(p_2\\left(p_2 - 1\\right) + \\left(2p_2^2 + 2p_2\\,p_3 - 2p_2 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_2 - 1\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_2 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(p_2\\left(p_2 - 1\\right) + \\left(2p_2^2 + 2p_2\\,p_3 - 2p_2 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_2 - 1\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_2 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(p_2\\left(p_2 - 1\\right) + \\left(2p_2^2 + 2p_2\\,p_3 - 2p_2 + 4p_3^2 - 2p_3\\right)b^2t^{2p_3} + \\left(p_2 - 1\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_2 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(1 - b^2t^{2p_3}\\right)\\left(1 - p_3 + \\left(3p_3 + 1\\right)b^2t^{2p_3}\\right)t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_3\\left(1 - b^2t^{2p_3}\\right)\\left(1 - p_3 + \\left(3p_3 + 1\\right)b^2t^{2p_3}\\right)t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_3\\left(1 - b^2t^{2p_3}\\right)\\left(1 - p_3 + \\left(3p_3 + 1\\right)b^2t^{2p_3}\\right)t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{p_3\\left(1 - b^2t^{2p_3}\\right)\\left(1 - p_3 + \\left(3p_3 + 1\\right)b^2t^{2p_3}\\right)t^{2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(p_1\\,p_2 + \\left(2p_1\\,p_2 + 2p_1\\,p_3 + 2p_2\\,p_3 - 4p_3^2\\right)b^2t^{2p_3} + \\left(p_1 + 2p_3\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_1 + 2p_2 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(p_1\\,p_2 + \\left(2p_1\\,p_2 + 2p_1\\,p_3 + 2p_2\\,p_3 - 4p_3^2\\right)b^2t^{2p_3} + \\left(p_1 + 2p_3\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_1 + 2p_2 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(p_1\\,p_2 + \\left(2p_1\\,p_2 + 2p_1\\,p_3 + 2p_2\\,p_3 - 4p_3^2\\right)b^2t^{2p_3} + \\left(p_1 + 2p_3\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_1 + 2p_2 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(p_1\\,p_2 + \\left(2p_1\\,p_2 + 2p_1\\,p_3 + 2p_2\\,p_3 - 4p_3^2\\right)b^2t^{2p_3} + \\left(p_1 + 2p_3\\right)\\left(p_2 + 2p_3\\right)b^4t^{4p_3}\\right)t^{2p_1 + 2p_2 - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_1 + 2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_1 + 2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_1 + 2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{p_3\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_1 + 2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{p_3\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_2 + 2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_2 + 2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{p_3\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_2 + 2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{p_3\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)\\left(1 - b^2t^{2p_3}\\right)t^{2p_2 + 2p_3 - 2}}{c^2\\left(1 + b^2t^{2p_3}\\right)^4}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2p_3\\,b^2\\,t^{2p_3 - 1}}{c\\left(1 + b^2t^{2p_3}\\right)}\\dot{t}^2 + \\dfrac{\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)t^{2p_1 - 1}}{c\\left(1 + b^2t^{2p_3}\\right)}\\dot{x}^2 + \\dfrac{\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)t^{2p_2 - 1}}{c\\left(1 + b^2t^{2p_3}\\right)}\\dot{y}^2 + \\dfrac{p_3\\left(1 - b^2t^{2p_3}\\right)t^{2p_3 - 1}}{c\\left(1 + b^2t^{2p_3}\\right)^5}\\dot{z}^2 = 0",
+        "\\ddot{x} + \\dfrac{2\\left(p_1 + \\left(p_1 + 2p_3\\right)b^2t^{2p_3}\\right)}{c\\,t\\left(1 + b^2t^{2p_3}\\right)}\\dot{t}\\dot{x} = 0",
+        "\\ddot{y} + \\dfrac{2\\left(p_2 + \\left(p_2 + 2p_3\\right)b^2t^{2p_3}\\right)}{c\\,t\\left(1 + b^2t^{2p_3}\\right)}\\dot{t}\\dot{y} = 0",
+        "\\ddot{z} + \\dfrac{2p_3\\left(1 - b^2t^{2p_3}\\right)}{c\\,t\\left(1 + b^2t^{2p_3}\\right)}\\dot{t}\\dot{z} = 0"
+      ]
+    },
+    {
+      "id": "rosen",
+      "name": "Rosen (axisymmetric)",
+      "coords": [
+        "\\eta",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "\\eta \\in (0, \\pi)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "\\eta = 0 \\;\\text{(a coordinate singularity)}",
+        "\\eta \\to \\pi \\;\\text{(the infinite future)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "A length, which sets the field: observers at rest measure a magnetic field $B = (c^2/\\sqrt{G})(1 + \\cos\\eta)^2/\\ell$ along $z$, in Gaussian units, which is $4c^2/(\\sqrt{G}\\,\\ell)$ at $\\eta = 0$"
+        }
+      ],
+      "convention": "We use coordinates $(\\eta, x, y, z)$, with Rosen's time $\\eta$ a pure number, in the axisymmetric case, where the exponents of Kasner's time are $(0, 0, 1)$ and $\\tan(\\eta/2) = bt$ once $x$, $y$, and $z$ are rescaled. We take components in the chart $x^0 = \\eta$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -\\dfrac{\\ell^2}{\\left(1 + \\cos\\eta\\right)^4}d\\eta^2 + \\dfrac{dx^2 + dy^2}{\\left(1 + \\cos\\eta\\right)^2} + \\sin^2\\eta\\,dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "-\\dfrac{\\ell^2}{\\left(1 + \\cos\\eta\\right)^4}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{1}{\\left(1 + \\cos\\eta\\right)^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{1}{\\left(1 + \\cos\\eta\\right)^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\sin^2\\eta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)^4}{\\ell^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\left(1 + \\cos\\eta\\right)^2"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\left(1 + \\cos\\eta\\right)^2"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{1}{\\sin^2\\eta}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2\\sin\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)\\sin\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)\\sin\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)^4\\sin\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sin\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\sin\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "\\dfrac{\\sin\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\sin\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "\\cot\\eta"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "\\cot\\eta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{2\\ell^2\\sin\\eta}{\\left(1 + \\cos\\eta\\right)^5}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\sin\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\sin\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sin\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\sin\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "\\dfrac{\\sin\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\sin\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\sin\\eta\\cos\\eta"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "\\sin\\eta\\cos\\eta"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "\\sin\\eta\\cos\\eta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(3\\cos\\eta + 1\\right)\\left(1 + \\cos\\eta\\right)^3\\sin^2\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\left(3\\cos\\eta + 1\\right)\\left(1 + \\cos\\eta\\right)^3\\sin^2\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "\\dfrac{\\cos\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\cos\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "\\dfrac{\\cos\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\cos\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\sin^2\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\sin^2\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\sin^2\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sin^2\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)^3\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)^3\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)^3\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)^3\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "-\\dfrac{3\\cos\\eta + 1}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{3\\cos\\eta + 1}{1 + \\cos\\eta}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\cos\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\cos\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\cos\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\cos\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "\\dfrac{\\cos\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\cos\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "\\dfrac{\\cos\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\cos\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(3\\cos\\eta + 1\\right)\\sin^2\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\left(3\\cos\\eta + 1\\right)\\sin^2\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(3\\cos\\eta + 1\\right)\\sin^2\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\left(3\\cos\\eta + 1\\right)\\sin^2\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\sin^2\\eta}{\\ell^2\\left(1 + \\cos\\eta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\sin^2\\eta}{\\ell^2\\left(1 + \\cos\\eta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\sin^2\\eta}{\\ell^2\\left(1 + \\cos\\eta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sin^2\\eta}{\\ell^2\\left(1 + \\cos\\eta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)^4\\sin^2\\eta}{\\ell^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)^4}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)^4}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)^4}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)^4}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)^8}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)^6}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)^6}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)^4\\csc^2\\eta}{\\ell^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = \\dfrac{8\\left(7\\cos^2\\eta + 2\\cos\\eta + 1\\right)\\left(1 + \\cos\\eta\\right)^6}{\\ell^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)^2}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)^4\\sin^2\\eta}{\\ell^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)^4}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)^4}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)^4}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)^4}{\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)^8}{\\ell^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)^6}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)^6}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)^4\\csc^2\\eta}{\\ell^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\left(1 + \\cos\\eta\\right)^3\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2\\left(1 + \\cos\\eta\\right)^3\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "\\dfrac{\\cos\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\cos\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "\\dfrac{\\cos\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\cos\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\left(1 + \\cos\\eta\\right)\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\left(1 + \\cos\\eta\\right)\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\left(1 + \\cos\\eta\\right)\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\left(1 + \\cos\\eta\\right)\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)^3\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)^3\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)^3\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)^3\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\cos\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2\\cos\\eta}{1 + \\cos\\eta}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\cos\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\cos\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\cos\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{\\cos\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "\\dfrac{\\cos\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\cos\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "\\dfrac{\\cos\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{\\cos\\eta}{\\left(1 + \\cos\\eta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\sin^2\\eta\\cos\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "-\\dfrac{2\\sin^2\\eta\\cos\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\sin^2\\eta\\cos\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "\\dfrac{2\\sin^2\\eta\\cos\\eta}{1 + \\cos\\eta}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\cos\\eta}{\\ell^2\\left(1 + \\cos\\eta\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{2\\cos\\eta}{\\ell^2\\left(1 + \\cos\\eta\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\cos\\eta}{\\ell^2\\left(1 + \\cos\\eta\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\cos\\eta}{\\ell^2\\left(1 + \\cos\\eta\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(1 + \\cos\\eta\\right)\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(1 + \\cos\\eta\\right)\\sin^2\\eta\\cos\\eta}{\\ell^2}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\eta} + \\dfrac{2\\sin\\eta}{1 + \\cos\\eta}\\dot{\\eta}^2 + \\dfrac{\\left(1 + \\cos\\eta\\right)\\sin\\eta}{\\ell^2}\\dot{x}^2 + \\dfrac{\\left(1 + \\cos\\eta\\right)\\sin\\eta}{\\ell^2}\\dot{y}^2 + \\dfrac{\\left(1 + \\cos\\eta\\right)^4\\sin\\eta\\cos\\eta}{\\ell^2}\\dot{z}^2 = 0",
+        "\\ddot{x} + \\dfrac{2\\sin\\eta}{1 + \\cos\\eta}\\dot{\\eta}\\dot{x} = 0",
+        "\\ddot{y} + \\dfrac{2\\sin\\eta}{1 + \\cos\\eta}\\dot{\\eta}\\dot{y} = 0",
+        "\\ddot{z} + 2\\cot\\eta\\,\\dot{\\eta}\\dot{z} = 0"
+      ]
+    }
+  ]
+}

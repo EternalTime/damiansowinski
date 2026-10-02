@@ -98,6 +98,11 @@
       "id": "brill_waves",
       "kind": "family",
       "text": "The same kind of moment with gravitational waves where the holes are. Brill's slice of 1959 has no poles in $\\psi$ and no throats, only a wave of freely chosen shape, and a positive mass all the same [brill1959]."
+    },
+    {
+      "id": "btz_multi_holes_wormholes",
+      "kind": "family",
+      "text": "Brill's moment of rest for many black holes in three dimensions, cut from the hyperbolic plane and glued. The one constraint there is that the slice has constant negative curvature [brill1996]."
     }
   ],
   "references": [
@@ -130,7 +135,8 @@
     "wheeler1983",
     "clifton2012",
     "friedman1993",
-    "brill1959"
+    "brill1959",
+    "brill1996"
   ],
   "coordinates": [
     {

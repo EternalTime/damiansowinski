@@ -2343,6 +2343,55 @@ def tolman_vii(ck, src):
                  settings="$r_s = 1$, the unit of every length, and $R = 2\\,r_s$, so $\\beta = 1/4$.")]
 
 
+def bowers_liang(ck, src):
+    """Bowers and Liang's anisotropic star at Schwarzschild's limit, R = 9 r_s/8, with Q = 1/4,
+    as the spacetime diagrams and the conformal diagram draw it. The density is uniform, so
+    g_rr = 1/(1 - r^2 r_s/R^3) whatever Q is, and the slice is the cap of a sphere of radius
+    a = sqrt(R^3/r_s) that Schwarzschild's star has: z = a - sqrt(a^2 - r^2) from the centre.
+    The cap ends at the angle arcsin(r/a) = arcsin sqrt(r_s/R) from its pole, which is 70.5
+    degrees at R = 9 r_s/8, the widest a star of equal pressures holds up. Outside it is Flamm's
+    paraboloid from the schwarzschild entry, and at r = R both give g_rr = 1/(1 - r_s/R), so the
+    cap meets the paraboloid with one tangent. The vacuum paraboloid is drawn on under the cap,
+    down to the throat the star does not have."""
+    R, top = 1.125, 4.0
+    size = 2 * top
+    inner = Slice(src, "bowers_liang", "areal", "r", "\\phi", {"t": 0, **EQUATOR}, nr.BOWERS_LIANG_STAR)
+    outer = Slice(src, "schwarzschild", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 1})
+    vacuum = Piece("vacuum", "reference", outer, 1.0, R, 0.0, 1,
+                   (("throat", "the throat $r = r_s$ of the vacuum, which the star replaces"), ("join", None)),
+                   [(1.0, "reference", None)], size, reference=True)
+    zR = vacuum.at(R)[1]
+    ext = Piece("exterior", "sheet", outer, R, top, zR, 1,
+                (("join", "the surface of the star, $r = R$"), ("edge", "the paraboloid runs on to $r \\to \\infty$")),
+                [(R, "surface", "$r = R$")] + [(r, "r", None) for r in (2, 3)] + [(top, "r", None)], size)
+    star = Piece("star", "star", inner, 0.0, R, 0.0, 1,
+                 (("axis", "the centre $r = 0$, where the cap is smooth"), ("join", "the surface of the star, $r = R$")),
+                 [(r, "r", None) for r in (0.375, 0.75)], size)
+    # The cap is built from its centre and moved up to meet the exterior at R.
+    star.z = star.z + (zR - star.z[-1])
+    surface = Surface([star, ext, vacuum])
+    ck.isometry("Bowers-Liang, the star", star)
+    ck.isometry("Bowers-Liang, the exterior", ext)
+    ck.join("Bowers-Liang, the star meets the exterior at r = R", star, R, ext, R)
+    a = math.sqrt(R ** 3)
+    ck.form("Bowers-Liang, the cap z = a - sqrt(a^2 - r^2)", star,
+            lambda r: star.z[0] + a - np.sqrt(a * a - r * r), size)
+    ck.form("Bowers-Liang, the exterior is Flamm's", ext, lambda r: 2 * np.sqrt(r - 1), size)
+
+    fig = figure_of([surface], {"star": "star", "sheet": "cover"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *ext.at(R), "$r = R$", dx=10)
+    ring_label(fig, [0, 0, 0], *ext.at(3.0), "$3\\,r_s$")
+    ring_label(fig, [0, 0, 0], *ext.at(top), "$4\\,r_s$")
+    fig.legend("fill", "star", "the star, $r \\le R$, a cap of a sphere of radius $\\sqrt{R^3/r_s}$")
+    fig.legend("fill", "cover", "the exterior, Flamm's paraboloid")
+    fig.legend("line", "r", "$r$ constant, at $0.375$ and $0.75\\,r_s$ inside and $2$, $3$ and $4\\,r_s$ outside")
+    fig.legend("line", "surface", "the surface of the star, $r = R$")
+    fig.legend("line", "reference", "the vacuum paraboloid inside $R$, down to its throat at $r_s$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("star", "The star and its exterior", "$r_s$", [surface], fig.done(),
+                 settings="$r_s = 1$, the unit of every length, and $R = 9r_s/8$.")]
+
+
 def misner_zapolsky(ck, src):
     """Three moments. The areal chart's equator at t = 0: g_rr = 7/4 and g_phiphi = r^2, so
     dz/dr = sqrt(3)/2, a cone whose apex is the centre, where the density is infinite. A cone is
@@ -5141,6 +5190,108 @@ def dilaton_black_hole(ck, src):
     return views
 
 
+SBC_THROAT_LO = 1 / 50
+
+
+def string_bh_three_four_charges(ck, src):
+    """Five moments t = 0, one of each chart, on the plane of r and phi with every other angle at
+    pi/2, at the parameters slices.SBC names. Off extremality the slice has g_rr = P/f and the
+    circumference radius r sqrt(P), with P = (H_1 H_2 H_3)^(1/3) in five dimensions and
+    sqrt(H_1 H_2 H_3 H_4) in four: it stands vertical at the throat r = r_0, the bifurcation
+    sphere, whose radius is (prod(r_0^2 + r_i^2))^(1/6) and (prod(r_0 + r_i))^(1/4), and runs on
+    into the other exterior. The extreme slice has g_rr = P, so dz/dr grows as 1/r toward the
+    horizon r = 0 and the throat runs on without end, its circles closing on (r_1 r_2 r_3)^(1/3)
+    and (r_1 r_2 r_3 r_4)^(1/4), each drawn from r = r_2/50. With the three charges equal the
+    areal chart has g_rr = 1/((1 - r_+^2/rho^2)(1 - r_-^2/rho^2)) and circles of radius rho. Each
+    height is the quadrature of the published metric, which Piece checks to be an isometry."""
+    P = nr.slices.SBC
+    views = []
+    rows = (
+        ("five_charges", "Three charges", "r", P["five_charges"], {"psi": "pi/2"}, "$r_0$",
+         "$D = 5$, $r_0 = 1$, the unit of every length, and $r_1 = r_0/2$, $r_2 = r_0$, $r_3 = 3r_0/2$, on the "
+         "plane of $r$ and $\\phi$ ($\\psi = \\theta = \\pi/2$)."),
+        ("five_extreme", "Extreme, three charges", "r", P["five_extreme"], {"psi": "pi/2"}, "$r_2$",
+         "$D = 5$, $r_2 = 1$, the unit of every length, and $r_1 = r_2/2$, $r_3 = 2r_2$, on the plane of $r$ and "
+         "$\\phi$ ($\\psi = \\theta = \\pi/2$)."),
+        ("five_areal", "Equal charges", "\\rho", P["five_areal"], {"psi": "pi/2"}, "$r_q$",
+         "$D = 5$, $r_q = 1$, the unit of every length, and $r_0 = 3r_q/4$, so that the horizons are at "
+         "$\\rho = 5r_q/4$ and $\\rho = r_q$, on the plane of $\\rho$ and $\\phi$ ($\\psi = \\theta = \\pi/2$)."),
+        ("four_charges", "Four charges", "r", P["four_charges"], {}, "$r_0$",
+         "$D = 4$, $r_0 = 1$, the unit of every length, and $r_1 = r_0/2$, $r_2 = r_0$, $r_3 = 3r_0/2$, "
+         "$r_4 = 2r_0$, on the equator ($\\theta = \\pi/2$)."),
+        ("four_extreme", "Extreme, four charges", "r", P["four_extreme"], {}, "$r_2$",
+         "$D = 4$, $r_2 = 1$, the unit of every length, and $r_1 = r_2/2$, $r_3 = 3r_2/2$, $r_4 = 2r_2$, on the "
+         "equator ($\\theta = \\pi/2$)."),
+    )
+    for system, label, radial, params, held, unit, settings in rows:
+        five, extreme = system.startswith("five"), system.endswith("extreme")
+        q = nr.slices.sbc_charges(system) if system != "five_areal" else []
+        sl = Slice(src, "string_bh_three_four_charges", system, radial, "\\phi", {"t": 0, **held, **EQUATOR}, params)
+        if five:
+            product = lambda r: np.prod([1 + a * a / r ** 2 for a in q], axis=0) ** (1 / 6)     # noqa: E731
+        else:
+            product = lambda r: np.prod([1 + a / r for a in q], axis=0) ** (1 / 4)              # noqa: E731
+        rho_of = (lambda r: r) if system == "five_areal" else (lambda r: r * product(r))
+        name = f"black holes of string theory, {label}"
+        sym = "\\rho" if system == "five_areal" else "r"
+        if extreme:
+            lo, top = SBC_THROAT_LO, 4.0
+            size = 2 * float(rho_of(top))
+            radii = (0.1, 0.25, 0.5, 1.0, 2.0, 3.0)
+            end = float(np.prod(q)) ** (1 / len(q))
+            throat = Piece("throat", "sheet", sl, lo, top, 0.0, 1,
+                           (("edge", "the throat runs on without end toward the horizon $r = 0$, its circles closing "
+                                     f"on the circumference radius ${end:.4g}\\,r_2$"),
+                            ("edge", "the surface runs on to $r \\to \\infty$")),
+                           [(lo, "r", None)] + [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+            ck.isometry(name, throat)
+            ck.radius(f"{name}, the closed form of rho", throat, rho_of, size)
+            ck.add(f"{name}: the circles close on the geometric mean of the charge radii",
+                   abs(float(rho_of(1e-9)) - end), 1e-6)
+            surface = Surface([throat])
+            fig = figure_of([surface], {"sheet": "cover"}, size)
+            ring_label(fig, [0, 0, 0], *throat.at(lo), "$r = r_2/50$")
+            ring_label(fig, [0, 0, 0], *throat.at(1.0), "$r = r_2$")
+            ring_label(fig, [0, 0, 0], *throat.at(top), "$4r_2$")
+            fig.legend("fill", "cover", "one moment of $t$, which $t$ and $r > 0$ cover")
+            fig.legend("line", "r", "$r$ constant, at $1/50$, $1/10$, $1/4$, $1/2$, $1$, $2$, $3$ and $4$ times $r_2$")
+            fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+            views.append(view(system, label, unit, [surface], fig.done(), settings=settings))
+            continue
+        rh = sl.horizons()[0]
+        expected = 1.25 if system == "five_areal" else 1.0
+        ck.add(f"{name}: the event horizon is at {expected}", abs(rh - expected), 1e-12)
+        top = 6.0
+        size = 2 * float(rho_of(top))
+        radii = (1.5, 2, 3, 4, 5)
+        horizon = "$\\rho = 5r_q/4$" if system == "five_areal" else "$r = r_0$"
+        end = f"the surface runs on to ${sym} \\to \\infty$"
+        near = Piece("exterior", "sheet", sl, rh, top, 0.0, 1,
+                     (("throat", f"the throat {horizon}, the bifurcation sphere, where the other exterior begins"),
+                      ("edge", end)),
+                     [(rh, "horizon", horizon)] + [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+        far = Piece("other_exterior", "sheet2", sl, rh, top, 0.0, -1,
+                    (("throat", f"the throat {horizon}"), ("edge", end)),
+                    [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+        for piece in (near, far):
+            ck.isometry(f"{name}, {piece.id}", piece)
+            ck.radius(f"{name}, {piece.id}, the closed form of rho", piece, rho_of, size)
+        ck.join(f"{name}, the two sheets at the throat", near, rh, far, rh)
+        surface = Surface([near, far])
+        fig = figure_of([surface], {"sheet": "cover"}, size)
+        ring_label(fig, [0, 0, 0], *near.at(rh), horizon, dx=14)
+        ring_label(fig, [0, 0, 0], *near.at(3.0), f"$3\\,{unit[1:-1]}$")
+        ring_label(fig, [0, 0, 0], *near.at(top), f"$6\\,{unit[1:-1]}$")
+        outside = "$\\rho > 5r_q/4$" if system == "five_areal" else "$r > r_0$"
+        fig.legend("fill", "cover", f"the exterior {outside} that $t$ and ${sym}$ cover")
+        fig.legend("line", "r", f"${sym}$ constant, at $1.5$, $2$, $3$, $4$, $5$ and $6\\,{unit[1:-1]}$")
+        fig.legend("line", "r2", "the same radii on the other exterior")
+        fig.legend("line", "horizon", f"the throat {horizon}, where the slice crosses the horizon")
+        fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+        views.append(view(system, label, unit, [surface], fig.done(), settings=settings))
+    return views
+
+
 def tangherlini(ck, src):
     """Tangherlini's black hole in five and in six dimensions, r_h = 1. The slice of constant t
     on the plane of r and phi, every other angle at pi/2, has g_rr = 1/(1 - (r_h/r)^(D-3)) and
@@ -7764,6 +7915,74 @@ def cremmer_scherk(ck, src):
     return views
 
 
+THREE_BRANE_LO = 1 / 20
+THREE_BRANE_POINT = {"t": 0, "x": 0, "y": 0, "z": 0, "alpha": "pi/2", "beta": "pi/2", "psi": "pi/2", "theta": "pi/2"}
+
+
+def three_brane_height(rho):
+    """z(rho) of the three-brane's surface at L = 1, from rho = 1/20: the quadrature of
+    sqrt(g_rho_rho - (dR/drho)^2) = sqrt(2 rho^4 + 1)/(rho (rho^4 + 1)^(3/4)), with
+    R = (rho^4 + 1)^(1/4) the circumference radius."""
+    def slope(x):
+        return math.sqrt(2 * x ** 4 + 1) / (x * (x ** 4 + 1) ** 0.75)
+    return np.array([quad(slope, THREE_BRANE_LO, float(x), epsabs=1e-12, epsrel=1e-12)[0]
+                     for x in np.atleast_1d(rho)])
+
+
+def three_brane_throat(ck, src):
+    """The three-brane at L = 1, in two views of one moment of t at one point of the brane. In the
+    isotropic chart the surface of rho and phi, a great circle of the 5-sphere at each radius, has
+    g_rho_rho = sqrt(1 + 1/rho^4) and the circumference radius R = (rho^4 + 1)^(1/4), so
+    dz/drho = sqrt(2 rho^4 + 1)/(rho (rho^4 + 1)^(3/4)): flat far away, and toward the horizon
+    rho = 0 it falls as ln(rho) without end while R closes on L, an infinitely long throat, drawn
+    from rho = L/20 out to 3L. The throat alone, in the chart of the proper distance sigma, is
+    d(sigma)^2 + L^2 d(phi)^2, the cylinder of radius L with sigma for its height. The brane's own
+    three dimensions and the rest of the sphere add nothing a surface can show."""
+    name = "The three-brane"
+    sl = Slice(src, "three_brane_throat", "isotropic", "\\rho", "\\phi", THREE_BRANE_POINT, {"L": 1})
+    lo, top = THREE_BRANE_LO, 3.0
+    size = 2 * (top + 1)
+    radii = (0.1, 0.25, 0.5, 1.0, 2.0)
+    throat = Piece("brane", "sheet", sl, lo, top, 0.0, 1,
+                   (("edge", "the throat runs on without end toward the horizon $\\rho = 0$, its circles closing "
+                             "on the radius $L$"),
+                    ("edge", "the surface runs on to $\\rho \\to \\infty$")),
+                   [(lo, "r", None)] + [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+    ck.isometry(f"{name}, a great circle of the sphere at each radius", throat)
+    ck.radius(f"{name}, rho = (rho^4 + L^4)^(1/4)", throat, lambda r: (r ** 4 + 1) ** 0.25, size)
+    ck.form(f"{name}, the quadrature of sqrt(2 rho^4 + 1)/(rho (rho^4 + 1)^(3/4))", throat, three_brane_height, size)
+    whole = Surface([throat])
+    fig = figure_of([whole], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *throat.at(lo), "$\\rho = L/20$")
+    ring_label(fig, [0, 0, 0], *throat.at(1.0), "$\\rho = L$")
+    ring_label(fig, [0, 0, 0], *throat.at(top), "$3L$")
+    fig.legend("fill", "cover", "the surface of $\\rho$ and $\\phi$ at one moment, which $t$ and $\\rho > 0$ cover")
+    fig.legend("line", "r", "$\\rho$ constant, at $1/20$, $1/10$, $1/4$, $1/2$, $1$, $2$ and $3$ times $L$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    settings = "$L = 1$, the unit of every length."
+    views = [view("brane", "The brane and its throat", "$L$", [whole], fig.done(), settings=settings)]
+
+    sl = Slice(src, "three_brane_throat", "throat_proper", "\\sigma", "\\phi", THREE_BRANE_POINT, {"L": 1})
+    size = 2.0
+    tube = Piece("cylinder", "sheet", sl, -1.0, 1.0, -1.0, 1,
+                 (("edge", "the cylinder runs on for ever toward the horizon, $\\sigma \\to -\\infty$"),
+                  ("edge", "the cylinder runs on for ever toward $\\sigma \\to \\infty$")),
+                 [(k / 2, "r", None) for k in (-2, -1, 0, 1, 2)], size)
+    ck.isometry(f"{name}, the throat alone", tube)
+    ck.form(f"{name}, the cylinder at the height sigma", tube, lambda x: x, size)
+    ck.radius(f"{name}, the cylinder rho = L", tube, lambda x: np.ones_like(x), size)
+    alone = Surface([tube])
+    fig = figure_of([alone], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *tube.at(0.0), "$\\sigma = 0$")
+    ring_label(fig, [0, 0, 0], *tube.at(1.0), "$L$")
+    ring_label(fig, [0, 0, 0], *tube.at(-1.0), "$-L$")
+    fig.legend("fill", "cover", "the surface of $\\sigma$ and $\\phi$ at one moment, which $t$ and $\\sigma$ cover")
+    fig.legend("line", "r", "$\\sigma$ constant, every $L/2$ from $-L$ to $L$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("throat", "The throat alone", "$L$", [alone], fig.done(), settings=settings))
+    return views
+
+
 # Two of Majumdar and Papapetrou's holes, each of mass parameter m, the unit, at z = +-2m on the
 # axis, as their spacetime diagrams declare.
 MP_TWO_CYLINDRICAL = "1 + 1/sqrt(rho**2 + (z - 2)**2) + 1/sqrt(rho**2 + (z + 2)**2)"
@@ -7836,6 +8055,45 @@ def majumdar_papapetrou(ck, src):
                       settings="$m = 1$, the unit of every length, and two holes of mass parameter $m$ on the axis at "
                                "$z = \\pm 2m$, so that $U = 1 + 2m/\\sqrt{\\rho^2 + 4m^2}$ on the plane $z = 0$."))
     return views
+
+
+def eih_many_bodies(ck, src):
+    """One moment, t = 0, of the binary the spacetime diagrams declare: two bodies of mass m = 1 at
+    x = +-10m on a circular orbit. The plane x = 0 midway between them has the metric
+    (1 + 2U)(dy^2 + dz^2) with U = 2/sqrt(s^2 + 100) at the distance s from the line through the
+    bodies, in both charts, so turned about that line it is a surface of revolution with
+    rho = s sqrt(1 + 2U) and dz/ds = sqrt(1 + 2U - (d rho/ds)^2), real since
+    d rho/ds = (1 + 2U + s U')/sqrt(1 + 2U) lies between 0 and sqrt(1 + 2U). It is flat where it
+    crosses that line, where U' = 0, and is drawn out to s = 30m, inside the near zone, which ends
+    at c/(2 Omega) = 37.1m."""
+    sl = Slice(src, "eih_many_bodies", "harmonic", "y", None, {"t": 0, "x": 0}, functions=dict(nr.EIH_BINARY),
+               turn="z")
+    top = 30.0
+    size = 2 * float(sl.rho_at(top))
+    radii = (10.0, 20.0)
+    plane = Piece("midplane", "sheet", sl, 0.0, top, 0.0, 1,
+                  (("axis", "the line through the two bodies, midway between them"),
+                   ("edge", "the surface runs on to the end of the near zone, $c/2\\Omega = 37.1\\,m$")),
+                  [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+    ck.isometry("Einstein-Infeld-Hoffmann, the midplane of two equal bodies", plane)
+    ck.radius("Einstein-Infeld-Hoffmann, the midplane, rho = s sqrt(1 + 4m/sqrt(s^2 + 100 m^2))", plane,
+              lambda r: r * np.sqrt(1 + 4 / np.sqrt(r * r + 100)), size)
+    other = Slice(src, "eih_many_bodies", "standard", "y", None, {"t": 0, "x": 0}, functions=dict(nr.EIH_BINARY),
+                  turn="z")
+    at = np.linspace(0.5, top, 60)
+    ck.add("Einstein-Infeld-Hoffmann: the midplane is the same surface in the standard gauge",
+           float(max(abs(float(sl.gxx_at(v)) - float(other.gxx_at(v))) for v in at)), 1e-12)
+    two = Surface([plane])
+    fig = figure_of([two], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *plane.at(10.0), "$s = 10\\,m$")
+    ring_label(fig, [0, 0, 0], *plane.at(top), "$30\\,m$")
+    fig.legend("fill", "cover", "the plane $x = 0$ at $t = 0$, midway between the bodies")
+    fig.legend("line", "r", "$s$ constant, at $10$, $20$ and $30$ times $m$")
+    fig.legend("line", "meridian", "the angle about the line through the bodies constant, every $15°$")
+    return [view("midplane", "Between two bodies", "$m$", [two], fig.done(),
+                 settings="$m = 1$, the unit of every length, and two bodies of mass $m$ at $x = \\pm 10\\,m$ at $t = 0$, "
+                          "so that $U = 2m/\\sqrt{s^2 + 100\\,m^2}$ on the plane $x = 0$, with $s = \\sqrt{y^2 + z^2}$.",
+                 input=nr.EIH_BINARY_INPUT)]
 
 
 # Two of Kastor and Traschen's holes, each of mass parameter m, the unit, at z = +-2m on the axis,
@@ -8545,6 +8803,51 @@ def som_raychaudhuri(ck, src):
                         "the dust is an axis like this one."])]
 
 
+MAITRA_REACH = 6.0               # how far out the plane z = 0 of Maitra's dust is drawn, in a
+
+
+def maitra_dust(ck, src):
+    """The plane z = 0 of Maitra's dust at one moment of t, a = 1: g_rr = e^gamma and
+    g_phiphi = r^2 - k^2, so the circle at r has the radius rho = sqrt(r^2 - k^2). Since k' < 1 and
+    k < r, rho grows at every radius, and g_rr - (drho/dr)^2 is positive at every radius, checked
+    here out to r = 1000 a, so the surface never stops: it is drawn to r = 6a. The circles grow
+    more slowly than the distance out to them, rho = 0.93 a at r = a and 3.87 a at 6a, and far out
+    rho^2 tends to a r (1 + ln(r/a)), checked at r = 10^6 a."""
+    sl = Slice(src, "maitra_dust", "cylindrical", "r", "\\phi", {"t": 0, "z": 0}, {"a": 1})
+    far = np.geomspace(1e-3, 1e3, 4001)
+    ck.add("Maitra: g_rr > (drho/dr)^2 at every radius out to 1000 a, so the surface never stops",
+           float(max(0.0, np.max(-sl.defect_at(far)))), 0.0)
+    ck.add("Maitra: the circles are spacelike at every radius out to 1000 a, g_phiphi > 0",
+           float(max(0.0, np.max(-sl.gpp_at(far)))), 0.0)
+    rho = sl.rho_at(far)
+    ck.add("Maitra: the circles grow at every radius", float(max(0.0, np.max(-np.diff(rho)))), 0.0)
+
+    def radius(r):
+        r = np.asarray(r, dtype=float)
+        s = np.sqrt(1 + 4 * r * r)
+        k = (s - 1 - np.log((s + 1) / 2)) / 2
+        return np.sqrt(r * r - k * k)
+
+    ck.add("Maitra: far out rho^2 tends to a r (1 + ln(r/a))",
+           abs(float(radius(1e6)) ** 2 / (1e6 * (1 + math.log(1e6))) - 1), 1e-5)
+    size = 8.0
+    dust = Piece("dust", "star", sl, 0.0, MAITRA_REACH, 0.0, 1,
+                 (("axis", "the axis $r = 0$"),
+                  ("edge", "the surface runs on to $r \\to \\infty$, its circles growing at every radius")),
+                 [(1.0, "r", None), (2.0, "r", None), (4.0, "r", None)], size)
+    ck.isometry("Maitra, the dust", dust)
+    ck.radius("Maitra, rho = sqrt(r^2 - k^2)", dust, radius, size)
+    surface = Surface([dust])
+    fig = figure_of([surface], {"star": "star"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *dust.at(1.0), "$a$")
+    ring_label(fig, [0, 0, 0], *dust.at(4.0), "$4a$", side=-1)
+    fig.legend("fill", "star", "the rotating dust, which $t$, $r$ and $\\phi$ cover")
+    fig.legend("line", "r", "$r$ constant, at $a$, $2a$ and $4a$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("dust", "The rotating dust", "$a$", [surface], fig.done(),
+                 settings="$a = 1$, the unit of every length.")]
+
+
 def ellis_bronnikov(ck, src):
     """In its own chart r is the proper distance from the throat, g_rr = 1 and g_phiphi = r^2 +
     l^2, so dz/dr = l/sqrt(r^2 + l^2) and z = l arcsinh(r/l): the catenoid rho = l cosh(z/l),
@@ -9016,6 +9319,48 @@ def misner(ck, src):
                  settings="$\\psi_0 = 4\\pi$, and $\\ell$, any length, the unit of every length, since flat space "
                           "has none of its own.")]
 
+
+
+
+SCU_MOMENTS = (0.25, 0.5, 1.0, 1.5)            # c tau in the de Sitter radius r_0
+
+
+def self_creating_universe(ck, src):
+    """The inflating region of Gott and Li's universe in the Kantowski-Sachs chart, at r_0 = 1 and
+    their beta = 2 pi r_0, where l runs once round 2 pi. The slice phi = 0 of one moment tau has the
+    metric cosh^2(tau) dtheta^2 + sinh^2(tau) dl^2: a flat cylinder of radius sinh(tau) about the
+    axis theta, z = cosh(tau)(theta - pi/2), from one pole of the sphere to the other. Drawn at four
+    moments as the closed direction opens from the Cauchy horizon tau = 0, and played as a movie
+    with a frame every 0.025 r_0 of c tau."""
+    size = 2 * math.pi * math.cosh(max(SCU_MOMENTS)) / 2 + 1.0
+
+    def moment(ct):
+        sl = Slice(src, "self_creating_universe", "kantowski_sachs", "\\theta", "l", {"tau": repr(ct), "phi": 0},
+                   {"r_0": 1, "beta": "2*pi"})
+        z0 = -math.cosh(ct) * math.pi / 2
+        tube = Piece("tube", "sheet", sl, 0.0, math.pi, z0, 1,
+                     (("edge", "the pole $\\theta = 0$, where the slice runs on into $\\phi = \\pi$"),
+                      ("edge", "the pole $\\theta = \\pi$, where the slice runs on into $\\phi = \\pi$")),
+                     [(math.pi / 4, "r", None), (math.pi / 2, "r", None), (3 * math.pi / 4, "r", None)], size)
+        where = f"Gott-Li, the cylinder at c tau = {ct:g}"
+        ck.isometry(where, tube)
+        ck.radius(f"{where}, rho = sinh(c tau)", tube, lambda th, ct=ct: np.full_like(th, math.sinh(ct)), size)
+        ck.form(f"{where}, z = cosh(c tau)(theta - pi/2)", tube,
+                lambda th, ct=ct: math.cosh(ct) * (th - math.pi / 2), size)
+        return Surface([tube], label=f"$c\\tau = {ct:g}$", time=ct)
+
+    # The movie runs through the moments at a steady tau, a frame every 0.025 r_0 of c tau.
+    times, keys = movie_values(list(SCU_MOMENTS), 0.025)
+    frames = [moment(round(ct, 9)) for ct in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the slice $\\phi = 0$ of a moment of constant $\\tau$, which $l$ and $\\theta$ cover")
+    fig.legend("line", "r", "$\\theta$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$, each a circle of "
+                            "circumference $\\beta\\sinh(c\\tau/r_0)$")
+    fig.legend("line", "meridian", "$l$ constant, every $\\beta/12$")
+    return [view("cylinders", "The inflating region", "$r_0$", surfaces, fig.done(),
+                 movie=movie(frames, "$c\\tau$", [f.time for f in frames]),
+                 settings="$\\beta = 2\\pi r_0$, and $r_0 = 1$, the unit of every length.")]
 
 
 
@@ -9810,6 +10155,63 @@ def kasner_scalar(ck, src):
     settings = ("$(p_1, p_2, p_3) = (2/13, 4/13, 7/13)$, $q = 10/13$, and $t$ in the unit of time in which the powers "
                 "are evaluated, with $\\ell$ the ring's radius at $t = 1$, the unit of every length.")
     given = ("Exponents $(p_1, p_2, p_3) = (2/13, 4/13, 7/13)$ and $q = 10/13$, as in the spacetime diagrams.")
+    return [view("tube", "The ring's world tube", "$\\ell$", [tube], tube_fig, settings=settings, input=given,
+                 height="$t$, a height of $1.5\\,\\ell$ for each unit of $t$"),
+            view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(), movie=played, settings=settings,
+                 input=given)]
+
+
+def kasner_magnetic(ck, src):
+    """The plane y = 0 of Kasner's universe with a magnetic field at t = 1/4, 1/2, 1 and 2, at the
+    exponents (-2/7, 3/7, 6/7) and b = 1 the spacetime diagrams declare, each flat,
+    f^2 t^(2 p_1) dx^2 + t^(2 p_3) dz^2/f^2 with f = 1 + b^2 t^(2 p_3), with the ring of particles at
+    rest on x^2 + z^2 = l^2, which the published Christoffel symbols keep at rest: the ellipse of
+    semi-axes f t^p_1 l across the field and t^p_3 l/f along it, the second greatest at t = 1."""
+    p = (sp.Rational(-2, 7), sp.Rational(3, 7), sp.Rational(6, 7))
+    ck.exact("Kasner with a magnetic field: the exponents sum to 1, and so do their squares",
+             sum(p) == 1 and sum(k * k for k in p) == 1)
+    at_rest(ck, src, "kasner_magnetic", "kasner_time")
+    params = {"p_1": "-2/7", "p_2": "3/7", "p_3": "6/7", "b": 1}
+
+    def axes(t):
+        f = 1 + t ** (12 / 7)
+        return f * t ** (-2 / 7), t ** (6 / 7) / f
+    named = ("1/4", "1/2", "1", "2")
+    # The movie runs through the moments at a steady t, a frame every 0.05 of it.
+    moments, keys = ring_moments([float(sp.Rational(s)) for s in named], 0.05,
+                                 lambda k: (f"$t = {named[k]}$", float(sp.Rational(named[k])), {"t": named[k], "y": 0}, None),
+                                 lambda t: (f"$t = {t:g}$", t, {"t": repr(t), "y": 0}, None))
+    frames = ring_sequence(ck, src, "Kasner with a magnetic field", "kasner_magnetic", "kasner_time", moments, 4.0, params)
+    surfaces = [frames[i] for i in keys]
+    for s, (_, time, _, _) in zip(frames, moments):
+        P = s.curves[0].points
+        a = np.linspace(0, 2 * math.pi, 361)
+        across, along = axes(time)
+        want = np.column_stack([across * np.cos(a), along * np.sin(a)])
+        ck.add(f"Kasner with a magnetic field, t = {time}: the ellipse of semi-axes f t^p_1 and t^p_3/f",
+               float(np.max(np.abs(P[:, :2] - want))), 1e-12)
+    ck.add("Kasner with a magnetic field: the length along the field is greatest at t = 1",
+           abs(max(np.linspace(0.25, 2, 701), key=lambda t: axes(t)[1]) - 1.0), 2e-3)
+
+    def plane(u, a, b):
+        sl = FlatPlane(src, "kasner_magnetic", "kasner_time", "x", "z", {"t": repr(float(u)), "y": 0}, params)
+        return float(np.max(np.abs(sl.scale - [a, b])))
+    tube = stack(ck, "Kasner with a magnetic field", surfaces, axes, 1.5, plane, 8.0,
+                 "the ring's world tube runs on before $t = 1/4$ and after $t = 2$")
+    tube_fig = stack_figure(tube, 8.0, "$t$", [
+        ("fill", "cover", "the ring at every moment from $t = 1/4$ to $t = 2$, each at the height of its time"),
+        ("line", "particles", "the ring at the four moments of the flat view, twelve of its particles marked"),
+        ("line", "worldline", "the world lines of the twelve particles, at rest in the chart"),
+        ("line", "axis", "the axis of time, through the centre of the ring")])
+    fig, played = ring_movie(frames, 8.0, "$t$")
+    fig.legend("fill", "cover", "the plane $y = 0$ at each moment, flat")
+    fig.legend("line", "particles", "a ring of particles at rest in the chart on $x^2 + z^2 = \\ell^2$, with twelve of "
+                                    "them marked: an ellipse reaching $(1 + b^2t^{2p_3})\\,t^{p_1}\\ell$ along $x$ and "
+                                    "$t^{p_3}\\ell/(1 + b^2t^{2p_3})$ along $z$")
+    fig.legend("line", "meridian", "straight lines from the centre, every $30°$")
+    settings = ("$(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$, $b = 1$, and $t$ in the unit of time in which the powers are "
+                "evaluated, with $\\ell$ the radius of the ring in the chart's coordinates, the unit of every length.")
+    given = ("Exponents $(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$ at early times and $b = 1$, as in the spacetime diagrams.")
     return [view("tube", "The ring's world tube", "$\\ell$", [tube], tube_fig, settings=settings, input=given,
                  height="$t$, a height of $1.5\\,\\ell$ for each unit of $t$"),
             view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(), movie=played, settings=settings,
@@ -10892,6 +11294,51 @@ def einstein_1912_static(ck, src):
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
     return [view("equator", "The equator", "$m$", [surface], fig.done(),
                  settings="$m = 1$, the unit of every length.")]
+TILTED_MOMENT = 3.0     # the eta of the surface of homogeneity of Farnsworth's dust that is embedded
+
+
+def tilted_universes(ck, src):
+    """The slice z = 0 of one surface of homogeneity of Farnsworth's dust above its Cauchy horizon,
+    eta = 3 at W = C = 1, as its other diagrams draw the dust. The metric on it is
+    (X^2 - C^2) dr^2 + Y^2 e^(-2r) dy^2, a hyperbolic plane whose radius of curvature is
+    l = sqrt(X^2 - C^2), ruled by the horocycles of constant r. The strip 0 <= y < 2 pi of it is rolled
+    up, y for the angle, so the circle at r has the radius Y e^(-r) and the surface rises at
+    dz/dr = sqrt(l^2 - Y^2 e^(-2r)): Beltrami's pseudosphere of radius l, from its rim r = ln(Y/l),
+    where the circles have grown as fast as the distance out to them, three units of r up the horn.
+    Below the rim g_rr < (drho/dr)^2, which is checked, and no surface of revolution carries it.
+    l falls to zero on the horizon, where X = C."""
+    eta = TILTED_MOMENT
+    Y = math.sinh(eta / 2) ** 2
+    X = Y - 1 / math.tanh(eta / 2)
+    ell = math.sqrt(X * X - 1)
+    rim = math.log(Y / ell)
+    size = 2 * ell
+    sl = Slice(src, "tilted_universes", "farnsworth", "r", "y", {"eta": repr(eta), "z": 0}, dict(nr.TILTED_DUST))
+    horn = Piece("horn", "sheet", sl, rim, rim + 3.0, 0.0, 1,
+                 (("stops", "the rim $r = 0.32$, below which the circles grow faster than the distance out to them"),
+                  ("edge", "the horn runs on, narrowing, to $r \\to \\infty$")),
+                 [(1.0, "r", None), (2.0, "r", None), (3.0, "r", None)], size)
+    where = "tilted universes, a surface of homogeneity"
+    ck.add(f"{where}: the radius of curvature at eta = 3 is 3.28 W and the rim is at r = 0.32",
+           max(abs(round(ell, 2) - 3.28), abs(round(rim, 2) - 0.32)), 1e-12)
+    ck.isometry(where, horn)
+    ck.radius(f"{where}, rho = Y e^(-r)", horn, lambda r: Y * np.exp(-r), size)
+    # The tractrix of radius l: z = l (artanh(s) - s) with s = sqrt(1 - (Y e^(-r)/l)^2).
+    ck.form(f"{where}, the pseudosphere z = l (artanh(s) - s)", horn,
+            lambda r: ell * (np.arctanh(np.sqrt(1 - (Y * np.exp(-r) / ell) ** 2))
+                             - np.sqrt(1 - (Y * np.exp(-r) / ell) ** 2)), size)
+    below = np.linspace(rim - 3.0, rim - 1e-3, 200)
+    ck.add(f"{where}: below the rim the circles outgrow the distance, Y e^(-r) > l",
+           0.0 if np.all(Y * np.exp(-below) > ell) else 1.0, 0.5)
+    surface = Surface([horn])
+    fig = figure_of([surface], {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the strip $0 \\le y < 2\\pi$ of the slice $z = 0$ of the surface $\\eta = 3$, rolled up, "
+                                "from the rim $r = 0.32$ up the horn")
+    fig.legend("line", "r", "$r$ constant, at $1$, $2$, and $3$, each a circle of circumference $2\\pi Ye^{-r}$")
+    fig.legend("line", "meridian", "$y$ constant, every $30°$")
+    return [view("homogeneity", "A surface of homogeneity", "$W$", [surface], fig.done(),
+                 settings="Farnsworth's dust with $W$ the unit of every length and the tilt $C = W$, on the surface "
+                          "$\\eta = 3$, where $Y = 4.53\\,W$ and $X = 3.43\\,W$.")]
 
 
 def btz(ck, src):
@@ -10965,6 +11412,180 @@ def btz(ck, src):
     return [view("throat", "Through the throat", "$\\ell$", [surface], fig.done(),
                  settings="$\\ell = 1$, the unit of every length, $M = 1$ and $J = 0$, so that $r_+ = \\ell$. Every "
                           "length along the surface beyond $r = \\sqrt{2}\\,\\ell$ is measured with $dX^2 + dY^2 - dZ^2$.")]
+
+
+def draining_bathtub(ck, src):
+    """Two moments of a drain at A = -1 and B = sqrt 3 with c = 1, so that the horizon |A|/c is
+    the unit of length and the ergosurface lies at 2, as the spacetime diagrams draw it.
+
+    The laboratory's t = 0 is the plane the water moves in: g_rr = 1 and g_thetatheta = r^2, so
+    rho = r and dz/dr = 0, drawn out to r = 4 with the horizon and the ergosurface marked on it.
+    The Kerr-like chart's T = 0 is another surface, t = log(r^2 - 1)/2: there g_rr = r^2/(r^2 - 1) and g_phiphi = r^2, so dz/dr = 1/sqrt(r^2 - 1) and
+    z = arcosh r, the catenoid rho = cosh z, from its waist on the horizon, where the chart ends,
+    out to r = 5."""
+    params = {"A": -1, "B": "sqrt(3)"}
+    flat = Slice(src, "draining_bathtub", "laboratory", "r", "\\theta", {"t": 0}, params)
+    ck.plane("Draining bathtub, the laboratory's moment", flat, np.linspace(1e-3, 20, 400))
+    top = 4.0
+    size = 2 * top
+    plane = Piece("plane", "sheet", flat, 0.0, top, 0.0, 1,
+                  (("axis", "the drain $r = 0$"), ("edge", "the plane runs on to $r \\to \\infty$")),
+                  [(1.0, "horizon", "$r = |A|/c$"), (2.0, "ergo", None), (3.0, "r", None), (top, "r", None)], size)
+    ck.isometry("Draining bathtub, the plane", plane)
+    ck.radius("Draining bathtub, the plane rho = r", plane, lambda r: r, size)
+    ck.form("Draining bathtub, the plane z = 0", plane, np.zeros_like, size)
+    surface = Surface([plane])
+    fig = figure_of([surface], {"sheet": "cover"}, size, FLAT_CAMERA)
+    ring_label(fig, [0, 0, 0], *plane.at(1.0), "$|A|/c$", side=-1)
+    ring_label(fig, [0, 0, 0], *plane.at(2.0), "$2|A|/c$")
+    ring_label(fig, [0, 0, 0], *plane.at(top), "$4|A|/c$")
+    fig.legend("fill", "cover", "the plane the water moves in, which $t$ and $r$ cover down to the drain")
+    fig.legend("line", "horizon", "the horizon $r = |A|/c$, where the water runs inward at the speed of sound")
+    fig.legend("line", "ergo", "the ergosurface $r = \\sqrt{A^2 + B^2}/c$, where the whole speed of the water is $c$")
+    fig.legend("line", "r", "$r$ constant, at $3|A|/c$ and $4|A|/c$, each of circumference $2\\pi r$")
+    fig.legend("line", "meridian", "$\\theta$ constant, every $15°$")
+    settings = ("$A = -1$ and $c = 1$, so that $|A|/c$ is the unit of every length, and $B = \\sqrt{3}$, so that "
+                "the ergosurface lies at $2|A|/c$.")
+    views = [view("plane", "The laboratory's moment", "$|A|/c$", [surface], fig.done(), settings=settings)]
+
+    sl = Slice(src, "draining_bathtub", "kerr_like", "r", "\\phi", {"T": 0}, params)
+    rh = sl.horizons()[0]
+    ck.add("Draining bathtub: the horizon is at r = |A|/c", abs(rh - 1.0), 1e-12)
+    far = 5.0
+    wide = 2 * far
+    funnel = Piece("funnel", "sheet", sl, rh, far, 0.0, 1,
+                   (("throat", "the waist $r = |A|/c$, the horizon, where the chart of $T$ and $r$ ends"),
+                    ("edge", "the surface runs on, flattening, to $r \\to \\infty$")),
+                   [(rh, "horizon", "$r = |A|/c$"), (2.0, "ergo", None)] + [(r, "r", None) for r in (3.0, 4.0, far)], wide)
+    ck.isometry("Draining bathtub, the funnel", funnel)
+    ck.radius("Draining bathtub, the funnel rho = r", funnel, lambda r: r, wide)
+    ck.form("Draining bathtub, the catenoid z = arcosh(c r/|A|)", funnel, lambda r: np.arccosh(np.maximum(r, 1.0)), wide)
+    cat = Surface([funnel])
+    fig = figure_of([cat], {"sheet": "cover"}, wide)
+    ring_label(fig, [0, 0, 0], *funnel.at(rh), "$|A|/c$", dx=14)
+    ring_label(fig, [0, 0, 0], *funnel.at(2.0), "$2|A|/c$")
+    ring_label(fig, [0, 0, 0], *funnel.at(far), "$5|A|/c$")
+    fig.legend("fill", "cover", "the outside of the horizon, which $T$ and $r$ cover")
+    fig.legend("line", "horizon", "the waist $r = |A|/c$, the horizon")
+    fig.legend("line", "ergo", "the ergosurface $r = \\sqrt{A^2 + B^2}/c$")
+    fig.legend("line", "r", "$r$ constant, at $3|A|/c$, $4|A|/c$ and $5|A|/c$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("funnel", "The moment $T = 0$", "$|A|/c$", [cat], fig.done(), settings=settings))
+    return views
+
+
+BTZ_MULTI_ALPHA = math.sqrt(2.0 / 3.0)
+
+
+def btz_multi_geodesic(normal, along):
+    """The points of the geodesic of the hyperbolic plane -V^2 + X^2 + Y^2 = -1 that lies in the plane
+    through the origin with the unit normal `normal` = (n_V, n_X, n_Y), at the signed distances `along`
+    from its point nearest the axis, as (V, X, Y)."""
+    nV, nX, nY = normal
+    b = math.asinh(nV)
+    turn = math.atan2(nY, nX)
+    near = np.array([math.cosh(b), math.sinh(b) * math.cos(turn), math.sinh(b) * math.sin(turn)])
+    tangent = np.array([0.0, -math.sin(turn), math.cos(turn)])
+    s = np.asarray(along, dtype=float)[:, None]
+    return np.cosh(s) * near + np.sinh(s) * tangent
+
+
+def btz_multi_holes_wormholes(ck, src):
+    """The moment of time symmetry, t = 0 of the sausage chart at l = 1, with the four geodesics along
+    which the tent of Aminneborg, Bengtsson, Brill, Holst and Peldan cuts it. The moment is the
+    hyperbolic plane, g_rhorho = 4/(1 - rho^2)^2 and g_phiphi = 4 rho^2/(1 - rho^2)^2, whose circles
+    grow faster than the distance out to them at every rho > 0, which is checked: in three
+    dimensional Minkowski space it is the hyperboloid Z = (1 + rho^2)/(1 - rho^2) - 1 over the
+    radius 2 rho/(1 - rho^2), Brill's figure 5 and Steif's (3.2).
+
+    The four cuts are the geodesics X = +-alpha V and Y = +-alpha V at alpha = sqrt(2/3), each at
+    the distance b = artanh(alpha) from the axis, sinh(b) = sqrt 2. Adjacent cuts are a distance d
+    apart with cosh d = sinh^2 b = 2, along their common perpendicular, which lies at the distance
+    h from the axis with tanh h = 1/(sqrt 2 alpha), cosh h = 2. Glued opposite, the four
+    perpendicular segments close into the wormhole's one horizon, of length 4 d = 2 pi sqrt(M),
+    and glued adjacent they close into three, of lengths d, d and 2 d. Each segment is checked
+    to lie on the surface, to meet both of its cuts at right angles, and to have the length d."""
+    params = {"ell": 1}
+    sl = Slice(src, "btz_multi_holes_wormholes", "sausage", "\\rho", "\\phi", {"t": 0}, params, space="minkowski")
+    ck.stops("many black holes, the moment t = 0 in flat space", sl, np.linspace(1e-3, 0.99, 400))
+    top = 0.8
+    reach = 2 * top / (1 - top ** 2)
+    size = 2 * reach
+    sheet = Piece("sheet", "sheet", sl, 0.0, top, 0.0, 1,
+                  (("axis", "the axis of the tent, $\\rho = 0$"),
+                   ("edge", "the sheet runs on toward the light cone, to $\\rho \\to \\ell$")),
+                  [(r, "r", None) for r in (0.2, 0.4, 0.6, top)], size)
+    cone = FormPiece("cone", sl, np.linspace(0.0, top, 81), lambda r: 2 * r / (1 - r * r),
+                     lambda r: 2 * r / (1 - r * r) - 1.0,
+                     (("apex", "the apex of the light cone, a distance $\\ell$ below the axis"),
+                      ("edge", "the cone runs on")), size)
+    ck.isometry("many black holes, the sheet", sheet)
+    ck.form("many black holes, the hyperboloid Z = (1 + rho^2)/(1 - rho^2) - 1", sheet,
+            lambda r: (1 + r * r) / (1 - r * r) - 1, size)
+    ck.radius("many black holes, the circle of rho has the radius 2 rho/(1 - rho^2)", sheet,
+              lambda r: 2 * r / (1 - r * r), size)
+
+    alpha = BTZ_MULTI_ALPHA
+    b = math.atanh(alpha)
+    d = math.acosh(math.sinh(b) ** 2)
+    h = math.atanh(1 / (math.sqrt(2) * alpha))
+    ck.add("many black holes: sinh b = sqrt 2 at alpha = sqrt(2/3)", abs(math.sinh(b) - math.sqrt(2)), 1e-12)
+    ck.add("many black holes: adjacent cuts are arccosh(2) apart", abs(d - math.acosh(2)), 1e-12)
+    ck.add("many black holes: the wormhole's horizon 4 d is 2 pi sqrt(M) at M = (2 arccosh(2)/pi)^2",
+           abs(4 * d - 2 * math.pi * math.sqrt((2 * math.acosh(2) / math.pi) ** 2)), 1e-12)
+    eta = np.diag([-1.0, 1.0, 1.0])
+    vtop = (1 + top ** 2) / (1 - top ** 2)
+
+    def on_sheet(P):
+        """(V, X, Y) on the hyperboloid as the drawing's (X, Y, Z), with Z = V - 1."""
+        return np.column_stack([P[:, 1], P[:, 2], P[:, 0] - 1.0])
+
+    curves, normals = [], []
+    for k in range(4):
+        turn = k * math.pi / 2
+        n = np.array([math.sinh(b), math.cosh(b) * math.cos(turn), math.cosh(b) * math.sin(turn)])
+        normals.append(n)
+        far = math.acosh(vtop / math.cosh(b))
+        P = btz_multi_geodesic(n, np.linspace(-far, far, 161))
+        ck.add(f"many black holes, cut {k}: on the hyperbolic plane", float(np.max(np.abs(np.einsum("ij,jk,ik->i", P, eta, P) + 1))), 1e-9)
+        ck.add(f"many black holes, cut {k}: on its plane through the origin, X cos + Y sin = alpha V",
+               float(np.max(np.abs(P @ eta @ n))), 1e-9)
+        step = np.diff(P, axis=0)
+        chord = np.sqrt(np.einsum("ij,jk,ik->i", step, eta, step))
+        ck.add(f"many black holes, cut {k}: each chord is the chord of its step in arc length",
+               float(np.max(np.abs(chord - 2 * np.sinh(far / 160)))), 1e-9)
+        ck.on_piece(f"many black holes, cut {k}", sheet, on_sheet(P))
+        curves.append(Curve(sheet, "cut", on_sheet(P)))
+    for k in range(4):
+        turn = k * math.pi / 2 + math.pi / 4
+        m = np.array([math.sinh(h), math.cosh(h) * math.cos(turn), math.cosh(h) * math.sin(turn)])
+        for n in (normals[k], normals[(k + 1) % 4]):
+            ck.add(f"many black holes, horizon segment {k}: at right angles to its cut", abs(float(m @ eta @ n)), 1e-12)
+        P = btz_multi_geodesic(m, np.linspace(-d / 2, d / 2, 41))
+        for end, n in ((P[0], normals[k]), (P[-1], normals[(k + 1) % 4])):
+            ck.add(f"many black holes, horizon segment {k}: ends on its cut", abs(float(end @ eta @ n)), 1e-9)
+        ck.on_piece(f"many black holes, horizon segment {k}", sheet, on_sheet(P))
+        curves.append(Curve(sheet, "horizon", on_sheet(P)))
+
+    surface = Surface([sheet, cone], curves=curves)
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *sheet.at(0.4), "$0.4\\,\\ell$")
+    ring_label(fig, [0, 0, 0], *sheet.at(top), "$0.8\\,\\ell$")
+    fig.legend("fill", "cover", "the hyperbolic plane, the moment $t = 0$ before any cutting")
+    fig.legend("line", "cut", "the four cuts, straight lines of the plane; the spacetime's moment is the region "
+                              "between them, with the cuts glued in pairs")
+    fig.legend("line", "horizon", "the shortest paths between adjacent cuts, each of length $\\mathrm{arccosh}\\,2"
+                                  "\\;\\ell$, which close into the horizons once the cuts are glued")
+    fig.legend("line", "r", "$\\rho$ constant, at $0.2$, $0.4$, $0.6$ and $0.8\\,\\ell$")
+    fig.legend("line", "reference", "the light cone of the Minkowski space it is drawn in, which the sheet nears as "
+                                    "$\\rho \\to \\ell$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("moment", "The moment of time symmetry", "$\\ell$", [surface], fig.done(),
+                 settings="$\\ell = 1$, the unit of every length, and $\\alpha = \\sqrt{2/3}$, the hyperbolic tangent "
+                          "of each cut's distance from the axis in units of $\\ell$. Every length along the sheet is "
+                          "measured with $dX^2 + dY^2 - dZ^2$.",
+                 stops=["At every $\\rho > 0$ the circles grow faster than the distance out to them, and no surface "
+                        "of revolution in flat space carries the moment; Minkowski space carries it."])]
 
 
 def spinning_string(ck, src):
@@ -12201,6 +12822,64 @@ def melvin(ck, src):
     return views
 
 
+def kerr_melvin(ck, src):
+    """The equatorial slice of constant t of Ernst and Wild's hole outside r_+, at a = 4m/5 and
+    B = 1/(4m), where g_tphi drops out: rho = sqrt(g_phiphi) = k sqrt(P) = k sqrt(A/(H Sigma)), the
+    circumference radius, with phi of period 2 pi on a regular axis, and g_rr = F/Delta = H Sigma/Delta.
+
+    On the equator H = (1 + B^2 A/(4 r^2))^2, and on the horizon A = 4 m^2 r_+^2, so the throat has
+    the radius 2 m k/(1 + B^2 m^2) whatever the spin, 32.08/17 m here, where Kerr's has 2m. The
+    circles widen to k/B = 4.01 m at r = 7.950 m, where B^2 A = 4 r^2, and narrow beyond it as
+    Melvin's plane does, drawn out to r = 10 m on both sheets of the slice through the bifurcation
+    sphere. g_tt vanishes on the equator at r = 1.942 m, found from the published metric."""
+    name = "Kerr-Melvin"
+    sl = Slice(src, "kerr_melvin", "boyer_lindquist", "r", "\\phi", {"t": 0, **EQUATOR}, nr.KM)
+    rp = sl.horizons()[0]
+    ck.add(f"{name}: the outer horizon is the larger root of the published g^rr, 8m/5", abs(rp - 1.6), 1e-11)
+    _, entry, R = nr.load("kerr_melvin", "boyer_lindquist")
+    subs = {R.c: 1, R.symbol["\\theta"]: sp.pi / 2}
+    subs.update({R.parameters[k]: sp.sympify(v) for k, v in nr.KM.items()})
+    gtt = nr.published_matrix(R, entry, "metric_components")[0, 0]
+    for _ in R.held:
+        # The held names hold one another: N, F and P hold H and A, which hold Delta.
+        gtt = gtt.subs(R.held).doit()
+    gtt = sp.lambdify(R.symbol["r"], gtt.subs(subs), "mpmath")
+    ergo = float(mpmath.findroot(gtt, (1.7, 2.2), solver="anderson"))
+    ck.add(f"{name}: g_tt vanishes on the equator at r = 1.9424 m", abs(ergo - 1.9424195963), 1e-9)
+    widest = brentq(lambda r: float(sl.rho_at(r + 1e-6) - sl.rho_at(r - 1e-6)), 6.0, 9.0, xtol=1e-9)
+    ck.add(f"{name}: the widest circle of the equator has radius k/B = 4.01 m, at r = 7.950 m",
+           abs(float(sl.rho_at(widest)) - 4.01) + abs(widest - 7.9497790) / 1e3, 1e-6)
+    top, size = 10.0, 18.0
+    radii = (3.0, 4.0, 5.0, 6.0)
+    near = Piece("exterior", "sheet", sl, rp, top, 0.0, 1,
+                 (("throat", "the throat $r = r_+$, the bifurcation sphere, where the other exterior begins"),
+                  ("edge", "the surface runs on, narrowing, to $r \\to \\infty$")),
+                 [(rp, "horizon", "$r = r_+$"), (ergo, "ergo", None)] + [(r, "r", None) for r in radii]
+                 + [(widest, "surface", "the widest circle"), (top, "r", None)], size)
+    far = Piece("other_exterior", "sheet2", sl, rp, top, 0.0, -1,
+                (("throat", "the throat $r = r_+$"), ("edge", "the surface runs on, narrowing, to $r \\to \\infty$")),
+                [(r, "r2", None) for r in radii] + [(widest, "surface", None), (top, "r2", None)], size)
+    ck.join(f"{name}, the two sheets at the throat", near, rp, far, rp)
+    for p in (near, far):
+        ck.isometry(f"{name}, {p.id}", p)
+    ck.add(f"{name}: the throat's circumference radius is 2mk/(1 + B^2 m^2)",
+           abs(near.at(rp)[0] - 2 * 1.0025 / (1 + 1 / 16)), 1e-6)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(rp), "$r = r_+$", dx=10)
+    ring_label(fig, [0, 0, 0], *near.at(widest), "$r = 7.95\\,m$", dx=10)
+    fig.legend("fill", "cover", "the exterior $r > r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $3$, $4$, $5$, $6$ and $10\\,m$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the horizon")
+    fig.legend("line", "ergo", f"the edge of the ergoregion, $r_E = {ergo:.3f}\\,m$ on the equator")
+    fig.legend("line", "surface", "the widest circle, of radius $k/B = 4.01\\,m$, at $r = 7.95\\,m$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("equator", "The equator", "$m$", [surface], fig.done(),
+                 settings="$m = 1$, the unit of every length, $a = 4m/5$, and $B = 1/(4m)$, so that $r_+ = 8m/5$, "
+                          f"$k = 1.0025$, and $r_E = {ergo:.3f}\\,m$ is the radius of the ergosurface on the equator.")]
+
+
 def levi_civita(ck, src):
     """Levi-Civita's plane z = 0 at t = 0 in Weyl's coordinates at sigma = 1/4 and C = 1.
 
@@ -12869,6 +13548,168 @@ def erez_rosen(ck, src):
                           stops=[f"Inside $r = {stop:.4f}\\,m$ the circles change faster than the distance in to them, "
                                  "$g_{rr} < (\\partial_r\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution in flat "
                                  "space carries the slice on."]))
+    return views
+
+
+DS_OBLATE, DS_PROLATE = {"m": 1, "q": "1/12"}, {"m": 1, "q": "-1/12"}
+
+
+def distorted_schwarzschild(ck, src):
+    """Schwarzschild's black hole in a quadrupole tidal field at m = 1, for the oblate q = 1/12 and
+    the prolate q = -1/12, in the spherical chart: the equatorial plane at t = 0 and the horizon
+    itself.
+
+    On the equator, with x = r/m - 1, U = -(q/4)(3x^2 - 1) and V = -3qx + (9/16) q^2 (x^2 - 1)^2,
+    so the circle of radius r has the radius rho = r e^(-U) = r e^(q (3x^2 - 1)/4) on the surface,
+    2m e^(q/2) at the throat r = 2m, the equator of the horizon, and g_rr = e^(2V - 2U)/(1 - 2m/r).
+    The slice runs through the throat, the bifurcation surface, into a second exterior, as
+    Flamm's paraboloid does. At q = -1/12 the circles grow more slowly than Schwarzschild's and the
+    surface stands in flat space as far as it is drawn, r = 4m. At q = 1/12 they grow faster: the
+    surface lies level at r = 2.5388 m, found here, on a circle of radius 2.883 m, and beyond it
+    the circles grow faster than the distance out to them, which is checked, so the slice is drawn
+    on in three dimensional Minkowski space, climbing at dZ/dr = sqrt((d rho/dr)^2 - g_rr), as
+    Schwarzschild-anti-de Sitter's is; inside the level circle no surface of Minkowski space
+    carries it, which is checked as well.
+
+    The horizon r = 2m at one moment has the metric 4m^2 e^(-2U)(e^(2V) dtheta^2 + sin^2(theta)
+    dphi^2) with U = (q/2)(3 cos^2(theta) - 1) and V = 2U - 2q = -3q sin^2(theta), a closed surface
+    of area 16 pi m^2 e^(-2q) whose equator has the radius 2m e^(q/2). Its Gaussian curvature is
+    e^(2q + 3q sin^2(theta))(1 + 3q - 15q cos^2(theta) - 18 q^2 sin^2(theta) cos^2(theta))/(4m^2),
+    (1 - 12q) e^(2q)/(4m^2) at the poles, so it stands in flat space for q <= 1/12 and at
+    q = 1/12 is flat at its poles, which is checked as g_thetatheta - (d rho/d theta)^2 falling to
+    zero there as the fourth power of theta. At q = 1/12 it is oblate, 2.085 m across the equator
+    and 1.225 m from its centre to a pole; at q = -1/12 prolate, 1.918 m and 2.652 m."""
+    name = "black hole in a tidal field"
+    top = 4.0
+    views = []
+    unit = "$m = 1$, the unit of every length"
+    for vid, label, q, qtex, params in (("oblate", "The equatorial plane, $q = 1/12$", 1 / 12, "1/12", DS_OBLATE),
+                                        ("prolate", "The equatorial plane, $q = -1/12$", -1 / 12, "-1/12", DS_PROLATE)):
+        fixed_at = {"t": 0, **EQUATOR}
+        sl = Slice(src, "distorted_schwarzschild", "spherical", "r", "\\phi", fixed_at, params)
+        rh = sl.horizons()[0]
+        ck.add(f"{name}, {vid}: the horizon on the equator is at r = 2m", abs(rh - 2.0), 1e-12)
+
+        def radius(r, q=q):
+            return r * np.exp(q * (3 * (r - 1) ** 2 - 1) / 4)
+        throat_radius = 2 * math.exp(q / 2)
+        size = 2 * float(sl.rho_at(top))
+        throat_text = "the throat $r = 2m$, the equator of the horizon, where the other exterior begins"
+        if vid == "oblate":
+            msl = Slice(src, "distorted_schwarzschild", "spherical", "r", "\\phi", fixed_at, params, space="minkowski")
+            lo, hi = 2.3, 2.8
+            for _ in range(80):
+                mid = 0.5 * (lo + hi)
+                lo, hi = (mid, hi) if float(sl.defect_at(np.array([mid]))[0]) > 0 else (lo, mid)
+            level = 0.5 * (lo + hi)
+            ck.add(f"{name}, oblate: the surface lies level at r = 2.5388 m", abs(level - 2.5388), 1e-4)
+            ck.stops(f"{name}, oblate, beyond the level circle in flat space", sl, np.linspace(level, top, 402)[1:])
+            inward = np.linspace(rh, level, 402)[1:-1]
+            ck.add(f"{name}, oblate: between the throat and the level circle no surface in Minkowski space carries "
+                   "the slice, (drho/dr)^2 - g_rr < 0", float(max(0.0, np.max(-msl.defect_at(inward)))), 0.0)
+            if not np.all(msl.defect_at(inward) > 0):
+                ck.items[-1]["ok"] = False
+            join = (f"at $r = {level:.2f}\\,m$ the surface lies level, in flat space nearer the horizon and in "
+                    "Minkowski space beyond")
+            edge = "the sheet runs on to where the distant matter lies"
+            near = Piece("exterior", "sheet", sl, rh, level, 0.0, 1, (("throat", throat_text), ("join", join)),
+                         [(rh, "horizon", "$r = 2m$"), (level, "space", None)], size)
+            out = Piece("exterior_minkowski", "sheet", msl, level, top, near.at(level)[1], 1,
+                        (("join", join), ("edge", edge)), [(3.0, "r", None), (top, "r", None)], size)
+            far = Piece("other_exterior", "sheet2", sl, rh, level, 0.0, -1,
+                        (("throat", "the throat $r = 2m$"), ("join", join)), [(level, "space", None)], size)
+            far_out = Piece("other_exterior_minkowski", "sheet2", msl, level, top, far.at(level)[1], -1,
+                            (("join", join), ("edge", edge)), [(3.0, "r2", None), (top, "r2", None)], size)
+            pieces = [near, out, far, far_out]
+            for a, b in ((near, out), (far, far_out)):
+                # The level circle is a root found in floats, where a tangent taken as a limit has no
+                # sign to its square root, so the join is held by the slope of each profile's last chord.
+                ends = [abs(piece.z[i] - piece.z[j]) / abs(piece.rho[i] - piece.rho[j])
+                        for piece, (i, j) in ((a, (-1, -2)), (b, (0, 1)))]
+                ck.add(f"{name}, oblate, {a.id} in flat space and {b.id} in Minkowski space lie level where they meet",
+                       max(ends), 0.05)
+                pa, pb = a.data()["points"][-1], b.data()["points"][0]
+                ck.add(f"{name}, oblate, {a.id} and {b.id} as written: one point at the level circle",
+                       max(abs(pa[0] - pb[0]), abs(pa[1] - pb[1]), abs(pa[2] - pb[2])),
+                       10.0 ** -min(a.decimals, b.decimals))
+            ck.add(f"{name}, oblate: the level circle has radius 2.883 m", abs(near.at(level)[0] - 2.883), 1e-3)
+        else:
+            edge = "the surface runs on to where the distant matter lies"
+            near = Piece("exterior", "sheet", sl, rh, top, 0.0, 1, (("throat", throat_text), ("edge", edge)),
+                         [(rh, "horizon", "$r = 2m$"), (2.5, "r", None), (3.0, "r", None), (3.5, "r", None),
+                          (top, "r", None)], size)
+            far = Piece("other_exterior", "sheet2", sl, rh, top, 0.0, -1,
+                        (("throat", "the throat $r = 2m$"), ("edge", edge)),
+                        [(2.5, "r2", None), (3.0, "r2", None), (3.5, "r2", None), (top, "r2", None)], size)
+            pieces = [near, far]
+        for piece in pieces:
+            space = "in Minkowski space" if piece.sl.lorentz else "in flat space"
+            ck.isometry(f"{name}, {vid}, {piece.id} {space}", piece)
+            ck.radius(f"{name}, {vid}, {piece.id}, rho = r e^(q (3x^2 - 1)/4)", piece, radius, size)
+        ck.join(f"{name}, {vid}, the two sheets at the throat", near, rh, far, rh)
+        ck.add(f"{name}, {vid}: the throat has radius 2m e^(q/2)", abs(near.at(rh)[0] - throat_radius), 1e-6)
+        surface = Surface(pieces)
+        fig = figure_of([surface], {"sheet": "cover"}, size)
+        ring_label(fig, [0, 0, 0], *near.at(rh), "$r = 2m$", dx=14)
+        last = pieces[1] if vid == "oblate" else near
+        ring_label(fig, [0, 0, 0], *last.at(top), "$4\\,m$")
+        fig.legend("fill", "cover", "the exterior $r > 2m$ that $t$ and $r$ cover")
+        if vid == "oblate":
+            ring_label(fig, [0, 0, 0], *near.at(level), f"${level:.2f}\\,m$")
+            fig.legend("line", "r", "$r$ constant, at $3$ and $4\\,m$")
+            fig.legend("line", "space", f"$r = {level:.2f}\\,m$, where the surface lies level: flat space inside, "
+                                        "Minkowski space beyond")
+            settings = (f"$q = {qtex}$ and {unit}. Every length along the surface beyond $r = {level:.2f}\\,m$ is "
+                        "measured with $dX^2 + dY^2 - dZ^2$.")
+        else:
+            fig.legend("line", "r", "$r$ constant, at $2.5$, $3$, $3.5$ and $4\\,m$")
+            settings = f"$q = {qtex}$ and {unit}."
+        fig.legend("line", "r2", "the same radii on the other exterior")
+        fig.legend("line", "horizon", f"the throat $r = 2m$, of radius ${throat_radius:.3f}\\,m$, where the slice "
+                                      "crosses the horizon")
+        fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+        views.append(view(vid, label, "$m$", [surface], fig.done(), settings=settings))
+
+    for vid, label, q, qtex, params, equator, half_height in (
+            ("horizon_oblate", "The horizon, $q = 1/12$", 1 / 12, "1/12", DS_OBLATE, 2.085, 1.225),
+            ("horizon_prolate", "The horizon, $q = -1/12$", -1 / 12, "-1/12", DS_PROLATE, 1.918, 2.652)):
+        hz = Slice(src, "distorted_schwarzschild", "spherical", "\\theta", "\\phi", {"t": 0, "r": 2}, params)
+        half = hz.rise(0.0, math.pi / 2)
+        hsize = 2 * max(half, 2 * math.exp(q / 2))
+        horizon = Piece("horizon", "sheet", hz, 0.0, math.pi, -half, 1,
+                        (("axis", "the pole $\\theta = 0$"), ("axis", "the pole $\\theta = \\pi$")),
+                        [(math.pi / 4, "r", None), (math.pi / 2, "horizon", "$\\theta = \\pi/2$"),
+                         (3 * math.pi / 4, "r", None)], hsize)
+        which = vid.removeprefix("horizon_")
+        ck.isometry(f"{name}, the {which} horizon", horizon)
+
+        def around(th, q=q):
+            return 2 * np.exp(-q * (3 * np.cos(th) ** 2 - 1) / 2) * np.sin(th)
+        ck.radius(f"{name}, the {which} horizon, rho = 2m e^(-U) sin(theta)", horizon, around, hsize)
+        ck.add(f"{name}, the {which} horizon is the same on either side of its equator",
+               abs(horizon.at(math.pi)[1] - half) / hsize, FORM)
+        ck.add(f"{name}, the {which} horizon: the equator has radius {equator} m",
+               abs(horizon.at(math.pi / 2)[0] - equator), 1e-3)
+        ck.add(f"{name}, the {which} horizon: a pole stands {half_height} m from the centre", abs(half - half_height), 1e-3)
+        pts = np.array(horizon.data()["points"])
+        ds = np.hypot(np.diff(pts[:, 1]), np.diff(pts[:, 2]))
+        area = float(np.sum(2 * math.pi * 0.5 * (pts[1:, 1] + pts[:-1, 1]) * ds))
+        exact = 16 * math.pi * math.exp(-2 * q)
+        ck.add(f"{name}, the {which} horizon: the area is 16 pi m^2 e^(-2q)", abs(area - exact) / exact, 1e-4)
+        if which == "oblate":
+            # At q = 1/12 the poles are flat: g_thetatheta - (d rho/d theta)^2 falls as theta^4.
+            small = np.array([0.02, 0.01])
+            defect = hz.defect_at(small)
+            ck.add(f"{name}, the oblate horizon is flat at its poles: the defect falls as theta^4",
+                   abs(float(defect[0] / defect[1]) - 16.0) / 16.0, 0.02)
+        body = Surface([horizon])
+        fig = figure_of([body], {"sheet": "cover"}, hsize)
+        ring_label(fig, [0, 0, 0], *horizon.at(math.pi / 2), "$\\theta = \\pi/2$", dx=10)
+        fig.legend("fill", "cover", "the horizon $r = 2m$ at one moment, a closed surface")
+        fig.legend("line", "horizon", f"the equator $\\theta = \\pi/2$, of radius ${equator}\\,m$")
+        fig.legend("line", "r", "$\\theta$ constant, at $\\pi/4$ and $3\\pi/4$")
+        fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+        views.append(view(vid, label, "$m$", [body], fig.done(), settings=f"$q = {qtex}$ and {unit}."))
     return views
 
 
@@ -14702,12 +15543,14 @@ DRAWN = {
     "hotta_tanaka": hotta_tanaka,
     "schwarzschild": schwarzschild,
     "misner": misner,
+    "self_creating_universe": self_creating_universe,
     "gott_time_machine": gott_time_machine,
     "wormhole_time_machine": wormhole_time_machine,
     "ori_time_machine": ori_time_machine,
     "interior_schwarzschild": interior_schwarzschild,
     "gravastar": gravastar,
     "tolman_vii": tolman_vii,
+    "bowers_liang": bowers_liang,
     "misner_zapolsky": misner_zapolsky,
     "bonnor_charged_dust": bonnor_charged_dust,
     "tov": tov,
@@ -14750,12 +15593,14 @@ DRAWN = {
     "bertotti_robinson": bertotti_robinson,
     "plebanski_hacyan": plebanski_hacyan,
     "cremmer_scherk": cremmer_scherk,
+    "three_brane_throat": three_brane_throat,
     "lindquist_wheeler_lattice": lindquist_wheeler_lattice,
     "stockum_dust": stockum_dust,
     "taub_nut": taub_nut,
     "israel_wilson_perjes": israel_wilson_perjes,
     "godel": godel,
     "som_raychaudhuri": som_raychaudhuri,
+    "maitra_dust": maitra_dust,
     "kerr": kerr,
     "kerr_newman": kerr_newman,
     "kerr_de_sitter": kerr_de_sitter,
@@ -14772,9 +15617,11 @@ DRAWN = {
     "minkowski": minkowski,
     "anti_de_sitter": anti_de_sitter,
     "malament_hogarth": malament_hogarth,
+    "eih_many_bodies": eih_many_bodies,
     "mixmaster": mixmaster,
     "kasner": kasner,
     "kasner_scalar": kasner_scalar,
+    "kasner_magnetic": kasner_magnetic,
     "bianchi": bianchi,
     "pp_wave": pp_wave, "khan_penrose": khan_penrose, "bell_szekeres": bell_szekeres,
     "chandrasekhar_xanthopoulos": chandrasekhar_xanthopoulos,
@@ -14787,15 +15634,19 @@ DRAWN = {
     "kopczynski_trautman": kopczynski_trautman,
     "ab_metrics": ab_metrics,
     "small_universes": small_universes,
+    "tilted_universes": tilted_universes,
     "alcubierre": alcubierre,
     "natario": natario,
     "btz": btz,
+    "draining_bathtub": draining_bathtub,
+    "btz_multi_holes_wormholes": btz_multi_holes_wormholes,
     "c_metric": c_metric,
     "einstein_rosen_waves": einstein_rosen_waves,
     "gowdy": gowdy,
     "nariai": nariai,
     "global_monopole": global_monopole,
     "tangherlini": tangherlini,
+    "string_bh_three_four_charges": string_bh_three_four_charges,
     "boulware_deser": boulware_deser,
     "black_string": black_string,
     "kaluza_klein_monopole": kaluza_klein_monopole,
@@ -14811,6 +15662,7 @@ DRAWN = {
     "brill_waves": brill_waves,
     "kastor_traschen": kastor_traschen,
     "melvin": melvin,
+    "kerr_melvin": kerr_melvin,
     "senovilla": senovilla,
     "thin_shell_wormhole": thin_shell_wormhole,
     "teo_wormhole": teo_wormhole,
@@ -14829,6 +15681,7 @@ DRAWN = {
     "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
     "zipoy_voorhees": zipoy_voorhees,
     "erez_rosen": erez_rosen,
+    "distorted_schwarzschild": distorted_schwarzschild,
     "robinson_trautman": robinson_trautman,
     "bondi_sachs": bondi_sachs,
     "string_black_hole": string_black_hole,
@@ -14974,6 +15827,19 @@ CAPTIONS = {
         "$\\sqrt{1/b^2 - 1}$, the slope of the Vilenkin-Gott cone. Both parts lie level at the circle, so they "
         "meet there with one tangent plane.",
     ],
+    ("btz_multi_holes_wormholes", "moment"): [
+        "The moment of time symmetry ($t = 0$ of the sausage chart) before the cutting, the whole hyperbolic "
+        "plane, drawn as a surface in three dimensional Minkowski space with every distance along it, measured "
+        "with $dX^2 + dY^2 - dZ^2$, the metric distance. It is one sheet of the hyperboloid $(Z + \\ell)^2 - X^2 - "
+        "Y^2 = \\ell^2$, and each straight line of the plane is the sheet's intersection with a plane through the "
+        "apex of the light cone.",
+        "The four cuts stand a distance $\\ell\\,\\mathrm{artanh}\\,\\alpha$ from the axis, and the spacetime's moment "
+        "is the region between them, with four ends that run out to infinity. Glue opposite cuts and the four "
+        "dashed segments join into one closed loop of length $4\\,\\mathrm{arccosh}\\,2\\;\\ell$, the horizon of a "
+        "wormhole with one exterior and a torus inside. Glue adjacent cuts and they close into three loops, of "
+        "lengths $\\mathrm{arccosh}\\,2\\;\\ell$ twice and $2\\,\\mathrm{arccosh}\\,2\\;\\ell$, the horizons of three "
+        "black holes.",
+    ],
     ("btz", "throat"): [
         "The moment $t = 0$ of the hole without rotation ($M = 1$, $J = 0$) through both of its exteriors, "
         "joined at the bifurcation circle $r = r_+$, in flat space out to the circle $r = \\sqrt{1 + M}\\,\\ell$ "
@@ -14986,6 +15852,24 @@ CAPTIONS = {
         "as on the static slice of anti-de Sitter space, and the surface climbs at $dZ/dr = \\sqrt{1 - 1/N^2}$ "
         "from level toward a light cone of Minkowski space, as the hyperboloid of anti-de Sitter space does. Both "
         "parts lie level at the circle, so they meet there with one tangent plane.",
+    ],
+    ("draining_bathtub", "plane"): [
+        "The moment $t = 0$ of the laboratory's clock for a drain ($A < 0$, $B = \\sqrt{3}\\,|A|$), a flat plane, "
+        "every distance along it the metric distance. On the slice the metric is $dr^2 + r^2d\\theta^2$: the "
+        "space sound moves through is the plane the water moves in, and a circle of radius $r$ has "
+        "circumference $2\\pi r$ all the way down to the drain.",
+        "The curvature of this spacetime lies in how its moments are stacked. From one to the next the water "
+        "carries each point of the plane inward at $|A|/r$ and round at $B/r$, faster than sound inside the "
+        "ergosurface $r = 2|A|/c$, and inward faster than sound inside the horizon $r = |A|/c$.",
+    ],
+    ("draining_bathtub", "funnel"): [
+        "The moment $T = 0$ of the Kerr-like chart for the same drain, outside the horizon, drawn as a surface "
+        "in flat space with every distance along it the metric distance. On the slice the metric is "
+        "$dr^2/(1 - A^2/(c^2r^2)) + r^2d\\phi^2$, so the surface climbs at $dz/dr = |A|/\\sqrt{c^2r^2 - A^2}$ and "
+        "is the catenoid $r = (|A|/c)\\cosh(cz/|A|)$, the curve of a hanging chain turned about the axis.",
+        "Its waist is the horizon $r = |A|/c$, where the surface stands vertical and the chart ends. The time "
+        "$T$ differs from the laboratory's $t$ by a function of $r$ that grows without bound toward the "
+        "horizon, so this surface and the flat plane are two cuts through one spacetime.",
     ],
     ("c_metric", "equator"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the C-metric at one moment of $t$ ($\\alpha m = 1/6$, "
@@ -15077,6 +15961,17 @@ CAPTIONS = {
         "circle with one tangent plane, and the surface is smooth across the surface of the star. The "
         "vacuum paraboloid would run on down to a throat at $r_s$. The star, at $R = 1.5\\,r_s$, ends it "
         "above there, and its circles shrink to a point at the centre.",
+    ],
+    ("bowers_liang", "star"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the star at one moment of $t$ ($R = 9r_s/8$), drawn as a "
+        "surface in flat space with every distance along it the metric distance. The density is uniform, so "
+        "$g_{rr} = 1/(1 - r^2r_s/R^3)$ is the metric of a sphere of radius $\\sqrt{R^3/r_s}$ for every $Q$, and "
+        "the slice is the cap of that sphere that Schwarzschild's star has. The two pressures shape $g_{tt}$ "
+        "alone.",
+        "The cap ends $\\arcsin\\sqrt{r_s/R} = 70.5°$ from its pole, the widest cap a star of equal pressures "
+        "holds up, and meets Flamm's paraboloid in one circle with one tangent plane. For $Q < 1/2$ a wider "
+        "cap is in equilibrium, as far as $r_s/R = 1 - 3^{-1/Q}$, and as $Q \\to 0$ that limit is the equator of "
+        "the sphere, $R = r_s$.",
     ],
     ("gravastar", "gravastar"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a gravastar at one moment of $t$ ($R = 1.25\\,r_s$, "
@@ -15820,6 +16715,38 @@ CAPTIONS = {
         "Minkowski space, $dX^2 + dY^2 - dZ^2$. Farther out the surface stands in flat space and widens as Flamm's "
         "paraboloid does; the same plane at every moment is the same surface.",
     ],
+    ("distorted_schwarzschild", "oblate"): [
+        "The equatorial plane of the black hole in a tidal field at one moment ($q = 1/12$, $m = 1$), drawn as a "
+        "surface with every distance along it the metric distance. With $x = r/m - 1$ the circle of radius $r$ has "
+        "circumference $2\\pi r\\,e^{q(3x^2 - 1)/4}$, wider than Schwarzschild's $2\\pi r$ at every radius in the field of "
+        "a ring of matter around the equator.",
+        "The throat $r = 2m$ is the equator of the horizon, a circle of radius $2m\\,e^{q/2} = 2.085\\,m$, and the "
+        "surface runs through it into the other exterior. It lies level at $r = 2.54\\,m$, and beyond that circle "
+        "the circles grow faster than the distance out to them, so the surface is drawn on in Minkowski space, "
+        "$dX^2 + dY^2 - dZ^2$; the same plane at every moment is the same surface.",
+    ],
+    ("distorted_schwarzschild", "prolate"): [
+        "The equatorial plane of the black hole in a tidal field at one moment ($q = -1/12$, $m = 1$), drawn as a "
+        "surface in flat space with every distance along it the metric distance. With $x = r/m - 1$ the circle of "
+        "radius $r$ has circumference $2\\pi r\\,e^{q(3x^2 - 1)/4}$, narrower than Schwarzschild's $2\\pi r$ at every "
+        "radius in the field of masses far off on the axis.",
+        "The throat $r = 2m$ is the equator of the horizon, a circle of radius $2m\\,e^{q/2} = 1.918\\,m$, and the "
+        "surface runs through it into the other exterior; the same plane at every moment is the same surface.",
+    ],
+    ("distorted_schwarzschild", "horizon_oblate"): [
+        "The horizon of the black hole in a tidal field at one moment ($q = 1/12$, $m = 1$), drawn as a surface in "
+        "flat space with every distance along it the metric distance. A ring of matter around the equator flattens "
+        "it: the equator has radius $2m\\,e^{q/2} = 2.085\\,m$ and each pole stands $1.225\\,m$ from the centre.",
+        "The Gaussian curvature at a pole is $(1 - 12q)e^{2q}/4m^2$, zero at this $q$, the largest for which the "
+        "horizon stands in flat space. The area is $16\\pi m^2e^{-2q}$.",
+    ],
+    ("distorted_schwarzschild", "horizon_prolate"): [
+        "The horizon of the black hole in a tidal field at one moment ($q = -1/12$, $m = 1$), drawn as a surface in "
+        "flat space with every distance along it the metric distance. Masses far off on the axis stretch it toward "
+        "them: the equator has radius $2m\\,e^{q/2} = 1.918\\,m$ and each pole stands $2.652\\,m$ from the centre.",
+        "The Gaussian curvature is $(1 - 12q)e^{2q}/4m^2$ at a pole and $(1 + 3q)e^{5q}/4m^2$ on the equator, and "
+        "the area is $16\\pi m^2e^{-2q}$.",
+    ],
     ("erez_rosen", "prolate"): [
         "The equatorial plane of the Erez-Rosen metric at one moment ($q = 1$, $m = 1$), drawn as a surface in flat "
         "space with every distance along it the metric distance. With $x = r/m - 1$ and $f = 1 - 2m/r$, the circle of "
@@ -15892,6 +16819,16 @@ CAPTIONS = {
         "and no surface of revolution in flat space carries them. Up the horn the circles shrink without limit "
         "while the curvature stays $-1/a_0^2$ at every point.",
     ],
+    ("tilted_universes", "homogeneity"): [
+        "The slice $z = 0$ of one surface of homogeneity of Farnsworth's dust, $\\eta = 3$, drawn as a surface in "
+        "flat space with every distance along it the metric distance. On it the metric is "
+        "$(X^2 - C^2)\\,dr^2 + Y^2e^{-2r}dy^2$, a hyperbolic plane whose radius of curvature is "
+        "$\\sqrt{X^2 - C^2} = 3.28\\,W$. A strip of it one turn of $y$ wide is rolled up into Eugenio Beltrami's "
+        "pseudosphere, and the plane itself runs on in $y$ without closing.",
+        "The surface begins at the rim $r = 0.32$. Below it the circles grow faster than the distance out to them, "
+        "and no surface of revolution in flat space carries them. The radius of curvature falls to zero on the "
+        "Cauchy horizon, where $X = C$, and under the horizon the surfaces of homogeneity are timelike.",
+    ],
     ("melvin", "universe"): [
         "The plane $z = 0$ of Melvin's universe at one moment ($B = 1$), drawn as a surface in flat space with "
         "every distance along it the metric distance. On it $g_{\\rho\\rho} = (1 + B^2\\rho^2/4)^2$ and the circle "
@@ -15907,6 +16844,17 @@ CAPTIONS = {
         "widest circle, of radius $1/B$, at $r = 2/B$, and closes beyond it into a spike, as Melvin's plane does.",
         "The slice runs through the bifurcation sphere at $r_s$ into the other exterior, the same surface turned "
         "over. Where $B r_s \\ge 2$ the widest circle is the throat itself.",
+    ],
+    ("kerr_melvin", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Ernst and Wild's black hole at one moment of $t$ "
+        "($a = 4m/5$, $B = 1/(4m)$), drawn as a surface in flat space with every distance along it the metric "
+        "distance. The cross term $g_{t\\phi}$ drops out at constant $t$, and the drawing's distance from the axis "
+        "is the circumference radius $\\sqrt{g_{\\phi\\phi}} = k\\sqrt{P}$. As Kerr's does, the slice "
+        "passes through the bifurcation sphere at $r_+$, its throat, into a second exterior.",
+        "The throat's radius is $2mk/(1 + B^2m^2)$ whatever the spin, where Kerr's is $2m$, and the dotted circle is "
+        "the edge of the ergoregion on the equator. The magnetic field closes the surface up as it closes Melvin's "
+        "plane: the circles widen to the radius $k/B$, at $r = 7.95\\,m$, and beyond it they shrink while the "
+        "distance out to them grows, so the surface narrows into a spike of unbounded length.",
     ],
     ("lewis", "moment"): [
         "The moment $t = 0$ of the plane $z = 0$ outside the closed timelike curves of a rotating cylinder of the "
@@ -16212,6 +17160,16 @@ CAPTIONS = {
         "The surface is flat where it crosses the axis, halfway between the horizons, and far out it rises as "
         "Flamm's paraboloid of the total mass $2m$ does, $dz/d\\rho \\to \\sqrt{4m/\\rho}$.",
     ],
+    ("eih_many_bodies", "midplane"): [
+        "The plane $x = 0$ midway between two bodies of equal mass at $x = \\pm 10\\,m$, at the moment $t = 0$ of "
+        "their circular orbit, drawn as a surface in flat space with every distance along it the metric distance. "
+        "On it the metric is $(1 + 2U)(dy^2 + dz^2)$ with $U = 2m/\\sqrt{s^2 + 100\\,m^2}$ at the distance "
+        "$s = \\sqrt{y^2 + z^2}$ from the line through the bodies, so the circle of coordinate radius $s$ has the "
+        "circumference radius $s\\sqrt{1 + 2U}$.",
+        "The surface is flat where it crosses the line through the bodies, halfway between them, and far from that line it "
+        "rises as Flamm's paraboloid of the total mass $2m$ does. Both charts share it, since their times agree "
+        "on this plane at $t = 0$.",
+    ],
     ("bertotti_robinson", "equator"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Bertotti-Robinson universe at one moment of $t$, drawn "
         "as a surface in flat space with every distance along it the metric "
@@ -16242,6 +17200,24 @@ CAPTIONS = {
     ("plebanski_hacyan", "sphere"): [
         "The sphere of $\\theta$ and $\\phi$ of the same spacetime at one event of $t$ and $z$, radius "
         "$b = 1/\\sqrt{2\\Lambda}$ and area $2\\pi/\\Lambda$, the same at every $t$ and $z$.",
+    ],
+    ("three_brane_throat", "brane"): [
+        "The surface of $\\rho$ and $\\phi$ ($x = y = z = 0$, $\\alpha = \\beta = \\psi = \\theta = \\pi/2$) of the three-brane at one moment of $t$, a great circle of "
+        "the 5-sphere at each radius, drawn as a surface in flat space with every distance along it the metric "
+        "distance. On it $g_{\\rho\\rho} = \\sqrt{1 + L^4/\\rho^4}$ and the circumference radius is "
+        "$(\\rho^4 + L^4)^{1/4}$, so the surface is a flat plane far from the brane.",
+        "Toward the horizon $\\rho = 0$ the surface falls as $L\\ln\\rho$ without end while its circles close "
+        "on the radius $L$: the throat is infinitely long, and it is drawn down to $\\rho = L/20$. Down the "
+        "throat the surface tends to the cylinder of anti-de Sitter space times a sphere, "
+        "$L^2d\\rho^2/\\rho^2 + L^2d\\phi^2$.",
+    ],
+    ("three_brane_throat", "throat"): [
+        "The surface of $\\sigma$ and $\\phi$ ($x = y = z = 0$, $\\alpha = \\beta = \\psi = \\theta = \\pi/2$) of the throat alone at one moment of $t$, a cylinder of "
+        "radius $L$ in flat space, $d\\sigma^2 + L^2d\\phi^2$, with every distance along it the metric "
+        "distance.",
+        "The limit that keeps the throat alone removes the flat plane at the top of the surface of the three-brane, "
+        "and the cylinder runs on without end both ways. Every circle is one great circle of a 5-sphere of "
+        "radius $L$.",
     ],
     ("cremmer_scherk", "equator"): [
         "One flat dimension and the equator of the sphere ($y = z = 0$, $\\theta = \\pi/2$) of Cremmer and "
@@ -16335,6 +17311,16 @@ CAPTIONS = {
         "At $r = r_c$ the circles are null, and beyond it they are closed timelike curves. The universe is "
         "homogeneous, so every world line of the dust is an axis like this one, and this surface is a moment "
         "of space only within $r_c$ of its axis.",
+    ],
+    ("maitra_dust", "dust"): [
+        "The plane $z = 0$ across Maitra's dust at one moment of $t$, drawn about its axis as a surface in flat "
+        "space with every distance along it the metric distance. On it $g_{rr} = e^{\\gamma}$, and the circle at "
+        "$r$ has circumference $2\\pi\\sqrt{r^2 - k^2}$, which grows at every radius, since $k < r$ and "
+        "$dk/dr < 1$.",
+        "The circles grow more slowly than the distance out to them, so the surface is a bowl whose wall steepens: "
+        "the circle at $r = a$ has radius $0.93\\,a$, and the one at $r = 6a$, where the drawing ends, $3.87\\,a$. "
+        "The bowl goes on past the drawing with its circles still growing, so a surface of constant $t$ is a "
+        "moment of space at every radius.",
     ],
     ("ellis_bronnikov", "wormhole"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Ellis-Bronnikov wormhole at one moment of $t$, drawn "
@@ -16549,6 +17535,50 @@ CAPTIONS = {
         "The meridians $\\theta = 0$ and $\\theta = \\pi$ are the moment $t = 0$ on the two sides of the "
         "horizon, the line along which the Euclidean section meets the black hole.",
     ],
+    ("string_bh_three_four_charges", "five_charges"): [
+        "The plane of $r$ and $\\phi$ ($\\psi = \\theta = \\pi/2$) of the hole of three charges "
+        "($r_1 = r_0/2$, $r_2 = r_0$, $r_3 = 3r_0/2$) at one moment of $t$, drawn as a surface in flat space with "
+        "every distance along it the metric distance. On it the metric is "
+        "$(H_1H_2H_3)^{1/3}(dr^2/f + r^2d\\phi^2)$, so the circle of coordinate radius $r$ has the circumference "
+        "radius $r(H_1H_2H_3)^{1/6}$, which is $1.42\\,r_0$ at the throat $r = r_0$ where Tangherlini's is $r_0$.",
+        "Every slice of constant $t$ passes through the bifurcation sphere $r = r_0$, where the circles are "
+        "smallest, and runs on through it into a second exterior, the same surface turned over.",
+    ],
+    ("string_bh_three_four_charges", "five_extreme"): [
+        "The plane of $r$ and $\\phi$ ($\\psi = \\theta = \\pi/2$) of the extreme hole of three charges "
+        "($r_1 = r_2/2$, $r_3 = 2r_2$) at one moment of $t$, drawn as a surface in flat space with every distance "
+        "along it the metric distance. On it the metric is $(H_1H_2H_3)^{1/3}(dr^2 + r^2d\\phi^2)$, and toward the "
+        "horizon $r = 0$ it tends to $(r_1r_2r_3)^{2/3}(dr^2/r^2 + d\\phi^2)$.",
+        "The surface falls without end while its circles close on the radius $(r_1r_2r_3)^{1/3} = r_2$: the "
+        "throat is infinitely long, and it is drawn down to $r = r_2/50$. The 3-sphere at its end has the area "
+        "$2\\pi^2r_1r_2r_3$, which vanishes when a charge is missing.",
+    ],
+    ("string_bh_three_four_charges", "five_areal"): [
+        "The plane of $\\rho$ and $\\phi$ ($\\psi = \\theta = \\pi/2$) of the hole of three equal charges "
+        "($r_0 = 3r_q/4$) at one moment of $t$, drawn as a surface in flat space with every distance along it the "
+        "metric distance. On it the metric is $d\\rho^2/((1 - 25r_q^2/16\\rho^2)(1 - r_q^2/\\rho^2)) + \\rho^2d\\phi^2$, "
+        "the equator of the Reissner-Nordström black hole of five dimensions.",
+        "Every slice of constant $t$ passes through the bifurcation sphere $\\rho = 5r_q/4$, where the circles are "
+        "smallest, and runs on through it into a second exterior, the same surface turned over.",
+    ],
+    ("string_bh_three_four_charges", "four_charges"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the hole of four charges ($r_1 = r_0/2$, $r_2 = r_0$, "
+        "$r_3 = 3r_0/2$, $r_4 = 2r_0$) at one moment of $t$, drawn as a surface in flat space with every distance "
+        "along it the metric distance. On it the metric is $\\sqrt{H_1H_2H_3H_4}\\,(dr^2/f + r^2d\\phi^2)$, so the "
+        "circle of coordinate radius $r$ has the circumference radius $r(H_1H_2H_3H_4)^{1/4}$, which is "
+        "$2.18\\,r_0$ at the throat $r = r_0$ where Schwarzschild's is $r_0$.",
+        "Every slice of constant $t$ passes through the bifurcation sphere $r = r_0$, where the circles are "
+        "smallest, and runs on through it into a second exterior, the same surface turned over.",
+    ],
+    ("string_bh_three_four_charges", "four_extreme"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the extreme hole of four charges ($r_1 = r_2/2$, "
+        "$r_3 = 3r_2/2$, $r_4 = 2r_2$) at one moment of $t$, drawn as a surface in flat space with every distance "
+        "along it the metric distance. On it the metric is $\\sqrt{H_1H_2H_3H_4}\\,(dr^2 + r^2d\\phi^2)$, and toward "
+        "the horizon $r = 0$ it tends to $\\sqrt{r_1r_2r_3r_4}\\,(dr^2/r^2 + d\\phi^2)$, Bertotti-Robinson's cylinder.",
+        "The surface falls without end while its circles close on the radius $(r_1r_2r_3r_4)^{1/4} = 1.11\\,r_2$: "
+        "the throat is infinitely long, and it is drawn down to $r = r_2/50$. The sphere at its end has the area "
+        "$4\\pi\\sqrt{r_1r_2r_3r_4}$, which vanishes when a charge is missing.",
+    ],
     ("tangherlini", "five"): [
         "The plane of $r$ and $\\phi$ ($\\psi = \\theta = \\pi/2$) of the Schwarzschild-Tangherlini spacetime in "
         "five dimensions at one moment of $t$, drawn as a surface in flat space with every distance along it the "
@@ -16742,6 +17772,17 @@ CAPTIONS = {
         "The cylinders narrow as $t$ climbs toward $0$, where the circles become the closed null geodesics of "
         "the chronology horizon. Beyond it, where $T > 0$, the same circles are closed timelike curves.",
     ],
+    ("self_creating_universe", "cylinders"): [
+        "The slice $\\phi = 0$ of Gott and Li's universe as the time $c\\tau$ since the Cauchy horizon runs from "
+        "$0.25\\,r_0$ to $1.5\\,r_0$, each moment drawn as a surface in flat space with every distance along it "
+        "the metric distance. On it the metric is $r_0^2\\cosh^2(c\\tau/r_0)\\,d\\theta^2 + "
+        "\\sinh^2(c\\tau/r_0)\\,dl^2$ with $l$ periodic in $\\beta$, so each moment is a flat cylinder of "
+        "circumference $\\beta\\sinh(c\\tau/r_0)$ and length $\\pi r_0\\cosh(c\\tau/r_0)$, from one pole "
+        "of the sphere to the other.",
+        "The cylinders open from a line on the Cauchy horizon $\\tau = 0$, where the circles are closed null "
+        "geodesics, and widen and lengthen as the universe inflates. Before the horizon the same circles are "
+        "closed timelike curves.",
+    ],
     ("ori_time_machine", "throat"): [
         "The slice $y = 0$ of Ori's vacuum core as $t$ runs from $-2\\,\\ell^2$ to $-0.1\\,\\ell^2$, each moment "
         "drawn as a surface in flat space with every distance along it the metric distance. On it the metric is "
@@ -16873,6 +17914,12 @@ CAPTIONS = {
         "The world tube of a ring of particles at rest in the chart ($(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$), each "
         "moment from $t = 1/4$ to $t = 2$ an ellipse at the height of its time. Its cross section reaches "
         "$t^{p_1}\\ell$ along $x$ and $t^{p_3}\\ell$ along $z$, so the tube narrows along $x$ as it widens along $z$.",
+    ],
+    ("kasner_magnetic", "tube"): [
+        "The world tube of a ring of particles at rest in the chart ($(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$, "
+        "$b = 1$), each moment from $t = 1/4$ to $t = 2$ an ellipse at the height of its time. Along the field, "
+        "$z$, its cross section widens until $t = 1$ and narrows afterward, and across the field it narrows "
+        "until $t = 5^{-7/12}$, about $0.39$, and then widens.",
     ],
     ("kasner_scalar", "tube"): [
         "The world tube of a ring of particles at rest in the chart ($(p_1, p_2, p_3) = (2/13, 4/13, 7/13)$, "
@@ -17026,6 +18073,18 @@ CAPTIONS = {
         "contracts while $y$ and $z$ expand, so toward the singularity at $t = 0$ every sphere of particles is drawn "
         "out into a needle along $x$. Edward Kasner found the solution in 1921: its exponents sum to $1$, so volumes "
         "grow as $t$, and the vacuum field equations require their squares to sum to $1$ as well.",
+    ],
+    ("kasner_magnetic", "ring"): [
+        "The plane $y = 0$ of Kasner's universe with a magnetic field along $z$ as $t$ runs from $1/4$ to $2$, each "
+        "moment drawn as a surface in flat space with every distance along it the metric distance. At every "
+        "moment the plane is flat, Euclid's plane with its axes scaled, so the drawing is a flat disc, and the "
+        "uneven expansion shows in a ring of particles at rest in the chart, which stay at rest because the "
+        "metric has no $\\Gamma^i{}_{tt}$.",
+        "The ring is the circle $x^2 + z^2 = \\ell^2$ of the chart, and at time $t$ the ellipse reaching "
+        "$(1 + b^2t^{2p_3})\\,t^{p_1}\\ell$ along $x$ and $t^{p_3}\\ell/(1 + b^2t^{2p_3})$ along $z$. With "
+        "$(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$ and $b = 1$ the length along the field grows as in Kasner's vacuum, "
+        "reaches $\\ell/2$ at $t = 1$, and shrinks, while the tension of the field takes over. In Kasner's "
+        "vacuum, $b = 0$, the same length grows without bound.",
     ],
     ("kasner_scalar", "ring"): [
         "The plane $y = 0$ of Kasner's universe with a scalar field as $t$ runs from $1/4$ to $2$, each moment "

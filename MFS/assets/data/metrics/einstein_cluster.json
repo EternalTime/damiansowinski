@@ -81,6 +81,11 @@
       "id": "bonnor_charged_dust",
       "kind": "family",
       "text": "A star of dust held up by its electric charge. Bonnor and Wickramasuriya set it beside Einstein's cluster as a body of well understood matter, and its surface can lie as near its horizon as one likes [bonnor1975]."
+    },
+    {
+      "id": "bowers_liang",
+      "kind": "limit_source",
+      "text": "A star of uniform density with pressure both along the radius and across it. In the limit $Q \\to 0$ of Bowers and Liang's exponent the pressure along the radius vanishes, and the star is Florides's uniform cluster [bowers1974, florides1974]."
     }
   ],
   "references": [
@@ -102,7 +107,8 @@
     "bartnik1988",
     "volkov1999",
     "morgan1969",
-    "bonnor1975"
+    "bonnor1975",
+    "bowers1974"
   ],
   "coordinates": [
     {

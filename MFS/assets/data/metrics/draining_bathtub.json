@@ -1,0 +1,4798 @@
+{
+  "id": "draining_bathtub",
+  "name": "The Draining Bathtub",
+  "short_name": "Draining Bathtub",
+  "description": "The spacetime that sound travels through in a fluid that swirls as it runs down a drain. Sound cannot stand still against the current inside $r = \\sqrt{A^2 + B^2}/c$, an ergoregion, and cannot move outward inside $r = |A|/c$, a horizon, so the vortex is a rotating black hole for sound. It solves no field equation of gravity, and it has been built in a water tank.",
+  "tags": [
+    "analogue gravity",
+    "acoustic black hole",
+    "acoustic metric",
+    "dumb hole",
+    "sound",
+    "fluid flow",
+    "vortex",
+    "black hole",
+    "white hole",
+    "rotating",
+    "rotating black hole",
+    "ergoregion",
+    "ergosphere",
+    "horizon",
+    "event horizon",
+    "superradiance",
+    "Hawking radiation",
+    "Painlevé-Gullstrand",
+    "laboratory experiment",
+    "no field equations",
+    "curvature singularity",
+    "circularly symmetric",
+    "axisymmetric",
+    "stationary",
+    "three-dimensional",
+    "four-dimensional",
+    "Lorentzian",
+    "idealized model"
+  ],
+  "signature": "(-,+,+)",
+  "convention": "Here $c$ is the speed of sound in the fluid, constant throughout it, and it stands wherever the speed of light does in a spacetime of gravity; we keep it explicit. The fluid has radial velocity $A/r$ and tangential velocity $B/r$, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "Matt Visser, a physicist at Washington University in Saint Louis, wanted to know how sound travels through a fluid that is itself on the move, which he called \"a deceptively simple question\" [visser1998]. William Unruh had answered it in 1981 for a fluid that speeds up past the speed of sound, and found that the arguments for black hole evaporation \"also predict that a thermal spectrum of sound waves should be given out from the sonic horizon in transsonic fluid flow\" [unruh1981]. Where the fluid runs inward faster than sound, a sound wave sent in any direction is swept in with it, as light is inside a black hole [visser1998]. Unruh's paper \"lay largely unnoticed for many years\", by the account of Carlos Barceló, Stefano Liberati, and Visser, and Visser was one of those who found the idea again on his own, in 1993 [barcelo2005].¶Visser's answer of 1998 asked three things of the fluid: its pressure depends on its density alone, it has no viscosity, and it flows without vorticity [visser1998]. Then sound behaves as a field does in a curved spacetime: its equation is that of \"a minimally coupled massless scalar field propagating in a (3+1)-dimensional Lorentzian geometry\" [visser1998]. The metric of that geometry is built from the density, the velocity of the flow, and the speed of sound $c$, and its light cones are sound moving at $c$ through the fluid that carries it [visser1998]. The fluid is Newtonian and sits in flat space, so there are two metrics: the flat one for the water and the curved one for the sound [visser1998].¶For a flow whose ergoregion and horizon come apart, Visser took water in two dimensions draining through a sink at the origin, his \"draining bathtub\" [visser1998]. Continuity makes the inward speed fall as $1/r$, zero vorticity does the same for the speed around the drain, and conservation of angular momentum then holds the density constant, and the speed of sound with it [visser1998]. The water moves inward at $|A|/r$ and around at $B/r$, and the metric is $ds^2 = -c^2dt^2 + (dr - A\\,dt/r)^2 + (r\\,d\\theta - B\\,dt/r)^2$ [visser1998]. Inside $r = \\sqrt{A^2 + B^2}/c$, the ergoregion, the water outruns sound, and no sound wave holds its place against the current [visser1998]. Inside $r = |A|/c$, the horizon, the inward speed alone beats $c$, and every sound wave goes down the drain [visser1998].¶How much of a black hole is that? The bathtub solves no field equation: Visser kept the half of general relativity that is kinematics, \"the fact that general relativity takes place in a Lorentzian spacetime\", and the Einstein equations \"have no analog in the acoustic model\" [visser1998]. Visser's own conclusion was that Hawking radiation \"is a purely kinematic effect that occurs in any Lorentzian geometry with an event horizon\" [visser1998]. With the swirl switched off it is a metric of Painlevé and Gullstrand's type, as their form of Schwarzschild's is: flat space with a flow through it [berti2004]. Soumen Basak and Parthasarathi Majumdar brought the turning drain to a form with a single cross term and found that sound of low enough frequency is reflected from it amplified, which they called superresonance [basak2003]. Emanuele Berti, Vitor Cardoso, and José Lemos corrected their formulas in 2004, named the result a Kerr-like form, and computed a gain of at most $21.2\\%$ for the wave of $m = 1$ when $B = |A|$ [berti2004].¶Ralf Schützhold and Unruh took the idea to the surface of the water: long waves on a shallow basin of depth $h$ obey the same metric with $\\sqrt{gh}$ in place of the speed of sound, $g$ being the acceleration of gravity, and they wrote the bathtub down for those waves [schutzhold2002]. Silke Weinfurtner, Edmund Tedford, Matthew Penrice, Unruh, and Gregory Lawrence set a streamlined obstacle in an open channel and measured long waves converted to short ones at a horizon, the stimulated form of Hawking's emission [weinfurtner2011]. Theo Torres, Sam Patrick, Antonin Coutant, Maurício Richartz, Tedford, and Weinfurtner then built the bathtub itself at Nottingham, water $6.25$ cm deep draining through a hole $4$ cm across in a tank $3$ m long [torres2017]. Waves of $3.70$ Hz came back from the vortex amplified by as much as $14\\% \\pm 8\\%$, which they report as \"the first laboratory detection\" of superradiance [torres2017].¶The conformal diagrams of acoustic holes, which Barceló, Liberati, Sebastiano Sonego, and Visser drew in 2004, stop short: a sound ray reaches the edge of the diagram after a finite stretch of its affine parameter and an infinite time on the laboratory's clock, so the spacetime is geodesically incomplete [barcelo2004]. The metric can be continued past that edge, and the part added \"does not exist in physical space and time\" [barcelo2004]. With the waves cut off at short wavelengths, as the atoms of a real fluid cut them, Unruh found numerically in 1995 that the change \"does not seem to alter the evaporation process\" [unruh1995].",
+  "related": [
+    {
+      "id": "kerr",
+      "kind": "family",
+      "text": "The rotating black hole of gravity, which the bathtub copies for sound: an ergoregion outside a horizon, and waves that come back amplified. Kerr's spin is bounded by its mass, while the swirl $B$ has, at least in principle, no upper bound [berti2004]."
+    },
+    {
+      "id": "btz",
+      "kind": "family",
+      "text": "A rotating black hole of three dimensions that solves Einstein's equations with a negative cosmological constant. Each has an ergoregion around its horizon, and the BTZ hole's curvature is constant where the bathtub's grows as $1/r^4$ toward the drain [banados1992, visser1998]."
+    },
+    {
+      "id": "schwarzschild",
+      "kind": "family",
+      "text": "With the swirl switched off the bathtub is of Painlevé and Gullstrand's type, as their form of Schwarzschild's metric is: flat space with a flow running into the hole. The water runs in at $|A|/r$ where Schwarzschild's space falls at $c\\sqrt{r_s/r}$, and no acoustic metric is identical to Schwarzschild's [visser1998, berti2004]."
+    },
+    {
+      "id": "natario",
+      "kind": "family",
+      "text": "The same line element, flat space with a flow through it. Natário's shift vector is the water's velocity here, and his $c$ is the speed of sound [natario2002, visser1998]."
+    },
+    {
+      "id": "spinning_string",
+      "kind": "family",
+      "text": "Another spacetime that turns about an axis, which Visser set beside the vortex to tell the two apart. Far from the core the string approximates the vortex, and near it the string has closed timelike curves where the vortex has none [visser1998]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "special_case",
+      "text": "The bathtub with the water at rest, $A = B = 0$: flat spacetime with the speed of sound for its $c$. The water itself moves in flat space throughout, and the curvature is for sound alone [visser1998]."
+    }
+  ],
+  "references": [
+    "visser1998",
+    "unruh1981",
+    "barcelo2005",
+    "berti2004",
+    "basak2003",
+    "schutzhold2002",
+    "weinfurtner2011",
+    "torres2017",
+    "barcelo2004",
+    "unruh1995",
+    "banados1992",
+    "natario2002"
+  ],
+  "coordinates": [
+    {
+      "id": "laboratory",
+      "name": "Laboratory",
+      "coords": [
+        "t",
+        "r",
+        "\\theta"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\theta \\in [0, 2\\pi)",
+        "r = |A|/c \\;\\text{(the acoustic horizon)}",
+        "r = \\sqrt{A^2 + B^2}/c \\;\\text{(the ergosurface)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "A",
+          "description": "Strength of the radial flow, a speed times a length: the fluid's radial velocity is $A/r$, inward for $A < 0$, a drain, and outward for $A > 0$, a spring; $2\\pi|A|$ is the area of fluid crossing each circle per unit time"
+        },
+        {
+          "symbol": "B",
+          "description": "Strength of the swirl, a speed times a length: the fluid's tangential velocity is $B/r$, and $2\\pi B$ is its circulation"
+        }
+      ],
+      "convention": "We use Visser's coordinates $(t, r, \\theta)$: the time $t$ of the laboratory, carrying dimensions of time, and polar coordinates on the plane the fluid moves in, with the drain at $r = 0$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + \\left(dr - \\dfrac{A}{r}dt\\right)^2 + \\left(r\\,d\\theta - \\dfrac{B}{r}dt\\right)^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(1 - \\dfrac{A^2 + B^2}{c^2\\,r^2}\\right)"
+        },
+        {
+          "indices": [
+            "t",
+            "r"
+          ],
+          "value": "-\\dfrac{A}{c\\,r}"
+        },
+        {
+          "indices": [
+            "r",
+            "t"
+          ],
+          "value": "-\\dfrac{A}{c\\,r}"
+        },
+        {
+          "indices": [
+            "t",
+            "\\theta"
+          ],
+          "value": "-\\dfrac{B}{c}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "t"
+          ],
+          "value": "-\\dfrac{B}{c}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "r^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "t",
+            "r"
+          ],
+          "value": "-\\dfrac{A}{c\\,r}"
+        },
+        {
+          "indices": [
+            "r",
+            "t"
+          ],
+          "value": "-\\dfrac{A}{c\\,r}"
+        },
+        {
+          "indices": [
+            "t",
+            "\\theta"
+          ],
+          "value": "-\\dfrac{B}{c\\,r^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "t"
+          ],
+          "value": "-\\dfrac{B}{c\\,r^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}{c^2\\,r^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "\\theta"
+          ],
+          "value": "-\\dfrac{A\\,B}{c^2\\,r^3}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "r"
+          ],
+          "value": "-\\dfrac{A\\,B}{c^2\\,r^3}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{\\left(c\\,r + B\\right)\\left(c\\,r - B\\right)}{c^2\\,r^4}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{A}{c\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{B}{c\\,r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{B}{c\\,r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{A}{c}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{A^2}{c^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A\\,B}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{A\\,B}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{A\\,B}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}{c^2\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{A\\,B}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(c\\,r + B\\right)\\left(c\\,r - B\\right)}{c^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(c\\,r + B\\right)\\left(c\\,r - B\\right)}{c^2\\,r^3}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{A}{c\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "r"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{3A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{3A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{3A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{3A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{3A^2 + 3B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{3A^2 + 3B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 - 3A^2 + B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 - 3A^2 + B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{4A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^7}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{4A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^7}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 - B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 - B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{4B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{4B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^4}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 + B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 + B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 + B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 + B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 + B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2A^2 + 2B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2A^2 + 2B^2}{c^2\\,r^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2A^2 + 2B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2A^2 + 2B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2A^2 + 2B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{4B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2A^2 + 2B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{2B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^7}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{2A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^7}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 + B^2\\right)}{c^4\\,r^8}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{2A^2 + 2B^2}{c^2\\,r^4}",
+      "kretschmann": "K = \\dfrac{44\\left(A^2 + B^2\\right)^2}{c^4\\,r^8}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 + 3B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{3B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3A^2 + 3B^2}{c^2\\,r^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{4B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3A^2 + 3B^2}{c^2\\,r^4}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^7}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^7}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 + B^2\\right)}{c^4\\,r^8}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} - \\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^4}\\dot{t}^2 + \\dfrac{2A^2 + 2B^2}{c^2\\,r^3}\\dot{t}\\dot{r} - \\dfrac{A}{c\\,r^2}\\dot{r}^2 - \\dfrac{2B}{c\\,r}\\dot{r}\\dot{\\theta} + \\dfrac{A}{c}\\dot{\\theta}^2 = 0",
+        "\\ddot{r} + \\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^5}\\dot{t}^2 + \\dfrac{2A\\left(A^2 + B^2\\right)}{c^3\\,r^4}\\dot{t}\\dot{r} - \\dfrac{A^2}{c^2\\,r^3}\\dot{r}^2 - \\dfrac{2A\\,B}{c^2\\,r^2}\\dot{r}\\dot{\\theta} - \\dfrac{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}{c^2\\,r}\\dot{\\theta}^2 = 0",
+        "\\ddot{\\theta} - \\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^6}\\dot{t}^2 + \\dfrac{2B\\left(A^2 + B^2\\right)}{c^3\\,r^5}\\dot{t}\\dot{r} - \\dfrac{A\\,B}{c^2\\,r^4}\\dot{r}^2 + \\dfrac{2\\left(c\\,r + B\\right)\\left(c\\,r - B\\right)}{c^2\\,r^3}\\dot{r}\\dot{\\theta} + \\dfrac{A\\,B}{c^2\\,r^2}\\dot{\\theta}^2 = 0"
+      ]
+    },
+    {
+      "id": "kerr_like",
+      "name": "Kerr-like",
+      "coords": [
+        "T",
+        "r",
+        "\\phi"
+      ],
+      "domains": [
+        "T \\in (-\\infty, \\infty)",
+        "r \\in (|A|/c, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "r = \\sqrt{A^2 + B^2}/c \\;\\text{(the ergosurface)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "A",
+          "description": "Strength of the radial flow, a speed times a length: the fluid's radial velocity is $A/r$, inward for $A < 0$, a drain, and outward for $A > 0$, a spring; $2\\pi|A|$ is the area of fluid crossing each circle per unit time"
+        },
+        {
+          "symbol": "B",
+          "description": "Strength of the swirl, a speed times a length: the fluid's tangential velocity is $B/r$, and $2\\pi B$ is its circulation"
+        }
+      ],
+      "convention": "We use the coordinates of Basak and Majumdar outside the horizon, written $(T, r, \\phi)$, with $dT = dt + A\\,r\\,dr/(c^2r^2 - A^2)$ and $d\\phi = d\\theta + A\\,B\\,dr/\\left(r\\left(c^2r^2 - A^2\\right)\\right)$ for the laboratory's $t$ and $\\theta$, so that $dT\\,d\\phi$ is the one cross term. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+      "line_element": "ds^2 = -\\left(1 - \\dfrac{A^2 + B^2}{c^2r^2}\\right)c^2dT^2 + \\dfrac{dr^2}{1 - \\dfrac{A^2}{c^2r^2}} - 2B\\,dT\\,d\\phi + r^2d\\phi^2",
+      "metric_components": [
+        {
+          "indices": [
+            "T",
+            "T"
+          ],
+          "value": "-\\left(1 - \\dfrac{A^2 + B^2}{c^2\\,r^2}\\right)"
+        },
+        {
+          "indices": [
+            "T",
+            "\\phi"
+          ],
+          "value": "-\\dfrac{B}{c}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "T"
+          ],
+          "value": "-\\dfrac{B}{c}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{c^2\\,r^2}{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "r^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "T",
+            "T"
+          ],
+          "value": "-\\dfrac{c^2\\,r^2}{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+        },
+        {
+          "indices": [
+            "T",
+            "\\phi"
+          ],
+          "value": "-\\dfrac{B\\,c}{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "T"
+          ],
+          "value": "-\\dfrac{B\\,c}{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}{c^2\\,r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{c^2\\,r^2 - A^2 - B^2}{r^2\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "r"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{r\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "r",
+                  "T"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{r\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{B\\,c\\,r}{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{B\\,c\\,r}{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "T",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{A^2}{r\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}{c^2\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "T",
+                  "r"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c\\,r^3\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "T"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c\\,r^3\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{c^2\\,r^2 - A^2 - B^2}{r\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{c^2\\,r^2 - A^2 - B^2}{r\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "r"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "r",
+                  "T"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "T",
+                  "T"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{A^2\\,c^2\\,r}{\\left(c\\,r + A\\right)^2\\left(c\\,r - A\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "r"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "T",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "\\phi",
+                  "T"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "T",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "T",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "T",
+                  "r"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "T"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "T",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\phi",
+                  "T"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "r",
+                  "T",
+                  "r"
+                ],
+                "value": "\\dfrac{3A^2 + 3B^2}{r^2\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "r",
+                  "r",
+                  "T"
+                ],
+                "value": "-\\dfrac{3A^2 + 3B^2}{r^2\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "\\phi",
+                  "T",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "\\phi",
+                  "\\phi",
+                  "T"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "T",
+                  "T",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 - 3A^2 + B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "T",
+                  "r",
+                  "T"
+                ],
+                "value": "-\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 - 3A^2 + B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "T",
+                  "T",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 - B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "T",
+                  "\\phi",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 - B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "T",
+                  "r"
+                ],
+                "value": "\\dfrac{4B\\left(A^2 + B^2\\right)}{c\\,r^4\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "T"
+                ],
+                "value": "-\\dfrac{4B\\left(A^2 + B^2\\right)}{c\\,r^4\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{r^2\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{r^2\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "r",
+                  "T",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 - 3A^2 + B^2\\right)}{c^2\\,r^4\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "r",
+                  "r",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 - 3A^2 + B^2\\right)}{c^2\\,r^4\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "T",
+                  "T",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 - 3A^2 + B^2\\right)}{c^2\\,r^4\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "T",
+                  "r",
+                  "T"
+                ],
+                "value": "-\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 - 3A^2 + B^2\\right)}{c^2\\,r^4\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c\\,r^2\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c\\,r^2\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "T",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c\\,r^2\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "T",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c\\,r^2\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "T",
+                  "r"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c\\,r^2\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "T"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c\\,r^2\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "T",
+                  "r"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c\\,r^2\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "T"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c\\,r^2\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "\\phi",
+                  "T",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "\\phi",
+                  "\\phi",
+                  "T"
+                ],
+                "value": "-\\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "T",
+                  "T",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "T",
+                  "\\phi",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T"
+                ],
+                "value": "-\\dfrac{2\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 + B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "T"
+                ],
+                "value": "\\dfrac{2B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2A^2 + 2B^2}{r^2\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2A^2 + 2B^2}{c^2\\,r^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T"
+                ],
+                "value": "\\dfrac{2A^2 + 2B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2A^2 + 2B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2A^2 + 2B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "T"
+                ],
+                "value": "\\dfrac{4B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T"
+                ],
+                "value": "-\\dfrac{2A^2 + 2B^2}{r^2\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2B\\left(A^2 + B^2\\right)}{c\\,r^4\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "T"
+                ],
+                "value": "-\\dfrac{2B\\left(A^2 + B^2\\right)}{c\\,r^4\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 + B^2\\right)}{c^2\\,r^6\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{2A^2 + 2B^2}{c^2\\,r^4}",
+      "kretschmann": "K = \\dfrac{44\\left(A^2 + B^2\\right)^2}{c^4\\,r^8}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T"
+                ],
+                "value": "-\\dfrac{\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 + 3B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "T"
+                ],
+                "value": "\\dfrac{3B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{r^2\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3A^2 + 3B^2}{c^2\\,r^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "T"
+                ],
+                "value": "\\dfrac{4B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3A^2 + 3B^2}{c^2\\,r^4}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{r^2\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c\\,r^4\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "T"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c\\,r^4\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 - 3A^2 + B^2\\right)}{c^2\\,r^6\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{T} + \\dfrac{2A^2 + 2B^2}{r\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}\\dot{T}\\dot{r} - \\dfrac{2B\\,c\\,r}{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}\\dot{r}\\dot{\\phi} = 0",
+        "\\ddot{r} + \\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^5}\\dot{T}^2 - \\dfrac{A^2}{r\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}\\dot{r}^2 - \\dfrac{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}{c^2\\,r}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2B\\left(A^2 + B^2\\right)}{c\\,r^3\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}\\dot{T}\\dot{r} + \\dfrac{2c^2\\,r^2 - 2A^2 - 2B^2}{r\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}\\dot{r}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "vortex_filament",
+      "name": "Vortex Filament",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\theta \\in [0, 2\\pi)",
+        "z \\in (-\\infty, \\infty)",
+        "r = |A|/c \\;\\text{(the acoustic horizon)}",
+        "r = \\sqrt{A^2 + B^2}/c \\;\\text{(the ergosurface)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "A",
+          "description": "Strength of the radial flow, a speed times a length: the fluid's radial velocity is $A/r$, inward for $A < 0$, a drain, and outward for $A > 0$, a spring; $2\\pi|A|$ is the area of fluid crossing each circle per unit time"
+        },
+        {
+          "symbol": "B",
+          "description": "Strength of the swirl, a speed times a length: the fluid's tangential velocity is $B/r$, and $2\\pi B$ is its circulation"
+        }
+      ],
+      "convention": "We use Visser's coordinates $(t, r, \\theta, z)$ for a vortex filament with a line sink along the $z$ axis: the laboratory's time $t$, carrying dimensions of time, and cylindrical coordinates about the filament. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + \\left(dr - \\dfrac{A}{r}dt\\right)^2 + \\left(r\\,d\\theta - \\dfrac{B}{r}dt\\right)^2 + dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(1 - \\dfrac{A^2 + B^2}{c^2\\,r^2}\\right)"
+        },
+        {
+          "indices": [
+            "t",
+            "r"
+          ],
+          "value": "-\\dfrac{A}{c\\,r}"
+        },
+        {
+          "indices": [
+            "r",
+            "t"
+          ],
+          "value": "-\\dfrac{A}{c\\,r}"
+        },
+        {
+          "indices": [
+            "t",
+            "\\theta"
+          ],
+          "value": "-\\dfrac{B}{c}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "t"
+          ],
+          "value": "-\\dfrac{B}{c}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "r^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "t",
+            "r"
+          ],
+          "value": "-\\dfrac{A}{c\\,r}"
+        },
+        {
+          "indices": [
+            "r",
+            "t"
+          ],
+          "value": "-\\dfrac{A}{c\\,r}"
+        },
+        {
+          "indices": [
+            "t",
+            "\\theta"
+          ],
+          "value": "-\\dfrac{B}{c\\,r^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "t"
+          ],
+          "value": "-\\dfrac{B}{c\\,r^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}{c^2\\,r^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "\\theta"
+          ],
+          "value": "-\\dfrac{A\\,B}{c^2\\,r^3}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "r"
+          ],
+          "value": "-\\dfrac{A\\,B}{c^2\\,r^3}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{\\left(c\\,r + B\\right)\\left(c\\,r - B\\right)}{c^2\\,r^4}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{A}{c\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{B}{c\\,r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{B}{c\\,r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{A}{c}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{A^2}{c^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A\\,B}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{A\\,B}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{A\\,B}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}{c^2\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{A\\,B}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(c\\,r + B\\right)\\left(c\\,r - B\\right)}{c^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(c\\,r + B\\right)\\left(c\\,r - B\\right)}{c^2\\,r^3}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{A}{c\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "r"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{3A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{3A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{3A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{3A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{3A^2 + 3B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{3A^2 + 3B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 - 3A^2 + B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 - 3A^2 + B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{4A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^7}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{4A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^7}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 - B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 - B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{4B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{4B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^4}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 + B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 + B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 + B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 + B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 + B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2A^2 + 2B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2A^2 + 2B^2}{c^2\\,r^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2A^2 + 2B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2A^2 + 2B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2A^2 + 2B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{4B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2A^2 + 2B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{2B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^7}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{2A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^7}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 + B^2\\right)}{c^4\\,r^8}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{2A^2 + 2B^2}{c^2\\,r^4}",
+      "kretschmann": "K = \\dfrac{44\\left(A^2 + B^2\\right)^2}{c^4\\,r^8}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 + 3B^2\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{3B\\left(A^2 + B^2\\right)}{c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3A^2 + 3B^2}{c^2\\,r^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{A^2 + B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{4B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3A^2 + 3B^2}{c^2\\,r^4}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{A^2 + B^2}{c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^7}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^7}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(A^2 + B^2\\right)\\left(3c^2\\,r^2 + B^2\\right)}{c^4\\,r^8}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{4A\\left(A^2 + B^2\\right)}{3c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{4A\\left(A^2 + B^2\\right)}{3c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{4A\\left(A^2 + B^2\\right)}{3c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{4A\\left(A^2 + B^2\\right)}{3c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{2B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{2B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{4A^2 + 4B^2}{3c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{4A^2 + 4B^2}{3c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "\\dfrac{4A^2 + 4B^2}{3c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4A^2 + 4B^2}{3c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2A^2 + 2B^2}{3c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2A^2 + 2B^2}{3c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2A^2 + 2B^2}{3c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{2A^2 + 2B^2}{3c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2A^2 + 2B^2}{3c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2A^2 + 2B^2}{3c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{2A^2 + 2B^2}{3c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{2A^2 + 2B^2}{3c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2A^2 + 2B^2}{3c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{2A^2 + 2B^2}{3c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{2A^2 + 2B^2}{3c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{2A^2 + 2B^2}{3c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\left(A^2 + B^2\\right)\\left(2c^2\\,r^2 - 2A^2 + B^2\\right)}{3c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\left(A^2 + B^2\\right)\\left(2c^2\\,r^2 - 2A^2 + B^2\\right)}{3c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^7}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^7}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 - B^2\\right)}{3c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 - B^2\\right)}{3c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2B\\left(A^2 + B^2\\right)}{c^3\\,r^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 + 2B^2\\right)}{3c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 + 2B^2\\right)}{3c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "\\dfrac{4B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "-\\dfrac{4A^2 + 4B^2}{3c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4A^2 + 4B^2}{3c^2\\,r^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\left(A^2 + B^2\\right)\\left(2c^2\\,r^2 + B^2\\right)}{3c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(A^2 + B^2\\right)\\left(2c^2\\,r^2 + B^2\\right)}{3c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\left(A^2 + B^2\\right)\\left(2c^2\\,r^2 + B^2\\right)}{3c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\left(A^2 + B^2\\right)\\left(2c^2\\,r^2 + B^2\\right)}{3c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2A\\,B\\left(A^2 + B^2\\right)}{3c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{2A\\,B\\left(A^2 + B^2\\right)}{3c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2A\\,B\\left(A^2 + B^2\\right)}{3c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2A\\,B\\left(A^2 + B^2\\right)}{3c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2A\\,B\\left(A^2 + B^2\\right)}{3c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2A\\,B\\left(A^2 + B^2\\right)}{3c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2A\\,B\\left(A^2 + B^2\\right)}{3c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2A\\,B\\left(A^2 + B^2\\right)}{3c^4\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{2B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{2B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{3c^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{3c^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{3c^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{3c^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 + 2B^2\\right)}{3c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 + 2B^2\\right)}{3c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 + 2B^2\\right)}{3c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(A^2 + B^2\\right)\\left(c^2\\,r^2 - A^2 + 2B^2\\right)}{3c^4\\,r^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2A\\left(A^2 + B^2\\right)}{3c^3\\,r^5}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "-\\dfrac{4B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "\\dfrac{4B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4B\\left(A^2 + B^2\\right)}{3c^3\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2A^2 + 2B^2}{3c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{2A^2 + 2B^2}{3c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2A^2 + 2B^2}{3c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{2A^2 + 2B^2}{3c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{2A^2 + 2B^2}{3c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{2A^2 + 2B^2}{3c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{2A^2 + 2B^2}{3c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{2A^2 + 2B^2}{3c^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "\\dfrac{4A^2 + 4B^2}{3c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{4A^2 + 4B^2}{3c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "-\\dfrac{4A^2 + 4B^2}{3c^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{4A^2 + 4B^2}{3c^2\\,r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} - \\dfrac{A\\left(A^2 + B^2\\right)}{c^3\\,r^4}\\dot{t}^2 + \\dfrac{2A^2 + 2B^2}{c^2\\,r^3}\\dot{t}\\dot{r} - \\dfrac{A}{c\\,r^2}\\dot{r}^2 - \\dfrac{2B}{c\\,r}\\dot{r}\\dot{\\theta} + \\dfrac{A}{c}\\dot{\\theta}^2 = 0",
+        "\\ddot{r} + \\dfrac{\\left(c\\,r + A\\right)\\left(A^2 + B^2\\right)\\left(c\\,r - A\\right)}{c^4\\,r^5}\\dot{t}^2 + \\dfrac{2A\\left(A^2 + B^2\\right)}{c^3\\,r^4}\\dot{t}\\dot{r} - \\dfrac{A^2}{c^2\\,r^3}\\dot{r}^2 - \\dfrac{2A\\,B}{c^2\\,r^2}\\dot{r}\\dot{\\theta} - \\dfrac{\\left(c\\,r + A\\right)\\left(c\\,r - A\\right)}{c^2\\,r}\\dot{\\theta}^2 = 0",
+        "\\ddot{\\theta} - \\dfrac{A\\,B\\left(A^2 + B^2\\right)}{c^4\\,r^6}\\dot{t}^2 + \\dfrac{2B\\left(A^2 + B^2\\right)}{c^3\\,r^5}\\dot{t}\\dot{r} - \\dfrac{A\\,B}{c^2\\,r^4}\\dot{r}^2 + \\dfrac{2\\left(c\\,r + B\\right)\\left(c\\,r - B\\right)}{c^2\\,r^3}\\dot{r}\\dot{\\theta} + \\dfrac{A\\,B}{c^2\\,r^2}\\dot{\\theta}^2 = 0",
+        "\\ddot{z} = 0"
+      ]
+    }
+  ]
+}

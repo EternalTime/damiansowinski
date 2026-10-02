@@ -60,6 +60,11 @@
       "id": "petrov_homogeneous",
       "kind": "piece",
       "text": "The vacuum outside the cylinder when its surface is the null circle $r = R$. William Bonnor showed in 1979 that this exterior is Petrov's homogeneous vacuum [bonnor1979petrov]."
+    },
+    {
+      "id": "maitra_dust",
+      "kind": "family",
+      "text": "Samaresh C. Maitra's dust of 1966, the same cylinder with the dust allowed to shear. Its circles about the axis stay spacelike at every radius, and near the axis its line element is van Stockum's at $R = 2a$ [maitra1966, chan2024]."
     }
   ],
   "references": [
@@ -80,7 +85,9 @@
     "bonnor1977cloud",
     "bratek2007",
     "neugebauer1995",
-    "bonnor1979petrov"
+    "bonnor1979petrov",
+    "maitra1966",
+    "chan2024"
   ],
   "coordinates": [
     {

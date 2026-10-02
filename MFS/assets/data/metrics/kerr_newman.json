@@ -79,6 +79,11 @@
       "id": "kerr_taub_nut",
       "kind": "family",
       "text": "Kerr's black hole with a NUT parameter where this one has a charge. Marek Demiański and Ezra Newman's electrovacuum solutions of 1966 carry both, and a magnetic charge too [manko2006]."
+    },
+    {
+      "id": "kerr_melvin",
+      "kind": "family",
+      "text": "Kerr's black hole in Melvin's magnetic universe, which charges itself. The exact solution built from an uncharged Kerr hole carries the charge $2amB$ [ernst1976c, gibbons2013]."
     }
   ],
   "references": [
@@ -106,7 +111,9 @@
     "sen1992",
     "hartle1972",
     "perjes1971",
-    "manko2006"
+    "manko2006",
+    "ernst1976c",
+    "gibbons2013"
   ],
   "coordinates": [
     {
