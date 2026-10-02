@@ -98,7 +98,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "122194bf1507b037",
+    "version": "f4f1a7fd2cc6410f",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -205,7 +205,7 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "7e03bd67e887ca73",
+    "version": "45388504ee9d40c9",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -331,7 +331,7 @@
       "homogeneous",
       "product spacetime"
     ],
-    "version": "22f6fe5316e75e81",
+    "version": "d747cb2bee154641",
     "diagrams": "7b995662594f7524",
     "conformal": "d58ee6f7393843e4",
     "embedding": "4b36293b1a64925a"
@@ -2103,6 +2103,45 @@
     "embedding": "5af191b3a00d29f2"
   },
   {
+    "id": "jackiw_teitelboim_black_hole",
+    "name": "Jackiw-Teitelboim",
+    "tags": [
+      "black hole",
+      "two-dimensional",
+      "dilaton",
+      "dilaton gravity",
+      "Jackiw-Teitelboim gravity",
+      "lower-dimensional gravity",
+      "anti-de Sitter",
+      "constant curvature",
+      "Hawking radiation",
+      "Hawking temperature",
+      "black hole thermodynamics",
+      "black hole entropy",
+      "holography",
+      "AdS/CFT",
+      "information paradox",
+      "Page curve",
+      "horizon",
+      "event horizon",
+      "Kruskal extension",
+      "Euclidean black hole",
+      "exact solution",
+      "Lorentzian",
+      "idealized model",
+      "Einstein space",
+      "cosmological constant",
+      "negative cosmological constant",
+      "conformally flat",
+      "static",
+      "stationary"
+    ],
+    "version": "74032fdb4cfc5979",
+    "diagrams": "fa020044695455d4",
+    "conformal": "8b047d93d5d75c6c",
+    "embedding": "0cc1bd857f4933e9"
+  },
+  {
     "id": "kaluza_klein_black_hole",
     "name": "Kaluza-Klein Black Holes",
     "tags": [
@@ -3409,7 +3448,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9d45ba87acb789ad",
+    "version": "f418b5b2648f2d6f",
     "diagrams": "762c153757fcd27b",
     "conformal": "ad18bb59a6c85dec",
     "embedding": "d2cedaf6a4fa93cb"
@@ -3791,7 +3830,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "2b9a9e10092ab33f",
+    "version": "dbdb8e675fe9a082",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -4960,7 +4999,7 @@
       "conformally flat",
       "stationary"
     ],
-    "version": "0a8fb1edf5583cbe",
+    "version": "95681af88bd404db",
     "diagrams": "20e4b54fd89e7fb9",
     "conformal": "f6b963bc340f323d",
     "embedding": "05b4e9f05b7ea873"

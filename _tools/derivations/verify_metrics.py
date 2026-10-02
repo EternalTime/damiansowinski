@@ -225,6 +225,13 @@ DIMENSIONS = {
     ("witten_black_hole", "kruskal"): {"U": "1", "V": "1", "\\lambda": "1/L", "m": "1"},
     ("witten_black_hole", "eddington_finkelstein_ingoing"): {"v": "L", "x": "L", "\\lambda": "1/L", "m": "1"},
     ("witten_black_hole", "eddington_finkelstein_outgoing"): {"u": "L", "x": "L", "\\lambda": "1/L", "m": "1"},
+    # The black hole of Jackiw and Teitelboim's gravity: the curvature radius L and the horizon r_h are
+    # lengths in every chart; the Kruskal and global coordinates are numbers, and the Poincare z a length.
+    ("jackiw_teitelboim_black_hole", "static"): {"t": "T", "r": "L", "L": "L", "r_h": "L"},
+    ("jackiw_teitelboim_black_hole", "proper_distance"): {"t": "T", "\\rho": "L", "L": "L", "r_h": "L"},
+    ("jackiw_teitelboim_black_hole", "kruskal"): {"U": "1", "V": "1", "L": "L", "r_h": "L"},
+    ("jackiw_teitelboim_black_hole", "global"): {"\\tau": "1", "\\sigma": "1", "L": "L", "r_h": "L"},
+    ("jackiw_teitelboim_black_hole", "poincare"): {"T": "T", "z": "L", "L": "L", "r_h": "L"},
     # The wave amplitude psi and gamma sit in exponentials and are dimensionless; the null chart's
     # u = ct - rho and v = ct + rho are lengths, as the Eddington-Finkelstein times of BTZ are.
     ("einstein_rosen_waves", "cylindrical"): {

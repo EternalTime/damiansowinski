@@ -964,6 +964,28 @@ def _bd_reach(m, of_r):
     return [of_r(2 / (1 - math.exp(-2 * u))) for u in (hi, lo)]
 
 
+def jackiw_teitelboim(chart):
+    """The moment t = 0 of the black hole of Jackiw and Teitelboim's gravity, the meridians
+    theta = 0 and pi of its Euclidean disc, as far as the embedding reaches in the proper distance
+    rho, at L = r_h = 1: r = cosh(rho) in the static chart, outside the horizon; the line U + V = 0
+    through the bifurcation point, V = -U = tanh(rho/2), on both sides in the Kruskal chart; tau = 0
+    with sigma = pi/2 +- arctan(sinh(rho)) in the global chart; and T = 0 with z = 2 e^(-+rho) in the
+    Poincare chart, out to the edge of its box at z = 6."""
+    m = moments("jackiw_teitelboim_black_hole")[0]
+    lo, hi = m.reach("proper_distance", "\\rho")
+    if chart == "proper_distance":
+        return [Mark(m, along(0.0, lo, hi))]
+    if chart == "static":
+        return [Mark(m, along(0.0, math.cosh(lo), math.cosh(hi)))]
+    if chart == "kruskal":
+        w = math.tanh(hi / 2)
+        return [Mark(m, [[(w, -w), (-w, w)]])]
+    if chart == "global":
+        a = math.atan(math.sinh(hi))
+        return [Mark(m, along(0.0, math.pi / 2 - a, math.pi / 2 + a))]
+    return [Mark(m, along(0.0, 2 * math.exp(-hi), min(6.0, 2 * math.exp(hi))))]
+
+
 def witten(chart):
     """The moment t = 0 of Witten's black hole outside the horizon, the meridian theta = 0 of his
     cigar, as far as the embedding reaches in his proper distance r, at lambda = m = 1: level in
@@ -2426,6 +2448,11 @@ FLAT = {
         "ppn_metric", lambda m: along(0.0, *(r + 1 for r in m.reach("isotropic", "r")))),
     ("ppn_metric", "rotating", "equator"): lambda: one(
         "ppn_metric", lambda m: along(0.0, *m.reach("isotropic", "r"))),
+    # The black hole of Jackiw and Teitelboim's gravity: the moment t = 0 outside the horizon in the
+    # static and proper distance charts, and on both sides of it in the others.
+    **{("jackiw_teitelboim_black_hole", chart, view): (lambda chart=chart: jackiw_teitelboim(chart))
+       for chart, view in (("static", "radial"), ("proper_distance", "radial"), ("kruskal", "plane"),
+                           ("global", "strip"), ("poincare", "tz"))},
     # Witten's black hole in two dimensions: the moment t = 0 outside the horizon in each chart, and
     # on both sides of it on the Kruskal plane.
     **{("witten_black_hole", chart, view): (lambda chart=chart: witten(chart))

@@ -15940,6 +15940,235 @@ def witten_black_hole(ck, src):
     return views
 
 
+def jackiw_teitelboim_black_hole(ck, src):
+    """The black hole of Jackiw and Teitelboim's gravity at L = r_h = 1, compactified by
+    p = arctan U, q = arctan V of its Kruskal chart.
+
+    The Kruskal metric -4 dU dV/(1 + UV)^2 is -4 dp dq/cos^2(p - q), so with T = p + q and
+    X = q - p it is (-dT^2 + dX^2)/cos^2 X, the global chart with tau = T and sigma = X + pi/2,
+    and the drawing is that chart itself. Since tan(q - p) = (V - U)/(1 + UV), the boundaries
+    UV = -1 are the vertical lines X = +-pi/2, and since tan(p + q) = (U + V)/(1 - UV), the lines
+    UV = 1 where the dilaton phi = (1 - UV)/(1 + UV) vanishes are T = +-pi/2: the square of
+    Achucarro and Ortiz's Figure 1 and of Banados, Teitelboim and Zanelli's hole without
+    rotation. The static chart's exterior has U = -a e^(-t), V = a e^t with a = sqrt((r - 1)/(r + 1))
+    = tanh(rho/2), and the black hole U = b e^(-t), V = b e^t with b = sqrt((1 - r)/(1 + r)). The
+    Poincare chart is carried in through the embedding of the hyperboloid, X_0 = 1/z - (T^2 - z^2)/4z,
+    X_1 = T/z and X_2 = 1/z + (T^2 - z^2)/4z, where the global chart has tan(tau) = X_1/X_0 and
+    tan(sigma - pi/2) = X_2: its patch is the triangle |T| < X + pi/2 of the drawing.
+    """
+    J = {"L": 1, "r_h": 1}
+    planes = {
+        "static": Plane(src, "jackiw_teitelboim_black_hole", "static", ("t", "r"), None, J),
+        "proper_distance": Plane(src, "jackiw_teitelboim_black_hole", "proper_distance", ("t", "\\rho"), None, J),
+        "kruskal": Plane(src, "jackiw_teitelboim_black_hole", "kruskal", ("U", "V"), None, J),
+        "global": Plane(src, "jackiw_teitelboim_black_hole", "global", ("\\tau", "\\sigma"), None, J),
+        "poincare": Plane(src, "jackiw_teitelboim_black_hole", "poincare", ("T", "z"), None, J),
+    }
+
+    def log(x):
+        with np.errstate(divide="ignore", invalid="ignore"):
+            return np.log(np.asarray(x, dtype=float))
+
+    def cell(name, t, s):
+        """(p, q) in a region at the static time t, s the logarithm of sqrt|UV| there."""
+        t, s = np.asarray(t, dtype=float), np.asarray(s, dtype=float)
+        a, b = atan_exp(s - t), atan_exp(s + t)
+        return {"I": (-a, b), "II": (a, b), "IV": (-a, -b), "I'": (a, -b)}[name]
+
+    def static(name):
+        return lambda t, r: cell(name, t, log(np.abs((np.asarray(r, dtype=float) - 1)
+                                                     / (np.asarray(r, dtype=float) + 1))) / 2)
+
+    def proper(t, rho):
+        return cell("I", t, log(np.tanh(np.asarray(rho, dtype=float) / 2)))
+
+    def kruskal(U, V):
+        return np.arctan(np.asarray(U, dtype=float)), np.arctan(np.asarray(V, dtype=float))
+
+    def strip(tau, sigma):
+        tau, X = np.asarray(tau, dtype=float), np.asarray(sigma, dtype=float) - HALF
+        return (tau - X) / 2, (tau + X) / 2
+
+    def poincare(T, z):
+        T, z = np.asarray(T, dtype=float), np.asarray(z, dtype=float)
+        x0 = 1 / z - (T ** 2 - z ** 2) / (4 * z)
+        x2 = 1 / z + (T ** 2 - z ** 2) / (4 * z)
+        tau, X = np.arctan2(T / z, x0), np.arctan(x2)
+        return (tau - X) / 2, (tau + X) / 2
+
+    ck.chart("Jackiw-Teitelboim black hole, static chart, exterior", planes["static"], static("I"),
+             ck.uniform(-5, 5), ck.uniform(1.001, 40), lambda t, r: (1, 0))
+    ck.chart("Jackiw-Teitelboim black hole, static chart, black hole", planes["static"], static("II"),
+             ck.uniform(-5, 5), ck.uniform(0.01, 0.999), lambda t, r: (0, -1))
+    ck.chart("Jackiw-Teitelboim black hole, proper distance chart", planes["proper_distance"], proper,
+             ck.uniform(-5, 5), ck.uniform(0.01, 6), lambda t, rho: (1, 0))
+    UU, VV = ck.uniform(-3, 3), ck.uniform(-3, 3)
+    keep = np.abs(UU * VV) < 0.98
+    ck.chart("Jackiw-Teitelboim black hole, Kruskal chart", planes["kruskal"], kruskal, UU[keep], VV[keep],
+             lambda U, V: (1, 1))
+    ck.chart("Jackiw-Teitelboim black hole, global chart", planes["global"], strip,
+             ck.uniform(-1.5, 1.5), ck.uniform(0.05, PI - 0.05), lambda tau, sigma: (1, 0))
+    TT, ZZ = ck.uniform(-5, 5), ck.uniform(0.05, 8)
+    keep = 4 - TT ** 2 + ZZ ** 2 > 0.1
+    ck.chart("Jackiw-Teitelboim black hole, Poincare chart", planes["poincare"], poincare, TT[keep], ZZ[keep],
+             lambda T, z: (1, 0))
+
+    pp, qq = static("II")(np.array([-3.0, 0, 3]), np.full(3, 1e-9))
+    ck.limit("Jackiw-Teitelboim black hole: r -> 0 in the black hole lands on T = pi/2, where phi = 0", pp + qq,
+             [HALF] * 3)
+    pp, qq = static("I")(np.array([-3.0, 0, 3]), np.full(3, 1e9))
+    ck.limit("Jackiw-Teitelboim black hole: r -> infinity lands on the boundary X = pi/2", qq - pp, [HALF] * 3, 1e-8)
+    pp, qq = static("I")(np.array([2.0]), np.array([1 + 1e-12]))
+    ck.limit("Jackiw-Teitelboim black hole: r -> r_h at fixed t lands on the bifurcation point", point(pp[0], qq[0]),
+             [0, 0], 1e-4)
+    pp, qq = poincare(np.array([0.0]), np.array([1e-9]))
+    ck.limit("Jackiw-Teitelboim black hole: z -> 0 at T = 0 lands on the boundary at (X, T) = (pi/2, 0)",
+             point(pp[0], qq[0]), [HALF, 0], 1e-8)
+    rr = np.linspace(0.05, 5, 50)
+    for name, sel in (("I", rr > 1.001), ("II", rr < 0.999)):
+        pp, qq = static(name)(0.3 + 0 * rr[sel], rr[sel])
+        ck.limit(f"Jackiw-Teitelboim black hole, {name}: tan p tan q is Kruskal's UV = (1 - r)/(1 + r)",
+                 np.tan(pp) * np.tan(qq), (1 - rr[sel]) / (1 + rr[sel]), 1e-8)
+    # One event, t = 0.7 at r = 2.5, in all five charts: rho = arcosh(r), U and V from the static
+    # chart, tau and sigma from p and q, and the Poincare chart by the embedding, z = 2/(X_0 + X_2)
+    # and T = z X_1, with X_0 = r, X_1 = sqrt(r^2 - 1) sinh(t) and X_2 = sqrt(r^2 - 1) cosh(t).
+    t0, r0 = 0.7, 2.5
+    here = static("I")(t0, r0)
+    a0 = math.sqrt((r0 - 1) / (r0 + 1))
+    root = math.sqrt(r0 * r0 - 1)
+    z0 = 2 / (r0 + root * math.cosh(t0))
+    for name, got in (("the proper distance chart", proper(t0, math.acosh(r0))),
+                      ("the Kruskal chart", kruskal(-a0 * math.exp(-t0), a0 * math.exp(t0))),
+                      ("the global chart", strip(here[0] + here[1], here[1] - here[0] + HALF)),
+                      ("the Poincare chart", poincare(z0 * root * math.sinh(t0), z0))):
+        ck.limit(f"Jackiw-Teitelboim black hole: {name} puts the event of the static chart at one point",
+                 got, here, 1e-12)
+    ck.finite("Jackiw-Teitelboim black hole: the Kretschmann scalar is finite at r = 0 and at r_h",
+              planes["static"].kretschmann(np.zeros(3), np.array([1e-9, 1.0, 5.0])))
+
+    views = []
+    box = [-HALF - 0.55, HALF + 0.55, -HALF - 0.25, HALF + 0.25]
+    square = [[HALF, -HALF], [HALF, HALF], [-HALF, HALF], [-HALF, -HALF]]
+    exterior = [[0, 0], [HALF, -HALF], [HALF, HALF]]
+    with_hole = [[0, 0], [HALF, -HALF], [HALF, HALF], [-HALF, HALF]]
+    patch = [[-HALF, 0], [HALF, -HALF], [HALF, HALF]]
+    TS = (-2, -1, 0, 1, 2)
+
+    def edges(v):
+        v.line("boundary", [[[HALF, -HALF], [HALF, HALF]], [[-HALF, -HALF], [-HALF, HALF]]])
+        v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+        v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+        v.label_xt([0, HALF], "$\\phi = 0$", "b", dy=-8)
+        v.label_xt([0, -HALF], "$\\phi = 0$", "t", dy=8)
+        v.label_xt([HALF, 0.9], "$\\phi \\to \\infty$", "l", "small", dx=6)
+        v.label_xt([-HALF, 0.9], "$\\phi \\to \\infty$", "r", "small", dx=-6)
+        v.label_xt([-Q4, Q4], "$r_h$", "tr", "small", dx=-6, dy=2)
+        v.label_xt([0.3, -0.62], "exterior", cls="region")
+        v.label_xt([-0.3, 0.62], "exterior", cls="region")
+        v.label_xt([0, 1.2], "black hole", cls="region")
+        v.label_xt([0, -1.2], "white hole", cls="region")
+        v.legend("horizon", "the horizons, $r = r_h$")
+        v.legend("boundary", "the two boundaries of anti-de Sitter space, timelike")
+        v.legend("singular", "$\\phi = 0$, where the dilaton vanishes and the effective Newton constant "
+                             "$G/\\phi$ diverges, with the curvature finite there")
+
+    disc = slices.moments("jackiw_teitelboim_black_hole")[0]
+    lo, hi = disc.reach("proper_distance", "\\rho")
+    s = log(np.tanh(np.array([lo + 1e-12, hi]) / 2))
+    left, right = cell("I'", 0.0, s[::-1]), cell("I", 0.0, s)
+    moment = [(np.concatenate([left[0], right[0]]), np.concatenate([left[1], right[1]]))]
+
+    t = spread(-np.inf, np.inf, 500, 9)
+    rr = spread(1, np.inf, 500, 14)
+
+    v = View("static", "Static", box, "static")
+    v.fill("region", square)
+    v.fill("cover", with_hole)
+    for r in (1.25, 1.5, 2, 3):
+        v.curve("r", *static("I")(t, np.full_like(t, r)))
+    for r in (0.25, 0.5, 0.75):
+        v.curve("r", *static("II")(t, np.full_like(t, r)))
+    inside = spread(0, 1, 500, 14)
+    for tt in TS:
+        v.curve("t", *static("I")(np.full_like(rr, tt), rr))
+        v.curve("t", *static("II")(np.full_like(inside, tt), inside))
+    edges(v)
+    for r, text in ((1.25, "$1.25\\,r_h$"), (3, "$3\\,r_h$")):
+        label_on(v, static("I")(0.0, r), text)
+    v.legend("cover", "the regions that $t$ and $r > 0$ cover, with the future toward smaller $r$ inside the horizon")
+    v.legend("r", "$r$ constant, a line of constant dilaton")
+    v.legend("t", "$ct$ constant, in units of $L$")
+    views.append(v)
+
+    v = View("proper_distance", "Proper Distance", box, "proper_distance")
+    v.fill("region", square)
+    v.fill("cover", exterior)
+    for rho in (0.5, 1, 2, 3):
+        v.curve("r", *proper(t, np.full_like(t, rho)))
+    rho = spread(0, np.inf, 500, 14)
+    for tt in TS:
+        v.curve("t", *proper(np.full_like(rho, tt), rho))
+    edges(v)
+    for rho_, text in ((0.5, "$\\rho = L/2$"), (3, "$3L$")):
+        label_on(v, proper(0.0, rho_), text)
+    v.legend("cover", "the region that $t$ and $\\rho > 0$ cover")
+    v.legend("r", "$\\rho$ constant")
+    v.legend("t", "$ct$ constant, in units of $L$")
+    views.append(v)
+
+    v = View("kruskal", "Kruskal", box, "kruskal")
+    v.fill("region", square)
+    v.fill("cover", square)
+    for c in (-2, -1, -0.5, 0.5, 1, 2):
+        # A line of constant U runs between the lines UV = -1 and UV = 1, V from -1/U to 1/U.
+        a = math.atan(c)
+        span = HALF - abs(a)
+        v.line("null", [[point(a, -span), point(a, span)]])
+        v.line("null", [[point(-span, a), point(span, a)]])
+    edges(v)
+    v.legend("cover", "the region that $U$ and $V$ cover, $-1 < UV < 1$")
+    v.legend("null", "$U$ or $V$ constant, a light ray, at $\\pm 0.5$, $\\pm 1$ and $\\pm 2$")
+    views.append(v)
+
+    v = View("global", "Global", box, "global")
+    v.fill("region", square)
+    v.fill("cover", square)
+    tau = np.linspace(-HALF, HALF, 200)
+    for sg in (PI / 6, PI / 3, PI / 2, 2 * PI / 3, 5 * PI / 6):
+        v.curve("r", *strip(tau, np.full_like(tau, sg)))
+    sig = np.linspace(0, PI, 200)
+    for tt in (-PI / 3, -PI / 6, 0, PI / 6, PI / 3):
+        v.curve("t", *strip(np.full_like(sig, tt), sig))
+    edges(v)
+    v.legend("cover", "the region that $\\tau$ and $\\sigma$ cover, the whole square")
+    v.legend("r", "$\\sigma$ constant, every $\\pi/6$")
+    v.legend("t", "$\\tau$ constant, every $\\pi/6$")
+    views.append(v)
+
+    v = View("poincare", "Poincaré", box, "poincare")
+    v.fill("region", square)
+    v.fill("cover", patch)
+    TT = spread(-np.inf, np.inf, 600, 9)
+    for z in (0.5, 1, 2, 4):
+        keep = 4 - TT ** 2 + z * z > 0
+        v.curve("r", *poincare(TT[keep], np.full(int(keep.sum()), z)))
+    zz = spread(0, np.inf, 600, 14)
+    for T0 in (-1, 0, 1):
+        keep = 4 - T0 * T0 + zz ** 2 > 0
+        v.curve("t", *poincare(np.full(int(keep.sum()), float(T0)), zz[keep]))
+    edges(v)
+    for z, text in ((0.5, "$z = L/2$"), (4, "$4L$")):
+        label_on(v, poincare(0.0, z), text)
+    v.legend("cover", "the region that $T$ and $z$ cover, the Poincaré patch")
+    v.legend("r", "$z$ constant")
+    v.legend("t", "$cT$ constant, in units of $L$")
+    views.append(v)
+    for view in views:
+        view.set(settings="$L = 1$ and $r_h = L$.")
+        view.slice(disc, moment)
+    return views
+
+
 def roberts(ck, src):
     """Roberts's collapsing scalar field, each point a 2-sphere, for its three outcomes, p = 9/10, 1
     and 2, one view for each in each of its five charts.
@@ -22107,6 +22336,7 @@ DRAWN = {
     "brans_dicke_sphere": brans_dicke_sphere,
     "exponential_metric": exponential_metric,
     "witten_black_hole": witten_black_hole,
+    "jackiw_teitelboim_black_hole": jackiw_teitelboim_black_hole,
     "roberts": roberts,
     "myers_perry": myers_perry,
     "curzon_chazy": curzon_chazy,
@@ -25310,6 +25540,51 @@ CAPTIONS = {
         "Eddington-Finkelstein coordinates $v$ and $r$ on it. They cover the exterior and the black hole "
         "together, and their lines of constant $v$ are ingoing light rays, which cross the horizon at 45° and "
         "end at $r = 0$.",
+    ],
+    ("jackiw_teitelboim_black_hole", "static"): [
+        "The black hole of Jackiw and Teitelboim's gravity ($r_h = L$), each point in the diagram a single "
+        "event. With $U = -e^{-r_hct/L^2}\\sqrt{(r - r_h)/(r + r_h)}$ and $V = e^{r_hct/L^2}\\sqrt{(r - r_h)/(r + r_h)}$ "
+        "the metric is $-4L^2\\,dU\\,dV/(1 + UV)^2$, regular through the horizon, where $UV = -(r - r_h)/(r + r_h)$ "
+        "vanishes. With $p = \\arctan U$ and $q = \\arctan V$ the two boundaries $UV = -1$ lie on the vertical "
+        "lines $X = \\pm\\pi/2$, and $r = 0$, where $UV = 1$, on the horizontal lines $T = \\pm\\pi/2$.",
+        "The coordinates cover the right exterior and, with the future toward smaller $r$, the black hole. "
+        "The dilaton is $\\phi = \\phi_rr/L^2$, so each line of constant $r$ is a line of constant dilaton, and "
+        "the black hole ends where the dilaton vanishes, $r = 0$ on $T = \\pi/2$. The curvature is $-2/L^2$ "
+        "there as everywhere, and the metric runs on past it into anti-de Sitter space of two dimensions.",
+    ],
+    ("jackiw_teitelboim_black_hole", "proper_distance"): [
+        "The black hole of Jackiw and Teitelboim's gravity with the proper distance chart's $t$ and $\\rho$ on "
+        "it ($r_h = L$), each point in the diagram a single event. Since $r = r_h\\cosh(\\rho/L)$, the Kruskal "
+        "coordinates are $V = -U = \\tanh(\\rho/2L)$ at $t = 0$, and the horizon $\\rho = 0$ is the bifurcation "
+        "point.",
+        "The coordinates cover the right exterior alone, and the lines of constant $\\rho$ run from the past "
+        "corner of the boundary to its future corner, each at a fixed proper distance from the horizon.",
+    ],
+    ("jackiw_teitelboim_black_hole", "kruskal"): [
+        "The black hole of Jackiw and Teitelboim's gravity with its Kruskal coordinates $U$ and $V$ on it, each "
+        "point in the diagram a single event. With $p = \\arctan U$ and $q = \\arctan V$ the metric "
+        "$-4L^2\\,dU\\,dV/(1 + UV)^2$ is $(-dT^2 + dX^2)L^2/\\cos^2X$, and the lines of constant $U$ or $V$ are "
+        "light rays at 45°.",
+        "The coordinates cover the whole square, $-1 < UV < 1$: both exteriors, the black hole and the white "
+        "hole, with the horizons on $UV = 0$. The dilaton $\\phi = \\phi_rr_h(1 - UV)/L^2(1 + UV)$ grows without "
+        "bound at the boundaries and vanishes on $T = \\pm\\pi/2$.",
+    ],
+    ("jackiw_teitelboim_black_hole", "global"): [
+        "The black hole of Jackiw and Teitelboim's gravity with the global chart's $\\tau$ and $\\sigma$ on it, "
+        "each point in the diagram a single event. The drawing is the chart itself, $T = \\tau$ and "
+        "$X = \\sigma - \\pi/2$, since the metric $L^2(-d\\tau^2 + d\\sigma^2)/\\sin^2\\sigma$ is already flat "
+        "space times a factor.",
+        "The strip $0 < \\sigma < \\pi$ is the whole of anti-de Sitter space of two dimensions, and the dilaton "
+        "$\\phi = \\phi_rr_h\\cos\\tau/L^2\\sin\\sigma$ cuts the black hole out of it as the square "
+        "$|\\tau| < \\pi/2$, where it is positive. The horizons are the diagonals of the square.",
+    ],
+    ("jackiw_teitelboim_black_hole", "poincare"): [
+        "The black hole of Jackiw and Teitelboim's gravity with the Poincaré chart's $T$ and $z$ on it "
+        "($r_h = L$), each point in the diagram a single event. The boundary $z = 0$ is the right edge of the "
+        "square, and the patch is the triangle between it and the two light rays that leave its ends.",
+        "The patch holds the right exterior, part of the black hole and of the white hole, and a corner of the "
+        "second exterior, beyond the horizons $cT + z = 2L^2/r_h$ and $cT - z = -2L^2/r_h$. Its lines of constant "
+        "$T$ all meet at the far corner, the point $z \\to \\infty$.",
     ],
     ("witten_black_hole", "witten"): [
         "Witten's black hole, maximally extended, each point in the diagram a single event. With "
