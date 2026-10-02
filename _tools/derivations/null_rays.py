@@ -692,6 +692,19 @@ DS = {"r_s": 1, "lambda": "1/5"}
 # r = +-sqrt(3)/2, the one way wormhole, a = r_s, and the traversable wormhole, a = 2 r_s.
 SV_CASES = {"bounce": ("$a = r_s/2$", "1/2"), "null": ("$a = r_s$", "1"), "wormhole": ("$a = 2\\,r_s$", "2")}
 
+# Hayward's regular black hole at ell = 12m/(7 sqrt 7) = 0.648 m, where r^3 - 2m r^2 + 2m ell^2 =
+# (r - 6m/7)(r - 12m/7)(r + 4m/7): the horizons are r_- = 6m/7 and r_+ = 12m/7, with surface
+# gravities -5/(12m) and 1/(6m). The extremal hole has ell = 4m/(3 sqrt 3) = 0.770 m.
+HAYWARD = {"m": 1, "ell": "12/(7*sqrt(7))"}
+# The same length with the mass a function of advanced time, in units of its greatest value m_0:
+# it grows as sin^2 from v = 0 to 2, stays m_0 until v = 4 and falls as cos^2 to zero at v = 8.
+# Trapped spheres exist while m > m_* = 3 sqrt(3) ell/4 = 0.842 m_0, from v = 1.479 to 5.042.
+HAYWARD_MASS = "sin(pi*Min(Max(v, 0), 2)/4)**2*cos(pi*(Min(Max(v, 4), 8) - 4)/8)**2"
+HAYWARD_INPUT = ("$m(v) = m_0\\sin^2(\\pi v/4m_0)$ from $v = 0$ to $2\\,m_0$, $m_0$ until $v = 4\\,m_0$, and "
+                 "$m_0\\cos^2(\\pi(v - 4m_0)/8m_0)$ until $v = 8\\,m_0$, with no mass before or after: "
+                 "ingoing radiation of positive energy forms the black hole, and ingoing radiation of "
+                 "negative energy evaporates it.")
+
 # Two of Majumdar and Papapetrou's holes, each of mass parameter m, the unit, at z = +-2m.
 MP_TWO = "1 + 1/sqrt(x**2 + y**2 + (z - 2)**2) + 1/sqrt(x**2 + y**2 + (z + 2)**2)"
 MP_TWO_CYLINDRICAL = "1 + 1/sqrt(rho**2 + (z - 2)**2) + 1/sqrt(rho**2 + (z + 2)**2)"
@@ -846,6 +859,25 @@ DIAGRAMS = [
             "$r/m$", "$ct/m$", {"m": 1}, KK_HOPF),
     Diagram("kaluza_klein_monopole", "taub_nut", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 16, -8, 8),
             "$\\rho/m$", "$ct/m$", {"m": 1}, KK_HOPF),
+    Diagram("hayward", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r/m$", "$ct/m$", HAYWARD, EQUATOR, orient="ingoing", areal=True),
+    Diagram("hayward", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
+            ("v", "r"), (0, 4, -2, 2), "$r/m$", "$(v - r)/m$", HAYWARD, EQUATOR,
+            to_display=FINKELSTEIN_IN, tau="v - r", areal=True),
+    Diagram("hayward", "eddington_finkelstein_ingoing", "chart", "against $v$",
+            ("v", "r"), (0, 4, -1, 3), "$r/m$", "$v/m$", HAYWARD, EQUATOR, tau="v - r", areal=True),
+    Diagram("hayward", "eddington_finkelstein_outgoing", "finkelstein", "against $u + r$",
+            ("u", "r"), (0, 4, -2, 2), "$r/m$", "$(u + r)/m$", HAYWARD, EQUATOR,
+            to_display=FINKELSTEIN_OUT, tau="u + r", areal=True),
+    Diagram("hayward", "eddington_finkelstein_outgoing", "chart", "against $u$",
+            ("u", "r"), (0, 4, -3, 1), "$r/m$", "$u/m$", HAYWARD, EQUATOR, tau="u + r", areal=True),
+    # The black hole forming and evaporating: the mass rises, holds and falls back to zero, and the
+    # curve g^rr = 0, which the script marks, is closed. Outside 0 < v < 8 the plane is Minkowski's.
+    Diagram("hayward", "evaporating", "history", "forming and evaporating", ("v", "r"), (0, 6, -6.5, 8.5),
+            "$r/m_0$", "$(v - r)/m_0$", {"ell": "12/(7*sqrt(7))"}, EQUATOR, to_display=FINKELSTEIN_IN,
+            tau="v - r", areal=True, functions={"m": HAYWARD_MASS}, input=HAYWARD_INPUT, cones=(11, 14),
+            lines=(("shell", "x0", "0", "the first radiation arrives, $v = 0$"),
+                   ("shell", "x0", "8", "the last of the mass is gone, $v = 8\\,m_0$"))),
     Diagram("global_monopole", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_s$", "$ct/r_s$", GM, EQUATOR, orient="ingoing", areal=True),
     Diagram("global_monopole", "conical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
@@ -1982,6 +2014,59 @@ CAPTIONS = {
         "The edge $\\rho = 2m$ is the nut, a single point of space where the 3-spheres have shrunk away, and the "
         "chart has no points with $\\rho < 2m$. A ray reaches it in a finite time, and the Kretschmann scalar "
         "$384m^2/(\\rho + 2m)^6$ is finite there.",
+    ],
+    ("hayward", "static", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $\\ell = 12m/7\\sqrt{7} = 0.648\\,m$, "
+        "the same at every other angle by spherical symmetry. There $g^{rr} = 1 - 2mr^2/(r^3 + 2m\\ell^2)$ "
+        "vanishes at $r_- = 6m/7$ and at $r_+ = 12m/7$, and the cones close on both horizons, since "
+        "$c\\,dt/dr = \\pm 1/g^{rr}$ diverges there. Inside $r_-$ the cones open again, and at the centre, where "
+        "$g^{rr} = 1$, they stand at 45°.",
+        "Between the horizons $t$ is a spacelike coordinate, and the components alone do not fix which way is "
+        "future. We take it from the ingoing Eddington-Finkelstein chart, which makes that region the black "
+        "hole, where every cone points to smaller $r$. The Kretschmann scalar is finite at every radius, and at "
+        "$r = 0$ it is $24/\\ell^4$, its value in de Sitter space of radius $\\ell$.",
+    ],
+    ("hayward", "eddington_finkelstein_ingoing", "finkelstein"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $\\ell = 0.648\\,m$ with $v - r$ as "
+        "the vertical axis, so that the ingoing rays, $v = $ const, run at 45°. The outgoing family has "
+        "$dv/dr = 2/g^{rr}$, so it stands vertical at $r_- = 6m/7$ and at $r_+ = 12m/7$: each horizon is an "
+        "outgoing ray that stays where it is.",
+        "The cones cross $r_+$ smoothly and keep tipping. Between the horizons both edges of every future cone "
+        "point to smaller $r$. Inside $r_-$ the outgoing edge points to larger $r$ again, and an outgoing ray "
+        "there climbs toward $r_-$, which it approaches as $v \\to \\infty$. An ingoing ray reaches the centre at "
+        "a finite $v$, where the curvature is finite.",
+    ],
+    ("hayward", "eddington_finkelstein_ingoing", "chart"): [
+        "The same plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The ingoing family is $v = $ const and runs horizontally here, since $v$ is itself a "
+        "null coordinate. The outgoing family turns vertical at $r_+$, leans toward smaller $r$ between the "
+        "horizons, and turns vertical again at $r_-$.",
+    ],
+    ("hayward", "eddington_finkelstein_outgoing", "finkelstein"): [
+        "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $\\ell = 0.648\\,m$ with $u + r$ as "
+        "the vertical axis, so that the outgoing rays, $u = $ const, run at 45°. The ingoing family stands "
+        "vertical at $r_- = 6m/7$ and at $r_+ = 12m/7$. Between the horizons both edges of every future cone "
+        "point to larger $r$: this is the white hole, which nothing from outside $r_+$ can enter.",
+        "The chart is the time reverse of the ingoing one: its $g_{ur}$ is $-1$ where the ingoing chart's "
+        "$g_{vr}$ is $+1$.",
+    ],
+    ("hayward", "eddington_finkelstein_outgoing", "chart"): [
+        "The same plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a "
+        "null coordinate. The ingoing family turns vertical at $r_+$, leans toward larger $r$ between the "
+        "horizons, and turns vertical again at $r_-$.",
+    ],
+    ("hayward", "evaporating", "history"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of a black hole that forms and evaporates "
+        "($\\ell = 0.648\\,m_0$), drawn with $v - r$ as the vertical axis, each point in the plane a 2-sphere "
+        "of area $4\\pi r^2$. Before $v = 0$ and after $v = 8\\,m_0$ the mass vanishes and the plane is "
+        "Minkowski's. The curve $g^{rr} = 0$ is closed. It opens at $r = \\sqrt{3}\\,\\ell = 1.12\\,m_0$ when the "
+        "mass passes $3\\sqrt{3}\\,\\ell/4 = 0.842\\,m_0$, at $v = 1.48\\,m_0$, reaches $r_- = 6m_0/7$ and "
+        "$r_+ = 12m_0/7$ while the mass is $m_0$, and closes at $v = 5.04\\,m_0$.",
+        "Inside the curve both edges of every future cone point to smaller $r$, so every sphere there is "
+        "trapped. Its outer part is the outer trapping horizon and its inner part the inner one. An outgoing "
+        "ray inside the curve loses $r$, and gains it again once the curve has closed or its inner part has "
+        "swept past the ray. Each such ray reaches infinity, so this spacetime has no event horizon.",
     ],
     ("global_monopole", "static", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of Letelier's black hole in a cloud of strings, "
@@ -5872,6 +5957,16 @@ def _bardeen_away(x, r):
     return (np.abs(r - 0.30096) > 0.05) & (np.abs(r - 0.77542) > 0.05)
 
 
+def _hayward_rstar(r):
+    """Hayward's tortoise coordinate at m = 1 and ell = 12/(7 sqrt 7), where 1/F = 1 + 2r^2/((r - 6/7)
+    (r - 12/7)(r + 4/7)): r - (6/5) ln|r - 6/7| + 3 ln|r - 12/7| + (1/5) ln(r + 4/7), up to a constant."""
+    return r - 1.2 * np.log(np.abs(r - 6 / 7)) + 3 * np.log(np.abs(r - 12 / 7)) + 0.2 * np.log(r + 4 / 7)
+
+
+def _hayward_away(x, r):
+    return (np.abs(r - 6 / 7) > 0.05) & (np.abs(r - 12 / 7) > 0.05)
+
+
 def _sds_away(x, r):
     return (np.abs(r - 1.0852) > 0.05) & (np.abs(r - 3.2146) > 0.05)
 
@@ -6060,6 +6155,12 @@ CLOSED_FORMS = {
         (lambda v, r: v, lambda v, r: v - 2 * _bardeen_rstar(r), _bardeen_away),
     ("bardeen", "eddington_finkelstein_outgoing", "finkelstein"):
         (lambda u, r: u + 2 * _bardeen_rstar(r), lambda u, r: u, _bardeen_away),
+    ("hayward", "static", "radial"):
+        (lambda t, r: t + _hayward_rstar(r), lambda t, r: t - _hayward_rstar(r), _hayward_away),
+    ("hayward", "eddington_finkelstein_ingoing", "finkelstein"):
+        (lambda v, r: v, lambda v, r: v - 2 * _hayward_rstar(r), _hayward_away),
+    ("hayward", "eddington_finkelstein_outgoing", "finkelstein"):
+        (lambda u, r: u + 2 * _hayward_rstar(r), lambda u, r: u, _hayward_away),
     ("schwarzschild_de_sitter", "static", "radial"):
         (lambda t, r: t + _sds_rstar(r), lambda t, r: t - _sds_rstar(r), _sds_away),
     ("schwarzschild_de_sitter", "eddington_finkelstein_ingoing", "finkelstein"):

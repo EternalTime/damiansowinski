@@ -1,5 +1,5 @@
 {
-  "version": "3d1f38ba650493b8",
+  "version": "8d5643726eb9341b",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -13538,6 +13538,128 @@
         "eprint": "1805.02675",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/1805.02675"
+      }
+    },
+    "poisson1988": {
+      "type": "article",
+      "fields": {
+        "title": "Structure of the black hole nucleus",
+        "author": "Poisson, Eric and Israel, Werner",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "5",
+        "number": "12",
+        "pages": "L201--L205",
+        "year": "1988",
+        "doi": "10.1088/0264-9381/5/12/002",
+        "url": "https://doi.org/10.1088/0264-9381/5/12/002"
+      }
+    },
+    "frolov1981": {
+      "type": "article",
+      "fields": {
+        "title": "Spherically symmetric collapse in quantum gravity",
+        "author": "Frolov, Valeri P. and Vilkovisky, G. A.",
+        "journal": "Physics Letters B",
+        "volume": "106",
+        "number": "4",
+        "pages": "307--313",
+        "year": "1981",
+        "doi": "10.1016/0370-2693(81)90542-6",
+        "url": "https://doi.org/10.1016/0370-2693(81)90542-6"
+      }
+    },
+    "roman1983": {
+      "type": "article",
+      "fields": {
+        "title": "Stellar collapse without singularities?",
+        "author": "Roman, Thomas A. and Bergmann, Peter G.",
+        "journal": "Physical Review D",
+        "volume": "28",
+        "number": "6",
+        "pages": "1265--1277",
+        "year": "1983",
+        "doi": "10.1103/PhysRevD.28.1265",
+        "url": "https://doi.org/10.1103/PhysRevD.28.1265"
+      }
+    },
+    "frolov2014": {
+      "type": "article",
+      "fields": {
+        "title": "Information loss problem and a `black hole' model with a closed apparent horizon",
+        "author": "Frolov, Valeri P.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2014",
+        "number": "5",
+        "pages": "049",
+        "year": "2014",
+        "doi": "10.1007/JHEP05(2014)049",
+        "eprint": "1402.5446",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP05(2014)049"
+      }
+    },
+    "frolov2016": {
+      "type": "article",
+      "fields": {
+        "title": "Notes on nonsingular models of black holes",
+        "author": "Frolov, Valeri P.",
+        "journal": "Physical Review D",
+        "volume": "94",
+        "number": "10",
+        "pages": "104056",
+        "year": "2016",
+        "doi": "10.1103/PhysRevD.94.104056",
+        "eprint": "1609.01758",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.94.104056"
+      }
+    },
+    "bambi2013": {
+      "type": "article",
+      "fields": {
+        "title": "Rotating regular black holes",
+        "author": "Bambi, Cosimo and Modesto, Leonardo",
+        "journal": "Physics Letters B",
+        "volume": "721",
+        "number": "4--5",
+        "pages": "329--334",
+        "year": "2013",
+        "doi": "10.1016/j.physletb.2013.03.025",
+        "eprint": "1302.6075",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.physletb.2013.03.025"
+      }
+    },
+    "delorenzo2015": {
+      "type": "article",
+      "fields": {
+        "title": "On the effective metric of a {Planck} star",
+        "author": "De Lorenzo, Tommaso and Pacilio, Costantino and Rovelli, Carlo and Speziale, Simone",
+        "journal": "General Relativity and Gravitation",
+        "volume": "47",
+        "number": "4",
+        "pages": "41",
+        "year": "2015",
+        "doi": "10.1007/s10714-015-1882-8",
+        "eprint": "1412.6015",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10714-015-1882-8"
+      }
+    },
+    "lan2023": {
+      "type": "article",
+      "fields": {
+        "title": "Regular Black Holes: A Short Topic Review",
+        "author": "Lan, Chen and Yang, Hao and Guo, Yang and Miao, Yan-Gang",
+        "journal": "International Journal of Theoretical Physics",
+        "volume": "62",
+        "number": "9",
+        "pages": "202",
+        "year": "2023",
+        "doi": "10.1007/s10773-023-05454-1",
+        "eprint": "2303.11696",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10773-023-05454-1"
       }
     }
   }

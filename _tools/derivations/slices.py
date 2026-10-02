@@ -772,6 +772,31 @@ def _bardeen_both(sign=0):
     return _bardeen("outside", sign) + _bardeen("inside", sign)
 
 
+def hayward_rstar(r):
+    """Hayward's tortoise coordinate at m = 1 and ell = 12/(7 sqrt 7), where 1/F = 1 + 2r^2/((r - 6/7)
+    (r - 12/7)(r + 4/7)), as the Eddington-Finkelstein charts fix it, vanishing at r = 0:
+    r_* = r - (6/5) ln|1 - 7r/6| + 3 ln|1 - 7r/12| + (1/5) ln(1 + 7r/4)."""
+    r = np.asarray(r, dtype=float)
+    return r - 1.2 * np.log(np.abs(1 - 7 * r / 6)) + 3 * np.log(np.abs(1 - 7 * r / 12)) + 0.2 * np.log(1 + 7 * r / 4)
+
+
+def _hayward(sign=0):
+    """The moment t = 0 of Hayward's black hole, outside r_+ = 12/7 and inside r_- = 6/7: along r in
+    its static chart (sign 0), and in its ingoing (1) or outgoing (-1) chart as v = r_* or
+    u = -r_*, each part crowding toward its horizon, where the curve runs off. The static t of the
+    region inside r_- is the one the same r_* gives there."""
+    out = []
+    for view_id in ("outside", "inside"):
+        m, = moments("hayward", view_id)
+        lo, hi = m.reach("static", "r")
+        if not sign:
+            out.append(Mark(m, along(0.0, lo, hi)))
+            continue
+        r = near(lo, hi) if view_id == "outside" else (lo + hi) - near(lo, hi)[::-1]
+        out.append(Mark(m, [np.column_stack([sign * hayward_rstar(r), r])]))
+    return out
+
+
 def _c_metric(y):
     """The C-metric's two moments on a plane of its axis: the equator's t = 0, which meets the
     axis along t = 0 over the same r as it reaches on the equator, and the black hole horizon,
@@ -859,6 +884,14 @@ FLAT = {
     ("bardeen", "eddington_finkelstein_ingoing", "chart"): lambda: _bardeen_both(1),
     ("bardeen", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _bardeen_both(-1),
     ("bardeen", "eddington_finkelstein_outgoing", "chart"): lambda: _bardeen_both(-1),
+    ("hayward", "static", "radial"): lambda: _hayward(),
+    ("hayward", "eddington_finkelstein_ingoing", "finkelstein"): lambda: _hayward(1),
+    ("hayward", "eddington_finkelstein_ingoing", "chart"): lambda: _hayward(1),
+    ("hayward", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _hayward(-1),
+    ("hayward", "eddington_finkelstein_outgoing", "chart"): lambda: _hayward(-1),
+    # v - r = T, every r the embedding reaches.
+    ("hayward", "evaporating", "history"): lambda: one(
+        "hayward", lambda m: [[(m.time + r, r) for r in m.reach("evaporating", "r")]], view_id="history"),
     ("schwarzschild_ads", "static", "radial"): lambda: _sads(),
     ("schwarzschild_ads", "eddington_finkelstein_ingoing", "finkelstein"): lambda: _sads(1),
     ("schwarzschild_ads", "eddington_finkelstein_ingoing", "chart"): lambda: _sads(1),

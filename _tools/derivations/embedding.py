@@ -2934,6 +2934,153 @@ def schwarzschild_ads(ck, src):
                           "the surface beyond $r = 1.26\\,L$ is measured with $dX^2 + dY^2 - dZ^2$.")]
 
 
+def hayward(ck, src):
+    """Hayward's regular black hole at ell = 12m/(7 sqrt 7), where the horizons, the two positive
+    roots of the published g^rr, are r_- = 6m/7 and r_+ = 12m/7. g_rr = 1/F with F = 1 - 2mr^2/
+    (r^3 + 2m ell^2), which is 1 at the centre and at infinity and below 1 between, so wherever a
+    slice of constant t is a moment of space flat space carries it, dz/dr = sqrt(1/F - 1).
+    Outside r_+ it runs through the outer bifurcation sphere into a second exterior, as
+    Schwarzschild's does. Inside r_- it starts at the centre as the sphere of radius ell of de
+    Sitter space does, z = r^2/(2 ell) + O(r^4), which is checked, stands vertical at the inner
+    bifurcation sphere, its widest circle, and runs on into a second region inside r_-: a closed
+    surface, with no part left out. Between the horizons g_rr < 0, which is checked.
+
+    The hole that forms and evaporates is drawn as Vaidya's shell is: a slice of constant v is
+    null, so the moments are slices of constant v - r = T, on which the published metric pulls
+    back, with v = T + r, to (2 - F) dr^2 + r^2 dphi^2, spacelike everywhere, climbing at dz/dr =
+    sqrt(2mr^2/(r^3 + 2m ell^2)) with m taken at v = T + r. Where m = 0 the surface is flat, and
+    at the centre it is the same cap of the sphere of radius ell for every mass. Each moment is
+    checked against an independent quadrature of that slope, and the circles where the published
+    g^rr vanishes on it, the trapping horizons, are found by bisection."""
+    ell = "12/(7*sqrt(7))"
+    lnum = 12 / (7 * math.sqrt(7))
+    name = "Hayward"
+    sl = Slice(src, "hayward", "static", "r", "\\phi", {"t": 0, **EQUATOR}, {"m": 1, "ell": ell})
+    # The third root of r^3 - 2m r^2 + 2m ell^2, -4m/7, lies outside the chart.
+    rp, rm, negative = sl.horizons()
+    ck.add(f"{name}: the horizons are at 12m/7 and 6m/7, and the third root at -4m/7",
+           abs(rp - 12 / 7) + abs(rm - 6 / 7) + abs(negative + 4 / 7), 1e-12)
+    ck.stops(f"{name}, between the horizons", sl, np.linspace(rm, rp, 402)[1:-1])
+    top, radii = 6.0, (2.0, 3.0, 4.0, 5.0)
+    size = 2 * top
+    near, far = two_sheets(ck, f"{name} outside", sl, rp, top, radii, size,
+                           [(rp, "horizon", "$r = r_+$")], (" of the outer horizon", ""))
+    for p in (near, far):
+        ck.radius(f"{name} outside, {p.id}, rho = r", p, lambda r: r, size)
+    outside = Surface([near, far])
+    fig = figure_of([outside], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], rp, 0.0, "$r = r_+$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(3.0), "$3\\,m$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$6\\,m$")
+    fig.legend("fill", "cover", "the exterior $r > r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $2$, $3$, $4$, $5$ and $6\\,m$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the outer horizon")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    settings = ("$m = 1$, the unit of every length, and $\\ell = 12m/7\\sqrt{7} = 0.648\\,m$, so that $r_+ = 12m/7$ "
+                "and $r_- = 6m/7$.")
+    between = ("Between the horizons, $r_- < r < r_+$, $g_{rr} < 0$: $r$ is a time there, and a slice of "
+               "constant $t$ is not a moment of space.")
+    views = [view("outside", "Outside $r_+$", "$m$", [outside], fig.done(), settings=settings, stops=[between])]
+
+    # Inside r-: each side from the centre up to the widest circle, r-.
+    size = 2 * rm
+    lo = Piece("inside", "sheet", sl, 0.0, rm, 0.0, 1,
+               (("axis", "the centre $r = 0$, where the surface closes smoothly, as a sphere of radius $\\ell$ does"),
+                ("join", "the inner horizon $r = r_-$, the widest circle, where the slice runs on into the other "
+                         "region inside $r_-$")),
+               [(0.3, "r", None), (0.6, "r", None), (rm, "horizon", "$r = r_-$")], size)
+    lo.z = lo.z - lo.z[-1]
+    hi = Piece("other_inside", "sheet2", sl, 0.0, rm, -lo.z[0], -1,
+               (("axis", "the centre of the other region inside $r_-$"), ("join", "the inner horizon $r = r_-$")),
+               [(0.3, "r2", None), (0.6, "r2", None)], size)
+    for p in (lo, hi):
+        ck.isometry(f"{name} inside, {p.id}", p)
+        ck.radius(f"{name} inside, {p.id}, rho = r", p, lambda r: r, size)
+    ck.join(f"{name} inside, the two sides at r-", lo, rm, hi, rm)
+    # At the centre the surface is the sphere of radius ell: z - z(0) = r^2/(2 ell) + O(r^4).
+    small = np.array([p for p in lo.data()["points"] if 0 < p[0] <= 0.05])
+    ck.add(f"{name} inside: at the centre the surface is the sphere of radius ell, z = r^2/(2 ell)",
+           float(np.max(np.abs((small[:, 2] - lo.data()["points"][0][2]) - small[:, 0] ** 2 / (2 * lnum)))), 2e-5)
+    inside = Surface([lo, hi])
+    fig = figure_of([inside], {"sheet": "cover"}, size, Camera(-90, 22))
+    ring_label(fig, [0, 0, 0], rm, 0.0, "$r = r_-$", dx=10)
+    fig.legend("fill", "cover", "the region $r < r_-$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $0.3$ and $0.6\\,m$")
+    fig.legend("line", "r2", "the same radii in the other region inside $r_-$")
+    fig.legend("line", "horizon", "the widest circle $r = r_-$, where the slice crosses the inner horizon")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("inside", "Inside $r_-$", "$m$", [inside], fig.done(), settings=settings, stops=[between]))
+
+    # The hole that forms and evaporates, in units of its greatest mass m_0.
+    top = 6.0
+    size = 2 * top
+    l2 = lnum ** 2
+
+    def mass(v):
+        a, b = min(max(v, 0.0), 2.0), min(max(v, 4.0), 8.0)
+        return math.sin(math.pi * a / 4) ** 2 * math.cos(math.pi * (b - 4) / 8) ** 2
+
+    def slope(r, T):
+        m = mass(T + r)
+        return math.sqrt(2 * m * r * r / (r ** 3 + 2 * m * l2)) if m > 0 else 0.0
+
+    def zero(r, T):
+        m = mass(T + r)
+        return r ** 3 - 2 * m * r * r + 2 * m * l2
+    rim = ("edge", "the surface runs on to $r \\to \\infty$")
+
+    def moment(T):
+        where = f"{name}, v - r = {T:g}"
+        dyn = Slice(src, "hayward", "evaporating", "r", "\\phi", {"theta": "pi/2"}, {"ell": ell},
+                    {"m": nr.HAYWARD_MASS}, along={"v": f"{T} + r"})
+        marks = [(r, "r", None) for r in (2.0, 4.0, top)]
+        marks += [(r, "surface", None) for r in (-T, 8 - T) if 0 < r < top]
+        # The circles where the published g^rr vanishes on this surface, the trapping horizons.
+        grid = np.linspace(1e-3, top, 2400)
+        vals = [zero(r, T) for r in grid]
+        for a, b, fa, fb in zip(grid[:-1], grid[1:], vals[:-1], vals[1:]):
+            if fa * fb < 0:
+                for _ in range(80):
+                    mid = 0.5 * (a + b)
+                    a, b = (mid, b) if zero(mid, T) * fa > 0 else (a, mid)
+                marks.append((0.5 * (a + b), "horizon", None))
+        whole = Piece("whole", "sheet", dyn, 0.0, top, 0.0, 1,
+                      (("axis", "the centre $r = 0$, where the surface closes smoothly"), rim), marks, size)
+        # The rim of the drawing, r = 6 m_0, stands at z = 0 at every moment.
+        shift = -whole.z[-1]
+        whole.z = whole.z + shift
+        knots = sorted({0.0, top, *[min(max(v - T, 0.0), top) for v in (0.0, 2.0, 4.0, 8.0)]})
+
+        def height(r, T=T, knots=knots):
+            out = []
+            for x in np.atleast_1d(r):
+                cuts = [k for k in knots if x < k < top]
+                out.append(-quad(slope, x, top, args=(T,), points=cuts or None, epsabs=1e-12, epsrel=1e-12, limit=400)[0])
+            return np.array(out)
+        ck.form(f"{where}, against the quadrature of sqrt(2 m r^2/(r^3 + 2 m ell^2))", whole, height, size)
+        if T <= -top or T >= 8:
+            ck.plane(f"{where}, no mass on the slice", dyn, np.linspace(1e-3, top, 200))
+        ck.isometry(f"{where}, whole", whole)
+        return Surface([whole], label=f"$v - r = {T:g}\\,m_0$", time=T)
+
+    # A frame every m_0/4 of v - r, which holds each moment of the flat view.
+    frames = [moment(-6.0 + k / 4) for k in range(57)]
+    surfaces = [frames[k] for k in (0, 16, 28, 36, 44, 56)]
+    fig = movie_figure(frames, {"sheet": "cover"}, size)
+    fig.legend("fill", "cover", "the slice of constant $v - r$, which $v$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $2$, $4$ and $6\\,m_0$")
+    fig.legend("line", "surface", "the first and the last of the radiation, $v = 0$ and $v = 8\\,m_0$")
+    fig.legend("line", "horizon", "the trapping horizons, where $g^{rr}$ vanishes on this surface")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    views.append(view("history", "Forming and evaporating", "$m_0$", surfaces, fig.done(), system="evaporating",
+                      movie=movie(frames, "$v - r$", [f.time for f in frames]),
+                      settings="$m_0 = 1$, the greatest mass and the unit of every length, and $\\ell = 0.648\\,m_0$; "
+                               "each moment is a slice of constant $v - r$.",
+                      input=nr.HAYWARD_INPUT))
+    return views
+
+
 def global_monopole(ck, src):
     """Two moments at Delta = 0.19, so that sqrt(1 - Delta) = 0.9. The monopole with no mass at
     its centre, the Barriola-Vilenkin chart's equator at t = 0: g_rr = 1 and g_phiphi =
@@ -7066,6 +7213,7 @@ DRAWN = {
     "einstein_static": einstein_static,
     "schwarzschild_de_sitter": schwarzschild_de_sitter,
     "schwarzschild_ads": schwarzschild_ads,
+    "hayward": hayward,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "vaidya": vaidya,
     "oppenheimer_snyder": oppenheimer_snyder,
@@ -7481,6 +7629,38 @@ CAPTIONS = {
         "The surface crosses $r_c$ and $r_+$ with no throat and no widest circle, and inside $r_+$ it falls as "
         "$(r_s/2)\\ln\\rho$ without end while its circles close on the radius $r_s/2$, the infinitely long throat "
         "of the extremal Reissner-Nordström black hole. It is drawn down to $\\rho = r_s/100$.",
+    ],
+    ("hayward", "outside"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Hayward's black hole at one moment of $t$ outside its outer "
+        "horizon ($\\ell = 0.648\\,m$), drawn as a surface in flat space with every distance along it the metric "
+        "distance. On it $g_{rr} = (r^3 + 2m\\ell^2)/(r^3 - 2mr^2 + 2m\\ell^2)$, so "
+        "$dz/dr = \\sqrt{2mr^2/(r^3 - 2mr^2 + 2m\\ell^2)}$, and the slice passes through the outer horizon's "
+        "bifurcation sphere $r = r_+$, its throat, into a second exterior, as Schwarzschild's does through $r_s$.",
+        "The length $\\ell$ pulls the throat in from $2m$ to $r_+ = 12m/7$, and far out the surface rises as "
+        "Flamm's paraboloid of the same mass does, $dz/dr \\to \\sqrt{2m/r}$. Between the horizons $r$ is a time, "
+        "and no slice of constant $t$ enters there.",
+    ],
+    ("hayward", "inside"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the same black hole at one moment of $t$ inside its inner "
+        "horizon, where $r$ is again a distance and $t$ a time, drawn as a surface in flat space with every "
+        "distance along it the metric distance. The slice runs from the centre through the inner horizon's "
+        "bifurcation sphere $r = r_-$, its widest circle, to the centre of a second region inside $r_-$, the same "
+        "surface turned over, so the whole of it is a closed surface.",
+        "Near $r = 0$, $g_{rr} = 1 + r^2/\\ell^2$ to this order, and the surface is the sphere of radius $\\ell$, "
+        "the static slice of de Sitter space with $\\Lambda = 3/\\ell^2$. The curvature at the centre is finite, "
+        "and the surface closes smoothly on the axis.",
+    ],
+    ("hayward", "history"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of space around a black hole that forms and evaporates, from "
+        "$v - r = -6\\,m_0$ to $8\\,m_0$, each moment drawn as a surface in flat space with every distance along "
+        "it the metric distance. A slice of constant $v$ is a light cone, so the moments are slices of constant "
+        "$v - r$, which are spacelike everywhere and carry the metric "
+        "$\\left(1 + 2mr^2/(r^3 + 2m\\ell^2)\\right)dr^2 + r^2d\\phi^2$, with $m$ taken at the advanced time of "
+        "each circle. Where no radiation has yet arrived, or all of it has left, $m = 0$ and the surface is flat.",
+        "The radiation that forms the hole reaches the centre at $v - r = 0$, and the surface sinks into a well "
+        "whose bottom is a cap of the sphere of radius $\\ell$ for every mass. The two trapping horizons appear "
+        "together on one circle, part, and meet again once the mass has fallen below $0.842\\,m_0$. After "
+        "$v - r = 8\\,m_0$ the whole surface is the plane again.",
     ],
     ("schwarzschild_de_sitter", "static"): [
         "The equatorial plane ($\\theta = \\pi/2$) of Kottler's spacetime at the moment $t = 0$ of its static chart, "

@@ -76,6 +76,11 @@
       "id": "bardeen",
       "kind": "family",
       "text": "Reissner-Nordström with the singularity taken out. James Bardeen put in place of $1 - r_s/r + r_q^2/r^2$ a function that is regular at $r = 0$, and kept both horizons [borde1994]."
+    },
+    {
+      "id": "hayward",
+      "kind": "family",
+      "text": "A black hole with the same two horizons and the same tower of regions, and a regular centre at $r = 0$ [hayward2006]."
     }
   ],
   "references": [
@@ -101,7 +106,8 @@
     "earman1993",
     "romans1992",
     "simpson2019",
-    "borde1994"
+    "borde1994",
+    "hayward2006"
   ],
   "coordinates": [
     {

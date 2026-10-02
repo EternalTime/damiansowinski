@@ -2370,6 +2370,52 @@ class EmbeddingDiagrams(unittest.TestCase):
         for r, _, z in cap[1:]:
             if r < 0.02:
                 self.assertLess(abs(2 * a * (z - cap[0][2]) / r ** 2 - 1), 2e-2, f"Bardeen's cap at {r}")
+        # Hayward's static slice at ell = 12m/(7 sqrt 7): outside, from the throat r_+ = 12m/7, and inside,
+        # a closed surface from the centre to r_- = 6m/7 and on to the other centre, each climbing at
+        # dz/dr = sqrt(1/F - 1) and leaving the centre as the sphere of radius ell does.
+        ell2 = 144 / 343
+
+        def hayward_slope(r, mass=1.0):
+            return math.sqrt(2 * mass * r * r / (r ** 3 - 2 * mass * r * r + 2 * mass * ell2))
+        for view, pids, ends in ((0, ("exterior", "other_exterior"), (12 / 7, 6.0)),
+                                 (1, ("inside", "other_inside"), (0.0, 6 / 7))):
+            for sign, pid in zip((1, -1), pids):
+                points = piece("hayward", pid, view=view)
+                self.assertAlmostEqual(points[0][0], ends[0], places=12)
+                self.assertAlmostEqual(points[-1][0], ends[1], places=12)
+                for r, rho, z in points:
+                    near(rho, r, f"Hayward rho at {r}")
+                for (r0, _, z0), (r1, _, z1) in zip(points, points[1:]):
+                    mid = 0.5 * (r0 + r1)
+                    if min(abs(mid - 6 / 7), abs(mid - 12 / 7)) > 0.05 and r1 - r0 > 1e-4:
+                        self.assertLess(abs(sign * (z1 - z0) / (r1 - r0) - hayward_slope(mid)),
+                                        2e-2 * (1 + hayward_slope(mid)), f"Hayward's dz/dr at {mid}")
+        cap = piece("hayward", "inside", view=1)
+        for r, _, z in cap:
+            if r <= 0.03:
+                near(z - cap[0][2], r * r / (2 * math.sqrt(ell2)), f"Hayward's centre, the sphere of radius ell, at {r}")
+        # The hole that forms and evaporates: flat before the radiation reaches the rim and after the
+        # last of it has left, and between them the trapping horizons marked where r^3 - 2m r^2 +
+        # 2m ell^2 vanishes at the mass of the advanced time v = T + r, two of them or none.
+        def hayward_mass(v):
+            a, b = min(max(v, 0.0), 2.0), min(max(v, 4.0), 8.0)
+            return math.sin(math.pi * a / 4) ** 2 * math.cos(math.pi * (b - 4) / 8) ** 2
+        frames = self.embedding["hayward"]["views"][2]["movie"]["frames"]
+        self.assertEqual((frames[0]["value"], frames[-1]["value"]), (-6.0, 8.0))
+        trapped = 0
+        for frame in frames:
+            T, points = frame["value"], frame["pieces"][0]["points"]
+            self.assertEqual(points[-1][2], 0)
+            if T <= -6 or T >= 8:
+                self.assertTrue(all(z == 0 for _, _, z in points), f"Hayward at v - r = {T}")
+            horizons = [ring["rho"] for ring in frame["rings"] if ring["class"] == "horizon"]
+            self.assertIn(len(horizons), (0, 2), f"Hayward at v - r = {T}")
+            trapped += bool(horizons)
+            for r in horizons:
+                mass = hayward_mass(T + r)
+                self.assertGreater(mass, 3 * math.sqrt(3 * ell2) / 4 - 1e-9)
+                self.assertLess(abs(r ** 3 - 2 * mass * r * r + 2 * mass * ell2), 1e-5, f"Hayward's horizon at v - r = {T}")
+        self.assertGreater(trapped, 10)
         # On Kerr's equator the throat's circumference radius is 2GM/c^2 whatever the spin, and
         # Kerr-Newman's charge pulls it in to 2GM/c^2 - r_Q^2/r+, at a = 0.6 and r_Q = 0.5.
         self.assertAlmostEqual(piece("kerr", "exterior")[0][1], 2.0, places=6)
@@ -2812,7 +2858,9 @@ class EmbeddingDiagrams(unittest.TestCase):
         flat = {"minkowski", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres", "light_beam"}
         # The domain wall's moment ct = 0, when the wall stops, is the flat disc of radius 1/k taken
         # twice and joined at its rim; the moments either side of it are the cones it opens into.
-        flat_moments = {("domain_wall", "moments", 2)}
+        # Hayward's hole forms from flat space and leaves flat space behind: the first and the last
+        # moments of its movie, before the radiation reaches the rim and after the last of it has left.
+        flat_moments = {("domain_wall", "moments", 2), ("hayward", "history", 0), ("hayward", "history", 5)}
         self.assertNotIn("lentz", self.embedding)
         self.assertNotIn("embedding", next(m for m in read(build.INDEX_FILE) if m["id"] == "lentz"))
         for name, data in self.embedding.items():
@@ -3152,7 +3200,7 @@ class StacksAndMovies(unittest.TestCase):
               ("domain_wall", "moments"): "$kct$", ("kantowski_sachs", "dust"): "$\\eta$",
               ("robinson_trautman", "fronts"): "$cu$", ("mcvittie", "flamm"): "$ct$",
               ("tolman_bondi", "cloud"): "$ct$", ("szekeres", "equators"): "$ct$", ("misner", "cylinders"): "$ct$",
-              ("photon_rocket", "burn"): "$cu + r$",
+              ("photon_rocket", "burn"): "$cu + r$", ("hayward", "history"): "$v - r$",
               ("gott_time_machine", "cylinders"): "$c\\tau$", ("kantowski_sachs", "vacuum"): "$c\\tau$",
               ("ori_time_machine", "throat"): "$t$",
               ("kasner", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
@@ -3939,6 +3987,15 @@ class Slices(unittest.TestCase):
     # one line element: the static and Eddington-Finkelstein drawings are the black hole's, and the
     # Barriola-Vilenkin drawings the monopole's.
     HIDDEN_VIEWS = {"conformal cosmic_string/gott": {"unroll"},
+                    # Hayward's static hole and the hole that forms and evaporates are two spacetimes of one
+                    # line element: the static and Eddington-Finkelstein drawings mark the static moment, outside
+                    # r_+ and inside r_-, and the forming and evaporating ones the slices of constant v - r.
+                    **{f"hayward/{s}": {"history"} for s in (
+                        "static/radial", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
+                        "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
+                    **{f"conformal hayward/{v}": {"history"} for v in ("static", "ingoing", "outgoing")},
+                    "hayward/evaporating/history": {"outside", "inside"},
+                    "conformal hayward/history": {"outside", "inside"},
                     **{f"global_monopole/{s}": {"monopole"} for s in (
                         "static/radial", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
                         "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
@@ -4121,6 +4178,21 @@ class Slices(unittest.TestCase):
                 return (0.25 * math.log(abs(1 - r)) - 0.125 * math.log((r * r + r + 2) / 2)
                         + 5 / (4 * w) * (math.atan((2 * r + 1) / w) - math.atan(1 / w)))
             return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
+        if key.startswith("hayward/eddington_finkelstein"):
+            # At m = 1 and ell = 12/(7 sqrt 7), 1/F = 1 + 2r^2/((r - 12/7)(r - 6/7)(r + 4/7)), and
+            # r_* = r + 3 ln|1 - 7r/12| - (6/5) ln|1 - 7r/6| + (1/5) ln(1 + 7r/4), which vanishes at r = 0.
+            # Static t = 0 is v = r_* and u = -r_*, outside r_+ and inside r_-, drawn against v - r and u + r
+            # or against v and u.
+            sign = 1 if "ingoing" in key else -1
+            finkelstein = key.endswith("finkelstein")
+
+            def rstar(r):
+                return (r + 3 * math.log(abs(1 - 7 * r / 12)) - 1.2 * math.log(abs(1 - 7 * r / 6))
+                        + 0.2 * math.log(1 + 7 * r / 4))
+            return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
+        if key == "hayward/evaporating/history":
+            # A slice of constant v - r, level against v - r.
+            return (lambda X: t), list(self.reach(surface))
         if key.startswith("global_monopole/eddington_finkelstein"):
             # Letelier's black hole at Delta = 0.19 and r_s = 1: r_* = r/0.81 + ln|0.81 r - 1|/0.81^2,
             # and the static t = 0 is v = r_* and u = -r_*, drawn against v - r and u + r or against v and u.
@@ -4617,6 +4689,22 @@ class Slices(unittest.TestCase):
                         # outgoing chart's view, whose exterior is the one above the white hole.
                         height = math.pi if mark["view"] == "inside" else 2 * math.pi if view["id"] == "outgoing" else 0.0
                         self.assertTrue(all(abs(T - height) < 2e-4 for _, T in points), where)
+                    elif metric_id == "hayward" and mark["view"] == "inside":
+                        # Through the inner bifurcation point above the exteriors on the static and ingoing
+                        # views, and through the one below them on the outgoing view, whose chart covers it.
+                        height = -math.pi if view["id"] == "outgoing" else math.pi
+                        self.assertTrue(all(abs(T - height) < 2e-4 for _, T in points), where)
+                    elif metric_id == "hayward" and mark["view"] == "history":
+                        # q = arctan((v - 4)/4) and p the same function of the advanced time v_0 at which the
+                        # outgoing ray left the centre: the slice v - r = t starts on the centre, X = 0, at
+                        # v = t, runs outward with v growing, and ends at r = 6, where v = t + 6.
+                        X, T = points[0]
+                        self.assertLess(abs(X) + abs(T - 2 * math.atan((t - 4) / 4)), 2e-4, where)
+                        qs = [(T + X) / 2 for X, T in points]
+                        self.assertTrue(all(b > a for a, b in zip(qs, qs[1:])), where)
+                        self.assertTrue(all(X >= -1e-9 for X, _ in points), where)
+                        v_end = 4 + 4 * math.tan(qs[-1])
+                        self.assertLess(abs((v_end - t) - 6), 2e-2 * (1 + v_end * v_end / 16), where)
                     else:
                         self.assertTrue(all(abs(T) < 2e-4 for _, T in points), where)
 

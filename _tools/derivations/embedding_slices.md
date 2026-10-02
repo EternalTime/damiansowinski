@@ -429,6 +429,16 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `eddington_finkelstein_outgoing/finkelstein` and `/chart`: the time reverse, $u = -r_*$.
 - `static`, `ingoing` and `outgoing`, the conformal diagram: the moment $t = 0$ is $U = -V$, the line $T = 0$ through the bifurcation sphere across both exteriors, $r$ from $L$ to $3L$ on each side, the same on all three.
 
+### Hayward
+
+- The embedding has three views at $\ell = 12m/7\sqrt{7}$: the equator of the static moment $t = 0$ outside $r_+ = 12m/7$, $r$ from $r_+$ to $6\,m$ on both sheets through the outer bifurcation sphere; the same moment inside $r_- = 6m/7$, $r$ from $0$ to $r_-$ on both sides of the inner bifurcation sphere; and, for the forming and evaporating chart, a movie of the slices $v - r = T$ from $T = -6$ to $8\,m_0$, $r$ from $0$ to $6\,m_0$.
+- `static/radial`: the line $ct = 0$ from $r_+$ to the box's edge at $4\,m$, and from $0$ to $r_-$, with the region between the horizons, where $t$ is no time, between them.
+- `eddington_finkelstein_ingoing/finkelstein` and `/chart`: with $v = ct + r_*$ and $r_*(0) = 0$ the outside moment is the curve $v = r_*$, which runs off to $v \to -\infty$ at $r_+$, and the inside moment the curve $v = r_*$ from the centre, which runs off to $v \to +\infty$ at $r_-$.
+- `eddington_finkelstein_outgoing/finkelstein` and `/chart`: the time reverse, $u = -r_*$.
+- `evaporating/history`: each of the six moments the view names is the line $v - r = T$, level on the drawing, from $r = 0$ to the box's edge at $6\,m_0$.
+- `static`, `ingoing` and `outgoing`, the conformal diagram: the outside moment is the line $T = 0$ through the outer bifurcation point across both exteriors; the inside moment is the line through the inner bifurcation point above them, $T = \pi$, on the static and ingoing views, whose charts cover an inner region there, and the line $T = -\pi$ through the inner bifurcation point below on the outgoing view, whose chart covers an inner region there.
+- `history`, the conformal diagram: each moment is the curve $v - r = T$ from the centre on $X = 0$ out to $r = 6\,m_0$.
+
 ### The threaded black hole
 
 - The embedding has two views at $b = 0.9$ and $r_s = 1$: the equator of the static chart's $t = 0$, $r$ from $r_s$ to $6\,r_s$ on both sheets through the bifurcation sphere, and the horizon itself, the bifurcation sphere, $\theta$ from $0$ to $\pi$.

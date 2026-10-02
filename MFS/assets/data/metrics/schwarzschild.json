@@ -195,6 +195,11 @@
       "id": "bardeen",
       "kind": "generalisation",
       "text": "Schwarzschild's black hole with a ball of de Sitter space where the singularity was. Its source is a magnetic monopole of charge $g$ in a nonlinear electrodynamics, and at $g = 0$ it is Schwarzschild's [ayonbeato2000]."
+    },
+    {
+      "id": "hayward",
+      "kind": "generalisation",
+      "text": "Schwarzschild's black hole with a ball of de Sitter space of radius $\\ell$ where the singularity was, and a second horizon around it. At $\\ell = 0$ it is Schwarzschild's, with $r_s = 2m$ [hayward2006]."
     }
   ],
   "references": [
@@ -246,7 +251,8 @@
     "damour2007",
     "ori2005",
     "simpson2019",
-    "ayonbeato2000"
+    "ayonbeato2000",
+    "hayward2006"
   ],
   "coordinates": [
     {
