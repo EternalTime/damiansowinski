@@ -694,30 +694,48 @@ def bardeen_f(r):
 
 @functools.lru_cache(maxsize=None)
 def _bardeen_smooth():
-    """What is left of 1/f once its two poles are taken out, as a function of a float, and its
-    integral from 0 to each multiple of a tenth of r_s up to 8 r_s, both worked in forty digits,
-    since 1/f and its pole cancel to the last digit of a float beside a horizon."""
+    """What is left of 1/f once its two poles are taken out, and its integral from 0 to each
+    multiple of a tenth of r_s up to 8 r_s and on from there to each half step of ln r. Within a
+    twentieth of r_s of a horizon it is worked in forty digits, since 1/f and its pole cancel
+    there to the last digits of a float."""
     import mpmath
     g2 = mpmath.mpf(1) / 9
     with mpmath.workdps(40):
         def f(x):
             return 1 - x * x / (x * x + g2) ** mpmath.mpf("1.5")
         roots = [mpmath.findroot(f, ri) for ri in BARDEEN_HORIZONS]
-        poles = [(ri, (ri * ri + g2) ** mpmath.mpf("2.5") / (ri * (ri * ri - 2 * g2))) for ri in roots]
+        exact = [(ri, (ri * ri + g2) ** mpmath.mpf("2.5") / (ri * (ri * ri - 2 * g2))) for ri in roots]
+    poles = [(float(ri), float(a)) for ri, a in exact]
 
     def smooth(x):
+        if min(abs(x - ri) for ri, _ in poles) > 0.05:
+            return 1 / bardeen_f(x) - sum(a / (x - ri) for ri, a in poles)
         with mpmath.workdps(40):
             x = mpmath.mpf(x)
-            return float(1 / f(x) - sum(a / (x - ri) for ri, a in poles))
+            return float(1 / f(x) - sum(a / (x - ri) for ri, a in exact))
 
     nodes, weights = np.polynomial.legendre.leggauss(12)
 
-    def panel(a, b):
+    def panel(a, b, of=smooth):
         half, mid = 0.5 * (b - a), 0.5 * (a + b)
-        return half * sum(w * smooth(mid + half * n) for n, w in zip(nodes, weights))
+        return half * sum(w * of(mid + half * n) for n, w in zip(nodes, weights))
+
+    def in_log(u):
+        return smooth(math.exp(u)) * math.exp(u)
     edges = [0.1 * k for k in range(81)]
     sums = np.concatenate([[0.0], np.cumsum([panel(a, b) for a, b in zip(edges, edges[1:])])])
-    return panel, sums, [(float(ri), float(a)) for ri, a in poles]
+    logs = [math.log(8.0) + 0.5 * k for k in range(61)]
+    tails = sums[-1] + np.concatenate([[0.0], np.cumsum([panel(a, b, in_log) for a, b in zip(logs, logs[1:])])])
+
+    def integral(x):
+        """The integral of the smooth part from 0 to x."""
+        if x <= 8.0:
+            k = min(int(x / 0.1), 80)
+            return float(sums[k]) + (panel(0.1 * k, x) if x > 0.1 * k else 0.0)
+        u = math.log(x)
+        k = min(int((u - logs[0]) / 0.5), 60)
+        return float(tails[k]) + (panel(logs[k], u, in_log) if u > logs[k] else 0.0)
+    return integral, poles
 
 
 def bardeen_rstar(r):
@@ -725,13 +743,15 @@ def bardeen_rstar(r):
     Eddington-Finkelstein charts fix it, vanishing at r = 0. 1/f has a simple pole at each
     horizon, of residue 1/f'(r_i), so r_* is the sum over both of ln|1 - r/r_i|/f'(r_i) and the
     integral from 0 of what is left of 1/f once those poles are taken out, which is smooth and is
-    summed by Gauss and Legendre's rule on panels a tenth of r_s wide."""
-    panel, sums, poles = _bardeen_smooth()
+    summed by Gauss and Legendre's rule, on panels a tenth of r_s wide out to 8 r_s and half a
+    unit of ln r wide beyond."""
+    integral, poles = _bardeen_smooth()
 
     def one(x):
-        k = min(int(x / 0.1), len(sums) - 1)
-        rest = panel(0.1 * k, x) if x > 0.1 * k else 0.0
-        return float(sums[k]) + rest + sum(a * math.log(abs(1 - x / ri)) for ri, a in poles)
+        if math.isinf(x):
+            return math.inf
+        with np.errstate(divide="ignore"):
+            return integral(x) + sum(a * float(np.log(abs(1 - x / ri))) for ri, a in poles)
     return np.array([one(float(x)) for x in np.atleast_1d(np.asarray(r, dtype=float))]).reshape(np.shape(r))
 
 
