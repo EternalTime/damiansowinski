@@ -6688,6 +6688,92 @@ def semiclosed_world(ck, src):
                        "of clocks released from rest when the dust is, on both sides of the throat.")]
 
 
+DR_MU = 1 / math.pi         # the dust on every shell of the T-sphere drawn, with epsilon = 1: symmetric in time
+DR_REACH = 2.0              # how far down the tube the drawing runs, in r_s of the comoving r
+DR_MOMENTS = (0.0, 0.6, 1.1, 1.4, 1.5)     # c tau in r_s since the greatest expansion
+
+
+def datt_ruban_t_models(ck, src):
+    """Ruban's T-sphere, r_s = 1: his dust with epsilon = 1 and mu = 1/pi on the shells r <= 0, the
+    member symmetric in time about its greatest expansion, and Schwarzschild's vacuum beyond the
+    surface r = 0. The moment of greatest expansion and four later moments of the dust's proper
+    time, until just before the tube closes at c tau = pi r_s/2.
+
+    Inside, the published chart of Ruban's at eta = pi + e, with c tau = (e + sin e)/2: the equator
+    of a moment is a^2 dr^2 + b^2 dphi^2 with a and b the same on every shell, a flat cylinder of
+    radius b = cos^2(e/2) on which the comoving stretch from r to 0 is a |r| long, with
+    a = (1 - eta/pi) cot(eta/2) + 2/pi. Outside, the moment carries on as the moment of clocks
+    released from rest with the dust, NovikovSheets from its throat s = 0 out: the surface of the
+    dust is that throat, the shell at rest at r_s, so the two have one radius at every moment, and
+    one tangent, the cylinder's, since the areal radius is stationary across the throat. At
+    tau = 0 the outside is Flamm's paraboloid from its throat up."""
+    top = 4.0
+    s_top = math.sqrt(top - 1)
+    size = 2 * top
+    sheets = NovikovSheets()
+    sheets.check(ck, src, "T-sphere outside", np.linspace(0.05, s_top, 40), [0.0, 0.5, 1.0, 1.5])
+    from scipy.optimize import brentq
+
+    def moment(tau):
+        e = brentq(lambda x: (x + math.sin(x)) / 2 - tau, 0.0, math.pi, xtol=1e-15) if tau > 0 else 0.0
+        eta = math.pi + e
+        a = (1 - DR_MU * eta) / math.tan(eta / 2) + 2 * DR_MU
+        b = math.cos(e / 2) ** 2
+        where = f"T-sphere, c tau = {tau:.4f} r_s"
+        inner = Slice(src, "datt_ruban_t_models", "ruban", "r", "\\phi", {"eta": repr(eta), **EQUATOR},
+                      {"r_s": 1, "epsilon": 1}, {"mu": repr(DR_MU)})
+        outer = sheets.slice(src, tau)
+        dust_marks = [(-1.5, "r", None), (-1.0, "r", None), (-0.5, "r", None), (0.0, "surface", None)]
+        out_marks = [(math.sqrt(2.0), "r", None), (s_top, "r", None)]
+        if tau > 0:
+            out_marks.append((sheets.horizon(tau), "horizon", None))
+        ext = Piece("exterior", "sheet", outer, 0.0, s_top, 0.0, 1,
+                    (("join", "the surface of the dust"), ("edge", "the slice runs on to $r \\to \\infty$")), out_marks, size)
+        dust = Piece("dust", "star", inner, -DR_REACH, 0.0, 0.0, 1,
+                     (("edge", "the tube runs on for ever toward $r \\to -\\infty$"), ("join", "the surface of the dust, $r = 0$")),
+                     dust_marks, size)
+        # The rim of the drawing, the clocks released at r = 4 r_s, stands at z = 0 at every moment,
+        # and the surface of the dust and the tube hang below it.
+        ext.z = ext.z - ext.z[-1]
+        dust.z = dust.z + (ext.z[0] - dust.z[-1])
+        ck.isometry(f"{where}, the dust", dust)
+        ck.isometry(f"{where}, outside", ext)
+        # The two meet in one point with one tangent. On the throat itself g_ss is the ratio of
+        # two quantities that vanish, so the outside's tangent is taken a little way up the sheet.
+        ck.add(f"{where}, the dust meets the outside: one point",
+               float(np.max(np.abs(np.array(dust.at(0.0)) - np.array(ext.at(0.0))))), JOIN)
+        ck.add(f"{where}, the dust meets the outside: one tangent",
+               float(np.max(np.abs(dust.inward(0.0) + outer.slope(1e-11, "+")))), JOIN)
+        ck.radius(f"{where}, the tube has the radius b = cos^2(e/2) on every shell", dust, lambda r: np.full_like(r, b), size)
+        ck.form(f"{where}, the tube is a |r| long", dust, lambda r, a=a, z0=dust.z[-1]: z0 + a * r, size)
+        ck.radius(f"{where}, the surface is the throat of the outside, on its own cycloid", ext,
+                  lambda s, t=tau: sheets.fields(s, t)["R"], size)
+        if tau == 0:
+            z_throat = ext.at(0.0)[1]
+            ck.form(f"{where}, outside it is Flamm's paraboloid from the throat up", ext, lambda s: z_throat + 2 * s, size)
+        return Surface([dust, ext], label=f"$c\\tau = {tau:.2f}\\,r_s$", time=tau)
+
+    # The movie runs at a steady proper time of the dust, a frame about every 0.03 r_s of c tau.
+    taus, keys = movie_values(list(DR_MOMENTS), 0.03)
+    frames = [moment(t) for t in taus]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"star": "star", "sheet": "cover"}, size)
+    fig.legend("fill", "star", "the dust, a tube of radius $b$, of which the stretch $-2r_s \\le r \\le 0$ is drawn")
+    fig.legend("fill", "cover", "outside it, the moment of clocks released from rest with the dust")
+    fig.legend("line", "r", "$r$ constant in the dust, at $-3r_s/2$, $-r_s$ and $-r_s/2$, and outside the clocks released "
+                            "at $3$ and $4\\,r_s$")
+    fig.legend("line", "surface", "the surface of the dust, $r = 0$, the smallest sphere of the outside")
+    fig.legend("line", "horizon", "the sphere of areal radius $r_s$ outside, the horizon")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("tsphere", "A T-sphere", "$r_s$", surfaces, fig.done(), system="ruban",
+                 movie=movie(frames, "$c\\tau$", [f.time for f in frames]),
+                 settings="$r_s = 1$, the unit of every length, $\\epsilon = 1$ and $\\mu = 1/\\pi$ on every shell of "
+                          "the dust, $r \\le 0$; the moments are the dust's proper time $\\tau$ since the greatest "
+                          "expansion, $\\eta = \\pi$.",
+                 input="Outside the dust, the slices of Tolman-Bondi's comoving chart with no dust in it, each shell "
+                       "of clocks released from rest when the dust is, from the shell at rest at $r_s$ outward.")]
+
+
 def white_hole(ck, src):
     """The white hole the conformal diagram draws, a core that comes to rest at R0 = 2 r_s, chi0 = pi/4
     and a_m = 2 sqrt(2) r_s, at four moments of its proper time tau since it left its singularity: the
@@ -12886,6 +12972,7 @@ DRAWN = {
     "bonnor_vaidya": bonnor_vaidya,
     "oppenheimer_snyder": oppenheimer_snyder,
     "semiclosed_world": semiclosed_world,
+    "datt_ruban_t_models": datt_ruban_t_models,
     "white_hole": white_hole,
     "tolman_bondi": tolman_bondi,
     "bertotti_robinson": bertotti_robinson,
@@ -13958,6 +14045,10 @@ CAPTIONS = {
     ("semiclosed_world", "bag"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a semiclosed world from its greatest expansion to $c\\tau = 1.50\\,r_s$, just before its throat closes, each moment drawn as a surface in flat space with every distance along it the metric distance. The dust is a sphere of radius $a(\\tau)$ kept from its pole past its equator to $\\chi_0 = 3\\pi/4$, the bag, and it hangs from the outside world by the throat. Above the throat the surface flares out toward infinity, and an observer up there measures the mass $M$ with $2GM/c^2 = a_m\\sin^3\\chi_0$, a twelfth of the mass of the dust in the bag counted grain by grain.",
         "At $\\tau = 0$ the outside is Flamm's paraboloid on both sheets: the stretch behind the throat, from the surface of the dust in to $r_s$, and the far sheet beyond it. The moment then carries on as the moment of clocks released from rest with the dust, Igor Novikov's slicing, and the throat shrinks along its own cycloid to nothing at $c\\tau = \\pi r_s/2$, while the bag has barely begun to fall: at the last moment drawn its radius is still $0.93\\,a_m$. The circles of areal radius $2GM/c^2$ leave the throat on both sides, and two more open out from the equator of the bag.",
+    ],
+    ("datt_ruban_t_models", "tsphere"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of a T-sphere from its greatest expansion to $c\\tau = 1.50\\,r_s$, just before it closes, each moment drawn as a surface in flat space with every distance along it the metric distance. The dust is the tube, every one of its circles of the same radius $b$, and it runs on downward for ever. At $\\tau = 0$ the tube is as wide as the horizon and the outside is Flamm's paraboloid, standing on the surface of the dust as on its throat.",
+        "An observer on the flared sheet measures the mass $M$ with $2GM/c^2 = r_s$ whatever the tube holds: the stretch drawn carries dust of rest mass $4M/\\pi$, counted grain by grain, and every further unit of $r$ adds $2M/\\pi$ to the dust and nothing to $M$. As the dust falls the tube narrows along the cycloid of its surface and lengthens, the marked shells drawing apart as $a$ grows, until it closes to a line at $c\\tau = \\pi r_s/2$. The circle of areal radius $r_s$ leaves the surface and climbs the sheet outside.",
     ],
     ("lindquist_wheeler_lattice", "lattice"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the lattice of eight cells through the centres of two "

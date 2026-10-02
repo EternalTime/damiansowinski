@@ -68,6 +68,11 @@
       "id": "misner_brill_lindquist",
       "kind": "family",
       "text": "Other moments of time symmetry, with several throats and no dust. Wheeler's own bag of gold was a piece of such a moment, pinched off where the conformal factor passes through zero [marolf2009]."
+    },
+    {
+      "id": "datt_ruban_t_models",
+      "kind": "family",
+      "text": "Ruban's T-sphere, a tube of dust behind the horizon in which every shell's binding energy cancels its rest mass, so the mass outside stays the same however much dust is added [ruban1968]."
     }
   ],
   "references": [
@@ -84,7 +89,8 @@
     "bekenstein1973",
     "hawking1975",
     "hsu2008monsters",
-    "chakravarty2021"
+    "chakravarty2021",
+    "ruban1968"
   ],
   "coordinates": [
     {

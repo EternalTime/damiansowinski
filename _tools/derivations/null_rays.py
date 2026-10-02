@@ -413,9 +413,10 @@ class Diagram:
     lines: tuple = ()               # (kind, "x0" or "r", value, legend): a line of constant
                                     # coordinate drawn and named, such as where a declared function jumps;
                                     # legend None for a marker the page names itself, as grr
-    curves: tuple = ()              # (kind, r as an expression in the plane's time, legend): a world line
-                                    # drawn and named, as a shell whose radius the row declares; it is
-                                    # drawn where the expression is positive
+    curves: tuple = ()              # (kind, r as an expression in the plane's time, legend[, "signed"]): a world
+                                    # line drawn and named, as a shell whose radius the row declares; it is
+                                    # drawn where the expression is positive, or wherever it is finite when
+                                    # the row says the coordinate is signed, as Kruskal's V is
     surface: str = None             # r at which a star's surface is released from rest; see Surface
     surface_legend: str = None      # what that surface is, where it is no star's
     surface_whole: tuple = None     # (x^0 of the moment of rest, legend[, (dx^0, dr)]): the surface before that
@@ -1741,9 +1742,37 @@ _LW_MADE = {}
 lw_r = _lw_function(0, 0)
 
 
+# The T-models of Datt and Ruban as every one of their diagrams draws them, in units of r_s: Ruban's
+# dust with epsilon = 1 and a tube whose shells carry mu = (2 + tanh(r))/(2 pi), thin dust on the left
+# and thick on the right, above 1/(2 pi) on every shell, so that no two shells meet before the crunch.
+DR_MU = "(2 + tanh(r))/(2*pi)"
+DR_TUBE = {"r_s": 1, "epsilon": 1}
+# The scale factor of Ruban's T-model on de Sitter space at l = 1 and epsilon = 1, positive on the spacetime.
+DR_DS_SCALE = f"sinh(t) + {DR_MU}*((pi/2 - atan(sinh(t)))*sinh(t) - 1)"
+DR_INPUT = ("Dust with $\\epsilon = 1$ and $\\mu = \\left(2 + \\tanh(r/r_s)\\right)/2\\pi$, which is above "
+            "$1/2\\pi$ on every shell, so that no two shells meet before the crunch.")
+_DR_ETAS = np.linspace(0.0, 2 * math.pi, 400001)
+
+
+def _dr_eta(t):
+    """The cycloid's parameter at the proper time t of Ruban's dust, in r_s: (eta - sin eta)/2 = ct."""
+    return np.interp(t, (_DR_ETAS - np.sin(_DR_ETAS)) / 2, _DR_ETAS)
+
+
+class dr_eta(sp.Function):
+    """The parameter eta of the cycloid at the chart time x^0 = ct of Ruban's dust, in r_s, a declared
+    function a row may name: its derivative is 1/b = 1/sin^2(eta/2), written in itself."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(_dr_eta)
+
+    def fdiff(self, argindex=1):
+        return 1 / sp.sin(dr_eta(self.args[0]) / 2) ** 2
+
+
 # Functions a row's `functions` may name beside the elementary ones, each a sympy function
 # that carries its own derivative and its own numbers.
-DECLARED_FUNCTIONS = {**{f.__name__: f for f in (bm_m, bm_dm, bm_d2m, bm_delta, bm_ddelta, bm_d2delta, bm_N, bm_dN,
+DECLARED_FUNCTIONS = {"dr_eta": dr_eta, **{f.__name__: f for f in (bm_m, bm_dm, bm_d2m, bm_delta, bm_ddelta, bm_d2delta, bm_N, bm_dN,
                                                  bm_d2N, bm_k, bm_dk, bm_d2k, bm_r)},
                       "teo_rho": teo_rho, "teo_sigma": teo_sigma, "ori_mass_behind": ori_mass_behind,
                       "ori_influx_behind": ori_influx_behind, "ori_shell_behind": ori_shell_behind,
@@ -3676,6 +3705,35 @@ DIAGRAMS = [
             input="Uniform dust inside the shell $r_1 = r_s$, a vacuum out to the shell $r_2 = 4r_s$, and uniform "
                   "dust beyond it: $F = r_s(r/r_1)^3$, $r_s$, and $r_s(r/r_2)^3$, with the delay $b = r_2 - r_1$, "
                   "$r_2 - r$, and $0$, as Novikov takes it."),
+    # The T-models of Datt and Ruban, in units of r_s: one tube of dust, mu = (2 + tanh(r))/(2 pi) and
+    # epsilon = 1, in the proper time of the dust, in the cycloid's parameter and in the radius of its
+    # spheres; Ruban's T-model on de Sitter space with the same mu, in units of l, which begins on the
+    # curve a = 0; and Kruskal's plane outside a T-sphere, whose surface V = U is the left edge.
+    Diagram("datt_ruban_t_models", "comoving", "tube", "$t$ and $r$", ("t", "r"), (-2.5, 2.5, 0, math.pi),
+            "$r/r_s$", "$ct/r_s$", {}, EQUATOR, families=SIDEWAYS, areal=True, no_throat=True,
+            functions={"b": "sin(dr_eta(t)/2)**2",
+                       "a": f"(1 - {DR_MU}*dr_eta(t))*cot(dr_eta(t)/2) + 2*{DR_MU}"},
+            solves=(("r", "r"), ("\\theta", "\\theta")),
+            input="Ruban's dust with $r_s$ the unit of length, $\\epsilon = 1$ and $\\mu = \\left(2 + \\tanh(r/r_s)\\right)"
+                  "/2\\pi$: $b = r_s\\sin^2(\\eta/2)$ and $a = \\left(1 - \\mu\\eta\\right)\\cot(\\eta/2) + 2\\mu$ at "
+                  "$ct = \\tfrac{1}{2}r_s\\left(\\eta - \\sin\\eta\\right)$, checked to solve this spacetime's own "
+                  "$G^r{}_r = 0$ and $G^\\theta{}_\\theta = 0$."),
+    Diagram("datt_ruban_t_models", "ruban", "tube", "$\\eta$ and $r$", ("\\eta", "r"), (-3, 3, 0, 2 * math.pi),
+            "$r/r_s$", "$\\eta$", DR_TUBE, EQUATOR, families=SIDEWAYS, tau="eta", areal=True, no_throat=True,
+            functions={"mu": DR_MU}, input=DR_INPUT),
+    Diagram("datt_ruban_t_models", "areal", "expansion", "$T$ and $r$", ("T", "r"), (-0.75, 0.75, 0, 1),
+            "$r/r_s$", "$T/r_s$", DR_TUBE, EQUATOR, families=SIDEWAYS, tau="T", areal=True,
+            functions={"mu": DR_MU}, input=DR_INPUT),
+    Diagram("datt_ruban_t_models", "de_sitter", "tube", "$t$ and $r$", ("t", "r"), (-2, 2, 0, 3),
+            "$r/\\ell$", "$ct/\\ell$", {"ell": 1, "epsilon": 1}, EQUATOR, families=SIDEWAYS, areal=True, no_throat=True,
+            functions={"mu": DR_MU}, where=DR_DS_SCALE, singular_zero=DR_DS_SCALE,
+            input="Dust with $\\epsilon = 1$ and $\\mu = \\left(2 + \\tanh(r/\\ell)\\right)/2\\pi$."),
+    Diagram("datt_ruban_t_models", "exterior_kruskal", "kruskal", "$U$ and $V$", ("U", "V"), (0, 2.5, -1.25, 1.25),
+            "$(V - U)/2$", "$(U + V)/2$", {"r_s": 1}, EQUATOR, to_display=NULL_TO_TR, families=SIDEWAYS, tau="U + V",
+            where="1 - U*V", singular_zero="1 - U*V",
+            curves=(("surface", "Piecewise((U, Abs(U) < 1), (nan, True))", "the surface of the dust, $V = U$", "signed"),),
+            marked=(("event", {"x0": "0", "r": "1/2"}, 1, "the event horizon, $U = 0$"),
+                    ("past", {"x0": "-1/2", "r": "0"}, 0, "the past horizon, $V = 0$"))),
     # The charged shell of dust: the flat space inside it, on the plane of T and r and on the line
     # through the centre, with the event horizon, the outgoing ray T - r = -1.167 that meets the shell on
     # r_+, and the Cauchy horizon, the ingoing ray T + r = 0.504 that leaves the shell on r_-; the static
@@ -8252,6 +8310,26 @@ CAPTIONS = {
         "$R = a\\sin\\chi$, bounds the trapped spheres: it starts at the surface at the same moment "
         "and runs inward, reaching the centre only at the crunch.",
     ],
+    ("datt_ruban_t_models", "comoving", "tube"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) along a tube of dust, each point a sphere, from the bang at $t = 0$ to the crunch at $ct = \\pi r_s$, where the Kretschmann scalar diverges. Every shell of dust is a vertical line, and its sphere has the radius $b$ of every other, which grows to $r_s$ at $ct = \\pi r_s/2$ and falls back.",
+        "The shells differ in the dust they carry, thin on the left and thick on the right, and so in the stretch $a$ along the tube. The edges of the cones are $dr/d(ct) = \\pm 1/a$: they close at the bang, where $a$ grows without limit on every shell, and again toward the crunch, last on the left, where the thin dust stretches the tube least.",
+    ],
+    ("datt_ruban_t_models", "ruban", "tube"): [
+        "The plane of $\\eta$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) along the same tube in the parameter of the cycloid, from the bang at $\\eta = 0$ to the crunch at $\\eta = 2\\pi$, where the Kretschmann scalar diverges. The spheres have the radius $b = r_s\\sin^2(\\eta/2)$ on every shell, greatest at $\\eta = \\pi$.",
+        "The edges of the cones are $dr/d\\eta = \\pm b/a$. Near the bang $a$ grows as $2/\\eta$ and near the crunch as $2\\left(2\\pi\\mu - 1\\right)/\\left(2\\pi - \\eta\\right)$, so the cones narrow toward both, and a shell with $\\mu$ below $1/2\\pi$ would reach $a = 0$ before the crunch and run into its neighbour.",
+    ],
+    ("datt_ruban_t_models", "areal", "expansion"): [
+        "The plane of $T$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) through the expansion of the same tube, with the radius $T$ of its spheres for the time, from the bang at $T = 0$, where the Kretschmann scalar diverges, to the greatest expansion at $T = r_s$, the top edge. With no dust this plane is the inside of Schwarzschild's horizon, and the top edge the horizon.",
+        "The edges of the cones are $dr/dT = \\pm 1/\\left(a\\sqrt{r_s/T - 1}\\right)$, so the cones open flat toward the top edge, where the spheres stand still for a moment and their radius stops serving as a time.",
+    ],
+    ("datt_ruban_t_models", "de_sitter", "tube"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) along Ruban's tube of dust on de Sitter space, whose spheres have the radius $\\ell\\cosh(ct/\\ell)$ and grow for ever. The tube begins on the curve $a = 0$, later where the dust is thicker: every shell there touches its neighbour, the density is infinite and the Kretschmann scalar diverges, and below the curve $a$ is negative.",
+        "The edges of the cones are $dr/d(ct) = \\pm 1/a$, wide open beside that curve and closing as $a$ grows like $e^{ct/\\ell}$, as the cones of de Sitter space do.",
+    ],
+    ("datt_ruban_t_models", "exterior_kruskal", "kruskal"): [
+        "The plane of $U$ and $V$ ($\\theta = \\pi/2$, $\\phi = 0$) outside a T-sphere, drawn with $(V - U)/2$ across and $(U + V)/2$ up, so that every light ray runs at 45°. The surface of the dust is the left edge, $V = U$: it leaves the past singularity $UV = 1$ at $U = -1$, passes at its greatest expansion through the sphere $U = V = 0$ where the two horizons cross, and ends on the future singularity at $U = 1$. The dust lies to its left, where these coordinates do not reach.",
+        "The surface stays inside $r_s$: below the crossing it is in the white hole, above it in the black hole, and the world outside, $U < 0 < V$, receives light only from its lower half. An observer there sees the surface rise out of the white hole and slow toward the horizon $U = 0$.",
+    ],
     ("white_hole", "interior_comoving", "through"): [
         "The line through the centre of the core in the plane $\\theta = \\pi/2$, in its own comoving "
         "coordinates: $\\chi$ on the right is $\\phi = 0$ and on the left $\\phi = \\pi$, and the surface is "
@@ -10398,15 +10476,17 @@ class Plot:
         corners = self.to_chart(self.from_unit(np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=float)))
         return float(np.min(corners[0])), float(np.max(corners[0]))
 
-    def world_line(self, radius):
+    def world_line(self, radius, signed=False):
         """A world line r = radius(x^0) a row declares in `curves`, through the drawing, in the unit
-        square, over the times at which the radius is positive and one more, where it ends."""
+        square, over the times at which the radius is positive and one more, where it ends. A row
+        whose drawn coordinate takes either sign, as Kruskal's V, says so, and the line is drawn
+        wherever the expression is finite."""
         x0 = self.c.x0
         f = sp.lambdify(x0, sp.sympify(radius, locals={str(x0): x0, **DECLARED_FUNCTIONS}), "numpy")
         t = np.linspace(*self.x0_range(), 4001)
         with np.errstate(all="ignore"):
             R = np.broadcast_to(np.asarray(f(t), dtype=float), t.shape)
-        keep = np.isfinite(R) & (R > 0)
+        keep = np.isfinite(R) & ((R > 0) | signed)
         if keep.sum() < 2:
             raise SystemExit(f"{key(self.c.spec)}: the world line r = {radius} does not cross the drawing")
         last = np.flatnonzero(keep)[-1]
@@ -10519,8 +10599,9 @@ class Plot:
         for kind, (x0, r), legend in spec.points:
             u = self.to_unit(self.to_display(float(number(x0)), float(number(r))))
             out.append({"kind": kind, "points": [rounded(u)], "legend": legend})
-        for kind, radius, legend in spec.curves:
-            out.append({"kind": kind, "lines": [rounded(thin(self.world_line(radius), 0.0006))], "legend": legend})
+        for kind, radius, legend, *signed in spec.curves:
+            out.append({"kind": kind, "lines": [rounded(thin(self.world_line(radius, bool(signed)), 0.0006))],
+                        "legend": legend})
         if spec.surface or spec.cell:
             out.append({"kind": "surface", "lines": [rounded(thin(self.surface_line(), 0.0006))],
                         "legend": spec.surface_legend or self.c.surface.legend})

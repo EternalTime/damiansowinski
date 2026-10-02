@@ -553,6 +553,29 @@ WH_REST = OS_AM * math.pi / 2                # c tau of the moment of rest, pi a
 WH_BOOST = math.sqrt(2) * math.exp(1 + math.pi / 2)      # e^(v_h/2r_s), v_h = (pi + 2 + ln 2) r_s
 
 
+def dr_eta(tau):
+    """The cycloid's parameter of Ruban's dust at the proper time tau since its greatest expansion,
+    in r_s: eta = pi + e with (e + sin e)/2 = c tau."""
+    lo, hi = 0.0, math.pi
+    for _ in range(80):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if 0.5 * (mid + math.sin(mid)) < tau else (lo, mid)
+    return math.pi + 0.5 * (lo + hi)
+
+
+def dr_shells(m):
+    """Kruskal's U and V of the moment outside a T-sphere: Novikov's shells released from rest with
+    the dust, from the surface, the shell at rest at r_s, out as far as the embedding reaches."""
+    lo, hi = m.reach("comoving_synchronous", "r")
+    U, V, _ = novikov_sheets(np.linspace(lo, hi, N), m.time)
+    return U, V
+
+
+def _dr_kruskal():
+    """The moments of a T-sphere on Kruskal's plane outside it, each a curve from the surface V = U."""
+    return [Mark(m, [np.column_stack(dr_shells(m))]) for m in moments("datt_ruban_t_models")]
+
+
 def wh_eta(tau):
     """The conformal time of the white hole's dust at its proper time tau, tau = (a_m/2)(eta - sin eta)."""
     lo, hi = 0.0, 2 * math.pi
@@ -2612,6 +2635,7 @@ FLAT = {
     ("semiclosed_world", "conformal", "dust"): lambda: _scw_dust(True),
     ("semiclosed_world", "schwarzschild", "radial"): lambda: _scw_far(False),
     ("semiclosed_world", "isotropic", "radial"): lambda: _scw_far(True),
+    ("datt_ruban_t_models", "exterior_kruskal", "kruskal"): _dr_kruskal,
     ("oppenheimer_snyder", "exterior_schwarzschild", "radial"): os_exterior,
     ("white_hole", "interior_comoving", "through"): lambda: one(
         "white_hole", lambda m: [[(m.time / OS_AM, lo) for lo in m.reach("interior_comoving", "\\chi")]]),
@@ -2671,6 +2695,10 @@ FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.
 HIDDEN = {
+    ("datt_ruban_t_models", "comoving", "tube"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",
+    ("datt_ruban_t_models", "ruban", "tube"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",
+    ("datt_ruban_t_models", "areal", "expansion"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",
+    ("datt_ruban_t_models", "de_sitter", "tube"): "Ruban's tube on de Sitter space, another spacetime than the T-sphere embedded",
     ("kundt_waves", "kundt", "front"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
     ("kundt_waves", "podolsky_belan", "near"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",
     ("kundt_waves", "podolsky_belan", "far"): "a wave with no cosmological constant, another spacetime than the waves in de Sitter and anti-de Sitter space whose fronts are embedded",

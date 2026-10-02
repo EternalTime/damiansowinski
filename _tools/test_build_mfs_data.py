@@ -3606,7 +3606,7 @@ class StacksAndMovies(unittest.TestCase):
               ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("white_hole", "explosion"): "$c\\tau$",
               ("vaidya", "shell"): "$v - r$",
-              ("semiclosed_world", "bag"): "$c\\tau$",
+              ("semiclosed_world", "bag"): "$c\\tau$", ("datt_ruban_t_models", "tsphere"): "$c\\tau$",
               ("lindquist_wheeler_lattice", "lattice"): "$c\\tau$",
               ("bonnor_vaidya", "shell"): "$v - r$", ("israel_shell", "shell"): "$v - r$",
               ("charged_shell", "bounce"): "$v - r$",
@@ -4520,6 +4520,26 @@ class Lukewarm:
 LW_PSI = bisect(lambda x: 8 * (2 * x - math.sin(2 * x)) - 2 * math.pi, 0.0, math.pi / 2)
 
 
+def novikov_uv(s, tau):
+    """Kruskal's U and V, r_s = 1, of Novikov's shell at rest at the areal radius s^2 + 1 on the far
+    sheet, at its proper time tau since the release: slices.novikov_sheets, by hand."""
+    R = s * s + 1
+    eta = bisect(lambda e: 0.5 * R * math.sqrt(R) * (e + math.sin(e)) - tau, 0.0, math.pi) if tau else 0.0
+    r = R * math.cos(eta / 2) ** 2
+    phase = s * (eta + 0.5 * R * (eta + math.sin(eta)))
+    return ((math.sin(eta / 2) - s * math.cos(eta / 2)) * math.exp((r - phase) / 2),
+            (s * math.cos(eta / 2) + math.sin(eta / 2)) * math.exp((r + phase) / 2))
+
+
+def ruban_sigma(eta, mu=1 / math.pi):
+    """The conformal time of Ruban's dust at epsilon = 1 and r_s = 1 from its greatest expansion to eta,
+    the integral of sin^2(e/2)/a with a = (1 - mu e) cot(e/2) + 2 mu, by Simpson's rule."""
+    n = 2000
+    f = [math.sin(e / 2) ** 2 / ((1 - mu * e) / math.tan(e / 2) + 2 * mu)
+         for e in (math.pi + (eta - math.pi) * k / n for k in range(n + 1))]
+    return (eta - math.pi) / n / 3 * (f[0] + f[-1] + 4 * sum(f[1:-1:2]) + 2 * sum(f[2:-1:2]))
+
+
 def novikov_t(R, tau):
     """A shell of dust released from rest at areal radius R, r_s = 1, at its proper time tau:
     its r and Schwarzschild t, from the cycloid and Misner, Thorne and Wheeler's (31.10)."""
@@ -4808,7 +4828,11 @@ class Slices(unittest.TestCase):
     # The drawings on which no moment of the spacetime's embedding lies: other universes,
     # another cloud, the time reversed shell, and cylinders where no surface of constant t is
     # a moment of space.
-    HIDDEN = {# The flat interior of Tippett and Tsang's bubble continued over the whole plane, another
+    HIDDEN = {# A tube of Datt and Ruban's dust that runs on in both directions, and Ruban's tube on de Sitter
+              # space, other spacetimes than the T-sphere whose moments are embedded.
+              "datt_ruban_t_models/comoving/tube", "datt_ruban_t_models/ruban/tube",
+              "datt_ruban_t_models/areal/expansion", "datt_ruban_t_models/de_sitter/tube",
+              # The flat interior of Tippett and Tsang's bubble continued over the whole plane, another
               # spacetime than the bubble whose moment is embedded.
               "tippett_tsang/interior/tx", "tippett_tsang/rindler/plane",
               # A plane wave and the uniform field of Nordstrom's theory, other spacetimes than the point
@@ -5641,6 +5665,16 @@ class Slices(unittest.TestCase):
             # time, sqrt 2 (eta + sin eta) = c tau, across the dust to chi_0 = 3 pi/4.
             eta = bisect(lambda e: math.sqrt(2) * (e + math.sin(e)) - t, 0, math.pi) if t else 0.0
             return (lambda X: eta if "conformal" in key else t / (2 * math.sqrt(2))), [0, 3 * math.pi / 4]
+        if key == "datt_ruban_t_models/exterior_kruskal/kruskal":
+            # Novikov's shells outside a T-sphere, from its surface s = 0, on which V = U, to the shell
+            # the embedding's rim rests at, drawn with (V - U)/2 across and (U + V)/2 up.
+            s_top = self.reach(surface, "comoving_synchronous")[1]
+            across = lambda s: (novikov_uv(s, t)[1] - novikov_uv(s, t)[0]) / 2
+
+            def up(X):
+                s = bisect(lambda x: across(x) - X, 0.0, s_top) if 0 < X < across(s_top) else (0.0 if X <= 0 else s_top)
+                return sum(novikov_uv(s, t)) / 2
+            return up, [0.0, across(s_top)]
         if key in ("semiclosed_world/schwarzschild/radial", "semiclosed_world/isotropic/radial"):
             # Novikov's shells of the far sheet, from the throat, which rests at r_s, to the shell the
             # embedding's rim rests at, r_s (s^2 + 1); the isotropic radius of the areal radius r on
@@ -6371,6 +6405,22 @@ class Slices(unittest.TestCase):
                         self.assertLess(math.dist(outside[0], [chi0, eta]), 2e-4, where)
                         self.assertTrue(all(b[0] > a[0] for a, b in zip(outside, outside[1:])), where)
                         self.assertTrue(all(-2e-4 <= T < math.pi for _, T in outside), where)
+                    elif metric_id == "datt_ruban_t_models":
+                        # Inside, p, q = arctan(sigma -+ r) at the moment's eta = pi + e, (e + sin e)/2 = c tau,
+                        # from r = -2 r_s to the surface, X = 0; outside, Novikov's curve from the surface out.
+                        eta = math.pi + (bisect(lambda e: (e + math.sin(e)) / 2 - t, 0, math.pi) if t else 0.0)
+                        sigma = ruban_sigma(eta)
+                        inside, outside = mark["lines"]
+                        for X, T in inside:
+                            tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            self.assertLess(abs((tp + tq) / 2 - sigma), 2e-3 * (1 + tp * tp + tq * tq), f"{where} at {(X, T)}")
+                            self.assertLessEqual((tq - tp) / 2, 1e-9)
+                        tp, tq = math.tan((inside[0][1] - inside[0][0]) / 2), math.tan((inside[0][1] + inside[0][0]) / 2)
+                        self.assertAlmostEqual((tq - tp) / 2, -2.0, delta=5e-3)
+                        self.assertLess(math.dist(inside[-1], [0, 2 * math.atan(sigma)]), 2e-4, where)
+                        self.assertLess(math.dist(outside[0], inside[-1]), 2e-4, where)
+                        self.assertTrue(all(b[0] > a[0] for a, b in zip(outside, outside[1:])), where)
+                        self.assertTrue(all(-2e-4 <= T < 2 * math.atan(ruban_sigma(2 * math.pi)) for _, T in outside), where)
                     elif metric_id == "white_hole":
                         chi0 = math.pi / 4
                         eta = bisect(lambda e: math.sqrt(2) * (e - math.sin(e)) - t, 0, 2 * math.pi) - math.pi
