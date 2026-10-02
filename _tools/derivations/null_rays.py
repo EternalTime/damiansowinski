@@ -2426,6 +2426,20 @@ DIAGRAMS = [
                    ("shell", "x0", "-2*exp(-pi)", "$u = -2$ and $u = -2e^{-L/2}$, one line of the core"))),
     # Tippett and Tsang's bubble on the plane y = z = 0, which holds its rays: the whole plane of t
     # and x, the same plane unrolled in the polar chart, and the flat interior alone in its two charts.
+    # Nordstrom's theory: every cone is Minkowski's, since the conformal factor drops out of the null
+    # condition. The free chart is drawn with a plane wave of the theory, the point mass in units of
+    # m from its singular sphere r = m, the uniform field in units of c^2/a from its singular plane
+    # z = 0, and the dust universe in units of L from the bang to the crunch.
+    Diagram("nordstrom_scalar", "conformal", "tx", "$t$ and $x$", ("t", "x"), (-4, 4, -4, 4), "$kx$", "$kct$", {},
+            {"y": "0", "z": "0"}, families=SIDEWAYS, functions={"Phi": "1 + cos(x - t)/2"}, any_factor="Phi",
+            input="Any $\\Phi$, since the rays and cones are the same for every one; drawn with a plane wave of "
+                  "the theory moving right, $\\Phi = 1 + \\tfrac{1}{2}\\cos(k(x - ct))$, where $k$ is its wave number."),
+    Diagram("nordstrom_scalar", "spherical", "radial", "$t$ and $r$", ("t", "r"), (1, 5, -2, 2),
+            "$r/m$", "$ct/m$", {"m": 1}, EQUATOR, areal=True),
+    Diagram("nordstrom_scalar", "uniform", "tz", "$t$ and $z$", ("t", "z"), (0, 3, -1.5, 1.5),
+            "$z\\;[c^2/a]$", "$ct\\;[c^2/a]$", {"a": 1}, {"x": "0", "y": "0"}, families=("moving down", "moving up")),
+    Diagram("nordstrom_scalar", "dust", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1, 1),
+            "$r/L$", "$ct/L$", {"L": 1}, EQUATOR, areal=True),
     Diagram("tippett_tsang", "cartesian", "tx", "$t$ and $x$ through the bubble", ("t", "x"),
             (-1.6, 1.6, -1.6, 1.6), "$x/A$", "$ct/A$", {}, {"y": "0", "z": "0"}, tau=TT_TAU, families=SIDEWAYS,
             cones=(8, 8), functions={"h": TT_H}, input=TT_INPUT, step=0.001,
@@ -5684,6 +5698,42 @@ CAPTIONS = {
         "and timelike where $v > 0$. The ray $v = 0$ is the closed null geodesic $N$. Each circuit of it is "
         "shorter in $u$, an affine parameter, by the factor $e^{-L/2}$, so $N$ runs round without end in a "
         "finite affine length and is incomplete to the future.",
+    ],
+    ("nordstrom_scalar", "conformal", "tx"): [
+        "The plane of $t$ and $x$ ($y = z = 0$). The metric on it is $\\Phi^2(-c^2dt^2 + dx^2)$, and $\\Phi^2$ "
+        "drops out of the null condition, so for every $\\Phi$ the light rays are Minkowski's, straight at 45°.",
+        "A wave of $\\Phi$ solves the wave equation light solves and keeps pace with the rays moving right, each "
+        "of which rides one value of $\\Phi$. A clock at rest ticks at the rate $\\Phi$ and a rod measures the "
+        "coordinate length $dx$ as $\\Phi\\,dx$, so both readings swell and shrink by half as the wave passes, and "
+        "the cones stay as they are.",
+    ],
+    ("nordstrom_scalar", "spherical", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), each point in the plane a 2-sphere of area "
+        "$4\\pi(r - m)^2$. The conformal factor $(1 - m/r)^2$ drops out of the null condition, so $ct \\mp r$ is "
+        "constant along a ray and every cone is Minkowski's, at 45° all the way down to $r = m$.",
+        "A clock at rest at $r$ ticks at the rate $1 - m/r$, so light from it reaches infinity with its wavelength "
+        "stretched by $1/(1 - m/r)$, to first order in $m/r$ the redshift of Schwarzschild's field. On $r = m$ the "
+        "spheres have zero area and the Kretschmann scalar diverges as $(r - m)^{-8}$. A ray moving in from $r$ "
+        "reaches that singularity after the time $(r - m)/c$, and a ray leaves it for infinity at every moment, so "
+        "no horizon hides it.",
+    ],
+    ("nordstrom_scalar", "uniform", "tz"): [
+        "The plane of $t$ and $z$ ($x = y = 0$) in units of $c^2/a$. The conformal factor $a^2z^2/c^4$ drops out of "
+        "the null condition, so the rays are Minkowski's, $ct \\mp z$ constant, at every height.",
+        "A body at rest at the height $z$ has the proper acceleration $c^4/az^2$, which is $a$ at $z = c^2/a$ and "
+        "grows without bound toward $z = 0$, where the Kretschmann scalar diverges as $z^{-8}$. A body dropped "
+        "from rest at $z = c^2/a$ reaches that plane after the proper time $\\pi c/4a$, and a ray moving down from $z$ "
+        "reaches it after the time $z/c$.",
+    ],
+    ("nordstrom_scalar", "dust", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), each point in the plane a 2-sphere of area "
+        "$4\\pi r^2\\Phi^2$ with $\\Phi = 1 - c^2t^2/L^2$. The dust is at rest, every vertical line the world "
+        "line of a galaxy in free fall, and the rays are Minkowski's, $ct \\mp r$ constant.",
+        "The universe begins on $ct = -L$ and ends on $ct = L$, where $\\Phi = 0$, every sphere has zero area, and "
+        "the Kretschmann scalar diverges. A galaxy's clock runs $4L/3c$ between the two. Light crosses a comoving "
+        "distance of $2L$ in that span, so two galaxies further apart than $2L$ never see one another. On "
+        "$r = (L^2 - c^2t^2)/2c|t|$ the area of the spheres is stationary along one family of rays, the apparent "
+        "horizon of the bang before $t = 0$ and of the crunch after it.",
     ],
     ("tippett_tsang", "cartesian", "tx"): [
         "The plane of $t$ and $x$ ($y = z = 0$) through Tippett and Tsang's bubble, which on this plane is the ring "
@@ -11365,6 +11415,10 @@ CLOSED_FORMS = {
     **{("point_particle_2plus1", "two_bodies", view):
         (lambda t, x: t + _two_particles_distance(x), lambda t, x: t - _two_particles_distance(x),
          lambda t, x: np.abs(np.abs(x) - 1) > 0.01) for view in ("between", "beyond")},
+    ("nordstrom_scalar", "conformal", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
+    ("nordstrom_scalar", "spherical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, lambda t, r: r > 1.0005),
+    ("nordstrom_scalar", "uniform", "tz"): (lambda t, z: t + z, lambda t, z: t - z, lambda t, z: z > 0.0005),
+    ("nordstrom_scalar", "dust", "radial"): (lambda t, r: t + r, lambda t, r: t - r, lambda t, r: np.abs(t) < 0.9995),
     ("minkowski", "spherical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("minkowski", "cartesian", "tx"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("minkowski", "rindler", "tx"):

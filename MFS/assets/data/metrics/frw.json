@@ -81,6 +81,11 @@
       "id": "sultana_dyer",
       "kind": "generalisation",
       "text": "The flat universe of dust with a black hole in it from the big bang on: Schwarzschild's metric times $a^2$, with $a \\propto \\eta^2$ [sultana2005]."
+    },
+    {
+      "id": "nordstrom_scalar",
+      "kind": "family",
+      "text": "The flat universe in Nordström's scalar theory of gravity. His field equation gives dust the scale factor $1 - \\eta^2/\\eta_0^2$ in conformal time, with $\\eta_0$ a constant, a universe that expands from a bang and falls back into a crunch [sundrum2003]."
     }
   ],
   "references": [
@@ -133,7 +138,8 @@
     "coleman1980",
     "bucher1995",
     "senovilla1996",
-    "sultana2005"
+    "sultana2005",
+    "sundrum2003"
   ],
   "coordinates": [
     {
