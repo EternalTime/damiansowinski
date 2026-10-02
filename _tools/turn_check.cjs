@@ -206,12 +206,15 @@ for (const file of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) 
     if (stacks) entry.stack = true;
     /* A movie draws every frame at one scale about one place: at the figure's own camera every
        frame keeps to the box at scale 1, and turned, every frame keeps to it at the one scale the
-       camera gives all of them. */
+       camera gives all of them. The label that names the frame shown stands at one place at each
+       camera, whatever the frame: `label` is the farthest any frame puts it from the first's. */
     if (view.movie) {
       const frames = view.movie.frames.length, cams = [[a0, e0], [a0 + 90, 45], [a0 + 200, -45], [a0 + 30, 90], [a0, -90]];
-      let outside = 0, bad = 0, scales = new Set(), home = 1;
+      const named = view.figure.labels.map((L, i) => L.frame ? i : -1).filter(i => i >= 0);
+      let outside = 0, bad = 0, scales = new Set(), home = 1, label = 0;
       for (const [a, e] of cams) {
         const seen = new Set();
+        let first = null;
         for (let k = 0; k < frames; k++) {
           turn.frame(M, k);
           const d = turn.draw(M, a, e, true);
@@ -223,11 +226,14 @@ for (const file of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) 
           };
           for (const L of d.layers) (L.kind === 'point' ? [[L.at]] : [L.points, ...(L.holes || [])]).forEach(r => r.forEach(check));
           d.labels.forEach(L => check(L.at));
+          const at = named.map(i => d.labels[i].at);
+          first = first || at;
+          at.forEach((p, i) => { label = Math.max(label, Math.hypot(p[0] - first[i][0], p[1] - first[i][1])); });
         }
         scales.add(seen.size);
       }
       turn.frame(M, 0);
-      entry.movie = { frames, outside: outside / size, bad, home, scalesPerCamera: Math.max(...scales) };
+      entry.movie = { frames, outside: outside / size, bad, home, scalesPerCamera: Math.max(...scales), named: named.length, label };
     }
     out.views.push(entry);
   }

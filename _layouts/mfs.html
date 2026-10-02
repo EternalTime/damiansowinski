@@ -2219,14 +2219,20 @@
           var svg = figure.querySelector('svg'), readout = figure.querySelector('.mfs-nr-readout');
           var rx = readout.querySelector('.nr-rx'), ry = readout.querySelector('.nr-ry');
           var box = JSON.parse(svg.getAttribute('data-box')), mg = JSON.parse(svg.getAttribute('data-margins'));
+          // Each value is set from the right in the room of the longest the plot can show, the
+          // longer of its two ends, so its name and its point stay where they are as the
+          // pointer moves and the value gains a digit or a sign.
+          function read(at, lo, hi) {
+            return at.toFixed(3).replace('-', '−').padStart(Math.max(lo.toFixed(3).length, hi.toFixed(3).length));
+          }
           svg.addEventListener('mousemove', function(ev) {
             var r = svg.getBoundingClientRect(), vb = svg.viewBox.baseVal;
             var u = ((ev.clientX - r.left) / r.width * vb.width - mg[0]) / mg[2];
             var v = 1 - ((ev.clientY - r.top) / r.height * vb.height - mg[1]) / mg[3];
             if (u < 0 || u > 1 || v < 0 || v > 1) { readout.style.opacity = 0; return; }
             readout.style.opacity = 1;
-            rx.textContent = (box[0] + u * (box[1] - box[0])).toFixed(3).replace('-', '−');
-            ry.textContent = (box[2] + v * (box[3] - box[2])).toFixed(3).replace('-', '−');
+            rx.textContent = read(box[0] + u * (box[1] - box[0]), box[0], box[1]);
+            ry.textContent = read(box[2] + v * (box[3] - box[2]), box[2], box[3]);
           });
           svg.addEventListener('mouseleave', function() { readout.style.opacity = 0; });
         });
@@ -2598,15 +2604,21 @@
          view with a movie plays its frames in turn, as wireTurning() says, with the button that
          plays and pauses it in the other top corner of its frame, and its label naming the frame
          shown holds every frame's name, set once with the page's mathematics, of which it shows
-         one. A movie whose file says it does not turn is still under the hand. */
+         one. Nothing in that label moves as the movie plays, as the captain asked on 1 October
+         2026: the names stand one over another from one left edge, in a box as wide as the
+         widest, which is what the label's place pins, and MfsTurn.steady() gives every frame's
+         number one width with its point at one place. A movie whose file says it does not turn
+         is still under the hand. */
       var MOVIE_PLAY = '<button type="button" class="mfs-movie-play">pause</button>';
       function emFigure(view, metricId, index) {
         var f = cdFrame(view.figure), movie = view.movie, turns = !movie || movie.turns !== false;
         var name = 'Embedding diagram, ' + nrPlain(view.label);
+        var names = movie && movie.frames.map(function(fr) { return fr.label; });
+        if (names && window.MfsTurn) names = MfsTurn.steady(names);
         var frames = movie && function(L) {
-          return L.frame && movie.frames.map(function(fr, k) {
-            return '<span class="mfs-frame-label"' + (k ? ' hidden' : '') + '>' + nrEsc(fr.label) + '</span>';
-          }).join('');
+          return L.frame && '<span class="mfs-frame-labels">' + names.map(function(name, k) {
+            return '<span class="mfs-frame-label"' + (k ? ' hidden' : '') + '>' + nrEsc(name) + '</span>';
+          }).join('') + '</span>';
         };
         return cdFrameAround(f, (turns ? TURN_RESET : '') + (movie ? MOVIE_PLAY : ''), emSvg(view, f) + cdLabels(view.figure, f, frames),
           'mfs-em-figure' + (turns ? ' mfs-turn' : '') + (movie ? ' mfs-movie' : ''),
@@ -4214,6 +4226,9 @@
       opacity: 0; transition: opacity 0.12s;
     }
     #mfs-content-panel .mfs-nr-readout > span { white-space: nowrap; }
+    /* A value keeps the spaces that hold its room, in figures of one width. */
+    #mfs-content-panel .mfs-nr-readout .nr-rx,
+    #mfs-content-panel .mfs-nr-readout .nr-ry { white-space: pre; font-variant-numeric: tabular-nums; }
     #mfs-content-panel .mfs-nr-text { flex: 1 1 21.25rem; min-width: 0; }
     #mfs-content-panel .mfs-nr-caption p {
       line-height: 1.65;
@@ -4378,7 +4393,13 @@
     #mfs-content-panel .mfs-movie-play:hover { color: var(--cyan); border-color: var(--cyan); }
     #mfs-content-panel .mfs-movie-play:active { color: var(--pink-light); border-color: var(--pink-light); }
     #mfs-content-panel .mfs-movie-play:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
-    #mfs-content-panel .mfs-frame-label[hidden] { display: none; }
+    /* A movie's label holds every frame's name in one cell of a grid, each from the cell's left
+       edge, and the names not shown keep their room: the label is as wide as its widest name at
+       every frame, so the place it is pinned by never depends on the frame shown, and each name
+       starts where the last did. Its figures are of one width, as MfsTurn.steady() counts on. */
+    #mfs-content-panel .mfs-frame-labels { display: grid; justify-items: start; font-variant-numeric: tabular-nums; }
+    #mfs-content-panel .mfs-frame-label { grid-area: 1 / 1; }
+    #mfs-content-panel .mfs-frame-label[hidden] { display: block; visibility: hidden; }
     /* ── Conformal diagrams ── The buttons, views, captions and legend are the spacetime
        diagrams'; the figure, its labels and its lines are these. Every label is white and at
        the caption's size, --mfs-prose, and the drawing is at least --cd-min of those ems

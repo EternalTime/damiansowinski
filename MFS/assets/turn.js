@@ -187,6 +187,50 @@
     return k;
   }
 
+  /* A movie's labels, one for each frame, set so that nothing in them moves as the movie plays,
+     as the captain asked on 1 October 2026. A label gives its value as the first number after
+     its first "=", inside its mathematics: a sign, digits, and then a decimal point or a stroke
+     with the digits after it, as in -0.7, 24 or 1/4. Each label is given, in \hphantom, the
+     glyphs its number lacks of the most of each kind any frame's has, a minus, digits, a point or
+     a stroke, those before the point in front of the number and those from the point on behind
+     it. A digit of mathematics is as wide as any other, so every frame's number then fills one
+     box, with its point at one place in it, and what follows the number stands still too. The
+     minus is braced in every label, so that it is set as a sign after a phantom as it is after
+     the "=". Nothing that shows is changed. Labels of which any carries no such number are
+     returned as they came. */
+  var STEADY_VALUE = /^([^=]*=\s*)(-?)(\d+)((?:\.\d+)?(?:\/\d+)?)([\s\S]*)$/;
+  function steady(labels) {
+    var parts = labels.map(function(label) {
+      var m = STEADY_VALUE.exec(label);
+      // The number is in the mathematics where an odd number of "$" stand before it.
+      return m && m[1].split('$').length % 2 === 0 ? m : null;
+    });
+    if (!parts.length || parts.indexOf(null) >= 0) return labels.slice();
+    // What a stretch of a number is made of: how many of each kind of glyph, every digit one kind.
+    function kinds(text) {
+      var n = {};
+      text.replace(/\d/g, '0').split('').forEach(function(c) { n[c] = (n[c] || 0) + 1; });
+      return n;
+    }
+    function most(texts) {
+      var need = {};
+      texts.map(kinds).forEach(function(n) { for (var c in n) need[c] = Math.max(need[c] || 0, n[c]); });
+      return need;
+    }
+    function lacking(text, need) {
+      var has = kinds(text), pad = '';
+      ['.', '0', '/', '-'].forEach(function(c) {
+        for (var k = (need[c] || 0) - (has[c] || 0); k > 0; k--) pad += c === '-' ? '{-}' : c;
+      });
+      return pad && '\\hphantom{' + pad + '}';
+    }
+    var before = most(parts.map(function(m) { return m[2] + m[3]; }));
+    var after = most(parts.map(function(m) { return m[4]; }));
+    return parts.map(function(m) {
+      return m[1] + lacking(m[2] + m[3], before) + (m[2] && '{-}') + m[3] + m[4] + lacking(m[4], after) + m[5];
+    });
+  }
+
   /* What each cone of the scene is tinted: 1 for one left clear and 2 on for the fill classes in
      order. Every cone takes its piece's tint from `turn.tint`, until `s`, one of the view's
      `shades` or null for none, is shown: then the cones of its piece between the circles at its
@@ -1249,7 +1293,7 @@
     return (M.kind === 'cones' ? drawCones : drawSurfaces)(M, azimuth, elevation, quick, sizes);
   }
 
-  var api = { camera: camera, prepare: prepare, draw: draw, frame: frame, movieFrame: movieFrame, shade: shade, dragged: dragged, keyed: keyed, turned: turned,
+  var api = { camera: camera, prepare: prepare, draw: draw, frame: frame, movieFrame: movieFrame, steady: steady, shade: shade, dragged: dragged, keyed: keyed, turned: turned,
               fitting: fitting, hidden: hidden, isolines: isolines, labelBox: labelBox, hull: hull };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.MfsTurn = api;

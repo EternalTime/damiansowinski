@@ -5,6 +5,7 @@
 """
 
 import ast
+import collections
 import contextlib
 import copy
 import decimal
@@ -3219,6 +3220,134 @@ class StacksAndMovies(unittest.TestCase):
         self.assertIn("prefers-reduced-motion: reduce", player.group(0))
         self.assertIn("IntersectionObserver", player.group(0))
         self.assertRegex(page, r"\.mfs-movie-play:active \{ color: var\(--pink-light\); border-color: var\(--pink-light\); \}")
+
+
+class SteadyMovieLabels(unittest.TestCase):
+    """Nothing in the label that names a movie's frame moves as the movie plays, as the captain
+    asked on 1 October 2026: until then the label was centred on its place, so the whole of it
+    shifted whenever its number gained or lost a digit. Every movie the files hold is held to
+    it, found by its `movie` and by the figure's label marked `frame`, and none by name: the
+    label's place is the same at every frame, its names start at one left edge in a box as wide
+    as the widest, and MfsTurn.steady() gives every frame's number one width with its point at
+    one place, counting on nothing of a font but that its digits are of one width."""
+
+    PADDED = re.compile(r"^(?P<lead>[^=]*=\s*)(?:\\hphantom\{(?P<front>(?:[0./]|\{-\})+)\})?(?P<sign>\{-\})?(?P<whole>\d+)"
+                        r"(?P<rest>(?:\.\d+)?(?:/\d+)?)(?:\\hphantom\{(?P<back>(?:[0./]|\{-\})+)\})?(?P<tail>.*)$", re.S)
+
+    def setUp(self):
+        self.movies = {(name, v["id"]): v for name, data in embedding_files().items()
+                       for v in data["views"] if "movie" in v}
+        self.assertTrue(self.movies)
+
+    def steady(self, lists):
+        """MfsTurn.steady() of each list of labels, run in Node as the page runs it."""
+        if shutil.which("node") is None:
+            self.skipTest("Node is not installed, so the page's labels cannot be made")
+        script = ("const t = require(process.argv[1]); const lists = JSON.parse(require('fs').readFileSync(0));"
+                  "process.stdout.write(JSON.stringify(lists.map(t.steady)));")
+        run = subprocess.run(["node", "-e", script, str(build.ROOT / "MFS" / "assets" / "turn.js")],
+                             input=json.dumps(lists), capture_output=True, text=True, timeout=120)
+        self.assertEqual(run.returncode, 0, run.stderr[-2000:])
+        return json.loads(run.stdout)
+
+    @staticmethod
+    def glyphs(*texts):
+        """What a stretch of a number is made of, phantom or shown: how many of each kind of
+        glyph, every digit one kind, which is its width in any font of digits of one width."""
+        return collections.Counter(re.sub(r"\d", "0", "".join(t or "" for t in texts).replace("{-}", "-")))
+
+    def test_every_frames_number_fills_one_box_with_its_point_at_one_place(self):
+        labels = {key: [f["label"] for f in v["movie"]["frames"]] for key, v in self.movies.items()}
+        for (key, plain), made in zip(labels.items(), self.steady(list(labels.values()))):
+            self.assertEqual(len(made), len(plain), key)
+            boxes, shown = set(), [collections.Counter(), collections.Counter()]
+            for was, now in zip(plain, made):
+                where = f"{key}: {was!r} as {now!r}"
+                # The whole label is one formula, so the phantoms are set in its mathematics.
+                self.assertRegex(was, r"^\$[^$]+\$$", where)
+                # Nothing that shows is changed.
+                self.assertEqual(re.sub(r"\\hphantom\{(?:[0./]|\{-\})+\}", "", now).replace("{-}", "-"), was, where)
+                m = self.PADDED.match(now)
+                self.assertIsNotNone(m, where)
+                front = self.glyphs(m["front"], m["sign"], m["whole"])
+                back = self.glyphs(m["rest"], m["back"])
+                self.assertLessEqual(set(front), {"-", "0"}, where)
+                self.assertLessEqual(set(back), {".", "/", "0"}, where)
+                boxes.add((m["lead"], tuple(sorted(front.items())), tuple(sorted(back.items()))))
+                shown[0] |= self.glyphs(m["sign"], m["whole"])
+                shown[1] |= self.glyphs(m["rest"])
+            # What stands before the number, the room before its point and the room from its
+            # point on are the same in every frame.
+            self.assertEqual(len(boxes), 1, f"{key}: the number's box changes from frame to frame, {sorted(boxes)}")
+            # No room is kept that no frame fills: of each kind of glyph, the most any frame shows.
+            [(_, front, back)] = boxes
+            self.assertEqual([dict(front), dict(back)], [dict(c) for c in shown], key)
+
+    def test_a_number_is_padded_with_what_it_lacks_and_nothing_else_is_touched(self):
+        cases = [
+            # A sign and a second digit: each frame gets the one it lacks.
+            (["$cu + r = -2\\,m_0$", "$cu + r = 0.5\\,m_0$", "$cu + r = 24\\,m_0$"],
+             ["$cu + r = \\hphantom{0}{-}2\\hphantom{.0}\\,m_0$", "$cu + r = \\hphantom{0{-}}0.5\\,m_0$",
+              "$cu + r = \\hphantom{{-}}24\\hphantom{.0}\\,m_0$"]),
+            # Decimals of different lengths, and what follows only the last frame's number.
+            (["$\\Delta\\phi = 0°$", "$\\Delta\\phi = 36° = \\delta$"],
+             ["$\\Delta\\phi = \\hphantom{0}0°$", "$\\Delta\\phi = 36° = \\delta$"]),
+            (["$t = 1/4$", "$t = 0.35$", "$t = 2$"],
+             ["$t = 1/4\\hphantom{.0}$", "$t = 0.35\\hphantom{/}$", "$t = 2\\hphantom{.00/}$"]),
+            # Labels already of one shape are left as they are, a minus braced.
+            (["$kct = -1.00$", "$kct = 0.00$"], ["$kct = {-}1.00$", "$kct = \\hphantom{{-}}0.00$"]),
+            (["$\\eta = 0.00$", "$\\eta = 1.20$"], ["$\\eta = 0.00$", "$\\eta = 1.20$"]),
+            # A digit in what stands before the "=" or after the number is no part of the value.
+            (["$r_2 = 9\\,m_0$", "$r_2 = 10\\,m_0$"], ["$r_2 = \\hphantom{0}9\\,m_0$", "$r_2 = 10\\,m_0$"]),
+            # A label with no number after an "=", or with its number outside the mathematics,
+            # where a phantom would be printed as it is written, leaves every label as it came.
+            (["$t = 1$", "the end"], ["$t = 1$", "the end"]),
+            (["t = 1", "t = 10"], ["t = 1", "t = 10"]),
+            (["$t$ = 1", "$t$ = 10"], ["$t$ = 1", "$t$ = 10"]),
+            ([], []),
+        ]
+        self.assertEqual(self.steady([plain for plain, _ in cases]), [made for _, made in cases])
+
+    def test_the_label_stands_at_one_place_whatever_the_frame(self):
+        # One label names the frame, and the figure places it, never a frame.
+        for key, view in self.movies.items():
+            named = [L for L in view["figure"]["labels"] if L.get("frame")]
+            self.assertEqual(len(named), 1, key)
+            self.assertEqual(named[0]["text"], view["movie"]["frames"][0]["label"], key)
+            for frame in view["movie"]["frames"]:
+                self.assertFalse({"at", "anchor", "dx", "dy", "labels"} & set(frame), key)
+        # Turned, the page draws each frame's labels again: at the figure's own camera and four
+        # others, every frame puts the label where the first does.
+        checked = {(v["metric"], v["view"]): v["movie"] for v in turn_check(self)["views"] if "movie" in v}
+        self.assertEqual(set(checked), set(self.movies))
+        for key, movie in checked.items():
+            self.assertEqual(movie["named"], 1, key)
+            self.assertEqual(movie["label"], 0, f"{key}: the label moves {movie['label']:.2e} between frames")
+
+    def test_the_page_sets_every_frames_name_from_one_left_edge_in_one_box(self):
+        page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
+        figure = re.search(r"function emFigure\([\s\S]*?\n      \}\n", page)
+        self.assertIsNotNone(figure, "no emFigure()")
+        self.assertIn("MfsTurn.steady(names)", figure.group(0))
+        self.assertIn("'<span class=\"mfs-frame-labels\">'", figure.group(0))
+        # Every name in one cell from its left edge, and a name not shown keeps its room, so the
+        # label the place pins is as wide at every frame.
+        rules = dict(re.findall(r"#mfs-content-panel (\.mfs-frame-label[^ {]*) \{([^}]*)\}", page))
+        self.assertEqual(set(rules), {".mfs-frame-labels", ".mfs-frame-label", ".mfs-frame-label[hidden]"})
+        for want in ("display: grid;", "justify-items: start;", "font-variant-numeric: tabular-nums;"):
+            self.assertIn(want, rules[".mfs-frame-labels"])
+        self.assertIn("grid-area: 1 / 1;", rules[".mfs-frame-label"])
+        self.assertIn("visibility: hidden;", rules[".mfs-frame-label[hidden]"])
+        self.assertNotIn("none", rules[".mfs-frame-label[hidden]"])
+        # Playing changes which name shows and nothing else of the label.
+        self.assertEqual(re.findall(r"names\.forEach\(function\(el, k\) \{([^}]*)\}", page), [" el.hidden = k !== shown; "])
+
+    def test_the_value_under_the_pointer_keeps_its_room(self):
+        page = (build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8")
+        self.assertIn(".padStart(Math.max(lo.toFixed(3).length, hi.toFixed(3).length))", page)
+        self.assertEqual(len(re.findall(r"r[xy]\.textContent = read\(", page)), 2)
+        self.assertEqual(len(re.findall(r"\br[xy]\.textContent = ", page)), 2)
+        self.assertRegex(page, r"\.mfs-nr-readout \.nr-ry \{ white-space: pre; font-variant-numeric: tabular-nums; \}")
 
 
 class TimeSlicedViewsAreMovies(unittest.TestCase):
