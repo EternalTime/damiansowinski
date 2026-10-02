@@ -729,13 +729,13 @@ class Reduced:
 
 class Chart:
     def __init__(self, coords_tex, parameters, chart_line_element, printer_options=None, pretty=None, time=None,
-                 bracketed=None, reduce=None, order=None):
+                 bracketed=None, reduce=None, order=None, held=()):
         # Time is already the chart coordinate here, so no coordinate is scaled by c. A chart
         # whose components depend on the time names it as `time`: its symbol then stands for
         # x^0 = ct in the geometry, and every value is printed and read back with it written
         # as c times the time the file prints, as Milne's comoving c^2t^2 is.
         self.coords_tex = coords_tex
-        self.reader = vm.Reader(coords_tex, parameters, (), kept=order)
+        self.reader = vm.Reader(coords_tex, parameters, (), kept=order, held=held)
         self.symbols = [self.reader.symbol[name] for name in coords_tex]
         self.bare = {self.reader.symbol[time]: self.reader.c * self.reader.symbol[time]} if time else {}
         g = vm.metric_from_line_element(self.reader, chart_line_element, coords_tex)

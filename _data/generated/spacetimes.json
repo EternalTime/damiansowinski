@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 93,
+  "count": 94,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -5524,6 +5524,11 @@
           "id": "einstein_static",
           "kind": "programme",
           "text": "Einstein's first static ball of matter, from 1917: a whole three sphere of uniform density, held still by the cosmological constant. Florides's cluster is a cap of such a sphere, held still by the motion of its particles [einstein1917, bohmerlobo2008]."
+        },
+        {
+          "id": "tolman_vii",
+          "kind": "family",
+          "text": "A static star of the same year whose fluid presses equally in every direction, with a density that falls as the square of the radius. Richard Tolman's paper was received on 3 January 1939, four months before Einstein's [tolman1939, einstein1939]."
         }
       ],
       "references": [
@@ -5539,7 +5544,8 @@
         "bohmerlobo2008",
         "bohmerharko2007",
         "lake2006",
-        "einstein1917"
+        "einstein1917",
+        "tolman1939"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_cluster.json",
@@ -20751,6 +20757,11 @@
           "id": "bonnor_vaidya",
           "kind": "generalisation",
           "text": "Schwarzschild's metric with a charge added and both the mass and the charge carried off by light. With no charge and a constant mass Bonnor and Vaidya's metric is Schwarzschild's in Eddington-Finkelstein coordinates."
+        },
+        {
+          "id": "tolman_vii",
+          "kind": "composite",
+          "text": "A star whose density falls as $1 - r^2/R^2$ to an empty surface, with Schwarzschild's vacuum outside it. Richard Tolman found the inside in 1939 [tolman1939]."
         }
       ],
       "references": [
@@ -20825,7 +20836,8 @@
         "chamblin2000",
         "witten1991",
         "mazur2004",
-        "visser2004"
+        "visser2004",
+        "tolman1939"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -21071,6 +21083,11 @@
           "id": "einstein_cluster",
           "kind": "family",
           "text": "A ball of the same uniform density and the same space inside, held up by the sideways motion of its particles with no pressure along the radius. Petros Florides found it in 1974 and called it \"a new interior Schwarzschild solution\" [florides1974, bohmerlobo2008]."
+        },
+        {
+          "id": "tolman_vii",
+          "kind": "generalisation",
+          "text": "Tolman's seventh solution lets the density fall as the square of the radius, $\\rho = \\rho_c(1 - \\mu r^2/R^2)$. At $\\mu = 0$ it is Schwarzschild's uniform star, and at $\\mu = 1$ the density reaches zero at the surface [tolman1939, raghoonundun2015]."
         }
       ],
       "references": [
@@ -21088,7 +21105,8 @@
         "mazur2015",
         "einstein1917",
         "florides1974",
-        "bohmerlobo2008"
+        "bohmerlobo2008",
+        "raghoonundun2015"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/interior_schwarzschild.json",
@@ -24632,6 +24650,222 @@
       ]
     },
     {
+      "id": "tolman_vii",
+      "name": "Tolman's Fluid Sphere, Solution VII",
+      "short_name": "Tolman VII",
+      "description": "A static star of perfect fluid whose density falls as the square of the radius, $\\rho = \\rho_c(1 - r^2/R^2)$ where the surface is empty. It is the seventh of the eight solutions Richard Tolman wrote down in 1939, and the density inside a neutron star follows it closely.",
+      "tags": [
+        "perfect fluid",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "stellar interior",
+        "neutron star",
+        "self-bound star",
+        "compactness",
+        "equation of state",
+        "mass",
+        "matched solution",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "tov",
+          "kind": "generalisation",
+          "text": "The equations of equilibrium for a star with any equation of state. Tolman's seventh solution satisfies them with $m = \\beta r^3(5R^2 - 3r^2)/(2R^4)$, and Oppenheimer and Volkoff's paper follows his in the same issue [tolman1939, oppenheimer1939]."
+        },
+        {
+          "id": "interior_schwarzschild",
+          "kind": "special_case",
+          "text": "The star of uniform density, solution III on Tolman's list. His density $3/R^2 - 20r^2/A^4$ is uniform as $A \\to \\infty$, where $g^{rr}$ is Schwarzschild's $1 - r^2/R^2$ [tolman1939, raghoonundun2015]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "The vacuum outside the star. At the surface the pressure vanishes and $g_{tt} = -(1 - 2\\beta)$, so the metric continues as Schwarzschild's with $r_s = 2\\beta R$ [lattimer2001]."
+        },
+        {
+          "id": "einstein_cluster",
+          "kind": "family",
+          "text": "The static star of the same year with no pressure along its radius, held up by the circular orbits of its particles. Tolman's fluid presses equally in every direction, and his paper was received on 3 January 1939, Einstein's on 10 May [tolman1939, einstein1939]."
+        },
+        {
+          "id": "tolman_bondi",
+          "kind": "programme",
+          "text": "Richard Tolman's other spacetime, dust expanding or collapsing in spherical symmetry with a density that varies with radius, from 1934 [tolman1934]."
+        }
+      ],
+      "references": [
+        "tolman1939",
+        "oppenheimer1939",
+        "raghoonundun2015",
+        "delgaty1998",
+        "lattimer2001",
+        "neary2001",
+        "jiang2019",
+        "einstein1939",
+        "tolman1934"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tolman_vii.json",
+      "charts": [
+        {
+          "id": "spherical",
+          "name": "Lattimer-Prakash",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, R]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "R",
+              "description": "Radius of the star, where the density and the pressure both vanish and Schwarzschild's vacuum begins"
+            },
+            {
+              "symbol": "r_s",
+              "description": "Schwarzschild radius of the star, $r_s = 2GM/c^2$ with $M$ its mass; the central pressure is finite for $r_s < 0.7724\\,R$"
+            },
+            {
+              "symbol": "\\beta = \\dfrac{r_s}{2R}",
+              "description": "Compactness of the star, $\\beta = GM/(Rc^2)$, a pure number; the central density is $\\rho_c = 15\\beta c^2/(8\\pi GR^2)$ and the density $\\rho = \\rho_c(1 - r^2/R^2)$"
+            },
+            {
+              "symbol": "Z = 1 - \\dfrac{\\beta r^2\\left(5R^2 - 3r^2\\right)}{R^4}",
+              "description": "The component $g^{rr} = 1 - 2Gm(r)/(c^2r)$, with $m(r)$ the mass inside radius $r$; at the surface it is $1 - 2\\beta$"
+            },
+            {
+              "symbol": "\\psi = \\arctan\\left(\\sqrt{\\dfrac{\\beta}{3\\left(1 - 2\\beta\\right)}}\\right) + \\dfrac{1}{2}\\ln\\left(\\dfrac{1 + 2\\sqrt{3\\left(1 - 2\\beta\\right)/\\beta}}{6r^2/R^2 - 5 + 2\\sqrt{3Z/\\beta}}\\right)",
+              "description": "The phase in $g_{tt}$, an angle, with $\\partial_r\\psi = -(r/R^2)\\sqrt{3\\beta/Z}$; it falls from the centre to $\\arctan\\sqrt{\\beta/(3(1 - 2\\beta))}$ at the surface, and the pressure is $p = (c^4/4\\pi GR^2)\\left(\\sqrt{3\\beta Z}\\tan\\psi - \\beta(5 - 3r^2/R^2)/2\\right)$"
+            }
+          ],
+          "convention": "We use Lattimer and Prakash's form of the solution in coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius. The star has radius $R$ and mass $M$, with $r_s = 2GM/c^2$ and compactness $\\beta = GM/(Rc^2)$. We write $Z$ for $g^{rr}$ and $\\psi$ for the phase they call $\\phi$, which is the azimuth here. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{5\\beta}{3}\\right)\\cos^2\\psi\\,c^2dt^2 + \\dfrac{dr^2}{Z} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{5\\beta}{3}\\right)\\cos^2\\psi"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{Z}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6\\beta\\left(5R^2 - 4r^2\\right) - 6R^2\\,\\sqrt{3\\beta Z}\\tan\\psi}{R^4}",
+          "kretschmann": "K = \\dfrac{12\\beta\\left(3R^4\\,Z\\,\\tan^2\\psi - 2R^2\\,r^2\\,\\sqrt{3\\beta Z}\\tan\\psi + 5\\beta\\left(5R^4 - 10R^2\\,r^2 + 6r^4\\right)\\right)}{R^8}"
+        },
+        {
+          "id": "tolman",
+          "name": "Tolman's Constants",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, r_b]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "R",
+              "description": "Tolman's constant $R$, a length, which sets the central density, $8\\pi G\\rho_c/c^2 = 3/R^2$"
+            },
+            {
+              "symbol": "A",
+              "description": "Tolman's constant $A$, a length, which sets how fast the density falls, $8\\pi G\\rho/c^2 = 3/R^2 - 20r^2/A^4$; as $A \\to \\infty$ the density is uniform"
+            },
+            {
+              "symbol": "B",
+              "description": "Tolman's constant $B$, a pure number that scales $t$; the vacuum outside fixes it by $B^2\\sin^2\\psi = Z$ at the surface"
+            },
+            {
+              "symbol": "C",
+              "description": "Tolman's constant $C$, a pure number that shifts the phase $\\psi$; it fixes the radius $r_b$ where the pressure vanishes"
+            },
+            {
+              "symbol": "Z = 1 - \\dfrac{r^2}{R^2} + \\dfrac{4r^4}{A^4}",
+              "description": "The component $g^{rr}$, Tolman's $e^{-\\lambda}$, the form he assumed"
+            },
+            {
+              "symbol": "\\psi = \\dfrac{1}{2}\\ln\\left(\\dfrac{1}{C}\\left(\\sqrt{Z} + \\dfrac{2r^2}{A^2} - \\dfrac{A^2}{4R^2}\\right)\\right)",
+              "description": "Half the logarithm in Tolman's $g_{tt}$, with $\\partial_r\\psi = 2r/(A^2\\sqrt{Z})$; the pressure is $8\\pi Gp/c^4 = -1/R^2 + 4r^2/A^4 + (4\\sqrt{Z}/A^2)\\cot\\psi$"
+            }
+          ],
+          "convention": "We use Tolman's own form of the solution in coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius. The constants $R$, $A$, $B$, and $C$ are his, so $R$ is the length in the central density, $8\\pi G\\rho_c/c^2 = 3/R^2$, and the surface of the star is at $r = r_b$, where the pressure vanishes. We write $Z$ for $g^{rr}$ and $\\psi$ for half the logarithm in his $g_{tt}$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -B^2\\sin^2\\psi\\,c^2dt^2 + \\dfrac{dr^2}{Z} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-B^2\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{Z}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\left(3A^4 - 16R^2\\,r^2\\right) - 12A^2\\,R^2\\,\\sqrt{Z}\\cot\\psi}{A^4\\,R^2}",
+          "kretschmann": "K = \\dfrac{48A^4\\,R^4\\,Z\\cot^2\\psi - 64A^2\\,R^4\\,r^2\\,\\sqrt{Z}\\cot\\psi + 4\\left(3A^8 - 40A^4\\,R^2\\,r^2 + 160R^4\\,r^4\\right)}{A^8\\,R^4}"
+        }
+      ]
+    },
+    {
       "id": "tolman_bondi",
       "name": "Tolman-Bondi Inhomogeneous Dust Universe",
       "short_name": "Tolman-Bondi",
@@ -24683,6 +24917,11 @@
           "id": "vaidya",
           "kind": "limit",
           "text": "Dust made of light. José Lemos showed in 1992 that Vaidya's metric is the limit of Tolman-Bondi in which the dust moves at the speed of light, and Charles Hellaby found in 1994 that only dust that is hollow at the centre has that limit [lemos1992, hellaby1994]."
+        },
+        {
+          "id": "tolman_vii",
+          "kind": "programme",
+          "text": "Richard Tolman's static spheres of fluid, from 1939. He found eight in closed form, and the density inside a neutron star follows the seventh closely [tolman1939, lattimer2001]."
         }
       ],
       "references": [
@@ -24710,7 +24949,8 @@
         "tolman1939",
         "oppenheimer1939",
         "lemos1992",
-        "hellaby1994"
+        "hellaby1994",
+        "lattimer2001"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tolman_bondi.json",
@@ -24836,6 +25076,11 @@
           "id": "einstein_cluster",
           "kind": "special_case",
           "text": "The star with no pressure along its radius, made of particles circling the centre in every direction. Einstein built it in 1939, the year of Tolman's and of Oppenheimer and Volkoff's papers, and its redshift function follows from its mass, $\\partial_r\\Phi = m/(r(r - 2m))$ [einstein1939, lake2006]."
+        },
+        {
+          "id": "tolman_vii",
+          "kind": "special_case",
+          "text": "Tolman's seventh solution, a star whose density falls as $1 - r^2/R^2$ from the centre to an empty surface. Its $m(r)$ is a polynomial and its redshift function a cosine of a logarithm, and the density inside a neutron star follows it closely [tolman1939, lattimer2001]."
         }
       ],
       "references": [
@@ -24868,7 +25113,8 @@
         "santos1985",
         "tolman1934",
         "einstein1939",
-        "lake2006"
+        "lake2006",
+        "lattimer2001"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tov.json",

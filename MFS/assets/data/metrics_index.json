@@ -579,7 +579,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e8de1fe647580ba4",
+    "version": "9dbe5e9a628db0a1",
     "diagrams": "1358f347fde7be67",
     "conformal": "7807b351c1311ade",
     "embedding": "ab81073436048cb9"
@@ -2118,7 +2118,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5a7184fd7ab0a484",
+    "version": "076ca1ed0f6c1470",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -2141,7 +2141,7 @@
       "idealized model",
       "conformally flat"
     ],
-    "version": "161bec9a6e15d4ca",
+    "version": "80523d6b69cae993",
     "diagrams": "2c3a4f257a42be77",
     "conformal": "576471fc7fb8c666",
     "embedding": "33dc4c3913188978"
@@ -2472,6 +2472,32 @@
     "embedding": "b79fedbd55cef742"
   },
   {
+    "id": "tolman_vii",
+    "name": "Tolman VII",
+    "tags": [
+      "perfect fluid",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "stellar interior",
+      "neutron star",
+      "self-bound star",
+      "compactness",
+      "equation of state",
+      "mass",
+      "matched solution",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "0c8ffce85193ca75",
+    "diagrams": "54dd0e9e7887701d",
+    "conformal": "0f87c7ddfbce658d",
+    "embedding": "80461874aabb5765"
+  },
+  {
     "id": "tolman_bondi",
     "name": "Tolman-Bondi",
     "tags": [
@@ -2489,7 +2515,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "93c6acc692d16f6a",
+    "version": "c0c08d1ef4cb8505",
     "diagrams": "b997809f786afa14",
     "embedding": "aefa04627c7f6154"
   },
@@ -2513,7 +2539,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "fb6dae69f7c9b27a",
+    "version": "ba816c96290eafd9",
     "diagrams": "b8a9287744afbad1",
     "conformal": "f4c269030698315c",
     "embedding": "c64f1f900fa70a89"

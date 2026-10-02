@@ -56,6 +56,11 @@
       "id": "einstein_static",
       "kind": "programme",
       "text": "Einstein's first static ball of matter, from 1917: a whole three sphere of uniform density, held still by the cosmological constant. Florides's cluster is a cap of such a sphere, held still by the motion of its particles [einstein1917, bohmerlobo2008]."
+    },
+    {
+      "id": "tolman_vii",
+      "kind": "family",
+      "text": "A static star of the same year whose fluid presses equally in every direction, with a density that falls as the square of the radius. Richard Tolman's paper was received on 3 January 1939, four months before Einstein's [tolman1939, einstein1939]."
     }
   ],
   "references": [
@@ -71,7 +76,8 @@
     "bohmerlobo2008",
     "bohmerharko2007",
     "lake2006",
-    "einstein1917"
+    "einstein1917",
+    "tolman1939"
   ],
   "coordinates": [
     {

@@ -295,6 +295,13 @@ LB_FAMILIES = ("against the beam", "with the beam")
 LB_BOX = (-8, 8, -2, 14)
 LB_NULL_TO_TZ = ((-1 / math.sqrt(2), 1 / math.sqrt(2)), (1 / math.sqrt(2), 1 / math.sqrt(2)))  # z and ct of Bonnor's u and v
 
+# Tolman's solution VII for a star of radius R = 2 r_s, in units of r_s: Lattimer and Prakash's
+# parameters, and Tolman's constants for the same star.
+TOLMAN_VII_STAR = {"r_s": 1, "R": 2}
+TOLMAN_VII_CONSTANTS = {"R": "4/sqrt(5)", "A": "4/3**(1/4)", "B": "sqrt(7/12)",
+                        "C": "sqrt(3)/2*(1/6 + sqrt(6)/3)*exp(2*atan(1/sqrt(6)) - pi)"}
+
+
 @dataclass
 class Diagram:
     """One view of one coordinate system, and every choice its drawing makes."""
@@ -1724,6 +1731,20 @@ DIAGRAMS = [
             areal=True),
     Diagram("interior_schwarzschild", "spherical", "through", "through the centre", ("t", "r"),
             (0, 1.5, -1.5, 1.5), "$x/r_s$", "$t/r_s$", {"r_s": 1, "R": "3/2"}, EQUATOR,
+            mirror=True, families=SIDEWAYS, cones=(4, 8), areal=True),
+    # Tolman's solution VII, the star whose density reaches zero at its surface, at R = 2 r_s, which
+    # is beta = 1/4: in Lattimer and Prakash's form, and in Tolman's constants for the same star,
+    # R^2 -> R^2/(5 beta), A^4 = 4R^4/(3 beta), B^2 = 1 - 5 beta/3 and the C that makes his phase
+    # pi/2 less theirs, which print_charts.tolman_vii_check holds the two charts to.
+    Diagram("tolman_vii", "spherical", "radial", "$t$ and $r$", ("t", "r"),
+            (0, 2, -1, 1), "$r/r_s$", "$ct/r_s$", TOLMAN_VII_STAR, EQUATOR, areal=True),
+    Diagram("tolman_vii", "spherical", "through", "through the centre", ("t", "r"),
+            (0, 2, -2, 2), "$x/r_s$", "$ct/r_s$", TOLMAN_VII_STAR, EQUATOR,
+            mirror=True, families=SIDEWAYS, cones=(4, 8), areal=True),
+    Diagram("tolman_vii", "tolman", "radial", "$t$ and $r$", ("t", "r"),
+            (0, 2, -1, 1), "$r/r_s$", "$ct/r_s$", TOLMAN_VII_CONSTANTS, EQUATOR, areal=True),
+    Diagram("tolman_vii", "tolman", "through", "through the centre", ("t", "r"),
+            (0, 2, -2, 2), "$x/r_s$", "$ct/r_s$", TOLMAN_VII_CONSTANTS, EQUATOR,
             mirror=True, families=SIDEWAYS, cones=(4, 8), areal=True),
     Diagram("kerr", "boyer_lindquist", "radial", "$t$ and $r$ on the axis", ("t", "r"), (0, 4, -2, 2),
             "$r/(GM/c^2)$", "$ct/(GM/c^2)$", {"G": 1, "M": 1, "a": "9/10"},
@@ -4479,6 +4500,30 @@ CAPTIONS = {
         "The line through the centre of the star in the plane $\\theta = \\pi/2$: $x = r$ "
         "on the right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$. Rays cross the "
         "centre smoothly, and the cones are narrowest there.",
+    ],
+    ("tolman_vii", "spherical", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole domain of the chart "
+        "($r \\in [0, R]$), for a star with $R = 2\\,r_s$ ($\\beta = 1/4$). The cones are narrowest at the "
+        "centre, where $|g_{tt}| = 0.199$ and the redshift is greatest, and they stay open. They would close at "
+        "the centre at $\\beta \\approx 0.3862$, where $\\psi$ reaches $\\pi/2$ there and the central pressure "
+        "is infinite. Beyond $R$ the spacetime is Schwarzschild's exterior, and the rays go on into it as they do "
+        "in Schwarzschild's own chart.",
+    ],
+    ("tolman_vii", "spherical", "through"): [
+        "The line through the centre of the star in the plane $\\theta = \\pi/2$ ($R = 2\\,r_s$): $x = r$ "
+        "on the right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$. Rays cross the "
+        "centre smoothly, and the cones are narrowest there.",
+    ],
+    ("tolman_vii", "tolman", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) for the same star in Tolman's constants "
+        "($R^2 = 16r_s^2/5$, $A^4 = 256r_s^4/3$, $B^2 = 7/12$, $C \\approx 0.0782$), with its surface at "
+        "$r_b = 2\\,r_s$. The phase $\\psi$ here is $\\pi/2$ less Lattimer and Prakash's, so $B^2\\sin^2\\psi$ "
+        "is their $(1 - 5\\beta/3)\\cos^2\\psi$ and the rays are the same curves.",
+    ],
+    ("tolman_vii", "tolman", "through"): [
+        "The line through the centre of the same star in Tolman's constants: $x = r$ on the right is "
+        "$\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$. Rays cross the centre smoothly, and the cones "
+        "are narrowest there.",
     ],
     ("kerr", "boyer_lindquist", "radial"): [
         "The plane of $t$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $a = 0.9\\,GM/c^2$. The curves "

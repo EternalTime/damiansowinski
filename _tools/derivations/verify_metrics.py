@@ -987,6 +987,16 @@ DIMENSIONS = {
     ("taub_nut", "spherical"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "l": "L",
     },
+    # Tolman's solution VII. Lattimer and Prakash's compactness beta = GM/(Rc^2) is a pure number,
+    # and so are Z = g^rr and the phase psi; Tolman's R and A are lengths and his B and C numbers.
+    ("tolman_vii", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "R": "L", "r_s": "L", "\\beta": "1", "Z": "1",
+        "\\psi": "1",
+    },
+    ("tolman_vii", "tolman"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "R": "L", "A": "L", "B": "1", "C": "1", "Z": "1",
+        "\\psi": "1",
+    },
     # The mass function is folded into a length, m = GM(r)/c^2, as Oppenheimer and Volkoff
     # folded it into their u, so 1 - 2m/r is dimensionless and the redshift function, sitting
     # in an exponential, is dimensionless too.
@@ -1164,6 +1174,15 @@ ORDERS = {
     ("hartle_thorne", "lense_thirring"): ({"m": 1}, 1),
 }
 
+# The defined names a system holds as functions of the coordinates while its tensors are built.
+# See "Adding a spacetime, as far as the checker is concerned" in _tools/README.md.
+HELD = {
+    # Tolman's phase, half a logarithm of radicals, which stands only inside a cosine or a sine
+    # and whose derivative along r is algebraic.
+    ("tolman_vii", "spherical"): ("psi",),
+    ("tolman_vii", "tolman"): ("psi",),
+}
+
 GREEK = [
     "theta", "phi", "eta", "omega", "Omega", "ell", "pi", "lambda", "mu", "nu",
     "rho", "sigma", "tau", "chi", "psi", "alpha", "beta", "gamma", "delta",
@@ -1180,6 +1199,9 @@ FUNCTIONS = {
     "sec": sp.sec, "csc": sp.csc, "sinh": sp.sinh, "cosh": sp.cosh,
     "tanh": sp.tanh, "coth": sp.coth, "exp": sp.exp, "log": sp.log,
     "ln": sp.log, "sqrt": sp.sqrt, "Abs": sp.Abs, "sign": sp.sign,
+    # \\arctan, under a spelling that ends in no other function's name, so that the reader does
+    # not part a tan from it.
+    "ATAN": sp.atan,
 }
 
 
@@ -1814,7 +1836,7 @@ class Reader:
     typo in a published value becomes an error here rather than a silent new symbol.
     """
 
-    def __init__(self, coords, parameters, time_coords=frozenset(), relations=None, kept=None):
+    def __init__(self, coords, parameters, time_coords=frozenset(), relations=None, kept=None, held=()):
         self.coords = list(coords)
         self.time_coords = set(time_coords)
         self.symbol = {}
@@ -1870,10 +1892,15 @@ class Reader:
         # A defined name whose definition holds a function of the coordinates, as Szekeres's E
         # holds S(r), P(r) and Q(r), is held as a function of the coordinates it varies with
         # while the tensors are built, and written out by surface() where two values are compared.
+        # So is a name the system lists in HELD, as Tolman's phase is: a logarithm of radicals
+        # that stands only inside a cosine, and whose derivative is algebraic.
         self.held = {}
+        stray = [name for name in held if name not in self.defined]
+        if stray:
+            raise LatexError(f"{stray} are held, and the system defines no such names")
         for plain, definition in self.defined.items():
             value = self.defined[plain] = self(definition)
-            if value.atoms(sp.core.function.AppliedUndef):
+            if value.atoms(sp.core.function.AppliedUndef) or plain in held:
                 names = [name for name in self.coords if value.has(self.symbol[name])]
                 function = sp.Function(plain, real=True)(*(self.symbol[name] for name in names))
                 self.functions[plain] = (function, names)
@@ -2068,6 +2095,7 @@ class Reader:
         for command in sorted(GREEK + TRIG, key=len, reverse=True):
             text = text.replace("\\" + command, " " + command + " ")
         text = text.replace("\\exp", " exp ").replace("\\ln", " log ").replace("\\log", " log ")
+        text = text.replace("\\arctan", " ATAN ")
         text = expand_superscript_braces(text)
         text = text.replace("^", "**")
         # A trig call written bare, as \sin^2\theta or \cot\theta rather than sin(theta).
@@ -2755,7 +2783,8 @@ def check_system(report, metric_id, entry, seconds, dimensions_only=False):
     parameters = [p["symbol"] for p in entry.get("parameters", [])]
     relations = PARAMETER_RELATIONS.get((metric_id, entry["id"]), {})
     try:
-        reader = Reader(coords, parameters, declaration, relations, ORDERS.get((metric_id, entry["id"])))
+        reader = Reader(coords, parameters, declaration, relations, ORDERS.get((metric_id, entry["id"])),
+                        HELD.get((metric_id, entry["id"]), ()))
     except LatexError as error:
         report.skip(where, f"parameters unreadable: {error}")
         return

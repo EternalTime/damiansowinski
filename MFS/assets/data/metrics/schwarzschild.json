@@ -258,6 +258,11 @@
       "id": "bonnor_vaidya",
       "kind": "generalisation",
       "text": "Schwarzschild's metric with a charge added and both the mass and the charge carried off by light. With no charge and a constant mass Bonnor and Vaidya's metric is Schwarzschild's in Eddington-Finkelstein coordinates."
+    },
+    {
+      "id": "tolman_vii",
+      "kind": "composite",
+      "text": "A star whose density falls as $1 - r^2/R^2$ to an empty surface, with Schwarzschild's vacuum outside it. Richard Tolman found the inside in 1939 [tolman1939]."
     }
   ],
   "references": [
@@ -332,7 +337,8 @@
     "chamblin2000",
     "witten1991",
     "mazur2004",
-    "visser2004"
+    "visser2004",
+    "tolman1939"
   ],
   "coordinates": [
     {

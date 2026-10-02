@@ -58,6 +58,11 @@
       "id": "einstein_cluster",
       "kind": "special_case",
       "text": "The star with no pressure along its radius, made of particles circling the centre in every direction. Einstein built it in 1939, the year of Tolman's and of Oppenheimer and Volkoff's papers, and its redshift function follows from its mass, $\\partial_r\\Phi = m/(r(r - 2m))$ [einstein1939, lake2006]."
+    },
+    {
+      "id": "tolman_vii",
+      "kind": "special_case",
+      "text": "Tolman's seventh solution, a star whose density falls as $1 - r^2/R^2$ from the centre to an empty surface. Its $m(r)$ is a polynomial and its redshift function a cosine of a logarithm, and the density inside a neutron star follows it closely [tolman1939, lattimer2001]."
     }
   ],
   "references": [
@@ -90,7 +95,8 @@
     "santos1985",
     "tolman1934",
     "einstein1939",
-    "lake2006"
+    "lake2006",
+    "lattimer2001"
   ],
   "coordinates": [
     {
