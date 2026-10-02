@@ -13,7 +13,7 @@ einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluz
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis, erez_rosen,
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
 born_infeld_charge, penrose_impulsive_wave, exponential_metric, petrov_homogeneous, rp3_geon,
-kopczynski_trautman, brill_waves, ab_metrics and datt_ruban_t_models, and Godel's cylindrical chart.
+kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models and eih_many_bodies, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -9038,6 +9038,196 @@ def ppn_arguments(system):
 
 
 CHARTS["ppn_metric"] = [lambda s=s: ppn_metric(s) for s in PPN_CHARTS]
+
+# -- Einstein, Infeld and Hoffmann's field of many bodies ----------------------------------
+
+EIH_CHARTS = ["harmonic", "standard"]
+EIH_FUNCTIONS = "(t,x,y,z)"
+EIH_INDEX = {"x": "1", "y": "2", "z": "3"}       # the components of V along x, y and z
+EIH_PARAMETERS = [name + " = " + name + EIH_FUNCTIONS for name in ("U", "\\psi", "\\chi", "V_1", "V_2", "V_3")]
+
+
+def eih_many_bodies(system):
+    """The field of N slowly moving bodies to post-Newtonian order, written in its potentials, in
+    two charts.
+
+    harmonic  Einstein, Infeld and Hoffmann's own coordinates, their conditions (1,25) and (1,26),
+              which to this order are the harmonic ones: their (9.8), (12.6) and (13.10) in the
+              signature (-,+,+,+), g_00 = -1 + 2U - 2U^2 + 2 psi + d_t^2 chi, g_0i = -4 V_i and
+              g_ij = (1 + 2U) delta_ij, which for two bodies is Blanchet, Faye and Ponsot's (7.2);
+    standard  the standard post-Newtonian gauge of Chandrasekhar and of Will's (2014) Box 2 at
+              general relativity's values, g_00 = -1 + 2U - 2U^2 + 2 psi and
+              g_0i = -4 V_i - d_t d_i chi/2, which is -(7/2) V_i - (1/2) W_i, whose time is the
+              harmonic time less d_t chi/2.
+
+    U = sum m_a/r_a, V = sum m_a v_a/r_a, chi = sum m_a r_a and
+    psi = sum (m_a/r_a)(3 v_a^2/2 - sum m_b/r_ab), with each mass the length Gm/c^2 and each speed
+    over c, are left free in every tensor, so no component assumes a field equation.
+    eih_check holds each chart to what it claims before it is written, and eih_many_bodies.md
+    beside this file is the derivation."""
+    coords = ["t", "x", "y", "z"]
+    reals = " \\in (-\\infty, \\infty)"
+    domains = [name + reals for name in coords] + ["r_a > 0 \\;\\text{(between the bodies)}"]
+    space = "\\left(1 + 2U\\right)\\left(dx^2 + dy^2 + dz^2\\right)"
+    if system == "harmonic":
+        name = "Einstein, Infeld, and Hoffmann (harmonic)"
+        lapse = "1 - 2U + 2U^2 - 2\\psi - \\partial_t^2\\chi"
+        shift = {k: "-4V_" + EIH_INDEX[k] for k in "xyz"}
+        cross = " - 8\\left(V_1\\,dx + V_2\\,dy + V_3\\,dz\\right){c}dt"
+        square = "16\\left(V_1^2 + V_2^2 + V_3^2\\right)"
+    else:
+        name = "Standard post-Newtonian gauge"
+        lapse = "1 - 2U + 2U^2 - 2\\psi"
+        shift = {k: "-\\left(4V_" + EIH_INDEX[k] + " + \\dfrac{1}{2}\\partial_t\\partial_" + k + "\\chi\\right)" for k in "xyz"}
+        cross = (" - \\left(\\left(8V_1 + \\partial_t\\partial_x\\chi\\right)dx + \\left(8V_2 + \\partial_t\\partial_y\\chi\\right)dy"
+                 " + \\left(8V_3 + \\partial_t\\partial_z\\chi\\right)dz\\right){c}dt")
+        square = " + ".join("\\left(4V_" + EIH_INDEX[k] + " + \\dfrac{1}{2}\\partial_t\\partial_" + k + "\\chi\\right)^2" for k in "xyz")
+    line = "ds^2 = -\\left(" + lapse + "\\right){c2}dt^2" + cross + " + " + space
+
+    def written(c):
+        return line.replace("{c2}", "c^2" if c else "").replace("{c}", "c\\," if c else "")
+
+    probe = vm.Reader(coords, EIH_PARAMETERS, ())
+    functions = [probe.parameters[k] for k in ("U", "psi", "chi", "V_1", "V_2", "V_3")]
+    # The inverse of the metric as the line element writes it, whole: with A the lapse's bracket,
+    # S = 1 + 2U and B the row g_ti, the block of t is -S/D and B_i/D, D = A S + B.B, and the block
+    # of space delta_ij/S - B_i B_j/(S D).
+    block = "\\left(\\left(" + lapse + "\\right)\\left(1 + 2U\\right) + " + square + "\\right)^{-1}"
+    inverse = {("t", "t"): "-\\left(1 + 2U\\right)" + block}
+    metric = {("t", "t"): "-\\left(" + lapse + "\\right)"}
+    for i in "xyz":
+        metric[(i, i)] = "1 + 2U"
+        metric[("t", i)] = metric[(i, "t")] = shift[i]
+        inverse[("t", i)] = inverse[(i, "t")] = shift[i] + block
+        for j in "xyz":
+            product = "\\dfrac{\\left(" + shift[i] + "\\right)\\left(" + shift[j] + "\\right)}{1 + 2U}" + block
+            inverse[(i, j)] = ("\\dfrac{1}{1 + 2U} - " if i == j else "-") + product
+    return {
+        "metric_id": "eih_many_bodies",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": EIH_PARAMETERS,
+                   "line_element": written(True)},
+        "chart_line_element": written(False),
+        "printer": {"lead": functions, "flip": False, "rank": eih_order(probe)},
+        "pretty": sp.expand,
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "check": lambda chart: eih_check(chart, system),
+        "after": lambda math, chart: eih_whole_inverse(math, chart, inverse),
+    }
+
+
+def eih_whole_inverse(math, chart, inverse):
+    """The inverse with its components between two different directions of space, -B_i B_j/(S D),
+    which are of sixth order and so vanish from the inverse cut to order: written in, each checked
+    against the cut tensor, so that the inverse printed is the inverse of the metric printed."""
+    listed = {tuple(entry["indices"]) for entry in math["inverse_metric_components"]}
+    for i, a in enumerate("xyz"):
+        for j, b in enumerate("xyz"):
+            if a != b and (a, b) not in listed:
+                value = chart.check(inverse[(a, b)], chart.geo.ginv[i + 1, j + 1])
+                math["inverse_metric_components"].append({"indices": [a, b], "value": value})
+    return math
+
+
+def eih_order(reader):
+    """The post-Newtonian order of a term of the field of many bodies, the sum of the orders of
+    its potentials, a derivative along the time one order more each time it is taken. Each value
+    is printed with its terms in that order, lowest first, so that Newton's term leads."""
+    orders = {reader.parameters[name]: weight for name, weight in
+              vm.ORDERS[("eih_many_bodies", "harmonic")][0].items()}
+    time = reader.symbol["t"]
+
+    def order(term):
+        total = 0
+        for factor, power in sp.sympify(term).as_powers_dict().items():
+            if isinstance(factor, sp.Derivative) and factor.expr in orders:
+                total += power * (orders[factor.expr] + sum(n for v, n in factor.variable_count if v == time))
+            elif factor in orders:
+                total += power * orders[factor]
+        return total
+
+    return order
+
+
+def eih_between_the_bodies(chart, value):
+    """`value` where the potentials solve their field equations between the bodies: U, psi and
+    the three components of V Laplace's, chi the Poisson equation whose source is 2U, and
+    d_t U + div V = 0. Each is used to write a derivative out of the value: every derivative of
+    V_3 along z by the last, every second derivative of V_3 along y and of the others along z by
+    its own equation, until none is left."""
+    t, x, y, z = chart.symbols
+    U, chi, Vx, Vy, Vz = (chart.reader.parameters[k] for k in ("U", "chi", "V_1", "V_2", "V_3"))
+    D = sp.Derivative
+
+    def taken(function, counts):
+        variables = [(v, n) for v, n in counts.items() if n]
+        return D(function, *variables) if variables else function
+
+    def rule(d):
+        counts = dict(d.variable_count)
+        f = d.expr
+        if f == Vz and counts.get(z, 0) >= 1:
+            rest = {**counts, z: counts[z] - 1}
+            return -sum(taken(g, {**rest, v: rest.get(v, 0) + 1}) for g, v in ((U, t), (Vx, x), (Vy, y)))
+        along = y if f == Vz else z
+        if counts.get(along, 0) >= 2:
+            rest = {**counts, along: counts[along] - 2}
+            others = [v for v in (x, y, z) if v != along]
+            out = -sum(taken(f, {**rest, v: rest.get(v, 0) + 2}) for v in others)
+            return out + 2 * taken(U, rest) if f == chi else out
+        return None
+
+    value = sp.sympify(value)
+    for _ in range(12):
+        rules = {d: rule(d) for d in value.atoms(D)}
+        rules = {d: r for d, r in rules.items() if r is not None}
+        if not rules:
+            return sp.expand(value)
+        value = sp.expand(value.xreplace(rules).doit())
+    raise AssertionError("eih_many_bodies: the field equations of the potentials do not settle")
+
+
+def eih_check(chart, system):
+    """What the two charts are held to before anything is written.
+
+    Both: wherever the potentials solve their field equations between the bodies,
+    eih_between_the_bodies, the Ricci tensor vanishes at every order kept, and R_tt and R_tx do
+    not vanish for free potentials, so that the vacuum is what those equations say.
+    standard: the harmonic chart pulled back along x^0 -> x^0 + d_t chi/2, g_tt through the
+    fourth order, g_ti through the third and g_ij through the second."""
+    ricci = chart.geo.ricci_ll()
+    for i in range(4):
+        for j in range(i, 4):
+            if eih_between_the_bodies(chart, ricci[i][j]) != 0:
+                raise AssertionError(f"eih_many_bodies: R_{chart.coords_tex[i]}{chart.coords_tex[j]} of the {system} "
+                                     "chart does not vanish between the bodies")
+    if ricci[0][0] == 0 or ricci[0][1] == 0 or ricci[1][1] == 0:
+        raise AssertionError(f"eih_many_bodies: the Ricci tensor of the {system} chart vanishes for free potentials")
+    if system == "standard":
+        reader = chart.reader
+        other = cp.Chart(*eih_arguments("harmonic"), order=vm.ORDERS[("eih_many_bodies", "harmonic")])
+        names = {other.reader.parameters[k]: reader.parameters[k] for k in ("U", "psi", "chi", "V_1", "V_2", "V_3")}
+        theirs = other.geo.g.subs(dict(zip(other.symbols, chart.symbols)), simultaneous=True).subs(names).doit()
+        shift = sp.diff(reader.parameters["chi"], chart.symbols[0]) / 2
+        jacobian = sp.eye(4)
+        for k in range(4):
+            jacobian[0, k] += sp.diff(shift, chart.symbols[k])
+        pulled = jacobian.T * theirs * jacobian
+        for i in range(4):
+            for j in range(i, 4):
+                kept = 4 - (i != 0) - (j != 0)
+                if reader.through(pulled[i, j] - chart.geo.g[i, j], kept) != 0:
+                    raise AssertionError("eih_many_bodies: the standard chart is not the harmonic chart at the time "
+                                         f"x^0 + d_t chi/2, in slot {i}{j}")
+
+
+def eih_arguments(system):
+    spec = eih_many_bodies(system)
+    return (spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"], spec["printer"],
+            spec["pretty"])
+
+
+CHARTS["eih_many_bodies"] = [lambda s=s: eih_many_bodies(s) for s in EIH_CHARTS]
+
 
 
 # -- Kerr-de Sitter ----------------------------------------------------------------------

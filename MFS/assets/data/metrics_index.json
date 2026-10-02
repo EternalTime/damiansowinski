@@ -1136,6 +1136,35 @@
     "embedding": "07b92b646e316b86"
   },
   {
+    "id": "eih_many_bodies",
+    "name": "Einstein-Infeld-Hoffmann",
+    "tags": [
+      "post-Newtonian",
+      "weak field",
+      "approximate solution",
+      "many bodies",
+      "two-body problem",
+      "problem of motion",
+      "equations of motion",
+      "point masses",
+      "binary",
+      "binary pulsar",
+      "periastron advance",
+      "perihelion precession",
+      "solar system",
+      "harmonic coordinates",
+      "gravitomagnetic",
+      "time-dependent",
+      "no horizon",
+      "Lorentzian",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "482bc1e5ebb4e78a",
+    "diagrams": "7c0ed7cc7e087f7f",
+    "embedding": "3f468d0fec878b32"
+  },
+  {
     "id": "einstein_rosen_bridge",
     "name": "Einstein-Rosen Bridge",
     "tags": [
@@ -2415,7 +2444,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b3958c32ca0826f7",
+    "version": "ee837d36f825023d",
     "diagrams": "c6edded6cce52897",
     "conformal": "334186f800f59252",
     "embedding": "b9bf3c95064c40a7"
@@ -3027,7 +3056,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b00d7fc0aa4af761",
+    "version": "f8e7c14efa054536",
     "diagrams": "197eec2d67db791c",
     "conformal": "6588b3545cfd1a4f",
     "embedding": "7438e54f373b2e03"
@@ -3540,7 +3569,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9c5cacc66f74405f",
+    "version": "a8e4f30da4d301b0",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"

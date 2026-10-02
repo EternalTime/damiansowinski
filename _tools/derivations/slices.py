@@ -2446,6 +2446,10 @@ FLAT = {
     ("majumdar_papapetrou", "cylindrical", "radial"): lambda: one(
         "majumdar_papapetrou", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")), view_id="two_holes"),
     ("majumdar_papapetrou", "cartesian", "tz"): _mp_axis,
+    ("eih_many_bodies", "harmonic", "axis"): lambda: one(
+        "eih_many_bodies", lambda m: across(0.0, *m.reach("harmonic", "y")), view_id="midplane"),
+    ("eih_many_bodies", "standard", "axis"): lambda: one(
+        "eih_many_bodies", lambda m: across(0.0, *m.reach("harmonic", "y")), view_id="midplane"),
     ("israel_wilson_perjes", "cylindrical", "midplane"): lambda: one(
         "israel_wilson_perjes", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")), view_id="two_sources"),
     ("israel_wilson_perjes", "spheroidal", "axis"): lambda: one(

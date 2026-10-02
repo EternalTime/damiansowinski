@@ -61,6 +61,11 @@
       "id": "exponential_metric",
       "kind": "family",
       "text": "A metric with no horizon that sits at general relativity's point: $e^{-2m/r} = 1 - 2m/r + 2m^2/r^2 - \\dots$, so $\\beta = \\gamma = 1$ and the post-Newtonian tests do not separate the two [boonserm2018]."
+    },
+    {
+      "id": "eih_many_bodies",
+      "kind": "family",
+      "text": "General relativity's field of many moving bodies, to the same order. One body at rest there is this metric at $\\beta = \\gamma = 1$ [will2014]."
     }
   ],
   "references": [
