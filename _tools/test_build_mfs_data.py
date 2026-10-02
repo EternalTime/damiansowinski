@@ -802,7 +802,7 @@ class Contrast(unittest.TestCase):
                      "Less calculation, more reading."):
             with self.subTest(text):
                 self.assertTrue(self.caught(text))
-        for text in ("Cornelius Lanczos wrote down the rotating dust cylinder in 1924, not long after Einstein's field "
+        for text in ("Kornel Lanczos wrote down the rotating dust cylinder in 1924, not long after Einstein's field "
                      "equations had settled into their final form.",
                      "It was a clean result, not yet joined to any other solution.",
                      "the singularity theorems no longer apply", "each point in the diagram a single event.",

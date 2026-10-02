@@ -32,13 +32,13 @@ Source: `MFS/assets/data/metrics/alcubierre.json`, `history`, paragraph 3.
 Before:
 
 > Worse, the amount is not a technicality.
-> In 1997 Michael Pfenning and Larry Ford applied quantum inequalities to the bubble and found that its walls must be only a few hundred Planck lengths thick, and that the total negative energy required exceeds, by many orders of magnitude, anything physically conceivable, comparable in scale to all the mass and energy of the visible universe [pfenning1997].
+> In 1997 Michael Pfenning and Lawrence Ford applied quantum inequalities to the bubble and found that its walls must be only a few hundred Planck lengths thick, and that the total negative energy required exceeds, by many orders of magnitude, anything physically conceivable, comparable in scale to all the mass and energy of the visible universe [pfenning1997].
 > So the warp drive lives as a thought experiment rather than an engineering proposal, but a remarkably productive one.
 
 After:
 
 > The negative energy needed is enormous.
-> In 1997 Michael Pfenning and Larry Ford applied quantum inequalities to the bubble and found that its walls must be only a few hundred Planck lengths thick, and that the total negative energy required exceeds, by many orders of magnitude, anything physically conceivable, comparable in scale to all the mass and energy of the visible universe [pfenning1997].
+> In 1997 Michael Pfenning and Lawrence Ford applied quantum inequalities to the bubble and found that its walls must be only a few hundred Planck lengths thick, and that the total negative energy required exceeds, by many orders of magnitude, anything physically conceivable, comparable in scale to all the mass and energy of the visible universe [pfenning1997].
 > The warp drive therefore remains a thought experiment, though a remarkably productive one.
 
 ### history: `alcubierre/history[3]`
@@ -835,7 +835,7 @@ Before:
 > The solution describes a universe filled with pressureless dust in uniform rotation, homogeneous in space and time, with no expansion.
 > Its cosmological constant is negative, tuned to the density of the dust.
 > About any world line of the dust the light cones tip as one moves outward, until at a critical radius they become tangent to a closed null curve, and beyond that radius closed timelike curves exist through every event: trajectories that loop back to their own past.
-> Rotating dust had been solved before, by Cornelius Lanczos in 1924 and by Willem Jacob van Stockum in 1937 [lanczos1924, vanstockum1937], but Gödel's paper cites neither, and his universe is homogeneous where theirs is a cylinder turning about one axis.
+> Rotating dust had been solved before, by Kornel Lanczos in 1924 and by Willem Jacob van Stockum in 1937 [lanczos1924, vanstockum1937], but Gödel's paper cites neither, and his universe is homogeneous where theirs is a cylinder turning about one axis.
 
 After:
 
@@ -843,7 +843,7 @@ After:
 > The solution describes a universe filled with pressureless dust in uniform rotation, homogeneous in space and time, with no expansion.
 > Its cosmological constant is negative, tuned to the density of the dust.
 > About any world line of the dust the light cones tip as one moves outward, until at a critical radius they become tangent to a closed null curve, and beyond that radius closed timelike curves exist through every event: trajectories that loop back to their own past.
-> Rotating dust had been solved before, by Cornelius Lanczos in 1924 and by Willem Jacob van Stockum in 1937 [lanczos1924, vanstockum1937], but Gödel cites neither, and his universe is homogeneous where theirs is a cylinder turning about one axis.
+> Rotating dust had been solved before, by Kornel Lanczos in 1924 and by Willem Jacob van Stockum in 1937 [lanczos1924, vanstockum1937], but Gödel cites neither, and his universe is homogeneous where theirs is a cylinder turning about one axis.
 
 ### history: `godel/history[1]`
 
@@ -1571,7 +1571,7 @@ Before:
 > There is a central region of mild tidal forces where proper time keeps step with coordinate time far away, so a passenger ages at the rate the rest of the universe does and stays put with respect to the soliton.
 > And the stress-energy Lentz's geometry demands is that of a conducting plasma together with classical electromagnetic fields, which is familiar matter.
 > It is not cheap.
-> For a soliton a hundred metres in radius with a metre of source thickness, running at the speed of light, Lentz put the mass equivalent at a few tenths of a solar mass, which he called immense, and which sits at the same order as the estimate Michael Pfenning and Larry Ford had made for an Alcubierre bubble of those dimensions [pfenning1997].
+> For a soliton a hundred metres in radius with a metre of source thickness, running at the speed of light, Lentz put the mass equivalent at a few tenths of a solar mass, which he called immense, and which sits at the same order as the estimate Michael Pfenning and Lawrence Ford had made for an Alcubierre bubble of those dimensions [pfenning1997].
 
 After:
 
@@ -1580,7 +1580,7 @@ After:
 > There is a central region of mild tidal forces where proper time keeps step with coordinate time far away, so a passenger ages at the rate the rest of the universe does and stays put with respect to the soliton.
 > And the stress energy of Lentz's geometry is that of a conducting plasma together with classical electromagnetic fields, which is familiar matter.
 > It is not cheap.
-> For a soliton a hundred metres in radius with a metre of source thickness, running at the speed of light, Lentz put the mass equivalent at a few tenths of a solar mass, which he called immense, and which sits at the same order as the estimate Michael Pfenning and Larry Ford had made for an Alcubierre bubble of those dimensions [pfenning1997].
+> For a soliton a hundred metres in radius with a metre of source thickness, running at the speed of light, Lentz put the mass equivalent at a few tenths of a solar mass, which he called immense, and which sits at the same order as the estimate Michael Pfenning and Lawrence Ford had made for an Alcubierre bubble of those dimensions [pfenning1997].
 
 ### history: `lentz/history[3]`
 
@@ -2238,7 +2238,7 @@ Before:
 
 After:
 
-> Hans Brinkmann was not looking for a gravitational wave.
+> Heinrich Brinkmann was not looking for a gravitational wave.
 > In 1925, asking which Einstein spaces map conformally onto one another, he was handed a family carrying a null vector field parallel to itself everywhere [brinkmann1925].
 > He did not call them waves.
 > Nobody did for thirty six years, until Wolfgang Kundt and Jürgen Ehlers named them the plane-fronted waves with parallel rays [kundt1961, ehlerskundt1962].
@@ -2609,14 +2609,14 @@ Source: `MFS/assets/data/metrics/stockum_dust.json`, `history`, paragraph 1.
 
 Before:
 
-> Cornelius Lanczos wrote down the rotating dust cylinder in 1924, not long after Einstein's field equations had settled into their final form [lanczos1924].
+> Kornel Lanczos wrote down the rotating dust cylinder in 1924, not long after Einstein's field equations had settled into their final form [lanczos1924].
 > He was not hunting for physical models.
 > The solution describes an infinite cylinder of pressureless dust in rigid rotation, a geometry with no reasonable astrophysical realization, but exact solutions were scarce, and one took what one could get.
 > It was largely set aside, its sting unnoticed.
 
 After:
 
-> Cornelius Lanczos wrote down the rotating dust cylinder in 1924, not long after Einstein's field equations had settled into their final form [lanczos1924].
+> Kornel Lanczos wrote down the rotating dust cylinder in 1924, not long after Einstein's field equations had settled into their final form [lanczos1924].
 > He was not hunting for physical models.
 > The solution describes an infinite cylinder of pressureless dust in rigid rotation, a geometry with no reasonable astrophysical realization, but exact solutions were scarce, and one took what one could get.
 > It was largely set aside, its closed timelike curves unnoticed.
@@ -3012,13 +3012,13 @@ Source: `MFS/assets/data/metrics/vaidya.json`, `history`, paragraph 1.
 Before:
 
 > Schwarzschild's solution describes the empty space outside a static star, but a star that shines is not surrounded by empty space; it is surrounded by the energy it is pouring out.
-> In 1951 the Indian physicist Prahalad Chunilal Vaidya found the metric for exactly this situation: the gravitational field outside a radiating spherical mass [vaidya1951].
+> In 1951 the Indian physicist Prahlad Chunilal Vaidya found the metric for exactly this situation: the gravitational field outside a radiating spherical mass [vaidya1951].
 > He had come to the problem in 1942 as the private research student of V. V. Narlikar at Banaras, who offered him two outstanding problems, the field of a radiating star and the field of a rotating star; since a rotating star must also radiate, they chose the radiating one [vaidya1997].
 
 After:
 
 > Schwarzschild's solution describes the empty space outside a static star, but a star that shines is surrounded by the energy it pours out.
-> In 1951 the Indian physicist Prahalad Chunilal Vaidya found the metric for this situation: the gravitational field outside a radiating spherical mass [vaidya1951].
+> In 1951 the Indian physicist Prahlad Chunilal Vaidya found the metric for this situation: the gravitational field outside a radiating spherical mass [vaidya1951].
 > He had come to the problem in 1942 as the private research student of V. V. Narlikar at Banaras, who offered him two outstanding problems, the field of a radiating star and the field of a rotating star; since a rotating star must also radiate, they chose the radiating one [vaidya1997].
 
 ### history: `vaidya/history[1]`

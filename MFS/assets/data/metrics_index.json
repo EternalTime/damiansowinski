@@ -20,7 +20,7 @@
       "idealized model",
       "Petrov type N"
     ],
-    "version": "e1c2660eb826737e",
+    "version": "b718ccc5e6c6dab5",
     "diagrams": "a6fabc19c0e551be",
     "conformal": "2771060b42b8605b",
     "embedding": "9b0e2bc9b72fa37e"
@@ -40,7 +40,7 @@
       "Einstein equations",
       "four-dimensional"
     ],
-    "version": "fbaee23f419f9164",
+    "version": "612ab20a7db4cb71",
     "diagrams": "a0c6ac73f99ce279",
     "embedding": "4df721cabada780a"
   },
@@ -101,7 +101,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "492540ccb298a450",
+    "version": "bc6d60583cdc7851",
     "diagrams": "36a10a399fd9e586",
     "conformal": "212fdcd488402227",
     "embedding": "0e56a5456f5e3b52"
@@ -313,7 +313,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5a7f6faed30e249a",
+    "version": "3af07eee803d8d50",
     "diagrams": "8e7a66b826371e27",
     "conformal": "4c22fa7d37693c09",
     "embedding": "7035de7d63ab26a4"
@@ -668,7 +668,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "38de03e5c004f3d6",
+    "version": "0ffd0af07da2d0de",
     "diagrams": "d86ff0a92ec2a5b0",
     "embedding": "eb113e431f8fa107"
   },
@@ -725,7 +725,7 @@
       "idealized model",
       "negative cosmological constant"
     ],
-    "version": "4edef2ae5179a60c",
+    "version": "ada680de39fc77c9",
     "diagrams": "7bf82d9d4b9ce74d",
     "embedding": "05f185c5abaada89"
   },
@@ -878,7 +878,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "12c3fab6c53c7e58",
+    "version": "044c29b399675e03",
     "diagrams": "bd41935318270b6a",
     "conformal": "17d38d5b746db304",
     "embedding": "5ff5b48da9e6b5f3"
@@ -1037,7 +1037,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "54ae497be0a9ff6e",
+    "version": "929f8c7b4da689e6",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -1186,9 +1186,9 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1e42b2ca7fab813c",
+    "version": "5ffdcd707d1f201e",
     "diagrams": "03d90ee0c12cbe63",
-    "embedding": "824169d893851bd7"
+    "embedding": "f63088100c538d20"
   },
   {
     "id": "lentz",
@@ -1207,7 +1207,7 @@
       "Einstein equations",
       "four-dimensional"
     ],
-    "version": "705f44510efe9777"
+    "version": "7ab4d92ee19ab245"
   },
   {
     "id": "levi_civita",
@@ -1646,7 +1646,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4ab0b2cadcdef442",
+    "version": "0e5739522749a91f",
     "diagrams": "d31b7b7b6c3dd2ef",
     "conformal": "7400ddcb9dd6a817",
     "embedding": "1ecd155079c29ab6"
@@ -1671,7 +1671,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cb670655fc5bad85",
+    "version": "09e3aad736cec711",
     "diagrams": "f02d33ce21e424e5",
     "conformal": "caada1e1189ae9f1",
     "embedding": "7b305003632e43d9"
@@ -1757,7 +1757,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e416cddf03a6dee1",
+    "version": "49f9c7e11baf20a6",
     "diagrams": "6e432dbfef4f0d7d",
     "embedding": "a484d91e42495a51"
   },
@@ -1823,7 +1823,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4f581303cc9db2b6",
+    "version": "f8da019a24b3995b",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -1933,7 +1933,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "eea0f61b96a3249b",
+    "version": "a20463c61839c287",
     "diagrams": "53ff4d90bff08988",
     "conformal": "0326c9d2101aa7a6",
     "embedding": "7b7a1d9f63195b3e"
@@ -2149,7 +2149,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "bce909ae72058f88",
+    "version": "f6354fcb890c5b8a",
     "diagrams": "b272a6aeea9e0b62",
     "conformal": "09d52a3611b8d1c6",
     "embedding": "044c6a18e30bb001"
@@ -2401,7 +2401,7 @@
       "naked singularity",
       "cosmic censorship"
     ],
-    "version": "ae4152129bc9341d",
+    "version": "c81ffc65a1f1a620",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404"
@@ -2422,7 +2422,7 @@
       "Einstein equations",
       "four-dimensional"
     ],
-    "version": "2d4fa42b38c370d9",
+    "version": "528ef67b2978e68e",
     "diagrams": "54c4ab721c360189",
     "embedding": "d0eb9c1c758df3f4"
   },
@@ -2447,7 +2447,7 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "f65931c9a2fecfc8",
+    "version": "7e58a2fbb5279019",
     "diagrams": "a5eedeb1a3fee9e3",
     "conformal": "23c762685b735685",
     "embedding": "aa10dc85dcfab188"
