@@ -781,6 +781,7 @@ DIMENSIONS = {
     },
     ("myers_perry", "boyer_lindquist_six"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\chi": "1", "\\psi": "1", "\\mu": "L**3", "a": "L",
+    },
     # Kastor and Traschen's holes: the potential V of the holes is a pure number, as Majumdar and
     # Papapetrou's U is, and so are U = H tau + V, the scale factor a = e^{Ht} and Omega = 1 + V/a,
     # each a name its chart defines; H is a frequency with 3H^2/c^2 = Lambda, as de Sitter's is.
