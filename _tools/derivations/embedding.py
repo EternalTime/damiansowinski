@@ -1864,13 +1864,11 @@ def movie_figure(frames, fills, size, camera=CAMERA, meridians=12):
     return fig
 
 
-def movie(frames, variable, values, seconds=5, turns=True, loop=None):
+def movie(frames, variable, values, seconds=5, turns=True):
     """What a view carries to play its frames in turn, each with its label and its value of the
-    movie's `variable`, one pass taking `seconds`, and played forward, back and forward again
-    where `loop` is "pingpong"."""
+    movie's `variable`, one pass taking `seconds`. Every movie plays forward, back and forward
+    again."""
     out = {"variable": variable, "seconds": seconds, "frames": []}
-    if loop:
-        out["loop"] = loop
     for s, v in zip(frames, values):
         d = s.data()
         d.pop("time", None)
@@ -4001,7 +3999,7 @@ def unrolling(ck, cone, fold, top, size, settings):
     fig.legend("line", "r", "$r$ constant, at $\\ell$ and $2\\ell$")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
     return view("unroll", "The cone unrolled", "$\\ell$", [Surface([whole])], fig.done(),
-                movie=movie(frames, "$\\Delta\\phi$", [math.degrees(d) for d in openings], loop="pingpong"),
+                movie=movie(frames, "$\\Delta\\phi$", [math.degrees(d) for d in openings]),
                 settings=settings)
 
 

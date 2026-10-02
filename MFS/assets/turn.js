@@ -163,27 +163,22 @@
   // Which frame of a movie draw() draws, the first until another is chosen.
   function frame(M, k) { M.frame = k; }
 
-  /* The frame of a movie shown `ms` milliseconds into playing it, as _tools/README.md, the
-     movie's `loop`, says. Its `value` runs at a steady rate, one pass from the first frame to the
-     last taking the movie's `seconds`. Played once, the default, frame k is shown from its value
-     to the next frame's, the last is held for one step of the mean, and the movie starts again.
-     Played "pingpong", the value runs forward and then back and on again, and the frame shown is
-     the one whose value is nearest, so every frame of evenly spaced values, the two ends
-     included, is shown for one step at each pass, and the ends once at each turnaround. The
-     clock starts half a step early, on the far side of the first frame, so the first frame too
-     is shown for one whole step at the start; a value halfway between two frames, to within
-     rounding, shows the earlier. */
+  /* The frame of a movie shown `ms` milliseconds into playing it, as _tools/README.md says, the
+     one way every movie plays, as the captain asked on 1 October 2026: forward, then back, then
+     forward again, never jumping to its start. Its `value` runs at a steady rate, one pass from
+     the first frame to the last taking the movie's `seconds`, forward and then back and on
+     again, and the frame shown is the one whose value is nearest, so every frame of evenly
+     spaced values, the two ends included, is shown for one step at each pass, and the ends once
+     at each turnaround. The clock starts early, halfway to the second frame's value on the far
+     side of the first frame, half a step where the values are evenly spaced, so the first frame
+     is the one shown at the start, and for as long as at any later turnaround; a value halfway
+     between two frames, to within rounding, shows the earlier. */
   function movieFrame(movie, ms) {
     var values = movie.frames.map(function(fr) { return fr.value; }), n = values.length;
-    var span = values[n - 1] - values[0], period = 1000 * movie.seconds, k = 0, v;
-    if (movie.loop === 'pingpong') {
-      var half = period / (n - 1) / 2, p = ((ms - half) % (2 * period) + 2 * period) % (2 * period);
-      v = values[0] + span * (p < period ? p : 2 * period - p) / period;
-      while (k + 1 < n && (values[k] + values[k + 1]) / 2 < v - 1e-9 * span) k++;
-      return k;
-    }
-    v = values[0] + span * (ms % (period * n / (n - 1))) / period;
-    while (k + 1 < n && values[k + 1] <= v) k++;
+    var span = values[n - 1] - values[0], period = 1000 * movie.seconds, k = 0;
+    var half = period * (values[1] - values[0]) / span / 2, p = ((ms - half) % (2 * period) + 2 * period) % (2 * period);
+    var v = values[0] + span * (p < period ? p : 2 * period - p) / period;
+    while (k + 1 < n && (values[k] + values[k + 1]) / 2 < v - 1e-9 * span) k++;
     return k;
   }
 
