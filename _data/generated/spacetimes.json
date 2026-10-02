@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 124,
+  "count": 125,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -7902,6 +7902,11 @@
           "id": "hotta_tanaka",
           "kind": "locally_same",
           "text": "De Sitter space with an impulsive gravitational wave on one cosmological horizon, the field of two massless particles. Off that horizon it is de Sitter space [hotta1993]."
+        },
+        {
+          "id": "elliptic_de_sitter",
+          "kind": "locally_same",
+          "text": "Erwin Schrödinger's remedy of 1956 for observers whose horizons part them: every event of de Sitter space made one with the event opposite it on the hyperboloid. An observer then sees one event of every pair, and the space has no global direction of time [schrodinger1956, parikh2003]."
         }
       ],
       "references": [
@@ -7941,7 +7946,9 @@
         "kiselev2003",
         "bicak1999",
         "griffiths2004",
-        "hotta1993"
+        "hotta1993",
+        "schrodinger1956",
+        "parikh2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -9476,6 +9483,11 @@
           "id": "einstein_cluster",
           "kind": "programme",
           "text": "Einstein's static ball of 1939, a cluster of particles on circular orbits. With uniform density its space is a cap of the same three sphere, held still by the motion of the particles with no cosmological constant [einstein1939, florides1974, bohmerlobo2008]."
+        },
+        {
+          "id": "elliptic_de_sitter",
+          "kind": "programme",
+          "text": "De Sitter's universe with opposite points of its hyperboloid made one event. Willem de Sitter wrote in 1917 of elliptic space, in which opposite points of the sphere are one place, that \"it is preferable to adopt this for the physical world\", and reported that Einstein agreed [desitter1917]."
         }
       ],
       "references": [
@@ -10309,6 +10321,363 @@
           ],
           "ricci_scalar": "R = \\dfrac{4\\left(2\\left(v - u\\right)\\partial_v\\psi\\,\\partial_u\\psi + \\partial_v\\psi - \\partial_u\\psi - 2\\left(v - u\\right)\\partial_u\\partial_v\\psi + 2\\left(v - u\\right)\\partial_u\\partial_v\\gamma\\right)e^{2\\psi - 2\\gamma}}{v - u}",
           "kretschmann": "K = 4e^{4\\psi - 4\\gamma}\\left(\\left(4\\partial_u\\partial_v\\psi - 4\\partial_u\\partial_v\\gamma\\right)^2 + \\left(\\dfrac{\\left(v - u\\right)\\partial_u^2\\psi + 2\\left(v - u\\right)\\partial_u\\partial_v\\psi + \\left(v - u\\right)\\partial_v^2\\psi + 2\\partial_u\\psi + \\left(v - u\\right)\\left(\\partial_u\\psi\\right)^2 - 2\\partial_v\\psi - 2\\left(v - u\\right)\\partial_v\\psi\\,\\partial_u\\psi + \\left(v - u\\right)\\left(\\partial_v\\psi\\right)^2 - 2\\partial_u\\gamma - 2\\left(v - u\\right)\\partial_u\\gamma\\,\\partial_u\\psi + 2\\partial_v\\gamma - 2\\left(v - u\\right)\\partial_v\\gamma\\,\\partial_v\\psi}{v - u}\\right)^2 + \\left(2\\partial_v\\gamma\\,\\partial_v\\psi + 2\\partial_u\\gamma\\,\\partial_u\\psi - 3\\left(\\partial_v\\psi\\right)^2 - 2\\partial_v\\psi\\,\\partial_u\\psi - 3\\left(\\partial_u\\psi\\right)^2 - \\partial_v^2\\psi - 2\\partial_u\\partial_v\\psi - \\partial_u^2\\psi\\right)^2 + \\left(\\dfrac{\\left(v - u\\right)\\partial_u^2\\psi - 2\\left(v - u\\right)\\partial_u\\partial_v\\psi + \\left(v - u\\right)\\partial_v^2\\psi - 2\\partial_u\\psi + \\left(v - u\\right)\\left(\\partial_u\\psi\\right)^2 + 2\\partial_v\\psi + 2\\left(v - u\\right)\\partial_v\\psi\\,\\partial_u\\psi + \\left(v - u\\right)\\left(\\partial_v\\psi\\right)^2 - 2\\partial_u\\gamma - 2\\left(v - u\\right)\\partial_u\\gamma\\,\\partial_u\\psi + 2\\partial_v\\gamma - 2\\left(v - u\\right)\\partial_v\\gamma\\,\\partial_v\\psi}{v - u}\\right)^2 + \\left(2\\partial_v\\gamma\\,\\partial_v\\psi + 2\\partial_u\\gamma\\,\\partial_u\\psi - 3\\left(\\partial_v\\psi\\right)^2 + 2\\partial_v\\psi\\,\\partial_u\\psi - 3\\left(\\partial_u\\psi\\right)^2 - \\partial_v^2\\psi + 2\\partial_u\\partial_v\\psi - \\partial_u^2\\psi\\right)^2 + \\left(\\dfrac{2\\partial_u\\psi - 2\\partial_v\\psi - 4\\left(v - u\\right)\\partial_v\\psi\\,\\partial_u\\psi}{v - u}\\right)^2 - 2\\left(\\dfrac{2\\left(v - u\\right)\\partial_v\\gamma\\,\\partial_v\\psi - 2\\partial_v\\gamma - 2\\left(v - u\\right)\\partial_u\\gamma\\,\\partial_u\\psi - 2\\partial_u\\gamma - \\left(v - u\\right)\\left(\\partial_v\\psi\\right)^2 + \\left(v - u\\right)\\left(\\partial_u\\psi\\right)^2 - \\left(v - u\\right)\\partial_v^2\\psi + \\left(v - u\\right)\\partial_u^2\\psi}{v - u}\\right)^2 - 2\\left(2\\partial_v\\gamma\\,\\partial_v\\psi - 2\\partial_u\\gamma\\,\\partial_u\\psi - 3\\left(\\partial_v\\psi\\right)^2 + 3\\left(\\partial_u\\psi\\right)^2 - \\partial_v^2\\psi + \\partial_u^2\\psi\\right)^2\\right)"
+        }
+      ]
+    },
+    {
+      "id": "elliptic_de_sitter",
+      "name": "Elliptic de Sitter Space",
+      "short_name": "Elliptic de Sitter",
+      "description": "De Sitter space with every event identified with the event opposite it on the hyperboloid, $X \\sim -X$. One observer's horizon then bounds the whole world and future and past infinity are a single sphere. The spacetime has no closed timelike curves and no global direction of time.",
+      "tags": [
+        "de Sitter",
+        "positive cosmological constant",
+        "cosmological constant",
+        "maximally symmetric",
+        "constant curvature",
+        "not time orientable",
+        "topology",
+        "cosmological horizon",
+        "horizon",
+        "causal structure",
+        "holography",
+        "inflation",
+        "expanding universe",
+        "cosmology",
+        "homogeneous",
+        "isotropic",
+        "geodesically complete",
+        "no singularity",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model",
+        "Einstein space",
+        "conformally flat",
+        "stationary",
+        "static",
+        "spherically symmetric"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The de Sitter radius $\\ell$ is a length, with $\\Lambda = 3/\\ell^2$, and we keep factors of $c$ explicit. An event is a pair of antipodal points $X$ and $-X$ of the hyperboloid $-X_0^2 + X_1^2 + X_2^2 + X_3^2 + X_4^2 = \\ell^2$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "de_sitter",
+          "kind": "locally_same",
+          "text": "The hyperboloid before any points are identified, the double cover of this space. Every local measurement agrees with de Sitter's, and the two differ in topology alone [parikh2003]."
+        },
+        {
+          "id": "einstein_static",
+          "kind": "programme",
+          "text": "Einstein's closed universe of 1917. Willem de Sitter proposed that year to take its space elliptic as well, opposite points of the sphere being one place, and reported that Einstein agreed [desitter1917]."
+        },
+        {
+          "id": "misner",
+          "kind": "family",
+          "text": "Flat space with events identified under a boost, as de Sitter space is here under the antipodal map. Misner's identification makes closed timelike curves, and the antipodal one makes none [misner1967, parikh2003]."
+        }
+      ],
+      "references": [
+        "desitter1917",
+        "schrodinger1956",
+        "hawking1973",
+        "calabi1962",
+        "gibbons1986elliptic",
+        "sanchez1987",
+        "parikh2003",
+        "spradlin2003",
+        "aguirre2003",
+        "misner1967"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/elliptic_de_sitter.json",
+      "charts": [
+        {
+          "id": "global",
+          "name": "Global",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, \\pi/2]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "(t, \\pi/2, \\theta, \\phi) \\sim (-t, \\pi/2, \\pi - \\theta, \\phi + \\pi)\\;\\text{(the antipodal identification)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "De Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = 3/\\ell^2$; the sphere of space has its least radius, $\\ell$, at $t = 0$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\chi, \\theta, \\phi)$, with $t$ carrying dimensions of time and $\\chi$ the polar angle on the sphere of space, measured from the observer at $\\chi = 0$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\ell^2\\cosh^2(ct/\\ell)\\left(d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\ell^2\\cosh^2(ct/\\ell)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\ell^2\\cosh^2(ct/\\ell)\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\ell^2\\cosh^2(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
+        },
+        {
+          "id": "conformal",
+          "name": "Conformal",
+          "coordinates": [
+            "\\eta",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (-\\pi/2, \\pi/2)",
+            "\\chi \\in [0, \\pi/2]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "(\\eta, \\pi/2, \\theta, \\phi) \\sim (-\\eta, \\pi/2, \\pi - \\theta, \\phi + \\pi)\\;\\text{(the antipodal identification)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "De Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = 3/\\ell^2$; the future and past infinities lie at $\\eta = \\pm\\pi/2$"
+            }
+          ],
+          "convention": "We use coordinates $(\\eta, \\chi, \\theta, \\phi)$, all angles, with the conformal time $\\eta$ related to the global chart by $\\tan\\eta = \\sinh(ct/\\ell)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{\\ell^2}{\\cos^2\\eta}\\left(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-\\dfrac{\\ell^2}{\\cos^2\\eta}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{\\ell^2}{\\cos^2\\eta}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\ell^2\\sin^2\\chi}{\\cos^2\\eta}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\ell^2\\sin^2\\chi\\sin^2\\theta}{\\cos^2\\eta}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
+        },
+        {
+          "id": "kruskal",
+          "name": "Kruskal",
+          "coordinates": [
+            "U",
+            "V",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "U \\in (-\\infty, \\infty)",
+            "V \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "-1 \\le UV < 1",
+            "V \\ge U",
+            "(U, U, \\theta, \\phi) \\sim (-U, -U, \\pi - \\theta, \\phi + \\pi)\\;\\text{(the antipodal identification)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "De Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = 3/\\ell^2$; the observer's horizons are $U = 0$ and $V = 0$, and a sphere of constant $U$ and $V$ has the areal radius $r = \\ell(1 + UV)/(1 - UV)$"
+            }
+          ],
+          "convention": "We use the null coordinates $U$ and $V$, both dimensionless and both increasing to the future in the static patch $U < 0 < V$ of the observer at $UV = -1$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{\\ell^2}{\\left(1 - UV\\right)^2}\\left(-4\\,dU\\,dV + \\left(1 + UV\\right)^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "U",
+                "V"
+              ],
+              "value": "-\\dfrac{2\\ell^2}{\\left(1 - U\\,V\\right)^2}"
+            },
+            {
+              "indices": [
+                "V",
+                "U"
+              ],
+              "value": "-\\dfrac{2\\ell^2}{\\left(1 - U\\,V\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\ell^2\\left(1 + U\\,V\\right)^2}{\\left(1 - U\\,V\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\ell^2\\left(1 + U\\,V\\right)^2\\sin^2\\theta}{\\left(1 - U\\,V\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
+        },
+        {
+          "id": "static",
+          "name": "Static",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\ell)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = \\ell \\;\\text{(cosmological horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "De Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = 3/\\ell^2$; the cosmological horizon of the observer at $r = 0$ sits at $r = \\ell$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r^2}{\\ell^2}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r^2}{\\ell^2}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r^2}{\\ell^2}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r^2}{\\ell^2}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
+        },
+        {
+          "id": "planar",
+          "name": "Planar",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "De Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = 3/\\ell^2$; the expansion rate of the flat slices is $H = c/\\ell$"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z)$, with $t$ carrying dimensions of time and $x$, $y$, and $z$ comoving lengths. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + e^{2ct/\\ell}\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "e^{2c\\,t/\\ell}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "e^{2c\\,t/\\ell}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{2c\\,t/\\ell}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
         }
       ]
     },
@@ -23671,6 +24040,11 @@
           "id": "tippett_tsang",
           "kind": "composite",
           "text": "A bubble whose inside is Misner space's Rindler region, the time $\\eta$ running once round $2\\pi$, set in Minkowski space by a wall of exotic matter [tippett2017]."
+        },
+        {
+          "id": "elliptic_de_sitter",
+          "kind": "family",
+          "text": "De Sitter space with events identified under the antipodal map of its hyperboloid, where Misner space identifies them under a boost. The antipodal map makes no closed timelike curves, and it removes the global direction of time [parikh2003]."
         }
       ],
       "references": [
@@ -23691,7 +24065,8 @@
         "banados1993",
         "morris1988prl",
         "ori2005",
-        "tippett2017"
+        "tippett2017",
+        "parikh2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner.json",

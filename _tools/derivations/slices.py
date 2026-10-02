@@ -988,6 +988,26 @@ def _ds_flat():
     return [Mark(m, [np.column_stack([-0.5 * np.log1p(x * x), x])])]
 
 
+def _eds(chart):
+    """Elliptic de Sitter space's moment t = 0 of the global chart, the hemisphere chi from 0 to pi/2,
+    in each of its charts at l = 1. The conformal time of that moment is eta = 0. On the hyperboloid
+    it is X_0 = 0 with X_4 = cos chi, which the Kruskal chart's X_0 = (U + V)/(1 - UV) and
+    X_4 = (V - U)/(1 - UV) make U = -V with V = tan(pi/4 - chi/2), the static chart's
+    X_0 = sqrt(1 - r^2) sinh t makes t = 0 with r = sin chi, the rim the horizon r = 1, and the planar
+    chart's X_0 = sinh t + x^2 e^t/2 makes t = -ln(1 + x^2)/2, the rim reached only as x -> infinity."""
+    m, = moments("elliptic_de_sitter")
+    lo, hi = m.reach("global", "\\chi")
+    if chart in ("global", "conformal"):
+        return [Mark(m, along(0.0, lo, hi))]
+    if chart == "kruskal":
+        V = np.tan(math.pi / 4 - np.linspace(lo, hi, N) / 2)
+        return [Mark(m, [np.column_stack([-V, V])])]
+    if chart == "static":
+        return [Mark(m, along(0.0, math.sin(lo), math.sin(hi)))]
+    x = np.linspace(-BIG ** 0.25, BIG ** 0.25, 4 * N + 1)
+    return [Mark(m, [np.column_stack([-0.5 * np.log1p(x * x), x])])]
+
+
 def _es_areal(m):
     """The Einstein static universe's moment in its areal chart, R = 1: r = sin chi over the
     near hemisphere the embedding reaches, chi from 0 to pi/2."""
@@ -1941,6 +1961,11 @@ FLAT = {
     ("de_sitter", "flat_slicing", "tx"): _ds_flat,
     # The moment t = 0 runs from the pole to the antipode, chi from 0 to pi, and the areal chart
     # carries its near hemisphere, r = R sin chi from 0 to R.
+    ("elliptic_de_sitter", "global", "through"): lambda: _eds("global"),
+    ("elliptic_de_sitter", "conformal", "through"): lambda: _eds("conformal"),
+    ("elliptic_de_sitter", "kruskal", "plane"): lambda: _eds("kruskal"),
+    ("elliptic_de_sitter", "static", "radial"): lambda: _eds("static"),
+    ("elliptic_de_sitter", "planar", "tx"): lambda: _eds("planar"),
     ("einstein_static", "hyperspherical", "radial"): lambda: one("einstein_static", lambda m: along(0.0, *m.reach("hyperspherical", "\\chi"))),
     ("einstein_static", "hyperspherical", "through"): lambda: one("einstein_static", lambda m: along(0.0, *m.reach("hyperspherical", "\\chi"))),
     ("einstein_static", "static_areal", "radial"): lambda: one("einstein_static", _es_areal),
@@ -2746,6 +2771,37 @@ def checks():
     xs = np.linspace(-3, 3, 13)
     miss = max(abs(float(T_s.subs({tf: -0.5 * math.log1p(a * a), xf: a}))) for a in xs)
     report("de Sitter: t_f = -ln(1 + x^2)/2 is the static t = 0", miss, 1e-14)
+
+    # Elliptic de Sitter space: the global chart's plane of t and chi pulls back onto the plane of each
+    # other chart along the hyperboloid, sinh t = X_0 and tan chi = |X_1..3|/X_4, and the moment t = 0 is
+    # the curve drawn in each.
+    g_g, (tg, cg, thg, _) = metric("elliptic_de_sitter", "global", {"ell": 1})
+    for name, system, hyper, points, moment in (
+            ("conformal", "conformal", lambda e, c: (sp.tan(e), sp.sin(c) / sp.cos(e), sp.cos(c) / sp.cos(e)),
+             zip(rng.uniform(-1.2, 1.2, 20), rng.uniform(0.1, 1.5, 20)), lambda c: (0.0, c)),
+            ("Kruskal", "kruskal", lambda U, V: ((U + V) / (1 - U * V), (1 + U * V) / (1 - U * V), (V - U) / (1 - U * V)),
+             zip(rng.uniform(-0.9, 0.2, 20), rng.uniform(0.3, 0.95, 20)),
+             lambda c: (-math.tan(math.pi / 4 - c / 2), math.tan(math.pi / 4 - c / 2))),
+            ("static", "static", lambda t, r: (sp.sqrt(1 - r ** 2) * sp.sinh(t), r, sp.sqrt(1 - r ** 2) * sp.cosh(t)),
+             zip(rng.uniform(-1, 1, 20), rng.uniform(0.1, 0.9, 20)), lambda c: (0.0, math.sin(c))),
+            ("planar", "planar", lambda t, x: (sp.sinh(t) + x ** 2 * sp.exp(t) / 2, x * sp.exp(t),
+                                               sp.cosh(t) - x ** 2 * sp.exp(t) / 2),
+             zip(rng.uniform(-1, 1, 20), rng.uniform(0.1, 0.8, 20)),
+             lambda c: (-0.5 * math.log1p(math.tan(c) ** 2), math.tan(c)))):
+        g_o, (a_, b_, *_) = metric("elliptic_de_sitter", system, {"ell": 1})
+        X0, R, X4 = hyper(a_, b_)
+        image = [sp.asinh(X0), sp.atan2(R, X4)]
+        J = sp.Matrix(2, 2, lambda i, j: sp.diff(image[i], [a_, b_][j]))
+        pulled = J.T * g_g[:2, :2].subs({tg: image[0], cg: image[1]}, simultaneous=True) * J
+        points = list(points)
+        miss = max(abs(float((pulled - g_o[:2, :2]).subs({a_: u, b_: v})[i, j])) for u, v in points
+                   for i in range(2) for j in range(2))
+        report(f"elliptic de Sitter: the global chart pulls back onto the {name} chart's plane", miss, 1e-10)
+        miss = 0.0
+        for c in np.linspace(0.05, 1.5, 12):
+            u, v = moment(c)
+            miss = max(miss, abs(float(X0.subs({a_: u, b_: v}))), abs(float(image[1].subs({a_: u, b_: v})) - c))
+        report(f"elliptic de Sitter: the moment t = 0 of the global chart in the {name} chart", miss, 1e-12)
 
     # Godel: the published transformation carries the Cartesian metric onto the cylindrical one
     # on the plane y = 0, where phi = 0 or pi, t_x = 2t and x = +-2r.

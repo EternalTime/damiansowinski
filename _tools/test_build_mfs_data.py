@@ -5716,6 +5716,19 @@ class Slices(unittest.TestCase):
                 "vr": ((lambda X: -0.5 / max(X, 1e-9) ** 2 - X), [math.exp(lo), math.exp(hi)]),
                 "vs": ((lambda X: -0.5 / max(X, 1e-9) - X / 2), [math.exp(2 * lo), math.exp(2 * hi)]),
             }[view_id]
+        if key.startswith("elliptic_de_sitter/"):
+            # Elliptic de Sitter space's moment t = 0 of the global chart at l = 1, over the embedding's
+            # reach in chi: the line eta = 0; U = -V with V = tan(pi/4 - chi/2), drawn against (V - U)/2 = V
+            # at (U + V)/2 = 0; the static t = 0 with r = sin chi; and t = -ln(1 + x^2)/2 with x = tan chi
+            # in the planar chart, which leaves the box before the rim.
+            lo, hi = self.reach(surface)
+            return {
+                "global": ((lambda X: 0.0), [lo, hi]),
+                "conformal": ((lambda X: 0.0), [lo, hi]),
+                "kruskal": ((lambda X: 0.0), [math.tan(math.pi / 4 - hi / 2), math.tan(math.pi / 4 - lo / 2)]),
+                "static": ((lambda X: 0.0), [math.sin(lo), math.sin(hi)]),
+                "planar": ((lambda X: -0.5 * math.log1p(X * X)), None),
+            }[key.split("/")[1]]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))
