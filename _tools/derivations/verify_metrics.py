@@ -903,6 +903,25 @@ DIMENSIONS = {
     },
     # Lifshitz spacetime keeps one length, L, and one pure number, the dynamical exponent z. Every
     # radial coordinate is a length, and so is the advanced time v = ct - w of the two null charts.
+    # Wahlquist's rotating fluid. In his own chart xi and eta are pure numbers and r_0 carries the
+    # length; h_1, h_2 and f are numbers, and the Weyl scalars W_1 and W_2 are curvatures. In Mars's
+    # charts y and z are lengths, sigma and varphi inverse lengths, Q_0, v_1, v_2, U and V areas,
+    # mu_0 a curvature, beta an inverse length, and a_1, a_2, m and n lengths.
+    ("wahlquist", "wahlquist"): {
+        "t": "T", "\\xi": "1", "\\eta": "1", "\\phi": "1", "r_0": "L", "k": "1", "b": "1", "\\eta_0": "1",
+        "\\gamma": "1", "h_1": "1", "h_2": "1", "W_1": "1/L**2", "W_2": "1/L**2",
+    },
+    ("wahlquist", "mars"): {
+        "\\tau": "T", "y": "L", "z": "L", "\\sigma": "1/L", "Q_0": "L**2", "\\nu_0": "1", "\\mu_0": "1/L**2",
+        "a_1": "L", "a_2": "L", "\\beta": "1/L", "v_1": "L**2", "v_2": "L**2", "n": "L", "m": "L", "U": "L**2",
+        "V": "L**2", "W_1": "1/L**2", "W_2": "1/L**2",
+    },
+    ("wahlquist", "mars_ingoing"): {
+        "v": "L", "y": "L", "z": "L", "\\phi": "1/L", "Q_0": "L**2", "\\nu_0": "1", "\\mu_0": "1/L**2",
+        "a_1": "L", "a_2": "L", "\\beta": "1/L", "v_1": "L**2", "v_2": "L**2", "n": "L", "m": "L", "U": "L**2",
+        "V": "L**2", "W_1": "1/L**2", "W_2": "1/L**2",
+    },
+    ("wahlquist", "whittaker"): {"t": "T", "X": "1", "\\theta": "1", "\\phi": "1", "R_0": "L", "b": "1", "F": "1"},
     ("lifshitz_spacetime", "kachru_liu_mulligan"): {"t": "T", "x": "L", "y": "L", "r": "L", "z": "1", "L": "L"},
     ("lifshitz_spacetime", "poincare"): {"t": "T", "x": "L", "y": "L", "u": "L", "z": "1", "L": "L"},
     ("lifshitz_spacetime", "proper_distance"): {"t": "T", "x": "L", "y": "L", "\\rho": "L", "z": "1", "L": "L"},
@@ -936,16 +955,16 @@ DIMENSIONS = {
     # of the Gauss-Bonnet term as the length l, l^2 = 2 alpha; the radical W = sqrt(r^4 + 4 l^2 r_0^2)
     # is an area, and the Eddington-Finkelstein times u = ct - r_* and v = ct + r_* are lengths.
     ("boulware_deser", "spherical"): {
-        "t": "T", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\ell": "L", "W": "L^2",
+        "t": "T", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\ell": "L", "W": "L**2",
     },
     ("boulware_deser", "eddington_finkelstein_outgoing"): {
-        "u": "L", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\ell": "L", "W": "L^2",
+        "u": "L", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\ell": "L", "W": "L**2",
     },
     ("boulware_deser", "eddington_finkelstein_ingoing"): {
-        "v": "L", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\ell": "L", "W": "L^2",
+        "v": "L", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\ell": "L", "W": "L**2",
     },
     ("boulware_deser", "spherical_plus"): {
-        "t": "T", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\ell": "L", "W": "L^2",
+        "t": "T", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\ell": "L", "W": "L**2",
     },
     # Randall and Sundrum's wall has one inverse length, k, the curvature of the anti-de Sitter space
     # on each side; x_1, x_2 and x_3 run along the wall, and the fifth coordinate is a length in every
@@ -1473,6 +1492,12 @@ HELD = {
     # Weyl's two functions for the first Morgan-Morgan disc, polynomials in xi, eta and arccot(xi):
     # held, every value is written in them and their derivatives, as Weyl's chart writes it.
     ("morgan_morgan", "oblate_spheroidal"): ("psi", "gamma"),
+    # Wahlquist's h_1 and h_2, and Mars's U and V, each a function of one coordinate that holds
+    # that coordinate bare beside its sine, so that its derivatives are algebraic in the function.
+    ("wahlquist", "wahlquist"): ("h_1", "h_2"),
+    ("wahlquist", "mars"): ("U", "V"),
+    ("wahlquist", "mars_ingoing"): ("U", "V"),
+    ("wahlquist", "whittaker"): ("F",),
 }
 
 GREEK = [
@@ -1494,6 +1519,8 @@ FUNCTIONS = {
     # \\arctan, under a spelling that ends in no other function's name, so that the reader does
     # not part a tan from it.
     "ATAN": sp.atan,
+    # \\arcsin and \\mathrm{arsinh}, spelled the same way, for Wahlquist's h_1 and h_2.
+    "ASINH": sp.asinh, "ASIN": sp.asin,
 }
 
 
@@ -2123,15 +2150,19 @@ PARTIAL = re.compile(
     r"\\partial_\s*\{?\s*(?:\\([A-Za-z]+)|([A-Za-z]))\s*\}?\s*(?:\^\s*\{?\s*(\d+)\s*\}?)?\s*")
 PARTIAL_TARGET = re.compile(r"\\?([A-Za-z]+)")
 # The single token expand_partials writes, split into the function and the coordinates.
-PARTIAL_NAME = re.compile(r"\b([A-Za-z]+)_partial_([A-Za-z]+(?:_[A-Za-z]+)*)\b")
+PARTIAL_NAME = re.compile(r"\b([A-Za-z]+(?:_[0-9]+)?)_partial_([A-Za-z]+(?:_[A-Za-z]+)*)\b")
+# A numeral subscript after the name a run of \\partial binds to, as the 1 of Wahlquist's h_1.
+PARTIAL_SUBSCRIPT = re.compile(r"\s*_\s*(?:\{\s*([0-9]+)\s*\}|([0-9]+))")
 
 
-def expand_partials(text):
+def expand_partials(text, subscripted=()):
     """A run of \\partial factors into the one name the reader declares for it.
 
     \\partial_x^2 H becomes H_partial_x_x and \\partial_x\\partial_y H becomes
     H_partial_x_y, so a published partial derivative is a single token by the time the
-    parser sees it. The run binds to the one function name that follows it.
+    parser sees it. The run binds to the one function name that follows it, and takes that
+    name's numeral subscript with it where `subscripted` lists the two together as a declared
+    function, as \\partial_\\xi h_1 becomes h_1_partial_xi.
     """
     out = []
     position = 0
@@ -2152,8 +2183,12 @@ def expand_partials(text):
         target = PARTIAL_TARGET.match(text, at)
         if target is None:
             raise LatexError(f"the \\partial in {text!r} names no function")
-        out.append(f" {target.group(1)}_partial_{'_'.join(variables)} ")
-        position = target.end()
+        name, position = target.group(1), target.end()
+        subscript = PARTIAL_SUBSCRIPT.match(text, position)
+        numeral = subscript and (subscript.group(1) or subscript.group(2))
+        if numeral and f"{name}_{numeral}" in subscripted:
+            name, position = f"{name}_{numeral}", subscript.end()
+        out.append(f" {name}_partial_{'_'.join(variables)} ")
 
 
 def expand_superscript_braces(text):
@@ -2418,7 +2453,7 @@ class Reader:
             text = re.sub(re.escape(name) + r"'''", f" {name}_ppprime ", text)
             text = re.sub(re.escape(name) + r"''", f" {name}_pprime ", text)
             text = re.sub(re.escape(name) + r"'", f" {name}_prime ", text)
-        text = expand_partials(text)
+        text = expand_partials(text, [name for name in self.functions if "_" in name])
         text = expand_fractions(text)
         text = expand_braced_call(text, "sqrt", "sqrt")
         text = expand_braced_call(text, "ddot", "DDOT")
@@ -2438,6 +2473,7 @@ class Reader:
             text = text.replace("\\" + command, " " + command + " ")
         text = text.replace("\\exp", " exp ").replace("\\ln", " log ").replace("\\log", " log ")
         text = text.replace("\\arctan", " ATAN ")
+        text = text.replace("\\mathrm{arsinh}", " ASINH ").replace("\\arcsin", " ASIN ")
         text = expand_superscript_braces(text)
         text = text.replace("^", "**")
         # A trig call written bare, as \sin^2\theta or \cot\theta rather than sin(theta).

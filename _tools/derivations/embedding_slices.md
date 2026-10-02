@@ -615,6 +615,14 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `poincare/rays`, the figure, marks nothing: its plane is $y = 0$ with $t$ left out, which every moment of the static spacetime covers whole.
 - The conformal diagram, one view for each chart: the curve $T = 0$ from $w = L/18$ to $w = e^6L/2$, the same curve on all six.
 
+### Wahlquist's rotating fluid
+
+- The embedding has two views: the equatorial plane of the rotating body at $t = 0$ in units of $r_0$, the disc $\xi = 0$ from the centre $\eta = \eta_0$ to the ring and the plane $\eta = 0$ from the ring to the surface of zero pressure at $\xi = 2.810$, and the equatorial plane of Whittaker's sphere at $t = 0$ in units of $R_0$, from the centre to $X_s = 1.0027$.
+- `wahlquist/equator`: the line $t = 0$ from the ring $\xi = 0$ to the surface.
+- `wahlquist/disc`: the line $t = 0$ from the ring $\eta = 0$ to the axis $\eta = \eta_0$.
+- `mars/equator` and `mars_ingoing/equator` mark nothing: Mars's angle is divided out along another Killing vector than $\partial_\phi$, $\partial_\sigma = (r_0/\gamma)\partial_\phi - r_0^2\eta_0^2\,\partial_{ct}$, whose circles each run through every moment of $t$.
+- `whittaker/radial` and `whittaker/through`: the line $t = 0$ from the centre to $X_s$, which the page mirrors on the view through the centre.
+
 ### Siklos waves
 
 - The embedding has one view in units of $L$: the wave front $u = v = 0$, read on the disc of the chart of Ozsváth, Robinson and Rózga out to the circle a proper distance $2L$ from its centre, $\xi^2 + \eta^2 = 4L^2\tanh^2 1$.
@@ -738,6 +746,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | TOV | line, line | none | line |
 | Hiscock | level lines in each chart that holds the moment; not visible on the two shells | none | six curves |
 | Lifshitz | line in each static chart and on each plane of $t$ and $x$, curve in each null chart | not visible: $t$ left out | six curves |
+| Wahlquist | line on each view of Wahlquist's chart and of Whittaker's; not visible on Mars's two | none | none drawn |
 | Vaidya | three lines, four with the box taken to $-3\,r_s$; not visible on the outgoing view | none | four curves |
 
 As drawn in 4de26cc, the Krasnikov tube's slice is a line, Reissner-Nordström's are two lines, and Vaidya's ingoing view carries all four lines.

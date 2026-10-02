@@ -165,6 +165,11 @@
       "id": "bonnor_magnetic_dipole",
       "kind": "family",
       "text": "A static magnet made from Kerr's metric. Bonnor's rule trades the twist of the spinning hole for a magnetic potential and turns $a^2$ into $-b^2$ [bonnor2002, davidson1994]."
+    },
+    {
+      "id": "wahlquist",
+      "kind": "generalisation",
+      "text": "Kerr's hole with a rigidly rotating perfect fluid laid over it. Wahlquist's family in Mars's chart is Kerr's metric at $\\beta = 0$, $\\mu_0 = 0$, and $a_1 = 0$ [mars2001]."
     }
   ],
   "references": [
@@ -218,7 +223,8 @@
     "bonnor1977cloud",
     "bratek2007",
     "bonnor2002",
-    "davidson1994"
+    "davidson1994",
+    "mars2001"
   ],
   "coordinates": [
     {

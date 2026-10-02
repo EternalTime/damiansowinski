@@ -10,8 +10,8 @@ black_string, myers_perry, black_saturn, near_horizon_extreme_kerr, hartle_thorn
 som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos,
 schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
-israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist and lewis, and
-Godel's cylindrical chart.
+israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis and
+wahlquist, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -15516,6 +15516,622 @@ def lewis_check(chart, system):
 
 
 CHARTS["lewis"] = [lambda s=s: lewis(s) for s in LEWIS_CHARTS]
+
+
+# -- Wahlquist's rotating fluid --------------------------------------------------------
+
+WAHLQUIST_CHARTS = ["wahlquist", "mars", "mars_ingoing", "whittaker"]
+# Mars's chart: his six constants, the two squares his line element is written in, the mass and
+# NUT functions, which carry the fluid as the terms in mu_0, his U and V, and the two scalars of
+# the Weyl tensor in the frame of the line element, which the mass and NUT functions make short.
+WQ_MARS_PARAMETERS = [
+    "Q_0", "\\nu_0", "\\mu_0", "a_1", "a_2", "\\beta",
+    "v_1 = \\dfrac{\\sinh^2(\\beta z)}{\\beta^2}",
+    "v_2 = \\dfrac{\\sin^2(\\beta y)}{\\beta^2}",
+    "n = a_1 + \\dfrac{\\mu_0 z}{\\beta^2}",
+    "m = a_2 - \\dfrac{\\mu_0 y}{\\beta^2}",
+    "U = Q_0 - \\left(\\nu_0 + \\dfrac{\\mu_0}{\\beta^2}\\right)v_1 + \\dfrac{n\\sinh(2\\beta z)}{2\\beta}",
+    "V = Q_0 + \\left(\\nu_0 + \\dfrac{\\mu_0}{\\beta^2}\\right)v_2 + \\dfrac{m\\sin(2\\beta y)}{2\\beta}",
+    "W_1 = -\\dfrac{n\\sinh(2\\beta z)\\left(2\\beta^2 v_2\\left(v_1 - v_2\\right) - v_1 + 3 v_2\\right)"
+    " + m\\sin(2\\beta y)\\left(2\\beta^2 v_1\\left(v_1 - v_2\\right) + 3 v_1 - v_2\\right)}{2\\beta\\left(v_1 + v_2\\right)^3}"
+    " - \\dfrac{\\mu_0\\left(\\beta^2\\left(v_1^2 - 4 v_1 v_2 + v_2^2\\right) + 3 v_1 - 3 v_2\\right)}{3\\beta^2\\left(v_1 + v_2\\right)^2}",
+    "W_2 = \\dfrac{n\\sin(2\\beta y)\\left(2\\beta^2 v_1\\left(v_1 - v_2\\right) + 3 v_1 - v_2\\right)"
+    " - m\\sinh(2\\beta z)\\left(2\\beta^2 v_2\\left(v_1 - v_2\\right) - v_1 + 3 v_2\\right)}{2\\beta\\left(v_1 + v_2\\right)^3}"
+    " - \\dfrac{\\mu_0\\sinh(2\\beta z)\\sin(2\\beta y)}{2\\beta^4\\left(v_1 + v_2\\right)^2}",
+]
+# Wahlquist's chart: his r_0, k and b, the root eta_0 of h_2 and the constant gamma that makes the
+# axis regular, his h_1 and h_2, and the same two scalars.
+WQ_OWN_PARAMETERS = [
+    "r_0", "k", "b", "\\eta_0", "\\gamma",
+    "h_1 = 1 + \\xi^2 + \\dfrac{\\xi}{b^2}\\left(\\xi - \\dfrac{\\sqrt{1 - k^2\\xi^2}}{k}\\arcsin(k\\xi)\\right)",
+    "h_2 = 1 - \\eta^2 - \\dfrac{\\eta}{b^2}\\left(\\eta - \\dfrac{\\sqrt{1 + k^2\\eta^2}}{k}\\mathrm{arsinh}(k\\eta)\\right)",
+    "W_1 = \\dfrac{\\xi\\sqrt{1 - k^2\\xi^2}\\left(2k^2\\eta^2\\left(\\eta^2 - \\xi^2\\right) + 3\\eta^2 - \\xi^2\\right)\\arcsin(k\\xi)"
+    " - \\eta\\sqrt{1 + k^2\\eta^2}\\left(2k^2\\xi^2\\left(\\eta^2 - \\xi^2\\right) + 3\\xi^2 - \\eta^2\\right)\\mathrm{arsinh}(k\\eta)}"
+    "{k b^2 r_0^2\\left(\\xi^2 + \\eta^2\\right)^3}"
+    " - \\dfrac{k^2\\left(\\xi^4 - 4\\xi^2\\eta^2 + \\eta^4\\right) + 3\\eta^2 - 3\\xi^2}{3 b^2 r_0^2\\left(\\xi^2 + \\eta^2\\right)^2}",
+    "W_2 = \\dfrac{\\xi\\sqrt{1 - k^2\\xi^2}\\left(2k^2\\eta^2\\left(\\eta^2 - \\xi^2\\right) + 3\\eta^2 - \\xi^2\\right)\\mathrm{arsinh}(k\\eta)"
+    " + \\eta\\sqrt{1 + k^2\\eta^2}\\left(2k^2\\xi^2\\left(\\eta^2 - \\xi^2\\right) + 3\\xi^2 - \\eta^2\\right)\\arcsin(k\\xi)}"
+    "{k b^2 r_0^2\\left(\\xi^2 + \\eta^2\\right)^3}"
+    " - \\dfrac{2\\xi\\eta\\sqrt{1 - k^2\\xi^2}\\sqrt{1 + k^2\\eta^2}}{b^2 r_0^2\\left(\\xi^2 + \\eta^2\\right)^2}",
+]
+WQ_WHITTAKER_PARAMETERS = ["R_0", "b", "F = 1 + \\dfrac{1 - X\\cot X}{b^2}"]
+
+
+def _bare(value, x, replacement):
+    """The value with the coordinate x replaced wherever it stands outside a function."""
+    kept = {f: sp.Dummy() for f in value.atoms(sp.Function) if f.has(x)}
+    back = {dummy: f for f, dummy in kept.items()}
+    return value.xreplace(kept).subs(x, replacement).xreplace(back)
+
+
+class WahlquistForms:
+    """How a value of Wahlquist's solution is written, in Mars's charts and in Wahlquist's own.
+
+    The functions of one coordinate, U(z) and V(y) or h_2(eta) and h_1(xi), are held as functions
+    while the tensors are built. `reduce` writes each derivative of one, and the mass and NUT
+    functions or the inverse sines a printed name brings in, in the function itself, which is
+    algebraic, so that no relation is left among the generators. `prepare` then lays out how
+    each tensor is written: a Christoffel symbol with the first derivatives of the two functions
+    standing, which is how Carter's separable metrics are short, the Weyl tensor as W_1 and W_2
+    times the products of the frame of the line element, a type D tensor having those two
+    components and no more, and the Riemann tensor as the Weyl tensor plus the part its Ricci
+    tensor fixes. `pretty` hands back the laid out form of a value it knows, and factors any
+    other in the chart's own generators."""
+
+    def __init__(self, reader, own):
+        self.reader, self.own = reader, own
+        p = reader.parameters
+        self.W1, self.W2 = sp.Symbol("W_1"), sp.Symbol("W_2")
+        self.known = {}
+        if own:
+            self.x2, self.x1 = reader.symbol["\\xi"], reader.symbol["\\eta"]
+            self.F2, self.F1 = p["h_1"], p["h_2"]
+            self.k, self.b, self.r0 = p["k"], p["b"], p["r_0"]
+            k, xi, eta = self.k, self.x2, self.x1
+            self.R2, self.R1 = sp.sqrt(1 - k ** 2 * xi ** 2), sp.sqrt(1 + k ** 2 * eta ** 2)
+            # The two radicals while a value is factored, and what each prints as.
+            self.r2, self.r1 = sp.Symbol("_R2", positive=True), sp.Symbol("_R1", positive=True)
+            self.rules = self._inverse_sines()
+        else:
+            self.x2, self.x1 = reader.symbol["y"], reader.symbol["z"]
+            self.F2, self.F1 = p["V"], p["U"]
+            self.beta = p["beta"]
+            self.v1, self.v2 = sp.Symbol("v_1", positive=True), sp.Symbol("v_2", positive=True)
+            self.rules = self._mass_and_nut(p)
+
+    # -- the relations that close the generators ------------------------------------------
+    def _mass_and_nut(self, p):
+        b, y, z, U, V = self.beta, self.x2, self.x1, self.F1, self.F2
+        Q0, nu, mu, a1, a2 = (p[key] for key in ("Q_0", "nu_0", "mu_0", "a_1", "a_2"))
+        v1, v2 = sp.sinh(b * z) ** 2 / b ** 2, sp.sin(b * y) ** 2 / b ** 2
+        nut = 2 * b * (U - Q0 + (nu + mu / b ** 2) * v1) / sp.sinh(2 * b * z)
+        mass = 2 * b * (V - Q0 - (nu + mu / b ** 2) * v2) / sp.sin(2 * b * y)
+        return {
+            "bare": ((z, b ** 2 * (nut - a1) / mu), (y, -b ** 2 * (mass - a2) / mu)),
+            "derivatives": {
+                sp.Derivative(U, z): -(nu + mu / (2 * b ** 2)) * sp.sinh(2 * b * z) / b + nut * sp.cosh(2 * b * z),
+                sp.Derivative(U, (z, 2)): 4 * b ** 2 * (U - Q0) - 2 * nu + 4 * mu * v1,
+                sp.Derivative(V, y): (nu + mu / (2 * b ** 2)) * sp.sin(2 * b * y) / b + mass * sp.cos(2 * b * y),
+                sp.Derivative(V, (y, 2)): -4 * b ** 2 * (V - Q0) + 2 * nu + 4 * mu * v2},
+            "atoms": {}}
+
+    def _inverse_sines(self):
+        """arcsin(k xi) and arsinh(k eta) written in h_1 and h_2, and with them the derivatives."""
+        out = {"bare": (), "derivatives": {}, "atoms": {}}
+        for F, x, inverse in ((self.F2, self.x2, sp.asin(self.k * self.x2)), (self.F1, self.x1, sp.asinh(self.k * self.x1))):
+            explicit, T = self.reader.held[F], sp.Dummy()
+            if not explicit.has(inverse):
+                raise AssertionError(f"wahlquist: {F} is not written in {inverse}")
+            (solution,) = sp.solve(explicit.xreplace({inverse: T}) - F, T)
+            out["atoms"][inverse] = solution
+            for order in (1, 2):
+                out["derivatives"][sp.Derivative(F, (x, order)) if order > 1 else sp.Derivative(F, x)] = \
+                    sp.diff(explicit, x, order).xreplace({inverse: solution})
+        return out
+
+    def reduce(self, value):
+        value = sp.sympify(value)
+        if value.has(sp.Derivative):
+            value = value.xreplace(self.rules["derivatives"])
+            if value.has(sp.Derivative):
+                raise AssertionError(f"wahlquist: a derivative `reduce` does not know stands in {value}")
+        if self.rules["atoms"]:
+            value = value.xreplace(self.rules["atoms"])
+        for x, replacement in self.rules["bare"]:
+            if value.has(x):
+                value = _bare(value, x, replacement)
+        return vm.norm(value)
+
+    # -- a value in the generators it is printed in ----------------------------------------
+    def stand_ins(self):
+        """{what stands in a value: the symbol it is while the value is factored}."""
+        F1, F2, x1, x2 = self.F1, self.F2, self.x1, self.x2
+        return {F1: sp.Symbol("_F1"), F2: sp.Symbol("_F2"),
+                sp.Derivative(F1, x1): sp.Symbol("_dF1"), sp.Derivative(F2, x2): sp.Symbol("_dF2"),
+                sp.Derivative(F1, (x1, 2)): sp.Symbol("_ddF1"), sp.Derivative(F2, (x2, 2)): sp.Symbol("_ddF2")}
+
+    def polynomial(self, value):
+        """(numerator, denominator, {stand-in: what it prints as}) of a value, the odd functions
+        of each coordinate lowered so that neither holds the square of one, and none below."""
+        stand = self.stand_ins()
+        value = sp.sympify(value).xreplace(stand)
+        back = {symbol: what for what, symbol in stand.items()}
+        if self.own:
+            r1, r2, k, xi = self.r1, self.r2, self.k, self.x2
+            squares = ((r1, self.R1 ** 2), (r2, self.R2 ** 2))
+            # The checker's canonical form writes the root of 1 - k^2 xi^2 as i times the roots of
+            # k xi - 1 and k xi + 1, the first of which is -i times the root of 1 - k xi.
+            low, high = sp.Symbol("_low", positive=True), sp.Symbol("_high", positive=True)
+
+            def radical(power):
+                base, n = power.base, 2 * power.exp
+                if sp.expand(base - (k * xi - 1)) == 0:
+                    return (-sp.I) ** n * low ** n
+                if sp.expand(base - (1 - k * xi)) == 0:
+                    return low ** n
+                if sp.expand(base - (k * xi + 1)) == 0:
+                    return high ** n
+                for symbol, square in squares:
+                    if sp.expand(base - square) == 0:
+                        return symbol ** n
+                raise AssertionError(f"wahlquist: {base} under a root is neither radicand")
+            value = value.replace(lambda e: e.is_Pow and e.exp.is_Rational and not e.exp.is_Integer and not e.base.is_Number,
+                                  radical)
+        else:
+            b, y, z, v1, v2 = self.beta, self.x2, self.x1, self.v1, self.v2
+            s1, s2 = sp.Symbol("_S1"), sp.Symbol("_S2")
+            E, s, c = sp.Symbol("_E", positive=True), sp.Symbol("_s"), sp.Symbol("_c")
+            if value.has(sp.sinh, sp.cosh):
+                value = value.rewrite(sp.exp)
+            value = value.replace(lambda e: isinstance(e, sp.exp), lambda e: E ** sp.cancel(e.args[0] / (b * z)))
+            value = sp.expand_trig(value).xreplace({sp.sin(b * y): s, sp.cos(b * y): c})
+            if value.has(y) or value.has(z):
+                raise AssertionError(f"wahlquist: a coordinate stands bare in {value}")
+            squares = ((s1, 4 * b ** 2 * v1 * (1 + b ** 2 * v1)), (s2, 4 * b ** 2 * v2 * (1 - b ** 2 * v2)))
+            back.update({s1: sp.sinh(2 * b * z), s2: sp.sin(2 * b * y)})
+        numerator, denominator = sp.fraction(sp.together(value))
+        if self.own:
+            def paired(side):
+                out = 0
+                for (i, j), coefficient in sp.Poly(sp.expand(side), low, high).terms():
+                    if (i + j) % 2:
+                        raise AssertionError("wahlquist: a root of 1 - k xi stands without the root of 1 + k xi")
+                    pairs = min(i, j)
+                    out += coefficient * r2 ** pairs * (1 - k * xi) ** ((i - pairs) // 2) * (1 + k * xi) ** ((j - pairs) // 2)
+                return sp.expand(out)
+            if any((i + j) % 2 for (i, j), _ in sp.Poly(sp.expand(denominator), low, high).terms()):
+                numerator, denominator = numerator * low, denominator * low
+            numerator, denominator = paired(numerator), paired(denominator)
+            if numerator.has(sp.I) or denominator.has(sp.I):
+                unit = sp.cancel(numerator / denominator)
+                numerator, denominator = sp.fraction(sp.together(unit))
+                if numerator.has(sp.I) or denominator.has(sp.I):
+                    raise AssertionError("wahlquist: an imaginary unit is left in a value")
+        if not self.own:
+            # e^{2 beta z} = cosh(2 beta z) + sinh(2 beta z) and the powers of sin(beta y) and
+            # cos(beta y), which come in pairs once both sides hold an even number of them.
+            if any((i + j) % 2 for (i, j), _ in sp.Poly(sp.expand(denominator), s, c).terms()):
+                numerator, denominator = numerator * c, denominator * c
+            if any(n % 2 for (n,), _ in sp.Poly(sp.expand(denominator), E).terms()):
+                numerator, denominator = numerator * E, denominator * E
+
+            def named(side):
+                out = 0
+                for (n,), coefficient in sp.Poly(sp.expand(side), E).terms():
+                    if n % 2:
+                        raise AssertionError("wahlquist: an odd power of e^(beta z) is left")
+                    out += coefficient * (1 + 2 * b ** 2 * v1 + s1) ** (n // 2)
+                side, out = out, 0
+                for (i, j), coefficient in sp.Poly(sp.expand(side), s, c).terms():
+                    if (i + j) % 2:
+                        raise AssertionError("wahlquist: an odd power of sin(beta y) or cos(beta y) is left")
+                    pairs = min(i, j)
+                    out += (coefficient * (s2 / 2) ** pairs * (b ** 2 * v2) ** ((i - pairs) // 2)
+                            * (1 - b ** 2 * v2) ** ((j - pairs) // 2))
+                return out
+            numerator, denominator = named(numerator), named(denominator)
+
+        def lowered(side):
+            for symbol, square in squares:
+                terms = sp.Poly(sp.expand(side), symbol).terms()
+                side = sp.expand(sum(c * symbol ** (n % 2) * square ** (n // 2) for (n,), c in terms))
+            return side
+        numerator, denominator = lowered(numerator), lowered(denominator)
+        for symbol, _ in squares:
+            if denominator.has(symbol):
+                poly = sp.Poly(denominator, symbol)
+                conjugate = poly.coeff_monomial(1) - poly.coeff_monomial(symbol) * symbol
+                numerator, denominator = lowered(numerator * conjugate), lowered(denominator * conjugate)
+        return numerator, denominator, back
+
+    def grouped(self, value):
+        """A factored value with each long sum grouped by the functions it holds, every
+        coefficient factored in its turn, where that is shorter."""
+        gens = [sp.Symbol(n) for n in ("_F1", "_F2", "_dF1", "_dF2", "_ddF1", "_ddF2", "_S1", "_S2")]
+        if self.own:
+            gens += [self.r1, self.r2]
+        number, factors = sp.Integer(1), []
+        for f in sp.Mul.make_args(value):
+            if f.is_Number:
+                number *= f
+                continue
+            base, n = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            if base.is_Add and len(base.args) > 3:
+                here = [g for g in gens if base.has(g)]
+                if here:
+                    terms = sp.Poly(base, *here).terms()
+                    if 1 < len(terms) < len(base.args):
+                        pieces = [sp.Mul(sp.factor(c), sp.Mul(*[g ** e for g, e in zip(here, mono)])) for mono, c in terms]
+                        candidate = sp.Add(*pieces, evaluate=False)
+                        if len(str(candidate)) < len(str(base)):
+                            base = candidate
+            factors.append(sp.Pow(base, n, evaluate=False) if n != 1 else base)
+        # A number multiplied onto a lone sum would be carried into it.
+        if len(factors) == 1 and factors[0].is_Add and number != 1:
+            return sp.Mul(number, factors[0], evaluate=False)
+        return sp.Mul(number, *factors)
+
+    def factored(self, value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        numerator, denominator, back = self.polynomial(value)
+        value = sp.factor(sp.cancel(numerator / denominator))
+        return self.grouped(value).xreplace(back)
+
+    def pretty(self, value):
+        value = sp.sympify(value)
+        if value in self.known:
+            return self.known[value]
+        return self.factored(value)
+
+    def printer(self):
+        if self.own:
+            p = self.reader.parameters
+            return {"lead": [self.W1, self.W2, self.F2, self.F1, self.x2, self.x1], "flip": False,
+                    "overrides": {self.r2: "\\sqrt{1 - k^2\\xi^2}", self.r1: "\\sqrt{1 + k^2\\eta^2}"},
+                    "factors": [self.k, self.b, self.r0, p["gamma"], p["eta_0"], self.x2, self.x1, self.F2, self.F1,
+                                self.r2, self.r1, self.W1, self.W2]}
+        b, y, z = self.beta, self.x2, self.x1
+        p = self.reader.parameters
+        return {"lead": [self.W1, self.W2, self.F1, self.F2, self.v1, self.v2], "flip": False,
+                "overrides": {b: "\\beta"},
+                "arguments": {2 * b * z: "2\\beta z", 2 * b * y: "2\\beta y"},
+                "factors": [b, p["Q_0"], p["nu_0"], p["mu_0"], p["a_1"], p["a_2"], self.v1, self.v2, self.F1, self.F2,
+                            self.W1, self.W2]}
+
+    # -- the layout of each tensor ----------------------------------------------------------
+    def coframe(self, system):
+        """The frame of the line element, e^0 to e^3 as rows over the chart's differentials, with
+        its two timelike-radial and its two angular legs each a square root apart."""
+        if self.own:
+            p = self.reader.parameters
+            xi, eta, h1, h2, r0, g, eta0, k = self.x2, self.x1, self.F2, self.F1, self.r0, p["gamma"], p["eta_0"], self.k
+            S = xi ** 2 + eta ** 2
+            return sp.Matrix([
+                [sp.sqrt(h1 / S), 0, 0, -sp.sqrt(h1 / S) * g * r0 * (eta ** 2 - eta0 ** 2)],
+                [0, r0 * sp.sqrt(S / h1) / self.r2, 0, 0],
+                [0, 0, r0 * sp.sqrt(S / h2) / self.r1, 0],
+                [sp.sqrt(h2 / S), 0, 0, sp.sqrt(h2 / S) * g * r0 * (xi ** 2 + eta0 ** 2)]])
+        U, V, v1, v2 = self.F1, self.F2, self.v1, self.v2
+        Q = v1 + v2
+        if system == "mars":
+            return sp.Matrix([[sp.sqrt(V / Q), 0, 0, -v1 * sp.sqrt(V / Q)], [0, sp.sqrt(Q / V), 0, 0],
+                              [0, 0, sp.sqrt(Q / U), 0], [sp.sqrt(U / Q), 0, 0, v2 * sp.sqrt(U / Q)]])
+        return sp.Matrix([[sp.sqrt(V / Q), -sp.sqrt(Q / V), 0, v1 * sp.sqrt(V / Q)], [0, sp.sqrt(Q / V), 0, 0],
+                          [0, 0, sp.sqrt(Q / U), 0], [sp.sqrt(U / Q), 0, 0, -v2 * sp.sqrt(U / Q)]])
+
+    @staticmethod
+    def type_d():
+        """The frame components of a type D Weyl tensor whose repeated principal null directions
+        are e_0 +- e_1, as {index: (its multiple of W_1, its multiple of W_2)}: C_0101 = W_1 and
+        C_0123 = W_2, and the rest by tracelessness and the cyclic identity."""
+        half = sp.Rational(1, 2)
+        pairs = {(0, 1, 0, 1): (1, 0), (2, 3, 2, 3): (-1, 0), (0, 2, 0, 2): (-half, 0), (0, 3, 0, 3): (-half, 0),
+                 (1, 2, 1, 2): (half, 0), (1, 3, 1, 3): (half, 0),
+                 (0, 1, 2, 3): (0, 1), (0, 2, 1, 3): (0, half), (0, 3, 1, 2): (0, -half)}
+        out = {}
+        for (a, b, c, d), (electric, magnetic) in pairs.items():
+            for (i, j, sign_one) in ((a, b, 1), (b, a, -1)):
+                for (m, n, sign_two) in ((c, d, 1), (d, c, -1)):
+                    for index in ((i, j, m, n), (m, n, i, j)):
+                        out[index] = (sign_one * sign_two * electric, sign_one * sign_two * magnetic)
+        return out
+
+    def tidy(self, value):
+        """A rational function of the printed generators, factored, with a positive symbol for
+        each function while the square roots of the frame merge."""
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        positive = {self.F1: sp.Symbol("_pF1", positive=True), self.F2: sp.Symbol("_pF2", positive=True)}
+        symbols = [s for s in value.free_symbols if not s.is_positive]
+        positive.update({s: sp.Symbol("_p" + s.name, positive=True) for s in symbols})
+        back = {symbol: what for what, symbol in positive.items()}
+        value = sp.powdenest(sp.expand_power_base(value.xreplace(positive), force=True), force=True)
+        value = sp.factor(sp.cancel(sp.together(sp.powsimp(value, force=True))))
+        if self.own:
+            # A power of a radical above the first is written in its radicand, and the radical
+            # itself stays the one symbol the printer writes as the root.
+            back = {symbol: what for symbol, what in back.items() if symbol not in (self.r1, self.r2)}
+            for symbol, root in ((self.r1, self.R1), (self.r2, self.R2)):
+                square = (root ** 2).xreplace(positive)
+                value = value.replace(lambda e: e.is_Pow and e.base == symbol and abs(e.exp) > 1,
+                                      lambda e: symbol ** (sp.sign(e.exp) * (abs(e.exp) % 2))
+                                      * square ** (sp.sign(e.exp) * (abs(e.exp) // 2)))
+            value = sp.factor(value)
+        return value.xreplace(back)
+
+    def prepare(self, chart, system):
+        """Lay out the Christoffel symbols, the Weyl tensor and the Riemann tensor of the chart."""
+        raw, reduced = chart.geo._geometry, chart.geo
+        n = 4
+        known = self.known
+
+        def note(key, laid):
+            key = sp.sympify(key)
+            if key != 0 and key not in known:
+                known[key], known[-key] = laid, -laid
+
+        # The connection, with the first derivatives of the two functions standing.
+        for variant in ("christoffel_ull", "christoffel_lll"):
+            mine, theirs = getattr(reduced, variant)(), getattr(raw, variant)()
+            for index in map(tuple, vm._indices(n, 3)):
+                key = vm._at(mine, index)
+                if key != 0:
+                    laid = self.factored(vm._at(theirs, index))
+                    note(key, laid)
+                    note(key * 2, 2 * laid)
+        # The Weyl tensor: W_1 and W_2 times the products of the frame.
+        e = self.coframe(system)
+        ginv = e.inv() * sp.diag(-1, 1, 1, 1) * e.inv().T
+        frame = self.type_d()
+        electric = {}
+        magnetic = {}
+        for index in map(tuple, vm._indices(n, 4)):
+            one = two = sp.Integer(0)
+            for legs, (a, b) in frame.items():
+                product = sp.Mul(*[e[leg, slot] for leg, slot in zip(legs, index)])
+                if product != 0:
+                    one, two = one + a * product, two + b * product
+            electric[index], magnetic[index] = self.tidy(one), self.tidy(two)
+        up_electric, up_magnetic = {}, {}
+        for index in map(tuple, vm._indices(n, 4)):
+            up_electric[index] = self.tidy(sum(ginv[index[0], s] * electric[(s,) + index[1:]] for s in range(n)))
+            up_magnetic[index] = self.tidy(sum(ginv[index[0], s] * magnetic[(s,) + index[1:]] for s in range(n)))
+        weyl, riemann = reduced.weyl_llll(), reduced.riemann_llll()
+        blocks = (("llll", weyl, riemann, electric, magnetic),
+                  ("ulll", reduced.raise_indices(weyl, 4, (0,)), reduced.raise_indices(riemann, 4, (0,)),
+                   up_electric, up_magnetic))
+        for _, conformal, whole, one, two in blocks:
+            for index in map(tuple, vm._indices(n, 4)):
+                laid = sp.Add(self.W1 * one[index], self.W2 * two[index])
+                c, r = vm._at(conformal, index), vm._at(whole, index)
+                if c != 0:
+                    note(c, laid)
+                if r != 0 and r != c:
+                    rest = self.factored(vm.norm(r - c))
+                    note(r, sp.Add(laid, rest))
+
+
+def wahlquist(system):
+    """Wahlquist's rigidly rotating perfect fluid with rho + 3p constant, in four charts: his own
+    spheroidal coordinates, for the fluid with no singularity in it; Mars's chart, Carter's form
+    with the two squares v_1 and v_2, which holds the whole family, the Kerr-NUT part with it, and
+    is Kerr-de Sitter's at beta = 0; Mars's chart carried along the ingoing principal null
+    congruence, which crosses the horizons V = 0; and the static limit, Whittaker's sphere.
+    wahlquist_check holds each to the perfect fluid, Wahlquist's chart to being Mars's pulled back
+    at Q_0 = r_0^2, nu_0 = 1, a_1 = a_2 = 0, beta = k/r_0 and mu_0 = k^2/(b r_0)^2, the ingoing chart
+    to being Mars's pulled back, and Whittaker's to being the limit r_0 -> 0 of Wahlquist's.
+    wahlquist.md beside this file records each chart's source."""
+    if system == "whittaker":
+        coords = ["t", "X", "\\theta", "\\phi"]
+        metric = "F\\,{T}^2 + R_0^2\\left(\\dfrac{dX^2}{F} + \\sin^2 X\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)"
+        reader = vm.Reader(coords, WQ_WHITTAKER_PARAMETERS, (), held=("F",))
+        X, b, F = reader.symbol["X"], reader.parameters["b"], reader.parameters["F"]
+        # F holds X bare beside its cotangent, so X = (1 + b^2 - b^2 F) tan X, and with it every
+        # derivative of F, is algebraic in F.
+        bare = (1 + b ** 2 - b ** 2 * F) * sp.tan(X)
+        first = (sp.sin(X) ** 2 + b ** 2 * (1 - F)) / (b ** 2 * sp.sin(X) * sp.cos(X))
+        second = sp.diff(first, X).subs(sp.Derivative(F, X), first)
+
+        def reduce(value):
+            value = sp.sympify(value).xreplace({sp.Derivative(F, (X, 2)): second, sp.Derivative(F, X): first})
+            if value.has(sp.Derivative):
+                raise AssertionError(f"wahlquist: a derivative `reduce` does not know stands in {value}")
+            return vm.norm(_bare(value, X, bare) if value.has(X) else value)
+        return {
+            "metric_id": "wahlquist",
+            "system": {"id": system, "name": "Whittaker's Static Limit", "coords": coords,
+                       "domains": ["t \\in (-\\infty, \\infty)", "X \\in [0, X_s]", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                                   "X_s\\cot X_s = b^2 \\;\\text{(the surface of zero pressure } X = X_s\\text{)}"],
+                       "parameters": WQ_WHITTAKER_PARAMETERS,
+                       "line_element": "ds^2 = -" + metric.replace("{T}", "c^2dt")},
+            "chart_line_element": "ds^2 = -" + metric.replace("{T}", "dt"),
+            "printer": {"lead": [F, b, X], "factors": [reader.parameters["R_0"], b, F, X]},
+            "reduce": reduce,
+            # (sin X + 1)(sin X - 1) is written -cos^2 X, as the frame of the sphere has it.
+            "pretty": lambda value: value if value == 0 else trig_pairs(
+                value, [(sp.sin(X), sp.cos(X), 1 + sp.sin(X), 1 - sp.sin(X))]),
+            "check": lambda chart: wahlquist_check(chart, system, None),
+        }
+    own = system == "wahlquist"
+    if own:
+        coords = ["t", "\\xi", "\\eta", "\\phi"]
+        parameters = WQ_OWN_PARAMETERS
+        held = ("h_1", "h_2")
+        tail = (" + r_0^2\\left(\\xi^2 + \\eta^2\\right)\\left(\\dfrac{d\\xi^2}{\\left(1 - k^2\\xi^2\\right)h_1}"
+                " + \\dfrac{d\\eta^2}{\\left(1 + k^2\\eta^2\\right)h_2} + \\dfrac{\\gamma^2 h_1 h_2}{h_1 - h_2}d\\phi^2\\right)")
+        head = ("ds^2 = -\\dfrac{h_1 - h_2}{\\xi^2 + \\eta^2}\\left({T} - \\gamma r_0\\left(\\dfrac{\\xi^2 h_2 + \\eta^2 h_1}{h_1 - h_2}"
+                " - \\eta_0^2\\right)d\\phi\\right)^2")
+        line = head + tail
+        name = "Wahlquist's Spheroidal"
+        domains = ["t \\in (-\\infty, \\infty)", "\\xi \\in [0, 1/k)", "\\eta \\in [-\\eta_0, \\eta_0]", "\\phi \\in [0, 2\\pi)",
+                   "h_2 = 0 \\;\\text{(the axis of rotation, } \\eta = \\pm\\eta_0\\text{)}",
+                   "h_1 - h_2 = \\left(\\xi^2 + \\eta^2\\right)/b^2 \\;\\text{(the surface of zero pressure)}"]
+        scalar = "\\dfrac{2k^2\\left(3b^2\\left(h_1 - h_2\\right) - 2\\xi^2 - 2\\eta^2\\right)}{b^2 r_0^2\\left(\\xi^2 + \\eta^2\\right)}"
+        kretschmann = ("12\\left(W_1^2 - W_2^2\\right) + \\dfrac{8k^4}{3b^4r_0^4}"
+                       " - \\dfrac{8k^4\\left(h_1 - h_2\\right)}{b^2r_0^4\\left(\\xi^2 + \\eta^2\\right)}"
+                       " + \\dfrac{12k^4\\left(h_1 - h_2\\right)^2}{r_0^4\\left(\\xi^2 + \\eta^2\\right)^2}")
+    else:
+        time, angle = ("\\tau", "\\sigma") if system == "mars" else ("v", "\\phi")
+        coords = [time, "y", "z", angle]
+        parameters = WQ_MARS_PARAMETERS
+        held = ("U", "V")
+        if system == "mars":
+            line = ("ds^2 = -\\dfrac{V}{v_1 + v_2}\\left({T} - v_1 d\\sigma\\right)^2 + \\dfrac{U}{v_1 + v_2}\\left({T} + v_2 d\\sigma\\right)^2"
+                    " + \\left(v_1 + v_2\\right)\\left(\\dfrac{dy^2}{V} + \\dfrac{dz^2}{U}\\right)")
+            name = "Mars's Canonical"
+            domains = ["\\tau \\in (-\\infty, \\infty)", "y \\in \\left(-\\pi/(2\\beta), \\pi/(2\\beta)\\right)", "z \\in (-\\infty, \\infty)",
+                       "\\sigma \\in (-\\infty, \\infty)", "U > 0", "V > 0",
+                       "V > U \\;\\text{(the fluid, whose velocity is along } \\partial_\\tau\\text{)}"]
+        else:
+            line = ("ds^2 = -\\dfrac{V - U}{v_1 + v_2}\\left({T} + v_1 d\\phi\\right)^2 + 2\\left(dy - U d\\phi\\right)\\left({T} + v_1 d\\phi\\right)"
+                    " + \\left(v_1 + v_2\\right)\\left(\\dfrac{dz^2}{U} + U d\\phi^2\\right)")
+            name = "Mars's Ingoing"
+            domains = ["v \\in (-\\infty, \\infty)", "y \\in \\left(-\\pi/(2\\beta), \\pi/(2\\beta)\\right)", "z \\in (-\\infty, \\infty)",
+                       "\\phi \\in (-\\infty, \\infty)", "U > 0", "V = 0 \\;\\text{(the Killing horizons)}"]
+        scalar = "-4\\mu_0 - \\dfrac{6\\beta^2\\left(U - V\\right)}{v_1 + v_2}"
+        kretschmann = ("12\\left(W_1^2 - W_2^2\\right) + \\dfrac{8\\mu_0^2}{3} + \\dfrac{8\\beta^2\\mu_0\\left(U - V\\right)}{v_1 + v_2}"
+                       " + \\dfrac{12\\beta^4\\left(U - V\\right)^2}{\\left(v_1 + v_2\\right)^2}")
+    forms = WahlquistForms(vm.Reader(coords, parameters, (), held=held), own)
+    timed = system != "mars_ingoing"
+    return {
+        "metric_id": "wahlquist",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line.replace("{T}", ("c\\,d" if timed else "d") + coords[0])},
+        "chart_line_element": line.replace("{T}", "d" + coords[0]),
+        "printer": forms.printer(),
+        "pretty": forms.pretty,
+        "bracketed": forms.pretty,
+        "reduce": forms.reduce,
+        "check": lambda chart: wahlquist_check(chart, system, forms),
+        "ricci_scalar": scalar,
+        "kretschmann": kretschmann,
+    }
+
+
+def wahlquist_fluid(chart, system, reduce):
+    """The density and the pressure of the chart, in units 8 pi G/c^4 = 1, once its Einstein
+    tensor is held to a perfect fluid's moving along the Killing vector of the time:
+    G^mu_nu = (rho + p) u^mu u_nu + p delta^mu_nu, with u^mu u_nu = delta^mu_0 g_0nu/(-g_00)."""
+    geo, g = chart.geo, chart.geo.g
+    G = geo.raise_indices(geo.einstein_ll(), 2, (0,))
+    pressure = G[2][2]
+    density = reduce(3 * pressure - sum(G[i][i] for i in range(4)))
+    for i in range(4):
+        for j in range(4):
+            fluid = pressure * (1 if i == j else 0)
+            if i == 0:
+                fluid -= (density + pressure) * g[0, j] / g[0, 0]
+            if reduce(G[i][j] - fluid) != 0:
+                raise AssertionError(f"wahlquist/{system}: the Einstein tensor is not a perfect fluid's in slot {i}{j}")
+    return density, pressure
+
+
+def wahlquist_check(chart, system, forms):
+    """What each chart is held to before anything is written.
+
+    Every chart: a perfect fluid at rest along the time's Killing vector with rho + 3p constant
+    and p = (rho + 3p)(1 + b^2 g_tt)/2, Wahlquist's (6), where b^-2 is -g_tt on the surface of
+    zero pressure; in Mars's constants that is p = mu_0 + beta^2 g_tau tau.
+    Wahlquist's chart: Mars's pulled back along y = r_0 arcsin(k xi)/k, z = r_0 arsinh(k eta)/k,
+    c tau = ct + gamma r_0 eta_0^2 phi and sigma = gamma phi/r_0 at Q_0 = r_0^2, nu_0 = 1,
+    a_1 = a_2 = 0, beta = k/r_0 and mu_0 = k^2/(b r_0)^2, at three points in forty digits.
+    Mars's ingoing chart: his canonical one pulled back along d tau = dv - v_2 dy/V and
+    d sigma = -d phi + dy/V.
+    Whittaker's chart: the limit k -> 0 of Wahlquist's at r_0 = k R_0, xi = sin(X)/k and
+    eta = cos(theta), where eta_0 and gamma are 1, at three points."""
+    reduce = chart.reduce or vm.norm
+    g = chart.geo.g
+    p = chart.reader.parameters
+    density, pressure = wahlquist_fluid(chart, system, reduce)
+    if system == "whittaker":
+        constant = 2 / (p["b"] ** 2 * p["R_0"] ** 2)
+        law = constant * (1 + p["b"] ** 2 * g[0, 0]) / 2
+    elif system == "wahlquist":
+        constant = 2 * p["k"] ** 2 / (p["b"] ** 2 * p["r_0"] ** 2)
+        law = constant * (1 + p["b"] ** 2 * g[0, 0]) / 2
+    else:
+        constant = 2 * p["mu_0"]
+        law = p["mu_0"] + p["beta"] ** 2 * g[0, 0]
+    if reduce(density + 3 * pressure - constant) != 0:
+        raise AssertionError(f"wahlquist/{system}: rho + 3p is not the constant {constant}")
+    if reduce(pressure - law) != 0:
+        raise AssertionError(f"wahlquist/{system}: the pressure is not {law}")
+    if system == "mars":
+        forms.prepare(chart, system)
+        return
+    mars = wahlquist("mars")
+    if system == "mars_ingoing":
+        source = vm.metric_from_line_element(vm.Reader(mars["system"]["coords"], WQ_MARS_PARAMETERS, (), held=("U", "V")),
+                                             mars["chart_line_element"], mars["system"]["coords"])
+        U, V = p["U"], p["V"]
+        y = chart.symbols[1]
+        v2 = sp.sin(p["beta"] * y) ** 2 / p["beta"] ** 2
+        jacobian = sp.Matrix([[1, -v2 / V, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 1 / V, 0, -1]])
+        pulled = jacobian.T * source * jacobian
+        for i in range(4):
+            for j in range(i, 4):
+                if vm.norm(pulled[i, j] - g[i, j]) != 0:
+                    raise AssertionError(f"wahlquist: Mars's chart pulled back misses the ingoing one in slot {i}{j}")
+        forms.prepare(chart, system)
+        return
+    if system == "wahlquist":
+        reader = vm.Reader(mars["system"]["coords"], WQ_MARS_PARAMETERS, ())
+        source = vm.metric_from_line_element(reader, mars["chart_line_element"], mars["system"]["coords"])
+        q = reader.parameters
+        t, xi, eta, phi = chart.symbols
+        r0, k, b, eta0, gamma = (p[key] for key in ("r_0", "k", "b", "eta_0", "gamma"))
+        image = [t + gamma * r0 * eta0 ** 2 * phi, r0 * sp.asin(k * xi) / k, r0 * sp.asinh(k * eta) / k, gamma * phi / r0]
+        constants = {q["Q_0"]: r0 ** 2, q["nu_0"]: 1, q["a_1"]: 0, q["a_2"]: 0, q["beta"]: k / r0,
+                     q["mu_0"]: k ** 2 / (b * r0) ** 2}
+        jacobian = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+        at = dict(zip([reader.symbol[name] for name in mars["system"]["coords"]], image))
+        pulled = jacobian.T * source.subs(constants, simultaneous=True).subs(at, simultaneous=True) * jacobian
+        mine = g.subs(chart.reader.held)
+        rng = random.Random(1)
+        for _ in range(3):
+            point = {r0: sp.Rational(rng.randint(50, 150), 100), k: sp.Rational(rng.randint(20, 60), 100),
+                     b: sp.Rational(rng.randint(60, 140), 100), eta0: sp.Rational(rng.randint(90, 130), 100),
+                     gamma: sp.Rational(rng.randint(80, 120), 100), xi: sp.Rational(rng.randint(10, 90), 100),
+                     eta: sp.Rational(rng.randint(10, 90), 100), t: 0, phi: 0}
+            for i in range(4):
+                for j in range(i, 4):
+                    if abs(sp.N((pulled[i, j] - mine[i, j]).subs(point), 40)) > sp.Float(10) ** -30:
+                        raise AssertionError(f"wahlquist: Mars's chart pulled back misses Wahlquist's in slot {i}{j}")
+        forms.prepare(chart, system)
+        return
+    # Whittaker's sphere, the limit of no rotation.
+    own = wahlquist("wahlquist")
+    # h_1 and h_2 go in as they are read: the canonical form of the checker would write the root of
+    # 1 - k^2 xi^2 on its other branch, which is the same algebra and another number.
+    reader = vm.Reader(own["system"]["coords"], WQ_OWN_PARAMETERS, (), held=("h_1", "h_2"))
+    source = vm.metric_from_line_element(reader, own["chart_line_element"], own["system"]["coords"]).subs(reader.held)
+    q = reader.parameters
+    t, X, theta, phi = chart.symbols
+    k = q["k"]
+    xi, eta = reader.symbol["\\xi"], reader.symbol["\\eta"]
+    # The limit is taken in numbers, at k = 10^-20 and sixty digits. The dragging term g_t phi
+    # vanishes with the first power of k, so each slot is held to 10^-15: 0 < X < pi/2 inside the
+    # fluid, so arcsin(sin X) = X there.
+    source = source.subs({q["r_0"]: k * p["R_0"], q["b"]: p["b"], q["gamma"]: 1, q["eta_0"]: 1})
+    source = source.subs({xi: sp.sin(X) / k, eta: sp.cos(theta), reader.symbol["t"]: t, reader.symbol["\\phi"]: phi},
+                         simultaneous=True)
+    jacobian = sp.diag(1, sp.cos(X) / k, -sp.sin(theta), 1)
+    pulled = jacobian.T * source * jacobian
+    rng = random.Random(2)
+    for _ in range(3):
+        point = {p["R_0"]: sp.Rational(rng.randint(50, 150), 100), p["b"]: sp.Rational(rng.randint(60, 95), 100),
+                 X: sp.Rational(rng.randint(10, 120), 100), theta: sp.Rational(rng.randint(20, 290), 100), t: 0, phi: 0}
+        for i in range(4):
+            for j in range(i, 4):
+                limit = sp.N(pulled[i, j].subs(point).subs(k, sp.Rational(1, 10 ** 20)), 60)
+                if abs(limit - sp.N(g[i, j].subs(chart.reader.held).subs(point), 60)) > sp.Float(10) ** -15:
+                    raise AssertionError(f"wahlquist: Whittaker's chart is not the limit of Wahlquist's in slot {i}{j}")
+
+
+CHARTS["wahlquist"] = [lambda s=s: wahlquist(s) for s in WAHLQUIST_CHARTS]
 
 
 def write(spec):

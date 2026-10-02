@@ -1262,7 +1262,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "38b9358e145ba9ec",
+    "version": "a609c2a6fa86600e",
     "diagrams": "dfa07fae80435e7d",
     "conformal": "878abf6db42c0334",
     "embedding": "cc9efb7cafec7946"
@@ -1574,7 +1574,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5c3269a18304b5a3",
+    "version": "53e3dfc2a8c729c7",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -1619,7 +1619,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "f094c982c454fc6f",
+    "version": "b09a9c2213374e33",
     "diagrams": "7dc03a9eedf6e5a2",
     "conformal": "4f803c414fba5da6",
     "embedding": "f1315ee1ffa48ebb"
@@ -1690,7 +1690,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "29ac4e244fa381dd",
+    "version": "a9ea6ea234eeec6a",
     "diagrams": "442206dfc206d069",
     "conformal": "8508e743b0676aa7",
     "embedding": "f046af1ffaff68d9"
@@ -2854,7 +2854,7 @@
       "idealized model",
       "conformally flat"
     ],
-    "version": "80523d6b69cae993",
+    "version": "f369170993219319",
     "diagrams": "2c3a4f257a42be77",
     "conformal": "576471fc7fb8c666",
     "embedding": "33dc4c3913188978"
@@ -3467,6 +3467,32 @@
     "diagrams": "d3c0cce1a6061334",
     "conformal": "651a421afaa54900",
     "embedding": "c9905ef896f1be24"
+  },
+  {
+    "id": "wahlquist",
+    "name": "Wahlquist",
+    "tags": [
+      "perfect fluid",
+      "rotating",
+      "rigid rotation",
+      "stationary",
+      "axisymmetric",
+      "stellar interior",
+      "equation of state",
+      "frame dragging",
+      "Petrov type D",
+      "separable",
+      "Killing-Yano tensor",
+      "NUT charge",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "73eed975a2bc4992",
+    "diagrams": "6dd4dac8529f8334",
+    "embedding": "0bbd48dbcc626017"
   },
   {
     "id": "witten_black_hole",

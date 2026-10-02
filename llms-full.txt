@@ -1569,6 +1569,19 @@ Matt Visser's traversable wormhole of 1989: two copies of the Schwarzschild exte
 - chart Schwarzschild: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Through the Throat: coordinates $(t, \ell, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{a + |\ell|}\right)c^2dt^2 + \dfrac{d\ell^2}{1 - \dfrac{r_s}{a + |\ell|}} + \left(a + |\ell|\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Wahlquist's Rotating Perfect Fluid
+
+A rigidly rotating body of perfect fluid in closed form, its energy density and pressure tied by $\mu + 3p = \mu_0$, which Hugo Wahlquist found in 1968. The surface of zero pressure closes around the fluid, and no asymptotically flat vacuum can be joined to it.
+
+- id: `wahlquist`
+- tags: perfect fluid, rotating, rigid rotation, stationary, axisymmetric, stellar interior, equation of state, frame dragging, Petrov type D, separable, Killing-Yano tensor, NUT charge, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/wahlquist.json
+- chart Wahlquist's Spheroidal: coordinates $(t, \xi, \eta, \phi)$, $$ds^2 = -\dfrac{h_1 - h_2}{\xi^2 + \eta^2}\left(c\,dt - \gamma r_0\left(\dfrac{\xi^2 h_2 + \eta^2 h_1}{h_1 - h_2} - \eta_0^2\right)d\phi\right)^2 + r_0^2\left(\xi^2 + \eta^2\right)\left(\dfrac{d\xi^2}{\left(1 - k^2\xi^2\right)h_1} + \dfrac{d\eta^2}{\left(1 + k^2\eta^2\right)h_2} + \dfrac{\gamma^2 h_1 h_2}{h_1 - h_2}d\phi^2\right)$$
+- chart Mars's Canonical: coordinates $(\tau, y, z, \sigma)$, $$ds^2 = -\dfrac{V}{v_1 + v_2}\left(c\,d\tau - v_1 d\sigma\right)^2 + \dfrac{U}{v_1 + v_2}\left(c\,d\tau + v_2 d\sigma\right)^2 + \left(v_1 + v_2\right)\left(\dfrac{dy^2}{V} + \dfrac{dz^2}{U}\right)$$
+- chart Mars's Ingoing: coordinates $(v, y, z, \phi)$, $$ds^2 = -\dfrac{V - U}{v_1 + v_2}\left(dv + v_1 d\phi\right)^2 + 2\left(dy - U d\phi\right)\left(dv + v_1 d\phi\right) + \left(v_1 + v_2\right)\left(\dfrac{dz^2}{U} + U d\phi^2\right)$$
+- chart Whittaker's Static Limit: coordinates $(t, X, \theta, \phi)$, $$ds^2 = -F\,c^2dt^2 + R_0^2\left(\dfrac{dX^2}{F} + \sin^2 X\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Witten's Black Hole in Two Dimensions
 
 A black hole in two spacetime dimensions, a solution of the low energy equations of string theory for a metric and a dilaton, and an exact string background. It has a horizon, a spacelike singularity, and Kruskal's diagram, and its Hawking temperature is the same for every mass. With matter added it is the model of Callan, Giddings, Harvey, and Strominger for a black hole that forms and evaporates.

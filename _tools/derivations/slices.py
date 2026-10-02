@@ -2106,6 +2106,17 @@ FLAT = {
     # The same slices of Bonnor and Vaidya's charged shell.
     ("bonnor_vaidya", "eddington_finkelstein_ingoing", "shell"): lambda: one(
         "bonnor_vaidya", lambda m: [[(m.time + r, r) for r in m.reach("eddington_finkelstein_ingoing", "r")]]),
+    # Wahlquist's fluid at the moment t = 0 of its own rest frame: on the equatorial plane the line
+    # t = 0 from the ring to the surface of zero pressure, on the disc from the ring to the axis, and
+    # on Whittaker's sphere from the centre to its surface.
+    ("wahlquist", "wahlquist", "equator"): lambda: one(
+        "wahlquist", lambda m: along(0.0, *m.reach("wahlquist", "\\xi")), view_id="rotating"),
+    ("wahlquist", "wahlquist", "disc"): lambda: one(
+        "wahlquist", lambda m: along(0.0, *m.reach("wahlquist", "\\eta")), view_id="rotating"),
+    ("wahlquist", "whittaker", "radial"): lambda: one(
+        "wahlquist", lambda m: along(0.0, *m.reach("whittaker", "X")), view_id="static"),
+    ("wahlquist", "whittaker", "through"): lambda: one(
+        "wahlquist", lambda m: along(0.0, *m.reach("whittaker", "X")), view_id="static"),
 }
 FLAT_METRICS = {key[0] for key in FLAT}
 
@@ -2212,6 +2223,8 @@ HIDDEN = {
     ("black_saturn", "ring", "inside"): "the ring alone, with no hole inside it; the moment embedded is the Saturn's",
     ("near_horizon_extreme_kerr", "near_nhek", "equator"): "the patch ct > r_0^2/r of the Poincare chart, to the future of the ray that leaves the boundary at t = 0, which the moment tau = 0 embedded does not enter",
     ("near_horizon_extreme_kerr", "near_nhek"): "the patch ct > r_0^2/r of the Poincare chart, to the future of the ray that leaves the boundary at t = 0, which the moment tau = 0 embedded does not enter",
+    **{("wahlquist", system, "equator"): "the plane with Mars's angle divided out, whose circles each run through every moment of Wahlquist's t"
+       for system in ("mars", "mars_ingoing")},
     **{("hartle_thorne", system, "axis"): "the axis of rotation, which the embedded equatorial plane does not meet"
        for system in ("hartle_thorne", "painleve_gullstrand")},
     ("hartle_thorne", "painleve_gullstrand", "equator"): "the Painleve-Gullstrand line element, which agrees with Hartle and Thorne's to first order in the spin and no further; the moment embedded is one of Hartle and Thorne's t",

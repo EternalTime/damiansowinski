@@ -61,6 +61,11 @@
       "id": "tolman_vii",
       "kind": "generalisation",
       "text": "Tolman's seventh solution lets the density fall as the square of the radius, $\\rho = \\rho_c(1 - \\mu r^2/R^2)$. At $\\mu = 0$ it is Schwarzschild's uniform star, and at $\\mu = 1$ the density reaches zero at the surface [tolman1939, raghoonundun2015]."
+    },
+    {
+      "id": "wahlquist",
+      "kind": "family",
+      "text": "A ball of fluid that rotates, in closed form. At rest it is Whittaker's sphere, whose $\\mu + 3p$ is uniform as the energy density of Schwarzschild's star is [whittaker1968, wahlquist1968]."
     }
   ],
   "references": [
@@ -79,7 +84,9 @@
     "einstein1917",
     "florides1974",
     "bohmerlobo2008",
-    "raghoonundun2015"
+    "raghoonundun2015",
+    "whittaker1968",
+    "wahlquist1968"
   ],
   "coordinates": [
     {

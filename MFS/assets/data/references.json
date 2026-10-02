@@ -1,5 +1,5 @@
 {
-  "version": "5a135c3b4970415a",
+  "version": "2789d26cefa863d0",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -22005,6 +22005,202 @@
         "doi": "10.1088/1361-6382/ab7bba",
         "eprint": "1901.06561",
         "url": "https://doi.org/10.1088/1361-6382/ab7bba"
+      }
+    },
+    "wahlquist1968": {
+      "type": "article",
+      "fields": {
+        "title": "Interior Solution for a Finite Rotating Body of Perfect Fluid",
+        "author": "Wahlquist, Hugo D.",
+        "journal": "Physical Review",
+        "volume": "172",
+        "number": "5",
+        "pages": "1291--1296",
+        "year": "1968",
+        "doi": "10.1103/PhysRev.172.1291",
+        "url": "https://doi.org/10.1103/PhysRev.172.1291"
+      }
+    },
+    "estabrook1964": {
+      "type": "article",
+      "fields": {
+        "title": "Dyadic Analysis of Space-Time Congruences",
+        "author": "Estabrook, Frank B. and Wahlquist, Hugo D.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "5",
+        "number": "11",
+        "pages": "1629--1644",
+        "year": "1964",
+        "doi": "10.1063/1.1931200",
+        "url": "https://doi.org/10.1063/1.1931200"
+      }
+    },
+    "whittaker1968": {
+      "type": "article",
+      "fields": {
+        "title": "An interior solution in general relativity",
+        "author": "Whittaker, John Macnaghten",
+        "journal": "Proceedings of the Royal Society of London. Series A",
+        "volume": "306",
+        "number": "1484",
+        "pages": "1--3",
+        "year": "1968",
+        "doi": "10.1098/rspa.1968.0133",
+        "url": "https://doi.org/10.1098/rspa.1968.0133"
+      }
+    },
+    "bradley2000": {
+      "type": "article",
+      "fields": {
+        "title": "The {Wahlquist} metric cannot describe an isolated rotating body",
+        "author": "Bradley, Michael and Fodor, Gyula and Marklund, Mattias and Perj\\'es, Zolt\\'an",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "17",
+        "number": "2",
+        "pages": "351--359",
+        "year": "2000",
+        "doi": "10.1088/0264-9381/17/2/306",
+        "eprint": "gr-qc/9910001",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/17/2/306"
+      }
+    },
+    "cuchi2013": {
+      "type": "article",
+      "fields": {
+        "title": "{Wahlquist}'s metric versus an approximate solution with the same equation of state",
+        "author": "Cuch\\'i, Javier E. and Mart\\'in, Jes\\'us and Molina, Alfred and Ruiz, Eduardo",
+        "journal": "General Relativity and Gravitation",
+        "volume": "45",
+        "number": "8",
+        "pages": "1493--1513",
+        "year": "2013",
+        "doi": "10.1007/s10714-013-1540-y",
+        "eprint": "1301.4962",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10714-013-1540-y"
+      }
+    },
+    "bradley2007": {
+      "type": "article",
+      "fields": {
+        "title": "Slowly rotating fluid balls of {Petrov} type {D}",
+        "author": "Bradley, Michael and Eriksson, Daniel and Fodor, Gyula and R\\'acz, Istv\\'an",
+        "journal": "Physical Review D",
+        "volume": "75",
+        "number": "2",
+        "pages": "024013",
+        "year": "2007",
+        "doi": "10.1103/PhysRevD.75.024013",
+        "eprint": "gr-qc/0612046",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.75.024013"
+      }
+    },
+    "mars2001": {
+      "type": "article",
+      "fields": {
+        "title": "{Wahlquist-Newman} solution",
+        "author": "Mars, Marc",
+        "journal": "Physical Review D",
+        "volume": "63",
+        "number": "6",
+        "pages": "064022",
+        "year": "2001",
+        "doi": "10.1103/PhysRevD.63.064022",
+        "eprint": "gr-qc/0101021",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.63.064022"
+      }
+    },
+    "kramer1985": {
+      "type": "article",
+      "fields": {
+        "title": "Perfect fluids with vanishing {Simon} tensor",
+        "author": "Kramer, Dietrich",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "2",
+        "number": "6",
+        "pages": "L135--L139",
+        "year": "1985",
+        "doi": "10.1088/0264-9381/2/6/005",
+        "url": "https://doi.org/10.1088/0264-9381/2/6/005"
+      }
+    },
+    "senovilla1987": {
+      "type": "article",
+      "fields": {
+        "title": "Stationary axisymmetric perfect-fluid metrics with $q + 3p = \\mathrm{const}$",
+        "author": "Senovilla, Jos\\'e M. M.",
+        "journal": "Physics Letters A",
+        "volume": "123",
+        "number": "5",
+        "pages": "211--214",
+        "year": "1987",
+        "doi": "10.1016/0375-9601(87)90062-4",
+        "url": "https://doi.org/10.1016/0375-9601(87)90062-4"
+      }
+    },
+    "hinoue2014": {
+      "type": "article",
+      "fields": {
+        "title": "General {Wahlquist} metrics in all dimensions",
+        "author": "Hinoue, Kazuki and Houri, Tsuyoshi and Rugina, Christina and Yasui, Yukinori",
+        "journal": "Physical Review D",
+        "volume": "90",
+        "number": "2",
+        "pages": "024037",
+        "year": "2014",
+        "doi": "10.1103/PhysRevD.90.024037",
+        "eprint": "1402.6904",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.90.024037"
+      }
+    },
+    "bradley2000b": {
+      "type": "article",
+      "fields": {
+        "title": "A slowly rotating perfect fluid body in an ambient vacuum",
+        "author": "Bradley, Michael and Fodor, Gyula and Perj\\'es, Zolt\\'an",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "17",
+        "number": "14",
+        "pages": "2635--2640",
+        "year": "2000",
+        "doi": "10.1088/0264-9381/17/14/303",
+        "eprint": "gr-qc/0002014",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/17/14/303"
+      }
+    },
+    "sarnobat2006": {
+      "type": "article",
+      "fields": {
+        "title": "The {Wahlquist} exterior: second-order analysis",
+        "author": "Sarnobat, P. and Hoenselaers, C. A.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "23",
+        "number": "18",
+        "pages": "5603--5623",
+        "year": "2006",
+        "doi": "10.1088/0264-9381/23/18/007",
+        "url": "https://doi.org/10.1088/0264-9381/23/18/007"
+      }
+    },
+    "houri2020": {
+      "type": "article",
+      "fields": {
+        "title": "Hidden symmetry and the separability of the {Maxwell} equation on the {Wahlquist} spacetime",
+        "author": "Houri, Tsuyoshi and Tanahashi, Norihiro and Yasui, Yukinori",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "37",
+        "number": "7",
+        "pages": "075005",
+        "year": "2020",
+        "doi": "10.1088/1361-6382/ab6e8a",
+        "eprint": "1910.13094",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/ab6e8a"
       }
     }
   }
