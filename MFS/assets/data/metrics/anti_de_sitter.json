@@ -122,6 +122,11 @@
       "id": "schrodinger_spacetime",
       "kind": "generalisation",
       "text": "Anti-de Sitter space with one term in $dt^2$ added along a null direction, which leaves of its symmetries those of the free Schrödinger equation. Dam Thanh Son proposed it in 2008 as the dual of cold atoms [son2008]."
+    },
+    {
+      "id": "plebanski_hacyan",
+      "kind": "family",
+      "text": "Products that keep anti-de Sitter space of two dimensions as one factor, times a flat plane with a uniform electromagnetic field or times a hyperbolic plane with none [ortaggio2002direct]."
     }
   ],
   "references": [
@@ -164,7 +169,8 @@
     "horowitz1998",
     "kachru2008",
     "copsey2011",
-    "son2008"
+    "son2008",
+    "ortaggio2002direct"
   ],
   "coordinates": [
     {

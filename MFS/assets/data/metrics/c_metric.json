@@ -96,6 +96,11 @@
       "id": "bonnor_magnetic_dipole",
       "kind": "family",
       "text": "Two black holes of opposite charge at rest on one axis. Emparan placed that pair on top of the barrier under which a magnetic field creates the accelerating pair [emparan2000]."
+    },
+    {
+      "id": "plebanski_hacyan",
+      "kind": "family",
+      "text": "The anti-Nariai universe has a C-metric of its own. Óscar Dias and José Lemos found it in 2003 as a limit toward a degenerate horizon of the accelerating black holes with a negative cosmological constant [dias2003]."
     }
   ],
   "references": [
@@ -123,7 +128,8 @@
     "levicivita1919",
     "podolsky2008",
     "kamran2009",
-    "emparan2000"
+    "emparan2000",
+    "dias2003"
   ],
   "coordinates": [
     {

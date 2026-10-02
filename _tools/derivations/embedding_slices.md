@@ -67,6 +67,17 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `poincare/tx`: the Poincaré chart has the same $t$ and $x = b^2/r$, which carries one line element onto the other, so the equator is the line $ct = 0$ from $x = b/e$ to $eb$ and the sphere the point $x = b$.
 - `static` and `poincare`, the strip of the first factor, each point a sphere of radius $b$: the line $T = 0$ over the same stretch of $r$ and the point at $r = b$, the same on both, since the two charts cover the same wedge.
 
+### Plebański-Hacyan and anti-Nariai
+
+- The embedding has three views. Two are of the flat plane times a sphere at the moment $t = 0$: the equator, $z$ from $-b$ to $b$ with $\phi$, and the sphere of $\theta$ and $\phi$ at one event, drawn at $z = b$. The third is anti-Nariai's hyperbolic plane of $\theta$ and $\phi$ at the event $\tau = 0$, $\chi = 1$.
+- `sphere/tz`: the equator is the line $ct = 0$ from $z = -b$ to $b$; the sphere is the point $ct = 0$, $z = b$ on it.
+- `sphere_rindler/wedge`: with $ct = \chi\sinh\tau$ and $z = \chi\cosh\tau$ the moment is $\tau = 0$ and the chart covers its half $z > 0$, so the equator is the line $\tau = 0$ from $\chi = 0$ to $b$ and the sphere the point $\chi = b$.
+- `anti_nariai/wedge`: the hyperbolic plane is the point $\tau = 0$, $\chi = 1$.
+- `anti_nariai_static/radial`: with $r = a\cosh\chi$ and $ct = a\tau$ it is the point $ct = 0$, $r = a\cosh 1$.
+- `sphere` and `sphere_rindler`, the diamond of the flat factor: the line $T = 0$ from $z = -b$ to $b$ on both, whole on the Rindler view too, since the diamond is the same, and the point at $z = b$.
+- `anti_nariai` and `anti_nariai_static`, the strip of the anti-de Sitter factor: the point at $\tau = 0$, $\chi = 1$, the same on both.
+- `plane/uw`, `plane_null/uv`, `plane_static/wedge` and their conformal views carry no slice: anti-de Sitter space times a flat plane is another spacetime than the two embedded, and its moment is itself a flat plane.
+
 ### Near-horizon extreme Kerr
 
 - The embedding has two views at the moment $\tau = 0$ of the global chart: the equator, $y$ from $-2.25$ to $2.25$ with $\phi$, and the sphere of $\theta$ and $\phi$ at one event, drawn at $y = 0$.
@@ -707,6 +718,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | anti-de Sitter | line, line, line | none | line, line |
 | Bell-Szekeres | four events, five times; not visible on the regular view, which lies off $\eta = 0$ | none | four events, five times |
 | Bertotti-Robinson | line and point, twice | none | line and point, twice |
+| Plebański-Hacyan | line and point, twice; point, twice; none on the three views of the product with a flat plane | none | line and point, twice; point, twice; none on the three views of the product with a flat plane |
 | Bianchi I | four lines | none | none drawn |
 | cosmic string | none | whole drawing | line, line |
 | de Sitter | line, line, curve | none | line, line |

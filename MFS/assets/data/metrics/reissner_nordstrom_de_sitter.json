@@ -85,6 +85,11 @@
       "id": "mass_inflation",
       "kind": "family",
       "text": "The same hole with no cosmological constant and radiation crossing it. There the tail dies off only as a power of time, and the inner horizon becomes a singularity [poisson1989, poisson1997]."
+    },
+    {
+      "id": "plebanski_hacyan",
+      "kind": "limit",
+      "text": "The limit of the ultracold hole, where all three horizons meet. The region between them becomes a flat plane of time and space times a sphere of radius $1/\\sqrt{2\\Lambda}$ [cardoso2004]."
     }
   ],
   "references": [
@@ -112,7 +117,8 @@
     "lake2015",
     "brill1994",
     "poisson1989",
-    "poisson1997"
+    "poisson1997",
+    "cardoso2004"
   ],
   "coordinates": [
     {
