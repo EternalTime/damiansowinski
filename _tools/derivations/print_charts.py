@@ -4,7 +4,7 @@ charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metri
 schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
-kaluza_klein_monopole, bell_szekeres, spinning_string and photon_rocket, and Godel's cylindrical chart.
+kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket and light_beam, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -4193,6 +4193,119 @@ def spinning_string_source(chart):
 
 
 CHARTS["spinning_string"] = [lambda s=s: spinning_string(s) for s in SPINNING_CHARTS]
+# -- Bonnor's beam of light ---------------------------------------------------------------
+
+LIGHT_BEAM_CHARTS = ("cartesian", "null_cartesian", "null_cylindrical_interior", "null_cylindrical_exterior")
+
+
+def light_beam(system):
+    """The four charts of William Bonnor's steady beams of light, a pp-wave whose profile A does
+    not depend on u and is not harmonic where the light is. The Cartesian chart is his equation
+    (2.13) and the null Cartesian chart his (2.1), with sqrt(2) u = ct - z and sqrt(2) v = ct + z,
+    both with A a free function of x and y, written here in the signature (-,+,+,+), so that his
+    A >= 0 enters with a minus sign. The null cylindrical charts are his uniform beam of circular
+    cross section, equations (5.6) and (5.5), in the polar coordinates of his (8.10):
+    A = 4 pi G epsilon rho^2/c^4 inside the radius R and 4 pi G epsilon R^2 (1 + 2 ln(rho/R))/c^4
+    outside it, his m being pi G epsilon R^2/c^4. light_beam.md derives each."""
+    reals = "(-\\infty, \\infty)"
+    k = "\\dfrac{8\\pi G\\epsilon}{c^4}"
+    log = "\\left(1 + 2\\ln\\left(\\dfrac{\\rho}{R}\\right)\\right)"
+    charts = {
+        "cartesian": {
+            "name": "Cartesian", "coords": ["t", "x", "y", "z"], "parameters": ["A = A(x,y)"],
+            "domains": ["t \\in " + reals, "x \\in " + reals, "y \\in " + reals, "z \\in " + reals],
+            "line_element": "ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2 - A\\left(c\\,dt - dz\\right)^2",
+            "chart": "ds^2 = -dt^2 + dx^2 + dy^2 + dz^2 - A\\left(dt - dz\\right)^2"},
+        "null_cartesian": {
+            "name": "Null Cartesian", "coords": ["u", "v", "x", "y"], "parameters": ["A = A(x,y)"],
+            "domains": ["u \\in " + reals, "v \\in " + reals, "x \\in " + reals, "y \\in " + reals],
+            "line_element": "ds^2 = -2\\,du\\,dv + dx^2 + dy^2 - 2A\\,du^2"},
+        "null_cylindrical_interior": {
+            "name": "Null Cylindrical, Inside the Beam", "coords": ["u", "v", "\\rho", "\\phi"],
+            "parameters": ["G", "\\epsilon", "R"],
+            "domains": ["u \\in " + reals, "v \\in " + reals, "\\rho \\in [0, R]", "\\phi \\in [0, 2\\pi)"],
+            "line_element": "ds^2 = -2\\,du\\,dv + d\\rho^2 + \\rho^2d\\phi^2 - " + k + "\\rho^2\\,du^2"},
+        "null_cylindrical_exterior": {
+            "name": "Null Cylindrical, Outside the Beam", "coords": ["u", "v", "\\rho", "\\phi"],
+            "parameters": ["G", "\\epsilon", "R"],
+            "domains": ["u \\in " + reals, "v \\in " + reals, "\\rho \\in [R, \\infty)", "\\phi \\in [0, 2\\pi)"],
+            "line_element": "ds^2 = -2\\,du\\,dv + d\\rho^2 + \\rho^2d\\phi^2 - " + k + "R^2" + log + "du^2"},
+    }
+    chart = charts[system]
+    probe = vm.Reader(chart["coords"], chart["parameters"], ())
+    spec = {
+        "metric_id": "light_beam",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": chart["parameters"], "line_element": chart["line_element"]},
+        "chart_line_element": chart.get("chart", chart["line_element"]),
+        "check": lambda chart: light_beam_null_dust(chart, system),
+    }
+    if system == "cartesian":
+        # Minkowski's metric and inverse plus the beam, each term of it carrying (c dt - dz)^2 or its dual.
+        spec["components"] = {
+            "metric_components": {("t", "t"): "-1 - A", ("z", "z"): "1 - A"},
+            "inverse_metric_components": {("t", "t"): "-1 + A", ("z", "z"): "1 + A"}}
+        spec["printer"] = {"lead": [probe.parameters["A"]]}
+        spec["time"] = "t"
+        # The geodesics grouped around ct - z, whose rate is the one the beam sees.
+        along = ("\\left(\\partial_x A\\,\\dot{x} + \\partial_y A\\,\\dot{y}\\right)"
+                 "\\left(\\dot{t} - \\dot{z}\\right) = 0")
+        across = "\\dfrac{\\partial_{0} A}{2}\\left(\\dot{t} - \\dot{z}\\right)^2 = 0"
+        spec["geodesics"] = ["\\ddot{t} + " + along, "\\ddot{x} + " + across.replace("{0}", "x"),
+                             "\\ddot{y} + " + across.replace("{0}", "y"), "\\ddot{z} + " + along]
+    elif system == "null_cartesian":
+        spec["printer"] = {"lead": [probe.parameters["A"]]}
+    else:
+        G, eps = probe.parameters["G"], probe.parameters["epsilon"]
+        # pi, G and epsilon enter every component as their product, printed together as the line element has it.
+        piGe = sp.Symbol("piGe")
+        spec["printer"] = {"lead": [probe.c, piGe, probe.parameters["R"], *probe.symbol.values()], "flip": False,
+                           "overrides": {piGe: "\\pi G\\epsilon"}}
+        spec["pretty"] = lambda value: sp.factor(value).subs(eps, piGe / (sp.pi * G))
+        if system == "null_cylindrical_exterior":
+            profile = k + "R^2" + log
+            spec["components"] = {"metric_components": {("u", "u"): "-" + profile},
+                                  "inverse_metric_components": {("v", "v"): profile}}
+    return spec
+
+
+def light_beam_null_dust(chart, system):
+    """Einstein's equations with light for the source: G_mu nu = (8 pi G/c^4) epsilon k_mu k_nu, with k the
+    null covector c dt - dz, which is sqrt(2) du, and the energy density epsilon = c^4 (A_xx + A_yy)/(16 pi G)
+    for a free profile, Bonnor's (2.10), the declared epsilon inside the uniform beam and zero outside it.
+    k^mu is checked null, a Killing vector, and covariantly constant, which makes the metric a pp-wave."""
+    x, names = chart.symbols, chart.coords_tex
+    g, ginv = chart.geo.g, chart.geo.ginv
+    if "t" in names:
+        k = sp.Matrix([1 if n == "t" else -1 if n == "z" else 0 for n in names])
+    else:
+        k = sp.Matrix([sp.sqrt(2) if n == "u" else 0 for n in names])
+    if "A" in chart.reader.parameters:
+        A = chart.reader.parameters["A"]
+        density = sum(sp.diff(A, s, 2) for n, s in zip(names, x) if n in ("x", "y")) / 2
+    elif system == "null_cylindrical_interior":
+        density = 8 * sp.pi * chart.reader.parameters["G"] * chart.reader.parameters["epsilon"] / chart.reader.c ** 4
+    else:
+        density = 0
+    G = chart.geo.einstein_ll()
+    for a in range(4):
+        for b in range(a, 4):
+            if vm.norm(vm._at(G, (a, b)) - density * k[a] * k[b]) != 0:
+                raise AssertionError(f"light_beam: the Einstein tensor misses the light's stress in slot "
+                                     f"{names[a]}{names[b]}")
+    up = ginv * k
+    if vm.norm((k.T * up)[0]) != 0:
+        raise AssertionError("light_beam: the rays of the beam are not null")
+    gamma = chart.geo.christoffel_ull()
+    for a in range(4):
+        for b in range(4):
+            nabla = sp.diff(up[a], x[b]) + sum(vm._at(gamma, (a, b, c)) * up[c] for c in range(4))
+            if vm.norm(nabla) != 0:
+                raise AssertionError(f"light_beam: the rays of the beam are not covariantly constant, slot "
+                                     f"{names[a]}{names[b]}")
+
+
+CHARTS["light_beam"] = [lambda s=s: light_beam(s) for s in LIGHT_BEAM_CHARTS]
 
 
 def write(spec):

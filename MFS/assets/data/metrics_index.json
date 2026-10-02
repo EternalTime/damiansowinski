@@ -20,7 +20,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "dbbe707eeade23a3",
+    "version": "9bfd3641ff5e058a",
     "diagrams": "a6fabc19c0e551be",
     "conformal": "2771060b42b8605b",
     "embedding": "9b0e2bc9b72fa37e"
@@ -222,6 +222,33 @@
     "version": "17dc92da38e96b43",
     "diagrams": "d6268bdae97d9fd7",
     "embedding": "7fea7a854b8ceca4"
+  },
+  {
+    "id": "light_beam",
+    "name": "Bonnor",
+    "tags": [
+      "null dust",
+      "pure radiation",
+      "light beam",
+      "pp-wave",
+      "gravitational wave",
+      "plane-fronted wave",
+      "Petrov type N",
+      "cylindrical symmetry",
+      "stationary",
+      "non-vacuum",
+      "gravitational lensing",
+      "not asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "d2fd41fd87eb0bc2",
+    "diagrams": "8e7a66b826371e27",
+    "conformal": "4c22fa7d37693c09",
+    "embedding": "7035de7d63ab26a4"
   },
   {
     "id": "c_metric",
@@ -859,7 +886,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4d786156478d2950",
+    "version": "9a03c4d181b770ba",
     "diagrams": "32400e2bb95be485",
     "conformal": "5451827f049d2595",
     "embedding": "232b53e716678841"
@@ -978,7 +1005,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b0be100ee9ed4975",
+    "version": "12fce70d820a1a5e",
     "diagrams": "5ac02048c1fc2550",
     "conformal": "edd5386c486f11df",
     "embedding": "86969fc37532f407"
@@ -1028,7 +1055,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3838ea57ff57c87e",
+    "version": "945c5cfc6b711564",
     "diagrams": "8682a860d329f091",
     "conformal": "a9e34cf1c120e37d",
     "embedding": "32a5018b0ec61d91"
@@ -1234,7 +1261,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "576ca2f8c11199e4",
+    "version": "cd3dbb41ac76a912",
     "diagrams": "28bfeca27919032b",
     "conformal": "1712fbc95e0d1f96",
     "embedding": "8106f022ecfc3b33"
@@ -1256,7 +1283,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "10466e81a1dc83ab",
+    "version": "4fe71ac6be25b02f",
     "diagrams": "21757421f8076200",
     "embedding": "a484d91e42495a51"
   },

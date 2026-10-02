@@ -4651,6 +4651,117 @@ def aichelburg_sexl(ck, src):
                  input=given)]
 
 
+def light_beam(ck, src):
+    """The wave front at six values of u of the null Cartesian chart, u = 0 to 10 in units of the
+    beam's radius R, with the free profile the uniform beam the spacetime diagrams declare,
+    pi G epsilon R^2/c^4 = 1/32: a surface of constant u has the metric dx^2 + dy^2 whatever v is on
+    it, flat. The ring is 360 free particles at rest at u = 0 on x^2 + y^2 = (2R)^2, outside the
+    beam, each run with the published Christoffel symbols, u being affine on every geodesic since
+    no Gamma^u is published: x'' = -Gamma^x_uu and y'' = -Gamma^y_uu. By the beam's symmetry the
+    ring stays a circle, of radius |rho(u)|, rho the x of the particle that starts at (2R, 0), with
+    rho'' = -dA/drho, Bonnor's (8.11), so rho'^2 + 2A is constant, his (8.16). Outside the beam
+    rho'^2 = ln(2/rho)/2, which reaches the edge rho = R at u_1 = 2 sqrt(2 pi) erf(sqrt(ln 2)) R with
+    the speed v_1 = sqrt(ln(2)/2); inside it rho'' = -rho/4, so rho = cos(s/2) - 2 v_1 sin(s/2) with
+    s = u - u_1, which closes on the axis at s = 2 arctan(1/(2 v_1)). The ring passes through the
+    axis, every particle crossing to the far side, and comes back to rest on its first circle at
+    twice the u of the focus: the motion Bonnor's section 8 calls stable."""
+    functions = {"A": nr.LB_ONE}
+    gamma, R = published_christoffel(src, "light_beam", "null_cartesian")
+    ck.exact("light beam: no published Gamma^u, so u is an affine parameter", not any(ix[0] == "u" for ix in gamma))
+    ck.exact("light beam: the only published Gamma^x and Gamma^y are Gamma^x_uu and Gamma^y_uu",
+             {ix for ix in gamma if ix[0] in ("x", "y")} == {("x", "u", "u"), ("y", "u", "u")})
+    names = {R._plain(n): s for n, s in R.symbol.items()}
+    A = R.parameters["A"]
+    profile = sp.sympify(nr.LB_ONE, locals={"x": names["x"], "y": names["y"]})
+    args = (names["x"], names["y"])
+    gx = sp.lambdify(args, gamma[("x", "u", "u")].subs(A, profile).doit(), "numpy")
+    gy = sp.lambdify(args, gamma[("y", "u", "u")].subs(A, profile).doit(), "numpy")
+    from scipy.integrate import solve_ivp
+    from scipy.optimize import brentq
+    from scipy.special import erf
+    alpha = np.linspace(0, 2 * math.pi, 361)[:-1]
+    n = len(alpha)
+    start_radius, last = 2.0, 10.0
+
+    def rhs(u, w):
+        x, y = w[:n], w[n:2 * n]
+        return np.concatenate([w[2 * n:3 * n], w[3 * n:], -gx(x, y) * np.ones(n), -gy(x, y) * np.ones(n)])
+    start = np.concatenate([start_radius * np.cos(alpha), start_radius * np.sin(alpha), np.zeros(2 * n)])
+    run = solve_ivp(rhs, (0, 11), start, rtol=1e-12, atol=1e-13, dense_output=True, max_step=0.01)
+
+    def rho(u):
+        return float(run.sol(u)[0])
+    edge = 2 * math.sqrt(2 * math.pi) * erf(math.sqrt(math.log(2)))
+    v1 = math.sqrt(math.log(2) / 2)
+    focus = edge + 2 * math.atan(1 / (2 * v1))
+    ck.add("light beam: the ring reaches the edge of the beam at u = 2 sqrt(2 pi) erf(sqrt(ln 2))",
+           abs(brentq(lambda u: rho(u) - 1, 3, 4.5, xtol=1e-13) - edge), 1e-8)
+    ck.add("light beam: the ring closes on the axis at u_1 + 2 arctan(1/(2 v_1))",
+           abs(brentq(rho, 4.5, 6, xtol=1e-13) - focus), 1e-8)
+    inside = np.linspace(edge, 2 * focus - edge, 60)
+    ck.add("light beam: inside the beam the ring's radius is cos(s/2) - 2 v_1 sin(s/2)",
+           float(np.max(np.abs([rho(u) - (math.cos((u - edge) / 2) - 2 * v1 * math.sin((u - edge) / 2)) for u in inside]))),
+           1e-8)
+    us = np.linspace(0, 10.9, 200)
+    energy = [float(run.sol(u)[2 * n]) ** 2 + 2 * float(profile.subs({names["x"]: rho(u), names["y"]: 0})) for u in us]
+    ck.add("light beam: rho'^2 + 2A keeps the value 2A(2R), Bonnor's (8.16)",
+           float(np.max(np.abs(np.array(energy) - (1 + 2 * math.log(start_radius)) / 4))), 1e-8)
+    ck.add("light beam: the ring is back at rest on its first circle at twice the u of the focus",
+           abs(rho(2 * focus) + start_radius) + abs(float(run.sol(2 * focus)[2 * n])), 1e-7)
+    top = 3.0
+    # The movie runs through the wave fronts at a steady u, a frame every 0.25 R of it.
+    us, keys = movie_values([0.0, 2.0, 4.0, 6.0, 8.0, last], 0.25)
+    frames = []
+    for u in [round(u, 9) for u in us]:
+        sl = FlatPlane(src, "light_beam", "null_cartesian", "x", "y", {"u": repr(u), "v": 0}, functions=functions)
+        where = f"light beam, u = {u:g}"
+        plane = disc(sl, "plane", top, "the axis of the beam", "the wave front runs on, flat, to infinity",
+                     [(1.0, "surface", "$\\rho = R$")], 2 * top)
+        ck.isometry(where, plane)
+        # Past the focus every particle is on the far side of the axis, and the ring is read round from
+        # the particle that now stands on the positive x axis, so a ring's points keep their angles.
+        w = run.sol(u) * (1.0 if run.sol(u)[0] >= 0 else -1.0)
+        cx, cy = np.append(w[:n], w[0]), np.append(w[n:2 * n], w[n])
+        a = float(w[0])
+        ck.add(f"{where}: the ring is the circle of radius {a:.6f} about the axis",
+               float(np.max(np.abs(np.column_stack([cx, cy]) - a * np.column_stack([np.cos(np.append(alpha, 0)),
+                                                                                    np.sin(np.append(alpha, 0))])))), 1e-9)
+        ring, dots = particles(ck, where, sl, plane, cx, cy)
+        frames.append(Surface([plane], label=f"$u = {u:g}\\,R$" if u else "$u = 0$", time=u, curves=[ring], dots=dots))
+    surfaces = [frames[i] for i in keys]
+
+    def beam_rows(u):
+        w = run.sol(np.atleast_1d(u))
+        return np.abs(w[0]), np.abs(w[n + 90])
+
+    def beam_ring(u, a, b):
+        # Every particle of the ring, run with the published Christoffel symbols, on the row, each
+        # at its own angle before the focus and at the opposite one after it.
+        w = run.sol(u) * (1.0 if run.sol(u)[0] >= 0 else -1.0)
+        return float(np.max(np.abs(np.column_stack([w[:n], w[n:2 * n]]) - np.column_stack([a * np.cos(alpha),
+                                                                                        b * np.sin(alpha)]))))
+    tube = stack(ck, "light beam", surfaces, beam_rows, 0.4, beam_ring, 2 * top,
+                 "the world tube of the ring runs on after $u = 10\\,R$, closing on the axis again and again")
+    tube_fig = stack_figure(tube, 2 * top, "$u$", [
+        ("fill", "cover", "the ring at every wave front from $u = 0$ to $u = 10\\,R$, each at the height of its $u$"),
+        ("line", "particles", "the ring at the six wave fronts of the flat view, twelve of its particles marked"),
+        ("line", "worldline", "the world lines of the twelve particles, each crossing the axis at the focus"),
+        ("line", "axis", "the axis of the beam")])
+    fig, played = ring_movie(frames, 2 * top, "$u$")
+    fig.legend("fill", "cover", "the wave front at each moment, flat")
+    fig.legend("line", "particles", "a ring of free particles at rest on $x^2 + y^2 = (2R)^2$ at $u = 0$, with twelve of "
+                                    "them marked")
+    fig.legend("line", "surface", "the edge of the beam, $\\rho = R$")
+    fig.legend("line", "meridian", "straight lines from the axis, every $30°$")
+    settings = ("$R = 1$, the unit of every length and of $u$, and $\\pi G\\epsilon R^2/c^4 = 1/32$; each moment is "
+                "the wave front of one $u$.")
+    given = nr.LB_ONE_INPUT
+    return [view("tube", "The ring's world tube", "$R$", [tube], tube_fig, settings=settings, input=given,
+                 height="$u$, a height of $0.4\\,R$ for each $R$ of $u$"),
+            view("ring", "A ring of particles", "$R$", surfaces, fig.done(), movie=played, settings=settings,
+                 input=given)]
+
+
 def khan_penrose(ck, src):
     """The wave front, the plane of x and y, at the four events tau = 0, 0.6, 1.0 and 1.3 on
     sigma = 0 of the cosmological chart, where u = v, at L = 1: each flat, g_xx dx^2 + g_yy dy^2
@@ -6194,6 +6305,7 @@ DRAWN = {
     "kasner": kasner,
     "bianchi": bianchi,
     "pp_wave": pp_wave, "khan_penrose": khan_penrose, "bell_szekeres": bell_szekeres,
+    "light_beam": light_beam,
     "krasnikov": krasnikov,
     "alcubierre": alcubierre,
     "natario": natario,
@@ -6935,6 +7047,24 @@ CAPTIONS = {
         "c^4\\rho^2/4GE$, twice $8GE/c^4$ for this ring. A ring of radius $\\rho$ focuses at a $u$ growing as "
         "$\\rho^2$, so the shock focuses like a lens whose focal length grows with the square of the distance from "
         "its axis.",
+    ],
+    ("light_beam", "tube"): [
+        "The world tube of a ring of free particles around a uniform beam of light ($\\pi G\\epsilon R^2/c^4 = 1/32$), "
+        "at rest on the circle $\\rho = 2R$ at $u = 0$, each wave front from $u = 0$ to $u = 10\\,R$ a circle at the "
+        "height of its $u$. The tube narrows, closes on the axis at $u = 5.22\\,R$, and opens again as every "
+        "particle carries on through the axis to the far side.",
+    ],
+    ("light_beam", "ring"): [
+        "The wave front of a uniform beam of light as $u = (ct - z)/\\sqrt{2}$ runs from $0$ to $10\\,R$, each front "
+        "drawn as a surface in flat space with every distance along it the metric distance. A surface of constant "
+        "$u$ has the metric $dx^2 + dy^2$ whatever $v$ is on it, so the drawing is a flat disc, and the beam shows "
+        "in a ring of free particles at rest on the circle $\\rho = 2R$ at $u = 0$.",
+        "The ring obeys $d^2\\rho/du^2 = -dA/d\\rho$, the equation of a particle in Newton's theory in the "
+        "potential $A$, so $(d\\rho/du)^2 + 2A$ keeps its value. Outside the beam the ring falls through the "
+        "logarithm and reaches the edge at $u = 3.81\\,R$; inside, $d^2\\rho/du^2 = -\\rho/4R^2$ and it swings as a "
+        "pendulum, closing on the axis at $u = 5.22\\,R$. It comes back to rest on its first circle at "
+        "$u = 10.45\\,R$, turned through half a circle, and falls again. Light sent against the beam follows the "
+        "same $\\rho(u)$.",
     ],
     ("pp_wave", "tube"): [
         "The world tube of a ring of free particles at rest before the pulse ($A = e^{-u^2}/L^2$), each wave front "

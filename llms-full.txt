@@ -300,6 +300,19 @@ A family of spatially homogeneous but generally anisotropic cosmologies classifi
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/bianchi.json
 - chart Type I, Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2 dt^2 + a_1^2 dx^2 + a_2^2 dy^2 + a_3^2 dz^2$$
 
+### Bonnor Beam of Light
+
+The exact gravitational field of a steady beam of light, which William Bonnor found in 1969, a plane-fronted gravitational wave that keeps pace with the light. A ray moving with the beam feels nothing, a ray moving against it is drawn in, and two beams shining the same way do not attract each other.
+
+- id: `light_beam`
+- tags: null dust, pure radiation, light beam, pp-wave, gravitational wave, plane-fronted wave, Petrov type N, cylindrical symmetry, stationary, non-vacuum, gravitational lensing, not asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/light_beam.json
+- chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2 - A\left(c\,dt - dz\right)^2$$
+- chart Null Cartesian: coordinates $(u, v, x, y)$, $$ds^2 = -2\,du\,dv + dx^2 + dy^2 - 2A\,du^2$$
+- chart Null Cylindrical, Inside the Beam: coordinates $(u, v, \rho, \phi)$, $$ds^2 = -2\,du\,dv + d\rho^2 + \rho^2d\phi^2 - \dfrac{8\pi G\epsilon}{c^4}\rho^2\,du^2$$
+- chart Null Cylindrical, Outside the Beam: coordinates $(u, v, \rho, \phi)$, $$ds^2 = -2\,du\,dv + d\rho^2 + \rho^2d\phi^2 - \dfrac{8\pi G\epsilon}{c^4}R^2\left(1 + 2\ln\left(\dfrac{\rho}{R}\right)\right)du^2$$
+
 ### C-Metric Accelerating Black Holes
 
 An exact vacuum solution describing two black holes that accelerate away from each other, driven by a cosmic string or a strut along their axis of symmetry. With the acceleration set to zero it is the Schwarzschild black hole.

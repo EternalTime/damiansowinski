@@ -6917,6 +6917,125 @@ def aichelburg_sexl(ck, src):
     return [v]
 
 
+def light_beam(ck, src):
+    """Three planes of Bonnor's beams on which nothing turns a light ray, each flat and each
+    Minkowski's diamond, in units of the beam's radius R with l = 4R.
+
+    On the axis of the uniform beam the profile A and its gradient vanish, so the plane of t and
+    z of the Cartesian chart has the metric -c^2dt^2 + dz^2 and p, q = arctan((ct -+ z)/l) bring
+    it into the diamond; in the null cylindrical chart inside the beam the same plane is rho = 0,
+    with the metric -2 du dv, and p, q = arctan(sqrt(2) u/l), arctan(sqrt(2) v/l). Midway between
+    two uniform beams with their axes at x = +-2R the profiles add to the constant
+    A = (1 + 2 ln 2)/4 and their gradients cancel, so -2 du dv - 2A du^2 = -2 du d(v + A u) and
+    q = arctan(sqrt(2)(v + A u)/l). Each plane is checked totally geodesic against the published
+    Christoffel symbols: none that could turn a ray of the plane out of it is left on it. Outside
+    the beam no plane of u and v is, and the chart there has no view."""
+    ell = 4.0
+    root2 = math.sqrt(2.0)
+    box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    A_mid = (1 + 2 * math.log(2)) / 4
+
+    def cartesian(t, z):
+        return mink_pq(t, z, ell)
+
+    def null(u, w, A=0.0):
+        u, w = np.asarray(u, dtype=float), np.asarray(w, dtype=float)
+        return np.arctan(root2 * u / ell), np.arctan(root2 * (w + A * u) / ell)
+
+    def geodesic(name, system, plane_coords, fixed, params=None, functions=None):
+        """No published Gamma^a_bc with b and c in the plane and a off it is left on the plane."""
+        _, entry, R = nr.load("light_beam", system)
+        src.note("light_beam", system, ["christoffel"])
+        names = {R._plain(n): sym for n, sym in R.symbol.items()}
+        subs = {R.c: 1, **{R.parameters[k]: sp.sympify(v) for k, v in (params or {}).items()}}
+        worst = 0.0
+        for c in entry["christoffel"]["variants"]["ull"]["nonzero"]:
+            a, b1, b2 = c["indices"]
+            if a in plane_coords or b1 not in plane_coords or b2 not in plane_coords:
+                continue
+            value = R(c["value"])
+            for fname, text in (functions or {}).items():
+                value = value.subs(R.parameters[fname], sp.sympify(text, locals=names)).doit()
+            value = value.subs(subs).subs({names[k]: sp.sympify(v) for k, v in fixed.items()})
+            worst = max(worst, abs(float(value)))
+        ck.limit(f"light beam, {name}: no Christoffel symbol turns a ray of the plane out of it", [worst], [0.0], 1e-12)
+
+    views = []
+    lines = (-16, -8, -4, 0, 4, 8, 16)
+    s = spread(-np.inf, np.inf, 600, 10)
+
+    def draw(vid, label, system, fmap, scale, restriction, legend):
+        v = View(vid, label, box, system)
+        v.fill("region", DIAMOND)
+        v.fill("cover", DIAMOND)
+        for c in lines:
+            v.curve("null", *fmap(np.full_like(s, c / scale), s))
+            v.curve("null", *fmap(s, np.full_like(s, c / scale)))
+        diamond_edges(v)
+        v.legend("null", legend)
+        v.set(restriction=restriction, settings="$R = 1$, the unit of every length, $\\pi G\\epsilon R^2/c^4 = 1/32$, "
+                                                "and $\\ell = 4R$.")
+        return v
+
+    fixed = {"x": "0", "y": "0"}
+    plane = Plane(src, "light_beam", "cartesian", ("t", "z"), fixed, functions={"A": nr.LB_ONE})
+    ck.chart("light beam, the axis in the Cartesian chart", plane, cartesian, ck.uniform(-20, 20), ck.uniform(-20, 20),
+             lambda t, z: (1, 0))
+    geodesic("the axis in the Cartesian chart", "cartesian", ("t", "z"), fixed, functions={"A": nr.LB_ONE})
+    # Lines of constant ct - z and of constant ct + z, as functions of (t, z).
+    v = View("cartesian_axis", "The axis of the beam", box, "cartesian")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    for c in lines:
+        v.curve("null", *cartesian((c + s) / 2, (s - c) / 2))
+        v.curve("null", *cartesian((s + c) / 2, (c - s) / 2))
+    diamond_edges(v)
+    v.legend("null", "$ct - z$ constant, light moving with the beam, and $ct + z$ constant, light moving against it, "
+                     "at $0$, $\\pm 4R$, $\\pm 8R$ and $\\pm 16R$")
+    v.set(restriction="The axis of the beam only ($x = y = 0$), totally geodesic, each point in the diagram a single "
+                      "event.",
+          settings="$R = 1$, the unit of every length, $\\pi G\\epsilon R^2/c^4 = 1/32$, and $\\ell = 4R$.")
+    w = spread(-np.inf, np.inf, 400, 10)
+    for m in slices.moments("light_beam"):
+        # The wave front u = u_k is ct - z = sqrt(2) u_k, every ct + z.
+        v.slice(m, [cartesian((root2 * m.time + w) / 2, (w - root2 * m.time) / 2)])
+    views.append(v)
+
+    fixed = {"rho": "0", "phi": "0"}
+    plane = Plane(src, "light_beam", "null_cylindrical_interior", ("u", "v"), fixed, nr.LB)
+    ck.chart("light beam, the axis in the null cylindrical chart", plane, null, ck.uniform(-20, 20), ck.uniform(-20, 20),
+             lambda u, w: (1, 1))
+    geodesic("the axis in the null cylindrical chart", "null_cylindrical_interior", ("u", "v"), fixed, nr.LB)
+    v = draw("interior_axis", "The axis of the beam", "null_cylindrical_interior", null, root2,
+             "The axis of the beam only ($\\rho = 0$), totally geodesic, each point in the diagram a single event.",
+             "$u$ constant, light moving with the beam, and $v$ constant, light moving against it, at "
+             "$\\sqrt{2}\\,u, \\sqrt{2}\\,v = 0$, $\\pm 4R$, $\\pm 8R$ and $\\pm 16R$")
+    for m in slices.moments("light_beam"):
+        v.slice(m, [null(np.full_like(w, m.time), w)])
+    views.append(v)
+
+    fixed = {"x": "0", "y": "0"}
+    plane = Plane(src, "light_beam", "null_cartesian", ("u", "v"), fixed, functions={"A": nr.LB_TWO})
+    between = lambda u, w: null(u, w, A_mid)
+    ck.chart("light beam, midway between two beams", plane, between, ck.uniform(-20, 20), ck.uniform(-20, 20),
+             lambda u, w: (1, 1))
+    geodesic("midway between two beams", "null_cartesian", ("u", "v"), fixed, functions={"A": nr.LB_TWO})
+    v = View("midway", "Midway between two beams", box, "null_cartesian")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    for c in lines:
+        v.curve("null", *between(np.full_like(s, c / root2), s))
+        v.curve("null", *between(s, c / root2 - A_mid * s))
+    diamond_edges(v)
+    v.legend("null", "$u$ constant, light moving with the beams, and $v + Au$ constant, light moving against them, at "
+                     "$\\sqrt{2}\\,u, \\sqrt{2}(v + Au) = 0$, $\\pm 4R$, $\\pm 8R$ and $\\pm 16R$")
+    v.set(restriction="The plane midway between the two beams only ($x = y = 0$), totally geodesic, each point in the "
+                      "diagram a single event.",
+          settings="$R = 1$, the unit of every length, $\\pi G\\epsilon R^2/c^4 = 1/32$ for each beam, and $\\ell = 4R$.")
+    views.append(v)
+    return views
+
+
 def domain_wall(ck, src):
     """The domain wall at k = 1, so that 1/k is the unit. Each side is the inside of the
     hyperbola R^2 - c^2T^2 = 1 of Minkowski's plane of T and R, and Minkowski's own maps
@@ -7528,6 +7647,7 @@ def photon_rocket(ck, src):
 
 DRAWN = {
     "aichelburg_sexl": aichelburg_sexl,
+    "light_beam": light_beam,
     "kantowski_sachs": kantowski_sachs,
     "domain_wall": domain_wall,
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom,
@@ -7562,6 +7682,32 @@ DRAWN = {
 # and every sentence about the spacetime, never about the page or the collection. A caption
 # opens by naming what is drawn, the whole spacetime or the surface in it.
 CAPTIONS = {
+    ("light_beam", "cartesian_axis"): [
+        "The axis of a uniform beam of light ($x = y = 0$), each point in the diagram a single event, brought by "
+        "$p = \\arctan((ct - z)/\\ell)$ and $q = \\arctan((ct + z)/\\ell)$ into the whole diamond. The profile $A$ "
+        "and its gradient vanish on the axis, so the metric on this plane is $-c^2dt^2 + dz^2$ and its diagram is "
+        "Minkowski's.",
+        "The lines of constant $ct - z$ are rays of the beam itself, from $\\mathscr{I}^-$ to $\\mathscr{I}^+$. The "
+        "lines of constant $ct + z$ are light sent against the beam along its axis, the one line parallel to the "
+        "beam on which such light is not turned.",
+    ],
+    ("light_beam", "interior_axis"): [
+        "The axis of a uniform beam of light ($\\rho = 0$) in Bonnor's null coordinates, each point in the diagram a "
+        "single event, brought by $p = \\arctan(\\sqrt{2}\\,u/\\ell)$ and $q = \\arctan(\\sqrt{2}\\,v/\\ell)$ into the "
+        "whole diamond. On the axis $g_{uu} = -8\\pi G\\epsilon\\rho^2/c^4$ vanishes with its gradient, so the metric "
+        "on this plane is $-2\\,du\\,dv$ and its diagram is Minkowski's.",
+        "The lines of constant $u$ are rays of the beam itself, and each wave front of the beam is one of them. The "
+        "lines of constant $v$ are light sent against the beam along its axis.",
+    ],
+    ("light_beam", "midway"): [
+        "The plane midway between two parallel uniform beams of light ($x = y = 0$), their axes at $x = \\pm 2R$, "
+        "each point in the diagram a single event. On it $A = (1 + 2\\ln 2)/4$ is constant, so "
+        "$-2\\,du\\,dv - 2A\\,du^2 = -2\\,du\\,d(v + Au)$ is flat, and $p = \\arctan(\\sqrt{2}\\,u/\\ell)$ and "
+        "$q = \\arctan(\\sqrt{2}(v + Au)/\\ell)$ bring it into the whole diamond.",
+        "The gradients of the two profiles cancel on this plane, so light sent against the beams along it stays "
+        "midway between them, on the lines of constant $v + Au$. The lines of constant $u$ are light moving with "
+        "the beams.",
+    ],
     ("aichelburg_sexl", "shock"): [
         "The plane of $u$ and $v$ at distance $\\rho = \\rho_0/8$ from the axis the source moves along, brought by "
         "$p = \\arctan u$ and $q = \\arctan(v - \\Delta v\\,\\theta(u))$ into the whole diamond, with "

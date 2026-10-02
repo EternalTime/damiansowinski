@@ -47,6 +47,11 @@
       "id": "minkowski",
       "kind": "special_case",
       "text": "Switch the field off, $B = 0$, and Melvin's universe is flat."
+    },
+    {
+      "id": "light_beam",
+      "kind": "programme",
+      "text": "Bonnor's exact field of a steady beam of light, from 1969. Light shining along the axis takes the place of the magnetic field [bonnor1969light]."
     }
   ],
   "references": [
@@ -72,7 +77,8 @@
     "dowker1994",
     "tseytlin1995",
     "bertotti1959",
-    "robinson1959"
+    "robinson1959",
+    "bonnor1969light"
   ],
   "coordinates": [
     {

@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 62,
+  "count": 63,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -46,6 +46,11 @@
           "id": "minkowski",
           "kind": "locally_same",
           "text": "Flat spacetime on either side of the shock. Roger Penrose built such waves in 1972 by cutting Minkowski space along a null plane and joining the halves again with a warp [penrose1972impulsive]."
+        },
+        {
+          "id": "light_beam",
+          "kind": "family",
+          "text": "A steady beam of light of finite width, whose exact field William Bonnor found in 1969. Outside the beam its profile is the shock's logarithm with no delta in front [bonnor1969light]."
         }
       ],
       "references": [
@@ -2077,6 +2082,365 @@
           ],
           "ricci_scalar": "R = 2\\left(\\dfrac{a_1''}{a_1} + \\dfrac{a_2''}{a_2} + \\dfrac{a_3''}{a_3} + \\dfrac{a_1'\\,a_2'}{a_1\\,a_2} + \\dfrac{a_1'\\,a_3'}{a_1\\,a_3} + \\dfrac{a_2'\\,a_3'}{a_2\\,a_3}\\right)",
           "kretschmann": "K = 4\\left(\\left(\\dfrac{a_1''}{a_1}\\right)^2 + \\left(\\dfrac{a_2''}{a_2}\\right)^2 + \\left(\\dfrac{a_3''}{a_3}\\right)^2 + \\left(\\dfrac{a_1'\\,a_2'}{a_1\\,a_2}\\right)^2 + \\left(\\dfrac{a_1'\\,a_3'}{a_1\\,a_3}\\right)^2 + \\left(\\dfrac{a_2'\\,a_3'}{a_2\\,a_3}\\right)^2\\right)"
+        }
+      ]
+    },
+    {
+      "id": "light_beam",
+      "name": "Bonnor Beam of Light",
+      "short_name": "Bonnor",
+      "description": "The exact gravitational field of a steady beam of light, which William Bonnor found in 1969, a plane-fronted gravitational wave that keeps pace with the light. A ray moving with the beam feels nothing, a ray moving against it is drawn in, and two beams shining the same way do not attract each other.",
+      "tags": [
+        "null dust",
+        "pure radiation",
+        "light beam",
+        "pp-wave",
+        "gravitational wave",
+        "plane-fronted wave",
+        "Petrov type N",
+        "cylindrical symmetry",
+        "stationary",
+        "non-vacuum",
+        "gravitational lensing",
+        "not asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $G$ and $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "pp_wave",
+          "kind": "generalisation",
+          "text": "The whole family of plane-fronted waves with parallel rays. Bonnor's beam is the member whose profile holds still in time and has light for its source [bonnor1969light]."
+        },
+        {
+          "id": "aichelburg_sexl",
+          "kind": "family",
+          "text": "A pulse of light with no width and no length, the field of one massless particle. Bonnor wrote its profile down in 1969 as the sharpest pulse, and Aichelburg and Sexl reached it in 1971 by boosting Schwarzschild's field [bonnor1969light, aichelburg1971]."
+        },
+        {
+          "id": "levi_civita",
+          "kind": "family",
+          "text": "The static vacuum outside a line of matter. Two beams shining in opposite directions make a static source, and Dietrich Kramer joined their exact field to Levi-Civita's metric in 1998 [kramer1998]."
+        },
+        {
+          "id": "melvin",
+          "kind": "programme",
+          "text": "Another of Bonnor's electromagnetic spacetimes, a bundle of magnetic field lines held together by its own gravity. He found it in 1954, ten years before Melvin [bonnor1954]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "The beam switched off. With $A = 0$ the metric is Minkowski's, and on the axis of a uniform beam the plane of $t$ and $z$ is flat with the light still on."
+        },
+        {
+          "id": "photon_rocket",
+          "kind": "family",
+          "text": "Light as the source again, here streaming out of a point mass and pushing it along. Bonnor named its rectilinear case the photon rocket in 1994 [bonnor1994]."
+        }
+      ],
+      "references": [
+        "tolman1931",
+        "tolman1934book",
+        "wheeler1955",
+        "faraoni1999",
+        "peres1959",
+        "peres1960",
+        "bonnor1969light",
+        "maccallum2015",
+        "aichelburg1971",
+        "bonnor1970spin",
+        "frolov2005",
+        "podolsky2014",
+        "scully1979",
+        "schneiter2018",
+        "kramer1998",
+        "ratzel2016",
+        "bonnor2009",
+        "bonnor1954",
+        "bonnor1994"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/light_beam.json",
+      "charts": [
+        {
+          "id": "cartesian",
+          "name": "Cartesian",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "A = A(x,y)",
+              "description": "Profile of the beams, a dimensionless function of the two transverse coordinates, with $A \\ge 0$. The energy density of the light is $\\epsilon = c^4\\left(\\partial_x^2 A + \\partial_y^2 A\\right)/16\\pi G$, so $A$ is harmonic outside the beams"
+            }
+          ],
+          "convention": "We use William Bonnor's coordinates $(t, x, y, z)$, with $t$ carrying dimensions of time and the beams shining toward $+z$, in the signature $(-,+,+,+)$, where his profile $A \\ge 0$ enters with a minus sign. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2 - A\\left(c\\,dt - dz\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1 - A"
+            },
+            {
+              "indices": [
+                "t",
+                "z"
+              ],
+              "value": "A"
+            },
+            {
+              "indices": [
+                "z",
+                "t"
+              ],
+              "value": "A"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1 - A"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "null_cartesian",
+          "name": "Null Cartesian",
+          "coordinates": [
+            "u",
+            "v",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "A = A(x,y)",
+              "description": "Profile of the beams, a dimensionless function of the two transverse coordinates, with $A \\ge 0$. The energy density of the light is $\\epsilon = c^4\\left(\\partial_x^2 A + \\partial_y^2 A\\right)/16\\pi G$, so $A$ is harmonic outside the beams"
+            }
+          ],
+          "convention": "We use William Bonnor's null coordinates $\\sqrt{2}\\,u = ct - z$ and $\\sqrt{2}\\,v = ct + z$, both lengths, with $x$ and $y$ the transverse lengths and the beams shining along the rays of constant $u$, $x$, and $y$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -2\\,du\\,dv + dx^2 + dy^2 - 2A\\,du^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-2A"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "null_cylindrical_interior",
+          "name": "Null Cylindrical, Inside the Beam",
+          "coordinates": [
+            "u",
+            "v",
+            "\\rho",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, R]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "G",
+              "description": "Newton's gravitational constant"
+            },
+            {
+              "symbol": "\\epsilon",
+              "description": "Energy density of the light, uniform across the beam; the energy per unit length of the beam is $\\pi R^2\\epsilon$"
+            },
+            {
+              "symbol": "R",
+              "description": "Radius of the beam"
+            }
+          ],
+          "convention": "We use William Bonnor's null coordinates $\\sqrt{2}\\,u = ct - z$ and $\\sqrt{2}\\,v = ct + z$, both lengths, with $\\rho$ the distance from the axis of the beam and $\\phi$ the angle about it. The light has the uniform energy density $\\epsilon$ out to the radius $R$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -2\\,du\\,dv + d\\rho^2 + \\rho^2d\\phi^2 - \\dfrac{8\\pi G\\epsilon}{c^4}\\rho^2\\,du^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\dfrac{8\\pi G\\epsilon\\,\\rho^2}{c^4}"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "null_cylindrical_exterior",
+          "name": "Null Cylindrical, Outside the Beam",
+          "coordinates": [
+            "u",
+            "v",
+            "\\rho",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "\\rho \\in [R, \\infty)",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "G",
+              "description": "Newton's gravitational constant"
+            },
+            {
+              "symbol": "\\epsilon",
+              "description": "Energy density of the light, uniform across the beam; the energy per unit length of the beam is $\\pi R^2\\epsilon$"
+            },
+            {
+              "symbol": "R",
+              "description": "Radius of the beam"
+            }
+          ],
+          "convention": "We use William Bonnor's null coordinates $\\sqrt{2}\\,u = ct - z$ and $\\sqrt{2}\\,v = ct + z$, both lengths, with $\\rho$ the distance from the axis of the beam and $\\phi$ the angle about it. The beam, of energy density $\\epsilon$, fills $\\rho \\le R$, and the metric and its first derivatives are continuous at its edge. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -2\\,du\\,dv + d\\rho^2 + \\rho^2d\\phi^2 - \\dfrac{8\\pi G\\epsilon}{c^4}R^2\\left(1 + 2\\ln\\left(\\dfrac{\\rho}{R}\\right)\\right)du^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\dfrac{8\\pi G\\epsilon}{c^4}R^2\\left(1 + 2\\ln\\left(\\dfrac{\\rho}{R}\\right)\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
         }
       ]
     },
@@ -6824,6 +7188,11 @@
           "id": "stockum_dust",
           "kind": "family",
           "text": "Dust rotating rigidly inside a cylinder. William Bonnor showed in 1980 that the vacuum outside the lightest such cylinders is static [bonnor1980]."
+        },
+        {
+          "id": "light_beam",
+          "kind": "family",
+          "text": "A beam of light in the place of the line of matter. Its field travels with the light and is twice that of a rod with the same energy per unit length [bonnor1969light]."
         }
       ],
       "references": [
@@ -6853,7 +7222,8 @@
         "bini2004",
         "levicivita1917",
         "bertotti1959",
-        "bonnor1980"
+        "bonnor1980",
+        "bonnor1969light"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/levi_civita.json",
@@ -7604,6 +7974,11 @@
           "id": "minkowski",
           "kind": "special_case",
           "text": "Switch the field off, $B = 0$, and Melvin's universe is flat."
+        },
+        {
+          "id": "light_beam",
+          "kind": "programme",
+          "text": "Bonnor's exact field of a steady beam of light, from 1969. Light shining along the axis takes the place of the magnetic field [bonnor1969light]."
         }
       ],
       "references": [
@@ -7629,7 +8004,8 @@
         "dowker1994",
         "tseytlin1995",
         "bertotti1959",
-        "robinson1959"
+        "robinson1959",
+        "bonnor1969light"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/melvin.json",
@@ -8127,6 +8503,11 @@
           "id": "spinning_string",
           "kind": "locally_same",
           "text": "Minkowski space with a wedge removed and the faces sewn together a time $8\\pi GJ/c^4$ out of step. It is flat off the string and has closed timelike curves close to it [deser1992time]."
+        },
+        {
+          "id": "light_beam",
+          "kind": "generalisation",
+          "text": "Flat spacetime with a steady beam of light shining through it. Light running with the beam does not feel it [bonnor1969light]."
         }
       ],
       "references": [
@@ -8162,7 +8543,8 @@
         "misner1967",
         "li1998",
         "griffiths1991",
-        "deser1992time"
+        "deser1992time",
+        "bonnor1969light"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -9769,6 +10151,11 @@
           "id": "c_metric",
           "kind": "family",
           "text": "The other accelerating spacetime of type D among Robinson and Trautman's. Its black holes are pulled along by a cosmic string or pushed by a strut, and the rocket pushes itself with light [podolsky2008]."
+        },
+        {
+          "id": "light_beam",
+          "kind": "family",
+          "text": "Light as the source again, here a steady beam of parallel rays with no rocket to push. William Bonnor found its exact field in 1969 [bonnor1969light]."
         }
       ],
       "references": [
@@ -9787,7 +10174,8 @@
         "cornish2000",
         "gurses2002",
         "podolsky2006",
-        "hogan2020"
+        "hogan2020",
+        "bonnor1969light"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/photon_rocket.json",
@@ -10005,6 +10393,11 @@
           "id": "bell_szekeres",
           "kind": "composite",
           "text": "Two plane electromagnetic waves sent at each other head on. Before they meet, each is the plane wave with $H = -a^2\\Theta(u)(x^2 + y^2)$, a step in $u$ [griffiths1991]."
+        },
+        {
+          "id": "light_beam",
+          "kind": "special_case",
+          "text": "The pp-wave of a steady beam of light. Its profile does not depend on $u$ and is harmonic only outside the beam, where the light's energy is its source [bonnor1969light]."
         }
       ],
       "references": [
@@ -10027,7 +10420,8 @@
         "khan1971",
         "robinson1960",
         "griffiths2009",
-        "griffiths1991"
+        "griffiths1991",
+        "bonnor1969light"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/pp_wave.json",

@@ -61,6 +61,11 @@
       "id": "c_metric",
       "kind": "family",
       "text": "The other accelerating spacetime of type D among Robinson and Trautman's. Its black holes are pulled along by a cosmic string or pushed by a strut, and the rocket pushes itself with light [podolsky2008]."
+    },
+    {
+      "id": "light_beam",
+      "kind": "family",
+      "text": "Light as the source again, here a steady beam of parallel rays with no rocket to push. William Bonnor found its exact field in 1969 [bonnor1969light]."
     }
   ],
   "references": [
@@ -79,7 +84,8 @@
     "cornish2000",
     "gurses2002",
     "podolsky2006",
-    "hogan2020"
+    "hogan2020",
+    "bonnor1969light"
   ],
   "coordinates": [
     {

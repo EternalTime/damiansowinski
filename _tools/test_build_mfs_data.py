@@ -2444,6 +2444,24 @@ class EmbeddingDiagrams(unittest.TestCase):
             radii = [math.hypot(X, Y) for X, Y, _ in P]
             near(max(radii) - min(radii), 0, "the Aichelburg-Sexl ring is a circle", 1e-5)
             near(radii[0], 1 - max(surface["time"], 0) / 2, "the Aichelburg-Sexl ring's radius", 2e-3)
+        # The ring about Bonnor's uniform beam, at rest on rho = 2R at u = 0, stays a circle. Outside the
+        # beam rho'^2 = ln(2/rho)/2, so it stands at rho when u = 2 sqrt(2 pi) erf(sqrt(ln(2/rho))); inside,
+        # rho'' = -rho/4 from the edge, reached at u_1 with the speed v_1 = sqrt(ln(2)/2), so its radius is
+        # |cos(s/2) - 2 v_1 sin(s/2)| at s = u - u_1. It closes on the axis at u_f = u_1 + 2 arctan(1/(2 v_1))
+        # and opens again as it closed, its radius at u the radius at 2 u_f - u.
+        u_1, v_1 = 2 * math.sqrt(2 * math.pi) * math.erf(math.sqrt(math.log(2))), math.sqrt(math.log(2) / 2)
+        u_f = u_1 + 2 * math.atan(1 / (2 * v_1))
+        for surface in rings("light_beam")["surfaces"]:
+            P = surface["curves"][0]["points"]
+            radii = [math.hypot(X, Y) for X, Y, _ in P]
+            near(max(radii) - min(radii), 0, "the ring about the beam of light is a circle", 1e-5)
+            u = min(surface["time"], 2 * u_f - surface["time"])
+            if u < u_1:
+                near(2 * math.sqrt(2 * math.pi) * math.erf(math.sqrt(math.log(2 / radii[0]))), u,
+                     "the ring falling toward the beam of light", 1e-5)
+            else:
+                near(radii[0], abs(math.cos((u - u_1) / 2) - 2 * v_1 * math.sin((u - u_1) / 2)),
+                     "the ring inside the beam of light", 1e-5)
 
         # Natario's lines of flow, closed, each on one level of the stream function n(r_s) y^2,
         # y being the drawing's Y, and each on the triangles of the height.
@@ -2636,7 +2654,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         particles. Lentz's class has flat slices for every potential and no soliton that can be
         computed, so it has no embedding diagram."""
         RELIEF = 0.05
-        flat = {"minkowski", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres"}
+        flat = {"minkowski", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres", "light_beam"}
         # The domain wall's moment ct = 0, when the wall stops, is the flat disc of radius 1/k taken
         # twice and joined at its rim; the moments either side of it are the cones it opens into.
         flat_moments = {("domain_wall", "moments", 2)}
@@ -2751,7 +2769,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         self.assertEqual({name for name, data in self.embedding.items()
                           if any("height" in view for view in data["views"])},
                          {"alcubierre", "krasnikov", "natario", "kasner", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose",
-                          "bell_szekeres"})
+                          "bell_szekeres", "light_beam"})
 
     def test_a_grid_that_is_not_one_is_refused(self):
         def spoil(change, words):
@@ -2968,7 +2986,7 @@ class StacksAndMovies(unittest.TestCase):
     September 2026, from the numbers written and nothing else."""
 
     STACKS = {"kasner": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
-              "bell_szekeres": 3.0}   # the height of a unit of time
+              "bell_szekeres": 3.0, "light_beam": 0.4}   # the height of a unit of time
     # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
@@ -2984,7 +3002,7 @@ class StacksAndMovies(unittest.TestCase):
               ("kasner", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
               ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$",
               ("bell_szekeres", "ring"): "$\\xi$",
-              ("gowdy", "torus"): "$t$"}
+              ("gowdy", "torus"): "$t$", ("light_beam", "ring"): "$u$"}
 
     def setUp(self):
         self.embedding = embedding_files()
@@ -3394,12 +3412,13 @@ class TurningLightConeFigures(unittest.TestCase):
             self.assertEqual([len(mark["lines"]) for mark in turn["slices"]],
                              [len(mark["lines"]) for mark in figure.get("slices", [])], where)
 
-    def test_only_the_cosmic_strings_flat_beam_does_not_turn(self):
-        # The beam lies in the plane t = 0 seen from straight above, drawn in the plane's own
-        # flat coordinates, so it has no other side.
+    def test_only_the_flat_figures_of_light_rays_do_not_turn(self):
+        # The cosmic string's beam lies in the plane t = 0 seen from straight above, drawn in the plane's
+        # own flat coordinates, and the rays along Bonnor's beam of light in the plane y = 0 seen from the
+        # side, t left out, so neither has another side.
         still = {f"{name}/{figure['id']}" for name, data in diagram_files().items()
                  for figures in data.get("projections", {}).values() for figure in figures if "turn" not in figure}
-        self.assertEqual(still, {"cosmic_string/beam"})
+        self.assertEqual(still, {"cosmic_string/beam", "light_beam/lens"})
 
 
 class TurningUnderTheHand(unittest.TestCase):
@@ -3498,7 +3517,11 @@ class Slices(unittest.TestCase):
               # The axis of the photon rocket's flight, which the embedded surface of the rays that leave
               # the rocket sideways meets only at r = 0.
               *[f"photon_rocket/{s}/{half}" for s in ("rectilinear", "robinson_trautman") for half in ("behind", "ahead")],
-              "conformal photon_rocket/behind", "conformal photon_rocket/ahead"}
+              "conformal photon_rocket/behind", "conformal photon_rocket/ahead",
+              # Two beams of light side by side, another spacetime than the single beam whose wave fronts
+              # are embedded, and the plane y = 0 with t left out, which every wave front covers whole.
+              "light_beam/null_cartesian/midway", "light_beam/null_cartesian/one", "conformal light_beam/midway",
+              "light_beam/cartesian/lens"}
 
     def setUp(self):
         self.diagrams, self.conformal, self.embedding = diagram_files(), conformal_files(), embedding_files()
@@ -3706,6 +3729,9 @@ class Slices(unittest.TestCase):
             return (lambda X: -0.5 * math.log(1 + X * X)), None
         if key == "pp_wave/exact_plane_wave/tz" or key.startswith("aichelburg_sexl/null_cartesian"):
             return (lambda X: X + t), None
+        if key.startswith("light_beam/"):
+            # Bonnor's wave front u = u_k is ct - z = sqrt(2) u_k, drawn against z and ct.
+            return (lambda X: X + math.sqrt(2) * t), None
         if key == "oppenheimer_snyder/exterior_schwarzschild/radial":
             lo, hi = self.reach(surface, "comoving_synchronous")
 
@@ -4029,6 +4055,10 @@ class Slices(unittest.TestCase):
                     elif metric_id == "aichelburg_sexl":
                         # The wave front u = u_k is the null line p = arctan u_k.
                         self.assertTrue(all(abs((T - X) / 2 - math.atan(t)) < 2e-4 for X, T in points), where)
+                    elif metric_id == "light_beam":
+                        # Bonnor's wave front u = u_k is the null line p = arctan(sqrt(2) u_k/l), l = 4R.
+                        self.assertTrue(all(abs((T - X) / 2 - math.atan(math.sqrt(2) * t / 4)) < 2e-4 for X, T in points),
+                                        where)
                     elif metric_id == "khan_penrose":
                         # The event u = v = sin(t/2) where both waves have passed, drawn with p, q = u, v.
                         for X, T in points:

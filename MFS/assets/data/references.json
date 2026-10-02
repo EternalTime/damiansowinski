@@ -1,5 +1,5 @@
 {
-  "version": "f49dba5f17a3d277",
+  "version": "7b70329e589b3bb2",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -7106,6 +7106,195 @@
         "year": "1969",
         "doi": "10.1007/BF01645484",
         "url": "https://doi.org/10.1007/BF01645484"
+      }
+    },
+    "tolman1934book": {
+      "type": "book",
+      "fields": {
+        "title": "Relativity, Thermodynamics and Cosmology",
+        "author": "Tolman, Richard C.",
+        "publisher": "Clarendon Press",
+        "address": "Oxford",
+        "year": "1934",
+        "url": "https://archive.org/details/dli.ernet.288495"
+      }
+    },
+    "peres1959": {
+      "type": "article",
+      "fields": {
+        "title": "Some Gravitational Waves",
+        "author": "Peres, Asher",
+        "journal": "Physical Review Letters",
+        "volume": "3",
+        "number": "12",
+        "pages": "571--572",
+        "year": "1959",
+        "doi": "10.1103/PhysRevLett.3.571",
+        "eprint": "hep-th/0205040",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.3.571"
+      }
+    },
+    "peres1960": {
+      "type": "article",
+      "fields": {
+        "title": "Null Electromagnetic Fields in General Relativity Theory",
+        "author": "Peres, Asher",
+        "journal": "Physical Review",
+        "volume": "118",
+        "number": "4",
+        "pages": "1105--1110",
+        "year": "1960",
+        "doi": "10.1103/PhysRev.118.1105",
+        "url": "https://doi.org/10.1103/PhysRev.118.1105"
+      }
+    },
+    "bonnor1970spin": {
+      "type": "article",
+      "fields": {
+        "title": "Spinning null fluid in general relativity",
+        "author": "Bonnor, William B.",
+        "journal": "International Journal of Theoretical Physics",
+        "volume": "3",
+        "number": "4",
+        "pages": "257--266",
+        "year": "1970",
+        "doi": "10.1007/BF00669753",
+        "url": "https://doi.org/10.1007/BF00669753"
+      }
+    },
+    "scully1979": {
+      "type": "article",
+      "fields": {
+        "title": "General-relativistic treatment of the gravitational coupling between laser beams",
+        "author": "Scully, Marlan O.",
+        "journal": "Physical Review D",
+        "volume": "19",
+        "number": "12",
+        "pages": "3582--3591",
+        "year": "1979",
+        "doi": "10.1103/PhysRevD.19.3582",
+        "url": "https://doi.org/10.1103/PhysRevD.19.3582"
+      }
+    },
+    "kramer1998": {
+      "type": "article",
+      "fields": {
+        "title": "The gravitational field of two counter-propagating beams of light",
+        "author": "Kramer, Dietrich",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "15",
+        "number": "10",
+        "pages": "L73--L76",
+        "year": "1998",
+        "doi": "10.1088/0264-9381/15/10/003",
+        "url": "https://doi.org/10.1088/0264-9381/15/10/003"
+      }
+    },
+    "faraoni1999": {
+      "type": "article",
+      "fields": {
+        "title": "The Gravitational Interaction of Light: From Weak to Strong Fields",
+        "author": "Faraoni, Valerio and Dumse, R. M.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "31",
+        "number": "1",
+        "pages": "91--105",
+        "year": "1999",
+        "doi": "10.1023/A:1018867405133",
+        "eprint": "gr-qc/9811052",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1023/A:1018867405133"
+      }
+    },
+    "frolov2005": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational field of a spinning radiation beam pulse in higher dimensions",
+        "author": "Frolov, Valeri P. and Fursaev, Dmitri V.",
+        "journal": "Physical Review D",
+        "volume": "71",
+        "number": "10",
+        "pages": "104034",
+        "year": "2005",
+        "doi": "10.1103/PhysRevD.71.104034",
+        "eprint": "hep-th/0504027",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.71.104034"
+      }
+    },
+    "bonnor2009": {
+      "type": "article",
+      "fields": {
+        "title": "The gravitational field of photons",
+        "author": "Bonnor, William B.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "41",
+        "number": "1",
+        "pages": "77--85",
+        "year": "2009",
+        "doi": "10.1007/s10714-008-0655-z",
+        "url": "https://doi.org/10.1007/s10714-008-0655-z"
+      }
+    },
+    "podolsky2014": {
+      "type": "article",
+      "fields": {
+        "title": "Gyratonic pp-waves and their impulsive limit",
+        "author": "Podolsk\\'y, Jiř\\'i and Steinbauer, Roland and Švarc, Robert",
+        "journal": "Physical Review D",
+        "volume": "90",
+        "number": "4",
+        "pages": "044050",
+        "year": "2014",
+        "doi": "10.1103/PhysRevD.90.044050",
+        "eprint": "1406.3227",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.90.044050"
+      }
+    },
+    "maccallum2015": {
+      "type": "article",
+      "fields": {
+        "title": "Bill Bonnor",
+        "author": "MacCallum, Malcolm",
+        "journal": "London Mathematical Society Newsletter",
+        "number": "452",
+        "pages": "39--40",
+        "year": "2015",
+        "url": "https://www.lms.ac.uk/sites/lms.ac.uk/files/files/November%202015.pdf"
+      }
+    },
+    "ratzel2016": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational properties of light - the gravitational field of a laser pulse",
+        "author": "R\\\"atzel, Dennis and Wilkens, Martin and Menzel, Ralf",
+        "journal": "New Journal of Physics",
+        "volume": "18",
+        "number": "2",
+        "pages": "023009",
+        "year": "2016",
+        "doi": "10.1088/1367-2630/18/2/023009",
+        "eprint": "1511.01023",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1367-2630/18/2/023009"
+      }
+    },
+    "schneiter2018": {
+      "type": "article",
+      "fields": {
+        "title": "The gravitational field of a laser beam beyond the short wavelength approximation",
+        "author": "Schneiter, Fabienne and R\\\"atzel, Dennis and Braun, Daniel",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "35",
+        "number": "19",
+        "pages": "195007",
+        "year": "2018",
+        "doi": "10.1088/1361-6382/aadc81",
+        "eprint": "1804.08706",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/aadc81"
       }
     },
     "aichelburg1971": {

@@ -95,6 +95,11 @@
       "id": "spinning_string",
       "kind": "locally_same",
       "text": "Minkowski space with a wedge removed and the faces sewn together a time $8\\pi GJ/c^4$ out of step. It is flat off the string and has closed timelike curves close to it [deser1992time]."
+    },
+    {
+      "id": "light_beam",
+      "kind": "generalisation",
+      "text": "Flat spacetime with a steady beam of light shining through it. Light running with the beam does not feel it [bonnor1969light]."
     }
   ],
   "references": [
@@ -130,7 +135,8 @@
     "misner1967",
     "li1998",
     "griffiths1991",
-    "deser1992time"
+    "deser1992time",
+    "bonnor1969light"
   ],
   "coordinates": [
     {

@@ -418,6 +418,17 @@ DIMENSIONS = {
         "u": "L", "v": "L", "\\rho": "L", "\\phi": "1", "G": "L**3/(M*T**2)", "E": "M*L**2/T**2",
         "\\rho_0": "L",
     },
+    # Bonnor's profile A multiplies (c dt - dz)^2 and is a pure number; his u and v, with
+    # sqrt(2) u = ct - z, are lengths, and 8 pi G epsilon/c^4, with epsilon an energy density,
+    # is an inverse area, so the uniform beam's A is a pure number as well.
+    ("light_beam", "cartesian"): {"t": "T", "x": "L", "y": "L", "z": "L", "A": "1"},
+    ("light_beam", "null_cartesian"): {"u": "L", "v": "L", "x": "L", "y": "L", "A": "1"},
+    ("light_beam", "null_cylindrical_interior"): {
+        "u": "L", "v": "L", "\\rho": "L", "\\phi": "1", "G": "L**3/(M*T**2)", "\\epsilon": "M/(L*T**2)", "R": "L",
+    },
+    ("light_beam", "null_cylindrical_exterior"): {
+        "u": "L", "v": "L", "\\rho": "L", "\\phi": "1", "G": "L**3/(M*T**2)", "\\epsilon": "M/(L*T**2)", "R": "L",
+    },
     # k = 2 pi G sigma / c^4 is an inverse length, 1/k the radius of the wall when it stops.
     ("domain_wall", "planar"): {"t": "T", "x": "L", "y": "L", "z": "L", "k": "1/L"},
     ("domain_wall", "global"): {"t": "T", "z": "L", "\\theta": "1", "\\phi": "1", "k": "1/L"},
