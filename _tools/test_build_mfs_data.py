@@ -2736,6 +2736,24 @@ class EmbeddingDiagrams(unittest.TestCase):
                 whole = piece("vaidya", "whole", number)
                 for r, rho, z in whole:
                     near(z, 2 * math.sqrt(r) - 4, f"Vaidya z at {r}")
+        # Israel's shell of dust on the same slices: a flat disc inside the shell, whose radius is the
+        # shell's on that slice, and z = 2 sqrt(r) outside it; the shell is one circle from both sides.
+        for number, surface in enumerate(self.embedding["israel_shell"]["views"][0]["surfaces"]):
+            ids = [p["id"] for p in surface["pieces"]]
+            if "inside" in ids:
+                inside = piece("israel_shell", "inside", number)
+                self.assertTrue(all(z == inside[0][2] for _, _, z in inside))
+                outside = piece("israel_shell", "outside", number)
+                shell = outside[0][0]
+                self.assertEqual(inside[-1], outside[0], "the shell is one circle")
+                self.assertAlmostEqual(shell, israel_radius(israel_on_slice(surface["time"])), delta=1e-9)
+                for r, rho, z in outside:
+                    near(z - outside[0][2], 2 * (math.sqrt(r) - math.sqrt(shell)), f"Israel's shell z at {r}")
+                self.assertEqual(outside[-1][2], 0)
+            else:
+                self.assertGreater(surface["time"], ISRAEL_END)
+                for r, rho, z in piece("israel_shell", "whole", number):
+                    near(z, 2 * math.sqrt(r) - 4, f"Israel's shell z at {r}")
         # The photon rocket's slices of constant cu + r at theta = pi/2: before the light of the burn
         # reaches them, z^2 = 8 m_0 r, and once it has passed the rim, z^2 = 8 m r with m = m_0 e^(-6/5),
         # the mass the burn leaves; the rim r = 12 m_0 stands at z = 0.
@@ -3512,7 +3530,7 @@ class StacksAndMovies(unittest.TestCase):
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
     MOVIES = {("frw", "closed"): "$ct$", ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("vaidya", "shell"): "$v - r$",
-              ("bonnor_vaidya", "shell"): "$v - r$",
+              ("bonnor_vaidya", "shell"): "$v - r$", ("israel_shell", "shell"): "$v - r$",
               ("cosmic_string", "unroll"): "$\\Delta\\phi$", ("point_particle_2plus1", "unroll"): "$\\Delta\\phi$",
               ("milne", "hyperboloids"): "$ct$",
               ("coleman_de_luccia", "hyperboloids"): "$c\\tau$",
@@ -3650,7 +3668,7 @@ class StacksAndMovies(unittest.TestCase):
         # Tolman-Bondi's cloud stand at z = 0 in every frame, and the
         # Malament-Hogarth well only deepens as the removed event nears.
         for metric_id, piece in (("malament_hogarth", "flat"), ("oppenheimer_snyder", "exterior"), ("vaidya", None),
-                                 ("tolman_bondi", "exterior")):
+                                 ("israel_shell", None), ("tolman_bondi", "exterior")):
             view = self.embedding[metric_id]["views"][0]
             for frame in view["movie"]["frames"]:
                 outer = frame["pieces"][-1] if piece is None else next(p for p in frame["pieces"] if p["id"] == piece)
@@ -4243,6 +4261,61 @@ def bisect(f, lo, hi, steps=200):
         else:
             hi = mid
     return 0.5 * (lo + hi)
+
+
+# Israel's shell of dust as its diagrams draw it, the shell that falls from rest at infinity, r_s = 1
+# and mu = 1/2. In s = sqrt(1 + 8R) its radius, the flat time T inside it and the advanced time v
+# outside it are R = (s^2 - 1)/8, T = -(s^3 + 3s - 4)/24 and
+# v = -(s^3/3 - s^2 + 5s - 15 - 16 ln((s + 3)/6))/8, which _tools/test_israel_shell.py holds to the
+# published metrics and the junction conditions. It crosses r_s at s = 3 and reaches R = 0 at s = 1.
+def israel_radius(s):
+    return (s * s - 1) / 8
+
+
+def israel_inner_time(s):
+    return -(s ** 3 + 3 * s - 4) / 24
+
+
+def israel_advanced(s):
+    return -(s ** 3 / 3 - s * s + 5 * s - 15 - 16 * math.log((s + 3) / 6)) / 8
+
+
+ISRAEL_END = israel_advanced(1.0)       # the advanced time at which the shell reaches the centre
+
+
+def israel_on_slice(w):
+    """s where the slice v - r = w meets the shell, for w < ISRAEL_END."""
+    return bisect(lambda s: israel_advanced(s) - israel_radius(s) - w, 1.0, 200.0)
+
+
+def israel_kruskal(s):
+    """Kruskal's U = (1 - R) e^(R - v/2) on the shell."""
+    return (1 - israel_radius(s)) * math.exp(israel_radius(s) - israel_advanced(s) / 2)
+
+
+def israel_event(p, q):
+    """The v and r of the event outside the shell that the conformal diagram draws at (p, q). The
+    outgoing ray p left the shell where the flat retarded time T - R = -((s + 1)^3 - 8)/24 is
+    (7/3) tan p, and keeps u = v - 2r_* outside r_s and Kruskal's U inside it; the ingoing ray q
+    entered the shell where T + R = -(s - 1)^3/24 is (7/3) tan q, or for q > 0 ends on r = 0 with the
+    outgoing ray -q, at U = e^(-v/2)."""
+    def left_at(angle):
+        return (8 - 56 * math.tan(angle)) ** (1 / 3) - 1
+    s_out = left_at(p)
+    if q <= 0:
+        v = israel_advanced(1 + (-56 * math.tan(q)) ** (1 / 3))
+    else:
+        v = -2 * math.log(israel_kruskal(left_at(-q)))
+    if s_out > 3:
+        R = israel_radius(s_out)
+        u = israel_advanced(s_out) - 2 * (R + math.log(R - 1))
+        r = bisect(lambda x: v - 2 * (x + math.log(x - 1)) - u, 1 + 1e-13, 1e3)
+    else:
+        U = israel_kruskal(s_out)
+        # (1 - r) e^r falls from 1 at r = 0, where the moment ends on the singularity.
+        f = lambda x: (1 - x) * math.exp(x - v / 2) - U
+        r = 0.0 if f(0) < 1e-6 else bisect(f, 0, 1)
+    return v, r
 
 
 class Lukewarm:
@@ -4912,7 +4985,11 @@ class Slices(unittest.TestCase):
     # Each chart of Hiscock's hole holds part of the spacetime: the ingoing chart ends at v_0 = 8, so the
     # last moment, v - r = 11, has no part in it; the outgoing chart begins on the surface of pair creation,
     # which the moments before v - r = -1 do not reach; and the flat space after the hole holds only the last.
+    # The flat interior of Israel's shell ends where the shell reaches the centre, at v - r = 0.52 r_s, so
+    # the last moment, v - r = r_s, has no part in it.
     HIDDEN_SURFACES = {"simpson_visser/areal/bounce": {("inside", 3), ("inside", 4)},
+                       "israel_shell/interior/radial": {("shell", 3)},
+                       "israel_shell/interior/through": {("shell", 3)},
                        "hiscock/ingoing/history": {("history", 5)},
                        "hiscock/outgoing/history": {("history", 0), ("history", 1)},
                        "hiscock/flat/after": {("history", k) for k in range(5)}}
@@ -5263,6 +5340,16 @@ class Slices(unittest.TestCase):
             return (lambda X: math.log(t)), list(self.reach(surface))
         if key in ("vaidya/eddington_finkelstein_ingoing/shell", "bonnor_vaidya/eddington_finkelstein_ingoing/shell"):
             return (lambda X: t), list(self.reach(surface))
+        if key.startswith("israel_shell/"):
+            # Israel's shell: the slice v - r = t outside the shell, level against v - r, and in
+            # Schwarzschild's chart the curve ct = t - ln(r - 1), which leaves the drawing toward r_s;
+            # inside the shell, the moment of the flat time T at which that slice meets the shell.
+            if key == "israel_shell/exterior_ingoing/shell":
+                return (lambda X: t), list(self.reach(surface, "exterior_ingoing"))
+            if key == "israel_shell/exterior/radial":
+                return (lambda X: t - math.log(X - 1)), list(self.reach(surface, "exterior_ingoing"))
+            level = israel_inner_time(israel_on_slice(t))
+            return (lambda X: level), list(self.reach(surface, "interior"))
         if key == "krasnikov/cylindrical/tx":
             path = next(c for c in surface["curves"] if c["class"] == "path")
             grid = next(p for p in surface["pieces"] if "grid" in p)["grid"]
@@ -5716,6 +5803,24 @@ class Slices(unittest.TestCase):
                             else:
                                 continue
                             self.assertLess(abs(v - r - t), 2e-3 * (1 + abs(v)), f"{where} at {(X, T)}")
+                    elif metric_id == "israel_shell":
+                        # Inside the shell p, q = arctan(3(cT -+ r)/7): the moment is the flat time at which
+                        # the slice v - r = t meets the shell, out to the shell. Outside it each point is
+                        # carried back along its two rays to the shell, israel_event, and lies on v - r = t.
+                        if t < ISRAEL_END:
+                            on_shell = israel_on_slice(t)
+                            level, edge = israel_inner_time(on_shell), israel_radius(on_shell)
+                            inside, outside = mark["lines"]
+                            for X, T in inside:
+                                a, b = 7 / 3 * math.tan((T - X) / 2), 7 / 3 * math.tan((T + X) / 2)
+                                self.assertLess(abs((a + b) / 2 - level), 2e-3 * (1 + a * a + b * b), f"{where} at {(X, T)}")
+                                self.assertLessEqual((b - a) / 2, edge + 2e-3 * (1 + a * a + b * b), where)
+                            self.assertLess(math.dist(inside[-1], outside[0]), 2e-4, where)
+                        else:
+                            (outside,) = mark["lines"]
+                        for X, T in outside[1:]:
+                            v, r = israel_event((T - X) / 2, (T + X) / 2)
+                            self.assertLess(abs(v - r - t), 5e-3 * (1 + abs(v)), f"{where} at {(X, T)}")
                     elif metric_id == "bonnor_vaidya":
                         # Both views draw the moment before the shell turns: outside the shell through
                         # the tower's ingoing map, and inside it through the flat map, every p moved by pi/2.

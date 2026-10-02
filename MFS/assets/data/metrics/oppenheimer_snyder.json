@@ -67,6 +67,11 @@
       "id": "einstein_cluster",
       "kind": "programme",
       "text": "Einstein's answer of the same year to the same question. His ball of particles on circular orbits cannot be made smaller than one and a half Schwarzschild radii, from which he concluded that Schwarzschild singularities \"do not exist in physical reality\" [einstein1939]."
+    },
+    {
+      "id": "israel_shell",
+      "kind": "family",
+      "text": "The same collapse with the dust on one thin shell and flat space inside, which Werner Israel solved in 1966 [israel1966]."
     }
   ],
   "references": [
@@ -83,7 +88,8 @@
     "schwarzschild1916b",
     "vaidya1966",
     "mann1993",
-    "einstein1939"
+    "einstein1939",
+    "israel1966"
   ],
   "coordinates": [
     {
