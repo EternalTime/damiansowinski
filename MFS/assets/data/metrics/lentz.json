@@ -11,14 +11,11 @@
     "plasma",
     "electromagnetic field",
     "energy condition violation",
-    "non-vacuum",
     "time-dependent",
-    "dynamical",
     "idealized model",
     "Lorentzian",
     "Einstein equations",
-    "four-dimensional",
-    "causality violation"
+    "four-dimensional"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep every factor of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

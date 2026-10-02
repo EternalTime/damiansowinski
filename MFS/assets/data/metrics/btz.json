@@ -4,8 +4,6 @@
   "short_name": "Bañados-Teitelboim-Zanelli",
   "description": "A rotating black hole in three spacetime dimensions with a negative cosmological constant. It has constant negative curvature everywhere, being anti-de Sitter space with points identified by a discrete boost, and it carries a temperature and an entropy that can be computed exactly.",
   "tags": [
-    "vacuum",
-    "vacuum solution",
     "negative cosmological constant",
     "cosmological constant",
     "anti-de Sitter",
@@ -27,11 +25,13 @@
     "AdS/CFT",
     "holography",
     "three-dimensional",
-    "lower-dimensional gravity",
+    "2+1 dimensional gravity",
     "exact solution",
     "Lorentzian",
     "Einstein equations",
-    "idealized model"
+    "idealized model",
+    "Einstein space",
+    "conformally flat"
   ],
   "signature": "(-,+,+)",
   "convention": "We keep factors of $c$ explicit, with $M = 8Gm/c^2$ and $J = 8Gj/c^3$ for a hole of mass $m$ and angular momentum $j$, and $G$ Newton's constant in three dimensions. We write $N^2 = r^2/\\ell^2 - M + J^2/(4r^2)$, which vanishes on the horizons $r_\\pm^2 = \\tfrac{1}{2}M\\ell^2\\left(1 \\pm \\sqrt{1 - J^2/(M^2\\ell^2)}\\right)$.",

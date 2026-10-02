@@ -4,7 +4,6 @@
   "short_name": "Fisher-Janis-Newman-Winicour",
   "description": "The static, spherically symmetric spacetime of a mass that also carries a massless scalar field, found by I. Z. Fisher in 1948 and found again by Allen Janis, Ezra Newman, and Jeffrey Winicour in 1968. For any scalar charge, however small, the sphere where Schwarzschild's horizon would stand has zero area and infinite curvature, and no horizon hides it.",
   "tags": [
-    "non-vacuum",
     "static",
     "stationary",
     "spherically symmetric",
@@ -15,7 +14,6 @@
     "scalar charge",
     "mass",
     "naked singularity",
-    "singularity",
     "curvature singularity",
     "timelike singularity",
     "no horizon",

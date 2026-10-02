@@ -7,7 +7,6 @@
     "flat",
     "special relativity",
     "vacuum",
-    "vacuum solution",
     "static",
     "maximally symmetric",
     "constant curvature",
@@ -15,7 +14,11 @@
     "exact solution",
     "Lorentzian",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "conformally flat",
+    "stationary",
+    "spherically symmetric",
+    "Einstein equations"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit.",

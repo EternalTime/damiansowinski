@@ -4,8 +4,6 @@
   "short_name": "Schwarzschild-anti-de Sitter",
   "description": "A black hole in anti-de Sitter space, the static, spherically symmetric vacuum solution with a negative cosmological constant. A small one is unstable and evaporates or grows, and a large one stays in stable equilibrium with thermal radiation, as Stephen Hawking and Don Page showed in 1983.",
   "tags": [
-    "vacuum",
-    "vacuum solution",
     "static",
     "stationary",
     "spherically symmetric",
@@ -18,7 +16,6 @@
     "holography",
     "black hole thermodynamics",
     "Hawking-Page transition",
-    "singularity",
     "curvature singularity",
     "coordinate singularity",
     "horizon",
@@ -30,7 +27,8 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "Einstein space"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and the anti-de Sitter radius $L$, a length, fixes the cosmological constant through $\\Lambda = -3/L^2$. The horizon $r_h$ is the one positive root of $1 - r_s/r + r^2/L^2$. We keep factors of $c$ explicit.",

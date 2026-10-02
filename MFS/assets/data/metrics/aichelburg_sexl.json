@@ -14,12 +14,12 @@
     "null source",
     "vacuum",
     "time-dependent",
-    "dynamical",
     "exact solution",
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "Petrov type N"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $G$ and $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

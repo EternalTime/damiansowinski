@@ -6,7 +6,6 @@
   "tags": [
     "time machine",
     "closed timelike curves",
-    "causality violation",
     "chronology horizon",
     "cosmic string",
     "topological defect",
@@ -15,13 +14,15 @@
     "flat",
     "locally flat",
     "tachyonic momentum",
-    "three-dimensional gravity",
+    "2+1 dimensional gravity",
     "Misner space",
     "exact solution",
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "vacuum",
+    "conformally flat"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ and $G$ explicit. Each string has mass per unit length $\\mu$ and removes a wedge of angle $2\\alpha = 8\\pi G\\mu/c^2$, and $\\gamma = (1 - v^2/c^2)^{-1/2}$.",

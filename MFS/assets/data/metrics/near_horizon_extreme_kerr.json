@@ -5,7 +5,6 @@
   "description": "The vacuum geometry left when one looks only at the region just outside the horizon of a Kerr black hole spinning as fast as it can, known as NHEK. At every polar angle it is a circle fibred over anti-de Sitter space of two dimensions, it has no singularity and no asymptotically flat region, and the Kerr/CFT correspondence is built on it.",
   "tags": [
     "vacuum",
-    "vacuum solution",
     "rotating",
     "extremal",
     "near-horizon limit",

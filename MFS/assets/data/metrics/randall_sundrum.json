@@ -10,7 +10,6 @@
     "thin shell",
     "warped geometry",
     "warp factor",
-    "extra dimensions",
     "higher dimensions",
     "five-dimensional",
     "anti-de Sitter",
@@ -29,7 +28,8 @@
     "exact solution",
     "Lorentzian",
     "Einstein equations",
-    "idealized model"
+    "idealized model",
+    "stationary"
   ],
   "signature": "(-,+,+,+,+)",
   "convention": "The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, and $\\delta$ is the Dirac delta. We keep factors of $c$ explicit.",

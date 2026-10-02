@@ -4,7 +4,6 @@
   "short_name": "Reissner-Nordström",
   "description": "The unique static, spherically symmetric vacuum solution to the Einstein-Maxwell equations describing the spacetime exterior to a charged mass that does not rotate.",
   "tags": [
-    "vacuum",
     "static",
     "stationary",
     "spherically symmetric",
@@ -15,7 +14,6 @@
     "mass",
     "electrovacuum",
     "electromagnetic field",
-    "singularity",
     "curvature singularity",
     "horizon",
     "event horizon",

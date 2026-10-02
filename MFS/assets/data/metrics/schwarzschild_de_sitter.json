@@ -4,8 +4,6 @@
   "short_name": "Schwarzschild-de Sitter",
   "description": "A black hole in a universe with a positive cosmological constant, the static, spherically symmetric vacuum solution Friedrich Kottler found in 1918. A black hole horizon and a cosmological horizon enclose a static region between them, and the two radiate at different temperatures.",
   "tags": [
-    "vacuum",
-    "vacuum solution",
     "static",
     "stationary",
     "spherically symmetric",
@@ -14,7 +12,6 @@
     "cosmological constant",
     "positive cosmological constant",
     "de Sitter",
-    "singularity",
     "curvature singularity",
     "coordinate singularity",
     "horizon",
@@ -28,7 +25,8 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "Einstein space"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The Schwarzschild radius is $r_s = 2GM/c^2$, and the cosmological constant $\\Lambda$ carries an inverse length squared. The horizons $r_h < r_c$ are the two positive roots of $1 - r_s/r - \\Lambda r^2/3$. We keep factors of $c$ explicit.",

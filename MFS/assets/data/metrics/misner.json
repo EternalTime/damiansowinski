@@ -6,9 +6,7 @@
   "tags": [
     "flat",
     "vacuum",
-    "vacuum solution",
     "closed timelike curves",
-    "causality violation",
     "chronology horizon",
     "time machine",
     "topology",
@@ -17,7 +15,9 @@
     "exact solution",
     "Lorentzian",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "conformally flat",
+    "Einstein equations"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit.",

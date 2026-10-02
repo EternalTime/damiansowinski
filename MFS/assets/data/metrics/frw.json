@@ -5,19 +5,18 @@
   "description": "The Friedmann-Lemaître-Robertson-Walker metric describing a homogeneous, isotropic expanding universe.",
   "tags": [
     "cosmology",
-    "cosmological",
     "expanding universe",
     "homogeneous",
     "isotropic",
     "FLRW",
     "time-dependent",
-    "dynamical",
-    "non-vacuum",
     "exact solution",
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "conformally flat",
+    "spherically symmetric"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The curvature parameter $k \\in \\{-1, 0, +1\\}$ sets the spatial geometry, in units of the inverse square of the curvature radius. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

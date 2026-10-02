@@ -5,7 +5,6 @@
   "description": "An exact vacuum solution describing two black holes that accelerate away from each other, driven by a cosmic string or a strut along their axis of symmetry. With the acceleration set to zero it is the Schwarzschild black hole.",
   "tags": [
     "vacuum",
-    "vacuum solution",
     "static",
     "axisymmetric",
     "black hole",
@@ -18,8 +17,7 @@
     "cosmic string",
     "conical singularity",
     "Petrov type D",
-    "gravitational radiation",
-    "singularity",
+    "gravitational wave",
     "curvature singularity",
     "maximal extension",
     "causal structure",
@@ -27,7 +25,8 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "stationary"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ and $G$ explicit, the mass parameter is the geometric mass $m = GM/c^2$, and the acceleration $\\alpha$ carries an inverse length, with $0 < 2\\alpha m < 1$. The constant $C$ is a pure number that scales the angle $\\phi$ about the axis. The Riemann tensor is $R^\\mu{}_{\\nu\\rho\\sigma} = \\partial_\\rho\\Gamma^\\mu{}_{\\nu\\sigma} - \\partial_\\sigma\\Gamma^\\mu{}_{\\nu\\rho} + \\Gamma^\\mu{}_{\\rho\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma} - \\Gamma^\\mu{}_{\\sigma\\lambda}\\Gamma^\\lambda{}_{\\nu\\rho}$ and the Ricci tensor its standard contraction, $R_{\\mu\\nu} = R^\\lambda{}_{\\mu\\lambda\\nu}$.",

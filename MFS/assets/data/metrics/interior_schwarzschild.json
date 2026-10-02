@@ -8,16 +8,15 @@
     "static",
     "stationary",
     "spherically symmetric",
-    "interior",
     "stellar interior",
-    "non-vacuum",
     "matched solution",
     "mass",
     "exact solution",
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "conformally flat"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The parameter $r_s = 2GM/c^2$ is the Schwarzschild radius of the star, and $R$ is the stellar radius. We work in units with $c = 1$ throughout, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
