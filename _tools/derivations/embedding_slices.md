@@ -599,6 +599,15 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `kaigorodov_stationary/plane` marks nothing: the region $x < 0$ is another region than the one whose front is embedded.
 - The conformal views mark the front as the curve $v = 0$, or $t = 0$, from $x = Le^{-2}$ to $Le^{2}$.
 
+### The anti-de Sitter soliton
+
+- The embedding has one view at $r_0 = L$: the surface of $\rho$ and $\phi$ of the polar chart at $t = 0$, $x = 0$, from the tip $\rho = 0$ to $\rho = 2L$.
+- `polar/radial` and `polar/through`: the line $ct = 0$ from the tip to $\rho = 2L$, on both sides of the tip on the line through it.
+- `horowitz_myers/radial`: the line $ct = 0$ from $r_0$ to the box's edge, since $r = r_0\cosh^{2/3}(3\rho/2L)$ is $4.66\,L$ at $\rho = 2L$.
+- `poincare/tz`: the line $ct = 0$ from $z = L^2/r = 0.21\,L$ to the tip $z_0 = L$.
+- `five_dimensional/radial` and `three_dimensional/radial` mark nothing: they are other spacetimes than the soliton of four dimensions embedded.
+- The conformal views mark the moment as the line $T = 0$ from the tip, across both halves of the strip on the polar view.
+
 ### The topological black holes
 
 - The embedding has two views in units of $L$: the black string's moment $t = 0$, $z = 0$ at $\mu = L$, $r$ from the throat $r_h = L$ to $3L$ on both exteriors, and the horizon of the hyperbolic hole without mass at one moment, its bifurcation surface.

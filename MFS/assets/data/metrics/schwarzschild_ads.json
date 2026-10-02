@@ -68,6 +68,11 @@
       "id": "reissner_nordstrom_ads",
       "kind": "generalisation",
       "text": "The same black hole with an electric charge. It gains an inner horizon, and at fixed charge a small black hole that is stable [chamblin1999]."
+    },
+    {
+      "id": "ads_soliton",
+      "kind": "family",
+      "text": "The ground state of the flat black holes of anti-de Sitter space, as anti-de Sitter space is of this one. The flat hole and the soliton trade places in a phase transition like Hawking and Page's [surya2001]."
     }
   ],
   "references": [
@@ -95,7 +100,8 @@
     "kastor2009",
     "banados1992",
     "hawking1999rotation",
-    "chamblin1999"
+    "chamblin1999",
+    "surya2001"
   ],
   "coordinates": [
     {

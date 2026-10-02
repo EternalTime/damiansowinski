@@ -1,4 +1,169 @@
 {
+ "ads_soliton/five_dimensional": {
+  "stamp": "c1ffbc06a841acbc",
+  "relations": {},
+  "orders": null,
+  "dimension": 5,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-4/L**2",
+   "sign": -1
+  },
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\tau",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "x",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "ads_soliton/horowitz_myers": {
+  "stamp": "23ca4050a1bc42c4",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-3/L**2",
+   "sign": -1
+  },
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\tau",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "x",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "ads_soliton/poincare": {
+  "stamp": "7c641568788dc891",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-3/L**2",
+   "sign": -1
+  },
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\tau",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "x",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "ads_soliton/polar": {
+  "stamp": "35fecaccc3e23c5b",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-3/L**2",
+   "sign": -1
+  },
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "x",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "ads_soliton/three_dimensional": {
+  "stamp": "324ab6a2422398e8",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-2/L**2",
+   "sign": -1
+  },
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\tau",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
  "aichelburg_sexl/cartesian": {
   "stamp": "fdafdd5d3fc2f532",
   "relations": {},

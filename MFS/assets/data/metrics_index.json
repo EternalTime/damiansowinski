@@ -68,10 +68,46 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "59451049c12dfab5",
+    "version": "2c6621a15ac85820",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
+  },
+  {
+    "id": "ads_soliton",
+    "name": "Anti-de Sitter Soliton",
+    "tags": [
+      "static",
+      "stationary",
+      "soliton",
+      "no horizon",
+      "regular",
+      "negative energy",
+      "positive energy",
+      "ground state",
+      "Casimir energy",
+      "confinement",
+      "cosmological constant",
+      "negative cosmological constant",
+      "anti-de Sitter",
+      "AdS/CFT",
+      "holography",
+      "compact dimension",
+      "three-dimensional",
+      "four-dimensional",
+      "five-dimensional",
+      "higher dimensions",
+      "string theory",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model",
+      "Einstein space"
+    ],
+    "version": "be2b89a830b33d32",
+    "diagrams": "3c1a2fceac5c1150",
+    "conformal": "be0bf05b08f0c825",
+    "embedding": "819ee1c2da820b20"
   },
   {
     "id": "string_black_hole",
@@ -139,7 +175,7 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "d3869b535dfc69cd",
+    "version": "c5ee52d5677ea282",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -2442,7 +2478,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "9a1c274b5002c61a",
+    "version": "9100220cfa800dbd",
     "diagrams": "1fc6612302f13cf4",
     "conformal": "01527c3f93dbe1c9",
     "embedding": "d3f0fd120a6d665b"
@@ -2890,7 +2926,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "c10f7fe3bf8da568",
+    "version": "070c7eab2a585151",
     "diagrams": "70598c77af726b80",
     "conformal": "243a2de40edb7f43",
     "embedding": "930f06c7003fad35"

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compute and write the coordinate systems whose mathematics is printed by machine: the
 charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metric,
-schwarzschild_de_sitter, schwarzschild_ads, topological_black_hole, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
+schwarzschild_de_sitter, schwarzschild_ads, topological_black_hole, ads_soliton, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, boulware_deser, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
@@ -10061,8 +10061,14 @@ def senovilla_pretty(a, time, rho):
     a power cosh^(-k/3)(3a rho), k = 0, 1 or 2, times a rational function of the hyperbolic
     functions of act and 3a rho, so the power is found by trying the three, and the rest is written
     in S = sinh and C = cosh of each argument, reduced by S^2 = C^2 - 1 and factored."""
-    arguments = [(a * time, 1), (3 * a * rho, 3)]
-    names = [sp.symbols(f"_S{i} _C{i}", positive=True) for i in range(2)]
+    return rooted_hyperbolic([(a * time, 1), (3 * a * rho, 3)], sp.cosh(3 * a * rho))
+
+
+def rooted_hyperbolic(arguments, root):
+    """Senovilla's `pretty` for any chart whose values are a power root^(-k/3), k = 0, 1 or 2, of
+    one hyperbolic cosine times a rational function of the hyperbolic functions of `arguments`,
+    each given with the whole number of the checker's exponentials its own exponential is."""
+    names = [sp.symbols(f"_S{i} _C{i}", positive=True) for i in range(len(arguments))]
     relations = [S ** 2 - C ** 2 + 1 for S, C in names]
     generators = [S for S, _ in names] + [C for _, C in names]
 
@@ -10075,11 +10081,11 @@ def senovilla_pretty(a, time, rho):
     def pretty(value):
         value = sp.sympify(value)
         for k in range(3):
-            x = vm.norm(value * sp.cosh(3 * a * rho) ** sp.Rational(k, 3))
+            x = vm.norm(value * root ** sp.Rational(k, 3))
             if not fractional(x):
                 break
         else:
-            raise ValueError(f"{value} is no power of cosh^(1/3)(3a rho) times a rational function")
+            raise ValueError(f"{value} is no power of the cube root of {root} times a rational function")
         # The checker's exponentials are those of a rho and of act. A value is a function of 3a rho,
         # so once common factors are cancelled each side is a polynomial in e^(3a rho) = S + C.
         letters = []
@@ -10089,13 +10095,13 @@ def senovilla_pretty(a, time, rho):
                           lambda e, unit=unit, E=E: E ** sp.expand(e.args[0] / unit))
             letters.append((E, step, S + C))
         if x.has(sp.exp):
-            raise ValueError(f"{value} keeps an exponential of neither act nor a rho")
+            raise ValueError(f"{value} keeps an exponential of none of the arguments")
         sides = []
         for side in sp.fraction(sp.cancel(x)):
             for E, step, both in letters:
                 poly = sp.Poly(side, E)
                 if any(n % step for (n,) in poly.monoms()):
-                    raise ValueError(f"{value} is no function of 3a rho")
+                    raise ValueError(f"{value} is no function of the arguments")
                 side = sum(coefficient * both ** (n // step) for (n,), coefficient in poly.terms())
             sides.append(reduce(side))
         num, den = sides
@@ -10116,7 +10122,7 @@ def senovilla_pretty(a, time, rho):
         back = {}
         for (argument, _), (S, C) in zip(arguments, names):
             back.update({S: sp.sinh(argument), C: sp.cosh(argument)})
-        return out.subs(back) / sp.cosh(3 * a * rho) ** sp.Rational(k, 3)
+        return out.subs(back) / root ** sp.Rational(k, 3)
     return pretty
 
 
@@ -12648,6 +12654,196 @@ def sultana_dyer_check(chart, system_id):
 
 
 CHARTS["sultana_dyer"] = [lambda s=s: sultana_dyer(s) for s in SULTANA_DYER_CHARTS]
+
+
+# -- The anti-de Sitter soliton --------------------------------------------------------------
+
+SOLITON_CHARTS = ["horowitz_myers", "poincare", "polar", "five_dimensional", "three_dimensional"]
+
+
+def ads_soliton(system_id):
+    """Horowitz and Myers's soliton, Phys. Rev. D 59, 026005, their (3.14): the planar black hole
+    of anti-de Sitter space, their (2.6), with t -> i tau and one flat direction -> i t. Their
+    chart in four dimensions, p = 2; the same in z = L^2/r, the coordinate of the Poincare patch,
+    with the tip at z_0 = L^2/r_0; the polar chart about the tip, with the proper distance rho,
+    r^3 = r_0^3 cosh^2(3 rho/2L), and the angle phi = 2 pi tau/beta, in which the tip is the origin
+    of a plane; their (4.1), p = 3, the soliton of five dimensions; and their (3.22), p = 1,
+    which is anti-de Sitter space of three dimensions itself. ads_soliton_check holds each chart to
+    R_mu_nu = -(p + 1)/L^2 g_mu_nu, the charts of four dimensions to each other and to the published
+    black brane continued, and the chart of three dimensions to constant curvature and to the
+    published BTZ hole continued."""
+    time_domain = "{} \\in (-\\infty, \\infty)"
+    spec = {"metric_id": "ads_soliton", "check": ads_soliton_check}
+    if system_id in ("horowitz_myers", "five_dimensional", "three_dimensional"):
+        flat = {"horowitz_myers": ["x"], "five_dimensional": ["x", "y"], "three_dimensional": []}[system_id]
+        n = len(flat) + 2
+        coords, parameters = ["t", "r", "\\tau"] + flat, ["r_0", "L"]
+        name = {"horowitz_myers": "Horowitz-Myers", "five_dimensional": "Five Dimensions",
+                "three_dimensional": "Three Dimensions"}[system_id]
+        ratio = f"\\dfrac{{r_0^{n}}}{{r^{n}}}"
+        f, bare = f"\\left(1 - {ratio}\\right)", f"1 - {ratio}"
+        period = {2: "4\\pi L^2/(3r_0)", 3: "\\pi L^2/r_0", 1: "2\\pi L^2/r_0"}[n - 1]
+
+        def line(c):
+            return ("ds^2 = \\dfrac{r^2}{L^2}\\left(-" + c + "dt^2 + " + f + "d\\tau^2"
+                    + "".join(f" + d{x}^2" for x in flat) + "\\right) + \\dfrac{L^2}{r^2}\\dfrac{dr^2}{" + bare + "}")
+        domains = [time_domain.format("t"), "r \\in [r_0, \\infty)", f"\\tau \\in [0, {period})"]
+        domains += [time_domain.format(x) for x in flat]
+        metric = {("t", "t"): "-\\dfrac{r^2}{L^2}", ("r", "r"): "\\dfrac{L^2}{r^2}" + f + "^{-1}",
+                  ("\\tau", "\\tau"): "\\dfrac{r^2}{L^2}" + f, **{(x, x): "\\dfrac{r^2}{L^2}" for x in flat}}
+        inverse = {("t", "t"): "-\\dfrac{L^2}{r^2}", ("r", "r"): "\\dfrac{r^2}{L^2}" + f,
+                   ("\\tau", "\\tau"): "\\dfrac{L^2}{r^2}" + f + "^{-1}", **{(x, x): "\\dfrac{L^2}{r^2}" for x in flat}}
+        scalars = {"ricci_scalar": f"-\\dfrac{{{n * (n + 1)}}}{{L^2}}",
+                   "kretschmann": {3: "\\dfrac{12}{L^4}\\left(2 + \\dfrac{r_0^6}{r^6}\\right)",
+                                   4: "\\dfrac{8}{L^4}\\left(5 + \\dfrac{9r_0^8}{r^8}\\right)",
+                                   2: "\\dfrac{12}{L^4}"}[n]}
+        probe = vm.Reader(coords, parameters, ())
+        r, r0, L = probe.symbol["r"], probe.parameters["r_0"], probe.parameters["L"]
+        printer = {"lead": [r, r0, L], "factors": [L, r, r0], "flip": False}
+        spec["pretty"] = soliton_whole(r ** n - r0 ** n)
+    elif system_id == "poincare":
+        coords, parameters, name = ["t", "z", "\\tau", "x"], ["z_0", "L"], "Poincaré"
+        h, bare = "\\left(1 - \\dfrac{z^3}{z_0^3}\\right)", "1 - \\dfrac{z^3}{z_0^3}"
+
+        def line(c):
+            return ("ds^2 = \\dfrac{L^2}{z^2}\\left(-" + c + "dt^2 + " + h + "d\\tau^2 + dx^2 + \\dfrac{dz^2}{"
+                    + bare + "}\\right)")
+        domains = [time_domain.format("t"), "z \\in (0, z_0]", "\\tau \\in [0, 4\\pi z_0/3)", time_domain.format("x")]
+        conformal = "\\dfrac{L^2}{z^2}"
+        metric = {("t", "t"): "-" + conformal, ("z", "z"): conformal + h + "^{-1}", ("\\tau", "\\tau"): conformal + h,
+                  ("x", "x"): conformal}
+        inverse = {("t", "t"): "-\\dfrac{z^2}{L^2}", ("z", "z"): "\\dfrac{z^2}{L^2}" + h,
+                   ("\\tau", "\\tau"): "\\dfrac{z^2}{L^2}" + h + "^{-1}", ("x", "x"): "\\dfrac{z^2}{L^2}"}
+        scalars = {"ricci_scalar": "-\\dfrac{12}{L^2}",
+                   "kretschmann": "\\dfrac{12}{L^4}\\left(2 + \\dfrac{z^6}{z_0^6}\\right)"}
+        probe = vm.Reader(coords, parameters, ())
+        z, z0, L = probe.symbol["z"], probe.parameters["z_0"], probe.parameters["L"]
+        printer = {"lead": [z, z0, L], "factors": [L, z, z0], "flip": False}
+        spec["pretty"] = soliton_whole(z ** 3 - z0 ** 3)
+    elif system_id == "polar":
+        coords, parameters, name = ["t", "\\rho", "\\phi", "x"], ["r_0", "L"], "Polar"
+        arg = "(\\tfrac{3\\rho}{2L})"
+        warp = "\\dfrac{r_0^2}{L^2}\\cosh^{4/3}" + arg
+        circle = "\\dfrac{4L^2\\sinh^2" + arg + "}{9\\cosh^{2/3}" + arg + "}"
+
+        def line(c):
+            return ("ds^2 = " + warp + "\\left(-" + c + "dt^2 + dx^2\\right) + d\\rho^2 + " + circle + "d\\phi^2")
+        domains = [time_domain.format("t"), "\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)", time_domain.format("x")]
+        metric = {("t", "t"): "-" + warp, ("\\phi", "\\phi"): circle, ("x", "x"): warp}
+        inverse = {("t", "t"): "-\\dfrac{L^2}{r_0^2\\cosh^{4/3}" + arg + "}",
+                   ("\\phi", "\\phi"): "\\dfrac{9\\cosh^{2/3}" + arg + "}{4L^2\\sinh^2" + arg + "}",
+                   ("x", "x"): "\\dfrac{L^2}{r_0^2\\cosh^{4/3}" + arg + "}"}
+        scalars = {"ricci_scalar": "-\\dfrac{12}{L^2}",
+                   "kretschmann": "\\dfrac{12}{L^4}\\left(2 + \\dfrac{1}{\\cosh^4" + arg + "}\\right)"}
+        probe = vm.Reader(coords, parameters, ())
+        rho, r0, L = probe.symbol["\\rho"], probe.parameters["r_0"], probe.parameters["L"]
+        argument = 3 * rho / (2 * L)
+        printer = {"lead": [L, r0, sp.cosh(argument), sp.sinh(argument)],
+                   "arguments": {argument: "\\tfrac{3\\rho}{2L}"}}
+        spec["pretty"] = rooted_hyperbolic([(argument, 3)], sp.cosh(argument))
+    else:
+        raise KeyError(system_id)
+    spec.update({"system": {"id": system_id, "name": name, "coords": coords, "domains": domains,
+                            "parameters": parameters, "line_element": line("c^2")},
+                 "chart_line_element": line(""), "printer": printer,
+                 "components": {"metric_components": metric, "inverse_metric_components": inverse}, **scalars})
+    return spec
+
+
+def soliton_whole(whole):
+    """A `pretty` that keeps r^n - r_0^n whole, as the line element writes 1 - r_0^n/r^n: the
+    factors sympy splits it into are multiplied back wherever each stands to one power."""
+    pieces = [b for b, e in sp.factor_list(whole)[1]]
+
+    def pretty(value):
+        powers = sp.factor(value).as_powers_dict()
+        n = powers.get(pieces[0], 0)
+        if n and all(powers.get(b, 0) == n for b in pieces):
+            for b in pieces:
+                del powers[b]
+            powers[whole] = n
+            return sp.Mul(*[b ** e for b, e in powers.items()], evaluate=False)
+        return sp.factor(value)
+    return pretty
+
+
+def ads_soliton_check(chart):
+    """Every chart solves R_mu_nu = -((d - 1)/L^2) g_mu_nu in its d dimensions, Einstein's
+    equations with a negative cosmological constant and no matter. In four dimensions Horowitz
+    and Myers's chart is the published black brane of the topological black holes with its time
+    and one flat direction exchanged, g_tau tau = -g_tt and g_tt = -g_xx of the brane at
+    z = L^2/r and z_h = L^2/r_0; the Poincare chart is their chart pulled back by r = L^2/z;
+    and the polar chart by r = r_0 cosh^(2/3)(3 rho/2L) and tau = 2 L^2 phi/(3 r_0), near whose
+    origin g_phi phi = rho^2 (1 + O(rho^2)), so that the tip is a regular point of a plane. In
+    three dimensions the chart has constant curvature, R_abcd = -(g_ac g_bd - g_ad g_bc)/L^2, so
+    it is anti-de Sitter space, and it is the published BTZ hole without rotation with its time
+    and its angle exchanged, Horowitz and Myers's (3.21) and (3.22)."""
+    x, g = chart.symbols, chart.geo.g
+    d = len(x)
+    L = chart.reader.parameters["L"]
+    ricci = chart.geo.ricci_ll()
+    for a in range(d):
+        for b in range(d):
+            if vm.norm(vm._at(ricci, (a, b)) + (d - 1) * g[a, b] / L ** 2) != 0:
+                raise AssertionError(f"ads_soliton: R + ((d - 1)/L^2) g does not vanish in slot "
+                                     f"{chart.coords_tex[a]}{chart.coords_tex[b]}")
+    if d == 5:
+        return
+    if d == 3:
+        r0 = chart.reader.parameters["r_0"]
+        riemann = chart.geo.riemann_llll()
+        for idx in itertools.product(range(3), repeat=4):
+            a, b, c, e = idx
+            if vm.norm(vm._at(riemann, idx) + (g[a, c] * g[b, e] - g[a, e] * g[b, c]) / L ** 2) != 0:
+                raise AssertionError("ads_soliton: the chart of three dimensions is not of constant curvature")
+        reader, symbols, btz = kaluza_klein_published("btz", "stationary")
+        at = {symbols[1]: x[1], reader.parameters["ell"]: L, reader.parameters["M"]: r0 ** 2 / L ** 2,
+              reader.parameters["J"]: 0}
+        btz = btz.subs(at, simultaneous=True)
+        # x = L phi along the hole's circle, so g_xx = g_phi phi / L^2.
+        for mine, theirs in ((g[2, 2], -btz[0, 0]), (g[0, 0], -btz[2, 2] / L ** 2), (g[1, 1], btz[1, 1])):
+            if vm.norm(mine - theirs) != 0:
+                raise AssertionError("ads_soliton: the chart of three dimensions is not the published BTZ hole continued")
+        return
+    spec = ads_soliton("horowitz_myers")
+    hm = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    t, r, tau, flat = hm.symbols
+    r0 = hm.reader.parameters["r_0"]
+    at = {hm.reader.parameters["L"]: L}
+    if chart.coords_tex[1] == "r":
+        reader, symbols, brane = kaluza_klein_published("topological_black_hole", "brane")
+        brane = brane.subs({symbols[3]: L ** 2 / x[1], reader.parameters["L"]: L,
+                            reader.parameters["z_h"]: L ** 2 / chart.reader.parameters["r_0"]}, simultaneous=True)
+        # dz = -(L^2/r^2) dr, so g_rr = (L^4/r^4) g_zz.
+        for mine, theirs in ((g[2, 2], -brane[0, 0]), (g[0, 0], -brane[1, 1]), (g[3, 3], brane[2, 2]),
+                             (g[1, 1], L ** 4 / x[1] ** 4 * brane[3, 3])):
+            if vm.norm(mine - theirs) != 0:
+                raise AssertionError("ads_soliton: Horowitz and Myers's chart is not the published black brane "
+                                     "with its time and one flat direction exchanged")
+        return
+    if chart.coords_tex[1] == "z":
+        image = [x[0], L ** 2 / x[1], x[2], x[3]]
+        at[r0] = L ** 2 / chart.reader.parameters["z_0"]
+    else:
+        r0_here = chart.reader.parameters["r_0"]
+        argument = 3 * x[1] / (2 * L)
+        image = [x[0], r0_here * sp.cosh(argument) ** sp.Rational(2, 3), 2 * L ** 2 * x[2] / (3 * r0_here), x[3]]
+        at[r0] = r0_here
+        tip = sp.series(g[2, 2], x[1], 0, 4).removeO()
+        if sp.simplify(tip - x[1] ** 2) != 0:
+            raise AssertionError("ads_soliton: the circle about the tip is not that of a plane, "
+                                 f"g_phi phi = {tip} + O(rho^4)")
+    at.update(dict(zip(hm.symbols, image)))
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], x[j]))
+    pulled = J.T * hm.geo.g.subs(at, simultaneous=True) * J
+    for i in range(4):
+        for j in range(i, 4):
+            if vm.norm(pulled[i, j] - g[i, j]) != 0:
+                raise AssertionError(f"ads_soliton: Horowitz and Myers's chart and the chart of {chart.coords_tex[1]} "
+                                     f"disagree in slot {i}{j} under their map")
+
+
+CHARTS["ads_soliton"] = [lambda s=s: ads_soliton(s) for s in SOLITON_CHARTS]
 
 
 def write(spec):

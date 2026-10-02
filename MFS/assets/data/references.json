@@ -1,5 +1,5 @@
 {
-  "version": "27911f1e1143ae41",
+  "version": "206bd9ede6321e4a",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -19318,6 +19318,210 @@
         "eprint": "0810.2778",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1088/0264-9381/26/8/085011"
+      }
+    },
+    "horowitz1998": {
+      "type": "article",
+      "fields": {
+        "title": "{AdS-CFT} correspondence and a new positive energy conjecture for general relativity",
+        "author": "Horowitz, Gary T. and Myers, Robert C.",
+        "journal": "Physical Review D",
+        "volume": "59",
+        "number": "2",
+        "pages": "026005",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.59.026005",
+        "eprint": "arXiv:hep-th/9808079",
+        "url": "https://doi.org/10.1103/PhysRevD.59.026005"
+      }
+    },
+    "gibbons1983": {
+      "type": "article",
+      "fields": {
+        "title": "The stability of gauged supergravity",
+        "author": "Gibbons, G. W. and Hull, C. M. and Warner, N. P.",
+        "journal": "Nuclear Physics B",
+        "volume": "218",
+        "number": "1",
+        "pages": "173--190",
+        "year": "1983",
+        "doi": "10.1016/0550-3213(83)90480-7",
+        "url": "https://doi.org/10.1016/0550-3213(83)90480-7"
+      }
+    },
+    "witten1982kk": {
+      "type": "article",
+      "fields": {
+        "title": "Instability of the {Kaluza-Klein} vacuum",
+        "author": "Witten, Edward",
+        "journal": "Nuclear Physics B",
+        "volume": "195",
+        "number": "3",
+        "pages": "481--492",
+        "year": "1982",
+        "doi": "10.1016/0550-3213(82)90007-4",
+        "url": "https://doi.org/10.1016/0550-3213(82)90007-4"
+      }
+    },
+    "brill1991": {
+      "type": "article",
+      "fields": {
+        "title": "Negative energy in string theory",
+        "author": "Brill, Dieter and Horowitz, Gary T.",
+        "journal": "Physics Letters B",
+        "volume": "262",
+        "number": "4",
+        "pages": "437--443",
+        "year": "1991",
+        "doi": "10.1016/0370-2693(91)90618-Z",
+        "url": "https://doi.org/10.1016/0370-2693(91)90618-Z"
+      }
+    },
+    "gubser1996": {
+      "type": "article",
+      "fields": {
+        "title": "Entropy and temperature of black 3-branes",
+        "author": "Gubser, S. S. and Klebanov, I. R. and Peet, A. W.",
+        "journal": "Physical Review D",
+        "volume": "54",
+        "number": "6",
+        "pages": "3915--3919",
+        "year": "1996",
+        "doi": "10.1103/PhysRevD.54.3915",
+        "eprint": "arXiv:hep-th/9602135",
+        "url": "https://doi.org/10.1103/PhysRevD.54.3915"
+      }
+    },
+    "myers1999": {
+      "type": "article",
+      "fields": {
+        "title": "Stress tensors and {Casimir} energies in the {AdS-CFT} correspondence",
+        "author": "Myers, Robert C.",
+        "journal": "Physical Review D",
+        "volume": "60",
+        "number": "4",
+        "pages": "046002",
+        "year": "1999",
+        "doi": "10.1103/PhysRevD.60.046002",
+        "eprint": "arXiv:hep-th/9903203",
+        "url": "https://doi.org/10.1103/PhysRevD.60.046002"
+      }
+    },
+    "constable1999": {
+      "type": "article",
+      "fields": {
+        "title": "Spin-two glueballs, positive energy theorems and the {AdS/CFT} correspondence",
+        "author": "Constable, Neil R. and Myers, Robert C.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "1999",
+        "number": "10",
+        "pages": "037",
+        "year": "1999",
+        "doi": "10.1088/1126-6708/1999/10/037",
+        "eprint": "arXiv:hep-th/9908175",
+        "url": "https://doi.org/10.1088/1126-6708/1999/10/037"
+      }
+    },
+    "surya2001": {
+      "type": "article",
+      "fields": {
+        "title": "Phase transitions for flat anti-de {Sitter} black holes",
+        "author": "Surya, Sumati and Schleich, Kristin and Witt, Donald M.",
+        "journal": "Physical Review Letters",
+        "volume": "86",
+        "number": "23",
+        "pages": "5231--5234",
+        "year": "2001",
+        "doi": "10.1103/PhysRevLett.86.5231",
+        "eprint": "arXiv:hep-th/0101134",
+        "url": "https://doi.org/10.1103/PhysRevLett.86.5231"
+      }
+    },
+    "galloway2002": {
+      "type": "article",
+      "fields": {
+        "title": "A uniqueness theorem for the anti-de {Sitter} soliton",
+        "author": "Galloway, G. J. and Surya, S. and Woolgar, E.",
+        "journal": "Physical Review Letters",
+        "volume": "88",
+        "number": "10",
+        "pages": "101102",
+        "year": "2002",
+        "doi": "10.1103/PhysRevLett.88.101102",
+        "eprint": "arXiv:hep-th/0108170",
+        "url": "https://doi.org/10.1103/PhysRevLett.88.101102"
+      }
+    },
+    "galloway2003": {
+      "type": "article",
+      "fields": {
+        "title": "On the geometry and mass of static, asymptotically {AdS} spacetimes, and the uniqueness of the {AdS} soliton",
+        "author": "Galloway, G. J. and Surya, S. and Woolgar, E.",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "241",
+        "number": "1",
+        "pages": "1--25",
+        "year": "2003",
+        "doi": "10.1007/s00220-003-0912-7",
+        "eprint": "arXiv:hep-th/0204081",
+        "url": "https://doi.org/10.1007/s00220-003-0912-7"
+      }
+    },
+    "nishioka2010": {
+      "type": "article",
+      "fields": {
+        "title": "Holographic superconductor/insulator transition at zero temperature",
+        "author": "Nishioka, Tatsuma and Ryu, Shinsei and Takayanagi, Tadashi",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2010",
+        "number": "3",
+        "pages": "131",
+        "year": "2010",
+        "doi": "10.1007/JHEP03(2010)131",
+        "eprint": "arXiv:0911.0962",
+        "url": "https://doi.org/10.1007/JHEP03(2010)131"
+      }
+    },
+    "woolgar2017": {
+      "type": "article",
+      "fields": {
+        "title": "The rigid {Horowitz-Myers} conjecture",
+        "author": "Woolgar, Eric",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2017",
+        "number": "3",
+        "pages": "104",
+        "year": "2017",
+        "doi": "10.1007/JHEP03(2017)104",
+        "eprint": "arXiv:1602.06197",
+        "url": "https://doi.org/10.1007/JHEP03(2017)104"
+      }
+    },
+    "barzegar2020": {
+      "type": "article",
+      "fields": {
+        "title": "Remarks on the energy of asymptotically {Horowitz-Myers} metrics",
+        "author": "Barzegar, Hamed and Chru\\'sciel, Piotr T. and H\\\"orzinger, Michael and Maliborski, Maciej and Nguyen, Luc",
+        "journal": "Physical Review D",
+        "volume": "101",
+        "number": "2",
+        "pages": "024007",
+        "year": "2020",
+        "doi": "10.1103/PhysRevD.101.024007",
+        "eprint": "arXiv:1907.04019",
+        "url": "https://doi.org/10.1103/PhysRevD.101.024007"
+      }
+    },
+    "brendle2024": {
+      "type": "article",
+      "fields": {
+        "title": "Systolic inequalities and the {Horowitz-Myers} conjecture",
+        "author": "Brendle, Simon and Hung, Pei-Ken",
+        "journal": "arXiv preprint arXiv:2406.04283",
+        "year": "2024",
+        "eprint": "2406.04283",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2406.04283"
       }
     }
   }

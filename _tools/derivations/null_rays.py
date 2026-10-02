@@ -856,6 +856,11 @@ TBH_THETA = {"theta": "1", "phi": "0"}
 TBH_CASES = (("flat", "$k = 0$", TBH_FLAT, (0, 3, -1.5, 1.5)),
              ("massless", "$k = -1$, $\\mu = 0$", TBH_MASSLESS, (0, 3, -1.5, 1.5)),
              ("negative", "$k = -1$, $\\mu < 0$", TBH_NEGATIVE, (0, 1.5, -0.75, 0.75)))
+# The anti-de Sitter soliton as every one of its diagrams draws it, in units of L, with the tip
+# at r_0 = L, where the circle tau has the period 4 pi L/3 in four dimensions, pi L in five and
+# 2 pi L in three, and z_0 = L^2/r_0 = L.
+SOLITON = {"r_0": 1, "L": 1}
+SOLITON_AT = {"tau": "0", "x": "0"}
 # Bardeen's regular black hole at g = r_s/3, below the extremal 2 r_s/(3 sqrt 3) = 0.385 r_s: two
 # horizons, r_- = 0.301 r_s and r_+ = 0.775 r_s, about a regular centre.
 BARDEEN = {"r_s": 1, "g": "1/3"}
@@ -1577,6 +1582,21 @@ DIAGRAMS = [
     *[Diagram("topological_black_hole", "hyperbolic", view, label.partition(", ")[2], ("t", "r"), box, "$r/L$",
               "$ct/L$", {k: v for k, v in params.items() if k != "k"}, TBH_THETA, orient="ingoing")
       for view, label, params, box in TBH_CASES[1:]],
+    # The soliton has no horizon, so its chart's t is a time everywhere. The tip is the left edge of
+    # Horowitz and Myers's planes and the right edge of the Poincare chart's, and the origin of the
+    # polar chart's, which is drawn from it and along the line through it.
+    Diagram("ads_soliton", "horowitz_myers", "radial", "$t$ and $r$", ("t", "r"), (1, 4, -1.5, 1.5),
+            "$r/L$", "$ct/L$", SOLITON, SOLITON_AT),
+    Diagram("ads_soliton", "poincare", "tz", "$t$ and $z$", ("t", "z"), (0, 1, -1.5, 1.5),
+            "$z/L$", "$ct/L$", {"z_0": 1, "L": 1}, SOLITON_AT, families=SIDEWAYS),
+    Diagram("ads_soliton", "polar", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 3, -1.5, 1.5),
+            "$\\rho/L$", "$ct/L$", SOLITON, {"phi": "0", "x": "0"}),
+    Diagram("ads_soliton", "polar", "through", "through the tip", ("t", "\\rho"), (0, 3, -3, 3),
+            "$s/L$", "$ct/L$", SOLITON, {"phi": "0", "x": "0"}, mirror=True, families=SIDEWAYS, cones=(4, 8)),
+    Diagram("ads_soliton", "five_dimensional", "radial", "$t$ and $r$", ("t", "r"), (1, 4, -1.5, 1.5),
+            "$r/L$", "$ct/L$", SOLITON, {**SOLITON_AT, "y": "0"}),
+    Diagram("ads_soliton", "three_dimensional", "radial", "$t$ and $r$", ("t", "r"), (1, 4, -1.5, 1.5),
+            "$r/L$", "$ct/L$", SOLITON, {"tau": "0"}),
     Diagram("global_monopole", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_s$", "$ct/r_s$", GM, EQUATOR, orient="ingoing", areal=True),
     Diagram("global_monopole", "conical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
@@ -3744,6 +3764,59 @@ CAPTIONS = {
         "Beyond $z_h$, $z$ is the time. We take the future toward larger $z$, which makes that region the "
         "black hole. The Kretschmann scalar $(12/L^4)(2 + z^6/z_h^6)$ is finite at $z_h$ and grows without "
         "bound as $z \\to \\infty$.",
+    ],
+    ("ads_soliton", "horowitz_myers", "radial"): [
+        "The plane of $t$ and $r$ ($\\tau = 0$, $x = 0$) of the soliton ($r_0 = L$), the same at every $\\tau$ "
+        "and $x$ by symmetry. The left edge is the tip $r = r_0$, where the circle $\\tau$ has shrunk to a point "
+        "and the rays, $c\\,dt/dr = \\pm L^2/(r^2\\sqrt{1 - r_0^3/r^3})$, stand vertical. A ray that reaches the "
+        "tip passes through it and leaves along the opposite side of the circle, $\\tau = \\beta/2$, so on this "
+        "plane it turns back.",
+        "Far out the rays flatten, and a ray from the tip reaches $r \\to \\infty$, the conformal boundary, at "
+        "$ct = 1.40\\,L^2/r_0$, as light reaches the boundary of anti-de Sitter space in a finite time. The "
+        "Kretschmann scalar $(12/L^4)(2 + r_0^6/r^6)$ is greatest at the tip, $36/L^4$, and falls far out to "
+        "$24/L^4$, the value in anti-de Sitter space.",
+    ],
+    ("ads_soliton", "poincare", "tz"): [
+        "The plane of $t$ and $z$ ($\\tau = 0$, $x = 0$) of the soliton ($z_0 = L$), the same at every $\\tau$ "
+        "and $x$. The left edge $z = 0$ is the conformal boundary, where the rays run at 45° as in the Poincaré "
+        "patch of anti-de Sitter space, and the right edge is the tip $z_0$, where "
+        "$g^{zz} = (z^2/L^2)(1 - z^3/z_0^3)$ vanishes and the rays, "
+        "$c\\,dt/dz = \\pm(1 - z^3/z_0^3)^{-1/2}$, stand vertical.",
+        "A ray from the boundary reaches the tip at $ct = 1.40\\,z_0$ and passes through it to the opposite "
+        "side of the circle $\\tau$. The space closes off at $z_0$, and no ray runs on toward $z \\to \\infty$, "
+        "where anti-de Sitter space has its Poincaré horizon and the black brane its singularity.",
+    ],
+    ("ads_soliton", "polar", "radial"): [
+        "The plane of $t$ and $\\rho$ ($\\phi = 0$, $x = 0$) of the soliton ($r_0 = L$), with $\\rho$ the proper "
+        "distance from the tip. The rays are $c\\,dt/d\\rho = \\pm(L/r_0)\\cosh^{-2/3}(\\tfrac{3\\rho}{2L})$: they "
+        "run at 45° at the tip, where $t$ is the proper time of an observer at rest, and flatten farther out.",
+        "The conformal boundary lies at an infinite proper distance, and a ray from the tip still reaches it "
+        "at $ct = 1.40\\,L^2/r_0$. An observer at rest at $\\rho$ ages by "
+        "$(r_0/L)\\cosh^{2/3}(\\tfrac{3\\rho}{2L})\\,dt$, the least at the tip, so the tip is the bottom of the "
+        "soliton's gravitational well.",
+    ],
+    ("ads_soliton", "polar", "through"): [
+        "The line through the tip ($x = 0$) of the soliton ($r_0 = L$), drawn against the signed distance $s$: "
+        "$s = \\rho$ on the right is $\\phi = 0$ and $s = -\\rho$ on the left is $\\phi = \\pi$, the opposite "
+        "side of the circle $\\tau$. Rays cross the tip smoothly, since $\\rho = 0$ is the origin of a plane in "
+        "polar coordinates.",
+        "A ray takes $ct = 2.80\\,L^2/r_0$ from the boundary on one side to the boundary on the other. Light "
+        "sent round the circle along the boundary, where $c\\,dt = d\\tau$, arrives first, after half a period, "
+        "$\\beta/2 = 2.09\\,L^2/r_0$.",
+    ],
+    ("ads_soliton", "five_dimensional", "radial"): [
+        "The plane of $t$ and $r$ ($\\tau = 0$, $x = 0$, $y = 0$) of the soliton of five dimensions ($r_0 = L$). "
+        "The rays, $c\\,dt/dr = \\pm L^2/(r^2\\sqrt{1 - r_0^4/r^4})$, stand vertical at the tip $r = r_0$, the "
+        "left edge, and a ray from the tip reaches the conformal boundary at $ct = 1.31\\,L^2/r_0$.",
+        "The Kretschmann scalar $(8/L^4)(5 + 9r_0^8/r^8)$ is greatest at the tip, $112/L^4$, and falls far out "
+        "to $40/L^4$, the value in anti-de Sitter space of five dimensions.",
+    ],
+    ("ads_soliton", "three_dimensional", "radial"): [
+        "The plane of $t$ and $r$ ($\\tau = 0$) of the soliton of three dimensions ($r_0 = L$), which is "
+        "anti-de Sitter space. The rays from the tip, $ct = \\pm(L^2/r_0)\\arccos(r_0/r)$, reach the conformal "
+        "boundary at $ct = \\pi L^2/(2r_0)$.",
+        "The Kretschmann scalar is $12/L^4$ at every point. The tip is the centre of anti-de Sitter space in "
+        "its static chart, whose radius is $\\sqrt{r^2 - r_0^2}\\,L/r_0$ and whose time is $r_0t/L$.",
     ],
     ("global_monopole", "static", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of Letelier's black hole in a cloud of strings, "
@@ -8728,6 +8801,34 @@ def _tbh_closed():
     return forms
 
 
+def _soliton_rstar(n):
+    """The soliton's tortoise coordinate from the tip, at r_0 = L = 1 with f = 1 - r^(-n): the integral
+    of dr/(r^2 sqrt f) from 1, which with u = 1/r is the integral of du/sqrt(1 - u^n) from u to 1,
+    B(1/n, 1/2)/n - u F(1/2, 1/n; 1 + 1/n; u^n). It tends to B(1/n, 1/2)/n at the boundary: 1.4022
+    for n = 3, 1.3110 for n = 4 and pi/2 for n = 2, where it is arccos(1/r)."""
+    from scipy.special import beta, hyp2f1
+
+    def rstar(r):
+        u = 1.0 / np.asarray(r, float)
+        return beta(1 / n, 0.5) / n - u * hyp2f1(0.5, 1 / n, 1 + 1 / n, u ** n)
+    return rstar
+
+
+def _soliton_closed():
+    """The closed forms of every view of the soliton: c t -+ r_*, with r = L^2/z on the Poincare
+    plane and r = r_0 cosh^(2/3)(3 rho/2L) on the polar chart's."""
+    forms = {}
+    for system, n in (("horowitz_myers", 3), ("five_dimensional", 4), ("three_dimensional", 2)):
+        rs = _soliton_rstar(n)
+        forms[("ads_soliton", system, "radial")] = (lambda t, r, rs=rs: t + rs(r), lambda t, r, rs=rs: t - rs(r), _away(1.0))
+    rs = _soliton_rstar(3)
+    forms[("ads_soliton", "poincare", "tz")] = (
+        lambda t, z: t - rs(1 / z), lambda t, z: t + rs(1 / z), _away(1.0))
+    polar = (lambda t, x: t + rs(np.cosh(1.5 * x) ** (2 / 3)), lambda t, x: t - rs(np.cosh(1.5 * x) ** (2 / 3)), None)
+    forms[("ads_soliton", "polar", "radial")] = forms[("ads_soliton", "polar", "through")] = polar
+    return forms
+
+
 def _sds_away(x, r):
     return (np.abs(r - 1.0852) > 0.05) & (np.abs(r - 3.2146) > 0.05)
 
@@ -9039,6 +9140,7 @@ CLOSED_FORMS = {
     ("hayward", "eddington_finkelstein_outgoing", "finkelstein"):
         (lambda u, r: u + 2 * _hayward_rstar(r), lambda u, r: u, _hayward_away),
     **_tbh_closed(),
+    **_soliton_closed(),
     ("reissner_nordstrom_ads", "static", "radial"):
         (lambda t, r: t + slices.rnads_rstar(r), lambda t, r: t - slices.rnads_rstar(r), _rnads_away),
     ("reissner_nordstrom_ads", "eddington_finkelstein_ingoing", "finkelstein"):
