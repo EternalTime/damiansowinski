@@ -7,7 +7,7 @@ robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, 
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
 black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
-som_raychaudhuri, point_particle_2plus1, coleman_de_luccia and senovilla, and Godel's cylindrical chart.
+som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla and roberts, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -25,8 +25,8 @@ reads better than an expanded one, and each of those is checked against sympy he
 
 The derivations these charts rest on, and the reason each was chosen, are in tov.md,
 malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_sitter.md,
-majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md and
-witten_black_hole.md beside this file.
+majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md,
+witten_black_hole.md and roberts.md beside this file.
 """
 import argparse
 import itertools
@@ -5541,6 +5541,300 @@ def fisher_jnw_check(chart, system):
 
 
 CHARTS["fisher_jnw"] = [lambda s=s: fisher_jnw(s) for s in FJNW_CHARTS]
+
+
+# -- Roberts's scalar field collapse -------------------------------------------------------
+
+ROBERTS_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+ROBERTS_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+ROBERTS_CHARTS = ["double_null", "advanced", "areal", "diagonal", "scaling"]
+
+
+def roberts_named(wholes, value):
+    """A factored value with each factor that is one of the sums in `wholes`, up to a sign and a
+    rational coefficient, written as that sum's placeholder, and the number in front kept out of
+    whatever sum is left, so that (v - u)/2 stays a product."""
+    number, out = sp.Integer(1), sp.Integer(1)
+    for factor in sp.Mul.make_args(value):
+        base, e = (factor.base, factor.exp) if factor.is_Pow else (factor, sp.Integer(1))
+        if base.is_Number:
+            number *= factor
+            continue
+        if base.is_Add and e.is_Integer:
+            content, primitive = base.as_content_primitive()
+            for placeholder, poly in wholes:
+                if sp.expand(primitive - poly) == 0:
+                    base, number = placeholder, number * content ** e
+                elif sp.expand(primitive + poly) == 0:
+                    base, number = placeholder, number * (-content) ** e
+        out *= base ** e
+    return _keep_coeff(number, out)
+
+
+def roberts_lambda(v, R, p, lam):
+    """A `pretty` for the areal chart, which names Roberts's lambda = sqrt(R^2 + p^2 v^2/4): the
+    radical is written as lambda and every even power of R as a power of lambda^2 - p^2 v^2/4, so a
+    value is a rational function of lambda, v and p with at most one R in front, factored. No
+    relation is left among those, and lambda +- p v/2 come out as factors: they are Roberts's r
+    and r - p v."""
+    def side(e):
+        poly = sp.Poly(sp.expand(e), R)
+        low = min(k for (k,), _ in poly.terms())
+        rest = sum(c * R ** ((k - low) % 2) * (lam ** 2 - p ** 2 * v ** 2 / 4) ** ((k - low) // 2)
+                   for (k,), c in poly.terms())
+        return R ** low * sp.factor(sp.expand(rest))
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        value = value.replace(lambda e: e.is_Pow and e.exp.is_Rational and e.exp.q == 2,
+                              lambda e: (2 * lam if sp.expand(e.base - 4 * R ** 2 - p ** 2 * v ** 2) == 0 else
+                                         lam if sp.expand(e.base - R ** 2 - p ** 2 * v ** 2 / 4) == 0 else
+                                         sp.sqrt(e.base)) ** (2 * e.exp))
+        if any(a.is_Pow and a.exp.is_Rational and a.exp.q == 2 for a in sp.preorder_traversal(value)):
+            raise AssertionError(f"a radical other than lambda stands in {value}")
+        num, den = sp.fraction(sp.together(value))
+        return sp.factor(sp.cancel(side(num) / side(den)))
+
+    return pretty
+
+
+def roberts_scaling(tau, x, p, D):
+    """A `pretty` for the scaling chart, whose values carry e^{2x} and e^{-2 tau}: each is written
+    as a rational function of E = e^{2x} and S = e^{2 tau} and factored. The two factors of the
+    areal radius come paired, ((1 + p) E + 1 - p)((1 - p) E + 1 + p) = 4 E (cosh^2 x - p^2 sinh^2 x),
+    and each pair is written as 4 E D with D the placeholder of that sum, as the line element
+    writes it."""
+    E, S = sp.symbols("ROBERTSe ROBERTSs", positive=True)
+    one, other = (1 + p) * E + 1 - p, (1 - p) * E + 1 + p
+
+    def power(e):
+        a = sp.Poly(sp.expand(e.args[0]), tau, x)
+        n, k = a.coeff_monomial(x), a.coeff_monomial(tau)
+        if sp.expand(a.as_expr() - n * x - k * tau) != 0 or not (n / 2).is_Integer or not (k / 2).is_Integer:
+            raise AssertionError(f"{e} is no power of e^(2x) and e^(2 tau)")
+        return E ** (n / 2) * S ** (k / 2)
+
+    def pretty(value):
+        value = sp.sympify(value).replace(sp.sinh, lambda a: (sp.exp(a) - sp.exp(-a)) / 2)
+        value = value.replace(sp.cosh, lambda a: (sp.exp(a) + sp.exp(-a)) / 2).replace(lambda e: isinstance(e, sp.exp), power)
+        A, B = sp.symbols("ROBERTSa ROBERTSb")
+        named = roberts_named([(A, one), (B, other)], sp.factor(sp.cancel(value)))
+        powers = named.as_powers_dict()
+        if powers.get(A, 0) != powers.get(B, 0):
+            raise AssertionError(f"the two factors of the areal radius are not paired in {value}")
+        named = (named / (A * B) ** powers.get(A, 0)) * (4 * E * D) ** powers.get(A, 0)
+        number, rest = named.as_coeff_Mul()
+        return _keep_coeff(number, rest.subs({E: sp.exp(2 * x), S: sp.exp(2 * tau)}))
+
+    def collect(poly, printer):
+        # A sum by falling powers of e^{2x}, each coefficient a sum in p kept whole.
+        P = sp.Poly(sp.expand(poly).replace(lambda e: isinstance(e, sp.exp), power), E)
+        terms = []
+        for (k,), coeff in sorted(P.terms(), reverse=True):
+            c, rest = coeff.as_content_primitive()
+            if rest.could_extract_minus_sign():
+                c, rest = -c, -rest
+            terms.append((c, rest * sp.exp(2 * k * x)))
+        return cp.Sum(terms)
+
+    return pretty, collect
+
+
+def roberts(system):
+    """Roberts's self-similar collapse of a massless scalar field, in five charts, with the one
+    parameter p of Oshiro, Nakamura and Tomimatsu, twice Roberts's sigma. The double null chart is
+    Oshiro, Nakamura and Tomimatsu's (1), (3) and (4), Brady's (9) with his beta = 1 and alpha =
+    (1 - p^2)/4 after u -> 2u, and Burko's (13). Roberts's own chart, his (4.5) of 1996 and (28) of
+    1989, has the advanced coordinate v and r = ((1 + p) v - u)/2, Burko's (12). The areal chart is
+    Roberts's (4.3) with alpha = p v/2: the same v and the areal radius R, with lambda =
+    sqrt(R^2 + p^2 v^2/4) = r - p v/2. The diagonal chart is his (4.7): ct = (v' + u')/2 and
+    rho = (v' - u')/2 for v' = sqrt(1 + p) v and u' = u/sqrt(1 + p). The scaling chart is Frolov's
+    (10) to (12) with a length restored: u = -2 l e^(-tau), v = l e^(-tau)(e^(2x) - 1), his s
+    written tau. roberts_check holds each chart to R_ab = 2 d_a phi d_b phi with its own field, to
+    the wave equation, to flat space at p = 0, and each after the first to being the first pulled
+    back; roberts.md beside this file is the derivation."""
+    components, kretschmann, pretty = {}, None, None
+    if system == "double_null":
+        coords, name, parameters = ["u", "v", "\\theta", "\\phi"], "Double Null", ["p"]
+        domains = (["v \\in (0, \\infty)", "u \\in (-\\infty, 0) \\;\\text{for}\\; p \\le 1",
+                    "u \\in (-\\infty, (1-p)v) \\;\\text{for}\\; p > 1"] + ROBERTS_ANGLES
+                   + ["v = 0 \\;\\text{(the field's first ray, flat space before it)}",
+                      "u = (1-p)v \\;\\text{(the singularity, for } p \\ge 1\\text{)}",
+                      "u = (1-p^2)v \\;\\text{(the apparent horizon, for } p > 1\\text{)}"])
+        area = "\\dfrac{(1-p^2)v^2 - 2uv + u^2}{4}"
+
+        def line(c):
+            return "ds^2 = -du\\,dv + " + area + ROBERTS_SPHERE
+        probe = vm.Reader(coords, parameters, ())
+        u, v, p = probe.symbol["u"], probe.symbol["v"], probe.parameters["p"]
+        A, B, C = sp.symbols("ROBERTSa ROBERTSb ROBERTSc")
+        wholes = [(A, (1 - p) * v - u), (B, (1 + p) * v - u), (C, (1 - p ** 2) * v - u)]
+        named = {A: "\\left(1 - p\\right)v - u", B: "\\left(1 + p\\right)v - u", C: "\\left(1 - p^2\\right)v - u"}
+        printer = {"lead": [v, u, p], "factors": [p, u, v], "flip": False, "named": named}
+        pretty = lambda value: roberts_named(wholes, sp.factor(sp.sympify(value)))
+        components = {"metric_components": {("\\theta", "\\theta"): area, ("\\phi", "\\phi"): area + "\\sin^2\\theta"}}
+    elif system == "advanced":
+        coords, name, parameters = ["v", "r", "\\theta", "\\phi"], "Roberts", ["p"]
+        domains = (["v \\in (0, \\infty)", "r \\in ((1+p)v/2, \\infty) \\;\\text{for}\\; p \\le 1",
+                    "r \\in (pv, \\infty) \\;\\text{for}\\; p > 1"] + ROBERTS_ANGLES
+                   + ["v = 0 \\;\\text{(the field's first ray, flat space before it)}",
+                      "r = pv \\;\\text{(the singularity, for } p \\ge 1\\text{)}",
+                      "r = p(1+p)v/2 \\;\\text{(the apparent horizon, for } p > 1\\text{)}"])
+
+        def line(c):
+            return "ds^2 = -(1+p)\\,dv^2 + 2\\,dv\\,dr + r(r - pv)" + ROBERTS_SPHERE
+        probe = vm.Reader(coords, parameters, ())
+        v, r, p = probe.symbol["v"], probe.symbol["r"], probe.parameters["p"]
+        printer = {"lead": [r, v, p], "factors": [p, v, r], "flip": False}
+    elif system == "areal":
+        coords, name = ["v", "R", "\\theta", "\\phi"], "Areal Radius"
+        parameters = ["p", "\\lambda = \\sqrt{R^2 + \\dfrac{p^2v^2}{4}}"]
+        domains = (["v \\in (0, \\infty)", "R \\in (\\sqrt{1-p^2}\\,v/2, \\infty) \\;\\text{for}\\; p \\le 1",
+                    "R \\in (0, \\infty) \\;\\text{for}\\; p > 1"] + ROBERTS_ANGLES
+                   + ["v = 0 \\;\\text{(the field's first ray, flat space before it)}",
+                      "R = 0 \\;\\text{(the singularity, for } p \\ge 1\\text{)}",
+                      "R = p\\sqrt{p^2-1}\\,v/2 \\;\\text{(the apparent horizon, for } p > 1\\text{)}"])
+
+        def line(c):
+            return ("ds^2 = -\\left(1 - \\dfrac{p^2v}{2\\lambda}\\right)dv^2 + \\dfrac{2R}{\\lambda}\\,dv\\,dR + R^2"
+                    + ROBERTS_SPHERE)
+        probe = vm.Reader(coords, parameters, ())
+        v, R, p = probe.symbol["v"], probe.symbol["R"], probe.parameters["p"]
+        lam = sp.Symbol("lambda", positive=True)
+        printer = {"lead": [lam, R, v, p], "factors": [p, v, R, lam], "flip": False}
+        pretty = roberts_lambda(v, R, p, lam)
+    elif system == "diagonal":
+        coords, name, parameters = ["t", "\\rho", "\\theta", "\\phi"], "Time and Radius", ["p"]
+        domains = (["\\rho \\in (0, \\infty)", "t \\in (-\\rho/c, \\rho/c) \\;\\text{for}\\; p \\le 1",
+                    "t \\in (-\\rho/c, \\rho/(pc)) \\;\\text{for}\\; p > 1"] + ROBERTS_ANGLES
+                   + ["ct = -\\rho \\;\\text{(the field's first ray, flat space before it)}",
+                      "ct = \\rho/p \\;\\text{(the singularity, for } p \\ge 1\\text{)}",
+                      "ct = (2-p)\\rho/p \\;\\text{(the apparent horizon, for } p > 1\\text{)}"])
+
+        def line(c):
+            return f"ds^2 = -{c}dt^2 + d\\rho^2 + \\rho(\\rho - p{'c' if c else ''}t)" + ROBERTS_SPHERE
+        probe = vm.Reader(coords, parameters, ())
+        t, rho, p = probe.symbol["t"], probe.symbol["\\rho"], probe.parameters["p"]
+        printer = {"lead": [rho, t, p], "factors": [p, probe.c, t, rho], "flip": False}
+    else:
+        coords, name, parameters = ["\\tau", "x", "\\theta", "\\phi"], "Scaling", ["p", "\\ell"]
+        domains = (["\\tau \\in (-\\infty, \\infty)", "x \\in (0, \\infty) \\;\\text{for}\\; p \\le 1",
+                    "x \\in (0, \\tanh^{-1}(1/p)) \\;\\text{for}\\; p > 1"] + ROBERTS_ANGLES
+                   + ["x = 0 \\;\\text{(the field's first ray, flat space before it)}",
+                      "x = \\tanh^{-1}(1/p) \\;\\text{(the singularity, for } p > 1\\text{)}",
+                      "x \\to \\infty \\;\\text{(the singularity, for } p = 1\\text{)}",
+                      "x = \\tanh^{-1}(1/p^2) \\;\\text{(the apparent horizon, for } p > 1\\text{)}"])
+
+        def line(c):
+            return ("ds^2 = 2\\ell^2e^{2(x-\\tau)}\\left(\\left(1 - e^{-2x}\\right)d\\tau^2 - 2\\,d\\tau\\,dx\\right)"
+                    " + \\ell^2e^{2(x-\\tau)}\\left(\\cosh^2x - p^2\\sinh^2x\\right)" + ROBERTS_SPHERE)
+        probe = vm.Reader(coords, parameters, ())
+        tau, x, p, ell = probe.symbol["\\tau"], probe.symbol["x"], probe.parameters["p"], probe.parameters["ell"]
+        D = sp.Symbol("ROBERTSd")
+        E = sp.exp(2 * x)
+        printer = {"lead": [E, p], "factors": [ell, p, D], "flip": False, "named": {D: "\\cosh^2x - p^2\\sinh^2x"},
+                   }
+        pretty, printer["collect"] = roberts_scaling(tau, x, p, D)
+        area = "\\ell^2e^{2(x-\\tau)}\\left(\\cosh^2x - p^2\\sinh^2x\\right)"
+        components = {"metric_components": {
+            ("\\tau", "\\tau"): "2\\ell^2e^{2(x-\\tau)}\\left(1 - e^{-2x}\\right)", ("\\tau", "x"): "-2\\ell^2e^{2(x-\\tau)}",
+            ("x", "\\tau"): "-2\\ell^2e^{2(x-\\tau)}", ("\\theta", "\\theta"): area,
+            ("\\phi", "\\phi"): area + "\\sin^2\\theta"}}
+    spec = {
+        "metric_id": "roberts",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "components": components,
+        "check": lambda chart: roberts_check(chart, system),
+    }
+    if pretty:
+        spec["pretty"] = spec["bracketed"] = pretty
+    if system == "diagonal":
+        spec["time"] = "t"
+    return spec
+
+
+def roberts_images(chart, system):
+    """Each chart's coordinates as the double null chart's u and v, and its field."""
+    a, b = chart.symbols[:2]
+    p = chart.reader.parameters["p"]
+    if system == "double_null":
+        u, v = a, b
+    elif system == "advanced":
+        u, v = (1 + p) * a - 2 * b, a
+    elif system == "areal":
+        u, v = (1 + p) * a - 2 * (sp.sqrt(b ** 2 + p ** 2 * a ** 2 / 4) + p * a / 2), a
+    elif system == "diagonal":
+        u, v = sp.sqrt(1 + p) * (a - b), (a + b) / sp.sqrt(1 + p)
+    else:
+        ell = chart.reader.parameters["ell"]
+        u, v = -2 * ell * sp.exp(-a), ell * sp.exp(-a) * (sp.exp(2 * b) - 1)
+    return u, v, sp.log(((1 - p) * v - u) / ((1 + p) * v - u)) / 2
+
+
+def roberts_check(chart, system):
+    """In every chart the Ricci tensor is 2 d phi d phi for the field phi =
+    ln(((1 - p) v - u)/((1 + p) v - u))/2 written in that chart's coordinates, the field solves the
+    wave equation, the metric is flat at p = 0, and each chart after the first is the double null
+    chart pulled back. Compared at six random points inside the chart's domain, in forty digits,
+    since the areal chart's radical and the scaling chart's exponentials leave sympy's simplify
+    nothing to hold on to."""
+    x = chart.symbols
+    p = chart.reader.parameters["p"]
+    u, v, field = roberts_images(chart, system)
+    g, ginv = chart.geo.g, chart.geo.ginv
+    ricci = chart.geo.ricci_ll()
+    riemann = chart.geo.riemann_llll()
+    root = sp.sqrt(-g.det())
+    wave = sum(sp.diff(root * ginv[a, b] * sp.diff(field, x[b]), x[a]) for a in range(2) for b in range(2))
+    own = roberts("double_null")
+    source = cp.Chart(own["system"]["coords"], own["system"]["parameters"], own["chart_line_element"])
+    at = {source.symbols[0]: u, source.symbols[1]: v, source.symbols[2]: x[2], source.symbols[3]: x[3],
+          source.reader.parameters["p"]: p}
+    images = [u, v, x[2], x[3]]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(images[i], x[j]))
+    pulled = J.T * source.geo.g.subs(at, simultaneous=True) * J
+    rng = random.Random(0)
+    for _ in range(6):
+        # v > 0 and u < (1 - p) v < 0 with p > 1 keeps the point inside every chart's domain.
+        U, V = -sp.Rational(rng.randint(3000, 5000), 1000), sp.Rational(rng.randint(500, 1000), 1000)
+        P = sp.Rational(rng.randint(1100, 1900), 1000)
+        point = {p: P, x[2]: sp.Rational(rng.randint(500, 1500), 1000), x[3]: sp.Integer(0)}
+        if system == "double_null":
+            point.update({x[0]: U, x[1]: V})
+        elif system == "advanced":
+            point.update({x[0]: V, x[1]: ((1 + P) * V - U) / 2})
+        elif system == "areal":
+            r = ((1 + P) * V - U) / 2
+            point.update({x[0]: V, x[1]: sp.sqrt(r * (r - P * V))})
+        elif system == "diagonal":
+            up, vp = U / sp.sqrt(1 + P), sp.sqrt(1 + P) * V
+            point.update({x[0]: (vp + up) / 2, x[1]: (vp - up) / 2})
+        else:
+            ell = chart.reader.parameters["ell"]
+            point.update({ell: sp.Integer(1), x[0]: -sp.log(-U / 2), x[1]: sp.log(1 - 2 * V / U) / 2})
+        value = lambda e: complex(sp.sympify(e).subs(point, simultaneous=True).evalf(40))
+        scale = max(abs(value(g[a, b])) for a in range(4) for b in range(4))
+        for a, b in vm._indices(4, 2):
+            wanted = 2 * sp.diff(field, x[a]) * sp.diff(field, x[b])
+            if abs(value(vm._at(ricci, (a, b)) - wanted)) > 1e-25:
+                raise AssertionError(f"roberts: R_ab is not 2 d_a phi d_b phi in slot {(a, b)} of the {system} chart")
+            if abs(value(pulled[a, b] - g[a, b])) > 1e-25 * scale:
+                raise AssertionError(f"roberts: the {system} chart is not the double null chart pulled back in slot {(a, b)}")
+        if abs(value(wave)) > 1e-25:
+            raise AssertionError(f"roberts: the field does not solve the wave equation in the {system} chart")
+        flat = dict(point)
+        flat[p] = sp.Integer(0)
+        for index in vm._indices(4, 4):
+            if abs(complex(sp.sympify(vm._at(riemann, index)).subs(flat, simultaneous=True).evalf(40))) > 1e-25:
+                raise AssertionError(f"roberts: the {system} chart is not flat at p = 0")
+
+
+CHARTS["roberts"] = [lambda s=s: roberts(s) for s in ROBERTS_CHARTS]
 
 
 

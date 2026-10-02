@@ -54,6 +54,11 @@
       "id": "ellis_bronnikov",
       "kind": "dual",
       "text": "Flip the sign of the scalar field's energy and Fisher's solution becomes the anti-Fisher family, whose member with no mass is this wormhole. In the harmonic coordinate the change is $\\sinh(ku) \\to \\sin(ku)$ [bronnikov1973, bronnikov2011]."
+    },
+    {
+      "id": "roberts",
+      "kind": "family",
+      "text": "The same massless scalar field falling in from infinity. Fisher's singularity is there from the start, and Roberts found his solution while looking for one that develops [roberts1996]."
     }
   ],
   "references": [
@@ -78,7 +83,8 @@
     "claudel2001",
     "virbhadra2002",
     "eht2022metric",
-    "chowdhury2012"
+    "chowdhury2012",
+    "roberts1996"
   ],
   "coordinates": [
     {

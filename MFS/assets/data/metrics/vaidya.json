@@ -79,6 +79,11 @@
       "id": "robinson_trautman",
       "kind": "generalisation",
       "text": "Vaidya's star with wave fronts of any shape, which carry gravitational waves as well as light. Jiří Podolský and Otakar Svítek showed in 2005 that these Robinson-Trautman spacetimes with pure radiation approach Vaidya's metric [podolsky2005]."
+    },
+    {
+      "id": "roberts",
+      "kind": "family",
+      "text": "A massless scalar field falling in where Vaidya has null dust. Anzhong Wang and Henrique de Oliveira cut Roberts's collapse along a light ray and joined Vaidya's outgoing radiation to it, which gives the black hole it makes a finite mass [wang1997collapse]."
     }
   ],
   "references": [
@@ -105,7 +110,8 @@
     "lemos1992",
     "hellaby1994",
     "bonnor1969light",
-    "podolsky2005"
+    "podolsky2005",
+    "wang1997collapse"
   ],
   "coordinates": [
     {

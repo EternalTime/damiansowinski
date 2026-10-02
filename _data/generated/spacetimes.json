@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 86,
+  "count": 87,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -5829,6 +5829,11 @@
           "id": "ellis_bronnikov",
           "kind": "dual",
           "text": "Flip the sign of the scalar field's energy and Fisher's solution becomes the anti-Fisher family, whose member with no mass is this wormhole. In the harmonic coordinate the change is $\\sinh(ku) \\to \\sin(ku)$ [bronnikov1973, bronnikov2011]."
+        },
+        {
+          "id": "roberts",
+          "kind": "family",
+          "text": "The same massless scalar field falling in from infinity. Fisher's singularity is there from the start, and Roberts found his solution while looking for one that develops [roberts1996]."
         }
       ],
       "references": [
@@ -5853,7 +5858,8 @@
         "claudel2001",
         "virbhadra2002",
         "eht2022metric",
-        "chowdhury2012"
+        "chowdhury2012",
+        "roberts1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/fisher_jnw.json",
@@ -13001,6 +13007,11 @@
           "id": "coleman_de_luccia",
           "kind": "composite",
           "text": "A false vacuum decaying by a bubble. Flat space is the inside of the bubble where the old vacuum had positive energy, and the outside of it where flat space is the one decaying [coleman1980]."
+        },
+        {
+          "id": "roberts",
+          "kind": "generalisation",
+          "text": "Flat spacetime with a massless scalar field sent in from infinity, at every scale alike. At $p = 0$ there is no field and Roberts's solution is Minkowski's, and for $p < 1$ the field passes through the centre and leaves flat space behind it [oshiro1994, brady1994]."
         }
       ],
       "references": [
@@ -13057,7 +13068,9 @@
         "randall1999a",
         "som1968",
         "deser1984",
-        "coleman1980"
+        "coleman1980",
+        "oshiro1994",
+        "brady1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -18084,6 +18097,410 @@
       ]
     },
     {
+      "id": "roberts",
+      "name": "Roberts Solution and Critical Collapse",
+      "short_name": "Roberts",
+      "description": "A massless scalar field falling in from infinity onto empty space, an exact solution of Einstein's equations that Mark Roberts found as a counterexample to cosmic censorship. It looks the same at every scale, and one number $p$ decides how it ends: for $p < 1$ the field passes through the centre and leaves flat space behind, for $p > 1$ it makes a black hole, and at $p = 1$ it leaves a null singularity.",
+      "tags": [
+        "non-vacuum",
+        "scalar field",
+        "massless scalar field",
+        "minimally coupled scalar field",
+        "Einstein-scalar",
+        "spherically symmetric",
+        "time-dependent",
+        "dynamical",
+        "self-similar",
+        "homothetic",
+        "gravitational collapse",
+        "critical collapse",
+        "critical phenomena",
+        "black hole",
+        "apparent horizon",
+        "naked singularity",
+        "null singularity",
+        "singularity",
+        "curvature singularity",
+        "cosmic censorship",
+        "Choptuik",
+        "double null coordinates",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The parameter $p$ is a pure number, and the scalar field $\\varphi$ is scaled so that Einstein's equations read $R_{\\mu\\nu} = 2\\,\\partial_\\mu\\varphi\\,\\partial_\\nu\\varphi$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "Roberts's solution with the field switched off, $p = 0$. Flat space is also what the field falls onto, before its first ray $v = 0$, and for $p < 1$ what it leaves behind, after $u = 0$ [oshiro1994, brady1994]."
+        },
+        {
+          "id": "fisher_jnw",
+          "kind": "family",
+          "text": "The same massless scalar field standing still. Its singularity is there from the start, which is why Roberts went looking for a solution that moves [roberts1996]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "family",
+          "text": "Anzhong Wang and Henrique de Oliveira cut Roberts's collapse along a light ray and joined it to Vaidya's outgoing radiation, which gives the black hole a finite mass [wang1997collapse]. Let the field's strength $pv/2$ be any function $\\alpha(v)$ and Roberts's metric still solves Einstein's equations, with null dust like Vaidya's flowing in beside the scalar field [roberts1996]."
+        }
+      ],
+      "references": [
+        "penrose1969",
+        "roberts1989",
+        "roberts1996",
+        "choptuik1993",
+        "gundlach2007",
+        "brady1994",
+        "oshiro1994",
+        "wang1997collapse",
+        "burko1997",
+        "frolov1997",
+        "frolov1999",
+        "frolov2000",
+        "christodoulou1994",
+        "christodoulou1999"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/roberts.json",
+      "charts": [
+        {
+          "id": "double_null",
+          "name": "Double Null",
+          "coordinates": [
+            "u",
+            "v",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (0, \\infty)",
+            "u \\in (-\\infty, 0) \\;\\text{for}\\; p \\le 1",
+            "u \\in (-\\infty, (1-p)v) \\;\\text{for}\\; p > 1",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "v = 0 \\;\\text{(the field's first ray, flat space before it)}",
+            "u = (1-p)v \\;\\text{(the singularity, for } p \\ge 1\\text{)}",
+            "u = (1-p^2)v \\;\\text{(the apparent horizon, for } p > 1\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "p",
+              "description": "Strength of the incoming field, a pure number with $p \\ge 0$: the field disperses for $p < 1$ and makes a black hole for $p > 1$; Roberts's $\\sigma$ is $p/2$"
+            }
+          ],
+          "convention": "We use the retarded and advanced null coordinates $(u, v)$, both lengths, with $R$ the areal radius, $R^2 = \\tfrac{1}{4}\\left((1-p^2)v^2 - 2uv + u^2\\right)$. The field is $\\varphi = \\tfrac{1}{2}\\ln\\left(((1-p)v - u)/((1+p)v - u)\\right)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -du\\,dv + \\dfrac{(1-p^2)v^2 - 2uv + u^2}{4}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-\\dfrac{1}{2}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-\\dfrac{1}{2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{(1-p^2)v^2 - 2uv + u^2}{4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{(1-p^2)v^2 - 2uv + u^2}{4}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{8p^2\\,u\\,v}{\\left(\\left(1 - p\\right)v - u\\right)^2\\left(\\left(1 + p\\right)v - u\\right)^2}",
+          "kretschmann": "K = \\dfrac{192p^4\\,u^2\\,v^2}{\\left(\\left(1 - p\\right)v - u\\right)^4\\left(\\left(1 + p\\right)v - u\\right)^4}"
+        },
+        {
+          "id": "advanced",
+          "name": "Roberts",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (0, \\infty)",
+            "r \\in ((1+p)v/2, \\infty) \\;\\text{for}\\; p \\le 1",
+            "r \\in (pv, \\infty) \\;\\text{for}\\; p > 1",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "v = 0 \\;\\text{(the field's first ray, flat space before it)}",
+            "r = pv \\;\\text{(the singularity, for } p \\ge 1\\text{)}",
+            "r = p(1+p)v/2 \\;\\text{(the apparent horizon, for } p > 1\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "p",
+              "description": "Strength of the incoming field, a pure number with $p \\ge 0$: the field disperses for $p < 1$ and makes a black hole for $p > 1$; Roberts's $\\sigma$ is $p/2$"
+            }
+          ],
+          "convention": "We use Roberts's coordinates $(v, r)$, both lengths, with $v$ the advanced null coordinate and $r = ((1+p)v - u)/2$ for the retarded null coordinate $u$. The areal radius is $R = \\sqrt{r(r - pv)}$ and the field is $\\varphi = \\tfrac{1}{2}\\ln(1 - pv/r)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -(1+p)\\,dv^2 + 2\\,dv\\,dr + r(r - pv)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(p + 1\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r\\left(r - p\\,v\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r\\left(r - p\\,v\\right)\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{p^2\\,v\\left(2r - p\\,v - v\\right)}{2r^2\\left(r - p\\,v\\right)^2}",
+          "kretschmann": "K = \\dfrac{3p^4\\,v^2\\left(2r - p\\,v - v\\right)^2}{4r^4\\left(r - p\\,v\\right)^4}"
+        },
+        {
+          "id": "areal",
+          "name": "Areal Radius",
+          "coordinates": [
+            "v",
+            "R",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (0, \\infty)",
+            "R \\in (\\sqrt{1-p^2}\\,v/2, \\infty) \\;\\text{for}\\; p \\le 1",
+            "R \\in (0, \\infty) \\;\\text{for}\\; p > 1",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "v = 0 \\;\\text{(the field's first ray, flat space before it)}",
+            "R = 0 \\;\\text{(the singularity, for } p \\ge 1\\text{)}",
+            "R = p\\sqrt{p^2-1}\\,v/2 \\;\\text{(the apparent horizon, for } p > 1\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "p",
+              "description": "Strength of the incoming field, a pure number with $p \\ge 0$: the field disperses for $p < 1$ and makes a black hole for $p > 1$; Roberts's $\\sigma$ is $p/2$"
+            },
+            {
+              "symbol": "\\lambda = \\sqrt{R^2 + \\dfrac{p^2v^2}{4}}",
+              "description": "Roberts's $\\lambda$, a length: his coordinate $r$ is $\\lambda + pv/2$"
+            }
+          ],
+          "convention": "We use the advanced null coordinate $v$ and the areal radius $R$, both lengths, and write $\\lambda = \\sqrt{R^2 + p^2v^2/4}$. The field is $\\varphi = \\tfrac{1}{2}\\ln\\left((2\\lambda - pv)/(2\\lambda + pv)\\right)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{p^2v}{2\\lambda}\\right)dv^2 + \\dfrac{2R}{\\lambda}\\,dv\\,dR + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\dfrac{2\\lambda - p^2\\,v}{2\\lambda}"
+            },
+            {
+              "indices": [
+                "v",
+                "R"
+              ],
+              "value": "\\dfrac{R}{\\lambda}"
+            },
+            {
+              "indices": [
+                "R",
+                "v"
+              ],
+              "value": "\\dfrac{R}{\\lambda}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "R^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "R^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{p^2\\,v\\left(2\\lambda - v\\right)}{2R^4}",
+          "kretschmann": "K = \\dfrac{3p^4\\,v^2\\left(2\\lambda - v\\right)^2}{4R^8}"
+        },
+        {
+          "id": "diagonal",
+          "name": "Time and Radius",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\rho \\in (0, \\infty)",
+            "t \\in (-\\rho/c, \\rho/c) \\;\\text{for}\\; p \\le 1",
+            "t \\in (-\\rho/c, \\rho/(pc)) \\;\\text{for}\\; p > 1",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "ct = -\\rho \\;\\text{(the field's first ray, flat space before it)}",
+            "ct = \\rho/p \\;\\text{(the singularity, for } p \\ge 1\\text{)}",
+            "ct = (2-p)\\rho/p \\;\\text{(the apparent horizon, for } p > 1\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "p",
+              "description": "Strength of the incoming field, a pure number with $p \\ge 0$: the field disperses for $p < 1$ and makes a black hole for $p > 1$; Roberts's $\\sigma$ is $p/2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho)$, with $t$ carrying dimensions of time and $\\rho$ a length. The areal radius is $R = \\sqrt{\\rho(\\rho - pct)}$ and the field is $\\varphi = \\tfrac{1}{2}\\ln(1 - pct/\\rho)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + d\\rho^2 + \\rho(\\rho - pct)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\rho\\left(\\rho - p\\,c\\,t\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho\\left(\\rho - p\\,c\\,t\\right)\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{p^2\\left(\\rho + c\\,t\\right)\\left(\\rho - c\\,t\\right)}{2\\rho^2\\left(\\rho - p\\,c\\,t\\right)^2}",
+          "kretschmann": "K = \\dfrac{3p^4\\left(\\rho + c\\,t\\right)^2\\left(\\rho - c\\,t\\right)^2}{4\\rho^4\\left(\\rho - p\\,c\\,t\\right)^4}"
+        },
+        {
+          "id": "scaling",
+          "name": "Scaling",
+          "coordinates": [
+            "\\tau",
+            "x",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "x \\in (0, \\infty) \\;\\text{for}\\; p \\le 1",
+            "x \\in (0, \\tanh^{-1}(1/p)) \\;\\text{for}\\; p > 1",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "x = 0 \\;\\text{(the field's first ray, flat space before it)}",
+            "x = \\tanh^{-1}(1/p) \\;\\text{(the singularity, for } p > 1\\text{)}",
+            "x \\to \\infty \\;\\text{(the singularity, for } p = 1\\text{)}",
+            "x = \\tanh^{-1}(1/p^2) \\;\\text{(the apparent horizon, for } p > 1\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "p",
+              "description": "Strength of the incoming field, a pure number with $p \\ge 0$: the field disperses for $p < 1$ and makes a black hole for $p > 1$; Roberts's $\\sigma$ is $p/2$"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "Any length, the unit $u$ and $v$ are counted in"
+            }
+          ],
+          "convention": "We use the scaling coordinates $(\\tau, x)$, both pure numbers, with $u = -2\\ell e^{-\\tau}$ and $v = \\ell e^{-\\tau}(e^{2x} - 1)$ for the null coordinates $u$ and $v$. The areal radius is $R = \\ell e^{x-\\tau}\\sqrt{\\cosh^2x - p^2\\sinh^2x}$ and the field is $\\varphi = \\tfrac{1}{2}\\ln\\left((1 - p\\tanh x)/(1 + p\\tanh x)\\right)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = 2\\ell^2e^{2(x-\\tau)}\\left(\\left(1 - e^{-2x}\\right)d\\tau^2 - 2\\,d\\tau\\,dx\\right) + \\ell^2e^{2(x-\\tau)}\\left(\\cosh^2x - p^2\\sinh^2x\\right)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "2\\ell^2e^{2(x-\\tau)}\\left(1 - e^{-2x}\\right)"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "x"
+              ],
+              "value": "-2\\ell^2e^{2(x-\\tau)}"
+            },
+            {
+              "indices": [
+                "x",
+                "\\tau"
+              ],
+              "value": "-2\\ell^2e^{2(x-\\tau)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\ell^2e^{2(x-\\tau)}\\left(\\cosh^2x - p^2\\sinh^2x\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\ell^2e^{2(x-\\tau)}\\left(\\cosh^2x - p^2\\sinh^2x\\right)\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{p^2\\left(e^{2x} - 1\\right)e^{-4x}e^{2\\tau}}{\\ell^2\\left(\\cosh^2x - p^2\\sinh^2x\\right)^2}",
+          "kretschmann": "K = \\dfrac{3p^4\\left(e^{2x} - 1\\right)^2e^{-8x}e^{4\\tau}}{\\ell^4\\left(\\cosh^2x - p^2\\sinh^2x\\right)^4}"
+        }
+      ]
+    },
+    {
       "id": "robinson_trautman",
       "name": "Robinson-Trautman Radiating Spacetimes",
       "short_name": "Robinson-Trautman",
@@ -22631,6 +23048,11 @@
           "id": "robinson_trautman",
           "kind": "generalisation",
           "text": "Vaidya's star with wave fronts of any shape, which carry gravitational waves as well as light. Jiří Podolský and Otakar Svítek showed in 2005 that these Robinson-Trautman spacetimes with pure radiation approach Vaidya's metric [podolsky2005]."
+        },
+        {
+          "id": "roberts",
+          "kind": "family",
+          "text": "A massless scalar field falling in where Vaidya has null dust. Anzhong Wang and Henrique de Oliveira cut Roberts's collapse along a light ray and joined Vaidya's outgoing radiation to it, which gives the black hole it makes a finite mass [wang1997collapse]."
         }
       ],
       "references": [
@@ -22657,7 +23079,8 @@
         "lemos1992",
         "hellaby1994",
         "bonnor1969light",
-        "podolsky2005"
+        "podolsky2005",
+        "wang1997collapse"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/vaidya.json",

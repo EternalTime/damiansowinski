@@ -365,6 +365,9 @@ class Diagram:
                                     # plane's two coordinates, as UV < 1 in the Kruskal chart of Witten's
                                     # black hole: the view is hatched where it is not positive, and no ray
                                     # or cone is drawn there
+    null_radius: bool = False       # the drawn radius is a null coordinate, so the areal radius is stationary
+                                    # along it exactly on the marginally trapped spheres: that curve is
+                                    # marked as the apparent horizon, and no throat is
     quotient: str = None            # a coordinate the metric does not depend on, divided out: the
                                     # plane's metric is g_ab - g_ak g_bk/g_kk; see "Rays of no angular
                                     # momentum"
@@ -760,6 +763,10 @@ DS = {"r_s": 1, "lambda": "1/5"}
 # figures, in units of b; the harmonic chart in units of k = b/2, where m = gamma k.
 FJNW = {"b": 1, "gamma": "1/2"}
 FJNW_HARMONIC = {"m": "1/2", "k": 1}
+# Roberts's collapsing scalar field for its three outcomes: p = 9/10, where the field disperses, the
+# threshold p = 1, and p = 2, where it makes a black hole. Nothing in it sets a scale, so lengths
+# are in any unit ell.
+ROBERTS_CASES = {"disperses": ("$p = 9/10$", "9/10"), "threshold": ("$p = 1$", "1"), "collapses": ("$p = 2$", "2")}
 
 # Witten's black hole in two dimensions in units of 1/lambda, at m = 1, where the horizon is x = 0
 # in the charts of x and w = 1 in the dilaton chart.
@@ -1292,6 +1299,35 @@ DIAGRAMS = [
     Diagram("witten_black_hole", "eddington_finkelstein_outgoing", "finkelstein", "against $u + x$",
             ("u", "x"), (-1.5, 2.5, -2, 2), "$\\lambda x$", "$\\lambda(u + x)$", WITTEN,
             to_display=FINKELSTEIN_OUT, tau="u + x"),
+    # Roberts's collapsing scalar field, one view for each of its three outcomes in each chart. The
+    # double null chart is drawn against (v - u)/2 and (u + v)/2, Roberts's v and r against r and
+    # (1 + p) v - r, which are sqrt(1 + p) times the diagonal chart's rho and ct, the areal chart
+    # against R and (1 + p/2) v - R, and the scaling chart against x and tau + x, since neither tau nor
+    # x is a time. The field arrives on v = 0, the lower edge of each wedge, with flat space below it.
+    # Each box holds a stretch of every moment of Roberts's t that the embedding diagram marks.
+    *[Diagram("roberts", "double_null", case, label, ("u", "v"), (0, 6, -5, 3), "$(v - u)/2\\ell$", "$(u + v)/2\\ell$",
+              {"p": p}, EQUATOR, to_display=NULL_TO_TR, tau="u + v", areal=True, null_radius=True,
+              singular_where_claimed=True, singular_runs=case == "disperses",
+              singular_zero=None if case == "disperses" else f"(1 - {p})*v - u")
+      for case, (label, p) in ROBERTS_CASES.items()],
+    *[Diagram("roberts", "advanced", case, label, ("v", "r"), (0, 8, -4, 4), "$r/\\ell$", "$((1 + p)v - r)/\\ell$",
+              {"p": p}, EQUATOR, to_display=((0, 1), (1 + float(Fraction(p)), -1)), tau=f"(1 + {p})*v - r", areal=True,
+              singular_where_claimed=True, singular_zero=None if case == "disperses" else f"r - {p}*v")
+      for case, (label, p) in ROBERTS_CASES.items()],
+    *[Diagram("roberts", "areal", case, label, ("v", "R"), (0, 6, -4, 7), "$R/\\ell$", "$((1 + p/2)v - R)/\\ell$",
+              {"p": p}, EQUATOR, to_display=((0, 1), (1 + float(Fraction(p)) / 2, -1)),
+              tau=f"(1 + ({p})/2)*v - sqrt(R**2 + ({p})**2*v**2/4)", areal=True, singular_where_claimed=True,
+              singular_runs=True, step=0.001, inside=case == "collapses")
+      for case, (label, p) in ROBERTS_CASES.items()],
+    *[Diagram("roberts", "diagonal", case, label, ("t", "\\rho"), (0, 6, -3, 3), "$\\rho/\\ell$", "$ct/\\ell$",
+              {"p": p}, EQUATOR, areal=True, singular_where_claimed=True,
+              singular_zero=None if case == "disperses" else f"rho - {p}*t")
+      for case, (label, p) in ROBERTS_CASES.items()],
+    *[Diagram("roberts", "scaling", case, label, ("\\tau", "x"), (0, 0.6 if case == "collapses" else 2, -2, 4),
+              "$x$", "$\\tau + x$", {"p": p, "ell": 1}, EQUATOR, to_display=((0, 1), (1, 1)), tau="tau + x",
+              families=("outgoing", "ingoing"), areal=True, null_radius=True, singular_where_claimed=True,
+              singular_zero="x - atanh(1/2)" if case == "collapses" else None)
+      for case, (label, p) in ROBERTS_CASES.items()],
     Diagram("morris_thorne", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/b_0$", "$ct/b_0$", {"b_0": 1}, EQUATOR, areal=True,
             functions={"Phi": "0", "b": "b_0**2/r"},
@@ -2152,6 +2188,92 @@ LB_CAPTIONS = {
            "infinity. One launched straight outward from here, with no angular momentum about the axis, turns back "
            "at a finite distance and falls into the beam."),
 }
+
+def _roberts_captions():
+    """Roberts's fifteen views: a first paragraph for the chart, the same for each value of p, and a
+    second for what that value of p does, said in the chart's own coordinates."""
+    shown = {"disperses": "9/10", "threshold": "1", "collapses": "2"}
+    chart = {
+        "double_null": lambda p: (
+            f"The plane of $u$ and $v$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $p = {p}$ against $(v - u)/2$ and "
+            "$(u + v)/2$ in units of any length $\\ell$, each point in the plane a 2-sphere of radius $R$. Only "
+            "$g_{uv}$ is nonzero on it, so the light rays are the lines $u = $ const and $v = $ const, at 45°."),
+        "advanced": lambda p: (
+            f"The plane of Roberts's $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $p = {p}$ against $r$ and "
+            "$(1 + p)v - r$ in units of any length $\\ell$. Ingoing rays are the lines $v = $ const, outgoing rays have "
+            "$dr/dv = (1 + p)/2$, and in these axes both run at 45°."),
+        "areal": lambda p: (
+            f"The plane of $v$ and the areal radius $R$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $p = {p}$ against "
+            "$R$ and $(1 + p/2)v - R$ in units of any length $\\ell$. Ingoing rays are the lines $v = $ const, and "
+            "outgoing rays have $dR/dv = (2\\lambda - p^2v)/4R$."),
+        "diagonal": lambda p: (
+            f"The plane of $t$ and $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $p = {p}$ in units of any length "
+            "$\\ell$. The metric on it is $-c^2dt^2 + d\\rho^2$, so every ray is at 45°, and the collapse is all in the "
+            "areal radius $R = \\sqrt{\\rho(\\rho - pct)}$."),
+        "scaling": lambda p: (
+            f"The plane of $\\tau$ and $x$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $p = {p}$ against $x$ and "
+            "$\\tau + x$. Outgoing rays are the lines $\\tau = $ const, and ingoing rays have "
+            "$d\\tau/dx = 2/(1 - e^{-2x})$. A step of one in $\\tau$ at fixed $x$ shrinks every length by the factor $e$ "
+            "and changes nothing else."),
+    }
+    outcome = {
+        ("double_null", "disperses"):
+            "The field arrives on the ray $v = 0$, with flat space before it. For $p < 1$ every outgoing ray gets "
+            "away to infinity, the mass inside each sphere, $-p^2uv/8R$, is back to zero on the ray $u = 0$, and after "
+            "that ray the spacetime is flat again.",
+        ("double_null", "threshold"):
+            "At $p = 1$ the areal radius is $R = \\tfrac{1}{2}\\sqrt{u(u - 2v)}$, which vanishes on the ray $u = 0$: the "
+            "singularity is a light ray, on which the Kretschmann scalar diverges as $12/u^2v^2$. Every outgoing ray "
+            "before it still reaches infinity, so no horizon forms.",
+        ("double_null", "collapses"):
+            "For $p = 2$ the singularity is the spacelike line $u = (1 - p)v$, here $u = -v$, and the apparent horizon is "
+            "$u = (1 - p^2)v$, here $u = -3v$, where $\\partial_vR = 0$. Between the two $R$ shrinks along both families "
+            "of rays, so every sphere there is trapped. The horizon's radius, $p\\sqrt{p^2 - 1}\\,v/2$, grows with $v$ "
+            "for as long as the field keeps arriving.",
+        ("advanced", "disperses"):
+            "The field arrives on $v = 0$ and its last ray is $r = (1 + p)v/2$, with flat space before the one and after "
+            "the other. The spheres have radius $R = \\sqrt{r(r - pv)}$, which stays positive between them.",
+        ("advanced", "threshold"):
+            "At $p = 1$ the last ray $r = (1 + p)v/2$ is $r = pv$, where $R = \\sqrt{r(r - pv)}$ vanishes and the "
+            "Kretschmann scalar diverges: the singularity is a light ray.",
+        ("advanced", "collapses"):
+            "For $p = 2$ the apparent horizon is $r = p(1 + p)v/2$, here $r = 3v$, which is level in these axes, and "
+            "the singularity $r = pv$ comes after it. Between the two both families of rays run to smaller $R$.",
+        ("areal", "disperses"):
+            "The field arrives on $v = 0$ and its last ray is $R = \\sqrt{1 - p^2}\\,v/2$, with flat space before the "
+            "one and after the other. Outgoing rays gain $R$ everywhere, since $2\\lambda > p^2v$ for $p < 1$.",
+        ("areal", "threshold"):
+            "At $p = 1$ outgoing rays have $dR/dv = (2\\lambda - v)/4R$, which is positive, so each of them gains $R$ "
+            "and no sphere is trapped. The singularity is $R = 0$ for $v > 0$, which every ingoing ray reaches.",
+        ("areal", "collapses"):
+            "For $p = 2$ the outgoing rays stand still in $R$ on $R = p\\sqrt{p^2 - 1}\\,v/2$, where $g^{RR} = 0$: the "
+            "apparent horizon. Inside it both families of rays fall to the singularity $R = 0$.",
+        ("diagonal", "disperses"):
+            "The field fills the wedge $\\rho > c|t|$ between its first ray $ct = -\\rho$ and its last $ct = \\rho$, "
+            "with flat space before the one and after the other. The areal radius is $\\rho$ at $t = 0$, larger than "
+            "$\\rho$ before and smaller after.",
+        ("diagonal", "threshold"):
+            "At $p = 1$ the areal radius vanishes on the last ray $ct = \\rho$, where the Kretschmann scalar diverges: "
+            "the singularity is a light ray.",
+        ("diagonal", "collapses"):
+            "For $p = 2$ the singularity is $ct = \\rho/p$ and the apparent horizon is $ct = (2 - p)\\rho/p$, which at "
+            "this $p$ is the moment $t = 0$. After that moment $R$ shrinks along both families of rays.",
+        ("scaling", "disperses"):
+            "The field's first ray $v = 0$ is $x = 0$, and its last ray $u = 0$ is $\\tau \\to \\infty$. The spheres have "
+            "radius $R = \\ell e^{x - \\tau}\\sqrt{\\cosh^2x - p^2\\sinh^2x}$, which is positive at every $x$ for $p < 1$.",
+        ("scaling", "threshold"):
+            "At $p = 1$ the areal radius is $R = \\ell e^{x - \\tau}$ and the field is $\\varphi = -x$. The singularity "
+            "$u = 0$ lies at $\\tau \\to \\infty$ and $x \\to \\infty$ together, with $2x - \\tau$ finite, where "
+            "$R \\to 0$.",
+        ("scaling", "collapses"):
+            "For $p = 2$ the singularity is the line $x = \\tanh^{-1}(1/p)$, here $x = 0.55$, and the apparent horizon "
+            "is the line $x = \\tanh^{-1}(1/p^2)$, here $x = 0.26$. Both stand at the same $x$ for every $\\tau$, since "
+            "the collapse is the same at every scale.",
+    }
+    return {("roberts", system, case): [chart[system](shown[case]), text] for (system, case), text in outcome.items()}
+
+
+ROBERTS_CAPTIONS = _roberts_captions()
 
 CAPTIONS = {
     **LB_CAPTIONS,
@@ -3277,6 +3399,7 @@ CAPTIONS = {
         "The chart is the time reverse of the ingoing one: its $g_{ux}$ is $-1$ where the ingoing chart's "
         "$g_{vx}$ is $+1$.",
     ],
+    **ROBERTS_CAPTIONS,
     ("morris_thorne", "spherical", "radial"): [
         "The plane of $t$ and the areal radius $r$ ($\\theta = \\pi/2$, $\\phi = 0$). The metric leaves $\\Phi(r)$ "
         "and $b(r)$ free. With $\\Phi = 0$ and $b = b_0^2/r$ it is the Ellis-Bronnikov wormhole of throat radius "
@@ -6138,7 +6261,9 @@ class Plot:
                 # A scalar that grows as e^(2m^2/rho^2), as the Curzon-Chazy particle's does in its plane
                 # z = 0, is past the largest double this close to the edge, and reads as infinite.
                 growing = (near / far > 50) | np.isposinf(near)
-                if claimed.any() and ((near > 1e8) & growing & lorentzian)[claimed].mean() > 0.5:
+                # An edge the domains touch at one corner alone, as the tip of Roberts's wedge, is no edge
+                # of the spacetime: as in singular_runs, a stretch is more than two points long.
+                if claimed.sum() > 2 and ((near > 1e8) & growing & lorentzian)[claimed].mean() > 0.5:
                     out.append(name)
         return out
 
@@ -6238,6 +6363,9 @@ class Plot:
             near, far = (np.abs(self.c.fn["K"](*self.to_chart(self.from_unit(at(e))))) for e in (1e-5, 1e-4))
             with np.errstate(all="ignore"):
                 hit = (near > 1e8) & (near / far > 50)
+            if self.c.spec.singular_where_claimed:
+                # A stretch of an edge is singular only where the published domains reach it.
+                hit &= self.claimed(*self.to_chart(self.from_unit(at(1e-4))))
             if hit.all():
                 whole.append(name)
                 continue
@@ -6352,9 +6480,11 @@ class Plot:
                 out.append({"kind": "gtt", "lines": lines, "legend": f"$g_{{{t}{t}}} = 0$, {spec.mark_gtt}"})
         if spec.areal:
             throat = self.zero_set("dRr", keep=lambda x0, r: (fn["R"](x0, r) > 1e-6) & here(x0, r), drop_edge=True)
-            if throat and not spec.no_throat:
+            if throat and spec.null_radius:
+                out.append({"kind": "apparent", "lines": throat})
+            elif throat and not spec.no_throat:
                 out.append({"kind": "throat", "lines": throat})
-            if not self.c.same_as_grr:
+            if not self.c.same_as_grr and not spec.null_radius:
                 apparent = self.zero_set("grad2", keep=lambda x0, r: (np.abs(fn["dRr"](x0, r)) > 1e-6) & here(x0, r))
                 apparent = [l for l in apparent if not same_line(l, throat)]
                 if apparent:
@@ -7662,6 +7792,17 @@ CLOSED_FORMS = {
         (lambda v, x: v, lambda v, x: v - 2 * _witten_xstar(x), lambda v, x: np.abs(x) > 0.02),
     ("witten_black_hole", "eddington_finkelstein_outgoing", "finkelstein"):
         (lambda u, x: u + 2 * _witten_xstar(x), lambda u, x: u, lambda u, x: np.abs(x) > 0.02),
+    # Roberts's collapse: the advanced and the retarded null coordinate v and u, in each chart's own coordinates.
+    **{("roberts", "double_null", case): (lambda u, v: v, lambda u, v: u, None) for case in ROBERTS_CASES},
+    **{("roberts", "advanced", case): (lambda v, r: v, lambda v, r, p=float(Fraction(p)): (1 + p) * v - 2 * r, None)
+       for case, (_, p) in ROBERTS_CASES.items()},
+    **{("roberts", "areal", case):
+       (lambda v, R: v, lambda v, R, p=float(Fraction(p)): v - 2 * np.sqrt(R ** 2 + p ** 2 * v ** 2 / 4),
+        lambda v, R: R > 0.05)
+       for case, (_, p) in ROBERTS_CASES.items()},
+    **{("roberts", "diagonal", case): (lambda t, rho: t + rho, lambda t, rho: t - rho, None) for case in ROBERTS_CASES},
+    **{("roberts", "scaling", case): (lambda tau, x: np.exp(-tau) * (np.exp(2 * x) - 1), lambda tau, x: tau,
+                                      lambda tau, x: x > 0.01) for case in ROBERTS_CASES},
     ("einstein_rosen_waves", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("einstein_rosen_waves", "null", "radial"): (lambda u, v: v, lambda u, v: u, None),
     # With m = 1, z_* = z e^(2/z) - 2 Ei(2/z) on the axis and rho_* the integral of e^(2/s - 1/(2 s^2)) in the plane.

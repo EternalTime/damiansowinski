@@ -89,6 +89,7 @@ fields changes without the file being redrawn. A view is
 import argparse
 import json
 import math
+from fractions import Fraction
 import sys
 import time
 from pathlib import Path
@@ -9138,6 +9139,207 @@ def witten_black_hole(ck, src):
         v.legend("null", f"${null}$ constant, {way} light ray")
         v.slice(cigar, moment)
         views.append(v)
+def roberts(ck, src):
+    """Roberts's collapsing scalar field, each point a 2-sphere, for its three outcomes, p = 9/10, 1
+    and 2, one view for each in each of its five charts.
+
+    On the plane of the null coordinates the metric is -du dv, so arctan(u/l) and arctan(v/l) bring
+    it in, for any length l, drawn as 1. The field fills v > 0 and u < 0, a square of the drawing,
+    with flat space before its first ray v = 0, whose centre u = v stands on X = 0. For p < 1 the
+    spacetime is flat again after the last ray u = 0, with its centre on u = (1 - p^2) v: there u is
+    divided by 1 - p^2 before the arctangent, which is continuous across u = 0 and puts that centre
+    on X = 0 too, so the whole is Minkowski's triangle, Oshiro, Nakamura and Tomimatsu's Figure 2a
+    and Brady's Figure 1. At p = 1 the last ray is the singularity, a null line from the centre to
+    i+, Brady's Figure 2. For p > 1 the singularity u = (1 - p) v is spacelike and runs from the
+    centre to i0, with the apparent horizon u = (1 - p^2) v to its past, and no future null infinity
+    is left: their Figures 2b and 3. Each chart is carried in by its map to u and v, which
+    print_charts.roberts_check holds to the published metrics, and one event is checked to land on
+    one point through all five maps."""
+    views = []
+    charts = ("double_null", "advanced", "areal", "diagonal", "scaling")
+    planes = {"double_null": ("u", "v"), "advanced": ("v", "r"), "areal": ("v", "R"), "diagonal": ("t", "\\rho"),
+              "scaling": ("\\tau", "x")}
+    names = {"double_null": "Double null", "advanced": "Roberts", "areal": "Areal radius", "diagonal": "Time and radius",
+             "scaling": "Scaling"}
+    for case, (label, value) in nr.ROBERTS_CASES.items():
+        p = float(Fraction(value))
+        s = math.sqrt(1 + p)
+
+        def compact(u, v, p=p):
+            u, v = np.asarray(u, dtype=float), np.asarray(v, dtype=float)
+            return np.arctan(np.where(u > 0, u / (1 - p * p), u) if p < 1 else u), np.arctan(v)
+
+        def field(u, v, p=p):
+            """u and v where the field is, and nan elsewhere."""
+            u, v = np.asarray(u, dtype=float), np.asarray(v, dtype=float)
+            with np.errstate(invalid="ignore"):
+                inside = (v > 0) & (u < 0) & (u < (1 - p) * v)
+            return compact(np.where(inside, u, np.nan), np.where(inside, v, np.nan))
+
+        # Each chart's coordinates as u and v, and u and v as each chart's coordinates.
+        to_null = {
+            "double_null": lambda u, v: (u, v),
+            "advanced": lambda v, r, p=p: ((1 + p) * v - 2 * r, v),
+            "areal": lambda v, R, p=p: (v - 2 * np.sqrt(R * R + p * p * v * v / 4), v),
+            "diagonal": lambda t, rho, p=p: slices.roberts_null(p, t, rho),
+            "scaling": lambda tau, x: (-2 * np.exp(-tau), np.exp(-tau) * (np.exp(2 * x) - 1)),
+        }
+        from_null = {
+            "double_null": lambda u, v: (u, v),
+            "advanced": lambda u, v, p=p: (v, ((1 + p) * v - u) / 2),
+            "areal": lambda u, v, p=p: (v, np.sqrt(((1 + p) * v - u) * ((1 - p) * v - u)) / 2),
+            "diagonal": lambda u, v, s=s: ((u / s + s * v) / 2, (s * v - u / s) / 2),
+            "scaling": lambda u, v: (-np.log(-u / 2), np.log(1 - 2 * v / u) / 2),
+        }
+
+        def future(cid, p=p, s=s):
+            """Roberts's d/dt at fixed rho, du = s and dv = 1/s, in each chart's coordinates."""
+            def vector(a, b):
+                u, v = to_null[cid](a, b)
+                if cid == "double_null":
+                    return s, 1 / s
+                if cid == "advanced":
+                    return 1 / s, ((1 + p) / s - s) / 2
+                if cid == "areal":
+                    A, B = (1 + p) * v - u, (1 - p) * v - u
+                    return 1 / s, (((1 + p) / s - s) * B + ((1 - p) / s - s) * A) / (8 * b)
+                if cid == "diagonal":
+                    return 1, 0
+                dtau = s * np.exp(a) / 2
+                return dtau, (1 / s + v * dtau) * np.exp(a - 2 * b) / 2
+            return vector
+
+        params = {"p": value}
+        plane = {cid: Plane(src, "roberts", cid, planes[cid], {**EQUATOR, "phi": "0"},
+                            {**params, "ell": 1} if cid == "scaling" else params) for cid in charts}
+        # Sample events of the field's region: v > 0 and u below both 0 and (1 - p) v.
+        sv_ = np.exp(ck.uniform(-3, 3))
+        su_ = np.minimum(0.0, (1 - p) * sv_) - np.exp(ck.uniform(-3, 3))
+        for cid in charts:
+            a, b = from_null[cid](su_, sv_)
+            ck.chart(f"Roberts, p = {value}, {cid}", plane[cid],
+                     lambda a, b, cid=cid: compact(*to_null[cid](a, b)), a, b, future(cid))
+        if p >= 1:
+            v0 = np.exp(ck.uniform(-1, 1, 50))
+            for cid in charts:
+                K = [plane[cid].kretschmann(*from_null[cid]((1 - p) * v0 - d, v0)) for d in (1e-3, 1e-4)]
+                ck.diverges(f"Roberts, p = {value}, {cid}: the Kretschmann scalar diverges on u = (1 - p) v", *K)
+        else:
+            v0 = np.exp(ck.uniform(-1, 1, 50))
+            for cid in charts:
+                ck.limit(f"Roberts, p = {value}, {cid}: the Kretschmann scalar vanishes on the last ray u = 0",
+                         plane[cid].kretschmann(*from_null[cid](np.full(50, -1e-9), v0)), np.zeros(50), 1e-6)
+        want = np.array(compact(su_, sv_))
+        for cid in charts[1:]:
+            ck.limit(f"Roberts, p = {value}: the {cid} chart lands on the points of the double null chart",
+                     np.array(compact(*to_null[cid](*from_null[cid](su_, sv_)))), want, 1e-9)
+        if p < 1:
+            # After the last ray the flat space has r = (v' - u')/2 with u' = u/sqrt(1 - p^2) and
+            # v' = sqrt(1 - p^2) v, so its centre u = (1 - p^2) v is the line X = 0.
+            vv = np.exp(ck.uniform(-3, 3, 50))
+            P, Q = compact((1 - p * p) * vv, vv)
+            ck.limit(f"Roberts, p = {value}: the centre of the flat space left behind stands on X = 0", Q - P, np.zeros(50), 1e-12)
+
+        top = {"disperses": PI + 0.25, "threshold": HALF + 0.45, "collapses": 0.6}[case]
+        box = [-0.35, PI + 0.35, -PI - 0.25, top]
+        square = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+        vs = np.exp(np.linspace(-9, 9, 600))
+        if p > 1:
+            edge = runs(*compact((1 - p) * vs, vs))[0]
+            covered = [[0, 0], [HALF, -HALF], [PI, 0]] + edge[::-1][1:-1]
+            whole = [[0, -PI], [HALF, -HALF], [PI, 0]] + edge[::-1][1:-1] + [[0, 0]]
+        elif p == 1:
+            covered = square
+            whole = [[0, -PI], [PI, 0], [HALF, HALF], [0, 0]]
+        else:
+            covered, whole = square, TRIANGLE
+        far = np.sinh(np.linspace(-9, 9, 900))
+        pos = np.exp(np.linspace(-9, 9, 900))
+        NULLS = (0.25, 0.5, 1, 2, 4, 8)
+        RADII = (0.5, 1, 2, 4, 8)
+        lines = {
+            "double_null": (("t", [lambda c=c: (np.full_like(pos, -c), pos) for c in NULLS]
+                             + [lambda c=c: (-pos, np.full_like(pos, c)) for c in NULLS]),),
+            "advanced": (("t", [lambda c=c: (np.full_like(pos, c), pos) for c in NULLS]),
+                         ("r", [lambda c=c: (pos, np.full_like(pos, c)) for c in RADII])),
+            "areal": (("t", [lambda c=c: (np.full_like(pos, c), pos) for c in NULLS]),
+                      ("r", [lambda c=c: (pos, np.full_like(pos, c)) for c in RADII])),
+            "diagonal": (("t", [lambda c=c: (np.full_like(pos, c), pos) for c in (-4, -2, -1, 0, 1, 2, 4)]),
+                         ("r", [lambda c=c: (far, np.full_like(far, c)) for c in RADII])),
+            "scaling": (("t", [lambda c=c: (np.full_like(pos, c), pos) for c in (-2, -1, 0, 1, 2)]),
+                        ("r", [lambda c=c: (far, np.full_like(far, c))
+                               for c in ((0.1, 0.2, 0.3, 0.4, 0.5) if p > 1 else (0.25, 0.5, 1, 1.5))])),
+        }
+        legends = {
+            "double_null": {"t": "$u$ constant and $v$ constant, every one a light ray, at $\\ell/4$, $\\ell/2$, $\\ell$, "
+                                 "$2\\,\\ell$, $4\\,\\ell$, and $8\\,\\ell$ from the first and from the last ray"},
+            "advanced": {"t": "$v$ constant, a light ray moving in, at $\\ell/4$, $\\ell/2$, $\\ell$, $2\\,\\ell$, $4\\,\\ell$, "
+                              "and $8\\,\\ell$",
+                         "r": "$r$ constant, at $\\ell/2$, $\\ell$, $2\\,\\ell$, $4\\,\\ell$, and $8\\,\\ell$"},
+            "areal": {"t": "$v$ constant, a light ray moving in, at $\\ell/4$, $\\ell/2$, $\\ell$, $2\\,\\ell$, $4\\,\\ell$, "
+                           "and $8\\,\\ell$",
+                      "r": "the areal radius $R$ constant, at $\\ell/2$, $\\ell$, $2\\,\\ell$, $4\\,\\ell$, and $8\\,\\ell$"},
+            "diagonal": {"t": "$ct$ constant, at $0$, $\\pm\\ell$, $\\pm 2\\,\\ell$, and $\\pm 4\\,\\ell$",
+                         "r": "$\\rho$ constant, at $\\ell/2$, $\\ell$, $2\\,\\ell$, $4\\,\\ell$, and $8\\,\\ell$"},
+            "scaling": {"t": "$\\tau$ constant, a light ray moving out, every $1$ from $-2$ to $2$",
+                        "r": ("$x$ constant, every $0.1$ to $0.5$" if p > 1 else "$x$ constant, at $0.25$, $0.5$, $1$, and $1.5$")},
+        }
+        coords = {"double_null": "$u$ and $v$", "advanced": "$v$ and $r$", "areal": "$v$ and $R$",
+                  "diagonal": "$t$ and $\\rho$", "scaling": "$\\tau$ and $x$"}
+        for cid in charts:
+            v = View(f"{cid}_{case}", label, box, cid)
+            v.fill("region", whole)
+            v.fill("cover", covered)
+            for cls, family in lines[cid]:
+                for make in family:
+                    with np.errstate(all="ignore"):
+                        v.curve(cls, *field(*to_null[cid](*make())))
+            # The field's first ray, and its last where it has one.
+            v.line("mark", [[[0, 0], [HALF, -HALF]]] + ([[[0, 0], [HALF, HALF]]] if p < 1 else []))
+            v.line("centre", [[[0, -PI], [0, 0]]] + ([[[0, 0], [0, PI]]] if p < 1 else []))
+            v.line("scri", [[[0, -PI], [PI, 0]]] + ([[[PI, 0], [0, PI]]] if p < 1 else
+                                                     [[[PI, 0], [HALF, HALF]]] if p == 1 else []))
+            ends = [((PI, 0), "$i^0$", "l", 6, 0), ((0, -PI), "$i^-$", "t", 0, 6)]
+            if p < 1:
+                ends.append(((0, PI), "$i^+$", "b", 0, -6))
+            elif p == 1:
+                ends.append(((HALF, HALF), "$i^+$", "b", 0, -6))
+            for at, text, anchor, dx, dy in ends:
+                v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+                v.label_xt(at, text, anchor, dx=dx, dy=dy)
+            v.label_xt([HALF + Q4, -Q4], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+            if p <= 1:
+                v.label_xt([HALF + Q4, Q4], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+            v.label_xt([Q4, -Q4], "$v = 0$", "tr", "small", dx=-3, dy=3)
+            if p < 1:
+                v.label_xt([Q4, Q4], "$u = 0$", "br", "small", dx=-3, dy=-3)
+                v.legend("mark", "the field's first ray $v = 0$ and its last ray $u = 0$")
+                v.legend("centre", "the regular centre of the flat space before the field and after it")
+            else:
+                v.legend("mark", "the field's first ray $v = 0$")
+                v.legend("centre", "the regular centre of the flat space before the field")
+            if p == 1:
+                v.line("singular", [[[0, 0], [HALF, HALF]]], zig=True)
+                v.legend("singular", "the singularity $u = 0$, a light ray, where the spheres have zero area and the "
+                                     "Kretschmann scalar diverges")
+            elif p > 1:
+                v.line("singular", [edge], zig=True)
+                v.curve("apparent", *compact((1 - p * p) * vs, vs))
+                v.legend("apparent", "the apparent horizon $u = (1 - p^2)v$")
+                v.legend("singular", "the singularity $u = (1 - p)v$, spacelike, where the spheres have zero area and "
+                                     "the Kretschmann scalar diverges")
+            v.legend("cover", f"where the field is, which {coords[cid]} cover")
+            for cls, text in legends[cid].items():
+                v.legend(cls, text)
+            v.legend("scri", "null infinity $\\mathscr{I}^\\pm$" if p <= 1 else "past null infinity $\\mathscr{I}^-$")
+            for m in slices.moments("roberts", case):
+                lo, hi = m.reach("diagonal", "\\rho")
+                rho = slices.near(lo, hi)
+                v.slice(m, [compact(*slices.roberts_null(p, m.time, rho))])
+            v.set(settings=f"$p = {value}$, with $\\ell$ any length; $T = \\arctan(v/\\ell) + \\arctan(u/\\ell)$ and "
+                           "$X = \\arctan(v/\\ell) - \\arctan(u/\\ell)$"
+                           + (", with $u$ divided by $1 - p^2$ after the last ray." if p < 1 else "."))
+            views.append(v)
     return views
 
 
@@ -11981,6 +12183,7 @@ DRAWN = {
     "kaluza_klein_monopole": kaluza_klein_monopole,
     "fisher_jnw": fisher_jnw,
     "witten_black_hole": witten_black_hole,
+    "roberts": roberts,
     "myers_perry": myers_perry,
     "curzon_chazy": curzon_chazy,
     "zipoy_voorhees": zipoy_voorhees,
@@ -11995,6 +12198,54 @@ DRAWN = {
 # Each view's caption, prose under the rules of _tools/README.md: no dashes but in a name,
 # and every sentence about the spacetime, never about the page or the collection. A caption
 # opens by naming what is drawn, the whole spacetime or the surface in it.
+def _roberts_captions():
+    """Roberts's fifteen views: a paragraph for the outcome, the same in each chart, and one for the
+    lines that chart draws."""
+    brought = ("The null coordinates are brought in by $\\arctan(u/\\ell)$ and $\\arctan(v/\\ell)$, with $T$ their sum "
+               "up and $X$ their difference across, so light rays run at 45°.")
+    outcome = {
+        "disperses":
+            "A massless scalar field falling in from infinity and dispersing ($p = 9/10$), each point in the diagram a "
+            "2-sphere. " + brought + " The field fills the square between its first ray $v = 0$ and its last ray "
+            "$u = 0$. Before the one and after the other the spacetime is flat, with a regular centre on $X = 0$, and "
+            "the whole is Minkowski's triangle.",
+        "threshold":
+            "A massless scalar field falling in from infinity on the threshold of making a black hole ($p = 1$), each "
+            "point in the diagram a 2-sphere. " + brought + " The field arrives on $v = 0$, with flat space and its "
+            "regular centre before it. The last ray $u = 0$ is the singularity, a light ray from the centre to $i^+$, "
+            "and every outgoing ray before it reaches $\\mathscr{I}^+$.",
+        "collapses":
+            "A massless scalar field falling in from infinity and making a black hole ($p = 2$), each point in the "
+            "diagram a 2-sphere. " + brought + " The singularity $u = (1 - p)v$ is spacelike and runs from the centre "
+            "out to $i^0$, level at this $p$, with the apparent horizon $u = (1 - p^2)v$ to its past. The field keeps "
+            "arriving, the horizon keeps growing, and no outgoing ray reaches a future null infinity.",
+    }
+    chart = {
+        "double_null":
+            "The lines drawn are those of $u$ constant and of $v$ constant, each a light ray, and the areal radius is "
+            "$R = \\tfrac{1}{2}\\sqrt{((1 + p)v - u)((1 - p)v - u)}$.",
+        "advanced":
+            "The lines drawn are those of $v$ constant, light rays moving in, and of Roberts's $r$ constant, which are "
+            "timelike everywhere, since $g_{vv} = -(1 + p)$. The retarded coordinate is $u = (1 + p)v - 2r$.",
+        "areal":
+            "The lines drawn are those of $v$ constant, light rays moving in, and of the areal radius $R$ constant. A "
+            "line of constant $R$ is timelike where $2\\lambda > p^2v$, null on the apparent horizon, and spacelike "
+            "inside it. The retarded coordinate is $u = v - 2\\lambda$.",
+        "diagonal":
+            "The lines drawn are those of $t$ constant and of $\\rho$ constant. On this plane the metric is "
+            "$-c^2dt^2 + d\\rho^2$, with $u = \\sqrt{1 + p}\\,(ct - \\rho)$ and $v = (ct + \\rho)/\\sqrt{1 + p}$, so the "
+            "lines of constant $\\rho$ are timelike and those of constant $t$ are moments of space.",
+        "scaling":
+            "The lines drawn are those of $\\tau$ constant, light rays moving out, and of $x$ constant, which all meet "
+            "at the point $u = v = 0$. Along a line of constant $x$ every length shrinks as $e^{-\\tau}$ and nothing "
+            "else changes, with $u = -2\\ell e^{-\\tau}$ and $v = \\ell e^{-\\tau}(e^{2x} - 1)$.",
+    }
+    return {("roberts", f"{c}_{case}"): [outcome[case], chart[c]] for c in chart for case in outcome}
+
+
+ROBERTS_CAPTIONS = _roberts_captions()
+
+
 CAPTIONS = {
     ("light_beam", "cartesian_axis"): [
         "The axis of a uniform beam of light ($x = y = 0$), each point in the diagram a single event, brought by "
@@ -13868,6 +14119,7 @@ CAPTIONS = {
         "The edge $X = 0$ is $u \\to \\infty$, where the spheres have zero area and the Kretschmann scalar diverges: a timelike singularity with no horizon, so light leaving it reaches $\\mathscr{I}^+$. Spatial infinity $i^0$ is $u = 0$, and the scalar field, "
         "proportional to $u$, grows without bound toward the edge.",
     ],
+    **ROBERTS_CAPTIONS,
     ("levi_civita", "weyl"): [
         "The half plane of fixed $\\phi$ and $z$ of Levi-Civita's cylinder ($\\sigma = 1/4$), each point in the "
         "diagram a circle around the axis times a line along it. The metric on it is "

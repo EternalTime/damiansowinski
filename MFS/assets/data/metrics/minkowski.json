@@ -163,6 +163,11 @@
       "id": "coleman_de_luccia",
       "kind": "composite",
       "text": "A false vacuum decaying by a bubble. Flat space is the inside of the bubble where the old vacuum had positive energy, and the outside of it where flat space is the one decaying [coleman1980]."
+    },
+    {
+      "id": "roberts",
+      "kind": "generalisation",
+      "text": "Flat spacetime with a massless scalar field sent in from infinity, at every scale alike. At $p = 0$ there is no field and Roberts's solution is Minkowski's, and for $p < 1$ the field passes through the centre and leaves flat space behind it [oshiro1994, brady1994]."
     }
   ],
   "references": [
@@ -219,7 +224,9 @@
     "randall1999a",
     "som1968",
     "deser1984",
-    "coleman1980"
+    "coleman1980",
+    "oshiro1994",
+    "brady1994"
   ],
   "coordinates": [
     {

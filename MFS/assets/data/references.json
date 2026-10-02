@@ -1,5 +1,5 @@
 {
-  "version": "622e47a2f17fa447",
+  "version": "eae68bf1aab3fb33",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -16956,6 +16956,208 @@
         "eprint": "gr-qc/0610127",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/gr-qc/0610127"
+      }
+    },
+    "roberts1989": {
+      "type": "article",
+      "fields": {
+        "title": "Scalar field counterexamples to the cosmic censorship hypothesis",
+        "author": "Roberts, M. D.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "21",
+        "number": "9",
+        "pages": "907--939",
+        "year": "1989",
+        "doi": "10.1007/BF00769864",
+        "url": "https://doi.org/10.1007/BF00769864"
+      }
+    },
+    "roberts1996": {
+      "type": "article",
+      "fields": {
+        "title": "Imploding scalar fields",
+        "author": "Roberts, M. D.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "37",
+        "number": "9",
+        "pages": "4557--4573",
+        "year": "1996",
+        "doi": "10.1063/1.531642",
+        "eprint": "gr-qc/9905006",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1063/1.531642"
+      }
+    },
+    "choptuik1993": {
+      "type": "article",
+      "fields": {
+        "title": "Universality and scaling in gravitational collapse of a massless scalar field",
+        "author": "Choptuik, Matthew W.",
+        "journal": "Physical Review Letters",
+        "volume": "70",
+        "number": "1",
+        "pages": "9--12",
+        "year": "1993",
+        "doi": "10.1103/PhysRevLett.70.9",
+        "url": "https://doi.org/10.1103/PhysRevLett.70.9"
+      }
+    },
+    "brady1994": {
+      "type": "article",
+      "fields": {
+        "title": "Analytic example of critical behaviour in scalar field collapse",
+        "author": "Brady, Patrick R.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "11",
+        "number": "5",
+        "pages": "1255--1260",
+        "year": "1994",
+        "doi": "10.1088/0264-9381/11/5/012",
+        "eprint": "gr-qc/9402023",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/11/5/012"
+      }
+    },
+    "oshiro1994": {
+      "type": "article",
+      "fields": {
+        "title": "Critical Behavior of Black Hole Formation in a Scalar Wave Collapse",
+        "author": "Oshiro, Yoshimi and Nakamura, Kouji and Tomimatsu, Akira",
+        "journal": "Progress of Theoretical Physics",
+        "volume": "91",
+        "number": "6",
+        "pages": "1265--1270",
+        "year": "1994",
+        "doi": "10.1143/ptp/91.6.1265",
+        "eprint": "gr-qc/9402017",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1143/ptp/91.6.1265"
+      }
+    },
+    "burko1997": {
+      "type": "article",
+      "fields": {
+        "title": "Comment on the {Roberts} Solution for the Spherically-Symmetric {Einstein}-Scalar Field Equations",
+        "author": "Burko, Lior M.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "29",
+        "number": "2",
+        "pages": "259--262",
+        "year": "1997",
+        "doi": "10.1023/A:1010200430550",
+        "eprint": "gr-qc/9608061",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1023/A:1010200430550"
+      }
+    },
+    "wang1997collapse": {
+      "type": "article",
+      "fields": {
+        "title": "Critical phenomena of collapsing massless scalar wave packets",
+        "author": "Wang, Anzhong and de Oliveira, Henrique P.",
+        "journal": "Physical Review D",
+        "volume": "56",
+        "number": "2",
+        "pages": "753--761",
+        "year": "1997",
+        "doi": "10.1103/PhysRevD.56.753",
+        "eprint": "gr-qc/9608063",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.56.753"
+      }
+    },
+    "frolov1997": {
+      "type": "article",
+      "fields": {
+        "title": "Perturbations and critical behavior in the self-similar gravitational collapse of a massless scalar field",
+        "author": "Frolov, Andrei V.",
+        "journal": "Physical Review D",
+        "volume": "56",
+        "number": "10",
+        "pages": "6433--6438",
+        "year": "1997",
+        "doi": "10.1103/PhysRevD.56.6433",
+        "eprint": "gr-qc/9704040",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.56.6433"
+      }
+    },
+    "frolov1999": {
+      "type": "article",
+      "fields": {
+        "title": "Critical collapse beyond spherical symmetry: General perturbations of the {Roberts} solution",
+        "author": "Frolov, Andrei V.",
+        "journal": "Physical Review D",
+        "volume": "59",
+        "number": "10",
+        "pages": "104011",
+        "year": "1999",
+        "doi": "10.1103/PhysRevD.59.104011",
+        "eprint": "gr-qc/9811001",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.59.104011"
+      }
+    },
+    "frolov2000": {
+      "type": "article",
+      "fields": {
+        "title": "Continuous self-similarity breaking in critical collapse",
+        "author": "Frolov, Andrei V.",
+        "journal": "Physical Review D",
+        "volume": "61",
+        "number": "8",
+        "pages": "084006",
+        "year": "2000",
+        "doi": "10.1103/PhysRevD.61.084006",
+        "eprint": "gr-qc/9908046",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.61.084006"
+      }
+    },
+    "christodoulou1994": {
+      "type": "article",
+      "fields": {
+        "title": "Examples of Naked Singularity Formation in the Gravitational Collapse of a Scalar Field",
+        "author": "Christodoulou, Demetrios",
+        "journal": "Annals of Mathematics",
+        "volume": "140",
+        "number": "3",
+        "pages": "607--653",
+        "year": "1994",
+        "doi": "10.2307/2118619",
+        "url": "https://doi.org/10.2307/2118619"
+      }
+    },
+    "christodoulou1999": {
+      "type": "article",
+      "fields": {
+        "title": "The Instability of Naked Singularities in the Gravitational Collapse of a Scalar Field",
+        "author": "Christodoulou, Demetrios",
+        "journal": "Annals of Mathematics",
+        "volume": "149",
+        "number": "1",
+        "pages": "183--217",
+        "year": "1999",
+        "doi": "10.2307/121023",
+        "eprint": "math/9901147",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.2307/121023"
+      }
+    },
+    "gundlach2007": {
+      "type": "article",
+      "fields": {
+        "title": "Critical Phenomena in Gravitational Collapse",
+        "author": "Gundlach, Carsten and Martín-García, José M.",
+        "journal": "Living Reviews in Relativity",
+        "volume": "10",
+        "number": "1",
+        "pages": "5",
+        "year": "2007",
+        "doi": "10.12942/lrr-2007-5",
+        "eprint": "0711.4620",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.12942/lrr-2007-5"
       }
     }
   }

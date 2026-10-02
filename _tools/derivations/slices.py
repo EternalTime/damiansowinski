@@ -451,6 +451,46 @@ def simpson_visser(chart, case):
     return marks
 
 
+ROBERTS_P = {"disperses": 0.9, "threshold": 1.0, "collapses": 2.0}     # p of each of the Roberts solution's outcomes
+
+
+def roberts_null(p, t, rho):
+    """The null coordinates u and v of the point (t, rho) of Roberts's diagonal chart, at l = c = 1:
+    u = sqrt(1 + p)(t - rho) and v = (t + rho)/sqrt(1 + p)."""
+    s = math.sqrt(1 + p)
+    return s * (t - rho), (t + rho) / s
+
+
+def roberts_point(chart, p, t, rho):
+    """The point (t, rho) of Roberts's diagonal chart as the (x^0, r) of another chart's plane: u and
+    v; v and r = ((1 + p) v - u)/2; v and the areal radius sqrt(rho (rho - p t)); and the scaling
+    chart's tau = -ln(-u/2) and x = ln(1 - 2v/u)/2."""
+    rho = np.asarray(rho, dtype=float)
+    u, v = roberts_null(p, t, rho)
+    if chart == "double_null":
+        return u, v
+    if chart == "advanced":
+        return v, ((1 + p) * v - u) / 2
+    if chart == "areal":
+        return v, np.sqrt(np.maximum(rho * (rho - p * t), 0.0))
+    if chart == "diagonal":
+        return np.full_like(rho, t), rho
+    with np.errstate(divide="ignore", invalid="ignore"):
+        return -np.log(-u / 2), np.log(1 - 2 * v / u) / 2
+
+
+def roberts(chart, case):
+    """Each moment of Roberts's time t that the embedding of `case` marks, over the stretch of rho it
+    reaches in the diagonal chart, on the plane of `chart`."""
+    p = ROBERTS_P[case]
+    marks = []
+    for m in moments("roberts", case):
+        lo, hi = m.reach("diagonal", "\\rho")
+        rho = near(lo, hi)
+        marks.append(Mark(m, [np.column_stack(roberts_point(chart, p, m.time, rho))]))
+    return marks
+
+
 def _fjnw_reach(m, of_r):
     """The embedding of Fisher, Janis, Newman and Winicour's equator is read in the harmonic chart at
     k = 1/2, b = 1, where e^(-u) = 1 - b/r: the radii r it reaches, least first, each carried to a
@@ -1235,6 +1275,9 @@ FLAT = {
     **{("simpson_visser", chart, case): (lambda chart=chart, case=case: simpson_visser(chart, case))
        for chart in ("spherical", "areal", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing")
        for case in SV_A},
+    # Roberts's collapse: the moments of his time t of each outcome, on that outcome's plane in each chart.
+    **{("roberts", chart, case): (lambda chart=chart, case=case: roberts(chart, case))
+       for chart in ("double_null", "advanced", "areal", "diagonal", "scaling") for case in ROBERTS_P},
     # Fisher, Janis, Newman and Winicour's scalar field at gamma = 1/2 and b = 1: the moment t = 0 from
     # the singularity out, in Wyman's r, in R = r - 3b/4, in the isotropic radius, and in the harmonic
     # coordinate, which its plane draws in units of 1/k at k = 1, so at half the embedding's own u.
