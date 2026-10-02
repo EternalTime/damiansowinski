@@ -5,7 +5,6 @@
   "description": "A black hole with horizons and no singularity, which James Bardeen proposed in 1968. A ball of de Sitter space sits where Schwarzschild's singularity would be, and Eloy Ayón-Beato and Alberto García showed in 2000 that the field of a magnetic monopole in a nonlinear electrodynamics is its source.",
   "tags": [
     "regular black hole",
-    "nonsingular black hole",
     "black hole",
     "static",
     "stationary",
@@ -14,7 +13,6 @@
     "magnetic monopole",
     "magnetic charge",
     "nonlinear electrodynamics",
-    "non-vacuum",
     "de Sitter core",
     "regular centre",
     "singularity theorems",

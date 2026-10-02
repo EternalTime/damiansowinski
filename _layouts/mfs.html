@@ -486,13 +486,28 @@
       // Before the page is first drawn, so the list is never seen and only the contents slide in.
       if (asked) showContents(true);
 
+      /* A search finds a tag whatever its capitals, and only from the start of one of its
+         words, a word starting after a space, a hyphen or a slash: "vacuum" finds the
+         vacuum spacetimes and not the ones tagged "electrovacuum", "wave" finds "pp-wave"
+         and "cft" finds "AdS/CFT". Until 2 October 2026 the text typed was lowercased and
+         the tag was not, so no search that reached a tag's capital letter found it, and
+         any part of a tag matched, so "vacuum" listed 69 of 75 spacetimes. A name is still
+         found by any part of it. `q` is the text typed, trimmed and lowercased. */
+      function mfsTagMatches(tag, q) {
+        var t = tag.toLowerCase();
+        for (var i = t.indexOf(q); i !== -1; i = t.indexOf(q, i + 1)) {
+          if (i === 0 || ' -/'.indexOf(t.charAt(i - 1)) !== -1) return true;
+        }
+        return false;
+      }
+
       function renderResults(METRIC_INDEX, query) {
         var q = query.trim().toLowerCase();
         var matches = q === ''
           ? METRIC_INDEX
           : METRIC_INDEX.filter(function(m) {
               return m.name.toLowerCase().indexOf(q) !== -1 ||
-                     m.tags.some(function(t) { return t.indexOf(q) !== -1; });
+                     m.tags.some(function(t) { return mfsTagMatches(t, q); });
             });
 
         results.innerHTML = matches.map(function(m) {

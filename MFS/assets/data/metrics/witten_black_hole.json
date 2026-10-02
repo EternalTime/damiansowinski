@@ -22,14 +22,16 @@
     "Page curve",
     "horizon",
     "event horizon",
-    "singularity",
+    "curvature singularity",
     "Kruskal extension",
     "static",
     "asymptotically flat",
     "lower-dimensional gravity",
     "exact solution",
     "Lorentzian",
-    "idealized model"
+    "idealized model",
+    "conformally flat",
+    "stationary"
   ],
   "signature": "(-,+)",
   "convention": "We keep factors of $c$ explicit. The metric and the dilaton $\\Phi$ solve $R_{\\mu\\nu} + 2\\nabla_\\mu\\nabla_\\nu\\Phi = 0$, with $\\lambda$ an inverse length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

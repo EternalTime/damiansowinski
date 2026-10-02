@@ -4,8 +4,6 @@
   "short_name": "Topological Black Holes",
   "description": "Black holes in anti-de Sitter space whose horizons are planes, cylinders, tori, or closed surfaces of genus two or more, the static vacuum solutions with a negative cosmological constant over a surface of constant curvature. The flat one is the black brane of holography, and the hyperbolic one is a black hole even with no mass or a negative one.",
   "tags": [
-    "vacuum",
-    "vacuum solution",
     "static",
     "stationary",
     "black hole",
@@ -26,7 +24,6 @@
     "AdS/CFT",
     "holography",
     "black hole thermodynamics",
-    "singularity",
     "curvature singularity",
     "coordinate singularity",
     "horizon",
@@ -39,7 +36,8 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "Einstein space"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The anti-de Sitter radius $L$, a length, fixes the cosmological constant through $\\Lambda = -3/L^2$. We keep factors of $c$ explicit.",

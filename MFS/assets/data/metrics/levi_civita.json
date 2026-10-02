@@ -5,7 +5,6 @@
   "description": "The static vacuum field with cylindrical symmetry, the field outside an infinitely long straight line of mass, which Tullio Levi-Civita found in 1919. It has two parameters, a mass per unit length and an angular deficit about the axis, and it is flat with no mass and again where the mass parameter is one half.",
   "tags": [
     "vacuum",
-    "vacuum solution",
     "static",
     "stationary",
     "cylindrical symmetry",
@@ -14,7 +13,6 @@
     "Kasner",
     "angular deficit",
     "conical",
-    "singularity",
     "curvature singularity",
     "naked singularity",
     "not asymptotically flat",

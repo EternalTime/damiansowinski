@@ -5,7 +5,6 @@
   "description": "A black hole with two horizons and a regular centre, Schwarzschild's metric far away and de Sitter space at the core. Sean Hayward wrote it down in 2006 and let its mass change in time, so that a region of trapped surfaces forms, evaporates, and leaves neither a singularity nor an event horizon.",
   "tags": [
     "regular black hole",
-    "nonsingular",
     "static",
     "stationary",
     "spherically symmetric",
@@ -23,10 +22,7 @@
     "information paradox",
     "Vaidya",
     "time-dependent",
-    "dynamical",
-    "non-vacuum",
     "energy conditions",
-    "nonlinear electrodynamics",
     "maximal extension",
     "causal structure",
     "asymptotically flat",

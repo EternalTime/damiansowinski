@@ -5,12 +5,9 @@
   "description": "The vacuum field of an isolated body sending out gravitational waves on expanding wave fronts, found by Ivor Robinson and Andrzej Trautman in 1960. From smooth initial data the fronts grow round as the waves leave, and the spacetime settles down to the Schwarzschild black hole.",
   "tags": [
     "vacuum",
-    "vacuum solution",
-    "gravitational waves",
-    "gravitational radiation",
+    "gravitational wave",
     "radiating",
     "time-dependent",
-    "dynamical",
     "algebraically special",
     "Petrov type II",
     "null congruence",

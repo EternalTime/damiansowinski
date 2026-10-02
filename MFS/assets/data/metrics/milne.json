@@ -5,14 +5,12 @@
   "description": "Edward Arthur Milne's expanding universe of 1932: test particles flying apart from one event of flat spacetime with every speed below that of light. In comoving coordinates it is the empty open Friedmann universe, with scale factor $ct$ and hyperbolic space at each moment.",
   "tags": [
     "cosmology",
-    "cosmological",
     "expanding universe",
     "open universe",
     "hyperbolic space",
     "empty universe",
     "flat",
     "vacuum",
-    "vacuum solution",
     "special relativity",
     "homogeneous",
     "isotropic",
@@ -21,7 +19,10 @@
     "exact solution",
     "Lorentzian",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "conformally flat",
+    "spherically symmetric",
+    "Einstein equations"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit.",

@@ -5,7 +5,6 @@
   "description": "Two impulsive plane gravitational waves colliding head on in flat space. Each focuses the other, and the vacuum where both have passed ends in a spacelike curvature singularity.",
   "tags": [
     "vacuum",
-    "vacuum solution",
     "plane wave",
     "gravitational wave",
     "colliding plane waves",
@@ -15,10 +14,10 @@
     "nonlinear",
     "exact solution",
     "time-dependent",
-    "dynamical",
     "Lorentzian",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "Einstein equations"
   ],
   "signature": "(-,+,+,+)",
   "convention": "No coordinate carries dimensions of time, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",

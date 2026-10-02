@@ -6,12 +6,11 @@
   "tags": [
     "causal structure",
     "hypercomputation",
-    "supercritical",
     "time-dependent",
-    "causality violation",
     "idealized model",
     "Lorentzian",
-    "four-dimensional"
+    "four-dimensional",
+    "conformally flat"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep every factor of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The conformal factor $\\Omega$ is a dimensionless function, equal to $1$ outside a compact region $C$ around the removed event and growing without bound as that event is approached.",

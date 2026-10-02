@@ -10,7 +10,6 @@
     "thin shell",
     "matched solution",
     "cosmology",
-    "cosmological",
     "open universe",
     "hyperbolic space",
     "inflation",
@@ -19,12 +18,12 @@
     "cosmological constant",
     "spherically symmetric",
     "time-dependent",
-    "dynamical",
     "exact solution",
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "conformally flat"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ and $G$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

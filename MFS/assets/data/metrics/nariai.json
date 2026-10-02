@@ -4,8 +4,6 @@
   "short_name": "Nariai",
   "description": "A vacuum solution with a positive cosmological constant, geometrically the product of a two dimensional de Sitter space and a sphere of the same radius (dS₂ × S²). It is the limit of the Schwarzschild-de Sitter black hole as its horizon meets the cosmological horizon, the largest black hole a de Sitter universe can hold.",
   "tags": [
-    "vacuum",
-    "vacuum solution",
     "positive cosmological constant",
     "cosmological constant",
     "de Sitter",
@@ -14,7 +12,6 @@
     "spherically symmetric",
     "static",
     "cosmology",
-    "cosmological",
     "horizon",
     "cosmological horizon",
     "Killing horizon",
@@ -28,7 +25,9 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "Einstein space",
+    "stationary"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit. The single parameter is the cosmological constant $\\Lambda$, positive and an inverse length squared, and $1/\\sqrt{\\Lambda}$ is the radius of both factors of the product. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

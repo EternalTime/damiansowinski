@@ -10,13 +10,10 @@
     "negative energy",
     "energy condition violation",
     "time-dependent",
-    "non-vacuum",
-    "dynamical",
     "idealized model",
     "Lorentzian",
     "Einstein equations",
-    "four-dimensional",
-    "causality violation"
+    "four-dimensional"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep every factor of $c$ explicit. The Riemann tensor is $R^\\mu{}_{\\nu\\rho\\sigma} = \\partial_\\rho\\Gamma^\\mu{}_{\\nu\\sigma} - \\partial_\\sigma\\Gamma^\\mu{}_{\\nu\\rho} + \\Gamma^\\mu{}_{\\rho\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma} - \\Gamma^\\mu{}_{\\sigma\\lambda}\\Gamma^\\lambda{}_{\\nu\\rho}$ and the Ricci tensor its standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

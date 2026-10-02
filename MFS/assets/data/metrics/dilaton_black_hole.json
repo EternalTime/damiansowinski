@@ -4,7 +4,6 @@
   "short_name": "Dilaton Black Hole",
   "description": "The static, spherically symmetric charged black hole of low energy string theory, a solution of Einstein's equations with a Maxwell field and a scalar field, the dilaton, coupled to it. On the plane of time and radius its metric is Schwarzschild's, with one horizon at the Schwarzschild radius for every charge and no inner horizon, and the area of its spheres vanishes at the singularity.",
   "tags": [
-    "non-vacuum",
     "static",
     "stationary",
     "spherically symmetric",
@@ -23,7 +22,6 @@
     "electromagnetic field",
     "extremal",
     "supersymmetric",
-    "singularity",
     "curvature singularity",
     "coordinate singularity",
     "horizon",

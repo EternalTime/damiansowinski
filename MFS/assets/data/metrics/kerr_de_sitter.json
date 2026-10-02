@@ -4,8 +4,6 @@
   "short_name": "Kerr-de Sitter",
   "description": "The rotating black hole in a universe with a cosmological constant of either sign, which Brandon Carter found in 1968 among the spacetimes whose geodesic equations separate. With $\\Lambda > 0$ an inner horizon, an event horizon, and a cosmological horizon surround the ring singularity, and with $\\Lambda < 0$ its boundary is a rotating Einstein universe.",
   "tags": [
-    "vacuum",
-    "vacuum solution",
     "rotating",
     "rotating black hole",
     "black hole",
@@ -24,7 +22,6 @@
     "frame dragging",
     "superradiance",
     "ring singularity",
-    "singularity",
     "curvature singularity",
     "horizon",
     "event horizon",
@@ -40,7 +37,8 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "Einstein space"
   ],
   "signature": "(-,+,+,+)",
   "convention": "The mass enters as the length $r_s = 2GM/c^2$, the rotation parameter $a$ is a length, and the cosmological constant $\\Lambda$ takes either sign, with $\\Lambda = -3/\\ell^2$ for Kerr-anti-de Sitter. The horizons are the real roots of $\\Delta_r$, $r_- < r_+$ and, for $\\Lambda > 0$, $r_c$ beyond them and $r_n$ at negative values, with surface gravities $\\kappa_-$, $\\kappa_+$, $\\kappa_c$, and $\\kappa_n$. We keep factors of $c$ explicit.",

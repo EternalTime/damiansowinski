@@ -5,12 +5,10 @@
   "description": "Albert Einstein's cosmology of 1917: dust spread uniformly through a round three sphere of fixed radius and held at rest by a positive cosmological constant. Minkowski, de Sitter, and anti-de Sitter space are each conformal to a region of it.",
   "tags": [
     "cosmology",
-    "cosmological",
     "static",
     "closed universe",
     "three sphere",
     "dust",
-    "non-vacuum",
     "cosmological constant",
     "positive cosmological constant",
     "Einstein cylinder",
@@ -21,7 +19,9 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "stationary",
+    "spherically symmetric"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit, and the one parameter is the radius $R$ of the three sphere, a length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

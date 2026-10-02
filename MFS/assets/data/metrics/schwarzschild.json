@@ -5,13 +5,11 @@
   "description": "The unique spherically symmetric vacuum solution of the Einstein field equations, describing the spacetime outside a static, uncharged mass that does not rotate.",
   "tags": [
     "vacuum",
-    "vacuum solution",
     "static",
     "stationary",
     "spherically symmetric",
     "black hole",
     "mass",
-    "singularity",
     "curvature singularity",
     "coordinate singularity",
     "horizon",

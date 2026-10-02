@@ -16,6 +16,37 @@ The page turns those brackets into numbered links by looking the key up in `refe
 A reason a reference is there, such as a novel beside the papers, goes in that prose; the `.bib` entries carry no annotations.
 `godel` and `morris_thorne` are worked examples.
 
+### Tags
+
+The search list finds a spacetime by its tags, so a tag has to be on every spacetime it is true of.
+On 2 October 2026 the captain typed "conformally flat" and got three spacetimes where sixteen are, because every tag was written by hand.
+
+Eight tags are now decided by the metric and never written by hand: `vacuum` (Ricci = 0), `Einstein space` (Ricci = k g with k a constant that is not zero), `conformally flat` (Weyl = 0, in three dimensions Cotton = 0, and in two always), `flat` (Riemann = 0), `stationary`, `static`, `spherically symmetric`, and the dimension, `two-dimensional` to `six-dimensional`.
+An Einstein space also carries `cosmological constant`, and `positive` or `negative cosmological constant` where its parameters fix the sign, which other spacetimes may carry by hand.
+After writing or editing a chart, compute its facts, which needs sympy and takes seconds for one spacetime:
+
+    /tmp/mfs-venv/bin/python _tools/derivations/metric_tags.py
+
+It computes only the charts that are new or whose coordinates, domains, line element or parameters changed, and writes `_tools/derivations/metric_tags.json`, which is committed.
+`_tools/test_metric_tags.py` then says which of the eight tags the spacetime lacks and which it carries wrongly, and fails until the file's `tags` agree; it needs no sympy and runs in the normal suite.
+`--all` computes every chart again, about five minutes on 2 October 2026 for 216 charts, and `--check` computes and compares without writing.
+
+A curvature tag needs every chart of the spacetime to have it, since charts of one region agree about curvature.
+A symmetry needs one chart to show it, since a Killing vector shows only in coordinates adapted to it.
+A chart is stationary when a coordinate its metric does not depend on is timelike somewhere in its domain and is a translation of the chart: it runs over the whole real line and no other entry of `domains` names it.
+That last condition is why the Milne universe is not static, though its inertial chart is a piece of Minkowski space: $T$ runs from 0 and the chart ends on $R = cT$.
+A sphere counts when its last angle runs over $[0, 2\pi)$ and the others over $[0, \pi]$, as the `domains` write them, and it fills all but two dimensions.
+
+Two tables in `metric_tags.py` hold what the charts cannot say, each entry with its reason.
+`REGIONS` names the charts that count for a spacetime and divides them into regions where it has more than one, as Oppenheimer and Snyder's dust ball and exterior; a chart left out draws a part or a special case, as the single hole of Majumdar and Papapetrou does.
+A spacetime whose regions differ carries no tag for what only one of them has, since a tag cannot say which region it is true of.
+`OVERRULED` sets a tag against the charts, as `vacuum` for Gowdy's universes, whose charts leave the functions of the metric free.
+A new spacetime needs an entry in either only when the test's answer is wrong for a reason of that kind.
+
+Every other tag is checked by hand against the History and its sources.
+`RETIRED` in the same file lists the near-duplicates that were merged, as `vacuum solution` into `vacuum`, and the test refuses a tag on that list, so use the name it was merged into.
+The page's search finds a tag whatever its capitals and only from the start of one of its words, `mfsTagMatches` in `_layouts/mfs.html`, which the same test file runs in Node.
+
 ### Related spacetimes
 
 Every spacetime lists the spacetimes it is related to, in a `related` field of its own metric file, and the page shows them under "Related Spacetimes" right after the history, as the captain asked on 1 October 2026.

@@ -9,7 +9,7 @@
     "angular deficit",
     "flat",
     "locally flat",
-    "three-dimensional gravity",
+    "2+1 dimensional gravity",
     "lower-dimensional gravity",
     "topological defect",
     "gravitational lensing",
@@ -20,7 +20,9 @@
     "Lorentzian",
     "Einstein equations",
     "three-dimensional",
-    "idealized model"
+    "idealized model",
+    "vacuum",
+    "conformally flat"
   ],
   "signature": "(-,+,+)",
   "convention": "We keep factors of $c$ explicit. A particle of mass $m$ enters through $\\alpha = 1 - 4Gm/c^2$, with $G$ Newton's constant in three dimensions, and removes a wedge of angle $2\\pi(1 - \\alpha) = 8\\pi Gm/c^2$.",

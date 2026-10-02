@@ -5,12 +5,10 @@
   "description": "Exact vacuum solutions describing gravitational waves with cylindrical wave fronts and a single polarisation, converging on an axis, passing through it and spreading out again. Einstein's equations for them reduce to the flat cylindrical wave equation for one function and a quadrature for a second.",
   "tags": [
     "vacuum",
-    "vacuum solution",
     "gravitational wave",
     "cylindrical symmetry",
     "exact solution",
     "time-dependent",
-    "dynamical",
     "radiating",
     "Lorentzian",
     "Einstein equations",

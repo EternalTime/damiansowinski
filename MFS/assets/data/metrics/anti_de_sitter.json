@@ -4,8 +4,6 @@
   "short_name": "Anti-de Sitter",
   "description": "The maximally symmetric vacuum solution with constant negative curvature, arising from a negative cosmological constant. Its conformal boundary underpins the AdS/CFT correspondence in theoretical physics.",
   "tags": [
-    "vacuum",
-    "vacuum solution",
     "maximally symmetric",
     "constant curvature",
     "negative cosmological constant",
@@ -20,7 +18,11 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "Einstein space",
+    "conformally flat",
+    "stationary",
+    "spherically symmetric"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit, and the one parameter is the anti-de Sitter radius $L$, a length, which fixes the cosmological constant through $\\Lambda = -3/L^2$. The Riemann tensor is $R^\\mu{}_{\\nu\\rho\\sigma} = \\partial_\\rho\\Gamma^\\mu{}_{\\nu\\sigma} - \\partial_\\sigma\\Gamma^\\mu{}_{\\nu\\rho} + \\Gamma^\\mu{}_{\\rho\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma} - \\Gamma^\\mu{}_{\\sigma\\lambda}\\Gamma^\\lambda{}_{\\nu\\rho}$ and the Ricci tensor its standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
