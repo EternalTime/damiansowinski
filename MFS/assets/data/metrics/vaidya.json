@@ -89,6 +89,11 @@
       "id": "bonnor_vaidya",
       "kind": "generalisation",
       "text": "Vaidya's star shedding charge as well as mass. William Bonnor and Vaidya let the charge inside each sphere depend on the retarded time too, and with no charge their metric is Vaidya's [bonnor1970]."
+    },
+    {
+      "id": "mass_inflation",
+      "kind": "generalisation",
+      "text": "Vaidya's ingoing metric with a charge on the hole, which gives it an inner horizon. A second stream running outward makes the mass function grow without limit there [poisson1989]."
     }
   ],
   "references": [
@@ -116,7 +121,8 @@
     "hellaby1994",
     "bonnor1969light",
     "podolsky2005",
-    "wang1997collapse"
+    "wang1997collapse",
+    "poisson1989"
   ],
   "coordinates": [
     {

@@ -4025,6 +4025,88 @@ def reissner_nordstrom_ads(ck, src):
     return views
 
 
+def mass_inflation(ck, src):
+    """The tail falling into the charged hole, as the spacetime diagram of the ingoing chart
+    declares it: r_q = 0.96 m_0 and m(v) = m_0 - (m_0/50)(v_0/v)^11 from v_0 = 10 m_0 on, 0.98 m_0
+    before. A slice of constant v is null, so the moments are slices of constant v - r = T,
+    on which the published metric pulls back, with v = T + r, to (2 - f) dr^2 + r^2 dphi^2, f =
+    1 - 2m/r + r_q^2/r^2 and m taken at v = T + r: spacelike wherever f < 2, through both
+    horizons, and a surface of revolution in flat space that climbs at dz/dr = sqrt(2m/r -
+    r_q^2/r^2) from the circle r = r_q^2/2m, where it lies level and nearer the singularity than
+    which the circles grow faster than the distance out to them. The apparent horizons are
+    the circles where r^2 - 2 m r + r_q^2 vanishes at the mass of their own advanced time, and
+    the first of the tail is the circle r = v_0 - T while the slice still holds it. The mass
+    grows by a fiftieth, so the surface is Reissner-Nordstrom's funnel sinking by a little, which
+    is all a stream falling in alone does to the hole."""
+    name = "mass inflation"
+    top, v0 = 4.0, 10.0
+    size = 2 * top
+    q2 = (24 / 25) ** 2
+
+    def mass(v):
+        return 1 - (v0 / max(v, v0)) ** 11 / 50
+
+    def slope(r, T):
+        return math.sqrt(max(2 * mass(T + r) / r - q2 / r ** 2, 0.0))
+
+    def root(fn, a, b):
+        fa = fn(a)
+        for _ in range(100):
+            mid = 0.5 * (a + b)
+            a, b = (mid, b) if fn(mid) * fa > 0 else (a, mid)
+        return 0.5 * (a + b)
+    rim = ("edge", "the surface runs on to $r \\to \\infty$")
+
+    def moment(T):
+        where = f"{name}, v - r = {T:g}"
+        sl = Slice(src, "mass_inflation", "ingoing", "r", "\\phi", {"theta": "pi/2"}, {"r_q": "24/25"},
+                   {"m": nr.MI_MASS}, along={"v": f"{T} + r"})
+        level = root(lambda r: 2 * mass(T + r) * r - q2, 0.3, 0.6)
+        ck.stops(f"{where}, nearer the singularity than r_q^2/2m", sl, np.linspace(0, level, 402)[1:-1])
+        # The drawing begins on the next ten thousandth of m_0 above that circle, a radius the file
+        # holds exactly, so that every chord is measured from where the surface exists.
+        level = math.ceil(level * 1e4) / 1e4
+        marks = [(r, "r", None) for r in (2.0, 3.0, top)]
+        for lo, hi in ((level, 1.0), (1.0, 1.5)):
+            marks.append((root(lambda r: r * r - 2 * mass(T + r) * r + q2, lo, hi), "horizon", None))
+        if level < v0 - T < top:
+            marks.append((v0 - T, "surface", None))
+        whole = Piece("whole", "sheet", sl, level, top, 0.0, 1,
+                      (("stops", "at $r = r_q^2/2m$ the surface lies level, and nearer the singularity the circles "
+                                 "grow faster than the distance out to them"), rim),
+                      [(level, "chartedge", None)] + marks, size, digits=LORENTZ_DIGITS)
+        # The chords are short where the surface leaves the level circle, so it is written to the
+        # digits a surface in Minkowski space is. The rim of the drawing, r = 4 m_0, stands at
+        # z = 0 at every moment.
+        whole.z = whole.z - whole.z[-1]
+        knots = [k for k in (v0 - T,) if level < k < top]
+
+        def height(r, T=T, knots=knots):
+            return np.array([-quad(slope, x, top, args=(T,), points=[k for k in knots if x < k] or None,
+                                   epsabs=1e-12, epsrel=1e-12, limit=400)[0] for x in np.atleast_1d(r)])
+        ck.form(f"{where}, against the quadrature of sqrt(2m/r - r_q^2/r^2)", whole, height, size)
+        ck.isometry(f"{where}, whole", whole)
+        return Surface([whole], label=f"$v - r = {T:g}\\,m_0$", time=T)
+
+    # A frame every m_0/4 of v - r, over the stretch the spacetime diagram draws.
+    frames = [moment(7.5 + k / 4) for k in range(37)]
+    surfaces = [frames[k] for k in (0, 8, 16, 36)]
+    fig = movie_figure(frames, {"sheet": "cover"}, size)
+    fig.legend("fill", "cover", "the slice of constant $v - r$, which $v$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $2$, $3$ and $4\\,m_0$")
+    fig.legend("line", "horizon", "the apparent horizons, where $g^{rr}$ vanishes on this surface")
+    fig.legend("line", "surface", "the first of the tail, $v = v_0$")
+    fig.legend("line", "chartedge", "$r = r_q^2/2m$, where the surface lies level and the drawing stops")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("tail", "The tail falling in", "$m_0$", surfaces, fig.done(), system="ingoing",
+                 movie=movie(frames, "$v - r$", [f.time for f in frames]),
+                 settings="$m_0 = 1$, the final mass and the unit of every length, and $r_q = 0.96\\,m_0$; each "
+                          "moment is a slice of constant $v - r$.",
+                 input=nr.MI_INPUT,
+                 stops=["Nearer the singularity than $r = r_q^2/2m$ the circles grow faster than the distance out to "
+                        "them, and no surface in flat space carries that part of the slice."])]
+
+
 def global_monopole(ck, src):
     """Two moments at Delta = 0.19, so that sqrt(1 - Delta) = 0.9. The monopole with no mass at
     its centre, the Barriola-Vilenkin chart's equator at t = 0: g_rr = 1 and g_phiphi =
@@ -9461,6 +9543,7 @@ DRAWN = {
     "topological_black_hole": topological_black_hole,
     "siklos": siklos,
     "hayward": hayward,
+    "mass_inflation": mass_inflation,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "vaidya": vaidya,
     "bonnor_vaidya": bonnor_vaidya,
@@ -10107,6 +10190,18 @@ CAPTIONS = {
         "Near $r = 0$, $g_{rr} = 1 + r^2/\\ell^2$ to this order, and the surface is the sphere of radius $\\ell$, "
         "the static slice of de Sitter space with $\\Lambda = 3/\\ell^2$. The curvature at the centre is finite, "
         "and the surface closes smoothly on the axis.",
+    ],
+    ("mass_inflation", "tail"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of space in and around a charged black hole ($r_q = 0.96\\,m_0$) "
+        "as the tail of its collapse falls in, from $v - r = 7.5\\,m_0$ to $16.5\\,m_0$, each moment drawn as a "
+        "surface in flat space with every distance along it the metric distance. A slice of constant $v$ is a "
+        "light cone, so the moments are slices of constant $v - r$, which are spacelike through both horizons "
+        "and carry the metric $(1 + 2m/r - r_q^2/r^2)\\,dr^2 + r^2d\\phi^2$, with $m$ taken at the advanced time "
+        "of each circle. The surface climbs at $dz/dr = \\sqrt{2m/r - r_q^2/r^2}$ from the circle "
+        "$r = r_q^2/2m$, where it lies level.",
+        "The mass grows from $0.98\\,m_0$ to $m_0$, and the funnel sinks by a little: the outer apparent horizon "
+        "widens from $1.18\\,m_0$ to $1.28\\,m_0$ and the inner one narrows from $0.78\\,m_0$ to $0.72\\,m_0$. With "
+        "this stream alone the surface at every later moment is Reissner-Nordström's.",
     ],
     ("hayward", "history"): [
         "The equatorial plane ($\\theta = \\pi/2$) of space around a black hole that forms and evaporates, from "

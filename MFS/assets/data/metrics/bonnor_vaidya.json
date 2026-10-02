@@ -54,6 +54,11 @@
       "id": "schwarzschild",
       "kind": "special_case",
       "text": "No charge and a constant mass. The metric is then Schwarzschild's in Eddington-Finkelstein coordinates, with $r_s = 2m$."
+    },
+    {
+      "id": "mass_inflation",
+      "kind": "special_case",
+      "text": "The same metric with the charge held constant, read inside a black hole. With a second stream of light running outward there, the mass function grows without limit at the inner horizon [poisson1989]."
     }
   ],
   "references": [
@@ -70,7 +75,8 @@
     "israel1986",
     "sullivan1980",
     "kehle2022",
-    "poisson1990"
+    "poisson1990",
+    "poisson1989"
   ],
   "coordinates": [
     {

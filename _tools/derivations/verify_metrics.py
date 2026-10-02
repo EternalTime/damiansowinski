@@ -1078,6 +1078,19 @@ DIMENSIONS = {
     ("hayward", "evaporating"): {
         "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "\\ell": "L",
     },
+    # Mass inflation: the charged Vaidya metric in advanced time, a length, with the mass function
+    # and the charge lengths too; the double null chart, where the areal radius r is a function of
+    # the two null coordinates and sigma a pure number; and Brady and Smith's chart of advanced time
+    # and radius, whose two functions are pure numbers.
+    ("mass_inflation", "ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "r_q": "L",
+    },
+    ("mass_inflation", "double_null"): {
+        "u": "L", "v": "L", "\\theta": "1", "\\phi": "1", "r": "L", "\\sigma": "1",
+    },
+    ("mass_inflation", "advanced"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "g": "1", "h": "1",
+    },
     # The one entry that keeps G and a mass explicit rather than folding them into a
     # length like r_s, and so the only one whose declarations need a mass at all.
     ("vaidya", "eddington_finkelstein_outgoing"): {

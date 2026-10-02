@@ -8,7 +8,7 @@ kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, reissner_nordstrom_ads, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
 black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
 som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos,
-einstein_rosen_bridge, bonnor_vaidya, tolman_vii and kiselev, and Godel's cylindrical chart.
+einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev and mass_inflation, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -28,6 +28,9 @@ The derivations these charts rest on, and the reason each was chosen, are in tov
 malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_sitter.md,
 majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md,
 witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md and kiselev.md beside this file.
+
+
+witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md and mass_inflation.md beside this file.
 """
 import argparse
 import itertools
@@ -10885,6 +10888,219 @@ def kiselev_check(chart, system):
 
 
 CHARTS["kiselev"] = [lambda s=s: kiselev(s) for s in KISELEV_CHARTS]
+
+
+# -- Mass inflation --------------------------------------------------------------------
+
+MASS_INFLATION_CHARTS = ["ingoing", "double_null", "advanced"]
+
+
+def mass_inflation(system):
+    """The inside of a charged black hole crossed by radiation, as Poisson and Israel set it up
+    and Ori solved it, in the three charts of the literature.
+
+    The ingoing chart is the charged Vaidya metric, Bonnor and Vaidya's with the charge held
+    constant, ds^2 = 2 dr dv - f dv^2 + r^2 dOmega^2 with f = 1 - 2m/r + r_q^2/r^2 and the mass a
+    function of the advanced time v: Poisson and Israel's solution for the influx alone, the line
+    element above their (6), and the metric on each side of Ori's shell. The double null chart is
+    their -2 e^{2 sigma} dU dV + r^2 dOmega^2, with r and sigma free functions of the two null
+    coordinates, the one both streams are written in. The advanced chart is Brady and Smith's
+    (1), -g h dv^2 - 2 g dv dr + r^2 dOmega^2 with g and h free functions of v and r, their g
+    and g-bar, in which they integrated a scalar field falling into the charged hole. No
+    component of the last two assumes a field equation.
+
+    mass_inflation_check holds the first to the Einstein-Maxwell equations with one stream of null
+    dust and to Reissner-Nordstrom's published metric at constant mass, the second to the two
+    equations for the mass function and to its wave equation, whose source is the product of the
+    two fluxes, and the third to Brady and Smith's two radial equations and to being the first
+    where g = -1 and h = -f. mass_inflation.md records each chart's source."""
+    sphere = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    D = sp.Derivative
+    if system == "double_null":
+        coords = ["u", "v", "\\theta", "\\phi"]
+        parameters = ["r = r(u,v)", "\\sigma = \\sigma(u,v)"]
+        line = "ds^2 = -2e^{2\\sigma}du\\,dv" + sphere
+        probe = vm.Reader(coords, parameters, ())
+        u, v = probe.symbol["u"], probe.symbol["v"]
+        r, sigma = probe.parameters["r"], probe.parameters["sigma"]
+        lead = [r, sigma]
+        for fn in (r, sigma):
+            lead += [D(fn, u), D(fn, v)]
+        for fn in (r, sigma):
+            lead += [D(fn, (u, 2)), D(fn, u, v), D(fn, (v, 2))]
+        return {
+            "metric_id": "mass_inflation",
+            "system": {"id": system, "name": "Double Null", "coords": coords,
+                       "domains": ["u \\in (-\\infty, \\infty)", "v \\in (-\\infty, \\infty)"] + angles,
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": lead, "factors": lead},
+            "pretty": lambda value: sp.powsimp(sp.factor(sp.sympify(value)), combine="exp"),
+            "check": lambda chart: mass_inflation_check(chart, system),
+        }
+    if system == "advanced":
+        coords = ["v", "r", "\\theta", "\\phi"]
+        parameters = ["g = g(v,r)", "h = h(v,r)"]
+        line = "ds^2 = -gh\\,dv^2 - 2g\\,dv\\,dr" + sphere
+        probe = vm.Reader(coords, parameters, ())
+        v, r = probe.symbol["v"], probe.symbol["r"]
+        g, h = probe.parameters["g"], probe.parameters["h"]
+        lead = [r, g, h]
+        for fn in (g, h):
+            lead += [D(fn, v), D(fn, r)]
+        for fn in (g, h):
+            lead += [D(fn, (v, 2)), D(fn, v, r), D(fn, (r, 2))]
+        return {
+            "metric_id": "mass_inflation",
+            "system": {"id": system, "name": "Advanced Time and Areal Radius", "coords": coords,
+                       "domains": ["v \\in (-\\infty, \\infty)", "r \\in (0, \\infty)"] + angles
+                                  + ["h = 0 \\;\\text{(the apparent horizons)}"],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": lead, "factors": lead},
+            "pretty": lambda value: sp.factor(sp.sympify(value)),
+            "check": lambda chart: mass_inflation_check(chart, system),
+        }
+    coords = ["v", "r", "\\theta", "\\phi"]
+    parameters = ["m = m(v)", "r_q"]
+    f = "\\left(1 - \\dfrac{2m}{r} + \\dfrac{r_q^2}{r^2}\\right)"
+    bare = "1 - \\dfrac{2m}{r} + \\dfrac{r_q^2}{r^2}"
+    line = "ds^2 = -" + f + "dv^2 + 2\\,dv\\,dr" + sphere
+    probe = vm.Reader(coords, parameters, ())
+    r, m, q = probe.symbol["r"], probe.parameters["m"], probe.parameters["r_q"]
+    dm = D(m, probe.symbol["v"])
+    return {
+        "metric_id": "mass_inflation",
+        "system": {"id": system, "name": "Ingoing Charged Vaidya", "coords": coords,
+                   "domains": ["v \\in (-\\infty, \\infty)", "r \\in (0, \\infty)"] + angles
+                              + ["r^2 - 2mr + r_q^2 = 0 \\;\\text{(the apparent horizons)}"],
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": line,
+        # A product is written as the line element writes it, and the rate of change of the mass
+        # stands apart from what Reissner-Nordstrom's metric has already.
+        "printer": {"lead": [dm, r, m, q], "factors": [m, q, r, dm], "flip": False,
+                    "collect": lambda poly, pr: cp.collect_by(poly, [dm], pr)},
+        "components": {"metric_components": {("v", "v"): "-" + f, ("v", "r"): "1", ("r", "v"): "1"},
+                       "inverse_metric_components": {("v", "r"): "1", ("r", "v"): "1", ("r", "r"): bare}},
+        "kretschmann": "\\dfrac{8\\left(6m^2r^2 - 12mr_q^2r + 7r_q^4\\right)}{r^8}",
+        "check": lambda chart: mass_inflation_check(chart, system),
+    }
+
+
+def mass_inflation_mass(chart):
+    """Poisson and Israel's mass function in the double null chart, their (1), g^ab r_,a r_,b =
+    1 - 2m/r + r_q^2/r^2 with g^uv = -e^{-2 sigma}, and the charge r_q it is defined with."""
+    u, v = chart.symbols[:2]
+    r, sigma = chart.reader.parameters["r"], chart.reader.parameters["sigma"]
+    q = sp.Symbol("q", positive=True)
+    return r / 2 * (1 + q ** 2 / r ** 2 + 2 * sp.exp(-2 * sigma) * sp.diff(r, u) * sp.diff(r, v)), q
+
+
+def mass_inflation_check(chart, system):
+    """The ingoing chart: G^a_b is the Maxwell field of the charge r_q, -r_q^2/r^4 on the plane of v
+    and r and +r_q^2/r^4 on the sphere, plus the one component of null dust, G_vv = 2 m'(v)/r^2;
+    and at constant mass it is Reissner-Nordstrom's published metric with r_s = 2m and r_q of its own,
+    pulled back along t = v - r_*.
+
+    The double null chart, for any r and sigma, with E_ab the Maxwell field of the charge, whose
+    one component on the plane is E_uv = r_q^2 e^{2 sigma}/r^4:
+
+        d_v m = -(r^2/2) e^{-2 sigma} (d_u r G_vv - d_v r (G_uv - E_uv)),
+
+    the same with u and v exchanged, and, where the two equations with no flux in them hold,
+    G_uv = E_uv and G_theta theta = E_theta theta,
+
+        d_u d_v m = (r^3/4) e^{-2 sigma} G_uu G_vv.
+
+    With G_uu = 2 L_out/r^2 and G_vv = 2 L_in/r^2 the first is d_v m = -e^{-2 sigma} L_in d_u r,
+    the first of Poisson and Israel's (2), and the last is d_u d_v m = e^{-2 sigma} L_in L_out/r,
+    the second of their (3), whose integral is their (7).
+
+    The advanced chart, for any g and h: G_rr = 2 d_r g/(r g) and G^v_v + G^r_r =
+    2 (d_r(r h) - g)/(r^2 g), which with a massless scalar field and the charge's Maxwell field
+    as the source are Brady and Smith's (5) and (6); and with g = -1 and h = -f it is the ingoing
+    chart slot by slot."""
+    geo = chart.geo
+    G = geo.einstein_ll()
+    D = sp.Derivative
+    if system == "double_null":
+        u, v = chart.symbols[:2]
+        r, sigma = chart.reader.parameters["r"], chart.reader.parameters["sigma"]
+        m, q = mass_inflation_mass(chart)
+        e = sp.exp(-2 * sigma)
+        Guu, Gvv, Guv, Gthth = (vm._at(G, i) for i in ((0, 0), (1, 1), (0, 1), (2, 2)))
+        Euv = q ** 2 / (e * r ** 4)
+        Ethth = q ** 2 / r ** 2
+        for a, b, Gbb in ((u, v, Gvv), (v, u, Guu)):
+            rest = sp.diff(m, b) + r ** 2 / 2 * e * (sp.diff(r, a) * Gbb - sp.diff(r, b) * (Guv - Euv))
+            if sp.simplify(rest.doit()) != 0:
+                raise AssertionError(f"mass_inflation: the equation for the derivative of the mass along {b} fails")
+        ruv = sp.solve(sp.Eq((Guv - Euv).doit(), 0), D(r, u, v))
+        suv = sp.solve(sp.Eq((Gthth - Ethth).doit().subs(D(r, u, v), ruv[0]), 0), D(sigma, u, v))
+        if len(ruv) != 1 or len(suv) != 1:
+            raise AssertionError("mass_inflation: the two equations without flux do not give d_u d_v r and d_u d_v sigma")
+        wave = (sp.diff(m, u, v) - r ** 3 / 4 * e * Guu * Gvv).doit()
+        on_shell = {D(r, u, v): ruv[0], D(sigma, u, v): suv[0]}
+        wave = wave.subs({D(r, (u, 2), v): sp.diff(ruv[0], u), D(r, u, (v, 2)): sp.diff(ruv[0], v)}).doit()
+        wave = wave.subs(on_shell).doit().subs(on_shell)
+        if sp.simplify(wave) != 0:
+            raise AssertionError("mass_inflation: the mass function misses its wave equation")
+        return
+    mixed = geo.raise_indices(G, 2, (0,))
+    if system == "advanced":
+        v, r = chart.symbols[:2]
+        g, h = chart.reader.parameters["g"], chart.reader.parameters["h"]
+        if sp.simplify(vm._at(G, (1, 1)) - 2 * sp.diff(g, r) / (r * g)) != 0:
+            raise AssertionError("mass_inflation: G_rr of the advanced chart is not 2 d_r g/(r g)")
+        if sp.simplify(vm._at(mixed, (0, 0)) + vm._at(mixed, (1, 1)) - 2 * (sp.diff(r * h, r) - g) / (r ** 2 * g)) != 0:
+            raise AssertionError("mass_inflation: G^v_v + G^r_r of the advanced chart is not 2 (d_r(r h) - g)/(r^2 g)")
+        spec = mass_inflation("ingoing")
+        vaidya = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+        there = dict(zip(vaidya.symbols, chart.symbols))
+        f = -vaidya.geo.g[0, 0].subs(there)
+        for i in range(4):
+            for j in range(4):
+                if sp.simplify((geo.g[i, j].subs({g: -1, h: -f}) - vaidya.geo.g[i, j].subs(there)).doit()) != 0:
+                    raise AssertionError(f"mass_inflation: with g = -1 and h = -f the advanced chart misses the ingoing "
+                                         f"one in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+        return
+    null = chart.symbols[0]
+    r, m, q = chart.reader.symbol["r"], chart.reader.parameters["m"], chart.reader.parameters["r_q"]
+    want = sp.zeros(4, 4)
+    want[0, 0] = want[1, 1] = -q ** 2 / r ** 4
+    want[2, 2] = want[3, 3] = q ** 2 / r ** 4
+    want[1, 0] = 2 * sp.diff(m, null) / r ** 2
+    for a in range(4):
+        for b in range(4):
+            if vm.norm(vm._at(mixed, (a, b)) - want[a, b]) != 0:
+                raise AssertionError(f"mass_inflation: the ingoing chart's mixed Einstein tensor is not the charge's "
+                                     f"field and one stream of null dust in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
+    if vm.norm(vm._at(G, (0, 0)) - (q ** 2 / r ** 4 * -geo.g[0, 0] + 2 * sp.diff(m, null) / r ** 2)) != 0:
+        raise AssertionError("mass_inflation: the ingoing chart's flux is not G_vv = 2 m'/r^2")
+    # At constant mass: Reissner-Nordstrom's published metric pulled back along t = v - r_*.
+    published = next(c for c in json.loads((METRICS / "rn_metric.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == "spherical")
+    static = vm.Reader(published["coords"], [p["symbol"] for p in published["parameters"]], ())
+    M = sp.Symbol("M", positive=True)
+    there = {static.symbol["r"]: r, static.parameters["r_s"]: 2 * M, static.parameters["r_q"]: q,
+             **dict(zip([static.symbol[c] for c in published["coords"][2:]], chart.symbols[2:]))}
+    gs = sp.zeros(4, 4)
+    for entry in published["metric_components"]:
+        i, j = (published["coords"].index(x) for x in entry["indices"])
+        gs[i, j] = static(entry["value"]).subs(there)
+    f = 1 - 2 * M / r + q ** 2 / r ** 2
+    J = sp.eye(4)
+    J[0, 1] = -1 / f          # dt = dv - dr/f
+    pulled = J.T * gs * J
+    for i in range(4):
+        for j in range(4):
+            if sp.simplify(pulled[i, j] - geo.g[i, j].subs(m, M)) != 0:
+                raise AssertionError(f"mass_inflation: at constant mass the ingoing chart misses Reissner-Nordstrom's "
+                                     f"published metric in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["mass_inflation"] = [lambda s=s: mass_inflation(s) for s in MASS_INFLATION_CHARTS]
 
 
 def write(spec):

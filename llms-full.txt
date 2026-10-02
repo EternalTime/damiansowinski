@@ -778,6 +778,18 @@ A spacetime construction containing a worldline of infinite proper length that l
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/malament_hogarth.json
 - chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = \Omega^2\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right)$$
 
+### Mass Inflation Inside a Charged Black Hole
+
+The inside of a charged black hole crossed by two streams of radiation, one falling in and one running outward. Eric Poisson and Werner Israel found in 1989 that the mass function then grows without limit at the inner horizon, which turns the Cauchy horizon of the Reissner-Nordström solution into a null curvature singularity, and Amos Ori gave the exact solution in 1991.
+
+- id: `mass_inflation`
+- tags: mass inflation, black hole interior, inner horizon, Cauchy horizon, strong cosmic censorship, null singularity, curvature singularity, blueshift, charged black hole, black hole, charged, electric charge, electromagnetic field, null dust, accreting, Vaidya, thin shell, double null coordinates, apparent horizon, event horizon, horizon, causal structure, time-dependent, spherically symmetric, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/mass_inflation.json
+- chart Ingoing Charged Vaidya: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{r_q^2}{r^2}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Double Null: coordinates $(u, v, \theta, \phi)$, $$ds^2 = -2e^{2\sigma}du\,dv + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Advanced Time and Areal Radius: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -gh\,dv^2 - 2g\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### McVittie Mass in an Expanding Universe
 
 A point mass in a spatially flat expanding universe, the solution George McVittie found in 1933 for a perfect fluid at rest about the mass. Where a positive cosmological constant drives the late expansion, it holds a black hole whose horizon approaches that of Schwarzschild-de Sitter.

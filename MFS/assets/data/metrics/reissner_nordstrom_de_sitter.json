@@ -80,6 +80,11 @@
       "id": "reissner_nordstrom_ads",
       "kind": "family",
       "text": "The charged black hole with a negative cosmological constant. At $r_q = r_s/2$, where this one is lukewarm, that one is supersymmetric and a naked singularity [romans1992]."
+    },
+    {
+      "id": "mass_inflation",
+      "kind": "family",
+      "text": "The same hole with no cosmological constant and radiation crossing it. There the tail dies off only as a power of time, and the inner horizon becomes a singularity [poisson1989, poisson1997]."
     }
   ],
   "references": [
@@ -105,7 +110,9 @@
     "hintz2017",
     "dias2018rough",
     "lake2015",
-    "brill1994"
+    "brill1994",
+    "poisson1989",
+    "poisson1997"
   ],
   "coordinates": [
     {

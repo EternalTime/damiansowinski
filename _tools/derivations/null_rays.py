@@ -226,6 +226,7 @@ from scipy.special import expi as scipy_expi
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 import build_mfs_data as build  # noqa: E402
+import ori_shell  # noqa: E402
 import slices  # noqa: E402
 import verify_metrics as vm  # noqa: E402
 
@@ -615,6 +616,18 @@ KISELEV_LINEAR = {"r_s": 1, "r_q": 8}
 KISELEV_STATIC = 8 ** 0.5
 KISELEV_ROOTS = (4 - 2 * 2 ** 0.5, 4 + 2 * 2 ** 0.5)
 KISELEV_FREE = {"r_q": 1}
+# Mass inflation as every diagram draws it, Ori's model at the numbers of ori_shell.py, in units of
+# the final mass m_0: the charge 0.96 m_0 of Reissner-Nordstrom's own diagrams, Price's tail of a
+# quadrupole switched on at v_0 = 10 m_0 with m_0/50 still to fall in, and a shell of mass m_0/50
+# that crosses v_0 at r = m_0. Behind the shell the advanced time is zero on the Cauchy horizon.
+MI = {"r_q": "24/25"}
+MI_MASS = "1 - (10/Max(v, 10))**11/50"
+MI_INPUT = ("$m(v) = m_0 - (m_0/50)(v_0/v)^{11}$ from $v_0 = 10\\,m_0$ on and $0.98\\,m_0$ before, an influx "
+            "that falls off as $v^{-12}$, with $m_0$ the final mass and the unit of every length.")
+MI_BEHIND_INPUT = ("Ori's shell of mass $m_0/50$, crossing the ingoing ray $v_0$ at $r = m_0$, in front of the tail "
+                   "$m_0 - (m_0/50)(v_0/v)^{11}$: the mass function behind it, $m(v)$, is integrated along the "
+                   "shell, with $v = 0$ the Cauchy horizon and $m_0$ the final mass outside.")
+MI_V2_AT_V0 = float(ori_shell.shell().v2_at(ori_shell.V0))
 # The lukewarm charged black hole in de Sitter space, r_q = r_s/2 and Lambda r_s^2 = 27/64, which is
 # H r_s/c = 3/8: f = (1 - 1/(2r))^2 - 9r^2/64 vanishes at r_c = 2, r_+ = 2/3, r_- = (2 sqrt 7 - 4)/3 and
 # -(2 sqrt 7 + 4)/3, and is greatest between r_+ and r_c at the root 1.298 of 9r^4 - 32r + 16.
@@ -944,9 +957,49 @@ class teo_sigma(sp.Function):
         return 1 / (2 * teo_rho(self.args[0]) ** 2)
 
 
+class ori_mass_behind(sp.Function):
+    """The mass function behind Ori's shell as a function of the advanced time there, which is
+    negative and reaches zero on the Cauchy horizon: ori_shell.py integrates it, and from zero on,
+    where there is no spacetime, it is infinite."""
+    nargs = 1
+    is_real = True
+
+    @staticmethod
+    def _imp_(v):
+        v = np.asarray(v, dtype=float)
+        with np.errstate(all="ignore"):
+            return np.where(v < 0, ori_shell.shell().mass_behind(np.minimum(v, -1e-300)), np.inf)
+
+    def fdiff(self, argindex=1):
+        return ori_influx_behind(self.args[0])
+
+
+class ori_influx_behind(sp.Function):
+    nargs = 1
+    is_real = True
+
+    @staticmethod
+    def _imp_(v):
+        v = np.asarray(v, dtype=float)
+        with np.errstate(all="ignore"):
+            return np.where(v < 0, ori_shell.shell().influx_behind(np.minimum(v, -1e-300)), np.inf)
+
+
+class ori_shell_behind(sp.Function):
+    """The radius of Ori's shell on the ingoing ray of advanced time v behind it."""
+    nargs = 1
+    is_real = True
+
+    @staticmethod
+    def _imp_(v):
+        v = np.asarray(v, dtype=float)
+        return ori_shell.shell().radius_behind(np.minimum(v, -1e-300))
+
+
 # Functions a row's `functions` may name beside the elementary ones, each a sympy function
 # that carries its own derivative and its own numbers.
-DECLARED_FUNCTIONS = {"teo_rho": teo_rho, "teo_sigma": teo_sigma}
+DECLARED_FUNCTIONS = {"teo_rho": teo_rho, "teo_sigma": teo_sigma, "ori_mass_behind": ori_mass_behind,
+                      "ori_influx_behind": ori_influx_behind, "ori_shell_behind": ori_shell_behind}
 TEO_RADIUS = "b_0*teo_rho(l/b_0)"
 TEO_RADIUS_INPUT = ("$r(l)$ from Teo's $l = \\pm\\left(\\sqrt{r(r - b_0)} + b_0\\ln\\left(\\sqrt{r/b_0} + "
                     "\\sqrt{r/b_0 - 1}\\right)\\right)$, inverted by Newton's method.")
@@ -1215,6 +1268,21 @@ DIAGRAMS = [
             tau="v - r", areal=True, functions={"m": HAYWARD_MASS}, input=HAYWARD_INPUT, cones=(11, 14),
             lines=(("shell", "x0", "0", "the first radiation arrives, $v = 0$"),
                    ("shell", "x0", "8", "the last of the mass is gone, $v = 8\\,m_0$"))),
+    # Mass inflation: the tail falling into the charged hole, with the ray Ori's shell runs along,
+    # and the charged Vaidya metric behind that shell, whose mass function ori_shell.py integrates.
+    Diagram("mass_inflation", "ingoing", "tail", "the tail falling in", ("v", "r"), (0, 3, 7.5, 16.5),
+            "$r/m_0$", "$(v - r)/m_0$", MI, EQUATOR, to_display=FINKELSTEIN_IN, orient="ingoing", areal=True,
+            functions={"m": MI_MASS}, input=MI_INPUT, cones=(9, 14),
+            lines=(("surface", "x0", "10", "the tail begins, $v = v_0$"),),
+            marked=(("event", {"x0": "16", "r": repr(float(ori_shell.event_horizon(16.0)))}, 1, "the event horizon"),
+                    ("shell", {"x0": "10", "r": "1"}, 1, "the outgoing ray Ori's shell runs along"))),
+    Diagram("mass_inflation", "ingoing", "behind", "behind the shell", ("v", "r"), (0, 1.5, -6, 0),
+            "$r/m_0$", "$(v - r)/m_0$", MI, EQUATOR, to_display=FINKELSTEIN_IN, orient="ingoing", areal=True,
+            functions={"m": "ori_mass_behind(v)"}, input=MI_BEHIND_INPUT, cones=(9, 14),
+            where="Min(ori_shell_behind(v) - r, -v)",
+            lines=(("event", "x0", "0", "the Cauchy horizon, $v = 0$, where the mass function diverges"),
+                   ("surface", "x0", repr(MI_V2_AT_V0), "the tail begins")),
+            marked=(("shell", {"x0": repr(MI_V2_AT_V0), "r": "1"}, 1, "the shell"),)),
     *[Diagram("topological_black_hole", "static", view, label, ("t", "r"), box, "$r/L$", "$ct/L$", params,
               TBH_POINT, orient="ingoing") for view, label, params, box in TBH_CASES],
     # Against v - r the static moment t = 0 of the flat hole, v = r_*, lies below -1.5 L, and against
@@ -4341,6 +4409,31 @@ CAPTIONS = {
         "$d\\rho^2/(1 - (r_s - r_d)/\\rho) + \\rho^2d\\Omega^2$, Schwarzschild's with $r_s - r_d$ for $r_s$. The "
         "Kretschmann scalar diverges at $r = r_d$, where $g_{tt}$ vanishes with the area of the spheres.",
     ],
+    ("mass_inflation", "ingoing", "tail"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn with $v - r$ as the vertical axis so "
+        "that the ingoing rays, $v$ constant, run at 45°, for $r_q = 0.96\\,m_0$. Until $v_0$ the hole is "
+        "Reissner-Nordström's with the mass $0.98\\,m_0$, and from $v_0$ on the tail falls in and the mass climbs to "
+        "$m_0$. The curves $g^{rr} = 0$ are the apparent horizons, which move from $1.18\\,m_0$ and $0.78\\,m_0$ to "
+        "$r_+ = 1.28\\,m_0$ and $r_- = 0.72\\,m_0$.",
+        "The event horizon is the outgoing ray that ends on $r_+$, and it stands at $1.27\\,m_0$ when the tail "
+        "begins, outside the apparent horizon. Every outgoing ray inside it closes on the inner apparent horizon as "
+        "$v \\to \\infty$, which is the Cauchy horizon, and the ray marked is the one Ori's shell runs along, "
+        "through $r = m_0$ at $v_0$. With this stream alone $m$ only settles to $m_0$, so the Kretschmann scalar "
+        "$8(6m^2r^2 - 12mr_q^2r + 7r_q^4)/r^8$ stays finite toward the Cauchy horizon and diverges at $r = 0$.",
+    ],
+    ("mass_inflation", "ingoing", "behind"): [
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) behind Ori's shell, drawn with $v - r$ as the "
+        "vertical axis, for $r_q = 0.96\\,m_0$. Here $v$ is the advanced time of this side, which reaches the Cauchy "
+        "horizon at $v = 0$, and the shell is the edge of the chart, falling from $r = m_0$ where the tail begins to "
+        "$r_- = 0.72\\,m_0$ on the Cauchy horizon. The mass function is $m_0$ until the tail arrives at "
+        "$v = -3.75\\,m_0$ and $1.04\\,m_0$ soon after.",
+        "It passes $2\\,m_0$ only $5 \\times 10^{-11}\\,m_0$ before the Cauchy horizon and $100\\,m_0$ at "
+        "$4 \\times 10^{-14}\\,m_0$, and grows without limit as $1/(|v|\\ln^{12}(m_0/|v|))$. That growth is "
+        "integrable in $v$, so every outgoing ray arrives on the Cauchy horizon at a radius above zero: the ray that "
+        "starts at $0.9\\,m_0$ where the tail begins arrives at $0.67\\,m_0$. The inner apparent horizon, "
+        "$g^{rr} = 0$, shrinks from $0.72\\,m_0$ toward $r = 0$ as the mass grows, and inside it the cones point to "
+        "larger $r$, away from the singularity at $r = 0$.",
+    ],
     ("rn_metric", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $r_q = 0.48\\,r_s$, "
         "the same at every other angle by spherical symmetry. There "
@@ -6130,7 +6223,8 @@ class Chart:
             self.zero_expr = prep(sp.sympify(spec.singular_zero, locals={**reader.local, **by_plain}))
             self.fn["szero"] = self.lambdify(self.zero_expr)
         if spec.where:
-            self.fn["where"] = self.lambdify(prep(sp.sympify(spec.where, locals={**reader.local, **by_plain})))
+            self.fn["where"] = self.lambdify(prep(sp.sympify(spec.where, locals={**reader.local, **DECLARED_FUNCTIONS,
+                                                                                **by_plain})))
         tau = sp.sympify(spec.tau, locals={str(self.x0): self.x0, str(self.xr): self.xr})
         self.fn["dtau0"] = self.lambdify(sp.diff(tau, self.x0))
         self.fn["dtaur"] = self.lambdify(sp.diff(tau, self.xr))
@@ -8405,6 +8499,19 @@ CLOSED_FORMS = {
     ("gravastar", "interior_tortoise", "radial"): (lambda t, x: t + x, lambda t, x: t - x, None),
     ("gravastar", "exterior", "radial"):
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), None),
+    # Mass inflation: an ingoing ray keeps its v, and an outgoing one the radius at which it crosses
+    # one ingoing ray, carried there by ori_shell.py's own integrators, which the tracing does not use.
+    # Inside the inner apparent horizon a ray comes from r = 0 and may never have crossed that
+    # ingoing ray, so the check is made outside it.
+    ("mass_inflation", "ingoing", "tail"):
+        (lambda v, r: v, lambda v, r: ori_shell.label_before(v, r, 12.0),
+         lambda v, r: r > ori_shell.horizons(ori_shell.mass_before(v))[0] + 0.03),
+    ("mass_inflation", "ingoing", "behind"):
+        # in tenths of m_0: behind the shell the rays span 0.2 m_0 of radius, and the check tells the two
+        # families apart by a spread above one.
+        (lambda v, r: v, lambda v, r: 10 * ori_shell.label_behind(np.minimum(v, -1e-3), r, -1.0),
+         lambda v, r: (v < -1e-3) & (r < ori_shell.shell().radius_behind(np.minimum(v, -1e-3)) - 0.01)
+         & (r > ori_shell.horizons(ori_shell.shell().mass_behind(np.minimum(v, -1e-3)))[0] + 0.03)),
     ("gowdy", "areal", "plane"): (lambda t, th: t + th, lambda t, th: t - th, lambda t, th: t > 0.02),
     ("gowdy", "sphere", "plane"): (lambda t, th: t + th, lambda t, th: t - th, None),
     ("gowdy", "logarithmic", "plane"): (lambda tau, th: np.exp(-tau) + th, lambda tau, th: np.exp(-tau) - th, None),

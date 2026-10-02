@@ -140,6 +140,11 @@
       "id": "string_black_hole",
       "kind": "family",
       "text": "Schwarzschild's black hole with a cosmic string through it. Ruth Gregory, David Kubizňák, and Danielle Wills put the string through a Kerr black hole in 2013 and found its effect conical in a frame turning with the hole [gregory2013]."
+    },
+    {
+      "id": "mass_inflation",
+      "kind": "family",
+      "text": "A charged spherical hole crossed by two streams of radiation, the model Eric Poisson and Werner Israel built in 1989 for the inside of a rotating one. Its mass function grows without limit at the inner horizon [poisson1989]."
     }
   ],
   "references": [

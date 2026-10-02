@@ -69,6 +69,11 @@
       "id": "gravastar",
       "kind": "family",
       "text": "A ball of de Sitter space under a thin shell with Schwarzschild's vacuum outside, a collapsed star with a de Sitter core and no horizon [mazur2004]."
+    },
+    {
+      "id": "mass_inflation",
+      "kind": "family",
+      "text": "Ori's model of a charged hole with radiation crossing it, whose mass function grows without limit at the inner horizon. Carried over to Hayward's metric it gives an exponentially growing mass at the inner horizon as well [carballorubio2021]."
     }
   ],
   "references": [
@@ -90,7 +95,8 @@
     "carballorubio2018",
     "vagnozzi2023",
     "simpson2019",
-    "mazur2004"
+    "mazur2004",
+    "carballorubio2021"
   ],
   "coordinates": [
     {
