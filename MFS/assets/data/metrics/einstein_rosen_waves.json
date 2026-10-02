@@ -48,6 +48,11 @@
       "id": "einstein_rosen_bridge",
       "kind": "programme",
       "text": "Einstein and Rosen's model of a particle, from 1935: two sheets of space joined at a horizon [einstein1935]."
+    },
+    {
+      "id": "belinski_zakharov",
+      "kind": "family",
+      "text": "Belinski and Zakharov's solution of one soliton, with its time and its direction of travel exchanged, is a cylindrical solitary wave that runs in to the axis and is reflected from it [belinskii1978]."
     }
   ],
   "references": [
@@ -76,7 +81,8 @@
     "gowdy2014",
     "senovilla1990",
     "fernandezjambrina2002",
-    "einstein1935"
+    "einstein1935",
+    "belinskii1978"
   ],
   "coordinates": [
     {

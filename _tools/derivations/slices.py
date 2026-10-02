@@ -546,6 +546,90 @@ def _scw_far(isotropic):
     return out
 
 
+# The white hole is that collapse with the time reversed, drawn to the same scale: its moments
+# count the dust's proper time from its singularity, so the moment tau is the collapse's moment
+# WH_REST - tau before the rest, mirrored in time.
+WH_REST = OS_AM * math.pi / 2                # c tau of the moment of rest, pi a_m/2
+WH_BOOST = math.sqrt(2) * math.exp(1 + math.pi / 2)      # e^(v_h/2r_s), v_h = (pi + 2 + ln 2) r_s
+
+
+def wh_eta(tau):
+    """The conformal time of the white hole's dust at its proper time tau, tau = (a_m/2)(eta - sin eta)."""
+    lo, hi = 0.0, 2 * math.pi
+    for _ in range(200):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if 0.5 * OS_AM * (mid - math.sin(mid)) < tau else (lo, mid)
+    return 0.5 * (lo + hi)
+
+
+def wh_shells(m):
+    """The shells of Novikov's slice outside the white hole's dust at the moment m, as far as the
+    embedding reaches: (areal radius, Kruskal's U and V of the white hole's own chart). Each shell
+    comes to rest when the dust does, so it is the shell of the collapse at WH_REST - tau after the
+    rest, with the time reversed, (U, V) -> (-V, -U), and Kruskal's coordinates carried to the
+    origin the white hole's charts take, the surface's crossing of r_s: U -> U/WH_BOOST,
+    V -> V WH_BOOST."""
+    lo, hi = m.reach("comoving_synchronous", "r")
+    U, V, r = novikov_kruskal(near(lo, hi, 2001, 1e-6), max(WH_REST - m.time, 0.0))
+    return r, -V / WH_BOOST, -U * WH_BOOST
+
+
+def wh_exterior():
+    """Novikov's slice outside the white hole's dust in Schwarzschild's t and r, drawn where
+    r > r_s: the collapse's, with the time reversed."""
+    out = []
+    for m in moments("white_hole"):
+        lo, hi = m.reach("comoving_synchronous", "r")
+        r, t, _ = novikov(near(lo, hi, 2001, 1e-6), max(WH_REST - m.time, 0.0))
+        keep = (r > 1) & np.isfinite(t)
+        out.append(Mark(m, [np.column_stack([-t[keep], r[keep]])]))
+    return out
+
+
+def wh_finkelstein():
+    """The same slice in the retarded time u and r, U = -e^(-u/2r_s), which crosses r_s."""
+    out = []
+    for m in moments("white_hole"):
+        r, U, _ = wh_shells(m)
+        out.append(Mark(m, [np.column_stack([-2 * np.log(-U), r])]))
+    return out
+
+
+# Lindquist and Wheeler's lattice as every drawing of it draws it: eight cells, the tiling of the
+# 3-sphere by cubes whose masses Bentivegna and Korzynski evolved. A cell of equal volume has the
+# angular radius psi on the comparison hypersphere with N (2 psi - sin 2 psi) = 2 pi, its boundary
+# turns round at r_m = r_s/sin^2(psi) and the hypersphere at a_m = r_s/sin^3(psi).
+def lw_psi(cells):
+    """The angular radius of one of N cells of equal volume on the 3-sphere."""
+    lo, hi = 0.0, math.pi / 2
+    for _ in range(200):
+        mid = (lo + hi) / 2
+        lo, hi = (mid, hi) if cells * (2 * mid - math.sin(2 * mid)) < 2 * math.pi else (lo, mid)
+    return (lo + hi) / 2
+
+
+LW_CELLS = 8
+LW_PSI = lw_psi(LW_CELLS)
+LW_RM = 1 / math.sin(LW_PSI) ** 2          # the boundary's largest radius, in r_s
+LW_AM = 1 / math.sin(LW_PSI) ** 3          # the hypersphere's largest radius, in r_s
+
+
+def lw_cell():
+    """A moment of the lattice in one cell's Schwarzschild chart: Novikov's slice, the shells of
+    Lindquist and Wheeler's comoving chart from the innermost the embedding reaches to the
+    boundary, each at the boundary's proper time, drawn where r > r_s, where the chart ends."""
+    out = []
+    for m in moments("lindquist_wheeler_lattice"):
+        lo, hi = m.reach("lindquist_wheeler", "\\rho")
+        R = near(lo, hi, 2001, 1e-6)
+        r, t, _ = novikov(R, m.time)
+        keep = (r > 1) & np.isfinite(t)
+        # A moment after the boundary has crossed r_s lies wholly inside the horizon, beyond the chart.
+        if keep.any():
+            out.append(Mark(m, [np.column_stack([t[keep], r[keep]])]))
+    return out
+
+
 def kerr_above(metric_id):
     """The equator of the moment seen from above with t left out: the whole plane outside
     the horizon, as far as the embedding reaches, as a region of (phi, r)."""
@@ -818,6 +902,34 @@ def _israel_shell(view):
     return [Mark(m, found) for m in moments("israel_shell") for found in [lines(m)] if found]
 
 
+def _charged_shell(view):
+    """The charged shell of dust: each moment of the falling shell is the slice v - r = w of the
+    ingoing chart over the piece read in it, outside the shell, and the moment of the flat time T at
+    which that slice meets the shell over the piece read in the interior chart. In the static
+    chart the slice is ct = w + r - r_*, drawn outside r_+ and, once the shell is inside r_-, inside
+    r_-; in the outgoing chart it is u = w + r - 2r_* inside r_-, the one region the two null
+    charts share."""
+    import charged_shell as shell
+
+    def lines(m):
+        lo, hi = m.reach("interior" if view in ("radial", "through") else "exterior_ingoing", "r")
+        if view in ("radial", "through"):
+            return along(float(shell.inner_time(shell.eta_of_slice(m.time))), lo, hi)
+        if view == "ingoing":
+            return [[(m.time + r, r) for r in (lo, hi)]]
+        if view == "outside":
+            # Crowded toward r_+, where the slice climbs to ct = +infinity.
+            r = near(shell.RP, hi) if lo <= shell.RP else np.linspace(lo, hi, N)
+            return [[(m.time + x - float(shell.tortoise(x)), x) for x in r]]
+        if lo >= shell.RM:
+            return []
+        # Inside r_-, crowded toward it, where r_* runs off to +infinity.
+        r = shell.RM - (shell.RM - lo) * np.geomspace(1e-9, 1.0, N)[::-1]
+        twice = 2 if view == "outgoing" else 1
+        return [[(m.time + x - twice * float(shell.tortoise(x)), x) for x in r]]
+    return [Mark(m, found) for m in moments("charged_shell", "bounce") for found in [lines(m)] if found]
+
+
 PIW_BETA = 0.5          # 1 - 4G mu/c^2 of the string every drawing of Penrose's wave takes
 
 
@@ -1084,6 +1196,26 @@ def _ds_flat():
     t_f = -ln(1 + rho^2)/2, and rho = |x| on the plane y = z = 0. The whole of the observer's
     hemisphere lies on it, its r = rho e^(t_f) reaching 1 only as rho -> infinity."""
     m = moments("de_sitter", label="static $t = 0$")[0]
+    x = np.linspace(-BIG ** 0.25, BIG ** 0.25, 4 * N + 1)
+    return [Mark(m, [np.column_stack([-0.5 * np.log1p(x * x), x])])]
+
+
+def _eds(chart):
+    """Elliptic de Sitter space's moment t = 0 of the global chart, the hemisphere chi from 0 to pi/2,
+    in each of its charts at l = 1. The conformal time of that moment is eta = 0. On the hyperboloid
+    it is X_0 = 0 with X_4 = cos chi, which the Kruskal chart's X_0 = (U + V)/(1 - UV) and
+    X_4 = (V - U)/(1 - UV) make U = -V with V = tan(pi/4 - chi/2), the static chart's
+    X_0 = sqrt(1 - r^2) sinh t makes t = 0 with r = sin chi, the rim the horizon r = 1, and the planar
+    chart's X_0 = sinh t + x^2 e^t/2 makes t = -ln(1 + x^2)/2, the rim reached only as x -> infinity."""
+    m, = moments("elliptic_de_sitter")
+    lo, hi = m.reach("global", "\\chi")
+    if chart in ("global", "conformal"):
+        return [Mark(m, along(0.0, lo, hi))]
+    if chart == "kruskal":
+        V = np.tan(math.pi / 4 - np.linspace(lo, hi, N) / 2)
+        return [Mark(m, [np.column_stack([-V, V])])]
+    if chart == "static":
+        return [Mark(m, along(0.0, math.sin(lo), math.sin(hi)))]
     x = np.linspace(-BIG ** 0.25, BIG ** 0.25, 4 * N + 1)
     return [Mark(m, [np.column_stack([-0.5 * np.log1p(x * x), x])])]
 
@@ -1435,6 +1567,108 @@ def _bardeen(view, sign=0):
 
 def _bardeen_both(sign=0):
     return _bardeen("outside", sign) + _bardeen("inside", sign)
+
+
+# Born and Infeld's point charge as every diagram draws it, in units of r_0: (r_s, r_q) of
+# Hoffmann's particle, whose mass is the energy of its field, and of the black hole, null_rays.BI_PARTICLE
+# and BI_HOLE, with the black hole's one horizon.
+BORN_INFELD_DIGITS = {"particle": ("0.61802489243379063947795011573", "0.5"), "hole": ("2", "0.5")}
+BORN_INFELD = {case: tuple(float(x) for x in pair) for case, pair in BORN_INFELD_DIGITS.items()}
+BORN_INFELD_HORIZON = 1.8666065519401185
+
+
+def born_infeld_f(r, case):
+    """g^rr = 1 - 2m/r of Born and Infeld's point charge, with the mass function null_rays.born_infeld_mass."""
+    import null_rays as nr
+    rs, rq = BORN_INFELD[case]
+    r = np.asarray(r, dtype=float)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        return 1 - 2 * nr.born_infeld_mass(r, rs, rq) / r
+
+
+@functools.lru_cache(maxsize=None)
+def _born_infeld_smooth(case):
+    """What is left of 1/f once the pole at the black hole's horizon is taken out, the whole of it
+    for the particle, which has no horizon, and its integral from 0 to each multiple of a tenth of
+    r_0 up to 8 r_0 and on from there to each half step of ln r. Within a twentieth of r_0 of the
+    horizon it is worked in forty digits, since 1/f and its pole cancel there to the last digits
+    of a float, and so it is within a hundredth of r_0 of the particle's centre, where the mass
+    function is the difference of two numbers that agree."""
+    import mpmath
+    rs, rq = (mpmath.mpf(x) for x in BORN_INFELD_DIGITS[case])
+
+    def f(x):
+        W = mpmath.sqrt(x ** 4 + 1)
+        m = rs / 2 + rq ** 2 * x / (3 * (x * x + W)) - rq ** 2 / 3 * mpmath.ellipf(2 * mpmath.atan(1 / x), 0.5)
+        return 1 - 2 * m / x
+
+    exact = []
+    if case == "hole":
+        with mpmath.workdps(40):
+            root = mpmath.findroot(f, BORN_INFELD_HORIZON)
+            exact = [(root, 1 / mpmath.diff(f, root))]
+    poles = [(float(ri), float(a)) for ri, a in exact]
+
+    def smooth(x):
+        if x > 0.01 and all(abs(x - ri) > 0.05 for ri, _ in poles):
+            return 1 / float(born_infeld_f(x, case)) - sum(a / (x - ri) for ri, a in poles)
+        with mpmath.workdps(40):
+            x = mpmath.mpf(x)
+            return float(1 / f(x) - sum(a / (x - ri) for ri, a in exact))
+
+    nodes, weights = np.polynomial.legendre.leggauss(12)
+
+    def panel(a, b, of=smooth):
+        half, mid = 0.5 * (b - a), 0.5 * (a + b)
+        return half * sum(w * of(mid + half * n) for n, w in zip(nodes, weights))
+
+    def in_log(u):
+        return smooth(math.exp(u)) * math.exp(u)
+    edges = [0.1 * k for k in range(81)]
+    sums = np.concatenate([[0.0], np.cumsum([panel(a, b) for a, b in zip(edges, edges[1:])])])
+    logs = [math.log(8.0) + 0.5 * k for k in range(61)]
+    tails = sums[-1] + np.concatenate([[0.0], np.cumsum([panel(a, b, in_log) for a, b in zip(logs, logs[1:])])])
+
+    def integral(x):
+        """The integral of the smooth part from 0 to x."""
+        if x <= 8.0:
+            k = min(int(x / 0.1), 80)
+            return float(sums[k]) + (panel(0.1 * k, x) if x > 0.1 * k else 0.0)
+        u = math.log(x)
+        k = min(int((u - logs[0]) / 0.5), 60)
+        return float(tails[k]) + (panel(logs[k], u, in_log) if u > logs[k] else 0.0)
+    return integral, poles
+
+
+def born_infeld_rstar(r, case):
+    """The tortoise coordinate of Born and Infeld's point charge, dr_*/dr = 1/f, as the
+    Eddington-Finkelstein charts fix it, vanishing at r = 0, for Hoffmann's particle or for the
+    black hole. The particle has no horizon and 1/f is smooth, 2 at the centre. The black hole's
+    1/f has one simple pole, at the horizon, of residue 1/f'(r_h), so its r_* is
+    ln|1 - r/r_h|/f'(r_h) and the integral from 0 of what is left of 1/f once that pole is taken
+    out. The smooth integrand is summed by Gauss and Legendre's rule, on panels a tenth of r_0
+    wide out to 8 r_0 and half a unit of ln r wide beyond."""
+    integral, poles = _born_infeld_smooth(case)
+
+    def one(x):
+        if math.isinf(x):
+            return math.inf
+        with np.errstate(divide="ignore"):
+            return integral(x) + sum(a * float(np.log(abs(1 - x / ri))) for ri, a in poles)
+    return np.array([one(float(x)) for x in np.atleast_1d(np.asarray(r, dtype=float))]).reshape(np.shape(r))
+
+
+def _born_infeld(case, sign=0):
+    """The moment t = 0 of Born and Infeld's point charge, the whole of it for Hoffmann's
+    particle and outside the horizon for the black hole: along r in the static chart (sign 0), and
+    in the ingoing (1) or outgoing (-1) chart as v = r_* or u = -r_*, which for the black hole
+    runs off toward the horizon."""
+    m, = moments("born_infeld_charge", case)
+    lo, hi = m.reach("static", "r")
+    if not sign:
+        return [Mark(m, along(0.0, lo, hi))]
+    r = near(lo, hi) if case == "hole" else np.linspace(lo, hi, N)
+    return [Mark(m, [np.column_stack([sign * born_infeld_rstar(r, case), r])])]
 
 
 def hayward_rstar(r):
@@ -1805,6 +2039,14 @@ FLAT = {
     ("hiscock", "ingoing", "history"): lambda: _hiscock("ingoing"),
     ("hiscock", "outgoing", "history"): lambda: _hiscock("outgoing"),
     ("hiscock", "flat", "after"): lambda: _hiscock("after"),
+    ("born_infeld_charge", "static", "particle"): lambda: _born_infeld("particle"),
+    ("born_infeld_charge", "static", "hole"): lambda: _born_infeld("hole"),
+    ("born_infeld_charge", "eddington_finkelstein_ingoing", "particle"): lambda: _born_infeld("particle", 1),
+    ("born_infeld_charge", "eddington_finkelstein_ingoing", "finkelstein"): lambda: _born_infeld("hole", 1),
+    ("born_infeld_charge", "eddington_finkelstein_ingoing", "chart"): lambda: _born_infeld("hole", 1),
+    ("born_infeld_charge", "eddington_finkelstein_outgoing", "particle"): lambda: _born_infeld("particle", -1),
+    ("born_infeld_charge", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _born_infeld("hole", -1),
+    ("born_infeld_charge", "eddington_finkelstein_outgoing", "chart"): lambda: _born_infeld("hole", -1),
     ("hayward", "evaporating", "history"): lambda: one(
         "hayward", lambda m: [[(m.time + r, r) for r in m.reach("evaporating", "r")]], view_id="history"),
     ("reissner_nordstrom_ads", "static", "radial"): lambda: _rnads(),
@@ -2041,6 +2283,11 @@ FLAT = {
     ("de_sitter", "flat_slicing", "tx"): _ds_flat,
     # The moment t = 0 runs from the pole to the antipode, chi from 0 to pi, and the areal chart
     # carries its near hemisphere, r = R sin chi from 0 to R.
+    ("elliptic_de_sitter", "global", "through"): lambda: _eds("global"),
+    ("elliptic_de_sitter", "conformal", "through"): lambda: _eds("conformal"),
+    ("elliptic_de_sitter", "kruskal", "plane"): lambda: _eds("kruskal"),
+    ("elliptic_de_sitter", "static", "radial"): lambda: _eds("static"),
+    ("elliptic_de_sitter", "planar", "tx"): lambda: _eds("planar"),
     ("einstein_static", "hyperspherical", "radial"): lambda: one("einstein_static", lambda m: along(0.0, *m.reach("hyperspherical", "\\chi"))),
     ("einstein_static", "hyperspherical", "through"): lambda: one("einstein_static", lambda m: along(0.0, *m.reach("hyperspherical", "\\chi"))),
     ("einstein_static", "static_areal", "radial"): lambda: one("einstein_static", _es_areal),
@@ -2242,6 +2489,12 @@ FLAT = {
     **{("light_beam", system, view): lambda: one("light_beam", lambda m: [[(m.time, -BIG), (m.time, BIG)]])
        for system, view in (("null_cylindrical_interior", "edge"), ("null_cylindrical_exterior", "twice"),
                             ("null_cylindrical_exterior", "four"))},
+    # Each moment of Belinski and Zakharov's ring is the plane of x and y at one event, on xi = 0 at
+    # tau = t of the pole chart, which is z = 0 at ct = w sinh(t) of the canonical chart, w = 1.
+    ("belinski_zakharov", "pole", "plane"): lambda: [
+        Mark(m, points=[(m.time, 0.0)]) for m in moments("belinski_zakharov")],
+    ("belinski_zakharov", "canonical", "plane"): lambda: [
+        Mark(m, points=[(math.sinh(m.time), 0.0)]) for m in moments("belinski_zakharov")],
     # Each moment is the plane of x and y at one event, on sigma = 0 at tau = t: u = v = sin(t/2).
     ("khan_penrose", "double_null", "plane"): lambda: [
         Mark(m, points=[(math.sin(m.time / 2), math.sin(m.time / 2))]) for m in moments("khan_penrose")],
@@ -2380,12 +2633,32 @@ FLAT = {
     ("einstein_cluster", "uniform", "through"): lambda: one("einstein_cluster", lambda m: along(0.0, *m.reach("uniform", "r")), view_id="uniform"),
     ("einstein_cluster", "hyperspherical", "radial"): lambda: one("einstein_cluster", lambda m: along(0.0, 0.0, math.asin(1 / math.sqrt(3))), view_id="uniform"),
     ("malament_hogarth", "cartesian", "tx"): lambda: one("malament_hogarth", lambda m: across(m.time, *m.reach("cartesian", "x"))),
+    # Nordstrom's point mass at t = 0 and his dust universe at each moment of its movie, each on its own chart.
+    ("nordstrom_scalar", "spherical", "radial"): lambda: one(
+        "nordstrom_scalar", lambda m: along(0.0, *m.reach("spherical", "r")), view_id="point_mass"),
+    ("nordstrom_scalar", "dust", "radial"): lambda: one(
+        "nordstrom_scalar", lambda m: along(m.time, *m.reach("dust", "r")), view_id="dust"),
     ("oppenheimer_snyder", "interior_comoving", "through"): _os_interior,
     ("semiclosed_world", "comoving", "dust"): lambda: _scw_dust(False),
     ("semiclosed_world", "conformal", "dust"): lambda: _scw_dust(True),
     ("semiclosed_world", "schwarzschild", "radial"): lambda: _scw_far(False),
     ("semiclosed_world", "isotropic", "radial"): lambda: _scw_far(True),
     ("oppenheimer_snyder", "exterior_schwarzschild", "radial"): os_exterior,
+    ("white_hole", "interior_comoving", "through"): lambda: one(
+        "white_hole", lambda m: [[(m.time / OS_AM, lo) for lo in m.reach("interior_comoving", "\\chi")]]),
+    ("white_hole", "interior_conformal", "through"): lambda: one(
+        "white_hole", lambda m: [[(wh_eta(m.time), lo) for lo in m.reach("interior_comoving", "\\chi")]]),
+    ("white_hole", "exterior_schwarzschild", "radial"): wh_exterior,
+    ("white_hole", "exterior_eddington_finkelstein", "finkelstein"): wh_finkelstein,
+    # The lattice's moments: Novikov's slice in a cell's Schwarzschild chart, a line of constant tau in the
+    # comoving chart from the innermost shell left to the boundary, and on the hypersphere, whose
+    # view is drawn in a_m, the line of constant tau between the two cells drawn.
+    ("lindquist_wheeler_lattice", "schwarzschild_cell", "radial"): lw_cell,
+    ("lindquist_wheeler_lattice", "lindquist_wheeler", "shells"):
+        lambda: one("lindquist_wheeler_lattice", lambda m: [[(m.time, x) for x in m.reach("lindquist_wheeler", "\\rho")]]),
+    ("lindquist_wheeler_lattice", "comparison_hypersphere", "radial"):
+        lambda: one("lindquist_wheeler_lattice",
+                    lambda m: [[(m.time / LW_AM, x) for x in m.reach("comparison_hypersphere", "\\chi")]]),
     # v - r = w, every r the embedding reaches.
     ("c_metric", "spherical", "inner"): lambda: _c_metric(False),
     ("c_metric", "spherical", "outer"): lambda: _c_metric(False),
@@ -2407,6 +2680,16 @@ FLAT = {
     ("israel_shell", "interior", "through"): lambda: _israel_shell("through"),
     ("israel_shell", "exterior", "radial"): lambda: _israel_shell("schwarzschild"),
     ("israel_shell", "exterior_ingoing", "shell"): lambda: _israel_shell("ingoing"),
+    # The charged shell of dust: the flat moment inside the shell and v - r = w outside it, and the
+    # balanced shell's moment t = 0 in the isotropic chart.
+    ("charged_shell", "interior", "radial"): lambda: _charged_shell("radial"),
+    ("charged_shell", "interior", "through"): lambda: _charged_shell("through"),
+    ("charged_shell", "exterior", "radial"): lambda: _charged_shell("outside"),
+    ("charged_shell", "exterior", "inside"): lambda: _charged_shell("inside"),
+    ("charged_shell", "exterior_ingoing", "shell"): lambda: _charged_shell("ingoing"),
+    ("charged_shell", "exterior_outgoing", "shell"): lambda: _charged_shell("outgoing"),
+    ("charged_shell", "exterior_isotropic", "point"): lambda: one(
+        "charged_shell", lambda m: along(0.0, *m.reach("exterior_isotropic", "\\rho")), view_id="point"),
     # The same slices of Bonnor and Vaidya's charged shell.
     ("bonnor_vaidya", "eddington_finkelstein_ingoing", "shell"): lambda: one(
         "bonnor_vaidya", lambda m: [[(m.time + r, r) for r in m.reach("eddington_finkelstein_ingoing", "r")]]),
@@ -2435,12 +2718,18 @@ HIDDEN = {
     ("hotta_tanaka", "conformally_flat", "equator"): "the spheres through the ring up to the shock meet the plane theta = pi/2 of this chart only as eta goes to minus infinity",
     **{("hotta_tanaka", "kundt", view): "the Kundt chart covers half of each wave front, and the spheres through the ring up to the shock lie on its edge w = 0"
        for view in ("equator", "near")},
+    ("lindquist_wheeler_lattice", "cosmological_time", "radial"): "the moments embedded are of the cell while it contracts, and this chart covers it while it expands",
     ("plebanski_hacyan", "plane", "uw"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
     ("plebanski_hacyan", "plane_null", "uv"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
     ("plebanski_hacyan", "plane_static", "wedge"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
+    ("lindquist_wheeler_lattice", "cosmological_time"): "the moments embedded are of the cell while it contracts, and this chart covers it while it expands",
     ("plebanski_hacyan", "plane"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
     ("plebanski_hacyan", "plane_null"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
     ("plebanski_hacyan", "plane_static"): "anti-de Sitter space times a flat plane, another spacetime than the two whose surfaces are embedded",
+    ("nordstrom_scalar", "conformal", "tx"): "a plane wave of the theory, another spacetime than the point mass and the dust universe whose moments are embedded",
+    ("nordstrom_scalar", "conformal"): "a plane wave of the theory, another spacetime than the point mass and the dust universe whose moments are embedded",
+    ("nordstrom_scalar", "uniform", "tz"): "the uniform field, another spacetime than the point mass and the dust universe whose moments are embedded",
+    ("nordstrom_scalar", "uniform"): "the uniform field, another spacetime than the point mass and the dust universe whose moments are embedded",
     ("tippett_tsang", "interior", "tx"): "the flat spacetime inside the bubble continued over the whole plane, another spacetime than the bubble whose moment is embedded",
     ("tippett_tsang", "rindler", "plane"): "the flat spacetime inside the bubble continued over the whole plane, another spacetime than the bubble whose moment is embedded",
     ("siklos", "kaigorodov_stationary", "plane"): "the region x < 0 of Siklos's chart, another region than the one whose wave front is embedded",
@@ -2486,6 +2775,8 @@ HIDDEN = {
     ("point_particle_2plus1", "two_bodies"): "two particles at rest, another spacetime than the one particle whose cone is embedded",
     ("point_particle_2plus1", "moving", "wedge"): "the particle in motion, whose moment of the frame's t is not the moment of its rest frame that is embedded",
     ("tolman_bondi", "comoving_synchronous", "collapse"): "the marginally bound cloud, E = 0, whose moments are planes; the cloud embedded is released from rest",
+    ("white_hole", "novikov_comoving", "vacuole"): "Novikov's marginally bound core in its vacuole, whose moments are planes; the core embedded is the bound one, which comes to rest",
+    ("white_hole", "exterior_kruskal", "kruskal"): "the surface's way out through the past horizon, drawn about U = -1, V = 0; the moments embedded run on to the rest at V = sqrt(2) e^(2 + pi/2), a dozen widths of the drawing away, where Kruskal's coordinates crowd the white hole out of sight",
     ("vaidya", "eddington_finkelstein_outgoing", "shell"): "the exploding shell, the time reverse of the imploding shell embedded",
     ("bonnor_vaidya", "eddington_finkelstein_outgoing", "shell"): "the leaving shell, the time reverse of the falling shell embedded",
     ("bonnor_vaidya", "leaving"): "the leaving shell, the time reverse of the falling shell embedded",
@@ -2842,6 +3133,29 @@ def checks():
     report("Bardeen: the horizons are the zeros of the published g^rr",
            max(abs(1 / grr(ri)) for ri in BARDEEN_HORIZONS), 1e-13)
 
+    # Born and Infeld's point charge: the tortoise coordinate's slope is the published g_rr of the
+    # static chart, with the mass function written out as its elliptic integral, it vanishes at the
+    # centre, the particle's g^rr is positive at every radius, and the black hole's horizon is the
+    # zero of the published g^rr.
+    _, entry_bi, reader_bi = nr.load("born_infeld_charge", "static")
+    g_bi = nr.published_matrix(reader_bi, entry_bi, "metric_components").subs(reader_bi.held).doit()
+    r_bi = reader_bi.symbol["r"]
+    h = 1e-5
+    for case, params, pts in (
+            ("particle", nr.BI_PARTICLE, np.concatenate([rng.uniform(0.02, 1, 8), rng.uniform(1, 6, 8)])),
+            ("hole", nr.BI_HOLE, np.concatenate([rng.uniform(0.02, 1.8, 8), rng.uniform(1.93, 6, 8)]))):
+        subs = {reader_bi.c: 1, **{reader_bi.parameters[k]: nr.number(v) for k, v in params.items()}}
+        grr = sp.lambdify(r_bi, g_bi[1, 1].subs(subs), "numpy")
+        miss = max(abs((born_infeld_rstar(v + h, case) - born_infeld_rstar(v - h, case)) / (2 * h) / grr(v) - 1) for v in pts)
+        report(f"Born-Infeld, the {case}: dr_*/dr is the published g_rr", float(miss), 1e-7)
+        report(f"Born-Infeld, the {case}: r_* = 0 at the centre", abs(float(born_infeld_rstar(0.0, case))), 1e-15)
+        if case == "particle":
+            report("Born-Infeld, the particle: the published g^rr is positive at every radius, 1/2 at the centre",
+                   float(max(0.0, -np.min(1 / grr(np.geomspace(1e-5, 1e5, 4000)))) + abs(1 / grr(1e-5) - 0.5)), 1e-8)
+        else:
+            report("Born-Infeld, the black hole: the horizon is the zero of the published g^rr",
+                   abs(1 / grr(BORN_INFELD_HORIZON)), 1e-13)
+
     # de Sitter: the static chart of the flat slicing, r = rho e^t_f and
     # t_s = t_f - ln(1 - rho^2 e^(2 t_f))/2, pulls the static plane back onto the flat one, and the
     # moment t_s = 0 is t_f = -ln(1 + rho^2)/2.
@@ -2857,6 +3171,37 @@ def checks():
     xs = np.linspace(-3, 3, 13)
     miss = max(abs(float(T_s.subs({tf: -0.5 * math.log1p(a * a), xf: a}))) for a in xs)
     report("de Sitter: t_f = -ln(1 + x^2)/2 is the static t = 0", miss, 1e-14)
+
+    # Elliptic de Sitter space: the global chart's plane of t and chi pulls back onto the plane of each
+    # other chart along the hyperboloid, sinh t = X_0 and tan chi = |X_1..3|/X_4, and the moment t = 0 is
+    # the curve drawn in each.
+    g_g, (tg, cg, thg, _) = metric("elliptic_de_sitter", "global", {"ell": 1})
+    for name, system, hyper, points, moment in (
+            ("conformal", "conformal", lambda e, c: (sp.tan(e), sp.sin(c) / sp.cos(e), sp.cos(c) / sp.cos(e)),
+             zip(rng.uniform(-1.2, 1.2, 20), rng.uniform(0.1, 1.5, 20)), lambda c: (0.0, c)),
+            ("Kruskal", "kruskal", lambda U, V: ((U + V) / (1 - U * V), (1 + U * V) / (1 - U * V), (V - U) / (1 - U * V)),
+             zip(rng.uniform(-0.9, 0.2, 20), rng.uniform(0.3, 0.95, 20)),
+             lambda c: (-math.tan(math.pi / 4 - c / 2), math.tan(math.pi / 4 - c / 2))),
+            ("static", "static", lambda t, r: (sp.sqrt(1 - r ** 2) * sp.sinh(t), r, sp.sqrt(1 - r ** 2) * sp.cosh(t)),
+             zip(rng.uniform(-1, 1, 20), rng.uniform(0.1, 0.9, 20)), lambda c: (0.0, math.sin(c))),
+            ("planar", "planar", lambda t, x: (sp.sinh(t) + x ** 2 * sp.exp(t) / 2, x * sp.exp(t),
+                                               sp.cosh(t) - x ** 2 * sp.exp(t) / 2),
+             zip(rng.uniform(-1, 1, 20), rng.uniform(0.1, 0.8, 20)),
+             lambda c: (-0.5 * math.log1p(math.tan(c) ** 2), math.tan(c)))):
+        g_o, (a_, b_, *_) = metric("elliptic_de_sitter", system, {"ell": 1})
+        X0, R, X4 = hyper(a_, b_)
+        image = [sp.asinh(X0), sp.atan2(R, X4)]
+        J = sp.Matrix(2, 2, lambda i, j: sp.diff(image[i], [a_, b_][j]))
+        pulled = J.T * g_g[:2, :2].subs({tg: image[0], cg: image[1]}, simultaneous=True) * J
+        points = list(points)
+        miss = max(abs(float((pulled - g_o[:2, :2]).subs({a_: u, b_: v})[i, j])) for u, v in points
+                   for i in range(2) for j in range(2))
+        report(f"elliptic de Sitter: the global chart pulls back onto the {name} chart's plane", miss, 1e-10)
+        miss = 0.0
+        for c in np.linspace(0.05, 1.5, 12):
+            u, v = moment(c)
+            miss = max(miss, abs(float(X0.subs({a_: u, b_: v}))), abs(float(image[1].subs({a_: u, b_: v})) - c))
+        report(f"elliptic de Sitter: the moment t = 0 of the global chart in the {name} chart", miss, 1e-12)
 
     # Godel: the published transformation carries the Cartesian metric onto the cylindrical one
     # on the plane y = 0, where phi = 0 or pi, t_x = 2t and x = +-2r.
@@ -2959,6 +3304,42 @@ def checks():
                float(np.max(np.abs(np.log(V[out]) - v / 2))), 1e-10)
         report(f"Novikov: U V = (1 - r) e^r along the shell from R = {R:g} r_s",
                float(np.max(np.abs(U * V - (1 - r) * np.exp(r)))), 1e-12)
+
+    # The white hole: its outgoing chart and Kruskal's are Schwarzschild's chart of the same page
+    # carried along u = t - r - ln|r - 1| + (pi + 2 + ln 2) and U = -e^(-u/2), V = e^(v/2) with
+    # v = u + 2r + 2 ln(r - 1), in units of r_s; and the dust's two charts are one along the cycloid.
+    g_s, (ts, rs, *_) = metric("white_hole", "exterior_schwarzschild", {"r_s": 1})
+    g_u, (uu, ru, *_) = metric("white_hole", "exterior_eddington_finkelstein", {"r_s": 1})
+    shift = math.pi + 2 + math.log(2)
+    image = [ts - rs - sp.log(rs - 1) + shift, rs]
+    J = sp.Matrix(2, 2, lambda i, j: sp.diff(image[i], [ts, rs][j]))
+    pulled = J.T * g_u[:2, :2].subs({ru: rs}) * J
+    miss = max(abs(float((pulled - g_s[:2, :2]).subs(rs, v)[i, j])) for v in rng.uniform(1.1, 6, 20)
+               for i in range(2) for j in range(2))
+    report("White hole: u = ct - r - r_s ln(r/r_s - 1) + const pulls the outgoing chart back onto Schwarzschild's",
+           miss, 1e-12)
+    _, entry_k, reader_k = nr.load("white_hole", "exterior_kruskal")
+    g_k = nr.published_matrix(reader_k, entry_k, "metric_components").subs(reader_k.held).doit()
+    g_k = g_k.subs({reader_k.c: 1, reader_k.parameters["r_s"]: 1})
+    Uk, Vk = reader_k.symbol["U"], reader_k.symbol["V"]
+    u_of = ts - rs - sp.log(rs - 1) + shift
+    v_of = u_of + 2 * rs + 2 * sp.log(rs - 1)
+    image = [-sp.exp(-u_of / 2), sp.exp(v_of / 2)]
+    J = sp.Matrix(2, 2, lambda i, j: sp.diff(image[i], [ts, rs][j]))
+    pulled = J.T * g_k[:2, :2].subs({Uk: image[0], Vk: image[1]}, simultaneous=True) * J
+    miss = max(abs(complex(sp.N((pulled - g_s[:2, :2]).subs({ts: a, rs: b})[i, j])))
+               for a, b in zip(rng.uniform(-6, 0, 20), rng.uniform(1.1, 4, 20)) for i in range(2) for j in range(2))
+    report("White hole: U = -e^(-u/2r_s), V = e^(v/2r_s) pulls Kruskal's chart back onto Schwarzschild's",
+           miss, 1e-9)
+    g_c, (ec, cc, *_) = metric("white_hole", "interior_conformal", {"a_m": 1, "chi_0": "pi/4"})
+    miss = max(abs(float(g_c[1, 1].subs(ec, wh_eta(tau * OS_AM))) - math.sin(wh_eta(tau * OS_AM) / 2) ** 4)
+               + abs(0.5 * (wh_eta(tau * OS_AM) - math.sin(wh_eta(tau * OS_AM))) - tau) for tau in rng.uniform(0.05, 3, 20))
+    report("White hole: wh_eta is the conformal time of the dust's proper time, a = a_m sin^2(eta/2)", miss, 1e-12)
+    # The moment of rest of the surface, t = 0 at r = 2 r_s, is u = (pi + ln 2) r_s, and the surface
+    # crosses r_s on the ray u = 0: the collapse's surface reaches r_s at V = WH_BOOST.
+    U, V, r = novikov_kruskal(np.array([OS_R0]), 0.5 * OS_AM * (math.pi / 2 + 1))
+    report("White hole: the surface crosses r_s at e^(v/2r_s) = sqrt(2) e^(1 + pi/2), which is u = 0",
+           abs(float(V[0]) / WH_BOOST - 1) + abs(float(r[0]) - 1), 1e-9)
 
     # Nariai: r = -cosh(tau) cos(chi) and sinh(t) = sinh(tau)/sqrt(1 - r^2) carry the global plane
     # into the static patch 0 < chi < pi, sin(chi) > |tanh(tau)|, pulling the static metric back onto

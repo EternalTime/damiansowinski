@@ -180,6 +180,11 @@
       "id": "chandrasekhar_xanthopoulos",
       "kind": "locally_same",
       "text": "Two plane gravitational waves whose collision makes the inside of Kerr. Between their fronts the metric is Kerr's between its two horizons, with $t$ and $\\phi$ running along the fronts and $\\phi$ unrolled, and the waves end on the inner horizon [chandrasekhar1986, griffiths1991]."
+    },
+    {
+      "id": "belinski_zakharov",
+      "kind": "family",
+      "text": "Kerr's black hole is two solitons on flat space. Belinski and Zakharov's inverse scattering method returns the Kerr-NUT solution from two poles, real ones for the hole with horizons [belinskii1979]."
     }
   ],
   "references": [
@@ -237,7 +242,8 @@
     "mars2001",
     "meinel2002",
     "chandrasekhar1986",
-    "griffiths1991"
+    "griffiths1991",
+    "belinskii1979"
   ],
   "coordinates": [
     {

@@ -72,6 +72,16 @@
       "id": "semiclosed_world",
       "kind": "family",
       "text": "The bridge with one of its sheets closed off by a universe of dust. Wheeler's bag of gold is reached by passing through the bridge [marolf2009]."
+    },
+    {
+      "id": "lindquist_wheeler_lattice",
+      "kind": "family",
+      "text": "A closed universe of $N$ masses whose moment of greatest expansion has a bridge at every mass, each opening onto a sheet of its own [clifton2012]."
+    },
+    {
+      "id": "born_infeld_charge",
+      "kind": "programme",
+      "text": "Hoffmann's particle of the same year, a point charge of Born and Infeld's electrodynamics whose whole mass is the energy of its field. Einstein and Rosen pointed out to him the conical point left at its centre [hoffmann1935, tahvildarzadeh2011]."
     }
   ],
   "references": [
@@ -94,7 +104,10 @@
     "einstein1937",
     "brill1963",
     "misner1960",
-    "marolf2009"
+    "marolf2009",
+    "clifton2012",
+    "hoffmann1935",
+    "tahvildarzadeh2011"
   ],
   "coordinates": [
     {

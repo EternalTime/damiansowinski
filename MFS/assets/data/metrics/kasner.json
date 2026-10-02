@@ -60,6 +60,11 @@
       "id": "nariai",
       "kind": "programme",
       "text": "Edward Kasner found this solution too. In 1921, the year of his anisotropic vacuum, he presented the product of two equal spheres as a solution with a cosmological constant, the positive signature form of Nariai's metric [kasner1925, kasner1921]."
+    },
+    {
+      "id": "belinski_zakharov",
+      "kind": "generalisation",
+      "text": "Kasner's universe with solitons added. Belinski and Zakharov took it for the seed of their first soliton solutions, among them two pulses of gravitational wave that run apart along a light cone [belinskii1978]."
     }
   ],
   "references": [
@@ -77,7 +82,8 @@
     "ringstrom2010",
     "berger1974",
     "geroch1969",
-    "kasner1925"
+    "kasner1925",
+    "belinskii1978"
   ],
   "coordinates": [
     {

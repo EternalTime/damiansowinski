@@ -86,6 +86,21 @@
       "id": "semiclosed_world",
       "kind": "composite",
       "text": "More than half of a closed Friedmann universe of dust with Schwarzschild's vacuum beyond its edge. From outside it is a black hole, and at a fixed mass the universe behind it can be as large as one likes [marolf2009]."
+    },
+    {
+      "id": "white_hole",
+      "kind": "composite",
+      "text": "A piece of a Friedmann universe of dust that leaves the big bang late and comes out of its own Schwarzschild sphere, with vacuum around it [novikov1965]."
+    },
+    {
+      "id": "lindquist_wheeler_lattice",
+      "kind": "family",
+      "text": "A closed universe with its dust gathered into $N$ equal masses on a regular lattice. It expands and recollapses on Friedmann's cycloid, to a largest radius that approaches Friedmann's as $N$ grows [lindquist1957, clifton2009]."
+    },
+    {
+      "id": "nordstrom_scalar",
+      "kind": "family",
+      "text": "The flat universe in Nordström's scalar theory of gravity. His field equation gives dust the scale factor $1 - \\eta^2/\\eta_0^2$ in conformal time, with $\\eta_0$ a constant, a universe that expands from a bang and falls back into a crunch [sundrum2003]."
     }
   ],
   "references": [
@@ -139,7 +154,11 @@
     "bucher1995",
     "senovilla1996",
     "sultana2005",
-    "marolf2009"
+    "marolf2009",
+    "novikov1965",
+    "lindquist1957",
+    "clifton2009",
+    "sundrum2003"
   ],
   "coordinates": [
     {

@@ -325,6 +325,21 @@ class Slice:
             self.exact[float(z)] = z
         return [float(z) for z in roots]
 
+    def horizon_between(self, lo, hi):
+        """The zero of 1/g_xx between lo and hi where it is no algebraic function of x, as the
+        metric of Born and Infeld's point charge is none, whose mass function is an elliptic
+        integral: found in eighty digits and remembered to that many, so that slope() and the
+        quadrature beside it treat it as they treat a root horizons() finds."""
+        value = sp.lambdify(self.x, 1 / self.gxx, "mpmath")
+        with mpmath.workdps(90):
+            root = mpmath.findroot(value, (mpmath.mpf(lo), mpmath.mpf(hi)), solver="anderson",
+                                   tol=mpmath.mpf(10) ** -80)
+            if not lo < root < hi or abs(value(root)) > mpmath.mpf(10) ** -75:
+                raise SystemExit(f"{self.metric_id}/{self.system_id}: no zero of 1/g_xx between {lo} and {hi}")
+            z = sp.Float(mpmath.nstr(root, 85), 85)
+        self.exact[float(z)] = z
+        return float(z)
+
     def _radical(self, e):
         """Whether e holds a power of x that is not a whole one, as Bardeen's (r^2 + g^2)^(3/2)."""
         return any(not p.exp.is_Integer and p.base.has(self.x) for p in e.atoms(sp.Pow))
@@ -3052,6 +3067,121 @@ def bardeen(ck, src):
     return views
 
 
+def born_infeld_charge(ck, src):
+    """Born and Infeld's point charge at r_q = r_0/2, in units of r_0, as its other diagrams draw
+    it. On the equator of a moment of t the metric is dr^2/f + r^2 dphi^2 with f = 1 - 2m/r, so
+    dz/dr = sqrt(2m/(r - 2m)), with m the mass inside r.
+
+    Hoffmann's particle, r_s = 0.6180 r_0, whose whole mass is the energy of its field: m
+    vanishes at the centre as r_q^2 r/r_0^2, so 2m/r tends to 2 r_q^2/r_0^2 = 1/2 and the surface
+    leaves the centre as a cone of slope sqrt(2 r_q^2/(r_0^2 - 2 r_q^2)) = 1, the conical
+    singularity, where the Kretschmann scalar grows as 16 r_q^4/(r_0^4 r^4). There is no horizon,
+    and far out the surface rises as Flamm's paraboloid of the same mass, dz/dr -> sqrt(r_s/r).
+
+    The black hole, r_s = 2 r_0: m is positive at the centre, f has one zero, r_h = 1.8666 r_0,
+    and the slice runs through the bifurcation sphere into a second exterior, as Schwarzschild's
+    does. The horizon is no root of a polynomial, since m is an elliptic integral, so
+    Slice.horizon_between finds it in eighty digits. Both heights are checked against scipy's
+    quadrature of the slope, with m from nr.born_infeld_mass."""
+    from scipy.integrate import quad
+    name = "Born-Infeld"
+    held = {"t": 0, **EQUATOR}
+
+    def slope_of(params):
+        rs, rq = float(sp.sympify(params["r_s"])), float(sp.sympify(params["r_q"]))
+        return lambda r: math.sqrt(2 * float(nr.born_infeld_mass(r, rs, rq)) / (r - 2 * float(nr.born_infeld_mass(r, rs, rq))))
+
+    # Hoffmann's particle: a cone at the centre that opens into Flamm's paraboloid far away.
+    sl = Slice(src, "born_infeld_charge", "static", "r", "\\phi", held, nr.BI_PARTICLE)
+    top, radii = 4.0, (1.0, 2.0, 3.0)
+    size = 2 * top
+    slope = slope_of(nr.BI_PARTICLE)
+    cone = Piece("particle", "sheet", sl, 0.0, top, 0.0, 1,
+                 (("apex", "the centre $r = 0$, a conical singularity, where the Kretschmann scalar diverges"),
+                  ("edge", "the surface runs on to $r \\to \\infty$")),
+                 [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+    ck.isometry(f"{name}, the particle", cone)
+    ck.radius(f"{name}, the particle, rho = r", cone, lambda r: r, size)
+    ck.form(f"{name}, the particle, the quadrature of sqrt(2m/(r - 2m))", cone,
+            lambda r: np.array([quad(slope, 1e-12, x, epsabs=1e-12, epsrel=1e-12, limit=200)[0] if x > 0 else 0.0
+                                for x in np.atleast_1d(r)]), size)
+    ck.add(f"{name}, the particle: g^rr tends to 1 - 2 r_q^2/r_0^2 = 1/2 at the centre, and the cone's slope to 1",
+           abs(1 / float(sl.gxx_at(1e-5)) - 0.5) + abs(slope(1e-5) - 1), 1e-8)
+    ck.add(f"{name}, the particle: g^rr is positive everywhere, so there is no horizon",
+           float(max(0.0, -np.min(1 / sl.gxx_at(np.geomspace(1e-9, 1e6, 4000))))), 0.0)
+    ck.add(f"{name}, the particle: far out the slope is Flamm's sqrt(r_s/r)",
+           abs(slope(1e6) / math.sqrt(float(sp.sympify(nr.BI_PARTICLE["r_s"])) / 1e6) - 1), 1e-5)
+    particle = Surface([cone])
+    fig = figure_of([particle], {"sheet": "cover"}, size, Camera(-90, 20))
+    ring_label(fig, [0, 0, 0], *cone.at(1.0), "$r = r_0$", side=-1, clear=True)
+    ring_label(fig, [0, 0, 0], *cone.at(top), "$4\\,r_0$", side=-1)
+    fig.legend("fill", "cover", "the whole of the moment, which $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1$, $2$, $3$ and $4\\,r_0$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views = [view("particle", "Hoffmann's particle", "$r_0$", [particle], fig.done(),
+                  settings="$r_0 = 1$, the unit of every length, $r_q = r_0/2$, and $r_s = 0.618\\,r_0$, the mass "
+                           "of the field alone.")]
+
+    # The black hole: the same charge with more mass than its field holds.
+    sl = Slice(src, "born_infeld_charge", "static", "r", "\\phi", held, nr.BI_HOLE)
+    rh = sl.horizon_between(1.5, 2.0)
+    ck.add(f"{name}, the black hole: the horizon is at 1.8666 r_0", abs(rh - nr.BI_HORIZON), 1e-12)
+    ck.add(f"{name}, the black hole: g^rr vanishes at one radius only",
+           float(np.sum(np.diff(np.sign(1 / sl.gxx_at(np.geomspace(1e-6, 1e6, 20000)))) != 0)) - 1, 0.0)
+    ck.stops(f"{name}, inside the horizon", sl, np.linspace(0, rh, 402)[1:-1])
+    top, radii = 8.0, (3.0, 4.0, 5.0, 6.0, 7.0)
+    size = 2 * top
+    end = "the surface runs on to $r \\to \\infty$"
+    near = Piece("exterior", "sheet", sl, rh, top, 0.0, 1,
+                 (("throat", "the throat $r = r_h$, the bifurcation sphere, where the other exterior begins"),
+                  ("edge", end)),
+                 [(rh, "horizon", "$r = r_h$")] + [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+    far = Piece("other_exterior", "sheet2", sl, rh, top, 0.0, -1,
+                (("throat", "the throat $r = r_h$"), ("edge", end)),
+                [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+    for p in (near, far):
+        ck.isometry(f"{name}, the black hole, {p.id}", p)
+    ck.join(f"{name}, the black hole, the two sheets at the throat", near, rh, far, rh)
+    slope = slope_of(nr.BI_HOLE)
+
+    rs, rq = float(nr.BI_HOLE["r_s"]), float(sp.sympify(nr.BI_HOLE["r_q"]))
+    Wh = math.sqrt(rh ** 4 + 1)
+    first, second = rq ** 2 / (rh ** 2 + Wh), -2 * rq ** 2 * rh / (Wh * (rh ** 2 + Wh))    # dm/dr and its slope at r_h
+
+    def in_q(q):
+        # The slope diverges as an inverse square root at the throat, so the height is taken in q,
+        # r = r_h + q^2, and next to the throat r - 2m is its series there, (1 - 2m') q^2 - m'' q^4,
+        # since r and 2m cancel to the last digits of a float.
+        r = rh + q * q
+        if q < 1e-3:
+            return 2 * math.sqrt(2 * float(nr.born_infeld_mass(r, rs, rq)) / (1 - 2 * first - second * q * q))
+        return 2 * q * slope(r)
+
+    def height(r):
+        return np.array([quad(in_q, 0.0, math.sqrt(max(x - rh, 0.0)), epsabs=1e-12, epsrel=1e-12, limit=200)[0]
+                         for x in np.atleast_1d(r)])
+    for p in (near, far):
+        ck.form(f"{name}, the black hole, {p.id}, the quadrature of sqrt(2m/(r - 2m))", p,
+                lambda r, s=p.sense: s * height(r), size)
+        ck.radius(f"{name}, the black hole, {p.id}, rho = r", p, lambda r: r, size)
+    hole = Surface([near, far])
+    fig = figure_of([hole], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], rh, 0.0, "$r = r_h$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(4.0), "$4\\,r_0$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$8\\,r_0$")
+    fig.legend("fill", "cover", "the exterior $r > r_h$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $3$, $4$, $5$, $6$, $7$ and $8\\,r_0$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_h$, where the slice crosses the horizon")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("hole", "The black hole", "$r_0$", [hole], fig.done(),
+                      settings="$r_0 = 1$, the unit of every length, $r_q = r_0/2$, and $r_s = 2\\,r_0$, so that "
+                               "the horizon is at $r_h = 1.867\\,r_0$.",
+                      stops=["Inside the horizon, $r < r_h$, $g_{rr} < 0$: $r$ is a time there, and a slice of "
+                             "constant $t$ is not a moment of space."]))
+    return views
+
+
 def kerr_family(ck, src, metric_id, name, params, ergo):
     """The equatorial slice of constant Boyer-Lindquist t outside r+, which has no cross term,
     g_tphi dropping out at constant t: rho = sqrt(g_phiphi), the circumference radius, and the
@@ -3335,6 +3465,51 @@ def de_sitter(ck, src):
                  settings="$\\Lambda = 3$, so that $\\ell = \\sqrt{3/\\Lambda} = 1$, the unit of every length.",
                  stops=["Every slice of constant $t$ of the flat slicing is flat, $e^{2Ht}(dx^2 + dy^2 + dz^2)$ "
                         "being Euclidean space scaled by $e^{Ht}$, so its equator is a plane."])]
+
+
+def elliptic_de_sitter(ck, src):
+    """The moment t = 0 of the global chart at l = 1, the whole of space: g_chichi = 1 and
+    g_phiphi = sin^2 chi from the observer at chi = 0 to the equator chi = pi/2, the hemisphere
+    rho = sin chi, z = -cos chi of a sphere of radius l. Opposite points of its rim are one point,
+    so the surface is a real projective plane, of which the hemisphere is the part that stands in
+    flat space. The meridians phi = 0 and phi = pi are one geodesic through the observer, which
+    leaves through the rim and comes back in at the opposite point, closed after the length pi l,
+    half the great circle's, which is checked. The static chart's slice t = 0, g_rr = 1/(1 - r^2),
+    is checked to be the same hemisphere short of its rim."""
+    sl = Slice(src, "elliptic_de_sitter", "global", "\\chi", "\\phi", {"t": 0, **EQUATOR}, {"ell": 1})
+    flat_slices(ck, src, "elliptic_de_sitter", "planar")
+    size = 2.0
+    half = Piece("hemisphere", "sheet", sl, 0.0, math.pi / 2, -1.0, 1,
+                 (("axis", "the observer at $\\chi = 0$, the pole of the hemisphere"),
+                  ("edge", "the equator $\\chi = \\pi/2$, the rim, each point of which is also the point opposite it")),
+                 [(math.pi / 6, "r", None), (math.pi / 3, "r", None), (math.pi / 2, "surface", "$\\chi = \\pi/2$")], size)
+    ck.isometry("elliptic de Sitter, the hemisphere", half)
+    ck.radius("elliptic de Sitter, the hemisphere rho = l sin chi", half, np.sin, size)
+    ck.form("elliptic de Sitter, the hemisphere z = -l cos chi", half, lambda chi: -np.cos(chi), size)
+    static = Slice(src, "elliptic_de_sitter", "static", "r", "\\phi", {"t": 0, **EQUATOR}, {"ell": 1})
+    patch = Piece("patch", "sheet", static, 0.0, static.horizons()[0], -1.0, 1, size=size)
+    ck.isometry("elliptic de Sitter, the static chart's slice", patch)
+    ck.form("elliptic de Sitter, the static chart's slice z = -sqrt(l^2 - r^2)", patch,
+            lambda r: -np.sqrt(np.maximum(1 - r * r, 0)), size)
+    # The closed geodesic: twice the meridian's length from the pole to the rim.
+    chi = np.linspace(0.0, math.pi / 2, 2001)
+    length = 2 * float(np.sum(np.hypot(np.diff(np.sin(chi)), np.diff(-np.cos(chi)))))
+    ck.add("elliptic de Sitter: the geodesic through the observer closes after the length pi l",
+           abs(length - math.pi), 1e-6)
+    surface = Surface([half])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    fig.mark("cut", 0, half, 0.0)
+    fig.mark("cut", 0, half, math.pi)
+    ring_label(fig, [0, 0, 0], *half.at(math.pi / 2), "$\\chi = \\pi/2$", dx=10)
+    fig.legend("fill", "cover", "the whole moment, a hemisphere of radius $\\ell$")
+    fig.legend("line", "r", "$\\chi$ constant, at $\\pi/6$ and $\\pi/3$")
+    fig.legend("line", "surface", "the equator $\\chi = \\pi/2$, the rim, glued to itself point to opposite point")
+    fig.legend("line", "cut", "a geodesic through the observer, closed through the rim, of length $\\pi\\ell$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("moment", "The moment $t = 0$", "$\\ell$", [surface], fig.done(),
+                 settings="$\\ell = 1$, the unit of every length.",
+                 stops=["Every slice of constant $t$ of the planar chart is flat, $e^{2ct/\\ell}(dx^2 + dy^2 + dz^2)$ "
+                        "being Euclidean space scaled by $e^{ct/\\ell}$, so its equator is a plane."])]
 
 
 def einstein_static(ck, src):
@@ -5780,6 +5955,152 @@ def israel_shell(ck, src):
                        "diagram.")]
 
 
+def charged_shell(ck, src):
+    """The charged shell of dust in two views.
+
+    The shell its other diagrams draw, r_s = 1, r_q = 12/25 and mu = 1/5, whose motion
+    charged_shell.py holds, as a movie. The moments are Vaidya's: outside the shell, slices of
+    constant v - r = w of the ingoing chart, spacelike everywhere, on which the published metric
+    pulls back to (1 + r_s/r - r_q^2/r^2) dr^2 + r^2 dphi^2 with v = w + r, so
+    dz/dr = sqrt(r_s r - r_q^2)/r and z = 2 s - 2 r_q arctan(s/r_q) with s = sqrt(r_s r - r_q^2),
+    which exists for r >= r_q^2/r_s, below the shell's least radius; inside it, the moment of the
+    flat time T at which the slice meets the shell, a flat disc, which is checked. The shell is the
+    circle r = R(w) where the two meet, and it folds the surface by the angle whose tangent is
+    sqrt(r_s R - r_q^2)/R. The event horizon, T - r = U_h inside the shell and r = r_+ outside it,
+    is r = T - U_h on the disc while the shell is outside r_+. The shell turns at w = -0.015 and
+    climbs back toward r_-, which it reaches only as w runs off to infinity.
+
+    The balanced shell at rest, b = 0 and mu = a = 1, at the isotropic radius 1: the moment t = 0
+    of the isotropic chart, on which the areal radius is rho + a and
+    z = 2 s + ln((s - 1)/(s + 1)) with s = sqrt(2r/a - 1), the throat of the extreme field, cut off at
+    the shell by a flat disc. The throat below the shell is drawn on as a reference, down to the
+    isotropic radius 1/64."""
+    shell = nr.cshell
+    top = 2.0
+    size = 2 * top
+    NEAR_FOLD = 1e-3
+    rq = shell.RQ
+    rim = ("edge", "the surface runs on to $r \\to \\infty$")
+    u_h = float(shell.inner_retarded(-shell.ETA_P))
+
+    def height(r):
+        root = np.sqrt(np.asarray(r, dtype=float) - rq * rq)
+        return 2 * root - 2 * rq * np.arctan(root / rq)
+
+    def moment(w):
+        where = f"charged shell, v - r = {w:g}"
+        hole = Slice(src, "charged_shell", "exterior_ingoing", "r", "\\phi", {"theta": "pi/2"}, nr.CHARGED,
+                     along={"v": f"{w!r} + r"})
+        eta = float(shell.eta_of_slice(w))
+        R, T = float(shell.radius(eta)), float(shell.inner_time(eta))
+        ck.add(f"{where}, the shell is on the slice", abs(float(shell.advanced(eta)) - R - w), 1e-11)
+        flat = Slice(src, "charged_shell", "interior", "r", "\\phi", {"theta": "pi/2", "T": repr(T)}, nr.CHARGED)
+        ck.plane(f"{where}, inside the shell", flat, np.linspace(1e-3 * R, R, 200))
+        horizon = T - u_h
+        # The shell's circle is marked a thousandth of r_s inside the fold: on the fold itself, whether
+        # the wall in front of it hides it would hang on the last digit the file keeps.
+        inside = Piece("inside", "sheet", flat, 0.0, R, 0.0, 1,
+                       (("axis", "the centre $r = 0$, where space is flat throughout"),
+                        ("crease", "the shell of charged dust, where the surface folds")),
+                       [(R - NEAR_FOLD, "surface", None)]
+                       + ([(horizon, "horizon", None)] if 0 < horizon < R - 2 * NEAR_FOLD else []), size)
+        outside = Piece("outside", "sheet", hole, R, top, 0.0, 1, (("crease", "the shell"), rim),
+                        [(h, "horizon", None) for h in (shell.RM, shell.RP) if R < h - 1e-9]
+                        + [(r, "r", None) for r in (1.0, 1.5, top) if r > R], size)
+        # The rim of the drawing, r = 2 r_s, stands at z = 0 at every moment.
+        shift = -outside.z[-1]
+        inside.z, outside.z = inside.z + shift, outside.z + shift
+        ck.add(f"{where}, the two sides meet at the shell: one point",
+               float(np.max(np.abs(np.array(inside.at(R)) - outside.at(R)))), JOIN)
+        ck.form(f"{where}, outside the shell z = 2s - 2 r_q arctan(s/r_q), s = sqrt(r_s r - r_q^2)", outside,
+                lambda r, R=R, shift=shift: height(r) - height(R) + shift, size)
+        tangent = outside.sl.slope(R, "+")
+        ck.add(f"{where}, the fold at the shell is sqrt(r_s R - r_q^2)/R",
+               abs(float(tangent[1] / tangent[0]) / (math.sqrt(R - rq * rq) / R) - 1), 1e-6)
+        for piece in (inside, outside):
+            ck.isometry(f"{where}, {piece.id}", piece)
+        return Surface([inside, outside], label=f"$v - r = {w:g}\\,r_s$", time=w)
+
+    # A frame every r_s/32 of v - r. The shell crosses r_+ at w = -0.66 and r_- at w = -0.25, and turns
+    # between the frames -1/32 and 0.
+    frames = [moment(-1.5 + k / 32) for k in range(81)]
+    ck.add("charged shell: it is on r_+ at v - r = -0.662", abs(float(shell.radius_on_slice(-0.6618957148773874)) - shell.RP), 1e-9)
+    ck.add("charged shell: it turns at v - r = -0.0147", abs(float(shell.slice_time(0.0)) + 0.014706366575392094), 1e-9)
+    # The moments marked on the other diagrams: the shell outside r_+, between the horizons, just past
+    # the turn, and on its way back up to r_-.
+    surfaces = [frames[k] for k in (0, 32, 48, 80)]
+    fig = movie_figure(frames, {"sheet": "cover"}, size)
+    fig.legend("fill", "cover", "the slice, flat inside the shell and of constant $v - r$ outside it")
+    fig.legend("line", "r", "$r$ constant, at $1$, $1.5$ and $2\\,r_s$")
+    fig.legend("line", "surface", "the shell of charged dust, where the surface folds")
+    fig.legend("line", "horizon", "the horizons $r_+$ and $r_-$ outside the shell, and inside it the event horizon, "
+                                  "which forms at the centre at $cT = -1.17\\,r_s$ and grows through flat space to "
+                                  "meet the shell at $r_+$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    bounce = view("bounce", "The fall and the turn", "$r_s$", surfaces, fig.done(),
+                  movie=movie(frames, "$v - r$", [f.time for f in frames]),
+                  settings="$r_s = 1$, the unit of every length, $r_q = 0.48\\,r_s$, and $\\mu = 0.2\\,r_s$; each "
+                           "moment is a slice of constant $v - r$ outside the shell and of constant $T$ inside it.",
+                  input="The shell that comes in from infinity and turns round at $R = 0.317\\,r_s$, as in the "
+                        "conformal diagram.")
+
+    # The balanced shell at rest, in units of a.
+    eps, reach = 1.0, 3.0
+    R = eps + 1
+    psize = 2 * (reach + 1)
+    field = Slice(src, "charged_shell", "exterior_isotropic", "\\rho", "\\phi", {"t": 0, **EQUATOR}, nr.CHARGED_POINT)
+    disc = Slice(src, "charged_shell", "interior", "r", "\\phi", {"theta": "pi/2", "T": "0"},
+                 {"r_s": 2, "r_q": 1, "mu": 1})
+    ck.plane("charged shell, the balanced shell: inside it", disc, np.linspace(1e-3, R, 200))
+
+    def throat_height(rho):
+        root = np.sqrt(2 * (np.asarray(rho, dtype=float) + 1) - 1)
+        return 2 * root + np.log((root - 1) / (root + 1))
+    throat = Piece("throat", "reference", field, 1 / 64, eps, 0.0, 1,
+                   (("stops", "the throat runs on down without end, to $\\rho \\to 0$"), ("join", None)),
+                   [(1 / 64, "reference", None), (1 / 16, "reference", None), (1 / 4, "reference", None)], psize,
+                   reference=True)
+    outside = Piece("outside", "sheet", field, eps, reach, 0.0, 1,
+                    (("crease", "the shell, $\\rho = \\epsilon$"), ("edge", "the surface runs on to $\\rho \\to \\infty$")),
+                    [(2.0, "r", None), (reach, "r", None)], psize)
+    inside = Piece("inside", "sheet", disc, 0.0, R, 0.0, 1,
+                   (("axis", "the centre $r = 0$, where space is flat"), ("crease", "the shell")),
+                   [(R - NEAR_FOLD, "surface", None)], psize)
+    shift = -outside.z[-1]
+    outside.z = outside.z + shift
+    inside.z = inside.z + outside.z[0]
+    throat.z = throat.z + (outside.z[0] - throat.z[-1])
+    ck.add("charged shell, the balanced shell: the two sides meet in one circle",
+           float(np.max(np.abs(np.array(inside.at(R)) - outside.at(eps)))), JOIN)
+    ck.add("charged shell, the balanced shell: the throat below it joins on",
+           float(np.max(np.abs(np.array(throat.at(eps)) - outside.at(eps)))), JOIN)
+    ck.form("charged shell, the balanced shell: outside z = 2s + ln((s - 1)/(s + 1)), s = sqrt(2r/a - 1)", outside,
+            lambda rho: throat_height(rho) - throat_height(reach), psize)
+    ck.form("charged shell, the balanced shell: the throat is the same surface", throat,
+            lambda rho: throat_height(rho) - throat_height(reach), psize)
+    tangent = outside.sl.slope(eps, "+")
+    ck.add("charged shell, the balanced shell: the fold is sqrt(2R/a - 1)/(R/a - 1)",
+           abs(float(tangent[1] / tangent[0]) / (math.sqrt(2 * R - 1) / (R - 1)) - 1), 1e-6)
+    for piece in (inside, outside):
+        ck.isometry(f"charged shell, the balanced shell, {piece.id}", piece)
+    surface = Surface([inside, outside, throat])
+    fig = figure_of([surface], {"sheet": "cover"}, psize, Camera(-90, 30))
+    ring_label(fig, [0, 0, 0], *outside.at(reach), "$4\\,a$")
+    ring_label(fig, [0, 0, 0], *outside.at(2.0), "$3\\,a$")
+    ring_label(fig, [0, 0, 0], *inside.at(R - NEAR_FOLD), "the shell", dx=10)
+    fig.legend("fill", "cover", "the slice $t = 0$: a flat disc inside the shell and the extreme field's throat outside it")
+    fig.legend("line", "r", "the areal radius constant, at $3$ and $4\\,a$")
+    fig.legend("line", "surface", "the shell at rest, $\\rho = \\epsilon = a$, of areal radius $2a$")
+    fig.legend("line", "reference", "the throat below the shell, down to $\\rho = a/64$, with $\\rho = a/4$ and $a/16$ "
+                                    "marked on the way")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    point = view("point", "The point charge", "$a$", [surface], fig.done(),
+                 settings="$a = 1$, the unit of every length, $b = 0$, and $\\mu = a$, so that $r_q = r_s/2 = a$; "
+                          "the shell is at rest at $\\epsilon = a$.",
+                 input="The balanced shell at rest, as in the isotropic spacetime diagram.")
+    return [bounce, point]
+
+
 PIW_BETA = 0.5                  # 1 - 4G mu/c^2 of the string every drawing of Penrose's wave takes
 PIW_RING = 2.0                  # the ring of particles at rest ahead of the wave, R = 2 l
 PIW_TOP = 8.0                   # the rim of the drawing, R = 8 l, where a circle has the radius 4 l
@@ -6475,6 +6796,208 @@ def semiclosed_world(ck, src):
                           "the greatest expansion.",
                  input="Outside the dust, the slices of Tolman-Bondi's comoving chart with no dust in it, each shell "
                        "of clocks released from rest when the dust is, on both sides of the throat.")]
+
+
+def white_hole(ck, src):
+    """The white hole the conformal diagram draws, a core that comes to rest at R0 = 2 r_s, chi0 = pi/4
+    and a_m = 2 sqrt(2) r_s, at four moments of its proper time tau since it left its singularity: the
+    collapse of Oppenheimer and Snyder with the time reversed. Inside, the published interior chart at
+    a = (a_m/2)(1 - cos eta), tau = (a_m/2)(eta - sin eta), which is checked to make the published
+    G^chi_chi vanish: a cap of a sphere of radius a out to chi0, growing. Outside, the moment of
+    constant tau carries on as Novikov's slice, the moment of clocks that come to rest with the dust
+    at every radius, read from Tolman-Bondi's comoving chart with no dust, k = r_s/r^3: by the
+    symmetry of each shell's cycloid it is the slice of the collapse at the same time before the
+    moment of rest as after it, so the cloud released from rest is read at tau_m - tau. The two meet
+    with one tangent, 1 + 2E = 1 - r_s/R0 = cos^2 chi0 on both sides, which is checked; at the moment
+    of rest the outside is Flamm's paraboloid."""
+    R0, chi0 = 2.0, math.pi / 4
+    am = R0 / math.sin(chi0)
+    rest = am * math.pi / 2
+    cloud = RestCloud(lambda r: np.where(r < R0, 1 / R0 ** 3, 1 / np.maximum(r, R0) ** 3),
+                      lambda r: np.where(r < R0, 0.0, -3 / np.maximum(r, R0) ** 4))
+    # The interior's own field equation, 2 a a'' + a'^2 + 1 = 0 in tau, along the cycloid.
+    Gcc = einstein(src, "white_hole", "interior_comoving", "\\chi")
+    etas = np.linspace(0.05 * math.pi, 1.95 * math.pi, 50)
+    half = np.sin(etas / 2)
+    ck.add("White hole: a = (a_m/2)(1 - cos eta) makes the published G^chi_chi vanish",
+           float(np.max(np.abs(Gcc(a=am * half ** 2, a_tau=1 / np.tan(etas / 2), a_tautau=-1 / (2 * am * half ** 4)))
+                        * (am * half ** 2) ** 2)), 1e-9)
+    cloud.check(ck, src, "White hole outside", np.linspace(R0, 8, 60), [0.0, 1.0, 2.0, 3.0, 4.0])
+    top = 4.0
+    size = 2 * top
+    from scipy.optimize import brentq
+
+    def moment(eta):
+        a = am * (1 - math.cos(eta)) / 2
+        tau = am * (eta - math.sin(eta)) / 2
+        where = f"White hole, eta = {eta / math.pi:.4f} pi"
+        inner = Slice(src, "white_hole", "interior_comoving", "\\chi", "\\phi", {"tau": "0", **EQUATOR},
+                      {"chi_0": "pi/4", "a_m": repr(am)}, {"a": repr(a)})
+        outer = cloud.slice(src, max(rest - tau, 0.0), "-1/(2*r)")
+        edge = cloud.horizon(max(rest - tau, 0.0), 0.0, top)
+        dust_marks = [(chi0 / 3, "r", None), (2 * chi0 / 3, "r", None), (chi0, "surface", None)]
+        out_marks = [(r, "r", None) for r in (3.0, top)]
+        if edge is not None and edge > R0:
+            out_marks.append((edge, "horizon", None))
+        elif edge is not None:
+            dust_marks.append((math.asin(edge / am), "horizon", None))
+        ext = Piece("exterior", "sheet", outer, R0, top, 0.0, 1,
+                    (("join", "the surface of the dust"), ("edge", "the slice runs on to $r \\to \\infty$")), out_marks, size)
+        dust = Piece("dust", "star", inner, 0.0, chi0, 0.0, 1,
+                     (("axis", "the centre $\\chi = 0$, where the cap is smooth"), ("join", "the surface $\\chi = \\chi_0$")),
+                     dust_marks, size)
+        dust.z = dust.z + (ext.z[0] - dust.z[-1])
+        # The rim of the drawing, the clocks that come to rest at r = 4 r_s, stands at z = 0 at every
+        # moment, and the dust rises toward it.
+        shift = -ext.z[-1]
+        ext.z, dust.z = ext.z + shift, dust.z + shift
+        ck.isometry(f"{where}, the dust", dust)
+        ck.isometry(f"{where}, outside", ext)
+        ck.join(f"{where}, the dust meets the outside", dust, chi0, ext, R0)
+        ck.form(f"{where}, the dust is a cap of a sphere of radius a", dust,
+                lambda c, a=a, z0=dust.z[0]: z0 + a * (1 - np.cos(c)), size)
+        if eta == math.pi:
+            ck.form(f"{where}, outside it is Flamm's paraboloid", ext, lambda r: 2 * np.sqrt(r - 1) - 2 + shift, size)
+        return Surface([dust, ext], label=f"$c\\tau = {tau:.2f}\\,r_s$", time=tau)
+
+    # The movie runs through the moments at a steady proper time of the dust, a frame about every
+    # 0.07 r_s of c tau.
+    etas = [f * math.pi for f in (0.2, 0.4, 0.7, 1.0)]
+    taus, keys = movie_values([am * (e - math.sin(e)) / 2 for e in etas], 0.07)
+    frames = [moment(etas[keys.index(i)] if i in keys else
+                     brentq(lambda e, t=t: am * (e - math.sin(e)) / 2 - t, 0.0, math.pi, xtol=1e-15))
+              for i, t in enumerate(taus)]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"star": "star", "sheet": "cover"}, size)
+    fig.legend("fill", "star", "the dust, a cap of a sphere of radius $a(\\tau)$, which $\\tau$ and $\\chi$ cover")
+    fig.legend("fill", "cover", "outside it, the moment of clocks that come to rest when the dust does")
+    fig.legend("line", "r", "$\\chi$ constant in the dust, at $\\chi_0/3$ and $2\\chi_0/3$, and outside the clocks "
+                            "that come to rest at $3$ and $4\\,r_s$")
+    fig.legend("line", "surface", "the surface of the dust, $\\chi = \\chi_0$")
+    fig.legend("line", "horizon", "the apparent horizon, $R = 2GM/c^2$ for the mass inside it")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("explosion", "The explosion", "$r_s$", surfaces, fig.done(),
+                 movie=movie(frames, "$c\\tau$", [f.time for f in frames]),
+                 settings="$R_0 = 2\\,r_s$, so that $\\chi_0 = \\pi/4$ and $a_m = 2\\sqrt{2}\\,r_s$, with $r_s = 1$ the "
+                          "unit of every length; the moments are the dust's proper time $\\tau$ since it left its "
+                          "singularity.",
+                 input="Outside the dust, the slices of Tolman-Bondi's comoving chart with no dust in it and the "
+                       "energy function $E = -r_s/2r$, each shell of clocks coming to rest at $R = r$ when the "
+                       "dust does.")]
+
+
+def lindquist_wheeler_lattice(ck, src):
+    """Lindquist and Wheeler's lattice of eight cells at four moments of the proper time tau of the
+    cell boundaries, from the moment of time symmetry toward the crunch, r_s = 1: the comparison
+    hypersphere of radius a = (a_m/2)(1 + cos e), c tau = (a_m/2)(e + sin e), between the two cells
+    centred on its poles, and in each of those cells Lindquist and Wheeler's comoving chart at the
+    same tau, every shell rho on its own cycloid r = (rho/2)(1 + cos eta), c tau = (rho^(3/2)/2)(eta +
+    sin eta). On it g_rhorho = (d_rho r)^2/(1 - 1/rho), so in the areal radius the surface climbs at
+    dz/dr = 1/sqrt(rho - 1), and where it meets the hypersphere, at rho = r_m = 1/sin^2(psi), its
+    tangent has dr/dl = sqrt(1 - 1/r_m) = cos(psi), the hypersphere's own at chi = psi: the tangency
+    Lindquist and Wheeler ask for, which holds at every moment and is checked. At tau = 0 the cell is
+    Flamm's paraboloid from the throat to r_m. A shell rho reaches r = 0 at c tau = (pi/2) rho^(3/2),
+    so from c tau = pi/2 on the funnel ends in a point on the shell that has just got there. The
+    cycloids are checked to make the published G^rho_rho of the comoving chart vanish and the
+    hypersphere's cycloid its G^chi_chi."""
+    name = "lindquist_wheeler_lattice"
+    psi, rm, am = nr.LW_PSI, nr.LW_RM, nr.LW_AM
+    size = 2 * am + 4.0
+    from scipy.optimize import brentq
+
+    # The shells' own field equation, 2 r d_tau^2 r + (d_tau r)^2 + 1/rho = 0, along the cycloids.
+    _, entry, reader = nr.load(name, "lindquist_wheeler")
+    src.note(name, "lindquist_wheeler", ["einstein_tensor"])
+    published = next(c["value"] for c in entry["einstein_tensor"]["variants"]["ul"]["nonzero"]
+                     if c["indices"] == ["\\rho", "\\rho"])
+    tau_s, rho_s = reader.symbol["\\tau"], reader.symbol["\\rho"]
+    shell = reader.parameters["r"]
+    plain = sp.symbols("r0 r1 r2")
+    G = reader(published).subs({sp.Derivative(shell, (tau_s, 2)): plain[2], sp.Derivative(shell, tau_s): plain[1]})
+    G = sp.lambdify((plain[0], plain[1], plain[2], rho_s),
+                    G.subs(shell, plain[0]).subs({reader.c: 1, reader.parameters["r_s"]: 1}), "numpy")
+    rhos, taus = np.meshgrid(np.linspace(1.05, rm, 40), np.linspace(0.0, 1.5, 30))
+    eta = nr._lw_eta(taus, rhos)
+    jets = [nr._lw_jet(i, 0)(eta, rhos) for i in range(3)]
+    ck.add("Lindquist-Wheeler: each shell's cycloid makes the published G^rho_rho vanish",
+           float(np.max(np.abs(G(jets[0], jets[1], jets[2], rhos)) * jets[0] ** 3)), 1e-9)
+    Gcc = einstein(src, name, "comparison_hypersphere", "\\chi")
+    es = np.linspace(0.05, 0.95 * math.pi, 50)
+    half = np.cos(es / 2)
+    ck.add("Lindquist-Wheeler: a = (a_m/2)(1 + cos e) makes the hypersphere's published G^chi_chi vanish",
+           float(np.max(np.abs(Gcc(a=am * half ** 2, a_tau=-np.tan(es / 2), a_tautau=-1 / (2 * am * half ** 4)))
+                        * (am * half ** 2) ** 2)), 1e-9)
+    ck.add("Lindquist-Wheeler: the boundary shell is the hypersphere's, r(tau, r_m) = a sin(psi)",
+           float(np.max(np.abs(nr._lw_jet(0, 0)(es, rm) - am * half ** 2 * math.sin(psi)))), 1e-12)
+    ck.add("Lindquist-Wheeler: eight cells of equal volume, 8 (2 psi - sin 2 psi) = 2 pi",
+           abs(nr.LW_CELLS * (2 * psi - math.sin(2 * psi)) - 2 * math.pi), 1e-12)
+
+    def moment(e):
+        a = am * (1 + math.cos(e)) / 2
+        tau = am * (e + math.sin(e)) / 2
+        where = f"Lindquist-Wheeler, e = {e / math.pi:.4f} pi"
+
+        def value(i, j):
+            return lambda x: nr._lw_jet(i, j)(nr._lw_eta(tau, np.atleast_1d(x)), np.atleast_1d(np.asarray(x, dtype=float))
+                                              ).reshape(np.shape(x))
+        cell = Slice(src, name, "lindquist_wheeler", "\\rho", "\\phi", {"tau": repr(tau), **EQUATOR}, {"r_s": 1},
+                     numeric={"r": (value(0, 0), value(0, 1))})
+        sphere = Slice(src, name, "comparison_hypersphere", "\\chi", "\\phi", {"tau": "0", **EQUATOR},
+                       {"psi": repr(psi), "r_s": 1}, {"a": repr(a)})
+        # The innermost shell still there: the throat, or the shell that has just reached r = 0.
+        open_throat = tau <= math.pi / 2
+        lo = 1.0 if open_throat else (2 * tau / math.pi) ** (2 / 3)
+        start = (("throat", "the throat $\\rho = r_s$, where the far sheet of the mass begins") if open_throat
+                 else ("apex", "the shell that has just reached $r = 0$"))
+        marks = [(rm, "surface", None)]
+        inner = float(value(0, 0)(np.array([lo * (1 + 1e-9)]))[0])
+        if open_throat and e == 0:
+            marks.insert(0, (lo, "horizon", None))
+        elif inner < 1 < a * math.sin(psi):
+            marks.insert(0, (brentq(lambda x: float(value(0, 0)(np.array([x]))[0]) - 1, lo * (1 + 1e-9), rm), "horizon", None))
+        band = Piece("hypersphere", "star", sphere, psi, math.pi - psi, -a * math.cos(psi), 1,
+                     (("join", "the boundary of the cell about $\\chi = 0$"), ("join", "the boundary of the cell about $\\chi = \\pi$")),
+                     [(math.pi / 2, "r", None)], size)
+        near = Piece("cell", "sheet", cell, lo, rm, 0.0, 1, (start, ("join", "the boundary of the cell, $\\rho = r_m$")),
+                     marks, size)
+        far = Piece("far_cell", "sheet", cell, lo, rm, 0.0, -1, (start, ("join", "the boundary of the cell, $\\rho = r_m$")),
+                    [(x, "surface" if c == "surface" else c, t) for x, c, t in marks], size)
+        near.z = near.z + (band.z[0] - near.z[-1])
+        far.z = far.z + (band.z[-1] - far.z[-1])
+        for label, piece in (("the cell about chi = 0", near), ("the hypersphere", band), ("the cell about chi = pi", far)):
+            ck.isometry(f"{where}, {label}", piece)
+        ck.join(f"{where}, the cell about chi = 0 is tangent to the hypersphere", near, rm, band, psi)
+        ck.join(f"{where}, the cell about chi = pi is tangent to the hypersphere", band, math.pi - psi, far, rm)
+        ck.form(f"{where}, the hypersphere is a sphere of radius a", band, lambda c, a=a: -a * np.cos(c), size)
+        if e == 0:
+            ck.form(f"{where}, the cell is Flamm's paraboloid", near,
+                    lambda x, z0=near.z[0]: z0 + 2 * np.sqrt(np.maximum(x - 1, 0)), size)
+        return Surface([near, band, far], label=f"$c\\tau = {tau:.2f}\\,r_s$", time=tau)
+
+    # The movie runs through the moments at a steady proper time of the boundaries, a frame about every
+    # 0.07 r_s of c tau.
+    es = [f * math.pi for f in (0.0, 0.35, 0.6, 0.8)]
+    taus, keys = movie_values([am * (e + math.sin(e)) / 2 for e in es], 0.07)
+    frames = [moment(es[keys.index(i)] if i in keys else
+                     brentq(lambda e, t=t: am * (e + math.sin(e)) / 2 - t, 0.0, math.pi, xtol=1e-15))
+              for i, t in enumerate(taus)]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover", "star": "star"}, size)
+    fig.legend("fill", "cover", "the two cells centred on $\\chi = 0$ and $\\chi = \\pi$, each a piece of Schwarzschild's geometry")
+    fig.legend("fill", "star", "the comparison hypersphere of radius $a(\\tau)$ between them, where the other six cells lie")
+    fig.legend("line", "surface", "the boundary of a cell, $\\rho = r_m$ and $\\chi = \\psi$ or $\\pi - \\psi$")
+    fig.legend("line", "horizon", "the sphere $r = r_s$ in a cell, at $\\tau = 0$ its throat")
+    fig.legend("line", "r", "the equator $\\chi = \\pi/2$, on which four more cells are centred")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("lattice", "The lattice", "$r_s$", surfaces, fig.done(),
+                 movie=movie(frames, "$c\\tau$", [f.time for f in frames]),
+                 settings=f"$N = {nr.LW_CELLS}$, so that $\\psi = {psi:.3f}$, $r_m = {rm:.3f}\\,r_s$, and "
+                          f"$a_m = {am:.3f}\\,r_s$, with $r_s = 1$ the unit of every length; the moments are the proper "
+                          "time $\\tau$ of the cell boundaries since they were at rest.",
+                 input="In each cell, the slices of Lindquist and Wheeler's comoving chart, every shell on the cycloid "
+                       "$r = \\tfrac{\\rho}{2}(1 + \\cos\\eta)$, $c\\tau = \\tfrac{\\rho}{2}\\sqrt{\\rho/r_s}\\,(\\eta + \\sin\\eta)$; "
+                       "between them the hypersphere of radius $a = \\tfrac{a_m}{2}(1 + \\cos\\eta)$, "
+                       "$c\\tau = \\tfrac{a_m}{2}(\\eta + \\sin\\eta)$.")]
 
 
 VERTICAL = 2   # the Tolman-Bondi cloud is drawn this many times taller than its embedding
@@ -9058,6 +9581,69 @@ def khan_penrose(ck, src):
             view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(), movie=played, settings=settings)]
 
 
+def belinski_zakharov(ck, src):
+    """The plane of x and y of Belinski and Zakharov's wave of two solitons, at the four events
+    tau = 0.25, 0.5, 1 and 2 on xi = 0 of the pole chart, midway between the two pulses, at w = 1
+    and cosh(beta) = 5/4: each flat, g_xx dx^2 + g_yy dy^2 with
+    g_xx = sinh(tau)(p cosh(tau) + 1)/(p cosh(tau) - 1) and g_yy = sinh(tau)^2/g_xx, p = cosh(beta),
+    since g_xy carries sinh(xi), with the ring of free particles at rest on x^2 + y^2 = l^2,
+    which the published Christoffel symbols keep at rest on xi = 0: they have no Gamma^x_tautau
+    or Gamma^y_tautau, and Gamma^xi_tautau vanishes there. Kasner's own ring would be the circle
+    of radius sqrt(sinh(tau)); the pulses draw it out along x by (p cosh(tau) + 1)/(p cosh(tau) - 1)
+    in the ratio of its axes, which falls to 1 as they leave."""
+    gamma, R = published_christoffel(src, "belinski_zakharov", "pole")
+    ck.exact("Belinski-Zakharov: no published Gamma^x_tautau or Gamma^y_tautau",
+             not any(ix[0] in ("x", "y") and ix[1:] == ("\\tau", "\\tau") for ix in gamma))
+    xi_tt = gamma.get(("\\xi", "\\tau", "\\tau"), sp.Integer(0))
+    ck.exact("Belinski-Zakharov: Gamma^xi_tautau vanishes on xi = 0",
+             sp.simplify(sp.sympify(xi_tt).subs(R.symbol["\\xi"], 0)) == 0)
+    params = {"w": 1, "beta": "log(2)"}
+
+    def front(t):
+        return f"$\\tau = {t:g}$", t, {"tau": repr(t), "xi": 0}, None
+    named = (0.25, 0.5, 1.0, 2.0)
+    # The movie runs through the moments at a steady tau, a frame every 0.05 of it.
+    moments, keys = ring_moments(named, 0.05, lambda k: front(named[k]), front)
+    times = [t for _, t, _, _ in moments]
+    frames = ring_sequence(ck, src, "Belinski-Zakharov", "belinski_zakharov", "pole", moments, 3.0, params,
+                           axes=("x", "y"))
+    surfaces = [frames[i] for i in keys]
+
+    def rows(tau):
+        tau = np.asarray(tau, dtype=float)
+        up, down = 1.25 * np.cosh(tau) + 1, 1.25 * np.cosh(tau) - 1
+        return np.sqrt(np.sinh(tau) * up / down), np.sqrt(np.sinh(tau) * down / up)
+    a = np.linspace(0, 2 * math.pi, 361)
+    for s, t in zip(frames, times):
+        A, B = rows(t)
+        ck.add(f"Belinski-Zakharov, tau = {t}: the ellipse of semi-axes sqrt(g_xx) and sqrt(g_yy)",
+               float(np.max(np.abs(s.curves[0].points[:, :2] - np.column_stack([A * np.cos(a), B * np.sin(a)])))), 1e-12)
+
+    def plane(tau, A, B):
+        sl = FlatPlane(src, "belinski_zakharov", "pole", "x", "y", {"tau": repr(float(tau)), "xi": 0}, params)
+        return float(np.max(np.abs(sl.scale - [A, B])))
+    tube = stack(ck, "Belinski-Zakharov", surfaces, rows, 2.0, plane, 6.0,
+                 "the world tube of the ring runs on before $\\tau = 0.25$, down to the singularity, and after "
+                 "$\\tau = 2$")
+    tube_fig = stack_figure(tube, 6.0, "$\\tau$", [
+        ("fill", "cover", "the ring at every moment from $\\tau = 0.25$ to $\\tau = 2$, each at the height of its "
+                          "$\\tau$"),
+        ("line", "particles", "the ring at the four moments of the flat view, twelve of its particles marked"),
+        ("line", "worldline", "the world lines of the twelve particles, at rest in the chart"),
+        ("line", "axis", "the axis of $\\tau$, through the centre of the ring")])
+    fig, played = ring_movie(frames, 6.0, "$\\tau$")
+    fig.legend("fill", "cover", "the plane of $x$ and $y$ at each moment, flat")
+    fig.legend("line", "particles", "a ring of free particles at rest on $x^2 + y^2 = \\ell^2$, with twelve of them marked: "
+                                    "an ellipse reaching $\\sqrt{g_{xx}}\\,\\ell$ along $x$ and "
+                                    "$\\sqrt{g_{yy}}\\,\\ell$ along $y$")
+    fig.legend("line", "meridian", "straight lines from the centre, every $30°$")
+    settings = ("$w = 1$ and $\\cosh\\beta = 5/4$, each moment the plane of $x$ and $y$ at one $\\tau$ on $\\xi = 0$, "
+                "midway between the two pulses, with $\\ell$ the ring's radius in $x$ and $y$, the unit of every length.")
+    return [view("tube", "The ring's world tube", "$\\ell$", [tube], tube_fig, settings=settings,
+                 height="$\\tau$, a height of $2\\,\\ell$ for each unit of $\\tau$"),
+            view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(), movie=played, settings=settings)]
+
+
 def bell_szekeres(ck, src):
     """The wave front, the plane of x and y, at the four events xi = 0, 0.5, 0.9 and 1.2 on eta = 0
     of the chart of xi and eta, where au = bv, at a = b = 1: each flat, dx^2 + cos^2(xi) dy^2,
@@ -9320,6 +9906,98 @@ def anti_de_sitter(ck, src):
                  stops=["At every $r > 0$ the circles grow faster than the distance out to them, $g_{rr} < "
                         "(\\partial_r\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution in flat space carries the "
                         "slice; Minkowski space carries it."])]
+
+
+def nordstrom_scalar(ck, src):
+    """Two of Nordstrom's spacetimes. Outside a static body the equator of the moment t = 0 has
+    g_rr = (1 - m/r)^2 and g_phiphi = (r - m)^2, so the circle through r has the radius
+    rho = r - m and grows by d rho = dr while the distance out to it grows by (1 - m/r) dr, less:
+    no surface of revolution in flat space carries it, which is checked. In three dimensional
+    Minkowski space it climbs at dZ/dr = sqrt(1 - (1 - m/r)^2) = sqrt(2mr - m^2)/r, so with
+    s = sqrt(2mr - m^2), Z = 2s - 2m arctan(s/m) - (2 - pi/2) m, counted from the singular point
+    r = m, which the surface leaves along the light cone, dZ/d rho = 1. Far out Z -> 2 sqrt(2mr),
+    the height of Flamm's paraboloid for the Schwarzschild radius 2m, here a timelike height.
+    A chord's proper length near the point is (rho/m) of its extent in rho, so the profile is
+    written to fourteen decimals, steps toward the point by a fortieth of rho at a time, and
+    stops at rho = m/80.
+
+    The dust universe's moment of the inertial time t has g_rr = Phi^2 and g_phiphi = Phi^2 r^2
+    with Phi = 1 - c^2t^2/L^2: a flat plane on which the galaxy at the comoving radius r stands
+    the distance Phi r from the centre. It is drawn out to r = L at five moments from the bang
+    to the crunch and played as a movie with a frame every 0.05 L of ct."""
+    sl = Slice(src, "nordstrom_scalar", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"m": 1}, space="minkowski")
+    flat = Slice(src, "nordstrom_scalar", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"m": 1})
+    ck.stops("Nordstrom, the point mass's equator in flat space", flat, np.linspace(1.0005, 40, 400))
+    top, tip = 6.0, 1.0 + 1.0 / 80
+    size = 2 * (top - 1)
+    steps = int(math.ceil(math.log((2.0 - 1) / (tip - 1)) / math.log(1.025)))
+    knots = [1 + (tip - 1) * 1.025 ** k for k in range(1, steps)]
+    sheet = Piece("sheet", "sheet", sl, tip, top, 0.0, 1,
+                  (("edge", "the surface runs on into the axis along a light cone, to the singularity $r = m$"),
+                   ("edge", "the surface runs on, to $r \\to \\infty$")),
+                  [(r, "r", None) for r in (1.5, 2.0, 3.0, 4.0, 5.0, top)], size, digits=1e-14, knots=knots)
+
+    def height(r):
+        root = np.sqrt(2 * np.asarray(r, dtype=float) - 1)
+        return 2 * root - 2 * np.arctan(root) - (2 - math.pi / 2)
+    ck.isometry("Nordstrom, the point mass in Minkowski space", sheet)
+    ck.radius("Nordstrom, the point mass, rho = r - m", sheet, lambda r: r - 1, size)
+    ck.form("Nordstrom, the point mass, Z = 2s - 2m arctan(s/m) - (2 - pi/2)m with s = sqrt(2mr - m^2)", sheet,
+            lambda r: height(r) - height(tip), size)
+    ck.add("Nordstrom, the point mass: the surface leaves the singular point along the light cone, Z = rho to m/80",
+           abs(float(height(tip)) - (tip - 1)) / (tip - 1), 0.02)
+    ck.add("Nordstrom, the point mass: far out the height is Flamm's for the radius 2m, 2 sqrt(2mr), to a constant",
+           abs(float(height(4e8) - height(1e8)) / (2 * math.sqrt(8e8) - 2 * math.sqrt(2e8)) - 1), 1e-4)
+    cone = FormPiece("cone", sl, np.linspace(1.0, top, 81), lambda r: r - 1.0, lambda r: r - 1.0 - float(height(tip)),
+                     (("apex", "the apex of the light cone, the singular point $r = m$"), ("edge", "the cone runs on")),
+                     size)
+    surface = Surface([sheet, cone])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *sheet.at(2.0), "$r = 2m$")
+    ring_label(fig, [0, 0, 0], *sheet.at(top), "$6m$")
+    fig.legend("fill", "cover", "the equator of the moment $t = 0$ outside the body, which $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1.5$, $2$, $3$, $4$, $5$ and $6\\,m$, circles of radius $r - m$")
+    fig.legend("line", "reference", "the light cone of the Minkowski space it is drawn in, which the surface leaves "
+                                    "at the singular point $r = m$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views = [view("point_mass", "A point mass, in Minkowski space", "$m$", [surface], fig.done(),
+                  settings="$m = 1$, the unit of every length, and every length along the surface measured with "
+                           "$dX^2 + dY^2 - dZ^2$.",
+                  stops=["At every $r > m$ the circles grow faster than the distance out to them, $g_{rr} < "
+                         "(\\partial_r\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution in flat space carries the "
+                         "slice; Minkowski space carries it."])]
+
+    named = (-0.9, -0.6, 0.0, 0.6, 0.9)
+    disc_size = 2.0
+
+    def name(t):
+        return f"$ct/L = {t + 0.0:g}$"
+
+    def moment(t):
+        factor = 1 - t * t
+        dl = Slice(src, "nordstrom_scalar", "dust", "r", "\\phi", {"t": repr(float(t)), **EQUATOR}, {"L": 1})
+        disc = Piece("disc", "sheet", dl, 0.0, 1.0, 0.0, 1,
+                     (("axis", "the galaxy at $r = 0$"), ("edge", "the plane runs on, to $r \\to \\infty$")),
+                     [(0.25, "r", None), (0.5, "r", None), (0.75, "r", None), (1.0, "r", None)], disc_size)
+        where = f"Nordstrom, the dust universe at ct = {t:g} L"
+        ck.plane(where, dl, np.linspace(1e-3, 20, 200))
+        ck.isometry(where, disc)
+        ck.radius(f"{where}, rho = Phi r", disc, lambda r, f=factor: f * r, disc_size)
+        ck.form(f"{where}, a plane", disc, lambda r: 0 * r, disc_size)
+        return Surface([disc], label=name(t), time=t)
+
+    times, keys = movie_values(list(named), 0.05)
+    times = [round(t, 10) for t in times]
+    frames = [moment(t) for t in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, disc_size, meridians=12)
+    fig.legend("fill", "cover", "the equator of the moment, a flat plane, out to the galaxy at $r = L$")
+    fig.legend("line", "r", "galaxies at rest at $r = L/4$, $L/2$, $3L/4$ and $L$, circles of radius $\\Phi r$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    views.append(view("dust", "The dust universe", "$L$", surfaces, fig.done(),
+                      movie=movie(frames, "$ct$", times),
+                      settings="$L = 1$, the unit of every length."))
+    return views
 
 
 def btz(ck, src):
@@ -12295,8 +12973,10 @@ DRAWN = {
     "van_den_broeck": van_den_broeck,
     "rn_metric": rn_metric,
     "bardeen": bardeen,
+    "born_infeld_charge": born_infeld_charge,
     "de_sitter": de_sitter,
     "einstein_static": einstein_static,
+    "elliptic_de_sitter": elliptic_de_sitter,
     "schwarzschild_de_sitter": schwarzschild_de_sitter,
     "kiselev": kiselev,
     "schwarzschild_ads": schwarzschild_ads,
@@ -12312,13 +12992,16 @@ DRAWN = {
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "vaidya": vaidya,
     "israel_shell": israel_shell,
+    "charged_shell": charged_shell,
     "penrose_impulsive_wave": penrose_impulsive_wave,
     "bonnor_vaidya": bonnor_vaidya,
     "oppenheimer_snyder": oppenheimer_snyder,
     "semiclosed_world": semiclosed_world,
+    "white_hole": white_hole,
     "tolman_bondi": tolman_bondi,
     "bertotti_robinson": bertotti_robinson,
     "plebanski_hacyan": plebanski_hacyan,
+    "lindquist_wheeler_lattice": lindquist_wheeler_lattice,
     "stockum_dust": stockum_dust,
     "taub_nut": taub_nut,
     "israel_wilson_perjes": israel_wilson_perjes,
@@ -12344,9 +13027,11 @@ DRAWN = {
     "bianchi": bianchi,
     "pp_wave": pp_wave, "khan_penrose": khan_penrose, "bell_szekeres": bell_szekeres,
     "chandrasekhar_xanthopoulos": chandrasekhar_xanthopoulos,
+    "belinski_zakharov": belinski_zakharov,
     "light_beam": light_beam,
     "krasnikov": krasnikov,
     "tippett_tsang": tippett_tsang,
+    "nordstrom_scalar": nordstrom_scalar,
     "alcubierre": alcubierre,
     "natario": natario,
     "btz": btz,
@@ -12794,6 +13479,28 @@ CAPTIONS = {
         "the rate $\\lambda$ of clocks far away, so the surface is the same at every moment, and light and "
         "matter cross from one side to the other.",
     ],
+    ("born_infeld_charge", "particle"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of Hoffmann's particle ($r_q = r_0/2$, $r_s = 0.618\\,r_0$) at "
+        "one moment of $t$, drawn as a surface in flat space with every distance along it the metric distance. On "
+        "it the metric is $dr^2/(1 - 2m/r) + r^2d\\phi^2$, so $dz/dr = \\sqrt{2m/(r - 2m)}$, with $m$ the mass "
+        "inside $r$.",
+        "The whole mass is the energy of the field, so $m$ vanishes at the centre, as $r_q^2r/r_0^2$. There "
+        "$2m/r \\to 2r_q^2/r_0^2 = 1/2$, and the surface leaves the centre as a cone of slope $1$: a circle of "
+        "radius $r$ about the centre lies a proper distance $\\sqrt{2}\\,r$ from it. The apex is Hoffmann's conical "
+        "singularity, where the Kretschmann scalar grows as $16r_q^4/(r_0^4r^4)$. Far out the surface rises as "
+        "Flamm's paraboloid of the same mass does, $dz/dr \\to \\sqrt{r_s/r}$.",
+    ],
+    ("born_infeld_charge", "hole"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the same charge with more mass than its field holds "
+        "($r_q = r_0/2$, $r_s = 2\\,r_0$) at one moment of $t$, drawn as a surface in flat space with every "
+        "distance along it the metric distance. Here $m$ is positive at the centre, $g^{rr} = 1 - 2m/r$ vanishes "
+        "at $r_h = 1.867\\,r_0$, and the surface stands vertical there.",
+        "The slice passes through the bifurcation sphere $r = r_h$, its throat, into a second exterior, the same "
+        "surface turned over, as Schwarzschild's does through $r_s$. Maxwell's field would put the throat at "
+        "$1.8660\\,r_0$, the outer horizon of Reissner and Nordström's black hole of the same mass and charge, "
+        "and Born and Infeld's field, which holds less energy, moves it out to $1.8666\\,r_0$. Inside the horizon "
+        "$r$ is a time, and no slice of constant $t$ enters there.",
+    ],
     ("bardeen", "outside"): [
         "The equatorial plane ($\\theta = \\pi/2$) of Bardeen's black hole at one moment of $t$ outside its "
         "outer horizon, drawn as a surface in flat space with every distance along it the metric distance. On "
@@ -12869,6 +13576,18 @@ CAPTIONS = {
         "smallest moment of the closed slicing, in which space is a three sphere of radius "
         "$\\ell\\cosh(ct/\\ell)$ that contracts to this waist and expands after it. The two observers can "
         "never exchange light: each hemisphere lies outside the other observer's past and future alike.",
+    ],
+    ("elliptic_de_sitter", "moment"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of elliptic de Sitter space at the moment $t = 0$ of its global "
+        "chart, drawn as a surface in flat space with every distance along it the metric distance. On it the "
+        "metric is $\\ell^2\\left(d\\chi^2 + \\sin^2\\chi\\,d\\phi^2\\right)$, a hemisphere of radius $\\ell$ "
+        "about the observer at $\\chi = 0$. Each point of the rim $\\chi = \\pi/2$ is also the point opposite it, "
+        "so the hemisphere is the whole moment and has no edge.",
+        "A geodesic through the observer leaves through the rim, comes back in at the opposite point, and closes "
+        "after the length $\\pi\\ell$, half the great circle of de Sitter's sphere. The largest distance between "
+        "two points is $\\pi\\ell/2$, from the observer to the rim, which is the observer's horizon $r = \\ell$ of "
+        "the static chart at this moment. The whole of space is the three dimensional version, a ball whose "
+        "boundary sphere is glued to itself in the same way.",
     ],
     ("einstein_static", "sphere"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Einstein static universe at one moment of $t$, "
@@ -13363,6 +14082,45 @@ CAPTIONS = {
         "The equatorial plane ($\\theta = \\pi/2$) of a semiclosed world from its greatest expansion to $c\\tau = 1.50\\,r_s$, just before its throat closes, each moment drawn as a surface in flat space with every distance along it the metric distance. The dust is a sphere of radius $a(\\tau)$ kept from its pole past its equator to $\\chi_0 = 3\\pi/4$, the bag, and it hangs from the outside world by the throat. Above the throat the surface flares out toward infinity, and an observer up there measures the mass $M$ with $2GM/c^2 = a_m\\sin^3\\chi_0$, a twelfth of the mass of the dust in the bag counted grain by grain.",
         "At $\\tau = 0$ the outside is Flamm's paraboloid on both sheets: the stretch behind the throat, from the surface of the dust in to $r_s$, and the far sheet beyond it. The moment then carries on as the moment of clocks released from rest with the dust, Igor Novikov's slicing, and the throat shrinks along its own cycloid to nothing at $c\\tau = \\pi r_s/2$, while the bag has barely begun to fall: at the last moment drawn its radius is still $0.93\\,a_m$. The circles of areal radius $2GM/c^2$ leave the throat on both sides, and two more open out from the equator of the bag.",
     ],
+    ("lindquist_wheeler_lattice", "lattice"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the lattice of eight cells through the centres of two "
+        "opposite cells, as the proper time $\\tau$ of the cell boundaries runs from their moment of rest to "
+        "$c\\tau = 3.36\\,r_s$, each moment drawn as a surface in flat space with every distance along it the "
+        "metric distance. Each cell is a funnel of Schwarzschild's geometry, the moment of clocks falling "
+        "freely with the boundary, and it meets the comparison hypersphere of radius $a(\\tau)$ with one "
+        "tangent: along the proper distance $l$ across the boundary, $dr/dl = \\sqrt{1 - r_s/r_m} = \\cos\\psi$ "
+        "on both sides. That tangency is "
+        "the condition Richard Lindquist and John Wheeler built the lattice on in 1957.",
+        "At $\\tau = 0$ each funnel is Flamm's paraboloid, open at its throat $r = r_s$. As the hypersphere "
+        "shrinks the funnels shrink with it and keep their angle $\\psi$. The shells nearest the throat reach "
+        "$r = 0$ first, at $c\\tau = \\pi r_s/2$, and from then on each funnel ends in a point. The expansion "
+        "before $\\tau = 0$ is the same run of moments in reverse.",
+    ],
+    ("charged_shell", "bounce"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of space around a shell of charged dust that falls in from "
+        "infinity and turns round, from $v - r = -1.5\\,r_s$ to $r_s$, each moment drawn as a surface in flat space "
+        "with every distance along it the metric distance. Outside the shell the moments are slices of constant "
+        "$v - r$, which are spacelike everywhere, between the horizons as well, and carry the metric "
+        "$(1 + r_s/r - r_q^2/r^2)\\,dr^2 + r^2d\\phi^2$. Inside the shell space is flat and the surface is a level "
+        "disc, and the mass of the shell folds the surface where the two meet, at a slope "
+        "$\\sqrt{r_sR - r_q^2}/R$.",
+        "The event horizon forms at the centre at $cT = -1.17\\,r_s$, before the shell arrives, and grows through "
+        "the flat disc at the speed of light to meet the shell at $r_+$. The shell goes on through $r_-$, stops at "
+        "$R = 0.317\\,r_s$ at $v - r = -0.015\\,r_s$, and climbs back toward $r_-$, which it reaches only as "
+        "$v \\to \\infty$. The disc at the bottom of the well stays flat throughout, and the charged field's "
+        "singularity has no place on any slice.",
+    ],
+    ("charged_shell", "point"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of space at $t = 0$ around the balanced shell, "
+        "$\\mu = r_q = r_s/2 = a$, at rest at the isotropic radius $\\epsilon = a$, drawn as a surface in flat "
+        "space with every distance along it the metric distance. Outside the shell the surface is the throat of "
+        "the extreme field, $z = 2s + \\ln((s - 1)/(s + 1))$ with $s = \\sqrt{2r/a - 1}$, which narrows toward the "
+        "radius $a$ and never reaches it. The shell cuts the throat off with a flat disc.",
+        "Arnowitt, Deser, and Misner's point charge is the limit $\\epsilon \\to 0$ at fixed charge. The disc "
+        "then sinks down the throat, its radius $\\epsilon + a$ closing on $a$ and its depth growing as "
+        "$a\\ln(1/\\epsilon)$, while the mass seen from outside stays the same. The three circles on the throat "
+        "below the shell are where it would sit at $\\epsilon = a/4$, $a/16$, and $a/64$.",
+    ],
     ("oppenheimer_snyder", "collapse"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a star of dust collapsing from rest, as the dust's own time "
         "$\\tau$ runs from the release to $c\\tau = 4.39\\,r_s$, each moment drawn as a surface in flat space with "
@@ -13377,6 +14135,19 @@ CAPTIONS = {
         "every moment. Once the surface is inside $r_s$ the slice runs through the horizon, drawn where "
         "$R = 2GM/c^2$, down to the dust, which no slice of constant Schwarzschild $t$ reaches. J. Robert "
         "Oppenheimer and Hartland Snyder worked out this collapse in 1939.",
+    ],
+    ("white_hole", "explosion"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of a core of dust coming out of its singularity, as the dust's own "
+        "time $\\tau$ runs from $c\\tau = 0.06\\,r_s$ to the moment of rest at $4.44\\,r_s$, each moment drawn as "
+        "a surface in flat space with every distance along it the metric distance. The dust is a piece of a closed "
+        "universe, and its slice is a cap of a sphere of radius $a(\\tau)$ out to $\\chi = \\chi_0$, which grows as "
+        "the dust rises while keeping its angle $\\chi_0$. Outside, the moment carries on as the moment of clocks "
+        "that come to rest at every radius when the dust does, Igor Novikov's slicing of Schwarzschild's exterior, "
+        "and the two meet with one tangent, since $1 + 2E = \\cos^2\\chi_0$ on both sides of the surface.",
+        "At first the cap is a small cup at the foot of a deep well, and the slice runs down to it through the past "
+        "horizon, drawn where $R = 2GM/c^2$, which no slice of constant Schwarzschild $t$ crosses. As the dust rises "
+        "the well fills from below, the surface passes the horizon at $c\\tau = 0.81\\,r_s$, and at the moment of "
+        "rest the outside is Flamm's paraboloid, with the dust sitting in it as Schwarzschild's star does.",
     ],
     ("tolman_bondi", "cloud"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a cloud of dust collapsing from rest, densest at its "
@@ -13996,6 +14767,27 @@ CAPTIONS = {
         "out in 1908 the geometry in which space at one moment of any inertial observer is this flat space of "
         "Euclid.",
     ],
+    ("nordstrom_scalar", "point_mass"): [
+        "The equatorial plane ($\\theta = \\pi/2$) outside a static body in Nordström's theory at the moment $t = 0$, "
+        "drawn as a surface in three dimensional Minkowski space with every distance along it, measured with $dX^2 + "
+        "dY^2 - dZ^2$, the metric distance. The circle through $r$ has the radius $r - m$, so it grows by $dr$ "
+        "while the distance out to it grows by $(1 - m/r)\\,dr$, and every circle grows faster than the distance "
+        "out to it, which no surface of revolution in flat space allows.",
+        "The surface climbs at $dZ/dr = \\sqrt{2mr - m^2}/r$. Far from the body its height is $2\\sqrt{2mr}$, the "
+        "height of Flamm's paraboloid for a Schwarzschild radius of $2m$, but a timelike height where "
+        "Schwarzschild's is spacelike: space is curved the opposite way, and by the same amount. Toward $r = m$ "
+        "the circles shrink to a point, the singularity, which the surface enters along the light cone, dashed.",
+    ],
+    ("nordstrom_scalar", "dust"): [
+        "The equator ($\\theta = \\pi/2$) of space in Nordström's universe of dust as the inertial time runs from "
+        "$ct = -0.9\\,L$ to $0.9\\,L$, each moment drawn as a surface in flat space with every distance along it the "
+        "metric distance. Each moment is a flat plane, on which the galaxy at the comoving radius $r$ stands a "
+        "distance $\\Phi r$ from the centre, with $\\Phi = 1 - c^2t^2/L^2$.",
+        "The galaxies keep their places in the chart while every distance between them grows from zero at the "
+        "bang, $ct = -L$, to its largest at $t = 0$ and falls back to zero at the crunch, $ct = L$. Gravity "
+        "decelerates the expansion at the steady rate $d^2\\Phi/d(ct)^2 = -2/L^2$, so the dust turns round and "
+        "falls back however fast it starts.",
+    ],
     ("anti_de_sitter", "hyperboloid"): [
         "The equatorial plane ($\\theta = \\pi/2$) of anti-de Sitter space at the moment $t = 0$ of its static chart, "
         "drawn as a surface in three dimensional Minkowski space with every distance along it, measured with $dX^2 + "
@@ -14103,6 +14895,23 @@ CAPTIONS = {
         "The world tube of a ring of free particles at rest before the pulse ($A = e^{-u^2}/L^2$), each wave front "
         "from $cu = -3\\,L$ to the focus at $cu = 0.66\\,L$ an ellipse at the height of its $u$. The pulse stretches "
         "the tube along $x$ and squeezes it along $y$ until it closes on a segment of the $x$ axis at the focus.",
+    ],
+    ("belinski_zakharov", "tube"): [
+        "The world tube of a ring of free particles at rest midway between the two pulses of the wave of two "
+        "solitons ($w = 1$, $\\cosh\\beta = 5/4$), each moment on $\\xi = 0$ from $\\tau = 0.25$ to $\\tau = 2$ an "
+        "ellipse at the height of its $\\tau$. Kasner's universe alone would widen the ring as a circle of radius "
+        "$\\sqrt{\\sinh\\tau}\\,\\ell$. The pulses draw it out along $x$ and squeeze it along $y$, with axes in the "
+        "ratio $(\\cosh\\beta\\cosh\\tau + 1)/(\\cosh\\beta\\cosh\\tau - 1)$, which falls to $1$ as they run off along "
+        "$\\xi = \\pm\\tau$.",
+    ],
+    ("belinski_zakharov", "ring"): [
+        "The plane of $x$ and $y$ as $\\tau$ runs from $0.25$ to $2$ on $\\xi = 0$, midway between the two pulses, "
+        "each moment drawn as a surface in flat space with every distance along it the metric distance. At each moment the "
+        "plane has the metric $g_{xx}dx^2 + g_{yy}dy^2$ with constant coefficients, since $g_{xy}$ vanishes on "
+        "$\\xi = 0$, so the drawing is a flat disc, and the wave shows in a ring of free particles at rest on the "
+        "circle $x^2 + y^2 = \\ell^2$ of the chart.",
+        "Near the singularity, where the pulses overlap, the ring is a long ellipse along $x$. As they leave it "
+        "grows and rounds off toward the circle of the Kasner universe behind them.",
     ],
     ("khan_penrose", "tube"): [
         "The world tube of a ring of free particles at rest on the wave front where both waves have passed ($L = 1$), "

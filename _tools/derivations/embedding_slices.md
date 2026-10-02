@@ -503,6 +503,16 @@ On the view through the nut it is the same line, which the page mirrors, and on 
   At $4.01$ and $4.39\,r_s$ the inner shells are inside the horizon, and each curve rises toward $t = \infty$ as its shells near $r_s$, leaving the box through its top edge, $ct = 6\,r_s$, near $r = 1.6$ and $1.9\,r_s$.
 - `collapse`, the dust and the exterior joined at the star's surface: four curves, each a line $T = \eta$ across the dust and Novikov's curve outside it through the Kruskal coordinates of each shell, met at the surface.
 
+### Lindquist-Wheeler lattice
+
+- The embedding is four moments of the proper time of the cell boundaries since they were at rest, $c\tau = 0$, $2.16$, $3.07$ and $3.36\,r_s$, which are $\eta = 0$, $0.35\pi$, $0.6\pi$ and $0.8\pi$ of $a = \tfrac{a_m}{2}(1 + \cos\eta)$ for the lattice of eight cells.
+  In each of two opposite cells it is the moment of constant $\tau$ of Lindquist and Wheeler's comoving chart, $\rho$ from the innermost shell still there to the boundary $r_m = 1.675\,r_s$; between them it is the comparison hypersphere, $\chi$ from $\psi$ to $\pi - \psi$.
+- `lindquist_wheeler/shells`: four lines of constant $c\tau$, the first from the throat $\rho = r_s$ and the others from the shell that has just reached $r = 0$, $\rho = (2c\tau/\pi)^{2/3}r_s^{1/3}$.
+- `comparison_hypersphere/radial`, drawn in units of $a_m$: four lines of constant $c\tau/a_m$ between the two cell boundaries.
+- `schwarzschild_cell/radial`: Novikov's curves, as outside Oppenheimer and Snyder's star, drawn where $r > r_s$. The first is the line $t = 0$ from $r_s$ to $r_m$ and the second runs from the boundary at $r = 1.22\,r_s$, $ct = 4.20\,r_s$ up through the top of the box; at $3.07$ and $3.36\,r_s$ the boundary is inside the horizon, so the whole moment is, and nothing of it is drawn.
+- `cosmological_time/radial` and the conformal view of that chart: not drawn, since the moments are of the cell while it contracts and the chart covers it while it expands.
+- The conformal views of the cell: four curves through the Kruskal coordinates of each shell, in the Schwarzschild cell's view and the comoving view; on the hypersphere's rectangle, four lines $T = \eta$ between the boundaries.
+
 ### pp-wave
 
 - The embedding is the wave front $x$, $y$ of four values of the retarded time, $cu = -3$, $-0.5$, $0$ and $0.661\,L$.
@@ -524,6 +534,14 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `static/radial`: both views on the line $t = 0$, from $r_+$ to the box's edge at $2\,r_s$ and from $0$ to $r_-$, with the region between the horizons, where $t$ is no time, between them.
 - The Eddington-Finkelstein views: the moment is $v = r_*$ in the ingoing chart and $u = -r_*$ in the outgoing one, with $r_* = 0$ at the centre, each curve running off toward the horizon its view ends on.
 - `tower`, `ingoing` and `outgoing`: the outside view is the line $T = 0$ through the outer bifurcation point, on the outgoing view the line $T = 2\pi$ of the exterior that chart covers, and the inside view is the line $T = \pi$ through the inner bifurcation point, from one centre to the other.
+
+### Born and Infeld's point charge
+
+- The embedding has two views at one moment of $t$, drawn at $t = 0$, in units of $r_0$ at $r_q = r_0/2$: Hoffmann's particle, $r$ from the centre to $4\,r_0$, and the black hole, $r$ from $r_h = 1.867\,r_0$ to $8\,r_0$ on both sheets through the bifurcation sphere.
+- The two are two spacetimes of one line element, so each drawing marks the moment of its own.
+- `static/particle` and `static/hole`: the line $t = 0$, from the centre or from $r_h$ to the box's edge at $4\,r_0$.
+- The Eddington-Finkelstein views: the moment is $v = r_*$ in the ingoing chart and $u = -r_*$ in the outgoing one, with $r_* = 0$ at the centre, the black hole's curve running off toward the horizon.
+- The conformal views: the particle's moment is the line $T = 0$ from the centre toward $i^0$, and the black hole's the line $T = 0$ through the bifurcation point.
 
 ### Schwarzschild
 
@@ -730,6 +748,16 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `exterior_ingoing/shell`, drawn against $v - r$: level lines from the shell, or from $r = 0$, to $4\,r_s$.
 - The conformal views: each moment through the flat map inside the shell and the ingoing chart's map outside it, met at the shell.
 
+### The charged shell
+
+- The embedding's first view is four moments of the falling shell, $v - r = -1.5$, $-0.5$, $0$ and $1\,r_s$ of the ingoing chart outside the shell, each carried on inside the shell as the moment of the flat time $T$ at which it meets the shell: the shell outside $r_+$, between the horizons, just past its turn, and climbing back toward $r_-$.
+- `interior/radial` and `interior/through`: level lines $T = T(w)$ from the centre to the shell.
+- `exterior/radial`: the curves $ct = w + r - r_*$ outside $r_+$, which leave the drawing toward $r_+$.
+- `exterior/inside`: the same curves inside $r_-$, for the two moments at which the shell is inside $r_-$; the first two are not visible.
+- `exterior_ingoing/shell`, drawn against $v - r$: level lines from the shell to $2\,r_s$.
+- `exterior_outgoing/shell`, drawn against $u + r$: the curves $u + r = w + 2r - 2r_*$ inside $r_-$, the one region the two null charts share, for the same two moments.
+- The first four conformal views: each moment through the flat map inside the shell and the ingoing chart's map outside it, met at the shell.
+- The second view is the balanced shell at rest, another spacetime of the same page, at $t = 0$: a level line from the shell out on `exterior_isotropic/point`, and the level line $T = 0$ of the fifth conformal view; no drawing of the falling shell marks it, and its own mark no moment of the falling shell.
 ### Penrose's impulsive wave
 
 - The embedding is four moments of the plane across the string through the break, $ct = \ell/4$, $\ell$, $7\ell/4$ and $5\ell/2$ behind the wave, each carried on ahead of the wave as the moment $T = t/\beta$ of the string's rest frame, which it meets on the front; `penrose_impulsive_wave.md` Step 6 is the map.
@@ -784,11 +812,13 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Mixmaster | none drawn | none | none drawn |
 | Morris-Thorne | line | none | line, line |
 | Natário | line | none | none drawn |
+| Lindquist-Wheeler lattice | eight lines, two curves; not visible on the cosmological time view | none | eight curves, four lines; not visible on the cosmological time view |
 | Oppenheimer-Snyder | four lines, four curves | none | four curves |
 | point particles in three dimensions | five lines; not visible on the two bodies' views | whole drawing; not visible on the moving wedge | five lines; not visible on the two bodies' view |
 | pp-wave | four null lines | none | none drawn |
 | Reissner-Nordström | two lines once redrawn at $r_q = 0.48\,r_s$ | none | two lines, twice |
 | Bardeen | two lines, two curves four times | none | two lines, three times |
+| Born-Infeld point charge | two lines, six curves | none | line, six times |
 | Schwarzschild | line, four curves | none | line, three times |
 | semiclosed world | five lines, twice; line and four curves, twice | none | five curves, four times |
 | Kiselev | two lines, four curves; line and curve for the matter alone | none | line, four times; line, twice |
@@ -805,6 +835,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 | Lifshitz | line in each static chart and on each plane of $t$ and $x$, curve in each null chart | not visible: $t$ left out | six curves |
 | Wahlquist | line on each view of Wahlquist's chart and of Whittaker's; not visible on Mars's two | none | none drawn |
 | Israel's shell | level lines inside the shell and against $v - r$, curves in Schwarzschild's chart | none | four curves |
+| The charged shell | level lines inside the shell, against $v - r$ and in the isotropic chart; curves in the static chart and against $u + r$ | none | four curves, and a level line for the shell at rest |
 | Penrose's impulsive wave | level lines either side of the front, a bent line on the retarded equator, points on the null planes; none on the plane $30°$ from the string | none | four curves, four points on the null plane |
 | Vaidya | three lines, four with the box taken to $-3\,r_s$; not visible on the outgoing view | none | four curves |
 

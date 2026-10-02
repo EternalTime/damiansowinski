@@ -83,6 +83,11 @@
       "id": "semiclosed_world",
       "kind": "family",
       "text": "One more moment of time symmetry: a closed universe of dust behind a single throat. The name bag of gold began in Wheeler's lectures on data of this kind [marolf2009]."
+    },
+    {
+      "id": "lindquist_wheeler_lattice",
+      "kind": "family",
+      "text": "A whole universe of such holes. Put $N$ of them on a three sphere in place of flat space and the same construction gives one moment of Lindquist and Wheeler's lattice exactly [wheeler1983, clifton2012]."
     }
   ],
   "references": [
@@ -111,7 +116,9 @@
     "kastor1993",
     "brill1994",
     "wheeler1955",
-    "marolf2009"
+    "marolf2009",
+    "wheeler1983",
+    "clifton2012"
   ],
   "coordinates": [
     {
