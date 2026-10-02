@@ -857,7 +857,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "339a0bb98eacf507",
+    "version": "884a701cdf2d04c1",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -947,7 +947,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "230a0d98e012d835",
+    "version": "b0d4cb4c0f1bdb7a",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -1436,6 +1436,49 @@
     "embedding": "5d574463e63f1df8"
   },
   {
+    "id": "myers_perry",
+    "name": "Myers-Perry",
+    "tags": [
+      "vacuum",
+      "vacuum solution",
+      "rotating",
+      "rotating black hole",
+      "black hole",
+      "stationary",
+      "axisymmetric",
+      "angular momentum",
+      "mass",
+      "ergosphere",
+      "frame dragging",
+      "ultra-spinning",
+      "singularity",
+      "curvature singularity",
+      "ring singularity",
+      "conical singularity",
+      "horizon",
+      "event horizon",
+      "Cauchy horizon",
+      "causal structure",
+      "asymptotically flat",
+      "higher dimensions",
+      "extra dimensions",
+      "five-dimensional",
+      "six-dimensional",
+      "Kerr-Schild",
+      "black ring",
+      "black hole uniqueness",
+      "Hopf fibration",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "c53cb9572aef17e6",
+    "diagrams": "fbe2465fce912260",
+    "conformal": "1a4a12f584d5c79c",
+    "embedding": "d6b5347d467d964c"
+  },
+  {
     "id": "nariai",
     "name": "Nariai",
     "tags": [
@@ -1885,7 +1928,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "48f4bd230e2386a6",
+    "version": "37bdbdf31790cd51",
     "diagrams": "d1e087098b20d92d",
     "conformal": "94cab2e957646c35",
     "embedding": "68458b3281a24534"

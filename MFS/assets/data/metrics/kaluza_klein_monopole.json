@@ -60,6 +60,11 @@
       "id": "black_string",
       "kind": "family",
       "text": "Another vacuum solution of five dimensions with one direction rolled into a circle. Seen from four dimensions it is Schwarzschild's black hole, where the monopole is a magnetic charge [gregory2012]."
+    },
+    {
+      "id": "myers_perry",
+      "kind": "family",
+      "text": "A rotating black hole in five dimensions. With equal spins in its two planes each surface around it is a squashed 3-sphere as well, its Hopf circles stretched by the rotation where the monopole's shrink [emparan2008]."
     }
   ],
   "references": [
@@ -78,7 +83,8 @@
     "ruback1986",
     "bombelli1987",
     "townsend1995",
-    "gregory2012"
+    "gregory2012",
+    "emparan2008"
   ],
   "coordinates": [
     {

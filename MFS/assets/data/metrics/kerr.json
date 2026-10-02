@@ -67,6 +67,11 @@
       "id": "kerr_de_sitter",
       "kind": "generalisation",
       "text": "Kerr's black hole in a universe with a cosmological constant of either sign. At $\\Lambda = 0$ Carter's metric is Kerr's [carter1968separable]."
+    },
+    {
+      "id": "myers_perry",
+      "kind": "generalisation",
+      "text": "Kerr's black hole in more than four dimensions, with a spin for every independent plane of rotation. From six dimensions up a hole turning in one plane keeps its horizon at every spin [myers1986]."
     }
   ],
   "references": [
@@ -95,7 +100,8 @@
     "obregon1998",
     "garfinkle1999",
     "mazza2021",
-    "carter1968separable"
+    "carter1968separable",
+    "myers1986"
   ],
   "coordinates": [
     {

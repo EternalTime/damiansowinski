@@ -5,8 +5,8 @@ schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
-damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser, bardeen, hayward, fisher_jnw and
-black_string, and Godel's cylindrical chart.
+damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
+black_string and myers_perry, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -6450,6 +6450,272 @@ def black_string_pullback(chart, system_id):
 
 
 CHARTS["black_string"] = [lambda s=s: black_string(s) for s in BLACK_STRING_CHARTS]
+
+
+# -- Myers-Perry -------------------------------------------------------------------------
+
+MP_CHARTS = ["boyer_lindquist", "ingoing_kerr", "two_spins", "equal_spins", "boyer_lindquist_six"]
+
+
+def myers_perry_pretty(theta, named):
+    """A value factored with sin^2 theta written as 1 - cos^2 theta, the angle Sigma is written
+    in, so that r^2 + a^2 cos^2 theta comes out as a factor. Each (sum, symbol) of `named` is
+    then written as its symbol, a pair of conjugate factors as their product, as
+    r^2 - a^2 cos^2 theta, (cos + 1)(cos - 1) as -sin^2 and (sin + 1)(sin - 1) as -cos^2, and
+    every other sum in whichever of sin^2 and cos^2 leaves it fewer terms, the cosine where
+    they tie."""
+    s, c = sp.sin(theta), sp.cos(theta)
+
+    def in_cosine(e):
+        return e.replace(lambda p: p.is_Pow and p.base == s and p.exp.is_Integer and p.exp > 1,
+                         lambda p: s ** (int(p.exp) % 2) * (1 - c ** 2) ** (int(p.exp) // 2))
+
+    def in_sine(e):
+        return e.replace(lambda p: p.is_Pow and p.base == c and p.exp.is_Integer and p.exp > 1,
+                         lambda p: c ** (int(p.exp) % 2) * (1 - s ** 2) ** (int(p.exp) // 2))
+
+    names = [(sp.expand(in_cosine(sp.expand(e))), symbol) for e, symbol in named]
+
+    def pretty(value):
+        powers = {}
+        for f in sp.Mul.make_args(sp.factor(in_cosine(sp.sympify(value)))):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            powers[base] = powers.get(base, 0) + k
+        out = sp.Integer(1)
+        for trig, other in ((c, s), (s, c)):
+            up, down = powers.get(trig + 1, 0), powers.get(trig - 1, 0)
+            k = min(up, down) if up > 0 and down > 0 else max(up, down) if up < 0 and down < 0 else 0
+            if k != 0:
+                powers[trig + 1] -= k
+                powers[trig - 1] -= k
+                powers[other] = powers.get(other, 0) + 2 * k
+                out *= sp.Integer(-1) ** abs(k)
+        # (p + q)(p - q) is written p^2 - q^2 where both stand to the same power.
+        sums = [b for b in powers if b.is_Add and len(b.args) == 2 and powers[b] != 0]
+        for i, one in enumerate(sums):
+            for other in sums[i + 1:]:
+                product = sp.expand(one * other)
+                if powers[one] == powers[other] != 0 and len(sp.Add.make_args(product)) == 2:
+                    powers[product] = powers.get(product, 0) + powers[one]
+                    powers[one] = powers[other] = 0
+        for base, k in powers.items():
+            if base.is_Add:
+                flat = sp.expand(base)
+                for e, symbol in names:
+                    if sp.expand(flat - e) == 0:
+                        base = symbol
+                        break
+                    if sp.expand(flat + e) == 0:
+                        base = -symbol
+                        break
+                else:
+                    sine = sp.expand(in_sine(base))
+                    if len(sp.Add.make_args(sine)) < len(sp.Add.make_args(flat)):
+                        base = sine
+            out *= base ** k
+        return out
+    return pretty
+
+
+def myers_perry(system_id):
+    """Myers and Perry's rotating black hole, Ann. Phys. 172, 304 (1986), in five charts.
+
+    boyer_lindquist: D = 5 with one spin, Emparan and Reall's (32) at d = 5 (Living Rev. Rel.
+    11, 6), whose sign of a is rotation toward increasing phi.
+    ingoing_kerr: the same hole in Myers's Eddington-like coordinates, his (1.27) for odd d
+    (arXiv:1111.1903), with the null v = c t_+ + r for the time and phi -> -phi.
+    two_spins: D = 5 with both spins, Myers's (1.66) with phi_i -> -phi_i.
+    equal_spins: the two-spin hole at b = a, cohomogeneity one, in the radius rho^2 = r^2 + a^2
+    and the Euler angles of the 3-sphere, the form of Kunduri, Lucietti and Reall, Phys. Rev.
+    D 74, 084021 (2006).
+    boyer_lindquist_six: D = 6 with one spin, Emparan and Reall's (32) at d = 6.
+
+    Every chart after the first is checked against another by a pullback or a limit, slot by
+    slot: myers_perry_check. myers_perry.md derives each."""
+    reals = "(-\\infty, \\infty)"
+    turn = " \\in [0, 2\\pi)"
+    SIG = "r^2 + a^2\\cos^2\\theta"
+    spec = {"metric_id": "myers_perry"}
+    if system_id in ("boyer_lindquist", "boyer_lindquist_six", "ingoing_kerr"):
+        six = system_id == "boyer_lindquist_six"
+        ingoing = system_id == "ingoing_kerr"
+        time_name, azimuth = ("v", "\\tilde\\phi") if ingoing else ("t", "\\phi")
+        coords = [time_name, "r", "\\theta", azimuth] + (["\\chi", "\\psi"] if six else ["\\psi"])
+        parameters = ["\\mu", "a"]
+        probe = vm.Reader(coords, parameters, ())
+        r, th = probe.symbol["r"], probe.symbol["\\theta"]
+        mu, a = probe.parameters["mu"], probe.parameters["a"]
+        S = sp.Symbol("MP_Sigma", positive=True)
+        named, pairs = {S: SIG}, [(r ** 2 + a ** 2 * sp.cos(th) ** 2, S)]
+        mass = "\\dfrac{\\mu}{r\\left(" + SIG + "\\right)}" if six else "\\dfrac{\\mu}{" + SIG + "}"
+        delta = "r^2 + a^2 - \\dfrac{\\mu}{r}" if six else "r^2 + a^2 - \\mu"
+        sphere = ("r^2\\cos^2\\theta\\left(d\\chi^2 + \\sin^2\\chi\\,d\\psi^2\\right)" if six
+                  else "r^2\\cos^2\\theta\\,d\\psi^2")
+        polar = "\\theta \\in [0, \\pi/2]"
+        transverse = ["\\chi \\in [0, \\pi]", "\\psi" + turn] if six else ["\\psi" + turn]
+
+        def line(c):
+            if ingoing:
+                return ("ds^2 = -dv^2 + 2\\,dv\\,dr - 2a\\sin^2\\theta\\,dr\\,d\\tilde\\phi + \\left(" + SIG
+                        + "\\right)d\\theta^2 + \\left(r^2 + a^2\\right)\\sin^2\\theta\\,d\\tilde\\phi^2 + " + sphere
+                        + " + " + mass + "\\left(dv - a\\sin^2\\theta\\,d\\tilde\\phi\\right)^2")
+            return ("ds^2 = -" + c + "dt^2 + " + mass + "\\left(" + ("c\\," if c else "")
+                    + "dt - a\\sin^2\\theta\\,d\\phi\\right)^2 + \\dfrac{" + SIG + "}{" + delta + "}dr^2 + \\left("
+                    + SIG + "\\right)d\\theta^2 + \\left(r^2 + a^2\\right)\\sin^2\\theta\\,d\\phi^2 + " + sphere)
+
+        if ingoing:
+            name = "Ingoing Kerr, One Spin, Five Dimensions"
+            domains = ["v \\in " + reals, "r \\in (0, \\infty)", polar, "\\tilde\\phi" + turn] + transverse
+            domains += ["r = \\sqrt{\\mu - a^2} \\;\\text{(the horizon)}", "r = 0 \\;\\text{(singularity)}"]
+        else:
+            name = "Boyer-Lindquist, One Spin, " + ("Six" if six else "Five") + " Dimensions"
+            domains = ["t \\in " + reals, "r \\in (r_+, \\infty)", polar, "\\phi" + turn] + transverse
+            domains += ["r_+^3 + a^2r_+ = \\mu \\;\\text{(the horizon)}" if six
+                        else "r_+ = \\sqrt{\\mu - a^2} \\;\\text{(the horizon)}"]
+        over = "\\dfrac{\\mu}{r\\left(" + SIG + "\\right)}" if six else "\\dfrac{\\mu}{" + SIG + "}"
+        spun = "\\left(r^2 + a^2 + " + over.replace("\\mu", "\\mu a^2\\sin^2\\theta") + "\\right)\\sin^2\\theta"
+        metric = {(time_name, time_name): "-\\left(1 - " + over + "\\right)", (azimuth, azimuth): spun}
+        inverse = {}
+        if not six:
+            inverse[("\\psi", "\\psi")] = "\\dfrac{1}{r^2\\cos^2\\theta}"
+        spec.update({
+            "system": {"id": system_id, "name": name, "coords": coords, "domains": domains,
+                       "parameters": parameters, "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"lead": [r, a, mu], "factors": [mu, a, r], "flip": False, "named": named},
+            "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        })
+    elif system_id == "two_spins":
+        coords, parameters = ["t", "r", "\\theta", "\\phi", "\\psi"], ["\\mu", "a", "b"]
+        probe = vm.Reader(coords, parameters, ())
+        r, th = probe.symbol["r"], probe.symbol["\\theta"]
+        mu, a, b = (probe.parameters[k] for k in ("mu", "a", "b"))
+        SIG = "r^2 + a^2\\cos^2\\theta + b^2\\sin^2\\theta"
+        DEL = "\\left(r^2 + a^2\\right)\\left(r^2 + b^2\\right) - \\mu r^2"
+        S, D = sp.Symbol("MP_Sigma", positive=True), sp.Symbol("MP_Delta", positive=True)
+        named = {S: SIG, D: DEL}
+        pairs = [(r ** 2 + a ** 2 * sp.cos(th) ** 2 + b ** 2 * sp.sin(th) ** 2, S),
+                 ((r ** 2 + a ** 2) * (r ** 2 + b ** 2) - mu * r ** 2, D)]
+
+        def line(c):
+            return ("ds^2 = -" + c + "dt^2 + \\dfrac{\\mu}{" + SIG + "}\\left(" + ("c\\," if c else "")
+                    + "dt - a\\sin^2\\theta\\,d\\phi - b\\cos^2\\theta\\,d\\psi\\right)^2 + \\dfrac{r^2\\left(" + SIG
+                    + "\\right)}{" + DEL + "}dr^2 + \\left(" + SIG + "\\right)d\\theta^2 + \\left(r^2 + a^2\\right)"
+                    "\\sin^2\\theta\\,d\\phi^2 + \\left(r^2 + b^2\\right)\\cos^2\\theta\\,d\\psi^2")
+
+        over = "\\dfrac{\\mu}{" + SIG + "}"
+        spec.update({
+            "system": {"id": system_id, "name": "Boyer-Lindquist, Two Spins, Five Dimensions", "coords": coords,
+                       "domains": ["t \\in " + reals, "r \\in (r_+, \\infty)", "\\theta \\in [0, \\pi/2]",
+                                   "\\phi" + turn, "\\psi" + turn,
+                                   "2r_\\pm^2 = \\mu - a^2 - b^2 \\pm \\sqrt{\\left(\\mu - a^2 - b^2\\right)^2 - 4a^2b^2}"
+                                   " \\;\\text{(the horizons)}"],
+                       "parameters": parameters, "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"lead": [r, a, b, mu], "factors": [mu, a, b, r], "flip": False, "named": named},
+            "components": {"metric_components": {
+                ("t", "t"): "-\\left(1 - " + over + "\\right)",
+                ("\\phi", "\\phi"): "\\left(r^2 + a^2 + " + over.replace("\\mu", "\\mu a^2\\sin^2\\theta")
+                + "\\right)\\sin^2\\theta",
+                ("\\psi", "\\psi"): "\\left(r^2 + b^2 + " + over.replace("\\mu", "\\mu b^2\\cos^2\\theta")
+                + "\\right)\\cos^2\\theta"}},
+        })
+    else:
+        coords, parameters = ["t", "\\rho", "\\theta", "\\phi", "\\psi"], ["\\mu", "a"]
+        probe = vm.Reader(coords, parameters, ())
+        rho, th = probe.symbol["\\rho"], probe.symbol["\\theta"]
+        mu, a = probe.parameters["mu"], probe.parameters["a"]
+        pairs, named = [], {}
+        G = "1 - \\dfrac{\\mu}{\\rho^2} + \\dfrac{\\mu a^2}{\\rho^4}"
+
+        def line(c):
+            return ("ds^2 = -" + c + "dt^2 + \\dfrac{\\mu}{\\rho^2}\\left(" + ("c\\," if c else "")
+                    + "dt - \\dfrac{a}{2}\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)\\right)^2 + \\dfrac{d\\rho^2}{" + G
+                    + "} + \\dfrac{\\rho^2}{4}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2 + \\left(d\\psi + "
+                    "\\cos\\theta\\,d\\phi\\right)^2\\right)")
+
+        spec.update({
+            "system": {"id": system_id, "name": "Equal Spins, Five Dimensions", "coords": coords,
+                       "domains": ["t \\in " + reals, "\\rho \\in \\left(\\sqrt{\\dfrac{\\mu + \\sqrt{\\mu^2 - 4\\mu a^2}}{2}}, \\infty\\right)",
+                                   "\\theta \\in [0, \\pi]",
+                                   "\\phi" + turn, "\\psi \\in [0, 4\\pi)",
+                                   "2\\rho_\\pm^2 = \\mu \\pm \\sqrt{\\mu^2 - 4\\mu a^2} \\;\\text{(the horizons)}",
+                                   "\\rho = 0 \\;\\text{(singularity)}"],
+                       "parameters": parameters, "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"lead": [rho, a, mu], "factors": [mu, a, rho], "flip": False},
+            "components": {"metric_components": {
+                ("t", "t"): "-\\left(1 - \\dfrac{\\mu}{\\rho^2}\\right)",
+                ("\\rho", "\\rho"): "\\left(" + G + "\\right)^{-1}"},
+                "inverse_metric_components": {("\\rho", "\\rho"): G}},
+        })
+    pretty = myers_perry_pretty(th, pairs)
+    spec["pretty"] = spec["bracketed"] = pretty
+    if system_id != "boyer_lindquist":
+        spec["check"] = lambda chart, s=system_id: myers_perry_check(chart, s)
+    return spec
+
+
+def myers_perry_check(chart, system_id):
+    """Each chart against another, in every slot. The ingoing chart is the Boyer-Lindquist one
+    pulled back through c dt = dv - (r^2 + a^2) dr/Delta and d phi = d phitilde - a dr/Delta.
+    The two-spin chart at b = 0 is the Boyer-Lindquist one. The equal-spin chart is the
+    two-spin one at b = a pulled back through r^2 = rho^2 - a^2, theta -> theta/2,
+    phi -> (psi - phi)/2 and psi -> (psi + phi)/2. The six-dimensional chart at a = 0 is
+    Tangherlini's 1 - mu/r^3 on its plane of t and r, and its metric at mu = 0 is flat."""
+    def source(system):
+        spec = myers_perry(system)
+        return cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+
+    def compare(pulled, own, what):
+        n = own.shape[0]
+        for i in range(n):
+            for j in range(i, n):
+                if sp.simplify(pulled[i, j] - own[i, j]) != 0:
+                    raise AssertionError(f"myers_perry: {what} misses the {system_id} chart in slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+    own = chart.geo.g
+    mu, a = chart.reader.parameters["mu"], chart.reader.parameters["a"]
+    if system_id == "ingoing_kerr":
+        bl = source("boyer_lindquist")
+        v, r, th, ph, ps = chart.symbols
+        delta = r ** 2 + a ** 2 - mu
+        J = sp.eye(5)
+        J[0, 1], J[3, 1] = -(r ** 2 + a ** 2) / delta, -a / delta
+        at = dict(zip(bl.symbols, chart.symbols))
+        at.update({bl.reader.parameters[k]: chart.reader.parameters[k] for k in ("mu", "a")})
+        compare(J.T * bl.geo.g.subs(at, simultaneous=True) * J, own, "the Boyer-Lindquist chart pulled back")
+    elif system_id == "two_spins":
+        bl = source("boyer_lindquist")
+        at = dict(zip(bl.symbols, chart.symbols))
+        at.update({bl.reader.parameters[k]: chart.reader.parameters[k] for k in ("mu", "a")})
+        compare(bl.geo.g.subs(at, simultaneous=True), own.subs(chart.reader.parameters["b"], 0),
+                "the one-spin chart at b = 0")
+    elif system_id == "equal_spins":
+        two = source("two_spins")
+        t, rho, th, ph, ps = chart.symbols
+        radius = sp.sqrt(rho ** 2 - a ** 2)
+        image = [t, radius, th / 2, (ps - ph) / 2, (ps + ph) / 2]
+        J = sp.Matrix(5, 5, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+        at = dict(zip(two.symbols, image))
+        at.update({two.reader.parameters["mu"]: mu, two.reader.parameters["a"]: a, two.reader.parameters["b"]: a})
+        pulled = (J.T * two.geo.g.subs(at, simultaneous=True) * J).applyfunc(
+            lambda e: sp.simplify(sp.expand_trig(e)))
+        compare(pulled, own, "the two-spin chart at b = a pulled back")
+    else:
+        t, r = chart.symbols[:2]
+        static = own.subs(a, 0)
+        if sp.simplify(static[0, 0] + 1 - mu / r ** 3) != 0 or sp.simplify(static[1, 1] * (1 - mu / r ** 3) - 1) != 0:
+            raise AssertionError("myers_perry: the six-dimensional chart at a = 0 is not Tangherlini's")
+        flat = vm.Geometry(own.subs(mu, 0), chart.symbols, 10 ** 6)
+        if any(x != 0 for x in sp.flatten(flat.riemann_ulll())):
+            raise AssertionError("myers_perry: the six-dimensional chart at mu = 0 is not flat")
+    if any(x != 0 for x in sp.flatten(chart.geo.ricci_ll())):
+        raise AssertionError(f"myers_perry: the {system_id} chart is not Ricci flat")
+
+
+CHARTS["myers_perry"] = [lambda s=s: myers_perry(s) for s in MP_CHARTS]
 
 
 def write(spec):

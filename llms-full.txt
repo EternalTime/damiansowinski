@@ -766,6 +766,20 @@ A traversable wormhole whose mouths have been put out of step by taking one of t
 - chart Morris-Thorne-Yurtsever: coordinates $(t, l, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{glF\cos\theta}{c^2}\right)^2e^{2\Phi}c^2dt^2 + dl^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Short Throat: coordinates $(t, l, \theta, \phi)$, $$ds^2 = -c^2dt^2 + dl^2 + \left(b + |l|\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Myers-Perry Rotating Black Hole
+
+The rotating black hole in $D > 4$ spacetime dimensions, the vacuum solution Robert Myers and Malcolm Perry found in 1985, with a separate spin in each independent plane of rotation. In five dimensions it shares its mass and spin with black rings, and from six dimensions up a black hole turning in one plane keeps its horizon at every spin.
+
+- id: `myers_perry`
+- tags: vacuum, vacuum solution, rotating, rotating black hole, black hole, stationary, axisymmetric, angular momentum, mass, ergosphere, frame dragging, ultra-spinning, singularity, curvature singularity, ring singularity, conical singularity, horizon, event horizon, Cauchy horizon, causal structure, asymptotically flat, higher dimensions, extra dimensions, five-dimensional, six-dimensional, Kerr-Schild, black ring, black hole uniqueness, Hopf fibration, exact solution, Lorentzian, Einstein equations, idealized model
+- signature: (-,+,\ldots,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/myers_perry.json
+- chart Boyer-Lindquist, One Spin, Five Dimensions: coordinates $(t, r, \theta, \phi, \psi)$, $$ds^2 = -c^2dt^2 + \dfrac{\mu}{r^2 + a^2\cos^2\theta}\left(c\,dt - a\sin^2\theta\,d\phi\right)^2 + \dfrac{r^2 + a^2\cos^2\theta}{r^2 + a^2 - \mu}dr^2 + \left(r^2 + a^2\cos^2\theta\right)d\theta^2 + \left(r^2 + a^2\right)\sin^2\theta\,d\phi^2 + r^2\cos^2\theta\,d\psi^2$$
+- chart Ingoing Kerr, One Spin, Five Dimensions: coordinates $(v, r, \theta, \tilde\phi, \psi)$, $$ds^2 = -dv^2 + 2\,dv\,dr - 2a\sin^2\theta\,dr\,d\tilde\phi + \left(r^2 + a^2\cos^2\theta\right)d\theta^2 + \left(r^2 + a^2\right)\sin^2\theta\,d\tilde\phi^2 + r^2\cos^2\theta\,d\psi^2 + \dfrac{\mu}{r^2 + a^2\cos^2\theta}\left(dv - a\sin^2\theta\,d\tilde\phi\right)^2$$
+- chart Boyer-Lindquist, Two Spins, Five Dimensions: coordinates $(t, r, \theta, \phi, \psi)$, $$ds^2 = -c^2dt^2 + \dfrac{\mu}{r^2 + a^2\cos^2\theta + b^2\sin^2\theta}\left(c\,dt - a\sin^2\theta\,d\phi - b\cos^2\theta\,d\psi\right)^2 + \dfrac{r^2\left(r^2 + a^2\cos^2\theta + b^2\sin^2\theta\right)}{\left(r^2 + a^2\right)\left(r^2 + b^2\right) - \mu r^2}dr^2 + \left(r^2 + a^2\cos^2\theta + b^2\sin^2\theta\right)d\theta^2 + \left(r^2 + a^2\right)\sin^2\theta\,d\phi^2 + \left(r^2 + b^2\right)\cos^2\theta\,d\psi^2$$
+- chart Equal Spins, Five Dimensions: coordinates $(t, \rho, \theta, \phi, \psi)$, $$ds^2 = -c^2dt^2 + \dfrac{\mu}{\rho^2}\left(c\,dt - \dfrac{a}{2}\left(d\psi + \cos\theta\,d\phi\right)\right)^2 + \dfrac{d\rho^2}{1 - \dfrac{\mu}{\rho^2} + \dfrac{\mu a^2}{\rho^4}} + \dfrac{\rho^2}{4}\left(d\theta^2 + \sin^2\theta\,d\phi^2 + \left(d\psi + \cos\theta\,d\phi\right)^2\right)$$
+- chart Boyer-Lindquist, One Spin, Six Dimensions: coordinates $(t, r, \theta, \phi, \chi, \psi)$, $$ds^2 = -c^2dt^2 + \dfrac{\mu}{r\left(r^2 + a^2\cos^2\theta\right)}\left(c\,dt - a\sin^2\theta\,d\phi\right)^2 + \dfrac{r^2 + a^2\cos^2\theta}{r^2 + a^2 - \dfrac{\mu}{r}}dr^2 + \left(r^2 + a^2\cos^2\theta\right)d\theta^2 + \left(r^2 + a^2\right)\sin^2\theta\,d\phi^2 + r^2\cos^2\theta\left(d\chi^2 + \sin^2\chi\,d\psi^2\right)$$
+
 ### Nariai Universe
 
 A vacuum solution with a positive cosmological constant, geometrically the product of a two dimensional de Sitter space and a sphere of the same radius (dS₂ × S²). It is the limit of the Schwarzschild-de Sitter black hole as its horizon meets the cosmological horizon, the largest black hole a de Sitter universe can hold.

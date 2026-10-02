@@ -245,6 +245,13 @@ STRING_SIX = {"psi": "pi/2", **STRING_FIVE}
 # Perry's potential vanishes and the embedding diagram's cigar stands.
 KK_AXIS = {"theta": "0", "phi": "0", "x_5": "0"}
 KK_HOPF = {"theta": "0", "phi": "0", "psi": "0"}
+# Myers and Perry's black hole: the plane transverse to the rotation, theta = 0, and the plane of
+# rotation, theta = pi/2, in five dimensions and in six, and the hole of five dimensions with equal
+# spins. Lengths are in sqrt(mu) in five dimensions and in the cube root of mu in six.
+MYERS_ONE = {"mu": 1, "a": "3/5"}
+MYERS_EQUAL = {"mu": 1, "a": "2/5"}
+MYERS_SIX = {"mu": 1, "a": "3/2"}
+MYERS_CONE = "future cone of no angular momentum"
 POLAR = "polar"                         # (phi, r) drawn from above: X = r cos phi, Y = r sin phi
 PRINCIPAL_CONE = "future cone of the principal plane"
 BTZ_CONE = "future cone of no angular momentum"
@@ -852,6 +859,33 @@ DIAGRAMS = [
             "$r/r_s$", "$cT/r_s$", {"r_s": 1}, STRING_FIVE, tau="T", areal=True),
     Diagram("black_string", "static_six", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_h$", "$ct/r_h$", {"r_h": 1}, STRING_SIX, orient="ingoing", areal=True),
+    # Myers and Perry's black hole. One spin in five dimensions, a = 0.6 sqrt(mu), where the horizon is
+    # 0.8 sqrt(mu): the plane transverse to the rotation, whose rays are null geodesics, and the plane
+    # of rotation with phi divided out, in the Boyer-Lindquist chart and the ingoing one. Equal spins,
+    # a = 0.4 sqrt(mu), with the Hopf fibre divided out, and one spin in six dimensions at a = 1.5 mu^(1/3),
+    # past every spin a hole of five dimensions can have. The chart of two unequal spins has no view:
+    # where one plane of rotation lies, the other plane's circle has shrunk to a point, and off both
+    # planes a ray moves in theta.
+    Diagram("myers_perry", "boyer_lindquist", "transverse", "the transverse plane", ("t", "r"), (0, 3, -1.5, 1.5),
+            "$r/\\sqrt{\\mu}$", "$ct/\\sqrt{\\mu}$", MYERS_ONE, {"theta": "0", "phi": "0", "psi": "0"}, orient="ingoing"),
+    Diagram("myers_perry", "boyer_lindquist", "rotation", "the plane of rotation", ("t", "r"), (0, 3, -1.5, 1.5),
+            "$r/\\sqrt{\\mu}$", "$ct/\\sqrt{\\mu}$", MYERS_ONE, {"theta": "pi/2", "psi": "0"}, orient="ingoing",
+            quotient="phi", mark_gtt="the ergosurface", cone=MYERS_CONE),
+    Diagram("myers_perry", "ingoing_kerr", "transverse", "the transverse plane", ("v", "r"), (0, 3, -1.5, 1.5),
+            "$r/\\sqrt{\\mu}$", "$(v - r)/\\sqrt{\\mu}$", MYERS_ONE, {"theta": "0", "tildephi": "0", "psi": "0"},
+            to_display=FINKELSTEIN_IN, tau="v - r"),
+    Diagram("myers_perry", "ingoing_kerr", "rotation", "the plane of rotation", ("v", "r"), (0, 3, -1.5, 1.5),
+            "$r/\\sqrt{\\mu}$", "$(v - r)/\\sqrt{\\mu}$", MYERS_ONE, {"theta": "pi/2", "psi": "0"},
+            to_display=FINKELSTEIN_IN, orient="ingoing", quotient="tildephi", mark_gtt="the ergosurface", cone=MYERS_CONE),
+    Diagram("myers_perry", "equal_spins", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 3, -1.5, 1.5),
+            "$\\rho/\\sqrt{\\mu}$", "$ct/\\sqrt{\\mu}$", MYERS_EQUAL, {"theta": "pi/2", "phi": "0"}, orient="ingoing",
+            quotient="psi", mark_gtt="the ergosurface", cone=MYERS_CONE),
+    Diagram("myers_perry", "boyer_lindquist_six", "transverse", "the transverse space", ("t", "r"), (0, 4, -2, 2),
+            "$r/\\mu^{1/3}$", "$ct/\\mu^{1/3}$", MYERS_SIX, {"theta": "0", "phi": "0", "chi": "pi/2", "psi": "0"},
+            orient="ingoing"),
+    Diagram("myers_perry", "boyer_lindquist_six", "rotation", "the plane of rotation", ("t", "r"), (0, 4, -2, 2),
+            "$r/\\mu^{1/3}$", "$ct/\\mu^{1/3}$", MYERS_SIX, {"theta": "pi/2", "chi": "pi/2", "psi": "0"}, orient="ingoing",
+            quotient="phi", mark_gtt="the ergosurface", cone=MYERS_CONE),
     Diagram("schwarzschild_ads", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
             "$r/L$", "$ct/L$", SADS, EQUATOR, orient="ingoing", areal=True),
     Diagram("schwarzschild_ads", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
@@ -2023,6 +2057,77 @@ CAPTIONS = {
         "Inside $r_h$ the same components make $r$ the time, and we take the future as the ingoing rays carry it "
         "across the horizon, which makes that region the black hole, where every cone points to $r = 0$. The "
         "Kretschmann scalar $240r_h^6/r^{10}$ is finite at $r_h$ and diverges only at $r = 0$.",
+    ],
+    ("myers_perry", "boyer_lindquist", "transverse"): [
+        "The plane of $t$ and $r$ ($\\theta = 0$, $\\psi = 0$) in the plane transverse to the rotation, drawn for "
+        "$a = 0.6\\sqrt{\\mu}$, each point in the plane a circle of $\\psi$ of radius $r$. The metric on it is "
+        "$-f\\,c^2dt^2 + dr^2/f$ with $f = (r^2 + a^2 - \\mu)/(r^2 + a^2)$, so the rays run at "
+        "$dr/d(ct) = \\pm f$ and the cones close at the one horizon, $r_+ = \\sqrt{\\mu - a^2} = 0.8\\sqrt{\\mu}$. "
+        "No Christoffel symbol turns the rays out of the plane, so they are null geodesics.",
+        "Inside $r_+$, $r$ is the time, and we take the future from the ingoing chart, which makes that region "
+        "the black hole. Every ray there ends at $r = 0$, where the circle of $\\psi$ has shrunk to a point. The "
+        "Kretschmann scalar is $72\\mu^2/a^8$ there, finite, and the surface $r = 0$ is the locus of a conical "
+        "singularity whose rim, in the plane of rotation, is where the curvature diverges.",
+    ],
+    ("myers_perry", "boyer_lindquist", "rotation"): [
+        "The plane of rotation ($\\theta = \\pi/2$) drawn in $t$ and $r$ with $\\phi$ divided out, for "
+        "$a = 0.6\\sqrt{\\mu}$: the metric orthogonal to the circles of $\\phi$. Its null curves are the shadows "
+        "on $t$ and $r$ of the null geodesics of zero angular momentum, each turning in $\\phi$ at "
+        "$d\\phi/d(ct) = \\mu a/(r^4 + a^2r^2 + \\mu a^2)$, and each cone is the future cone of the directions of "
+        "zero angular momentum. They run at $dr/d(ct) = \\pm(r^2 + a^2 - \\mu)/\\sqrt{r^4 + a^2r^2 + \\mu a^2}$, "
+        "and the cones close at the horizon $r_+ = 0.8\\sqrt{\\mu}$.",
+        "The dotted line is the ergosurface, $g_{tt} = 0$ at $r = \\sqrt{\\mu}$, and between it and $r_+$ no "
+        "observer keeps $\\phi$ fixed. Inside $r_+$ every ray ends at $r = 0$, the ring where the Kretschmann "
+        "scalar $72\\mu^2/r^8$ diverges.",
+    ],
+    ("myers_perry", "ingoing_kerr", "transverse"): [
+        "The plane of $v$ and $r$ ($\\theta = 0$, $\\psi = 0$) in the plane transverse to the rotation, drawn "
+        "for $a = 0.6\\sqrt{\\mu}$ with $v - r$ as the vertical axis so that the ingoing rays, $v = $ const, run "
+        "at 45°. The outgoing family has $dv/dr = 2(r^2 + a^2)/(r^2 + a^2 - \\mu)$, so it stands vertical at "
+        "$r_+ = 0.8\\sqrt{\\mu}$: the horizon is an outgoing ray that stays where it is.",
+        "The cones cross $r_+$ smoothly and keep tipping. Inside it both edges of every future cone point to "
+        "smaller $r$, so every future directed ray ends at $r = 0$.",
+    ],
+    ("myers_perry", "ingoing_kerr", "rotation"): [
+        "The plane of rotation ($\\theta = \\pi/2$) drawn in $v$ and $r$ with $\\tilde\\phi$ divided out, for "
+        "$a = 0.6\\sqrt{\\mu}$, with $v - r$ as the vertical axis. Its null curves are the shadows of the null "
+        "geodesics of zero angular momentum, and each cone is the future cone of those directions. The lines of "
+        "constant $v$ and $\\tilde\\phi$ are the ingoing principal rays, which carry angular momentum, so the "
+        "ingoing family drawn here crosses them.",
+        "The outgoing family stands vertical at the horizon $r_+ = 0.8\\sqrt{\\mu}$, and the cones cross it "
+        "smoothly. The dotted line is the ergosurface, $g_{vv} = 0$ at $r = \\sqrt{\\mu}$. Inside $r_+$ both "
+        "edges of every cone point to smaller $r$, and every ray ends on the ring $r = 0$.",
+    ],
+    ("myers_perry", "equal_spins", "radial"): [
+        "The plane of $t$ and $\\rho$ of the hole with equal spins ($a = 0.4\\sqrt{\\mu}$) with $\\psi$ divided "
+        "out, each point in the plane a squashed 3-sphere of $\\theta$, $\\phi$, and $\\psi$. The metric depends "
+        "on $\\rho$ alone, so the plane is the same at every $\\theta$ and $\\phi$. Its null curves are the "
+        "shadows of the null geodesics with no angular momentum, which run at $d\\rho/d(ct) = "
+        "\\pm(\\rho^4 - \\mu\\rho^2 + \\mu a^2)/(\\rho^2\\sqrt{\\rho^4 + \\mu a^2})$.",
+        "The cones close at the horizons $\\rho_+ = 0.894\\sqrt{\\mu}$ and $\\rho_- = 0.447\\sqrt{\\mu}$, and "
+        "the dotted line is the ergosurface, $g_{tt} = 0$ at $\\rho = \\sqrt{\\mu}$, a round value at every "
+        "angle. Inside $\\rho_-$ the lines of constant $\\rho$ are timelike again, down to the singularity "
+        "$\\rho = 0$, where the Kretschmann scalar $384\\mu^2a^4/\\rho^{12}$ diverges.",
+    ],
+    ("myers_perry", "boyer_lindquist_six", "transverse"): [
+        "The plane of $t$ and $r$ ($\\theta = 0$, $\\chi = \\pi/2$, $\\psi = 0$) in the space transverse to the "
+        "rotation in six dimensions, drawn for $a = 1.5\\,\\mu^{1/3}$, each point in the plane a 2-sphere of "
+        "radius $r$. The metric on it is $-f\\,c^2dt^2 + dr^2/f$ with $f = 1 - \\mu/(r(r^2 + a^2))$, and the "
+        "cones close at the one horizon, the root $r_+ = 0.413\\,\\mu^{1/3}$ of $r^3 + a^2r = \\mu$. No "
+        "Christoffel symbol turns the rays out of the plane, so they are null geodesics.",
+        "In five dimensions a hole of this mass parameter loses its horizon at $a = \\sqrt{\\mu}$. In six the "
+        "cubic has a positive root for every $a$, and as the spin grows the horizon only moves in, toward "
+        "$r_+ = \\mu/a^2$. Inside it every ray ends at the singularity $r = 0$, where the Kretschmann scalar "
+        "diverges.",
+    ],
+    ("myers_perry", "boyer_lindquist_six", "rotation"): [
+        "The plane of rotation ($\\theta = \\pi/2$) in six dimensions drawn in $t$ and $r$ with $\\phi$ divided "
+        "out, for $a = 1.5\\,\\mu^{1/3}$. Its null curves are the shadows of the null geodesics of zero angular "
+        "momentum, and each cone is the future cone of those directions. The cones close at the horizon "
+        "$r_+ = 0.413\\,\\mu^{1/3}$.",
+        "The dotted line is the ergosurface, $g_{tt} = 0$ at $r = \\mu^{1/3}$. In this plane the horizon is a "
+        "circle of circumference radius $(r_+^2 + a^2)/r_+ = 5.86\\,\\mu^{1/3}$, and across the plane it is a "
+        "2-sphere of radius $r_+$, fourteen times smaller: the pancake of Emparan and Myers.",
     ],
     ("schwarzschild_ads", "static", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $r_s = 2L$, the same at every "
@@ -6107,6 +6212,18 @@ def _kk_rstar(r):
     return np.sqrt(r * (r + 4)) + 4 * np.arcsinh(np.sqrt(r) / 2)
 
 
+def _myers_rstar(r, D=5):
+    """The tortoise coordinate on the plane transverse to the rotation of Myers and Perry's black hole
+    with one spin. In five dimensions at mu = 1 and a = 3/5, 1/f = 1 + mu/(r^2 - r_+^2) with r_+ = 4/5:
+    r + (5/8) ln|(r - 4/5)/(r + 4/5)|. In six at mu = 1 and a = 3/2, 1/f = 1 + mu/(r^3 + a^2 r - mu):
+    r + Re sum_i A_i ln(1 - r/r_i) over the three roots of the cubic, A_i = mu/(3 r_i^2 + a^2)."""
+    r = np.asarray(r, float)
+    if D == 5:
+        return r + 0.625 * np.log(np.abs((r - 0.8) / (r + 0.8)))
+    roots = np.roots([1.0, 0.0, 2.25, -1.0]).astype(complex)
+    return r + np.real(sum(np.log(1 - r.astype(complex) / ri) / (3 * ri ** 2 + 2.25) for ri in roots))
+
+
 def _away(*radii):
     return lambda x0, r: np.all([np.abs(r - h) > 0.05 for h in radii], axis=0)
 
@@ -6315,6 +6432,12 @@ CLOSED_FORMS = {
         (lambda v, r: v, lambda v, r: v - 2 * _rstar(r, [1]), lambda v, r: np.abs(r - 1) > 0.05),
     ("schwarzschild", "eddington_finkelstein_outgoing", "finkelstein"):
         (lambda u, r: u + 2 * _rstar(r, [1]), lambda u, r: u, lambda u, r: np.abs(r - 1) > 0.05),
+    ("myers_perry", "boyer_lindquist", "transverse"):
+        (lambda t, r: t + _myers_rstar(r), lambda t, r: t - _myers_rstar(r), _away(0.8)),
+    ("myers_perry", "ingoing_kerr", "transverse"):
+        (lambda v, r: v, lambda v, r: v - 2 * _myers_rstar(r), _away(0.8)),
+    ("myers_perry", "boyer_lindquist_six", "transverse"):
+        (lambda t, r: t + _myers_rstar(r, 6), lambda t, r: t - _myers_rstar(r, 6), _away(0.4131104345566232)),
     ("kaluza_klein_monopole", "gross_perry", "radial"):
         (lambda t, r: t + _kk_rstar(r), lambda t, r: t - _kk_rstar(r), lambda t, r: r > 0.05),
     ("kaluza_klein_monopole", "hopf", "radial"):

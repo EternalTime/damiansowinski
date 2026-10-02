@@ -261,6 +261,17 @@ def black_string_t(kerr_schild=False):
     return [Mark(m, [np.column_stack([np.log(r - 1) + (0 if kerr_schild else r), r])])]
 
 
+def myers_perry_t(view_id):
+    """Myers and Perry's Boyer-Lindquist t = 0 in the ingoing chart, one spin in five dimensions at
+    mu = 1 and a = 3/5: v = r_*, r_* = r + (5/8) ln((r - 4/5)/(r + 4/5)), outside r+ = 4/5, the same on
+    the plane transverse to the rotation and on the plane of rotation, as far as each embedding
+    reaches."""
+    m = moments("myers_perry", view_id)[0]
+    lo, hi = m.reach("boyer_lindquist", "r")
+    r = near(lo, hi)
+    return [Mark(m, [np.column_stack([r + 0.625 * np.log((r - 0.8) / (r + 0.8)), r])])]
+
+
 def novikov(R, tau):
     """A shell of dust released from rest at areal radius R at t = 0, r_s = 1, at its proper
     time tau: its areal radius r and its Schwarzschild t, from the cycloid
@@ -1066,6 +1077,19 @@ FLAT = {
     ("black_string", "kerr_schild", "radial"): lambda: black_string_t(kerr_schild=True),
     ("black_string", "static_six", "radial"): lambda: one(
         "black_string", lambda m: along(0.0, *m.reach("static_six", "r")), view_id="six"),
+    # Myers and Perry's black hole: each plane of t and r marks the moment embedded on its own surface,
+    # the plane transverse to the rotation or the plane of rotation in five dimensions, the Hopf fibre of
+    # the hole with equal spins, and the transverse plane in six dimensions.
+    ("myers_perry", "boyer_lindquist", "transverse"): lambda: one(
+        "myers_perry", lambda m: along(0.0, *m.reach("boyer_lindquist", "r")), view_id="transverse"),
+    ("myers_perry", "boyer_lindquist", "rotation"): lambda: one(
+        "myers_perry", lambda m: along(0.0, *m.reach("boyer_lindquist", "r")), view_id="rotation"),
+    ("myers_perry", "ingoing_kerr", "transverse"): lambda: myers_perry_t("transverse"),
+    ("myers_perry", "ingoing_kerr", "rotation"): lambda: myers_perry_t("rotation"),
+    ("myers_perry", "equal_spins", "radial"): lambda: one(
+        "myers_perry", lambda m: along(0.0, *m.reach("equal_spins", "\\rho")), view_id="fibre"),
+    ("myers_perry", "boyer_lindquist_six", "transverse"): lambda: one(
+        "myers_perry", lambda m: along(0.0, *m.reach("boyer_lindquist_six", "r")), view_id="six"),
     # The Kaluza-Klein monopole's cigar, the half axis theta = 0 at t = 0, on its plane of t and the radius
     # in each chart; the Taub-NUT radius is rho = r + 2m.
     ("kaluza_klein_monopole", "gross_perry", "radial"): lambda: one(
@@ -1329,6 +1353,7 @@ HIDDEN = {
     ("wormhole_time_machine", "lorentz", "trip"): "the flat space outside the mouths, with the mouths drawn as world lines; the moment embedded runs through the throat",
     ("wormhole_time_machine", "lorentz"): "the flat space outside the mouths, with the mouths drawn as world lines; the moment embedded runs through the throat",
     ("frw", "open"): "the open universe's conformal diagram; the moments embedded are the closed universe's",
+    ("myers_perry", "boyer_lindquist_six", "rotation"): "the plane of rotation in six dimensions, theta = pi/2, which the embedded transverse plane theta = 0 meets nowhere outside the horizon",
 }
 
 

@@ -3621,6 +3621,187 @@ def black_string(ck, src):
     return views
 
 
+def myers_perry(ck, src):
+    """Myers and Perry's black hole at one moment of t, on four surfaces of revolution.
+
+    One spin in five dimensions, mu = 1 and a = 3/5, so that r+ = 4/5. In the plane of rotation,
+    theta = pi/2, the slice has g_rr = r^2/(r^2 - r+^2) and the circumference radius
+    rho = sqrt(r^2 + a^2 + mu a^2/r^2), which is mu/r+ = 5/4 at the throat; its height is checked
+    against scipy's quadrature. In the plane transverse to the rotation, theta = 0, the circles
+    of psi have radius r and g_rr - 1 = mu/(r^2 - r+^2), so z = sqrt(mu) arcosh(r/r+), a
+    catenoid stretched by sqrt(mu)/r+, whose throat has radius r+. The two throats are the two
+    sizes of one horizon, wider in the plane it turns in.
+
+    Equal spins in five dimensions, mu = 1 and a = 2/5: the surface of rho and the Hopf fibre psi
+    at theta = pi, where sin(theta) = 0 and the fibre's line element is (rho^4 + mu a^2)/(4 rho^2)
+    (d psi - d phi)^2. psi has the period 4 pi, so the slice sweeps psi = 3 phi, which carries
+    d psi - d phi once round the fibre as phi runs once round, and phi itself moves nothing
+    there. The circle at rho has radius sqrt(rho^4 + mu a^2)/rho, sqrt(mu) at the throat rho+
+    for every spin.
+
+    One spin in six dimensions, mu = 1 and a = 3/2: the plane of r and psi transverse to the
+    rotation, theta = 0 and chi = pi/2, with g_rr - 1 = mu/(r^3 + a^2 r - mu), whose height
+    approaches a finite value, as Tangherlini's does in six dimensions. Each slice runs through
+    the bifurcation surface into the other exterior."""
+    from scipy.integrate import quad
+    views = []
+    one = {"mu": 1, "a": "3/5"}
+
+    def from_throat(slope, throat, r):
+        """The integral of a slope that diverges as an inverse square root at the throat, taken in
+        s with u = throat + s^2, where the integrand is finite."""
+        return np.array([quad(lambda q: 2 * q * slope(throat + q * q) if q > 0 else 0.0, 0.0, math.sqrt(x - throat),
+                              epsabs=1e-10, epsrel=1e-10, limit=200)[0] if x > throat else 0.0
+                         for x in np.atleast_1d(r)])
+
+    # The plane of rotation.
+    sl = Slice(src, "myers_perry", "boyer_lindquist", "r", "\\phi", {"t": 0, "theta": "pi/2", "psi": 0}, one)
+    rp = max(sl.horizons())
+    ck.add("Myers-Perry, one spin: the horizon is r+ = 0.8 sqrt(mu)", abs(rp - 0.8), 1e-12)
+    top, radii, ergo = 4.0, (1.5, 2.0, 3.0), 1.0
+    size = 2 * float(sl.rho_at(top))
+    near, far = two_sheets(ck, "Myers-Perry, the plane of rotation", sl, rp, top, radii, size,
+                           [(rp, "horizon", "$r = r_+$"), (ergo, "ergo", None)])
+    ck.add("Myers-Perry: the throat's circumference radius in the plane of rotation is mu/r+",
+           abs(near.at(rp)[0] - 1.25), 1e-6)
+
+    def rho_rotation(r):
+        return np.sqrt(r * r + 0.36 + 0.36 / (r * r))
+
+    def height_rotation(r):
+        def slope(u):
+            rho = math.sqrt(u * u + 0.36 + 0.36 / (u * u))
+            gap = (u - 0.8) * (u + 0.8)
+            if gap <= 0:
+                return 0.0
+            return math.sqrt(max(u * u / gap - ((u - 0.36 / u ** 3) / rho) ** 2, 0.0))
+        return from_throat(slope, 0.8, r)
+    for piece in (near, far):
+        ck.radius(f"Myers-Perry, the plane of rotation, {piece.id}, rho = sqrt(r^2 + a^2 + mu a^2/r^2)", piece,
+                  rho_rotation, size)
+        ck.form(f"Myers-Perry, the plane of rotation, {piece.id}, the quadrature of its height", piece,
+                lambda r, s=piece.sense: s * height_rotation(r), size)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(rp), "$r = r_+$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(top), "$4\\sqrt{\\mu}$")
+    fig.legend("fill", "cover", "the exterior $r > r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1.5$, $2$, $3$ and $4\\sqrt{\\mu}$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the horizon")
+    fig.legend("line", "ergo", "the edge of the ergosphere, $r = \\sqrt{\\mu}$ in this plane")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("rotation", "The plane of rotation", "$\\sqrt{\\mu}$", [surface], fig.done(),
+                      settings="$D = 5$, $\\mu = 1$, so that $\\sqrt{\\mu}$ is the unit of every length, and "
+                               "$a = 0.6\\sqrt{\\mu}$, so that $r_+ = 0.8\\sqrt{\\mu}$, on the plane of $r$ and "
+                               "$\\phi$ ($\\theta = \\pi/2$)."))
+
+    # The plane transverse to the rotation.
+    sl = Slice(src, "myers_perry", "boyer_lindquist", "r", "\\psi", {"t": 0, "theta": 0, "phi": 0}, one)
+    rp = max(sl.horizons())
+    size = 2 * top
+    near, far = two_sheets(ck, "Myers-Perry, the transverse plane", sl, rp, top, (1.0,) + radii, size,
+                           [(rp, "horizon", "$r = r_+$")])
+    for piece in (near, far):
+        ck.radius(f"Myers-Perry, the transverse plane, {piece.id}, rho = r", piece, lambda r: r, size)
+        ck.form(f"Myers-Perry, the transverse plane, {piece.id}, z = sqrt(mu) arcosh(r/r+)", piece,
+                lambda r, s=piece.sense: s * np.arccosh(np.maximum(r / 0.8, 1.0)), size)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(rp), "$r = r_+$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(top), "$4\\sqrt{\\mu}$")
+    fig.legend("fill", "cover", "the exterior $r > r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1$, $1.5$, $2$, $3$ and $4\\sqrt{\\mu}$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the horizon")
+    fig.legend("line", "meridian", "$\\psi$ constant, every $15°$")
+    views.append(view("transverse", "The transverse plane", "$\\sqrt{\\mu}$", [surface], fig.done(),
+                      settings="$D = 5$, $\\mu = 1$, and $a = 0.6\\sqrt{\\mu}$, on the plane of $r$ and $\\psi$ "
+                               "($\\theta = 0$)."))
+
+    # Equal spins: the Hopf fibre.
+    sl = Slice(src, "myers_perry", "equal_spins", "\\rho", "\\phi", {"t": 0, "theta": "pi"}, {"mu": 1, "a": "2/5"},
+               swept={"psi": "3*phi"})
+    rp = max(sl.horizons())
+    ck.add("Myers-Perry, equal spins: the outer horizon is rho+ = sqrt(4/5) sqrt(mu)", abs(rp - math.sqrt(0.8)), 1e-12)
+    radii, ergo = (1.5, 2.0, 3.0), 1.0
+    size = 2 * float(sl.rho_at(top))
+    out = "the surface runs on to $\\rho \\to \\infty$"
+    near = Piece("exterior", "sheet", sl, rp, top, 0.0, 1,
+                 (("throat", "the throat $\\rho = \\rho_+$, the bifurcation surface, where the other exterior begins"),
+                  ("edge", out)),
+                 [(rp, "horizon", "$\\rho = \\rho_+$"), (ergo, "ergo", None)] + [(r, "r", None) for r in radii]
+                 + [(top, "r", None)], size)
+    far = Piece("other_exterior", "sheet2", sl, rp, top, 0.0, -1,
+                (("throat", "the throat $\\rho = \\rho_+$"), ("edge", out)),
+                [(r, "r2", None) for r in radii] + [(top, "r2", None)], size)
+
+    def height_fibre(r):
+        def slope(u):
+            # 1/g_rhorho = (rho^2 - rho+^2)(rho^2 - rho-^2)/rho^4, with rho+^2 = 4/5 and rho-^2 = 1/5.
+            gap = (u - math.sqrt(0.8)) * (u + math.sqrt(0.8)) * (u * u - 0.2) / u ** 4
+            if gap <= 0:
+                return 0.0
+            return math.sqrt(max(1 / gap - ((u ** 4 - 0.16) / (u * u * math.sqrt(u ** 4 + 0.16))) ** 2, 0.0))
+        return from_throat(slope, math.sqrt(0.8), r)
+    for piece in (near, far):
+        ck.isometry(f"Myers-Perry, equal spins, {piece.id}", piece)
+        ck.radius(f"Myers-Perry, equal spins, {piece.id}, rho = sqrt(rho^4 + mu a^2)/rho", piece,
+                  lambda r: np.sqrt(r ** 4 + 0.16) / r, size)
+        ck.form(f"Myers-Perry, equal spins, {piece.id}, the quadrature of its height", piece,
+                lambda r, s=piece.sense: s * height_fibre(r), size)
+    ck.join("Myers-Perry, equal spins, the two sheets at the throat", near, rp, far, rp)
+    ck.add("Myers-Perry, equal spins: the fibre at the throat has radius sqrt(mu)", abs(near.at(rp)[0] - 1.0), 1e-6)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(rp), "$\\rho = \\rho_+$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(top), "$4\\sqrt{\\mu}$")
+    fig.legend("fill", "cover", "the exterior $\\rho > \\rho_+$ that $t$ and $\\rho$ cover")
+    fig.legend("line", "r", "$\\rho$ constant, at $1.5$, $2$, $3$ and $4\\sqrt{\\mu}$: a circle of the Hopf fibration")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $\\rho = \\rho_+$, where the slice crosses the outer horizon")
+    fig.legend("line", "ergo", "the ergosurface $\\rho = \\sqrt{\\mu}$")
+    fig.legend("line", "meridian", "$\\psi$ constant, every $30°$")
+    views.append(view("fibre", "Equal spins, the Hopf fibre", "$\\sqrt{\\mu}$", [surface], fig.done(),
+                      settings="$D = 5$, $\\mu = 1$, and $a = 0.4\\sqrt{\\mu}$ in both planes, so that "
+                               "$\\rho_+ = 0.894\\sqrt{\\mu}$, on the surface of $\\rho$ and $\\psi$ "
+                               "($\\theta = \\pi$)."))
+
+    # Six dimensions.
+    sl = Slice(src, "myers_perry", "boyer_lindquist_six", "r", "\\psi",
+               {"t": 0, "theta": 0, "phi": 0, "chi": "pi/2"}, {"mu": 1, "a": "3/2"})
+    rp = max(sl.horizons())
+    root = float(np.real([x for x in np.roots([1, 0, 2.25, -1]) if abs(x.imag) < 1e-12][0]))
+    ck.add("Myers-Perry, six dimensions: the horizon is the root of r^3 + a^2 r = mu", abs(rp - root), 1e-12)
+    top, radii = 3.0, (0.75, 1.0, 1.5, 2.0)
+    size = 2 * top
+    near, far = two_sheets(ck, "Myers-Perry, six dimensions", sl, rp, top, radii, size,
+                           [(rp, "horizon", "$r = r_+$")])
+
+    def height_six(r):
+        # r^3 + a^2 r - mu = (r - r+)(r^2 + r+ r + r+^2 + a^2)
+        return from_throat(lambda u: 1 / math.sqrt((u - root) * (u * u + root * u + root * root + 2.25))
+                           if u > root else 0.0, root, r)
+    for piece in (near, far):
+        ck.radius(f"Myers-Perry, six dimensions, {piece.id}, rho = r", piece, lambda r: r, size)
+        ck.form(f"Myers-Perry, six dimensions, {piece.id}, the quadrature of its height", piece,
+                lambda r, s=piece.sense: s * height_six(r), size)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(rp), "$r = r_+$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(top), "$3\\,\\mu^{1/3}$")
+    fig.legend("fill", "cover", "the exterior $r > r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $0.75$, $1$, $1.5$, $2$ and $3\\,\\mu^{1/3}$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the horizon")
+    fig.legend("line", "meridian", "$\\psi$ constant, every $15°$")
+    views.append(view("six", "Six dimensions, the transverse plane", "$\\mu^{1/3}$", [surface], fig.done(),
+                      settings="$D = 6$, $\\mu = 1$, so that $\\mu^{1/3}$ is the unit of every length, and "
+                               f"$a = 1.5\\,\\mu^{{1/3}}$, so that $r_+ = {rp:.3f}\\,\\mu^{{1/3}}$, on the plane of $r$ "
+                               "and $\\psi$ ($\\theta = 0$, $\\chi = \\pi/2$)."))
+    return views
+
+
 def kaluza_klein_monopole(ck, src):
     """The Kaluza-Klein monopole's surface of r and x_5 on the half axis theta = 0 at t = 0, m = 1,
     in Gross and Perry's chart, where the potential 4m(1 - cos theta) d phi vanishes. On it the
@@ -7639,6 +7820,7 @@ DRAWN = {
     "tangherlini": tangherlini,
     "black_string": black_string,
     "kaluza_klein_monopole": kaluza_klein_monopole,
+    "myers_perry": myers_perry,
     "dilaton_black_hole": dilaton_black_hole,
     "majumdar_papapetrou": majumdar_papapetrou,
     "melvin": melvin,
@@ -8344,6 +8526,44 @@ CAPTIONS = {
         "grows with the distance $s$ from the nut as $d\\rho/ds = 16m^2/(r + 4m)^2$, which is $1$ at $r = 0$, so "
         "the tip is as smooth as the pole of a sphere. The period $16\\pi m$ of $x_5$ is the one that makes it "
         "so; any other would leave the apex of a cone there.",
+    ],
+    ("myers_perry", "rotation"): [
+        "The plane of rotation ($\\theta = \\pi/2$) of the Myers-Perry black hole with one spin in five "
+        "dimensions at one moment of $t$, drawn as a surface in flat space with every distance along it the "
+        "metric distance. A circle of constant $r$ has the circumference radius "
+        "$\\sqrt{r^2 + a^2 + \\mu a^2/r^2}$, which at the throat $r_+$ is $\\mu/r_+ = 1.25\\sqrt{\\mu}$.",
+        "The slice runs through the throat, the bifurcation surface of the horizon, into a second exterior. "
+        "The dotted circle is the edge of the ergosphere, $r = \\sqrt{\\mu}$, which leaves no mark on the "
+        "shape of the slice, since $g_{t\\phi}$ drops out at constant $t$.",
+    ],
+    ("myers_perry", "transverse"): [
+        "The plane of $r$ and $\\psi$ ($\\theta = 0$), transverse to the rotation, of the same black hole at "
+        "one moment of $t$, drawn as a surface in flat space with every distance along it the metric "
+        "distance. On it the metric is $(r^2 + a^2)\\,dr^2/(r^2 - r_+^2) + r^2d\\psi^2$, and the surface is "
+        "$z = \\sqrt{\\mu}\\,\\mathrm{arcosh}(r/r_+)$, a catenoid stretched along its axis by $\\sqrt{\\mu}/r_+$.",
+        "Its throat has the radius $r_+ = 0.8\\sqrt{\\mu}$, where the throat in the plane of rotation has "
+        "$1.25\\sqrt{\\mu}$: the horizon is wider in the plane it turns in. With the spin switched off both "
+        "throats have the radius $\\sqrt{\\mu}$ and the surface is the catenoid of the Schwarzschild-Tangherlini "
+        "black hole in five dimensions.",
+    ],
+    ("myers_perry", "fibre"): [
+        "The surface of $\\rho$ and the Hopf fibre $\\psi$ ($\\theta = \\pi$) of the Myers-Perry black hole "
+        "with equal spins in five dimensions at one moment of $t$, drawn as a surface in flat space with every "
+        "distance along it the metric distance. Each circle is a fibre of the Hopf fibration of the 3-sphere "
+        "of constant $\\rho$, of circumference radius $\\sqrt{\\rho^4 + \\mu a^2}/\\rho$.",
+        "Far out the fibre is a great circle of a round 3-sphere of radius $\\rho$. Toward the hole the "
+        "rotation stretches it against the 2-sphere it is fibred over, whose radius is $\\rho/2$, and at "
+        "the throat $\\rho_+$ its radius is $\\sqrt{\\mu}$ for every spin. The dotted circle is the "
+        "ergosurface $\\rho = \\sqrt{\\mu}$.",
+    ],
+    ("myers_perry", "six"): [
+        "The plane of $r$ and $\\psi$ ($\\theta = 0$, $\\chi = \\pi/2$), transverse to the rotation, of the "
+        "Myers-Perry black hole with one spin in six dimensions at one moment of $t$, drawn as a surface in "
+        "flat space with every distance along it the metric distance. On it $g_{rr} - 1 = \\mu/(r^3 + a^2r - "
+        "\\mu)$, which falls as $r^{-3}$, so the height of the surface approaches a finite value far out.",
+        "The throat has the radius $r_+ = 0.413\\,\\mu^{1/3}$ at $a = 1.5\\,\\mu^{1/3}$, and it shrinks toward "
+        "$\\mu/a^2$ as the spin grows. In the plane of rotation the same horizon has the circumference radius "
+        "$(r_+^2 + a^2)/r_+ = 5.86\\,\\mu^{1/3}$.",
     ],
     ("tangherlini", "five"): [
         "The plane of $r$ and $\\phi$ ($\\psi = \\theta = \\pi/2$) of the Schwarzschild-Tangherlini spacetime in "
