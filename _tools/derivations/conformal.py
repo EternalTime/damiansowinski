@@ -931,6 +931,128 @@ def misner(ck, src):
     return views
 
 
+ORI_L = 2.0             # a circuit of z a boost of rapidity 1, as Misner's views are drawn
+
+
+def ori_time_machine(ck, src):
+    """The plane x = y = 0 of Ori's vacuum core with f = a(x^2 - y^2)/2, through the central
+    circle, in the plane that covers it, one view per chart.
+
+    On that plane f = 0 and t = T, the published Gamma^x and Gamma^y vanish for every pair of the
+    plane's directions, which is checked, so it is totally geodesic and its light rays are the
+    core's; its metric is Misner's, -2 dz dT - T dz^2. The Brinkmann chart's u = -2 e^(-z/2) and
+    v = T e^(z/2) are null coordinates of the flat plane that covers it, -2 du dv, and
+    p = arctan u, q = arctan 2v bring the half u < 0 they cover to the half square p < 0. A circuit
+    of z is the boost u -> u e^(-L/2), v -> v e^(L/2), so one copy of the plane lies between
+    two neighbouring null lines z = kL, and the null line q = 0, T = 0, is in the quotient the
+    closed null geodesic N. Drawn at L = 2, since at the L = 2 pi of the other diagrams one copy
+    stretches by e^pi along each light ray. Away from this plane the covering space is the plane
+    wave 2a(x^2 - y^2)/u^2 du^2, whose amplitude diverges at u = 0."""
+    L = ORI_L
+    a, e = nr.ORI["a"], nr.ORI["e"]
+    half_box = [-HALF - 0.35, PI + 0.35, -PI - 0.25, HALF + 0.25]
+    settings = f"$L = {L:g}$, a boost of rapidity $1$, and $\\ell = 1$."
+    restriction = ("The plane $x = y = 0$ through the central circle only, drawn in the flat plane that covers "
+                   "it, each point in the diagram a single event, each event of the plane drawn once in every "
+                   "copy.")
+    ks = range(-4, 5)
+
+    def pq(u, v):
+        return np.arctan(np.asarray(u, dtype=float)), np.arctan(np.asarray(v, dtype=float))
+
+    def core_pq(T, z):
+        T, z = np.asarray(T, dtype=float), np.asarray(z, dtype=float)
+        return pq(-2 * np.exp(-z / 2), 2 * T * np.exp(z / 2))
+
+    def brinkmann_pq(u, v):
+        return pq(u, 2 * np.asarray(v, dtype=float))
+
+    def corners(*pqs):
+        return [point(p, q) for p, q in pqs]
+
+    moments = slices.moments("ori_time_machine")
+
+    def hyperbola(t):
+        """The moment t on the central circle, T = t < 0: uv = -2t with both negative, every copy
+        of its circle, out to where either null coordinate of the drawing is 50."""
+        s = np.geomspace(-4 * t / 50, 50, 801)
+        return pq(-s, 4 * t / s)
+
+    charts = {
+        "vacuum_core": Plane(src, "ori_time_machine", "vacuum_core", ("T", "z"), {"x": "0", "y": "0"},
+                             {"L": repr(L)}, functions={"f": nr.ORI_F}),
+        "foliation": Plane(src, "ori_time_machine", "foliation", ("t", "z"), {"x": "0", "y": "0"},
+                           {"a": a, "e": e, "L": repr(L)}),
+        "brinkmann": Plane(src, "ori_time_machine", "brinkmann", ("u", "v"), {"x": "0", "y": "0"},
+                           {"a": a, "L": repr(L)}),
+    }
+    # The plane is totally geodesic: no published Gamma^x or Gamma^y acts on a pair of its directions.
+    for system, plane in charts.items():
+        src.note("ori_time_machine", system, ["christoffel"])
+        on = ("u", "v") if system == "brinkmann" else (plane.entry["coords"][0], "z")
+        turned = [c["indices"] for c in plane.entry["christoffel"]["variants"]["ull"]["nonzero"]
+                  if c["indices"][0] in ("x", "y") and c["indices"][1] in on and c["indices"][2] in on
+                  and plane.prep(plane.reader(c["value"])) != 0]
+        ck.limit(f"Ori, {system}: the plane x = y = 0 is totally geodesic", np.array([float(len(turned))]),
+                 np.zeros(1), 0.5)
+
+    def drawn(vid, label, time, circles):
+        v = View(vid, label, half_box, vid)
+        v.fill("region", corners((-HALF, -HALF), (-HALF, HALF), (0, HALF), (0, -HALF)))
+        lo, hi = math.atan(-2.0), math.atan(-2 * math.exp(-L / 2))
+        v.fill("cover", corners((lo, -HALF), (lo, HALF), (hi, HALF), (hi, -HALF)))
+        grid(v, "t", core_pq, (-2, -1, -0.5, 0.5, 1, 2), S_ALL)
+        grid(v, "r", core_pq, [k * L for k in ks], S_ALL, first=False)
+        v.line("horizon", [corners((-HALF, 0), (0, 0))])
+        v.line("chartedge", [corners((0, -HALF), (0, HALF))])
+        v.line("scri", [corners((-HALF, -HALF), (-HALF, HALF), (0, HALF)), corners((-HALF, -HALF), (0, -HALF))])
+        for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, -PI), "$i^-$", "t", 0, 6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(at[0], 4), round(at[1], 4)]})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([0, -PI / 2 - 0.35], f"${time} < 0$", "c", "small")
+        v.label_xt([PI / 2 + 0.45, 0], f"${time} > 0$", "c", "small")
+        v.legend("cover", "one copy of the central plane, $0 \\le z < L$")
+        for cls, text in circles:
+            v.legend(cls, text)
+        v.set(restriction=restriction, settings=settings)
+        for m in moments:
+            v.slice(m, [hyperbola(m.time)])
+        return v
+
+    views = []
+    for system, time in (("vacuum_core", "T"), ("foliation", "t")):
+        plane = charts[system]
+        ck.chart(f"Ori, {system}", plane, core_pq, ck.uniform(-5, 5), ck.uniform(-6, 6),
+                 lambda T, z: (np.abs(T) / 2 + 1, 1))
+        p, q = core_pq(np.zeros(5), np.linspace(-4, 4, 5))
+        ck.limit(f"Ori, {system}: {time} = 0 is the null line q = 0", q, np.zeros(5), 1e-12)
+        p, q = core_pq(np.linspace(-3, 3, 5), np.full(5, 200.0))
+        ck.limit(f"Ori, {system}: z -> infinity is the null line p = 0", p, np.zeros(5), 1e-12)
+        ck.finite(f"Ori, {system}: the closed null geodesic N is regular",
+                  plane.kretschmann(np.zeros(50), ck.uniform(-5, 5, 50)))
+        views.append(drawn(system, {"vacuum_core": "Vacuum Core", "foliation": "Spacelike Foliation"}[system], time, (
+            ("r", "$z = kL$ for integer $k$, each the same light ray of the core"),
+            ("t", f"${time}$ constant, at $\\pm1/2$, $\\pm1$ and $\\pm2$ times $\\ell^2$"),
+            ("horizon", f"${time} = 0$, the closed null geodesic $N$"),
+            ("chartedge", "$z \\to \\infty$, where the coordinates end"))))
+
+    plane = charts["brinkmann"]
+    ck.chart("Ori, Brinkmann", plane, brinkmann_pq, ck.uniform(-10, -0.01), ck.uniform(-5, 5), lambda u, v: (1, 1))
+    # The Brinkmann chart's null coordinates are the drawing's: u = -2 e^(-z/2) and 2v = 2T e^(z/2).
+    T, z = ck.uniform(-3, 3, 20), ck.uniform(-4, 4, 20)
+    p, q = brinkmann_pq(-2 * np.exp(-z / 2), T * np.exp(z / 2))
+    ck.limit("Ori, Brinkmann: u = -2 e^(-z/2), v = T e^(z/2) is the vacuum core's map",
+             np.concatenate([p, q]), np.concatenate(core_pq(T, z)), 1e-12)
+    ck.finite("Ori, Brinkmann: the closed null geodesic N is regular",
+              plane.kretschmann(ck.uniform(-5, -0.1, 50), np.zeros(50)))
+    views.append(drawn("brinkmann", "Brinkmann", "v", (
+        ("r", "$u = -2e^{-kL/2}$ for integer $k$, each the same light ray of the core"),
+        ("t", "$uv$ constant, the circles of $T = -uv/2$ at $\\pm1/2$, $\\pm1$ and $\\pm2$ times $\\ell^2$"),
+        ("horizon", "$v = 0$, the closed null geodesic $N$"),
+        ("chartedge", "$u = 0$, where the coordinates end"))))
+    return views
+
+
 def gott_time_machine(ck, src):
     """Gott's two strings away from the strings, in the plane Y = z = 0 of the Minkowski space
     James Grant showed that region to be, identified under a boost of rapidity a along X and a
@@ -7836,6 +7958,7 @@ DRAWN = {
     "misner": misner, "milne": milne,
     "gott_time_machine": gott_time_machine,
     "wormhole_time_machine": wormhole_time_machine,
+    "ori_time_machine": ori_time_machine,
     "einstein_rosen_waves": einstein_rosen_waves, "gowdy": gowdy,
     "nariai": nariai, "khan_penrose": khan_penrose, "bell_szekeres": bell_szekeres,
     "majumdar_papapetrou": majumdar_papapetrou,
@@ -8105,6 +8228,33 @@ CAPTIONS = {
         "Each hyperbola of constant $t$ is, in the quotient, a circle of circumference $\\psi_0c|t|/2$, and the "
         "circles shrink toward the null lines $t \\to 0$. Misner's coordinates continue the region across the "
         "line $ct + x = 0$ into the wedge $x > c|t|$, and the other extension across $ct - x = 0$.",
+    ],
+    ("ori_time_machine", "vacuum_core"): [
+        "The plane $x = y = 0$ of Ori's vacuum core ($f = a(x^2 - y^2)/2$), through its central circle, in the "
+        "flat plane that covers it, with null coordinates $-2e^{-z/2}$ and $2Te^{z/2}/\\ell^2$, brought into a "
+        "finite drawing by the arctangent of each. On this plane $f = 0$ and the metric is Misner's, "
+        "$-2\\,dz\\,dT - T\\,dz^2$, and the coordinates cover half of the covering plane.",
+        "A circuit of $z$ is a boost of rapidity $L/2$, which carries each light ray $z = kL$ onto the next, and "
+        "one copy of the plane lies between two neighbouring rays. In the quotient the null line $T = 0$ is the "
+        "closed null geodesic $N$, and each hyperbola of constant $T > 0$ is a closed timelike curve.",
+    ],
+    ("ori_time_machine", "foliation"): [
+        "The plane $x = y = 0$ of Ori's vacuum core ($f = a(x^2 - y^2)/2$), through its central circle, in the "
+        "flat plane that covers it, with null coordinates $-2e^{-z/2}$ and $2te^{z/2}/\\ell^2$, brought into a "
+        "finite drawing by the arctangent of each. On this plane $t = T$ and the metric is "
+        "$-2\\,dz\\,dt - t\\,dz^2$.",
+        "Each hyperbola of constant $t < 0$ is, in the quotient, the central circle of a spacelike surface, of "
+        "circumference $L\\sqrt{-t}$. The circles shrink toward the null line $t = 0$, the closed null geodesic "
+        "$N$, the one circle of the surface $t = 0$ that is null.",
+    ],
+    ("ori_time_machine", "brinkmann"): [
+        "The plane $x = y = 0$ of Ori's vacuum core ($f = a(x^2 - y^2)/2$), through its central circle, in the "
+        "Brinkmann chart, whose $u$ and $2v/\\ell^2$ are null coordinates of the flat plane that covers it, "
+        "brought into a finite drawing by the arctangent of each. The coordinates cover $u < 0$.",
+        "A circuit of the core's closed direction is the boost that takes $(u, v)$ to $(ue^{-L/2}, ve^{L/2})$, "
+        "which carries each light ray $u = -2e^{-kL/2}$ onto the next. Off this plane the covering space is the "
+        "plane wave of amplitude $2a/u^2$, which the same boost carries into itself and which diverges at "
+        "$u = 0$.",
     ],
     ("gott_time_machine", "grant_rindler"): [
         "The wedge $X > c|T|$ of the plane $Y = z = 0$ of the Minkowski space that Gott's spacetime is away from "

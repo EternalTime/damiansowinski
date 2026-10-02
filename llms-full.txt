@@ -723,6 +723,18 @@ The first dynamical model of gravitational collapse, matching a collapsing homog
 - chart Comoving Dust Interior: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = -c^2 d\tau^2 + a^2\left(d\chi^2 + \sin^2\chi\, d\theta^2 + \sin^2\chi\sin^2\theta\, d\phi^2\right)$$
 - chart Schwarzschild Exterior: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1-\dfrac{r_s}{r}\right)c^2 dt^2 + \dfrac{dr^2}{1-\dfrac{r_s}{r}} + r^2 d\theta^2 + r^2\sin^2\theta\, d\phi^2$$
 
+### Ori Time Machine
+
+Amos Ori's vacuum time machine core of 2005: a plane fronted gravitational wave closed up along one direction, whose circles turn from spacelike to timelike. With $f = a(x^2 - y^2)/2$ causality first fails on a single closed null geodesic, and closed timelike curves fill the region beyond it.
+
+- id: `ori_time_machine`
+- tags: time machine, closed timelike curves, causality violation, chronology horizon, closed null geodesic, vacuum, vacuum solution, pp-wave, plane wave, gravitational wave, Misner space, energy conditions, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/ori_time_machine.json
+- chart Vacuum Core: coordinates $(T, x, y, z)$, $$ds^2 = dx^2 + dy^2 - 2\,dz\,dT + \left(f - T\right)dz^2$$
+- chart Spacelike Foliation: coordinates $(t, x, y, z)$, $$ds^2 = dx^2 + dy^2 - 2\,dz\,dt + \left(e\left(x^2 + y^2\right) - t\right)dz^2 + 2\left(\left(2e - a\right)x\,dx + \left(2e + a\right)y\,dy\right)dz$$
+- chart Brinkmann: coordinates $(u, v, x, y)$, $$ds^2 = \dfrac{2a\left(x^2 - y^2\right)}{u^2}du^2 - 2\,du\,dv + dx^2 + dy^2$$
+
 ### Kinnersley Photon Rocket
 
 The field of a point mass that accelerates by shining light unevenly, found by William Kinnersley in 1969. Its mass and its acceleration are arbitrary functions of retarded time, the light is null dust that streams out brightest behind it, and no gravitational waves reach infinity.

@@ -51,6 +51,11 @@
       "id": "wormhole_time_machine",
       "kind": "family",
       "text": "A time machine made by moving one mouth of a traversable wormhole, three years before Gott's strings. Hawking's chronology protection conjecture is aimed at both [morris1988prl, hawking1992]."
+    },
+    {
+      "id": "ori_time_machine",
+      "kind": "family",
+      "text": "A time machine whose vacuum core fits in a finite region. Amos Ori built it in 2005 so that causality first fails on one closed null geodesic, fixed by data on a compact surface [ori2005]."
     }
   ],
   "references": [
@@ -74,7 +79,8 @@
     "holst1999",
     "birmingham2000",
     "dedeo2002",
-    "morris1988prl"
+    "morris1988prl",
+    "ori2005"
   ],
   "coordinates": [
     {

@@ -518,6 +518,12 @@ MCV_INPUT = ("A universe of dust and a cosmological constant, $a = \\sinh^{2/3}(
 # cosh(a/4) = gamma sin(alpha), and the shift is b = 4 gamma v d sin(alpha)/(c sinh(a/4)).
 GOTT = {"a": "4*acosh(5/(2*sqrt(3)))", "b": "8/sqrt(13)"}
 GOTT_A = 4 * math.acosh(5 / (2 * math.sqrt(3)))
+# Ori's vacuum core as every one of its diagrams draws it: his example f = a(x^2 - y^2)/2 at
+# a = 1/16, with e = 1/8 for the surfaces of constant t, so that e > a and e > (2e + a)^2 = 25/256,
+# and z running once round 2 pi.
+ORI = {"a": "1/16", "e": "1/8", "L": "2*pi"}
+ORI_F = "(x**2 - y**2)/32"
+ORI_INPUT = "Ori's example, $f = a(x^2 - y^2)/2$ at $a = 1/16$, a vacuum, with $L = 2\\pi$."
 # The spinning string: b = 0.9, the cosmic string's deficit, and a = 0.9 in units of r_c = a/b.
 SPINNING = {"a": "9/10", "b": "9/10"}
 GOTT_STRINGS = {"mu": "1/12", "G": 1, "v": "4/5", "d": "1/2", "alpha": "pi/3", "gamma": "5/3"}
@@ -883,6 +889,33 @@ DIAGRAMS = [
     Diagram("gott_time_machine", "grant_milne", "plane", "$\\tau$ and $\\chi$", ("\\tau", "\\chi"),
             (0, GOTT_A, -2.5, 0), "$\\chi$", "$c\\tau/\\ell$", GOTT, {"Y": "0", "z": "0"}, tau="tau",
             families=SIDEWAYS, periodic=("\\chi",)),
+    # Ori's vacuum core with his example f = a(x^2 - y^2)/2 at a = 1/16, e = 1/8 and L = 2 pi: the
+    # cylinder of the time and z through the central circle x = y = 0, which is totally geodesic and
+    # Misner's, and the cylinder at x = 4 l, y = 0, where f = l^2/2 and e x^2 = 2 l^2, in each of
+    # his two charts; and the Brinkmann plane of u and v through the central circle, flat, whose
+    # line u = -2 a circuit of z carries onto u = -2 exp(-pi).
+    Diagram("ori_time_machine", "vacuum_core", "centre", "the central circle", ("T", "z"),
+            (0, 2 * math.pi, -2.5, 2), "$z$", "$T/\\ell^2$", {"L": "2*pi"}, {"x": "0", "y": "0"},
+            orient="outgoing", families=SIDEWAYS, periodic=("z",), functions={"f": ORI_F}, input=ORI_INPUT,
+            lines=(("surface", "x0", "0", "the closed null geodesic $N$, $T = 0$"),)),
+    Diagram("ori_time_machine", "vacuum_core", "off_centre", "$x = 4\\,\\ell$", ("T", "z"),
+            (0, 2 * math.pi, -4, 2), "$z$", "$T/\\ell^2$", {"L": "2*pi"}, {"x": "4", "y": "0"},
+            orient="outgoing", families=SIDEWAYS, periodic=("z",), functions={"f": ORI_F}, input=ORI_INPUT,
+            lines=(("surface", "x0", "1/2", "the null circle, $T = f = \\ell^2/2$"),)),
+    Diagram("ori_time_machine", "foliation", "centre", "the central circle", ("t", "z"),
+            (0, 2 * math.pi, -2.5, 2), "$z$", "$t/\\ell^2$", ORI, {"x": "0", "y": "0"},
+            orient="outgoing", families=SIDEWAYS, periodic=("z",),
+            lines=(("surface", "x0", "0", "the closed null geodesic $N$, $t = 0$"),)),
+    Diagram("ori_time_machine", "foliation", "off_centre", "$x = 4\\,\\ell$", ("t", "z"),
+            (0, 2 * math.pi, -2.5, 3.5), "$z$", "$t/\\ell^2$", ORI, {"x": "4", "y": "0"},
+            orient="outgoing", families=SIDEWAYS, periodic=("z",),
+            lines=(("surface", "x0", "2", "the null circle, $t = ex^2 = 2\\,\\ell^2$"),)),
+    Diagram("ori_time_machine", "brinkmann", "plane", "$u$ and $v$", ("u", "v"), (-1, 2.5, -2.5, 1),
+            "$(v/\\ell^2 - u)/2$", "$(u + v/\\ell^2)/2$", {"a": "1/16", "L": "2*pi"}, {"x": "0", "y": "0"},
+            to_display=NULL_TO_TR, tau="u + v", families=SIDEWAYS,
+            lines=(("surface", "r", "0", "the closed null geodesic $N$, $v = 0$"),
+                   ("shell", "x0", "-2", "$u = -2$ and $u = -2e^{-L/2}$, one line of the core"),
+                   ("shell", "x0", "-2*exp(-pi)", "$u = -2$ and $u = -2e^{-L/2}$, one line of the core"))),
     # The spinning string's cylinders of one time and one angle at one radius, unrolled, at b = 0.9,
     # the deficit the cosmic string is drawn at, and a = 0.9, so that the null circle r_c = a/b is
     # the unit of length: inside it and outside it in the proper radius, rescaled radius and helical
@@ -2094,6 +2127,53 @@ CAPTIONS = {
         "which is positive, so no closed timelike curve passes through this region. The closed curve of "
         "constant $\\tau$ through an event has length $\\sqrt{a^2c^2\\tau^2 + b^2}$, which shrinks to $b$ "
         "at the horizon.",
+    ],
+    ("ori_time_machine", "vacuum_core", "centre"): [
+        "The plane of $T$ and $z$ ($x = y = 0$), a cylinder drawn unrolled, its edges $z = 0$ and $z = L$ one "
+        "line. On it $f = 0$ and the metric is Misner's, $-2\\,dz\\,dT - T\\,dz^2$. One family of light rays "
+        "runs straight up at constant $z$, and the other follows $dT/dz = -T/2$, so the cones tip over as $T$ "
+        "climbs.",
+        "The symmetry of $f$ under $x \\to -x$ and under $y \\to -y$ keeps every ray of this plane a null "
+        "geodesic. The circle $T = 0$ is $N$, the one closed null geodesic of the core, and above it every "
+        "circle of constant $T$ is a closed timelike curve.",
+    ],
+    ("ori_time_machine", "vacuum_core", "off_centre"): [
+        "The cylinder of $T$ and $z$ ($x = 4\\,\\ell$, $y = 0$), drawn unrolled, its edges $z = 0$ and $z = L$ "
+        "one line. On it $f = ax^2/2 = \\ell^2/2$ and the metric is $-2\\,dz\\,dT + (f - T)\\,dz^2$, so the "
+        "circle of constant $T$ is spacelike below $T = f$, null there, and a closed timelike curve above.",
+        "The vertical lines are light rays. The curves that tip over, $dT/dz = (f - T)/2$, are null, and light "
+        "launched along one leaves the cylinder for larger $x$, turned by $\\Gamma^x{}_{zz} = -ax/2$. Each "
+        "circle of the core turns null at its own $T = f(x, y)$, sooner along $y$, where $f < 0$, and later "
+        "along $x$.",
+    ],
+    ("ori_time_machine", "foliation", "centre"): [
+        "The plane of $t$ and $z$ ($x = y = 0$), a cylinder drawn unrolled, its edges $z = 0$ and $z = L$ one "
+        "line. On it $t = T$ and the metric is $-2\\,dz\\,dt - t\\,dz^2$. One family of light rays runs "
+        "straight up at constant $z$, and the other follows $dt/dz = -t/2$, winding round the cylinder toward "
+        "$t = 0$ from below.",
+        "Every surface of constant $t < 0$ is spacelike, and the surface $t = 0$ is spacelike everywhere but "
+        "on this central circle, the closed null geodesic $N$. Above it the circles of constant $t$ are closed "
+        "timelike curves.",
+    ],
+    ("ori_time_machine", "foliation", "off_centre"): [
+        "The cylinder of $t$ and $z$ ($x = 4\\,\\ell$, $y = 0$), drawn unrolled, its edges $z = 0$ and $z = L$ "
+        "one line. On it the metric is $-2\\,dz\\,dt + (ex^2 - t)\\,dz^2$ with $ex^2 = 2\\,\\ell^2$, so the "
+        "circle of constant $t$ is spacelike below $t = 2\\,\\ell^2$, null there, and a closed timelike curve "
+        "above.",
+        "At $t = 0$, when the central circle is already null, this one still has circumference "
+        "$L\\sqrt{2}\\,\\ell$. The vertical lines are light rays, and the curves that tip over, "
+        "$dt/dz = (ex^2 - t)/2$, are null: light launched along one leaves the cylinder for larger $x$, turned "
+        "by $\\Gamma^x{}_{zz} = -ax/2$.",
+    ],
+    ("ori_time_machine", "brinkmann", "plane"): [
+        "The plane of $u$ and $v$ ($x = y = 0$), drawn against $(v - u)/2$ and $(u + v)/2$, where the metric "
+        "is $-2\\,du\\,dv$ and every light ray runs at 45°. The coordinates cover $u < 0$, and a circuit of $z$ "
+        "carries the line $u = -2$ onto $u = -2e^{-L/2}$ with $v$ stretched by $e^{L/2}$, so the strip between "
+        "them is one copy of the core's central plane.",
+        "Each hyperbola $uv = -2T$ is a circle of constant $T$, closed by that boost: spacelike where $v < 0$ "
+        "and timelike where $v > 0$. The ray $v = 0$ is the closed null geodesic $N$. Each circuit of it is "
+        "shorter in $u$, an affine parameter, by the factor $e^{-L/2}$, so $N$ runs round without end in a "
+        "finite affine length and is incomplete to the future.",
     ],
     ("minkowski", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) in flat spacetime. "
@@ -5643,6 +5723,15 @@ CLOSED_FORMS.update({
                                                       lambda eta, xi: xi > 0.02),
     ("gott_time_machine", "grant_milne", "plane"): (lambda t, chi: np.log(-t) - chi, lambda t, chi: np.log(-t) + chi,
                                                     lambda t, chi: t < -0.02),
+})
+# Ori's core: on a cylinder of the time and z where g_zz = k - (time), one family keeps z and the
+# other (time - k) e^(z/2), with k = f or e x^2 there, read through arcsinh as Misner's is; on the
+# Brinkmann plane each family keeps u or v.
+CLOSED_FORMS.update({
+    **{("ori_time_machine", system, view): (lambda T, z: z, lambda T, z, k=k: np.arcsinh((T - k) * np.exp(z / 2)), None)
+       for system, view, k in (("vacuum_core", "centre", 0.0), ("vacuum_core", "off_centre", 0.5),
+                               ("foliation", "centre", 0.0), ("foliation", "off_centre", 2.0))},
+    ("ori_time_machine", "brinkmann", "plane"): (lambda u, v: v, lambda u, v: u, None),
 })
 # What light launched along each family of a cylinder does, as its caption says: stays on the
 # cylinder as a null geodesic, or is turned toward or away from the axis.

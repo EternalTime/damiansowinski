@@ -3000,6 +3000,7 @@ class StacksAndMovies(unittest.TestCase):
               ("tolman_bondi", "cloud"): "$ct$", ("szekeres", "equators"): "$ct$", ("misner", "cylinders"): "$ct$",
               ("photon_rocket", "burn"): "$cu + r$",
               ("gott_time_machine", "cylinders"): "$c\\tau$", ("kantowski_sachs", "vacuum"): "$c\\tau$",
+              ("ori_time_machine", "throat"): "$t$",
               ("kasner", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
               ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$",
               ("bell_szekeres", "ring"): "$\\xi$",
@@ -3914,6 +3915,15 @@ class Slices(unittest.TestCase):
             return (lambda X: height), [0.0]
         if key in ("misner/milne/plane", "gott_time_machine/grant_milne/plane"):
             return (lambda X: t), None
+        if key.startswith("ori_time_machine/"):
+            # Ori's moment t is level on every cylinder of the time and z: at T = t on the central circle
+            # in both charts, where the charts agree, at the foliation's own t at x = 4, and there at
+            # T = t + (a/2 - e) x^2 = t - 3/2 in the vacuum core's chart. On the Brinkmann plane it is
+            # the hyperbola uv = -2t with both negative, drawn against X = (v - u)/2 and Y = (u + v)/2,
+            # where uv = Y^2 - X^2.
+            if key.endswith("/brinkmann/plane"):
+                return (lambda X: -math.sqrt(X * X - 2 * t)), None
+            return (lambda X: t - 1.5 if key.endswith("/vacuum_core/off_centre") else t), None
         if key.startswith(("godel/cylindrical", "stockum_dust/cylindrical", "minkowski/rindler")):
             return (lambda X: 0.0), None
         if key == "spinning_string/helical/outside":
@@ -4104,6 +4114,12 @@ class Slices(unittest.TestCase):
                         for X, T in points:
                             tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
                             self.assertLess(abs(tp * tq - t * t), 2e-4 * (1 + tp * tp + tq * tq), where)
+                    elif metric_id == "ori_time_machine":
+                        # The hyperbola of the covering plane on which T = t, every copy: its null
+                        # coordinates -2 e^(-z/2) and 2T e^(z/2) multiply to -4t.
+                        for X, T in points:
+                            tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            self.assertLess(abs(tp * tq + 4 * t), 2e-4 * (1 + tp * tp + tq * tq), where)
                     elif metric_id == "vaidya":
                         for X, T in points:
                             p, q = (T - X) / 2, (T + X) / 2

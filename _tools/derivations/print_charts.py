@@ -4,8 +4,8 @@ charts of tov, malament_hogarth, mixmaster, lentz, einstein_static, btz, c_metri
 schwarzschild_de_sitter, schwarzschild_ads, milne, einstein_rosen_waves, nariai, aichelburg_sexl,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, zipoy_voorhees, szekeres,
-kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine and
-damour_solodukhin, and Godel's cylindrical chart.
+kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
+damour_solodukhin and ori_time_machine, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -4628,6 +4628,164 @@ def damour_solodukhin_check(chart, system):
 
 
 CHARTS["damour_solodukhin"] = [lambda s=s: damour_solodukhin(s) for s in DS_CHARTS]
+
+
+# -- Ori's time machine ------------------------------------------------------------------
+
+ORI_CHARTS = ("vacuum_core", "foliation", "brinkmann")
+
+
+def ori_time_machine(system):
+    """The vacuum core of Amos Ori's time machine of 2005 in three charts:
+
+    vacuum_core  his equation (1), -2 dz dT + (f - T) dz^2 with f(x, y, z) free and z periodic;
+    foliation    his equation (5), the core with f = a(x^2 - y^2)/2 in the time
+                 t = T - a(x^2 - y^2)/2 + e(x^2 + y^2), whose surfaces t < 0 are spacelike;
+    brinkmann    the same core with u = -2 exp(-z/2) and v = T exp(z/2), the plane wave
+                 2a(x^2 - y^2)/u^2 du^2 - 2 du dv, on which a circuit of z is a boost.
+
+    ori_core_check holds the first to his equations (2) and (3), and ori_pullback checks each of
+    the other two, slot by slot, to be the first pulled back. ori_time_machine.md is the
+    derivation."""
+    reals = "(-\\infty, \\infty)"
+    plane = "\\left(x^2 + y^2\\right)"
+    charts = {
+        "vacuum_core": {
+            "name": "Vacuum Core", "coords": ["T", "x", "y", "z"], "parameters": ["f = f(x,y,z)", "L"],
+            "domains": ["T \\in " + reals, "x \\in " + reals, "y \\in " + reals, "z \\in [0, L)",
+                        "T = f \\;\\text{(the circle of constant } T, x, y \\text{ is null)}",
+                        "T > f \\;\\text{(the circles of constant } T, x, y \\text{ are closed timelike curves)}"],
+            "line_element": "ds^2 = dx^2 + dy^2 - 2\\,dz\\,dT + \\left(f - T\\right)dz^2"},
+        "foliation": {
+            "name": "Spacelike Foliation", "coords": ["t", "x", "y", "z"], "parameters": ["a", "e", "L"],
+            "domains": ["t \\in " + reals, "x \\in " + reals, "y \\in " + reals, "z \\in [0, L)",
+                        "x = y = t = 0 \\;\\text{(the closed null geodesic } N\\text{)}",
+                        "t > e" + plane + " \\;\\text{(the circles of constant } t, x, y "
+                        "\\text{ are closed timelike curves)}"],
+            "line_element": ("ds^2 = dx^2 + dy^2 - 2\\,dz\\,dt + \\left(e" + plane + " - t\\right)dz^2"
+                             " + 2\\left(\\left(2e - a\\right)x\\,dx + \\left(2e + a\\right)y\\,dy\\right)dz")},
+        "brinkmann": {
+            "name": "Brinkmann", "coords": ["u", "v", "x", "y"], "parameters": ["a", "L"],
+            "domains": ["u \\in (-\\infty, 0)", "v \\in " + reals, "x \\in " + reals, "y \\in " + reals,
+                        "(u, v) \\sim \\left(u\\exp(-L/2),\\, v\\exp(L/2)\\right)",
+                        "uv < -a\\left(x^2 - y^2\\right) \\;\\text{(the closed curves of constant } uv, x, y "
+                        "\\text{ are timelike)}"],
+            "line_element": "ds^2 = \\dfrac{2a\\left(x^2 - y^2\\right)}{u^2}du^2 - 2\\,du\\,dv + dx^2 + dy^2"},
+    }
+    chart = charts[system]
+    probe = vm.Reader(chart["coords"], chart["parameters"], ())
+    spec = {
+        "metric_id": "ori_time_machine",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": chart["parameters"], "line_element": chart["line_element"]},
+        # No coordinate is a time, so the chart's line element is the published one.
+        "chart_line_element": chart["line_element"],
+        "printer": {"lead": [*probe.parameters.values()]},
+        "check": ori_core_check if system == "vacuum_core" else (lambda c: ori_pullback(c, system)),
+    }
+    # The printer writes a - 2e and a + 2e; the values keep Ori's 2e - a and 2e + a, and his g^tt.
+    down, up = "\\left(2e - a\\right)x", "\\left(2e + a\\right)y"
+    if system == "vacuum_core":
+        spec["components"] = {"inverse_metric_components": {("T", "T"): "T - f"}}
+    elif system == "foliation":
+        spec["components"] = {
+            "metric_components": {("x", "z"): down, ("z", "x"): down, ("y", "z"): up, ("z", "y"): up,
+                                  ("z", "z"): "e" + plane + " - t"},
+            "inverse_metric_components": {
+                ("t", "x"): down, ("x", "t"): down, ("t", "y"): up, ("y", "t"): up,
+                ("t", "t"): "t + \\left(2e - a\\right)^2x^2 + \\left(2e + a\\right)^2y^2 - e" + plane}}
+        tzz = "\\dfrac{t - \\left(e + 2ae - a^2\\right)x^2 - \\left(e - 2ae - a^2\\right)y^2}{2}"
+        spec["rewrite"] = [
+            ("-\\dfrac{a\\,x\\left(a - 2e\\right)}{2}", "\\dfrac{a\\left(2e - a\\right)x}{2}"),
+            ("\\dfrac{a\\,x\\left(a - 2e\\right)}{2}", "-\\dfrac{a\\left(2e - a\\right)x}{2}"),
+            ("\\dfrac{a\\,y\\left(a + 2e\\right)}{2}", "\\dfrac{a\\left(2e + a\\right)y}{2}"),
+            ("\\dfrac{a^2\\,x^2 + a^2\\,y^2 - 2a\\,e\\,x^2 + 2a\\,e\\,y^2 - e\\,x^2 - e\\,y^2 + t}{2}", tzz),
+            ("-\\left(a - 2e\\right)", "2e - a"), ("a - 2e", "-\\left(2e - a\\right)"),
+            ("-\\left(a + 2e\\right)", "-\\left(2e + a\\right)"), ("a + 2e", "2e + a")]
+        spec["geodesics"] = [
+            "\\ddot{t} + \\dot{t}\\dot{z} - \\left(2e - a\\right)\\dot{x}^2 - \\left(2e + a\\right)\\dot{y}^2"
+            " - 2e\\left(x\\dot{x} + y\\dot{y}\\right)\\dot{z} + " + tzz + "\\dot{z}^2 = 0",
+            "\\ddot{x} - \\dfrac{a\\,x}{2}\\dot{z}^2 = 0", "\\ddot{y} + \\dfrac{a\\,y}{2}\\dot{z}^2 = 0",
+            "\\ddot{z} - \\dfrac{1}{2}\\dot{z}^2 = 0"]
+    else:
+        spec["rewrite"] = [("\\left(x + y\\right)\\left(x - y\\right)", "\\left(x^2 - y^2\\right)")]
+    return spec
+
+
+def ori_core_check(chart):
+    """Ori's equations (2) and (3) and his footnote 1: det g = -1, R_izjz = -f,ij/2 with every
+    other component zero up to the symmetries, and a Ricci tensor whose one component is
+    R_zz = -(f,xx + f,yy)/2, so the core is a vacuum exactly where f is harmonic in x and y."""
+    T, x, y, z = chart.symbols
+    f = chart.reader.parameters["f"]
+    if sp.simplify(chart.geo.g.det() + 1) != 0:
+        raise AssertionError("ori_time_machine: det g is not -1 in the vacuum core chart")
+    R = chart.geo.riemann_llll()
+    plane = {1: x, 2: y}
+    for i, j, k, l in itertools.product(range(4), repeat=4):
+        want = 0
+        if j == 3 and l == 3 and i in plane and k in plane:
+            want = -sp.diff(f, plane[i], plane[k]) / 2
+        elif i == 3 and k == 3 and j in plane and l in plane:
+            want = -sp.diff(f, plane[j], plane[l]) / 2
+        elif i == 3 and l == 3 and j in plane and k in plane:
+            want = sp.diff(f, plane[j], plane[k]) / 2
+        elif j == 3 and k == 3 and i in plane and l in plane:
+            want = sp.diff(f, plane[i], plane[l]) / 2
+        if sp.simplify(R[i][j][k][l] - want) != 0:
+            raise AssertionError(f"ori_time_machine: R_{i}{j}{k}{l} misses Ori's equation (3)")
+    ricci = chart.geo.ricci_ll()
+    for i, j in itertools.product(range(4), repeat=2):
+        want = -(sp.diff(f, x, 2) + sp.diff(f, y, 2)) / 2 if i == j == 3 else 0
+        if sp.simplify(ricci[i][j] - want) != 0:
+            raise AssertionError(f"ori_time_machine: R_{i}{j} is not Ori's null dust term")
+
+
+def ori_pullback(chart, system):
+    """J^T g J, with g the vacuum core chart's metric at f = a(x^2 - y^2)/2 and J the Jacobian
+    of the map onto it, against this chart's metric in every slot: T = t + a(x^2 - y^2)/2 -
+    e(x^2 + y^2) for the foliation, and T = -uv/2 with z = -2 ln(-u/2) for the Brinkmann chart.
+    Then the vacuum, det g = -1, and for the foliation Ori's g^tt and the closed null geodesic
+    N, the circle x = y = t = 0, whose tangent the published connection carries into itself."""
+    spec = ori_time_machine("vacuum_core")
+    source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    a = chart.reader.parameters["a"]
+    if system == "foliation":
+        e = chart.reader.parameters["e"]
+        t, x, y, z = chart.symbols
+        image = [t + a * (x ** 2 - y ** 2) / 2 - e * (x ** 2 + y ** 2), x, y, z]
+    else:
+        u, v, x, y = chart.symbols
+        image = [-u * v / 2, x, y, -2 * sp.log(-u / 2)]
+    at = dict(zip(source.symbols, image))
+    profile = a * (x ** 2 - y ** 2) / 2
+    g = source.geo.g.subs(source.reader.parameters["f"], profile).subs(at, simultaneous=True)
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+    pulled = J.T * g * J
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify(pulled[i, j] - chart.geo.g[i, j]) != 0:
+                raise AssertionError(f"ori_time_machine: the vacuum core chart pulled back misses the {system} "
+                                     f"chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    if sp.simplify(chart.geo.g.det() + 1) != 0:
+        raise AssertionError(f"ori_time_machine: det g is not -1 in the {system} chart")
+    ricci = chart.geo.ricci_ll()
+    if any(sp.simplify(ricci[i][j]) != 0 for i in range(4) for j in range(4)):
+        raise AssertionError(f"ori_time_machine: the {system} chart is not a vacuum")
+    if system == "foliation":
+        want = t + (2 * e - a) ** 2 * x ** 2 + (2 * e + a) ** 2 * y ** 2 - e * (x ** 2 + y ** 2)
+        if sp.simplify(chart.geo.ginv[0, 0] - want) != 0:
+            raise AssertionError("ori_time_machine: g^tt is not Ori's")
+        on_N = {t: 0, x: 0, y: 0}
+        if chart.geo.g[3, 3].subs(on_N) != 0:
+            raise AssertionError("ori_time_machine: the circle x = y = t = 0 is not null")
+        gamma = chart.geo.christoffel_ull()
+        for i in range(3):
+            if sp.simplify(gamma[i][3][3].subs(on_N)) != 0:
+                raise AssertionError("ori_time_machine: the circle x = y = t = 0 is not a geodesic")
+
+
+CHARTS["ori_time_machine"] = [lambda s=s: ori_time_machine(s) for s in ORI_CHARTS]
 
 
 def write(spec):

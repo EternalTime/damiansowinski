@@ -180,6 +180,11 @@
       "id": "damour_solodukhin",
       "kind": "generalisation",
       "text": "Schwarzschild's metric with a small constant $\\lambda^2$ added to $-g_{tt}$, which turns the horizon into the throat of a wormhole that passes for a black hole. At $\\lambda = 0$ it is Schwarzschild's [damour2007]."
+    },
+    {
+      "id": "ori_time_machine",
+      "kind": "composite",
+      "text": "A time machine with a vacuum core inside a region of ordinary matter. Schwarzschild's geometry is everything outside that matter [ori2005]."
     }
   ],
   "references": [
@@ -228,7 +233,8 @@
     "obregon1998",
     "kinnersley1969",
     "podolsky2008",
-    "damour2007"
+    "damour2007",
+    "ori2005"
   ],
   "coordinates": [
     {

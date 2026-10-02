@@ -1,5 +1,5 @@
 {
-  "version": "607247ca43204b13",
+  "version": "f43660d7e784f34e",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -12519,6 +12519,122 @@
         "eprint": "2205.07787",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/2205.07787"
+      }
+    },
+    "ori2005": {
+      "type": "article",
+      "fields": {
+        "title": "A Class of Time-Machine Solutions with a Compact Vacuum Core",
+        "author": "Ori, Amos",
+        "journal": "Physical Review Letters",
+        "volume": "95",
+        "number": "2",
+        "pages": "021101",
+        "year": "2005",
+        "doi": "10.1103/PhysRevLett.95.021101",
+        "eprint": "gr-qc/0503077",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.95.021101"
+      }
+    },
+    "ori2007": {
+      "type": "article",
+      "fields": {
+        "title": "Formation of closed timelike curves in a composite vacuum/dust asymptotically flat spacetime",
+        "author": "Ori, Amos",
+        "journal": "Physical Review D",
+        "volume": "76",
+        "number": "4",
+        "pages": "044002",
+        "year": "2007",
+        "doi": "10.1103/PhysRevD.76.044002",
+        "eprint": "gr-qc/0701024",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.76.044002"
+      }
+    },
+    "ori1993": {
+      "type": "article",
+      "fields": {
+        "title": "Must time-machine construction violate the weak energy condition?",
+        "author": "Ori, Amos",
+        "journal": "Physical Review Letters",
+        "volume": "71",
+        "number": "16",
+        "pages": "2517--2520",
+        "year": "1993",
+        "doi": "10.1103/PhysRevLett.71.2517",
+        "url": "https://doi.org/10.1103/PhysRevLett.71.2517"
+      }
+    },
+    "ori1994": {
+      "type": "article",
+      "fields": {
+        "title": "Causality violation and the weak energy condition",
+        "author": "Ori, Amos and Soen, Yoav",
+        "journal": "Physical Review D",
+        "volume": "49",
+        "number": "8",
+        "pages": "3990--3997",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.49.3990",
+        "url": "https://doi.org/10.1103/PhysRevD.49.3990"
+      }
+    },
+    "soen1996": {
+      "type": "article",
+      "fields": {
+        "title": "Improved time-machine model",
+        "author": "Soen, Yoav and Ori, Amos",
+        "journal": "Physical Review D",
+        "volume": "54",
+        "number": "8",
+        "pages": "4858--4861",
+        "year": "1996",
+        "doi": "10.1103/PhysRevD.54.4858",
+        "url": "https://doi.org/10.1103/PhysRevD.54.4858"
+      }
+    },
+    "olum2000": {
+      "type": "article",
+      "fields": {
+        "title": "Ori-Soen time machine",
+        "author": "Olum, Ken D.",
+        "journal": "Physical Review D",
+        "volume": "61",
+        "number": "12",
+        "pages": "124022",
+        "year": "2000",
+        "doi": "10.1103/PhysRevD.61.124022",
+        "eprint": "gr-qc/9907007",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.61.124022"
+      }
+    },
+    "tipler1977": {
+      "type": "article",
+      "fields": {
+        "title": "Singularities and causality violation",
+        "author": "Tipler, Frank J.",
+        "journal": "Annals of Physics",
+        "volume": "108",
+        "number": "1",
+        "pages": "1--36",
+        "year": "1977",
+        "doi": "10.1016/0003-4916(77)90348-7",
+        "url": "https://doi.org/10.1016/0003-4916(77)90348-7"
+      }
+    },
+    "dietz2012ori": {
+      "type": "misc",
+      "fields": {
+        "title": "Geometric Analysis of Ori-type Spacetimes",
+        "author": "Dietz, J. and Dirmeier, A. and Scherfner, M.",
+        "journal": "arXiv preprint",
+        "year": "2012",
+        "eprint": "1201.1929",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1201.1929"
       }
     }
   }
