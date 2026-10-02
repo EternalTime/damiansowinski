@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 63,
+  "count": 64,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -4862,6 +4862,11 @@
           "id": "spinning_string",
           "kind": "family",
           "text": "One string that spins on its own. Deser, Jackiw, and 't Hooft found closed timelike curves around it in 1984 and wrote that moving particles without spin would not make them, which Gott's pair does [deser1984, carroll1994]."
+        },
+        {
+          "id": "wormhole_time_machine",
+          "kind": "family",
+          "text": "A time machine made by moving one mouth of a traversable wormhole, three years before Gott's strings. Hawking's chronology protection conjecture is aimed at both [morris1988prl, hawking1992]."
         }
       ],
       "references": [
@@ -4884,7 +4889,8 @@
         "holst1996",
         "holst1999",
         "birmingham2000",
-        "dedeo2002"
+        "dedeo2002",
+        "morris1988prl"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gott_time_machine.json",
@@ -8508,6 +8514,11 @@
           "id": "light_beam",
           "kind": "generalisation",
           "text": "Flat spacetime with a steady beam of light shining through it. Light running with the beam does not feel it [bonnor1969light]."
+        },
+        {
+          "id": "wormhole_time_machine",
+          "kind": "locally_same",
+          "text": "Minkowski space with two balls cut out and their surfaces identified at equal proper times is a wormhole, and moving one ball makes it a time machine [friedman1990, morris1988prl]."
         }
       ],
       "references": [
@@ -8544,7 +8555,9 @@
         "li1998",
         "griffiths1991",
         "deser1992time",
-        "bonnor1969light"
+        "bonnor1969light",
+        "friedman1990",
+        "morris1988prl"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -8854,6 +8867,11 @@
           "id": "btz",
           "kind": "family",
           "text": "The same construction in anti-de Sitter space of three dimensions, where the identification makes a black hole [banados1993]."
+        },
+        {
+          "id": "wormhole_time_machine",
+          "kind": "family",
+          "text": "A wormhole whose mouths move toward each other has a Cauchy horizon like Misner's with closed timelike curves behind it, and Kim and Thorne found the vacuum stress energy diverging there too [morris1988prl, kim1991]."
         }
       ],
       "references": [
@@ -8871,7 +8889,8 @@
         "grant1993",
         "thorne1993misner",
         "berkooz2004",
-        "banados1993"
+        "banados1993",
+        "morris1988prl"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner.json",
@@ -9268,6 +9287,11 @@
           "id": "teo_wormhole",
           "kind": "generalisation",
           "text": "The Morris-Thorne wormhole set spinning. Edward Teo added an angular velocity $\\omega$ and a function $K$ for the circles about the axis in 1998, and with $\\omega = 0$ and $K = 1$ his metric is this one [teo1998]."
+        },
+        {
+          "id": "wormhole_time_machine",
+          "kind": "generalisation",
+          "text": "The same wormhole with one mouth taken on a round trip at nearly the speed of light. The mouth comes home younger than the one that stayed, and a walk through the throat is a walk into the past [morris1988prl]."
         }
       ],
       "references": [
@@ -9416,6 +9440,272 @@
           ],
           "ricci_scalar": "R = \\dfrac{2\\left(1 - \\left(\\partial_l r\\right)^2 - r^2\\left(\\left(\\partial_l\\Phi\\right)^2 + \\partial_l^2\\Phi\\right) - 2r\\left(\\partial_l\\Phi\\,\\partial_l r + \\partial_l^2 r\\right)\\right)}{r^2}",
           "kretschmann": "K = 4\\left(\\left(\\partial_l\\Phi\\right)^2 + \\partial_l^2\\Phi\\right)^2 + \\dfrac{8\\left(\\partial_l\\Phi\\right)^2\\left(\\partial_l r\\right)^2}{r^2} + \\dfrac{8\\left(\\partial_l^2 r\\right)^2}{r^2} + \\dfrac{4\\left(1 - \\left(\\partial_l r\\right)^2\\right)^2}{r^4}"
+        }
+      ]
+    },
+    {
+      "id": "wormhole_time_machine",
+      "name": "Morris-Thorne-Yurtsever Wormhole Time Machine",
+      "short_name": "Morris-Thorne-Yurtsever",
+      "description": "A traversable wormhole whose mouths have been put out of step by taking one of them on a round trip at nearly the speed of light, described by Michael Morris, Kip Thorne, and Ulvi Yurtsever in 1988. Once the time shift between the mouths exceeds the light travel time between them, closed timelike curves loop through the throat, to the future of a Cauchy horizon whose light rays peel off one closed null geodesic.",
+      "tags": [
+        "time machine",
+        "closed timelike curves",
+        "causality violation",
+        "chronology horizon",
+        "Cauchy horizon",
+        "wormhole",
+        "traversable",
+        "exotic matter",
+        "energy condition violation",
+        "twin paradox",
+        "chronology protection",
+        "self consistency",
+        "locally flat",
+        "non-vacuum",
+        "asymptotically flat",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "morris_thorne",
+          "kind": "special_case",
+          "text": "The wormhole before anyone moves it. With $g = 0$ the metric is Morris and Thorne's, and $\\Phi$ and $r$ are that wormhole's own functions [morris1988prl, morris1988]."
+        },
+        {
+          "id": "thin_shell_wormhole",
+          "kind": "family",
+          "text": "With the throat shrunk to zero length each mouth is a thin shell joining two flat regions, Visser's wormhole with no mass [friedman1990, visser1989prd]."
+        },
+        {
+          "id": "misner",
+          "kind": "family",
+          "text": "The flat model of a Cauchy horizon with closed timelike curves behind it. Waves pile up on Misner's horizon, and Morris, Thorne, and Yurtsever argued that the wormhole's throat spreads them out [morris1988prl, misner1967]."
+        },
+        {
+          "id": "gott_time_machine",
+          "kind": "family",
+          "text": "The time machine J. Richard Gott built from two cosmic strings in 1991. Hawking's chronology protection conjecture is aimed at both [gott1991, hawking1992, visser1993]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "locally_same",
+          "text": "Outside the mouths the short throat model is Minkowski space, with two balls removed and their surfaces identified at equal proper times [friedman1990]."
+        }
+      ],
+      "references": [
+        "morris1988prl",
+        "morris1988",
+        "friedman1990",
+        "kim1991",
+        "misner1967",
+        "frolov1990",
+        "friedman1991",
+        "echeverria1991",
+        "frolov1991",
+        "hawking1992",
+        "visser1993",
+        "kay1997",
+        "visser1989prd",
+        "gott1991"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/wormhole_time_machine.json",
+      "charts": [
+        {
+          "id": "lorentz",
+          "name": "External Lorentz",
+          "coordinates": [
+            "T",
+            "X",
+            "Y",
+            "Z"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "X \\in (-\\infty, \\infty)",
+            "Y \\in (-\\infty, \\infty)",
+            "Z \\in (-\\infty, \\infty)",
+            "|\\mathbf{X} - \\mathbf{X}_A(\\tau)| \\le b \\;\\text{in the rest frame of mouth } A = 1, 2 \\;\\text{(the balls removed)}",
+            "\\mathcal{B}_1(\\tau) \\sim \\mathcal{B}_2(\\tau) \\;\\text{(the two spheres at equal proper time)}",
+            "\\text{flat: every curvature tensor vanishes}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Radius of each mouth, the ball removed about its world line"
+            }
+          ],
+          "convention": "We use the Lorentz coordinates $(T, X, Y, Z)$ of the flat space outside the mouths, with $T$ carrying dimensions of time, and $\\tau$ is the proper time along a mouth's world line. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dT^2 + dX^2 + dY^2 + dZ^2",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "X",
+                "X"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "Y",
+                "Y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "Z",
+                "Z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "wormhole",
+          "name": "Morris-Thorne-Yurtsever",
+          "coordinates": [
+            "t",
+            "l",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "l \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "l = 0 \\;\\text{(throat)}",
+            "g_{\\max}S \\ll c^2 \\;\\text{(a wormhole of length } S \\text{ from mouth to mouth)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "g = g(t)",
+              "description": "Acceleration of the right mouth in its own asymptotic rest frame, $g = \\gamma^2\\,dv/dt$ for a mouth moving at speed $v$ with $\\gamma = (1 - v^2/c^2)^{-1/2}$"
+            },
+            {
+              "symbol": "F = F(l)",
+              "description": "Form factor, dimensionless, which vanishes for $l \\le 0$ and rises smoothly from 0 at the throat to 1 at the right mouth"
+            },
+            {
+              "symbol": "\\Phi = \\Phi(l)",
+              "description": "Redshift function of the static wormhole, dimensionless and finite on the whole line"
+            },
+            {
+              "symbol": "r = r(l)",
+              "description": "Areal radius of the static wormhole, a length, with its minimum $r_0$ at the throat"
+            },
+            {
+              "symbol": "N = 1 + \\dfrac{glF\\cos\\theta}{c^2}",
+              "description": "Lapse of the accelerated frame, dimensionless, equal to 1 on the left half of the wormhole"
+            }
+          ],
+          "convention": "We use coordinates $(t, l, \\theta, \\phi)$, with $t$ the proper time of both mouths and $l$ the proper radial distance, negative on the left of the throat and positive on the right, and the polar axis $\\theta = 0$ points along the acceleration. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 + \\dfrac{glF\\cos\\theta}{c^2}\\right)^2e^{2\\Phi}c^2dt^2 + dl^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-N^2e^{2\\Phi}"
+            },
+            {
+              "indices": [
+                "l",
+                "l"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\left(N\\,r^2\\left(\\partial_l\\Phi\\right)^2\\,\\sin\\theta + N\\,r^2\\,\\partial_l^2\\Phi\\,\\sin\\theta + 2N\\,r\\,\\partial_l r\\,\\partial_l\\Phi\\,\\sin\\theta + 2N\\,r\\,\\partial_l^2 r\\,\\sin\\theta + N\\left(\\partial_l r\\right)^2\\,\\sin\\theta - N\\sin\\theta + 2r^2\\,\\partial_l N\\,\\partial_l\\Phi\\,\\sin\\theta + r^2\\,\\partial_l^2 N\\,\\sin\\theta + 2r\\,\\partial_l N\\,\\partial_l r\\,\\sin\\theta + \\partial_\\theta N\\,\\cos\\theta + \\partial_\\theta^2 N\\,\\sin\\theta\\right)\\csc\\theta}{N\\,r^2}",
+          "kretschmann": "K = \\dfrac{4\\left(2N^2\\,r^4\\left(\\partial_l\\Phi\\right)^2\\,\\partial_l^2\\Phi\\,\\sin^2\\theta + N^2\\,r^4\\left(\\partial_l\\Phi\\right)^4\\,\\sin^2\\theta + N^2\\,r^4\\left(\\partial_l^2\\Phi\\right)^2\\,\\sin^2\\theta + 2N^2\\,r^2\\left(\\partial_l r\\right)^2\\left(\\partial_l\\Phi\\right)^2\\,\\sin^2\\theta + 2N^2\\,r^2\\left(\\partial_l^2 r\\right)^2\\,\\sin^2\\theta - 2N^2\\left(\\partial_l r\\right)^2\\,\\sin^2\\theta + N^2\\left(\\partial_l r\\right)^4\\,\\sin^2\\theta + N^2\\sin^2\\theta + 4N\\,r^4\\,\\partial_l N\\,\\partial_l\\Phi\\,\\partial_l^2\\Phi\\,\\sin^2\\theta + 4N\\,r^4\\,\\partial_l N\\left(\\partial_l\\Phi\\right)^3\\,\\sin^2\\theta + 2N\\,r^4\\left(\\partial_l\\Phi\\right)^2\\,\\partial_l^2 N\\,\\sin^2\\theta + 2N\\,r^4\\,\\partial_l^2 N\\,\\partial_l^2\\Phi\\,\\sin^2\\theta + 4N\\,r^2\\,\\partial_l N\\left(\\partial_l r\\right)^2\\,\\partial_l\\Phi\\,\\sin^2\\theta + 2N\\,r\\,\\partial_\\theta N\\,\\partial_l r\\,\\partial_l\\Phi\\,\\sin\\theta\\cos\\theta + 2N\\,r\\,\\partial_\\theta^2 N\\,\\partial_l r\\,\\partial_l\\Phi\\,\\sin^2\\theta + 4r^4\\,\\partial_l N\\,\\partial_l\\Phi\\,\\partial_l^2 N\\,\\sin^2\\theta + 4r^4\\left(\\partial_l N\\right)^2\\left(\\partial_l\\Phi\\right)^2\\,\\sin^2\\theta + r^4\\left(\\partial_l^2 N\\right)^2\\,\\sin^2\\theta + 4r^2\\,\\partial_\\theta N\\,\\partial_l\\Phi\\,\\partial_l\\partial_\\theta N\\,\\sin^2\\theta + 2r^2\\left(\\partial_\\theta N\\right)^2\\left(\\partial_l\\Phi\\right)^2\\,\\sin^2\\theta + 2r^2\\left(\\partial_l N\\right)^2\\left(\\partial_l r\\right)^2\\,\\sin^2\\theta + 2r^2\\left(\\partial_l\\partial_\\theta N\\right)^2\\,\\sin^2\\theta + 2r\\,\\partial_\\theta N\\,\\partial_l N\\,\\partial_l r\\,\\sin\\theta\\cos\\theta - 4r\\left(\\partial_\\theta N\\right)^2\\,\\partial_l r\\,\\partial_l\\Phi\\,\\sin^2\\theta - 4r\\,\\partial_\\theta N\\,\\partial_l r\\,\\partial_l\\partial_\\theta N\\,\\sin^2\\theta + 2r\\,\\partial_\\theta^2 N\\,\\partial_l N\\,\\partial_l r\\,\\sin^2\\theta + 2\\left(\\partial_\\theta N\\right)^2\\left(\\partial_l r\\right)^2\\,\\sin^2\\theta - \\left(\\partial_\\theta N\\right)^2\\,\\sin^2\\theta + \\left(\\partial_\\theta^2 N\\right)^2\\,\\sin^2\\theta + \\left(\\partial_\\theta N\\right)^2\\right)\\csc^2\\theta}{N^2\\,r^4}"
+        },
+        {
+          "id": "short_throat",
+          "name": "Short Throat",
+          "coordinates": [
+            "t",
+            "l",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "l \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "l = 0 \\;\\text{(throat)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Radius of each mouth, the least areal radius"
+            }
+          ],
+          "convention": "We use coordinates $(t, l, \\theta, \\phi)$ in the rest frame of a mouth, with $t$ carrying dimensions of time and $l$ the proper radial distance, which rises from $-\\infty$ to 0 toward one mouth and from 0 to $\\infty$ away from the other, and $\\delta$ is the Dirac delta. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + dl^2 + \\left(b + |l|\\right)^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "l",
+                "l"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(b + |l|\\right)^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(b + |l|\\right)^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{8\\delta(l)}{b}",
+          "kretschmann": "K = 0 \\;\\text{for}\\; l \\neq 0"
         }
       ]
     },
@@ -14509,6 +14799,11 @@
           "id": "teo_wormhole",
           "kind": "family",
           "text": "A rotating wormhole some travellers cross without meeting its exotic matter. Teo took the idea from Visser's flat space wormholes of 1989, cut along polyhedra [teo1998, visser1989prd]."
+        },
+        {
+          "id": "wormhole_time_machine",
+          "kind": "family",
+          "text": "Two mouths of a thin shell wormhole with no mass, both opening into one flat space. Move one of them and closed timelike curves thread the throat [friedman1990, morris1988prl]."
         }
       ],
       "references": [
@@ -14529,7 +14824,9 @@
         "westerweck2018",
         "abbott2021tgr",
         "abbott2025tgr",
-        "teo1998"
+        "teo1998",
+        "friedman1990",
+        "morris1988prl"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/thin_shell_wormhole.json",

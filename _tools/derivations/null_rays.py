@@ -521,6 +521,75 @@ GOTT_A = 4 * math.acosh(5 / (2 * math.sqrt(3)))
 # The spinning string: b = 0.9, the cosmic string's deficit, and a = 0.9 in units of r_c = a/b.
 SPINNING = {"a": "9/10", "b": "9/10"}
 GOTT_STRINGS = {"mu": "1/12", "G": 1, "v": "4/5", "d": "1/2", "alpha": "pi/3", "gamma": "5/3"}
+
+# Morris, Thorne and Yurtsever's round trip, in the throat radius r_0 and with c = 1: the right
+# mouth's rapidity is eta = (3/2) sin^3(2 pi tau/P) over 0 <= tau <= P = 54 r_0, out for the first
+# half and home for the second, so its acceleration g = d eta/d tau is greatest, 0.2015/r_0, at
+# tau = (P/2 pi) arctan(sqrt 2) = 8.21 r_0 and least, the same with a minus sign, at P/2 - 8.21 r_0.
+# The mouths start a distance D = 10 r_0 apart. wormhole_time_machine.md derives the rest.
+WTM_ETA0, WTM_P, WTM_D = 1.5, 54.0, 10.0
+WTM_G = "pi/6*sin(pi*t/27)**2*cos(pi*t/27)"
+WTM_FUNCTIONS = {"g": WTM_G, "F": "Piecewise((0, l <= 0), (exp(-1/(4*l**2)), True))", "Phi": "0", "r": "sqrt(1 + l**2)"}
+WTM_PEAK = WTM_P / (2 * math.pi) * math.atan(math.sqrt(2))
+
+
+class WormholeTrip:
+    """The world line of the right mouth on Morris, Thorne and Yurtsever's round trip, in the
+    Lorentz coordinates (T, Z) of the flat space outside, with c = 1 and lengths in r_0.
+
+    The left mouth rests at Z = 0 and its proper time is T. The right mouth starts at Z = D
+    with the same proper time tau = T = 0, and moves with rapidity eta(tau) = eta_0
+    sin^3(2 pi tau/P) for 0 <= tau <= P and none after, so that dT/dtau = cosh(eta) and
+    dZ/dtau = sinh(eta), integrated here by Simpson's rule. eta is odd about P/2, so the mouth
+    comes home, Z(P) = D, and it has aged less than the left one by shift = T(P) - P. The two
+    mouths are identified at equal tau. A light ray leaving the left mouth at tau along +Z
+    reaches the right one at T = tau + Z, and tau_c is the first tau at which that is the
+    right mouth's own T(tau): the closed null geodesic, the only one, since after it the
+    light arrives early at every tau. Every claim is checked as it is made."""
+
+    def __init__(self, eta0=WTM_ETA0, period=WTM_P, distance=WTM_D, n=200001):
+        from scipy.integrate import cumulative_simpson
+        from scipy.optimize import brentq
+        self.eta0, self.period, self.distance = eta0, period, distance
+        tau = np.linspace(0.0, period, n)
+        eta = eta0 * np.sin(2 * np.pi * tau / period) ** 3
+        self._tau = tau
+        self._T = cumulative_simpson(np.cosh(eta), x=tau, initial=0.0)
+        self._Z = distance + cumulative_simpson(np.sinh(eta), x=tau, initial=0.0)
+        self.shift = float(self._T[-1] - period)
+        if abs(self._Z[-1] - distance) > 1e-9:
+            raise SystemExit("the wormhole's right mouth does not come home")
+        if not self.shift > distance:
+            raise SystemExit("the wormhole's time shift is less than the distance between its mouths")
+        gap = lambda t: self.right(t)[0] - t - self.right(t)[1]
+        grid = np.linspace(0.0, period, 5401)
+        values = np.array([gap(t) for t in grid])
+        first = int(np.flatnonzero(values >= 0)[0])
+        self.tau_c = float(brentq(gap, grid[first - 1], grid[first], xtol=1e-13))
+        if not (values[:first] < 0).all():
+            raise SystemExit("a closed causal curve threads the wormhole before the closed null geodesic")
+        if not (values[first:] >= 0).all():
+            raise SystemExit("the closed null geodesic is not the only one: light from the left mouth "
+                             "arrives late again after it")
+
+    def rapidity(self, tau):
+        tau = np.asarray(tau, dtype=float)
+        inside = (tau >= 0) & (tau <= self.period)
+        return np.where(inside, self.eta0 * np.sin(2 * np.pi * tau / self.period) ** 3, 0.0)
+
+    def right(self, tau):
+        """(T, Z) of the right mouth at its proper time tau: at rest before the trip and after."""
+        tau = np.asarray(tau, dtype=float)
+        inside = np.clip(tau, 0.0, self.period)
+        T = np.interp(inside, self._tau, self._T) + (tau - inside)
+        return T, np.interp(inside, self._tau, self._Z)
+
+    def left(self, tau):
+        tau = np.asarray(tau, dtype=float)
+        return tau, np.zeros_like(tau)
+WTM_INPUT = ("$\\Phi = 0$ and $r = \\sqrt{r_0^2 + l^2}$, the Ellis-Bronnikov wormhole, with the form factor "
+             "$F = e^{-r_0^2/4l^2}$ for $l > 0$ and the acceleration $g = d\\eta/dt$ of a round trip with rapidity "
+             "$\\eta = \\tfrac{3}{2}\\sin^3(2\\pi t/P)$ and $P = 54\\,r_0/c$, greatest at $0.2\\,c^2/r_0$.")
 GM_CONE = {"Delta": "19/100"}
 GM_RH = 100 / 81
 # The black hole on a cosmic string at the deficit the cosmic string is drawn at, 4G mu/c^2 = 0.1.
@@ -729,6 +798,17 @@ DIAGRAMS = [
     Diagram("thin_shell_wormhole", "spherical", "radial", "$t$ and $r$", ("t", "r"), (1.25, 4.25, -1.5, 1.5),
             "$r/r_s$", "$ct/r_s$", TSW, EQUATOR, areal=True,
             lines=(("shell", "r", "5/4", "the shell at the throat, $r = a$"),)),
+    # The wormhole time machine on the axis of the right mouth's acceleration, theta = 0, where
+    # N = 1 + g l F: a stretch of the trip about the greatest acceleration, and one about the
+    # greatest deceleration, half a trip's turn later. And the mouth of the short throat.
+    *[Diagram("wormhole_time_machine", "wormhole", view, label, ("t", "l"),
+              (-1.5, 1.5, centre - 1.5, centre + 1.5), "$l/r_0$", "$ct/r_0$", {}, {"theta": "0", "phi": "0"},
+              families=SIDEWAYS, functions=WTM_FUNCTIONS, input=WTM_INPUT,
+              lines=(("surface", "r", "0", "the throat, $l = 0$"),))
+      for view, label, centre in (("speeding", "$t$ and $l$ on the axis, speeding up", WTM_PEAK),
+                                  ("slowing", "$t$ and $l$ on the axis, slowing down", WTM_P / 2 - WTM_PEAK))],
+    Diagram("wormhole_time_machine", "short_throat", "radial", "$t$ and $l$", ("t", "l"), (-3, 3, -3, 3),
+            "$l/b$", "$ct/b$", {"b": 1}, EQUATOR, families=SIDEWAYS, areal=True, areal_contours=(1.5, 2.0, 3.0)),
     Diagram("morris_thorne", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r/b_0$", "$ct/b_0$", {"b_0": 1}, EQUATOR, areal=True,
             functions={"Phi": "0", "b": "b_0**2/r"},
@@ -1806,6 +1886,31 @@ CAPTIONS = {
         "The dotted lines are the ergosurface, $g_{tt} = 0$ at $r = \\sqrt{2a}\\,b_0$, which is "
         "$l = \\pm 1.37\\,b_0$. Between them, through the throat, no observer keeps $\\phi$ fixed. The "
         "ergoregion is a tube round the equator of the throat and reaches neither pole.",
+    ],
+    ("wormhole_time_machine", "wormhole", "speeding"): [
+        "The plane of $t$ and $l$ on the axis of the acceleration ($\\theta = 0$), where "
+        "$g_{tt} = -(1 + glF/c^2)^2$, for three units of $r_0/c$ about the moment the right mouth speeds up "
+        "hardest, $g = 0.2\\,c^2/r_0$. The edges of the cones are $dl/d(ct) = \\pm(1 + glF/c^2)$. On the left "
+        "half, $l \\le 0$, $F = 0$ and every ray is at 45°.",
+        "To the right of the throat the cones open as $F$ rises, and the rays there cross a given stretch of "
+        "$l$ in less of the time $t$. Clocks to the right of the throat run fast against $t$ by the factor "
+        "$1 + glF/c^2$, as clocks higher up in the accelerated frame of the right mouth.",
+    ],
+    ("wormhole_time_machine", "wormhole", "slowing"): [
+        "The plane of $t$ and $l$ on the axis of the acceleration ($\\theta = 0$), for three units of $r_0/c$ "
+        "about the moment the right mouth slows hardest on its way out, $g = -0.2\\,c^2/r_0$. The edges of the "
+        "cones are $dl/d(ct) = \\pm(1 + glF/c^2)$, and to the right of the throat the cones close as $F$ rises.",
+        "Along this axis the acceleration now points toward the throat, and clocks to the right of the throat "
+        "run slow against $t$. On the left half, $l \\le 0$, $F = 0$ and every ray is at 45°, as in the static "
+        "wormhole.",
+    ],
+    ("wormhole_time_machine", "short_throat", "radial"): [
+        "The plane of $t$ and $l$ ($\\theta = \\pi/2$, $\\phi = 0$) in the rest frame of a mouth of radius $b$, "
+        "with $l < 0$ outside one mouth and $l > 0$ outside the other. Here $g_{tt} = -1$ and $g_{ll} = 1$, so "
+        "every ray is at 45° and crosses the throat as a straight line.",
+        "The throat $l = 0$ carries the curvature, a delta function, since $r = b + |l|$ has a kink there. "
+        "The faint vertical lines are the spheres of areal radius $1.5\\,b$, $2\\,b$, and $3\\,b$, one of each "
+        "on either side.",
     ],
     ("morris_thorne", "spherical", "radial"): [
         "The plane of $t$ and the areal radius $r$ ($\\theta = \\pi/2$, $\\phi = 0$). "
@@ -5268,6 +5373,7 @@ CLOSED_FORMS = {
          lambda t, z: np.abs(z) < 0.95),
     ("domain_wall", "inertial", "through"): (lambda T, R: T + R, lambda T, R: T - R, None),
     ("ellis_bronnikov", "spherical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
+    ("wormhole_time_machine", "short_throat", "radial"): (lambda t, l: t + l, lambda t, l: t - l, None),
     ("morris_thorne", "spherical", "radial"):
         (lambda t, r: t + np.sqrt(r ** 2 - 1), lambda t, r: t - np.sqrt(r ** 2 - 1), lambda t, r: r > 1.0005),
     # Teo's example at b_0 = 1: on the equator the rays keep ct -+ l, and on the axis at a = 1/4,

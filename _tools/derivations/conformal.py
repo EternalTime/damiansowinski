@@ -1043,6 +1043,65 @@ def gott_time_machine(ck, src):
     return views
 
 
+def wormhole_time_machine(ck, src):
+    """Morris, Thorne and Yurtsever's round trip on the plane X = Y = 0 through both mouths, in
+    the Lorentz chart of the flat space outside them, the mouths drawn as their world lines.
+
+    The plane is Minkowski's, brought into its diamond by p = arctan((cT - cT_0 - Z)/l) and
+    q = arctan((cT - cT_0 + Z)/l), with cT_0 = 40 r_0 and l = 20 r_0 so that the trip of
+    nr.WormholeTrip fills the middle of it. The closed null geodesic leaves the left mouth at
+    tau_c along a line of constant p and meets the right mouth at the same tau, which is
+    checked, and on this plane the events with a closed timelike curve through them are those
+    to the future of the event it leaves from, p > p_c and q > q_c, for mouths small beside
+    the distance between them. Before tau_c the two mouths at one proper time are spacelike
+    separated, and after it timelike, which is checked at every time drawn."""
+    trip = nr.WormholeTrip()
+    T0, ell = 40.0, 20.0
+    box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+
+    def pq(T, Z):
+        return mink_pq(np.asarray(T, dtype=float) - T0, Z, ell)
+
+    plane = Plane(src, "wormhole_time_machine", "lorentz", ("T", "Z"), {"X": "0", "Y": "0"}, {"b": 1})
+    ck.chart("wormhole time machine, Lorentz", plane, pq, ck.uniform(-60, 140), ck.uniform(-100, 100), lambda T, Z: (1, 0))
+    ck.finite("wormhole time machine: the plane is flat", plane.kretschmann(ck.uniform(-60, 140, 50), ck.uniform(-100, 100, 50)))
+    left_c, right_c = trip.left(trip.tau_c), trip.right(trip.tau_c)
+    p_c, q_c = (float(x) for x in pq(*left_c))
+    ck.limit("wormhole time machine: the closed null geodesic keeps p from the left mouth to the right",
+             np.array([float(pq(*right_c)[0])]), np.array([p_c]), 1e-9)
+    marks = np.arange(0.0, trip.period + 10.0, 9.0)
+    sides = [float(((trip.right(m)[0] - m) - trip.right(m)[1]) * (1 if m > trip.tau_c else -1)) for m in marks]
+    ck.limit("wormhole time machine: the mouths at one proper time are spacelike separated before the closed "
+             "null geodesic and timelike after", np.array([0.0 if min(sides) > 0 else 1.0]), np.zeros(1), 0.5)
+
+    v = View("lorentz", "External Lorentz", box, "lorentz")
+    v.fill("region", DIAMOND)
+    v.fill("cover", [point(p_c, q_c), point(p_c, HALF), point(HALF, HALF), point(HALF, q_c)])
+    for m in marks:
+        s_ = np.linspace(0.0, 1.0, 60)
+        (Ta, Za), (Tb, Zb) = trip.left(m), trip.right(m)
+        v.curve("t", *pq(Ta + s_ * (Tb - Ta), Za + s_ * (Zb - Za)))
+    v.line("horizon", [[point(p_c, HALF), point(p_c, q_c), point(HALF, q_c)]])
+    v.curve("null", *pq(np.linspace(left_c[0], right_c[0], 40), np.linspace(left_c[1], right_c[1], 40)))
+    tau = np.concatenate([-np.geomspace(1e5, 1e-3, 300), np.linspace(0, trip.period, 1200),
+                          trip.period + np.geomspace(1e-3, 1e5, 300)])
+    v.curve("world", *pq(*trip.left(tau)))
+    v.curve("world", *pq(*trip.right(tau)))
+    diamond_edges(v)
+    label_on(v, pq(*trip.left(0.0)), "$\\tau = 0$", "r", dx=-5, dy=0)
+    label_on(v, pq(*trip.left(54.0)), "$54$", "r", dx=-5, dy=0)
+    v.legend("cover", "the events with a closed timelike curve through them")
+    v.legend("world", "the two mouths, the left at rest and the right on its round trip")
+    v.legend("t", "from one mouth to the other at one proper time $\\tau$, every $9\\,r_0/c$, the two ends one event")
+    v.legend("null", "the closed null geodesic, at $c\\tau = " + f"{trip.tau_c:.1f}" + "\\,r_0$")
+    v.legend("horizon", "the Cauchy horizon")
+    v.set(restriction="The plane $X = Y = 0$ through both mouths only, each point in the diagram a single event, "
+                      "with the mouths drawn as their world lines.",
+          settings="Mouths that start $D = 10\\,r_0$ apart, the right one on a round trip with rapidity "
+                   "$\\eta = \\tfrac{3}{2}\\sin^3(2\\pi\\tau/P)$ and $P = 54\\,r_0/c$.")
+    return [v]
+
+
 # ---------------------------------------------------------------- the tower
 
 class Tower:
@@ -7660,6 +7719,7 @@ DRAWN = {
     "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "c_metric": c_metric,
     "misner": misner, "milne": milne,
     "gott_time_machine": gott_time_machine,
+    "wormhole_time_machine": wormhole_time_machine,
     "einstein_rosen_waves": einstein_rosen_waves, "gowdy": gowdy,
     "nariai": nariai, "khan_penrose": khan_penrose, "bell_szekeres": bell_szekeres,
     "majumdar_papapetrou": majumdar_papapetrou,
@@ -7946,6 +8006,18 @@ CAPTIONS = {
         "An event and each of its images are spacelike separated here, by $n^2b^2 + 4c^2\\tau^2\\sinh^2(na/2)$ in "
         "squared interval, so no closed timelike curve enters either cone. The null lines $\\tau \\to 0$ are the "
         "chronology horizon.",
+    ],
+    ("wormhole_time_machine", "lorentz"): [
+        "The plane $X = Y = 0$ through both mouths in the Lorentz frame of the left one, brought into a finite "
+        "drawing by $p = \\arctan((cT - cT_0 - Z)/\\ell)$ and $q = \\arctan((cT - cT_0 + Z)/\\ell)$, with "
+        "$cT_0 = 40\\,r_0$ and $\\ell = 20\\,r_0$. The left mouth rests at $Z = 0$, and the right one leaves "
+        "$Z = 10\\,r_0$, travels out to $31.5\\,r_0$, and comes home having aged $21.7\\,r_0/c$ less than the left.",
+        "The two ends of each line joining the mouths at one proper time are one event. Early in the trip the "
+        "ends are spacelike separated, and late in it the right end lies in the future of the left, so a "
+        "traveller leaving the left mouth can reach the right mouth at that same proper time and step through the "
+        "throat to where the journey began. The first such journey is a light ray's, the closed null geodesic, "
+        "and the Cauchy horizon is the future light cone of the event it leaves from, for mouths small beside the "
+        "distance between them.",
     ],
     ("misner", "rindler"): [
         "The wedge $x > c|t|$ in the plane $y = z = 0$ of the covering Minkowski space, in the Rindler chart, "
