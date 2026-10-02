@@ -13433,6 +13433,138 @@ def ads_soliton_check(chart):
 CHARTS["ads_soliton"] = [lambda s=s: ads_soliton(s) for s in SOLITON_CHARTS]
 
 
+# -- The double Kerr solution ------------------------------------------------------------
+
+DOUBLE_KERR_PARAMETERS = ["f = f(\\rho,z)", "\\omega = \\omega(\\rho,z)", "\\gamma = \\gamma(\\rho,z)"]
+
+
+def double_kerr():
+    """Kramer and Neugebauer's two Kerr black holes on one axis, in the canonical chart of Weyl,
+    Lewis and Papapetrou, ds^2 = -f(c dt - omega dphi)^2 + (e^{2 gamma}(drho^2 + dz^2) +
+    rho^2 dphi^2)/f, with f, omega and gamma free functions of rho and z, and no component
+    assuming a field equation. double_kerr_check holds the field equations the chart's
+    parameters state to making every Ricci component vanish, and Kramer and Neugebauer's Ernst
+    potential, as those parameters write it, to solving them. double_kerr.md beside this file is
+    the derivation."""
+    coords = ["t", "\\rho", "\\phi", "z"]
+
+    def line(c):
+        return (f"ds^2 = -f\\left({c}dt - \\omega\\,d\\phi\\right)^2 + \\dfrac{{1}}{{f}}\\left(e^{{2\\gamma}}"
+                "\\left(d\\rho^2 + dz^2\\right) + \\rho^2d\\phi^2\\right)")
+    probe = vm.Reader(coords, DOUBLE_KERR_PARAMETERS, ())
+    rho, z = probe.symbol["\\rho"], probe.symbol["z"]
+    f, om, gam = (probe.parameters[n] for n in ("f", "omega", "gamma"))
+    D = sp.Derivative
+    lead = [gam, f, om]
+    for g in (gam, f, om):
+        lead += [D(g, rho), D(g, z)]
+    for g in (gam, f, om):
+        lead += [D(g, (rho, 2)), D(g, rho, z), D(g, (z, 2))]
+    lead.append(rho)
+    return {
+        "metric_id": "double_kerr",
+        "system": {"id": "weyl", "name": "Weyl-Lewis-Papapetrou", "coords": coords,
+                   "domains": ["t \\in (-\\infty, \\infty)", "\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                               "z \\in (-\\infty, \\infty)",
+                               "\\rho = 0,\\; a_1 \\le z \\le a_2 \\;\\text{and}\\; a_3 \\le z \\le a_4 "
+                               "\\;\\text{(the two horizons)}",
+                               "\\omega = 0 \\;\\text{and}\\; \\gamma = 0 \\;\\text{at}\\; \\rho = 0 "
+                               "\\;\\text{(a regular axis)}"],
+                   "parameters": DOUBLE_KERR_PARAMETERS, "line_element": line("c\\,")},
+        "chart_line_element": line(""),
+        "printer": {"lead": lead, "factors": lead},
+        "pretty": lambda value: sp.powsimp(sp.factor(sp.sympify(value)), combine="exp"),
+        # The norm of the axial Killing vector as a difference, which the printer would factor.
+        "components": {"metric_components": {("\\phi", "\\phi"): "\\dfrac{\\rho^2 - f^2\\omega^2}{f}"},
+                       "inverse_metric_components": {("t", "t"): "-\\dfrac{\\rho^2 - f^2\\omega^2}{f\\,\\rho^2}"}},
+        "check": double_kerr_check,
+    }
+
+
+def double_kerr_vacuum(chart):
+    """The field equations the chart's parameters state, as replacements: the second derivatives
+    along z of f and omega by Ernst's equation written in f and omega, and both first
+    derivatives of gamma by its quadrature."""
+    rho, z = chart.symbols[1], chart.symbols[3]
+    f, om, gam = (chart.reader.parameters[n] for n in ("f", "omega", "gamma"))
+    D = sp.Derivative
+    fr, fz, wr, wz = D(f, rho), D(f, z), D(om, rho), D(om, z)
+    second = {D(f, (z, 2)): -D(f, (rho, 2)) - fr / rho + (fr ** 2 + fz ** 2 - f ** 4 * (wr ** 2 + wz ** 2) / rho ** 2) / f,
+              D(om, (z, 2)): -D(om, (rho, 2)) + wr / rho - 2 * (fr * wr + fz * wz) / f}
+    first = {rho: rho * (fr ** 2 - fz ** 2) / (4 * f ** 2) - f ** 2 * (wr ** 2 - wz ** 2) / (4 * rho),
+             z: rho * fr * fz / (2 * f ** 2) - f ** 2 * wr * wz / (2 * rho)}
+    return second, gam, first
+
+
+def double_kerr_on_shell(chart, value):
+    """`value` where the chart's field equations hold: gamma's derivatives replaced by its
+    quadrature and that quadrature's derivatives, then the second derivatives of f and omega
+    along z by Ernst's equation."""
+    rho, z = chart.symbols[1], chart.symbols[3]
+    second, gam, first = double_kerr_vacuum(chart)
+    D = sp.Derivative
+    value = sp.sympify(value).subs({D(gam, (rho, 2)): sp.diff(first[rho], rho), D(gam, (z, 2)): sp.diff(first[z], z),
+                                    D(gam, rho, z): sp.diff(first[rho], z)}).doit()
+    value = value.subs({D(gam, rho): first[rho], D(gam, z): first[z]}).doit()
+    return value.subs(second).doit()
+
+
+def double_kerr_potential(rho, z, ends, phases):
+    """Kramer and Neugebauer's solution, as Herdeiro and Rebelo write it after Yamazaki: the two
+    determinants D_-+ of X_ik -+ 1, X_ik = (alpha_i r_i + alpha_k r_k)/(a_i - a_k), over
+    i = 1, 3 and k = 2, 4, and the product of the four distances. The Ernst potential is
+    D_-/D_+ and e^{2 gamma} is Re(D_- conj(D_+)) over a constant times that product."""
+    r = [sp.sqrt(rho ** 2 + (z - a) ** 2) for a in ends]
+
+    def det(sign):
+        X = lambda i, k: (phases[i] * r[i] + phases[k] * r[k]) / (ends[i] - ends[k]) + sign  # noqa: E731
+        return X(0, 1) * X(2, 3) - X(0, 3) * X(2, 1)
+    return det(-1), det(1), r[0] * r[1] * r[2] * r[3]
+
+
+def double_kerr_check(chart):
+    ricci = chart.geo.ricci_ll()
+    for i in range(4):
+        for j in range(i, 4):
+            if not gowdy_vanishes(double_kerr_on_shell(chart, ricci[i][j])):
+                raise AssertionError(f"double_kerr: the stated field equations leave R_{chart.coords_tex[i]}"
+                                     f"{chart.coords_tex[j]} standing")
+    # The quadrature for gamma is integrable where Ernst's equation holds.
+    rho, z = chart.symbols[1], chart.symbols[3]
+    second, _, first = double_kerr_vacuum(chart)
+    if not gowdy_vanishes((sp.diff(first[rho], z) - sp.diff(first[z], rho)).subs(second).doit()):
+        raise AssertionError("double_kerr: the quadrature for gamma is not integrable on the field equations")
+    # Kramer and Neugebauer's potential solves Ernst's equation, and with it the two equations
+    # for f and omega: at random ends and phases, at six points, in forty digits.
+    rng = random.Random(7)
+    x, y = sp.symbols("x y", positive=True)
+    for _ in range(3):
+        ends = sorted(sp.Rational(rng.randint(-40, 40), 10) for _ in range(4))
+        if len(set(ends)) < 4:
+            continue
+        phases = [sp.exp(sp.I * sp.Rational(rng.randint(-30, 30), 10)) for _ in range(4)]
+        minus, plus, product = double_kerr_potential(x, y, ends, phases)
+        E = minus / plus
+        lap = sp.diff(E, x, 2) + sp.diff(E, x) / x + sp.diff(E, y, 2)
+        ernst = (E + sp.conjugate(E)) / 2 * lap - sp.diff(E, x) ** 2 - sp.diff(E, y) ** 2
+        # gamma's quadrature in the potential: d gamma = rho (dE dE*) / (4 f^2), its two parts.
+        e2g = (minus * sp.conjugate(plus) + sp.conjugate(minus) * plus) / (2 * product)
+        Ex, Ey, f = sp.diff(E, x), sp.diff(E, y), (E + sp.conjugate(E)) / 2
+        along = sp.diff(e2g, x) / (2 * e2g) - x * (Ex * sp.conjugate(Ex) - Ey * sp.conjugate(Ey)) / (4 * f ** 2)
+        across = sp.diff(e2g, y) / (2 * e2g) - x * (Ex * sp.conjugate(Ey) + Ey * sp.conjugate(Ex)) / (4 * f ** 2)
+        for _ in range(6):
+            at = {x: sp.Rational(rng.randint(1, 40), 10), y: sp.Rational(rng.randint(-50, 50), 7)}
+            miss, size = sp.N(ernst.subs(at), 40), sp.N(lap.subs(at), 40)
+            if abs(miss) > sp.Float("1e-30") * (1 + abs(size)):
+                raise AssertionError(f"double_kerr: Kramer and Neugebauer's potential misses Ernst's equation at {at}")
+            for part in (along, across):
+                if abs(sp.N(part.subs(at), 40)) > sp.Float("1e-30"):
+                    raise AssertionError(f"double_kerr: the stated e^(2 gamma) misses gamma's quadrature at {at}")
+
+
+CHARTS["double_kerr"] = double_kerr
+
+
 def write(spec):
     start = time.time()
     chart = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],

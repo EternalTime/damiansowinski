@@ -382,6 +382,14 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `weyl_equator` and `spherical_equator`, the triangle: the curve $p, q = \arctan(\mp\rho_*/\ell)$ over the same stretch.
 - `weyl/axis`, `spherical/axis`, `weyl_axis` and `spherical_axis`: nothing, since the plane meets the axis only at $\rho = 0$, inside where the embedding stops, which `HIDDEN` records.
 
+### The double Kerr solution
+
+- The embedding is one moment: the plane $z = 0$ midway between the two holes at $t = 0$, from the strut at $\rho = 0$ to $6\,m$.
+- `weyl/midplane`, the plane of $t$ and $\rho$: the line $ct = 0$ from $\rho = 0$ to the edge of the box at $6\,m$.
+- `weyl/axis`, the plane of $t$ and $z$: the one event $t = 0$, $z = 0$, where the plane meets the axis, the tip of the cone.
+- `weyl_midplane`, the triangle: the curve $p, q = \arctan(\mp\rho_*/\ell)$ over the same stretch; `weyl_axis_between`, the diamond of the strut: its centre.
+- `weyl_axis_outside`: nothing, since the plane does not meet the axis above the upper hole, which `HIDDEN` records.
+
 ### Zipoy-Voorhees
 
 - The embedding is two moments of two spacetimes: the equatorial plane at $t = 0$ in the spherical chart for the oblate $q = 1$, from $r = 2.5161\,m$ to $6\,m$, and for the prolate $q = -1/2$, from $r = 2.0020\,m$ to $6\,m$.

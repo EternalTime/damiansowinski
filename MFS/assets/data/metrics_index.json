@@ -557,7 +557,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e955d5deb5976216",
+    "version": "848f60c9fc020b8f",
     "diagrams": "8b39c6bef80d5718",
     "conformal": "573aa16b0b411fe4",
     "embedding": "a9676c6465fbce1c"
@@ -662,6 +662,41 @@
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc"
+  },
+  {
+    "id": "double_kerr",
+    "name": "Double Kerr",
+    "tags": [
+      "vacuum",
+      "stationary",
+      "axisymmetric",
+      "rotating",
+      "rotating black hole",
+      "black hole",
+      "multiple black holes",
+      "angular momentum",
+      "mass",
+      "conical singularity",
+      "ergosphere",
+      "frame dragging",
+      "horizon",
+      "event horizon",
+      "closed timelike curves",
+      "NUT parameter",
+      "soliton",
+      "superposition",
+      "black hole uniqueness",
+      "asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "4198a5aaa5b5f724",
+    "diagrams": "e80c22fa8faff2b6",
+    "conformal": "9dae987db0ca1df8",
+    "embedding": "7ebe08e359710241"
   },
   {
     "id": "einstein_cluster",
@@ -1168,7 +1203,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "21d6cf1112886caf",
+    "version": "812efdfd42a97577",
     "diagrams": "46f7eaaecdbd1ba2",
     "conformal": "82c544ce8dcb28c0",
     "embedding": "5af191b3a00d29f2"
@@ -1374,7 +1409,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c762fb03293b0348",
+    "version": "326e8bc8982876c0",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7"
@@ -1701,7 +1736,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a98acd9dae6b976f",
+    "version": "d57846eb4dc21d80",
     "diagrams": "c6edded6cce52897",
     "conformal": "334186f800f59252",
     "embedding": "b9bf3c95064c40a7"
@@ -2485,7 +2520,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a840d20a11e76b09",
+    "version": "71d6d0e71db426e5",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"

@@ -4597,6 +4597,8 @@ class Slices(unittest.TestCase):
               # The axis of the Curzon-Chazy particle, which the embedded plane z = 0 meets only at R = 0.
               "curzon_chazy/weyl/axis", "curzon_chazy/spherical/axis",
               "conformal curzon_chazy/weyl_axis", "conformal curzon_chazy/spherical_axis",
+              # The axis above the two Kerr black holes, which the embedded plane z = 0 between them does not meet.
+              "conformal double_kerr/weyl_axis_outside",
               # The axis of Zipoy and Voorhees's metric, which the embedded equatorial plane does not meet.
               # Kerr-Taub-NUT's regular half axis, which the embedded equatorial plane does not meet, and the
               # equator in Plebanski and Demianski's chart, where the moment's tau changes with the sigma left out.

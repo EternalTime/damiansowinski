@@ -49,6 +49,11 @@
       "id": "pp_wave",
       "kind": "family",
       "text": "Tod's other class. A spacetime with a supercovariantly constant spinor is one of Israel, Wilson, and Perjés's fields where the spinor's Killing vector is timelike, and a pp-wave where it is null everywhere [tod1983, chrusciel2006]."
+    },
+    {
+      "id": "double_kerr",
+      "kind": "family",
+      "text": "Two spinning black holes with no charge, on one axis. Their spins do not balance their attraction, and a strut on the axis holds them apart [kramer1980, neugebauer2009]."
     }
   ],
   "references": [
@@ -65,7 +70,9 @@
     "chrusciel2006",
     "gibbons1982",
     "tod1983",
-    "kallosh1994anomaly"
+    "kallosh1994anomaly",
+    "kramer1980",
+    "neugebauer2009"
   ],
   "coordinates": [
     {

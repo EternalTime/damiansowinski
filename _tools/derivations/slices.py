@@ -1423,6 +1423,13 @@ def _mp_axis():
     return [Mark(m, points=[(0.0, 0.0)])]
 
 
+def _double_kerr_axis():
+    """The plane z = 0 midway between Kramer and Neugebauer's two holes, at t = 0, meets the axis
+    through them at one event, t = 0 and z = 0, the tip of the embedded cone."""
+    m = moments("double_kerr", "midplane", label="$t = 0$, $z = 0$")[0]
+    return [Mark(m, points=[(0.0, 0.0)])]
+
+
 KT_LABEL = "$c\\tau = -8m/3$"     # the moment of one of Kastor and Traschen's holes that is embedded, H tau = 1/2
 KT_TAU = -8 / 3
 
@@ -1946,6 +1953,9 @@ FLAT = {
     ("levi_civita", "weyl", "radial"): lambda: one("levi_civita", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
     ("levi_civita", "kasner", "radial"): lambda: one(
         "levi_civita", lambda m: along(0.0, *(levi_civita_r(x) for x in m.reach("weyl", "\\rho")))),
+    # The plane z = 0 midway between the two holes at t = 0, and the one event where it meets the axis.
+    ("double_kerr", "weyl", "midplane"): lambda: one("double_kerr", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
+    ("double_kerr", "weyl", "axis"): _double_kerr_axis,
     # The plane z = 0 at t = 0, where the spherical chart's r is Weyl's rho.
     ("curzon_chazy", "weyl", "equator"): lambda: one("curzon_chazy", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
     ("curzon_chazy", "spherical", "equator"): lambda: one("curzon_chazy", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
@@ -2050,6 +2060,7 @@ HIDDEN = {
        for system in ("weyl", "spherical")},
     **{("curzon_chazy", f"{system}_axis"): "the axis, which the embedded plane z = 0 meets only at rho = 0, inside where the embedding stops"
        for system in ("weyl", "spherical")},
+    ("double_kerr", "weyl_axis_outside"): "the axis above the upper hole, which the embedded plane z = 0 does not meet",
     **{("zipoy_voorhees", system, f"axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"
        for system in ("spherical", "prolate_spheroidal") for shape in ("oblate", "prolate")},
     **{("zipoy_voorhees", f"{system}_axis_{shape}"): "the axis, which the embedded equatorial plane does not meet"

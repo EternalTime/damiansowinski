@@ -225,6 +225,9 @@ OVERRULED = {
         True, "V, Omega, W and nu are left free in Weyl's chart and the polar chart; black Saturn "
               "is the solution of the vacuum equations their parameters define, which "
               "print_charts.py holds to a vanishing Ricci tensor"),
+    ("double_kerr", "vacuum"): (
+        True, "f, omega and gamma are left free; the two Kerr black holes are a solution of "
+              "the vacuum equations, Ernst's equation for f and omega and a quadrature for gamma"),
     ("einstein_rosen_waves", "vacuum"): (
         True, "psi and gamma are left free in both charts; the waves are the solutions of "
               "the vacuum equations, a wave equation for psi and a quadrature for gamma"),

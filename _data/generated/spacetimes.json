@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 105,
+  "count": 106,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -5676,6 +5676,11 @@
           "id": "zipoy_voorhees",
           "kind": "limit_source",
           "text": "The Weyl field of a rod. In the limit of the rod shrunk to a point at fixed mass it becomes the Curzon-Chazy particle [herrera1999]."
+        },
+        {
+          "id": "double_kerr",
+          "kind": "family",
+          "text": "Two Kerr black holes at rest on one axis. The axis between them is singular, as the line joining two Curzon-Chazy particles is, and no choice of spins removes the singularity [kramer1980, neugebauer2009]."
         }
       ],
       "references": [
@@ -5696,7 +5701,9 @@
         "griffiths2009",
         "mangut2025",
         "bicak2000",
-        "herrera1999"
+        "herrera1999",
+        "kramer1980",
+        "neugebauer2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/curzon_chazy.json",
@@ -6912,6 +6919,176 @@
           ],
           "ricci_scalar": "R = -\\dfrac{r_d\\left(r\\,r_d + 3r\\,r_s - 4r_s\\,r_d\\right)}{r^2\\left(r - r_d\\right)^3}",
           "kretschmann": "K = \\dfrac{12r^4\\,r_d^2 - 4r^3\\,r_d^3 + r^2\\,r_d^4 - 40r^3\\,r_s\\,r_d^2 + 30r^2\\,r_s\\,r_d^3 - 8r\\,r_s\\,r_d^4 + 12r^4\\,r_s^2 - 36r^3\\,r_s^2\\,r_d + 73r^2\\,r_s^2\\,r_d^2 - 56r\\,r_s^2\\,r_d^3 + 16r_s^2\\,r_d^4}{r^4\\left(r - r_d\\right)^6}"
+        }
+      ]
+    },
+    {
+      "id": "double_kerr",
+      "name": "Double Kerr Solution",
+      "short_name": "Double Kerr",
+      "description": "Two Kerr black holes on one axis of symmetry, the stationary vacuum solution Dietrich Kramer and Gernot Neugebauer built in 1980 by two Bäcklund transformations of flat space. The repulsion between the spins does not balance the attraction of the masses, so a strut on the axis between the horizons holds the holes apart.",
+      "tags": [
+        "vacuum",
+        "stationary",
+        "axisymmetric",
+        "rotating",
+        "rotating black hole",
+        "black hole",
+        "multiple black holes",
+        "angular momentum",
+        "mass",
+        "conical singularity",
+        "ergosphere",
+        "frame dragging",
+        "horizon",
+        "event horizon",
+        "closed timelike curves",
+        "NUT parameter",
+        "soliton",
+        "superposition",
+        "black hole uniqueness",
+        "asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "kerr",
+          "kind": "special_case",
+          "text": "One of the two holes on its own. A single Bäcklund transformation of flat space returns the Kerr-NUT solution, which holds Kerr's black hole, and two return the pair [neugebauer2012]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "One hole on its own with the spin switched off. With both spins switched off the pair is Rudolf Bach and Hermann Weyl's two Schwarzschild bodies of 1922, with a singular stretch of axis between them [bach1922, neugebauer2012]."
+        },
+        {
+          "id": "majumdar_papapetrou",
+          "kind": "family",
+          "text": "Black holes that do stand still side by side. Each carries a charge equal to its mass, and the electric repulsion balances the attraction, which the repulsion between two spins does not [hartle1972, neugebauer2009]."
+        },
+        {
+          "id": "israel_wilson_perjes",
+          "kind": "family",
+          "text": "Spinning sources that do stay in balance. Each carries a charge equal to its mass, and the electric repulsion holds the spinning sources in a stationary configuration [perjes1971, israel1972]."
+        },
+        {
+          "id": "curzon_chazy",
+          "kind": "family",
+          "text": "Jean Chazy and H. E. J. Curzon each presented two point particles at rest on one axis, and the line joining the particles is singular as the axis between the two holes is [chazy1924, curzon1925, einstein1936twobody]."
+        }
+      ],
+      "references": [
+        "bach1922",
+        "neugebauer2012",
+        "wald1972",
+        "herdeiro2008",
+        "ernst1968",
+        "neugebauer1979",
+        "kramer1980",
+        "kihara1982",
+        "tomimatsu1982",
+        "hoenselaers1984",
+        "manko2001",
+        "neugebauer2009",
+        "hennig2008",
+        "hennig2011",
+        "chrusciel2011",
+        "costa2009",
+        "hartle1972",
+        "perjes1971",
+        "israel1972",
+        "chazy1924",
+        "curzon1925",
+        "einstein1936twobody"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/double_kerr.json",
+      "charts": [
+        {
+          "id": "weyl",
+          "name": "Weyl-Lewis-Papapetrou",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "\\rho = 0,\\; a_1 \\le z \\le a_2 \\;\\text{and}\\; a_3 \\le z \\le a_4 \\;\\text{(the two horizons)}",
+            "\\omega = 0 \\;\\text{and}\\; \\gamma = 0 \\;\\text{at}\\; \\rho = 0 \\;\\text{(a regular axis)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "f = f(\\rho,z)",
+              "description": "Dimensionless function of $\\rho$ and $z$, with $-f$ the norm of the Killing vector $\\partial_t$ in the chart $x^0 = ct$; the spacetime is a vacuum exactly where $f\\left(\\partial_\\rho^2f + \\dfrac{1}{\\rho}\\partial_\\rho f + \\partial_z^2f\\right) = \\left(\\partial_\\rho f\\right)^2 + \\left(\\partial_zf\\right)^2 - \\dfrac{f^4}{\\rho^2}\\left(\\left(\\partial_\\rho\\omega\\right)^2 + \\left(\\partial_z\\omega\\right)^2\\right)$ together with the equations for $\\omega$ and $\\gamma$; for two Kerr black holes $f$ is the real part of the Ernst potential $\\mathcal{E} = D_-/D_+$, with $D_\\pm = X^\\pm_{12}X^\\pm_{34} - X^\\pm_{14}X^\\pm_{32}$, $X^\\pm_{ik} = \\dfrac{\\alpha_ir_i + \\alpha_kr_k}{a_i - a_k} \\pm 1$, and $r_j = \\sqrt{\\rho^2 + (z - a_j)^2}$, where $a_1$, $a_2$, $a_3$, and $a_4$ are the ends of the two horizons on the axis, lengths in increasing order, and each $\\alpha_j$ is a complex number of modulus one"
+            },
+            {
+              "symbol": "\\omega = \\omega(\\rho,z)",
+              "description": "Function of $\\rho$ and $z$, a length, with $f\\omega$ the product of the Killing vectors $\\partial_t$ and $\\partial_\\phi$; in a vacuum $\\partial_\\rho\\left(\\dfrac{f^2}{\\rho}\\partial_\\rho\\omega\\right) + \\partial_z\\left(\\dfrac{f^2}{\\rho}\\partial_z\\omega\\right) = 0$, and for two Kerr black holes $\\partial_\\rho\\omega = -\\dfrac{\\rho}{f^2}\\partial_z\\chi$ and $\\partial_z\\omega = \\dfrac{\\rho}{f^2}\\partial_\\rho\\chi$, where $\\chi$ is the imaginary part of $\\mathcal{E}$"
+            },
+            {
+              "symbol": "\\gamma = \\gamma(\\rho,z)",
+              "description": "Dimensionless function of $\\rho$ and $z$ fixed by $f$ and $\\omega$ through $\\partial_\\rho\\gamma = \\dfrac{\\rho}{4f^2}\\left(\\left(\\partial_\\rho f\\right)^2 - \\left(\\partial_zf\\right)^2\\right) - \\dfrac{f^2}{4\\rho}\\left(\\left(\\partial_\\rho\\omega\\right)^2 - \\left(\\partial_z\\omega\\right)^2\\right)$ and $\\partial_z\\gamma = \\dfrac{\\rho}{2f^2}\\partial_\\rho f\\,\\partial_zf - \\dfrac{f^2}{2\\rho}\\partial_\\rho\\omega\\,\\partial_z\\omega$, and zero on a regular axis; for two Kerr black holes $e^{2\\gamma} = \\dfrac{\\mathrm{Re}\\left(D_-D_+^*\\right)}{C\\,r_1r_2r_3r_4}$, where the star is complex conjugation and the constant $C$ makes $\\gamma$ vanish far from the holes; inside an ergoregion, where $f < 0$, $e^{2\\gamma}$ is negative with $f$, so $\\gamma$ has the imaginary part $\\pi/2$ there"
+            }
+          ],
+          "convention": "We use the canonical coordinates of Weyl, Lewis, and Papapetrou, $(t, \\rho, \\phi, z)$, with $t$ carrying dimensions of time, $\\rho$ a length fixed by $g_{t\\phi}^2 - g_{tt}\\,g_{\\phi\\phi} = \\rho^2$, and $z$ a length along the axis. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -f\\left(c\\,dt - \\omega\\,d\\phi\\right)^2 + \\dfrac{1}{f}\\left(e^{2\\gamma}\\left(d\\rho^2 + dz^2\\right) + \\rho^2d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-f"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "f\\,\\omega"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "f\\,\\omega"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{e^{2\\gamma}}{f}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{e^{2\\gamma}}{f}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\rho^2 - f^2\\omega^2}{f}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\left(f^4\\left(\\partial_\\rho\\omega\\right)^2 + f^4\\left(\\partial_z\\omega\\right)^2 - 4f^2\\,\\rho^2\\,\\partial_\\rho^2\\gamma - 4f^2\\,\\rho^2\\,\\partial_z^2\\gamma + 2f\\,\\rho\\,\\partial_\\rho f + 2f\\,\\rho^2\\,\\partial_\\rho^2 f + 2f\\,\\rho^2\\,\\partial_z^2 f - 3\\rho^2\\left(\\partial_\\rho f\\right)^2 - 3\\rho^2\\left(\\partial_z f\\right)^2\\right)e^{-2\\gamma}}{2f\\,\\rho^2}",
+          "kretschmann": "K = \\dfrac{\\left(11f^8\\left(\\partial_\\rho\\omega\\right)^4 + 22f^8\\left(\\partial_\\rho\\omega\\right)^2\\left(\\partial_z\\omega\\right)^2 + 11f^8\\left(\\partial_z\\omega\\right)^4 - 16f^6\\,\\rho^2\\left(\\partial_\\rho\\gamma\\right)^2\\left(\\partial_\\rho\\omega\\right)^2 - 16f^6\\,\\rho^2\\left(\\partial_\\rho\\gamma\\right)^2\\left(\\partial_z\\omega\\right)^2 + 8f^6\\,\\rho\\,\\partial_\\rho\\gamma\\left(\\partial_\\rho\\omega\\right)^2 + 16f^6\\,\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_\\rho\\omega\\,\\partial_\\rho^2\\omega - 16f^6\\,\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_\\rho\\omega\\,\\partial_z^2\\omega - 40f^6\\,\\rho\\,\\partial_\\rho\\gamma\\left(\\partial_z\\omega\\right)^2 + 32f^6\\,\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_z\\omega\\,\\partial_\\rho\\partial_z\\omega - 16f^6\\,\\rho^2\\left(\\partial_z\\gamma\\right)^2\\left(\\partial_\\rho\\omega\\right)^2 - 16f^6\\,\\rho^2\\left(\\partial_z\\gamma\\right)^2\\left(\\partial_z\\omega\\right)^2 + 48f^6\\,\\rho\\,\\partial_z\\gamma\\,\\partial_\\rho\\omega\\,\\partial_z\\omega + 32f^6\\,\\rho^2\\,\\partial_z\\gamma\\,\\partial_\\rho\\omega\\,\\partial_\\rho\\partial_z\\omega - 16f^6\\,\\rho^2\\,\\partial_z\\gamma\\,\\partial_z\\omega\\,\\partial_\\rho^2\\omega + 16f^6\\,\\rho^2\\,\\partial_z\\gamma\\,\\partial_z\\omega\\,\\partial_z^2\\omega - 8f^6\\left(\\partial_\\rho\\omega\\right)^2 + 16f^6\\,\\rho\\,\\partial_\\rho\\omega\\,\\partial_\\rho^2\\omega - 16f^6\\left(\\partial_z\\omega\\right)^2 + 16f^6\\,\\rho\\,\\partial_z\\omega\\,\\partial_\\rho\\partial_z\\omega - 8f^6\\,\\rho^2\\left(\\partial_\\rho^2\\omega\\right)^2 - 16f^6\\,\\rho^2\\left(\\partial_\\rho\\partial_z\\omega\\right)^2 - 8f^6\\,\\rho^2\\left(\\partial_z^2\\omega\\right)^2 + 32f^5\\,\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_\\rho f\\left(\\partial_\\rho\\omega\\right)^2 + 64f^5\\,\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_\\rho f\\left(\\partial_z\\omega\\right)^2 - 32f^5\\,\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_z f\\,\\partial_\\rho\\omega\\,\\partial_z\\omega - 32f^5\\,\\rho^2\\,\\partial_z\\gamma\\,\\partial_\\rho f\\,\\partial_\\rho\\omega\\,\\partial_z\\omega + 64f^5\\,\\rho^2\\,\\partial_z\\gamma\\,\\partial_z f\\left(\\partial_\\rho\\omega\\right)^2 + 32f^5\\,\\rho^2\\,\\partial_z\\gamma\\,\\partial_z f\\left(\\partial_z\\omega\\right)^2 + 56f^5\\,\\rho\\,\\partial_\\rho f\\left(\\partial_\\rho\\omega\\right)^2 - 40f^5\\,\\rho^2\\,\\partial_\\rho f\\,\\partial_\\rho\\omega\\,\\partial_\\rho^2\\omega + 8f^5\\,\\rho^2\\,\\partial_\\rho f\\,\\partial_\\rho\\omega\\,\\partial_z^2\\omega + 64f^5\\,\\rho\\,\\partial_\\rho f\\left(\\partial_z\\omega\\right)^2 - 48f^5\\,\\rho^2\\,\\partial_\\rho f\\,\\partial_z\\omega\\,\\partial_\\rho\\partial_z\\omega - 8f^5\\,\\rho\\,\\partial_z f\\,\\partial_\\rho\\omega\\,\\partial_z\\omega - 48f^5\\,\\rho^2\\,\\partial_z f\\,\\partial_\\rho\\omega\\,\\partial_\\rho\\partial_z\\omega + 8f^5\\,\\rho^2\\,\\partial_z f\\,\\partial_z\\omega\\,\\partial_\\rho^2\\omega - 40f^5\\,\\rho^2\\,\\partial_z f\\,\\partial_z\\omega\\,\\partial_z^2\\omega + 16f^5\\,\\rho^2\\left(\\partial_\\rho\\omega\\right)^2\\,\\partial_\\rho^2 f + 32f^5\\,\\rho^2\\,\\partial_\\rho\\omega\\,\\partial_z\\omega\\,\\partial_\\rho\\partial_z f + 16f^5\\,\\rho^2\\left(\\partial_z\\omega\\right)^2\\,\\partial_z^2 f + 32f^4\\,\\rho^2\\left(\\partial_\\rho\\gamma\\right)^2 + 32f^4\\,\\rho^2\\left(\\partial_z\\gamma\\right)^2 - 66f^4\\,\\rho^2\\left(\\partial_\\rho f\\right)^2\\left(\\partial_\\rho\\omega\\right)^2 - 58f^4\\,\\rho^2\\left(\\partial_\\rho f\\right)^2\\left(\\partial_z\\omega\\right)^2 - 16f^4\\,\\rho^2\\,\\partial_\\rho f\\,\\partial_z f\\,\\partial_\\rho\\omega\\,\\partial_z\\omega - 58f^4\\,\\rho^2\\left(\\partial_z f\\right)^2\\left(\\partial_\\rho\\omega\\right)^2 - 66f^4\\,\\rho^2\\left(\\partial_z f\\right)^2\\left(\\partial_z\\omega\\right)^2 + 16f^4\\,\\rho^4\\left(\\partial_\\rho^2\\gamma\\right)^2 + 32f^4\\,\\rho^4\\,\\partial_\\rho^2\\gamma\\,\\partial_z^2\\gamma + 16f^4\\,\\rho^4\\left(\\partial_z^2\\gamma\\right)^2 - 32f^3\\,\\rho^3\\left(\\partial_\\rho\\gamma\\right)^2\\,\\partial_\\rho f + 16f^3\\,\\rho^3\\,\\partial_\\rho\\gamma\\,\\partial_\\rho^2 f - 16f^3\\,\\rho^3\\,\\partial_\\rho\\gamma\\,\\partial_z^2 f - 32f^3\\,\\rho^3\\left(\\partial_z\\gamma\\right)^2\\,\\partial_\\rho f + 32f^3\\,\\rho^3\\,\\partial_z\\gamma\\,\\partial_\\rho\\partial_z f - 16f^3\\,\\rho^4\\,\\partial_\\rho^2\\gamma\\,\\partial_\\rho^2 f - 16f^3\\,\\rho^4\\,\\partial_\\rho^2\\gamma\\,\\partial_z^2 f - 16f^3\\,\\rho^4\\,\\partial_z^2\\gamma\\,\\partial_\\rho^2 f - 16f^3\\,\\rho^4\\,\\partial_z^2\\gamma\\,\\partial_z^2 f + 16f^2\\,\\rho^4\\left(\\partial_\\rho\\gamma\\right)^2\\left(\\partial_\\rho f\\right)^2 + 16f^2\\,\\rho^4\\left(\\partial_\\rho\\gamma\\right)^2\\left(\\partial_z f\\right)^2 - 8f^2\\,\\rho^3\\,\\partial_\\rho\\gamma\\left(\\partial_\\rho f\\right)^2 - 16f^2\\,\\rho^4\\,\\partial_\\rho\\gamma\\,\\partial_\\rho f\\,\\partial_\\rho^2 f + 16f^2\\,\\rho^4\\,\\partial_\\rho\\gamma\\,\\partial_\\rho f\\,\\partial_z^2 f + 8f^2\\,\\rho^3\\,\\partial_\\rho\\gamma\\left(\\partial_z f\\right)^2 - 32f^2\\,\\rho^4\\,\\partial_\\rho\\gamma\\,\\partial_z f\\,\\partial_\\rho\\partial_z f + 16f^2\\,\\rho^4\\left(\\partial_z\\gamma\\right)^2\\left(\\partial_\\rho f\\right)^2 + 16f^2\\,\\rho^4\\left(\\partial_z\\gamma\\right)^2\\left(\\partial_z f\\right)^2 - 16f^2\\,\\rho^3\\,\\partial_z\\gamma\\,\\partial_\\rho f\\,\\partial_z f - 32f^2\\,\\rho^4\\,\\partial_z\\gamma\\,\\partial_\\rho f\\,\\partial_\\rho\\partial_z f + 16f^2\\,\\rho^4\\,\\partial_z\\gamma\\,\\partial_z f\\,\\partial_\\rho^2 f - 16f^2\\,\\rho^4\\,\\partial_z\\gamma\\,\\partial_z f\\,\\partial_z^2 f + 16f^2\\,\\rho^4\\left(\\partial_\\rho f\\right)^2\\,\\partial_\\rho^2\\gamma + 16f^2\\,\\rho^4\\left(\\partial_\\rho f\\right)^2\\,\\partial_z^2\\gamma + 12f^2\\,\\rho^2\\left(\\partial_\\rho f\\right)^2 + 8f^2\\,\\rho^3\\,\\partial_\\rho f\\,\\partial_\\rho^2 f + 8f^2\\,\\rho^3\\,\\partial_\\rho f\\,\\partial_z^2 f + 16f^2\\,\\rho^4\\left(\\partial_z f\\right)^2\\,\\partial_\\rho^2\\gamma + 16f^2\\,\\rho^4\\left(\\partial_z f\\right)^2\\,\\partial_z^2\\gamma + 12f^2\\,\\rho^4\\left(\\partial_\\rho^2 f\\right)^2 + 8f^2\\,\\rho^4\\,\\partial_\\rho^2 f\\,\\partial_z^2 f + 16f^2\\,\\rho^4\\left(\\partial_\\rho\\partial_z f\\right)^2 + 12f^2\\,\\rho^4\\left(\\partial_z^2 f\\right)^2 - 16f\\,\\rho^3\\left(\\partial_\\rho f\\right)^3 - 16f\\,\\rho^4\\left(\\partial_\\rho f\\right)^2\\,\\partial_\\rho^2 f - 16f\\,\\rho^4\\left(\\partial_\\rho f\\right)^2\\,\\partial_z^2 f - 16f\\,\\rho^3\\,\\partial_\\rho f\\left(\\partial_z f\\right)^2 - 16f\\,\\rho^4\\left(\\partial_z f\\right)^2\\,\\partial_\\rho^2 f - 16f\\,\\rho^4\\left(\\partial_z f\\right)^2\\,\\partial_z^2 f + 11\\rho^4\\left(\\partial_\\rho f\\right)^4 + 22\\rho^4\\left(\\partial_\\rho f\\right)^2\\left(\\partial_z f\\right)^2 + 11\\rho^4\\left(\\partial_z f\\right)^4\\right)e^{-4\\gamma}}{4f^2\\,\\rho^4}"
         }
       ]
     },
@@ -11901,6 +12078,11 @@
           "id": "pp_wave",
           "kind": "family",
           "text": "Tod's other class. A spacetime with a supercovariantly constant spinor is one of Israel, Wilson, and Perjés's fields where the spinor's Killing vector is timelike, and a pp-wave where it is null everywhere [tod1983, chrusciel2006]."
+        },
+        {
+          "id": "double_kerr",
+          "kind": "family",
+          "text": "Two spinning black holes with no charge, on one axis. Their spins do not balance their attraction, and a strut on the axis holds them apart [kramer1980, neugebauer2009]."
         }
       ],
       "references": [
@@ -11917,7 +12099,9 @@
         "chrusciel2006",
         "gibbons1982",
         "tod1983",
-        "kallosh1994anomaly"
+        "kallosh1994anomaly",
+        "kramer1980",
+        "neugebauer2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/israel_wilson_perjes.json",
@@ -14027,6 +14211,11 @@
           "id": "kerr_taub_nut",
           "kind": "generalisation",
           "text": "Kerr's black hole given a NUT parameter $l$ beside its spin. At $l = 0$ it is Kerr's metric, and for $|l| > |a|$ the ring singularity is gone [griffiths2005]."
+        },
+        {
+          "id": "double_kerr",
+          "kind": "generalisation",
+          "text": "Two Kerr black holes on one axis, built by Dietrich Kramer and Gernot Neugebauer in 1980. The repulsion between the spins does not balance the attraction, and a strut on the axis between the holes holds them apart [kramer1980, neugebauer2009]."
         }
       ],
       "references": [
@@ -14074,7 +14263,9 @@
         "vaidya1973",
         "chandrasekhar1984ferrari",
         "nutku1977",
-        "gregory2013"
+        "gregory2013",
+        "kramer1980",
+        "neugebauer2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -17482,6 +17673,11 @@
           "id": "black_saturn",
           "kind": "family",
           "text": "Two black objects of five dimensions held apart with no charge: a ring kept from falling onto the hole at its centre by rotation [elvang2007]."
+        },
+        {
+          "id": "double_kerr",
+          "kind": "family",
+          "text": "Two spinning black holes on one axis, with no charge. The repulsion between their spins does not balance their attraction, so a strut holds them apart where these holes need none [kramer1980, neugebauer2009]."
         }
       ],
       "references": [
@@ -17508,7 +17704,9 @@
         "shipley2016",
         "hawking1977",
         "ruback1986",
-        "elvang2007"
+        "elvang2007",
+        "kramer1980",
+        "neugebauer2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/majumdar_papapetrou.json",
@@ -25403,6 +25601,11 @@
           "id": "kerr_taub_nut",
           "kind": "generalisation",
           "text": "Schwarzschild's black hole with a spin $a$ and a NUT parameter $l$ at once. With $a = l = 0$ it is Schwarzschild's metric."
+        },
+        {
+          "id": "double_kerr",
+          "kind": "generalisation",
+          "text": "Two spinning black holes on one axis, held apart by a strut. With the spins switched off they are Rudolf Bach and Hermann Weyl's pair of Schwarzschild bodies of 1922 [bach1922, neugebauer2012]."
         }
       ],
       "references": [
@@ -25481,7 +25684,9 @@
         "tolman1939",
         "kiselev2003",
         "lubbe2009",
-        "sultana2005"
+        "sultana2005",
+        "bach1922",
+        "neugebauer2012"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",

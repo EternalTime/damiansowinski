@@ -150,6 +150,11 @@
       "id": "kerr_taub_nut",
       "kind": "generalisation",
       "text": "Kerr's black hole given a NUT parameter $l$ beside its spin. At $l = 0$ it is Kerr's metric, and for $|l| > |a|$ the ring singularity is gone [griffiths2005]."
+    },
+    {
+      "id": "double_kerr",
+      "kind": "generalisation",
+      "text": "Two Kerr black holes on one axis, built by Dietrich Kramer and Gernot Neugebauer in 1980. The repulsion between the spins does not balance the attraction, and a strut on the axis between the holes holds them apart [kramer1980, neugebauer2009]."
     }
   ],
   "references": [
@@ -197,7 +202,9 @@
     "vaidya1973",
     "chandrasekhar1984ferrari",
     "nutku1977",
-    "gregory2013"
+    "gregory2013",
+    "kramer1980",
+    "neugebauer2009"
   ],
   "coordinates": [
     {

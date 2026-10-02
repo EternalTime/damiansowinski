@@ -9037,6 +9037,86 @@ def curzon_chazy(ck, src):
                         "space carries the slice on."])]
 
 
+def double_kerr(ck, src):
+    """The plane z = 0 midway between Kramer and Neugebauer's two black holes at t = 0, for Herdeiro
+    and Rebelo's pair of opposite spins, J = M^2 and zeta = 4M, in units of M.
+
+    The half turn z -> -z, phi -> -phi fixes the plane, so omega = 0 on it, g_rhorho = e^(2 gamma)/f
+    and g_phiphi = rho^2/f, and the circle of Weyl's radius rho has radius rho/sqrt(f) on the
+    surface. At the strut, rho = 0, e^gamma = 3/4 and a circle the distance l from the axis has
+    circumference (4/3) 2 pi l, an excess of angle, so no surface of revolution in flat space carries
+    the slice there: the circles grow faster than the distance out to them as far as the circle
+    where g_rhorho = (d(rho/sqrt f)/drho)^2, found here, and that part is drawn in three dimensional
+    Minkowski space, a cone at its tip. From that circle outward the slice is a surface in flat
+    space, started at the height where the first piece ends; both lie level at the join. The radius
+    is drawn from the pair's closed form on the plane, quartics in the distances from the four poles,
+    and checked against the pair in complex arithmetic at any rho and z, which the drawing does not use."""
+    # The closed form enters as numpy functions of rho with their derivatives, since sympy's
+    # simplifier does not finish on the two radicals written out.
+    closed, x = nr._double_kerr_midplane(), sp.Symbol("rho", positive=True)
+    numeric = {}
+    for which in ("f", "gamma"):
+        value = sp.sympify(closed[which], locals={"rho": x})
+        numeric[which] = (sp.lambdify(x, value, "numpy"), sp.lambdify(x, sp.diff(value, x), "numpy"))
+    fixed = {"t": 0, "z": 0}
+    still = {"omega": closed["omega"]}
+    sl = Slice(src, "double_kerr", "weyl", "\\rho", "\\phi", fixed, {}, functions=still, numeric=numeric)
+    msl = Slice(src, "double_kerr", "weyl", "\\rho", "\\phi", fixed, {}, functions=still, numeric=numeric,
+                space="minkowski")
+    name = "the double Kerr solution"
+    level = float(brentq(lambda x: float(sl.defect_at(np.array([x]))[0]), 0.8, 1.6, xtol=1e-14))
+    # The level circle is a root found in floating point, where g_xx - (drho/dx)^2 is left at the
+    # size of the rounding, which is checked; its square root is read as zero there, as a root with
+    # no form in radicals is, so that both pieces lie level at the join.
+    ck.add(f"{name}: the surface lies level at the circle found",
+           abs(float(sl.defect_at(np.array([level]))[0])) / float(sl.gxx_at(level)), 1e-13)
+    for one in (sl, msl):
+        one.slope = (lambda x, side, own=one.slope: own(x, side) * [1.0, 0.0] if x == level else own(x, side))
+    top = 6.0
+    size = 2 * float(sl.rho_at(top))
+    ck.stops(f"{name}, inside the level circle in flat space", sl, np.linspace(0.0, level, 202)[1:-1])
+    outward = np.linspace(level, 60, 402)[1:]
+    ck.add(f"{name}: beyond the level circle no surface in Minkowski space carries the slice",
+           float(max(0.0, np.max(-msl.defect_at(outward)))), 0.0)
+    if not np.all(msl.defect_at(outward) > 0):
+        ck.items[-1]["ok"] = False
+
+    def radius(x):
+        return x / np.sqrt(nr._double_kerr_numbers(x, 0.0)[0])
+    f0, _, e2g0 = nr._double_kerr_numbers(0.0, 0.0)
+    ck.add(f"{name}: at the strut f = 5/41 and e^gamma = 3/4", abs(float(f0) - 5 / 41) + abs(math.sqrt(float(e2g0)) - 0.75), 1e-12)
+    join = "the circle where the surface lies level, in Minkowski space nearer the strut and in flat space beyond"
+    tip = Piece("strut", "sheet", msl, 0.0, level, 0.0, 1,
+                (("apex", "the strut, $\\rho = 0$, a cone of angle $\\tfrac{4}{3}\\cdot 2\\pi$"), ("join", join)),
+                [(0.5, "r", None), (level, "space", None)], size)
+    plane = Piece("plane", "sheet", sl, level, top, tip.at(level)[1], 1,
+                  (("join", join), ("edge", "the surface runs on to $\\rho \\to \\infty$")),
+                  [(2.0, "r", None), (4.0, "r", None), (top, "r", None)], size)
+    for piece in (tip, plane):
+        space = "in Minkowski space" if piece.sl.lorentz else "in flat space"
+        ck.isometry(f"{name}, {piece.id} {space}", piece)
+        ck.radius(f"{name}, {piece.id}, rho/sqrt(f) {space}", piece, radius, size)
+    ck.join(f"{name}, the two pieces at the level circle", tip, level, plane, level)
+    # The cone at the tip: the radius of a small circle over its distance from the axis, e^(-gamma) = 4/3.
+    near = 1e-4
+    ck.add(f"{name}: a small circle about the strut has 4/3 of the circumference of a flat one",
+           abs(float(radius(near)) / (near * math.sqrt(float(e2g0) / float(f0))) - 4 / 3), 1e-6)
+    surface = Surface([tip, plane])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *tip.at(level), f"${level:.2f}\\,m$", side=-1)
+    ring_label(fig, [0, 0, 0], *plane.at(top), "$6\\,m$")
+    fig.legend("fill", "cover", "the plane $z = 0$ at $t = 0$, which $\\rho$ and $\\phi$ cover")
+    fig.legend("line", "r", "$\\rho$ constant, at $m/2$, $2$, $4$ and $6\\,m$")
+    fig.legend("line", "space", f"$\\rho = {level:.2f}\\,m$, where the surface lies level: Minkowski space inside, "
+                                "flat space beyond")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("midplane", "The plane $z = 0$", "$m$", [surface], fig.done(),
+                 settings="Herdeiro and Rebelo's pair, two black holes of mass $M$ whose angular momenta are $J$ and $-J$ and "
+                          "whose horizons have their centres $\\zeta$ apart, at $J = GM^2/c$ and $\\zeta = 4m$, with $m = GM/c^2 = 1$ the unit "
+                          f"of every length. Every length along the surface inside $\\rho = {level:.2f}\\,m$ is measured "
+                          "with $dX^2 + dY^2 - dZ^2$.")]
+
+
 ZV_OBLATE, ZV_PROLATE = {"m": 1, "q": 1}, {"m": 1, "q": "-1/2"}
 
 
@@ -10365,6 +10445,7 @@ DRAWN = {
     "levi_civita": levi_civita,
     "kantowski_sachs": kantowski_sachs,
     "curzon_chazy": curzon_chazy,
+    "double_kerr": double_kerr,
     "zipoy_voorhees": zipoy_voorhees,
     "robinson_trautman": robinson_trautman,
     "string_black_hole": string_black_hole,
@@ -11062,6 +11143,16 @@ CAPTIONS = {
         "climbs in flat space, from vertical to level. Beyond the level circle the circles grow faster than the "
         "distance out to them, as on the static slice of anti-de Sitter space, and the surface climbs toward a light "
         "cone of Minkowski space. The dotted circle is the edge of the ergoregion, where $g_{tt} = 0$.",
+    ],
+    ("double_kerr", "midplane"): [
+        "The plane $z = 0$ midway between the two black holes of Herdeiro and Rebelo's pair at one moment "
+        "($J = GM^2/c$, $\\zeta = 4m$), drawn as a surface with every distance along it the metric distance. On it "
+        "$\\omega = 0$, $g_{\\rho\\rho} = e^{2\\gamma}/f$, and the circle of Weyl's radius $\\rho$ has circumference "
+        "$2\\pi\\rho/\\sqrt{f}$.",
+        "At the strut, $\\rho = 0$, a circle the distance $\\ell$ from the axis has circumference "
+        "$\\tfrac{4}{3}\\cdot 2\\pi\\ell$, an excess of angle, so the tip is a cone in Minkowski space, "
+        "$dX^2 + dY^2 - dZ^2$. Farther out the surface stands in flat space and widens as Flamm's paraboloid does; the "
+        "same plane at every moment is the same surface.",
     ],
     ("curzon_chazy", "equator"): [
         "The plane $z = 0$ of the Curzon-Chazy particle at one moment ($m = 1$), drawn as a surface in flat space "
