@@ -93,6 +93,7 @@ from fractions import Fraction
 import sys
 import time
 from pathlib import Path
+from types import SimpleNamespace
 
 import mpmath
 import numpy as np
@@ -120,11 +121,12 @@ Q4 = PI / 4
 EQUATOR = {"theta": "pi/2", "phi": "0"}
 
 # The spacetimes with no conformal diagram, for which nothing is written.
-NOT_DRAWN = {"godel", "stockum_dust", "som_raychaudhuri", "taub_nut", "kasner", "kasner_scalar", "bianchi", "tolman_bondi", "alcubierre",
+NOT_DRAWN = {"godel", "stockum_dust", "som_raychaudhuri", "maitra_dust", "taub_nut", "kasner", "kasner_scalar", "kasner_magnetic",
+             "bianchi", "tolman_bondi", "alcubierre",
              "natario", "krasnikov", "pp_wave", "mixmaster", "lentz", "szekeres", "van_den_broeck",
              "string_wave", "black_saturn", "schrodinger_spacetime", "eguchi_hanson", "gravitational_instantons",
              "misner_brill_lindquist", "brill_waves",
-             "kundt_waves", "wahlquist", "tippett_tsang", "petrov_homogeneous"}
+             "kundt_waves", "wahlquist", "tippett_tsang", "petrov_homogeneous", "eih_many_bodies"}
 
 
 # ---------------------------------------------------------------- the drawing
@@ -2017,6 +2019,207 @@ def tangherlini(ck, src):
     views.append(static("six", "Hyperspherical", "spherical_six", T6, moment_of(T6, "six", "spherical_six"),
                         ((1.25, "$1.25\\,r_h$"), (1.5, "$1.5\\,r_h$"))))
     return views
+
+
+class StringHoleTower(Tower):
+    """A chart of the black holes of string theory off extremality, -f dt^2/P^2 + P dr^2/f on the
+    plane of t and r, whose tortoise coordinate is slices.sbc_rstar: A ln|r - r_0| at the event
+    horizon, with A = 1/2k and k its surface gravity, and -S(0) ln r at the inner horizon r = 0,
+    plus a smooth rest integrated by quadrature. The cells I, I', II and IV are Tower's, with II
+    running from r_0 down to r = 0, where r_* -> +infinity."""
+
+    def __init__(self, chart):
+        self.chart = chart
+        self.kp = slices.sbc_kappa(chart)
+        self.rf = [1.0, 0.0]
+
+    def rstar(self, r):
+        return slices.sbc_rstar(self.chart, r)
+
+
+def string_bh_three_four_charges(ck, src):
+    """Five views, one of each chart, at the parameters slices.SBC names.
+
+    Off extremality with unequal charges, the charts of three and of four charges: Kruskal's block
+    by p = -+arctan exp(-k u), q = +-arctan exp(k v) with u, v = ct -+ r_* and k the surface gravity
+    of the event horizon, drawn as far as the chart reaches, the exterior and the region between
+    the horizons, whose upper edges are the inner horizon r = 0. With the three charges equal the
+    areal chart is the Reissner-Nordstrom black hole of five dimensions, f = (1 - r_+^2/rho^2)
+    (1 - r_-^2/rho^2) with simple roots +-r_+ and +-r_-, and Tower draws the whole of it: at
+    r_0 = 3 r_q/4 the horizons are 5/4 and 1 and k_-/k_+ = (5/4)^3. The extreme charts have no
+    surface gravity; their exterior is the diamond p = arctan u, q = arctan v, as Majumdar and
+    Papapetrou's single hole is drawn, with the horizon r = 0 on its two left edges."""
+    five_fixed = {"psi": "pi/2", **EQUATOR}
+    P = slices.SBC
+    views = []
+    box = [-PI - 0.25, PI + 0.25, -PI - 0.25, PI + 0.25]
+    t = spread(-np.inf, np.inf, 500, 10)
+
+    # -- off extremality, unequal charges
+    for chart, label, fixed, words, inner, units in (
+            ("five_charges", "Three charges", five_fixed, "three charges", "$(r_1r_2r_3)^{1/3}$", "$r_1 = r_0/2$, $r_2 = r_0$, and $r_3 = 3r_0/2$"),
+            ("four_charges", "Four charges", EQUATOR, "four charges", "$(r_1r_2r_3r_4)^{1/4}$",
+             "$r_1 = r_0/2$, $r_2 = r_0$, $r_3 = 3r_0/2$, and $r_4 = 2r_0$")):
+        plane = Plane(src, "string_bh_three_four_charges", chart, ("t", "r"), fixed, P[chart])
+        assert plane.g[0, 1] == 0
+        Tw = StringHoleTower(chart)
+        name = f"string black hole, {words}"
+        span = 3 / Tw.kp
+        for cell, region, lo, hi, future in (("I", "exterior", 1.001, 8, (1, 0)), ("II", "black hole", 0.01, 0.999, (0, -1)),
+                                             ("IV", "white hole", 0.01, 0.999, (0, 1)),
+                                             ("I'", "other exterior", 1.001, 8, (-1, 0))):
+            ck.chart(f"{name}, {region}", plane, lambda tt, r, cell=cell, Tw=Tw: Tw.pq(cell, tt, r),
+                     ck.uniform(-span, span, 600), ck.uniform(lo, hi, 600), lambda tt, r, future=future: future)
+        q = slices.sbc_charges(chart)
+        S1 = float(np.sqrt(np.prod([1 + a * a for a in q]))) if chart == "five_charges" else float(np.sqrt(np.prod([1 + a for a in q])))
+        ck.limit(f"{name}: the surface gravity is r_0^2/S(r_0) in five dimensions and r_0/2S(r_0) in four",
+                 Tw.kp, 1 / S1 if chart == "five_charges" else 1 / (2 * S1), 1e-12)
+        pp, qq = Tw.pq("I", np.array([0.0]), np.array([1e8]))
+        ck.limit(f"{name}: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)", point(pp[0], qq[0]), [PI, 0], 1e-3)
+        pp, qq = Tw.pq("I", np.array([1.5 / Tw.kp]), np.array([1 + 1e-12]))
+        ck.limit(f"{name}: r -> r_0 at fixed t lands on the bifurcation sphere", point(pp[0], qq[0]), [0, 0], 1e-4)
+        pp, qq = Tw.pq("II", np.array([0.0]), np.array([1e-30]))
+        ck.limit(f"{name}: r -> 0 at fixed t lands on the inner bifurcation sphere, (X, T) = (0, pi)",
+                 point(pp[0], qq[0]), [0, PI], 1e-3)
+        ck.finite(f"{name}: the Kretschmann scalar is finite at r_0 and toward the inner horizon r = 0",
+                  plane.kretschmann(np.zeros(5), np.array([1e-4, 1e-2, 0.999, 1, 1.001])))
+        D = TowerDrawing(Tw, False, 0.0)
+        times = [c / Tw.kp for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+        rI = nice_all(even_radii(Tw, "I", 4, 1.0, np.inf), [1.0])
+        rII = nice_all(even_radii(Tw, "II", 4, 0.0, 1.0), [0.0, 1.0])
+        v = View(chart, label, box, chart)
+        cells = ("IV", "I", "I'", "II")
+        for cell in cells:
+            v.fill("region", D.polygon(cell))
+        for cell in ("I", "II"):
+            v.fill("cover", D.polygon(cell))
+        D.grid(v, "I", rI, times)
+        D.grid(v, "II", rII, times)
+        for cell in cells:
+            D.edges(v, cell)
+        for sx in (1, -1):
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(sx * PI, 4), 0.0]})
+            v.label_xt([sx * PI, 0], "$i^0$", "l" if sx > 0 else "r", dx=6 * sx)
+            for dT, text, anchor, dy in ((HALF, "$i^+$", "b", -2), (-HALF, "$i^-$", "t", 2)):
+                v.layers.append({"kind": "point", "class": "infinity", "at": [round(sx * HALF, 4), round(dT, 4)]})
+                v.label_xt([sx * HALF, dT], text, anchor + ("l" if sx > 0 else "r"), dx=5 * sx, dy=dy)
+            v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-3)
+            v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=3)
+            v.label_xt([sx * HALF, 0.3], "exterior", cls="region")
+        v.label_xt([0, HALF + 0.1], "black hole", cls="region")
+        v.label_xt([0, -HALF - 0.1], "white hole", cls="region")
+        v.label_xt([Q4, Q4], "$r = r_0$", "tl", "small", dx=5, dy=1)
+        v.label_xt([Q4, 3 * Q4], "$r = 0$", "bl", "small", dx=5, dy=-1)
+        v.legend("cover", "the exterior and the region between the horizons, which $t$ and $r > 0$ cover")
+        v.legend("r", f"$r$ constant: {listed(rI)} outside and {listed(rII)} between the horizons, in units of $r_0$")
+        v.legend("t", "$t$ constant")
+        v.legend("horizon", "the event horizon $r = r_0$ and the inner horizon $r = 0$, a sphere of circumference "
+                            f"radius {inner}")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        moment = slices.moments("string_bh_three_four_charges", chart)[0]
+        v.slice(moment, [through_bifurcation(Tw, ("I'", "I"), *moment.reach(chart, "r")[::-1])])
+        v.set(settings=f"$r_0 = 1$, the unit of every length, and {units}.")
+        views.append(v)
+
+    # -- three equal charges: the areal chart, the whole of the Reissner-Nordstrom tower of five dimensions
+    pl = Plane(src, "string_bh_three_four_charges", "five_areal", ("t", "\\rho"), five_fixed, P["five_areal"])
+    assert pl.g[0, 1] == 0 and sp.simplify(pl.g[0, 0] * pl.g[1, 1] + 1) == 0
+    Tw = Tower(-pl.g[0, 0], pl.x1, [sp.Rational(5, 4), 1, -sp.Rational(5, 4), -1])
+    rp, rm = Tw.rf[0], Tw.rf[1]
+    name = "string black hole, equal charges"
+    ck.chart(f"{name}, exterior", pl, lambda tt, r: Tw.pq("I", tt, r),
+             ck.uniform(-15, 15), ck.uniform(rp + 1e-3, 40), lambda tt, r: (1, 0))
+    ck.chart(f"{name}, between the horizons", pl, lambda tt, r: Tw.pq("II", tt, r),
+             ck.uniform(-15, 15), ck.uniform(rm + 1e-3, rp - 1e-3), lambda tt, r: (0, -1))
+    ck.chart(f"{name}, inside r-", pl, lambda tt, r: Tw.pq("III", tt, r),
+             ck.uniform(-15, 15), ck.uniform(0.01, rm - 1e-3), lambda tt, r: (-1, 0))
+    pp, qq = Tw.pq("III", np.array([-6.0, 0, 6]), np.full(3, 1e-12))
+    ck.limit(f"{name}: rho -> 0 lands on the vertical line X = pi/2", qq - pp, [HALF] * 3, 1e-9)
+    ck.limit(f"{name}: the surface gravities are (r_+^2 - r_-^2)/r_+^3 and (r_+^2 - r_-^2)/r_-^3",
+             [float(k) for k in Tw.kappa[:2]], [0.5625 / 1.25 ** 3, 0.5625], 1e-12)
+    ck.diverges(f"{name}: the Kretschmann scalar diverges at rho = 0", pl.kretschmann(0, 1e-2), pl.kretschmann(0, 1e-3))
+    ck.finite(f"{name}: the Kretschmann scalar is finite at both horizons", pl.kretschmann(np.zeros(2), np.array([rp, rm])))
+    ck.limit(f"{name}: Tower's tortoise coordinate is slices.sbc_areal_rstar",
+             Tw.rstar(np.array([0.4, 1.1, 3.0])), slices.sbc_areal_rstar(np.array([0.4, 1.1, 3.0])), 1e-12)
+    D = TowerDrawing(Tw, True, 0.0)
+    tall = [-PI - 0.45, PI + 0.45, -PI - 0.1, 3 * PI + 0.1]
+    times = [c / Tw.kp for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+    rI = nice_all(even_radii(Tw, "I", 4, rp, np.inf), [rp])
+    rII = nice_all(even_radii(Tw, "II", 4, rm, rp), [rm, rp])
+    rIII = nice_all(even_radii(Tw, "III", 3, 0, rm, xmax=HALF), [0, rm])
+    grids = {"I": (rI, times), "II": (rII, times), "IV": (rII, times), "III": (rIII, times)}
+    v = View("five_areal", "Equal charges", tall, "five_areal")
+    D.draw(v, grids, cover=[("I", False), ("II", False), ("III", False)])
+    D.labels(v, inner="$\\rho < r_q$")
+    v.set(fade={"top": 0.9, "bottom": 0.9})
+    v.legend("cover", "one exterior, one region between the horizons and one inside $r_q$, which $t$ and "
+                      "$\\rho > 0$ cover")
+    v.legend("r", f"$\\rho$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside, "
+                  "in units of $r_q$")
+    v.legend("t", "$t$ constant")
+    v.legend("horizon", "the horizons $r_+ = 5r_q/4$ and $r_- = r_q$, with $r_\\pm$ the radii $\\rho$ of the event "
+                        "horizon and the inner horizon")
+    v.legend("singular", "$\\rho = 0$, a timelike singularity, where the Kretschmann scalar diverges")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    moment = slices.moments("string_bh_three_four_charges", "five_areal")[0]
+    v.slice(moment, [through_bifurcation(Tw, ("I'", "I"), *moment.reach("five_areal", "\\rho")[::-1])])
+    v.set(settings="$r_q = 1$, the unit of every length, and $r_0 = 3r_q/4$, so that $r_+ = 5r_q/4$, $r_- = r_q$, "
+                   "and, with $\\kappa_\\pm$ the surface gravities of the two horizons, "
+                   "$\\kappa_-/\\kappa_+ = (5/4)^3$.")
+    views.append(v)
+
+    # -- the extreme holes: the exterior alone, a diamond with the horizon on its two left edges
+    for chart, label, fixed, words, units in (
+            ("five_extreme", "Extreme, three charges", five_fixed, "extreme, three charges", "$r_1 = r_2/2$ and $r_3 = 2r_2$"),
+            ("four_extreme", "Extreme, four charges", EQUATOR, "extreme, four charges",
+             "$r_1 = r_2/2$, $r_3 = 3r_2/2$, and $r_4 = 2r_2$")):
+        plane = Plane(src, "string_bh_three_four_charges", chart, ("t", "r"), fixed, P[chart])
+        assert plane.g[0, 1] == 0
+        name = f"string black hole, {words}"
+
+        def E(tt, x, chart=chart):
+            rs = slices.sbc_rstar(chart, x)
+            tt = np.asarray(tt, dtype=float)
+            return np.arctan(tt - rs), np.arctan(tt + rs)
+        ck.chart(f"{name}, exterior", plane, E, ck.uniform(-20, 20, 600), ck.uniform(0.02, 40, 600), lambda tt, x: (1, 0))
+        pp, qq = E(np.array([-6.0, 0.0, 6.0]), np.full(3, 1e-9))
+        ck.limit(f"{name}: r -> 0 lands on the horizon p = pi/2", pp, [HALF] * 3, 1e-6)
+        pp, qq = E(np.array([0.0]), np.array([1e8]))
+        ck.limit(f"{name}: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)", point(pp[0], qq[0]), [PI, 0], 1e-3)
+        ck.finite(f"{name}: the Kretschmann scalar is finite toward the horizon r = 0",
+                  plane.kretschmann(np.zeros(3), np.array([1e-4, 1e-3, 1e-2])))
+        v = View(chart, label, box, chart)
+        diamond = [[0, -PI], [-PI, 0], [0, PI], [PI, 0]]
+        v.fill("region", diamond)
+        v.fill("cover", diamond)
+        r_out = (0.2, 0.5, 1.0, 2.0)
+        for x in r_out:
+            v.curve("r", *E(t, np.full_like(t, x)))
+        xs = spread(0.0, np.inf, 600, 16)
+        for tt in (-3.0, -1.0, 0.0, 1.0, 3.0):
+            v.curve("t", *E(np.full_like(xs, tt), xs))
+        v.line("horizon", [[[-PI, 0], [0, PI]], [[0, -PI], [-PI, 0]]])
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        for at, text, anchor, dx in (((PI, 0), "$i^0$", "l", 6), ((0, PI), "$i^+$", "l", 6), ((0, -PI), "$i^-$", "l", 6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(at[0], 4), round(at[1], 4)]})
+            v.label_xt(list(at), text, anchor, dx=dx)
+        v.label_xt([3 * Q4 * 2 / 3 + 0.8, HALF], "$\\mathscr{I}^+$", "bl", dx=4, dy=-3)
+        v.label_xt([3 * Q4 * 2 / 3 + 0.8, -HALF], "$\\mathscr{I}^-$", "tl", dx=4, dy=3)
+        v.label_xt([-HALF, HALF], "$r = 0$", "br", "small", dx=-5, dy=-1)
+        v.label_xt([HALF, 0.45], "exterior", cls="region")
+        v.legend("cover", "the exterior $r > 0$, which $t$ and $r$ cover")
+        v.legend("r", f"$r$ constant, at {listed(r_out)}, in units of $r_2$")
+        v.legend("t", "$t$ constant")
+        v.legend("horizon", "the horizon $r = 0$, across which the spacetime continues")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        moment = slices.moments("string_bh_three_four_charges", chart)[0]
+        lo, hi = moment.reach(chart, "r")
+        rr = np.geomspace(lo, hi, 400)
+        v.slice(moment, [E(np.zeros_like(rr), rr)])
+        v.set(settings=f"$r_2 = 1$, the unit of every length, and {units}.")
+        views.append(v)
+    order = ["five_charges", "five_extreme", "five_areal", "four_charges", "four_extreme"]
+    return sorted(views, key=lambda view: order.index(view.d["id"]))
 
 
 BD = {"r_0": "13/12", "ell": "5/12"}
@@ -5122,23 +5325,31 @@ def kastor_traschen(ck, src):
     return [v]
 
 
-def kerr_axis(ck, src, metric_id, params, name):
+def kerr_axis(ck, src, metric_id, params, name, unit="GM/c^2", factor=1, kretschmann=True):
     """The symmetry axis theta = 0, where the published metric is, in the limit,
     -Delta/(r^2 + a^2) c^2dt^2 + (r^2 + a^2)/Delta dr^2, with g_tt g_rr = -1 checked: a tower
     with two simple roots and no singularity, r running through the ring's disc to a second
     asymptotically flat end at r -> -infinity. That is Carter's diagram of 1966.
+
+    `factor` is a constant the published metric of the axis carries in front of that one, as
+    Ernst and Wild's hole carries the value k of H on its axis, with g_tt g_rr = -factor^2
+    checked, and `unit` the length the legend counts r in. A chart whose published Kretschmann
+    scalar is 0/0 on the axis, as that hole's is, written in a function that vanishes there,
+    passes `kretschmann=False`, and its own tests hold the curvature at r = 0.
     """
     pl = Plane(src, metric_id, "boyer_lindquist", ("t", "r"), {"phi": "0"}, params, axis=("theta", "0"))
-    assert pl.g[0, 1] == 0 and sp.simplify(pl.g[0, 0] * pl.g[1, 1] + 1) == 0
+    factor = sp.sympify(factor)
+    assert pl.g[0, 1] == 0 and sp.simplify(pl.g[0, 0] * pl.g[1, 1] + factor ** 2) == 0
     roots = sorted([x for x in sp.solve(sp.numer(sp.together(pl.gi[1, 1])), pl.x1) if x.is_real], reverse=True)
-    T = Tower(-pl.g[0, 0], pl.x1, roots)
+    T = Tower(-pl.g[0, 0] / factor, pl.x1, roots)
     rp, rm = T.rf
     tower_checks(ck, f"{name} axis", pl, T, -40, 30)
     p, q = T.pq("III", np.array([0.0]), np.array([-1e9]))
     ck.limit(f"{name} axis: r -> -infinity at t = 0 lands on the far i0, (X, T) = (pi, pi)",
              point(p[0], q[0]), [PI, PI], 1e-3)
-    ck.finite(f"{name} axis: the Kretschmann scalar is finite at r = 0 on the axis",
-              pl.kretschmann(np.zeros(3), np.array([-1e-3, 0.0, 1e-3])))
+    if kretschmann:
+        ck.finite(f"{name} axis: the Kretschmann scalar is finite at r = 0 on the axis",
+                  pl.kretschmann(np.zeros(3), np.array([-1e-3, 0.0, 1e-3])))
 
     D = TowerDrawing(T, False, -np.inf)
     box = [-PI - 0.45, PI + 0.45, -PI - 0.1, 3 * PI + 0.1]
@@ -5162,9 +5373,9 @@ def kerr_axis(ck, src, metric_id, params, name):
                       "surface; on the axis $r$ runs through the centre of the ring's disc to $r < 0$.")
     v.legend("cover", "the exterior $r > r_+$, which $t$ and $r$ cover")
     v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, "
-                  "in units of $GM/c^2$")
+                  f"in units of ${unit}$")
     v.legend("t", "$ct$ constant")
-    v.legend("horizon", f"the horizons on the axis, $r_+ = {rp:.3f}$ and $r_- = {rm:.3f}\\,GM/c^2$")
+    v.legend("horizon", f"the horizons on the axis, $r_+ = {rp:.3f}$ and $r_- = {rm:.3f}\\,{unit}$")
     v.legend("centre", "$r = 0$ on the axis, the centre of the ring's disc, where the curvature is finite")
     v.legend("scri", "null infinity, of $r \\to +\\infty$ and of $r \\to -\\infty$")
     # The moment of the embedding's equator meets the axis through the outer bifurcation point.
@@ -5190,9 +5401,15 @@ class EquatorTower(Tower):
     falling as 1/r^2 at infinity, by a Chebyshev series whose last terms must have died away.
     """
 
-    def __init__(self, plane):
+    def __init__(self, plane, factor=1):
+        """`factor` is a positive function of r the plane's metric carries in front of such a
+        one, as Ernst and Wild's equator carries H in front of Kerr's: it changes no null line,
+        so the tower is that of the metric with the factor divided out."""
         r = plane.x1
         assert plane.g[0, 1] == 0
+        if factor != 1:
+            plane = SimpleNamespace(x1=r, g=(plane.g / factor).applyfunc(sp.cancel),
+                                    gi=(plane.gi * factor).applyfunc(sp.cancel))
         delta = sp.Poly(sp.numer(sp.together(plane.gi[1, 1])), r)
         roots = sorted(delta.real_roots(), reverse=True)
         assert len(roots) == 2 and delta.degree() == 2, "the published g^rr has not two simple roots"
@@ -5223,7 +5440,7 @@ class EquatorTower(Tower):
         return super().rstar(r) + self.D(w)
 
 
-def kerr_equator(ck, src, metric_id, params, name):
+def kerr_equator(ck, src, metric_id, params, name, unit="GM/c^2", factor=None, kretschmann=True):
     """The equatorial plane theta = pi/2, a totally geodesic surface of t, r and phi, with phi
     divided out: the published metric there less g_t phi^2/g_phi phi, the metric on the circles
     about the axis, whose null lines are the light rays of no angular momentum. Its t is timelike
@@ -5231,9 +5448,14 @@ def kerr_equator(ck, src, metric_id, params, name):
     where the published Kretschmann scalar diverges: on this surface r = 0 is the ring, a
     timelike singularity in each region inside r_-, and nothing lies beyond it. That is Carter's
     extension of 1968, in which only the equatorial plane meets the singularity.
+
+    `factor` takes the plane and gives a positive function of r its metric carries in front of
+    such a one, as Ernst and Wild's equator carries H in front of Kerr's, and `unit` is the length
+    the legend counts r in. A chart whose published Kretschmann scalar does not evaluate in
+    seconds passes `kretschmann=False`, and its own tests hold the curvature at r = 0.
     """
     pl = Plane(src, metric_id, "boyer_lindquist", ("t", "r"), {"theta": "pi/2"}, params, quotient="phi")
-    T = EquatorTower(pl)
+    T = EquatorTower(pl, factor(pl) if factor else 1)
     rp, rm = T.rf
     tower_checks(ck, f"{name} equatorial plane", pl, T, 0.01, 15)
     rr = np.array([0.05, 0.3, 1.0, 2.0, 7.0])
@@ -5245,10 +5467,11 @@ def kerr_equator(ck, src, metric_id, params, name):
     p, q = T.pq("I", np.array([0.0]), np.array([1e9]))
     ck.limit(f"{name} equatorial plane: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)",
              point(p[0], q[0]), [PI, 0], 1e-3)
-    ck.diverges(f"{name} equatorial plane: the Kretschmann scalar diverges at r = 0, the ring",
-                pl.kretschmann(0, 1e-2), pl.kretschmann(0, 1e-3))
-    ck.finite(f"{name} equatorial plane: the Kretschmann scalar is finite at both horizons",
-              pl.kretschmann(np.zeros(2), np.array([rp, rm])))
+    if kretschmann:
+        ck.diverges(f"{name} equatorial plane: the Kretschmann scalar diverges at r = 0, the ring",
+                    pl.kretschmann(0, 1e-2), pl.kretschmann(0, 1e-3))
+        ck.finite(f"{name} equatorial plane: the Kretschmann scalar is finite at both horizons",
+                  pl.kretschmann(np.zeros(2), np.array([rp, rm])))
 
     D = TowerDrawing(T, True, 0.0)
     box = [-PI - 0.45, PI + 0.45, -PI - 0.1, 3 * PI + 0.1]
@@ -5267,9 +5490,9 @@ def kerr_equator(ck, src, metric_id, params, name):
                       "the diagram a circle about the axis. Light rays of zero angular momentum run at 45 degrees.")
     v.legend("cover", "the exterior $r > r_+$, which $t$ and $r$ cover")
     v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, "
-                  "in units of $GM/c^2$")
+                  f"in units of ${unit}$")
     v.legend("t", "$ct$ constant")
-    v.legend("horizon", f"the horizons $r_+ = {rp:.3f}$ and $r_- = {rm:.3f}\\,GM/c^2$")
+    v.legend("horizon", f"the horizons $r_+ = {rp:.3f}$ and $r_- = {rm:.3f}\\,{unit}$")
     v.legend("singular", "$r = 0$, the ring, a timelike singularity, where the Kretschmann scalar diverges")
     v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
     # The moment of the embedding's equator lies in this surface, through the outer bifurcation circle.
@@ -5289,6 +5512,39 @@ def kerr(ck, src):
 def kerr_newman(ck, src):
     views = kerr_axis(ck, src, "kerr_newman", {"G": 1, "M": 1, "a": "3/5", "r_Q": "1/2"}, "Kerr-Newman")
     views[0].set(settings="$a = 0.6\\,GM/c^2$ and $r_Q = 0.5\\,GM/c^2$.")
+    return views
+
+
+def kerr_melvin(ck, src):
+    """Ernst and Wild's hole on its axis and on its equator with phi divided out, at a = 4m/5 and
+    B = 1/(4m). The metric of the axis is the constant k = 1 + a^2 m^2 B^4 times that of Kerr's
+    axis, and the metric orthogonal to the circles of the equator is H = (1 + B^2 A/(4 r^2))^2 times
+    Kerr's, each checked against the published metric; a factor changes no null line, so Carter's
+    two towers draw them. Along a ray of the equator the affine parameter grows as the integral of
+    H sqrt(A)/Delta, without bound, so its far edges are the null infinity of the plane, as those
+    of Ernst's hole are. The published Kretschmann scalar is written in P, which vanishes on the
+    axis, and in second derivatives that run to pages written out, so the curvature at r = 0, on
+    the axis and on the ring, is held by _tools/test_kerr_melvin.py."""
+    k = sp.Rational(401, 400)
+    views = kerr_axis(ck, src, "kerr_melvin", nr.KM, "Kerr-Melvin", unit="m", factor=k, kretschmann=False)
+
+    def factor(pl):
+        r = pl.x1
+        delta = r ** 2 - 2 * r + sp.Rational(16, 25)
+        H = sp.cancel(pl.g[1, 1] * delta / r ** 2)
+        A = (r ** 2 + sp.Rational(16, 25)) ** 2 - sp.Rational(16, 25) * delta
+        assert sp.simplify(H - (1 + A / (64 * r ** 2)) ** 2) == 0, "H on the equator is not (1 + B^2 A/(4 r^2))^2"
+        return H
+    views += kerr_equator(ck, src, "kerr_melvin", nr.KM, "Kerr-Melvin", unit="m", factor=factor, kretschmann=False)
+    for view in views:
+        view.set(settings="$a = 4m/5$ and $B = 1/(4m)$.")
+    views[0].set(restriction="The symmetry axis $\\theta = 0$ only, a totally geodesic surface, along which the "
+                             "magnetic field runs. The ring singularity is at $r = 0$ in the equatorial plane "
+                             "$\\theta = \\pi/2$, off this surface; on the axis $r$ runs through the centre of the "
+                             "ring's disc to $r < 0$.")
+    for item in views[1].legend_items:
+        if item[1] == "scri":
+            item[2] = "null infinity of the plane, $\\mathscr{I}^\\pm$"
     return views
 
 
@@ -5963,6 +6219,194 @@ def de_sitter(ck, src):
     return views
 
 
+SCU_BETA = 1.0          # a boost of rapidity 1, so that several copies fit the drawing
+
+
+def self_creating_universe(ck, src):
+    """Gott and Li's de Sitter space identified under a boost, on the global square of the de Sitter
+    space that covers it, one view per chart, each tinting one copy between two lines the boost
+    carries onto one another, drawn at r_0 = 1.
+
+    The square is de Sitter's, X = chi across and T up, with Gott and Li's V = tan T,
+    W = cos(chi)/cos T and sqrt(X^2 + Y^2 + Z^2) = sin(chi)/cos T. The boost in the plane of V and
+    W keeps the last, and each of the four triangles the diagonals cut the square into: the left
+    one, W > |V|, is their region R, which the static chart covers by ds_static_pq; the top one,
+    V > |W|, their region F, which the Kantowski-Sachs chart covers with V = sinh(tau) cosh(l) and
+    W = sinh(tau) sinh(l); and the steady state chart and its conformal time eta = -exp(-tau) cover
+    the half W + V > 0 as p, q = pi/4 + arctan(eta -+ rho). The boost is t -> t + beta,
+    l -> l + beta, tau -> tau + beta with x shrunk by exp(-beta), and eta and rho shrunk by
+    exp(-beta). At beta = 2 pi, the value the other diagrams are drawn at, one copy fills the
+    drawing to within a pixel, so these views are drawn at beta = 1. Each chart is checked against
+    the published metric and against the hyperboloid."""
+    beta = SCU_BETA
+    params = {"r_0": 1, "beta": repr(beta)}
+    settings = f"$\\beta = {beta:g}\\,r_0$, a boost of rapidity $1$, and $r_0 = 1$."
+    ks = range(-5, 6)
+
+    def from_hyperboloid(V, W, R):
+        T, chi = np.arctan(V), np.arctan2(R, W)
+        return (T - chi) / 2, (T + chi) / 2
+
+    def ks_pq(tau, l):
+        tau, l = np.asarray(tau, dtype=float), np.asarray(l, dtype=float)
+        return from_hyperboloid(np.sinh(tau) * np.cosh(l), np.sinh(tau) * np.sinh(l), np.cosh(tau))
+
+    def conformal_pq(eta, rho):
+        eta, rho = np.asarray(eta, dtype=float), np.asarray(rho, dtype=float)
+        return Q4 + np.arctan(eta - rho), Q4 + np.arctan(eta + rho)
+
+    def steady_pq(tau, x):
+        return conformal_pq(-np.exp(-np.asarray(tau, dtype=float)), x)
+
+    planes = {
+        "static": Plane(src, "self_creating_universe", "static", ("t", "r"), EQUATOR, params),
+        "kantowski_sachs": Plane(src, "self_creating_universe", "kantowski_sachs", ("\\tau", "l"), EQUATOR, params),
+        "steady_state": Plane(src, "self_creating_universe", "steady_state", ("\\tau", "x"), {"y": "0", "z": "0"}, params),
+        "conformal": Plane(src, "self_creating_universe", "conformal", ("\\eta", "\\rho"), EQUATOR, params),
+    }
+    ck.chart("Gott-Li static", planes["static"], ds_static_pq, ck.uniform(-10, 10), ck.uniform(0.001, 0.999),
+             lambda t, r: (1, 0))
+    ck.chart("Gott-Li Kantowski-Sachs", planes["kantowski_sachs"], ks_pq, ck.uniform(0.01, 5), ck.uniform(-4, 4),
+             lambda tau, l: (1, 0))
+    ck.chart("Gott-Li steady state", planes["steady_state"], steady_pq, ck.uniform(-4, 4), ck.uniform(0.001, 20),
+             lambda tau, x: (1, 0))
+    ck.chart("Gott-Li conformal", planes["conformal"], conformal_pq, ck.uniform(-20, -0.01), ck.uniform(0.001, 20),
+             lambda eta, rho: (1, 0))
+
+    def lands(name, pq, V, W, R):
+        X0, X4, R3 = ds_hyperboloid(*pq)
+        scale = 1 + np.abs(V) + np.abs(W) + np.abs(R)
+        ck.limit(f"Gott-Li: the {name} chart lands where the hyperboloid puts it",
+                 np.concatenate([(X0 - V) / scale, (X4 - W) / scale, (R3 - R) / scale]), 0, 1e-9)
+
+    t, r = ck.uniform(-6, 6, 2000), ck.uniform(0, 0.999, 2000)
+    lands("static", ds_static_pq(t, r), np.sqrt(1 - r ** 2) * np.sinh(t), np.sqrt(1 - r ** 2) * np.cosh(t), r)
+    tau, l = ck.uniform(0.01, 4, 2000), ck.uniform(-3, 3, 2000)
+    lands("Kantowski-Sachs", ks_pq(tau, l), np.sinh(tau) * np.cosh(l), np.sinh(tau) * np.sinh(l), np.cosh(tau))
+    tau, x = ck.uniform(-3, 3, 2000), ck.uniform(0, 8, 2000)
+    a = np.exp(tau)
+    lands("steady state", steady_pq(tau, x), np.sinh(tau) + x ** 2 * a / 2, np.cosh(tau) - x ** 2 * a / 2, a * x)
+    eta, rho = ck.uniform(-8, -0.05, 2000), ck.uniform(0, 8, 2000)
+    lands("conformal", conformal_pq(eta, rho), (eta ** 2 - rho ** 2 - 1) / (2 * eta),
+          (rho ** 2 - eta ** 2 - 1) / (2 * eta), -rho / eta)
+    # The boost of rapidity beta in the plane of V and W is each chart's stated identification.
+    ch, sh = math.cosh(beta), math.sinh(beta)
+
+    def boosted(name, before, after):
+        V, W, R = ds_hyperboloid(*before)
+        V2, W2, R2 = ds_hyperboloid(*after)
+        scale = 1 + np.abs(V) + np.abs(W)
+        ck.limit(f"Gott-Li: the {name} chart's identification is the boost",
+                 np.concatenate([(V2 - V * ch - W * sh) / scale, (W2 - W * ch - V * sh) / scale, (R2 - R) / scale]),
+                 0, 1e-9)
+
+    t, r = ck.uniform(-3, 3, 500), ck.uniform(0, 0.99, 500)
+    boosted("static", ds_static_pq(t, r), ds_static_pq(t + beta, r))
+    tau, l = ck.uniform(0.05, 3, 500), ck.uniform(-2, 2, 500)
+    boosted("Kantowski-Sachs", ks_pq(tau, l), ks_pq(tau, l + beta))
+    tau, x = ck.uniform(-2, 2, 500), ck.uniform(0, 4, 500)
+    boosted("steady state", steady_pq(tau, x), steady_pq(tau + beta, math.exp(-beta) * x))
+    eta, rho = ck.uniform(-4, -0.1, 500), ck.uniform(0, 4, 500)
+    boosted("conformal", conformal_pq(eta, rho), conformal_pq(math.exp(-beta) * eta, math.exp(-beta) * rho))
+    p, q = ds_static_pq(np.array([0.0, 3, -3]), np.full(3, 1 - 1e-14))
+    ck.limit("Gott-Li: r -> r_0 lands on the Cauchy horizons q = pi/4 (t > 0) and p = -pi/4 (t < 0)",
+             [q[0], q[1], p[2]], [Q4, Q4, -Q4], 1e-6)
+    p, q = ks_pq(np.full(5, 1e-9), np.linspace(-2, 2, 5))
+    ck.limit("Gott-Li: tau -> 0 of the Kantowski-Sachs chart lands on the centre of the square",
+             np.concatenate([p + q, q - p]), np.concatenate([np.zeros(5), np.full(5, HALF)]), 1e-6)
+    ck.finite("Gott-Li: the Cauchy horizon is regular",
+              planes["steady_state"].kretschmann(ck.uniform(-2, 2, 50), np.exp(-ck.uniform(-2, 2, 50))))
+
+    box = [-0.35, PI + 0.35, -HALF - 0.3, HALF + 0.3]
+    square = [[0, -HALF], [PI, -HALF], [PI, HALF], [0, HALF]]
+
+    def frame(v):
+        v.fill("region", square)
+        v.line("scri", [[[0, HALF], [PI, HALF]], [[0, -HALF], [PI, -HALF]]])
+        v.line("centre", [[[0, -HALF], [0, HALF]], [[PI, -HALF], [PI, HALF]]])
+        v.line("horizon", [[[0, -HALF], [PI, HALF]], [[0, HALF], [PI, -HALF]]])
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "b", dy=-5)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "t", dy=5)
+        v.label_xt([0, -1.25], "observer", "r", "coord", dx=-6)
+        v.label_xt([PI, -1.25], "antipode", "l", "coord", dx=6)
+        v.legend("scri", "future and past infinity $\\mathscr{I}^\\pm$, spacelike")
+        v.legend("centre", "$r = 0$ of the observer and of its antipode")
+        v.legend("horizon", "the Cauchy horizons $r = r_0$, made of closed null geodesics")
+
+    def band(lower, upper):
+        """The region between two curves given as (p, q) arrays that run the same way."""
+        a, b = xt(*lower)
+        c, d = xt(*upper)
+        return [[float(x), float(y)] for x, y in zip(np.concatenate([a, c[::-1]]), np.concatenate([b, d[::-1]]))]
+
+    # Each moment of the inflating region, c tau = tau_k of the Kantowski-Sachs chart over every l, is one
+    # curve of the square, which the steady state and conformal views draw as well.
+    moments = slices.moments("self_creating_universe")
+    s_l = np.linspace(-30, 30, 1201)
+    views = []
+    s_r = spread(0, 1, 500, 14)
+    v = View("static", "Static", box, "static")
+    frame(v)
+    v.fill("cover", band(ds_static_pq(0 * s_r, s_r), ds_static_pq(0 * s_r + beta, s_r)))
+    grid(v, "r", lambda r, t: ds_static_pq(t, r), (0.3, 0.6, 0.85, 0.97), S_ALL)
+    grid(v, "t", ds_static_pq, [k * beta for k in ks], s_r)
+    v.label_xt([PI * 0.82, 0.0], "the antipode's closed timelike curves", cls="region")
+    v.label_xt([HALF, 1.05], "inflating", cls="region")
+    v.label_xt([HALF, -1.05], "contracting", cls="region")
+    v.legend("cover", "one copy of the region of closed timelike curves, $0 \\le ct < \\beta$")
+    v.legend("r", "$r$ constant, each a closed timelike curve, at $0.3$, $0.6$, $0.85$ and $0.97$ times $r_0$")
+    v.legend("t", "$ct = k\\beta$ for integer $k$, each the same line of the universe")
+    v.set(settings=settings)
+    views.append(v)
+
+    s_tau = np.geomspace(1e-6, 30, 500)
+    v = View("kantowski_sachs", "Kantowski-Sachs", box, "kantowski_sachs")
+    frame(v)
+    v.fill("cover", band(ks_pq(s_tau, 0 * s_tau), ks_pq(s_tau, 0 * s_tau + beta)))
+    grid(v, "t", ks_pq, (0.25, 0.5, 1, 2), np.linspace(-30, 30, 1201))
+    grid(v, "r", lambda l, tau: ks_pq(tau, l), [k * beta for k in ks], s_tau)
+    v.label_xt([PI * 0.18, 0.0], "closed timelike curves", cls="region")
+    v.legend("cover", "one copy of the inflating region, $0 \\le l < \\beta$")
+    v.legend("t", "$c\\tau$ constant, at $1/4$, $1/2$, $1$ and $2$ times $r_0$")
+    v.legend("r", "$l = k\\beta$ for integer $k$, each the same line of the universe")
+    v.set(settings=settings)
+    for m in moments:
+        v.slice(m, [ks_pq(np.full_like(s_l, m.time), s_l)])
+    views.append(v)
+
+    s_x = spread(0, np.inf, 500, 12)
+    v = View("steady_state", "Steady state", box, "steady_state")
+    frame(v)
+    v.fill("cover", band(steady_pq(0 * s_x, s_x), steady_pq(0 * s_x + beta, s_x)))
+    grid(v, "t", steady_pq, [k * beta for k in range(-3, 6)], s_x)
+    grid(v, "r", lambda x, tau: steady_pq(tau, x), (0.25, 0.5, 1, 2, 4), S_ALL)
+    v.line("chartedge", [[[0, -HALF], [PI, HALF]]])
+    v.legend("cover", "one copy of Gott and Li's universe, $0 \\le c\\tau < \\beta$")
+    v.legend("t", "$c\\tau = k\\beta$ for integer $k$, each the same moment of the universe")
+    v.legend("r", "$\\rho = \\sqrt{x^2 + y^2 + z^2}$ constant, at $1/4$, $1/2$, $1$, $2$ and $4$ times $r_0$")
+    v.legend("chartedge", "$\\tau \\to -\\infty$, where the coordinates end")
+    v.set(settings=settings)
+    for m in moments:
+        v.slice(m, [ks_pq(np.full_like(s_l, m.time), s_l)])
+    views.append(v)
+
+    v = View("conformal", "Conformal", box, "conformal")
+    frame(v)
+    v.fill("cover", band(conformal_pq(0 * s_x - 1, s_x), conformal_pq(0 * s_x - math.exp(-beta), s_x)))
+    grid(v, "t", conformal_pq, [-math.exp(-k * beta) for k in range(-3, 6)], s_x)
+    grid(v, "r", lambda rho, eta: conformal_pq(eta, rho), (0.25, 0.5, 1, 2, 4), -np.geomspace(1e-6, 1e6, 500))
+    v.line("chartedge", [[[0, -HALF], [PI, HALF]]])
+    v.legend("cover", "one copy of Gott and Li's universe, $-r_0 \\le \\eta < -r_0e^{-\\beta/r_0}$")
+    v.legend("t", "$\\eta = -r_0e^{-k\\beta/r_0}$ for integer $k$, each the same moment of the universe")
+    v.legend("r", "$\\rho$ constant, at $1/4$, $1/2$, $1$, $2$ and $4$ times $r_0$")
+    v.legend("chartedge", "$\\eta \\to -\\infty$, where the coordinates end")
+    v.set(settings=settings)
+    for m in moments:
+        v.slice(m, [ks_pq(np.full_like(s_l, m.time), s_l)])
+    views.append(v)
+    return views
+
+
 def elliptic_de_sitter(ck, src):
     """Half of de Sitter's global square, the hyperboloid -X0^2 + X1^2 + ... + X4^2 = l^2 with X and
     -X one event, drawn at l = 1.
@@ -6554,6 +6998,101 @@ def clip_in_t(v, T0, T1):
         elif T0 <= layer["at"][1] <= T1:
             layers.append(layer)
     v.layers = layers
+
+
+def btz_multi_holes_wormholes(ck, src):
+    """The tent of Aminneborg, Bengtsson, Brill, Holst and Peldan at alpha = sqrt(2/3) and l = 1, on the
+    totally geodesic plane through its axis and two opposite folds, phi = pi/4 and 5 pi/4 of the
+    sausage chart. With rho = tan(sigma/2) the plane's metric is (-dt^2 + d sigma^2)/cos^2(sigma),
+    so p, q = (t -+ sigma)/2 are null and X = sigma, T = t: the strip of anti-de Sitter space of
+    two dimensions, |X| < pi/2, with the left half the plane's other side.
+
+    Over each opening two glued surfaces cross on a fold, sin(sigma) = sqrt(2) alpha cos(t) =
+    (2/sqrt 3) cos t, which leaves infinity at t_P = pi/6, where tan t_P = sqrt(2 alpha^2 - 1),
+    their (10), and reaches the axis at pi/2\\; the past folds are its mirror image in t. The event
+    horizon is the past light cone of the fold's end at infinity, t = t_P - pi/2 + sigma, born on
+    the axis at t = -pi/3. Both are checked against the embedding: the fold lies on X = alpha V and
+    Y = alpha V, and the horizon's rays are null and end where the fold does."""
+    alpha = math.sqrt(2.0 / 3.0)
+    tP = math.atan(math.sqrt(2 * alpha ** 2 - 1))
+    plane = Plane(src, "btz_multi_holes_wormholes", "sausage", ("t", "\\rho"), {"phi": "pi/4"}, {"ell": 1})
+    assert plane.g[0, 1] == 0
+
+    def pq(t, rho):
+        t, rho = np.asarray(t, dtype=float), np.asarray(rho, dtype=float)
+        sigma = 2 * np.arctan(rho)
+        return (t - sigma) / 2, (t + sigma) / 2
+
+    ck.chart("many black holes, the sausage chart on the plane through two folds", plane, pq,
+             ck.uniform(-1.5, 1.5), ck.uniform(0.001, 0.98), lambda t, rho: (1, 0))
+    ck.limit("many black holes: the fold leaves infinity at t_P = pi/6", tP, math.pi / 6, 1e-12)
+    ck.limit("many black holes: rho -> l lands on the boundary X = pi/2",
+             np.subtract(*pq(np.array([-1.0, 0, 1]), np.full(3, 1 - 1e-9))[::-1]), [HALF] * 3, 1e-8)
+    ck.finite("many black holes: the Kretschmann scalar is finite on the fold and at infinity",
+              plane.kretschmann(np.array([0.6, 1.0, 1.5]), np.array([0.9, 0.5, 0.05])))
+
+    def fold(t):
+        """sigma on the fold at the sausage time t, pi/6 <= |t| <= pi/2."""
+        return np.arcsin(np.clip(math.sqrt(2) * alpha * np.cos(t), -1, 1))
+
+    ts = np.linspace(tP, HALF, 201)
+    sig = fold(ts)
+    rho = np.tan(sig / 2)
+    # The embedding of the sausage chart at phi = pi/4, l = 1: V, X = Y on the fold.
+    V = (1 + rho ** 2) / (1 - rho ** 2 + 1e-300) * np.cos(ts)
+    X = 2 * rho / (1 - rho ** 2 + 1e-300) * math.cos(math.pi / 4)
+    ck.limit("many black holes: the fold lies on the glued surfaces X = alpha V and Y = alpha V",
+             (X - alpha * V)[1:] / (1 + V[1:]), np.zeros(200), 1e-9)
+    ck.limit("many black holes: the fold runs from infinity at t_P to the axis at pi/2",
+             [sig[0], sig[-1]], [HALF, 0.0], 1e-7)
+    ck.limit("many black holes: the horizon's ray from the axis at -pi/3 ends where the fold does",
+             -math.pi / 3 + HALF, tP, 1e-12)
+
+    box = [-HALF - 0.55, HALF + 0.55, -HALF - 0.25, HALF + 0.25]
+    upper = [[float(a), float(b)] for a, b in zip(sig, ts)]                 # (X, T) from P to the tip
+    region = ([[HALF, -tP]] + upper + [[-a, b] for a, b in reversed(upper)]
+              + [[-HALF, -tP]] + [[-a, -b] for a, b in upper] + [[a, -b] for a, b in reversed(upper)])
+    v = View("fold", "Through two folds", box, "sausage")
+    v.fill("region", region)
+    v.fill("cover", region)
+    hole = [[0.0, tP - HALF]] + [[HALF, tP]] + upper + [[-a, b] for a, b in reversed(upper)] + [[-HALF, tP]]
+    v.fill("cover2", hole)
+    tt = np.linspace(-HALF, HALF, 721)
+    for r in (0.2, 0.4, 0.6, 0.8):
+        sigma = 2 * math.atan(r)
+        inside = math.sqrt(2) * alpha * np.cos(tt) >= math.sin(sigma)
+        for sign in (1, -1):
+            v.line("r", [[[sign * sigma, float(t)] for t in tt[inside]]])
+    for t in (-1.0, -0.5, 0.5, 1.0):
+        reach = HALF if abs(t) <= tP else float(fold(abs(t)))
+        v.line("t", [[[-reach, t], [reach, t]]])
+    v.line("boundary", [[[HALF, -tP], [HALF, tP]], [[-HALF, -tP], [-HALF, tP]]])
+    v.line("horizon", [[[0.0, tP - HALF], [HALF, tP]], [[0.0, tP - HALF], [-HALF, tP]]])
+    for sx in (1, -1):
+        for st in (1, -1):
+            v.line("singular", [[[sx * a, st * b] for a, b in upper]], zig=True)
+    v.label_xt([0, 0.95], "black hole", cls="region")
+    v.label_xt([0, -0.2], "$\\rho = 0$", "b", "small", dy=-4)
+    v.label_xt([HALF, 0.2], "$\\rho \\to \\ell$", "l", "small", dx=6)
+    v.label_xt([-HALF, 0.2], "$\\rho \\to \\ell$", "r", "small", dx=-6)
+    v.label_xt([HALF, tP], "$P$", "l", "small", dx=6)
+    v.label_xt([-HALF, tP], "$P$", "r", "small", dx=-6)
+    v.legend("cover", "the region between the glued surfaces, which $t$ and $\\rho$ cover")
+    v.legend("cover2", "the black hole, the part that no light leaves for infinity")
+    v.legend("r", "$\\rho$ constant, at $0.2$, $0.4$, $0.6$ and $0.8\\,\\ell$")
+    v.legend("t", "$ct$ constant, at $\\pm\\ell/2$ and $\\pm\\ell$")
+    v.legend("horizon", "the event horizon, the past light cone of $P$")
+    v.legend("boundary", "the conformal boundary, timelike, one opening of the tent on each side")
+    v.legend("singular", "the folds, where two glued surfaces cross: singular, with the curvature finite")
+    v.set(settings="$\\ell = 1$, the unit of every length, and $\\alpha = \\sqrt{2/3}$, the hyperbolic tangent of "
+                   "each glued surface's distance from the axis at $t = 0$ in units of $\\ell$, so that the folds "
+                   "leave infinity at the points $P$, at $ct_P = \\pm\\pi\\ell/6$.",
+          restriction="The plane through the axis of the tent and two opposite folds only, totally geodesic.")
+    moment, = slices.moments("btz_multi_holes_wormholes")
+    lo, hi = moment.reach("sausage", "\\rho")
+    edge = 2 * math.atan(hi)
+    v.slice(moment, xt=[[[-edge, 0.0], [edge, 0.0]]])
+    return [v]
 
 
 def btz(ck, src):
@@ -8026,6 +8565,188 @@ def cremmer_scherk(ck, src):
     return [v]
 
 
+def three_brane_throat(ck, src):
+    """The three-brane at L = 1 on its plane of the time and the radial coordinate, and its throat.
+    On the isotropic chart g_tt g_rho_rho = -1, so a radial light ray has d(rho_*)/d(rho) = g_rho_rho
+    = sqrt(1 + 1/rho^4), nr._three_brane_rstar, taken odd in rho. The horizon rho = 0 is at
+    rho_* -> -infinity, and behind it lies a region isometric to the exterior, Gibbons, Horowitz and
+    Townsend's w -> -w, in which rho_* continues as an odd function, so that the v of the exterior
+    is the u of the mirror region. With u, v = t -+ rho_*, every region is a copy of one of two
+    cells, shifted by (k pi, k pi):
+
+        E_k   exterior          p = k pi + arctan u,        q = k pi + arctan v
+        M_k   behind a horizon  p = (k + 1) pi + arctan v,  q = k pi + arctan u
+
+    with u and v those of the region's own radius. Each null coordinate runs on across a horizon, q
+    from E_k into M_k and p from M_k into E_(k+1), so the map is continuous there, and the tower
+    has no singularity: their Figure 1. The areal radius and w are carried to rho, rho^4 = r^4 - 1
+    and rho = w (1 - w^4)^(-1/4). The throat alone is the product of anti-de Sitter space with a
+    sphere, and its plane of t and r is the Poincare wedge of the strip of AdS2, poincare_pq(t, 1/r),
+    with r = e^sigma on the chart of the proper distance."""
+    name = "three_brane_throat"
+    fixed = dict(nr.TB_PLANE)
+    rs = nr._three_brane_rstar
+    charts = (("isotropic", "Isotropic", "\\rho", lambda x: np.asarray(x, dtype=float), (0.25, 0.5, 1.0, 2.0, 4.0),
+               0.0, np.inf, ck.uniform(1e-2, 40)),
+              ("areal", "Areal Radius", "r", lambda x: (np.asarray(x, dtype=float) ** 4 - 1) ** 0.25,
+               (1.02, 1.1, 1.5, 2.0, 4.0), 1.0, np.inf, ck.uniform(1.0001, 40)),
+              ("horizon", "Gibbons-Horowitz-Townsend", "w",
+               lambda x: np.asarray(x, dtype=float) / (1 - np.asarray(x, dtype=float) ** 4) ** 0.25,
+               (0.2, 0.4, 0.6, 0.8, 0.95), 0.0, 1.0, ck.uniform(1e-2, 0.999)))
+    moment = slices.moments(name, "brane")[0]
+    views = []
+    for system, label, symbol, rho_of, radii, lo, hi, sample in charts:
+        pl = Plane(src, name, system, ("t", symbol), fixed, {"L": 1})
+
+        def E(k, rho_of=rho_of):
+            return lambda t, x: (k * PI + np.arctan(np.asarray(t, dtype=float) - rs(rho_of(x))),
+                                 k * PI + np.arctan(np.asarray(t, dtype=float) + rs(rho_of(x))))
+
+        def M(k, rho_of=rho_of):
+            return lambda t, x: ((k + 1) * PI + np.arctan(np.asarray(t, dtype=float) + rs(rho_of(x))),
+                                 k * PI + np.arctan(np.asarray(t, dtype=float) - rs(rho_of(x))))
+
+        ck.chart(f"three-brane, {system}, exterior", pl, E(0), ck.uniform(-20, 20), sample, lambda t, x: (1, 0))
+        ck.chart(f"three-brane, {system}, behind the horizon", pl, M(0), ck.uniform(-20, 20), sample,
+                 lambda t, x: (1, 0))
+        if system == "isotropic":
+            x = np.array([0.05, 0.3, 1.0, 2.5, 20.0])
+            h = 1e-6 * x
+            g00, g01, g11 = pl.metric(np.zeros_like(x), x)[:3]
+            ck.limit("three-brane: d rho_*/d rho is the published g_rho_rho, and g_tt g_rho_rho = -1",
+                     np.concatenate([(rs(x + h) - rs(x - h)) / (2 * h) / g11, g00 * g11]), [1.0] * 5 + [-1.0] * 5, 1e-6)
+            ck.limit("three-brane: rho_* is odd in rho, -L^2/rho + rho^3/6L^2 toward the horizon",
+                     rs(np.array([1e-2, 3e-2])) + 1 / np.array([1e-2, 3e-2]) - np.array([1e-2, 3e-2]) ** 3 / 6, [0.0, 0.0], 1e-9)
+            ts = np.array([-6.0, 0.0, 6.0])
+            p, q = E(0)(ts, np.full(3, 1e-9))
+            ck.limit("three-brane: rho -> 0 at fixed t lands on the corner X = -pi, T = 0", np.concatenate(xt(p, q)),
+                     [-PI] * 3 + [0.0] * 3, 1e-6)
+            p, q = M(0)(ts, np.full(3, 1e-9))
+            ck.limit("three-brane: behind the horizon, rho -> 0 at fixed t lands on the corner X = 0, T = pi",
+                     np.concatenate(xt(p, q)), [0.0] * 3 + [PI] * 3, 1e-6)
+            p, q = M(0)(ts, np.full(3, 1e12))
+            ck.limit("three-brane: behind the horizon, rho -> infinity lands on a second i^0, X = -2 pi, T = pi",
+                     np.concatenate(xt(p, q)), [-2 * PI] * 3 + [PI] * 3, 1e-6)
+            # One ingoing ray, v fixed, crosses the future horizon at the same point from both sides.
+            v0 = 0.7
+            x_out, x_in = np.array([1e-7]), np.array([1e-7])
+            out = xt(*E(0)(v0 - rs(x_out), x_out))
+            behind = xt(*M(0)(v0 + rs(x_in), x_in))
+            ck.limit("three-brane: an ingoing ray meets the horizon at one point from outside and from behind it",
+                     np.concatenate(out), np.concatenate(behind), 1e-6)
+            ck.finite("three-brane: the Kretschmann scalar is finite at the horizon, 80/L^4",
+                      pl.kretschmann(np.zeros(2), np.array([1e-6, 1e-3])))
+            ck.limit("three-brane: the Kretschmann scalar at the horizon is 80/L^4",
+                     pl.kretschmann(np.zeros(1), np.array([1e-6])), [80.0], 1e-6)
+
+        box = [-2 * PI - 0.45, PI + 0.45, -PI - 0.1, 3 * PI + 0.1]
+        T0, T1 = box[2], box[3]
+        v = View(system, label, box, system)
+
+        def cell_polygon(kind, k):
+            base = 2 * k * PI
+            if kind == "E":
+                pts = [[0, base - PI], [-PI, base], [0, base + PI], [PI, base]]
+            else:
+                pts = [[-PI, base], [0, base + PI], [-PI, base + 2 * PI], [-2 * PI, base + PI]]
+            return clip_polygon(pts, T0, T1)
+
+        def clipped(p, q):
+            X, T = xt(p, q)
+            bad = (T < T0) | (T > T1)
+            return np.where(bad, np.nan, p), np.where(bad, np.nan, q)
+
+        cells = [("M", -1), ("E", 0), ("M", 0), ("E", 1), ("M", 1)]
+        for kind, k in cells:
+            v.fill("region", cell_polygon(kind, k))
+        v.fill("cover", cell_polygon("E", 0))
+        times = (-3.0, -1.0, 0.0, 1.0, 3.0)
+        t = spread(-np.inf, np.inf, 500, 10)
+        xs = spread(lo, hi, 600, 16)
+        for kind, k in cells:
+            fmap = E(k) if kind == "E" else M(k)
+            for x in radii:
+                v.curve("r", *clipped(*fmap(t, np.full_like(t, x))))
+            for tt in times:
+                v.curve("t", *clipped(*fmap(np.full_like(xs, tt), xs)))
+        # The horizons and null infinity, each an edge of a cell.
+        for k in (0, 1):
+            base = 2 * k * PI
+            v.line("horizon", [[[-PI, base], [0, base + PI]], [[0, base - PI], [-PI, base]]])
+            v.line("scri", [[[0, base + PI], [PI, base]], [[PI, base], [0, base - PI]]])
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(PI, 4), round(base, 4)]})
+            v.label_xt([PI, base], "$i^0$", "l", dx=6)
+            v.label_xt([3 * Q4, base + Q4], "$\\mathscr{I}^+$", "bl", dx=4, dy=-3)
+            v.label_xt([3 * Q4, base - Q4], "$\\mathscr{I}^-$", "tl", dx=4, dy=3)
+            v.label_xt([HALF, base + 0.45], "exterior", cls="region")
+        v.line("scri", [[[-PI, 0], [-2 * PI, PI]], [[-2 * PI, PI], [-PI, 2 * PI]],
+                        [[-2 * PI, -PI], [-PI, 0]], [[-PI, 2 * PI], [-2 * PI, 3 * PI]]])
+        for T in (-PI, PI, 3 * PI):
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(-2 * PI, 4), round(T, 4)]})
+            v.label_xt([-2 * PI, T], "$i^0$", "r", dx=-6)
+        v.label_xt([-3 * HALF, PI + 0.45], "mirror region", cls="region")
+        v.label_xt([-7 * Q4, PI + Q4], "$\\mathscr{I}^+$", "br", dx=-4, dy=-3)
+        v.label_xt([-7 * Q4, PI - Q4], "$\\mathscr{I}^-$", "tr", dx=-4, dy=3)
+        for at, text, anchor, dx in (((0, PI), "$i^\\pm$", "l", 6), ((0, -PI), "$i^-$", "l", 6), ((0, 3 * PI), "$i^+$", "l", 6),
+                                     ((-PI, 0), "$i^\\pm$", "r", -6), ((-PI, 2 * PI), "$i^\\pm$", "r", -6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(at[0], 4), round(at[1], 4)]})
+            v.label_xt(list(at), text, anchor, dx=dx)
+        v.set(fade={"top": 0.9, "bottom": 0.9})
+        edge = {"isotropic": "the horizon $\\rho = 0$", "areal": "the horizon $r = L$", "horizon": "the horizon $w = 0$"}[system]
+        tex = "\\rho" if system == "isotropic" else symbol
+        unit = "" if system == "horizon" else ", in units of $L$"
+        v.legend("cover", f"one exterior, which $t$ and ${tex}$ cover")
+        v.legend("r", f"${tex}$ constant, at {listed(radii)}{unit}, in every region")
+        v.legend("t", "$t$ constant")
+        v.legend("horizon", edge)
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        a, b = moment.reach("isotropic", "\\rho")
+        rr = np.geomspace(a, b, 400)
+        v.slice(moment, [(np.arctan(-rs(rr)), np.arctan(rs(rr)))])
+        v.set(settings="$L = 1$, the unit of every length.")
+        views.append(v)
+
+    alone = slices.moments(name, "throat")[0]
+    T0, T1 = -1.1 * PI, 1.1 * PI
+    box = [-HALF - 0.55, HALF + 0.55, T0, T1]
+    for system, label, symbol, z_of, values in (
+            ("throat", "Throat", "r", lambda r: 1.0 / np.asarray(r, dtype=float), (0.25, 0.5, 1, 2, 4)),
+            ("throat_proper", "Throat, Proper Distance", "\\sigma", lambda s: np.exp(-np.asarray(s, dtype=float)),
+             (-1.5, -0.75, 0, 0.75, 1.5))):
+        pl = Plane(src, name, system, ("t", symbol), fixed, {"L": 1})
+        sample = ck.uniform(0.01, 20) if system == "throat" else ck.uniform(-4, 3)
+        ck.chart(f"three-brane, {system}", pl, lambda t, x, z_of=z_of: poincare_pq(t, z_of(x)), ck.uniform(-10, 10),
+                 sample, lambda t, x: (1, 0))
+        ck.limit(f"three-brane, {system}: the Kretschmann scalar is 80/L^4 everywhere",
+                 pl.kretschmann(np.array([0.0, 1.0, -2.0]), np.array([0.3, 1.0, 1.7])), [80.0] * 3, 1e-9)
+        v = View(system, label, box, system)
+        strip(v, True, T0, T1)
+        v.fill("cover", [[-HALF, 0], [HALF, -PI], [HALF, PI]])
+        for c in values:
+            v.curve("r", *poincare_pq(S_ALL, np.full_like(S_ALL, float(z_of(c)))))
+        grid(v, "t", poincare_pq, (-4, -2, -1, 0, 1, 2, 4), S_POS)
+        v.line("chartedge", [[[-HALF, 0], [HALF, PI]], [[-HALF, 0], [HALF, -PI]]])
+        if system == "throat":
+            label_on(v, poincare_pq(0, 1.0), "$r = L$")
+            v.legend("cover", "the wedge that $t$ and $r$ cover")
+            v.legend("r", "$r$ constant, from $L/4$ to $4L$")
+            v.legend("chartedge", "$r = 0$, the Poincaré horizon, where $t$ and $r$ end")
+        else:
+            label_on(v, poincare_pq(0, 1.0), "$\\sigma = 0$")
+            v.legend("cover", "the wedge that $t$ and $\\sigma$ cover, the same as that of $t$ and $r$")
+            v.legend("r", "$\\sigma$ constant, every $3L/4$ from $-3L/2$ to $3L/2$")
+            v.legend("chartedge", "$\\sigma \\to -\\infty$, the Poincaré horizon, where $t$ and $\\sigma$ end")
+        v.legend("t", "$ct$ constant")
+        v.legend("boundary", "the conformal boundary, timelike")
+        v.set(fade={"top": 0.7, "bottom": 0.7})
+        a, b = alone.reach("throat_proper", "\\sigma")
+        c = np.exp(-np.linspace(a, b, 2))
+        v.slice(alone, [poincare_pq(0 * c, c)])
+        v.set(settings="$L = 1$, the unit of every length.")
+        views.append(v)
+    return views
+
+
 def ellis_bronnikov(ck, src):
     """The metric on the plane of t and r is -c^2dt^2 + dr^2 with r over the whole line:
     the full diamond, p, q = arctan((ct -+ r)/l), drawn at l = 1."""
@@ -9156,6 +9877,155 @@ def cosmic_string(ck, src):
     return views
 
 
+def draining_bathtub(ck, src):
+    """The draining bathtub with its circles divided out, at |A| = c = 1 and B = sqrt 3.
+
+    Orthogonal to the circles of the angle the metric is -f dT^2 + dr^2/f in the Kerr-like chart,
+    f = 1 - 1/r^2, whatever B is, with one horizon at r = 1 and r* = r + ln|(r - 1)/(r + 1)|/2,
+    which vanishes at r = 0. The surface gravity is 1, so U = -exp(-u) and V = exp(v) with
+    u, v = T -+ r* give UV = (1 - r) exp(2r)/(1 + r), analytic through the horizon, and r = 0,
+    where UV = 1, lies on the straight line T = pi/2: Kruskal's diagram for Schwarzschild, cell
+    for cell. The laboratory's time is t = T + ln|r^2 - 1|/2 for the drain, so v = t + r - ln(1 + r)
+    is regular for every r > 0 and the laboratory chart is the ingoing one, q = arctan exp(v) and
+    p = arctan((1 - r) exp(2r - v)/(1 + r)), covering the exterior and the black hole and nothing
+    else: the line V = 0 is t -> -infinity. The spring, A = 1, is the drain with time reversed,
+    (p, q) -> (-q, -p), the exterior and the white hole. The water is all there is of either, so
+    each is drawn alone, with the edge t -> -+infinity where Kruskal's diagram runs on, as
+    Barcelo, Liberati, Sonego and Visser (2004) draw their acoustic holes."""
+    drain = {"A": -1, "B": "sqrt(3)"}
+    # The surface gravity is twice Schwarzschild's in these units, so the arctangents flatten twice as
+    # fast, and the charts are sampled over a third of the range his are.
+    kl = Plane(src, "draining_bathtub", "kerr_like", ("T", "r"), params=drain, quotient="phi")
+    assert kl.g[0, 1] == 0 and sp.simplify(kl.g[0, 0] * kl.g[1, 1] + 1) == 0
+    T = Tower(-kl.g[0, 0], kl.x1, [1, -1])
+    ck.chart("Draining bathtub, Kerr-like, exterior", kl, lambda t, r: T.pq("I", t, r),
+             ck.uniform(-5, 5), ck.uniform(1.001, 6), lambda t, r: (1, 0))
+
+    def ingoing(t, r):
+        t, r = np.asarray(t, dtype=float), np.asarray(r, dtype=float)
+        v = t + r - np.log1p(r)
+        return np.arctan((1 - r) / (1 + r) * np.exp(2 * r - v)), atan_exp(v)
+
+    def outgoing(t, r):
+        p, q = ingoing(-np.asarray(t, dtype=float), r)
+        return -q, -p
+    lab = Plane(src, "draining_bathtub", "laboratory", ("t", "r"), params=drain, quotient="theta")
+    ck.chart("Draining bathtub, laboratory, the drain", lab, ingoing,
+             ck.uniform(-5, 5), ck.uniform(0.01, 6), lambda t, r: (1, -1 / r))
+    spring = Plane(src, "draining_bathtub", "laboratory", ("t", "r"), params={"A": 1, "B": "sqrt(3)"}, quotient="theta")
+    ck.chart("Draining bathtub, laboratory, the spring", spring, outgoing,
+             ck.uniform(-5, 5), ck.uniform(0.01, 6), lambda t, r: (1, 1 / r))
+
+    p, q = ingoing(np.array([-5.0, 0, 5]), np.full(3, 1e-9))
+    ck.limit("Draining bathtub: r -> 0 lands on T = pi/2", p + q, [HALF] * 3)
+    p, q = ingoing(np.array([0.0]), np.array([1e8]))
+    ck.limit("Draining bathtub: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)", point(p[0], q[0]), [PI, 0], 1e-3)
+    p, q = ingoing(np.array([-40.0, -40.0]), np.array([0.5, 3.0]))
+    ck.limit("Draining bathtub: t -> -infinity lands on V = 0", q, [0, 0], 1e-12)
+    rr = np.linspace(0.05, 5, 50)
+    pp, qq = ingoing(0.3 + 0 * rr, rr)
+    ck.limit("Draining bathtub: tan p tan q is UV = (1 - r) e^(2r)/(1 + r)",
+             np.tan(pp) * np.tan(qq), (1 - rr) / (1 + rr) * np.exp(2 * rr), 1e-8)
+    ck.limit("Draining bathtub: the laboratory and Kerr-like coordinates put one event at one point",
+             ingoing(2.0 + np.log(8.0) / 2, 3.0), T.pq("I", 2.0, 3.0), 1e-12)
+    K = lab.kretschmann
+    ck.diverges("Draining bathtub: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+    ck.finite("Draining bathtub: the Kretschmann scalar is finite on the horizon", K(np.zeros(3), np.array([0.999, 1, 1.001])))
+
+    box = [-HALF - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25]
+    whole = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF], [-HALF, HALF]]
+    exterior = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    R_OUT, R_IN, TS = (1.05, 1.25, 1.5, 2, 3), (0.5, 0.75, 0.9), (-4, -2, -1, 0, 1, 2, 4)
+    t = spread(-np.inf, np.inf, 500, 9)
+
+    def edges(v, up=1):
+        """The drain's edges, or with up = -1 the spring's, the same drawing upside down."""
+        v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]]])
+        v.line("horizon", [[[0, 0], [HALF, up * HALF]]])
+        v.line("chartedge", [[[HALF, -up * HALF], [-HALF, up * HALF]]])
+        v.line("singular", [[[-HALF, up * HALF], [HALF, up * HALF]]], zig=True)
+        for at in ((PI, 0), (HALF, HALF), (HALF, -HALF)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+        v.label_xt([HALF, HALF], "$i^+$", "b", dy=-6)
+        v.label_xt([HALF, -HALF], "$i^-$", "t", dy=6)
+        v.label_xt([3 * Q4, Q4], "$\\mathscr{I}^+$", "bl", dx=4, dy=-4)
+        v.label_xt([3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl", dx=4, dy=4)
+        v.label_xt([0, up * HALF], "$r = 0$", "b" if up > 0 else "t", dy=-8 * up)
+        v.label_xt([HALF, -0.95 * up], "outside", cls="region")
+        v.legend("singular", "$r = 0$, the drain, where the Kretschmann scalar diverges" if up > 0 else
+                 "$r = 0$, the spring, where the Kretschmann scalar diverges")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+
+    plane, = slices.moments("draining_bathtub", "plane")
+    funnel, = slices.moments("draining_bathtub", "funnel")
+    lo, hi = plane.reach("laboratory", "r")
+    flo, fhi = funnel.reach("kerr_like", "r")
+    r_plane = np.concatenate([np.linspace(max(lo, 1e-9), 0.999, 200), 1 + np.exp(np.linspace(-12, math.log(hi - 1), 200))])
+    r_funnel = flo + np.exp(np.linspace(-30, math.log(fhi - flo), 300))
+
+    def marks(v):
+        v.slice(plane, [ingoing(0 * r_plane, r_plane)])
+        v.slice(funnel, [T.pq("I", 0 * r_funnel, r_funnel)], label="$T = 0$")
+
+    views = []
+    v = View("drain", "A drain, $A < 0$", box, "laboratory")
+    v.fill("region", whole)
+    v.fill("cover", whole)
+    for r in R_OUT + R_IN:
+        v.curve("r", *ingoing(t, np.full_like(t, r)))
+    rr = spread(0, np.inf, 600, 14)
+    for tt in TS:
+        v.curve("t", *ingoing(np.full_like(rr, tt), rr))
+    edges(v)
+    v.label_xt([-Q4 / 2, 1.15], "black hole", cls="region")
+    label_on(v, ingoing(0.0, 2.0), "$2|A|/c$")
+    v.legend("horizon", "the horizon $r = |A|/c$")
+    v.legend("chartedge", "$t \\to -\\infty$, where the laboratory's time begins")
+    v.legend("cover", "the whole of the drain, which $t$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant; $r = 2|A|/c$ is the ergosurface")
+    v.legend("t", "$t$ constant, in units of $|A|/c^2$")
+    marks(v)
+    views.append(v)
+
+    v = View("spring", "A spring, $A > 0$", box, "laboratory")
+    v.fill("region", [[x, -y] for x, y in whole])
+    v.fill("cover", [[x, -y] for x, y in whole])
+    for r in R_OUT + R_IN:
+        v.curve("r", *outgoing(t, np.full_like(t, r)))
+    for tt in TS:
+        v.curve("t", *outgoing(np.full_like(rr, tt), rr))
+    edges(v, -1)
+    v.label_xt([-Q4 / 2, -1.15], "white hole", cls="region")
+    label_on(v, outgoing(0.0, 2.0), "$2A/c$")
+    v.legend("horizon", "the horizon $r = A/c$")
+    v.legend("chartedge", "$t \\to \\infty$, where the laboratory's time ends")
+    v.legend("cover", "the whole of the spring, which $t$ and $r > 0$ cover")
+    v.legend("r", "$r$ constant; $r = 2A/c$ is the ergosurface")
+    v.legend("t", "$t$ constant, in units of $A/c^2$")
+    views.append(v)
+
+    v = View("kerr_like", "Kerr-like", box, "kerr_like")
+    v.fill("region", whole)
+    v.fill("cover", exterior)
+    for r in R_OUT:
+        v.curve("r", *T.pq("I", t, np.full_like(t, r)))
+    rr = spread(1, np.inf, 500, 14)
+    for tt in TS:
+        v.curve("t", *T.pq("I", np.full_like(rr, tt), rr))
+    edges(v)
+    v.label_xt([-Q4 / 2, 1.15], "black hole", cls="region")
+    label_on(v, T.pq("I", 0.0, 2.0), "$2|A|/c$")
+    v.legend("horizon", "the horizon $r = |A|/c$")
+    v.legend("chartedge", "$t \\to -\\infty$, where the laboratory's time begins")
+    v.legend("cover", "the region that $T$ and $r > |A|/c$ cover")
+    v.legend("r", "$r$ constant; $r = 2|A|/c$ is the ergosurface")
+    v.legend("t", "$T$ constant, in units of $|A|/c^2$")
+    marks(v)
+    views.append(v)
+    return views
+
+
 def point_particle_2plus1(ck, src):
     """A point particle in three dimensions at alpha = 3/4, the particle its cone is embedded at.
     The half plane of fixed angle is flat and totally geodesic, -c^2dt^2 + dr^2 in the proper
@@ -9672,6 +10542,73 @@ def misner_zapolsky(ck, src):
     v.slice(moment, [stiffest(0 * along_r, along_r)])
     views.append(v)
     return views
+
+
+# ---------------------------------------------------------------- Bowers and Liang's anisotropic star
+
+def bowers_liang(ck, src):
+    """Bowers and Liang's star with Q = 1/4, r <= R, joined at Schwarzschild's limit R = 9 r_s/8
+    to the Schwarzschild exterior of the schwarzschild entry. g_tt is continuous at R, checked,
+    so t is one coordinate, and r* = int sqrt(g_rr/(-g_tt)) dr runs from the centre through the
+    surface, which it reaches at 8.28 r_s; p, q = arctan((t -+ r*)/(9 r_s)) give Minkowski's
+    triangle with the star a timelike tube."""
+    R, scale = 1.125, 9.0
+    inner = Plane(src, "bowers_liang", "areal", ("t", "r"), EQUATOR, nr.BOWERS_LIANG_STAR)
+    outer = Plane(src, "schwarzschild", "spherical", ("t", "r"), EQUATOR, {"r_s": 1})
+    ck.limit("Bowers-Liang: g_tt is continuous at r = R",
+             [float(inner.g[0, 0].subs(inner.x1, R))], [float(outer.g[0, 0].subs(outer.x1, R))], 1e-12)
+    ck.limit("Bowers-Liang: g_rr is continuous at r = R",
+             [float(inner.g[1, 1].subs(inner.x1, R))], [float(outer.g[1, 1].subs(outer.x1, R))], 1e-12)
+    speed = sp.lambdify(inner.x1, sp.sqrt(inner.g[1, 1] / (-inner.g[0, 0])), "numpy")
+    rq = np.linspace(0, R, 300001)
+    rsq = cumulative_trapezoid(speed(rq), rq, initial=0)
+    ck.limit("Bowers-Liang: light crosses the star in 8.28 r_s/c of t", [float(rsq[-1])], [8.2818], 1e-4)
+
+    def rstar(r):
+        r = np.asarray(r, dtype=float)
+        with np.errstate(invalid="ignore", divide="ignore"):
+            outside = rsq[-1] + (r + np.log(np.abs(r - 1))) - (R + np.log(R - 1))
+        return np.where(r <= R, np.interp(r, rq, rsq), outside)
+
+    def star(t, r):
+        return mink_pq(t, rstar(r), scale)
+    ck.chart("Bowers-Liang, the star", inner, star, ck.uniform(-60, 60), ck.uniform(0.01, 1.12),
+             lambda t, r: (1, 0))
+    ck.chart("Bowers-Liang, the exterior", outer, star, ck.uniform(-60, 60), ck.uniform(1.13, 30),
+             lambda t, r: (1, 0))
+    ck.finite("Bowers-Liang: r = 0 is a regular centre",
+              inner.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+
+    v = View("areal", "Areal Radius", [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "areal")
+    v.fill("region", TRIANGLE)
+    # S_ALL is spread for a unit scale, so the times along a curve are spread for this one.
+    times = S_ALL * scale
+    ps, qs = mink_pq(times, rstar(R), scale)
+    v.fill("cover", [[0, -PI]] + [point(p, q) for p, q in zip(ps, qs)] + [[0, PI]])
+    for r in (0.375, 0.75):
+        v.curve("r", *star(times, np.full_like(times, r)))
+    for r in (2.0, 4.0, 16.0):
+        v.curve("r2", *star(times, np.full_like(times, r)))
+    rr = np.concatenate([np.linspace(0, R, 60)[:-1], R + np.exp(np.linspace(-6, 9, 200)) - np.exp(-6)])
+    for t in (-36, -18, -9, 0, 9, 18, 36):
+        v.curve("t", *star(np.full_like(rr, t), rr))
+    v.curve("surface", ps, qs)
+    triangle_edges(v)
+    label_on(v, mink_pq(0, rstar(R), scale), "$r = R$")
+    v.label_xt([0.35, 0.0], "star", cls="region")
+    v.legend("cover", "the star, which the interior solution covers")
+    v.legend("r", "$r$ constant inside, at $0.375$ and $0.75\\,r_s$")
+    v.legend("r2", "$r$ constant outside, at $2$, $4$ and $16\\,r_s$")
+    v.legend("t", "$t$ constant, one $t$ on both sides, at $0$, $\\pm 9$, $\\pm 18$ and $\\pm 36\\,r_s/c$")
+    v.legend("surface", "the surface of the star")
+    v.legend("centre", "$r = 0$, a regular centre")
+    v.set(settings="$Q = 1/4$ and $R = 9r_s/8$.")
+    star_moment = slices.moments("bowers_liang")[0]
+    # The star is read in its own chart and the exterior in Schwarzschild's, and the slice crosses both.
+    lo, hi = star_moment.reach(coordinate="r")
+    rr = np.concatenate([np.linspace(lo, R, 40), R + np.geomspace(1e-6, hi - R, 200)])
+    v.slice(star_moment, [star(0 * rr, rr)])
+    return [v]
 
 
 # ---------------------------------------------------------------- Tolman's solution VII
@@ -14217,6 +15154,216 @@ def small_universes_horn(ck, src):
     return v
 
 
+class TiltedDust:
+    """Farnsworth's tilted dust on its plane of eta and r at W = C = 1, y and z held fixed, each
+    point a plane, and the null coordinates that carry it across its Cauchy horizon.
+
+    The metric on the plane is -(Y d eta - C dr)^2 + X^2 dr^2 with Y = sinh^2(eta/2) and
+    X = Y - coth(eta/2), so a ray has dr/d eta = Y/(C + X) or Y/(C - X) and keeps r - F_+(eta) or
+    r - F_-(eta), the integrals of the two. X runs from 0 at eta_s = 1.9684, the singularity, through
+    C at eta_H = 2.3730, the horizon, where the second integrand has a simple pole of residue -a,
+    a = Y/(dX/d eta) there. So F_- = G - a ln|eta - eta_H| + a ln(eta_H - eta_s) with G the integral of
+    Y/(C - X) + a/(eta - eta_H), which is regular, and
+
+        V = (eta - eta_H)/(eta_H - eta_s) e^((r - G)/a),    U = e^(-(r - F_+)/a)
+
+    are null coordinates regular on the horizon, V = 0, as Kruskal's are on Schwarzschild's. With
+    p = arctan V and q = arctan U: on the singularity -V U = 1, the line X = q - p = pi/2; r -> +infinity
+    is q = 0; and eta -> infinity is p = pi/2 or q = pi/2. The flat model has the same shape with
+    V = cT - x = (u - C) e^r and U = cT + x = (u + C) e^(-r)."""
+
+    def __init__(self):
+        tables = nr.tilted_null_tables()
+        self.eta_s, self.eta_H, self.a = tables["eta_s"], tables["eta_H"], tables["a"]
+        self.etas, self.F_plus, self.G, self.affine = (tables[k] for k in ("etas", "F_plus", "G", "affine"))
+
+    @staticmethod
+    def scale(eta):
+        h = np.asarray(eta, dtype=float) / 2
+        Y = np.sinh(h) ** 2
+        return Y, Y - np.cosh(h) / np.sinh(h)
+
+    @staticmethod
+    def eta_of(u):
+        """Farnsworth's parameter at the time u: the root of (sinh(eta) - eta)/2 = u, by Newton's method."""
+        u = np.asarray(u, dtype=float)
+        eta = np.where(u < 1, np.cbrt(12 * u), np.log(4 * u + 4))
+        for _ in range(60):
+            eta = eta - (np.sinh(eta) - eta - 2 * u) / np.maximum(np.cosh(eta) - 1, 1e-300)
+        return eta
+
+    def pq(self, eta, r):
+        eta, r = np.asarray(eta, dtype=float), np.asarray(r, dtype=float)
+        G, F = np.interp(eta, self.etas, self.G), np.interp(eta, self.etas, self.F_plus)
+        side = (eta - self.eta_H) / (self.eta_H - self.eta_s)
+        with np.errstate(all="ignore"):
+            p = np.sign(side) * atan_exp((r - G) / self.a + np.log(np.abs(side)))
+        return np.where(side == 0, 0.0, p), atan_exp(-(r - F) / self.a)
+
+    def pq_u(self, u, r):
+        return self.pq(self.eta_of(u), r)
+
+    def functions(self, u, r):
+        """X and Y of the homogeneous chart with their first two derivatives along u."""
+        eta = self.eta_of(u)
+        Y, X = self.scale(eta)
+        P = np.cosh(eta / 2) / np.sinh(eta / 2)
+        Y2 = -(P ** 2 - 1) / (2 * Y)
+        Y3 = P * (P ** 2 - 1) / Y ** 2
+        return {"X": (X, P - Y2, Y2 - Y3), "Y": (Y, P, Y2)}
+
+
+def tilted_flat_pq(u, r):
+    """The flat model in Minkowski's diamond: V = cT - x = (u - C) e^r and U = cT + x = (u + C) e^(-r) at C = 1."""
+    u, r = np.asarray(u, dtype=float), np.asarray(r, dtype=float)
+    with np.errstate(all="ignore"):
+        p = np.sign(u - 1) * atan_exp(r + np.log(np.abs(u - 1)))
+    return np.where(u == 1, 0.0, p), atan_exp(np.log(u + 1) - r)
+
+
+def tilted_universes(ck, src):
+    """Farnsworth's tilted dust and the flat model of the whimper, each on its plane of the time and r,
+    y and z held fixed, which the reflections of y and of z leave fixed, so it is totally geodesic.
+
+    Both fill one quadrilateral of Minkowski's diamond, TiltedDust's: the corner (pi/2, -pi/2), the
+    corner (-pi/2, pi/2), i+ at (0, pi) and the corner (pi/2, pi/2). Its right edge, X = pi/2, is
+    where the matter begins: Farnsworth's singularity X = 0, on which the published Kretschmann
+    scalar is checked to diverge, and in the flat model the hyperbola every line of the matter
+    touches. Its lower left edge, q = 0, is r -> infinity: the whimper, which the generators of the
+    horizon reach at a finite affine distance, with the published Kretschmann scalar finite. The
+    horizon is p = 0, from the origin to (pi/2, pi/2), and the two upper edges are reached by a ray
+    only at an infinite value of its affine parameter, the integral of X Y d eta."""
+    dust = TiltedDust()
+    fixed = {"y": "0", "z": "0"}
+    far = Plane(src, "tilted_universes", "farnsworth", ("\\eta", "r"), fixed, nr.TILTED_DUST)
+    hom = Plane(src, "tilted_universes", "homogeneous", ("u", "r"), fixed, {"C": 1}, numeric=["X", "Y"])
+    flat = Plane(src, "tilted_universes", "flat_model", ("u", "r"), fixed, {"C": 1})
+    inertial = Plane(src, "tilted_universes", "inertial", ("T", "x"), {"xi": "0", "zeta": "0"}, {"C": 1})
+    up = lambda a, b: (1, 0)  # noqa: E731
+    ck.chart("tilted universes, Farnsworth's dust", far, dust.pq, ck.uniform(dust.eta_s + 0.01, 8), ck.uniform(-3, 3), up)
+    ck.chart("tilted universes, the homogeneous time", hom, dust.pq_u, ck.uniform(0.8, 30), ck.uniform(-3, 3), up,
+             dust.functions)
+    ck.chart("tilted universes, the flat model", flat, tilted_flat_pq, ck.uniform(0.01, 30), ck.uniform(-3, 3), up)
+    ck.chart("tilted universes, inertial coordinates", inertial, mink_pq, ck.uniform(-20, 20), ck.uniform(-20, 20), up)
+    r = ck.uniform(-3, 3, 50)
+    ck.diverges("tilted universes: X = 0 is a curvature singularity",
+                far.kretschmann(np.full(50, dust.eta_s + 1e-4), r), far.kretschmann(np.full(50, dust.eta_s + 1e-5), r))
+    ck.finite("tilted universes: the Kretschmann scalar is finite on the horizon and toward the whimper",
+              far.kretschmann(np.full(50, dust.eta_H), np.linspace(0, 40, 50)))
+    p, q = dust.pq(np.full(50, dust.eta_s), r)
+    ck.limit("tilted universes: the singularity X = 0 lands on X = pi/2", q - p, np.full(50, HALF), 1e-9)
+    p, q = dust.pq(np.full(50, dust.eta_H), r)
+    ck.limit("tilted universes: the horizon X = C lands on p = 0", p, np.zeros(50), 1e-12)
+    p, q = dust.pq(np.full(50, 3.0), np.full(50, 400.0))
+    ck.limit("tilted universes: r -> infinity lands on q = 0", q, np.zeros(50), 1e-12)
+    p, q = dust.pq(np.full(50, 59.0), r)
+    ck.limit("tilted universes: eta -> infinity lands on i+", np.concatenate([p, q]), np.full(100, HALF), 1e-6)
+    ck.limit("tilted universes: the upper edges are at infinite affine parameter",
+             [float(1 / np.interp(e, dust.etas, dust.affine)) for e in (20.0, 40.0)], [0.0, 0.0], 1e-10)
+    # The flat model is the inertial chart along cT - x = (u - C) e^r and cT + x = (u + C) e^(-r).
+    u, rr = ck.uniform(0.01, 5, 50), ck.uniform(-2, 2, 50)
+    T, x = (u * np.cosh(rr) - np.sinh(rr)), (np.cosh(rr) - u * np.sinh(rr))
+    pf, qf = tilted_flat_pq(u, rr)
+    pm, qm = mink_pq(T, x)
+    ck.limit("tilted universes: the flat model is the inertial chart carried along its map",
+             np.concatenate([pf - pm, qf - qm]), np.zeros(100), 1e-9)
+
+    A, O, B, top, E = [HALF, -HALF], [0.0, 0.0], [-HALF, HALF], [0.0, PI], [HALF, HALF]
+    region = [A, B, top, E]
+    box = [-HALF - 0.55, HALF + 0.55, -HALF - 0.3, PI + 0.3]
+    views = []
+
+    def frame(v, matter):
+        v.fill("region", region)
+        v.fill("cover", region)
+        v.line("horizon", [[O, E]])
+        v.line("scri", [[B, top], [top, E]])
+        v.layers.append({"kind": "point", "class": "infinity", "at": [0.0, round(PI, 4)]})
+        v.label_xt(top, "$i^+$", "b", dy=-6)
+        v.label_xt([-HALF / 2, 1.5 * HALF], "$\\mathscr{I}^+$", "br", dx=-5, dy=-3)
+        v.label_xt([HALF / 2, 1.5 * HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        if matter:
+            v.label_xt([HALF, 0], matter, "l", dx=6)
+        v.legend("scri", "future null infinity $\\mathscr{I}^+$")
+
+    rs = (-3, -1.5, 0, 1.5, 3)
+    r_legend = "$r$ constant, at $0$, $\\pm 3/2$, and $\\pm 3$: the world lines of the {matter}"
+    whimper = ("the whimper, $r \\to \\infty$, where the rays along the horizon end at a finite affine distance "
+               "and the Kretschmann scalar stays finite")
+    bang = "the singularity $X = 0$, where the density and the Kretschmann scalar diverge"
+    for vid, label, system, fmap, times, s, t_legend in (
+            ("farnsworth", "Farnsworth's dust", "farnsworth", dust.pq, (2.1, 2.25, 2.6, 3, 4, 6),
+             spread(dust.eta_s, np.inf, 500, 12),
+             "$\\eta$ constant, the surfaces of homogeneity: timelike at $2.1$ and $2.25$, under the horizon, and "
+             "spacelike at $2.6$, $3$, $4$, and $6$"),
+            ("homogeneous", "Homogeneous time", "homogeneous", dust.pq_u, (1, 1.25, 2, 3, 5, 10),
+             spread(float(nr.TILTED_U_S), np.inf, 500, 12),
+             "$u$ constant, the surfaces of homogeneity: timelike at $W$ and $5W/4$, under the horizon, and "
+             "spacelike at $2W$, $3W$, $5W$, and $10W$")):
+        v = View(vid, label, box, system)
+        frame(v, "$X = 0$")
+        grid(v, "r", lambda c, t, fmap=fmap: fmap(t, c), rs, s)
+        grid(v, "t", fmap, times, S_ALL)
+        v.line("singular", [[E, A]], zig=True)
+        v.line("singular", [[A, B]], zig=True)
+        v.label_xt([-0.45, 0.45], "the whimper", "tr", dx=-6, dy=4)
+        v.legend("cover", "the whole of the dust's spacetime, which $r$ covers with $\\eta$ or with $u$")
+        v.legend("r", r_legend.format(matter="dust"))
+        v.legend("t", t_legend)
+        v.legend("horizon", "the Cauchy horizon, $X = C$, a null surface of homogeneity")
+        v.legend("singular", bang)
+        v.legend("singular", whimper)
+        v.set(input=nr.TILTED_INPUT)
+        for m in slices.moments("tilted_universes", label=slices.TILTED_LABEL):
+            reach = np.linspace(*m.reach("farnsworth", "r"), 200)
+            v.slice(m, [dust.pq(np.full_like(reach, slices.TILTED_MOMENT), reach)])
+        views.append(v)
+
+    v = View("flat_model", "Flat model", box, "flat_model")
+    frame(v, "$u = 0$")
+    grid(v, "r", lambda c, t: tilted_flat_pq(t, c), rs, S_POS)
+    grid(v, "t", tilted_flat_pq, (0.5, 0.75, 1.5, 2, 3, 5), S_ALL)
+    v.line("boundary", [[E, A]])
+    v.line("boundary", [[A, B]])
+    v.point("removed", (0, 0))
+    v.label_xt([-0.45, 0.45], "$x = -cT$", "tr", "coord", dx=-6, dy=4)
+    v.legend("cover", "the part of Minkowski space the matter fills, which $u$ and $r$ cover")
+    v.legend("r", r_legend.format(matter="matter, straight lines"))
+    v.legend("t", "$u$ constant, the surfaces of homogeneity: timelike at $C/2$ and $3C/4$, under the horizon, and "
+                  "spacelike at $3C/2$, $2C$, $3C$, and $5C$")
+    v.legend("horizon", "the Cauchy horizon, $u = C$, half of the light cone of the origin")
+    v.legend("boundary", "the hyperbola $u = 0$, which every line of the matter touches, on the right, and the null "
+                         "line $x = -cT$, which none reaches, on the lower left")
+    v.legend("removed", "the origin, where the rays along the horizon end")
+    v.set(settings="$C = 1$, the scale of $p = \\arctan((cT - x)/C)$ and $q = \\arctan((cT + x)/C)$.")
+    views.append(v)
+
+    def clipped(T, x):
+        T, x = np.asarray(T, dtype=float), np.asarray(x, dtype=float)
+        p, q = mink_pq(T, x)
+        inside = (T + x > 0) & (x * x - T * T < 1)
+        return np.where(inside, p, np.nan), np.where(inside, q, np.nan)
+
+    v = View("inertial", "Inertial coordinates", box, "inertial")
+    frame(v, None)
+    grid(v, "r", lambda c, t: clipped(t, c), (-2, -1, 0, 1, 2), S_ALL)
+    grid(v, "t", clipped, (-1, 0, 1, 2, 4), S_ALL)
+    v.line("boundary", [[E, A]])
+    v.line("boundary", [[A, B]])
+    v.point("removed", (0, 0))
+    v.label_xt([-0.45, 0.45], "$x = -cT$", "tr", "coord", dx=-6, dy=4)
+    v.legend("cover", "the part of Minkowski space the matter fills, which $T$ and $x$ cover")
+    v.legend("r", "$x$ constant, at $0$, $\\pm C$, and $\\pm 2C$")
+    v.legend("t", "$cT$ constant, at $-C$, $0$, $C$, $2C$, and $4C$")
+    v.legend("horizon", "the Cauchy horizon, $x = cT$, half of the light cone of the origin")
+    v.legend("boundary", "the hyperbola $x^2 - c^2T^2 = C^2$, which every line of the matter touches, on the right, "
+                         "and the null line $x = -cT$, which none reaches, on the lower left")
+    v.legend("removed", "the origin, where the rays along the horizon end")
+    v.set(settings="$C = 1$, the scale of $p = \\arctan((cT - x)/C)$ and $q = \\arctan((cT + x)/C)$.")
+    views.append(v)
+    return views
+
+
 def levi_civita(ck, src):
     """Levi-Civita's half plane of fixed phi and z at sigma = 1/4, in Weyl's coordinates and in
     the Kasner form.
@@ -17528,6 +18675,280 @@ def erez_rosen(ck, src):
                   settings=f"{shown[shape]} and $m = 1$, the unit of every length, and $\\ell = {plane_ell:g}\\,m$.")
             views.append(v)
     return views
+
+
+class DistortedTower(Tower):
+    """The tower of one plane of Schwarzschild's black hole in a tidal field at m = 1, in the prolate
+    spheroidal x. On the axis and on the equatorial plane the metric is conformal to -dt^2 + dx_*^2
+    with dx_*/dx = e^{V - 2U}(x + 1)/(x - 1), which has one simple pole, at the horizon x = 1, of
+    residue 2 e^{-2q} on both planes: the surface gravity is k = e^{2q}/4m on the whole horizon.
+    The tortoise coordinate is null_rays.py's, by quadrature, vanishing at the singularity
+    x = -1, and the cells are a Tower's, written in G(u) = arctan exp(-k u), so that x = -1 lies on
+    the straight lines T = +-pi/2 as Schwarzschild's r = 0 does. Where x_* tends to a finite R
+    as x -> infinity, on the axis for q > 0, the edge x -> infinity lies on tan p tan q = -B with
+    B = exp(2kR), as Schwarzschild-anti-de Sitter's boundary does."""
+
+    def __init__(self, plane, q):
+        self.kp = math.exp(2 * q) / 4
+        self.rf = [1.0]
+        self._star = nr._distorted_star(plane, q)
+        self.far = float(self._star(60.0)) if plane == "axis" and q > 0 else None
+        self.B = math.exp(2 * self.kp * self.far) if self.far is not None else None
+
+    def rstar(self, x):
+        return self._star(x)
+
+    def boundary(self, n=400):
+        """x -> infinity in cell I: tan p tan q = -B, from the corner (X, T) = (pi/2, -pi/2) to (pi/2, pi/2)."""
+        p = -HALF / (1 + np.exp(np.linspace(-14, 14, n)))
+        return p, np.arctan(-self.B / np.tan(p))
+
+
+DS_CONFORMAL = (("oblate", "1/12", 1 / 12), ("prolate", "-1/12", -1 / 12))
+DS_CONFORMAL_CHARTS = ("prolate_spheroidal", "spherical", "weyl")
+
+
+def distorted_schwarzschild(ck, src):
+    """Schwarzschild's black hole in a quadrupole tidal field on its two totally geodesic planes of t
+    and one radial coordinate, m = 1, for the oblate q = 1/12 and the prolate q = -1/12, in each chart.
+
+    On either plane the metric is e^{2U}(x - 1)/(x + 1) times (-c^2 dt^2 + dx_*^2), with
+    dx_*/dx = m e^{V - 2U}(x + 1)/(x - 1): on the axis V = 0 and U = (q/2)(3x^2 - 1), and on the
+    equatorial plane V - 2U = (9/16) q^2 (x^2 - 1)^2 + (q/2)(3x^2 - 6x - 1). Both have the one pole
+    x = 1, of residue 2m e^{-2q}, so Kruskal's U = -exp(-k u), V = exp(k v), with u, v = ct -+ x_*
+    and k = e^{2q}/4m, run through the horizon, and p = arctan U, q = arctan V draw each plane as
+    Kruskal and Szekeres's extension is drawn: the cells I, II, IV and I' of a tower of one root.
+    Inside the horizon x runs from 1 down to -1, r = 0, where U and V are finite, the Kretschmann
+    scalar diverges and x_* = 0, so the singularity is the pair of lines T = +-pi/2. Outside,
+    x_* runs to infinity on the equatorial plane for either sign of q and on the axis for q < 0,
+    and the far edges are null, the plane's null infinity, which light reaches after an infinite
+    affine distance and where the Kretschmann scalar falls to zero. On the axis for q > 0 the
+    integrand falls as e^{-3qx^2}, x_* tends to a finite R, and the edge x -> infinity is the
+    timelike curve tan p tan q = -exp(2kR), which light reaches in a finite time t and after an
+    infinite affine distance, since r is an affine parameter on the axis, and where the
+    Kretschmann scalar grows without bound: the potential of the distant matter grows with
+    distance, and the vacuum solution holds only as far as that matter. The spherical chart
+    draws the same planes with r = m(x + 1), and Weyl's chart with z = m x on the axis and
+    rho = m sqrt(x^2 - 1) in the equatorial plane; no chart published covers x < 1, and the
+    cells II and IV are checked against the prolate spheroidal and spherical charts' components
+    read there."""
+    name = "black hole in a tidal field"
+    views = []
+    TS = (-8, -4, -2, 0, 2, 4, 8)
+    XS = (1.05, 1.25, 1.5, 2, 3)        # the prolate spheroidal x of the circles drawn in the exterior
+    charts = {
+        "prolate_spheroidal": ("x", lambda x: x, {"y": "1", "phi": "0"}, {"y": "0", "phi": "0"}, "x",
+                               "$y = 1$", "$y = 0$", lambda x: f"{x:g}", "x = 1", "x = -1"),
+        "spherical": ("r", lambda x: x + 1, {"theta": "0", "phi": "0"}, {**EQUATOR, "phi": "0"}, "r",
+                      "$\\theta = 0$", "$\\theta = \\pi/2$", lambda x: f"{x + 1:g}\\,m", "r = 2m", "r = 0"),
+        "weyl": (None, None, {"rho": "0", "phi": "0"}, {"phi": "0", "z": "0"}, None,
+                 "$\\rho = 0$", "$z = 0$", None, None, None),
+    }
+    hexagon = [[PI, 0], [HALF, HALF], [-HALF, HALF], [-PI, 0], [-HALF, -HALF], [HALF, -HALF]]
+    exterior = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    for shape, qtex, q in DS_CONFORMAL:
+        params = {"m": 1, "q": qtex}
+        equator_moment = slices.moments("distorted_schwarzschild", shape)[0]
+        horizon_moment = slices.moments("distorted_schwarzschild", f"horizon_{shape}",
+                                        label="the horizon at $t = 0$, the bifurcation surface")[0]
+        for plane in ("axis", "equator"):
+            T = DistortedTower(plane, q)
+            where = f"{name}, {shape}, {'the axis' if plane == 'axis' else 'the equatorial plane'}"
+            # The tower against the published components, the cells inside the horizon read from the
+            # charts whose components are analytic through it.
+            for system in ("prolate_spheroidal", "spherical"):
+                ra, of_x, axis_fixed, eq_fixed = charts[system][:4]
+                pl = Plane(src, "distorted_schwarzschild", system, ("t", ra), axis_fixed if plane == "axis" else eq_fixed,
+                           params, kretschmann_fixed={"theta": "1e-30"} if (system, plane) == ("spherical", "axis") else None)
+                shift = 1.0 if system == "spherical" else 0.0
+
+                def pq(cell, shift=shift):
+                    return lambda t, r: T.pq(cell, t, np.asarray(r, dtype=float) - shift)
+                ck.chart(f"{where}, {system}, exterior", pl, pq("I"), ck.uniform(-15, 15, 400),
+                         ck.uniform(1.001 + shift, 4 + shift, 400), lambda t, r: (1, 0))
+                ck.chart(f"{where}, {system}, black hole", pl, pq("II"), ck.uniform(-15, 15, 400),
+                         ck.uniform(-0.99 + shift, 0.999 + shift, 400), lambda t, r: (0, -1))
+                ck.chart(f"{where}, {system}, white hole", pl, pq("IV"), ck.uniform(-15, 15, 400),
+                         ck.uniform(-0.99 + shift, 0.999 + shift, 400), lambda t, r: (0, 1))
+                ck.chart(f"{where}, {system}, other exterior", pl, pq("I'"), ck.uniform(-15, 15, 400),
+                         ck.uniform(1.001 + shift, 4 + shift, 400), lambda t, r: (-1, 0))
+                K = pl.kretschmann
+                ck.diverges(f"{where}, {system}: the Kretschmann scalar diverges at r = 0",
+                            K(0, -1 + 1e-2 + shift), K(0, -1 + 1e-3 + shift))
+                at_horizon = (0.75 * (1 - 12 * q) ** 2 * math.exp(4 * q) if plane == "axis"
+                              else 0.75 * (1 + 3 * q) ** 2 * math.exp(10 * q))
+                ck.limit(f"{where}, {system}: the Kretschmann scalar at the horizon is "
+                         + ("(3/4)(1 - 12q)^2 e^(4q)/m^4" if plane == "axis" else "(3/4)(1 + 3q)^2 e^(10q)/m^4"),
+                         K(np.zeros(2), np.array([1 - 1e-6, 1 + 1e-6]) + shift), [at_horizon] * 2, 1e-4)
+                if plane == "axis":
+                    rr = np.array([1.5, 2.0, 3.0]) + shift
+                    g00, _, g11, *_ = pl.metric(np.zeros(3), rr)
+                    ck.limit(f"{where}, {system}: g_tt g_rr = -1 on the axis, so the radius is affine along its rays",
+                             g00 * g11, [-1.0] * 3, 1e-12)
+            if "weyl" in DS_CONFORMAL_CHARTS:
+                ra = "z" if plane == "axis" else "\\rho"
+                pl = Plane(src, "distorted_schwarzschild", "weyl", ("t", ra),
+                           charts["weyl"][2] if plane == "axis" else charts["weyl"][3], params,
+                           kretschmann_fixed={"rho": "1e-12"} if plane == "axis" else None)
+                to_x = (lambda r: np.asarray(r, dtype=float)) if plane == "axis" else (
+                    lambda r: np.sqrt(1 + np.asarray(r, dtype=float) ** 2))
+                lo = 1.001 if plane == "axis" else 0.05
+                ck.chart(f"{where}, weyl, exterior", pl, lambda t, r: T.pq("I", t, to_x(r)), ck.uniform(-15, 15, 400),
+                         ck.uniform(lo, 4, 400), lambda t, r: (1, 0))
+                ck.chart(f"{where}, weyl, other exterior", pl, lambda t, r: T.pq("I'", t, to_x(r)),
+                         ck.uniform(-15, 15, 400), ck.uniform(lo, 4, 400), lambda t, r: (-1, 0))
+            ck.limit(f"{where}: x_* vanishes at the singularity x = -1", T.rstar(np.array([-1.0])), [0.0], 1e-9)
+            xs = np.array([-0.5, 0.3, 1.7, 2.6])
+            slope = np.exp(nr._distorted_exponent(plane, q)(xs)) * (xs + 1) / (xs - 1)
+            ck.limit(f"{where}: dx_*/dx = e^(V - 2U)(x + 1)/(x - 1)",
+                     (T.rstar(xs + 1e-6) - T.rstar(xs - 1e-6)) / 2e-6 / slope, np.ones(4), 1e-6)
+            p, qq = T.pq("II", np.array([-5.0, 0, 5]), np.full(3, -1 + 1e-9))
+            ck.limit(f"{where}: x -> -1 in the black hole lands on T = pi/2", p + qq, [HALF] * 3)
+            p, qq = T.pq("I", np.array([3.0]), np.array([1 + 1e-12]))
+            ck.limit(f"{where}: x -> 1 at fixed t lands on the bifurcation surface", point(p[0], qq[0]), [0, 0], 1e-4)
+            timelike = T.B is not None
+            if timelike:
+                ck.limit(f"{where}: x_* tends to R = {T.far:.4f} m as x -> infinity", T.rstar(np.array([200.0])), [T.far], 1e-9)
+                p, qq = T.pq("I", np.array([-0.5, 0, 0.5]), np.full(3, 200.0))
+                ck.limit(f"{where}: x -> infinity lands on tan p tan q = -B", np.tan(p) * np.tan(qq), [-T.B] * 3, 1e-6)
+                bp, bq = T.boundary()
+                right = [point(a, b) for a, b in zip(bp, bq)]
+                left = [[-xx, tt] for xx, tt in right[::-1]]
+                whole, cover = right + left, [[0, 0]] + right
+                reach = 2 * np.arctan(np.sqrt(T.B))
+                box = [-max(reach, HALF) - 0.3, max(reach, HALF) + 0.3, -HALF - 0.25, HALF + 0.25]
+            else:
+                p, qq = T.pq("I", np.array([0.0]), np.array([60.0 if plane == "axis" else 8.0]))
+                ck.limit(f"{where}: x -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)", point(p[0], qq[0]), [PI, 0], 1e-3)
+                whole, cover = hexagon, exterior
+                box = [-PI - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25]
+
+            def edges(v, edge, centre):
+                if timelike:
+                    v.curve("boundary", bp, bq)
+                    v.curve("boundary", -bq, -bp)
+                    at = min(right, key=lambda pt: abs(pt[1] - 1.2))
+                    v.label_xt(at, "$r \\to \\infty$", "l", "small", dx=6)
+                    v.label_xt([-at[0], at[1]], "$r \\to \\infty$", "r", "small", dx=-6)
+                    v.legend("boundary", "the edge $r \\to \\infty$, timelike, where the Kretschmann scalar grows "
+                                         "without bound")
+                    mid = 0.5 * reach
+                    v.label_xt([mid, -0.45], "exterior", cls="region")
+                    v.label_xt([-mid, -0.45], "exterior", cls="region")
+                else:
+                    v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]],
+                                    [[-PI, 0], [-HALF, HALF]], [[-PI, 0], [-HALF, -HALF]]])
+                    for at in ((PI, 0), (-PI, 0), (HALF, HALF), (HALF, -HALF), (-HALF, HALF), (-HALF, -HALF)):
+                        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+                    v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+                    v.label_xt([-PI, 0], "$i^0$", "r", dx=-6)
+                    for sx in (1, -1):
+                        v.label_xt([sx * HALF, HALF], "$i^+$", "b", dy=-6)
+                        v.label_xt([sx * HALF, -HALF], "$i^-$", "t", dy=6)
+                        v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-4)
+                        v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=4)
+                    v.legend("scri", "null infinity of the plane, $\\mathscr{I}^\\pm$")
+                    v.label_xt([HALF, -0.95], "exterior", cls="region")
+                    v.label_xt([-HALF, 0], "exterior", cls="region")
+                v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+                v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+                v.label_xt([0, HALF], f"${centre}$", "b", dy=-8)
+                v.label_xt([0, -HALF], f"${centre}$", "t", dy=8)
+                v.label_xt([-Q4, Q4], f"${edge}$", "tr", "small", dx=-6, dy=2)
+                v.label_xt([0, 1.15], "black hole", cls="region")
+                v.label_xt([0, -1.15], "white hole", cls="region")
+                v.legend("horizon", f"the horizon ${edge}$")
+                v.legend("singular", f"${centre}$, where the Kretschmann scalar diverges")
+
+            t = spread(-np.inf, np.inf, 500, 9)
+            for system in DS_CONFORMAL_CHARTS:
+                if system == "weyl":
+                    ra = "z" if plane == "axis" else "\\rho"
+                    edge = "z = m" if plane == "axis" else "\\rho = 0"
+                    centre = "r = 0"
+                    named = (lambda x: f"{x:g}\\,m") if plane == "axis" else (lambda x: f"{math.sqrt(x * x - 1):.3g}\\,m")
+                    on_plane = charts["weyl"][5] if plane == "axis" else charts["weyl"][6]
+                else:
+                    ra, _, _, _, _, on_axis, on_equator, named, edge, centre = charts[system]
+                    on_plane = on_axis if plane == "axis" else on_equator
+                label = f"{'The axis' if plane == 'axis' else 'The equatorial plane'}, $q = {qtex}$"
+                v = View(f"{system}_{plane}_{shape}", label, box, system)
+                v.fill("region", whole)
+                v.fill("cover", cover)
+                for x in XS:
+                    v.curve("r", *T.pq("I", t, np.full_like(t, x)))
+                xx = spread(1, np.inf, 500, 14) if not timelike else 1 + np.geomspace(1e-12, 60, 600)
+                for tt in TS:
+                    v.curve("t", *T.pq("I", np.full_like(xx, tt), xx))
+                edges(v, edge, centre)
+                label_on(v, T.pq("I", 0.0, 1.5), f"${ra} = {named(1.5)}$")
+                which = f"${ra}$ beyond the horizon" if system != "weyl" or plane == "axis" else f"${ra} > 0$"
+                v.legend("cover", f"the region that $t$ and {which} cover")
+                v.legend("r", f"${ra}$ constant, at " + ", ".join(f"${named(x)}$" for x in XS[:-1]) + f" and ${named(XS[-1])}$")
+                v.legend("t", "$ct$ constant, in units of $m$")
+                if plane == "equator":
+                    lo, hi = equator_moment.reach("spherical", "r")
+                    v.slice(equator_moment, [through_bifurcation(T, ("I'", "I"), hi - 1, lo - 1)])
+                v.slice(horizon_moment, points=[(0.0, 0.0)])
+                what = "half axis" if plane == "axis" else "half plane"
+                v.set(restriction=f"The plane of $t$ and ${ra}$ at {on_plane} and fixed $\\phi$ only, totally geodesic, "
+                                  + ("each point in the diagram a single event." if plane == "axis" else
+                                     "each point in the diagram a single event."),
+                      settings=f"$q = {qtex}$ and $m = 1$, the unit of every length; the surface gravity is "
+                               f"$\\kappa = e^{{2q}}/4m = {T.kp:.4f}/m$ in units of $c^2$.")
+                views.append(v)
+    return views
+
+
+def _distorted_schwarzschild_captions():
+    """The captions of Schwarzschild's black hole in a tidal field: the axis and the equatorial
+    plane, oblate and prolate, in each chart's own radial coordinate."""
+    out = {}
+    hole = "the black hole in a tidal field"
+    kruskal = ("With $r_*$ the tortoise coordinate of the plane and $\\kappa = e^{2q}/4m$, the maps "
+               "$u = -\\arctan e^{-\\kappa(ct - r_*)}$ and $v = \\arctan e^{\\kappa(ct + r_*)}$, the arctangents of "
+               "Kruskal's coordinates, run through the horizon and bring the plane into ")
+    drawn = ", drawn with $T = u + v$ up and $X = v - u$ across."
+    for system in DS_CONFORMAL_CHARTS:
+        for shape, qtex, _ in DS_CONFORMAL:
+            source = ("a ring of matter around the equator" if shape == "oblate" else "masses far off on the axis")
+            if system == "prolate_spheroidal":
+                ra_axis = ra_plane = "x"
+                fixed_axis, fixed_plane, edge, centre = "$y = 1$", "$y = 0$", "x = 1", "x = -1"
+            elif system == "spherical":
+                ra_axis = ra_plane = "r"
+                fixed_axis, fixed_plane, edge, centre = "$\\theta = 0$", "$\\theta = \\pi/2$", "r = 2m", "r = 0"
+            else:
+                ra_axis, ra_plane = "z", "\\rho"
+                fixed_axis, fixed_plane, edge, centre = "$\\rho = 0$", "$z = 0$", None, "r = 0"
+            setting = f"($q = {qtex}$, $m = 1$)"
+            horizon_axis = edge or "z = m"
+            horizon_plane = edge or "\\rho = 0"
+            if shape == "oblate":
+                far = (f"Out along the axis the potential of the ring grows as $e^{{3qx^2}}$, with $x$ the prolate "
+                       "spheroidal radial coordinate, and $r_*$ tends to a finite value, so the edge "
+                       "$r \\to \\infty$ is timelike: light reaches it in a finite time $t$, after an infinite affine "
+                       "distance, and the Kretschmann scalar grows without bound toward it.")
+                shape_text = "Kruskal and Szekeres's diagram with its null infinity replaced by a timelike edge"
+            else:
+                far = ("Out along the axis the cones narrow, $r_*$ runs to infinity, and the far edges are the null "
+                       "infinity of the plane, toward which the Kretschmann scalar falls to zero.")
+                shape_text = "Kruskal and Szekeres's hexagon"
+            out[f"{system}_axis_{shape}"] = [
+                f"The plane of $t$ and ${ra_axis}$ ({fixed_axis}, $\\phi$ fixed) of {hole} {setting}, with the field "
+                f"of {source}. {kruskal}{shape_text}{drawn}",
+                f"The horizon ${horizon_axis}$ is regular, the pair of null lines through the centre, and the "
+                f"singularity ${centre}$ is spacelike, as in Schwarzschild's spacetime. {far}",
+            ]
+            out[f"{system}_equator_{shape}"] = [
+                f"The plane of $t$ and ${ra_plane}$ ({fixed_plane}, $\\phi$ fixed) of {hole} {setting}, with the field "
+                f"of {source}. {kruskal}Kruskal and Szekeres's hexagon{drawn}",
+                f"The horizon ${horizon_plane}$ is regular and the singularity ${centre}$ spacelike, as in "
+                "Schwarzschild's spacetime, and $\\kappa$ is the same on this plane as on the axis. In the plane "
+                "$r_*$ runs to infinity for either sign of $q$, so the far edges are null, the null infinity of the "
+                "plane, toward which the Kretschmann scalar falls to zero.",
+            ]
+    return out
 
 
 def _erez_rosen_captions():
@@ -21316,6 +22737,7 @@ def moving_mirror(ck, src):
 
 DRAWN = {
     "moving_mirror": moving_mirror,
+    "draining_bathtub": draining_bathtub,
     "lifshitz_spacetime": lifshitz_spacetime,
     "born_infeld_charge": born_infeld_charge,
     "aichelburg_sexl": aichelburg_sexl,
@@ -21331,12 +22753,14 @@ DRAWN = {
     "ads_soliton": ads_soliton,
     "coleman_de_luccia": coleman_de_luccia,
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "hiscock": hiscock, "bardeen": bardeen, "mass_inflation": mass_inflation,
-    "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "kerr_taub_nut": kerr_taub_nut, "de_sitter": de_sitter,
+    "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "kerr_taub_nut": kerr_taub_nut, "kerr_melvin": kerr_melvin,
+    "de_sitter": de_sitter,
     "elliptic_de_sitter": elliptic_de_sitter,
+    "self_creating_universe": self_creating_universe,
     "rp3_geon": rp3_geon,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
-    "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "boulware_deser": boulware_deser, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
-    "bertotti_robinson": bertotti_robinson, "plebanski_hacyan": plebanski_hacyan, "cremmer_scherk": cremmer_scherk, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
+    "schwarzschild_de_sitter": schwarzschild_de_sitter, "global_monopole": global_monopole, "tangherlini": tangherlini, "string_bh_three_four_charges": string_bh_three_four_charges, "boulware_deser": boulware_deser, "black_string": black_string, "dilaton_black_hole": dilaton_black_hole, "anti_de_sitter": anti_de_sitter,
+    "bertotti_robinson": bertotti_robinson, "plebanski_hacyan": plebanski_hacyan, "cremmer_scherk": cremmer_scherk, "three_brane_throat": three_brane_throat, "ellis_bronnikov": ellis_bronnikov, "morris_thorne": morris_thorne,
     "cosmic_string": cosmic_string, "spinning_string": spinning_string,
     "point_particle_2plus1": point_particle_2plus1,
     "interior_schwarzschild": interior_schwarzschild, "gravastar": gravastar, "frw": frw,
@@ -21344,13 +22768,13 @@ DRAWN = {
     "lindquist_wheeler_lattice": lindquist_wheeler_lattice,
     "semiclosed_world": semiclosed_world,
     "datt_ruban_t_models": datt_ruban_t_models,
-    "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii, "misner_zapolsky": misner_zapolsky,
+    "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "bowers_liang": bowers_liang, "boson_star": boson_star, "tolman_vii": tolman_vii, "misner_zapolsky": misner_zapolsky,
     "bonnor_charged_dust": bonnor_charged_dust,
     "bartnik_mckinnon": bartnik_mckinnon,
     "nordstrom_scalar": nordstrom_scalar,
     "einstein_1912_static": einstein_1912_static,
     "ab_metrics": ab_metrics,
-    "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "reissner_nordstrom_ads": reissner_nordstrom_ads, "c_metric": c_metric,
+    "malament_hogarth": malament_hogarth, "einstein_static": einstein_static, "btz": btz, "btz_multi_holes_wormholes": btz_multi_holes_wormholes, "schwarzschild_ads": schwarzschild_ads, "topological_black_hole": topological_black_hole, "reissner_nordstrom_ads": reissner_nordstrom_ads, "c_metric": c_metric,
     "misner": misner, "milne": milne,
     "gott_time_machine": gott_time_machine,
     "wormhole_time_machine": wormhole_time_machine,
@@ -21381,6 +22805,7 @@ DRAWN = {
     "curzon_chazy": curzon_chazy,
     "kopczynski_trautman": kopczynski_trautman,
     "small_universes": small_universes,
+    "tilted_universes": tilted_universes,
     "bonnor_rotating_dust": bonnor_rotating_dust,
     "double_kerr": double_kerr,
     "neugebauer_meinel": neugebauer_meinel,
@@ -21389,6 +22814,7 @@ DRAWN = {
     "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
     "zipoy_voorhees": zipoy_voorhees,
     "erez_rosen": erez_rosen,
+    "distorted_schwarzschild": distorted_schwarzschild,
     "string_black_hole": string_black_hole,
     "mcvittie": mcvittie,
     "sultana_dyer": sultana_dyer,
@@ -21561,6 +22987,8 @@ CAPTIONS = {
     **{("bonnor_magnetic_dipole", view): text for view, text in _bonnor_dipole_captions().items()},
     **{("zipoy_voorhees", view): text for view, text in _zipoy_voorhees_captions().items()},
     **{("erez_rosen", view): text for view, text in _erez_rosen_captions().items()},
+    **{("distorted_schwarzschild", view): text
+       for view, text in _distorted_schwarzschild_captions().items()},
     ("neugebauer_meinel", "weyl_axis"): [
         "The axis $\\rho = 0$ of the disc of $\\mu = 3$, from far below it to far above, each point in the diagram a "
         "single event. The metric on it is $-e^{2U}c^2dt^2 + e^{-2U}dz^2$, and with $z_* = \\int_0^z e^{-2U}dz$ the maps "
@@ -22240,6 +23668,48 @@ CAPTIONS = {
         "horizon lies between them: a light ray crosses from one to the other in the time $R/c$, and every "
         "observer sees the singularity.",
     ],
+    ("string_bh_three_four_charges", "five_charges"): [
+        "The hole of three charges ($r_1 = r_0/2$, $r_2 = r_0$, $r_3 = 3r_0/2$) as far as $t$ and $r > 0$ reach, each "
+        "point in the diagram a 3-sphere. The Kruskal coordinates $U = -e^{-\\kappa u/c}$ and "
+        "$V = e^{\\kappa v/c}$, with $u, v = ct \\mp r_*$, $dr_*/dr = \\sqrt{H_1H_2H_3}/f$, and $\\kappa$ the surface "
+        "gravity of the event horizon, make the metric regular through $r = r_0$, and $p = \\arctan U$, "
+        "$q = \\arctan V$.",
+        "The black hole ends on the inner horizon $r = 0$, a pair of null lines where the 3-spheres have the radius "
+        "$(r_1r_2r_3)^{1/3}$ and the Kretschmann scalar is finite. The spacetime continues across it, as "
+        "Reissner and Nordström's does across its inner horizon.",
+    ],
+    ("string_bh_three_four_charges", "five_extreme"): [
+        "The exterior of the extreme hole of three charges ($r_1 = r_2/2$, $r_3 = 2r_2$), each point in the diagram "
+        "a 3-sphere, with $p, q = \\arctan((ct \\mp r_*)/r_2)$ and $dr_*/dr = \\sqrt{H_1H_2H_3}$. An extreme horizon "
+        "has no surface gravity, so the arctangent stands where Kruskal's exponential would.",
+        "The horizon $r = 0$ is the pair of null lines on the left, and every moment of $t$ runs down the throat to "
+        "their corner, an infinite distance away.",
+    ],
+    ("string_bh_three_four_charges", "five_areal"): [
+        "The hole of three equal charges ($r_0 = 3r_q/4$), maximally extended, each point in the diagram a 3-sphere "
+        "of radius $\\rho$: the Reissner-Nordström black hole of five dimensions. The exterior is drawn as Kruskal "
+        "draws it, and every region is written in the Kruskal coordinate of the event horizon.",
+        "Between the horizons $\\rho$ is the time, and inside $r_-$ the hole is static again, with a timelike "
+        "singularity at $\\rho = 0$ that an observer can avoid. The tower repeats without end, each exterior a "
+        "separate asymptotically flat region.",
+    ],
+    ("string_bh_three_four_charges", "four_charges"): [
+        "The hole of four charges ($r_1 = r_0/2$, $r_2 = r_0$, $r_3 = 3r_0/2$, $r_4 = 2r_0$) as far as $t$ and "
+        "$r > 0$ reach, each point in the diagram a 2-sphere. The Kruskal coordinates $U = -e^{-\\kappa u/c}$ and "
+        "$V = e^{\\kappa v/c}$, with $u, v = ct \\mp r_*$, $dr_*/dr = \\sqrt{H_1H_2H_3H_4}/f$, and $\\kappa$ the "
+        "surface gravity of the event horizon, make the metric regular through $r = r_0$, and $p = \\arctan U$, "
+        "$q = \\arctan V$.",
+        "The black hole ends on the inner horizon $r = 0$, a pair of null lines where the spheres have the radius "
+        "$(r_1r_2r_3r_4)^{1/4}$ and the Kretschmann scalar is finite. The spacetime continues across it, as "
+        "Reissner and Nordström's does across its inner horizon.",
+    ],
+    ("string_bh_three_four_charges", "four_extreme"): [
+        "The exterior of the extreme hole of four charges ($r_1 = r_2/2$, $r_3 = 3r_2/2$, $r_4 = 2r_2$), each point "
+        "in the diagram a 2-sphere, with $p, q = \\arctan((ct \\mp r_*)/r_2)$ and $dr_*/dr = \\sqrt{H_1H_2H_3H_4}$. "
+        "An extreme horizon has no surface gravity, so the arctangent stands where Kruskal's exponential would.",
+        "The horizon $r = 0$ is the pair of null lines on the left, and every moment of $t$ runs down the throat to "
+        "their corner, an infinite distance away.",
+    ],
     ("tangherlini", "spherical"): [
         "The Schwarzschild-Tangherlini spacetime in five dimensions, maximally extended, each point in the diagram "
         "a 3-sphere of radius $r$. The Kruskal coordinates $U = -e^{-u/r_h}$ and $V = e^{v/r_h}$, with "
@@ -22340,6 +23810,44 @@ CAPTIONS = {
         "The deficit enters only $g_{\\theta\\theta}$ and $g_{\\phi\\phi}$, so the plane and its triangle are "
         "Minkowski's. The edge $X = 0$ is the monopole, $r = 0$, where the Kretschmann scalar "
         "$4\\Delta^2/\\left((1 - \\Delta)^2r^4\\right)$ diverges, a timelike singularity.",
+    ],
+    ("draining_bathtub", "drain"): [
+        "A drain ($A < 0$) with the circles of $\\theta$ divided out, each point in the diagram a circle of "
+        "circumference $2\\pi r$. The metric orthogonal to the circles is $-f\\,c^2dT^2 + dr^2/f$ with $f = 1 - "
+        "A^2/(c^2r^2)$, whatever the swirl $B$. With $r_h = |A|/c$ and $r_* = r + \\tfrac{1}{2}r_h\\ln|(r - "
+        "r_h)/(r + r_h)|$, the Kruskal coordinates $U = -e^{-u/r_h}$ and $V = e^{v/r_h}$, with $u, v = cT \\mp "
+        "r_*$, make it regular through the horizon, where $UV = e^{2r/r_h}(r_h - r)/(r_h + r)$ vanishes. With "
+        "$p = \\arctan U$ and $q = \\arctan V$ the drain $r = 0$, where $UV = 1$, lies on the line $T = \\pi/2$.",
+        "The laboratory's $t$ and $r > 0$ cover the outside and the black hole, and those two regions are all "
+        "the water there is. Every line of constant $t$ runs from the drain through the horizon out to $i^0$. "
+        "The dashed edge is $t \\to -\\infty$: a sound ray followed back in time reaches it after a finite "
+        "affine length and an endless time on the laboratory's clock.",
+    ],
+    ("draining_bathtub", "spring"): [
+        "A spring ($A > 0$) with the circles of $\\theta$ divided out, the drain with time reversed. The "
+        "laboratory's $t$ and $r > 0$ cover the outside and a white hole: sound leaves the region inside "
+        "$r = A/c$ and none enters it.",
+        "The spring $r = 0$ lies on the line $T = -\\pi/2$, and the dashed edge is $t \\to \\infty$. Sound sent "
+        "inward against the flow approaches the horizon for ever by the laboratory's clock.",
+    ],
+    ("draining_bathtub", "kerr_like"): [
+        "The same drain, with the region the Kerr-like chart covers. The coordinates $T$ and $r > |A|/c$ "
+        "cover the outside alone, and its lines of constant $T$ all meet at the corner where the horizon "
+        "meets the edge $t \\to -\\infty$.",
+        "The time $T = t - (|A|/(2c^2))\\ln(c^2r^2/A^2 - 1)$ runs to $+\\infty$ along the horizon, so the chart "
+        "ends there, while the laboratory's $t$ goes through.",
+    ],
+    ("btz_multi_holes_wormholes", "fold"): [
+        "The plane of $t$ and $\\rho$ through the axis of the tent and two opposite folds ($\\phi = \\pi/4$ on the "
+        "right, $5\\pi/4$ on the left), each point in the diagram a single event. With $\\sigma = "
+        "2\\arctan(\\rho/\\ell)$ the metric on it is $(-c^2dt^2 + \\ell^2d\\sigma^2)/\\cos^2\\sigma$, so $p, q = "
+        "(ct/\\ell \\mp \\sigma)/2$ are null and the plane is the strip $|X| < \\pi/2$ of anti-de Sitter space, "
+        "cut off above and below by the folds, $\\sin\\sigma = \\sqrt{2}\\,\\alpha\\cos(ct/\\ell)$.",
+        "Each side of the strip is one opening of the tent, a stretch of infinity that lasts from $-t_P$ to "
+        "$t_P$. The event horizon is the past light cone of its last point $P$, and the two halves of it meet "
+        "on the axis at $ct = -\\pi\\ell/3$: the black hole is born there, a time $\\pi\\ell/6c$ after the spacetime "
+        "begins at the lower tip. With opposite surfaces glued the two openings belong to the one exterior of "
+        "the wormhole, and with adjacent surfaces glued they are the exteriors of two of the three black holes.",
     ],
     ("btz", "static"): [
         "The black hole without rotation ($M = 1$, $J = 0$), maximally extended, each point in the "
@@ -22901,6 +24409,23 @@ CAPTIONS = {
         "each point in the diagram a circle about the axis, after Brandon Carter (1968). The ring singularity is "
         "the timelike edge $r = 0$ of each region inside $r_-$, and on the symmetry axis $r = 0$ is a regular point.",
     ],
+    ("kerr_melvin", "axis"): [
+        "The symmetry axis $\\theta = 0$ of Ernst and Wild's black hole, maximally extended ($a = 4m/5$, "
+        "$B = 1/(4m)$): the surface the rotations leave fixed, and so totally geodesic. On it the metric is the "
+        "constant $k$ times that of Kerr's axis, $-\\frac{\\Delta}{r^2 + a^2}c^2dt^2 + \\frac{r^2 + a^2}{\\Delta}dr^2$, "
+        "so the two simple roots of $\\Delta$ give it Kerr's tower, which Brandon Carter drew in 1966.",
+        "As Kerr's does, the axis runs through the centre of the ring's disc into $r < 0$. The magnetic field "
+        "runs along it, and the coordinates $t$ and $r > r_+$ cover the exterior.",
+    ],
+    ("kerr_melvin", "equator"): [
+        "The equatorial plane $\\theta = \\pi/2$ of Ernst and Wild's black hole, maximally extended ($a = 4m/5$, "
+        "$B = 1/(4m)$), with $\\phi$ divided out, each point in the diagram a circle about the axis. The metric "
+        "orthogonal to the circles is $H$ times that of Kerr's equator, and a factor changes no null direction, so "
+        "Brandon Carter's diagram of 1968 draws it.",
+        "A light ray reaches $r \\to \\infty$ only at an infinite value of its affine parameter, so the far edges "
+        "are the null infinity of the plane, although the circles about the axis shrink to zero there. The ring "
+        "singularity is the timelike edge $r = 0$ of each region inside $r_-$.",
+    ],
     ("kerr_newman", "axis"): [
         "The symmetry axis $\\theta = 0$ of the maximally extended Kerr-Newman spacetime, "
         "totally geodesic as Kerr's is. On it the metric is again "
@@ -22955,6 +24480,44 @@ CAPTIONS = {
         "$q = \\pi/4 + \\arctan(H\\eta + H\\rho/c)$, with $\\rho^2 = x^2 + y^2 + z^2$.",
         "The slicing covers the half above the observer's past horizon, so its $t \\to -\\infty$ "
         "is a null line where the coordinates end, and the spacetime goes on below it.",
+    ],
+    ("self_creating_universe", "static"): [
+        "De Sitter space, the hyperboloid $W^2 + X^2 + Y^2 + Z^2 - V^2 = r_0^2$ in flat space of five dimensions "
+        "with coordinates $V, W, X, Y, Z$, each event identified with its images under a boost in the plane of "
+        "$V$ and $W$, drawn on the square of the de Sitter space that covers it, each point in the diagram a "
+        "2-sphere. The static chart enters as $\\tan p = \\tanh(u/2r_0)$ and $\\tan q = \\tanh(v/2r_0)$, with "
+        "$u, v = ct \\mp r_0\\,\\mathrm{artanh}(r/r_0)$, and covers the triangle about the observer on the left edge.",
+        "The boost carries each line $ct = k\\beta$ onto the next, and one copy of the region lies between two "
+        "neighbouring lines, which are one line of it. In the quotient each curve of constant $r$ is a closed "
+        "timelike curve, and the two null lines through the centre of the square are the Cauchy horizons. The boost "
+        "leaves every point of the sphere at the centre where it is, and there the quotient is no manifold.",
+    ],
+    ("self_creating_universe", "kantowski_sachs"): [
+        "The region to the future of both Cauchy horizons in the Kantowski-Sachs chart, "
+        "$V = r_0\\sinh(c\\tau/r_0)\\cosh(l/r_0)$ and $W = r_0\\sinh(c\\tau/r_0)\\sinh(l/r_0)$ on the hyperboloid, "
+        "each point in the diagram a 2-sphere of radius $r_0\\cosh(c\\tau/r_0)$. Lines of constant $l$ leave the "
+        "centre of the square and end on future infinity, and the boost carries each line $l = k\\beta$ onto the next.",
+        "Each curve of constant $\\tau$ is, in the quotient, a circle of circumference "
+        "$\\beta\\sinh(c\\tau/r_0)$, which grows from zero on the horizons. The region holds no closed causal curve.",
+    ],
+    ("self_creating_universe", "steady_state"): [
+        "The half of the square above the observer's past horizon in the steady state chart, which enters as "
+        "$p = \\pi/4 + \\arctan((\\eta - \\rho)/r_0)$ and $q = \\pi/4 + \\arctan((\\eta + \\rho)/r_0)$ with "
+        "$\\eta = -r_0e^{-c\\tau/r_0}$ and $\\rho^2 = x^2 + y^2 + z^2$, each point in the diagram a 2-sphere. The "
+        "chart covers the triangle of closed timelike curves about the observer, the inflating triangle at the top, "
+        "and the Cauchy horizon between them.",
+        "The boost carries each flat slice $c\\tau = k\\beta$ onto the next, shrunk by $e^{-\\beta/r_0}$, and one "
+        "copy lies between two neighbouring slices. One copy holds the whole of Gott and Li's universe, closed "
+        "timelike curves below the horizon and inflation above it.",
+    ],
+    ("self_creating_universe", "conformal"): [
+        "The half of the square above the observer's past horizon in the conformal chart, "
+        "$p = \\pi/4 + \\arctan((\\eta - \\rho)/r_0)$ and $q = \\pi/4 + \\arctan((\\eta + \\rho)/r_0)$, each point "
+        "in the diagram a 2-sphere. Future infinity is $\\eta = 0$, the top edge, and the Cauchy horizon is the null "
+        "line $\\rho = -\\eta$ from the centre of the square to the top of the left edge.",
+        "The boost shrinks $\\eta$ and $\\rho$ by $e^{-\\beta/r_0}$, which carries each slice "
+        "$\\eta = -r_0e^{-k\\beta/r_0}$ onto the next. One copy lies between two neighbouring slices, and the copies "
+        "crowd toward future infinity.",
     ],
     ("elliptic_de_sitter", "global"): [
         "Elliptic de Sitter space, the hyperboloid $-X_0^2 + X_1^2 + \\dots + X_4^2 = \\ell^2$ with $X$ and $-X$ one "
@@ -23128,6 +24691,43 @@ CAPTIONS = {
         "The whole Bertotti-Robinson spacetime with the Poincaré coordinates $t$ "
         "and $x$ on it. They cover the same wedge as the throat coordinates, with "
         "$x = b^2/r$.",
+    ],
+    ("three_brane_throat", "isotropic"): [
+        "The three-brane on its plane of $t$ and $\\rho$ ($x = y = z = 0$, one point of the sphere), maximally "
+        "extended, each point in the diagram a flat sheet of $x$, $y$, and $z$ times a 5-sphere. The extension "
+        "is a tower of exteriors that repeats up and down without end, alternately on the right and on the "
+        "left, with no singularity in it.",
+        "We place each region by $p = \\arctan(u/L)$ and $q = \\arctan(v/L)$ with $u, v = ct \\mp \\rho_*$, "
+        "where the tortoise coordinate $\\rho_*$ has $d\\rho_*/d\\rho = \\sqrt{1 + L^4/\\rho^4}$, shifted by "
+        "$\\pi$ from one region to the next. The horizon is degenerate, and $\\rho_*$ runs to $-\\infty$ on it "
+        "as $-L^2/\\rho$.",
+        "The coordinates $t$ and $\\rho > 0$ cover one exterior. Behind each horizon lies a mirror image of the "
+        "exterior, with a null infinity of its own. The moment $t = 0$ runs from spatial infinity down the "
+        "infinitely long throat toward the corner $X = -\\pi$, $T = 0$, where the past and future horizons "
+        "meet at an infinite distance.",
+    ],
+    ("three_brane_throat", "areal"): [
+        "The same tower with the areal radius $r$ on it, each point in the diagram a flat sheet of $x$, $y$, and "
+        "$z$ times a 5-sphere of radius $r$. The radius falls from infinity to $L$ at each horizon and rises "
+        "again behind it, so no sphere of the three-brane is smaller than $L$.",
+    ],
+    ("three_brane_throat", "horizon"): [
+        "The same tower with Gibbons, Horowitz, and Townsend's $w$ on it, which runs from $1$ at infinity to "
+        "$0$ at the horizon. Behind the horizon $w$ is negative, and the mirror region is this exterior under "
+        "$w \\to -w$, with its infinity at $w = -1$.",
+    ],
+    ("three_brane_throat", "throat"): [
+        "The throat alone on its plane of $t$ and $r$, each point in the diagram a flat sheet of $x$, $y$, and "
+        "$z$ times a 5-sphere of radius $L$. The metric on the plane is "
+        "$-\\frac{r^2}{L^2}c^2dt^2 + \\frac{L^2}{r^2}dr^2$, an anti-de Sitter space of two dimensions and "
+        "radius $L$, whose conformal diagram is a strip.",
+        "The coordinates $t$ and $r$ cover a Poincaré wedge of the strip. The limit that keeps the throat alone "
+        "has traded the flat region of the three-brane for the timelike boundary at $r \\to \\infty$, and "
+        "$r = 0$ is the Poincaré horizon, across which the strip continues.",
+    ],
+    ("three_brane_throat", "throat_proper"): [
+        "The same strip with the proper distance $\\sigma = L\\ln(r/L)$ on it. The lines of constant "
+        "$\\sigma$ are those of constant $r$, and the horizon lies at $\\sigma \\to -\\infty$.",
     ],
     ("cremmer_scherk", "cartesian"): [
         "The plane of $t$ and $x$ ($y = z = 0$) of Cremmer and Scherk's solution, each point in the diagram a "
@@ -23798,6 +25398,16 @@ CAPTIONS = {
         "The lines of constant $u$ outside the spheroid crowd toward null infinity, since the height grows as "
         "$e^u$.",
     ],
+    ("bowers_liang", "areal"): [
+        "A static star of uniform density with unequal pressures ($Q = 1/4$), joined at Schwarzschild's limit "
+        "($R = 9r_s/8$) to the Schwarzschild exterior, each point in the diagram a 2-sphere of radius $r$. The "
+        "central pressure is finite, as it is for every $r_s/R < 1 - 3^{-1/Q} = 80/81$, and the star has no "
+        "horizon.",
+        "At the surface $g_{tt} = -(1 - r_s/R)$ on both sides, so $t$ is one coordinate throughout. The "
+        "tortoise coordinate $r_* = \\int\\sqrt{g_{rr}/(-g_{tt})}\\,dr$ runs from the centre through the "
+        "surface, which it reaches at $8.3\\,r_s$, and $p, q = \\arctan((ct \\mp r_*)/9r_s)$ bring the "
+        "spacetime into Minkowski's triangle, with the star a timelike tube from $i^-$ to $i^+$.",
+    ],
     ("tolman_vii", "spherical"): [
         "A static star whose density falls as $1 - r^2/R^2$ to an empty surface, joined at $R = 2\\,r_s$ "
         "($\\beta = 1/4$) to the Schwarzschild exterior, each point in the diagram a 2-sphere of radius $r$. "
@@ -24295,6 +25905,40 @@ CAPTIONS = {
         "The big bang is the segment along the bottom, and the two upper edges are future null infinity, one far "
         "down the horn, where the tori are large, and one far up it, where they are small. A ray reaches either "
         "only at an infinite value of its affine parameter.",
+    ],
+    ("tilted_universes", "farnsworth"): [
+        "The plane of $\\eta$ and $r$ of Farnsworth's dust at $y = z = 0$, each point in the diagram a plane of $y$ "
+        "and $z$. A ray keeps $r - \\int Y\\,d\\eta/(C + X)$ or $r - \\int Y\\,d\\eta/(C - X)$, with "
+        "$Y = W\\sinh^2(\\eta/2)$, and the second integrand has a pole on the horizon, so $p$ and $q$ are the "
+        "arctangents of exponentials of the two, as Kruskal's coordinates are of Schwarzschild's.",
+        "The dust leaves the timelike singularity $X = 0$ on the right, crosses the Cauchy horizon into the "
+        "homogeneous universe above it, and ends at $i^+$. The lower left edge is the whimper: a ray along the "
+        "horizon reaches it at a finite affine distance into the past, with the density and the Kretschmann "
+        "scalar finite all the way. Ellis and King drew this shape for a universe that begins with both a "
+        "whimper and a bang [ellis1974].",
+    ],
+    ("tilted_universes", "homogeneous"): [
+        "The same plane ruled by the time $u$ of the surfaces of homogeneity, each point in the diagram a plane "
+        "of $y$ and $z$. Under the horizon the surfaces of constant $u$ are timelike and run from the lower "
+        "corner to the right corner, and above it they are spacelike and cross the whole universe from left to "
+        "right.",
+        "The universe above the horizon is spatially homogeneous, and the region under it is stationary: the "
+        "motion along a surface of constant $u$ is a motion in time there. Each world line of the dust spends "
+        "the time $0.70\\,W/c$ under the horizon.",
+    ],
+    ("tilted_universes", "flat_model"): [
+        "The plane of $u$ and $r$ of the flat model at $y = z = 0$, a part of Minkowski's diamond, with "
+        "$p = \\arctan((u - C)e^r/C)$ and $q = \\arctan((u + C)e^{-r}/C)$. The matter leaves the hyperbola $u = 0$ "
+        "on the right, crosses the Cauchy horizon, and fills the inside of the future light cone of the origin, "
+        "where the surfaces of constant $u$ are spacelike.",
+        "The lower left edge is the null line $x = -cT$ of the inertial coordinates, which the lines of the "
+        "matter approach as $r \\to \\infty$. Space is flat there, and only the matter ends on it: a ray along "
+        "the horizon, followed into the past, crosses every line of the matter before it reaches the origin.",
+    ],
+    ("tilted_universes", "inertial"): [
+        "The same part of Minkowski's diamond ruled by the inertial coordinates $T$ and $x$ at $\\xi = \\zeta = 0$, with "
+        "$p, q = \\arctan((cT \\mp x)/C)$. The right edge is the hyperbola $x^2 - c^2T^2 = C^2$ and the lower left "
+        "edge the null line $x = -cT$.",
     ],
     ("melvin", "cylindrical"): [
         "The half plane of $t$ and $\\rho$ of Melvin's universe at fixed $\\phi$ and $z$, totally geodesic. The metric "

@@ -138,6 +138,11 @@
       "id": "gravitational_instantons",
       "kind": "family",
       "text": "De Sitter space in imaginary time is a 4-sphere, the simplest compact gravitational instanton. The complex projective plane and Page's space are two more with a positive cosmological constant [gibbonshawking1979, page2009]."
+    },
+    {
+      "id": "self_creating_universe",
+      "kind": "locally_same",
+      "text": "De Sitter space with each event identified with its images under a boost. J. Richard Gott and Li-Xin Li proposed it in 1998 as a universe whose earliest stretch of time is a loop [gott1998]."
     }
   ],
   "references": [
@@ -182,7 +187,8 @@
     "parikh2003",
     "ruban1969",
     "gibbonshawking1979",
-    "page2009"
+    "page2009",
+    "gott1998"
   ],
   "coordinates": [
     {

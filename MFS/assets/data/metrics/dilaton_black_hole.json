@@ -79,6 +79,16 @@
       "id": "brans_dicke_sphere",
       "kind": "family",
       "text": "The dilaton's ancestor. Brans and Dicke put a scalar field beside the metric in 1961, and the gravity of bosonic string theory at low energy is their theory with $\\omega = -1$ [bransdicke1961, faraoni2016]."
+    },
+    {
+      "id": "string_bh_three_four_charges",
+      "kind": "generalisation",
+      "text": "The dilaton black hole is two equal charges out of four. With all four present the extreme hole has a horizon with an area [cvetic1996static, cvetic1996dyonic]."
+    },
+    {
+      "id": "three_brane_throat",
+      "kind": "family",
+      "text": "The three-brane of ten dimensions has a horizon with no singularity behind it. Gibbons, Horowitz, and Townsend found it by the analysis that turns the singularity of some extreme dilaton black holes into a horizon in more dimensions [gibbons1995]."
     }
   ],
   "references": [
@@ -101,7 +111,10 @@
     "duff1994",
     "horowitz2012",
     "bransdicke1961",
-    "faraoni2016"
+    "faraoni2016",
+    "cvetic1996static",
+    "cvetic1996dyonic",
+    "gibbons1995"
   ],
   "coordinates": [
     {

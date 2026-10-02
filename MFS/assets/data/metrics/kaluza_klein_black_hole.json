@@ -70,6 +70,11 @@
       "id": "aichelburg_sexl",
       "kind": "family",
       "text": "The electric hole at the speed of light, $r_s = 0$ with $q$ held fixed, is a plane fronted wave in five dimensions with the profile $q/r$, the counterpart there of Aichelburg and Sexl's shock [horowitz2012]."
+    },
+    {
+      "id": "string_bh_three_four_charges",
+      "kind": "generalisation",
+      "text": "The Einstein metric of the Kaluza-Klein black hole is one charge out of four. String theory's hole of four dimensions has a harmonic function for each [cvetic1996static]."
     }
   ],
   "references": [
@@ -87,7 +92,8 @@
     "larsen2000",
     "emparan2006",
     "hovdebo2006",
-    "gibbons1988"
+    "gibbons1988",
+    "cvetic1996static"
   ],
   "coordinates": [
     {

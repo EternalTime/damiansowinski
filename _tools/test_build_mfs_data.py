@@ -115,7 +115,8 @@ CAPTION_VOICE = (
 )
 # A hyphen joins two names, a name and a word, or a designation; beyond those it is part of a
 # spelling only in these terms, and an ordinary compound is rewritten without it.
-HYPHENATED_TERMS = {"anti-de", "anti-trapped", "plane-fronted", "pp-wave", "pp-waves", "scalar-tensor"}
+HYPHENATED_TERMS = {"anti-de", "anti-trapped", "plane-fronted", "pp-wave", "pp-waves", "scalar-tensor",
+                    "three-brane", "three-branes"}
 
 # The templates and pages whose words reach a reader, beside the generated files, and the
 # data the site hands to agents.
@@ -3257,7 +3258,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         particles. Lentz's class has flat slices for every potential and no soliton that can be
         computed, so it has no embedding diagram."""
         RELIEF = 0.05
-        flat = {"minkowski", "kasner", "kasner_scalar", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres", "light_beam",
+        flat = {"minkowski", "kasner", "kasner_scalar", "kasner_magnetic", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres", "light_beam",
                 "chandrasekhar_xanthopoulos", "belinski_zakharov"}
         # The domain wall's moment ct = 0, when the wall stops, is the flat disc of radius 1/k taken
         # twice and joined at its rim; the moments either side of it are the cones it opens into.
@@ -3274,7 +3275,11 @@ class EmbeddingDiagrams(unittest.TestCase):
                         *(("kopczynski_trautman", "universe", k) for k in range(5)),
                         # Space is flat in Einstein's static field of 1912, so the equator outside a body is a
                         # plane, drawn under Flamm's paraboloid of the same mass.
-                        ("einstein_1912_static", "equator", 0)}
+                        ("einstein_1912_static", "equator", 0),
+                        # The laboratory's moment of the draining bathtub is the plane the water moves in; the
+                        # curvature sound feels is in how the moments are stacked, and the catenoid beside it is
+                        # the Kerr-like chart's moment.
+                        ("draining_bathtub", "plane", 0)}
         self.assertNotIn("lentz", self.embedding)
         self.assertNotIn("embedding", next(m for m in read(build.INDEX_FILE) if m["id"] == "lentz"))
         for name, data in self.embedding.items():
@@ -3385,7 +3390,7 @@ class EmbeddingDiagrams(unittest.TestCase):
                 self.assertEqual("height" in view, grids, f"{name} {view['id']}")
         self.assertEqual({name for name, data in self.embedding.items()
                           if any("height" in view for view in data["views"])},
-                         {"alcubierre", "krasnikov", "natario", "kasner", "kasner_scalar", "bianchi", "pp_wave",
+                         {"alcubierre", "krasnikov", "natario", "kasner", "kasner_scalar", "kasner_magnetic", "bianchi", "pp_wave",
                           "aichelburg_sexl", "khan_penrose",
                           "bell_szekeres", "light_beam", "tippett_tsang", "chandrasekhar_xanthopoulos",
                           "belinski_zakharov", "moving_mirror"})
@@ -3604,7 +3609,7 @@ class StacksAndMovies(unittest.TestCase):
     diagrams that change through a run of moments played as movies, as the captain asked on 30
     September 2026, from the numbers written and nothing else."""
 
-    STACKS = {"kasner": 1.5, "kasner_scalar": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
+    STACKS = {"kasner": 1.5, "kasner_scalar": 1.5, "kasner_magnetic": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
               "bell_szekeres": 3.0, "light_beam": 0.4, "chandrasekhar_xanthopoulos": 3.0, "belinski_zakharov": 2.0}   # the height of a unit of time
     # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
@@ -3631,12 +3636,13 @@ class StacksAndMovies(unittest.TestCase):
               ("misner_brill_lindquist", "through"): "$a$", ("misner_brill_lindquist", "between"): "$a$",
               ("brill_waves", "strong"): "$a$",
               ("tolman_bondi", "cloud"): "$ct$", ("szekeres", "equators"): "$ct$", ("misner", "cylinders"): "$ct$",
+              ("self_creating_universe", "cylinders"): "$c\\tau$",
               ("photon_rocket", "burn"): "$cu + r$", ("hayward", "history"): "$v - r$",
               ("mass_inflation", "tail"): "$v - r$",
               ("hiscock", "history"): "$v - r$",
               ("gott_time_machine", "cylinders"): "$c\\tau$", ("kantowski_sachs", "vacuum"): "$c\\tau$",
               ("ori_time_machine", "throat"): "$t$", ("senovilla", "universe"): "$act$",
-              ("kasner", "ring"): "$t$", ("kasner_scalar", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
+              ("kasner", "ring"): "$t$", ("kasner_scalar", "ring"): "$t$", ("kasner_magnetic", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
               ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$",
               ("bell_szekeres", "ring"): "$\\xi$", ("chandrasekhar_xanthopoulos", "ring"): "$\\psi$",
               ("belinski_zakharov", "ring"): "$\\tau$",
@@ -4206,11 +4212,11 @@ class TurningLightConeFigures(unittest.TestCase):
         checked = {f"{v['metric']}/{v['view']}" for v in turn_check(self)["figures"]}
         self.assertEqual(checked, set(self.figures))
         self.assertEqual(checked, {"alcubierre/bubble", "godel/tipping", "gott_time_machine/loop", "kerr/dragging", "kerr_de_sitter/dragging",
-                                   "kerr_newman/dragging", "kerr_taub_nut/dragging", "kundt_waves/fronts",
+                                   "kerr_newman/dragging", "kerr_taub_nut/dragging", "kerr_melvin/dragging", "kundt_waves/fronts",
                                    "near_horizon_extreme_kerr/dragging", "point_particle_2plus1/wedge",
                                    "som_raychaudhuri/tipping", "spinning_string/tipping", "stockum_dust/tipping",
-                                   "bonnor_rotating_dust/tipping", "tippett_tsang/ring",
-                                   "wormhole_time_machine/trip", "petrov_homogeneous/turning"})
+                                   "bonnor_rotating_dust/tipping", "maitra_dust/tipping", "tippett_tsang/ring",
+                                   "wormhole_time_machine/trip", "petrov_homogeneous/turning", "draining_bathtub/swirl"})
 
     def test_at_its_own_camera_the_page_draws_the_published_figure(self):
         # Every point the generator does not thin is the published point to the published
@@ -4281,8 +4287,9 @@ class TurningLightConeFigures(unittest.TestCase):
         # in its surface X = 0 seen from the side, V left out.
         still = {f"{name}/{figure['id']}" for name, data in diagram_files().items()
                  for figures in data.get("projections", {}).values() for figure in figures if "turn" not in figure}
+        # Ernst and Wild's ergoregion is its meridional plane seen from the side, t and phi left out.
         self.assertEqual(still, {"cosmic_string/beam", "light_beam/lens", "lifshitz_spacetime/rays",
-                                 "point_particle_2plus1/beam", "schrodinger_spacetime/trap"})
+                                 "point_particle_2plus1/beam", "schrodinger_spacetime/trap", "kerr_melvin/tube"})
 
 
 class TurningUnderTheHand(unittest.TestCase):
@@ -4880,11 +4887,22 @@ class Slices(unittest.TestCase):
               "kundt_waves/simplest_wave/front", "kundt_waves/simplest_wave/depth", "kundt_waves/kerr_schild/fronts",
               # A closed hyperbolic universe about one observer; the moments embedded are the torus's and the horn's.
               "small_universes/hyperbolic/radial",
+              # Rosen's chart draws the axisymmetric universe, exponents (0, 0, 1); the ring embedded is
+              # of the universe that starts at (-2/7, 3/7, 6/7).
+              "kasner_magnetic/rosen/etax", "kasner_magnetic/rosen/etaz",
               # Hiscock's simplest model, a hole made and removed by two shells, another spacetime than the one embedded.
               "hiscock/ingoing/shells",
+              # The flat model of the whimper, another spacetime than Farnsworth's dust, whose surface of
+              # homogeneity is embedded.
+              "tilted_universes/flat_model/model", "tilted_universes/inertial/model",
+              "conformal tilted_universes/flat_model", "conformal tilted_universes/inertial",
               # Up to the shock the spheres through Hotta and Tanaka's ring meet the equatorial plane of the
               # conformally flat chart only as eta goes to minus infinity, and lie on the edge of the Kundt chart.
               "hotta_tanaka/conformally_flat/equator", "hotta_tanaka/kundt/equator", "hotta_tanaka/kundt/near",
+              # The spring and the vortex filament of four dimensions, other spacetimes than the drain in the
+              # plane whose moments are embedded.
+              "draining_bathtub/laboratory/spring", "draining_bathtub/vortex_filament/drain",
+              "conformal draining_bathtub/spring",
               "btz/stationary/rotating", "btz/eddington_finkelstein_ingoing/rotating",
               "btz/eddington_finkelstein_outgoing/rotating", "conformal btz/rotating",
               # Myers and Perry's plane of rotation in six dimensions, which the embedded transverse plane
@@ -4923,6 +4941,8 @@ class Slices(unittest.TestCase):
               "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "som_raychaudhuri/cylindrical/beyond",
               "conformal frw/flat", "conformal frw/open",
               "misner/rindler/plane", "conformal misner/rindler",
+              # Gott and Li's region of closed timelike curves, which no moment of the inflating region meets.
+              "self_creating_universe/static/through", "conformal self_creating_universe/static",
               # Gott's region of closed timelike curves, which no moment of Grant's Milne time meets,
               # and the centre of momentum chart about the strings.
               "gott_time_machine/grant_rindler/plane", "conformal gott_time_machine/grant_rindler",
@@ -4981,6 +5001,9 @@ class Slices(unittest.TestCase):
               *[f"kerr_taub_nut/{s}/axis" for s in ("one_string", "kerr_ingoing", "kerr_outgoing")],
               *[f"conformal kerr_taub_nut/{v}" for v in ("axis", "ingoing", "outgoing")],
               "kerr_taub_nut/plebanski/principal",
+              # Ernst and Wild's hole in the stronger field of the figure of its ergoregion, another member
+              # of the family than the hole whose equator is embedded.
+              "kerr_melvin/boyer_lindquist/tube",
               *[f"zipoy_voorhees/{s}/axis_{k}" for s in ("spherical", "prolate_spheroidal") for k in ("oblate", "prolate")],
               *[f"conformal zipoy_voorhees/{s}_axis_{k}" for s in ("spherical", "prolate_spheroidal")
                 for k in ("oblate", "prolate")],
@@ -5072,6 +5095,9 @@ class Slices(unittest.TestCase):
     # one line element: the static and Eddington-Finkelstein drawings are the black hole's, and the
     # Barriola-Vilenkin drawings the monopole's.
     HIDDEN_VIEWS = {"conformal cosmic_string/gott": {"unroll"},
+                    # The bathtub's figure carries the laboratory's moment as its floor; the Kerr-like chart's
+                    # T = 0 is a curved surface of the figure, t = ln(r^2 - 1)/2, which would stand among the cones.
+                    "draining_bathtub/laboratory/swirl": {"funnel"},
                     # Nordstrom's point mass and his universe of dust are two spacetimes of one theory,
                     # each drawing marking the moments of its own.
                     "nordstrom_scalar/spherical/radial": {"dust"}, "conformal nordstrom_scalar/spherical": {"dust"},
@@ -5085,6 +5111,12 @@ class Slices(unittest.TestCase):
                     # Cremmer and Scherk's sphere is embedded at the event x = a, off the plane x = 0 of the
                     # time and phi.
                     "cremmer_scherk/cartesian/circle": {"sphere"},
+                    # The three-brane and its throat alone are two spacetimes, the second the limit of the
+                    # first, and each chart's drawings mark the surface of its own.
+                    **{f"{place}three_brane_throat/{chart}{view}": {other}
+                       for other, charts in (("throat", ("isotropic", "areal", "horizon")),
+                                             ("brane", ("throat", "throat_proper")))
+                       for chart in charts for place, view in (("", "/radial"), ("conformal ", ""))},
                     # The flat plane times a sphere and the anti-Nariai universe are two spacetimes, and
                     # each chart's drawings mark the surfaces of its own.
                     **{where: {"hyperbolic_plane"} for where in (
@@ -5283,6 +5315,14 @@ class Slices(unittest.TestCase):
                        for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
                     **{f"conformal erez_rosen/{s}_equator_{k}": {o} for s in ("spherical", "prolate_spheroidal")
                        for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
+                    # The black hole in a tidal field is drawn oblate and prolate, two spacetimes of one line
+                    # element: each drawing marks the horizon of its own shape, and an equatorial drawing the
+                    # equatorial plane of its own shape as well, which does not meet the axis.
+                    **{f"{place}distorted_schwarzschild/{s}{join}{plane}_{k}":
+                       {o, f"horizon_{o}"} | ({k} if plane == "axis" else set())
+                       for place, join in (("", "/"), ("conformal ", "_"))
+                       for s in ("prolate_spheroidal", "spherical", "weyl") for plane in ("axis", "equator")
+                       for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
                     # Bonnor's two spheres, Lemos and Weinberg's cloud and the spheroid are four stars of one
                     # line element, each chart's drawings marking its own; the exterior is drawn with the sphere
                     # of 1975, and the spheroid's equatorial plane meets its axis inside the spheroid alone.
@@ -5294,6 +5334,13 @@ class Slices(unittest.TestCase):
                        for chart in charts
                        for place, s in [("conformal ", chart)] + [("", f"{chart}/{v}") for v in (
                            "radial", "through", "tx", "axis")]},
+                    # The five charts of the black holes of string theory are drawn at parameters of their
+                    # own, three and four charges, extreme and not, and the three charges equal: five
+                    # spacetimes of one family, each chart's drawings marking its own moment.
+                    **{f"{place}string_bh_three_four_charges/{chart}{view}":
+                       {"five_charges", "five_extreme", "five_areal", "four_charges", "four_extreme"} - {chart}
+                       for chart in ("five_charges", "five_extreme", "five_areal", "four_charges", "four_extreme")
+                       for place, view in (("conformal ", ""), ("", "/radial"))},
                     "majumdar_papapetrou/cartesian/tz": {"one_hole"},
                     "majumdar_papapetrou/cartesian/tx": {"one_hole"},
                     "majumdar_papapetrou/cylindrical/radial": {"one_hole"},
@@ -5410,6 +5457,12 @@ class Slices(unittest.TestCase):
         """The moment on a flat view as its drawn axes put it: Y as a function of X, and the
         ends a line of it may have short of the box."""
         t = surface.get("time")
+        if key.startswith("draining_bathtub/"):
+            # The laboratory's t = 0 and the Kerr-like chart's T = 0, with T = t - ln(r^2 - 1)/2 for the
+            # drain at |A| = c = 1: each a level line in its own chart and a curve in the other's.
+            own = (mark["view"] == "plane") == (key.split("/")[1] == "laboratory")
+            sign = 1 if mark["view"] == "funnel" else -1
+            return (lambda X: 0.0 if own else sign * 0.5 * math.log(X * X - 1)), list(self.reach(surface))
         if key == "morgan_morgan/oblate_spheroidal/plane":
             # The plane z = 0 outside the rim, embedded out to Weyl's rho: xi = sqrt(rho^2/a^2 - 1).
             return (lambda X: 0.0), [math.sqrt(self.reach(surface)[1] ** 2 - 1)]
@@ -5457,6 +5510,10 @@ class Slices(unittest.TestCase):
             # time across every cell, at the conformal time 2 (3t/2)^(1/3) on the conformal chart.
             height = 2 * (1.5 * t) ** (1 / 3) if key.split("/")[1] == "torus_conformal" else t
             return (lambda X: height), None
+        if key.startswith("tilted_universes/"):
+            # Farnsworth's dust is embedded on its surface eta = 3, which is u = (sinh 3 - 3)/2 W, from its rim up.
+            height = 3.0 if key.split("/")[1] == "farnsworth" else (math.sinh(3.0) - 3.0) / 2
+            return (lambda X: height), list(self.reach(surface))
         if key == "small_universes/horn/along":
             # The horn is embedded at the moment a = a_0, ct = (6/5 - (11/50) ln 11) a_0, from its rim up.
             return (lambda X: 1.2 - 0.22 * math.log(11)), list(self.reach(surface))
@@ -5492,6 +5549,18 @@ class Slices(unittest.TestCase):
             # The fronts of one retarded time differ only in size, so a moment is the whole
             # outgoing ray u = u_k, drawn against r and cu + r, from r = 0 to the box.
             return (lambda X: t + X), [0.0]
+        if key.startswith("distorted_schwarzschild/"):
+            # The black hole in a tidal field at m = 1: the horizon's bifurcation surface is the point t = 0
+            # of every plane at x = 1, r = 2m, z = m on Weyl's axis and rho = 0 in his equatorial plane, and
+            # the equatorial plane's t = 0 runs over the r the embedding reaches, with x = r/m - 1 and
+            # rho = m sqrt(x^2 - 1).
+            _, system, plane = key.split("/")
+            if not mark["lines"]:
+                return (lambda X: 0.0), [{"prolate_spheroidal": 1.0, "spherical": 2.0,
+                                          "weyl": 1.0 if plane.startswith("axis") else 0.0}[system]]
+            to = {"prolate_spheroidal": lambda r: r - 1, "spherical": lambda r: r,
+                  "weyl": lambda r: math.sqrt(max((r - 1) ** 2 - 1, 0.0))}[system]
+            return (lambda X: 0.0), [to(r) for r in self.reach(surface)]
         if key.startswith("string_black_hole/") and not mark["lines"]:
             # The horizon's bifurcation sphere, the point t = 0, r = r_s of the static planes.
             return (lambda X: 0.0), [1.0]
@@ -5974,6 +6043,15 @@ class Slices(unittest.TestCase):
             return (lambda X: math.sin(t) if chart == "prolate" else t), [0.0]
         if key in ("misner/milne/plane", "gott_time_machine/grant_milne/plane"):
             return (lambda X: t), None
+        if key.startswith("self_creating_universe/"):
+            # Gott and Li's moment c tau = t of the Kantowski-Sachs chart at r_0 = 1: level on its own plane,
+            # x = cosh(t) exp(-tau) on the steady state plane, and rho = -eta cosh(t) on the conformal one.
+            chart = key.split("/")[1]
+            if chart == "steady_state":
+                return (lambda X: math.log(math.cosh(t) / X)), None
+            if chart == "conformal":
+                return (lambda X: -X / math.cosh(t)), None
+            return (lambda X: t), None
         if key.startswith("ori_time_machine/"):
             # Ori's moment t is level on every cylinder of the time and z: at T = t on the central circle
             # in both charts, where the charts agree, at the foliation's own t at x = 4, and there at
@@ -5984,6 +6062,7 @@ class Slices(unittest.TestCase):
                 return (lambda X: -math.sqrt(X * X - 2 * t)), None
             return (lambda X: t - 1.5 if key.endswith("/vacuum_core/off_centre") else t), None
         if key.startswith(("godel/cylindrical", "stockum_dust/cylindrical", "som_raychaudhuri/cylindrical",
+                           "maitra_dust/cylindrical",
                            "bonnor_rotating_dust/cylindrical/outside",
                            "minkowski/rindler")):
             return (lambda X: 0.0), None
@@ -6280,6 +6359,26 @@ class Slices(unittest.TestCase):
         if key == "bonnor_charged_dust/exterior_areal/radial":
             # The areal radius is the isotropic radius the embedding reads plus m, at m = 1.
             return (lambda X: 0.0), [x + 1 for x in self.reach(surface, "exterior")]
+        if key == "btz_multi_holes_wormholes/stereographic/fold":
+            # The moment of time symmetry is U = 0, the hyperbola c tau = -sqrt(4 + x^2) at l = 1, out to
+            # x = 4 rho/(1 - rho^2) at the embedding's reach in rho.
+            hi = self.reach(surface)[1]
+            return (lambda X: -math.sqrt(4 + X * X)), [4 * hi / (1 - hi * hi)]
+        if key == "btz_multi_holes_wormholes/exterior/radial":
+            # t = 0 from the wormhole's horizon r_+ = 2 arccosh(2)/pi to the edge of the sheet on phi = 0.
+            hi = self.reach(surface)[1]
+            horizon = 2 * math.acosh(2) / math.pi
+            return (lambda X: 0.0), [horizon, horizon * (1 + hi * hi) / (1 - hi * hi)]
+        if key in ("three_brane_throat/areal/radial", "three_brane_throat/horizon/radial"):
+            # The embedding reads the isotropic radius rho at L = 1: the areal radius is (rho^4 + 1)^(1/4)
+            # and Gibbons, Horowitz and Townsend's w is rho over it.
+            areal = [(x ** 4 + 1) ** 0.25 for x in self.reach(surface, "isotropic")]
+            if "/areal/" in key:
+                return (lambda X: 0.0), areal
+            return (lambda X: 0.0), [x / r for x, r in zip(self.reach(surface, "isotropic"), areal)]
+        if key == "three_brane_throat/throat/radial":
+            # The throat's cylinder is read in the proper distance sigma, and r = L e^(sigma/L).
+            return (lambda X: 0.0), [math.exp(x) for x in self.reach(surface, "throat_proper")]
         if key == "anti_de_sitter/poincare/tx":
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))
@@ -6455,6 +6554,21 @@ class Slices(unittest.TestCase):
                         eta = bisect(lambda e: e - math.sin(e) - t, 0, 2 * math.pi)
                         self.assertTrue(all(abs(T - eta) < 2e-4 for _, T in points), where)
                         self.assertEqual(sorted(X for X, _ in points), [0, round(math.pi, 4)], where)
+                    elif metric_id == "draining_bathtub":
+                        # Kruskal's U = tan p and V = tan q with UV = (1 - r) e^(2r)/(1 + r) and V = e^v,
+                        # v = t + r - ln(1 + r): the Kerr-like chart's T = 0 is the level line, and the
+                        # laboratory's t = 0 is carried back through r.
+                        for X, T in points:
+                            if mark["view"] == "funnel":
+                                self.assertLess(abs(T), 2e-4, where)
+                                continue
+                            tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            # Beside the drain UV = 1 - 2r^3/3, so four decimals of a point no longer fix r.
+                            if not (1e-3 < tq < 1e3 and abs(tp) < 1e3 and tp * tq < 0.9):
+                                continue
+                            f = lambda r: (1 - r) * math.exp(2 * r) / (1 + r) - tp * tq
+                            r = bisect(f, 0, 20)
+                            self.assertLess(abs(math.log(tq) - r + math.log(1 + r)), 5e-3, f"{where} at {(X, T)}")
                     elif metric_id in ("malament_hogarth", "einstein_rosen_waves", "gowdy", "senovilla"):
                         lo, hi = self.reach(surface)
                         for X, T in points:
@@ -6491,6 +6605,14 @@ class Slices(unittest.TestCase):
                         for X, T in points:
                             tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
                             self.assertLess(abs(tp * tq - t * t), 2e-4 * (1 + tp * tp + tq * tq), where)
+                    elif metric_id == "self_creating_universe":
+                        # On de Sitter's square V = tan T and W = cos(X)/cos T at r_0 = 1, and the moment
+                        # c tau = t of the Kantowski-Sachs chart is V^2 - W^2 = sinh^2(t), every copy.
+                        for X, T in points:
+                            if abs(math.cos(T)) < 1e-3:
+                                continue
+                            V, W = math.tan(T), math.cos(X) / math.cos(T)
+                            self.assertLess(abs(V * V - W * W - math.sinh(t) ** 2), 2e-3 * (1 + V * V + W * W), where)
                     elif metric_id == "ori_time_machine":
                         # The hyperbola of the covering plane on which T = t, every copy: its null
                         # coordinates -2 e^(-z/2) and 2T e^(z/2) multiply to -4t.
@@ -6908,6 +7030,15 @@ class Slices(unittest.TestCase):
                         self.assertTrue(all(X >= -1e-9 for X, _ in points), where)
                         v_end = 4 + 4 * math.tan(qs[-1])
                         self.assertLess(abs((v_end - t) - 6), 2e-2 * (1 + v_end * v_end / 16), where)
+                    elif metric_id == "tilted_universes":
+                        # tan p = V and tan q = U are k e^(r/a) and k' e^(-r/a) on a surface of constant eta, so
+                        # their product is one number along the slice, positive above the horizon, and the
+                        # slice runs from the rim toward the whimper, q falling.
+                        products = [math.tan((T - X) / 2) * math.tan((T + X) / 2) for X, T in points]
+                        self.assertGreater(min(products), 0, where)
+                        self.assertLess(max(products) - min(products), 2e-2 * max(products), where)
+                        qs = [(T + X) / 2 for X, T in points]
+                        self.assertTrue(all(b < a for a, b in zip(qs, qs[1:])), where)
                     else:
                         self.assertTrue(all(abs(T) < 2e-4 for _, T in points), where)
 

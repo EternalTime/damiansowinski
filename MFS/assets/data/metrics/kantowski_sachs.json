@@ -60,6 +60,11 @@
       "id": "datt_ruban_t_models",
       "kind": "generalisation",
       "text": "Kantowski and Sachs's dust universe with the stretch along its axis free to differ from shell to shell, found by B. Datt in 1938 and again by Vladimir Ruban in 1968 [datt1938, ruban1968]."
+    },
+    {
+      "id": "self_creating_universe",
+      "kind": "special_case",
+      "text": "The inflating region of Gott and Li's universe, de Sitter space identified under a boost, with $a = \\sinh(ct/r_0)$ and $b = r_0\\cosh(ct/r_0)$ for the de Sitter radius $r_0$ [gott1998]."
     }
   ],
   "references": [
@@ -81,7 +86,8 @@
     "obregon1998",
     "bronnikov2022",
     "novikov1965",
-    "ruban1968"
+    "ruban1968",
+    "gott1998"
   ],
   "coordinates": [
     {

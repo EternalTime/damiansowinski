@@ -12,10 +12,13 @@ schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
 israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist, lewis, erez_rosen,
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
-born_infeld_charge, penrose_impulsive_wave, exponential_metric, bondi_sachs, petrov_homogeneous, rp3_geon,
-kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kasner_scalar, moving_mirror,
-gravitational_instantons, small_universes, misner_zapolsky, cremmer_scherk, brans_dicke_sphere and
-bonnor_charged_dust, and Godel's cylindrical chart.
+born_infeld_charge, penrose_impulsive_wave, exponential_metric, bondi_sachs, petrov_homogeneous,
+rp3_geon, kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kasner_scalar,
+moving_mirror, gravitational_instantons, small_universes, misner_zapolsky, distorted_schwarzschild,
+cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_bodies,
+tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
+string_bh_three_four_charges, btz_multi_holes_wormholes and three_brane_throat, and Godel's
+cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -37,7 +40,9 @@ majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photo
 witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, mass_inflation.md,
 kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_star.md,
 misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, petrov_homogeneous.md,
-brill_waves.md, gravitational_instantons.md and brans_dicke_sphere.md beside this file.
+brill_waves.md, gravitational_instantons.md, brans_dicke_sphere.md, tilted_universes.md, bowers_liang.md
+and kerr_melvin.md beside this file.
+btz_multi_holes_wormholes.md beside this file records the charts of the many black holes of three dimensions.
 """
 import argparse
 import fcntl
@@ -1372,6 +1377,152 @@ def elliptic_de_sitter_check(chart, system):
     else:
         if sp.simplify((X[0] + X[4] - ell * sp.exp(chart.symbols[0] / ell)).rewrite(sp.exp)) != 0:
             raise AssertionError("elliptic_de_sitter: the planar chart is not X_0 + X_4 = l exp(ct/l)")
+
+
+# -- Gott and Li's self-creating universe ------------------------------------------------
+
+SCU_CHARTS = ("static", "kantowski_sachs", "steady_state", "conformal")
+# The image of an event under the boost of rapidity beta/r_0 in the plane of V and W, as the
+# substitution of each chart's coordinates in order, a time coordinate standing for x^0 = ct.
+SCU_BOOST = {
+    "static": lambda r0, beta, t, r, theta, phi: (t + beta, r, theta, phi),
+    "kantowski_sachs": lambda r0, beta, tau, l, theta, phi: (tau, l + beta, theta, phi),
+    "steady_state": lambda r0, beta, tau, x, y, z: (tau + beta, *(sp.exp(-beta / r0) * q for q in (x, y, z))),
+    "conformal": lambda r0, beta, eta, rho, theta, phi: (sp.exp(-beta / r0) * eta, sp.exp(-beta / r0) * rho,
+                                                           theta, phi),
+}
+
+
+def scu_embedding(system, coords, r0):
+    """(V, W, X, Y, Z) of Gott and Li's hyperboloid W^2 + X^2 + Y^2 + Z^2 - V^2 = r_0^2, their
+    equation (61), at the chart's coordinates: their (63) in the static chart, (73) in region F,
+    and (74) solved for the steady-state chart, with eta = -r_0 exp(-c tau/r_0) of (76) in the
+    conformal one."""
+    a, b, c, d = coords
+    if system == "steady_state":
+        rho2, e = b ** 2 + c ** 2 + d ** 2, sp.exp(a / r0)
+        return [r0 * sp.sinh(a / r0) + e * rho2 / (2 * r0), r0 * sp.cosh(a / r0) - e * rho2 / (2 * r0),
+                e * b, e * c, e * d]
+    n = [sp.sin(c) * sp.cos(d), sp.sin(c) * sp.sin(d), sp.cos(c)]
+    if system == "static":
+        s = sp.sqrt(r0 ** 2 - b ** 2)
+        V, W, R = s * sp.sinh(a / r0), s * sp.cosh(a / r0), b
+    elif system == "kantowski_sachs":
+        V, W, R = r0 * sp.sinh(a / r0) * sp.cosh(b / r0), r0 * sp.sinh(a / r0) * sp.sinh(b / r0), r0 * sp.cosh(a / r0)
+    else:
+        V, W, R = (a ** 2 - b ** 2 - r0 ** 2) / (2 * a), (b ** 2 - a ** 2 - r0 ** 2) / (2 * a), -r0 * b / a
+    return [V, W, R * n[0], R * n[1], R * n[2]]
+
+
+def self_creating_universe(system):
+    """Gott and Li's multiply connected de Sitter space, Phys. Rev. D 58, 023501 (1998), section IX:
+    the hyperboloid of their (61) with each event identified with its images under a boost in the
+    plane of V and W. Four charts, each theirs: the static chart (64) of region R, where the boost
+    shifts t by beta and every line of constant r is a closed timelike curve; the Kantowski-Sachs
+    chart (72) of region F, where it shifts l; the steady-state chart (75), which covers R, F and the
+    Cauchy horizon between them, and where the boost shifts tau and shrinks x, y and z; and the
+    conformally flat chart (77), where it is a dilation. self_creating_universe_check holds each to
+    the hyperboloid pulled back, to R_mu_nu = (3/r_0^2) g_mu_nu and no Weyl tensor, and its stated
+    identification to that boost. self_creating_universe.md records each chart's source."""
+    sphere, angles = EDS_SPHERE, EDS_ANGLES
+    shrink = "e^{-\\beta/r_0}"
+    glue = "\\;\\text{(the boost)}"
+    charts = {
+        "static": {
+            "name": "Static", "coords": ["t", "r", "\\theta", "\\phi"],
+            "domains": ["t \\in [0, \\beta/c)", "r \\in [0, r_0)"] + angles
+                       + ["r = r_0 \\;\\text{(Cauchy horizon)}"],
+            "line": lambda c: (f"ds^2 = -\\left(1 - \\dfrac{{r^2}}{{r_0^2}}\\right){c + '^2' if c else ''}dt^2 + "
+                               f"\\dfrac{{dr^2}}{{1 - \\dfrac{{r^2}}{{r_0^2}}}} + r^2{sphere}")},
+        "kantowski_sachs": {
+            "name": "Kantowski-Sachs", "coords": ["\\tau", "l", "\\theta", "\\phi"],
+            "domains": ["\\tau \\in (0, \\infty)", "l \\in [0, \\beta)"] + angles
+                       + ["\\tau = 0 \\;\\text{(Cauchy horizon)}"],
+            "line": lambda c: (f"ds^2 = -{c + '^2' if c else ''}d\\tau^2 + \\sinh^2({c}\\tau/r_0)\\,dl^2 + "
+                               f"r_0^2\\cosh^2({c}\\tau/r_0){sphere}")},
+        "steady_state": {
+            "name": "Steady state", "coords": ["\\tau", "x", "y", "z"],
+            "domains": ["\\tau \\in [0, \\beta/c)", "x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)",
+                        "z \\in (-\\infty, \\infty)",
+                        f"(\\tau, x, y, z) \\sim (\\tau + \\beta/c, {shrink}x, {shrink}y, {shrink}z)" + glue,
+                        "x^2 + y^2 + z^2 = r_0^2e^{-2c\\tau/r_0} \\;\\text{(Cauchy horizon)}"],
+            "line": lambda c: (f"ds^2 = -{c + '^2' if c else ''}d\\tau^2 + e^{{2{c}\\tau/r_0}}"
+                               "\\left(dx^2 + dy^2 + dz^2\\right)")},
+        "conformal": {
+            "name": "Conformal", "coords": ["\\eta", "\\rho", "\\theta", "\\phi"],
+            "domains": [f"\\eta \\in [-r_0, -r_0{shrink})", "\\rho \\in [0, \\infty)"] + angles
+                       + [f"(\\eta, \\rho, \\theta, \\phi) \\sim ({shrink}\\eta, {shrink}\\rho, \\theta, \\phi)" + glue,
+                          "\\rho = -\\eta \\;\\text{(Cauchy horizon)}"],
+            "line": lambda c: (f"ds^2 = \\dfrac{{r_0^2}}{{\\eta^2}}\\left(-d\\eta^2 + d\\rho^2 + \\rho^2{sphere}\\right)")},
+    }
+    chart = charts[system]
+    probe = vm.Reader(chart["coords"], ["r_0", "\\beta"], ())
+    r0 = probe.parameters["r_0"]
+    first = probe.symbol[chart["coords"][0]]
+    f, bare = "\\left(1 - \\dfrac{r^2}{r_0^2}\\right)", "1 - \\dfrac{r^2}{r_0^2}"
+    printing = {
+        "static": lambda: {"printer": {"lead": [r0], "rising": [probe.symbol["r"]], "flip": False},
+                           "components": {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                                          "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}}},
+        "kantowski_sachs": lambda: {"printer": {"lead": [r0], "arguments": {probe.c * first / r0: "c\\tau/r_0"}},
+                                    "time": "\\tau", "pretty": nariai_hyperbolic(probe.c * first / r0)},
+        "steady_state": lambda: {"printer": {"lead": [r0]}, "time": "\\tau"},
+        "conformal": lambda: {"printer": {"lead": [r0]}},
+    }[system]()
+    return {
+        "metric_id": "self_creating_universe",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": ["r_0", "\\beta"], "line_element": chart["line"]("c")},
+        "chart_line_element": chart["line"](""),
+        "check": lambda c: self_creating_universe_check(c, system),
+        **printing,
+    }
+
+
+def self_creating_universe_check(chart, system):
+    """The chart is Gott and Li's hyperboloid pulled back, an Einstein space with Lambda = 3/r_0^2
+    and no Weyl tensor, and its stated identification is the boost of rapidity beta/r_0 in the plane
+    of V and W, which leaves X, Y and Z alone. The static chart lies in W > |V|, their region R; the
+    Kantowski-Sachs chart in V > |W|, their region F; the steady-state and conformal charts in
+    W + V > 0, which is R, F and the horizon between them."""
+    r0, beta = chart.reader.parameters["r_0"], chart.reader.parameters["beta"]
+    positive = {r0: sp.Symbol("r0_", positive=True), beta: sp.Symbol("beta_", positive=True)}
+
+    def zero(expr):
+        return sp.simplify(sp.expand_trig(sp.sympify(expr).subs(positive).rewrite(sp.exp))) == 0
+
+    P = scu_embedding(system, chart.symbols, r0)
+    J = sp.Matrix([[sp.diff(P_I, v) for v in chart.symbols] for P_I in P])
+    pulled = J.T * sp.diag(-1, 1, 1, 1, 1) * J
+    g = chart.geo.g
+    for i in range(4):
+        for j in range(i, 4):
+            if not zero(pulled[i, j] - g[i, j]):
+                raise AssertionError(f"self_creating_universe: the hyperboloid pulled back misses the {system} chart "
+                                     f"in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    if not zero(-P[0] ** 2 + sum(p ** 2 for p in P[1:]) - r0 ** 2):
+        raise AssertionError(f"self_creating_universe: the {system} chart leaves the hyperboloid")
+    ricci = chart.geo.ricci_ll()
+    if any(vm.norm(ricci[a][b] - 3 * g[a, b] / r0 ** 2) != 0 for a in range(4) for b in range(4)):
+        raise AssertionError(f"self_creating_universe: R_mu_nu is not (3/r_0^2) g_mu_nu in the {system} chart")
+    if any(vm.norm(value) != 0 for value in sp.flatten(chart.geo.weyl_llll())):
+        raise AssertionError(f"self_creating_universe: the {system} chart has a Weyl tensor")
+    image = dict(zip(chart.symbols, SCU_BOOST[system](r0, beta, *chart.symbols)))
+    moved = [p.subs(image, simultaneous=True) for p in P]
+    b = beta / r0
+    boosted = [P[0] * sp.cosh(b) + P[1] * sp.sinh(b), P[1] * sp.cosh(b) + P[0] * sp.sinh(b), *P[2:]]
+    if not all(zero(m - q) for m, q in zip(moved, boosted)):
+        raise AssertionError(f"self_creating_universe: the {system} chart's identification is not the boost")
+    # The region each chart covers, by the invariants of the boost.
+    a, x1 = chart.symbols[0], chart.symbols[1]
+    region = {
+        "static": P[1] ** 2 - P[0] ** 2 - (r0 ** 2 - x1 ** 2),
+        "kantowski_sachs": P[0] ** 2 - P[1] ** 2 - r0 ** 2 * sp.sinh(a / r0) ** 2,
+        "steady_state": P[0] + P[1] - r0 * sp.exp(a / r0),
+        "conformal": P[0] + P[1] + r0 ** 2 / a,
+    }[system]
+    if not zero(region):
+        raise AssertionError(f"self_creating_universe: the {system} chart is not on the region its text names")
 
 
 # -- Aichelburg-Sexl ------------------------------------------------------------------
@@ -2914,6 +3065,7 @@ MELVIN_GEODESICS = [
 
 CHARTS["melvin"] = [lambda s=s: melvin(s) for s in ("cylindrical", "ernst")]
 CHARTS["elliptic_de_sitter"] = [lambda s=s: elliptic_de_sitter(s) for s in EDS_CHARTS]
+CHARTS["self_creating_universe"] = [lambda s=s: self_creating_universe(s) for s in SCU_CHARTS]
 CHARTS["schwarzschild_ads"] = [lambda s=s: schwarzschild_ads(s) for s in SADS_CHARTS]
 CHARTS["topological_black_hole"] = [lambda s=s: topological_black_hole(s) for s in TBH_CHARTS]
 
@@ -3696,6 +3848,263 @@ def erez_rosen_check(chart):
 
 
 CHARTS["erez_rosen"] = [lambda s=s: erez_rosen(s) for s in ("prolate_spheroidal", "spherical")]
+
+
+# -- Kerr's black hole in Melvin's universe ------------------------------------------------
+
+KM_CHARTS = ["boyer_lindquist", "rotating"]
+KM_K = "k = 1 + a^2m^2B^4"
+KM_SIGMA = "\\Sigma = r^2 + a^2\\cos^2\\theta"
+KM_DELTA = "\\Delta = r^2 - 2mr + a^2"
+KM_A = "A = \\left(r^2 + a^2\\right)^2 - a^2\\Delta\\sin^2\\theta"
+KM_H = ("H = \\left(1 + \\dfrac{B^2A\\sin^2\\theta}{4\\Sigma}\\right)^2 + \\dfrac{B^4m^2a^2\\cos^2\\theta}{4}"
+        "\\left(3 - \\cos^2\\theta + \\dfrac{a^2\\sin^4\\theta}{\\Sigma}\\right)^2")
+KM_OMEGA = ("\\omega = \\dfrac{a}{A}\\left(2mr + \\dfrac{mB^4}{8}\\left(\\left(3r^2 + 6mr - a^2\\right)"
+            "\\left(r^3 + a^2r + 2a^2m\\right) + \\Delta\\cos^2\\theta\\left(6r\\left(r^2 + a^2\\right)"
+            " - \\left(r^3 - 3a^2r + 2a^2m\\right)\\cos^2\\theta\\right)\\right)\\right)")
+KM_N = "N = \\dfrac{H\\Delta\\Sigma}{A}"
+KM_F = "F = H\\Sigma"
+KM_P = "P = \\dfrac{A\\sin^2\\theta}{H\\Sigma}"
+KM_PARAMETERS = ["m", "a", "B", KM_K, KM_SIGMA, KM_DELTA, KM_A, KM_H, KM_OMEGA, KM_N, KM_F, KM_P]
+KM_HELD = ("Delta", "omega", "N", "F", "P")
+
+
+def kerr_melvin_parameters(system):
+    return KM_PARAMETERS + (["\\Omega"] if system == "rotating" else [])
+
+
+def kerr_melvin_line(system, c):
+    """The line element of a chart, with c the text that stands before the differential of the
+    time: empty in the chart x^0 = ct, and c where the time is the named one."""
+    angle, drag = (("\\phi", "\\omega") if system == "boyer_lindquist"
+                   else ("\\tilde\\phi", "\\left(\\omega - k\\Omega\\right)"))
+    return ("ds^2 = -N\\," + (c + "^2" if c else "") + "dt^2 + F\\left(\\dfrac{dr^2}{\\Delta} + d\\theta^2\\right)"
+            " + P\\left(k\\,d" + angle + " - " + drag + "\\," + (c + "\\," if c else "") + "dt\\right)^2")
+
+
+def kerr_melvin_pretty(reader, lead):
+    """How a value of Ernst and Wild's chart is written. The checker hands it back as a rational
+    function of the five held names and their derivatives and of a, m and B, the last three only
+    through k = 1 + a^2 m^2 B^4, the value of H on the axis. It is put over one denominator with
+    every B^4 written (k - 1)/(a^2 m^2), and factored."""
+    a, m, B = (reader.parameters[name] for name in ("a", "m", "B"))
+    K = sp.Symbol("KMK", positive=True)
+
+    def plain(side):
+        poly = sp.Poly(sp.expand(side), B)
+        if any(n % 4 for (n,) in poly.monoms()):
+            raise AssertionError("kerr_melvin: a value holds B other than through k")
+        return sum(co * ((K - 1) / (a ** 2 * m ** 2)) ** (n // 4) for (n,), co in poly.terms())
+
+    def pretty(value):
+        e, forward, back = cp.symbolize(sp.sympify(value))
+        top, bottom = sp.fraction(sp.together(e))
+        number, out = sp.Integer(1), sp.Integer(1)
+        for f in sp.Mul.make_args(sp.factor(sp.together(plain(top) / plain(bottom)))):
+            if f.is_Number:
+                number *= f
+            else:
+                out *= f
+        return _keep_coeff(number, out.xreplace(back))
+    return pretty, {"lead": lead + [K], "overrides": {K: "k"}}
+
+
+def kerr_melvin(system):
+    """Kerr's black hole in Melvin's magnetic universe, Ernst and Wild's solution: Harrison's
+    transformation of Kerr's metric, ds^2 = H(-(Delta Sigma/A) c^2 dt^2 + Sigma (dr^2/Delta +
+    dtheta^2)) + (A sin^2(theta)/(H Sigma)) (k dphi - omega c dt)^2, with Sigma, Delta and A
+    Kerr's, H = |Lambda|^2 Ernst and Wild's factor, omega the dragging rate, and k the value of H
+    on the axis, which gives phi the period 2 pi on a regular axis. Each chart writes it
+    ds^2 = -N c^2 dt^2 + F (dr^2/Delta + dtheta^2) + P (k dphi - omega c dt)^2 with the squared
+    lapse N = H Delta Sigma/A, F = H Sigma and P = A sin^2(theta)/(H Sigma). The second chart
+    turns the azimuth at a constant rate Omega, phi = phi~ + Omega c t.
+
+    Delta, omega, N, F and P are names each chart defines, held as functions of r and theta
+    while the tensors are built (vm.HELD), so every value is written in the five and their
+    derivatives; kerr_melvin_check holds the definitions to the Einstein-Maxwell equations and
+    each chart to its sources, and kerr_melvin.md beside this file is the derivation."""
+    D = sp.Derivative
+    angle, name = (("\\phi", "Ernst-Wild (Boyer-Lindquist)") if system == "boyer_lindquist"
+                   else ("\\tilde\\phi", "Rotating Azimuth"))
+    coords = ["t", "r", "\\theta", angle]
+    parameters = kerr_melvin_parameters(system)
+    probe = vm.Reader(coords, parameters, (), held=KM_HELD)
+    r, th = probe.symbol["r"], probe.symbol["\\theta"]
+    Delta, omega, N, F, P = (probe.parameters[held] for held in KM_HELD)
+    lead = []
+    for f in (N, F, P, omega):
+        lead += [D(f, (r, 2)), D(f, r, th), D(f, (th, 2))]
+    lead.append(D(Delta, (r, 2)))
+    for f in (N, F, P, omega):
+        lead += [D(f, r), D(f, th)]
+    lead += [D(Delta, r), omega, N, F, P, Delta]
+    if system == "rotating":
+        lead.append(probe.parameters["Omega"])
+    pretty, printer = kerr_melvin_pretty(probe, lead)
+    domains = ["t \\in (-\\infty, \\infty)", "r \\in (r_+, \\infty)", "\\theta \\in [0, \\pi]", angle + " \\in [0, 2\\pi)",
+               "\\Delta = 0 \\;\\text{(the horizons } r_\\pm = m \\pm \\sqrt{m^2 - a^2}\\text{)}"]
+    return {
+        "metric_id": "kerr_melvin",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": kerr_melvin_line(system, "c")},
+        "chart_line_element": kerr_melvin_line(system, ""),
+        "printer": printer,
+        "pretty": pretty,
+        "check": lambda chart: kerr_melvin_check(chart, system),
+    }
+
+
+def kerr_melvin_written(chart, value):
+    """A value with the chart's five held names written out by their definitions, which hold one
+    another: N, F and P hold H and A, which hold Delta."""
+    held = chart.reader.held
+    for _ in held:
+        value = value.subs(held).doit()
+    return value
+
+
+def kerr_melvin_traceless():
+    """Whether the Ricci scalar of Ernst and Wild's metric vanishes identically, the trace of
+    Maxwell's stress. A chart prints it in its five held names, where it is a sum of their second
+    derivatives and no relation among them makes it zero, and written out from that form its
+    canonical form did not come in three minutes. So it is built here from Ernst and Wild's own
+    form of the line element with H and omega alone held, Kerr's Sigma, Delta and A standing as
+    the polynomials they are, written out and put in canonical form, which takes about a minute
+    and a half."""
+    line = ("ds^2 = H\\left(-\\dfrac{\\Delta\\Sigma}{A}dt^2 + \\Sigma\\left(\\dfrac{dr^2}{\\Delta} + d\\theta^2\\right)\\right)"
+            " + \\dfrac{A\\sin^2\\theta}{H\\Sigma}\\left(k\\,d\\phi - \\omega\\,dt\\right)^2")
+    chart = cp.Chart(["t", "r", "\\theta", "\\phi"], ["m", "a", "B", KM_K, KM_SIGMA, KM_DELTA, KM_A, KM_H, KM_OMEGA],
+                     line, held=("H", "omega"))
+    return vm.norm(chart.reader.surface(chart.geo.ricci_scalar())) == 0
+
+
+def kerr_melvin_potential(chart):
+    """Ernst and Wild's vector potential in geometric units and the chart x^0 = ct, as Gibbons,
+    Mujtaba and Pope give it for an uncharged seed: Phi_0 c dt + Phi_3 (k dphi - omega c dt)
+    with Phi_3 = (dH/dB)/(2H) and Phi_0 = (2/B)(omega - 2mra/A), in the first chart; the second
+    carries the same one-form."""
+    r = chart.symbols[1]
+    m, a, B, k = (chart.reader.parameters[name] for name in ("m", "a", "B", "k"))
+    A, H, omega = (kerr_melvin_written(chart, chart.reader.parameters[name]) for name in ("A", "H", "omega"))
+    azimuthal = sp.diff(H, B) / (2 * H)
+    timelike = 2 * (omega - 2 * m * r * a / A) / B
+    if chart.coords_tex[3] != "\\phi":
+        # phi = phi~ + Omega x^0, so dphi brings k Phi_3 Omega into the time component.
+        return [timelike - azimuthal * (omega - k * chart.reader.parameters["Omega"]), 0, 0, k * azimuthal]
+    return [timelike - azimuthal * omega, 0, 0, k * azimuthal]
+
+
+def kerr_melvin_einstein_maxwell(chart, point):
+    """G_{mu nu} - 2 (F_{mu a} F_nu^a - g_{mu nu} F^2/4) of the chart at a point of rational
+    coordinates and parameters, exactly: every derivative is taken of the written out metric
+    and potential and evaluated there, with theta an angle of rational sine and cosine."""
+    x = chart.symbols
+    th = x[2]
+    at = dict(point)
+    sine, cosine = at.pop("sin"), at.pop("cos")
+
+    def number(e):
+        return sp.cancel(e.subs(at).subs({sp.sin(th): sine, sp.cos(th): cosine}))
+    g = kerr_melvin_written(chart, chart.geo.g)
+    n = 4
+    G = sp.Matrix(n, n, lambda i, j: number(g[i, j]))
+    d1 = [[[number(sp.diff(g[i, j], x[k])) for k in range(n)] for j in range(n)] for i in range(n)]
+    d2 = [[[[number(sp.diff(g[i, j], x[k], x[l])) if {k, l} <= {1, 2} else sp.Integer(0) for l in range(n)]
+            for k in range(n)] for j in range(n)] for i in range(n)]
+    Gi = G.inv()
+    dGi = [-Gi * sp.Matrix(n, n, lambda i, j: d1[i][j][k]) * Gi for k in range(n)]
+
+    def lowered(l, j, k):
+        return d1[l][j][k] + d1[l][k][j] - d1[j][k][l]
+    gamma = [[[sum(Gi[i, l] * lowered(l, j, k) for l in range(n)) / 2 for k in range(n)] for j in range(n)]
+             for i in range(n)]
+
+    def dgamma(i, j, k, along):
+        return sum(dGi[along][i, l] * lowered(l, j, k)
+                   + Gi[i, l] * (d2[l][j][k][along] + d2[l][k][j][along] - d2[j][k][l][along]) for l in range(n)) / 2
+    ricci = sp.Matrix(n, n, lambda j, k: sum(
+        dgamma(i, j, k, i) - dgamma(i, j, i, k)
+        + sum(gamma[i][i][l] * gamma[l][j][k] - gamma[i][k][l] * gamma[l][j][i] for l in range(n)) for i in range(n)))
+    scalar = sum(Gi[i, j] * ricci[i, j] for i in range(n) for j in range(n))
+    potential = kerr_melvin_potential(chart)
+    F = sp.Matrix(n, n, lambda i, j: number(sp.diff(potential[j], x[i]) - sp.diff(potential[i], x[j])))
+    mixed = F * Gi
+    square = sum((Gi * F * Gi)[i, j] * F[i, j] for i in range(n) for j in range(n))
+    stress = sp.Matrix(n, n, lambda i, j: sum(F[i, k] * mixed[j, k] for k in range(n)) - G[i, j] * square / 4)
+    return (ricci - G * scalar / 2 - 2 * stress).applyfunc(sp.cancel), sp.cancel(scalar)
+
+
+def kerr_melvin_check(chart, system):
+    """Each chart: with the five held names written out, the Einstein tensor is twice Maxwell's
+    stress of Ernst and Wild's potential and the Ricci scalar vanishes at two points of rational
+    coordinates, exactly, and for the first chart the Ricci scalar vanishes identically,
+    kerr_melvin_traceless; H on
+    the axis is k at both poles, so the axis is regular with phi of period 2 pi; and omega is
+    the same at every theta on the horizon, a/(2 m r_+) + a m B^4 (r_+ + m)/2. The first chart is
+    the published Boyer-Lindquist chart of kerr at B = 0, with GM/c^2 = m, and the published
+    chart of Ernst's hole in melvin at a = 0, with r_s = 2m. The second chart is the first pulled
+    back along phi = phi~ + Omega x^0."""
+    t, r, th, phi = chart.symbols
+    m, a, B, k = (chart.reader.parameters[name] for name in ("m", "a", "B", "k"))
+    points = [{r: sp.Rational(23, 10), "sin": sp.Rational(3, 5), "cos": sp.Rational(4, 5), a: sp.Rational(3, 5),
+               m: 1, B: sp.Rational(2, 7)},
+              {r: sp.Rational(7, 2), "sin": sp.Rational(12, 13), "cos": -sp.Rational(5, 13), a: sp.Rational(9, 10),
+               m: sp.Rational(6, 5), B: sp.Rational(1, 2)}]
+    if system == "rotating":
+        for point in points:
+            point[chart.reader.parameters["Omega"]] = sp.Rational(1, 9)
+    for point in points:
+        residual, scalar = kerr_melvin_einstein_maxwell(chart, point)
+        if residual != sp.zeros(4, 4) or scalar != 0:
+            raise AssertionError(f"kerr_melvin/{system}: the Einstein-Maxwell equations fail at {point}")
+    H, omega = (kerr_melvin_written(chart, chart.reader.parameters[name]) for name in ("H", "omega"))
+    for pole in (0, sp.pi):
+        if vm.norm(H.subs(th, pole) - k) != 0:
+            raise AssertionError(f"kerr_melvin/{system}: H on the axis is not k")
+    rp = sp.Symbol("r_p", positive=True)
+    horizon = {r: rp, m: (rp ** 2 + a ** 2) / (2 * rp)}
+    rate = (a / (2 * m * r) + a * m * B ** 4 * (r + m) / 2).subs(horizon, simultaneous=True)
+    if vm.norm(omega.subs(horizon, simultaneous=True) - rate) != 0:
+        raise AssertionError(f"kerr_melvin/{system}: omega on the horizon is not a/(2 m r_+) + a m B^4 (r_+ + m)/2")
+    g = kerr_melvin_written(chart, chart.geo.g)
+    if system == "boyer_lindquist" and not kerr_melvin_traceless():
+        raise AssertionError("kerr_melvin: the Ricci scalar does not vanish")
+    if system == "rotating":
+        spec = kerr_melvin("boyer_lindquist")
+        source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
+                          held=KM_HELD)
+        swap = dict(zip(source.symbols, chart.symbols))
+        swap.update({source.reader.parameters[name]: chart.reader.parameters[name] for name in KM_HELD})
+        jacobian = sp.eye(4)
+        jacobian[3, 0] = chart.reader.parameters["Omega"]
+        pulled = jacobian.T * source.geo.g.xreplace(swap) * jacobian
+        for i in range(4):
+            for j in range(i, 4):
+                if vm.norm(pulled[i, j] - chart.geo.g[i, j]) != 0:
+                    raise AssertionError(f"kerr_melvin/rotating: the first chart pulled back misses slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+        return
+    for metric_id, system_id, limit, swap_of in (
+            ("kerr", "boyer_lindquist", {B: 0}, lambda R: {R.parameters["M"]: m, R.parameters["G"]: R.c ** 2}),
+            ("melvin", "ernst", {a: 0}, lambda R: {R.parameters["r_s"]: 2 * m, R.parameters["B"]: B})):
+        published = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                         if c["id"] == system_id)
+        R = vm.Reader(published["coords"], [p["symbol"] for p in published["parameters"]], ())
+        swap = {R.symbol[n]: chart.reader.symbol[n] for n in published["coords"]}
+        if "a" in R.parameters:
+            swap[R.parameters["a"]] = a
+        swap.update(swap_of(R))
+        values = {tuple(e["indices"]): e["value"] for e in published["metric_components"]}
+        here = g.subs(limit)
+        for i in range(4):
+            for j in range(4):
+                text = values.get((chart.coords_tex[i], chart.coords_tex[j]), "0")
+                if vm.norm(R(text).subs(swap, simultaneous=True) - here[i, j]) != 0:
+                    raise AssertionError(f"kerr_melvin: at {limit} the chart misses the published metric of "
+                                         f"{metric_id} in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["kerr_melvin"] = [lambda s=s: kerr_melvin(s) for s in KM_CHARTS]
 
 
 # -- Bonnor's magnetic dipole ------------------------------------------------------------
@@ -9042,6 +9451,196 @@ def ppn_arguments(system):
 
 CHARTS["ppn_metric"] = [lambda s=s: ppn_metric(s) for s in PPN_CHARTS]
 
+# -- Einstein, Infeld and Hoffmann's field of many bodies ----------------------------------
+
+EIH_CHARTS = ["harmonic", "standard"]
+EIH_FUNCTIONS = "(t,x,y,z)"
+EIH_INDEX = {"x": "1", "y": "2", "z": "3"}       # the components of V along x, y and z
+EIH_PARAMETERS = [name + " = " + name + EIH_FUNCTIONS for name in ("U", "\\psi", "\\chi", "V_1", "V_2", "V_3")]
+
+
+def eih_many_bodies(system):
+    """The field of N slowly moving bodies to post-Newtonian order, written in its potentials, in
+    two charts.
+
+    harmonic  Einstein, Infeld and Hoffmann's own coordinates, their conditions (1,25) and (1,26),
+              which to this order are the harmonic ones: their (9.8), (12.6) and (13.10) in the
+              signature (-,+,+,+), g_00 = -1 + 2U - 2U^2 + 2 psi + d_t^2 chi, g_0i = -4 V_i and
+              g_ij = (1 + 2U) delta_ij, which for two bodies is Blanchet, Faye and Ponsot's (7.2);
+    standard  the standard post-Newtonian gauge of Chandrasekhar and of Will's (2014) Box 2 at
+              general relativity's values, g_00 = -1 + 2U - 2U^2 + 2 psi and
+              g_0i = -4 V_i - d_t d_i chi/2, which is -(7/2) V_i - (1/2) W_i, whose time is the
+              harmonic time less d_t chi/2.
+
+    U = sum m_a/r_a, V = sum m_a v_a/r_a, chi = sum m_a r_a and
+    psi = sum (m_a/r_a)(3 v_a^2/2 - sum m_b/r_ab), with each mass the length Gm/c^2 and each speed
+    over c, are left free in every tensor, so no component assumes a field equation.
+    eih_check holds each chart to what it claims before it is written, and eih_many_bodies.md
+    beside this file is the derivation."""
+    coords = ["t", "x", "y", "z"]
+    reals = " \\in (-\\infty, \\infty)"
+    domains = [name + reals for name in coords] + ["r_a > 0 \\;\\text{(between the bodies)}"]
+    space = "\\left(1 + 2U\\right)\\left(dx^2 + dy^2 + dz^2\\right)"
+    if system == "harmonic":
+        name = "Einstein, Infeld, and Hoffmann (harmonic)"
+        lapse = "1 - 2U + 2U^2 - 2\\psi - \\partial_t^2\\chi"
+        shift = {k: "-4V_" + EIH_INDEX[k] for k in "xyz"}
+        cross = " - 8\\left(V_1\\,dx + V_2\\,dy + V_3\\,dz\\right){c}dt"
+        square = "16\\left(V_1^2 + V_2^2 + V_3^2\\right)"
+    else:
+        name = "Standard post-Newtonian gauge"
+        lapse = "1 - 2U + 2U^2 - 2\\psi"
+        shift = {k: "-\\left(4V_" + EIH_INDEX[k] + " + \\dfrac{1}{2}\\partial_t\\partial_" + k + "\\chi\\right)" for k in "xyz"}
+        cross = (" - \\left(\\left(8V_1 + \\partial_t\\partial_x\\chi\\right)dx + \\left(8V_2 + \\partial_t\\partial_y\\chi\\right)dy"
+                 " + \\left(8V_3 + \\partial_t\\partial_z\\chi\\right)dz\\right){c}dt")
+        square = " + ".join("\\left(4V_" + EIH_INDEX[k] + " + \\dfrac{1}{2}\\partial_t\\partial_" + k + "\\chi\\right)^2" for k in "xyz")
+    line = "ds^2 = -\\left(" + lapse + "\\right){c2}dt^2" + cross + " + " + space
+
+    def written(c):
+        return line.replace("{c2}", "c^2" if c else "").replace("{c}", "c\\," if c else "")
+
+    probe = vm.Reader(coords, EIH_PARAMETERS, ())
+    functions = [probe.parameters[k] for k in ("U", "psi", "chi", "V_1", "V_2", "V_3")]
+    # The inverse of the metric as the line element writes it, whole: with A the lapse's bracket,
+    # S = 1 + 2U and B the row g_ti, the block of t is -S/D and B_i/D, D = A S + B.B, and the block
+    # of space delta_ij/S - B_i B_j/(S D).
+    block = "\\left(\\left(" + lapse + "\\right)\\left(1 + 2U\\right) + " + square + "\\right)^{-1}"
+    inverse = {("t", "t"): "-\\left(1 + 2U\\right)" + block}
+    metric = {("t", "t"): "-\\left(" + lapse + "\\right)"}
+    for i in "xyz":
+        metric[(i, i)] = "1 + 2U"
+        metric[("t", i)] = metric[(i, "t")] = shift[i]
+        inverse[("t", i)] = inverse[(i, "t")] = shift[i] + block
+        for j in "xyz":
+            product = "\\dfrac{\\left(" + shift[i] + "\\right)\\left(" + shift[j] + "\\right)}{1 + 2U}" + block
+            inverse[(i, j)] = ("\\dfrac{1}{1 + 2U} - " if i == j else "-") + product
+    return {
+        "metric_id": "eih_many_bodies",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": EIH_PARAMETERS,
+                   "line_element": written(True)},
+        "chart_line_element": written(False),
+        "printer": {"lead": functions, "flip": False, "rank": eih_order(probe)},
+        "pretty": sp.expand,
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "check": lambda chart: eih_check(chart, system),
+        "after": lambda math, chart: eih_whole_inverse(math, chart, inverse),
+    }
+
+
+def eih_whole_inverse(math, chart, inverse):
+    """The inverse with its components between two different directions of space, -B_i B_j/(S D),
+    which are of sixth order and so vanish from the inverse cut to order: written in, each checked
+    against the cut tensor, so that the inverse printed is the inverse of the metric printed."""
+    listed = {tuple(entry["indices"]) for entry in math["inverse_metric_components"]}
+    for i, a in enumerate("xyz"):
+        for j, b in enumerate("xyz"):
+            if a != b and (a, b) not in listed:
+                value = chart.check(inverse[(a, b)], chart.geo.ginv[i + 1, j + 1])
+                math["inverse_metric_components"].append({"indices": [a, b], "value": value})
+    return math
+
+
+def eih_order(reader):
+    """The post-Newtonian order of a term of the field of many bodies, the sum of the orders of
+    its potentials, a derivative along the time one order more each time it is taken. Each value
+    is printed with its terms in that order, lowest first, so that Newton's term leads."""
+    orders = {reader.parameters[name]: weight for name, weight in
+              vm.ORDERS[("eih_many_bodies", "harmonic")][0].items()}
+    time = reader.symbol["t"]
+
+    def order(term):
+        total = 0
+        for factor, power in sp.sympify(term).as_powers_dict().items():
+            if isinstance(factor, sp.Derivative) and factor.expr in orders:
+                total += power * (orders[factor.expr] + sum(n for v, n in factor.variable_count if v == time))
+            elif factor in orders:
+                total += power * orders[factor]
+        return total
+
+    return order
+
+
+def eih_between_the_bodies(chart, value):
+    """`value` where the potentials solve their field equations between the bodies: U, psi and
+    the three components of V Laplace's, chi the Poisson equation whose source is 2U, and
+    d_t U + div V = 0. Each is used to write a derivative out of the value: every derivative of
+    V_3 along z by the last, every second derivative of V_3 along y and of the others along z by
+    its own equation, until none is left."""
+    t, x, y, z = chart.symbols
+    U, chi, Vx, Vy, Vz = (chart.reader.parameters[k] for k in ("U", "chi", "V_1", "V_2", "V_3"))
+    D = sp.Derivative
+
+    def taken(function, counts):
+        variables = [(v, n) for v, n in counts.items() if n]
+        return D(function, *variables) if variables else function
+
+    def rule(d):
+        counts = dict(d.variable_count)
+        f = d.expr
+        if f == Vz and counts.get(z, 0) >= 1:
+            rest = {**counts, z: counts[z] - 1}
+            return -sum(taken(g, {**rest, v: rest.get(v, 0) + 1}) for g, v in ((U, t), (Vx, x), (Vy, y)))
+        along = y if f == Vz else z
+        if counts.get(along, 0) >= 2:
+            rest = {**counts, along: counts[along] - 2}
+            others = [v for v in (x, y, z) if v != along]
+            out = -sum(taken(f, {**rest, v: rest.get(v, 0) + 2}) for v in others)
+            return out + 2 * taken(U, rest) if f == chi else out
+        return None
+
+    value = sp.sympify(value)
+    for _ in range(12):
+        rules = {d: rule(d) for d in value.atoms(D)}
+        rules = {d: r for d, r in rules.items() if r is not None}
+        if not rules:
+            return sp.expand(value)
+        value = sp.expand(value.xreplace(rules).doit())
+    raise AssertionError("eih_many_bodies: the field equations of the potentials do not settle")
+
+
+def eih_check(chart, system):
+    """What the two charts are held to before anything is written.
+
+    Both: wherever the potentials solve their field equations between the bodies,
+    eih_between_the_bodies, the Ricci tensor vanishes at every order kept, and R_tt and R_tx do
+    not vanish for free potentials, so that the vacuum is what those equations say.
+    standard: the harmonic chart pulled back along x^0 -> x^0 + d_t chi/2, g_tt through the
+    fourth order, g_ti through the third and g_ij through the second."""
+    ricci = chart.geo.ricci_ll()
+    for i in range(4):
+        for j in range(i, 4):
+            if eih_between_the_bodies(chart, ricci[i][j]) != 0:
+                raise AssertionError(f"eih_many_bodies: R_{chart.coords_tex[i]}{chart.coords_tex[j]} of the {system} "
+                                     "chart does not vanish between the bodies")
+    if ricci[0][0] == 0 or ricci[0][1] == 0 or ricci[1][1] == 0:
+        raise AssertionError(f"eih_many_bodies: the Ricci tensor of the {system} chart vanishes for free potentials")
+    if system == "standard":
+        reader = chart.reader
+        other = cp.Chart(*eih_arguments("harmonic"), order=vm.ORDERS[("eih_many_bodies", "harmonic")])
+        names = {other.reader.parameters[k]: reader.parameters[k] for k in ("U", "psi", "chi", "V_1", "V_2", "V_3")}
+        theirs = other.geo.g.subs(dict(zip(other.symbols, chart.symbols)), simultaneous=True).subs(names).doit()
+        shift = sp.diff(reader.parameters["chi"], chart.symbols[0]) / 2
+        jacobian = sp.eye(4)
+        for k in range(4):
+            jacobian[0, k] += sp.diff(shift, chart.symbols[k])
+        pulled = jacobian.T * theirs * jacobian
+        for i in range(4):
+            for j in range(i, 4):
+                kept = 4 - (i != 0) - (j != 0)
+                if reader.through(pulled[i, j] - chart.geo.g[i, j], kept) != 0:
+                    raise AssertionError("eih_many_bodies: the standard chart is not the harmonic chart at the time "
+                                         f"x^0 + d_t chi/2, in slot {i}{j}")
+
+
+def eih_arguments(system):
+    spec = eih_many_bodies(system)
+    return (spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"], spec["printer"],
+            spec["pretty"])
+
+
+CHARTS["eih_many_bodies"] = [lambda s=s: eih_many_bodies(s) for s in EIH_CHARTS]
+
+
 
 # -- Kerr-de Sitter ----------------------------------------------------------------------
 
@@ -11304,6 +11903,185 @@ def som_raychaudhuri_pullback(chart):
 
 
 CHARTS["som_raychaudhuri"] = [lambda s=s: som_raychaudhuri(s) for s in SR_CHARTS]
+
+
+# -- Maitra's rotating dust ---------------------------------------------------------------
+
+MAITRA_S = "s = \\sqrt{1 + \\dfrac{4r^2}{a^2}}"
+MAITRA_K = "k = \\dfrac{a}{2}\\left(s - 1 - \\ln\\left(\\dfrac{s + 1}{2}\\right)\\right)"
+MAITRA_GAMMA = ("\\gamma = \\dfrac{1}{4} - \\dfrac{1}{2\\left(s + 1\\right)}"
+                " - \\dfrac{1}{2}\\ln\\left(\\dfrac{s + 1}{2}\\right)")
+
+
+def maitra_dust():
+    """Maitra's stationary, cylindrically symmetric dust in differential rotation, with no
+    cosmological constant, in his own chart: ds^2 = -(c dt - k dphi)^2 + r^2 dphi^2
+    + e^gamma (dr^2 + dz^2), where the block of t and phi has the determinant -r^2 and g_tt = -1.
+    Maitra's paper was not read; the functions are Krasinski's transcription of them (1998, his
+    (6.23) to (6.25), with m = -k, ln(dy/dr) = gamma/2 and the signature reversed) and Chan and
+    Santos's (2024, their (1), (45), (48) and (50), with x = 2r/a and c_1 = 1/a), which agree. The
+    one length a sets the density on the axis, 8 pi G rho/c^2 = 1/a^2. The chart names the root
+    s = sqrt(1 + 4r^2/a^2) and the two functions k and gamma, each of which holds a logarithm of
+    s + 1; the checker holds k and gamma as functions with the slopes k' = 2r/(a (s + 1)) and
+    gamma' = -k'^2/2r, vm.HELD and vm.RATES, having checked each slope against its definition, so
+    every value is a rational function of r, a, s, k and e^gamma. maitra_dust.md is the
+    derivation."""
+    coords = ["t", "r", "\\phi", "z"]
+    reals = "(-\\infty, \\infty)"
+    parameters = ["a", MAITRA_S, MAITRA_K, MAITRA_GAMMA]
+    probe = vm.Reader(coords, parameters, (), held=("k", "gamma"))
+    r, a, k, gamma = probe.symbol["r"], probe.parameters["a"], probe.parameters["k"], probe.parameters["gamma"]
+    root = sp.sqrt(1 + 4 * r ** 2 / a ** 2)
+    slopes = {k: 2 * r / (a * (1 + root)), gamma: -2 * r / (a ** 2 * (1 + root) ** 2)}
+    s = sp.Symbol("s", positive=True)
+    line = "ds^2 = -\\left(c\\,dt - k\\,d\\phi\\right)^2 + r^2d\\phi^2 + e^{\\gamma}\\left(dr^2 + dz^2\\right)"
+
+    def reduce(value):
+        # No derivative of k or gamma is left: each is written by its slope, which holds the root alone.
+        value = sp.sympify(value)
+        for d in sorted(value.atoms(sp.Derivative), key=lambda d: -d.derivative_count):
+            if d.expr not in slopes:
+                raise AssertionError(f"maitra_dust: {d} is no derivative of k or gamma")
+            value = value.xreplace({d: sp.diff(slopes[d.expr], r, d.derivative_count - 1)})
+        return vm.norm(value)
+
+    return {
+        "metric_id": "maitra_dust",
+        "system": {"id": "cylindrical", "name": "Cylindrical", "coords": coords,
+                   "domains": ["t \\in " + reals, "r \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)", "z \\in " + reals],
+                   "parameters": parameters, "line_element": line},
+        # The chart coordinate is x^0 = ct, so c dt is the chart's dt.
+        "chart_line_element": line.replace("c\\,dt", "dt"),
+        "printer": {"lead": [r, s, k, a], "factors": [a, r, s, k], "flip": False},
+        "pretty": maitra_pretty(r, a, k, gamma, s),
+        "reduce": reduce,
+        # The block of t and phi as the line element writes it, with its determinant -r^2.
+        "components": {
+            "metric_components": {("\\phi", "\\phi"): "r^2 - k^2"},
+            "inverse_metric_components": {("t", "t"): "-\\dfrac{r^2 - k^2}{r^2}", ("t", "\\phi"): "\\dfrac{k}{r^2}",
+                                          ("\\phi", "t"): "\\dfrac{k}{r^2}", ("\\phi", "\\phi"): "\\dfrac{1}{r^2}"}},
+        "check": maitra_dust_check,
+    }
+
+
+def maitra_pretty(r, a, k, gamma, s):
+    """A pretty printer for Maitra's chart, whose every value is a rational function of r, a, the
+    root sqrt(a^2 + 4r^2), k and e^gamma. The root is written a s, and every even power of r is
+    written by r^2 = a^2 (s^2 - 1)/4, so that r is left to the first power at most and no relation
+    holds among what is left: the value factors there, and s - 1 and s + 1 cancel. Where an r is
+    left below the line under an s - 1 above it, (s - 1)/r is written 4r/(a^2 (s + 1)), which is
+    finite on the axis as the value is."""
+    square = a ** 2 + 4 * r ** 2
+    K, E = sp.Symbol("MaitraK"), sp.Symbol("MaitraE", positive=True)
+
+    def even(poly):
+        return sum(c * (a ** 2 * (s ** 2 - 1) / 4) ** (n // 2) * r ** (n % 2)
+                   for (n,), c in sp.Poly(sp.expand(poly), r).terms())
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        value = value.replace(lambda p: p.is_Pow and p.exp.is_Rational and p.exp.q == 2
+                              and sp.expand(p.base - square) == 0, lambda p: (a * s) ** (2 * p.exp))
+        value = value.replace(lambda p: p.is_Pow and p.exp.is_Rational and p.exp.q == 2
+                              and sp.expand(p.base - square / a ** 2) == 0, lambda p: s ** (2 * p.exp))
+        value = value.replace(lambda f: isinstance(f, sp.exp) and f.args[0].has(gamma),
+                              lambda f: E ** sp.together(f.args[0] / gamma))
+        value = sp.together(value.subs(k, K))
+        if value.has(gamma) or any(not p.exp.is_Integer for p in value.atoms(sp.Pow)):
+            raise AssertionError(f"maitra_dust: a root other than s, or a bare gamma, is left in {value}")
+        numerator, denominator = sp.fraction(value)
+        value = sp.factor(even(numerator) / even(denominator))
+        numerator, denominator = sp.fraction(value)
+        if sp.Poly(denominator, r).degree() == 1 and sp.rem(numerator, s - 1, s) == 0:
+            value = sp.factor(value * 4 * r ** 2 / (a ** 2 * (s - 1) * (s + 1)))
+        return value.subs({K: k, E: sp.exp(gamma)})
+
+    return pretty
+
+
+def maitra_dust_check(chart):
+    """The chart against its source and against what its sources say of it.
+
+    The source is dust: G_ab = R u_a u_b with every other slot zero, where R, the Ricci scalar, is
+    8 pi G rho/c^2 = 4 e^-gamma/(a^2 s (s + 1)^2), and the dust's velocity is u = v d_t + W d_phi
+    with W = -(1/a) sqrt(2/(s + 1)) and v = sqrt((s + 1)/2) + k W, Chan and Santos's (4), (6) and
+    (41) at f = 1. Its covariant components are u_t = -sqrt((s + 1)/2) and
+    u_phi = k sqrt((s + 1)/2) + r^2 W, so the three products are free of the nested root:
+    u_t^2 = (s + 1)/2, u_t u_phi = r^2/a - k (s + 1)/2 and u_phi^2 = (k sqrt((s + 1)/2) - sqrt(2)
+    r^2/(a sqrt(s + 1)))^2 = k^2 (s + 1)/2 - 2 k r^2/a + a^2... written out below. The dust falls
+    freely, Gamma^r_ab u^a u^b = 0, which with the root cleared is
+    2 Gamma^r_tphi ((s + 1)/2 - k/a) = Gamma^r_phiphi/a.
+
+    The determinant is -r^2 e^(2 gamma). The gradient of t is timelike at every radius,
+    g^tt = -(1 - k^2/r^2) < 0, since k' < 1 gives k < r: t is a time function, and no closed
+    timelike curve exists, Maitra's title. The axis is regular, g_phiphi/r^2 and e^gamma both 1
+    there, and to the second order in r the chart is the published dust of van Stockum at R = 2a
+    with the sense of phi reversed, Chan and Santos's remark under their (52). The mass per unit
+    length inside r, Whittaker's, is -r gamma'/4 = (s - 1)/(8 (s + 1)), their (51), which tends
+    to 1/8."""
+    geo, g = chart.geo, chart.geo.g
+    reader = chart.reader
+    t, r, phi, z = chart.symbols
+    a, k, gamma = (reader.parameters[n] for n in ("a", "k", "gamma"))
+    s = sp.sqrt(1 + 4 * r ** 2 / a ** 2)
+    slope_k, slope_gamma = 2 * r / (a * (1 + s)), -2 * r / (a ** 2 * (1 + s) ** 2)
+    if vm.norm(sp.diff(reader.held[k], r) - slope_k) != 0 or vm.norm(sp.diff(reader.held[gamma], r) - slope_gamma) != 0:
+        raise AssertionError("maitra_dust: the slopes of k and gamma are not 2r/(a (s + 1)) and -2r/(a^2 (s + 1)^2)")
+    if vm.norm(slope_gamma + slope_k ** 2 / (2 * r)) != 0:
+        raise AssertionError("maitra_dust: gamma' is not -k'^2/2r")
+    density = 4 * sp.exp(-gamma) / (a ** 2 * s * (s + 1) ** 2)
+    if vm.norm(geo.ricci_scalar() - density) != 0:
+        raise AssertionError("maitra_dust: the Ricci scalar is not 4 e^-gamma/(a^2 s (s + 1)^2)")
+    lowered = geo.einstein_ll()
+    dust = {(0, 0): (s + 1) / 2, (0, 2): r ** 2 / a - k * (s + 1) / 2,
+            (2, 2): k ** 2 * (s + 1) / 2 - 2 * k * r ** 2 / a + 2 * r ** 4 / (a ** 2 * (s + 1))}
+    for i in range(4):
+        for j in range(i, 4):
+            if vm.norm(lowered[i][j] - density * dust.get((i, j), 0)) != 0:
+                raise AssertionError(f"maitra_dust: the Einstein tensor is not dust's in slot "
+                                     f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+    if vm.norm(dust[0, 0] * dust[2, 2] - dust[0, 2] ** 2) != 0:
+        raise AssertionError("maitra_dust: the three products of the dust's velocity are not one vector's")
+    christoffel = geo.christoffel_ull()
+    if christoffel[1][0][0] != 0 or vm.norm(2 * christoffel[1][0][2] * ((s + 1) / 2 - k / a) - christoffel[1][2][2] / a) != 0:
+        raise AssertionError("maitra_dust: the dust does not fall freely")
+    if vm.norm(g.det() + r ** 2 * sp.exp(2 * gamma)) != 0:
+        raise AssertionError("maitra_dust: the determinant is not -r^2 e^(2 gamma)")
+    if vm.norm(geo.ginv[0, 0] + (r ** 2 - k ** 2) / r ** 2) != 0:
+        raise AssertionError("maitra_dust: g^tt is not -(1 - k^2/r^2)")
+    if vm.norm(slope_k ** 2 - (s - 1) / (s + 1)) != 0:
+        raise AssertionError("maitra_dust: k'^2 is not (s - 1)/(s + 1), which is less than 1")
+    if vm.norm(-r * slope_gamma / 4 - (s - 1) / (8 * (s + 1))) != 0 or sp.limit(((s - 1) / (8 * (s + 1))).subs(a, 1), r, sp.oo) != sp.Rational(1, 8):
+        raise AssertionError("maitra_dust: the mass per unit length is not (s - 1)/(8 (s + 1)), tending to 1/8")
+    written = {k: reader.held[k], gamma: reader.held[gamma]}
+    for label, value, want in (("k", written[k], r ** 2 / (2 * a)), ("gamma", written[gamma], -r ** 2 / (4 * a ** 2))):
+        if sp.simplify(sp.series(value, r, 0, 4).removeO() - want) != 0:
+            raise AssertionError(f"maitra_dust: {label} does not begin as van Stockum's on the axis")
+    # Van Stockum's published dust at R = 2a, with phi reversed, to the second order in r.
+    there = next(c for c in json.loads((METRICS / "stockum_dust.json").read_text(encoding="utf-8"))["coordinates"]
+                 if c["id"] == "cylindrical")
+    other = vm.Reader(there["coords"], [p["symbol"] for p in there["parameters"]], ())
+    values = {tuple(e["indices"]): other(e["value"]) for e in there["metric_components"]}
+    names = dict(zip([other.symbol[c] for c in there["coords"]], chart.symbols))
+    flip = sp.diag(1, 1, -1, 1)
+    stockum = sp.Matrix(4, 4, lambda i, j: values.get((there["coords"][i], there["coords"][j]), sp.Integer(0)))
+    stockum = flip * stockum.subs(names).subs(other.parameters["R"], 2 * a) * flip
+    mine = g.subs(sp.exp(gamma), sp.exp(written[gamma])).subs(written)
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify(sp.series(mine[i, j] - stockum[i, j], r, 0, 4).removeO()) != 0:
+                raise AssertionError(f"maitra_dust: the chart leaves van Stockum's published dust before the fourth "
+                                     f"order in r in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    for at in (sp.Rational(1, 7), 1, 5, 60, 4000):
+        radius = {r: at, a: 1}
+        twist = sp.N(written[k].subs(radius), 30)
+        if not 0 < twist < at:
+            raise AssertionError(f"maitra_dust: k is not between 0 and r at r = {at} a")
+
+
+CHARTS["maitra_dust"] = [maitra_dust]
 # -- Coleman-De Luccia -------------------------------------------------------------------
 
 CDL_CHARTS = ["wall", "open", "open_conformal", "static_inside", "static_outside"]
@@ -14382,6 +15160,195 @@ def misner_zapolsky_check(chart, system):
 
 
 CHARTS["misner_zapolsky"] = [lambda s=s: misner_zapolsky(s) for s in MISNER_ZAPOLSKY_CHARTS]
+
+
+# -- The anisotropic sphere of Bowers and Liang -------------------------------------------
+
+BOWERS_LIANG_Z = "Z = 1 - \\dfrac{r_s r^2}{R^3}"
+BOWERS_LIANG_N = "N = \\dfrac{1}{2}\\left(3\\left(1 - \\dfrac{r_s}{R}\\right)^{Q} - Z^{Q}\\right)"
+BOWERS_LIANG_P = "P = \\dfrac{2Z^{Q}}{3\\left(1 - \\dfrac{r_s}{R}\\right)^{Q} - Z^{Q}}"
+BOWERS_LIANG_RATES = {"N": "\\dfrac{Q r_s r N P}{R^3 Z}", "P": "-\\dfrac{Q r_s r P\\left(P + 2\\right)}{R^3 Z}"}
+
+
+def bowers_liang():
+    """Bowers and Liang's sphere of uniform density with unequal stresses, in the areal radius,
+    the only coordinate its literature uses. Their (2.10) with m = 4 pi rho_0 r^3/3 is g^rr = Z =
+    1 - r_s r^2/R^3, and their (2.8), nu'/2 = (m + 4 pi r^3 p_r)/(r(r - 2m)), with the pressure of
+    their (3.4) integrates to e^nu = N^(1/Q), N = (3(1 - r_s/R)^Q - Z^Q)/2, which is 1 - r_s/R at
+    the surface. Q = 1/2 - 3C/(4 pi) is their exponent, and P = Z^Q/N is 1 + 3p_r/(rho_0 c^2).
+
+    N and P hold a power Q of Z, and their slopes are algebraic in themselves: N' =
+    Q r_s r N P/(R^3 Z) and P' = -Q r_s r P(P + 2)/(R^3 Z). So both are held as functions of r
+    with those slopes, vm.HELD and vm.RATES, and every value is a rational function of r, R, r_s,
+    Q and P, with one factor N^(1/Q) for each lowered time index. bowers_liang_check holds the
+    chart to its source before anything is written, and bowers_liang.md is the derivation."""
+    coords = ["t", "r", "\\theta", "\\phi"]
+    parameters = ["R", "r_s", "Q", BOWERS_LIANG_Z, BOWERS_LIANG_N, BOWERS_LIANG_P]
+    line = ("ds^2 = -N^{1/Q}{c}dt^2 + \\dfrac{dr^2}{Z}"
+            " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)")
+    held = vm.HELD[("bowers_liang", "areal")]
+    probe = vm.Reader(coords, parameters, (), held=held)
+    r, Q = probe.symbol["r"], probe.parameters["Q"]
+    R, rs = probe.parameters["R"], probe.parameters["r_s"]
+    N, P = probe.parameters["N"], probe.parameters["P"]
+    rates = {name: probe(text) for name, text in ((N, BOWERS_LIANG_RATES["N"]), (P, BOWERS_LIANG_RATES["P"]))}
+    lapse, Z = sp.Symbol("_lapse", positive=True), sp.Symbol("Z", positive=True)
+    gap = sp.Symbol("_gap", positive=True)
+
+    def reduce(value):
+        # The slopes of N and P are written in N, P and r, so no derivative of either is left.
+        value = sp.sympify(value)
+        while value.has(sp.Derivative):
+            for d in sorted(value.atoms(sp.Derivative), key=lambda d: -d.derivative_count):
+                if d.expr not in rates:
+                    raise AssertionError(f"bowers_liang: {d} is no derivative of N or P")
+                value = value.xreplace({d: sp.diff(rates[d.expr], r, d.derivative_count - 1)})
+            value = value.doit()
+        return vm.norm(value)
+
+    def pretty(value):
+        """A value with N^(k/Q) written as that power of the one factor N^(1/Q), and the
+        rest written in Z by r_s r^2 = R^3 (1 - Z): a factor 1 - Z is written back as r_s r^2/R^3,
+        and a sum is left in Z, P and Q."""
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+
+        def power(e):
+            k = sp.cancel(e.exp * Q)
+            if not k.is_Integer:
+                raise AssertionError(f"bowers_liang: {e} is no whole power of N^(1/Q)")
+            return lapse ** k
+        value = value.replace(lambda e: e.is_Pow and e.base == N, power)
+        if value.has(N):
+            raise AssertionError(f"bowers_liang: N stands outside its power 1/Q in {value}")
+        # r_s r^2 = R^3 (1 - Z), so every sum is one in Z, P and Q, with r_s/R^3 in front.
+        number, powers = _factor_powers(sp.cancel(value.subs(rs, R ** 3 * (1 - Z) / r ** 2)))
+        out = number
+        for base, k in powers.items():
+            if sp.expand(base - (Z - 1)) == 0:
+                base, out = rs * r ** 2 / R ** 3, out * (-1) ** k
+            elif sp.expand(base + (Z - 1)) == 0:
+                base = rs * r ** 2 / R ** 3
+            out *= base ** k
+        return out
+
+    def collect(polynomial, printer):
+        """A sum that holds Z written by powers of Z and of 1 - Z, a Z^k (1 - Z)^(d - k) with each
+        coefficient factored, so that the terms the anisotropy adds stand apart: they carry
+        1 - Z, which is r_s r^2/R^3, and vanish at the centre."""
+        polynomial = sp.expand(polynomial)
+        if not polynomial.has(Z) or not polynomial.is_polynomial(Z):
+            return printer.sum_of(polynomial)
+        degree = sp.degree(polynomial, Z)
+        s, u = sp.Symbol("_s"), sp.Symbol("_u")
+        whole = sp.Poly(sp.expand(sp.cancel((s + u) ** degree * polynomial.subs(Z, s / (s + u)))), s, u)
+        out = []
+        for (k, rest), coefficient in sorted(whole.terms(), key=lambda term: -term[0][0]):
+            number, powers = _factor_powers(coefficient)
+            body = sp.Integer(1)
+            for base, n in powers.items():
+                # A sum leads with a positive term, its sign carried by the number in front.
+                if base.is_Add and printer.leads_negative(printer.sum_of(base).terms[0]):
+                    base, number = sp.expand(-base), number * (-1) ** n
+                body *= base ** n
+            out.append((number, body * Z ** k * gap ** rest))
+        return cp.Sum(out)
+
+    return {
+        "metric_id": "bowers_liang",
+        "system": {"id": "areal", "name": "Areal Radius", "coords": coords,
+                   "domains": ["t \\in (-\\infty, \\infty)", "r \\in [0, R]", "\\theta \\in [0, \\pi]",
+                               "\\phi \\in [0, 2\\pi)"],
+                   "parameters": parameters, "line_element": line.replace("{c}", "c^2")},
+        "chart_line_element": line.replace("{c}", ""),
+        "printer": {"lead": [Q, R, rs, r, P, Z, lapse], "factors": [Q, rs, r, R, Z, gap, P, lapse],
+                    "overrides": {lapse: "N^{1/Q}", gap: "\\left(1 - Z\\right)"}, "collect": collect},
+        "components": {"metric_components": {("t", "t"): "-N^{1/Q}", ("r", "r"): "\\dfrac{1}{Z}"},
+                       "inverse_metric_components": {("t", "t"): "-\\dfrac{1}{N^{1/Q}}", ("r", "r"): "Z"}},
+        "reduce": reduce,
+        "pretty": pretty,
+        "check": lambda chart: bowers_liang_check(chart, rates),
+    }
+
+
+def bowers_liang_check(chart, rates):
+    """The chart against its source, before anything is written. The slopes `reduce` writes for
+    N and P are those of their definitions. The stresses are diagonal with G^theta_theta =
+    G^phi_phi. The density is uniform, 8 pi G rho/c^2 = 3 r_s/R^3. The radial pressure is Bowers
+    and Liang's (3.4), rho_0 (Z^Q - Z_R^Q)/(3 Z_R^Q - Z^Q) with Z_R = 1 - r_s/R, which is
+    rho_0 (P - 1)/3, and the tangential pressure exceeds it by their (3.1) and (3.2) with n = 2,
+    C r^2 (rho_0 + p)(rho_0 + 3p)/Z, where C = (2 pi/3)(1 - 2Q) since Q = 1/2 - 3C/(4 pi). At the
+    surface P = 1, so the radial pressure vanishes, and g_tt and g_rr are those of Schwarzschild's
+    published exterior. At Q = 1/2 the chart is Schwarzschild's published interior, and as
+    Q -> 0 it tends to Florides's uniform cluster, the published chart of einstein_cluster. The
+    central pressure is infinite where N vanishes at the centre, r_s/R = 1 - 3^(-1/Q), their
+    (3.6)."""
+    r = chart.symbols[1]
+    p = chart.reader.parameters
+    R, rs, Q, N, P, Z = p["R"], p["r_s"], p["Q"], p["N"], p["P"], p["Z"]
+    held = chart.reader.held
+    out = lambda e: sp.sympify(e).subs(held).subs(held).doit()  # noqa: E731
+    for name in (N, P):
+        if vm.norm(sp.diff(out(held[name]), r) - out(rates[name])) != 0:
+            raise AssertionError(f"bowers_liang: the slope of {name} is not its definition's")
+    reduce = chart.reduce
+    geo, g = chart.geo, chart.geo.g
+    G = geo.raise_indices(geo.einstein_ll(), 2, (0,))
+    for a in range(4):
+        for b in range(4):
+            if a != b and reduce(G[a][b]) != 0:
+                raise AssertionError("bowers_liang: the chart has a stress off the diagonal")
+    if reduce(G[2][2] - G[3][3]) != 0:
+        raise AssertionError("bowers_liang: the two stresses across the radius differ")
+    density, radial, across = -G[0][0], G[1][1], G[2][2]
+    if vm.norm(density - 3 * rs / R ** 3) != 0:
+        raise AssertionError("bowers_liang: the density is not uniform, 8 pi G rho/c^2 = 3 r_s/R^3")
+    if vm.norm(radial - density * (P - 1) / 3) != 0:
+        raise AssertionError("bowers_liang: the radial pressure is not rho (P - 1)/3")
+    surface = (1 - rs / R) ** Q
+    theirs = density * (Z ** Q - surface) / (3 * surface - Z ** Q)
+    if vm.norm(out(density * (P - 1) / 3) - theirs) != 0:
+        raise AssertionError("bowers_liang: the radial pressure is not Bowers and Liang's (3.4)")
+    # Their (3.1) and (3.2) in 8 pi G/c^4 times the stresses: C/(8 pi) = (1 - 2Q)/12.
+    wanted = (1 - 2 * Q) * r ** 2 * (density + radial) * (density + 3 * radial) / (12 * Z)
+    if reduce(across - radial - wanted) != 0:
+        raise AssertionError("bowers_liang: the anisotropy is not Bowers and Liang's (3.1) with (3.2)")
+
+    def gone(e):
+        positive = {s: sp.Symbol(s.name + "_positive", positive=True) for s in sp.sympify(e).free_symbols}
+        return sp.simplify(sp.powsimp(sp.powdenest(sp.sympify(e).subs(positive), force=True), force=True)) == 0
+
+    lapse = out(-g[0, 0])
+    if not gone(out(P).subs(r, R) - 1):
+        raise AssertionError("bowers_liang: the radial pressure does not vanish at the surface")
+    reader, symbols, there = kaluza_klein_published("schwarzschild", "spherical")
+    same = {symbols[1]: R, reader.parameters["r_s"]: rs}
+    if not gone(-lapse.subs(r, R) - there[0, 0].subs(same)) or not gone((1 / Z).subs(r, R) - there[1, 1].subs(same)):
+        raise AssertionError("bowers_liang: the star does not meet Schwarzschild's published metric at its surface")
+    # Q = 1/2 is Schwarzschild's interior, at exact rational points inside the star.
+    reader, symbols, there = kaluza_klein_published("interior_schwarzschild", "spherical")
+    points = [(sp.Rational(3, 2), sp.Rational(1, 3)), (sp.Rational(5, 4), sp.Rational(9, 10)), (3, 2)]
+    for radius, x in points:
+        mine = {R: radius, rs: 1, r: x, Q: sp.Rational(1, 2)}
+        his = {reader.parameters["R"]: radius, reader.parameters["r_s"]: 1, symbols[1]: x}
+        if abs(sp.N(-lapse.subs(mine) - there[0, 0].subs(his), 40)) > sp.Float(10) ** -30:
+            raise AssertionError("bowers_liang: the chart at Q = 1/2 is not Schwarzschild's published interior")
+    # Q -> 0 is Florides's cluster of uniform density, whose lapse is (1 - r_s/R)^(3/2) Z^(-1/2).
+    reader, symbols, there = kaluza_klein_published("einstein_cluster", "uniform")
+    for radius, x in points:
+        his = {reader.parameters["R"]: radius, reader.parameters["r_s"]: 1, symbols[1]: x}
+        limit = sp.limit(lapse.subs({R: radius, rs: 1, r: x}), Q, 0, "+")
+        if abs(sp.N(-limit - there[0, 0].subs(his), 40)) > sp.Float(10) ** -30:
+            raise AssertionError("bowers_liang: the chart does not tend to Florides's cluster as Q -> 0")
+    # Their (3.6): N vanishes at the centre, and the central pressure is infinite, at r_s/R = 1 - 3^(-1/Q).
+    for exponent in (sp.Rational(1, 2), sp.Rational(1, 4), sp.Rational(1, 3)):
+        critical = {R: 1, rs: 1 - sp.Integer(3) ** (-1 / exponent), r: 0, Q: exponent}
+        if sp.simplify(out(N).subs(critical)) != 0:
+            raise AssertionError("bowers_liang: the central pressure is not infinite at Bowers and Liang's (3.6)")
+
+
+CHARTS["bowers_liang"] = bowers_liang
 # -- The Kiselev black hole ---------------------------------------------------------------
 
 KISELEV_CHARTS = ("static", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing", "linear",
@@ -20446,6 +21413,248 @@ def cremmer_scherk_check(chart):
 
 
 CHARTS["cremmer_scherk"] = cremmer_scherk
+
+
+# -- The three-brane and its throat -----------------------------------------------------
+
+THREE_BRANE_CHARTS = ["isotropic", "areal", "horizon", "throat", "throat_proper"]
+THREE_BRANE_ANGLES = ["\\alpha", "\\beta", "\\psi", "\\theta", "\\phi"]
+THREE_BRANE_SPHERE = ("\\left(d\\alpha^2 + \\sin^2\\alpha\\left(d\\beta^2 + \\sin^2\\beta\\left(d\\psi^2"
+                      " + \\sin^2\\psi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)\\right)\\right)")
+THREE_BRANE_FLAT = "\\left(-{}dt^2 + dx^2 + dy^2 + dz^2\\right)"
+THREE_BRANE_AREAL = "r = \\dfrac{L}{\\left(1 - w^4\\right)^{1/4}}"
+
+
+def three_brane(system):
+    """The extreme three-brane of type IIB supergravity in ten dimensions and its throat. The
+    isotropic chart is Duff and Lu's (2.2) with (2.20) and (3.4), e^{-4A} = 1 + |Q|/r^4, their |Q|
+    written L^4 and their r written rho. The areal chart is Horowitz and Strominger's (36) at
+    r_+ = r_- = L, which is Gibbons and Townsend's (3) and Gibbons, Horowitz and Townsend's (3.12) at
+    d = 7, p = 3. The horizon chart takes Gibbons, Horowitz and Townsend's coordinate of (2.14),
+    the power 1/(p + 1) of 1 - (mu/r)^(d - 3), here w = (1 - L^4/r^4)^(1/4): every component is
+    even in w, which is their reflection (2.22). The throat is Maldacena's (2.3), his U written
+    r and the lengths kept, the limit in which the 1 of the harmonic function is dropped, and the
+    throat in the proper distance is Gibbons and Townsend's (5). three_brane_check holds each chart
+    to the field equations with a self-dual five-form\\; three_brane_throat.md records each source."""
+    coords = ["t", "x", "y", "z", {"isotropic": "\\rho", "areal": "r", "horizon": "w", "throat": "r",
+                                    "throat_proper": "\\sigma"}[system]] + THREE_BRANE_ANGLES
+    reals = [PH_LINE.format(c) for c in coords[:4]]
+    angles = [a + " \\in [0, \\pi]" for a in THREE_BRANE_ANGLES[:-1]] + ["\\phi \\in [0, 2\\pi)"]
+    parameters = ["L"]
+    if system == "isotropic":
+        name, radial = "Isotropic", ["\\rho \\in (0, \\infty)"]
+        parameters = ["L", "H = 1 + \\dfrac{L^4}{\\rho^4}"]
+        line = ("ds^2 = H^{-1/2}" + THREE_BRANE_FLAT + " + H^{1/2}\\left(d\\rho^2 + \\rho^2"
+                + THREE_BRANE_SPHERE + "\\right)")
+    elif system == "areal":
+        name, radial = "Areal Radius", ["r \\in (L, \\infty)"]
+        f = "\\left(1 - \\dfrac{L^4}{r^4}\\right)"
+        line = ("ds^2 = " + f + "^{1/2}" + THREE_BRANE_FLAT + " + " + f + "^{-2}dr^2 + r^2" + THREE_BRANE_SPHERE)
+    elif system == "horizon":
+        # The areal radius is held as a function of w with the slope vm.RATES declares, so that every
+        # value is rational in w and r and no root of 1 - w^4 is written. L stands in neither the
+        # line element nor the slope: it is the constant of integration of the slope, so w and r
+        # have no relation among them that a value could hold.
+        name, radial = "Gibbons-Horowitz-Townsend", ["w \\in (0, 1)"]
+        parameters = ["L", THREE_BRANE_AREAL]
+        line = ("ds^2 = w^2" + THREE_BRANE_FLAT + " + r^2\\left(\\dfrac{dw^2}{w^2\\left(1 - w^4\\right)^2} + "
+                + THREE_BRANE_SPHERE[len("\\left("):])
+    elif system == "throat":
+        name, radial = "Throat", ["r \\in (0, \\infty)"]
+        line = ("ds^2 = \\dfrac{r^2}{L^2}" + THREE_BRANE_FLAT + " + \\dfrac{L^2}{r^2}dr^2 + L^2" + THREE_BRANE_SPHERE)
+    else:
+        name, radial = "Throat, Proper Distance", ["\\sigma \\in (-\\infty, \\infty)"]
+        line = ("ds^2 = e^{2\\sigma/L}" + THREE_BRANE_FLAT + " + d\\sigma^2 + L^2" + THREE_BRANE_SPHERE)
+    spec = {"metric_id": "three_brane_throat", "check": lambda chart, s=system: three_brane_check(chart, s),
+            "system": {"id": system, "name": name, "coords": coords, "domains": reals + radial + angles,
+                       "parameters": parameters, "line_element": line.replace("{}", "c^2")},
+            "chart_line_element": line.replace("{}", "")}
+    if system == "horizon":
+        probe = vm.Reader(coords, parameters, (), held=("r",), rates=vm.RATES[("three_brane_throat", "horizon")])
+        w, whole = probe.symbol["w"], sp.Symbol("_whole", positive=True)
+        spec["printer"] = {"lead": [w], "factors": [w, whole, probe.parameters["r"]], "flip": False,
+                           "named": {whole: "1 - w^4"}}
+        spec["reduce"] = lambda value: vm.norm(probe.by_rates(value))
+
+        def pretty(value):
+            # 1 - w^4 is kept whole, as the line element writes it.
+            value = sp.factor(value)
+            powers = value.as_powers_dict()
+            power = powers.get(w + 1, 0)
+            if power != 0 and powers.get(w - 1, 0) == power and powers.get(w ** 2 + 1, 0) == power:
+                value = sp.factor(value / (w ** 4 - 1) ** power) * (-whole) ** power
+            return value
+        spec["pretty"] = pretty
+    else:
+        probe = vm.Reader(coords, parameters, ())
+        spec["printer"] = {"lead": [probe.symbol[coords[4]], probe.parameters["L"]], "flip": False}
+    if system == "areal":
+        # r^4 - L^4 is kept whole, as the line element writes it.
+        factors = ["\\left(r + L\\right)", "\\left(r - L\\right)", "\\left(r^2 + L^2\\right)"]
+        spec["rewrite"] = [("".join(f + power for f in factors), "\\left(r^4 - L^4\\right)" + power)
+                           for power in ("^{3/2}", "^{5/2}", "^2", "^3", "^4", "")]
+        spec["rewrite"].append(("\\sqrt{r + L}\\sqrt{r - L}\\sqrt{r^2 + L^2}", "\\sqrt{r^4 - L^4}"))
+    return spec
+
+
+def three_brane_metric(system, x, L):
+    """The diagonal of a chart's metric at the radial coordinate x, with x^0 = ct: the four
+    dimensions along the brane, the radial one, and the square of the sphere's radius."""
+    if system == "isotropic":
+        H = 1 + L ** 4 / x ** 4
+        return 1 / sp.sqrt(H), sp.sqrt(H), sp.sqrt(H) * x ** 2
+    if system == "areal":
+        f = 1 - L ** 4 / x ** 4
+        return sp.sqrt(f), f ** -2, x ** 2
+    if system == "horizon":
+        return x ** 2, L ** 2 / (x ** 2 * (1 - x ** 4) ** sp.Rational(5, 2)), L ** 2 / sp.sqrt(1 - x ** 4)
+    if system == "throat":
+        return x ** 2 / L ** 2, L ** 2 / x ** 2, L ** 2
+    return sp.exp(2 * x / L), sp.Integer(1), L ** 2
+
+
+def three_brane_check(chart, system):
+    """Each chart against type IIB supergravity with a constant dilaton, Duff and Lu's (3.1),
+    R_MN = F_MPQRS F_N^PQRS / 96, for the five-form F = dA + *dA with A_txyz the square of the
+    warp factor, their (2.3) with (2.20): F is self-dual by construction, its part on the sphere is
+    closed, its flux through the sphere is 4 L^4 times the unit sphere's volume, the Ricci scalar
+    vanishes, and R^M_N is -k on the brane's four dimensions and the radial one and +k on the
+    sphere, with k = 4 L^8/(rho^4 + L^4)^(5/2) on the isotropic chart and 4/L^2 in the throat.
+    The areal chart is the isotropic one pulled back along rho^4 = r^4 - L^4, Gibbons, Horowitz
+    and Townsend's (4.1), and the horizon chart along rho = L w (1 - w^4)^(-1/4), and the horizon
+    chart is even in w. The inversion rho -> L^2/rho multiplies the isotropic metric by
+    L^2/rho^2, Gibbons and Townsend's conformal isometry (7). The throat is the isotropic chart
+    with H = L^4/rho^4, the limit lambda -> 0 of the isotropic metric at rho = lambda r with the
+    brane's coordinates divided by lambda, has no Weyl tensor, and is an Einstein space of
+    constant -4/L^2 on its first five dimensions and +4/L^2 on the sphere\\; the proper distance
+    chart is the throat pulled back along r = L e^(sigma/L)."""
+    name = f"three_brane_throat/{system}"
+    x, L = chart.symbols[4], chart.reader.parameters["L"]
+    g = sp.Matrix(chart.geo.g)
+
+    # The radial coordinate and L are positive, and w lies below 1, which the reader's symbols do
+    # not say, so a difference is settled with them written as positive symbols.
+    radius, length = sp.Symbol("_radius", positive=True), sp.Symbol("_length", positive=True)
+    inside = {x: radius / (1 + radius)} if system == "horizon" else {x: radius}
+    if system == "areal":
+        inside = {x: length * (1 + radius)}
+
+    rng = random.Random(3)
+    rated = None
+    if system == "horizon":
+        rated = vm.Reader(chart.coords_tex, ["L", THREE_BRANE_AREAL], (), held=("r",),
+                          rates=vm.RATES[("three_brane_throat", "horizon")])
+
+    def zero(e):
+        e = sp.sympify(e)
+        if e == 0:
+            return True
+        if rated:
+            # The held areal radius is written out, its slope by the declared rate first.
+            e = rated.by_rates(e.doit())
+            e = e.xreplace({f: L / (1 - x ** 4) ** sp.Rational(1, 4) for f in e.atoms(AppliedUndef)})
+        e = e.subs(inside, simultaneous=True).subs(L, length)
+        if sp.simplify(e) == 0:
+            return True
+        # Nested roots that simplify leaves standing are settled at three points, to thirty digits.
+        for _ in range(3):
+            at = {s: sp.Rational(rng.randint(20, 160), 100) for s in sorted(e.free_symbols, key=str)}
+            if abs(sp.N(e.subs(at), 40)) > sp.Float(10) ** -30:
+                return False
+        return True
+
+    sines = [sp.sin(a) for a in chart.symbols[5:9]]
+    round_sphere = [sp.Integer(1), sines[0] ** 2, (sines[0] * sines[1]) ** 2, (sines[0] * sines[1] * sines[2]) ** 2,
+                    (sines[0] * sines[1] * sines[2] * sines[3]) ** 2]
+
+    def diagonal(warp, radial, sphere):
+        return sp.diag(-warp, warp, warp, warp, radial, *[sphere * s for s in round_sphere])
+
+    warp, radial, sphere = three_brane_metric(system, x, L)
+    wanted = diagonal(warp, radial, sphere)
+    if any(not zero(g[i, j] - wanted[i, j]) for i in range(10) for j in range(10)):
+        raise AssertionError(f"{name}: the line element is not the chart's warp factor, radial part and sphere")
+
+    # The five-form: F_txyz(radial) = d(warp^2)/d(radial) and its dual on the sphere.
+    electric = sp.diff(warp ** 2, x)
+    volume = sines[0] ** 4 * sines[1] ** 3 * sines[2] ** 2 * sines[3]       # of the unit five-sphere
+    root = warp ** 2 * sp.sqrt(radial) * sphere ** sp.Rational(5, 2) * volume  # sqrt(-g), 0 < angles < pi
+    if not zero(sp.Mul(*[g[i, i] for i in range(10)]) + root ** 2):
+        raise AssertionError(f"{name}: sqrt(-g) is not the product of the warp factors")
+    magnetic = root * electric / (warp ** 4 * radial)                          # (*F) on the sphere
+    if not zero(sp.diff(magnetic, x)):
+        raise AssertionError(f"{name}: the five-form on the sphere is not closed")
+    if not zero(magnetic - 4 * L ** 4 * volume):
+        raise AssertionError(f"{name}: the flux through the sphere is not 4 L^4 times the unit sphere's volume")
+    ricci = chart.geo.ricci_ll()
+    ginv = [1 / g[i, i] for i in range(10)]
+    for i in range(10):
+        block = range(5) if i < 5 else range(5, 10)
+        strength = electric if i < 5 else magnetic
+        others = sp.Mul(*[ginv[a] for a in block if a != i])
+        if not zero(sp.sympify(ricci[i][i]) - strength ** 2 * others / 4):
+            raise AssertionError(f"{name}: R_MN = F_MPQRS F_N^PQRS/96 fails in slot {chart.coords_tex[i]}")
+        if any(ricci[i][j] != 0 for j in range(10) if j != i):
+            raise AssertionError(f"{name}: the Ricci tensor is not diagonal")
+    if not zero(chart.geo.ricci_scalar()):
+        raise AssertionError(f"{name}: the Ricci scalar does not vanish")
+    mixed = [sp.sympify(ricci[i][i]) * ginv[i] for i in range(10)]
+    if any(not zero(mixed[i] - (1 if i >= 5 else -1) * mixed[9]) for i in range(10)):
+        raise AssertionError(f"{name}: the mixed Ricci tensor is not -k on the first five dimensions and +k on the sphere")
+
+    def source(of):
+        spec = three_brane(of)
+        return cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+
+    def pulled(of, image, slope):
+        """The chart `of` carried along radial = image(x), in every diagonal slot."""
+        there = source(of)
+        at = {there.symbols[4]: image, there.reader.parameters["L"]: L}
+        at.update(dict(zip(there.symbols[5:], chart.symbols[5:])))
+        J = sp.eye(10)
+        J[4, 4] = slope
+        return J.T * sp.Matrix(there.geo.g).subs(at, simultaneous=True) * J
+
+    def same(a, b, what):
+        if any(not zero(a[i, j] - b[i, j]) for i in range(10) for j in range(i, 10)):
+            raise AssertionError(f"{name}: {what}")
+
+    if system == "isotropic":
+        if not zero(mixed[9] - 4 * L ** 8 / (x ** 4 + L ** 4) ** sp.Rational(5, 2)):
+            raise AssertionError(f"{name}: the mixed Ricci tensor is not 4 L^8/(rho^4 + L^4)^(5/2)")
+        inverted = g.subs(x, L ** 2 / x)
+        inverted[4, 4] *= (L ** 2 / x ** 2) ** 2
+        same(inverted, (L ** 2 / x ** 2) * g, "the inversion rho -> L^2/rho is not a conformal isometry of factor L^2/rho^2")
+        return
+    if system == "areal":
+        image = (x ** 4 - L ** 4) ** sp.Rational(1, 4)
+        same(pulled("isotropic", image, sp.diff(image, x)), g, "not the isotropic chart pulled back along rho^4 = r^4 - L^4")
+        return
+    if system == "horizon":
+        image = L * x / (1 - x ** 4) ** sp.Rational(1, 4)
+        same(pulled("isotropic", image, sp.diff(image, x)), g,
+             "not the isotropic chart pulled back along rho = L w (1 - w^4)^(-1/4)")
+        if any(not zero(part - part.subs(x, -x)) for part in three_brane_metric("horizon", x, L)):
+            raise AssertionError(f"{name}: the metric is not even in w")
+        return
+    if any(vm._at(chart.geo.weyl_llll(), index) != 0 for index in vm._indices(10, 4)):
+        raise AssertionError(f"{name}: the throat has a Weyl tensor")
+    if not zero(mixed[9] - 4 / L ** 2):
+        raise AssertionError(f"{name}: the throat's Ricci tensor is not -4/L^2 on anti-de Sitter space and +4/L^2 on the sphere")
+    if system == "throat":
+        # The isotropic chart at rho = lambda r, with t, x, y, z divided by lambda, as lambda -> 0.
+        scale = sp.Symbol("lambda", positive=True)
+        iso_warp, iso_radial, iso_sphere = three_brane_metric("isotropic", scale * x, L)
+        limits = [sp.limit(iso_warp / scale ** 2, scale, 0), sp.limit(iso_radial * scale ** 2, scale, 0),
+                  sp.limit(iso_sphere, scale, 0)]
+        if any(not zero(a - b) for a, b in zip(limits, (warp, radial, sphere))):
+            raise AssertionError(f"{name}: not the limit of the isotropic chart toward rho = 0")
+        return
+    image = L * sp.exp(x / L)
+    same(pulled("throat", image, sp.diff(image, x)), g, "not the throat pulled back along r = L e^(sigma/L)")
+
+
+CHARTS["three_brane_throat"] = [lambda s=s: three_brane(s) for s in THREE_BRANE_CHARTS]
 # -- Tippett and Tsang's time machine ---------------------------------------------------
 
 TIPPETT_TSANG_CHARTS = ["cartesian", "polar", "interior", "rindler"]
@@ -24060,6 +25269,341 @@ def kasner_scalar_check(chart, system):
 CHARTS["kasner_scalar"] = [lambda s=s: kasner_scalar(s) for s in KASNER_SCALAR_CHARTS]
 
 
+# -- Kasner's universe with a magnetic field -------------------------------------------
+
+KASNER_MAGNETIC_CHARTS = ("kasner_time", "rosen")
+
+
+def magnetic_powers(time, time_tex, c, b, exponents, state):
+    """A pretty printer for the chart in Kasner's time of the universe with a magnetic field, whose
+    every value is one power of the time, with an exponent that holds the exponents, times a
+    rational function of b^2 t^{2p_3}. The powers of the time are read as monomials in t,
+    t^{p_1}, t^{p_2} and t^{p_3}, the value is factored, the monomial is handed to the printer as
+    one placeholder with its whole exponent, as time_powers does, and each factor that is a sum
+    is written in rising powers of b^2 t^{2p_3}, as 1 + b^2 t^{2p_3} is in the line element."""
+    table = {}
+    A = [sp.Symbol(f"TIMEAXIS{i}", positive=True) for i in (1, 2, 3)]
+    # t^{2p_3} is a generator of its own, so that 1 - b^2 t^{2p_3} is not split into two factors.
+    W = sp.Symbol("TIMEFIELD", positive=True)
+
+    def split(power, a):
+        e = sp.expand(power)
+        out, rest = sp.Integer(1), e
+        for p, axis in zip(exponents, A):
+            k = e.coeff(p)
+            if axis == A[2]:
+                if not k.is_Integer:
+                    raise AssertionError(f"the exponent {power} holds a fraction of p_3")
+                out *= W ** (k // 2) * axis ** (k % 2)
+            else:
+                out *= axis ** k
+            rest -= k * p
+        rest = sp.expand(rest)
+        if not rest.is_Number:
+            raise AssertionError(f"the exponent {power} is not linear in the exponents")
+        return out * a ** rest
+
+    def coefficient(printer, value):
+        """The text of one coefficient of a sum in b^2 t^{2p_3}, and whether it carries a minus."""
+        value = sp.factor(value)
+        negative = value.could_extract_minus_sign()
+        body = -value if negative else value
+        if body == 1:
+            return "", negative
+        if body.is_Add:
+            return "\\left(" + printer.positive_first(body) + "\\right)", negative
+        text = printer.expr(body)
+        return text if cp.is_single_term(text) else "\\left(" + text + "\\right)", negative
+
+    def named_sum(printer, factor):
+        poly = sp.Poly(factor, W)
+        terms = sorted(((k[0], sp.cancel(value / b ** (2 * k[0]))) for k, value in zip(poly.monoms(), poly.coeffs())),
+                       key=lambda term: term[0])
+        if any(value.has(b) for _, value in terms):
+            raise AssertionError(f"{factor} is not a polynomial in b^2 t^{{2p_3}}")
+        text = ""
+        for i, (k, value) in enumerate(terms):
+            if k == 0 and sp.factor(value).is_Add:
+                # The part with no field in it leads the sum as it stands, with no bracket.
+                text += printer.positive_first(sp.factor(value))
+                continue
+            head, negative = coefficient(printer, value)
+            tail = "" if k == 0 else ("b^2" if k == 1 else f"b^{2 * k}") + f"{time_tex}^{{{2 * k if k > 1 else 2}p_3}}"
+            piece = (head + ("\\," if head and tail and not head.endswith("\\right)") else "") + tail) or "1"
+            text += ("-" if negative else "") + piece if not text else (" - " if negative else " + ") + piece
+        return text
+
+    def pretty(value):
+        printer = state["printer"]
+        a, cc = sp.Dummy(positive=True), sp.Dummy(positive=True)
+        value = sp.together(sp.sympify(value)).subs({time: a, c: cc})
+        value = sp.powsimp(sp.expand_power_base(sp.powdenest(value, force=True), force=True), combine="exp")
+        # The line element writes each power as (x^0/c)^{2p}, so the powers of c whose exponents
+        # hold a parameter cancel against those of the time once x^0 is written ct; they are
+        # dropped here, and reading the printed value back catches one that did not cancel.
+        value = value.replace(lambda e: e.is_Pow and e.base == cc,
+                              lambda e: cc ** sp.expand(e.exp).subs({p: 0 for p in exponents}))
+        value = value.replace(lambda e: e.is_Pow and e.base == a, lambda e: split(e.exp, a))
+
+        def paired(side):
+            # Every pair of t^{p_3} left standing in a product of factors is one t^{2p_3}.
+            poly = sp.Poly(sp.expand(side), A[2])
+            return sum(coeff * W ** (k // 2) * A[2] ** (k % 2) for (k,), coeff in zip(poly.monoms(), poly.coeffs()))
+        numerator, denominator = sp.fraction(sp.cancel(value))
+        value = sp.factor(sp.cancel(paired(numerator) / paired(denominator)))
+        exponent, rest = sp.Integer(0), sp.Integer(1)
+        axes = dict(zip(A, exponents))
+        for f in sp.Mul.make_args(value):
+            base, k = f.as_base_exp()
+            if base == a:
+                exponent += k
+            elif base in axes:
+                exponent += k * axes[base]
+            elif base == W:
+                exponent += 2 * k * exponents[2]
+            elif base.is_Add and base.has(W):
+                if base.has(a, *A):
+                    raise AssertionError(f"{base} is not a sum in t^{{2p_3}} alone")
+                text = named_sum(printer, base)
+                sign = 1
+                if text.startswith("-"):
+                    text, sign = named_sum(printer, -base), -1
+                placeholder = table.setdefault(text, sp.Symbol(f"MAGNETICSUM{len(table)}", positive=True))
+                printer.named[placeholder] = text
+                rest *= sign ** k * placeholder ** k
+            else:
+                if base.has(a, W, *A):
+                    raise AssertionError(f"{base} holds the time outside a power")
+                rest *= f
+        rest = rest.subs(cc, c)
+        exponent = sp.expand(exponent)
+        if exponent == 0:
+            return rest
+        if exponent.is_Number:
+            return rest * time ** exponent
+        negative = all(term.as_coeff_Mul()[0].is_negative for term in sp.Add.make_args(exponent))
+        shown, side = (-exponent, -1) if negative else (exponent, 1)
+        text = time_tex + "^{" + printer.positive_first(shown) + "}"
+        placeholder = table.setdefault(text, sp.Symbol(f"TIMEPOWER{len(table)}", positive=True))
+        printer.overrides[placeholder] = text
+        return rest * placeholder ** side
+
+    return pretty
+
+
+def kasner_magnetic(system):
+    """Kasner's universe with a uniform magnetic field along z and no matter, the solution of the
+    Einstein-Maxwell equations Rosen found (1962, 1964), in two charts.
+
+    kasner_time  ds^2 = f^2(-c^2dt^2 + t^{2p_1}dx^2 + t^{2p_2}dy^2) + t^{2p_3}dz^2/f^2 with
+                 f = 1 + b^2 t^{2p_3} and the exponents on Kasner's circle, (33) of Kastor and
+                 Traschen (2015) with their E = 2b: Harrison's transformation of Kasner's vacuum
+                 along z;
+    rosen        ds^2 = -l^2 d eta^2/(1 + cos eta)^4 + (dx^2 + dy^2)/(1 + cos eta)^2 + sin^2(eta) dz^2,
+                 Rosen's solutions as Kastor and Traschen's appendix writes them, at
+                 c_1 = c_2 = 1, the axisymmetric case, which is the first chart at the exponents
+                 (0, 0, 1) with tan(eta/2) = b t.
+
+    Every value of the first chart assumes Kasner's two conditions. kasner_magnetic_check holds
+    both charts to the Einstein-Maxwell equations with the field F_xy constant, the stated
+    curvature of the first to the tensors of free exponents on Kasner's circle, and the second to
+    being the first pulled back; kasner_magnetic.md beside this file is the derivation."""
+    state = {}
+    flat = ["x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)", "z \\in (-\\infty, \\infty)"]
+
+    def check(chart):
+        state["printer"] = chart.printer
+        kasner_magnetic_check(chart, system)
+
+    spec = {"metric_id": "kasner_magnetic", "check": check}
+    if system == "kasner_time":
+        coords, parameters = ["t", "x", "y", "z"], ["p_1", "p_2", "p_3", "b"]
+
+        def line(c2, t):
+            f = f"\\left(1 + b^2{t}^{{2p_3}}\\right)"
+            return (f"ds^2 = {f}^2\\left(-{c2}dt^2 + {t}^{{2p_1}}dx^2 + {t}^{{2p_2}}dy^2\\right)"
+                    f" + \\dfrac{{{t}^{{2p_3}}}}{{{f}^2}}dz^2")
+        probe = vm.Reader(coords, parameters, ())
+        time = probe.symbol["t"]
+        b = probe.parameters["b"]
+        exponents = [probe.parameters[n] for n in ("p_1", "p_2", "p_3")]
+        f = "\\left(1 + b^2t^{2p_3}\\right)"
+        spec.update({
+            "system": {"id": system, "name": "Kasner's time", "coords": coords,
+                       "domains": ["t \\in (0, \\infty)"] + flat
+                                  + ["t \\to 0 \\;\\text{(the singularity, where } p_3 < 1\\text{)}"],
+                       "parameters": parameters, "line_element": line("c^2", "t")},
+            "chart_line_element": line("", "\\left(\\dfrac{t}{c}\\right)"),
+            "time": "t",
+            "printer": {"lead": [b] + exponents + [time], "factors": exponents + [b, probe.c, time]},
+            "pretty": magnetic_powers(time, "t", probe.c, b, exponents, state),
+            "components": {
+                "metric_components": {("t", "t"): "-" + f + "^2", ("x", "x"): f + "^2t^{2p_1}",
+                                      ("y", "y"): f + "^2t^{2p_2}", ("z", "z"): "\\dfrac{t^{2p_3}}{" + f + "^2}"},
+                "inverse_metric_components": {("t", "t"): "-\\dfrac{1}{" + f + "^2}",
+                                              ("x", "x"): "\\dfrac{t^{-2p_1}}{" + f + "^2}",
+                                              ("y", "y"): "\\dfrac{t^{-2p_2}}{" + f + "^2}",
+                                              ("z", "z"): f + "^2t^{-2p_3}"}},
+            "kretschmann": "\\dfrac{16p_3^2\\left(1 - p_3 + 6p_3\\left(1 - p_3\\right)b^2t^{2p_3}"
+                           " + 2\\left(13p_3^2 - 2p_3 - 1\\right)b^4t^{4p_3} - 6p_3\\left(3p_3 + 1\\right)b^6t^{6p_3}"
+                           " + \\left(2p_3 + 1\\right)\\left(3p_3 + 1\\right)b^8t^{8p_3}\\right)}"
+                           "{c^4\\,t^4\\left(1 + b^2t^{2p_3}\\right)^8}",
+        })
+    else:
+        coords, parameters = ["\\eta", "x", "y", "z"], ["\\ell"]
+        line = ("ds^2 = -\\dfrac{\\ell^2}{\\left(1 + \\cos\\eta\\right)^4}d\\eta^2"
+                " + \\dfrac{dx^2 + dy^2}{\\left(1 + \\cos\\eta\\right)^2} + \\sin^2\\eta\\,dz^2")
+        probe = vm.Reader(coords, parameters, ())
+        eta, ell = probe.symbol["\\eta"], probe.parameters["ell"]
+        spec.update({
+            "system": {"id": system, "name": "Rosen (axisymmetric)", "coords": coords,
+                       "domains": ["\\eta \\in (0, \\pi)"] + flat
+                                  + ["\\eta = 0 \\;\\text{(a coordinate singularity)}",
+                                     "\\eta \\to \\pi \\;\\text{(the infinite future)}"],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [ell, sp.cos(eta), sp.sin(eta)], "named": {ROSEN_SUM: "1 + \\cos\\eta"}},
+            "pretty": rosen_trigonometric(eta),
+            "components": {
+                "metric_components": {("\\eta", "\\eta"): "-\\dfrac{\\ell^2}{\\left(1 + \\cos\\eta\\right)^4}",
+                                      ("x", "x"): "\\dfrac{1}{\\left(1 + \\cos\\eta\\right)^2}",
+                                      ("y", "y"): "\\dfrac{1}{\\left(1 + \\cos\\eta\\right)^2}",
+                                      ("z", "z"): "\\sin^2\\eta"},
+                "inverse_metric_components": {("\\eta", "\\eta"): "-\\dfrac{\\left(1 + \\cos\\eta\\right)^4}{\\ell^2}",
+                                              ("x", "x"): "\\left(1 + \\cos\\eta\\right)^2",
+                                              ("y", "y"): "\\left(1 + \\cos\\eta\\right)^2",
+                                              ("z", "z"): "\\dfrac{1}{\\sin^2\\eta}"}},
+        })
+    return spec
+
+
+# The sum 1 + cos(eta) of Rosen's chart, printed in the order the line element writes it.
+ROSEN_SUM = sp.Symbol("ROSENSUM", positive=True)
+
+
+def rosen_trigonometric(eta):
+    """A pretty printer for Rosen's chart: every value is a power of sin(eta) times a rational
+    function of cos(eta), so the even powers of the sine are written in the cosine, the fraction
+    is cancelled and both sides are factored. A factor 1 - cos(eta) is then written
+    sin^2(eta)/(1 + cos(eta)), which leaves the sine and the sum 1 + cos(eta) of the line element
+    as the only factors that vanish on the chart's edges."""
+    def pretty(value):
+        s, k = sp.Dummy(), sp.Dummy()
+        value = sp.together(sp.sympify(value)).subs({sp.sin(eta): s, sp.cos(eta): k})
+        numerator, denominator = sp.fraction(sp.together(value))
+
+        def reduced(e):
+            poly = sp.Poly(sp.expand(e), s)
+            out = sp.Integer(0)
+            for (power,), coeff in zip(poly.monoms(), poly.coeffs()):
+                out += coeff * (1 - k ** 2) ** (power // 2) * s ** (power % 2)
+            return sp.expand(out)
+        value = sp.factor(sp.cancel(reduced(numerator) / reduced(denominator)))
+        out = sp.Integer(1)
+        for f in sp.Mul.make_args(value):
+            base, power = f.as_base_exp()
+            if sp.expand(base - (k - 1)) == 0:
+                out *= (-1) ** power * s ** (2 * power) / ROSEN_SUM ** power
+            elif sp.expand(base + (k - 1)) == 0:
+                out *= s ** (2 * power) / ROSEN_SUM ** power
+            elif sp.expand(base - (k + 1)) == 0:
+                out *= ROSEN_SUM ** power
+            else:
+                out *= f
+        return out.subs({s: sp.sin(eta), k: sp.cos(eta)})
+    return pretty
+
+
+def kasner_magnetic_check(chart, system):
+    """Each chart against the Einstein-Maxwell equations, G_ab = 2(F_ac F_b^c - g_ab F^2/4) in
+    units where the field is an inverse length, and Maxwell's equations, with the field F_xy
+    constant: 2 b p_3/c in Kasner's time, where the powers are read with the time in a fixed
+    unit, and 1/l in Rosen's chart. In Kasner's time the equations hold on Kasner's circle, on
+    the checker's own parametrisation of it, and the curvature stated there, the Ricci tensor of
+    the field, no Ricci scalar and the Kretschmann scalar in p_3 and b^2 t^{2p_3} alone, is held
+    to the tensors of free exponents and then stands in for the chart's, so that it is what is
+    printed. Rosen's chart is the first at (0, 0, 1) pulled back along tan(eta/2) = b t."""
+    reader, geo = chart.reader, chart.geo
+    P = reader.parameters
+    x = chart.symbols
+    g, ginv = geo.g, geo.ginv
+    if system == "kasner_time":
+        relations = vm.PARAMETER_RELATIONS[("kasner_magnetic", system)]
+        surface = {P[name]: sp.sympify(value) for name, value in relations.items()}
+        b, p3 = P["b"], P["p_3"]
+        w = b ** 2 * (x[0] / reader.c) ** (2 * p3)
+        field = 2 * b * p3 / reader.c
+    else:
+        surface = {}
+        field = 1 / P["ell"]
+
+    def on(value):
+        return vm.norm(sp.sympify(value).subs(surface))
+
+    F = sp.zeros(4, 4)
+    F[1, 2], F[2, 1] = field, -field
+    Fup = ginv * F * ginv
+    F2 = sum(F[i, j] * Fup[i, j] for i in range(4) for j in range(4))
+    stress = [[2 * (sum(F[i, k] * F[j, m] * ginv[k, m] for k in range(4) for m in range(4)) - g[i, j] * F2 / 4)
+               for j in range(4)] for i in range(4)]
+    if system == "kasner_time":
+        # The stress holds t^(-2 p_1 - 2 p_2) where the curvature holds t^(2 p_3 - 2), one power of
+        # the time once the exponents sum to 1, so it is compared with the stated Ricci tensor
+        # below, which is the Einstein tensor where the Ricci scalar vanishes.
+        pass
+    else:
+        G = geo.einstein_ll()
+        for i in range(4):
+            for j in range(i, 4):
+                if on(vm._at(G, (i, j)) - stress[i][j]) != 0:
+                    raise AssertionError(f"kasner_magnetic: the Einstein tensor misses Maxwell's stress in slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]} of the {system} chart")
+    # F_xy is constant and sqrt(-g) F^xy depends on the time alone, so both of Maxwell's equations hold.
+    if any(Fup[1, 2].has(s) for s in x[1:]) or any(g.has(s) for s in x[1:]):
+        raise AssertionError(f"kasner_magnetic: Maxwell's equations fail in the {system} chart")
+    if system == "kasner_time":
+        rho = 4 * p3 ** 2 * w / (x[0] ** 2 * (1 + w) ** 4)
+        ricci = [[sp.Integer(0)] * 4 for _ in range(4)]
+        for i, sign in enumerate((-1, 1, 1, -1)):
+            ricci[i][i] = sign * rho * g[i, i]
+        kretschmann = 16 * p3 ** 2 * ((1 - p3) + 6 * p3 * (1 - p3) * w + 2 * (13 * p3 ** 2 - 2 * p3 - 1) * w ** 2
+                                      - 6 * p3 * (3 * p3 + 1) * w ** 3 + (2 * p3 + 1) * (3 * p3 + 1) * w ** 4
+                                      ) / (x[0] ** 4 * (1 + w) ** 8)
+        linear = {P["p_1"]: 1 - P["p_2"] - p3}
+        for i in range(4):
+            for j in range(i, 4):
+                # The time is positive on the chart, which is what gathers its powers into one.
+                gap = (stress[i][j] - ricci[i][j]).subs(linear).subs(x[0], sp.Dummy(positive=True))
+                if sp.simplify(sp.expand_power_base(sp.powdenest(gap, force=True), force=True)) != 0:
+                    raise AssertionError(f"kasner_magnetic: the stated Ricci tensor misses Maxwell's stress in slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+        stated = OnSurface(geo, ricci, sp.Integer(0), kretschmann)
+        for name, rank in (("ricci_ll", 2), ("einstein_ll", 2), ("weyl_llll", 4)):
+            free, there = getattr(geo, name)(), getattr(stated, name)()
+            for index in vm._indices(4, rank):
+                if on(vm._at(free, index) - vm._at(there, index)) != 0:
+                    raise AssertionError(f"kasner_magnetic: {name} is misstated in slot {index}")
+        if on(geo.ricci_scalar()) != 0 or on(geo.kretschmann() - kretschmann) != 0:
+            raise AssertionError("kasner_magnetic: a scalar is misstated")
+        chart.geo = stated
+    else:
+        # tan(eta/2) = b t at (p_1, p_2, p_3) = (0, 0, 1), with x and y halved and z doubled and
+        # scaled by b: ell = 2 c t_0/b in the unit of time t_0 the powers are read in.
+        eta, ell = x[0], P["ell"]
+        tb = sp.tan(eta / 2)                       # b t / t_0
+        f = 1 + tb ** 2
+        dt = ell / 2 * sp.diff(tb, eta)            # c dt = (c t_0/b) d(tan(eta/2)) = (ell/2) d(tan(eta/2))
+        pulled = sp.diag(-f ** 2 * dt ** 2, f ** 2 / 4, f ** 2 / 4, tb ** 2 / f ** 2 * 4)
+        if (pulled - g).applyfunc(sp.simplify) != sp.zeros(4):
+            raise AssertionError("kasner_magnetic: Rosen's chart is not Kasner's time pulled back")
+        kretschmann = 8 * (1 + sp.cos(eta)) ** 6 * (7 * sp.cos(eta) ** 2 + 2 * sp.cos(eta) + 1) / ell ** 4
+        if vm.norm(geo.kretschmann() - kretschmann) != 0 or vm.norm(geo.ricci_scalar()) != 0:
+            raise AssertionError("kasner_magnetic: a scalar is misstated in Rosen's chart")
+
+
+CHARTS["kasner_magnetic"] = [lambda s=s: kasner_magnetic(s) for s in KASNER_MAGNETIC_CHARTS]
+
+
 # -- Ellis's small universes --------------------------------------------------------------------
 
 SMALL_CHARTS = ("torus", "torus_conformal", "hyperbolic", "horn")
@@ -24261,6 +25805,580 @@ def small_universes_check(chart, system):
 
 
 CHARTS["small_universes"] = [lambda s=s: small_universes(s) for s in SMALL_CHARTS]
+
+
+# -- Schwarzschild's black hole in a tidal field -------------------------------------------
+
+DS_P_U = "U = \\dfrac{q}{4}\\left(3x^2 - 1\\right)\\left(3y^2 - 1\\right)"
+DS_P_V = ("V = -3q\\,x\\left(1 - y^2\\right) - \\dfrac{9q^2}{16}\\left(x^2 - 1\\right)\\left(1 - y^2\\right)"
+          "\\left(9x^2y^2 - x^2 - y^2 + 1\\right)")
+DS_PROLATE_PARAMETERS = ["m", "q", DS_P_U, DS_P_V]
+DS_S_U = "U = \\dfrac{q\\left(3r^2 - 6mr + 2m^2\\right)\\left(3\\cos^2\\theta - 1\\right)}{4m^2}"
+DS_S_V = ("V = -\\dfrac{3q\\left(r - m\\right)\\sin^2\\theta}{m} - \\dfrac{9q^2\\,r\\left(r - 2m\\right)\\sin^2\\theta}{16m^4}"
+          "\\left(\\left(r - m\\right)^2\\left(9\\cos^2\\theta - 1\\right) + m^2\\sin^2\\theta\\right)")
+DS_SPHERICAL_PARAMETERS = ["m", "q", DS_S_U, DS_S_V]
+DS_W_X = ("x = \\dfrac{\\sqrt{\\rho^2 + \\left(z + m\\right)^2} + \\sqrt{\\rho^2 + \\left(z - m\\right)^2}}{2m}")
+DS_W_Y = ("y = \\dfrac{\\sqrt{\\rho^2 + \\left(z + m\\right)^2} - \\sqrt{\\rho^2 + \\left(z - m\\right)^2}}{2m}")
+DS_W_PSI = ("\\psi = \\dfrac{1}{2}\\ln\\left(\\dfrac{x - 1}{x + 1}\\right)"
+            " + \\dfrac{q\\left(6z^2 - 3\\rho^2 - 2m^2\\right)}{4m^2}")
+DS_W_GAMMA = ("\\gamma = \\dfrac{1}{2}\\ln\\left(\\dfrac{x^2 - 1}{x^2 - y^2}\\right) - 3q\\,x\\left(1 - y^2\\right)"
+              " - \\dfrac{9q^2\\rho^2\\left(8z^2 - \\rho^2\\right)}{16m^4}")
+DS_WEYL_PARAMETERS = ["m", "q", DS_W_X, DS_W_Y, DS_W_PSI, DS_W_GAMMA]
+DS_HELD = ("U", "V")
+DS_CHARTS = ("prolate_spheroidal", "spherical", "weyl")
+
+
+def distorted_schwarzschild(system):
+    """Schwarzschild's black hole in the quadrupole field of distant matter, Doroshkevich,
+    Zel'dovich and Novikov's Appendix IV and the simplest of Geroch and Hartle's distorted black
+    holes: the member of Weyl's class whose potential is Schwarzschild's plus q times the
+    quadrupole harmonic that is regular on the horizon and grows with distance, P_2(x) P_2(y).
+
+    prolate_spheroidal  Doroshkevich, Zel'dovich and Novikov's own, and Shoom, Walsh and Booth's (1):
+                        ds^2 = -(x - 1)/(x + 1) e^{2U} c^2 dt^2 + m^2 (x + 1)^2 e^{-2U}
+                        (e^{2V}(dx^2/(x^2 - 1) + dy^2/(1 - y^2)) + (1 - y^2) dphi^2)
+    spherical           x = r/m - 1, y = cos(theta), Schwarzschild's chart at q = 0, Fairhurst and
+                        Krishnan's (3.7)
+    weyl                Weyl's canonical chart, in which Geroch and Hartle work, with psi and gamma
+                        Schwarzschild's plus U and V
+
+    U and V, or psi and gamma, are names each chart defines, held as functions of its two
+    coordinates while the tensors are built (vm.HELD). In the first two charts `reduce` writes
+    the second derivative of U along the radial coordinate by Laplace's equation and that of V
+    by the one field equation of second order, and leaves the first derivatives of V standing,
+    so that no value divides by x^2 - y^2, which Weyl's quadrature does; a value that vanishes
+    on the quadrature is written as zero, and the Weyl tensor, which is the Riemann tensor of a
+    vacuum, is written as the Riemann tensor is. Weyl's chart writes gamma's derivatives by the
+    quadrature, which divides by nothing there. distorted_schwarzschild_check holds each chart
+    to its source, and distorted_schwarzschild.md beside this file is the derivation."""
+    D = sp.Derivative
+    if system == "weyl":
+        coords = ["t", "\\rho", "\\phi", "z"]
+
+        def line(c2):
+            return (f"ds^2 = -e^{{2\\psi}}{c2}dt^2 + e^{{-2\\psi}}\\left(e^{{2\\gamma}}\\left(d\\rho^2 + dz^2\\right)"
+                    " + \\rho^2d\\phi^2\\right)")
+        probe = vm.Reader(coords, DS_WEYL_PARAMETERS, (), held=MM_HELD)
+        a, b = probe.symbol["\\rho"], probe.symbol["z"]
+        psi, gam = probe.parameters["psi"], probe.parameters["gamma"]
+        lead = [gam, psi]
+        for g in (gam, psi):
+            lead += [D(g, a), D(g, b)]
+        for g in (gam, psi):
+            lead += [D(g, (a, 2)), D(g, a, b), D(g, (b, 2))]
+        lead += [a]
+        named, overrides = distorted_weyl_exponentials([probe.symbol[name] for name in coords], lead, psi, gam)
+        return {
+            "metric_id": "distorted_schwarzschild",
+            "system": {"id": "weyl", "name": "Weyl", "coords": coords,
+                       "domains": ["t \\in (-\\infty, \\infty)", "\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                                   "z \\in (-\\infty, \\infty)",
+                                   "\\rho = 0,\\; |z| \\le m \\;\\text{(the horizon)}"],
+                       "parameters": DS_WEYL_PARAMETERS, "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"lead": lead, "factors": lead + list(overrides), "overrides": overrides},
+            "pretty": distorted_weyl_pretty(named),
+            "reduce": morgan_morgan_reduce(a, b, psi, gam, oblate=False),
+            "check": distorted_schwarzschild_check,
+        }
+    spherical = system == "spherical"
+    if not spherical:
+        coords = ["t", "x", "y", "\\phi"]
+        parameters, name = DS_PROLATE_PARAMETERS, "Prolate Spheroidal"
+
+        def line(c2):
+            return (f"ds^2 = -\\dfrac{{x - 1}}{{x + 1}}e^{{2U}}{c2}dt^2 + m^2\\left(x + 1\\right)^2e^{{-2U}}"
+                    "\\left(e^{2V}\\left(\\dfrac{dx^2}{x^2 - 1} + \\dfrac{dy^2}{1 - y^2}\\right)"
+                    " + \\left(1 - y^2\\right)d\\phi^2\\right)")
+        probe = vm.Reader(coords, parameters, (), held=DS_HELD)
+        a, b, m = probe.symbol["x"], probe.symbol["y"], probe.parameters["m"]
+        domains = ["t \\in (-\\infty, \\infty)", "x \\in (1, \\infty)", "y \\in [-1, 1]", "\\phi \\in [0, 2\\pi)",
+                   "x = 1 \\;\\text{(the horizon)}"]
+        named = [(sp.Symbol("DSH"), 1 - b ** 2, "1 - y^2"), (sp.Symbol("DSX"), a ** 2 - 1, "x^2 - 1")]
+        tail = [m, a, b]
+        factors = distorted_prolate_factors(a, b, named)
+    else:
+        coords = ["t", "r", "\\theta", "\\phi"]
+        parameters, name = DS_SPHERICAL_PARAMETERS, "Spherical"
+
+        def line(c2):
+            return (f"ds^2 = -\\left(1 - \\dfrac{{2m}}{{r}}\\right)e^{{2U}}{c2}dt^2 + e^{{-2U}}\\left(e^{{2V}}"
+                    "\\left(\\dfrac{dr^2}{1 - \\dfrac{2m}{r}} + r^2d\\theta^2\\right)"
+                    " + r^2\\sin^2\\theta\\,d\\phi^2\\right)")
+        probe = vm.Reader(coords, parameters, (), held=DS_HELD)
+        a, b, m = probe.symbol["r"], probe.symbol["\\theta"], probe.parameters["m"]
+        domains = ["t \\in (-\\infty, \\infty)", "r \\in (2m, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                   "r = 2m \\;\\text{(the horizon)}"]
+        named = []
+        tail = [a, m, sp.cos(b), sp.sin(b)]
+        factors = distorted_spherical_factors(a, b, m)
+    U, V = probe.parameters["U"], probe.parameters["V"]
+    reduce = distorted_schwarzschild_reduce(a, b, U, V, m if spherical else None)
+    lead = [V, U, D(V, a), D(V, b), D(U, a), D(U, b), D(U, a, b), D(U, (b, 2)), *tail]
+    derivatives = [D(V, a), D(V, b), D(U, a, b), D(U, (b, 2)), D(U, a), D(U, b)]
+
+    def pretty(value):
+        c, rest = factors(sp.sympify(value))
+        return _keep_coeff(c, sp.powsimp(rest, combine="exp"))
+
+    def collect(base, p):
+        # Each value is a polynomial in the derivatives of U and V, grouped by them, and every
+        # coefficient is written in the factors the line element has, its number kept in front.
+        e, forward, back = cp.symbolize(sp.expand(base))
+        poly = sp.Poly(e, *[forward.get(g, g) for g in derivatives])
+        if poly.total_degree() == 0:
+            return p.sum_of(base)
+        terms = []
+        for monomial, coeff in sorted(poly.terms(), key=lambda mc: tuple(-k for k in mc[0])):
+            c, rest = factors(coeff.as_expr().xreplace(back))
+            terms.append((c, rest * sp.Mul(*[g ** k for g, k in zip(derivatives, monomial)])))
+        return cp.Sum(terms)
+    printer = {"lead": lead, "collect": collect, "named": {s: text for s, _, text in named},
+               "factors": [s for s, _, _ in named] + lead}
+    return {
+        "metric_id": "distorted_schwarzschild",
+        "system": {"id": "spherical" if spherical else "prolate_spheroidal", "name": name, "coords": coords,
+                   "domains": domains, "parameters": parameters, "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "pretty": pretty,
+        "reduce": reduce,
+        "check": distorted_schwarzschild_check,
+        "after": distorted_schwarzschild_vacuum,
+    }
+
+
+def distorted_weyl_exponentials(symbols, lead, psi, gam):
+    """Every exponential a value of Weyl's chart can carry, e^{a gamma + b psi} with a and b whole
+    numbers from -4 to 4, each as a symbol of the printer with its text: (the symbols by their
+    exponential, the printer's overrides)."""
+    plain = cp.Printer(symbols, lead=lead, factors=lead)
+    named, overrides = {}, {}
+    for a, b in itertools.product(range(-4, 5), repeat=2):
+        if (a, b) != (0, 0):
+            e = sp.exp(a * gam + b * psi)
+            named[e] = sp.Symbol(f"DSE{len(named)}", positive=True)
+            overrides[named[e]] = plain(e)
+    return named, overrides
+
+
+def distorted_weyl_pretty(named):
+    """The pretty printer of Weyl's chart: a value factored with each exponential taken as one
+    symbol, so that e^{-2 gamma} e^{4 psi} comes out of a sum whole, and then written as one
+    exponential. Where it multiplies a sum the exponential is handed to the printer as a symbol
+    with its text, so that it is written in front of the sum: a value that opens with a bracket
+    cannot take a minus sign in front, and would be printed with the exponential spread over
+    every term."""
+    def pretty(value):
+        value = sp.powsimp(sp.sympify(value), combine="exp")
+        held = {e: sp.Dummy("e", positive=True) for e in value.atoms(sp.exp)}
+        factored = sp.factor(value.xreplace(held)).xreplace({d: e for e, d in held.items()})
+        factored = sp.powsimp(factored, combine="exp")
+        parts = sp.Mul.make_args(factored)
+        exponentials = [f for f in parts if isinstance(f, sp.exp)]
+        if len(exponentials) != 1 or not any(f.is_Add for f in parts):
+            return factored
+        (e,) = exponentials
+        return sp.Mul(*[named[e] if f is e else f for f in parts])
+    return pretty
+
+
+def distorted_prolate_factors(a, b, named):
+    """The pretty printer of the prolate spheroidal chart: a value factored, as (its number, the
+    rest), with (1 + y)(1 - y) written 1 - y^2 and (x - 1)(x + 1) written x^2 - 1 as far as the
+    two come in pairs. The number is handed back apart, since sympy spreads a number over a sum
+    when the two stand alone in a product, and 2(x + 1) would be printed 2x + 2."""
+    (H, _, _), (X, _, _) = named
+    pairs = [((1 - b, 1 + b), H), ((a - 1, a + 1), X)]
+
+    def factors(value):
+        number, rest = sp.factor(sp.sympify(value)).as_coeff_Mul()
+        powers = {}
+        for f in sp.Mul.make_args(rest):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            if base.is_Add and k.is_Integer and any(sp.expand(base + part) == 0 for one, _ in pairs for part in one):
+                # y - 1 is counted as 1 - y, and the sign goes to the number.
+                base, number = -base, number * (-1) ** k
+            base = next((part for one, _ in pairs for part in one if sp.expand(base - part) == 0), base)
+            powers[base] = powers.get(base, 0) + k
+        for (one, other), product in pairs:
+            ka, kb = powers.get(one, 0), powers.get(other, 0)
+            k = min(ka, kb) if ka > 0 and kb > 0 else max(ka, kb) if ka < 0 and kb < 0 else 0
+            if k:
+                powers[one], powers[other] = ka - k, kb - k
+                powers[product] = powers.get(product, 0) + k
+        return number, sp.Mul(*[base ** k for base, k in powers.items() if k != 0])
+    return factors
+
+
+def distorted_spherical_factors(a, b, m):
+    """The pretty printer of the spherical chart. The metric is even in theta, so a value is a
+    rational function of r, m and cos(theta), times sin(theta) or not, once each derivative of U
+    or V taken an odd number of times along theta is counted as odd; and it is homogeneous in r
+    and m once a derivative along r counts as an inverse length. It is factored in r/m and
+    y = cos(theta), with (1 - y)(1 + y) = sin^2(theta), and each factor is written back in r, m
+    and the derivatives themselves, as Erez and Rosen's spherical chart is."""
+    Y, S, S2 = sp.Symbol("DSY"), sp.Symbol("DSSIN"), sp.Symbol("DSSINSQ", positive=True)
+    RHO = sp.Symbol("DSRHO", positive=True)
+    plain = named_factors([], [(1 - Y, 1 + Y, S2)])
+
+    def factors(value):
+        value = sp.sympify(value)
+        forward, back = {}, {RHO: a / m}
+        for d in value.atoms(sp.Derivative):
+            along = dict(d.variable_count)
+            held = sp.Dummy("h")
+            forward[d] = held * S ** (along.get(b, 0) % 2) / m ** along.get(a, 0)
+            back[held] = d * m ** along.get(a, 0) / S ** (along.get(b, 0) % 2)
+        e = value.xreplace(forward).subs({sp.cos(b): Y, sp.sin(b): S, a: m * RHO})
+        e = sp.together(e)
+        parts = []
+        for side in sp.fraction(e):
+            poly = sp.Poly(sp.expand(side), S)
+            even = sum(c * (1 - Y ** 2) ** (k // 2) for (k,), c in poly.terms() if k % 2 == 0)
+            odd = sum(c * (1 - Y ** 2) ** (k // 2) for (k,), c in poly.terms() if k % 2 == 1)
+            parts.append((sp.expand(even), sp.expand(odd)))
+        (ne, no), (de, do) = parts
+        even, odd = sp.expand(ne * de - (1 - Y ** 2) * no * do), sp.expand(no * de - ne * do)
+        below = sp.expand(de ** 2 - (1 - Y ** 2) * do ** 2)
+        if even != 0 and odd != 0:
+            raise AssertionError("distorted_schwarzschild: a value of the spherical chart is neither even nor odd "
+                                 "in sin(theta)")
+        out = plain((even if odd == 0 else odd) / below) * (1 if odd == 0 else S)
+        # The number in front is kept apart to the end: sympy spreads a number over a sum when
+        # the two stand alone in a product, and 96(r - m) would be printed 96r - 96m.
+        number, result = sp.Integer(1), sp.Integer(1)
+        for f in sp.Mul.make_args(out):
+            if f.is_Number:
+                number *= f
+                continue
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            top, bottom = sp.fraction(sp.together(base.xreplace(back)))
+            if top.is_Add:
+                # A sum is written out, with its cosines in the sine wherever they come squared, and
+                # the power of sin(theta) every term carries is taken out of it.
+                poly = sp.Poly(sp.expand(top), Y)
+                top = sp.expand(sum(c * (1 - S ** 2) ** (n // 2) * Y ** (n % 2) for (n,), c in poly.terms()))
+                common = min(sp.Poly(term, S).degree() for term in sp.Add.make_args(top))
+                top, bottom = sp.expand(top / S ** common), sp.cancel(bottom / S ** common)
+            result *= (top / bottom) ** k
+        # A sine left under a sum goes into it term by term, where every term takes it as a power
+        # of the sine or as a cotangent: (d_theta U sin(theta) - cos(theta))/sin(theta) is written
+        # d_theta U - cot(theta).
+        powers = {}
+        for f in sp.Mul.make_args(sp.powsimp(result)):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            powers[base] = powers.get(base, 0) + k
+        sines = powers.pop(S, 0) + 2 * powers.pop(S2, 0)
+        if sines < 0:
+            under = -sines
+            for base, k in powers.items():
+                terms = sp.Add.make_args(base)
+                if base.is_Add and k == 1 and all(
+                        sp.Poly(term, S).degree() >= under
+                        or (sp.Poly(term, S).degree() == under - 1 and sp.Poly(term, Y).degree() == 1) for term in terms):
+                    del powers[base]
+                    powers[sp.Add(*[term / S ** under for term in terms])] = 1
+                    sines = 0
+                    break
+        result = sp.Mul(*[base ** k for base, k in powers.items()]) * S2 ** (sines // 2) * S ** (sines % 2)
+        c, result = result.subs({S2: sp.sin(b) ** 2}).subs({S: sp.sin(b), Y: sp.cos(b)}).as_coeff_Mul()
+        return number * c, result
+    return factors
+
+
+def distorted_quadrature(a, b, ua, ub, m=None):
+    """Weyl's quadrature for V, its two first derivatives in those of U: Erez and Rosen's
+    quadrature for gamma with Schwarzschild's potential added to U, less Schwarzschild's gamma.
+    In the prolate spheroidal x and y, or, with the mass parameter given, in r and theta."""
+    if m is None:
+        common = a ** 2 - b ** 2
+        return ((1 - b ** 2) / common * (a * (a ** 2 - 1) * ua ** 2 - a * (1 - b ** 2) * ub ** 2
+                                         - 2 * b * (a ** 2 - 1) * ua * ub + 2 * a * ua - 2 * b * ub),
+                ((a ** 2 - 1) * (b * (a ** 2 - 1) * ua ** 2 - b * (1 - b ** 2) * ub ** 2
+                                 + 2 * a * (1 - b ** 2) * ua * ub + 2 * b * ua) + 2 * a * (1 - b ** 2) * ub) / common)
+    # x = r/m - 1 and y = cos(theta): d_x = m d_r and d_y = -d_theta/sin(theta).
+    x, y = a / m - 1, sp.cos(b)
+    vx, vy = distorted_quadrature(x, y, m * ua, -ub / sp.sin(b))
+    return vx / m, -sp.sin(b) * vy
+
+
+def distorted_second_order(a, b, U, V, m=None):
+    """Laplace's equation for U and the field equation of second order for V, each solved for
+    the second derivative along the radial coordinate:
+    (x^2 - 1) V_xx + x V_x + (1 - y^2) V_yy - y V_y = -(x^2 - 1) U_x^2 - (1 - y^2) U_y^2 - 2 U_x,
+    which in r and theta is (r^2 - 2mr) V_rr + (r - m) V_r + V_thth = -(r^2 - 2mr) U_r^2 - U_th^2 - 2m U_r."""
+    D = sp.Derivative
+    laplace = erez_rosen_laplace(a, b, U, m)
+    if m is None:
+        vaa = (-(a ** 2 - 1) * D(U, a) ** 2 - (1 - b ** 2) * D(U, b) ** 2 - 2 * D(U, a) - a * D(V, a)
+               - (1 - b ** 2) * D(V, (b, 2)) + b * D(V, b)) / (a ** 2 - 1)
+    else:
+        vaa = (-(a ** 2 - 2 * m * a) * D(U, a) ** 2 - D(U, b) ** 2 - 2 * m * D(U, a) - (a - m) * D(V, a)
+               - D(V, (b, 2))) / (a ** 2 - 2 * m * a)
+    return laplace, {D(V, (a, 2)): vaa}
+
+
+def distorted_schwarzschild_reduce(a, b, U, V, m=None):
+    """`value` where the field equations of second order hold, with the first derivatives of V
+    left standing; zero where it vanishes on Weyl's quadrature as well, which is tried at two
+    random points before it is asked exactly."""
+    D = sp.Derivative
+    laplace, second = distorted_second_order(a, b, U, V, m)
+    uaa = laplace[D(U, (a, 2))]
+    va, vb = distorted_quadrature(a, b, D(U, a), D(U, b), m)
+
+    def partial(value):
+        value = sp.sympify(value).subs(second).doit()
+        value = value.subs({D(U, (a, 3)): sp.diff(uaa, a), D(U, (a, 2), b): sp.diff(uaa, b)}).doit()
+        return value.subs(laplace).doit()
+
+    def full(value):
+        value = value.subs({D(V, (b, 2)): sp.diff(vb, b), D(V, a, b): sp.diff(va, b)}).doit()
+        value = value.subs({D(V, a): va, D(V, b): vb}).doit()
+        value = value.subs({D(U, (a, 3)): sp.diff(uaa, a), D(U, (a, 2), b): sp.diff(uaa, b)}).doit()
+        return value.subs(laplace).doit()
+
+    def at_random(value, rng):
+        swap = {sp.sin(b): sp.Rational(3, 5), sp.cos(b): sp.Rational(4, 5)} if m is not None else {}
+        value = value.xreplace(swap)
+        atoms = sorted((value.atoms(sp.Derivative) | value.atoms(AppliedUndef) | value.free_symbols) - {b}
+                       if m is not None else
+                       value.atoms(sp.Derivative) | value.atoms(AppliedUndef) | value.free_symbols,
+                       key=sp.default_sort_key)
+        point = {s: sp.Rational(rng.randint(211, 397), rng.randint(101, 199)) for s in atoms}
+        return value.xreplace(point)
+
+    def reduce(value):
+        value = partial(value)
+        if value == 0:
+            return value
+        on_shell = full(value)
+        rng = random.Random(0)
+        if any(at_random(on_shell, rng) != 0 for _ in range(2)):
+            return value
+        if not gowdy_vanishes(on_shell):
+            raise AssertionError("distorted_schwarzschild: a value vanishes at two random points and not everywhere")
+        return sp.Integer(0)
+    reduce.full = full
+    return reduce
+
+
+def distorted_schwarzschild_vacuum(math, chart):
+    """The Weyl tensor of a vacuum is its Riemann tensor, and is written as the Riemann tensor
+    is: built apart, it carries the Ricci tensor's terms, which vanish only on Weyl's
+    quadrature. Each component of the difference is checked to vanish there first."""
+    geo = chart.geo
+    full = chart.reduce.full
+    riemann, weyl = geo.riemann_llll(), geo.weyl_llll()
+    n = len(chart.symbols)
+    for i, j, k, l in itertools.product(range(n), repeat=4):
+        if not gowdy_vanishes(full(sp.sympify(riemann[i][j][k][l] - weyl[i][j][k][l]))):
+            raise AssertionError("distorted_schwarzschild: the Weyl tensor is not the Riemann tensor on shell")
+    for variant in ("ulll", "llll"):
+        math["weyl_tensor"]["variants"][variant]["nonzero"] = json.loads(json.dumps(
+            math["riemann"]["variants"][variant]["nonzero"]))
+    math["kretschmann"] = "K = " + distorted_schwarzschild_kretschmann(chart)
+    return math
+
+
+def distorted_schwarzschild_kretschmann(chart):
+    """The Kretschmann scalar of a static vacuum, 16(a^2 + a b + b^2 + c^2), with a = R^{tx}_{tx},
+    b = R^{ty}_{ty} and c^2 = R^{tx}_{ty} R^{ty}_{tx} for x and y the chart's radial coordinate and
+    angle: the electric part of the Weyl tensor has no trace, and its magnetic part vanishes.
+    Each of the three is written as a common factor times a sum, and the whole is checked
+    against the scalar built from every component, on Weyl's quadrature."""
+    geo, reader = chart.geo, chart.reader
+    t, a, b, phi = chart.symbols
+    U, V = reader.parameters["U"], reader.parameters["V"]
+    m = reader.parameters["m"]
+    spherical = chart.coords_tex[1] == "r"
+    mixed = geo.raise_indices(geo.riemann_llll(), 4, (0,))
+    scale = sp.exp(2 * U - 2 * V) / (a ** 3 if spherical else m ** 2 * (a + 1) ** 3)
+    one = sp.cancel(sp.together(geo.ginv[1, 1] * mixed[0][1][0][1] / scale))
+    two = sp.cancel(sp.together(geo.ginv[2, 2] * mixed[0][2][0][2] / scale))
+    cross, below = sp.fraction(sp.cancel(sp.together(mixed[0][1][0][2])))
+    weight = sp.cancel(sp.together(geo.ginv[1, 1] * geo.ginv[2, 2] / (below * scale) ** 2))
+    scalar = 16 * scale ** 2 * (one ** 2 + one * two + two ** 2 + weight * cross ** 2)
+    if not gowdy_vanishes(chart.reduce.full(sp.sympify(scalar - geo.kretschmann()))):
+        raise AssertionError("distorted_schwarzschild: the Kretschmann scalar is not 16(a^2 + ab + b^2 + c^2)")
+    def parted(value):
+        """A value as (what multiplies its sum, the sum that holds the derivatives)."""
+        factored = chart.pretty(value)
+        sums = [f for f in sp.Mul.make_args(factored) if f.is_Add and f.atoms(sp.Derivative)]
+        if len(sums) != 1:
+            raise AssertionError("distorted_schwarzschild: a part of the Kretschmann scalar is no one sum")
+        return sp.cancel(factored / sums[0]), sums[0]
+    (pa, one), (pb, two), (pc, cross) = parted(one), parted(two), parted(cross)
+    if sp.cancel(pa / pb) not in (1, -1):
+        raise AssertionError("distorted_schwarzschild: the two diagonal parts have no common factor")
+    sb = sp.cancel(pb / pa)
+
+    def bracketed(part):
+        # A sum that leads with a minus sign is written with its sign changed, and the sign handed back.
+        text = chart.printer(part)
+        if text.startswith("-\\left(") and text.endswith("\\right)"):
+            return -1, text[1:]
+        return 1, "\\left(" + text + "\\right)"
+    (sa, A), (sb2, B), (_, C) = (bracketed(part) for part in (one, two, cross))
+    front = chart.text(16 * scale ** 2 * pa ** 2)
+    weight = chart.text(sp.cancel(weight * pc ** 2 / pa ** 2))
+    text = (f"{front}\\left({A}^2 {'+' if sa * sb2 * sb > 0 else '-'} {A}{B} + {B}^2 + {weight}{C}^2\\right)")
+    if not gowdy_vanishes(sp.sympify(reader(text) - scalar)):
+        raise AssertionError("distorted_schwarzschild: the Kretschmann scalar does not read back")
+    return text
+
+
+def distorted_schwarzschild_check(chart):
+    """Each chart: with the names written out, the Ricci tensor is exactly zero. The prolate
+    spheroidal and spherical charts: U solves Laplace's equation, V solves Weyl's quadrature
+    and the equation of second order and vanishes on the axis, V = 2U - 2q on the horizon, and
+    at q = 0 both vanish. The prolate spheroidal chart is Erez and Rosen's line element with
+    psi = (1/2) ln((x - 1)/(x + 1)) + U and gamma = (1/2) ln((x^2 - 1)/(x^2 - y^2)) + V, and its
+    U and V are Doroshkevich, Zel'dovich and Novikov's Appendix IV. The spherical chart's U and
+    V are the prolate spheroidal chart's at x = r/m - 1 and y = cos(theta), it is that chart
+    pulled back, and at q = 0 it is Schwarzschild's published metric with r_s = 2m. Weyl's
+    chart: psi solves Laplace's equation and gamma the quadrature, gamma vanishes on the axis
+    beyond the rod, and the prolate spheroidal chart is it pulled back along
+    rho = m sqrt((x^2 - 1)(1 - y^2)), z = m x y, the functions one value at an event."""
+    D = sp.Derivative
+    system = {"x": "prolate_spheroidal", "r": "spherical", "\\rho": "weyl"}[chart.coords_tex[1]]
+    reader = chart.reader
+    m, q = reader.parameters["m"], reader.parameters["q"]
+    rng = random.Random(0)
+
+    def numerically(value, symbols, what, ranges=None):
+        """A value of the chart's symbols vanishes at six random points to thirty digits."""
+        for _ in range(6):
+            at = {s: sp.Rational(rng.randint(*(ranges or {}).get(s, (11, 30))), 10) for s in symbols}
+            if abs(sp.N(value.subs(at), 40)) > sp.Float("1e-30"):
+                raise AssertionError(f"distorted_schwarzschild: the {system} chart misses {what}")
+
+    if system == "weyl":
+        t, rho, phi, z = chart.symbols
+        psi, gam = reader.parameters["psi"], reader.parameters["gamma"]
+        P, G = reader.held[psi], reader.held[gam]
+        ranges = {rho: (3, 40), z: (-40, 40), m: (5, 15), q: (-9, 9)}
+        symbols = [rho, z, m, q]
+        numerically(sp.diff(rho * sp.diff(P, rho), rho) / rho + sp.diff(P, z, 2), symbols, "Laplace's equation", ranges)
+        numerically(sp.diff(G, rho) - rho * (sp.diff(P, rho) ** 2 - sp.diff(P, z) ** 2), symbols,
+                    "the quadrature along rho", ranges)
+        numerically(sp.diff(G, z) - 2 * rho * sp.diff(P, rho) * sp.diff(P, z), symbols, "the quadrature along z", ranges)
+        # On the axis beyond the rod, z > m: gamma = 0.
+        numerically(G.subs(rho, 0), [z, m, q], "gamma on the axis", {z: (31, 60), m: (5, 15), q: (-9, 9)})
+        # The prolate spheroidal chart is this one pulled back, psi and gamma one value at an event.
+        spec = distorted_schwarzschild("prolate_spheroidal")
+        prolate = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
+                           held=DS_HELD)
+        T, x, y, ph = prolate.symbols
+        there = prolate.reader
+        pm, pq = there.parameters["m"], there.parameters["q"]
+        Uh, Vh = there.held[there.parameters["U"]], there.held[there.parameters["V"]]
+        image = [T, pm * sp.sqrt((x ** 2 - 1) * (1 - y ** 2)), ph, pm * x * y]
+        swap = {t: image[0], rho: image[1], phi: image[2], z: image[3], m: pm, q: pq}
+        points = {x: (11, 40), y: (-9, 9), pm: (5, 15), pq: (-9, 9)}
+        numerically(P.subs(swap, simultaneous=True) - sp.log((x - 1) / (x + 1)) / 2 - Uh, [x, y, pm, pq],
+                    "the prolate spheroidal chart's psi", points)
+        numerically(G.subs(swap, simultaneous=True) - sp.log((x ** 2 - 1) / (x ** 2 - y ** 2)) / 2 - Vh,
+                    [x, y, pm, pq], "the prolate spheroidal chart's gamma", points)
+        p0, g0 = sp.symbols("p0 g0", real=True)
+        source = chart.geo.g.subs({psi: p0, gam: g0}).subs(swap, simultaneous=True)
+        order = [T, x, y, ph]
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], order[j]))
+        pulled = (J.T * source * J).subs({p0: sp.log((x - 1) / (x + 1)) / 2 + there.parameters["U"],
+                                           g0: sp.log((x ** 2 - 1) / (x ** 2 - y ** 2)) / 2 + there.parameters["V"]})
+        for i in range(4):
+            for j in range(i, 4):
+                if sp.simplify(pulled[i, j] - prolate.geo.g[i, j]) != 0:
+                    raise AssertionError("distorted_schwarzschild: Weyl's chart pulled back misses the prolate "
+                                         f"spheroidal chart in slot {prolate.coords_tex[i]}{prolate.coords_tex[j]}")
+        return
+    spherical = system == "spherical"
+    t, a, b, phi = chart.symbols
+    U, V = reader.parameters["U"], reader.parameters["V"]
+    Uh, Vh = reader.held[U], reader.held[V]
+    # The Ricci tensor with the names written out, exactly.
+    written = {D(f, *w): sp.diff(h, *w) for f, h in ((U, Uh), (V, Vh))
+               for w in ((a,), (b,), (a, a), (a, b), (b, b), (a, a, a), (a, a, b), (a, b, b), (b, b, b))}
+    raw = vm.Geometry(chart.geo.g, chart.symbols, 10 ** 6, None).ricci_ll()
+    for i in range(4):
+        for j in range(i, 4):
+            value = sp.sympify(raw[i][j]).xreplace(written).subs({U: Uh, V: Vh}).doit()
+            if sp.simplify(value) != 0:
+                raise AssertionError(f"distorted_schwarzschild: the {system} chart is no vacuum")
+    va, vb = distorted_quadrature(a, b, sp.diff(Uh, a), sp.diff(Uh, b), m if spherical else None)
+    laplace, second = distorted_second_order(a, b, U, V, m if spherical else None)
+    horizon, pole = (2 * m, 0) if spherical else (1, 1)
+    checks = {"Laplace's equation": (sp.diff(Uh, (a, 2)) - laplace[D(U, (a, 2))]).subs(U, Uh).doit(),
+              "the quadrature along the radial coordinate": sp.diff(Vh, a) - va,
+              "the quadrature along the angle": sp.diff(Vh, b) - vb,
+              "the equation of second order for V": (sp.diff(Vh, (a, 2)) - second[D(V, (a, 2))]
+                                                     ).subs({U: Uh, V: Vh}).doit(),
+              "V on the axis": Vh.subs(b, pole),
+              "V = 2U - 2q on the horizon": (Vh - 2 * Uh + 2 * q).subs(a, horizon),
+              "U at q = 0": Uh.subs(q, 0), "V at q = 0": Vh.subs(q, 0)}
+    for label, value in checks.items():
+        if sp.simplify(value) != 0:
+            raise AssertionError(f"distorted_schwarzschild: the {system} chart misses {label}")
+    u0, v0 = sp.symbols("u0 v0", real=True)
+    if not spherical:
+        # Erez and Rosen's line element with psi = psi_S + U and gamma = gamma_S + V.
+        x, y = a, b
+        weyl = sp.diag(-sp.exp(2 * u0) * (x - 1) / (x + 1),
+                       *[m ** 2 * (x + 1) / (x - 1) * sp.exp(-2 * u0) * part for part in (
+                           sp.exp(2 * v0) * (x ** 2 - 1) / (x ** 2 - y ** 2) * (x ** 2 - y ** 2) / (x ** 2 - 1),
+                           sp.exp(2 * v0) * (x ** 2 - 1) / (x ** 2 - y ** 2) * (x ** 2 - y ** 2) / (1 - y ** 2))],
+                       m ** 2 * (x + 1) / (x - 1) * sp.exp(-2 * u0) * (x ** 2 - 1) * (1 - y ** 2))
+        here = chart.geo.g.subs({U: u0, V: v0})
+        if (weyl - here).applyfunc(sp.simplify) != sp.zeros(4, 4):
+            raise AssertionError("distorted_schwarzschild: the prolate spheroidal chart is not Weyl's line element")
+        # Doroshkevich, Zel'dovich and Novikov's Appendix IV, as printed.
+        lam, mu = x, y
+        printed_psi = sp.log((lam - 1) / (lam + 1)) / 2 + q * (3 * lam ** 2 - 1) * (3 * mu ** 2 - 1) / 4
+        printed_gamma = (sp.log((lam ** 2 - 1) / (lam ** 2 - mu ** 2)) / 2 - 3 * q * lam * (1 - mu ** 2)
+                         - sp.Rational(9, 16) * q ** 2 * (lam ** 2 - 1) * (1 - mu ** 2)
+                         * (9 * mu ** 2 * lam ** 2 - lam ** 2 - mu ** 2 + 1))
+        if sp.simplify(printed_psi - sp.log((x - 1) / (x + 1)) / 2 - Uh) != 0 or sp.simplify(
+                printed_gamma - sp.log((x ** 2 - 1) / (x ** 2 - y ** 2)) / 2 - Vh) != 0:
+            raise AssertionError("distorted_schwarzschild: U and V are not Doroshkevich, Zel'dovich and Novikov's")
+        return
+    spec = distorted_schwarzschild("prolate_spheroidal")
+    prolate = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"],
+                       held=DS_HELD)
+    T, x, y, ph = prolate.symbols
+    there = prolate.reader
+    at = {T: t, x: a / m - 1, y: sp.cos(b), ph: phi, there.parameters["m"]: m, there.parameters["q"]: q}
+    for label, here, name in (("U", Uh, "U"), ("V", Vh, "V")):
+        other = there.held[there.parameters[name]].subs(at, simultaneous=True)
+        if sp.simplify(here - other) != 0:
+            raise AssertionError(f"distorted_schwarzschild: the spherical chart's {label} is not the prolate "
+                                 "spheroidal chart's")
+    source = prolate.geo.g.subs({there.parameters["U"]: u0, there.parameters["V"]: v0}).subs(at, simultaneous=True)
+    image = [at[s] for s in prolate.symbols]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+    pulled = J.T * source * J
+    here = chart.geo.g.subs({U: u0, V: v0})
+    for i in range(4):
+        for j in range(i, 4):
+            if sp.simplify(pulled[i, j] - here[i, j]) != 0:
+                raise AssertionError("distorted_schwarzschild: the prolate spheroidal chart pulled back misses the "
+                                     f"spherical chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+    published = next(c for c in json.loads((METRICS / "schwarzschild.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == "spherical")
+    sch = vm.Reader(published["coords"], [p["symbol"] for p in published["parameters"]], ())
+    swap = {sch.symbol[n]: reader.symbol[n] for n in published["coords"]}
+    swap[sch.parameters["r_s"]] = 2 * m
+    values = {tuple(e["indices"]): e["value"] for e in published["metric_components"]}
+    round_ = chart.geo.g.subs({U: 0, V: 0})
+    for i in range(4):
+        for j in range(4):
+            text = values.get((chart.coords_tex[i], chart.coords_tex[j]), "0")
+            if sp.simplify(sch(text).subs(swap) - round_[i, j]) != 0:
+                raise AssertionError("distorted_schwarzschild: at q = 0 the spherical chart misses Schwarzschild's "
+                                     f"published metric in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["distorted_schwarzschild"] = [lambda s=s: distorted_schwarzschild(s) for s in DS_CHARTS]
 
 
 # -- The static sphere of Brans and Dicke's theory ----------------------------------------
@@ -24992,6 +27110,903 @@ def bonnor_charged_dust_check(chart, system):
 
 
 CHARTS["bonnor_charged_dust"] = [lambda s=s: bonnor_charged_dust(s) for s in BCD_CHARTS]
+
+
+# -- The draining bathtub ----------------------------------------------------------------
+
+DB_CHARTS = ["laboratory", "kerr_like", "vortex_filament"]
+
+
+def draining_bathtub(system):
+    """Visser's (1998) acoustic metric of a fluid draining while it turns, with velocity
+    (A r^ + B theta^)/r and c the speed of sound, in three charts:
+
+    laboratory       -c^2dt^2 + (dr - A dt/r)^2 + (r dtheta - B dt/r)^2, his equation for the
+                     draining bathtub in two dimensions of space, with t the time of the laboratory;
+    kerr_like        Basak and Majumdar's (2003) form as Berti, Cardoso and Lemos (2004) correct it,
+                     their (16) and (17): c dt = c dT - A c r dr/(c^2r^2 - A^2) and
+                     dtheta = dphi - A B dr/(r (c^2r^2 - A^2)), which leaves dT dphi the one cross term, their t~ and phi~
+                     written T and phi;
+    vortex_filament  the laboratory chart with dz^2 added, Visser's vortex filament with a line sink.
+
+    Their A is minus Visser's, the flow of a drain having A < 0 in his sign. draining_bathtub_check
+    holds the laboratory charts to Visser's expanded form, to sound moving at c past the fluid, and
+    to his horizon and ergosurface, and the Kerr-like chart to the laboratory chart pulled back."""
+    reals = "(-\\infty, \\infty)"
+    horizon = "r = |A|/c \\;\\text{(the acoustic horizon)}"
+    ergo = "r = \\sqrt{A^2 + B^2}/c \\;\\text{(the ergosurface)}"
+
+    def flow(c):
+        return (f"\\left(dr - \\dfrac{{A}}{{{c}r}}dt\\right)^2"
+                f" + \\left(r\\,d\\theta - \\dfrac{{B}}{{{c}r}}dt\\right)^2")
+    if system == "laboratory":
+        name, coords = "Laboratory", ["t", "r", "\\theta"]
+        domains = ["t \\in " + reals, "r \\in (0, \\infty)", "\\theta \\in [0, 2\\pi)", horizon, ergo]
+        line, chart_line = "ds^2 = -c^2dt^2 + " + flow(""), "ds^2 = -dt^2 + " + flow("c\\,")
+    elif system == "vortex_filament":
+        name, coords = "Vortex Filament", ["t", "r", "\\theta", "z"]
+        domains = ["t \\in " + reals, "r \\in (0, \\infty)", "\\theta \\in [0, 2\\pi)", "z \\in " + reals, horizon, ergo]
+        line, chart_line = "ds^2 = -c^2dt^2 + " + flow("") + " + dz^2", "ds^2 = -dt^2 + " + flow("c\\,") + " + dz^2"
+    else:
+        name, coords = "Kerr-like", ["T", "r", "\\phi"]
+        domains = ["T \\in " + reals, "r \\in (|A|/c, \\infty)", "\\phi \\in [0, 2\\pi)", ergo]
+
+        def kerr(c2, cross):
+            return (f"ds^2 = -\\left(1 - \\dfrac{{A^2 + B^2}}{{c^2r^2}}\\right){c2}dT^2"
+                    " + \\dfrac{dr^2}{1 - \\dfrac{A^2}{c^2r^2}}"
+                    f" - {cross}\\,dT\\,d\\phi + r^2d\\phi^2")
+        line, chart_line = kerr("c^2", "2B"), kerr("", "\\dfrac{2B}{c}")
+    r, A, B = (sp.Symbol(n, real=True) for n in ("r", "A", "B"))
+    c = sp.Symbol("c", positive=True)
+    return {
+        "metric_id": "draining_bathtub",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": ["A", "B"],
+                   "line_element": line},
+        "chart_line_element": chart_line,
+        "printer": {"lead": [c, r, A, B], "factors": [A, B, c, r]},
+        "components": {"metric_components": {
+            (coords[0], coords[0]): "-\\left(1 - \\dfrac{A^2 + B^2}{c^2\\,r^2}\\right)"}},
+        "check": lambda chart: draining_bathtub_check(chart, system),
+    }
+
+
+def draining_bathtub_check(chart, system):
+    X, g, c = chart.symbols, chart.geo.g, chart.reader.c
+    r = X[1]
+    A, B = chart.reader.parameters["A"], chart.reader.parameters["B"]
+    n = len(X)
+
+    def zero(value, what):
+        if sp.simplify(value) != 0:
+            raise AssertionError(f"draining_bathtub: {what} fails in the {system} chart")
+    # Visser's expanded form, with the time the chart's x^0 = ct.
+    visser = sp.zeros(n, n)
+    visser[0, 0] = -(1 - (A ** 2 + B ** 2) / (c ** 2 * r ** 2))
+    visser[0, 1] = visser[1, 0] = -A / (c * r)
+    visser[0, 2] = visser[2, 0] = -B / c
+    visser[1, 1], visser[2, 2] = 1, r ** 2
+    if n == 4:
+        visser[3, 3] = 1
+    if system == "kerr_like":
+        # Berti, Cardoso and Lemos's (16), with their A minus ours.
+        J = sp.Matrix([[1, -A * c * r / (c ** 2 * r ** 2 - A ** 2), 0], [0, 1, 0],
+                       [0, -A * B / (r * (c ** 2 * r ** 2 - A ** 2)), 1]])
+        pulled = J.T * visser * J
+        for i in range(3):
+            for j in range(i, 3):
+                zero(pulled[i, j] - g[i, j], f"the laboratory chart pulled back, slot {i}{j}")
+        zero(g[0, 1], "the vanishing of the cross term in dT dr")
+        zero(g[1, 2], "the vanishing of the cross term in dr dphi")
+        zero(1 / g[1, 1] - (1 - A ** 2 / (c ** 2 * r ** 2)), "g^rr = 1 - A^2/(c^2r^2)")
+        return
+    for i in range(n):
+        for j in range(i, n):
+            zero(visser[i, j] - g[i, j], f"Visser's expanded line element, slot {i}{j}")
+    # Sound moves at c past the fluid: a ray with dx/dt = v + c n is null for every unit n.
+    alpha = sp.Symbol("alpha", real=True)
+    ray = sp.Matrix([1, A / (c * r) + sp.cos(alpha), (B / (c * r) + sp.sin(alpha)) / r] + [0] * (n - 3))
+    zero((ray.T * g * ray)[0, 0], "sound moving at c past the fluid")
+    # The horizon is where the radial speed of the flow is c, and the ergosurface where its whole speed is.
+    ginv = chart.geo.ginv
+    zero(ginv[1, 1] - (1 - A ** 2 / (c ** 2 * r ** 2)), "g^rr = 1 - A^2/(c^2r^2)")
+    zero(g[0, 0].subs(r, sp.sqrt(A ** 2 + B ** 2) / c), "the ergosurface at r = sqrt(A^2 + B^2)/c")
+    zero(g.det() + r ** 2, "the determinant -r^2")
+    # A surface of constant time is the flat plane the fluid moves in.
+    zero(g[1, 1] - 1, "the flat plane of constant t")
+    zero(g[2, 2] - r ** 2, "the flat plane of constant t")
+    zero(chart.geo.ricci_scalar() - 2 * (A ** 2 + B ** 2) / (c ** 2 * r ** 4), "the Ricci scalar 2(A^2 + B^2)/(c^2r^4)")
+
+
+CHARTS["draining_bathtub"] = [lambda s=s: draining_bathtub(s) for s in DB_CHARTS]
+
+
+# -- Tilted universes and the whimper ------------------------------------------------------
+
+TILTED_CHARTS = ("homogeneous", "farnsworth", "flat_model", "inertial")
+TILTED_REALS = "(-\\infty, \\infty)"
+TILTED_SPACE = ["r \\in " + TILTED_REALS, "y \\in " + TILTED_REALS, "z \\in " + TILTED_REALS]
+TILTED_PLANES = "\\left(dy^2 + dz^2\\right)"
+TILTED_X = "X = W\\sinh^2(\\eta/2) - C\\coth(\\eta/2)"
+TILTED_NAMED = sp.Symbol("TILTEDX", positive=True)
+
+
+def tilted_universes(system):
+    """Tilted homogeneous universes, King and Ellis, Commun. Math. Phys. 31, 209 (1973), and the
+    whimper of Ellis and King, Commun. Math. Phys. 38, 119 (1974), on the simplest of them, the
+    locally rotationally symmetric universes of Bianchi's type V, whose dust solution is
+    Farnsworth's, J. Math. Phys. 8, 2315 (1967).
+
+    Four charts. The homogeneous chart is Farnsworth's comoving chart with u = ct + Cr for its time,
+    -(du - C dr)^2 + X(u)^2 dr^2 + e^(-2r) Y(u)^2 (dy^2 + dz^2), X and Y free, so no component assumes
+    a field equation: the surfaces of homogeneity are those of constant u, the matter moves along
+    the lines of constant r, y and z, and C is the tilt. Farnsworth's chart writes his dust solution
+    in the parameter eta of the open Friedmann universe, Y = W sinh^2(eta/2), du = Y d eta and
+    X = Y - C dY/du = W sinh^2(eta/2) - C coth(eta/2). The flat model is its member with no matter,
+    W = 0, where Y = u + C and X = u, which is Minkowski space: Ellis and King's model of the
+    whimper with the two dimensions they left out. The inertial chart is the same space in the
+    coordinates in which it is flat. tilted_universes.md records each chart's source."""
+    def check(chart):
+        return tilted_universes_check(chart, system)
+    if system == "homogeneous":
+        coords, parameters = ["u", "r", "y", "z"], ["C", "X = X(u)", "Y = Y(u)"]
+        line = "ds^2 = -\\left(du - C\\,dr\\right)^2 + X^2dr^2 + e^{-2r}Y^2" + TILTED_PLANES
+        probe = vm.Reader(coords, parameters, ())
+        X, Y, C = probe.parameters["X"], probe.parameters["Y"], probe.parameters["C"]
+        return {
+            "metric_id": "tilted_universes",
+            "system": {"id": system, "name": "Homogeneous Time", "coords": coords,
+                       "domains": ["u \\in " + TILTED_REALS] + TILTED_SPACE
+                       + ["X = C \\;\\text{(a Cauchy horizon)}"],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"primed": ["X", "Y"], "lead": [X, Y, C]},
+            "components": {"metric_components": {("r", "r"): "X^2 - C^2"}},
+            "check": check,
+        }
+    if system == "farnsworth":
+        coords, parameters = ["\\eta", "r", "y", "z"], ["C", "W", TILTED_X]
+        line = ("ds^2 = -\\left(W\\sinh^2(\\eta/2)\\,d\\eta - C\\,dr\\right)^2 + X^2dr^2"
+                " + W^2e^{-2r}\\sinh^4(\\eta/2)" + TILTED_PLANES)
+        probe = vm.Reader(coords, parameters, ())
+        eta = probe.symbol["\\eta"]
+        forms = TiltedParametric(probe)
+        return {
+            "metric_id": "tilted_universes",
+            "system": {"id": system, "name": "Farnsworth's Dust", "coords": coords,
+                       "domains": ["\\eta \\in (0, \\infty)"] + TILTED_SPACE
+                       + ["X > 0 \\;\\text{(where the density is positive)}",
+                          "X = C \\;\\text{(the Cauchy horizon)}"],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [TILTED_NAMED, probe.parameters["W"], probe.parameters["C"]],
+                        "arguments": {eta / 2: "\\eta/2"}, "overrides": {TILTED_NAMED: "X"}},
+            "pretty": forms.pretty,
+            "components": {"metric_components": {("r", "r"): "X^2 - C^2"},
+                           "inverse_metric_components": {("r", "r"): "\\dfrac{1}{X^2}"}},
+            "ricci_scalar": "\\dfrac{3}{W\\,X\\sinh^4(\\eta/2)}",
+            "kretschmann": ("\\dfrac{3\\left(5W^2\\sinh^6(\\eta/2) + 4C^2\\cosh^2(\\eta/2)\\right)}"
+                            "{W^4\\,X^2\\sinh^{14}(\\eta/2)}"),
+            "check": check,
+        }
+    if system == "flat_model":
+        coords, parameters = ["u", "r", "y", "z"], ["C"]
+        line = "ds^2 = -\\left(du - C\\,dr\\right)^2 + u^2dr^2 + e^{-2r}\\left(u + C\\right)^2" + TILTED_PLANES
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "tilted_universes",
+            "system": {"id": system, "name": "Flat Model", "coords": coords,
+                       "domains": ["u \\in (0, \\infty)"] + TILTED_SPACE
+                       + ["u = C \\;\\text{(the Cauchy horizon)}"],
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line,
+            "printer": {"lead": [probe.symbol["u"], probe.parameters["C"]]},
+            "components": {"metric_components": {("r", "r"): "u^2 - C^2"}},
+            "bare_scalar": True,
+            "check": check,
+        }
+    coords, parameters = ["T", "x", "\\xi", "\\zeta"], ["C"]
+    probe = vm.Reader(coords, parameters, ())
+    return {
+        "metric_id": "tilted_universes",
+        "system": {"id": system, "name": "Inertial", "coords": coords,
+                   "domains": ["T \\in " + TILTED_REALS, "x \\in " + TILTED_REALS, "\\xi \\in " + TILTED_REALS,
+                               "\\zeta \\in " + TILTED_REALS, "cT + x > 0",
+                               "x^2 + \\xi^2 + \\zeta^2 - c^2T^2 < C^2",
+                               "x^2 + \\xi^2 + \\zeta^2 = c^2T^2 \\;\\text{(the Cauchy horizon)}"],
+                   "parameters": parameters,
+                   "line_element": "ds^2 = -c^2dT^2 + dx^2 + d\\xi^2 + d\\zeta^2"},
+        "chart_line_element": "ds^2 = -dT^2 + dx^2 + d\\xi^2 + d\\zeta^2",
+        "printer": {"lead": [probe.c]},
+        "bare_scalar": True,
+        "check": check,
+    }
+
+
+class TiltedParametric:
+    """The `pretty` of Farnsworth's chart, whose every value is a rational function of
+    t = coth(eta/2), W and C, since sinh^2(eta/2) = 1/(t^2 - 1) and dt/d eta = -(t^2 - 1)/2.
+
+    A value is factored there. A factor that is a polynomial in X = W/(t^2 - 1) - C t and C alone
+    once W is written (X + C t)(t^2 - 1), as X, X - C and X + C are, is written so, and any other
+    factor in sinh(eta/2) and cosh(eta/2): times sinh^n(eta/2) it is homogeneous of even degree n in
+    the two, and an even power of the cosine is written by cosh^2 = 1 + sinh^2, so that one cosine
+    at most is left in a term."""
+
+    def __init__(self, reader):
+        self.eta = reader.symbol["\\eta"]
+        self.W, self.C = reader.parameters["W"], reader.parameters["C"]
+        self.t = sp.Symbol("_t", positive=True)
+        self.E = sp.Symbol("_E", positive=True)
+        self.S, self.K = sp.Symbol("_S", positive=True), sp.Symbol("_K", positive=True)
+
+    def rational(self, value):
+        """The value as a cancelled fraction in t, W and C."""
+        half = self.eta / 2
+        value = sp.sympify(value).rewrite(sp.exp)
+        value = value.replace(lambda e: isinstance(e, sp.exp) and sp.expand(e.args[0] / half).is_Integer,
+                              lambda e: self.E ** sp.expand(e.args[0] / half))
+        if value.has(self.eta):
+            raise AssertionError(f"tilted_universes: a function of eta other than those of eta/2 in {value}")
+        num, den = sp.fraction(sp.cancel(sp.together(value)))
+
+        def even(side):
+            # e^(eta/2) stands only in even powers once the fraction is balanced, and e^eta = (t + 1)/(t - 1).
+            poly = sp.Poly(sp.expand(side), self.E)
+            low = min(k for (k,) in poly.monoms())
+            if any((k - low) % 2 for (k,) in poly.monoms()):
+                raise AssertionError(f"tilted_universes: an odd power of e^(eta/2) in {value}")
+            top = max(k for (k,) in poly.monoms())
+            half_degree = (top - low) // 2
+            return (sum(c * (self.t + 1) ** ((k - low) // 2) * (self.t - 1) ** (half_degree - (k - low) // 2)
+                        for (k,), c in poly.terms()), low, half_degree)
+
+        (num, low_n, deg_n), (den, low_d, deg_d) = even(num), even(den)
+        if (low_n - low_d) % 2:
+            raise AssertionError(f"tilted_universes: an odd power of e^(eta/2) in {value}")
+        shift = (low_n - low_d) // 2
+        out = num / den * (self.t - 1) ** (deg_d - deg_n) * ((self.t + 1) / (self.t - 1)) ** shift
+        return sp.cancel(sp.together(out))
+
+    def in_hyperbolics(self, base):
+        """An irreducible factor in t as (its power of sinh(eta/2) below the line, what stands above it)."""
+        if not base.has(self.t):
+            return 0, base
+        poly = sp.Poly(base, self.t)
+        n = poly.degree() + poly.degree() % 2
+        out = sp.Integer(0)
+        for (i,), coefficient in poly.terms():
+            j = n - i
+            if i % 2:
+                out += coefficient * self.K * self.S ** j * (1 + self.S ** 2) ** ((i - 1) // 2)
+            else:
+                out += coefficient * self.S ** j * (1 + self.S ** 2) ** (i // 2)
+        return n, sp.expand(out)
+
+    def named(self, base):
+        """The factor as (a power of t^2 - 1, a polynomial in X and C), or None where it is no such."""
+        X = TILTED_NAMED
+        written = sp.factor(sp.expand(base.subs(self.W, (X + self.C * self.t) * (self.t ** 2 - 1))))
+        power, rest = 0, sp.Integer(1)
+        for factor in sp.Mul.make_args(written):
+            b, k = factor.as_base_exp()
+            if sp.expand(b - (self.t - 1)) == 0 or sp.expand(b - (self.t + 1)) == 0:
+                power += k
+            else:
+                rest *= factor
+        if rest.has(self.t) or not rest.has(X) or power % 2:
+            return None
+        return power // 2, rest
+
+    def back(self, value):
+        return value.subs({self.S: sp.sinh(self.eta / 2), self.K: sp.cosh(self.eta / 2)})
+
+    def pretty(self, value):
+        x = self.rational(value)
+        if x == 0:
+            return sp.Integer(0)
+        # The number in front is kept apart, so that it is not multiplied into a sum.
+        number, out, sines = sp.Integer(1), sp.Integer(1), 0
+        num, den = sp.fraction(x)
+        pairs = {}
+        for side, sign in ((num, 1), (den, -1)):
+            for factor in sp.Mul.make_args(sp.factor(side)):
+                base, power = factor.as_base_exp()
+                if base.is_Number:
+                    number *= base ** (sign * power)
+                    continue
+                # t - 1 and t + 1 together are 1/sinh^2(eta/2).
+                for s in (1, -1):
+                    if sp.expand(base - (self.t + s)) == 0:
+                        pairs[s] = pairs.get(s, 0) + sign * power
+                        break
+                else:
+                    own = self.named(base) if base.has(self.W) else None
+                    if own is not None:
+                        k, rest = own
+                        sines -= 2 * k * sign * power
+                        content, rest = rest.as_coeff_Mul()
+                        number *= content ** (sign * power)
+                        out *= rest ** (sign * power)
+                        continue
+                    n, above = self.in_hyperbolics(base)
+                    sines -= sign * power * n
+                    content, above = sp.factor(above).as_coeff_Mul()
+                    number *= content ** (sign * power)
+                    out *= above ** (sign * power)
+        both = min(pairs.get(1, 0), pairs.get(-1, 0)) if pairs.get(1, 0) * pairs.get(-1, 0) > 0 else 0
+        if pairs.get(1, 0) < 0 and pairs.get(-1, 0) < 0:
+            both = max(pairs.get(1, 0), pairs.get(-1, 0))
+        sines -= 2 * both
+        for s in (1, -1):
+            left = pairs.get(s, 0) - both
+            if left:
+                # t + 1 and t - 1 alone are (cosh +- sinh)/sinh.
+                out *= (self.K + s * self.S) ** left
+                sines -= left
+        return _keep_coeff(number, self.back(out * self.S ** sines))
+
+
+def tilted_universes_map(u, r, y, z, C):
+    """The inertial T, x, xi and zeta of the flat model's event (u, r, y, z): u n - C dn/dr with n the
+    unit hyperboloid in horospheres, mirrored in x so that the matter comes in from the right, as
+    Ellis and King draw it. T + x = (u + C) e^(-r) and T - x = (u - C) e^r + (u + C) e^(-r) (y^2 + z^2)."""
+    plus = (u + C) * sp.exp(-r)
+    minus = (u - C) * sp.exp(r) + (u + C) * sp.exp(-r) * (y ** 2 + z ** 2)
+    return [(plus + minus) / 2, (plus - minus) / 2, plus * y, plus * z]
+
+
+def tilted_universes_check(chart, system):
+    """What each chart is held to before it is written.
+
+    The homogeneous chart: translations of y and z, the rotation of their plane, and the motion
+    d_r + y d_y + z d_z are isometries, with the brackets of Bianchi's type V, and all of them keep u,
+    so the surfaces of constant u are homogeneous; the lines of constant r, y and z are geodesics of
+    proper time u/c along them, and their velocity makes with the normal of those surfaces the
+    hyperbolic angle whose tangent is C/X; and with C = 0 and X = Y the chart is the published horn
+    of small_universes, Friedmann's open universe. Farnsworth's chart is that chart along
+    du = W sinh^2(eta/2) d eta with Y = W sinh^2(eta/2) and X = Y - C dY/du, it is dust at rest in it of
+    density 3/(W X sinh^4(eta/2)) and nothing else, and its Weyl tensor vanishes at C = 0. The flat
+    model is the homogeneous chart with X = u and Y = u + C, Farnsworth's X = Y - C dY/du with W = 0,
+    and its Riemann tensor vanishes. The inertial chart is flat, and the flat model is that chart
+    pulled back along tilted_universes_map."""
+    geo, g, P = chart.geo, chart.geo.g, chart.reader.parameters
+
+    def homogeneous_chart():
+        spec = tilted_universes("homogeneous")
+        return cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+
+    if system == "homogeneous":
+        u, r, y, z = chart.symbols
+        X, Y, C = P["X"], P["Y"], P["C"]
+        fields = {"y": [0, 0, 1, 0], "z": [0, 0, 0, 1], "turn": [0, 0, -z, y], "r": [0, 1, y, z]}
+        for name, xi in fields.items():
+            lie = sp.Matrix(4, 4, lambda a, b: sum(
+                xi[k] * sp.diff(g[a, b], chart.symbols[k]) + g[k, b] * sp.diff(xi[k], chart.symbols[a])
+                + g[a, k] * sp.diff(xi[k], chart.symbols[b]) for k in range(4)))
+            if any(sp.simplify(v) != 0 for v in lie):
+                raise AssertionError(f"tilted_universes: the motion {name} is no isometry of the homogeneous chart")
+            if xi[0] != 0:
+                raise AssertionError(f"tilted_universes: the motion {name} does not keep u")
+
+        def bracket(a, b):
+            return [sum(a[k] * sp.diff(b[i], chart.symbols[k]) - b[k] * sp.diff(a[i], chart.symbols[k])
+                        for k in range(4)) for i in range(4)]
+        # Bianchi's type V: [d_y, d_z] = 0, [xi, d_y] = -d_y and [xi, d_z] = -d_z.
+        if bracket(fields["y"], fields["z"]) != [0, 0, 0, 0] or bracket(fields["r"], fields["y"]) != [0, 0, -1, 0] \
+                or bracket(fields["r"], fields["z"]) != [0, 0, 0, -1]:
+            raise AssertionError("tilted_universes: the motions do not have the brackets of Bianchi's type V")
+        gamma = geo.christoffel_ull()
+        if g[0, 0] != -1 or any(sp.simplify(gamma[a][0][0]) != 0 for a in range(4)):
+            raise AssertionError("tilted_universes: the lines of constant r, y and z are not geodesics of proper time u")
+        # The unit normal of u = constant is -du/sqrt(-g^uu), and -u.n = cosh(beta) = X/sqrt(X^2 - C^2).
+        if sp.simplify(geo.ginv[0, 0] + (X ** 2 - C ** 2) / X ** 2) != 0:
+            raise AssertionError("tilted_universes: the tilt of the homogeneous chart is not tanh(beta) = C/X")
+        entry = next(c for c in json.loads((METRICS / "small_universes.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == "horn")
+        reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+        there = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+        names = entry["coords"]
+        horn = sp.Matrix(4, 4, lambda i, j: reader(there.get((names[i], names[j]), "0")))
+        a = reader.parameters["a"]
+        t = reader.symbol["t"]
+        scale = sp.Function("tilted_a")(u)
+        horn = horn.subs(a, scale).subs({reader.symbol["x"]: r, reader.symbol["y"]: y, reader.symbol["z"]: z})
+        mine = g.subs(C, 0).subs({X: scale, Y: scale})
+        if any(sp.simplify(v) != 0 for v in (horn - mine)):
+            raise AssertionError("tilted_universes: the homogeneous chart with no tilt and X = Y is not the published horn")
+        return
+    if system == "farnsworth":
+        eta, r, y, z = chart.symbols
+        W, C = P["W"], P["C"]
+        s = sp.sinh(eta / 2)
+        Yd = W * s ** 2
+        Xd = W * s ** 2 - C * sp.cosh(eta / 2) / s
+        source = homogeneous_chart()
+        Q = source.reader.parameters
+        # dY/du = (dY/d eta)/Y, so X = Y - C dY/du is the chart's own X.
+        if sp.simplify((Yd - C * sp.diff(Yd, eta) / Yd - Xd).rewrite(sp.exp)) != 0:
+            raise AssertionError("tilted_universes: Farnsworth's X is not Y - C dY/du")
+        there = source.geo.g.subs({Q["X"]: Xd, Q["Y"]: Yd, Q["C"]: C}).subs(
+            dict(zip(source.symbols[1:], chart.symbols[1:])))
+        J = sp.diag(Yd, 1, 1, 1)
+        if any(sp.simplify((v).rewrite(sp.exp)) != 0 for v in (J.T * there * J - g)):
+            raise AssertionError("tilted_universes: Farnsworth's chart is not the homogeneous chart along du = Y d eta")
+        # Dust at rest: G_ab = rho u_a u_b with u_a = (-Y, C, 0, 0) and rho = 3W/(X Y^2).
+        density = 3 / (W * Xd * s ** 4)
+        velocity = [-Yd, C, 0, 0]
+        einstein = geo.einstein_ll()
+        for i in range(4):
+            for j in range(4):
+                if vm.norm(vm._at(einstein, (i, j)) - density * velocity[i] * velocity[j]) != 0:
+                    raise AssertionError(f"tilted_universes: Farnsworth's chart is not dust in slot {(i, j)}")
+        weyl = geo.weyl_llll()
+        if any(vm.norm(sp.sympify(vm._at(weyl, index)).subs(C, 0)) != 0 for index in vm._indices(4, 4)):
+            raise AssertionError("tilted_universes: Farnsworth's chart with no tilt is not conformally flat")
+        return
+    if system == "flat_model":
+        u, r, y, z = chart.symbols
+        C = P["C"]
+        source = homogeneous_chart()
+        Q = source.reader.parameters
+        there = source.geo.g.subs({Q["X"]: source.symbols[0], Q["Y"]: source.symbols[0] + Q["C"]}).subs(Q["C"], C).subs(
+            dict(zip(source.symbols, chart.symbols)))
+        if any(sp.simplify(v) != 0 for v in (there - g)):
+            raise AssertionError("tilted_universes: the flat model is not the homogeneous chart with X = u and Y = u + C")
+        riemann = geo.riemann_llll()
+        if any(vm.norm(vm._at(riemann, index)) != 0 for index in vm._indices(4, 4)):
+            raise AssertionError("tilted_universes: the flat model is not flat")
+        image = tilted_universes_map(u, r, y, z, C)
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], chart.symbols[j]))
+        if any(sp.simplify(v) != 0 for v in (J.T * sp.diag(-1, 1, 1, 1) * J - g)):
+            raise AssertionError("tilted_universes: the flat model is not Minkowski space pulled back")
+        # The interval from the origin is C^2 - u^2, so u = C is the light cone of the origin.
+        interval = -image[0] ** 2 + image[1] ** 2 + image[2] ** 2 + image[3] ** 2
+        if sp.simplify(interval - (C ** 2 - u ** 2)) != 0:
+            raise AssertionError("tilted_universes: the surfaces of constant u are not at a constant interval from the origin")
+        return
+    if g != sp.diag(-1, 1, 1, 1):
+        raise AssertionError("tilted_universes: the inertial chart is not Minkowski's")
+
+
+CHARTS["tilted_universes"] = [lambda s=s: tilted_universes(s) for s in TILTED_CHARTS]
+
+
+# -- The black holes of string theory with three and four charges ---------------------------
+
+SBC_S3 = "r^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2 + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)"
+SBC_S2 = "r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+SBC_CHARTS = ["five_charges", "five_extreme", "five_areal", "four_charges", "four_extreme"]
+
+
+def string_bh_charges(system):
+    """The black holes of string theory whose entropy was first counted. In five dimensions
+    Horowitz, Maldacena and Strominger's (2.7) and (2.8) is Tangherlini's metric with the time and
+    the space rescaled by powers of H_1 H_2 H_3, H_i = 1 + r_0^2 sinh^2(alpha_i)/r^2, their boosts
+    written here as the lengths r_i = r_0 sinh(alpha_i)\\; with r_0 = 0 it is Tseytlin's extreme hole,
+    his (31), whose horizon is r = 0\\; and with the three charges equal it is the Reissner-Nordstrom
+    black hole of five dimensions in the areal radius rho^2 = r^2 + r_q^2, Callan and Maldacena's
+    (2.1) with r_+^2 = r_0^2 + r_q^2 and r_-^2 = r_q^2. In four dimensions Horowitz, Lowe and
+    Maldacena's (2), after Cvetic and Youm, is Schwarzschild's metric rescaled by powers of
+    H_1 H_2 H_3 H_4, H_i = 1 + r_0 sinh^2(alpha_i)/r, with r_i = r_0 sinh^2(alpha_i), and Cvetic
+    and Youm's (9) is its extreme case. A chart that names f and the H_i holds them as functions
+    with the slopes vm.RATES declares, so each value is a rational function of them and r.
+    string_bh_charges_check holds every chart to its field equations and to the published charts
+    it reduces to\\; string_bh_three_four_charges.md records each chart's source."""
+    five = system.startswith("five")
+    n = 3 if five else 4
+    angles = ["\\psi", "\\theta", "\\phi"] if five else ["\\theta", "\\phi"]
+    domains = [a + " \\in [0, \\pi]" for a in angles[:-1]] + ["\\phi \\in [0, 2\\pi)"]
+    reals = "t \\in (-\\infty, \\infty)"
+    words = "Five Dimensions" if five else "Four Dimensions"
+    check = lambda chart: string_bh_charges_check(chart, system)  # noqa: E731
+    if system == "five_areal":
+        coords, parameters = ["t", "\\rho"] + angles, ["r_0", "r_q"]
+        outer = "\\left(1 - \\dfrac{r_0^2 + r_q^2}{\\rho^2}\\right)"
+        inner = "\\left(1 - \\dfrac{r_q^2}{\\rho^2}\\right)"
+
+        def line(c2):
+            return ("ds^2 = -" + outer + inner + c2 + "dt^2 + \\dfrac{d\\rho^2}{" + outer + inner + "} + "
+                    + SBC_S3.replace("r^2", "\\rho^2", 1))
+        probe = vm.Reader(coords, parameters, ())
+        rho, r0, rq = probe.symbol["\\rho"], probe.parameters["r_0"], probe.parameters["r_q"]
+        return {
+            "metric_id": "string_bh_three_four_charges",
+            "system": {"id": system, "name": "Equal Charges, Areal Radius, " + words, "coords": coords,
+                       "domains": [reals, "\\rho \\in (0, \\infty)"] + domains
+                       + ["\\rho = \\sqrt{r_0^2 + r_q^2} \\;\\text{(the event horizon)}",
+                          "\\rho = r_q \\;\\text{(the inner horizon)}", "\\rho = 0 \\;\\text{(singularity)}"],
+                       "parameters": parameters, "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"lead": [rho, r0, rq], "flip": False},
+            "components": {"metric_components": {("t", "t"): "-" + outer + inner,
+                                                 ("\\rho", "\\rho"): outer + "^{-1}" + inner + "^{-1}"},
+                           "inverse_metric_components": {("t", "t"): "-" + outer + "^{-1}" + inner + "^{-1}",
+                                                         ("\\rho", "\\rho"): outer + inner}},
+            "check": check,
+        }
+    extreme = system.endswith("extreme")
+    power = "^2" if five else ""
+    names = ["H_%d" % i for i in range(1, n + 1)]
+    lengths = ([] if extreme else ["r_0"]) + ["r_%d" % i for i in range(1, n + 1)]
+    defined = ([] if extreme else ["f = 1 - \\dfrac{r_0%s}{r%s}" % (power, power)]) + [
+        "H_%d = 1 + \\dfrac{r_%d%s}{r%s}" % (i, i, power, power) for i in range(1, n + 1)]
+    coords, parameters = ["t", "r"] + angles, lengths + defined
+    product = "\\,".join(names)
+    radial = "dr^2" if extreme else "\\dfrac{dr^2}{f}"
+    if five:
+        def line(c2):
+            return ("ds^2 = -\\left(" + product + "\\right)^{-2/3}" + ("" if extreme else "f\\,") + c2 + "dt^2"
+                    " + \\left(" + product + "\\right)^{1/3}\\left(" + radial + " + " + SBC_S3 + "\\right)")
+    else:
+        def line(c2):
+            return ("ds^2 = -\\dfrac{" + ("" if extreme else "f\\,") + c2 + "dt^2}{\\sqrt{" + product + "}}"
+                    " + \\sqrt{" + product + "}\\left(" + radial + " + " + SBC_S2 + "\\right)")
+    key = ("string_bh_three_four_charges", system)
+    probe = vm.Reader(coords, parameters, (), held=vm.HELD[key], rates=vm.RATES[key])
+    r = probe.symbol["r"]
+    H = [probe.parameters[name] for name in names]
+    f = [] if extreme else [probe.parameters["f"]]
+    name = ("Extreme, " if extreme else "") + ("Three" if five else "Four") + " Charges, " + words
+    marks = (["r = 0 \\;\\text{(the horizon)}"] if extreme else
+             ["r = r_0 \\;\\text{(the event horizon)}", "r = 0 \\;\\text{(the inner horizon)}"])
+    return {
+        "metric_id": "string_bh_three_four_charges",
+        "system": {"id": system, "name": name, "coords": coords,
+                   "domains": [reals, "r \\in (0, \\infty)"] + domains + marks,
+                   "parameters": parameters, "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": {"lead": H + f + [r], "factors": [r] + f + H, "flip": False},
+        "reduce": lambda value: vm.norm(probe.by_rates(value)),
+        "check": check,
+    }
+
+
+def string_bh_charges_check(chart, system):
+    """Every chart against its field equations and against the published charts it reduces to.
+
+    The fields: n = D - 2 gauge fields A^i = q_i dt/(r^(D-3) H_i), with q_i^2 = r_i^2(r_i^2 + r_0^2)
+    in five dimensions and r_i(r_i + r_0) in four, and scalars X_i = H_i^{-1}(H_1 ... H_n)^{1/n},
+    whose product is 1, in the action R - (1/2)(d phi)^2 - (1/4) sum X_i^{-2} F_i^2 with
+    X_i = exp(-a_i . phi/2) and a_i . a_j = 4 delta_ij - 4/n. Slot by slot,
+    G_ab = (1/2) sum (d_a ln X_i d_b ln X_i - g_ab (d ln X_i)^2/2) + (1/2) sum X_i^{-2}(F_ac F_b^c - g_ab F^2/4),
+    d_a(sqrt(-g) X_i^{-2} F_i^ab) = 0, and box ln X_j = -X_j^{-2} F_j^2/2 + sum X_i^{-2} F_i^2/(2n).
+    With the charges equal every X_i is 1 and these are the Einstein-Maxwell equations.
+
+    The published charts: with no charge Tangherlini's and Schwarzschild's\\; with the charges equal
+    the areal chart, which is this spacetime's own, in five dimensions and rn_metric in four, and
+    Majumdar and Papapetrou's single hole at r_0 = 0\\; with two charges equal and two absent the
+    dilaton black hole\\; and with one charge the Einstein metric of the Kaluza-Klein black hole.
+    The area of the horizon is 2 pi^2 prod sqrt(r_0^2 + r_i^2) in five dimensions and
+    4 pi prod sqrt(r_0 + r_i) in four, Horowitz, Maldacena and Strominger's (2.9) and Horowitz,
+    Lowe and Maldacena's (5)."""
+    X = chart.symbols
+    P = chart.reader.parameters
+    g = sp.Matrix(chart.geo.g)
+    D = len(X)
+    rng = random.Random(11)
+
+    def published(metric_id, chart_id):
+        there = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == chart_id)
+        other = vm.Reader(there["coords"], [p["symbol"] for p in there["parameters"]], ())
+        return other, vm.metric_from_line_element(other, there["line_element"].replace("c^2", "").replace(
+            "d\\Omega^2", "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"), there["coords"])
+
+    def vanishes(e, what):
+        e = sp.sympify(e)
+        if e == 0:
+            return
+        free = sorted(e.free_symbols, key=str)
+        for _ in range(3):
+            at = {s: sp.Rational(rng.randint(20, 60), 100) for s in X[2:]}
+            at.update({s: sp.Rational(rng.randint(310, 390), 100) for s in free if s not in X[2:]})
+            at.update({s: sp.Rational(rng.randint(40, 90), 100) for s in free if str(s) == "r_0"})
+            if abs(sp.N(e.subs(at), 40)) > sp.Float(10) ** -30:
+                raise AssertionError(f"string_bh_three_four_charges: {what} fails on the {system} chart")
+
+    def against(metric_id, chart_id, mine, values, radius, what):
+        """This chart's metric `mine`, written out, equals the published chart at `values`, with the
+        published radius the expression `radius` of this chart's."""
+        other, theirs = published(metric_id, chart_id)
+        names = dict(zip([other.symbol[c] for c in other.coords], X))
+        names.update({other.parameters[k]: v for k, v in values.items()})
+        there = other.symbol[other.coords[1]]
+        names[there] = radius
+        jac = sp.diff(radius, X[1])
+        pulled = theirs.subs(names, simultaneous=True)
+        for i in range(D):
+            scale = jac ** 2 if i == 1 else 1
+            vanishes(pulled[i, i] * scale - mine[i, i], f"{what}, slot {i}{i}")
+
+    if system == "five_areal":
+        rho, r0, rq = X[1], P["r_0"], P["r_q"]
+        spec = string_bh_charges("five_charges")
+        key = ("string_bh_three_four_charges", "five_charges")
+        there = vm.Reader(spec["system"]["coords"], spec["system"]["parameters"], (), held=vm.HELD[key])
+        full = vm.metric_from_line_element(there, spec["chart_line_element"], spec["system"]["coords"]).xreplace(there.held)
+        r = sp.sqrt(rho ** 2 - rq ** 2)
+        at = dict(zip([there.symbol[c] for c in there.coords], X))
+        at[there.symbol["r"]] = r
+        at.update({there.parameters["r_0"]: r0, **{there.parameters[f"r_{i}"]: rq for i in (1, 2, 3)}})
+        pulled = full.subs(at, simultaneous=True)
+        jac = sp.diff(r, rho)
+        for i in range(5):
+            vanishes(pulled[i, i] * (jac ** 2 if i == 1 else 1) - g[i, i],
+                     f"the three charges equal, pulled back along r^2 = rho^2 - r_q^2, slot {i}{i}")
+        against("tangherlini", "spherical", g.subs(rq, 0), {"r_h": r0}, rho, "Tangherlini's black hole at r_q = 0")
+        # Einstein-Maxwell: G_ab = 2(F_ac F_b^c - g_ab F^2/4) with A = sqrt(3)/2 (r_+ r_-/rho^2) dt.
+        gi = sp.Matrix(chart.geo.ginv)
+        q2 = sp.Rational(3, 4) * rq ** 2 * (r0 ** 2 + rq ** 2)
+        F = sp.zeros(5, 5)
+        F[1, 0], F[0, 1] = -2 / rho ** 3, 2 / rho ** 3           # F/q, for A_t = q/rho^2
+        Fu = gi * F * gi
+        F2 = q2 * sum(F[a, b] * Fu[a, b] for a in range(5) for b in range(5))
+        G = sp.Matrix(chart.geo.einstein_ll())
+        for a in range(5):
+            for b in range(a, 5):
+                FF = q2 * sum(F[a, c] * F[b, d] * gi[c, d] for c in range(5) for d in range(5))
+                vanishes(G[a, b] - 2 * (FF - g[a, b] * F2 / 4), f"the Einstein-Maxwell equation {a}{b}")
+        return
+
+    five, extreme = system.startswith("five"), system.endswith("extreme")
+    n, k = (3, 2) if five else (4, 1)
+    key = ("string_bh_three_four_charges", system)
+    rated = vm.Reader(chart.coords_tex, [p for p in chart.reader.parameters], (), held=vm.HELD[key], rates=vm.RATES[key]) \
+        if False else None
+    held = chart.reader.held
+    r = X[1]
+    H = [P[f"H_{i}"] for i in range(1, n + 1)]
+    f = sp.Integer(1) if extreme else P["f"]
+    lengths = [P[f"r_{i}"] for i in range(1, n + 1)]
+    r0 = sp.Integer(0) if extreme else P["r_0"]
+    spec = string_bh_charges(system)
+    rated = vm.Reader(spec["system"]["coords"], spec["system"]["parameters"], (), held=vm.HELD[key], rates=vm.RATES[key])
+    back = dict(zip([rated.symbol[c] for c in rated.coords], X))
+    back.update({rated.parameters[name]: P[name] for name in rated.parameters})
+    forth = {v: k_ for k_, v in back.items()}
+
+    def settled(e):
+        """The expression with every slope of f and the H_i written by the declared rates."""
+        return rated.by_rates(sp.sympify(e).doit().xreplace(forth)).xreplace(back)
+
+    def zero(e, what):
+        # A value is a rational function of r, f and the H_i with roots of the H_i in front: three
+        # random points to thirty digits, each name standing as a number of its own.
+        e = settled(e)
+        if e == 0:
+            return
+        names = {fn: sp.Dummy(positive=True) for fn in e.atoms(AppliedUndef)}
+        e = e.xreplace(names)
+        for _ in range(3):
+            at = {s: sp.Rational(rng.randint(20, 60), 100) for s in X}
+            at.update({s: sp.Rational(rng.randint(120, 180), 100) for s in e.free_symbols - set(X)})
+            if abs(sp.N(e.subs(at), 40)) > sp.Float(10) ** -30:
+                raise AssertionError(f"string_bh_three_four_charges: {what} fails on the {system} chart")
+
+    gi = sp.Matrix(chart.geo.ginv)
+    product = sp.Mul(*H)
+    scalars = [product ** sp.Rational(1, n) / h for h in H]                 # X_i
+    dln = [[settled(sp.diff(sp.log(x), c)) for c in X] for x in scalars]
+    # q_i^2 = r_i^k (r_i^k + r_0^k) = r^(2k) (H_i - 1)(H_i - f), and A_i = q_i dt/(r^k H_i).
+    q2 = [r ** (2 * k) * (h - 1) * (h - f) for h in H]
+    fields = []
+    for h in H:
+        F = sp.zeros(D, D)
+        slope = settled(sp.diff(1 / (r ** k * h), r))
+        F[1, 0], F[0, 1] = slope, -slope                                  # F/q
+        fields.append(F)
+    ups = [gi * F * gi for F in fields]
+    squares = [q2[i] * sum(fields[i][a, b] * ups[i][a, b] for a in range(D) for b in range(D)) for i in range(n)]
+    weights = [x ** -2 for x in scalars]
+    G = sp.Matrix(chart.geo.einstein_ll())
+    for a in range(D):
+        for b in range(a, D):
+            stress = 0
+            for i in range(n):
+                grad2 = sum(gi[c, d] * dln[i][c] * dln[i][d] for c in range(D) for d in range(D))
+                FF = q2[i] * sum(fields[i][a, c] * fields[i][b, d] * gi[c, d] for c in range(D) for d in range(D))
+                stress += (dln[i][a] * dln[i][b] - g[a, b] * grad2 / 2) / 2
+                stress += weights[i] * (FF - g[a, b] * squares[i] / 4) / 2
+            zero(G[a, b] - stress, f"Einstein's equation {a}{b} with the gauge fields and the scalars")
+    angles = sp.sin(X[2]) ** 2 * sp.sin(X[3]) if five else sp.sin(X[2])
+    root = product ** sp.Rational(1, 3 if five else 2) * r ** (k + 1) * angles
+    zero(root ** 2 + g.det(), "sqrt(-g)")
+    for i in range(n):
+        for b in range(D):
+            zero(sum(sp.diff(root * weights[i] * ups[i][a, b], X[a]) for a in range(D)),
+                 f"Maxwell's equation {b} of the field {i + 1}")
+        box = sum(sp.diff(root * gi[a, a] * dln[i][a], X[a]) for a in range(D)) / root
+        zero(box + weights[i] * squares[i] / 2 - sum(weights[j] * squares[j] for j in range(n)) / (2 * n),
+             f"the equation of the scalar X_{i + 1}")
+
+    # From here on f and the H_i are their definitions.
+    out = g.xreplace(held).doit()
+    area = (2 * sp.pi ** 2 if five else 4 * sp.pi) * sp.sqrt(sp.Mul(*[r0 ** k + x ** k for x in lengths]))
+    sphere = sp.sqrt(sp.Mul(*[out[i, i] for i in range(2, D)])) / angles
+    rim = sp.limit(sphere, r, 0, "+") if extreme else sphere.subs(r, r0)
+    vanishes((2 * sp.pi ** 2 if five else 4 * sp.pi) * rim - area, "the area of the horizon")
+    none = {x: 0 for x in lengths}
+    if five and not extreme:
+        against("tangherlini", "spherical", out.subs(none), {"r_h": r0}, r, "Tangherlini's black hole with no charge")
+    if five and extreme:
+        spec = string_bh_charges("five_charges")
+        key = ("string_bh_three_four_charges", "five_charges")
+        there = vm.Reader(spec["system"]["coords"], spec["system"]["parameters"], (), held=vm.HELD[key])
+        full = vm.metric_from_line_element(there, spec["chart_line_element"], spec["system"]["coords"]).xreplace(there.held)
+        at = dict(zip([there.symbol[c] for c in there.coords], X))
+        at.update({there.parameters["r_0"]: 0, **{there.parameters[f"r_{i}"]: lengths[i - 1] for i in (1, 2, 3)}})
+        for i in range(5):
+            vanishes(full[i, i].subs(at, simultaneous=True) - out[i, i], f"the three charges at r_0 = 0, slot {i}{i}")
+    if not five:
+        rq = sp.Symbol("r_q", positive=True)
+        equal = {x: rq for x in lengths}
+        if extreme:
+            against("majumdar_papapetrou", "isotropic", out.subs(equal), {"m": rq}, r,
+                    "Majumdar and Papapetrou's single hole with the charges equal")
+        else:
+            against("schwarzschild", "spherical", out.subs(none), {"r_s": r0}, r, "Schwarzschild's black hole with no charge")
+            against("rn_metric", "spherical", out.subs(equal), {"r_s": r0 + 2 * rq, "r_q": sp.sqrt(rq * (rq + r0))},
+                    r + rq, "Reissner and Nordstrom's black hole with the charges equal")
+            two = {lengths[0]: rq, lengths[1]: rq, lengths[2]: 0, lengths[3]: 0}
+            against("dilaton_black_hole", "static", out.subs(two), {"r_s": r0 + rq, "r_d": rq}, r + rq,
+                    "the dilaton black hole with two charges equal and two absent")
+            one = {lengths[0]: rq, lengths[1]: 0, lengths[2]: 0, lengths[3]: 0}
+            against("kaluza_klein_black_hole", "einstein", out.subs(one), {"r_s": r0, "q": rq + r0}, r,
+                    "the Kaluza-Klein black hole with one charge")
+
+
+CHARTS["string_bh_three_four_charges"] = [lambda s=s: string_bh_charges(s) for s in SBC_CHARTS]
+
+
+# -- Many black holes and wormholes in three dimensions -----------------------------------
+
+BTZ_MULTI_CHARTS = ["sausage", "stereographic", "free_fall", "exterior"]
+
+
+def btz_multi_holes_wormholes(system):
+    """The four charts in which Brill, Steif, and Aminneborg, Bengtsson, Brill, Holst and Peldan
+    describe anti-de Sitter space of three dimensions cut along totally geodesic timelike surfaces
+    and glued back together. Each is a chart of anti-de Sitter space, and the identifications live
+    in the domains and the drawings, since no line element can carry them.
+
+    sausage: Brill's lectures (5), Aminneborg et al. (B.6) with l = 1, static, each moment of t
+    Poincare's disc of radius l. Its domain is the time between the two events where the glued
+    surfaces meet, |ct| < pi l/2.
+    stereographic: Brill's lectures (14), Aminneborg et al. (A.3), conformally flat, centred on the
+    event where the surfaces meet, so that each of them is a plane through the origin.
+    free_fall: Brill's lectures (10), -c^2dT^2 + cos^2(cT/l) times the metric of the moment of time
+    symmetry, here on Poincare's disc, his (16), as his section 3 says to take it.
+    exterior: Brill's lectures (18), Aminneborg et al. (1), the chart of Banados, Teitelboim and
+    Zanelli without rotation, outside one horizon.
+
+    btz_multi_check holds each to R_mu_nu = -(2/l^2) g_mu_nu and to being the surface
+    -U^2 - V^2 + X^2 + Y^2 = -l^2 of flat space of signature (-, -, +, +) pulled back."""
+    disc = "\\dfrac{4\\ell^4}{\\left(\\ell^2 - \\rho^2\\right)^2}\\left(d\\rho^2 + \\rho^2d\\phi^2\\right)"
+    lapse = "\\dfrac{r^2}{\\ell^2} - M"
+    charts = {
+        "sausage": {
+            "name": "Sausage", "coords": ["t", "\\rho", "\\phi"], "parameters": ["\\ell"],
+            "domains": ["t \\in \\left(-\\pi\\ell/2c,\\, \\pi\\ell/2c\\right)", "\\rho \\in [0, \\ell)",
+                        "\\phi \\in [0, 2\\pi)"],
+            "line": lambda c, c2: ("ds^2 = -\\left(\\dfrac{\\ell^2 + \\rho^2}{\\ell^2 - \\rho^2}\\right)^2"
+                                   f"{c2}dt^2 + {disc}")},
+        "stereographic": {
+            "name": "Stereographic", "coords": ["\\tau", "x", "y"], "parameters": ["\\ell"],
+            "domains": ["\\tau \\in (-\\infty, 0)", "x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)",
+                        "x^2 + y^2 - c^2\\tau^2 < 4\\ell^2"],
+            "line": lambda c, c2: (f"ds^2 = \\dfrac{{-{c2}d\\tau^2 + dx^2 + dy^2}}"
+                                   f"{{\\left(1 - \\dfrac{{x^2 + y^2 - {c2}\\tau^2}}{{4\\ell^2}}\\right)^2}}")},
+        "free_fall": {
+            "name": "Free Fall", "coords": ["T", "\\rho", "\\phi"], "parameters": ["\\ell"],
+            "domains": ["T \\in \\left(-\\pi\\ell/2c,\\, \\pi\\ell/2c\\right)", "\\rho \\in [0, \\ell)",
+                        "\\phi \\in [0, 2\\pi)"],
+            "line": lambda c, c2: (f"ds^2 = -{c2}dT^2 + \\cos^2({c}T/\\ell)\\,{disc}")},
+        "exterior": {
+            "name": "Exterior", "coords": ["t", "r", "\\phi"], "parameters": ["\\ell", "M"],
+            "domains": ["t \\in (-\\infty, \\infty)", "r \\in \\left(\\sqrt{M}\\,\\ell,\\, \\infty\\right)",
+                        "\\phi \\in [0, 2\\pi)"],
+            "line": lambda c, c2: (f"ds^2 = -\\left({lapse}\\right){c2}dt^2 + \\dfrac{{dr^2}}{{{lapse}}}"
+                                   " + r^2d\\phi^2")},
+    }
+    chart = charts[system]
+    probe = vm.Reader(chart["coords"], chart["parameters"], ())
+    ell = probe.parameters["ell"]
+    x = [probe.symbol[name] for name in chart["coords"]]
+    printing = {
+        "sausage": lambda: {"printer": {"lead": [x[1], ell]}},
+        "stereographic": lambda: {"printer": {"lead": [x[1], x[2], x[0], ell],
+                                              "factors": [probe.c, x[0], x[1], x[2], ell]}, "time": "\\tau"},
+        "free_fall": lambda: {"printer": {"lead": [x[1], ell],
+                                          "arguments": {probe.c * x[0] / ell: "cT/\\ell",
+                                                        2 * probe.c * x[0] / ell: "2cT/\\ell"}},
+                              "time": "T", "pretty": btz_multi_trig(x[0] / ell)},
+        "exterior": lambda: {"printer": {"lead": [x[1], probe.parameters["M"], ell]}},
+    }[system]()
+    return {
+        "metric_id": "btz_multi_holes_wormholes",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": chart["parameters"], "line_element": chart["line"]("c", "c^2")},
+        "chart_line_element": chart["line"]("", ""),
+        "ricci_scalar": "-\\dfrac{6}{\\ell^2}", "kretschmann": "\\dfrac{12}{\\ell^4}",
+        "check": lambda c: btz_multi_check(c, system),
+        **printing,
+    }
+
+
+def btz_multi_trig(angle):
+    """Each value that holds the time simplified by trigonometry, so that 1 - sin^2 reads as cos^2
+    and a ratio of sine to cosine as a tangent\\; a value without it stays as sympy factors it."""
+    def pretty(value):
+        value = sp.sympify(value)
+        if not value.has(sp.sin, sp.cos, sp.tan):
+            return sp.factor(value)
+        out = sp.factor(sp.trigsimp(sp.factor(value)))
+        return out.replace(lambda e: e.is_Add and sp.expand(e + sp.sin(angle) ** 2 - 1) == 0,
+                           lambda e: sp.cos(angle) ** 2)
+    return pretty
+
+
+def btz_multi_embedding(chart, system):
+    """(U, V, X, Y) on -U^2 - V^2 + X^2 + Y^2 = -l^2 as functions of the chart's coordinates, with
+    the chart's time already c times it. U = 0 is the moment of time symmetry in every chart, and
+    U = l, V = X = Y = 0 the event where the glued surfaces meet."""
+    x0, x1, x2 = chart.symbols
+    ell = chart.reader.parameters["ell"]
+    if system == "sausage":
+        # Aminneborg et al. (B.4) and (B.5), with their T and U our V and U.
+        grow = ell * (ell ** 2 + x1 ** 2) / (ell ** 2 - x1 ** 2)
+        flat = 2 * ell ** 2 * x1 / (ell ** 2 - x1 ** 2)
+        return [grow * sp.sin(x0 / ell), grow * sp.cos(x0 / ell), flat * sp.cos(x2), flat * sp.sin(x2)]
+    if system == "stereographic":
+        # Brill's lectures (13), projected from the event antipodal to the origin: with
+        # s = (x^2 + y^2 - c^2 tau^2)/(4 l^2), U = l (1 + s)/(1 - s) and (V, X, Y) = (-c tau, x, y)/(1 - s),
+        # so that tau grows toward the future, to the origin from below.
+        s = (x1 ** 2 + x2 ** 2 - x0 ** 2) / (4 * ell ** 2)
+        return [ell * (1 + s) / (1 - s), -x0 / (1 - s), x1 / (1 - s), x2 / (1 - s)]
+    if system == "free_fall":
+        # Brill's lectures (9), with the hyperbolic plane of the moment T = 0 on Poincare's disc.
+        grow = ell * (ell ** 2 + x1 ** 2) / (ell ** 2 - x1 ** 2)
+        flat = 2 * ell ** 2 * x1 / (ell ** 2 - x1 ** 2)
+        return [ell * sp.sin(x0 / ell), grow * sp.cos(x0 / ell), flat * sp.cos(x0 / ell) * sp.cos(x2),
+                flat * sp.cos(x0 / ell) * sp.sin(x2)]
+    # Brill's lectures (8), with phi -> sqrt(M) phi, r -> r/sqrt(M) and t -> sqrt(M) t, his (18).
+    M = chart.reader.parameters["M"]
+    root = sp.sqrt(M)
+    out = sp.sqrt(x1 ** 2 / M - ell ** 2)
+    return [out * sp.sinh(root * x0 / ell), x1 / root * sp.cosh(root * x2), x1 / root * sp.sinh(root * x2),
+            out * sp.cosh(root * x0 / ell)]
+
+
+def btz_multi_check(chart, system):
+    """Each chart solves R_mu_nu = -(2/l^2) g_mu_nu, and is the metric -dU^2 - dV^2 + dX^2 + dY^2
+    pulled back onto the surface -U^2 - V^2 + X^2 + Y^2 = -l^2 by btz_multi_embedding."""
+    ell = chart.reader.parameters["ell"]
+    ricci = chart.geo.ricci_ll()
+    for a in range(3):
+        for b in range(3):
+            if vm.norm(vm._at(ricci, (a, b)) + 2 * chart.geo.g[a, b] / ell ** 2) != 0:
+                raise AssertionError(f"btz_multi_holes_wormholes: R + (2/l^2) g does not vanish in slot "
+                                     f"{chart.coords_tex[a]}{chart.coords_tex[b]} of the {system} chart")
+    Z = btz_multi_embedding(chart, system)
+    positive = {s: sp.Symbol(s.name + "_", positive=True) for s in chart.reader.parameters.values()}
+    positive.update({s: sp.Symbol(s.name + "_", real=True) for s in chart.symbols})
+    Z = [z.subs(positive) for z in Z]
+    here = [positive[s] for s in chart.symbols]
+    lp = positive[ell]
+    surface = -Z[0] ** 2 - Z[1] ** 2 + Z[2] ** 2 + Z[3] ** 2 + lp ** 2
+    if sp.simplify(surface.rewrite(sp.exp)) != 0:
+        raise AssertionError(f"btz_multi_holes_wormholes: the {system} chart leaves the surface of anti-de Sitter space")
+    J = sp.Matrix([[sp.diff(z, v) for v in here] for z in Z])
+    pulled = J.T * sp.diag(-1, -1, 1, 1) * J
+    g = chart.geo.g.subs(positive)
+    for i in range(3):
+        for j in range(i, 3):
+            if sp.simplify((pulled[i, j] - g[i, j]).rewrite(sp.exp)) != 0:
+                raise AssertionError(f"btz_multi_holes_wormholes: the embedding pulled back misses the {system} "
+                                     f"chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["btz_multi_holes_wormholes"] = [lambda s=s: btz_multi_holes_wormholes(s) for s in BTZ_MULTI_CHARTS]
 
 
 def write(spec):

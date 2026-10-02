@@ -99,6 +99,21 @@
       "id": "cremmer_scherk",
       "kind": "family",
       "text": "A sphere held open by a monopole's gauge field in six dimensions, with a cosmological constant chosen so that the other four dimensions are flat where Bertotti and Robinson's two are an anti-de Sitter space [horvath1977]."
+    },
+    {
+      "id": "kerr_melvin",
+      "kind": "family",
+      "text": "Kerr's black hole in Melvin's universe, whose magnetic field is a bundle along an axis. In 2025 Podolský and Ovcharenko put Kerr's hole into a field that is Bertotti and Robinson's when the mass is taken away [podolsky2025]."
+    },
+    {
+      "id": "string_bh_three_four_charges",
+      "kind": "limit_source",
+      "text": "The extreme black holes of string theory end in this throat, in the limit toward the horizon. Strominger and Vafa's hole of five dimensions has the same throat with a 3-sphere [strominger1996]."
+    },
+    {
+      "id": "three_brane_throat",
+      "kind": "family",
+      "text": "The three-brane of string theory has the same throat six dimensions up, anti-de Sitter space of five dimensions times a sphere of five [gibbons1993]."
     }
   ],
   "references": [
@@ -127,7 +142,9 @@
     "emparan2000",
     "podolskybelan2004",
     "ortaggio2002direct",
-    "horvath1977"
+    "horvath1977",
+    "podolsky2025",
+    "strominger1996"
   ],
   "coordinates": [
     {

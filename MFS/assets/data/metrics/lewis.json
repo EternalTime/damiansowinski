@@ -57,6 +57,11 @@
       "id": "petrov_homogeneous",
       "kind": "special_case",
       "text": "The Lewis class at $m = \\sqrt{3}$, where the Kretschmann scalar vanishes. There the field gains a fourth symmetry and is Petrov's homogeneous vacuum, the same at every event [bonnor1979petrov, bonnor1980]."
+    },
+    {
+      "id": "maitra_dust",
+      "kind": "composite",
+      "text": "A cylinder of shearing, rotating dust with Lewis's vacuum around it. R. Chan and N. O. Santos showed that only the Weyl class of the family joins to such dust [bonnor2009maitra, chan2024]."
     }
   ],
   "references": [
@@ -73,7 +78,9 @@
     "stachel1982",
     "maccallum1998",
     "jensen1992",
-    "bonnor1979petrov"
+    "bonnor1979petrov",
+    "bonnor2009maitra",
+    "chan2024"
   ],
   "coordinates": [
     {

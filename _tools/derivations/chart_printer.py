@@ -25,7 +25,7 @@ from sympy.core.function import AppliedUndef
 import verify_metrics as vm
 
 GREEK = {"theta", "phi", "psi", "chi", "eta", "tau", "Phi", "Psi", "Omega", "omega", "lambda", "mu", "nu", "rho", "ell", "alpha",
-         "Lambda", "gamma", "sigma", "Delta", "kappa", "xi", "delta", "epsilon", "Xi", "beta", "zeta"}
+         "Lambda", "gamma", "sigma", "Sigma", "Delta", "kappa", "xi", "delta", "epsilon", "Xi", "beta", "zeta"}
 # A name the reader spells from an accented command, as it reads \tilde\phi as tildephi.
 ACCENTED = {"tildephi": "\\tilde\\phi"}
 TRIG = (sp.sin, sp.cos, sp.tan, sp.cot, sp.csc, sp.sec, sp.sinh, sp.cosh, sp.tanh)
@@ -59,7 +59,7 @@ class Sum:
 
 class Printer:
     def __init__(self, coords, primed=(), lead=(), overrides=None, collect=None, factors=None, named=None,
-                 rising=(), flip=True, last=(), dotted=(), arguments=None):
+                 rising=(), flip=True, last=(), dotted=(), arguments=None, rank=None):
         """coords: coordinate symbols in chart order.
         primed: names of functions of one variable printed with primes.
         dotted: names of functions of the time printed with dots, as \\dot{a} and \\ddot{a},
@@ -80,8 +80,11 @@ class Printer:
         arguments: {the argument of a trigonometric or hyperbolic function: its printed text}, set
             tight in plain brackets as the line element writes it, \\cosh(3a\\rho); a function of
             such an argument keeps a fractional power on its name, \\cosh^{2/3}(3a\\rho).
+        rank: a function of a term whose value orders the terms of a sum before anything else does,
+            lowest first, as the post-Newtonian order of a term of the field of many bodies is.
         """
         self.coords = list(coords)
+        self.rank = rank
         self.primed = set(primed)
         self.dotted = set(dotted)
         self.lead = list(lead)
@@ -108,7 +111,8 @@ class Printer:
         return out
 
     def ordered(self, terms):
-        return sorted(terms, key=lambda t: (any(t[1].has(g) for g in self.last), self.degrees(t[1]),
+        return sorted(terms, key=lambda t: (any(t[1].has(g) for g in self.last),
+                                            self.rank(t[1]) if self.rank else 0, self.degrees(t[1]),
                                             -sp.count_ops(t[1]), self.plain(t[1])))
 
     def plain(self, rest):
