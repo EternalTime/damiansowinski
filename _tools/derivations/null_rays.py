@@ -1736,6 +1736,10 @@ EC_CORE_INPUT = ("A cluster with no surface, $e^{2\\Phi} = 1 - r_s/\\sqrt{r^2 + 
 EC_RHO0 = 3 / (6 - 2 * math.sqrt(6)) ** 2
 EC_CHI0 = math.asin(1 / math.sqrt(3))
 
+# Elliptic de Sitter space: the edge of the half of space the global and conformal charts cover.
+EDS_EDGE = "the equator $\\chi = \\pi/2$, glued to itself with the time reversed"
+
+
 DIAGRAMS = [
     *[Diagram("hotta_tanaka", "conformally_flat", view, f"$\\theta = {tex}$", ("\\eta", "\\rho"), (0, 4, -4.3, -0.3),
               "$\\rho/a$", "$\\eta/a$", HT, {"theta": theta, "phi": "0"}, tau="eta", delta=AS_PULSE, step=0.0005,
@@ -2509,6 +2513,24 @@ DIAGRAMS = [
             EQUATOR, mirror=True, orient="outgoing", families=SIDEWAYS, cones=(4, 8), areal=True),
     Diagram("de_sitter", "flat_slicing", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -1, 3),
             "$x\\;[c/H]$", "$ct\\;[c/H]$", {"H": 1}, {"y": "0", "z": "0"}, families=SIDEWAYS),
+    # Elliptic de Sitter space at l = 1. The global and conformal charts are drawn along the line through the
+    # observer, chi from -pi/2 to pi/2, a fundamental domain whose two edges are one line of events, the right
+    # edge at t being the left edge at -t; the Kruskal chart on its half V >= U, whose edge U = V is glued to
+    # itself the same way.
+    Diagram("elliptic_de_sitter", "global", "through", "through the observer", ("t", "\\chi"),
+            (0, math.pi / 2, -2, 2), "$\\chi$", "$ct/\\ell$", {"ell": 1}, EQUATOR, mirror=True,
+            families=SIDEWAYS, cones=(4, 8), lines=(("surface", "r", "pi/2", EDS_EDGE),)),
+    Diagram("elliptic_de_sitter", "conformal", "through", "through the observer", ("\\eta", "\\chi"),
+            (0, math.pi / 2, -math.pi / 2, math.pi / 2), "$\\chi$", "$\\eta$", {"ell": 1}, EQUATOR, mirror=True,
+            tau="eta", families=SIDEWAYS, cones=(4, 6), lines=(("surface", "r", "pi/2", EDS_EDGE),)),
+    Diagram("elliptic_de_sitter", "kruskal", "plane", "$U$ and $V$", ("U", "V"), (0, 2, -2, 2),
+            "$(V - U)/2$", "$(U + V)/2$", {"ell": 1}, EQUATOR, to_display=NULL_TO_TR, tau="U + V",
+            families=SIDEWAYS, where="(1 - U*V)*(1 + U*V)",
+            marked=(("event", {"x0": "0", "r": "0"}, "both", "the observer's horizons, $UV = 0$"),)),
+    Diagram("elliptic_de_sitter", "static", "radial", "$t$ and $r$", ("t", "r"), (0, 2, -1, 1),
+            "$r/\\ell$", "$ct/\\ell$", {"ell": 1}, EQUATOR, orient="outgoing", cones=(8, 7), areal=True),
+    Diagram("elliptic_de_sitter", "planar", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -1, 3),
+            "$x/\\ell$", "$ct/\\ell$", {"ell": 1}, {"y": "0", "z": "0"}, families=SIDEWAYS),
     Diagram("einstein_static", "hyperspherical", "radial", "$t$ and $\\chi$", ("t", "\\chi"),
             (0, math.pi, 0, math.pi), "$\\chi$", "$ct/R$", {"R": 1}, EQUATOR),
     Diagram("einstein_static", "hyperspherical", "through", "through the pole", ("t", "\\chi"),
@@ -5774,6 +5796,49 @@ CAPTIONS = {
         "toward the past.",
         "A ray covers only a finite comoving distance however long it runs, $x = \\pm(c/H)e^{-Ht} "
         "+ $ const, so an observer at $x = 0$ has an event horizon.",
+    ],
+    ("elliptic_de_sitter", "global", "through"): [
+        "The line through the observer in the plane $\\theta = \\pi/2$, drawn in $t$ and $\\chi$: $\\chi$ on the "
+        "right is $\\phi = 0$ and $\\chi$ on the left is $\\phi = \\pi$, with the observer at $\\chi = 0$. On it "
+        "$ds^2 = -c^2dt^2 + \\ell^2\\cosh^2(ct/\\ell)\\,d\\chi^2$, so light runs at 45° at $t = 0$, where the "
+        "circle of $\\chi$ is smallest, and the cones close as the circle grows.",
+        "The two edges $\\chi = \\pi/2$ are one line of events, the right edge at $t$ being the left edge at $-t$, "
+        "so the strip is a Möbius band. A future cone carried out through the right edge at $t$ comes in through "
+        "the left edge at $-t$ pointing toward decreasing $t$, and no choice of future holds over the whole band.",
+    ],
+    ("elliptic_de_sitter", "conformal", "through"): [
+        "The line through the observer in the plane $\\theta = \\pi/2$, drawn in $\\eta$ and $\\chi$: $\\chi$ on "
+        "the right is $\\phi = 0$ and $\\chi$ on the left is $\\phi = \\pi$, with the observer at $\\chi = 0$. On "
+        "it $ds^2 = (\\ell^2/\\cos^2\\eta)(-d\\eta^2 + d\\chi^2)$, so light runs at 45° everywhere, and infinity "
+        "is $\\eta = \\pm\\pi/2$.",
+        "The two edges $\\chi = \\pi/2$ are one line of events, the right edge at $\\eta$ being the left edge at "
+        "$-\\eta$, so the strip is a Möbius band. An event below the diagonals $\\eta = \\pi/2 - |\\chi|$, the "
+        "observer's future horizon, is seen by the observer directly, and an event above them is seen through an "
+        "edge, so the observer sees every event off the horizon.",
+    ],
+    ("elliptic_de_sitter", "kruskal", "plane"): [
+        "The plane of $U$ and $V$ ($\\theta = \\pi/2$, $\\phi = 0$) on the half $V \\ge U$, drawn with $(V - U)/2$ "
+        "across and $(U + V)/2$ up. Only $g_{UV}$ is nonzero on it, so light runs at 45°. The observer is the "
+        "hyperbola $UV = -1$ on the right, the horizons are the rays $U = 0$ and $V = 0$ from the middle of the "
+        "left edge, and infinity is the hyperbola $UV = 1$, in the future and in the past.",
+        "The left edge $U = V$ is glued to itself with the time reversed, the event at $U$ being the opposite point "
+        "of its sphere at $-U$. The region to the future of both horizons and the region to the past of both are "
+        "the two halves of one region, and the two branches of infinity are the two halves of one sphere.",
+    ],
+    ("elliptic_de_sitter", "static", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) in the static chart, the same at every other "
+        "angle by spherical symmetry. The cones close at the cosmological horizon $r = \\ell$, where "
+        "$g^{rr} = 1 - r^2/\\ell^2$ vanishes, on the far side from the observer at $r = 0$.",
+        "Beyond the horizon $t$ is spacelike, and the cones point along the outgoing rays to larger $r$. The static "
+        "patch holds one point of every antipodal pair it meets: the patch of the opposite observer in de Sitter "
+        "space is this patch with $t$ reversed.",
+    ],
+    ("elliptic_de_sitter", "planar", "tx"): [
+        "The plane of $t$ and $x$ ($y = z = 0$) in the planar chart ($ds^2 = -c^2dt^2 + e^{2ct/\\ell}dx^2$), the "
+        "cones narrowing as $e^{-ct/\\ell}$ toward the future and opening out toward the past.",
+        "A ray covers only a finite comoving distance however long it runs, $x = \\pm\\ell e^{-ct/\\ell} + $ const, "
+        "so an observer at $x = 0$ has an event horizon. The chart holds one point of every antipodal pair off the "
+        "null surface $t \\to -\\infty$, so it covers the whole space but that surface.",
     ],
     ("einstein_static", "hyperspherical", "radial"): [
         "The plane of $t$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$), the same at every other angle by "
@@ -11110,6 +11175,17 @@ CLOSED_FORMS = {
     ("de_sitter", "static_spherical", "radial"):
         (lambda t, r: t + 0.5 * np.log(np.abs((1 + r) / (1 - r))),
          lambda t, r: t - 0.5 * np.log(np.abs((1 + r) / (1 - r))), lambda t, r: np.abs(r - 1) > 0.05),
+    # Elliptic de Sitter space at l = 1: the conformal time of the global chart is the Gudermannian
+    # 2 arctan(tanh(t/2)), the static chart's tortoise coordinate is artanh(r), and the planar chart's
+    # conformal time is -exp(-t).
+    ("elliptic_de_sitter", "global", "through"):
+        (lambda t, c: 2 * np.arctan(np.tanh(t / 2)) + c, lambda t, c: 2 * np.arctan(np.tanh(t / 2)) - c, None),
+    ("elliptic_de_sitter", "conformal", "through"): (lambda e, c: e + c, lambda e, c: e - c, None),
+    ("elliptic_de_sitter", "kruskal", "plane"): (lambda U, V: V, lambda U, V: U, None),
+    ("elliptic_de_sitter", "static", "radial"):
+        (lambda t, r: t + 0.5 * np.log(np.abs((1 + r) / (1 - r))),
+         lambda t, r: t - 0.5 * np.log(np.abs((1 + r) / (1 - r))), lambda t, r: np.abs(r - 1) > 0.05),
+    ("elliptic_de_sitter", "planar", "tx"): (lambda t, x: x - np.exp(-t), lambda t, x: x + np.exp(-t), None),
     ("einstein_static", "hyperspherical", "radial"): (lambda t, c: t + c, lambda t, c: t - c, None),
     ("einstein_static", "hyperspherical", "through"): (lambda t, c: t + c, lambda t, c: t - c, None),
     ("einstein_static", "static_areal", "radial"):

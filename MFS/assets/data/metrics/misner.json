@@ -57,6 +57,11 @@
       "id": "tippett_tsang",
       "kind": "composite",
       "text": "A bubble whose inside is Misner space's Rindler region, the time $\\eta$ running once round $2\\pi$, set in Minkowski space by a wall of exotic matter [tippett2017]."
+    },
+    {
+      "id": "elliptic_de_sitter",
+      "kind": "family",
+      "text": "De Sitter space with events identified under the antipodal map of its hyperboloid, where Misner space identifies them under a boost. The antipodal map makes no closed timelike curves, and it removes the global direction of time [parikh2003]."
     }
   ],
   "references": [
@@ -77,7 +82,8 @@
     "banados1993",
     "morris1988prl",
     "ori2005",
-    "tippett2017"
+    "tippett2017",
+    "parikh2003"
   ],
   "coordinates": [
     {

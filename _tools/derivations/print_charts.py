@@ -1190,6 +1190,184 @@ def nariai_embedding(chart, system):
                                      f"in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
 
 
+# -- elliptic de Sitter space ----------------------------------------------------------
+
+EDS_CHARTS = ("global", "conformal", "kruskal", "static", "planar")
+EDS_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+EDS_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+# The antipodal map X -> -X of the hyperboloid in each chart that holds a point together with its
+# antipode, as the substitution of the chart's coordinates in order; theta -> pi - theta and
+# phi -> phi + pi is the antipodal map of the sphere of theta and phi.
+EDS_ANTIPODE = {
+    "global": lambda t, chi, theta, phi: (-t, sp.pi - chi, sp.pi - theta, phi + sp.pi),
+    "conformal": lambda eta, chi, theta, phi: (-eta, sp.pi - chi, sp.pi - theta, phi + sp.pi),
+    "kruskal": lambda U, V, theta, phi: (-U, -V, sp.pi - theta, phi + sp.pi),
+}
+
+
+def eds_embedding(system, coords, ell):
+    """(X_0, X_1, X_2, X_3, X_4) of the hyperboloid -X_0^2 + X_1^2 + ... + X_4^2 = l^2 at the chart's
+    coordinates, a time coordinate standing for x^0 = ct. The observer the charts are built about is
+    the pole X_1 = X_2 = X_3 = 0, X_4 > 0."""
+    a, b, c, d = coords
+    if system == "planar":
+        rho2 = b ** 2 + c ** 2 + d ** 2
+        return [ell * sp.sinh(a / ell) + sp.exp(a / ell) * rho2 / (2 * ell), sp.exp(a / ell) * b, sp.exp(a / ell) * c,
+                sp.exp(a / ell) * d, ell * sp.cosh(a / ell) - sp.exp(a / ell) * rho2 / (2 * ell)]
+    n = [sp.sin(c) * sp.cos(d), sp.sin(c) * sp.sin(d), sp.cos(c)]
+    if system == "global":
+        X0, X4, R = ell * sp.sinh(a / ell), ell * sp.cosh(a / ell) * sp.cos(b), ell * sp.cosh(a / ell) * sp.sin(b)
+    elif system == "conformal":
+        X0, X4, R = ell * sp.tan(a), ell * sp.cos(b) / sp.cos(a), ell * sp.sin(b) / sp.cos(a)
+    elif system == "kruskal":
+        X0, X4, R = ell * (a + b) / (1 - a * b), ell * (b - a) / (1 - a * b), ell * (1 + a * b) / (1 - a * b)
+    else:
+        s = sp.sqrt(ell ** 2 - b ** 2)
+        X0, X4, R = s * sp.sinh(a / ell), s * sp.cosh(a / ell), b
+    return [X0, R * n[0], R * n[1], R * n[2], X4]
+
+
+def elliptic_de_sitter(system):
+    """Elliptic de Sitter space, the hyperboloid -X_0^2 + X_1^2 + ... + X_4^2 = l^2 with X and -X
+    one event: Schrodinger, Expanding Universes (1956), section 3, and Parikh, Savonije and Verlinde,
+    Phys. Rev. D 67, 064005 (2003), whose global chart this is. Five charts: the global chart of
+    closed slices and its conformal time, on the half chi <= pi/2 of space, whose edge chi = pi/2 is
+    glued to itself with t -> -t; the Kruskal chart of Spradlin, Strominger and Volovich's review
+    on the half V >= U; the static chart, whose patch holds no antipodal pair; and the planar chart,
+    half of the hyperboloid and so, with the null surface X_0 + X_4 = 0, the whole space.
+    elliptic_de_sitter_check holds each to the hyperboloid pulled back, to R_mu_nu = (3/l^2) g_mu_nu
+    and a vanishing Weyl tensor, the first three to their antipodal map being X -> -X, and the last
+    two to covering no antipodal pair. elliptic_de_sitter.md records each chart's source."""
+    glue = "\\;\\text{(the antipodal identification)}"
+    charts = {
+        "global": {
+            "name": "Global", "coords": ["t", "\\chi", "\\theta", "\\phi"],
+            "domains": ["t \\in (-\\infty, \\infty)", "\\chi \\in [0, \\pi/2]"] + EDS_ANGLES
+                       + ["(t, \\pi/2, \\theta, \\phi) \\sim (-t, \\pi/2, \\pi - \\theta, \\phi + \\pi)" + glue],
+            "line": lambda c: (f"ds^2 = -{c + '^2' if c else ''}dt^2 + \\ell^2\\cosh^2({c}t/\\ell)"
+                               f"\\left(d\\chi^2 + \\sin^2\\chi{EDS_SPHERE}\\right)")},
+        "conformal": {
+            "name": "Conformal", "coords": ["\\eta", "\\chi", "\\theta", "\\phi"],
+            "domains": ["\\eta \\in (-\\pi/2, \\pi/2)", "\\chi \\in [0, \\pi/2]"] + EDS_ANGLES
+                       + ["(\\eta, \\pi/2, \\theta, \\phi) \\sim (-\\eta, \\pi/2, \\pi - \\theta, \\phi + \\pi)" + glue],
+            "line": lambda c: ("ds^2 = \\dfrac{\\ell^2}{\\cos^2\\eta}\\left(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi"
+                               f"{EDS_SPHERE}\\right)")},
+        "kruskal": {
+            "name": "Kruskal", "coords": ["U", "V", "\\theta", "\\phi"],
+            "domains": ["U \\in (-\\infty, \\infty)", "V \\in (-\\infty, \\infty)"] + EDS_ANGLES
+                       + ["-1 \\le UV < 1", "V \\ge U",
+                          "(U, U, \\theta, \\phi) \\sim (-U, -U, \\pi - \\theta, \\phi + \\pi)" + glue],
+            "line": lambda c: ("ds^2 = \\dfrac{\\ell^2}{\\left(1 - UV\\right)^2}\\left(-4\\,dU\\,dV + \\left(1 + UV\\right)^2"
+                               f"{EDS_SPHERE}\\right)")},
+        "static": {
+            "name": "Static", "coords": ["t", "r", "\\theta", "\\phi"],
+            "domains": ["t \\in (-\\infty, \\infty)", "r \\in [0, \\ell)"] + EDS_ANGLES
+                       + ["r = \\ell \\;\\text{(cosmological horizon)}"],
+            "line": lambda c: (f"ds^2 = -\\left(1 - \\dfrac{{r^2}}{{\\ell^2}}\\right){c + '^2' if c else ''}dt^2 + "
+                               f"\\dfrac{{dr^2}}{{1 - \\dfrac{{r^2}}{{\\ell^2}}}} + r^2{EDS_SPHERE}")},
+        "planar": {
+            "name": "Planar", "coords": ["t", "x", "y", "z"],
+            "domains": ["t \\in (-\\infty, \\infty)", "x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)",
+                        "z \\in (-\\infty, \\infty)"],
+            "line": lambda c: (f"ds^2 = -{c + '^2' if c else ''}dt^2 + e^{{2{c}t/\\ell}}"
+                               "\\left(dx^2 + dy^2 + dz^2\\right)")},
+    }
+    chart = charts[system]
+    probe = vm.Reader(chart["coords"], ["\\ell"], ())
+    ell = probe.parameters["ell"]
+    first = probe.symbol[chart["coords"][0]]
+    f, bare = "\\left(1 - \\dfrac{r^2}{\\ell^2}\\right)", "1 - \\dfrac{r^2}{\\ell^2}"
+    printing = {
+        "global": lambda: {"printer": {"lead": [ell], "arguments": {probe.c * first / ell: "ct/\\ell"}}, "time": "t",
+                           "pretty": nariai_hyperbolic(probe.c * first / ell)},
+        "conformal": lambda: {"printer": {"lead": [ell]}, "pretty": eds_conformal(first)},
+        "kruskal": lambda: {"printer": {"rising": [first, probe.symbol["V"]], "lead": [ell], "flip": False}},
+        "static": lambda: {"printer": {"lead": [ell], "rising": [probe.symbol["r"]], "flip": False},
+                           "components": {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                                          "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}}},
+        "planar": lambda: {"printer": {"lead": [ell]}, "time": "t"},
+    }[system]()
+    return {
+        "metric_id": "elliptic_de_sitter",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": ["\\ell"], "line_element": chart["line"]("c")},
+        "chart_line_element": chart["line"](""),
+        "check": lambda c: elliptic_de_sitter_check(c, system),
+        **printing,
+    }
+
+
+def eds_conformal(eta):
+    """A `pretty` for the conformal chart: each value written in sin(eta) and cos(eta) with every
+    even power of the sine reduced by sin^2 = 1 - cos^2, cancelled and factored, and a sine left
+    over a cosine written as the tangent, so that the conformal factor reads 1/cos^2(eta) and the
+    connection tan(eta). The other angles stay as sympy factors them."""
+    s, c, t = sp.symbols("_s _c _t")
+    relation = [s ** 2 + c ** 2 - 1]
+
+    def reduce(p):
+        return sp.expand(sp.reduced(sp.expand(p), relation, s, c)[1])
+
+    def pretty(value):
+        x = sp.sympify(value)
+        if not x.has(eta):
+            return sp.factor(x)
+        x = x.rewrite(sp.cos).subs({sp.sin(eta): s, sp.cos(eta): c}) if x.has(sp.tan(eta)) else \
+            x.subs({sp.sin(eta): s, sp.cos(eta): c})
+        num, den = (reduce(p) for p in sp.fraction(sp.together(x)))
+        # A denominator left with a sine is cleared by its conjugate, since a + b s times a - b s is
+        # a^2 - b^2 (1 - c^2).
+        d0, d1 = sp.Poly(den, s).coeff_monomial(1), sp.Poly(den, s).coeff_monomial(s)
+        if d1 != 0:
+            num, den = reduce(num * (d0 - d1 * s)), reduce(d0 ** 2 - d1 ** 2 * (1 - c ** 2))
+        out = sp.factor(sp.cancel(num / den))
+        powers = out.as_powers_dict()
+        if powers.get(s, 0) == 1 and powers.get(c, 0) < 0:
+            out = out * t * c / s
+        return out.subs({s: sp.sin(eta), c: sp.cos(eta), t: sp.tan(eta)})
+    return pretty
+
+
+def elliptic_de_sitter_check(chart, system):
+    """The chart is the hyperboloid's metric pulled back, an Einstein space with Lambda = 3/l^2 and
+    no Weyl tensor. Where the chart holds a point together with its antipode, its stated
+    identification is X -> -X; the static patch lies in X_4 > |X_0| and the planar chart in
+    X_0 + X_4 > 0, each of which X -> -X carries off itself."""
+    ell = chart.reader.parameters["ell"]
+    positive = sp.Symbol("ell_", positive=True)
+    X = eds_embedding(system, chart.symbols, ell)
+    J = sp.Matrix([[sp.diff(X_I, v) for v in chart.symbols] for X_I in X])
+    pulled = J.T * sp.diag(-1, 1, 1, 1, 1) * J
+    g = chart.geo.g
+    for i in range(4):
+        for j in range(i, 4):
+            difference = (pulled[i, j] - g[i, j]).subs(ell, positive)
+            if sp.simplify(sp.expand_trig(difference.rewrite(sp.exp))) != 0:
+                raise AssertionError(f"elliptic_de_sitter: the hyperboloid pulled back misses the {system} chart in slot "
+                                     f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+    on = sp.simplify((-X[0] ** 2 + sum(x ** 2 for x in X[1:]) - ell ** 2).subs(ell, positive).rewrite(sp.exp))
+    if sp.simplify(sp.expand_trig(on)) != 0:
+        raise AssertionError(f"elliptic_de_sitter: the {system} chart leaves the hyperboloid")
+    ricci = chart.geo.ricci_ll()
+    if any(vm.norm(ricci[a][b] - 3 * g[a, b] / ell ** 2) != 0 for a in range(4) for b in range(4)):
+        raise AssertionError(f"elliptic_de_sitter: R_mu_nu is not (3/l^2) g_mu_nu in the {system} chart")
+    if any(vm.norm(value) != 0 for value in sp.flatten(chart.geo.weyl_llll())):
+        raise AssertionError(f"elliptic_de_sitter: the {system} chart has a Weyl tensor")
+    if system in EDS_ANTIPODE:
+        image = dict(zip(chart.symbols, EDS_ANTIPODE[system](*chart.symbols)))
+        for X_I in X:
+            total = (X_I + X_I.subs(image, simultaneous=True)).subs(ell, positive)
+            if sp.simplify(sp.expand_trig(total.rewrite(sp.exp))) != 0:
+                raise AssertionError(f"elliptic_de_sitter: the {system} chart's identification is not X -> -X")
+    elif system == "static":
+        # X_4^2 - X_0^2 = l^2 - r^2 > 0 with X_4 > 0, so -X lies in X_4 < 0, off the patch.
+        if sp.simplify((X[4] ** 2 - X[0] ** 2 - (ell ** 2 - chart.symbols[1] ** 2)).rewrite(sp.exp)) != 0:
+            raise AssertionError("elliptic_de_sitter: the static patch is not X_4^2 - X_0^2 = l^2 - r^2")
+    else:
+        if sp.simplify((X[0] + X[4] - ell * sp.exp(chart.symbols[0] / ell)).rewrite(sp.exp)) != 0:
+            raise AssertionError("elliptic_de_sitter: the planar chart is not X_0 + X_4 = l exp(ct/l)")
+
+
 # -- Aichelburg-Sexl ------------------------------------------------------------------
 
 def aichelburg_sexl(system):
@@ -2729,6 +2907,7 @@ MELVIN_GEODESICS = [
 
 
 CHARTS["melvin"] = [lambda s=s: melvin(s) for s in ("cylindrical", "ernst")]
+CHARTS["elliptic_de_sitter"] = [lambda s=s: elliptic_de_sitter(s) for s in EDS_CHARTS]
 CHARTS["schwarzschild_ads"] = [lambda s=s: schwarzschild_ads(s) for s in SADS_CHARTS]
 CHARTS["topological_black_hole"] = [lambda s=s: topological_black_hole(s) for s in TBH_CHARTS]
 
