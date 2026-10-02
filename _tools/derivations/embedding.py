@@ -8631,6 +8631,86 @@ def spinning_string(ck, src):
                           "$dX^2 + dY^2 - dZ^2$.")]
 
 
+def lewis(ck, src):
+    """The moment t = 0 of a rotating cylinder of Lewis's Weyl class outside its closed timelike
+    curves, in the canonical chart at sigma = 1/8, j = ell/8 and alpha = 1, with ell the unit of
+    length: g_rr = h = r^(-3/8) and g_phiphi = alpha r^2/u - C^2 u/alpha = r^(3/2) - r^(1/2), with
+    C = 4j/(1 - 4 sigma) = ell. The circle r = ell is null and has no radius, and just outside it
+    the circles grow faster than the distance out to them, which is checked, so the slice is
+    drawn in three dimensional Minkowski space, leaving the axis along the light cone and bending
+    over to lie level where g_rr = (d rho/dr)^2, at r_1 = 1.472 ell, a root found here. Beyond that
+    circle it is drawn in flat space out to r = 7 ell, climbing ever more steeply, as
+    Levi-Civita's horn does: far out rho -> r^(3/4), the radius of the static cylinder's circle.
+    Both pieces lie level at r_1, so they meet in one circle with one tangent, checked from the
+    numbers and from the file.
+
+    Toward r = ell the sheet runs into the axis along the light cone, where a straight chord of
+    Minkowski space is longer than the arc it spans, so the profile steps toward the null circle
+    by a fortieth of r - ell at a time, is written to twelve decimals, and starts at
+    r = (1 + 2e-5) ell."""
+    params = nr.LEWIS_CANONICAL
+    fixed = {"t": 0, "z": 0}
+    sl = Slice(src, "lewis", "canonical", "r", "\\phi", fixed, params)
+    msl = Slice(src, "lewis", "canonical", "r", "\\phi", fixed, params, space="minkowski")
+    # With s = r^(1/8), g_rr = (drho/dr)^2 is 16 s^17 - 9 s^16 - 16 s^9 + 6 s^8 - 1 = 0, whose one
+    # root above s = 1 is the level circle; it has no form in radicals.
+    s = sp.Symbol("s")
+    exact_level = max(sp.Poly(16 * s ** 17 - 9 * s ** 16 - 16 * s ** 9 + 6 * s ** 8 - 1, s).real_roots()) ** 8
+    level = float(exact_level)
+    ck.add("Lewis: the root of the polynomial in r^(1/8) is the zero of g_rr - (drho/dr)^2 found numerically",
+           abs(level - float(sp.nsolve(sl.defect, sl.x, 1.47))), 1e-12)
+    sl.known = msl.known = {level: exact_level}
+    top = 7.0
+    size = 2 * float(sl.rho_at(np.array([top]))[0])
+    ck.add("Lewis: the surface lies level where g_rr = (drho/dr)^2, at r = 1.472 ell",
+           abs(float(sl.defect_at(np.array([level]))[0])), 1e-12)
+    ck.add("Lewis: the circle r = ell is null, g_phiphi = 0", abs(float(sl.gpp_at(np.array([1.0]))[0])), 1e-12)
+    inside = sl.gpp_at(np.linspace(0.01, 1, 201)[:-1])
+    ck.add("Lewis: inside r = ell the circles are timelike, g_phiphi < 0", float(max(0.0, np.max(inside))), 0.0)
+    ck.stops("Lewis, between r = ell and the level circle in flat space", sl, np.linspace(1.0, level, 402)[1:-1])
+    outward = np.linspace(level, 40, 402)[1:]
+    ck.add("Lewis: beyond the level circle no surface in Minkowski space carries the slice, "
+           "(drho/dr)^2 - g_rr < 0", float(max(0.0, np.max(-msl.defect_at(outward)))), 0.0)
+    if not np.all(msl.defect_at(outward) > 0):
+        ck.items[-1]["ok"] = False
+    ck.add("Lewis: far out the circle has Levi-Civita's radius, rho/r^(3/4) -> 1",
+           abs(float(sl.rho_at(np.array([1e12]))[0]) / 1e9 - 1), 1e-5)
+
+    join = ("at $r = 1.47\\,\\ell$ the surface lies level, in Minkowski space nearer the axis and in flat space beyond")
+    start = 1 + 2e-5
+    steps = int(math.ceil(math.log((level - 1) / (start - 1)) / math.log(1.025)))
+    near = Piece("near", "sheet", msl, start, level, 0.0, 1,
+                 (("edge", "the surface runs on into the axis along a light cone, to the closed null curve $r = \\ell$"),
+                  ("join", join)),
+                 [(1.2, "r", None), (level, "space", None)], size, digits=1e-12,
+                 knots=[1 + (start - 1) * ((level - 1) / (start - 1)) ** (k / steps) for k in range(1, steps)])
+    far = Piece("far", "sheet", sl, level, top, near.at(level)[1], 1,
+                (("join", join), ("edge", "the horn runs on, steepening, to $r \\to \\infty$")),
+                [(2.0, "r", None), (4.0, "r", None), (top, "r", None)], size)
+    for p in (near, far):
+        space = "in Minkowski space" if p.sl.lorentz else "in flat space"
+        ck.isometry(f"Lewis, {p.id} {space}", p)
+        ck.radius(f"Lewis, {p.id}, rho = sqrt(r^(3/2) - r^(1/2)) {space}", p,
+                  lambda r: np.sqrt(np.maximum(r ** 1.5 - np.sqrt(r), 0)), size)
+    ck.join("Lewis, near in Minkowski space and far in flat space at the level circle", near, level, far, level)
+    pa, pb = near.data()["points"][-1], far.data()["points"][0]
+    ck.add("Lewis, near and far as written: one point at the level circle",
+           max(abs(pa[0] - pb[0]), abs(pa[1] - pb[1]), abs(pa[2] - pb[2])), 10.0 ** -min(near.decimals, far.decimals))
+
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(level), "$1.47\\,\\ell$")
+    ring_label(fig, [0, 0, 0], *far.at(top), "$7\\,\\ell$")
+    fig.legend("fill", "cover", "the region $r > \\ell$, where the circles around the axis are spacelike")
+    fig.legend("line", "r", "$r$ constant, at $1.2\\,\\ell$, $2\\,\\ell$, $4\\,\\ell$, and $7\\,\\ell$")
+    fig.legend("line", "space", "$r = 1.47\\,\\ell$: Minkowski space inside, flat space beyond")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("moment", "A moment of $t$", "$\\ell$", [surface], fig.done(),
+                 settings="$\\sigma = 1/8$, $j = \\ell/8$, and $\\alpha = 1$ in the canonical chart, with $\\ell$ the unit "
+                          "of every length. Every length along the surface inside $r = 1.47\\,\\ell$ is measured with "
+                          "$dX^2 + dY^2 - dZ^2$.")]
+
+
 def fisher_jnw(ck, src):
     """The equatorial plane of Fisher, Janis, Newman and Winicour's scalar field at one moment, at
     gamma = 1/2 and b = 1, the surface Abdolrahimi and Shoom embed. It is read in the harmonic
@@ -11178,6 +11258,7 @@ DRAWN = {
     "einstein_rosen_bridge": einstein_rosen_bridge,
     "simpson_visser": simpson_visser,
     "levi_civita": levi_civita,
+    "lewis": lewis,
     "kantowski_sachs": kantowski_sachs,
     "curzon_chazy": curzon_chazy,
     "double_kerr": double_kerr,
@@ -12002,6 +12083,18 @@ CAPTIONS = {
         "widest circle, of radius $1/B$, at $r = 2/B$, and closes beyond it into a spike, as Melvin's plane does.",
         "The slice runs through the bifurcation sphere at $r_s$ into the other exterior, the same surface turned "
         "over. Where $B r_s \\ge 2$ the widest circle is the throat itself.",
+    ],
+    ("lewis", "moment"): [
+        "The moment $t = 0$ of the plane $z = 0$ outside the closed timelike curves of a rotating cylinder of the "
+        "Weyl class ($\\sigma = 1/8$, $j = \\ell/8$, $\\alpha = 1$, $r > \\ell$), in three dimensional Minkowski "
+        "space ($dX^2 + dY^2 - dZ^2$) out to the circle $r = 1.47\\,\\ell$ and in flat space beyond it, every "
+        "distance along the surface the metric distance.",
+        "On the slice the metric is $h\\,dr^2 + (\\alpha r^2/u - C^2u/\\alpha)\\,d\\phi^2$ with "
+        "$C = 4j/(1 - 4\\sigma)$, so the circle $r = \\ell$ has no radius: it is a closed null curve, and the "
+        "surface leaves the axis there along a light cone of Minkowski space. Just outside it the circles grow "
+        "faster than the distance out to them, and the surface bends over until it lies level at "
+        "$r = 1.47\\,\\ell$. Beyond that circle it is Levi-Civita's horn, steeper at every circle, and both parts "
+        "lie level where they meet, with one tangent plane.",
     ],
     ("levi_civita", "field"): [
         "The plane $z = 0$ around Levi-Civita's line of mass at one moment ($\\sigma = 1/4$, $C = 1$), drawn as a "

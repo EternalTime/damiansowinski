@@ -66,6 +66,11 @@
       "text": "The string given angular momentum as well as mass. Time then jumps by $8\\pi GJ/c^4$ on each circuit of it, and close in the circles around it are closed timelike curves [deser1984, deser1992time]."
     },
     {
+      "id": "lewis",
+      "kind": "generalisation",
+      "text": "The vacuum outside any straight rotating cylinder. Its flat member at rest, $n = 1$ with $b = q = 0$, is the cosmic string [bronnikov2020]."
+    },
+    {
       "id": "string_wave",
       "kind": "generalisation",
       "text": "The string plucked. A wave of any shape runs along it at the speed of light, and the cone around it becomes a pp-wave [garfinkle1990]."
@@ -98,6 +103,7 @@
     "hawking1995",
     "barriola1989",
     "deser1992time",
+    "bronnikov2020",
     "garfinkle1990",
     "staruszkiewicz1963"
   ],

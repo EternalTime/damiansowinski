@@ -10819,6 +10819,68 @@ def levi_civita(ck, src):
     return views
 
 
+def lewis(ck, src):
+    """The half plane of fixed phi and z of a rotating cylinder of Lewis's Weyl class, in the
+    canonical chart at sigma = 1/8, j = ell/8 and alpha = 1, with ell the unit of length.
+
+    On it dphi = 0, so the term in j drops out and the metric is Levi-Civita's,
+    u(-c^2dt^2 + dr_*^2)/alpha with r_* = sqrt(alpha) (r/ell)^{(1 - 4 sigma)^2/2} ell/((1 - 4 sigma)^2/2),
+    which is (16/9) r^{9/16} here and runs from 0 on the axis to infinity. So p, q = arctan(ct -+ r_*)
+    bring it into Minkowski's triangle with the axis on X = 0, as they bring Levi-Civita's: the far
+    edges are the half plane's null infinity, and the axis is a timelike singularity with no
+    horizon. The plane is totally geodesic, since its null rays are null geodesics by the published
+    Christoffel symbols, which null_rays.py checks. Inside r = ell the circles about the axis are
+    closed timelike curves, and that region is tinted, with the null circle drawn as its edge."""
+    def pq(t, r):
+        return mink_pq(t, 16 / 9 * np.asarray(r, dtype=float) ** 0.5625)
+
+    fixed = {"phi": "0", "z": "0"}
+    # The published inverse has the cross term of t and phi in its block of t and r, so the plane's
+    # own inverse is taken from its induced metric, as the spinning string's is.
+    plane = Plane(src, "lewis", "canonical", ("t", "r"), fixed, nr.LEWIS_CANONICAL, induced=True)
+    ck.chart("Lewis, canonical", plane, pq, ck.uniform(-20, 20), ck.uniform(0.01, 20), lambda t, r: (1, 0))
+    K = plane.kretschmann
+    ck.diverges("Lewis: the Kretschmann scalar diverges on the axis r = 0", K(0, 1e-2), K(0, 1e-3))
+    ck.limit("Lewis: the Kretschmann scalar at sigma = 1/8 is 117/(256 r^(13/4))", K(np.zeros(1), np.full(1, 2.0)),
+             [117 / 256 / 2 ** 3.25], 1e-12)
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    TS, RS = (-4, -2, -1, 0, 1, 2, 4), (0.25, 4)
+    moment = slices.moments("lewis")[0]
+    reach = np.linspace(*moment.reach("canonical", "r"), 2)
+    v = View("canonical", "Canonical", box, "canonical")
+    v.fill("region", TRIANGLE)
+    v.fill("cover", TRIANGLE)
+    # Inside r = ell the circle of fixed t, r and z is a closed timelike curve, tinted as the
+    # spinning string's region is, with the null circle its edge.
+    pc, qc = pq(S_ALL, 1.0)
+    v.fill("star", [[0, -PI]] + [point(p, q) for p, q in zip(pc, qc)] + [[0, PI]])
+    grid(v, "r", lambda r, t: pq(t, r), RS, S_ALL)
+    grid(v, "t", pq, TS, S_POS)
+    v.curve("boundary", pc, qc)
+    v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+    v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+    for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6),
+                                     ((0, -PI), "$i^-$", "t", 0, 6)):
+        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt(at, text, anchor, dx=dx, dy=dy)
+    v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+    v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+    v.label_xt([0, 0.25], "$r = 0$", "r", dx=-6)
+    v.legend("cover", "the whole half plane, which $t$ and $r$ cover")
+    v.legend("star", "$r < \\ell$, where the circle of fixed $t$, $r$, and $z$ is a closed timelike curve")
+    v.legend("boundary", "$r = \\ell$, where that circle is null")
+    v.legend("r", "$r$ constant, at $\\ell/4$ and $4\\,\\ell$")
+    v.legend("t", "$ct$ constant")
+    v.legend("singular", "the axis $r = 0$, where the Kretschmann scalar diverges")
+    v.legend("scri", "null infinity of the half plane, $\\mathscr{I}^\\pm$")
+    v.slice(moment, [pq(0 * reach, reach)])
+    v.set(restriction="The half plane of fixed $\\phi$ and $z$ only, totally geodesic, and the same for every $j$.",
+          settings="$\\sigma = 1/8$, $j = \\ell/8$, and $\\alpha = 1$, with $\\ell$ the unit of length; "
+                   "$p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ with "
+                   "$r_* = (16/9)\\,\\ell\\,(r/\\ell)^{9/16}$.")
+    return [v]
+
+
 def fisher_jnw(ck, src):
     """Fisher, Janis, Newman and Winicour's scalar field at gamma = 1/2, the whole spacetime, each
     point a 2-sphere, one view for each of its four charts.
@@ -16109,6 +16171,7 @@ DRAWN = {
     "einstein_rosen_bridge": einstein_rosen_bridge,
     "simpson_visser": simpson_visser,
     "levi_civita": levi_civita,
+    "lewis": lewis,
     "kaluza_klein_monopole": kaluza_klein_monopole,
     "kaluza_klein_black_hole": kaluza_klein_black_hole,
     "fisher_jnw": fisher_jnw,
@@ -18628,6 +18691,17 @@ CAPTIONS = {
         "proportional to $u$, grows without bound toward the edge.",
     ],
     **ROBERTS_CAPTIONS,
+    ("lewis", "canonical"): [
+        "The half plane of fixed $\\phi$ and $z$ of a rotating cylinder of the Weyl class in the canonical chart "
+        "($\\sigma = 1/8$, $j = \\ell/8$, $\\alpha = 1$). The metric on it is $u(-c^2dt^2 + dr_*^2)/\\alpha$ with "
+        "$r_* = (16/9)\\,\\ell\\,(r/\\ell)^{9/16}$, Levi-Civita's, and $p = \\arctan((ct - r_*)/\\ell)$ and "
+        "$q = \\arctan((ct + r_*)/\\ell)$ bring it into Minkowski's triangle, drawn with $T = p + q$ up and "
+        "$X = q - p$ across.",
+        "The edge $X = 0$ is the axis $r = 0$, where the Kretschmann scalar $117/(256\\,r^4h^2)$ diverges, a "
+        "timelike singularity with no horizon. The angular momentum $j$ enters only through $d\\phi$, so the "
+        "triangle is that of the cylinder at rest, and the closed timelike curves inside $r = \\ell$ run round the "
+        "axis, across this plane.",
+    ],
     ("levi_civita", "weyl"): [
         "The half plane of fixed $\\phi$ and $z$ of Levi-Civita's cylinder ($\\sigma = 1/4$), each point in the "
         "diagram a circle around the axis times a line along it. The metric on it is "

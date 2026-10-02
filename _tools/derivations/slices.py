@@ -847,6 +847,17 @@ def _spinning_cylinder(R, line=None):
     return lines
 
 
+def _lewis_cylinder(r):
+    """A cylinder about Lewis's axis at the radius r, which must lie within the embedding's reach:
+    the whole line t = 0, every phi."""
+    def lines(m):
+        lo, hi = m.reach("canonical", "r")
+        if not lo <= r <= hi:
+            raise ValueError("the cylinder lies outside the embedding")
+        return [[(0.0, -math.pi), (0.0, math.pi)]]
+    return lines
+
+
 def _os_interior():
     return one("oppenheimer_snyder", lambda m: [[(m.time / OS_AM, lo) for lo in m.reach("interior_comoving", "\\chi")]])
 
@@ -2003,6 +2014,12 @@ FLAT = {
                           ("isotropic", lambda r: (0.75 * r) ** (4 / 3)))},
     ("point_particle_2plus1", "planet", "radial"): lambda: one(
         "point_particle_2plus1", lambda m: along(0.0, *m.reach("planet", "\\chi")), view_id="cone"),
+    # Lewis's moment t = 0 outside the null circle, embedded in the canonical chart: its radial line
+    # on that chart's plane, and the whole line t = 0 of each cylinder outside r = ell, in the
+    # canonical chart and in Lewis's, whose time is the same and whose angle turns rigidly.
+    ("lewis", "canonical", "radial"): lambda: one("lewis", lambda m: along(0.0, *m.reach("canonical", "r"))),
+    **{("lewis", system, view): lambda r=r: one("lewis", _lewis_cylinder(r))
+       for system, view, r in (("canonical", "outside", 1.5), ("lewis", "between", 2.0), ("lewis", "beyond", 6.0))},
     ("levi_civita", "weyl", "radial"): lambda: one("levi_civita", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
     ("levi_civita", "kasner", "radial"): lambda: one(
         "levi_civita", lambda m: along(0.0, *(levi_civita_r(x) for x in m.reach("weyl", "\\rho")))),
@@ -2124,6 +2141,12 @@ HIDDEN = {
     ("godel", "cylindrical", "beyond"): "beyond r_c the circles are closed timelike curves and no surface of constant t is a moment of space; the embedding stops at sinh^2 r = 1/sqrt 2",
     ("stockum_dust", "cylindrical", "beyond"): "beyond r = R the circles are closed timelike curves; the embedding stops at r = 0.83 R",
     ("som_raychaudhuri", "cylindrical", "beyond"): "beyond r_c the circles are closed timelike curves; the embedding stops at r = sqrt(3) r_c/2",
+    **{("lewis", system, "inside"): "inside r = ell the circles are closed timelike curves; the embedding begins at ell"
+       for system in ("lewis", "canonical")},
+    **{("lewis", system, view): "another member of Lewis's family than the cylinder of the Weyl class whose moment is embedded"
+       for system, views in (("lewis_class", ("first", "second")), ("stockum_light", ("surface", "beyond")),
+                             ("stockum_critical", ("surface", "beyond")), ("stockum_heavy", ("surface", "band")))
+       for view in views},
     **{("spinning_string", system, "inside"): "inside r_c the circles are closed timelike curves; the embedding begins at r_c"
        for system in ("proper_radius", "rescaled_radius", "helical")},
     **{("point_particle_2plus1", "two_bodies", view): "two particles at rest, another spacetime than the one particle whose cone is embedded"

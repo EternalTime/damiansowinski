@@ -32,6 +32,11 @@
       "text": "Levi-Civita's metric is Kasner's with a space coordinate in the place of time, the static class of the family Edward Kasner found in 1921 [kasner1921, maccallum2011]."
     },
     {
+      "id": "lewis",
+      "kind": "generalisation",
+      "text": "Levi-Civita's cylinder set spinning. Thomas Lewis found the stationary vacuum fields with cylindrical symmetry, and those with real constants are locally this static one [lewis1932, dasilva1995weyl]."
+    },
+    {
       "id": "einstein_rosen_waves",
       "kind": "generalisation",
       "text": "Cylindrical symmetry with a dependence on time allowed. The wave with $\\psi \\propto \\ln\\rho$ does not change in time and is Levi-Civita's metric [beck1925, bicak2000]."
@@ -93,6 +98,8 @@
     "bonnordavidson1992",
     "philbin1996",
     "bicak2004",
+    "lewis1932",
+    "dasilva1995weyl",
     "beck1925",
     "bicak2000",
     "griffiths2009",

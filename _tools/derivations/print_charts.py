@@ -10,8 +10,8 @@ black_string, myers_perry, black_saturn, near_horizon_extreme_kerr, hartle_thorn
 som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos,
 schrodinger_spacetime,
 einstein_rosen_bridge, bonnor_vaidya, tolman_vii, kiselev, mass_inflation, kaluza_klein_black_hole,
-israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star and misner_brill_lindquist, and Godel's
-cylindrical chart.
+israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, misner_brill_lindquist and lewis, and
+Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -31,8 +31,8 @@ The derivations these charts rest on, and the reason each was chosen, are in tov
 malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_sitter.md,
 majumdar_papapetrou.md, robinson_trautman.md, tangherlini.md, szekeres.md, photon_rocket.md, fisher_jnw.md,
 witten_black_hole.md, roberts.md, gravastar.md, bonnor_vaidya.md, kiselev.md, mass_inflation.md,
-kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_star.md and
-misner_brill_lindquist.md beside this file.
+kaluza_klein_black_hole.md, israel_wilson_perjes.md, eguchi_hanson.md, boson_star.md,
+misner_brill_lindquist.md and lewis.md beside this file.
 """
 import argparse
 import itertools
@@ -15052,6 +15052,470 @@ def misner_brill_lindquist_check(chart):
 
 
 CHARTS["misner_brill_lindquist"] = [lambda s=s: misner_brill_lindquist(s) for s in TWO_HOLE_CHARTS]
+
+
+# -- The Lewis metrics -------------------------------------------------------------------
+
+LEWIS_CHARTS = ("lewis", "canonical", "lewis_class", "stockum_light", "stockum_critical", "stockum_heavy")
+LEWIS_COORDS = ["t", "r", "\\phi", "z"]
+LEWIS_REALS = "(-\\infty, \\infty)"
+# The form every chart but the canonical one shares, Lewis's own: three functions of r on the
+# plane of t and phi, of determinant -r^2, and one on the plane of r and z.
+LEWIS_LINE = "ds^2 = -{f}\\,c^2dt^2 {s} 2{k}\\,c\\,dt\\,d\\phi + {h}\\left(dr^2 + dz^2\\right) + {l}\\,d\\phi^2"
+
+
+def lewis_parameters(system):
+    """The constants and the names of each chart. A name is read as its definition, so no
+    published value holds a relation the file does not state."""
+    ratio = "\\left(\\dfrac{r}{X}\\right)"
+    if system == "lewis":
+        return ["n", "a", "b", "q", "\\ell",
+                "u = " + ratio.replace("X", "\\ell") + "^{n}",
+                "h = " + ratio.replace("X", "\\ell") + "^{(n^2 - 1)/2}",
+                "f = \\dfrac{r}{\\ell}\\left(\\dfrac{a}{u} - \\dfrac{q^2u}{n^2a}\\right)",
+                "k = -\\dfrac{q\\,r\\,u}{n\\,a} - b\\,f",
+                "l = \\dfrac{r\\,u}{a}\\left(\\ell - \\dfrac{2b\\,q}{n}\\right) - b^2f"]
+    if system == "canonical":
+        return ["\\sigma", "j", "\\alpha", "\\ell",
+                "u = " + ratio.replace("X", "\\ell") + "^{4\\sigma}",
+                "h = " + ratio.replace("X", "\\ell") + "^{4\\sigma(2\\sigma - 1)}"]
+    if system == "lewis_class":
+        return ["m", "a_1", "b_1", "a_2", "\\ell",
+                "b_2 = \\dfrac{1 + a_2\\,b_1}{a_1}",
+                "\\psi = m\\ln" + ratio.replace("X", "\\ell"),
+                "h = " + ratio.replace("X", "\\ell") + "^{-(m^2 + 1)/2}",
+                "f = \\dfrac{r}{\\ell}\\left(\\left(a_1^2 - b_1^2\\right)\\cos\\psi + 2a_1\\,b_1\\sin\\psi\\right)",
+                "k = -r\\left(\\left(a_1\\,a_2 - b_1\\,b_2\\right)\\cos\\psi + \\left(a_1\\,b_2 + a_2\\,b_1\\right)\\sin\\psi\\right)",
+                "l = -r\\,\\ell\\left(\\left(a_2^2 - b_2^2\\right)\\cos\\psi + 2a_2\\,b_2\\sin\\psi\\right)"]
+    if system == "stockum_light":
+        return ["n", "R", "\\ell",
+                "w = \\dfrac{\\sqrt{1 - n^2}}{2R}",
+                "u = " + ratio.replace("X", "R") + "^{n}",
+                "H = " + ratio.replace("X", "\\ell") + "^{-(1 - n^2)/2}",
+                "F = \\dfrac{r}{2nR}\\left(\\dfrac{1 + n}{u} - \\left(1 - n\\right)u\\right)",
+                "M = \\dfrac{w\\,R\\,r}{2n}\\left(\\left(1 + n\\right)u - \\dfrac{1 - n}{u}\\right)",
+                "L = \\dfrac{R\\,r}{8n}\\left(\\left(1 + n\\right)^3u - \\dfrac{\\left(1 - n\\right)^3}{u}\\right)"]
+    if system == "stockum_critical":
+        log = "\\ln" + ratio.replace("X", "R")
+        return ["R", "\\ell",
+                "H = " + ratio.replace("X", "\\ell") + "^{-1/2}",
+                "F = \\dfrac{r}{R}\\left(1 - " + log + "\\right)",
+                "M = \\dfrac{r}{2}\\left(1 + " + log + "\\right)",
+                "L = \\dfrac{R\\,r}{4}\\left(3 + " + log + "\\right)"]
+    return ["m", "R", "\\ell",
+            "w = \\dfrac{\\sqrt{1 + m^2}}{2R}",
+            "\\psi = m\\ln" + ratio.replace("X", "R"),
+            "H = " + ratio.replace("X", "\\ell") + "^{-(1 + m^2)/2}",
+            "F = \\dfrac{r}{R}\\left(\\cos\\psi - \\dfrac{\\sin\\psi}{m}\\right)",
+            "M = w\\,R\\,r\\left(\\cos\\psi + \\dfrac{\\sin\\psi}{m}\\right)",
+            "L = \\dfrac{R\\,r}{4}\\left(\\left(3 - m^2\\right)\\cos\\psi + \\dfrac{\\left(1 - 3m^2\\right)\\sin\\psi}{m}\\right)"]
+
+
+class LewisForms:
+    """A `pretty` for a chart of Lewis's family. The checker hands every value back in powers of
+    r and of the chart's lengths whose exponents hold the chart's parameter, in the cosine and
+    sine of m ln(r/unit), and in the radical of van Stockum's w. Here each is written on the names
+    the chart defines:
+
+    powers    {name: (c, E, unit)}, the name being (r/unit)^(c + E) with c a number and E the
+              part of the exponent that holds the parameter. r^E is written name (r/unit)^(-c)
+              unit^E, after which every unit^E cancels, since a value has one dimension;
+    phase     (placeholder, unit): the placeholder stands for psi = m ln(r/unit) inside the cosine
+              and the sine;
+    root      (radicand, placeholder, value): the radical is written as value times the
+              placeholder, van Stockum's w, and an even power of w as the rational function it is.
+              A fourth entry (first, second) names the two factors the checker splits a radicand
+              of the form -first second over, whose roots it writes as i sqrt(first) sqrt(second).
+
+    What is left is a rational function of r, the lengths, the constants and the names, factored."""
+
+    def __init__(self, r, parameter, powers=None, phase=None, root=None):
+        self.r, self.parameter = r, parameter
+        self.powers, self.phase, self.root = powers or {}, phase, root
+        self.scales = {name: sp.Symbol(f"LEWISUNIT{i}", positive=True) for i, name in enumerate(self.powers)}
+        self.lengths = [r] + [unit for _, _, unit in self.powers.values()] + ([phase[1]] if phase else [])
+
+    def split(self, exponent):
+        """The number in an exponent and its powers of the names: exponent = whole + sum k E."""
+        exponent = sp.expand(exponent)
+        whole = exponent.subs(self.parameter, 0)
+        unknowns = {name: sp.Dummy() for name in self.powers}
+        rest = sp.expand(exponent - whole - sum(unknowns[name] * E for name, (_, E, _) in self.powers.items()))
+        found = sp.solve(sp.Poly(rest, self.parameter).all_coeffs(), list(unknowns.values()), dict=True)
+        if len(found) != 1 or set(found[0]) != set(unknowns.values()):
+            raise AssertionError(f"lewis: the exponent {exponent} is no sum of the named exponents")
+        return whole, {name: found[0][unknowns[name]] for name in self.powers}
+
+    def __call__(self, value):
+        # The radius and the lengths are positive, which is what lets their powers be gathered.
+        positive = {x: sp.Dummy(x.name, positive=True) for x in self.lengths}
+        back = {dummy: x for x, dummy in positive.items()}
+        r, p = positive[self.r], self.parameter
+        value = sp.expand_power_base(sp.sympify(value).subs(positive), force=True)
+        if self.phase is not None:
+            placeholder, unit = self.phase[0], positive[self.phase[1]]
+
+            def turned(e):
+                return sp.simplify(sp.expand_log(e.args[0] - p * sp.log(r / unit), force=True)) == 0
+            value = value.replace(lambda e: isinstance(e, (sp.cos, sp.sin)) and e.args[0].has(sp.log) and turned(e),
+                                  lambda e: e.func(placeholder))
+
+        def power(e):
+            whole, named = self.split(e.exp)
+            out = e.base ** whole
+            for name, k in named.items():
+                c, _, unit = self.powers[name]
+                out *= self.scales[name] ** k
+                if e.base == r:
+                    out *= (name * (r / positive[unit]) ** (-c)) ** k
+            return out
+        value = value.replace(lambda e: e.is_Pow and e.base in back and e.exp.has(p), power)
+        if self.root is not None:
+            radicand, placeholder, worth = self.root[:3]
+            worth = worth.subs(positive)
+            first, second = self.root[3] if len(self.root) > 3 else (None, None)
+            other = sp.Symbol("LEWISROOT", positive=True)
+
+            def rooted(e):
+                if sp.expand(e.base - radicand) == 0:
+                    return (worth * placeholder) ** (2 * e.exp)
+                if first is not None and sp.expand(e.base - first) == 0:
+                    return (-sp.I * worth * placeholder / other) ** (2 * e.exp)
+                if first is not None and sp.expand(e.base - second) == 0:
+                    return other ** (2 * e.exp)
+                return e
+            value = value.replace(lambda e: e.is_Pow and e.exp.is_Rational and e.exp.q == 2, rooted)
+        value = sp.powsimp(sp.powdenest(sp.expand_power_base(value, force=True), force=True), force=True)
+        value = sp.factor(sp.cancel(sp.together(value)))
+        if self.root is not None:
+            # An even power of w is rational in the parameter, and is written so.
+            value = value.replace(lambda e: e.is_Pow and e.base == other and e.exp % 2 == 0,
+                                  lambda e: second ** (e.exp // 2))
+            value = value.replace(lambda e: e.is_Pow and e.base == placeholder and abs(e.exp) > 1,
+                                  lambda e: placeholder ** (e.exp % 2) * (radicand / worth ** 2) ** (e.exp // 2))
+            value = sp.factor(sp.cancel(sp.together(value)))
+        stray = [s for s in self.scales.values() if value.has(s)]
+        if stray or value.has(sp.I) or value.has(sp.Symbol("LEWISROOT", positive=True)) or any(e.is_Pow and not e.exp.is_Integer for e in sp.preorder_traversal(value)):
+            raise AssertionError(f"lewis: {value} is not rational in the chart's names")
+        return value.subs(back)
+
+
+def lewis(system):
+    """The stationary vacuum fields with cylindrical symmetry, Lewis's family of 1932, in six charts:
+
+    lewis             Lewis's form with real constants, the Weyl class, in the notation of da Silva,
+                      Herrera, Paiva and Santos, their c written q and r measured in a length ell\\;
+    canonical         the Weyl class in the star-fixed coordinates of Costa, Natario and Santos
+                      (2021), in the Komar mass and angular momentum per unit length\\;
+    lewis_class       Lewis's form with n = im imaginary, the Lewis class, real in the five constants
+                      of da Silva, Herrera, Paiva and Santos, of which b_2 is fixed by the other four\\;
+    stockum_light     van Stockum's exterior of 1937 for wR < 1/2, a member of the Weyl class\\;
+    stockum_critical  his exterior at wR = 1/2, the member with n = 0, in logarithms\\;
+    stockum_heavy     his exterior for wR > 1/2, a member of the Lewis class.
+
+    Every value is printed by LewisForms as a rational function of r, the constants and the names
+    each chart defines. lewis_check holds each chart to the vacuum equations and to the others,
+    and lewis.md beside this file records each chart's source."""
+    parameters = lewis_parameters(system)
+    probe = vm.Reader(LEWIS_COORDS, parameters, ())
+    r, P = probe.symbol["r"], probe.parameters
+    domains = ["t \\in " + LEWIS_REALS, None, "\\phi \\in [0, 2\\pi)", "z \\in " + LEWIS_REALS]
+    names = {"lewis": "Lewis", "canonical": "Canonical", "lewis_class": "Lewis Class",
+             "stockum_light": "Light Cylinder", "stockum_critical": "Critical Cylinder",
+             "stockum_heavy": "Heavy Cylinder"}
+    half = sp.Rational(1, 2)
+    if system == "canonical":
+        line = ("ds^2 = -\\dfrac{1}{\\alpha}\\left(\\dfrac{r}{\\ell}\\right)^{4\\sigma}\\left(c\\,dt + \\dfrac{4j}{1 - 4\\sigma}d\\phi\\right)^2"
+                " + \\left(\\dfrac{r}{\\ell}\\right)^{4\\sigma(2\\sigma - 1)}\\left(dr^2 + dz^2\\right)"
+                " + \\alpha\\,r^2\\left(\\dfrac{r}{\\ell}\\right)^{-4\\sigma}d\\phi^2")
+        sigma, U, H = sp.Symbol("sigma", real=True), sp.Symbol("LEWISU", positive=True), sp.Symbol("LEWISH", positive=True)
+        sigma = next(s for s in probe.allowed if s.name == "sigma")
+        ell = next(s for s in probe.allowed if s.name == "ell")
+        forms = LewisForms(r, sigma, {U: (0, 4 * sigma, ell), H: (0, 8 * sigma ** 2 - 4 * sigma, ell)})
+        overrides, lead = {U: "u", H: "h"}, [U, H, r]
+        domains[1] = "r \\in (0, \\infty)"
+        domains += ["r = 0 \\;\\text{(the axis, a curvature singularity unless } \\sigma = 0 \\text{ or } \\sigma = 1/2\\text{)}",
+                    "\\alpha^2r^2 < \\left(\\dfrac{4j}{1 - 4\\sigma}\\right)^2u^2 \\;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}"]
+        components = {
+            "metric_components": {("t", "t"): "-\\dfrac{u}{\\alpha}", ("r", "r"): "h", ("z", "z"): "h"},
+            "inverse_metric_components": {("r", "r"): "\\dfrac{1}{h}", ("z", "z"): "\\dfrac{1}{h}",
+                                          ("\\phi", "\\phi"): "\\dfrac{u}{\\alpha\\,r^2}"}}
+    else:
+        symbol = {s.name: s for s in probe.allowed}
+        lower = system in ("lewis", "lewis_class")
+        f, k, l, h = ("f", "k", "l", "h") if lower else ("F", "M", "L", "H")
+        line = LEWIS_LINE.format(f=f, k=k, l=l, h=h, s="+" if lower else "-")
+        sign = "" if lower else "-"
+        flip = "-" if lower else ""
+        components = {
+            "metric_components": {("t", "t"): "-" + f, ("t", "\\phi"): sign + k, ("\\phi", "t"): sign + k,
+                                  ("r", "r"): h, ("z", "z"): h, ("\\phi", "\\phi"): l},
+            "inverse_metric_components": {
+                ("t", "t"): "-\\dfrac{" + l + "}{r^2}", ("t", "\\phi"): sign + "\\dfrac{" + k + "}{r^2}",
+                ("\\phi", "t"): sign + "\\dfrac{" + k + "}{r^2}", ("r", "r"): "\\dfrac{1}{" + h + "}",
+                ("z", "z"): "\\dfrac{1}{" + h + "}", ("\\phi", "\\phi"): "\\dfrac{" + f + "}{r^2}"}}
+        del flip
+        # The phase is a symbol named psi, which the printer writes bare inside a cosine or a sine.
+        U, H, PSI, W = (sp.Symbol(name, positive=True) for name in ("LEWISU", "LEWISH", "psi", "LEWISW"))
+        timelike = "\\;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}"
+        if system == "lewis":
+            n, ell = symbol["n"], symbol["ell"]
+            forms = LewisForms(r, n, {U: (0, n, ell), H: (-half, n ** 2 / 2, ell)})
+            overrides, lead = {U: "u", H: "h"}, [U, H, r]
+            domains[1] = "r \\in (0, \\infty)"
+            domains += ["r = 0 \\;\\text{(the axis, a curvature singularity unless } n = 1\\text{)}",
+                        "f < 0 \\;\\text{(} \\partial_t \\text{ is spacelike)}", "l < 0 " + timelike]
+        elif system == "lewis_class":
+            m, ell = symbol["m"], symbol["ell"]
+            forms = LewisForms(r, m, {H: (-half, -m ** 2 / 2, ell)}, phase=(PSI, ell))
+            overrides, lead = {H: "h", PSI: "\\psi"}, [H, r]
+            domains[1] = "r \\in (0, \\infty)"
+            domains += ["r = 0 \\;\\text{(the axis, a curvature singularity)}",
+                        "f < 0 \\;\\text{(} \\partial_t \\text{ is spacelike)}", "l < 0 " + timelike]
+        elif system == "stockum_light":
+            n, R, ell = symbol["n"], symbol["R"], symbol["ell"]
+            # The checker writes the radical of 1 - n^2 as i sqrt(n - 1) sqrt(n + 1), an algebraic
+            # identity on either branch, so the root of n - 1 is -i times the whole radical over
+            # the root of n + 1.
+            forms = LewisForms(r, n, {U: (0, n, R), H: (-half, n ** 2 / 2, ell)},
+                               root=(1 - n ** 2, W, 2 * R, (n - 1, n + 1)))
+            overrides, lead = {U: "u", H: "H", W: "w"}, [U, H, r]
+            domains[1] = "r \\in [R, \\infty)"
+            domains += ["r = R \\;\\text{(the surface of the dust)}", "F < 0 \\;\\text{(} \\partial_t \\text{ is spacelike)}"]
+        elif system == "stockum_critical":
+            R = symbol["R"]
+            forms = lewis_critical(r, R, symbol["ell"], H)
+            overrides, lead = {H: "H"}, [H, r]
+            domains[1] = "r \\in [R, \\infty)"
+            domains += ["r = R \\;\\text{(the surface of the dust)}", "r > e\\,R \\;\\text{(} \\partial_t \\text{ is spacelike)}"]
+        else:
+            m, R, ell = symbol["m"], symbol["R"], symbol["ell"]
+            forms = LewisForms(r, m, {H: (-half, -m ** 2 / 2, ell)}, phase=(PSI, R), root=(1 + m ** 2, W, 2 * R))
+            overrides, lead = {H: "H", PSI: "\\psi", W: "w"}, [H, r]
+            domains[1] = "r \\in [R, \\infty)"
+            domains += ["r = R \\;\\text{(the surface of the dust)}", "F < 0 \\;\\text{(} \\partial_t \\text{ is spacelike)}",
+                        "L < 0 " + timelike]
+    generators = [g for g in lead if g != r and not g.name.endswith("H")]
+    if system in ("lewis_class", "stockum_heavy"):
+        generators = [sp.cos(PSI), sp.sin(PSI)]
+    elif system == "stockum_critical":
+        generators = [sp.log(r / symbol["R"])]
+    return {
+        "metric_id": "lewis",
+        "system": {"id": system, "name": names[system], "coords": LEWIS_COORDS, "domains": domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": line.replace("c\\,dt", "dt").replace("c^2dt", "dt"),
+        # A sum is grouped by the powers of u, or by the cosine and the sine of the phase.
+        "printer": {"lead": lead, "overrides": overrides,
+                    # van Stockum's w leads a product, as it does in his M.
+                    "factors": [g for g in overrides if g.name == "LEWISW"] + lead,
+                    "collect": lambda poly, printer: cp.collect_by(poly, generators, printer)},
+        "pretty": forms,
+        "components": components,
+        "check": lambda chart: lewis_check(chart, system),
+        "kretschmann": LEWIS_KRETSCHMANN[system],
+    }
+
+
+def lewis_critical(r, R, ell, H):
+    """A `pretty` for van Stockum's exterior at wR = 1/2, where H = sqrt(ell/r): the root of r is
+    written sqrt(ell)/H, after which no half power of r or ell is left. The logarithm of r/R is
+    set aside while the powers are gathered, so that it stays one logarithm."""
+    def pretty(value):
+        positive = {x: sp.Dummy(x.name, positive=True) for x in (r, ell)}
+        x, unit, log = positive[r], positive[ell], sp.Dummy("log")
+        value = sp.sympify(value).replace(lambda e: isinstance(e, sp.log), lambda e: log).subs(positive)
+        value = sp.powdenest(sp.expand_power_base(value, force=True), force=True)
+        value = value.replace(lambda e: e.is_Pow and e.base == x and e.exp.is_Rational and e.exp.q == 2,
+                              lambda e: x ** sp.floor(e.exp) * sp.sqrt(unit) / H)
+        value = sp.factor(sp.cancel(sp.together(sp.powsimp(value, force=True))))
+        if any(e.is_Pow and not e.exp.is_Integer for e in sp.preorder_traversal(value)):
+            raise AssertionError(f"lewis: {value} is not rational in r, R, H and ln(r/R)")
+        return value.subs({dummy: s for s, dummy in positive.items()}).subs(log, sp.log(r / R))
+    return pretty
+
+
+LEWIS_KRETSCHMANN = {
+    "lewis": "\\dfrac{\\left(1 - n^2\\right)^2\\left(n^2 + 3\\right)}{4r^4h^2}",
+    # Levi-Civita's published scalar, with r^4h^2 in the place of rho^{4(4 sigma^2 - 2 sigma + 1)}.
+    "canonical": "\\dfrac{64\\sigma^2\\left(2\\sigma - 1\\right)^2\\left(4\\sigma^2 - 2\\sigma + 1\\right)}{r^4h^2}",
+    "lewis_class": "\\dfrac{\\left(m^2 + 1\\right)^2\\left(3 - m^2\\right)}{4r^4h^2}",
+    "stockum_light": "\\dfrac{\\left(1 - n^2\\right)^2\\left(n^2 + 3\\right)}{4r^4H^2}",
+    "stockum_critical": "\\dfrac{3}{4r^4H^2}",
+    "stockum_heavy": "\\dfrac{\\left(m^2 + 1\\right)^2\\left(3 - m^2\\right)}{4r^4H^2}",
+}
+
+
+def lewis_chart(system):
+    spec = lewis(system)
+    return cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+
+
+def lewis_check(chart, system):
+    """Every chart is a vacuum, with fl + k^2 = r^2 on the plane of t and phi, and each is held to
+    the others and to the published neighbours, at three points in thirty digits where the
+    comparison holds a power with a parameter in its exponent:
+
+    lewis             k and l are Lewis's k = -Af and l = r^2/f - A^2 f with A = q r u/(n a f) + b,
+                      and at b = q = 0 the chart is Levi-Civita's published Weyl chart with
+                      sigma = (1 - n)/4 and C^2 = a, its time sqrt(a) t and its unit of length ell;
+    canonical         Lewis's chart carried along phi -> phi + Omega x^0, Omega = q/(n ell - b q),
+                      at sigma = (1 - n)/4, alpha = (n ell - b q)^2/(n^2 ell^2 a) and
+                      j = b(n ell - b q)/(4 ell), Costa, Natario and Santos's map; and at
+                      j = 0 Levi-Civita's published chart with C^2 = 1/alpha;
+    lewis_class       Lewis's chart at n = im, a = (a_1 + i b_1)^2/2, q = m(a_1^2 + b_1^2)/2 and
+                      b = ell(a_2 + i b_2)/(a_1 + i b_1), da Silva, Herrera, Paiva and Santos's constants;
+    stockum_light     Lewis's chart at a = (n + 1)(ell/R)^(1 - n)/2n, b = -(1 - n)wR^2/(1 + n) and
+                      q = w ell, Costa, Natario and Santos's substitutions with the sense of
+                      rotation of the published dust, and joined to that dust at r = R;
+    stockum_critical  the light cylinder's limit n -> 0, joined to the dust at w = 1/2R;
+    stockum_heavy     the light cylinder at n = im, a member of the Lewis class, joined to the dust.
+
+    Joined means that at ell = R/sqrt(e) the metric and its first derivative along r are those of
+    the published chart of van Stockum's dust at r = R, whose own R is 1/w."""
+    t, r, phi, z = chart.symbols
+    g = chart.geo.g
+    name = {s.name: s for s in chart.reader.allowed}
+    ricci = chart.geo.ricci_ll()
+    for index in vm._indices(4, 2):
+        if vm.norm(vm._at(ricci, index)) != 0:
+            raise AssertionError(f"lewis: the {system} chart's Ricci tensor does not vanish in slot {index}")
+    if vm.norm(g[0, 0] * g[2, 2] - g[0, 2] ** 2 + r ** 2) != 0:
+        raise AssertionError(f"lewis: the {system} chart's plane of t and phi has not the determinant -r^2")
+    generator = random.Random(1932)
+
+    def on_branch(matrix, n):
+        """The light cylinder's metric with its radical on the branch 0 < n < 1. The checker
+        writes sqrt(1 - n^2) as i sqrt(n - 1) sqrt(n + 1), which is the same algebraic number
+        and, taken with principal roots at such an n, minus the radical."""
+        return matrix.replace(lambda e: e.is_Pow and e.exp == sp.Rational(1, 2) and sp.expand(e.base - n + 1) == 0,
+                              lambda e: -sp.I * sp.sqrt(1 - n ** 2) / sp.sqrt(n + 1))
+
+    def fraction(low, high):
+        return sp.Rational(generator.randint(low, high), 97)
+
+    def agree(ours, theirs, values, what, constrain=lambda at: at):
+        """The two metrics at three random points, the parameters in `values` drawn afresh."""
+        for _ in range(3):
+            at = constrain({symbol: fraction(*bounds) for symbol, bounds in values.items()})
+            for i in range(4):
+                for j in range(i, 4):
+                    left, right = (sp.N(sp.sympify(m[i, j]).subs(at), 30) for m in (ours, theirs))
+                    if abs(left - right) > sp.Float(10) ** -22 * (1 + abs(left)):
+                        raise AssertionError(f"lewis: the {system} chart is not {what} in slot "
+                                             f"{chart.coords_tex[i]}{chart.coords_tex[j]}: {left} against {right}")
+
+    def published(metric_id, system_id):
+        entry = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == system_id)
+        reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+        there = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+        matrix = sp.Matrix(4, 4, lambda i, j: reader(there.get((entry["coords"][i], entry["coords"][j]), "0")))
+        return reader, matrix.subs(dict(zip([reader.symbol[c] for c in entry["coords"]], chart.symbols)))
+
+    def levi_civita_at(sigma, conicity, clock):
+        """Levi-Civita's published Weyl chart, its time `clock` times this chart's."""
+        reader, matrix = published("levi_civita", "weyl")
+        matrix = matrix.subs({reader.parameters["sigma"]: sigma, reader.parameters["C"]: conicity})
+        scale = sp.diag(clock, 1, 1, 1)
+        return scale.T * matrix * scale
+
+    def joined(w, values, constrain=lambda at: at):
+        """The metric and its first derivative along r against the published dust's at r = R."""
+        reader, dust = published("stockum_dust", "cylindrical")
+        dust = dust.subs(reader.parameters["R"], 1 / w)
+        R = name["R"]
+
+        def on_surface(matrix):
+            return matrix.subs(r, R)
+        fixed = lambda at: constrain({**at, name["ell"]: at[R] / sp.sqrt(sp.E)})  # noqa: E731
+        agree(on_surface(g), on_surface(dust), values, "the published dust on the surface", fixed)
+        agree(on_surface(g.diff(r)), on_surface(dust.diff(r)), values,
+              "joined smoothly to the published dust", fixed)
+
+    if system == "lewis":
+        P = chart.reader.parameters
+        A = name["q"] * r * P["u"] / (name["n"] * name["a"] * P["f"]) + name["b"]
+        if vm.norm(P["k"] + A * P["f"]) != 0 or vm.norm(P["l"] - (r ** 2 / P["f"] - A ** 2 * P["f"])) != 0:
+            raise AssertionError("lewis: k and l are not Lewis's -Af and r^2/f - A^2 f")
+        static = g.subs({name["b"]: 0, name["q"]: 0, name["ell"]: 1})
+        agree(static, levi_civita_at((1 - name["n"]) / 4, sp.sqrt(name["a"]), sp.sqrt(name["a"])),
+              {r: (30, 300), name["n"]: (10, 90), name["a"]: (50, 200)},
+              "Levi-Civita's published chart at b = q = 0")
+        return
+    if system == "canonical":
+        source = lewis_chart("lewis")
+        n, a, b, q, ell = (next(s for s in source.reader.allowed if s.name == x) for x in ("n", "a", "b", "q", "ell"))
+        omega = q / (n * ell - b * q)
+        J = sp.Matrix([[1, 0, 0, 0], [0, 1, 0, 0], [omega, 0, 1, 0], [0, 0, 0, 1]])
+        ours = g.subs({name["sigma"]: (1 - n) / 4, name["alpha"]: (n * ell - b * q) ** 2 / (n ** 2 * ell ** 2 * a),
+                       name["j"]: b * (n * ell - b * q) / (4 * ell)})
+        agree(ours, J.T * source.geo.g * J,
+              {r: (30, 300), n: (10, 90), a: (50, 200), b: (10, 60), q: (5, 40), ell: (90, 200)},
+              "Lewis's chart carried along phi -> phi + Omega ct")
+        agree(g.subs({name["j"]: 0, name["ell"]: 1}),
+              levi_civita_at(name["sigma"], 1 / sp.sqrt(name["alpha"]), 1 / sp.sqrt(name["alpha"])),
+              {r: (30, 300), name["sigma"]: (5, 45), name["alpha"]: (50, 200)},
+              "Levi-Civita's published chart at j = 0")
+        return
+    if system == "lewis_class":
+        source = lewis_chart("lewis")
+        n, a, b, q = (next(s for s in source.reader.allowed if s.name == x) for x in ("n", "a", "b", "q"))
+        m, a1, b1, a2, ell = (name[x] for x in ("m", "a_1", "b_1", "a_2", "ell"))
+        b2 = chart.reader.parameters["b_2"]
+        continued = source.geo.g.subs({n: sp.I * m, a: (a1 + sp.I * b1) ** 2 / 2, q: m * (a1 ** 2 + b1 ** 2) / 2,
+                                       b: ell * (a2 + sp.I * b2) / (a1 + sp.I * b1)})
+        agree(g, continued, {r: (30, 300), m: (20, 160), a1: (50, 200), b1: (10, 90), a2: (10, 90), ell: (90, 200)},
+              "Lewis's chart continued to n = im")
+        return
+    R = name["R"]
+    if system == "stockum_light":
+        source = lewis_chart("lewis")
+        n, a, b, q, ell = (next(s for s in source.reader.allowed if s.name == x) for x in ("n", "a", "b", "q", "ell"))
+        w = chart.reader.parameters["w"]
+        member = source.geo.g.subs({a: (n + 1) * (ell / R) ** (1 - n) / (2 * n), b: -(1 - n) * w * R ** 2 / (1 + n),
+                                    q: w * ell}, simultaneous=True)
+        g = on_branch(g, n)
+        agree(g, member, {r: (100, 400), n: (10, 90), R: (60, 100), ell: (40, 90)}, "a member of Lewis's chart")
+        joined(w, {n: (10, 90), R: (60, 100)})
+        return
+    light = lewis_chart("stockum_light")
+    n = next(s for s in light.reader.allowed if s.name == "n")
+    light_g = on_branch(light.geo.g, n)
+    if system == "stockum_critical":
+        limit = light_g.applyfunc(lambda e: sp.limit(e, n, 0, "+"))
+        agree(g, limit, {r: (100, 400), R: (60, 100), name["ell"]: (40, 90)}, "the light cylinder's limit n -> 0")
+        joined(1 / (2 * R), {R: (60, 100)})
+        return
+    m = name["m"]
+    worth = chart.reader.parameters["w"]
+    continued = light_g.subs(n, sp.I * m)
+    values = {r: (100, 400), m: (20, 160), R: (60, 100), name["ell"]: (40, 90)}
+    agree(g, continued, values, "the light cylinder continued to n = im")
+    joined(worth, {m: (20, 160), R: (60, 100)})
+    # A member of the Lewis class: psi about ell is psi about R plus m ln(R/ell), so the constants
+    # are read off the complex amplitudes of f and k, and they obey a_1 b_2 - a_2 b_1 = 1.
+    source = lewis_chart("lewis_class")
+    a1, b1, a2 = (next(s for s in source.reader.allowed if s.name == x) for x in ("a_1", "b_1", "a_2"))
+    ell = name["ell"]
+    turn = sp.exp(-sp.I * m * sp.log(R / ell))
+    first = sp.sqrt(ell / R * (1 + sp.I / m) * turn)
+    second = worth * R * (1 - sp.I / m) * turn / first
+    for _ in range(3):
+        at = {symbol: fraction(*bounds) for symbol, bounds in values.items()}
+        z1, z2 = (sp.N(value.subs(at), 30) for value in (first, second))
+        member = {a1: sp.re(z1), b1: -sp.im(z1), a2: sp.re(z2)}
+        if abs(sp.re(z1) * (-sp.im(z2)) - sp.re(z2) * (-sp.im(z1)) - 1) > sp.Float(10) ** -22:
+            raise AssertionError("lewis: the heavy cylinder's constants do not obey a_1 b_2 - a_2 b_1 = 1")
+        for i in range(4):
+            for j in range(i, 4):
+                left = sp.N(g[i, j].subs(at), 30)
+                right = sp.N(source.geo.g[i, j].subs(member).subs(at), 30)
+                if abs(left - right) > sp.Float(10) ** -22 * (1 + abs(left)):
+                    raise AssertionError(f"lewis: the heavy cylinder is no member of the Lewis class in slot {i}{j}")
+
+
+CHARTS["lewis"] = [lambda s=s: lewis(s) for s in LEWIS_CHARTS]
 
 
 def write(spec):

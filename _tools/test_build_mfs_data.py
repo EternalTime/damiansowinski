@@ -4591,6 +4591,12 @@ class Slices(unittest.TestCase):
               "bell_szekeres/regular/plane", "conformal bell_szekeres/regular",
               # The spinning string's cylinders inside r_c, whose circles are closed timelike curves.
               *[f"spinning_string/{s}/inside" for s in ("proper_radius", "rescaled_radius", "helical")],
+              # Lewis's cylinders inside the null circle, where the circles are closed timelike curves, and
+              # the members of his family other than the cylinder of the Weyl class whose moment is embedded.
+              "lewis/lewis/inside", "lewis/canonical/inside", "lewis/lewis_class/first", "lewis/lewis_class/second",
+              *[f"lewis/stockum_{s}/{v}" for s, views in (("light", ("surface", "beyond")),
+                                                         ("critical", ("surface", "beyond")),
+                                                         ("heavy", ("surface", "band"))) for v in views],
               # Gowdy's sphere chart draws the inside of Schwarzschild's horizon; the moments
               # embedded are the torus universe's.
               "gowdy/sphere/plane", "conformal gowdy/sphere",

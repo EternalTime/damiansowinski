@@ -253,6 +253,11 @@ OVERRULED = {
         False, "the time translation is orthogonal to the surfaces of constant "
                "t + a phi / c, which do not close up round the string, so the string is "
                "static in every patch and only stationary as a whole"),
+    ("lewis", "static"): (
+        False, "the canonical chart's time translation is orthogonal to the surfaces of constant "
+               "t + 4j phi / (c(1 - 4 sigma)), which do not close up round the axis, so the Weyl "
+               "class is static in every patch and only stationary as a whole, and the Lewis "
+               "class is static in no patch"),
 }
 
 

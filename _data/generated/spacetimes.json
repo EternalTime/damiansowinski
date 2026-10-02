@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 114,
+  "count": 115,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -18094,6 +18094,11 @@
       "convention": "The parameter $R$ sets the scale of the dust cylinder. We work in units with $G = c = 1$ throughout, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
       "related": [
         {
+          "id": "lewis",
+          "kind": "piece",
+          "text": "The vacuum outside the dust. Thomas Lewis wrote it down in 1932, and van Stockum joined it to the surface of his cylinder [lewis1932, vanstockum1937]."
+        },
+        {
           "id": "levi_civita",
           "kind": "family",
           "text": "The static vacuum outside a line of mass. William Bonnor showed in 1980 that the vacuum outside van Stockum's cylinder is static only for the lightest cylinders [bonnor1980]."
@@ -18129,6 +18134,7 @@
         "misner1973",
         "vanloo2004",
         "wack2014timebomber",
+        "lewis1932",
         "godel1949",
         "deser1992time",
         "som1968",
@@ -18390,6 +18396,11 @@
           "text": "Levi-Civita's metric is Kasner's with a space coordinate in the place of time, the static class of the family Edward Kasner found in 1921 [kasner1921, maccallum2011]."
         },
         {
+          "id": "lewis",
+          "kind": "generalisation",
+          "text": "Levi-Civita's cylinder set spinning. Thomas Lewis found the stationary vacuum fields with cylindrical symmetry, and those with real constants are locally this static one [lewis1932, dasilva1995weyl]."
+        },
+        {
           "id": "einstein_rosen_waves",
           "kind": "generalisation",
           "text": "Cylindrical symmetry with a dependence on time allowed. The wave with $\\psi \\propto \\ln\\rho$ does not change in time and is Levi-Civita's metric [beck1925, bicak2000]."
@@ -18451,6 +18462,8 @@
         "bonnordavidson1992",
         "philbin1996",
         "bicak2004",
+        "lewis1932",
+        "dasilva1995weyl",
         "beck1925",
         "bicak2000",
         "griffiths2009",
@@ -18592,6 +18605,696 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = -\\dfrac{16p_0\\,p_2\\,p_3}{r^4}"
+        }
+      ]
+    },
+    {
+      "id": "lewis",
+      "name": "Lewis Rotating Cylinder",
+      "short_name": "Lewis",
+      "description": "The stationary vacuum fields with cylindrical symmetry, the space outside an infinitely long rotating cylinder, which Thomas Lewis wrote down in 1932. With real constants the field is locally Levi-Civita's static one and the rotation shows only on a trip round the axis; with an imaginary exponent it is static nowhere. Both kinds hold the vacuum outside van Stockum's cylinder of dust.",
+      "tags": [
+        "vacuum",
+        "stationary",
+        "rotating",
+        "cylindrical symmetry",
+        "axisymmetric",
+        "line mass",
+        "frame dragging",
+        "gravitomagnetism",
+        "Sagnac effect",
+        "Aharonov-Bohm effect",
+        "locally static",
+        "closed timelike curves",
+        "angular momentum",
+        "angular deficit",
+        "Weyl class",
+        "Lewis class",
+        "curvature singularity",
+        "naked singularity",
+        "not asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "levi_civita",
+          "kind": "special_case",
+          "text": "Lewis's cylinder with the spin taken away. At $b = q = 0$ the metric is Levi-Civita's, with $\\sigma = (1 - n)/4$, and the whole Weyl class is locally that static field [bronnikov2020, dasilva1995weyl]."
+        },
+        {
+          "id": "stockum_dust",
+          "kind": "composite",
+          "text": "The cylinder of dust in rigid rotation that Lewis's vacuum surrounds. Willem Jacob van Stockum joined the two in 1937, and the vacuum is of the Weyl class for $wR < 1/2$ and of the Lewis class for $wR > 1/2$ [vanstockum1937, costa2021]."
+        },
+        {
+          "id": "spinning_string",
+          "kind": "special_case",
+          "text": "The flat member that still spins. At $n = 1$ and $q = 0$ Lewis's metric is the spinning cosmic string, with angular momentum set by $b\\sqrt{a}$ [bronnikov2020, jensen1992]."
+        },
+        {
+          "id": "cosmic_string",
+          "kind": "special_case",
+          "text": "The flat member at rest. At $n = 1$ and $b = q = 0$ only the cone is left, with $a$ setting the missing angle [bronnikov2020]."
+        }
+      ],
+      "references": [
+        "levicivita1919",
+        "lewis1932",
+        "lanczos1924",
+        "bronnikov2020",
+        "costa2021",
+        "dasilva1995weyl",
+        "vanstockum1937",
+        "bonnor1980",
+        "dasilva1995lewis",
+        "tipler1974",
+        "stachel1982",
+        "maccallum1998",
+        "jensen1992"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/lewis.json",
+      "charts": [
+        {
+          "id": "lewis",
+          "name": "Lewis",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "r = 0 \\;\\text{(the axis, a curvature singularity unless } n = 1\\text{)}",
+            "f < 0 \\;\\text{(} \\partial_t \\text{ is spacelike)}",
+            "l < 0 \\;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "n",
+              "description": "Lewis's exponent, real and positive in the Weyl class; it is the one constant the curvature depends on, and $\\sigma = (1 - n)/4$ is the mass parameter of Levi-Civita's cylinder"
+            },
+            {
+              "symbol": "a",
+              "description": "Lewis's constant $a$, a positive number; without rotation it sets the angular deficit about the axis"
+            },
+            {
+              "symbol": "b",
+              "description": "Lewis's constant $b$, a length; with $q = 0$ it is the time, as a length, by which a circuit of the axis shifts the static time $t + b\\phi/c$"
+            },
+            {
+              "symbol": "q",
+              "description": "Lewis's constant $c$, a number, which measures the rotation of the source; with $b = q = 0$ the metric is Levi-Civita's"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "Unit of length for $r$, the scale Lewis's dimensionless coordinates leave implicit"
+            },
+            {
+              "symbol": "u = \\left(\\dfrac{r}{\\ell}\\right)^{n}",
+              "description": "The power of the radius the three functions of Lewis's metric are built from"
+            },
+            {
+              "symbol": "h = \\left(\\dfrac{r}{\\ell}\\right)^{(n^2 - 1)/2}",
+              "description": "Lewis's $e^\\mu$, the coefficient of $dr^2 + dz^2$"
+            },
+            {
+              "symbol": "f = \\dfrac{r}{\\ell}\\left(\\dfrac{a}{u} - \\dfrac{q^2u}{n^2a}\\right)",
+              "description": "Lewis's $f$, minus the norm of $\\partial_t$, which is negative beyond $u = na/q$"
+            },
+            {
+              "symbol": "k = -\\dfrac{q\\,r\\,u}{n\\,a} - b\\,f",
+              "description": "Lewis's $k = -Af$, with $A = q\\,r\\,u/(n\\,a\\,f) + b$"
+            },
+            {
+              "symbol": "l = \\dfrac{r\\,u}{a}\\left(\\ell - \\dfrac{2b\\,q}{n}\\right) - b^2f",
+              "description": "Lewis's $l = r^2/f - A^2f$, the norm of $\\partial_\\phi$, so that $fl + k^2 = r^2$"
+            }
+          ],
+          "convention": "We use Lewis's coordinates $(t, r, \\phi, z)$ with all four of his constants real, the Weyl class, and $t$ carrying dimensions of time, $r$ and $z$ lengths, and $\\phi$ periodic in $2\\pi$. We write $q$ for the constant the literature calls $c$, and measure $r$ in a length $\\ell$, so that $u$ and $h$ are pure numbers. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -f\\,c^2dt^2 + 2k\\,c\\,dt\\,d\\phi + h\\left(dr^2 + dz^2\\right) + l\\,d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-f"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "k"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "k"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "h"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "h"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "l"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{\\left(1 - n^2\\right)^2\\left(n^2 + 3\\right)}{4r^4h^2}"
+        },
+        {
+          "id": "canonical",
+          "name": "Canonical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "r = 0 \\;\\text{(the axis, a curvature singularity unless } \\sigma = 0 \\text{ or } \\sigma = 1/2\\text{)}",
+            "\\alpha^2r^2 < \\left(\\dfrac{4j}{1 - 4\\sigma}\\right)^2u^2 \\;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\sigma",
+              "description": "Mass per unit length as a pure number, $G/c^2$ times the Komar mass per unit length; $\\sigma = (1 - n)/4$ in Lewis's constants, and it is Levi-Civita's mass parameter"
+            },
+            {
+              "symbol": "j",
+              "description": "Angular momentum per unit length as a length, $G/c^3$ times the Komar angular momentum per unit length; $j = b(n\\ell - bq)/4\\ell$ in Lewis's constants, and the metric is Levi-Civita's at $j = 0$"
+            },
+            {
+              "symbol": "\\alpha",
+              "description": "Conicity, a positive number, which sets the angular deficit of the space the observers at rest measure; $\\alpha = (n\\ell - bq)^2/(n^2\\ell^2a)$ in Lewis's constants"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "Unit of length for $r$"
+            },
+            {
+              "symbol": "u = \\left(\\dfrac{r}{\\ell}\\right)^{4\\sigma}",
+              "description": "The power of the radius in $g_{tt} = -u/\\alpha$"
+            },
+            {
+              "symbol": "h = \\left(\\dfrac{r}{\\ell}\\right)^{4\\sigma(2\\sigma - 1)}",
+              "description": "The coefficient of $dr^2 + dz^2$"
+            }
+          ],
+          "convention": "We use the canonical coordinates $(t, r, \\phi, z)$ of the Weyl class, at rest relative to the distant stars, with $t$ carrying dimensions of time, $r$ and $z$ lengths measured in a length $\\ell$, and $\\phi$ periodic in $2\\pi$. The angle is Lewis's less $\\Omega ct$ with $\\Omega = q/(n\\ell - bq)$, and $\\partial_t$ is timelike at every radius. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{1}{\\alpha}\\left(\\dfrac{r}{\\ell}\\right)^{4\\sigma}\\left(c\\,dt + \\dfrac{4j}{1 - 4\\sigma}d\\phi\\right)^2 + \\left(\\dfrac{r}{\\ell}\\right)^{4\\sigma(2\\sigma - 1)}\\left(dr^2 + dz^2\\right) + \\alpha\\,r^2\\left(\\dfrac{r}{\\ell}\\right)^{-4\\sigma}d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{u}{\\alpha}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{4u\\,j}{\\alpha\\left(1 - 4\\sigma\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-\\dfrac{4u\\,j}{\\alpha\\left(1 - 4\\sigma\\right)}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "h"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "h"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{\\left(4u\\,j + r\\,\\alpha\\left(1 - 4\\sigma\\right)\\right)\\left(4u\\,j - r\\,\\alpha\\left(1 - 4\\sigma\\right)\\right)}{u\\,\\alpha\\left(1 - 4\\sigma\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{64\\sigma^2\\left(2\\sigma - 1\\right)^2\\left(4\\sigma^2 - 2\\sigma + 1\\right)}{r^4h^2}"
+        },
+        {
+          "id": "lewis_class",
+          "name": "Lewis Class",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "r = 0 \\;\\text{(the axis, a curvature singularity)}",
+            "f < 0 \\;\\text{(} \\partial_t \\text{ is spacelike)}",
+            "l < 0 \\;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "The imaginary part of Lewis's exponent, $n = im$, a positive number; the Kretschmann scalar is positive for $m < \\sqrt{3}$"
+            },
+            {
+              "symbol": "a_1",
+              "description": "First real constant of the Lewis class, a number, not zero"
+            },
+            {
+              "symbol": "b_1",
+              "description": "Second real constant of the Lewis class, a number"
+            },
+            {
+              "symbol": "a_2",
+              "description": "Third real constant of the Lewis class, a number"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "Unit of length for $r$"
+            },
+            {
+              "symbol": "b_2 = \\dfrac{1 + a_2\\,b_1}{a_1}",
+              "description": "Fourth real constant of the Lewis class, fixed by $a_1b_2 - a_2b_1 = 1$"
+            },
+            {
+              "symbol": "\\psi = m\\ln\\left(\\dfrac{r}{\\ell}\\right)",
+              "description": "Phase of the metric functions, which turn through a full cycle each time $r$ grows by the factor $e^{2\\pi/m}$"
+            },
+            {
+              "symbol": "h = \\left(\\dfrac{r}{\\ell}\\right)^{-(m^2 + 1)/2}",
+              "description": "Lewis's $e^\\mu$, the coefficient of $dr^2 + dz^2$"
+            },
+            {
+              "symbol": "f = \\dfrac{r}{\\ell}\\left(\\left(a_1^2 - b_1^2\\right)\\cos\\psi + 2a_1\\,b_1\\sin\\psi\\right)",
+              "description": "Lewis's $f$, minus the norm of $\\partial_t$, which changes sign twice in each cycle of $\\psi$"
+            },
+            {
+              "symbol": "k = -r\\left(\\left(a_1\\,a_2 - b_1\\,b_2\\right)\\cos\\psi + \\left(a_1\\,b_2 + a_2\\,b_1\\right)\\sin\\psi\\right)",
+              "description": "Lewis's $k$, the cross term of $t$ and $\\phi$"
+            },
+            {
+              "symbol": "l = -r\\,\\ell\\left(\\left(a_2^2 - b_2^2\\right)\\cos\\psi + 2a_2\\,b_2\\sin\\psi\\right)",
+              "description": "Lewis's $l$, the norm of $\\partial_\\phi$, so that $fl + k^2 = r^2$; the circles of constant $t$, $r$, and $z$ are closed timelike curves where it is negative"
+            }
+          ],
+          "convention": "We use Lewis's coordinates $(t, r, \\phi, z)$ for the Lewis class, where his exponent is imaginary, $n = im$, and the metric is real for the five real constants of da Silva, Herrera, Paiva, and Santos, bound by $a_1b_2 - a_2b_1 = 1$. Here $t$ carries dimensions of time, $r$ and $z$ are lengths measured in a length $\\ell$, and $\\phi$ is periodic in $2\\pi$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -f\\,c^2dt^2 + 2k\\,c\\,dt\\,d\\phi + h\\left(dr^2 + dz^2\\right) + l\\,d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-f"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "k"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "k"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "h"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "h"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "l"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{\\left(m^2 + 1\\right)^2\\left(3 - m^2\\right)}{4r^4h^2}"
+        },
+        {
+          "id": "stockum_light",
+          "name": "Light Cylinder",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [R, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "r = R \\;\\text{(the surface of the dust)}",
+            "F < 0 \\;\\text{(} \\partial_t \\text{ is spacelike)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "n",
+              "description": "Lewis's exponent, between 0 and 1; the mass per unit length is $\\sigma = (1 - n)/4$"
+            },
+            {
+              "symbol": "R",
+              "description": "Radius of the dust cylinder, a length; the vacuum is $r \\ge R$"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "The length $R/\\sqrt{e}$, the unit of $r$ in $H$ that joins the vacuum to the dust on the surface"
+            },
+            {
+              "symbol": "w = \\dfrac{\\sqrt{1 - n^2}}{2R}",
+              "description": "Angular velocity of the dust divided by $c$, an inverse length; the density of the dust on the axis is $w^2c^2/2\\pi G$"
+            },
+            {
+              "symbol": "u = \\left(\\dfrac{r}{R}\\right)^{n}",
+              "description": "The power of the radius van Stockum's three functions are built from"
+            },
+            {
+              "symbol": "H = \\left(\\dfrac{r}{\\ell}\\right)^{-(1 - n^2)/2}",
+              "description": "van Stockum's coefficient of $dr^2 + dz^2$, equal to $e^{-w^2R^2}$ on the surface"
+            },
+            {
+              "symbol": "F = \\dfrac{r}{2nR}\\left(\\dfrac{1 + n}{u} - \\left(1 - n\\right)u\\right)",
+              "description": "Minus the norm of $\\partial_t$, equal to 1 on the surface and negative beyond $u^2 = (1 + n)/(1 - n)$"
+            },
+            {
+              "symbol": "M = \\dfrac{w\\,R\\,r}{2n}\\left(\\left(1 + n\\right)u - \\dfrac{1 - n}{u}\\right)",
+              "description": "van Stockum's cross term, a length, equal to $wR^2$ on the surface"
+            },
+            {
+              "symbol": "L = \\dfrac{R\\,r}{8n}\\left(\\left(1 + n\\right)^3u - \\dfrac{\\left(1 - n\\right)^3}{u}\\right)",
+              "description": "The norm of $\\partial_\\phi$, positive at every radius, so that $FL + M^2 = r^2$"
+            }
+          ],
+          "convention": "We use van Stockum's coordinates $(t, r, \\phi, z)$ outside his dust cylinder of radius $R$ for $wR < 1/2$, which rotate with the dust, with $t$ carrying dimensions of time, $r$ and $z$ lengths, and $\\phi$ periodic in $2\\pi$. The dust turns at the angular velocity $wc$, and Lewis's exponent is $n = \\sqrt{1 - 4w^2R^2}$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -F\\,c^2dt^2 - 2M\\,c\\,dt\\,d\\phi + H\\left(dr^2 + dz^2\\right) + L\\,d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-F"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-M"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-M"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "H"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "H"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "L"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{\\left(1 - n^2\\right)^2\\left(n^2 + 3\\right)}{4r^4H^2}"
+        },
+        {
+          "id": "stockum_critical",
+          "name": "Critical Cylinder",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [R, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "r = R \\;\\text{(the surface of the dust)}",
+            "r > e\\,R \\;\\text{(} \\partial_t \\text{ is spacelike)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "R",
+              "description": "Radius of the dust cylinder, a length; the vacuum is $r \\ge R$, and the dust turns at the angular velocity $c/2R$"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "The length $R/\\sqrt{e}$, the unit of $r$ in $H$ that joins the vacuum to the dust on the surface"
+            },
+            {
+              "symbol": "H = \\left(\\dfrac{r}{\\ell}\\right)^{-1/2}",
+              "description": "van Stockum's coefficient of $dr^2 + dz^2$, equal to $e^{-1/4}$ on the surface"
+            },
+            {
+              "symbol": "F = \\dfrac{r}{R}\\left(1 - \\ln\\left(\\dfrac{r}{R}\\right)\\right)",
+              "description": "Minus the norm of $\\partial_t$, equal to 1 on the surface and negative beyond $r = eR$"
+            },
+            {
+              "symbol": "M = \\dfrac{r}{2}\\left(1 + \\ln\\left(\\dfrac{r}{R}\\right)\\right)",
+              "description": "van Stockum's cross term, a length"
+            },
+            {
+              "symbol": "L = \\dfrac{R\\,r}{4}\\left(3 + \\ln\\left(\\dfrac{r}{R}\\right)\\right)",
+              "description": "The norm of $\\partial_\\phi$, positive at every radius, so that $FL + M^2 = r^2$"
+            }
+          ],
+          "convention": "We use van Stockum's coordinates $(t, r, \\phi, z)$ outside his dust cylinder of radius $R$ at $wR = 1/2$, which rotate with the dust, with $t$ carrying dimensions of time, $r$ and $z$ lengths, and $\\phi$ periodic in $2\\pi$. This is the member of the family with $n = 0$, where powers of $r$ become logarithms. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -F\\,c^2dt^2 - 2M\\,c\\,dt\\,d\\phi + H\\left(dr^2 + dz^2\\right) + L\\,d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-F"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-M"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-M"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "H"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "H"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "L"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{3}{4r^4H^2}"
+        },
+        {
+          "id": "stockum_heavy",
+          "name": "Heavy Cylinder",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [R, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "r = R \\;\\text{(the surface of the dust)}",
+            "F < 0 \\;\\text{(} \\partial_t \\text{ is spacelike)}",
+            "L < 0 \\;\\text{(the circles of constant } t, r, z \\text{ are closed timelike curves)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "The imaginary part of Lewis's exponent, $m = \\sqrt{4w^2R^2 - 1}$, a positive number"
+            },
+            {
+              "symbol": "R",
+              "description": "Radius of the dust cylinder, a length; the vacuum is $r \\ge R$"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "The length $R/\\sqrt{e}$, the unit of $r$ in $H$ that joins the vacuum to the dust on the surface"
+            },
+            {
+              "symbol": "w = \\dfrac{\\sqrt{1 + m^2}}{2R}",
+              "description": "Angular velocity of the dust divided by $c$, an inverse length"
+            },
+            {
+              "symbol": "\\psi = m\\ln\\left(\\dfrac{r}{R}\\right)",
+              "description": "Phase of van Stockum's functions, zero on the surface"
+            },
+            {
+              "symbol": "H = \\left(\\dfrac{r}{\\ell}\\right)^{-(1 + m^2)/2}",
+              "description": "van Stockum's coefficient of $dr^2 + dz^2$, equal to $e^{-w^2R^2}$ on the surface"
+            },
+            {
+              "symbol": "F = \\dfrac{r}{R}\\left(\\cos\\psi - \\dfrac{\\sin\\psi}{m}\\right)",
+              "description": "Minus the norm of $\\partial_t$, equal to 1 on the surface"
+            },
+            {
+              "symbol": "M = w\\,R\\,r\\left(\\cos\\psi + \\dfrac{\\sin\\psi}{m}\\right)",
+              "description": "van Stockum's cross term, a length, equal to $wR^2$ on the surface"
+            },
+            {
+              "symbol": "L = \\dfrac{R\\,r}{4}\\left(\\left(3 - m^2\\right)\\cos\\psi + \\dfrac{\\left(1 - 3m^2\\right)\\sin\\psi}{m}\\right)",
+              "description": "The norm of $\\partial_\\phi$, so that $FL + M^2 = r^2$; the circles of constant $t$, $r$, and $z$ are closed timelike curves where it is negative"
+            }
+          ],
+          "convention": "We use van Stockum's coordinates $(t, r, \\phi, z)$ outside his dust cylinder of radius $R$ for $wR > 1/2$, which rotate with the dust, with $t$ carrying dimensions of time, $r$ and $z$ lengths, and $\\phi$ periodic in $2\\pi$. The dust turns at the angular velocity $wc$ and we take $m = \\sqrt{4w^2R^2 - 1}$ as the parameter. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -F\\,c^2dt^2 - 2M\\,c\\,dt\\,d\\phi + H\\left(dr^2 + dz^2\\right) + L\\,d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-F"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-M"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-M"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "H"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "H"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "L"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{\\left(m^2 + 1\\right)^2\\left(3 - m^2\\right)}{4r^4H^2}"
         }
       ]
     },
@@ -31131,6 +31834,11 @@
           "text": "The string with its spin switched off, $J = 0$. The helix in time closes up and only the cone is left [soleng1992]."
         },
         {
+          "id": "lewis",
+          "kind": "generalisation",
+          "text": "The vacuum outside any straight rotating cylinder, curved off the axis. The flat one among Lewis's fields, $n = 1$ with $q = 0$, is the spinning string [bronnikov2020, jensen1992]."
+        },
+        {
           "id": "minkowski",
           "kind": "locally_same",
           "text": "Flat spacetime with a wedge cut out along the string and the two faces glued back together a time $8\\pi GJ/c^4$ out of step [deser1992time]."
@@ -31190,6 +31898,7 @@
         "menotti1993",
         "letelier1995",
         "mena2008",
+        "bronnikov2020",
         "vanstockum1937",
         "misner1963",
         "banados1992",
@@ -34160,6 +34869,11 @@
           "text": "The string given angular momentum as well as mass. Time then jumps by $8\\pi GJ/c^4$ on each circuit of it, and close in the circles around it are closed timelike curves [deser1984, deser1992time]."
         },
         {
+          "id": "lewis",
+          "kind": "generalisation",
+          "text": "The vacuum outside any straight rotating cylinder. Its flat member at rest, $n = 1$ with $b = q = 0$, is the cosmic string [bronnikov2020]."
+        },
+        {
           "id": "string_wave",
           "kind": "generalisation",
           "text": "The string plucked. A wave of any shape runs along it at the speed of light, and the cone around it becomes a pp-wave [garfinkle1990]."
@@ -34192,6 +34906,7 @@
         "hawking1995",
         "barriola1989",
         "deser1992time",
+        "bronnikov2020",
         "garfinkle1990",
         "staruszkiewicz1963"
       ],
