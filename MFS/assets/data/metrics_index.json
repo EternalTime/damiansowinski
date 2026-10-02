@@ -452,6 +452,43 @@
     "embedding": "7035de7d63ab26a4"
   },
   {
+    "id": "bonnor_charged_dust",
+    "name": "Bonnor Charged Dust",
+    "tags": [
+      "dust",
+      "charged dust",
+      "charged",
+      "electric charge",
+      "electromagnetic field",
+      "Einstein-Maxwell",
+      "extremal",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "stellar interior",
+      "matched solution",
+      "regular centre",
+      "no horizon",
+      "black hole mimicker",
+      "quasiblack hole",
+      "gravitational redshift",
+      "quasar",
+      "harmonic coordinates",
+      "isotropic coordinates",
+      "mass",
+      "asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "72aaff7e2c8cd82c",
+    "diagrams": "ac2eb68ee92b57a6",
+    "conformal": "7c7471759c5476fc",
+    "embedding": "0453da68b24b7ab7"
+  },
+  {
     "id": "bonnor_magnetic_dipole",
     "name": "Bonnor Dipole",
     "tags": [
@@ -811,7 +848,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "25316b6866e3ee9d",
+    "version": "aa7a5332614bebef",
     "diagrams": "58591b53cadf5579",
     "conformal": "67014d080f0dd52b",
     "embedding": "2c30edaa0cee4bdc"
@@ -1071,7 +1108,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5042a9c9fcd76842",
+    "version": "3d0016cb821ef322",
     "diagrams": "1358f347fde7be67",
     "conformal": "7807b351c1311ade",
     "embedding": "ab81073436048cb9"
@@ -2384,7 +2421,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b3958c32ca0826f7",
+    "version": "d2cb2f9ff5b0ef22",
     "diagrams": "c6edded6cce52897",
     "conformal": "334186f800f59252",
     "embedding": "b9bf3c95064c40a7"
@@ -2680,7 +2717,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0e900347d0ff5c7d",
+    "version": "038ac6328a1b003b",
     "diagrams": "fcd9b835546fa10a",
     "conformal": "83b45b101a7e6db4",
     "embedding": "6602c018a8504748"
@@ -3239,7 +3276,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "839a1137fc4c9ae4",
+    "version": "81ee1e083f532d39",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881"
@@ -3532,7 +3569,7 @@
       "idealized model",
       "conformally flat"
     ],
-    "version": "f369170993219319",
+    "version": "662f76246d4af0e7",
     "diagrams": "2c3a4f257a42be77",
     "conformal": "576471fc7fb8c666",
     "embedding": "33dc4c3913188978"

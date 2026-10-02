@@ -1,5 +1,5 @@
 {
-  "version": "1dc5e38d71d4a632",
+  "version": "5086b3ab53605508",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -25340,6 +25340,94 @@
         "eprint": "1808.03508",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.99.084037"
+      }
+    },
+    "das1962": {
+      "type": "article",
+      "fields": {
+        "title": "A class of exact solutions of certain classical field equations in general relativity",
+        "author": "Das, A.",
+        "journal": "Proceedings of the Royal Society of London. Series A. Mathematical and Physical Sciences",
+        "volume": "267",
+        "number": "1328",
+        "pages": "1--10",
+        "year": "1962",
+        "doi": "10.1098/rspa.1962.0079",
+        "url": "https://doi.org/10.1098/rspa.1962.0079"
+      }
+    },
+    "hoyle1964": {
+      "type": "article",
+      "fields": {
+        "title": "On the avoidance of singularities in {C}-field cosmology",
+        "author": "Hoyle, Fred and Narlikar, Jayant Vishnu",
+        "journal": "Proceedings of the Royal Society of London. Series A. Mathematical and Physical Sciences",
+        "volume": "278",
+        "number": "1375",
+        "pages": "465--478",
+        "year": "1964",
+        "doi": "10.1098/rspa.1964.0076",
+        "url": "https://doi.org/10.1098/rspa.1964.0076"
+      }
+    },
+    "bonnor1965": {
+      "type": "article",
+      "fields": {
+        "title": "The Equilibrium of a Charged Sphere",
+        "author": "Bonnor, W. B.",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "129",
+        "number": "6",
+        "pages": "443--446",
+        "year": "1965",
+        "doi": "10.1093/mnras/129.6.443",
+        "url": "https://doi.org/10.1093/mnras/129.6.443"
+      }
+    },
+    "bonnor1975": {
+      "type": "article",
+      "fields": {
+        "title": "Are Very Large Gravitational Redshifts Possible?",
+        "author": "Bonnor, W. B. and Wickramasuriya, S. B. P.",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "170",
+        "number": "3",
+        "pages": "643--649",
+        "year": "1975",
+        "doi": "10.1093/mnras/170.3.643",
+        "url": "https://doi.org/10.1093/mnras/170.3.643"
+      }
+    },
+    "lemos2004": {
+      "type": "article",
+      "fields": {
+        "title": "Quasiblack holes from extremal charged dust",
+        "author": "Lemos, José P. S. and Weinberg, Erick J.",
+        "journal": "Physical Review D",
+        "volume": "69",
+        "number": "10",
+        "pages": "104004",
+        "year": "2004",
+        "doi": "10.1103/PhysRevD.69.104004",
+        "eprint": "gr-qc/0311051",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.69.104004"
+      }
+    },
+    "lemoszanchin2008": {
+      "type": "article",
+      "fields": {
+        "title": "Bonnor stars in $d$ spacetime dimensions",
+        "author": "Lemos, José P. S. and Zanchin, Vilson T.",
+        "journal": "Physical Review D",
+        "volume": "77",
+        "number": "6",
+        "pages": "064003",
+        "year": "2008",
+        "doi": "10.1103/PhysRevD.77.064003",
+        "eprint": "0802.0530",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.77.064003"
       }
     }
   }

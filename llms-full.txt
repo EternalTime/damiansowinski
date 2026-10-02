@@ -398,6 +398,23 @@ The exact gravitational field of a steady beam of light, which William Bonnor fo
 - chart Null Cylindrical, Inside the Beam: coordinates $(u, v, \rho, \phi)$, $$ds^2 = -2\,du\,dv + d\rho^2 + \rho^2d\phi^2 - \dfrac{8\pi G\epsilon}{c^4}\rho^2\,du^2$$
 - chart Null Cylindrical, Outside the Beam: coordinates $(u, v, \rho, \phi)$, $$ds^2 = -2\,du\,dv + d\rho^2 + \rho^2d\phi^2 - \dfrac{8\pi G\epsilon}{c^4}R^2\left(1 + 2\ln\left(\dfrac{\rho}{R}\right)\right)du^2$$
 
+### Bonnor's Stars of Charged Dust
+
+Stars of dust in which every grain carries just enough charge for its electric repulsion to cancel its gravity, so the dust rests in equilibrium with no pressure, in a ball or in any other shape. William Bonnor built a sphere of it in 1965, and in 1975 he and S. B. P. Wickramasuriya made one whose surface lies as close to its own horizon as one likes, so that light from its centre arrives with a redshift as large as one likes. José Lemos and Erick Weinberg named that limit a quasiblack hole.
+
+- id: `bonnor_charged_dust`
+- tags: dust, charged dust, charged, electric charge, electromagnetic field, Einstein-Maxwell, extremal, static, stationary, spherically symmetric, stellar interior, matched solution, regular centre, no horizon, black hole mimicker, quasiblack hole, gravitational redshift, quasar, harmonic coordinates, isotropic coordinates, mass, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/bonnor_charged_dust.json
+- chart Harmonic: coordinates $(t, x, y, z)$, $$ds^2 = -\dfrac{c^2dt^2}{U^2} + U^2\left(dx^2 + dy^2 + dz^2\right)$$
+- chart Bonnor's Sphere of 1965: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{c^2dt^2}{U^2} + U^2\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Bonnor and Wickramasuriya's Sphere: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{c^2dt^2}{U^2} + U^2\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Isotropic Exterior: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{m}{r}\right)^{-2}c^2dt^2 + \left(1 + \dfrac{m}{r}\right)^2\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Reissner-Nordström Exterior: coordinates $(t, R, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{m}{R}\right)^2c^2dt^2 + \left(1 - \dfrac{m}{R}\right)^{-2}dR^2 + R^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Spheroid Interior: coordinates $(t, u, \theta, \phi)$, $$ds^2 = -\dfrac{c^2dt^2}{U^2} + U^2\left(a^2\left(\sinh^2u + \sin^2\theta\right)\left(du^2 + d\theta^2\right) + a^2\cosh^2u\cos^2\theta\,d\phi^2\right)$$
+- chart Spheroid Exterior: coordinates $(t, u, \theta, \phi)$, $$ds^2 = -\dfrac{c^2dt^2}{U^2} + U^2\left(a^2\left(\sinh^2u + \sin^2\theta\right)\left(du^2 + d\theta^2\right) + a^2\cosh^2u\cos^2\theta\,d\phi^2\right)$$
+- chart Lemos and Weinberg's Cloud: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{c^2dt^2}{U^2} + U^2\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Bonnor's Magnetic Dipole
 
 The static field of a mass with a magnetic dipole moment, the solution of the Einstein-Maxwell equations William Bonnor found in 1966. Roberto Emparan showed in 2000 that its two poles are extremal black holes with opposite magnetic charges, held apart by a strut on the axis between them.

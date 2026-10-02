@@ -123,7 +123,7 @@ EQUATOR = {"theta": "pi/2", "phi": "0"}
 NOT_DRAWN = {"godel", "stockum_dust", "som_raychaudhuri", "taub_nut", "kasner", "bianchi", "tolman_bondi", "alcubierre",
              "natario", "krasnikov", "pp_wave", "mixmaster", "lentz", "szekeres", "van_den_broeck",
              "string_wave", "black_saturn", "schrodinger_spacetime", "eguchi_hanson", "misner_brill_lindquist", "brill_waves",
-             "kundt_waves", "wahlquist", "tippett_tsang"}
+             "kundt_waves", "wahlquist", "tippett_tsang", "petrov_homogeneous"}
 
 
 # ---------------------------------------------------------------- the drawing
@@ -9518,6 +9518,182 @@ def tolman_vii(ck, src):
         lo, hi = star_moment.reach("spherical", "r")
         rr = np.concatenate([np.linspace(lo, R, 40), R + np.geomspace(1e-6, hi - R, 200)])
         v.slice(star_moment, [star(0 * rr, rr)])
+        views.append(v)
+    return views
+
+
+def bonnor_charged_dust(ck, src):
+    """Bonnor's stars at m = 1, each a static spacetime with a regular centre and no horizon, so
+    each is Minkowski's triangle under p, q = arctan((t -+ r*)/l) with r* the integral of
+    sqrt(g_xx/(-g_tt)) from the centre, which is the integral of U^2 times the flat length. The
+    sphere of 1975 and the sphere of 1965, both at r_0 = 2m, are joined at r_0 to the exterior
+    U = 1 + m/r, with g_tt and g_rr continuous there, checked, so t is one coordinate and the
+    star is a timelike tube; the exterior is drawn in the isotropic radius and in the areal
+    radius R = r + m, on the tube of the sphere of 1975. Lemos and Weinberg's cloud, at b = m/2,
+    has no surface, and the harmonic chart is drawn with it on the half line x >= 0, y = z = 0.
+    The spheroid, at a = m and u_0 = 1, is drawn on the upper half of its axis of symmetry,
+    theta = pi/2, where the height is a sinh(u): the axis is fixed by the rotation, so light
+    along it stays on it. Each r* is checked against its closed form where it has one."""
+    R, ell = 2.0, 2.0
+    star_at = nr.BCD_STAR
+    A, B = 1.75, 1 / 16
+    closed = {"sphere_1975": lambda r: A * A * r - 2 * A * B * r ** 3 / 3 + B * B * r ** 5 / 5,
+              "sphere_1965": lambda r: 27 / math.sqrt(8) * np.arctan(r / math.sqrt(8))}
+    outer = Plane(src, "bonnor_charged_dust", "exterior", ("t", "r"), EQUATOR, star_at)
+    areal = Plane(src, "bonnor_charged_dust", "exterior_areal", ("t", "R"), EQUATOR, star_at)
+    views = []
+
+    def tortoise(plane, edge, n=300001):
+        speed = sp.lambdify(plane.x1, sp.sqrt(plane.g[1, 1] / (-plane.g[0, 0])), "numpy")
+        xq = np.linspace(0, edge, n)
+        return xq, cumulative_trapezoid(speed(xq) * np.ones_like(xq), xq, initial=0)
+
+    def outside(r):
+        return r + 2 * np.log(r) - 1 / r
+
+    for system, name, moment_view in (("sphere_1975", "Bonnor and Wickramasuriya's sphere", "star"),
+                                      ("sphere_1965", "Bonnor's sphere of 1965", "star_1965")):
+        inner = Plane(src, "bonnor_charged_dust", system, ("t", "r"), EQUATOR, star_at)
+        for k, what in ((0, "g_tt"), (1, "g_rr")):
+            ck.limit(f"{name}: {what} is continuous at r = r_0",
+                     [float(inner.g[k, k].subs(inner.x1, R))], [float(outer.g[k, k].subs(outer.x1, R))], 1e-12)
+        rq, rsq = tortoise(inner, R)
+        ck.limit(f"{name}: r* is its closed form", rsq[::30000], closed[system](rq[::30000]), 1e-8)
+
+        def rstar(r, rq=rq, rsq=rsq):
+            r = np.asarray(r, dtype=float)
+            with np.errstate(invalid="ignore", divide="ignore"):
+                beyond = rsq[-1] + outside(r) - outside(R)
+            return np.where(r <= R, np.interp(r, rq, rsq), beyond)
+
+        def star(t, r, rstar=rstar):
+            return mink_pq(t, rstar(r), ell)
+        ck.chart(f"{name}, the star", inner, star, ck.uniform(-20, 20), ck.uniform(0.01, 1.99), lambda t, r: (1, 0))
+        ck.chart(f"{name}, the exterior", outer, star, ck.uniform(-20, 20), ck.uniform(2.01, 30), lambda t, r: (1, 0))
+        ck.finite(f"{name}: r = 0 is a regular centre", inner.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+        charts = [(system, "Sphere of 1975" if system == "sphere_1975" else "Sphere of 1965", "r", 0.0)]
+        if system == "sphere_1975":
+            ck.chart(f"{name}, the exterior in the areal radius", areal, lambda t, X: star(t, np.asarray(X) - 1),
+                     ck.uniform(-20, 20), ck.uniform(3.01, 30), lambda t, r: (1, 0))
+            charts += [("exterior", "Isotropic Exterior", "r", 0.0), ("exterior_areal", "Areal Exterior", "R", 1.0)]
+        moment = slices.moments("bonnor_charged_dust", moment_view)[0]
+        for vid, label, letter, shift in charts:
+            v = View(vid, label, [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], vid)
+            v.fill("region", TRIANGLE)
+            ps, qs = mink_pq(S_ALL, rstar(R), ell)
+            v.fill("cover", [[0, -PI]] + [point(p, q) for p, q in zip(ps, qs)] + [[0, PI]])
+            for r in (0.5, 1.0, 1.5):
+                v.curve("r", *star(S_ALL, np.full_like(S_ALL, r)))
+            for r in (3.0, 4.0, 8.0):
+                v.curve("r2", *star(S_ALL, np.full_like(S_ALL, r)))
+            rr = np.concatenate([np.linspace(0, R, 60)[:-1], R + np.exp(np.linspace(-6, 8, 200)) - np.exp(-6)])
+            for t in (-8, -4, -2, 0, 2, 4, 8):
+                v.curve("t", *star(np.full_like(rr, t), rr))
+            v.curve("surface", ps, qs)
+            triangle_edges(v)
+            label_on(v, mink_pq(0, rstar(R), ell), "$r = r_0$" if not shift else "$R = r_0 + m$")
+            v.label_xt([0.35, 0.0], "star", cls="region")
+            v.legend("cover", "the star, which the interior chart covers")
+            v.legend("r", "$r$ constant inside, at $0.5$, $1$ and $1.5\\,m$")
+            v.legend("r2", "$r$ constant outside, at $3$, $4$ and $8\\,m$" if not shift else
+                     "$R$ constant outside, at $4$, $5$ and $9\\,m$")
+            v.legend("t", "$t$ constant, one $t$ on both sides")
+            v.legend("surface", "the surface of the star")
+            v.legend("centre", "$r = 0$, a regular centre")
+            v.set(settings="$m = 1$, the unit of every length, and $r_0 = 2m$.")
+            lo, hi = moment.reach(None, "r")
+            rr = np.concatenate([np.linspace(lo, R, 40), R + np.geomspace(1e-6, hi - R, 200)])
+            v.slice(moment, [star(0 * rr, rr)])
+            views.append(v)
+
+    # Lemos and Weinberg's cloud at b = m/2, in its own chart and as the harmonic chart's U.
+    def cloud_rstar(r):
+        r = np.asarray(r, dtype=float)
+        return r + 2 * np.arcsinh(2 * r) + 2 * np.arctan(2 * r)
+
+    def cloud(t, r):
+        return mink_pq(t, cloud_rstar(r), ell)
+    own = Plane(src, "bonnor_charged_dust", "quasi_black_hole", ("t", "r"), EQUATOR, nr.BCD_CLOUD)
+    line = Plane(src, "bonnor_charged_dust", "harmonic", ("t", "x"), {"y": "0", "z": "0"}, functions={"U": nr.BCD_CLOUD_U})
+    rq, rsq = tortoise(own, 6.0)
+    ck.limit("Lemos and Weinberg's cloud: r* is r + 2 arsinh(2r) + 2 arctan(2r)", rsq[::30000], cloud_rstar(rq[::30000]), 1e-8)
+    ck.chart("Lemos and Weinberg's cloud", own, cloud, ck.uniform(-20, 20), ck.uniform(0.01, 30), lambda t, r: (1, 0))
+    ck.chart("the harmonic chart through the cloud", line, cloud, ck.uniform(-20, 20), ck.uniform(0.01, 30),
+             lambda t, r: (1, 0))
+    ck.finite("Lemos and Weinberg's cloud: r = 0 is a regular centre",
+              own.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+    moment = slices.moments("bonnor_charged_dust", "cloud")[0]
+    for vid, label, letter in (("quasi_black_hole", "The Cloud", "r"), ("harmonic", "Harmonic", "x")):
+        v = View(vid, label, [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], vid)
+        v.fill("region", TRIANGLE)
+        for r in (0.5, 1.0, 2.0, 4.0, 8.0):
+            v.curve("r", *cloud(S_ALL, np.full_like(S_ALL, r)))
+        rr = np.concatenate([np.linspace(0, 2, 60)[:-1], 2 + np.exp(np.linspace(-6, 8, 200)) - np.exp(-6)])
+        for t in (-8, -4, -2, 0, 2, 4, 8):
+            v.curve("t", *cloud(np.full_like(rr, t), rr))
+        triangle_edges(v, centre=f"${letter} = 0$")
+        v.legend("r", f"${letter}$ constant, at $0.5$, $1$, $2$, $4$ and $8\\,m$")
+        v.legend("t", "$t$ constant")
+        v.legend("centre", f"${letter} = 0$, a regular centre")
+        v.set(settings="$m = 1$, the unit of every length, and $b = m/2$.")
+        lo, hi = moment.reach(None, "r")
+        rr = np.linspace(lo, hi, 300)
+        v.slice(moment, [cloud(0 * rr, rr)])
+        views.append(v)
+
+    # The spheroid at a = m and u_0 = 1, on the upper half of its axis.
+    axis = dict(nr.BCD_AXIS)
+    body = Plane(src, "bonnor_charged_dust", "spheroid_interior", ("t", "u"), axis, nr.BCD_SPHEROID)
+    field = Plane(src, "bonnor_charged_dust", "spheroid_exterior", ("t", "u"), axis, nr.BCD_SPHEROID)
+    for k, what in ((0, "g_tt"), (1, "g_uu")):
+        ck.limit(f"the spheroid: {what} is continuous at u = u_0 on the axis",
+                 [float(body.g[k, k].subs(body.x1, 1))], [float(field.g[k, k].subs(field.x1, 1))], 1e-12)
+    uq, usq = tortoise(body, 1.0)
+    speed = sp.lambdify(field.x1, sp.sqrt(field.g[1, 1] / (-field.g[0, 0])), "numpy")
+    wq = np.linspace(1.0, 12.0, 400001)
+    wsq = usq[-1] + cumulative_trapezoid(speed(wq), wq, initial=0)
+
+    def axis_rstar(u):
+        u = np.asarray(u, dtype=float)
+        return np.where(u <= 1.0, np.interp(u, uq, usq), np.interp(u, wq, wsq))
+
+    def spheroid(t, u):
+        return mink_pq(t, axis_rstar(u), ell)
+    ck.chart("the spheroid, inside, on the axis", body, spheroid, ck.uniform(-20, 20), ck.uniform(0.01, 0.99),
+             lambda t, r: (1, 0))
+    ck.chart("the spheroid, outside, on the axis", field, spheroid, ck.uniform(-20, 20), ck.uniform(1.01, 8),
+             lambda t, r: (1, 0))
+    # The spheroid's published Kretschmann scalar, a page of hyperbolic functions that sympy is slow to
+    # simplify, is evaluated on the axis as it stands.
+    body.sources.note("bonnor_charged_dust", "spheroid_interior", ["kretschmann"])
+    K = body.reader(nr.strip_lhs(body.entry["kretschmann"])).subs(body.reader.held).doit().subs(body.subs).subs(body.fixed)
+    ck.finite("the spheroid: the centre of the disc is regular",
+              sp.lambdify(body.x1, K, "numpy")(np.linspace(1e-3, 0.2, 50)))
+    moment = slices.moments("bonnor_charged_dust", "spheroid")[0]
+    for vid, label in (("spheroid_interior", "Spheroid Interior"), ("spheroid_exterior", "Spheroid Exterior")):
+        v = View(vid, label, [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], vid)
+        v.fill("region", TRIANGLE)
+        ps, qs = mink_pq(S_ALL, axis_rstar(1.0), ell)
+        v.fill("cover", [[0, -PI]] + [point(p, q) for p, q in zip(ps, qs)] + [[0, PI]])
+        for u in (0.5,):
+            v.curve("r", *spheroid(S_ALL, np.full_like(S_ALL, u)))
+        for u in (1.5, 2.0, 3.0):
+            v.curve("r2", *spheroid(S_ALL, np.full_like(S_ALL, u)))
+        uu = np.concatenate([np.linspace(0, 1, 60)[:-1], np.linspace(1, 12, 400)])
+        for t in (-8, -4, -2, 0, 2, 4, 8):
+            v.curve("t", *spheroid(np.full_like(uu, t), uu))
+        v.curve("surface", ps, qs)
+        triangle_edges(v, centre="$u = 0$")
+        label_on(v, mink_pq(0, axis_rstar(1.0), ell), "$u = u_0$")
+        v.legend("cover", "the spheroid, which the interior chart covers")
+        v.legend("r", "$u$ constant inside, at $0.5$")
+        v.legend("r2", "$u$ constant outside, at $1.5$, $2$ and $3$")
+        v.legend("t", "$t$ constant, one $t$ on both sides")
+        v.legend("surface", "the surface of the spheroid")
+        v.legend("centre", "$u = 0$, the centre of the disc")
+        v.set(settings="$m = 1$, the unit of every length, $a = m$, and $u_0 = 1$.")
+        if vid == "spheroid_interior":
+            v.slice(moment, points=[spheroid(0.0, 0.0)], label="$t = 0$, $u = 0$")
         views.append(v)
     return views
 
@@ -19705,7 +19881,7 @@ DRAWN = {
     "einstein_cluster": einstein_cluster,
     "lindquist_wheeler_lattice": lindquist_wheeler_lattice,
     "semiclosed_world": semiclosed_world,
-    "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii,
+    "oppenheimer_snyder": oppenheimer_snyder, "white_hole": white_hole, "vaidya": vaidya, "israel_shell": israel_shell, "charged_shell": charged_shell, "bonnor_vaidya": bonnor_vaidya, "tov": tov, "boson_star": boson_star, "tolman_vii": tolman_vii, "bonnor_charged_dust": bonnor_charged_dust,
     "bartnik_mckinnon": bartnik_mckinnon,
     "nordstrom_scalar": nordstrom_scalar,
     "ab_metrics": ab_metrics,
@@ -22061,6 +22237,56 @@ CAPTIONS = {
     ("bartnik_mckinnon", "soliton"): [
         "The soliton whose Yang-Mills amplitude $w$ has one zero, each point in the diagram a 2-sphere of radius $r$. Every sphere has $2m < r$, so there is no horizon, and the centre is regular.",
         "The tortoise coordinate $\\xi = \\int dr/(\\sigma(1 - 2m/r))$ runs from the centre to infinity, and $p, q = \\arctan((ct \\mp \\xi)/8\\ell)$ bring the spacetime into Minkowski's triangle, the causal structure of empty space. The curves of constant $r$ crowd toward the centre, since light takes $7.88\\,\\ell/c$ of $t$ to cross the first $\\ell$ of radius.",
+    ],
+    ("bonnor_charged_dust", "sphere_1975"): [
+        "Bonnor and Wickramasuriya's sphere of charged dust ($r_0 = 2m$) and the extremal Reissner-Nordström field "
+        "outside it, each point in the diagram a 2-sphere. The potential $U$ and its slope are continuous at the "
+        "surface, so $t$ and $r$ are one pair of coordinates throughout.",
+        "Outside $r_0$ the potential is $1 + m/r$ and the horizon of that field, $r = 0$, lies inside the star, where the field does not hold, so the spacetime has no horizon. The tortoise coordinate $r_* = \\int U^2dr$ runs from the centre through the surface, and $p, q = \\arctan((ct \\mp r_*)/2m)$ bring the spacetime into Minkowski's triangle, with the star a timelike tube from $i^-$ to $i^+$.",
+    ],
+    ("bonnor_charged_dust", "sphere_1965"): [
+        "Bonnor's sphere of 1965 ($r_0 = 2m$) and the extremal Reissner-Nordström field outside it, each point in "
+        "the diagram a 2-sphere. The potential $U$ and its slope are continuous at the surface, so $t$ and $r$ are "
+        "one pair of coordinates throughout.",
+        "Outside $r_0$ the potential is $1 + m/r$ and the horizon of that field, $r = 0$, lies inside the star, where the field does not hold, so the spacetime has no horizon. The tortoise coordinate $r_* = \\int U^2dr$ runs from the centre through the surface, and $p, q = \\arctan((ct \\mp r_*)/2m)$ bring the spacetime into Minkowski's triangle, with the star a timelike tube from $i^-$ to $i^+$.",
+    ],
+    ("bonnor_charged_dust", "exterior"): [
+        "The field outside Bonnor and Wickramasuriya's sphere ($r_0 = 2m$) in the isotropic radius $r$, each point "
+        "in the diagram a 2-sphere, with the star a timelike tube from $i^-$ to $i^+$. The horizon of the extremal "
+        "Reissner-Nordström field, $r = 0$, lies inside the tube, where the field does not hold.",
+    ],
+    ("bonnor_charged_dust", "exterior_areal"): [
+        "The field outside Bonnor and Wickramasuriya's sphere in the areal radius $R = r + m$, each point in the "
+        "diagram a 2-sphere of radius $R$, with the surface of the star at $R = r_0 + m = 3m$. The horizon of the "
+        "extremal Reissner-Nordström field, $R = m$, lies inside the tube of the star, where the field does not hold.",
+    ],
+    ("bonnor_charged_dust", "quasi_black_hole"): [
+        "Lemos and Weinberg's cloud of charged dust ($b = m/2$), each point in the diagram a 2-sphere. The cloud "
+        "has no surface and no horizon, and its centre is regular.",
+        "The tortoise coordinate is $r_* = r + 2m\\,\\mathrm{arsinh}(r/b) + (m^2/b)\\arctan(r/b)$, and "
+        "$p, q = \\arctan((ct \\mp r_*)/2m)$ bring the spacetime into Minkowski's triangle. At the centre "
+        "$dr_*/dr = (1 + m/b)^2$, which grows without limit as $b$ goes to zero, so the curves of constant $r$ crowd "
+        "toward the centre.",
+    ],
+    ("bonnor_charged_dust", "harmonic"): [
+        "The half line $x \\ge 0$, $y = z = 0$ through the centre of Lemos and Weinberg's cloud ($b = m/2$) over "
+        "time, the harmonic chart with that cloud's $U$. By spherical symmetry it is the plane of $t$ and $r$ of "
+        "the cloud's own chart, Minkowski's triangle with $p, q = \\arctan((ct \\mp x_*)/2m)$ and "
+        "$x_* = \\int U^2dx$.",
+    ],
+    ("bonnor_charged_dust", "spheroid_interior"): [
+        "The upper half of the axis of symmetry of Bonnor and Wickramasuriya's spheroid ($\\theta = \\pi/2$, "
+        "$a = m$, $u_0 = 1$) over time, each point in the diagram a single event at the height $a\\sinh u$ above "
+        "the centre of the disc. Light sent along the axis stays on it.",
+        "With $u_* = \\int aU^2\\cosh u\\,du$ from the disc through the surface, $p, q = \\arctan((ct \\mp "
+        "u_*)/2m)$ bring the half axis into Minkowski's triangle, with the spheroid a timelike tube from $i^-$ to "
+        "$i^+$.",
+    ],
+    ("bonnor_charged_dust", "spheroid_exterior"): [
+        "The upper half of the axis of symmetry outside Bonnor and Wickramasuriya's spheroid ($\\theta = \\pi/2$, "
+        "$a = m$, $u_0 = 1$) over time, each point in the diagram a single event at the height $a\\sinh u$. "
+        "The lines of constant $u$ outside the spheroid crowd toward null infinity, since the height grows as "
+        "$e^u$.",
     ],
     ("tolman_vii", "spherical"): [
         "A static star whose density falls as $1 - r^2/R^2$ to an empty surface, joined at $R = 2\\,r_s$ "
