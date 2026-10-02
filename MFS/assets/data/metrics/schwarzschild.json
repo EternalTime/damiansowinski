@@ -413,6 +413,11 @@
       "id": "einstein_1912_static",
       "kind": "programme",
       "text": "Einstein's own first field outside a body, three years before Schwarzschild's. Its space is flat and only its clocks feel the mass, so it bends light by half as much [einstein1911]."
+    },
+    {
+      "id": "brans_dicke_sphere",
+      "kind": "generalisation",
+      "text": "The field outside a static body in Brans and Dicke's theory, where a scalar field sets the strength of gravity. With the scalar charge $C = 0$ it is Schwarzschild's metric, and with any other the horizon gives way to a singularity [bransdicke1961, agnese1995]."
     }
   ],
   "references": [
@@ -525,7 +530,9 @@
     "ruban1968",
     "davies1977",
     "good2016",
-    "gibbons1977action"
+    "gibbons1977action",
+    "bransdicke1961",
+    "agnese1995"
   ],
   "coordinates": [
     {

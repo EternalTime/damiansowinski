@@ -342,6 +342,19 @@ DIMENSIONS = {
     ("fisher_jnw", "harmonic"): {
         "t": "T", "u": "L**(-1)", "\\theta": "1", "\\phi": "1", "m": "L", "k": "L",
     },
+    # Brans and Dicke's static sphere: B is a length and C and lambda pure numbers in Brans's
+    # isotropic chart; r_0 is a length and m and n pure numbers in Campanelli and Lousto's; and
+    # Bronnikov's harmonic coordinate u is an inverse length, with k, b and s lengths. h and A are
+    # the ratios the charts name.
+    ("brans_dicke_sphere", "isotropic"): {
+        "t": "T", "\\rho": "L", "\\theta": "1", "\\phi": "1", "B": "L", "C": "1", "\\lambda": "1", "h": "1",
+    },
+    ("brans_dicke_sphere", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_0": "L", "m": "1", "n": "1", "A": "1",
+    },
+    ("brans_dicke_sphere", "harmonic"): {
+        "t": "T", "u": "L**(-1)", "\\theta": "1", "\\phi": "1", "k": "L", "b": "L", "s": "L",
+    },
     # The exponential metric of Papapetrou and Yilmaz: m = GM/c^2 is a length, the Cartesian chart
     # names its isotropic radius, the areal chart holds the isotropic radius r(R) as a length, and
     # Bronnikov's harmonic coordinate u = 1/r is an inverse length.
