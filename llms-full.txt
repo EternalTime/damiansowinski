@@ -464,6 +464,16 @@ The static, spherically symmetric charged black hole of low energy string theory
 - chart String Metric, Magnetic Charge: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{1 - \dfrac{r_s}{r}}{1 - \dfrac{r_d}{r}}c^2dt^2 + \dfrac{dr^2}{\left(1 - \dfrac{r_s}{r}\right)\left(1 - \dfrac{r_d}{r}\right)} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart String Metric, Electric Charge: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \left(1 - \dfrac{r_d}{r}\right)\left(-\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}}\right) + \left(r - r_d\right)^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Double Kerr Solution
+
+Two Kerr black holes on one axis of symmetry, the stationary vacuum solution Dietrich Kramer and Gernot Neugebauer built in 1980 by two Bäcklund transformations of flat space. The repulsion between the spins does not balance the attraction of the masses, so a strut on the axis between the horizons holds the holes apart.
+
+- id: `double_kerr`
+- tags: vacuum, stationary, axisymmetric, rotating, rotating black hole, black hole, multiple black holes, angular momentum, mass, conical singularity, ergosphere, frame dragging, horizon, event horizon, closed timelike curves, NUT parameter, soliton, superposition, black hole uniqueness, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/double_kerr.json
+- chart Weyl-Lewis-Papapetrou: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -f\left(c\,dt - \omega\,d\phi\right)^2 + \dfrac{1}{f}\left(e^{2\gamma}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2\right)$$
+
 ### Einstein's Cluster
 
 A static ball of particles on circular orbits in every direction, each held on its circle by the gravity of all the others, with no pressure along the radius. Einstein built it in 1939 to argue that no body can be squeezed inside its Schwarzschild radius, and it now serves as a model for halos of dark matter.

@@ -67,6 +67,11 @@
       "id": "black_saturn",
       "kind": "family",
       "text": "Two black objects of five dimensions held apart with no charge: a ring kept from falling onto the hole at its centre by rotation [elvang2007]."
+    },
+    {
+      "id": "double_kerr",
+      "kind": "family",
+      "text": "Two spinning black holes on one axis, with no charge. The repulsion between their spins does not balance their attraction, so a strut holds them apart where these holes need none [kramer1980, neugebauer2009]."
     }
   ],
   "references": [
@@ -93,7 +98,9 @@
     "shipley2016",
     "hawking1977",
     "ruback1986",
-    "elvang2007"
+    "elvang2007",
+    "kramer1980",
+    "neugebauer2009"
   ],
   "coordinates": [
     {

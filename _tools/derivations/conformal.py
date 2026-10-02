@@ -12187,6 +12187,155 @@ def curzon_chazy(ck, src):
     return views
 
 
+DOUBLE_KERR_SCALE = 4.0   # the length l of p, q = arctan((ct -+ x_*)/l), in units of m
+
+
+def double_kerr(ck, src):
+    """Kramer and Neugebauer's two black holes, as Herdeiro and Rebelo's pair of opposite spins at
+    J = M^2 and zeta = 4M, on its two totally geodesic planes of t and one length, in units of M.
+
+    On the axis omega = 0 off the horizons and the metric is -f c^2dt^2 + (e^(2 gamma)/f) dz^2, with
+    f = 0 at the four poles z = +-(2 -+ sigma), sigma = sqrt(2/3). The tortoise coordinate z_*, the
+    integral of e^gamma/f, falls or rises without bound at every pole as ln|z - pole|/(2 kappa),
+    kappa the surface gravity, which is checked against Herdeiro and Rebelo's temperature. So
+    p, q = arctan((ct -+ z_*)/l) bring the stretch above the upper hole into a whole diamond, the
+    horizon on its left and null infinity on its right, and the stretch between the holes, where
+    e^gamma = 3/4 is the strut, into a whole diamond with a horizon on every side. The stretch below
+    the lower hole is the mirror image of the first. On the plane z = 0 the same maps with rho_*,
+    which vanishes at rho = 0, bring the half plane into Minkowski's triangle, the strut on X = 0.
+    f and gamma on each plane are the pair's, in complex arithmetic, and omega vanishes there, which
+    is checked."""
+    ell = DOUBLE_KERR_SCALE
+    sigma = math.sqrt(2 / 3)
+    lower, upper = 2 - sigma, 2 + sigma
+    star_axis, star_plane = nr._double_kerr_star("axis"), nr._double_kerr_star("midplane")
+
+    def axis_pq(t, z):
+        zs = star_axis(z)
+        t = np.asarray(t, dtype=float)
+        return np.arctan((t - zs) / ell), np.arctan((t + zs) / ell)
+
+    def plane_pq(t, rho):
+        return mink_pq(t, star_plane(rho), ell)
+
+    # omega on the axis off the rods and on the plane z = 0, from the complex arithmetic.
+    zz = np.array([-5.0, -3.5, -1.0, 0.0, 0.6, 3.2, 9.0])
+    ck.limit("double Kerr: omega = 0 on the axis off the horizons", nr._double_kerr_numbers(0.0, zz)[1], [0.0] * 7, 1e-12)
+    rr = np.array([0.3, 1.0, 2.5, 7.0])
+    ck.limit("double Kerr: omega = 0 on the plane z = 0", nr._double_kerr_numbers(rr, 0.0)[1], [0.0] * 4, 1e-12)
+    # f and gamma enter each plane as numbers, from the complex arithmetic, with omega = 0 on it;
+    # the metric on a plane holds no derivative of either, so none is handed over.
+    def on(plane):
+        def values(x0, x1):
+            f, _, e2g = nr._double_kerr_numbers(0.0, x1) if plane == "axis" else nr._double_kerr_numbers(x1, 0.0)
+            none = np.zeros_like(f)
+            return {"f": (f, none, none), "gamma": (np.log(e2g) / 2, none, none)}
+        return values
+    still, held = {"omega": "0"}, ["f", "gamma"]
+    axis = Plane(src, "double_kerr", "weyl", ("t", "z"), {"rho": "0", "phi": "0"}, {}, functions=still, numeric=held)
+    eq = Plane(src, "double_kerr", "weyl", ("t", "\\rho"), {"phi": "0", "z": "0"}, {}, functions=still, numeric=held)
+    ck.chart("double Kerr, the axis above the upper hole", axis, axis_pq, ck.uniform(-20, 20, 400),
+             ck.uniform(upper + 0.05, 20, 400), lambda t, z: (1, 0), on("axis"))
+    ck.chart("double Kerr, the axis between the holes", axis, axis_pq, ck.uniform(-20, 20, 400),
+             ck.uniform(-lower + 0.05, lower - 0.05, 400), lambda t, z: (1, 0), on("axis"))
+    ck.chart("double Kerr, the plane z = 0", eq, plane_pq, ck.uniform(-20, 20, 400), ck.uniform(0.05, 20, 400),
+             lambda t, r: (1, 0), on("plane"))
+    # Herdeiro and Rebelo's (3.5) and (3.6) at M = J = 1, zeta = 4: a = 2 sigma and kappa = 2 pi T = a (2 - a)/4.
+    kappa = 2 * sigma * (2 - 2 * sigma) / 4
+    for pole, side, where in ((upper, 1, "above the upper hole"), (lower, -1, "below the upper hole")):
+        near, nearer = float(star_axis(pole + side * 1e-5)), float(star_axis(pole + side * 1e-7))
+        ck.limit(f"double Kerr: z_* runs off as ln|z - pole|/(2 kappa) {where}, kappa Herdeiro and Rebelo's",
+                 side * (near - nearer) / math.log(100.0), 1 / (2 * kappa), 1e-4)
+    g00, _, g11, *_ = axis.metric(np.zeros(3), np.array([-0.5, 0.0, 0.9]), on("axis"))
+    f0 = nr._double_kerr_numbers(0.0, np.array([-0.5, 0.0, 0.9]))[0]
+    ck.limit("double Kerr: e^gamma = 3/4 on the axis between the holes, the strut", np.sqrt(-g00 * g11), [0.75] * 3, 1e-10)
+    ck.limit("double Kerr: the axis plane's g_tt is -f of the pair", -g00, f0, 1e-10)
+
+    views = []
+    moment = slices.moments("double_kerr", "midplane")[0]
+    TS = (-8, -4, -2, 0, 2, 4, 8)
+    settings = ("Herdeiro and Rebelo's pair, two black holes of mass $M$ whose angular momenta are $J$ and $-J$ and "
+                "whose horizons have their centres $\\zeta$ apart, at $J = GM^2/c$ and $\\zeta = 4m$, with "
+                "$m = GM/c^2 = 1$ the unit of every length, $\\sigma = \\sqrt{2/3}\\,m$, and "
+                f"$\\ell = {ell:g}\\,m$.")
+    corners = (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6), ((0, -PI), "$i^-$", "t", 0, 6))
+
+    v = View("weyl_axis_outside", "The axis above the holes", [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "weyl")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    ZS = (3, 4, 6, 10)
+    grid(v, "r", lambda z, t: axis_pq(t, z), ZS, S_ALL)
+    grid(v, "t", axis_pq, TS, spread(upper, np.inf, 500, 9))
+    v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+    v.line("horizon", [[[0, PI], [-PI, 0]], [[-PI, 0], [0, -PI]]])
+    for at, text, anchor, dx, dy in corners:
+        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt(at, text, anchor, dx=dx, dy=dy)
+    v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+    v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+    v.label_xt([-HALF, HALF], "$z = 2m + \\sigma$", "br", dx=-5, dy=-3)
+    v.label_xt([-HALF, -HALF], "$z = 2m + \\sigma$", "tr", dx=-5, dy=3)
+    label_on(v, axis_pq(0, 4), "$z = 4\\,m$")
+    v.legend("cover", "the axis above the upper hole, $z > 2m + \\sigma$, which $t$ and $z$ cover")
+    v.legend("r", "$z$ constant, at $3$, $4$, $6$ and $10\\,m$")
+    v.legend("t", "$ct$ constant, in units of $m$")
+    v.legend("horizon", "$z = 2m + \\sigma$, the upper pole of the upper hole's horizon")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    v.set(restriction="The axis $\\rho = 0$ above the upper hole only, totally geodesic, each point in the diagram a single event.",
+          settings=settings)
+    views.append(v)
+
+    v = View("weyl_axis_between", "The axis between the holes", [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "weyl")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    ZB = (-1, -0.5, 0.5, 1)
+    grid(v, "r", lambda z, t: axis_pq(t, z), ZB, S_ALL)
+    grid(v, "surface", lambda z, t: axis_pq(t, z), (0,), S_ALL)
+    grid(v, "t", axis_pq, TS, spread(-lower, lower, 500, 9))
+    v.line("horizon", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]], [[0, PI], [-PI, 0]], [[-PI, 0], [0, -PI]]])
+    v.label_xt([HALF, HALF], "$z = 2m - \\sigma$", "bl", dx=5, dy=-3)
+    v.label_xt([HALF, -HALF], "$z = 2m - \\sigma$", "tl", dx=5, dy=3)
+    v.label_xt([-HALF, HALF], "$z = -(2m - \\sigma)$", "br", dx=-5, dy=-3)
+    v.label_xt([-HALF, -HALF], "$z = -(2m - \\sigma)$", "tr", dx=-5, dy=3)
+    v.legend("cover", "the strut, $|z| < 2m - \\sigma$, which $t$ and $z$ cover")
+    v.legend("r", "$z$ constant, at $\\pm m/2$ and $\\pm m$")
+    v.legend("surface", "$z = 0$, midway between the holes")
+    v.legend("t", "$ct$ constant, in units of $m$")
+    v.legend("horizon", "$z = \\pm(2m - \\sigma)$, the facing poles of the two horizons")
+    v.slice(moment, points=[axis_pq(0.0, 0.0)], label="$t = 0$, $z = 0$")
+    v.set(restriction="The axis $\\rho = 0$ between the two holes only, totally geodesic, each point in the diagram a single event.",
+          settings=settings)
+    views.append(v)
+
+    v = View("weyl_midplane", "The plane $z = 0$", [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "weyl")
+    v.fill("region", TRIANGLE)
+    v.fill("cover", TRIANGLE)
+    RS = (1, 2, 4, 8)
+    grid(v, "r", lambda r, t: plane_pq(t, r), RS, S_ALL)
+    grid(v, "t", plane_pq, TS, spread(0, np.inf, 300, 9))
+    v.line("centre", [[[0, -PI], [0, PI]]])
+    v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+    for at, text, anchor, dx, dy in corners:
+        v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+        v.label_xt(at, text, anchor, dx=dx, dy=dy)
+    v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+    v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+    v.label_xt([0, 0.25], "$\\rho = 0$", "r", dx=-6)
+    label_on(v, plane_pq(0, 4), "$\\rho = 4\\,m$")
+    v.legend("cover", "the half plane, which $t$ and $\\rho$ cover")
+    v.legend("r", "$\\rho$ constant, at $1$, $2$, $4$ and $8\\,m$")
+    v.legend("t", "$ct$ constant, in units of $m$")
+    v.legend("centre", "$\\rho = 0$, the strut")
+    v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+    r = np.linspace(*moment.reach("weyl", "\\rho"), 60)
+    v.slice(moment, [plane_pq(0 * r, r)])
+    v.set(restriction="The half plane of $t$ and $\\rho$ at $z = 0$ and fixed $\\phi$ only, totally geodesic, each point "
+                      "in the diagram a single event.",
+          settings=settings)
+    views.append(v)
+    return views
+
+
 def zv_axis_star(r, oblate):
     """r_* on the axis of Zipoy and Voorhees's metric at m = 1, dr_*/dr = f^(-1 - q): at q = 1,
     r + 4 ln(r - 2) - 4/(r - 2), which falls to minus infinity as r -> 2, and at q = -1/2,
@@ -15326,6 +15475,7 @@ DRAWN = {
     "roberts": roberts,
     "myers_perry": myers_perry,
     "curzon_chazy": curzon_chazy,
+    "double_kerr": double_kerr,
     "zipoy_voorhees": zipoy_voorhees,
     "string_black_hole": string_black_hole,
     "mcvittie": mcvittie,
@@ -15483,6 +15633,31 @@ CAPTIONS = {
         "behind the shock moved along it by $\\Delta v$. The rays moving right never meet the shock.",
     ],
     **{("zipoy_voorhees", view): text for view, text in _zipoy_voorhees_captions().items()},
+    ("double_kerr", "weyl_axis_outside"): [
+        "The axis $\\rho = 0$ above the upper hole of Herdeiro and Rebelo's pair ($J = GM^2/c$, $\\zeta = 4m$), each "
+        "point in the diagram a single event. The metric on it is $-f\\,c^2dt^2 + (e^{2\\gamma}/f)\\,dz^2$ with "
+        "$\\gamma = 0$, and with $z_* = \\int dz/f$ the maps $p = \\arctan((ct - z_*)/\\ell)$ and "
+        "$q = \\arctan((ct + z_*)/\\ell)$ bring it into the whole diamond, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "At the pole $z = 2m + \\sigma$ of the horizon $f = 0$ and $z_* \\to -\\infty$ as a logarithm, so the pole is the "
+        "two null edges on the left, as the horizon of Schwarzschild's exterior is. The axis below the lower hole is "
+        "the mirror image.",
+    ],
+    ("double_kerr", "weyl_axis_between"): [
+        "The axis $\\rho = 0$ between the two holes of Herdeiro and Rebelo's pair ($J = GM^2/c$, $\\zeta = 4m$), the "
+        "strut, each point in the diagram a single event. The metric on it is $-f\\,c^2dt^2 + (e^{2\\gamma}/f)\\,dz^2$ "
+        "with $e^{\\gamma} = 3/4$, and with $z_* = \\tfrac{3}{4}\\int_0^z dz/f$ the maps $p = \\arctan((ct - z_*)/\\ell)$ "
+        "and $q = \\arctan((ct + z_*)/\\ell)$ bring it into the whole diamond, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "A horizon stands on every side: $z_* \\to \\pm\\infty$ at the two poles that face each other, "
+        "$z = \\pm(2m - \\sigma)$, so light sent along the strut from $z = 0$ takes an infinite time $t$ to reach either hole.",
+    ],
+    ("double_kerr", "weyl_midplane"): [
+        "The half plane of $t$ and $\\rho$ at $z = 0$, midway between the two holes of Herdeiro and Rebelo's pair "
+        "($J = GM^2/c$, $\\zeta = 4m$), each point in the diagram a single event. The metric on it is "
+        "$-f\\,c^2dt^2 + (e^{2\\gamma}/f)\\,d\\rho^2$, and with $\\rho_* = \\int_0^\\rho e^{\\gamma}d\\rho/f$ the maps "
+        "$p = \\arctan((ct - \\rho_*)/\\ell)$ and $q = \\arctan((ct + \\rho_*)/\\ell)$ bring it into the triangle of "
+        "Minkowski space, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "The strut is the timelike line $\\rho = 0$ on the left, and no horizon crosses the plane.",
+    ],
     ("curzon_chazy", "weyl_axis"): [
         "The half axis $\\rho = 0$, $z > 0$ of the Curzon-Chazy particle ($m = 1$), each point in the diagram a single event. "
         "The metric on it is $-e^{-2m/z}c^2dt^2 + e^{2m/z}dz^2$, and with $z_* = z\\,e^{2m/z} - 2m\\,\\mathrm{Ei}(2m/z)$, "

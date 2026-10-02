@@ -1765,6 +1765,30 @@
   ],
   "sphere": null
  },
+ "double_kerr/weyl": {
+  "stamp": "7dc73d36e6daad29",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
  "einstein_cluster/areal": {
   "stamp": "37dcaad3e148f0d8",
   "relations": {},

@@ -596,6 +596,129 @@ def _gowdy_solves(time):
     return ((time, time), (time, "\\theta"), ("\\theta", "\\theta"), ("\\sigma", "\\sigma"), ("\\delta", "\\delta"))
 
 
+# Kramer and Neugebauer's two Kerr black holes as every one of their diagrams draws them: Herdeiro
+# and Rebelo's pair of equal masses M and opposite angular momenta +-J, at J = M^2 and with the
+# centres of the two rods zeta = 4M apart, in units of M with G = c = 1. Their (3.6) makes each
+# rod 2 sqrt(2/3) long, and their b and c, the tangents of half the phases, are -(3 - sqrt 6)/3
+# and 3 - sqrt 6. The phases are turned by pi, which exchanges D_- and D_+ and makes the masses
+# positive.
+DK_ZETA, DK_J = 4, 1
+
+
+@lru_cache(maxsize=None)
+def _double_kerr_data():
+    """The rod ends a_j and the unit complex numbers alpha_j = -(1 + i t_j)^2/(1 + t_j^2) of the
+    pair, t_j the tangent of half Herdeiro and Rebelo's phase, exact."""
+    kappa = sp.Rational(2 - DK_ZETA, 2 + DK_ZETA)
+    c = (-1 + sp.sqrt(1 + DK_J ** 2 * kappa)) / (DK_J * kappa)
+    mu = sp.Rational(2, DK_ZETA)
+    b = c * (mu - 1) / (mu + 1)
+    half = sp.sqrt(1 + DK_J ** 2 * kappa)
+    centre = sp.Rational(DK_ZETA, 2)
+    ends = [-centre - half, -centre + half, centre - half, centre + half]
+    phases = [(-(1 - t ** 2) / (1 + t ** 2), -2 * t / (1 + t ** 2)) for t in (b, c, c, b)]
+    return ends, phases
+
+
+@lru_cache(maxsize=None)
+def _double_kerr_pair():
+    """f, omega and gamma of the pair, as strings in rho and z. Every complex number is carried
+    as its real and imaginary parts, so the strings are real: D_-+ are the determinants of
+    X_ik -+ 1 with X_ik = (alpha_i r_i + alpha_k r_k)/(a_i - a_k), f = Re(D_- D_+*)/|D_+|^2,
+    e^{2 gamma} = Re(D_- D_+*)/(C r_1 r_2 r_3 r_4) with C its value far away, and
+    omega = Im(M* D_+ - L D_+*)/Re(D_- D_+*) with Yamazaki's two potentials L and M."""
+    rho, z = sp.symbols("rho z", real=True)
+    ends, phases = _double_kerr_data()
+    r = [sp.sqrt(rho ** 2 + (z - a) ** 2) for a in ends]
+    n = [(co * r[j], si * r[j]) for j, (co, si) in enumerate(phases)]
+
+    def add(u, v):
+        return (u[0] + v[0], u[1] + v[1])
+
+    def mul(u, v):
+        return (u[0] * v[0] - u[1] * v[1], u[0] * v[1] + u[1] * v[0])
+
+    def det(m):
+        return add(mul(m[0][0], m[1][1]), tuple(-x for x in mul(m[0][1], m[1][0])))
+
+    def X(i, k, shift=0):
+        w = add(n[i], n[k])
+        return (w[0] / (ends[i] - ends[k]) + shift, w[1] / (ends[i] - ends[k]))
+    rows, cols = (0, 2), (1, 3)
+    minus = det([[X(i, k, -1) for k in cols] for i in rows])
+    plus = det([[X(i, k, 1) for k in cols] for i in rows])
+    A = minus[0] * plus[0] + minus[1] * plus[1]
+    B = plus[0] ** 2 + plus[1] ** 2
+    L, M = (0, 0), (0, 0)
+    for t in range(2):
+        L = add(L, det([[add(n[i], tuple(-x for x in n[k])) if q == t else X(i, k) for k in cols]
+                        for q, i in enumerate(rows)]))
+        M = add(M, det([[(ends[i] + ends[k] - 2 * z, 0) if q == t else X(i, k) for k in cols]
+                        for q, i in enumerate(rows)]))
+    omega = (M[0] * plus[1] - M[1] * plus[0] - (L[1] * plus[0] - L[0] * plus[1])) / A
+    # Far away r_j -> r and D_-+ -> r^2 det((alpha_i + alpha_k)/(a_i - a_k)), so C is its square modulus.
+    far = det([[tuple(x / (ends[i] - ends[k]) for x in add(phases[i], phases[k])) for k in cols] for i in rows])
+    C = sp.nsimplify(sp.simplify(far[0] ** 2 + far[1] ** 2))
+    e2g = A / (C * r[0] * r[1] * r[2] * r[3])
+    return {"f": str(A / B), "omega": str(omega), "gamma": str(sp.log(e2g) / 2)}
+
+
+def _double_kerr_midplane():
+    """f, omega and gamma of the pair on its plane z = 0, as strings in rho alone. There r_1 = r_4
+    and r_2 = r_3, the two distances U and V from the far and the near poles, so that
+    Re(D_- D_+*) and |D_+|^2 are quartics in U and V, C = 36/25, and omega vanishes."""
+    U, V = "sqrt(rho**2 + (2 + sqrt(6)/3)**2)", "sqrt(rho**2 + (2 - sqrt(6)/3)**2)"
+    top = ("(25*U**4 + 28*U**3*V + 150*U**2*V**2 + 28*U*V**3 + 25*V**4 - 128*U*V"
+           " - (448 - 128*sqrt(6))*U**2 - (448 + 128*sqrt(6))*V**2)")
+    bottom = ("(25*U**4 + 28*U**3*V + 150*U**2*V**2 + 28*U*V**3 + 25*V**4 + 128*U*V"
+              " + (128 - 8*sqrt(6))*U**3 + (128 + 8*sqrt(6))*V**3 + (384 - 104*sqrt(6))*U**2*V"
+              " + (384 + 104*sqrt(6))*U*V**2 + (448 - 128*sqrt(6))*U**2 + (448 + 128*sqrt(6))*V**2)")
+    put = lambda text: text.replace("U", U).replace("V", V)  # noqa: E731
+    return {"f": put(f"{top}/{bottom}"), "omega": "0", "gamma": put(f"log({top}/(256*U**2*V**2))/2")}
+
+
+@lru_cache(maxsize=None)
+def _double_kerr_floats():
+    ends, phases = _double_kerr_data()
+    return [float(a) for a in ends], [complex(float(co), float(si)) for co, si in phases]
+
+
+def _double_kerr_numbers(rho, z):
+    """f, omega and e^{2 gamma} of the pair in complex arithmetic, which no drawing uses."""
+    ends, alpha = _double_kerr_floats()
+    rho, z = np.asarray(rho, float), np.asarray(z, float)
+    r = [np.sqrt(rho ** 2 + (z - a) ** 2) for a in ends]
+    n = [alpha[j] * r[j] for j in range(4)]
+
+    def X(i, k):
+        return (n[i] + n[k]) / (ends[i] - ends[k])
+
+    def det(m):
+        return m[0][0] * m[1][1] - m[0][1] * m[1][0]
+    rows, cols = (0, 2), (1, 3)
+    minus = det([[X(i, k) - 1 for k in cols] for i in rows])
+    plus = det([[X(i, k) + 1 for k in cols] for i in rows])
+    A = (minus * np.conj(plus)).real
+    L = sum(det([[n[i] - n[k] if q == t else X(i, k) for k in cols] for q, i in enumerate(rows)]) for t in range(2))
+    M = sum(det([[ends[i] + ends[k] - 2 * z + 0j if q == t else X(i, k) for k in cols] for q, i in enumerate(rows)])
+            for t in range(2))
+    far = det([[(alpha[i] + alpha[k]) / (ends[i] - ends[k]) for k in cols] for i in rows])
+    return (A / abs(plus) ** 2, (np.conj(M) * plus - L * np.conj(plus)).imag / A,
+            A / (abs(far) ** 2 * r[0] * r[1] * r[2] * r[3]))
+
+
+DK_INPUT = ("Herdeiro and Rebelo's pair: two black holes of mass $M$ whose angular momenta are $J$ and $-J$ and whose "
+            "horizons have their centres $\\zeta$ apart, at $J = GM^2/c$ and $\\zeta = 4m$, with $m = GM/c^2$. The "
+            "horizons are the rods $\\rho = 0$, $2m - \\sigma \\le |z| \\le 2m + \\sigma$ with $\\sigma = \\sqrt{2/3}\\,m$, "
+            "and $f$, $\\omega$, and $\\gamma$ are Kramer and Neugebauer's, checked to solve this spacetime's own "
+            "field equations. On the axis between the horizons $\\omega = 0$ and $e^{\\gamma} = 3/4$, the strut.")
+# The four poles of the two horizons on the axis, |z| = 2 -+ sqrt(2/3), and an expression that is
+# positive on the axis off the two rods between them.
+DK_POLES = ("-2 - sqrt(6)/3", "-2 + sqrt(6)/3", "2 - sqrt(6)/3", "2 + sqrt(6)/3")
+DK_OFF_RODS = "(z**2 - (2 - sqrt(6)/3)**2)*(z**2 - (2 + sqrt(6)/3)**2)"
+DK_SOLVES = (("t", "t"), ("\\rho", "\\rho"), ("z", "z"), ("\\phi", "\\phi"))
+
+
 FRW_DUST = {"funcs": ["a"], "eqs": [["r", "r"]], "rates": [1.0], "params": {"k": 0}}
 # The Oppenheimer-Snyder dust released from rest at a = a_m, which is the unit, at tau = 0.
 OS_DUST = {"funcs": ["a"], "eqs": [["\\chi", "\\chi"]], "rates": [0.0], "start": [1.0], "origin": "reference"}
@@ -2499,6 +2622,17 @@ DIAGRAMS = [
     Diagram("curzon_chazy", "spherical", "equator", "$t$ and $r$ in the plane $\\theta = \\pi/2$", ("t", "r"), (0, 4, -2, 2),
             "$r/m$", "$ct/m$", {"m": 1}, {**EQUATOR, "phi": "0"},
             lines=(("surface", "r", "1", "$r = m$, the narrowest circle about the axis"),)),
+    # Kramer and Neugebauer's two Kerr black holes, drawn as Herdeiro and Rebelo's pair of opposite
+    # spins, on its two totally geodesic planes: the axis, where the cones close on the four poles
+    # of the horizons, and the plane midway between the holes at phi = 0, which the half turn
+    # z -> -z, phi -> -phi leaves fixed.
+    Diagram("double_kerr", "weyl", "axis", "$t$ and $z$ on the axis", ("t", "z"), (-6, 6, -6, 6),
+            "$z/m$", "$ct/m$", {}, {"rho": "0", "phi": "0"}, families=SIDEWAYS, kretschmann=False, orient="vector",
+            functions=_double_kerr_pair(), input=DK_INPUT, where=DK_OFF_RODS,
+            lines=tuple(("grr", "r", pole, None) for pole in DK_POLES)),
+    Diagram("double_kerr", "weyl", "midplane", "$t$ and $\\rho$ in the plane $z = 0$", ("t", "\\rho"), (0, 6, -3, 3),
+            "$\\rho/m$", "$ct/m$", {}, {"phi": "0", "z": "0"}, kretschmann=False,
+            functions=_double_kerr_pair(), solves=DK_SOLVES, input=DK_INPUT),
     # Zipoy and Voorhees's metric on its two totally geodesic planes, the axis and the equatorial
     # plane, in each chart, for the oblate q = 1 and the prolate q = -1/2. The prolate equator's
     # curvature diverges only as the 3/2 power, so its rows declare the edge singular.
@@ -6085,6 +6219,22 @@ CAPTIONS = {
         "The cones are narrowest at $r = m/2$ and open without bound toward $r = 0$, the ring, which every ingoing ray "
         "reaches in a finite time $t$ and where the Kretschmann scalar diverges as $e^{2m^2/r^2}$.",
     ],
+    ("double_kerr", "weyl", "axis"): [
+        "The plane of $t$ and $z$ ($\\rho = 0$, $\\phi = 0$) of Herdeiro and Rebelo's pair ($J = GM^2/c$, $\\zeta = 4m$). "
+        "The metric on it is $-f\\,c^2dt^2 + (e^{2\\gamma}/f)\\,dz^2$ with $\\omega = 0$, so a ray has "
+        "$c\\,dt/dz = \\pm e^{\\gamma}/f$, and every rotation about the axis fixes the plane, so the rays are null geodesics.",
+        "The cones close on the four poles of the horizons, $|z| = 2m \\pm \\sigma$, where $f = 0$, and a ray reaches a "
+        "pole only as $t \\to \\pm\\infty$. Each rod between two poles is a whole horizon, a sphere in the spacetime. "
+        "Between the holes $e^{\\gamma} = 3/4$, the strut, which pushes on each hole with the force $c^4/12G$.",
+    ],
+    ("double_kerr", "weyl", "midplane"): [
+        "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of Herdeiro and Rebelo's pair ($J = GM^2/c$, $\\zeta = 4m$), "
+        "midway between the holes. The half turn $z \\to -z$, $\\phi \\to -\\phi$ exchanges the holes and fixes this plane, "
+        "so $\\omega = 0$ on it, the metric is $-f\\,c^2dt^2 + (e^{2\\gamma}/f)\\,d\\rho^2$, and the rays, "
+        "$c\\,dt/d\\rho = \\pm e^{\\gamma}/f$, are null geodesics.",
+        "The cones are narrowest on the axis, where $f = 5/41$ and $e^{\\gamma} = 3/4$, and open toward the cones of flat "
+        "space far from the holes.",
+    ],
     **{("zipoy_voorhees", system, view): text for system in ("spherical", "prolate_spheroidal")
        for view, text in _zipoy_voorhees_captions(system).items()},
     ("senovilla", "cylindrical", "radial"): [
@@ -8671,6 +8821,34 @@ def _curzon_axis(z):
     return z * np.exp(2 / z) - 2 * scipy_expi(2 / z)
 
 
+def _double_kerr_star(plane):
+    """The tortoise coordinate of the pair on its axis or in its plane z = 0, the integral of
+    e^gamma/f along the plane from a point of the same stretch: z = -6, 0 or 6 on the axis, each
+    stretch between two poles having its own, and rho = 0 in the plane. It is taken from the
+    complex arithmetic of _double_kerr_numbers, which no drawing uses."""
+    ends = _double_kerr_floats()[0]
+
+    def slope(x):
+        f, _, e2g = _double_kerr_numbers(0.0, x) if plane == "axis" else _double_kerr_numbers(x, 0.0)
+        return math.sqrt(float(e2g)) / float(f)
+
+    def one(x):
+        start = 0.0
+        if plane == "axis":
+            start = -6.0 if x < ends[0] else 6.0 if x > ends[3] else 0.0
+            if not (x < ends[0] or ends[1] < x < ends[2] or x > ends[3]):
+                return math.nan
+        return quad(slope, start, x, epsabs=1e-12, epsrel=1e-12, limit=200)[0]
+    return lambda x: np.vectorize(one, otypes=[float])(np.asarray(x, float))
+
+
+def _double_kerr_off_poles(t, z):
+    """Away from the rods and from within a twentieth of m of a pole, where the tortoise
+    coordinate diverges."""
+    ends = _double_kerr_floats()[0]
+    return (z < ends[0] - 0.05) | ((z > ends[1] + 0.05) & (z < ends[2] - 0.05)) | (z > ends[3] + 0.05)
+
+
 def _curzon_plane(rho):
     """rho_* in the plane z = 0 of the Curzon-Chazy particle at m = 1, the integral from 0 of
     e^(2/s - 1/(2 s^2))."""
@@ -9510,6 +9688,10 @@ CLOSED_FORMS = {
     ("einstein_rosen_waves", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("einstein_rosen_waves", "null", "radial"): (lambda u, v: v, lambda u, v: u, None),
     # With m = 1, z_* = z e^(2/z) - 2 Ei(2/z) on the axis and rho_* the integral of e^(2/s - 1/(2 s^2)) in the plane.
+    ("double_kerr", "weyl", "axis"): (lambda t, z: t + _double_kerr_star("axis")(z),
+                                      lambda t, z: t - _double_kerr_star("axis")(z), _double_kerr_off_poles),
+    ("double_kerr", "weyl", "midplane"): (lambda t, r: t + _double_kerr_star("midplane")(r),
+                                          lambda t, r: t - _double_kerr_star("midplane")(r), None),
     **{("curzon_chazy", system, "axis"): (lambda t, z: t + _curzon_axis(z), lambda t, z: t - _curzon_axis(z),
                                           lambda t, z: z > 0.35) for system in ("weyl", "spherical")},
     **{("curzon_chazy", system, "equator"): (lambda t, r: t + _curzon_plane(r), lambda t, r: t - _curzon_plane(r),

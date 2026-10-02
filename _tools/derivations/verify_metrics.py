@@ -246,6 +246,11 @@ DIMENSIONS = {
     ("levi_civita", "kasner"): {
         "t": "T", "r": "L", "\\phi": "1", "z": "L", "p_0": "1", "p_2": "1", "p_3": "1", "\\ell": "L",
     },
+    # f and gamma are pure numbers and omega is a length: with x^0 = ct the line element's
+    # c dt - omega dphi is a length term by term.
+    ("double_kerr", "weyl"): {
+        "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "f": "1", "\\omega": "L", "\\gamma": "1",
+    },
     # m = GM/c^2 is a length, and so is R = sqrt(rho^2 + z^2), the name Weyl's chart defines.
     ("curzon_chazy", "weyl"): {
         "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "m": "L", "R": "L",
