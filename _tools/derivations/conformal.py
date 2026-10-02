@@ -10603,6 +10603,150 @@ def domain_wall(ck, src):
     return views
 
 
+RS_WALL = {"x_1": "0", "x_2": "0", "x_3": "0"}
+RS_KRC = 0.5            # k r_c of the two walls drawn, as the spacetime and embedding diagrams take it
+
+
+def randall_sundrum(ck, src):
+    """Randall and Sundrum's wall at k = 1, so that 1/k is the unit, each point of the drawing a flat
+    space of three dimensions, the x_i. In the conformally flat chart the plane of t and w has the
+    metric (-c^2dt^2 + dw^2)/(1 + k|w|)^2, Minkowski's plane times a factor, so Minkowski's maps
+    p = arctan(ct - w) and q = arctan(ct + w) bring it into the whole diamond, with the wall on the
+    axis X = 0 and a ray crossing it as one straight line. The proper distance chart enters by
+    w = sgn(y)(e^{|y|} - 1), the Poincare chart of one side by w = z - 1, which covers the right half,
+    and the chart between two walls by w = sgn(phi)(e^{r_c|phi|} - 1) at r_c = 1/2, which covers the
+    strip |w| < e^{pi/2} - 1 between the two images of the second wall. The four edges of the diamond
+    are the horizons y = +-infinity, reached at t = +-infinity: along a ray the affine parameter is the
+    integral of -g_tt dt, since d_t is a Killing vector, and it is checked to stay finite, 1/k from
+    the wall to the horizon, so the edges are no infinity of the spacetime, and the Kretschmann scalar
+    is 40k^4 up to them."""
+    def conformal(t, w):
+        return mink_pq(t, w)
+
+    def proper(t, y):
+        y = np.asarray(y, dtype=float)
+        return mink_pq(t, np.sign(y) * np.expm1(np.abs(y)))
+
+    def poincare(t, z):
+        return mink_pq(t, np.asarray(z, dtype=float) - 1)
+
+    def walls(t, phi):
+        phi = np.asarray(phi, dtype=float)
+        return mink_pq(t, np.sign(phi) * np.expm1(RS_KRC * np.abs(phi)))
+
+    pd = Plane(src, "randall_sundrum", "proper_distance", ("t", "y"), RS_WALL, {"k": 1})
+    cf = Plane(src, "randall_sundrum", "conformal", ("t", "w"), RS_WALL, {"k": 1})
+    po = Plane(src, "randall_sundrum", "poincare", ("t", "z"), RS_WALL, {"k": 1})
+    tw = Plane(src, "randall_sundrum", "two_walls", ("t", "\\phi"), RS_WALL, {"k": 1, "r_c": repr(RS_KRC)})
+    for name, plane, fmap, lo, hi, x in (("proper distance", pd, proper, 0.001, 3, "y"),
+                                         ("conformal", cf, conformal, 0.001, 8, "w"),
+                                         ("two walls", tw, walls, 0.001, PI, "phi")):
+        for side, sign in (("<", -1), (">", 1)):
+            ck.chart(f"Randall-Sundrum {name}, {x} {side} 0", plane, fmap, ck.uniform(-4, 4), sign * ck.uniform(lo, hi),
+                     lambda t, x: (1, 0))
+    ck.chart("Randall-Sundrum Poincare", po, poincare, ck.uniform(-4, 4), ck.uniform(1.001, 9), lambda t, z: (1, 0))
+    t = np.linspace(-20, 20, 81)
+    for name, fmap in (("proper distance", proper), ("conformal", conformal), ("two walls", walls)):
+        ck.limit(f"Randall-Sundrum {name}: both sides reach the wall at one point of X = 0 for every t",
+                 np.concatenate(xt(*fmap(t, np.full(81, -1e-15))) + xt(*fmap(t, np.full(81, 1e-15)))),
+                 np.concatenate([np.zeros(81), 2 * np.arctan(t)] * 2), 1e-12)
+    ck.limit("Randall-Sundrum Poincare: the wall z = 1/k is the axis X = 0", xt(*poincare(t, np.ones(81)))[0], np.zeros(81), 1e-12)
+    for sign in (-1, 1):
+        X, T = xt(*proper(t[20:61], np.full(41, sign * 40.0)))
+        ck.limit(f"Randall-Sundrum: the horizon y = {'+' if sign > 0 else '-'}infinity lies on the edges |T| = pi - |X|",
+                 np.abs(T) - (PI - np.abs(X)), np.zeros(41), 1e-9)
+    # One event, three charts, one point: y = 1, w = e - 1 and z = e on the side y > 0.
+    e = math.e
+    ck.limit("Randall-Sundrum: one event lands on one point through the three charts of one wall",
+             np.concatenate([np.array(proper(0.7, 1.0)) - conformal(0.7, e - 1), np.array(poincare(0.7, e)) - conformal(0.7, e - 1)]),
+             np.zeros(4), 1e-12)
+    # The affine parameter of a ray from the wall to w = W is the integral of -g_tt dw, 1 - 1/(1 + W).
+    w = np.expm1(np.linspace(0, math.log(1e4 + 1), 200001))
+    gtt = cf.metric(np.zeros_like(w), w)[0]
+    affine = float(np.sum(-(gtt[1:] + gtt[:-1]) / 2 * np.diff(w)))
+    ck.limit("Randall-Sundrum: a ray reaches the horizon at the affine parameter 1/k from the wall", affine, 1 - 1 / (1e4 + 1), 1e-8)
+    ck.finite("Randall-Sundrum: the curvature stays 40k^4 toward the horizon",
+              po.kretschmann(ck.uniform(-5, 5, 50), np.geomspace(1.0, 1e6, 50)))
+
+    box = [-PI - 0.45, PI + 0.45, -PI - 0.25, PI + 0.25]
+    S = spread(-np.inf, np.inf, 600, 10)
+    wc = math.expm1(RS_KRC * PI)
+
+    def frame(v, cover, legend, name, horizons=True):
+        v.fill("region", DIAMOND if horizons else cover)
+        v.fill("cover", cover)
+        if horizons:
+            v.line("horizon", [[[PI, 0], [0, PI]], [[0, PI], [-PI, 0]], [[-PI, 0], [0, -PI]], [[0, -PI], [PI, 0]]])
+        v.line("surface", [[[0, -PI], [0, PI]]])
+        for at, text, anchor, dy in (((0, PI), "$i^+$", "b", -6), ((0, -PI), "$i^-$", "t", 6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(at[0], 4), round(at[1], 4)]})
+            v.label_xt(at, text, anchor, dy=dy)
+        v.label_xt([0, 0.35], "the wall", "l", "small", dx=5)
+        if horizons:
+            v.label_xt([HALF, HALF], f"${name} = \\infty$", "bl", dx=5, dy=-3)
+            v.label_xt([-HALF, HALF], f"${name} = -\\infty$" if name != "z" else "$z = \\infty$", "br", dx=-5, dy=-3)
+            v.legend("horizon", "the horizons, which light reaches at $t = \\pm\\infty$ and at a finite affine parameter")
+        v.legend("cover", legend)
+
+    views = []
+    for vid, label, fmap, coord, values, where in (
+            ("proper_distance", "Proper Distance", proper, "y", (-2, -1, -0.5, 0.5, 1, 2), "$\\pm 1/2k$, $\\pm 1/k$, and $\\pm 2/k$"),
+            ("conformal", "Conformally Flat", conformal, "w", (-4, -2, -1, 1, 2, 4), "$\\pm 1/k$, $\\pm 2/k$, and $\\pm 4/k$")):
+        v = View(vid, label, box, vid)
+        grid(v, "r", lambda c, s: fmap(s, c), values, S)
+        span = np.sinh(np.linspace(-9, 9, 1201)) if coord == "w" else np.linspace(-25, 25, 2001)
+        for t0 in (-2, -1, 0, 1, 2):
+            v.curve("t", *fmap(np.full_like(span, t0), span))
+        frame(v, DIAMOND, f"the whole diamond, which $t$ and ${coord}$ cover", coord)
+        v.legend("surface", f"the wall, ${coord} = 0$")
+        v.legend("r", f"${coord}$ constant, at " + where)
+        v.legend("t", "$ct$ constant, at $-2/k$, $-1/k$, $0$, $1/k$, and $2/k$")
+        views.append(v)
+
+    v = View("poincare", "Poincaré, One Side", box, "poincare")
+    grid(v, "r", lambda c, s: poincare(s, c), (2, 3, 5), S)
+    span = 1 + np.sinh(np.linspace(0, 9, 601))
+    for t0 in (-2, -1, 0, 1, 2):
+        v.curve("t", *poincare(np.full_like(span, t0), span))
+    frame(v, [[0, -PI], [PI, 0], [0, PI]], "the side $y > 0$, which $t$ and $z$ cover", "z")
+    v.legend("surface", "the wall, $z = 1/k$, where this side meets its mirror image")
+    v.legend("r", "$z$ constant, at $2/k$, $3/k$, and $5/k$")
+    v.legend("t", "$ct$ constant, at $-2/k$, $-1/k$, $0$, $1/k$, and $2/k$")
+    views.append(v)
+
+    v = View("two_walls", "Two Walls", box, "two_walls")
+    edge = [np.array(xt(*conformal(S, np.full_like(S, sign * wc)))).T for sign in (1, -1)]
+    strip_ = [list(map(float, P)) for P in edge[0]] + [list(map(float, P)) for P in edge[1][::-1]]
+    grid(v, "r", lambda c, s: walls(s, c), (-HALF, HALF), S)
+    span = np.linspace(-PI, PI, 801)
+    for t0 in (-2, -1, 0, 1, 2):
+        v.curve("t", *walls(np.full_like(span, t0), span))
+    frame(v, strip_, "the space between the walls, drawn twice, since $\\phi$ and $-\\phi$ are one point", "\\phi",
+          horizons=False)
+    for sign in (1, -1):
+        v.curve("surface", *conformal(S, np.full_like(S, sign * wc)))
+    label_on(v, walls(0.0, PI), "$\\phi = \\pi$", "l", "coord", dx=5, dy=0)
+    label_on(v, walls(0.0, -PI), "$\\phi = -\\pi$", "r", "coord", dx=-5, dy=0)
+    v.legend("surface", "the walls, of positive tension at $\\phi = 0$ and of negative tension at $\\phi = \\pm\\pi$, one wall")
+    v.legend("r", "$\\phi = \\pm\\pi/2$, halfway between the walls")
+    v.legend("t", "$ct$ constant, at $-2/k$, $-1/k$, $0$, $1/k$, and $2/k$")
+    views.append(v)
+
+    one_wall = slices.moments("randall_sundrum", "pseudosphere")[0]
+    lo, hi = one_wall.reach("proper_distance", "y")
+    for v in views[:3]:
+        v.set(settings="$1/k$, the radius of the anti-de Sitter space on each side, the unit of every length and of "
+                       "$ct$.")
+        y = np.linspace(0 if v.d["id"] == "poincare" else lo, hi, 601)
+        v.slice(one_wall, [proper(np.zeros_like(y), y)])
+    between = slices.moments("randall_sundrum", "two_walls")[0]
+    phi = np.linspace(-between.reach("two_walls", "\\phi")[1], between.reach("two_walls", "\\phi")[1], 401)
+    views[3].set(settings="$1/k$ the unit of every length and of $ct$, and $kr_c = 1/2$, so that the walls are "
+                          "$\\pi/2k$ apart.")
+    views[3].slice(between, [walls(np.zeros_like(phi), phi)])
+    return views
+
+
 KS_TAU = 1.2189074815171743     # the dust universe's conformal time from its widest moment to a singularity, in b_0
 
 
@@ -11160,6 +11304,7 @@ DRAWN = {
     "light_beam": light_beam,
     "kantowski_sachs": kantowski_sachs,
     "domain_wall": domain_wall,
+    "randall_sundrum": randall_sundrum,
     "minkowski": minkowski, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "bardeen": bardeen,
     "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "de_sitter": de_sitter,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
@@ -11272,6 +11417,31 @@ CAPTIONS = {
         "The edge $X = 0$ is $r = 0$, the ring, a timelike singularity where the Kretschmann scalar diverges as "
         "$e^{2m^2/r^2}$ and which light from any event of the plane reaches in a finite time $t$. The axis meets the "
         "same coordinate point at the edge of its diamond, where the curvature goes to zero.",
+    ],
+    ("randall_sundrum", "proper_distance"): [
+        "The region Randall and Sundrum's coordinates cover (one wall), each point in the diagram a flat space of three dimensions, brought by $p = \\arctan(k(ct - w))$ and $q = \\arctan(k(ct + w))$ into the whole diamond, with $1 + k|w| = e^{k|y|}$. The wall is the vertical line in the middle, from $i^-$ to $i^+$, and a light ray crosses it as one straight line.",
+        "The four edges are the horizons $y = \\pm\\infty$. Light from the wall reaches them at $t = \\pm\\infty$ and at the affine parameter $1/k$, the curvature there is that of anti-de Sitter space, and the spacetime continues beyond them. The lines of constant $y$ crowd toward the wall, since a proper distance $y$ is the conformal "
+        "distance $(e^{k|y|} - 1)/k$.",
+    ],
+    ("randall_sundrum", "conformal"): [
+        "The region Randall and Sundrum's coordinates cover (one wall), each point in the diagram a flat space of three dimensions, brought by $p = \\arctan(k(ct - w))$ and $q = \\arctan(k(ct + w))$ into the whole diamond, with $1 + k|w| = e^{k|y|}$. The wall is the vertical line in the middle, from $i^-$ to $i^+$, and a light ray crosses it as one straight line.",
+        "The four edges are the horizons $y = \\pm\\infty$. Light from the wall reaches them at $t = \\pm\\infty$ and at the affine parameter $1/k$, the curvature there is that of anti-de Sitter space, and the spacetime continues beyond them. On the plane of $t$ and $w$ the metric is $(-c^2dt^2 + dw^2)/(1 + k|w|)^2$, so the lines of "
+        "constant $t$ and $w$ are Minkowski's.",
+    ],
+    ("randall_sundrum", "poincare"): [
+        "The region Randall and Sundrum's coordinates cover (one wall), each point in the diagram a flat space of three dimensions, brought by $p = \\arctan(k(ct - w))$ and $q = \\arctan(k(ct + w))$ into the whole diamond, with $1 + k|w| = e^{k|y|}$. The wall is the vertical line in the middle, from $i^-$ to $i^+$, and a light ray crosses it as one straight line.",
+        "The Poincaré chart covers the right half, the side $y > 0$, with $kz = 1 + kw$, and the wall stands at "
+        "$z = 1/k$. The conformal boundary of anti-de Sitter space, $z = 0$, lies in the part cut away, and the "
+        "edges on the right are the Poincaré horizon $z = \\infty$, which light from the wall reaches at "
+        "$t = \\pm\\infty$ and at the affine parameter $1/k$.",
+    ],
+    ("randall_sundrum", "two_walls"): [
+        "The space between two walls ($kr_c = 1/2$), each point in the diagram a flat space of three dimensions, "
+        "brought by $p = \\arctan(k(ct - w))$ and $q = \\arctan(k(ct + w))$, with "
+        "$1 + k|w| = e^{kr_c|\\phi|}$, into the strip between the two curves $\\phi = \\pm\\pi$, which are one "
+        "wall. The points $\\phi$ and $-\\phi$ are one point, so the left half of the strip repeats the right.",
+        "A light ray that reaches either wall turns back from it, and crosses from one wall to the other in the "
+        "time $t = (e^{kr_c\\pi} - 1)/kc$. Every ray stays between the walls, from $i^-$ to $i^+$.",
     ],
     ("domain_wall", "planar"): [
         "The whole spacetime of the wall, each point in the diagram a 2-sphere, two copies of the inside of the "

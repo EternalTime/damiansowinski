@@ -44,6 +44,11 @@
       "id": "de_sitter",
       "kind": "family",
       "text": "The wall itself is a de Sitter space of $2 + 1$ dimensions, a sphere that shrinks to the radius $1/k$ and grows again [caldwell1996]."
+    },
+    {
+      "id": "randall_sundrum",
+      "kind": "family",
+      "text": "A wall with three dimensions of space in anti-de Sitter space of five, flat and at rest because its tension is tuned to the cosmological constant on either side [randall1999a, cvetic1997]."
     }
   ],
   "references": [
@@ -61,7 +66,8 @@
     "widrow1989",
     "cvetic1992",
     "saikawa2017",
-    "harari1990"
+    "harari1990",
+    "randall1999a"
   ],
   "coordinates": [
     {

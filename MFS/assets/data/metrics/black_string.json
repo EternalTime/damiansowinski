@@ -53,6 +53,11 @@
       "id": "kaluza_klein_monopole",
       "kind": "family",
       "text": "Another vacuum solution of five dimensions with one direction rolled into a circle. Seen from four dimensions the string is Schwarzschild's black hole and the monopole is a magnetic charge [gregory2012, grossperry1983]."
+    },
+    {
+      "id": "randall_sundrum",
+      "kind": "family",
+      "text": "A wall in anti-de Sitter space of five dimensions, on which Schwarzschild's black hole is a black string that reaches away from the wall into the fifth [chamblin2000]."
     }
   ],
   "references": [
@@ -73,7 +78,8 @@
     "emparan2003",
     "figueras2016",
     "figueras2023",
-    "grossperry1983"
+    "grossperry1983",
+    "chamblin2000"
   ],
   "coordinates": [
     {

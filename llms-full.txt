@@ -886,6 +886,19 @@ A class of exact solutions describing gravitational waves with plane fronts and 
 - chart Brinkmann: coordinates $(u, v, x, y)$, $$ds^2 = H\,c^2du^2 - 2c\,du\,dv + dx^2 + dy^2$$
 - chart Exact Plane Wave: coordinates $(u, v, x, y)$, $$ds^2 = \left(A\left(x^2 - y^2\right) + 2Bxy\right)c^2du^2 - 2c\,du\,dv + dx^2 + dy^2$$
 
+### Randall-Sundrum Braneworld
+
+A flat wall with three dimensions of space in anti-de Sitter space of five dimensions, found by Lisa Randall and Raman Sundrum in 1999. Every length along the wall's directions shrinks as $e^{-k|y|}$ with the distance $y$ from it, which between two walls turns the Planck scale into the weak scale, and with one wall keeps gravity four dimensional beside a fifth dimension of infinite size.
+
+- id: `randall_sundrum`
+- tags: braneworld, brane, domain wall, thin shell, warped geometry, warp factor, extra dimensions, higher dimensions, five-dimensional, anti-de Sitter, negative cosmological constant, cosmological constant, hierarchy problem, localized gravity, reflection symmetry, orbifold, planar symmetry, static, conformally flat, horizon, AdS/CFT, holography, exact solution, Lorentzian, Einstein equations, idealized model
+- signature: (-,+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/randall_sundrum.json
+- chart Proper Distance: coordinates $(t, x_1, x_2, x_3, y)$, $$ds^2 = e^{-2k|y|}\left(-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2\right) + dy^2$$
+- chart Conformally Flat: coordinates $(t, x_1, x_2, x_3, w)$, $$ds^2 = \dfrac{-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2 + dw^2}{\left(1 + k|w|\right)^2}$$
+- chart Poincaré, One Side: coordinates $(t, x_1, x_2, x_3, z)$, $$ds^2 = \dfrac{-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2 + dz^2}{k^2z^2}$$
+- chart Two Walls: coordinates $(t, x_1, x_2, x_3, \phi)$, $$ds^2 = e^{-2kr_c|\phi|}\left(-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2\right) + r_c^2d\phi^2$$
+
 ### Reissner-Nordström Charged Black Hole
 
 The unique static, spherically symmetric vacuum solution to the Einstein-Maxwell equations describing the spacetime exterior to a charged mass that does not rotate.

@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 80,
+  "count": 81,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -556,6 +556,11 @@
           "id": "topological_black_hole",
           "kind": "generalisation",
           "text": "Anti-de Sitter space sliced by hyperbolic planes has a horizon at $r = L$, and with points identified that horizon is a black hole's, of genus two or more [aminneborg1996]. Adding mass gives the family [mann1997]."
+        },
+        {
+          "id": "randall_sundrum",
+          "kind": "composite",
+          "text": "Two pieces of anti-de Sitter space of five dimensions joined mirror to mirror along a flat wall, which keeps gravity four dimensional beside a fifth dimension of infinite size [randall1999b]."
         }
       ],
       "references": [
@@ -587,7 +592,8 @@
         "godel1949",
         "rooman1998",
         "aminneborg1996",
-        "mann1997"
+        "mann1997",
+        "randall1999b"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -2551,6 +2557,11 @@
           "id": "kaluza_klein_monopole",
           "kind": "family",
           "text": "Another vacuum solution of five dimensions with one direction rolled into a circle. Seen from four dimensions the string is Schwarzschild's black hole and the monopole is a magnetic charge [gregory2012, grossperry1983]."
+        },
+        {
+          "id": "randall_sundrum",
+          "kind": "family",
+          "text": "A wall in anti-de Sitter space of five dimensions, on which Schwarzschild's black hole is a black string that reaches away from the wall into the fifth [chamblin2000]."
         }
       ],
       "references": [
@@ -2571,7 +2582,8 @@
         "emparan2003",
         "figueras2016",
         "figueras2023",
-        "grossperry1983"
+        "grossperry1983",
+        "chamblin2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/black_string.json",
@@ -8313,6 +8325,11 @@
           "id": "myers_perry",
           "kind": "family",
           "text": "A rotating black hole in five dimensions. With equal spins in its two planes each surface around it is a squashed 3-sphere as well, its Hopf circles stretched by the rotation where the monopole's shrink [emparan2008]."
+        },
+        {
+          "id": "randall_sundrum",
+          "kind": "family",
+          "text": "A fifth dimension of infinite size, with gravity held near a wall by the curvature of anti-de Sitter space [randall1999b]."
         }
       ],
       "references": [
@@ -8332,7 +8349,8 @@
         "bombelli1987",
         "townsend1995",
         "gregory2012",
-        "emparan2008"
+        "emparan2008",
+        "randall1999b"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_monopole.json",
@@ -12560,6 +12578,11 @@
           "id": "malament_hogarth",
           "kind": "conformal",
           "text": "Remove one event from Minkowski space and multiply the metric by a factor that grows without bound toward it, and one observer can see the whole endless future of another in a finite time of their own [earman1993]. Itamar Pitowsky had tried the same in Minkowski space itself in 1990, where the traveller's acceleration must grow without bound [pitowsky1990]."
+        },
+        {
+          "id": "randall_sundrum",
+          "kind": "composite",
+          "text": "A stack of Minkowski spaces along a fifth dimension, each scaled by $e^{-k|y|}$ with its distance $y$ from a wall [randall1999a]."
         }
       ],
       "references": [
@@ -12612,7 +12635,8 @@
         "everett1997",
         "visser1989prd",
         "earman1993",
-        "pitowsky1990"
+        "pitowsky1990",
+        "randall1999a"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -16264,6 +16288,368 @@
       ]
     },
     {
+      "id": "randall_sundrum",
+      "name": "Randall-Sundrum Braneworld",
+      "short_name": "Randall-Sundrum",
+      "description": "A flat wall with three dimensions of space in anti-de Sitter space of five dimensions, found by Lisa Randall and Raman Sundrum in 1999. Every length along the wall's directions shrinks as $e^{-k|y|}$ with the distance $y$ from it, which between two walls turns the Planck scale into the weak scale, and with one wall keeps gravity four dimensional beside a fifth dimension of infinite size.",
+      "tags": [
+        "braneworld",
+        "brane",
+        "domain wall",
+        "thin shell",
+        "warped geometry",
+        "warp factor",
+        "extra dimensions",
+        "higher dimensions",
+        "five-dimensional",
+        "anti-de Sitter",
+        "negative cosmological constant",
+        "cosmological constant",
+        "hierarchy problem",
+        "localized gravity",
+        "reflection symmetry",
+        "orbifold",
+        "planar symmetry",
+        "static",
+        "conformally flat",
+        "horizon",
+        "AdS/CFT",
+        "holography",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+,+)",
+      "convention": "The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, and $\\delta$ is the Dirac delta. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "anti_de_sitter",
+          "kind": "piece",
+          "text": "Each side of the wall is a piece of anti-de Sitter space with one more dimension, of radius $1/k$, in the Poincaré chart [randall1999a, chamblin2000]."
+        },
+        {
+          "id": "domain_wall",
+          "kind": "family",
+          "text": "A thin wall with flat space on both sides, which cannot stay at rest and accelerates as a bubble. A wall between anti-de Sitter vacua can be static, and Randall and Sundrum's is one of those [cvetic1997, randall1999b]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "piece",
+          "text": "Every surface of constant $y$ is Minkowski space, with its lengths scaled by $e^{-k|y|}$ [randall1999a]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "Put Schwarzschild's metric on every surface of constant $y$ in place of Minkowski's and the result still solves the equations: a black string, which someone on the wall sees as Schwarzschild's black hole [chamblin2000]."
+        },
+        {
+          "id": "black_string",
+          "kind": "family",
+          "text": "The black hole on the wall is this string with anti-de Sitter space around it, and near the horizon $y = \\infty$ it has the string's instability [chamblin2000, gregorylaflamme1993]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "family",
+          "text": "Gravity in five dimensions with the fifth rolled into a small circle, the compactification that Randall and Sundrum's single wall is an alternative to [randall1999b]."
+        }
+      ],
+      "references": [
+        "rubakov1983",
+        "arkanihamed1998",
+        "randall1999a",
+        "goldberger1999",
+        "randall1999b",
+        "garriga2000",
+        "maartens2010",
+        "chamblin2000",
+        "cvetic1997",
+        "gregorylaflamme1993",
+        "tanaka2002",
+        "emparan2002holograms",
+        "figueras2011",
+        "maldacena1998",
+        "gubser2001",
+        "atlas2021"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/randall_sundrum.json",
+      "charts": [
+        {
+          "id": "proper_distance",
+          "name": "Proper Distance",
+          "coordinates": [
+            "t",
+            "x_1",
+            "x_2",
+            "x_3",
+            "y"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x_1 \\in (-\\infty, \\infty)",
+            "x_2 \\in (-\\infty, \\infty)",
+            "x_3 \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "y = 0 \\;\\text{(the wall)}",
+            "y \\to \\pm\\infty \\;\\text{(the two horizons)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "k",
+              "description": "Inverse length, with $1/k$ the radius of the anti-de Sitter space on each side of the wall, where $R_{\\mu\\nu} = -4k^2g_{\\mu\\nu}$; the wall's tension is $3kc^4/4\\pi G_5$, with $G_5$ Newton's constant in five dimensions"
+            }
+          ],
+          "convention": "We use coordinates $(t, x_1, x_2, x_3, y)$, with $t$ the proper time of an observer at rest on the wall, $x_1$, $x_2$, and $x_3$ lengths along the wall, and $y$ the proper distance from it, and $\\mathrm{sgn}(y)$ is the sign of $y$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = e^{-2k|y|}\\left(-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2\\right) + dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{-2k|y|}"
+            },
+            {
+              "indices": [
+                "x_1",
+                "x_1"
+              ],
+              "value": "e^{-2k|y|}"
+            },
+            {
+              "indices": [
+                "x_2",
+                "x_2"
+              ],
+              "value": "e^{-2k|y|}"
+            },
+            {
+              "indices": [
+                "x_3",
+                "x_3"
+              ],
+              "value": "e^{-2k|y|}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = -\\left(20k^2 - 16k\\,\\delta(y)\\right)",
+          "kretschmann": "K = 40k^4 \\;\\text{for}\\; y \\neq 0"
+        },
+        {
+          "id": "conformal",
+          "name": "Conformally Flat",
+          "coordinates": [
+            "t",
+            "x_1",
+            "x_2",
+            "x_3",
+            "w"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x_1 \\in (-\\infty, \\infty)",
+            "x_2 \\in (-\\infty, \\infty)",
+            "x_3 \\in (-\\infty, \\infty)",
+            "w \\in (-\\infty, \\infty)",
+            "w = 0 \\;\\text{(the wall)}",
+            "w \\to \\pm\\infty \\;\\text{(the two horizons)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "k",
+              "description": "Inverse length, with $1/k$ the radius of the anti-de Sitter space on each side of the wall, where $R_{\\mu\\nu} = -4k^2g_{\\mu\\nu}$; the wall's tension is $3kc^4/4\\pi G_5$, with $G_5$ Newton's constant in five dimensions"
+            }
+          ],
+          "convention": "We use coordinates $(t, x_1, x_2, x_3, w)$, with $t$ the proper time of an observer at rest on the wall, $x_1$, $x_2$, and $x_3$ lengths along the wall, and $w$ the length with $1 + k|w| = e^{k|y|}$, where $y$ is the proper distance from the wall, and $\\mathrm{sgn}(w)$ is the sign of $w$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2 + dw^2}{\\left(1 + k|w|\\right)^2}",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{\\left(1 + k|w|\\right)^2}"
+            },
+            {
+              "indices": [
+                "x_1",
+                "x_1"
+              ],
+              "value": "\\dfrac{1}{\\left(1 + k|w|\\right)^2}"
+            },
+            {
+              "indices": [
+                "x_2",
+                "x_2"
+              ],
+              "value": "\\dfrac{1}{\\left(1 + k|w|\\right)^2}"
+            },
+            {
+              "indices": [
+                "x_3",
+                "x_3"
+              ],
+              "value": "\\dfrac{1}{\\left(1 + k|w|\\right)^2}"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "\\dfrac{1}{\\left(1 + k|w|\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\left(20k^2 - 16k\\,\\delta(w)\\right)",
+          "kretschmann": "K = 40k^4 \\;\\text{for}\\; w \\neq 0"
+        },
+        {
+          "id": "poincare",
+          "name": "Poincaré, One Side",
+          "coordinates": [
+            "t",
+            "x_1",
+            "x_2",
+            "x_3",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x_1 \\in (-\\infty, \\infty)",
+            "x_2 \\in (-\\infty, \\infty)",
+            "x_3 \\in (-\\infty, \\infty)",
+            "z \\in [1/k, \\infty)",
+            "z = 1/k \\;\\text{(the wall, where this side meets its mirror image)}",
+            "z \\to \\infty \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "k",
+              "description": "Inverse length, with $1/k$ the radius of the anti-de Sitter space on each side of the wall, where $R_{\\mu\\nu} = -4k^2g_{\\mu\\nu}$; the wall's tension is $3kc^4/4\\pi G_5$, with $G_5$ Newton's constant in five dimensions"
+            }
+          ],
+          "convention": "We use coordinates $(t, x_1, x_2, x_3, z)$ on one side of the wall, with $t$ the proper time of an observer at rest on the wall, $x_1$, $x_2$, and $x_3$ lengths along the wall, and $z = e^{ky}/k$, where $y$ is the proper distance from the wall. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2 + dz^2}{k^2z^2}",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{k^2z^2}"
+            },
+            {
+              "indices": [
+                "x_1",
+                "x_1"
+              ],
+              "value": "\\dfrac{1}{k^2z^2}"
+            },
+            {
+              "indices": [
+                "x_2",
+                "x_2"
+              ],
+              "value": "\\dfrac{1}{k^2z^2}"
+            },
+            {
+              "indices": [
+                "x_3",
+                "x_3"
+              ],
+              "value": "\\dfrac{1}{k^2z^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{1}{k^2z^2}"
+            }
+          ],
+          "ricci_scalar": "R = -20k^2",
+          "kretschmann": "K = 40k^4"
+        },
+        {
+          "id": "two_walls",
+          "name": "Two Walls",
+          "coordinates": [
+            "t",
+            "x_1",
+            "x_2",
+            "x_3",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x_1 \\in (-\\infty, \\infty)",
+            "x_2 \\in (-\\infty, \\infty)",
+            "x_3 \\in (-\\infty, \\infty)",
+            "\\phi \\in (-\\pi, \\pi]",
+            "\\phi = 0 \\;\\text{(the wall of positive tension)}",
+            "\\phi = \\pi \\;\\text{(the wall of negative tension)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "k",
+              "description": "Inverse length, with $1/k$ the radius of the anti-de Sitter space on each side of the wall, where $R_{\\mu\\nu} = -4k^2g_{\\mu\\nu}$; the wall's tension is $3kc^4/4\\pi G_5$, with $G_5$ Newton's constant in five dimensions"
+            },
+            {
+              "symbol": "r_c",
+              "description": "Length that sets the size of the fifth dimension: the two walls are a proper distance $\\pi r_c$ apart"
+            }
+          ],
+          "convention": "We use coordinates $(t, x_1, x_2, x_3, \\phi)$, with $t$ the proper time of an observer at rest on the wall at $\\phi = 0$, $x_1$, $x_2$, and $x_3$ lengths along it, and $\\phi$ an angle, with $\\mathrm{sgn}(\\phi)$ its sign. The points $\\phi$ and $-\\phi$ are one point, and every component holds for $|\\phi| < \\pi$, the wall at $\\phi = \\pi$ carrying deltas of the opposite sign. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = e^{-2kr_c|\\phi|}\\left(-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2\\right) + r_c^2d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{-2kr_c|\\phi|}"
+            },
+            {
+              "indices": [
+                "x_1",
+                "x_1"
+              ],
+              "value": "e^{-2kr_c|\\phi|}"
+            },
+            {
+              "indices": [
+                "x_2",
+                "x_2"
+              ],
+              "value": "e^{-2kr_c|\\phi|}"
+            },
+            {
+              "indices": [
+                "x_3",
+                "x_3"
+              ],
+              "value": "e^{-2kr_c|\\phi|}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r_c^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\left(20k^2 - \\dfrac{16k\\,\\delta(\\phi)}{r_c}\\right)",
+          "kretschmann": "K = 40k^4 \\;\\text{for}\\; \\phi \\neq 0"
+        }
+      ]
+    },
+    {
       "id": "rn_metric",
       "name": "Reissner-Nordström Charged Black Hole",
       "short_name": "Reissner-Nordström",
@@ -17301,6 +17687,11 @@
           "id": "kasner",
           "kind": "limit",
           "text": "A limit of Schwarzschild's metric with the mass sent to infinity. Robert Geroch showed in 1969 that the limit depends on the coordinates carried along: in one set it is Minkowski space, and in another, which stays inside the horizon, it is a Kasner universe [geroch1969]."
+        },
+        {
+          "id": "randall_sundrum",
+          "kind": "family",
+          "text": "Schwarzschild's black hole on a wall in five dimensions is a black string that reaches away from the wall into the fifth [chamblin2000]."
         }
       ],
       "references": [
@@ -17371,7 +17762,8 @@
         "hartlethorne1968",
         "ernst1976b",
         "einstein1945",
-        "geroch1969"
+        "geroch1969",
+        "chamblin2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -21735,6 +22127,11 @@
           "id": "de_sitter",
           "kind": "family",
           "text": "The wall itself is a de Sitter space of $2 + 1$ dimensions, a sphere that shrinks to the radius $1/k$ and grows again [caldwell1996]."
+        },
+        {
+          "id": "randall_sundrum",
+          "kind": "family",
+          "text": "A wall with three dimensions of space in anti-de Sitter space of five, flat and at rest because its tension is tuned to the cosmological constant on either side [randall1999a, cvetic1997]."
         }
       ],
       "references": [
@@ -21752,7 +22149,8 @@
         "widrow1989",
         "cvetic1992",
         "saikawa2017",
-        "harari1990"
+        "harari1990",
+        "randall1999a"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/domain_wall.json",

@@ -7634,6 +7634,96 @@ def domain_wall(ck, src):
                         "space carries the slice; Minkowski space carries it."])]
 
 
+RS_TOP = 3.0            # how far the pseudosphere is drawn from the wall, in 1/k
+RS_KRC = 0.5            # k r_c of the two walls drawn, so that the second stands at y = pi/2k
+
+
+def tractrix(y):
+    """The height of the tractrix whose radius is e^{-|y|} at the arc length y from its cusp:
+    Z = sgn(y)(arcosh(e^{|y|}) - sqrt(1 - e^{-2|y|}))."""
+    a = np.abs(np.asarray(y, dtype=float))
+    return np.sign(y) * (np.arccosh(np.exp(a)) - np.sqrt(1 - np.exp(-2 * a)))
+
+
+def randall_sundrum(ck, src):
+    """The surface of y and x_1 at one moment, x_2 and x_3 held fixed, g_yy = 1 and
+    g_x1x1 = e^{-2k|y|}, at k = 1. It is a piece of the hyperbolic plane on each side of the wall,
+    a horocycle its edge, and a strip of it of width 2 pi/k along x_1, rolled up so that x_1 runs
+    once round, is a surface of revolution with rho = e^{-k|y|}/k, which shrinks more slowly than
+    the distance out, |drho/dy| = e^{-k|y|} <= 1: Z climbs at sqrt(1 - e^{-2k|y|}), the tractrix,
+    and the two sides are the two halves of Beltrami's pseudosphere, joined along its cuspidal rim,
+    which is the wall. Between two walls the points phi and -phi are one point, so the two halves
+    are two copies of the moment, each from the rim to the circle of the second wall, drawn at
+    k r_c = 1/2, as the spacetime and conformal diagrams draw both copies."""
+    size = 6.0
+    rings = (0.5, 1.0, 2.0)
+    fixed_at = {"t": 0, "x_2": 0, "x_3": 0}
+    sl = Slice(src, "randall_sundrum", "proper_distance", "y", "x_1", fixed_at, {"k": 1})
+    horizon = "the surface runs on toward the horizon $y \\to %s\\infty$, its circles shrinking as $e^{-k|y|}$"
+    near = Piece("near", "sheet", sl, -RS_TOP, 0.0, 0.0, 1,
+                 (("edge", horizon % "-"), ("crease", "the wall, where the surface folds back on itself")),
+                 [(-y, "r", None) for y in reversed(rings)] + [(0.0, "surface", None)], size)
+    near.z = near.z - float(near.z[-1])
+    far = Piece("far", "sheet2", sl, 0.0, RS_TOP, 0.0, 1,
+                (("crease", "the wall"), ("edge", horizon % "")),
+                [(y, "r2", None) for y in rings], size)
+    ck.add("Randall-Sundrum, the two sides meet at the wall: one point",
+           float(np.max(np.abs(np.array(near.at(0.0)) - far.at(0.0)))), JOIN)
+    for piece in (near, far):
+        where = f"Randall-Sundrum, one wall, {piece.id}"
+        ck.isometry(where, piece)
+        ck.radius(f"{where}: rho = e^(-k|y|)/k", piece, lambda y: np.exp(-np.abs(y)), size)
+        ck.form(f"{where}: the tractrix Z = sgn(y)(arcosh(e^|y|) - sqrt(1 - e^(-2|y|)))", piece, tractrix, size)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(0.0), "the wall")
+    ring_label(fig, [0, 0, 0], *far.at(1.0), "$y = 1/k$")
+    ring_label(fig, [0, 0, 0], *near.at(-1.0), "$-1/k$")
+    fig.legend("fill", "cover", "the side $y < 0$ of the strip at one moment, which $y$ and $x_1$ cover")
+    fig.legend("line", "r", "$y$ constant on the side $y < 0$, at $-1/2k$, $-1/k$ and $-2/k$")
+    fig.legend("line", "r2", "the same on the side $y > 0$, at $1/2k$, $1/k$ and $2/k$")
+    fig.legend("line", "surface", "the wall, $y = 0$, the rim where the surface folds back")
+    fig.legend("line", "meridian", "$x_1$ constant, every $\\pi/12k$")
+    one = view("pseudosphere", "One wall", "$1/k$", [surface], fig.done(),
+               settings="$k = 1$, so that $1/k$, the radius of the anti-de Sitter space on each side, is the unit "
+                        "of every length, and the strip $0 \\le x_1 < 2\\pi/k$ rolled up so that $x_1$ runs once "
+                        "round the axis.")
+
+    tw = Slice(src, "randall_sundrum", "two_walls", "\\phi", "x_1", fixed_at, {"k": 1, "r_c": repr(RS_KRC)})
+    second = "the wall of negative tension, $\\phi = \\pm\\pi$, where this end and the other are one circle"
+    lower = Piece("lower", "sheet", tw, -math.pi, 0.0, 0.0, 1,
+                  (("edge", second), ("crease", "the wall of positive tension, where the surface folds back on itself")),
+                  [(-math.pi, "surface", None), (-math.pi / 2, "r", None), (0.0, "surface", None)], size)
+    lower.z = lower.z - float(lower.z[-1])
+    upper = Piece("upper", "sheet2", tw, 0.0, math.pi, 0.0, 1,
+                  (("crease", "the wall of positive tension"), ("edge", second)),
+                  [(math.pi / 2, "r2", None), (math.pi, "surface", None)], size)
+    ck.add("Randall-Sundrum, two walls, the two copies meet at the wall: one point",
+           float(np.max(np.abs(np.array(lower.at(0.0)) - upper.at(0.0)))), JOIN)
+    for piece in (lower, upper):
+        where = f"Randall-Sundrum, two walls, {piece.id}"
+        ck.isometry(where, piece)
+        ck.radius(f"{where}: rho = e^(-k r_c |phi|)/k", piece, lambda phi: np.exp(-RS_KRC * np.abs(phi)), size)
+        ck.form(f"{where}: the tractrix at y = r_c phi", piece, lambda phi: tractrix(RS_KRC * phi), size)
+    between = Surface([lower, upper])
+    fig = figure_of([between], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *lower.at(0.0), "$\\phi = 0$")
+    ring_label(fig, [0, 0, 0], *upper.at(math.pi), "$\\phi = \\pi$")
+    ring_label(fig, [0, 0, 0], *lower.at(-math.pi), "$-\\pi$")
+    fig.legend("fill", "cover", "the copy $\\phi < 0$ of the strip between the walls at one moment, which $\\phi$ and "
+                                "$x_1$ cover")
+    fig.legend("line", "surface", "the walls, of positive tension at $\\phi = 0$ and of negative tension at "
+                                  "$\\phi = \\pm\\pi$")
+    fig.legend("line", "r", "$\\phi = -\\pi/2$, halfway between the walls")
+    fig.legend("line", "r2", "the same circle in the copy $\\phi > 0$, at $\\pi/2$")
+    fig.legend("line", "meridian", "$x_1$ constant, every $\\pi/12k$")
+    two = view("two_walls", "Two walls", "$1/k$", [between], fig.done(),
+               settings="$k = 1$ and $kr_c = 1/2$, so that the walls are $\\pi/2k$ apart and lengths along the "
+                        "second are $e^{-\\pi/2} = 0.21$ of those along the first, and the strip "
+                        "$0 \\le x_1 < 2\\pi/k$ rolled up so that $x_1$ runs once round the axis.")
+    return [one, two]
+
+
 SV_BOUNCE_MOMENTS = (0.75, 0.4, 0.0, -0.4, -0.75)    # r in units of r_s, between the horizons +-sqrt(3)/2 of a = r_s/2
 
 
@@ -8219,6 +8309,7 @@ DRAWN = {
     "frw": frw,
     "milne": milne,
     "domain_wall": domain_wall,
+    "randall_sundrum": randall_sundrum,
     "minkowski": minkowski,
     "anti_de_sitter": anti_de_sitter,
     "malament_hogarth": malament_hogarth,
@@ -9492,6 +9583,26 @@ CAPTIONS = {
         "closes at its apex, the centre of its side at $T = 0$, where the horizon meets it. At $ct = 0$ both are the "
         "flat disc of radius $1/k$, the moment the wall stops, and the whole equator is that disc taken twice, "
         "joined at its rim.",
+    ],
+    ("randall_sundrum", "pseudosphere"): [
+        "The surface of $y$ and $x_1$ at one moment ($x_2 = x_3 = 0$), a strip of width $2\\pi/k$ along $x_1$ rolled "
+        "up and drawn as a surface in flat space with every distance along it the metric distance. On it "
+        "$g_{yy} = 1$ while the circle at $y$ has radius $e^{-k|y|}/k$, so each side of the wall is half of Eugenio "
+        "Beltrami's pseudosphere, the surface of constant curvature $-k^2$ whose profile is the tractrix.",
+        "The two halves meet along the rim, the widest circle, which is the wall, and every length along the wall's "
+        "own directions is greatest there and shrinks as $e^{-k|y|}$ on either side. The surface narrows toward "
+        "each horizon, $y \\to \\pm\\infty$, at a proper distance without end, while the area between the wall and "
+        "either horizon is finite, $2\\pi/k^2$.",
+    ],
+    ("randall_sundrum", "two_walls"): [
+        "The strip between two walls at one moment ($x_2 = x_3 = 0$, $kr_c = 1/2$), its width $2\\pi/k$ along $x_1$ "
+        "rolled up and drawn as a surface in flat space with every distance along it the metric distance. The "
+        "points $\\phi$ and $-\\phi$ are one point, so the two halves of the surface are two copies of the moment, "
+        "each a piece of the pseudosphere from its rim, the wall of positive tension at $\\phi = 0$, to the circle "
+        "of the wall of negative tension at $\\phi = \\pm\\pi$, a proper distance $\\pi r_c$ away.",
+        "A circle of the second wall is $e^{-kr_c\\pi}$ times as long as one of the first, $0.21$ at $kr_c = 1/2$. "
+        "With $e^{kr_c\\pi}$ of order $10^{15}$, the ratio of the Planck scale to the weak scale, the second circle "
+        "is $10^{-15}$ of the first.",
     ],
     ("szekeres", "equators"): [
         "The surface through the equators ($\\theta = \\pi/2$) of the shells of a collapsing cloud of dust as $t$ runs "
