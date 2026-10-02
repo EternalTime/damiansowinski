@@ -1509,6 +1509,9 @@ FLAT = {
         for m in moments("bell_szekeres")],
     ("bell_szekeres", "bertotti_robinson", "plane"): lambda: [
         Mark(m, points=[(math.tan(m.time), 1 / math.cos(m.time))]) for m in moments("bell_szekeres")],
+    # The moments act = T of Senovilla's universe, out to where the embedding reaches.
+    ("senovilla", "cylindrical", "radial"): lambda: one(
+        "senovilla", lambda m: along(m.time, *m.reach("cylindrical", "\\rho"))),
     # Melvin's plane z = 0 at t = 0 and Ernst's equator at t = 0, each on its own chart's plane.
     ("melvin", "cylindrical", "radial"): lambda: one(
         "melvin", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")), view_id="universe"),

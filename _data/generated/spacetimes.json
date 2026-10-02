@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 85,
+  "count": 86,
   "spacetimes": [
     {
       "id": "aichelburg_sexl",
@@ -4573,6 +4573,11 @@
           "id": "coleman_de_luccia",
           "kind": "composite",
           "text": "De Sitter space with a bubble of lower vacuum energy growing in it, the way a false vacuum decays [coleman1980]."
+        },
+        {
+          "id": "senovilla",
+          "kind": "family",
+          "text": "A universe of radiation that also contracts, bounces, and expands with no singularity, and keeps the strong energy condition that de Sitter's violates. It has no closed trapped surface, and its slices of constant time are open [senovilla1998, chinea1992]."
         }
       ],
       "references": [
@@ -4605,7 +4610,9 @@
         "mazur2015",
         "ipser1984",
         "caldwell1996",
-        "coleman1980"
+        "coleman1980",
+        "senovilla1998",
+        "chinea1992"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -5204,6 +5211,11 @@
           "id": "godel",
           "kind": "family",
           "text": "Dust that rotates where Einstein's is at rest, held by a cosmological constant of the opposite sign. Kurt Gödel wrote in 1949, without proof, that his universe and Einstein's are the only spatially homogeneous solutions with matter whose world lines stay equidistant [godel1949]."
+        },
+        {
+          "id": "senovilla",
+          "kind": "family",
+          "text": "A universe of radiation that also satisfies the strong energy condition and has no singularity, while it contracts, bounces, and expands. It has no compact slice and no point whose light cone converges again [senovilla1998, chinea1992]."
         }
       ],
       "references": [
@@ -5224,7 +5236,9 @@
         "hawking1973",
         "eddington1933",
         "schwarzschild1916b",
-        "godel1949"
+        "godel1949",
+        "senovilla1998",
+        "chinea1992"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_static.json",
@@ -5484,6 +5498,11 @@
           "id": "minkowski",
           "kind": "special_case",
           "text": "The waves gone quiet. With $\\psi = 0$ and $\\gamma = 0$ the metric is Minkowski's in cylindrical coordinates."
+        },
+        {
+          "id": "senovilla",
+          "kind": "family",
+          "text": "The same cylindrical symmetry filled with radiation. Senovilla's metric is diagonal with a conformally flat plane of $t$ and $\\rho$, as Einstein and Rosen's is, and it has no singularity anywhere [senovilla1990, fernandezjambrina2002]."
         }
       ],
       "references": [
@@ -5509,7 +5528,9 @@
         "ashtekar1996",
         "levicivita1919",
         "gowdy1971",
-        "gowdy2014"
+        "gowdy2014",
+        "senovilla1990",
+        "fernandezjambrina2002"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_waves.json",
@@ -6193,6 +6214,11 @@
           "id": "coleman_de_luccia",
           "kind": "composite",
           "text": "A bubble of new vacuum with an open Friedmann universe inside it, $k = -1$, and no singularity at its start [coleman1980, bucher1995]."
+        },
+        {
+          "id": "senovilla",
+          "kind": "family",
+          "text": "A universe of radiation arranged around an axis, with a bounce where the big bang would be. One class of metrics, with a function of time for a scale factor and four parameters, holds it and every Friedmann-Lemaître-Robertson-Walker universe [senovilla1996]."
         }
       ],
       "references": [
@@ -6243,7 +6269,8 @@
         "einstein1945",
         "carrera2010",
         "coleman1980",
-        "bucher1995"
+        "bucher1995",
+        "senovilla1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -7690,6 +7717,11 @@
           "id": "mixmaster",
           "kind": "programme",
           "text": "Both are testing grounds for the conjecture of Belinskii, Khalatnikov, and Lifshitz that each small region near a generic singularity evolves as a homogeneous universe of its own [bkl1970]. The Mixmaster universe oscillates all the way down, and in a generic Gowdy universe the spatial curvature terms drop out [gowdy2014]."
+        },
+        {
+          "id": "senovilla",
+          "kind": "family",
+          "text": "An inhomogeneous cosmology with the same two commuting symmetries of space, filled with radiation and arranged around an axis. Every geodesic in it runs on for ever, with no singularity at either end of time [ruiz1992, chinea1992]."
         }
       ],
       "references": [
@@ -7714,7 +7746,9 @@
         "rendall2001",
         "ringstrom2006",
         "ringstrom2009",
-        "ellismaccallum1969"
+        "ellismaccallum1969",
+        "ruiz1992",
+        "chinea1992"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gowdy.json",
@@ -19973,6 +20007,137 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{240r_h^6}{r^{10}}"
+        }
+      ]
+    },
+    {
+      "id": "senovilla",
+      "name": "Senovilla Universe With No Singularity",
+      "short_name": "Senovilla",
+      "description": "A universe filled with radiation and arranged around an axis, which contracts, is densest at one moment, and expands again, with no big bang and no singularity anywhere, found by José Senovilla in 1990. It satisfies the energy conditions and is globally hyperbolic, and the singularity theorems leave it alone because it has no closed trapped surface and its expansion falls to zero far from the axis.",
+      "tags": [
+        "perfect fluid",
+        "radiation",
+        "non-vacuum",
+        "cosmology",
+        "cosmological",
+        "inhomogeneous",
+        "cylindrical symmetry",
+        "geodesically complete",
+        "no singularity",
+        "bounce",
+        "singularity theorems",
+        "globally hyperbolic",
+        "comoving",
+        "time-dependent",
+        "dynamical",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The constant $a$ is an inverse length. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "einstein_rosen_waves",
+          "kind": "family",
+          "text": "The same cylindrical symmetry with nothing in it but gravitational waves. Both metrics are diagonal, with a plane of $t$ and $\\rho$ that is conformally flat, so radial light rays run at 45° in both [fernandezjambrina2002]."
+        },
+        {
+          "id": "gowdy",
+          "kind": "family",
+          "text": "Inhomogeneous cosmologies with the same two commuting symmetries of space, in vacuum and wrapped into a torus [ruiz1992]."
+        },
+        {
+          "id": "frw",
+          "kind": "family",
+          "text": "The universes whose big bang Senovilla's does without. One class of metrics, with a function of time for a scale factor and four parameters, holds every Friedmann-Lemaître-Robertson-Walker universe and Senovilla's as well [senovilla1996]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "family",
+          "text": "de Sitter's universe also contracts, bounces, and expands with no singularity. It has closed trapped spheres and escapes Penrose's theorem because its slices of constant time are compact, and it violates the strong energy condition, which Senovilla's universe keeps [senovilla1998]."
+        },
+        {
+          "id": "einstein_static",
+          "kind": "family",
+          "text": "A complete universe that satisfies the strong energy condition, as Senovilla's does. It has compact slices and points whose light cones converge again, and it escapes the theorems because the generic condition fails along its world lines at rest [senovilla1998]."
+        }
+      ],
+      "references": [
+        "raychaudhuri1955",
+        "senovilla1998",
+        "senovilla2007",
+        "penrose1965",
+        "hawkingpenrose1970",
+        "chinea1992",
+        "senovilla1990",
+        "maddox1990",
+        "ruiz1992",
+        "fernandezjambrina2002",
+        "raychaudhuri1998",
+        "senovilla1996"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/senovilla.json",
+      "charts": [
+        {
+          "id": "cylindrical",
+          "name": "Cylindrical",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Inverse length that sets every scale; the energy density of the radiation is greatest on the axis at $t = 0$, where it is $15a^2c^4/8\\pi G$, and so is the Kretschmann scalar, $792\\,a^4$"
+            }
+          ],
+          "convention": "We use Senovilla's cylindrical coordinates $(t, \\rho, \\phi, z)$, at rest with the fluid, with $t$ carrying dimensions of time and $\\rho$ and $z$ lengths. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\cosh^4(act)\\cosh^2(3a\\rho)\\left(-c^2dt^2 + d\\rho^2\\right) + \\dfrac{\\cosh^4(act)\\sinh^2(3a\\rho)}{9a^2\\cosh^{2/3}(3a\\rho)}d\\phi^2 + \\dfrac{dz^2}{\\cosh^2(act)\\cosh^{2/3}(3a\\rho)}",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\cosh^4(act)\\cosh^2(3a\\rho)"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\cosh^4(act)\\cosh^2(3a\\rho)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\cosh^4(act)\\sinh^2(3a\\rho)}{9a^2\\cosh^{2/3}(3a\\rho)}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{1}{\\cosh^2(act)\\cosh^{2/3}(3a\\rho)}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{24a^4\\left(24\\cosh^4(act)\\cosh^2(3a\\rho) + 33\\cosh^4(act) - 32\\cosh^2(act)\\cosh^2(3a\\rho) + 8\\cosh^4(3a\\rho)\\right)}{\\cosh^{12}(act)\\cosh^8(3a\\rho)}"
         }
       ]
     },

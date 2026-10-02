@@ -56,6 +56,11 @@
       "id": "godel",
       "kind": "family",
       "text": "Dust that rotates where Einstein's is at rest, held by a cosmological constant of the opposite sign. Kurt Gödel wrote in 1949, without proof, that his universe and Einstein's are the only spatially homogeneous solutions with matter whose world lines stay equidistant [godel1949]."
+    },
+    {
+      "id": "senovilla",
+      "kind": "family",
+      "text": "A universe of radiation that also satisfies the strong energy condition and has no singularity, while it contracts, bounces, and expands. It has no compact slice and no point whose light cone converges again [senovilla1998, chinea1992]."
     }
   ],
   "references": [
@@ -76,7 +81,9 @@
     "hawking1973",
     "eddington1933",
     "schwarzschild1916b",
-    "godel1949"
+    "godel1949",
+    "senovilla1998",
+    "chinea1992"
   ],
   "coordinates": [
     {

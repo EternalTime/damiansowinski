@@ -481,7 +481,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "49967dbc2b642df4",
+    "version": "6633307162a18343",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -552,7 +552,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a452d9d969582531",
+    "version": "1ac110e08cbd66f8",
     "diagrams": "9afed8951c5aec50",
     "conformal": "c7734072db0d7622",
     "embedding": "07b92b646e316b86"
@@ -574,7 +574,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c7cdee87fba671f8",
+    "version": "b83efb56401160c3",
     "diagrams": "dc0f3031798ca092",
     "conformal": "2876dfbbabbb4b26",
     "embedding": "f736444606912902"
@@ -667,7 +667,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "84728b303e41b4a5",
+    "version": "5842dfe345991ad2",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -811,7 +811,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "28a959fe018c5e70",
+    "version": "757a68a2ad08d864",
     "diagrams": "2af1bbf417683eb3",
     "conformal": "431800db7085dc77",
     "embedding": "f0d7a1bdcd0620df"
@@ -2137,6 +2137,36 @@
     "diagrams": "d1e087098b20d92d",
     "conformal": "94cab2e957646c35",
     "embedding": "68458b3281a24534"
+  },
+  {
+    "id": "senovilla",
+    "name": "Senovilla",
+    "tags": [
+      "perfect fluid",
+      "radiation",
+      "non-vacuum",
+      "cosmology",
+      "cosmological",
+      "inhomogeneous",
+      "cylindrical symmetry",
+      "geodesically complete",
+      "no singularity",
+      "bounce",
+      "singularity theorems",
+      "globally hyperbolic",
+      "comoving",
+      "time-dependent",
+      "dynamical",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "97234a97bddf5294",
+    "diagrams": "ba9dba288cd26f63",
+    "conformal": "e6b2c492ab043d17",
+    "embedding": "e135a6bb032eedc2"
   },
   {
     "id": "simpson_visser",

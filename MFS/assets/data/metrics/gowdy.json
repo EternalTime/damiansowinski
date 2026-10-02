@@ -60,6 +60,11 @@
       "id": "mixmaster",
       "kind": "programme",
       "text": "Both are testing grounds for the conjecture of Belinskii, Khalatnikov, and Lifshitz that each small region near a generic singularity evolves as a homogeneous universe of its own [bkl1970]. The Mixmaster universe oscillates all the way down, and in a generic Gowdy universe the spatial curvature terms drop out [gowdy2014]."
+    },
+    {
+      "id": "senovilla",
+      "kind": "family",
+      "text": "An inhomogeneous cosmology with the same two commuting symmetries of space, filled with radiation and arranged around an axis. Every geodesic in it runs on for ever, with no singularity at either end of time [ruiz1992, chinea1992]."
     }
   ],
   "references": [
@@ -84,7 +89,9 @@
     "rendall2001",
     "ringstrom2006",
     "ringstrom2009",
-    "ellismaccallum1969"
+    "ellismaccallum1969",
+    "ruiz1992",
+    "chinea1992"
   ],
   "coordinates": [
     {

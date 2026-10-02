@@ -28,7 +28,7 @@ GREEK = {"theta", "phi", "psi", "chi", "eta", "tau", "Phi", "Omega", "omega", "l
          "Lambda", "gamma", "sigma", "Delta", "kappa", "xi", "delta", "epsilon", "Xi"}
 # A name the reader spells from an accented command, as it reads \tilde\phi as tildephi.
 ACCENTED = {"tildephi": "\\tilde\\phi"}
-TRIG = (sp.sin, sp.cos, sp.tan, sp.cot, sp.csc, sp.sec, sp.sinh, sp.cosh)
+TRIG = (sp.sin, sp.cos, sp.tan, sp.cot, sp.csc, sp.sec, sp.sinh, sp.cosh, sp.tanh)
 
 
 def tex_name(name):
@@ -59,7 +59,7 @@ class Sum:
 
 class Printer:
     def __init__(self, coords, primed=(), lead=(), overrides=None, collect=None, factors=None, named=None,
-                 rising=(), flip=True, last=(), dotted=()):
+                 rising=(), flip=True, last=(), dotted=(), arguments=None):
         """coords: coordinate symbols in chart order.
         primed: names of functions of one variable printed with primes.
         dotted: names of functions of the time printed with dots, as \\dot{a} and \\ddot{a},
@@ -77,6 +77,9 @@ class Printer:
             throughout passes False.
         last: expressions whose terms close a sum, as a chart with a kink puts the delta at
             the kink after the smooth part of every value.
+        arguments: {the argument of a trigonometric or hyperbolic function: its printed text}, set
+            tight in plain brackets as the line element writes it, \\cosh(3a\\rho); a function of
+            such an argument keeps a fractional power on its name, \\cosh^{2/3}(3a\\rho).
         """
         self.coords = list(coords)
         self.primed = set(primed)
@@ -88,6 +91,7 @@ class Printer:
         self.last = list(last)
         self.overrides = dict(overrides or {})
         self.named = dict(named or {})
+        self.arguments = dict(arguments or {})
         self.collect = collect
 
     # -- ordering ----------------------------------------------------------------------
@@ -247,6 +251,8 @@ class Printer:
             else:
                 numerator.append((base, exponent))
         numerator, denominator = self.tidy_trig(numerator, denominator)
+        if self.arguments:
+            numerator, denominator = self.tidy_hyperbolic(numerator, denominator)
         out = []
         for side in (numerator, denominator):
             done = []
@@ -300,6 +306,16 @@ class Printer:
         denominator = rest_den + [(f(a), sp.Integer(k)) for (f, a), k in den.items() if k]
         return numerator, denominator
 
+    def tidy_hyperbolic(self, numerator, denominator):
+        """sinh^k above cosh^k of one argument as tanh^k, where that is the whole of both powers."""
+        for argument in self.arguments:
+            sinh, cosh = sp.sinh(argument), sp.cosh(argument)
+            k = next((e for b, e in numerator if b == sinh), None)
+            if k is not None and k.is_Integer and (cosh, k) in denominator:
+                numerator = [(sp.tanh(argument), k) if b == sinh else (b, e) for b, e in numerator]
+                denominator = [(b, e) for b, e in denominator if b != cosh]
+        return numerator, denominator
+
     def rank_of(self, g):
         return self.factors.index(g) if g in self.factors else 99
 
@@ -327,7 +343,11 @@ class Printer:
         if isinstance(base, sp.Derivative):
             return (5, self.rank_of(base), self.atom(base))
         if isinstance(base, TRIG):
-            order = {sp.sin: 0, sp.cos: 1, sp.cot: 2, sp.csc: 3, sp.tan: 4, sp.sec: 5, sp.sinh: 6, sp.cosh: 7}
+            order = {sp.sin: 0, sp.cos: 1, sp.cot: 2, sp.csc: 3, sp.tan: 4, sp.sec: 5, sp.sinh: 6, sp.cosh: 7,
+                     sp.tanh: 8}
+            if base.args[0] in self.arguments:
+                # The arguments a chart names are written in the order it names them.
+                return (6, f"{list(self.arguments).index(base.args[0]):03d}", order[base.func])
             return (6, str(base.args[0]), order[base.func])
         return (7, str(base))
 
@@ -360,7 +380,7 @@ class Printer:
         if isinstance(base, sp.log) and exponent == 1:
             # The argument is one fraction, as ln((x^2 + y^2)/rho_0^2), however sympy expanded it.
             return "\\ln\\left(" + self.expr(sp.factor(base.args[0])) + "\\right)"
-        if isinstance(base, TRIG) and not exponent.is_Integer:
+        if isinstance(base, TRIG) and not exponent.is_Integer and base.args[0] not in self.arguments:
             # The reader takes \cos^2\tau but not \cos^{3/2}\tau, so a fractional power is bracketed.
             return "\\left(\\" + base.func.__name__ + self.trig_argument(base.args[0]) + "\\right)^" + _sup(exponent)
         if isinstance(base, TRIG):
@@ -376,6 +396,8 @@ class Printer:
         return text + "^" + _sup(exponent)
 
     def trig_argument(self, argument):
+        if argument in self.arguments:
+            return "(" + self.arguments[argument] + ")"
         if isinstance(argument, sp.Symbol):
             return tex_name(argument.name) if argument.name in GREEK else " " + argument.name
         return "\\left(" + self.expr(argument) + "\\right)"
@@ -420,7 +442,7 @@ def _sup(exponent):
     return text if len(text) == 1 else "{" + text + "}"
 
 
-TRIG_TEX = ("\\sin", "\\cos", "\\cot", "\\csc", "\\sinh", "\\cosh")
+TRIG_TEX = ("\\sin", "\\cos", "\\cot", "\\csc", "\\sinh", "\\cosh", "\\tanh")
 
 
 def _needs_space(left, right, previous):

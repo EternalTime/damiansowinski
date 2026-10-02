@@ -96,6 +96,11 @@
       "id": "coleman_de_luccia",
       "kind": "composite",
       "text": "De Sitter space with a bubble of lower vacuum energy growing in it, the way a false vacuum decays [coleman1980]."
+    },
+    {
+      "id": "senovilla",
+      "kind": "family",
+      "text": "A universe of radiation that also contracts, bounces, and expands with no singularity, and keeps the strong energy condition that de Sitter's violates. It has no closed trapped surface, and its slices of constant time are open [senovilla1998, chinea1992]."
     }
   ],
   "references": [
@@ -128,7 +133,9 @@
     "mazur2015",
     "ipser1984",
     "caldwell1996",
-    "coleman1980"
+    "coleman1980",
+    "senovilla1998",
+    "chinea1992"
   ],
   "coordinates": [
     {

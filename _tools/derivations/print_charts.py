@@ -7,7 +7,7 @@ robinson_trautman, string_black_hole, mcvittie, tangherlini, gott_time_machine, 
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
 black_string, myers_perry, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
-som_raychaudhuri, point_particle_2plus1 and coleman_de_luccia, and Godel's cylindrical chart.
+som_raychaudhuri, point_particle_2plus1, coleman_de_luccia and senovilla, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -8672,6 +8672,171 @@ def point_particle_check(chart, system):
 
 
 CHARTS["point_particle_2plus1"] = [lambda s=s: point_particle_2plus1(s) for s in PARTICLE_CHARTS]
+
+
+# -- Senovilla ---------------------------------------------------------------------------
+
+def senovilla():
+    """Senovilla's singularity-free universe in his own cylindrical chart, the one chart the
+    literature writes it in: the line element is (1) of Chinea, Fernandez-Jambrina and Senovilla,
+    Phys. Rev. D 45, 481 (1992), which restates Senovilla, Phys. Rev. Lett. 64, 2219 (1990). Every
+    value is printed in the hyperbolic functions of act and 3a rho the line element is written in,
+    with the cube root kept on the name, cosh^(2/3)(3a rho). senovilla_fluid checks the chart
+    against Einstein's equations for the radiation fluid at rest in it and against the expansion and
+    acceleration its sources state, the geodesic equations are their (7) and (8) with the two
+    cyclic ones written out, and senovilla.md beside this file is the derivation."""
+    coords, parameters = ["t", "\\rho", "\\phi", "z"], ["a"]
+    probe = vm.Reader(coords, parameters, ())
+    a, rho = probe.parameters["a"], probe.symbol["\\rho"]
+    time = probe.c * probe.symbol["t"]
+
+    def line(c):
+        return (f"ds^2 = \\cosh^4(a{c}t)\\cosh^2(3a\\rho)\\left(-{c + '^2' if c else ''}dt^2 + d\\rho^2\\right)"
+                f" + \\dfrac{{\\cosh^4(a{c}t)\\sinh^2(3a\\rho)}}{{9a^2\\cosh^{{2/3}}(3a\\rho)}}d\\phi^2"
+                f" + \\dfrac{{dz^2}}{{\\cosh^2(a{c}t)\\cosh^{{2/3}}(3a\\rho)}}")
+    conformal = "\\cosh^4(act)\\cosh^2(3a\\rho)"
+    metric = {("t", "t"): "-" + conformal, ("\\rho", "\\rho"): conformal,
+              ("\\phi", "\\phi"): "\\dfrac{\\cosh^4(act)\\sinh^2(3a\\rho)}{9a^2\\cosh^{2/3}(3a\\rho)}",
+              ("z", "z"): "\\dfrac{1}{\\cosh^2(act)\\cosh^{2/3}(3a\\rho)}"}
+    inverse = {("t", "t"): "-\\dfrac{1}{" + conformal + "}", ("\\rho", "\\rho"): "\\dfrac{1}{" + conformal + "}",
+               ("\\phi", "\\phi"): "\\dfrac{9a^2\\cosh^{2/3}(3a\\rho)}{\\cosh^4(act)\\sinh^2(3a\\rho)}",
+               ("z", "z"): "\\cosh^2(act)\\cosh^{2/3}(3a\\rho)"}
+    return {
+        "metric_id": "senovilla",
+        "system": {"id": "cylindrical", "name": "Cylindrical", "coords": coords,
+                   "domains": ["t \\in (-\\infty, \\infty)", "\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                               "z \\in (-\\infty, \\infty)"],
+                   "parameters": parameters, "line_element": line("c")},
+        "chart_line_element": line(""),
+        "time": "t",
+        "printer": {"lead": [a, sp.cosh(a * time), sp.sinh(a * time), sp.cosh(3 * a * rho), sp.sinh(3 * a * rho)],
+                    "arguments": {a * time: "act", 3 * a * rho: "3a\\rho"}},
+        "pretty": senovilla_pretty(a, time, rho),
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "geodesics": SENOVILLA_GEODESICS,
+        "check": senovilla_fluid,
+    }
+
+
+def senovilla_pretty(a, time, rho):
+    """A `pretty` for Senovilla's chart. The checker hands each value back in the exponentials of
+    a rho and act and in cube roots of the factors of e^(6a rho) + 1; every value of this chart is
+    a power cosh^(-k/3)(3a rho), k = 0, 1 or 2, times a rational function of the hyperbolic
+    functions of act and 3a rho, so the power is found by trying the three, and the rest is written
+    in S = sinh and C = cosh of each argument, reduced by S^2 = C^2 - 1 and factored."""
+    arguments = [(a * time, 1), (3 * a * rho, 3)]
+    names = [sp.symbols(f"_S{i} _C{i}", positive=True) for i in range(2)]
+    relations = [S ** 2 - C ** 2 + 1 for S, C in names]
+    generators = [S for S, _ in names] + [C for _, C in names]
+
+    def reduce(p):
+        return sp.expand(sp.reduced(sp.expand(p), relations, *generators)[1])
+
+    def fractional(e):
+        return any(not p.exp.is_Integer for p in e.atoms(sp.Pow) if p.exp.is_Rational)
+
+    def pretty(value):
+        value = sp.sympify(value)
+        for k in range(3):
+            x = vm.norm(value * sp.cosh(3 * a * rho) ** sp.Rational(k, 3))
+            if not fractional(x):
+                break
+        else:
+            raise ValueError(f"{value} is no power of cosh^(1/3)(3a rho) times a rational function")
+        # The checker's exponentials are those of a rho and of act. A value is a function of 3a rho,
+        # so once common factors are cancelled each side is a polynomial in e^(3a rho) = S + C.
+        letters = []
+        for (argument, step), (S, C) in zip(arguments, names):
+            unit, E = argument / step, sp.Dummy("E")
+            x = x.replace(lambda e, unit=unit: isinstance(e, sp.exp) and sp.expand(e.args[0] / unit).is_Integer,
+                          lambda e, unit=unit, E=E: E ** sp.expand(e.args[0] / unit))
+            letters.append((E, step, S + C))
+        if x.has(sp.exp):
+            raise ValueError(f"{value} keeps an exponential of neither act nor a rho")
+        sides = []
+        for side in sp.fraction(sp.cancel(x)):
+            for E, step, both in letters:
+                poly = sp.Poly(side, E)
+                if any(n % step for (n,) in poly.monoms()):
+                    raise ValueError(f"{value} is no function of 3a rho")
+                side = sum(coefficient * both ** (n // step) for (n,), coefficient in poly.terms())
+            sides.append(reduce(side))
+        num, den = sides
+        # A sinh below the line is cleared by its conjugate, (A + B S)(A - B S) = A^2 - B^2 (C^2 - 1).
+        for S, C in names:
+            even = den.subs(S, 0)
+            odd = sp.expand((den - even) / S)
+            if odd != 0:
+                num, den = reduce(num * (even - odd * S)), reduce(even ** 2 - odd ** 2 * (C ** 2 - 1))
+        out = sp.factor(sp.cancel(sp.factor(num) / sp.factor(den)))
+        # (C + 1)(C - 1) is read as the S^2 it came from.
+        powers = out.as_powers_dict()
+        for S, C in names:
+            plus, minus = powers.get(C + 1, 0), powers.get(C - 1, 0)
+            if plus * minus > 0:
+                both = min(abs(plus), abs(minus)) * (1 if plus > 0 else -1)
+                out = out * S ** (2 * both) / ((C + 1) * (C - 1)) ** both
+        back = {}
+        for (argument, _), (S, C) in zip(arguments, names):
+            back.update({S: sp.sinh(argument), C: sp.cosh(argument)})
+        return out.subs(back) / sp.cosh(3 * a * rho) ** sp.Rational(k, 3)
+    return pretty
+
+
+def senovilla_fluid(chart):
+    """G_mu nu = (eps + p) u_mu u_nu + p g_mu nu in every slot, for the fluid at rest in the chart,
+    u = dx^0-normalised, with eps = 15a^2/(cosh^4(act) cosh^4(3a rho)) and p = eps/3 in units of
+    c^4/(8 pi G), which is (5) and (6) of Chinea, Fernandez-Jambrina and Senovilla; the fluid's
+    expansion against their (3), 3a sinh(act)/(cosh^3(act) cosh(3a rho)), and its acceleration
+    against their (4), whose one component is a_rho = 3a tanh(3a rho). A circle about the axis
+    at constant t and z is a null curve where (d phi/d x^0)^2 = -g_tt/g_phiphi, and it is a geodesic
+    where Gamma^rho_tt + Gamma^rho_phiphi (d phi/d x^0)^2 vanishes, which is a (cosh^2 - 4)/(sinh cosh)
+    of 3a rho: the one circular light ray of their section 2, at cosh(3a rho) = 2."""
+    x0, rho = chart.symbols[0], chart.symbols[1]
+    a = chart.reader.parameters["a"]
+    g, ginv = chart.geo.g, chart.geo.ginv
+    Ct, St, C, S = sp.cosh(a * x0), sp.sinh(a * x0), sp.cosh(3 * a * rho), sp.sinh(3 * a * rho)
+    eps = 15 * a ** 2 / (Ct ** 4 * C ** 4)
+    u = [-Ct ** 2 * C, 0, 0, 0]
+    G = chart.geo.einstein_ll()
+    for i in range(4):
+        for j in range(i, 4):
+            if vm.norm(vm._at(G, (i, j)) - (4 * eps / 3 * u[i] * u[j] + eps / 3 * g[i, j])) != 0:
+                raise AssertionError(f"senovilla: the Einstein tensor misses the radiation fluid in slot "
+                                     f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+    up = [sum(ginv[i, j] * u[j] for j in range(4)) for i in range(4)]
+    gamma = chart.geo.christoffel_ull()
+    expansion = sum(sp.diff(up[i], chart.symbols[i]) + sum(gamma[i][i][k] * up[k] for k in range(4))
+                    for i in range(4))
+    if vm.norm(expansion - 3 * a * St / (Ct ** 3 * C)) != 0:
+        raise AssertionError("senovilla: the fluid's expansion misses 3a sinh(act)/(cosh^3(act) cosh(3a rho))")
+    acceleration = [sum(up[k] * (sp.diff(u[i], chart.symbols[k]) - sum(gamma[m][k][i] * u[m] for m in range(4)))
+                        for k in range(4)) for i in range(4)]
+    for i, stated in enumerate([0, 3 * a * S / C, 0, 0]):
+        if vm.norm(acceleration[i] - stated) != 0:
+            raise AssertionError(f"senovilla: the fluid's acceleration misses 3a tanh(3a rho) d rho "
+                                 f"along {chart.coords_tex[i]}")
+    turning = gamma[1][0][0] - gamma[1][2][2] * g[0, 0] / g[2, 2]
+    if vm.norm(turning - a * (C ** 2 - 4) / (S * C)) != 0:
+        raise AssertionError("senovilla: the circular light ray is not at cosh(3a rho) = 2")
+
+
+# The geodesic equations as Chinea, Fernandez-Jambrina and Senovilla write them, their (7) and (8),
+# with the two their Killing vectors integrate, (9) and (10), written out.
+SENOVILLA_GEODESICS = [
+    "\\ddot{t} + 2a\\tanh(act)\\left(\\dot{t}^2 + \\dot{\\rho}^2\\right) + 6a\\tanh(3a\\rho)\\dot{t}\\dot{\\rho}"
+    " + \\dfrac{2\\tanh(act)\\sinh^2(3a\\rho)}{9a\\cosh^{8/3}(3a\\rho)}\\dot{\\phi}^2"
+    " - \\dfrac{a\\sinh(act)}{\\cosh^7(act)\\cosh^{8/3}(3a\\rho)}\\dot{z}^2 = 0",
+    "\\ddot{\\rho} + 3a\\tanh(3a\\rho)\\left(\\dot{t}^2 + \\dot{\\rho}^2\\right) + 4a\\tanh(act)\\dot{t}\\dot{\\rho}"
+    " - \\dfrac{\\sinh(3a\\rho)\\left(3 - \\tanh^2(3a\\rho)\\right)}{9a\\cosh^{5/3}(3a\\rho)}\\dot{\\phi}^2"
+    " + \\dfrac{a\\sinh(3a\\rho)}{\\cosh^6(act)\\cosh^{11/3}(3a\\rho)}\\dot{z}^2 = 0",
+    "\\ddot{\\phi} + 4a\\tanh(act)\\dot{t}\\dot{\\phi}"
+    " + \\dfrac{2a\\left(3 - \\tanh^2(3a\\rho)\\right)}{\\tanh(3a\\rho)}\\dot{\\rho}\\dot{\\phi} = 0",
+    "\\ddot{z} - 2a\\tanh(act)\\dot{t}\\dot{z} - 2a\\tanh(3a\\rho)\\dot{\\rho}\\dot{z} = 0",
+]
+
+
+CHARTS["senovilla"] = senovilla
 
 
 def write(spec):
