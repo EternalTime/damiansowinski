@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 150,
+  "count": 151,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -5924,6 +5924,602 @@
       ]
     },
     {
+      "id": "bonnor_charged_dust",
+      "name": "Bonnor's Stars of Charged Dust",
+      "short_name": "Bonnor Charged Dust",
+      "description": "Stars of dust in which every grain carries just enough charge for its electric repulsion to cancel its gravity, so the dust rests in equilibrium with no pressure, in a ball or in any other shape. William Bonnor built a sphere of it in 1965, and in 1975 he and S. B. P. Wickramasuriya made one whose surface lies as close to its own horizon as one likes, so that light from its centre arrives with a redshift as large as one likes. José Lemos and Erick Weinberg named that limit a quasiblack hole.",
+      "tags": [
+        "dust",
+        "charged dust",
+        "charged",
+        "electric charge",
+        "electromagnetic field",
+        "Einstein-Maxwell",
+        "extremal",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "stellar interior",
+        "matched solution",
+        "regular centre",
+        "no horizon",
+        "black hole mimicker",
+        "quasiblack hole",
+        "gravitational redshift",
+        "quasar",
+        "harmonic coordinates",
+        "isotropic coordinates",
+        "mass",
+        "asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The dust has mass density $\\rho$ and charge density $\\pm\\sqrt{4\\pi\\epsilon_0G}\\,\\rho$, of one sign throughout, and the metric is $-U^{-2}c^2dt^2 + U^2$ times flat space.",
+      "related": [
+        {
+          "id": "majumdar_papapetrou",
+          "kind": "special_case",
+          "text": "The same metric with no dust. Where $\\rho = 0$ the potential $U$ is harmonic and its poles are extremal black holes, and the field outside a star of this dust is the single hole's [hartle1972, bonnor1975]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "piece",
+          "text": "The outside of each spherical star, with the charge equal to the mass, $r_q = r_s/2$. The surface of the star lies outside the horizon, as near it as one likes [bonnor1965, bonnor1975]."
+        },
+        {
+          "id": "charged_shell",
+          "kind": "family",
+          "text": "The same balance on a thin shell. A shell of dust whose charge equals its mass rests at any radius outside its gravitational radius, with flat space inside it [gao2008]."
+        },
+        {
+          "id": "interior_schwarzschild",
+          "kind": "family",
+          "text": "The star of uniform density, held up by pressure. With its pressure at most a third of its density its redshift is at most one, at the centre, where a star of this dust has no bound [bonnor1975]."
+        },
+        {
+          "id": "einstein_cluster",
+          "kind": "family",
+          "text": "Another star with no pressure, held up by the orbits of its particles. Einstein concluded that its Schwarzschild radius lies well inside it [einstein1939, bonnor1975]."
+        },
+        {
+          "id": "morgan_morgan",
+          "kind": "family",
+          "text": "Discs of dust in counter rotation, the bodies Bonnor and Wickramasuriya set out from. Their redshift is of order one, and the charged spheroid flattened to a disc keeps a finite redshift too [morgan1969, bonnor1975]."
+        }
+      ],
+      "references": [
+        "bonnor1965",
+        "hoyle1964",
+        "bonnor1975",
+        "hartle1972",
+        "lemos2004",
+        "papapetrou1947",
+        "das1962",
+        "lemoszanchin2008",
+        "gao2008",
+        "einstein1939",
+        "morgan1969"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bonnor_charged_dust.json",
+      "charts": [
+        {
+          "id": "harmonic",
+          "name": "Harmonic",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "U = U(x,y,z)",
+              "description": "Dimensionless potential, with $\\partial_x^2U + \\partial_y^2U + \\partial_z^2U = -4\\pi G\\rho\\,U^3/c^2$ in the dust, Laplace's equation outside it, and $U \\to 1$ far away; the electric potential is $\\pm c^2/(\\sqrt{4\\pi\\epsilon_0G}\\,U)$"
+            }
+          ],
+          "convention": "We use the harmonic coordinates $(t, x, y, z)$ of Majumdar and Papapetrou's metric, with $t$ carrying dimensions of time and $x$, $y$, and $z$ lengths, and leave $U$ free, so no component assumes a field equation. The dust has density $\\rho = -c^2\\left(\\partial_x^2U + \\partial_y^2U + \\partial_z^2U\\right)/(4\\pi GU^3)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{c^2dt^2}{U^2} + U^2\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{U^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "U^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "U^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "U^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\partial_x^2 U + 2\\partial_y^2 U + 2\\partial_z^2 U}{U^3}",
+          "kretschmann": "K = \\dfrac{4U^2\\left(2\\partial_x^2 U\\,\\partial_y^2 U + 2\\partial_x^2 U\\,\\partial_z^2 U + 2\\partial_y^2 U\\,\\partial_z^2 U + 4\\left(\\partial_x\\partial_y U\\right)^2 + 4\\left(\\partial_x\\partial_z U\\right)^2 + 3\\left(\\partial_x^2 U\\right)^2 + 4\\left(\\partial_y\\partial_z U\\right)^2 + 3\\left(\\partial_y^2 U\\right)^2 + 3\\left(\\partial_z^2 U\\right)^2\\right) - 8U\\left(12\\partial_x U\\,\\partial_x\\partial_y U\\,\\partial_y U + 12\\partial_x U\\,\\partial_x\\partial_z U\\,\\partial_z U + 12\\partial_y U\\,\\partial_y\\partial_z U\\,\\partial_z U + 5\\left(\\partial_x U\\right)^2\\,\\partial_x^2 U - \\left(\\partial_x U\\right)^2\\,\\partial_y^2 U - \\left(\\partial_x U\\right)^2\\,\\partial_z^2 U + 5\\left(\\partial_y U\\right)^2\\,\\partial_y^2 U - \\left(\\partial_y U\\right)^2\\,\\partial_z^2 U + 5\\left(\\partial_z U\\right)^2\\,\\partial_z^2 U - \\partial_x^2 U\\left(\\partial_y U\\right)^2 - \\partial_x^2 U\\left(\\partial_z U\\right)^2 - \\partial_y^2 U\\left(\\partial_z U\\right)^2\\right) + 56\\left(\\left(\\partial_x U\\right)^2 + \\left(\\partial_y U\\right)^2 + \\left(\\partial_z U\\right)^2\\right)^2}{U^8}"
+        },
+        {
+          "id": "sphere_1965",
+          "name": "Bonnor's Sphere of 1965",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, r_0]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_0 \\;\\text{(the surface)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass parameter of the star, $m = GM/c^2$ with $M$ its mass, a length; its charge is $Q = \\pm\\sqrt{4\\pi\\epsilon_0G}\\,M$"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Coordinate radius of the star, where the dust ends and the vacuum begins; the areal radius of that surface is $r_0 + m$"
+            },
+            {
+              "symbol": "U = \\dfrac{\\left(r_0 + m\\right)^{3/2}}{\\sqrt{r_0^3 + m\\,r^2}}",
+              "description": "Dimensionless potential inside the sphere, with $\\partial_rU = -mrU^3/(r_0 + m)^3$; it is $(1 + m/r_0)^{3/2}$ at the centre and $1 + m/r_0$ at the surface, and the density, $\\rho = 3mc^2/\\left(4\\pi G\\left(r_0 + m\\right)^3\\left(1 + mr^2/r_0^3\\right)\\right)$, falls from the centre to the surface"
+            }
+          ],
+          "convention": "We use isotropic coordinates $(t, r, \\theta, \\phi)$ inside Bonnor's sphere of 1965, with $t$ carrying dimensions of time and $r$ a length. His $f$ is $1/U$ and his radius $a$ is $r_0$ here. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{c^2dt^2}{U^2} + U^2\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{U^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "U^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\,U^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\,U^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6m\\left(m\\,r^2\\,U^2 - \\left(r_0 + m\\right)^3\\right)}{\\left(r_0 + m\\right)^6}",
+          "kretschmann": "K = \\dfrac{4m^2\\left(11m^2\\,r^4\\,U^4 - 24m\\,r^2\\,U^2\\left(r_0 + m\\right)^3 + 15\\left(r_0 + m\\right)^6\\right)}{\\left(r_0 + m\\right)^{12}}"
+        },
+        {
+          "id": "sphere_1975",
+          "name": "Bonnor and Wickramasuriya's Sphere",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, r_0]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_0 \\;\\text{(the surface)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass parameter of the star, $m = GM/c^2$ with $M$ its mass, a length; its charge is $Q = \\pm\\sqrt{4\\pi\\epsilon_0G}\\,M$"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Coordinate radius of the star, where the dust ends and the vacuum begins; the areal radius of that surface is $r_0 + m$"
+            },
+            {
+              "symbol": "U = 1 + \\dfrac{m}{2r_0}\\left(3 - \\dfrac{r^2}{r_0^2}\\right)",
+              "description": "Dimensionless potential inside the sphere, with $\\partial_rU = -mr/r_0^3$; it is $1 + 3m/(2r_0)$ at the centre and $1 + m/r_0$ at the surface, and the density, $\\rho = 3mc^2/(4\\pi Gr_0^3U^3)$, rises from the centre to the surface"
+            }
+          ],
+          "convention": "We use isotropic coordinates $(t, r, \\theta, \\phi)$ inside Bonnor and Wickramasuriya's sphere of 1975, with $t$ carrying dimensions of time and $r$ a length. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{c^2dt^2}{U^2} + U^2\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{U^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "U^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\,U^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\,U^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6m}{r_0^3\\,U^3}",
+          "kretschmann": "K = \\dfrac{4m^2\\left(15r_0^6\\,U^2 + 6m\\,r^2\\,r_0^3\\,U + 14m^2\\,r^4\\right)}{r_0^{12}\\,U^8}"
+        },
+        {
+          "id": "exterior",
+          "name": "Isotropic Exterior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [r_0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_0 \\;\\text{(the surface)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass parameter of the star, $m = GM/c^2$ with $M$ its mass, a length; its charge is $Q = \\pm\\sqrt{4\\pi\\epsilon_0G}\\,M$"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Coordinate radius of the star, where the dust ends and the vacuum begins; the areal radius of that surface is $r_0 + m$"
+            }
+          ],
+          "convention": "We use isotropic coordinates $(t, r, \\theta, \\phi)$ outside either sphere, with $t$ carrying dimensions of time and $r$ a length, the same $t$ and $r$ as inside. The potential is $U = 1 + m/r$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 + \\dfrac{m}{r}\\right)^{-2}c^2dt^2 + \\left(1 + \\dfrac{m}{r}\\right)^2\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 + \\dfrac{m}{r}\\right)^{-2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 + \\dfrac{m}{r}\\right)^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(r + m\\right)^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(r + m\\right)^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8m^2\\left(6r^2 + m^2\\right)}{\\left(r + m\\right)^8}"
+        },
+        {
+          "id": "exterior_areal",
+          "name": "Reissner-Nordström Exterior",
+          "coordinates": [
+            "t",
+            "R",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "R \\in [r_0 + m, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "R = r_0 + m \\;\\text{(the surface)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass parameter of the star, $m = GM/c^2$ with $M$ its mass, a length; its charge is $Q = \\pm\\sqrt{4\\pi\\epsilon_0G}\\,M$"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Coordinate radius of the star, where the dust ends and the vacuum begins; the areal radius of that surface is $r_0 + m$"
+            }
+          ],
+          "convention": "We use Reissner and Nordström's coordinates $(t, R, \\theta, \\phi)$ outside either sphere, with $t$ carrying dimensions of time and $R = r + m$ the areal radius, which Bonnor and Wickramasuriya write $\\bar{r}$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{m}{R}\\right)^2c^2dt^2 + \\left(1 - \\dfrac{m}{R}\\right)^{-2}dR^2 + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{m}{R}\\right)^2"
+            },
+            {
+              "indices": [
+                "R",
+                "R"
+              ],
+              "value": "\\left(1 - \\dfrac{m}{R}\\right)^{-2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "R^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "R^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8m^2\\left(6R^2 - 12m\\,R + 7m^2\\right)}{R^8}"
+        },
+        {
+          "id": "spheroid_interior",
+          "name": "Spheroid Interior",
+          "coordinates": [
+            "t",
+            "u",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "u \\in [0, u_0]",
+            "\\theta \\in [-\\pi/2, \\pi/2]",
+            "\\phi \\in [0, 2\\pi)",
+            "u = u_0 \\;\\text{(the surface)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass parameter of the star, $m = GM/c^2$ with $M$ its mass, a length; its charge is $Q = \\pm\\sqrt{4\\pi\\epsilon_0G}\\,M$"
+            },
+            {
+              "symbol": "a",
+              "description": "Focal radius of the oblate spheroidal coordinates, a length: the surfaces of constant $u$ are spheroids whose foci lie on the ring of radius $a$ in the plane $z = 0$"
+            },
+            {
+              "symbol": "u_0",
+              "description": "Surface of the spheroid, $u = u_0 > 0$; its meridional section has eccentricity $1/\\cosh u_0$ in the flat background"
+            },
+            {
+              "symbol": "U = 1 + \\dfrac{m}{a}\\left(\\arctan\\left(\\dfrac{1}{\\sinh u_0}\\right) + \\dfrac{u_0^4 - u^4}{4u_0^3\\cosh u_0}\\right)",
+              "description": "Dimensionless potential inside the spheroid, with $\\partial_uU = -mu^3/(au_0^3\\cosh u_0)$; on the disc $u = 0$ it is $1 + (m/a)\\left(\\arctan(1/\\sinh u_0) + u_0/(4\\cosh u_0)\\right)$"
+            }
+          ],
+          "convention": "We use oblate spheroidal coordinates $(t, u, \\theta, \\phi)$ inside Bonnor and Wickramasuriya's spheroid, with $t$ carrying dimensions of time, $x = a\\cosh u\\cos\\theta\\cos\\phi$, $y = a\\cosh u\\cos\\theta\\sin\\phi$, and $z = a\\sinh u\\sin\\theta$, so $\\theta$ is a latitude and $u = 0$ is the disc of radius $a$ in the plane $z = 0$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{c^2dt^2}{U^2} + U^2\\left(a^2\\left(\\sinh^2u + \\sin^2\\theta\\right)\\left(du^2 + d\\theta^2\\right) + a^2\\cosh^2u\\cos^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{U^2}"
+            },
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "a^2\\,U^2\\left(\\sin^2\\theta + \\sinh^2 u\\right)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,U^2\\left(\\sin^2\\theta + \\sinh^2 u\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,U^2\\cos^2\\theta\\cosh^2 u"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2m\\,u^2\\left(u\\sinh u\\cosh u + 3\\sinh^2 u + 3\\right)}{a^3\\,u_0^3\\,U^3\\left(\\sin^2\\theta + \\sinh^2 u\\right)\\cosh^2 u\\cosh u_0}",
+          "kretschmann": "K = \\dfrac{4m^2\\,u^4\\left(6a^2\\,u_0^6\\,u\\,U^2\\sin^2\\theta\\sinh u\\cosh u\\cosh^2 u_0 - a^2\\,u_0^6\\,u^2\\,U^2\\sin^2\\theta\\sinh^2 u\\cosh^2 u_0 + 27a^2\\,u_0^6\\,U^2\\sin^2\\theta\\sinh^2 u\\cosh^2 u_0 - 6a^2\\,u_0^6\\,u\\,U^2\\sinh^3 u\\cosh u\\cosh^2 u_0 - 12a^2\\,u_0^6\\,u\\,U^2\\sinh u\\cosh u\\cosh^2 u_0 - 4a^2\\,u_0^6\\,u^2\\,U^2\\sin^2\\theta\\cosh^2 u_0 + 8a^2\\,u_0^6\\,u^2\\,U^2\\sinh^2 u\\cosh^2 u_0 + 7a^2\\,u_0^6\\,u^2\\,U^2\\sinh^4 u\\cosh^2 u_0 + 27a^2\\,u_0^6\\,U^2\\sin^2\\theta\\cosh^2 u_0 + 27a^2\\,u_0^6\\,U^2\\sinh^2 u\\cosh^2 u_0 + 27a^2\\,u_0^6\\,U^2\\sinh^4 u\\cosh^2 u_0 + 4a^2\\,u_0^6\\,u^2\\,U^2\\cosh^2 u_0 - 2m\\,a\\,u_0^3\\,u^5\\,U\\sin^2\\theta\\sinh u\\cosh u\\cosh u_0 + 30m\\,a\\,u_0^3\\,u^4\\,U\\sin^2\\theta\\sinh^2 u\\cosh u_0 - 14m\\,a\\,u_0^3\\,u^5\\,U\\sinh^3 u\\cosh u\\cosh u_0 - 12m\\,a\\,u_0^3\\,u^5\\,U\\sinh u\\cosh u\\cosh u_0 + 30m\\,a\\,u_0^3\\,u^4\\,U\\sin^2\\theta\\cosh u_0 + 30m\\,a\\,u_0^3\\,u^4\\,U\\sinh^2 u\\cosh u_0 + 30m\\,a\\,u_0^3\\,u^4\\,U\\sinh^4 u\\cosh u_0 + 14m^2\\,u^8\\sin^2\\theta\\sinh^2 u + 14m^2\\,u^8\\sin^2\\theta + 14m^2\\,u^8\\sinh^2 u + 14m^2\\,u^8\\sinh^4 u\\right)}{a^8\\,u_0^{12}\\,U^8\\left(\\sin^2\\theta + \\sinh^2 u\\right)^3\\cosh^2 u\\cosh^4 u_0}"
+        },
+        {
+          "id": "spheroid_exterior",
+          "name": "Spheroid Exterior",
+          "coordinates": [
+            "t",
+            "u",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "u \\in [u_0, \\infty)",
+            "\\theta \\in [-\\pi/2, \\pi/2]",
+            "\\phi \\in [0, 2\\pi)",
+            "u = u_0 \\;\\text{(the surface)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass parameter of the star, $m = GM/c^2$ with $M$ its mass, a length; its charge is $Q = \\pm\\sqrt{4\\pi\\epsilon_0G}\\,M$"
+            },
+            {
+              "symbol": "a",
+              "description": "Focal radius of the oblate spheroidal coordinates, a length: the surfaces of constant $u$ are spheroids whose foci lie on the ring of radius $a$ in the plane $z = 0$"
+            },
+            {
+              "symbol": "u_0",
+              "description": "Surface of the spheroid, $u = u_0 > 0$; its meridional section has eccentricity $1/\\cosh u_0$ in the flat background"
+            },
+            {
+              "symbol": "U = 1 + \\dfrac{m}{a}\\arctan\\left(\\dfrac{1}{\\sinh u}\\right)",
+              "description": "Dimensionless potential outside the spheroid, harmonic in the flat background, with $\\partial_uU = -m/(a\\cosh u)$ and $U \\to 1 + m/\\sqrt{x^2 + y^2 + z^2}$ far away"
+            }
+          ],
+          "convention": "We use oblate spheroidal coordinates $(t, u, \\theta, \\phi)$ outside Bonnor and Wickramasuriya's spheroid, with $t$ carrying dimensions of time, $x = a\\cosh u\\cos\\theta\\cos\\phi$, $y = a\\cosh u\\cos\\theta\\sin\\phi$, and $z = a\\sinh u\\sin\\theta$, so $\\theta$ is a latitude. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{c^2dt^2}{U^2} + U^2\\left(a^2\\left(\\sinh^2u + \\sin^2\\theta\\right)\\left(du^2 + d\\theta^2\\right) + a^2\\cosh^2u\\cos^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{U^2}"
+            },
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "a^2\\,U^2\\left(\\sin^2\\theta + \\sinh^2 u\\right)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,U^2\\left(\\sin^2\\theta + \\sinh^2 u\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,U^2\\cos^2\\theta\\cosh^2 u"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = -\\dfrac{8m^2\\left(2a^2\\,U^2\\sin^2\\theta - 6a^2\\,U^2\\sinh^2 u - 6a^2\\,U^2\\sinh^4 u - 2a^2\\,U^2 + 6m\\,a\\,U\\sin^2\\theta\\sinh u + 12m\\,a\\,U\\sinh^3 u + 6m\\,a\\,U\\sinh u - 7m^2\\sin^2\\theta - 7m^2\\sinh^2 u\\right)}{a^8\\,U^8\\left(\\sin^2\\theta + \\sinh^2 u\\right)^3\\cosh^4 u}"
+        },
+        {
+          "id": "quasi_black_hole",
+          "name": "Lemos and Weinberg's Cloud",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass parameter of the star, $m = GM/c^2$ with $M$ its mass, a length; its charge is $Q = \\pm\\sqrt{4\\pi\\epsilon_0G}\\,M$"
+            },
+            {
+              "symbol": "b",
+              "description": "Core length of the dust cloud: the density is nearly constant for $r \\ll b$ and falls as $r^{-5}$ far outside; at $b = 0$ the metric is the extremal Reissner-Nordström black hole's"
+            },
+            {
+              "symbol": "U = 1 + \\dfrac{m}{\\sqrt{r^2 + b^2}}",
+              "description": "Dimensionless potential, with $\\partial_rU = -r\\left(U - 1\\right)^3/m^2$; it is $1 + m/b$ at the centre, and the dust fills all of space with the density $\\rho = 3mb^2c^2/\\left(4\\pi G\\left(r^2 + b^2\\right)\\left(m + \\sqrt{r^2 + b^2}\\right)^3\\right)$"
+            }
+          ],
+          "convention": "We use Lemos and Weinberg's harmonic coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ a length. Their $R$ is $r$ here, their $q$ is $m$, and their $c$ is $b$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{c^2dt^2}{U^2} + U^2\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{U^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "U^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\,U^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\,U^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6\\left(U - 1\\right)^3\\left(r\\,U + m - r\\right)\\left(r\\,U - m - r\\right)}{m^4\\,U^3}",
+          "kretschmann": "K = \\dfrac{4\\left(U - 1\\right)^6\\left(11r^4\\,U^6 - 42r^4\\,U^5 - 24m^2\\,r^2\\,U^4 + 72r^4\\,U^4 + 42m^2\\,r^2\\,U^3 - 88r^4\\,U^3 - 12m^2\\,r^2\\,U^2 + 15m^4\\,U^2 + 87r^4\\,U^2 - 6m^2\\,r^2\\,U - 54r^4\\,U + 14r^4\\right)}{m^8\\,U^8}"
+        }
+      ]
+    },
+    {
       "id": "bonnor_magnetic_dipole",
       "name": "Bonnor's Magnetic Dipole",
       "short_name": "Bonnor Dipole",
@@ -8976,6 +9572,11 @@
           "id": "mass_inflation",
           "kind": "programme",
           "text": "What becomes of the inner horizon the shell crosses on its way out. With radiation falling in behind the collapse, Eric Poisson and Werner Israel found the mass function growing without limit there [poisson1989]."
+        },
+        {
+          "id": "bonnor_charged_dust",
+          "kind": "family",
+          "text": "The balanced shell filled in: dust whose charge density equals its mass density all through a ball, at rest at any radius, with the same extremal field outside [bonnor1965]."
         }
       ],
       "references": [
@@ -8996,7 +9597,8 @@
         "penrose1968",
         "brady1999",
         "poisson1989",
-        "ori1991charged"
+        "ori1991charged",
+        "bonnor1965"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/charged_shell.json",
@@ -12274,6 +12876,11 @@
           "id": "morgan_morgan",
           "kind": "family",
           "text": "The same support within one plane: a static disc of dust on circular orbits, half the grains circling each way. Morgan and Morgan cite Einstein's paper [morgan1969]."
+        },
+        {
+          "id": "bonnor_charged_dust",
+          "kind": "family",
+          "text": "A star of dust held up by its electric charge. Bonnor and Wickramasuriya set it beside Einstein's cluster as a body of well understood matter, and its surface can lie as near its horizon as one likes [bonnor1975]."
         }
       ],
       "references": [
@@ -12294,7 +12901,8 @@
         "ruffini1969",
         "bartnik1988",
         "volkov1999",
-        "morgan1969"
+        "morgan1969",
+        "bonnor1975"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_cluster.json",
@@ -28202,6 +28810,11 @@
           "id": "charged_shell",
           "kind": "family",
           "text": "One charge in the same balance, spread on a shell. Arnowitt, Deser, and Misner shrank it to a point in 1960 and found the mass fixed by the charge, with the single hole's field outside [arnowitt1960]."
+        },
+        {
+          "id": "bonnor_charged_dust",
+          "kind": "generalisation",
+          "text": "Their metric with matter in it. Dust whose charge density equals its mass density is a source for $U$, and a ball of it can lie as near its own horizon as one likes [bonnor1975, lemos2004]."
         }
       ],
       "references": [
@@ -28235,7 +28848,9 @@
         "ishihara2006",
         "brill1963",
         "emparan2000",
-        "arnowitt1960"
+        "arnowitt1960",
+        "bonnor1975",
+        "lemos2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/majumdar_papapetrou.json",
@@ -31389,6 +32004,11 @@
           "id": "neugebauer_meinel",
           "kind": "family",
           "text": "A disc of dust that all turns one way, rigidly, solved exactly by Neugebauer and Meinel. The two discs agree in Newton's limit, and in this one the rotation drags the frames [bardeen1969, neugebauer1995]."
+        },
+        {
+          "id": "bonnor_charged_dust",
+          "kind": "family",
+          "text": "Dust held up by its charge, in a sphere or a spheroid. Flattened to a disc the spheroid keeps a finite redshift, as these discs do, and shrunk at a fixed shape its redshift has no limit [bonnor1975]."
         }
       ],
       "references": [
@@ -31410,7 +32030,8 @@
         "klein2001",
         "bonnor1968",
         "semerak2001",
-        "kofron2023"
+        "kofron2023",
+        "bonnor1975"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/morgan_morgan.json",
@@ -38333,6 +38954,11 @@
           "id": "datt_ruban_t_models",
           "kind": "family",
           "text": "Ruban's T-models of charged dust have this field outside them, on a surface that swings between the two horizons [krasinski2012]."
+        },
+        {
+          "id": "bonnor_charged_dust",
+          "kind": "composite",
+          "text": "A star of charged dust at rest, with the extremal field, $r_q = r_s/2$, outside it. Its surface can lie as near the horizon as one likes, and the redshift of its centre is then as large as one likes [bonnor1975]."
         }
       ],
       "references": [
@@ -38376,7 +39002,8 @@
         "hoffmann1935",
         "gibbonsrasheed1995",
         "arnowitt1960",
-        "krasinski2012"
+        "krasinski2012",
+        "bonnor1975"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -41410,6 +42037,11 @@
           "id": "misner_zapolsky",
           "kind": "family",
           "text": "A star from the same list of Tolman's whose density is infinite at the centre and falls as $1/r^2$. Its pressure there is a third of its energy density, the ratio that holds for radiation [tolman1939]."
+        },
+        {
+          "id": "bonnor_charged_dust",
+          "kind": "family",
+          "text": "A star of dust held up by electric repulsion, with no pressure. The redshift of its centre has no bound [bonnor1975]."
         }
       ],
       "references": [
@@ -41430,7 +42062,8 @@
         "bohmerlobo2008",
         "raghoonundun2015",
         "whittaker1968",
-        "wahlquist1968"
+        "wahlquist1968",
+        "bonnor1975"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/interior_schwarzschild.json",

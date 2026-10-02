@@ -14,8 +14,8 @@ israel_wilson_perjes, sultana_dyer, kerr_taub_nut, eguchi_hanson, boson_star, mi
 wahlquist, plebanski_hacyan, tippett_tsang, ppn_metric, lindquist_wheeler_lattice, belinski_zakharov,
 born_infeld_charge, penrose_impulsive_wave, exponential_metric, bondi_sachs, petrov_homogeneous, rp3_geon,
 kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kasner_scalar, moving_mirror,
-gravitational_instantons, small_universes, misner_zapolsky, cremmer_scherk and brans_dicke_sphere,
-and Godel's cylindrical chart.
+gravitational_instantons, small_universes, misner_zapolsky, cremmer_scherk, brans_dicke_sphere and
+bonnor_charged_dust, and Godel's cylindrical chart.
 
     /tmp/mfs-venv/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     /tmp/mfs-venv/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -24274,6 +24274,336 @@ def bondi_sachs_check(chart, system):
 
 
 CHARTS["bondi_sachs"] = [lambda s=s: bondi_sachs(s) for s in BONDI_SACHS_CHARTS]
+
+
+# -- Bonnor's stars of charged dust ---------------------------------------------------------
+
+BCD_SPHERE = "dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+BCD_SPHEROID = ("a^2\\left(\\sinh^2u + \\sin^2\\theta\\right)\\left(du^2 + d\\theta^2\\right)"
+                " + a^2\\cosh^2u\\cos^2\\theta\\,d\\phi^2")
+# Each chart that names its potential: the name, its coordinates, the flat background, the
+# parameters before the potential, the potential, its slope along the one coordinate it varies
+# with, and the chart's domains after the time's.
+BCD_NAMED = {
+    "sphere_1965": ("Bonnor's Sphere of 1965", "r", BCD_SPHERE, ["m", "r_0"],
+                    "U = \\dfrac{\\left(r_0 + m\\right)^{3/2}}{\\sqrt{r_0^3 + m\\,r^2}}",
+                    ["r \\in [0, r_0]", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                     "r = r_0 \\;\\text{(the surface)}"]),
+    "sphere_1975": ("Bonnor and Wickramasuriya's Sphere", "r", BCD_SPHERE, ["m", "r_0"],
+                    "U = 1 + \\dfrac{m}{2r_0}\\left(3 - \\dfrac{r^2}{r_0^2}\\right)",
+                    ["r \\in [0, r_0]", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+                     "r = r_0 \\;\\text{(the surface)}"]),
+    "spheroid_interior": ("Spheroid Interior", "u", BCD_SPHEROID, ["m", "a", "u_0"],
+                          "U = 1 + \\dfrac{m}{a}\\left(\\arctan\\left(\\dfrac{1}{\\sinh u_0}\\right)"
+                          " + \\dfrac{u_0^4 - u^4}{4u_0^3\\cosh u_0}\\right)",
+                          ["u \\in [0, u_0]", "\\theta \\in [-\\pi/2, \\pi/2]", "\\phi \\in [0, 2\\pi)",
+                           "u = u_0 \\;\\text{(the surface)}"]),
+    "spheroid_exterior": ("Spheroid Exterior", "u", BCD_SPHEROID, ["m", "a", "u_0"],
+                          "U = 1 + \\dfrac{m}{a}\\arctan\\left(\\dfrac{1}{\\sinh u}\\right)",
+                          ["u \\in [u_0, \\infty)", "\\theta \\in [-\\pi/2, \\pi/2]", "\\phi \\in [0, 2\\pi)",
+                           "u = u_0 \\;\\text{(the surface)}"]),
+    "quasi_black_hole": ("Lemos and Weinberg's Cloud", "r", BCD_SPHERE, ["m", "b"],
+                         "U = 1 + \\dfrac{m}{\\sqrt{r^2 + b^2}}",
+                         ["r \\in [0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]),
+}
+BCD_CHARTS = ["harmonic", "sphere_1965", "sphere_1975", "exterior", "exterior_areal", "spheroid_interior",
+              "spheroid_exterior", "quasi_black_hole"]
+
+
+def bonnor_charged_dust(system):
+    """Charged dust at rest with its charge density equal to its mass density, in Majumdar and
+    Papapetrou's metric -U^{-2}c^2dt^2 + U^2 times flat space, where the flat Laplacian of U is
+    -4 pi G rho U^3/c^2: Das's theorem of 1962 and Bonnor's stars. The harmonic chart leaves U
+    free, as Bonnor and Wickramasuriya's (2.10) does. Bonnor's sphere of 1965 has
+    1/U = (a + m)^{-3/2}(a^3 + m r^2)^{1/2}, his (3.10), with his a written r_0\\; Bonnor and
+    Wickramasuriya's sphere of 1975 has U = 1 + (m/r_0)(1 + (r_0^2 - r^2)/(2r_0^2)), their (3.2)\\;
+    outside either, U = 1 + m/r, the extremal Reissner-Nordstrom field, printed in the isotropic
+    radius and in the areal radius R = r + m, their (3.8). Their spheroid is printed in oblate
+    spheroidal coordinates inside and out, their (4.1) to (4.3), and Lemos and Weinberg's cloud
+    U = 1 + q/sqrt(R^2 + c^2), their (3.1), with q written m, R written r and c written b. A chart
+    that names U holds it as a function with the slope vm.RATES declares, so each value is a
+    rational function of U and the coordinates. bonnor_charged_dust_check holds every chart to
+    the Einstein-Maxwell equations with the dust for a source\\; bonnor_charged_dust.md records
+    each chart's source."""
+    reals = "t \\in (-\\infty, \\infty)"
+    check = lambda chart: bonnor_charged_dust_check(chart, system)  # noqa: E731
+    if system == "harmonic":
+        spec = majumdar_papapetrou("cartesian")
+        spec["metric_id"] = "bonnor_charged_dust"
+        spec["system"].update({"id": system, "name": "Harmonic",
+                               "domains": [reals, "x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)",
+                                           "z \\in (-\\infty, \\infty)"]})
+        spec["check"] = check
+        return spec
+    angles = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    if system == "exterior":
+        spec = majumdar_papapetrou("isotropic")
+        spec["metric_id"] = "bonnor_charged_dust"
+        spec["system"].update({"id": system, "name": "Isotropic Exterior", "parameters": ["m", "r_0"],
+                               "domains": [reals, "r \\in [r_0, \\infty)"] + angles
+                               + ["r = r_0 \\;\\text{(the surface)}"]})
+        spec["check"] = check
+        return spec
+    if system == "exterior_areal":
+        coords, parameters = ["t", "R", "\\theta", "\\phi"], ["m", "r_0"]
+        f = "\\left(1 - \\dfrac{m}{R}\\right)"
+
+        def line(c2):
+            return ("ds^2 = -" + f + "^2" + c2 + "dt^2 + " + f + "^{-2}dR^2"
+                    " + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)")
+        probe = vm.Reader(coords, parameters, ())
+        R, m = probe.symbol["R"], probe.parameters["m"]
+        return {
+            "metric_id": "bonnor_charged_dust",
+            "system": {"id": system, "name": "Reissner-Nordström Exterior", "coords": coords,
+                       "domains": [reals, "R \\in [r_0 + m, \\infty)"] + angles
+                       + ["R = r_0 + m \\;\\text{(the surface)}"],
+                       "parameters": parameters, "line_element": line("c^2")},
+            "chart_line_element": line(""),
+            "printer": {"lead": [R, m], "factors": [m, R]},
+            "components": {"metric_components": {("t", "t"): "-" + f + "^2", ("R", "R"): f + "^{-2}"},
+                           "inverse_metric_components": {("t", "t"): "-" + f + "^{-2}", ("R", "R"): f + "^2"}},
+            "check": check,
+        }
+    name, radial, flat, constants, potential, domains = BCD_NAMED[system]
+    coords, parameters = ["t", radial, "\\theta", "\\phi"], constants + [potential]
+    line = "ds^2 = -\\dfrac{{}dt^2}{U^2} + U^2\\left(" + flat + "\\right)"
+    rates = vm.RATES[("bonnor_charged_dust", system)]
+    probe = vm.Reader(coords, parameters, (), held=("U",), rates=rates)
+    U, x, m = probe.parameters["U"], probe.symbol[radial], probe.parameters["m"]
+    printer = {"lead": [U], "flip": False}
+    pretty = None
+    if system == "sphere_1965":
+        # Every value holds r_0 through (r_0 + m)^3 alone, which is written as that sum.
+        r0, both = probe.parameters["r_0"], sp.Symbol("_both", positive=True)
+        printer["overrides"] = {both: "\\left(r_0 + m\\right)"}
+        printer["factors"] = [m, x, U, both]
+
+        def pretty(value):
+            return sp.factor(sp.cancel(sp.together(sp.sympify(value).subs(r0, both - m))))
+    elif system == "sphere_1975":
+        printer["factors"] = [m, x, probe.parameters["r_0"], U]
+    elif system == "quasi_black_hole":
+        printer["factors"] = [m, x, U]
+    else:
+        # The checker hands back exponentials of u and of u_0, which are written in sinh u, cosh u
+        # and cosh u_0, as the line element and the potential write them.
+        a, u0 = probe.parameters["a"], probe.parameters["u_0"]
+        outer = cp.hyperbolic(x)
+        printer["factors"] = [m, a, u0, x, U]
+        E0, C0, T = sp.symbols("_E0 _C0 _T", positive=True)
+
+        def halves(poly):
+            # A polynomial in T = sinh u_0 as A + B T, by T^2 = cosh^2 u_0 - 1.
+            parts = [sp.Integer(0), sp.Integer(0)]
+            for (k,), coeff in sp.Poly(sp.expand(poly), T).terms():
+                parts[k % 2] += coeff * (C0 ** 2 - 1) ** (k // 2)
+            return parts
+
+        def pretty(value):
+            # A value holds u_0 through cosh u_0 alone: e^{u_0} is written cosh u_0 + sinh u_0 and
+            # the sinh, which a conjugate clears from the denominator, cancels.
+            value = sp.sympify(value).replace(
+                lambda e: isinstance(e, sp.exp) and sp.expand(e.args[0] / u0).is_Integer,
+                lambda e: E0 ** sp.expand(e.args[0] / u0))
+            if value.has(E0):
+                num, den = (p.subs(E0, C0 + T) for p in sp.fraction(sp.together(value)))
+                (n0, n1), (d0, d1) = halves(num), halves(den)
+                top = halves((n0 + n1 * T) * (d0 - d1 * T))
+                if sp.expand(top[1]) != 0:
+                    raise AssertionError(f"bonnor_charged_dust: {value} holds u_0 outside cosh u_0")
+                value = sp.cancel(top[0] / sp.expand(d0 ** 2 - d1 ** 2 * (C0 ** 2 - 1)))
+            return outer(value).subs(C0, sp.cosh(u0))
+    spec = {
+        "metric_id": "bonnor_charged_dust",
+        "system": {"id": system, "name": name, "coords": coords, "domains": [reals] + domains,
+                   "parameters": parameters, "line_element": line.replace("{}dt", "c^2dt")},
+        "chart_line_element": line.replace("{}dt", "dt"),
+        "printer": printer,
+        "reduce": lambda value: vm.norm(probe.by_rates(value)),
+        "check": check,
+    }
+    if pretty:
+        spec["pretty"] = pretty
+    return spec
+
+
+def bonnor_charged_dust_check(chart, system):
+    """Every chart against the Einstein-Maxwell equations with charged dust at rest for a source, in
+    units where G = c = 4 pi epsilon_0 = 1: with A = U^{-1} dt, u_a = -U^{-1} dt and the density
+    4 pi rho = -(flat Laplacian of U)/U^3, the Einstein tensor is 8 pi rho u_a u_b plus the Maxwell
+    stress 2(F_ac F_b^c - g_ab F^2/4), and Maxwell's equations have the current rho u^b, the
+    charge density equal to the mass density. Then each chart against its source: the densities
+    of Bonnor's (3.11), Bonnor and Wickramasuriya's (3.3) and (I.1) and Lemos and Weinberg's (3.2),
+    none of them negative\\; U and its slope continuous across each surface\\; the central redshift
+    3m/(2r_0) of the sphere of 1975 and its limits as r_0 -> 0, a central density 2/(9 pi m^2), a
+    proper radius 4m/3 and an area 4 pi m^2\\; the redshift (4.8) on the disc of the spheroid\\; the
+    spheroidal charts as the harmonic chart pulled back along (4.10), with U -> 1 + m/r far away\\;
+    the isotropic exterior as the published single hole of majumdar_papapetrou\\; and the areal
+    exterior as the isotropic one pulled back along r = R - m and as the published rn_metric at
+    r_s = 2m, r_q = m."""
+    X = chart.symbols
+    held = chart.reader.held
+    P = chart.reader.parameters
+    # A chart that names U keeps it as a function with the slope vm.RATES declares, which the
+    # reader has checked against the name's definition, so every value here is rational in U.
+    g = sp.Matrix(chart.geo.g)
+    rng = random.Random(7)
+    rated = None
+    if system in BCD_NAMED:
+        rated = vm.Reader(chart.coords_tex, BCD_NAMED[system][3] + [BCD_NAMED[system][4]], (), held=("U",),
+                          rates=vm.RATES[("bonnor_charged_dust", system)])
+
+    def settled(e):
+        e = sp.sympify(e).doit()
+        return rated.by_rates(e) if rated else e
+
+    def zero(e, what):
+        # A value that holds the free U is settled exactly; any other at three random points to
+        # thirty digits, a named U standing as a number of its own.
+        e = settled(e)
+        if e == 0:
+            return
+        if system == "harmonic":
+            if vm.norm(e) == 0 or sp.simplify(e) == 0:
+                return
+            raise AssertionError(f"bonnor_charged_dust: {what} fails on the {system} chart")
+        names = {f: sp.Dummy() for f in e.atoms(AppliedUndef)}
+        e = e.xreplace(names)
+        for _ in range(3):
+            at = {s: sp.Rational(rng.randint(20, 60), 100) for s in X}
+            at.update({s: sp.Rational(rng.randint(120, 180), 100) for s in e.free_symbols - set(X)})
+            if abs(sp.N(e.subs(at), 40)) > sp.Float(10) ** -30:
+                raise AssertionError(f"bonnor_charged_dust: {what} fails on the {system} chart")
+
+    def published(metric_id, chart_id):
+        there = next(c for c in json.loads((METRICS / f"{metric_id}.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == chart_id)
+        other = vm.Reader(there["coords"], [p["symbol"] for p in there["parameters"]], ())
+        values = {tuple(e["indices"]): other(e["value"]) for e in there["metric_components"]}
+        return other, values
+
+    if system == "exterior_areal":
+        m, R = P["m"], X[1]
+        spec = bonnor_charged_dust("exterior")
+        iso = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+        at = dict(zip(iso.symbols, X))
+        at[iso.symbols[1]] = R - m
+        at[iso.reader.parameters["m"]] = m
+        pulled = iso.geo.g.subs(at, simultaneous=True)
+        for i in range(4):
+            zero(pulled[i, i] - g[i, i], f"the isotropic exterior pulled back along r = R - m, slot {i}{i}")
+        other, values = published("rn_metric", "spherical")
+        same = {other.symbol["r"]: R, other.parameters["r_s"]: 2 * m, other.parameters["r_q"]: m,
+                other.symbol["\\theta"]: X[2]}
+        for i, name in enumerate(["t", "r", "\\theta", "\\phi"]):
+            zero(values[name, name].subs(same) - g[i, i], f"the published rn_metric at r_s = 2m, r_q = m, slot {name}")
+        return
+
+    U = P["U"] if "U" in P else 1 + P["m"] / X[1]
+    zero(U ** 2 * g[0, 0] + 1, "g_tt = -1/U^2")
+    geo = chart.geo
+    gi = sp.Matrix(geo.ginv)
+    flat = (g / U ** 2)[1:, 1:]
+    # The flat background is diagonal in every chart, so its volume is the root of a product.
+    scale = [sp.sqrt(sp.factor(flat[i, i])) for i in range(3)]
+    root = scale[0] * scale[1] * scale[2]
+    laplace = sum(sp.diff(root / flat[i, i] * settled(sp.diff(U, X[i + 1])), X[i + 1]) for i in range(3)) / root
+    density = settled(-laplace / U ** 3)          # 4 pi rho
+    A = [1 / U, 0, 0, 0]
+    F = sp.Matrix(4, 4, lambda a, b: settled(sp.diff(A[b], X[a]) - sp.diff(A[a], X[b])))
+    Fu = gi * F * gi
+    F2 = sum(F[a, b] * Fu[a, b] for a in range(4) for b in range(4))
+    einstein = sp.Matrix(geo.einstein_ll())
+    for a in range(4):
+        for b in range(a, 4):
+            maxwell = 2 * (sum(F[a, c] * F[b, d] * gi[c, d] for c in range(4) for d in range(4)) - g[a, b] * F2 / 4)
+            dust = 2 * density / U ** 2 if a == b == 0 else 0
+            zero(einstein[a, b] - maxwell - dust, f"Einstein's equation {a}{b} with the dust and its field")
+    volume = root * U ** 2
+    for b in range(4):
+        divergence = sum(sp.diff(volume * Fu[a, b], X[a]) for a in range(4)) / volume
+        zero(divergence + (density * U if b == 0 else 0), f"Maxwell's equation {b} with the current rho u")
+    if system == "harmonic":
+        return
+
+    def number(e, values, digits=40):
+        return sp.sympify(e).subs(values).evalf(digits)
+
+    m = P["m"]
+    x = X[1]
+    if held:
+        # From here on the potential is its definition, and the density is the density of that.
+        name = U
+        U = held[name]
+        density = density.xreplace({name: U})
+        g = g.xreplace({name: U})
+        rated = None
+    if system == "exterior":
+        zero(density, "the vacuum outside the star")
+        other, values = published("majumdar_papapetrou", "isotropic")
+        same = {other.symbol["r"]: x, other.parameters["m"]: m, other.symbol["\\theta"]: X[2]}
+        for i, name in enumerate(chart.coords_tex):
+            zero(values[name, name].subs(same) - g[i, i], f"the published single hole of majumdar_papapetrou, slot {name}")
+        return
+    if system in ("sphere_1965", "sphere_1975"):
+        r0 = P["r_0"]
+        zero(U.subs(x, r0) - (1 + m / r0), "U at the surface")
+        zero(sp.diff(U, x).subs(x, r0) + m / r0 ** 2, "the slope of U at the surface")
+        zero(sp.diff(U, x).subs(x, 0), "the slope of U at the centre")
+        if system == "sphere_1965":
+            zero(density - 3 * m / r0 ** 3 / (1 + m / r0) ** 3 / (1 + m * x ** 2 / r0 ** 3), "Bonnor's density (3.11)")
+            zero(U.subs(x, 0) - (1 + m / r0) ** sp.Rational(3, 2), "U at the centre")
+            sign = -1
+        else:
+            zero(density - 3 * m / (r0 ** 3 * U ** 3), "Bonnor and Wickramasuriya's density (3.3)")
+            zero(U.subs(x, 0) - 1 - 3 * m / (2 * r0), "the central redshift 3m/(2r_0), their (3.4)")
+            central = sp.limit((density / (4 * sp.pi)).subs(x, 0), r0, 0, "+")
+            zero(central - 2 / (9 * sp.pi * m ** 2), "the central density 2/(9 pi m^2) as r_0 -> 0")
+            zero(sp.limit(sp.integrate(U, (x, 0, r0)), r0, 0, "+") - 4 * m / 3, "the proper radius 4m/3 as r_0 -> 0")
+            zero(sp.limit(4 * sp.pi * (r0 * U.subs(x, r0)) ** 2, r0, 0, "+") - 4 * sp.pi * m ** 2,
+                 "the area 4 pi m^2 as r_0 -> 0")
+            sign = 1
+        for _ in range(6):
+            at = {m: sp.Rational(rng.randint(10, 400), 100), r0: sp.Rational(rng.randint(10, 400), 100)}
+            at[x] = at[r0] * sp.Rational(rng.randint(1, 99), 100)
+            if number(density, at) <= 0 or sign * number(sp.diff(density, x), at) <= 0:
+                raise AssertionError(f"bonnor_charged_dust: the density of the {system} chart is not positive and "
+                                     f"{'rising' if sign > 0 else 'falling'} outward")
+        return
+    if system == "quasi_black_hole":
+        b = P["b"]
+        root = sp.sqrt(x ** 2 + b ** 2)
+        zero(density - 3 * m * b ** 2 / ((x ** 2 + b ** 2) * (m + root) ** 3), "Lemos and Weinberg's density (3.2)")
+        zero(U.subs(b, 0) - 1 - m / sp.sqrt(x ** 2), "the single hole at b = 0")
+        return
+    # The spheroid: the harmonic chart pulled back along Bonnor and Wickramasuriya's (4.10).
+    a, u0, th, ph = P["a"], P["u_0"], X[2], X[3]
+    image = [X[0], a * sp.cosh(x) * sp.cos(th) * sp.cos(ph), a * sp.cosh(x) * sp.cos(th) * sp.sin(ph),
+             a * sp.sinh(x) * sp.sin(th)]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], X[j]))
+    pulled = J.T * sp.diag(-1 / U ** 2, U ** 2, U ** 2, U ** 2) * J
+    for i in range(4):
+        for j in range(i, 4):
+            zero(pulled[i, j] - g[i, j], f"the harmonic chart pulled back, slot {i}{j}")
+    alpha = sp.atan(1 / sp.sinh(u0))
+    outside = 1 + m / a * sp.atan(1 / sp.sinh(x))
+    inside = 1 + m / a * (alpha + (u0 ** 4 - x ** 4) / (4 * u0 ** 3 * sp.cosh(u0)))
+    zero((inside - outside).subs(x, u0), "U across the surface of the spheroid")
+    zero((sp.diff(inside, x) - sp.diff(outside, x)).subs(x, u0), "the slope of U across the surface of the spheroid")
+    if system == "spheroid_exterior":
+        zero(U - outside, "their (4.2)")
+        zero(density, "the vacuum outside the spheroid")
+        # Far away a sinh u is the distance from the centre, and U -> 1 + m/r.
+        zero(sp.limit((U - 1) * a * sp.sinh(x), x, sp.oo) - m, "U -> 1 + m/r far away")
+        return
+    zero(U - inside, "their (4.3)")
+    wanted = m * x ** 2 * (3 + x * sp.tanh(x)) / (sp.cosh(u0) * a ** 3 * u0 ** 3 * (sp.sinh(x) ** 2 + sp.sin(th) ** 2) * U ** 3)
+    zero(density - wanted, "Bonnor and Wickramasuriya's density (I.1)")
+    zero(U.subs(x, 0) - 1 - m / a * (alpha + u0 / (4 * sp.cosh(u0))), "the redshift on the disc, their (4.8)")
+
+
+CHARTS["bonnor_charged_dust"] = [lambda s=s: bonnor_charged_dust(s) for s in BCD_CHARTS]
 
 
 def write(spec):
