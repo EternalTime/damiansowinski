@@ -378,6 +378,11 @@
       "id": "erez_rosen",
       "kind": "generalisation",
       "text": "Schwarzschild's mass with a quadrupole moment added, in a number $q$. Any $q \\neq 0$ turns the horizon into a naked singularity, which Doroshkevich, Zel'dovich, and Novikov used to argue that a collapsing star sheds its quadrupole [doroshkevich1965]."
+    },
+    {
+      "id": "brill_waves",
+      "kind": "family",
+      "text": "One moment of a spacetime with gravitational waves in it and no matter. Far away its slice is Schwarzschild's with a positive mass, and a strong enough wave collapses to a black hole [brill1959, alcubierre2000collapse]."
     }
   ],
   "references": [
@@ -482,7 +487,9 @@
     "gibbonsrasheed1995",
     "boonserm2018",
     "friedman1993",
-    "doroshkevich1965"
+    "doroshkevich1965",
+    "brill1959",
+    "alcubierre2000collapse"
   ],
   "coordinates": [
     {

@@ -1342,6 +1342,53 @@
    "\\phi"
   ]
  },
+ "brill_waves/cylindrical": {
+  "stamp": "0777339a930769a9",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "brill_waves/spherical": {
+  "stamp": "b5769e8b4dfedd63",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "brill_waves/three_dimensional": {
+  "stamp": "d3361bffeed55dd5",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [],
+  "sphere": null
+ },
  "btz/eddington_finkelstein_ingoing": {
   "stamp": "5dfb4df830ef867d",
   "relations": {},

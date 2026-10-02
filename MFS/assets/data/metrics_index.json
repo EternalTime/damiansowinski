@@ -598,7 +598,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1630b6c90e788077",
+    "version": "f9d3de44eef15b45",
     "diagrams": "d8f5e35c3b0e6fe2",
     "conformal": "7b86209f53558e97",
     "embedding": "c3dc5db3068ad454"
@@ -643,6 +643,41 @@
     "diagrams": "aad81dc2048a0547",
     "conformal": "6c5c22a5247f56a8",
     "embedding": "d857ba18e7d9066a"
+  },
+  {
+    "id": "brill_waves",
+    "name": "Brill Waves",
+    "tags": [
+      "three-dimensional",
+      "Riemannian",
+      "no time",
+      "initial data",
+      "spatial slice",
+      "time symmetric",
+      "constraint equations",
+      "Hamiltonian constraint",
+      "gravitational wave",
+      "Brill wave",
+      "axisymmetric",
+      "conformal transformation",
+      "positive energy",
+      "positive mass theorem",
+      "mass",
+      "apparent horizon",
+      "minimal surface",
+      "trapped surface",
+      "critical collapse",
+      "gravitational collapse",
+      "geometrodynamics",
+      "geon",
+      "numerical relativity",
+      "numerical solution",
+      "asymptotically flat",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "08faaaccb2452036",
+    "embedding": "be58694ee9d966c0"
   },
   {
     "id": "c_metric",
@@ -1088,7 +1123,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8979e5d4015737d9",
+    "version": "aca100e92ae53e77",
     "diagrams": "dc0f3031798ca092",
     "conformal": "2876dfbbabbb4b26",
     "embedding": "f736444606912902"
@@ -2490,7 +2525,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "55f26acaff050937",
+    "version": "fea2801d2f6c8046",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -2559,7 +2594,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "2a15ea91f78aa504",
+    "version": "21e8f6faa49a9c80",
     "embedding": "0c96027fa617beeb"
   },
   {
@@ -3297,7 +3332,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "6def0b8803f1ff3b",
+    "version": "f4db48e2dee621d8",
     "diagrams": "a0d99b1047fc15a8",
     "conformal": "be314e331ea79c30",
     "embedding": "7d4fbd4e5c072163"
@@ -3444,7 +3479,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "32becf9a2b2e0dd5",
+    "version": "af7702bc75290bf6",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1"
@@ -3603,7 +3638,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f1c4b6f5f7091625",
+    "version": "322cc87ee4caf25d",
     "diagrams": "ac2ae60444203f54",
     "conformal": "1d994db28644e6d6",
     "embedding": "74242cc150b7e4a7"

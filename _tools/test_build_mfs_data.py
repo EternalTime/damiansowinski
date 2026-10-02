@@ -3624,6 +3624,7 @@ class StacksAndMovies(unittest.TestCase):
               ("sultana_dyer", "paraboloid"): "$\\eta$",
               ("kastor_traschen", "two_holes"): "$c\\tau$",
               ("misner_brill_lindquist", "through"): "$a$", ("misner_brill_lindquist", "between"): "$a$",
+              ("brill_waves", "strong"): "$a$",
               ("tolman_bondi", "cloud"): "$ct$", ("szekeres", "equators"): "$ct$", ("misner", "cylinders"): "$ct$",
               ("photon_rocket", "burn"): "$cu + r$", ("hayward", "history"): "$v - r$",
               ("mass_inflation", "tail"): "$v - r$",

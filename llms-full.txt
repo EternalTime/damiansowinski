@@ -446,6 +446,18 @@ The spherical black hole of Einstein-Gauss-Bonnet gravity in five dimensions, wh
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{2\ell^2}\left(1 - \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)\right)dv^2 + 2\,dv\,dr + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
 - chart Hyperspherical, Anti-de Sitter Branch: coordinates $(t, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{2\ell^2}\left(1 + \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)\right)c^2dt^2 + \dfrac{dr^2}{1 + \dfrac{r^2}{2\ell^2}\left(1 + \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)} + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
 
+### Brill's Time-Symmetric Gravitational Waves
+
+One moment of a spacetime that holds gravitational waves and nothing else, which Dieter Brill constructed in 1959. It is a single slice of space, three dimensions with no time, at the moment the wave is at rest, and it satisfies Einstein's constraint equations with no matter anywhere. Brill proved its mass positive, a strong enough wave already lies inside its own apparent horizon, and what the wave does afterwards is known from computer simulations.
+
+- id: `brill_waves`
+- tags: three-dimensional, Riemannian, no time, initial data, spatial slice, time symmetric, constraint equations, Hamiltonian constraint, gravitational wave, Brill wave, axisymmetric, conformal transformation, positive energy, positive mass theorem, mass, apparent horizon, minimal surface, trapped surface, critical collapse, gravitational collapse, geometrodynamics, geon, numerical relativity, numerical solution, asymptotically flat, Einstein equations, idealized model
+- signature: (+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/brill_waves.json
+- chart Brill: coordinates $(\rho, z, \phi)$, $$ds^2 = \psi^4\left(e^{2q}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2\right)$$
+- chart Spherical: coordinates $(r, \theta, \phi)$, $$ds^2 = \psi^4\left(e^{2q}\left(dr^2 + r^2d\theta^2\right) + r^2\sin^2\theta\,d\phi^2\right)$$
+- chart Without Axial Symmetry: coordinates $(\rho, z, \phi)$, $$ds^2 = \psi^4\left(e^{2q}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2\right)$$
+
 ### C-Metric Accelerating Black Holes
 
 An exact vacuum solution describing two black holes that accelerate away from each other, driven by a cosmic string or a strut along their axis of symmetry. With the acceleration set to zero it is the Schwarzschild black hole.
