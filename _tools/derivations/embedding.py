@@ -9558,7 +9558,7 @@ CAPTIONS = {
         "$r$, so a slice of constant $t$ is the line along the cylinder of the other view times this sphere.",
     ],
     ("stockum_dust", "dust"): [
-        "The plane $z = 0$ across Cornelius Lanczos's cylinder of rotating dust at one moment of $t$, drawn "
+        "The plane $z = 0$ across Kornel Lanczos's cylinder of rotating dust at one moment of $t$, drawn "
         "about its axis as a surface in flat space with every distance along it the metric "
         "distance. On it $g_{rr} = e^{-r^2/R^2}$, and the circle of radius $r$ has circumference "
         "$2\\pi r\\sqrt{1 - r^2/R^2}$, which grows only out to $r = R/\\sqrt{2}$ and then shrinks, so the "
